@@ -1,21 +1,31 @@
 import Image from "next/image";
+import { PROMOTION_BY_NAME_QUERYResult } from "@/sanity.types";
 
 export default function PromotionImage({
-  src,
-  headline,
+  imageData,
+  alt,
 }: {
-  src: string;
-  headline: string;
+  imageData: PROMOTION_BY_NAME_QUERYResult;
+  alt: string;
+  fullscreen?: boolean;
 }) {
+  console.log("@promo img", imageData.src);
+
   return (
-    <Image
-      src={src}
-      alt={headline}
-      fill
-      priority
-      quality={95}
-      sizes="(max-width: 768px) 100vw, 100vw"
-      style={{ objectFit: "cover" }}
-    />
+    <div className={`absolute h-full w-full overflow-hidden`}>
+      <Image
+        src={imageData.src}
+        alt={alt}
+        width={imageData.width}
+        height={imageData.height}
+        placeholder="blur"
+        blurDataURL={imageData.blurDataURL}
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 1200px"
+        priority
+        className={
+          "h-full w-full object-cover object-[35%_center] lg:object-[0%_center]"
+        }
+      />
+    </div>
   );
 }

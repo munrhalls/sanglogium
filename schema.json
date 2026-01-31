@@ -1,5 +1,1974 @@
 [
   {
+    "name": "promotion",
+    "type": "document",
+    "attributes": {
+      "_id": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_type": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string",
+          "value": "promotion"
+        }
+      },
+      "_createdAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_updatedAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_rev": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "internalTitle": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "promotion_text": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "array",
+          "of": {
+            "type": "union",
+            "of": [
+              {
+                "type": "object",
+                "attributes": {
+                  "children": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "array",
+                      "of": {
+                        "type": "object",
+                        "attributes": {
+                          "marks": {
+                            "type": "objectAttribute",
+                            "value": {
+                              "type": "array",
+                              "of": {
+                                "type": "string"
+                              }
+                            },
+                            "optional": true
+                          },
+                          "text": {
+                            "type": "objectAttribute",
+                            "value": {
+                              "type": "string"
+                            },
+                            "optional": true
+                          },
+                          "_type": {
+                            "type": "objectAttribute",
+                            "value": {
+                              "type": "string",
+                              "value": "span"
+                            }
+                          }
+                        },
+                        "rest": {
+                          "type": "object",
+                          "attributes": {
+                            "_key": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "optional": true
+                  },
+                  "style": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "union",
+                      "of": [
+                        {
+                          "type": "string",
+                          "value": "normal"
+                        },
+                        {
+                          "type": "string",
+                          "value": "h1"
+                        },
+                        {
+                          "type": "string",
+                          "value": "h2"
+                        }
+                      ]
+                    },
+                    "optional": true
+                  },
+                  "listItem": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "union",
+                      "of": []
+                    },
+                    "optional": true
+                  },
+                  "markDefs": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "array",
+                      "of": {
+                        "type": "object",
+                        "attributes": {
+                          "hex": {
+                            "type": "objectAttribute",
+                            "value": {
+                              "type": "union",
+                              "of": [
+                                {
+                                  "type": "string",
+                                  "value": "#e11d48"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#800000"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#fef2f2"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#fee2e2"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#fecaca"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#fca5a5"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#f87171"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#ef4444"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#dc2626"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#b91c1c"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#991b1b"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#7f1d1d"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#450a0a"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#fff7ed"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#ffedd5"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#fed7aa"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#fdba74"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#fb923c"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#f97316"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#ea580c"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#c2410c"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#9a3412"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#7c2d12"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#431407"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#fffbeb"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#fef3c7"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#fde68a"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#fcd34d"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#fbbf24"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#f59e0b"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#d97706"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#b45309"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#92400e"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#78350f"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#451a03"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#fefce8"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#fef9c3"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#fef08a"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#fde047"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#facc15"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#eab308"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#ca8a04"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#a16207"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#854d0e"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#713f12"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#422006"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#f7fee7"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#ecfccb"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#d9f99d"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#bef264"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#a3e635"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#84cc16"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#65a30d"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#4d7c0f"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#3f6212"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#365314"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#1a2e05"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#f0fdf4"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#dcfce7"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#bbf7d0"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#86efac"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#4ade80"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#22c55e"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#16a34a"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#15803d"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#166534"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#14532d"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#052e16"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#ecfdf5"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#d1fae5"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#a7f3d0"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#6ee7b7"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#34d399"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#10b981"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#059669"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#047857"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#065f46"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#064e3b"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#022c22"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#f0fdfa"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#ccfbf1"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#99f6e4"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#5eead4"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#2dd4bf"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#14b8a6"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#0d9488"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#0f766e"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#115e59"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#134e4a"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#042f2e"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#ecfeff"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#cffafe"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#a5f3fc"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#67e8f9"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#22d3ee"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#06b6d4"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#0891b2"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#0e7490"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#155e75"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#164e63"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#083344"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#f0f9ff"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#e0f2fe"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#bae6fd"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#7dd3fc"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#38bdf8"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#0ea5e9"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#0284c7"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#0369a1"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#075985"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#0c4a6e"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#082f49"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#eff6ff"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#dbeafe"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#bfdbfe"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#93c5fd"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#60a5fa"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#3b82f6"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#2563eb"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#1d4ed8"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#1e40af"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#1e3a8a"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#172554"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#eef2ff"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#e0e7ff"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#c7d2fe"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#a5b4fc"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#818cf8"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#6366f1"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#4f46e5"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#4338ca"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#3730a3"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#312e81"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#1e1b4b"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#f5f3ff"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#ede9fe"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#ddd6fe"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#c4b5fd"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#a78bfa"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#8b5cf6"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#7c3aed"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#6d28d9"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#5b21b6"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#4c1d95"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#2e1065"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#faf5ff"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#f3e8ff"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#e9d5ff"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#d8b4fe"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#c084fc"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#a855f7"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#9333ea"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#7e22ce"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#6b21a8"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#581c87"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#3b0764"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#fdf4ff"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#fae8ff"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#f5d0fe"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#f0abfc"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#e879f9"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#d946ef"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#c026d3"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#a21caf"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#86198f"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#701a75"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#4a044e"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#fdf2f8"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#fce7f3"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#fbcfe8"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#f9a8d4"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#f472b6"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#ec4899"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#db2777"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#be185d"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#9d174d"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#831843"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#500724"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#fff1f2"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#ffe4e6"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#fecdd3"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#fda4af"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#fb7185"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#f43f5e"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#e11d48"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#be123c"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#9f1239"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#881337"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#4c0519"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#f8fafc"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#f1f5f9"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#e2e8f0"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#cbd5e1"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#94a3b8"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#64748b"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#475569"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#334155"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#1e293b"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#0f172a"
+                                },
+                                {
+                                  "type": "string",
+                                  "value": "#020617"
+                                }
+                              ]
+                            },
+                            "optional": true
+                          },
+                          "_type": {
+                            "type": "objectAttribute",
+                            "value": {
+                              "type": "string",
+                              "value": "color"
+                            }
+                          }
+                        },
+                        "rest": {
+                          "type": "object",
+                          "attributes": {
+                            "_key": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "optional": true
+                  },
+                  "level": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "number"
+                    },
+                    "optional": true
+                  },
+                  "_type": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string",
+                      "value": "block"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "object",
+                  "attributes": {
+                    "_key": {
+                      "type": "objectAttribute",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "attributes": {
+                  "asset": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "object",
+                      "attributes": {
+                        "_ref": {
+                          "type": "objectAttribute",
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "_type": {
+                          "type": "objectAttribute",
+                          "value": {
+                            "type": "string",
+                            "value": "reference"
+                          }
+                        },
+                        "_weak": {
+                          "type": "objectAttribute",
+                          "value": {
+                            "type": "boolean"
+                          },
+                          "optional": true
+                        }
+                      },
+                      "dereferencesTo": "sanity.imageAsset"
+                    },
+                    "optional": true
+                  },
+                  "media": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "unknown"
+                    },
+                    "optional": true
+                  },
+                  "hotspot": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "inline",
+                      "name": "sanity.imageHotspot"
+                    },
+                    "optional": true
+                  },
+                  "crop": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "inline",
+                      "name": "sanity.imageCrop"
+                    },
+                    "optional": true
+                  },
+                  "alt": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
+                  "_type": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string",
+                      "value": "image"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "object",
+                  "attributes": {
+                    "_key": {
+                      "type": "objectAttribute",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "optional": true
+      },
+      "image_background": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "asset": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "object",
+                "attributes": {
+                  "_ref": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "_type": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string",
+                      "value": "reference"
+                    }
+                  },
+                  "_weak": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "boolean"
+                    },
+                    "optional": true
+                  }
+                },
+                "dereferencesTo": "sanity.imageAsset"
+              },
+              "optional": true
+            },
+            "media": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "unknown"
+              },
+              "optional": true
+            },
+            "hotspot": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "sanity.imageHotspot"
+              },
+              "optional": true
+            },
+            "crop": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "sanity.imageCrop"
+              },
+              "optional": true
+            },
+            "_type": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string",
+                "value": "image"
+              }
+            }
+          }
+        },
+        "optional": true
+      },
+      "cta_text": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "cta_background": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "#e11d48"
+            },
+            {
+              "type": "string",
+              "value": "#800000"
+            },
+            {
+              "type": "string",
+              "value": "#fef2f2"
+            },
+            {
+              "type": "string",
+              "value": "#fee2e2"
+            },
+            {
+              "type": "string",
+              "value": "#fecaca"
+            },
+            {
+              "type": "string",
+              "value": "#fca5a5"
+            },
+            {
+              "type": "string",
+              "value": "#f87171"
+            },
+            {
+              "type": "string",
+              "value": "#ef4444"
+            },
+            {
+              "type": "string",
+              "value": "#dc2626"
+            },
+            {
+              "type": "string",
+              "value": "#b91c1c"
+            },
+            {
+              "type": "string",
+              "value": "#991b1b"
+            },
+            {
+              "type": "string",
+              "value": "#7f1d1d"
+            },
+            {
+              "type": "string",
+              "value": "#450a0a"
+            },
+            {
+              "type": "string",
+              "value": "#fff7ed"
+            },
+            {
+              "type": "string",
+              "value": "#ffedd5"
+            },
+            {
+              "type": "string",
+              "value": "#fed7aa"
+            },
+            {
+              "type": "string",
+              "value": "#fdba74"
+            },
+            {
+              "type": "string",
+              "value": "#fb923c"
+            },
+            {
+              "type": "string",
+              "value": "#f97316"
+            },
+            {
+              "type": "string",
+              "value": "#ea580c"
+            },
+            {
+              "type": "string",
+              "value": "#c2410c"
+            },
+            {
+              "type": "string",
+              "value": "#9a3412"
+            },
+            {
+              "type": "string",
+              "value": "#7c2d12"
+            },
+            {
+              "type": "string",
+              "value": "#431407"
+            },
+            {
+              "type": "string",
+              "value": "#fffbeb"
+            },
+            {
+              "type": "string",
+              "value": "#fef3c7"
+            },
+            {
+              "type": "string",
+              "value": "#fde68a"
+            },
+            {
+              "type": "string",
+              "value": "#fcd34d"
+            },
+            {
+              "type": "string",
+              "value": "#fbbf24"
+            },
+            {
+              "type": "string",
+              "value": "#f59e0b"
+            },
+            {
+              "type": "string",
+              "value": "#d97706"
+            },
+            {
+              "type": "string",
+              "value": "#b45309"
+            },
+            {
+              "type": "string",
+              "value": "#92400e"
+            },
+            {
+              "type": "string",
+              "value": "#78350f"
+            },
+            {
+              "type": "string",
+              "value": "#451a03"
+            },
+            {
+              "type": "string",
+              "value": "#fefce8"
+            },
+            {
+              "type": "string",
+              "value": "#fef9c3"
+            },
+            {
+              "type": "string",
+              "value": "#fef08a"
+            },
+            {
+              "type": "string",
+              "value": "#fde047"
+            },
+            {
+              "type": "string",
+              "value": "#facc15"
+            },
+            {
+              "type": "string",
+              "value": "#eab308"
+            },
+            {
+              "type": "string",
+              "value": "#ca8a04"
+            },
+            {
+              "type": "string",
+              "value": "#a16207"
+            },
+            {
+              "type": "string",
+              "value": "#854d0e"
+            },
+            {
+              "type": "string",
+              "value": "#713f12"
+            },
+            {
+              "type": "string",
+              "value": "#422006"
+            },
+            {
+              "type": "string",
+              "value": "#f7fee7"
+            },
+            {
+              "type": "string",
+              "value": "#ecfccb"
+            },
+            {
+              "type": "string",
+              "value": "#d9f99d"
+            },
+            {
+              "type": "string",
+              "value": "#bef264"
+            },
+            {
+              "type": "string",
+              "value": "#a3e635"
+            },
+            {
+              "type": "string",
+              "value": "#84cc16"
+            },
+            {
+              "type": "string",
+              "value": "#65a30d"
+            },
+            {
+              "type": "string",
+              "value": "#4d7c0f"
+            },
+            {
+              "type": "string",
+              "value": "#3f6212"
+            },
+            {
+              "type": "string",
+              "value": "#365314"
+            },
+            {
+              "type": "string",
+              "value": "#1a2e05"
+            },
+            {
+              "type": "string",
+              "value": "#f0fdf4"
+            },
+            {
+              "type": "string",
+              "value": "#dcfce7"
+            },
+            {
+              "type": "string",
+              "value": "#bbf7d0"
+            },
+            {
+              "type": "string",
+              "value": "#86efac"
+            },
+            {
+              "type": "string",
+              "value": "#4ade80"
+            },
+            {
+              "type": "string",
+              "value": "#22c55e"
+            },
+            {
+              "type": "string",
+              "value": "#16a34a"
+            },
+            {
+              "type": "string",
+              "value": "#15803d"
+            },
+            {
+              "type": "string",
+              "value": "#166534"
+            },
+            {
+              "type": "string",
+              "value": "#14532d"
+            },
+            {
+              "type": "string",
+              "value": "#052e16"
+            },
+            {
+              "type": "string",
+              "value": "#ecfdf5"
+            },
+            {
+              "type": "string",
+              "value": "#d1fae5"
+            },
+            {
+              "type": "string",
+              "value": "#a7f3d0"
+            },
+            {
+              "type": "string",
+              "value": "#6ee7b7"
+            },
+            {
+              "type": "string",
+              "value": "#34d399"
+            },
+            {
+              "type": "string",
+              "value": "#10b981"
+            },
+            {
+              "type": "string",
+              "value": "#059669"
+            },
+            {
+              "type": "string",
+              "value": "#047857"
+            },
+            {
+              "type": "string",
+              "value": "#065f46"
+            },
+            {
+              "type": "string",
+              "value": "#064e3b"
+            },
+            {
+              "type": "string",
+              "value": "#022c22"
+            },
+            {
+              "type": "string",
+              "value": "#f0fdfa"
+            },
+            {
+              "type": "string",
+              "value": "#ccfbf1"
+            },
+            {
+              "type": "string",
+              "value": "#99f6e4"
+            },
+            {
+              "type": "string",
+              "value": "#5eead4"
+            },
+            {
+              "type": "string",
+              "value": "#2dd4bf"
+            },
+            {
+              "type": "string",
+              "value": "#14b8a6"
+            },
+            {
+              "type": "string",
+              "value": "#0d9488"
+            },
+            {
+              "type": "string",
+              "value": "#0f766e"
+            },
+            {
+              "type": "string",
+              "value": "#115e59"
+            },
+            {
+              "type": "string",
+              "value": "#134e4a"
+            },
+            {
+              "type": "string",
+              "value": "#042f2e"
+            },
+            {
+              "type": "string",
+              "value": "#ecfeff"
+            },
+            {
+              "type": "string",
+              "value": "#cffafe"
+            },
+            {
+              "type": "string",
+              "value": "#a5f3fc"
+            },
+            {
+              "type": "string",
+              "value": "#67e8f9"
+            },
+            {
+              "type": "string",
+              "value": "#22d3ee"
+            },
+            {
+              "type": "string",
+              "value": "#06b6d4"
+            },
+            {
+              "type": "string",
+              "value": "#0891b2"
+            },
+            {
+              "type": "string",
+              "value": "#0e7490"
+            },
+            {
+              "type": "string",
+              "value": "#155e75"
+            },
+            {
+              "type": "string",
+              "value": "#164e63"
+            },
+            {
+              "type": "string",
+              "value": "#083344"
+            },
+            {
+              "type": "string",
+              "value": "#f0f9ff"
+            },
+            {
+              "type": "string",
+              "value": "#e0f2fe"
+            },
+            {
+              "type": "string",
+              "value": "#bae6fd"
+            },
+            {
+              "type": "string",
+              "value": "#7dd3fc"
+            },
+            {
+              "type": "string",
+              "value": "#38bdf8"
+            },
+            {
+              "type": "string",
+              "value": "#0ea5e9"
+            },
+            {
+              "type": "string",
+              "value": "#0284c7"
+            },
+            {
+              "type": "string",
+              "value": "#0369a1"
+            },
+            {
+              "type": "string",
+              "value": "#075985"
+            },
+            {
+              "type": "string",
+              "value": "#0c4a6e"
+            },
+            {
+              "type": "string",
+              "value": "#082f49"
+            },
+            {
+              "type": "string",
+              "value": "#eff6ff"
+            },
+            {
+              "type": "string",
+              "value": "#dbeafe"
+            },
+            {
+              "type": "string",
+              "value": "#bfdbfe"
+            },
+            {
+              "type": "string",
+              "value": "#93c5fd"
+            },
+            {
+              "type": "string",
+              "value": "#60a5fa"
+            },
+            {
+              "type": "string",
+              "value": "#3b82f6"
+            },
+            {
+              "type": "string",
+              "value": "#2563eb"
+            },
+            {
+              "type": "string",
+              "value": "#1d4ed8"
+            },
+            {
+              "type": "string",
+              "value": "#1e40af"
+            },
+            {
+              "type": "string",
+              "value": "#1e3a8a"
+            },
+            {
+              "type": "string",
+              "value": "#172554"
+            },
+            {
+              "type": "string",
+              "value": "#eef2ff"
+            },
+            {
+              "type": "string",
+              "value": "#e0e7ff"
+            },
+            {
+              "type": "string",
+              "value": "#c7d2fe"
+            },
+            {
+              "type": "string",
+              "value": "#a5b4fc"
+            },
+            {
+              "type": "string",
+              "value": "#818cf8"
+            },
+            {
+              "type": "string",
+              "value": "#6366f1"
+            },
+            {
+              "type": "string",
+              "value": "#4f46e5"
+            },
+            {
+              "type": "string",
+              "value": "#4338ca"
+            },
+            {
+              "type": "string",
+              "value": "#3730a3"
+            },
+            {
+              "type": "string",
+              "value": "#312e81"
+            },
+            {
+              "type": "string",
+              "value": "#1e1b4b"
+            },
+            {
+              "type": "string",
+              "value": "#f5f3ff"
+            },
+            {
+              "type": "string",
+              "value": "#ede9fe"
+            },
+            {
+              "type": "string",
+              "value": "#ddd6fe"
+            },
+            {
+              "type": "string",
+              "value": "#c4b5fd"
+            },
+            {
+              "type": "string",
+              "value": "#a78bfa"
+            },
+            {
+              "type": "string",
+              "value": "#8b5cf6"
+            },
+            {
+              "type": "string",
+              "value": "#7c3aed"
+            },
+            {
+              "type": "string",
+              "value": "#6d28d9"
+            },
+            {
+              "type": "string",
+              "value": "#5b21b6"
+            },
+            {
+              "type": "string",
+              "value": "#4c1d95"
+            },
+            {
+              "type": "string",
+              "value": "#2e1065"
+            },
+            {
+              "type": "string",
+              "value": "#faf5ff"
+            },
+            {
+              "type": "string",
+              "value": "#f3e8ff"
+            },
+            {
+              "type": "string",
+              "value": "#e9d5ff"
+            },
+            {
+              "type": "string",
+              "value": "#d8b4fe"
+            },
+            {
+              "type": "string",
+              "value": "#c084fc"
+            },
+            {
+              "type": "string",
+              "value": "#a855f7"
+            },
+            {
+              "type": "string",
+              "value": "#9333ea"
+            },
+            {
+              "type": "string",
+              "value": "#7e22ce"
+            },
+            {
+              "type": "string",
+              "value": "#6b21a8"
+            },
+            {
+              "type": "string",
+              "value": "#581c87"
+            },
+            {
+              "type": "string",
+              "value": "#3b0764"
+            },
+            {
+              "type": "string",
+              "value": "#fdf4ff"
+            },
+            {
+              "type": "string",
+              "value": "#fae8ff"
+            },
+            {
+              "type": "string",
+              "value": "#f5d0fe"
+            },
+            {
+              "type": "string",
+              "value": "#f0abfc"
+            },
+            {
+              "type": "string",
+              "value": "#e879f9"
+            },
+            {
+              "type": "string",
+              "value": "#d946ef"
+            },
+            {
+              "type": "string",
+              "value": "#c026d3"
+            },
+            {
+              "type": "string",
+              "value": "#a21caf"
+            },
+            {
+              "type": "string",
+              "value": "#86198f"
+            },
+            {
+              "type": "string",
+              "value": "#701a75"
+            },
+            {
+              "type": "string",
+              "value": "#4a044e"
+            },
+            {
+              "type": "string",
+              "value": "#fdf2f8"
+            },
+            {
+              "type": "string",
+              "value": "#fce7f3"
+            },
+            {
+              "type": "string",
+              "value": "#fbcfe8"
+            },
+            {
+              "type": "string",
+              "value": "#f9a8d4"
+            },
+            {
+              "type": "string",
+              "value": "#f472b6"
+            },
+            {
+              "type": "string",
+              "value": "#ec4899"
+            },
+            {
+              "type": "string",
+              "value": "#db2777"
+            },
+            {
+              "type": "string",
+              "value": "#be185d"
+            },
+            {
+              "type": "string",
+              "value": "#9d174d"
+            },
+            {
+              "type": "string",
+              "value": "#831843"
+            },
+            {
+              "type": "string",
+              "value": "#500724"
+            },
+            {
+              "type": "string",
+              "value": "#fff1f2"
+            },
+            {
+              "type": "string",
+              "value": "#ffe4e6"
+            },
+            {
+              "type": "string",
+              "value": "#fecdd3"
+            },
+            {
+              "type": "string",
+              "value": "#fda4af"
+            },
+            {
+              "type": "string",
+              "value": "#fb7185"
+            },
+            {
+              "type": "string",
+              "value": "#f43f5e"
+            },
+            {
+              "type": "string",
+              "value": "#e11d48"
+            },
+            {
+              "type": "string",
+              "value": "#be123c"
+            },
+            {
+              "type": "string",
+              "value": "#9f1239"
+            },
+            {
+              "type": "string",
+              "value": "#881337"
+            },
+            {
+              "type": "string",
+              "value": "#4c0519"
+            },
+            {
+              "type": "string",
+              "value": "#f8fafc"
+            },
+            {
+              "type": "string",
+              "value": "#f1f5f9"
+            },
+            {
+              "type": "string",
+              "value": "#e2e8f0"
+            },
+            {
+              "type": "string",
+              "value": "#cbd5e1"
+            },
+            {
+              "type": "string",
+              "value": "#94a3b8"
+            },
+            {
+              "type": "string",
+              "value": "#64748b"
+            },
+            {
+              "type": "string",
+              "value": "#475569"
+            },
+            {
+              "type": "string",
+              "value": "#334155"
+            },
+            {
+              "type": "string",
+              "value": "#1e293b"
+            },
+            {
+              "type": "string",
+              "value": "#0f172a"
+            },
+            {
+              "type": "string",
+              "value": "#020617"
+            }
+          ]
+        },
+        "optional": true
+      }
+    }
+  },
+  {
     "name": "product",
     "type": "document",
     "attributes": {
