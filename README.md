@@ -15,7 +15,8 @@ The architecture is robust, secure, and fault-tolerant, designed to prioritize a
 
 ---
 
-## KEY FEATURES
+### KEY FEATURES
+
 
 ### PAYMENTS
 
