@@ -158,3 +158,4 @@ Using Sanity Typegen to auto-generate types for schemas and GROQ queries. Fronte
 - Everything underwent rigorous, systems-first approach. That is to say - organizing everything thoroughly but as simply as possible first, paper sketches, diagrams, documentation - second, and code - third.
 - In honesty, that's not how I started out - but over the initial months of struggle, I realized it was the _only_ way because of the compound effect.
 - Lesson: It's either harder the further the project is, or easier. This whole work is my experience with the former, and learning to transition into the latter. It required a completely different approach. Hardest thing about the project are going to come up anyway - the only difference is WHEN. I wanted to see what happens if I tackle the "hardest" upfront and do nothing but that, first.
+-
