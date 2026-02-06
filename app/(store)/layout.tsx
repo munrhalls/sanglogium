@@ -15,6 +15,7 @@ import MobileMenu from "../components/layout/mobile/MobileMenu";
 
 export { metadata };
 
+// test
 export default async function RootLayout({
   children,
 }: Readonly<{
