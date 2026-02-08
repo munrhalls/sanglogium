@@ -1,17 +1,99 @@
-// TODO should have two icons: cart and user profile (or sign in if not authenticated). These should be hidden on mobile and visible on desktop. They should be placed to the right of the search bar, with a gap of .6 (24px) between them and the search bar, and between each other. The cart icon should have a badge with the number of items in the cart, which should be hidden if the cart is empty. The user profile icon should have a dropdown menu with options for "My Account", "Orders", and "Sign Out" (if authenticated) or "Sign In" (if not authenticated).
-// icon itself
-// - should be 24x24
+"use client";
 
-// icon with text - look and style behavior
-// - should have proper text under the icon
-// - with proper spacing (as decreed by spacing system 8pt grid)
-// - both vertical (icon to text) and horizontal (between icons) - but careful - horizontal should be handled by icons group
-// - should be proper typography selection from the source of truth - tailwind config
-// - should have proper subtle hover effect (either on text or icon itself, a subtle highlight)
-// - the highlight should be using brand color for the highlight effect, not random color (from palette source of truth)
-// - should take 40px height together with text
-// - text, like all typography elements, should be truncated in terms of line height
+import {
+  ShoppingCart,
+  UserIcon,
+  SignInIcon,
+  SignOut,
+} from "@phosphor-icons/react";
 
-// icons as a group
-// - should implement gap between icons based on spacing system
-// - should avoid using any anti-patterns such as horizontal margins (that should be handled by the container of this comp)
+interface NavbarActionsProps {
+  isAuthenticated: boolean;
+  cartCount: number;
+}
+
+const NavbarActions = ({ isAuthenticated, cartCount }: NavbarActionsProps) => {
+  return (
+    <div className="ml-6 hidden items-center gap-6 lg:flex">
+      {/* Cart Action */}
+      <NavActionItem
+        icon={<ShoppingCart size={24} />}
+        label="Cart"
+        badgeCount={cartCount}
+      />
+
+      {/* Account / Auth Group */}
+      <div className="group relative">
+        <NavActionItem
+          icon={
+            isAuthenticated ? <UserIcon size={24} /> : <SignInIcon size={24} />
+          }
+          label={isAuthenticated ? "Account" : "Sign In"}
+        />
+
+        {/* Dropdown Menu */}
+        <div className="invisible absolute right-0 top-full w-48 pt-2 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
+          <div className="border-secondary-300 bg-secondary-100 flex flex-col rounded-md border py-1 shadow-lg">
+            {isAuthenticated ? (
+              <>
+                <DropdownItem label="My Account" />
+                <DropdownItem label="Orders" />
+                <div className="bg-secondary-300 my-1 h-px w-full" />
+                <DropdownItem label="Sign Out" isDestructive />
+              </>
+            ) : (
+              <DropdownItem label="Sign In" />
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// --- Sub-components ---
+
+interface NavActionItemProps {
+  icon: React.ReactNode;
+  label: string;
+  badgeCount?: number;
+}
+
+const NavActionItem = ({ icon, label, badgeCount }: NavActionItemProps) => {
+  return (
+    <button className="group/item flex h-10 w-fit flex-col items-center justify-center gap-1 transition-colors duration-200">
+      <div className="text-secondary-300 group-hover/item:text-accent-600 relative transition-colors">
+        {icon}
+        {badgeCount !== undefined && badgeCount > 0 && (
+          <span className="bg-accent-600 text-brand-100 absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-bold">
+            {badgeCount}
+          </span>
+        )}
+      </div>
+      <span className="text-cap text-secondary-300 group-hover/item:text-accent-600 text-xs font-medium transition-colors">
+        {label}
+      </span>
+    </button>
+  );
+};
+
+interface DropdownItemProps {
+  label: string;
+  onClick?: () => void;
+  isDestructive?: boolean;
+}
+
+const DropdownItem = ({ label, onClick, isDestructive }: DropdownItemProps) => {
+  return (
+    <button
+      onClick={onClick}
+      className={`text-cap hover:bg-brand-200 w-full px-4 py-2 text-left text-sm transition-colors ${
+        isDestructive ? "text-brand-400 opacity-75" : "text-brand-400"
+      }`}
+    >
+      {label}
+    </button>
+  );
+};
+
+export default NavbarActions;

@@ -3,12 +3,13 @@ import magnifying_glass from "@/public/icons/magnifying_glass.svg";
 
 export default function SearchBar() {
   return (
-    <div className="bg-secondary-300 flex h-10 w-full min-w-[248px] max-w-[600px] items-center gap-2 rounded-[80px] px-4">
+    <div className="bg-secondary-300 flex h-[36px] w-full max-w-md items-center gap-4 rounded-full px-4 xl:max-w-xl">
+      {" "}
       <Image
         src={magnifying_glass}
         alt=""
-        width={24}
-        height={24}
+        width={18}
+        height={18}
         aria-hidden="true"
       />
       <input
