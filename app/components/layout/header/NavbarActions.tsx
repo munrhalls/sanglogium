@@ -1,7 +1,7 @@
 "use client";
 
 import {
-  ShoppingCart,
+  ShoppingCartIcon,
   UserIcon,
   SignInIcon,
   SignOut,
@@ -17,7 +17,7 @@ const NavbarActions = ({ isAuthenticated, cartCount }: NavbarActionsProps) => {
     <div className="ml-6 hidden items-center gap-6 lg:flex">
       {/* Cart Action */}
       <NavActionItem
-        icon={<ShoppingCart size={24} />}
+        icon={<ShoppingCartIcon size={24} />}
         label="Cart"
         badgeCount={cartCount}
       />
