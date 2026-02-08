@@ -8,6 +8,7 @@ import { montserrat } from "./configuration";
 
 // Global Components
 import Header from "@/app/components/layout/header/Header";
+import CatalogueWrapper from "@/app/components/layout/catalogue/CatalogueWrapper";
 import Footer from "@/app/components/layout/footer/Footer";
 import DrawersManager from "@/app/components/layout/drawers/DrawersManager";
 import MobileMenu from "@/app/components/layout/mobile/MobileMenu";
@@ -25,6 +26,7 @@ export default function RootLayout({
         <ClerkProvider>
           <NuqsAdapter>
             <Header />
+            <CatalogueWrapper />
 
             <main className="relative flex w-full flex-1 flex-col">
               {children}

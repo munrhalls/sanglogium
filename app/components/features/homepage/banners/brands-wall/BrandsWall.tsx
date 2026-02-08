@@ -1,5 +1,5 @@
 import Image from "next/image";
-import * as Brands from "@/public/brands";
+import * as Brands from "@/public/archived/brands";
 import Link from "next/link";
 export default async function BrandsWall() {
   return (

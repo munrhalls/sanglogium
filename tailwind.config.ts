@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 import animatePlugin from "tailwindcss-animate";
 import typographyPlugin from "@tailwindcss/typography";
-
+import plugin from "tailwindcss/plugin";
 /**
  * REFERENCE: 8pt GRID SPACING SYSTEM (Tailwind Defaults)
  * 4px   -> .1
@@ -148,7 +148,22 @@ export default {
       },
     },
   },
-  plugins: [animatePlugin, typographyPlugin],
+  plugins: [
+    animatePlugin,
+    typographyPlugin,
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        // Trims top to Cap-Height, bottom to Baseline.
+        ".text-cap": {
+          "text-box": "trim-both cap alphabetic",
+        },
+        // Trims top to x-Height (good for lowercase), bottom to Baseline.
+        ".text-ex": {
+          "text-box": "trim-both ex alphabetic",
+        },
+      });
+    }),
+  ],
   corePlugins: {
     preflight: true,
     container: false,
