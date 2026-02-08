@@ -55,3 +55,6 @@ next-env.d.ts
 
 # ngrok configuration
 ngrok.yml
+
+# clerk configuration (can include secrets)
+/.clerk/

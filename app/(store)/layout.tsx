@@ -7,7 +7,6 @@ import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { ClerkProvider } from "@clerk/nextjs";
 
 import Loader from "@/app/components/common/Loader";
-
 import Header from "@/app/components/layout/header/Header";
 import CatalogueWrapper from "../components/layout/catalogue/CatalogueWrapper";
 import DrawersManager from "../components/layout/drawers/DrawersManager";
@@ -15,7 +14,6 @@ import MobileMenu from "../components/layout/mobile/MobileMenu";
 
 export { metadata };
 
-// test
 export default async function RootLayout({
   children,
 }: Readonly<{

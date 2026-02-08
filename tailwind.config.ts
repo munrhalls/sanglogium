@@ -18,56 +18,30 @@ export default {
         "2xl": "1600px",
         "3xl": "1920px",
       },
+      // TODO this is tailwind.config.ts, need the color palette here?
+      // ...
       colors: {
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+        // 1. BRAND (Warmth & Void) - The core identity
+        brand: {
+          100: "#FEFCFB", // Paper White (Body Text)
+          200: "#FAEEE6", // Soft Highlight (Hover)
+          400: "#F6E3D5", // Peach Rose Base (Skin Tone)
+          700: "#151B1B", // The Void (Main Background)
+          800: "#0D0F0F", // Deep Void (Footer/Contrast)
         },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
+        // 2. SECONDARY (Structure) - The scaffolding
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+          100: "#FCFCFC", // Card Background (Clean White)
+          300: "#E5E4E2", // Divider (Platinum Base)
+          600: "#5C5B5A", // Subtext (Readable Grey)
         },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
+        // 3. ACCENT (Action) - The Gold
         accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        promotion: {
-          DEFAULT: "#CF8226",
-          foreground: "#CF8226",
-        },
-        lightpromotion: {
-          DEFAULT: "rgb(255 158 43)",
-          foreground: "rgb(255 158 43)",
-        },
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        chart: {
-          "1": "hsl(var(--chart-1))",
-          "2": "hsl(var(--chart-2))",
-          "3": "hsl(var(--chart-3))",
-          "4": "hsl(var(--chart-4))",
-          "5": "hsl(var(--chart-5))",
+          600: "#D4AF37", // Main Gold (Buttons/CTAs)
+          500: "#E5C158", // Optional Lighter Gold (Hover state)
         },
       },
+
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
