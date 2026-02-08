@@ -56,7 +56,7 @@ export default {
       },
       fontFamily: {
         sans: [
-          "Montserrat",
+          "var(--font-montserrat)",
           "ui-sans-serif",
           "system-ui",
           "Helvetica",
