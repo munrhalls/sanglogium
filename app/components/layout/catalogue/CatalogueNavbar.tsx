@@ -12,7 +12,6 @@ const CatalogueNavbar = () => {
       <div className="container mx-auto flex h-full items-center justify-center">
         {CATALOGUE_DATA.map((item) => (
           <CatalogueWrapper key={item.id} label={item.label}>
-            {/* The Server Component (or static data component) passed as a child */}
             <CatalogueMenu data={item} />
           </CatalogueWrapper>
         ))}

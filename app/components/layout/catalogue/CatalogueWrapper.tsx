@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CaretDown } from "@phosphor-icons/react";
+import { CaretDownIcon } from "@phosphor-icons/react";
 
 interface CatalogueWrapperProps {
   label: string;
@@ -18,7 +18,7 @@ export function CatalogueWrapper({ label, children }: CatalogueWrapperProps) {
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
     >
-      {/* Trigger Button */}
+      {/* Dropdown Trigger */}
       <button
         className="group relative flex h-full items-center gap-2 px-6 focus:outline-none"
         aria-expanded={isOpen}
@@ -27,7 +27,7 @@ export function CatalogueWrapper({ label, children }: CatalogueWrapperProps) {
         <span className="text-sm font-medium tracking-[0.2em] text-brand-400 transition-colors group-hover:text-accent-500">
           {label}
         </span>
-        <CaretDown
+        <CaretDownIcon
           weight="light"
           size={14}
           className={`text-brand-400 transition-transform duration-300 group-hover:text-accent-500 ${
@@ -35,7 +35,6 @@ export function CatalogueWrapper({ label, children }: CatalogueWrapperProps) {
           }`}
         />
 
-        {/* Active Line Indicator */}
         <div
           className={`absolute bottom-0 left-1/2 h-[2px] -translate-x-1/2 bg-accent-500 transition-all duration-300 ${
             isOpen ? "w-full" : "w-0 group-hover:w-8"

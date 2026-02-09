@@ -1,5 +1,5 @@
 import { defineField, defineType } from "sanity";
-import { COLOR_OPTIONS } from "@/sanity/schemaTypes/colors";
+import { COLOR_OPTIONS } from "@/sanity/schemaTypes/archived/colors";
 
 export const promotionType = defineType({
   name: "promotion",

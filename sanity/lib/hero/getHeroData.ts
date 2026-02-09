@@ -1,0 +1,36 @@
+import { defineQuery } from "next-sanity";
+import { client } from "../client";
+
+export const getHeroData = async () => {
+  // CRITICAL - the "why" = careful use of BOTH sanity image optimization and next/image optimization:
+  // - sanity crops the image optimally
+  // - next/image *delivers* the image optimally (resizing, format) based on device
+  const HERO_QUERY = defineQuery(`
+    *[_type == "hero"] | order(_updatedAt desc)[0] {
+      headline,
+      subheadline,
+      ctaText,
+      backgroundImage {
+        asset->{
+          _id,
+          url,
+          metadata {
+            dimensions,
+            lqip
+          }
+        },
+        hotspot,
+        crop,
+        alt
+      }
+    }
+  `);
+
+  try {
+    const heroData = await client.fetch(HERO_QUERY);
+    return heroData || null;
+  } catch (error) {
+    console.error("Error fetching hero data:", error);
+    return null;
+  }
+};
