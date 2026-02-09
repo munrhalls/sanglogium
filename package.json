@@ -55,7 +55,7 @@
     "dotenv": "^16.4.5",
     "embla-carousel-react": "^8.5.1",
     "eslint-plugin-next": "^0.0.0",
-    "framer-motion": "^11.11.17",
+    "framer-motion": "^11.18.2",
     "groq-builder": "^0.10.0",
     "install": "^0.13.0",
     "jose": "^6.1.2",

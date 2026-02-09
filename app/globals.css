@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --header-h: 64px;
+  --catalogue-nav-h: 88px;
+  --site-header-h: calc(var(--header-h) + var(--catalogue-nav-h));
+}
 /* 1. Global Font Setup */
 body {
   font-family: Montserrat, Helvetica, Arial, sans-serif;
@@ -24,7 +29,7 @@ body {
        Background: Brand-700 (The Void)
        Text: Brand-100 (Paper White)
     */
-    @apply bg-brand-700 text-brand-100 relative min-h-screen;
+    @apply relative min-h-screen bg-brand-700 text-brand-100;
   }
 }
 

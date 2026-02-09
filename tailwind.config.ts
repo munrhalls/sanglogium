@@ -54,6 +54,14 @@ export default {
         "2xl": "1600px",
         "3xl": "1920px",
       },
+      spacing: {
+        "header-h": "var(--header-h)",
+        "catalogue-nav-h": "var(--catalogue-nav-h)",
+        "site-header-h": "var(--site-header-h)",
+      },
+      height: {
+        "view-content": "calc(100vh - var(--header-total-h))",
+      },
       fontFamily: {
         sans: [
           "var(--font-montserrat)",

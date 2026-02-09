@@ -1,19 +1,3 @@
-// should be 88px height
-// full width
-// bg brand-800
-// should only have 3 catalogue action items - Headphones / Audio Electronics / Accessories
-// should have a dropdown on hover for each of the 3 categories, showing the subcategories
-// should have a nice icon or little "hitch" or whatever looks nice as indicator for the dropdown
-// should not be concerned with mobile responsiveness, as this will be hidden on mobile and replaced with the mobile menu, which will be triggered by the hamburger menu in the mobile menu
-// should be concerned with accessibility, so the dropdown should be accessible via keyboard navigation and screen readers
-// should be concerned with performance, so the dropdown should not cause any jank or lag when hovering over the categories
-// should be concerned with SEO, so the dropdown should be crawlable by search engines and should not use any techniques that would prevent it from being indexed
-// should be concerned with maintainability, so the code should be well-structured and easy to understand for other developers who may work on it in the future
-// the catalogue navbar should be separate from the dropdown component, so that it's easier to manage
-// the catalogue navbar should have only 3 items and they should be hardcoded for now, as integrating with backend fetch is a separate latern concern and step
-// should have style - bg is brand 800, text is accent-600, hover text is accent-500 with nice underline that is not full width of the item
-// the navbar should split space into 3 sections and each item should be centered in its section, so that it looks balanced and visually appealing
-// the dropdown is a separate concern, for now, it should just be navbar implemented nicely
 import React from "react";
 import { CaretDown } from "@phosphor-icons/react/dist/ssr";
 
