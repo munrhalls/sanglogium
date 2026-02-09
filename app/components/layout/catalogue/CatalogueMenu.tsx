@@ -1,71 +1,49 @@
-// {
-//   "catalogueData": [
-//     {
-//       "id": "headphones",
-//       "label": "Headphones",
-//       "sections": [
-//         {
-//           "title": "By Design",
-//           "links": ["Open-Back", "Closed-Back"]
-//         },
-//         {
-//           "title": "By Driver",
-//           "links": ["Planar Magnetic", "Dynamic", "Electrostatic"]
-//         },
-//         {
-//           "title": "In-Ear & Wireless",
-//           "links": ["Monitors (IEMs)", "True Wireless (TWS)"]
-//         }
-//       ],
-//       "feature": {
-//         "description": "Technical wireframe of an open-back earcup showing the internal driver layers.",
-//         "caption": "Pure Resonance"
-//       }
-//     },
-//     {
-//       "id": "audio-electronics",
-//       "label": "Audio Electronics",
-//       "sections": [
-//         {
-//           "title": "Amplification",
-//           "links": ["Desktop Amps", "Portable Amps"]
-//         },
-//         {
-//           "title": "Digital Sources",
-//           "links": [
-//             "Standalone DACs",
-//             "DAC/Amp Combos",
-//             "Digital Players (DAPs)",
-//             "Network Streamers"
-//           ]
-//         }
-//       ],
-//       "feature": {
-//         "description": "X-ray or top-down view of a PCB board or a glowing vacuum tube.",
-//         "caption": "Signal Integrity"
-//       }
-//     },
-//     {
-//       "id": "accessories",
-//       "label": "Accessories",
-//       "sections": [
-//         {
-//           "title": "Connectivity",
-//           "links": ["Headphone Cables", "Interconnects", "Adapters"]
-//         },
-//         {
-//           "title": "Maintenance",
-//           "links": ["Earpads", "Care & Cleaning"]
-//         },
-//         {
-//           "title": "Storage",
-//           "links": ["Headphone Stands", "Carrying Cases"]
-//         }
-//       ],
-//       "feature": {
-//         "description": "Close-up macro of a braided multi-core cable or leather texture.",
-//         "caption": "The Final Detail"
-//       }
-//     }
-//   ]
-// }
+import React from "react";
+import type { CatalogueItem } from "./data";
+
+export function CatalogueMenu({ data }: { data: CatalogueItem }) {
+  return (
+    <div className="container mx-auto h-full px-8 py-12">
+      <div className="grid h-full grid-cols-12 gap-8">
+        {/* Left: Categories Grid */}
+        <div className="col-span-8 grid grid-cols-3 gap-8">
+          {data.sections.map((section) => (
+            <div key={section.title} className="space-y-4">
+              <h3 className="text-brand-900 text-sm font-semibold uppercase tracking-widest">
+                {section.title}
+              </h3>
+              <ul className="space-y-3">
+                {section.links.map((link) => (
+                  <li key={link}>
+                    <a
+                      href="#"
+                      className="text-base text-gray-600 transition-colors hover:text-accent-500"
+                    >
+                      {link}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        {/* Right: Feature Area */}
+        <div className="col-span-4 flex h-full flex-col justify-between rounded-lg bg-gray-50 p-8">
+          <div className="aspect-square w-full rounded-md border border-dashed border-gray-300 bg-white p-4 text-center text-xs text-gray-400">
+            {/* Image Placeholder */}
+            {data.feature.description}
+          </div>
+          <div className="mt-4">
+            <p className="font-serif text-lg italic text-brand-800">
+              {data.feature.caption}
+            </p>
+            <span className="text-xs font-bold uppercase tracking-wider text-accent-500">
+              Featured Collection
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

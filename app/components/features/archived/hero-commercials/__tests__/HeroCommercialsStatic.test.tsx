@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import HeroCommercials from "../HeroCommercials";
+import HeroCommercials from "../../../../archived/hero-commercials/HeroCommercials";
 import { GET_COMMERCIALS_BY_FEATURE_QUERYResult } from "@/sanity.types";
 type Commercial = GET_COMMERCIALS_BY_FEATURE_QUERYResult[number];
 jest.mock("../../../../ui/carousel-single-slide/carouselSingleSlide", () => {
@@ -48,7 +48,9 @@ describe("HeroCommercials", () => {
   test("should render fallback message when commercials array is empty", () => {
     render(<HeroCommercials commercials={[]} />);
     expect(screen.getByText("No commercials available")).toBeInTheDocument();
-    expect(screen.queryByTestId("carousel-single-slide")).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId("carousel-single-slide")
+    ).not.toBeInTheDocument();
   });
   test("should have commercials prop typed as Commercial[]", () => {
     const validCommercials: Commercial[] = [

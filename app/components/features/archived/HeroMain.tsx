@@ -2,8 +2,8 @@ import Image from "next/image";
 import PromotionCommercial from "./PromotionCommercial";
 import { getPromotionByName } from "@/sanity/lib/promotions/getPromotionByName";
 import PromotionImage from "@/app/components/ui/promotion-image/PromotionImage";
-import SmallTest from "./SmallTest";
-import SmallTest2 from "./SmallTest2";
+import SmallTest from "../homepage/hero/hero-main/SmallTest";
+import SmallTest2 from "../homepage/hero/hero-main/SmallTest2";
 import CTA from "@/app/components/ui/buttons/cta";
 
 export default async function HeroMain() {

@@ -1,6 +1,6 @@
 import { getCommercialsHeroSecondary } from "@/sanity/lib/commercials/getCommercialsHeroSecondary";
 import { GET_COMMERCIALS_BY_FEATURE_QUERYResult } from "@/sanity.types";
-import CarouselSingleSlide from "../../../../ui/carousel-single-slide/carouselSingleSlide";
+import CarouselSingleSlide from "../../../ui/carousel-single-slide/carouselSingleSlide";
 import HeroCommercialItem from "./HeroCommercialItem";
 import HeroCommercialsSkeleton from "./HeroCommercialsSkeleton";
 
