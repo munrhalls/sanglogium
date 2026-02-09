@@ -8,10 +8,10 @@ import { montserrat } from "./configuration";
 
 // Global Components
 import Header from "@/app/components/layout/header/Header";
-import CatalogueWrapper from "@/app/components/layout/catalogue/CatalogueWrapper";
 import Footer from "@/app/components/layout/footer/Footer";
 import DrawersManager from "@/app/components/layout/drawers/DrawersManager";
 import MobileMenu from "@/app/components/layout/mobile/MobileMenu";
+import CatalogueNavbar from "@/app/components/layout/catalogue/CatalogueNavbar";
 
 export { metadata };
 
@@ -22,12 +22,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${montserrat.variable} antialiased`}>
-      <body className="bg-brand-700 text-brand-100 selection:bg-brand-accent-600 selection:text-brand-800 flex min-h-screen flex-col font-sans">
+      <body className="selection:bg-brand-accent-600 flex min-h-screen flex-col bg-brand-700 font-sans text-brand-100 selection:text-brand-800">
         <ClerkProvider>
           <NuqsAdapter>
             <Header />
-            <CatalogueWrapper />
 
+            <CatalogueNavbar />
             <main className="relative flex w-full flex-1 flex-col">
               {children}
             </main>

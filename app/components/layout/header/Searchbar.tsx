@@ -5,7 +5,7 @@ export default function SearchBar() {
   return (
     <form
       role="search"
-      className="bg-secondary-300 focus-within:bg-brand-400 hover:bg-secondary-100 group flex h-[36px] w-full max-w-md items-center gap-4 rounded-full px-4 shadow-sm transition-all duration-300 ease-out focus-within:shadow-md xl:max-w-xl"
+      className="group hidden h-[36px] w-full items-center gap-4 rounded-full bg-secondary-300 px-4 shadow-sm transition-all duration-300 ease-out focus-within:bg-brand-400 focus-within:shadow-md hover:bg-secondary-100 sm:flex sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-xl"
     >
       <Image
         src={magnifying_glass}
@@ -13,14 +13,14 @@ export default function SearchBar() {
         width={18}
         height={18}
         aria-hidden="true"
-        className="group-focus-within:text-brand-800 transition-all duration-300 group-focus-within:font-bold group-focus-within:brightness-0"
+        className="transition-all duration-300 group-focus-within:font-bold group-focus-within:text-brand-800 group-focus-within:brightness-0"
       />
       <input
         type="text"
         placeholder="Search..."
         maxLength={500}
         aria-label="Search"
-        className="text-brand-700 placeholder:text-secondary-600 focus:placeholder:text-brand-800 group-focus-within:text-brand-700 selection:bg-brand-700 selection:text-brand-400 w-full border-none bg-transparent outline-none transition-colors duration-300"
+        className="w-full border-none bg-transparent text-brand-700 outline-none transition-colors duration-300 selection:bg-brand-700 selection:text-brand-400 placeholder:text-secondary-600 focus:placeholder:text-brand-800 group-focus-within:text-brand-700"
       />
     </form>
   );
