@@ -2,8 +2,8 @@ import { defineQuery } from "next-sanity";
 import { client } from "../client";
 
 export const getHeroData = async () => {
-  // CRITICAL - the "why" = careful use of BOTH sanity image optimization and next/image optimization:
-  // - sanity crops the image optimally
+  // CRITICAL"WHY":
+  // - sanity *crops* the image optimally
   // - next/image *delivers* the image optimally (resizing, format) based on device
   const HERO_QUERY = defineQuery(`
     *[_type == "hero"] | order(_updatedAt desc)[0] {
