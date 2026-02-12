@@ -72,28 +72,46 @@ export default {
           "sans-serif",
         ],
       },
+      // tailwind.config.ts
+
       fontSize: {
         // ----------------------------------------------------------------------
-        // HEADINGS (Perfect Fourth Scale: 1.333)
+        // FLUID HEADINGS (Responsive Luxury Scale)
+        // Logic: Linear interpolation from Mobile (375px) to Desktop (1440px)
         // ----------------------------------------------------------------------
 
-        // 90px / 100px (Tracking: -2%)
+        // Desktop: 90px (5.625rem) | Mobile: 48px (3rem)
+        // Line-Height: 1.1 (was 100px) | Tracking: -2%
         "display-1": [
-          "90px",
-          { lineHeight: "100px", letterSpacing: "-0.02em" },
+          "clamp(3rem, 4vw + 2rem, 5.625rem)",
+          { lineHeight: "1.1", letterSpacing: "-0.02em" },
         ],
 
-        // 68px / 76px (Tracking: -1.5%)
+        // Desktop: 68px (4.25rem) | Mobile: 36px (2.25rem)
+        // Line-Height: 1.12 (was 76px) | Tracking: -1.5%
         "display-2": [
-          "68px",
-          { lineHeight: "76px", letterSpacing: "-0.015em" },
+          "clamp(2.25rem, 3vw + 1.5rem, 4.25rem)",
+          { lineHeight: "1.12", letterSpacing: "-0.015em" },
         ],
 
-        // 51px / 60px (Tracking: -1%)
-        h1: ["51px", { lineHeight: "60px", letterSpacing: "-0.01em" }],
+        // Desktop: 51px (3.18rem) | Mobile: 32px (2rem)
+        // Line-Height: 1.2 (was 60px) | Tracking: -1%
+        h1: [
+          "clamp(2rem, 1.8vw + 1.6rem, 3.1875rem)",
+          { lineHeight: "1.2", letterSpacing: "-0.01em" },
+        ],
 
-        // 38px / 48px (Tracking: -0.5%)
-        h2: ["38px", { lineHeight: "48px", letterSpacing: "-0.005em" }],
+        // Desktop: 38px (2.375rem) | Mobile: 28px (1.75rem)
+        // Line-Height: 1.25 (was 48px) | Tracking: -0.5%
+        h2: [
+          "clamp(1.75rem, 1vw + 1.5rem, 2.375rem)",
+          { lineHeight: "1.25", letterSpacing: "-0.005em" },
+        ],
+
+        // ----------------------------------------------------------------------
+        // FIXED SIZES (Structural Utility)
+        // These sizes are small enough to remain static across viewports.
+        // ----------------------------------------------------------------------
 
         // 28px / 36px (Tracking: 0)
         h3: ["28px", { lineHeight: "36px", letterSpacing: "0em" }],
@@ -105,20 +123,23 @@ export default {
         // BODY COPY & UTILITIES
         // ----------------------------------------------------------------------
 
-        // 16px / 24px (Standard Body)
+        // 16px / 24px
         body: ["16px", { lineHeight: "24px", letterSpacing: "0em" }],
 
-        // 12px / 16px (Small / Legal)
+        // 12px / 16px
         small: ["12px", { lineHeight: "16px", letterSpacing: "0.01em" }],
 
         // ----------------------------------------------------------------------
-        // SPECIFIC UI ACTIONS (Luxury Treatments)
+        // SPECIFIC UI ACTIONS
         // ----------------------------------------------------------------------
 
-        // CTA Hero: 28px.
-        "cta-hero": ["28px", { lineHeight: "32px", letterSpacing: "0.03em" }],
+        // CTA Hero: 28px fixed
+        "cta-hero": [
+          "clamp(1.125rem, 1vw + 0.9rem, 1.75rem)",
+          { lineHeight: "1.15", letterSpacing: "0.03em" },
+        ],
 
-        // Spotlight: Wide tracking (0.1em) for uppercase luxury feel
+        // Spotlight: 28px fixed (Luxury uppercase)
         spotlight: ["28px", { lineHeight: "32px", letterSpacing: "0.1em" }],
       },
       // Weights separately - can be combined with any size

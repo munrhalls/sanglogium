@@ -2,15 +2,32 @@ import { defineQuery } from "next-sanity";
 import { client } from "../client";
 
 export const getHeroData = async () => {
-  // CRITICAL"WHY":
-  // - sanity *crops* the image optimally
-  // - next/image *delivers* the image optimally (resizing, format) based on device
+  // CRITICAL "WHY":
+  // - Now fetching TWO separate assets for true Art Direction.
+  // - "mobileImage" takes priority on small screens.
+  // - "backgroundImage" is reserved for desktop.
+
   const HERO_QUERY = defineQuery(`
     *[_type == "hero"] | order(_updatedAt desc)[0] {
       headline,
       subheadline,
       ctaText,
+
       backgroundImage {
+        asset->{
+          _id,
+          url,
+          metadata {
+            dimensions,
+            lqip
+          }
+        },
+        hotspot,
+        crop,
+        alt
+      },
+
+      mobileBackgroundImage {
         asset->{
           _id,
           url,

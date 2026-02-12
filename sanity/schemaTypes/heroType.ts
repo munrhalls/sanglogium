@@ -31,6 +31,14 @@ export const heroType = defineType({
       options: { hotspot: true },
       fields: [defineField({ name: "alt", type: "string", title: "Alt Text" })],
     }),
+    defineField({
+      name: "mobileBackgroundImage",
+      title: "Mobile Background Image",
+      type: "image",
+      // ESSENTIAL - needed for sanity vs next 'handshake' on image URLs (non-conflicting optimizations)
+      options: { hotspot: true },
+      fields: [defineField({ name: "alt", type: "string", title: "Alt Text" })],
+    }),
   ],
   preview: {
     select: { title: "headline", media: "backgroundImage" },

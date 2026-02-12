@@ -3,7 +3,7 @@ import { CatalogueWrapper } from "./CatalogueWrapper";
 import { CatalogueMenu } from "./CatalogueMenu";
 import { CATALOGUE_DATA } from "./data";
 
-const CatalogueNavbar = () => {
+const CatalogueNavbar = async () => {
   return (
     <nav
       className="hidden h-[var(--catalogue-nav-h)] w-full shrink-0 items-center bg-brand-800 md:flex"
