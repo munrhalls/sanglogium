@@ -3,13 +3,13 @@ import type { CatalogueItem } from "./data";
 
 export function CatalogueMenu({ data }: { data: CatalogueItem }) {
   return (
-    <div className="container mx-auto h-full px-8 py-12">
+    <div className="container mx-auto h-full bg-brand-700 px-8 py-12">
       <div className="grid h-full grid-cols-12 gap-8">
         {/* Left: Categories Grid */}
         <div className="col-span-8 grid grid-cols-3 gap-8">
           {data.sections.map((section) => (
             <div key={section.title} className="space-y-4">
-              <h3 className="text-brand-900 text-sm font-semibold uppercase tracking-widest">
+              <h3 className="text-brand-900 text-sm font-semibold uppercase tracking-widest text-brand-400">
                 {section.title}
               </h3>
               <ul className="space-y-3">
@@ -17,7 +17,7 @@ export function CatalogueMenu({ data }: { data: CatalogueItem }) {
                   <li key={link}>
                     <a
                       href="#"
-                      className="text-base text-gray-600 transition-colors hover:text-accent-500"
+                      className="text-base text-secondary-600 transition-colors hover:text-accent-500"
                     >
                       {link}
                     </a>

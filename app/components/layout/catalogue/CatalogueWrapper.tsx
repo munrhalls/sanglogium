@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CaretDownIcon } from "@phosphor-icons/react";
+import { CaretDownIcon, XCircleIcon } from "@phosphor-icons/react";
 
 interface CatalogueWrapperProps {
   label: string;
@@ -11,6 +11,8 @@ interface CatalogueWrapperProps {
 
 export function CatalogueWrapper({ label, children }: CatalogueWrapperProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const toggleMenu = () => setIsOpen((prev) => !prev);
+  const closeMenu = () => setIsOpen(false);
 
   return (
     <div
@@ -20,6 +22,7 @@ export function CatalogueWrapper({ label, children }: CatalogueWrapperProps) {
     >
       {/* Dropdown Trigger */}
       <button
+        onClick={toggleMenu}
         className="group relative flex h-full items-center gap-2 px-6 focus:outline-none"
         aria-expanded={isOpen}
         aria-haspopup="true"
@@ -53,6 +56,16 @@ export function CatalogueWrapper({ label, children }: CatalogueWrapperProps) {
             className="absolute left-0 top-[var(--site-header-h)] z-50 h-[calc(100vh-var(--site-header-h))] w-full border-t border-gray-100 bg-white shadow-xl"
           >
             {children}
+            <div className="absolute bottom-12 left-0 flex w-full justify-center">
+              <button
+                onClick={closeMenu}
+                className="flex items-center gap-3 bg-transparent p-2 text-xs font-bold uppercase tracking-[0.3em] text-brand-400 transition-colors hover:text-accent-500"
+                aria-label="Close Menu"
+              >
+                <span>Close</span>
+                <XCircleIcon size={20} weight="thin" />
+              </button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

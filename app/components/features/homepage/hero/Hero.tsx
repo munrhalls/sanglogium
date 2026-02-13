@@ -53,7 +53,7 @@ export default async function Hero() {
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
       </div>
 
-      <div className="container justsm:justify-center relative z-10 mx-auto mt-16 flex h-full flex-col justify-start px-4 sm:px-16 md:mt-0 3xl:px-44">
+      <div className="container justsm:justify-center relative z-10 mx-auto mt-16 flex h-full flex-col justify-start px-4 sm:px-16 3xl:px-44">
         <div className="flex max-w-xl flex-col items-start gap-8 sm:mb-44">
           <div>
             <h1 className="text-display-1 font-bold uppercase leading-tight text-brand-400 sm:text-display-2 md:text-display-1">
