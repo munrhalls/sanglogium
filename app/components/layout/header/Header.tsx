@@ -9,7 +9,7 @@ import NavbarActions from "./NavbarActions";
 
 export default function Header() {
   return (
-    <header className="flex h-[64px] shrink-0 items-center justify-around gap-4 bg-brand-800">
+    <header className="fixed left-0 right-0 top-0 z-50 flex h-[64px] shrink-0 items-center justify-around gap-4 bg-brand-800">
       <Image src={logo_desktop} alt="Logo" height={32} width={184} priority />
       <Searchbar />
       <NavbarActions isAuthenticated={false} cartCount={0} />

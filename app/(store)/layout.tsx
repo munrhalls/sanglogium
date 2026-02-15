@@ -26,16 +26,14 @@ export default function RootLayout({
         <ClerkProvider>
           <NuqsAdapter>
             <Header />
-
             <CatalogueNavbar />
-            <main className="relative flex w-full flex-1 flex-col">
+            <main className="relative flex w-full flex-1 flex-col pb-[var(--mobile-menu-h)] pt-[var(--header-h)]">
               {children}
             </main>
+            <Footer />
 
             <DrawersManager />
             <MobileMenu />
-
-            <Footer />
           </NuqsAdapter>
         </ClerkProvider>
       </body>
