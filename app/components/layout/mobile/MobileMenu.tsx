@@ -70,11 +70,7 @@ function MobileMenuButtons() {
           <span className="mt-1 hidden text-xs sm:inline-block">Search</span>
         </Link>
 
-        <Authentication />
-        <Link href="/tracking" className="flex flex-col items-center">
-          <Truck className="h-6 w-6" />
-          <span className="mt-1 hidden text-xs sm:inline-block">Track</span>
-        </Link>
+        {/* <Authentication /> */}
         <Link href="/basket" className="flex flex-col items-center">
           <ShoppingBag className="h-6 w-6" />
           <span className="mt-1 hidden text-xs sm:inline-block">Basket</span>

@@ -10,10 +10,11 @@ interface CatalogueWrapperProps {
 }
 
 export function CatalogueWrapper({ label, children }: CatalogueWrapperProps) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen2, setIsOpen] = useState(true);
   const toggleMenu = () => setIsOpen((prev) => !prev);
   const closeMenu = () => setIsOpen(false);
 
+  const isOpen = true;
   return (
     <div
       className="static h-full"
@@ -59,7 +60,7 @@ export function CatalogueWrapper({ label, children }: CatalogueWrapperProps) {
             <div className="absolute bottom-12 left-0 flex w-full justify-center">
               <button
                 onClick={closeMenu}
-                className="flex items-center gap-3 bg-transparent p-2 text-xs font-bold uppercase tracking-[0.3em] text-brand-400 transition-colors hover:text-accent-500"
+                className="flex items-center gap-3 bg-transparent p-2 text-xs font-bold uppercase tracking-[0.3em] text-brand-400 transition-colors hover:text-secondary-100"
                 aria-label="Close Menu"
               >
                 <span>Close</span>
