@@ -38,7 +38,7 @@ function MobileMenuButtons() {
   const { isOpen, openDrawer, closeDrawer } = useDrawer();
 
   return (
-    <div className="h-14 border-t border-white bg-black py-2 text-white lg:hidden">
+    <div className="h-[var(--mobile-menu-h)] border-t border-white bg-black py-2 text-white lg:hidden">
       <div className="flex items-center justify-around px-4">
         {/* {isMenuOpen ? (
           <Link href={pathname} className="flex flex-col items-center">

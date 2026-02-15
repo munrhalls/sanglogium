@@ -1,4 +1,10 @@
-import { Carousel, CarouselTrack } from "@/app/components/ui/carousel/Carousel";
+"use client";
+
+import {
+  Carousel,
+  CarouselTrack,
+  useCarousel,
+} from "@/app/components/ui/carousel/Carousel";
 import { CarouselBtn } from "@/app/components/ui/carouselBtn/CarouselBtn";
 import { CatalogueMenu } from "@/app/components/layout/catalogue/CatalogueMenu";
 import { CATALOGUE_DATA } from "@/app/components/layout/catalogue/data";
@@ -7,14 +13,7 @@ export default function MobileCatalogue() {
   return (
     <nav aria-label="Catalogue Navigation" className="w-full text-white">
       <Carousel>
-        <div className="mb-2 flex justify-between">
-          <CarouselBtn direction="left" className="rounded bg-gray-100 p-2">
-            Prev
-          </CarouselBtn>
-          <CarouselBtn direction="right" className="rounded bg-gray-100 p-2">
-            Next
-          </CarouselBtn>
-        </div>
+        <MobileCarouselControls />
 
         <CarouselTrack>
           {CATALOGUE_DATA.map((item) => (
@@ -23,5 +22,25 @@ export default function MobileCatalogue() {
         </CarouselTrack>
       </Carousel>
     </nav>
+  );
+}
+
+function MobileCarouselControls() {
+  const { scrollPrev, scrollNext, canScrollPrev, canScrollNext } =
+    useCarousel();
+
+  return (
+    <div className="flex justify-between px-2">
+      <CarouselBtn
+        direction="prev"
+        onClick={scrollPrev}
+        disabled={!canScrollPrev}
+      />
+      <CarouselBtn
+        direction="next"
+        onClick={scrollNext}
+        disabled={!canScrollNext}
+      />
+    </div>
   );
 }

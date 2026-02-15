@@ -6,6 +6,7 @@
   --header-h: 64px;
   --catalogue-nav-h: 88px;
   --site-header-h: calc(var(--header-h) + var(--catalogue-nav-h));
+  --mobile-menu-h: 64px;
 }
 /* 1. Global Font Setup */
 body {

@@ -58,6 +58,7 @@ export default {
         "header-h": "var(--header-h)",
         "catalogue-nav-h": "var(--catalogue-nav-h)",
         "site-header-h": "var(--site-header-h)",
+        "mobile-menu-h": "var(--mobile-menu-h)",
       },
       height: {
         "view-content": "calc(100vh - var(--header-total-h))",

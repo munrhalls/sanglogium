@@ -20,10 +20,6 @@ export function CatalogueMenu({ data }: { data: CatalogueItem }) {
                 priority
               />
             </div>
-
-            <p className="font-serif text-lg italic text-brand-200">
-              {data.feature.caption}
-            </p>
           </div>
 
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:col-span-8 lg:grid-cols-3">

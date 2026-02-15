@@ -1,9 +1,19 @@
 "use client";
 
-import React, { createContext, useContext, useRef, useCallback } from "react";
+import React, {
+  createContext,
+  useContext,
+  useRef,
+  useCallback,
+  useState,
+  useEffect,
+} from "react";
 
 interface CarouselContextValue {
-  scroll: (direction: "left" | "right") => void;
+  scrollPrev: () => void;
+  scrollNext: () => void;
+  canScrollPrev: boolean;
+  canScrollNext: boolean;
   scrollRef: React.RefObject<HTMLDivElement | null>;
 }
 
@@ -11,22 +21,57 @@ const CarouselContext = createContext<CarouselContextValue | null>(null);
 
 export function Carousel({ children }: { children: React.ReactNode }) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(true);
 
-  const scroll = useCallback((direction: "left" | "right") => {
+  const updateState = useCallback(() => {
     const el = scrollRef.current;
     if (!el) return;
 
-    const { scrollLeft, clientWidth } = el;
-    const offset = direction === "left" ? -clientWidth : clientWidth;
+    const { scrollLeft, scrollWidth, clientWidth } = el;
+    setCanScrollPrev(scrollLeft > 0);
+    // 1px buffer vs sub-pixel rounding issues
+    setCanScrollNext(scrollLeft + clientWidth < scrollWidth - 1);
+  }, []);
 
-    el.scrollTo({
-      left: scrollLeft + offset,
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    updateState();
+    el.addEventListener("scroll", updateState, { passive: true });
+    window.addEventListener("resize", updateState);
+
+    return () => {
+      el.removeEventListener("scroll", updateState);
+      window.removeEventListener("resize", updateState);
+    };
+  }, [updateState]);
+
+  const scrollPrev = useCallback(() => {
+    scrollRef.current?.scrollBy({
+      left: -scrollRef.current.clientWidth,
+      behavior: "smooth",
+    });
+  }, []);
+
+  const scrollNext = useCallback(() => {
+    scrollRef.current?.scrollBy({
+      left: scrollRef.current.clientWidth,
       behavior: "smooth",
     });
   }, []);
 
   return (
-    <CarouselContext.Provider value={{ scroll, scrollRef }}>
+    <CarouselContext.Provider
+      value={{
+        scrollPrev,
+        scrollNext,
+        canScrollPrev,
+        canScrollNext,
+        scrollRef,
+      }}
+    >
       <div className="relative w-full">{children}</div>
     </CarouselContext.Provider>
   );
@@ -48,9 +93,8 @@ export function CarouselTrack({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function useCarouselActions() {
+export function useCarousel() {
   const context = useContext(CarouselContext);
-  if (!context)
-    throw new Error("useCarouselActions must be used within Carousel");
+  if (!context) throw new Error("useCarousel must be used within Carousel");
   return context;
 }
