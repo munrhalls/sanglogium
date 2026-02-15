@@ -1,25 +1,25 @@
 "use client";
 
 import React from "react";
-import { Menu, Search, ShoppingBag, Truck } from "lucide-react";
+import { Menu, Search, ShoppingBag } from "lucide-react";
 import Link from "next/link";
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 // import { useQueryState } from "nuqs";
 import { usePathname } from "next/navigation";
 import { useDrawer } from "@/app/hooks/nuqs/useDrawer";
 
-const Authentication = dynamic(
-  () => import("@/app/components/features/auth/Authentication"),
-  {
-    loading: () => (
-      <div className="flex text-white">
-        <div className="mx-auto h-[24px] w-[24px] animate-pulse rounded-full bg-blue-700" />
-        <span className="pl-2">Loading...</span>
-      </div>
-    ),
-    ssr: false,
-  }
-);
+// const Authentication = dynamic(
+//   () => import("@/app/components/features/auth/Authentication"),
+//   {
+//     loading: () => (
+//       <div className="flex text-white">
+//         <div className="mx-auto h-[24px] w-[24px] animate-pulse rounded-full bg-blue-700" />
+//         <span className="pl-2">Loading...</span>
+//       </div>
+//     ),
+//     ssr: false,
+//   }
+// );
 
 // TODO mobile menu has two parts - buttons and mobile drawers
 // - entirely contained inside mobile menu component

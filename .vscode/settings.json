@@ -1,4 +1,5 @@
 {
-    "github.copilot.chat.anthropic.thinking.enabled": true,
-    "github.copilot.chat.codeGeneration.useInstructionFiles": false
+  "github.copilot.chat.anthropic.thinking.enabled": true,
+  "github.copilot.chat.codeGeneration.useInstructionFiles": false,
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }
