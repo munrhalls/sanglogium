@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export function CatalogueMenu({ data }: { data: CatalogueItem }) {
   return (
-    <div className="w-full bg-brand-700 p-6 sm:p-12">
+    <div className="h-full w-full bg-brand-700 p-6 sm:p-12">
       <div className="mx-auto max-w-7xl">
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
           <div className="flex flex-col items-center space-y-2 sm:space-y-6 lg:col-span-4">
