@@ -1,113 +1,56 @@
 "use client";
-// ui/carousel.tsx
-import * as React from "react";
 
-// 1. Context to share state (Can we scroll left? Right?)
-type CarouselContextProps = {
-  scrollNext: () => void;
-  scrollPrev: () => void;
-  canScrollPrev: boolean;
-  canScrollNext: boolean;
-};
-const CarouselContext = React.createContext<CarouselContextProps | null>(null);
+import React, { createContext, useContext, useRef, useCallback } from "react";
 
-// 2. The Root
-export function Carousel({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  const scrollRef = React.useRef<HTMLDivElement>(null);
-  const [canScrollPrev, setCanScrollPrev] = React.useState(false);
-  const [canScrollNext, setCanScrollNext] = React.useState(true);
+interface CarouselContextValue {
+  scroll: (direction: "left" | "right") => void;
+  scrollRef: React.RefObject<HTMLDivElement | null>;
+}
 
-  const scrollNext = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({
-        left: scrollRef.current.clientWidth,
-        behavior: "smooth",
-      });
-    }
-  };
+const CarouselContext = createContext<CarouselContextValue | null>(null);
 
-  const scrollPrev = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({
-        left: -scrollRef.current.clientWidth,
-        behavior: "smooth",
-      });
-    }
-  };
+export function Carousel({ children }: { children: React.ReactNode }) {
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Listen to scroll events to toggle button visibility
-  const handleScroll = () => {
-    if (scrollRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-      setCanScrollPrev(scrollLeft > 0);
-      setCanScrollNext(scrollLeft < scrollWidth - clientWidth - 10);
-    }
-  };
+  const scroll = useCallback((direction: "left" | "right") => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    const { scrollLeft, clientWidth } = el;
+    const offset = direction === "left" ? -clientWidth : clientWidth;
+
+    el.scrollTo({
+      left: scrollLeft + offset,
+      behavior: "smooth",
+    });
+  }, []);
 
   return (
-    <CarouselContext.Provider
-      value={{ scrollNext, scrollPrev, canScrollPrev, canScrollNext }}
-    >
-      <div
-        className={`relative ${className}`}
-        // The "Data Attribute" allows us to find the scroll container in children if needed
-        data-carousel-root
-      >
-        <div
-          ref={scrollRef}
-          onScroll={handleScroll}
-          className="no-scrollbar flex w-full snap-x snap-mandatory overflow-x-auto scroll-smooth"
-          style={{ scrollbarWidth: "none" }} // Hide scrollbar Firefox
-        >
-          {children}
-        </div>
-      </div>
+    <CarouselContext.Provider value={{ scroll, scrollRef }}>
+      <div className="relative w-full">{children}</div>
     </CarouselContext.Provider>
   );
 }
 
-// 3. The Content Wrapper (Just a flex container)
-export function CarouselContent({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex min-w-0 shrink-0 grow-0 basis-full">{children}</div>
-  );
-}
+export function CarouselTrack({ children }: { children: React.ReactNode }) {
+  const context = useContext(CarouselContext);
+  if (!context) throw new Error("CarouselTrack must be used within Carousel");
 
-// 4. The Item (Forces snap alignment)
-export function CarouselItem({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
   return (
     <div
-      className={`min-w-0 shrink-0 grow-0 basis-full snap-center ${className}`}
+      ref={context.scrollRef as React.RefObject<HTMLDivElement>}
+      className="no-scrollbar flex snap-x snap-mandatory flex-nowrap overflow-x-auto scroll-smooth"
     >
-      {children}
+      {React.Children.map(children, (child) => (
+        <div className="w-full flex-shrink-0 snap-start">{child}</div>
+      ))}
     </div>
   );
 }
 
-// 5. The Controls (Consume Context)
-export function CarouselNext({ className }: { className?: string }) {
-  const { scrollNext, canScrollNext } = React.useContext(CarouselContext)!;
-  return (
-    <button
-      onClick={scrollNext}
-      disabled={!canScrollNext}
-      className={`absolute right-4 top-1/2 -translate-y-1/2 ${className}`}
-    >
-      Next
-    </button>
-  );
+export function useCarouselActions() {
+  const context = useContext(CarouselContext);
+  if (!context)
+    throw new Error("useCarouselActions must be used within Carousel");
+  return context;
 }
-
-// ... CarouselPrev is identical but calls scrollPrev
