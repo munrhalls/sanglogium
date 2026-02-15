@@ -1,46 +1,51 @@
 import React from "react";
 import type { CatalogueItem } from "./data";
+import Image from "next/image";
 
 export function CatalogueMenu({ data }: { data: CatalogueItem }) {
   return (
-    <div className="container mx-auto h-full bg-brand-700 px-8 py-12">
-      <div className="grid h-full grid-cols-12 gap-8">
-        {/* Left: Categories Grid */}
-        <div className="col-span-8 grid grid-cols-3 gap-8">
-          {data.sections.map((section) => (
-            <div key={section.title} className="space-y-4">
-              <h3 className="text-brand-900 text-sm font-semibold uppercase tracking-widest text-brand-400">
-                {section.title}
-              </h3>
-              <ul className="space-y-3">
-                {section.links.map((link) => (
-                  <li key={link}>
-                    <a
-                      href="#"
-                      className="text-base text-secondary-600 transition-colors hover:text-accent-500"
-                    >
-                      {link}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
+    <div className="w-full bg-brand-700 p-6 sm:p-12">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
+          <div className="flex flex-col space-y-6 lg:col-span-4">
+            <h1 className="text-display-1 text-white">{data.label}</h1>
 
-        {/* Right: Feature Area */}
-        <div className="col-span-4 flex h-full flex-col justify-between rounded-lg bg-gray-50 p-8">
-          <div className="aspect-square w-full rounded-md border border-dashed border-gray-300 bg-white p-4 text-center text-xs text-gray-400">
-            {/* Image Placeholder */}
-            {data.feature.description}
-          </div>
-          <div className="mt-4">
-            <p className="font-serif text-lg italic text-brand-800">
+            <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-brand-800">
+              <Image
+                src={data.imageUrl}
+                alt={data.label}
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-contain p-4"
+                priority
+              />
+            </div>
+
+            <p className="font-serif text-lg italic text-brand-200">
               {data.feature.caption}
             </p>
-            <span className="text-xs font-bold uppercase tracking-wider text-accent-500">
-              Featured Collection
-            </span>
+          </div>
+
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:col-span-8 lg:grid-cols-3">
+            {data.sections.map((section) => (
+              <div key={section.title} className="space-y-4">
+                <h3 className="text-sm font-semibold uppercase tracking-widest text-brand-400">
+                  {section.title}
+                </h3>
+                <ul className="space-y-3">
+                  {section.links.map((link) => (
+                    <li key={link}>
+                      <a
+                        href="#"
+                        className="text-base text-gray-300 transition-colors hover:text-white"
+                      >
+                        {link}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
       </div>

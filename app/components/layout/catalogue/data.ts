@@ -6,9 +6,9 @@ export type CatalogueSection = {
 export type CatalogueItem = {
   id: string;
   label: string;
+  imageUrl: string;
   sections: CatalogueSection[];
   feature: {
-    description: string;
     caption: string;
   };
 };
@@ -17,6 +17,7 @@ export const CATALOGUE_DATA: CatalogueItem[] = [
   {
     id: "headphones",
     label: "Headphones",
+    imageUrl: "/images/headphones-skeletal.png",
     sections: [
       { title: "By Design", links: ["Open-Back", "Closed-Back"] },
       {
@@ -29,14 +30,13 @@ export const CATALOGUE_DATA: CatalogueItem[] = [
       },
     ],
     feature: {
-      description:
-        "Technical wireframe of an open-back earcup showing the internal driver layers.",
       caption: "Pure Resonance",
     },
   },
   {
     id: "audio-electronics",
     label: "Audio Electronics",
+    imageUrl: "/images/audio-electronics-skeletal.png",
     sections: [
       { title: "Amplification", links: ["Desktop Amps", "Portable Amps"] },
       {
@@ -50,14 +50,13 @@ export const CATALOGUE_DATA: CatalogueItem[] = [
       },
     ],
     feature: {
-      description:
-        "X-ray or top-down view of a PCB board or a glowing vacuum tube.",
       caption: "Signal Integrity",
     },
   },
   {
     id: "accessories",
     label: "Accessories",
+    imageUrl: "/images/accessories-skeletal.png",
     sections: [
       {
         title: "Connectivity",
@@ -67,8 +66,6 @@ export const CATALOGUE_DATA: CatalogueItem[] = [
       { title: "Storage", links: ["Headphone Stands", "Carrying Cases"] },
     ],
     feature: {
-      description:
-        "Close-up macro of a braided multi-core cable or leather texture.",
       caption: "The Final Detail",
     },
   },
