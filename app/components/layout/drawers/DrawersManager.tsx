@@ -1,27 +1,25 @@
 "use client";
-import { cn } from "@/lib/utils/tailwind";
+
+import { motion, AnimatePresence } from "framer-motion";
 import { useDrawer } from "@/app/hooks/nuqs/useDrawer";
 import MobileCatalogue from "@/app/components/layout/mobile/MobileCatalogue";
-// TODO
-// animation IN works properly but OUT needs to be fixed - currently just jumps out of view
 
 export default function DrawerManager() {
-  const { drawer, isOpen, closeDrawer } = useDrawer();
+  const { drawer, isOpen } = useDrawer();
 
   return (
-    <div
-      className={cn(
-        "w-[calc(100vw] fixed bottom-14 right-0 top-[var(--header-h)] z-50 h-[calc(100vh-3.5rem)] overflow-y-auto bg-white shadow-lg transition-transform duration-300 ease-in-out lg:w-1/4",
-        isOpen ? "translate-x-0" : "translate-x-full"
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ x: "100%" }}
+          animate={{ x: 0 }}
+          exit={{ x: "100%" }}
+          transition={{ type: "spring", damping: 25, stiffness: 200 }}
+          className="fixed inset-y-0 right-0 z-50 mb-14 mt-[var(--header-h)] w-full overflow-y-auto bg-white shadow-lg lg:w-1/4"
+        >
+          {drawer === "catalogue" && <MobileCatalogue />}
+        </motion.div>
       )}
-    >
-      {/* // TODO that button cannot be there as it makes styling difficult inside
-      content components */}
-      {/* TODO pass closeDrawer to content components...that requires they all accept new props..would want to avoid that, too - instead, just import closeDrawer in each content component*/}
-      {/* <button onClick={closeDrawer} className="p-4">
-        X
-      </button> */}
-      {drawer === "catalogue" && <MobileCatalogue />}
-    </div>
+    </AnimatePresence>
   );
 }
