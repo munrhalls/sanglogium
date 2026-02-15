@@ -33,7 +33,7 @@ export default function DrawerManager() {
                 animate={{ x: 0 }}
                 exit={{ x: "100%" }}
                 transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                className="fixed bottom-14 right-0 top-[var(--header-h)] z-50 w-full overflow-y-auto bg-white shadow-lg outline-none lg:w-1/4"
+                className="fixed bottom-14 right-0 top-[var(--header-h)] z-50 w-full overflow-y-auto bg-transparent shadow-lg outline-none lg:w-1/4"
               >
                 <Dialog.Title className="sr-only">Drawer Content</Dialog.Title>
                 {drawer === "catalogue" && <MobileCatalogue />}

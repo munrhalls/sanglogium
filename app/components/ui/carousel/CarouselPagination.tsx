@@ -28,7 +28,7 @@ export function CarouselPagination({ className }: { className?: string }) {
       {/* CRITICAL: We pass "static translate-y-0" to override the absolute positioning
         embedded in your BTN_BASE. 'tw-merge' (inside cn) handles the conflict cleanly.
       */}
-      <CarouselPrevious className="static translate-y-0 border-white/20 bg-transparent text-white hover:bg-white/10" />
+      <CarouselPrevious className="static translate-y-0 border-white/20 bg-brand-800 text-white hover:bg-white/10" />
 
       <div className="flex items-center gap-3">
         {pages.map((pageIndex) => {
