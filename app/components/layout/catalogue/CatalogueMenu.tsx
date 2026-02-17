@@ -1,26 +1,33 @@
 import React from "react";
 import type { CatalogueItem } from "./data";
 import Image from "next/image";
+import {
+  CarouselPrevious,
+  CarouselNext,
+} from "@/app/components/ui/carousel/Carousel";
 
 export function CatalogueMenu({ data }: { data: CatalogueItem }) {
   return (
     <div className="h-full w-full bg-brand-700 p-6 sm:p-12">
       <div className="mx-auto max-w-7xl">
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
-          <div className="flex flex-col items-center space-y-2 sm:space-y-6 lg:col-span-4">
+        <div className="flex-col gap-4 lg:grid-cols-12">
+          <div className="space-y-2 sm:grid sm:grid-cols-1 sm:space-y-6 lg:col-span-4">
             {/* TODO
             1. mobile header size -> about 24px */}
             <h1 className="text-display-2 text-brand-400">{data.label}</h1>
-
-            <div className="relative aspect-square w-1/2 overflow-hidden rounded-lg sm:bg-brand-800 md:w-full">
-              <Image
-                src={data.imageUrl}
-                alt={data.label}
-                fill
-                sizes="(max-width: 768px) 100vw, 33vw"
-                className="object-contain sm:p-4"
-                priority
-              />
+            <div className="flex items-center justify-center">
+              <CarouselPrevious className="shrink-1 pointer-events-auto grow-0 sm:hidden" />
+              <div className="relative aspect-square w-7/12 shrink-0 overflow-hidden rounded-lg sm:bg-brand-800 md:w-full">
+                <Image
+                  src={data.imageUrl}
+                  alt={data.label}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-contain sm:p-4"
+                  priority
+                />
+              </div>
+              <CarouselNext className="shrink-1 pointer-events-auto grow-0 sm:hidden" />
             </div>
           </div>
 

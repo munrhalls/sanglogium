@@ -1,44 +1,51 @@
-"use client";
+// "use client";
 
-import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
-import { useCarouselNavigation } from "./CarouselContext";
-import { cn } from "@/lib/utils/tailwind";
+// import React from "react";
+// import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
+// import { useCarousel } from "./Carousel"; // Changed import source
+// import { cn } from "@/lib/utils/tailwind";
 
-const BTN_BASE =
-  "absolute top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white/20 text-white backdrop-blur-md transition-all hover:bg-white/40 active:scale-95 disabled:pointer-events-none disabled:opacity-0 md:h-12 md:w-12";
+// // REMOVED: absolute positioning, top/left coordinates, translate.
+// // KEPT: Visual styling (colors, shape, blur, interaction).
+// const BTN_BASE =
+//   "flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-white/20 text-white backdrop-blur-md transition-all hover:bg-white/40 active:scale-95 disabled:pointer-events-none disabled:opacity-0 md:h-12 md:w-12";
 
-interface NavBtnProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  className?: string;
-}
+// interface NavBtnProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+//   className?: string;
+// }
 
-export function CarouselPrevious({ className, ...props }: NavBtnProps) {
-  const { scrollPrev, canScrollPrev } = useCarouselNavigation();
+// export function CarouselPrevious({ className, ...props }: NavBtnProps) {
+//   // Consuming from the centralized hook
+//   const { scrollPrev, canScrollPrev } = useCarousel();
 
-  return (
-    <button
-      onClick={scrollPrev}
-      disabled={!canScrollPrev}
-      className={cn(BTN_BASE, "left-2 md:left-4", className)}
-      aria-label="Previous slide"
-      {...props}
-    >
-      <CaretLeftIcon size={32} weight="light" />
-    </button>
-  );
-}
+//   return (
+//     <button
+//       type="button"
+//       onClick={scrollPrev}
+//       disabled={!canScrollPrev}
+//       // We pass `className` last so you can add 'absolute' back conditionally if needed
+//       className={cn(BTN_BASE, className)}
+//       aria-label="Previous slide"
+//       {...props}
+//     >
+//       <CaretLeftIcon size={32} weight="light" />
+//     </button>
+//   );
+// }
 
-export function CarouselNext({ className, ...props }: NavBtnProps) {
-  const { scrollNext, canScrollNext } = useCarouselNavigation();
+// export function CarouselNext({ className, ...props }: NavBtnProps) {
+//   const { scrollNext, canScrollNext } = useCarousel();
 
-  return (
-    <button
-      onClick={scrollNext}
-      disabled={!canScrollNext}
-      className={cn(BTN_BASE, "right-2 md:right-4", className)}
-      aria-label="Next slide"
-      {...props}
-    >
-      <CaretRightIcon size={32} weight="light" />
-    </button>
-  );
-}
+//   return (
+//     <button
+//       type="button"
+//       onClick={scrollNext}
+//       disabled={!canScrollNext}
+//       className={cn(BTN_BASE, className)}
+//       aria-label="Next slide"
+//       {...props}
+//     >
+//       <CaretRightIcon size={32} weight="light" />
+//     </button>
+//   );
+// }
