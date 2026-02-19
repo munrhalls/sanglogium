@@ -14,7 +14,11 @@ export function CatalogueMenu({ data }: { data: CatalogueItem }) {
           <div className="space-y-2 sm:grid sm:grid-cols-1 sm:space-y-6 lg:col-span-4">
             {/* TODO
             1. mobile header size -> about 24px */}
-            <h1 className="text-display-2 text-brand-400">{data.label}</h1>
+            <div className="grid min-h-[clamp(5.04rem,6.72vw+3.36rem,9.52rem)] items-end justify-center text-center">
+              <h1 className="line-clamp-2 text-display-2 text-brand-400">
+                {data.label}
+              </h1>
+            </div>
             <div className="flex items-center justify-center">
               <CarouselPrevious className="shrink-1 pointer-events-auto grow-0 sm:hidden" />
               <div className="relative aspect-square w-7/12 shrink-0 overflow-hidden rounded-lg sm:bg-brand-800 md:w-full">
@@ -23,7 +27,7 @@ export function CatalogueMenu({ data }: { data: CatalogueItem }) {
                   alt={data.label}
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-contain sm:p-4"
+                  className="object-contain px-2 sm:p-4"
                   priority
                 />
               </div>
@@ -31,7 +35,7 @@ export function CatalogueMenu({ data }: { data: CatalogueItem }) {
             </div>
           </div>
 
-          <div className="flex flex-wrap justify-between gap-8 sm:grid-cols-2 sm:gap-8 md:grid lg:col-span-8 lg:grid-cols-3">
+          <div className="flex flex-wrap justify-center gap-8 sm:grid-cols-2 sm:gap-8 md:grid lg:col-span-8 lg:grid-cols-3">
             {data.sections.map((section) => (
               <div key={section.title} className="space-y-4">
                 <h3 className="text-sm font-semibold uppercase tracking-widest text-brand-400">

@@ -60,7 +60,7 @@ export function CarouselTrack({
 
 // --- 4. NAVIGATION COMPONENTS (Moved Here) ---
 const BTN_BASE =
-  "flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-white/20 text-white backdrop-blur-md transition-all hover:bg-white/40 active:scale-95 disabled:pointer-events-none disabled:opacity-0 md:h-12 md:w-12";
+  "flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-white/20 text-white backdrop-blur-md transition-all hover:bg-white/40 active:scale-95 disabled:pointer-events-none disabled:opacity-25 md:h-12 md:w-12 outline-none focus-visible:ring-2 focus-visible:accent-600 focus-visible:ring-offset-2";
 
 interface NavBtnProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
