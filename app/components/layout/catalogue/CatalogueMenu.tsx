@@ -2,6 +2,7 @@ import React from "react";
 import type { CatalogueItem } from "./data";
 import CatalogueHeader from "./CatalogueHeader";
 import { CatalogueSlot } from "./CatalogueSlot";
+import CatalogueGrid from "./CatalogueGrid";
 
 export function CatalogueMenu({ data }: { data: CatalogueItem }) {
   const sections = data.sections;
@@ -17,16 +18,15 @@ export function CatalogueMenu({ data }: { data: CatalogueItem }) {
   ] as const;
 
   return (
-    <div className="flex h-full w-full items-start justify-center overflow-hidden bg-brand-700">
-      <div className="flex h-full items-center lg:gap-12">
-        <div className="flex h-full flex-1 flex-col justify-center">
+    <div className="flex h-full w-full items-start justify-center overflow-hidden bg-brand-700 p-4">
+      <CatalogueGrid />
+      {/* <div className="flex h-full flex-1 flex-col justify-center">
           {slots.map((_, i) => {
             const sectionIndex = activeSlots.indexOf(i);
             const section = sectionIndex !== -1 ? sections[sectionIndex] : null;
             const symmetryClass = SYMMETRY_STEPS[i] || "";
 
             return (
-              // slot
               <CatalogueSlot
                 key={i}
                 data={section}
@@ -35,10 +35,9 @@ export function CatalogueMenu({ data }: { data: CatalogueItem }) {
               />
             );
           })}
-        </div>
+        </div> */}
 
-        <CatalogueHeader data={data} />
-      </div>
+      {/* <CatalogueHeader data={data} /> */}
     </div>
   );
 }

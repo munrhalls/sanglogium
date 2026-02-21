@@ -12,10 +12,13 @@ export const CatalogueSlot = ({
   index,
   symmetryClass,
 }: SlotProps) => {
+  const isActive = !!section;
+  const height = isActive ? "h-auto" : "h-0";
+
   return (
     <div
       key={index}
-      className={`flex h-20 w-fit flex-nowrap items-center justify-start transition-transform duration-500 ${symmetryClass}`}
+      className={`flex h-20 w-fit flex-nowrap items-center justify-start transition-transform duration-500 ${symmetryClass} ${height}`}
     >
       {section && (
         <div className="space-y-2">
