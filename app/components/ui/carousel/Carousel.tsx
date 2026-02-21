@@ -44,6 +44,7 @@ export function CarouselTrack({
   children,
   className = "",
 }: CarouselTrackProps) {
+  // TODO: 1. Handle case where useCarousel is used outside of CarouselProvider (e.g., render nothing or a fallback UI).
   const { scrollRef } = useCarousel();
 
   return (
@@ -52,7 +53,7 @@ export function CarouselTrack({
       className={`no-scrollbar flex h-full w-full snap-x snap-mandatory overflow-x-auto scroll-smooth ${className}`}
     >
       {React.Children.map(children, (child) => (
-        <div className="min-w-full snap-start">{child}</div>
+        <div className="h-full min-w-full snap-start">{child}</div>
       ))}
     </div>
   );

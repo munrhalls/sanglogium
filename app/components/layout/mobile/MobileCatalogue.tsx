@@ -10,7 +10,7 @@ import { CATALOGUE_DATA } from "@/app/components/layout/catalogue/data";
 
 export default function MobileCatalogue() {
   return (
-    <nav aria-label="Catalogue Navigation" className="w-full text-white">
+    <nav aria-label="Catalogue Navigation" className="h-full w-full text-white">
       <Carousel>
         {/* Navigation Overlay
             Now fully decoupled: These buttons communicate wirelessly with the Track
@@ -20,7 +20,6 @@ export default function MobileCatalogue() {
           <CarouselPrevious className="pointer-events-auto" />
           <CarouselNext className="pointer-events-auto" />
         </div> */}
-
         <CarouselTrack>
           {CATALOGUE_DATA.map((item) => (
             <CatalogueMenu key={item.id} data={item} />

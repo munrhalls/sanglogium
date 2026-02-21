@@ -54,7 +54,7 @@ export function CatalogueWrapper({ label, children }: CatalogueWrapperProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="absolute left-0 top-[var(--site-header-h)] z-50 h-[calc(100vh-var(--site-header-h))] w-full border-t border-gray-100 bg-white shadow-xl"
+            className="absolute left-0 top-[var(--site-header-h)] z-50 w-full border-t border-gray-100 bg-white shadow-xl md:h-[calc(100vh-var(--site-header-h))]"
           >
             {children}
             <div className="absolute bottom-12 left-0 flex w-full justify-center">

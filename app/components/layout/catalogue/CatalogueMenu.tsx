@@ -7,36 +7,28 @@ export function CatalogueMenu({ data }: { data: CatalogueItem }) {
   const slots = Array.from({ length: 5 });
   const activeSlots = sections.length === 2 ? [1, 3] : [0, 2, 4];
 
-  const getSymmetryClass = (index: number) => {
-    switch (index) {
-      case 0:
-        return "translate-x-16"; // Top: Tucked in
-      case 1:
-        return "translate-x-4"; // Mid-top: Pushed out slightly
-      case 2:
-        return "-translate-x-4"; // Center: Pushed furthest left
-      case 3:
-        return "translate-x-4"; // Mid-bottom: Pushed out slightly
-      case 4:
-        return "translate-x-16"; // Bottom: Tucked in
-      default:
-        return "";
-    }
-  };
+  const SYMMETRY_STEPS = [
+    "translate-x-4", // Top (Index 0)
+    "translate-x-3", // Mid-top (Index 1)
+    "translate-x-0", // Center (Index 2)
+    "translate-x-3", // Mid-bottom (Index 3)
+    "translate-x-4", // Bottom (Index 4)
+  ] as const;
 
   return (
-    <div className="flex h-full w-full items-center justify-center overflow-hidden bg-brand-700">
-      <div className="flex items-center gap-4 lg:gap-12">
-        <div className="flex flex-col gap-6">
+    <div className="flex h-full w-full items-start justify-center overflow-hidden bg-brand-700">
+      <div className="flex h-full items-center lg:gap-12">
+        <div className="flex h-full flex-1 flex-col">
           {slots.map((_, i) => {
             const sectionIndex = activeSlots.indexOf(i);
             const section = sectionIndex !== -1 ? sections[sectionIndex] : null;
-            const symmetryClass = getSymmetryClass(i);
+            const symmetryClass = SYMMETRY_STEPS[i] || "";
 
             return (
               <div
                 key={i}
-                className={`flex h-20 w-64 items-center justify-end text-right transition-transform duration-500 ${symmetryClass}`}
+                // ${symmetryClass}
+                className={`flex h-20 w-fit items-center justify-start text-right transition-transform duration-500`}
               >
                 {section && (
                   <div className="space-y-1">

@@ -23,7 +23,7 @@ export default function DrawerManager() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="fixed bottom-14 left-0 right-0 top-[var(--header-h)] z-50 bg-black/10 backdrop-blur-[3px]"
+                className="fixed bottom-[var(--mobile-menu-h)] left-0 right-0 top-[var(--header-h)] z-50 bg-black/10 backdrop-blur-[3px]"
               />
             </Dialog.Overlay>
 
@@ -35,7 +35,7 @@ export default function DrawerManager() {
                 transition={{ type: "spring", damping: 25, stiffness: 200 }}
                 className="fixed bottom-[var(--mobile-menu-h)] right-0 top-[var(--header-h)] z-50 w-full overflow-y-auto bg-transparent shadow-lg outline-none lg:w-1/4"
               >
-                <Dialog.Title className="sr-only">Drawer Content</Dialog.Title>
+                {/* <Dialog.Title className="sr-only">Drawer Content</Dialog.Title> */}
                 {drawer === "catalogue" && <MobileCatalogue />}
               </motion.div>
             </Dialog.Content>
