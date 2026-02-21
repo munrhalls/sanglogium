@@ -59,6 +59,7 @@ export default {
         "catalogue-nav-h": "var(--catalogue-nav-h)",
         "site-header-h": "var(--site-header-h)",
         "mobile-menu-h": "var(--mobile-menu-h)",
+        "mobile-viewport-h": "var(--mobile-viewport-h)",
       },
       height: {
         "view-content": "calc(100vh - var(--header-total-h))",

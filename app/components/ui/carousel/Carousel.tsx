@@ -25,7 +25,7 @@ export function Carousel({ children, className = "" }: CarouselProps) {
   return (
     <CarouselContext.Provider value={carouselLogic}>
       <section
-        className={`relative w-full ${className}`}
+        className={`relative h-full w-full ${className}`}
         aria-roledescription="carousel"
       >
         {children}
@@ -49,7 +49,7 @@ export function CarouselTrack({
   return (
     <div
       ref={scrollRef}
-      className={`no-scrollbar flex w-full snap-x snap-mandatory overflow-x-auto scroll-smooth ${className}`}
+      className={`no-scrollbar flex h-full w-full snap-x snap-mandatory overflow-x-auto scroll-smooth ${className}`}
     >
       {React.Children.map(children, (child) => (
         <div className="min-w-full snap-start">{child}</div>

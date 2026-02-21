@@ -3,35 +3,61 @@ import type { CatalogueItem } from "./data";
 import CatalogueHeader from "./CatalogueHeader";
 
 export function CatalogueMenu({ data }: { data: CatalogueItem }) {
+  const sections = data.sections;
+  const slots = Array.from({ length: 5 });
+  const activeSlots = sections.length === 2 ? [1, 3] : [0, 2, 4];
+
+  const getSymmetryClass = (index: number) => {
+    switch (index) {
+      case 0:
+        return "translate-x-16"; // Top: Tucked in
+      case 1:
+        return "translate-x-4"; // Mid-top: Pushed out slightly
+      case 2:
+        return "-translate-x-4"; // Center: Pushed furthest left
+      case 3:
+        return "translate-x-4"; // Mid-bottom: Pushed out slightly
+      case 4:
+        return "translate-x-16"; // Bottom: Tucked in
+      default:
+        return "";
+    }
+  };
+
   return (
-    <div className="h-full w-full bg-brand-700 p-6 sm:p-12">
-      <div className="mx-auto flex max-w-7xl flex-col gap-4">
-        <CatalogueHeader data={data} />
-        <div className="flex-col gap-4 lg:grid-cols-12">
-          <div className="mx-auto w-fit">
-            <div className="flex flex-col flex-nowrap justify-start gap-8 sm:grid-cols-2 sm:gap-8 md:grid lg:col-span-8 lg:grid-cols-3">
-              {data.sections.map((section) => (
-                <div key={section.title} className="space-y-4">
-                  <h3 className="text-sm font-semibold uppercase tracking-widest text-brand-400">
-                    {section.title}
-                  </h3>
-                  <ul className="space-y-3">
-                    {section.links.map((link) => (
-                      <li key={link}>
-                        <a
-                          href="#"
-                          className="pl-2 text-base text-secondary-300 transition-colors hover:text-white"
-                        >
+    <div className="flex h-full w-full items-center justify-center overflow-hidden bg-brand-700">
+      <div className="flex items-center gap-4 lg:gap-12">
+        <div className="flex flex-col gap-6">
+          {slots.map((_, i) => {
+            const sectionIndex = activeSlots.indexOf(i);
+            const section = sectionIndex !== -1 ? sections[sectionIndex] : null;
+            const symmetryClass = getSymmetryClass(i);
+
+            return (
+              <div
+                key={i}
+                className={`flex h-20 w-64 items-center justify-end text-right transition-transform duration-500 ${symmetryClass}`}
+              >
+                {section && (
+                  <div className="space-y-1">
+                    <h3 className="text-sm font-bold uppercase tracking-tighter text-brand-400">
+                      {section.title}
+                    </h3>
+                    <ul className="hidden md:block">
+                      {section.links.slice(0, 2).map((link) => (
+                        <li key={link} className="text-xs text-secondary-300">
                           {link}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
+
+        <CatalogueHeader data={data} />
       </div>
     </div>
   );
