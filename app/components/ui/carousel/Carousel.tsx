@@ -61,7 +61,7 @@ export function CarouselTrack({
 
 // --- 4. NAVIGATION COMPONENTS (Moved Here) ---
 const BTN_BASE =
-  "flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-white/20 text-white backdrop-blur-md transition-all hover:bg-white/40 active:scale-95 disabled:pointer-events-none disabled:opacity-25 md:h-12 md:w-12 outline-none focus-visible:ring-2 focus-visible:accent-600 focus-visible:ring-offset-2";
+  "flex h-10 w-10 items-center justify-center rounded-full border border-secondary-200/20 bg-brand-800/40 text-brand-400 backdrop-blur-md transition-all hover:bg-brand-500 hover:text-brand-900 active:scale-95 disabled:pointer-events-none disabled:opacity-10 outline-none focus-visible:ring-2 focus-visible:ring-accent-500";
 
 interface NavBtnProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
@@ -82,7 +82,7 @@ export function CarouselPrevious({ className, ...props }: NavBtnProps) {
       className={cn(BTN_BASE, className)}
       {...props}
     >
-      <CaretLeftIcon size={32} weight="light" />
+      <CaretLeftIcon size={24} weight="light" />
     </button>
   );
 }
@@ -102,7 +102,7 @@ export function CarouselNext({ className, ...props }: NavBtnProps) {
       className={cn(BTN_BASE, className)}
       {...props}
     >
-      <CaretRightIcon size={32} weight="light" />
+      <CaretRightIcon size={24} weight="light" />
     </button>
   );
 }
