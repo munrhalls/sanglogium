@@ -7,7 +7,7 @@ import Image from "next/image";
 
 export default function CatalogueHeader({ data }: { data: CatalogueItem }) {
   return (
-    <div className="bg-secondary-900 relative flex h-64 w-full flex-col items-center justify-center overflow-hidden px-6">
+    <div className="bg-brand-900 relative flex h-64 w-full flex-col items-center justify-center overflow-hidden px-6">
       {/* 1. The Image Layer: Scaled up and centered behind text */}
       <div className="absolute h-56 w-56 opacity-40 grayscale transition-all duration-700 hover:scale-110 hover:opacity-40">
         <Image
