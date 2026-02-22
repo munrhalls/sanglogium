@@ -15,7 +15,7 @@ const ColTitle = function ({ title }: { title: string }) {
 };
 export default function Footer() {
   return (
-    <footer className="relative grid grid-rows-[auto_4rem_1fr] bg-black px-4 pt-8 text-white">
+    <footer className="relative grid grid-rows-[auto_4rem_1fr] bg-brand-800 px-4 pt-8 text-brand-100">
       {}
       <div className="justify-content-center mx-auto grid w-full max-w-[600px] gap-6 py-8 md:max-w-[1400px] md:grid-cols-4">
         <div className="grid content-start gap-4">
