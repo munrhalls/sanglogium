@@ -31,7 +31,7 @@ body {
        Background: Brand-700 (The Void)
        Text: Brand-100 (Paper White)
     */
-    @apply relative min-h-screen bg-brand-700 text-brand-100;
+    @apply bg-brand-900 relative min-h-screen text-brand-100;
   }
 }
 

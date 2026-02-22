@@ -151,24 +151,58 @@ export default {
         bold: "700",
       },
       colors: {
-        // 1. BRAND (Warmth & Void) - The core identity
+        // BRAND (Peach Rose → The Void)
         brand: {
-          100: "#FEFCFB", // Paper White (Body Text)
-          200: "#FAEEE6", // Soft Highlight (Hover)
-          400: "#F6E3D5", // Peach Rose Base (Skin Tone)
-          700: "#151B1B", // The Void (Main Background)
-          800: "#0D0F0F", // Deep Void (Footer/Contrast)
+          50: "#FEFCFB", // Whisper - Lightest background
+          100: "#FDF9F7", // Paper White - Body text on dark
+          200: "#FAEEE6", // Soft Highlight - Hover backgrounds
+          300: "#F8E6D9", // Warm Mist - Subtle cards
+          400: "#F6E3D5", // Peach Rose Base - Primary brand color
+          500: "#E8C9B5", // Deeper Peach - Hover peach
+          600: "#C9A18A", // Terracotta - Active states
+          700: "#151B1B", // The Void - Main background
+          800: "#0D0F0F", // Deep Void - Footer, strong contrast
+          900: "#070808", // Absolute Void - Strongest contrast
         },
-        // 2. SECONDARY (Structure) - The scaffolding
+
+        // SECONDARY (Platinum → Charcoal)
         secondary: {
-          100: "#FCFCFC", // Card Background (Clean White)
-          300: "#E5E4E2", // Divider (Platinum Base)
-          600: "#5C5B5A", // Subtext (Readable Grey)
+          50: "#FCFCFC", // Pure White - Card backgrounds on dark
+          100: "#F5F5F4", // Warm White - Elevated cards
+          200: "#ECECEB", // Light Platinum - Borders
+          300: "#E5E4E2", // Platinum Base - Dividers
+          400: "#C7C6C4", // Medium Platinum - Inactive text
+          500: "#9A9997", // Warm Gray - Subdued elements
+          600: "#6E6D6B", // Charcoal Gray - Secondary text
+          700: "#4A4948", // Deep Charcoal - Strong secondary
+          800: "#2E2E2D", // Near Black - Alternative bg
+          900: "#1A1A19", // Rich Black - Deepest secondary
         },
-        // 3. ACCENT (Action) - The Gold
+
+        // ACCENT (Gold Spectrum)
         accent: {
-          600: "#D4AF37", // Main Gold (Buttons/CTAs)
-          500: "#E5C158", // Optional Lighter Gold (Hover state)
+          100: "#FBF6E8", // Champagne Tint - Subtle highlights
+          200: "#F5E9C8", // Pale Gold - Light accents
+          300: "#EEDB9F", // Soft Gold - Hover preparation
+          400: "#E5C158", // Light Gold - Hover state
+          500: "#D4AF37", // True Gold - Primary CTA
+          600: "#B8952E", // Deep Gold - Active CTA
+          700: "#8F7324", // Bronze - Pressed state
+          800: "#6B561C", // Dark Bronze - Strong accents
+        },
+
+        // SEMANTIC (Status Colors)
+        success: {
+          500: "#4ADE80", // Green - In stock, success
+          700: "#15803D", // Dark Green - Success text on light
+        },
+        error: {
+          500: "#EF4444", // Red - Out of stock, errors
+          700: "#991B1B", // Dark Red - Error text
+        },
+        warning: {
+          500: "#F59E0B", // Amber - Low stock
+          700: "#92400E", // Dark Amber - Warning text
         },
       },
 

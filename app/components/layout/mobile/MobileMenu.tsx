@@ -80,7 +80,7 @@ function MobileMenuButtons() {
 
 export default function MobileMenu() {
   return (
-    <div className="fixed bottom-0 left-0 right-0 h-[var(--mobile-menu-h)] border-t border-white bg-black text-white lg:hidden">
+    <div className="bg-brand-900 fixed bottom-0 left-0 right-0 h-[var(--mobile-menu-h)] border-t border-white text-white lg:hidden">
       <MobileMenuButtons />
     </div>
   );

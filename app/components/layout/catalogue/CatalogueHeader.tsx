@@ -7,22 +7,25 @@ import Image from "next/image";
 
 export default function CatalogueHeader({ data }: { data: CatalogueItem }) {
   return (
-    <div className="flex flex-1 items-center justify-center">
-      {/* <div className="aspect-square h-[33vh] max-w-[70vw] shrink-0 overflow-hidden rounded-full border-4 border-brand-400 bg-brand-800 shadow-xl md:relative"> */}
-      <div>
-        <div className="absolute inset-0 z-10 flex items-center justify-center p-6 text-center">
-          <h1 className="text-xl font-bold uppercase text-brand-400">
-            {data.label}
-          </h1>
-          <Image
-            src={data.imageUrl}
-            alt={data.label}
-            fill
-            className="absolute aspect-square object-contain opacity-40"
-            priority
-          />
-        </div>
+    <div className="bg-secondary-900 relative flex h-64 w-full flex-col items-center justify-center overflow-hidden px-6">
+      {/* 1. The Image Layer: Scaled up and centered behind text */}
+      <div className="absolute h-56 w-56 opacity-40 grayscale transition-all duration-700 hover:scale-110 hover:opacity-40">
+        <Image
+          src={data.imageUrl}
+          alt={data.label}
+          fill
+          className="object-contain"
+          priority
+        />
       </div>
+
+      {/* 2. The Text Layer: Directly on top with luxury tracking */}
+      <h1 className="relative z-10 text-2xl font-bold uppercase tracking-[0.3em] text-brand-400">
+        {data.label}
+      </h1>
+
+      {/* 3. Minimalist Spacer: Creates breathing room for the list below */}
+      <div className="bg-brand-500/20 absolute bottom-0 h-px w-16" />
     </div>
   );
 }
