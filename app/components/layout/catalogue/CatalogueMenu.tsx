@@ -5,7 +5,7 @@ import CatalogueSegments from "./CatalogueSegments";
 
 export function CatalogueMenu({ data }: { data: CatalogueItem }) {
   return (
-    <div className="relative flex h-auto w-full flex-col items-start justify-start gap-8 bg-brand-700 pb-12">
+    <div className="relative flex min-h-full w-full flex-1 flex-col items-start justify-start gap-8 bg-brand-700 pb-12">
       <CatalogueHeader data={data} />
       <CatalogueSegments data={data} />
     </div>

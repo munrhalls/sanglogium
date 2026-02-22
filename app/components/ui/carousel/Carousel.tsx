@@ -50,10 +50,10 @@ export function CarouselTrack({
   return (
     <div
       ref={scrollRef}
-      className={`no-scrollbar flex h-full w-full snap-x snap-mandatory overflow-x-auto scroll-smooth ${className}`}
+      className={`no-scrollbar flex min-h-full w-full snap-x snap-mandatory overflow-x-auto scroll-smooth ${className}`}
     >
       {React.Children.map(children, (child) => (
-        <div className="h-full min-w-full snap-start">{child}</div>
+        <div className="min-h-full min-w-full snap-start flex-col">{child}</div>
       ))}
     </div>
   );

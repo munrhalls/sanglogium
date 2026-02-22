@@ -36,7 +36,9 @@ export default function DrawerManager() {
                 className="fixed bottom-[var(--mobile-menu-h)] right-0 top-[var(--header-h)] z-50 w-full overflow-y-auto bg-transparent shadow-lg outline-none lg:w-1/4"
               >
                 <Dialog.Title className="sr-only">Drawer Content</Dialog.Title>
-                {drawer === "catalogue" && <MobileCatalogue />}
+                <div className="flex min-h-full w-full flex-col bg-brand-700">
+                  {drawer === "catalogue" && <MobileCatalogue />}
+                </div>
               </motion.div>
             </Dialog.Content>
           </Dialog.Portal>
