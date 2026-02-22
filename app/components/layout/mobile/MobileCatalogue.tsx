@@ -15,7 +15,6 @@ export default function MobileCatalogue() {
       className="flex h-full w-full flex-col"
     >
       <Carousel className="flex-1">
-        {" "}
         {/* Navigation Overlay
             Now fully decoupled: These buttons communicate wirelessly with the Track
             via the Context Provider in <Carousel>.
@@ -24,9 +23,9 @@ export default function MobileCatalogue() {
           <CarouselPrevious className="pointer-events-auto" />
           <CarouselNext className="pointer-events-auto" />
         </div> */}
-        <CarouselTrack className="h-full">
+        <CarouselTrack className="min-h-full">
           {CATALOGUE_DATA.map((item) => (
-            <div key={item.id} className="h-full min-w-full">
+            <div key={item.id} className="min-h-full min-w-full">
               <CatalogueMenu key={item.id} data={item} />
             </div>
           ))}
