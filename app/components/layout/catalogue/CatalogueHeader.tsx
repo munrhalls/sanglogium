@@ -1,10 +1,11 @@
 import type { CatalogueItem } from "./data";
 import Image from "next/image";
-// import {
-//   CarouselPrevious,
-//   CarouselNext,
-// } from "@/app/components/ui/carousel/Carousel";
+import {
+  CarouselPrevious,
+  CarouselNext,
+} from "@/app/components/ui/carousel/Carousel";
 
+// TODO add carousel controls for mobile (currently commented) and make them look nice
 export default function CatalogueHeader({ data }: { data: CatalogueItem }) {
   return (
     <div className="bg-brand-900 relative flex h-64 w-full flex-col items-center justify-center overflow-hidden px-6">
@@ -23,6 +24,12 @@ export default function CatalogueHeader({ data }: { data: CatalogueItem }) {
       <h1 className="relative z-10 text-2xl font-bold uppercase tracking-[0.3em] text-brand-400">
         {data.label}
       </h1>
+
+      {/* 3. Carousel Controls: Grouped Instrument Cluster */}
+      <div className="absolute bottom-4 right-4 z-20 flex gap-2 sm:right-8">
+        <CarouselPrevious className="static translate-y-0" />
+        <CarouselNext className="static translate-y-0" />
+      </div>
 
       {/* 3. Minimalist Spacer: Creates breathing room for the list below */}
       <div className="bg-brand-500/20 absolute bottom-0 h-px w-16" />
