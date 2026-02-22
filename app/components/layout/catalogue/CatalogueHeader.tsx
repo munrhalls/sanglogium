@@ -5,7 +5,6 @@ import {
   CarouselNext,
 } from "@/app/components/ui/carousel/Carousel";
 
-// TODO add carousel controls for mobile (currently commented) and make them look nice
 export default function CatalogueHeader({ data }: { data: CatalogueItem }) {
   return (
     <div className="bg-brand-900 relative flex h-64 w-full flex-col items-center justify-center overflow-hidden px-6">
@@ -36,8 +35,3 @@ export default function CatalogueHeader({ data }: { data: CatalogueItem }) {
     </div>
   );
 }
-
-// <div className="absolute inset-x-0 bottom-5 z-10 flex justify-between px-4 sm:hidden">
-//   <CarouselPrevious className="static translate-y-0" />
-//   <CarouselNext className="static translate-y-0" />
-// </div>
