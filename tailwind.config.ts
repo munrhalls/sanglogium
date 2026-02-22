@@ -116,10 +116,10 @@ export default {
         // ----------------------------------------------------------------------
 
         // 28px / 36px (Tracking: 0)
-        h3: ["28px", { lineHeight: "36px", letterSpacing: "0em" }],
+        h3: ["28px", { lineHeight: "36px", letterSpacing: "0.05em" }],
 
         // 21px / 28px (Tracking: 0)
-        h4: ["21px", { lineHeight: "28px", letterSpacing: "0em" }],
+        h4: ["21px", { lineHeight: "28px", letterSpacing: "0.1em" }],
 
         // ----------------------------------------------------------------------
         // BODY COPY & UTILITIES
@@ -129,7 +129,7 @@ export default {
         body: ["16px", { lineHeight: "24px", letterSpacing: "0em" }],
 
         // 12px / 16px
-        small: ["12px", { lineHeight: "16px", letterSpacing: "0.01em" }],
+        small: ["12px", { lineHeight: "16px", letterSpacing: "0.05em" }],
 
         // ----------------------------------------------------------------------
         // SPECIFIC UI ACTIONS
