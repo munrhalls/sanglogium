@@ -2,7 +2,7 @@ import type { CatalogueItem } from "./data";
 
 export default function CatalogueSegments({ data }: { data: CatalogueItem }) {
   return (
-    <div className="mx-auto w-fit">
+    <div className="w-full max-w-screen-xl px-8">
       <div className="flex flex-col flex-nowrap justify-start gap-12 sm:grid-cols-2 sm:gap-8 md:grid lg:col-span-8 lg:grid-cols-3">
         {data.sections.map((section, idx) => (
           <div
@@ -18,7 +18,7 @@ export default function CatalogueSegments({ data }: { data: CatalogueItem }) {
                 <li key={link}>
                   <a
                     href="#"
-                    className="active:text-brand-600 pl-2 text-body text-secondary-300 transition-colors hover:text-brand-200"
+                    className="pl-2 text-body text-secondary-300 transition-colors hover:text-brand-200 active:text-brand-400"
                   >
                     {link}
                   </a>
