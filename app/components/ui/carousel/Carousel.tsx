@@ -35,45 +35,18 @@ export function Carousel({ children, className = "" }: CarouselProps) {
   );
 }
 
-interface InjectedSlideProps {
-  isActive?: boolean;
-  className?: string;
-}
-
 export function CarouselSlide({
   children,
-  index,
   className = "",
 }: {
   children: React.ReactNode;
-  index: number;
   className?: string;
 }) {
-  const context = useCarousel();
-
-  if (!context) {
-    return (
-      <div
-        className={`flex min-h-full min-w-full snap-start flex-col ${className}`}
-      >
-        {children}
-      </div>
-    );
-  }
-
-  const { activeIndex } = context;
-  const isActive = activeIndex === index;
-
   return (
     <div
       className={`flex min-h-full min-w-full snap-start flex-col ${className}`}
     >
-      {React.isValidElement<InjectedSlideProps>(children)
-        ? React.cloneElement(children, {
-            isActive,
-            className: `${children.props.className || ""} flex-1`,
-          })
-        : children}
+      {children}
     </div>
   );
 }
@@ -97,7 +70,7 @@ export function CarouselTrack({
   return (
     <div
       ref={scrollRef}
-      className={`no-scrollbar scroll-container-active flex min-h-full w-full snap-x snap-mandatory overflow-x-auto scroll-smooth ${className}`}
+      className={`no-scrollbar flex min-h-full w-full snap-x snap-mandatory overflow-x-auto scroll-smooth ${className}`}
     >
       {children}
     </div>
