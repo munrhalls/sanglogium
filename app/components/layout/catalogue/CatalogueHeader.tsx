@@ -4,6 +4,7 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "@/app/components/ui/carousel/Carousel";
+import { InViewSection } from "@/app/components/ui/in-view-section/InViewSection";
 
 export default function CatalogueHeader({ data }: { data: CatalogueItem }) {
   return (
@@ -20,9 +21,11 @@ export default function CatalogueHeader({ data }: { data: CatalogueItem }) {
       </div>
 
       {/* 2. The Text Layer: Directly on top with luxury tracking */}
-      <h1 className="relative z-10 text-center text-2xl font-bold uppercase tracking-[0.3em] text-brand-400">
-        {data.label}
-      </h1>
+      <InViewSection key={data.label} delay={0.1}>
+        <h1 className="relative z-10 text-center text-2xl font-bold uppercase tracking-[0.3em] text-brand-400">
+          {data.label}
+        </h1>
+      </InViewSection>
 
       {/* 3. Carousel Controls: Grouped Instrument Cluster */}
       <div className="absolute bottom-4 right-4 z-20 flex gap-2 sm:right-8">

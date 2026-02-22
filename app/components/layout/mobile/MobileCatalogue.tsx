@@ -1,6 +1,10 @@
 "use client";
 
-import { Carousel, CarouselTrack } from "@/app/components/ui/carousel/Carousel";
+import {
+  CarouselSlide,
+  CarouselTrack,
+  Carousel,
+} from "@/app/components/ui/carousel/Carousel";
 // import {
 //   CarouselPrevious,
 //   CarouselNext,
@@ -24,10 +28,10 @@ export default function MobileCatalogue() {
           <CarouselNext className="pointer-events-auto" />
         </div> */}
         <CarouselTrack className="min-h-full">
-          {CATALOGUE_DATA.map((item) => (
-            <div key={item.id} className="min-h-full min-w-full">
-              <CatalogueMenu key={item.id} data={item} />
-            </div>
+          {CATALOGUE_DATA.map((item, index) => (
+            <CarouselSlide key={item.id} index={index}>
+              <CatalogueMenu data={item} />
+            </CarouselSlide>
           ))}
         </CarouselTrack>
       </Carousel>

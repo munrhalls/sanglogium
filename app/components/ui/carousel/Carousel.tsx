@@ -9,8 +9,9 @@ import { cn } from "@/lib/utils/tailwind";
 type CarouselContextType = ReturnType<typeof useSnapCarousel>;
 const CarouselContext = createContext<CarouselContextType | null>(null);
 
-function useCarousel() {
-  return useContext(CarouselContext);
+export function useCarousel() {
+  const context = useContext(CarouselContext);
+  return context;
 }
 
 // --- 2. ROOT COMPONENT ---
@@ -34,6 +35,49 @@ export function Carousel({ children, className = "" }: CarouselProps) {
   );
 }
 
+interface InjectedSlideProps {
+  isActive?: boolean;
+  className?: string;
+}
+
+export function CarouselSlide({
+  children,
+  index,
+  className = "",
+}: {
+  children: React.ReactNode;
+  index: number;
+  className?: string;
+}) {
+  const context = useCarousel();
+
+  if (!context) {
+    return (
+      <div
+        className={`flex min-h-full min-w-full snap-start flex-col ${className}`}
+      >
+        {children}
+      </div>
+    );
+  }
+
+  const { activeIndex } = context;
+  const isActive = activeIndex === index;
+
+  return (
+    <div
+      className={`flex min-h-full min-w-full snap-start flex-col ${className}`}
+    >
+      {React.isValidElement<InjectedSlideProps>(children)
+        ? React.cloneElement(children, {
+            isActive,
+            className: `${children.props.className || ""} flex-1`,
+          })
+        : children}
+    </div>
+  );
+}
+
 // --- 3. TRACK COMPONENT ---
 interface CarouselTrackProps {
   children: ReactNode;
@@ -44,17 +88,18 @@ export function CarouselTrack({
   children,
   className = "",
 }: CarouselTrackProps) {
-  // TODO: 1. Handle case where useCarousel is used outside of CarouselProvider (e.g., render nothing or a fallback UI).
-  const { scrollRef } = useCarousel();
+  const context = useCarousel();
+
+  if (!context) return <div className={className}>{children}</div>;
+
+  const { scrollRef } = context;
 
   return (
     <div
       ref={scrollRef}
-      className={`no-scrollbar flex min-h-full w-full snap-x snap-mandatory overflow-x-auto scroll-smooth ${className}`}
+      className={`no-scrollbar scroll-container-active flex min-h-full w-full snap-x snap-mandatory overflow-x-auto scroll-smooth ${className}`}
     >
-      {React.Children.map(children, (child) => (
-        <div className="min-h-full min-w-full snap-start flex-col">{child}</div>
-      ))}
+      {children}
     </div>
   );
 }
