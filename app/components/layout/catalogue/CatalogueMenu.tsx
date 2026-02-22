@@ -1,25 +1,12 @@
 import React from "react";
 import type { CatalogueItem } from "./data";
 import CatalogueHeader from "./CatalogueHeader";
-import { CatalogueSlot } from "./CatalogueSlot";
-import CatalogueGrid from "./CatalogueGrid";
+import CatalogueSegments from "./CatalogueSegments";
 
 export function CatalogueMenu({ data }: { data: CatalogueItem }) {
-  const sections = data.sections;
-  const slots = Array.from({ length: 5 });
-  const activeSlots = sections.length === 2 ? [1, 3] : [0, 2, 4];
-
-  const SYMMETRY_STEPS = [
-    "translate-x-4", // Top (Index 0)
-    "translate-x-3", // Mid-top (Index 1)
-    "translate-x-0", // Center (Index 2)
-    "translate-x-3", // Mid-bottom (Index 3)
-    "translate-x-4", // Bottom (Index 4)
-  ] as const;
-
   return (
-    <div className="flex h-full w-full items-start justify-center overflow-hidden bg-brand-700 p-4">
-      <CatalogueGrid />
+    <div className="relative flex h-full w-full items-start justify-center overflow-hidden bg-brand-700 p-2">
+      {/* <CatalogueGrid /> */}
       {/* <div className="flex h-full flex-1 flex-col justify-center">
           {slots.map((_, i) => {
             const sectionIndex = activeSlots.indexOf(i);
@@ -36,8 +23,8 @@ export function CatalogueMenu({ data }: { data: CatalogueItem }) {
             );
           })}
         </div> */}
-
-      {/* <CatalogueHeader data={data} /> */}
+      <CatalogueHeader data={data} />
+      <CatalogueSegments data={data} />
     </div>
   );
 }
