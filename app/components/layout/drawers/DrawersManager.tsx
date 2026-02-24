@@ -12,10 +12,10 @@ export default function DrawerManager() {
       <Dialog.Portal>
         <Dialog.Overlay
           className="
-            fixed left-0 right-0 z-50
+            fixed inset-0 z-50 bg-black/10
             top-[var(--header-h)] bottom-[var(--mobile-menu-h)]
-            /* ANIMATION */
-            data-[state=open]:animate-in data-[state=open]:fade-in-0
+            /* QUICK FADE: Signals the shift immediately */
+            duration-300 data-[state=open]:animate-in data-[state=open]:fade-in-0
             data-[state=closed]:animate-out data-[state=closed]:fade-out-0
           "
         />
@@ -24,10 +24,17 @@ export default function DrawerManager() {
           className="
             fixed right-0 z-50 w-full overflow-y-auto bg-transparent shadow-lg outline-none lg:w-1/4
             top-[var(--header-h)] bottom-[var(--mobile-menu-h)]
-            /* ANIMATION */
-            duration-500 ease-in-out
-            data-[state=open]:animate-in data-[state=open]:slide-in-from-right-full
-            data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right-full
+            /* THE STEADY GLIDE */
+            duration-1300 [transition-timing-function:linear]
+            /* OR use [transition-timing-function:cubic-bezier(0.4,0,0.6,1)] for a tiny bit of soul */
+
+            data-[state=open]:animate-in
+            data-[state=open]:fade-in-0
+            data-[state=open]:slide-in-from-right-20 /* Reduced distance = Reduced speed */
+
+            data-[state=closed]:animate-out
+            data-[state=closed]:fade-out-0
+            data-[state=closed]:slide-out-to-right-20
           "
         >
           <Dialog.Title className="sr-only">Drawer Content</Dialog.Title>
