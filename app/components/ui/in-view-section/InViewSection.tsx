@@ -11,11 +11,14 @@ export function InViewSection({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: false, amount: 0.4 }}
-      transition={{ duration: 0.5, delay }}
-      className="space-y-4"
+      initial={{ opacity: 0, y: -15 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: false, amount: 0.2 }}
+      transition={{
+        duration: 0.2,
+        delay: delay + 0.1,
+        ease: "easeOut",
+      }}
     >
       {children}
     </motion.div>

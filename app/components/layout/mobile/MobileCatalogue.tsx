@@ -17,9 +17,9 @@ export default function MobileCatalogue() {
     >
       <Carousel className="flex-1">
         <CarouselTrack className="min-h-full">
-          {CATALOGUE_DATA.map((item) => (
+          {CATALOGUE_DATA.map((item, index) => (
             <CarouselSlide key={item.id}>
-              <CatalogueMenu data={item} />
+              <CatalogueMenu data={item} index={index} />
             </CarouselSlide>
           ))}
         </CarouselTrack>

@@ -10,9 +10,11 @@ const CatalogueNavbar = async () => {
       aria-label="Catalogue Navigation"
     >
       <div className="container mx-auto flex h-full items-center justify-center">
-        {CATALOGUE_DATA.map((item) => (
+        {CATALOGUE_DATA.map((item, index) => (
           <CatalogueWrapper key={item.id} label={item.label}>
-            <CatalogueMenu data={item} />
+            <div key={`${item.id}-${index}`}>
+              <CatalogueMenu data={item} />
+            </div>
           </CatalogueWrapper>
         ))}
       </div>

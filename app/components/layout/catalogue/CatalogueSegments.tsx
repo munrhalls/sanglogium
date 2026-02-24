@@ -1,12 +1,18 @@
 import type { CatalogueItem } from "./data";
-import { InViewSection } from "@/app/components/ui/in-view-section/InViewSection";
+import { SlideActiveTrigger } from "@/app/components/ui/carousel/SlideActiveTrigger";
 
-export default function CatalogueSegments({ data }: { data: CatalogueItem }) {
+export default function CatalogueSegments({
+  data,
+  index,
+}: {
+  data: CatalogueItem;
+  index: number;
+}) {
   return (
     <div className="w-full max-w-screen-xl px-8">
       <div className="flex flex-col flex-nowrap justify-start gap-12 sm:grid-cols-2 sm:gap-8 md:grid lg:col-span-8 lg:grid-cols-3">
         {data.sections.map((section, idx) => (
-          <InViewSection key={section.title} delay={idx * 0.1}>
+          <SlideActiveTrigger key={section.title} index={index} delay={idx * 0.1}>
             <div
               key={section.title}
               className="animate-catalogue-slide space-y-4"
@@ -27,7 +33,7 @@ export default function CatalogueSegments({ data }: { data: CatalogueItem }) {
                 ))}
               </ul>
             </div>
-          </InViewSection>
+          </SlideActiveTrigger>
         ))}
       </div>
     </div>
