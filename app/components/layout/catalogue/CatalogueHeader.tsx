@@ -28,11 +28,12 @@ export default function CatalogueHeader({
 
       {/* 2. The Text Layer: Directly on top with luxury tracking */}
       <div key={data.label}>
-        <SlideActiveTrigger key={data.label} index={index} delay={0}>
-          <h1 className="relative z-10 text-center text-2xl font-bold uppercase tracking-[0.3em] text-brand-400">
+          <h1 className="opacity-0 translate-y-2 transition-all duration-500
+  group-data-[active=true]/slide:opacity-100
+  group-data-[active=true]/slide:translate-y-0
+  group-data-[active=true]/slide:delay-150 relative z-10 text-center text-2xl font-bold uppercase tracking-[0.3em] text-brand-400">
             {data.label}
           </h1>
-        </SlideActiveTrigger>
       </div>
       {/* 3. Carousel Controls: Grouped Instrument Cluster */}
       <div className="absolute bottom-4 right-4 z-20 flex gap-2 sm:right-8">

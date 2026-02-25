@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, ReactNode } from "react";
+import React, { createContext, useContext, ReactNode, useRef, useEffect } from "react";
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 import { useSnapCarousel } from "@/app/hooks/useSnapCarousel";
 import { cn } from "@/lib/utils/tailwind";
@@ -35,16 +35,37 @@ export function Carousel({ children, className = "" }: CarouselProps) {
   );
 }
 
-export function CarouselSlide({
-  children,
-  className = "",
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
+
+
+export function CarouselSlide({ children, className = "" }) {
+  const slideRef = useRef<HTMLDivElement>(null);
+  const { scrollRef } = useCarousel()!; // Get the track ref from your context
+
+  useEffect(() => {
+    const node = slideRef.current;
+    const track = scrollRef.current;
+    if (!node || !track) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // We use the attribute to trigger the CSS
+        node.dataset.active = entry.isIntersecting ? "true" : "false";
+      },
+      {
+        root: track,    // KEY: Watch relative to the track, not the window
+        threshold: 0.6, // 60% visibility is the 'sweet spot' for snapping
+      }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [scrollRef]);
+
   return (
     <div
-      className={`flex min-h-full min-w-full snap-start flex-col ${className}`}
+      ref={slideRef}
+      data-active="false"
+      className={`group/slide flex min-w-full snap-start flex-col ${className}`}
     >
       {children}
     </div>

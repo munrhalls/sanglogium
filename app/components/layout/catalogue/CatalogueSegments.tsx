@@ -12,10 +12,9 @@ export default function CatalogueSegments({
     <div className="w-full max-w-screen-xl px-8">
       <div className="flex flex-col flex-nowrap justify-start gap-12 sm:grid-cols-2 sm:gap-8 md:grid lg:col-span-8 lg:grid-cols-3">
         {data.sections.map((section, idx) => (
-          <SlideActiveTrigger key={section.title} index={index} delay={idx * 0.1}>
             <div
               key={section.title}
-              className="animate-catalogue-slide space-y-4"
+              className=" space-y-4"
             >
               <h3 className="text-h4 uppercase text-brand-400">
                 {section.title}
@@ -33,7 +32,6 @@ export default function CatalogueSegments({
                 ))}
               </ul>
             </div>
-          </SlideActiveTrigger>
         ))}
       </div>
     </div>
