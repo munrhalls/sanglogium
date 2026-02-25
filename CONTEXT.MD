@@ -1,0 +1,2 @@
+Context: Next 15, Tailwind 3, sanity v3, react 18.
+Constraints: Highly performant, lean, works fast at even 6x cpu throttle/weak network setting in dev tools. Mobile responsive, semantic HTML, step-by-step verification of every step.
