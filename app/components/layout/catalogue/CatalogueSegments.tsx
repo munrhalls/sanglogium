@@ -14,7 +14,7 @@ export default function CatalogueSegments({
         {data.sections.map((section, idx) => (
             <div
               key={section.title}
-              className="opacity-0 translate-y-2 transition-all duration-500
+              className="opacity-0 translate-y-2 transition-[opacity,transform] duration-300 ease-in delay-0
   group-data-[active=true]/slide:opacity-100
   group-data-[active=true]/slide:translate-y-0
   group-data-[active=true]/slide:delay-150 space-y-4"
@@ -31,7 +31,7 @@ export default function CatalogueSegments({
                     className="
                       /* 1. Base State */
                       opacity-0 translate-y-2
-                      transition-all duration-500
+                      transition-[opacity,transform] duration-300 ease-in delay-0
 
                       /* 2. The Trigger: Slide becomes active */
                       group-data-[active=true]/slide:opacity-100
