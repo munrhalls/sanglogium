@@ -12,6 +12,7 @@ import Footer from "@/app/components/layout/footer/Footer";
 import DrawersManager from "@/app/components/layout/drawers/DrawersManager";
 import MobileMenu from "@/app/components/layout/mobile/MobileMenu";
 import CatalogueNavbar from "@/app/components/layout/catalogue/CatalogueNavbar";
+import { Suspense } from "react";
 
 export { metadata };
 
@@ -32,8 +33,10 @@ export default function RootLayout({
             </main>
             <Footer />
 
-            <DrawersManager />
-            <MobileMenu />
+            <Suspense fallback={null}>
+              <DrawersManager />
+              <MobileMenu />
+            </Suspense>
           </NuqsAdapter>
         </ClerkProvider>
       </body>

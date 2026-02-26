@@ -2,8 +2,9 @@
 
 import { usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { Suspense } from "react";
 
-export function DrawerToggleButton({
+function DrawerToggleButtonContent({
   param,
   children,
   className,
@@ -22,5 +23,17 @@ export function DrawerToggleButton({
     <Link href={href} className={className} scroll={false}>
       {children}
     </Link>
+  );
+}
+
+export default function DrawerToggleButton(props: {
+  param: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <Suspense fallback={null}>
+      <DrawerToggleButtonContent {...props} />
+    </Suspense>
   );
 }

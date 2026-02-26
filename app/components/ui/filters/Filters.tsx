@@ -1,11 +1,12 @@
 "use client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import FilterItem from "./FilterItem";
 import parseFilterValue from "./helpers/parseFilterValue";
 import normalizeFilters from "./helpers/normalizeFilters";
 import { FilterOptions } from "./FilterTypes";
-export default function Filters({
+
+function FiltersContent({
   filterOptions,
 }: {
   filterOptions: FilterOptions;
@@ -137,5 +138,15 @@ export default function Filters({
         )}
       </form>
     </div>
+  );
+}
+
+export default function Filters(props: {
+  filterOptions: FilterOptions;
+}) {
+  return (
+    <Suspense fallback={null}>
+      <FiltersContent {...props} />
+    </Suspense>
   );
 }

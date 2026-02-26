@@ -1,6 +1,6 @@
 "use client";
 import { SlidersHorizontal, ArrowUpDown } from "lucide-react";
-import { DrawerToggleButton } from "./DrawerToggleButton";
+import DrawerToggleButton from "./DrawerToggleButton";
 
 export default function FilterSortBtns() {
   return (

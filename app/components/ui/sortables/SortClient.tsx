@@ -1,17 +1,18 @@
 "use client";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { ArrowDown, ArrowUp } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import formatSortName from "./helpers/formatSortName";
 import { SortOption } from "./SortTypes";
-export default function SortClient({
+
+function SortClientContent({
   initialSortOptions = [],
-  currentSort = "", 
+  currentSort = "",
 }: {
   initialSortOptions?: SortOption[];
   currentSort?: string;
 }) {
-  const _ = currentSort; 
+  const _ = currentSort;
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -135,5 +136,16 @@ export default function SortClient({
         </button>
       )}
     </div>
+  );
+}
+
+export default function SortClient(props: {
+  initialSortOptions?: SortOption[];
+  currentSort?: string;
+}) {
+  return (
+    <Suspense fallback={null}>
+      <SortClientContent {...props} />
+    </Suspense>
   );
 }

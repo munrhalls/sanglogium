@@ -4,10 +4,13 @@ import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import { X, ArrowDown, ArrowUp } from "lucide-react";
 import { FilterOptions } from "../filters/FilterTypes";
+import { Suspense } from "react";
+
 interface AppliedFiltersProps {
   filterOptions?: FilterOptions;
 }
-export default function AppliedFilters({
+
+function AppliedFiltersContent({
   filterOptions = [],
 }: AppliedFiltersProps) {
   const searchParams = useSearchParams();
@@ -74,7 +77,7 @@ export default function AppliedFilters({
     filters: Array<{ key: string; value: string }>;
     sort: { name: string; dir: string } | null;
   } = Array.from(searchParams.entries())
-    .filter(([key]) => !key.includes("page")) 
+    .filter(([key]) => !key.includes("page"))
     .reduce(
       (
         acc: {
@@ -172,5 +175,13 @@ export default function AppliedFilters({
         )}
       </div>
     </div>
+  );
+}
+
+export default function AppliedFilters(props: AppliedFiltersProps) {
+  return (
+    <Suspense fallback={null}>
+      <AppliedFiltersContent {...props} />
+    </Suspense>
   );
 }

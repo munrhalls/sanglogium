@@ -3,7 +3,9 @@ import MinOnlyFilter from "./MinOnlyFilter";
 import { useSearchParams } from "next/navigation";
 import { FilterComponentProps } from "./FilterTypes";
 import { FilterValue } from "./FilterTypes";
-export default function FilterItem({
+import { Suspense } from "react";
+
+function FilterItemContent({
   filter,
   value,
   onChange,
@@ -169,4 +171,19 @@ export default function FilterItem({
         </div>
       );
   }
+}
+
+export default function FilterItem(props: {
+  filter: FilterComponentProps;
+  value: string | number | boolean | object | string[] | null;
+  onChange: (
+    value: string | number | boolean | object | string[],
+    type: string
+  ) => void;
+}) {
+  return (
+    <Suspense fallback={null}>
+      <FilterItemContent {...props} />
+    </Suspense>
+  );
 }

@@ -4,8 +4,9 @@ import { X } from "lucide-react";
 import SortClient from "../../sortables/SortClient";
 import { SortOption } from "../../sortables/SortTypes";
 import Link from "next/link";
+import { Suspense } from "react";
 
-export default function ProductsSortDrawer({
+function ProductsSortDrawerContent({
   sortOptions = [],
 }: {
   sortOptions: SortOption[];
@@ -49,5 +50,15 @@ export default function ProductsSortDrawer({
         </footer>
       </div>
     </div>
+  );
+}
+
+export default function ProductsSortDrawer(props: {
+  sortOptions: SortOption[];
+}) {
+  return (
+    <Suspense fallback={null}>
+      <ProductsSortDrawerContent {...props} />
+    </Suspense>
   );
 }

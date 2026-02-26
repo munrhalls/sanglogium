@@ -1,7 +1,10 @@
 "use client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
+
 const DEFAULT_PAGE_SIZE = 15;
-export default function ProductsPerPageDropdown() {
+
+function ProductsPerPageDropdownContent() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -38,5 +41,13 @@ export default function ProductsPerPageDropdown() {
         ))}
       </select>
     </div>
+  );
+}
+
+export default function ProductsPerPageDropdown() {
+  return (
+    <Suspense fallback={null}>
+      <ProductsPerPageDropdownContent />
+    </Suspense>
   );
 }

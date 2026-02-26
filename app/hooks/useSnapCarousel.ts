@@ -47,6 +47,16 @@ export function useSnapCarousel() {
     });
   }, []);
 
+ const goTo = useCallback((index: number) => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    el.scrollTo({
+      left: index * el.clientWidth,
+      behavior: "smooth",
+    });
+  }, []);
+
   return {
     scrollRef,
     canScrollPrev,
@@ -54,5 +64,6 @@ export function useSnapCarousel() {
     scrollPrev,
     scrollNext,
     activeIndex,
+    goTo,
   };
 }

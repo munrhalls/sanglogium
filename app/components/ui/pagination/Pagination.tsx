@@ -2,9 +2,12 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ProductsPerPageDropdown from "./ProductsPerPageDropdown";
 import generatePageNumbers from "./generatePageNumbers";
+import { Suspense } from "react";
+
 const DEFAULT_PAGE_SIZE = 12;
 const DEFAULT_PAGE = 1;
-export default function Pagination({
+
+function PaginationContent({
   totalProductsCount,
 }: {
   totalProductsCount: number;
@@ -117,5 +120,15 @@ export default function Pagination({
         </button>
       </div>
     </div>
+  );
+}
+
+export default function Pagination(props: {
+  totalProductsCount: number;
+}) {
+  return (
+    <Suspense fallback={null}>
+      <PaginationContent {...props} />
+    </Suspense>
   );
 }

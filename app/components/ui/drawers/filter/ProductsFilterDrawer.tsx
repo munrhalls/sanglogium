@@ -4,8 +4,9 @@ import { X } from "lucide-react";
 import Filters from "../../filters/Filters";
 import { FilterOptions } from "../../filters/FilterTypes";
 import Link from "next/link";
+import { Suspense } from "react";
 
-export default function ProductsFilterDrawer({
+function ProductsFilterDrawerContent({
   filterOptions = [],
 }: {
   filterOptions: FilterOptions;
@@ -46,5 +47,15 @@ export default function ProductsFilterDrawer({
         </footer>
       </div>
     </div>
+  );
+}
+
+export default function ProductsFilterDrawer(props: {
+  filterOptions: FilterOptions;
+}) {
+  return (
+    <Suspense fallback={null}>
+      <ProductsFilterDrawerContent {...props} />
+    </Suspense>
   );
 }
