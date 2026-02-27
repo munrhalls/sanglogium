@@ -3,8 +3,8 @@ import Image from "next/image";
 import {
   CarouselPrevious,
   CarouselNext,
+  CarouselDots
 } from "@/app/components/ui/carousel/Carousel";
-import { SlideActiveTrigger } from "@/app/components/ui/carousel/SlideActiveTrigger";
 
 export default function CatalogueHeader({
   data,
@@ -24,6 +24,9 @@ export default function CatalogueHeader({
           className="object-contain"
           priority
         />
+      </div>
+      <div className="absolute bottom-4 left-4 z-40">
+        <CarouselDots />
       </div>
 
       {/* 2. The Text Layer: Directly on top with luxury tracking */}

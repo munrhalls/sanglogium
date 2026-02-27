@@ -15,7 +15,7 @@ export default function MobileCatalogue() {
       aria-label="Catalogue Navigation"
       className="flex h-full w-full flex-col"
     >
-      <Carousel className="flex-1">
+      <Carousel className="flex-1" itemsCount={CATALOGUE_DATA.length}>
         <CarouselTrack className="min-h-full">
           {CATALOGUE_DATA.map((item, index) => (
             <CarouselSlide key={item.id}>

@@ -1,12 +1,15 @@
 "use client";
 
-import React, { createContext, useContext, ReactNode, useRef, useEffect } from "react";
+import React, { createContext, useContext, ReactNode, useRef, useEffect, Children } from "react";
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 import { useSnapCarousel } from "@/app/hooks/useSnapCarousel";
 import { cn } from "@/lib/utils/tailwind";
+import Image from "next/image";
 
 // --- 1. CONTEXT DEFINITION ---
-type CarouselContextType = ReturnType<typeof useSnapCarousel>;
+type CarouselContextType = ReturnType<typeof useSnapCarousel> & {
+  itemsCount: number;
+};
 const CarouselContext = createContext<CarouselContextType | null>(null);
 
 export function useCarousel() {
@@ -14,17 +17,22 @@ export function useCarousel() {
   return context;
 }
 
+
 // --- 2. ROOT COMPONENT ---
 interface CarouselProps {
   children: ReactNode;
   className?: string;
+  itemsCount: number;
 }
 
-export function Carousel({ children, className = "" }: CarouselProps) {
+export function Carousel({ children, className = "", itemsCount = 0 }: CarouselProps) {
   const carouselLogic = useSnapCarousel();
+  console.log('ITEMS COUNT', itemsCount)
+  if (itemsCount === 0) return null;
+  const contextValue = { ...carouselLogic, itemsCount };
 
   return (
-    <CarouselContext.Provider value={carouselLogic}>
+    <CarouselContext.Provider value={contextValue}>
       <section
         className={`relative h-full w-full ${className}`}
         aria-roledescription="carousel"
@@ -143,5 +151,53 @@ export function CarouselNext({ className, ...props }: NavBtnProps) {
     >
       <CaretRightIcon size={24} weight="light" />
     </button>
+  );
+}
+
+
+interface CarouselDotsProps {
+  className?: string;
+}
+
+export function CarouselDots({ className }: CarouselDotsProps) {
+    const context = useCarousel();
+    console.log('DOTS CONTEXT', context)
+    if (!context) return null;
+    const { itemsCount, activeIndex, goTo } = context;
+    console.log('DOTS COUNT', itemsCount)
+    console.log('DOTS ACTIVE INDEX', activeIndex)
+    console.log('DOTS GO TO', goTo)
+
+
+  return (
+    <div className={cn("flex justify-center gap-4", className)}>
+      {Array.from({ length: itemsCount }).map((_, i) => {
+        const isActive = activeIndex === i;
+
+        return (
+          <button
+            key={i}
+            type="button"
+            onClick={() => goTo(i)}
+            aria-label={`Go to slide ${i + 1}`}
+            aria-current={isActive ? "step" : undefined}
+            className="transition-opacity hover:opacity-80 focus-visible:outline-none"
+          >
+            {isActive ? (
+              <Image
+                src="/icons/carousel_dot_active.svg"
+                alt=""
+                width={16}
+                height={16}
+                className="h-3 w-3"
+                priority
+              />
+            ) : (
+              <div className="h-2.5 w-2.5 rounded-full border border-1 border-brand-400"></div>
+            )}
+          </button>
+        );
+      })}
+    </div>
   );
 }

@@ -65,5 +65,6 @@ export function useSnapCarousel() {
     scrollNext,
     activeIndex,
     goTo,
+
   };
 }
