@@ -30,6 +30,20 @@ export function Carousel({ children, className = "", itemsCount = 0 }: CarouselP
   if (itemsCount === 0) return null;
   const contextValue = { ...carouselLogic, itemsCount };
 
+  const renderCount = useRef(0);
+renderCount.current++;
+
+useEffect(() => {
+  console.log(`[Carousel] MOUNTED`);
+  return () => console.log(`[Carousel] UNMOUNTED`);
+}, []);
+
+console.log(
+  `%c[Carousel] RENDER #${renderCount.current}`,
+  "color: #fbbf24; font-weight: bold;",
+  { activeIndex: carouselLogic.activeIndex }
+);
+
   return (
     <CarouselContext.Provider value={contextValue}>
       <section
@@ -74,7 +88,19 @@ export function CarouselSlide({ children, className = "" }) {
       data-active="false"
       className={`group/slide scroll-smooth flex min-w-full snap-start flex-col ${className}`}
     >
-      {children}
+      <div className="
+        h-full w-full
+        /* Child: The Glide Layer (Compositor Lane) */
+        transition-all duration-700 ease-in-out
+        will-change-transform
+
+        /* Inactive State */
+        opacity-15
+
+        /* Active State */
+        group-data-[active=true]/slide:opacity-100
+      ">{children}</div>
+
     </div>
   );
 }
