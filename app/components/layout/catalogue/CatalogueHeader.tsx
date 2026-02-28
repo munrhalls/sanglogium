@@ -25,7 +25,7 @@ export default function CatalogueHeader({
           priority
         />
       </div>
-      <div className="absolute bottom-4 left-4 z-40">
+      <div className="absolute bottom-2 left-4 right-4 z-40">
         <CarouselDots />
       </div>
 
