@@ -36,14 +36,14 @@ export function useSnapCarousel() {
   const scrollPrev = useCallback(() => {
     scrollRef.current?.scrollBy({
       left: -scrollRef.current.clientWidth,
-      behavior: "smooth",
+      behavior: "auto",
     });
   }, []);
 
   const scrollNext = useCallback(() => {
     scrollRef.current?.scrollBy({
       left: scrollRef.current.clientWidth,
-      behavior: "smooth",
+      behavior: "auto",
     });
   }, []);
 

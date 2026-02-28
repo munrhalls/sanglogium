@@ -4,7 +4,6 @@ import React, { createContext, useContext, ReactNode, useRef, useEffect, Childre
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 import { useSnapCarousel } from "@/app/hooks/useSnapCarousel";
 import { cn } from "@/lib/utils/tailwind";
-import Image from "next/image";
 
 // --- 1. CONTEXT DEFINITION ---
 type CarouselContextType = ReturnType<typeof useSnapCarousel> & {
@@ -73,7 +72,7 @@ export function CarouselSlide({ children, className = "" }) {
     <div
       ref={slideRef}
       data-active="false"
-      className={`group/slide flex min-w-full snap-start flex-col ${className}`}
+      className={`group/slide scroll-smooth flex min-w-full snap-start flex-col ${className}`}
     >
       {children}
     </div>
