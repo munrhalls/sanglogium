@@ -55,7 +55,8 @@ function MobileMenuButtons() {
 
       <button
         onClick={() => (isOpen ? closeDrawer() : openDrawer("catalogue"))}
-        className="flex flex-col items-center"
+        className="flex flex-col items-center cursor-pointer"
+        type="button"
       >
         <Menu className="h-6 w-6" />
         <span className="mt-1 hidden text-xs sm:inline-block">Menu</span>
@@ -63,14 +64,17 @@ function MobileMenuButtons() {
 
       <Link
         href={`${pathname}?search=true`}
-        className="flex flex-col items-center"
+        className="flex flex-col items-center cursor-pointer"
+        type="button"
       >
         <Search className="h-6 w-6" />
         <span className="mt-1 hidden text-xs sm:inline-block">Search</span>
       </Link>
 
       {/* <Authentication /> */}
-      <Link href="/basket" className="flex flex-col items-center">
+      <Link href="/basket" className="flex flex-col items-center cursor-pointer"
+        type="button"
+      >
         <ShoppingBag className="h-6 w-6" />
         <span className="mt-1 hidden text-xs sm:inline-block">Basket</span>
       </Link>
@@ -80,7 +84,7 @@ function MobileMenuButtons() {
 
 export default function MobileMenu() {
   return (
-    <div className="fixed bottom-0 left-0 right-0 h-[var(--mobile-menu-h)] border-t border-white bg-brand-800 text-white lg:hidden">
+    <div className="z-10 fixed bottom-0 left-0 right-0 h-[var(--mobile-menu-h)] border-t border-white bg-brand-800 text-white lg:hidden">
       <MobileMenuButtons />
     </div>
   );
