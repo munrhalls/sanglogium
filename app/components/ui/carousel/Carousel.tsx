@@ -158,19 +158,16 @@ export function CarouselNext({ className, ...props }: NavBtnProps) {
 interface CarouselDotsProps {
   className?: string;
 }
+import { CarouselIcon } from "./DotIcon";
 
 export function CarouselDots({ className }: CarouselDotsProps) {
-    const context = useCarousel();
-    console.log('DOTS CONTEXT', context)
-    if (!context) return null;
-    const { itemsCount, activeIndex, goTo } = context;
-    console.log('DOTS COUNT', itemsCount)
-    console.log('DOTS ACTIVE INDEX', activeIndex)
-    console.log('DOTS GO TO', goTo)
+  const context = useCarousel();
 
+  if (!context) return null;
+  const { itemsCount, activeIndex, goTo } = context;
 
   return (
-    <div className={cn("flex justify-center gap-4", className)}>
+    <div className={cn("flex justify-center gap-4", className)} role="tablist">
       {Array.from({ length: itemsCount }).map((_, i) => {
         const isActive = activeIndex === i;
 
@@ -178,23 +175,23 @@ export function CarouselDots({ className }: CarouselDotsProps) {
           <button
             key={i}
             type="button"
-            onClick={() => goTo(i)}
+            role="tab"
+            aria-selected={isActive}
             aria-label={`Go to slide ${i + 1}`}
-            aria-current={isActive ? "step" : undefined}
-            className="transition-opacity hover:opacity-80 focus-visible:outline-none"
+            onClick={() => goTo(i)}
+            className="group relative flex items-center justify-center transition-transform active:scale-95 focus-visible:outline-none"
           >
-            {isActive ? (
-              <Image
-                src="/icons/carousel_dot_active.svg"
-                alt=""
-                width={16}
-                height={16}
-                className="h-3 w-3"
-                priority
-              />
-            ) : (
-              <div className="h-2.5 w-2.5 rounded-full border border-1 border-brand-400"></div>
-            )}
+            <CarouselIcon
+              className={cn(
+                "h-4 w-4",
+                isActive
+                  ? "text-brand-400 opacity-100"
+                  : "grayscale opacity-40 hover:opacity-70"
+              )}
+            />
+
+            {/* Focus Ring - Semantic and clear without shifting layout */}
+            <div className="absolute -inset-1 hidden rounded-full ring-2 ring-brand-400/50 group-focus-visible:block" />
           </button>
         );
       })}
