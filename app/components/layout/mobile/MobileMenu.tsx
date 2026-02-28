@@ -57,6 +57,7 @@ function MobileMenuButtons() {
         onClick={() => (isOpen ? closeDrawer() : openDrawer("catalogue"))}
         className="flex flex-col items-center cursor-pointer touch-manipulation"
         type="button"
+        style={{ isolation: 'isolate' }}
       >
         <Menu className="h-6 w-6" />
         <span className="mt-1 hidden text-xs sm:inline-block">Menu</span>
@@ -66,6 +67,7 @@ function MobileMenuButtons() {
         href={`${pathname}?search=true`}
         className="flex flex-col items-center cursor-pointer touch-manipulation"
         type="button"
+        style={{ isolation: 'isolate' }}
       >
         <Search className="h-6 w-6" />
         <span className="mt-1 hidden text-xs sm:inline-block">Search</span>
@@ -74,6 +76,7 @@ function MobileMenuButtons() {
       {/* <Authentication /> */}
       <Link href="/basket" className="flex flex-col items-center cursor-pointer touch-manipulation"
         type="button"
+        style={{ isolation: 'isolate' }}
       >
         <ShoppingBag className="h-6 w-6" />
         <span className="mt-1 hidden text-xs sm:inline-block">Basket</span>
