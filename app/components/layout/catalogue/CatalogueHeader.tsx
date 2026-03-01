@@ -40,7 +40,7 @@ export default function CatalogueHeader({
           <h1 className="opacity-0 translate-y-2 transition-all duration-500
   group-data-[active=true]/slide:opacity-100
   group-data-[active=true]/slide:translate-y-0
-  group-data-[active=true]/slide:delay-150 relative z-10 text-center text-h4 font-bold uppercase tracking-[0.3em] text-brand-400 landscape:text-left">
+  group-data-[active=true]/slide:delay-150 relative z-10 text-center text-h4 font-bold uppercase tracking-[0.3em] text-brand-400 landscape:text-left text-cap">
             {data.label}
           </h1>
       </div>

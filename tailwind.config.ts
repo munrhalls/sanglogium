@@ -116,10 +116,16 @@ export default {
         // ----------------------------------------------------------------------
 
         // 28px / 36px (Tracking: 0)
-        h3: ["28px", { lineHeight: "36px", letterSpacing: "0.05em" }],
+        h3: [
+          "clamp(1.375rem, 0.5vw + 1.2rem, 1.75rem)",
+          { lineHeight: "1.2", letterSpacing: "0.05em" },
+        ],
 
         // 21px / 28px (Tracking: 0)
-        h4: ["21px", { lineHeight: "28px", letterSpacing: "0.1em" }],
+        h4: [
+          "clamp(1rem, 0.4vw + 0.9rem, 1.3125rem)",
+          { lineHeight: "1.2", letterSpacing: "0.1em" },
+        ],
 
         // ----------------------------------------------------------------------
         // BODY COPY & UTILITIES
