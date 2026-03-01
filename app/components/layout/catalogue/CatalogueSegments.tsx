@@ -9,20 +9,20 @@ export default function CatalogueSegments({
   index: number;
 }) {
   return (
-    <div className="w-full max-w-screen-xl px-8 landscape:overflow-y-auto landscape:no-scrollbar landscape:max-h-full landscape:h-full landscape:py-12">
-      <div className="flex flex-col flex-nowrap justify-start gap-12 landscape:gap-8 sm:grid-cols-2 sm:gap-8 md:grid lg:col-span-8 lg:grid-cols-3">
+    <div className="w-full max-w-screen-xl px-8 landscape:overflow-y-auto landscape:no-scrollbar landscape:max-h-full landscape:h-full landscape:py-12 ">
+      <div className="flex flex-col flex-nowrap justify-start items-center gap-12 landscape:gap-8 sm:grid-cols-2 sm:gap-8 md:grid lg:col-span-8 lg:grid-cols-3">
         {data.sections.map((section, idx) => (
             <div
               key={section.title}
-              className="opacity-0 translate-y-2 transition-[opacity,transform] duration-300 ease-in delay-0
+              className=" opacity-0 translate-y-2 transition-[opacity,transform] duration-300 ease-in delay-0
   group-data-[active=true]/slide:opacity-100
   group-data-[active=true]/slide:translate-y-0
   group-data-[active=true]/slide:delay-150 space-y-4 landscape:min-h-0"
             >
-              <h3 className="text-h4 uppercase text-brand-400">
+              <h3 className="text-h4 uppercase text-brand-400 mx-auto max-w-[280px] xs:max-w-[320px] sm:max-w-sm">
                 {section.title}
               </h3>
-              <ul className="space-y-4">
+              <ul className="space-y-4 pl-2">
                 {section.links.map((link, linkIdx) => (
                   <li
                     key={link}
