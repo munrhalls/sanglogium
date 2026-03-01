@@ -16,7 +16,13 @@ export default function CatalogueHeader({
   return (
     <div className="relative flex h-64 w-full flex-col items-center justify-center overflow-hidden bg-brand-900 px-8">
       {/* 1. The Image Layer: Scaled up and centered behind text */}
-      <div className="absolute h-56 w-56 opacity-40 grayscale transition-all duration-700 hover:scale-110 hover:opacity-40">
+      <div className="absolute h-56 w-56 opacity-40 grayscale transition-all duration-700 hover:scale-110 hover:opacity-40 [animation:pendulum_8s_cubic-bezier(0.45,0.05,0.55,0.95)_infinite_alternate]">
+        <style>{`
+          @keyframes pendulum {
+            0% { transform: rotate(-2deg); }
+            100% { transform: rotate(3deg); }
+          }
+        `}</style>
         <Image
           src={data.imageUrl}
           alt={data.label}
