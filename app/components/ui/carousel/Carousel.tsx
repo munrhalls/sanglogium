@@ -4,6 +4,7 @@ import React, { createContext, useContext, ReactNode, useRef, useEffect, Childre
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 import { useSnapCarousel } from "@/app/hooks/useSnapCarousel";
 import { cn } from "@/lib/utils/tailwind";
+import { CarouselIcon } from "./DotIcon";
 
 // --- 1. CONTEXT DEFINITION ---
 type CarouselContextType = ReturnType<typeof useSnapCarousel> & {
@@ -26,23 +27,13 @@ interface CarouselProps {
 
 export function Carousel({ children, className = "", itemsCount = 0 }: CarouselProps) {
   const carouselLogic = useSnapCarousel();
-  console.log('ITEMS COUNT', itemsCount)
   if (itemsCount === 0) return null;
-  const contextValue = { ...carouselLogic, itemsCount };
 
-  const renderCount = useRef(0);
-renderCount.current++;
+  const contextValue = React.useMemo(
+    () => ({ ...carouselLogic, itemsCount }),
+    [carouselLogic, itemsCount]
+  );
 
-useEffect(() => {
-  console.log(`[Carousel] MOUNTED`);
-  return () => console.log(`[Carousel] UNMOUNTED`);
-}, []);
-
-console.log(
-  `%c[Carousel] RENDER #${renderCount.current}`,
-  "color: #fbbf24; font-weight: bold;",
-  { activeIndex: carouselLogic.activeIndex }
-);
 
   return (
     <CarouselContext.Provider value={contextValue}>
@@ -75,7 +66,11 @@ export function CarouselTrack({
   return (
     <div
       ref={scrollRef}
-      className={`no-scrollbar flex min-h-full w-full snap-x snap-mandatory overflow-x-auto scroll-smooth touch-action:pan-x landscape:h-full  ${className}`}
+      data-vaul-no-drag
+      className={cn(
+        "no-scrollbar flex min-h-full w-full snap-x snap-mandatory overflow-x-auto touch-pan-x landscape:h-full",
+        className
+      )}
     >
       {children}
     </div>
@@ -111,7 +106,10 @@ export function CarouselSlide({ children, className = "" }) {
     <div
       ref={slideRef}
       data-active="false"
-      className={`group/slide scroll-smooth flex min-w-full snap-start flex-col ${className}`}
+      className={cn(
+        "group/slide flex min-w-full snap-start snap-always flex-col",
+        className
+      )}
     >
       <div className="
         h-full w-full
@@ -183,7 +181,6 @@ export function CarouselNext({ className, ...props }: NavBtnProps) {
 interface CarouselDotsProps {
   className?: string;
 }
-import { CarouselIcon } from "./DotIcon";
 
 export function CarouselDots({ className }: CarouselDotsProps) {
   const context = useCarousel();
