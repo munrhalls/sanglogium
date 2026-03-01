@@ -22,7 +22,7 @@ export default function CatalogueSegments({
         </div>
       </div>
       <div className="w-full max-w-screen-xl px-8 landscape:overflow-y-auto landscape:no-scrollbar landscape:max-h-full landscape:h-full landscape:py-4 landscape:px-4">
-        <div className="flex flex-col flex-nowrap justify-start items-center gap-12 landscape:gap-8 sm:flex sm:flex-wrap sm:gap-4 lg:grid lg:gap-8 lg:grid-cols-3">
+        <div className="mx-auto max-w-[184px] flex flex-col flex-nowrap justify-start items-start gap-12 landscape:gap-8 sm:flex sm:flex-wrap sm:gap-4 lg:grid lg:gap-8 lg:grid-cols-3">
           {data.sections.map((section, idx) => (
               <div
                 key={section.title}
