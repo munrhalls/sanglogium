@@ -9,7 +9,7 @@ export default function CatalogueSegments({
   index: number;
 }) {
   return (
-  <div className="sm:h-full relative w-full max-w-screen-xl px-8 landscape:overflow-y-auto landscape:no-scrollbar landscape:max-h-full landscape:h-full landscape:py-12 sm:h-1/2">
+  <div className="sm:h-full relative w-full max-w-screen-xl px-8 landscape:overflow-y-auto landscape:no-scrollbar landscape:max-h-full landscape:h-full landscape:py-4 landscape:px-2 sm:h-1/2">
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden opacity-[0.05] grayscale">
         <div className="relative h-full w-full scale-[3] translate-x-1/4 translate-y-1/4">
           <Image
@@ -21,8 +21,8 @@ export default function CatalogueSegments({
           />
         </div>
       </div>
-      <div className="w-full max-w-screen-xl px-8 landscape:overflow-y-auto landscape:no-scrollbar landscape:max-h-full landscape:h-full landscape:py-12">
-        <div className="flex flex-col flex-nowrap justify-start items-center gap-12 landscape:gap-8 sm:grid sm:grid-cols-3 sm:gap-8 lg:grid-cols-3">
+      <div className="w-full max-w-screen-xl px-8 landscape:overflow-y-auto landscape:no-scrollbar landscape:max-h-full landscape:h-full landscape:py-4 landscape:px-4">
+        <div className="flex flex-col flex-nowrap justify-start items-center gap-12 landscape:gap-8 sm:flex sm:flex-wrap sm:gap-4 lg:grid lg:gap-8 lg:grid-cols-3">
           {data.sections.map((section, idx) => (
               <div
                 key={section.title}
