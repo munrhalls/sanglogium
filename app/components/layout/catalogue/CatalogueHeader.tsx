@@ -36,7 +36,7 @@ export default function CatalogueHeader({
       </div>
 
       {/* 2. The Text Layer: Directly on top with luxury tracking */}
-      <div key={data.label} className="flex h-full w-full items-start justify-center pt-4">
+      <div key={data.label} className="flex h-full w-full items-start justify-center pt-8">
           <h1 className="opacity-0 translate-y-2 transition-all duration-500
   group-data-[active=true]/slide:opacity-100
   group-data-[active=true]/slide:translate-y-0
