@@ -91,7 +91,7 @@ export function CarouselSlide({ children, className = "" }) {
       <div className="
         h-full w-full
         /* Child: The Glide Layer (Compositor Lane) */
-        transition-all duration-700 ease-in-out
+        transition-all duration-450 ease-in-out
         will-change-transform
 
         /* Inactive State */
