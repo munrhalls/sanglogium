@@ -31,7 +31,7 @@ export default function CatalogueHeader({
           priority
         />
       </div>
-      <div className="absolute bottom-2 left-4 right-4 landscape:top-4 landscape:right-auto landscape:left-8 z-40">
+      <div className="absolute bottom-2 left-4 right-4 landscape:top-4 landscape:right-auto landscape:left-8 z-30 bg-black/30 py-2">
         <CarouselDots />
       </div>
 
@@ -45,7 +45,7 @@ export default function CatalogueHeader({
           </h1>
       </div>
       {/* 3. Carousel Controls: Grouped Instrument Cluster */}
-      <div className="absolute bottom-2 left-4 z-20 flex gap-2 landscape:right-auto landscape:left-4 sm:right-8">
+      <div className="absolute bottom-2 left-4 z-40 flex gap-2 landscape:right-auto landscape:left-4 sm:right-8">
         <CarouselPrevious className="static translate-y-0" />
         <CarouselNext className="static translate-y-0" />
       </div>
