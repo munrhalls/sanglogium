@@ -22,7 +22,7 @@ export default function CatalogueSegments({
         </div>
       </div>
       <div className="w-full max-w-screen-xl px-8 landscape:overflow-y-auto landscape:no-scrollbar landscape:max-h-full landscape:h-full landscape:py-4 landscape:px-4">
-        <div className="mx-auto max-w-[184px]  flex flex-col flex-nowrap items-start gap-12 landscape:gap-8 sm:flex sm:flex-wrap sm:gap-4 lg:grid lg:gap-8 lg:grid-cols-3">
+        <div className="mx-auto max-w-[184px]  flex flex-col flex-nowrap items-start gap-12 landscape:gap-8 sm:flex sm:flex-wrap sm:gap-4 sm:max-w-[256px] lg:grid lg:gap-8 lg:grid-cols-3">
           {data.sections.map((section, idx) => (
               <div
                 key={section.title}
@@ -31,7 +31,7 @@ export default function CatalogueSegments({
     group-data-[active=true]/slide:translate-y-0
     group-data-[active=true]/slide:delay-150 space-y-4 landscape:min-h-0"
               >
-                <h3 className="text-h4 uppercase text-brand-400 mx-auto max-w-[280px] xs:max-w-[320px] sm:max-w-sm">
+                <h3 className="text-h4 sm:text-h3 uppercase text-brand-400 mx-auto max-w-[280px] xs:max-w-[320px] sm:max-w-sm">
                   {section.title}
                 </h3>
                 <ul className="space-y-4 pl-2">
@@ -57,7 +57,7 @@ export default function CatalogueSegments({
                     >
                       <a
                         href="#"
-                        className="pl-2 text-body text-secondary-300 transition-colors hover:text-brand-200 active:text-brand-400"
+                        className="pl-2 text-body sm:text-h4 text-secondary-300 transition-colors hover:text-brand-200 active:text-brand-400"
                       >
                         {link}
                       </a>
