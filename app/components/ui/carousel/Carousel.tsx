@@ -210,7 +210,7 @@ export function CarouselDots({ className }: CarouselDotsProps) {
           >
             <CarouselIcon
               className={cn(
-                "h-2 w-2",
+                "h-2 w-2 sm:h-4 sm:w-4",
                 isActive
                   ? "text-brand-400 opacity-100"
                   : "grayscale opacity-35 hover:opacity-70"
