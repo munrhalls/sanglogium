@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Menu, Search, ShoppingBag } from "lucide-react";
+import { ListIcon, XIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 // import dynamic from "next/dynamic";
 // import { useQueryState } from "nuqs";
@@ -59,7 +60,19 @@ function MobileMenuButtons() {
         type="button"
         style={{ isolation: 'isolate' }}
       >
-        <Menu className="h-6 w-6" />
+        {/* TODO: use phosphor icons - when the menu is open, the button should turn to close X icon */}
+        {isOpen ? (
+          <div className="relative flex h-10 w-10 items-center justify-center">
+            {/* The Circle Highlight */}
+            <div className="absolute h-8 w-8 rounded-full bg-white/5 ring-1 ring-white/10" />
+
+            {/* The Icon */}
+            <XIcon className="relative h-6 w-6 text-brand-200" weight="bold" />
+          </div>
+
+        ) : (
+          <ListIcon className="h-6 w-6" weight="bold" />
+        )}
         <span className="mt-1 hidden text-xs sm:inline-block">Menu</span>
       </button>
 

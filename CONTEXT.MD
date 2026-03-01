@@ -1,2 +1,2 @@
-Context: Next 15, Tailwind 3, sanity v3, react 18.
+Context: Next 15, Tailwind 3, sanity v3, react 18, all icons are phosphor icons and sometimes, custom assets (e.g. logo dots for carousel). Tailwind config defines typography scale (utilizes clamp), colors, spacing, breakpoints, etc.
 Constraints: Highly performant, lean, works fast at even 6x cpu throttle/weak network setting in dev tools. Mobile responsive, semantic HTML, step-by-step verification of every step. Must aim at simplest possible solution * fully robust/professional. Must account for 2nd and 3rd order consequences - in terms of how implementation might complicate. Must assess options to now and avoid future complications.
