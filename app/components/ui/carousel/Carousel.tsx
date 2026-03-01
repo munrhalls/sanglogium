@@ -75,7 +75,7 @@ export function CarouselTrack({
   return (
     <div
       ref={scrollRef}
-      className={`no-scrollbar flex min-h-full w-full snap-x snap-mandatory overflow-x-auto scroll-smooth landscape:h-full  ${className}`}
+      className={`no-scrollbar flex min-h-full w-full snap-x snap-mandatory overflow-x-auto scroll-smooth touch-action:pan-x landscape:h-full  ${className}`}
     >
       {children}
     </div>

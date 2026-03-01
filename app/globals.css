@@ -4,9 +4,10 @@
 
 :root {
   --header-h: 64px;
+  --mobile-header-h: 44px;
   --catalogue-nav-h: 88px;
   --site-header-h: calc(var(--header-h) + var(--catalogue-nav-h));
-  --mobile-menu-h: 64px;
+  --mobile-menu-h: 44px;
   --mobile-viewport-h: calc(100dvh - var(--mobile-menu-h));
 }
 /* 1. Global Font Setup */
