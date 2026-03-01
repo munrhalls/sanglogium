@@ -49,7 +49,7 @@ function MobileMenuButtons() {
             href={`${pathname}?menu=true`}
             className="flex flex-col items-center"
           >
-            <Menu className="h-6 w-6" />
+            <Menu className="h-5 w-5" />
             <span className="mt-1 hidden text-xs sm:inline-block">Menu</span>
           </Link>
         )} */}
@@ -64,14 +64,14 @@ function MobileMenuButtons() {
         {isOpen ? (
           <div className="relative flex h-10 w-10 items-center justify-center">
             {/* The Circle Highlight */}
-            <div className="absolute h-8 w-8 rounded-full bg-white/5 ring-1 ring-white/10" />
+            <div className="absolute h-6 w-6 rounded-full bg-white/5 ring-1 ring-white/10" />
 
             {/* The Icon */}
-            <XIcon className="relative h-6 w-6 text-brand-200" weight="bold" />
+            <XIcon className="relative h-5 w-5 text-brand-200" weight="bold" />
           </div>
 
         ) : (
-          <ListIcon className="h-6 w-6" weight="bold" />
+          <ListIcon className="h-5 w-5" weight="bold" />
         )}
         <span className="mt-1 hidden text-xs sm:inline-block">Menu</span>
       </button>
@@ -82,7 +82,7 @@ function MobileMenuButtons() {
         type="button"
         style={{ isolation: 'isolate' }}
       >
-        <Search className="h-6 w-6" />
+        <Search className="h-5 w-5" />
         <span className="mt-1 hidden text-xs sm:inline-block">Search</span>
       </Link>
 
@@ -91,7 +91,7 @@ function MobileMenuButtons() {
         type="button"
         style={{ isolation: 'isolate' }}
       >
-        <ShoppingBag className="h-6 w-6" />
+        <ShoppingBag className="h-5 w-5" />
         <span className="mt-1 hidden text-xs sm:inline-block">Basket</span>
       </Link>
     </div>
