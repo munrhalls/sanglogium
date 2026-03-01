@@ -56,8 +56,33 @@ console.log(
   );
 }
 
+// --- 2. TRACK COMPONENT ---
+interface CarouselTrackProps {
+  children: ReactNode;
+  className?: string;
+}
 
+export function CarouselTrack({
+  children,
+  className = "",
+}: CarouselTrackProps) {
+  const context = useCarousel();
 
+  if (!context) return <div className={className}>{children}</div>;
+
+  const { scrollRef } = context;
+
+  return (
+    <div
+      ref={scrollRef}
+      className={`no-scrollbar flex min-h-full w-full snap-x snap-mandatory overflow-x-auto scroll-smooth landscape:h-full  ${className}`}
+    >
+      {children}
+    </div>
+  );
+}
+
+// 3. SLIDE
 export function CarouselSlide({ children, className = "" }) {
   const slideRef = useRef<HTMLDivElement>(null);
   const { scrollRef } = useCarousel()!; // Get the track ref from your context
@@ -105,31 +130,6 @@ export function CarouselSlide({ children, className = "" }) {
   );
 }
 
-// --- 3. TRACK COMPONENT ---
-interface CarouselTrackProps {
-  children: ReactNode;
-  className?: string;
-}
-
-export function CarouselTrack({
-  children,
-  className = "",
-}: CarouselTrackProps) {
-  const context = useCarousel();
-
-  if (!context) return <div className={className}>{children}</div>;
-
-  const { scrollRef } = context;
-
-  return (
-    <div
-      ref={scrollRef}
-      className={`no-scrollbar flex min-h-full w-full snap-x snap-mandatory overflow-x-auto scroll-smooth ${className}`}
-    >
-      {children}
-    </div>
-  );
-}
 
 // --- 4. NAVIGATION COMPONENTS (Moved Here) ---
 const BTN_BASE =
