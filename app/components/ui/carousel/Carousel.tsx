@@ -204,7 +204,9 @@ export function CarouselDots({ className }: CarouselDotsProps) {
             aria-selected={isActive}
             aria-label={`Go to slide ${i + 1}`}
             onClick={() => goTo(i)}
-            className="group relative flex items-center justify-center transition-transform active:scale-95 focus-visible:outline-none"
+            className="cursor-pointer group relative flex items-center justify-center transition-transform active:scale-95 focus-visible:outline-none touch-manipulation"
+            style={{ isolation: 'isolate' }}
+
           >
             <CarouselIcon
               className={cn(
