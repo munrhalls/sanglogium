@@ -2,7 +2,7 @@ export default function BrandLogo() {
   return (
     <div className="flex items-center gap-[4px]">
       {/* SANG */}
-      <span className="text-h5 font-bold tracking-tight text-brand-400">SANG</span>
+      <span className="text-h5 font-bold tracking-normal text-brand-400">SANG</span>
 
       {/* The 1KB Orbit */}
       <svg
@@ -14,7 +14,7 @@ export default function BrandLogo() {
     </svg>
 
       {/* LOGIUM */}
-      <span className="text-h5 font-bold tracking-tight text-brand-400">LOGIUM</span>
+      <span className="text-h5 font-bold tracking-normal text-brand-400">LOGIUM</span>
     </div>
   );
 };
