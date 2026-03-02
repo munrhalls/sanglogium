@@ -9,7 +9,7 @@ export default function CatalogueSegments({
   index: number;
 }) {
   return (
-  <div className="sm:h-full relative w-full max-w-screen-xl px-8 landscape:overflow-y-auto landscape:no-scrollbar landscape:max-h-full landscape:h-full landscape:py-4 landscape:px-2 sm:h-1/2">
+  <div className="sm:h-full relative w-full max-w-screen-xl px-8 pb-12 landscape:overflow-y-auto landscape:no-scrollbar landscape:max-h-full landscape:h-full landscape:py-4 landscape:px-2 sm:h-1/2">
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden opacity-[0.05] grayscale">
         <div className="relative h-full w-full scale-[3] translate-x-1/4 translate-y-1/4">
           <Image
@@ -38,7 +38,7 @@ export default function CatalogueSegments({
                   {section.links.map((link, linkIdx) => (
                     <li
                       key={link}
-                      // We pass the index to a CSS variable
+                      // pass the index to a CSS variable
                       style={{ "--index": linkIdx } as React.CSSProperties}
                       className="
                         /* 1. Base State */
