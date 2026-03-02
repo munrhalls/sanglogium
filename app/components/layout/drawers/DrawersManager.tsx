@@ -3,6 +3,7 @@
 import { Drawer } from "vaul";
 import { useDrawer } from "@/app/hooks/nuqs/useDrawer";
 import MobileCatalogue from "@/app/components/layout/mobile/MobileCatalogue";
+import { cn } from "@/lib/utils/tailwind";
 
 export default function DrawerManager() {
   const { drawer, isOpen, closeDrawer } = useDrawer();
@@ -15,13 +16,25 @@ export default function DrawerManager() {
     >
       <Drawer.Portal>
         <Drawer.Overlay
-          className="fixed inset-0 z-50 bg-black/10 top-[var(--mobile-header-h)] bottom-[var(--mobile-menu-h)]"
+          className={cn(
+            "fixed inset-0 z-50 bg-black/10",
+            "bottom-[var(--mobile-menu-h)] top-[var(--mobile-header-h)]"
+          )}
         />
 
         <Drawer.Content
-          className="fixed right-0 z-50 flex w-full outline-none lg:w-1/4 top-[var(--mobile-header-h)] bottom-[var(--mobile-menu-h)]"
+          className={cn(
+            "fixed right-0 z-50 flex w-full outline-none",
+            "bottom-[var(--mobile-menu-h)] top-[var(--mobile-header-h)]",
+            "lg:w-1/4"
+          )}
         >
-          <div className="flex w-full flex-col overflow-y-auto bg-brand-700 shadow-lg">
+          <div
+            className={cn(
+              "flex w-full flex-col bg-brand-700 shadow-lg",
+              "overflow-y-auto"
+            )}
+          >
             <Drawer.Title className="sr-only">Drawer Content</Drawer.Title>
             {drawer === "catalogue" && <MobileCatalogue />}
           </div>

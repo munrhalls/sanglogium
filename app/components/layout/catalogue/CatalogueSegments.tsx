@@ -67,7 +67,7 @@ export default function CatalogueSegments({
                 key={section.title}
                 className={cn(
                   "translate-y-2 opacity-0",
-                  "space-y-4",
+                  "space-y-4 md:space-y-6",
                   "transition-[opacity,transform] delay-0 duration-300 ease-in",
                   "group-data-[active=true]/slide:translate-y-0 group-data-[active=true]/slide:opacity-100 group-data-[active=true]/slide:delay-150"
                 )}

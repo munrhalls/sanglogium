@@ -20,7 +20,7 @@ export default function SearchBar() {
         placeholder="Search..."
         maxLength={500}
         aria-label="Search"
-        className="text-body w-full border-none bg-transparent text-brand-700 outline-none transition-colors duration-300 selection:bg-brand-700 selection:text-brand-400 placeholder:text-secondary-600 focus:placeholder:text-brand-800 group-focus-within:text-brand-700"
+        className="w-full border-none bg-transparent text-body text-brand-700 outline-none transition-colors duration-300 selection:bg-brand-700 selection:text-brand-400 placeholder:text-secondary-600 focus:placeholder:text-brand-800 group-focus-within:text-brand-700"
       />
     </form>
   );

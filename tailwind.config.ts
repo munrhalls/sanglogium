@@ -53,6 +53,8 @@ export default {
         "2xs": "450px",
         "2xl": "1600px",
         "3xl": "1920px",
+        "pointer-fine": { raw: "(pointer: fine)" },
+        "pointer-coarse": { raw: "(pointer: coarse)" },
       },
       spacing: {
         "header-h": "var(--header-h)",

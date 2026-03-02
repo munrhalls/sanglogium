@@ -9,7 +9,15 @@
   --catalogue-nav-h: 88px;
   --mobile-viewport-h: calc(100dvh - var(--mobile-menu-h));
   --site-header-h: calc(var(--header-h) + var(--catalogue-nav-h));
+  --mobile-menu-display: block;
 }
+
+@media (min-width: 1024px) and (min-height: 851px) {
+  :root {
+    --mobile-menu-display: none;
+  }
+}
+
 /* 1. Global Font Setup */
 body {
   font-family: Montserrat, Helvetica, Arial, sans-serif;
@@ -32,7 +40,7 @@ body {
        Background: Brand-700 (The Void)
        Text: Brand-100 (Paper White)
     */
-    @apply bg-brand-900 relative min-h-screen text-brand-100;
+    @apply relative min-h-screen bg-brand-900 text-brand-100;
   }
 }
 
@@ -57,4 +65,12 @@ body {
 button {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+}
+
+@layer utilities {
+  @media (min-width: 1024px) and (hover: hover) {
+    .hide-on-desktop-hover {
+      display: none;
+    }
+  }
 }

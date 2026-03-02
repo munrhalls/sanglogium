@@ -8,6 +8,7 @@ import Link from "next/link";
 // import { useQueryState } from "nuqs";
 import { usePathname } from "next/navigation";
 import { useDrawer } from "@/app/hooks/nuqs/useDrawer";
+import { cn } from "@/lib/utils/tailwind";
 
 // const Authentication = dynamic(
 //   () => import("@/app/components/features/auth/Authentication"),
@@ -56,9 +57,9 @@ function MobileMenuButtons() {
 
       <button
         onClick={() => (isOpen ? closeDrawer() : openDrawer("catalogue"))}
-        className="flex flex-col items-center cursor-pointer touch-manipulation"
+        className="flex cursor-pointer touch-manipulation flex-col items-center"
         type="button"
-        style={{ isolation: 'isolate' }}
+        style={{ isolation: "isolate" }}
       >
         {/* TODO: use phosphor icons - when the menu is open, the button should turn to close X icon */}
         {isOpen ? (
@@ -69,30 +70,37 @@ function MobileMenuButtons() {
             {/* The Icon */}
             <XIcon className="relative h-5 w-5 text-brand-200" weight="bold" />
           </div>
-
         ) : (
           <ListIcon className="h-5 w-5" weight="bold" />
         )}
-        <span className="sr-only text-cap mt-1 hidden text-xs sm:inline-block">Menu</span>
+        <span className="sr-only mt-1 hidden text-xs text-cap sm:inline-block">
+          Menu
+        </span>
       </button>
 
       <Link
         href={`${pathname}?search=true`}
-        className="flex flex-col items-center cursor-pointer touch-manipulation"
+        className="flex cursor-pointer touch-manipulation flex-col items-center"
         type="button"
-        style={{ isolation: 'isolate' }}
+        style={{ isolation: "isolate" }}
       >
         <Search className="h-5 w-5" />
-        <span className="sr-only text-cap mt-1 hidden text-xs sm:inline-block">Search</span>
+        <span className="sr-only mt-1 hidden text-xs text-cap sm:inline-block">
+          Search
+        </span>
       </Link>
 
       {/* <Authentication /> */}
-      <Link href="/basket" className="flex flex-col items-center cursor-pointer touch-manipulation"
+      <Link
+        href="/basket"
+        className="flex cursor-pointer touch-manipulation flex-col items-center"
         type="button"
-        style={{ isolation: 'isolate' }}
+        style={{ isolation: "isolate" }}
       >
         <ShoppingBag className="h-5 w-5" />
-        <span className="sr-only text-cap mt-1 hidden text-xs sm:inline-block">Basket</span>
+        <span className="sr-only mt-1 hidden text-xs text-cap sm:inline-block">
+          Basket
+        </span>
       </Link>
     </div>
   );
@@ -100,7 +108,13 @@ function MobileMenuButtons() {
 
 export default function MobileMenu() {
   return (
-    <div className="z-10 fixed bottom-0 left-0 right-0 h-[var(--mobile-menu-h)] border-t border-white bg-brand-800 text-white lg:hidden">
+    <div
+      style={{ display: "var(--mobile-menu-display)" }}
+      className={cn(
+        "fixed bottom-0 left-0 right-0 z-50",
+        "h-[var(--mobile-menu-h)] border-t border-white bg-brand-800 text-white"
+      )}
+    >
       <MobileMenuButtons />
     </div>
   );
