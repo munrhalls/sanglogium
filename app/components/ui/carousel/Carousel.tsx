@@ -77,7 +77,7 @@ export function CarouselTrack({
       ref={scrollRef}
       data-vaul-no-drag
       className={cn(
-        "no-scrollbar flex min-h-full w-full",
+        "no-scrollbar flex h-full w-full",
         "touch-pan-x snap-x snap-mandatory overflow-x-auto",
         "landscape:h-full",
         className
@@ -118,14 +118,14 @@ export function CarouselSlide({ children, className = "" }) {
       ref={slideRef}
       data-active="false"
       className={cn(
-        "group/slide flex min-w-full snap-start snap-always flex-col",
+        "group/slide flex h-full min-w-full flex-1 snap-start snap-always flex-col",
         className
       )}
     >
       <div
         className={cn(
-          "duration-450 h-full w-full opacity-15 transition-all ease-in-out will-change-transform",
-          "group-data-[active=true]/slide:opacity-100"
+          "duration-450 h-full w-full flex-1 opacity-15 transition-all ease-in-out will-change-transform",
+          "flex flex-col group-data-[active=true]/slide:opacity-100"
         )}
       >
         {children}

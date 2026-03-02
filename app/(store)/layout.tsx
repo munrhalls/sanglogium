@@ -28,7 +28,7 @@ export default function RootLayout({
           <NuqsAdapter>
             <Header />
             <CatalogueNavbar />
-            <main className="relative flex w-full flex-1 flex-col overflow-y-auto overflow-x-hidden pb-[var(--mobile-menu-h)] pt-[var(--mobile-header-h)]">
+            <main className="relative flex h-full w-full flex-1 flex-col overflow-y-auto overflow-x-hidden pb-[var(--mobile-menu-h)] pt-[var(--mobile-header-h)]">
               {children}
               <Footer />
             </main>

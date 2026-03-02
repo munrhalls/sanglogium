@@ -34,6 +34,7 @@ body {
   * {
     @apply border-secondary-300;
   }
+
   html {
     @apply h-dvh overflow-hidden;
   }
