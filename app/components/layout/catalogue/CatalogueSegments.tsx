@@ -14,7 +14,7 @@ export default function CatalogueSegments({
       className={cn(
         "relative h-full max-h-full w-full max-w-screen-xl",
         "landscape:no-scrollbar overflow-y-auto",
-        "px-8 pb-12 pt-8"
+        "px-8 pt-8"
       )}
     >
       <div
@@ -43,7 +43,7 @@ export default function CatalogueSegments({
       <div
         className={cn(
           "relative z-10 min-h-full w-full max-w-screen-xl",
-          "space-y-4 pl-8 sm:pl-12",
+          "space-y-4 pb-12 pl-8 sm:pl-12",
           "flex flex-col landscape:justify-center"
         )}
       >

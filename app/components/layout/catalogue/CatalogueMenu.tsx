@@ -16,7 +16,7 @@ export function CatalogueMenu({
       className={cn(
         "relative flex w-full flex-1 flex-col items-start justify-start gap-8 bg-brand-700",
         "h-auto sm:h-full",
-        "landscape:h-full landscape:flex-row landscape:pb-0"
+        "landscape:h-full landscape:flex-row"
       )}
     >
       <CatalogueHeader data={data} index={index} />
