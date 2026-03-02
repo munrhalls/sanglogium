@@ -47,7 +47,7 @@ export function Carousel({
   return (
     <CarouselContext.Provider value={contextValue}>
       <section
-        className={`relative h-full w-full ${className}`}
+        className={cn("relative h-full w-full", className)}
         aria-roledescription="carousel"
       >
         {children}
@@ -77,7 +77,9 @@ export function CarouselTrack({
       ref={scrollRef}
       data-vaul-no-drag
       className={cn(
-        "no-scrollbar flex min-h-full w-full touch-pan-x snap-x snap-mandatory overflow-x-auto landscape:h-full",
+        "no-scrollbar flex min-h-full w-full",
+        "touch-pan-x snap-x snap-mandatory overflow-x-auto",
+        "landscape:h-full",
         className
       )}
     >
@@ -120,7 +122,12 @@ export function CarouselSlide({ children, className = "" }) {
         className
       )}
     >
-      <div className="/* Child: The Glide Layer (Compositor Lane) */ duration-450 /* Inactive State */ /* Active State */ h-full w-full opacity-15 transition-all ease-in-out will-change-transform group-data-[active=true]/slide:opacity-100">
+      <div
+        className={cn(
+          "duration-450 h-full w-full opacity-15 transition-all ease-in-out will-change-transform",
+          "group-data-[active=true]/slide:opacity-100"
+        )}
+      >
         {children}
       </div>
     </div>
@@ -128,8 +135,15 @@ export function CarouselSlide({ children, className = "" }) {
 }
 
 // --- 4. NAVIGATION COMPONENTS (Moved Here) ---
-const BTN_BASE =
-  "flex h-8 w-8 items-center justify-center rounded-full border border-brand-300/35 bg-brand-800/40 text-brand-400 backdrop-blur-md transition-all hover:bg-brand-500 hover:text-brand-900 active:scale-95 disabled:pointer-events-none disabled:opacity-10 outline-none focus-visible:ring-2 focus-visible:ring-accent-500";
+const BTN_BASE = cn(
+  "flex h-8 w-8 items-center justify-center rounded-full",
+  "border border-brand-300/35 bg-brand-800/40 text-brand-400",
+  "backdrop-blur-md transition-all",
+  "hover:bg-brand-500 hover:text-brand-900 active:scale-95",
+  "disabled:pointer-events-none disabled:opacity-40",
+  "outline-none focus-visible:ring-2 focus-visible:ring-accent-500",
+  "before:absolute before:-inset-2 before:content-['']"
+);
 
 interface NavBtnProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
@@ -186,7 +200,7 @@ export function CarouselDots({ className }: CarouselDotsProps) {
   const { itemsCount, activeIndex, goTo } = context;
 
   return (
-    <div className={cn("flex justify-center gap-4", className)} role="tablist">
+    <div className={cn("flex justify-center gap-6", className)} role="tablist">
       {Array.from({ length: itemsCount }).map((_, i) => {
         const isActive = activeIndex === i;
 
@@ -198,7 +212,10 @@ export function CarouselDots({ className }: CarouselDotsProps) {
             aria-selected={isActive}
             aria-label={`Go to slide ${i + 1}`}
             onClick={() => goTo(i)}
-            className="group relative flex cursor-pointer touch-manipulation items-center justify-center transition-transform focus-visible:outline-none active:scale-95"
+            className={cn(
+              "group relative flex cursor-pointer touch-manipulation items-center justify-center",
+              "transition-transform focus-visible:outline-none active:scale-95"
+            )}
             style={{ isolation: "isolate" }}
           >
             <CarouselIcon
@@ -206,7 +223,7 @@ export function CarouselDots({ className }: CarouselDotsProps) {
                 "h-2 w-2 sm:h-4 sm:w-4",
                 isActive
                   ? "text-brand-400 opacity-100"
-                  : "opacity-35 grayscale hover:opacity-70"
+                  : "opacity-40 grayscale hover:opacity-95"
               )}
             />
 

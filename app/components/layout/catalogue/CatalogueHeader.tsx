@@ -49,7 +49,7 @@ export default function CatalogueHeader({
       </div>
       <div
         className={cn(
-          "absolute bottom-2 left-4 right-4 z-30 bg-black/30 py-2",
+          "absolute bottom-3 left-4 right-4 z-30 bg-black/30 py-2",
           "landscape:bottom-auto landscape:left-8 landscape:right-auto landscape:top-4"
         )}
       >
