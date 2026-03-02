@@ -11,11 +11,10 @@ interface CatalogueWrapperProps {
 }
 
 export function CatalogueWrapper({ label, children }: CatalogueWrapperProps) {
-  const [isOpen2, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen((prev) => !prev);
   const closeMenu = () => setIsOpen(false);
 
-  const isOpen = true;
   return (
     <div
       className="static h-full"

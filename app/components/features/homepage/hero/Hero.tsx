@@ -20,7 +20,13 @@ export default async function Hero() {
   const mobileY = mobileHotspot?.y ? mobileHotspot.y + 0.5 : 0.95;
 
   return (
-    <section className="relative h-[80vh] w-full overflow-hidden bg-black text-white">
+    <section
+      className="relative w-full overflow-hidden bg-black text-white"
+      style={{
+        height:
+          "calc(100dvh - var(--desktop-header-h) - var(--desktop-catalogue-nav-h))",
+      }}
+    >
       <div className="absolute inset-0 z-0">
         {/* IMAGE 1: MOBILE (Visible < md) */}
         <Image

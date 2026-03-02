@@ -6,7 +6,7 @@ import { CATALOGUE_DATA } from "./data";
 const CatalogueNavbar = async () => {
   return (
     <nav
-      className="hidden w-full shrink-0 items-center bg-brand-800 lg:flex lg:h-[var(--catalogue-nav-h)]"
+      className="hidden w-full shrink-0 items-center bg-brand-800 lg:flex lg:h-[var(--mobile-header-h)]"
       aria-label="Catalogue Navigation"
     >
       <div className="container mx-auto flex h-full items-center justify-center">
