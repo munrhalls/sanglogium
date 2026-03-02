@@ -27,7 +27,7 @@ export default function DrawerManager() {
             "fixed right-0 z-50 flex w-full outline-none",
             "bottom-[var(--mobile-menu-h)] top-[var(--mobile-header-h)]",
             // on lg width but md height w-3/4
-            "@media(min-width:1024px)and(max-height:850px):!w-3/4"
+            "@media(min-width:1024px)and(max-height:850px):!w-full"
           )}
         >
           <div
