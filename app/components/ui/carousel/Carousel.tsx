@@ -1,6 +1,13 @@
 "use client";
 
-import React, { createContext, useContext, ReactNode, useRef, useEffect, Children } from "react";
+import React, {
+  createContext,
+  useContext,
+  ReactNode,
+  useRef,
+  useEffect,
+  Children,
+} from "react";
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 import { useSnapCarousel } from "@/app/hooks/useSnapCarousel";
 import { cn } from "@/lib/utils/tailwind";
@@ -17,7 +24,6 @@ export function useCarousel() {
   return context;
 }
 
-
 // --- 2. ROOT COMPONENT ---
 interface CarouselProps {
   children: ReactNode;
@@ -25,7 +31,11 @@ interface CarouselProps {
   itemsCount: number;
 }
 
-export function Carousel({ children, className = "", itemsCount = 0 }: CarouselProps) {
+export function Carousel({
+  children,
+  className = "",
+  itemsCount = 0,
+}: CarouselProps) {
   const carouselLogic = useSnapCarousel();
   if (itemsCount === 0) return null;
 
@@ -33,7 +43,6 @@ export function Carousel({ children, className = "", itemsCount = 0 }: CarouselP
     () => ({ ...carouselLogic, itemsCount }),
     [carouselLogic, itemsCount]
   );
-
 
   return (
     <CarouselContext.Provider value={contextValue}>
@@ -68,7 +77,7 @@ export function CarouselTrack({
       ref={scrollRef}
       data-vaul-no-drag
       className={cn(
-        "no-scrollbar flex min-h-full w-full snap-x snap-mandatory overflow-x-auto touch-pan-x landscape:h-full",
+        "no-scrollbar flex min-h-full w-full touch-pan-x snap-x snap-mandatory overflow-x-auto landscape:h-full",
         className
       )}
     >
@@ -93,7 +102,7 @@ export function CarouselSlide({ children, className = "" }) {
         node.dataset.active = entry.isIntersecting ? "true" : "false";
       },
       {
-        root: track,    // KEY: Watch relative to the track, not the window
+        root: track, // KEY: Watch relative to the track, not the window
         threshold: 0.6, // 60% visibility is the 'sweet spot' for snapping
       }
     );
@@ -111,23 +120,12 @@ export function CarouselSlide({ children, className = "" }) {
         className
       )}
     >
-      <div className="
-        h-full w-full
-        /* Child: The Glide Layer (Compositor Lane) */
-        transition-all duration-450 ease-in-out
-        will-change-transform
-
-        /* Inactive State */
-        opacity-15
-
-        /* Active State */
-        group-data-[active=true]/slide:opacity-100
-      ">{children}</div>
-
+      <div className="/* Child: The Glide Layer (Compositor Lane) */ duration-450 /* Inactive State */ /* Active State */ h-full w-full opacity-15 transition-all ease-in-out will-change-transform group-data-[active=true]/slide:opacity-100">
+        {children}
+      </div>
     </div>
   );
 }
-
 
 // --- 4. NAVIGATION COMPONENTS (Moved Here) ---
 const BTN_BASE =
@@ -177,7 +175,6 @@ export function CarouselNext({ className, ...props }: NavBtnProps) {
   );
 }
 
-
 interface CarouselDotsProps {
   className?: string;
 }
@@ -201,16 +198,15 @@ export function CarouselDots({ className }: CarouselDotsProps) {
             aria-selected={isActive}
             aria-label={`Go to slide ${i + 1}`}
             onClick={() => goTo(i)}
-            className="cursor-pointer group relative flex items-center justify-center transition-transform active:scale-95 focus-visible:outline-none touch-manipulation"
-            style={{ isolation: 'isolate' }}
-
+            className="group relative flex cursor-pointer touch-manipulation items-center justify-center transition-transform focus-visible:outline-none active:scale-95"
+            style={{ isolation: "isolate" }}
           >
             <CarouselIcon
               className={cn(
                 "h-2 w-2 sm:h-4 sm:w-4",
                 isActive
                   ? "text-brand-400 opacity-100"
-                  : "grayscale opacity-35 hover:opacity-70"
+                  : "opacity-35 grayscale hover:opacity-70"
               )}
             />
 

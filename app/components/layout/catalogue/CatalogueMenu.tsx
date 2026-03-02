@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/tailwind";
 import React from "react";
 import type { CatalogueItem } from "./data";
 import CatalogueHeader from "./CatalogueHeader";
