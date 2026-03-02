@@ -14,8 +14,7 @@ export default function CatalogueSegments({
       className={cn(
         "relative h-full max-h-full w-full max-w-screen-xl",
         "landscape:no-scrollbar overflow-y-auto",
-        "px-8 pb-12 pt-8",
-        "sm:flex sm:flex-col sm:justify-center"
+        "px-8 pb-12 pt-8"
       )}
     >
       <div
@@ -44,16 +43,17 @@ export default function CatalogueSegments({
       <div
         className={cn(
           "relative z-10 w-full max-w-screen-xl",
+          "space-y-4",
           "landscape:flex landscape:flex-col landscape:justify-center"
         )}
       >
         <div
           className={cn(
-            "mx-auto my-auto flex flex-col flex-nowrap items-start gap-12",
+            "mx-auto my-auto flex flex-col flex-nowrap items-start gap-8",
             "max-w-[184px]",
-            "sm:flex sm:max-w-prose sm:flex-wrap sm:gap-12",
-            "lg:grid lg:grid-cols-3 lg:gap-8",
-            "landscape:gap-8"
+            "sm:flex sm:max-w-prose sm:flex-wrap",
+            "sm:gap-12",
+            "lg:grid lg:grid-cols-3"
           )}
         >
           {data.sections.map((section, idx) => (
