@@ -64,7 +64,7 @@ export default {
         "mobile-viewport-h": "var(--mobile-viewport-h)",
       },
       height: {
-        "view-content": "calc(100vh - var(--header-total-h))",
+        "view-content": "calc(100dvh - var(--header-total-h))",
       },
       fontFamily: {
         sans: [

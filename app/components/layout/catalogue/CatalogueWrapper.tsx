@@ -69,7 +69,7 @@ export function CatalogueWrapper({ label, children }: CatalogueWrapperProps) {
             className={cn(
               "absolute left-0 top-[var(--site-header-h)] z-50 w-full",
               "border-t border-gray-100 bg-white shadow-xl",
-              "md:h-[calc(100vh-var(--site-header-h))]"
+              "md:h-[calc(100dvh-var(--site-header-h))]"
             )}
           >
             {children}

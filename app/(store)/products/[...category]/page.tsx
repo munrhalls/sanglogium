@@ -99,7 +99,7 @@ export default async function ProductsPage(props: {
         </div>
         <ProductsFilterSortDrawersWrapper categoryPath={path} />
       </main>
-      <div className="flex h-screen flex-col overflow-hidden md:hidden">
+      <div className="flex h-dvh flex-col overflow-hidden md:hidden">
         <div className="flex-none bg-white">
           <div className="container mx-auto flex px-1 py-1">
             <div className="mb-1">

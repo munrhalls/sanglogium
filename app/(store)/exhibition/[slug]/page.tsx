@@ -8,9 +8,9 @@ export default async function ExhibitionPage({
   const products = await getProductsByExhibitionSlug(slug);
   console.dir(products);
   return (
-    <div className="flex flex-col items-center justify-top min-h-screen bg-gray-100 p-4">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-4xl">
-        <h1 className="text-4xl font-bold mb-6 text-center">
+    <div className="justify-top flex min-h-dvh flex-col items-center bg-gray-100 p-4">
+      <div className="w-full max-w-4xl rounded-lg bg-white p-8 shadow-md">
+        <h1 className="mb-6 text-center text-4xl font-bold">
           {slug
             .split("-")
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1))

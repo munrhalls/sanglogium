@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${montserrat.variable} antialiased`}>
-      <body className="selection:bg-brand-accent-600 flex min-h-screen flex-col bg-brand-700 font-sans text-brand-100 selection:text-brand-800">
+      <body className="selection:bg-brand-accent-600 flex min-h-dvh flex-col bg-brand-700 font-sans text-brand-100 selection:text-brand-800">
         <ClerkProvider>
           <NuqsAdapter>
             <Header />
