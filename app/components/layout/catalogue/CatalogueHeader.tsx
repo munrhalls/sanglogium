@@ -21,7 +21,7 @@ export default function CatalogueHeader({
         "h-[clamp(96px,30dvh,256px)]",
         "sm:h-1/2 sm:w-full sm:max-w-full",
         "landscape:h-full landscape:w-1/2 landscape:max-w-72 landscape:shrink-0 landscape:flex-row landscape:justify-between landscape:px-4 landscape:py-4",
-        "[@media(min-width:1024px)_and_(max-height:850px)]:!max-w-[400px]"
+        "max-w-[var(--catalogue-header-max-w,288px)]"
       )}
     >
       {/* 1. The Image Layer: Scaled up and centered behind text */}
