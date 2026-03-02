@@ -17,12 +17,13 @@ export default function CatalogueHeader({
   return (
     <div
       className={cn(
-        "relative flex w-full max-w-full flex-col items-center justify-center overflow-hidden bg-brand-900 px-8",
+        "relative flex w-full flex-col items-center justify-center overflow-hidden bg-brand-900 px-8",
         "h-[clamp(96px,30dvh,256px)]",
-        "sm:h-1/2 sm:w-full sm:max-w-full",
-        "landscape:h-full landscape:w-1/2 landscape:max-w-72 landscape:shrink-0 landscape:flex-row landscape:justify-between landscape:px-4 landscape:py-4",
-        // "[@media(min-width:1024px)_and_(max-height:850px)]:!max-w-[400px]"
-        "landscape:max-w-[var(--catalogue-header-max-w,288px)]"
+        "sm:h-1/2",
+        "landscape:h-full landscape:w-1/2 landscape:flex-row landscape:justify-between",
+        "landscape:shrink-0 landscape:px-4 landscape:py-4",
+
+        "lg:landscape:max-w-[var(--catalogue-header-max-w,400px)]"
       )}
     >
       {/* 1. The Image Layer: Scaled up and centered behind text */}
