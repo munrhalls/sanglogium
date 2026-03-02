@@ -129,7 +129,7 @@ export function CarouselSlide({ children, className = "" }) {
 
 // --- 4. NAVIGATION COMPONENTS (Moved Here) ---
 const BTN_BASE =
-  "flex h-6 w-6 items-center justify-center rounded-full border border-brand-300/35 bg-brand-800/40 text-brand-400 backdrop-blur-md transition-all hover:bg-brand-500 hover:text-brand-900 active:scale-95 disabled:pointer-events-none disabled:opacity-10 outline-none focus-visible:ring-2 focus-visible:ring-accent-500";
+  "flex h-8 w-8 items-center justify-center rounded-full border border-brand-300/35 bg-brand-800/40 text-brand-400 backdrop-blur-md transition-all hover:bg-brand-500 hover:text-brand-900 active:scale-95 disabled:pointer-events-none disabled:opacity-10 outline-none focus-visible:ring-2 focus-visible:ring-accent-500";
 
 interface NavBtnProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
