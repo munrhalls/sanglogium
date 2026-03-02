@@ -1,11 +1,18 @@
 import Image from "next/image";
 import magnifying_glass from "@/public/icons/magnifying_glass.svg";
+import { cn } from "@/lib/utils/tailwind";
 
 export default function SearchBar() {
   return (
     <form
       role="search"
-      className="group hidden h-[24px] w-full items-center gap-4 rounded-full bg-secondary-300 px-4 shadow-sm transition-all duration-300 ease-out focus-within:bg-brand-400 focus-within:shadow-md hover:bg-secondary-100 sm:flex sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-xl"
+      className={cn(
+        "group hidden h-[24px] w-full items-center gap-4 rounded-full px-4",
+        "bg-secondary-300 shadow-sm transition-all duration-300 ease-out",
+        "hover:bg-secondary-100",
+        "focus-within:bg-brand-400 focus-within:shadow-md",
+        "sm:flex sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-xl"
+      )}
     >
       <Image
         src={magnifying_glass}
@@ -13,14 +20,23 @@ export default function SearchBar() {
         width={12}
         height={12}
         aria-hidden="true"
-        className="transition-all duration-300 group-focus-within:font-bold group-focus-within:text-brand-800 group-focus-within:brightness-0"
+        className={cn(
+          "transition-all duration-300",
+          "group-focus-within:font-bold group-focus-within:text-brand-800 group-focus-within:brightness-0"
+        )}
       />
       <input
         type="text"
         placeholder="Search..."
         maxLength={500}
         aria-label="Search"
-        className="w-full border-none bg-transparent text-body text-brand-700 outline-none transition-colors duration-300 selection:bg-brand-700 selection:text-brand-400 placeholder:text-secondary-600 focus:placeholder:text-brand-800 group-focus-within:text-brand-700"
+        className={cn(
+          "w-full border-none bg-transparent outline-none",
+          "text-body text-brand-700 transition-colors duration-300",
+          "selection:bg-brand-700 selection:text-brand-400",
+          "placeholder:text-secondary-600 focus:placeholder:text-brand-800",
+          "group-focus-within:text-brand-700"
+        )}
       />
     </form>
   );

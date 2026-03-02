@@ -17,7 +17,7 @@ export function CatalogueWrapper({ label, children }: CatalogueWrapperProps) {
 
   return (
     <div
-      className="static h-full"
+      className={cn("static h-full")}
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
     >
@@ -25,8 +25,8 @@ export function CatalogueWrapper({ label, children }: CatalogueWrapperProps) {
       <button
         onClick={toggleMenu}
         className={cn(
-          "group relative flex h-full items-center gap-2 px-6",
-          "focus:outline-none"
+          "group relative flex h-full items-center gap-2",
+          "px-6 focus:outline-none"
         )}
         aria-expanded={isOpen}
         aria-haspopup="true"
@@ -43,15 +43,16 @@ export function CatalogueWrapper({ label, children }: CatalogueWrapperProps) {
           weight="light"
           size={14}
           className={cn(
-            "text-brand-400 transition-transform duration-300 group-hover:text-accent-500",
+            "text-brand-400 transition-colors duration-300",
+            "group-hover:text-accent-500",
             isOpen && "rotate-180"
           )}
         />
 
         <div
           className={cn(
-            "absolute bottom-0 left-1/2 h-[2px] -translate-x-1/2 bg-accent-500",
-            "transition-all duration-300",
+            "absolute bottom-0 left-1/2 h-[2px] -translate-x-1/2",
+            "bg-accent-500 transition-all duration-300",
             isOpen ? "w-full" : "w-0 group-hover:w-8"
           )}
         />
@@ -72,7 +73,12 @@ export function CatalogueWrapper({ label, children }: CatalogueWrapperProps) {
             )}
           >
             {children}
-            <div className="absolute bottom-12 left-0 flex w-full justify-center">
+            <div
+              className={cn(
+                "absolute bottom-12 left-0",
+                "flex w-full justify-center"
+              )}
+            >
               <button
                 onClick={closeMenu}
                 className={cn(

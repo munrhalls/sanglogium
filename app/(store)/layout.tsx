@@ -1,6 +1,7 @@
 import "./../globals.css";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { ClerkProvider } from "@clerk/nextjs";
+import { cn } from "@/lib/utils/tailwind";
 
 // Fonts & Config
 import { metadata } from "./configuration";
@@ -22,13 +23,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${montserrat.variable} antialiased`}>
-      <body className="selection:bg-brand-accent-600 flex h-dvh flex-col overflow-hidden bg-brand-700 font-sans text-brand-100 selection:text-brand-800">
+    <html lang="en" className={cn(montserrat.variable, "antialiased")}>
+      <body
+        className={cn(
+          "flex h-dvh flex-col overflow-hidden",
+          "bg-brand-700 font-sans text-brand-100",
+          "selection:bg-brand-accent-600 selection:text-brand-800"
+        )}
+      >
         <ClerkProvider>
           <NuqsAdapter>
             <Header />
             <CatalogueNavbar />
-            <main className="relative flex h-full w-full flex-1 flex-col overflow-y-auto overflow-x-hidden pb-[var(--mobile-menu-h)]">
+            <main
+              className={cn(
+                "relative flex h-full w-full flex-1 flex-col",
+                "overflow-y-auto overflow-x-hidden",
+                "pb-[var(--mobile-menu-h)]"
+              )}
+            >
               {children}
               <Footer />
             </main>

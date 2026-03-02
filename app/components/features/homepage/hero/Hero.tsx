@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/client";
 import { getHeroData } from "@/sanity/lib/hero/getHeroData";
+import { cn } from "@/lib/utils/tailwind";
 
 export default async function Hero() {
   const data = await getHeroData();
@@ -21,7 +22,7 @@ export default async function Hero() {
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-black text-white"
+      className={cn("relative w-full overflow-hidden", "bg-black text-white")}
       style={{
         height:
           "calc(100dvh - var(--desktop-header-h) - var(--desktop-catalogue-nav-h))",
@@ -34,7 +35,7 @@ export default async function Hero() {
           alt={mobileBackgroundImage.alt || "Hero Image"}
           fill
           priority
-          className="block object-cover md:hidden"
+          className={cn("block object-cover", "md:hidden")}
           sizes="100vw"
           quality={90}
           style={{
@@ -48,7 +49,7 @@ export default async function Hero() {
           alt={data.backgroundImage.alt || "Hero Image"}
           fill
           priority
-          className="hidden object-cover md:block"
+          className={cn("hidden object-cover", "md:block")}
           sizes="100vw"
           quality={90}
           style={{
@@ -56,21 +57,53 @@ export default async function Hero() {
           }}
         />
 
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
+        <div
+          className={cn(
+            "absolute inset-0",
+            "bg-gradient-to-r from-black/60 via-black/20 to-transparent"
+          )}
+        />
       </div>
 
-      <div className="container justsm:justify-center relative z-10 mx-auto mt-16 flex h-full flex-col justify-start px-4 sm:px-16 3xl:px-44">
-        <div className="flex max-w-xl flex-col items-start gap-8 sm:mb-44">
+      <div
+        className={cn(
+          "container relative z-10 mx-auto mt-16 h-full px-4",
+          "flex flex-col justify-start",
+          "justsm:justify-center sm:px-16 3xl:px-44"
+        )}
+      >
+        <div
+          className={cn("flex max-w-xl flex-col items-start gap-8", "sm:mb-44")}
+        >
           <div>
-            <h1 className="text-display-1 font-bold uppercase leading-tight text-brand-400 sm:text-display-2 md:text-display-1">
+            <h1
+              className={cn(
+                "text-display-1 font-bold uppercase leading-tight",
+                "text-brand-400",
+                "sm:text-display-2 md:text-display-1"
+              )}
+            >
               {data.headline}
             </h1>
-            <p className="mt-2 text-h4 font-medium text-secondary-300 md:text-h3">
+            <p
+              className={cn(
+                "mt-2 text-h4 font-medium",
+                "text-secondary-300",
+                "md:text-h3"
+              )}
+            >
               {data.subheadline}
             </p>
           </div>
 
-          <button className="xs:mt-auto rounded-full bg-brand-400 px-12 py-4 text-cta-hero font-bold text-brand-700 transition-colors hover:bg-brand-200 sm:mt-2">
+          <button
+            className={cn(
+              "rounded-full px-12 py-4",
+              "bg-brand-400 text-cta-hero font-bold text-brand-700",
+              "transition-colors hover:bg-brand-200",
+              "xs:mt-auto sm:mt-2"
+            )}
+          >
             {data.ctaText || "Explore"}
           </button>
         </div>
