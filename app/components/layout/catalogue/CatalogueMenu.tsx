@@ -14,7 +14,7 @@ export function CatalogueMenu({
   return (
     <div
       className={cn(
-        "relative flex w-full flex-1 flex-col items-start justify-start gap-8 bg-brand-700",
+        "relative flex w-full flex-1 flex-col items-start justify-start bg-brand-700",
         "h-auto sm:h-full",
         "landscape:h-full landscape:flex-row"
       )}
