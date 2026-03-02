@@ -31,23 +31,15 @@ body {
 }
 
 @layer base {
-  /* 2. Global Reset using Colors Palette */
   * {
-    /* Sets default border color to your 'Platinum Divider' */
     @apply border-secondary-300;
   }
-
-  html,
-  body {
-    @apply h-full;
+  html {
+    @apply h-dvh overflow-hidden;
   }
 
   body {
-    /* 'Engineered Purity' Dark Theme as default.
-       Background: Brand-700 (The Void)
-       Text: Brand-100 (Paper White)
-    */
-    @apply relative min-h-dvh bg-brand-900 text-brand-100;
+    @apply flex h-dvh flex-col overflow-hidden bg-brand-900 text-brand-100;
   }
 }
 
