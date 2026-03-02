@@ -42,16 +42,15 @@ export default function CatalogueSegments({
       {/* Content Layer */}
       <div
         className={cn(
-          "relative z-10 w-full max-w-screen-xl",
-          "space-y-4",
-          "landscape:flex landscape:flex-col landscape:justify-center"
+          "relative z-10 min-h-full w-full max-w-screen-xl",
+          "space-y-4 pl-8 sm:pl-12",
+          "flex flex-col landscape:justify-center"
         )}
       >
         <div
           className={cn(
             "mx-auto my-auto flex flex-col flex-nowrap items-start gap-8",
-            "max-w-[184px]",
-            "sm:flex sm:max-w-prose sm:flex-wrap",
+            "w-fit max-w-full",
             "sm:gap-12",
             "lg:grid lg:grid-cols-3"
           )}

@@ -79,9 +79,9 @@ export default function CatalogueHeader({
       <div
         className={cn(
           "absolute bottom-2 left-4 z-40 flex",
-          "gap-4 sm:gap-8",
-          "sm:left-16",
-          "landscape:bottom-4 landscape:left-4 landscape:right-auto"
+          "gap-4 sm:gap-6",
+          "landscape:bottom-4 landscape:left-4 landscape:right-auto",
+          "sm:left-20 sm:landscape:left-16"
         )}
       >
         <CarouselPrevious className="static translate-y-0" />
