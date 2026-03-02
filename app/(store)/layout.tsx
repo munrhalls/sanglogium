@@ -23,15 +23,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${montserrat.variable} antialiased`}>
-      <body className="selection:bg-brand-accent-600 flex min-h-dvh flex-col bg-brand-700 font-sans text-brand-100 selection:text-brand-800">
+      <body className="selection:bg-brand-accent-600 flex h-dvh flex-col overflow-hidden bg-brand-700 font-sans text-brand-100 selection:text-brand-800">
         <ClerkProvider>
           <NuqsAdapter>
             <Header />
             <CatalogueNavbar />
-            <main className="relative flex w-full flex-1 flex-col pb-[var(--mobile-menu-h)] pt-[var(--mobile-header-h)]">
+            <main className="relative flex w-full flex-1 flex-col overflow-y-auto overflow-x-hidden pb-[var(--mobile-menu-h)] pt-[var(--mobile-header-h)]">
               {children}
+              <Footer />
             </main>
-            <Footer />
 
             <Suspense fallback={null}>
               <DrawersManager />
