@@ -66,10 +66,11 @@ export default function CatalogueSegments({
               <div
                 key={section.title}
                 className={cn(
+                  /* [MIGRATE: CONSUMER START STATE] */
                   "translate-y-2 opacity-0",
                   "space-y-4 md:space-y-6",
                   "transition-[opacity,transform] delay-0 duration-300 ease-in",
-                  "group-data-[active=true]/slide:translate-y-0 group-data-[active=true]/slide:opacity-100 group-data-[active=true]/slide:delay-150"
+                  "group-data-[active=true]/animation-settle:translate-y-0 group-data-[active=true]/animation-settle:opacity-100 group-data-[active=true]/animation-settle:delay-150"
                 )}
               >
                 <h3
@@ -89,10 +90,13 @@ export default function CatalogueSegments({
                       // pass the index to a CSS variable
                       style={{ "--index": linkIdx } as React.CSSProperties}
                       className={cn(
+                        /* [MIGRATE: CONSUMER START STATE] */
                         "translate-y-2 opacity-0",
                         "transition-[opacity,transform] delay-0 duration-300 ease-in",
-                        "group-data-[active=true]/slide:translate-y-0 group-data-[active=true]/slide:opacity-100",
-                        "group-data-[active=true]/slide:[transition-delay:calc(150ms+(var(--index)*100ms))]"
+                        /* [UPDATE: LISTENER] -> group-data-[active=true]/animation-settle-animator AND /dropdown-animator */
+                        "group-data-[active=true]/animation-settle:translate-y-0 group-data-[active=true]/animation-settle:opacity-100",
+                        /* [UPDATE: STAGGER LOGIC] -> /animation-settle-animator AND /dropdown-animator */
+                        "group-data-[active=true]/animation-settle:[transition-delay:calc(150ms+(var(--index)*100ms))]"
                       )}
                     >
                       <a

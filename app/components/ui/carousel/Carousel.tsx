@@ -61,7 +61,6 @@ interface CarouselTrackProps {
   children: ReactNode;
   className?: string;
 }
-
 export function CarouselTrack({
   children,
   className = "",
@@ -76,12 +75,7 @@ export function CarouselTrack({
     <div
       ref={scrollRef}
       data-vaul-no-drag
-      className={cn(
-        "no-scrollbar flex h-full w-full",
-        "touch-pan-x snap-x snap-mandatory overflow-x-auto",
-        "landscape:h-full",
-        className
-      )}
+      className={cn("no-scrollbar flex h-full w-full", className)}
     >
       {children}
     </div>
@@ -91,45 +85,30 @@ export function CarouselTrack({
 // 3. SLIDE
 export function CarouselSlide({ children, className = "" }) {
   const slideRef = useRef<HTMLDivElement>(null);
-  const { scrollRef } = useCarousel()!; // Get the track ref from your context
+  const context = useCarousel();
 
   useEffect(() => {
     const node = slideRef.current;
-    const track = scrollRef.current;
+    const track = context?.scrollRef.current;
     if (!node || !track) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // We use the attribute to trigger the CSS
         node.dataset.active = entry.isIntersecting ? "true" : "false";
       },
       {
-        root: track, // KEY: Watch relative to the track, not the window
-        threshold: 0.6, // 60% visibility is the 'sweet spot' for snapping
+        root: track,
+        threshold: 0.6,
       }
     );
 
     observer.observe(node);
     return () => observer.disconnect();
-  }, [scrollRef]);
+  }, [context?.scrollRef]);
 
   return (
-    <div
-      ref={slideRef}
-      data-active="false"
-      className={cn(
-        "group/slide flex h-full min-w-full flex-1 snap-start snap-always flex-col",
-        className
-      )}
-    >
-      <div
-        className={cn(
-          "duration-450 h-full w-full flex-1 opacity-15 transition-all ease-in-out will-change-transform",
-          "flex flex-col group-data-[active=true]/slide:opacity-100"
-        )}
-      >
-        {children}
-      </div>
+    <div ref={slideRef} data-active="false" className={className}>
+      {children}
     </div>
   );
 }
