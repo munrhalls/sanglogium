@@ -1,0 +1,77 @@
+Chunk 1: Top Container
+
+The Track Container (Stage Manager)
+This is the physical window that determines when a slide is "Active."
+
+TypeScript
+// Scroll Physics
+"snap-x snap-mandatory"
+
+// Visibility & Overflow
+"overflow-x-auto no-scrollbar"
+
+// Interaction
+"touch-pan-x"
+
+
+
+The Slide Container
+// Transition Properties
+"duration-450 ease-in-out transition-all will-change-transform"
+
+// Start State
+"opacity-15"
+
+// End State (Triggered by Carousel)
+"group-data-[active=true]/slide:opacity-100"
+
+
+
+Chunk 2: Bottom Consumers (Section & Links)
+
+SECTION CONTAINER
+// Transition Properties
+"duration-300 delay-0 ease-in transition-[opacity,transform]"
+
+// Start State
+"translate-y-2 opacity-0"
+
+// End State (Triggered by Carousel)
+"group-data-[active=true]/slide:translate-y-0"
+"group-data-[active=true]/slide:opacity-100"
+"group-data-[active=true]/slide:delay-150"
+
+
+
+LINKs CONTAINER
+// Transition Properties
+"duration-300 delay-0 ease-in transition-[opacity,transform]"
+
+// Start State
+"translate-y-2 opacity-0"
+
+// End State (Triggered by Carousel)
+"group-data-[active=true]/slide:translate-y-0"
+"group-data-[active=true]/slide:opacity-100"
+
+// Dynamic Stagger Logic
+"group-data-[active=true]/slide:[transition-delay:calc(150ms+(var(--index)*100ms))]"
+
+
+
+BACKGROUND LAYER
+// Transition Properties
+"transition-all duration-700"
+
+
+HEADER
+// Transition Properties
+"transition-all duration-500 delay-0"
+
+// Start State
+"translate-y-2 opacity-0"
+
+// End State (Triggered by Carousel)
+"group-data-[active=true]/slide:translate-y-0"
+"group-data-[active=true]/slide:opacity-100"
+"group-data-[active=true]/slide:delay-150"

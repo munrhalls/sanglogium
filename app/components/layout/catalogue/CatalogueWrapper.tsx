@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { CaretDownIcon, XCircleIcon } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils/tailwind";
 
@@ -15,14 +14,14 @@ export function CatalogueWrapper({ label, children }: CatalogueWrapperProps) {
   const toggleMenu = () => setIsOpen2((prev) => !prev);
   const closeMenu = () => setIsOpen2(false);
 
-  const isOpen = false;
+  const isOpen = label === "Headphones";
+
   return (
     <div
       className={cn("static h-full")}
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={() => setIsOpen(false)}
+      onMouseEnter={() => {}}
+      onMouseLeave={() => {}}
     >
-      {/* Dropdown Trigger */}
       <button
         onClick={toggleMenu}
         className={cn(
@@ -59,43 +58,37 @@ export function CatalogueWrapper({ label, children }: CatalogueWrapperProps) {
         />
       </button>
 
-      {/* The Mega Menu Dropdown */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
+      {isOpen && (
+        <div
+          className={cn(
+            "top-[var(--desktop-header-h) - var(--desktop-catalogue-nav-h)] absolute left-0 z-50",
+            "lg:h-[calc(100dvh-var(--desktop-header-h) - var(--desktop-catalogue-nav-h))]",
+            "h-full w-full",
+            "border-t border-gray-100 bg-white shadow-xl"
+          )}
+        >
+          {children}
+          <div
             className={cn(
-              "top-[var(--desktop-header-h) - var(--desktop-catalogue-nav-h)] absolute left-0 z-50 w-full",
-              "border-t border-gray-100 bg-white shadow-xl",
-              "lg:h-[calc(100dvh-var(--desktop-header-h) - var(--desktop-catalogue-nav-h))]"
+              "absolute bottom-12 left-0",
+              "flex w-full justify-center"
             )}
           >
-            {children}
-            <div
+            <button
+              onClick={closeMenu}
               className={cn(
-                "absolute bottom-12 left-0",
-                "flex w-full justify-center"
+                "flex items-center gap-3 bg-transparent p-2",
+                "text-xs font-bold uppercase tracking-[0.3em] text-brand-400",
+                "transition-colors hover:text-secondary-100"
               )}
+              aria-label="Close Menu"
             >
-              <button
-                onClick={closeMenu}
-                className={cn(
-                  "flex items-center gap-3 bg-transparent p-2",
-                  "text-xs font-bold uppercase tracking-[0.3em] text-brand-400",
-                  "transition-colors hover:text-secondary-100"
-                )}
-                aria-label="Close Menu"
-              >
-                <span>Close</span>
-                <XCircleIcon size={20} weight="thin" />
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              <span>Close</span>
+              <XCircleIcon size={20} weight="thin" />
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
