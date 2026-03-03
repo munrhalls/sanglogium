@@ -33,7 +33,7 @@ const InfoTooltip: React.FC<InfoTooltipProps> = ({ information }) => {
   return (
     <div className="relative inline-block">
       <button
-        className="text-gray-500 hover:text-gray-700 focus:outline-none ml-1"
+        className="ml-1 text-gray-500 hover:text-gray-700 focus:outline-none"
         onMouseEnter={() => setIsVisible(true)}
         onMouseLeave={() => setIsVisible(false)}
         onClick={toggleVisibility}
@@ -45,9 +45,9 @@ const InfoTooltip: React.FC<InfoTooltipProps> = ({ information }) => {
       {isVisible && (
         <div
           ref={tooltipRef}
-          className="absolute z-10 w-64 p-3 mt-2 bg-white rounded shadow-lg border border-gray-300 left-8 top-full md:left-12 md:-top-16 md:right-0"
+          className="absolute left-8 top-full z-10 mt-2 w-64 rounded border border-gray-300 bg-white p-3 shadow-lg md:-top-16 md:left-12 md:right-0"
         >
-          <div className="flex justify-between items-start mb-1">
+          <div className="mb-1 flex items-start justify-between">
             <span className="font-medium text-gray-700">Information</span>
             <button
               onClick={hideTooltip}
@@ -58,7 +58,7 @@ const InfoTooltip: React.FC<InfoTooltipProps> = ({ information }) => {
               <X size={16} />
             </button>
           </div>
-          <p className=" text-sm text-gray-600">{information}</p>
+          <p className="text-sm text-gray-600">{information}</p>
         </div>
       )}
     </div>
