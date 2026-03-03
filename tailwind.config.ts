@@ -59,11 +59,8 @@ export default {
         "pointer-coarse": { raw: "(pointer: coarse)" },
       },
       spacing: {
-        "header-h": "var(--header-h)",
+        "desktop-header-h": "var(--desktop-header-h)",
         "mobile-menu-h": "var(--mobile-menu-h)",
-      },
-      height: {
-        "view-content": "calc(100dvh - var(--header-total-h))",
       },
       fontFamily: {
         sans: [
