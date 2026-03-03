@@ -18,7 +18,7 @@ export default function SliceHero({ data }: { data: CatalogueItem }) {
         "landscape:h-full landscape:w-1/2 landscape:flex-row landscape:justify-between",
         "landscape:shrink-0 landscape:px-4 landscape:py-4",
 
-        "lg-touch:landscape:max-w-[var(--catalogue-header-max-w,400px)]",
+        "lg-touch:landscape:max-w-[var(--catalogue-hero-max-w,400px)]",
         "lg-desktop:landscape:max-w-1/3"
       )}
     >

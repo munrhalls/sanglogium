@@ -5,7 +5,7 @@
 :root {
   --mobile-header-h: 44px;
   --mobile-menu-h: 44px;
-  --catalogue-header-max-w: 288px;
+  --catalogue-hero-max-w: 288px;
   --mobile-menu-display: block;
 
   --desktop-header-h: 64px;
@@ -14,7 +14,7 @@
 
 @media (min-width: 1024px) and (max-height: 850px) {
   :root {
-    --catalogue-header-max-w: 400px;
+    --catalogue-hero-max-w: 400px;
   }
 }
 
