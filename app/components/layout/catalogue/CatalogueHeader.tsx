@@ -31,7 +31,6 @@ export default function CatalogueHeader({
         className={cn(
           "absolute h-96 w-96 opacity-40 grayscale",
           "transition-all duration-700 hover:scale-110",
-          /* [MIGRATE: PERSISTENT ANIMATION] -> Stays here as it is independent of trigger */
           "[animation:pendulum_8s_cubic-bezier(0.45,0.05,0.55,0.95)_infinite_alternate]",
           "sm:h-[960px] sm:w-[960px]",
           "landscape:aspect-square landscape:h-[512px] landscape:w-[512px]"
@@ -70,7 +69,6 @@ export default function CatalogueHeader({
       >
         <h1
           className={cn(
-            /* [MIGRATE: CONSUMER START STATE] */
             "relative z-10 translate-y-2 pb-6 text-center text-h4 font-bold uppercase tracking-[0.3em] text-brand-400 opacity-0 transition-all duration-500 text-cap",
             /* [UPDATE: LISTENER] -> group-data-[active=true]/animation-settle-animator AND /dropdown-animator */
             "group-data-[active=true]/animation-settle:translate-y-0 group-data-[active=true]/animation-settle:opacity-100 group-data-[active=true]/animation-settle:delay-150",

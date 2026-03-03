@@ -53,6 +53,8 @@ export default {
         "2xs": "450px",
         "2xl": "1600px",
         "3xl": "1920px",
+        "lg-touch": { raw: "(min-width: 1024px) and (max-height: 850px)" },
+        "lg-desktop": { raw: "(min-width: 1024px) and (min-height: 851px)" },
         "pointer-fine": { raw: "(pointer: fine)" },
         "pointer-coarse": { raw: "(pointer: coarse)" },
       },

@@ -58,15 +58,14 @@ export default function CatalogueSegments({
             className={cn(
               "mx-auto my-auto flex flex-col flex-nowrap items-start gap-8",
               "w-fit max-w-full",
-              "sm:gap-12",
-              "lg:grid lg:grid-cols-3"
+              "sm:gap-12 md:gap-16",
+              "lg-touch:flex-row lg-touch:flex-wrap lg-touch:justify-around lg-touch:gap-x-20"
             )}
           >
             {data.sections.map((section, idx) => (
               <div
                 key={section.title}
                 className={cn(
-                  /* [MIGRATE: CONSUMER START STATE] */
                   "translate-y-2 opacity-0",
                   "space-y-4 md:space-y-6",
                   "transition-[opacity,transform] delay-0 duration-300 ease-in",
@@ -90,12 +89,9 @@ export default function CatalogueSegments({
                       // pass the index to a CSS variable
                       style={{ "--index": linkIdx } as React.CSSProperties}
                       className={cn(
-                        /* [MIGRATE: CONSUMER START STATE] */
                         "translate-y-2 opacity-0",
                         "transition-[opacity,transform] delay-0 duration-300 ease-in",
-                        /* [UPDATE: LISTENER] -> group-data-[active=true]/animation-settle-animator AND /dropdown-animator */
                         "group-data-[active=true]/animation-settle:translate-y-0 group-data-[active=true]/animation-settle:opacity-100",
-                        /* [UPDATE: STAGGER LOGIC] -> /animation-settle-animator AND /dropdown-animator */
                         "group-data-[active=true]/animation-settle:[transition-delay:calc(150ms+(var(--index)*100ms))]"
                       )}
                     >
@@ -103,8 +99,7 @@ export default function CatalogueSegments({
                         href="#"
                         className={cn(
                           "pl-2 text-body text-secondary-300",
-                          "transition-colors hover:text-brand-200 active:text-brand-400",
-                          "sm:text-h4"
+                          "transition-colors hover:text-brand-200 active:text-brand-400"
                         )}
                       >
                         {link}

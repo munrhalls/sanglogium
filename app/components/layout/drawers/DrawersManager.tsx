@@ -18,7 +18,9 @@ export default function DrawerManager() {
         <Drawer.Overlay
           className={cn(
             "fixed inset-0 z-50 bg-black/10",
-            "bottom-[var(--mobile-menu-h)] top-[var(--mobile-header-h)]"
+            "bottom-[var(--mobile-menu-h)] top-[var(--mobile-header-h)]",
+            "lg-desktop:bottom-0 lg-desktop:top-[var(--desktop-header-h) + var(--desktop-catalogue-nav-h)]",
+            "lg-touch:top-[var(--desktop-header-h)] lg-touch:bottom-[var(--mobile-menu-h)]"
           )}
         />
 
@@ -26,7 +28,9 @@ export default function DrawerManager() {
           className={cn(
             "fixed right-0 z-50 flex w-full outline-none",
             "bottom-[var(--mobile-menu-h)] top-[var(--mobile-header-h)]",
-            "@media(min-width:1024px)and(max-height:850px):!w-full"
+            "lg-desktop:bottom-0 lg-desktop:top-[var(--desktop-header-h) + var(--desktop-catalogue-nav-h)]",
+            "lg-touch:top-[var(--desktop-header-h)] lg-touch:bottom-[var(--mobile-menu-h)]",
+            "lg-touch:w-full"
           )}
         >
           <div
