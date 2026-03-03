@@ -1,0 +1,41 @@
+Folder PATH listing for volume Windows
+
+Volume serial number is DCE1-0497
+
+C:.
+
+ª   CatalogueMenu.tsx
+
+ª   CatalogueNavbar.tsx
+
+ª   CatalogueWrapper.tsx
+
+ª   data.ts
+
+ª
+
++---header
+
+ª       BGImage.tsx
+
+ª       CatalogueHeader.tsx
+
+ª       Title.tsx
+
+ª
+
++---segments
+
+        CatalogueSegments.tsx
+
+        Section.tsx
+
+        Watermark.tsx
+
+
+
+Current Name,Proposed Name,Logic / Semantic Value
+CatalogueMenu,CatalogueView,"""Menu"" implies a list of choices; ""View"" implies the full immersive stage where the item is presented."
+CatalogueHeader,SliceHero,"""Header"" is a document term. ""Hero"" describes its function as the primary visual anchor (the Podium)."
+CatalogueSegments,SliceDetails,"""Segments"" is abstract. ""Details"" or ""Slices"" (if referring to the container) describes the data breakdown."
+Title.tsx,SliceTitle.tsx,Keeps the atomic component linked to the parent domain.

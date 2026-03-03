@@ -3,7 +3,11 @@ import type { CatalogueItem } from "../data";
 
 type CatalogueSection = CatalogueItem["sections"][number];
 
-export default function Section({ section }: { section: CatalogueSection }) {
+export default function DetailSection({
+  section,
+}: {
+  section: CatalogueSection;
+}) {
   return (
     <div
       className={cn(

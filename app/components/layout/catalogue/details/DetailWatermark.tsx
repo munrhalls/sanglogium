@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils/tailwind";
 import Image from "next/image";
 
-export default function Watermark({ imageUrl }: { imageUrl: string }) {
+export default function DetailWatermark({ imageUrl }: { imageUrl: string }) {
   return (
     <div
       className={cn(

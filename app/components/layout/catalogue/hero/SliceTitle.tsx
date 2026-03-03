@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils/tailwind";
 
-export default function Title({ label }: { label: string }) {
+export default function SliceTitle({ label }: { label: string }) {
   return (
     <div
       key={label}

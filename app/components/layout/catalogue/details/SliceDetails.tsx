@@ -1,9 +1,9 @@
 import { cn } from "@/lib/utils/tailwind";
 import type { CatalogueItem } from "../data";
-import Watermark from "./Watermark";
-import Section from "./Section";
+import DetailWatermark from "./DetailWatermark";
+import DetailSection from "./DetailSection";
 
-export default function CatalogueSegment({ data }: { data: CatalogueItem }) {
+export default function SliceDetails({ data }: { data: CatalogueItem }) {
   return (
     <div
       className={cn(
@@ -11,7 +11,7 @@ export default function CatalogueSegment({ data }: { data: CatalogueItem }) {
         "overflow-hidden"
       )}
     >
-      <Watermark imageUrl={data.imageUrl} />
+      <DetailWatermark imageUrl={data.imageUrl} />
 
       {/* Content Layer */}
       <div
@@ -37,7 +37,7 @@ export default function CatalogueSegment({ data }: { data: CatalogueItem }) {
             )}
           >
             {data.sections.map((section, idx) => (
-              <Section key={idx} section={section} />
+              <DetailSection key={idx} section={section} />
             ))}
           </div>
         </div>

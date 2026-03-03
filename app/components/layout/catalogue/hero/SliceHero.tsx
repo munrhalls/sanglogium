@@ -5,10 +5,10 @@ import {
   CarouselNext,
   CarouselDots,
 } from "@/app/components/ui/carousel/Carousel";
-import BGImage from "./BGImage";
-import Title from "./Title";
+import HeroImage from "./HeroImage";
+import SliceTitle from "./SliceTitle";
 
-export default function CatalogueHeader({ data }: { data: CatalogueItem }) {
+export default function SliceHero({ data }: { data: CatalogueItem }) {
   return (
     <div
       className={cn(
@@ -28,7 +28,7 @@ export default function CatalogueHeader({ data }: { data: CatalogueItem }) {
         }
       `}</style>
 
-      <BGImage data={data} />
+      <HeroImage data={data} />
 
       <div
         className={cn(
@@ -39,7 +39,7 @@ export default function CatalogueHeader({ data }: { data: CatalogueItem }) {
         <CarouselDots />
       </div>
 
-      <Title label={data.label} />
+      <SliceTitle label={data.label} />
       {/* 3. Carousel Controls: Grouped Instrument Cluster */}
       <div
         className={cn(

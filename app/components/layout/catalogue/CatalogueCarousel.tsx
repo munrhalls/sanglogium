@@ -6,11 +6,11 @@ import {
   Carousel,
 } from "@/app/components/ui/carousel/Carousel";
 
-import { CatalogueMenu } from "@/app/components/layout/catalogue/CatalogueMenu";
+import { CatalogueView } from "@/app/components/layout/catalogue/CatalogueView";
 import { CATALOGUE_DATA } from "@/app/components/layout/catalogue/data";
 import { cn } from "@/lib/utils/tailwind";
 
-export default function MobileCatalogue() {
+export default function CatalogueCarousel() {
   return (
     <nav
       aria-label="Catalogue Navigation"
@@ -29,7 +29,7 @@ export default function MobileCatalogue() {
                   "flex flex-col group-data-[active=true]/animation-settle:opacity-100"
                 )}
               >
-                <CatalogueMenu data={item} index={index} />
+                <CatalogueView data={item} />
               </div>
             </CarouselSlide>
           ))}

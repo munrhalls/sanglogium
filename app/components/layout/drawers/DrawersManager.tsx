@@ -2,7 +2,7 @@
 
 import { Drawer } from "vaul";
 import { useDrawer } from "@/app/hooks/nuqs/useDrawer";
-import MobileCatalogue from "@/app/components/layout/mobile/MobileCatalogue";
+import CarouselCatalogue from "@/app/components/layout/catalogue/CatalogueCarousel";
 import { cn } from "@/lib/utils/tailwind";
 
 export default function DrawerManager() {
@@ -40,7 +40,7 @@ export default function DrawerManager() {
             )}
           >
             <Drawer.Title className="sr-only">Drawer Content</Drawer.Title>
-            {drawer === "catalogue" && <MobileCatalogue />}
+            {drawer === "catalogue" && <CarouselCatalogue />}
           </div>
         </Drawer.Content>
       </Drawer.Portal>

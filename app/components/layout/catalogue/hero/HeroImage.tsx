@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils/tailwind";
 import type { CatalogueItem } from "../data";
 import Image from "next/image";
 
-export default function BGImage({ data }: { data: CatalogueItem }) {
+export default function HeroImage({ data }: { data: CatalogueItem }) {
   return (
     <div
       className={cn(

@@ -1,6 +1,6 @@
 import React from "react";
 import { CatalogueWrapper } from "./CatalogueWrapper";
-import { CatalogueMenu } from "./CatalogueMenu";
+import { CatalogueView } from "./CatalogueView";
 import { CATALOGUE_DATA } from "./data";
 import { cn } from "@/lib/utils/tailwind";
 
@@ -13,9 +13,9 @@ const CatalogueNavbar = async () => {
       aria-label="Catalogue Navigation"
     >
       <div className="container mx-auto flex h-full items-center justify-center">
-        {CATALOGUE_DATA.map((item, index) => (
+        {CATALOGUE_DATA.map((item) => (
           <CatalogueWrapper key={item.id} label={item.label}>
-            <CatalogueMenu data={item} index={index} />
+            <CatalogueView data={item} />
           </CatalogueWrapper>
         ))}
       </div>

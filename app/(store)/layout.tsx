@@ -11,7 +11,7 @@ import { montserrat } from "./configuration";
 import Header from "@/app/components/layout/header/Header";
 import Footer from "@/app/components/layout/footer/Footer";
 import DrawersManager from "@/app/components/layout/drawers/DrawersManager";
-import MobileMenu from "@/app/components/layout/mobile/MobileMenu";
+import ActionBar from "@/app/components/layout/navigation/ActionBar";
 import CatalogueNavbar from "@/app/components/layout/catalogue/CatalogueNavbar";
 import { Suspense } from "react";
 
@@ -57,7 +57,7 @@ export default function RootLayout({
 
               <Suspense fallback={null}>
                 <DrawersManager />
-                <MobileMenu />
+                <ActionBar />
               </Suspense>
             </div>
           </NuqsAdapter>

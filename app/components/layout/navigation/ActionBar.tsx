@@ -34,7 +34,7 @@ import { cn } from "@/lib/utils/tailwind";
 // - Mobile menu has 'mobile drawers' component and the buttons component
 // - mobile drawers contains everything about responding to url with the proper drawer behavior
 
-function MobileMenuButtons() {
+function ActionButtons() {
   const pathname = usePathname();
   // drawer
   const { isOpen, openDrawer, closeDrawer } = useDrawer();
@@ -106,7 +106,7 @@ function MobileMenuButtons() {
   );
 }
 
-export default function MobileMenu() {
+export default function ActionBar() {
   return (
     <div
       style={{ display: "var(--mobile-menu-display)" }}
@@ -115,7 +115,7 @@ export default function MobileMenu() {
         "h-[var(--mobile-menu-h)] border-t border-white bg-brand-800 text-white"
       )}
     >
-      <MobileMenuButtons />
+      <ActionButtons />
     </div>
   );
 }
