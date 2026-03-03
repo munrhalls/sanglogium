@@ -19,7 +19,7 @@ export default function DrawerManager() {
           className={cn(
             "fixed inset-0 z-50 bg-black/10",
             "bottom-[var(--mobile-menu-h)] top-[var(--mobile-header-h)]",
-            "lg-touch:top-[var(--desktop-header-h)] lg-touch:bottom-[var(--mobile-menu-h)]",
+            "lg-touch:bottom-[var(--mobile-menu-h)] lg-touch:top-[var(--desktop-header-h)]",
             "lg-desktop:bottom-0 lg-desktop:top-[calc(var(--desktop-header-h)_+_var(--desktop-catalogue-nav-h))]"
           )}
         />
@@ -28,7 +28,7 @@ export default function DrawerManager() {
           className={cn(
             "fixed right-0 z-50 flex w-full outline-none",
             "bottom-[var(--mobile-menu-h)] top-[var(--mobile-header-h)]",
-            "lg-touch:top-[var(--desktop-header-h)] lg-touch:bottom-[var(--mobile-menu-h)]",
+            "lg-touch:bottom-[var(--mobile-menu-h)] lg-touch:top-[var(--desktop-header-h)]",
             "lg-touch:w-full",
             "lg-desktop:bottom-0 lg-desktop:top-[calc(var(--desktop-header-h)_+_var(--desktop-catalogue-nav-h))]"
           )}

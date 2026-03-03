@@ -8,7 +8,7 @@ const CatalogueNavbar = async () => {
   return (
     <nav
       className={cn(
-        "lg-desktop:h-[var(--desktop-catalogue-nav-h)] hidden w-full shrink-0 items-center bg-brand-900 lg:flex"
+        "hidden w-full shrink-0 items-center bg-brand-900 lg:flex lg-desktop:h-[var(--desktop-catalogue-nav-h)]"
       )}
       aria-label="Catalogue Navigation"
     >
