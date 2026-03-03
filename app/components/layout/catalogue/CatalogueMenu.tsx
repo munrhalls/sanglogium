@@ -1,16 +1,10 @@
 import { cn } from "@/lib/utils/tailwind";
 import React from "react";
 import type { CatalogueItem } from "./data";
-import CatalogueHeader from "./CatalogueHeader";
-import CatalogueSegments from "./CatalogueSegments";
+import CatalogueHeader from "./header/CatalogueHeader";
+import CatalogueSegments from "./segments/CatalogueSegments";
 
-export function CatalogueMenu({
-  data,
-  index,
-}: {
-  data: CatalogueItem;
-  index: number;
-}) {
+export function CatalogueMenu({ data }: { data: CatalogueItem }) {
   return (
     <div
       className={cn(
@@ -19,8 +13,8 @@ export function CatalogueMenu({
         "landscape:h-full landscape:flex-row"
       )}
     >
-      <CatalogueHeader data={data} index={index} />
-      <CatalogueSegments data={data} index={index} />
+      <CatalogueHeader data={data} />
+      <CatalogueSegments data={data} />
     </div>
   );
 }
