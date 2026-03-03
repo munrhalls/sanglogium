@@ -43,6 +43,19 @@ body {
   }
 }
 
+button {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@layer utilities {
+  @media (min-width: 1024px) and (hover: hover) {
+    .hide-on-desktop-hover {
+      display: none;
+    }
+  }
+}
+
 /* 3. Animations */
 
 @keyframes fadeOut {
@@ -59,17 +72,4 @@ body {
 
 .animate-fade-out {
   animation: fadeOut 3s forwards;
-}
-
-button {
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-@layer utilities {
-  @media (min-width: 1024px) and (hover: hover) {
-    .hide-on-desktop-hover {
-      display: none;
-    }
-  }
 }
