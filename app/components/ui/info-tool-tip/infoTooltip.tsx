@@ -5,7 +5,7 @@ import { FaInfoCircle } from "react-icons/fa";
 interface InfoTooltipProps {
   information: string;
 }
-const InfoTooltip: React.FC<InfoTooltipProps> = ({ information }) => {
+const InfoToolTip: React.FC<InfoTooltipProps> = ({ information }) => {
   const [isVisible, setIsVisible] = useState(false);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const toggleVisibility = () => {
@@ -64,4 +64,4 @@ const InfoTooltip: React.FC<InfoTooltipProps> = ({ information }) => {
     </div>
   );
 };
-export default InfoTooltip;
+export default InfoToolTip;

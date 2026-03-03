@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
 import ProductPageGallery from "./ProductPageGallery";
 import { FaCheckCircle } from "react-icons/fa";
-import InfoTooltip from "@/app/components/ui/info-tool-tip/InfoTooltip";
+// import InfoToolTip from "@/app/components/ui/info-tool-tip/InfoToolTip";
 import BasketControls from "@/app/components/features/basket/BasketControls";
 import { BasketItem } from "@/store/store";
 export default async function ProductPage({
