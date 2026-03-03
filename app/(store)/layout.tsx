@@ -26,30 +26,40 @@ export default function RootLayout({
     <html lang="en" className={cn(montserrat.variable, "antialiased")}>
       <body
         className={cn(
-          "flex h-dvh flex-col overflow-hidden",
-          "bg-brand-700 font-sans text-brand-100",
+          "flex h-dvh w-full flex-col overflow-hidden",
+          "bg-brand-800 font-sans text-brand-100",
           "selection:bg-brand-accent-600 selection:text-brand-800"
         )}
       >
         <ClerkProvider>
           <NuqsAdapter>
-            <Header />
-            <CatalogueNavbar />
-            <main
+            <div
               className={cn(
-                "relative flex h-full w-full flex-1 flex-col",
-                "overflow-y-auto overflow-x-hidden",
-                "pb-[var(--mobile-menu-h)]"
+                "relative flex flex-1 flex-col overflow-hidden",
+                "bg-brand-700",
+                "mx-auto max-w-[1920px]",
+                "h-full w-full flex-1"
               )}
             >
-              {children}
-              <Footer />
-            </main>
+              <Header />
+              <CatalogueNavbar />
+              <main
+                className={cn(
+                  "relative flex h-full w-full flex-1 flex-col",
+                  "overflow-y-auto overflow-x-hidden",
+                  "pb-[var(--mobile-menu-h)]",
+                  "shadow-[0_0_100px_rgba(0,0,0,0.5)]"
+                )}
+              >
+                {children}
+                <Footer />
+              </main>
 
-            <Suspense fallback={null}>
-              <DrawersManager />
-              <MobileMenu />
-            </Suspense>
+              <Suspense fallback={null}>
+                <DrawersManager />
+                <MobileMenu />
+              </Suspense>
+            </div>
           </NuqsAdapter>
         </ClerkProvider>
       </body>

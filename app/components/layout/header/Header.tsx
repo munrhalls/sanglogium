@@ -8,7 +8,7 @@ export default function Header() {
     <header
       className={cn(
         "sticky left-0 right-0 top-0 z-50",
-        "flex h-[var(--mobile-header-h)] shrink-0 items-center justify-around gap-4",
+        "flex h-[var(--mobile-header-h)] shrink-0 items-center justify-around gap-4 lg:h-[var(--desktop-header-h)]",
         "bg-brand-900 text-cap"
       )}
     >

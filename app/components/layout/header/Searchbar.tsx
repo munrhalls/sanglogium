@@ -7,7 +7,7 @@ export default function SearchBar() {
     <form
       role="search"
       className={cn(
-        "group hidden h-[24px] w-full items-center gap-4 rounded-full px-4",
+        "group hidden h-[24px] w-full items-center gap-4 rounded-full px-4 lg:h-[36px]",
         "bg-secondary-300 shadow-sm transition-all duration-300 ease-out",
         "hover:bg-secondary-100",
         "focus-within:bg-brand-400 focus-within:shadow-md",

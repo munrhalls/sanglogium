@@ -11,10 +11,11 @@ interface CatalogueWrapperProps {
 }
 
 export function CatalogueWrapper({ label, children }: CatalogueWrapperProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const toggleMenu = () => setIsOpen((prev) => !prev);
-  const closeMenu = () => setIsOpen(false);
+  const [isOpen2, setIsOpen2] = useState(true);
+  const toggleMenu = () => setIsOpen2((prev) => !prev);
+  const closeMenu = () => setIsOpen2(false);
 
+  const isOpen = false;
   return (
     <div
       className={cn("static h-full")}
@@ -67,9 +68,9 @@ export function CatalogueWrapper({ label, children }: CatalogueWrapperProps) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
             className={cn(
-              "absolute left-0 top-[var(--site-header-h)] z-50 w-full",
+              "top-[var(--desktop-header-h) - var(--desktop-catalogue-nav-h)] absolute left-0 z-50 w-full",
               "border-t border-gray-100 bg-white shadow-xl",
-              "md:h-[calc(100dvh-var(--site-header-h))]"
+              "lg:h-[calc(100dvh-var(--desktop-header-h) - var(--desktop-catalogue-nav-h))]"
             )}
           >
             {children}
