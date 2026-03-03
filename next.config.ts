@@ -1,7 +1,6 @@
 import type { NextConfig } from "next";
 
 import withBundleAnalyzer from "@next/bundle-analyzer";
-// TODO  ⚠ The "images.domains" configuration is deprecated. Please use "images.remotePatterns" configuration instead.
 
 const nextConfig: NextConfig = {
   typescript: { ignoreBuildErrors: true },
