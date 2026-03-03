@@ -14,7 +14,6 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ["@clerk/nextjs", "@phosphor-icons/react"],
   },
   images: {
-    domains: ["cdn.sanity.io"],
     formats: ["image/avif", "image/webp"],
     remotePatterns: [{ protocol: "https", hostname: "cdn.sanity.io" }],
     qualities: [75, 90],
