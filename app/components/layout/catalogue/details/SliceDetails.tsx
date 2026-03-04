@@ -8,7 +8,8 @@ export default function SliceDetails({ data }: { data: CatalogueItem }) {
     <div
       className={cn(
         "relative h-full max-h-full w-full max-w-screen-xl",
-        "overflow-hidden"
+        "overflow-hidden",
+        "lg-desktop:landscape:w-2/3"
       )}
     >
       <DetailWatermark imageUrl={data.imageUrl} />
