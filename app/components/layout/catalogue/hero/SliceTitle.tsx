@@ -5,7 +5,7 @@ export default function SliceTitle({ label }: { label: string }) {
     <div
       key={label}
       className={cn(
-        "flex h-full w-full items-center justify-center pt-8",
+        "flex h-full w-full items-center justify-center pt-12",
         "sm:items-center landscape:items-center"
       )}
     >
@@ -15,7 +15,7 @@ export default function SliceTitle({ label }: { label: string }) {
           "group-data-[active=true]/animation-settle:translate-y-0 group-data-[active=true]/animation-settle:opacity-100 group-data-[active=true]/animation-settle:delay-150",
           "sm:text-h2",
           "landscape:text-center",
-          "lg-desktop:landscape:self-start lg-desktop:landscape:pt-8 lg-desktop:landscape:text-brand-400"
+          "lg-desktop:landscape:self-start lg-desktop:landscape:text-brand-400"
         )}
       >
         {label}
