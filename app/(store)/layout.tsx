@@ -37,7 +37,7 @@ export default function RootLayout({
               className={cn(
                 "relative flex flex-1 flex-col overflow-hidden",
                 "bg-brand-700",
-                "mx-auto max-w-[1920px]",
+                "mx-auto max-w-[1440px]",
                 "h-full w-full flex-1"
               )}
             >

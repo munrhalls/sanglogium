@@ -64,10 +64,19 @@ export function CatalogueWrapper({ label, children }: CatalogueWrapperProps) {
             "top-[var(--desktop-header-h) - var(--desktop-catalogue-nav-h)] absolute left-0 z-50",
             "lg:h-[calc(100dvh-var(--desktop-header-h) - var(--desktop-catalogue-nav-h))]",
             "h-full w-full",
-            "border-t border-gray-100 bg-white shadow-xl"
+            "border-t border-gray-100 bg-brand-700 shadow-xl",
+            "group/animation-settle"
           )}
+          data-active={isOpen}
         >
-          {children}
+          <div
+            className={cn(
+              "duration-450 h-full w-full opacity-15 transition-all ease-in-out will-change-transform",
+              "group-data-[active=true]/animation-settle:opacity-100"
+            )}
+          >
+            {children}
+          </div>
           <div
             className={cn(
               "absolute bottom-12 left-0",
