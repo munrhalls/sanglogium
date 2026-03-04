@@ -33,7 +33,8 @@ export default function SliceHero({ data }: { data: CatalogueItem }) {
       <div
         className={cn(
           "absolute bottom-3 left-4 right-4 z-30 bg-black/30 py-2",
-          "landscape:bottom-auto landscape:left-8 landscape:right-auto landscape:top-4"
+          "landscape:bottom-auto landscape:left-8 landscape:right-auto landscape:top-4",
+          "lg-desktop:landscape:hidden"
         )}
       >
         <CarouselDots />
@@ -46,7 +47,8 @@ export default function SliceHero({ data }: { data: CatalogueItem }) {
           "absolute bottom-2 left-4 z-40 flex",
           "gap-4 sm:gap-6",
           "landscape:bottom-4 landscape:left-4 landscape:right-auto",
-          "sm:left-20 sm:landscape:left-16"
+          "sm:left-20 sm:landscape:left-16",
+          "lg-desktop:landscape:hidden"
         )}
       >
         <CarouselPrevious className="static translate-y-0" />
