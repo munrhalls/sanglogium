@@ -15,6 +15,7 @@ export default function SliceTitle({ label }: { label: string }) {
           "group-data-[active=true]/animation-settle:translate-y-0 group-data-[active=true]/animation-settle:opacity-100 group-data-[active=true]/animation-settle:delay-150",
           "sm:text-h2",
           "landscape:text-center",
+          "lg-touch:landscape:self-start",
           "lg-desktop:landscape:self-start lg-desktop:landscape:text-brand-400"
         )}
       >
