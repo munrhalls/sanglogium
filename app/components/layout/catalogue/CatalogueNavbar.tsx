@@ -1,5 +1,4 @@
 import React from "react";
-import { CatalogueItem } from "./CatalogueItem";
 import { CatalogueView } from "./CatalogueView";
 import NavbarManager from "./NavbarManager";
 import { CATALOGUE_DATA } from "./data";
