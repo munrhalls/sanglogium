@@ -4,6 +4,7 @@ import ProductSpotlight1 from "@/app/components/features/homepage/product-spotli
 import ProductSpotlight2 from "@/app/components/features/homepage/product-spotlight-2/ProductSpotlight2";
 import ProductSpotlight3 from "@/app/components/features/homepage/product-spotlight-3/ProductSpotlight3";
 import IemsGallery from "@/app/components/features/homepage/iems-gallery/IemsGallery";
+import NewestRelease from "@/app/components/features/homepage/newest-release/NewestRelease";
 import Dacs from "@/app/components/features/homepage/dacs/Dacs";
 import Accessories from "@/app/components/features/homepage/accessories/Accessories";
 import Shelf from "@/app/components/layout/homepage/Shelf";
@@ -28,8 +29,13 @@ export default function HomePage() {
         <ProductSpotlight3 />
       </Shelf>
 
+
       <Shelf>
         <IemsGallery />
+      </Shelf>
+
+      <Shelf>
+        <NewestRelease />
       </Shelf>
 
       <Shelf>
