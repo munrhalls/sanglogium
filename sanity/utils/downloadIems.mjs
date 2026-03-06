@@ -1,58 +1,46 @@
-import client from "./getClient.mjs";
+import { createClient } from "@sanity/client";
 import fs from "fs";
 import path from "path";
 
-async function downloadIems() {
-  const dumpPath = "c:/webdev/sang-logium/app/components/features/homepage/iems-gallery/iems-dump";
+const client = createClient({
+  projectId: "2tdmkpky",
+  dataset: "production",
+  useCdn: false,
+  apiVersion: "2024-03-06",
+});
 
-  if (!fs.existsSync(dumpPath)) {
-    fs.mkdirSync(dumpPath, { recursive: true });
-  } else {
-    // Clear existing files to avoid mixing old duplicates with new unique files
-    fs.readdirSync(dumpPath).forEach(file => fs.unlinkSync(path.join(dumpPath, file)));
-  }
+const targetIds = [
+  "Y7l1IhzX2fnyiano571oLJ",
+  "Y7l1IhzX2fnyiano572DVy",
+  "dLGDVDmEEI2lV8CArIgVky"
+];
+
+async function downloadIems() {
+  // Use coalesce to try multiple field names used in your schema
+  const query = `*[_id in $targetIds]{
+    "_id": _id,
+    "brand": brand,
+    "displayPrice": coalesce(displayPrice, price, 0),
+    "imageUrl": coalesce(mainImage.asset->url, image.asset->url, gallery[0].asset->url),
+    "name": name,
+    "slug": slug.current
+  }`;
 
   try {
-    const query = `*[_type == "product" && categoryPath match "headphones*" && (slug.current match "*ear*" || slug.current match "*buds*" || slug.current match "*iem*")]{
-      _id,
-      brand,
-      "name": coalesce(title, name),
-      "slug": slug.current,
-      "imageUrl": image.asset->url,
-      displayPrice
-    } | order(brand asc)`;
+    const products = await client.fetch(query, { targetIds });
+    const dumpPath = "c:/webdev/sang-logium/app/components/features/homepage/iems-gallery/iems-dump";
 
-    const allProducts = await client.fetch(query);
-    const uniqueProducts = [];
-    const seenBaseModels = new Set();
+    products.forEach((product) => {
+      if (!product.imageUrl) console.warn(`⚠️ Warning: Image still missing for ${product.name}. Check Sanity Studio.`);
 
-    for (const prod of allProducts) {
-      if (uniqueProducts.length >= 16) break;
+      const fileName = `IEM-${product.brand.replace(/\s+/g, "-")}-${product._id}.json`;
+      const fullPath = path.join(dumpPath, fileName);
 
-      // Create a "Base Model" key by removing common color/bundle suffixes
-      // This prevents "Pi8 White" and "Pi8 Black" from both appearing
-      const baseName = prod.name
-        .split(/ - | \(| 2024| with | bundle/i)[0] // Split at common separators
-        .replace(/(black|white|grey|silver|green|blue|pink|gold|storm|glacier|jade|cloud|forest|midnight)/gi, '')
-        .trim();
-
-      if (!seenBaseModels.has(baseName)) {
-        seenBaseModels.add(baseName);
-        uniqueProducts.push(prod);
-      }
-    }
-
-    uniqueProducts.forEach((product) => {
-      const fileName = `IEM-${product.brand.replace(/\s+/g, '')}-${product.slug}.json`;
-      const filePath = path.join(dumpPath, fileName);
-      fs.writeFileSync(filePath, JSON.stringify(product, null, 2));
-      console.log(`✅ Unique Download: ${fileName}`);
+      fs.writeFileSync(fullPath, JSON.stringify(product, null, 2), "utf8");
+      console.log(`✅ Fixed & Downloaded: ${product.name} ($${product.displayPrice})`);
     });
-
-    console.log(`\n🚀 Success: ${uniqueProducts.length} unique products dumped.`);
-
-  } catch (error) {
-    console.error("❌ Download failed:", error);
+  } catch (err) {
+    console.error("❌ Sanity Fetch Failed:", err);
   }
 }
 
