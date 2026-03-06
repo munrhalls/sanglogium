@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils/tailwind";
 import { CaretDownIcon } from "@phosphor-icons/react";
+// BACKLOG TODO - make sure navbar manager is hidden on anything less than lg-desktop (including lg-touch)
+// BACKLOG TODO - make sure catalogue carousel drawer is not accessible on lg-desktop -> should result in normal homepage with navbar on lg-desktop
 
 export default function NavbarManager({
   navLinks,
