@@ -1,0 +1,6 @@
+﻿# Meze — Industrial Grace
+## The Modern Standard
+
+The LIRIC II is a masterclass in acoustic warmth and structural elegance. By marrying hand-finished Macassar ebony with the innovative Quarter Wavelength Resonator Mask, Meze delivers a closed-back icon that balances rich, organic textures with fatigue-free clarity.
+
+Designed for the mobile audiophile who refuses to compromise on heritage or performance, the LIRIC II is more than a transducer; it is a personal statement piece crafted to resonate with the soul of the listener.
