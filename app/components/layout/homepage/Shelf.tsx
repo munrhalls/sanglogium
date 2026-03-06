@@ -11,7 +11,12 @@ export default function Shelf({ children, className, id }: ShelfProps) {
     <section
       id={id}
       className={cn(
-        "w-full py-20 md:py-36",
+        "w-full",
+
+        "py-20 md:py-36 landscape:py-10 md:landscape:py-36",
+
+        "px-6 md:px-12",
+        "outline-1 outline-dashed outline-white/20 -outline-offset-1",
         className
       )}
     >
