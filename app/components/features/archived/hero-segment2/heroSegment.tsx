@@ -1,4 +1,4 @@
-import { Carousel } from "@/app/components/ui/carousel/Carousel";
+import { Carousel } from "@/app/components/layout/carousel/Carousel";
 import SanityImage from "@/app/components/ui/sanity-image/SanityImage";
 import { SmartLink } from "@/app/components/ui/smart-link/SmartLink";
 

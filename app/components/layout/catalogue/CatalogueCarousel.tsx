@@ -4,7 +4,7 @@ import {
   CarouselSlide,
   CarouselTrack,
   Carousel,
-} from "@/app/components/ui/carousel/Carousel";
+} from "@/app/components/layout/carousel/Carousel";
 
 import { CatalogueView } from "@/app/components/layout/catalogue/CatalogueView";
 import { CATALOGUE_DATA } from "@/app/components/layout/catalogue/data";
