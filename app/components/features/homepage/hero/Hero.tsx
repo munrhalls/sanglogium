@@ -67,7 +67,12 @@ export default async function Hero() {
         )}
       >
         <div
-          className={cn("flex max-w-xl flex-col items-start gap-4 md:gap-8", "lg-touch:mb-44 lg-desktop:mb-64")}
+          className={cn(
+            "flex max-w-xl flex-col items-start gap-4 md:gap-8",
+            "lg-touch:mb-44 lg-desktop:mb-64",
+            "max-w-xl w-full",
+            "landscape:max-w-full lg-touch:landscape:max-w-4xl lg-desktop:landscape:max-w-4xl",
+          )}
         >
           <div className="flex flex-col gap-2 md:gap-4">
             <h1
