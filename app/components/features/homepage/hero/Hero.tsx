@@ -62,16 +62,17 @@ export default async function Hero() {
        className={cn(
           "relative z-10 h-full w-full",
           "px-[clamp(1.5rem,5vw,5rem)]",
-          "flex flex-col justify-center lg-touch:items-start lg-desktop:items-start"
+          "flex flex-col justify-center lg-touch:items-start lg-desktop:items-start",
+          "gap-6 md:gap-6"
         )}
       >
         <div
           className={cn("flex max-w-xl flex-col items-start gap-4 md:gap-8", "lg-touch:mb-44 lg-desktop:mb-64")}
         >
-          <div>
+          <div className="flex flex-col gap-2 md:gap-4">
             <h1
               className={cn(
-                "text-cap text-display-1 xs:text-display-1 md:text-display-1 font-bold uppercase",
+                "text-cap text-display-2 md:text-display-1 font-bold uppercase",
                 "text-brand-400",
               )}
             >
@@ -79,9 +80,9 @@ export default async function Hero() {
             </h1>
             <p
               className={cn(
-                "text-cap mt-2 text-h4 font-medium",
+                "text-cap text-h4 font-medium",
                 "text-secondary-300",
-                "md:text-h3"
+                "text-h4 md:text-h3"
               )}
             >
               {data.subheadline}
