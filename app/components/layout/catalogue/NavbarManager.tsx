@@ -39,7 +39,7 @@ export default function NavbarManager({
               className={cn(
                 "group flex items-center gap-2 text-sm font-medium tracking-[0.2em] uppercase transition-all duration-300",
                 isActive
-                  ? "text-accent-500"
+                  ? "text-accent-500 font-semibold"
                   : "text-brand-400 hover:text-brand-200"
               )}
             >
