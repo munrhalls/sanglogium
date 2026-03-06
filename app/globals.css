@@ -58,6 +58,15 @@ button {
 
 /* 3. Animations */
 
+.group\/animation-settle * {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.group\/animation-settle *::-webkit-scrollbar {
+  display: none !important;
+}
+
 @keyframes fadeOut {
   0% {
     opacity: 1;

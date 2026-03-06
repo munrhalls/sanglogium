@@ -18,7 +18,8 @@ export default function SliceDetails({ data }: { data: CatalogueItem }) {
       <div
         className={cn(
           "relative h-full max-h-full w-full max-w-screen-xl",
-          "landscape:no-scrollbar overflow-y-auto",
+          "landscape:no-scrollbar overflow-y-auto overflow-x-hidden",
+          "no-scrollbar",
           "px-8 pt-8"
         )}
       >

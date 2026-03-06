@@ -48,7 +48,7 @@ export default function NavbarManager({
         className={cn(
           "absolute left-0 right-0 top-[calc(var(--desktop-header-h)+var(--desktop-catalogue-nav-h))] bottom-0 z-50",
           "bg-brand-700 shadow-2xl transition-[grid-template-rows,opacity] duration-300 ease-in-out grid",
-          "overflow-hidden",
+          "overflow-hidden !scrollbar-none",
           isOpen ? "grid-rows-[1fr] opacity-100 border-t border-brand-500/20" : "grid-rows-[0fr] opacity-0 pointer-events-none"
         )}
       >
