@@ -1,0 +1,56 @@
+[
+  {
+    "brand": "Focal",
+    "displayPrice": 1499,
+    "id": "k27n1AQuIbSr5iozFz7EsP",
+    "imageUrl": "https://cdn.sanity.io/images/2tdmkpky/production/e3ea99d9a7359a3b5b86e1de2ddff28feb024256-1024x1024.jpg",
+    "name": "Focal Clear Mg Headphones",
+    "slug": "focal-clear-mg-headphones",
+    "tag": "Open-Back"
+  },
+  {
+    "brand": "Sennheiser",
+    "displayPrice": 135,
+    "id": "k27n1AQuIbSr5iozFz2v2d",
+    "imageUrl": "https://cdn.sanity.io/images/2tdmkpky/production/ab0856a210d134d52f7d734e94bec3dd911d4d09-1024x1024.jpg",
+    "name": "Sennheiser HD 800S Headphones",
+    "slug": "sennheiser-hd-800s-headphones",
+    "tag": "Open-Back"
+  },
+  {
+    "brand": "Meze",
+    "displayPrice": 2000,
+    "id": "moXlkADK7m1DHgGwWtblBG",
+    "imageUrl": "https://cdn.sanity.io/images/2tdmkpky/production/548a9c2b395dff17024bad8d3c62d8f3f33bf849-1024x1024.jpg",
+    "name": "Meze Audio LIRIC II Headphones",
+    "slug": "meze-audio-liric-ii-headphones",
+    "tag": "Closed-Back"
+  },
+  {
+    "brand": "Audeze",
+    "displayPrice": 1199,
+    "id": "k27n1AQuIbSr5iozFz3iys",
+    "imageUrl": "https://cdn.sanity.io/images/2tdmkpky/production/5eb8ef5b96cc54f5a0aaaf018893b6c6832a6d20-1024x1024.jpg",
+    "name": "Audeze LCD-X Headphones | 2024 Creator's Edition",
+    "slug": "audeze-lcd-x-headphones-|-2024-creator's-edition",
+    "tag": "Open-Back"
+  },
+  {
+    "brand": "Dan Clark Audio",
+    "displayPrice": 3999.99,
+    "id": "k27n1AQuIbSr5iozFz7HA5",
+    "imageUrl": "https://cdn.sanity.io/images/2tdmkpky/production/2e2ff9649b3422361fbe1a2340e4e81636140040-1024x1024.jpg",
+    "name": "Dan Clark Audio Stealth Headphones",
+    "slug": "dan-clark-audio-stealth-headphones",
+    "tag": "Closed-Back"
+  },
+  {
+    "brand": "Bowers & Wilkins",
+    "displayPrice": 399,
+    "id": "dLGDVDmEEI2lV8CArIgKzc",
+    "imageUrl": "https://cdn.sanity.io/images/2tdmkpky/production/42f23254360ef257b21f5dabf676fd5d99d9eae7-1200x1200.jpg",
+    "name": "Bowers & Wilkins Pi8 In-Ear Bluetooth True Wireless Earbuds (Midnight Blue)",
+    "slug": "bowers-wilkins-pi8-in-ear-bluetooth-true-wireless-earbuds-midnight-blue",
+    "tag": "Pi8. The new reference in earbuds. Class-leading audio performance, bespoke ANC and crystal-clear call quality with the comfort and elegance of a highly considered earbud design."
+  }
+]
