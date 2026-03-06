@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils/tailwind";
+import { CaretDownIcon } from "@phosphor-icons/react";
 
 export default function NavbarManager({
   navLinks,
@@ -28,19 +29,32 @@ export default function NavbarManager({
   return (
     <div className="w-full">
       {/* 1. Navbar buttons */}
-      <div className="flex justify-center gap-8 h-[var(--desktop-catalogue-nav-h)] items-center">
-        {navLinks.map((link) => (
-          <button
-            key={link.id}
-            onClick={() => toggleId(link.id)}
-            className={cn(
-              "text-sm font-medium tracking-[0.2em] uppercase transition-colors relative",
-              activeId === link.id ? "text-brand-200" : "text-brand-400 hover:text-brand-300"
-            )}
-          >
-            {link.label}
-          </button>
-        ))}
+      <div className="flex justify-center gap-10 h-[var(--desktop-catalogue-nav-h)] items-center">
+        {navLinks.map((link) => {
+          const isActive = activeId === link.id;
+          return (
+            <button
+              key={link.id}
+              onClick={() => toggleId(link.id)}
+              className={cn(
+                "group flex items-center gap-2 text-sm font-medium tracking-[0.2em] uppercase transition-all duration-300",
+                isActive
+                  ? "text-accent-500"
+                  : "text-brand-400 hover:text-brand-200"
+              )}
+            >
+              <span>{link.label}</span>
+              <CaretDownIcon
+                size={16}
+                weight="bold"
+                className={cn(
+                  "transition-transform duration-300 ease-in-out",
+                  isActive ? "rotate-180 text-accent-500" : "text-brand-500 group-hover:text-brand-300"
+                )}
+              />
+            </button>
+          );
+        })}
       </div>
 
       {/* 2. Dropdown Viewport */}
