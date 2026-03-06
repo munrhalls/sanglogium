@@ -1,8 +1,14 @@
 import React from "react";
-import { CatalogueWrapper } from "./CatalogueWrapper";
+import { CatalogueItem } from "./CatalogueItem";
 import { CatalogueView } from "./CatalogueView";
+import NavbarManager from "./NavbarManager";
 import { CATALOGUE_DATA } from "./data";
 import { cn } from "@/lib/utils/tailwind";
+
+const navLinks = CATALOGUE_DATA.map((item) => ({
+  id: item.id,
+  label: item.label,
+}));
 
 const CatalogueNavbar = async () => {
   return (
@@ -13,11 +19,11 @@ const CatalogueNavbar = async () => {
       aria-label="Catalogue Navigation"
     >
       <div className="container mx-auto flex h-full items-center justify-center">
-        {CATALOGUE_DATA.map((item) => (
-          <CatalogueWrapper key={item.id} label={item.label}>
-            <CatalogueView data={item} />
-          </CatalogueWrapper>
-        ))}
+        <NavbarManager navLinks={navLinks}>
+          {CATALOGUE_DATA.map((item) => (
+            <CatalogueView key={item.id} data={item} />
+          ))}
+        </NavbarManager>
       </div>
     </nav>
   );

@@ -16,7 +16,7 @@ export default function SliceTitle({ label }: { label: string }) {
           "sm:text-h2",
           "landscape:text-center",
           "lg-touch:landscape:self-start",
-          "lg-desktop:landscape:self-start lg-desktop:landscape:text-brand-400"
+          "lg-desktop:landscape:mt-24 lg-desktop:landscape:self-start lg-desktop:landscape:text-brand-400"
         )}
       >
         {label}
