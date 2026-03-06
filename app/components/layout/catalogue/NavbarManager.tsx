@@ -1,5 +1,5 @@
 "use client";
-import { useState, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils/tailwind";
 
 export default function NavbarManager({
@@ -10,16 +10,20 @@ export default function NavbarManager({
   children: React.ReactNode[];
 }) {
   const [activeId, setActiveId] = useState<string | null>(null);
-
-  const activeIndex = useMemo(() =>
-    navLinks.findIndex(link => link.id === activeId),
-    [activeId, navLinks]
-  );
+  const [displayIndex, setDisplayIndex] = useState(0);
 
   const toggleId = (id: string) => {
-    // Logika przełączania: jeśli ten sam -> zamknij (null), jeśli inny -> zmień
-    setActiveId(prev => (prev === id ? null : id));
+    setActiveId(prev => {
+      const isClosing = prev === id;
+      if (!isClosing) {
+        const newIndex = navLinks.findIndex(l => l.id === id);
+        setDisplayIndex(newIndex);
+      }
+      return isClosing ? null : id;
+    });
   };
+
+  const isOpen = activeId !== null;
 
   return (
     <div className="w-full">
@@ -44,21 +48,25 @@ export default function NavbarManager({
         className={cn(
           "absolute left-0 right-0 top-[calc(var(--desktop-header-h)+var(--desktop-catalogue-nav-h))] bottom-0 z-50",
           "bg-brand-700 shadow-2xl transition-[grid-template-rows,opacity] duration-300 ease-in-out grid",
-          // Używamy opacity dodatkowo, by uniknąć glitchu przy pierwszym montowaniu
-          activeId ? "grid-rows-[1fr] opacity-100 border-t border-brand-500/20" : "grid-rows-[0fr] opacity-0 pointer-events-none"
+          "overflow-hidden",
+          isOpen ? "grid-rows-[1fr] opacity-100 border-t border-brand-500/20" : "grid-rows-[0fr] opacity-0 pointer-events-none"
         )}
       >
-        <div className="min-h-0 overflow-hidden"> {/* To usuwa scrollbar przy slide */}
+        <div className="min-h-0 overflow-hidden no-scrollbar">
           {/* 3. The Track */}
           <div
-            className="flex w-full h-full transition-transform duration-500 ease-out no-scrollbar"
-            style={{ transform: `translateX(-${activeIndex === -1 ? 0 : activeIndex * 100}%)` }}
+            className={cn(
+               "flex w-full h-full no-scrollbar",
+               "transition-transform duration-500 ease-out"
+            )}
+            style={{
+              transform: `translateX(-${displayIndex * 100}%)`
+            }}
           >
             {children.map((child, idx) => (
               <div
                 key={navLinks[idx].id}
                 className="w-full shrink-0 group/animation-settle overflow-hidden no-scrollbar"
-                // KLUCZ: data-active musi być na tym samym poziomie co group/animation-settle
                 data-active={activeId === navLinks[idx].id}
               >
                 <div className="h-full overflow-hidden no-scrollbar">
