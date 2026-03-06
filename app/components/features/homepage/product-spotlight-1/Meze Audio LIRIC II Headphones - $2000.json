@@ -1,0 +1,51 @@
+{
+  "brand": "Meze",
+  "description": [
+    {
+      "_key": "90a7c82a-a827-4b79-a800-c3785cda9a73",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "6ea4adc8-c522-492d-80b3-e020c48955ac",
+          "_type": "span",
+          "text": "The Meze Audio LIRIC II represents a harmonious blend of industrial design prowess and cutting-edge technological innovation. Designed for the active audiophile who demands both mobility and exceptional sound quality, the LIRIC II offers a refined sound profile that strikes a perfect balance between warmth and clarity. Utilizing the innovative Quarter Wavelength Resonator Mask (QWRM), this headphone effectively attenuates high-frequency peaks above 7kHz, ensuring a listening experience that is both rich and non-fatiguing."
+        }
+      ],
+      "style": "normal"
+    },
+    {
+      "_key": "188358ff-ebf1-492c-a2fe-9336b1c4c40e",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "23c91b6d-a504-41cc-8167-22148d694638",
+          "_type": "span",
+          "text": "Rooted in the tradition of Maramures craftsmanship, the LIRIC II maintains the iconic design language of its predecessor while introducing a touch of warmth through the use of wood in the ear cups. The chosen material, Macassar ebony, is a dense and aesthetically pleasing hardwood known for its deep brown coloration and intricate golden-brown stripes. Each pair of headphones is unique, with the distinctiveness of Macassar ebony ensuring that every LIRIC II is not just a device for music but a personal statement piece with its own story."
+        }
+      ],
+      "style": "normal"
+    }
+  ],
+  "displayPrice": 2000,
+  "gallery": [
+    "https://cdn.sanity.io/images/2tdmkpky/production/548a9c2b395dff17024bad8d3c62d8f3f33bf849-1024x1024.jpg",
+    "https://cdn.sanity.io/images/2tdmkpky/production/f2280d1dde665e56e529f49ab03f331bc058519a-1024x1024.jpg",
+    "https://cdn.sanity.io/images/2tdmkpky/production/19bcc344895fd8d7f02e578eb2915ba3b5f632db-1024x1024.jpg",
+    "https://cdn.sanity.io/images/2tdmkpky/production/a9b479b0437445cc35b8e0791c8ce80407a7c377-1024x1024.jpg",
+    "https://cdn.sanity.io/images/2tdmkpky/production/cf2bd00b6e22e8dd34ce8c9508433ddb0c8e6c68-1024x1024.jpg",
+    "https://cdn.sanity.io/images/2tdmkpky/production/a3bf5f5c33c381a9d560c78abd45cce92febd923-1024x1024.jpg",
+    "https://cdn.sanity.io/images/2tdmkpky/production/2364cba7e0acfdf719378c8ece1781592194e459-1024x1024.jpg",
+    "https://cdn.sanity.io/images/2tdmkpky/production/776061dbf21f00c2f76e9a2a5474a8db856d8948-1024x1024.jpg",
+    "https://cdn.sanity.io/images/2tdmkpky/production/f9eb079506c123dee5502e041ee7faed23bee23f-1024x1024.jpg",
+    "https://cdn.sanity.io/images/2tdmkpky/production/9f42940ae89401cc0cdf2b1d557346dfec75a2d4-1024x1024.jpg"
+  ],
+  "id": "moXlkADK7m1DHgGwWtblBG",
+  "mainImage": "https://cdn.sanity.io/images/2tdmkpky/production/548a9c2b395dff17024bad8d3c62d8f3f33bf849-1024x1024.jpg",
+  "name": "Meze Audio LIRIC II Headphones",
+  "slug": "meze-audio-liric-ii-headphones",
+  "specs": [],
+  "headline": "The Modern Standard",
+  "subheadline": "Refined Closed-Back Excellence",
+  "isGold": false,
+  "order": 1
+}

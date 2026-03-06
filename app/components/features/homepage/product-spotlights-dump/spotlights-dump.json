@@ -1,0 +1,107 @@
+[
+  {
+    "brand": "Focal",
+    "displayPrice": 1499,
+    "gallery": [
+      "https://cdn.sanity.io/images/2tdmkpky/production/e3ea99d9a7359a3b5b86e1de2ddff28feb024256-1024x1024.jpg",
+      "https://cdn.sanity.io/images/2tdmkpky/production/96d2015ea2432bfdb6c8ab90042e9f862169fed0-1946x1946.jpg",
+      "https://cdn.sanity.io/images/2tdmkpky/production/b0f8eedbc65bf58099251ac4622efac8f1709f91-1024x1024.jpg",
+      "https://cdn.sanity.io/images/2tdmkpky/production/8aed094d1292cdab839d242d3978575e97dc9871-1024x1024.jpg",
+      "https://cdn.sanity.io/images/2tdmkpky/production/3d13d263506f63ecdbd9fef601db527bdfa6e8e5-1024x1024.jpg",
+      "https://cdn.sanity.io/images/2tdmkpky/production/7f2b1ac155bde57dc0e4bef35d95cf48be45c702-1024x1024.jpg",
+      "https://cdn.sanity.io/images/2tdmkpky/production/11c1d99cdec95511f23765d4b13a5f2ec3f542b3-1024x1024.jpg",
+      "https://cdn.sanity.io/images/2tdmkpky/production/b08010abd0c9e4e024669dedac44f8932b690067-1024x1024.jpg",
+      "https://cdn.sanity.io/images/2tdmkpky/production/000f037f4c020bc6a86a0edf867442b502e7d39c-1024x1024.jpg",
+      "https://cdn.sanity.io/images/2tdmkpky/production/7bd27fdf0eaf3a46764200115da2067f73a6aef6-1024x1024.jpg",
+      "https://cdn.sanity.io/images/2tdmkpky/production/7f07f2bb426fc3f042fac2d82e1eb02d3ea03c32-1024x1024.jpg",
+      "https://cdn.sanity.io/images/2tdmkpky/production/699b70b744edba163e12a891fc424d22c35a58ea-1024x1024.jpg"
+    ],
+    "id": "k27n1AQuIbSr5iozFz7EsP",
+    "mainImage": "https://cdn.sanity.io/images/2tdmkpky/production/e3ea99d9a7359a3b5b86e1de2ddff28feb024256-1024x1024.jpg",
+    "name": "Focal Clear Mg Headphones",
+    "slug": "focal-clear-mg-headphones",
+    "specs": [
+      {
+        "title": "Sensitivity",
+        "value": "104dB SPL / 1 mW @ 1kHz"
+      },
+      {
+        "title": "Total Harmonic Distortion (THD)",
+        "value": "0.25% @ 1kHz / 100dB SPL"
+      },
+      {
+        "title": "Frequency Response",
+        "value": "5Hz – 28kHz"
+      },
+      {
+        "title": "Driver Type",
+        "value": "Dynamic"
+      }
+    ],
+    "headline": "Engineered Purity",
+    "subheadline": "The Modern Standard",
+    "isGold": false,
+    "order": 1
+  },
+  {
+    "brand": "Sennheiser",
+    "displayPrice": 135,
+    "gallery": [
+      "https://cdn.sanity.io/images/2tdmkpky/production/ab0856a210d134d52f7d734e94bec3dd911d4d09-1024x1024.jpg",
+      "https://cdn.sanity.io/images/2tdmkpky/production/64f5cb46c52600145d1b94af1d5fdea8217581c5-1024x1024.jpg",
+      "https://cdn.sanity.io/images/2tdmkpky/production/124e5eaf1a7c35bce352f33513f21fe33cb2044f-1024x1024.jpg",
+      "https://cdn.sanity.io/images/2tdmkpky/production/44dd3d9eaea443104003c63df6ccdfa9a85a6c0d-1024x1024.jpg"
+    ],
+    "id": "k27n1AQuIbSr5iozFz2v2d",
+    "mainImage": "https://cdn.sanity.io/images/2tdmkpky/production/ab0856a210d134d52f7d734e94bec3dd911d4d09-1024x1024.jpg",
+    "name": "Sennheiser HD 800S Headphones",
+    "slug": "sennheiser-hd-800s-headphones",
+    "specs": [
+      {
+        "title": "Sensitivity",
+        "value": "103.76 dB"
+      },
+      {
+        "title": "Total Harmonic Distortion (THD)",
+        "value": "0.02 % (1 kHz 1 Vrms)"
+      },
+      {
+        "title": "Frequency Response",
+        "value": "4 - 51,000 Hz (-10 dB)"
+      },
+      {
+        "title": "Driver Type",
+        "value": "Dynamic"
+      }
+    ],
+    "headline": "Acoustic Precision",
+    "subheadline": "The Reference Icon",
+    "isGold": false,
+    "order": 2
+  },
+  {
+    "brand": "Meze",
+    "displayPrice": 2000,
+    "gallery": [
+      "https://cdn.sanity.io/images/2tdmkpky/production/548a9c2b395dff17024bad8d3c62d8f3f33bf849-1024x1024.jpg",
+      "https://cdn.sanity.io/images/2tdmkpky/production/f2280d1dde665e56e529f49ab03f331bc058519a-1024x1024.jpg",
+      "https://cdn.sanity.io/images/2tdmkpky/production/19bcc344895fd8d7f02e578eb2915ba3b5f632db-1024x1024.jpg",
+      "https://cdn.sanity.io/images/2tdmkpky/production/a9b479b0437445cc35b8e0791c8ce80407a7c377-1024x1024.jpg",
+      "https://cdn.sanity.io/images/2tdmkpky/production/cf2bd00b6e22e8dd34ce8c9508433ddb0c8e6c68-1024x1024.jpg",
+      "https://cdn.sanity.io/images/2tdmkpky/production/a3bf5f5c33c381a9d560c78abd45cce92febd923-1024x1024.jpg",
+      "https://cdn.sanity.io/images/2tdmkpky/production/2364cba7e0acfdf719378c8ece1781592194e459-1024x1024.jpg",
+      "https://cdn.sanity.io/images/2tdmkpky/production/776061dbf21f00c2f76e9a2a5474a8db856d8948-1024x1024.jpg",
+      "https://cdn.sanity.io/images/2tdmkpky/production/f9eb079506c123dee5502e041ee7faed23bee23f-1024x1024.jpg",
+      "https://cdn.sanity.io/images/2tdmkpky/production/9f42940ae89401cc0cdf2b1d557346dfec75a2d4-1024x1024.jpg"
+    ],
+    "id": "moXlkADK7m1DHgGwWtblBG",
+    "mainImage": "https://cdn.sanity.io/images/2tdmkpky/production/548a9c2b395dff17024bad8d3c62d8f3f33bf849-1024x1024.jpg",
+    "name": "Meze Audio LIRIC II Headphones",
+    "slug": "meze-audio-liric-ii-headphones",
+    "specs": [],
+    "headline": "The Golden Standard",
+    "subheadline": "The Pinnacle of Craft",
+    "isGold": true,
+    "order": 3
+  }
+]

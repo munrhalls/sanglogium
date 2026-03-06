@@ -8,6 +8,10 @@ import {
 import HeroImage from "./HeroImage";
 import SliceTitle from "./SliceTitle";
 
+// BACKLOG TODO - make sure the title is lifted up and doesn't squeeze onto nav arrows on very old tiny iphones
+// BACKLOG TODO - make sure arrows are smaller on very tiny phones viewport
+// BACKLOGO TODO - ^ same for landscape on tiny phones viewport or narrow height viewport
+
 export default function SliceHero({ data }: { data: CatalogueItem }) {
   return (
     <div
