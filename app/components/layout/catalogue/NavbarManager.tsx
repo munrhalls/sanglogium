@@ -24,6 +24,8 @@ export default function NavbarManager({
     });
   };
 
+  const closeMenu = () => setActiveId(null);
+
   const isOpen = activeId !== null;
 
   return (
@@ -90,6 +92,22 @@ export default function NavbarManager({
             ))}
           </div>
         </div>
+        {/* 4. Fixed Bottom Close Bar - Teraz jest jeden, stabilny */}
+          <div className="absolute bottom-0 left-0 right-0 flex justify-center pb-8 pt-4 bg-gradient-to-t from-brand-700 via-brand-700/80 to-transparent pointer-events-none">
+            <button
+              onClick={closeMenu}
+              className="pointer-events-auto group flex items-center gap-2 px-6 py-2 text-[10px] tracking-[0.3em] uppercase text-brand-500 transition-colors hover:text-accent-500"
+            >
+              <span>
+      Close
+    </span>
+    <CaretDownIcon
+      size={14}
+      weight="bold"
+      className="rotate-180 transition-transform duration-300"
+    />
+            </button>
+          </div>
       </div>
     </div>
   );
