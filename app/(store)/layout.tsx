@@ -47,6 +47,7 @@ export default function RootLayout({
                 className={cn(
                   "relative flex h-full w-full flex-1 flex-col",
                   "overflow-y-auto overflow-x-hidden",
+                  "scrollbar-none",
                   "pb-[var(--mobile-menu-h)]",
                   "shadow-[0_0_100px_rgba(0,0,0,0.5)]"
                 )}
