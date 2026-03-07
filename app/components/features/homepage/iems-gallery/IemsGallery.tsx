@@ -1,3 +1,4 @@
+import Image from "next/image";
 import iems from "./data.json";
 import Grid from "@/app/components/layout/grid/Grid";
 import Shelf from "@/app/components/layout/general/Shelf";
@@ -21,11 +22,7 @@ export default function IemsGallery() {
             className="group bg-brand-800/10 border border-brand-800/20 p-5 rounded-sm hover:border-brand-400/50 transition-all duration-500"
           >
             <div className="aspect-square mb-6 overflow-hidden bg-black/40 flex items-center justify-center p-4">
-              <img
-                src={iem.imageUrl}
-                alt={iem.name}
-                className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-700"
-              />
+              <div className="relative w-full h-full"><Image src={iem.imageUrl} alt={iem.name} fill className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-700" sizes="(max-width: 768px) 100vw, 33vw" /></div>
             </div>
 
             <p className="text-[10px] font-mono text-brand-400 uppercase tracking-widest mb-1">
@@ -48,3 +45,4 @@ export default function IemsGallery() {
     </div>
   );
 }
+

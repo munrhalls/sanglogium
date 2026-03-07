@@ -1,13 +1,15 @@
 "use client";
+import Image from "next/image";
+
 
 import dacs from "./data.json";
-import { 
-  Carousel, 
-  CarouselTrack, 
-  CarouselSlide, 
-  CarouselNext, 
-  CarouselPrevious, 
-  CarouselDots 
+import {
+  Carousel,
+  CarouselTrack,
+  CarouselSlide,
+  CarouselNext,
+  CarouselPrevious,
+  CarouselDots
 } from "@/app/components/layout/carousel/Carousel";
 import { cn } from "@/lib/utils/tailwind";
 
@@ -34,11 +36,7 @@ export default function DACs() {
             >
               <div className="group relative border-l border-brand-800/30 pl-6 py-4 hover:border-brand-400 transition-colors duration-500">
                 <div className="aspect-video mb-6 overflow-hidden bg-brand-800/10 flex items-center justify-center p-4">
-                  <img
-                    src={item.imageUrl}
-                    alt={item.name}
-                    className="w-full h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
-                  />
+                  <div className="relative w-full h-full"><Image src={item.imageUrl} alt={item.name} fill className="w-full h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105" sizes="(max-width: 768px) 100vw, 33vw" /></div>
                 </div>
                 <span className="text-[10px] font-bold text-brand-400 tracking-widest uppercase text-cap">
                   {item.brand}
@@ -70,3 +68,4 @@ export default function DACs() {
     </div>
   );
 }
+
