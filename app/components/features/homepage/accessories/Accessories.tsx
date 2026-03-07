@@ -1,6 +1,7 @@
-﻿"use client";
+"use client";
 
 import data from "./data.json";
+import { Carousel, CarouselTrack, CarouselSlide, CarouselDots } from "@/app/components/layout/carousel/Carousel";
 
 export default function Accessories() {
   const categories = [
@@ -10,18 +11,16 @@ export default function Accessories() {
   ];
 
   return (
-    <div className="w-full bg-white py-10 px-4 md:px-12">
-      <div className="max-w-screen-2xl mx-auto space-y-12">
-        <div className="border-b border-zinc-100 pb-4">
-          <h2 className="text-3xl font-bold uppercase italic text-black">
-            Essentials <span className="text-brand-400">&</span> Accessories
-          </h2>
-        </div>
-
-        {categories.map((cat) => (
-          <CategorySection key={cat.name} category={cat} />
-        ))}
+    <div className="w-full space-y-20">
+      <div className="border-b border-brand-800/30 pb-4">
+        <h2 className="text-display-2 font-bold uppercase italic text-brand-100 text-cap">
+          Essentials <span className="text-brand-400">&</span> Accessories
+        </h2>
       </div>
+
+      {categories.map((cat) => (
+        <CategorySection key={cat.name} category={cat} />
+      ))}
     </div>
   );
 }
@@ -35,47 +34,49 @@ function CategorySection({ category }: { category: { name: string, filter: strin
   if (filteredItems.length === 0) return null;
 
   return (
-    <section>
-      <h3 className="text-[10px] font-mono uppercase tracking-[0.3em] text-zinc-400 mb-4 flex items-center gap-3">
+    <div className="group/section">
+      <h3 className="text-[10px] font-mono uppercase tracking-[0.3em] text-brand-400 mb-6 flex items-center gap-3">
         <span className="h-px w-8 bg-brand-400" />
         {category.name}
       </h3>
 
-      {/* Native Scroll Container: 2 columns on mobile, no extra JS wrappers */}
-      <div className="flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-4">
-        {filteredItems.map((item) => (
-          <div
-            key={item._id}
-            className="min-w-[130px] w-[calc(50%-12px)] md:w-[220px] flex-shrink-0 snap-start border border-zinc-100 p-2 group"
-          >
-            {/* Forced Height Image Container */}
-            <div className="h-28 w-full bg-zinc-50 flex items-center justify-center p-4 mb-2">
-              <img
-                src={item.imageUrl}
-                alt={item.name}
-                className="max-h-full max-w-full object-contain mix-blend-multiply group-hover:scale-110 transition-transform"
-              />
-            </div>
-
-            <div className="space-y-1">
-              <span className="text-[7px] font-black uppercase tracking-tighter text-brand-500">
-                {item.brand}
-              </span>
-              <h4 className="text-[10px] font-medium leading-tight text-zinc-800 line-clamp-2 h-7">
-                {item.name}
-              </h4>
-              <div className="flex justify-between items-center pt-2 border-t border-zinc-50">
-                <span className="text-[11px] font-bold text-black">
-
-                </span>
-                <button className="text-[9px] font-bold text-brand-500 uppercase">
-                  + Add
-                </button>
+      <Carousel itemsCount={filteredItems.length}>
+        <CarouselTrack className="flex gap-4 overflow-x-auto scrollbar-none snap-x snap-mandatory pb-4">
+          {filteredItems.map((item) => (
+            <CarouselSlide
+              key={item._id}
+              className="min-w-[160px] basis-[45%] md:basis-1/4 lg:basis-1/6 flex-shrink-0 snap-start"
+            >
+              <div className="bg-brand-800/10 border border-brand-800/20 p-4 group transition-all duration-500 hover:border-brand-400/40">
+                <div className="h-32 w-full flex items-center justify-center p-2 mb-4 bg-black/20">
+                  <img
+                    src={item.imageUrl}
+                    alt={item.name}
+                    className="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-700"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <span className="text-[8px] font-bold uppercase tracking-widest text-brand-400">
+                    {item.brand}
+                  </span>
+                  <h4 className="text-[11px] font-medium leading-tight text-brand-100 line-clamp-2 h-8">
+                    {item.name}
+                  </h4>
+                  <div className="flex justify-between items-center pt-2 border-t border-brand-800/30">
+                    <span className="text-xs font-bold text-brand-200">${item.displayPrice}</span>
+                    <button className="text-[9px] font-bold text-brand-400 uppercase hover:text-brand-100">
+                      + Add
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
+            </CarouselSlide>
+          ))}
+        </CarouselTrack>
+        <div className="mt-4 opacity-0 group-hover/section:opacity-100 transition-opacity duration-500">
+          <CarouselDots />
+        </div>
+      </Carousel>
+    </div>
   );
 }
