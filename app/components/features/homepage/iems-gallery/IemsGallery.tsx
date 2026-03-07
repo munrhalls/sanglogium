@@ -1,45 +1,50 @@
 import iems from "./data.json";
+import Grid from "@/app/components/layout/grid/Grid";
+import Shelf from "@/app/components/layout/general/Shelf";
 
 export default function IemsGallery() {
   return (
-    <section className="py-12 px-4 border-t border-zinc-800">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-2xl font-bold mb-8 flex items-center gap-2">
-          <span className="w-2 h-2 bg-amber-500 rounded-full" />
-          IEM Collection Audit
+    <Shelf>
+      <div className="mb-12">
+        <h2 className="text-display-3 font-bold uppercase italic leading-none">
+          IEM Collection
         </h2>
-
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-          {iems.map((iem) => (
-            <div
-              key={iem._id}
-              className="bg-zinc-900/50 border border-zinc-800 p-4 rounded-lg hover:border-amber-500/50 transition-colors group"
-            >
-              <div className="aspect-square mb-4 overflow-hidden rounded bg-zinc-950">
-                <img
-                  src={iem.imageUrl}
-                  alt={iem.name}
-                  className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform"
-                />
-              </div>
-
-              <p className="text-[10px] font-mono text-amber-500 uppercase tracking-tighter">
-                {iem.brand}
-              </p>
-              <h3 className="text-sm font-medium text-zinc-200 line-clamp-2 min-h-[40px] mb-2">
-                {iem.name}
-              </h3>
-              <p className="text-lg font-bold text-zinc-100">${iem.displayPrice}</p>
-
-              <div className="mt-3 pt-3 border-t border-zinc-800/50">
-                <code className="text-[9px] text-zinc-600 block truncate">
-                  ID: {iem._id}
-                </code>
-              </div>
-            </div>
-          ))}
-        </div>
+        <p className="text-brand-400 font-mono text-xs uppercase tracking-[0.2em] mt-2">
+          Precision Engineered Audio
+        </p>
       </div>
-    </section>
+
+      <Grid cols={4}>
+        {iems.map((iem) => (
+          <div
+            key={iem._id}
+            className="group bg-brand-800/10 border border-brand-800/20 p-5 rounded-sm hover:border-brand-400/50 transition-all duration-500"
+          >
+            <div className="aspect-square mb-6 overflow-hidden bg-black/40 flex items-center justify-center p-4">
+              <img
+                src={iem.imageUrl}
+                alt={iem.name}
+                className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-700"
+              />
+            </div>
+
+            <p className="text-[10px] font-mono text-brand-400 uppercase tracking-widest mb-1">
+              {iem.brand}
+            </p>
+
+            <h3 className="text-body font-medium text-brand-100 line-clamp-2 min-h-[3rem] leading-snug">
+              {iem.name}
+            </h3>
+
+            <div className="mt-4 pt-4 border-t border-brand-800/30 flex justify-between items-baseline">
+              <p className="text-xl font-bold text-brand-50">${iem.displayPrice}</p>
+              <span className="text-[10px] font-mono text-brand-500 uppercase opacity-0 group-hover:opacity-100 transition-opacity">
+                View Details
+              </span>
+            </div>
+          </div>
+        ))}
+      </Grid>
+    </Shelf>
   );
 }
