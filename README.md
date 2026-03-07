@@ -52,9 +52,13 @@ The architecture is robust, secure, and fault-tolerant, designed to prioritize a
 
 ### PERFORMANCE - IMAGE STRATEGY
 * **Hero Image Strategy**
-Strategy uses Sanity's Image Pipeline *integrated* with Next.js next/image in a way that avoids double-optimization. I avoid hardcoded dimension. Instead I use custom loader to map Sanity's crop and hotspot.
-That data goes  directly to the browser's viewport using dynamic srcset generation. This does the next optimization: 1) a device gets image size as small as fits (next optimization) and 2) via network delivery speed is optimized (sanity optimization). Sanity handles processing and delivery.
-Sanity applies crops, hotspots, and compression on-the-fly via CDN. The next and sanity image optimizations are both preserved. But they don't conflict. This is extremely important because images are the largest assets. This has the biggest impact on performance.
+Zero-Conflict Optimization: Use next/image with a Custom Loader (@sanity/image-url).
+
+CDN Offloading: Direct all transformation requests (width, quality, format) to Sanity's API to bypass the Next.js image optimization server, reducing server load and improving TTFB.
+
+Aspect Ratio Integrity: Always fetch metadata.dimensions from Sanity to provide Next.js with the base aspect ratio. Use the fill or sizes attribute to ensure the browser selects the correct srcset from the Sanity CDN.
+
+Hotspot/Crop: Apply Sanity's .rect() parameters within the loader so the browser never downloads pixels that are cropped out of the design.
 
 ### CATALOGUE INTERACTION EXPERIENCE - INSTANT RESPONSIVENESS
 * **The Struggle:** Recursive database queries for nested category trees caused bottlenecks and 1-2s latency on navigation.
