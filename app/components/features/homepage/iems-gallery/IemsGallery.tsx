@@ -4,9 +4,9 @@ import Shelf from "@/app/components/layout/general/Shelf";
 
 export default function IemsGallery() {
   return (
-    <Shelf>
+    <div className="w-full">
       <div className="mb-12">
-        <h2 className="text-display-3 font-bold uppercase italic leading-none">
+        <h2 className="text-display-2 font-bold uppercase italic leading-none">
           IEM Collection
         </h2>
         <p className="text-brand-400 font-mono text-xs uppercase tracking-[0.2em] mt-2">
@@ -45,6 +45,6 @@ export default function IemsGallery() {
           </div>
         ))}
       </Grid>
-    </Shelf>
+    </div>
   );
 }
