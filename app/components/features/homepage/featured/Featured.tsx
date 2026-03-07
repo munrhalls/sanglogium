@@ -1,11 +1,11 @@
 "use client";
 
 import products from "./content-dump.json";
-import { 
-  Carousel, 
-  CarouselTrack, 
-  CarouselSlide, 
-  CarouselNext, 
+import {
+  Carousel,
+  CarouselTrack,
+  CarouselSlide,
+  CarouselNext,
   CarouselPrevious,
   CarouselDots
 } from "@/app/components/layout/carousel/Carousel";
@@ -20,7 +20,7 @@ export default function Featured() {
   return (
     <section className="bg-zinc-950 py-24 overflow-hidden border-t border-zinc-900">
       <div className="max-w-7xl mx-auto px-6">
-        
+
         <Carousel itemsCount={maxSlides}>
           <div className="flex items-end justify-between mb-12">
             <div>
@@ -40,15 +40,15 @@ export default function Featured() {
               <CarouselSlide key={index} className="w-full min-w-full">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                   {products.slice(index, index + VISIBLE_COUNT).map((product, pIdx) => (
-                    <div 
-                      key={product._id + pIdx} 
+                    <div
+                      key={product._id + pIdx}
                       className="bg-zinc-900/30 border border-zinc-800/50 p-6 flex flex-col h-full hover:bg-zinc-900/80 transition-colors duration-500 group"
                     >
                       <div className="aspect-square mb-6 flex items-center justify-center bg-zinc-950/50 overflow-hidden">
-                        <img 
-                          src={product.imageUrl} 
-                          alt={product.name} 
-                          className="max-h-32 object-contain group-hover:scale-110 transition-transform duration-700" 
+                        <img
+                          src={product.imageUrl}
+                          alt={product.name}
+                          className="max-h-32 object-contain group-hover:scale-110 transition-transform duration-700"
                         />
                       </div>
                       <span className="text-amber-500 text-[10px] font-bold uppercase tracking-widest mb-2">{product.brand}</span>

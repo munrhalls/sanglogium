@@ -13,6 +13,7 @@ export default function HomePage() {
   return (
     <div>
       <Hero />
+
       <Shelf>
         <Featured />
       </Shelf>
