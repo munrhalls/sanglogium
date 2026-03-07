@@ -15,8 +15,8 @@ export default function Featured() {
   if (!products || products.length === 0) return null;
 
   return (
-    <section className="bg-brand-700 py-16 md:py-24 overflow-hidden border-t border-brand-800">
-      <div className="max-w-[1440px] mx-auto px-6 md:px-12">
+    <div>
+      <div>
         <Carousel itemsCount={products.length}>
 
           <div className="flex items-end justify-between mb-10 md:mb-16">
@@ -71,6 +71,9 @@ export default function Featured() {
           </div>
         </Carousel>
       </div>
-    </section>
+    </div>
   );
 }
+
+
+

@@ -6,7 +6,7 @@ export default function NewestRelease() {
   const images = (data as any).images || [data.imageUrl];
 
   return (
-    <section className="bg-white text-black border-y border-zinc-200 py-20">
+    <div className="w-full">
       <Spotlight isReversed={false}>
         {/* Content Column (L) */}
         <div className="lg:col-span-7 flex flex-col justify-center order-2 lg:order-1">
@@ -67,6 +67,8 @@ export default function NewestRelease() {
           </div>
         </div>
       </Spotlight>
-    </section>
+    </div>
   );
 }
+
+

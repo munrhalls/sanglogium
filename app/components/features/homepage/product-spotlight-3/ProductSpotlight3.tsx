@@ -8,7 +8,7 @@ export default function ProductSpotlight3() {
   const images = (product as any).images || [product.mainImage];
 
   return (
-    <section className="py-20 bg-transparent">
+    <div>
       <Spotlight isReversed={false}>
         <div className="lg:col-span-7 order-2 lg:order-1 flex flex-col justify-center">
           <p className="text-brand-400 font-mono text-[10px] uppercase tracking-widest text-cap mb-4">
@@ -49,6 +49,8 @@ export default function ProductSpotlight3() {
           </div>
         </div>
       </Spotlight>
-    </section>
+    </div>
   );
 }
+
+
