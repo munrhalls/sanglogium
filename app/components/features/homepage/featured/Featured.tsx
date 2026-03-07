@@ -12,9 +12,10 @@ import {
 import { cn } from "@/lib/utils/tailwind";
 
 export default function Featured() {
-  const VISIBLE_COUNT = 2;
+  const VISIBLE_COUNT = 2; // Change this to 5 later for the Desktop view
   if (!products || products.length === 0) return null;
 
+  // Dot logic: Only show dots for valid "start" positions
   const dotCount = products.length - (VISIBLE_COUNT - 1);
 
   return (
@@ -33,11 +34,11 @@ export default function Featured() {
             </div>
           </div>
 
-          <CarouselTrack className="flex gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar">
+          <CarouselTrack className="flex overflow-x-auto snap-x snap-mandatory no-scrollbar">
             {products.map((product) => (
               <CarouselSlide
                 key={product._id}
-                className="min-w-0 flex-shrink-0 basis-1/2 snap-start"
+                className="min-w-0 flex-shrink-0 basis-1/2 snap-start px-2"
               >
                 <div className="bg-zinc-900/30 border border-zinc-800/50 p-12 flex flex-col items-center justify-center h-96 group">
                   <img
