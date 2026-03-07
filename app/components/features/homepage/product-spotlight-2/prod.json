@@ -1,7 +1,7 @@
 {
     "brand":  "Dan Clark Audio",
     "displayPrice":  3999.99,
-    "gallery":  [
+    "images":  [
                     "https://cdn.sanity.io/images/2tdmkpky/production/2e2ff9649b3422361fbe1a2340e4e81636140040-1024x1024.jpg",
                     "https://cdn.sanity.io/images/2tdmkpky/production/502acacc254b25bb17ed54fc6f87918f2889076a-1024x1024.jpg",
                     "https://cdn.sanity.io/images/2tdmkpky/production/212d097b3da7f656c4b50651ca71058d15cae90f-1024x1024.jpg"

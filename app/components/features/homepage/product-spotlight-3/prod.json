@@ -1,7 +1,7 @@
 {
     "brand":  "Focal",
     "displayPrice":  4999,
-    "gallery":  [
+    "images":  [
                     "https://cdn.sanity.io/images/2tdmkpky/production/0fd257f7f89cdd91b40d624b6176f1657b97e441-1200x900.jpg",
                     "https://cdn.sanity.io/images/2tdmkpky/production/d30b8736884014a69002bd6576ebe8d7912631f7-2000x2000.jpg",
                     "https://cdn.sanity.io/images/2tdmkpky/production/a092d925c73fb2c1c2fad02f369603cfec8fe6c1-1200x900.jpg",

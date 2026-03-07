@@ -1,7 +1,7 @@
 {
     "brand":  "Meze",
     "displayPrice":  2000,
-    "gallery":  [
+    "images":  [
                     "https://cdn.sanity.io/images/2tdmkpky/production/548a9c2b395dff17024bad8d3c62d8f3f33bf849-1024x1024.jpg",
                     "https://cdn.sanity.io/images/2tdmkpky/production/f2280d1dde665e56e529f49ab03f331bc058519a-1024x1024.jpg",
                     "https://cdn.sanity.io/images/2tdmkpky/production/19bcc344895fd8d7f02e578eb2915ba3b5f632db-1024x1024.jpg",
