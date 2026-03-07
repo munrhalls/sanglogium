@@ -1,50 +1,47 @@
+import Spotlight from "@/app/components/layout/spotlight/Spotlight";
 import product from "./prod.json";
 import copyData from "./copy.json";
 
-export default function ProductSpotlight() {
-  // Cast to any for the audit if TS is still complaining about the JSON structure
+export default function ProductSpotlight1() {
   const copy = copyData as any;
 
   return (
-    <section className="border-2 border-dotted border-amber-500 p-4">
-      <h2 className="text-xs uppercase tracking-widest text-zinc-500 mb-4">
-        Raw Audit: {product.slug}
-      </h2>
+    <Spotlight isReversed={false}>
+      {/* CONTENT SLOT (order-2 on mobile for image-first stack) */}
+      <div className="lg:col-span-7 order-2 lg:order-1">
+        <p className="text-brand-400 font-mono text-sm uppercase tracking-widest">
+          {product.brand}
+        </p>
 
-      <div className="flex flex-col md:flex-row gap-8 items-center">
-        <div className="bg-zinc-900 p-4 rounded shrink-0">
+        <h2 className="text-display-2 font-bold my-4 uppercase italic">
+          {product.name}
+        </h2>
+
+        {product.isGold && (
+          <div className="mb-6">
+            <span className="bg-brand-400 text-black text-[10px] font-bold px-3 py-1 rounded">
+              GOLD STATUS
+            </span>
+          </div>
+        )}
+
+        <div className="text-brand-200 leading-relaxed text-body max-w-xl">
+          {typeof copy.text === 'string' ? copy.text : "Content pending..."}
+        </div>
+
+        <p className="text-2xl text-brand-100 mt-8">${product.displayPrice}</p>
+      </div>
+
+      {/* IMAGE SLOT (order-1 on mobile) */}
+      <div className="lg:col-span-5 order-1 lg:order-2">
+        <div className="bg-brand-800/10 p-8 flex items-center justify-center aspect-square md:aspect-[4/5]">
           <img
             src={product.mainImage}
             alt={product.name}
-            className="w-full max-w-md h-auto object-contain"
+            className="w-full h-full object-contain hover:scale-105 transition-transform duration-700"
           />
         </div>
-
-        <div className="flex-1">
-          <p className="text-amber-500 font-mono text-sm">{product.brand}</p>
-          <h1 className="text-4xl font-bold my-2">{product.name}</h1>
-
-          {product.isGold && (
-            <span className="bg-amber-500 text-black text-[10px] font-bold px-2 py-1 rounded">
-              GOLD STATUS
-            </span>
-          )}
-
-          <p className="text-2xl text-zinc-300 my-4">${product.displayPrice}</p>
-
-          <div className="bg-zinc-800/50 p-4 rounded border border-zinc-700">
-            <h3 className="text-xs font-bold uppercase mb-2 text-zinc-400">Marketing Truth (copy.json):</h3>
-            <div className="text-zinc-300 leading-relaxed text-sm whitespace-pre-wrap">
-              {/* Using the string property specifically */}
-              {typeof copy.text === 'string' ? copy.text : "Error: Data is not a string"}
-            </div>
-          </div>
-
-          <p className="mt-4 text-[10px] text-zinc-600 font-mono uppercase">
-            System ID: {product.id}
-          </p>
-        </div>
       </div>
-    </section>
+    </Spotlight>
   );
 }
