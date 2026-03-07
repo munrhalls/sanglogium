@@ -36,7 +36,7 @@ export function Carousel({
   className = "",
   itemsCount = 0,
 }: CarouselProps) {
-  const carouselLogic = useSnapCarousel();
+  const carouselLogic = useSnapCarousel(itemsCount);
   if (itemsCount === 0) return null;
 
   const contextValue = React.useMemo(

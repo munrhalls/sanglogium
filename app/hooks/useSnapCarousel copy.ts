@@ -2,19 +2,7 @@
 
 import { useRef, useState, useCallback, useEffect } from "react";
 
-export function useSnapCarousel(itemsCount: number) {
-  if (itemsCount === 0 || !itemsCount) {
-    console.error("No items provided to the useSnapCarousel hook");
-    return {
-      scrollRef: null,
-      canScrollPrev: false,
-      canScrollNext: false,
-      scrollPrev: () => {},
-      scrollNext: () => {},
-      activeIndex: 0,
-      goTo: () => {},
-    };
-  }
+export function useSnapCarousel() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(true);
@@ -22,18 +10,14 @@ export function useSnapCarousel(itemsCount: number) {
 
   const updateState = useCallback(() => {
     const el = scrollRef.current;
-    if (!el || el.clientWidth === 0 || itemsCount === 0) return;
+    if (!el || el.clientWidth === 0) return;
 
     const { scrollLeft, scrollWidth, clientWidth } = el;
-    const itemWidth = scrollWidth / itemsCount;
-
-    setCanScrollPrev(scrollLeft > 10); // 10px buffer for precision
-    setCanScrollNext(scrollLeft + clientWidth < scrollWidth - 10);
-
-    // Calculate which item is currently at the start of the lens
-    const newIndex = Math.round(scrollLeft / itemWidth);
+    setCanScrollPrev(scrollLeft > 0);
+    setCanScrollNext(scrollLeft + clientWidth < scrollWidth - 1);
+    const newIndex = Math.round(scrollLeft / clientWidth);
     setActiveIndex(newIndex);
-  }, [itemsCount]);
+  }, []);
 
   useEffect(() => {
     const el = scrollRef.current;
@@ -52,23 +36,30 @@ export function useSnapCarousel(itemsCount: number) {
   const scrollPrev = useCallback(() => {
     const el = scrollRef.current;
     if (!el) return;
-    const itemWidth = el.scrollWidth / itemsCount;
-    el.scrollBy({ left: -itemWidth, behavior: "smooth" });
-  }, [itemsCount]);
+    el.scrollBy({
+      left: -el.clientWidth,
+      behavior: "smooth",
+    });
+  }, []);
 
   const scrollNext = useCallback(() => {
     const el = scrollRef.current;
     if (!el) return;
-    const itemWidth = el.scrollWidth / itemsCount;
-    el.scrollBy({ left: itemWidth, behavior: "smooth" });
-  }, [itemsCount]);
+    el.scrollBy({
+      left: el.clientWidth,
+      behavior: "smooth",
+    });
+  }, []);
 
-  const goTo = useCallback((index: number) => {
+ const goTo = useCallback((index: number) => {
     const el = scrollRef.current;
     if (!el) return;
-    const itemWidth = el.scrollWidth / itemsCount;
-    el.scrollTo({ left: index * itemWidth, behavior: "smooth" });
-  }, [itemsCount]);
+
+    el.scrollTo({
+      left: index * el.clientWidth,
+      behavior: "smooth",
+    });
+  }, []);
 
   return {
     scrollRef,
@@ -78,5 +69,6 @@ export function useSnapCarousel(itemsCount: number) {
     scrollNext,
     activeIndex,
     goTo,
+
   };
 }
