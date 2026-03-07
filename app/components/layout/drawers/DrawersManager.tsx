@@ -5,6 +5,7 @@ import { useDrawer } from "@/app/hooks/nuqs/useDrawer";
 import CarouselCatalogue from "@/app/components/layout/catalogue/CatalogueCarousel";
 import { cn } from "@/lib/utils/tailwind";
 
+// BACKLOG TODO - ensure the mobile catalogue / menu is not accessible when catalogue navbar is accessible (lg-touch/desktop related)
 export default function DrawerManager() {
   const { drawer, isOpen, closeDrawer } = useDrawer();
 

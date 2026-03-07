@@ -62,6 +62,7 @@ export function useSnapCarousel(itemsCount: number) {
 
   const scrollNext = useCallback(() => {
     const el = scrollRef.current;
+    console.log('el: ', el)
     if (!el) return;
     const itemWidth = el.scrollWidth / itemsCount;
     el.scrollBy({ left: itemWidth, behavior: "smooth" });
