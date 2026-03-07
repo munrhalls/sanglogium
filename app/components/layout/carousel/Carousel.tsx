@@ -196,8 +196,8 @@ export function CarouselDots({ className }: { className?: string }) {
               className={cn(
                 "h-2 w-2 sm:h-4 sm:w-4 transition-all duration-500",
                 isAnchor ? "text-brand-400 opacity-100 scale-110" :
-                isInView ? "text-brand-400 opacity-70 grayscale-0" :
-                "text-brand-400/10 grayscale"
+                isInView ? "text-brand-400 opacity-65 grayscale-0" :
+                "text-brand-400 opacity-45 grayscale"
               )}
             />
             <div className="absolute -inset-1 hidden rounded-full ring-2 ring-brand-400/50 group-focus-visible:block" />

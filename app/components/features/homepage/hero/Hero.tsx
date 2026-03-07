@@ -19,11 +19,10 @@ export default async function Hero() {
 
   return (
     <section
-      className={cn("relative w-full overflow-hidden", "bg-black text-white")}
-      style={{
-        height:
-          "calc(100dvh - var(--desktop-header-h) - var(--desktop-catalogue-nav-h))",
-      }}
+      className={cn("relative w-full overflow-hidden", "bg-black text-white",
+        "h-[calc(100dvh-var(--mobile-header-h)-var(--mobile-menu-h))]",
+        "lg-desktop:h-[calc(100dvh-var(--desktop-header-h)-var(--desktop-catalogue-nav-h))]"
+      )}
     >
       <div className="absolute inset-0 z-0">
         {/* IMAGE 1: MOBILE (Visible < md) */}
