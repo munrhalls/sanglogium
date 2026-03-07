@@ -62,12 +62,12 @@ export default function Featured() {
             ))}
           </CarouselTrack>
 
-            <div className="flex gap-4 pb-2">
-              <CarouselPrevious className="border-brand-600/30 bg-brand-800/50 text-brand-400 hover:border-brand-400 transition-colors" />
-              <CarouselNext className="border-brand-600/30 bg-brand-800/50 text-brand-400 hover:border-brand-400 transition-colors" />
-            </div>
+          <div className="flex gap-4 pb-2">
+            <CarouselPrevious className="border-brand-600/30 bg-brand-800/50 text-brand-400 hover:border-brand-400 transition-colors" />
+            <CarouselNext className="border-brand-600/30 bg-brand-800/50 text-brand-400 hover:border-brand-400 transition-colors" />
+          </div>
           <div className="mt-12 md:mt-16">
-             <CarouselDots />
+            <CarouselDots />
           </div>
         </Carousel>
       </div>
