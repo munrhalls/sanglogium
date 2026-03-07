@@ -172,41 +172,34 @@ interface CarouselDotsProps {
   className?: string;
 }
 
-export function CarouselDots({ className }: CarouselDotsProps) {
+export function CarouselDots({ className }: { className?: string }) {
   const context = useCarousel();
-
   if (!context) return null;
-  const { itemsCount, activeIndex, goTo } = context;
+  const { itemsCount, activeIndex, goTo, visibleCount = 1 } = context;
 
   return (
-    <div className={cn("flex justify-center gap-6", className)} role="tablist">
+    <div className={cn("flex justify-center gap-4 sm:gap-6", className)} role="tablist">
       {Array.from({ length: itemsCount }).map((_, i) => {
-        const isActive = activeIndex === i;
+        const isAnchor = i === activeIndex;
+        const isInView = i > activeIndex && i < activeIndex + visibleCount;
 
         return (
           <button
             key={i}
             type="button"
             role="tab"
-            aria-selected={isActive}
-            aria-label={`Go to slide ${i + 1}`}
+            aria-selected={isAnchor}
             onClick={() => goTo(i)}
-            className={cn(
-              "group relative flex cursor-pointer touch-manipulation items-center justify-center",
-              "transition-transform focus-visible:outline-none active:scale-95"
-            )}
-            style={{ isolation: "isolate" }}
+            className="group relative flex cursor-pointer touch-manipulation items-center justify-center transition-transform active:scale-95 focus-visible:outline-none"
           >
             <CarouselIcon
               className={cn(
-                "h-2 w-2 sm:h-4 sm:w-4",
-                isActive
-                  ? "text-brand-400 opacity-100"
-                  : "opacity-40 grayscale hover:opacity-95"
+                "h-2 w-2 sm:h-4 sm:w-4 transition-all duration-500",
+                isAnchor ? "text-brand-400 opacity-100 scale-110" :
+                isInView ? "text-brand-400/60 opacity-60 grayscale-0" :
+                "text-brand-400/20 opacity-20 grayscale"
               )}
             />
-
-            {/* Focus Ring - Semantic and clear without shifting layout */}
             <div className="absolute -inset-1 hidden rounded-full ring-2 ring-brand-400/50 group-focus-visible:block" />
           </button>
         );

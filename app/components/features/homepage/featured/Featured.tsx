@@ -56,14 +56,15 @@ export default function Featured() {
             {products.map((product) => (
               <CarouselSlide
                 key={product._id}
-                padding="px-3"
+
                 className={cn(
                   "min-w-0 flex-shrink-0 snap-start transition-all duration-500",
                   "basis-full",
                   "2xs:basis-1/2 landscape:basis-1/2",
                   "sm:basis-1/3",
                   "md:landscape:basis-1/4",
-                  "lg-touch:basis-1/5 lg-desktop:basis-1/5"
+                  "lg-touch:basis-1/5 lg-desktop:basis-1/5",
+                  "px-3"
                 )}
               >
                 <div className="bg-brand-800/40 border border-brand-600/20 p-8 flex flex-col items-center justify-center h-96 group hover:border-accent-500/50 transition-colors duration-500">

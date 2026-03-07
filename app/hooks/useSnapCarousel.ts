@@ -19,6 +19,7 @@ export function useSnapCarousel(itemsCount: number) {
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [visibleCount, setVisibleCount] = useState(1);
 
   const updateState = useCallback(() => {
     const el = scrollRef.current;
@@ -33,6 +34,9 @@ export function useSnapCarousel(itemsCount: number) {
     // Calculate which item is currently at the start of the lens
     const newIndex = Math.round(scrollLeft / itemWidth);
     setActiveIndex(newIndex);
+
+    const currentVisible = Math.max(1, Math.round(clientWidth / itemWidth));
+    setVisibleCount(currentVisible);
   }, [itemsCount]);
 
   useEffect(() => {
@@ -77,6 +81,7 @@ export function useSnapCarousel(itemsCount: number) {
     scrollPrev,
     scrollNext,
     activeIndex,
+    visibleCount,
     goTo,
   };
 }
