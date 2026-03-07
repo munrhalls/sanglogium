@@ -3,6 +3,13 @@ Safety: be mindful of assumptions, avoid shifting code unless you are 100%  clea
 Constraints: Highly performant, lean, works fast at even 6x cpu throttle/weak network setting in dev tools. Mobile responsive, semantic HTML, step-by-step verification of every step. Must aim at simplest possible solution * fully robust/professional. Must account for 2nd and 3rd order consequences - in terms of how implementation might complicate. Must assess options to now and avoid future complications.
 
 
+
+// Homepage features context
+The App Wrapper handles 1440px. The Shelf handles py-20.
+
+
+// Context When images are present
+
 Sanity image optimizations vs next/image optimizations sync strategy:
 Zero-Conflict Optimization: Use next/image with a Custom Loader (@sanity/image-url).
 
@@ -11,3 +18,4 @@ CDN Offloading: Direct all transformation requests (width, quality, format) to S
 Aspect Ratio Integrity: Always fetch metadata.dimensions from Sanity to provide Next.js with the base aspect ratio. Use the fill or sizes attribute to ensure the browser selects the correct srcset from the Sanity CDN.
 
 Hotspot/Crop: Apply Sanity's .rect() parameters within the loader so the browser never downloads pixels that are cropped out of the design.
+
