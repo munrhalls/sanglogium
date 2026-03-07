@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Spotlight from "@/app/components/layout/spotlight/Spotlight";
 import { Carousel, CarouselTrack, CarouselSlide, CarouselDots } from "@/app/components/layout/carousel/Carousel";
 import data from "./data.json";
@@ -70,5 +71,6 @@ export default function NewestRelease() {
     </div>
   );
 }
+
 
 
