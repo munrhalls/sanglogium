@@ -5,7 +5,7 @@ import data from "./prod.json";
 export default function ProductSpotlight3() {
   return (
     <div className="group grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-      <SpotlightHero image={data.imageUrl} tier="premium" />
+      <SpotlightHero image={data.mainImage} tier="premium" />
       <SpotlightDetails
         data={data}
         accentColor="text-accent-500"
