@@ -1,13 +1,12 @@
 "use client";
 
-import {
-  CarouselSlide,
-  CarouselTrack,
-  Carousel,
-} from "@/app/components/layout/carousel/Carousel";
+import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
+import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";
+import { CarouselSlide } from "@/app/components/layout/carousel/CarouselSlide";
 
 import { CatalogueView } from "@/app/components/layout/catalogue/CatalogueView";
 import { CATALOGUE_DATA } from "@/app/components/layout/catalogue/data";
+
 import { cn } from "@/lib/utils/tailwind";
 
 export default function CatalogueCarousel() {
