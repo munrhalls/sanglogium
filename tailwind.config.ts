@@ -209,7 +209,10 @@ export default {
           700: "#92400E", // Dark Amber - Warning text
         },
       },
-
+      boxShadow: {
+        card: '0 4px 20px rgba(0, 0, 0, 0.03)',
+        cardHover: '0 8px 30px rgba(0, 0, 0, 0.08)'
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
