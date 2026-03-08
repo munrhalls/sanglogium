@@ -95,7 +95,7 @@ export default async function Hero() {
 
           <button
             className={cn(
-              "rounded-full px-12 py-4 lg:py-6" // @coherence-bypass,
+              "rounded-full px-12 py-4 lg:py-6", // @coherence-bypass,
               "bg-brand-400 text-cta-hero font-bold text-brand-700",
               "transition-colors hover:bg-brand-200",
               "xs:mt-auto sm:mt-2"
