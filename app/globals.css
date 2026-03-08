@@ -76,6 +76,10 @@ button {
   display: none !important;
 }
 
+.interactive-card {
+  @apply transition-all duration-700 ease-out hover:scale-[1.03] hover:border-brand-400/40;
+}
+
 @keyframes fadeOut {
   0% {
     opacity: 1;
