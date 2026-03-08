@@ -60,7 +60,8 @@ export default {
       },
       spacing: {
         "desktop-header-h": "var(--desktop-header-h)",
-        "mobile-menu-h": "var(--mobile-menu-h)",
+                "mobile-menu-h": "var(--mobile-menu-h)",
+        "feature-media": "450px",
       },
       fontFamily: {
         sans: [
@@ -251,3 +252,4 @@ export default {
     hoverOnlyWhenSupported: true,
   },
 } satisfies Config;
+
