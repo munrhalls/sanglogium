@@ -8,21 +8,28 @@ export default function Featured() {
   if (!products || products.length === 0) return null;
   return (
     <Carousel itemsCount={products.length}>
-      <div className="flex items-end justify-between mb-10 md:mb-16">
+      <div className="flex items-end justify-between mb-12">
         <FeaturedHeader />
       </div>
-      <CarouselTrack className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none">
+      
+      <CarouselTrack className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none -mx-4">
         {products.map((product) => (
-          <CarouselSlide key={product._id} className="basis-full 2xs:basis-1/2 sm:basis-1/3 md:landscape:basis-1/4 lg:basis-1/5 px-3 flex-shrink-0 snap-start">
-            <FeaturedProduct name={product.name} imageUrl={product.imageUrl} />
+          <CarouselSlide 
+            key={product._id} 
+            className="basis-full 2xs:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5 px-4 flex-shrink-0 snap-start"
+          >
+            <FeaturedProduct product={product} />
           </CarouselSlide>
         ))}
       </CarouselTrack>
-      <div className="flex gap-4 pb-2 mt-8">
-        <CarouselPrevious className="border-brand-600/30 bg-brand-800/50 text-brand-400 hover:border-brand-400 transition-colors" />
-        <CarouselNext className="border-brand-600/30 bg-brand-800/50 text-brand-400 hover:border-brand-400 transition-colors" />
+
+      <div className="flex gap-4 mt-12">
+        <CarouselPrevious className="static translate-y-0" />
+        <CarouselNext className="static translate-y-0" />
       </div>
-      <div className="mt-12 md:mt-16"><CarouselDots /></div>
+      <div className="mt-16">
+        <CarouselDots />
+      </div>
     </Carousel>
   );
 }

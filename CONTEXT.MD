@@ -1,4 +1,7 @@
 Context: Next 15, Tailwind 3, sanity v3, react 18, all icons are phosphor icons and sometimes, custom assets (e.g. logo dots for carousel). Tailwind config defines typography scale (utilizes clamp), colors, spacing, breakpoints, etc. Workspace: antigravity IDE. Folders: no src folder.
+Tailwind config is the source of truth for all design decisions.
+The whole app is wrapped in 1440px container.
+All code changes should be considered not in isolation but in system-coherence, system-fit first, and then in terms of individual change, in order to avoid changes that fix individual thing but disrupt system simplicity and coherence.
 Safety: be mindful of assumptions, avoid shifting code unless you are 100%  clear 1 to 1 awareness of why that code exists and is the way it is. Beware changing something without deeper understanding of further relationships and perception of n-th level consequences of altering the existing relations.
 Constraints: Highly performant, lean, works fast at even 6x cpu throttle/weak network setting in dev tools. Mobile responsive, semantic HTML, step-by-step verification of every step. Must aim at simplest possible solution * fully robust/professional. Must account for 2nd and 3rd order consequences - in terms of how implementation might complicate. Must assess options to now and avoid future complications.
 

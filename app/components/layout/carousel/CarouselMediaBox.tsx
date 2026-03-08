@@ -1,14 +1,23 @@
 import Image from "next/image";
+import { urlFor } from "@/sanity/lib/client";
 
-export default function CarouselMediaBox({ src, alt }: { src: string; alt: string }) {
+interface CarouselMediaBoxProps {
+  src: any;
+  alt: string;
+}
+
+export default function CarouselMediaBox({ src, alt }: CarouselMediaBoxProps) {
+  // Guard clause for missing source to prevent runtime crashes
+  if (!src) return <div className="bg-secondary-100 aspect-square w-full animate-pulse" />;
+
   return (
-    <div className="relative w-full h-32 mb-4 bg-black/20 overflow-hidden">
+    <div className="relative aspect-square w-full overflow-hidden bg-white">
       <Image
-        src={src}
-        alt={alt}
+        src={urlFor(src).url()}
+        alt={alt || "Product image"}
         fill
-        className="object-contain p-2 transition-transform duration-700 group-hover:scale-110"
-        sizes="(max-width: 768px) 45vw, 15vw"
+        sizes="(max-width: 768px) 80vw, (max-width: 1200px) 40vw, 20vw"
+        className="object-contain p-6 transition-transform duration-700 group-hover:scale-110"
       />
     </div>
   );
