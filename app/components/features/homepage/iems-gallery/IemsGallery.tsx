@@ -9,7 +9,7 @@ export default function IemsGallery() {
       <IemsGalleryHeader />
       <Grid cols={4}>
         {iems.map((iem) => (
-          <IemCard key={iem._id} iem={iem} />
+          <IemCard key={iem._id} product={iem} />
         ))}
       </Grid>
     </>
