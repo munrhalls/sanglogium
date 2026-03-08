@@ -28,7 +28,7 @@ export default function CategorySection({ category, items }: CategorySectionProp
         <CarouselTrack className="flex gap-4 overflow-x-auto scrollbar-none snap-x snap-mandatory pb-4">
           {filteredItems.map((item) => (
             <CarouselSlide
-              key={item._id}
+              key={`${category.filter}-${item._id}`}
               className="min-w-[160px] basis-1/2 // @coherence-bypass md:basis-1/4 lg:basis-1/6 flex-shrink-0 snap-start"
             >
               <AccessoryCard item={item} />
