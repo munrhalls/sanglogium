@@ -8,9 +8,9 @@ import FeaturedControls from "./FeaturedControls";
 export default function Featured() {
   if (!products || products.length === 0) return null;
   return (
-    <section className="py-20 bg-brand-900">
+    <section className="py-20 px-8 bg-secondary-200 w-full">
       <Carousel itemsCount={products.length}>
-        <div className="container mx-auto px-4">
+        <div className="mx-auto">
           <FeaturedHeader />
           <FeaturedViewport products={products} />
           <FeaturedControls />

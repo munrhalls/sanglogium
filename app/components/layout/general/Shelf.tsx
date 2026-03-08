@@ -14,7 +14,7 @@ export default function Shelf({ children, variant = "default", className }: Shel
   };
 
   return (
-    <section className={cn("w-full py-20 px-4", variants[variant], className)}>
+    <section className={cn("w-full py-20", variants[variant], className)}>
       {children}
     </section>
   );
