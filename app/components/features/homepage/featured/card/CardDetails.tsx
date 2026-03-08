@@ -1,19 +1,54 @@
-export default function CardDetails({ name, brand, price }: { name: string; brand: string; price: number }) {
+﻿import { ShoppingCartIcon } from "@phosphor-icons/react/dist/ssr";
+
+export default function CardDetails({
+  name,
+  brand,
+  price,
+  description = "Premium acoustic engineering with artisan craftsmanship."
+}: {
+  name: string;
+  brand: string;
+  price: number;
+  description?: string;
+}) {
+
+  const formattedPrice = price?.toLocaleString() ?? "";
+
   return (
-    <div className="p-8 pt-6 flex flex-col justify-between flex-1">
-      <div className="flex flex-col gap-2">
-        <span className="text-small font-mono text-secondary-400 uppercase tracking-tighter">
-          {brand}
-        </span>
-        <h3 className="text-h3 font-light leading-tight text-brand-900 line-clamp-2">
+    <div className="flex flex-1 flex-col bg-brand-700">
+      {/* Identity Block */}
+      <div className="flex flex-col gap-2 p-8 pb-6">
+        <div className="flex items-center gap-2">
+          <span className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-secondary-500">
+            {brand}
+          </span>
+          <div className="h-[1px] w-4 bg-brand-500/30" />
+        </div>
+
+        <h3 className="line-clamp-1 text-h3 font-light leading-tight tracking-tight text-secondary-50 transition-colors duration-500 group-hover:text-accent-400">
           {name}
         </h3>
+
+        <p className="line-clamp-2 text-small leading-relaxed text-secondary-300">
+          {description}
+        </p>
       </div>
-      <div className="mt-8 flex items-baseline justify-between pt-6 border-t border-secondary-100">
-        <span className="text-body font-bold text-brand-900">${price}</span>
-        <span className="text-small font-bold uppercase tracking-widest text-brand-600 transition-all group-hover:translate-x-1">
-          Shop
-        </span>
+
+      {/* Pricing & CTA Anchor */}
+      <div className="mt-auto flex items-center justify-between border-t border-brand-800/50 p-8 py-6">
+        <div className="flex flex-col">
+          <span className="text-[10px] uppercase tracking-widest text-secondary-500">Price</span>
+          <span className="text-body font-bold tabular-nums text-brand-50">
+            ${formattedPrice}
+          </span>
+        </div>
+
+        <button className="flex items-center gap-2 rounded-sm bg-accent-500 px-5 py-2.5 transition-all duration-300 hover:bg-accent-400 active:scale-95">
+          <ShoppingCartIcon size={18} weight="bold" className="text-brand-900" />
+          <span className="font-sans text-[11px] font-bold uppercase tracking-widest text-brand-900">
+            Add to cart
+          </span>
+        </button>
       </div>
     </div>
   );
