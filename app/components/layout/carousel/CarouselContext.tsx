@@ -9,7 +9,6 @@ interface CarouselContextType {
   scrollPrev: () => void;
   scrollNext: () => void;
   activeIndex: number;
-  visibleCount: number;
   goTo: (index: number) => void;
   itemsCount: number;
 }
@@ -30,11 +29,9 @@ export function CarouselProvider({ children, itemsCount }: { children: React.Rea
     setCanScrollPrev(scrollLeft > 10);
     setCanScrollNext(scrollLeft + clientWidth < scrollWidth - 10);
     
-    // Calculate index based on the first slide's width
     const firstChild = el.firstElementChild as HTMLElement;
     if (firstChild) {
-      const slideWidth = firstChild.offsetWidth;
-      setActiveIndex(Math.round(scrollLeft / slideWidth));
+      setActiveIndex(Math.round(scrollLeft / firstChild.offsetWidth));
     }
   }, []);
 
@@ -52,18 +49,9 @@ export function CarouselProvider({ children, itemsCount }: { children: React.Rea
 
   const scroll = useCallback((direction: 'prev' | 'next') => {
     const el = scrollRef.current;
-    if (!el) return;
-    const firstChild = el.firstElementChild as HTMLElement;
-    if (!firstChild) return;
-
-    const slideWidth = firstChild.offsetWidth;
-    const gap = parseFloat(getComputedStyle(el).gap) || 0;
-    const scrollAmount = slideWidth + gap;
-
-    el.scrollBy({ 
-      left: direction === 'next' ? scrollAmount : -scrollAmount, 
-      behavior: "smooth" 
-    });
+    if (!el || !el.firstElementChild) return;
+    const moveAmount = direction === 'next' ? (el.firstElementChild as HTMLElement).offsetWidth : -(el.firstElementChild as HTMLElement).offsetWidth;
+    el.scrollBy({ left: moveAmount, behavior: "smooth" });
   }, []);
 
   const value = useMemo(() => ({
@@ -73,16 +61,14 @@ export function CarouselProvider({ children, itemsCount }: { children: React.Rea
     scrollPrev: () => scroll('prev'),
     scrollNext: () => scroll('next'),
     activeIndex,
-    visibleCount: 3, // Default for desktop, ideally dynamic
+    itemsCount,
     goTo: (index: number) => {
       const el = scrollRef.current;
       const firstChild = el?.firstElementChild as HTMLElement;
       if (el && firstChild) {
-        const slideWidth = firstChild.offsetWidth + (parseFloat(getComputedStyle(el).gap) || 0);
-        el.scrollTo({ left: index * slideWidth, behavior: "smooth" });
+        el.scrollTo({ left: index * firstChild.offsetWidth, behavior: "smooth" });
       }
-    },
-    itemsCount
+    }
   }), [canScrollPrev, canScrollNext, activeIndex, itemsCount, scroll]);
 
   return <CarouselContext.Provider value={value}>{children}</CarouselContext.Provider>;

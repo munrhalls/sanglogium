@@ -15,25 +15,21 @@ export default function Featured() {
   );
 
   return (
-    <section className="w-full bg-secondary-200 py-24">
-      <div className="mx-auto max-w-[1440px] px-8 md:px-12">
-        <FeaturedHeader />
-
-        <Carousel itemsCount={uniqueProducts.length}>
-          <CarouselTrack className="gap-8 pb-4">
-            {uniqueProducts.map((product) => (
-              <CarouselSlide
-                key={product._id}
-                className="min-w-0 shrink-0 grow-0 basis-full md:basis-[calc(33.333%-21.33px)]"
-              >
-                <Card product={product} />
-              </CarouselSlide>
-            ))}
-          </CarouselTrack>
-
-          <FeaturedControls />
-        </Carousel>
-      </div>
+    <section className="w-full bg-secondary-200 py-24 px-8">
+      <FeaturedHeader />
+      <Carousel itemsCount={uniqueProducts.length}>
+        <CarouselTrack>
+          {uniqueProducts.map((product) => (
+            <CarouselSlide
+              key={product._id}
+              className="min-w-0 shrink-0 grow-0 basis-full px-4 md:basis-1/3"
+            >
+              <Card product={product} />
+            </CarouselSlide>
+          ))}
+        </CarouselTrack>
+        <FeaturedControls />
+      </Carousel>
     </section>
   );
 }
