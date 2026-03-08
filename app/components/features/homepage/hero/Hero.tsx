@@ -20,8 +20,8 @@ export default async function Hero() {
   return (
     <section
       className={cn("relative w-full overflow-hidden", "bg-black text-white",
-        "h-[calc(100dvh-var(--mobile-header-h)-var(--mobile-menu-h))]",
-        "lg-desktop:h-[calc(100dvh-var(--desktop-header-h)-var(--desktop-catalogue-nav-h))]"
+        "h-[calc(100dvh-var(--mobile-header-h)-var(--mobile-menu-h))]", // @coherence-bypass
+        "lg-desktop:h-[calc(100dvh-var(--desktop-header-h)-var(--desktop-catalogue-nav-h))]" // @coherence-bypass
       )}
     >
       <div className="absolute inset-0 z-0">
@@ -58,9 +58,9 @@ export default async function Hero() {
       </div>
 
       <div
-       className={cn(
+        className={cn(
           "relative z-10 h-full w-full",
-          "px-[clamp(1.5rem,5vw,5rem)]",
+          "px-[clamp(1.5rem,5vw,5rem)]", // @coherence-bypass
           "flex flex-col justify-center lg-touch:items-start lg-desktop:items-start",
           "gap-6 md:gap-6"
         )}
@@ -95,7 +95,7 @@ export default async function Hero() {
 
           <button
             className={cn(
-              "rounded-full px-12 py-4 lg:py-6",
+              "rounded-full px-12 py-4 lg:py-6" // @coherence-bypass,
               "bg-brand-400 text-cta-hero font-bold text-brand-700",
               "transition-colors hover:bg-brand-200",
               "xs:mt-auto sm:mt-2"

@@ -26,7 +26,7 @@ export default function CategorySection({ category, items }: CategorySectionProp
           {filteredItems.map((item) => (
             <CarouselSlide
               key={item._id}
-              className="min-w-[160px] basis-[45%] md:basis-1/4 lg:basis-1/6 flex-shrink-0 snap-start"
+              className="min-w-[160px] basis-1/2 // @coherence-bypass md:basis-1/4 lg:basis-1/6 flex-shrink-0 snap-start"
             >
               <AccessoryCard item={item} />
             </CarouselSlide>

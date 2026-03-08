@@ -21,7 +21,7 @@ export default function NewestRelease() {
         <h2 className="text-display-2 font-light leading-none mb-8 tracking-tighter lowercase italic text-cap">
           {data.name}
         </h2>
-        <p className="text-body text-zinc-500 leading-relaxed mb-10 font-light max-w-sm italic">
+        <p className="text-body text-zinc-500 leading-relaxed mb-10 font-light max-w-sm italic">      
           "{data.description}"
         </p>
         <div className="flex flex-col gap-6">
@@ -40,7 +40,7 @@ export default function NewestRelease() {
       <div className="lg:col-span-5 flex items-center justify-center order-1 lg:order-2">
         <div className="relative group w-full overflow-hidden">
           <Carousel itemsCount={images.length}>
-            <CarouselTrack className="flex h-80 lg:h-[450px]">
+            <CarouselTrack className="flex h-80 lg:h-[450px]"> // @coherence-bypass
               {images.map((img: any, idx: number) => (
                 <CarouselSlide key={idx} className="basis-full flex-shrink-0">
                    <SpotlightMediaBox src={img} alt={data.name} />

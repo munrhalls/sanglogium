@@ -12,7 +12,7 @@ export default function FeaturedProduct({ product }: { product: any }) {
   return (
     <Link
       href={`/product/${product.slug?.current || product.slug || ""}`}
-      className="group flex flex-col h-full bg-white transition-all duration-500 rounded-sm shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)]"
+      className="group flex flex-col h-full bg-white transition-all duration-500 rounded-sm shadow-card hover:shadow-card-hover"
     >
       {/* Internal Spacing: .6 (24px) for Macro breathing room */}
       <div className="p-6 pb-0">
