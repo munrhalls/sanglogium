@@ -14,7 +14,7 @@ export default function CardDetails({
   const formattedPrice = price?.toLocaleString() ?? "";
 
   return (
-    <div className="flex flex-1 flex-col bg-[#111111]">
+    <div className="flex flex-1 flex-col bg-brand-900">
       <div className="flex flex-col gap-2 p-8 pb-6">
         <div className="flex items-center gap-2">
           <span className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-secondary-500">
