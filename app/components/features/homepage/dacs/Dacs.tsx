@@ -1,6 +1,9 @@
 "use client";
 import dacs from "./data.json";
-import { Carousel, CarouselTrack, CarouselSlide, CarouselNext, CarouselPrevious, CarouselDots } from "@/app/components/layout/carousel/Carousel";
+import { Carousel } from '@/app/components/layout/carousel/CarouselRoot';
+import { CarouselTrack } from '@/app/components/layout/carousel/CarouselTrack';
+import { CarouselSlide } from '@/app/components/layout/carousel/CarouselSlide';
+import { CarouselNext, CarouselPrevious, CarouselDots } from '@/app/components/layout/carousel/CarouselControls';
 import DacsHeader from "./DacsHeader";
 import DacCard from "./DacCard";
 

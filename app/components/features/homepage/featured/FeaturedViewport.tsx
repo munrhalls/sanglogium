@@ -1,4 +1,5 @@
-import { CarouselTrack, CarouselSlide } from "@/app/components/layout/carousel/Carousel";
+import { CarouselTrack } from '@/app/components/layout/carousel/CarouselTrack';
+import { CarouselSlide } from '@/app/components/layout/carousel/CarouselSlide';
 import Card from "./card/Card";
 
 export default function FeaturedViewport({ products }: { products: any[] }) {

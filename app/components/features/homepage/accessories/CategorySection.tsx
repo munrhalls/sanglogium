@@ -1,4 +1,7 @@
-import { Carousel, CarouselTrack, CarouselSlide, CarouselDots } from "@/app/components/layout/carousel/Carousel";
+import { Carousel } from '@/app/components/layout/carousel/CarouselRoot';
+import { CarouselTrack } from '@/app/components/layout/carousel/CarouselTrack';
+import { CarouselSlide } from '@/app/components/layout/carousel/CarouselSlide';
+import { CarouselDots } from '@/app/components/layout/carousel/CarouselControls';
 import AccessoryCard from "./AccessoryCard";
 
 interface CategorySectionProps {

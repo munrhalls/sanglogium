@@ -1,6 +1,6 @@
 "use client";
 import products from "./content-dump.json";
-import { Carousel } from "@/app/components/layout/carousel/Carousel";
+import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
 import FeaturedHeader from "./FeaturedHeader";
 import FeaturedViewport from "./FeaturedViewport";
 import FeaturedControls from "./FeaturedControls";

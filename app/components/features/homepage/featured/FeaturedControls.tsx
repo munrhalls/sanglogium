@@ -1,4 +1,4 @@
-import { CarouselNext, CarouselPrevious, CarouselDots } from "@/app/components/layout/carousel/Carousel";
+import { CarouselNext, CarouselPrevious, CarouselDots } from "@/app/components/layout/carousel/CarouselControls";
 
 export default function FeaturedControls() {
   return (
