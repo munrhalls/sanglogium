@@ -14,7 +14,6 @@ export function CarouselTrack({
   className = "",
 }: CarouselTrackProps) {
   const context = useCarousel();
-
   if (!context) return <div className={className}>{children}</div>;
 
   const { scrollRef } = context;
@@ -22,8 +21,11 @@ export function CarouselTrack({
   return (
     <div
       ref={scrollRef}
-      data-vaul-no-drag
-      className={cn("no-scrollbar flex h-full w-full", className)}
+      className={cn(
+        "no-scrollbar flex w-full overflow-x-auto snap-x snap-mandatory scroll-smooth",
+        className
+      )}
+      style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
     >
       {children}
     </div>
