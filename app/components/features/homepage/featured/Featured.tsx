@@ -2,8 +2,8 @@
 import products from "./content-dump.json";
 import { Carousel } from "@/app/components/layout/carousel/Carousel";
 import FeaturedHeader from "./FeaturedHeader";
-import FeaturedStage from "./FeaturedStage";
-import FeaturedPodium from "./FeaturedPodium";
+import FeaturedViewport from "./FeaturedViewport";
+import FeaturedControls from "./FeaturedControls";
 
 export default function Featured() {
   if (!products || products.length === 0) return null;
@@ -12,11 +12,10 @@ export default function Featured() {
       <Carousel itemsCount={products.length}>
         <div className="container mx-auto px-4">
           <FeaturedHeader />
-          <FeaturedStage products={products} />
-          <FeaturedPodium />
+          <FeaturedViewport products={products} />
+          <FeaturedControls />
         </div>
       </Carousel>
     </section>
   );
 }
-
