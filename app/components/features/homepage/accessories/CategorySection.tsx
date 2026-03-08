@@ -1,4 +1,4 @@
-import { Carousel } from '@/app/components/layout/carousel/CarouselRoot';
+﻿import { Carousel } from '@/app/components/layout/carousel/CarouselRoot';
 import { CarouselTrack } from '@/app/components/layout/carousel/CarouselTrack';
 import { CarouselSlide } from '@/app/components/layout/carousel/CarouselSlide';
 import { CarouselDots } from '@/app/components/layout/carousel/CarouselControls';
@@ -10,9 +10,13 @@ interface CategorySectionProps {
 }
 
 export default function CategorySection({ category, items }: CategorySectionProps) {
-  const filteredItems = items.filter(item =>
+  const filtered = items.filter(item =>
     item.name.toLowerCase().includes(category.filter) ||
     item.category?.toLowerCase() === category.filter
+  );
+
+  const filteredItems = Array.from(
+    new Map(filtered.map((item) => [item._id, item])).values()
   );
 
   if (filteredItems.length === 0) return null;
@@ -42,3 +46,5 @@ export default function CategorySection({ category, items }: CategorySectionProp
     </div>
   );
 }
+
+
