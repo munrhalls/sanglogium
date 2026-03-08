@@ -1,4 +1,4 @@
-﻿import { ShoppingCartIcon } from "@phosphor-icons/react/dist/ssr";
+import { ShoppingCartIcon } from "@phosphor-icons/react/dist/ssr";
 
 export default function CardDetails({
   name,
@@ -11,7 +11,7 @@ export default function CardDetails({
   price: number;
   description?: string;
 }) {
-  const formattedPrice = price?.toLocaleString() ?? "";
+  const formattedPrice = price?.toLocaleString("en-US") ?? "";
 
   return (
     <div className="flex flex-1 flex-col bg-brand-900">
