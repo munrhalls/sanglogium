@@ -14,10 +14,10 @@ export default function Shelf({ children, className, variant = "dark" }: ShelfPr
   };
 
   return (
-    <section className={cn("w-full py-20 px-6 md:px-12", variants[variant], className)}>
+    <section className={cn("w-full py-16 md:py-24 px-4 md:px-8", variants[variant], className)}>
       <div className={cn(
-        "mx-auto p-6 md:p-10",
-        variant === "platinum" ? "bg-secondary-50 shadow-sm" : ""
+        "mx-auto p-8 md:p-16",
+        variant === "platinum" ? "bg-secondary-50 shadow-sm rounded-sm" : ""
       )}>
         {children}
       </div>

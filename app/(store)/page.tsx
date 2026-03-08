@@ -14,46 +14,37 @@ export default function HomePage() {
     <div>
       <Hero />
 
-      <Shelf>
+      {/* The Featured section now correctly triggers the Platinum Slab physics */}
+      <Shelf variant="platinum">
         <Featured />
-        {/* CAROUSEL */}
       </Shelf>
 
       <Shelf>
         <ProductSpotlight1 />
-        {/* A 50/50 or 60/40 grid split. Vertically stacks on mobile. */}
       </Shelf>
 
       <Shelf>
         <ProductSpotlight2 />
-        {/* A 50/50 or 60/40 grid split. Vertically stacks on mobile. */}
       </Shelf>
 
       <Shelf>
         <ProductSpotlight3 />
-        {/* A 50/50 or 60/40 grid split. Vertically stacks on mobile. */}
       </Shelf>
-
 
       <Shelf>
         <IemsGallery />
-        {/* A 4X4 grid (16 ITEMS) for non-sliding content */}
       </Shelf>
 
       <Shelf>
         <NewestRelease />
-        {/* A 50/50 or 60/40 grid split. Vertically stacks on mobile. */}
-
       </Shelf>
 
       <Shelf>
         <Dacs />
-        {/* CAROUSEL */}
       </Shelf>
 
       <Shelf>
         <Accessories />
-        {/* CAROUSEL HOUSING GRID PER SLIDE */}
       </Shelf>
     </div>
   );

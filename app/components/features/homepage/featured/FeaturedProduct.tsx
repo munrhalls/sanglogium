@@ -1,37 +1,41 @@
-import { cn } from "@/lib/utils/tailwind";
+import Link from "next/link";
 import CarouselMediaBox from "@/app/components/layout/carousel/CarouselMediaBox";
 
 export default function FeaturedProduct({ product }: { product: any }) {
+  const imageSource = product.imageUrl || product.mainImage;
+  const price = product.displayPrice || product.price;
+  
+  const categoryLabel = Array.isArray(product.tag) 
+    ? (Array.isArray(product.tag[0]) ? product.tag[0][0] : product.tag[0])
+    : "Audio";
+
   return (
-    <div className="group flex flex-col h-full bg-white transition-all duration-500 hover:shadow-xl">
-      {/* Product Image Layer: Whiter Platinum (Secondary-50) container */}
-      <div className="bg-white p-6">
-        <CarouselMediaBox 
-          src={product.imageUrl} 
-          alt={product.name} 
+    <Link
+      href={`/product/${product.slug?.current || product.slug || ""}`}
+      className="group flex flex-col h-full bg-white transition-all duration-500 rounded-sm shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)]"
+    >
+      {/* Internal Spacing: .6 (24px) for Macro breathing room */}
+      <div className="p-6 pb-0">
+        <CarouselMediaBox
+          src={imageSource}
+          alt={product.name}
         />
       </div>
-      
-      {/* Content Layer: Absolute Void (Brand-900) */}
-      <div className="flex flex-col flex-grow p-6 bg-brand-900 text-brand-100">
-        <span className="text-[10px] font-mono uppercase tracking-widest text-brand-400 mb-2">
-          {product.brand}
-        </span>
-        <h4 className="text-body font-bold leading-tight mb-6 line-clamp-2 h-12">
-          {product.name}
-        </h4>
-        
-        <div className="mt-auto flex items-center justify-between">
-          <span className="text-h4 font-bold tracking-tighter">
-            ${product.displayPrice}
-          </span>
-          <div className="h-10 w-10 flex items-center justify-center rounded-full bg-brand-100 text-brand-900">
-             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-              <path d="M5 12h14m-7-7 7 7-7 7"/>
-            </svg>
-          </div>
+
+      <div className="p-6 pt-4 flex flex-col justify-between flex-1">
+        <div className="flex flex-col gap-2"> {/* Micro-Scale: .2 (8px) for label relationship */}
+          <h3 className="text-small font-bold uppercase tracking-widest text-brand-900 line-clamp-2">
+            {product.name}
+          </h3>
+          <p className="text-small font-medium uppercase text-secondary-500">
+            {categoryLabel.split("/").pop()?.replace("-", " ")}
+          </p>
+        </div>
+
+        <div className="mt-6 text-body font-bold text-brand-900">
+          ${price}
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

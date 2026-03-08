@@ -7,17 +7,20 @@ interface CarouselMediaBoxProps {
 }
 
 export default function CarouselMediaBox({ src, alt }: CarouselMediaBoxProps) {
-  // Guard clause for missing source to prevent runtime crashes
-  if (!src) return <div className="bg-secondary-100 aspect-square w-full animate-pulse" />;
+  if (!src) return <div className="bg-secondary-100 aspect-square w-full animate-pulse rounded-sm" />;
+
+  const isStringUrl = typeof src === "string";
+  const imagePath = isStringUrl ? src : urlFor(src).url();
 
   return (
-    <div className="relative aspect-square w-full overflow-hidden bg-white">
+    <div className="relative aspect-square w-full overflow-hidden">
       <Image
-        src={urlFor(src).url()}
+        src={imagePath}
         alt={alt || "Product image"}
         fill
-        sizes="(max-width: 768px) 80vw, (max-width: 1200px) 40vw, 20vw"
-        className="object-contain p-6 transition-transform duration-700 group-hover:scale-110"
+        sizes="(max-width: 768px) 40vw, 20vw"
+        className="object-contain transition-transform duration-700 group-hover:scale-105"
+        priority
       />
     </div>
   );
