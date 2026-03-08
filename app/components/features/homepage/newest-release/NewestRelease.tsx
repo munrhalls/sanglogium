@@ -4,7 +4,6 @@ import SpotlightMediaBox from "@/app/components/layout/spotlight/SpotlightMediaB
 import data from "./data.json";
 
 export default function NewestRelease() {
-  // Support both array of images and single imageUrl fallback
   const images = data.images || [data.imageUrl];
 
   return (
@@ -16,23 +15,23 @@ export default function NewestRelease() {
             {data.tag}
           </span>
         </div>
-        <p className="text-small text-cap font-mono text-zinc-400 uppercase mb-3">
+        <p className="text-small text-cap font-mono text-secondary-500 uppercase mb-2">
           {data.brand}
         </p>
         <h2 className="text-display-2 font-light leading-none mb-8 tracking-tighter lowercase italic text-cap">
           {data.name}
         </h2>
-        <p className="text-body text-zinc-500 leading-relaxed mb-10 font-light max-w-sm italic">      
+        <p className="text-body text-secondary-600 leading-relaxed mb-8 font-light max-w-sm italic">      
           "{data.description}"
         </p>
         <div className="flex flex-col gap-6">
           <div className="flex items-baseline gap-2">
-            <span className="text-small font-bold text-zinc-400 uppercase">MSRP</span>
+            <span className="text-small font-bold text-secondary-500 uppercase">MSRP</span>
             <span className="text-display-2 font-light tracking-tighter text-brand-100">
               ${data.displayPrice}
             </span>
           </div>
-          <button className="w-fit bg-brand-400 text-brand-900 px-10 py-5 text-small text-cap font-bold uppercase hover:bg-brand-200 transition-all">
+          <button className="w-fit bg-brand-400 text-brand-900 px-8 py-4 text-small text-cap font-bold uppercase hover:bg-brand-200 transition-all">
             Discover the Series
           </button>
         </div>
