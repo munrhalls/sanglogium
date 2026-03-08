@@ -12,18 +12,6 @@
         }
       ],
       "style": "normal"
-    },
-    {
-      "_key": "c9e27e75-812d-46f5-b583-f988e2597361",
-      "_type": "block",
-      "children": [
-        {
-          "_key": "57a583e5-9d8d-4ed5-9c89-072b8fe88ee2",
-          "_type": "span",
-          "text": ""
-        }
-      ],
-      "style": "normal"
     }
   ],
   "displayPrice": 3999.99,
