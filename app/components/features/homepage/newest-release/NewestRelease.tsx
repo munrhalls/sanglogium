@@ -40,7 +40,7 @@ export default function NewestRelease() {
       <div className="lg:col-span-5 flex items-center justify-center order-1 lg:order-2">
         <div className="relative group w-full overflow-hidden">
           <Carousel itemsCount={images.length}>
-            <CarouselTrack className="flex h-80 lg:h-[450px]">
+            <CarouselTrack className="flex h-80 lg:h-feature-media">
               {images.map((img: string, idx: number) => (
                 <CarouselSlide key={idx} className="basis-full flex-shrink-0">
                    <SpotlightMediaBox src={img} alt={data.name} />

@@ -14,3 +14,4 @@ export default function ProductSpotlight3() {
     </div>
   );
 }
+
