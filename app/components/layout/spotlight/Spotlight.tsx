@@ -8,9 +8,9 @@ interface SpotlightProps {
 
 export default function Spotlight({ children, isReversed, className }: SpotlightProps) {
   return (
-    <section className={cn("w-full py-16 md:py-24", className)}>
+    <section className={cn("w-full py-20", className)}>
       <div className={cn(
-        "grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center",
+        "grid grid-cols-1 lg:grid-cols-12 gap-8 items-center",
         isReversed && "lg:direction-rtl"
       )}>
         {/* The component assumes two children: one for Content, one for Image */}
