@@ -1,26 +1,21 @@
 import { cn } from "@/lib/utils/tailwind";
+import { ReactNode } from "react";
 
 interface ShelfProps {
-  children: React.ReactNode;
+  children: ReactNode;
+  variant?: "default" | "platinum";
   className?: string;
-  variant?: "platinum" | "dark" | "gold"; 
 }
 
-export default function Shelf({ children, className, variant = "dark" }: ShelfProps) {
+export default function Shelf({ children, variant = "default", className }: ShelfProps) {
   const variants = {
-    platinum: "bg-secondary-200 text-brand-900",
-    dark: "bg-brand-900 text-brand-100",
-    gold: "bg-brand-900 text-accent-500",
+    default: "bg-transparent",
+    platinum: "bg-secondary-50 shadow-inner-soft",
   };
 
   return (
-    <section className={cn("w-full py-16 md:py-24 px-4 md:px-8", variants[variant], className)}>
-      <div className={cn(
-        "mx-auto p-8 md:p-16",
-        variant === "platinum" ? "bg-secondary-50 shadow-sm rounded-sm" : ""
-      )}>
-        {children}
-      </div>
+    <section className={cn("w-full py-20 px-4", variants[variant], className)}>
+      {children}
     </section>
   );
 }

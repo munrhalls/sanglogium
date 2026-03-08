@@ -10,7 +10,7 @@ export default function Spotlight({ children, isReversed, className }: Spotlight
   return (
     <section className={cn("w-full py-16 md:py-24", className)}>
       <div className={cn(
-        "grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-20 items-center",
+        "grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center",
         isReversed && "lg:direction-rtl"
       )}>
         {/* The component assumes two children: one for Content, one for Image */}

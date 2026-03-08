@@ -15,7 +15,7 @@ export default function Grid({ children, className, cols = 4 }: GridProps) {
 
   return (
     <div className={cn(
-      "grid gap-4 md:gap-8 lg:gap-12",
+      "grid gap-4 md:gap-6 lg:gap-8",
       columnMap[cols],
       className
     )}>
