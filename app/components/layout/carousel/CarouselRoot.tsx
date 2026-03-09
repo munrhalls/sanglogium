@@ -9,9 +9,14 @@ interface CarouselProps {
   className?: string;
   itemsCount: number;
   breakpointMap?: {
-    sm?: number;
-    md?: number;
-    lg?: number;
+    mobilePortrait?: number;
+    mobileLandscape?: number;
+    smPortrait?: number;
+    smLandscape?: number;
+    mdPortrait?: number;
+    mdLandscape?: number;
+    lgTouch?: number;
+    lgDesktop?: number;
     xl?: number;
   };
 }

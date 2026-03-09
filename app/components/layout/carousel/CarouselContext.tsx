@@ -24,9 +24,14 @@ export function CarouselProvider({
   children: React.ReactNode;
   itemsCount: number;
   breakpointMap?: {
-    sm?: number;
-    md?: number;
-    lg?: number;
+    mobilePortrait?: number;
+    mobileLandscape?: number;
+    smPortrait?: number;
+    smLandscape?: number;
+    mdPortrait?: number;
+    mdLandscape?: number;
+    lgTouch?: number;
+    lgDesktop?: number;
     xl?: number;
   };
 }) {
@@ -63,7 +68,7 @@ export function CarouselProvider({
           const val = Number(span.getAttribute("data-value")) || 1;
           setVisibleCount(val);
           // Provider Level Trace: Active detection
-          console.log("[SRIP Trace] Active Capacity Read:", val);
+          console.log("[SRIP Trace] Active Signal Read | Value:", val, "| SpanClasses:", span.className);
           break;
         }
       }
@@ -109,13 +114,17 @@ export function CarouselProvider({
 
   return (
     <CarouselContext.Provider value={value}>
-      {/* The Config Map: Dynamic signal spans based on breakpointMap or defaults to 1 */}
+      {/* The Config Map: 2D Orientation Matrix using CSS Signals */}
       <div ref={signalRef} className="hidden" aria-hidden="true">
-        <span className="block sm:hidden" data-signal="true" data-value="1"></span>
-        <span className="hidden sm:block md:hidden" data-signal="true" data-value={breakpointMap?.sm || 1}></span>
-        <span className="hidden md:block lg:hidden" data-signal="true" data-value={breakpointMap?.md || 1}></span>
-        <span className="hidden lg:block xl:hidden" data-signal="true" data-value={breakpointMap?.lg || 1}></span>
-        <span className="hidden xl:block" data-signal="true" data-value={breakpointMap?.xl || 1}></span>
+        <span className="block sm:hidden portrait:block" data-signal="true" data-value={breakpointMap?.mobilePortrait || 1}></span>
+        <span className="hidden sm:hidden landscape:block" data-signal="true" data-value={breakpointMap?.mobileLandscape || 2}></span>
+        <span className="hidden sm:block md:hidden portrait:block" data-signal="true" data-value={breakpointMap?.smPortrait || 1}></span>
+        <span className="hidden sm:block md:hidden landscape:block" data-signal="true" data-value={breakpointMap?.smLandscape || 2}></span>
+        <span className="hidden md:block lg:hidden portrait:block" data-signal="true" data-value={breakpointMap?.mdPortrait || 3}></span>
+        <span className="hidden md:block lg:hidden landscape:block" data-signal="true" data-value={breakpointMap?.mdLandscape || 3}></span>
+        <span className="hidden lg-touch:block" data-signal="true" data-value={breakpointMap?.lgTouch || 3}></span>
+        <span className="hidden lg-desktop:block" data-signal="true" data-value={breakpointMap?.lgDesktop || 3}></span>
+        <span className="hidden xl:block" data-signal="true" data-value={breakpointMap?.xl || 4}></span>
       </div>
       <div style={{ "--visible-count": visibleCount } as React.CSSProperties}>
         {children}
