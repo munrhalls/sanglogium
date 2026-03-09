@@ -126,7 +126,7 @@ export function CarouselProvider({
         <span className="hidden lg-desktop:block" data-signal="true" data-value={breakpointMap?.lgDesktop || 3}></span>
         <span className="hidden xl:block" data-signal="true" data-value={breakpointMap?.xl || 4}></span>
       </div>
-      <div style={{ "--visible-count": visibleCount } as React.CSSProperties}>
+      <div className="h-full w-full" style={{ "--visible-count": visibleCount } as React.CSSProperties}>
         {children}
       </div>
     </CarouselContext.Provider>
