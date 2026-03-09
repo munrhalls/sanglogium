@@ -1,10 +1,16 @@
-﻿export default function SpotlightDetails({ data, accentColor }: any) {
-  // NORMALIZATION: Handle both flat string and Sanity block content
+﻿import { SpotlightProduct } from "../product-spotlight-1/types";
+
+interface SpotlightDetailsProps {
+  data: SpotlightProduct;
+  accentColor: string;
+  buttonClass?: string;
+}
+
+export default function SpotlightDetails({ data, accentColor }: SpotlightDetailsProps) {
   const descriptionText = typeof data.description === "string" 
     ? data.description 
     : data.description?.[0]?.children?.[0]?.text || "";
 
-  // NORMALIZATION: Handle headline splitting for the "Display" effect
   const headlineParts = data.headline?.split(" ") || ["Product", "Feature"];
 
   return (
