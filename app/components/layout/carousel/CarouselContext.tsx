@@ -16,13 +16,31 @@ interface CarouselContextType {
 
 const CarouselContext = createContext<CarouselContextType | null>(null);
 
-export function CarouselProvider({ children, itemsCount }: { children: React.ReactNode; itemsCount: number }) {
+export function CarouselProvider({
+  children,
+  itemsCount,
+  breakpointMap
+}: {
+  children: React.ReactNode;
+  itemsCount: number;
+  breakpointMap?: {
+    sm?: number;
+    md?: number;
+    lg?: number;
+    xl?: number;
+  };
+}) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const signalRef = useRef<HTMLDivElement>(null);
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
   const [visibleCount, setVisibleCount] = useState(1);
+
+  // Provider Level Trace: Map initialization
+  useEffect(() => {
+    console.log("[SRIP Trace] Using Map:", breakpointMap || "Default (All 1)");
+  }, [breakpointMap]);
 
   const updateState = useCallback(() => {
     const el = scrollRef.current;
@@ -44,8 +62,8 @@ export function CarouselProvider({ children, itemsCount }: { children: React.Rea
         if (window.getComputedStyle(span).display !== 'none') {
           const val = Number(span.getAttribute("data-value")) || 1;
           setVisibleCount(val);
-          // Provider Level Trace
-          console.log("[Config Trace] Current Breakpoint Value:", val);
+          // Provider Level Trace: Active detection
+          console.log("[SRIP Trace] Active Capacity Read:", val);
           break;
         }
       }
@@ -91,12 +109,13 @@ export function CarouselProvider({ children, itemsCount }: { children: React.Rea
 
   return (
     <CarouselContext.Provider value={value}>
-      {/* The Config Map: Exactly four span elements for breakpoint synchronization */}
+      {/* The Config Map: Dynamic signal spans based on breakpointMap or defaults to 1 */}
       <div ref={signalRef} className="hidden" aria-hidden="true">
         <span className="block sm:hidden" data-signal="true" data-value="1"></span>
-        <span className="hidden sm:block md:hidden" data-signal="true" data-value="2"></span>
-        <span className="hidden md:block lg:hidden" data-signal="true" data-value="3"></span>
-        <span className="hidden lg:block" data-signal="true" data-value="4"></span>
+        <span className="hidden sm:block md:hidden" data-signal="true" data-value={breakpointMap?.sm || 1}></span>
+        <span className="hidden md:block lg:hidden" data-signal="true" data-value={breakpointMap?.md || 1}></span>
+        <span className="hidden lg:block xl:hidden" data-signal="true" data-value={breakpointMap?.lg || 1}></span>
+        <span className="hidden xl:block" data-signal="true" data-value={breakpointMap?.xl || 1}></span>
       </div>
       {children}
     </CarouselContext.Provider>
