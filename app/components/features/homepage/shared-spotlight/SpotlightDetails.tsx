@@ -1,38 +1,42 @@
-﻿import { ShoppingCartIcon } from "@phosphor-icons/react/dist/ssr";
+﻿export default function SpotlightDetails({ data, accentColor }: any) {
+  // NORMALIZATION: Handle both flat string and Sanity block content
+  const descriptionText = typeof data.description === "string" 
+    ? data.description 
+    : data.description?.[0]?.children?.[0]?.text || "";
 
-export default function SpotlightDetails({ data, accentColor, buttonClass }: any) {
-  const formattedPrice = data.displayPrice?.toLocaleString("en-US");
+  // NORMALIZATION: Handle headline splitting for the "Display" effect
+  const headlineParts = data.headline?.split(" ") || ["Product", "Feature"];
 
   return (
-    <div className="flex flex-col gap-8 p-4 lg:p-8">
-      <div className="flex flex-col gap-4">
-        {/* Uses system "small" and standard "widest" tracking */}
+    <div className="flex flex-col gap-8 p-4 lg:p-12">
+      <div className="flex flex-col gap-6">
         <span className={`text-small font-bold uppercase tracking-widest ${accentColor}`}>
-          {data.brand} — {data.headline}
+          {data.brand}
         </span>
         
-        {/* Uses fluid "display-2" and cap-height trim utility */}
-        <h2 className="text-display-2 font-bold text-brand-50 uppercase leading-none text-cap">
-          {data.name}
-        </h2>
+        <div className="flex flex-col">
+          <h2 className="text-display-2 font-bold text-brand-50 uppercase leading-[0.9] text-cap">
+            {headlineParts[0]}
+          </h2>
+          {headlineParts.length > 1 && (
+            <h2 className="text-display-2 font-bold text-secondary-500 uppercase leading-[0.9] text-cap">
+              {headlineParts.slice(1).join(" ")}
+            </h2>
+          )}
+        </div>
 
-        <p className="text-body text-secondary-400 leading-relaxed max-w-md">
-          {data.subheadline}
+        <h3 className="text-spotlight text-brand-50 font-regular">
+          {data.subheadline || data.name}
+        </h3>
+
+        <p className="text-body text-secondary-400 leading-relaxed max-w-lg italic">
+          "{descriptionText}"
         </p>
       </div>
 
-      {/* Structural scale 0.8 (p-8) for internal breathing room */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-8 border-t border-white/10 pt-8">
-        <div className="flex flex-col">
-          <span className="text-small uppercase tracking-widest text-secondary-500">MSRP</span>
-          <span className="text-h3 font-bold tabular-nums text-brand-50">${formattedPrice}</span>
-        </div>
-        
-        <button className={`flex items-center justify-center gap-3 rounded-full px-8 py-3 transition-all duration-300 active:scale-95 ${buttonClass}`}>
-          <ShoppingCartIcon size={20} weight="bold" />
-          <span className="text-small font-bold uppercase tracking-widest">Add to cart</span>
-        </button>
-      </div>
+      <button className="w-fit text-small font-bold uppercase tracking-widest text-brand-50 border-b border-brand-400 pb-1 transition-all hover:text-brand-400">
+        See More
+      </button>
     </div>
   );
 }
