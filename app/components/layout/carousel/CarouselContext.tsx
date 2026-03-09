@@ -1,18 +1,7 @@
 ﻿"use client";
 
 import React, { createContext, useContext, useRef, useState, useCallback, useEffect, useMemo } from "react";
-
-interface CarouselContextType {
-  scrollRef: React.RefObject<HTMLDivElement | null>;
-  canScrollPrev: boolean;
-  canScrollNext: boolean;
-  scrollPrev: () => void;
-  scrollNext: () => void;
-  activeIndex: number;
-  goTo: (index: number) => void;
-  itemsCount: number;
-  visibleCount: number;
-}
+import { CarouselContextType, CarouselBreakpoints } from "./types";
 
 const CarouselContext = createContext<CarouselContextType | null>(null);
 
@@ -23,17 +12,7 @@ export function CarouselProvider({
 }: {
   children: React.ReactNode;
   itemsCount: number;
-  breakpointMap?: {
-    mobilePortrait?: number;
-    mobileLandscape?: number;
-    smPortrait?: number;
-    smLandscape?: number;
-    mdPortrait?: number;
-    mdLandscape?: number;
-    lgTouch?: number;
-    lgDesktop?: number;
-    xl?: number;
-  };
+  breakpointMap?: CarouselBreakpoints;
 }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollPrev, setCanScrollPrev] = useState(false);
@@ -41,7 +20,6 @@ export function CarouselProvider({
   const [activeIndex, setActiveIndex] = useState(0);
   const [visibleCount, setVisibleCount] = useState(1);
 
-  // MAP: Viewport detection aligned with Tailwind Breakpoints
   const updateVisibleCount = useCallback(() => {
     if (typeof window === "undefined") return;
 
@@ -67,7 +45,6 @@ export function CarouselProvider({
     console.log("[SRIP Trace] Context Source | Viewport Width:", w, "| Capacity Set To:", count);
   }, [breakpointMap]);
 
-  // UPDATE: Scroll state and active index tracking
   const updateScrollState = useCallback(() => {
     const el = scrollRef.current;
     if (!el) return;
@@ -85,7 +62,6 @@ export function CarouselProvider({
   useEffect(() => {
     const el = scrollRef.current;
 
-    // Initial sync
     updateVisibleCount();
     updateScrollState();
 
