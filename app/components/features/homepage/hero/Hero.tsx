@@ -1,17 +1,21 @@
-import Image from "next/image";
+﻿import Image from "next/image";
 import { urlFor } from "@/sanity/lib/client";
 import { getHeroData } from "@/sanity/lib/hero/getHeroData";
 import { cn } from "@/lib/utils/tailwind";
+import { HeroData, SanityImage } from "./types";
 
 export default async function Hero() {
-  const data = await getHeroData();
+  const data = await getHeroData() as HeroData | null;
 
   if (!data?.backgroundImage || !data?.headline) {
     return null;
   }
+
+  console.log(`[SRIP Trace] Hero Data Contract validated for headline: "${data.headline}"`);
+
   const mobileBackgroundImage = data.mobileBackgroundImage || data.backgroundImage;
 
-  const getPosition = (image: any) => {
+  const getPosition = (image: SanityImage) => {
     const x = image.hotspot?.x ? image.hotspot.x * 100 : 50;
     const y = image.hotspot?.y ? image.hotspot.y * 100 : 50;
     return `${x}% ${y}%`;
@@ -20,12 +24,11 @@ export default async function Hero() {
   return (
     <section
       className={cn("relative w-full overflow-hidden", "bg-black text-white",
-        "h-[calc(100dvh-var(--mobile-header-h)-var(--mobile-menu-h))]", // @coherence-bypass
-        "lg-desktop:h-[calc(100dvh-var(--desktop-header-h)-var(--desktop-catalogue-nav-h))]" // @coherence-bypass
+        "h-[calc(100dvh-var(--mobile-header-h)-var(--mobile-menu-h))]",
+        "lg-desktop:h-[calc(100dvh-var(--desktop-header-h)-var(--desktop-catalogue-nav-h))]"
       )}
     >
       <div className="absolute inset-0 z-0">
-        {/* IMAGE 1: MOBILE (Visible < md) */}
         <Image
           src={urlFor(mobileBackgroundImage).url()}
           alt={mobileBackgroundImage.alt || "Hero Image"}
@@ -37,7 +40,6 @@ export default async function Hero() {
           style={{ objectPosition: getPosition(mobileBackgroundImage) }}
         />
 
-        {/* IMAGE 2: DESKTOP (Visible >= md) */}
         <Image
           src={urlFor(data.backgroundImage).url()}
           alt={data.backgroundImage.alt || "Hero Image"}
@@ -60,7 +62,7 @@ export default async function Hero() {
       <div
         className={cn(
           "relative z-10 h-full w-full",
-          "px-[clamp(1.5rem,5vw,5rem)]", // @coherence-bypass
+          "px-[clamp(1.5rem,5vw,5rem)]",
           "flex flex-col justify-center lg-touch:items-start lg-desktop:items-start",
           "gap-6 md:gap-6"
         )}
@@ -95,7 +97,7 @@ export default async function Hero() {
 
           <button
             className={cn(
-              "rounded-full px-12 py-4 lg:py-6", // @coherence-bypass,
+              "rounded-full px-12 py-4 lg:py-6",
               "bg-brand-400 text-cta-hero font-bold text-brand-700",
               "transition-colors hover:bg-brand-200",
               "xs:mt-auto sm:mt-2"
