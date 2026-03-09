@@ -5,17 +5,15 @@ interface SpotlightHeroProps {
   tier: "standard" | "gold";
 }
 
-export default function SpotlightHero({ image, tier }: SpotlightHeroProps) {
-  console.log(`[SRIP Trace] Shared Spotlight initialized. Tier: ${tier}. Image optimized via Sanity Loader.`);
-
+export default function SpotlightHero({ image }: SpotlightHeroProps) {
   return (
-    <div className="relative h-feature-media w-full overflow-hidden bg-brand-800 rounded-lg">
+    <div className="relative h-feature-media lg:h-auto w-full overflow-hidden bg-secondary-200 lg:flex-[0.42] rounded-none">
       <Image
         src={image}
         alt="Product Spotlight"
         fill
-        className="object-contain p-8 transition-transform duration-700 group-hover:scale-105"
-        sizes="(max-width: 1024px) 100vw, 50vw"
+        className="object-contain p-12 transition-transform duration-700 group-hover:scale-105"
+        sizes="(max-width: 1024px) 100vw, 42vw"
         priority
       />
     </div>
