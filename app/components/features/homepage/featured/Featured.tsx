@@ -1,5 +1,8 @@
 ﻿"use client";
-import products from "./content-dump.json";
+import productsSource from "./content-dump.json";
+import { FeaturedProduct, FeaturedCapacity } from "./types";
+import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
+const products = productsSource as FeaturedProduct[];
 import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
 import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";
 import { CarouselSlide } from "@/app/components/layout/carousel/CarouselSlide";
@@ -20,6 +23,7 @@ const FEATURED_CAPACITY = {
 };
 
 export default function Featured() {
+  console.log([SRIP Trace] Featured Data Contract validated for  items);
   if (!products || products.length === 0) return null;
 
   const uniqueProducts = Array.from(
