@@ -63,6 +63,14 @@ export default {
         "mobile-menu-h": "var(--mobile-menu-h)",
         "feature-media": "450px",
       },
+      letterSpacing: {
+        editorial: "0.25em",
+        signature: "0.4em",
+      },
+      flex: {
+        hero: "0 0 42%",
+        details: "0 0 58%",
+      },
       fontFamily: {
         sans: [
           "var(--font-montserrat)",
