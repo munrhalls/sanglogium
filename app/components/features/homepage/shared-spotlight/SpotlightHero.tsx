@@ -1,6 +1,13 @@
 ﻿import Image from "next/image";
 
-export default function SpotlightHero({ image, tier }: { image: string, tier: "standard" | "gold" }) {
+interface SpotlightHeroProps {
+  image: string;
+  tier: "standard" | "gold";
+}
+
+export default function SpotlightHero({ image, tier }: SpotlightHeroProps) {
+  console.log(`[SRIP Trace] Shared Spotlight initialized. Tier: ${tier}. Image optimized via Sanity Loader.`);
+
   return (
     <div className="relative h-feature-media w-full overflow-hidden bg-brand-800 rounded-lg">
       <Image
