@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React from "react";
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
@@ -60,7 +60,10 @@ export function CarouselNext({ className, bg = "bg-brand-800/40", iconColor = "t
 export function CarouselDots({ className, color = "brand-400" }: { className?: string; color?: string }) {
   const context = useCarousel();
   if (!context) return null;
-  const { itemsCount, activeIndex, goTo, visibleCount = 1 } = context; const vCount = Number(visibleCount); const aIndex = Math.round(Number(activeIndex));
+  const { itemsCount, activeIndex, goTo, visibleCount = 1 } = context;
+  // Consumer Level Trace
+  console.log("[Dots Trace] Applying Capacity:", visibleCount);
+  const vCount = Number(visibleCount); const aIndex = Math.round(Number(activeIndex));
 
   return (
     <div className={cn("flex justify-center gap-4 sm:gap-6", className)} role="tablist">
@@ -92,6 +95,8 @@ export function CarouselDots({ className, color = "brand-400" }: { className?: s
     </div>
   );
 }
+
+
 
 
 
