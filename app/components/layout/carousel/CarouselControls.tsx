@@ -16,11 +16,11 @@ const BTN_BASE = cn(
   "before:absolute before:-inset-2 before:content-['']"
 );
 
-interface NavBtnProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface NavBtnProps extends React.ButtonHTMLAttributes<HTMLButtonElement> { bg?: string; iconColor?: string;
   className?: string;
 }
 
-export function CarouselPrevious({ className, ...props }: NavBtnProps) {
+export function CarouselPrevious({ className, bg = "bg-brand-800/40", iconColor = "text-brand-400", ...props }: NavBtnProps) {
   const context = useCarousel();
   if (!context) return null;
 
@@ -30,7 +30,7 @@ export function CarouselPrevious({ className, ...props }: NavBtnProps) {
       type="button"
       onClick={scrollPrev}
       disabled={!canScrollPrev}
-      className={cn(BTN_BASE, className)}
+      className={cn(BTN_BASE, bg, iconColor, className)}
       {...props}
     >
       <CaretLeftIcon size={16} weight="light" />
@@ -38,7 +38,7 @@ export function CarouselPrevious({ className, ...props }: NavBtnProps) {
   );
 }
 
-export function CarouselNext({ className, ...props }: NavBtnProps) {
+export function CarouselNext({ className, bg = "bg-brand-800/40", iconColor = "text-brand-400", ...props }: NavBtnProps) {
   const context = useCarousel();
   if (!context) return null;
 
@@ -48,7 +48,7 @@ export function CarouselNext({ className, ...props }: NavBtnProps) {
       type="button"
       onClick={scrollNext}
       disabled={!canScrollNext}
-      className={cn(BTN_BASE, className)}
+      className={cn(BTN_BASE, bg, iconColor, className)}
       {...props}
     >
       <CaretRightIcon size={16} weight="light" />
@@ -91,5 +91,6 @@ export function CarouselDots({ className, color = "brand-400" }: { className?: s
     </div>
   );
 }
+
 
 

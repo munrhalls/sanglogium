@@ -31,8 +31,8 @@ export default function Featured() {
         <div className="mt-12 flex flex-col gap-8">
           <CarouselDots color="brand-700" />
           <div className="flex justify-center gap-4">
-            <CarouselPrevious />
-            <CarouselNext />
+            <CarouselPrevious iconColor="text-brand-400" bg="bg-brand-900" />
+            <CarouselNext iconColor="text-brand-400" bg="bg-brand-900" />
           </div>
         </div>
       </Carousel>
