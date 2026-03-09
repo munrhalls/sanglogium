@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { NavbarManagerProps } from "@/app/components/layout/carousel/types";
 import { cn } from "@/lib/utils/tailwind";
 import { CaretDownIcon } from "@phosphor-icons/react";
 // BACKLOG TODO - make sure navbar manager is hidden on anything less than lg-desktop (including lg-touch)
@@ -8,10 +9,11 @@ import { CaretDownIcon } from "@phosphor-icons/react";
 export default function NavbarManager({
   navLinks,
   children,
-}: {
-  navLinks: { id: string; label: string }[];
-  children: React.ReactNode[];
-}) {
+}: NavbarManagerProps) {
+  useEffect(() => {
+    console.log("[SRIP Trace] Manager Mount | Link Count:", navLinks.length, "| Children Count:", children.length);
+  }, [navLinks.length, children.length]);
+
   const [activeId, setActiveId] = useState<string | null>(null);
   const [displayIndex, setDisplayIndex] = useState(0);
 
@@ -19,7 +21,7 @@ export default function NavbarManager({
     setActiveId(prev => {
       const isClosing = prev === id;
       if (!isClosing) {
-        const newIndex = navLinks.findIndex(l => l.id === id);
+        const newIndex = navLinks.findIndex((l: { id: string }) => l.id === id);
         setDisplayIndex(newIndex);
       }
       return isClosing ? null : id;
@@ -34,7 +36,7 @@ export default function NavbarManager({
     <div className="w-full">
       {/* 1. Navbar buttons */}
       <div className="flex justify-center gap-10 h-[var(--desktop-catalogue-nav-h)] items-center">
-        {navLinks.map((link) => {
+        {navLinks.map((link: { id: string; label: string }) => {
           const isActive = activeId === link.id;
           return (
             <button
@@ -74,18 +76,18 @@ export default function NavbarManager({
           {/* 3. The Track */}
           <div
             className={cn(
-               "flex w-full h-full no-scrollbar",
-               "transition-transform duration-500 ease-out"
+              "flex w-full h-full no-scrollbar",
+              "transition-transform duration-500 ease-out"
             )}
             style={{
               transform: `translateX(-${displayIndex * 100}%)`
             }}
           >
-            {children.map((child, idx) => (
+            {children.map((child: React.ReactNode, idx: number) => (
               <div
-                key={navLinks[idx].id}
+                key={navLinks[idx]?.id}
                 className="w-full shrink-0 group/animation-settle overflow-hidden no-scrollbar"
-                data-active={activeId === navLinks[idx].id}
+                data-active={activeId === navLinks[idx]?.id}
               >
                 <div className="h-full overflow-hidden no-scrollbar">
                   {child}
@@ -95,21 +97,21 @@ export default function NavbarManager({
           </div>
         </div>
         {/* 4. Fixed Bottom Close Bar - Teraz jest jeden, stabilny */}
-          <div className="absolute bottom-0 left-0 right-0 flex justify-center pb-8 pt-4 bg-gradient-to-t from-brand-700 via-brand-700/80 to-transparent pointer-events-none">
-            <button
-              onClick={closeMenu}
-              className="pointer-events-auto group flex items-center gap-2 px-6 py-2 text-[10px] tracking-[0.3em] uppercase text-brand-500 transition-colors hover:text-accent-500"
-            >
-              <span>
-      Close
-    </span>
-    <CaretDownIcon
-      size={14}
-      weight="bold"
-      className="rotate-180 transition-transform duration-300"
-    />
-            </button>
-          </div>
+        <div className="absolute bottom-0 left-0 right-0 flex justify-center pb-8 pt-4 bg-gradient-to-t from-brand-700 via-brand-700/80 to-transparent pointer-events-none">
+          <button
+            onClick={closeMenu}
+            className="pointer-events-auto group flex items-center gap-2 px-6 py-2 text-[10px] tracking-[0.3em] uppercase text-brand-500 transition-colors hover:text-accent-500"
+          >
+            <span>
+              Close
+            </span>
+            <CaretDownIcon
+              size={14}
+              weight="bold"
+              className="rotate-180 transition-transform duration-300"
+            />
+          </button>
+        </div>
       </div>
     </div>
   );
