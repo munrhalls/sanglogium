@@ -5,8 +5,8 @@ import { CarouselDots } from '@/app/components/layout/carousel/CarouselControls'
 import AccessoryCard from "./AccessoryCard";
 
 interface CategorySectionProps {
-  category: { name: string; filter: string };
-  items: any[];
+  category: AccessoryCategory;
+  items: AccessoryItem[];
 }
 
 export default function CategorySection({ category, items }: CategorySectionProps) {

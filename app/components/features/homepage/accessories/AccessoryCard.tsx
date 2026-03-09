@@ -1,6 +1,6 @@
-import { cn } from "@/lib/utils/tailwind";
+﻿import { cn } from "@/lib/utils/tailwind";
 
-export default function AccessoryCard({ item }: { item: any }) {
+export default function AccessoryCard({ item }: { item: AccessoryItem }) {
   if (!item) return null;
 
   return (
