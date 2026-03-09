@@ -117,7 +117,9 @@ export function CarouselProvider({
         <span className="hidden lg:block xl:hidden" data-signal="true" data-value={breakpointMap?.lg || 1}></span>
         <span className="hidden xl:block" data-signal="true" data-value={breakpointMap?.xl || 1}></span>
       </div>
-      {children}
+      <div style={{ "--visible-count": visibleCount } as React.CSSProperties}>
+        {children}
+      </div>
     </CarouselContext.Provider>
   );
 }
