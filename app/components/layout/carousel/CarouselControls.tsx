@@ -10,13 +10,14 @@ const BTN_BASE = cn(
   "flex h-8 w-8 items-center justify-center rounded-full",
   "border border-brand-300/35 bg-brand-800/40 text-brand-400",
   "backdrop-blur-md transition-all",
-  "hover:bg-brand-500 hover:text-brand-900 active:scale-95",
+  "hover:bg-brand-600 hover:text-brand-900 active:scale-95",
   "disabled:pointer-events-none disabled:opacity-40",
   "outline-none focus-visible:ring-2 focus-visible:ring-accent-500",
   "before:absolute before:-inset-2 before:content-['']"
 );
 
-interface NavBtnProps extends React.ButtonHTMLAttributes<HTMLButtonElement> { bg?: string; iconColor?: string;
+interface NavBtnProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  bg?: string; iconColor?: string;
   className?: string;
 }
 
@@ -65,7 +66,7 @@ export function CarouselDots({ className, color = "brand-400" }: { className?: s
     <div className={cn("flex justify-center gap-4 sm:gap-6", className)} role="tablist">
       {Array.from({ length: itemsCount }).map((_, i) => {
         const isAnchor = i === activeIndex;
-        const isInView = i > activeIndex && i < activeIndex + visibleCount;
+        const isInView = i >= activeIndex && i < activeIndex + visibleCount;
 
         return (
           <button
@@ -80,7 +81,7 @@ export function CarouselDots({ className, color = "brand-400" }: { className?: s
               className={cn(
                 "h-2 w-2 sm:h-4 sm:w-4 transition-all duration-500",
                 isAnchor ? `text-${color} opacity-100 scale-110` :
-                  isInView ? `text-${color} opacity-85 grayscale-10` :
+                  isInView ? `text-${color} opacity-85` :
                     `text-${color} opacity-45 lg-touch:opacity-30 lg-desktop:opacity-30 grayscale`,
               )}
             />
@@ -91,6 +92,7 @@ export function CarouselDots({ className, color = "brand-400" }: { className?: s
     </div>
   );
 }
+
 
 
 
