@@ -4,7 +4,7 @@ import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
 import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";
 import { CarouselSlide } from "@/app/components/layout/carousel/CarouselSlide";
 import FeaturedHeader from "./FeaturedHeader";
-import FeaturedControls from "./FeaturedControls";
+import { CarouselPrevious, CarouselNext, CarouselDots } from "@/app/components/layout/carousel/CarouselControls";
 import Card from "./card/Card";
 
 export default function Featured() {
@@ -28,8 +28,15 @@ export default function Featured() {
             </CarouselSlide>
           ))}
         </CarouselTrack>
-        <FeaturedControls />
+        <div className="mt-12 flex flex-col gap-8">
+          <CarouselDots color="brand-700" />
+          <div className="flex justify-center gap-4">
+            <CarouselPrevious />
+            <CarouselNext />
+          </div>
+        </div>
       </Carousel>
     </section>
   );
 }
+
