@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import React, { createContext, useContext, useRef, useState, useCallback, useEffect, useMemo } from "react";
-import { CarouselContextType, CarouselBreakpoints } from "./types";
+import { CarouselContextType, CarouselBreakpoints, CarouselProviderProps } from "./types";
 
 const CarouselContext = createContext<CarouselContextType | null>(null);
 
@@ -9,12 +9,12 @@ export function CarouselProvider({
   children,
   itemsCount,
   breakpointMap
-}: {
-  children: React.ReactNode;
-  itemsCount: number;
-  breakpointMap?: CarouselBreakpoints;
-}) {
+}: CarouselProviderProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    console.log("[SRIP Trace] Provider Mount | Mode: Direct Reader | Sync ID:", Math.random().toString(36).substring(2, 11));
+  }, []);
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
