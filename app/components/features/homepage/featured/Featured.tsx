@@ -27,7 +27,7 @@ export default function Featured() {
   );
 
   return (
-    <section className="w-full bg-secondary-200 py-24 px-8">
+    <section className="w-full bg-secondary-200 py-24 px-4 sm:px-8">
       <FeaturedHeader />
       <Carousel
         itemsCount={uniqueProducts.length}
@@ -54,3 +54,4 @@ export default function Featured() {
     </section>
   );
 }
+
