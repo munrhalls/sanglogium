@@ -29,8 +29,8 @@ export default function Featured() {
   return (
     <section className="w-full bg-secondary-200 py-24 px-8">
       <FeaturedHeader />
-      <Carousel 
-        itemsCount={uniqueProducts.length} 
+      <Carousel
+        itemsCount={uniqueProducts.length}
         breakpointMap={FEATURED_CAPACITY}
       >
         <CarouselTrack>

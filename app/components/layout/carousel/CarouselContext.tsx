@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { createContext, useContext, useRef, useState, useCallback, useEffect, useMemo } from "react";
 
@@ -36,18 +36,39 @@ export function CarouselProvider({
   };
 }) {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const signalRef = useRef<HTMLDivElement>(null);
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
   const [visibleCount, setVisibleCount] = useState(1);
 
-  // Provider Level Trace: Map initialization
-  useEffect(() => {
-    console.log("[SRIP Trace] Using Map:", breakpointMap || "Default (All 1)");
+  // MAP: Viewport detection aligned with Tailwind Breakpoints
+  const updateVisibleCount = useCallback(() => {
+    if (typeof window === "undefined") return;
+
+    const w = window.innerWidth;
+    const isLandscape = window.matchMedia("(orientation: landscape)").matches;
+    let count = 1;
+
+    if (w >= 1280) {
+      count = breakpointMap?.xl || 3;
+    } else if (w >= 1024) {
+      count = breakpointMap?.lgDesktop || 3;
+    } else if (w >= 768) {
+      count = isLandscape ? (breakpointMap?.mdLandscape || 2) : (breakpointMap?.mdPortrait || 2);
+    } else if (w >= 640) {
+      count = isLandscape ? (breakpointMap?.smLandscape || 2) : (breakpointMap?.smPortrait || 1);
+    } else if (isLandscape) {
+      count = breakpointMap?.mobileLandscape || 2;
+    } else {
+      count = breakpointMap?.mobilePortrait || 1;
+    }
+
+    setVisibleCount(count);
+    console.log("[SRIP Trace] Context Source | Viewport Width:", w, "| Capacity Set To:", count);
   }, [breakpointMap]);
 
-  const updateState = useCallback(() => {
+  // UPDATE: Scroll state and active index tracking
+  const updateScrollState = useCallback(() => {
     const el = scrollRef.current;
     if (!el) return;
 
@@ -59,38 +80,34 @@ export function CarouselProvider({
     if (firstChild) {
       setActiveIndex(Math.round(scrollLeft / firstChild.offsetWidth));
     }
-
-    // The Reader: Iterate through signals to identify the active breakpoint
-    if (signalRef.current) {
-      const signals = signalRef.current.querySelectorAll<HTMLElement>('[data-signal="true"]');
-      for (const span of Array.from(signals)) {
-        if (window.getComputedStyle(span).display !== 'none') {
-          const val = Number(span.getAttribute("data-value")) || 1;
-          setVisibleCount(val);
-          // Provider Level Trace: Active detection
-          console.log("[SRIP Trace] Active Signal Read | Value:", val, "| SpanClasses:", span.className);
-          break;
-        }
-      }
-    }
   }, []);
 
   useEffect(() => {
     const el = scrollRef.current;
-    if (!el) return;
-    updateState();
-    el.addEventListener("scroll", updateState, { passive: true });
-    window.addEventListener("resize", updateState);
-    return () => {
-      el.removeEventListener("scroll", updateState);
-      window.removeEventListener("resize", updateState);
+
+    // Initial sync
+    updateVisibleCount();
+    updateScrollState();
+
+    const handleResize = () => {
+      updateVisibleCount();
+      updateScrollState();
     };
-  }, [updateState]);
+
+    window.addEventListener("resize", handleResize);
+    el?.addEventListener("scroll", updateScrollState, { passive: true });
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      el?.removeEventListener("scroll", updateScrollState);
+    };
+  }, [updateVisibleCount, updateScrollState]);
 
   const scroll = useCallback((direction: 'prev' | 'next') => {
     const el = scrollRef.current;
     if (!el || !el.firstElementChild) return;
-    const moveAmount = direction === 'next' ? (el.firstElementChild as HTMLElement).offsetWidth : -(el.firstElementChild as HTMLElement).offsetWidth;
+    const slideWidth = (el.firstElementChild as HTMLElement).offsetWidth;
+    const moveAmount = direction === 'next' ? slideWidth : -slideWidth;
     el.scrollBy({ left: moveAmount, behavior: "smooth" });
   }, []);
 
@@ -114,19 +131,10 @@ export function CarouselProvider({
 
   return (
     <CarouselContext.Provider value={value}>
-      {/* The Config Map: 2D Orientation Matrix using CSS Signals */}
-      <div ref={signalRef} className="hidden" aria-hidden="true">
-        <span className="block sm:hidden portrait:block" data-signal="true" data-value={breakpointMap?.mobilePortrait || 1}></span>
-        <span className="hidden sm:hidden landscape:block" data-signal="true" data-value={breakpointMap?.mobileLandscape || 2}></span>
-        <span className="hidden sm:block md:hidden portrait:block" data-signal="true" data-value={breakpointMap?.smPortrait || 1}></span>
-        <span className="hidden sm:block md:hidden landscape:block" data-signal="true" data-value={breakpointMap?.smLandscape || 2}></span>
-        <span className="hidden md:block lg:hidden portrait:block" data-signal="true" data-value={breakpointMap?.mdPortrait || 3}></span>
-        <span className="hidden md:block lg:hidden landscape:block" data-signal="true" data-value={breakpointMap?.mdLandscape || 3}></span>
-        <span className="hidden lg-touch:block" data-signal="true" data-value={breakpointMap?.lgTouch || 3}></span>
-        <span className="hidden lg-desktop:block" data-signal="true" data-value={breakpointMap?.lgDesktop || 3}></span>
-        <span className="hidden xl:block" data-signal="true" data-value={breakpointMap?.xl || 4}></span>
-      </div>
-      <div className="h-full w-full" style={{ "--visible-count": visibleCount } as React.CSSProperties}>
+      <div
+        className="h-full w-full"
+        style={{ "--visible-count": visibleCount } as React.CSSProperties}
+      >
         {children}
       </div>
     </CarouselContext.Provider>
@@ -134,4 +142,3 @@ export function CarouselProvider({
 }
 
 export function useCarousel() { return useContext(CarouselContext); }
-
