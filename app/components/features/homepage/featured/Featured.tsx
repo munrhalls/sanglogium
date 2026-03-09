@@ -2,15 +2,15 @@
 import productsSource from "./content-dump.json";
 import { FeaturedProduct, FeaturedCapacity } from "./types";
 import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
-const products = productsSource as FeaturedProduct[];
-import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
 import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";
 import { CarouselSlide } from "@/app/components/layout/carousel/CarouselSlide";
 import FeaturedHeader from "./FeaturedHeader";
 import { CarouselPrevious, CarouselNext, CarouselDots } from "@/app/components/layout/carousel/CarouselControls";
 import Card from "./card/Card";
 
-const FEATURED_CAPACITY = {
+const products = productsSource as FeaturedProduct[];
+
+const FEATURED_CAPACITY: FeaturedCapacity = {
   mobilePortrait: 1,
   mobileLandscape: 2,
   smPortrait: 1,
@@ -23,7 +23,8 @@ const FEATURED_CAPACITY = {
 };
 
 export default function Featured() {
-  console.log([SRIP Trace] Featured Data Contract validated for  items);
+  console.log(`[SRIP Trace] Featured Data Contract validated for ${products.length} items`);
+  
   if (!products || products.length === 0) return null;
 
   const uniqueProducts = Array.from(
@@ -58,4 +59,3 @@ export default function Featured() {
     </section>
   );
 }
-
