@@ -66,7 +66,7 @@ export function CarouselDots({ className, color = "brand-400" }: { className?: s
     <div className={cn("flex justify-center gap-4 sm:gap-6", className)} role="tablist">
       {Array.from({ length: itemsCount }).map((_, i) => {
         const isAnchor = i === activeIndex;
-        const isInView = i >= activeIndex && i < activeIndex + visibleCount;
+        const isInView = !isAnchor && i >= activeIndex && i < activeIndex + visibleCount;
 
         return (
           <button
@@ -81,7 +81,7 @@ export function CarouselDots({ className, color = "brand-400" }: { className?: s
               className={cn(
                 "h-2 w-2 sm:h-4 sm:w-4 transition-all duration-500",
                 isAnchor ? `text-${color} opacity-100 scale-110` :
-                  isInView ? `text-${color} opacity-85` :
+                  isInView ? `text-${color} opacity-85 scale-100` :
                     `text-${color} opacity-45 lg-touch:opacity-30 lg-desktop:opacity-30 grayscale`,
               )}
             />
@@ -92,6 +92,7 @@ export function CarouselDots({ className, color = "brand-400" }: { className?: s
     </div>
   );
 }
+
 
 
 
