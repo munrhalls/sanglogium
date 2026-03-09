@@ -60,13 +60,13 @@ export function CarouselNext({ className, bg = "bg-brand-800/40", iconColor = "t
 export function CarouselDots({ className, color = "brand-400" }: { className?: string; color?: string }) {
   const context = useCarousel();
   if (!context) return null;
-  const { itemsCount, activeIndex, goTo, visibleCount = 1 } = context;
+  const { itemsCount, activeIndex, goTo, visibleCount = 1 } = context; const vCount = Number(visibleCount); const aIndex = Number(activeIndex);
 
   return (
     <div className={cn("flex justify-center gap-4 sm:gap-6", className)} role="tablist">
       {Array.from({ length: itemsCount }).map((_, i) => {
-        const isAnchor = i === activeIndex;
-        const isInView = !isAnchor && i >= activeIndex && i < activeIndex + visibleCount;
+        const isAnchor = i === aIndex;
+        const isInView = !isAnchor && i >= aIndex && i < (aIndex + vCount);
 
         return (
           <button
@@ -92,6 +92,7 @@ export function CarouselDots({ className, color = "brand-400" }: { className?: s
     </div>
   );
 }
+
 
 
 
