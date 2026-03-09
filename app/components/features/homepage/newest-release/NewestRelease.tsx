@@ -4,16 +4,20 @@ import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
 import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";
 import { CarouselSlide } from "@/app/components/layout/carousel/CarouselSlide";
 import { CarouselDots } from "@/app/components/layout/carousel/CarouselControls";
-import data from "./data.json";
+import releaseSource from "./data.json";
+import { SpotlightRelease } from "./types";
+
+const data = releaseSource as SpotlightRelease;
 
 export default function NewestRelease() {
   const images = data.images || [data.imageUrl];
+
+  console.log(`[SRIP Trace] Newest Release Contract validated: "${data.name}" with ${images.length} assets.`);
 
   return (
     <section className="w-full bg-brand-950 py-24 px-4 sm:px-8">
       <div className="group grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
         
-        {/* Text Section: Standardized through Shared Component */}
         <div className="order-2 lg:order-1">
           <SpotlightDetails
             data={{
@@ -26,7 +30,6 @@ export default function NewestRelease() {
           />
         </div>
 
-        {/* Media Section: Carousel constrained by System Height */}
         <div className="order-1 lg:order-2">
           <div className="relative h-feature-media w-full overflow-hidden bg-brand-800 rounded-lg">
             <Carousel itemsCount={images.length}>
