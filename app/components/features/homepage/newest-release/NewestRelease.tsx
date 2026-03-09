@@ -1,61 +1,50 @@
-import Spotlight from "@/app/components/layout/spotlight/Spotlight";
-import { Carousel } from '@/app/components/layout/carousel/CarouselRoot';
-import { CarouselTrack } from '@/app/components/layout/carousel/CarouselTrack';
-import { CarouselSlide } from '@/app/components/layout/carousel/CarouselSlide';
-import { CarouselDots } from '@/app/components/layout/carousel/CarouselControls';
-import SpotlightMediaBox from "@/app/components/layout/spotlight/SpotlightMediaBox";
+﻿import SpotlightHero from "../shared-spotlight/SpotlightHero";
+import SpotlightDetails from "../shared-spotlight/SpotlightDetails";
+import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
+import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";
+import { CarouselSlide } from "@/app/components/layout/carousel/CarouselSlide";
+import { CarouselDots } from "@/app/components/layout/carousel/CarouselControls";
 import data from "./data.json";
 
 export default function NewestRelease() {
   const images = data.images || [data.imageUrl];
 
   return (
-    <Spotlight isReversed={false}>
-      <div className="lg:col-span-7 flex flex-col justify-center order-2 lg:order-1">
-        <div className="flex items-center gap-3 mb-8">
-          <span className="h-px w-8 bg-brand-400"></span>
-          <span className="text-small text-cap font-bold uppercase text-brand-500">
-            {data.tag}
-          </span>
+    <section className="w-full bg-brand-950 py-24 px-4 sm:px-8">
+      <div className="group grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
+        
+        {/* Text Section: Standardized through Shared Component */}
+        <div className="order-2 lg:order-1">
+          <SpotlightDetails
+            data={{
+              ...data,
+              headline: data.tag,
+              subheadline: data.description
+            }}
+            accentColor="text-brand-400"
+            buttonClass="bg-brand-400 text-brand-900 hover:bg-brand-300"
+          />
         </div>
-        <p className="text-small text-cap font-mono text-secondary-500 uppercase mb-2">
-          {data.brand}
-        </p>
-        <h2 className="text-display-2 font-light leading-none mb-8 tracking-tighter lowercase italic text-cap">
-          {data.name}
-        </h2>
-        <p className="text-body text-secondary-600 leading-relaxed mb-8 font-light max-w-sm italic">      
-          "{data.description}"
-        </p>
-        <div className="flex flex-col gap-6">
-          <div className="flex items-baseline gap-2">
-            <span className="text-small font-bold text-secondary-500 uppercase">MSRP</span>
-            <span className="text-display-2 font-light tracking-tighter text-brand-100">
-              ${data.displayPrice}
-            </span>
-          </div>
-          <button className="w-fit bg-brand-400 text-brand-900 px-8 py-4 text-small text-cap font-bold uppercase hover:bg-brand-200 transition-all">
-            Discover the Series
-          </button>
-        </div>
-      </div>
 
-      <div className="lg:col-span-5 flex items-center justify-center order-1 lg:order-2">
-        <div className="relative group w-full overflow-hidden">
-          <Carousel itemsCount={images.length}>
-            <CarouselTrack className="flex h-80 lg:h-feature-media">
-              {images.map((img: string, idx: number) => (
-                <CarouselSlide key={idx} className="basis-full flex-shrink-0">
-                   <SpotlightMediaBox src={img} alt={data.name} />
-                </CarouselSlide>
-              ))}
-            </CarouselTrack>
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
-              <CarouselDots />
-            </div>
-          </Carousel>
+        {/* Media Section: Carousel constrained by System Height */}
+        <div className="order-1 lg:order-2">
+          <div className="relative h-feature-media w-full overflow-hidden bg-brand-800 rounded-lg">
+            <Carousel itemsCount={images.length}>
+              <CarouselTrack className="h-full">
+                {images.map((img, idx) => (
+                  <CarouselSlide key={idx} className="h-full basis-full flex-shrink-0">
+                    <SpotlightHero image={img} tier="standard" />
+                  </CarouselSlide>
+                ))}
+              </CarouselTrack>
+              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10">
+                <CarouselDots color="brand-400" />
+              </div>
+            </Carousel>
+          </div>
         </div>
+
       </div>
-    </Spotlight>
+    </section>
   );
 }
