@@ -21,17 +21,17 @@ export default function SpotlightDetails({ data, accentColor }: SpotlightDetails
         </span>
 
         <div className="flex flex-col">
-          <h2 className="text-display-2 font-regular tracking-editorial text-brand-50 uppercase leading-[1.0] text-cap">
+          <h2 className="text-display-2 font-regular tracking-editorial text-brand-400 uppercase leading-[1.0] text-cap">
             {headlineParts[0]}
           </h2>
           {headlineParts.length > 1 && (
-            <h2 className="text-display-2 font-regular tracking-editorial text-secondary-500 uppercase leading-[1.0] text-cap">
+            <h2 className="text-display-2 font-regular tracking-editorial text-brand-600 uppercase leading-[1.0] text-cap">
               {headlineParts.slice(1).join(" ")}
             </h2>
           )}
         </div>
 
-        <h3 className="text-spotlight text-brand-50 font-regular">
+        <h3 className="text-spotlight text-brand-50 font-thin">
           {data.subheadline || data.name}
         </h3>
 
