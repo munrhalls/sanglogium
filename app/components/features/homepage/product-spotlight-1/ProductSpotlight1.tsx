@@ -6,7 +6,7 @@ import { SpotlightProduct } from "./types";
 const data = spotlightSource as SpotlightProduct;
 
 export default function ProductSpotlight1() {
-  console.log("[SRIP Trace] Phase 1.52: Flex-basis Anchored. Image container forced to non-zero height.");
+  console.log("[SRIP Trace] Phase 2: Typographic Alignment. Serif Purged. Editorial Axis Locked.");
 
   return (
     <section className="relative w-full bg-brand-950 overflow-hidden">
