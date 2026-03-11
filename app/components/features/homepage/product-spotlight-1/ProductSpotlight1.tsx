@@ -1,4 +1,4 @@
-import SpotlightHero from "../shared-spotlight/SpotlightHero";
+﻿import SpotlightHero from "../shared-spotlight/SpotlightHero";
 import SpotlightDetails from "../shared-spotlight/SpotlightDetails";
 import spotlightSource from "./prod.json";
 import { SpotlightProduct } from "./types";
@@ -6,11 +6,11 @@ import { SpotlightProduct } from "./types";
 const data = spotlightSource as SpotlightProduct;
 
 export default function ProductSpotlight1() {
-  console.log("[SRIP Trace] Phase 2: Typographic Alignment. Serif Purged. Editorial Axis Locked.");
+  console.log("[SRIP Trace] Phase 3: Dimensional Integration. Product Grounded. Alignment Balanced.");
 
   return (
     <section className="relative w-full bg-brand-950 overflow-hidden">
-
+      
       {/* THE APERTURE: Constellation Background Layer */}
       <div
         className="absolute inset-0 z-0 pointer-events-none"
@@ -27,17 +27,26 @@ export default function ProductSpotlight1() {
         aria-hidden="true"
       />
 
-      {/* THE CONTENT LAYER: Unified Void with Intrinsic Anchor */}
+      {/* GROUNDING AURA: A subtle radial glow to anchor the product */}
+      <div 
+        className="absolute inset-0 z-0 pointer-events-none opacity-20"
+        style={{
+          background: "radial-gradient(circle at 25% 50%, #c5a059 0%, transparent 40%)",
+          filter: "blur(60px)"
+        }}
+      />
+
+      {/* THE CONTENT LAYER */}
       <div className="relative z-10 w-full max-w-[1440px] mx-auto flex flex-col lg:flex-row items-stretch overflow-hidden bg-transparent min-h-[600px] lg:min-h-[700px]">
-        <SpotlightHero
-          image={data.mainImage}
-          tier="standard"
-          className="lg:flex-[0.42] w-full self-stretch"
+        <SpotlightHero 
+          image={data.mainImage} 
+          tier="standard" 
+          className="lg:flex-[0.42] w-full self-stretch p-16" 
         />
         <SpotlightDetails
           data={data}
           accentColor="text-accent-500"
-          className="lg:flex-[0.58] flex-1"
+          className="lg:flex-[0.58] flex-1 p-16 lg:p-24"
         />
       </div>
     </section>
