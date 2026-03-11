@@ -1,4 +1,4 @@
-﻿import SpotlightHero from "../shared-spotlight/SpotlightHero";
+import SpotlightHero from "../shared-spotlight/SpotlightHero";
 import SpotlightDetails from "../shared-spotlight/SpotlightDetails";
 import spotlightSource from "./prod.json";
 import { SpotlightProduct } from "./types";
@@ -6,72 +6,38 @@ import { SpotlightProduct } from "./types";
 const data = spotlightSource as SpotlightProduct;
 
 export default function ProductSpotlight1() {
-  console.log("[SRIP Trace] Foundation Leveling: Height Parity Restored. Padding Normalized to .20 Scale.");
+  console.log("[SRIP Trace] Phase 1.52: Flex-basis Anchored. Image container forced to non-zero height.");
 
   return (
-    <section className="relative w-full bg-brand-950 overflow-hidden min-h-[600px] flex items-center justify-center">
+    <section className="relative w-full bg-brand-950 overflow-hidden">
 
-      {/* THE APERTURE: Constellation Background Layer
-        Z-0 ensures it stays strictly behind the z-10 content.
-      */}
+      {/* THE APERTURE: Constellation Background Layer */}
       <div
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
-          /* 1. THE CONSTELLATION (Top-to-Bottom Array) */
-          backgroundImage: `
-            url('/backgrounds/fractal_ring.webp'),
-            url('/backgrounds/fractal_ring.webp'),
-            url('/backgrounds/fractal_ring.webp'),
-            url('/backgrounds/fractal_ring.webp')
-          `,
-
-          /* 2. THE 3D HIERARCHY (Scale) */
-          backgroundSize: `
-            1400px,  /* Layer 1: Atmosphere (Deep Background) */
-            550px,   /* Layer 2: Structure (Top Left - Image Orbit) */
-            650px,   /* Layer 3: Structure (Bottom Right - Text Orbit) */
-            200px    /* Layer 4: Focal (Center Bridge) */
-          `,
-
-          /* 3. RESPONSIVE ORBITING (Positioning)
-             Using calc() ensures the rings float around the 42/58 split on desktop,
-             and stack nicely on mobile.
-          */
-          backgroundPosition: `
-            calc(50% + 20vw) center,                /* Atmosphere: Anchored deep behind the text block */
-            calc(0% - 10vw) calc(0% - 10vh),        /* Structure Left: Orbiting top-left of the hero image */
-            calc(100% + 5vw) calc(100% + 15vh),     /* Structure Right: Orbiting bottom-right of the text */
-            calc(42% - 50px) calc(50% + 120px)      /* Focal: Placed exactly at the 42% split line, shifted down */
-          `,
-
+          backgroundImage: "url('/backgrounds/fractal_ring.webp'), url('/backgrounds/fractal_ring.webp'), url('/backgrounds/fractal_ring.webp'), url('/backgrounds/fractal_ring.webp')",
+          backgroundSize: '1400px, 550px, 650px, 200px',
+          backgroundPosition: 'calc(50% + 20vw) center, calc(0% - 10vw) calc(0% - 10vh), calc(100% + 5vw) calc(100% + 15vh), calc(42% - 50px) calc(50% + 120px)',
           backgroundRepeat: "no-repeat",
           opacity: 0.6,
-          mixBlendMode: "screen", /* The Logic of Light: Keeps the white lines, drops the darks */
-
-          /* 4. THE GLOBAL FADE (Masking)
-             Creates a soft gradient at the top and bottom edges so the fractal doesn't
-             hard-cut where the section ends.
-          */
+          mixBlendMode: "screen",
           maskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)',
           WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)',
         }}
         aria-hidden="true"
       />
 
-      {/* THE CONTENT LAYER
-        Max-w-[1440px] enforces your Global 8pt grid structural scale,
-        allowing the background to bleed edge-to-edge behind it.
-      */}
-      <div className="relative z-10 group flex flex-col lg:flex-row w-full max-w-[1440px] mx-auto overflow-hidden bg-transparent min-h-[600px]">
+      {/* THE CONTENT LAYER: Unified Void with Intrinsic Anchor */}
+      <div className="relative z-10 w-full max-w-[1440px] mx-auto flex flex-col lg:flex-row items-stretch overflow-hidden bg-transparent min-h-[600px] lg:min-h-[700px]">
         <SpotlightHero
           image={data.mainImage}
           tier="standard"
-          className="lg:flex-[0.42]"
+          className="lg:flex-[0.42] w-full self-stretch"
         />
         <SpotlightDetails
           data={data}
           accentColor="text-accent-500"
-          className="lg:flex-[0.58]"
+          className="lg:flex-[0.58] flex-1"
         />
       </div>
     </section>

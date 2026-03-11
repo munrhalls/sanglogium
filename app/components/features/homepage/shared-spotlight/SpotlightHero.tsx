@@ -9,7 +9,11 @@ interface SpotlightHeroProps {
 
 export default function SpotlightHero({ image, className }: SpotlightHeroProps) {
   return (
-    <div className={cn("relative h-full w-full overflow-hidden rounded-none", className)}>
+    /* SYSTEM FIX: We remove 'h-full' which fails on min-height parents. 
+       We use 'flex-1' and 'min-h-[450px]' (mobile) / 'lg:min-h-full' 
+       to ensure the absolute 'fill' image has a coordinate system to reference.
+    */
+    <div className={cn("relative w-full flex-1 min-h-[450px] lg:min-h-full overflow-hidden rounded-none", className)}>
       <Image
         src={image}
         alt="Product Spotlight"
