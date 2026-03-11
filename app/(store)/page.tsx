@@ -8,6 +8,7 @@ import NewestRelease from "@/app/components/features/homepage/newest-release/New
 import Dacs from "@/app/components/features/homepage/dacs/Dacs";
 import Accessories from "@/app/components/features/homepage/accessories/Accessories";
 import Shelf from "@/app/components/layout/general/Shelf";
+import RedesignFeaturedAndProductSpotlight from "../components/features/homepage/redesign-featured-and-product-spotlight/RedesignFeaturedAndProductSpotlight";
 
 export default function HomePage() {
   return (
@@ -15,13 +16,13 @@ export default function HomePage() {
       <Hero />
 
       {/* The Featured section now correctly triggers the Platinum Slab physics */}
-      <Shelf variant="platinum">
-        <Featured />
-      </Shelf>
-
       <Shelf>
-        <ProductSpotlight1 />
+        <RedesignFeaturedAndProductSpotlight />
       </Shelf>
+      {/* <Shelf variant="platinum">
+        <Featured />
+      </Shelf> */}
+
 
       <Shelf>
         <ProductSpotlight2 />
