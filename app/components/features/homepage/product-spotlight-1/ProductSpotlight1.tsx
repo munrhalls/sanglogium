@@ -6,7 +6,7 @@ import { SpotlightProduct } from "./types";
 const data = spotlightSource as SpotlightProduct;
 
 export default function ProductSpotlight1() {
-  console.log("[SRIP Trace] Parity Audit: 42/58 split, Editorial tracking, and Platinum zone restored.");
+  console.log("[SRIP Trace] Foundation Leveling: Height Parity Restored. Padding Normalized to .20 Scale.");
 
   return (
     <section className="relative w-full bg-brand-950 overflow-hidden min-h-[600px] flex items-center justify-center">
@@ -45,7 +45,7 @@ export default function ProductSpotlight1() {
           `,
 
           backgroundRepeat: "no-repeat",
-          opacity: 0.7,
+          opacity: 0.6,
           mixBlendMode: "screen", /* The Logic of Light: Keeps the white lines, drops the darks */
 
           /* 4. THE GLOBAL FADE (Masking)
@@ -62,11 +62,16 @@ export default function ProductSpotlight1() {
         Max-w-[1440px] enforces your Global 8pt grid structural scale,
         allowing the background to bleed edge-to-edge behind it.
       */}
-      <div className="relative z-10 group flex flex-col lg:flex-row w-full max-w-[1440px] mx-auto overflow-hidden">
-        <SpotlightHero image={data.mainImage} tier="standard" />
+      <div className="relative z-10 group flex flex-col lg:flex-row w-full max-w-[1440px] mx-auto overflow-hidden bg-transparent min-h-[600px]">
+        <SpotlightHero
+          image={data.mainImage}
+          tier="standard"
+          className="lg:flex-[0.42]"
+        />
         <SpotlightDetails
           data={data}
           accentColor="text-accent-500"
+          className="lg:flex-[0.58]"
         />
       </div>
     </section>
