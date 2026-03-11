@@ -1,13 +1,15 @@
 ﻿import Image from "next/image";
+import { cn } from "@/lib/utils/tailwind";
 
 interface SpotlightHeroProps {
   image: string;
   tier: "standard" | "gold";
+  className?: string;
 }
 
-export default function SpotlightHero({ image }: SpotlightHeroProps) {
+export default function SpotlightHero({ image, className }: SpotlightHeroProps) {
   return (
-    <div className="relative h-feature-media lg:h-auto w-full overflow-hidden bg-secondary-200 lg:flex-[0.42] rounded-none">
+    <div className={cn("relative h-full w-full overflow-hidden rounded-none", className)}>
       <Image
         src={image}
         alt="Product Spotlight"
