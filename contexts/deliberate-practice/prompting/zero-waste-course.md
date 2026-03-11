@@ -8,7 +8,7 @@
 ---
 
 ## Level 2: The Physics Boundary (Input/Output vs. Tooling)
-**Principle:** Define physics (Input/Output), do not constrain tooling unless you have 100% awareness.
+**Principle:** Define physics (Input/Output), do not constrain tooling unless you have 100% mechanical awareness.
 **Context:** You have a logo.webp (800x600). You need it to be exactly 400x400, centered, no stretching.
 **The Drill:** Write the Zero-Waste prompt. Define the exact Input State and the exact Required Output State without naming a single ImageMagick flag.
 
