@@ -9,24 +9,27 @@ import spotlightImg from './product_spotlight_transparent.png';
 // --- ATOM 1: THE FEATURED CARD ---
 const FeaturedCard = ({ product }: { product: any }) => (
     <article className="group flex flex-col h-full gap-4 p-6 border border-secondary-800 rounded-lg bg-transparent transition-all duration-300 hover:border-secondary-600 hover:bg-secondary-900/10">
-        <div className="aspect-square w-full bg-brand-800/50 bg-secondary-300 rounded-md overflow-hidden relative flex items-center justify-center p-8">
+        <div className="aspect-square w-full bg-brand-300 rounded-md overflow-hidden relative flex items-center justify-center p-8">
             <img
                 src={featuredImg.src}
                 alt={product.name}
-                className="w-full h-full object-contain transform transition-transform duration-700 group-hover:scale-110"
+                /* WARN FIX: Ensure image has breathing room and stays centered */
+                className="w-auto h-auto max-w-[85%] max-h-[85%] object-contain mix-blend-multiply transform transition-transform duration-700 group-hover:scale-110"
             />
         </div>
         <div className="flex flex-col gap-2">
-            <span className="text-small tracking-editorial text-secondary-500 uppercase">{product.brand}</span>
+            {/* CRITICAL #3 FIX: Synchronized brand eyebrow to gold token (accent-500) */}
+            <span className="text-small tracking-editorial text-accent-500 uppercase">{product.brand}</span>
             <h3 className="text-h4 text-brand-100 line-clamp-1 group-hover:text-accent-400 transition-colors">{product.name}</h3>
             <p className="text-small text-secondary-400 line-clamp-2 leading-relaxed">Unrivaled acoustic engineering and clarity.</p>
         </div>
         <div className="mt-auto pt-4 flex items-center justify-between border-t border-secondary-800">
-            <div className="flex flex-col">
-                <span className="text-[10px] tracking-widest text-secondary-500 uppercase">Price</span>
+            <div className="flex flex-col justify-center">
+                {/* WARN #1 FIX: "PRICE" text removed entirely. Number stands alone. */}
                 <span className="text-h4 text-brand-100">${product.displayPrice}</span>
             </div>
-            <button className="flex items-center gap-2 px-4 py-2 bg-accent-500 text-brand-900 rounded-sm transition-all duration-300 hover:bg-accent-400 active:scale-95">
+            {/* WARN #2 FIX: Ghost button active state locking */}
+            <button className="flex items-center gap-2 px-4 py-2 bg-transparent border border-accent-500 text-accent-500 rounded-sm transition-all duration-300 hover:bg-accent-500 hover:text-brand-900 hover:border-accent-500 active:scale-95">
                 <span className="text-small font-bold uppercase">Add</span>
             </button>
         </div>
@@ -35,18 +38,24 @@ const FeaturedCard = ({ product }: { product: any }) => (
 
 // --- ATOM 2: THE SPOTLIGHT CONTENT ---
 const SpotlightSection = ({ data }: { data: any }) => (
-    <section className="w-full py-20 relative overflow-hidden">
+    <section className="w-full py-20 relative overflow-hidden border-t border-secondary-800">
         <div className="absolute inset-0 bg-[url('/fractal_ring.webp')] bg-no-repeat bg-right-bottom mix-blend-overlay opacity-20 pointer-events-none z-0" />
         <div className="max-w-[1440px] mx-auto px-4 md:px-8 relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div className="w-full flex justify-center lg:justify-start">
-                    <div className="relative w-full max-w-[450px] aspect-square flex items-center justify-center">
-                        <div className="absolute inset-0 rounded-full" />
-                        <img src={spotlightImg.src}
-                        />
-                    </div>
+            {/* CRITICAL: items-stretch forces identical panel heights */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
+
+                {/* LEFT PANEL */}
+                <div className="w-full h-full bg-brand-300 rounded-lg flex items-center justify-center relative p-8 lg:p-12 overflow-hidden">
+                    <img
+                        src={spotlightImg.src}
+                        alt={data.name || "Product Spotlight"}
+                        className="w-auto h-auto max-w-[85%] max-h-[85%] object-contain mix-blend-multiply relative z-10"
+                    />
                 </div>
-                <div className="w-full flex flex-col gap-6">
+
+                {/* RIGHT PANEL */}
+                {/* CRITICAL #5 & #2 FIXES: Added bg-brand-800 and justify-center. Now matches left panel depth and vertical alignment. */}
+                <div className="w-full h-full bg-brand-800 rounded-lg flex flex-col justify-center gap-6 p-8 lg:p-12">
                     <div className="flex flex-col gap-2">
                         <span className="text-small tracking-editorial text-accent-500 uppercase">{data.brand}</span>
                         <h2 className="text-h1 text-brand-100 uppercase">{data.headline}</h2>
@@ -59,14 +68,15 @@ const SpotlightSection = ({ data }: { data: any }) => (
                     </div>
                     <div className="mt-8 pt-4">
                         <button className="group flex items-center gap-4 text-h4 tracking-signature text-accent-500 uppercase transition-all">
-                            <span className="border-b border-accent-500 pb-1 group-hover:border-accent-100">See More</span>
+                            <span className="border-b border-accent-500 pb-1 group-hover:border-accent-100 group-hover:text-accent-100 transition-all">See More</span>
                             <svg className="w-5 h-5 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                         </button>
                     </div>
                 </div>
+
             </div>
         </div>
-    </section>
+    </section >
 );
 
 // --- ORCHESTRATOR ---
@@ -77,7 +87,6 @@ export default function RedesignFeaturedAndProductSpotlight({
     featuredData?: any[],
     spotlightData?: any
 }) {
-    // INTERNAL MOCK HARNESS (Self-Heals if Parent sends nothing)
     const finalFeatured = featuredData && featuredData.length > 0 ? featuredData : MOCK_FEATURED;
     const finalSpotlight = spotlightData && spotlightData.name ? spotlightData : MOCK_SPOTLIGHT;
 
@@ -98,8 +107,8 @@ export default function RedesignFeaturedAndProductSpotlight({
                                 </div>
                             </div>
                             <CarouselTrack className="-mx-3">
-                                {finalFeatured.map((p) => (
-                                    <CarouselSlide key={p._id} className="px-3">
+                                {finalFeatured.map((p, idx) => (
+                                    <CarouselSlide key={p._id || idx} className="px-3">
                                         <FeaturedCard product={p} />
                                     </CarouselSlide>
                                 ))}
