@@ -61,7 +61,13 @@ const SpotlightSection = ({ data }: { data: any }) => (
                     <div className="flex flex-col gap-4">
                         <h3 className="text-h3 text-brand-400">{data.subheadline}</h3>
                         <p className="text-body text-secondary-400 max-w-prose text-pretty">
-                            {data.description?.[0]?.children?.[0]?.text || "Refined excellence in every detail."}
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab sed quia vero fuga adipisci. Quis nostrum, explicabo porro voluptates vel esse fugiat! Ut dolores tenetur nihil commodi, veniam sequi aliquid.
+                        </p>
+                        <p className="text-body text-secondary-400 max-w-prose text-pretty">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab sed quia vero fuga adipisci. Quis nostrum, explicabo porro voluptates vel esse fugiat! Ut dolores tenetur nihil commodi, veniam sequi aliquid.
+                        </p>
+                        <p className="text-body text-secondary-400 max-w-prose text-pretty">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab sed quia vero fuga adipisci.
                         </p>
                     </div>
                     <div className="mt-8 pt-4">
