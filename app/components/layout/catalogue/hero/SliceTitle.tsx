@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils/tailwind";
 
 export default function SliceTitle({ label }: { label: string }) {
+  console.log('[SRIP Trace] Overwrote border-radius to 0px in:', 'SliceTitle');
   return (
     <div
       key={label}

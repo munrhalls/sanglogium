@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils/tailwind";
 import Image from "next/image";
 
 export default function DetailWatermark({ imageUrl }: { imageUrl: string }) {
+  console.log('[SRIP Trace] Overwrote border-radius to 0px in:', 'DetailWatermark');
   return (
     <div
       className={cn(
@@ -21,7 +22,7 @@ export default function DetailWatermark({ imageUrl }: { imageUrl: string }) {
           src={imageUrl}
           alt=""
           fill
-          className={cn("object-contain object-center", "sm:object-bottom")}
+          className={cn("object-contain object-center rounded-none", "sm:object-bottom")}
           priority
         />
       </div>

@@ -10,6 +10,7 @@ export default function NavbarManager({
   navLinks,
   children,
 }: NavbarManagerProps) {
+  console.log('[SRIP Trace] Overwrote border-radius to 0px in:', 'NavbarManager');
   useEffect(() => {
     console.log("[SRIP Trace] Manager Mount | Link Count:", navLinks.length, "| Children Count:", children.length);
   }, [navLinks.length, children.length]);
@@ -43,7 +44,7 @@ export default function NavbarManager({
               key={link.id}
               onClick={() => toggleId(link.id)}
               className={cn(
-                "group flex items-center gap-2 text-sm font-medium tracking-[0.2em] uppercase transition-all duration-300",
+                "group flex items-center gap-2 text-sm font-medium tracking-[0.2em] uppercase transition-all duration-300 rounded-none",
                 isActive
                   ? "text-accent-500 font-semibold"
                   : "text-brand-400 hover:text-brand-200"
@@ -66,7 +67,7 @@ export default function NavbarManager({
       {/* 2. Dropdown Viewport */}
       <div
         className={cn(
-          "absolute left-0 right-0 top-[calc(var(--desktop-header-h)+var(--desktop-catalogue-nav-h))] bottom-0 z-50",
+          "absolute left-0 right-0 top-[calc(var(--desktop-header-h)+var(--desktop-catalogue-nav-h))] bottom-0 z-50 rounded-none",
           "bg-brand-700 shadow-2xl transition-[grid-template-rows,opacity] duration-300 ease-in-out grid",
           "overflow-hidden !scrollbar-none",
           isOpen ? "grid-rows-[1fr] opacity-100 border-t border-brand-500/20" : "grid-rows-[0fr] opacity-0 pointer-events-none"
@@ -76,7 +77,7 @@ export default function NavbarManager({
           {/* 3. The Track */}
           <div
             className={cn(
-              "flex w-full h-full no-scrollbar",
+              "flex w-full h-full no-scrollbar rounded-none",
               "transition-transform duration-500 ease-out"
             )}
             style={{
@@ -100,7 +101,7 @@ export default function NavbarManager({
         <div className="absolute bottom-0 left-0 right-0 flex justify-center pb-8 pt-4 bg-gradient-to-t from-brand-700 via-brand-700/80 to-transparent pointer-events-none">
           <button
             onClick={closeMenu}
-            className="pointer-events-auto group flex items-center gap-2 px-6 py-2 text-[10px] tracking-[0.3em] uppercase text-brand-500 transition-colors hover:text-accent-500"
+            className="pointer-events-auto group flex items-center gap-2 px-6 py-2 text-[10px] tracking-[0.3em] uppercase text-brand-500 transition-colors hover:text-accent-500 rounded-none"
           >
             <span>
               Close

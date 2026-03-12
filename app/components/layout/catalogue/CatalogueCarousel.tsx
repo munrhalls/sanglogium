@@ -10,13 +10,14 @@ import { CATALOGUE_DATA } from "@/app/components/layout/catalogue/data";
 import { cn } from "@/lib/utils/tailwind";
 
 export default function CatalogueCarousel() {
+  console.log('[SRIP Trace] Overwrote border-radius to 0px in:', 'CatalogueCarousel');
   return (
     <nav
       aria-label="Catalogue Navigation"
       className="flex h-full w-full flex-col"
     >
       <Carousel itemsCount={CATALOGUE_DATA.length}>
-        <CarouselTrack className="touch-pan-x snap-x snap-mandatory overflow-x-auto landscape:h-full">
+        <CarouselTrack className="touch-pan-x snap-x snap-mandatory overflow-x-auto landscape:h-full rounded-none">
           {CATALOGUE_DATA.map((item, index) => (
             <CarouselSlide
               key={item.id}

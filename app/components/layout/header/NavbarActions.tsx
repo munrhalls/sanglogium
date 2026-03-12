@@ -14,6 +14,7 @@ interface NavbarActionsProps {
 }
 
 const NavbarActions = ({ isAuthenticated, cartCount }: NavbarActionsProps) => {
+  console.log('[SRIP Trace] Overwrote border-radius to 0px in:', 'NavbarActions');
   return (
     <div className={cn("ml-6 hidden items-center gap-6", "lg:flex")}>
       {/* Cart Action */}
@@ -42,7 +43,7 @@ const NavbarActions = ({ isAuthenticated, cartCount }: NavbarActionsProps) => {
         >
           <div
             className={cn(
-              "flex flex-col rounded-md border py-1 shadow-lg",
+              "flex flex-col rounded-none border py-1 shadow-lg",
               "border-secondary-300 bg-secondary-100"
             )}
           >
@@ -72,10 +73,11 @@ interface NavActionItemProps {
 }
 
 const NavActionItem = ({ icon, label, badgeCount }: NavActionItemProps) => {
+  console.log('[SRIP Trace] Overwrote border-radius to 0px in:', 'NavActionItem');
   return (
     <button
       className={cn(
-        "group/item flex h-10 w-fit flex-col items-center justify-center gap-1",
+        "group/item flex h-10 w-fit flex-col items-center justify-center gap-1 rounded-none",
         "transition-colors duration-200"
       )}
     >
@@ -90,7 +92,7 @@ const NavActionItem = ({ icon, label, badgeCount }: NavActionItemProps) => {
           <span
             className={cn(
               "absolute -right-1.5 -top-1.5",
-              "flex h-4 w-4 items-center justify-center rounded-full",
+              "flex h-4 w-4 items-center justify-center rounded-none",
               "bg-accent-600 text-[10px] font-bold text-brand-100"
             )}
           >
@@ -118,11 +120,12 @@ interface DropdownItemProps {
 }
 
 const DropdownItem = ({ label, onClick, isDestructive }: DropdownItemProps) => {
+  console.log('[SRIP Trace] Overwrote border-radius to 0px in:', 'DropdownItem');
   return (
     <button
       onClick={onClick}
       className={cn(
-        "w-full px-4 py-2 text-left text-sm",
+        "w-full px-4 py-2 text-left text-sm rounded-none",
         "transition-colors text-cap hover:bg-brand-200",
         isDestructive ? "text-brand-400 opacity-75" : "text-brand-400"
       )}

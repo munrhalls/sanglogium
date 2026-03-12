@@ -8,6 +8,7 @@ export default function DetailSection({
 }: {
   section: CatalogueSection;
 }) {
+  console.log('[SRIP Trace] Overwrote border-radius to 0px in:', 'DetailSection');
   return (
     <div
       className={cn(

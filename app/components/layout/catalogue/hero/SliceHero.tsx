@@ -13,6 +13,7 @@ import SliceTitle from "./SliceTitle";
 // BACKLOGO TODO - ^ same for landscape on tiny phones viewport or narrow height viewport
 
 export default function SliceHero({ data }: { data: CatalogueItem }) {
+  console.log('[SRIP Trace] Overwrote border-radius to 0px in:', 'SliceHero');
   return (
     <div
       className={cn(

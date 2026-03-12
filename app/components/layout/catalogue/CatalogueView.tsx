@@ -5,6 +5,7 @@ import SliceHero from "./hero/SliceHero";
 import SliceDetails from "./details/SliceDetails";
 
 export function CatalogueView({ data }: { data: CatalogueItem }) {
+  console.log('[SRIP Trace] Overwrote border-radius to 0px in:', 'CatalogueView');
   return (
     <div
       className={cn(

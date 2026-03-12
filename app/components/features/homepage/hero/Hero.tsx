@@ -1,10 +1,11 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import { urlFor } from "@/sanity/lib/client";
 import { getHeroData } from "@/sanity/lib/hero/getHeroData";
 import { cn } from "@/lib/utils/tailwind";
 import { HeroData, SanityImage } from "./types";
 
 export default async function Hero() {
+  console.log('[SRIP Trace] Overwrote border-radius to 0px in:', 'Hero');
   const data = await getHeroData() as HeroData | null;
 
   if (!data?.backgroundImage || !data?.headline) {
@@ -34,7 +35,7 @@ export default async function Hero() {
           alt={mobileBackgroundImage.alt || "Hero Image"}
           fill
           priority
-          className={cn("block object-cover", "md:hidden")}
+          className={cn("block object-cover rounded-none", "md:hidden")}
           sizes="100vw"
           quality={90}
           style={{ objectPosition: getPosition(mobileBackgroundImage) }}
@@ -45,7 +46,7 @@ export default async function Hero() {
           alt={data.backgroundImage.alt || "Hero Image"}
           fill
           priority
-          className={cn("hidden object-cover", "md:block")}
+          className={cn("hidden object-cover rounded-none", "md:block")}
           sizes="100vw"
           quality={90}
           style={{ objectPosition: getPosition(data.backgroundImage) }}
@@ -97,7 +98,7 @@ export default async function Hero() {
 
           <button
             className={cn(
-              "rounded-full px-12 py-4 lg:py-6",
+              "rounded-none px-12 py-4 lg:py-6",
               "bg-brand-400 text-cta-hero font-bold text-brand-700",
               "transition-colors hover:bg-brand-200",
               "xs:mt-auto sm:mt-2"

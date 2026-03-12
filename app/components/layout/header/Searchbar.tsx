@@ -3,11 +3,12 @@ import magnifying_glass from "@/public/icons/magnifying_glass.svg";
 import { cn } from "@/lib/utils/tailwind";
 
 export default function SearchBar() {
+  console.log('[SRIP Trace] Overwrote border-radius to 0px in:', 'SearchBar');
   return (
     <form
       role="search"
       className={cn(
-        "group hidden h-[24px] w-full items-center gap-4 rounded-full px-4 lg:h-[36px]",
+        "group hidden h-[24px] w-full items-center gap-4 rounded-none px-4 lg:h-[36px]",
         "bg-secondary-300 shadow-sm transition-all duration-300 ease-out",
         "hover:bg-secondary-100",
         "focus-within:bg-brand-400 focus-within:shadow-md",
@@ -31,7 +32,7 @@ export default function SearchBar() {
         maxLength={500}
         aria-label="Search"
         className={cn(
-          "w-full border-none bg-transparent outline-none",
+          "w-full border-none bg-transparent outline-none rounded-none",
           "text-body text-brand-700 transition-colors duration-300",
           "selection:bg-brand-700 selection:text-brand-400",
           "placeholder:text-secondary-600 focus:placeholder:text-brand-800",

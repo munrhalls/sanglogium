@@ -4,6 +4,7 @@ import DetailWatermark from "./DetailWatermark";
 import DetailSection from "./DetailSection";
 
 export default function SliceDetails({ data }: { data: CatalogueItem }) {
+  console.log('[SRIP Trace] Overwrote border-radius to 0px in:', 'SliceDetails');
   return (
     <div
       className={cn(
