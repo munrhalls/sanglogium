@@ -8,28 +8,26 @@ import spotlightImg from './product_spotlight_transparent.png';
 
 // --- ATOM 1: THE FEATURED CARD ---
 const FeaturedCard = ({ product }: { product: any }) => (
-    <article className="group flex flex-col h-full gap-4 p-6 border border-secondary-800 rounded-lg bg-transparent transition-all duration-300 hover:border-secondary-600 hover:bg-secondary-900/10">
-        <div className="aspect-square w-full bg-brand-300 rounded-md overflow-hidden relative flex items-center justify-center p-8">
+    <article className="group flex flex-col h-full gap-4 p-6 border border-secondary-800 rounded-none bg-transparent transition-all duration-300 hover:border-secondary-600 hover:bg-secondary-900/10">
+        {/* CRITICAL: Enforced rounded-none on the image well */}
+        <div className="aspect-square w-full bg-brand-300 rounded-none overflow-hidden relative flex items-center justify-center p-8">
             <img
                 src={featuredImg.src}
                 alt={product.name}
-                /* WARN FIX: Ensure image has breathing room and stays centered */
                 className="w-auto h-auto max-w-[85%] max-h-[85%] object-contain mix-blend-multiply transform transition-transform duration-700 group-hover:scale-110"
             />
         </div>
         <div className="flex flex-col gap-2">
-            {/* CRITICAL #3 FIX: Synchronized brand eyebrow to gold token (accent-500) */}
             <span className="text-small tracking-editorial text-accent-500 uppercase">{product.brand}</span>
             <h3 className="text-h4 text-brand-100 line-clamp-1 group-hover:text-accent-400 transition-colors">{product.name}</h3>
             <p className="text-small text-secondary-400 line-clamp-2 leading-relaxed">Unrivaled acoustic engineering and clarity.</p>
         </div>
         <div className="mt-auto pt-4 flex items-center justify-between border-t border-secondary-800">
             <div className="flex flex-col justify-center">
-                {/* WARN #1 FIX: "PRICE" text removed entirely. Number stands alone. */}
                 <span className="text-h4 text-brand-100">${product.displayPrice}</span>
             </div>
-            {/* WARN #2 FIX: Ghost button active state locking */}
-            <button className="flex items-center gap-2 px-4 py-2 bg-transparent border border-accent-500 text-accent-500 rounded-sm transition-all duration-300 hover:bg-accent-500 hover:text-brand-900 hover:border-accent-500 active:scale-95">
+            {/* CRITICAL: Enforced rounded-none on the action button */}
+            <button className="flex items-center gap-2 px-4 py-2 bg-transparent border border-accent-500 text-accent-500 rounded-none transition-all duration-300 hover:bg-accent-500 hover:text-brand-900 hover:border-accent-500 active:scale-95">
                 <span className="text-small font-bold uppercase">Add</span>
             </button>
         </div>
@@ -41,11 +39,11 @@ const SpotlightSection = ({ data }: { data: any }) => (
     <section className="w-full py-20 relative overflow-hidden border-t border-secondary-800">
         <div className="absolute inset-0 bg-[url('/fractal_ring.webp')] bg-no-repeat bg-right-bottom mix-blend-overlay opacity-20 pointer-events-none z-0" />
         <div className="max-w-[1440px] mx-auto px-4 md:px-8 relative z-10">
-            {/* CRITICAL: items-stretch forces identical panel heights */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
 
                 {/* LEFT PANEL */}
-                <div className="w-full h-full bg-brand-300 rounded-lg flex items-center justify-center relative p-8 lg:p-12 overflow-hidden">
+                {/* CRITICAL: Enforced rounded-none on the left structural block */}
+                <div className="w-full h-full bg-brand-300 rounded-none flex items-center justify-center relative p-8 lg:p-12 overflow-hidden">
                     <img
                         src={spotlightImg.src}
                         alt={data.name || "Product Spotlight"}
@@ -54,8 +52,8 @@ const SpotlightSection = ({ data }: { data: any }) => (
                 </div>
 
                 {/* RIGHT PANEL */}
-                {/* CRITICAL #5 & #2 FIXES: Added bg-brand-800 and justify-center. Now matches left panel depth and vertical alignment. */}
-                <div className="w-full h-full bg-brand-800 rounded-lg flex flex-col justify-center gap-6 p-8 lg:p-12">
+                {/* CRITICAL: Enforced rounded-none on the right structural block */}
+                <div className="w-full h-full bg-brand-800 rounded-none flex flex-col justify-center gap-6 p-8 lg:p-12">
                     <div className="flex flex-col gap-2">
                         <span className="text-small tracking-editorial text-accent-500 uppercase">{data.brand}</span>
                         <h2 className="text-h1 text-brand-100 uppercase">{data.headline}</h2>
@@ -76,7 +74,7 @@ const SpotlightSection = ({ data }: { data: any }) => (
 
             </div>
         </div>
-    </section >
+    </section>
 );
 
 // --- ORCHESTRATOR ---
@@ -102,8 +100,8 @@ export default function RedesignFeaturedAndProductSpotlight({
                                     <h2 className="text-h2 text-brand-100 uppercase">Featured</h2>
                                 </div>
                                 <div className="flex gap-3 pb-1">
-                                    <CarouselPrevious className="border-secondary-600 text-secondary-400 hover:text-accent-500 hover:border-accent-500 transition-all" />
-                                    <CarouselNext className="border-secondary-600 text-secondary-400 hover:text-accent-500 hover:border-accent-500 transition-all" />
+                                    <CarouselPrevious className="border-secondary-600 text-secondary-400 hover:text-accent-500 hover:border-accent-500 transition-all rounded-none" />
+                                    <CarouselNext className="border-secondary-600 text-secondary-400 hover:text-accent-500 hover:border-accent-500 transition-all rounded-none" />
                                 </div>
                             </div>
                             <CarouselTrack className="-mx-3">
