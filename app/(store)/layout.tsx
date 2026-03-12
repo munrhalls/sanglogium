@@ -40,7 +40,7 @@ export default function RootLayout({
                 "mx-auto max-w-[1440px]",
                 "h-full w-full flex-1",
                 "shadow-[0_0_40px_rgba(246,227,213,0.015)]"
-                )}
+              )}
             >
               <Header />
               <CatalogueNavbar />

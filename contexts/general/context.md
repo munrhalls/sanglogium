@@ -25,8 +25,6 @@ Zero-Conflict Optimization: Use next/image with a Custom Loader (@sanity/image-u
 - Mechanical Awareness: 1-to-1 understanding of existing code is mandatory before alteration.
 - Component Physics: Layout (Shelf) -> Structure (Track/Slide) -> Content (Product/Media). Logic flows downward.
 
-3. THE "PLATINUM" VISUAL PHYSICS
-- Layering: Nested "Slabs" create depth. secondary-200 (Base) > secondary-50 (Stage) > White/Brand-900 (Focus).
 - Gutters: Managed at the Layout level (Track/Slide), never the Component level (Product), to maintain snap-integrity.
 
 4. PERFORMANCE
