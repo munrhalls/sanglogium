@@ -3,12 +3,15 @@ import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
 import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";
 import { CarouselSlide } from "@/app/components/layout/carousel/CarouselSlide";
 import { CarouselPrevious, CarouselNext, CarouselDots } from "@/app/components/layout/carousel/CarouselControls";
+import featuredImg from './featured_transparent.png';
+import spotlightImg from './product_spotlight_transparent.png';
+
 // --- ATOM 1: THE FEATURED CARD ---
 const FeaturedCard = ({ product }: { product: any }) => (
     <article className="group flex flex-col h-full gap-4 p-6 border border-secondary-800 rounded-lg bg-transparent transition-all duration-300 hover:border-secondary-600 hover:bg-secondary-900/10">
-        <div className="aspect-square w-full bg-brand-800/50 rounded-md overflow-hidden relative flex items-center justify-center p-8">
+        <div className="aspect-square w-full bg-brand-800/50 bg-secondary-300 rounded-md overflow-hidden relative flex items-center justify-center p-8">
             <img
-                src={product.imageUrl || product.mainImage}
+                src={featuredImg.src}
                 alt={product.name}
                 className="w-full h-full object-contain transform transition-transform duration-700 group-hover:scale-110"
             />
@@ -38,8 +41,9 @@ const SpotlightSection = ({ data }: { data: any }) => (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div className="w-full flex justify-center lg:justify-start">
                     <div className="relative w-full max-w-[450px] aspect-square flex items-center justify-center">
-                        <div className="absolute inset-0 bg-accent-500/10 blur-[120px] rounded-full" />
-                        <img src={data.mainImage} alt={data.name} className="relative z-10 w-full h-full object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.6)]" />
+                        <div className="absolute inset-0 rounded-full" />
+                        <img src={spotlightImg.src}
+                        />
                     </div>
                 </div>
                 <div className="w-full flex flex-col gap-6">
