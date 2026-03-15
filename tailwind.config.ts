@@ -38,6 +38,59 @@ import plugin from "tailwindcss/plugin";
 // 20,80px,"p-20, m-20",Structural: Vertical padding for page sections.
 // 36,144px,"p-36, m-36","Structural: Hero sections, landing page footers."
 
+const brand = {
+  50: "#FEFCFB",
+  100: "#FDF9F7",
+  200: "#FAEEE6",
+  300: "#F8E6D9",
+  400: "#F6E3D5",
+  500: "#E8C9B5",
+  600: "#C9A18A",
+  700: "#151B1B",
+  800: "#0D0F0F",
+  900: "#070808",
+};
+
+const secondary = {
+  50: "#FCFCFC",
+  100: "#F5F5F4",
+  200: "#ECECEB",
+  300: "#E5E4E2",
+  400: "#C7C6C4",
+  500: "#9A9997",
+  600: "#6E6D6B",
+  700: "#4A4948",
+  800: "#2E2E2D",
+  900: "#1A1A19",
+};
+
+const accent = {
+  100: "#FBF6E8",
+  200: "#F5E9C8",
+  300: "#EEDB9F",
+  400: "#E5C158",
+  500: "#D4AF37",
+  600: "#B8952E",
+  700: "#8F7324",
+  800: "#6B561C",
+};
+
+const success = {
+  500: "#4ADE80",
+  700: "#15803D",
+};
+
+const error = {
+  500: "#EF4444",
+  700: "#991B1B",
+};
+
+const warning = {
+  500: "#F59E0B",
+  700: "#92400E",
+};
+
+
 export default {
   darkMode: ["class"],
   content: [
@@ -167,81 +220,33 @@ export default {
         bold: "700",
       },
       colors: {
-        // BRAND (Peach Rose → The Void)
-        brand: {
-          50: "#FEFCFB", // Whisper - Lightest background
-          100: "#FDF9F7", // Paper White - Body text on dark
-          200: "#FAEEE6", // Soft Highlight - Hover backgrounds
-          300: "#F8E6D9", // Warm Mist - Subtle cards
-          400: "#F6E3D5", // Peach Rose Base - Primary brand color
-          500: "#E8C9B5", // Deeper Peach - Hover peach
-          600: "#C9A18A", // Terracotta - Active states
-          700: "#151B1B", // The Void - Main background
-          800: "#0D0F0F", // Deep Void - Footer, strong contrast
-          900: "#070808", // Absolute Void - Strongest contrast
-        },
-
-        // SECONDARY (Platinum → Charcoal)
-        secondary: {
-          50: "#FCFCFC", // Pure White - Card backgrounds on dark
-          100: "#F5F5F4", // Warm White - Elevated cards
-          200: "#ECECEB", // Light Platinum - Borders
-          300: "#E5E4E2", // Platinum Base - Dividers
-          400: "#C7C6C4", // Medium Platinum - Inactive text
-          500: "#9A9997", // Warm Gray - Subdued elements
-          600: "#6E6D6B", // Charcoal Gray - Secondary text
-          700: "#4A4948", // Deep Charcoal - Strong secondary
-          800: "#2E2E2D", // Near Black - Alternative bg
-          900: "#1A1A19", // Rich Black - Deepest secondary
-        },
-
-        // ACCENT (Gold Spectrum)
-        accent: {
-          100: "#FBF6E8", // Champagne Tint - Subtle highlights
-          200: "#F5E9C8", // Pale Gold - Light accents
-          300: "#EEDB9F", // Soft Gold - Hover preparation
-          400: "#E5C158", // Light Gold - Hover state
-          500: "#D4AF37", // True Gold - Primary CTA
-          600: "#B8952E", // Deep Gold - Active CTA
-          700: "#8F7324", // Bronze - Pressed state
-          800: "#6B561C", // Dark Bronze - Strong accents
-        },
-
-        // SEMANTIC (Status Colors)
-        success: {
-          500: "#4ADE80", // Green - In stock, success
-          700: "#15803D", // Dark Green - Success text on light
-        },
-        error: {
-          500: "#EF4444", // Red - Out of stock, errors
-          700: "#991B1B", // Dark Red - Error text
-        },
-        warning: {
-          500: "#F59E0B", // Amber - Low stock
-          700: "#92400E", // Dark Amber - Warning text
-        },
-
-        // LAYER 3: SEMANTIC ALIASES (Mappings to Primitives)
+        brand,
+        secondary,
+        accent,
+        success,
+        error,
+        warning,
         surface: {
-          page: "#151B1B",
-          card: "#1A1A19",
-          elevated: "#2E2E2D",
-          subtle: "#0D0F0F",
-          highlight: "#FAEEE6",
+          page: brand[700],
+          card: secondary[900],
+          elevated: secondary[800],
+          subtle: brand[800],
+          highlight: brand[200],
         },
         text: {
-          primary: "#FDF9F7",
-          secondary: "#C7C6C4",
-          headline: "#FEFCFB",
-          subtitle: "#9A9997",
-          body: "#C7C6C4",
-          accent: "#D4AF37",
-          overline: "#D4AF37",
-          priceTag: "#E5E4E2",
+          primary: brand[100],
+          secondary: secondary[400],
+          headline: brand[50],
+          subtitle: secondary[500],
+          body: secondary[400],
+          accent: accent[500],
+          overline: accent[500],
+          priceTag: secondary[300],
+          inverse: secondary[700],
         },
         border: {
-          primary: "#E5E4E2",
-          secondary: "#4A4948",
+          primary: secondary[300],
+          secondary: secondary[700],
         },
       },
       boxShadow: {
@@ -296,20 +301,20 @@ export default {
           color: theme("colors.text.body") as string,
         },
         ".cta-hero": {
-          color: theme("colors.text.headline") as string,
+          color: theme("colors.text.inverse") as string,
         },
         ".spotlight": {
           color: theme("colors.text.headline") as string,
         },
         ".btn-primary": {
           backgroundColor: theme("colors.brand.500") as string,
-          color: theme("colors.surface.base") as string,
+          color: theme("colors.brand.700") as string,
           padding: `${theme("spacing.3")} ${theme("spacing.6")}`,
           borderRadius: theme("borderRadius.md") as string,
           fontWeight: theme("fontWeight.medium") as string,
           transition: "background-color 0.2s ease",
           "&:hover": {
-            backgroundColor: theme("colors.brand.500") as string,
+            backgroundColor: theme("colors.brand.600") as string,
           },
           "&:active": {
             backgroundColor: theme("colors.brand.700") as string,
