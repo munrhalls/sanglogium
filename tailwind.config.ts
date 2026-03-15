@@ -302,11 +302,11 @@ export default {
         },
         ".btn-primary": {
           backgroundColor: theme("colors.brand.400") as string,
-          color: theme("colors.brand.900") as string,
+          color: theme("colors.brand.800") as string,
           borderRadius: "0px",
           transition: "background-color 0.2s ease",
           "&:hover": {
-            backgroundColor: theme("colors.brand.600") as string,
+            backgroundColor: theme("colors.brand.500") as string,
           },
           "&:active": {
             backgroundColor: theme("colors.brand.700") as string,
@@ -319,12 +319,12 @@ export default {
         },
         ".btn-secondary": {
           backgroundColor: "transparent",
-          border: `1px solid ${theme("colors.brand.100")}`,
+          border: `1px solid ${theme("colors.brand.200")}`,
           color: theme("colors.brand.100") as string,
           borderRadius: "0px",
           transition: "all 0.2s ease",
           "&:hover": {
-            backgroundColor: theme("colors.brand.400") as string,
+            backgroundColor: theme("colors.brand.300") as string,
             color: theme("colors.brand.700") as string,
           },
           "&:active": {
@@ -341,7 +341,7 @@ export default {
           borderRadius: "0px",
           transition: "color 0.2s ease",
           "&:hover": {
-            color: theme("colors.accent.400") as string,
+            color: theme("colors.accent.300") as string,
           },
         },
       });
