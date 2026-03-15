@@ -226,19 +226,24 @@ export default {
         // LAYER 3: SEMANTIC ALIASES (Mappings to Primitives)
         surface: {
           page: "#151B1B",
+          card: "#1A1A19",
+          elevated: "#2E2E2D",
+          subtle: "#0D0F0F",
+          highlight: "#FAEEE6",
         },
         text: {
-          primary: "#F6E3D5",
-          secondary: "#E5E4E2",
-          headline: "#FDF9F7",
-          subtitle: "#C7C6C4",
-          body: "#9A9997",
+          primary: "#FDF9F7",
+          secondary: "#C7C6C4",
+          headline: "#FEFCFB",
+          subtitle: "#9A9997",
+          body: "#C7C6C4",
           accent: "#D4AF37",
           overline: "#D4AF37",
           priceTag: "#E5E4E2",
         },
         border: {
-          primary: "#ECECEB",
+          primary: "#E5E4E2",
+          secondary: "#4A4948",
         },
       },
       boxShadow: {
