@@ -1,4 +1,4 @@
-﻿import { SpotlightProduct } from "../product-spotlight-1/types";
+import { SpotlightProduct } from "../product-spotlight-1/types";
 import { cn } from "@/lib/utils/tailwind";
 
 interface SpotlightDetailsProps {
@@ -42,9 +42,8 @@ export default function SpotlightDetails({ data, accentColor, className }: Spotl
       </div>
 
       {/* INTERACTIVE CTA: Animated Underline */}
-      <button className="group relative w-fit text-small font-bold uppercase tracking-signature text-brand-50 pb-2">
+      <button className="btn-ghost w-fit text-small font-bold uppercase pb-2">
         See More
-        <span className="absolute bottom-0 left-0 h-[1px] w-8 bg-accent-500 transition-all duration-300 group-hover:w-full" />
       </button>
     </div>
   );

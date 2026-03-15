@@ -1,4 +1,4 @@
-﻿import { ShoppingCartIcon } from "@phosphor-icons/react/dist/ssr";
+import { ShoppingCartIcon } from "@phosphor-icons/react/dist/ssr";
 
 export default function CardDetails({
   name,
@@ -38,12 +38,12 @@ export default function CardDetails({
           </span>
         </div>
 
-        <button className="flex items-center gap-2 rounded-full bg-accent-500 px-4 py-2 sm:px-6 transition-all duration-300 hover:bg-accent-400 active:scale-95">
-          <ShoppingCartIcon size={18} weight="bold" className="text-brand-900" />
-          <span className="font-sans text-small font-bold text-brand-900 xs:block md:hidden">
+        <button className="btn-secondary flex items-center gap-2 px-4 py-2 sm:px-6 active:scale-95">
+          <ShoppingCartIcon size={18} weight="bold" />
+          <span className="font-sans text-small font-bold xs:block md:hidden uppercase">
             Add
           </span>
-          <span className="hidden font-sans text-small font-bold text-brand-900 md:block">
+          <span className="hidden font-sans text-small font-bold md:block uppercase">
             Add to cart
           </span>
         </button>

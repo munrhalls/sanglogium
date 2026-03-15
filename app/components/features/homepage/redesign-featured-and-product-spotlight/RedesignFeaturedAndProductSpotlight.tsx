@@ -27,7 +27,7 @@ const FeaturedCard = ({ product }: { product: any }) => (
                 <span className="text-h4 text-brand-100">${product.displayPrice}</span>
             </div>
             {/* CRITICAL: Enforced rounded-none on the action button */}
-            <button className="flex items-center gap-2 px-4 py-2 bg-transparent border border-accent-500 text-accent-500 rounded-none transition-all duration-300 hover:bg-accent-500 hover:text-brand-900 hover:border-accent-500 active:scale-95">
+            <button className="btn-secondary flex items-center gap-2 px-4 py-2 active:scale-95">
                 <span className="text-small font-bold uppercase">Add</span>
             </button>
         </div>
@@ -71,8 +71,8 @@ const SpotlightSection = ({ data }: { data: any }) => (
                         </p>
                     </div>
                     <div className="mt-8 pt-4">
-                        <button className="group flex items-center gap-4 text-h4 tracking-signature text-accent-500 uppercase transition-all">
-                            <span className="border-b border-accent-500 pb-1 group-hover:border-accent-100 group-hover:text-accent-100 transition-all">See More</span>
+                        <button className="btn-ghost group flex items-center gap-4 text-h4 uppercase">
+                            <span>See More</span>
                             <svg className="w-5 h-5 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                         </button>
                     </div>

@@ -232,7 +232,7 @@ export default {
   plugins: [
     animatePlugin,
     typographyPlugin,
-    plugin(function ({ addUtilities }) {
+    plugin(function ({ addUtilities, addComponents, theme }) {
       addUtilities({
         // Trims top to Cap-Height, bottom to Baseline.
         ".text-cap": {
@@ -241,6 +241,53 @@ export default {
         // Trims top to x-Height (good for lowercase), bottom to Baseline.
         ".text-ex": {
           "text-box": "trim-both ex alphabetic",
+        },
+      });
+
+      addComponents({
+        ".btn-primary": {
+          backgroundColor: theme("colors.brand.400") as string,
+          color: theme("colors.brand.900") as string,
+          borderRadius: "0px",
+          transition: "background-color 0.2s ease",
+          "&:hover": {
+            backgroundColor: theme("colors.brand.600") as string,
+          },
+          "&:active": {
+            backgroundColor: theme("colors.brand.700") as string,
+          },
+          "&:disabled": {
+            backgroundColor: theme("colors.brand.200") as string,
+            opacity: "0.4",
+            cursor: "not-allowed",
+          },
+        },
+        ".btn-secondary": {
+          backgroundColor: "transparent",
+          border: `1px solid ${theme("colors.brand.100")}`,
+          color: theme("colors.brand.100") as string,
+          borderRadius: "0px",
+          transition: "all 0.2s ease",
+          "&:hover": {
+            backgroundColor: theme("colors.brand.400") as string,
+            color: theme("colors.brand.700") as string,
+          },
+          "&:active": {
+            backgroundColor: theme("colors.brand.500") as string,
+          },
+        },
+        ".btn-ghost": {
+          backgroundColor: "transparent",
+          border: "none",
+          color: theme("colors.accent.500") as string,
+          textDecoration: "underline",
+          textUnderlineOffset: "4px",
+          letterSpacing: theme("letterSpacing.editorial") as string,
+          borderRadius: "0px",
+          transition: "color 0.2s ease",
+          "&:hover": {
+            color: theme("colors.accent.400") as string,
+          },
         },
       });
     }),

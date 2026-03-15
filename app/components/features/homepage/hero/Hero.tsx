@@ -98,9 +98,8 @@ export default async function Hero() {
 
           <button
             className={cn(
-              "rounded-none px-12 py-4 lg:py-6",
-              "bg-brand-400 text-cta-hero font-bold text-brand-700",
-              "transition-colors hover:bg-brand-200",
+              "btn-primary px-12 py-4 lg:py-6",
+              "text-cta-hero font-bold",
               "xs:mt-auto sm:mt-2"
             )}
           >
