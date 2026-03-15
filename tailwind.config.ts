@@ -59,6 +59,8 @@ export default {
         "pointer-coarse": { raw: "(pointer: coarse)" },
       },
       spacing: {
+        "12": "3rem",
+        "16": "4rem",
         "desktop-header-h": "var(--desktop-header-h)",
         "mobile-menu-h": "var(--mobile-menu-h)",
         "feature-media": "450px",
@@ -232,6 +234,8 @@ export default {
           subtitle: "#C7C6C4",
           body: "#9A9997",
           accent: "#D4AF37",
+          overline: "#D4AF37",
+          priceTag: "#E5E4E2",
         },
         border: {
           primary: "#ECECEB",
