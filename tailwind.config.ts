@@ -128,7 +128,7 @@ export default {
         // 28px / 36px (Tracking: 0)
         h3: [
           "clamp(1.375rem, 0.5vw + 1.2rem, 1.75rem)",
-          { lineHeight: "1.2", letterSpacing: "0.05em", color: theme("colors.secondary.400") },
+          { lineHeight: "1.2", letterSpacing: "0.05em" },
         ],
 
         // 21px / 28px (Tracking: 0)
@@ -142,7 +142,7 @@ export default {
         // ----------------------------------------------------------------------
 
         // 16px / 24px
-        body: ["16px", { lineHeight: "24px", letterSpacing: "0em", color: theme("colors.secondary.500") }],
+        body: ["16px", { lineHeight: "24px", letterSpacing: "0em" }],
 
         // 12px / 16px
         small: ["12px", { lineHeight: "16px", letterSpacing: "0.05em" }],
@@ -223,14 +223,18 @@ export default {
 
         // LAYER 3: SEMANTIC ALIASES (Mappings to Primitives)
         surface: {
-          page: "#151B1B", // Maps to brand.700
+          page: "#151B1B",
         },
         text: {
-          muted: "#9A9997", // Maps to secondary.500
-          accent: "#D4AF37", // Maps to accent.500
+          primary: "#F6E3D5",
+          secondary: "#E5E4E2",
+          headline: "#FDF9F7",
+          subtitle: "#C7C6C4",
+          body: "#9A9997",
+          accent: "#D4AF37",
         },
         border: {
-          primary: "#ECECEB", // Maps to secondary.200
+          primary: "#ECECEB",
         },
       },
       boxShadow: {
@@ -260,6 +264,36 @@ export default {
       });
 
       addComponents({
+        ".display-1": {
+          color: theme("colors.text.primary") as string,
+        },
+        ".display-2": {
+          color: theme("colors.text.secondary") as string,
+        },
+        h1: {
+          color: theme("colors.text.headline") as string,
+        },
+        h2: {
+          color: theme("colors.text.headline") as string,
+        },
+        h3: {
+          color: theme("colors.text.subtitle") as string,
+        },
+        h4: {
+          color: theme("colors.text.headline") as string,
+        },
+        body: {
+          color: theme("colors.text.body") as string,
+        },
+        small: {
+          color: theme("colors.text.body") as string,
+        },
+        ".cta-hero": {
+          color: theme("colors.text.headline") as string,
+        },
+        ".spotlight": {
+          color: theme("colors.text.headline") as string,
+        },
         ".btn-primary": {
           backgroundColor: theme("colors.brand.400") as string,
           color: theme("colors.brand.900") as string,
