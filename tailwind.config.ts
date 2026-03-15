@@ -76,11 +76,6 @@ export default {
       fontFamily: {
         sans: [
           "var(--font-montserrat)",
-          "ui-sans-serif",
-          "system-ui",
-          "Helvetica",
-          "Arial",
-          "sans-serif",
         ],
       },
       // tailwind.config.ts
@@ -164,8 +159,10 @@ export default {
       }),
       // Weights separately - can be combined with any size
       fontWeight: {
+        light: "300",
         regular: "400",
         medium: "500",
+        semibold: "600",
         bold: "700",
       },
       colors: {
