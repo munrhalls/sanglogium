@@ -83,7 +83,7 @@ export default {
       },
       // tailwind.config.ts
 
-      fontSize: {
+      fontSize: ({ theme }: { theme: any }) => ({
         // ----------------------------------------------------------------------
         // FLUID HEADINGS (Responsive Luxury Scale)
         // Logic: Linear interpolation from Mobile (375px) to Desktop (1440px)
@@ -125,7 +125,7 @@ export default {
         // 28px / 36px (Tracking: 0)
         h3: [
           "clamp(1.375rem, 0.5vw + 1.2rem, 1.75rem)",
-          { lineHeight: "1.2", letterSpacing: "0.05em" },
+          { lineHeight: "1.2", letterSpacing: "0.05em", color: theme("colors.secondary.400") },
         ],
 
         // 21px / 28px (Tracking: 0)
@@ -139,7 +139,7 @@ export default {
         // ----------------------------------------------------------------------
 
         // 16px / 24px
-        body: ["16px", { lineHeight: "24px", letterSpacing: "0em" }],
+        body: ["16px", { lineHeight: "24px", letterSpacing: "0em", color: theme("colors.secondary.500") }],
 
         // 12px / 16px
         small: ["12px", { lineHeight: "16px", letterSpacing: "0.05em" }],
@@ -156,7 +156,7 @@ export default {
 
         // Spotlight: 28px fixed (Luxury uppercase)
         spotlight: ["28px", { lineHeight: "32px", letterSpacing: "0.1em" }],
-      },
+      }),
       // Weights separately - can be combined with any size
       fontWeight: {
         regular: "400",
