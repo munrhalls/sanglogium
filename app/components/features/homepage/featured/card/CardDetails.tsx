@@ -22,7 +22,7 @@ export default function CardDetails({
           </span>
           <div className="h-[1px] w-4 bg-brand-500/30" />
         </div>
-        <h3 className="line-clamp-1 text-h3 font-light leading-tight tracking-tight text-secondary-50 transition-colors duration-500 group-hover:text-accent-400">
+        <h3 className="line-clamp-1 text-h3 font-light leading-tight tracking-tight transition-colors duration-500 group-hover:text-accent-400">
           {name}
         </h3>
         <p className="line-clamp-2 text-small leading-relaxed text-secondary-300">

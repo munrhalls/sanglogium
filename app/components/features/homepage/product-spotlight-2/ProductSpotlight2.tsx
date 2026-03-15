@@ -1,4 +1,4 @@
-﻿import SpotlightHero from "../shared-spotlight/SpotlightHero";
+import SpotlightHero from "../shared-spotlight/SpotlightHero";
 import SpotlightDetails from "../shared-spotlight/SpotlightDetails";
 import spotlightSource from "./prod.json";
 import { SpotlightProduct } from "./types";
@@ -15,7 +15,6 @@ export default function ProductSpotlight2() {
           <SpotlightDetails
             data={data}
             accentColor="text-secondary-400"
-            buttonClass="bg-secondary-400 text-brand-900 hover:bg-secondary-300"
           />
         </div>
         <div className="order-1 lg:order-2">

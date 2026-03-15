@@ -9,7 +9,7 @@ export default function DacCard({ item }: { item: any }) {
     )}>
       <CarouselMediaBox src={item.imageUrl} alt={item.name} />
       <div className="flex flex-col gap-2">
-        <h3 className="text-body text-cap font-bold text-brand-100 italic tracking-tight">
+        <h3 className="text-body text-cap font-bold italic tracking-tight">
           {item.name}
         </h3>
         <div className="flex justify-between items-center">

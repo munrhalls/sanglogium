@@ -4,7 +4,7 @@ export default function FeaturedHeader() {
       <span className="text-small uppercase tracking-widest text-brand-700 font-bold">
         Curated Excellence
       </span>
-      <h2 className="text-display-2 font-bold text-brand-700 uppercase italic">
+      <h2 className="text-display-2 font-bold uppercase italic">
         Featured
       </h2>
     </div>

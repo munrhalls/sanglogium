@@ -1,4 +1,4 @@
-﻿import { Carousel } from '@/app/components/layout/carousel/CarouselRoot';
+import { Carousel } from '@/app/components/layout/carousel/CarouselRoot';
 import { CarouselTrack } from '@/app/components/layout/carousel/CarouselTrack';
 import { CarouselSlide } from '@/app/components/layout/carousel/CarouselSlide';
 import { CarouselDots } from '@/app/components/layout/carousel/CarouselControls';
@@ -23,7 +23,7 @@ export default function CategorySection({ category, items }: CategorySectionProp
 
   return (
     <div className="group/section">
-      <h3 className="text-small text-cap font-bold uppercase text-brand-400 mb-6 flex items-center gap-3">
+      <h3 className="text-small text-cap font-bold uppercase mb-6 flex items-center gap-3">
         <span className="h-px w-8 bg-brand-400" />
         {category.name}
       </h3>

@@ -1,4 +1,4 @@
-﻿import { cn } from "@/lib/utils/tailwind";
+import { cn } from "@/lib/utils/tailwind";
 
 export default function AccessoryCard({ item }: { item: AccessoryItem }) {
   if (!item) return null;
@@ -15,7 +15,7 @@ export default function AccessoryCard({ item }: { item: AccessoryItem }) {
       </div>
 
       <div className="flex flex-col gap-1">
-        <h4 className="text-small font-bold text-brand-100 truncate">
+        <h4 className="text-small font-bold truncate">
           {item.name}
         </h4>
         <div className="flex justify-between items-center">

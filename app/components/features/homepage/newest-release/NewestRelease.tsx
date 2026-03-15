@@ -1,4 +1,4 @@
-﻿import SpotlightHero from "../shared-spotlight/SpotlightHero";
+import SpotlightHero from "../shared-spotlight/SpotlightHero";
 import SpotlightDetails from "../shared-spotlight/SpotlightDetails";
 import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
 import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";
@@ -26,7 +26,6 @@ export default function NewestRelease() {
               subheadline: data.description
             }}
             accentColor="text-brand-400"
-            buttonClass="bg-brand-400 text-brand-900 hover:bg-brand-300"
           />
         </div>
 

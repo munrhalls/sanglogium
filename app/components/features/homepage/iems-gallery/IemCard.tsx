@@ -1,4 +1,4 @@
-﻿import { cn } from "@/lib/utils/tailwind"
+import { cn } from "@/lib/utils/tailwind"
 import { IemProduct } from "./types"
 
 export default function IemCard({ product }: { product: IemProduct }) {
@@ -18,7 +18,7 @@ export default function IemCard({ product }: { product: IemProduct }) {
                 <span className="text-small font-mono uppercase tracking-widest text-brand-400">
                     {product.brand}
                 </span>
-                <h3 className="text-small font-bold text-brand-100 truncate">
+                <h3 className="text-small font-bold truncate">
                     {product.name}
                 </h3>
                 <p className="text-small text-brand-200">

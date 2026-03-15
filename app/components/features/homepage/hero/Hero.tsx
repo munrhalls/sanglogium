@@ -79,8 +79,7 @@ export default async function Hero() {
           <div className="flex flex-col gap-2 md:gap-4">
             <h1
               className={cn(
-                "text-cap text-display-2 md:text-display-1 font-bold uppercase",
-                "text-brand-400",
+                "text-cap text-display-2 md:text-display-1 font-bold uppercase"
               )}
             >
               {data.headline}
@@ -88,7 +87,6 @@ export default async function Hero() {
             <p
               className={cn(
                 "text-cap text-h4 font-medium",
-                "text-secondary-300",
                 "text-h4 md:text-h3"
               )}
             >

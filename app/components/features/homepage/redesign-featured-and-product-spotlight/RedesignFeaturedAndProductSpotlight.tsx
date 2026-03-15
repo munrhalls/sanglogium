@@ -19,12 +19,12 @@ const FeaturedCard = ({ product }: { product: any }) => (
         </div>
         <div className="flex flex-col gap-2">
             <span className="text-small tracking-editorial text-accent-500 uppercase">{product.brand}</span>
-            <h3 className="text-h4 text-brand-100 line-clamp-1 group-hover:text-accent-400 transition-colors">{product.name}</h3>
-            <p className="text-small text-secondary-400 line-clamp-2 leading-relaxed">Unrivaled acoustic engineering and clarity.</p>
+            <h3 className="text-h4 line-clamp-1 group-hover:text-accent-400 transition-colors">{product.name}</h3>
+            <p className="text-small line-clamp-2 leading-relaxed">Unrivaled acoustic engineering and clarity.</p>
         </div>
         <div className="mt-auto pt-4 flex items-center justify-between border-t border-secondary-800">
             <div className="flex flex-col justify-center">
-                <span className="text-h4 text-brand-100">${product.displayPrice}</span>
+                <span className="text-h4">${product.displayPrice}</span>
             </div>
             {/* CRITICAL: Enforced rounded-none on the action button */}
             <button className="btn-secondary flex items-center gap-2 px-4 py-2 active:scale-95">
@@ -56,17 +56,17 @@ const SpotlightSection = ({ data }: { data: any }) => (
                 <div className="w-full h-full bg-brand-800 rounded-none flex flex-col justify-center gap-6 p-8 lg:p-12">
                     <div className="flex flex-col gap-2">
                         <span className="text-small tracking-editorial text-accent-500 uppercase">{data.brand}</span>
-                        <h2 className="text-h1 text-brand-100 uppercase">{data.headline}</h2>
+                        <h2 className="text-h1 uppercase">{data.headline}</h2>
                     </div>
                     <div className="flex flex-col gap-4">
-                        <h3 className="text-h3 text-brand-400">{data.subheadline}</h3>
-                        <p className="text-body text-secondary-400 max-w-prose text-pretty">
+                        <h3 className="text-h3">{data.subheadline}</h3>
+                        <p className="text-body max-w-prose text-pretty">
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab sed quia vero fuga adipisci. Quis nostrum, explicabo porro voluptates vel esse fugiat! Ut dolores tenetur nihil commodi, veniam sequi aliquid.
                         </p>
-                        <p className="text-body text-secondary-400 max-w-prose text-pretty">
+                        <p className="text-body max-w-prose text-pretty">
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab sed quia vero fuga adipisci. Quis nostrum, explicabo porro voluptates vel esse fugiat! Ut dolores tenetur nihil commodi, veniam sequi aliquid.
                         </p>
-                        <p className="text-body text-secondary-400 max-w-prose text-pretty">
+                        <p className="text-body max-w-prose text-pretty">
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab sed quia vero fuga adipisci.
                         </p>
                     </div>
@@ -103,7 +103,7 @@ export default function RedesignFeaturedAndProductSpotlight({
                             <div className="flex justify-between items-end">
                                 <div className="flex flex-col gap-2">
                                     <span className="text-small tracking-editorial text-secondary-400 uppercase">Curated Excellence</span>
-                                    <h2 className="text-h2 text-brand-100 uppercase">Featured</h2>
+                                    <h2 className="text-h2 uppercase">Featured</h2>
                                 </div>
                                 <div className="flex gap-3 pb-1">
                                     <CarouselPrevious className="border-secondary-600 text-secondary-400 hover:text-accent-500 hover:border-accent-500 transition-all rounded-none" />

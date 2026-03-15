@@ -22,21 +22,21 @@ export default function SpotlightDetails({ data, accentColor, className }: Spotl
         </span>
 
         <div className="flex flex-col">
-          <h2 className="text-display-2 font-regular tracking-editorial text-brand-400 uppercase text-cap leading-tight">
+          <h2 className="text-display-2 font-regular tracking-editorial uppercase text-cap leading-tight">
             {headlineParts[0]}
           </h2>
           {headlineParts.length > 1 && (
-            <h2 className="text-display-2 font-regular tracking-editorial text-brand-600 uppercase text-cap leading-tight">
+            <h2 className="text-display-2 font-regular tracking-editorial uppercase text-cap leading-tight">
               {headlineParts.slice(1).join(" ")}
             </h2>
           )}
         </div>
 
-        <h3 className="text-h3 text-brand-50 font-sans font-light tracking-wide">
+        <h3 className="text-h3 font-sans font-light tracking-wide">
           {data.subheadline || data.name}
         </h3>
 
-        <p className="text-body text-secondary-400 font-regular not-italic leading-relaxed max-w-lg">
+        <p className="text-body font-regular not-italic leading-relaxed max-w-lg">
           {descriptionText}
         </p>
       </div>
