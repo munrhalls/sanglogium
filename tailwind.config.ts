@@ -95,6 +95,7 @@ export default {
           "clamp(3rem, 4vw + 2rem, 5.625rem)",
           { lineHeight: "1.1", letterSpacing: "-0.02em" },
         ],
+        // base color brand-400
 
         // Desktop: 68px (4.25rem) | Mobile: 36px (2.25rem)
         // Line-Height: 1.12 (was 76px) | Tracking: -1.5%
@@ -102,6 +103,7 @@ export default {
           "clamp(2.25rem, 3vw + 1.5rem, 4.25rem)",
           { lineHeight: "1.12", letterSpacing: "-0.015em" },
         ],
+        // base color secondary-300
 
         // Desktop: 51px (3.18rem) | Mobile: 32px (2rem)
         // Line-Height: 1.2 (was 60px) | Tracking: -1%
@@ -109,6 +111,7 @@ export default {
           "clamp(2rem, 1.8vw + 1.6rem, 3.1875rem)",
           { lineHeight: "1.2", letterSpacing: "-0.01em" },
         ],
+
 
         // Desktop: 38px (2.375rem) | Mobile: 28px (1.75rem)
         // Line-Height: 1.25 (was 48px) | Tracking: -0.5%
@@ -216,6 +219,18 @@ export default {
         warning: {
           500: "#F59E0B", // Amber - Low stock
           700: "#92400E", // Dark Amber - Warning text
+        },
+
+        // LAYER 3: SEMANTIC ALIASES (Mappings to Primitives)
+        surface: {
+          page: "#151B1B", // Maps to brand.700
+        },
+        text: {
+          muted: "#9A9997", // Maps to secondary.500
+          accent: "#D4AF37", // Maps to accent.500
+        },
+        border: {
+          primary: "#ECECEB", // Maps to secondary.200
         },
       },
       boxShadow: {
