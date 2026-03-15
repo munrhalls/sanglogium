@@ -50,8 +50,7 @@ export default {
   theme: {
     extend: {
       screens: {
-        "2xs": "450px",
-        "2xl": "1600px",
+        "xs": "475px",
         "3xl": "1920px",
         "lg-touch": { raw: "(min-width: 1024px) and (max-height: 850px)" },
         "lg-desktop": { raw: "(min-width: 1024px) and (min-height: 851px)" },
@@ -61,6 +60,8 @@ export default {
       spacing: {
         "12": "3rem",
         "16": "4rem",
+        "112": "28rem",
+        "128": "32rem",
         "desktop-header-h": "var(--desktop-header-h)",
         "mobile-menu-h": "var(--mobile-menu-h)",
         "feature-media": "450px",
@@ -301,9 +302,11 @@ export default {
           color: theme("colors.text.headline") as string,
         },
         ".btn-primary": {
-          backgroundColor: theme("colors.brand.400") as string,
-          color: theme("colors.brand.800") as string,
-          borderRadius: "0px",
+          backgroundColor: theme("colors.brand.500") as string,
+          color: theme("colors.surface.base") as string,
+          padding: `${theme("spacing.3")} ${theme("spacing.6")}`,
+          borderRadius: theme("borderRadius.md") as string,
+          fontWeight: theme("fontWeight.medium") as string,
           transition: "background-color 0.2s ease",
           "&:hover": {
             backgroundColor: theme("colors.brand.500") as string,
@@ -343,6 +346,13 @@ export default {
           "&:hover": {
             color: theme("colors.accent.300") as string,
           },
+        },
+        ".card-base": {
+          backgroundColor: theme("colors.surface.base") as string,
+          padding: theme("spacing.6") as string,
+          borderRadius: theme("borderRadius.lg") as string,
+          boxShadow: theme("boxShadow.sm") as string,
+          border: `1px solid ${theme("colors.border.subtle")}`,
         },
       });
     }),
