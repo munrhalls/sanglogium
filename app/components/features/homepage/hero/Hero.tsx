@@ -65,7 +65,7 @@ export default async function Hero() {
           "relative z-10 h-full w-full",
           "px-[clamp(1.5rem,5vw,5rem)]",
           "flex flex-col justify-center lg-touch:items-start lg-desktop:items-start",
-          "gap-6 md:gap-6"
+          "gap-6"
         )}
       >
         <div
@@ -76,7 +76,7 @@ export default async function Hero() {
             "landscape:max-w-full lg-touch:landscape:max-w-4xl lg-desktop:landscape:max-w-4xl",
           )}
         >
-          <div className="flex flex-col gap-2 md:gap-4">
+          <div className="flex flex-col gap-2 md:gap-8">
             <h1
               className={cn(
                 "text-cap text-display-2 md:text-display-1 font-bold uppercase"
@@ -86,8 +86,8 @@ export default async function Hero() {
             </h1>
             <p
               className={cn(
-                "text-cap text-h4 font-medium",
-                "text-h4 md:text-h3"
+                "text-cap text-h4 font-semibold",
+                "text-h4 md:text-h2"
               )}
             >
               {data.subheadline}
@@ -98,7 +98,7 @@ export default async function Hero() {
             className={cn(
               "btn-primary px-12 py-4 lg:py-6",
               "text-cta-hero font-bold",
-              "xs:mt-auto sm:mt-2"
+              "mt-2"
             )}
           >
             {data.ctaText || "Explore"}

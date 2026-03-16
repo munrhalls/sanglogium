@@ -1,0 +1,41 @@
+Homepage Sprint:
+  [ ] Hero @done
+    [x] Desktop image renders with hotspot crop at 1280px
+    [x] Mobile image renders with hotspot crop at 375px
+    [x] Headline and CTA visible and styled at both breakpoints
+    [x] No console errors on mount
+    [x] Next/Image and Sanity CDN not conflicting
+    ☐ Copy stack: h1 has text-cap, subheadline has text-cap mt-2, CTA has mt-4
+    ☐ Headline uses leading-none if multiline
+  [ ] Featured
+    ☐ Carousel renders 3-6 products at 1280px
+    [ ] Carousel prev/next controls work
+    [ ] Real Sanity data displayed
+    [ ] Renders at 375px without overflow
+    [ ] No console errors on mount
+  [ ] ProductSpotlight
+    [ ] Renders product image, title, description at 1280px
+    [ ] Renders correctly at 375px
+    [ ] Real Sanity data displayed
+    [ ] No console errors on mount
+  [ ] IemsGallery
+    [ ] 4-column grid at 1280px
+    [ ] 2-column grid at 375px
+    [ ] Real Sanity data — all products visible
+    [ ] No console errors on mount
+    [ ] Hover state on cards
+  [ ] NewestRelease
+    [ ] Renders product list at 1280px
+    [ ] Renders at 375px without overflow
+    [ ] Real Sanity data displayed
+    [ ] No console errors on mount
+  [ ] Dacs
+    [ ] Renders product grid at 1280px
+    [ ] Renders at 375px without overflow
+    [ ] Real Sanity data displayed
+    [ ] No console errors on mount
+  [ ] Accessories
+    [ ] Renders product grid at 1280px
+    [ ] Renders at 375px without overflow
+    [ ] Real Sanity data displayed
+    [ ] No console errors on mount

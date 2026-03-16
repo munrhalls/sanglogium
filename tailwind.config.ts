@@ -38,6 +38,10 @@ import plugin from "tailwindcss/plugin";
 // 20,80px,"p-20, m-20",Structural: Vertical padding for page sections.
 // 36,144px,"p-36, m-36","Structural: Hero sections, landing page footers."
 
+// ---------------------------------------------------------------------------
+// PALETTE TOKENS (Layer 1)
+// ---------------------------------------------------------------------------
+
 const brand = {
   50: "#FEFCFB",
   100: "#FDF9F7",
@@ -90,6 +94,142 @@ const warning = {
   700: "#92400E",
 };
 
+// ---------------------------------------------------------------------------
+// SEMANTIC TOKENS (Layer 2)
+// ---------------------------------------------------------------------------
+
+const surface = {
+  page: brand[700],
+  card: secondary[900],
+  elevated: secondary[800],
+  subtle: brand[800],
+  highlight: brand[200],
+} as const;
+
+const textTokens = {
+  primary: brand[400],
+  secondary: secondary[400],
+  headline: brand[50],
+  subtitle: secondary[500],
+  body: secondary[400],
+  accent: accent[500],
+  overline: accent[500],
+  priceTag: secondary[300],
+  inverse: secondary[700],
+} as const;
+
+const border = {
+  primary: secondary[300],
+  secondary: secondary[700],
+} as const;
+
+// ---------------------------------------------------------------------------
+// PLUGINS
+// ---------------------------------------------------------------------------
+
+const typographyDefaultsPlugin = plugin(function ({ addUtilities, addComponents, theme }) {
+  addUtilities({
+    // Trims top to Cap-Height, bottom to Baseline.
+    ".text-cap": {
+      "text-box": "trim-both cap alphabetic",
+    },
+    // Trims top to x-Height (good for lowercase), bottom to Baseline.
+    ".text-ex": {
+      "text-box": "trim-both ex alphabetic",
+    },
+  });
+
+  addComponents({
+    ".display-1": {
+      color: theme("colors.text.primary") as string,
+    },
+    ".display-2": {
+      color: theme("colors.text.secondary") as string,
+    },
+    h1: {
+      color: theme("colors.text.headline") as string,
+    },
+    h2: {
+      color: theme("colors.text.headline") as string,
+    },
+    h3: {
+      color: theme("colors.text.subtitle") as string,
+    },
+    h4: {
+      color: theme("colors.text.headline") as string,
+    },
+    body: {
+      color: theme("colors.text.body") as string,
+    },
+    small: {
+      color: theme("colors.text.body") as string,
+    },
+    ".cta-hero": {
+      color: theme("colors.text.inverse") as string,
+    },
+    ".spotlight": {
+      color: theme("colors.text.headline") as string,
+    },
+  });
+});
+
+const uiComponentsPlugin = plugin(function ({ addComponents, theme }) {
+  addComponents({
+    ".btn-primary": {
+      backgroundColor: theme("colors.brand.400") as string,
+      color: theme("colors.brand.700") as string,
+      padding: `${theme("spacing.3")} ${theme("spacing.6")}`,
+      borderRadius: theme("borderRadius.md") as string,
+      fontWeight: theme("fontWeight.medium") as string,
+      transition: "background-color 0.2s ease",
+      "&:hover": {
+        backgroundColor: theme("colors.brand.600") as string,
+      },
+      "&:active": {
+        backgroundColor: theme("colors.brand.700") as string,
+      },
+      "&:disabled": {
+        backgroundColor: theme("colors.brand.200") as string,
+        opacity: "0.4",
+        cursor: "not-allowed",
+      },
+    },
+    ".btn-secondary": {
+      backgroundColor: "transparent",
+      border: `1px solid ${theme("colors.brand.200")}`,
+      color: theme("colors.brand.100") as string,
+      borderRadius: "0px",
+      transition: "all 0.2s ease",
+      "&:hover": {
+        backgroundColor: theme("colors.brand.300") as string,
+        color: theme("colors.brand.700") as string,
+      },
+      "&:active": {
+        backgroundColor: theme("colors.brand.500") as string,
+      },
+    },
+    ".btn-ghost": {
+      backgroundColor: "transparent",
+      border: "none",
+      color: theme("colors.accent.500") as string,
+      textDecoration: "underline",
+      textUnderlineOffset: "4px",
+      letterSpacing: theme("letterSpacing.editorial") as string,
+      borderRadius: "0px",
+      transition: "color 0.2s ease",
+      "&:hover": {
+        color: theme("colors.accent.300") as string,
+      },
+    },
+    ".card-base": {
+      backgroundColor: theme("colors.surface.card") as string,
+      padding: theme("spacing.6") as string,
+      borderRadius: theme("borderRadius.lg") as string,
+      boxShadow: theme("boxShadow.sm") as string,
+      border: `1px solid ${theme("colors.border.secondary")}`,
+    },
+  });
+});
 
 export default {
   darkMode: ["class"],
@@ -101,6 +241,11 @@ export default {
     "./sanity/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    borderRadius: {
+      lg: "0px",
+      md: "0px",
+      sm: "0px",
+    },
     extend: {
       screens: {
         "xs": "475px",
@@ -134,7 +279,7 @@ export default {
       },
       // tailwind.config.ts
 
-      fontSize: ({ theme }: { theme: any }) => ({
+      fontSize: () => ({
         // ----------------------------------------------------------------------
         // FLUID HEADINGS (Responsive Luxury Scale)
         // Logic: Linear interpolation from Mobile (375px) to Desktop (1440px)
@@ -226,141 +371,21 @@ export default {
         success,
         error,
         warning,
-        surface: {
-          page: brand[700],
-          card: secondary[900],
-          elevated: secondary[800],
-          subtle: brand[800],
-          highlight: brand[200],
-        },
-        text: {
-          primary: brand[100],
-          secondary: secondary[400],
-          headline: brand[50],
-          subtitle: secondary[500],
-          body: secondary[400],
-          accent: accent[500],
-          overline: accent[500],
-          priceTag: secondary[300],
-          inverse: secondary[700],
-        },
-        border: {
-          primary: secondary[300],
-          secondary: secondary[700],
-        },
+        surface,
+        text: textTokens,
+        border,
       },
       boxShadow: {
         card: '0 4px 20px rgba(0, 0, 0, 0.03)',
         cardHover: '0 8px 30px rgba(0, 0, 0, 0.08)'
-      },
-      borderRadius: {
-        lg: "0px",
-        md: "0px",
-        sm: "0px"
       },
     },
   },
   plugins: [
     animatePlugin,
     typographyPlugin,
-    plugin(function ({ addUtilities, addComponents, theme }) {
-      addUtilities({
-        // Trims top to Cap-Height, bottom to Baseline.
-        ".text-cap": {
-          "text-box": "trim-both cap alphabetic",
-        },
-        // Trims top to x-Height (good for lowercase), bottom to Baseline.
-        ".text-ex": {
-          "text-box": "trim-both ex alphabetic",
-        },
-      });
-
-      addComponents({
-        ".display-1": {
-          color: theme("colors.text.primary") as string,
-        },
-        ".display-2": {
-          color: theme("colors.text.secondary") as string,
-        },
-        h1: {
-          color: theme("colors.text.headline") as string,
-        },
-        h2: {
-          color: theme("colors.text.headline") as string,
-        },
-        h3: {
-          color: theme("colors.text.subtitle") as string,
-        },
-        h4: {
-          color: theme("colors.text.headline") as string,
-        },
-        body: {
-          color: theme("colors.text.body") as string,
-        },
-        small: {
-          color: theme("colors.text.body") as string,
-        },
-        ".cta-hero": {
-          color: theme("colors.text.inverse") as string,
-        },
-        ".spotlight": {
-          color: theme("colors.text.headline") as string,
-        },
-        ".btn-primary": {
-          backgroundColor: theme("colors.brand.500") as string,
-          color: theme("colors.brand.700") as string,
-          padding: `${theme("spacing.3")} ${theme("spacing.6")}`,
-          borderRadius: theme("borderRadius.md") as string,
-          fontWeight: theme("fontWeight.medium") as string,
-          transition: "background-color 0.2s ease",
-          "&:hover": {
-            backgroundColor: theme("colors.brand.600") as string,
-          },
-          "&:active": {
-            backgroundColor: theme("colors.brand.700") as string,
-          },
-          "&:disabled": {
-            backgroundColor: theme("colors.brand.200") as string,
-            opacity: "0.4",
-            cursor: "not-allowed",
-          },
-        },
-        ".btn-secondary": {
-          backgroundColor: "transparent",
-          border: `1px solid ${theme("colors.brand.200")}`,
-          color: theme("colors.brand.100") as string,
-          borderRadius: "0px",
-          transition: "all 0.2s ease",
-          "&:hover": {
-            backgroundColor: theme("colors.brand.300") as string,
-            color: theme("colors.brand.700") as string,
-          },
-          "&:active": {
-            backgroundColor: theme("colors.brand.500") as string,
-          },
-        },
-        ".btn-ghost": {
-          backgroundColor: "transparent",
-          border: "none",
-          color: theme("colors.accent.500") as string,
-          textDecoration: "underline",
-          textUnderlineOffset: "4px",
-          letterSpacing: theme("letterSpacing.editorial") as string,
-          borderRadius: "0px",
-          transition: "color 0.2s ease",
-          "&:hover": {
-            color: theme("colors.accent.300") as string,
-          },
-        },
-        ".card-base": {
-          backgroundColor: theme("colors.surface.base") as string,
-          padding: theme("spacing.6") as string,
-          borderRadius: theme("borderRadius.lg") as string,
-          boxShadow: theme("boxShadow.sm") as string,
-          border: `1px solid ${theme("colors.border.subtle")}`,
-        },
-      });
-    }),
+    typographyDefaultsPlugin,
+    uiComponentsPlugin,
   ],
   corePlugins: {
     preflight: true,
@@ -377,4 +402,3 @@ export default {
     hoverOnlyWhenSupported: true,
   },
 } satisfies Config;
-

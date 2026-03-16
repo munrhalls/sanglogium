@@ -1,0 +1,35 @@
+Design System Sprint:
+
+  Bugs to fix:
+    [ ] .card-base shadow fixed: replace boxShadow.sm with boxShadow.card
+    [ ] .btn-primary typography added: fontSize body, letterSpacing wide
+
+  Missing aliases to add:
+    [ ] .overline defined in uiComponentsPlugin
+    [ ] .price-tag defined in uiComponentsPlugin
+    [ ] .product-card-title defined in uiComponentsPlugin
+    [ ] .section-label defined in uiComponentsPlugin
+
+  Verification — open test page at /design-system-test:
+    [ ] .display-1 renders at correct fluid size, brand-400 color
+    [ ] .display-2 renders at correct fluid size, secondary-300 color
+    [ ] h1 renders at correct fluid size, brand-50 color
+    [ ] h2 renders at correct fluid size, brand-50 color
+    [ ] h3 renders at correct fluid size, secondary-500 color
+    [ ] h4 renders at correct fluid size, brand-50 color
+    [ ] .cta-hero renders at correct fluid size, secondary-700 color (inverse)
+    [ ] .spotlight renders at 28px, brand-50 color
+    [ ] .btn-primary correct background, color, padding, no border-radius
+    [ ] .btn-secondary correct transparent background, brand-200 border
+    [ ] .btn-ghost correct transparent, accent-500 color, underline
+    [ ] .card-base correct dark background, no border-radius, correct shadow
+    [ ] .overline correct size, accent-500 color, uppercase, editorial tracking
+    [ ] .price-tag correct size, secondary-300 color, tabular-nums
+    [ ] .product-card-title correct size, brand-50 color
+    [ ] .section-label correct size, accent-500 color, signature tracking
+    [ ] No console errors on test page
+    [ ] No Tailwind class warnings in terminal
+
+  Final:
+    [ ] Test page deleted
+    [ ] Design system locked — tailwind.config.ts not touched during component sprint
