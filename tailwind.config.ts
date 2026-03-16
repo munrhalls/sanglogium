@@ -304,7 +304,7 @@ export default {
         // Desktop: 51px (3.18rem) | Mobile: 32px (2rem)
         // Line-Height: 1.2 (was 60px) | Tracking: -1%
         h1: [
-          "clamp(2rem, 1.8vw + 1.6rem, 3.1875rem)",
+          "clamp(2.5rem, 2.5vw + 1.5rem, 3.5rem)",
           { lineHeight: "1.2", letterSpacing: "-0.01em" },
         ],
 
@@ -312,7 +312,7 @@ export default {
         // Desktop: 38px (2.375rem) | Mobile: 28px (1.75rem)
         // Line-Height: 1.25 (was 48px) | Tracking: -0.5%
         h2: [
-          "clamp(1.75rem, 1vw + 1.5rem, 2.375rem)",
+          "clamp(1.875rem, 1.5vw + 1.25rem, 2.75rem)",
           { lineHeight: "1.25", letterSpacing: "-0.005em" },
         ],
 
@@ -323,13 +323,13 @@ export default {
 
         // 28px / 36px (Tracking: 0)
         h3: [
-          "clamp(1.375rem, 0.5vw + 1.2rem, 1.75rem)",
+          "clamp(1.375rem, 0.8vw + 1rem, 1.875rem)",
           { lineHeight: "1.2", letterSpacing: "0.05em" },
         ],
 
         // 21px / 28px (Tracking: 0)
         h4: [
-          "clamp(1rem, 0.4vw + 0.9rem, 1.3125rem)",
+          "clamp(1.125rem, 0.5vw + 0.9rem, 1.375rem)",
           { lineHeight: "1.2", letterSpacing: "0.1em" },
         ],
 

@@ -1,8 +1,9 @@
 export default function TypographyTestPage() {
   return (
     <div
-      style={{ background: "white", color: "black" }}
-      className="min-h-screen px-8 py-16"
+      style={{ fontFamily: "inherit", background: "white", color: "black" }}
+      className="min-h-screen px-8 py-16 overflow-y-auto"
+
     >
       <h1 style={{ fontSize: "14px", fontWeight: "bold", marginBottom: "2rem" }}>
         Typography Scale — Design System Test
@@ -13,8 +14,8 @@ export default function TypographyTestPage() {
         <p style={{ fontSize: "12px", marginBottom: "0.5rem" }}>
           display-1 | 48px → 90px | hero headline
         </p>
-        <div className="text-display-1 font-bold">The quick brown fox</div>
-        <div className="text-display-1 font-bold">The quick brown fox</div>
+        <p className="text-display-1 font-bold">The quick brown fox</p>
+        <p className="text-display-1 font-bold">The quick brown fox</p>
       </div>
 
       {/* display-2 */}
@@ -22,8 +23,8 @@ export default function TypographyTestPage() {
         <p style={{ fontSize: "12px", marginBottom: "0.5rem" }}>
           display-2 | 36px → 72px | section headline alternative
         </p>
-        <div className="text-display-2 font-semibold">The quick brown fox</div>
-        <div className="text-display-2 font-semibold">The quick brown fox</div>
+        <p className="text-display-2 font-semibold">The quick brown fox</p>
+        <p className="text-display-2 font-semibold">The quick brown fox</p>
       </div>
 
       {/* h1 */}

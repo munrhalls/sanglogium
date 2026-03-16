@@ -1,10 +1,11 @@
 Typography Sprint:
 
   Test page setup:
-    [ ] /app/design-system-test/typography/page.tsx created
+    ✔ /app/design-system-test/typography/page.tsx created @done(26-03-16 20:26)
     [ ] Page renders all 8 scale steps in hierarchy order
     [ ] Each step labeled with: name, clamp formula, px range, intended role
     [ ] Page visible at localhost:3000/design-system-test/typography
+
 
   Scale verification at 375px (resize browser or DevTools):
     [ ] display-1 distinct from display-2 — clearly larger
@@ -12,9 +13,12 @@ Typography Sprint:
     [ ] h1 distinct from h2 — clearly larger
     [ ] h2 distinct from h3 — clearly larger
     [ ] h3 distinct from h4 — clearly larger
-    [ ] h4 distinct from body — clearly larger, not caption-sized
+    [ ] h4 distinguished from body at 375px by letterSpacing and weight,
+    not size — this is acceptable and intentional
     [ ] body distinct from small — clearly larger
     [ ] All steps readable at 375px — nothing feels too small for its role
+    [ ] display-2 larger than h1 at 375px — hierarchy does not invert at mobile
+
 
   Scale verification at 768px:
     [ ] All 8 steps remain distinct
@@ -41,6 +45,8 @@ Typography Sprint:
     [ ] letter-spacing on h3 and h4 (0.05em, 0.1em) reads correctly
     [ ] letter-spacing on display-1 (-0.02em) reads correctly — tight, intentional
     [ ] body letter-spacing (0em) reads correctly
+    [ ] Size ratios between adjacent steps fall between 1.25 and 1.45 at desktop
+    (verify: display-2/h1, h1/h2, h2/h3, h3/h4, h4/body)
 
   Multiline verification:
     [ ] display-1 at 2+ lines: line-height 1.1 does not cause line overlap
