@@ -174,6 +174,9 @@ const uiComponentsPlugin = plugin(function ({ addComponents, theme }) {
       backgroundColor: theme("colors.brand.400") as string,
       color: theme("colors.brand.700") as string,
       fontWeight: theme("fontWeight.bold") as string,
+      fontSize: theme("fontSize.action[0]") as string,
+      lineHeight: theme("fontSize.action[1].lineHeight") as string,
+      padding: `${theme("spacing.3")} ${theme("spacing.2")}`,
       borderRadius: "0px",
       boxShadow: theme("boxShadow.button") as string,
       transition: "background-color 0.2s ease, box-shadow 0.2s ease",
@@ -423,6 +426,7 @@ export default {
 
         // 16px / 24px
         body: ["16px", { lineHeight: "24px", letterSpacing: "0em" }],
+        action: ["14px", { lineHeight: "21px", letterSpacing: "0.05em" }],
 
         // 12px / 16px
         small: ["12px", { lineHeight: "16px", letterSpacing: "0.05em" }],

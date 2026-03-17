@@ -27,9 +27,9 @@ export default function ButtonTestPage() {
           btn-cart — add to cart
         </p>
         <div className="flex flex-wrap gap-4 items-center">
-          <button className="btn-cart px-6 py-3">
+          <button className="btn-cart px-3 py-2">
             <ShoppingCart size={18} />
-            Add to Cart
+            Add
           </button>
           <button className="btn-cart px-6 py-3" disabled>
             <ShoppingCart size={18} />
