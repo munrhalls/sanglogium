@@ -211,15 +211,20 @@ const uiComponentsPlugin = plugin(function ({ addComponents, theme }) {
       backgroundColor: "transparent",
       border: "none",
       color: theme("colors.brand.400") as string,
+      fontWeight: theme("fontWeight.light") as string,
+      fontSize: theme("fontSize.cta-hero[0]") as string,
+      lineHeight: theme("fontSize.cta-hero[1].lineHeight") as string,
+      letterSpacing: theme("letterSpacing.editorial") as string,
+      textTransform: "uppercase",
       textDecoration: "underline",
-      textUnderlineOffset: "4px",
+      textUnderlineOffset: "9px",
       borderRadius: "0px",
       transition: "color 0.2s ease",
       "&:hover": {
-        color: theme("colors.brand.500") as string,
+        color: theme("colors.brand.100") as string,
       },
       "&:focus-visible": {
-        outline: `2px solid ${theme("colors.accent.500")}`,
+        outline: `2px solid ${theme("colors.brand.100")}`,
         outlineOffset: "2px",
       },
     },
@@ -338,7 +343,7 @@ export default {
         "feature-media": "450px",
       },
       letterSpacing: {
-        editorial: "0.25em",
+        editorial: "0.260em",
         signature: "0.4em",
       },
       flex: {

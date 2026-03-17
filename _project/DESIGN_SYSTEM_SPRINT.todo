@@ -5,7 +5,7 @@ Design System Sprint:
   Shadow tokens:
     ✔ boxShadow.button added to tailwind.config.ts @done(26-03-17 13:27)
     ✔ boxShadow.buttonHover added to tailwind.config.ts @done(26-03-17 13:27)
-    [ ] Both tokens verified in DevTools on test page — correct visual weight
+    ✔ Both tokens verified in DevTools on test page — correct visual weight @done(26-03-17 13:57)
 
   Bug fixes:
     ✔ .card-base shadow fixed: boxShadow.sm replaced with boxShadow.card @done(26-03-17 13:27)
@@ -30,9 +30,9 @@ Design System Sprint:
     ✔ Font weight: bold @done(26-03-17 13:39)
     ✔ Border radius: 0px @done(26-03-17 13:39)
     ✔ Shadow: boxShadow.button applied @done(26-03-17 13:39)
-    ☐ Phosphor cart icon renders left of label text
-    [ ] Icon size matches font size
-    [ ] Gap between icon and label: gap-2
+    ✔ Phosphor cart icon renders left of label text @done(26-03-17 13:57)
+    ✔ Icon size matches font size @done(26-03-17 13:57)
+    ✔ Gap between icon and label: gap-2 @done(26-03-17 13:57)
     ✔ Hover: bg brand-600 + boxShadow.buttonHover @done(26-03-17 13:39)
     ✔ Focus: outline brand-500, 2px width, 2px offset @done(26-03-17 13:39)
     ✔ Active: bg brand-600 @done(26-03-17 13:39)
@@ -47,17 +47,33 @@ Design System Sprint:
     ✔ No background, no border @done(26-03-17 13:43)
     ✔ Border radius: 0px @done(26-03-17 13:43)
     ✔ No visual conflict with .type-overline gold on same page @done(26-03-17 13:43)
-    [ ] Verified on dark background test page alongside type-overline
+    ✔ Verified on dark background test page alongside type-overline @done(26-03-17 14:06)
+
+  Apply updates:
+    .btn-cart:
+      [] must smaller than btn-primary
+      [] must only show Add text, not Add to cart
+      [] icon must be bigger to match the text in visual terms, rather than just mathematical - probably a bit bigger than text size, with proper offset
+      [] icon must be vertically centered and lifted up by 1-3px to avoid 'sinking feeling'
+    .btn-ghost:
+      ✔ must be larger font size @done(26-03-17 14:06)
+      ✔ on mobile should not be excessively big @done(26-03-17 14:06)
+      ✔ all uppercase @done(26-03-17 14:06)
+      ✔ must have custom, larger letter spacing for luxury editorial look @done(26-03-17 14:06)
+      ✔ slightly more underline distance from text @done(26-03-17 14:06)
+      ✔ hover should be brand-100 @done(26-03-17 14:06)
+      ✔ outline focused should be brand-100 @done(26-03-17 14:06)
+
 
   Button test page:
-    [ ] /app/design-system-test/buttons/page.tsx created
-    [ ] Dark background (brand-900)
-    [ ] All three buttons visible with role labels
-    [ ] All three buttons shown at mobile width (375px)
-    [ ] All three buttons shown at desktop width (1280px)
-    [ ] Hover states visible (mouse over each button manually)
-    [ ] Focus states visible (tab key through each button manually)
-    [ ] No console errors
+    ✔ /app/design-system-test/buttons/page.tsx created @done(26-03-17 13:54)
+    ✔ Dark background (brand-900) @done(26-03-17 13:54)
+    ✔ All three buttons visible with role labels @done(26-03-17 13:54)
+    ☐ All three buttons shown at mobile width (375px)
+    ✔ All three buttons shown at desktop width (1280px) @done(26-03-17 13:58)
+    ✔ Hover states visible (mouse over each button manually) @done(26-03-17 13:56)
+    ✔ Focus states visible (tab key through each button manually) @done(26-03-17 13:56)
+    ✔ No console errors @done(26-03-17 13:57)
 
   Final verification:
     [ ] No TypeScript errors in tailwind.config.ts
