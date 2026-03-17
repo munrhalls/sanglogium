@@ -25,18 +25,18 @@ Design System Sprint:
     [ ] Verified on dark background test page
 
   .btn-cart (new):
-    [ ] Background: brand-400
-    [ ] Text color: brand-700
-    [ ] Font weight: bold
-    [ ] Border radius: 0px
-    [ ] Shadow: boxShadow.button applied
-    [ ] Phosphor cart icon renders left of label text
+    ✔ Background: brand-400 @done(26-03-17 13:39)
+    ✔ Text color: brand-700 @done(26-03-17 13:39)
+    ✔ Font weight: bold @done(26-03-17 13:39)
+    ✔ Border radius: 0px @done(26-03-17 13:39)
+    ✔ Shadow: boxShadow.button applied @done(26-03-17 13:39)
+    ☐ Phosphor cart icon renders left of label text
     [ ] Icon size matches font size
     [ ] Gap between icon and label: gap-2
-    [ ] Hover: bg brand-600 + boxShadow.buttonHover
-    [ ] Focus: outline accent-500, 2px width, 2px offset
-    [ ] Active: bg brand-700
-    [ ] Disabled: opacity-40, cursor not-allowed
+    ✔ Hover: bg brand-600 + boxShadow.buttonHover @done(26-03-17 13:39)
+    ✔ Focus: outline brand-500, 2px width, 2px offset @done(26-03-17 13:39)
+    ✔ Active: bg brand-600 @done(26-03-17 13:39)
+    ✔ Disabled: opacity-40, cursor not-allowed @done(26-03-17 13:39)
     [ ] Verified on dark background test page
 
   .btn-ghost (update):

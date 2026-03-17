@@ -167,6 +167,32 @@ const uiComponentsPlugin = plugin(function ({ addComponents, theme }) {
         cursor: "not-allowed",
       },
     },
+    ".btn-cart": {
+      display: "inline-flex",
+      alignItems: "center",
+      gap: theme("spacing.2") as string,
+      backgroundColor: theme("colors.brand.400") as string,
+      color: theme("colors.brand.700") as string,
+      fontWeight: theme("fontWeight.bold") as string,
+      borderRadius: "0px",
+      boxShadow: theme("boxShadow.button") as string,
+      transition: "background-color 0.2s ease, box-shadow 0.2s ease",
+      "&:hover": {
+        backgroundColor: theme("colors.brand.500") as string,
+        boxShadow: theme("boxShadow.buttonHover") as string,
+      },
+      "&:focus-visible": {
+        outline: `2px solid ${theme("colors.brand.500")}`,
+        outlineOffset: "2px",
+      },
+      "&:active": {
+        backgroundColor: theme("colors.brand.500") as string,
+      },
+      "&:disabled": {
+        opacity: "0.4",
+        cursor: "not-allowed",
+      },
+    },
     ".btn-secondary": {
       backgroundColor: "transparent",
       border: `1px solid ${theme("colors.brand.200")}`,
