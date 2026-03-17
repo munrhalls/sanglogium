@@ -51,10 +51,10 @@ Design System Sprint:
 
   Apply updates:
     .btn-cart:
-      [] must smaller than btn-primary
-      [] must only show Add text, not Add to cart
-      [] icon must be bigger to match the text in visual terms, rather than just mathematical - probably a bit bigger than text size, with proper offset
-      [] icon must be vertically centered and lifted up by 1-3px to avoid 'sinking feeling'
+      ✔ must smaller than btn-primary @done(26-03-17 14:15)
+      ✔ must only show Add text, not Add to cart @done(26-03-17 14:15)
+      ✔ icon must be bigger to match the text in visual terms, rather than just mathematical - probably a bit bigger than text size, with proper offset @done(26-03-17 14:15)
+      ✔ icon must be vertically centered and lifted up by 1-3px to avoid 'sinking feeling' @done(26-03-17 14:15)
     .btn-ghost:
       ✔ must be larger font size @done(26-03-17 14:06)
       ✔ on mobile should not be excessively big @done(26-03-17 14:06)
@@ -69,18 +69,20 @@ Design System Sprint:
     ✔ /app/design-system-test/buttons/page.tsx created @done(26-03-17 13:54)
     ✔ Dark background (brand-900) @done(26-03-17 13:54)
     ✔ All three buttons visible with role labels @done(26-03-17 13:54)
-    ☐ All three buttons shown at mobile width (375px)
+    ✔ All three buttons shown at mobile width (375px) @done(26-03-17 14:17)
     ✔ All three buttons shown at desktop width (1280px) @done(26-03-17 13:58)
     ✔ Hover states visible (mouse over each button manually) @done(26-03-17 13:56)
     ✔ Focus states visible (tab key through each button manually) @done(26-03-17 13:56)
     ✔ No console errors @done(26-03-17 13:57)
 
   Final verification:
-    [ ] No TypeScript errors in tailwind.config.ts
-    [ ] btn-primary, btn-cart, btn-ghost all render correctly on dark bg
-    [ ] btn-ghost does not visually compete with type-overline gold
-    [ ] globals.css has no remaining primitive token references
-    [ ] card-base shadow renders correctly on a card element
+    ✔ No TypeScript errors in tailwind.config.ts @done(26-03-17 14:17)
+    ✔ btn-primary, btn-cart, btn-ghost all render correctly on dark bg @done(26-03-17 14:18)
+    ✔ btn-ghost does not visually compete with type-overline gold @done(26-03-17 14:18)
+    ✔ globals.css has no remaining primitive token references @done(26-03-17 14:23)
+    ✔ globals.css border default updated to semantic token border-border-secondary @done(26-03-17 14:23)
+    ✔ bg-brand-900 and border-brand-400/40 confirmed as intentional exceptions — documented, not changed @done(26-03-17 14:23)
+    ✔ card-base shadow renders correctly on a card element @done(26-03-17 14:20)
     [ ] Design system sprint locked — tailwind.config.ts not touched during component builds
 
 ---

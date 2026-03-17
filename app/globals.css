@@ -31,7 +31,7 @@ body {
 
 @layer base {
   * {
-    @apply border-secondary-300;
+    @apply border-border-secondary;
   }
 
   html {
