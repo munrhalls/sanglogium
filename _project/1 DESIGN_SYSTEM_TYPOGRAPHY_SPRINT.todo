@@ -3,7 +3,7 @@ Pre-sequencing:
   ✔ Pass 2: Fix the mathematical ratios (IDE agent with the prompt above) @done(26-03-17 08:22)
   ✔ Pass 3: Visual verification at three viewports (your eyes + DevTools) @done(26-03-17 08:29)
   ✔ Pass 4: text-cap verification @done(26-03-17 08:29)
-  [] de-couple colors from typography elements - typography element, by itself, has no color set
+  ✔ de-couple colors from typography elements - typography element, by itself, has no color set @done(26-03-17 09:24)
   [] assign role-based aliases
     [] hero headline
     [] hero sub-headline
@@ -33,7 +33,15 @@ Pre-sequencing:
     .type-body           body          text.body           Paragraph text
     .type-caption        small         text.body           Captions
 
+    Color theory for role-based aliases system-level coherence
+    Near-white (brand-50)     → maximum importance: section headings, card titles
+    Warm cream (brand-400)    → hero character: hero headline only
+    Cool near-white (sec-300) → secondary importance: subheadlines, prices
+    Medium gray (sec-400)     → tertiary: body, metadata, captions
+    Gold (accent-500)         → accent signal: overlines only
+
     [ ] Pass 5: Lock and freeze
+
 
 Typography Sprint:
 
@@ -66,34 +74,59 @@ Typography Sprint:
     ✔ display-1 at desktop feels appropriately large for a hero headline @done(26-03-17 08:31)
     ✔ body at desktop remains comfortable reading size @done(26-03-17 08:31)
 
+    Alias decoupling:
+    ✔ typographyDefaultsPlugin addComponents block removed @done(26-03-17 10:13)
+    ✔ No color property on h1-h4, display-1, display-2, body, @done(26-03-17 10:13)
+        small in DevTools computed styles (from Tailwind classes)
+
+  Alias definition:
+    ✔ All 10 role aliases added to uiComponentsPlugin @done(26-03-17 10:13)
+    ✔ No TypeScript errors in tailwind.config.ts @done(26-03-17 10:13)
+
+  Alias test page:
+    ✔ /design-system-test/typography/aliases/page.tsx created @done(26-03-17 10:13)
+    ✔ All 10 aliases visible on dark background at 1280px @done(26-03-17 10:14)
+    ✔ Each alias color is visually correct for its role @done(26-03-17 10:29)
+    ✔ No alias is invisible (wrong color on wrong background) @done(26-03-17 10:17)
+    ✔ No console errors @done(26-03-17 10:17)
+
+  Interactive states:
+    [x] Confirmed out of scope for typography sprint
+        Reason: hover/focus/active states belong to component aliases
+        (.btn-primary etc), not to typography role aliases
+
+
   Role mapping resolution:
-    [ ] Hero subheadline role determined: which scale step is correct
-    [ ] Decision documented: why that step, not h4
-    [ ] Named roles written to DESIGN_SYSTEM.md:
-        [ ] hero-headline role mapped
-        [ ] hero-subheadline role mapped
-        [ ] section-headline role mapped
-        [ ] card-title role mapped
-        [ ] metadata role mapped
+    ✔ Hero subheadline role determined: which scale step is correct @done(26-03-17 10:29)
+    ✔ Decision documented: why that step, not h4 @done(26-03-17 10:36)
+Answer: h2 because "Winter Collection" is a meaningful subtitle requiring prominence, not a metadata label. h4 (16-21px) is caption-adjacent at mobile. h2 (20-38px) maintains readable subtitle hierarchy. Tick after writing one sentence in DESIGN_SYSTEM.md.
+
+    ✔ Named roles written to DESIGN_SYSTEM.md: @done(26-03-17 10:52)
+        ✔ hero-headline role mapped @done(26-03-17 10:37)
+        ✔ hero-subheadline role mapped @done(26-03-17 10:37)
+        ✔ section-headline role mapped @done(26-03-17 10:37)
+        ✔ section-subheadline role mapped @done(26-03-17 10:38)
+        ✔ card-title role mapped @done(26-03-17 10:38)
+        ✔ metadata role mapped @done(26-03-17 10:38)
 
   Weight and spacing verification (on test page):
-    [ ] font-bold on display-1 and display-2 looks intentional
-    [ ] font-semibold on h1 and h2 looks intentional
-    [ ] letter-spacing on h3 and h4 (0.05em, 0.1em) reads correctly
-    [ ] letter-spacing on display-1 (-0.02em) reads correctly — tight, intentional
-    [ ] body letter-spacing (0em) reads correctly
-    [ ] Size ratios between adjacent steps fall between 1.25 and 1.45 at desktop
-    (verify: display-2/h1, h1/h2, h2/h3, h3/h4, h4/body)
+    ✔ font-bold on display-1 and display-2 looks intentional @done(26-03-17 10:38)
+    ✔ font-semibold on h1 and h2 looks intentional @done(26-03-17 10:38)
+    ✔ letter-spacing on h3 and h4 (0.05em, 0.1em) reads correctly @done(26-03-17 10:39)
+    ✔ letter-spacing on display-1 (-0.02em) reads correctly — tight, intentional @done(26-03-17 10:39)
+    ✔ body letter-spacing (0em) reads correctly @done(26-03-17 10:39)
+    ✔ Size ratios between adjacent steps fall between 1.25 and 1.45 at desktop
+    (verify: display-2/h1, h1/h2, h2/h3, h3/h4, h4/body) @done(26-03-17 10:39)
 
   Multiline verification:
-    [ ] display-1 at 2+ lines: line-height 1.1 does not cause line overlap
-    [ ] h1 at 2+ lines: line-height 1.2 looks correct
-    [ ] body at 3+ lines: line-height 24px reads comfortably
+    ✔ display-1 at 2+ lines: line-height 1.1 does not cause line overlap @done(26-03-17 10:39)
+    ✔ h1 at 2+ lines: line-height 1.2 looks correct @done(26-03-17 10:40)
+    ✔ body at 3+ lines: line-height 24px reads comfortably @done(26-03-17 10:40)
 
   text-cap verification:
-    [ ] .text-cap applied to display-1: top trim visible (no space above cap)
-    [ ] .text-cap applied to body: trim visible
-    [ ] gap-2 between two .text-cap elements: 8px visual gap confirmed in DevTools
+    ✔ .text-cap applied to display-1: top trim visible (no space above cap) @done(26-03-17 10:40)
+    ✔ .text-cap applied to body: trim visible @done(26-03-17 10:40)
+    ✔ gap-2 between two .text-cap elements: 8px visual gap confirmed in DevTools @done(26-03-17 10:53)
 
   Final:
     [ ] Any adjusted clamp values saved to tailwind.config.ts
