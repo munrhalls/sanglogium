@@ -147,18 +147,22 @@ const uiComponentsPlugin = plugin(function ({ addComponents, theme }) {
     ".btn-primary": {
       backgroundColor: theme("colors.brand.400") as string,
       color: theme("colors.brand.700") as string,
-      padding: `${theme("spacing.3")} ${theme("spacing.6")}`,
-      borderRadius: theme("borderRadius.md") as string,
-      fontWeight: theme("fontWeight.medium") as string,
-      transition: "background-color 0.2s ease",
+      fontWeight: theme("fontWeight.bold") as string,
+      borderRadius: "0px",
+      boxShadow: theme("boxShadow.button") as string,
+      transition: "background-color 0.2s ease, box-shadow 0.2s ease",
       "&:hover": {
-        backgroundColor: theme("colors.brand.600") as string,
+        backgroundColor: theme("colors.brand.500") as string,
+        boxShadow: theme("boxShadow.buttonHover") as string,
+      },
+      "&:focus-visible": {
+        outline: `2px solid ${theme("colors.brand.600")}`,
+        outlineOffset: "2px",
       },
       "&:active": {
-        backgroundColor: theme("colors.brand.700") as string,
+        backgroundColor: theme("colors.brand.600") as string,
       },
       "&:disabled": {
-        backgroundColor: theme("colors.brand.200") as string,
         opacity: "0.4",
         cursor: "not-allowed",
       },
