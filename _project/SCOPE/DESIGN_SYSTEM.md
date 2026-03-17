@@ -1,97 +1,130 @@
+```
+**In scope:**
+1. Fix `.card-base` shadow bug — `boxShadow.sm` → `boxShadow.card`
+2. Add `boxShadow.button` and `boxShadow.buttonHover` tokens
+3. Fix body text in globals.css — `text-brand-100` → `text-text-body`
+4. Update `.btn-primary` — add shadow token, verify it is complete
+5. Add `.btn-cart` — brand-400 bg, brand-700 text, bold, cart icon slot, shadow, hover, focus, disabled states, 0px border-radius
+6. Update `.btn-ghost` — change color from `accent[500]` to `text.heroHeadline` (brand-400) — warm cream with underline, no gold
+
+**Out of scope confirmed:** Nav elements, search bar, header icons, carousel buttons — all correctly excluded. Your reasoning is sound on all of them.
+
+**The carousel navigation buttons** — correct call to leave them inside the carousel component. The carousel is already an abstracted component. Changes propagate automatically. No design system tokens needed.
+
+---
+
+Here is the IDE agent prompt to update the scope file:
+```
+Replace the entire content of _project/DESIGN_SYSTEM.md
+with exactly this. Do not add or remove anything.
+
+---
+
 # Design System Scope
 
+## Status
+Typography sprint: COMPLETE AND FROZEN.
+Design system sprint: OPEN.
+
+## Non-Interference Rule
+These are frozen. This sprint does not touch them under any circumstance:
+- tailwind.config.ts fontSize section
+- tailwind.config.ts textTokens object
+- All .type-* aliases in uiComponentsPlugin
+- typographyDefaultsPlugin (.text-cap, .text-ex)
+
 ## Current State
-The config is substantially complete. Primitives, semantic tokens, and core
-component aliases exist. This sprint closes the remaining gaps only.
-Do not rebuild what exists. Do not reorganize what works.
+Typography, primitives, and semantic tokens are complete and frozen.
+Button aliases exist but are incomplete and have bugs.
+globals.css body uses a primitive token instead of a semantic token.
+boxShadow tokens are incomplete — card shadows exist, button shadows missing.
 
 ## Deliverable State
-A complete tailwind.config.ts and globals.css where:
-- Every component alias includes its own color (no component assembles
-  color + typography separately)
-- All aliases used by the 9 homepage components exist and are verified
-- No bug exists between defined aliases and consumed Tailwind values
-- One test page verifies every alias visually before component builds begin
+tailwind.config.ts and globals.css where:
+- All button aliases are complete with correct hierarchy, states, and shadows
+- Shadow tokens are extended to include button shadows
+- globals.css body uses semantic token, not primitive
+- .card-base shadow bug is fixed
+- All aliases verified on a design system test page before component builds
 
-## In Scope — Gaps to Close
+## In Scope
 
-### Fix existing bugs
-- `.card-base` references `boxShadow.sm` which is not defined.
-  Replace with `boxShadow.card` which is defined.
-- `.btn-primary` missing fontSize and letterSpacing.
-  Add: fontSize body size, letterSpacing wide.
+### 1. Shadow tokens — add to tailwind.config.ts boxShadow
+button: '0 2px 8px rgba(0, 0, 0, 0.15)'
+buttonHover: '0 4px 16px rgba(0, 0, 0, 0.25)'
+Rule: buttons reference shadow tokens by name. No inline button shadows.
 
-### Check existing component aliases (in uiComponentsPlugin)
-- `.overline` — combines: text-small size + text.overline color
-  + letter-spacing editorial + uppercase + font-medium
-- `.price-tag` — combines: body size + text.priceTag color
-  + tabular-nums + font-semibold
-- `.product-card-title` — h3 size + text.headline color + font-semibold
-  (used in IemsGallery, NewestRelease, Dacs, Accessories)
-- `.section-label` — overline size + text.accent color
-  + letter-spacing signature + uppercase
-  (used above section headlines across homepage)
+### 2. Fix .card-base
+Replace boxShadow.sm with boxShadow.card.
 
-### Verify globals.css has no gaps
-- Confirm body background and text defaults match surface.page and text.body
-- Confirm no component-level styles hiding in globals that should be in config
+### 3. Fix globals.css body text
+Replace text-brand-100 with text-text-body in the body @layer base rule.
+Reason: removes primitive reference, wires body to semantic token correctly.
 
-## Typography Role Aliases
+### 4. Button hierarchy — three buttons
 
-### Role Map
-| Alias               | Scale Step  | Color Token          | Usage                    |
-|---------------------|-------------|----------------------|--------------------------|
-| .type-hero-headline | display-1   | text.heroHeadline    | Hero main headline       |
-| .type-hero-sub      | h2          | text.heroSubHeadline | Hero subheadline         |
-| .type-section-hed   | h1          | text.headline        | Section headings         |
-| .type-section-sub   | h2          | text.subtitle        | Section subheadings      |
-| .type-card-title    | h3          | text.headline        | Product card titles      |
-| .type-metadata      | h4          | text.secondary       | Labels and metadata      |
-| .type-price         | h4          | text.priceTag        | Product prices           |
-| .type-overline      | small       | text.overline        | Overline labels (gold)   |
-| .type-body          | body        | text.body            | Paragraph and body copy  |
-| .type-caption       | small       | text.body            | Captions and small text  |
+.btn-primary (existing — verify and complete)
+Role: main CTA, hero EXPLORE button
+Spec: brand-400 bg, brand-700 text, font-bold, 0px border-radius,
+      boxShadow.button, hover bg brand-600, focus outline accent-500 2px offset 2px,
+      active bg brand-700, disabled opacity-40
 
-### Hero Subheadline Decision
-Role uses h2 scale step, not h4.
-Reason: hero subheadline carries meaningful content ("Winter Collection")
-requiring subtitle prominence. h4 at mobile (16px) is caption-adjacent
-and loses hierarchy next to display-scale headline. h2 maintains
-readable subtitle weight at all viewports.
+.btn-cart (new — replaces .btn-secondary)
+Role: add to cart action on product cards
+Spec: brand-400 bg, brand-700 text, font-bold, 0px border-radius,
+      boxShadow.button, includes slot for Phosphor cart icon left of text,
+      icon size matches font size, gap-2 between icon and label,
+      hover bg brand-600 + boxShadow.buttonHover,
+      focus outline accent-500 2px offset 2px,
+      active bg brand-700, disabled opacity-40
 
-### text-cap Usage Rule
-text-cap is NOT encoded in alias definitions.
-Apply text-cap at point of use in component JSX when precise
-spacing control is needed.
-Correct: <h1 className="type-hero-headline text-cap">
+.btn-ghost (existing — update color only)
+Role: low-weight text link action, "See More" in product spotlights
+Spec: transparent bg, no border, brand-400 color (warm cream),
+      underline with underlineOffset-4, 0px border-radius,
+      hover color brand-600, no shadow
+      Remove: accent-500 color (was competing with overline gold)
 
-### Consumption Rule
-Components use alias classes only. Never raw scale steps or primitives.
-Correct:   className="type-hero-headline text-cap"
-Incorrect: className="text-display-1 font-bold text-brand-400"
-
+### 5. Design system test page
+Create /app/design-system-test/buttons/page.tsx
+Dark background. Shows all three buttons with labels.
+Shows hover states via CSS (pointer-fine media query visible).
+Shows all three at mobile and desktop widths.
+Delete after verification unless retained for portfolio.
 
 ## Out of Scope
-- Reorganizing existing plugin structure
-- Changing existing primitive tokens
-- Changing existing semantic token names
-- Adding aliases for features not used by the 9 homepage components
-- Animation utilities (already handled by tailwindcss-animate)
-- Responsive variants inside aliases (components own their responsive behavior)
+- Typography scale and aliases (frozen — see Non-Interference Rule)
+- Color primitives (complete)
+- Semantic text tokens (complete)
+- Nav elements, search bar, header icons
+- Carousel buttons (abstracted inside carousel component)
+- Any alias not used by the 9 homepage components
+- New typography scale steps
 
 ## Forbidden Scope
-- Do not rename existing tokens — components already consume them
-- Do not touch the fluid typography scale — it is correct
-- Do not add new primitives — the palette is complete
-- Do not restructure the plugin architecture
-- Do not modify this config once component builds begin
+- Do not touch fontSize in tailwind.config.ts
+- Do not touch textTokens in tailwind.config.ts
+- Do not touch any .type-* alias
+- Do not touch typographyDefaultsPlugin
+- Do not rename existing tokens
 
-## Architecture Rules (for component authors)
-- Never use a primitive directly: never `text-brand-400`, never `text-5xl`
-- Never use a semantic token directly: never `text-text-primary`
-- Always use a component alias: `.display-1`, `.overline`, `.btn-primary`
-- Exception: layout properties (flex, grid, spacing, width) use
-  Tailwind utilities directly — aliases are for typography, color, and
-  interactive component states only
-- One alias = complete visual treatment for that element type
+## Architecture Rules (reference)
+- Components use aliases only — never primitives or semantic tokens directly
+- Layout utilities (flex, grid, spacing, sizing) use Tailwind directly
+- Shadows reference named tokens — never inline box-shadow values in components
+- text-cap applied at point of use in JSX, never inside alias definitions
+- Focus outlines use accent-500 at 2px width, 2px offset — consistent across all interactive elements
 
+## Known Exception
+globals.css body previously used text-brand-100 (primitive).
+This sprint replaces it with text-text-body (semantic token).
+After this change, no known primitive tokens remain in globals.css.
+
+---
+
+CONSTRAINTS:
+- Replace the entire file with exactly the content above
+- Do not preserve anything from the old file
+- Do not add anything not written above
+- Do not touch any other file
+```

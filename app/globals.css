@@ -39,7 +39,7 @@ body {
   }
 
   body {
-    @apply flex h-dvh flex-col overflow-hidden bg-brand-900 text-brand-100;
+    @apply flex h-dvh flex-col overflow-hidden bg-brand-900 text-text-body;
   }
 }
 

@@ -111,7 +111,7 @@ const textTokens = {
   secondary: secondary[400],
   heroHeadline: brand[400],
   heroSubHeadline: secondary[300],
-  headline: brand[50],
+  headline: brand[400],
   subtitle: secondary[300],
   body: secondary[400],
   accent: accent[500],
@@ -423,8 +423,10 @@ export default {
       },
       boxShadow: {
         card: '0 4px 20px rgba(0, 0, 0, 0.03)',
-        cardHover: '0 8px 30px rgba(0, 0, 0, 0.08)'
-      },
+        cardHover: '0 8px 30px rgba(0, 0, 0, 0.08)',
+        button: '0 2px 8px rgba(0, 0, 0, 0.15)',
+        buttonHover: '0 4px 16px rgba(0, 0, 0, 0.25)',
+      }
     },
   },
   plugins: [
