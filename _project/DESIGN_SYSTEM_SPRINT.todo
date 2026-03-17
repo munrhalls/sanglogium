@@ -3,14 +3,14 @@
 Design System Sprint:
 
   Shadow tokens:
-    [ ] boxShadow.button added to tailwind.config.ts
-    [ ] boxShadow.buttonHover added to tailwind.config.ts
+    ✔ boxShadow.button added to tailwind.config.ts @done(26-03-17 13:27)
+    ✔ boxShadow.buttonHover added to tailwind.config.ts @done(26-03-17 13:27)
     [ ] Both tokens verified in DevTools on test page — correct visual weight
 
   Bug fixes:
-    [ ] .card-base shadow fixed: boxShadow.sm replaced with boxShadow.card
-    [ ] globals.css body: text-brand-100 replaced with text-text-body
-    [ ] No console errors after both fixes
+    ✔ .card-base shadow fixed: boxShadow.sm replaced with boxShadow.card @done(26-03-17 13:27)
+    ✔ globals.css body: text-brand-100 replaced with text-text-body @done(26-03-17 13:27)
+    ✔ No console errors after both fixes @done(26-03-17 13:27)
 
   .btn-primary (verify and complete):
     [ ] Background: brand-400

@@ -194,7 +194,7 @@ const uiComponentsPlugin = plugin(function ({ addComponents, theme }) {
       backgroundColor: theme("colors.surface.card") as string,
       padding: theme("spacing.6") as string,
       borderRadius: theme("borderRadius.lg") as string,
-      boxShadow: theme("boxShadow.sm") as string,
+      boxShadow: theme("boxShadow.card") as string,
       border: `1px solid ${theme("colors.border.secondary")}`,
     },
     ".type-hero-headline": {
