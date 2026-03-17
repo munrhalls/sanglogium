@@ -127,7 +127,7 @@ const border = {
 // PLUGINS
 // ---------------------------------------------------------------------------
 
-const typographyDefaultsPlugin = plugin(function ({ addUtilities, addComponents, theme }) {
+const typographyDefaultsPlugin = plugin(function ({ addUtilities }) {
   addUtilities({
     // Trims top to Cap-Height, bottom to Baseline.
     ".text-cap": {
@@ -136,39 +136,6 @@ const typographyDefaultsPlugin = plugin(function ({ addUtilities, addComponents,
     // Trims top to x-Height (good for lowercase), bottom to Baseline.
     ".text-ex": {
       "text-box": "trim-both ex alphabetic",
-    },
-  });
-
-  addComponents({
-    ".display-1": {
-      color: theme("colors.text.primary") as string,
-    },
-    ".display-2": {
-      color: theme("colors.text.secondary") as string,
-    },
-    h1: {
-      color: theme("colors.text.headline") as string,
-    },
-    h2: {
-      color: theme("colors.text.headline") as string,
-    },
-    h3: {
-      color: theme("colors.text.subtitle") as string,
-    },
-    h4: {
-      color: theme("colors.text.headline") as string,
-    },
-    body: {
-      color: theme("colors.text.body") as string,
-    },
-    small: {
-      color: theme("colors.text.body") as string,
-    },
-    ".cta-hero": {
-      color: theme("colors.text.inverse") as string,
-    },
-    ".spotlight": {
-      color: theme("colors.text.headline") as string,
     },
   });
 });
@@ -304,7 +271,7 @@ export default {
         // Desktop: 51px (3.18rem) | Mobile: 32px (2rem)
         // Line-Height: 1.2 (was 60px) | Tracking: -1%
         h1: [
-          "clamp(2.5rem, 2.5vw + 1.5rem, 3.5rem)",
+          "clamp(1.6875rem, 2.25vw + 1.16rem, 3.1875rem)",
           { lineHeight: "1.2", letterSpacing: "-0.01em" },
         ],
 
@@ -312,7 +279,7 @@ export default {
         // Desktop: 38px (2.375rem) | Mobile: 28px (1.75rem)
         // Line-Height: 1.25 (was 48px) | Tracking: -0.5%
         h2: [
-          "clamp(1.875rem, 1.5vw + 1.25rem, 2.75rem)",
+          "clamp(1.25rem, 1.69vw + 0.854rem, 2.375rem)",
           { lineHeight: "1.25", letterSpacing: "-0.005em" },
         ],
 
@@ -323,13 +290,13 @@ export default {
 
         // 28px / 36px (Tracking: 0)
         h3: [
-          "clamp(1.375rem, 0.8vw + 1rem, 1.875rem)",
+          "clamp(1.125rem, 1.03vw + 0.883rem, 1.8125rem)",
           { lineHeight: "1.2", letterSpacing: "0.05em" },
         ],
 
         // 21px / 28px (Tracking: 0)
         h4: [
-          "clamp(1.125rem, 0.5vw + 0.9rem, 1.375rem)",
+          "clamp(1rem, 0.56vw + 0.868rem, 1.375rem)",
           { lineHeight: "1.2", letterSpacing: "0.1em" },
         ],
 
