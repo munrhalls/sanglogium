@@ -40,13 +40,13 @@ Design System Sprint:
     [ ] Verified on dark background test page
 
   .btn-ghost (update):
-    [ ] Color changed from accent-500 to brand-400
-    [ ] Underline present, underlineOffset-4
-    [ ] Hover: color brand-600
-    [ ] No shadow
-    [ ] No background, no border
-    [ ] Border radius: 0px
-    [ ] No visual conflict with .type-overline gold on same page
+    ✔ Color changed from accent-500 to brand-400 @done(26-03-17 13:43)
+    ✔ Underline present, underlineOffset-4 @done(26-03-17 13:43)
+    ✔ Hover: color brand-500 @done(26-03-17 13:43)
+    ✔ No shadow @done(26-03-17 13:43)
+    ✔ No background, no border @done(26-03-17 13:43)
+    ✔ Border radius: 0px @done(26-03-17 13:43)
+    ✔ No visual conflict with .type-overline gold on same page @done(26-03-17 13:43)
     [ ] Verified on dark background test page alongside type-overline
 
   Button test page:

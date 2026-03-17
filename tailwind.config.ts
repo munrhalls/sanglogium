@@ -210,14 +210,17 @@ const uiComponentsPlugin = plugin(function ({ addComponents, theme }) {
     ".btn-ghost": {
       backgroundColor: "transparent",
       border: "none",
-      color: theme("colors.accent.500") as string,
+      color: theme("colors.brand.400") as string,
       textDecoration: "underline",
       textUnderlineOffset: "4px",
-      letterSpacing: theme("letterSpacing.editorial") as string,
       borderRadius: "0px",
       transition: "color 0.2s ease",
       "&:hover": {
-        color: theme("colors.accent.300") as string,
+        color: theme("colors.brand.500") as string,
+      },
+      "&:focus-visible": {
+        outline: `2px solid ${theme("colors.accent.500")}`,
+        outlineOffset: "2px",
       },
     },
     ".card-base": {
