@@ -21,7 +21,7 @@ A complete tailwind.config.ts and globals.css where:
 - `.btn-primary` missing fontSize and letterSpacing.
   Add: fontSize body size, letterSpacing wide.
 
-### Add missing component aliases (in uiComponentsPlugin)
+### Check existing component aliases (in uiComponentsPlugin)
 - `.overline` — combines: text-small size + text.overline color
   + letter-spacing editorial + uppercase + font-medium
 - `.price-tag` — combines: body size + text.priceTag color
@@ -35,6 +35,41 @@ A complete tailwind.config.ts and globals.css where:
 ### Verify globals.css has no gaps
 - Confirm body background and text defaults match surface.page and text.body
 - Confirm no component-level styles hiding in globals that should be in config
+
+## Typography Role Aliases
+
+### Role Map
+| Alias               | Scale Step  | Color Token          | Usage                    |
+|---------------------|-------------|----------------------|--------------------------|
+| .type-hero-headline | display-1   | text.heroHeadline    | Hero main headline       |
+| .type-hero-sub      | h2          | text.heroSubHeadline | Hero subheadline         |
+| .type-section-hed   | h1          | text.headline        | Section headings         |
+| .type-section-sub   | h2          | text.subtitle        | Section subheadings      |
+| .type-card-title    | h3          | text.headline        | Product card titles      |
+| .type-metadata      | h4          | text.secondary       | Labels and metadata      |
+| .type-price         | h4          | text.priceTag        | Product prices           |
+| .type-overline      | small       | text.overline        | Overline labels (gold)   |
+| .type-body          | body        | text.body            | Paragraph and body copy  |
+| .type-caption       | small       | text.body            | Captions and small text  |
+
+### Hero Subheadline Decision
+Role uses h2 scale step, not h4.
+Reason: hero subheadline carries meaningful content ("Winter Collection")
+requiring subtitle prominence. h4 at mobile (16px) is caption-adjacent
+and loses hierarchy next to display-scale headline. h2 maintains
+readable subtitle weight at all viewports.
+
+### text-cap Usage Rule
+text-cap is NOT encoded in alias definitions.
+Apply text-cap at point of use in component JSX when precise
+spacing control is needed.
+Correct: <h1 className="type-hero-headline text-cap">
+
+### Consumption Rule
+Components use alias classes only. Never raw scale steps or primitives.
+Correct:   className="type-hero-headline text-cap"
+Incorrect: className="text-display-1 font-bold text-brand-400"
+
 
 ## Out of Scope
 - Reorganizing existing plugin structure
@@ -59,3 +94,4 @@ A complete tailwind.config.ts and globals.css where:
   Tailwind utilities directly — aliases are for typography, color, and
   interactive component states only
 - One alias = complete visual treatment for that element type
+

@@ -4,22 +4,22 @@ Pre-sequencing:
   ✔ Pass 3: Visual verification at three viewports (your eyes + DevTools) @done(26-03-17 08:29)
   ✔ Pass 4: text-cap verification @done(26-03-17 08:29)
   ✔ de-couple colors from typography elements - typography element, by itself, has no color set @done(26-03-17 09:24)
-  [] assign role-based aliases
-    [] hero headline
-    [] hero sub-headline
-    [] section headline
-    [] section sub headline
-    [] body
-    [] card title
-    [] price tag
-    [] overline
-    [] metadata
-  [] make secondary typography aliases test page and test aliases
-    [] each alias should apply proper role-based size
-    [] each alias should apply proper role-based color
-    [] each alias should properly scale on all viewports based on its role
+  ✔ assign role-based aliases @done(26-03-17 11:14)
+    ✔ hero headline @done(26-03-17 11:14)
+    ✔ hero sub-headline @done(26-03-17 11:14)
+    ✔ section headline @done(26-03-17 11:14)
+    ✔ section sub headline @done(26-03-17 11:14)
+    ✔ body @done(26-03-17 11:14)
+    ✔ card title @done(26-03-17 11:14)
+    ✔ price tag @done(26-03-17 11:14)
+    ✔ overline @done(26-03-17 11:14)
+    ✔ metadata @done(26-03-17 11:14)
+  ✔ make secondary typography aliases test page and test aliases @done(26-03-17 11:14)
+    ✔ each alias should apply proper role-based size @done(26-03-17 11:14)
+    ✔ each alias should apply proper role-based color @done(26-03-17 11:14)
+    ✔ each alias should properly scale on all viewports based on its role @done(26-03-17 11:14)
 
-    [] each of the following aliases is present and fullfils the requirements above
+    ✔ each of the following aliases is present and fullfils the requirements above @done(26-03-17 11:14)
     Alias class          Scale step    Color token         Usage
     ─────────────────────────────────────────────────────────────────────
     .type-hero-headline  display-2/1   text.headline       Hero h1
@@ -40,7 +40,7 @@ Pre-sequencing:
     Medium gray (sec-400)     → tertiary: body, metadata, captions
     Gold (accent-500)         → accent signal: overlines only
 
-    [ ] Pass 5: Lock and freeze
+    ✔ Pass 5: Lock and freeze @done(26-03-17 11:14)
 
 
 Typography Sprint:
@@ -128,8 +128,19 @@ Answer: h2 because "Winter Collection" is a meaningful subtitle requiring promin
     ✔ .text-cap applied to body: trim visible @done(26-03-17 10:40)
     ✔ gap-2 between two .text-cap elements: 8px visual gap confirmed in DevTools @done(26-03-17 10:53)
 
-  Final:
-    [ ] Any adjusted clamp values saved to tailwind.config.ts
-    [ ] Role mappings written to DESIGN_SYSTEM.md
-    [ ] Test page deleted
-    [ ] Typography frozen — tailwind.config.ts fontSize not touched during component sprint
+  ✔ re-check and make sure every typography element in base is present to serve the needs of typography aliases @done(26-03-17 11:05)
+  ✔ clamp values re-added scaled with mathematical symmetric precision for each breakpoint and typography element @done(26-03-17 11:12)
+    ✔ clamp values tested on for every breakpoint on typography test page and alias test page @done(26-03-17 11:12)
+    ✔ clamp values tested for mathematical correctness on every breakpoint @done(26-03-17 11:12)
+Final section:
+✔ Clamp values saved (already correct, comments fixed by agent)
+✔ Role mappings written to DESIGN_SYSTEM.md (done)
+✔ Typography frozen (FROZEN comment added by agent)
+```
+
+Update the Final section's "Test page deleted" item to:
+
+[x] Test pages retained intentionally — portfolio demonstration of
+    systematic workflow. Pages at /design-system-test/typography
+    and /design-system-test/typography/aliases
+```

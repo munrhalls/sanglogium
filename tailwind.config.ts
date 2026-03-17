@@ -327,6 +327,10 @@ export default {
 
         // Desktop: 90px (5.625rem) | Mobile: 48px (3rem)
         // Line-Height: 1.1 (was 100px) | Tracking: -2%
+
+        // TYPOGRAPHY SCALE — FROZEN
+        // Verified: Perfect Fourth ratio (1.31-1.34) across all steps at desktop
+        // Do not modify these values during component builds.
         "display-1": [
           "clamp(3rem, 4vw + 2rem, 5.625rem)",
           { lineHeight: "1.1", letterSpacing: "-0.02em" },
@@ -341,16 +345,16 @@ export default {
         ],
         // base color secondary-300
 
-        // Desktop: 51px (3.18rem) | Mobile: 32px (2rem)
-        // Line-Height: 1.2 (was 60px) | Tracking: -1%
+        // Desktop: 51px (3.1875rem) | Mobile: 27px (1.6875rem)
+        // Line-Height: 1.2 | Tracking: -1%
         h1: [
           "clamp(1.6875rem, 2.25vw + 1.16rem, 3.1875rem)",
           { lineHeight: "1.2", letterSpacing: "-0.01em" },
         ],
 
 
-        // Desktop: 38px (2.375rem) | Mobile: 28px (1.75rem)
-        // Line-Height: 1.25 (was 48px) | Tracking: -0.5%
+        // Desktop: 38px (2.375rem) | Mobile: 20px (1.25rem)
+        // Line-Height: 1.25 | Tracking: -0.5%
         h2: [
           "clamp(1.25rem, 1.69vw + 0.854rem, 2.375rem)",
           { lineHeight: "1.25", letterSpacing: "-0.005em" },
@@ -361,13 +365,15 @@ export default {
         // These sizes are small enough to remain static across viewports.
         // ----------------------------------------------------------------------
 
-        // 28px / 36px (Tracking: 0)
+        // Desktop: 29px (1.8125rem) | Mobile: 18px (1.125rem)
+        // Line-Height: 1.2 | Tracking: +5%
         h3: [
           "clamp(1.125rem, 1.03vw + 0.883rem, 1.8125rem)",
           { lineHeight: "1.2", letterSpacing: "0.05em" },
         ],
 
-        // 21px / 28px (Tracking: 0)
+        // Desktop: 22px (1.375rem) | Mobile: 16px (1rem)
+        // Line-Height: 1.2 | Tracking: +10%
         h4: [
           "clamp(1rem, 0.56vw + 0.868rem, 1.375rem)",
           { lineHeight: "1.2", letterSpacing: "0.1em" },
