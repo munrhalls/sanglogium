@@ -5,7 +5,7 @@ import { SpotlightProduct } from "../spotlightTypes";
 
 export default async function ProductSpotlight1() {
     const data = await sanityFetch<any>({
-        query: `*[_type == "homepage"][0].spotlight1{
+        query: `*[_type == "homepageData"][0].spotlight1Data{
             promoTitle,
             promoSubtitle,
             promoText,

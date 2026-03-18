@@ -1,0 +1,5 @@
+Programmatic Sanity Pipeline:
+  [x] 1. Create Data Pipeline Scope and Sprint Files @DoD(scope.md and sprint.todo are saved in _project/scope/ directory)
+  [x] 2. Setup Sanity Mutation Script @DoD(Node script exists that reads payload.json and patches the target document ID via @sanity/client)
+  [ ] 3. Create JSON Payload Templates @DoD(A clean payload.json file is created mapping to the new schema structures)
+  [ ] 4. Execute Partial Update @DoD(PowerShell command successfully updates a single section like spotlight1Data in the live database)
