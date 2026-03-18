@@ -1,43 +1,43 @@
 import React from "react";
 import spotlightImg from './product_spotlight_transparent.png';
-import { ProductSpotlight1Props } from "./types";
+import { sanityFetch } from "@/sanity/lib/client";
+import { SpotlightProduct } from "../spotlightTypes";
 
-export default function ProductSpotlight1({ spotlightData }: ProductSpotlight1Props) {
-    const finalSpotlight = spotlightData && spotlightData.name ? spotlightData : MOCK_SPOTLIGHT;
+export default async function ProductSpotlight1() {
+    const product = await sanityFetch<SpotlightProduct | null>({
+        query: `*[_type == "homepage"][0].spotlight1->{
+            _id,
+            name,
+            brand,
+            displayPrice,
+            image{asset->{url}},
+            overviewFields
+        }`
+    });
+
+    if (!product) return null;
 
     return (
         <section className="w-full py-20 relative overflow-hidden border-t border-secondary-800 bg-brand-700">
             <div className="absolute inset-0 bg-[url('/fractal_ring.webp')] bg-no-repeat bg-right-bottom mix-blend-overlay opacity-20 pointer-events-none z-0" />
             <div className="max-w-[1440px] mx-auto px-4 md:px-8 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
-
-                    {/* LEFT PANEL */}
-                    {/* CRITICAL: Enforced rounded-none on the left structural block */}
                     <div className="w-full h-full bg-brand-300 rounded-none flex items-center justify-center relative p-8 lg:p-12 overflow-hidden">
                         <img
-                            src={spotlightImg.src}
-                            alt={finalSpotlight.name || "Product Spotlight"}
+                            src={product.image?.asset?.url || spotlightImg.src}
+                            alt={product.name}
                             className="w-auto h-auto max-w-[85%] max-h-[85%] object-contain mix-blend-multiply relative z-10"
                         />
                     </div>
-
-                    {/* RIGHT PANEL */}
-                    {/* CRITICAL: Enforced rounded-none on the right structural block */}
                     <div className="w-full h-full bg-brand-800 rounded-none flex flex-col justify-center gap-6 p-8 lg:p-12">
                         <div className="flex flex-col gap-2">
-                            <span className="text-small tracking-editorial text-accent-500 uppercase">{finalSpotlight.brand}</span>
-                            <h2 className="text-h1 uppercase">{finalSpotlight.headline}</h2>
+                            <span className="text-small tracking-editorial text-accent-500 uppercase">{product.brand}</span>
+                            <h2 className="text-h1 uppercase">{product.name}</h2>
                         </div>
                         <div className="flex flex-col gap-4">
-                            <h3 className="text-h3">{finalSpotlight.subheadline}</h3>
+                            <h3 className="text-h3">{product.overviewFields?.[0]?.value || product.name}</h3>
                             <p className="text-body max-w-prose text-pretty">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab sed quia vero fuga adipisci. Quis nostrum, explicabo porro voluptates vel esse fugiat! Ut dolores tenetur nihil commodi, veniam sequi aliquid.
-                            </p>
-                            <p className="text-body max-w-prose text-pretty">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab sed quia vero fuga adipisci. Quis nostrum, explicabo porro voluptates vel esse fugiat! Ut dolores tenetur nihil commodi, veniam sequi aliquid.
-                            </p>
-                            <p className="text-body max-w-prose text-pretty">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab sed quia vero fuga adipisci.
+                                {product.overviewFields?.[0]?.information || "Unrivaled acoustic engineering and clarity."}
                             </p>
                         </div>
                         <div className="mt-8 pt-4">
@@ -47,18 +47,8 @@ export default function ProductSpotlight1({ spotlightData }: ProductSpotlight1Pr
                             </button>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
     );
 }
-
-// --- MOCK DATA ---
-const MOCK_SPOTLIGHT = {
-    brand: "Meze",
-    name: "LIRIC II",
-    headline: "The Modern Standard",
-    subheadline: "Refined Closed-Back Excellence",
-    mainImage: "https://cdn.sanity.io/images/2tdmkpky/production/548a9c2b395dff17024bad8d3c62d8f3f33bf849-1024x1024.jpg",
-};

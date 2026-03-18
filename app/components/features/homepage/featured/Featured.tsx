@@ -41,7 +41,7 @@ export default async function Featured() {
 
     return (
         <section className="w-full py-20 bg-brand-700">
-            <div className="px-4 md:px-8">
+            <div className=" px-4 md:px-8">
                 <Carousel itemsCount={finalFeatured.length} breakpointMap={{ lgDesktop: 3, mdPortrait: 2, mobilePortrait: 1 }}>
                     <div className="relative flex flex-col gap-8">
                         <div className="flex justify-between items-end">
