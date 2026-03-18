@@ -76,18 +76,17 @@ export default async function Hero() {
             "landscape:max-w-full lg-touch:landscape:max-w-4xl lg-desktop:landscape:max-w-4xl",
           )}
         >
-          <div className="flex flex-col gap-2 md:gap-8">
+          <div className="flex flex-col gap-4 md:gap-8">
             <h1
               className={cn(
-                "text-cap text-display-2 md:text-display-1 font-bold uppercase"
+                "text-cap type-hero-headline uppercase"
               )}
             >
               {data.headline}
             </h1>
             <p
               className={cn(
-                "text-cap text-h4 font-semibold",
-                "text-h4 md:text-h2"
+                "text-cap type-hero-sub",
               )}
             >
               {data.subheadline}

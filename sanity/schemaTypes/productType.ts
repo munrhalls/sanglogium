@@ -156,16 +156,17 @@ export const productType = defineType({
     }),
   ],
   preview: {
-    // TODO preview the category name too
     select: {
       title: "name",
+      id: "_id",
       media: "image",
       price: "displayPrice",
     },
-    prepare(select) {
+    prepare(selection) {
       return {
-        title: `${select.title} - $${select.price}`,
-        media: select.media,
+        title: `${selection.title} - $${selection.price}`,
+        subtitle: `ID: ${selection.id}`,
+        media: selection.media,
       };
     },
   },

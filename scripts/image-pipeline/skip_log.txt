@@ -1,0 +1,9 @@
+# Images skipped due to rembg failure
+# Format: product_id | filename | reason
+n10eAegrGspodtsQvy4Df8 | mainImage | download failed: 400 Client Error: Bad Request for url: https://cdn.sanity.io/images/2tdmkpky/production/43181efff6dcee020da324d5bddcab1c38e65486/1024x1024.jpg
+n10eAegrGspodtsQvy4Df8 | imageGallery[0] | download failed: 400 Client Error: Bad Request for url: https://cdn.sanity.io/images/2tdmkpky/production/43181efff6dcee020da324d5bddcab1c38e65486/1024x1024.jpg
+n10eAegrGspodtsQvy4Df8 | imageGallery[1] | download failed: 400 Client Error: Bad Request for url: https://cdn.sanity.io/images/2tdmkpky/production/bad6899268b3e10069f966c01e12d87e1c54f55f/1024x1024.jpg
+n10eAegrGspodtsQvy4Df8 | imageGallery[2] | download failed: 400 Client Error: Bad Request for url: https://cdn.sanity.io/images/2tdmkpky/production/bba9621243a5e3d956e4edf330a8b0d00e3580d0/1024x1024.jpg
+n10eAegrGspodtsQvy4Df8 | imageGallery[3] | download failed: 400 Client Error: Bad Request for url: https://cdn.sanity.io/images/2tdmkpky/production/f095b0612a715188f22afe37b0d8cdb42adabd11/1024x1024.jpg
+n10eAegrGspodtsQvy4Df8 | imageGallery[4] | download failed: 400 Client Error: Bad Request for url: https://cdn.sanity.io/images/2tdmkpky/production/6fce34b0e5e17c9cad66f0a52b691465fe42283c/1024x1024.jpg
+n10eAegrGspodtsQvy4Df8 | imageGallery[5] | download failed: 400 Client Error: Bad Request for url: https://cdn.sanity.io/images/2tdmkpky/production/971b2649837617ee5f6828a533221312830a0762/1024x1024.jpg

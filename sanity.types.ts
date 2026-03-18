@@ -303,12 +303,25 @@ export type SALE_BY_ID_QUERYResult = Array<never>;
 
 // Source: ./sanity/lib/hero/getHeroData.ts
 // Variable: HERO_QUERY
-// Query: *[_type == "hero"] | order(_updatedAt desc)[0] {      headline,      subheadline,      ctaText,      backgroundImage {        asset->{          _id,          url,          metadata {            dimensions,            lqip          }        },        hotspot,        crop,        alt      }    }
+// Query: *[_type == "hero"] | order(_updatedAt desc)[0] {      headline,      subheadline,      ctaText,      backgroundImage {        asset->{          _id,          url,          metadata {            dimensions,            lqip          }        },        hotspot,        crop,        alt      },      mobileBackgroundImage {        asset->{          _id,          url,          metadata {            dimensions,            lqip          }        },        hotspot,        crop,        alt      }    }
 export type HERO_QUERYResult = {
   headline: string | null;
   subheadline: string | null;
   ctaText: string | null;
   backgroundImage: {
+    asset: {
+      _id: string;
+      url: string | null;
+      metadata: {
+        dimensions: SanityImageDimensions | null;
+        lqip: string | null;
+      } | null;
+    } | null;
+    hotspot: SanityImageHotspot | null;
+    crop: SanityImageCrop | null;
+    alt: string | null;
+  } | null;
+  mobileBackgroundImage: {
     asset: {
       _id: string;
       url: string | null;
@@ -530,7 +543,7 @@ declare module "@sanity/client" {
     '\n    *[_type == "promotion"][0]\n  ': SMALL_TESTResult;
     '\n      *[_type == "sale" && isActive == true] {\n        _id,\n        title,\n        "slug": slug.current,\n        discount,\n        validFrom,\n        validUntil,\n        isActive\n      }\n    ': GET_ACTIVE_SALES_QUERYResult;
     '\n    *[_type == "sale" && _id == $saleId]{\n      name,\n      "slug": slug.current,\n      validFrom,\n      validUntil,\n      isActive,\n      description,\n      "image": image.asset->url,\n      category->{\n        name,\n        "slug": slug.current,\n        "products": *[_type==\'product\' && categoryPath == ^.metadata.path]{\n          name,\n          "slug": slug.current,\n          image,\n          defaultPrice\n        }\n      }\n    }\n  ': SALE_BY_ID_QUERYResult;
-    '\n    *[_type == "hero"] | order(_updatedAt desc)[0] {\n      headline,\n      subheadline,\n      ctaText,\n      backgroundImage {\n        asset->{\n          _id,\n          url,\n          metadata {\n            dimensions,\n            lqip\n          }\n        },\n        hotspot,\n        crop,\n        alt\n      }\n    }\n  ': HERO_QUERYResult;
+    '\n    *[_type == "hero"] | order(_updatedAt desc)[0] {\n      headline,\n      subheadline,\n      ctaText,\n\n      backgroundImage {\n        asset->{\n          _id,\n          url,\n          metadata {\n            dimensions,\n            lqip\n          }\n        },\n        hotspot,\n        crop,\n        alt\n      },\n\n      mobileBackgroundImage {\n        asset->{\n          _id,\n          url,\n          metadata {\n            dimensions,\n            lqip\n          }\n        },\n        hotspot,\n        crop,\n        alt\n      }\n    }\n  ': HERO_QUERYResult;
     '{\n    "brands": array::unique(*[_type == "product"].brand->name)\n  }': FILTERSResult;
     '\n    *[_type == "categoryFilters" && title == $topLevelCategory][0] {\n      title,\n      "filters": filters.filterItems[]{\n        name,\n        type,\n        options,\n        defaultValue,\n        min,\n        max,\n        isMinOnly,\n        step\n      },\n      "mappings": categoryMappings[path == $cleanPath]\n    }\n  ': FILTERS_BY_CATEGORY_QUERYResult;
     '\n        *[\n            _type == "product"\n        ] | order(name asc)\n    ': ALL_PRODUCTS_QUERYResult;

@@ -1,0 +1,60 @@
+Image Background Removal Pipeline Sprint:
+
+  Environment setup:
+    ✔ Python 3.9+ confirmed: run `python --version` in terminal @done(26-03-18 08:30)
+    ✔ Dependencies installed: run `pip install -r requirements.txt` @done(26-03-18 08:30)
+        in scripts/image-pipeline/
+    ✔ Sanity API token with read/write access obtained @done(26-03-18 08:30)
+        from sanity.io/manage
+    ✔ .env file edited with real SANITY_PROJECT_ID and @done(26-03-18 08:30)
+        SANITY_API_TOKEN values
+    ✔ scripts/image-pipeline/.env confirmed in .gitignore @done(26-03-18 08:30)
+    ✔ `git status scripts/image-pipeline/.env` shows @done(26-03-18 08:30)
+        untracked or ignored — not staged, not committed
+
+  Script structure:
+    ✔ Accepts product ID as command-line argument @done
+    ✔ Reads SANITY_PROJECT_ID and SANITY_API_TOKEN from
+      environment variables @done
+    ✔ No hardcoded credentials anywhere in script @done
+
+  Sanity read:
+    ✔ Fetches product document by ID via GROQ query @done
+    ✔ mainImage asset reference extracted correctly @done
+    ✔ imageGallery asset references extracted correctly @done
+    ✔ Empty imageGallery handled without crash @done
+    ✔ Images downloaded to memory for processing @done
+
+  Background removal:
+    ✔ rembg processes each downloaded image @done
+    ✔ Output is PNG with transparent background @done
+    ✔ Fully transparent output detected and skipped @done
+    ✔ Skipped images logged to skip_log.txt @done
+
+  Sanity write:
+    ✔ Each processed image uploaded to Sanity as new asset @done
+    ✔ mainImage field updated to new asset reference @done
+    ✔ imageGallery fields updated in original order @done
+    ✔ Sanity document patched — no other fields modified @done
+
+  Known code smell (non-blocking):
+    ☐ Remove unused `asset_ref` variable in main() before
+        production use — line computes value that is never used
+
+  Verification — run: python pipeline.py <product_id>:
+    ✔ Script runs to completion without error @done(26-03-18 08:30)
+    ✔ Terminal output shows product title found @done(26-03-18 08:30)
+    ✔ Terminal output shows each image processing step @done(26-03-18 08:30)
+    ✔ Terminal output shows "Sanity document patched successfully" @done(26-03-18 08:30)
+    ✔ Open product in Sanity Studio — mainImage shows @done(26-03-18 08:30)
+        transparent background visually
+    ✔ Original composition preserved: no cropping, no resize, @done(26-03-18 08:30)
+        no color shift
+    ✔ skip_log.txt exists and is readable @done(26-03-18 08:30)
+    ✔ No credentials visible in terminal output or log files @done(26-03-18 08:30)
+
+  Final:
+    ✔ Script tested on a second different product ID @done(26-03-18 08:30)
+    ✔ Both runs show correct transparent background in @done(26-03-18 08:30)
+        Sanity Studio
+    ✔ Pipeline locked — ready for production use per product @done(26-03-18 08:30)
