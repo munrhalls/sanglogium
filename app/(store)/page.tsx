@@ -19,11 +19,14 @@ export default function HomePage() {
       {/* The Featured section now correctly triggers the Platinum Slab physics */}
       <Shelf>
         <Featured />
-        <ProductSpotlight1 />
       </Shelf>
       {/* <Shelf variant="platinum">
         <Featured />
       </Shelf> */}
+
+      <Shelf>
+        <ProductSpotlight1 />
+      </Shelf>
 
 
       <Shelf>

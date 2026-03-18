@@ -5,10 +5,10 @@ Create _project/DATA_PASS_SPRINT.todo with exactly this content:
 Data Pass Sprint:
 
   Architecture setup:
-    [ ] export const revalidate = 3600 added to app/page.tsx
-    [ ] No Suspense wrappers on any homepage component
-    [ ] No shared fetch hooks created
-    [ ] Hero component untouched — confirmed by git diff
+    ✔ export const revalidate = 3600 added to app/page.tsx @done(26-03-18 10:59)
+    ✔ No Suspense wrappers on any homepage component @done(26-03-18 10:59)
+    ✔ No shared fetch hooks created @done(26-03-18 10:59)
+    ✔ Hero component untouched — confirmed by git diff @done(26-03-18 10:59)
 
   Featured:
     [ ] TypeScript interface FeaturedProduct defined in component folder

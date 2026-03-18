@@ -21,3 +21,13 @@ const builder = imageUrlBuilder(client);
 export function urlFor(source: any) {
   return builder.image(source);
 }
+
+export async function sanityFetch<QueryResponse>({
+  query,
+  params = {},
+}: {
+  query: string;
+  params?: any;
+}): Promise<QueryResponse> {
+  return client.fetch<QueryResponse>(query, params);
+}
