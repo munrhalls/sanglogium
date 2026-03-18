@@ -14,20 +14,35 @@ export const homepageType = defineType({
     defineField({
       name: "spotlight1",
       title: "Product Spotlight 1",
-      type: "reference",
-      to: [{ type: "product" }],
+      type: "object",
+      fields: [
+        defineField({ name: "product", type: "reference", to: [{ type: "product" }] }),
+        defineField({ name: "promoTitle", type: "string", title: "Promo Title" }),
+        defineField({ name: "promoSubtitle", type: "string", title: "Promo Subtitle" }),
+        defineField({ name: "promoText", type: "text", title: "Promo Text" }),
+      ],
     }),
     defineField({
       name: "spotlight2",
       title: "Product Spotlight 2",
-      type: "reference",
-      to: [{ type: "product" }],
+      type: "object",
+      fields: [
+        defineField({ name: "product", type: "reference", to: [{ type: "product" }] }),
+        defineField({ name: "promoTitle", type: "string", title: "Promo Title" }),
+        defineField({ name: "promoSubtitle", type: "string", title: "Promo Subtitle" }),
+        defineField({ name: "promoText", type: "text", title: "Promo Text" }),
+      ],
     }),
     defineField({
       name: "spotlight3",
       title: "Product Spotlight 3",
-      type: "reference",
-      to: [{ type: "product" }],
+      type: "object",
+      fields: [
+        defineField({ name: "product", type: "reference", to: [{ type: "product" }] }),
+        defineField({ name: "promoTitle", type: "string", title: "Promo Title" }),
+        defineField({ name: "promoSubtitle", type: "string", title: "Promo Subtitle" }),
+        defineField({ name: "promoText", type: "text", title: "Promo Text" }),
+      ],
     }),
     defineField({
       name: "iemsGallery",
@@ -38,8 +53,13 @@ export const homepageType = defineType({
     defineField({
       name: "newestRelease",
       title: "Newest Release",
-      type: "reference",
-      to: [{ type: "product" }],
+      type: "object",
+      fields: [
+        defineField({ name: "product", type: "reference", to: [{ type: "product" }] }),
+        defineField({ name: "promoTitle", type: "string", title: "Promo Title" }),
+        defineField({ name: "promoSubtitle", type: "string", title: "Promo Subtitle" }),
+        defineField({ name: "promoText", type: "text", title: "Promo Text" }),
+      ],
     }),
     defineField({
       name: "dacs",
