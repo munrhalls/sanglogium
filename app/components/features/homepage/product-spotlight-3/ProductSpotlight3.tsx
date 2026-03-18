@@ -5,26 +5,32 @@ import { sanityFetch } from "@/sanity/lib/client";
 import { SpotlightProduct as SanitySpotlightProduct } from "../spotlightTypes";
 
 export default async function ProductSpotlight3() {
-  const product = await sanityFetch<SanitySpotlightProduct | null>({
-    query: `*[_type == "homepage"][0].spotlight3->{
-      _id,
-      name,
-      brand,
-      displayPrice,
-      image{asset->{url}},
-      overviewFields
+  const data = await sanityFetch<any>({
+    query: `*[_type == "homepage"][0].spotlight3{
+      promoTitle,
+      promoSubtitle,
+      promoText,
+      productRef->{
+        _id,
+        name,
+        brand,
+        displayPrice,
+        image{asset->{url}},
+        overviewFields
+      }
     }`
   });
 
-  if (!product) return null;
+  if (!data?.productRef) return null;
+  const product = data.productRef;
 
   const mappedData = {
     id: product._id,
     brand: product.brand,
     name: product.name,
-    headline: product.name,
-    subheadline: product.overviewFields?.[0]?.value || product.name,
-    description: product.overviewFields?.[0]?.information || "Unrivaled acoustic engineering and clarity.",
+    headline: data.promoTitle || product.name,
+    subheadline: data.promoSubtitle || product.overviewFields?.[0]?.value || product.name,
+    description: data.promoText || product.overviewFields?.[0]?.information || "Unrivaled acoustic engineering and clarity.",
     mainImage: product.image?.asset?.url || ""
   };
 

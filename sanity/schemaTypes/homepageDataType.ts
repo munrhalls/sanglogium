@@ -1,7 +1,7 @@
 import { defineField, defineType } from "sanity";
 
-export const homepageType = defineType({
-  name: "homepage",
+export const homepageDataType = defineType({
+  name: "homepageData",
   title: "Homepage",
   type: "document",
   fields: [
@@ -12,7 +12,7 @@ export const homepageType = defineType({
       of: [{ type: "reference", to: [{ type: "product" }] }],
     }),
     defineField({
-      name: "spotlight1",
+      name: "spotlight1Data",
       title: "Product Spotlight 1",
       type: "object",
       fields: [
@@ -23,7 +23,7 @@ export const homepageType = defineType({
       ],
     }),
     defineField({
-      name: "spotlight2",
+      name: "spotlight2Data",
       title: "Product Spotlight 2",
       type: "object",
       fields: [
@@ -34,7 +34,7 @@ export const homepageType = defineType({
       ],
     }),
     defineField({
-      name: "spotlight3",
+      name: "spotlight3Data",
       title: "Product Spotlight 3",
       type: "object",
       fields: [
@@ -51,7 +51,7 @@ export const homepageType = defineType({
       of: [{ type: "reference", to: [{ type: "product" }] }],
     }),
     defineField({
-      name: "newestRelease",
+      name: "newestReleaseData",
       title: "Newest Release",
       type: "object",
       fields: [

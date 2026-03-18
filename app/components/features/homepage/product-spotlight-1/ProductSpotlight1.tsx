@@ -4,18 +4,24 @@ import { sanityFetch } from "@/sanity/lib/client";
 import { SpotlightProduct } from "../spotlightTypes";
 
 export default async function ProductSpotlight1() {
-    const product = await sanityFetch<SpotlightProduct | null>({
-        query: `*[_type == "homepage"][0].spotlight1->{
-            _id,
-            name,
-            brand,
-            displayPrice,
-            image{asset->{url}},
-            overviewFields
+    const data = await sanityFetch<any>({
+        query: `*[_type == "homepage"][0].spotlight1{
+            promoTitle,
+            promoSubtitle,
+            promoText,
+            productRef->{
+                _id,
+                name,
+                brand,
+                displayPrice,
+                image{asset->{url}},
+                overviewFields
+            }
         }`
     });
 
-    if (!product) return null;
+    if (!data?.productRef) return null;
+    const product = data.productRef;
 
     return (
         <section className="w-full py-20 relative overflow-hidden border-t border-secondary-800 bg-brand-700">
@@ -32,12 +38,12 @@ export default async function ProductSpotlight1() {
                     <div className="w-full h-full bg-brand-800 rounded-none flex flex-col justify-center gap-6 p-8 lg:p-12">
                         <div className="flex flex-col gap-2">
                             <span className="text-small tracking-editorial text-accent-500 uppercase">{product.brand}</span>
-                            <h2 className="text-h1 uppercase">{product.name}</h2>
+                            <h2 className="text-h1 uppercase">{data.promoTitle || product.name}</h2>
                         </div>
                         <div className="flex flex-col gap-4">
-                            <h3 className="text-h3">{product.overviewFields?.[0]?.value || product.name}</h3>
+                            <h3 className="text-h3">{data.promoSubtitle || product.overviewFields?.[0]?.value || product.name}</h3>
                             <p className="text-body max-w-prose text-pretty">
-                                {product.overviewFields?.[0]?.information || "Unrivaled acoustic engineering and clarity."}
+                                {data.promoText || product.overviewFields?.[0]?.information || "Unrivaled acoustic engineering and clarity."}
                             </p>
                         </div>
                         <div className="mt-8 pt-4">

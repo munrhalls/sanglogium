@@ -1,5 +1,5 @@
-"use client";
-import dacs from "./data.json";
+import React from "react";
+import { sanityFetch } from "@/sanity/lib/client";
 import { Carousel } from '@/app/components/layout/carousel/CarouselRoot';
 import { CarouselTrack } from '@/app/components/layout/carousel/CarouselTrack';
 import { CarouselSlide } from '@/app/components/layout/carousel/CarouselSlide';
@@ -7,7 +7,19 @@ import { CarouselNext, CarouselPrevious, CarouselDots } from '@/app/components/l
 import DacsHeader from "./DacsHeader";
 import DacCard from "./DacCard";
 
-export default function DACs() {
+export default async function DACs() {
+  const dacs = await sanityFetch<any[]>({
+    query: `*[_type == "homepage"][0].dacs[]->{
+      _id,
+      name,
+      brand,
+      displayPrice,
+      image{asset->{url}}
+    }`
+  });
+
+  if (!dacs || dacs.length === 0) return null;
+
   return (
     <Carousel itemsCount={dacs.length}>
       <div className="flex justify-between items-end mb-10">

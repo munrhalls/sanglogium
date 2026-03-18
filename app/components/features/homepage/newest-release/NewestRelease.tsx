@@ -1,34 +1,55 @@
+import React from "react";
 import SpotlightHero from "../shared-spotlight/SpotlightHero";
 import SpotlightDetails from "../shared-spotlight/SpotlightDetails";
 import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
 import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";
 import { CarouselSlide } from "@/app/components/layout/carousel/CarouselSlide";
 import { CarouselDots } from "@/app/components/layout/carousel/CarouselControls";
-import releaseSource from "./data.json";
-import { SpotlightRelease } from "./types";
+import { sanityFetch } from "@/sanity/lib/client";
 
-const data = releaseSource as SpotlightRelease;
+export default async function NewestRelease() {
+  const data = await sanityFetch<any>({
+    query: `*[_type == "homepage"][0].newestRelease{
+      promoTitle,
+      promoSubtitle,
+      promoText,
+      productRef->{
+        _id,
+        name,
+        brand,
+        displayPrice,
+        image{asset->{url}},
+        gallery[]{asset->{url}},
+        overviewFields
+      }
+    }`
+  });
 
-export default function NewestRelease() {
-  const images = data.images || [data.imageUrl];
+  if (!data?.productRef) return null;
 
-  console.log(`[SRIP Trace] Newest Release Contract validated: "${data.name}" with ${images.length} assets.`);
+  const product = data.productRef;
+  const images = [
+    product.image?.asset?.url,
+    ...(product.gallery?.map((g: any) => g.asset?.url) || [])
+  ].filter(Boolean);
+
+  const mappedSpotlight = {
+    brand: product.brand,
+    name: product.name,
+    headline: data.promoTitle || product.name,
+    subheadline: data.promoSubtitle || product.brand,
+    description: data.promoText || product.overviewFields?.[0]?.information || ""
+  };
 
   return (
     <section className="w-full bg-brand-950 py-24 px-4 sm:px-8">
       <div className="group grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
-        
         <div className="order-2 lg:order-1">
           <SpotlightDetails
-            data={{
-              ...data,
-              headline: data.tag,
-              subheadline: data.description
-            }}
+            data={mappedSpotlight as any}
             accentColor="text-brand-400"
           />
         </div>
-
         <div className="order-1 lg:order-2">
           <div className="relative h-feature-media w-full overflow-hidden bg-brand-800 rounded-lg">
             <Carousel itemsCount={images.length}>
@@ -45,8 +66,8 @@ export default function NewestRelease() {
             </Carousel>
           </div>
         </div>
-
       </div>
     </section>
   );
 }
+

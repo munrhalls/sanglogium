@@ -1,13 +1,21 @@
-﻿import iemsSource from "./data.json";
-import { IemProduct } from "./types";
+import React from "react";
+import { sanityFetch } from "@/sanity/lib/client";
 import Grid from "@/app/components/layout/grid/Grid";
 import IemsGalleryHeader from "./IemsGalleryHeader";
 import IemCard from "./IemCard";
 
-const iems = iemsSource as IemProduct[];
+export default async function IemsGallery() {
+  const iems = await sanityFetch<any[]>({
+    query: `*[_type == "homepage"][0].iemsGallery[]->{
+      _id,
+      name,
+      brand,
+      displayPrice,
+      image{asset->{url}}
+    }`
+  });
 
-export default function IemsGallery() {
-  console.log(`[SRIP Trace] IEMs Gallery Data Contract validated. Items loaded: ${iems.length}`);
+  if (!iems || iems.length === 0) return null;
 
   return (
     <>
