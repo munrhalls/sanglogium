@@ -849,7 +849,7 @@ The sang-logium failure had technically excellent commit hygiene (semantic prefi
 Every commit message must end with a deliverable impact clause:
 
 ```
-[type]([scope]): [action] — → [impact]
+[Taxonomy category] - type]([scope]): [action] — → [impact]
 ```
 
 Impact options:

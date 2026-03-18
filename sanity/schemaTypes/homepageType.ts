@@ -16,10 +16,10 @@ export const homepageType = defineType({
       title: "Product Spotlight 1",
       type: "object",
       fields: [
-        defineField({ name: "product", type: "reference", to: [{ type: "product" }] }),
-        defineField({ name: "promoTitle", type: "string", title: "Promo Title" }),
-        defineField({ name: "promoSubtitle", type: "string", title: "Promo Subtitle" }),
-        defineField({ name: "promoText", type: "text", title: "Promo Text" }),
+        { name: "productRef", type: "reference", to: [{ type: "product" }], title: "Product" },
+        { name: "promoTitle", type: "string", title: "Promo Title" },
+        { name: "promoSubtitle", type: "string", title: "Promo Subtitle" },
+        { name: "promoText", type: "text", title: "Promo Text" },
       ],
     }),
     defineField({
@@ -27,10 +27,10 @@ export const homepageType = defineType({
       title: "Product Spotlight 2",
       type: "object",
       fields: [
-        defineField({ name: "product", type: "reference", to: [{ type: "product" }] }),
-        defineField({ name: "promoTitle", type: "string", title: "Promo Title" }),
-        defineField({ name: "promoSubtitle", type: "string", title: "Promo Subtitle" }),
-        defineField({ name: "promoText", type: "text", title: "Promo Text" }),
+        { name: "productRef", type: "reference", to: [{ type: "product" }], title: "Product" },
+        { name: "promoTitle", type: "string", title: "Promo Title" },
+        { name: "promoSubtitle", type: "string", title: "Promo Subtitle" },
+        { name: "promoText", type: "text", title: "Promo Text" },
       ],
     }),
     defineField({
@@ -38,10 +38,10 @@ export const homepageType = defineType({
       title: "Product Spotlight 3",
       type: "object",
       fields: [
-        defineField({ name: "product", type: "reference", to: [{ type: "product" }] }),
-        defineField({ name: "promoTitle", type: "string", title: "Promo Title" }),
-        defineField({ name: "promoSubtitle", type: "string", title: "Promo Subtitle" }),
-        defineField({ name: "promoText", type: "text", title: "Promo Text" }),
+        { name: "productRef", type: "reference", to: [{ type: "product" }], title: "Product" },
+        { name: "promoTitle", type: "string", title: "Promo Title" },
+        { name: "promoSubtitle", type: "string", title: "Promo Subtitle" },
+        { name: "promoText", type: "text", title: "Promo Text" },
       ],
     }),
     defineField({
@@ -55,10 +55,10 @@ export const homepageType = defineType({
       title: "Newest Release",
       type: "object",
       fields: [
-        defineField({ name: "product", type: "reference", to: [{ type: "product" }] }),
-        defineField({ name: "promoTitle", type: "string", title: "Promo Title" }),
-        defineField({ name: "promoSubtitle", type: "string", title: "Promo Subtitle" }),
-        defineField({ name: "promoText", type: "text", title: "Promo Text" }),
+        { name: "productRef", type: "reference", to: [{ type: "product" }], title: "Product" },
+        { name: "promoTitle", type: "string", title: "Promo Title" },
+        { name: "promoSubtitle", type: "string", title: "Promo Subtitle" },
+        { name: "promoText", type: "text", title: "Promo Text" },
       ],
     }),
     defineField({
