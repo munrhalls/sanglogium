@@ -14,8 +14,16 @@ export const structure: StructureResolver = (S) =>
             .documentId("catalogue")
             .title("Catalogue")
         ),
+      S.listItem()
+        .title("Homepage")
+        .child(
+          S.document()
+            .schemaType("homepage")
+            .documentId("homepage")
+            .title("Homepage")
+        ),
       S.divider(),
       ...S.documentTypeListItems().filter(
-        (item) => item.getId() && !["catalogue"].includes(item.getId()!)
+        (item) => item.getId() && !["catalogue", "homepage"].includes(item.getId()!)
       ),
     ]);
