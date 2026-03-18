@@ -13,8 +13,7 @@ export interface FeaturedProduct {
   };
 }
 
-const FEATURED_QUERY = `*[_type == "product" &&
-  "featured" in catalogueLocationKeys]{
+const FEATURED_QUERY = `*[_type == "homepage"][0].featured[]->{
   _id,
   name,
   brand,
