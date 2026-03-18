@@ -1,4 +1,5 @@
 # Hero
+- IT IS CURRENTLY DONE AND LOCKED - DO NOT TOUCH HERO IN ANY WAY
 
 ## Deliverable State
 Desktop: Full-viewport background image with hotspot-aware cropping,
