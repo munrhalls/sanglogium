@@ -25,24 +25,24 @@ Refactor Sprint — RedesignFeaturedAndProductSpotlight:
     [ ] ProductSpotlight1 renders in isolation — no import errors
 
   Cleanup:
-    [ ] Original merged file deleted
-    [ ] Original merged folder deleted (if now empty)
-    [ ] Page import updated to import Featured and ProductSpotlight1
+    ✔ Original merged file deleted @done(26-03-18 10:51)
+    ✔ Original merged folder deleted (if now empty) @done(26-03-18 10:51)
+    ✔ Page import updated to import Featured and ProductSpotlight1 @done(26-03-18 10:51)
         from their new respective folders
-    [ ] No TypeScript errors in the project
-    [ ] No console errors on homepage load
+    ✔ No TypeScript errors in the project @done(26-03-18 10:51)
+    ✔ No console errors on homepage load @done(26-03-18 10:51)
 
   Verification:
-    [ ] Homepage renders in browser — no blank sections
-    [ ] Featured section looks identical to before-state screenshot
-    [ ] ProductSpotlight1 section looks identical to before-state screenshot
-    [ ] Renders correctly at 1280px
-    [ ] Renders correctly at 375px
-    [ ] git diff shows: only file moves + one import update in page
+    ✔ Homepage renders in browser — no blank sections @done(26-03-18 10:51)
+    ✔ Featured section looks identical to before-state screenshot @done(26-03-18 10:51)
+    ✔ ProductSpotlight1 section looks identical to before-state screenshot @done(26-03-18 10:51)
+    ✔ Renders correctly at 1280px @done(26-03-18 10:51)
+    ✔ Renders correctly at 375px @done(26-03-18 10:51)
+    ✔ git diff shows: only file moves + one import update in page @done(26-03-18 10:51)
 
   Final:
-    [ ] Refactor sprint locked
-    [ ] Data pass sprint can now proceed on Featured and Spotlight1 independently
+    ✔ Refactor sprint locked @done(26-03-18 10:51)
+    ✔ Data pass sprint can now proceed on Featured and Spotlight1 independently @done(26-03-18 10:51)
 
 ---
 
