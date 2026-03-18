@@ -1,0 +1,137 @@
+Create _project/DATA_PASS_SPRINT.todo with exactly this content:
+
+---
+
+Data Pass Sprint:
+
+  Architecture setup:
+    [ ] export const revalidate = 3600 added to app/page.tsx
+    [ ] No Suspense wrappers on any homepage component
+    [ ] No shared fetch hooks created
+    [ ] Hero component untouched — confirmed by git diff
+
+  Featured:
+    [ ] TypeScript interface FeaturedProduct defined in component folder
+    [ ] GROQ query fetches: _id, name, brand, displayPrice, image{asset->{url}}
+    [ ] GROQ filter: catalogueLocationKeys match[@ in ["featured"]]
+    [ ] Component is async server component
+    [ ] Real Sanity data renders in browser — no mock data remaining
+    [ ] Product image renders from Sanity CDN url
+    [ ] Brand, name, price visible on each card
+    [ ] btn-cart renders on each card
+    [ ] No console errors on mount
+    [ ] Renders correctly at 1280px
+    [ ] Renders correctly at 375px
+
+  ProductSpotlight1:
+    [ ] TypeScript interface SpotlightProduct defined in component folder
+    [ ] GROQ query fetches: _id, name, brand, displayPrice, image{asset->{url}}, overviewFields
+    [ ] GROQ filter: specific hardcoded product _id
+    [ ] Component is async server component
+    [ ] Real Sanity data renders — no mock data, no lorem ipsum
+    [ ] Product image renders from Sanity CDN url
+    [ ] Brand, name visible
+    [ ] btn-ghost "SEE MORE" renders
+    [ ] No console errors on mount
+    [ ] Renders correctly at 1280px
+    [ ] Renders correctly at 375px
+
+  ProductSpotlight2:
+    [ ] TypeScript interface reuses SpotlightProduct from Spotlight1
+    [ ] GROQ query fetches same fields — different hardcoded _id
+    [ ] Component is async server component
+    [ ] Real Sanity data renders — no mock data, no lorem ipsum
+    [ ] Product image renders from Sanity CDN url
+    [ ] Brand, name visible
+    [ ] btn-ghost "SEE MORE" renders
+    [ ] No console errors on mount
+    [ ] Renders correctly at 1280px
+    [ ] Renders correctly at 375px
+
+  ProductSpotlight3:
+    [ ] TypeScript interface reuses SpotlightProduct from Spotlight1
+    [ ] GROQ query fetches same fields — different hardcoded _id
+    [ ] Component is async server component
+    [ ] Real Sanity data renders — no mock data, no lorem ipsum
+    [ ] Product image renders from Sanity CDN url
+    [ ] Brand, name visible
+    [ ] btn-ghost "SEE MORE" renders
+    [ ] No console errors on mount
+    [ ] Renders correctly at 1280px
+    [ ] Renders correctly at 375px
+
+  IemsGallery:
+    [ ] TypeScript interface IemProduct defined in component folder
+    [ ] GROQ query fetches: _id, name, brand, displayPrice, image{asset->{url}}
+    [ ] GROQ filter: catalogueLocationKeys match[@ in ["iem"]]
+    [ ] Limit: 8 products
+    [ ] Component is async server component
+    [ ] Real Sanity data renders — no mock data
+    [ ] Product images render from Sanity CDN url
+    [ ] Brand, name, price visible on each card
+    [ ] btn-cart renders on each card
+    [ ] No console errors on mount
+    [ ] Renders correctly at 1280px — 4 column grid
+    [ ] Renders correctly at 375px — 2 column grid
+
+  NewestRelease:
+    [ ] TypeScript interface NewestReleaseProduct defined in component folder
+    [ ] GROQ query fetches: _id, name, brand, displayPrice,
+        image{asset->{url}}, gallery[]{asset->{url}}, overviewFields
+    [ ] GROQ filter: specific hardcoded product _id
+    [ ] Component is async server component
+    [ ] Real Sanity data renders — no mock data
+    [ ] mainImage and gallery images combined into single array for carousel
+    [ ] Carousel renders product images
+    [ ] Brand, name, copy visible on left
+    [ ] btn-ghost "SEE MORE" renders
+    [ ] No console errors on mount
+    [ ] Renders correctly at 1280px
+    [ ] Renders correctly at 375px
+
+  Dacs:
+    [ ] TypeScript interface DacProduct defined in component folder
+    [ ] GROQ query fetches: _id, name, brand, displayPrice,
+        image{asset->{url}}, overviewFields
+    [ ] GROQ filter: catalogueLocationKeys match[@ in ["dac"]]
+    [ ] Limit: 6 products
+    [ ] Component is async server component
+    [ ] Real Sanity data renders — no mock data
+    [ ] Product images render from Sanity CDN url
+    [ ] Brand, name, price visible on each card
+    [ ] btn-cart renders on each card
+    [ ] No console errors on mount
+    [ ] Renders correctly at 1280px
+    [ ] Renders correctly at 375px
+
+  Accessories:
+    [ ] TypeScript interface AccessoryProduct defined in component folder
+    [ ] GROQ query fetches: _id, name, brand, displayPrice, image{asset->{url}}
+    [ ] Three separate queries — cables, earpads, storage
+    [ ] GROQ filters:
+        cables:  catalogueLocationKeys match[@ in ["cable"]]
+        earpads: catalogueLocationKeys match[@ in ["earpad"]]
+        storage: catalogueLocationKeys match[@ in ["storage"]]
+    [ ] Limit: 6 products per query
+    [ ] Component is async server component
+    [ ] All three carousels render real Sanity data
+    [ ] Product images render from Sanity CDN url
+    [ ] Brand, name, price visible on cards in each carousel
+    [ ] btn-cart renders on each card
+    [ ] No console errors on mount
+    [ ] Renders correctly at 1280px
+    [ ] Renders correctly at 375px
+
+  Final:
+    [ ] All 8 components render real data simultaneously on homepage
+    [ ] No component shows mock data or lorem ipsum anywhere
+    [ ] No console errors on full homepage load
+    [ ] Homepage renders correctly at 375px end to end
+    [ ] Homepage renders correctly at 1280px end to end
+    [ ] git diff confirms Hero was not touched
+
+---
+
+CONSTRAINTS:
+- Create this file with exactly this content
+- Do not touch any other file

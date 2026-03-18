@@ -1,4 +1,4 @@
-# IemsGallery
+# <ComponentName>
 
 ## Deliverable State
 ...
