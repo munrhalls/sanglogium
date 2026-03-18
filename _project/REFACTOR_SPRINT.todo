@@ -1,0 +1,51 @@
+Create _project/REFACTOR_SPRINT.todo with exactly this content:
+
+---
+
+Refactor Sprint — RedesignFeaturedAndProductSpotlight:
+
+  Pre-flight:
+    [ ] Current merged file location identified and noted
+    [ ] Current page import path for merged component identified
+    [ ] Browser screenshot taken of current render — before state
+    [ ] No uncommitted changes on other files before starting
+
+  Featured migration:
+    [ ] app/components/features/homepage/featured/ folder created
+    [ ] Featured.tsx created with Featured component code extracted
+    [ ] types.ts created with Featured TypeScript interfaces only
+    [ ] index.ts created: export { default } from './Featured'
+    [ ] Featured renders in isolation — no import errors
+
+  ProductSpotlight1 migration:
+    [ ] app/components/features/homepage/product-spotlight-1/ folder created
+    [ ] ProductSpotlight1.tsx created with Spotlight component code extracted
+    [ ] types.ts created with Spotlight TypeScript interfaces only
+    [ ] index.ts created: export { default } from './ProductSpotlight1'
+    [ ] ProductSpotlight1 renders in isolation — no import errors
+
+  Cleanup:
+    [ ] Original merged file deleted
+    [ ] Original merged folder deleted (if now empty)
+    [ ] Page import updated to import Featured and ProductSpotlight1
+        from their new respective folders
+    [ ] No TypeScript errors in the project
+    [ ] No console errors on homepage load
+
+  Verification:
+    [ ] Homepage renders in browser — no blank sections
+    [ ] Featured section looks identical to before-state screenshot
+    [ ] ProductSpotlight1 section looks identical to before-state screenshot
+    [ ] Renders correctly at 1280px
+    [ ] Renders correctly at 375px
+    [ ] git diff shows: only file moves + one import update in page
+
+  Final:
+    [ ] Refactor sprint locked
+    [ ] Data pass sprint can now proceed on Featured and Spotlight1 independently
+
+---
+
+CONSTRAINTS:
+- Create this file with exactly this content
+- Do not touch any other file

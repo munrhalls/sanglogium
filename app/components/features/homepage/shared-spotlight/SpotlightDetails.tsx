@@ -1,4 +1,4 @@
-import { SpotlightProduct } from "../product-spotlight-1/types";
+import { SpotlightProduct } from "../_legacy_product-spotlight-1/types";
 import { cn } from "@/lib/utils/tailwind";
 
 interface SpotlightDetailsProps {
