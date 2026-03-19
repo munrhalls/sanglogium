@@ -42,31 +42,29 @@ export default async function Featured() {
     if (!finalFeatured || finalFeatured?.length === 0) return null;
 
     return (
-        <section className="w-full py-20 bg-brand-700">
-            <div className=" px-4 md:px-8">
-                <Carousel itemsCount={finalFeatured?.length || 0} breakpointMap={{ lgDesktop: 3, mdPortrait: 2, mobilePortrait: 1 }}>
-                    <div className="relative flex flex-col gap-8">
-                        <div className="flex justify-between items-end">
-                            <div className="flex flex-col gap-2">
-                                <span className="text-small tracking-editorial text-secondary-400 uppercase">Curated Excellence</span>
-                                <h2 className="text-h2 uppercase">Featured</h2>
-                            </div>
-                            <div className="flex gap-3 pb-1">
-                                <CarouselPrevious className="border-secondary-600 text-secondary-400 hover:text-accent-500 hover:border-accent-500 transition-all rounded-none" />
-                                <CarouselNext className="border-secondary-600 text-secondary-400 hover:text-accent-500 hover:border-accent-500 transition-all rounded-none" />
-                            </div>
+        <article className="w-full px-4 md:px-8">
+            <Carousel itemsCount={finalFeatured?.length || 0} breakpointMap={{ lgDesktop: 3, mdPortrait: 2, mobilePortrait: 1 }}>
+                <div className="relative flex flex-col gap-8">
+                    <div className="flex justify-between items-end">
+                        <div className="flex flex-col gap-2">
+                            <span className="text-small tracking-editorial text-secondary-400 uppercase">Curated Excellence</span>
+                            <h2 className="text-h2 uppercase">Featured</h2>
                         </div>
-                        <CarouselTrack className="-mx-3">
-                            {finalFeatured.map((p, idx) => (
-                                <CarouselSlide key={p._id || idx} className="px-3">
-                                    <FeaturedCard product={p} />
-                                </CarouselSlide>
-                            ))}
-                        </CarouselTrack>
-                        <div className="flex justify-center mt-4"><CarouselDots color="brand-400" /></div>
+                        <div className="flex gap-3 pb-1">
+                            <CarouselPrevious className="border-secondary-600 text-secondary-400 hover:text-accent-500 hover:border-accent-500 transition-all rounded-none" />
+                            <CarouselNext className="border-secondary-600 text-secondary-400 hover:text-accent-500 hover:border-accent-500 transition-all rounded-none" />
+                        </div>
                     </div>
-                </Carousel>
-            </div>
-        </section>
+                    <CarouselTrack className="-mx-3">
+                        {finalFeatured.map((p, idx) => (
+                            <CarouselSlide key={p._id || idx} className="px-3">
+                                <FeaturedCard product={p} />
+                            </CarouselSlide>
+                        ))}
+                    </CarouselTrack>
+                    <div className="flex justify-center mt-4"><CarouselDots color="brand-400" /></div>
+                </div>
+            </Carousel>
+        </article>
     );
 }

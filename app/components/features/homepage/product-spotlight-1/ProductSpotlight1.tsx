@@ -9,7 +9,7 @@ export default async function ProductSpotlight1() {
     const { productRef: product, promoTitle, promoSubtitle, promoText } = data;
 
     return (
-        <section className="w-full py-20 relative overflow-hidden border-t border-secondary-800 bg-brand-700">
+        <article className="w-full relative overflow-hidden border-t border-secondary-800 bg-brand-700">
             <div className="absolute inset-0 bg-[url('/fractal_ring.webp')] bg-no-repeat bg-right-bottom mix-blend-overlay opacity-20 pointer-events-none z-0" />
             <div className="max-w-[1440px] mx-auto px-4 md:px-8 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
@@ -40,6 +40,6 @@ export default async function ProductSpotlight1() {
                     </div>
                 </div>
             </div>
-        </section>
+        </article>
     );
 }
