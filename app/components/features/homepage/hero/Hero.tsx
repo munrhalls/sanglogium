@@ -5,14 +5,12 @@ import { cn } from "@/lib/utils/tailwind";
 import { HeroData, SanityImage } from "./types";
 
 export default async function Hero() {
-  console.log('[SRIP Trace] Overwrote border-radius to 0px in:', 'Hero');
   const data = await getHeroData() as HeroData | null;
 
   if (!data?.backgroundImage || !data?.headline) {
     return null;
   }
 
-  console.log(`[SRIP Trace] Hero Data Contract validated for headline: "${data.headline}"`);
 
   const mobileBackgroundImage = data.mobileBackgroundImage || data.backgroundImage;
 

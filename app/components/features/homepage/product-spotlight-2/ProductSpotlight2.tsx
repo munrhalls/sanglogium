@@ -1,25 +1,10 @@
 import React from "react";
 import SpotlightHero from "../shared-spotlight/SpotlightHero";
 import SpotlightDetails from "../shared-spotlight/SpotlightDetails";
-import { sanityFetch } from "@/sanity/lib/client";
-import { SpotlightProduct as SanitySpotlightProduct } from "../spotlightTypes";
+import { getSpotlight2Product } from "./getSpotlight2Product";
 
 export default async function ProductSpotlight2() {
-  const data = await sanityFetch<any>({
-    query: `*[_type == "homepage"][0].spotlight2{
-      promoTitle,
-      promoSubtitle,
-      promoText,
-      productRef->{
-        _id,
-        name,
-        brand,
-        displayPrice,
-        image{asset->{url}},
-        overviewFields
-      }
-    }`
-  });
+  const data = await getSpotlight2Product();
 
   if (!data?.productRef) return null;
   const product = data.productRef;

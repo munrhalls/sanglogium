@@ -10,7 +10,6 @@ const navLinks = CATALOGUE_DATA.map((item) => ({
 }));
 
 const CatalogueNavbar = async () => {
-  console.log('[SRIP Trace] Overwrote border-radius to 0px in:', 'CatalogueNavbar');
   return (
     <nav
       className={cn(

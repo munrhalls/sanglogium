@@ -45,5 +45,32 @@
       "_type": "reference",
       "_ref": "moXlkADK7m1DHgGwWtXvWl"
     }
-  ]
+  ],
+  "spotlight1Data": {
+    "productRef": {
+      "_type": "reference",
+      "_ref": "moXlkADK7m1DHgGwWtblBG"
+    },
+    "promoTitle": "The Kinetic Edge",
+    "promoSubtitle": "Precision Performance",
+    "promoText": "Engineered for those who demand absolute control. The Kinetic series merges advanced ergonomics with high-response tactile feedback, ensuring every movement is translated with surgical precision."
+  },
+  "spotlight2Data": {
+    "productRef": {
+      "_type": "reference",
+      "_ref": "k27n1AQuIbSr5iozFz7HA5"
+    },
+    "promoTitle": "Carbon Flow",
+    "promoSubtitle": "Lightweight Mastery",
+    "promoText": "A testament to minimalist design and maximum impact. Built with aerospace-grade carbon fiber components, the Flow variant provides a near-weightless experience without compromising structural integrity."
+  },
+  "spotlight3Data": {
+    "productRef": {
+      "_type": "reference",
+      "_ref": "moXlkADK7m1DHgGwWtUHWs"
+    },
+    "promoTitle": "Zenith Core",
+    "promoSubtitle": "Infinite Endurance",
+    "promoText": "Redefining the standard for longevity. Featuring the new Zenith power architecture, this edition offers industry-leading battery life and a resilient finish designed to withstand the rigors of professional use."
+  }
 }

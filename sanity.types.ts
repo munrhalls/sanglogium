@@ -13,6 +13,100 @@
  */
 
 // Source: schema.json
+export type HomepageData = {
+  _id: string;
+  _type: "homepageData";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  featured?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "product";
+  }>;
+  spotlight1Data?: {
+    productRef?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "product";
+    };
+    promoTitle?: string;
+    promoSubtitle?: string;
+    promoText?: string;
+  };
+  spotlight2Data?: {
+    productRef?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "product";
+    };
+    promoTitle?: string;
+    promoSubtitle?: string;
+    promoText?: string;
+  };
+  spotlight3Data?: {
+    productRef?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "product";
+    };
+    promoTitle?: string;
+    promoSubtitle?: string;
+    promoText?: string;
+  };
+  iemsGallery?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "product";
+  }>;
+  newestReleaseData?: {
+    productRef?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "product";
+    };
+    promoTitle?: string;
+    promoSubtitle?: string;
+    promoText?: string;
+  };
+  dacs?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "product";
+  }>;
+  accessoriesCables?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "product";
+  }>;
+  accessoriesEarpads?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "product";
+  }>;
+  accessoriesStorage?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "product";
+  }>;
+};
+
 export type Product = {
   _id: string;
   _type: "product";
@@ -250,6 +344,7 @@ export type SanityAssetSourceData = {
 };
 
 export type AllSanitySchemaTypes =
+  | HomepageData
   | Product
   | Catalogue
   | CatalogueItem

@@ -10,7 +10,6 @@ import { CATALOGUE_DATA } from "@/app/components/layout/catalogue/data";
 import { cn } from "@/lib/utils/tailwind";
 
 export default function CatalogueCarousel() {
-  console.log('[SRIP Trace] Overwrote border-radius to 0px in:', 'CatalogueCarousel');
   return (
     <nav
       aria-label="Catalogue Navigation"

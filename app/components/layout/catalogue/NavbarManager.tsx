@@ -10,7 +10,6 @@ export default function NavbarManager({
   navLinks,
   children,
 }: NavbarManagerProps) {
-  console.log('[SRIP Trace] Overwrote border-radius to 0px in:', 'NavbarManager');
   useEffect(() => {
     console.log("[SRIP Trace] Manager Mount | Link Count:", navLinks.length, "| Children Count:", children.length);
   }, [navLinks.length, children.length]);

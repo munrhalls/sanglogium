@@ -3,7 +3,6 @@ import magnifying_glass from "@/public/icons/magnifying_glass.svg";
 import { cn } from "@/lib/utils/tailwind";
 
 export default function SearchBar() {
-  console.log('[SRIP Trace] Overwrote border-radius to 0px in:', 'SearchBar');
   return (
     <form
       role="search"

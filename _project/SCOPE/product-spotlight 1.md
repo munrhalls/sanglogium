@@ -24,6 +24,7 @@ interface SpotlightProduct {
 GROQ filter: specific product _id hardcoded per spotlight component
 (each spotlight shows a specific curated product)
 
+<!-- ALL DATA CONTRACTS ARE OUTDATES -> LOOK UP DATA_PASS_SPRINT.todo -->
 ## In Scope
 - GROQ query for a single product by hardcoded _id
 - TypeScript interface for SpotlightProduct

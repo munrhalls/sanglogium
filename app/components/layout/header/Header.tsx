@@ -4,7 +4,6 @@ import Searchbar from "./Searchbar";
 import NavbarActions from "./NavbarActions";
 
 export default function Header() {
-  console.log('[SRIP Trace] Overwrote border-radius to 0px in:', 'Header');
   return (
     <header
       className={cn(

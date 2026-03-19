@@ -14,7 +14,6 @@ interface NavbarActionsProps {
 }
 
 const NavbarActions = ({ isAuthenticated, cartCount }: NavbarActionsProps) => {
-  console.log('[SRIP Trace] Overwrote border-radius to 0px in:', 'NavbarActions');
   return (
     <div className={cn("ml-6 hidden items-center gap-6", "lg:flex")}>
       {/* Cart Action */}
@@ -73,7 +72,6 @@ interface NavActionItemProps {
 }
 
 const NavActionItem = ({ icon, label, badgeCount }: NavActionItemProps) => {
-  console.log('[SRIP Trace] Overwrote border-radius to 0px in:', 'NavActionItem');
   return (
     <button
       className={cn(
@@ -120,7 +118,6 @@ interface DropdownItemProps {
 }
 
 const DropdownItem = ({ label, onClick, isDestructive }: DropdownItemProps) => {
-  console.log('[SRIP Trace] Overwrote border-radius to 0px in:', 'DropdownItem');
   return (
     <button
       onClick={onClick}

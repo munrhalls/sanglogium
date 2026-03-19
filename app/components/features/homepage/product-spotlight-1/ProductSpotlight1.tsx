@@ -1,27 +1,12 @@
 import React from "react";
 import spotlightImg from './product_spotlight_transparent.png';
-import { sanityFetch } from "@/sanity/lib/client";
-import { SpotlightProduct } from "../spotlightTypes";
+import { getSpotlight1Data } from "./getSpotlight1Data";
 
 export default async function ProductSpotlight1() {
-    const data = await sanityFetch<any>({
-        query: `*[_type == "homepageData"][0].spotlight1Data{
-            promoTitle,
-            promoSubtitle,
-            promoText,
-            productRef->{
-                _id,
-                name,
-                brand,
-                displayPrice,
-                image{asset->{url}},
-                overviewFields
-            }
-        }`
-    });
+    const data = await getSpotlight1Data();
 
-    if (!data?.productRef) return null;
-    const product = data.productRef;
+    if (!data || !data.productRef) return null;
+    const { productRef: product, promoTitle, promoSubtitle, promoText } = data;
 
     return (
         <section className="w-full py-20 relative overflow-hidden border-t border-secondary-800 bg-brand-700">
@@ -38,12 +23,12 @@ export default async function ProductSpotlight1() {
                     <div className="w-full h-full bg-brand-800 rounded-none flex flex-col justify-center gap-6 p-8 lg:p-12">
                         <div className="flex flex-col gap-2">
                             <span className="text-small tracking-editorial text-accent-500 uppercase">{product.brand}</span>
-                            <h2 className="text-h1 uppercase">{data.promoTitle || product.name}</h2>
+                            <h2 className="text-h1 uppercase">{promoTitle || product.name}</h2>
                         </div>
                         <div className="flex flex-col gap-4">
-                            <h3 className="text-h3">{data.promoSubtitle || product.overviewFields?.[0]?.value || product.name}</h3>
+                            <h3 className="text-h3">{promoSubtitle || product.name}</h3>
                             <p className="text-body max-w-prose text-pretty">
-                                {data.promoText || product.overviewFields?.[0]?.information || "Unrivaled acoustic engineering and clarity."}
+                                {promoText || "Unrivaled acoustic engineering and clarity."}
                             </p>
                         </div>
                         <div className="mt-8 pt-4">

@@ -3,7 +3,6 @@ import type { CatalogueItem } from "../data";
 import Image from "next/image";
 
 export default function HeroImage({ data }: { data: CatalogueItem }) {
-  console.log('[SRIP Trace] Overwrote border-radius to 0px in:', 'HeroImage');
   return (
     <div
       className={cn(

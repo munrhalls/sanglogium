@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils/tailwind";
 
 export default function BrandLogo() {
-  console.log('[SRIP Trace] Overwrote border-radius to 0px in:', 'BrandLogo');
   return (
     <div className={cn("flex items-center gap-[4px]")}>
       {/* SANG */}
