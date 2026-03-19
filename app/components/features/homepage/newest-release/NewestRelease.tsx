@@ -5,40 +5,26 @@ import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
 import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";
 import { CarouselSlide } from "@/app/components/layout/carousel/CarouselSlide";
 import { CarouselDots } from "@/app/components/layout/carousel/CarouselControls";
-import { sanityFetch } from "@/sanity/lib/client";
+import { getNewestRelease } from "./getNewestRelease";
 
 export default async function NewestRelease() {
-  const data = await sanityFetch<any>({
-    query: `*[_type == "homepage"][0].newestRelease{
-      promoTitle,
-      promoSubtitle,
-      promoText,
-      productRef->{
-        _id,
-        name,
-        brand,
-        displayPrice,
-        image{asset->{url}},
-        gallery[]{asset->{url}},
-        overviewFields
-      }
-    }`
-  });
+  const data = await getNewestRelease();
 
-  if (!data?.productRef) return null;
+  if (!data || !data.productRef) return null;
 
-  const product = data.productRef;
-  const images = [
-    product.image?.asset?.url,
-    ...(product.gallery?.map((g: any) => g.asset?.url) || [])
+  const { productRef: product, promoTitle, promoSubtitle, promoText } = data;
+  
+  const allImages = [
+    product.image,
+    ...(product.gallery ?? [])
   ].filter(Boolean);
 
   const mappedSpotlight = {
     brand: product.brand,
     name: product.name,
-    headline: data.promoTitle || product.name,
-    subheadline: data.promoSubtitle || product.brand,
-    description: data.promoText || product.overviewFields?.[0]?.information || ""
+    headline: promoTitle || product.name,
+    subheadline: promoSubtitle || product.brand,
+    description: promoText || ""
   };
 
   return (
@@ -52,11 +38,11 @@ export default async function NewestRelease() {
         </div>
         <div className="order-1 lg:order-2">
           <div className="relative h-feature-media w-full overflow-hidden bg-brand-800 rounded-lg">
-            <Carousel itemsCount={images.length}>
+            <Carousel itemsCount={allImages.length}>
               <CarouselTrack className="h-full">
-                {images.map((img, idx) => (
+                {allImages.map((img, idx) => (
                   <CarouselSlide key={idx} className="h-full basis-full flex-shrink-0">
-                    <SpotlightHero image={img} tier="standard" />
+                    <SpotlightHero image={img.asset.url} tier="standard" />
                   </CarouselSlide>
                 ))}
               </CarouselTrack>

@@ -1,28 +1,20 @@
 import React from "react";
-import { sanityFetch } from "@/sanity/lib/client";
 import Grid from "@/app/components/layout/grid/Grid";
 import IemsGalleryHeader from "./IemsGalleryHeader";
 import IemCard from "./IemCard";
+import { getIemProducts } from "./getIemProducts";
 
 export default async function IemsGallery() {
-  const iems = await sanityFetch<any[]>({
-    query: `*[_type == "homepage"][0].iemsGallery[]->{
-      _id,
-      name,
-      brand,
-      displayPrice,
-      image{asset->{url}}
-    }`
-  });
+  const products = await getIemProducts();
 
-  if (!iems || iems.length === 0) return null;
+  if (!products.length) return null;
 
   return (
     <>
       <IemsGalleryHeader />
       <Grid cols={4}>
-        {iems.map((iem) => (
-          <IemCard key={iem._id} product={iem} />
+        {products.map((iem) => (
+          <IemCard key={iem._id} product={iem as any} />
         ))}
       </Grid>
     </>

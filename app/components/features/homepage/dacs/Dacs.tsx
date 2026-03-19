@@ -7,26 +7,20 @@ import { CarouselNext, CarouselPrevious, CarouselDots } from '@/app/components/l
 import DacsHeader from "./DacsHeader";
 import DacCard from "./DacCard";
 
-export default async function DACs() {
-  const dacs = await sanityFetch<any[]>({
-    query: `*[_type == "homepage"][0].dacs[]->{
-      _id,
-      name,
-      brand,
-      displayPrice,
-      image{asset->{url}}
-    }`
-  });
+import { getDacProducts } from "./getDacProducts";
 
-  if (!dacs || dacs.length === 0) return null;
+export default async function DACs() {
+  const products = await getDacProducts();
+
+  if (!products.length) return null;
 
   return (
-    <Carousel itemsCount={dacs.length}>
+    <Carousel itemsCount={products.length}>
       <div className="flex justify-between items-end mb-10">
         <DacsHeader />
       </div>
       <CarouselTrack className="flex gap-6 overflow-x-auto scrollbar-none snap-x snap-mandatory">
-        {dacs.map((item) => (
+        {products.map((item) => (
           <CarouselSlide key={item._id} className="basis-full 2xs:basis-1/2 md:basis-1/3 lg:basis-1/3 flex-shrink-0 snap-start">
             <DacCard item={item} />
           </CarouselSlide>
