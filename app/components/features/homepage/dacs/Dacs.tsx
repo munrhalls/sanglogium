@@ -15,7 +15,7 @@ export default async function DACs() {
   if (!products.length) return null;
 
   return (
-    <article className="w-full relative overflow-hidden border-t border-secondary-800 px-4 md:px-8">
+    <article className="w-full relative overflow-hidden border-secondary-800 px-4 md:px-8">
       <Carousel itemsCount={products.length}>
         <div className="flex justify-between items-end mb-10">
           <DacsHeader />

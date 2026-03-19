@@ -16,24 +16,15 @@ export default function HomePage() {
     <div>
       <Hero />
 
-      {/* The Featured section now correctly triggers the Platinum Slab physics */}
       <Shelf>
         <Featured />
       </Shelf>
-      {/* <Shelf variant="platinum">
-        <Featured />
-      </Shelf> */}
 
       <Shelf>
         <ProductSpotlight1 />
-      </Shelf>
 
-
-      <Shelf>
         <ProductSpotlight2 />
-      </Shelf>
 
-      <Shelf>
         <ProductSpotlight3 />
       </Shelf>
 

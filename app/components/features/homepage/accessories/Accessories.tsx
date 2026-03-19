@@ -6,7 +6,7 @@ export default async function Accessories() {
   const { cables, earpads, storage } = await getAccessoryProducts();
 
   return (
-    <div className="w-full space-y-20">
+    <div className="w-full space-y-12">
       <AccessoriesHeader />
       {cables.length > 0 && (
         <CategorySection category={{ name: "Cables", filter: "" }} items={cables as any} />

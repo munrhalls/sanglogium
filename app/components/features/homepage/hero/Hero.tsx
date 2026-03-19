@@ -11,7 +11,6 @@ export default async function Hero() {
     return null;
   }
 
-
   const mobileBackgroundImage = data.mobileBackgroundImage || data.backgroundImage;
 
   const getPosition = (image: SanityImage) => {
