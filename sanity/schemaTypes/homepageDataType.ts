@@ -12,6 +12,20 @@ export const homepageDataType = defineType({
       of: [{ type: "reference", to: [{ type: "product" }] }],
     }),
     defineField({
+      name: "featuredProducts",
+      title: "Featured Products (New)",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            { name: "productRef", type: "reference", to: [{ type: "product" }] },
+            { name: "productPromo", type: "string" },
+          ],
+        },
+      ],
+    }),
+    defineField({
       name: "spotlight1Data",
       title: "Product Spotlight 1",
       type: "object",
