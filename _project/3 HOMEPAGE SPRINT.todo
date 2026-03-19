@@ -5,14 +5,21 @@ Homepage Sprint:
     [x] Headline and CTA visible and styled at both breakpoints
     [x] No console errors on mount
     [x] Next/Image and Sanity CDN not conflicting
-    ☐ Copy stack: h1 has text-cap, subheadline has text-cap mt-2, CTA has mt-4
-    ☐ Headline uses leading-none if multiline
+    ✔ Copy stack: h1 has text-cap, subheadline has text-cap mt-2, CTA has mt-4 @done(26-03-19 14:00)
+    ✔ Headline uses leading-none if multiline @done(26-03-19 14:00)
   [ ] Featured
-    ☐ Carousel renders 3-6 products at 1280px
-    [ ] Carousel prev/next controls work
-    [ ] Real Sanity data displayed
-    [ ] Renders at 375px without overflow
-    [ ] No console errors on mount
+    ✔ Carousel renders 3-6 products at 1280px @done(26-03-19 13:59)
+    ✔ Carousel prev/next controls work @done(26-03-19 13:59)
+    ✔ Real Sanity data displayed @done(26-03-19 13:59)
+    ✔ Renders at 375px without overflow @done(26-03-19 13:59)
+    ✔ No console errors on mount @done(26-03-19 13:59)
+    [] layout - prev/next buttons should be moved to the bottom, to the left of dots
+    [] layout - prev/next buttons should have 1/2 of their width distance between them
+    [ ] layout - Promo text elements should all expand and have equal height to the tallest promo text element, based on promo text length
+    [] styling - add button should be replaced to be btn-cart from design system, with the phosphor cart icon
+    [] styling - prev/next button should be the size of primary cta in height, and aspect square in width
+    [] styling - prev/next button should have 1/2 of their width distance between them
+
   [ ] ProductSpotlight
     [ ] Renders product image, title, description at 1280px
     [ ] Renders correctly at 375px

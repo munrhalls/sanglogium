@@ -7,20 +7,23 @@ replace any one-off Tailwind classes with design system aliases.
 
 ## Deliverable State
 Responsive carousel of product cards populated from Sanity.
-Each card shows: product image (mainImage), brand, title, price,
-and btn-cart button from design system.
-Desktop: 3 cards visible. Mobile: 1 card visible.
+Each card shows: product image (mainImage), brand, title, promot text,
+ and price and btn-cart button from design system.
+Promo text elements should all expand and have equal height to the tallest promo text element, based on promo text length.
+Desktop: 3 cards visible. Tablet: 2 cards visible. Mobile: 1 card visible.
 All Tailwind classes use design system aliases from tailwind.config.ts.
 
 ## Data Contract
-interface FeaturedProduct {
-  _id: string
-  name: string
-  brand: string
-  displayPrice: number
-  image: { asset: { url: string }, alt?: string }
-}
-GROQ filter: catalogueLocationKeys includes "featured"
+const FEATURED_QUERY = `*[_type == "homepageData"][0].featuredProducts[]{
+  productPromo,
+  ...productRef->{
+    _id,
+    name,
+    brand,
+    displayPrice,
+    image{asset->{url}}
+  }
+}`;
 
 ## In Scope
 - GROQ query fetching only the fields in the data contract above
