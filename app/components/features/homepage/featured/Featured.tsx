@@ -23,7 +23,7 @@ const FeaturedCard = ({ product }: FeaturedCardProps) => (
         <div className="flex flex-col gap-2">
             <span className="text-small tracking-editorial text-accent-500 uppercase">{product.brand}</span>
             <h3 className="text-h4 line-clamp-1 group-hover:text-accent-400 transition-colors">{product.name}</h3>
-            <p className="text-small line-clamp-2 leading-relaxed">Unrivaled acoustic engineering and clarity.</p>
+            <p className="text-small line-clamp-2 leading-relaxed">{product.productPromo}</p>
         </div>
         <div className="mt-auto pt-4 flex items-center justify-between border-t border-secondary-800">
             <div className="flex flex-col justify-center">

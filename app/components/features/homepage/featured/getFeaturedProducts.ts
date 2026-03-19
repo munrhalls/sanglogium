@@ -5,6 +5,7 @@ export interface FeaturedProduct {
   name: string;
   brand: string;
   displayPrice: number;
+  productPromo: string;
   image: {
     asset: {
       url: string;
@@ -13,12 +14,15 @@ export interface FeaturedProduct {
   };
 }
 
-const FEATURED_QUERY = `*[_type == "homepageData"][0].featured[]->{
-  _id,
-  name,
-  brand,
-  displayPrice,
-  image{asset->{url}}
+const FEATURED_QUERY = `*[_type == "homepageData"][0].featuredProducts[]{
+  productPromo,
+  ...productRef->{
+    _id,
+    name,
+    brand,
+    displayPrice,
+    image{asset->{url}}
+  }
 }`;
 
 export async function getFeaturedProducts(): Promise<FeaturedProduct[]> {

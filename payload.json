@@ -1,6 +1,7 @@
 [
   {
     "_key": "1k27n1AQuIbSr5iozFz2v2d",
+    "_type": "object",
     "productRef": {
       "_type": "reference",
       "_ref": "k27n1AQuIbSr5iozFz2v2d"
@@ -9,6 +10,7 @@
   },
   {
     "_key": "2ZuUKzmkqDyQwdcwhxwQheb",
+    "_type": "object",
     "productRef": {
       "_type": "reference",
       "_ref": "ZuUKzmkqDyQwdcwhxwQheb"
@@ -17,6 +19,7 @@
   },
   {
     "_key": "3n10eAegrGspodtsQvneFiH",
+    "_type": "object",
     "productRef": {
       "_type": "reference",
       "_ref": "n10eAegrGspodtsQvneFiH"
@@ -25,6 +28,7 @@
   },
   {
     "_key": "4k27n1AQuIbSr5iozFz7KCz",
+    "_type": "object",
     "productRef": {
       "_type": "reference",
       "_ref": "k27n1AQuIbSr5iozFz7KCz"
@@ -33,6 +37,7 @@
   },
   {
     "_key": "5k27n1AQuIbSr5iozFz3jQQ",
+    "_type": "object",
     "productRef": {
       "_type": "reference",
       "_ref": "k27n1AQuIbSr5iozFz3jQQ"
@@ -41,6 +46,7 @@
   },
   {
     "_key": "6moXlkADK7m1DHgGwWtbnF3",
+    "_type": "object",
     "productRef": {
       "_type": "reference",
       "_ref": "moXlkADK7m1DHgGwWtbnF3"
@@ -49,6 +55,7 @@
   },
   {
     "_key": "7k27n1AQuIbSr5iozG2iyZJ",
+    "_type": "object",
     "productRef": {
       "_type": "reference",
       "_ref": "k27n1AQuIbSr5iozG2iyZJ"
@@ -57,6 +64,7 @@
   },
   {
     "_key": "8moXlkADK7m1DHgGwWtbizC",
+    "_type": "object",
     "productRef": {
       "_type": "reference",
       "_ref": "moXlkADK7m1DHgGwWtbizC"
@@ -65,6 +73,7 @@
   },
   {
     "_key": "9moXlkADK7m1DHgGwWtXvWl",
+    "_type": "object",
     "productRef": {
       "_type": "reference",
       "_ref": "moXlkADK7m1DHgGwWtXvWl"
