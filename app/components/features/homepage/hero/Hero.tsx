@@ -77,14 +77,14 @@ export default async function Hero() {
           <div className="flex flex-col gap-4 md:gap-8">
             <h1
               className={cn(
-                "text-cap type-hero-headline uppercase"
+                "text-cap type-hero-headline uppercase leading-none"
               )}
             >
               {data.headline}
             </h1>
             <p
               className={cn(
-                "text-cap type-hero-sub",
+                "text-cap type-hero-sub mt-2"
               )}
             >
               {data.subheadline}
@@ -95,7 +95,7 @@ export default async function Hero() {
             className={cn(
               "btn-primary px-12 py-4 lg:py-6",
               "text-cta-hero font-bold",
-              "mt-2"
+              "mt-4"
             )}
           >
             {data.ctaText || "Explore"}
