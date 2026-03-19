@@ -5,6 +5,7 @@ import { CarouselSlide } from "@/app/components/layout/carousel/CarouselSlide";
 import { CarouselPrevious, CarouselNext, CarouselDots } from "@/app/components/layout/carousel/CarouselControls";
 import featuredImg from './featured_transparent.png';
 import { getFeaturedProducts, FeaturedProduct } from "./getFeaturedProducts";
+import { ShoppingCart } from "@phosphor-icons/react/dist/ssr";
 
 // --- ATOM 1: THE FEATURED CARD ---
 interface FeaturedCardProps {
@@ -20,16 +21,17 @@ const FeaturedCard = ({ product }: FeaturedCardProps) => (
                 className="w-auto h-auto max-w-[85%] max-h-[85%] object-contain mix-blend-multiply transform transition-transform duration-700 group-hover:scale-110"
             />
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex-grow flex flex-col gap-2">
             <span className="text-small tracking-editorial text-accent-500 uppercase">{product.brand}</span>
             <h3 className="text-h4 line-clamp-1 group-hover:text-accent-400 transition-colors">{product.name}</h3>
-            <p className="text-small line-clamp-2 leading-relaxed">{product.productPromo}</p>
+            <p className="text-small line-clamp-2 leading-relaxed flex-grow">{product.productPromo}</p>
         </div>
         <div className="mt-auto pt-4 flex items-center justify-between border-t border-secondary-800">
             <div className="flex flex-col justify-center">
                 <span className="text-h4">${product.displayPrice}</span>
             </div>
-            <button className="btn-secondary flex items-center gap-2 px-4 py-2 active:scale-95">
+            <button className="btn-cart transition-all active:scale-95">
+                <ShoppingCart size={20} weight="light" />
                 <span className="text-small font-bold uppercase">Add</span>
             </button>
         </div>
@@ -45,24 +47,24 @@ export default async function Featured() {
         <article className="w-full px-4 md:px-8">
             <Carousel itemsCount={finalFeatured?.length || 0} breakpointMap={{ lgDesktop: 3, mdPortrait: 2, mobilePortrait: 1 }}>
                 <div className="relative flex flex-col gap-8">
-                    <div className="flex justify-between items-end">
-                        <div className="flex flex-col gap-2">
-                            <span className="text-small tracking-editorial text-secondary-400 uppercase">Curated Excellence</span>
-                            <h2 className="text-h2 uppercase">Featured</h2>
-                        </div>
-                        <div className="flex gap-3 pb-1">
-                            <CarouselPrevious className="border-secondary-600 text-secondary-400 hover:text-accent-500 hover:border-accent-500 transition-all rounded-none" />
-                            <CarouselNext className="border-secondary-600 text-secondary-400 hover:text-accent-500 hover:border-accent-500 transition-all rounded-none" />
-                        </div>
+                    <div className="flex flex-col gap-2">
+                        <span className="text-small tracking-editorial text-secondary-400 uppercase">Curated Excellence</span>
+                        <h2 className="text-h2 uppercase">Featured</h2>
                     </div>
                     <CarouselTrack className="-mx-3">
                         {finalFeatured.map((p, idx) => (
-                            <CarouselSlide key={p._id || idx} className="px-3">
+                            <CarouselSlide key={p._id || idx} className="px-3 h-full">
                                 <FeaturedCard product={p} />
                             </CarouselSlide>
                         ))}
                     </CarouselTrack>
-                    <div className="flex justify-center mt-4"><CarouselDots color="brand-400" /></div>
+                    <div className="flex items-center justify-center gap-12 mt-4">
+                        <div className="flex gap-4">
+                            <CarouselPrevious className="h-12 w-12 aspect-square border-secondary-600 text-secondary-400 hover:text-accent-500 hover:border-accent-500 transition-all rounded-none" />
+                            <CarouselNext className="h-12 w-12 aspect-square border-secondary-600 text-secondary-400 hover:text-accent-500 hover:border-accent-500 transition-all rounded-none" />
+                        </div>
+                        <CarouselDots color="brand-400" />
+                    </div>
                 </div>
             </Carousel>
         </article>
