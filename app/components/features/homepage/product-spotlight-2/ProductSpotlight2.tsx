@@ -1,12 +1,12 @@
 import React from "react";
 import SpotlightHero from "../shared-spotlight/SpotlightHero";
 import SpotlightDetails from "../shared-spotlight/SpotlightDetails";
-import { getSpotlight2Product } from "./getSpotlight2Product";
+import { getSpotlight2Data } from "./getSpotlight2Data";
 
 export default async function ProductSpotlight2() {
-  const data = await getSpotlight2Product();
+  const data = await getSpotlight2Data();
 
-  if (!data?.productRef) return null;
+  if (!data || !data.productRef) return null;
   const product = data.productRef;
 
   const mappedData = {
@@ -14,8 +14,8 @@ export default async function ProductSpotlight2() {
     brand: product.brand,
     name: product.name,
     headline: data.promoTitle || product.name,
-    subheadline: data.promoSubtitle || product.overviewFields?.[0]?.value || product.name,
-    description: data.promoText || product.overviewFields?.[0]?.information || "Unrivaled acoustic engineering and clarity.",
+    subheadline: data.promoSubtitle || product.name,
+    description: data.promoText || "Unrivaled acoustic engineering and clarity.",
     mainImage: product.image?.asset?.url || ""
   };
 
