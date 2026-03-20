@@ -176,7 +176,7 @@ const uiComponentsPlugin = plugin(function ({ addComponents, theme }) {
       fontWeight: theme("fontWeight.bold") as string,
       fontSize: theme("fontSize.action[0]") as string,
       lineHeight: theme("fontSize.action[1].lineHeight") as string,
-      padding: `${theme("spacing.3")} ${theme("spacing.2")}`,
+      padding: `${theme("spacing.2")} ${theme("spacing.2")}`,
       borderRadius: "0px",
       boxShadow: theme("boxShadow.button") as string,
       transition: "background-color 0.2s ease, box-shadow 0.2s ease",

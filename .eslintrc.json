@@ -1,0 +1,10 @@
+{
+  "root": true,
+  "extends": [
+    "next/core-web-vitals"
+  ],
+  "rules": {
+    "prettier/prettier": "off",
+    "tailwindcss/classnames-order": "off"
+  }
+}

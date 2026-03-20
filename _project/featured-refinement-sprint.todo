@@ -1,0 +1,10 @@
+Definition of Done (DoD) Sequence
+DoD 1: Text container has a fixed min-h preventing layout shifts during slide navigation.
+
+DoD 2: Image container aspect ratio or fixed height is increased for mobile, maintaining full-card visibility.
+
+DoD 3: Vertical spacing between title, image, text, price, and dots uses strictly 8-point Tailwind utility classes.
+
+DoD 4: Mobile arrows render as brand-900 chevrons with transparent backgrounds, perfectly centered on the left/right edges of the image container.
+
+DoD 5: Desktop arrows move to the bottom row, rendering as brand-400 chevrons with transparent backgrounds, flanking the pagination dots.

@@ -8,8 +8,8 @@ import { CarouselIcon } from "./DotIcon";
 
 const BTN_BASE = cn(
   "flex h-8 w-8 items-center justify-center rounded-full",
-  "border border-brand-300/35 bg-brand-800/40 text-brand-400",
-  "backdrop-blur-md transition-all",
+  "text-brand-400",
+  "transition-all",
   "hover:bg-brand-600 hover:text-brand-900 active:scale-95",
   "disabled:pointer-events-none disabled:opacity-40",
   "outline-none focus-visible:ring-2 focus-visible:ring-accent-500",
@@ -31,10 +31,10 @@ export function CarouselPrevious({ className, bg = "bg-brand-800/40", iconColor 
       type="button"
       onClick={scrollPrev}
       disabled={!canScrollPrev}
-      className={cn(BTN_BASE, bg, iconColor, className)}
+      className={cn(BTN_BASE, className)}
       {...props}
     >
-      <CaretLeftIcon size={16} weight="light" />
+      <CaretLeftIcon size={16} weight="bold" />
     </button>
   );
 }
@@ -49,10 +49,10 @@ export function CarouselNext({ className, bg = "bg-brand-800/40", iconColor = "t
       type="button"
       onClick={scrollNext}
       disabled={!canScrollNext}
-      className={cn(BTN_BASE, bg, iconColor, className)}
+      className={cn(BTN_BASE, className)}
       {...props}
     >
-      <CaretRightIcon size={16} weight="light" />
+      <CaretRightIcon size={16} weight="bold" />
     </button>
   );
 }
@@ -61,8 +61,6 @@ export function CarouselDots({ className, color = "brand-400" }: { className?: s
   const context = useCarousel();
   if (!context) return null;
   const { itemsCount, activeIndex, goTo, visibleCount = 1 } = context;
-  // Consumer Level Trace
-  console.log("[Dots Trace] Applying Capacity:", visibleCount);
   const vCount = Number(visibleCount); const aIndex = Math.round(Number(activeIndex));
 
   return (
