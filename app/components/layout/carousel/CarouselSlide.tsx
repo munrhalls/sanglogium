@@ -34,8 +34,6 @@ export function CarouselSlide({ children, className = "" }: CarouselSlideProps) 
 
   useEffect(() => {
     if (slideRef.current) {
-      console.log("[SRIP Trace] Slide Rendering | Capacity:", getComputedStyle(slideRef.current).getPropertyValue('--visible-count'));
-      console.log("[SRIP Trace] Calculated Flex Basis:", slideRef.current?.style.flexBasis);
     }
   });
 

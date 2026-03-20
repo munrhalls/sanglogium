@@ -13,7 +13,7 @@ interface FeaturedCardProps {
 }
 
 const FeaturedCard = ({ product }: FeaturedCardProps) => (
-    <article className="group flex flex-col h-full gap-4 p-6 border border-secondary-800 rounded-none bg-transparent transition-all duration-300 hover:border-secondary-600 hover:bg-secondary-900/10">
+    <article className="group grid grid-rows-subgrid row-span-4 h-full gap-4 p-6 border border-secondary-800 rounded-none bg-transparent transition-all duration-300 hover:border-secondary-600 hover:bg-secondary-900/10">
         <div className="aspect-square w-full bg-brand-300 rounded-none overflow-hidden relative flex items-center justify-center p-8">
             <img
                 src={product.image?.asset?.url || featuredImg.src}
@@ -24,7 +24,7 @@ const FeaturedCard = ({ product }: FeaturedCardProps) => (
         <div className="flex-grow flex flex-col gap-2">
             <span className="text-small tracking-editorial text-accent-500 uppercase">{product.brand}</span>
             <h3 className="text-h4 line-clamp-1 group-hover:text-accent-400 transition-colors">{product.name}</h3>
-            <p className="text-small line-clamp-2 leading-relaxed flex-grow">{product.productPromo}</p>
+            <p className="text-small leading-relaxed flex-grow">{product.productPromo}</p>
         </div>
         <div className="mt-auto pt-4 flex items-center justify-between border-t border-secondary-800">
             <div className="flex flex-col justify-center">
@@ -51,19 +51,19 @@ export default async function Featured() {
                         <span className="text-small tracking-editorial text-secondary-400 uppercase">Curated Excellence</span>
                         <h2 className="text-h2 uppercase">Featured</h2>
                     </div>
-                    <CarouselTrack className="-mx-3">
+                    <CarouselTrack className="-mx-3 grid grid-rows-subgrid row-span-3">
                         {finalFeatured.map((p, idx) => (
-                            <CarouselSlide key={p._id || idx} className="px-3 h-full">
+                            <CarouselSlide key={p._id || idx} className="px-3 h-full flex flex-col">
                                 <FeaturedCard product={p} />
                             </CarouselSlide>
                         ))}
                     </CarouselTrack>
-                    <div className="flex items-center justify-center gap-12 mt-4">
-                        <div className="flex gap-4">
+                    <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 mt-4">
+                        <CarouselDots color="brand-400" className="order-1 md:order-2" />
+                        <div className="flex gap-4 order-2 md:order-1">
                             <CarouselPrevious className="h-12 w-12 aspect-square border-secondary-600 text-secondary-400 hover:text-accent-500 hover:border-accent-500 transition-all rounded-none" />
                             <CarouselNext className="h-12 w-12 aspect-square border-secondary-600 text-secondary-400 hover:text-accent-500 hover:border-accent-500 transition-all rounded-none" />
                         </div>
-                        <CarouselDots color="brand-400" />
                     </div>
                 </div>
             </Carousel>

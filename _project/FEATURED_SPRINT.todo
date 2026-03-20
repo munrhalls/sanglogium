@@ -1,0 +1,24 @@
+7 DoD items left
+2 complex tasks
+Estimate: 1 hour (done by 9:00)
+Aim: done by 8:30
+
+[ ] Featured
+    ✔ Carousel renders 3-6 products at 1280px @done(26-03-19 13:59)
+    ✔ Carousel prev/next controls work @done(26-03-19 13:59)
+    ✔ Real Sanity data displayed @done(26-03-19 13:59)
+    ✔ Renders at 375px without overflow @done(26-03-19 13:59)
+    ✔ No console errors on mount @done(26-03-19 13:59)
+    ✔ layout - prev/next buttons should be moved to the bottom, to the left of dots @done(26-03-19 14:14)
+    ✔ layout - prev/next buttons should have 1/2 of their width distance between them @done(26-03-19 14:14)
+    ☐ replace any tailwind or one off disconnected typography classes, use the design system instead - only typograpy aliases from tailwind.config.ts
+    [] headings and subheadings must have text-cap
+    ✔ layout - Promo text elements text content should be fully visible - should expand height of container @done(26-03-20 07:42)
+    ✔ layout - promot texts should have equal height to the tallest promo text element, based on promo text length @done(26-03-20 08:28)
+    ✔ layout - carousel slides should be equal height (without touching carousel internals in any way) @done(26-03-20 08:28)
+    ☐ on mobile, prev/next buttons should be attached to the sides of the product card - such that each button is vertically in the middle of the product image, horizontally on the sides such that such that the slides respective vertical border crosses the middle (but goes underneath) of each button
+    [] dots on mobile should be colored dark, bg-700 utilizing props that carousel dots accepts (it's already done - if not, don't touch it, only alert me)
+    [] dots on mobile should be smaller
+    [] dots on mobile should occupy the bottom area of the product image
+    ✔ styling - add button should be replaced to be btn-cart from design system, with the phosphor cart icon @done(26-03-19 14:16)
+    ✔ styling - prev/next button should be the size of primary cta in height, and aspect square in width @done(26-03-19 14:17)
