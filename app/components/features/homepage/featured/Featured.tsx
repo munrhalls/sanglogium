@@ -13,8 +13,8 @@ interface FeaturedCardProps {
 }
 
 const FeaturedCard = ({ product }: FeaturedCardProps) => (
-    <article className="group grid grid-rows-subgrid row-span-4 h-full gap-4 p-6 border border-secondary-800 rounded-none bg-transparent transition-all duration-300 hover:border-secondary-600 hover:bg-secondary-900/10">
-        <div className="aspect-square w-full bg-brand-300 rounded-none overflow-hidden relative flex items-center justify-center p-8">
+    <article className="group flex flex-col h-full gap-4 p-6 border border-secondary-800 rounded-none bg-transparent transition-all duration-300 hover:border-secondary-600 hover:bg-secondary-900/10">
+        <div className="aspect-4/3 w-full bg-brand-300 rounded-none overflow-hidden relative flex items-center justify-center p-8">
             <img
                 src={product.image?.asset?.url || featuredImg.src}
                 alt={product.name}
@@ -22,9 +22,9 @@ const FeaturedCard = ({ product }: FeaturedCardProps) => (
             />
         </div>
         <div className="flex-grow flex flex-col gap-2">
-            <span className="text-small tracking-editorial text-accent-500 uppercase">{product.brand}</span>
-            <h3 className="text-h4 line-clamp-1 group-hover:text-accent-400 transition-colors">{product.name}</h3>
-            <p className="text-small leading-relaxed flex-grow">{product.productPromo}</p>
+            <h3 className="text-body tracking-editorial text-accent-500 uppercase">{product.brand}</h3>
+            <p className="text-small group-hover:text-accent-400 transition-colors">{product.name}</p>
+            {/* <p className="text-small leading-relaxed flex-grow">{product.productPromo}</p> */}
         </div>
         <div className="mt-auto pt-4 flex items-center justify-between border-t border-secondary-800">
             <div className="flex flex-col justify-center">
@@ -44,25 +44,25 @@ export default async function Featured() {
     if (!finalFeatured || finalFeatured?.length === 0) return null;
 
     return (
-        <article className="w-full px-4 md:px-8">
+        <article className="w-full px-4 md:px-8 bg-brand-950">
             <Carousel itemsCount={finalFeatured?.length || 0} breakpointMap={{ lgDesktop: 3, mdPortrait: 2, mobilePortrait: 1 }}>
-                <div className="relative flex flex-col gap-8">
-                    <div className="flex flex-col gap-2">
+                <div className="relative flex flex-col lg-touch:gap-6 lg-desktop:gap-6">
+                    <div className=" flex flex-col gap-2">
                         <span className="text-small tracking-editorial text-secondary-400 uppercase">Curated Excellence</span>
                         <h2 className="text-h2 uppercase">Featured</h2>
                     </div>
-                    <CarouselTrack className="-mx-3 grid grid-rows-subgrid row-span-3">
+                    <CarouselTrack className="mt-4 mx-0 md:-mx-3 items-stretch relative">
                         {finalFeatured.map((p, idx) => (
                             <CarouselSlide key={p._id || idx} className="px-3 h-full flex flex-col">
                                 <FeaturedCard product={p} />
                             </CarouselSlide>
                         ))}
                     </CarouselTrack>
-                    <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 mt-4">
+                    <div className="mt-4 flex flex-col md:flex-row items-center justify-center  md:gap-12 lg-desktop:mt-4">
                         <CarouselDots color="brand-400" className="order-1 md:order-2" />
-                        <div className="flex gap-4 order-2 md:order-1">
-                            <CarouselPrevious className="h-12 w-12 aspect-square border-secondary-600 text-secondary-400 hover:text-accent-500 hover:border-accent-500 transition-all rounded-none" />
-                            <CarouselNext className="h-12 w-12 aspect-square border-secondary-600 text-secondary-400 hover:text-accent-500 hover:border-accent-500 transition-all rounded-none" />
+                        <div className=" flex gap-4 order-2 md:order-1">
+                            <CarouselPrevious className="absolute top-[47.5%] left-0 lg-touch:static lg-desktop:static h-12 w-12 aspect-square border-secondary-600 text-secondary-400 hover:text-accent-500 hover:border-accent-500 transition-all rounded-none" />
+                            <CarouselNext className="absolute top-[47.5%] right-0 lg-touch:static lg-desktop:static h-12 w-12 aspect-square border-secondary-600 text-secondary-400 hover:text-accent-500 hover:border-accent-500 transition-all rounded-none" />
                         </div>
                     </div>
                 </div>
