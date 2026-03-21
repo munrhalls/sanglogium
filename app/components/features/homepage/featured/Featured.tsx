@@ -76,7 +76,7 @@ export default async function Featured() {
           </CarouselTrack>
 
 
-          <div className="flex items-center justify-center md:flex-row md:gap-8">
+          <div className="flex items-center justify-center md:flex-row gap-4 md:gap-8">
             <CarouselPrevious
               className="transition-colors border-none shadow-none h-auto w-auto hover:bg-transparent focus:ring-0 active:scale-110 text-brand-400"
             />

@@ -13,9 +13,11 @@ Catalogue
     [] styling - close button - should be a bit larger and remain brand-400 via alias (currently very small) -> determine proper typography alias -> use /// if alias not present - stop and process proper update to global tailwind config
     [] styling - close button - should be thin font
 
-[] mobile / tablet / lg-touch
-    [] styling - nav chevrons slightly bigger on tablet sizes
-    [] styling nav chevrons and dots are consistent size relative to each other at each viewport
+✔ carousel dots and nav btns - mobile / tablet / lg-touch dots and nav btns are consistent sizing and color@done(26-03-21 13:20)
+    ✔ structure - refactor carousel controls to be reach simple and robust and professional level: ensure the logic of props vs defaults is simple and consistent, structurally sound, robust, nothing unnecessary @done(26-03-21 13:19)
+    ✔ styling - nav chevrons slightly bigger on tablet sizes @done(26-03-21 13:20)
+    ✔ styling nav chevrons and dots are consistent size relative to each other at each viewport @done(26-03-21 13:20)
+        ✔ styling - nav chevrons and dots - make the appropriate same size at each viewport, if needed, reduce size of chevros to match the size of dots @done(26-03-21 13:20)
     ✔ styling - dots - non-active dots should be empty circles, brand-400 color; active dot should be orb (as is) @done(26-03-21 12:50)
 
 Featured
