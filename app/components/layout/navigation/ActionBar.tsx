@@ -87,10 +87,10 @@ function ActionButtons() {
 export default function ActionBar() {
   return (
     <div
-      style={{ display: "var(--mobile-menu-display)" }}
       className={cn(
         "fixed bottom-0 left-0 right-0 z-50",
-        "h-[var(--mobile-menu-h)] border-t border-white bg-brand-800 text-white"
+        "h-[var(--mobile-menu-h)] border-t border-white bg-brand-800 text-white",
+        "lg-touch:hidden lg-desktop:hidden"
       )}
     >
       <ActionButtons />

@@ -15,7 +15,9 @@ export default function Shelf({ children, variant = "default", className }: Shel
 
   return (
     <section className={cn("w-full py-20", variants[variant], className)}>
-      {children}
+      <div className="mx-auto max-w-[1280px]">
+        {children}
+      </div>
     </section>
   );
 }
