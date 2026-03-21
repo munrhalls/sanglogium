@@ -7,25 +7,20 @@ import { useCarousel } from "./CarouselContext";
 import { CarouselIcon } from "./DotIcon";
 
 const BTN_BASE = cn(
-  "flex h-8 w-8 items-center justify-center rounded-full",
-  "text-brand-400",
-  "transition-all",
-  "hover:bg-brand-600 hover:text-brand-900 active:scale-95",
-  "disabled:pointer-events-none disabled:opacity-40",
-  "outline-none focus-visible:ring-2 focus-visible:ring-accent-500",
+  "group relative flex h-8 w-8 items-center justify-center rounded-full",
+  "text-brand-400 transition-all duration-200",
+  "hover:text-brand-300 active:scale-110",
+  "disabled:pointer-events-none disabled:opacity-20",
+  "outline-none focus-visible:ring-2 focus-visible:ring-brand-400/50",
   "before:absolute before:-inset-2 before:content-['']"
 );
 
-interface NavBtnProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  bg?: string; iconColor?: string;
-  className?: string;
-}
-
-export function CarouselPrevious({ className, bg = "bg-brand-800/40", iconColor = "text-brand-400", ...props }: NavBtnProps) {
+export function CarouselPrevious({ className, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   const context = useCarousel();
   if (!context) return null;
 
   const { scrollPrev, canScrollPrev } = context;
+
   return (
     <button
       type="button"
@@ -34,16 +29,17 @@ export function CarouselPrevious({ className, bg = "bg-brand-800/40", iconColor 
       className={cn(BTN_BASE, className)}
       {...props}
     >
-      <CaretLeftIcon size={16} weight="bold" />
+      <CaretLeftIcon weight="bold" className="h-5 w-5 sm:h-6 sm:w-6" />
     </button>
   );
 }
 
-export function CarouselNext({ className, bg = "bg-brand-800/40", iconColor = "text-brand-400", ...props }: NavBtnProps) {
+export function CarouselNext({ className, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   const context = useCarousel();
   if (!context) return null;
 
   const { scrollNext, canScrollNext } = context;
+
   return (
     <button
       type="button"
@@ -52,7 +48,7 @@ export function CarouselNext({ className, bg = "bg-brand-800/40", iconColor = "t
       className={cn(BTN_BASE, className)}
       {...props}
     >
-      <CaretRightIcon size={16} weight="bold" />
+      <CaretRightIcon weight="bold" className="h-5 w-5 sm:h-6 sm:w-6" />
     </button>
   );
 }
@@ -60,15 +56,14 @@ export function CarouselNext({ className, bg = "bg-brand-800/40", iconColor = "t
 export function CarouselDots({ className, color = "brand-400" }: { className?: string; color?: string }) {
   const context = useCarousel();
   if (!context) return null;
+
   const { itemsCount, activeIndex, goTo, visibleCount = 1 } = context;
-  const vCount = Number(visibleCount); const aIndex = Math.round(Number(activeIndex));
+  const vCount = Number(visibleCount);
+  const aIndex = Math.round(Number(activeIndex));
 
-  const colorMap: Record<string, { text: string; border: string }> = {
-    "brand-400": { text: "text-brand-400", border: "border-brand-400" },
-    "brand-700": { text: "text-brand-700", border: "border-brand-700" },
-  };
-
-  const colorClasses = colorMap[color] || colorMap["brand-400"];
+  const colorClasses = color === "brand-700"
+    ? { text: "text-brand-700" }
+    : { text: "text-brand-400" };
 
   return (
     <div className={cn("flex justify-center gap-4 sm:gap-6", className)} role="tablist">
@@ -88,9 +83,8 @@ export function CarouselDots({ className, color = "brand-400" }: { className?: s
             {isAnchor ? (
               <CarouselIcon
                 className={cn(
-                  "h-2 w-2 sm:h-4 sm:w-4 rounded-full transition-all duration-500",
-                  colorClasses.text,
-                  "opacity-100 scale-110"
+                  "h-2 w-2 sm:h-4 sm:w-4 rounded-full transition-all duration-500 opacity-100 scale-110",
+                  colorClasses.text
                 )}
               />
             ) : (
@@ -101,9 +95,7 @@ export function CarouselDots({ className, color = "brand-400" }: { className?: s
                 className={cn(
                   "h-2 w-2 sm:h-4 sm:w-4 transition-all duration-500",
                   colorClasses.text,
-                  isInView
-                    ? "opacity-85 scale-100"
-                    : "opacity-45 lg-touch:opacity-30 lg-desktop:opacity-30",
+                  isInView ? "opacity-85 scale-100" : "opacity-45 lg-touch:opacity-30 lg-desktop:opacity-30"
                 )}
               >
                 <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="2" />
@@ -116,12 +108,3 @@ export function CarouselDots({ className, color = "brand-400" }: { className?: s
     </div>
   );
 }
-
-
-
-
-
-
-
-
-

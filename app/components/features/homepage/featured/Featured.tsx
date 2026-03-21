@@ -78,11 +78,11 @@ export default async function Featured() {
 
           <div className="flex items-center justify-center md:flex-row md:gap-8">
             <CarouselPrevious
-              className="flex md:flex p-3 transition-colors border-none shadow-none h-auto w-auto hover:bg-transparent focus:ring-0 active:scale-110 [&_svg]:w-5 [&_svg]:h-5 md:[&_svg]:w-7 md:[&_svg]:h-7 text-brand-400"
+              className="transition-colors border-none shadow-none h-auto w-auto hover:bg-transparent focus:ring-0 active:scale-110 text-brand-400"
             />
             <CarouselDots color="brand-400" />
             <CarouselNext
-              className="flex md:flex p-3 transition-colors border-none shadow-none h-auto w-auto hover:bg-transparent focus:ring-0 active:scale-110 [&_svg]:w-5 [&_svg]:h-5 md:[&_svg]:w-7 md:[&_svg]:h-7 text-brand-400"
+              className="transition-colors border-none shadow-none h-auto w-auto hover:bg-transparent focus:ring-0 active:scale-105 text-brand-400"
             />
           </div>
         </div>

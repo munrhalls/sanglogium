@@ -15,7 +15,8 @@ Catalogue
 
 [] mobile / tablet / lg-touch
     [] styling - nav chevrons slightly bigger on tablet sizes
-    [] styling - dots - non-active dots should be empty circles, brand-400 color; active dot should be orb (as is)
+    [] styling nav chevrons and dots are consistent size relative to each other at each viewport
+    ✔ styling - dots - non-active dots should be empty circles, brand-400 color; active dot should be orb (as is) @done(26-03-21 12:50)
 
 Featured
 [] desktop
@@ -31,8 +32,8 @@ Featured
     [] styling - featured card - image container - should be 3/4 (wider than tall), not aspect square
     [] styling - featured card - image container - image - should be a bit smaller size, appropriate for 3/4 container symmetry
     [] styling - typography - check only typography aliases applied, no one off's
-    [] styling - dots - non-active dots should be empty circles, brand-400 color
-    [] styling - dots - active dot should be brand-400 orb (as is)
+    ✔ styling - dots - non-active dots should be empty circles, brand-400 color @done(26-03-21 12:52)
+    ✔ styling - dots - active dot should be brand-400 orb (as is) @done(26-03-21 12:52)
 [] tablet
     [] layout - nav btns and dots should be bottom center, nav btns first, dots after nav btns
 
@@ -60,7 +61,7 @@ Featured
 
     [] styling - nav btns - should be thick brand-700 chevros, inactive should be greyed out or low opacity
     // if no alias present for inactive state inside carousel internals - stop, will need to re-consider that aspect
-    [] styling - dots - inactive dot should be brand-700 circle, active dot should be brand-700 orb
+    ✔ styling - dots - inactive dot should be brand-700 circle, active dot should be brand-700 orb @done(26-03-21 12:52)
     [] styling - dots - should be relatively small - around w-5 h-5 mobile, up to w-6 h-7 tablet, w-8 h-8 desktop
 
     [] styling - typography - should use only typography aliases, no one off's
