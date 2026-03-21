@@ -66,6 +66,7 @@ const surface = {
 const textTokens = {
   primary: brand[400],
   secondary: secondary[400],
+  caption: secondary[500],
   heroHeadline: brand[400],
   heroSubHeadline: secondary[300],
   headline: brand[400],
@@ -202,6 +203,13 @@ const uiComponentsPlugin = plugin(function ({ addComponents, theme }) {
       letterSpacing: theme("fontSize.h2[1].letterSpacing") as string,
       fontWeight: theme("fontWeight.medium") as string,
       color: theme("colors.text.heroSubHeadline") as string,
+    },
+    ".type-section-caption": {
+      fontSize: theme("fontSize.small[0]") as string,
+      lineHeight: theme("fontSize.small[1].lineHeight") as string,
+      letterSpacing: theme("letterSpacing.editorial") as string,
+      fontWeight: theme("fontWeight.light") as string,
+      color: theme("colors.text.caption") as string,
     },
     ".type-section-hed": {
       fontSize: theme("fontSize.h1[0]") as string,

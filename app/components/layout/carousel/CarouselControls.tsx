@@ -83,7 +83,7 @@ export function CarouselDots({ className, color = "brand-400" }: { className?: s
             {isAnchor ? (
               <CarouselIcon
                 className={cn(
-                  "h-2 w-2 sm:h-4 sm:w-4 rounded-full transition-all duration-500 opacity-100 scale-110",
+                  "h-2 w-2 sm:h-3 sm:w-3 rounded-full transition-all duration-500 opacity-100 scale-110",
                   colorClasses.text
                 )}
               />
@@ -93,7 +93,7 @@ export function CarouselDots({ className, color = "brand-400" }: { className?: s
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 className={cn(
-                  "h-2 w-2 sm:h-4 sm:w-4 transition-all duration-500",
+                  "h-2 w-2 sm:h-3 sm:w-3 transition-all duration-500",
                   colorClasses.text,
                   isInView ? "opacity-85 scale-100" : "opacity-45 lg-touch:opacity-30 lg-desktop:opacity-30"
                 )}

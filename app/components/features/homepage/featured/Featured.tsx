@@ -17,16 +17,16 @@ interface FeaturedCardProps {
 
 export const FeaturedCard = ({ product }: FeaturedCardProps) => (
   <article className="group flex h-full flex-col bg-transparent p-6 transition-all duration-300 gap-3">
-    <figure className="aspect-square rounded-none relative flex w-full items-center justify-center overflow-hidden bg-brand-300 p-6">
+    <figure className="aspect-[16/9] rounded-none relative flex w-full items-center justify-center overflow-hidden bg-brand-300 p-6 md:pt-6 md:pb-2 md:px-4">
       <span className="absolute left-4 top-4 text-small font-bold uppercase tracking-editorial text-brand-900">
         {product.brand}
       </span>
       <Image
         src={product.image?.asset?.url || featuredImg.src}
         alt={product.name}
-        width={300}
-        height={300}
-        className="h-auto max-h-[85%] w-auto max-w-[85%] transform object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-110"
+        width={450}
+        height={450}
+        className="h-auto max-h-[95%] w-auto max-w-[95%] md:max-h-full md:max-w-full md:h-full md:w-full transform object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-110"
       />
     </figure>
 
@@ -52,19 +52,21 @@ export default async function Featured() {
 
   return (
     <article className="bg-brand-950 w-full px-4 md:px-8">
+
+
       <Carousel
         itemsCount={finalFeatured?.length || 0}
         breakpointMap={{ lgDesktop: 3, mdPortrait: 2, mobilePortrait: 1 }}
       >
-        <div className="relative flex flex-col gap-2">
-          <div className="flex flex-col gap-4">
-            <span className="type-overline uppercase tracking-editorial text-secondary-400">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4">
+          <div className="flex flex-col gap-4 md:col-start-1 md:row-start-1">
+            <span className="type-section-caption uppercase">
               Curated Excellence
             </span>
             <h2 className="type-section-hed uppercase">Featured</h2>
           </div>
 
-          <CarouselTrack className="relative mx-0 items-stretch md:-mx-3">
+          <CarouselTrack className="relative mx-0 items-stretch md:-mx-3 md:col-span-full md:row-start-2">
             {finalFeatured.map((p, idx) => (
               <CarouselSlide
               key={p._id || idx}
@@ -75,18 +77,20 @@ export default async function Featured() {
             ))}
           </CarouselTrack>
 
-
-          <div className="flex items-center justify-center md:flex-row gap-4 md:gap-8">
+          <div className="flex items-center justify-center md:flex-row gap-4 md:gap-8 md:col-start-2 md:row-start-1 md:justify-self-end md:pr-16 ">
             <CarouselPrevious
-              className="transition-colors border-none shadow-none h-auto w-auto hover:bg-transparent focus:ring-0 active:scale-110 text-brand-400"
+              className="transition-colors border-none shadow-none h-4 w-4 hover:bg-transparent focus:ring-0 active:scale-110 text-brand-400"
             />
             <CarouselDots color="brand-400" />
             <CarouselNext
-              className="transition-colors border-none shadow-none h-auto w-auto hover:bg-transparent focus:ring-0 active:scale-105 text-brand-400"
+              className="transition-colors border-none shadow-none h-4 w-4 hover:bg-transparent focus:ring-0 active:scale-105 text-brand-400"
             />
           </div>
         </div>
       </Carousel>
+
+
+
     </article>
   );
 }
