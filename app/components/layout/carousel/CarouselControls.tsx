@@ -63,6 +63,13 @@ export function CarouselDots({ className, color = "brand-400" }: { className?: s
   const { itemsCount, activeIndex, goTo, visibleCount = 1 } = context;
   const vCount = Number(visibleCount); const aIndex = Math.round(Number(activeIndex));
 
+  const colorMap: Record<string, { text: string; border: string }> = {
+    "brand-400": { text: "text-brand-400", border: "border-brand-400" },
+    "brand-700": { text: "text-brand-700", border: "border-brand-700" },
+  };
+
+  const colorClasses = colorMap[color] || colorMap["brand-400"];
+
   return (
     <div className={cn("flex justify-center gap-4 sm:gap-6", className)} role="tablist">
       {Array.from({ length: itemsCount }).map((_, i) => {
@@ -78,14 +85,30 @@ export function CarouselDots({ className, color = "brand-400" }: { className?: s
             onClick={() => goTo(i)}
             className="group relative flex cursor-pointer touch-manipulation items-center justify-center transition-transform active:scale-95 focus-visible:outline-none"
           >
-            <CarouselIcon
-              className={cn(
-                "h-2 w-2 sm:h-4 sm:w-4 transition-all duration-500",
-                isAnchor ? `text-${color} opacity-100 scale-110` :
-                  isInView ? `text-${color} opacity-85 scale-100` :
-                    `text-${color} opacity-45 lg-touch:opacity-30 lg-desktop:opacity-30 grayscale`,
-              )}
-            />
+            {isAnchor ? (
+              <CarouselIcon
+                className={cn(
+                  "h-2 w-2 sm:h-4 sm:w-4 rounded-full transition-all duration-500",
+                  colorClasses.text,
+                  "opacity-100 scale-110"
+                )}
+              />
+            ) : (
+              <svg
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className={cn(
+                  "h-2 w-2 sm:h-4 sm:w-4 transition-all duration-500",
+                  colorClasses.text,
+                  isInView
+                    ? "opacity-85 scale-100"
+                    : "opacity-45 lg-touch:opacity-30 lg-desktop:opacity-30",
+                )}
+              >
+                <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="2" />
+              </svg>
+            )}
             <div className="absolute -inset-1 hidden rounded-full ring-2 ring-brand-400/50 group-focus-visible:block" />
           </button>
         );

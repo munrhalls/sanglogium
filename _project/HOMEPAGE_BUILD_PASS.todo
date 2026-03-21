@@ -1,0 +1,67 @@
+#typography alias - only from global tailwind.config.ts, no tailwind aliases - only design system aliases present in tailwind.config.ts are used
+
+Global
+[] rwd - menu bottom bar should not appear on laptop/desktop at all and that effect should be achieved using only the lg-touch and lg-desktop tailwind classes from global config; if twMerge usage is present, preserve it, else just arrange responsive classes properly
+[] desktop - shelf - should center its direct child horizontally
+[] desktop - layout - each component's root container - should have max width 1280px
+
+Catalogue
+[] desktop
+    [] layout - close button - uses proper spacing system value to be distanced from the bottom
+    [] styling - typography - check only typography aliases applied, no one off's
+    [] styling - typography - catalogue links segment titles should be secondary 300 and bold
+    [] styling - close button - should be a bit larger and remain brand-400 via alias (currently very small) -> determine proper typography alias -> use /// if alias not present - stop and process proper update to global tailwind config
+    [] styling - close button - should be thin font
+
+[] mobile / tablet / lg-touch
+    [] styling - nav chevrons slightly bigger on tablet sizes
+    [] styling - dots - non-active dots should be empty circles, brand-400 color; active dot should be orb (as is)
+
+Featured
+[] desktop
+    [] layout - nav btns should be top right corner, after dots
+    [] layout - dots should be top right corner, before nav btns
+    [] layout - distance between dots and nav btns should be proper and apply value from global spacing system
+    [] layout - distance between nav prev and nav next should be smaller than distance between nav btns and dots
+    [] layout - distance between dots should be small fitting value, taken from global spacing system
+    [] layout - product title per slide - one line titles should align to bottom, not top (closer to price and cart btn, not closer to image container)
+    [] layout - product title should have constant height to prevent layout shifts on slide shifts between 1-line/2-line/3-line product titles
+    [] styling - featured card - bottom component - product title - typography - should be alias with secondary-300
+    // if the color look is not exactly right for this role - stop, global alias needs to be re-considered
+    [] styling - featured card - image container - should be 3/4 (wider than tall), not aspect square
+    [] styling - featured card - image container - image - should be a bit smaller size, appropriate for 3/4 container symmetry
+    [] styling - typography - check only typography aliases applied, no one off's
+    [] styling - dots - non-active dots should be empty circles, brand-400 color
+    [] styling - dots - active dot should be brand-400 orb (as is)
+[] tablet
+    [] layout - nav btns and dots should be bottom center, nav btns first, dots after nav btns
+
+[] Product spotlight 1, 2, 3, new release
+    [] structure - should process product's main image and imageGallery (imagesGallery, check name) - into single array of images, starting from main image
+    [] structure - consuming component - carousel - should use processed product images array
+    [] structure - should use carousel, carousel track, carousel slide to place the product images inside of it
+    [] structure - should have nav btns for carousel navigation
+    [] structure - should have dots for carousel navigation
+    [] structure - SEE MORE button - should not have arrow element, delete arrow element
+
+    [] structure - should import fractal_start element from public assets, meant for background decoration
+    [] structure - should have element meant purely for background decoration
+
+    [] layout - dots should be placed below the image, centered, close to the bottom edge
+    [] layout - nav btns should be placed below image, bottom left corner
+
+
+    [] layout - bg decor element should be absolutely positioned, inset-0 and have lower z-index than any other element, in order to hide behind text elements
+    [] layout - single bg decor asset should be used on the bg decor element
+    [] layout - single bg decor element should use asset to create multiple iterations of the asset at 3 different levels for achieving 3D effect: 1) big size, least visibile, lowest opacity for 3d effect, 2) medium size - comparatively more visible for texture effect, 3) smallest size, highest comparative opacity for the focal points effect
+    [] layout - single bg decor element should position the bg decor asset stamps such that they are nicely distanced around each other element's edges
+    [] layout - other than distance from standard element's edges, the bg decor should span entire bg decor element container
+    [] layout - SEE MORE button - should be centered horizontally
+
+    [] styling - nav btns - should be thick brand-700 chevros, inactive should be greyed out or low opacity
+    // if no alias present for inactive state inside carousel internals - stop, will need to re-consider that aspect
+    [] styling - dots - inactive dot should be brand-700 circle, active dot should be brand-700 orb
+    [] styling - dots - should be relatively small - around w-5 h-5 mobile, up to w-6 h-7 tablet, w-8 h-8 desktop
+
+    [] styling - typography - should use only typography aliases, no one off's
+

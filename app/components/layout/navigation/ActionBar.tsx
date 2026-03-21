@@ -23,37 +23,15 @@ import { cn } from "@/lib/utils/tailwind";
 //   }
 // );
 
-// TODO mobile menu has two parts - buttons and mobile drawers
-// - entirely contained inside mobile menu component
-// - drawers are position fixed and animated via framer motion
-// - nuqs does two part url /drawer/<menu name>
-// - /drawer is about shell that's on/off only
-// - all menu's are inside that one shell
-// - shell's job -> respond to on/off only (url)
-// - menu manager inside shell, its only job -> read the url part after drawer and display the right menu accordingly
-// - Mobile menu has 'mobile drawers' component and the buttons component
-// - mobile drawers contains everything about responding to url with the proper drawer behavior
+
 
 function ActionButtons() {
   const pathname = usePathname();
-  // drawer
   const { isOpen, openDrawer, closeDrawer } = useDrawer();
 
   return (
     <div className="flex h-full items-center justify-around px-4">
-      {/* {isMenuOpen ? (
-          <Link href={pathname} className="flex flex-col items-center">
-            <X size={24} />
-          </Link>
-        ) : (
-          <Link
-            href={`${pathname}?menu=true`}
-            className="flex flex-col items-center"
-          >
-            <Menu className="h-5 w-5" />
-            <span className="sr-only text-cap mt-1 hidden text-xs sm:inline-block">Menu</span>
-          </Link>
-        )} */}
+
 
       <button
         onClick={() => (isOpen ? closeDrawer() : openDrawer("catalogue"))}

@@ -2,11 +2,8 @@ Every AI-effective prompt I generate must include:
 
 MANDATORY STRUCTURE:
 CONTEXT: [next 15, react 18, tailwind 3, sanity v3, current file state, what already exists]
-
-TARGET:
-
-LAYER:
-[Structure / Layout / Surface / Interaction — pick one]
+TARGET: [one specific output, one layer only]
+LAYER: [Structure / Layout / Surface / Interaction — pick one]
 
 CONSTRAINTS:
 - Use only existing design system aliases from tailwind.config.ts
