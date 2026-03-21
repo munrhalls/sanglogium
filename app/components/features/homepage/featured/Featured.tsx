@@ -16,8 +16,8 @@ interface FeaturedCardProps {
 }
 
 export const FeaturedCard = ({ product }: FeaturedCardProps) => (
-  <article className="group flex h-full flex-col bg-transparent p-6 transition-all duration-300 gap-4 max-h-[400px]">
-    <figure className="aspect-4/3 rounded-none relative flex w-full items-center justify-center overflow-hidden bg-brand-300 p-8">
+  <article className="group flex h-full flex-col bg-transparent p-6 transition-all duration-300 gap-3">
+    <figure className="aspect-square rounded-none relative flex w-full items-center justify-center overflow-hidden bg-brand-300 p-6">
       <span className="absolute left-4 top-4 text-small font-bold uppercase tracking-editorial text-brand-900">
         {product.brand}
       </span>
@@ -30,7 +30,7 @@ export const FeaturedCard = ({ product }: FeaturedCardProps) => (
       />
     </figure>
 
-    <div className="flex flex-grow flex-col h-[3rem]">
+    <div className="flex flex-col h-[3rem] pb-2">
       <p className="type-body font-bold transition-colors group-hover:text-accent-400">
         {product.name}
       </p>
@@ -78,11 +78,11 @@ export default async function Featured() {
 
           <div className="flex items-center justify-center md:flex-row md:gap-8">
             <CarouselPrevious
-              className="flex md:flex p-3 transition-colors border-none shadow-none h-auto w-auto hover:bg-transparent focus:ring-0 active:scale-110 [&_svg]:w-8 [&_svg]:h-8 text-brand-400"
+              className="flex md:flex p-3 transition-colors border-none shadow-none h-auto w-auto hover:bg-transparent focus:ring-0 active:scale-110 [&_svg]:w-5 [&_svg]:h-5 md:[&_svg]:w-7 md:[&_svg]:h-7 text-brand-400"
             />
             <CarouselDots color="brand-400" />
             <CarouselNext
-              className="flex md:flex p-3 transition-colors border-none shadow-none h-auto w-auto hover:bg-transparent focus:ring-0 active:scale-110 [&_svg]:w-8 [&_svg]:h-8 text-brand-400"
+              className="flex md:flex p-3 transition-colors border-none shadow-none h-auto w-auto hover:bg-transparent focus:ring-0 active:scale-110 [&_svg]:w-5 [&_svg]:h-5 md:[&_svg]:w-7 md:[&_svg]:h-7 text-brand-400"
             />
           </div>
         </div>

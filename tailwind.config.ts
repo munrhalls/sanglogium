@@ -2,45 +2,6 @@ import type { Config } from "tailwindcss";
 import animatePlugin from "tailwindcss-animate";
 import typographyPlugin from "@tailwindcss/typography";
 import plugin from "tailwindcss/plugin";
-/**
- * REFERENCE: 8pt GRID SPACING SYSTEM (Tailwind Defaults)
- * 4px   -> .1
- * 8px   -> .2
- * 12px  -> .3
- * 16px  -> .4
- * 24px  -> .6
- * 32px  -> .8
- * 80px  -> .20
- * 144px -> .36
- */
-
-// STRATEGIC IMPLEMENTATION
-// 1. The Micro-Scale (4px - 16px)
-// Use these for Internal Spacing. If you change a .2 to a .4, you are telling the user's brain that the two elements are becoming independent pieces of information.
-
-// 2. The Macro-Scale (24px - 32px)
-// Use these for Component Layouts. This is the "breathing room" for your main content area. If you use a gap smaller than .6 between major cards, the UI will feel cluttered and "cheap."
-
-// 3. The Structural Scale (80px - 144px)
-// Use these for Vertical Hierarchy.
-
-// 80px (.20): Use for alternating background color sections.
-
-// 144px (.36): Use exclusively for your Hero or the very end of a landing page to signal "The End."
-
-// TABLE Value, PX, Tailwind Class, Recommended Use Case
-// 0.1,4px,"p-1, m-1, gap-1","Micro: Icons next to text, breadcrumb separators."
-// 0.2,8px,"p-2, m-2, gap-2","Micro: Labels above inputs, small tags."
-// 0.3,12px,"p-3, m-3, gap-3","Micro: Card metadata, sidebar list items."
-// 0.4,16px,"p-4, m-4, gap-4","Micro: Paragraph spacing, inner card padding."
-// 0.6,24px,"p-6, m-6, gap-6","Macro: Gaps between cards, navigation links."
-// 0.8,32px,"p-8, m-8, gap-8","Macro: Luxury button padding, standard grid gaps."
-// 20,80px,"p-20, m-20",Structural: Vertical padding for page sections.
-// 36,144px,"p-36, m-36","Structural: Hero sections, landing page footers."
-
-// ---------------------------------------------------------------------------
-// PALETTE TOKENS (Layer 1)
-// ---------------------------------------------------------------------------
 
 const brand = {
   50: "#FEFCFB",
@@ -94,10 +55,6 @@ const warning = {
   700: "#92400E",
 };
 
-// ---------------------------------------------------------------------------
-// SEMANTIC TOKENS (Layer 2)
-// ---------------------------------------------------------------------------
-
 const surface = {
   page: brand[700],
   card: secondary[900],
@@ -125,17 +82,11 @@ const border = {
   secondary: secondary[700],
 } as const;
 
-// ---------------------------------------------------------------------------
-// PLUGINS
-// ---------------------------------------------------------------------------
-
 const typographyDefaultsPlugin = plugin(function ({ addUtilities }) {
   addUtilities({
-    // Trims top to Cap-Height, bottom to Baseline.
     ".text-cap": {
       "text-box": "trim-both cap alphabetic",
     },
-    // Trims top to x-Height (good for lowercase), bottom to Baseline.
     ".text-ex": {
       "text-box": "trim-both ex alphabetic",
     },
@@ -358,93 +309,40 @@ export default {
           "var(--font-montserrat)",
         ],
       },
-      // tailwind.config.ts
-
       fontSize: () => ({
-        // ----------------------------------------------------------------------
-        // FLUID HEADINGS (Responsive Luxury Scale)
-        // Logic: Linear interpolation from Mobile (375px) to Desktop (1440px)
-        // ----------------------------------------------------------------------
-
-        // Desktop: 90px (5.625rem) | Mobile: 48px (3rem)
-        // Line-Height: 1.1 (was 100px) | Tracking: -2%
-
-        // TYPOGRAPHY SCALE — FROZEN
-        // Verified: Perfect Fourth ratio (1.31-1.34) across all steps at desktop
-        // Do not modify these values during component builds.
         "display-1": [
           "clamp(3rem, 4vw + 2rem, 5.625rem)",
           { lineHeight: "1.1", letterSpacing: "-0.02em" },
         ],
-        // base color brand-400
-
-        // Desktop: 68px (4.25rem) | Mobile: 36px (2.25rem)
-        // Line-Height: 1.12 (was 76px) | Tracking: -1.5%
         "display-2": [
           "clamp(2.25rem, 3vw + 1.5rem, 4.25rem)",
           { lineHeight: "1.12", letterSpacing: "-0.015em" },
         ],
-        // base color secondary-300
-
-        // Desktop: 51px (3.1875rem) | Mobile: 27px (1.6875rem)
-        // Line-Height: 1.2 | Tracking: -1%
         h1: [
           "clamp(1.6875rem, 2.25vw + 1.16rem, 3.1875rem)",
           { lineHeight: "1.2", letterSpacing: "-0.01em" },
         ],
-
-
-        // Desktop: 38px (2.375rem) | Mobile: 20px (1.25rem)
-        // Line-Height: 1.25 | Tracking: -0.5%
         h2: [
           "clamp(1.25rem, 1.69vw + 0.854rem, 2.375rem)",
           { lineHeight: "1.25", letterSpacing: "-0.005em" },
         ],
-
-        // ----------------------------------------------------------------------
-        // FIXED SIZES (Structural Utility)
-        // These sizes are small enough to remain static across viewports.
-        // ----------------------------------------------------------------------
-
-        // Desktop: 29px (1.8125rem) | Mobile: 18px (1.125rem)
-        // Line-Height: 1.2 | Tracking: +5%
         h3: [
           "clamp(1.125rem, 1.03vw + 0.883rem, 1.8125rem)",
           { lineHeight: "1.2", letterSpacing: "0.05em" },
         ],
-
-        // Desktop: 22px (1.375rem) | Mobile: 16px (1rem)
-        // Line-Height: 1.2 | Tracking: +10%
         h4: [
           "clamp(1rem, 0.56vw + 0.868rem, 1.375rem)",
           { lineHeight: "1.2", letterSpacing: "0.1em" },
         ],
-
-        // ----------------------------------------------------------------------
-        // BODY COPY & UTILITIES
-        // ----------------------------------------------------------------------
-
-        // 16px / 24px
         body: ["16px", { lineHeight: "24px", letterSpacing: "0em" }],
         action: ["14px", { lineHeight: "21px", letterSpacing: "0.05em" }],
-
-        // 12px / 16px
         small: ["12px", { lineHeight: "16px", letterSpacing: "0.05em" }],
-
-        // ----------------------------------------------------------------------
-        // SPECIFIC UI ACTIONS
-        // ----------------------------------------------------------------------
-
-        // CTA Hero: 28px fixed
         "cta-hero": [
           "clamp(1.125rem, 1vw + 0.9rem, 1.75rem)",
           { lineHeight: "1.15", letterSpacing: "0.03em" },
         ],
-
-        // Spotlight: 28px fixed (Luxury uppercase)
         spotlight: ["28px", { lineHeight: "32px", letterSpacing: "0.1em" }],
       }),
-      // Weights separately - can be combined with any size
       fontWeight: {
         light: "300",
         regular: "400",
