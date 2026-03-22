@@ -12,18 +12,12 @@ Global
 ✔ desktop - shelf - should center its direct child horizontally @done(26-03-21 13:50)
 ✔ desktop - layout - each component's root container - should have max width 1280px @done(26-03-21 13:50)
 
-Catalogue
-[] desktop
-    [] layout - close button - uses proper spacing system value to be distanced from the bottom
-    [] styling - typography - check only typography aliases applied, no one off's
-    [] styling - typography - catalogue links segment titles should be secondary 300 and bold
-    [] styling - close button - should be a bit larger and remain brand-400 via alias (currently very small) -> determine proper typography alias -> use /// if alias not present - stop and process proper update to global tailwind config
-    [] styling - close button - should be thin font
-
 Featured
 [] desktop
-    [] layout - nav btns should be top right corner, after dots
-    [] layout - dots should be top right corner, before nav btns
+    ✔ layout - nav btns should be top right corner, after dots
+    ✔ layout - dots should be top right corner, before nav btns @done(26-03-21 13:59)
+    [] layout - on md sizes too (e.g. Ipad Mini should also display nav btns and dots in the top right corner
+    [] layout - (desktop and md sizes) nav btns and dots should be vertically centered such that middle of dots and nav btns aligns with title "FEATURED" middle   @done(26-03-21 13:58)
     [] layout - distance between dots and nav btns should be proper and apply value from global spacing system
     [] layout - distance between nav prev and nav next should be smaller than distance between nav btns and dots
     [] layout - distance between dots should be small fitting value, taken from global spacing system
@@ -39,7 +33,10 @@ Featured
 [] tablet
     [] layout - nav btns and dots should be bottom center, nav btns first, dots after nav btns
 
-[] Product spotlight 1, 2, 3, new release
+
+
+
+    [] Product spotlight 1, 2, 3, new release
     [] structure - should process product's main image and imageGallery (imagesGallery, check name) - into single array of images, starting from main image
     [] structure - consuming component - carousel - should use processed product images array
     [] structure - should use carousel, carousel track, carousel slide to place the product images inside of it
@@ -68,3 +65,12 @@ Featured
 
     [] styling - typography - should use only typography aliases, no one off's
 
+    Catalogue
+    [] database pass - database records contain legacy data and products, migrate them to new data and products
+    [] data pass
+    [] desktop
+        [] layout - close button - uses proper spacing system value to be distanced from the bottom
+        [] styling - typography - check only typography aliases applied, no one off's
+        [] styling - typography - catalogue links segment titles should be secondary 300 and bold
+        [] styling - close button - should be a bit larger and remain brand-400 via alias (currently very small) -> determine proper typography alias -> use /// if alias not present - stop and process proper update to global tailwind config
+        [] styling - close button - should be thin font
