@@ -31,7 +31,7 @@ export const FeaturedCard = ({ product }: FeaturedCardProps) => (
     </figure>
 
     <div className="flex flex-col h-[3rem] pb-2">
-      <p className="type-body font-bold transition-colors group-hover:text-accent-400">
+      <p className="type-body font-bold transition-colors group-hover:text-brand-50">
         {product.name}
       </p>
     </div>

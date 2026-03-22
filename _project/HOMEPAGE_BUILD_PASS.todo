@@ -13,26 +13,34 @@ Global
 ✔ desktop - layout - each component's root container - should have max width 1280px @done(26-03-21 13:50)
 
 Featured
-[] desktop
+✔ desktop @done(26-03-22 10:48)
     ✔ layout - nav btns should be top right corner, after dots
     ✔ layout - dots should be top right corner, before nav btns @done(26-03-21 13:59)
-    [] layout - on md sizes too (e.g. Ipad Mini should also display nav btns and dots in the top right corner
+    ✔ layout - on md sizes too (e.g. Ipad Mini should also display nav btns and dots in the top right corner @done(26-03-22 10:47)
     [] layout - (desktop and md sizes) nav btns and dots should be vertically centered such that middle of dots and nav btns aligns with title "FEATURED" middle   @done(26-03-21 13:58)
-    [] layout - distance between dots and nav btns should be proper and apply value from global spacing system
-    [] layout - distance between nav prev and nav next should be smaller than distance between nav btns and dots
-    [] layout - distance between dots should be small fitting value, taken from global spacing system
-    [] layout - product title per slide - one line titles should align to bottom, not top (closer to price and cart btn, not closer to image container)
-    [] layout - product title should have constant height to prevent layout shifts on slide shifts between 1-line/2-line/3-line product titles
-    [] styling - featured card - bottom component - product title - typography - should be alias with secondary-300
+    ✔ layout - distance between dots and nav btns should be proper and apply value from global spacing system @done(26-03-22 10:47)
+    ✔ layout - distance between nav prev and nav next should be smaller than distance between nav btns and dots @done(26-03-22 10:47)
+    ✔ layout - distance between dots should be small fitting value, taken from global spacing system @done(26-03-22 10:47)
+    ✔ layout - product title per slide - one line titles should align to bottom, not top (closer to price and cart btn, not closer to image container) @done(26-03-22 10:47)
+    ✔ layout - product title should have constant height to prevent layout shifts on slide shifts between 1-line/2-line/3-line product titles @done(26-03-22 10:47)
+    ✔ styling - featured card - bottom component - product title - typography - should be alias with secondary-300 @done(26-03-22 10:47)
     // if the color look is not exactly right for this role - stop, global alias needs to be re-considered
-    [] styling - featured card - image container - should be 3/4 (wider than tall), not aspect square
-    [] styling - featured card - image container - image - should be a bit smaller size, appropriate for 3/4 container symmetry
-    [] styling - typography - check only typography aliases applied, no one off's
+    ✔ styling - featured card - image container - should be 3/4 (wider than tall), not aspect square @done(26-03-22 10:47)
+    ✔ styling - featured card - image container - image - should be a bit smaller size, appropriate for 3/4 container symmetry @done(26-03-22 10:47)
+    ✔ styling - typography - check only typography aliases applied, no one off's @done(26-03-22 10:47)
     ✔ styling - dots - non-active dots should be empty circles, brand-400 color @done(26-03-21 12:52)
     ✔ styling - dots - active dot should be brand-400 orb (as is) @done(26-03-21 12:52)
-[] tablet
-    [] layout - nav btns and dots should be bottom center, nav btns first, dots after nav btns
-
+✔ tablet @done(26-03-22 10:48)
+    ✔ layout - nav btns and dots should be bottom center, nav btns first, dots after nav btns @done(26-03-22 10:48)
+    [] interactivity
+        ✔ hover card - prod name color - brand-50 @done(26-03-22 11:00)
+        ✔ carousel nav buttons - should go brand-50 on hover @done(26-03-22 11:03)
+        ✔ carousel nav buttons - should remain exactly the same size and everything, except have larger clickable area - And in a way that doesn't interfere with neighbor nodes nor affects layout in any way @done(26-03-22 10:57)
+        ✔ inactive dot - should remain exactly the same size and everything, except have larger clickable area - And in a way that doesn't interfere with neighbor nodes nor affects layout in any way @done(26-03-22 10:57)
+        ✔ inactive dot - should have brand-50 background on hover @done(26-03-22 11:17)
+        [] inactive dot - hover highlight should be rounded
+        [] inactive dot - hover highlight should be light color
+        Powinno się wyrównać Hover state Powinno się wyrównać Hover state
 
 
 
