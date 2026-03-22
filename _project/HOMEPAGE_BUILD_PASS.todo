@@ -48,6 +48,7 @@ Featured
 [] Product Spotlight 1, 2, 3, New Release
   [] Data
     ✔ Data - GROQ should return not just main image, but also image gallery of product and it should do so in a single query using the existing homepage query with minimal modification @done(26-03-22 12:55)
+    ✔ Data - replicate the above change in product spotlight 2, 3 and New Release @done(26-03-22 12:56)
     [] Should process product's main image and imageGallery (verify field name) into a single array of images, starting with the main image.
     [] run image deletion script on every product id
 
@@ -56,7 +57,7 @@ Featured
     ✔ Should use Carousel, Carousel Track, and Carousel Slide to contain product images - Carousel should not affect layout or styling in any way whatsoever, not a single change - except for providing the carousel functionality @done(26-03-22 12:50)
     ✔ Should implement navigation buttons for carousel control. @done(26-03-22 12:50)
     ✔ Should implement dots for carousel pagination. @done(26-03-22 12:50)
-
+    ✔ replicate the above in product 2, 3, New Release @done(26-03-22 12:58)
 
     [] Consuming component (Carousel) should use the processed product images array.
 

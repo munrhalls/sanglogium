@@ -7,6 +7,7 @@ export interface Spotlight1Product {
   displayPrice: number;
   image: { asset: { url: string }; alt?: string };
   gallery?: Array<{ asset: { url: string }; alt?: string }>;
+  images?: Array<{ asset: { url: string }; alt?: string }>;
 }
 
 export interface Spotlight1Data {
@@ -27,6 +28,23 @@ const SPOTLIGHT1_QUERY = `*[_type == "homepageData"][0].spotlight1Data{
   }
 }`;
 
+function processProductImages(product: Spotlight1Product): Spotlight1Product {
+  if (!product.image) return product;
+
+  const images = [product.image];
+  if (product.gallery && product.gallery.length > 0) {
+    images.push(...product.gallery);
+  }
+
+  return { ...product, images };
+}
+
 export async function getSpotlight1Data(): Promise<Spotlight1Data | null> {
-  return sanityFetch({ query: SPOTLIGHT1_QUERY });
+  const data = await sanityFetch({ query: SPOTLIGHT1_QUERY });
+
+  if (data && data.productRef) {
+    data.productRef = processProductImages(data.productRef);
+  }
+
+  return data;
 }
