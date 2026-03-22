@@ -21,9 +21,9 @@ export default async function DACs() {
           <DacsHeader />
         </div>
         <CarouselTrack className="flex gap-6 overflow-x-auto scrollbar-none snap-x snap-mandatory">
-          {products.map((item) => (
+          {products.map((item, idx) => (
             <CarouselSlide key={item._id} className="basis-full 2xs:basis-1/2 md:basis-1/3 lg:basis-1/3 flex-shrink-0 snap-start">
-              <DacCard item={item} />
+              <DacCard item={item} idx={idx} />
             </CarouselSlide>
           ))}
         </CarouselTrack>

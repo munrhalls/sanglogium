@@ -1,15 +1,21 @@
 import { cn } from "@/lib/utils/tailwind"
+import { Image } from "next-sanity/image"
+import { urlFor } from "@/sanity/lib/image"
 import { IemProduct } from "./types"
 
-export default function IemCard({ product }: { product: IemProduct }) {
+export default function IemCard({ product, idx }: { product: IemProduct; idx: number }) {
     if (!product) return null;
 
     return (
         <div className="group relative flex flex-col gap-4 p-4 rounded-xl border border-transparent hover:bg-brand-800/20 transition-all">
             <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-brand-800/10">
-                <img 
-                    src={product.imageUrl} 
+                <Image
+                    src={urlFor(product.image).url()}
                     alt={product.name}
+                    width={400}
+                    height={400}
+                    priority={idx < 4}
+                    loading={idx < 4 ? "eager" : "lazy"}
                     className="object-cover w-full h-full"
                 />
             </div>

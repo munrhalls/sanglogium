@@ -13,8 +13,8 @@ export default async function IemsGallery() {
     <>
       <IemsGalleryHeader />
       <Grid cols={4}>
-        {products.map((iem) => (
-          <IemCard key={iem._id} product={iem as any} />
+        {products.map((iem, idx) => (
+          <IemCard key={iem._id} product={iem as any} idx={idx} />
         ))}
       </Grid>
     </>

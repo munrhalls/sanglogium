@@ -1,15 +1,20 @@
 import { cn } from "@/lib/utils/tailwind";
+import { Image } from "next-sanity/image";
+import { urlFor } from "@/sanity/lib/image";
 
-export default function AccessoryCard({ item }: { item: AccessoryItem }) {
+export default function AccessoryCard({ item, idx }: { item: AccessoryItem; idx: number }) {
   if (!item) return null;
 
   return (
     <div className="group flex flex-col gap-3 p-3 rounded-lg border border-transparent hover:border-secondary-200 transition-all">
-      {/* Raw image consumption */}
       <div className="relative aspect-square w-full overflow-hidden rounded bg-brand-800/10">
-        <img 
-          src={item?.imageUrl} 
-          alt={item?.name}
+        <Image
+          src={urlFor(item.image).url()}
+          alt={item.name}
+          width={400}
+          height={400}
+          priority={idx < 4}
+          loading={idx < 4 ? "eager" : "lazy"}
           className="object-cover w-full h-full"
         />
       </div>
