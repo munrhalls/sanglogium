@@ -18,15 +18,17 @@ export default async function ProductSpotlight2() {
             <div className="max-w-[1440px] mx-auto px-4 md:px-8 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
                     <div className="order-1 lg:order-2 w-full h-full bg-brand-300 rounded-none flex items-center justify-center relative p-8 lg:p-12 overflow-hidden">
-                        <Carousel itemsCount={1} breakpointMap={{ lgDesktop: 1, mdPortrait: 1, mobilePortrait: 1 }}>
+                        <Carousel itemsCount={product.images?.length || 1} breakpointMap={{ lgDesktop: 1, mdPortrait: 1, mobilePortrait: 1 }}>
                             <CarouselTrack className="w-full h-full">
-                                <CarouselSlide className="w-full h-full flex items-center justify-center">
-                                    <img
-                                        src={product.image?.asset?.url || spotlightImg.src}
-                                        alt={product.name}
-                                        className="w-auto h-auto max-w-[85%] max-h-[85%] object-contain mix-blend-multiply relative z-10"
-                                    />
-                                </CarouselSlide>
+                                {product.images?.map((image, idx) => (
+                                    <CarouselSlide key={idx} className="w-full h-full flex items-center justify-center">
+                                        <img
+                                            src={image.asset?.url || spotlightImg.src}
+                                            alt={product.name}
+                                            className="w-auto h-auto max-w-[85%] max-h-[85%] object-contain mix-blend-multiply relative z-10"
+                                        />
+                                    </CarouselSlide>
+                                ))}
                             </CarouselTrack>
                             <CarouselPrevious />
                             <CarouselNext />

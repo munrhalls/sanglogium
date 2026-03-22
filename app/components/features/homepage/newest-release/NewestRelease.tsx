@@ -12,23 +12,18 @@ export default async function NewestRelease() {
 
   const { productRef: product, promoTitle, promoSubtitle, promoText } = data;
 
-  const allImages = [
-    product.image,
-    ...(product.gallery ?? [])
-  ].filter(Boolean);
-
   return (
     <article className="w-full relative overflow-hidden border-secondary-800 bg-brand-700">
       <div className="absolute inset-0 bg-[url('/fractal_ring.webp')] bg-no-repeat bg-right-bottom mix-blend-overlay opacity-20 pointer-events-none z-0" />
       <div className="max-w-[1440px] mx-auto px-4 md:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
           <div className="w-full h-full bg-brand-300 rounded-none flex items-center justify-center relative p-8 lg:p-12 overflow-hidden">
-            <Carousel itemsCount={allImages.length} className="w-full h-full">
-              <CarouselTrack className="h-full">
-                {allImages.map((img, idx) => (
-                  <CarouselSlide key={idx} className="h-full basis-full flex-shrink-0 flex items-center justify-center">
+            <Carousel itemsCount={product.images?.length || 1} className="w-full h-full">
+              <CarouselTrack className="w-full h-full">
+                {product.images?.map((image, idx) => (
+                  <CarouselSlide key={idx} className="w-full h-full flex items-center justify-center">
                     <img
-                      src={img.asset.url}
+                      src={image.asset?.url}
                       alt={product.name}
                       className="w-auto h-auto max-w-[85%] max-h-[85%] object-contain mix-blend-multiply relative z-10"
                     />
