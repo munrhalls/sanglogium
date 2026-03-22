@@ -28,15 +28,15 @@ export function CarouselProvider({
     let count = 1;
 
     if (w >= 1280) {
-      count = breakpointMap?.xl || 3;
+      count = breakpointMap?.xl || 1;
     } else if (w >= 1024) {
-      count = breakpointMap?.lgDesktop || 3;
+      count = breakpointMap?.lgDesktop || 1;
     } else if (w >= 768) {
-      count = isLandscape ? (breakpointMap?.mdLandscape || 2) : (breakpointMap?.mdPortrait || 2);
+      count = isLandscape ? (breakpointMap?.mdLandscape || 1) : (breakpointMap?.mdPortrait || 1);
     } else if (w >= 640) {
-      count = isLandscape ? (breakpointMap?.smLandscape || 2) : (breakpointMap?.smPortrait || 1);
+      count = isLandscape ? (breakpointMap?.smLandscape || 1) : (breakpointMap?.smPortrait || 1);
     } else if (isLandscape) {
-      count = breakpointMap?.mobileLandscape || 2;
+      count = breakpointMap?.mobileLandscape || 1;
     } else {
       count = breakpointMap?.mobilePortrait || 1;
     }

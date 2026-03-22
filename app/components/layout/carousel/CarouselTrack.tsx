@@ -22,7 +22,7 @@ export function CarouselTrack({
     <div
       ref={scrollRef}
       className={cn(
-        "no-scrollbar flex overflow-x-auto snap-x snap-mandatory scroll-smooth",
+        "no-scrollbar flex w-full overflow-x-auto snap-x snap-mandatory scroll-smooth",
         className
       )}
       style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
