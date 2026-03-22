@@ -8,9 +8,28 @@
     ✔ styling - dots - non-active dots should be empty circles, brand-400 color; active dot should be orb (as is) @done(26-03-21 12:50)
 
 Global
-✔ rwd - menu bottom bar should not appear on laptop/desktop at all and that effect should be achieved using only the lg-touch and lg-desktop tailwind classes from global config; if twMerge usage is present, preserve it, else just arrange responsive classes properly @done(26-03-21 13:47)
-✔ desktop - shelf - should center its direct child horizontally @done(26-03-21 13:50)
-✔ desktop - layout - each component's root container - should have max width 1280px @done(26-03-21 13:50)
+[] Data
+  ✔ Image - should determine how to reconcile next/image and sanity v3 image optimizations to achieve lean, robust, best lcp and other performance metrics and page speed criteria - only reconcile and output research report @done(26-03-22 13:40)
+
+        Infrastructure & Setup
+        ✔ Install dependencies: npm install next-sanity @sanity/image-url @done(26-03-22 13:31)
+        ✔ Configure sanity/lib/image.ts with createImageUrlBuilder to export urlFor helper @done(26-03-22 13:47)
+        ✔ Standardize imports to use Image from next-sanity/image across all product components @done(26-03-22 13:47)
+
+        Product Spotlight & New Release Optimization
+        ✔ LCP Optimization: Apply priority, loading="eager", and fetchPriority="high" to the first slide image in every Carousel @done(26-03-22 13:47)
+        ✔ Layout Stability: Replace all <img> tags with next-sanity/image using explicit width and height to achieve CLS = 0 @done(26-03-22 13:47)
+        ✔ CDN Delegation: Ensure urlFor(image).url() is used in src to bypass Next.js server-side re-processing in favor of Sanity edge transformations @done(26-03-22 13:47)
+        ✔ Format Negotiation: Verify browser DevTools "Network" tab confirms WebP or AVIF delivery via auto=format @done(26-03-22 13:47)
+
+        Refactor & Cleanup
+        ✔ Remove any remotePatterns related to Sanity from next.config.js (now redundant) @done(26-03-22 13:47)
+        ✔ Update CarouselSlide to pass necessary dimensions down to the new Image component @done(26-03-22 13:47)
+
+[] Layout
+    ✔ rwd - menu bottom bar should not appear on laptop/desktop at all and that effect should be achieved using only the lg-touch and lg-desktop tailwind classes from global config; if twMerge usage is present, preserve it, else just arrange responsive classes properly @done(26-03-21 13:47)
+    ✔ desktop - shelf - should center its direct child horizontally @done(26-03-21 13:50)
+    ✔ desktop - layout - each component's root container - should have max width 1280px @done(26-03-21 13:50)
 
 Featured
 ✔ desktop @done(26-03-22 10:48)
@@ -55,15 +74,15 @@ Featured
     ✔ replicate on product spotlight 2, 3 @done(26-03-22 13:18)
      ✔ replicate on new release @done(26-03-22 13:21)
 
+
+     ✔ Consuming component (Carousel) should use the processed product images array. @done(26-03-22 13:23)
   [] Structure
     ✔ Should use Carousel, Carousel Track, and Carousel Slide to contain product images - Carousel should not affect layout or styling in any way whatsoever, not a single change - except for providing the carousel functionality @done(26-03-22 12:50)
     ✔ Should implement navigation buttons for carousel control. @done(26-03-22 12:50)
     ✔ Should implement dots for carousel pagination. @done(26-03-22 12:50)
     ✔ replicate the above in product 2, 3, New Release @done(26-03-22 12:58
     ✔ replicate in product spotlight 2, 3, new release @done(26-03-22 13:01)
-    ✔ Consuming component (Carousel) should use the processed product images array. @done(26-03-22 13:23)
-    [] Replicate in product spotlight 2,3, new release
-    [] Image - should determine how to reconcile next/image and sanity v3 image optimizations to achieve lean, robust, best lcp and other performance metrics and page speed criteria
+    ✔ Replicate in product spotlight 2,3, new release @done(26-03-22 13:26)
     [] Image - should be next/image with simple, robust sizing and optimization, knowing that the images are imported from sanity v3
     [] SEE MORE button: Remove existing arrow element.
     [] Import fractal_start from public assets for background decoration.

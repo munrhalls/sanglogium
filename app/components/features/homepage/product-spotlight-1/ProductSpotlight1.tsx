@@ -1,4 +1,6 @@
 import React from "react";
+import { Image } from "next-sanity/image";
+import { urlFor } from "@/sanity/lib/image";
 import spotlightImg from './product_spotlight_transparent.png';
 import { getSpotlight1Data } from "./getSpotlight1Data";
 import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
@@ -22,9 +24,13 @@ export default async function ProductSpotlight1() {
                             <CarouselTrack className="w-full h-full">
                                 {product.images?.map((image, idx) => (
                                     <CarouselSlide key={idx} className="w-full h-full flex items-center justify-center">
-                                        <img
-                                            src={image.asset?.url || spotlightImg.src}
+                                        <Image
+                                            src={urlFor(image).url()}
                                             alt={product.name}
+                                            width={800}
+                                            height={600}
+                                            priority={idx === 0}
+                                            loading={idx === 0 ? "eager" : "lazy"}
                                             className="w-auto h-auto max-w-[85%] max-h-[85%] object-contain mix-blend-multiply relative z-10"
                                         />
                                     </CarouselSlide>

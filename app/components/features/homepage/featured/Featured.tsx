@@ -1,4 +1,5 @@
-import Image from "next/image";
+import { Image } from "next-sanity/image";
+import { urlFor } from "@/sanity/lib/image";
 import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
 import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";
 import { CarouselSlide } from "@/app/components/layout/carousel/CarouselSlide";
@@ -13,19 +14,22 @@ import { ShoppingCart } from "@phosphor-icons/react/dist/ssr";
 
 interface FeaturedCardProps {
   product: FeaturedProduct;
+  idx: number;
 }
 
-export const FeaturedCard = ({ product }: FeaturedCardProps) => (
+export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
   <article className="group flex h-full flex-col bg-transparent p-6 transition-all duration-300 gap-3">
     <figure className="aspect-[3/2] rounded-none relative flex w-full items-center justify-center overflow-hidden bg-brand-300 p-6 md:pt-6 md:pb-2 md:px-4">
       <span className="absolute left-4 top-4 text-small font-bold uppercase tracking-editorial text-brand-900">
         {product.brand}
       </span>
       <Image
-        src={product.image?.asset?.url || featuredImg.src}
+        src={urlFor(product.image).url()}
         alt={product.name}
         width={450}
         height={450}
+        priority={idx === 0}
+        loading={idx === 0 ? "eager" : "lazy"}
         className="h-auto max-h-[95%] w-auto max-w-[95%] md:max-h-full md:max-w-full md:h-full md:w-full transform object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-110"
       />
     </figure>
@@ -72,7 +76,7 @@ export default async function Featured() {
               key={p._id || idx}
               className="flex h-full flex-col px-3"
               >
-                <FeaturedCard product={p} />
+                <FeaturedCard product={p} idx={idx} />
               </CarouselSlide>
             ))}
           </CarouselTrack>
