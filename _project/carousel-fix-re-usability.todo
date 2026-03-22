@@ -1,0 +1,26 @@
+Scope:
+The core problem is surgical: CarouselTrack and CarouselSlide impose flex layout on their children. Everything else in the carousel is already layout-agnostic. The fix is narrow.
+What's NOT in scope: CarouselRoot, CarouselContext, CarouselControls, CarouselMediaBox, DotIcon, types — none of these need touching.
+What IS in scope: CarouselTrack and CarouselSlide need to stop owning dimensions and instead inherit them from whatever parent they're placed inside.
+The zero-regression constraint means Featured and CatalogueCarousel must look pixel-identical before and after. Both currently work correctly, so the refactor must be fully backward-compatible — the components must behave exactly as before when used as they currently are.
+
+
+DoDs
+CarouselTrack
+
+✔ Track's height behavior must be driven entirely by its children or its parent — it must not impose a height @done(26-03-22 12:31)
+✔ Track must continue to provide flex, overflow-x-auto, snap-x snap-mandatory, scroll-smooth, and no-scrollbar @done(26-03-22 12:31)
+✔ Track must accept and forward a className prop so callers can override or augment layout (already exists — must be preserved) @done(26-03-22 12:31)
+✔ Track must not add any h-full or w-full by default — those must come from caller via className when needed @done(26-03-22 12:31)
+
+CarouselSlide
+5. Slide's flexBasis CSS variable calc must remain functional for multi-item carousels
+6. Slide must not impose h-full by default — height must come from content or caller
+7. Slide must accept and forward className prop (already exists — must be preserved)
+8. Slide's min-w-0 shrink-0 grow-0 snap-start must remain intact
+Backward Compatibility — Featured
+9. Featured's CarouselTrack className (relative mx-0 items-stretch md:-mx-3 md:col-span-full md:row-start-2) must produce identical visual output
+10. Featured's CarouselSlide className (flex h-full flex-col px-3) must produce identical visual output
+Backward Compatibility — CatalogueCarousel
+11. CatalogueCarousel's CarouselTrack className (touch-pan-x snap-x snap-mandatory overflow-x-auto landscape:h-full rounded-none) must produce identical visual output
+12. CatalogueCarousel's CarouselSlide className (group/animation-settle flex h-full min-w-full flex-1 snap-start snap-always flex-col) must produce identical visual output

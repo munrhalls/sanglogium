@@ -32,46 +32,56 @@ Featured
     ✔ styling - dots - active dot should be brand-400 orb (as is) @done(26-03-21 12:52)
 ✔ tablet @done(26-03-22 10:48)
     ✔ layout - nav btns and dots should be bottom center, nav btns first, dots after nav btns @done(26-03-22 10:48)
-    [] interactivity
+    ✔ interactivity @done(26-03-22 11:18)
         ✔ hover card - prod name color - brand-50 @done(26-03-22 11:00)
         ✔ carousel nav buttons - should go brand-50 on hover @done(26-03-22 11:03)
         ✔ carousel nav buttons - should remain exactly the same size and everything, except have larger clickable area - And in a way that doesn't interfere with neighbor nodes nor affects layout in any way @done(26-03-22 10:57)
         ✔ inactive dot - should remain exactly the same size and everything, except have larger clickable area - And in a way that doesn't interfere with neighbor nodes nor affects layout in any way @done(26-03-22 10:57)
         ✔ inactive dot - should have brand-50 background on hover @done(26-03-22 11:17)
-        [] inactive dot - hover highlight should be rounded
-        [] inactive dot - hover highlight should be light color
+        ✔ inactive dot - hover highlight should be rounded @done(26-03-22 11:18)
+        ✔ inactive dot - hover highlight should be light color @done(26-03-22 11:18)
         Powinno się wyrównać Hover state Powinno się wyrównać Hover state
 
+[] Product Spotlights 1, 2, 3, New Release
+  [] Data - run image deletion script on every product id
 
 
-    [] Product spotlight 1, 2, 3, new release
-    [] structure - should process product's main image and imageGallery (imagesGallery, check name) - into single array of images, starting from main image
-    [] structure - consuming component - carousel - should use processed product images array
-    [] structure - should use carousel, carousel track, carousel slide to place the product images inside of it
-    [] structure - should have nav btns for carousel navigation
-    [] structure - should have dots for carousel navigation
-    [] structure - SEE MORE button - should not have arrow element, delete arrow element
+  [] Structure
+    [] Should process product's main image and imageGallery (verify field name) into a single array of images, starting with the main image.
+    [] Consuming component (Carousel) should use the processed product images array.
+    [] Should use Carousel, Carousel Track, and Carousel Slide to contain product images.
+    [] Should implement navigation buttons for carousel control.
+    [] Should implement dots for carousel pagination.
+    [] SEE MORE button: Remove existing arrow element.
+    [] Import fractal_start from public assets for background decoration.
+    [] Implement a dedicated element purely for background decoration.
 
-    [] structure - should import fractal_start element from public assets, meant for background decoration
-    [] structure - should have element meant purely for background decoration
+  [] Layout
+    [] Dots: Centered horizontally below the image, positioned close to the bottom edge.
+    [] Nav Buttons: Positioned below the image in the bottom-left corner.
+    [] Background Decoration:
+      [] Absolutely positioned, inset-0, with a lower z-index than all other elements.
+      [] Use a single background decoration asset.
+      [] Create three iterations/levels for a 3D effect:
+        1. Big size: Lowest visibility/opacity.
+        2. Medium size: Moderate visibility.
+        3. Smallest size: Highest opacity.
+      [] Position asset stamps with consistent padding from other UI element edges.
+      [] Decoration must span the entire container.
+    [] SEE MORE button: Centered horizontally.
 
-    [] layout - dots should be placed below the image, centered, close to the bottom edge
-    [] layout - nav btns should be placed below image, bottom left corner
+  [] Styling
+    [] Nav Buttons:
+      [] Use thick brand-700 chevrons.
+      [] Inactive state: Greyed out or low opacity.
+    ✔ Dots: Inactive = brand-700 circle; Active = brand-700 orb. @done(26-03-21 12:52)
 
+    [] Dots Sizing:
+      [] Mobile: w-5 h-5
+      [] Tablet: w-6 h-7
+      [] Desktop: w-8 h-8
 
-    [] layout - bg decor element should be absolutely positioned, inset-0 and have lower z-index than any other element, in order to hide behind text elements
-    [] layout - single bg decor asset should be used on the bg decor element
-    [] layout - single bg decor element should use asset to create multiple iterations of the asset at 3 different levels for achieving 3D effect: 1) big size, least visibile, lowest opacity for 3d effect, 2) medium size - comparatively more visible for texture effect, 3) smallest size, highest comparative opacity for the focal points effect
-    [] layout - single bg decor element should position the bg decor asset stamps such that they are nicely distanced around each other element's edges
-    [] layout - other than distance from standard element's edges, the bg decor should span entire bg decor element container
-    [] layout - SEE MORE button - should be centered horizontally
-
-    [] styling - nav btns - should be thick brand-700 chevros, inactive should be greyed out or low opacity
-    // if no alias present for inactive state inside carousel internals - stop, will need to re-consider that aspect
-    ✔ styling - dots - inactive dot should be brand-700 circle, active dot should be brand-700 orb @done(26-03-21 12:52)
-    [] styling - dots - should be relatively small - around w-5 h-5 mobile, up to w-6 h-7 tablet, w-8 h-8 desktop
-
-    [] styling - typography - should use only typography aliases, no one off's
+    [] Typography: Use only typography aliases; strictly no one-off styles.
 
     Catalogue
     [] database pass - database records contain legacy data and products, migrate them to new data and products

@@ -66,7 +66,7 @@ export default async function Featured() {
             <h2 className="type-section-hed uppercase">Featured</h2>
           </div>
 
-          <CarouselTrack className="relative mx-0 items-stretch md:-mx-3 md:col-span-full md:row-start-2">
+          <CarouselTrack className="w-full relative mx-0 items-stretch md:-mx-3 md:col-span-full md:row-start-2">
             {finalFeatured.map((p, idx) => (
               <CarouselSlide
               key={p._id || idx}

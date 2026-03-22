@@ -1,6 +1,10 @@
 import React from "react";
 import spotlightImg from './product_spotlight_transparent.png';
 import { getSpotlight1Data } from "./getSpotlight1Data";
+import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
+import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";
+import { CarouselSlide } from "@/app/components/layout/carousel/CarouselSlide";
+import { CarouselPrevious, CarouselNext, CarouselDots } from "@/app/components/layout/carousel/CarouselControls";
 
 export default async function ProductSpotlight1() {
     const data = await getSpotlight1Data();
@@ -14,11 +18,20 @@ export default async function ProductSpotlight1() {
             <div className="max-w-[1440px] mx-auto px-4 md:px-8 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
                     <div className="w-full h-full bg-brand-300 rounded-none flex items-center justify-center relative p-8 lg:p-12 overflow-hidden">
-                        <img
-                            src={product.image?.asset?.url || spotlightImg.src}
-                            alt={product.name}
-                            className="w-auto h-auto max-w-[85%] max-h-[85%] object-contain mix-blend-multiply relative z-10"
-                        />
+                        {/* <Carousel itemsCount={1}>
+                            <CarouselTrack>
+                                <CarouselSlide> */}
+                                        <img
+                                            src={product.image?.asset?.url || spotlightImg.src}
+                                            alt={product.name}
+                                            className="w-auto h-auto max-w-[85%] max-h-[85%] object-contain mix-blend-multiply relative z-10"
+                                        />
+                                {/* </CarouselSlide>
+                            </CarouselTrack>
+                            <CarouselPrevious />
+                            <CarouselNext />
+                            <CarouselDots />
+                        </Carousel> */}
                     </div>
                     <div className="w-full h-full bg-brand-800 rounded-none flex flex-col justify-center gap-6 p-8 lg:p-12">
                         <div className="flex flex-col gap-2">
