@@ -7,7 +7,8 @@ const SPOTLIGHT3_QUERY = `*[_type == "homepageData"][0].spotlight3Data{
   promoText,
   productRef->{
     _id, name, brand, displayPrice,
-    image{asset->{url}}
+    image{asset->{url}},
+    gallery[]{asset->{url}}
   }
 }`;
 

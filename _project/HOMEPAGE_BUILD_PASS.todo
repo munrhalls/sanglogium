@@ -42,16 +42,24 @@ Featured
         ✔ inactive dot - hover highlight should be light color @done(26-03-22 11:18)
         Powinno się wyrównać Hover state Powinno się wyrównać Hover state
 
-[] Product Spotlights 1, 2, 3, New Release
-  [] Data - run image deletion script on every product id
+[] Carousel refactor
+
+
+[] Product Spotlight 1, 2, 3, New Release
+  [] Data
+    ✔ Data - GROQ should return not just main image, but also image gallery of product and it should do so in a single query using the existing homepage query with minimal modification @done(26-03-22 12:55)
+    [] Should process product's main image and imageGallery (verify field name) into a single array of images, starting with the main image.
+    [] run image deletion script on every product id
 
 
   [] Structure
-    [] Should process product's main image and imageGallery (verify field name) into a single array of images, starting with the main image.
+    ✔ Should use Carousel, Carousel Track, and Carousel Slide to contain product images - Carousel should not affect layout or styling in any way whatsoever, not a single change - except for providing the carousel functionality @done(26-03-22 12:50)
+    ✔ Should implement navigation buttons for carousel control. @done(26-03-22 12:50)
+    ✔ Should implement dots for carousel pagination. @done(26-03-22 12:50)
+
+
     [] Consuming component (Carousel) should use the processed product images array.
-    [] Should use Carousel, Carousel Track, and Carousel Slide to contain product images.
-    [] Should implement navigation buttons for carousel control.
-    [] Should implement dots for carousel pagination.
+
     [] SEE MORE button: Remove existing arrow element.
     [] Import fractal_start from public assets for background decoration.
     [] Implement a dedicated element purely for background decoration.

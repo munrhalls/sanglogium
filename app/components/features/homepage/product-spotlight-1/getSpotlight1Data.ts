@@ -6,6 +6,7 @@ export interface Spotlight1Product {
   brand: string;
   displayPrice: number;
   image: { asset: { url: string }; alt?: string };
+  gallery?: Array<{ asset: { url: string }; alt?: string }>;
 }
 
 export interface Spotlight1Data {
@@ -21,7 +22,8 @@ const SPOTLIGHT1_QUERY = `*[_type == "homepageData"][0].spotlight1Data{
   promoText,
   productRef->{
     _id, name, brand, displayPrice,
-    image{asset->{url}}
+    image{asset->{url}},
+    gallery[]{asset->{url}}
   }
 }`;
 

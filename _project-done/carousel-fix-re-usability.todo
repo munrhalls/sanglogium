@@ -12,7 +12,7 @@ CarouselTrack
 ✔ Track must continue to provide flex, overflow-x-auto, snap-x snap-mandatory, scroll-smooth, and no-scrollbar @done(26-03-22 12:31)
 ✔ Track must accept and forward a className prop so callers can override or augment layout (already exists — must be preserved) @done(26-03-22 12:31)
 ✔ Track must not add any h-full or w-full by default — those must come from caller via className when needed @done(26-03-22 12:31)
-
+✔ Bug fix - fallback defaults all should be 1 @done(26-03-22 12:50)
 CarouselSlide
 5. Slide's flexBasis CSS variable calc must remain functional for multi-item carousels
 6. Slide must not impose h-full by default — height must come from content or caller
