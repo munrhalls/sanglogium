@@ -54,7 +54,6 @@ Featured
     ✔ run image bg deletion script on every product id @done(26-03-22 13:13)
     ✔ replicate on product spotlight 2, 3 @done(26-03-22 13:18)
      ✔ replicate on new release @done(26-03-22 13:21)
-     moXlkADK7m1DHgGwWwEUpi
 
   [] Structure
     ✔ Should use Carousel, Carousel Track, and Carousel Slide to contain product images - Carousel should not affect layout or styling in any way whatsoever, not a single change - except for providing the carousel functionality @done(26-03-22 12:50)
