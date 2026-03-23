@@ -11,8 +11,12 @@
 [Human: Insert the rough scope here. Define the exact target state to be reached.]
 
 **Explicit Rough DoDs:**
-[Human: Insert the rough Definitions of Done here.]
-
+      [] Carousel Interactivity - animations
+        [] Changing slide should trigger lean, performant animation (lean, minimal impact on performance and website speed metrics)
+        [] Should not touch Carousel internals at all
+        [] Should achieve animation effect f or transitioning between slides - whichever direction - by only supplying tailwind classes to the carousel components (tag calls, not definitions) inside Product spotlight 1
+        [] Animation effect should utilize the CarouselSlide for triggering - CarouselSlide has data-active or similar attribute which triggers when it becomes active
+        [] Only apply in product spotlight 1 for now
 ---
 
 ## PHASE 1: Plan and Contain (Agent Output Required Before Coding)

@@ -154,8 +154,15 @@ Featured
           ✔ Carousel Nav Buttons: @done(26-03-23 13:12)
           ✔ Use thick brand-700 chevrons. @done(26-03-23 13:12)
           ✔ Inactive state: Greyed out or low opacity. @done(26-03-23 13:12)
-      [] replicate on 2, 3, new release
-IEMS
+      ✔ replicate on 2, 3, new release @done(26-03-23 13:16)
+      [] Interactivity
+        [] Changing slide should trigger lean, performant animation (lean, minimal impact on performance and website speed metrics)
+        [] Should not touch Carousel internals at all
+        [] Should achieve animation effect f or transitioning between slides - whichever direction - by only supplying tailwind classes to the carousel components (tag calls, not definitions) inside Product spotlight 1
+        [] Animation effect should utilize the CarouselSlide for triggering - CarouselSlide has data-active or similar attribute which triggers when it becomes active
+        [] Only apply in product spotlight 1 for now
+
+      IEMS
 [] Data
     [] run image bg deletion script on every product id
 

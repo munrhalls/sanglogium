@@ -17,3 +17,13 @@ Featured
     [] layout
     [] style
 
+
+Product spotlight 1, 2, 3, new release
+[] Carousel Controls
+    [] Structure
+        [] The container should receive the same element absolutely positioned that the promo text element has. It should be used to import the background asset, and by import what is really meant here is applying the talent class that automatically appends the background image asset.
+    [] Style
+        [] Container Powinno mieć ciemny kolor brand/dasz 700
+        [] Containers should have the same pattern background decoration applied that the promo text copy component has.
+        [] The dots should be brand 400 color. So should the active dot be brand 400 color, and all else should remain the same. That is, the active dot remains the orb style while the inactive dots are empty circles.
+
