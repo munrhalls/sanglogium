@@ -18,20 +18,19 @@ export default async function ProductSpotlight3() {
     <article className="w-full relative overflow-hidden border-secondary-800 bg-brand-700">
       <div className="absolute inset-0 bg-[url('/fractal_ring.webp')] bg-no-repeat bg-right-bottom mix-blend-overlay opacity-20 pointer-events-none z-0" />
       <div className="max-w-[1440px] mx-auto px-4 md:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
-          <div className="w-full h-full bg-brand-300 rounded-none flex items-center justify-center relative p-8 lg:p-12 overflow-hidden">
-            <Carousel itemsCount={product.images?.length || 1} breakpointMap={{ lgDesktop: 1, mdPortrait: 1, mobilePortrait: 1 }}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch min-h-[500px] lg:min-h-[600px]">
+          <div className="w-full h-full bg-brand-300 rounded-none flex items-center justify-center relative overflow-hidden">
+            <Carousel itemsCount={product.images?.length || 1} breakpointMap={{ lgDesktop: 1, mdPortrait: 1, mobilePortrait: 1 }} className="w-full h-full">
               <CarouselTrack className="w-full h-full">
                 {product.images?.map((image, idx) => (
-                  <CarouselSlide key={idx} className="w-full h-full flex items-center justify-center">
+                  <CarouselSlide key={idx} className="aspect-square w-full flex items-center justify-center">
                     <Image
                       src={urlFor(image).url()}
                       alt={product.name}
                       width={800}
-                      height={600}
+                      height={800}
                       priority={idx === 0}
-                      loading={idx === 0 ? "eager" : "lazy"}
-                      className="w-auto h-auto max-w-[85%] max-h-[85%] object-contain mix-blend-multiply relative z-10"
+                      className="max-w-full max-h-full w-auto h-auto object-contain mix-blend-multiply"
                     />
                   </CarouselSlide>
                 ))}

@@ -28,10 +28,10 @@ export default async function NewestRelease() {
                       src={urlFor(image).url()}
                       alt={product.name}
                       width={800}
-                      height={600}
+                      height={800}
                       priority={idx === 0}
                       loading={idx === 0 ? "eager" : "lazy"}
-                      className="w-auto h-auto max-w-[85%] max-h-[85%] object-contain mix-blend-multiply relative z-10"
+                      className="w-auto h-auto max-w-full max-h-full object-contain mix-blend-multiply relative z-10"
                     />
                   </CarouselSlide>
                 ))}

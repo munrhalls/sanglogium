@@ -25,6 +25,11 @@ Global
         Refactor & Cleanup
         ✔ Remove any remotePatterns related to Sanity from next.config.js (now redundant) @done(26-03-22 13:47)
         ✔ Update CarouselSlide to pass necessary dimensions down to the new Image component @done(26-03-22 13:47)
+        ✔ Apply in Featured @done(26-03-22 13:52)
+        ✔ Apply in product spotlight 1, 2, 3, new release @done(26-03-22 13:55)
+        ✔ Apply in IEMS, DACs, Accessories @done(26-03-22 14:00)
+        ✔ Status check catalogue - apply changes if needed /uses static images @done(26-03-22 14:09)
+        [] Status check hero - determine status
 
 [] Layout
     ✔ rwd - menu bottom bar should not appear on laptop/desktop at all and that effect should be achieved using only the lg-touch and lg-desktop tailwind classes from global config; if twMerge usage is present, preserve it, else just arrange responsive classes properly @done(26-03-21 13:47)
@@ -83,9 +88,12 @@ Featured
     ✔ replicate the above in product 2, 3, New Release @done(26-03-22 12:58
     ✔ replicate in product spotlight 2, 3, new release @done(26-03-22 13:01)
     ✔ Replicate in product spotlight 2,3, new release @done(26-03-22 13:26)
-    [] Image - should be next/image with simple, robust sizing and optimization, knowing that the images are imported from sanity v3
+    ✔ Image - should be next/image with simple, robust sizing and optimization, knowing that the images are imported from sanity v3 @done(26-03-22 14:18)
+    ✔ determine root cause of image regression, only that @done(26-03-23 08:04)
+    ✔ Fix regression - image partially not visible top bottom @done(26-03-23 08:04)
+    [] apply in product spotlight 2,3 and new release
     [] SEE MORE button: Remove existing arrow element.
-    [] Import fractal_start from public assets for background decoration.
+    [] Import fractal_star from public assets for background decoration.
     [] Implement a dedicated element purely for background decoration.
 
   [] Layout

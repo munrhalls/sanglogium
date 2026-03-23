@@ -13,7 +13,7 @@ export default function SandboxPage() {
   return (
     <main className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="w-full max-w-7xl p-8">
-        <FeaturedCard
+        {/* <FeaturedCard
           product={{
             _id: '1',
             name: mockFeaturedData.title,
@@ -25,7 +25,7 @@ export default function SandboxPage() {
               }
             }
           }}
-        />
+        /> */}
       </div>
     </main>
   );

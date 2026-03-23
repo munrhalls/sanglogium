@@ -1,0 +1,147 @@
+SPRINT P1 — CRITICAL (Ship-blocking for Core Web Vitals)
+☐ DoD C-1: All Sanity image URLs on the home page include .width(w).auto('format').quality(75) chaining @files(hero/Hero.tsx, featured/Featured.tsx, product-spotlight-1/ProductSpotlight1.tsx, product-spotlight-2/ProductSpotlight2.tsx, product-spotlight-3/ProductSpotlight3.tsx, iems-gallery/IemCard.tsx, newest-release/NewestRelease.tsx, dacs/DacCard.tsx, accessories/AccessoryCard.tsx)
+☐ DoD C-2: Catalogue nav skeleton images converted to WebP, sized to max render dimension, priority removed @files(public/images/headphones-skeletal.webp, catalogue/hero/HeroImage.tsx)
+☐ DoD C-3: fractal_ring.webp referenced via <Image> component with loading="lazy" in each section, not CSS background @files(product-spotlight-1/ProductSpotlight1.tsx, product-spotlight-2/ProductSpotlight2.tsx, product-spotlight-3/ProductSpotlight3.tsx, newest-release/NewestRelease.tsx)
+☐ DoD C-4: Sanity stega disabled in production, enabled only in preview/draft mode @file(sanity/lib/client.ts)
+☐ DoD C-5: Homepage data fetches parallelized via single Promise.all or single aggregated GROQ query @file(app/(store)/page.tsx)
+SPRINT P2 — HIGH
+☐ DoD H-1: Dead PNG imports removed from ProductSpotlight and Featured components @files(product-spotlight-1/ProductSpotlight1.tsx, product-spotlight-2/ProductSpotlight2.tsx, product-spotlight-3/ProductSpotlight3.tsx, featured/Featured.tsx)
+☐ DoD H-2: Header streams real auth state via Suspense boundary @files(app/components/layout/header/Header.tsx, app/components/layout/header/NavbarActions.tsx)
+☐ DoD H-3: react-multi-carousel removed from production dependencies @file(package.json)
+☐ DoD H-4: styledComponents: true removed from next.config.ts compiler options @file(next.config.ts)
+SPRINT P3 — MEDIUM
+☐ DoD M-1: Hero uses single <Image> with art direction — no double priority preload @file(hero/Hero.tsx)
+☐ DoD M-2: IemCard priority removed — replaced with loading="lazy" for all cards @file(iems-gallery/IemCard.tsx)
+☐ DoD M-3: Per-section Sanity cache tags added to all fetch functions @file(sanity/lib/hero/getHeroData.ts)
+☐ DoD M-4: '/' removed from Clerk middleware matcher @file(middleware.ts)
+☐ DoD M-5: netlify.toml /_next/image* cache header removed (let Next.js manage its own) @file(netlify.toml)
+☐ DoD M-6: CatalogueNavbar HeroImage gets sizes prop matching catalogue slot dimensions @file(catalogue/hero/HeroImage.tsx)
+SPRINT P4 — HYGIENE
+☐ DoD L-1: Confirm react-icons has zero imports in (store) route — remove if confirmed
+☐ DoD L-2: Confirm axios has zero imports in (store) route — remove from production deps if confirmed
+☐ DoD L-3: interactive-card CSS class scoped to transition-transform only @file(app/globals.css)
+☐ DoD L-4: logo_desktop.svg, logo_desktop (1).svg, stale archived assets removed from /public/
+☐ DoD L-5: app/fonts/GeistVF.woff and GeistMonoVF.woff removed
+
+
+SPRINT P1 — CRITICAL
+C-1: Unoptimized Sanity image URLs
+
+Issue: Full-resolution images served to every viewport.
+
+Impact: LCP, bandwidth.
+
+C-2: 2MB PNG catalogue nav images preloaded
+
+Issue: Large, unoptimized images blocking initial render.
+
+Impact: LCP, bandwidth.
+
+C-3: fractal_ring.webp via CSS bg × 4
+
+Issue: Unoptimized background images that are not lazy-loaded.
+
+Impact: Render blocking, bandwidth.
+
+C-4: Stega always enabled in production
+
+Issue: Visual editing metadata active in live environment.
+
+Impact: Server CPU, payload size.
+
+C-5: 9 sequential Sanity fetches — waterfall
+
+Issue: Requests firing one after another instead of simultaneously.
+
+Impact: TTFB, FCP.
+
+SPRINT P2 — HIGH
+H-1: 1.47MB dead PNG imports in JS chunks
+
+Issue: Unused assets bloating the JavaScript bundle.
+
+Impact: Bundle size, JS parse time.
+
+H-2: Header hardcodes stale auth state
+
+Issue: Incorrect user authentication display on load.
+
+Impact: UX correctness, CLS.
+
+H-3: react-multi-carousel unused in prod bundle
+
+Issue: Dependency included in build despite no usage.
+
+Impact: Bundle size.
+
+H-4: styled-components SWC overhead unused in store
+
+Issue: Compiler processing styled-components unnecessarily.
+
+Impact: SSR overhead.
+
+H-5: Geist fonts in app/fonts/ — orphaned
+
+Issue: Files present in repository but never loaded.
+
+Impact: Repo hygiene.
+
+SPRINT P3 — MEDIUM
+M-1: Double priority preload on Hero
+
+Issue: Preloading both mobile and desktop hero images simultaneously.
+
+Impact: LCP, wasted bandwidth.
+
+M-2: IemCard priority on below-fold images
+
+Issue: High priority assigned to images not immediately visible.
+
+Impact: LCP competition.
+
+M-3: No per-section cache tags
+
+Issue: Impossible to perform surgical revalidation.
+
+Impact: Cache efficiency.
+
+M-4: Clerk middleware runs on public home page
+
+Issue: Middleware execution on routes that don't require auth.
+
+Impact: Cold-start latency.
+
+M-5: netlify.toml overrides Next image cache headers
+
+Issue: Configuration conflict with Next.js native optimization.
+
+Impact: Cache correctness.
+
+M-6: CatalogueNavbar fill images missing sizes prop
+
+Issue: Images requested at incorrect dimensions.
+
+Impact: Oversized image requests.
+
+SPRINT P4 — LOW
+L-1: react-icons possibly unused in store
+
+Impact: Bundle weight.
+
+L-2: axios possibly unused in store
+
+Impact: Bundle weight.
+
+L-3: transition-all on hover card
+
+Issue: Animating non-transform properties.
+
+Impact: Layout thrash.
+
+L-4: Stale SVGs and archived assets in /public
+
+Impact: Deploy size.
+
+L-5: Orphaned Geist font files
+
+Impact: Repo hygiene.
