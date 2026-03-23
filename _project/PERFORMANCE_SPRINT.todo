@@ -7,7 +7,7 @@ SPRINT P1 — CRITICAL (Ship-blocking for Core Web Vitals)
 SPRINT P2 — HIGH
 ☐ DoD H-1: Dead PNG imports removed from ProductSpotlight and Featured components @files(product-spotlight-1/ProductSpotlight1.tsx, product-spotlight-2/ProductSpotlight2.tsx, product-spotlight-3/ProductSpotlight3.tsx, featured/Featured.tsx)
 ☐ DoD H-2: Header streams real auth state via Suspense boundary @files(app/components/layout/header/Header.tsx, app/components/layout/header/NavbarActions.tsx)
-☐ DoD H-3: react-multi-carousel removed from production dependencies @file(package.json)
+✔ DoD H-3: react-multi-carousel removed from production dependencies @file(package.json) @done(26-03-23 08:45)
 ☐ DoD H-4: styledComponents: true removed from next.config.ts compiler options @file(next.config.ts)
 SPRINT P3 — MEDIUM
 ☐ DoD M-1: Hero uses single <Image> with art direction — no double priority preload @file(hero/Hero.tsx)

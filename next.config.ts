@@ -5,7 +5,6 @@ import withBundleAnalyzer from "@next/bundle-analyzer";
 const nextConfig: NextConfig = {
   typescript: { ignoreBuildErrors: true },
   eslint: { ignoreDuringBuilds: true },
-  compiler: { styledComponents: true },
   serverExternalPackages: ["isomorphic-dompurify"],
   experimental: {
     optimizeCss: true,
