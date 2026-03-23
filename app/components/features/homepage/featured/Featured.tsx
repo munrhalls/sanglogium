@@ -8,7 +8,6 @@ import {
   CarouselNext,
   CarouselDots,
 } from "@/app/components/layout/carousel/CarouselControls";
-import featuredImg from "./featured_transparent.png";
 import { getFeaturedProducts, FeaturedProduct } from "./getFeaturedProducts";
 import { ShoppingCart } from "@phosphor-icons/react/dist/ssr";
 

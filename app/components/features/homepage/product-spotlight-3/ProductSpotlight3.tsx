@@ -1,7 +1,6 @@
 import React from "react";
 import { Image } from "next-sanity/image";
 import { urlFor } from "@/sanity/lib/image";
-import spotlightImg from '../product-spotlight-1/product_spotlight_transparent.png';
 import { getSpotlight3Data } from "./getSpotlight3Data";
 import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
 import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";
