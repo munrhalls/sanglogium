@@ -144,16 +144,17 @@ Featured
     [] Typography: Use only typography aliases; strictly no one-off styles.
 
 
-    [] Carousel
-      [] Structure
-          [] Elements mapped inside carousel - Delete unprofessional and faulty mapping of index from the second argument and replace with professional product ID to the mapped elements.
-      [] Layout
-        [] Dots: Centered horizontally below the image, positioned close to the bottom edge.
-        [] Nav Buttons: Positioned below the image in the bottom-left corner.
-      [] Styling
-          [] Carousel Nav Buttons:
-          [] Use thick brand-700 chevrons.
-          [] Inactive state: Greyed out or low opacity.
+    ✔ Carousel @done(26-03-23 13:12)
+      ✔ Structure @done(26-03-23 13:12)
+          ✔ Elements mapped inside carousel - Delete unprofessional and faulty mapping of index from the second argument and replace with professional product ID to the mapped elements. @done(26-03-23 13:12)
+      ✔ Layout @done(26-03-23 13:12)
+        ✔ Dots: Centered horizontally below the image, positioned close to the bottom edge. @done(26-03-23 13:12)
+        ✔ Nav Buttons: Positioned below the image in the bottom-left corner. @done(26-03-23 13:12)
+      ✔ Styling @done(26-03-23 13:12)
+          ✔ Carousel Nav Buttons: @done(26-03-23 13:12)
+          ✔ Use thick brand-700 chevrons. @done(26-03-23 13:12)
+          ✔ Inactive state: Greyed out or low opacity. @done(26-03-23 13:12)
+      [] replicate on 2, 3, new release
 IEMS
 [] Data
     [] run image bg deletion script on every product id

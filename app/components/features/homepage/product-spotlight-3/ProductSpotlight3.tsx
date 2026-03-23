@@ -18,26 +18,26 @@ export default async function ProductSpotlight3() {
       <div className="max-w-[1440px] mx-auto px-4 md:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch min-h-[500px] lg:min-h-[600px]">
           <div className="w-full h-full bg-brand-300 rounded-none flex items-center justify-center relative overflow-hidden">
-            <Carousel itemsCount={product.images?.length || 1} breakpointMap={{ lgDesktop: 1, mdPortrait: 1, mobilePortrait: 1 }} className="w-full h-full">
+            <Carousel itemsCount={product.images?.length || 1} breakpointMap={{ lgDesktop: 1, mdPortrait: 1, mobilePortrait: 1 }} className="w-full h-full overflow-visible">
               <CarouselTrack className="w-full h-full">
                 {product.images?.map((image, idx) => (
-                  <CarouselSlide key={`${product._id}-${idx}`} className="aspect-square w-full flex items-center justify-center">
+                  <CarouselSlide key={`${product._id}-${idx}`} className="aspect-square w-full flex items-center justify-center pb-4">
                     <Image
                       src={urlFor(image).width(800).auto('format').quality(75).url()}
                       alt={product.name}
                       width={800}
                       height={800}
                       priority={idx === 0}
-                      className="max-w-full max-h-full w-auto h-auto object-contain mix-blend-multiply"
+                      className="max-w-full max-h-[80%] w-auto h-auto object-contain mix-blend-multiply"
                     />
                   </CarouselSlide>
                 ))}
               </CarouselTrack>
-              <div className="absolute bottom-4 left-4 z-10 flex gap-2">
-                <CarouselPrevious />
-                <CarouselNext />
-              </div>
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10">
+              <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-6">
+                <div className="flex gap-2">
+                  <CarouselPrevious />
+                  <CarouselNext />
+                </div>
                 <CarouselDots color="brand-700" />
               </div>
             </Carousel>
