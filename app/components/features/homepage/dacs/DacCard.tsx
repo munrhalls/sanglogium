@@ -20,8 +20,7 @@ export default function DacCard({ item, idx }: { item: any; idx: number }) {
           alt={productName}
           width={400}
           height={400}
-          priority={idx < 4}
-          loading={idx < 4 ? "eager" : "lazy"}
+          loading="lazy"
           className="object-contain w-full h-full transition-transform duration-700 group-hover:scale-105"
         />
       </div>

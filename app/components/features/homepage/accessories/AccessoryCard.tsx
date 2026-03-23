@@ -13,8 +13,7 @@ export default function AccessoryCard({ item, idx }: { item: AccessoryItem; idx:
           alt={item.name}
           width={400}
           height={400}
-          priority={idx < 4}
-          loading={idx < 4 ? "eager" : "lazy"}
+          loading="lazy"
           className="object-cover w-full h-full"
         />
       </div>
