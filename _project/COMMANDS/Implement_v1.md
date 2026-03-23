@@ -8,15 +8,12 @@
 *Agent MUST read these carefully to understand the exact mathematical target state.*
 
 **Explicit Rough Scope:**
-Files: Product Spotlight 1, Product Spotlight 2, Product Spotlight 3, New Release.
-Area in each file: Carousel navigation elements and element containing product image.
-The only required change and the only change to make is to make the carousel navigation elements positioned properly in terms of layout and styled properly in terms of styling such that they are visible against the beige background and such that they are also properly sized and look good.
-- They should have Brand-700 color for default state
-- For hover state, they should go up brand-950 in color.
-- For inactive state, they should be lower opacity but visible against beige background.
+
 
 **Explicit Rough DoDs:**
     [] Carousel
+      [] Structure
+          [] Elements mapped inside carousel - Delete unprofessional and faulty mapping of index from the second argument and replace with professional product ID to the mapped elements.
       [] Layout
         [] Dots: Centered horizontally below the image, positioned close to the bottom edge.
         [] Nav Buttons: Positioned below the image in the bottom-left corner.
@@ -48,4 +45,4 @@ The only required change and the only change to make is to make the carousel nav
 ## PHASE 3: Verification & Output
 1. Execute the **Verification Command** using PowerShell.
 2. If the command fails, automatically revert the specific change, re-evaluate, and fix. Do not declare completion until the verification command passes 100%.
-3. Generate the git commit message using the repository's required taxonomy format, present in the _project/COMMIT_TEMPLATE.txt file.
+3. Generate the git commit message using the repository's required taxonomy format, present in the _project/COMMIT_TEMPLATE.txt
