@@ -8,15 +8,11 @@
 *Agent MUST read these carefully to understand the exact mathematical target state.*
 
 **Explicit Rough Scope:**
-[Human: Insert the rough scope here. Define the exact target state to be reached.]
+Scope: The only thing to do while ensuring that nothing else is touched or changed and there are zero regressions. The only goal is to replicate the new lean animation present on Product Spotlight 1 onto Product Spotlight 2, Product Spotlight 3, and Newest Release.
 
 **Explicit Rough DoDs:**
-      [] Carousel Interactivity - animations
-        [] Changing slide should trigger lean, performant animation (lean, minimal impact on performance and website speed metrics)
-        [] Should not touch Carousel internals at all
-        [] Should achieve animation effect f or transitioning between slides - whichever direction - by only supplying tailwind classes to the carousel components (tag calls, not definitions) inside Product spotlight 1
-        [] Animation effect should utilize the CarouselSlide for triggering - CarouselSlide has data-active or similar attribute which triggers when it becomes active
-        [] Only apply in product spotlight 1 for now
+[] Carousel lean animation - replicate on product spotlight 2, product spotlight 3, new release
+
 ---
 
 ## PHASE 1: Plan and Contain (Agent Output Required Before Coding)
