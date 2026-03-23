@@ -29,7 +29,9 @@ Global
         ✔ Apply in product spotlight 1, 2, 3, new release @done(26-03-22 13:55)
         ✔ Apply in IEMS, DACs, Accessories @done(26-03-22 14:00)
         ✔ Status check catalogue - apply changes if needed /uses static images @done(26-03-22 14:09)
-        [] Status check hero - determine status
+        ✔ Status check hero - determine status @done(26-03-23 08:29)
+
+
 
 [] Layout
     ✔ rwd - menu bottom bar should not appear on laptop/desktop at all and that effect should be achieved using only the lg-touch and lg-desktop tailwind classes from global config; if twMerge usage is present, preserve it, else just arrange responsive classes properly @done(26-03-21 13:47)
@@ -92,7 +94,7 @@ Featured
     ✔ determine root cause of image regression, only that @done(26-03-23 08:04)
     ✔ Fix regression - image partially not visible top bottom @done(26-03-23 08:04)
     ✔ apply in product spotlight 2,3 and new release @done(26-03-23 08:08)
-    [] SEE MORE button: Remove existing arrow element.
+    ✔ SEE MORE button: Remove existing arrow element. @done(26-03-23 08:13)
     [] Import fractal_star from public assets for background decoration.
     [] Implement a dedicated element purely for background decoration.
 
