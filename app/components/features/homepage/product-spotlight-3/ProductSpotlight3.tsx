@@ -40,9 +40,18 @@ export default async function ProductSpotlight3() {
           </div>
           <div className="w-full h-full bg-brand-800 rounded-none flex flex-col justify-center gap-6 p-8 lg:p-12 relative overflow-hidden">
             <div aria-hidden="true" className="absolute inset-0 z-0 pointer-events-none">
-              <div className="absolute -top-[20%] -right-[20%] w-[140%] h-[140%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-5" />
-              <div className="absolute top-[10%] -left-[10%] w-[80%] h-[80%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-10" />
-              <div className="absolute bottom-[5%] right-[5%] w-[40%] h-[40%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-20" />
+              <div
+                className="absolute -top-[20%] -right-[20%] w-[140%] h-[140%] bg-accent-500 opacity-5"
+                style={{ WebkitMaskImage: "url('/backgrounds/fractal_ring.webp')", WebkitMaskSize: "100%", WebkitMaskRepeat: "no-repeat", maskImage: "url('/backgrounds/fractal_ring.webp')", maskSize: "100%", maskRepeat: "no-repeat" }}
+              />
+              <div
+                className="absolute top-[10%] -left-[10%] w-[80%] h-[80%] bg-accent-500 opacity-10"
+                style={{ WebkitMaskImage: "url('/backgrounds/fractal_ring.webp')", WebkitMaskSize: "100%", WebkitMaskRepeat: "no-repeat", maskImage: "url('/backgrounds/fractal_ring.webp')", maskSize: "100%", maskRepeat: "no-repeat" }}
+              />
+              <div
+                className="absolute bottom-[5%] right-[5%] w-[40%] h-[40%] bg-accent-500 opacity-20"
+                style={{ WebkitMaskImage: "url('/backgrounds/fractal_ring.webp')", WebkitMaskSize: "100%", WebkitMaskRepeat: "no-repeat", maskImage: "url('/backgrounds/fractal_ring.webp')", maskSize: "100%", maskRepeat: "no-repeat" }}
+              />
             </div>
             <div className="flex flex-col gap-2 relative z-10">
               <span className="text-small tracking-editorial text-accent-500 uppercase">{product.brand}</span>
