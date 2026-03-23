@@ -77,7 +77,7 @@ button {
 }
 
 .interactive-card {
-  @apply transition-all duration-700 ease-out hover:scale-[1.03] hover:border-brand-400/40;
+  @apply transition-transform duration-700 ease-out hover:scale-[1.03] hover:border-brand-400/40;
 }
 
 @keyframes fadeOut {

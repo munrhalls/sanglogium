@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { ListIcon, XIcon, Menu, Search, ShoppingBag } from "@phosphor-icons/react";
+import { ListIcon, XIcon, List as Menu, MagnifyingGlass as Search, ShoppingBag } from "@phosphor-icons/react";
 import Link from "next/link";
 // import dynamic from "next/dynamic";
 // import { useQueryState } from "nuqs";

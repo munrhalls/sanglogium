@@ -17,7 +17,6 @@ export const config = {
     "/profile/:path*",
     "/checkout/:path*",
     "/basket/:path*",
-    "/",
     /*
      * 2. EXCLUSION STRATEGY (The "Antigravity" Guard)
      * This regex prevents the middleware from running on:
