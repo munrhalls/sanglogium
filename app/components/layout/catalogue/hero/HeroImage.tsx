@@ -16,7 +16,8 @@ export default function HeroImage({ data }: { data: CatalogueItem }) {
         alt={data.label}
         fill
         className="object-contain rounded-none"
-        priority
+        loading="lazy"
+        sizes="(max-width: 1024px) 0px, (max-width: 1280px) 288px, 400px"
       />
     </div>
   );
