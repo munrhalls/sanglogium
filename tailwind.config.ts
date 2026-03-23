@@ -281,6 +281,9 @@ export default {
     "./sanity/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    backgroundImage: {
+      'fractal-ring': "url('/backgrounds/fractal_ring.webp')",
+    },
     borderRadius: {
       lg: "0px",
       md: "0px",

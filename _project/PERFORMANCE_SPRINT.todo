@@ -5,8 +5,8 @@
 ✔ M-1  — Disable stega in production                      [HAIKU OK] @done(26-03-23 09:34)
 ✔ M-2  — Remove priority from IemCard/DacCard/AccessoryCard [HAIKU OK] @done(26-03-23 09:35)
 ✔ M-3  — Remove conflicting netlify.toml image header     [HAIKU OK] @done(26-03-23 09:36)
-[ ] C-4  — Fix CatalogueNavbar image: lazy + sizes          [HAIKU OK]
-[ ] C-3  — Replace fractal_ring CSS backgrounds with Image  [SONNET REQUIRED]
+✔ C-4  — Fix CatalogueNavbar image: lazy + sizes          [HAIKU OK] @done(26-03-23 09:37)
+✔ C-3  — Replace fractal_ring CSS backgrounds with tailwind config extend  [SONNET REQUIRED] @done(26-03-23 09:45)
 [ ] C-2  — Add width/format/quality to all urlFor calls     [SONNET REQUIRED]
 [ ] C-1  — Parallelize homepage fetches via Promise.all     [SONNET REQUIRED]
 [ ] H-1  — Fix Hero double priority preload                 [SONNET REQUIRED]
