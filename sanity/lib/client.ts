@@ -8,6 +8,7 @@ export const client = createClient({
   apiVersion,
   useCdn: true,
   stega: {
+    enabled: process.env.NEXT_PUBLIC_VERCEL_ENV === "preview",
     studioUrl: process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}/studio`
       : "http://localhost:3000/studio",

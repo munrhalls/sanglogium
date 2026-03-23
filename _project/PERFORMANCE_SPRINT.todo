@@ -1,7 +1,7 @@
 ✔ L-1  — Delete dead public assets and font files         [HAIKU OK] @done(26-03-23 08:57)
 ✔ L-2  — Remove dead spotlightImg/featuredImg imports     [HAIKU OK] @done(26-03-23 09:06)
 ✔ L-3  — Remove styledComponents flag, audit dead deps    [HAIKU OK] @done(26-03-23 09:18)
-[ ] L-4  — Fix transition-all, remove '/' from middleware   [HAIKU OK]
+✔ L-4  — Fix transition-all, remove '/' from middleware   [HAIKU OK] @done(26-03-23 09:32)
 [ ] M-1  — Disable stega in production                      [HAIKU OK]
 [ ] M-2  — Remove priority from IemCard/DacCard/AccessoryCard [HAIKU OK]
 [ ] M-3  — Remove conflicting netlify.toml image header     [HAIKU OK]
