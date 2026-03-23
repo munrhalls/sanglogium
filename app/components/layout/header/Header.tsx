@@ -1,7 +1,9 @@
 import { cn } from "@/lib/utils/tailwind";
 import BrandLogo from "./BrandLogo";
 import Searchbar from "./Searchbar";
-import NavbarActions from "./NavbarActions";
+import NavbarActionsServer from "./NavbarActionsServer";
+import NavbarActionsSkeleton from "./NavbarActionsSkeleton";
+import { Suspense } from "react";
 
 export default function Header() {
   return (
@@ -14,7 +16,9 @@ export default function Header() {
     >
       <BrandLogo />
       <Searchbar />
-      <NavbarActions isAuthenticated={false} cartCount={0} />
+      <Suspense fallback={<NavbarActionsSkeleton />}>
+        <NavbarActionsServer />
+      </Suspense>
     </header>
   );
 }
