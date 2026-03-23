@@ -41,21 +41,21 @@ Global
 Featured Carousel - 3 slides desktop, 2 slides tablet
 Phase 1: API & Viewport Calculation (The Source)
 
-[] DoD 1: Analyze updateVisibleCount in CarouselContext.tsx to map how window.innerWidth and orientation correlate to specific breakpointMap keys (xl, lgDesktop, mdLandscape, mobilePortrait, etc.).
+✔ DoD 1: Analyze updateVisibleCount in CarouselContext.tsx to map how window.innerWidth and orientation correlate to specific breakpointMap keys (xl, lgDesktop, mdLandscape, mobilePortrait, etc.). @done(26-03-23 11:36)
 
-[] DoD 2: Verify the fallback behavior within the Context when a specific breakpointMap key is omitted during component instantiation.
+✔ DoD 2: Verify the fallback behavior within the Context when a specific breakpointMap key is omitted during component instantiation. @done(26-03-23 11:36)
 
 Phase 2: CSS Variable Propagation (The Bridge)
 
-[] DoD 3: Identify where and how visibleCount is attached to the DOM as the --visible-count CSS custom property within CarouselContext.tsx.
+✔ DoD 3: Identify where and how visibleCount is attached to the DOM as the --visible-count CSS custom property within CarouselContext.tsx. @done(26-03-23 11:36)
 
 Phase 3: Visual Rendering (The Destination)
 
-[] DoD 4: Inspect CarouselSlide.tsx to confirm exactly how the inline style flexBasis: calc(100% / var(--visible-count, 1)) consumes the CSS variable to dictate the slide's physical width.
+✔ DoD 4: Inspect CarouselSlide.tsx to confirm exactly how the inline style flexBasis: calc(100% / var(--visible-count, 1)) consumes the CSS variable to dictate the slide's physical width. @done(26-03-23 11:36)
 
 Phase 4: Regression-Free Strategy formulation
 
-[] DoD 5: Formulate the exact breakpointMap object payload required to be passed into <Carousel /> at its target usage site to achieve the 3/2/1 display requirement without altering any internal Carousel code.
+✔ DoD 5: Formulate the exact breakpointMap object payload required to be passed into <Carousel /> at its target usage site to achieve the 3/2/1 display requirement without altering any internal Carousel code. @done(26-03-23 11:36)
 
 Featured
 ✔ desktop @done(26-03-22 10:48)
@@ -110,8 +110,8 @@ Featured
     ✔ Responsiveness: Tailwind breakpoint prefixes (md:, lg:) are used to adjust sizes and coordinate positions to ensure visual harmony on mobile, tablet, and desktop. @done(26-03-23 10:53)
 
 
-[] Product Spotlight 1, 2, 3, New Release
-  [] Data
+☐ Product Spotlight 1, 2, 3, New Release
+  ✔ Data @done(26-03-23 11:41)
     ✔ Data - GROQ should return not just main image, but also image gallery of product and it should do so in a single query using the existing homepage query with minimal modification @done(26-03-22 12:55)
     ✔ Data - use unified GROQ instead of re-processing on frontend @done(26-03-22 13:03)
     ✔ Data - replicate the above change in product spotlight 2, 3 and New Release @done(26-03-22 12:56)
@@ -120,7 +120,7 @@ Featured
     ✔ replicate on product spotlight 2, 3 @done(26-03-22 13:18)
      ✔ replicate on new release @done(26-03-22 13:21)
      ✔ Consuming component (Carousel) should use the processed product images array. @done(26-03-22 13:23)
-  [] Structure
+  ✔ Structure @done(26-03-23 11:56)
     ✔ Should use Carousel, Carousel Track, and Carousel Slide to contain product images - Carousel should not affect layout or styling in any way whatsoever, not a single change - except for providing the carousel functionality @done(26-03-22 12:50)
     ✔ Should implement navigation buttons for carousel control. @done(26-03-22 12:50)
     ✔ Should implement dots for carousel pagination. @done(26-03-22 12:50)
@@ -133,28 +133,27 @@ Featured
     ✔ apply in product spotlight 2,3 and new release @done(26-03-23 08:08)
     ✔ SEE MORE button: Remove existing arrow element. @done(26-03-23 08:13)
     ✔ Import fractal_star from public assets for background decoration. @done(26-03-23 10:10)
-
-      [] Elements mapped inside carousel - Delete unprofessional and faulty mapping of index from the second argument and replace with professional product ID to the mapped elements.
-
-  [] Layout
-    [] Dots: Centered horizontally below the image, positioned close to the bottom edge.
-    [] Nav Buttons: Positioned below the image in the bottom-left corner.
-\
     ✔ SEE MORE button: Centered horizontally. @done(26-03-23 10:17)
 
+  [] Layout
+    [] On mobile, there should be distance between spotlights 1, 2, and 2, 3
+    [] Distance should be taken from global spacing system (tailwind config)
+
   [] Styling
-    [] Nav Buttons:
-      [] Use thick brand-700 chevrons.
-      [] Inactive state: Greyed out or low opacity.
     ✔ Dots: Inactive = brand-700 circle; Active = brand-700 orb. @done(26-03-21 12:52)
-
-    [] Dots Sizing:
-      [] Mobile: w-5 h-5
-      [] Tablet: w-6 h-7
-      [] Desktop: w-8 h-8
-
     [] Typography: Use only typography aliases; strictly no one-off styles.
 
+
+    [] Carousel
+      [] Structure
+          [] Elements mapped inside carousel - Delete unprofessional and faulty mapping of index from the second argument and replace with professional product ID to the mapped elements.
+      [] Layout
+        [] Dots: Centered horizontally below the image, positioned close to the bottom edge.
+        [] Nav Buttons: Positioned below the image in the bottom-left corner.
+      [] Styling
+          [] Carousel Nav Buttons:
+          [] Use thick brand-700 chevrons.
+          [] Inactive state: Greyed out or low opacity.
 IEMS
 [] Data
     [] run image bg deletion script on every product id

@@ -22,7 +22,7 @@ export default async function NewestRelease() {
             <Carousel itemsCount={product.images?.length || 1} className="w-full h-full">
               <CarouselTrack className="w-full h-full">
                 {product.images?.map((image, idx) => (
-                  <CarouselSlide key={idx} className="w-full h-full flex items-center justify-center">
+                  <CarouselSlide key={`${product._id}-${idx}`} className="w-full h-full flex items-center justify-center">
                     <Image
                       src={urlFor(image).width(800).auto('format').quality(75).url()}
                       alt={product.name}

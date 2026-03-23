@@ -21,7 +21,7 @@ export default async function ProductSpotlight3() {
             <Carousel itemsCount={product.images?.length || 1} breakpointMap={{ lgDesktop: 1, mdPortrait: 1, mobilePortrait: 1 }} className="w-full h-full">
               <CarouselTrack className="w-full h-full">
                 {product.images?.map((image, idx) => (
-                  <CarouselSlide key={idx} className="aspect-square w-full flex items-center justify-center">
+                  <CarouselSlide key={`${product._id}-${idx}`} className="aspect-square w-full flex items-center justify-center">
                     <Image
                       src={urlFor(image).width(800).auto('format').quality(75).url()}
                       alt={product.name}

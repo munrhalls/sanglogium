@@ -1,0 +1,19 @@
+Data
+[] Copy texts for product spotlight 1, 2, 3, new release - adapted and refined
+    [] Research
+    [] Develop new titles and copies
+    [] Migration script and payload.json
+    [] Database update via migration script
+    [] Verification
+
+Featured
+[] research and determine - should apply same bg-decor pattern as product spotlights?
+    [] yes - implement
+    [] no - should implement any other kind of decor/bg alignment change?
+
+
+[] on small landscape view, image on the right, title + price + cart btn on the right, with new fitting layout, carousel nav at the bottom of image, image smaller to account for that
+    [] structure
+    [] layout
+    [] style
+
