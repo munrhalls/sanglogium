@@ -1,10 +1,10 @@
-import {
-  FaFacebook,
-  FaInstagram,
-  FaPinterest,
-  FaTwitter,
-  FaYoutube,
-} from "react-icons/fa";
+// import {
+//   FaFacebook,
+//   FaInstagram,
+//   FaPinterest,
+//   FaTwitter,
+//   FaYoutube,
+// } from "react-icons/fa";
 import Link from "next/link";
 import { cn } from "@/lib/utils/tailwind";
 
@@ -107,7 +107,7 @@ export default function Footer() {
               "md:grid-flow-col md:grid-rows-1"
             )}
           >
-            <li>
+            {/* <li>
               <FaTwitter size={32} />
             </li>
             <li>
@@ -121,7 +121,7 @@ export default function Footer() {
             </li>
             <li>
               <FaYoutube size={32} />
-            </li>
+            </li> */}
           </ul>
         </div>
         <div

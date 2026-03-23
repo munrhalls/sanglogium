@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import { Menu, Search, ShoppingBag } from "lucide-react";
-import { ListIcon, XIcon } from "@phosphor-icons/react";
+import { ListIcon, XIcon, Menu, Search, ShoppingBag } from "@phosphor-icons/react";
 import Link from "next/link";
 // import dynamic from "next/dynamic";
 // import { useQueryState } from "nuqs";
