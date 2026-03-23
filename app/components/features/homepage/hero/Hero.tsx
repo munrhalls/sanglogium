@@ -27,27 +27,22 @@ export default async function Hero() {
       )}
     >
       <div className="absolute inset-0 z-0">
-        <Image
-          src={urlFor(mobileBackgroundImage).url()}
-          alt={mobileBackgroundImage.alt || "Hero Image"}
-          fill
-          priority
-          className={cn("block object-cover rounded-none", "md:hidden")}
-          sizes="100vw"
-          quality={90}
-          style={{ objectPosition: getPosition(mobileBackgroundImage) }}
-        />
-
-        <Image
-          src={urlFor(data.backgroundImage).url()}
-          alt={data.backgroundImage.alt || "Hero Image"}
-          fill
-          priority
-          className={cn("hidden object-cover rounded-none", "md:block")}
-          sizes="100vw"
-          quality={90}
-          style={{ objectPosition: getPosition(data.backgroundImage) }}
-        />
+        <picture>
+          <source
+            media="(min-width: 768px)"
+            srcSet={urlFor(data.backgroundImage).url()}
+          />
+          <Image
+            src={urlFor(mobileBackgroundImage).url()}
+            alt={data.backgroundImage.alt || "Hero Image"}
+            fill
+            priority
+            className="object-cover rounded-none"
+            sizes="100vw"
+            quality={90}
+            style={{ objectPosition: getPosition(mobileBackgroundImage) }}
+          />
+        </picture>
 
         <div
           className={cn(
