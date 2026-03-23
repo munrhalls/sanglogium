@@ -1,3 +1,19 @@
+[ ] L-1  — Delete dead public assets and font files         [HAIKU OK]
+[ ] L-2  — Remove dead spotlightImg/featuredImg imports     [HAIKU OK]
+[ ] L-3  — Remove styledComponents flag, audit dead deps    [HAIKU OK]
+[ ] L-4  — Fix transition-all, remove '/' from middleware   [HAIKU OK]
+[ ] M-1  — Disable stega in production                      [HAIKU OK]
+[ ] M-2  — Remove priority from IemCard/DacCard/AccessoryCard [HAIKU OK]
+[ ] M-3  — Remove conflicting netlify.toml image header     [HAIKU OK]
+[ ] C-4  — Fix CatalogueNavbar image: lazy + sizes          [HAIKU OK]
+[ ] C-3  — Replace fractal_ring CSS backgrounds with Image  [SONNET REQUIRED]
+[ ] C-2  — Add width/format/quality to all urlFor calls     [SONNET REQUIRED]
+[ ] C-1  — Parallelize homepage fetches via Promise.all     [SONNET REQUIRED]
+[ ] H-1  — Fix Hero double priority preload                 [SONNET REQUIRED]
+[ ] H-2  — Stream real auth state in Header via Suspense    [SONNET REQUIRED]
+
+
+
 SPRINT P1 — CRITICAL (Ship-blocking for Core Web Vitals)
 ☐ DoD C-1: All Sanity image URLs on the home page include .width(w).auto('format').quality(75) chaining @files(hero/Hero.tsx, featured/Featured.tsx, product-spotlight-1/ProductSpotlight1.tsx, product-spotlight-2/ProductSpotlight2.tsx, product-spotlight-3/ProductSpotlight3.tsx, iems-gallery/IemCard.tsx, newest-release/NewestRelease.tsx, dacs/DacCard.tsx, accessories/AccessoryCard.tsx)
 ☐ DoD C-2: Catalogue nav skeleton images converted to WebP, sized to max render dimension, priority removed @files(public/images/headphones-skeletal.webp, catalogue/hero/HeroImage.tsx)
