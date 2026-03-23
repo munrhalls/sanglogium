@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useBasketStore } from "@/store/store";
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { ArrowLeft } from "@phosphor-icons/react";
 import Link from "next/link";
 
 export default function BasketSummary() {
@@ -50,7 +50,7 @@ export default function BasketSummary() {
           href="/products"
           className="flex w-full items-center justify-center gap-2 rounded-sm border border-gray-300 py-3 font-medium text-gray-700 transition-colors hover:bg-gray-50"
         >
-          <ArrowLeftIcon className="h-4 w-4" />
+          <ArrowLeft size={16} />
           Continue Shopping
         </Link>
       </div>

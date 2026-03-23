@@ -1,13 +1,13 @@
-import { FaHeadphones } from "react-icons/fa";
-import { Mic2, Radio, Cable, Headset, Speaker } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
-const ROOT_CATEGORY_ICONS: Record<string, LucideIcon | typeof FaHeadphones> = {
-  "studio-equipment": Mic2,
-  "home-audio": Radio,
-  accessories: Cable,
+"use client";
+import { Microphone, WifiHigh, Plugs, Headset, SpeakerHigh, Headphones } from "@phosphor-icons/react";
+import type { Icon } from "@phosphor-icons/react";
+const ROOT_CATEGORY_ICONS: Record<string, Icon> = {
+  "studio-equipment": Microphone,
+  "home-audio": WifiHigh,
+  accessories: Plugs,
   "personal-audio": Headset,
-  speakers: Speaker,
-  headphones: FaHeadphones,
+  speakers: SpeakerHigh,
+  headphones: Headphones,
 };
 export default function CategoryTitleIcon({ category }: { category: string }) {
   if (category === "on-sale") return null;

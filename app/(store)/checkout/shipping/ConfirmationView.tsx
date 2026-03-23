@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useCheckout } from "../CheckoutProvider"; // Import from the new provider
 import DisplayAddress from "./DisplayAddress";
-import { Check, Edit3 } from "lucide-react";
+import { CheckCircle, PencilSimple } from "@phosphor-icons/react";
 import { useEffect } from "react";
 
 export default function ConfirmationView() {
@@ -28,14 +28,14 @@ export default function ConfirmationView() {
           onClick={editAddress}
           className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-yellow-900 hover:text-yellow-950"
         >
-          <Edit3 size={16} />
+          <PencilSimple size={16} />
           Edit
         </button>
       </div>
 
       {status === "ACCEPT" ? (
         <div className="flex items-center gap-2 rounded-lg border border-green-200 bg-green-50 p-3">
-          <Check className="text-green-600" size={18} />
+          <CheckCircle className="text-green-600" size={18} />
           <p className="text-sm font-semibold text-green-800">
             Address confirmed on map
           </p>

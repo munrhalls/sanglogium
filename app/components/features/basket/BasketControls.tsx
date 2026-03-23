@@ -1,8 +1,7 @@
 "use client";
 import React from "react";
 import { useBasketStore } from "@/store/store";
-import { XMarkIcon } from "@heroicons/react/24/outline";
-import { ShoppingCart } from "lucide-react";
+import { X, ShoppingCart } from "@phosphor-icons/react";
 import { BasketItem } from "../basket/basket.types";
 
 const BasketControls = function BasketControls({
@@ -46,7 +45,7 @@ const BasketControls = function BasketControls({
             className="p-1"
             style={{ display: "inline-flex", lineHeight: 0 }}
           >
-            <ShoppingCart className="h-6 w-6 text-white" />
+            <ShoppingCart className="text-white" size={24} />
           </span>
         </button>
       </div>
@@ -98,7 +97,7 @@ const BasketControls = function BasketControls({
           onClick={handleRemove}
           className="flex h-9 w-9 items-center justify-center rounded p-2 text-gray-400 transition-colors hover:text-red-500"
         >
-          <XMarkIcon className="h-5 w-5" />
+          <X size={20} />
         </button>
       </div>
     </div>

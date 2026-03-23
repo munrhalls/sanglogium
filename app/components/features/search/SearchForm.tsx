@@ -1,4 +1,4 @@
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { MagnifyingGlass } from "@phosphor-icons/react";
 function SearchForm() {
   return (
     <form
@@ -6,7 +6,7 @@ function SearchForm() {
       className="hidden h-full w-full grid-cols-[auto_1fr] place-content-center lg:grid"
     >
       <div className="grid h-full place-content-center">
-        <MagnifyingGlassIcon className="text-white" height={16} width={16} />
+        <MagnifyingGlass className="text-white" size={16} />
       </div>
       <input
         type="text"

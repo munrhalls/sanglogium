@@ -2,7 +2,7 @@
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
-import { X, ArrowDown, ArrowUp } from "lucide-react";
+import { X, ArrowDown, ArrowUp } from "@phosphor-icons/react";
 import { FilterOptions } from "../filters/FilterTypes";
 import { Suspense } from "react";
 

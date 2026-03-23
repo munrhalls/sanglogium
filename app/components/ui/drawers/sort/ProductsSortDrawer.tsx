@@ -1,6 +1,6 @@
 "use client";
 import { useSearchParams, usePathname } from "next/navigation";
-import { X } from "lucide-react";
+import { X } from "@phosphor-icons/react";
 import SortClient from "../../sortables/SortClient";
 import { SortOption } from "../../sortables/SortTypes";
 import Link from "next/link";

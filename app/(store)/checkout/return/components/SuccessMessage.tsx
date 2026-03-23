@@ -1,10 +1,11 @@
-import { CheckCircle } from "lucide-react";
+"use client";
+import { CheckCircle } from "@phosphor-icons/react";
 
 export function SuccessMessage() {
   return (
     <>
       <div className="mb-6 flex justify-center">
-        <CheckCircle className="h-20 w-20 text-green-500" />
+        <CheckCircle className="text-green-500" size={80} weight="fill" />
       </div>
       <h1 className="mb-4 text-center text-3xl font-bold text-gray-900">
         Payment Successful!

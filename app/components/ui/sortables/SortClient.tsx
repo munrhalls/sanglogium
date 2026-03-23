@@ -1,6 +1,6 @@
 "use client";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { ArrowDown, ArrowUp } from "lucide-react";
+import { ArrowDown, ArrowUp } from "@phosphor-icons/react";
 import { useEffect, useState, Suspense } from "react";
 import formatSortName from "./helpers/formatSortName";
 import { SortOption } from "./SortTypes";

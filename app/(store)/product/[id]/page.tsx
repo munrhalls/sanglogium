@@ -2,7 +2,7 @@ import { getProductById } from "@/sanity/lib/products/getProductById";
 import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
 import ProductPageGallery from "./ProductPageGallery";
-import { FaCheckCircle } from "react-icons/fa";
+import StockIndicator from "./StockIndicator";
 // import InfoToolTip from "@/app/components/ui/info-tool-tip/InfoToolTip";
 import BasketControls from "@/app/components/features/basket/BasketControls";
 import { BasketItem } from "@/store/store";
@@ -52,12 +52,7 @@ export default async function ProductPage({
           </div>
         ) : (
           <div>
-            <div className="my-2 flex items-center gap-1">
-              <span className="rounded-sm text-xl font-bold text-green-700">
-                In stock & shipping
-              </span>
-              <FaCheckCircle color="green" size={16} />
-            </div>
+            <StockIndicator />
             <BasketControls product={basketProduct} />
           </div>
         )}

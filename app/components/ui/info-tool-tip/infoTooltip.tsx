@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
-import { X } from "lucide-react";
-import { FaInfoCircle } from "react-icons/fa";
+import { X, Info } from "@phosphor-icons/react";
 interface InfoTooltipProps {
   information: string;
 }
@@ -40,7 +39,7 @@ const InfoToolTip: React.FC<InfoTooltipProps> = ({ information }) => {
         aria-label="Show information"
         type="button"
       >
-        <FaInfoCircle size={14} />
+        <Info size={14} weight="fill" />
       </button>
       {isVisible && (
         <div

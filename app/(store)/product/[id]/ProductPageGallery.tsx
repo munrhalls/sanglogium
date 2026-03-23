@@ -4,8 +4,7 @@ import { imageUrl } from "@/lib/sanity/imageUrl";
 import { useState } from "react";
 import { Product } from "@/sanity.types";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types";
-import { FaArrowLeft } from "react-icons/fa";
-import { FaArrowRight } from "react-icons/fa";
+import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 const ProductPageGallery = ({ product }: { product: Product }) => {
   const [currentImage, setCurrentImage] = useState<string>(
     imageUrl(product.image as SanityImageSource).url()
@@ -52,9 +51,10 @@ const ProductPageGallery = ({ product }: { product: Product }) => {
       )}
       <div className="mt-4 grid grid-flow-col place-content-start gap-2">
         {product.gallery && (
-          <FaArrowLeft
+          <CaretLeft
             className="cursor-pointer place-self-center"
             onClick={handlePrev}
+            size={24}
           />
         )}
         {product.gallery &&
@@ -79,9 +79,10 @@ const ProductPageGallery = ({ product }: { product: Product }) => {
             );
           })}
         {product.gallery && (
-          <FaArrowRight
+          <CaretRight
             className="cursor-pointer place-self-center"
             onClick={handleNext}
+            size={24}
           />
         )}
       </div>

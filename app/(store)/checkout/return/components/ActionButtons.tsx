@@ -1,5 +1,6 @@
+"use client";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from "@phosphor-icons/react";
 
 export function ActionButtons() {
   return (
@@ -9,7 +10,7 @@ export function ActionButtons() {
         className="flex flex-1 items-center justify-center rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-blue-700"
       >
         View My Orders
-        <ArrowRight className="ml-2 h-5 w-5" />
+        <ArrowRight className="ml-2" size={20} />
       </Link>
       <Link
         href="/"

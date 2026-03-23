@@ -1,6 +1,6 @@
 "use client";
 import { useSearchParams, usePathname } from "next/navigation";
-import { X } from "lucide-react";
+import { X } from "@phosphor-icons/react";
 import Filters from "../../filters/Filters";
 import { FilterOptions } from "../../filters/FilterTypes";
 import Link from "next/link";

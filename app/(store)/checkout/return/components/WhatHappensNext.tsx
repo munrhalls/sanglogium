@@ -1,10 +1,11 @@
-import { Package } from "lucide-react";
+"use client";
+import { Package } from "@phosphor-icons/react";
 
 export function WhatHappensNext() {
   return (
     <div className="mb-8 rounded-lg border border-gray-200 p-6">
       <h2 className="mb-4 flex items-center text-xl font-semibold text-gray-900">
-        <Package className="mr-2 h-6 w-6" />
+        <Package className="mr-2" size={24} />
         What happens next?
       </h2>
       <ul className="space-y-3 text-gray-700">

@@ -23,7 +23,7 @@ export default function Basket() {
         >
           <div className="flex items-center gap-5">
             <div className="flex h-24 w-24 items-center justify-center overflow-hidden rounded-sm bg-gray-100">
-              <ShoppingCartIcon className="h-10 w-10 text-gray-400" />
+              <ShoppingCart className="text-gray-400" size={40} />
             </div>
             <div>
               <Link href={`/product/${item._id}`}>
