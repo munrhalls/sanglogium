@@ -91,7 +91,7 @@ Featured
     ✔ Image - should be next/image with simple, robust sizing and optimization, knowing that the images are imported from sanity v3 @done(26-03-22 14:18)
     ✔ determine root cause of image regression, only that @done(26-03-23 08:04)
     ✔ Fix regression - image partially not visible top bottom @done(26-03-23 08:04)
-    [] apply in product spotlight 2,3 and new release
+    ✔ apply in product spotlight 2,3 and new release @done(26-03-23 08:08)
     [] SEE MORE button: Remove existing arrow element.
     [] Import fractal_star from public assets for background decoration.
     [] Implement a dedicated element purely for background decoration.

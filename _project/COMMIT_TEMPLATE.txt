@@ -1,11 +1,23 @@
 ```
-[A|feat]([scope]): [action] — → closes DoD item [N] on [SprintName]
+Difficulty (complexity, size) - fibonacci T-shirts notation:
+- 1 trivially easy and small
+- 2 easy
+- 3 relatively easy
+- 5 medium difficulty
+- 8 difficult
+- 13 very difficult and large scope
+```
+
+
+```
+Difficulty: <fibonacci number 1-13> - <A|feat|fix|config|polish](scope /changed filename names): action — → closes DoD item [N] on [SprintName]
+Difficulty: <fibonacci number 1-13> - <A|feat|fix|config|polish](scope /changed filename names): action — → closes 0 DoD items, <type of non DoD>
+
 ```
 
 [A|feat](typography): lock typography sprint — → closes all DoD items on TypographySprint
 [B|fix](hero): resolve image hotspot crash — → fixes CRITICAL bug blocking Hero DoD item 2
 [D|config](tailwind): add frozen comment — → infrastructure, no DoD impact
-
 
 
 ```
