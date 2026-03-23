@@ -8,9 +8,9 @@ import { CarouselIcon } from "./DotIcon";
 
 const BTN_BASE = cn(
   "group relative flex h-8 w-8 items-center justify-center rounded-full",
-  "text-brand-400 transition-all duration-200",
-  "hover:text-brand-50 active:scale-110",
-  "disabled:pointer-events-none disabled:opacity-20",
+  "text-brand-700 transition-all duration-200",
+  "hover:text-brand-950 active:scale-110",
+  "disabled:pointer-events-none disabled:opacity-40",
   "outline-none focus-visible:ring-2 focus-visible:ring-brand-400/50",
   "before:absolute before:-inset-2 before:content-['']"
 );

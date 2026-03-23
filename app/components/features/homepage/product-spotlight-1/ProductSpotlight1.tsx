@@ -33,9 +33,13 @@ export default async function ProductSpotlight1() {
                                     </CarouselSlide>
                                 ))}
                             </CarouselTrack>
-                            <CarouselPrevious />
-                            <CarouselNext />
-                            <CarouselDots />
+                            <div className="absolute bottom-4 left-4 z-10 flex gap-2">
+                                <CarouselPrevious />
+                                <CarouselNext />
+                            </div>
+                            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10">
+                                <CarouselDots color="brand-700" />
+                            </div>
                         </Carousel>
                     </div>
 

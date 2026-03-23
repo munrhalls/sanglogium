@@ -4,7 +4,7 @@ import { urlFor } from "@/sanity/lib/image";
 import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
 import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";
 import { CarouselSlide } from "@/app/components/layout/carousel/CarouselSlide";
-import { CarouselDots } from "@/app/components/layout/carousel/CarouselControls";
+import { CarouselPrevious, CarouselNext, CarouselDots } from "@/app/components/layout/carousel/CarouselControls";
 import { getNewestRelease } from "./getNewestRelease";
 
 export default async function NewestRelease() {
@@ -35,8 +35,12 @@ export default async function NewestRelease() {
                   </CarouselSlide>
                 ))}
               </CarouselTrack>
-              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10">
-                <CarouselDots color="brand-400" />
+              <div className="absolute bottom-4 left-4 z-10 flex gap-2">
+                <CarouselPrevious />
+                <CarouselNext />
+              </div>
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10">
+                <CarouselDots color="brand-700" />
               </div>
             </Carousel>
           </div>

@@ -64,7 +64,10 @@ Template 1: For DoD Impact:
 
 PowerShell
 git ac 'Difficulty: <1-13> - <A|B|C|D|E>, <Category Name> (<scope>): <action> — → closes DoD item <N> on <SprintName>'
-Template 2: For Non-DoD Impact:
 
+Template 2: For Non-DoD Impact:
 PowerShell
-git ac 'Difficulty: <1-13> - <A|B|C|D|E>, <Category Name> (<scope>): <action> — → clo
+git ac 'Difficulty: <1-13> - <A|B|C|D|E>, <Category Name> (<scope>): <action> — → closes 0 DoD items on <SprintName>
+
+FOR AGENT NOTE: DO NOT COMMIT YOURSELF. Only human web dev commits. Output copy paste commit message only.
+
