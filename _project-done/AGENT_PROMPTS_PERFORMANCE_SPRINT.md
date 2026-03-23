@@ -369,7 +369,7 @@ The @sanity/image-url builder supports chaining: urlFor(source).width(N).auto('f
 
 FILES TO EDIT — only these files inside app/components/features/homepage/:
 1. hero/Hero.tsx
-2. featured/Featured.tsx  
+2. featured/Featured.tsx
 3. product-spotlight-1/ProductSpotlight1.tsx
 4. product-spotlight-2/ProductSpotlight2.tsx
 5. product-spotlight-3/ProductSpotlight3.tsx

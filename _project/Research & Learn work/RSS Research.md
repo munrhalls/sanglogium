@@ -1,0 +1,1 @@
+[] Means for automatically researching and catching every latest relevant development in AI tooling and development techniques - RSS-like research tool

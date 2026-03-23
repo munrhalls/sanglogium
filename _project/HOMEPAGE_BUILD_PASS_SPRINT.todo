@@ -71,6 +71,30 @@ Featured
 [] Carousel refactor
 
 
+[] Product Spotlight 1 - background decoration element
+  [] Data
+    ☐ fractal star applied via css class, enabled via tailwind config
+  [] Structure
+    [] Implement a dedicated element purely for background decoration
+      [] should be inside the promo text copy element
+  [] Layout
+    [] Absolutely positioned, inset-0, with a lower z-index than all other elements.
+    [] Use a single background decoration asset.
+    [] Create three iterations/levels for a 3D effect:
+      1. Big size: Lowest visibility/opacity.
+      2. Medium size: Moderate visibility.
+      3. Smallest size: Highest opacity.
+    [] Position asset stamps with consistent padding from other UI element edges
+    [] Stamps must be responsive and always flow around the text elements and up to the edges
+    [] Stamps patterns - both in terms big to medium to smallest - and in terms of 2d spatial arrangement - must create coherent mathematical pattern spatially
+    [] Decoration must span the entire container.
+  [] Styling
+    [] opacity - Big size lowest, medium more than lowest, smallest - highest comparative opacity
+    [] opacity - adjusted for visual effect
+    [] opacity - must be used in combination with spatial stamps pattern such that mathematically coherent visual vividness pattern is created
+    [] all other properties and opacity - aligned to create mathematically coherent pattern that visually synchronizes with the promo text and entire product spotlight 1 component's visual harmony
+
+
 [] Product Spotlight 1, 2, 3, New Release
   [] Data
     ✔ Data - GROQ should return not just main image, but also image gallery of product and it should do so in a single query using the existing homepage query with minimal modification @done(26-03-22 12:55)
@@ -95,22 +119,17 @@ Featured
     ✔ Fix regression - image partially not visible top bottom @done(26-03-23 08:04)
     ✔ apply in product spotlight 2,3 and new release @done(26-03-23 08:08)
     ✔ SEE MORE button: Remove existing arrow element. @done(26-03-23 08:13)
-    [] Import fractal_star from public assets for background decoration.
-    [] Implement a dedicated element purely for background decoration.
+    ✔ Import fractal_star from public assets for background decoration. @done(26-03-23 10:10)
+
+
+
+      [] Elements mapped inside carousel - Delete unprofessional and faulty mapping of index from the second argument and replace with professional product ID to the mapped elements.
 
   [] Layout
     [] Dots: Centered horizontally below the image, positioned close to the bottom edge.
     [] Nav Buttons: Positioned below the image in the bottom-left corner.
-    [] Background Decoration:
-      [] Absolutely positioned, inset-0, with a lower z-index than all other elements.
-      [] Use a single background decoration asset.
-      [] Create three iterations/levels for a 3D effect:
-        1. Big size: Lowest visibility/opacity.
-        2. Medium size: Moderate visibility.
-        3. Smallest size: Highest opacity.
-      [] Position asset stamps with consistent padding from other UI element edges.
-      [] Decoration must span the entire container.
-    [] SEE MORE button: Centered horizontally.
+\
+    ✔ SEE MORE button: Centered horizontally. @done(26-03-23 10:17)
 
   [] Styling
     [] Nav Buttons:
