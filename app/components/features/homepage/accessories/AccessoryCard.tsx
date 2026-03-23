@@ -9,7 +9,7 @@ export default function AccessoryCard({ item, idx }: { item: AccessoryItem; idx:
     <div className="group flex flex-col gap-3 p-3 rounded-lg border border-transparent hover:border-secondary-200 transition-all">
       <div className="relative aspect-square w-full overflow-hidden rounded bg-brand-800/10">
         <Image
-          src={urlFor(item.image).url()}
+          src={urlFor(item.image).width(400).auto('format').quality(75).url()}
           alt={item.name}
           width={400}
           height={400}

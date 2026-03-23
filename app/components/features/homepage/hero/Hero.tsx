@@ -30,10 +30,10 @@ export default async function Hero() {
         <picture>
           <source
             media="(min-width: 768px)"
-            srcSet={urlFor(data.backgroundImage).url()}
+            srcSet={urlFor(data.backgroundImage).width(1920).auto('format').quality(85).url()}
           />
           <Image
-            src={urlFor(mobileBackgroundImage).url()}
+            src={urlFor(mobileBackgroundImage).width(828).auto('format').quality(85).url()}
             alt={data.backgroundImage.alt || "Hero Image"}
             fill
             priority

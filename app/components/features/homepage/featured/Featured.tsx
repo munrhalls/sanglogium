@@ -23,7 +23,7 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
         {product.brand}
       </span>
       <Image
-        src={urlFor(product.image).url()}
+        src={urlFor(product.image).width(450).auto('format').quality(75).url()}
         alt={product.name}
         width={450}
         height={450}

@@ -16,7 +16,7 @@ export default function DacCard({ item, idx }: { item: any; idx: number }) {
     )}>
       <div className="relative aspect-square w-full overflow-hidden">
         <Image
-          src={urlFor(item.image).url()}
+          src={urlFor(item.image).width(400).auto('format').quality(75).url()}
           alt={productName}
           width={400}
           height={400}

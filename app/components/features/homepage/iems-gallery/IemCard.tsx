@@ -10,7 +10,7 @@ export default function IemCard({ product, idx }: { product: IemProduct; idx: nu
         <div className="group relative flex flex-col gap-4 p-4 rounded-xl border border-transparent hover:bg-brand-800/20 transition-all">
             <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-brand-800/10">
                 <Image
-                    src={urlFor(product.image).url()}
+                    src={urlFor(product.image).width(400).auto('format').quality(75).url()}
                     alt={product.name}
                     width={400}
                     height={400}
