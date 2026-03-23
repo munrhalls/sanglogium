@@ -16,6 +16,16 @@ interface FeaturedCardProps {
   idx: number;
 }
 
+const featuredBreakpointMap = {
+  xl: 3,
+  lgDesktop: 3,
+  mdLandscape: 2,
+  mdPortrait: 2,
+  smLandscape: 2,
+  smPortrait: 1,
+  mobileLandscape: 1,
+  mobilePortrait: 1
+};
 export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
   <article className="group flex h-full flex-col bg-transparent p-6 transition-all duration-300 gap-3">
     <figure className="aspect-[3/2] rounded-none relative flex w-full items-center justify-center overflow-hidden bg-brand-300 p-6 md:pt-6 md:pb-2 md:px-4">
@@ -59,7 +69,7 @@ export default async function Featured() {
 
       <Carousel
         itemsCount={finalFeatured?.length || 0}
-        breakpointMap={{ lgDesktop: 3, mdPortrait: 2, mobilePortrait: 1 }}
+        breakpointMap={featuredBreakpointMap}
       >
         <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4">
           <div className="flex flex-col gap-4 md:col-start-1 md:row-start-1">

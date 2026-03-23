@@ -8,7 +8,7 @@
     ✔ styling - dots - non-active dots should be empty circles, brand-400 color; active dot should be orb (as is) @done(26-03-21 12:50)
 
 Global
-[] Data
+✔ Data @done(26-03-23 10:54)
   ✔ Image - should determine how to reconcile next/image and sanity v3 image optimizations to achieve lean, robust, best lcp and other performance metrics and page speed criteria - only reconcile and output research report @done(26-03-22 13:40)
 
         Infrastructure & Setup
@@ -33,10 +33,29 @@ Global
 
 
 
-[] Layout
+✔ Layout @done(26-03-23 10:54)
     ✔ rwd - menu bottom bar should not appear on laptop/desktop at all and that effect should be achieved using only the lg-touch and lg-desktop tailwind classes from global config; if twMerge usage is present, preserve it, else just arrange responsive classes properly @done(26-03-21 13:47)
     ✔ desktop - shelf - should center its direct child horizontally @done(26-03-21 13:50)
     ✔ desktop - layout - each component's root container - should have max width 1280px @done(26-03-21 13:50)
+
+Featured Carousel - 3 slides desktop, 2 slides tablet
+Phase 1: API & Viewport Calculation (The Source)
+
+[] DoD 1: Analyze updateVisibleCount in CarouselContext.tsx to map how window.innerWidth and orientation correlate to specific breakpointMap keys (xl, lgDesktop, mdLandscape, mobilePortrait, etc.).
+
+[] DoD 2: Verify the fallback behavior within the Context when a specific breakpointMap key is omitted during component instantiation.
+
+Phase 2: CSS Variable Propagation (The Bridge)
+
+[] DoD 3: Identify where and how visibleCount is attached to the DOM as the --visible-count CSS custom property within CarouselContext.tsx.
+
+Phase 3: Visual Rendering (The Destination)
+
+[] DoD 4: Inspect CarouselSlide.tsx to confirm exactly how the inline style flexBasis: calc(100% / var(--visible-count, 1)) consumes the CSS variable to dictate the slide's physical width.
+
+Phase 4: Regression-Free Strategy formulation
+
+[] DoD 5: Formulate the exact breakpointMap object payload required to be passed into <Carousel /> at its target usage site to achieve the 3/2/1 display requirement without altering any internal Carousel code.
 
 Featured
 ✔ desktop @done(26-03-22 10:48)
@@ -49,6 +68,7 @@ Featured
     ✔ layout - distance between dots should be small fitting value, taken from global spacing system @done(26-03-22 10:47)
     ✔ layout - product title per slide - one line titles should align to bottom, not top (closer to price and cart btn, not closer to image container) @done(26-03-22 10:47)
     ✔ layout - product title should have constant height to prevent layout shifts on slide shifts between 1-line/2-line/3-line product titles @done(26-03-22 10:47)
+
     ✔ styling - featured card - bottom component - product title - typography - should be alias with secondary-300 @done(26-03-22 10:47)
     // if the color look is not exactly right for this role - stop, global alias needs to be re-considered
     ✔ styling - featured card - image container - should be 3/4 (wider than tall), not aspect square @done(26-03-22 10:47)
@@ -68,31 +88,26 @@ Featured
         ✔ inactive dot - hover highlight should be light color @done(26-03-22 11:18)
         Powinno się wyrównać Hover state Powinno się wyrównać Hover state
 
-[] Carousel refactor
 
 
-[] Product Spotlight 1 - background decoration element
-  [] Data
-    ☐ fractal star applied via css class, enabled via tailwind config
-  [] Structure
-    [] Implement a dedicated element purely for background decoration
-      [] should be inside the promo text copy element
-  [] Layout
-    [] Absolutely positioned, inset-0, with a lower z-index than all other elements.
-    [] Use a single background decoration asset.
-    [] Create three iterations/levels for a 3D effect:
-      1. Big size: Lowest visibility/opacity.
-      2. Medium size: Moderate visibility.
-      3. Smallest size: Highest opacity.
-    [] Position asset stamps with consistent padding from other UI element edges
-    [] Stamps must be responsive and always flow around the text elements and up to the edges
-    [] Stamps patterns - both in terms big to medium to smallest - and in terms of 2d spatial arrangement - must create coherent mathematical pattern spatially
-    [] Decoration must span the entire container.
-  [] Styling
-    [] opacity - Big size lowest, medium more than lowest, smallest - highest comparative opacity
-    [] opacity - adjusted for visual effect
-    [] opacity - must be used in combination with spatial stamps pattern such that mathematically coherent visual vividness pattern is created
-    [] all other properties and opacity - aligned to create mathematically coherent pattern that visually synchronizes with the promo text and entire product spotlight 1 component's visual harmony
+
+
+✔ Product Spotlight 1, 2, 3, new release - background decoration element @done(26-03-23 10:51)
+  ✔ replicate on @done(26-03-23 10:51)
+  ✔ 2, @done(26-03-23 10:51)
+  ✔ 3, @done(26-03-23 10:51)
+  ✔ 4, @done(26-03-23 10:51)
+  ✔ nedw release @done(26-03-23 10:51)
+  ✔ Data @done(26-03-23 10:51)
+    ✔ fractal star applied via css class, enabled via tailwind config @done(26-03-23 10:51)
+  ✔ Structure: A dedicated <div aria-hidden="true" className="absolute inset-0 z-0 pointer-events-none overflow-hidden"> exists specifically within the .bg-brand-800 text container. @done(26-03-23 10:53)
+   ✔ Asset Reusability: The fractal_ring.webp is applied via Tailwind configuration (bg-fractal-ring) to three separate child nodes representing the size iterations. @done(26-03-23 10:53)
+    ✔ 3D Effect Styling: @done(26-03-23 10:53)
+    ✔ Node 1 (Big): Largest background size, lowest opacity. @done(26-03-23 10:53)
+    ✔ Node 2 (Medium): Intermediate background size, moderate opacity. @done(26-03-23 10:53)
+    ✔ Node 3 (Small): Smallest background size, highest opacity. @done(26-03-23 10:53)
+    ✔ Spatial Framing (Replaces "Flow Around"): The nodes are positioned at the container's perimeter using absolute coordinate utilities to mathematically frame the text box across breakpoints, rather than computing complex text collision boundaries. @done(26-03-23 10:53)
+    ✔ Responsiveness: Tailwind breakpoint prefixes (md:, lg:) are used to adjust sizes and coordinate positions to ensure visual harmony on mobile, tablet, and desktop. @done(26-03-23 10:53)
 
 
 [] Product Spotlight 1, 2, 3, New Release
@@ -104,8 +119,6 @@ Featured
     ✔ run image bg deletion script on every product id @done(26-03-22 13:13)
     ✔ replicate on product spotlight 2, 3 @done(26-03-22 13:18)
      ✔ replicate on new release @done(26-03-22 13:21)
-
-
      ✔ Consuming component (Carousel) should use the processed product images array. @done(26-03-22 13:23)
   [] Structure
     ✔ Should use Carousel, Carousel Track, and Carousel Slide to contain product images - Carousel should not affect layout or styling in any way whatsoever, not a single change - except for providing the carousel functionality @done(26-03-22 12:50)
@@ -120,8 +133,6 @@ Featured
     ✔ apply in product spotlight 2,3 and new release @done(26-03-23 08:08)
     ✔ SEE MORE button: Remove existing arrow element. @done(26-03-23 08:13)
     ✔ Import fractal_star from public assets for background decoration. @done(26-03-23 10:10)
-
-
 
       [] Elements mapped inside carousel - Delete unprofessional and faulty mapping of index from the second argument and replace with professional product ID to the mapped elements.
 
