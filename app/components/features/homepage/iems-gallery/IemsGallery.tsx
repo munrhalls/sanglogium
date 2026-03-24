@@ -10,13 +10,13 @@ export default async function IemsGallery() {
   if (!products.length) return null;
 
   return (
-    <>
+    <div className="flex flex-col gap-4">
       <IemsGalleryHeader />
       <Grid cols={4}>
         {products.map((iem, idx) => (
           <IemCard key={iem._id} product={iem as any} idx={idx} />
         ))}
       </Grid>
-    </>
+    </div>
   );
 }

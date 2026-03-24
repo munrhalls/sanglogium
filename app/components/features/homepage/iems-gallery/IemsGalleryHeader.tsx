@@ -1,12 +1,11 @@
-import { cn } from "@/lib/utils/tailwind";
 
 export default function IemsGalleryHeader() {
   return (
-    <div className="mb-10">
-      <h2 className="type-section-hed">IEMs</h2>
-      <p className="type-overline mt-2">
+    <div className="flex flex-col gap-4 md:col-start-1 md:row-start-1">
+      <span className="type-section-caption uppercase">
         Precision Engineering
-      </p>
-    </div>
+      </span>
+      <h2 className="type-section-hed uppercase">IEMs</h2>
+      </div>
   );
 }

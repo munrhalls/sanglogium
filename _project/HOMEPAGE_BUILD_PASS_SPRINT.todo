@@ -165,11 +165,22 @@ Featured
       IEMS
 ✔ Data @done(26-03-24 12:51)
     ✔ run image bg deletion script on every product id @done(26-03-24 12:51)
-[] Structure
-[] Layout
-[] Interactivity
-  []
+✔ Structure @done(26-03-24 13:19)
+  ✔ Layout @done(26-03-24 13:19)
+      ✔ brand title - should be top left corner @done(26-03-24 12:58)
+      ✔ should apply padding top to account for brand title @done(26-03-24 12:58)
+    ✔ Styling @done(26-03-24 13:19)
+      ✔ brand title - should use the same style as brand title in featured component that is also placed in the top left corner of the image area background @done(26-03-24 12:58)
+      ✔ background - should be brand-400 @done(26-03-24 12:58)
+      ✔ image - should be adjusted slightly to not overlap with the brand title @done(26-03-24 13:16)
+      ✔ add to cart button - should use global tailwind cart btn style @done(26-03-24 13:16)
+      ✔ should have cart icon from phosphor @done(26-03-24 13:16)
+      ✔ should have only "Add" text @done(26-03-24 13:16)
 
+✔ Interactivity @done(26-03-24 13:19)
+  ✔ hover - should not apply background color @done(26-03-24 13:19)
+
+New Release
 DACs
 [] Data
     [] run image bg deletion script on every product id

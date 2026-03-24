@@ -2,23 +2,24 @@ import { cn } from "@/lib/utils/tailwind"
 import { Image } from "next-sanity/image"
 import { urlFor } from "@/sanity/lib/image"
 import { IemProduct } from "./getIemProducts"
+import { ShoppingCart } from "@phosphor-icons/react/dist/ssr"
 
 export default function IemCard({ product, idx }: { product: IemProduct; idx: number }) {
     if (!product) return null;
 
     return (
-        <div className="group relative flex flex-col gap-4 p-4 rounded-none border border-transparent hover:bg-brand-50 hover:border-brand-200 transition-all">
-            <div className="relative aspect-square w-full overflow-hidden rounded-none bg-brand-50">
+        <div className="group relative flex flex-col gap-4 p-4 rounded-none border border-transparent  transition-all">
+            <div className="relative flex justify-center items-center aspect-square w-full overflow-hidden rounded-none bg-brand-100 pt-12 pb-4 cursor-pointer">
                 <Image
-                    src={urlFor(product.image).width(400).auto('format').quality(75).url()}
+                    src={urlFor(product.image).width(375).auto('format').quality(75).url()}
                     alt={product.name}
-                    width={400}
-                    height={400}
+                    width={375}
+                    height={375}
                     loading="lazy"
-                    className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
+                    className="object-cover w-[60%] h-[60%] transition-transform duration-300 group-hover:scale-105 object-center"
                 />
-                <div className="absolute bottom-0 left-0 bg-brand-700 px-2 py-1">
-                    <span className="type-overline">{product.brand}</span>
+                <div className="absolute left-4 top-4">
+                    <span className="text-small font-bold uppercase tracking-editorial text-brand-900">{product.brand}</span>
                 </div>
             </div>
 
@@ -31,7 +32,8 @@ export default function IemCard({ product, idx }: { product: IemProduct; idx: nu
                         ${product.displayPrice}
                     </p>
                     <button className="btn-cart">
-                        Add to Cart
+                        <ShoppingCart size={20} style={{ marginBottom: "2px" }} />
+                        Add
                     </button>
                 </div>
             </div>

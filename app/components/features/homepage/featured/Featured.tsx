@@ -26,6 +26,7 @@ const featuredBreakpointMap = {
   mobileLandscape: 1,
   mobilePortrait: 1
 };
+
 export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
   <article className="group flex h-full flex-col bg-transparent p-6 transition-all duration-300 gap-3">
     <figure className="aspect-[3/2] rounded-none relative flex w-full items-center justify-center overflow-hidden bg-brand-300 p-6 md:pt-6 md:pb-2 md:px-4">
