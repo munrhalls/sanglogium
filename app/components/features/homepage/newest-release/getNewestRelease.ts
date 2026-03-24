@@ -16,6 +16,8 @@ export interface NewestReleaseData {
   productRef: NewestReleaseProduct;
 }
 
+
+
 const NEWEST_RELEASE_QUERY = `*[_type == "homepageData"][0].newestReleaseData{
   promoTitle,
   promoSubtitle,

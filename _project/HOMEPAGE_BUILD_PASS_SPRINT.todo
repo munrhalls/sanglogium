@@ -38,6 +38,8 @@ Global
     ✔ desktop - shelf - should center its direct child horizontally @done(26-03-21 13:50)
     ✔ desktop - layout - each component's root container - should have max width 1280px @done(26-03-21 13:50)
 
+
+
 Featured Carousel - 3 slides desktop, 2 slides tablet
 Phase 1: API & Viewport Calculation (The Source)
 
@@ -176,11 +178,17 @@ Featured
       ✔ add to cart button - should use global tailwind cart btn style @done(26-03-24 13:16)
       ✔ should have cart icon from phosphor @done(26-03-24 13:16)
       ✔ should have only "Add" text @done(26-03-24 13:16)
-
 ✔ Interactivity @done(26-03-24 13:19)
   ✔ hover - should not apply background color @done(26-03-24 13:19)
 
-New Release
+
+  New Release
+  ✔ pre-knowledge @done(26-03-24 13:51)
+    ✔ determine why image isn't showing up @done(26-03-24 13:51)
+    ✔ fix @done(26-03-24 13:51)
+  ✔ data @done(26-03-24 13:51)
+    ✔ delete backgrounds from images via script @done(26-03-24 13:51)
+
 DACs
 [] Data
     [] run image bg deletion script on every product id
