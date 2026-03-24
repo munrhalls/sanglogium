@@ -19,6 +19,7 @@ Featured
 
 
 Product spotlight 1, 2, 3, new release
+[] delete 2nd prod repeat from prod spot 1
 [] Carousel Controls
     [] Structure
         [] The container should receive the same element absolutely positioned that the promo text element has. It should be used to import the background asset, and by import what is really meant here is applying the talent class that automatically appends the background image asset.

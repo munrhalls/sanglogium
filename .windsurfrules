@@ -1,0 +1,56 @@
+# CORE ARCHITECTURAL CONSTRAINTS
+
+## Next.js 15 App Router Strict Adherence
+- Primary pages MUST be Server Components (no arbitrary "use client" directives)
+- Data fetching MUST be parallelized on the server to reduce waterfall requests
+- Server-first routing is the absolute default pattern
+
+## Sanity CMS & Type Safety
+- Sanity Typegen outputs are the ABSOLUTE source of truth for schema types
+- NEVER manually define types that conflict with generated Sanity types
+- All GROQ queries MUST respect the generated type contracts
+- Fetch Strategy: Sanity Schema → Localhost Studio → GROQ Library → React Server Component → Prebuilt Props → Client Components
+
+## Styling Constraints
+- ALL styling MUST use scoped Tailwind utility classes ONLY
+- NEVER modify global CSS files unless explicitly requested
+- NO arbitrary global CSS modifications permitted
+- Styling changes MUST be applied directly on target elements to prevent global blast radius
+
+## Virtual File System (VFS) - Catalogue Architecture
+- VFS is pre-computed at build time via daily automatic rebuild (cron)
+- NEVER query the database recursively for category trees
+- Lookup complexity is O(1) via path-based prefix matching
+- Moving catalogue slots automatically updates ALL associated product locations
+- Any catalogue change requires ZERO subsequent update work
+
+## Finite State Machine (FSM) - Order Lifecycle
+- FSM states are the ABSOLUTE source of truth for sorder lifecycle
+- Order state transitions MUST follow strict, pre-determined enumerable variable transitions
+- NEVER bypass FSM state validation
+- Idempotent background queues (Inngest) guarantee exactly-once execution for Stripe refunds and inventory re-stocking
+
+## Image Optimization Strategy
+- ALL image transformations MUST be handled by Sanity CDN (NOT Next.js image optimization server)
+- Use next/image with Custom Loader (@sanity/image-url)
+- ALWAYS fetch metadata.dimensions from Sanity to provide base aspect ratio
+- Apply Sanity's .rect() parameters within the loader for hotspot/crop
+
+## Component Archaeology Principle (Debugging Workflow)
+1. Analyze what the problem is
+2. Determine what components are relevant
+3. Check each relevant component one by one, analyze and understand individually
+4. Understand relevant components as a connected chain, analyze interactions
+5. Investigate the problem space and analyze reality BEFORE proposing solutions
+6. Solve the problem as asked - do not jump ahead to un-asked optimizations
+
+## Development Workflow
+- Specifications first
+- Turn each specification into test case code one by one
+- Run the failing test
+- Implement feature until test succeeds
+- Test manually
+- Work on a one-by-one basis for fixes
+
+## /implement Command Protocol
+When the user types /implement in Cascade, immediately read, strictly adopt, and execute the exact protocol defined in C:\webdev\sang-logium\_project\COMMANDS\Implement_v2.md. Do not deviate from its phases.

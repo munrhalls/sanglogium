@@ -16,18 +16,24 @@ export function CarouselTrack({
   const context = useCarousel();
   if (!context) return <div className={className}>{children}</div>;
 
-  const { scrollRef } = context;
+  const { activeIndex, visibleCount, scrollRef } = context;
+
+  // Calculate the exact percentage to move the belt
+  const slidePercentage = 100 / visibleCount;
+  const offset = activeIndex * slidePercentage;
 
   return (
-    <div
-      ref={scrollRef}
-      className={cn(
-        "no-scrollbar flex w-full overflow-x-auto snap-x snap-mandatory scroll-smooth",
-        className
-      )}
-      style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-    >
-      {children}
+    // The Viewport: Hides the overflow
+    <div className={cn(className, "w-full overflow-hidden")} ref={scrollRef}>
+      {/* The Belt: Animates smoothly when 'offset' changes */}
+      <div
+        className="flex h-full w-full will-change-transform transition-transform duration-500 ease-in-out"
+        style={{
+          transform: `translateX(-${offset}%)`,
+        }}
+      >
+        {children}
+      </div>
     </div>
   );
 }

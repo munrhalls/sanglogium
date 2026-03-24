@@ -32,16 +32,11 @@ export function CarouselSlide({ children, className = "" }: CarouselSlideProps) 
     return () => observer.disconnect();
   }, [context?.scrollRef]);
 
-  useEffect(() => {
-    if (slideRef.current) {
-    }
-  });
-
   return (
     <div
       ref={slideRef}
       data-active="false"
-      className={cn("min-w-0 shrink-0 grow-0 snap-start", className)}
+      className={cn("min-w-0 shrink-0 grow-0", className)}
       style={{ flexBasis: "calc(100% / var(--visible-count, 1))" }}
     >
       {children}

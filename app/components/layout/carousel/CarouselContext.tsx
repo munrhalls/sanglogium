@@ -12,11 +12,6 @@ export function CarouselProvider({
 }: CarouselProviderProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    console.log("[SRIP Trace] Provider Mount | Mode: Direct Reader | Sync ID:", Math.random().toString(36).substring(2, 11));
-  }, []);
-  const [canScrollPrev, setCanScrollPrev] = useState(false);
-  const [canScrollNext, setCanScrollNext] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
   const [visibleCount, setVisibleCount] = useState(1);
 
@@ -42,68 +37,55 @@ export function CarouselProvider({
     }
 
     setVisibleCount(count);
-    console.log("[SRIP Trace] Context Source | Viewport Width:", w, "| Capacity Set To:", count);
   }, [breakpointMap]);
 
-  const updateScrollState = useCallback(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-
-    const { scrollLeft, scrollWidth, clientWidth } = el;
-    setCanScrollPrev(scrollLeft > 10);
-    setCanScrollNext(scrollLeft + clientWidth < scrollWidth - 10);
-
-    const firstChild = el.firstElementChild as HTMLElement;
-    if (firstChild) {
-      setActiveIndex(Math.round(scrollLeft / firstChild.offsetWidth));
-    }
-  }, []);
+  const maxIndex = Math.max(0, itemsCount - visibleCount);
+  const canScrollPrevDerived = activeIndex > 0;
+  const canScrollNextDerived = activeIndex < maxIndex;
 
   useEffect(() => {
-    const el = scrollRef.current;
-
     updateVisibleCount();
-    updateScrollState();
 
     const handleResize = () => {
       updateVisibleCount();
-      updateScrollState();
     };
 
     window.addEventListener("resize", handleResize);
-    el?.addEventListener("scroll", updateScrollState, { passive: true });
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      el?.removeEventListener("scroll", updateScrollState);
     };
-  }, [updateVisibleCount, updateScrollState]);
+  }, [updateVisibleCount]);
+
+  useEffect(() => {
+    setActiveIndex((current) => Math.min(current, Math.max(0, itemsCount - visibleCount)));
+  }, [visibleCount, itemsCount]);
 
   const scroll = useCallback((direction: 'prev' | 'next') => {
-    const el = scrollRef.current;
-    if (!el || !el.firstElementChild) return;
-    const slideWidth = (el.firstElementChild as HTMLElement).offsetWidth;
-    const moveAmount = direction === 'next' ? slideWidth : -slideWidth;
-    el.scrollBy({ left: moveAmount, behavior: "smooth" });
-  }, []);
+    setActiveIndex((current) => {
+      const max = Math.max(0, itemsCount - visibleCount);
+      if (direction === 'next') return Math.min(current + 1, max);
+      if (direction === 'prev') return Math.max(0, current - 1);
+      return current;
+    });
+  }, [itemsCount, visibleCount]);
+
+  const goTo = useCallback((index: number) => {
+    const max = Math.max(0, itemsCount - visibleCount);
+    setActiveIndex(Math.min(Math.max(0, index), max));
+  }, [itemsCount, visibleCount]);
 
   const value = useMemo(() => ({
     scrollRef,
-    canScrollPrev,
-    canScrollNext,
+    canScrollPrev: canScrollPrevDerived,
+    canScrollNext: canScrollNextDerived,
     scrollPrev: () => scroll('prev'),
     scrollNext: () => scroll('next'),
     activeIndex,
     itemsCount,
     visibleCount,
-    goTo: (index: number) => {
-      const el = scrollRef.current;
-      const firstChild = el?.firstElementChild as HTMLElement;
-      if (el && firstChild) {
-        el.scrollTo({ left: index * firstChild.offsetWidth, behavior: "smooth" });
-      }
-    }
-  }), [canScrollPrev, canScrollNext, activeIndex, itemsCount, scroll, visibleCount]);
+    goTo,
+  }), [canScrollPrevDerived, canScrollNextDerived, activeIndex, itemsCount, scroll, visibleCount, goTo]);
 
   return (
     <CarouselContext.Provider value={value}>
