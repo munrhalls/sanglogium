@@ -194,6 +194,17 @@ Featured
 DACs
 ✔ Data @done(26-03-24 13:56)
     ✔ run image bg deletion script on every product id @done(26-03-24 13:56)
+✔ Layout @done(26-03-24 14:05)
+  ✔ should mimic featured layout @done(26-03-24 14:04)
+  ✔ its carousel should be getting props to show 2 slides per viewport on each breakpoint up to mobile, on mobile should show 1 slide per viewport @done(26-03-24 14:04)
+  ✔ Title and subtitle should mimic featured layout @done(26-03-24 14:05)
+  ✔ Brand positioning in top left corner of image area - should mimic featured layout @done(26-03-24 14:07)
+✔ Style @done(26-03-24 14:07)
+  ✔ Card color - should mimic featured color usage for card bg @done(26-03-24 14:07)
+
+
+
+
 
 Accessories
 ✔ Data @done(26-03-24 14:01)
