@@ -9,6 +9,17 @@ import DacCard from "./DacCard";
 
 import { getDacProducts } from "./getDacProducts";
 
+const dacsBreakpointMap = {
+  xl: 2,
+  lgDesktop: 2,
+  mdLandscape: 2,
+  mdPortrait: 2,
+  smLandscape: 2,
+  smPortrait: 2,
+  mobileLandscape: 1,
+  mobilePortrait: 1
+};
+
 export default async function DACs() {
   const products = await getDacProducts();
 
@@ -16,22 +27,34 @@ export default async function DACs() {
 
   return (
     <article className="w-full relative overflow-hidden border-secondary-800 px-4 md:px-8">
-      <Carousel itemsCount={products.length}>
-        <div className="flex justify-between items-end mb-10">
-          <DacsHeader />
-        </div>
-        <CarouselTrack className="flex gap-6 overflow-x-auto scrollbar-none snap-x snap-mandatory">
-          {products.map((item, idx) => (
-            <CarouselSlide key={item._id} className="basis-full 2xs:basis-1/2 md:basis-1/3 lg:basis-1/3 flex-shrink-0 snap-start">
-              <DacCard item={item} idx={idx} />
-            </CarouselSlide>
-          ))}
-        </CarouselTrack>
-        <div className="mt-12 flex items-center justify-between">
-          <CarouselDots />
-          <div className="flex gap-2">
-            <CarouselPrevious className="static translate-y-0 h-10 w-10 border-brand-800/50 bg-brand-900/50" />
-            <CarouselNext className="static translate-y-0 h-10 w-10 border-brand-800/50 bg-brand-900/50" />
+      <Carousel
+        itemsCount={products.length}
+        breakpointMap={dacsBreakpointMap}
+      >
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4">
+          <div className="flex flex-col gap-4 md:col-start-1 md:row-start-1">
+            <DacsHeader />
+          </div>
+
+          <CarouselTrack className="w-full relative mx-0 items-stretch md:-mx-3 md:col-span-full md:row-start-2">
+            {products.map((item, idx) => (
+              <CarouselSlide
+                key={item._id}
+                className="flex h-full flex-col px-3"
+              >
+                <DacCard item={item} idx={idx} />
+              </CarouselSlide>
+            ))}
+          </CarouselTrack>
+
+          <div className="flex items-center justify-center md:flex-row gap-4 md:gap-8 md:col-start-2 md:row-start-1 md:justify-self-end md:pr-16">
+            <CarouselPrevious
+              className="transition-colors border-none shadow-none h-4 w-4 hover:bg-transparent focus:ring-0 active:scale-110 text-brand-400"
+            />
+            <CarouselDots color="brand-400" />
+            <CarouselNext
+              className="transition-colors border-none shadow-none h-4 w-4 hover:bg-transparent focus:ring-0 active:scale-105 text-brand-400"
+            />
           </div>
         </div>
       </Carousel>

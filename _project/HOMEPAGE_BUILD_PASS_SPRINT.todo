@@ -113,7 +113,9 @@ Featured
 
 
 ☐ Product Spotlight 1, 2, 3, New Release
-  ✔ Data @done(26-03-23 11:41)
+  ☐ Data
+    [] delete backgrounds from images
+      [] moXlkADK7m1DHgGwWtblBG, k27n1AQuIbSr5iozFz7HA5, moXlkADK7m1DHgGwWtUHWs, moXlkADK7m1DHgGwWwEUpi
     ✔ Data - GROQ should return not just main image, but also image gallery of product and it should do so in a single query using the existing homepage query with minimal modification @done(26-03-22 12:55)
     ✔ Data - use unified GROQ instead of re-processing on frontend @done(26-03-22 13:03)
     ✔ Data - replicate the above change in product spotlight 2, 3 and New Release @done(26-03-22 12:56)
@@ -190,13 +192,13 @@ Featured
     ✔ delete backgrounds from images via script @done(26-03-24 13:51)
 
 DACs
-[] Data
-    [] run image bg deletion script on every product id
+✔ Data @done(26-03-24 13:56)
+    ✔ run image bg deletion script on every product id @done(26-03-24 13:56)
 
 Accessories
-[] Data
-    [] run image bg deletion script on every product id
-    []
+✔ Data @done(26-03-24 14:01)
+    ✔ run image bg deletion script on every product id @done(26-03-24 14:01)
+
 
 Catalogue
     [] database pass - database records contain legacy data and products, migrate them to new data and products
