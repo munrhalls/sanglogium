@@ -218,11 +218,14 @@ Accessories
     ✔ Title and subtitle - mimic featured layout @done(26-03-24 14:27)
 
   Accessories - data and structure
-  [] Data
-    [] delete storage from GROQ
-  [] Structure (html only)
+  ✔ Data @done(26-03-24 14:30)
+    ✔ delete storage from GROQ @done(26-03-24 14:30)
+  ☐ Structure (html only)
     [] Delete storage consumer element from structure
-
+  Accessories - carousel
+  [] Structure (html only)
+    [] Retain --- "CABLES" and "PADS" title elements exactly as they are
+    [] Carousel - each carousel should mimic featured layout
 
 Catalogue
     [] database pass - database records contain legacy data and products, migrate them to new data and products
