@@ -6,6 +6,7 @@ Data
     [] Database update via migration script
     [] Verification
 
+
 Featured
 [] research and determine - should apply same bg-decor pattern as product spotlights?
     [] yes - implement
@@ -27,4 +28,7 @@ Product spotlight 1, 2, 3, new release
         [] Container Powinno mieć ciemny kolor brand/dasz 700
         [] Containers should have the same pattern background decoration applied that the promo text copy component has.
         [] The dots should be brand 400 color. So should the active dot be brand 400 color, and all else should remain the same. That is, the active dot remains the orb style while the inactive dots are empty circles.
+
+    [] Interactivity
+        [] bg decor element - on hover, the opacity of each bg decor element should slightly - but tangibly - increase by a uniform amount to create a 'light up' subtle bg effect
 

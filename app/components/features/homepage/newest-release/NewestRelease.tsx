@@ -18,7 +18,7 @@ export default async function NewestRelease() {
     <article className="w-full relative overflow-hidden border-secondary-800 bg-brand-700">
       <div className="max-w-[1440px] mx-auto px-4 md:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
-          <div className="w-full h-full bg-brand-300 rounded-none flex items-center justify-center relative p-8 lg:p-12 overflow-hidden">
+          <div className="w-full h-full bg-brand-200 rounded-none flex items-center justify-center relative p-8 lg:p-12 overflow-hidden">
             <Carousel itemsCount={product.gallery?.length || 1} breakpointMap={{ lgDesktop: 1, mdPortrait: 1, mobilePortrait: 1 }} className="w-full h-full overflow-visible">
               <CarouselTrack className="w-full h-full">
                 {product.gallery?.map((image, idx) => (
