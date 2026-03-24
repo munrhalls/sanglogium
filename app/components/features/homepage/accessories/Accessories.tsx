@@ -3,7 +3,7 @@ import CategorySection from "./CategorySection";
 import { getAccessoryProducts } from "./getAccessoryProducts";
 
 export default async function Accessories() {
-  const { cables, earpads, storage } = await getAccessoryProducts();
+  const { cables, earpads } = await getAccessoryProducts();
 
   return (
     <div className="w-full space-y-12">
@@ -13,9 +13,6 @@ export default async function Accessories() {
       )}
       {earpads.length > 0 && (
         <CategorySection category={{ name: "Pads", filter: "" }} items={earpads as any} />
-      )}
-      {storage.length > 0 && (
-        <CategorySection category={{ name: "Storage", filter: "" }} items={storage as any} />
       )}
     </div>
   );

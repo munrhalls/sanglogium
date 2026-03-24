@@ -208,7 +208,20 @@ DACs
 Accessories
 ✔ Data @done(26-03-24 14:01)
     ✔ run image bg deletion script on every product id @done(26-03-24 14:01)
+  Accessories - title and subtitle
+  [] Structure
+    ✔ Add subtitle with text "Sublime compliment" @done(26-03-24 14:25)
+    ✔ Change title to "Accessories" @done(26-03-24 14:25)
+  [] Layout
+    ✔ Title and subtitle - mimic featured layout @done(26-03-24 14:26)
+  [] Style
+    ✔ Title and subtitle - mimic featured layout @done(26-03-24 14:27)
 
+  Accessories - data and structure
+  [] Data
+    [] delete storage from GROQ
+  [] Structure (html only)
+    [] Delete storage consumer element from structure
 
 
 Catalogue
