@@ -71,7 +71,7 @@ const textTokens = {
   heroSubHeadline: secondary[300],
   headline: brand[400],
   subtitle: secondary[300],
-  body: secondary[200],
+  body: brand[200],
   accent: accent[500],
   overline: accent[500],
   priceTag: secondary[300],

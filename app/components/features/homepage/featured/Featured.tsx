@@ -9,6 +9,7 @@ import {
   CarouselDots,
 } from "@/app/components/layout/carousel/CarouselControls";
 import { getFeaturedProducts, FeaturedProduct } from "./getFeaturedProducts";
+import { ShoppingCart } from "@phosphor-icons/react/dist/ssr";
 
 interface FeaturedCardProps {
   product: FeaturedProduct;
@@ -27,7 +28,10 @@ const featuredBreakpointMap = {
 };
 
 export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
-  <article className="card-base group flex h-full flex-col gap-4 transition-all duration-300 hover:shadow-cardHover hover:-translate-y-1">
+  <article
+    className="card-base group flex h-full flex-col gap-4 transition-all duration-300 hover:shadow-cardHover hover:-translate-y-1"
+    style={{ boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)' }}
+  >
     <figure className="aspect-[3/2] relative flex w-full items-center justify-center overflow-hidden bg-surface-highlight p-6">
       <span className="absolute left-4 top-4 text-small font-bold uppercase tracking-editorial text-brand-900 z-10">
         {product.brand}
@@ -44,14 +48,19 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
     </figure>
 
     <div className="flex flex-col flex-grow gap-3">
-      <h3 className="type-card-title line-clamp-2">
+      <h3 className="type-body font-thin line-clamp-2">
         {product.name}
       </h3>
       <div className="mt-auto flex items-center justify-between pt-2">
         <p className="type-price">${product.displayPrice}</p>
-        <button className="btn-ghost" aria-label={`Add ${product.name} to cart`}>
-          Add
-        </button>
+        <button
+        className="btn-cart transition-all active:scale-95"
+        style={{ borderRadius: '3px' }}
+        aria-label={`Add ${product.name} to cart`}
+      >
+        <ShoppingCart size={18} weight="thin" />
+        <span className="text-cap font-bold">Add</span>
+      </button>
       </div>
     </div>
   </article>
