@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils/tailwind";
 import { Image } from "next-sanity/image";
 import { urlFor } from "@/sanity/lib/image";
+import { ShoppingCart } from "@phosphor-icons/react/dist/ssr";
 
 export default function DacCard({ item, idx }: { item: any; idx: number }) {
   if (!item) return null;
@@ -10,11 +11,8 @@ export default function DacCard({ item, idx }: { item: any; idx: number }) {
   const price = item.displayPrice ? `$${item.displayPrice}` : "Contact for Price";
 
   return (
-    <div className={cn(
-      "group flex flex-col gap-6 p-6 rounded-2xl border border-brand-800/20 bg-brand-800/5",
-      "interactive-card"
-    )}>
-      <figure className="aspect-square rounded-none relative flex w-full items-center justify-center overflow-hidden bg-brand-300 p-6">
+    <article className="group flex h-full flex-col bg-transparent p-6 transition-all duration-300 gap-3">
+      <figure className="aspect-[16/9] rounded-none relative flex w-full items-center justify-center overflow-hidden bg-brand-300 p-6">
         <span className="absolute left-4 top-4 text-small font-bold uppercase tracking-editorial text-brand-900">
           {brandName}
         </span>
@@ -27,16 +25,19 @@ export default function DacCard({ item, idx }: { item: any; idx: number }) {
           className="h-auto max-h-[95%] w-auto max-w-[95%] transform object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-105"
         />
       </figure>
-      <div className="flex flex-col gap-2">
-        <h3 className="text-body text-cap font-bold italic tracking-tight">
+
+      <div className="flex flex-col h-[3rem] pb-2">
+        <p className="type-body font-bold transition-colors group-hover:text-brand-50">
           {productName}
-        </h3>
-        <div className="flex justify-between items-center">
-          <span className="text-body font-light text-brand-100">
-            {price}
-          </span>
-        </div>
+        </p>
       </div>
-    </div>
+      <div className="mt-auto flex items-center">
+        <p className="text-cap type-price text-center">{price}</p>
+        <button className="btn-cart transition-all active:scale-95 ml-auto">
+          <ShoppingCart size={18} weight="bold" />
+          <span className="text-cap font-bold">Add</span>
+        </button>
+      </div>
+    </article>
   );
 }
