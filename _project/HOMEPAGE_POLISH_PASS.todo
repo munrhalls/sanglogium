@@ -1,14 +1,32 @@
+#Homepage
 Global
 [] border radius
-    [] Action: Update theme.borderRadius in your Tailwind config so sm, md, and lg map to subtle variations around this 3px mark.
+    ✔ Action: Update theme.borderRadius in your Tailwind config so sm, md, and lg map to subtle variations around this 3px mark. @done(26-03-24 19:12)
+    ✔ Check and ensure the change is properly propagated to globla button styles @done(26-03-24 19:14)
+    ✔ Check and ensure the change is properly propagated to global input styles @done(26-03-24 19:16)
+    ✔ hard-code border radius in search bar @done(26-03-24 19:22)  #refactor later
+     #refactor later^
+    []
 
 
-    Featured -
+
+Featured
+Featured - carousel track
+[] style
+    [] background decoration - replicate the same background decoration that is present in the product spotlight 1 in the same way - albeit slightly adjusted in proportionate ways to fulfill the same look on the featured carousel track dimensions
+
 
 [] on small landscape view, image on the right, title + price + cart btn on the right, with new fitting layout, carousel nav at the bottom of image, image smaller to account for that
     [] structure
     [] layout
     [] style
+
+
+Hero
+[] Style
+    [] subtle 3d effect - research what the background image in hero colors are behind the title, subtitle and button
+    [] subtle 3d effect - research and determine proper, design system-aligned colors for shadows based on background image in hero
+    [] subtle 3d effect - proper shadows on title, subtitle and button to create subtle 3d effect
 
 
 Product spotlight 1, 2, 3, new release
