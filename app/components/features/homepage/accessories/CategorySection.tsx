@@ -20,8 +20,8 @@ const accessoriesBreakpointMap = {
   mdPortrait: 3,
   smLandscape: 3,
   smPortrait: 2,
-  mobileLandscape: 2,
-  mobilePortrait: 2
+  mobileLandscape: 1,
+  mobilePortrait: 1
 };
 
 export default function CategorySection({ category, items }: CategorySectionProps) {
