@@ -231,7 +231,7 @@ Accessories
     ✔ Carousel - each carousel should mimic featured layout (other than above) @done(26-03-24 14:33)
   Accessories - carousel slides / viewport
   ✔ Structure @done(26-03-24 14:36)
-    ✔ Carousel props - should mimic featured props structure but the breakpoints data should result in 4 slides on desktop viewport, 3 slides on md, 2 slides on mobile (and appropriately modified for landscape mode, where usually landscape can handle +1 slide) @done(26-03-24 14:36)
+    ✔ Carousel props - should mimic featured props structure but the breakpoints data should result in 4 slides on desktop viewport, 3 slides on md, 1 slides on mobile (and appropriately modified for landscape mode, where usually landscape can handle +1 slide) @done(26-03-24 15:01)
   Accessories bottom section
     ✔ Layout @done(26-03-24 14:42)
       ✔ Should make room for 3 lines @done(26-03-24 14:42)
@@ -251,6 +251,10 @@ Accessories
     ✔ Mathematical Constraints @done(26-03-24 15:07)
     ✔ Info Zone Height — Set fixed h-[5.5rem] (88px) to provide exactly enough room for 2-line title + price @done(26-03-24 15:07)
     ✔ Image Scaling — Constrain object-contain to 75% max-height/width on mobile to prevent overflow @done(26-03-24 15:07)
+  Accessories - container
+    [] Bugs
+      [] Layout
+        [] Fix lack of horizontal alignment
 
 
     Catalogue
