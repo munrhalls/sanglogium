@@ -7,12 +7,9 @@ export default function AccessoryCard({ item, idx }: { item: AccessoryItem; idx:
   if (!item) return null;
 
   return (
-    // Removed gap-3 to rely on strict margin control
     <article className="group flex h-full flex-col bg-transparent p-6 transition-all duration-300">
 
-      {/* Added mb-4 to create the exact distance to the text block */}
       <figure className="aspect-[3/2] rounded-none relative flex w-full items-center justify-center overflow-hidden bg-brand-300 p-6 md:pt-12 md:pb-4 md:px-4 mb-4">
-        {/* Brand label stays here (perfect positioning) */}
         <span className="absolute left-4 top-4 text-small font-bold uppercase tracking-editorial text-brand-900">
           {item.brand}
         </span>
@@ -27,12 +24,10 @@ export default function AccessoryCard({ item, idx }: { item: AccessoryItem; idx:
         />
       </figure>
 
-      {/* Removed p-4 to fix the double-padding alignment error */}
       <div className="flex flex-col flex-grow">
 
         {/* ZONE 1: INFO - Height recalculated to 5.5rem (~88px) to fit Title + Price perfectly */}
         <div className="flex flex-col h-[5.5rem] mb-4">
-          {/* Removed redundant brand span from here */}
 
           <h3 className="type-body line-clamp-2 font-medium mb-2">
             {item.name}
@@ -41,7 +36,6 @@ export default function AccessoryCard({ item, idx }: { item: AccessoryItem; idx:
           <p className="type-price">${item.displayPrice}</p>
         </div>
 
-        {/* ZONE 2: ACTION */}
         <div className="mt-auto pt-4 border-t border-border-secondary/50">
           <button className="btn-cart w-full justify-center transition-all active:scale-95">
             <ShoppingCart size={18} weight="bold" />

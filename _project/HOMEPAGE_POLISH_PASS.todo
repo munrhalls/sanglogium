@@ -1,17 +1,9 @@
-Data
-[] Copy texts for product spotlight 1, 2, 3, new release - adapted and refined
-    [] Research
-    [] Develop new titles and copies
-    [] Migration script and payload.json
-    [] Database update via migration script
-    [] Verification
+Global
+[] border radius
+    [] Action: Update theme.borderRadius in your Tailwind config so sm, md, and lg map to subtle variations around this 3px mark.
 
 
-Featured
-[] research and determine - should apply same bg-decor pattern as product spotlights?
-    [] yes - implement
-    [] no - should implement any other kind of decor/bg alignment change?
-
+    Featured -
 
 [] on small landscape view, image on the right, title + price + cart btn on the right, with new fitting layout, carousel nav at the bottom of image, image smaller to account for that
     [] structure
@@ -20,7 +12,12 @@ Featured
 
 
 Product spotlight 1, 2, 3, new release
-[] delete 2nd prod repeat from prod spot 1
+
+[] Data
+    [] delete 2nd prod repeat from prod spot 1
+[] Layout
+    [] on mobile - brand title and header should be in front of image carousel, image carousel should be middle, promo copy should be after image carousel
+
 [] Carousel Controls
     [] Structure
         [] The container should receive the same element absolutely positioned that the promo text element has. It should be used to import the background asset, and by import what is really meant here is applying the talent class that automatically appends the background image asset.
@@ -31,4 +28,6 @@ Product spotlight 1, 2, 3, new release
 
     [] Interactivity
         [] bg decor element - on hover, the opacity of each bg decor element should slightly - but tangibly - increase by a uniform amount to create a 'light up' subtle bg effect
+
+
 

@@ -252,10 +252,18 @@ Accessories
     ✔ Info Zone Height — Set fixed h-[5.5rem] (88px) to provide exactly enough room for 2-line title + price @done(26-03-24 15:07)
     ✔ Image Scaling — Constrain object-contain to 75% max-height/width on mobile to prevent overflow @done(26-03-24 15:07)
   Accessories - container
-    [] Bugs
-      [] Layout
-        [] Fix lack of horizontal alignment
+    ✔ Bugs @done(26-03-24 15:03)
+      ✔ Layout @done(26-03-24 15:03)
+        ✔ Fix lack of horizontal alignment @done(26-03-24 15:03)
 
+
+  Data - text copies
+[] Copy texts for product spotlight 1, 2, 3, new release - adapted and refined
+    [] Research
+    [] Develop new titles and copies
+    [] Migration script and payload.json
+    [] Database update via migration script
+    [] Verification
 
     Catalogue
     [] database pass - database records contain legacy data and products, migrate them to new data and products
