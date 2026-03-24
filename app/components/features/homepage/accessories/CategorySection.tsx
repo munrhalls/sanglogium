@@ -14,8 +14,8 @@ interface CategorySectionProps {
 }
 
 const accessoriesBreakpointMap = {
-  xl: 5,
-  lgDesktop: 5,
+  xl: 4,
+  lgDesktop: 4,
   mdLandscape: 4,
   mdPortrait: 3,
   smLandscape: 3,

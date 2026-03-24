@@ -220,14 +220,40 @@ Accessories
   Accessories - data and structure
   ✔ Data @done(26-03-24 14:30)
     ✔ delete storage from GROQ @done(26-03-24 14:30)
-  ☐ Structure (html only)
-    [] Delete storage consumer element from structure
+  ✔ Structure (html only) @done(26-03-24 14:32)
+    ✔ Delete storage consumer element from structure @done(26-03-24 14:32)
   Accessories - carousel
-  [] Structure (html only)
-    [] Retain --- "CABLES" and "PADS" title elements exactly as they are
-    [] Carousel - each carousel should mimic featured layout
+  ✔ Structure (html only) @done(26-03-24 14:33)
+    ✔ Retain --- "CABLES" and "PADS" title elements exactly as they are @done(26-03-24 14:33)
+    ✔ Carousel - each carousel should mimic featured structure (other than above) @done(26-03-24 14:33)
+  ✔ Layout @done(26-03-24 14:33)
+    ✔ Retain --- "CABLES" and "PADS" title elements exactly as they are @done(26-03-24 14:33)
+    ✔ Carousel - each carousel should mimic featured layout (other than above) @done(26-03-24 14:33)
+  Accessories - carousel slides / viewport
+  ✔ Structure @done(26-03-24 14:36)
+    ✔ Carousel props - should mimic featured props structure but the breakpoints data should result in 4 slides on desktop viewport, 3 slides on md, 2 slides on mobile (and appropriately modified for landscape mode, where usually landscape can handle +1 slide) @done(26-03-24 14:36)
+  Accessories bottom section
+    ✔ Layout @done(26-03-24 14:42)
+      ✔ Should make room for 3 lines @done(26-03-24 14:42)
+      ✔ Product title - should stick closest to bottom as available @done(26-03-24 15:00)
+    ✔ Style @done(26-03-24 14:42)
+      ✔ Product title - should be thin font @done(26-03-24 14:42)
 
-Catalogue
+    Accessories - Component Refinement & Professional Standards
+    ✔ Layout @done(26-03-24 15:05)
+    ✔ Standardize left-alignment — Remove double padding by deleting p-4 from text wrapper @done(26-03-24 15:05)
+    ✔ Fix Vertical Rhythm — Group Title and Price into a cohesive unit @done(26-03-24 15:05)
+    ✔ Anchor Action — Move "Add to Cart" to a dedicated footer with mt-auto and border-t @done(26-03-24 15:05)
+    ✔ Precise Spacing — Replace global gap-3 with explicit mb-4 on figure to control proximity @done(26-03-24 15:05)
+    ✔ Data & Logic @done(26-03-24 15:06)
+    ✔ Remove Data Redundancy — Delete duplicate brand name span from the text information zone @done(26-03-24 15:06)
+    ✔ Optimize Title Logic — Implement line-clamp-2 to prevent layout breaks on 3+ line titles @done(26-03-24 15:06)
+    ✔ Mathematical Constraints @done(26-03-24 15:07)
+    ✔ Info Zone Height — Set fixed h-[5.5rem] (88px) to provide exactly enough room for 2-line title + price @done(26-03-24 15:07)
+    ✔ Image Scaling — Constrain object-contain to 75% max-height/width on mobile to prevent overflow @done(26-03-24 15:07)
+
+
+    Catalogue
     [] database pass - database records contain legacy data and products, migrate them to new data and products
     [] data pass
     [] desktop
