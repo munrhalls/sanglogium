@@ -16,7 +16,7 @@ export default function HomePage() {
     <div>
       <Hero />
 
-      <Shelf>
+      <Shelf fullBleed>
         <Featured />
       </Shelf>
 

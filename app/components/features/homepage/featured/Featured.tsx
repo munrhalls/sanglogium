@@ -63,41 +63,50 @@ export default async function Featured() {
   if (!finalFeatured || finalFeatured?.length === 0) return null;
 
   return (
-    <article className="bg-surface-page w-full px-4 md:px-8">
-      <Carousel
-        itemsCount={finalFeatured.length}
-        breakpointMap={featuredBreakpointMap}
-      >
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4">
-          <div className="flex flex-col gap-4 md:col-start-1 md:row-start-1">
-            <span className="type-section-caption uppercase">
-              Curated Excellence
-            </span>
-            <h2 className="type-section-hed uppercase">Featured</h2>
-          </div>
+    <article className="w-full px-4 md:px-8 relative bg-brand-900">
+      <div aria-hidden="true" className="absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute -top-[10%] -right-[10%] w-[120%] h-[120%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-5" />
+        <div className="absolute top-[5%] -left-[5%] w-[60%] h-[60%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-10" />
+        <div className="absolute bottom-[2.5%] right-[2.5%] w-[30%] h-[30%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-20" />
+      </div>
+      <div className="relative z-10">
+        <div className="mx-auto max-w-[1280px] py-20">
+          <Carousel
+            itemsCount={finalFeatured.length}
+            breakpointMap={featuredBreakpointMap}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4">
+              <div className="flex flex-col gap-4 md:col-start-1 md:row-start-1">
+                <span className="type-section-caption uppercase">
+                  Curated Excellence
+                </span>
+                <h2 className="type-section-hed uppercase">Featured</h2>
+              </div>
 
-          <CarouselTrack className="w-full relative mx-0 items-stretch md:-mx-3 md:col-span-full md:row-start-2">
-            {finalFeatured.map((p, idx) => (
-              <CarouselSlide
-                key={p._id || idx}
-                className="flex h-full flex-col px-3"
-              >
-                <FeaturedCard product={p} idx={idx} />
-              </CarouselSlide>
-            ))}
-          </CarouselTrack>
+              <CarouselTrack className="w-full items-stretch mx-0 md:-mx-3 md:col-span-full md:row-start-2">
+                {finalFeatured.map((p, idx) => (
+                  <CarouselSlide
+                    key={p._id || idx}
+                    className="flex h-full flex-col px-3"
+                  >
+                    <FeaturedCard product={p} idx={idx} />
+                  </CarouselSlide>
+                ))}
+              </CarouselTrack>
 
-          <div className="flex items-center justify-center md:flex-row gap-4 md:gap-8 md:col-start-2 md:row-start-1 md:justify-self-end md:pr-16">
-            <CarouselPrevious
-              className="transition-colors border-none shadow-none h-4 w-4 hover:bg-transparent focus:ring-0 active:scale-110 text-brand-400"
-            />
-            <CarouselDots color="brand-400" />
-            <CarouselNext
-              className="transition-colors border-none shadow-none h-4 w-4 hover:bg-transparent focus:ring-0 active:scale-105 text-brand-400"
-            />
-          </div>
+              <div className="flex items-center justify-center md:flex-row gap-4 md:gap-8 md:col-start-2 md:row-start-1 md:justify-self-end md:pr-16">
+                <CarouselPrevious
+                  className="transition-colors border-none shadow-none h-4 w-4 hover:bg-transparent focus:ring-0 active:scale-110 text-brand-400"
+                />
+                <CarouselDots color="brand-400" />
+                <CarouselNext
+                  className="transition-colors border-none shadow-none h-4 w-4 hover:bg-transparent focus:ring-0 active:scale-105 text-brand-400"
+                />
+              </div>
+            </div>
+          </Carousel>
         </div>
-      </Carousel>
+      </div>
     </article>
   );
 }

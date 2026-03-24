@@ -8,12 +8,23 @@ Global
      #refactor later^
     []
 
-
+Shelf
+✔ Structure @done(26-03-24 19:38)
+    ✔ Should accept props fullBleed, should be optional, if present - should change w-max-1280px to w-full @done(26-03-24 19:38)
+[] layout
+    [] shelf
 
 Featured
-Featured - carousel track
-[] style
-    [] background decoration - replicate the same background decoration that is present in the product spotlight 1 in the same way - albeit slightly adjusted in proportionate ways to fulfill the same look on the featured carousel track dimensions
+    Featured - container and background
+    ✔ structure @done(26-03-24 19:42)
+        ✔ should change featured's shelf container to fullBleed @done(26-03-24 19:42)
+        ✔ inside featured - top-lvl wrapper should be w-full (article) @done(26-03-24 19:42)
+        ✔ secondary wrapper should exist
+    ✔ layout @done(26-03-24 19:43)
+        ✔ centered horizontally by top level container, should be w-max-1280px @done(26-03-24 19:43)
+        ✔ top level container should apply (padding) vertical top and bottom spacing with value from the spacing system present in global tailwind config @done(26-03-24 19:45)
+    ✔ style @done(26-03-24 19:36)
+        ✔ background decoration - replicate the same background decoration that is present in the product spotlight 1 in the same way - albeit slightly adjusted in proportionate ways to fulfill the same look on the featured carousel track dimensions @done(26-03-24 19:36)
 
 
 [] on small landscape view, image on the right, title + price + cart btn on the right, with new fitting layout, carousel nav at the bottom of image, image smaller to account for that
