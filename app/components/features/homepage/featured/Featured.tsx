@@ -8,6 +8,7 @@ import {
   CarouselNext,
   CarouselDots,
 } from "@/app/components/layout/carousel/CarouselControls";
+import FeaturedHeader from "./FeaturedHeader";
 import { getFeaturedProducts, FeaturedProduct } from "./getFeaturedProducts";
 import { ShoppingCart } from "@phosphor-icons/react/dist/ssr";
 
@@ -29,7 +30,7 @@ const featuredBreakpointMap = {
 
 export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
   <article className="card-product group flex h-full flex-col gap-4">
-    <figure className="aspect-[3/2] relative flex w-full items-center justify-center overflow-hidden bg-surface-highlight p-6">
+    <figure className="aspect-[4/3] relative flex w-full items-center justify-center overflow-hidden bg-surface-productImage p-6">
       <span className="absolute left-4 top-4 text-small font-bold uppercase tracking-editorial text-brand-900 z-10">
         {product.brand}
       </span>
@@ -45,7 +46,7 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
     </figure>
 
     <div className="flex flex-col flex-grow gap-3">
-      <h3 className="type-body font-thin line-clamp-2">
+      <h3 className="type-body font-medium line-clamp-2">
         {product.name}
       </h3>
       <div className="mt-auto flex items-center justify-between pt-2">
@@ -55,7 +56,7 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
         style={{ borderRadius: '3px' }}
         aria-label={`Add ${product.name} to cart`}
       >
-        <ShoppingCart size={18} weight="thin" />
+        <ShoppingCart size={18} weight="regular" />
         <span className="text-cap font-bold">Add</span>
       </button>
       </div>
@@ -83,10 +84,7 @@ export default async function Featured() {
           >
             <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4">
               <div className="flex flex-col gap-4 md:col-start-1 md:row-start-1">
-                <span className="type-section-caption uppercase">
-                  Curated Excellence
-                </span>
-                <h2 className="type-section-hed uppercase">Featured</h2>
+                <FeaturedHeader />
               </div>
 
               <CarouselTrack className="w-full items-stretch mx-0 md:-mx-3 md:col-span-full md:row-start-2">

@@ -15,7 +15,7 @@ export default async function NewestRelease() {
   const { productRef: product, promoTitle, promoSubtitle, promoText } = data;
 
   return (
-    <article className="w-full relative overflow-hidden border-secondary-800 bg-brand-700">
+    <article className="w-full relative overflow-hidden border-secondary-800 bg-brand-800">
       <div className="max-w-content mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
           <div className="w-full h-full bg-brand-200 rounded-none flex items-center justify-center relative p-8 lg:p-12 overflow-hidden">

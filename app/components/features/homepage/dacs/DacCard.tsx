@@ -12,7 +12,7 @@ export default function DacCard({ item, idx }: { item: any; idx: number }) {
 
   return (
     <article className="card-product group flex h-full flex-col gap-4">
-      <figure className="aspect-[16/9] rounded-none relative flex w-full items-center justify-center overflow-hidden bg-brand-300 p-6">
+      <figure className="aspect-[4/3] rounded-none relative flex w-full items-center justify-center overflow-hidden bg-surface-productImage p-6">
         <span className="absolute left-4 top-4 text-small font-bold uppercase tracking-editorial text-brand-900">
           {brandName}
         </span>
@@ -26,15 +26,15 @@ export default function DacCard({ item, idx }: { item: any; idx: number }) {
         />
       </figure>
 
-      <div className="flex flex-col h-[3rem] pb-2">
-        <p className="type-body font-bold transition-colors group-hover:text-brand-50">
+      <div className="flex flex-col min-h-[3rem] pb-2">
+        <p className="type-body font-medium transition-colors group-hover:text-brand-50 line-clamp-2">
           {productName}
         </p>
       </div>
       <div className="mt-auto flex items-center">
         <p className="text-cap type-price text-center">{price}</p>
         <button className="btn-cart transition-all active:scale-95 ml-auto">
-          <ShoppingCart size={18} weight="bold" />
+          <ShoppingCart size={18} weight="regular" />
           <span className="text-cap font-bold">Add</span>
         </button>
       </div>

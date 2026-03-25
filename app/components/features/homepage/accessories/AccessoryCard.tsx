@@ -9,7 +9,7 @@ export default function AccessoryCard({ item, idx }: { item: AccessoryItem; idx:
   return (
     <article className="card-product group flex h-full flex-col gap-4">
 
-      <figure className="aspect-[3/2] rounded-none relative flex w-full items-center justify-center overflow-hidden bg-brand-300 p-6 md:pt-12 md:pb-4 md:px-4 mb-4">
+      <figure className="aspect-[4/3] rounded-none relative flex w-full items-center justify-center overflow-hidden bg-surface-productImage p-6 md:pt-12 md:pb-4 md:px-4 mb-4">
         <span className="absolute left-4 top-4 text-small font-bold uppercase tracking-editorial text-brand-900">
           {item.brand}
         </span>
@@ -38,7 +38,7 @@ export default function AccessoryCard({ item, idx }: { item: AccessoryItem; idx:
 
         <div className="mt-auto pt-4 border-t border-border-secondary/50">
           <button className="btn-cart w-full justify-center transition-all active:scale-95">
-            <ShoppingCart size={18} weight="bold" />
+            <ShoppingCart size={18} weight="regular" />
             <span className="hidden md:block text-cap font-bold ml-2">Add to Cart</span>
             <span className=" md:hidden text-cap font-bold ml-2">Add</span>
 

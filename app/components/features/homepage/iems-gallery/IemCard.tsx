@@ -9,7 +9,7 @@ export default function IemCard({ product, idx }: { product: IemProduct; idx: nu
 
     return (
         <article className="card-product group flex h-full flex-col gap-4">
-            <div className="relative flex justify-center items-center aspect-square w-full overflow-hidden rounded-none bg-brand-100 pt-12 pb-4 cursor-pointer">
+            <div className="relative flex justify-center items-center aspect-square w-full overflow-hidden rounded-none bg-surface-productImage pt-12 pb-4 cursor-pointer">
                 <Image
                     src={urlFor(product.image).width(375).auto('format').quality(75).url()}
                     alt={product.name}
@@ -24,7 +24,7 @@ export default function IemCard({ product, idx }: { product: IemProduct; idx: nu
             </div>
 
             <div className="flex flex-col gap-3">
-                <h3 className="type-body font-bold line-clamp-2">
+                <h3 className="type-body font-medium line-clamp-2">
                     {product.name}
                 </h3>
                 <div className="flex items-center justify-between gap-2">
@@ -32,11 +32,11 @@ export default function IemCard({ product, idx }: { product: IemProduct; idx: nu
                         ${product.displayPrice}
                     </p>
                     <button className="btn-cart">
-                        <ShoppingCart size={20} style={{ marginBottom: "2px" }} />
+                        <ShoppingCart size={20} weight="regular" />
                         Add
                     </button>
                 </div>
             </div>
-        </div>
+        </article>
     )
 }
