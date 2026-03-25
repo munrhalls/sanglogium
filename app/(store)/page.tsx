@@ -28,7 +28,7 @@ export default function HomePage() {
         <ProductSpotlight3 />
       </Shelf>
 
-      <Shelf>
+      <Shelf fullBleed>
         <IemsGallery />
       </Shelf>
 
