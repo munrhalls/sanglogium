@@ -36,7 +36,7 @@ export default function RootLayout({
             <div
               className={cn(
                 "relative flex flex-1 flex-col overflow-hidden",
-                "bg-brand-700",
+                "bg-brand-800",
                 "mx-auto max-w-[1440px]",
                 "h-full w-full flex-1",
                 "shadow-[0_0_40px_rgba(246,227,213,0.015)]"

@@ -9,13 +9,9 @@ interface ShelfProps {
 }
 
 export default function Shelf({ children, variant = "default", fullBleed = false, className }: ShelfProps) {
-  const variants = {
-    default: "bg-transparent",
-    platinum: "bg-secondary-50 shadow-inner-soft",
-  };
 
   return (
-    <section className={cn("w-full py-20", variants[variant], className)}>
+    <section className={cn("w-full py-20 bg-brand-700", className)}>
       <div className={cn("mx-auto", fullBleed ? "w-full" : "max-w-[1280px]")}>
         {children}
       </div>
