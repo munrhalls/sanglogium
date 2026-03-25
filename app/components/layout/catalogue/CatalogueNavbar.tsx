@@ -1,15 +1,30 @@
 import React from "react";
 import { CatalogueView } from "./CatalogueView";
 import NavbarManager from "./NavbarManager";
-import { CATALOGUE_DATA } from "./data";
+import catalogueDataRaw from "./catalogue.json";
+import type { CatalogueItem } from "./data";
 import { cn } from "@/lib/utils/tailwind";
 
-const navLinks = CATALOGUE_DATA.map((item) => ({
-  id: item.id,
-  label: item.label,
-}));
-
 const CatalogueNavbar = async () => {
+  // Transform catalogue.json to match original CatalogueItem interface
+  const catalogueData: CatalogueItem[] = catalogueDataRaw.catalogue.map((item: any) => ({
+    id: item.slug?.current || item.title.toLowerCase().replace(/\s+/g, '-'),
+    label: item.title,
+    imageUrl: `/images/${item.icon}-skeletal.png`,
+    sections: (item.children || []).map((child: any) => ({
+      title: child.title,
+      links: (child.children || []).map((link: any) => link.title)
+    })),
+    feature: {
+      caption: "Pure Resonance"
+    }
+  }));
+
+  const navLinks = catalogueData.map((item) => ({
+    id: item.id,
+    label: item.label,
+  }));
+
   return (
     <nav
       className={cn(
@@ -19,7 +34,7 @@ const CatalogueNavbar = async () => {
     >
       <div className="container mx-auto flex h-full items-center justify-center">
         <NavbarManager navLinks={navLinks}>
-          {CATALOGUE_DATA.map((item) => (
+          {catalogueData.map((item) => (
             <CatalogueView key={item.id} data={item} />
           ))}
         </NavbarManager>
