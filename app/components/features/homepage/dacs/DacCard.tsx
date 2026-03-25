@@ -11,7 +11,7 @@ export default function DacCard({ item, idx }: { item: any; idx: number }) {
   const price = item.displayPrice ? `$${item.displayPrice}` : "Contact for Price";
 
   return (
-    <article className="group flex h-full flex-col bg-transparent p-6 transition-all duration-300 gap-3 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
+    <article className="card-product group flex h-full flex-col gap-4">
       <figure className="aspect-[16/9] rounded-none relative flex w-full items-center justify-center overflow-hidden bg-brand-300 p-6">
         <span className="absolute left-4 top-4 text-small font-bold uppercase tracking-editorial text-brand-900">
           {brandName}

@@ -34,7 +34,7 @@ export default async function DACs() {
       </div>
       <div className="relative z-10">
         <div className="mx-auto max-w-content">
-          <div className="relative overflow-hidden border-secondary-800 px-4 md:px-8">
+          <div className="relative overflow-hidden border-secondary-800">
       <Carousel
         itemsCount={products.length}
         breakpointMap={dacsBreakpointMap}

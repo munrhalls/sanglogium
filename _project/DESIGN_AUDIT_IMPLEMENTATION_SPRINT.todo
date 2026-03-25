@@ -31,12 +31,12 @@ Forbidden:
   - Modifying existing maxWidth values if any exist
   - Changing any color, spacing, or typography tokens
 ---
-[] Structure
-    [] Add maxWidth key to theme.extend in tailwind.config.ts
-    [] Add "content": "1280px" entry
-[] Verify
-    [] Confirm build succeeds with new token
-    [] Confirm no regressions (existing classes unaffected)
+✔ Structure @done(26-03-25 09:30)
+    ✔ Add maxWidth key to theme.extend in tailwind.config.ts @done(26-03-25 09:30)
+    ✔ Add "content": "1280px" entry @done(26-03-25 09:30)
+✔ Verify @done(26-03-25 09:30)
+    ✔ Confirm build succeeds with new token @done(26-03-25 09:30)
+    ✔ Confirm no regressions (existing classes unaffected) @done(26-03-25 09:30)
 
 --------------------------------------------------------------------------------
 
@@ -63,11 +63,11 @@ Forbidden:
   - Altering surface.card, surface.elevated, surface.subtle, surface.highlight values
   - Changing any component's bg class yet
 ---
-[] Structure
-    [] Add "productImage": brand[200] to the surface const object
-[] Verify
-    [] Confirm build succeeds
-    [] Confirm bg-surface-productImage class is available
+✔ Structure @done(26-03-25 09:30)
+    ✔ Add "productImage": brand[200] to the surface const object @done(26-03-25 09:30)
+✔ Verify @done(26-03-25 09:30)
+    ✔ Confirm build succeeds @done(26-03-25 09:30)
+    ✔ Confirm bg-surface-productImage class is available @done(26-03-25 09:30)
 
 --------------------------------------------------------------------------------
 
@@ -98,13 +98,13 @@ Forbidden:
   - Modifying .card-base
   - Adding any color/bg to .card-product (bg stays transparent; image bg is per-component)
 ---
-[] Structure
-    [] Add .card-product class definition after .card-base in uiComponentsPlugin
-    [] Include base state: transparent bg, padding, border-radius, shadow, border
-    [] Include &:hover state: cardHover shadow, -2px translateY
-[] Verify
-    [] Confirm build succeeds
-    [] Confirm .card-product class is generated in output CSS
+✔ Structure @done(26-03-25 09:30)
+    ✔ Add .card-product class definition after .card-base in uiComponentsPlugin @done(26-03-25 09:30)
+    ✔ Include base state: transparent bg, padding, border-radius, shadow, border @done(26-03-25 09:30)
+    ✔ Include &:hover state: cardHover shadow, -2px translateY @done(26-03-25 09:30)
+✔ Verify @done(26-03-25 09:30)
+    ✔ Confirm build succeeds @done(26-03-25 09:30)
+    ✔ Confirm .card-product class is generated in output CSS @done(26-03-25 09:30)
 
 --------------------------------------------------------------------------------
 
@@ -133,12 +133,12 @@ Forbidden:
   - Modifying existing typography utility definitions
   - Adding this to globals.css (must be in the plugin)
 ---
-[] Structure
-    [] Add .section-header-anchor to uiComponentsPlugin
-    [] Uses display:flex, alignItems:center, gap, with ::before pseudo for the line
-[] Verify
-    [] Confirm build succeeds
-
+✔ Structure @done(26-03-25 09:30)
+    ✔ Add .section-header-anchor to uiComponentsPlugin @done(26-03-25 09:30)
+    ✔ Uses display:flex, alignItems:center, gap, with ::before pseudo for the line @done(26-03-25 09:30)
+✔ Verify @done(26-03-25 09:30)
+    ✔ Confirm build succeeds @done(26-03-25 09:30)
+✔ @done(26-03-25 09:30)
 
 ================================================================================
 PHASE 2 — SECTION LAYOUT NORMALIZATION
@@ -176,17 +176,17 @@ Forbidden:
   - Changing Shelf's py-20 value (that is the system's vertical rhythm token)
   - Removing Shelf wrappers from page.tsx
 ---
-[] Structure
-    [] Shelf.tsx: remove bg-brand-700, keep py-20
-    [] Featured.tsx: remove py-20 from inner max-w wrapper
-    [] IemsGallery.tsx: remove py-16 from inner max-w wrapper
-    [] Dacs.tsx: remove py-16 from inner max-w wrapper
-    [] Accessories.tsx: remove py-16 from inner max-w wrapper (inside space-y-12 wrapper)
-    [] NewestRelease.tsx: verify no competing py-* exists on inner wrappers
-[] Verify
-    [] Each section has exactly ONE layer of vertical padding (from Shelf's py-20)
-    [] No visual double-gap between sections
-    [] Each section's own background color is visible (not masked by Shelf's bg)
+✔ Structure @done(26-03-25 09:30)
+    ✔ Shelf.tsx: remove bg-brand-700, keep py-20 @done(26-03-25 09:30)
+    ✔ Featured.tsx: remove py-20 from inner max-w wrapper @done(26-03-25 09:30)
+    ✔ IemsGallery.tsx: remove py-16 from inner max-w wrapper @done(26-03-25 09:30)
+    ✔ Dacs.tsx: remove py-16 from inner max-w wrapper @done(26-03-25 09:30)
+    ✔ Accessories.tsx: remove py-16 from inner max-w wrapper (inside space-y-12 wrapper) @done(26-03-25 09:30)
+    ✔ NewestRelease.tsx: verify no competing py-* exists on inner wrappers @done(26-03-25 09:30)
+✔ Verify @done(26-03-25 09:30)
+    ✔ Each section has exactly ONE layer of vertical padding (from Shelf's py-20) @done(26-03-25 09:30)
+    ✔ No visual double-gap between sections @done(26-03-25 09:30)
+    ✔ Each section's own background color is visible (not masked by Shelf's bg) @done(26-03-25 09:30)
 
 --------------------------------------------------------------------------------
 
@@ -219,20 +219,20 @@ Forbidden:
   - Using any value other than max-w-content
   - Removing mx-auto from any wrapper that has it
 ---
-[] Layout
-    [] Shelf.tsx: max-w-[1280px] → max-w-content
-    [] Featured.tsx: max-w-[1280px] → max-w-content
-    [] IemsGallery.tsx: max-w-[1280px] → max-w-content
-    [] Dacs.tsx: max-w-[1280px] → max-w-content
-    [] Accessories.tsx: max-w-[1280px] → max-w-content
-    [] NewestRelease.tsx: max-w-[1440px] → max-w-content (bug fix)
-    [] ProductSpotlight2.tsx: max-w-[1440px] → max-w-content (bug fix)
-    [] ProductSpotlight3.tsx: max-w-[1440px] → max-w-content (bug fix)
-    [] ProductSpotlight1.tsx: add max-w-content mx-auto to inner wrapper div
-[] Verify
-    [] All sections align to same 1280px content width
-    [] Spotlights no longer exceed 1280px (were 1440px)
-    [] No horizontal overflow on any viewport
+✔ Layout @done(26-03-25 09:30)
+    ✔ Shelf.tsx: max-w-[1280px] → max-w-content @done(26-03-25 09:30)
+    ✔ Featured.tsx: max-w-[1280px] → max-w-content @done(26-03-25 09:30)
+    ✔ IemsGallery.tsx: max-w-[1280px] → max-w-content @done(26-03-25 09:30)
+    ✔ Dacs.tsx: max-w-[1280px] → max-w-content @done(26-03-25 09:30)
+    ✔ Accessories.tsx: max-w-[1280px] → max-w-content @done(26-03-25 09:30)
+    ✔ NewestRelease.tsx: max-w-[1440px] → max-w-content (bug fix) @done(26-03-25 09:30)
+    ✔ ProductSpotlight2.tsx: max-w-[1440px] → max-w-content (bug fix) @done(26-03-25 09:30)
+    ✔ ProductSpotlight3.tsx: max-w-[1440px] → max-w-content (bug fix) @done(26-03-25 09:30)
+    ✔ ProductSpotlight1.tsx: add max-w-content mx-auto to inner wrapper div @done(26-03-25 09:30)
+✔ Verify @done(26-03-25 09:30)
+    ✔ All sections align to same 1280px content width @done(26-03-25 09:30)
+    ✔ Spotlights no longer exceed 1280px (were 1440px) @done(26-03-25 09:30)
+    ✔ No horizontal overflow on any viewport @done(26-03-25 09:30)
 
 --------------------------------------------------------------------------------
 

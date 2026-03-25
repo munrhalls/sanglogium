@@ -28,10 +28,7 @@ const featuredBreakpointMap = {
 };
 
 export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
-  <article
-    className="card-base group flex h-full flex-col gap-4 transition-all duration-300 hover:shadow-cardHover hover:-translate-y-1"
-    style={{ boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)' }}
-  >
+  <article className="card-product group flex h-full flex-col gap-4">
     <figure className="aspect-[3/2] relative flex w-full items-center justify-center overflow-hidden bg-surface-highlight p-6">
       <span className="absolute left-4 top-4 text-small font-bold uppercase tracking-editorial text-brand-900 z-10">
         {product.brand}
@@ -72,7 +69,7 @@ export default async function Featured() {
   if (!finalFeatured || finalFeatured?.length === 0) return null;
 
   return (
-    <article className="w-full px-4 md:px-8 relative bg-brand-900">
+    <article className="w-full relative bg-brand-900">
       <div aria-hidden="true" className="absolute inset-0 z-0 pointer-events-none">
         <div className="absolute -top-[10%] -right-[10%] w-[120%] h-[120%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-5" />
         <div className="absolute top-[5%] -left-[5%] w-[60%] h-[60%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-10" />

@@ -8,7 +8,7 @@ export default function IemCard({ product, idx }: { product: IemProduct; idx: nu
     if (!product) return null;
 
     return (
-        <div className="group relative flex flex-col gap-4 p-4 rounded-none border border-transparent  transition-all">
+        <article className="card-product group flex h-full flex-col gap-4">
             <div className="relative flex justify-center items-center aspect-square w-full overflow-hidden rounded-none bg-brand-100 pt-12 pb-4 cursor-pointer">
                 <Image
                     src={urlFor(product.image).width(375).auto('format').quality(75).url()}
