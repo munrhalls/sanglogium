@@ -7,7 +7,7 @@ export default function AccessoryCard({ item, idx }: { item: AccessoryItem; idx:
   if (!item) return null;
 
   return (
-    <article className="group flex h-full flex-col bg-transparent p-6 transition-all duration-300">
+    <article className="group flex h-full flex-col bg-transparent p-6 transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
 
       <figure className="aspect-[3/2] rounded-none relative flex w-full items-center justify-center overflow-hidden bg-brand-300 p-6 md:pt-12 md:pb-4 md:px-4 mb-4">
         <span className="absolute left-4 top-4 text-small font-bold uppercase tracking-editorial text-brand-900">

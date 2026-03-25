@@ -53,18 +53,36 @@ Iems
 
 Dacs
     Dacs - container and background
-    ☐ structure
-        ☐ should change Dacs's shelf container in page.tsx to receive fullBleed props
-        ☐ inside Dacs - top-lvl wrapper should be w-full (article)
-        ☐ secondary wrapper should exist
-    ☐ layout
-        ☐ centered horizontally by top level container, should be w-max-1280px
-        ☐ top level container should apply (padding) vertical top and bottom spacing with value from the spacing system present in global tailwind config
-    ☐ style
-        ☐ background decoration - replicate the same background decoration that is present in the product spotlight 1 in the same way - albeit slightly adjusted in proportionate ways to fulfill the same look on the Dacs carousel track dimensions
+    ✔ structure @done(26-03-25 07:45)
+        ✔ should change Dacs's shelf container in page.tsx to receive fullBleed props @done(26-03-25 07:45)
+        ✔ inside Dacs - top-lvl wrapper should be w-full (article) @done(26-03-25 07:45)
+        ✔ secondary wrapper should exist @done(26-03-25 07:45)
+    ✔ layout @done(26-03-25 07:47)
+        ✔ centered horizontally by top level container, should be w-max-1280px @done(26-03-25 07:47)
+        ✔ top level container should apply (padding) vertical top and bottom spacing with value from the spacing system present in global tailwind config @done(26-03-25 07:47)
+    ✔ style @done(26-03-25 07:47)
+        ✔ background decoration - replicate the same background decoration that is present in the product spotlight 1 in the same way - albeit slightly adjusted in proportionate ways to fulfill the same look on the Dacs carousel track dimensions @done(26-03-25 07:47)
     Dacs card - subtle shadow for 3d effect
+    ✔ Style @done(26-03-25 07:48)
+        ✔ Action: Add shadow and Ensure the shadow has a low opacity but a wide blur spread (e.g., rgba(0,0,0,0.05) with a 20px blur) to keep the elevation looking like natural ambient light rather than a harsh drop shadow. @done(26-03-25 07:48)
+
+
+Accessories
+    Accessories - container and background
+    ✔ structure @done(26-03-25 07:50)
+        ✔ should change Accessories's shelf container in page.tsx to receive fullBleed props @done(26-03-25 07:50)
+        ✔ inside Accessories - top-lvl wrapper should be w-full (article) @done(26-03-25 07:50)
+        ✔ secondary wrapper should exist @done(26-03-25 07:50)
+    ✔ layout @done(26-03-25 07:51)
+        ✔ centered horizontally by top level container, should be w-max-1280px @done(26-03-25 07:51)
+        ✔ top level container should apply (padding) vertical top and bottom spacing with value from the spacing system present in global tailwind config @done(26-03-25 07:51)
+    ✔ style @done(26-03-25 07:53)
+        ✔ background decoration - replicate the same background decoration that is present in the product spotlight 1 in the same way - albeit slightly adjusted in proportionate ways to fulfill the same look on the Accessories carousel track dimensions @done(26-03-25 07:53)
+    Accessories card - subtle shadow for 3d effect
     ☐ Style
         ☐ Action: Add shadow and Ensure the shadow has a low opacity but a wide blur spread (e.g., rgba(0,0,0,0.05) with a 20px blur) to keep the elevation looking like natural ambient light rather than a harsh drop shadow.
+
+
 
 [] on small landscape view, image on the right, title + price + cart btn on the right, with new fitting layout, carousel nav at the bottom of image, image smaller to account for that
     [] structure

@@ -40,7 +40,7 @@ export default function HomePage() {
         <Dacs />
       </Shelf>
 
-      <Shelf>
+      <Shelf fullBleed>
         <Accessories />
       </Shelf>
     </div>
