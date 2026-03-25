@@ -79,7 +79,7 @@ export default async function Featured() {
         <div className="absolute bottom-[2.5%] right-[2.5%] w-[30%] h-[30%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-20" />
       </div>
       <div className="relative z-10">
-        <div className="mx-auto max-w-[1280px] py-20">
+        <div className="mx-auto max-w-content">
           <Carousel
             itemsCount={finalFeatured.length}
             breakpointMap={featuredBreakpointMap}

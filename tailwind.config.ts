@@ -61,6 +61,7 @@ const surface = {
   elevated: secondary[800],
   subtle: brand[800],
   highlight: brand[200],
+  productImage: brand[200],
 } as const;
 
 const textTokens = {
@@ -189,6 +190,18 @@ const uiComponentsPlugin = plugin(function ({ addComponents, theme }) {
       borderRadius: theme("borderRadius.lg") as string,
       boxShadow: theme("boxShadow.card") as string,
       border: `1px solid ${theme("colors.border.secondary")}`,
+    },
+    ".card-product": {
+      backgroundColor: "transparent",
+      padding: theme("spacing.6") as string,
+      borderRadius: theme("borderRadius.lg") as string,
+      boxShadow: theme("boxShadow.card") as string,
+      border: `1px solid ${theme("colors.border.secondary")}`,
+      transition: "box-shadow 0.3s ease, transform 0.3s ease",
+      "&:hover": {
+        boxShadow: theme("boxShadow.cardHover") as string,
+        transform: "translateY(-2px)",
+      },
     },
     ".input-base": {
       backgroundColor: theme("colors.surface.elevated") as string,
@@ -347,6 +360,19 @@ const uiComponentsPlugin = plugin(function ({ addComponents, theme }) {
       fontWeight: theme("fontWeight.regular") as string,
       color: theme("colors.text.body") as string,
     },
+    ".section-header-anchor": {
+      display: "flex",
+      alignItems: "center",
+      gap: theme("spacing.3") as string,
+      "&::before": {
+        content: '""',
+        display: "block",
+        width: "32px",
+        height: "1px",
+        backgroundColor: theme("colors.brand.400") as string,
+        flexShrink: "0",
+      },
+    },
   });
 });
 
@@ -450,6 +476,9 @@ export default {
         surface,
         text: textTokens,
         border,
+      },
+      maxWidth: {
+        content: "1280px",
       },
       boxShadow: {
         card: '0 4px 20px rgba(0, 0, 0, 0.03)',

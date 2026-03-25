@@ -79,8 +79,8 @@ Accessories
     ✔ style @done(26-03-25 07:53)
         ✔ background decoration - replicate the same background decoration that is present in the product spotlight 1 in the same way - albeit slightly adjusted in proportionate ways to fulfill the same look on the Accessories carousel track dimensions @done(26-03-25 07:53)
     Accessories card - subtle shadow for 3d effect
-    ☐ Style
-        ☐ Action: Add shadow and Ensure the shadow has a low opacity but a wide blur spread (e.g., rgba(0,0,0,0.05) with a 20px blur) to keep the elevation looking like natural ambient light rather than a harsh drop shadow.
+    ✔ Style @done(26-03-25 07:53)
+        ✔ Action: Add shadow and Ensure the shadow has a low opacity but a wide blur spread (e.g., rgba(0,0,0,0.05) with a 20px blur) to keep the elevation looking like natural ambient light rather than a harsh drop shadow. @done(26-03-25 07:53)
 
 
 

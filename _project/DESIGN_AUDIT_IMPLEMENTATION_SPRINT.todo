@@ -1,0 +1,798 @@
+DESIGN AUDIT IMPLEMENTATION SPRINT
+====================================
+Source: Professional design audit of homepage (2026-03-25)
+Goal: Close gaps between current state and professional design standard.
+Sequence: Foundation tokens → Section layout → Card contract → Visual rhythm → Interactivity → Accessibility
+
+Each scope contract is layered: Structure → Layout → Style → Interactivity (where applicable).
+Each scope contract has: Deliverable State, In Scope, Out of Scope, Forbidden.
+
+
+================================================================================
+PHASE 1 — FOUNDATION TOKENS (tailwind.config.ts)
+================================================================================
+Upstream changes that all subsequent phases depend on.
+NO visual change to any component yet. Only config-level additions.
+--------------------------------------------------------------------------------
+
+SCOPE 1.1 — Layout content-width token
+Files: tailwind.config.ts
+Current state: max-w-[1280px] hardcoded in 6+ components (Featured, IemsGallery, Dacs, Accessories, Shelf, NewestRelease uses 1440px)
+---
+Deliverable State:
+  - theme.extend.maxWidth has "content": "1280px" token
+  - No component files changed yet (that is Phase 2)
+In Scope:
+  - Add maxWidth.content to tailwind.config.ts theme.extend
+Out of Scope:
+  - Changing any component files
+  - Any other tailwind token changes
+Forbidden:
+  - Modifying existing maxWidth values if any exist
+  - Changing any color, spacing, or typography tokens
+---
+[] Structure
+    [] Add maxWidth key to theme.extend in tailwind.config.ts
+    [] Add "content": "1280px" entry
+[] Verify
+    [] Confirm build succeeds with new token
+    [] Confirm no regressions (existing classes unaffected)
+
+--------------------------------------------------------------------------------
+
+SCOPE 1.2 — Product card image background token
+Files: tailwind.config.ts
+Current state: Card image backgrounds use 5 different values:
+  - FeaturedCard: bg-surface-highlight (= brand-200 = #FAEEE6)
+  - DacCard: bg-brand-300 (#F8E6D9)
+  - IemCard: bg-brand-100 (#FDF9F7)
+  - AccessoryCard: bg-brand-300 (#F8E6D9)
+  - Spotlights: bg-brand-300 (#F8E6D9)
+---
+Deliverable State:
+  - surface object in tailwind.config.ts has new "productImage": brand[200] token
+  - This is the single source of truth for all product card image backgrounds
+  - No component files changed yet (that is Phase 3)
+In Scope:
+  - Add surface.productImage to the surface const in tailwind.config.ts
+  - Value: brand[200] (#FAEEE6) — the warmest neutral that works against dark theme
+Out of Scope:
+  - Changing any component files
+  - Modifying existing surface tokens
+Forbidden:
+  - Altering surface.card, surface.elevated, surface.subtle, surface.highlight values
+  - Changing any component's bg class yet
+---
+[] Structure
+    [] Add "productImage": brand[200] to the surface const object
+[] Verify
+    [] Confirm build succeeds
+    [] Confirm bg-surface-productImage class is available
+
+--------------------------------------------------------------------------------
+
+SCOPE 1.3 — Card product component class
+Files: tailwind.config.ts (uiComponentsPlugin)
+Current state: Only .card-base exists. Product cards use ad-hoc combinations:
+  - FeaturedCard: card-base + inline boxShadow style
+  - DacCard: bg-transparent + inline shadow-[...] + no card-base
+  - IemCard: no card-base, no shadow, rounded-none
+  - AccessoryCard: bg-transparent + inline shadow-[...] + no card-base
+---
+Deliverable State:
+  - New .card-product class in uiComponentsPlugin with:
+    - backgroundColor: transparent
+    - padding: spacing.6
+    - borderRadius: borderRadius.lg
+    - boxShadow: boxShadow.card (the existing '0 4px 20px rgba(0, 0, 0, 0.03)')
+    - border: 1px solid border.secondary
+    - transition on box-shadow and transform
+  - No component files changed yet (that is Phase 3)
+In Scope:
+  - Add .card-product to uiComponentsPlugin addComponents call
+  - Include hover state: boxShadow → cardHover, translateY → -2px
+Out of Scope:
+  - Changing .card-base definition
+  - Changing any component files
+Forbidden:
+  - Modifying .card-base
+  - Adding any color/bg to .card-product (bg stays transparent; image bg is per-component)
+---
+[] Structure
+    [] Add .card-product class definition after .card-base in uiComponentsPlugin
+    [] Include base state: transparent bg, padding, border-radius, shadow, border
+    [] Include &:hover state: cardHover shadow, -2px translateY
+[] Verify
+    [] Confirm build succeeds
+    [] Confirm .card-product class is generated in output CSS
+
+--------------------------------------------------------------------------------
+
+SCOPE 1.4 — Section header anchor decoration pattern
+Files: tailwind.config.ts (uiComponentsPlugin)
+Current state: Section headers have inconsistent patterns:
+  - Featured: type-section-caption + type-section-hed (inline in Featured.tsx, not using FeaturedHeader)
+  - DacsHeader: type-overline + type-section-hed
+  - IemsGalleryHeader: type-section-caption + type-section-hed
+  - AccessoriesHeader: type-overline + type-section-hed
+  - CategorySection sub-header: text-small + manual h-px w-8 bg-brand-400 line
+Two different caption classes used (type-section-caption vs type-overline).
+Only CategorySection has the decorative line anchor.
+---
+Deliverable State:
+  - New .section-header-anchor utility class:
+    - A pseudo-element ::before that renders a 32px × 1px line in brand-400
+    - Flex row with gap
+  - This is a reusable pattern. No component files changed yet.
+In Scope:
+  - Add .section-header-anchor to uiComponentsPlugin
+Out of Scope:
+  - Changing any header component files (that is Phase 4)
+  - Changing type-section-caption or type-overline definitions
+Forbidden:
+  - Modifying existing typography utility definitions
+  - Adding this to globals.css (must be in the plugin)
+---
+[] Structure
+    [] Add .section-header-anchor to uiComponentsPlugin
+    [] Uses display:flex, alignItems:center, gap, with ::before pseudo for the line
+[] Verify
+    [] Confirm build succeeds
+
+
+================================================================================
+PHASE 2 — SECTION LAYOUT NORMALIZATION
+================================================================================
+Fix Shelf as single owner of section spacing. Fix max-width inconsistencies.
+Components adopt max-w-content token. Remove double-padding stacking.
+--------------------------------------------------------------------------------
+
+SCOPE 2.1 — Shelf becomes sole vertical rhythm owner
+Files: Shelf.tsx, page.tsx
+Current state:
+  - Shelf.tsx applies py-20 AND bg-brand-700 to every section
+  - Inner components ALSO apply their own py-16 or py-20 (Featured: py-20, Dacs/IemsGallery/Accessories: py-16)
+  - This creates 80px + 64px = 144px or 80px + 80px = 160px double-stacked padding
+  - Shelf always applies bg-brand-700 even when children have their own bg (brand-900, brand-700)
+---
+Deliverable State:
+  - Shelf.tsx: removes bg-brand-700 (sections own their own background)
+  - Shelf.tsx: keeps py-20 as sole vertical rhythm
+  - All inner component wrappers: remove their own py-* classes
+  - page.tsx: no Shelf wrapper on Hero (Hero owns its own height)
+In Scope:
+  - Shelf.tsx: remove bg-brand-700 from the <section>
+  - Featured.tsx inner wrapper: remove py-20 from mx-auto max-w-[1280px] div
+  - IemsGallery.tsx inner wrapper: remove py-16 from mx-auto max-w-[1280px] div
+  - Dacs.tsx inner wrapper: remove py-16 from mx-auto max-w-[1280px] div
+  - Accessories.tsx inner wrapper: remove py-16 from mx-auto max-w-[1280px] div
+  - NewestRelease.tsx: remove independent padding if present
+Out of Scope:
+  - Changing any card components
+  - Changing carousel controls
+  - Changing any section's internal grid/flex layout
+Forbidden:
+  - Adding new py-* values to inner wrappers
+  - Changing Shelf's py-20 value (that is the system's vertical rhythm token)
+  - Removing Shelf wrappers from page.tsx
+---
+[] Structure
+    [] Shelf.tsx: remove bg-brand-700, keep py-20
+    [] Featured.tsx: remove py-20 from inner max-w wrapper
+    [] IemsGallery.tsx: remove py-16 from inner max-w wrapper
+    [] Dacs.tsx: remove py-16 from inner max-w wrapper
+    [] Accessories.tsx: remove py-16 from inner max-w wrapper (inside space-y-12 wrapper)
+    [] NewestRelease.tsx: verify no competing py-* exists on inner wrappers
+[] Verify
+    [] Each section has exactly ONE layer of vertical padding (from Shelf's py-20)
+    [] No visual double-gap between sections
+    [] Each section's own background color is visible (not masked by Shelf's bg)
+
+--------------------------------------------------------------------------------
+
+SCOPE 2.2 — Adopt max-w-content token across all components
+Files: Featured.tsx, IemsGallery.tsx, Dacs.tsx, Accessories.tsx, NewestRelease.tsx, Shelf.tsx
+Current state:
+  - Shelf.tsx: max-w-[1280px]
+  - Featured.tsx: max-w-[1280px]
+  - IemsGallery.tsx: max-w-[1280px]
+  - Dacs.tsx: max-w-[1280px]
+  - Accessories.tsx: max-w-[1280px]
+  - NewestRelease.tsx: max-w-[1440px] ← BUG: inconsistent
+  - ProductSpotlight1.tsx: no max-w (uses px-4 md:px-8 only)
+  - ProductSpotlight2.tsx: max-w-[1440px] ← BUG: inconsistent
+  - ProductSpotlight3.tsx: max-w-[1440px] ← BUG: inconsistent
+---
+Deliverable State:
+  - Every hardcoded max-w-[1280px] replaced with max-w-content
+  - Every max-w-[1440px] replaced with max-w-content (bug fix)
+  - ProductSpotlight1.tsx: add max-w-content to its inner wrapper
+  - Shelf.tsx non-fullBleed: uses max-w-content
+In Scope:
+  - String replacement of max-w-[1280px] → max-w-content in all listed files
+  - String replacement of max-w-[1440px] → max-w-content in NewestRelease, Spotlight2, Spotlight3
+  - Add mx-auto max-w-content to ProductSpotlight1's inner px-4 wrapper
+Out of Scope:
+  - Changing any layout structure (grid, flex, gap)
+  - Changing horizontal padding values
+Forbidden:
+  - Using any value other than max-w-content
+  - Removing mx-auto from any wrapper that has it
+---
+[] Layout
+    [] Shelf.tsx: max-w-[1280px] → max-w-content
+    [] Featured.tsx: max-w-[1280px] → max-w-content
+    [] IemsGallery.tsx: max-w-[1280px] → max-w-content
+    [] Dacs.tsx: max-w-[1280px] → max-w-content
+    [] Accessories.tsx: max-w-[1280px] → max-w-content
+    [] NewestRelease.tsx: max-w-[1440px] → max-w-content (bug fix)
+    [] ProductSpotlight2.tsx: max-w-[1440px] → max-w-content (bug fix)
+    [] ProductSpotlight3.tsx: max-w-[1440px] → max-w-content (bug fix)
+    [] ProductSpotlight1.tsx: add max-w-content mx-auto to inner wrapper div
+[] Verify
+    [] All sections align to same 1280px content width
+    [] Spotlights no longer exceed 1280px (were 1440px)
+    [] No horizontal overflow on any viewport
+
+--------------------------------------------------------------------------------
+
+SCOPE 2.3 — Horizontal padding ownership
+Files: Shelf.tsx, Featured.tsx, ProductSpotlight1/2/3.tsx, NewestRelease.tsx, IemsGallery.tsx, Dacs.tsx, Accessories.tsx
+Current state:
+  - Shelf.tsx: no horizontal padding
+  - Featured.tsx: px-4 md:px-8 on article
+  - ProductSpotlight1.tsx: px-4 md:px-8 on inner div
+  - ProductSpotlight2.tsx: px-4 md:px-8 on inner div
+  - ProductSpotlight3.tsx: px-4 md:px-8 on inner div
+  - NewestRelease.tsx: px-4 md:px-8 on inner div
+  - IemsGallery.tsx: no px (relies on inner grid gap)
+  - Dacs.tsx: px-4 md:px-8 on nested div inside max-w wrapper
+  - Accessories.tsx: no px (relies on inner card padding)
+---
+Deliverable State:
+  - Shelf.tsx: non-fullBleed div gets px-4 md:px-8
+  - Shelf.tsx: fullBleed div gets px-4 md:px-8 (content still needs gutter)
+  - All inner component px-4 md:px-8 REMOVED (Shelf owns it)
+In Scope:
+  - Add px-4 md:px-8 to Shelf's inner <div>
+  - Remove px-4 md:px-8 from: Featured article, Spotlight1/2/3 inner divs, NewestRelease inner div, Dacs nested div
+  - Verify IemsGallery and Accessories get correct padding via Shelf
+Out of Scope:
+  - Changing any padding INSIDE cards or carousel tracks
+  - Changing vertical padding
+Forbidden:
+  - Adding px-* to any inner component wrapper after this scope
+  - Removing padding entirely (gutters must exist at mobile)
+---
+[] Layout
+    [] Shelf.tsx: add px-4 md:px-8 to inner <div>
+    [] Featured.tsx: remove px-4 md:px-8 from <article>
+    [] ProductSpotlight1.tsx: remove px-4 md:px-8 from inner div
+    [] ProductSpotlight2.tsx: remove px-4 md:px-8 from inner div
+    [] ProductSpotlight3.tsx: remove px-4 md:px-8 from inner div
+    [] NewestRelease.tsx: remove px-4 md:px-8 from inner div
+    [] Dacs.tsx: remove px-4 md:px-8 from nested div
+[] Verify
+    [] All sections have uniform left/right gutters at mobile (16px) and md+ (32px)
+    [] No section has double horizontal padding
+    [] Full-bleed backgrounds still extend edge-to-edge
+
+
+================================================================================
+PHASE 3 — CARD CONTRACT UNIFICATION
+================================================================================
+All product cards adopt the shared .card-product class and surface.productImage token.
+Typography and icon weights standardized.
+--------------------------------------------------------------------------------
+
+SCOPE 3.1 — Adopt .card-product class on all product cards
+Files: FeaturedCard (Featured.tsx), DacCard.tsx, IemCard.tsx, AccessoryCard.tsx
+Current state (card wrapper classes):
+  - FeaturedCard: "card-base group flex h-full flex-col gap-4 transition-all duration-300 hover:shadow-cardHover hover:-translate-y-1" + inline style boxShadow
+  - DacCard: "group flex h-full flex-col bg-transparent p-6 transition-all duration-300 gap-3 shadow-[0_4px_20px_rgba(0,0,0,0.05)]"
+  - IemCard: "group relative flex flex-col gap-4 p-4 rounded-none border border-transparent transition-all"
+  - AccessoryCard: "group flex h-full flex-col bg-transparent p-6 transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.05)]"
+---
+Deliverable State:
+  - All four cards use "card-product group flex h-full flex-col gap-4" as their base
+  - ALL inline boxShadow styles removed
+  - ALL ad-hoc shadow-[...] utility classes removed
+  - ALL ad-hoc transition/hover classes on card wrapper removed (card-product owns hover)
+In Scope:
+  - Replace card wrapper className on all 4 cards
+  - Remove style={{ boxShadow: ... }} from FeaturedCard
+Out of Scope:
+  - Changing card inner structure (figure, title zone, price zone)
+  - Changing image sizing or aspect ratios (that is Scope 3.3)
+Forbidden:
+  - Using card-base on product cards (card-base is for non-product contexts)
+  - Adding any inline boxShadow styles
+  - Adding any ad-hoc shadow-[...] utilities on card wrappers
+---
+[] Structure
+    [] FeaturedCard: replace wrapper classes with "card-product group flex h-full flex-col gap-4"
+    [] FeaturedCard: remove style={{ boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)' }}
+    [] DacCard: replace wrapper classes with "card-product group flex h-full flex-col gap-4"
+    [] IemCard: replace wrapper classes with "card-product group flex h-full flex-col gap-4"
+    [] AccessoryCard: replace wrapper classes with "card-product group flex h-full flex-col gap-4"
+[] Verify
+    [] All 4 card types have identical wrapper class pattern
+    [] Hover state (shadow + lift) is uniform across all cards
+    [] No inline style attributes on any card wrapper
+
+--------------------------------------------------------------------------------
+
+SCOPE 3.2 — Adopt bg-surface-productImage on all card image containers
+Files: FeaturedCard (Featured.tsx), DacCard.tsx, IemCard.tsx, AccessoryCard.tsx
+Current state (image container bg):
+  - FeaturedCard: bg-surface-highlight
+  - DacCard: bg-brand-300
+  - IemCard: bg-brand-100
+  - AccessoryCard: bg-brand-300
+---
+Deliverable State:
+  - All four cards use bg-surface-productImage on their image container
+In Scope:
+  - Replace bg-surface-highlight → bg-surface-productImage on FeaturedCard figure
+  - Replace bg-brand-300 → bg-surface-productImage on DacCard figure
+  - Replace bg-brand-100 → bg-surface-productImage on IemCard image div
+  - Replace bg-brand-300 → bg-surface-productImage on AccessoryCard figure
+Out of Scope:
+  - Changing image sizing, aspect ratio, or object-fit
+  - Changing product spotlight image containers (those are editorial, not cards)
+Forbidden:
+  - Using any bg value other than bg-surface-productImage for card image containers
+  - Changing spotlight image container backgrounds (bg-brand-300 is intentional for editorial panels)
+---
+[] Style
+    [] FeaturedCard: bg-surface-highlight → bg-surface-productImage
+    [] DacCard: bg-brand-300 → bg-surface-productImage
+    [] IemCard: bg-brand-100 → bg-surface-productImage
+    [] AccessoryCard: bg-brand-300 → bg-surface-productImage
+[] Verify
+    [] All 4 card types have identical warm-cream image background
+    [] Product images remain legible with mix-blend-multiply against new bg
+
+--------------------------------------------------------------------------------
+
+SCOPE 3.3 — Standardize card image aspect ratios
+Files: FeaturedCard (Featured.tsx), DacCard.tsx, IemCard.tsx, AccessoryCard.tsx
+Current state:
+  - FeaturedCard: aspect-[3/2]
+  - DacCard: aspect-[16/9]
+  - IemCard: aspect-square
+  - AccessoryCard: aspect-[3/2]
+---
+Deliverable State:
+  - Two permitted aspect ratios only:
+    - aspect-[4/3] for carousel gallery cards (Featured, Dacs, Accessories)
+    - aspect-square for grid gallery cards (IEMs)
+  - DacCard's aspect-[16/9] normalized to aspect-[4/3] (too wide, wastes vertical space)
+  - FeaturedCard's aspect-[3/2] normalized to aspect-[4/3] (minor tightening)
+  - AccessoryCard's aspect-[3/2] normalized to aspect-[4/3]
+In Scope:
+  - Change aspect ratio classes on image container elements
+Out of Scope:
+  - Changing image width/height attributes
+  - Changing image src URLs or quality
+  - Changing object-fit or mix-blend-multiply
+Forbidden:
+  - Introducing any aspect ratio other than aspect-[4/3] or aspect-square
+  - Changing IemCard from aspect-square (grid layout depends on it)
+---
+[] Style
+    [] FeaturedCard: aspect-[3/2] → aspect-[4/3]
+    [] DacCard: aspect-[16/9] → aspect-[4/3]
+    [] AccessoryCard: aspect-[3/2] → aspect-[4/3]
+    [] IemCard: keep aspect-square (no change)
+[] Verify
+    [] All carousel cards have uniform 4:3 image containers
+    [] IEM grid cards remain square
+    [] No image clipping or overflow
+
+--------------------------------------------------------------------------------
+
+SCOPE 3.4 — Standardize product name typography weight
+Files: FeaturedCard (Featured.tsx), DacCard.tsx, IemCard.tsx, AccessoryCard.tsx
+Current state:
+  - FeaturedCard: type-body font-thin
+  - DacCard: type-body font-bold
+  - IemCard: type-body font-bold
+  - AccessoryCard: type-body font-medium
+---
+Deliverable State:
+  - All four cards use "type-body font-medium" for product name h3
+In Scope:
+  - Normalize font weight class on product name h3 in all 4 cards
+Out of Scope:
+  - Changing type-body itself
+  - Changing line-clamp behavior
+  - Changing any other text element in cards
+Forbidden:
+  - Using font-thin (too light on dark bg, fails contrast)
+  - Using font-bold (competes with price/brand label hierarchy)
+---
+[] Style
+    [] FeaturedCard h3: "type-body font-thin" → "type-body font-medium"
+    [] DacCard p (product name): "type-body font-bold" → "type-body font-medium"
+    [] IemCard h3: "type-body font-bold" → "type-body font-medium"
+    [] AccessoryCard h3: keep "type-body font-medium" (already correct)
+[] Verify
+    [] All product names have uniform visual weight
+    [] Product name sits below brand label in visual hierarchy
+
+--------------------------------------------------------------------------------
+
+SCOPE 3.5 — Standardize ShoppingCart icon weight
+Files: FeaturedCard (Featured.tsx), DacCard.tsx, IemCard.tsx, AccessoryCard.tsx
+Current state:
+  - FeaturedCard: weight="thin"
+  - DacCard: weight="bold"
+  - IemCard: no weight prop (default = "regular")
+  - AccessoryCard: weight="bold"
+---
+Deliverable State:
+  - All four cards use ShoppingCart with weight="regular"
+In Scope:
+  - Set weight="regular" on ShoppingCart in all 4 cards
+  - Remove any inline style={{ marginBottom: "2px" }} hacks (IemCard)
+Out of Scope:
+  - Changing icon size
+  - Changing btn-cart class definition
+  - Changing button text
+Forbidden:
+  - Using weight="thin" (too light, poor affordance)
+  - Using weight="bold" (too heavy, competes with text)
+---
+[] Style
+    [] FeaturedCard: weight="thin" → weight="regular"
+    [] DacCard: weight="bold" → weight="regular"
+    [] IemCard: add weight="regular", remove style={{ marginBottom: "2px" }}
+    [] AccessoryCard: weight="bold" → weight="regular"
+[] Verify
+    [] All cart icons have uniform stroke weight
+    [] Icons align with button text baseline
+
+--------------------------------------------------------------------------------
+
+SCOPE 3.6 — Standardize DacCard title container
+Files: DacCard.tsx
+Current state: Hard-coded h-[3rem] on title container
+---
+Deliverable State:
+  - DacCard title zone uses min-h-[3rem] + line-clamp-2 (not fixed h-[3rem])
+  - Matches AccessoryCard pattern (flex-col with line-clamp)
+In Scope:
+  - DacCard: h-[3rem] → min-h-[3rem], add line-clamp-2 to product name element
+Out of Scope:
+  - Changing any other card's title zone
+Forbidden:
+  - Using fixed height h-[] on any text container
+---
+[] Layout
+    [] DacCard: change h-[3rem] to min-h-[3rem] on title wrapper div
+    [] DacCard: add line-clamp-2 to product name <p> element
+[] Verify
+    [] Long product names truncate cleanly
+    [] Short product names don't create excess whitespace
+
+
+================================================================================
+PHASE 4 — VISUAL RHYTHM & SECTION DIFFERENTIATION
+================================================================================
+Section backgrounds, header patterns, spotlight layout alternation.
+--------------------------------------------------------------------------------
+
+SCOPE 4.1 — Section background ABAB rhythm
+Files: Featured.tsx, IemsGallery.tsx, Dacs.tsx, Accessories.tsx, ProductSpotlight1/2/3.tsx, NewestRelease.tsx
+Current state (bg on article/wrapper):
+  - Featured: bg-brand-900
+  - Spotlight1: bg-brand-700
+  - Spotlight2: bg-brand-700
+  - Spotlight3: bg-brand-700
+  - IemsGallery: bg-brand-900
+  - NewestRelease: bg-brand-700
+  - Dacs: bg-brand-900
+  - Accessories: bg-brand-700
+---
+Deliverable State:
+  Strict alternating pattern reading top-to-bottom:
+  - Hero: (owns its own bg — no change)
+  - Featured: bg-brand-900 (dark) — NO CHANGE
+  - Spotlight1/2/3 (single Shelf): bg-brand-700 (mid) — NO CHANGE (already correct)
+  - IemsGallery: bg-brand-900 (dark) — NO CHANGE
+  - NewestRelease: bg-brand-800 (deep) — CHANGE from bg-brand-700
+  - Dacs: bg-brand-900 (dark) — NO CHANGE
+  - Accessories: bg-brand-700 (mid) — NO CHANGE
+In Scope:
+  - NewestRelease.tsx: bg-brand-700 → bg-brand-800 on <article>
+Out of Scope:
+  - Changing any other section's background
+  - Changing inner panel backgrounds (spotlight promo panels stay bg-brand-800)
+Forbidden:
+  - Making two adjacent sections the same background shade
+  - Using bg-brand-900 on NewestRelease (would match adjacent Dacs)
+---
+[] Style
+    [] NewestRelease.tsx: article bg-brand-700 → bg-brand-800
+[] Verify
+    [] Scrolling top-to-bottom, no two adjacent sections share the same bg shade
+    [] NewestRelease is visually distinct from surrounding sections
+
+--------------------------------------------------------------------------------
+
+SCOPE 4.2 — Spotlight layout alternation
+Files: ProductSpotlight2.tsx
+Current state:
+  - Spotlight1: image-left, promo-right (grid default order)
+  - Spotlight2: image-right, promo-left (uses order-1/order-2 swap) ← ALREADY ALTERNATED
+  - Spotlight3: image-left, promo-right (grid default order)
+---
+Deliverable State:
+  - Spotlight2 already alternates. No change needed.
+  - VERIFY current alternation is correct and no regression.
+In Scope:
+  - Read-only verification that alternation pattern is: L-R, R-L, L-R
+Out of Scope:
+  - Changing any spotlight structure
+Forbidden:
+  - Changing Spotlight2's order classes
+---
+[] Verify
+    [] Spotlight1: image-left (no order classes) ✓
+    [] Spotlight2: image-right (order-1 lg:order-2 on image, order-2 lg:order-1 on promo) ✓
+    [] Spotlight3: image-left (no order classes) ✓
+
+--------------------------------------------------------------------------------
+
+SCOPE 4.3 — Section header anchor pattern adoption
+Files: FeaturedHeader.tsx (or inline in Featured.tsx), DacsHeader.tsx, IemsGalleryHeader.tsx, AccessoriesHeader.tsx
+Current state:
+  - Featured (inline in Featured.tsx): type-section-caption + type-section-hed, no decorative line
+  - FeaturedHeader.tsx: type-overline + type-section-hed, no decorative line (NOTE: this file exists but Featured.tsx inlines its own header — verify which is used)
+  - DacsHeader: type-overline + type-section-hed, no decorative line
+  - IemsGalleryHeader: type-section-caption + type-section-hed, no decorative line
+  - AccessoriesHeader: type-overline + type-section-hed, no decorative line
+  - CategorySection sub-header: manual h-px w-8 bg-brand-400 line (the only one with anchor)
+---
+Deliverable State:
+  - All section headers use type-overline for caption (standardized)
+  - All section headers include the decorative line anchor via the .section-header-anchor class created in 1.4
+  - CategorySection sub-header adopts .section-header-anchor instead of manual markup
+In Scope:
+  - Unify caption class to type-overline across all headers
+  - Add section-header-anchor class to caption <span> in all headers
+  - Featured.tsx inline header: extract to use FeaturedHeader component, OR standardize inline
+  - CategorySection: replace manual h-px w-8 bg-brand-400 markup with section-header-anchor class
+Out of Scope:
+  - Changing heading text content
+  - Changing type-section-hed class
+  - Changing section header structure beyond caption standardization
+Forbidden:
+  - Using type-section-caption (inconsistent with majority pattern — type-overline is the standard)
+  - Adding decorative elements beyond the single line anchor
+---
+[] Structure
+    [] Determine if Featured.tsx uses FeaturedHeader.tsx or inlines its own header
+    [] If inline: refactor to use FeaturedHeader.tsx
+[] Style
+    [] FeaturedHeader.tsx: ensure caption uses type-overline + section-header-anchor
+    [] DacsHeader.tsx: add section-header-anchor to caption span
+    [] IemsGalleryHeader.tsx: type-section-caption → type-overline, add section-header-anchor
+    [] AccessoriesHeader.tsx: add section-header-anchor to caption span
+    [] CategorySection.tsx: replace manual line markup with section-header-anchor class on h3 span
+[] Verify
+    [] All section headers have uniform caption style + decorative line
+    [] CategorySection sub-headers match the same pattern
+
+--------------------------------------------------------------------------------
+
+SCOPE 4.4 — Fractal ring decoration reduction
+Files: Featured.tsx, IemsGallery.tsx, Dacs.tsx, Accessories.tsx, ProductSpotlight1/2/3.tsx, NewestRelease.tsx
+Current state: 7 sections use the exact same 3-layer fractal ring pattern with near-identical positioning/opacity values. The repeated pattern creates visual fatigue.
+---
+Deliverable State:
+  - Fractal ring retained on: Featured, one spotlight promo panel (Spotlight3 — gold accent variant), Accessories
+  - Fractal ring REMOVED from: IemsGallery, Dacs
+  - Spotlight1/2 promo panels: keep fractal ring (they are editorial panels, not gallery sections)
+  - NewestRelease promo panel: keep fractal ring
+  - Total: 5 instances (3 spotlight/release promo panels + Featured + Accessories)
+  - Removed from 2 gallery sections that don't need atmospheric texture
+In Scope:
+  - Remove the aria-hidden fractal ring wrapper from IemsGallery.tsx
+  - Remove the aria-hidden fractal ring wrapper from Dacs.tsx
+Out of Scope:
+  - Changing fractal ring parameters (opacity, positioning, size) on kept instances
+  - Changing ProductSpotlight3's unique gold mask variant
+Forbidden:
+  - Removing fractal ring from Featured (it's the flagship section)
+  - Removing fractal ring from spotlight promo panels (editorial texture is intentional)
+  - Adding fractal ring to any section that doesn't currently have it
+---
+[] Style
+    [] IemsGallery.tsx: remove entire <div aria-hidden="true"> fractal ring block
+    [] Dacs.tsx: remove entire <div aria-hidden="true"> fractal ring block
+[] Verify
+    [] IemsGallery and Dacs render clean dark backgrounds
+    [] Featured, Spotlights, NewestRelease, Accessories retain their fractal ring texture
+    [] No layout shift from removed elements (they were position:absolute)
+
+
+================================================================================
+PHASE 5 — INTERACTIVE STATES & AFFORDANCES
+================================================================================
+Carousel touch targets, CTA button improvements, card resting borders.
+--------------------------------------------------------------------------------
+
+SCOPE 5.1 — Carousel arrow touch targets
+Files: CarouselControls.tsx
+Current state:
+  - BTN_BASE: "h-8 w-8" (32px visual size)
+  - Has before:absolute before:-inset-2 (extends hit area by 8px each side = 48px)
+  - Individual carousel instances override with "h-4 w-4" (16px!) which shrinks visual AND hit area
+---
+Deliverable State:
+  - BTN_BASE keeps h-8 w-8 (32px visual, 48px hit via pseudo) — this is already adequate
+  - All carousel consumers STOP overriding with h-4 w-4
+  - Remove h-4 w-4 overrides from: Featured.tsx, Dacs.tsx, CategorySection.tsx (Accessories)
+  - Add aria-label to CarouselPrevious and CarouselNext in BTN_BASE or as default props
+In Scope:
+  - Remove className overrides that shrink arrow size in Featured, Dacs, CategorySection
+  - Add default aria-label="Previous" / aria-label="Next" to CarouselPrevious/CarouselNext
+Out of Scope:
+  - Changing BTN_BASE sizing
+  - Changing dot size or styling
+  - Changing carousel behavior
+Forbidden:
+  - Setting arrow dimensions below 32px visual / 44px hit area
+  - Removing focus-visible ring from BTN_BASE
+---
+[] Structure
+    [] CarouselPrevious: add aria-label="Previous slide" as default (overridable by props)
+    [] CarouselNext: add aria-label="Next slide" as default (overridable by props)
+[] Style
+    [] Featured.tsx: remove "h-4 w-4" from CarouselPrevious/CarouselNext className overrides
+    [] Dacs.tsx: remove "h-4 w-4" from CarouselPrevious/CarouselNext className overrides
+    [] CategorySection.tsx: remove "h-4 w-4" from CarouselPrevious/CarouselNext className overrides
+    [] Keep remaining className overrides (border-none, shadow-none, text-brand-400, etc.)
+[] Verify
+    [] Arrows render at 32px with 48px touch target on all carousel instances
+    [] Arrows have aria-label in rendered HTML
+    [] Focus-visible ring visible when tabbing
+
+--------------------------------------------------------------------------------
+
+SCOPE 5.2 — Spotlight "See More" CTA improvement
+Files: ProductSpotlight1.tsx, ProductSpotlight2.tsx, ProductSpotlight3.tsx, NewestRelease.tsx
+Current state:
+  - All use btn-ghost which is underline-only, font-light
+  - Very low affordance against dark bg-brand-800 promo panels
+---
+Deliverable State:
+  - Spotlight CTAs upgrade from btn-ghost to btn-secondary (outlined button)
+  - This provides a visible border that signals "clickable" against dark backgrounds
+  - Text stays uppercase, inherits btn-secondary styling
+In Scope:
+  - Replace btn-ghost with btn-secondary on all 4 spotlight/release "See More" buttons
+  - Add px-8 py-3 for comfortable sizing
+  - Keep the existing text content and uppercase treatment
+Out of Scope:
+  - Changing btn-ghost definition (other pages may use it)
+  - Changing btn-secondary definition
+  - Adding icons to the button
+Forbidden:
+  - Using btn-primary (reserved for primary conversion actions like hero CTA, checkout)
+  - Removing the button entirely
+---
+[] Style
+    [] ProductSpotlight1.tsx: btn-ghost → btn-secondary, add px-8 py-3
+    [] ProductSpotlight2.tsx: btn-ghost → btn-secondary, add px-8 py-3
+    [] ProductSpotlight3.tsx: btn-ghost text-accent-500 → btn-secondary, add px-8 py-3
+    [] NewestRelease.tsx: btn-ghost → btn-secondary, add px-8 py-3
+    [] Remove text-h4 size override (btn-secondary has its own sizing)
+    [] Keep uppercase and group class
+[] Verify
+    [] All spotlight CTAs render with visible border
+    [] Hover state transitions to filled (per btn-secondary definition)
+    [] Focus-visible ring is visible
+
+
+================================================================================
+PHASE 6 — ACCESSIBILITY BASELINE
+================================================================================
+Minimum viable accessibility improvements for interactive elements.
+--------------------------------------------------------------------------------
+
+SCOPE 6.1 — Product card link wrappers
+Files: FeaturedCard (Featured.tsx), DacCard.tsx, IemCard.tsx, AccessoryCard.tsx
+Current state: Cards are <article> or <div> wrappers with no link. Products have slug data available in IemCard (via product.slug). Other cards may need slug added to their GROQ queries.
+---
+Deliverable State:
+  - Each product card's outermost element is wrapped in a Next.js <Link>
+  - Link href points to product detail page: /product/{slug}
+  - Card remains the visual container; Link is the semantic wrapper
+  - GROQ queries updated to fetch slug where missing
+In Scope:
+  - Add slug to GROQ queries in: getFeaturedProducts.ts, getDacProducts query, getAccessoryProducts query
+  - Wrap card content in <Link> in all 4 card components
+  - Ensure existing hover/transition classes transfer to Link or inner wrapper
+Out of Scope:
+  - Creating product detail pages
+  - Changing card visual design
+  - Adding prefetch behavior
+Forbidden:
+  - Making the entire card a button (cards navigate, they don't trigger actions)
+  - Nesting interactive elements: cart button must use e.stopPropagation() or be excluded from link
+---
+[] Structure
+    [] getFeaturedProducts.ts: add "slug": slug.current to GROQ projection
+    [] getDacProducts query: add "slug": slug.current to GROQ projection
+    [] getAccessoryProducts query: add "slug": slug.current to GROQ projection
+    [] FeaturedCard: wrap in <Link href={`/product/${product.slug}`}>
+    [] DacCard: wrap in <Link href={`/product/${item.slug}`}>
+    [] IemCard: wrap in <Link href={`/product/${product.slug}`}> (slug already fetched)
+    [] AccessoryCard: wrap in <Link href={`/product/${item.slug}`}>
+    [] Each card's cart button: add onClick={(e) => e.stopPropagation()} and e.preventDefault()
+[] Verify
+    [] Clicking card navigates to product page (or 404 if page doesn't exist — expected)
+    [] Clicking cart button does NOT navigate (event stopped)
+    [] Keyboard tab order: card link → cart button within card
+    [] No nested <a> tags in rendered HTML
+
+--------------------------------------------------------------------------------
+
+SCOPE 6.2 — Focus-visible rings on all interactive elements
+Files: CarouselControls.tsx, all card button elements
+Current state:
+  - CarouselPrevious/Next: has focus-visible:ring-2 ring-brand-400/50 ✓
+  - CarouselDots buttons: has group-focus-visible:block ring pattern ✓
+  - btn-primary: has focus-visible outline ✓
+  - btn-cart: has focus-visible outline ✓
+  - btn-ghost: has focus-visible outline ✓
+  - btn-secondary: NO focus-visible defined ← GAP
+  - Individual carousel consumers add "focus:ring-0" which REMOVES the ring ← BUG
+---
+Deliverable State:
+  - btn-secondary has focus-visible outline defined in uiComponentsPlugin
+  - No consumer overrides focus:ring-0 on carousel controls
+In Scope:
+  - Add &:focus-visible outline to .btn-secondary in tailwind.config.ts uiComponentsPlugin
+  - Remove focus:ring-0 from carousel control className overrides in Featured, Dacs, CategorySection
+Out of Scope:
+  - Changing focus-visible styling of other button classes
+  - Adding skip-to-content or other page-level a11y
+Forbidden:
+  - Removing existing focus-visible definitions
+  - Using outline:none without a visible alternative
+---
+[] Style
+    [] tailwind.config.ts: add "&:focus-visible" to .btn-secondary: outline 2px solid brand.200, outlineOffset 2px
+    [] Featured.tsx: remove "focus:ring-0" from CarouselPrevious/CarouselNext className
+    [] Dacs.tsx: remove "focus:ring-0" from CarouselPrevious/CarouselNext className
+    [] CategorySection.tsx: remove "focus:ring-0" from CarouselPrevious/CarouselNext className
+[] Verify
+    [] Tab through page: every interactive element shows visible focus ring
+    [] btn-secondary has visible focus ring on spotlight CTAs
+    [] Carousel arrows have visible focus ring (no longer suppressed)
+
+
+================================================================================
+IMPLEMENTATION SEQUENCE SUMMARY
+================================================================================
+Phase 1: Foundation tokens (1.1 → 1.2 → 1.3 → 1.4) — config only, no visual changes
+Phase 2: Section layout (2.1 → 2.2 → 2.3) — structural normalization
+Phase 3: Card contract (3.1 → 3.2 → 3.3 → 3.4 → 3.5 → 3.6) — card consistency
+Phase 4: Visual rhythm (4.1 → 4.2 → 4.3 → 4.4) — polish & differentiation
+Phase 5: Interactivity (5.1 → 5.2) — affordance improvements
+Phase 6: Accessibility (6.1 → 6.2) — baseline a11y
+
+Dependencies:
+  - Phase 2 depends on 1.1 (max-w-content token)
+  - Phase 3 depends on 1.2 (surface.productImage token) AND 1.3 (.card-product class)
+  - Phase 4 depends on 1.4 (.section-header-anchor class)
+  - Phase 5 has no upstream dependency (can run after Phase 2)
+  - Phase 6 depends on Phase 5 (focus ring fixes reference same files)
+
+Total scopes: 18
+Estimated touch points: ~20 files
+Risk: LOW — all changes are scoped to homepage components and tailwind config
