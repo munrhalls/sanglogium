@@ -1,72 +1,186 @@
 export type CatalogueSection = {
   title: string;
-  links: string[];
+  children: CatalogueItem[];
 };
 
 export type CatalogueItem = {
-  id: string;
-  label: string;
-  imageUrl: string;
-  sections: CatalogueSection[];
-  feature: {
-    caption: string;
+  _key?: string;
+  _type?: "catalogueItem";
+  title: string;
+  type: "link" | "header";
+  slug?: {
+    _type: "slug";
+    current: string;
   };
+  icon?: string;
+  children?: CatalogueItem[];
+  // Only present on leaf nodes where type === 'link' && !children
+  productIds?: string[];
+  // Legacy structure for UI compatibility - maps children to sections
+  sections?: Array<{
+    title: string;
+    links: string[];
+  }>;
+  // Legacy properties for UI compatibility
+  label: string; // Maps to title
+  imageUrl: string; // Placeholder for hero images
 };
+
+// The exact shape that will be inserted into Sanity
+export type CataloguePayload = CatalogueItem[];
 
 export const CATALOGUE_DATA: CatalogueItem[] = [
   {
-    id: "headphones",
-    label: "Headphones",
-    imageUrl: "/images/headphones-skeletal.png",
-    sections: [
-      { title: "By Design", links: ["Open-Back", "Closed-Back"] },
-      {
-        title: "By Driver",
-        links: ["Planar Magnetic", "Dynamic", "Electrostatic"],
-      },
-      {
-        title: "In-Ear & Wireless",
-        links: ["Monitors (IEMs)", "True Wireless (TWS)"],
-      },
-    ],
-    feature: {
-      caption: "Pure Resonance",
+    _key: "headphones",
+    _type: "catalogueItem",
+    title: "Headphones & Personal Audio",
+    type: "link",
+    slug: {
+      _type: "slug",
+      current: "headphones"
     },
+    icon: "headphones",
+    children: [
+      {
+        _key: "headphones-by-category",
+        _type: "catalogueItem",
+        title: "By category",
+        type: "header",
+        children: [
+          {
+            _key: "wired",
+            _type: "catalogueItem",
+            title: "Wired",
+            type: "link",
+            slug: {
+              _type: "slug",
+              current: "wired"
+            }
+          },
+          {
+            _key: "wireless",
+            _type: "catalogueItem",
+            title: "Wireless",
+            type: "link",
+            slug: {
+              _type: "slug",
+              current: "wireless"
+            }
+          },
+          {
+            _key: "noise-cancelling",
+            _type: "catalogueItem",
+            title: "Noise cancelling",
+            type: "link",
+            slug: {
+              _type: "slug",
+              current: "noise-cancelling"
+            }
+          },
+          {
+            _key: "earbuds",
+            _type: "catalogueItem",
+            title: "Earbuds",
+            type: "link",
+            slug: {
+              _type: "slug",
+              current: "earbuds"
+            }
+          }
+        ]
+      }
+    ],
+    // Legacy sections for UI compatibility
+    sections: [
+      {
+        title: "By category",
+        links: ["Wired", "Wireless", "Noise cancelling", "Earbuds"]
+      }
+    ],
+    // Legacy properties for UI compatibility
+    label: "Headphones & Personal Audio",
+    imageUrl: "/images/headphones-skeletal.png"
   },
   {
-    id: "audio-electronics",
-    label: "Audio Electronics",
-    imageUrl: "/images/audio-electronics-skeletal.png",
-    sections: [
-      { title: "Amplification", links: ["Desktop Amps", "Portable Amps"] },
-      {
-        title: "Digital Sources",
-        links: [
-          "Standalone DACs",
-          "DAC/Amp Combos",
-          "Digital Players (DAPs)",
-          "Network Streamers",
-        ],
-      },
-    ],
-    feature: {
-      caption: "Signal Integrity",
+    _key: "speakers",
+    _type: "catalogueItem",
+    title: "Speakers",
+    type: "link",
+    slug: {
+      _type: "slug",
+      current: "speakers"
     },
+    icon: "speaker",
+    children: [
+      {
+        _key: "speakers-home-theater",
+        _type: "catalogueItem",
+        title: "Home theater",
+        type: "header",
+        children: [
+          {
+            _key: "floor-standing-speakers",
+            _type: "catalogueItem",
+            title: "Floor standing speakers",
+            type: "link",
+            slug: {
+              _type: "slug",
+              current: "floor-standing-speakers"
+            }
+          }
+        ]
+      }
+    ],
+    // Legacy sections for UI compatibility
+    sections: [
+      {
+        title: "Home theater",
+        links: ["Floor standing speakers"]
+      }
+    ],
+    // Legacy properties for UI compatibility
+    label: "Speakers",
+    imageUrl: "/images/speakers-skeletal.png"
   },
   {
-    id: "accessories",
+    _key: "accessories",
+    _type: "catalogueItem",
+    title: "Accessories",
+    type: "link",
+    slug: {
+      _type: "slug",
+      current: "accessories"
+    },
+    icon: "cable",
+    children: [
+      {
+        _key: "cables-wiring",
+        _type: "catalogueItem",
+        title: "Cables & Wiring",
+        type: "header",
+        children: [
+          {
+            _key: "audio-cables",
+            _type: "catalogueItem",
+            title: "Audio cables",
+            type: "link",
+            slug: {
+              _type: "slug",
+              current: "audio-cables"
+            }
+          }
+        ]
+      }
+    ],
+    // Legacy sections for UI compatibility
+    sections: [
+      {
+        title: "Cables & Wiring",
+        links: ["Audio cables"]
+      }
+    ],
+    // Legacy properties for UI compatibility
     label: "Accessories",
-    imageUrl: "/images/accessories-skeletal.png",
-    sections: [
-      {
-        title: "Connectivity",
-        links: ["Headphone Cables", "Interconnects", "Adapters"],
-      },
-      { title: "Maintenance", links: ["Earpads", "Care & Cleaning"] },
-      { title: "Storage", links: ["Headphone Stands", "Carrying Cases"] },
-    ],
-    feature: {
-      caption: "The Final Detail",
-    },
-  },
+    imageUrl: "/images/accessories-skeletal.png"
+  }
 ];

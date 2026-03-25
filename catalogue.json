@@ -1,0 +1,103 @@
+{
+  "catalogue": [
+    {
+      "title": "Headphones & Personal Audio",
+      "type": "link",
+      "slug": {
+        "_type": "slug",
+        "current": "headphones"
+      },
+      "icon": "headphones",
+      "children": [
+        {
+          "title": "By category",
+          "type": "header",
+          "children": [
+            {
+              "title": "Wired",
+              "type": "link",
+              "slug": {
+                "_type": "slug",
+                "current": "wired"
+              }
+            },
+            {
+              "title": "Wireless",
+              "type": "link",
+              "slug": {
+                "_type": "slug",
+                "current": "wireless"
+              }
+            },
+            {
+              "title": "Noise cancelling",
+              "type": "link",
+              "slug": {
+                "_type": "slug",
+                "current": "noise-cancelling"
+              }
+            },
+            {
+              "title": "Earbuds",
+              "type": "link",
+              "slug": {
+                "_type": "slug",
+                "current": "earbuds"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Speakers",
+      "type": "link",
+      "slug": {
+        "_type": "slug",
+        "current": "speakers"
+      },
+      "icon": "speaker",
+      "children": [
+        {
+          "title": "Home theater",
+          "type": "header",
+          "children": [
+            {
+              "title": "Floor standing speakers",
+              "type": "link",
+              "slug": {
+                "_type": "slug",
+                "current": "floor-standing-speakers"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Accessories",
+      "type": "link",
+      "slug": {
+        "_type": "slug",
+        "current": "accessories"
+      },
+      "icon": "cable",
+      "children": [
+        {
+          "title": "Cables & Wiring",
+          "type": "header",
+          "children": [
+            {
+              "title": "Audio cables",
+              "type": "link",
+              "slug": {
+                "_type": "slug",
+                "current": "audio-cables"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

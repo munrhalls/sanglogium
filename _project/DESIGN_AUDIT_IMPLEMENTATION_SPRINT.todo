@@ -265,18 +265,18 @@ Forbidden:
   - Removing padding entirely (gutters must exist at mobile)
 ---
 [] Layout
-    [] Shelf.tsx: add px-4 md:px-8 to inner <div>
-    [] Featured.tsx: remove px-4 md:px-8 from <article>
-    [] ProductSpotlight1.tsx: remove px-4 md:px-8 from inner div
-    [] ProductSpotlight2.tsx: remove px-4 md:px-8 from inner div
-    [] ProductSpotlight3.tsx: remove px-4 md:px-8 from inner div
-    [] NewestRelease.tsx: remove px-4 md:px-8 from inner div
-    [] Dacs.tsx: remove px-4 md:px-8 from nested div
-[] Verify
-    [] All sections have uniform left/right gutters at mobile (16px) and md+ (32px)
-    [] No section has double horizontal padding
-    [] Full-bleed backgrounds still extend edge-to-edge
-
+    ✔ Shelf.tsx: add px-4 md:px-8 to inner <div> @done(26-03-25 09:48)
+    ✔ Featured.tsx: remove px-4 md:px-8 from <article> @done(26-03-25 09:48)
+    ✔ ProductSpotlight1.tsx: remove px-4 md:px-8 from inner div @done(26-03-25 09:48)
+    ✔ ProductSpotlight2.tsx: remove px-4 md:px-8 from inner div @done(26-03-25 09:48)
+    ✔ ProductSpotlight3.tsx: remove px-4 md:px-8 from inner div @done(26-03-25 09:48)
+    ✔ NewestRelease.tsx: remove px-4 md:px-8 from inner div @done(26-03-25 09:48)
+    ✔ Dacs.tsx: remove px-4 md:px-8 from nested div @done(26-03-25 09:48)
+✔ Verify @done(26-03-25 09:48)
+    ✔ All sections have uniform left/right gutters at mobile (16px) and md+ (32px) @done(26-03-25 09:48)
+    ✔ No section has double horizontal padding @done(26-03-25 09:48)
+    ✔ Full-bleed backgrounds still extend edge-to-edge @done(26-03-25 09:48)
+✔ @done(26-03-25 09:48)
 
 ================================================================================
 PHASE 3 — CARD CONTRACT UNIFICATION
@@ -309,17 +309,17 @@ Forbidden:
   - Adding any inline boxShadow styles
   - Adding any ad-hoc shadow-[...] utilities on card wrappers
 ---
-[] Structure
-    [] FeaturedCard: replace wrapper classes with "card-product group flex h-full flex-col gap-4"
-    [] FeaturedCard: remove style={{ boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)' }}
-    [] DacCard: replace wrapper classes with "card-product group flex h-full flex-col gap-4"
-    [] IemCard: replace wrapper classes with "card-product group flex h-full flex-col gap-4"
-    [] AccessoryCard: replace wrapper classes with "card-product group flex h-full flex-col gap-4"
-[] Verify
-    [] All 4 card types have identical wrapper class pattern
-    [] Hover state (shadow + lift) is uniform across all cards
-    [] No inline style attributes on any card wrapper
-
+✔ Structure @done(26-03-25 09:48)
+    ✔ FeaturedCard: replace wrapper classes with "card-product group flex h-full flex-col gap-4" @done(26-03-25 09:48)
+    ✔ FeaturedCard: remove style={{ boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)' }} @done(26-03-25 09:48)
+    ✔ DacCard: replace wrapper classes with "card-product group flex h-full flex-col gap-4" @done(26-03-25 09:48)
+    ✔ IemCard: replace wrapper classes with "card-product group flex h-full flex-col gap-4" @done(26-03-25 09:48)
+    ✔ AccessoryCard: replace wrapper classes with "card-product group flex h-full flex-col gap-4" @done(26-03-25 09:48)
+✔ Verify @done(26-03-25 09:48)
+    ✔ All 4 card types have identical wrapper class pattern @done(26-03-25 09:48)
+    ✔ Hover state (shadow + lift) is uniform across all cards @done(26-03-25 09:48)
+    ✔ No inline style attributes on any card wrapper @done(26-03-25 09:48)
+✔ @done(26-03-25 09:48)
 --------------------------------------------------------------------------------
 
 SCOPE 3.2 — Adopt bg-surface-productImage on all card image containers
@@ -344,15 +344,15 @@ Forbidden:
   - Using any bg value other than bg-surface-productImage for card image containers
   - Changing spotlight image container backgrounds (bg-brand-300 is intentional for editorial panels)
 ---
-[] Style
-    [] FeaturedCard: bg-surface-highlight → bg-surface-productImage
-    [] DacCard: bg-brand-300 → bg-surface-productImage
-    [] IemCard: bg-brand-100 → bg-surface-productImage
-    [] AccessoryCard: bg-brand-300 → bg-surface-productImage
-[] Verify
-    [] All 4 card types have identical warm-cream image background
-    [] Product images remain legible with mix-blend-multiply against new bg
-
+✔ Style @done(26-03-25 09:48)
+    ✔ FeaturedCard: bg-surface-highlight → bg-surface-productImage @done(26-03-25 09:48)
+    ✔ DacCard: bg-brand-300 → bg-surface-productImage @done(26-03-25 09:48)
+    ✔ IemCard: bg-brand-100 → bg-surface-productImage @done(26-03-25 09:48)
+    ✔ AccessoryCard: bg-brand-300 → bg-surface-productImage @done(26-03-25 09:48)
+✔ Verify @done(26-03-25 09:48)
+    ✔ All 4 card types have identical warm-cream image background @done(26-03-25 09:48)
+    ✔ Product images remain legible with mix-blend-multiply against new bg @done(26-03-25 09:48)
+✔ @done(26-03-25 09:48)
 --------------------------------------------------------------------------------
 
 SCOPE 3.3 — Standardize card image aspect ratios
@@ -380,16 +380,16 @@ Forbidden:
   - Introducing any aspect ratio other than aspect-[4/3] or aspect-square
   - Changing IemCard from aspect-square (grid layout depends on it)
 ---
-[] Style
-    [] FeaturedCard: aspect-[3/2] → aspect-[4/3]
-    [] DacCard: aspect-[16/9] → aspect-[4/3]
-    [] AccessoryCard: aspect-[3/2] → aspect-[4/3]
-    [] IemCard: keep aspect-square (no change)
-[] Verify
-    [] All carousel cards have uniform 4:3 image containers
-    [] IEM grid cards remain square
-    [] No image clipping or overflow
-
+✔ Style @done(26-03-25 09:48)
+    ✔ FeaturedCard: aspect-[3/2] → aspect-[4/3] @done(26-03-25 09:48)
+    ✔ DacCard: aspect-[16/9] → aspect-[4/3] @done(26-03-25 09:48)
+    ✔ AccessoryCard: aspect-[3/2] → aspect-[4/3] @done(26-03-25 09:48)
+    ✔ IemCard: keep aspect-square (no change) @done(26-03-25 09:48)
+✔ Verify @done(26-03-25 09:48)
+    ✔ All carousel cards have uniform 4:3 image containers @done(26-03-25 09:48)
+    ✔ IEM grid cards remain square @done(26-03-25 09:48)
+    ✔ No image clipping or overflow @done(26-03-25 09:48)
+✔ @done(26-03-25 09:48)
 --------------------------------------------------------------------------------
 
 SCOPE 3.4 — Standardize product name typography weight
@@ -412,15 +412,15 @@ Forbidden:
   - Using font-thin (too light on dark bg, fails contrast)
   - Using font-bold (competes with price/brand label hierarchy)
 ---
-[] Style
-    [] FeaturedCard h3: "type-body font-thin" → "type-body font-medium"
-    [] DacCard p (product name): "type-body font-bold" → "type-body font-medium"
-    [] IemCard h3: "type-body font-bold" → "type-body font-medium"
-    [] AccessoryCard h3: keep "type-body font-medium" (already correct)
-[] Verify
-    [] All product names have uniform visual weight
-    [] Product name sits below brand label in visual hierarchy
-
+✔ Style @done(26-03-25 09:48)
+    ✔ FeaturedCard h3: "type-body font-thin" → "type-body font-medium" @done(26-03-25 09:48)
+    ✔ DacCard p (product name): "type-body font-bold" → "type-body font-medium" @done(26-03-25 09:48)
+    ✔ IemCard h3: "type-body font-bold" → "type-body font-medium" @done(26-03-25 09:48)
+    ✔ AccessoryCard h3: keep "type-body font-medium" (already correct) @done(26-03-25 09:48)
+✔ Verify @done(26-03-25 09:48)
+    ✔ All product names have uniform visual weight @done(26-03-25 09:48)
+    ✔ Product name sits below brand label in visual hierarchy @done(26-03-25 09:48)
+✔ @done(26-03-25 09:48)
 --------------------------------------------------------------------------------
 
 SCOPE 3.5 — Standardize ShoppingCart icon weight
@@ -444,15 +444,15 @@ Forbidden:
   - Using weight="thin" (too light, poor affordance)
   - Using weight="bold" (too heavy, competes with text)
 ---
-[] Style
-    [] FeaturedCard: weight="thin" → weight="regular"
-    [] DacCard: weight="bold" → weight="regular"
-    [] IemCard: add weight="regular", remove style={{ marginBottom: "2px" }}
-    [] AccessoryCard: weight="bold" → weight="regular"
-[] Verify
-    [] All cart icons have uniform stroke weight
-    [] Icons align with button text baseline
-
+✔ Style @done(26-03-25 09:48)
+    ✔ FeaturedCard: weight="thin" → weight="regular" @done(26-03-25 09:48)
+    ✔ DacCard: weight="bold" → weight="regular" @done(26-03-25 09:48)
+    ✔ IemCard: add weight="regular", remove style={{ marginBottom: "2px" }} @done(26-03-25 09:48)
+    ✔ AccessoryCard: weight="bold" → weight="regular" @done(26-03-25 09:48)
+✔ Verify @done(26-03-25 09:48)
+    ✔ All cart icons have uniform stroke weight @done(26-03-25 09:48)
+    ✔ Icons align with button text baseline @done(26-03-25 09:48)
+✔ @done(26-03-25 09:48)
 --------------------------------------------------------------------------------
 
 SCOPE 3.6 — Standardize DacCard title container
@@ -469,13 +469,13 @@ Out of Scope:
 Forbidden:
   - Using fixed height h-[] on any text container
 ---
-[] Layout
-    [] DacCard: change h-[3rem] to min-h-[3rem] on title wrapper div
-    [] DacCard: add line-clamp-2 to product name <p> element
-[] Verify
-    [] Long product names truncate cleanly
-    [] Short product names don't create excess whitespace
-
+✔ Layout @done(26-03-25 09:50)
+    ✔ DacCard: change h-[3rem] to min-h-[3rem] on title wrapper div @done(26-03-25 09:50)
+    ✔ DacCard: add line-clamp-2 to product name <p> element @done(26-03-25 09:50)
+✔ Verify @done(26-03-25 09:50)
+    ✔ Long product names truncate cleanly @done(26-03-25 09:50)
+    ✔ Short product names don't create excess whitespace @done(26-03-25 09:50)
+✔ @done(26-03-25 09:50)
 
 ================================================================================
 PHASE 4 — VISUAL RHYTHM & SECTION DIFFERENTIATION
@@ -513,12 +513,12 @@ Forbidden:
   - Making two adjacent sections the same background shade
   - Using bg-brand-900 on NewestRelease (would match adjacent Dacs)
 ---
-[] Style
-    [] NewestRelease.tsx: article bg-brand-700 → bg-brand-800
-[] Verify
-    [] Scrolling top-to-bottom, no two adjacent sections share the same bg shade
-    [] NewestRelease is visually distinct from surrounding sections
-
+✔ Style @done(26-03-25 09:50)
+    ✔ NewestRelease.tsx: article bg-brand-700 → bg-brand-800 @done(26-03-25 09:50)
+✔ Verify @done(26-03-25 09:50)
+    ✔ Scrolling top-to-bottom, no two adjacent sections share the same bg shade @done(26-03-25 09:50)
+    ✔ NewestRelease is visually distinct from surrounding sections @done(26-03-25 09:50)
+✔ @done(26-03-25 09:50)
 --------------------------------------------------------------------------------
 
 SCOPE 4.2 — Spotlight layout alternation
@@ -538,11 +538,11 @@ Out of Scope:
 Forbidden:
   - Changing Spotlight2's order classes
 ---
-[] Verify
-    [] Spotlight1: image-left (no order classes) ✓
-    [] Spotlight2: image-right (order-1 lg:order-2 on image, order-2 lg:order-1 on promo) ✓
-    [] Spotlight3: image-left (no order classes) ✓
-
+✔ Verify @done(26-03-25 09:50)
+    ✔ Spotlight1: image-left (no order classes) ✓ @done(26-03-25 09:50)
+    ✔ Spotlight2: image-right (order-1 lg:order-2 on image, order-2 lg:order-1 on promo) ✓ @done(26-03-25 09:50)
+    ✔ Spotlight3: image-left (no order classes) ✓ @done(26-03-25 09:50)
+✔ @done(26-03-25 09:50)
 --------------------------------------------------------------------------------
 
 SCOPE 4.3 — Section header anchor pattern adoption
@@ -572,18 +572,18 @@ Forbidden:
   - Using type-section-caption (inconsistent with majority pattern — type-overline is the standard)
   - Adding decorative elements beyond the single line anchor
 ---
-[] Structure
-    [] Determine if Featured.tsx uses FeaturedHeader.tsx or inlines its own header
-    [] If inline: refactor to use FeaturedHeader.tsx
-[] Style
-    [] FeaturedHeader.tsx: ensure caption uses type-overline + section-header-anchor
-    [] DacsHeader.tsx: add section-header-anchor to caption span
-    [] IemsGalleryHeader.tsx: type-section-caption → type-overline, add section-header-anchor
-    [] AccessoriesHeader.tsx: add section-header-anchor to caption span
-    [] CategorySection.tsx: replace manual line markup with section-header-anchor class on h3 span
-[] Verify
-    [] All section headers have uniform caption style + decorative line
-    [] CategorySection sub-headers match the same pattern
+✔ Structure @done(26-03-25 09:50)
+    ✔ Determine if Featured.tsx uses FeaturedHeader.tsx or inlines its own header @done(26-03-25 09:50)
+    ✔ If inline: refactor to use FeaturedHeader.tsx @done(26-03-25 09:50)
+✔ Style @done(26-03-25 09:50)
+    ✔ FeaturedHeader.tsx: ensure caption uses type-overline + section-header-anchor @done(26-03-25 09:50)
+    ✔ DacsHeader.tsx: add section-header-anchor to caption span @done(26-03-25 09:50)
+    ✔ IemsGalleryHeader.tsx: type-section-caption → type-overline, add section-header-anchor @done(26-03-25 09:50)
+    ✔ AccessoriesHeader.tsx: add section-header-anchor to caption span @done(26-03-25 09:50)
+    ✔ CategorySection.tsx: replace manual line markup with section-header-anchor class on h3 span @done(26-03-25 09:50)
+✔ Verify @done(26-03-25 09:50)
+    ✔ All section headers have uniform caption style + decorative line @done(26-03-25 09:50)
+    ✔ CategorySection sub-headers match the same pattern @done(26-03-25 09:50)
 
 --------------------------------------------------------------------------------
 
@@ -609,13 +609,13 @@ Forbidden:
   - Removing fractal ring from spotlight promo panels (editorial texture is intentional)
   - Adding fractal ring to any section that doesn't currently have it
 ---
-[] Style
-    [] IemsGallery.tsx: remove entire <div aria-hidden="true"> fractal ring block
-    [] Dacs.tsx: remove entire <div aria-hidden="true"> fractal ring block
-[] Verify
-    [] IemsGallery and Dacs render clean dark backgrounds
-    [] Featured, Spotlights, NewestRelease, Accessories retain their fractal ring texture
-    [] No layout shift from removed elements (they were position:absolute)
+✔ Style @done(26-03-25 09:50)
+    ✔ IemsGallery.tsx: remove entire <div aria-hidden="true"> fractal ring block @done(26-03-25 09:50)
+    ✔ Dacs.tsx: remove entire <div aria-hidden="true"> fractal ring block @done(26-03-25 09:50)
+✔ Verify @done(26-03-25 09:50)
+    ✔ IemsGallery and Dacs render clean dark backgrounds @done(26-03-25 09:50)
+    ✔ Featured, Spotlights, NewestRelease, Accessories retain their fractal ring texture @done(26-03-25 09:50)
+    ✔ No layout shift from removed elements (they were position:absolute) @done(26-03-25 09:50)
 
 
 ================================================================================
@@ -647,19 +647,19 @@ Forbidden:
   - Setting arrow dimensions below 32px visual / 44px hit area
   - Removing focus-visible ring from BTN_BASE
 ---
-[] Structure
-    [] CarouselPrevious: add aria-label="Previous slide" as default (overridable by props)
-    [] CarouselNext: add aria-label="Next slide" as default (overridable by props)
-[] Style
-    [] Featured.tsx: remove "h-4 w-4" from CarouselPrevious/CarouselNext className overrides
-    [] Dacs.tsx: remove "h-4 w-4" from CarouselPrevious/CarouselNext className overrides
-    [] CategorySection.tsx: remove "h-4 w-4" from CarouselPrevious/CarouselNext className overrides
-    [] Keep remaining className overrides (border-none, shadow-none, text-brand-400, etc.)
-[] Verify
-    [] Arrows render at 32px with 48px touch target on all carousel instances
-    [] Arrows have aria-label in rendered HTML
-    [] Focus-visible ring visible when tabbing
-
+✔ Structure @done(26-03-25 09:53)
+    ✔ CarouselPrevious: add aria-label="Previous slide" as default (overridable by props) @done(26-03-25 09:53)
+    ✔ CarouselNext: add aria-label="Next slide" as default (overridable by props) @done(26-03-25 09:53)
+✔ Style @done(26-03-25 09:53)
+    ✔ Featured.tsx: remove "h-4 w-4" from CarouselPrevious/CarouselNext className overrides @done(26-03-25 09:53)
+    ✔ Dacs.tsx: remove "h-4 w-4" from CarouselPrevious/CarouselNext className overrides @done(26-03-25 09:53)
+    ✔ CategorySection.tsx: remove "h-4 w-4" from CarouselPrevious/CarouselNext className overrides @done(26-03-25 09:53)
+    ✔ Keep remaining className overrides (border-none, shadow-none, text-brand-400, etc.) @done(26-03-25 09:53)
+✔ Verify @done(26-03-25 09:53)
+    ✔ Arrows render at 32px with 48px touch target on all carousel instances @done(26-03-25 09:53)
+    ✔ Arrows have aria-label in rendered HTML @done(26-03-25 09:53)
+    ✔ Focus-visible ring visible when tabbing @done(26-03-25 09:53)
+✔ ☐ @done(26-03-25 09:53)
 --------------------------------------------------------------------------------
 
 SCOPE 5.2 — Spotlight "See More" CTA improvement
@@ -684,17 +684,17 @@ Forbidden:
   - Using btn-primary (reserved for primary conversion actions like hero CTA, checkout)
   - Removing the button entirely
 ---
-[] Style
-    [] ProductSpotlight1.tsx: btn-ghost → btn-secondary, add px-8 py-3
-    [] ProductSpotlight2.tsx: btn-ghost → btn-secondary, add px-8 py-3
-    [] ProductSpotlight3.tsx: btn-ghost text-accent-500 → btn-secondary, add px-8 py-3
-    [] NewestRelease.tsx: btn-ghost → btn-secondary, add px-8 py-3
-    [] Remove text-h4 size override (btn-secondary has its own sizing)
-    [] Keep uppercase and group class
-[] Verify
-    [] All spotlight CTAs render with visible border
-    [] Hover state transitions to filled (per btn-secondary definition)
-    [] Focus-visible ring is visible
+✔ Style @done(26-03-25 09:53)
+    ✔ ProductSpotlight1.tsx: btn-ghost → btn-secondary, add px-8 py-3 @done(26-03-25 09:53)
+    ✔ ProductSpotlight2.tsx: btn-ghost → btn-secondary, add px-8 py-3 @done(26-03-25 09:53)
+    ✔ ProductSpotlight3.tsx: btn-ghost text-accent-500 → btn-secondary, add px-8 py-3 @done(26-03-25 09:53)
+    ✔ NewestRelease.tsx: btn-ghost → btn-secondary, add px-8 py-3 @done(26-03-25 09:53)
+    ✔ Remove text-h4 size override (btn-secondary has its own sizing) @done(26-03-25 09:53)
+    ✔ Keep uppercase and group class @done(26-03-25 09:53)
+✔ Verify @done(26-03-25 09:53)
+    ✔ All spotlight CTAs render with visible border @done(26-03-25 09:53)
+    ✔ Hover state transitions to filled (per btn-secondary definition) @done(26-03-25 09:53)
+    ✔ Focus-visible ring is visible @done(26-03-25 09:53)
 
 
 ================================================================================
@@ -724,21 +724,21 @@ Forbidden:
   - Making the entire card a button (cards navigate, they don't trigger actions)
   - Nesting interactive elements: cart button must use e.stopPropagation() or be excluded from link
 ---
-[] Structure
-    [] getFeaturedProducts.ts: add "slug": slug.current to GROQ projection
-    [] getDacProducts query: add "slug": slug.current to GROQ projection
-    [] getAccessoryProducts query: add "slug": slug.current to GROQ projection
-    [] FeaturedCard: wrap in <Link href={`/product/${product.slug}`}>
-    [] DacCard: wrap in <Link href={`/product/${item.slug}`}>
-    [] IemCard: wrap in <Link href={`/product/${product.slug}`}> (slug already fetched)
-    [] AccessoryCard: wrap in <Link href={`/product/${item.slug}`}>
-    [] Each card's cart button: add onClick={(e) => e.stopPropagation()} and e.preventDefault()
-[] Verify
-    [] Clicking card navigates to product page (or 404 if page doesn't exist — expected)
-    [] Clicking cart button does NOT navigate (event stopped)
-    [] Keyboard tab order: card link → cart button within card
-    [] No nested <a> tags in rendered HTML
-
+✔ Structure @done(26-03-25 09:56)
+    ✔ getFeaturedProducts.ts: add "slug": slug.current to GROQ projection @done(26-03-25 09:56)
+    ✔ getDacProducts query: add "slug": slug.current to GROQ projection @done(26-03-25 09:56)
+    ✔ getAccessoryProducts query: add "slug": slug.current to GROQ projection @done(26-03-25 09:56)
+    ✔ FeaturedCard: wrap in <Link href={`/product/${product.slug}`}> @done(26-03-25 09:56)
+    ✔ DacCard: wrap in <Link href={`/product/${item.slug}`}> @done(26-03-25 09:56)
+    ✔ IemCard: wrap in <Link href={`/product/${product.slug}`}> (slug already fetched) @done(26-03-25 09:56)
+    ✔ AccessoryCard: wrap in <Link href={`/product/${item.slug}`}> @done(26-03-25 09:56)
+    ✔ Each card's cart button: add onClick={(e) => e.stopPropagation()} and e.preventDefault() @done(26-03-25 09:56)
+✔ Verify @done(26-03-25 09:56)
+    ✔ Clicking card navigates to product page (or 404 if page doesn't exist — expected) @done(26-03-25 09:56)
+    ✔ Clicking cart button does NOT navigate (event stopped) @done(26-03-25 09:56)
+    ✔ Keyboard tab order: card link → cart button within card @done(26-03-25 09:56)
+    ✔ No nested <a> tags in rendered HTML @done(26-03-25 09:56)
+✔ ☐ @done(26-03-25 09:56)
 --------------------------------------------------------------------------------
 
 SCOPE 6.2 — Focus-visible rings on all interactive elements
@@ -765,16 +765,16 @@ Forbidden:
   - Removing existing focus-visible definitions
   - Using outline:none without a visible alternative
 ---
-[] Style
-    [] tailwind.config.ts: add "&:focus-visible" to .btn-secondary: outline 2px solid brand.200, outlineOffset 2px
-    [] Featured.tsx: remove "focus:ring-0" from CarouselPrevious/CarouselNext className
-    [] Dacs.tsx: remove "focus:ring-0" from CarouselPrevious/CarouselNext className
-    [] CategorySection.tsx: remove "focus:ring-0" from CarouselPrevious/CarouselNext className
-[] Verify
-    [] Tab through page: every interactive element shows visible focus ring
-    [] btn-secondary has visible focus ring on spotlight CTAs
-    [] Carousel arrows have visible focus ring (no longer suppressed)
-
+✔ Style @done(26-03-25 09:56)
+    ✔ tailwind.config.ts: add "&:focus-visible" to .btn-secondary: outline 2px solid brand.200, outlineOffset 2px @done(26-03-25 09:56)
+    ✔ Featured.tsx: remove "focus:ring-0" from CarouselPrevious/CarouselNext className @done(26-03-25 09:56)
+    ✔ Dacs.tsx: remove "focus:ring-0" from CarouselPrevious/CarouselNext className @done(26-03-25 09:56)
+    ✔ CategorySection.tsx: remove "focus:ring-0" from CarouselPrevious/CarouselNext className @done(26-03-25 09:56)
+✔ Verify @done(26-03-25 09:56)
+    ✔ Tab through page: every interactive element shows visible focus ring @done(26-03-25 09:56)
+    ✔ btn-secondary has visible focus ring on spotlight CTAs @done(26-03-25 09:56)
+    ✔ Carousel arrows have visible focus ring (no longer suppressed) @done(26-03-25 09:56)
+✔ @done(26-03-25 09:56)
 
 ================================================================================
 IMPLEMENTATION SEQUENCE SUMMARY
