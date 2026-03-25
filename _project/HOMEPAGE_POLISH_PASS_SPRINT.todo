@@ -38,16 +38,31 @@ Featured
 
 Iems
     Iems - container and background
+    ✔ structure @done(26-03-25 07:31)
+        ✔ should change Iems's shelf container to fullBleed @done(26-03-25 07:34)
+        ✔ inside Iems - top-lvl wrapper should be w-full (article) @done(26-03-25 07:38)
+        ✔ secondary wrapper should exist @done(26-03-25 07:38)
+    ✔ layout @done(26-03-25 07:38)
+        ✔ centered horizontally by top level container, should be w-max-1280px @done(26-03-25 07:38)
+        ✔ top level container should apply (padding) vertical top and bottom spacing with value from the spacing system present in global tailwind config @done(26-03-25 07:38)
+    ✔ style @done(26-03-25 07:38)
+        ✔ background decoration - replicate the same background decoration that is present in the product spotlight 1 in the same way - albeit slightly adjusted in proportionate ways to fulfill the same look on the Iems carousel track dimensions @done(26-03-25 07:38)
+    Iems card - subtle shadow for 3d effect
+    ☐ Style
+        ☐ Action: Add shadow and Ensure the shadow has a low opacity but a wide blur spread (e.g., rgba(0,0,0,0.05) with a 20px blur) to keep the elevation looking like natural ambient light rather than a harsh drop shadow.
+
+Dacs
+    Dacs - container and background
     ☐ structure
-        ☐ should change Iems's shelf container to fullBleed
-        ☐ inside Iems - top-lvl wrapper should be w-full (article)
+        ☐ should change Dacs's shelf container in page.tsx to receive fullBleed props
+        ☐ inside Dacs - top-lvl wrapper should be w-full (article)
         ☐ secondary wrapper should exist
     ☐ layout
         ☐ centered horizontally by top level container, should be w-max-1280px
         ☐ top level container should apply (padding) vertical top and bottom spacing with value from the spacing system present in global tailwind config
     ☐ style
-        ☐ background decoration - replicate the same background decoration that is present in the product spotlight 1 in the same way - albeit slightly adjusted in proportionate ways to fulfill the same look on the Iems carousel track dimensions
-    Iems card - subtle shadow for 3d effect
+        ☐ background decoration - replicate the same background decoration that is present in the product spotlight 1 in the same way - albeit slightly adjusted in proportionate ways to fulfill the same look on the Dacs carousel track dimensions
+    Dacs card - subtle shadow for 3d effect
     ☐ Style
         ☐ Action: Add shadow and Ensure the shadow has a low opacity but a wide blur spread (e.g., rgba(0,0,0,0.05) with a 20px blur) to keep the elevation looking like natural ambient light rather than a harsh drop shadow.
 

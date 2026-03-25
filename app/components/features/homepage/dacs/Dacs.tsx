@@ -26,7 +26,15 @@ export default async function DACs() {
   if (!products.length) return null;
 
   return (
-    <article className="w-full relative overflow-hidden border-secondary-800 px-4 md:px-8">
+    <article className="w-full relative overflow-hidden border-secondary-800 bg-brand-900">
+      <div aria-hidden="true" className="absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute -top-[20%] -right-[20%] w-[140%] h-[140%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-5" />
+        <div className="absolute top-[10%] -left-[10%] w-[80%] h-[80%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-10" />
+        <div className="absolute bottom-[5%] right-[5%] w-[40%] h-[40%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-20" />
+      </div>
+      <div className="relative z-10">
+        <div className="mx-auto max-w-[1280px] py-16">
+          <div className="relative overflow-hidden border-secondary-800 px-4 md:px-8">
       <Carousel
         itemsCount={products.length}
         breakpointMap={dacsBreakpointMap}
@@ -58,6 +66,9 @@ export default async function DACs() {
           </div>
         </div>
       </Carousel>
+          </div>
+        </div>
+      </div>
     </article>
   );
 }

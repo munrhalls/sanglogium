@@ -36,7 +36,7 @@ export default function HomePage() {
         <NewestRelease />
       </Shelf>
 
-      <Shelf>
+      <Shelf fullBleed>
         <Dacs />
       </Shelf>
 
