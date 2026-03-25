@@ -106,7 +106,7 @@ export default async function Featured() {
                 />
                 <CarouselDots color="brand-400" />
                 <CarouselNext
-                  className="transition-colors border-none shadow-none hover:bg-transparent focus:ring-0 active:scale-105 text-brand-400"
+                  className="transition-colors border-none shadow-none hover:bg-transparent active:scale-105 text-brand-400"
                 />
               </div>
             </div>
