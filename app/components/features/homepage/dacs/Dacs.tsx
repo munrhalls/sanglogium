@@ -57,11 +57,11 @@ export default async function DACs() {
 
           <div className="flex items-center justify-center md:flex-row gap-4 md:gap-8 md:col-start-2 md:row-start-1 md:justify-self-end md:pr-16">
             <CarouselPrevious
-              className="transition-colors border-none shadow-none h-4 w-4 hover:bg-transparent focus:ring-0 active:scale-110 text-brand-400"
+              className="transition-colors border-none shadow-none hover:bg-transparent focus:ring-0 active:scale-110 text-brand-400"
             />
             <CarouselDots color="brand-400" />
             <CarouselNext
-              className="transition-colors border-none shadow-none h-4 w-4 hover:bg-transparent focus:ring-0 active:scale-105 text-brand-400"
+              className="transition-colors border-none shadow-none hover:bg-transparent focus:ring-0 active:scale-105 text-brand-400"
             />
           </div>
         </div>

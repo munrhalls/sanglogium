@@ -8,7 +8,8 @@ export default function IemCard({ product, idx }: { product: IemProduct; idx: nu
     if (!product) return null;
 
     return (
-        <article className="card-product group flex h-full flex-col gap-4">
+        <a href={`/products/${product.slug}`} className="block group">
+            <article className="card-product flex h-full flex-col gap-4 group-hover:shadow-cardHover group-hover:-translate-y-1 transition-all duration-300">
             <div className="relative flex justify-center items-center aspect-square w-full overflow-hidden rounded-none bg-surface-productImage pt-12 pb-4 cursor-pointer">
                 <Image
                     src={urlFor(product.image).width(375).auto('format').quality(75).url()}
@@ -38,5 +39,6 @@ export default function IemCard({ product, idx }: { product: IemProduct; idx: nu
                 </div>
             </div>
         </article>
+        </a>
     )
 }

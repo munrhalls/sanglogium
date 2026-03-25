@@ -11,7 +11,8 @@ export default function DacCard({ item, idx }: { item: any; idx: number }) {
   const price = item.displayPrice ? `$${item.displayPrice}` : "Contact for Price";
 
   return (
-    <article className="card-product group flex h-full flex-col gap-4">
+  <a href={`/products/${item.slug}`} className="block group">
+    <article className="card-product flex h-full flex-col gap-4 group-hover:shadow-cardHover group-hover:-translate-y-1 transition-all duration-300">
       <figure className="aspect-[4/3] rounded-none relative flex w-full items-center justify-center overflow-hidden bg-surface-productImage p-6">
         <span className="absolute left-4 top-4 text-small font-bold uppercase tracking-editorial text-brand-900">
           {brandName}
@@ -39,5 +40,6 @@ export default function DacCard({ item, idx }: { item: any; idx: number }) {
         </button>
       </div>
     </article>
+  </a>
   );
 }

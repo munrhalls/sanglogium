@@ -29,7 +29,8 @@ const featuredBreakpointMap = {
 };
 
 export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
-  <article className="card-product group flex h-full flex-col gap-4">
+  <a href={`/products/${product.slug}`} className="block group">
+    <article className="card-product flex h-full flex-col gap-4 group-hover:shadow-cardHover group-hover:-translate-y-1 transition-all duration-300">
     <figure className="aspect-[4/3] relative flex w-full items-center justify-center overflow-hidden bg-surface-productImage p-6">
       <span className="absolute left-4 top-4 text-small font-bold uppercase tracking-editorial text-brand-900 z-10">
         {product.brand}
@@ -62,6 +63,7 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
       </div>
     </div>
   </article>
+  </a>
 );
 
 export default async function Featured() {
@@ -100,7 +102,7 @@ export default async function Featured() {
 
               <div className="flex items-center justify-center md:flex-row gap-4 md:gap-8 md:col-start-2 md:row-start-1 md:justify-self-end md:pr-16">
                 <CarouselPrevious
-                  className="transition-colors border-none shadow-none hover:bg-transparent focus:ring-0 active:scale-110 text-brand-400"
+                  className="transition-colors border-none shadow-none hover:bg-transparent active:scale-110 text-brand-400"
                 />
                 <CarouselDots color="brand-400" />
                 <CarouselNext
