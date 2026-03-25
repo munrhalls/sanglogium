@@ -40,9 +40,8 @@ export default function CategorySection({ category, items }: CategorySectionProp
     <Carousel itemsCount={filteredItems.length} breakpointMap={accessoriesBreakpointMap}>
       <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4">
         <div className="flex flex-col gap-4 md:col-start-1 md:row-start-1">
-          <h3 className="text-small text-cap font-bold uppercase flex items-center gap-3">
-            <span className="h-px w-8 bg-brand-400" />
-            {category.name}
+          <h3 className="text-small text-cap font-bold uppercase">
+            <span className="section-header-anchor">{category.name}</span>
           </h3>
         </div>
 

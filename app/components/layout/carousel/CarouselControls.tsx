@@ -26,6 +26,7 @@ export function CarouselPrevious({ className, ...props }: React.ButtonHTMLAttrib
       type="button"
       onClick={scrollPrev}
       disabled={!canScrollPrev}
+      aria-label="Previous slide"
       className={cn(BTN_BASE, className)}
       {...props}
     >
@@ -45,6 +46,7 @@ export function CarouselNext({ className, ...props }: React.ButtonHTMLAttributes
       type="button"
       onClick={scrollNext}
       disabled={!canScrollNext}
+      aria-label="Next slide"
       className={cn(BTN_BASE, className)}
       {...props}
     >
