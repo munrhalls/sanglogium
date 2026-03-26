@@ -16,8 +16,63 @@ async function buildCatalogueIndex() {
   console.log("🏗️  Building Catalogue Virtual File System...");
 
   try {
-    const catalogue = await client.fetch(`*[_id == "catalogue"][0].catalogue`);
-    if (!catalogue) throw new Error("No catalogue found in Sanity!");
+    const allItems = await client.fetch(`*[_type == "catalogueItem"]{ _id, title, type, slug, icon, sortOrder, "childRefs": children[]._ref }`);
+    if (!allItems || allItems.length === 0) throw new Error("No catalogue items found in Sanity!");
+
+    // Build lookup map
+    const itemById = {};
+    for (const item of allItems) {
+      itemById[item._id] = item;
+    }
+
+    // Identify root nodes (those that are not referenced as children)
+    const referencedIds = new Set();
+    for (const item of allItems) {
+      if (item.childRefs) {
+        for (const ref of item.childRefs) {
+          referencedIds.add(ref);
+        }
+      }
+    }
+
+    const rootNodes = allItems
+      .filter(item => !referencedIds.has(item._id))
+      .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+
+    // Tree reconstruction function
+    function buildTreeNode(doc) {
+      const node = {
+        _key: doc._id,
+        _type: "catalogueItem",
+        title: doc.title,
+        type: doc.type,
+      };
+
+      if (doc.slug?.current) {
+        node.slug = doc.slug;
+      }
+
+      if (doc.icon) {
+        node.icon = doc.icon;
+      }
+
+      if (doc.childRefs && doc.childRefs.length > 0) {
+        const children = doc.childRefs
+          .map(ref => itemById[ref])
+          .filter(Boolean)
+          .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0))
+          .map(buildTreeNode);
+
+        if (children.length > 0) {
+          node.children = children;
+        }
+      }
+
+      return node;
+    }
+
+    // Reconstruct the full tree
+    const tree = rootNodes.map(buildTreeNode);
 
     const slugToIdMap = {};
     const slotMetadataMap = {};
@@ -64,13 +119,13 @@ async function buildCatalogueIndex() {
       }
     }
 
-    traverse(catalogue);
+    traverse(tree);
 
     const output = {
       generatedAt: new Date().toISOString(),
       slugToIdMap,
       slotMetadataMap,
-      tree: catalogue,
+      tree,
     };
 
     const outputPath = path.join(process.cwd(), "data", "catalogue-index.json");

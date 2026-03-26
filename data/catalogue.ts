@@ -1,7 +1,16 @@
-import { Catalogue } from "@/sanity.types";
 import catalogueIndex from "./catalogue-index.json";
 
-export type CatalogueTree = Catalogue["catalogue"];
+export interface CatalogueTreeNode {
+  _key: string;
+  _type: "catalogueItem";
+  title: string;
+  type: "link" | "header";
+  slug?: { _type: "slug"; current: string };
+  icon?: string;
+  children?: CatalogueTreeNode[];
+}
+
+export type CatalogueTree = CatalogueTreeNode[];
 
 interface CatalogueIndexData {
   generatedAt: string;

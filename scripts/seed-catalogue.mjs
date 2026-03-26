@@ -142,48 +142,58 @@ const RAW_CATALOGUE = [
 
 // ─── Transformation ───────────────────────────────────────────────────────────
 //
-// Recursively walks the raw tree and injects the two things Sanity requires
-// on every object that appears inside an array:
-//
-//   _type  → must match the schema object name: "catalogueItem"
-//   _key   → must be a unique non-empty string across the whole document
-//
-// Slug objects already carry _type: "slug" in the source data — preserved as-is.
-// Header nodes without a slug have the slug field omitted entirely (not set to
-// null) to avoid Sanity Studio render warnings on hidden-but-populated fields.
+// Walks the raw tree and creates flat documents with references.
+// Each document gets a unique cuid2 ID that becomes both the document _id
+// and the _key used in child references.
 
-function transformNode(raw) {
-  const node = {
-    _type: "catalogueItem",
-    _key:  createId(),          // globally unique cuid2 string
-    title: raw.title,
-    type:  raw.type ?? "link",
-  };
+function flattenTree(rawArray, parentSortOrder = 0) {
+  const flatDocs = [];
 
-  // Only attach slug when it is genuinely present and has a value.
-  // Omit it completely for pure headers that have no slug in the source.
-  if (raw.slug?.current) {
-    node.slug = {
-      _type:   "slug",
-      current: raw.slug.current,
+  for (let i = 0; i < rawArray.length; i++) {
+    const raw = rawArray[i];
+
+    // Create flat document for this node
+    const doc = {
+      _id: createId(),                    // unique cuid2 string
+      _type: "catalogueItem",
+      title: raw.title,
+      type: raw.type ?? "link",
+      sortOrder: i,                      // preserve original array position
     };
+
+    // Only attach slug when it is genuinely present and has a value.
+    if (raw.slug?.current) {
+      doc.slug = {
+        _type: "slug",
+        current: raw.slug.current,
+      };
+    }
+
+    // Optional icon (root items only)
+    if (raw.icon) {
+      doc.icon = raw.icon;
+    }
+
+    // Children as references
+    if (Array.isArray(raw.children) && raw.children.length > 0) {
+      // First, recursively process children to get their document IDs
+      const childDocs = flattenTree(raw.children, i);
+
+      // Then create reference objects pointing to child documents
+      doc.children = childDocs.map(childDoc => ({
+        _type: "reference",
+        _ref:  childDoc._id,             // reference to child document by its _id
+        _key:  childDoc._id              // _key matches the _id for consistency
+      }));
+
+      // Add child documents to the flat array
+      flatDocs.push(...childDocs);
+    }
+
+    flatDocs.push(doc);
   }
 
-  // Optional icon (root items only)
-  if (raw.icon) {
-    node.icon = raw.icon;
-  }
-
-  // Recurse into children array
-  if (Array.isArray(raw.children) && raw.children.length > 0) {
-    node.children = raw.children.map(transformNode);
-  }
-
-  return node;
-}
-
-function transformCatalogue(rawArray) {
-  return rawArray.map(transformNode);
+  return flatDocs;
 }
 
 // ─── Seed function ────────────────────────────────────────────────────────────
@@ -194,50 +204,57 @@ async function seedCatalogue() {
   console.log(`    Dataset : ${DATASET}`);
 
   // 1. Transform
-  console.log("\n📐  Transforming raw data...");
-  const transformed = transformCatalogue(RAW_CATALOGUE);
-  console.log(`    ✓ Transformed ${transformed.length} top-level items`);
+  console.log("\n📐  Flattening raw data to flat documents...");
+  const flatDocuments = flattenTree(RAW_CATALOGUE);
+  console.log(`    ✓ Generated ${flatDocuments.length} flat documents`);
 
-  // Quick sanity-check: every node must have _key and _type
-  let nodeCount = 0;
-  function audit(nodes) {
-    for (const n of nodes) {
-      nodeCount++;
-      if (!n._key)  throw new Error(`Node "${n.title}" is missing _key`);
-      if (!n._type) throw new Error(`Node "${n.title}" is missing _type`);
-      if (n.children) audit(n.children);
+  // Quick sanity-check: every document must have _id and _type
+  let rootCount = 0;
+  let groupCount = 0;
+  let leafCount = 0;
+
+  for (const doc of flatDocuments) {
+    if (!doc._id)  throw new Error(`Document "${doc.title}" is missing _id`);
+    if (!doc._type) throw new Error(`Document "${doc.title}" is missing _type`);
+
+    if (doc.type === "header") {
+      if (doc.icon) {
+        rootCount++;
+      } else {
+        groupCount++;
+      }
+    } else {
+      leafCount++;
     }
   }
-  audit(transformed);
-  console.log(`    ✓ Audited ${nodeCount} total nodes — all have _key and _type`);
+
+  console.log(`    ✓ Audited: ${rootCount} roots, ${groupCount} groups, ${leafCount} leaves (${flatDocuments.length} total)`);
 
   // 2. Write to Sanity
-  //    createOrReplace is used (not patch) because it works whether the
-  //    document already exists or not, making the script safe to re-run.
-  console.log("\n🚀  Writing to Sanity Content Lake...");
+  console.log("\n🚀  Writing flat documents to Sanity Content Lake...");
 
-  const doc = {
-    _id:       "catalogue",   // singleton ID — matches the GROQ query in build-catalogue-index.mjs
-    _type:     "catalogue",   // matches catalogueType schema
-    catalogue: transformed,   // matches the array field name in catalogueType
-  };
+  const transaction = client.transaction();
 
-  await client.createOrReplace(doc);
-  console.log("    ✓ createOrReplace committed");
+  for (const doc of flatDocuments) {
+    transaction.createOrReplace(doc);
+  }
+
+  await transaction.commit();
+  console.log("    ✓ Transaction committed");
 
   // 3. Read-back verification
   console.log("\n🔍  Verifying write...");
-  const result = await client.fetch(`*[_id == "catalogue"][0].catalogue`);
+  const result = await client.fetch(`*[_type == "catalogueItem"]`);
 
-  if (!result) {
-    throw new Error("Read-back failed — document not found after write");
+  if (!result || result.length === 0) {
+    throw new Error("Read-back failed — no documents found after write");
   }
 
-  console.log(`    ✓ Read-back success: ${result.length} top-level items in Content Lake`);
+  console.log(`    ✓ Read-back success: ${result.length} catalogueItem documents in Content Lake`);
 
-  if (result.length !== RAW_CATALOGUE.length) {
+  if (result.length !== flatDocuments.length) {
     console.warn(
-      `⚠️  Expected ${RAW_CATALOGUE.length} top-level items but got ${result.length}`
+      `⚠️  Expected ${flatDocuments.length} documents but got ${result.length}`
     );
   }
 
@@ -245,12 +262,19 @@ async function seedCatalogue() {
   console.log(`
 ✅  Seed complete!
 
+Summary:
+  • Total documents created: ${result.length}
+  • Root nodes (with icon): ${rootCount}
+  • Group headers: ${groupCount}
+  • Leaf links: ${leafCount}
+
 Next steps:
-  1. Open http://localhost:3000/studio/structure/catalogue
-  2. You should see ${result.length} root items in the Catalogue array
-  3. Click "Publish" to promote the Draft to Published
+  1. Open http://localhost:3000/studio
+  2. Navigate to "Catalogue" in the sidebar
+  3. You should see ${result.length} individual catalogueItem documents
+  4. Click "Publish" to promote the Drafts to Published
      (frontend GROQ queries read from the published version by default)
-  4. Run:  node scripts/build-catalogue-index.mjs
+  5. Run:  node scripts/build-catalogue-index.mjs
      to regenerate data/catalogue-index.json from the live data
 `);
 }
