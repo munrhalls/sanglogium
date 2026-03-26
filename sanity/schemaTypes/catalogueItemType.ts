@@ -4,7 +4,7 @@ import { TagIcon, FolderIcon } from "@sanity/icons";
 export const catalogueItemType = defineType({
   name: "catalogueItem",
   title: "Catalogue Item",
-  type: "object",
+  type: "document",
   icon: TagIcon,
   fields: [
     defineField({
@@ -40,21 +40,25 @@ export const catalogueItemType = defineType({
       description: "e.g., 'headphones', 'speaker' (Used for root items)",
     }),
     defineField({
+      name: "sortOrder",
+      title: "Sort Order",
+      type: "number",
+      initialValue: 0,
+    }),
+    defineField({
       name: "children",
       title: "Sub-Items",
       type: "array",
-      of: [{ type: "catalogueItem" }],
+      of: [{ type: "reference", to: [{ type: "catalogueItem" }] }],
     }),
   ],
-  // preview: {
-  //   select: { title: "title", type: "type" },
-  //   prepare({ title, type }) {
-  //     // const isHeader = type === "header";
-  //     return {
-  //       title: title,
-  //       // subtitle: isHeader ? "📂 Visual Group" : "🔗 Catalogue Slot",
-  //       // media: isHeader ? FolderIcon : TagIcon,
-  //     };
-  //   },
-  // },
+  preview: {
+    select: { title: "title", type: "type" },
+    prepare({ title, type }) {
+      return {
+        title,
+        subtitle: type === "header" ? "Group" : "Link",
+      };
+    },
+  },
 });
