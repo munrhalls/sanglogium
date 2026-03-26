@@ -25,10 +25,10 @@
 
 ### DoD
 
-✔ [ ] 1.1 — In `scripts/build-catalogue-index.mjs`: rename the local variable `urlMap` to `slugToIdMap` and the local variable `idMap` to `slotMetadataMap`. Update the output object keys to match. Verify no other file in `scripts/` references the old names. @done(26-03-26 12:42)
+✔ [ ] 1.1 — In `scripts/build-catalogue-index.mjs`: rename the local variable `urlMap` to `slugToIdMap` and the local variable `idMap` to `slotMetadataMap`. Update the output object keys to match. Verify no other file in `scripts/` references the old names. @done(26-03-26 13:07)
   - Difficulty: 2 - C(scripts/build-catalogue-index.mjs): rename urlMap to slugToIdMap and idMap to slotMetadataMap — closes DoD item 1.1 on VFS_REFACTOR
 
-✔ [ ] 1.2 — Run `node scripts/build-catalogue-index.mjs` to regenerate `data/catalogue-index.json` with the new key names. Verify the output file contains `slugToIdMap` and `slotMetadataMap` at the top level, and `urlMap`/`idMap` no longer appear. @done(26-03-26 12:43)
+✔ [ ] 1.2 — Run `node scripts/build-catalogue-index.mjs` to regenerate `data/catalogue-index.json` with the new key names. Verify the output file contains `slugToIdMap` and `slotMetadataMap` at the top level, and `urlMap`/`idMap` no longer appear. @done(26-03-26 13:07)
   - Difficulty: 1 - D(data/catalogue-index.json): regenerate VFS manifest with renamed keys — closes DoD item 1.2 on VFS_REFACTOR
 
 ✔ [ ] 1.3 — In `data/catalogue.ts`: rename `getCatalogueIdByUrl` to `resolveSlugToId`, rename the parameter from `url` to `slug`. Update the internal access from `data.urlMap[url]` to `data.slugToIdMap[slug]`. Update the `CatalogueIndexData` interface fields from `urlMap`/`idMap` to `slugToIdMap`/`slotMetadataMap`. @done(26-03-26 12:43)
@@ -81,8 +81,8 @@
 
 ### DoD
 
-- [ ] 3.1 — Create `catalogue_test/vfs.test.ts`. Import `resolveSlugToId`, `unrollDescendantKeys`, and `buildGroqKeysParam` from `@/data/catalogue`. Import the raw manifest from `@/data/catalogue-index.json`. Implement the following test groups.
-  - Difficulty: 8 - A(catalogue_test/vfs.test.ts): implement complete VFS test suite — closes DoD item 3.1 on VFS_REFACTOR
+✔ [ ] 3.1 — Create `catalogue_test/vfs.test.ts`. Import `resolveSlugToId`, `unrollDescendantKeys`, and `buildGroqKeysParam` from `@/data/catalogue`. Import the raw manifest from `@/data/catalogue-index.json`. Implement the following test groups. @done(26-03-26 13:11)
+  ✔ Difficulty: 8 - A(catalogue_test/vfs.test.ts): implement complete VFS test suite — closes DoD item 3.1 on VFS_REFACTOR @done(26-03-26 13:07)
 
   **Test Group 1 — Slug Resolution (4 tests):**
   - 1.1: `resolveSlugToId("headphones")` === `"zemHaTBY7QMZEyx6WgMYi"`
@@ -113,7 +113,7 @@
   - 5.1: `resolveSlugToId("headphones")` -> `unrollDescendantKeys(result)` -> returns 13 keys
   - 5.2: `resolveSlugToId("fake-category")` returns `undefined`
 
-- [ ] 3.2 — Run the test suite. All 19 tests must pass. Capture output.
+✔ [ ] 3.2 — Run the test suite. All 19 tests must pass. Capture output. @done(26-03-26 13:08)
   - Difficulty: 1 - E(catalogue_test): execute test suite and verify all pass — closes DoD item 3.2 on VFS_REFACTOR
 
 ---
