@@ -43,7 +43,6 @@ function runTest(testName: string, testFn: () => void) {
   }
 }
 
-// Test Group 1 — Slug Resolution (4 tests)
 runTest("1.1: resolveSlugToId('headphones')", () => {
   assertEqual(resolveSlugToId("headphones"), "zemHaTBY7QMZEyx6WgMYi", "headphones slug resolution");
 });
@@ -60,7 +59,6 @@ runTest("1.4: resolveSlugToId('')", () => {
   assertEqual(resolveSlugToId(""), undefined, "empty slug resolution");
 });
 
-// Test Group 2 — Slot Metadata Lookup (5 tests)
 runTest("2.1: Manifest slotMetadataMap title lookup", () => {
   assertEqual(manifest.slotMetadataMap["zemHaTBY7QMZEyx6WgMYi"].title, "Headphones & Personal Audio ", "title lookup");
 });
@@ -81,7 +79,6 @@ runTest("2.5: Manifest slotMetadataMap fake ID lookup", () => {
   assertEqual(manifest.slotMetadataMap["fake_id"], undefined, "fake ID lookup");
 });
 
-// Test Group 3 — Key Unrolling (5 tests)
 runTest("3.1: unrollDescendantKeys leaf node", () => {
   const result = unrollDescendantKeys("sXIqLWIxMpCT5E2VxPkad");
   assertArrayEqual(result, ["sXIqLWIxMpCT5E2VxPkad"], "leaf node unrolling");
@@ -114,7 +111,6 @@ runTest("3.5: unrollDescendantKeys validity check", () => {
   }
 });
 
-// Test Group 4 — GROQ Param Generation (3 tests)
 runTest("4.1: buildGroqKeysParam single key", () => {
   const result = buildGroqKeysParam(["sXIqLWIxMpCT5E2VxPkad"]);
   assertArrayEqual(result, ["sXIqLWIxMpCT5E2VxPkad"], "single key param generation");
@@ -131,7 +127,6 @@ runTest("4.3: buildGroqKeysParam unrolled keys", () => {
   assertEqual(result.length, 4, "unrolled keys param generation");
 });
 
-// Test Group 5 — Full-Path Integration (2 tests)
 runTest("5.1: Full path integration - headphones", () => {
   const resolved = resolveSlugToId("headphones");
   assert(resolved !== undefined, "headphones resolved");
