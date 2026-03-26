@@ -1,46 +1,327 @@
 {
-  "generatedAt": "2026-03-26T15:55:57.053Z",
-  "slugToIdMap": {},
+  "generatedAt": "2026-03-26T19:02:16.745Z",
+  "slugToIdMap": {
+    "open-back": "o7c6baiuobsr7ni2y2vf22sh",
+    "closed-back": "yq3p9s798zszjkzm5btnebjh",
+    "planar-magnetic": "yd9641q8fiuh9rgoupauw2zl",
+    "dynamic": "j751evwbn8n9aac4elrekqi4",
+    "electrostatic": "icmc3j8qzjiffr9h6tw6kg74",
+    "monitors-iems": "t2anvkkjfz9knqi85kozuaze",
+    "true-wireless-tws": "sbbu2eig5fx84uht05ic863j",
+    "desktop-amps": "o6mz3kbs5xla8ixastppktsd",
+    "portable-amps": "ipz8oe0elii0vm2voxsbgsw6",
+    "standalone-dacs": "mpni93r13d9yo2vn5moexlkp",
+    "dac-amp-combos": "o37u0yjphzt3qu91ewnww2yj",
+    "digital-players-daps": "o9igtdq1g5oqaahpa0zvq238",
+    "network-streamers": "npwbgqg3v4t5qe95rg35wte0",
+    "headphone-cables": "vnrj2n32p172vcje1tt3s4ls",
+    "interconnects": "ck7d2wm9xe6lujtdfq7biyh7",
+    "adapters": "jdxde1qpftseepekaivzpl8c",
+    "earpads": "j2yu4yvtje69j6gie4spxutu",
+    "care-cleaning": "ab2xhkm6hgabf69y0f3s4oo0",
+    "headphone-stands": "u9o83mfmx23cudko8phu5otx",
+    "carrying-cases": "j8ls622l90d6m4xetlajua4y"
+  },
   "slotMetadataMap": {
-    "ifcy734fq76iilnt6ev8zyz5": {
+    "ugyeto8653n495dpf89nzoar": {
       "title": "Headphones",
       "url": "#",
       "slug": "headphones",
       "breadcrumbs": [],
       "children": [
-        "e4ufygd9u98pkky1wvqkiox3",
-        "v4bhr8vzpb0l8nlz4gh2cqov",
-        "cq7wdjbq5k07x7o0d67md1dm"
+        "ekv4twh175wcse4fl4jjdxfq",
+        "px3eujo0ql1hot9dkoxleao6",
+        "fxvwrl18sixw5b9ro2jrlepa"
       ],
       "type": "header"
     },
-    "q9sd8de4ian3qrnwjzs4b1nn": {
+    "o7c6baiuobsr7ni2y2vf22sh": {
+      "title": "Open-Back",
+      "url": "/shop/open-back",
+      "slug": "open-back",
+      "breadcrumbs": [
+        {
+          "label": "Open-Back",
+          "url": "/shop/open-back"
+        }
+      ],
+      "children": [],
+      "type": "link"
+    },
+    "yq3p9s798zszjkzm5btnebjh": {
+      "title": "Closed-Back",
+      "url": "/shop/closed-back",
+      "slug": "closed-back",
+      "breadcrumbs": [
+        {
+          "label": "Closed-Back",
+          "url": "/shop/closed-back"
+        }
+      ],
+      "children": [],
+      "type": "link"
+    },
+    "yd9641q8fiuh9rgoupauw2zl": {
+      "title": "Planar Magnetic",
+      "url": "/shop/planar-magnetic",
+      "slug": "planar-magnetic",
+      "breadcrumbs": [
+        {
+          "label": "Planar Magnetic",
+          "url": "/shop/planar-magnetic"
+        }
+      ],
+      "children": [],
+      "type": "link"
+    },
+    "j751evwbn8n9aac4elrekqi4": {
+      "title": "Dynamic",
+      "url": "/shop/dynamic",
+      "slug": "dynamic",
+      "breadcrumbs": [
+        {
+          "label": "Dynamic",
+          "url": "/shop/dynamic"
+        }
+      ],
+      "children": [],
+      "type": "link"
+    },
+    "icmc3j8qzjiffr9h6tw6kg74": {
+      "title": "Electrostatic",
+      "url": "/shop/electrostatic",
+      "slug": "electrostatic",
+      "breadcrumbs": [
+        {
+          "label": "Electrostatic",
+          "url": "/shop/electrostatic"
+        }
+      ],
+      "children": [],
+      "type": "link"
+    },
+    "t2anvkkjfz9knqi85kozuaze": {
+      "title": "Monitors (IEMs)",
+      "url": "/shop/monitors-iems",
+      "slug": "monitors-iems",
+      "breadcrumbs": [
+        {
+          "label": "Monitors (IEMs)",
+          "url": "/shop/monitors-iems"
+        }
+      ],
+      "children": [],
+      "type": "link"
+    },
+    "sbbu2eig5fx84uht05ic863j": {
+      "title": "True Wireless (TWS)",
+      "url": "/shop/true-wireless-tws",
+      "slug": "true-wireless-tws",
+      "breadcrumbs": [
+        {
+          "label": "True Wireless (TWS)",
+          "url": "/shop/true-wireless-tws"
+        }
+      ],
+      "children": [],
+      "type": "link"
+    },
+    "ti2wufd15h51jxtq855ogbfa": {
       "title": "Audio Electronics",
       "url": "#",
       "slug": "audio-electronics",
       "breadcrumbs": [],
       "children": [
-        "blfr0r543dfou8kns6laivt9",
-        "dymk95phg3wdyycalveehvze"
+        "hqb22ca5czb252r0r7l1xmet",
+        "lkuqr2n1gpeivrvxisnfs3ot"
       ],
       "type": "header"
     },
-    "s2t0urixbahebe8vayp3i527": {
+    "o6mz3kbs5xla8ixastppktsd": {
+      "title": "Desktop Amps",
+      "url": "/shop/desktop-amps",
+      "slug": "desktop-amps",
+      "breadcrumbs": [
+        {
+          "label": "Desktop Amps",
+          "url": "/shop/desktop-amps"
+        }
+      ],
+      "children": [],
+      "type": "link"
+    },
+    "ipz8oe0elii0vm2voxsbgsw6": {
+      "title": "Portable Amps",
+      "url": "/shop/portable-amps",
+      "slug": "portable-amps",
+      "breadcrumbs": [
+        {
+          "label": "Portable Amps",
+          "url": "/shop/portable-amps"
+        }
+      ],
+      "children": [],
+      "type": "link"
+    },
+    "mpni93r13d9yo2vn5moexlkp": {
+      "title": "Standalone DACs",
+      "url": "/shop/standalone-dacs",
+      "slug": "standalone-dacs",
+      "breadcrumbs": [
+        {
+          "label": "Standalone DACs",
+          "url": "/shop/standalone-dacs"
+        }
+      ],
+      "children": [],
+      "type": "link"
+    },
+    "o37u0yjphzt3qu91ewnww2yj": {
+      "title": "DAC/Amp Combos",
+      "url": "/shop/dac-amp-combos",
+      "slug": "dac-amp-combos",
+      "breadcrumbs": [
+        {
+          "label": "DAC/Amp Combos",
+          "url": "/shop/dac-amp-combos"
+        }
+      ],
+      "children": [],
+      "type": "link"
+    },
+    "o9igtdq1g5oqaahpa0zvq238": {
+      "title": "Digital Players (DAPs)",
+      "url": "/shop/digital-players-daps",
+      "slug": "digital-players-daps",
+      "breadcrumbs": [
+        {
+          "label": "Digital Players (DAPs)",
+          "url": "/shop/digital-players-daps"
+        }
+      ],
+      "children": [],
+      "type": "link"
+    },
+    "npwbgqg3v4t5qe95rg35wte0": {
+      "title": "Network Streamers",
+      "url": "/shop/network-streamers",
+      "slug": "network-streamers",
+      "breadcrumbs": [
+        {
+          "label": "Network Streamers",
+          "url": "/shop/network-streamers"
+        }
+      ],
+      "children": [],
+      "type": "link"
+    },
+    "j9ozs17mc0b1nv2gqn2rvmg1": {
       "title": "Accessories",
       "url": "#",
       "slug": "accessories",
       "breadcrumbs": [],
       "children": [
-        "f1qa8om5x7saypebsfmwzaaq",
-        "c1vy4vh85ddenw7x5xs8s14h",
-        "k4wuxmkjci5b57h856jvrzj1"
+        "lhpqqb5qkfvh4kid6q6455eu",
+        "e4rct8015rxgy011710isd5e",
+        "rw0symuvdvebq75r4og53tlf"
       ],
       "type": "header"
+    },
+    "vnrj2n32p172vcje1tt3s4ls": {
+      "title": "Headphone Cables",
+      "url": "/shop/headphone-cables",
+      "slug": "headphone-cables",
+      "breadcrumbs": [
+        {
+          "label": "Headphone Cables",
+          "url": "/shop/headphone-cables"
+        }
+      ],
+      "children": [],
+      "type": "link"
+    },
+    "ck7d2wm9xe6lujtdfq7biyh7": {
+      "title": "Interconnects",
+      "url": "/shop/interconnects",
+      "slug": "interconnects",
+      "breadcrumbs": [
+        {
+          "label": "Interconnects",
+          "url": "/shop/interconnects"
+        }
+      ],
+      "children": [],
+      "type": "link"
+    },
+    "jdxde1qpftseepekaivzpl8c": {
+      "title": "Adapters",
+      "url": "/shop/adapters",
+      "slug": "adapters",
+      "breadcrumbs": [
+        {
+          "label": "Adapters",
+          "url": "/shop/adapters"
+        }
+      ],
+      "children": [],
+      "type": "link"
+    },
+    "j2yu4yvtje69j6gie4spxutu": {
+      "title": "Earpads",
+      "url": "/shop/earpads",
+      "slug": "earpads",
+      "breadcrumbs": [
+        {
+          "label": "Earpads",
+          "url": "/shop/earpads"
+        }
+      ],
+      "children": [],
+      "type": "link"
+    },
+    "ab2xhkm6hgabf69y0f3s4oo0": {
+      "title": "Care & Cleaning",
+      "url": "/shop/care-cleaning",
+      "slug": "care-cleaning",
+      "breadcrumbs": [
+        {
+          "label": "Care & Cleaning",
+          "url": "/shop/care-cleaning"
+        }
+      ],
+      "children": [],
+      "type": "link"
+    },
+    "u9o83mfmx23cudko8phu5otx": {
+      "title": "Headphone Stands",
+      "url": "/shop/headphone-stands",
+      "slug": "headphone-stands",
+      "breadcrumbs": [
+        {
+          "label": "Headphone Stands",
+          "url": "/shop/headphone-stands"
+        }
+      ],
+      "children": [],
+      "type": "link"
+    },
+    "j8ls622l90d6m4xetlajua4y": {
+      "title": "Carrying Cases",
+      "url": "/shop/carrying-cases",
+      "slug": "carrying-cases",
+      "breadcrumbs": [
+        {
+          "label": "Carrying Cases",
+          "url": "/shop/carrying-cases"
+        }
+      ],
+      "children": [],
+      "type": "link"
     }
   },
   "tree": [
     {
-      "_key": "ifcy734fq76iilnt6ev8zyz5",
+      "_key": "ugyeto8653n495dpf89nzoar",
       "_type": "catalogueItem",
       "title": "Headphones",
       "type": "header",
@@ -51,13 +332,13 @@
       "icon": "headphones",
       "children": [
         {
-          "_key": "e4ufygd9u98pkky1wvqkiox3",
+          "_key": "ekv4twh175wcse4fl4jjdxfq",
           "_type": "catalogueItem",
           "title": "By Design",
           "type": "header",
           "children": [
             {
-              "_key": "my1r79pin54keco76qdg9pb0",
+              "_key": "o7c6baiuobsr7ni2y2vf22sh",
               "_type": "catalogueItem",
               "title": "Open-Back",
               "type": "link",
@@ -67,7 +348,7 @@
               }
             },
             {
-              "_key": "k16pq7i973us3iwjl5knjma8",
+              "_key": "yq3p9s798zszjkzm5btnebjh",
               "_type": "catalogueItem",
               "title": "Closed-Back",
               "type": "link",
@@ -79,13 +360,13 @@
           ]
         },
         {
-          "_key": "v4bhr8vzpb0l8nlz4gh2cqov",
+          "_key": "px3eujo0ql1hot9dkoxleao6",
           "_type": "catalogueItem",
           "title": "By Driver",
           "type": "header",
           "children": [
             {
-              "_key": "fz9xh06dqjci1u7j99v1v6li",
+              "_key": "yd9641q8fiuh9rgoupauw2zl",
               "_type": "catalogueItem",
               "title": "Planar Magnetic",
               "type": "link",
@@ -95,7 +376,7 @@
               }
             },
             {
-              "_key": "vqw2gbuejkhu0m798ctdsssk",
+              "_key": "j751evwbn8n9aac4elrekqi4",
               "_type": "catalogueItem",
               "title": "Dynamic",
               "type": "link",
@@ -105,7 +386,7 @@
               }
             },
             {
-              "_key": "t9rc4nzf0rc8uxup3j0jkxcq",
+              "_key": "icmc3j8qzjiffr9h6tw6kg74",
               "_type": "catalogueItem",
               "title": "Electrostatic",
               "type": "link",
@@ -117,13 +398,13 @@
           ]
         },
         {
-          "_key": "cq7wdjbq5k07x7o0d67md1dm",
+          "_key": "fxvwrl18sixw5b9ro2jrlepa",
           "_type": "catalogueItem",
           "title": "In-Ear & Wireless",
           "type": "header",
           "children": [
             {
-              "_key": "n86c0v4huayy27hwa3g621hh",
+              "_key": "t2anvkkjfz9knqi85kozuaze",
               "_type": "catalogueItem",
               "title": "Monitors (IEMs)",
               "type": "link",
@@ -133,7 +414,7 @@
               }
             },
             {
-              "_key": "dvwsabzlrx0gbdezoljcv5dz",
+              "_key": "sbbu2eig5fx84uht05ic863j",
               "_type": "catalogueItem",
               "title": "True Wireless (TWS)",
               "type": "link",
@@ -147,7 +428,7 @@
       ]
     },
     {
-      "_key": "q9sd8de4ian3qrnwjzs4b1nn",
+      "_key": "ti2wufd15h51jxtq855ogbfa",
       "_type": "catalogueItem",
       "title": "Audio Electronics",
       "type": "header",
@@ -158,13 +439,13 @@
       "icon": "audio-electronics",
       "children": [
         {
-          "_key": "blfr0r543dfou8kns6laivt9",
+          "_key": "hqb22ca5czb252r0r7l1xmet",
           "_type": "catalogueItem",
           "title": "Amplification",
           "type": "header",
           "children": [
             {
-              "_key": "n79lr7vk4cnxbiwfxqalcrj1",
+              "_key": "o6mz3kbs5xla8ixastppktsd",
               "_type": "catalogueItem",
               "title": "Desktop Amps",
               "type": "link",
@@ -174,7 +455,7 @@
               }
             },
             {
-              "_key": "l5s8zjsyvssy9poxoef41fd9",
+              "_key": "ipz8oe0elii0vm2voxsbgsw6",
               "_type": "catalogueItem",
               "title": "Portable Amps",
               "type": "link",
@@ -186,13 +467,13 @@
           ]
         },
         {
-          "_key": "dymk95phg3wdyycalveehvze",
+          "_key": "lkuqr2n1gpeivrvxisnfs3ot",
           "_type": "catalogueItem",
           "title": "Digital Sources",
           "type": "header",
           "children": [
             {
-              "_key": "wj9m0v6a9i0yxxz9ce84np3q",
+              "_key": "mpni93r13d9yo2vn5moexlkp",
               "_type": "catalogueItem",
               "title": "Standalone DACs",
               "type": "link",
@@ -202,7 +483,7 @@
               }
             },
             {
-              "_key": "lz1fxen2unbqhhzhv1mdu1ho",
+              "_key": "o37u0yjphzt3qu91ewnww2yj",
               "_type": "catalogueItem",
               "title": "DAC/Amp Combos",
               "type": "link",
@@ -212,7 +493,7 @@
               }
             },
             {
-              "_key": "og0jl4b9yw5hsio5xhvb3pxu",
+              "_key": "o9igtdq1g5oqaahpa0zvq238",
               "_type": "catalogueItem",
               "title": "Digital Players (DAPs)",
               "type": "link",
@@ -222,7 +503,7 @@
               }
             },
             {
-              "_key": "xfo5k8dtslvl9u4dv4q38w6h",
+              "_key": "npwbgqg3v4t5qe95rg35wte0",
               "_type": "catalogueItem",
               "title": "Network Streamers",
               "type": "link",
@@ -236,7 +517,7 @@
       ]
     },
     {
-      "_key": "s2t0urixbahebe8vayp3i527",
+      "_key": "j9ozs17mc0b1nv2gqn2rvmg1",
       "_type": "catalogueItem",
       "title": "Accessories",
       "type": "header",
@@ -247,13 +528,13 @@
       "icon": "accessories",
       "children": [
         {
-          "_key": "f1qa8om5x7saypebsfmwzaaq",
+          "_key": "lhpqqb5qkfvh4kid6q6455eu",
           "_type": "catalogueItem",
           "title": "Connectivity",
           "type": "header",
           "children": [
             {
-              "_key": "eeth068eswfqf39yu5e5bnzr",
+              "_key": "vnrj2n32p172vcje1tt3s4ls",
               "_type": "catalogueItem",
               "title": "Headphone Cables",
               "type": "link",
@@ -263,7 +544,7 @@
               }
             },
             {
-              "_key": "pxph704a7ymc1p2o4ro5d5a0",
+              "_key": "ck7d2wm9xe6lujtdfq7biyh7",
               "_type": "catalogueItem",
               "title": "Interconnects",
               "type": "link",
@@ -273,7 +554,7 @@
               }
             },
             {
-              "_key": "n5kz7oolb407hdbnrjrs7dyq",
+              "_key": "jdxde1qpftseepekaivzpl8c",
               "_type": "catalogueItem",
               "title": "Adapters",
               "type": "link",
@@ -285,13 +566,13 @@
           ]
         },
         {
-          "_key": "c1vy4vh85ddenw7x5xs8s14h",
+          "_key": "e4rct8015rxgy011710isd5e",
           "_type": "catalogueItem",
           "title": "Maintenance",
           "type": "header",
           "children": [
             {
-              "_key": "geog8npxjtubwraannd12owj",
+              "_key": "j2yu4yvtje69j6gie4spxutu",
               "_type": "catalogueItem",
               "title": "Earpads",
               "type": "link",
@@ -301,7 +582,7 @@
               }
             },
             {
-              "_key": "apxnqkjzeiqnm2x8fa48vj1l",
+              "_key": "ab2xhkm6hgabf69y0f3s4oo0",
               "_type": "catalogueItem",
               "title": "Care & Cleaning",
               "type": "link",
@@ -313,13 +594,13 @@
           ]
         },
         {
-          "_key": "k4wuxmkjci5b57h856jvrzj1",
+          "_key": "rw0symuvdvebq75r4og53tlf",
           "_type": "catalogueItem",
           "title": "Storage",
           "type": "header",
           "children": [
             {
-              "_key": "johkqbud0awfxk4ers408dgq",
+              "_key": "u9o83mfmx23cudko8phu5otx",
               "_type": "catalogueItem",
               "title": "Headphone Stands",
               "type": "link",
@@ -329,7 +610,7 @@
               }
             },
             {
-              "_key": "e082tw5wzcoxw5wykmfngibq",
+              "_key": "j8ls622l90d6m4xetlajua4y",
               "_type": "catalogueItem",
               "title": "Carrying Cases",
               "type": "link",

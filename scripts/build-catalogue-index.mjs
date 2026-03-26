@@ -16,27 +16,30 @@ async function buildCatalogueIndex() {
   console.log("🏗️  Building Catalogue Virtual File System...");
 
   try {
-    const allItems = await client.fetch(`*[_type == "catalogueItem"]{ _id, title, type, slug, icon, sortOrder, "childRefs": children[]._ref }`);
+    const allItems = await client.fetch(`*[_type == "catalogueItem"]{ _id, title, type, slug, icon, sortOrder, "parentId": parent._ref }`);
     if (!allItems || allItems.length === 0) throw new Error("No catalogue items found in Sanity!");
 
     // Build lookup map
     const itemById = {};
     for (const item of allItems) {
       itemById[item._id] = item;
+      // Initialize children array for reconstruction
+      item.children = [];
     }
 
-    // Identify root nodes (those that are not referenced as children)
-    const referencedIds = new Set();
+    // Rebuild tree using parent references (adjacency list inversion)
     for (const item of allItems) {
-      if (item.childRefs) {
-        for (const ref of item.childRefs) {
-          referencedIds.add(ref);
+      if (item.parentId) {
+        const parent = itemById[item.parentId];
+        if (parent) {
+          parent.children.push(item);
         }
       }
     }
 
+    // Identify root nodes (those with no parent)
     const rootNodes = allItems
-      .filter(item => !referencedIds.has(item._id))
+      .filter(item => !item.parentId)
       .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
 
     // Tree reconstruction function
@@ -56,10 +59,8 @@ async function buildCatalogueIndex() {
         node.icon = doc.icon;
       }
 
-      if (doc.childRefs && doc.childRefs.length > 0) {
-        const children = doc.childRefs
-          .map(ref => itemById[ref])
-          .filter(Boolean)
+      if (doc.children && doc.children.length > 0) {
+        const children = doc.children
           .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0))
           .map(buildTreeNode);
 
@@ -81,39 +82,42 @@ async function buildCatalogueIndex() {
       if (!nodes) return;
 
       for (const node of nodes) {
-        if (!node.slug?.current) continue;
-
-        if (!node.type && node.type) node.type = node.type;
         if (!node.type) node.type = "link";
 
         const isHeader = node.type === "header";
-        const currentSlug = node.slug.current;
+        const currentSlug = node.slug?.current;
 
-        const pathSegments = isHeader
+        // Skip invalid non-header nodes that lack a slug entirely
+        if (!isHeader && !currentSlug) continue;
+
+        const pathSegments = isHeader || !currentSlug
           ? parentPath
           : [...parentPath, currentSlug];
 
         const urlString = pathSegments.join("/");
 
-        const nextBreadcrumbs = isHeader
+        const nextBreadcrumbs = isHeader || !currentSlug
           ? parentBreadcrumbs
           : [
               ...parentBreadcrumbs,
               { label: node.title, url: `/shop/${urlString}` },
             ];
 
-        if (!isHeader) {
-          slugToIdMap[urlString] = node._key;
-        }
+        // Only register nodes that actually have slugs
+        if (currentSlug) {
+          if (!isHeader) {
+            slugToIdMap[urlString] = node._key;
+          }
 
-        slotMetadataMap[node._key] = {
-          title: node.title,
-          url: isHeader ? "#" : `/shop/${urlString}`,
-          slug: currentSlug,
-          breadcrumbs: nextBreadcrumbs,
-          children: node.children?.map((c) => c._key) || [],
-          type: node.type,
-        };
+          slotMetadataMap[node._key] = {
+            title: node.title,
+            url: isHeader ? "#" : `/shop/${urlString}`,
+            slug: currentSlug,
+            breadcrumbs: nextBreadcrumbs,
+            children: node.children?.map((c) => c._key) || [],
+            type: node.type,
+          };
+        }
 
         traverse(node.children, pathSegments, nextBreadcrumbs);
       }

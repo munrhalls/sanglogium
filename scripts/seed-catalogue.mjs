@@ -146,7 +146,7 @@ const RAW_CATALOGUE = [
 // Each document gets a unique cuid2 ID that becomes both the document _id
 // and the _key used in child references.
 
-function flattenTree(rawArray, parentSortOrder = 0) {
+function flattenTree(rawArray, parentId = null, parentSortOrder = 0) {
   const flatDocs = [];
 
   for (let i = 0; i < rawArray.length; i++) {
@@ -174,17 +174,18 @@ function flattenTree(rawArray, parentSortOrder = 0) {
       doc.icon = raw.icon;
     }
 
-    // Children as references
+    // Parent reference (optional - roots will have no parent)
+    if (parentId) {
+      doc.parent = {
+        _type: "reference",
+        _ref: parentId
+      };
+    }
+
+    // Children as references - recursively process and add to flat array
     if (Array.isArray(raw.children) && raw.children.length > 0) {
       // First, recursively process children to get their document IDs
-      const childDocs = flattenTree(raw.children, i);
-
-      // Then create reference objects pointing to child documents
-      doc.children = childDocs.map(childDoc => ({
-        _type: "reference",
-        _ref:  childDoc._id,             // reference to child document by its _id
-        _key:  childDoc._id              // _key matches the _id for consistency
-      }));
+      const childDocs = flattenTree(raw.children, doc._id, i);
 
       // Add child documents to the flat array
       flatDocs.push(...childDocs);
