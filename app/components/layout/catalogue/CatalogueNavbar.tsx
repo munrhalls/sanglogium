@@ -2,23 +2,12 @@ import React from "react";
 import { CatalogueView } from "./CatalogueView";
 import NavbarManager from "./NavbarManager";
 import catalogueDataRaw from "./catalogue.json";
+import { transformCatalogueJson } from "./catalogue-nav.utils";
 import type { CatalogueNavItem } from "./catalogue-nav.types";
 import { cn } from "@/lib/utils/tailwind";
 
 const CatalogueNavbar = async () => {
-  // Transform catalogue.json to match original CatalogueNavItem interface
-  const catalogueData: CatalogueNavItem[] = catalogueDataRaw.catalogue.map((item: any) => ({
-    id: item.slug?.current || item.title.toLowerCase().replace(/\s+/g, '-'),
-    label: item.title,
-    imageUrl: `/images/${item.icon}-skeletal.png`,
-    sections: (item.children || []).map((child: any) => ({
-      title: child.title,
-      links: (child.children || []).map((link: any) => link.title)
-    })),
-    feature: {
-      caption: "Pure Resonance"
-    }
-  }));
+  const catalogueData: CatalogueNavItem[] = transformCatalogueJson(catalogueDataRaw);
 
   const navLinks = catalogueData.map((item) => ({
     id: item.id,

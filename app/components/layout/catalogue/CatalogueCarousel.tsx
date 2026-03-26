@@ -6,23 +6,13 @@ import { CarouselSlide } from "@/app/components/layout/carousel/CarouselSlide";
 
 import { CatalogueView } from "@/app/components/layout/catalogue/CatalogueView";
 import catalogueDataRaw from "@/app/components/layout/catalogue/catalogue.json";
+import { transformCatalogueJson } from "@/app/components/layout/catalogue/catalogue-nav.utils";
 import type { CatalogueNavItem } from "@/app/components/layout/catalogue/catalogue-nav.types";
 
 import { cn } from "@/lib/utils/tailwind";
 
 export default function CatalogueCarousel() {
-  const catalogueData: CatalogueNavItem[] = catalogueDataRaw.catalogue.map((item: any) => ({
-    id: item.slug?.current || item.title.toLowerCase().replace(/\s+/g, '-'),
-    label: item.title,
-    imageUrl: `/images/${item.icon}-skeletal.png`,
-    sections: (item.children || []).map((child: any) => ({
-      title: child.title,
-      links: (child.children || []).map((link: any) => link.title)
-    })),
-    feature: {
-      caption: "Pure Resonance"
-    }
-  }));
+  const catalogueData: CatalogueNavItem[] = transformCatalogueJson(catalogueDataRaw);
 
   return (
     <nav

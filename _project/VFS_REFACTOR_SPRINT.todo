@@ -54,19 +54,19 @@
 
 ### DoD
 
-- [ ] 2.1 — In `data/catalogue.ts`: implement and export `unrollDescendantKeys(nodeId: string): string[]`. The function must: (a) Load `slotMetadataMap` from the manifest. (b) If `nodeId` is not found, return `[]`. (c) Return an array containing `nodeId` itself plus all descendant IDs found by recursively looking up `children` in `slotMetadataMap`. (d) Use a `Set` internally to prevent infinite loops if the data has cycles.
+✔ [ ] 2.1 — In `data/catalogue.ts`: implement and export `unrollDescendantKeys(nodeId: string): string[]`. The function must: (a) Load `slotMetadataMap` from the manifest. (b) If `nodeId` is not found, return `[]`. (c) Return an array containing `nodeId` itself plus all descendant IDs found by recursively looking up `children` in `slotMetadataMap`. (d) Use a `Set` internally to prevent infinite loops if the data has cycles. @done(26-03-26 12:59)
   - Difficulty: 5 - A(data/catalogue.ts): implement VFS key unrolling pure function — closes DoD item 2.1 on VFS_REFACTOR
 
-- [ ] 2.2 — In `data/catalogue.ts`: implement and export `buildGroqKeysParam(keys: string[]): string[]`. This function simply returns the input array. Its purpose is to act as a semantic boundary — the caller passes unrolled keys, the output is ready for GROQ `$params`. If the input is empty, return `[]`.
+✔ [ ] 2.2 — In `data/catalogue.ts`: implement and export `buildGroqKeysParam(keys: string[]): string[]`. This function simply returns the input array. Its purpose is to act as a semantic boundary — the caller passes unrolled keys, the output is ready for GROQ `$params`. If the input is empty, return `[]`. @done(26-03-26 12:59)
   - Difficulty: 1 - A(data/catalogue.ts): implement GROQ param builder function — closes DoD item 2.2 on VFS_REFACTOR
 
-- [ ] 2.3 — Create `app/components/layout/catalogue/catalogue-nav.utils.ts`. Export a function `transformCatalogueJson(rawData: { catalogue: any[] }): CatalogueNavItem[]` that contains the JSON-to-CatalogueNavItem mapping currently duplicated in `CatalogueNavbar.tsx` (lines 10-21) and `CatalogueCarousel.tsx` (lines 14-25).
+✔ [ ] 2.3 — Create `app/components/layout/catalogue/catalogue-nav.utils.ts`. Export a function `transformCatalogueJson(rawData: { catalogue: any[] }): CatalogueNavItem[]` that contains the JSON-to-CatalogueNavItem mapping currently duplicated in `CatalogueNavbar.tsx` (lines 10-21) and `CatalogueCarousel.tsx` (lines 14-25). @done(26-03-26 12:59)
   - Difficulty: 2 - C(app/components/layout/catalogue/catalogue-nav.utils.ts): extract shared transform — closes DoD item 2.3 on VFS_REFACTOR
 
-- [ ] 2.4 — Update `CatalogueNavbar.tsx` to import and use `transformCatalogueJson` from `catalogue-nav.utils.ts`. Remove the inline transformation code.
+✔ [ ] 2.4 — Update `CatalogueNavbar.tsx` to import and use `transformCatalogueJson` from `catalogue-nav.utils.ts`. Remove the inline transformation code. @done(26-03-26 12:59)
   - Difficulty: 2 - C(app/components/layout/catalogue/CatalogueNavbar.tsx): use shared transform utility — closes DoD item 2.4 on VFS_REFACTOR
 
-- [ ] 2.5 — Update `CatalogueCarousel.tsx` to import and use `transformCatalogueJson` from `catalogue-nav.utils.ts`. Remove the inline transformation code.
+✔ [ ] 2.5 — Update `CatalogueCarousel.tsx` to import and use `transformCatalogueJson` from `catalogue-nav.utils.ts`. Remove the inline transformation code. @done(26-03-26 12:59)
   - Difficulty: 2 - C(app/components/layout/catalogue/CatalogueCarousel.tsx): use shared transform utility — closes DoD item 2.5 on VFS_REFACTOR
 
 ---
