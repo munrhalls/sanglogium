@@ -1,0 +1,58 @@
+# VFS_STUDIO_TREE_HOTFIX.todo
+# Sprint Execution File — Sanity Studio UI Fixes
+# Agent: SWE 1.5 | Risk: Zero Regression
+# Objective: Resolve the "got object" StructureBuilder error, and implement true context-aware document creation via Initial Value Templates mapping.
+
+---
+
+## Global Directives
+
+- Final code output must contain ZERO comments.
+- No file may be deleted.
+- Follow D (Configuration) and B (Critical bug fix) taxonomy.
+
+---
+
+## Layer 1: Structure Array Mapping (Bug Fix)
+
+### Scope Contract
+Fix the critical Sanity UI crash `List items must be of type "listItem", got "object"`. The root `items()` array in Sanity's `.list()` expects `ListItemBuilder` elements, but the previous agent passed a `DocumentListBuilder` direct reference.
+
+### DoD
+
+- [ ] 1.1 — In `sanity/structure.ts`: In the main `structure` export list (around line 38), change `buildCatalogueTree(S),` to `S.listItem().title("Catalogue").child(buildCatalogueTree(S)),`. Wrap the builder dynamically.
+  - Difficulty: 1 - B(sanity/structure.ts): wrap root list item to resolve crash
+
+### Verification — Layer 1
+
+- [ ] V1.1 — Open Sanity Studio at `http://localhost:3000/studio`. Confirm the Studio loads properly without the red error screen, and the "Catalogue" folder is visible.
+  - Difficulty: 1
+
+---
+
+## Layer 2: Context-Aware Document Creation
+
+### Scope Contract
+The previous sprint registered the `catalogueItem-with-parent` initial value template in `sanity.config.ts`, but failed to actually bind it to the dynamic structure list. We must tell Sanity to use this specific template (and pass it the `parentId`) when an editor clicks the "+" button while viewing a specific nested folder.
+
+### DoD
+
+- [ ] 2.1 — In `sanity/structure.ts`: Update the `buildCatalogueTree` function. Chain the `.initialValueTemplates` method onto `S.documentTypeList("catalogueItem")` dynamically based on whether `parentId` is present.
+  If a `parentId` is defined, call `.initialValueTemplates([ S.initialValueTemplateItem("catalogueItem-with-parent", { parentId }) ])`.
+  If no `parentId` is defined (root level), do not chain `.initialValueTemplates` (letting Sanity use the default root document creation).
+  - Difficulty: 3 - A(sanity/structure.ts): bind templates to contextual tree lists
+
+### Verification — Layer 2
+
+- [ ] V2.1 — Open Studio > Catalogue. Click a root item like "Headphones" > "View Sub-Items". Click the pencil/plus icon at the top to create a new sub-item. Ensure the right-side creation pane has the "Parent Item" reference field PRE-FILLED with "Headphones" automatically.
+  - Difficulty: 2
+
+---
+
+## Summary
+
+| Layer | Scope | Items | Verifications | Total Difficulty |
+|---|---|---|---|---|
+| Layer 1 | Fix structure array mapping bug | 1 | 1 | 1 |
+| Layer 2 | Bind Context-Aware templates | 1 | 1 | 3 |
+| **Total** | | **2** | **2** | **4** |
