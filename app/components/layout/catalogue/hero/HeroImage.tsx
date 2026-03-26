@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils/tailwind";
-import type { CatalogueItem } from "../data";
+import type { CatalogueNavItem } from "../catalogue-nav.types";
 import Image from "next/image";
 
-export default function HeroImage({ data }: { data: CatalogueItem }) {
+export default function HeroImage({ data }: { data: CatalogueNavItem }) {
   return (
     <div
       className={cn(

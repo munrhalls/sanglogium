@@ -22,8 +22,8 @@ async function buildCatalogueIndex() {
     if (!catalogue) throw new Error("No catalogue found in Sanity!");
 
     // 2. Flatten into Look-Up Tables (O(1))
-    const urlMap = {}; // "/headphones/wired" -> "key_123"
-    const idMap = {}; // "key_123" -> { title: "Wired", url: "...", breadcrumbs: [] }
+    const slugToIdMap = {}; // "/headphones/wired" -> "key_123"
+    const slotMetadataMap = {}; // "key_123" -> { title: "Wired", url: "...", breadcrumbs: [] }
 
     function traverse(nodes, parentPath = [], parentBreadcrumbs = []) {
       if (!nodes) return;
@@ -59,10 +59,10 @@ async function buildCatalogueIndex() {
         // 4. Populate Maps
         // Only Links get a URL entry
         if (!isHeader) {
-          urlMap[urlString] = node._key;
+          slugToIdMap[urlString] = node._key;
         }
 
-        idMap[node._key] = {
+        slotMetadataMap[node._key] = {
           title: node.title,
           // Headers get '#' so they don't link anywhere
           url: isHeader ? "#" : `/shop/${urlString}`,
@@ -83,8 +83,8 @@ async function buildCatalogueIndex() {
     // 3. Write to File
     const output = {
       generatedAt: new Date().toISOString(),
-      urlMap,
-      idMap,
+      slugToIdMap,
+      slotMetadataMap,
       tree: catalogue, // 👈 CRITICAL FIX: Added the full tree here
     };
 
@@ -96,7 +96,7 @@ async function buildCatalogueIndex() {
     await fs.writeFile(outputPath, JSON.stringify(output, null, 2));
 
     console.log(
-      `✅ Index Built! Mapped ${Object.keys(idMap).length} categories.`
+      `✅ Index Built! Mapped ${Object.keys(slotMetadataMap).length} categories.`
     );
     console.log(`📂 Saved to: src/data/catalogue-index.json`);
   } catch (error) {

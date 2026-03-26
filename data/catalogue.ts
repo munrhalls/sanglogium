@@ -5,8 +5,8 @@ export type CatalogueTree = Catalogue["catalogue"];
 
 interface CatalogueIndexData {
   generatedAt: string;
-  urlMap: Record<string, string>;
-  idMap: Record<string, unknown>;
+  slugToIdMap: Record<string, string>;
+  slotMetadataMap: Record<string, unknown>;
   tree: CatalogueTree;
 }
 
@@ -15,7 +15,7 @@ export const getCatalogue = (): CatalogueTree => {
   return data.tree || [];
 };
 
-export const getCatalogueIdByUrl = (url: string) => {
+export const resolveSlugToId = (slug: string) => {
   const data = catalogueIndex as unknown as CatalogueIndexData;
-  return data.urlMap[url];
+  return data.slugToIdMap[slug];
 };

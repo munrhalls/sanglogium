@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils/tailwind";
 import { Image } from "next-sanity/image";
 import { urlFor } from "@/sanity/lib/image";
 import { ShoppingCart } from "@phosphor-icons/react/dist/ssr";
+import type { AccessoryItem } from "./types";
 
 export default function AccessoryCard({ item, idx }: { item: AccessoryItem; idx: number }) {
   if (!item) return null;
@@ -47,4 +48,5 @@ export default function AccessoryCard({ item, idx }: { item: AccessoryItem; idx:
       </div>
     </article>
   </a>
-);
+  );
+}

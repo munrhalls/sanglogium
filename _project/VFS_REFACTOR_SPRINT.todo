@@ -1,0 +1,185 @@
+# VFS_REFACTOR.todo
+# Sprint Execution File — VFS Integration
+# Agent: SWE 1.5 | Risk: 0 Regression
+# Reference: catalogue_test/VFS_ARCHITECTURE_AUDIT.md
+
+---
+
+## Global Directives
+
+- Final code output must contain ZERO comments.
+- Every commit must follow the taxonomy: A (Forward progress), B (Critical bug fix), C (Refactor), D (Configuration), E (Polish).
+- Difficulty uses Fibonacci T-shirt scale: 1, 2, 3, 5, 8, 13.
+- No file may be deleted until its replacement is verified working.
+- All changes to `catalogue-index.json` happen through `build-catalogue-index.mjs`, never manually.
+
+---
+
+## Layer 1: Semantics and Types
+
+### Scope Contract
+- `urlMap` -> `slugToIdMap` (in catalogue-index.json output, build script, and all consumers)
+- `idMap` -> `slotMetadataMap` (in catalogue-index.json output, build script, and all consumers)
+- `getCatalogueIdByUrl(url)` -> `resolveSlugToId(slug)` (in data/catalogue.ts)
+- Create the missing `CatalogueItem` UI type module at `app/components/layout/catalogue/catalogue-nav.types.ts`
+
+### DoD
+
+✔ [ ] 1.1 — In `scripts/build-catalogue-index.mjs`: rename the local variable `urlMap` to `slugToIdMap` and the local variable `idMap` to `slotMetadataMap`. Update the output object keys to match. Verify no other file in `scripts/` references the old names. @done(26-03-26 12:42)
+  - Difficulty: 2 - C(scripts/build-catalogue-index.mjs): rename urlMap to slugToIdMap and idMap to slotMetadataMap — closes DoD item 1.1 on VFS_REFACTOR
+
+✔ [ ] 1.2 — Run `node scripts/build-catalogue-index.mjs` to regenerate `data/catalogue-index.json` with the new key names. Verify the output file contains `slugToIdMap` and `slotMetadataMap` at the top level, and `urlMap`/`idMap` no longer appear. @done(26-03-26 12:43)
+  - Difficulty: 1 - D(data/catalogue-index.json): regenerate VFS manifest with renamed keys — closes DoD item 1.2 on VFS_REFACTOR
+
+✔ [ ] 1.3 — In `data/catalogue.ts`: rename `getCatalogueIdByUrl` to `resolveSlugToId`, rename the parameter from `url` to `slug`. Update the internal access from `data.urlMap[url]` to `data.slugToIdMap[slug]`. Update the `CatalogueIndexData` interface fields from `urlMap`/`idMap` to `slugToIdMap`/`slotMetadataMap`. @done(26-03-26 12:43)
+  - Difficulty: 2 - C(data/catalogue.ts): rename accessor function and align interface to new manifest keys — closes DoD item 1.3 on VFS_REFACTOR
+
+✔ [ ] 1.4 — Create `app/components/layout/catalogue/catalogue-nav.types.ts`. Define and export `CatalogueNavItem` interface with fields: `id: string`, `label: string`, `imageUrl: string`, `sections: { title: string; links: string[] }[]`, `feature: { caption: string }`. This replaces the phantom `CatalogueItem` type. @done(26-03-26 12:44)
+  - Difficulty: 2 - A(app/components/layout/catalogue/catalogue-nav.types.ts): create missing UI type module — closes DoD item 1.4 on VFS_REFACTOR
+
+✔ [ ] 1.5 — Update all imports of `CatalogueItem` from `"./data"` or `"../data"` to import `CatalogueNavItem` from `"./catalogue-nav.types"` or `"../catalogue-nav.types"`. Affected files: `CatalogueView.tsx`, `CatalogueNavbar.tsx`, `CatalogueCarousel.tsx`, `hero/SliceHero.tsx`, `hero/HeroImage.tsx`, `details/SliceDetails.tsx`, `details/DetailSection.tsx`. Replace every usage of `CatalogueItem` with `CatalogueNavItem`. @done(26-03-26 12:45)
+  - Difficulty: 3 - C(app/components/layout/catalogue): update 7 files to use CatalogueNavItem from new type module — closes DoD item 1.5 on VFS_REFACTOR
+
+✔ [ ] 1.6 — Grep the entire codebase for any remaining references to the old names: `urlMap`, `idMap`, `getCatalogueIdByUrl`, `from "./data"`, `from "../data"` within the catalogue folder. All must return zero results (excluding `catalogue-index.json` historical content and `node_modules`). @done(26-03-26 12:46)
+  - Difficulty: 1 - E(project): verify zero remaining references to old semantic names — closes DoD item 1.6 on VFS_REFACTOR
+
+---
+
+## Layer 2: Utility Functions and Unrolling
+
+### Scope Contract
+- `data/catalogue.ts` must export a pure function `unrollDescendantKeys(nodeId: string): string[]` that recursively gathers the input ID plus all descendant IDs from `slotMetadataMap`.
+- `data/catalogue.ts` must export a pure function `buildGroqKeysParam(keys: string[]): string[]` that returns the keys as a GROQ-safe string array parameter.
+- A shared transform utility must be created to eliminate duplicate JSON-to-CatalogueNavItem mapping.
+
+### DoD
+
+- [ ] 2.1 — In `data/catalogue.ts`: implement and export `unrollDescendantKeys(nodeId: string): string[]`. The function must: (a) Load `slotMetadataMap` from the manifest. (b) If `nodeId` is not found, return `[]`. (c) Return an array containing `nodeId` itself plus all descendant IDs found by recursively looking up `children` in `slotMetadataMap`. (d) Use a `Set` internally to prevent infinite loops if the data has cycles.
+  - Difficulty: 5 - A(data/catalogue.ts): implement VFS key unrolling pure function — closes DoD item 2.1 on VFS_REFACTOR
+
+- [ ] 2.2 — In `data/catalogue.ts`: implement and export `buildGroqKeysParam(keys: string[]): string[]`. This function simply returns the input array. Its purpose is to act as a semantic boundary — the caller passes unrolled keys, the output is ready for GROQ `$params`. If the input is empty, return `[]`.
+  - Difficulty: 1 - A(data/catalogue.ts): implement GROQ param builder function — closes DoD item 2.2 on VFS_REFACTOR
+
+- [ ] 2.3 — Create `app/components/layout/catalogue/catalogue-nav.utils.ts`. Export a function `transformCatalogueJson(rawData: { catalogue: any[] }): CatalogueNavItem[]` that contains the JSON-to-CatalogueNavItem mapping currently duplicated in `CatalogueNavbar.tsx` (lines 10-21) and `CatalogueCarousel.tsx` (lines 14-25).
+  - Difficulty: 2 - C(app/components/layout/catalogue/catalogue-nav.utils.ts): extract shared transform — closes DoD item 2.3 on VFS_REFACTOR
+
+- [ ] 2.4 — Update `CatalogueNavbar.tsx` to import and use `transformCatalogueJson` from `catalogue-nav.utils.ts`. Remove the inline transformation code.
+  - Difficulty: 2 - C(app/components/layout/catalogue/CatalogueNavbar.tsx): use shared transform utility — closes DoD item 2.4 on VFS_REFACTOR
+
+- [ ] 2.5 — Update `CatalogueCarousel.tsx` to import and use `transformCatalogueJson` from `catalogue-nav.utils.ts`. Remove the inline transformation code.
+  - Difficulty: 2 - C(app/components/layout/catalogue/CatalogueCarousel.tsx): use shared transform utility — closes DoD item 2.5 on VFS_REFACTOR
+
+---
+
+## Layer 3: Test Suite Implementation
+
+### Scope Contract
+- All tests run as pure function evaluations against the real `catalogue-index.json`.
+- No Sanity client, no network, no mock database.
+- Tests must be runnable via the project's existing test runner or as standalone TypeScript/Node scripts.
+- Test file location: `catalogue_test/vfs.test.ts`.
+
+### DoD
+
+- [ ] 3.1 — Create `catalogue_test/vfs.test.ts`. Import `resolveSlugToId`, `unrollDescendantKeys`, and `buildGroqKeysParam` from `@/data/catalogue`. Import the raw manifest from `@/data/catalogue-index.json`. Implement the following test groups.
+  - Difficulty: 8 - A(catalogue_test/vfs.test.ts): implement complete VFS test suite — closes DoD item 3.1 on VFS_REFACTOR
+
+  **Test Group 1 — Slug Resolution (4 tests):**
+  - 1.1: `resolveSlugToId("headphones")` === `"zemHaTBY7QMZEyx6WgMYi"`
+  - 1.2: `resolveSlugToId("accessories")` === `"_EDhByj4HR6NH7X1DHHfr"`
+  - 1.3: `resolveSlugToId("nonexistent")` === `undefined`
+  - 1.4: `resolveSlugToId("")` === `undefined`
+
+  **Test Group 2 — Slot Metadata Lookup (5 tests):**
+  - 2.1: Manifest `slotMetadataMap["zemHaTBY7QMZEyx6WgMYi"].title` === `"Headphones & Personal Audio "`
+  - 2.2: Manifest `slotMetadataMap["zemHaTBY7QMZEyx6WgMYi"].children.length` === `3`
+  - 2.3: Manifest `slotMetadataMap["zemHaTBY7QMZEyx6WgMYi"].breadcrumbs[0].label` === `"Headphones & Personal Audio "`
+  - 2.4: Manifest `slotMetadataMap["k3_InLGWRyJsBJfwNrnyB"].children.length` === `0`
+  - 2.5: Manifest `slotMetadataMap["fake_id"]` === `undefined`
+
+  **Test Group 3 — Key Unrolling (5 tests):**
+  - 3.1: `unrollDescendantKeys("k3_InLGWRyJsBJfwNrnyB")` returns array of length 1 containing only `"k3_InLGWRyJsBJfwNrnyB"`
+  - 3.2: `unrollDescendantKeys("gJvupOFvek9IA28wG1pJw")` returns array of length 5 (1 header + 4 leaves)
+  - 3.3: `unrollDescendantKeys("zemHaTBY7QMZEyx6WgMYi")` returns array of length 13 (1 root + 3 headers + 9 leaves)
+  - 3.4: `unrollDescendantKeys("sXIqLWIxMpCT5E2VxPkad")` returns array of length 1 (On Sale, no children)
+  - 3.5: Every ID returned by `unrollDescendantKeys("zemHaTBY7QMZEyx6WgMYi")` exists as a key in the manifest's `slotMetadataMap`
+
+  **Test Group 4 — GROQ Param Generation (3 tests):**
+  - 4.1: `buildGroqKeysParam(["k3_InLGWRyJsBJfwNrnyB"])` returns `["k3_InLGWRyJsBJfwNrnyB"]`
+  - 4.2: `buildGroqKeysParam([])` returns `[]`
+  - 4.3: `buildGroqKeysParam(unrollDescendantKeys("zemHaTBY7QMZEyx6WgMYi"))` returns array of length 13
+
+  **Test Group 5 — Full-Path Integration (2 tests):**
+  - 5.1: `resolveSlugToId("headphones")` -> `unrollDescendantKeys(result)` -> returns 13 keys
+  - 5.2: `resolveSlugToId("fake-category")` returns `undefined`
+
+- [ ] 3.2 — Run the test suite. All 19 tests must pass. Capture output.
+  - Difficulty: 1 - E(catalogue_test): execute test suite and verify all pass — closes DoD item 3.2 on VFS_REFACTOR
+
+---
+
+## Layer 4: GROQ Query Integration
+
+### Scope Contract
+- `getSelectedProducts.ts` must replace `categoryPath match "string/*"` with `count(catalogueLocationKeys[@ in $unrolledKeys]) > 0`.
+- The function signature must accept unrolled VFS keys instead of a path string.
+- `getProductsByCategoryPath.ts` is legacy and must NOT be deleted yet, but a new VFS-based equivalent must be created.
+
+### DoD
+
+- [ ] 4.1 — Create `sanity/lib/products/getProductsByVfsKeys.ts`. Export function `getProductsByVfsKeys(keys: string[])` that executes the GROQ query: `*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0] | order(name asc)` using the Sanity client. The function receives pre-unrolled keys as its only argument.
+  - Difficulty: 3 - A(sanity/lib/products/getProductsByVfsKeys.ts): create VFS-aware product query function — closes DoD item 4.1 on VFS_REFACTOR
+
+- [ ] 4.2 — In `getSelectedProducts.ts`: change the function parameter `path: string[] | string` to `catalogueKeys: string[]`. Replace the `pathQuery` construction block (lines 107-114) with: `pathQuery = catalogueKeys.length > 0 ? \` && count(catalogueLocationKeys[@ in $catalogueKeys]) > 0\` : ""`. Add `catalogueKeys` to the Sanity client fetch params.
+  - Difficulty: 5 - B(sanity/lib/products/getSelectedProducts.ts): replace leaky string-path matching with VFS key intersection — closes DoD item 4.2 on VFS_REFACTOR
+
+- [ ] 4.3 — In `app/(store)/products/[...category]/page.tsx`: update the active code block (lines 1-148) to use VFS resolution instead of passing raw path strings. The flow must be: (a) resolve slug via `resolveSlugToId`, (b) unroll via `unrollDescendantKeys`, (c) pass keys to `getSelectedProducts`. Remove the commented-out VFS prototype code (lines 150-288) after integrating its logic into the active code.
+  - Difficulty: 8 - A(app/(store)/products/[...category]/page.tsx): integrate VFS resolution into live category page — closes DoD item 4.3 on VFS_REFACTOR
+
+- [ ] 4.4 — Update `getFiltersForCategoryPathAction` and `getSortablesForCategoryPathAction` call signatures in the category page to accept VFS keys instead of path strings. If these functions internally use `categoryPath`, update their GROQ to use `catalogueLocationKeys[@ in $keys]` as well.
+  - Difficulty: 5 - A(app/actions/categories + sanity/lib): migrate filter and sort actions to VFS key resolution — closes DoD item 4.4 on VFS_REFACTOR
+
+- [ ] 4.5 — Verify the application compiles with `npm run build`. Zero type errors, zero build warnings related to VFS changes.
+  - Difficulty: 1 - E(project): verify clean build after VFS integration — closes DoD item 4.5 on VFS_REFACTOR
+
+---
+
+## Layer 5: Cleanup and Polish
+
+### Scope Contract
+- Remove dead code.
+- Update documentation.
+- Ensure the project builds and runs.
+
+### DoD
+
+- [ ] 5.1 — Delete `app/components/layout/catalogue/CatalogueItem.tsx` (100% commented-out dead code).
+  - Difficulty: 1 - E(app/components/layout/catalogue): remove dead CatalogueItem file — closes DoD item 5.1 on VFS_REFACTOR
+
+- [ ] 5.2 — Delete `app/components/layout/catalogue/catalogue-alignment.test.ts` (stale, broken imports to deleted module).
+  - Difficulty: 1 - E(app/components/layout/catalogue): remove stale alignment test — closes DoD item 5.2 on VFS_REFACTOR
+
+- [ ] 5.3 — Rename `app/components/layout/catalogue/catalogue.json` to `catalogue-nav-data.json`. Update all imports of this file in `CatalogueNavbar.tsx` and `CatalogueCarousel.tsx`.
+  - Difficulty: 2 - C(app/components/layout/catalogue): rename UI data file to avoid VFS naming collision — closes DoD item 5.3 on VFS_REFACTOR
+
+- [ ] 5.4 — Rewrite `app/components/layout/catalogue/README.md` as properly formatted markdown (it is currently CSV-formatted). Keep the same conceptual content.
+  - Difficulty: 1 - E(app/components/layout/catalogue/README.md): reformat README as proper markdown — closes DoD item 5.4 on VFS_REFACTOR
+
+- [ ] 5.5 — Strip all code comments from every file modified during this sprint. Final output must contain zero comments.
+  - Difficulty: 2 - E(project): remove all comments from modified files — closes DoD item 5.5 on VFS_REFACTOR
+
+- [ ] 5.6 — Run `npm run build` and `npm run dev`. Verify the application loads, the catalogue dropdown functions, and product pages resolve correctly via VFS keys.
+  - Difficulty: 2 - E(project): final integration smoke test — closes DoD item 5.6 on VFS_REFACTOR
+
+---
+
+## Summary
+
+| Layer | Items | Total Difficulty |
+|---|---|---|
+| Layer 1: Semantics and Types | 6 | 11 |
+| Layer 2: Utility Functions and Unrolling | 5 | 12 |
+| Layer 3: Test Suite Implementation | 2 | 9 |
+| Layer 4: GROQ Query Integration | 5 | 22 |
+| Layer 5: Cleanup and Polish | 6 | 9 |
+| **Total** | **24** | **63** |

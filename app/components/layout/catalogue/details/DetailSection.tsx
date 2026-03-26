@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils/tailwind";
-import type { CatalogueItem } from "../data";
+import type { CatalogueNavItem } from "../catalogue-nav.types";
 
-type CatalogueSection = CatalogueItem["sections"][number];
+type CatalogueSection = CatalogueNavItem["sections"][number];
 
 export default function DetailSection({
   section,

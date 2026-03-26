@@ -1,9 +1,9 @@
 import { cn } from "@/lib/utils/tailwind";
-import type { CatalogueItem } from "../data";
+import type { CatalogueNavItem } from "../catalogue-nav.types";
 import DetailWatermark from "./DetailWatermark";
 import DetailSection from "./DetailSection";
 
-export default function SliceDetails({ data }: { data: CatalogueItem }) {
+export default function SliceDetails({ data }: { data: CatalogueNavItem }) {
   return (
     <div
       className={cn(

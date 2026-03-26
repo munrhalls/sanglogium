@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-03-25T17:43:27.460Z",
-  "urlMap": {
+  "generatedAt": "2026-03-26T11:39:42.197Z",
+  "slugToIdMap": {
     "headphones": "zemHaTBY7QMZEyx6WgMYi",
     "speakers": "X0ijjgLQc5pnVGZ5uB9Md",
     "personal-audio": "JfWZqAwqcOLNWBMabMc5y",
@@ -9,7 +9,7 @@
     "accessories": "_EDhByj4HR6NH7X1DHHfr",
     "on-sale": "sXIqLWIxMpCT5E2VxPkad"
   },
-  "idMap": {
+  "slotMetadataMap": {
     "zemHaTBY7QMZEyx6WgMYi": {
       "title": "Headphones & Personal Audio ",
       "url": "/shop/headphones",

@@ -1,10 +1,10 @@
 import { cn } from "@/lib/utils/tailwind";
 import React from "react";
-import type { CatalogueItem } from "./data";
+import type { CatalogueNavItem } from "./catalogue-nav.types";
 import SliceHero from "./hero/SliceHero";
 import SliceDetails from "./details/SliceDetails";
 
-export function CatalogueView({ data }: { data: CatalogueItem }) {
+export function CatalogueView({ data }: { data: CatalogueNavItem }) {
   return (
     <div
       className={cn(
