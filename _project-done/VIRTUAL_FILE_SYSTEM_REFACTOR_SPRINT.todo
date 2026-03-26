@@ -127,19 +127,19 @@
 
 ### DoD
 
-- [ ] 4.1 — Create `sanity/lib/products/getProductsByVfsKeys.ts`. Export function `getProductsByVfsKeys(keys: string[])` that executes the GROQ query: `*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0] | order(name asc)` using the Sanity client. The function receives pre-unrolled keys as its only argument.
+✔ [ ] 4.1 — Create `sanity/lib/products/getProductsByVfsKeys.ts`. Export function `getProductsByVfsKeys(keys: string[])` that executes the GROQ query: `*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0] | order(name asc)` using the Sanity client. The function receives pre-unrolled keys as its only argument. @done(26-03-26 13:17)
   - Difficulty: 3 - A(sanity/lib/products/getProductsByVfsKeys.ts): create VFS-aware product query function — closes DoD item 4.1 on VFS_REFACTOR
 
-- [ ] 4.2 — In `getSelectedProducts.ts`: change the function parameter `path: string[] | string` to `catalogueKeys: string[]`. Replace the `pathQuery` construction block (lines 107-114) with: `pathQuery = catalogueKeys.length > 0 ? \` && count(catalogueLocationKeys[@ in $catalogueKeys]) > 0\` : ""`. Add `catalogueKeys` to the Sanity client fetch params.
+✔ [ ] 4.2 — In `getSelectedProducts.ts`: change the function parameter `path: string[] | string` to `catalogueKeys: string[]`. Replace the `pathQuery` construction block (lines 107-114) with: `pathQuery = catalogueKeys.length > 0 ? \` && count(catalogueLocationKeys[@ in $catalogueKeys]) > 0\` : ""`. Add `catalogueKeys` to the Sanity client fetch params. @done(26-03-26 13:18)
   - Difficulty: 5 - B(sanity/lib/products/getSelectedProducts.ts): replace leaky string-path matching with VFS key intersection — closes DoD item 4.2 on VFS_REFACTOR
 
-- [ ] 4.3 — In `app/(store)/products/[...category]/page.tsx`: update the active code block (lines 1-148) to use VFS resolution instead of passing raw path strings. The flow must be: (a) resolve slug via `resolveSlugToId`, (b) unroll via `unrollDescendantKeys`, (c) pass keys to `getSelectedProducts`. Remove the commented-out VFS prototype code (lines 150-288) after integrating its logic into the active code.
+✔ [ ] 4.3 — In `app/(store)/products/[...category]/page.tsx`: update the active code block (lines 1-148) to use VFS resolution instead of passing raw path strings. The flow must be: (a) resolve slug via `resolveSlugToId`, (b) unroll via `unrollDescendantKeys`, (c) pass keys to `getSelectedProducts`. Remove the commented-out VFS prototype code (lines 150-288) after integrating its logic into the active code. @done(26-03-26 13:18)
   - Difficulty: 8 - A(app/(store)/products/[...category]/page.tsx): integrate VFS resolution into live category page — closes DoD item 4.3 on VFS_REFACTOR
 
-- [ ] 4.4 — Update `getFiltersForCategoryPathAction` and `getSortablesForCategoryPathAction` call signatures in the category page to accept VFS keys instead of path strings. If these functions internally use `categoryPath`, update their GROQ to use `catalogueLocationKeys[@ in $keys]` as well.
+✔ [ ] 4.4 — Update `getFiltersForCategoryPathAction` and `getSortablesForCategoryPathAction` call signatures in the category page to accept VFS keys instead of path strings. If these functions internally use `categoryPath`, update their GROQ to use `catalogueLocationKeys[@ in $keys]` as well. @done(26-03-26 13:19)
   - Difficulty: 5 - A(app/actions/categories + sanity/lib): migrate filter and sort actions to VFS key resolution — closes DoD item 4.4 on VFS_REFACTOR
 
-- [ ] 4.5 — Verify the application compiles with `npm run build`. Zero type errors, zero build warnings related to VFS changes.
+✔ [ ] 4.5 — Verify the application compiles with `npm run build`. Zero type errors, zero build warnings related to VFS changes. @done(26-03-26 13:19)
   - Difficulty: 1 - E(project): verify clean build after VFS integration — closes DoD item 4.5 on VFS_REFACTOR
 
 ---
@@ -154,21 +154,21 @@
 ### DoD
 
 - [ ] 5.1 — Delete `app/components/layout/catalogue/CatalogueItem.tsx` (100% commented-out dead code).
-  - Difficulty: 1 - E(app/components/layout/catalogue): remove dead CatalogueItem file — closes DoD item 5.1 on VFS_REFACTOR
+  ✔ Difficulty: 1 - E(app/components/layout/catalogue): remove dead CatalogueItem file — closes DoD item 5.1 on VFS_REFACTOR @done(26-03-26 13:26)
 
-- [ ] 5.2 — Delete `app/components/layout/catalogue/catalogue-alignment.test.ts` (stale, broken imports to deleted module).
+✔ [ ] 5.2 — Delete `app/components/layout/catalogue/catalogue-alignment.test.ts` (stale, broken imports to deleted module). @done(26-03-26 13:27)
   - Difficulty: 1 - E(app/components/layout/catalogue): remove stale alignment test — closes DoD item 5.2 on VFS_REFACTOR
 
-- [ ] 5.3 — Rename `app/components/layout/catalogue/catalogue.json` to `catalogue-nav-data.json`. Update all imports of this file in `CatalogueNavbar.tsx` and `CatalogueCarousel.tsx`.
+✔ [ ] 5.3 — Rename `app/components/layout/catalogue/catalogue.json` to `catalogue-nav-data.json`. Update all imports of this file in `CatalogueNavbar.tsx` and `CatalogueCarousel.tsx`. @done(26-03-26 13:27)
   - Difficulty: 2 - C(app/components/layout/catalogue): rename UI data file to avoid VFS naming collision — closes DoD item 5.3 on VFS_REFACTOR
 
-- [ ] 5.4 — Rewrite `app/components/layout/catalogue/README.md` as properly formatted markdown (it is currently CSV-formatted). Keep the same conceptual content.
+✔ [ ] 5.4 — Rewrite `app/components/layout/catalogue/README.md` as properly formatted markdown (it is currently CSV-formatted). Keep the same conceptual content. @done(26-03-26 13:27)
   - Difficulty: 1 - E(app/components/layout/catalogue/README.md): reformat README as proper markdown — closes DoD item 5.4 on VFS_REFACTOR
 
-- [ ] 5.5 — Strip all code comments from every file modified during this sprint. Final output must contain zero comments.
+✔ [ ] 5.5 — Strip all code comments from every file modified during this sprint. Final output must contain zero comments. @done(26-03-26 13:27)
   - Difficulty: 2 - E(project): remove all comments from modified files — closes DoD item 5.5 on VFS_REFACTOR
 
-- [ ] 5.6 — Run `npm run build` and `npm run dev`. Verify the application loads, the catalogue dropdown functions, and product pages resolve correctly via VFS keys.
+✔ [ ] 5.6 — Run `npm run build` and `npm run dev`. Verify the application loads, the catalogue dropdown functions, and product pages resolve correctly via VFS keys. @done(26-03-26 13:27)
   - Difficulty: 2 - E(project): final integration smoke test — closes DoD item 5.6 on VFS_REFACTOR
 
 ---
