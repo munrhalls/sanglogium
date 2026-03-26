@@ -1,257 +1,140 @@
 {
-  "generatedAt": "2026-03-26T13:05:45.365Z",
-  "slugToIdMap": {
-    "headphones": "zemHaTBY7QMZEyx6WgMYi",
-    "speakers": "X0ijjgLQc5pnVGZ5uB9Md",
-    "personal-audio": "JfWZqAwqcOLNWBMabMc5y",
-    "home-audio": "jiS80IhRzgh41eMR_AWo6",
-    "studio-equipment": "bhGPYfXKyPyZ2sixtvS7X",
-    "accessories": "_EDhByj4HR6NH7X1DHHfr",
-    "on-sale": "sXIqLWIxMpCT5E2VxPkad"
-  },
+  "generatedAt": "2026-03-26T13:57:45.457Z",
+  "slugToIdMap": {},
   "slotMetadataMap": {
-    "zemHaTBY7QMZEyx6WgMYi": {
-      "title": "Headphones & Personal Audio ",
-      "url": "/shop/headphones",
+    "ifcy734fq76iilnt6ev8zyz5": {
+      "title": "Headphones",
+      "url": "#",
       "slug": "headphones",
-      "breadcrumbs": [
-        {
-          "label": "Headphones & Personal Audio ",
-          "url": "/shop/headphones"
-        }
-      ],
+      "breadcrumbs": [],
       "children": [
-        "gJvupOFvek9IA28wG1pJw",
-        "R9bVoOi1wleAgXnCXER9q",
-        "cwjfSx5AHHNGTf46j6BXj"
+        "e4ufygd9u98pkky1wvqkiox3",
+        "v4bhr8vzpb0l8nlz4gh2cqov",
+        "cq7wdjbq5k07x7o0d67md1dm"
       ],
-      "type": "link"
+      "type": "header"
     },
-    "X0ijjgLQc5pnVGZ5uB9Md": {
-      "title": "Speakers",
-      "url": "/shop/speakers",
-      "slug": "speakers",
-      "breadcrumbs": [
-        {
-          "label": "Speakers",
-          "url": "/shop/speakers"
-        }
-      ],
+    "q9sd8de4ian3qrnwjzs4b1nn": {
+      "title": "Audio Electronics",
+      "url": "#",
+      "slug": "audio-electronics",
+      "breadcrumbs": [],
       "children": [
-        "9eQyVlSBWINktO5TCFf9S",
-        "xgyfkJAh90oG6JJVFlURP",
-        "28_Sx1s6s0xgzv1t4l4k_"
+        "blfr0r543dfou8kns6laivt9",
+        "dymk95phg3wdyycalveehvze"
       ],
-      "type": "link"
+      "type": "header"
     },
-    "JfWZqAwqcOLNWBMabMc5y": {
-      "title": "Personal Audio",
-      "url": "/shop/personal-audio",
-      "slug": "personal-audio",
-      "breadcrumbs": [
-        {
-          "label": "Personal Audio",
-          "url": "/shop/personal-audio"
-        }
-      ],
-      "children": [
-        "9BK0Nu0WtqIcP7_xdU_5K",
-        "xJSAZj4W0ASAsSLF23jjL",
-        "IgQ4lTv5Gn8QHTOTS3Es1"
-      ],
-      "type": "link"
-    },
-    "jiS80IhRzgh41eMR_AWo6": {
-      "title": "Home Audio",
-      "url": "/shop/home-audio",
-      "slug": "home-audio",
-      "breadcrumbs": [
-        {
-          "label": "Home Audio",
-          "url": "/shop/home-audio"
-        }
-      ],
-      "children": [
-        "Jdjqtf7kej4P8y10QaByV",
-        "34MF_aAKZnOmEen0ZQOtG",
-        "xPjQHGOI9TRXJN9QzTaCb"
-      ],
-      "type": "link"
-    },
-    "bhGPYfXKyPyZ2sixtvS7X": {
-      "title": "Studio Equipment",
-      "url": "/shop/studio-equipment",
-      "slug": "studio-equipment",
-      "breadcrumbs": [
-        {
-          "label": "Studio Equipment",
-          "url": "/shop/studio-equipment"
-        }
-      ],
-      "children": [
-        "YSOR4-ZcEmRtJUEZGgrgl",
-        "igkH1-53EAidFCuwHMC9k"
-      ],
-      "type": "link"
-    },
-    "_EDhByj4HR6NH7X1DHHfr": {
+    "s2t0urixbahebe8vayp3i527": {
       "title": "Accessories",
-      "url": "/shop/accessories",
+      "url": "#",
       "slug": "accessories",
-      "breadcrumbs": [
-        {
-          "label": "Accessories",
-          "url": "/shop/accessories"
-        }
-      ],
+      "breadcrumbs": [],
       "children": [
-        "Qt7SYKy11ImZaDXOYObrP",
-        "MMsC8u8jiHf-6TEugX4dY",
-        "wp8-KGe6cOwSbmV0KnssN",
-        "jRqROPjh9R42eZ8GGN8pb"
+        "f1qa8om5x7saypebsfmwzaaq",
+        "c1vy4vh85ddenw7x5xs8s14h",
+        "k4wuxmkjci5b57h856jvrzj1"
       ],
-      "type": "link"
-    },
-    "sXIqLWIxMpCT5E2VxPkad": {
-      "title": "On Sale",
-      "url": "/shop/on-sale",
-      "slug": "on-sale",
-      "breadcrumbs": [
-        {
-          "label": "On Sale",
-          "url": "/shop/on-sale"
-        }
-      ],
-      "children": [],
-      "type": "link"
+      "type": "header"
     }
   },
   "tree": [
     {
-      "_key": "zemHaTBY7QMZEyx6WgMYi",
+      "_key": "ifcy734fq76iilnt6ev8zyz5",
       "_type": "catalogueItem",
       "children": [
         {
-          "_key": "gJvupOFvek9IA28wG1pJw",
+          "_key": "e4ufygd9u98pkky1wvqkiox3",
           "_type": "catalogueItem",
           "children": [
             {
-              "_key": "463Jo7gWrpfJ7BMSgdMQF",
+              "_key": "my1r79pin54keco76qdg9pb0",
               "_type": "catalogueItem",
-              "children": [],
               "slug": {
                 "_type": "slug",
-                "current": "wired"
+                "current": "open-back"
               },
-              "title": "Wired",
+              "title": "Open-Back",
               "type": "link"
             },
             {
-              "_key": "DyVY7prFN3BC14f8eO2SE",
+              "_key": "k16pq7i973us3iwjl5knjma8",
               "_type": "catalogueItem",
-              "children": [],
               "slug": {
                 "_type": "slug",
-                "current": "wireless"
+                "current": "closed-back"
               },
-              "title": "Wireless",
-              "type": "link"
-            },
-            {
-              "_key": "w80_8SIwE560_gk-Va6Jk",
-              "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "noise-cancelling"
-              },
-              "title": "Noise cancelling",
-              "type": "link"
-            },
-            {
-              "_key": "k3_InLGWRyJsBJfwNrnyB",
-              "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "earbuds"
-              },
-              "title": "Earbuds",
+              "title": "Closed-Back",
               "type": "link"
             }
           ],
-          "title": "By category",
+          "title": "By Design",
           "type": "header"
         },
         {
-          "_key": "R9bVoOi1wleAgXnCXER9q",
+          "_key": "v4bhr8vzpb0l8nlz4gh2cqov",
           "_type": "catalogueItem",
           "children": [
             {
-              "_key": "wFwdlX0H3-t0zyFmSwV6z",
+              "_key": "fz9xh06dqjci1u7j99v1v6li",
               "_type": "catalogueItem",
-              "children": [],
               "slug": {
                 "_type": "slug",
-                "current": "over-ear"
+                "current": "planar-magnetic"
               },
-              "title": "Over ear",
+              "title": "Planar Magnetic",
               "type": "link"
             },
             {
-              "_key": "aqXYUeh6N6amoDuFDT0sG",
+              "_key": "vqw2gbuejkhu0m798ctdsssk",
               "_type": "catalogueItem",
-              "children": [],
               "slug": {
                 "_type": "slug",
-                "current": "in-ear"
+                "current": "dynamic"
               },
-              "title": "In ear",
+              "title": "Dynamic",
+              "type": "link"
+            },
+            {
+              "_key": "t9rc4nzf0rc8uxup3j0jkxcq",
+              "_type": "catalogueItem",
+              "slug": {
+                "_type": "slug",
+                "current": "electrostatic"
+              },
+              "title": "Electrostatic",
               "type": "link"
             }
           ],
-          "title": "By fit",
+          "title": "By Driver",
           "type": "header"
         },
         {
-          "_key": "cwjfSx5AHHNGTf46j6BXj",
+          "_key": "cq7wdjbq5k07x7o0d67md1dm",
           "_type": "catalogueItem",
           "children": [
             {
-              "_key": "5M88xGQXUCgqbwR9FvLag",
+              "_key": "n86c0v4huayy27hwa3g621hh",
               "_type": "catalogueItem",
-              "children": [],
               "slug": {
                 "_type": "slug",
-                "current": "studio-and-recording"
+                "current": "monitors-iems"
               },
-              "title": "Studio and recording",
+              "title": "Monitors (IEMs)",
               "type": "link"
             },
             {
-              "_key": "n6pRz-Gxgikq6r3c2b3Sy",
+              "_key": "dvwsabzlrx0gbdezoljcv5dz",
               "_type": "catalogueItem",
-              "children": [],
               "slug": {
                 "_type": "slug",
-                "current": "gaming"
+                "current": "true-wireless-tws"
               },
-              "title": "Gaming",
-              "type": "link"
-            },
-            {
-              "_key": "n6ZmERWp5SWJ7iNdblPDC",
-              "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "travel"
-              },
-              "title": "Travel",
+              "title": "True Wireless (TWS)",
               "type": "link"
             }
           ],
-          "title": "By use",
+          "title": "In-Ear & Wireless",
           "type": "header"
         }
       ],
@@ -260,181 +143,35 @@
         "_type": "slug",
         "current": "headphones"
       },
-      "title": "Headphones & Personal Audio ",
-      "type": "link"
+      "title": "Headphones",
+      "type": "header"
     },
     {
-      "_key": "X0ijjgLQc5pnVGZ5uB9Md",
+      "_key": "q9sd8de4ian3qrnwjzs4b1nn",
       "_type": "catalogueItem",
       "children": [
         {
-          "_key": "9eQyVlSBWINktO5TCFf9S",
+          "_key": "blfr0r543dfou8kns6laivt9",
           "_type": "catalogueItem",
           "children": [
             {
-              "_key": "JBOgfU8QvaIUmzLXAqo9S",
+              "_key": "n79lr7vk4cnxbiwfxqalcrj1",
               "_type": "catalogueItem",
-              "children": [],
               "slug": {
                 "_type": "slug",
-                "current": "floor-standing-speakers"
+                "current": "desktop-amps"
               },
-              "title": "Floor standing speakers",
+              "title": "Desktop Amps",
               "type": "link"
             },
             {
-              "_key": "zcq9tTXO8iK1_IO__4dRC",
+              "_key": "l5s8zjsyvssy9poxoef41fd9",
               "_type": "catalogueItem",
-              "children": [],
               "slug": {
                 "_type": "slug",
-                "current": "subwoofers"
+                "current": "portable-amps"
               },
-              "title": "Subwoofers",
-              "type": "link"
-            },
-            {
-              "_key": "vecmCGGu5Zp5oPVl68oqW",
-              "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "soundbars"
-              },
-              "title": "Soundbars",
-              "type": "link"
-            }
-          ],
-          "title": "Home theater",
-          "type": "header"
-        },
-        {
-          "_key": "xgyfkJAh90oG6JJVFlURP",
-          "_type": "catalogueItem",
-          "children": [
-            {
-              "_key": "T7XcVYmzu_WugT6Uo1Ijd",
-              "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "bookshelf-speakers"
-              },
-              "title": "Bookshelf speakers",
-              "type": "link"
-            },
-            {
-              "_key": "gTbPm4lOvFnLuQNTVpZrM",
-              "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "powered-speakers"
-              },
-              "title": "Powered speakers",
-              "type": "link"
-            }
-          ],
-          "title": "Hi-Fi Audio",
-          "type": "header"
-        },
-        {
-          "_key": "28_Sx1s6s0xgzv1t4l4k_",
-          "_type": "catalogueItem",
-          "children": [
-            {
-              "_key": "KKdarDg4DDxoWVvFKSK8f",
-              "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "bluetooth-speakers"
-              },
-              "title": "Bluetooth speakers",
-              "type": "link"
-            },
-            {
-              "_key": "ON20rAci84-4-HOAzszHz",
-              "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "outdoor-speakers"
-              },
-              "title": "Outdoor speakers",
-              "type": "link"
-            }
-          ],
-          "title": "Portable & Outdoor",
-          "type": "header"
-        }
-      ],
-      "icon": "speaker",
-      "slug": {
-        "_type": "slug",
-        "current": "speakers"
-      },
-      "title": "Speakers",
-      "type": "link"
-    },
-    {
-      "_key": "JfWZqAwqcOLNWBMabMc5y",
-      "_type": "catalogueItem",
-      "children": [
-        {
-          "_key": "9BK0Nu0WtqIcP7_xdU_5K",
-          "_type": "catalogueItem",
-          "children": [
-            {
-              "_key": "JlpQgWMfdiEKhky3yullW",
-              "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "digital-audio-players"
-              },
-              "title": "Digital Audio Players",
-              "type": "link"
-            },
-            {
-              "_key": "l7xrVCUnlfxNY_xtBa4TD",
-              "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "bluetooth-receivers-and-transmitters"
-              },
-              "title": "Bluetooth receivers and transmitters",
-              "type": "link"
-            }
-          ],
-          "title": "Audio Players & Devices",
-          "type": "header"
-        },
-        {
-          "_key": "xJSAZj4W0ASAsSLF23jjL",
-          "_type": "catalogueItem",
-          "children": [
-            {
-              "_key": "ssDmG7x4c8HpNMZQudHPm",
-              "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "portable-dacs-and-amps"
-              },
-              "title": "Portable DACs and Amps",
-              "type": "link"
-            },
-            {
-              "_key": "8pEXPFELH6GtFdUPUYrgq",
-              "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "headphone-amplifiers"
-              },
-              "title": "Headphone amplifiers",
+              "title": "Portable Amps",
               "type": "link"
             }
           ],
@@ -442,309 +179,73 @@
           "type": "header"
         },
         {
-          "_key": "IgQ4lTv5Gn8QHTOTS3Es1",
+          "_key": "dymk95phg3wdyycalveehvze",
           "_type": "catalogueItem",
           "children": [
             {
-              "_key": "-JKoFdmYIGxWuS3C4e9jE",
+              "_key": "wj9m0v6a9i0yxxz9ce84np3q",
               "_type": "catalogueItem",
-              "children": [],
               "slug": {
                 "_type": "slug",
-                "current": "phone-and-tablet-accessories"
+                "current": "standalone-dacs"
               },
-              "title": "Phone and Tablet Accessories",
+              "title": "Standalone DACs",
               "type": "link"
             },
             {
-              "_key": "rfUccjFwuago3vW-xNI7j",
+              "_key": "lz1fxen2unbqhhzhv1mdu1ho",
               "_type": "catalogueItem",
-              "children": [],
               "slug": {
                 "_type": "slug",
-                "current": "carrying-cases-and-protection"
+                "current": "dac-amp-combos"
               },
-              "title": "Carrying Cases and Protection",
+              "title": "DAC/Amp Combos",
               "type": "link"
             },
             {
-              "_key": "a7i2k7KL2cVRA2ppP01yk",
+              "_key": "og0jl4b9yw5hsio5xhvb3pxu",
               "_type": "catalogueItem",
-              "children": [],
               "slug": {
                 "_type": "slug",
-                "current": "replacement-parts"
+                "current": "digital-players-daps"
               },
-              "title": "Replacement Parts",
+              "title": "Digital Players (DAPs)",
+              "type": "link"
+            },
+            {
+              "_key": "xfo5k8dtslvl9u4dv4q38w6h",
+              "_type": "catalogueItem",
+              "slug": {
+                "_type": "slug",
+                "current": "network-streamers"
+              },
+              "title": "Network Streamers",
               "type": "link"
             }
           ],
-          "title": "Accessories & Parts",
+          "title": "Digital Sources",
           "type": "header"
         }
       ],
-      "icon": "earbuds",
+      "icon": "audio-electronics",
       "slug": {
         "_type": "slug",
-        "current": "personal-audio"
+        "current": "audio-electronics"
       },
-      "title": "Personal Audio",
-      "type": "link"
+      "title": "Audio Electronics",
+      "type": "header"
     },
     {
-      "_key": "jiS80IhRzgh41eMR_AWo6",
+      "_key": "s2t0urixbahebe8vayp3i527",
       "_type": "catalogueItem",
       "children": [
         {
-          "_key": "Jdjqtf7kej4P8y10QaByV",
+          "_key": "f1qa8om5x7saypebsfmwzaaq",
           "_type": "catalogueItem",
           "children": [
             {
-              "_key": "6vL2--Pz44vl1wi8km39j",
+              "_key": "eeth068eswfqf39yu5e5bnzr",
               "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "amplifiers"
-              },
-              "title": "Amplifiers",
-              "type": "link"
-            },
-            {
-              "_key": "vgMYaYb1OXxgW-kzAGGAf",
-              "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "receivers"
-              },
-              "title": "Receivers",
-              "type": "link"
-            },
-            {
-              "_key": "Sf3rqGgz8iflaVgeOY-v5",
-              "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "preamps"
-              },
-              "title": "Preamps",
-              "type": "link"
-            }
-          ],
-          "title": "Core components",
-          "type": "header"
-        },
-        {
-          "_key": "34MF_aAKZnOmEen0ZQOtG",
-          "_type": "catalogueItem",
-          "children": [
-            {
-              "_key": "w7ncMqdGwihv4CtDsUMR6",
-              "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "turntables"
-              },
-              "title": "Turntables",
-              "type": "link"
-            },
-            {
-              "_key": "OagjRCkHyEyJ65PvgzDTg",
-              "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "cd-players"
-              },
-              "title": "CD players",
-              "type": "link"
-            }
-          ],
-          "title": "Source devices",
-          "type": "header"
-        },
-        {
-          "_key": "xPjQHGOI9TRXJN9QzTaCb",
-          "_type": "catalogueItem",
-          "children": [
-            {
-              "_key": "OuMWzz2HwOCPO-IjkjKYQ",
-              "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "dacs-digital-to-analog-converters"
-              },
-              "title": "DACs (Digital-to-Analog Converters)",
-              "type": "link"
-            }
-          ],
-          "title": "Signal processing",
-          "type": "header"
-        }
-      ],
-      "icon": "radio",
-      "slug": {
-        "_type": "slug",
-        "current": "home-audio"
-      },
-      "title": "Home Audio",
-      "type": "link"
-    },
-    {
-      "_key": "bhGPYfXKyPyZ2sixtvS7X",
-      "_type": "catalogueItem",
-      "children": [
-        {
-          "_key": "YSOR4-ZcEmRtJUEZGgrgl",
-          "_type": "catalogueItem",
-          "children": [
-            {
-              "_key": "Nx5kNxItLj8Y_E1UhWS16",
-              "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "microphones"
-              },
-              "title": "Microphones",
-              "type": "link"
-            },
-            {
-              "_key": "KMq2n89cOr_zwKh_XK4PH",
-              "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "studio-monitors"
-              },
-              "title": "Studio monitors",
-              "type": "link"
-            },
-            {
-              "_key": "sfZENWHgeIfwHuHhg5b5p",
-              "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "audio-interfaces"
-              },
-              "title": "Audio interfaces",
-              "type": "link"
-            }
-          ],
-          "title": "Recording Essentials",
-          "type": "header"
-        },
-        {
-          "_key": "igkH1-53EAidFCuwHMC9k",
-          "_type": "catalogueItem",
-          "children": [
-            {
-              "_key": "qsmtyLw79F0YhgrsZ-Aa0",
-              "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "studio-processors"
-              },
-              "title": "Studio Processors",
-              "type": "link"
-            },
-            {
-              "_key": "EGTqCFTBfCF6ZY0kCo2Nr",
-              "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "recording-accessories"
-              },
-              "title": "Recording accessories",
-              "type": "link"
-            }
-          ],
-          "title": "Processing & Accessories",
-          "type": "header"
-        }
-      ],
-      "icon": "mic2",
-      "slug": {
-        "_type": "slug",
-        "current": "studio-equipment"
-      },
-      "title": "Studio Equipment",
-      "type": "link"
-    },
-    {
-      "_key": "_EDhByj4HR6NH7X1DHHfr",
-      "_type": "catalogueItem",
-      "children": [
-        {
-          "_key": "Qt7SYKy11ImZaDXOYObrP",
-          "_type": "catalogueItem",
-          "children": [
-            {
-              "_key": "jx7CfwhG3gRLJEEjsDXBq",
-              "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "audio-cables"
-              },
-              "title": "Audio cables",
-              "type": "link"
-            },
-            {
-              "_key": "214HEFSpC1XMGElkA_BnD",
-              "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "power-cables"
-              },
-              "title": "Power cables",
-              "type": "link"
-            },
-            {
-              "_key": "oE91U2T2GcAc3odX1XF8P",
-              "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "hdmi-cables"
-              },
-              "title": "HDMI Cables",
-              "type": "link"
-            },
-            {
-              "_key": "EnTFHZnrkbXRa5iRrrZue",
-              "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "rca-cables"
-              },
-              "title": "RCA Cables",
-              "type": "link"
-            },
-            {
-              "_key": "qouXLSWZeaxDqiXeQjpnQ",
-              "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "usb-cables"
-              },
-              "title": "USB Cables",
-              "type": "link"
-            },
-            {
-              "_key": "9IxBjjQK5Z3Scpnjo2Aul",
-              "_type": "catalogueItem",
-              "children": [],
               "slug": {
                 "_type": "slug",
                 "current": "headphone-cables"
@@ -753,130 +254,93 @@
               "type": "link"
             },
             {
-              "_key": "e5anI0ENiI9CtV65k4KkF",
+              "_key": "pxph704a7ymc1p2o4ro5d5a0",
               "_type": "catalogueItem",
-              "children": [],
               "slug": {
                 "_type": "slug",
-                "current": "ethernet-cables"
+                "current": "interconnects"
               },
-              "title": "Ethernet Cables",
-              "type": "link"
-            }
-          ],
-          "title": "Cables & Wiring",
-          "type": "header"
-        },
-        {
-          "_key": "MMsC8u8jiHf-6TEugX4dY",
-          "_type": "catalogueItem",
-          "children": [
-            {
-              "_key": "QiMcFQ8gxYJwNiQ3zcz0j",
-              "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "wall-mounts"
-              },
-              "title": "Wall mounts",
+              "title": "Interconnects",
               "type": "link"
             },
             {
-              "_key": "ZKUf_ieIR8lIJML2kXXTc",
+              "_key": "n5kz7oolb407hdbnrjrs7dyq",
               "_type": "catalogueItem",
-              "children": [],
               "slug": {
                 "_type": "slug",
-                "current": "speaker-stands"
+                "current": "adapters"
               },
-              "title": "Speaker stands",
+              "title": "Adapters",
               "type": "link"
             }
           ],
-          "title": "Mounting & Support",
+          "title": "Connectivity",
           "type": "header"
         },
         {
-          "_key": "wp8-KGe6cOwSbmV0KnssN",
+          "_key": "c1vy4vh85ddenw7x5xs8s14h",
           "_type": "catalogueItem",
           "children": [
             {
-              "_key": "fHY3fZknupEJB8pr1Lexb",
+              "_key": "geog8npxjtubwraannd12owj",
               "_type": "catalogueItem",
-              "children": [],
               "slug": {
                 "_type": "slug",
-                "current": "phono-cartridges"
+                "current": "earpads"
               },
-              "title": "Phono Cartridges",
+              "title": "Earpads",
               "type": "link"
             },
             {
-              "_key": "D_aJ18q3VATKnzDcX1bCY",
+              "_key": "apxnqkjzeiqnm2x8fa48vj1l",
               "_type": "catalogueItem",
-              "children": [],
               "slug": {
                 "_type": "slug",
-                "current": "speaker-and-subwoofer-accessories"
+                "current": "care-cleaning"
               },
-              "title": "Speaker and Subwoofer accessories",
-              "type": "link"
-            },
-            {
-              "_key": "NL0CuO0xRw3jwSkNMrwrd",
-              "_type": "catalogueItem",
-              "children": [],
-              "slug": {
-                "_type": "slug",
-                "current": "microphone-accessories"
-              },
-              "title": "Microphone Accessories",
+              "title": "Care & Cleaning",
               "type": "link"
             }
           ],
-          "title": "Audio Equipment Accessories",
+          "title": "Maintenance",
           "type": "header"
         },
         {
-          "_key": "jRqROPjh9R42eZ8GGN8pb",
+          "_key": "k4wuxmkjci5b57h856jvrzj1",
           "_type": "catalogueItem",
           "children": [
             {
-              "_key": "6s51wjZC4cv17wMH9_ofj",
+              "_key": "johkqbud0awfxk4ers408dgq",
               "_type": "catalogueItem",
-              "children": [],
               "slug": {
                 "_type": "slug",
-                "current": "power-management"
+                "current": "headphone-stands"
               },
-              "title": "Power Management",
+              "title": "Headphone Stands",
+              "type": "link"
+            },
+            {
+              "_key": "e082tw5wzcoxw5wykmfngibq",
+              "_type": "catalogueItem",
+              "slug": {
+                "_type": "slug",
+                "current": "carrying-cases"
+              },
+              "title": "Carrying Cases",
               "type": "link"
             }
           ],
-          "title": "Power Management",
+          "title": "Storage",
           "type": "header"
         }
       ],
-      "icon": "cable",
+      "icon": "accessories",
       "slug": {
         "_type": "slug",
         "current": "accessories"
       },
       "title": "Accessories",
-      "type": "link"
-    },
-    {
-      "_key": "sXIqLWIxMpCT5E2VxPkad",
-      "_type": "catalogueItem",
-      "children": [],
-      "icon": null,
-      "slug": {
-        "_type": "slug",
-        "current": "on-sale"
-      },
-      "title": "On Sale",
-      "type": "link"
+      "type": "header"
     }
   ]
 }
