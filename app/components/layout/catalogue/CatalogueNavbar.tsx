@@ -1,7 +1,7 @@
 import React from "react";
 import { CatalogueView } from "./CatalogueView";
 import NavbarManager from "./NavbarManager";
-import catalogueDataRaw from "./catalogue.json";
+import catalogueDataRaw from "./catalogue-nav-data.json";
 import { transformCatalogueJson } from "./catalogue-nav.utils";
 import type { CatalogueNavItem } from "./catalogue-nav.types";
 import { cn } from "@/lib/utils/tailwind";

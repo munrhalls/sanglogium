@@ -5,7 +5,7 @@ import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";
 import { CarouselSlide } from "@/app/components/layout/carousel/CarouselSlide";
 
 import { CatalogueView } from "@/app/components/layout/catalogue/CatalogueView";
-import catalogueDataRaw from "@/app/components/layout/catalogue/catalogue.json";
+import catalogueDataRaw from "@/app/components/layout/catalogue/catalogue-nav-data.json";
 import { transformCatalogueJson } from "@/app/components/layout/catalogue/catalogue-nav.utils";
 import type { CatalogueNavItem } from "@/app/components/layout/catalogue/catalogue-nav.types";
 
