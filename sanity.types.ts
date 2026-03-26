@@ -439,8 +439,13 @@ export type FILTERSResult = {
 };
 
 // Source: ./sanity/lib/products/filter/getFiltersForCategoryPath.ts
+// Variable: FILTERS_BY_VFS_KEYS_QUERY
+// Query: *[_type == "product" && count(catalogueLocationKeys[@ in $catalogueKeys]) > 0] {      category    } | order(category asc)
+export type FILTERS_BY_VFS_KEYS_QUERYResult = Array<{
+  category: null;
+}>;
 // Variable: FILTERS_BY_CATEGORY_QUERY
-// Query: *[_type == "categoryFilters" && title == $topLevelCategory][0] {      title,      "filters": filters.filterItems[]{        name,        type,        options,        defaultValue,        min,        max,        isMinOnly,        step      },      "mappings": categoryMappings[path == $cleanPath]    }
+// Query: *[_type == "categoryFilters" && title == $topLevelCategory][0] {        title,        "filters": filters.filterItems[]{          name,          type,          options,          defaultValue,          min,          max,          isMinOnly,          step        }      }
 export type FILTERS_BY_CATEGORY_QUERYResult = null;
 
 // Source: ./sanity/lib/products/getAllProducts.ts
@@ -618,8 +623,13 @@ export type SEARCH_FOR_PRODUCTS_QUERYResult = Array<{
 }>;
 
 // Source: ./sanity/lib/products/sort/getSortablesForCategoryPath.ts
+// Variable: PRODUCTS_BY_VFS_KEYS_QUERY
+// Query: *[_type == "product" && count(catalogueLocationKeys[@ in $catalogueKeys]) > 0] {      category    } | order(category asc)
+export type PRODUCTS_BY_VFS_KEYS_QUERYResult = Array<{
+  category: null;
+}>;
 // Variable: SORTABLES_BY_CATEGORY_QUERY
-// Query: *[_type == "categorySortables" && title == $topLevelCategory][0] {      title,      "sortOptions": sortOptions[]{        name,        displayName,        type,        field,        defaultDirection      },      "mappings": categoryMappings[path == $cleanPath]    }
+// Query: *[_type == "categorySortables" && title == $topLevelCategory][0] {        title,        "sortOptions": sortOptions[]{          name,          displayName,          type,          field,          defaultDirection        }      }
 export type SORTABLES_BY_CATEGORY_QUERYResult = null;
 
 // Source: ./sanity/lib/profiles/fetchProfileByClerkId.ts
@@ -640,11 +650,14 @@ declare module "@sanity/client" {
     '\n    *[_type == "sale" && _id == $saleId]{\n      name,\n      "slug": slug.current,\n      validFrom,\n      validUntil,\n      isActive,\n      description,\n      "image": image.asset->url,\n      category->{\n        name,\n        "slug": slug.current,\n        "products": *[_type==\'product\' && categoryPath == ^.metadata.path]{\n          name,\n          "slug": slug.current,\n          image,\n          defaultPrice\n        }\n      }\n    }\n  ': SALE_BY_ID_QUERYResult;
     '\n    *[_type == "hero"] | order(_updatedAt desc)[0] {\n      headline,\n      subheadline,\n      ctaText,\n\n      backgroundImage {\n        asset->{\n          _id,\n          url,\n          metadata {\n            dimensions,\n            lqip\n          }\n        },\n        hotspot,\n        crop,\n        alt\n      },\n\n      mobileBackgroundImage {\n        asset->{\n          _id,\n          url,\n          metadata {\n            dimensions,\n            lqip\n          }\n        },\n        hotspot,\n        crop,\n        alt\n      }\n    }\n  ': HERO_QUERYResult;
     '{\n    "brands": array::unique(*[_type == "product"].brand->name)\n  }': FILTERSResult;
-    '\n    *[_type == "categoryFilters" && title == $topLevelCategory][0] {\n      title,\n      "filters": filters.filterItems[]{\n        name,\n        type,\n        options,\n        defaultValue,\n        min,\n        max,\n        isMinOnly,\n        step\n      },\n      "mappings": categoryMappings[path == $cleanPath]\n    }\n  ': FILTERS_BY_CATEGORY_QUERYResult;
+    '\n    *[_type == "product" && count(catalogueLocationKeys[@ in $catalogueKeys]) > 0] {\n      category\n    } | order(category asc)\n  ':
+      | FILTERS_BY_VFS_KEYS_QUERYResult
+      | PRODUCTS_BY_VFS_KEYS_QUERYResult;
+    '\n      *[_type == "categoryFilters" && title == $topLevelCategory][0] {\n        title,\n        "filters": filters.filterItems[]{\n          name,\n          type,\n          options,\n          defaultValue,\n          min,\n          max,\n          isMinOnly,\n          step\n        }\n      }\n    ': FILTERS_BY_CATEGORY_QUERYResult;
     '\n        *[\n            _type == "product"\n        ] | order(name asc)\n    ': ALL_PRODUCTS_QUERYResult;
     "\n            *[\n                _type == 'product'\n                && _id == $id\n            ] | order(name asc) [0]\n        ": PRODUCT_BY_ID_QUERYResult;
     '*[\n        _type == "product"\n        && name match $searchParam\n    ] | order(name asc)': SEARCH_FOR_PRODUCTS_QUERYResult;
-    '\n    *[_type == "categorySortables" && title == $topLevelCategory][0] {\n      title,\n      "sortOptions": sortOptions[]{\n        name,\n        displayName,\n        type,\n        field,\n        defaultDirection\n      },\n      "mappings": categoryMappings[path == $cleanPath]\n    }\n  ': SORTABLES_BY_CATEGORY_QUERYResult;
+    '\n      *[_type == "categorySortables" && title == $topLevelCategory][0] {\n        title,\n        "sortOptions": sortOptions[]{\n          name,\n          displayName,\n          type,\n          field,\n          defaultDirection\n        }\n      }\n    ': SORTABLES_BY_CATEGORY_QUERYResult;
     '\n    *[_type == "userProfile" && clerkId == $clerkId][0] {\n      _id,\n      _type,\n      clerkId,\n      displayName,\n      primaryAddress {\n        streetAddress,\n        city,\n        state,\n        postalCode,\n        country\n      },\n      preferences {\n        receiveMarketingEmails,\n        darkMode,\n        savePaymentInfo\n      },\n      createdAt,\n      updatedAt\n    }\n  ': FETCH_PROFILE_QUERYResult;
   }
 }
