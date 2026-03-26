@@ -46,10 +46,11 @@ export const catalogueItemType = defineType({
       initialValue: 0,
     }),
     defineField({
-      name: "children",
-      title: "Sub-Items",
-      type: "array",
-      of: [{ type: "reference", to: [{ type: "catalogueItem" }] }],
+      name: "parent",
+      title: "Parent Item",
+      type: "reference",
+      to: [{ type: "catalogueItem" }],
+      description: "Reference to parent item forming the recursive tree graph. Root items have no parent.",
     }),
   ],
   preview: {
