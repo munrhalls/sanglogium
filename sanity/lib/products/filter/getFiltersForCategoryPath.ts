@@ -6,94 +6,69 @@ import {
 } from "@/app/components/ui/filters/FilterTypes";
 
 export const getFiltersForCategoryPath = async (
-  categoryPath: string[]
+  catalogueKeys: string[]
 ): Promise<FilterOptions> => {
-  if (categoryPath[0] === "products" && categoryPath.length > 1) {
-    categoryPath.shift();
-  } else if (categoryPath[0] === "products") {
-    categoryPath = ["all"];
+  if (catalogueKeys.length === 0) {
+    return [];
   }
 
-  const cleanPath = categoryPath.join("/");
-
-  const topLevelCategory = categoryPath[0];
-
-  const FILTERS_BY_CATEGORY_QUERY = defineQuery(`
-    *[_type == "categoryFilters" && title == $topLevelCategory][0] {
-      title,
-      "filters": filters.filterItems[]{
-        name,
-        type,
-        options,
-        defaultValue,
-        min,
-        max,
-        isMinOnly,
-        step
-      },
-      "mappings": categoryMappings[path == $cleanPath]
-    }
+  const FILTERS_BY_VFS_KEYS_QUERY = defineQuery(`
+    *[_type == "product" && count(catalogueLocationKeys[@ in $catalogueKeys]) > 0] {
+      category
+    } | order(category asc)
   `);
 
   try {
-    const filtersData = await client.fetch(FILTERS_BY_CATEGORY_QUERY, {
-      topLevelCategory,
-      cleanPath,
-    });
+    const products = await client.fetch(FILTERS_BY_VFS_KEYS_QUERY, { catalogueKeys });
 
-    if (!filtersData) {
-      console.warn(
-        `No filter document found for category: ${topLevelCategory}`
-      );
+    if (!products || products.length === 0) {
       return [];
     }
 
-    // Get all available filters
-    const allFilters = filtersData.filters || [];
+    const categories = [...new Set(products.map((p: any) => p.category).filter(Boolean))];
+    const topLevelCategory = categories[0];
 
-    // Check if we have a specific mapping for this path
-    const specificMapping = filtersData.mappings && filtersData.mappings[0];
+    const FILTERS_BY_CATEGORY_QUERY = defineQuery(`
+      *[_type == "categoryFilters" && title == $topLevelCategory][0] {
+        title,
+        "filters": filters.filterItems[]{
+          name,
+          type,
+          options,
+          defaultValue,
+          min,
+          max,
+          isMinOnly,
+          step
+        }
+      }
+    `);
 
-    let filteredFilters: FilterOptionObject[];
+    const filtersData = await client.fetch(FILTERS_BY_CATEGORY_QUERY, {
+      topLevelCategory,
+    });
 
-    if (specificMapping) {
-      // Return only the filters that are in the mapping and have non-null names
-      filteredFilters = allFilters
-        .filter(
-          (filter) =>
-            filter.name && // Check that name exists and is truthy
-            (specificMapping.filters ?? []).includes(filter.name)
-        )
-        .map((filter) => ({
-          // Make sure all fields match the FilterOptionObject interface
-          name: filter.name || "Unknown", // Use fallback name if somehow null
-          type: filter.type || null,
-          options: filter.options || null,
-          defaultValue: filter.defaultValue || null,
-          min: filter.min !== undefined ? filter.min : null,
-          max: filter.max !== undefined ? filter.max : null,
-          isMinOnly: filter.isMinOnly || null,
-          step: filter.step !== undefined ? filter.step : null,
-        }));
-    } else {
-      // If no specific mapping is found, return all filters with non-null names
-      filteredFilters = allFilters
-        .filter((filter) => filter.name) // Filter out those with null/undefined names
-        .map((filter) => ({
-          name: filter.name || "Unknown", // Fallback name
-          type: filter.type || null,
-          options: filter.options || null,
-          defaultValue: filter.defaultValue || null,
-          min: filter.min !== undefined ? filter.min : null,
-          max: filter.max !== undefined ? filter.max : null,
-          isMinOnly: filter.isMinOnly || null,
-          step: filter.step !== undefined ? filter.step : null,
-        }));
+    if (!filtersData) {
+      console.warn(`No filter document found for category: ${topLevelCategory}`);
+      return [];
     }
 
-    return filteredFilters;
+    const allFilters = filtersData.filters || [];
+
+    return allFilters
+      .filter((filter: any) => filter.name)
+      .map((filter: any) => ({
+        name: filter.name || "Unknown",
+        type: filter.type || null,
+        options: filter.options || null,
+        defaultValue: filter.defaultValue || null,
+        min: filter.min !== undefined ? filter.min : null,
+        max: filter.max !== undefined ? filter.max : null,
+        isMinOnly: filter.isMinOnly || null,
+        step: filter.step !== undefined ? filter.step : null,
+      }));
   } catch (err) {
-    console.error("Error fetching filters for category path:", err);
+    console.error("Error fetching filters for VFS keys:", err);
     return [];
   }
 };
