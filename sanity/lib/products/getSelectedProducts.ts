@@ -2,7 +2,7 @@ import { client } from "../client";
 import { FilterItem } from "@/app/components/ui/filters/FilterTypes";
 
 export const getSelectedProducts = async (
-  path: string[] | string,
+  catalogueKeys: string[],
   selectedFilters: [FilterItem[], FilterItem[], FilterItem[], FilterItem[]],
   selectedSort: { field: string; direction: string } | null,
   selectedPagination = { page: 0, pageSize: 12 }
@@ -104,14 +104,7 @@ export const getSelectedProducts = async (
 
   let assembledQuery = `*[_type == "product"`;
 
-  const pathString = Array.isArray(path) ? path.join("/") : path;
-  let pathQuery = "";
-
-  if (pathString === "products") {
-    pathQuery = "";
-  } else {
-    pathQuery = ` && (categoryPath == "${pathString}" || categoryPath match "${pathString}/*")`;
-  }
+  const pathQuery = catalogueKeys.length > 0 ? ` && count(catalogueLocationKeys[@ in $catalogueKeys]) > 0` : "";
 
   assembledQuery += pathQuery;
 
@@ -201,7 +194,7 @@ export const getSelectedProducts = async (
   const GET_PRODUCTS_BY_QUERY = finalQuery;
 
   try {
-    const result = await client.fetch(GET_PRODUCTS_BY_QUERY);
+    const result = await client.fetch(GET_PRODUCTS_BY_QUERY, { catalogueKeys });
     return {
       products: result.products || [],
       totalProductsCount: result.totalProductsCount || 0,
