@@ -21,7 +21,7 @@ export default async function RootProductsPage(props: {
   params: Params;
   searchParams: SearchParams;
 }) {
-  const path = ["products"];
+  const catalogueKeys: string[] = [];
   const searchParamsResolved = await props.searchParams;
   const selectedFilters = getSelectedFilters(searchParamsResolved);
   const selectedSort = getSelectedSort(searchParamsResolved);
@@ -36,7 +36,7 @@ export default async function RootProductsPage(props: {
       : "asc";
   const [productsResult, filterOptions, sortOptions] = await Promise.all([
     getSelectedProducts(
-      path,
+      catalogueKeys,
       selectedFilters,
       selectedSort,
       selectedPagination
@@ -44,11 +44,11 @@ export default async function RootProductsPage(props: {
       console.error("Failed to fetch products:", error);
       return { products: [], totalProductsCount: 0 };
     }),
-    getFiltersForCategoryPathAction(path).catch((error) => {
+    getFiltersForCategoryPathAction(catalogueKeys).catch((error) => {
       console.error("Failed to fetch filters:", error);
       return [];
     }),
-    getSortablesForCategoryPathAction(path.join("/")).catch((error) => {
+    getSortablesForCategoryPathAction(catalogueKeys).catch((error) => {
       console.error("Failed to fetch sort options:", error);
       return [];
     }),
@@ -80,7 +80,7 @@ export default async function RootProductsPage(props: {
             </div>
           </div>
         </div>
-        <ProductsFilterSortDrawersWrapper categoryPath={path} />
+        <ProductsFilterSortDrawersWrapper categoryPath={catalogueKeys} />
       </main>
       <div className="flex h-dvh flex-col overflow-hidden md:hidden">
         <div className="flex-none bg-white">
@@ -119,7 +119,7 @@ export default async function RootProductsPage(props: {
                 </div>
               </div>
             </div>
-            <ProductsFilterSortDrawersWrapper categoryPath={path} />
+            <ProductsFilterSortDrawersWrapper categoryPath={catalogueKeys} />
           </div>
         </div>
       </div>
