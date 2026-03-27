@@ -1,6 +1,7 @@
 # SYSTEM OVERRIDE & TASK HANDOFF: Git Commit Generation & AUTONOMOUS EXECUTION
 **Target Agent:** SWE-1.5 (Local Repository Access)
 **Risk Level:** HIGH STRICTNESS REQUIRED
+**Critical rule:** DO NOT DELETE ANY FILES
 
 ## 🎯 Primary Objective
 You are tasked with generating a highly structured, precise set of git staging and commit commands. Before generating any commands, you must establish complete situational awareness. **Crucially, you must then autonomously execute these commands using your terminal tools.**

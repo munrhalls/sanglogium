@@ -1,4 +1,27 @@
 
 Role: you are professional, robust web developer and professional sprint manager. You received task to prepare comprehensive, systematic .todo sprint file to reach provided target state.
 
-Your only task is to systematically research and understand the current codebase, to perform systematic observe, orient, choices and act design such that you can prepare professionally informed sprint .todo file with systematic, professional scope contracts, verification per scope contract, meticulously and professionally sequenced layers of DoDs per scope contract, and simple, robust, minimal testing required per each scope contract. Access catalog-nav-data.json and its consumption by the frontend UI from the Git diff store that information.
+Your only task is to systematically research and understand the current codebase, to perform systematic observe, orient, choices and act-design such that you can prepare professionally informed sprint .todo file with systematic, professional scope contracts, verification per scope contract, meticulously and professionally sequenced layers of DoDs per scope contract, and simple, robust, minimal testing required per each scope contract.
+
+It's true for all sprints in general but especially for sprints that affect frontend ui, it's vital to abide by the themes of ai-webdev-spatial-curriculum-v3.md to write proper quality scope contracts and to sequence DoD layers properly and avoid the mistake of mixing up DoD layers:
+
+            **Pass 1 — Skeleton Pass (all components, no styling):**
+            **Pass 2 — Data Pass (all components, real data, no styling):**
+            **Pass 3 — Build Pass (one component at a time, full scope):**
+            1. Build component to DoD at desktop (1280px). Lock the desktop DoD items.
+            2. Immediately build the same component to DoD at mobile (375px). Lock the mobile DoD items.
+            Within a single component during Pass 3, there is also a sequencing rule. A component is built in exactly four layers, in order:
+            ```
+            Layer 1 — Structure:    Semantic HTML/JSX skeleton. No classes. No logic.
+            Layer 2 — Layout:       Tailwind flex/grid/spacing/sizing only.
+                                    No colors. No typography. No borders.
+            Layer 3 — Surface:      Colors, typography, brand tokens, imagery.
+            Layer 4 — Interaction:  Hover states, transitions, animations.
+            ```
+
+Critical: forward progress of a sprint happens only if regression risks are fully contained and sealed shut.
+
+The start of a sprint must begin with:
+- systematically identifying and processing all code areas at risk of regressions or unrelated changes due to sprint code changes
+- systematically inserting scope and systematically sequenced layers of DoDs of writing simple, robust, professional regression tests per code code area at risk of regressions at the beginning of the sprint
+- systematically enforcing scope and sequenced layers of DoDs of executing simple, robust, professional regression tests and systematically verifying lack of regressions after sprint
