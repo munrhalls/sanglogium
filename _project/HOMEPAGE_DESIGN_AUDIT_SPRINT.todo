@@ -1,0 +1,459 @@
+# HOMEPAGE DESIGN AUDIT SPRINT
+## Systematic Observation, Orientation, Decisions, Actions
+
+**Audit Date**: 2026-03-27
+**Scope**: Complete homepage design system audit
+**Sequence**: Foundation → Layout → Components → Content → Polish
+
+================================================================================
+PHASE 0 — OBSERVE (Current State Documentation)
+================================================================================
+
+## O.1 Homepage Section Architecture
+```
+page.tsx
+├── Hero (full viewport, independent) @app/components/features/homepage/hero/Hero.tsx
+├── Shelf (fullBleed) + Featured Carousel @app/components/features/homepage/featured/Featured.tsx
+├── Shelf + ProductSpotlight1/2/3 (3 editorial sections) @app/components/features/homepage/product-spotlight-{1,2,3}/
+├── Shelf (fullBleed) + IemsGallery Grid @app/components/features/homepage/iems-gallery/IemsGallery.tsx
+├── Shelf + NewestRelease @app/components/features/homepage/newest-release/NewestRelease.tsx
+├── Shelf (fullBleed) + Dacs Carousel @app/components/features/homepage/dacs/Dacs.tsx
+└── Shelf (fullBleed) + Accessories @app/components/features/homepage/accessories/Accessories.tsx
+```
+
+## O.2 Data Schema (Sanity)
+**Source**: @sanity/schemaTypes/homepageDataType.ts
+
+**Document Structure**:
+- `featuredProducts[]`: { productRef, productPromo }
+- `spotlight1Data/2Data/3Data`: { productRef, promoTitle, promoSubtitle, promoText }
+- `iemsGallery[]`: Product references
+- `newestReleaseData`: { productRef, promoTitle, promoSubtitle, promoText }
+- `dacs[]`: Product references
+- `accessoriesCables/earpads/storage[]`: Product references
+
+## O.3 Design System Tokens (Verified)
+**Source**: @tailwind.config.ts
+
+**Color System**:
+- Brand: 50-900 scale, primary dark theme base (brand-900: #070808)
+- Surface: page, card, elevated, subtle, highlight, productImage
+- Text: heroHeadline, heroSubHeadline, headline, subtitle, body, caption, accent
+
+**Typography Aliases**:
+- `.type-hero-headline` — Display 1, bold, brand-400
+- `.type-hero-sub` — H2, medium, secondary-300
+- `.type-section-hed` — H1, semibold, brand-400
+- `.type-section-sub` — H2, medium, secondary-300
+- `.type-body` — 16px/24px, regular, brand-200
+- `.type-price` — H4, semibold, secondary-300
+
+**Component Classes**:
+- `.btn-primary`, `.btn-secondary`, `.btn-ghost`, `.btn-cart`
+- `.card-base`, `.card-product` (unified)
+- `.section-header-anchor` (decorative line)
+
+**Layout Tokens**:
+- `max-w-content`: 1280px
+- `py-20`: Section vertical rhythm (80px)
+- `px-4 md:px-8`: Gutters (16px mobile, 32px desktop)
+
+## O.4 Layout System Analysis
+**Shelf Component**: @app/components/layout/general/Shelf.tsx
+- Owns vertical spacing: `py-20`
+- Owns horizontal gutters: `px-4 md:px-8`
+- Wraps all sections except Hero
+- `fullBleed` prop for edge-to-edge backgrounds
+
+**Carousel System**: @app/components/layout/carousel/
+- Context-based state management
+- CSS variable `--visible-count` for slide width
+- Touch targets: 32px visual, 48px hit area via pseudo-element
+
+**Grid System**: @app/components/layout/grid/Grid.tsx
+- Used only in IemsGallery
+- 2 cols mobile, 3 cols md, 4 cols lg
+
+## O.5 Section Background Pattern (Current)
+```
+Hero: bg-black (independent)
+Featured: bg-brand-900 (dark)
+Spotlight1/2/3: bg-brand-700 (mid)
+IemsGallery: bg-brand-900 (dark)
+NewestRelease: bg-brand-800 (deep)
+Dacs: bg-brand-900 (dark)
+Accessories: bg-brand-700 (mid)
+```
+→ Alternating rhythm maintained ✓
+
+## O.6 Card Component Inventory
+| Component | Background | Aspect Ratio | Card Class |
+|-----------|-----------|--------------|------------|
+| FeaturedCard | bg-surface-productImage | aspect-[4/3] | card-product |
+| DacCard | bg-surface-productImage | aspect-[4/3] | card-product |
+| IemCard | bg-surface-productImage | aspect-square | card-product |
+| AccessoryCard | bg-surface-productImage | aspect-[4/3] | card-product |
+
+## O.7 Breakpoint Architecture
+**Tailwind Screens**:
+- xs: 475px
+- sm: 640px
+- md: 768px
+- lg: 1024px
+- xl: 1280px
+- 3xl: 1920px
+
+**Custom Screens**:
+- `lg-touch`: (min-width: 1024px) and (max-height: 850px)
+- `lg-desktop`: (min-width: 1024px) and (min-height: 851px)
+
+## O.8 Visual Decoration System
+**Fractal Ring Pattern** (bg-fractal-ring via Tailwind config):
+- Applied to: Featured, Spotlight promo panels, Accessories
+- 3-layer depth effect: Large (low opacity), Medium, Small (high opacity)
+- REMOVED from: IemsGallery, Dacs (clean gallery look)
+
+================================================================================
+PHASE 1 — ORIENT (Gap Analysis & Strategic Decisions)
+================================================================================
+
+## GAP 1.1 Content Layer — Text Copies
+**Observation**: Product spotlight promo texts are placeholder/default
+**Location**: Sanity `homepageData` document, spotlight1/2/3Data fields
+**Impact**: Editorial voice inconsistent, not brand-aligned
+**Decision**: DEFER — Separate content sprint with copywriter
+
+## GAP 1.2 Navigation Layer — CTA Functionality
+**Observation**: Hero button and "See More" buttons lack href/link
+**Location**: @app/components/features/homepage/hero/Hero.tsx:88-96
+**Impact**: Dead click, poor UX
+**Decision**: ACT — Add navigation links in Sprint Phase 4
+
+## GAP 1.3 Accessibility — ARIA Labels
+**Observation**: Carousel controls lack aria-labels in some instances
+**Location**: @app/components/layout/carousel/CarouselControls.tsx
+**Impact**: Screen reader navigation impaired
+**Decision**: ACT — Add default aria-labels
+
+## GAP 1.4 Responsive — Mobile Spotlight Spacing
+**Observation**: No distance between consecutive spotlights on mobile
+**Location**: @app/(store)/page.tsx shelf wrappers
+**Impact**: Visual compression, hard to distinguish sections
+**Decision**: ACT — Add section spacing on mobile viewports
+
+## GAP 1.5 Performance — Image Loading Strategy
+**Observation**: All images use priority/loading correctly
+**Location**: All card components verified
+**Status**: RESOLVED ✓ — First slide eager, subsequent lazy
+
+## GAP 1.6 Visual — Typography Consistency
+**Observation**: Section headers use mixed patterns
+- FeaturedHeader: type-overline (correct)
+- DacsHeader: type-overline (correct)
+- IemsGalleryHeader: type-overline (correct)
+- AccessoriesHeader: type-overline (correct)
+**Status**: RESOLVED ✓ — All unified
+
+## GAP 1.7 Code Quality — Hardcoded Values
+**Observation**: No hardcoded max-w-[1280px] found in current codebase
+**Observation**: No inline boxShadow styles found
+**Status**: RESOLVED ✓ — Token system fully adopted
+
+================================================================================
+PHASE 2 — DECIDE (Scope Contracts & Sequencing)
+================================================================================
+
+SEQUENCE RATIONALE:
+1. Structure (navigation, a11y) — unblock user journeys
+2. Layout (spacing, rhythm) — visual breathing room
+3. Content (copies, CTAs) — messaging layer
+4. Polish (interactions, edge cases) — refinement
+
+--------------------------------------------------------------------------------
+SCOPE CONTRACT 2.1 — Hero CTA Navigation
+--------------------------------------------------------------------------------
+Files: @app/components/features/homepage/hero/Hero.tsx
+
+**Deliverable State**:
+- Hero CTA button navigates to /products
+- Button is semantic <a> tag styled as button
+- No visual change to styling
+
+**In Scope**:
+- Replace <button> with <a> tag
+- Add href="/products"
+- Preserve all existing styling classes
+
+**Out of Scope**:
+- Changing hero layout
+- Changing hero typography
+- Adding new props
+
+**Forbidden**:
+- Using JavaScript navigation (onClick router.push)
+- Changing button styling
+- Adding external link behavior
+
+**Verification**:
+- [ ] Click navigates to /products
+- [ ] Keyboard accessible (Tab + Enter)
+- [ ] No visual regression
+
+--------------------------------------------------------------------------------
+SCOPE CONTRACT 2.2 — Product Spotlight CTAs
+--------------------------------------------------------------------------------
+Files: @app/components/features/homepage/product-spotlight-{1,2,3}/ProductSpotlight{1,2,3}.tsx
+
+**Deliverable State**:
+- Each "See More" button links to product detail page
+- Button navigates to /products/{product.slug}
+
+**In Scope**:
+- Wrap/convert button to <a> with dynamic href
+- Use product.slug from GROQ data
+
+**Out of Scope**:
+- Changing button text
+- Changing button styling
+- Adding new GROQ fields
+
+**Verification**:
+- [ ] Each spotlight links to correct product
+- [ ] Slug resolves correctly from Sanity
+
+--------------------------------------------------------------------------------
+SCOPE CONTRACT 2.3 — Newest Release CTA
+--------------------------------------------------------------------------------
+Files: @app/components/features/homepage/newest-release/NewestRelease.tsx
+
+**Deliverable State**:
+- "See More" button links to product detail page
+
+**Verification**:
+- [ ] Links to /products/{product.slug}
+
+--------------------------------------------------------------------------------
+SCOPE CONTRACT 2.4 — Carousel ARIA Labels
+--------------------------------------------------------------------------------
+Files: @app/components/layout/carousel/CarouselControls.tsx
+
+**Deliverable State**:
+- CarouselPrevious has aria-label="Previous slide"
+- CarouselNext has aria-label="Next slide"
+- Labels overridable via props for localization
+
+**In Scope**:
+- Add aria-label prop support with defaults
+- Defaults: "Previous slide", "Next slide"
+
+**Out of Scope**:
+- Adding aria-label to dots (not interactive control)
+- Changing visual styling
+
+**Verification**:
+- [ ] Screen reader announces "Previous slide button"
+- [ ] Screen reader announces "Next slide button"
+
+--------------------------------------------------------------------------------
+SCOPE CONTRACT 2.5 — Mobile Spotlight Spacing
+--------------------------------------------------------------------------------
+Files: @app/(store)/page.tsx
+
+**Deliverable State**:
+- Distance between spotlight sections on mobile
+- Gap taken from spacing system (gap-8 or gap-12 on mobile)
+
+**In Scope**:
+- Add mb-8 (or equivalent) to spotlight sections on mobile
+- Use Tailwind responsive classes (sm:mb-0 to reset)
+
+**Out of Scope**:
+- Changing desktop spacing
+- Changing section backgrounds
+
+**Verification**:
+- [ ] 32px gap between spotlights on <640px
+- [ ] No gap change on desktop
+
+--------------------------------------------------------------------------------
+SCOPE CONTRACT 2.6 — Featured Card Link Wrap
+--------------------------------------------------------------------------------
+Files: @app/components/features/homepage/featured/Featured.tsx
+
+**Deliverable State**:
+- Entire FeaturedCard is clickable link
+- Hover state on card (lift + shadow)
+- Product name hover color change removed (redundant)
+
+**In Scope**:
+- Wrap card content in <a> or make card a semantic link
+- Verify card-product hover state applies
+- Remove group-hover:text-brand-50 from product name
+
+**Out of Scope**:
+- Changing card layout
+- Adding "Add to Cart" functionality
+
+**Verification**:
+- [ ] Clicking anywhere on card navigates to product
+- [ ] Hover shows card lift effect
+- [ ] No double hover states
+
+--------------------------------------------------------------------------------
+SCOPE CONTRACT 2.7 — Content Copy Integration (DEFERRED)
+--------------------------------------------------------------------------------
+**Status**: PENDING COPYWRITER INPUT
+
+**Blocked Until**:
+- Brand voice guidelines finalized
+- Product spotlight copy drafts received
+
+**Preparation**:
+- Migration script structure ready in @sanity/update/
+- payload.json schema defined
+
+================================================================================
+PHASE 3 — ACT (Implementation Sprints)
+================================================================================
+
+SPRINT 3.1 — Navigation & Accessibility (Priority: HIGH)
+--------------------------------------------------------------------------------
+☐ Hero CTA Navigation @app/components/features/homepage/hero/Hero.tsx
+    ☐ Structure: Convert button to <a> with href="/products"
+    ☐ Verify: Navigation works, styling preserved
+    ☐ A11y: Keyboard navigable
+
+☐ Product Spotlight CTAs @app/components/features/homepage/product-spotlight-{1,2,3}/
+    ☐ Structure: Convert "See More" buttons to links
+    ☐ Data: Use product.slug from GROQ
+    ☐ Verify: Each links to correct product
+
+☐ Newest Release CTA @app/components/features/homepage/newest-release/NewestRelease.tsx
+    ☐ Structure: Convert "See More" button to link
+    ☐ Verify: Links to product detail
+
+☐ Carousel ARIA Labels @app/components/layout/carousel/CarouselControls.tsx
+    ☐ Structure: Add aria-label prop with defaults
+    ☐ Defaults: "Previous slide", "Next slide"
+    ☐ Verify: Screen reader announcement works
+
+SPRINT 3.2 — Layout Refinement (Priority: MEDIUM)
+--------------------------------------------------------------------------------
+☐ Mobile Spotlight Spacing @app/(store)/page.tsx
+    ☐ Layout: Add mb-8 to spotlight Shelf wrappers
+    ☐ Responsive: sm:mb-0 for desktop
+    ☐ Verify: Visual gap on mobile, no change on desktop
+
+☐ Featured Card Link Wrap @app/components/features/homepage/featured/Featured.tsx
+    ☐ Structure: Wrap card in <a>
+    ☐ Style: Remove redundant hover color change
+    ☐ Verify: Entire card clickable
+
+SPRINT 3.3 — Content Integration (Priority: MEDIUM — BLOCKED)
+--------------------------------------------------------------------------------
+☐ Copy Migration Script
+    ☐ Blocked: Waiting for copywriter drafts
+    ☐ Ready: Migration infrastructure in place
+
+SPRINT 3.4 — Verification & Regression Testing (Priority: HIGH)
+--------------------------------------------------------------------------------
+☐ Cross-browser Layout Verification
+    ☐ Chrome/Edge (Chromium)
+    ☐ Firefox
+    ☐ Safari
+    ☐ Mobile Chrome
+    ☐ Mobile Safari
+
+☐ Responsive Breakpoint Verification
+    ☐ 320px (mobile portrait)
+    ☐ 480px (mobile landscape)
+    ☐ 640px (sm)
+    ☐ 768px (md)
+    ☐ 1024px (lg)
+    ☐ 1280px (xl)
+    ☐ 1440px (2xl)
+
+☐ Accessibility Audit
+    ☐ Keyboard navigation path
+    ☐ Screen reader announcement
+    ☐ Focus indicators visible
+    ☐ Color contrast ratios
+
+================================================================================
+VERIFICATION CHECKLIST — DoD Per Scope Contract
+================================================================================
+
+SCOPE 2.1 Hero CTA:
+☐ Button navigates to /products
+☐ Uses semantic <a> tag
+☐ Keyboard accessible
+☐ No visual regression
+
+SCOPE 2.2-2.3 Product CTAs:
+☐ Each spotlight links to correct product slug
+☐ Newest Release links to correct product
+☐ No 404s from link testing
+
+SCOPE 2.4 Carousel ARIA:
+☐ Previous button announces "Previous slide"
+☐ Next button announces "Next slide"
+☐ Props allow override
+
+SCOPE 2.5 Mobile Spacing:
+☐ 32px gap between spotlights on mobile
+☐ No desktop spacing change
+☐ Responsive class working
+
+SCOPE 2.6 Featured Card:
+☐ Entire card clickable
+☐ Hover lift effect works
+☐ No redundant hover states
+
+================================================================================
+ARCHITECTURE DECISIONS (Record)
+================================================================================
+
+1. **Navigation Pattern**: All CTAs use semantic <a> tags, not JS navigation
+   - Rationale: Progressive enhancement, SEO, accessibility
+   - Future: Can enhance with prefetching if needed
+
+2. **Card Link Strategy**: Wrap entire card, not just title
+   - Rationale: Larger touch target, better UX
+   - Exception: Add to Cart button (future feature)
+
+3. **ARIA Defaults**: Hardcoded English labels with prop override
+   - Rationale: i18n not currently required
+   - Future: Add i18n context when localization needed
+
+4. **Mobile Spacing**: mb-8 between consecutive spotlights
+   - Rationale: Visual separation without changing section rhythm
+   - Alternative Considered: Internal section margin (rejected: affects desktop)
+
+================================================================================
+RISKS & MITIGATION
+================================================================================
+
+| Risk | Likelihood | Impact | Mitigation |
+|------|-----------|--------|------------|
+| Copy delays | High | Medium | Sprint 3.3 isolated, won't block 3.1/3.2 |
+| Responsive regression | Medium | High | Comprehensive breakpoint testing in 3.4 |
+| Link routing issues | Low | High | Test all slugs against actual Sanity data |
+| Accessibility gaps | Medium | Medium | Screen reader testing in 3.4 |
+
+================================================================================
+SPRINT COMPLETION CRITERIA
+================================================================================
+
+**Definition of Done**:
+1. All navigation CTAs functional and verified
+2. ARIA labels present and tested
+3. Mobile spacing implemented
+4. Cross-browser testing passed
+5. No console errors
+6. Lighthouse score maintained (90+ performance)
+
+**Sign-off Required**:
+- [ ] UX: Navigation flow verified
+- [ ] A11y: Screen reader testing complete
+- [ ] Visual: Design system compliance
+- [ ] QA: Cross-browser regression testing
