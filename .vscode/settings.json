@@ -2,5 +2,8 @@
   "github.copilot.chat.anthropic.thinking.enabled": true,
   "github.copilot.chat.codeGeneration.useInstructionFiles": false,
   "typescript.tsdk": "node_modules\\typescript\\lib",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "workbench.editor.wrapTabs": true,
+  "workbench.editor.tabCloseButton": "off",
+  "workbench.editor.showTabs": "multiple"
 }
