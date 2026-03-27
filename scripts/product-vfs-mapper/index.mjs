@@ -37,26 +37,43 @@ const client = createClient({
 async function fetchCatalogueLeafNodes() {
   const query = '*[_type == "catalogueItem" && type == "link"]{_id, title, slug}';
   const leafNodes = await client.fetch(query);
+
+  if (!Array.isArray(leafNodes)) {
+    throw new Error('Invalid catalogue leaf nodes query result');
+  }
+
   return leafNodes;
 }
 
 async function fetchProductTraits(productId) {
   const query = `*[_type == "product" && _id == $productId][0]{name, overviewFields}`;
   const product = await client.fetch(query, { productId });
+
+  if (product && typeof product !== 'object') {
+    throw new Error('Invalid product query result');
+  }
+
   return product;
 }
 
 function determineLeafNodeIds(leafNodes, productTraits) {
   if (!productTraits || !productTraits.overviewFields) return [];
 
-  const traits = Object.values(productTraits.overviewFields).flat().filter(Boolean);
+  if (!Array.isArray(productTraits.overviewFields)) {
+    throw new Error('Invalid overviewFields structure');
+  }
+
+  const traits = productTraits.overviewFields
+    .filter(field => field && typeof field.value === 'string')
+    .map(field => field.value);
+
   const matchedIds = [];
 
   for (const leafNode of leafNodes) {
     const nodeText = `${leafNode.title} ${leafNode.slug?.current || ''}`.toLowerCase();
 
     for (const trait of traits) {
-      const traitText = String(trait).toLowerCase();
+      const traitText = trait.toLowerCase();
       if (nodeText.includes(traitText) || traitText.includes(nodeText.split('(')[0].trim())) {
         matchedIds.push(leafNode._id);
         break;
