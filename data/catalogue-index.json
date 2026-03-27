@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-27T07:10:09.089Z",
+  "generatedAt": "2026-03-27T13:32:31.767Z",
   "slugToIdMap": {
     "open-back": "o7c6baiuobsr7ni2y2vf22sh",
     "closed-back": "yq3p9s798zszjkzm5btnebjh",
@@ -35,6 +35,17 @@
       ],
       "type": "header"
     },
+    "ekv4twh175wcse4fl4jjdxfq": {
+      "title": "By Design",
+      "url": "#",
+      "slug": "",
+      "breadcrumbs": [],
+      "children": [
+        "o7c6baiuobsr7ni2y2vf22sh",
+        "yq3p9s798zszjkzm5btnebjh"
+      ],
+      "type": "header"
+    },
     "o7c6baiuobsr7ni2y2vf22sh": {
       "title": "Open-Back",
       "url": "/shop/open-back",
@@ -60,6 +71,18 @@
       ],
       "children": [],
       "type": "link"
+    },
+    "px3eujo0ql1hot9dkoxleao6": {
+      "title": "By Driver",
+      "url": "#",
+      "slug": "",
+      "breadcrumbs": [],
+      "children": [
+        "yd9641q8fiuh9rgoupauw2zl",
+        "j751evwbn8n9aac4elrekqi4",
+        "icmc3j8qzjiffr9h6tw6kg74"
+      ],
+      "type": "header"
     },
     "yd9641q8fiuh9rgoupauw2zl": {
       "title": "Planar Magnetic",
@@ -100,6 +123,17 @@
       "children": [],
       "type": "link"
     },
+    "fxvwrl18sixw5b9ro2jrlepa": {
+      "title": "In-Ear & Wireless",
+      "url": "#",
+      "slug": "",
+      "breadcrumbs": [],
+      "children": [
+        "t2anvkkjfz9knqi85kozuaze",
+        "sbbu2eig5fx84uht05ic863j"
+      ],
+      "type": "header"
+    },
     "t2anvkkjfz9knqi85kozuaze": {
       "title": "Monitors (IEMs)",
       "url": "/shop/monitors-iems",
@@ -137,6 +171,17 @@
       ],
       "type": "header"
     },
+    "hqb22ca5czb252r0r7l1xmet": {
+      "title": "Amplification",
+      "url": "#",
+      "slug": "",
+      "breadcrumbs": [],
+      "children": [
+        "o6mz3kbs5xla8ixastppktsd",
+        "ipz8oe0elii0vm2voxsbgsw6"
+      ],
+      "type": "header"
+    },
     "o6mz3kbs5xla8ixastppktsd": {
       "title": "Desktop Amps",
       "url": "/shop/desktop-amps",
@@ -162,6 +207,19 @@
       ],
       "children": [],
       "type": "link"
+    },
+    "lkuqr2n1gpeivrvxisnfs3ot": {
+      "title": "Digital Sources",
+      "url": "#",
+      "slug": "",
+      "breadcrumbs": [],
+      "children": [
+        "mpni93r13d9yo2vn5moexlkp",
+        "o37u0yjphzt3qu91ewnww2yj",
+        "o9igtdq1g5oqaahpa0zvq238",
+        "npwbgqg3v4t5qe95rg35wte0"
+      ],
+      "type": "header"
     },
     "mpni93r13d9yo2vn5moexlkp": {
       "title": "Standalone DACs",
@@ -227,6 +285,18 @@
       ],
       "type": "header"
     },
+    "lhpqqb5qkfvh4kid6q6455eu": {
+      "title": "Connectivity",
+      "url": "#",
+      "slug": "",
+      "breadcrumbs": [],
+      "children": [
+        "vnrj2n32p172vcje1tt3s4ls",
+        "ck7d2wm9xe6lujtdfq7biyh7",
+        "jdxde1qpftseepekaivzpl8c"
+      ],
+      "type": "header"
+    },
     "vnrj2n32p172vcje1tt3s4ls": {
       "title": "Headphone Cables",
       "url": "/shop/headphone-cables",
@@ -266,6 +336,17 @@
       "children": [],
       "type": "link"
     },
+    "e4rct8015rxgy011710isd5e": {
+      "title": "Maintenance",
+      "url": "#",
+      "slug": "",
+      "breadcrumbs": [],
+      "children": [
+        "j2yu4yvtje69j6gie4spxutu",
+        "ab2xhkm6hgabf69y0f3s4oo0"
+      ],
+      "type": "header"
+    },
     "j2yu4yvtje69j6gie4spxutu": {
       "title": "Earpads",
       "url": "/shop/earpads",
@@ -291,6 +372,17 @@
       ],
       "children": [],
       "type": "link"
+    },
+    "rw0symuvdvebq75r4og53tlf": {
+      "title": "Storage",
+      "url": "#",
+      "slug": "",
+      "breadcrumbs": [],
+      "children": [
+        "u9o83mfmx23cudko8phu5otx",
+        "j8ls622l90d6m4xetlajua4y"
+      ],
+      "type": "header"
     },
     "u9o83mfmx23cudko8phu5otx": {
       "title": "Headphone Stands",

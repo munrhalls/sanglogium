@@ -103,16 +103,17 @@ async function buildCatalogueIndex() {
               { label: node.title, url: `/shop/${urlString}` },
             ];
 
-        // Only register nodes that actually have slugs
-        if (currentSlug) {
-          if (!isHeader) {
+        // Register ALL nodes (both headers and links) in slotMetadataMap
+        // Headers without slugs still need to be included for subtree traversal
+        if (currentSlug || isHeader) {
+          if (!isHeader && currentSlug) {
             slugToIdMap[urlString] = node._key;
           }
 
           slotMetadataMap[node._key] = {
             title: node.title,
             url: isHeader ? "#" : `/shop/${urlString}`,
-            slug: currentSlug,
+            slug: currentSlug || "",
             breadcrumbs: nextBreadcrumbs,
             children: node.children?.map((c) => c._key) || [],
             type: node.type,
@@ -124,6 +125,50 @@ async function buildCatalogueIndex() {
     }
 
     traverse(tree);
+
+    // Validation: Ensure all referenced children IDs exist in slotMetadataMap
+    function validateSlotMetadataCompleteness(metadataMap) {
+      const allReferencedIds = new Set();
+      const missingIds = new Set();
+
+      // Collect all referenced child IDs
+      for (const [nodeId, metadata] of Object.entries(metadataMap)) {
+        for (const childId of metadata.children) {
+          allReferencedIds.add(childId);
+          if (!metadataMap[childId]) {
+            missingIds.add(childId);
+          }
+        }
+      }
+
+      const totalNodes = Object.keys(metadataMap).length;
+      const leafNodes = Object.values(metadataMap).filter(meta => meta.children.length === 0).length;
+      const headerNodes = totalNodes - leafNodes;
+
+      console.log(`📊 VFS Validation Results:`);
+      console.log(`   Total nodes: ${totalNodes}`);
+      console.log(`   Leaf nodes: ${leafNodes}`);
+      console.log(`   Header nodes: ${headerNodes}`);
+      console.log(`   Referenced IDs: ${allReferencedIds.size}`);
+
+      if (missingIds.size > 0) {
+        console.log(`❌ VALIDATION FAILED - Missing ${missingIds.size} IDs in slotMetadataMap:`);
+        for (const missingId of missingIds) {
+          // Find which parent references this missing ID
+          for (const [parentId, metadata] of Object.entries(metadataMap)) {
+            if (metadata.children.includes(missingId)) {
+              console.log(`   - ${missingId} (referenced by parent "${metadata.title}" (${parentId}))`);
+              break;
+            }
+          }
+        }
+        throw new Error(`Build failed: ${missingIds.size} missing IDs in slotMetadataMap`);
+      } else {
+        console.log(`✅ VALIDATION PASSED - All referenced IDs exist in slotMetadataMap`);
+      }
+    }
+
+    validateSlotMetadataCompleteness(slotMetadataMap);
 
     const output = {
       generatedAt: new Date().toISOString(),
