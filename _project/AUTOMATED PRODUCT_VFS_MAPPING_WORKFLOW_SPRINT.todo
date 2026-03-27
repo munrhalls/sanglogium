@@ -1,6 +1,6 @@
-# Sprint Execution File — Automated Product VFS Mapping Workflow
+# Sprint Execution File — Automated Product VFS Mapping Workflow (Refined)
 # Agent: SWE | Risk: Zero Regression on Existing VFS Core
-# Objective: Build and verify a robust, automated workflow (Node.js script) that dynamically resets and populates a single product's `catalogueLocationKeys` strictly with logically-derived leaf-node IDs, based on the product's internal metadata (`overviewFields`). Ensure strict adherence to the Virtual File System (VFS) "Leaf-Node Only" invariant.
+# Objective: Hardening the automated VFS mapping script and its verification suite. Address semantic trait matching failures, fix destructive GROQ query parsing errors, and establish resilient VFS Sub-Tree querying for seamless product placement into the VFS.
 
 ---
 
@@ -13,65 +13,64 @@
 
 ---
 
-## Layer 1: Foundation – Trait Extraction & Leaf Node Discovery Engine
+## Layer 1: Enhanced Semantic Trait Discovery Engine
 
 ### Scope Contract
-Establish the core logic needed to pull the active Virtual File System (VFS) leaf nodes from Sanity and parse the target product's `overviewFields` to extract its deterministic traits. This phase only performs "read" evaluations without modifying the product document.
+Fix the brittle `.includes()` logic in the trait mapping engine. The `index.mjs` script must utilize a semantic keyword dictionary to map abstract product features (e.g., "integrated amplifier", "d/a conversion") into standard VFS leaf nodes (e.g., "Desktop Amps", "DAC/Amp Combos"). The product's `name` must also be parsed alongside its `overviewFields`.
 
 ### DoD
 
-- [ ] 1.1 — Create `scripts/product-vfs-mapper/index.mjs` with boilerplate Sanity Client initialization.
-- [ ] 1.2 — Implement `fetchCatalogueLeafNodes()`: Query Sanity for `*[_type == "catalogueItem" && type == "link"]{_id, title, slug}`. Verify the script downloads and builds an in-memory map of strictly leaf nodes.
-- [ ] 1.3 — Implement `fetchProductTraits(productId)`: Query the target product (e.g., B&W PI7) by ID, extracting its `name` and `overviewFields`.
-- [ ] 1.4 — Implement rule-based matching engine `determineLeafNodeIds(leafNodes, productTraits)`: Implement text/regex intersection logic that checks `productTraits` against the leaf nodes' titles/slugs (e.g., matching "in-ear" trait to the "Monitors (IEMs)" leaf ID). The output must be an array of matching string `_id` values.
+- [ ] 1.1 — In `scripts/product-vfs-mapper/index.mjs`: Introduce a robust `semanticMap` dictionary mapping specific VFS leaf `slug.current` strings to an array of semantic keywords. (e.g., `{'desktop-amps': ['amplifier', 'amp', 'receiver'], 'dac-amp-combos': ['dac', 'd/a converter', 'digital-to-analog']}`).
+- [ ] 1.2 — Update `fetchProductTraits(productId)`: Ensure it retrieves the product `name` and all `overviewFields` safely, concatenating them into a single, normalized, lowercased "knowledge string" containing all product data.
+- [ ] 1.3 — Rewrite `determineLeafNodeIds(leafNodes, knowledgeString)`: Iterate through the `leafNodes`. For each leaf node, check if its title or any of its associated semantic keywords (from `semanticMap`) strictly exist within the `knowledgeString`.
+- [ ] 1.4 — Ensure the engine returns a deduplicated array of matching `_id` strings, strictly belonging `type: "link"` classification.
 
 ### Verification — Layer 1
 
 - [ ] V1.1 — Run `node scripts/product-vfs-mapper/index.mjs --dry-run --productId="[Target_ID]"`.
-- [ ] V1.2 — Validate console output: The script must strictly log ONLY `_id` strings belonging to `type: "link"` classification.
-- [ ] V1.3 — Validate against the B&W PI7 dummy case: Output must resolve exactly 4 IDs mapping to Closed-Back, Monitors (IEMs), True Wireless (TWS), and Dynamic. Exactly zero `type: "header"` IDs (e.g., "headphone", "by-design") must appear.
+- [ ] V1.2 — Validate console output against the Marantz PM6007 amplifier: It must output the exact IDs corresponding to "Desktop Amps" and "DAC/Amp Combos". Wait for success.
 
 ---
 
 ## Layer 2: Atomic Update & Reset Transaction
 
 ### Scope Contract
-Write the mutation logic that first purges the product's legacy/corrupted string keys and systematically writes the deterministic array of valid leaf-node IDs generated from Layer 1.
+Execute the definitive transaction that purges the product's legacy/corrupted IDs (e.g., `6vL2...`) and records the verified semantic array.
 
 ### DoD
 
-- [ ] 2.1 — In `scripts/product-vfs-mapper/index.mjs`: Implement `resetAndPopulateCatalogueKeys(productId, determinedIds)`.
-- [ ] 2.2 — Construct a Sanity Transaction:
+- [ ] 2.1 — In `scripts/product-vfs-mapper/index.mjs`: Verify `resetAndPopulateCatalogueKeys(productId, determinedIds)` drops the old array strictly via integer/string mismatch replacements.
   1. Use `patch(productId)`
-  2. Unset the existing `catalogueLocationKeys` array entirely to flush invalid 21-character or legacy keys.
-  3. Set `catalogueLocationKeys` rigidly to the newly `determinedIds` string array.
-  4. Commit transaction.
-- [ ] 2.3 — Add CLI argument handling to support executing the update (e.g., `--commit` flag vs `--dry-run`).
+  2. Implement `.unset(['catalogueLocationKeys'])` followed sequentially by `.set({ catalogueLocationKeys: determinedIds })`.
+  3. Commit transaction.
+- [ ] 2.2 — Finalize CLI argument handling to support executing the real update using `--commit`.
 
 ### Verification — Layer 2
 
-- [ ] V2.1 — Execute the script with `--commit` on a targeted product ID.
-- [ ] V2.2 — Query the Sanity Content Lake: `*[_type == "product" && _id == "[Target_ID]"][0].catalogueLocationKeys`.
-- [ ] V2.3 — Assert that the array is strictly populated with only the verified leaf-node IDs and that ALL legacy 21-character strings are securely eradicated.
+- [ ] V2.1 — Execute the script with `--commit` on the target product ID.
+- [ ] V2.2 — Query `*[_type == "product" && _id == "[Target_ID]"][0].catalogueLocationKeys` via CLI or Vision plugin.
+- [ ] V2.3 — Assert the array is rigidly populated with only the newly derived leaf-node IDs. ALL legacy IDs must be gone.
 
 ---
 
-## Layer 3: Comprehensive VFS Architecture Verification
+## Layer 3: Hardened VFS Architecture GROQ Verification
 
 ### Scope Contract
-Systematically test the product's presence and absence across the multi-tiered Virtual File System query mechanisms to definitively prove 100% correct placement.
+Fix the `param $leafId referenced, but not provided` and syntax errors in `verify-mapping.mjs`. Implement proper array-intersection GROQ and decoupled Sub-Tree logic.
 
 ### DoD
 
-- [ ] 3.1 — Create a dynamic test harness script `scripts/product-vfs-mapper/verify-mapping.mjs` that takes a `productId`.
-- [ ] 3.2 — Implement **Positive Leaf Test**: Query every single leaf node assigned to the product. Assert the product is returned for each query independently.
-- [ ] 3.3 — Implement **Positive Header (Sub-Tree) Test**: Query the parent headers (e.g., `headphones` and `by-design`). The query must resolve the sub-tree automatically, and the product must be successfully returned.
-- [ ] 3.4 — Implement **Negative Co-Branch Test**: Query sibling leaf nodes contradicting the product's traits (e.g., `open-back` and `planar-magnetic`). Assert the product is strictly hidden.
+- [ ] 3.1 — In `scripts/product-vfs-mapper/verify-mapping.mjs`: Fix the **Positive Leaf Test**. The target GROQ query must be valid Sanity array-membership syntax: `*[_type == "product" && $leafId in catalogueLocationKeys]{name}`.
+- [ ] 3.2 — Fix the **Positive Header (Sub-Tree) Test**. GROQ does not easily recursively query unbounded parent-child trees. Instead:
+  1. Write a Javascript function `getSubTreeLeafIds(headerId)` that queries `*[_type == "catalogueItem"]` and recursively follows `parent._ref` downwards in-memory to collect all leaf node IDs.
+  2. Perform the product intersection query seamlessly: `*[_type == "product" && count((catalogueLocationKeys[])[@ in $subTreeIds]) > 0]{name}`.
+- [ ] 3.3 — Fix the **Negative Co-Branch Test**. Use the same valid membership syntax `$leafId in catalogueLocationKeys` to assert the product does NOT match logically contradictory siblings.
+- [ ] 3.4 — Prevent `Cannot read properties of null` by gracefully testing ONLY against the leaf IDs strictly present inside the database right now (dynamic querying instead of hardcoded strings).
 
 ### Verification — Layer 3
 
 - [ ] V3.1 — Run `node scripts/product-vfs-mapper/verify-mapping.mjs --productId="[Target_ID]"`.
-- [ ] V3.2 — The console must evaluate and green-check exactly 4 Positive Leaf Tests, 2 Positive Header Tests, and 2 Negative Co-Branch Tests. If any test returns false positive/negative visibility, fail the build pipeline automatically.
+- [ ] V3.2 — Look for 100% green-checks spanning Positive Leaf, Postive Header, and Negative Co-Branch tests. The GROQ parsing errors must not appear. Test is PASS.
 
 ---
 
@@ -79,7 +78,7 @@ Systematically test the product's presence and absence across the multi-tiered V
 
 | Layer | Scope | DoDs | Verifications |
 |---|---|---|---|
-| Layer 1: Foundation | Build the trait extraction and leaf node discovery engine. | 4 | 3 |
-| Layer 2: Atomic Reset | Execute transaction resetting target product VFS paths. | 3 | 3 |
-| Layer 3: VFS Verification | Systematic VFS multi-tree intersection verification test suite. | 4 | 2 |
-| **Total** | | **11** | **8** |
+| Layer 1: Enhanced Traits Engine | Implement Semantic mapping and product "knowledge string" parsing. | 4 | 2 |
+| Layer 2: Atomic Reset | Execute transaction resetting target product VFS paths securely. | 2 | 3 |
+| Layer 3: Hardened GROQ Verification | Correct array intersection logic and VFS tree depth resolution. | 4 | 2 |
+| **Total** | | **10** | **7** |
