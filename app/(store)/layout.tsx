@@ -13,15 +13,19 @@ import Footer from "@/app/components/layout/footer/Footer";
 import DrawersManager from "@/app/components/layout/drawers/DrawersManager";
 import ActionBar from "@/app/components/layout/navigation/ActionBar";
 import CatalogueNavbar from "@/app/components/layout/catalogue/CatalogueNavbar";
+import { getSanityCatalogueData } from "@/app/components/layout/catalogue/getCatalogueData";
 import { Suspense } from "react";
 
 export { metadata };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Fetch catalogue data on the server
+  const catalogueDataRaw = await getSanityCatalogueData();
+
   return (
     <html lang="en" className={cn(montserrat.variable, "antialiased")}>
       <body
@@ -43,7 +47,7 @@ export default function RootLayout({
               )}
             >
               <Header />
-              <CatalogueNavbar />
+              <CatalogueNavbar catalogueDataRaw={catalogueDataRaw} />
               <main
                 className={cn(
                   "relative flex h-full w-full flex-1 flex-col",
@@ -58,7 +62,7 @@ export default function RootLayout({
               </main>
 
               <Suspense fallback={null}>
-                <DrawersManager />
+                <DrawersManager catalogueDataRaw={catalogueDataRaw} />
                 <ActionBar />
               </Suspense>
             </div>

@@ -6,7 +6,11 @@ import CarouselCatalogue from "@/app/components/layout/catalogue/CatalogueCarous
 import { cn } from "@/lib/utils/tailwind";
 
 // BACKLOG TODO - ensure the mobile catalogue / menu is not accessible when catalogue navbar is accessible (lg-touch/desktop related)
-export default function DrawerManager() {
+interface DrawerManagerProps {
+  catalogueDataRaw: { catalogue: any[] };
+}
+
+export default function DrawerManager({ catalogueDataRaw }: DrawerManagerProps) {
   const { drawer, isOpen, closeDrawer } = useDrawer();
 
   return (
@@ -41,7 +45,7 @@ export default function DrawerManager() {
             )}
           >
             <Drawer.Title className="sr-only">Drawer Content</Drawer.Title>
-            {drawer === "catalogue" && <CarouselCatalogue />}
+            {drawer === "catalogue" && <CarouselCatalogue catalogueDataRaw={catalogueDataRaw} />}
           </div>
         </Drawer.Content>
       </Drawer.Portal>
