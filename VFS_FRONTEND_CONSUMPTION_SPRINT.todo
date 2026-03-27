@@ -1,0 +1,409 @@
+# VFS Frontend Consumption Sprint
+
+## Executive Summary
+
+**Current State:** The VFS (Virtual File System) architecture is structurally sound and data-complete (32 nodes in `catalogue-index.json`). However, the frontend consumes catalogue data inefficiently with dual data paths, zero caching, and incomplete URL resolution.
+
+**Target State:** A unified, performant, type-safe frontend consumption layer that leverages the pre-built VFS index with aggressive caching, proper URL generation, and zero client-side JavaScript for navigation.
+
+**Success Metrics:**
+- Navigation data fetch: From ~200ms+ per request to 0ms (cached build-time data)
+- Category page product queries: Sub-100ms GROQ execution
+- Type safety: 100% TypeScript coverage for catalogue data structures
+- Bundle size: Remove client-side catalogue transformation logic
+
+---
+
+## Architecture Principles
+
+1. **Build-Time Precomputation**: `catalogue-index.json` is the single source of truth for both navigation and product queries
+2. **Server-First Data Flow**: All catalogue data resolves on the server via React Server Components
+3. **Zero Client JS for Navigation**: Navigation UI uses CSS hover states, not React state
+4. **O(1) Lookups**: URL resolution uses pre-computed maps, not tree traversal
+5. **Type Safety**: All catalogue structures fully typed via Sanity TypeGen
+
+---
+
+## Scope Contract 1: Unified Data Layer - Navigation VFS Migration
+
+**Goal**: Migrate navigation from live Sanity fetches to pre-built `catalogue-index.json`
+
+### Current State
+```typescript
+// app/(store)/layout.tsx
+const catalogueDataRaw = await getSanityCatalogueData(); // Live fetch every request!
+```
+- Navigation fetches from Sanity CMS on every page load
+- `getCatalogueData.ts` transforms flat Sanity data to legacy JSON format
+- Duplicates build script logic, adds 100-300ms latency per request
+- Data inconsistency risk between navigation and product pages
+
+### Target State
+```typescript
+// app/(store)/layout.tsx
+import { getCatalogue } from "@/data/catalogue";
+const catalogueTree = getCatalogue(); // Instant, cached, pre-built
+```
+- Navigation consumes `catalogue-index.json` directly via `data/catalogue.ts`
+- Zero network requests for catalogue structure
+- Perfect consistency with product page VFS queries
+
+### Implementation
+1. **Update `data/catalogue.ts`**:
+   - Add `getCatalogueForNavigation()` function
+   - Transform VFS tree to navigation format (headers → sections, links → nav items)
+   - Preserve existing component interface
+
+2. **Update `app/(store)/layout.tsx`**:
+   - Replace `getSanityCatalogueData()` with `getCatalogueForNavigation()`
+   - Maintain same props interface for `CatalogueNavbar` and `DrawersManager`
+
+3. **Deprecate `getCatalogueData.ts`**:
+   - Mark for removal after verification
+   - Remove redundant transformation logic
+
+### DoD - Verification Checklist
+- [ ] Navigation renders without any Sanity client fetch
+- [ ] `catalogue-index.json` is the sole data source for both nav and product pages
+- [ ] Response header shows no additional latency from catalogue fetching
+- [ ] All 3 root categories (Headphones, Audio Electronics, Accessories) render correctly
+- [ ] Mobile drawer shows identical structure to desktop navbar
+
+### Testing
+```typescript
+// Verify no live fetches
+// 1. Run dev server: npm run dev
+// 2. Open any page
+// 3. Check server console - should see NO "CATALOGUE JSON WITH IDs" log
+// 4. Check network tab - no Sanity API calls for catalogue
+
+// Verify complete data
+node -e "const {getCatalogueForNavigation} = require('./data/catalogue.ts'); console.log(getCatalogueForNavigation().length)"
+// Expected: 3 (root categories)
+```
+
+---
+
+## Scope Contract 2: URL Resolution Fix - Proper Slug Generation
+
+**Goal**: Fix navigation links to generate correct URLs with full path slugs
+
+### Current State
+```typescript
+// catalogue-nav.utils.ts
+const transformedItem = {
+  id: item.slug?.current || item.title.toLowerCase().replace(/\s+/g, '-'),
+  sections: (item.children || []).map((child: any) => ({
+    links: (child.children || []).map((link: any) => link.title) // ❌ Just titles!
+  })),
+};
+```
+- Navigation shows product titles ("Open-Back") instead of clickable URLs
+- Links lose parent path context ("/shop/open-back" vs just "open-back")
+- User cannot navigate to category pages from mega-menu
+
+### Target State
+```typescript
+// Navigation link generates full URL
+{
+  label: "Open-Back",
+  url: "/products/headphones/open-back", // ✅ Full path
+  slug: "open-back"
+}
+```
+- Navigation links point to correct `/products/[...category]` routes
+- URLs include full path context for breadcrumbs
+- Clicking "Open-Back" navigates to `/products/headphones/open-back`
+
+### Implementation
+1. **Update Navigation Data Transformation**:
+   - In `data/catalogue.ts`, add path-aware transformation
+   - Build full URL paths from VFS breadcrumbs data
+   - Maintain parent→child relationship for URL construction
+
+2. **Update Navigation Components**:
+   - Modify `CatalogueView.tsx` to accept URL prop
+   - Ensure all link items are actual `<a>` tags or Next.js `<Link>`
+   - Preserve existing visual styling
+
+3. **Update Drawer Navigation**:
+   - Apply same URL generation to `CarouselCatalogue`
+   - Ensure mobile drawer links work identically to desktop
+
+### DoD - Verification Checklist
+- [ ] Hovering "Headphones" mega-menu shows clickable "Open-Back" link
+- [ ] Clicking "Open-Back" navigates to `/products/headphones/open-back`
+- [ ] URL pattern: `/products/{root}/{parent?}/{leaf}`
+- [ ] Mobile drawer links function identically to desktop
+- [ ] All 20 leaf categories have working navigation links
+
+### Testing
+```typescript
+// Manual verification
+// 1. Start dev server
+// 2. Hover "Headphones" in navbar
+// 3. Verify "By Design" section shows "Open-Back" as clickable link
+// 4. Click link, verify navigation to /products/headphones/open-back
+// 5. Repeat for all leaf categories
+
+// Automated link validation
+node scripts/verify-navigation-links.mjs
+// Expected: All 20 leaf nodes return 200 OK
+```
+
+---
+
+## Scope Contract 3: Type Safety - Complete TypeScript Coverage
+
+**Goal**: Replace all `any` types with proper Sanity TypeGen-derived interfaces
+
+### Current State
+```typescript
+// catalogue-nav.types.ts
+export interface CatalogueNavItem {
+  id: string;
+  label: string;
+  imageUrl: string;
+  sections: { title: string; links: string[] }[]; // ❌ links are just strings!
+  feature: { caption: string };
+}
+
+// getCatalogueData.ts
+function transformSanityToLegacyJson(items: CatalogueItem[]): { catalogue: any[] } // ❌ any[]!
+```
+- Navigation data uses `any[]` types
+- No compile-time guarantees for catalogue structure
+- Runtime errors possible if data shape changes
+
+### Target State
+```typescript
+import type { CatalogueTreeNode } from "@/data/catalogue";
+import type { SanityValues } from "@/sanity.types";
+
+// Fully typed navigation items derived from Sanity schema
+interface NavItem {
+  id: string;
+  label: string;
+  url: string;
+  sections: NavSection[];
+}
+```
+- All catalogue structures use Sanity TypeGen types
+- Compile-time validation for all data transformations
+- IntelliSense support throughout navigation components
+
+### Implementation
+1. **Update `data/catalogue.ts` types**:
+   - Use `CatalogueItem` from `sanity.types.ts`
+   - Define strict interfaces for navigation transformation output
+   - Export types for component consumption
+
+2. **Update Navigation Components**:
+   - Type `CatalogueNavbar`, `CatalogueView`, `NavbarManager` props
+   - Remove all `any` types from catalogue-related files
+   - Add type guards where necessary
+
+3. **Verify Type Safety**:
+   - Run `tsc --noEmit` with strict mode
+   - Ensure zero type errors in catalogue system
+   - Add type tests if needed
+
+### DoD - Verification Checklist
+- [ ] Zero `any` types in `data/catalogue.ts`
+- [ ] Zero `any` types in `app/components/layout/catalogue/*`
+- [ ] `tsc --noEmit` passes without errors
+- [ ] All navigation props have explicit interfaces
+- [ ] Link transformation includes proper URL types
+
+### Testing
+```bash
+# Type checking
+npx tsc --noEmit --project tsconfig.json
+
+# Find remaining 'any' types in catalogue system
+grep -r "any" app/components/layout/catalogue/ data/catalogue.ts || echo "No 'any' types found"
+```
+
+---
+
+## Scope Contract 4: Performance - Client Component Refactoring
+
+**Goal**: Convert navigation client components to server components where possible
+
+### Current State
+```typescript
+// NavbarManager.tsx
+"use client"; // ❌ Client component for hover state!
+
+// CatalogueCarousel.tsx  
+"use client"; // ❌ Client component for drawer!
+```
+- Navigation uses client components for CSS-hover-able behavior
+- ~15KB+ JavaScript shipped for hover state management
+- Unnecessary React hydration for static navigation structure
+
+### Target State
+```typescript
+// NavbarManager becomes Server Component
+// Hover states via CSS :hover, not React state
+// Drawer animation via CSS transitions
+```
+- Navigation renders entirely on server (zero client JS)
+- Hover states via CSS `:hover` and `:focus-within`
+- Drawer uses CSS transitions, not React state machines
+
+### Implementation
+1. **Refactor `NavbarManager`**:
+   - Remove `"use client"` directive
+   - Replace React hover state with CSS `:hover`
+   - Use CSS `:focus-within` for keyboard accessibility
+   - Preserve existing visual behavior
+
+2. **Refactor `CatalogueView`**:
+   - Server component for static rendering
+   - CSS-based mega-menu visibility
+   - No JavaScript event handlers
+
+3. **Preserve Drawer Functionality**:
+   - `DrawersManager` can remain client component (nuqs state)
+   - But `CarouselCatalogue` content should be server-rendered
+   - Minimize client-side JavaScript footprint
+
+### DoD - Verification Checklist
+- [ ] `NavbarManager` has no `"use client"` directive
+- [ ] `CatalogueView` has no `"use client"` directive  
+- [ ] Hover states work without JavaScript (test with JS disabled)
+- [ ] Navigation bundle size reduced by >10KB
+- [ ] Lighthouse "Reduce unused JavaScript" warning eliminated
+
+### Testing
+```bash
+# Bundle analysis
+npm run build
+npx @next/bundle-analyzer .next
+
+# Check for "use client" in catalogue components
+grep -r "\"use client\"" app/components/layout/catalogue/ || echo "No client directives found"
+
+# Manual test
+# 1. Open DevTools → Network → JS
+# 2. Load page
+# 3. Verify no navbar-related JS chunks loaded
+```
+
+---
+
+## Scope Contract 5: Data Integrity - Runtime Validation
+
+**Goal**: Add runtime validation to detect VFS data issues in production
+
+### Current State
+- Build script validates data at build time
+- No runtime protection against corrupted `catalogue-index.json`
+- Silent failures possible if JSON is malformed
+
+### Target State
+- Runtime validation on `getCatalogue()` calls
+- Clear error messages if VFS data is corrupted
+- Graceful degradation (empty navigation vs app crash)
+
+### Implementation
+1. **Add Runtime Validator**:
+   ```typescript
+   // data/catalogue-validator.ts
+   export function validateCatalogueIndex(data: unknown): asserts data is CatalogueIndex {
+     // Zod or manual validation
+   }
+   ```
+
+2. **Validate on Load**:
+   - Call validator in `getCatalogue()`
+   - Log detailed error if validation fails
+   - Return empty array instead of crashing
+
+3. **Development Warnings**:
+   - Extra strict validation in dev mode
+   - Warn about inconsistent data states
+
+### DoD - Verification Checklist
+- [ ] `catalogue-index.json` schema validation on every `getCatalogue()` call
+- [ ] Clear error logged if validation fails (development)
+- [ ] Graceful fallback if data is corrupted (production)
+- [ ] Validation covers all 3 VFS structures (tree, slugToIdMap, slotMetadataMap)
+
+### Testing
+```typescript
+// Test corrupted data handling
+// 1. Temporarily corrupt data/catalogue-index.json
+// 2. Start dev server
+// 3. Verify clear error message in console
+// 4. Restore file, verify normal operation
+```
+
+---
+
+## Sequence of Execution
+
+| Order | Scope Contract | Dependencies | Risk Level |
+|-------|---------------|--------------|------------|
+| 1 | Scope 1: Unified Data Layer | None | Medium |
+| 2 | Scope 3: Type Safety | Scope 1 | Low |
+| 3 | Scope 2: URL Resolution | Scope 1, 3 | Low |
+| 4 | Scope 5: Runtime Validation | Scope 1 | Low |
+| 5 | Scope 4: Client Component Refactor | Scope 1, 2, 3 | High |
+
+**Rationale**:
+1. **Data Layer First**: Must unify data source before optimizing consumption
+2. **Types Second**: Types enable safe refactoring of URL generation
+3. **URLs Third**: Depends on correct data and types
+4. **Validation Fourth**: Protects the now-critical VFS data path
+5. **Client Refactor Last**: Most complex, requires solid foundation
+
+---
+
+## Verification Matrix
+
+| Feature | Before | After | Verification Method |
+|---------|--------|-------|---------------------|
+| Navigation data fetch | ~200ms Sanity query | 0ms (cached JSON) | Server timing logs |
+| Type coverage | 60% (many `any`) | 100% | `tsc --noEmit` |
+| Client JS for nav | ~15KB | 0KB | Bundle analyzer |
+| URL correctness | Broken (titles only) | Working (full paths) | Manual link test |
+| Data consistency | Risk of drift | Guaranteed sync | Code review |
+| Error handling | Silent failures | Clear validation | Corruption test |
+
+---
+
+## Notes & Risks
+
+### Risk: Breaking Navigation Visual Behavior
+**Mitigation**: Extensive visual regression testing before/after client component refactor. Maintain CSS class names.
+
+### Risk: URL Path Mismatch with Existing Routes
+**Mitigation**: Verify all 20 leaf slugs match `[...category]` route handler expectations. Test matrix of all category paths.
+
+### Risk: Mobile Drawer Regression
+**Mitigation**: `DrawersManager` keeps nuqs integration. Only inner content becomes server-rendered.
+
+### Out of Scope
+- **Product catalogueLocationKeys population**: Assumes products already have VFS keys assigned
+- **Build script modifications**: Already complete per VFS_DATA_INTEGRITY_SPRINT
+- **Category page redesign**: URL resolution only, no UI changes
+- **New navigation features**: Feature parity only
+
+---
+
+## Sprint Completion Criteria
+
+This sprint is complete when:
+1. All 5 scope contracts pass DoD verification
+2. Navigation renders with zero Sanity API calls
+3. All 20 category links navigate to correct URLs
+4. TypeScript coverage at 100% for catalogue system
+5. Bundle size reduced by navigation client JS elimination
+6. No visual or functional regressions in mega-menu/drawer
+
+---
+
+*Generated by OODA-Design Audit: Observe → Orient → Decide → Act*
+*Date: March 27, 2026*
