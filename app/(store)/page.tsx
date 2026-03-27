@@ -8,40 +8,43 @@ import Accessories from "@/app/components/features/homepage/accessories/Accessor
 import Shelf from "@/app/components/layout/general/Shelf";
 import Featured from "@/app/components/features/homepage/featured";
 import ProductSpotlight1 from "@/app/components/features/homepage/product-spotlight-1";
+import { fetchHomepageData } from "./lib/fetchHomepageData";
 
 export const revalidate = 3600;
 
-export default function HomePage() {
+export default async function HomePage() {
+  const data = await fetchHomepageData();
+
   return (
     <div>
-      <Hero />
+      <Hero heroData={data.hero} />
 
       <Shelf fullBleed>
-        <Featured />
+        <Featured featuredData={data.featured} />
       </Shelf>
 
       <Shelf>
-        <ProductSpotlight1 />
+        <ProductSpotlight1 spotlightData={data.spotlight1} />
 
-        <ProductSpotlight2 />
+        <ProductSpotlight2 spotlightData={data.spotlight2} />
 
-        <ProductSpotlight3 />
+        <ProductSpotlight3 spotlightData={data.spotlight3} />
       </Shelf>
 
       <Shelf fullBleed>
-        <IemsGallery />
+        <IemsGallery iemsData={data.iemsGallery} />
       </Shelf>
 
       <Shelf>
-        <NewestRelease />
+        <NewestRelease newestReleaseData={data.newestRelease} />
       </Shelf>
 
       <Shelf fullBleed>
-        <Dacs />
+        <Dacs dacsData={data.dacs} />
       </Shelf>
 
       <Shelf fullBleed>
-        <Accessories />
+        <Accessories accessoriesData={data.accessories} />
       </Shelf>
     </div>
   );

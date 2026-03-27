@@ -13,7 +13,7 @@ import Footer from "@/app/components/layout/footer/Footer";
 import DrawersManager from "@/app/components/layout/drawers/DrawersManager";
 import ActionBar from "@/app/components/layout/navigation/ActionBar";
 import CatalogueNavbar from "@/app/components/layout/catalogue/CatalogueNavbar";
-import { getSanityCatalogueData } from "@/app/components/layout/catalogue/getCatalogueData";
+import { getCatalogueForNavigation } from "@/data/catalogue";
 import { Suspense } from "react";
 
 export { metadata };
@@ -23,8 +23,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Fetch catalogue data on the server
-  const catalogueDataRaw = await getSanityCatalogueData();
+  // Get catalogue data from pre-built VFS
+  const catalogueDataRaw = { catalogue: getCatalogueForNavigation() };
 
   return (
     <html lang="en" className={cn(montserrat.variable, "antialiased")}>
