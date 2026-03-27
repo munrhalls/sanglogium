@@ -3,13 +3,13 @@
 Total Items: 31
 Root Categories: 3
 
-## Final UI Catalogue Structure
+## Final UI Catalogue Structure (with REAL Sanity IDs)
 
 ```json
 {
   "catalogue": [
     {
-      "id": "headphones",
+      "id": "ugyeto8653n495dpf89nzoar",
       "title": "Headphones",
       "type": "header",
       "slug": {
@@ -19,12 +19,12 @@ Root Categories: 3
       "icon": "headphones",
       "children": [
         {
-          "id": "by-design",
+          "id": "ekv4twh175wcse4fl4jjdxfq",
           "title": "By Design",
           "type": "header",
           "children": [
             {
-              "id": "open-back",
+              "id": "o7c6baiuobsr7ni2y2vf22sh",
               "title": "Open-Back",
               "type": "link",
               "slug": {
@@ -33,7 +33,7 @@ Root Categories: 3
               }
             },
             {
-              "id": "closed-back",
+              "id": "yq3p9s798zszjkzm5btnebjh",
               "title": "Closed-Back",
               "type": "link",
               "slug": {
@@ -44,12 +44,12 @@ Root Categories: 3
           ]
         },
         {
-          "id": "by-driver",
+          "id": "px3eujo0ql1hot9dkoxleao6",
           "title": "By Driver",
           "type": "header",
           "children": [
             {
-              "id": "planar-magnetic",
+              "id": "yd9641q8fiuh9rgoupauw2zl",
               "title": "Planar Magnetic",
               "type": "link",
               "slug": {
@@ -58,7 +58,7 @@ Root Categories: 3
               }
             },
             {
-              "id": "dynamic",
+              "id": "j751evwbn8n9aac4elrekqi4",
               "title": "Dynamic",
               "type": "link",
               "slug": {
@@ -67,7 +67,7 @@ Root Categories: 3
               }
             },
             {
-              "id": "electrostatic",
+              "id": "icmc3j8qzjiffr9h6tw6kg74",
               "title": "Electrostatic",
               "type": "link",
               "slug": {
@@ -78,12 +78,12 @@ Root Categories: 3
           ]
         },
         {
-          "id": "in-ear-&-wireless",
+          "id": "fxvwrl18sixw5b9ro2jrlepa",
           "title": "In-Ear & Wireless",
           "type": "header",
           "children": [
             {
-              "id": "monitors-iems",
+              "id": "t2anvkkjfz9knqi85kozuaze",
               "title": "Monitors (IEMs)",
               "type": "link",
               "slug": {
@@ -92,7 +92,7 @@ Root Categories: 3
               }
             },
             {
-              "id": "true-wireless-tws",
+              "id": "sbbu2eig5fx84uht05ic863j",
               "title": "True Wireless (TWS)",
               "type": "link",
               "slug": {
@@ -105,7 +105,7 @@ Root Categories: 3
       ]
     },
     {
-      "id": "audio-electronics",
+      "id": "ti2wufd15h51jxtq855ogbfa",
       "title": "Audio Electronics",
       "type": "header",
       "slug": {
@@ -115,12 +115,12 @@ Root Categories: 3
       "icon": "audio-electronics",
       "children": [
         {
-          "id": "amplification",
+          "id": "hqb22ca5czb252r0r7l1xmet",
           "title": "Amplification",
           "type": "header",
           "children": [
             {
-              "id": "desktop-amps",
+              "id": "o6mz3kbs5xla8ixastppktsd",
               "title": "Desktop Amps",
               "type": "link",
               "slug": {
@@ -129,7 +129,7 @@ Root Categories: 3
               }
             },
             {
-              "id": "portable-amps",
+              "id": "ipz8oe0elii0vm2voxsbgsw6",
               "title": "Portable Amps",
               "type": "link",
               "slug": {
@@ -140,12 +140,12 @@ Root Categories: 3
           ]
         },
         {
-          "id": "digital-sources",
+          "id": "lkuqr2n1gpeivrvxisnfs3ot",
           "title": "Digital Sources",
           "type": "header",
           "children": [
             {
-              "id": "standalone-dacs",
+              "id": "mpni93r13d9yo2vn5moexlkp",
               "title": "Standalone DACs",
               "type": "link",
               "slug": {
@@ -154,7 +154,7 @@ Root Categories: 3
               }
             },
             {
-              "id": "dac-amp-combos",
+              "id": "o37u0yjphzt3qu91ewnww2yj",
               "title": "DAC/Amp Combos",
               "type": "link",
               "slug": {
@@ -163,7 +163,7 @@ Root Categories: 3
               }
             },
             {
-              "id": "digital-players-daps",
+              "id": "o9igtdq1g5oqaahpa0zvq238",
               "title": "Digital Players (DAPs)",
               "type": "link",
               "slug": {
@@ -172,7 +172,7 @@ Root Categories: 3
               }
             },
             {
-              "id": "network-streamers",
+              "id": "npwbgqg3v4t5qe95rg35wte0",
               "title": "Network Streamers",
               "type": "link",
               "slug": {
@@ -185,7 +185,7 @@ Root Categories: 3
       ]
     },
     {
-      "id": "accessories",
+      "id": "j9ozs17mc0b1nv2gqn2rvmg1",
       "title": "Accessories",
       "type": "header",
       "slug": {
@@ -195,12 +195,12 @@ Root Categories: 3
       "icon": "accessories",
       "children": [
         {
-          "id": "connectivity",
+          "id": "lhpqqb5qkfvh4kid6q6455eu",
           "title": "Connectivity",
           "type": "header",
           "children": [
             {
-              "id": "headphone-cables",
+              "id": "vnrj2n32p172vcje1tt3s4ls",
               "title": "Headphone Cables",
               "type": "link",
               "slug": {
@@ -209,7 +209,7 @@ Root Categories: 3
               }
             },
             {
-              "id": "interconnects",
+              "id": "ck7d2wm9xe6lujtdfq7biyh7",
               "title": "Interconnects",
               "type": "link",
               "slug": {
@@ -218,7 +218,7 @@ Root Categories: 3
               }
             },
             {
-              "id": "adapters",
+              "id": "jdxde1qpftseepekaivzpl8c",
               "title": "Adapters",
               "type": "link",
               "slug": {
@@ -229,12 +229,12 @@ Root Categories: 3
           ]
         },
         {
-          "id": "maintenance",
+          "id": "e4rct8015rxgy011710isd5e",
           "title": "Maintenance",
           "type": "header",
           "children": [
             {
-              "id": "earpads",
+              "id": "j2yu4yvtje69j6gie4spxutu",
               "title": "Earpads",
               "type": "link",
               "slug": {
@@ -243,7 +243,7 @@ Root Categories: 3
               }
             },
             {
-              "id": "care-cleaning",
+              "id": "ab2xhkm6hgabf69y0f3s4oo0",
               "title": "Care & Cleaning",
               "type": "link",
               "slug": {
@@ -254,12 +254,12 @@ Root Categories: 3
           ]
         },
         {
-          "id": "storage",
+          "id": "rw0symuvdvebq75r4og53tlf",
           "title": "Storage",
           "type": "header",
           "children": [
             {
-              "id": "headphone-stands",
+              "id": "u9o83mfmx23cudko8phu5otx",
               "title": "Headphone Stands",
               "type": "link",
               "slug": {
@@ -268,7 +268,7 @@ Root Categories: 3
               }
             },
             {
-              "id": "carrying-cases",
+              "id": "j8ls622l90d6m4xetlajua4y",
               "title": "Carrying Cases",
               "type": "link",
               "slug": {
