@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { createClient } from '@sanity/client';
-import { writeFileSync } from 'fs';
+import { writeFileSync, readFileSync } from 'fs';
 import { join } from 'path';
 
 // Load environment variables from .env.local
@@ -195,6 +195,48 @@ async function verifyAgainstDetermined(productId, determinedIds) {
   console.log(passedTests === totalTests ? '✅ ALL TESTS PASSED' : '❌ SOME TESTS FAILED');
 }
 
+async function logCatalogMapping(productId, determinedIds, productName) {
+  const logFile = join(process.cwd(), 'catalog_temporary', 'catalog-mappings.md');
+
+  // Fetch leaf node details for readable labels
+  const leafDetails = [];
+  for (const leafId of determinedIds) {
+    const leafQuery = `*[_type == "catalogueItem" && _id == $leafId][0]{title, slug}`;
+    const leaf = await client.fetch(leafQuery, { leafId });
+    if (leaf) {
+      leafDetails.push({
+        id: leafId,
+        title: leaf.title,
+        slug: leaf.slug.current
+      });
+    }
+  }
+
+  const timestamp = new Date().toISOString().split('T')[0];
+  const entry = `## ${productName || 'Unknown Product'} (${productId}) - ${timestamp}\n\n` +
+    `**Product:** ${productName || 'Unknown'}\n` +
+    `**ID:** ${productId}\n\n` +
+    `**Catalog Locations (${determinedIds.length}):**\n\n`;
+
+  let locationsText = '';
+  leafDetails.forEach((leaf, index) => {
+    locationsText += `${index + 1}. **${leaf.title}** (${leaf.slug})\n` +
+      `   - ID: \`${leaf.id}\`\n`;
+  });
+
+  const fullEntry = entry + locationsText + '\n---\n\n';
+
+  // Append to file or create new file
+  try {
+    const existing = readFileSync(logFile, 'utf8');
+    writeFileSync(logFile, existing + fullEntry);
+  } catch (error) {
+    writeFileSync(logFile, fullEntry);
+  }
+
+  console.log(`Catalog mapping logged to: catalog_temporary/catalog-mappings.md`);
+}
+
 async function main() {
   const args = process.argv.slice(2);
   const dryRun = args.includes('--dry-run');
@@ -227,8 +269,10 @@ async function main() {
     if (!dryRun && determinedIds.length > 0) {
       await resetAndPopulateCatalogueKeys(productId, determinedIds);
       console.log('Product catalogueLocationKeys updated successfully');
+      await logCatalogMapping(productId, determinedIds, productTraits?.name);
     } else if (dryRun) {
       console.log('Dry run completed - no changes made');
+      await logCatalogMapping(productId, determinedIds, productTraits?.name);
     }
   } catch (error) {
     console.error('Error:', error.message);
