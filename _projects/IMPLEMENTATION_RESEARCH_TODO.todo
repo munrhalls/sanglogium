@@ -1,0 +1,154 @@
+Sprint: Sanity v3 Implementation Research (JSON Seeding & VFS Integration)
+Scope Contract 1: JSON Document Format Research
+Definition: Research and document the exact JSON structure used to seed rootCatalogue entities, including array nesting and n+1 recursive patterns.
+
+Execution DoDs:
+
+[ ] Document JSON Structure: Extract the complete JSON document format used to seed rootCatalogue entities from the existing seeding script.
+
+[ ] Document Array Nesting: Define the exact JSON syntax for array nesting within rootCatalogue documents.
+
+[ ] Document N+1 Nesting: Define the exact JSON syntax for n+1 recursive array nesting inside nested arrays.
+
+[ ] Document JSON Validation Test: Create the exact test needed to validate the JSON document format against the schema.
+
+Verification DoDs:
+
+[ ] Verify the JSON structure matches the RAW_CATALOGUE format from seed-catalogue.mjs.
+
+[ ] Validate the array nesting syntax supports both header and link types with proper slug structures.
+
+Scope Contract 2: Seeding Script Research
+Definition: Research and document the seeding script functionality and its relationship with JSON documents and schema.
+
+Execution DoDs:
+
+[ ] Document Script Function: Define the exact purpose and functionality of the seeding script in transforming JSON to Sanity documents.
+
+[ ] Document Transformation Logic: Extract the flattenTree function logic and how it processes nested JSON into flat documents.
+
+[ ] Document Script Validation Test: Create the exact test needed to validate the seeding script produces correct Sanity documents.
+
+[ ] Document ID Generation: Document how cuid2 IDs are generated and used for both _id and _key references.
+
+Verification DoDs:
+
+[ ] Verify the transformation logic preserves parent-child relationships through references.
+
+[ ] Validate the seeding script is idempotent using createOrReplace operations.
+
+Scope Contract 3: Schema-Script-JSON Relationship Research
+Definition: Research and document the exact relationships between rootCatalogue schema, seeding script, and JSON document format.
+
+Execution DoDs:
+
+[ ] Document Schema Mapping: Define how each field in the JSON maps to the catalogueItemType schema fields.
+
+[ ] Document Type Conversion: Document how JSON type values ("header", "link") map to schema type field.
+
+[ ] Document Reference Creation: Define how the script converts nested JSON children into reference arrays.
+
+[ ] Document Consistency Validation: Create test to validate schema-script-JSON consistency.
+
+Verification DoDs:
+
+[ ] Verify all JSON fields have corresponding schema field definitions.
+
+[ ] Validate the slug structure matches Sanity slug type requirements.
+
+Scope Contract 4: GROQ Query Research for Retrieval
+Definition: Research and document the exact GROQ queries needed to retrieve rootCatalogue documents with full nesting.
+
+Execution DoDs:
+
+[ ] Document Basic Retrieval Query: Extract the exact GROQ query to retrieve all rootCatalogue documents.
+
+[ ] Document Nested Retrieval Query: Define the GROQ query to retrieve documents with all array nesting expanded.
+
+[ ] Document Query Performance: Document the relationship between query structure and schema design.
+
+[ ] Document Query Validation Test: Create testable GROQ queries with expected results.
+
+Verification DoDs:
+
+[ ] Verify the nested query retrieves all levels of hierarchy in single request.
+
+[ ] Validate the query syntax matches Sanity v3 GROQ specifications.
+
+Scope Contract 5: Population Script Research
+Definition: Research and document the exact scripts needed to populate individual rootCatalogue documents and their relationship to JSON.
+
+Execution DoDs:
+
+[ ] Document Population Function: Define the script functionality for populating specific rootCatalogue documents.
+
+[ ] Document JSON to Document Mapping: Document how individual JSON structures map to Sanity documents.
+
+[ ] Document Population Validation: Create test to validate populated document contents match JSON source.
+
+[ ] Document Error Handling: Document how the script handles validation errors and edge cases.
+
+Verification DoDs:
+
+[ ] Verify population script creates documents with correct field types and references.
+
+[ ] Validate the script maintains referential integrity between parent and child documents.
+
+Scope Contract 6: VFS Index Integration Research
+Definition: Research and document the relationship between populated rootCatalogue documents and the pre-computed catalogue-index.json for VFS functionality.
+
+Execution DoDs:
+
+[ ] Document Index Generation: Define how build-catalogue-index.mjs transforms Sanity documents into VFS index format.
+
+[ ] Document Index Structure: Document the exact structure of catalogue-index.json and its purpose.
+
+[ ] Document Slug-to-ID Mapping: Document how slugToIdMap enables O(1) VFS lookups.
+
+[ ] Document Metadata Structure: Document slotMetadataMap structure and its frontend usage.
+
+Verification DoDs:
+
+[ ] Verify the index generation preserves the complete hierarchy from Sanity documents.
+
+[ ] Validate the VFS structure supports O(1) path-based lookups as designed.
+
+Scope Contract 7: CRUD Operations Research
+Definition: Research and document CRUD operations for populating rootCatalogue documents at different nesting levels.
+
+Execution DoDs:
+
+[ ] Document Root Level CRUD: Define the exact operations for creating new rootCatalogue documents.
+
+[ ] Document Array Level CRUD: Define the operations for modifying array contents within rootCatalogue documents.
+
+[ ] Document N+1 Level CRUD: Define the operations for modifying nested array items at recursive levels.
+
+[ ] Document CRUD Validation Tests: Create tests to validate CRUD operations at each level.
+
+Verification DoDs:
+
+[ ] Verify root level operations create proper document structure with required fields.
+
+[ ] Validate array level operations maintain reference integrity and sort order.
+
+[ ] Validate n+1 level operations handle recursive nesting without breaking referential integrity.
+
+Scope Contract 8: Implementation Assembly and Synthesis
+Definition: Consolidate all researched implementation patterns into a comprehensive practical guide.
+
+Execution DoDs:
+
+[ ] Create implementation-guide.md with sequential contract execution.
+
+[ ] Document complete data flow from JSON → Schema → Seeding → GROQ → VFS → Frontend.
+
+[ ] Include all exact syntax examples, test cases, and validation procedures.
+
+[ ] Strip theoretical content; retain only pragmatic implementation details.
+
+Verification DoDs:
+
+[ ] Read through generated guide to guarantee complete implementation coverage.
+
+[ ] Validate all code examples are copy-paste ready and tested.
