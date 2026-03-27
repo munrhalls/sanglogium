@@ -1,5 +1,5 @@
-import { resolveSlugToId, unrollDescendantKeys, buildGroqKeysParam } from "@/data/catalogue";
-import catalogueIndex from "@/data/catalogue-index.json";
+import { resolveSlugToId, unrollDescendantKeys, buildGroqKeysParam } from "../data/catalogue";
+import catalogueIndex from "../data/catalogue-index.json";
 
 const manifest = catalogueIndex as any;
 
