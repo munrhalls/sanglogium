@@ -1,0 +1,123 @@
+# VFS_STUDIO_TREE.todo
+# Sprint Execution File — VFS Parent References & Studio Tree Hierarchy
+# Agent: SWE 1.5 | Risk: Zero Regression on Frontend
+# Objective: Invert the directory structure from `children` arrays to `parent` references to achieve O(1) adjacency scalability, and build a customized Sanity Structure Tree.
+
+---
+
+## Global Directives
+
+- Final code output must contain ZERO comments.
+- Every commit must follow the taxonomy: A (Forward progress), B (Critical bug fix), C (Refactor), D (Configuration), E (Polish).
+- Difficulty uses Fibonacci T-shirt scale: 1, 2, 3, 5, 8, 13.
+- No file may be deleted until its replacement is verified working.
+
+---
+
+## Layer 1: Schema Inversion (Adjacency List)
+
+### Scope Contract
+Refactor `catalogueItemType.ts` from a top-down `children` array model to a bottom-up `parent` reference model. This flattens the dependency graph in the Content Lake, guaranteeing infinite scaling, trivial GROQ sub-tree queries, and pure CRUD.
+
+### DoD
+
+- [ ] 1.1 — In `sanity/schemaTypes/catalogueItemType.ts`: Remove the `children` array field entirely.
+  - Difficulty: 1 - C(sanity/schemaTypes/catalogueItemType.ts): remove children array
+
+- [ ] 1.2 — In `sanity/schemaTypes/catalogueItemType.ts`: Add a `parent` field of type `reference` pointing to `[{ type: "catalogueItem" }]`. Configure it as optional (roots will have no parent). Add a description explaining it forms the recursive tree graph.
+  - Difficulty: 1 - A(sanity/schemaTypes/catalogueItemType.ts): add parent reference field
+
+### Verification — Layer 1
+
+- [ ] V1.1 — Run `npx sanity schema extract` (or equivalent) and confirm the `catalogueItem` schema contains `parent` and NO `children` property.
+  - Difficulty: 1
+
+---
+
+## Layer 2: Seed & Migration Updates
+
+### Scope Contract
+Update the logic that writes catalogue items to Sanity to populate the `parent` reference instead of `children` arrays.
+
+### DoD
+
+- [ ] 2.1 — In `scripts/migrate-catalogue-to-flat.mjs` (if it exists) or `scripts/seed-catalogue.mjs`: Modify the tree flattening logic. When recursively walking the `RAW_CATALOGUE`, pass the current node's `_id` down to its children as their `parentId`. When creating the child document object, add `parent: { _type: 'reference', _ref: parentId }` instead of building a `children` array on the parent.
+  - Difficulty: 3 - C(scripts/seed-catalogue.mjs): assign parent pointers instead of children arrays
+
+- [ ] 2.2 — Run `node scripts/seed-catalogue.mjs` (after clearing existing catalogueItems if necessary) to physically write the new relational data to the Content Lake.
+  - Difficulty: 2 - D(database): execute parent-pointer data seed
+
+### Verification — Layer 2
+
+- [ ] V2.1 — Evaluate GROQ `*[_type == "catalogueItem" && defined(parent)]`. Output must yield all non-root nodes (should be 28 nodes, based on 3 roots out of 31 total).
+  - Difficulty: 1
+
+- [ ] V2.2 — Evaluate GROQ `*[_type == "catalogueItem" && !defined(parent)]`. Output must yield exactly 3 root nodes.
+  - Difficulty: 1
+
+---
+
+## Layer 3: Studio UI (The Missing Link)
+
+### Scope Contract
+Write a custom Structure Builder (Desk Tool) configuration that instructs Sanity to query the flat documents, read their parent references, and draw a visual, clickable tree hierarchy for the editors.
+
+### DoD
+
+- [ ] 3.1 — In `sanity.config.ts`, register an initial-value template for `catalogueItem` that accepts a `parentId` parameter and dynamically sets the `parent` reference. This guarantees editors can click "Add new" inside a nested sub-level and the node is automatically linked to the correct parent.
+  - Difficulty: 3 - A(sanity.config.ts): register initial value template for nested creation
+
+- [ ] 3.2 — In `sanity/structure.ts`: Implement a recursive Structure node algorithm.
+  Logic Outline:
+  1. Define a function `buildCatalogueTree(S, parentId = null)`
+  2. The function generates an `S.documentTypeList("catalogueItem")`.
+  3. If `!parentId`, the filter is `!defined(parent)`. If `parentId`, the filter is `parent._ref == $parentId`.
+  4. Define the `.child((documentId) => ...)` resolver for the list to return a multi-pane `S.list()` containing:
+     - "Edit Details": `S.document().documentId(documentId).schemaType("catalogueItem")`
+     - "View Sub-Items": a recursive call to `buildCatalogueTree(S, documentId)`
+  - Difficulty: 8 - A(sanity/structure.ts): implement recursive visual tree hierarchy
+
+- [ ] 3.3 — In `sanity/structure.ts`: Replace the standard `S.documentTypeListItem("catalogueItem")` implementation with the root-level call to the new `buildCatalogueTree(S)` function.
+  - Difficulty: 1 - C(sanity/structure.ts): wire up custom VFS tree to main structure
+
+### Verification — Layer 3
+
+- [ ] V3.1 — Open Sanity Studio. Click "Catalogue". Confirm you only see the 3 root items.
+  - Difficulty: 1
+- [ ] V3.2 — Click a root item. Confirm you can navigate into "View Sub-Items" to see its children natively within the Desk Tool pane. Click "Edit Details" to confirm you can edit the folder name/metadata.
+  - Difficulty: 1
+
+---
+
+## Layer 4: Pre-Compute Script Adaptation
+
+### Scope Contract
+Update `scripts/build-catalogue-index.mjs` to reconstruct the VFS navigation manifest using the new database standard. Read the `parent` pointers to stitch the tree back together in-memory. The output JSON (`catalogue-index.json`) must remain structurally identical to guarantee zero frontend breakage.
+
+### DoD
+
+- [ ] 4.1 — In `scripts/build-catalogue-index.mjs`: Update the GROQ query to fetch the parent reference `parent._ref as parentId` instead of `children`.
+  - Difficulty: 1 - C(scripts/build-catalogue-index.mjs): update GROQ query for parent refs
+
+- [ ] 4.2 — In `scripts/build-catalogue-index.mjs`: Update the in-memory tree reconstruction algorithm. Iterate `allItems`, and if an item has a `parentId`, append it to `itemById[doc.parentId].children`. Filter out any node with a `parentId` to isolate your exact root nodes. The remainder of the `traverse` mapping logic stays 100% untouched.
+  - Difficulty: 5 - C(scripts/build-catalogue-index.mjs): rebuild tree using adjacency list inversion
+
+- [ ] 4.3 — Run `node scripts/build-catalogue-index.mjs`.
+  - Difficulty: 1 - D(scripts): rebuild production manifest
+
+### Verification — Layer 4
+
+- [ ] V4.1 — Diff the generated `data/catalogue-index.json` linearly against `catalogue-index.pre-flatten.json`. The newly built manifest must match the old structure flawlessly (identical slug maps, identical tree topology).
+  - Difficulty: 2
+
+---
+
+## Summary
+
+| Layer | Scope | Items | Verifications | Total Difficulty |
+|---|---|---|---|---|
+| Layer 1: Schema Inversion | Replace `children` with `parent` ref | 2 | 1 | 2 |
+| Layer 2: Seed & Migration Updates | Update seed logic to write `parent` refs | 2 | 2 | 5 |
+| Layer 3: Studio UI (The Missing Link) | Recursive Desk UI with intuitive editing & structured adds | 3 | 2 | 12 |
+| Layer 4: Pre-Compute Script Adaptation | Update index builder, output invariant preserved | 3 | 1 | 7 |
+| **Total** | | **10** | **6** | **26** |
