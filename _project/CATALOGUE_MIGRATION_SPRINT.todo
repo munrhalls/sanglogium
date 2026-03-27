@@ -1,0 +1,36 @@
+# CATALOGUE SANITY MIGRATION SPRINT
+
+## SCOPE CONTRACT 1: SANITY DATA FETCHING ON SERVER (GROQ QUERY)
+**Objective**: Build a robust, strongly-typed server fetching mechanism (`getCatalogueData.ts`) using GROQ, capable of reconstructing the three-level deep tree graph from flat sanity references (`root -> header -> link`).
+
+- [ ] DoD 1.1: Create GROQ query string mapping `catalogueItem` documents with recursively resolved nested structures via parent id (`parent._ref == ^._id`).
+- [ ] DoD 1.2: Implement `getSanityCatalogueData()` fetching utility in the Next15 context, utilizing `sanityFetch` with appropriate Next caching/revalidation tags (e.g., `'catalogue'`).
+- [ ] DoD 1.3: Transform the flat/nested GROQ tree explicitly to the existing `CatalogueNavItem[]` strict local interface originally parsed by `transformCatalogueJson` to prevent VFS regressions. Keep mocked `imageUrl` schema paths (`/images/${item.icon}-skeletal.png`).
+- [ ] Verification: Validating that the `getSanityCatalogueData()` correctly structures the sanity response into the TS type bindings equivalent to the previous hard-coded JSON dataset.
+- [ ] Testing Requirements: Simple static console logging server-side or a temporary isolated server route to verify successful structured tree payload correctly populating array lengths.
+
+## SCOPE CONTRACT 2: SERVER-SIDE PROP DRILLING IN ROOT LAYOUT
+**Objective**: Adhere to Next.js 15 top-down server-to-client component data flow, fetching catalogue data globally on the server root layout and piping it downstream to requisite UI containers.
+
+- [ ] DoD 2.1: Implement asynchronous data fetching (`getSanityCatalogueData`) directly inside the top-level Server Component: `app/(store)/layout.tsx`.
+- [ ] DoD 2.2: Refactor `<CatalogueNavbar />` (Server Component) from importing `.json` raw files to instead accept `{ catalogueData }` as a prop or leverage its own cached layout fetch hook natively.
+- [ ] DoD 2.3: Modify `<DrawersManager />` (Client Component) instantiation within `layout.tsx` to accept the fetched data as a prop (`<DrawersManager catalogueData={catalogueData} />`).
+- [ ] Verification: The application effectively bundles the GROQ query rigorously upon server render, removing entirely independent client-side static data ingestion flows for `catalogue-nav-data.json`.
+- [ ] Testing Requirements: Check Node.js Next console output to verify `getSanityCatalogueData` executes precisely once per render pass via deduped caching mechanisms. Ensure `DrawersManager` safely propagates data without boundary errors.
+
+## SCOPE CONTRACT 3: CLIENT CAROUSEL VFS INTEGRATION & CLEANUP
+**Objective**: Safely consume injected server properties inside `CatalogueCarousel.tsx` without dropping legacy presentation logic and cleanly depreciate legacy artifacts.
+
+- [ ] DoD 3.1: Modify `DrawersManager.tsx` to actively pipe the newly received `{ catalogueData }` argument into its internal `<CarouselCatalogue data={catalogueData} />` instantiation.
+- [ ] DoD 3.2: Refactor `CatalogueCarousel.tsx` to strictly bind to injected prop parameters, actively terminating raw `catalogueDataRaw` JSON imports and local `transformCatalogueJson()` executions natively triggering on mount.
+- [ ] DoD 3.3: Terminate legacy code securely. Confidently deprecate `catalogue-nav-data.json` globally and remove obsolete mapping methodologies residing within `catalogue-nav.utils.ts` retaining purely strictly typed TS definitions.
+- [ ] Verification: VFS catalogue UI renders identically, seamlessly navigating visual layout scopes, completely resilient to undefined arrays via sanity fallbacks.
+- [ ] Testing Requirements: Rigorous tactile examination of the Drawer sliding interactions and responsive nested swipe mechanics ensuring pure React pure-render lifecycles are unobstructed by dynamic array remapping. Check that all skeleton `/images/*` paths mount flawlessly.
+
+## SCOPE CONTRACT 4: SANITY STUDIO BACK-OFFICE VALIDATION
+**Objective**: Provide fundamental validations against the sanity schema to guarantee stable frontend mappings inherently dependent upon standard types `link` and `header`.
+
+- [ ] DoD 4.1: Populate the `Sanity Studio` desktop interface with mock documents rigorously conforming to the `catalogueItemType.ts` architecture mapping precisely to previous JSON roots (`parent == null`), `header` arrays, and `link` arrays.
+- [ ] DoD 4.2: Execute VFS synchronization between Studio modifications instantly appearing on the local Next `npm run dev` server (assuming `catalogue` tags invalidate).
+- [ ] Verification: Data added manually to the Studio flawlessly reflects within the frontend Carousel hierarchy.
+- [ ] Testing Requirements: Add 1 distinct test node into the root Catalogue dataset through Sanity Desk, refresh the DOM interface, and ascertain it functionally displays with correctly formatted structural CSS bounds.
