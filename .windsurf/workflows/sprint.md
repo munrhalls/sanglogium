@@ -19,7 +19,9 @@ It's true for all sprints in general but especially for sprints that affect fron
             Layer 4 — Interaction:  Hover states, transitions, animations.
             ```
 
-Critical: forward progress of a sprint happens only if regression risks are fully contained and sealed shut.
+Professional sprint must enforce adherence to global design system (tailwind.config.ts for styling) first, in order to contain and seal shut risks of one-off's and disconnected implementations that fix a problem locally but disrupt global coherence, hence creating problems elsewhere by lack of discipline in adhering to global design system first. Hence, that discipline must be rigurously enforced and checked in the sprint's scope contracts and sequential layers of DoDs.
+
+Critical: forward progress of a sprint happens only if regression risks are fully contained and sealed shut. Sprint must be extremely restrictive about scope and enforce not improving or changing anything outside the scope.
 
 The start of a sprint must begin with:
 - systematically identifying and processing all code areas at risk of regressions or unrelated changes due to sprint code changes
