@@ -5,8 +5,6 @@ const getProductsByExhibitionSlug = async (slug: string) => {
   const PRODUCTS_BY_EXHIBITION_SLUG = await defineQuery(`
         *[_type == "product" && (
           _id in *[_type == "exhibition" && slug.current == $slug].products[]._ref
-          ||
-          categoryPath in *[_type == "exhibition" && slug.current == $slug].category->metadata.path
         )] | order(name asc)
        `);
 
