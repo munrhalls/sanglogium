@@ -14,7 +14,67 @@ export const getSortablesForCategoryPath = async (
   catalogueKeys: string[]
 ): Promise<SortOption[]> => {
   if (catalogueKeys.length === 0) {
-    return [];
+    // For empty keys (all products), get all categories and their sortables
+    const ALL_CATEGORIES_QUERY = defineQuery(`
+      *[_type == "product"] {
+        category
+      } | order(category asc)
+    `);
+
+    try {
+      const products = await client.fetch(ALL_CATEGORIES_QUERY);
+      const categories = [...new Set(products.map((p: any) => p.category).filter(Boolean))];
+
+      if (categories.length === 0) {
+        return [];
+      }
+
+      // Get sortables for all categories
+      const ALL_SORTABLES_QUERY = defineQuery(`
+        *[_type == "categorySortables"] {
+          title,
+          "sortOptions": sortOptions[]{
+            name,
+            displayName,
+            type,
+            field,
+            defaultDirection
+          }
+        }
+      `);
+
+      const allSortablesData = await client.fetch(ALL_SORTABLES_QUERY);
+
+      if (!allSortablesData || allSortablesData.length === 0) {
+        return [];
+      }
+
+      // Combine all sortables from all categories
+      const allSortOptions = allSortablesData.flatMap((categoryData: any) => categoryData.sortOptions || []);
+
+      // Deduplicate sortables by name
+      const uniqueSortOptions = allSortOptions.reduce((acc: RawSortOption[], option: RawSortOption) => {
+        if (!option.name) return acc;
+        const existing = acc.find(s => s.name === option.name);
+        if (!existing) {
+          acc.push(option);
+        }
+        return acc;
+      }, []);
+
+      const processedOptions: SortOption[] = uniqueSortOptions.map((option) => ({
+        name: option.name || "",
+        displayName: option.displayName ?? undefined,
+        type: option.type ?? undefined,
+        field: option.field ?? undefined,
+        defaultDirection: option.defaultDirection ?? undefined,
+      }));
+
+      return processedOptions;
+    } catch (err) {
+      console.error("Error fetching all sortables:", err);
+      return [];
+    }
   }
 
   const PRODUCTS_BY_VFS_KEYS_QUERY = defineQuery(`
