@@ -1,0 +1,528 @@
+# Product Discovery Catalogue Alignment Sprint
+
+## Executive Summary
+
+**Current State:** Product discovery operates through multiple disconnected paths with inconsistent catalogue integration. The VFS (Virtual File System) provides a unified key-based lookup system, but only category pages fully utilize it. Search, exhibitions, sales, and navigation remain disconnected from the catalogue structure.
+
+**Target State:** All product discovery touchpoints (search, category pages, exhibitions, sales, navigation) operate through a unified VFS-aligned layer with consistent key-based lookups, type safety, and zero legacy `categoryPath` dependencies.
+
+**Success Metrics:**
+- 100% of product discovery paths use VFS keys (no `categoryPath` references)
+- Search integrates with catalogue for faceted/filtered results
+- Navigation renders from `catalogue-index.json` (zero live Sanity fetches)
+- All product discovery endpoints return consistent product shapes
+- Type safety: 100% TypeScript coverage for all discovery paths
+
+---
+
+## Architecture Principles
+
+1. **Single Source of Truth**: `catalogue-index.json` drives all category-based discovery
+2. **Key-Based Discovery**: All product lookups use `catalogueLocationKeys` array intersection
+3. **No Legacy Paths**: `categoryPath` string matching is completely eliminated
+4. **Server-First**: All discovery data resolves via React Server Components
+5. **Unified Product Shape**: All discovery endpoints return identical product structures
+6. **Type Safety**: All discovery functions fully typed via Sanity TypeGen
+
+---
+
+## OODA Analysis: Current State
+
+### OBSERVE — Product Discovery Touchpoints
+
+| Touchpoint | Path | Current Implementation | VFS Aligned? |
+|------------|------|------------------------|--------------|
+| Category Pages | `/products/[...category]` | Uses `resolveSlugToId` + `unrollDescendantKeys` + `getSelectedProducts` | ✅ Yes |
+| Root Products | `/products` | Passes `path = ["products"]` (invalid keys) | ❌ Broken |
+| Search | `/search` | Name matching only, no catalogue integration | ❌ No |
+| Exhibitions | `/exhibition/[slug]` | Uses `categoryPath` + reference lookup | ❌ Legacy |
+| Sales | `/sale/[slug]` | Uses `categoryPath` + reference lookup | ❌ Legacy |
+| Navigation | All pages | Live Sanity fetch via `getSanityCatalogueData` | ❌ No |
+| Filters | Category pages | VFS keys → category field indirection | ⚠️ Partial |
+| Sortables | Category pages | VFS keys → category field indirection | ⚠️ Partial |
+
+### ORIENT — Gap Analysis
+
+**Critical Gap #1: Root Products Page Broken**
+- `app/(store)/products/page.tsx:39` passes `path = ["products"]`
+- Query: `count(catalogueLocationKeys[@ in ["products"]]) > 0` returns zero results
+- No products have `"products"` as a catalogue location key
+- **Impact:** "All Products" page is non-functional
+
+**Critical Gap #2: Legacy categoryPath Dependencies**
+- `getProductsByExhibitionSlug.ts:9` uses `categoryPath` lookup
+- `getProductsBySaleSlug.ts:9` uses `categoryPath` lookup
+- These bypass the VFS entirely and rely on deprecated field
+- **Impact:** Inconsistent product discovery, maintenance burden
+
+**Gap #3: Search Has No Catalogue Integration**
+- `searchProductsByName` only matches on product name
+- No ability to filter search results by category
+- No catalogue-based faceting
+- **Impact:** Poor discoverability, no guided navigation
+
+**Gap #4: Navigation Uses Live Fetches**
+- `app/(store)/layout.tsx` calls `getSanityCatalogueData()` every request
+- 100-300ms latency per page load
+- Risk of data inconsistency between nav and product pages
+- **Impact:** Poor performance, potential drift
+
+**Gap #5: Filter/Sortable Indirection**
+- Both use VFS keys to find products, then read `category` field
+- `category` field is not validated against VFS structure
+- Two-step lookup is fragile
+- **Impact:** Mistyped categories break filter discovery
+
+### DECIDE — Target State
+
+| Touchpoint | Target Implementation |
+|------------|----------------------|
+| Category Pages | Maintain VFS key-based (current) |
+| Root Products | Special "all products" query or empty key array handling |
+| Search | Enhanced with optional VFS key filtering |
+| Exhibitions | Migrate to use `catalogueLocationKeys` or direct references |
+| Sales | Migrate to use `catalogueLocationKeys` or direct references |
+| Navigation | Consume `catalogue-index.json` directly (zero live fetches) |
+| Filters | Direct VFS key → filter mapping (eliminate category indirection) |
+| Sortables | Direct VFS key → sortable mapping (eliminate category indirection) |
+
+---
+
+## Scope Contract 1: Root Products Page Fix
+
+**Goal:** Fix the "/products" root page to correctly display all products
+
+### Current State
+```typescript
+// app/(store)/products/page.tsx:39
+const path = ["products"]; // ❌ Invalid VFS keys
+const [productsResult] = await Promise.all([
+  getSelectedProducts(path, ...) // Returns zero products
+]);
+```
+
+### Target State
+```typescript
+// Option A: Empty array triggers "all products" query
+const catalogueKeys: string[] = []; // ✅ Empty = all products
+const [productsResult] = await Promise.all([
+  getSelectedProducts(catalogueKeys, ...) // Returns all products
+]);
+```
+
+### Implementation
+1. **Update `getSelectedProducts.ts`**:
+   - Handle empty `catalogueKeys` array as "all products" query
+   - Remove `categoryPath` constraint when keys are empty
+   - Maintain existing filter/sort/pagination logic
+
+2. **Update `app/(store)/products/page.tsx`**:
+   - Pass empty array instead of `["products"]`
+   - Update page title to "All Products"
+   - Verify filter/sortables still function
+
+### DoD - Verification Checklist
+- [ ] `/products` page displays all products from Sanity
+- [ ] Empty `catalogueKeys` array returns complete product catalog
+- [ ] Filters and sortables function on root products page
+- [ ] Pagination works correctly
+- [ ] No regression on category-specific pages
+
+### Testing
+```bash
+# Verify all products returned
+# 1. Start dev server: npm run dev
+# 2. Navigate to /products
+# 3. Verify product count matches Sanity total
+# 4. Apply filters, verify subset returned
+# 5. Navigate to /products/headphones/open-back
+# 6. Verify only open-back products shown (no regression)
+```
+
+---
+
+## Scope Contract 2: Legacy categoryPath Elimination
+
+**Goal:** Remove all `categoryPath` dependencies from product discovery
+
+### Current State
+```typescript
+// getProductsByExhibitionSlug.ts:9
+categoryPath in *[_type == "exhibition" && slug.current == $slug].category->metadata.path
+
+// getProductsBySaleSlug.ts:9  
+categoryPath in *[_type == "sale" && slug.current == $slug].category->metadata.path
+
+// getProductsByCategoryPath.ts (entire file - unused but exists)
+*[_type == 'product' && categoryPath match $path + "/*" || categoryPath == $path]
+```
+
+### Target State
+```typescript
+// Exhibition products via direct references OR VFS keys
+*[_type == "product" && (
+  _id in *[_type == "exhibition" && slug.current == $slug].products[]._ref
+  ||
+  count(catalogueLocationKeys[@ in $exhibitionKeys]) > 0
+)]
+```
+
+### Implementation
+1. **Update Exhibition Schema**:
+   - Add `catalogueLocationKeys` array to exhibition documents
+   - OR ensure `products[]` reference array is complete
+   - Deprecate `category` reference with `metadata.path`
+
+2. **Update `getProductsByExhibitionSlug.ts`**:
+   - Replace `categoryPath` lookup with VFS keys
+   - Or rely solely on direct `products[]` references
+   - Maintain fallback for legacy exhibitions
+
+3. **Update Sale Schema & Logic**:
+   - Same pattern as exhibitions
+   - Ensure sales can target specific catalogue slots
+
+4. **Delete Legacy File**:
+   - Remove `getProductsByCategoryPath.ts`
+   - Verify no imports reference it
+
+### DoD - Verification Checklist
+- [ ] Zero `categoryPath` references in `sanity/lib/products`
+- [ ] Exhibitions return correct products via VFS keys or references
+- [ ] Sales return correct products via VFS keys or references
+- [ ] `getProductsByCategoryPath.ts` deleted
+- [ ] Legacy `categoryPath` field can be removed from schema (post-migration)
+
+### Testing
+```bash
+# Verify no categoryPath references
+grep -r "categoryPath" sanity/lib/products/ || echo "No legacy references found"
+
+# Test exhibition products
+# 1. Create/edit exhibition with catalogue keys
+# 2. Verify products returned match VFS slot
+# 3. Test sale products similarly
+```
+
+---
+
+## Scope Contract 3: Search + Catalogue Integration
+
+**Goal:** Enable catalogue-aware search with faceted filtering
+
+### Current State
+```typescript
+// searchProductsByName.ts
+*[_type == "product" && name match $searchParam]
+// No catalogue context, no faceting
+```
+
+### Target State
+```typescript
+// Enhanced search with optional VFS key filtering
+*[_type == "product" 
+  && name match $searchParam
+  && ($catalogueKeys == [] || count(catalogueLocationKeys[@ in $catalogueKeys]) > 0)
+] | order(name asc)
+```
+
+### Implementation
+1. **Update `searchProductsByName.ts`**:
+   - Accept optional `catalogueKeys` parameter
+   - Apply VFS key filter when keys provided
+   - Maintain name-only search for empty keys
+
+2. **Update Search Page**:
+   - Add category filter UI to search results
+   - Use catalogue structure for faceting options
+   - Maintain URL state for shareable filtered search
+
+3. **Add Search Action**:
+   - Server action for catalogue-aware search
+   - Combine name matching with VFS key filtering
+   - Return faceted counts by category
+
+### DoD - Verification Checklist
+- [ ] Search accepts optional `catalogueKeys` parameter
+- [ ] Search results filterable by catalogue category
+- [ ] Category facets show result counts
+- [ ] Empty search with category filter returns all in category
+- [ ] Combined name + category filter works correctly
+
+### Testing
+```bash
+# Test catalogue-aware search
+# 1. Search for "cable" - verify all cable products returned
+# 2. Apply "Accessories" filter - verify subset returned
+# 3. Search "cable" + "Accessories" - verify intersection
+# 4. Verify URL encodes both query and filters
+```
+
+---
+
+## Scope Contract 4: Navigation VFS Migration
+
+**Goal:** Eliminate live Sanity fetches for navigation data
+
+### Current State
+```typescript
+// app/(store)/layout.tsx
+const catalogueDataRaw = await getSanityCatalogueData(); // ❌ 100-300ms per request
+```
+
+### Target State
+```typescript
+// app/(store)/layout.tsx
+import { getCatalogueForNavigation } from "@/data/catalogue";
+const catalogueData = getCatalogueForNavigation(); // ✅ 0ms, cached JSON
+```
+
+### Implementation
+1. **Update `data/catalogue.ts`**:
+   - Enhance `getCatalogueForNavigation()` to include URLs
+   - Transform VFS tree to navigation format
+   - Ensure all 20 leaf categories have clickable links
+
+2. **Update `app/(store)/layout.tsx`**:
+   - Replace `getSanityCatalogueData()` with `getCatalogueForNavigation()`
+   - Maintain same props interface for components
+   - Remove `getCatalogueData.ts` import
+
+3. **Update Navigation Components**:
+   - Ensure `CatalogueNavbar` accepts new data shape
+   - Verify mobile drawer (`CarouselCatalogue`) works identically
+   - Add URL generation for all leaf categories
+
+4. **Deprecate Legacy**:
+   - Mark `getCatalogueData.ts` for removal
+   - Remove after verification
+
+### DoD - Verification Checklist
+- [ ] Navigation renders without any Sanity API calls
+- [ ] All 20 leaf categories have working navigation links
+- [ ] Mobile drawer shows identical structure to desktop navbar
+- [ ] URLs follow `/products/{root}/{parent?}/{leaf}` pattern
+- [ ] Server console shows no "CATALOGUE JSON WITH IDs" log
+
+### Testing
+```bash
+# Verify no live fetches
+# 1. Start dev server
+# 2. Open any page
+# 3. Check server console - no catalogue fetch logs
+# 4. Check network tab - no Sanity API calls for catalogue
+
+# Verify link correctness
+# 1. Hover "Headphones"
+# 2. Click "Open-Back"
+# 3. Verify navigation to /products/headphones/open-back
+```
+
+---
+
+## Scope Contract 5: Direct VFS Filter/Sortable Mapping
+
+**Goal:** Eliminate `category` field indirection in filter/sortable discovery
+
+### Current State
+```typescript
+// getFiltersForCategoryPath.ts:16-49
+// Step 1: Query products by VFS keys to get category field
+// Step 2: Query categoryFilters by category name
+// ❌ Fragile indirection, two round trips
+```
+
+### Target State
+```typescript
+// Direct VFS key → filter mapping via new schema structure
+// OR optimized single query with lookup table
+*[_type == "vfsSlotFilters" && slotKey in $catalogueKeys] {
+  "filters": filters[]
+}
+```
+
+### Implementation
+1. **Create New Schema Type** (Optional):
+   - `vfsSlotFilters` - Maps VFS slot keys directly to filter configs
+   - Allows per-slot custom filter sets
+   - OR: Enhance existing `categoryFilters` with `appliesToSlots` array
+
+2. **Update Filter Logic**:
+   - Query filters directly by VFS keys
+   - Eliminate `category` field dependency
+   - Merge filter sets for multiple keys (parent + children)
+
+3. **Update Sortable Logic**:
+   - Same pattern as filters
+   - Direct VFS key → sortable mapping
+
+4. **Migration**:
+   - Backfill existing filter/sortable docs with VFS key references
+   - OR: Create lookup table from existing data
+
+### DoD - Verification Checklist
+- [ ] Filter discovery uses direct VFS key lookup (no category indirection)
+- [ ] Sortable discovery uses direct VFS key lookup
+- [ ] Single Sanity round trip for filter/sortable fetch
+- [ ] All existing filters continue to work
+- [ ] No dependency on `category` field for filter discovery
+
+### Testing
+```bash
+# Verify filter discovery
+# 1. Navigate to /products/headphones/open-back
+# 2. Verify filters returned match expected for open-back
+# 3. Navigate to /products/audio-electronics
+# 4. Verify filters returned for all audio-electronics subtree
+# 5. Check Sanity query log - single round trip
+```
+
+---
+
+## Scope Contract 6: Type Safety & Runtime Validation
+
+**Goal:** 100% TypeScript coverage with runtime data validation
+
+### Current State
+```typescript
+// catalogue-nav.types.ts
+export interface CatalogueNavItem {
+  id: string;
+  label: string;
+  sections: { title: string; links: string[] }[]; // ❌ links are strings!
+  // ...
+}
+
+// Multiple files use `any` types
+```
+
+### Target State
+```typescript
+// Fully typed with Sanity TypeGen
+import type { CatalogueTreeNode } from "@/data/catalogue";
+import type { SanityValues } from "@/sanity.types";
+
+interface NavigationLink {
+  label: string;
+  url: string; // ✅ Proper URL type
+  slug: string;
+}
+```
+
+### Implementation
+1. **Update Type Definitions**:
+   - Use `sanity.types.ts` for all Sanity-derived types
+   - Define strict interfaces for all discovery functions
+   - Add type guards for runtime validation
+
+2. **Add Runtime Validation**:
+   - `data/catalogue-validator.ts` with Zod or manual validation
+   - Validate `catalogue-index.json` on every load
+   - Clear error messages for data corruption
+
+3. **TypeScript Strict Mode**:
+   - Run `tsc --noEmit` with strict settings
+   - Eliminate all `any` types in discovery paths
+   - Add type tests for critical paths
+
+### DoD - Verification Checklist
+- [ ] Zero `any` types in `sanity/lib/products/*`
+- [ ] Zero `any` types in `app/(store)/products/*`
+- [ ] Zero `any` types in `app/components/layout/catalogue/*`
+- [ ] `tsc --noEmit` passes without errors
+- [ ] Runtime validation on `getCatalogue()` calls
+- [ ] Clear error logged if VFS data is corrupted
+
+### Testing
+```bash
+# Type checking
+npx tsc --noEmit --project tsconfig.json
+
+# Find remaining 'any' types
+grep -r "any" sanity/lib/products/ app/(store)/products/ app/components/layout/catalogue/ || echo "No 'any' types found"
+
+# Runtime validation test
+# 1. Temporarily corrupt data/catalogue-index.json
+# 2. Start dev server
+# 3. Verify clear error message
+# 4. Restore file, verify normal operation
+```
+
+---
+
+## Sequence of Execution
+
+| Order | Scope Contract | Dependencies | Risk Level | Effort |
+|-------|---------------|--------------|------------|--------|
+| 1 | Scope 1: Root Products Fix | None | Medium | 2 hrs |
+| 2 | Scope 4: Navigation VFS Migration | Scope 1 | Medium | 4 hrs |
+| 3 | Scope 2: Legacy Path Elimination | None | High | 4 hrs |
+| 4 | Scope 3: Search Integration | Scope 2 | Low | 3 hrs |
+| 5 | Scope 6: Type Safety | Scope 1-4 | Low | 3 hrs |
+| 6 | Scope 5: Direct Filter Mapping | Scope 2, 6 | Medium | 4 hrs |
+
+**Rationale:**
+1. **Root Products First:** Fixes broken page, establishes empty-key pattern
+2. **Navigation Second:** High impact performance win, enables other work
+3. **Legacy Elimination:** Removes technical debt, unblocks search
+4. **Search Integration:** Builds on clean VFS foundation
+5. **Type Safety:** Solidifies all changes with type coverage
+6. **Filter Mapping:** Most complex schema change, requires solid foundation
+
+---
+
+## Verification Matrix
+
+| Feature | Before | After | Verification Method |
+|---------|--------|-------|---------------------|
+| Root products page | Broken (empty) | Working (all products) | Manual test /products |
+| Exhibition products | categoryPath | VFS keys or refs | Test exhibition pages |
+| Sale products | categoryPath | VFS keys or refs | Test sale pages |
+| Search | Name only | Name + catalogue | Search with filters |
+| Navigation fetch | ~200ms live | 0ms cached | Server timing logs |
+| Filter discovery | 2 round trips | 1 round trip | Query log analysis |
+| Type coverage | ~60% | 100% | `tsc --noEmit` |
+| categoryPath refs | 3+ files | 0 files | `grep -r` verification |
+
+---
+
+## Cross-Cutting Concerns
+
+### Data Migration Requirements
+
+| Scope | Migration Required | Details |
+|-------|-------------------|---------|
+| Scope 2 | Yes | Exhibitions and sales need VFS key arrays |
+| Scope 5 | Optional | Enhanced filter schema with VFS key support |
+
+### Breaking Changes
+
+| Scope | Breaking Change | Mitigation |
+|-------|----------------|------------|
+| Scope 2 | Exhibition/sale product lookup changes | Maintain dual lookup during transition |
+| Scope 4 | Navigation data shape changes | Maintain component interface, transform data |
+| Scope 5 | Filter/sortable schema changes | Backward compatible enhancement |
+
+### Out of Scope
+- **Product catalogueLocationKeys population:** Assumes complete from previous sprint
+- **Build script changes:** `catalogue-index.json` generation is stable
+- **UI redesign:** Feature parity only, no visual changes
+- **New discovery features:** Search autocomplete, recommendations (future sprints)
+
+---
+
+## Sprint Completion Criteria
+
+This sprint is complete when:
+1. ✅ `/products` page correctly displays all products
+2. ✅ Zero `categoryPath` references in product discovery code
+3. ✅ Search supports catalogue-based filtering
+4. ✅ Navigation renders from `catalogue-index.json` (no live fetches)
+5. ✅ TypeScript coverage at 100% for all discovery paths
+6. ✅ All 6 scope contracts pass DoD verification
+7. ✅ No visual or functional regressions in product discovery
+
+---
+
+*Generated by OODA-Design Sprint Planning*
+*Date: March 27, 2026*

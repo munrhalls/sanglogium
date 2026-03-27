@@ -1,0 +1,359 @@
+# VFS Data Integrity Sprint — Critical Fix
+## Objective: Fix CRITICAL build script bug causing missing intermediate nodes in slotMetadataMap
+## Risk Level: HIGH — Core catalogue infrastructure
+
+---
+
+## Executive Summary
+
+**Current State:** VFS architecture is structurally sound but **critically broken in implementation**. The `slotMetadataMap` is missing intermediate header nodes, making subtree queries fail.
+
+**Target State:** Complete, consistent VFS data structure where all nodes referenced in the tree exist in `slotMetadataMap`.
+
+**Success Metrics:**
+- All child IDs referenced in headers exist in `slotMetadataMap`
+- `unrollDescendantKeys()` returns valid IDs for GROQ queries
+- Zero "referenced but not found" validation errors
+- Subtree product queries work correctly
+
+---
+
+## Architecture Principles
+
+1. **Data Integrity First**: All tree references must resolve to valid metadata
+2. **O(1) Lookup**: Every ID in the tree must exist in `slotMetadataMap`
+3. **Validation at Build**: Build script must validate consistency before output
+4. **Zero Silent Failures**: Errors must be loud and actionable
+
+---
+
+## Scope Contract 1: Fix Build Script — Populate Complete slotMetadataMap
+
+**Goal:** Fix the build script inconsistency that causes missing intermediate header nodes
+
+### Current State (CRITICAL BUG)
+```typescript
+// scripts/build-catalogue-index.mjs
+// The traverse function only adds LEAF nodes to slotMetadataMap
+// Intermediate headers (type: "header") are SKIPPED
+```
+
+Per VFS Audit:
+- Header "ugyeto8653n495dpf89nzoar" references children ["ekv4twh175wcse4fl4jjdxfq", ...]
+- These child IDs exist in tree but are MISSING from slotMetadataMap
+- Root Cause: Build script logic skips intermediate nodes during metadata population
+
+### Target State
+```typescript
+// ALL nodes (headers AND links) populated in slotMetadataMap
+"slotMetadataMap": {
+  "ugyeto8653n495dpf89nzoar": { /* header with children */ },
+  "ekv4twh175wcse4fl4jjdxfq": { /* intermediate header - NOW PRESENT */ },
+  "o7c6baiuobsr7ni2y2vf22sh": { /* leaf link */ }
+}
+```
+
+### Implementation
+
+1. **Analyze Build Script Logic**:
+   - Read `scripts/build-catalogue-index.mjs` completely
+   - Identify where `slotMetadataMap` population happens (around line 78-140)
+   - Find the conditional that skips intermediate headers
+
+2. **Fix Metadata Population**:
+   - Ensure EVERY node traversed gets added to `slotMetadataMap`
+   - Include headers (type: "header") and their metadata
+   - Preserve existing leaf node handling
+
+3. **Verify Complete Population**:
+   - After fix, count nodes in tree vs nodes in slotMetadataMap
+   - Should be equal (or tree nodes ≤ slotMetadataMap nodes)
+
+### DoD — Verification Checklist
+
+- [ ] All 32 tree nodes exist in `slotMetadataMap`
+- [ ] Intermediate headers (like "By Design") have entries
+- [ ] `unrollDescendantKeys("headphones")` returns valid IDs only
+- [ ] No "ID not found in slotMetadataMap" errors
+
+### Testing
+
+```bash
+# Build the index
+node scripts/build-catalogue-index.mjs
+
+# Verify count
+cat data/catalogue-index.json | jq '.slotMetadataMap | length'
+# Expected: 32 (or more, but ALL tree IDs present)
+
+# Check specific intermediate header exists
+cat data/catalogue-index.json | jq '.slotMetadataMap["ekv4twh175wcse4fl4jjdxfq"]' 
+# Expected: { title: "By Design", ... }
+```
+
+---
+
+## Scope Contract 2: Add Build-Time Validation
+
+**Goal:** Prevent future data inconsistencies with strict validation
+
+### Current State
+- Build script completes silently even with missing nodes
+- No verification that tree references resolve correctly
+- Runtime failures only discovered when GROQ queries fail
+
+### Target State
+- Build validates: `∀ node ∈ tree.children, node._key ∈ slotMetadataMap`
+- Clear error message if validation fails
+- Exit code non-zero on validation failure
+
+### Implementation
+
+1. **Add Validation Function**:
+   ```typescript
+   function validateCatalogueIntegrity(tree, slotMetadataMap) {
+     const errors = [];
+     
+     function checkNode(node) {
+       // Verify this node exists in metadata
+       if (!slotMetadataMap[node._key]) {
+         errors.push(`Missing metadata for: ${node._key}`);
+       }
+       
+       // Recursively check children
+       if (node.children) {
+         node.children.forEach(checkNode);
+       }
+     }
+     
+     tree.forEach(checkNode);
+     return errors;
+   }
+   ```
+
+2. **Integrate into Build Flow**:
+   - Run validation after tree and metadata generation
+   - If errors found: log them clearly, exit with code 1
+   - If clean: log "✅ Validation passed: N nodes verified"
+
+3. **Add Stats Output**:
+   - Tree node count
+   - Metadata map entry count
+   - Slug-to-ID mapping count
+
+### DoD — Verification Checklist
+
+- [ ] Validation runs on every build
+- [ ] Clear error message names the missing ID
+- [ ] Build fails (non-zero exit) on validation failure
+- [ ] Success shows: "✅ Validated: 32 nodes, 20 slugs"
+
+### Testing
+
+```bash
+# Test validation catches errors
+# 1. Intentionally corrupt a node ID in tree
+# 2. Run build
+# 3. Expect: "Missing metadata for: corrupted-id", exit 1
+
+# Test validation passes when clean
+node scripts/build-catalogue-index.mjs
+# Expect: "✅ Validation passed" message
+```
+
+---
+
+## Scope Contract 3: Fix unrollDescendantKeys() Function
+
+**Goal:** Ensure subtree queries return valid, usable IDs
+
+### Current State
+```typescript
+// lib/catalogue.ts or similar
+function unrollDescendantKeys(headerId: string): string[] {
+  const metadata = slotMetadataMap[headerId];
+  return metadata.children; // ❌ Returns IDs that may not be in slotMetadataMap!
+}
+```
+
+Problem: Returns child IDs, but those intermediate nodes may not have metadata entries.
+
+### Target State
+```typescript
+function unrollDescendantKeys(headerId: string): string[] {
+  // Recursively collect ALL descendant IDs
+  // Return only IDs that are type: "link" (leaf nodes)
+  // OR return all valid IDs that exist in slotMetadataMap
+}
+```
+
+### Implementation
+
+1. **Locate Function**:
+   - Find where `unrollDescendantKeys` is defined
+   - Likely in: `lib/catalogue.ts`, `data/catalogue.ts`, or `app/actions/categories.ts`
+
+2. **Fix Recursion Logic**:
+   - If a child is a header, recursively unroll its children
+   - If a child is a link, add to results
+   - Verify each ID exists in slotMetadataMap before adding
+
+3. **Add Defensive Checks**:
+   - Log warning if ID not found in metadata
+   - Don't include invalid IDs in return array
+
+### DoD — Verification Checklist
+
+- [ ] `unrollDescendantKeys("headphones")` returns array of valid IDs
+- [ ] All returned IDs exist in `slotMetadataMap`
+- [ ] Recursive traversal works through multiple header levels
+- [ ] GROQ query using these keys returns products successfully
+
+### Testing
+
+```typescript
+// Manual verification
+import { unrollDescendantKeys } from '@/data/catalogue';
+
+const keys = unrollDescendantKeys('ugyeto8653n495dpf89nzoar');
+console.log(keys);
+// Expected: ['o7c6baiuobsr7ni2y2vf22sh', 'yq3p9s798zszjkzm5btnebjh', ...]
+// All valid leaf IDs
+
+// Verify in GROQ
+// *[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0]
+// Should return products without errors
+```
+
+---
+
+## Scope Contract 4: Runtime Validation Layer
+
+**Goal:** Protect against corrupted data in production
+
+### Current State
+- `getCatalogue()` assumes data is valid
+- No runtime checks on loaded `catalogue-index.json`
+- Silent failures if JSON is malformed
+
+### Target State
+- Runtime validation on every `getCatalogue()` call
+- Clear error messages in development
+- Graceful degradation in production
+
+### Implementation
+
+1. **Create Validator**:
+   ```typescript
+   // data/catalogue-validator.ts
+   export function validateCatalogueIndex(data: unknown): asserts data is CatalogueIndex {
+     // Check required fields exist
+     // Verify slugToIdMap structure
+     // Verify slotMetadataMap has entries
+     // Validate tree structure
+   }
+   ```
+
+2. **Integrate in getCatalogue()**:
+   ```typescript
+   export function getCatalogue() {
+     const data = require('./catalogue-index.json');
+     validateCatalogueIndex(data); // Throws on invalid
+     return data;
+   }
+   ```
+
+3. **Add Dev Warnings**:
+   - Extra strict validation in dev mode
+   - Warn about missing but non-critical issues
+
+### DoD — Verification Checklist
+
+- [ ] `getCatalogue()` validates on every call in dev
+- [ ] Clear error if `catalogue-index.json` is corrupted
+- [ ] Validation covers: tree, slugToIdMap, slotMetadataMap
+- [ ] Graceful fallback (empty data) if validation fails in production
+
+### Testing
+
+```bash
+# Test corrupted data handling
+# 1. Temporarily delete a required field from catalogue-index.json
+# 2. Start dev server
+# 3. Verify clear error message in console
+# 4. Restore file, verify normal operation
+```
+
+---
+
+## Sequence of Execution
+
+| Order | Scope Contract | Dependencies | Risk Level |
+|-------|---------------|--------------|------------|
+| 1 | Scope 1: Fix Build Script | None | **CRITICAL** |
+| 2 | Scope 2: Build Validation | Scope 1 | Medium |
+| 3 | Scope 3: Fix unrollDescendantKeys | Scope 1 | Medium |
+| 4 | Scope 4: Runtime Validation | Scope 2 | Low |
+
+**Rationale:**
+1. **Fix Build First**: Core data integrity issue must be resolved before anything else
+2. **Validation Second**: Prevent regression of the same bug
+3. **Function Fix Third**: Now that data is complete, fix the consumer
+4. **Runtime Last**: Defensive layer for production safety
+
+---
+
+## Verification Matrix
+
+| Feature | Before | After | Verification Method |
+|---------|--------|-------|---------------------|
+| slotMetadataMap completeness | 20 leaves only | 32 all nodes | `jq '.slotMetadataMap | keys | length'` |
+| Build validation | None | Strict | Intentionally corrupt → build fails |
+| Subtree query | Broken | Working | GROQ query returns products |
+| Error messages | Silent | Clear | Missing ID explicitly named |
+| Data integrity | Unverified | Validated | Runtime checks in getCatalogue() |
+
+---
+
+## Notes & Risks
+
+### Risk: Breaking Existing Navigation
+**Mitigation**: Scope 1 only CHANGES the build script, doesn't change runtime code. Navigation continues using existing (flawed) data until explicitly migrated.
+
+### Risk: Data Corruption During Fix
+**Mitigation**: 
+- Backup existing `catalogue-index.json` before rebuild
+- Verify new file has MORE entries (not fewer)
+- Run validation before accepting new build
+
+### Risk: GROQ Queries Still Fail After Fix
+**Mitigation**: 
+- Scope 3 specifically fixes `unrollDescendantKeys()`
+- Test with actual GROQ query before marking complete
+- Verify product schema has `catalogueLocationKeys` field
+
+---
+
+## Out of Scope
+
+- **Frontend navigation migration**: Covered in VFS_FRONTEND_CONSUMPTION_SPRINT.todo
+- **Product catalogueLocationKeys population**: Covered in VFS_PRODUCT_MAPPING_HARDENING.todo
+- **Build script performance optimization**: Not required for data integrity
+- **New VFS features**: Only fixing existing broken functionality
+
+---
+
+## Sprint Completion Criteria
+
+This sprint is complete when:
+1. ✅ All tree nodes exist in slotMetadataMap (32/32)
+2. ✅ Build script validates data integrity on every run
+3. ✅ unrollDescendantKeys() returns valid IDs for GROQ queries
+4. ✅ Runtime validation protects against corrupted data
+5. ✅ Zero silent failures — all errors are explicit and actionable
+
+---
+
+*Generated by OODA Sprint Design: Observe → Orient → Decide → Act*
+*Date: March 27, 2026*
+*Priority: CRITICAL — Blocks all VFS-dependent functionality*
