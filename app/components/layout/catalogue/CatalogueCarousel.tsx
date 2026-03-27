@@ -11,7 +11,7 @@ import type { CatalogueNavItem } from "@/app/components/layout/catalogue/catalog
 import { cn } from "@/lib/utils/tailwind";
 
 interface CatalogueCarouselProps {
-  catalogueDataRaw: { catalogue: any[] };
+  catalogueDataRaw: { catalogue: CatalogueNavItem[] };
 }
 
 export default function CatalogueCarousel({ catalogueDataRaw }: CatalogueCarouselProps) {
@@ -24,7 +24,7 @@ export default function CatalogueCarousel({ catalogueDataRaw }: CatalogueCarouse
     >
       <Carousel itemsCount={catalogueData.length}>
         <CarouselTrack className="touch-pan-x snap-x snap-mandatory overflow-x-auto landscape:h-full rounded-none">
-          {catalogueData.map((item, index) => (
+          {catalogueData.map((item) => (
             <CarouselSlide
               key={item.id}
               className="group/animation-settle flex h-full min-w-full flex-1 snap-start snap-always flex-col"

@@ -31,7 +31,7 @@ export default function DetailSection({
       <ul className="space-y-4 pl-2">
         {section.links.map((link, linkIdx) => (
           <li
-            key={link}
+            key={link.slug}
             style={{ "--index": linkIdx } as React.CSSProperties}
             className={cn(
               "translate-y-2 opacity-0",
@@ -41,13 +41,13 @@ export default function DetailSection({
             )}
           >
             <a
-              href="#"
+              href={link.url}
               className={cn(
                 "pl-2 text-body text-secondary-300",
                 "transition-colors hover:text-brand-200 active:text-brand-400"
               )}
             >
-              {link}
+              {link.label}
             </a>
           </li>
         ))}

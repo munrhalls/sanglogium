@@ -6,7 +6,7 @@ import type { CatalogueNavItem } from "./catalogue-nav.types";
 import { cn } from "@/lib/utils/tailwind";
 
 interface CatalogueNavbarProps {
-  catalogueDataRaw: { catalogue: any[] };
+  catalogueDataRaw: { catalogue: CatalogueNavItem[] };
 }
 
 const CatalogueNavbar = async ({ catalogueDataRaw }: CatalogueNavbarProps) => {
