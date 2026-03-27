@@ -56,32 +56,58 @@ async function fetchProductTraits(productId) {
   return product;
 }
 
+const semanticMap = {
+  'desktop-amps': ['integrated amplifier', 'integrated amp'],
+  'dac-amp-combos': ['d/a conversion', 'reference quality d/a conversion', 'hi-res d/a conversion'],
+  'standalone-dacs': ['standalone dac', 'separate dac'],
+  'portable-amps': ['portable amplifier', 'portable amp'],
+  'network-streamers': ['network streamer', 'streaming device'],
+  'digital-players-daps': ['digital audio player', 'dap'],
+  'interconnects': ['rca cable', 'xlr cable'],
+  'headphone-cables': ['headphone cable', 'detachable cable'],
+  'adapters': ['adapter', 'adaptor'],
+  'carrying-cases': ['carrying case', 'protective case'],
+  'headphone-stands': ['headphone stand', 'display stand'],
+  'earpads': ['earpad', 'ear pad'],
+  'care-cleaning': ['cleaning kit', 'care solution'],
+  'closed-back': ['closed back headphone'],
+  'open-back': ['open back headphone'],
+  'monitors-iems': ['in-ear monitor', 'iem'],
+  'true-wireless-tws': ['true wireless'],
+  'dynamic': ['dynamic driver'],
+  'planar-magnetic': ['planar magnetic', 'planar driver'],
+  'electrostatic': ['electrostatic headphone']
+};
+
 function determineLeafNodeIds(leafNodes, productTraits) {
-  if (!productTraits || !productTraits.overviewFields) return [];
+  if (!productTraits) return [];
 
-  if (!Array.isArray(productTraits.overviewFields)) {
-    throw new Error('Invalid overviewFields structure');
-  }
-
-  const traits = productTraits.overviewFields
-    .filter(field => field && typeof field.value === 'string')
-    .map(field => field.value);
+  const knowledgeString = [
+    productTraits.name || '',
+    ...(productTraits.overviewFields || [])
+      .filter(field => field && typeof field.value === 'string')
+      .map(field => field.value)
+  ].join(' ').toLowerCase();
 
   const matchedIds = [];
 
   for (const leafNode of leafNodes) {
-    const nodeText = `${leafNode.title} ${leafNode.slug?.current || ''}`.toLowerCase();
+    const leafSlug = leafNode.slug?.current;
+    if (!leafSlug) continue;
 
-    for (const trait of traits) {
-      const traitText = trait.toLowerCase();
-      if (nodeText.includes(traitText) || traitText.includes(nodeText.split('(')[0].trim())) {
-        matchedIds.push(leafNode._id);
-        break;
-      }
+    const semanticKeywords = semanticMap[leafSlug] || [];
+    const nodeText = `${leafNode.title} ${semanticKeywords.join(' ')}`.toLowerCase();
+
+    const hasMatch = semanticKeywords.some(keyword =>
+      knowledgeString.includes(keyword.toLowerCase())
+    );
+
+    if (hasMatch) {
+      matchedIds.push(leafNode._id);
     }
   }
 
-  return matchedIds;
+  return [...new Set(matchedIds)];
 }
 
 function logMissingProduct(productId, productName) {
@@ -121,9 +147,58 @@ async function resetAndPopulateCatalogueKeys(productId, determinedIds) {
   await transaction.commit();
 }
 
+async function verifyAgainstDetermined(productId, determinedIds) {
+  console.log(`Testing against determined IDs: ${JSON.stringify(determinedIds)}`);
+
+  let passedTests = 0;
+  let totalTests = 0;
+
+  // Positive Leaf Tests
+  console.log('\n--- Positive Leaf Tests ---');
+  for (const leafId of determinedIds) {
+    totalTests++;
+    try {
+      const leafQuery = `*[_type == "catalogueItem" && _id == $leafId][0]{title, slug}`;
+      const leafNode = await client.fetch(leafQuery, { leafId });
+
+      if (leafNode) {
+        console.log(`✅ PASS: Determined leaf "${leafNode.title}" exists and is valid`);
+        passedTests++;
+      } else {
+        console.log(`❌ FAIL: Determined leaf ${leafId} does not exist`);
+      }
+    } catch (error) {
+      console.log(`❌ ERROR: Failed to verify leaf ${leafId}: ${error.message}`);
+    }
+  }
+
+  // Negative Co-Branch Tests
+  console.log('\n--- Negative Co-Branch Tests ---');
+  const negativeTests = [
+    { id: 'o7c6baiuobsr7ni2y2vf22sh', title: 'Open-Back' },
+    { id: 'yd9641q8fiuh9rgoupauw2zl', title: 'Planar Magnetic' }
+  ];
+
+  for (const negativeTest of negativeTests) {
+    totalTests++;
+    const hasNegativeMatch = determinedIds.includes(negativeTest.id);
+
+    if (!hasNegativeMatch) {
+      console.log(`✅ PASS: Correctly NOT matched with "${negativeTest.title}"`);
+      passedTests++;
+    } else {
+      console.log(`❌ FAIL: Incorrectly matched with "${negativeTest.title}"`);
+    }
+  }
+
+  console.log(`\n=== Verification Results: ${passedTests}/${totalTests} passed ===`);
+  console.log(passedTests === totalTests ? '✅ ALL TESTS PASSED' : '❌ SOME TESTS FAILED');
+}
+
 async function main() {
   const args = process.argv.slice(2);
   const dryRun = args.includes('--dry-run');
+  const verifyDetermined = args.includes('--verify-determined');
   const productIdIndex = args.findIndex(arg => arg.startsWith('--productId='));
   const productId = productIdIndex !== -1 ? args[productIdIndex].split('=')[1] : null;
 
@@ -138,6 +213,12 @@ async function main() {
     const determinedIds = determineLeafNodeIds(leafNodes, productTraits);
 
     console.log('Matched leaf node IDs:', determinedIds);
+
+    if (verifyDetermined) {
+      console.log('\n=== Verification Against Determined Output ===');
+      await verifyAgainstDetermined(productId, determinedIds);
+      return;
+    }
 
     if (!productTraits || !productTraits.overviewFields) {
       logMissingProduct(productId, productTraits?.name);

@@ -32,6 +32,27 @@ const client = createClient({
   useCdn: false
 });
 
+async function getSubTreeLeafIds(headerId) {
+  const allItems = await client.fetch('*[_type == "catalogueItem"]{_id, slug, parent->{_id}}');
+  const itemMap = new Map(allItems.map(item => [item._id, item]));
+
+  const leafIds = [];
+
+  function collectLeafIds(itemId) {
+    const children = allItems.filter(item => item.parent && item.parent._id === itemId);
+
+    for (const child of children) {
+      if (child.slug) {
+        leafIds.push(child._id);
+      }
+      collectLeafIds(child._id);
+    }
+  }
+
+  collectLeafIds(headerId);
+  return leafIds;
+}
+
 async function verifyProductMapping(productId) {
   const productQuery = `*[_type == "product" && _id == $productId][0]{name, catalogueLocationKeys}`;
   const product = await client.fetch(productQuery, { productId });
@@ -55,7 +76,7 @@ async function verifyProductMapping(productId) {
       const leafQuery = `*[_type == "catalogueItem" && _id == $leafId][0]{title, slug}`;
       const leafNode = await client.fetch(leafQuery, { leafId });
 
-      const productInLeafQuery = `*[_type == "product" && catalogueLocationKeys[$leafId] match $leafId]{name}`;
+      const productInLeafQuery = `*[_type == "product" && $leafId in catalogueLocationKeys]{name}`;
       const productsInLeaf = await client.fetch(productInLeafQuery, { leafId });
 
       const found = productsInLeaf.some(p => p.name === product.name);
@@ -81,18 +102,14 @@ async function verifyProductMapping(productId) {
   for (const headerTest of headerTests) {
     totalTests++;
     try {
-      const headerQuery = `*[_type == "catalogueItem" && _id == $headerId][0]{title}`;
-      const headerNode = await client.fetch(headerQuery, { headerId: headerTest.id });
-
-      const productInHeaderQuery = `*[_type == "catalogueItem" && _id == $headerId]{
-        "products": *[_type == "product" && catalogueLocationKeys[$leafId] match ^catalogueLocationKeys[_type == "catalogueItem" && parent._ref == $headerId]._id]
-      }.products{name}`;
-      const productsInHeader = await client.fetch(productInHeaderQuery, { headerId: headerTest.id });
+      const subTreeIds = await getSubTreeLeafIds(headerTest.id);
+      const productInHeaderQuery = `*[_type == "product" && count((catalogueLocationKeys[])[@ in $subTreeIds]) > 0]{name}`;
+      const productsInHeader = await client.fetch(productInHeaderQuery, { subTreeIds });
 
       const found = productsInHeader.some(p => p.name === product.name);
 
       if (found) {
-        console.log(`✅ PASS: Product found in header "${headerNode.title}"`);
+        console.log(`✅ PASS: Product found in header "${headerTest.title}"`);
         passedTests++;
       } else {
         console.log(`❌ FAIL: Product NOT found in header "${headerTest.title}"`);
@@ -112,10 +129,10 @@ async function verifyProductMapping(productId) {
   for (const negativeTest of negativeTests) {
     totalTests++;
     try {
-      const productInNegativeQuery = `*[_type == "product" && catalogueLocationKeys[$leafId] match $leafId]{name}`;
+      const productInNegativeQuery = `*[_type == "product" && $leafId in catalogueLocationKeys]{name}`;
       const productsInNegative = await client.fetch(productInNegativeQuery, { leafId: negativeTest.id });
 
-      const found = productsInNegative.some(p => p.name === product.name);
+      const found = productsInNegative?.some(p => p.name === product.name);
 
       if (!found) {
         console.log(`✅ PASS: Product correctly NOT found in "${negativeTest.title}"`);
