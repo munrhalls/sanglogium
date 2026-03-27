@@ -1,16 +1,24 @@
 [] COVER SUM TOTAL TIMELINE OF ENTIRE SANG-LOGIUM DONE
     ✔ add regression tests instructions to /sprint command @done(26-03-27 18:45)
     ✔ add themes of scope and layer sequencing to /sprint @done(26-03-27 18:51)
-    [ ]
+    ✔ update sprint to include design system coherence first @done(26-03-27 19:07)
+    [ ] get means for auto-screenshot all RWD breakpoint screens at once and pass all to AI in one go - or have AI get that capability
 
+
+[ ] DEVELOP
+    CRITICAL PATHS
+        [ ] catalogue item click -> products page show expected products quantity and type based on item clicked and VFS functionality
+            ✔ write and launch prompt: /sprint -> entire architecture and functionality of crtical path catalogue item -> products page @done(26-03-27 19:10)
+            ✔ run @done(26-03-27 19:27)
 
 
 The scope
     [ ] It's extremely visually polished and beautiful
-    [ ] It's professionally robust, complete, full RWD portrait/landscape modes, zero bugs
-    [ ] It's professionally functional, end-to-end, all critical pathways are fully checked and tested
+    [ ] It's professionally robust, complete, full RWD portrait/landscape modes, zero bugs, even at very edge case scenarios or browser/device combo
+    [ ] It's professionally functional, end-to-end, all critical pathways are fully checked and tested, especially payments
     [ ] Full cross-browser testing, compatibility
     [ ] Full cross-device testing, compatibility, works even on old iphones and androids
+    [ ] It's extremely well-documented, with systematic discipline and rigour, where every feature is followed by a disciplined, simple, clear, concise README with a clear mermaid diagram -> translates onto extremely well-written gitbook
 
 The big NOT TO-DO LIST
     [ ] avoid one-off's
