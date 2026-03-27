@@ -47,6 +47,7 @@ function buildLegacyCatalogueItem(
 
   // Return exact legacy structure
   const legacyItem: any = {
+    id: item.slug?.current || item.title?.toLowerCase().replace(/\s+/g, '-') || item._id,
     title: item.title,
     type: item.type,
   };
@@ -80,7 +81,9 @@ export async function getSanityCatalogueData(): Promise<{ catalogue: any[] }> {
       // Note: You may need to configure revalidate tags in your Next.js setup
     });
 
-    return transformSanityToLegacyJson(sanityItems);
+    const result = transformSanityToLegacyJson(sanityItems);
+    console.log('CATALOGUE JSON WITH IDs:', JSON.stringify(result, null, 2));
+    return result;
   } catch (error) {
     console.error('Error fetching catalogue data from Sanity:', error);
 
