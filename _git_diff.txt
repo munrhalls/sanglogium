@@ -1,0 +1,1717 @@
+﻿diff --git a/_projects/CATALOGUE_SCHEMA_FLATTEN.todo b/_projects/CATALOGUE_SCHEMA_FLATTEN.todo
+deleted file mode 100644
+index ab6e8ae7..00000000
+--- a/_projects/CATALOGUE_SCHEMA_FLATTEN.todo
++++ /dev/null
+@@ -1,331 +0,0 @@
+-# CATALOGUE_SCHEMA_FLATTEN.todo
+-# Sprint Execution File ÔÇö Catalogue Schema Flattening
+-# Created: 2026-03-26
+-# Risk Gate: Zero breakage on frontend Virtual File System
+-#
+-# Input State:
+-#   - catalogueType.ts (singleton document wrapping a nested array)
+-#   - catalogueItemType.ts (object type with recursive inline children)
+-#   - Singleton doc _id:"catalogue" holding entire tree as deeply nested objects
+-#   - Products reference catalogue nodes via catalogueLocationKeys (stores _key values)
+-#
+-# Target State:
+-#   - catalogueItem as a flat, independent document type (type: "document")
+-#   - Each node is its own Sanity document with _id = old _key (preserves product references)
+-#   - children modeled as references to other catalogueItem documents
+-#   - Singleton wrapper (catalogueType) removed entirely
+-#   - catalogue-index.json output format identical (zero frontend breakage)
+-
+----
+-
+-## Global Directives
+-
+-- Final code output must contain ZERO comments.
+-- Every commit must follow the taxonomy: A (Forward progress), B (Critical bug fix), C (Refactor), D (Configuration), E (Polish).
+-- No file may be deleted until its replacement is verified working.
+-- All changes to `catalogue-index.json` happen through `build-catalogue-index.mjs`, never manually.
+-- Migration MUST set each new document _id equal to the old nested node _key to preserve product catalogueLocationKeys references without touching product documents.
+-- The current catalogue-index.json has 3 root nodes, 8 group headers, 20 leaf links (31 total nodes). The slugToIdMap is currently empty (all roots/groups are headers, no non-header node has a slug in the current data set). The slotMetadataMap has 3 entries (root headers only ÔÇö they are the only nodes with slugs). These counts are invariants for migration verification.
+-
+----
+-
+-## Layer 1: Schema Deployment
+-
+-### Scope Contract
+-
+-Redefine `catalogueItem` from `type: "object"` to `type: "document"`, making each catalogue node an independent, queryable Sanity document. Remove the singleton `catalogueType` wrapper entirely. Retain all existing fields (`title`, `type`, `slug`, `icon`) required by the build-catalogue-index pre-compute script. Transform `children` from inline nested objects to an array of references. Add `sortOrder` field for deterministic sibling ordering.
+-
+-**Files Modified:**
+-- `sanity/schemaTypes/catalogueItemType.ts` ÔÇö object ÔåÆ document, children ÔåÆ references, add sortOrder
+-- `sanity/schemaTypes/index.ts` ÔÇö remove catalogueType import and registration
+-- `sanity/structure.ts` ÔÇö replace singleton catalogue entry with catalogueItem document list
+-
+-**Files Removed (deferred to Layer 5):**
+-- `sanity/schemaTypes/catalogueType.ts` ÔÇö singleton wrapper (marked for deletion, not deleted here)
+-
+-**Invariant:**
+-- The field names `title`, `type`, `slug`, `icon` must remain exactly as-is on the new document type.
+-
+-### DoD
+-
+-- [ ] 1.1 ÔÇö In `sanity/schemaTypes/catalogueItemType.ts`: change `type: "object"` to `type: "document"`. Change `children` field from `of: [{ type: "catalogueItem" }]` to `of: [{ type: "reference", to: [{ type: "catalogueItem" }] }]`. Add new field `sortOrder` of type `number` with `initialValue: 0` after the `icon` field. Remove the commented-out `preview` block. Add a `preview` block that selects `title` and `type`, and returns `{ title, subtitle: type === "header" ? "Group" : "Link" }`.
+-  - Difficulty: 3 - C(sanity/schemaTypes/catalogueItemType.ts): promote catalogueItem to document type with reference children ÔÇö closes DoD item 1.1
+-
+-- [ ] 1.2 ÔÇö In `sanity/schemaTypes/index.ts`: remove the import of `catalogueType` from `"./catalogueType"` (line 4). Remove `catalogueType` from the `types` array (line 9). Leave all other imports and registrations untouched.
+-  - Difficulty: 1 - C(sanity/schemaTypes/index.ts): deregister singleton catalogueType ÔÇö closes DoD item 1.2
+-
+-- [ ] 1.3 ÔÇö In `sanity/structure.ts`: replace the `S.listItem().title("Catalogue").child(S.document().schemaType("catalogue").documentId("catalogue").title("Catalogue"))` block (lines 9-16) with `S.documentTypeListItem("catalogueItem").title("Catalogue")`. Update the filter array on line 27 to exclude `"catalogueItem"` instead of `"catalogue"`: `!["catalogueItem", "homepage"]`.
+-  - Difficulty: 2 - C(sanity/structure.ts): show catalogueItem document list instead of singleton ÔÇö closes DoD item 1.3
+-
+-### Verification ÔÇö Layer 1
+-
+-- [ ] V1.1 ÔÇö Run `npx sanity schema extract` (or equivalent) and confirm `catalogueItem` is listed as a document type, not an object type.
+-  - Difficulty: 1
+-
+-- [ ] V1.2 ÔÇö Run `npm run dev`, open Sanity Studio in browser. Confirm: (a) "Catalogue" appears in the sidebar as a document list (not a singleton editor), (b) no Studio console errors related to schema, (c) the catalogueItem document type shows fields: title, type, slug, icon, sortOrder, children.
+-  - Difficulty: 1
+-
+----
+-
+-## Layer 2: Data Migration Script
+-
+-### Scope Contract
+-
+-Create a one-time migration script `scripts/migrate-catalogue-to-flat.mjs` that reads the existing singleton tree from Sanity Content Lake and creates one independent `catalogueItem` document per node. Each document's `_id` MUST equal the old node's `_key` to preserve all existing product `catalogueLocationKeys` references without modifying product documents. Children are stored as Sanity reference objects. Sort order reflects original array position. The old singleton document is NOT deleted by this script.
+-
+-**Files Created:**
+-- `scripts/migrate-catalogue-to-flat.mjs` ÔÇö one-time migration script
+-
+-**Critical Invariant:**
+-- `newDoc._id === oldNode._key` for every node in the tree. This is the zero-breakage guarantee for product `catalogueLocationKeys`.
+-
+-### DoD
+-
+-- [ ] 2.1 ÔÇö Create `scripts/migrate-catalogue-to-flat.mjs`. The script must:
+-  (a) Load env vars and create a Sanity client (same pattern as seed-catalogue.mjs).
+-  (b) Fetch the old singleton: `*[_id == "catalogue"][0].catalogue`.
+-  (c) Recursively walk the tree. For each node, produce a document object:
+-      ```
+-      {
+-        _id:        node._key,
+-        _type:      "catalogueItem",
+-        title:      node.title,
+-        type:       node.type,
+-        slug:       node.slug || undefined,
+-        icon:       node.icon || undefined,
+-        sortOrder:  <index within parent array>,
+-        children:   (node.children || []).map(child => ({
+-                      _type: "reference",
+-                      _ref:  child._key,
+-                      _key:  child._key
+-                    }))
+-      }
+-      ```
+-  (d) Collect ALL document objects into a flat array.
+-  (e) Use a Sanity transaction (`client.transaction()`) with `createOrReplace` for each document.
+-  (f) Commit the transaction.
+-  (g) Print summary: total documents created, root count, group count, leaf count.
+-  - Difficulty: 5 - A(scripts/migrate-catalogue-to-flat.mjs): create flat migration script ÔÇö closes DoD item 2.1
+-
+-- [ ] 2.2 ÔÇö Execute the migration script: `node scripts/migrate-catalogue-to-flat.mjs`. Capture output. Verify console reports 31 total documents (3 roots, 8 groups, 20 leaves).
+-  - Difficulty: 1 - D(scripts): run migration ÔÇö closes DoD item 2.2
+-
+-### Verification ÔÇö Layer 2
+-
+-- [ ] V2.1 ÔÇö Write `scripts/verify-migration.mjs`. The script must:
+-  (a) Fetch all: `*[_type == "catalogueItem"]`.
+-  (b) Assert total count === 31.
+-  (c) Assert exactly 3 documents have `icon` field defined (root nodes).
+-  (d) Assert exactly 20 documents have `type == "link"` (leaf nodes).
+-  (e) Assert exactly 11 documents have `type == "header"` (roots + groups).
+-  (f) For every document with children references, assert each `_ref` resolves to an existing document in the result set.
+-  (g) Fetch all `*[_type == "product"].catalogueLocationKeys` and assert every key value exists as a `_id` in the catalogueItem result set.
+-  (h) Print PASS/FAIL per assertion.
+-  - Difficulty: 5 - A(scripts/verify-migration.mjs): create migration verification script ÔÇö closes DoD V2.1
+-
+-- [ ] V2.2 ÔÇö Run `node scripts/verify-migration.mjs`. All assertions must PASS.
+-  - Difficulty: 1
+-
+----
+-
+-## Layer 3: Pre-Compute Script Update
+-
+-### Scope Contract
+-
+-Update `scripts/build-catalogue-index.mjs` to query flat `catalogueItem` documents instead of the singleton. Reconstruct the nested tree in memory from the flat document set. Output `catalogue-index.json` with identical structure: `{ generatedAt, slugToIdMap, slotMetadataMap, tree }`. The `tree` output must use `_key` property (set to `_id` value) for backward compatibility with any consumer reading tree nodes. All URL path construction, breadcrumb generation, and metadata mapping logic must produce equivalent results.
+-
+-**Files Modified:**
+-- `scripts/build-catalogue-index.mjs` ÔÇö new GROQ query, tree reconstruction, _key mapping
+-
+-**Output Contract (identical to current):**
+-- `slugToIdMap`: `Record<urlPath, documentId>` ÔÇö maps URL path strings to document `_id` values (equivalent to old `_key`).
+-- `slotMetadataMap`: `Record<documentId, { title, url, slug, breadcrumbs, children, type }>` ÔÇö maps document `_id` to metadata (same shape).
+-- `tree`: Array of nested node objects with `_key`, `_type`, `title`, `type`, `slug`, `icon`, `children`.
+-
+-### DoD
+-
+-- [ ] 3.1 ÔÇö In `scripts/build-catalogue-index.mjs`: replace the GROQ query `*[_id == "catalogue"][0].catalogue` with `*[_type == "catalogueItem"]{ _id, title, type, slug, icon, sortOrder, "childRefs": children[]._ref }`. Store result in a variable `allItems`.
+-  - Difficulty: 2 - C(scripts/build-catalogue-index.mjs): switch to flat document query ÔÇö closes DoD item 3.1
+-
+-- [ ] 3.2 ÔÇö In `scripts/build-catalogue-index.mjs`: implement tree reconstruction from the flat document array. The algorithm must:
+-  (a) Build a lookup map: `itemById[doc._id] = doc` for every document in `allItems`.
+-  (b) Identify root nodes: iterate `allItems`, collect all `_id` values that appear in any document's `childRefs` into a Set `referencedIds`. Root nodes are those whose `_id` is NOT in `referencedIds`.
+-  (c) Sort root nodes by `sortOrder`.
+-  (d) Implement a recursive function `buildTreeNode(doc)` that returns:
+-      ```
+-      {
+-        _key:     doc._id,
+-        _type:    "catalogueItem",
+-        title:    doc.title,
+-        type:     doc.type,
+-        slug:     doc.slug || undefined,
+-        icon:     doc.icon || undefined,
+-        children: (doc.childRefs || [])
+-                    .map(ref => itemById[ref])
+-                    .filter(Boolean)
+-                    .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0))
+-                    .map(buildTreeNode)
+-      }
+-      ```
+-      Omit `slug`, `icon`, `children` keys when undefined/empty to match current output shape.
+-  (e) Build the full tree: `rootNodes.map(buildTreeNode)`.
+-  - Difficulty: 5 - A(scripts/build-catalogue-index.mjs): implement tree reconstruction from flat documents ÔÇö closes DoD item 3.2
+-
+-- [ ] 3.3 ÔÇö In `scripts/build-catalogue-index.mjs`: replace the current `traverse(catalogue)` call with the new tree. Pass the reconstructed tree into the existing `traverse` function (which builds `slugToIdMap` and `slotMetadataMap`). Update the traverse function to use `node._key` (which is now set to the `_id` value from tree reconstruction). Set `output.tree` to the reconstructed tree.
+-  - Difficulty: 3 - C(scripts/build-catalogue-index.mjs): integrate reconstructed tree into traverse and output ÔÇö closes DoD item 3.3
+-
+-### Verification ÔÇö Layer 3
+-
+-- [ ] V3.1 ÔÇö Before running the updated script, save a copy of the current `data/catalogue-index.json` as `data/catalogue-index.pre-flatten.json`.
+-  - Difficulty: 1
+-
+-- [ ] V3.2 ÔÇö Run `node scripts/build-catalogue-index.mjs`. Verify:
+-  (a) Script completes without errors.
+-  (b) Output file `data/catalogue-index.json` is generated.
+-  (c) Top-level keys are: `generatedAt`, `slugToIdMap`, `slotMetadataMap`, `tree`.
+-  - Difficulty: 1
+-
+-- [ ] V3.3 ÔÇö Write `scripts/verify-catalogue-index.mjs`. The script must:
+-  (a) Load both `catalogue-index.pre-flatten.json` and the new `catalogue-index.json`.
+-  (b) Assert `Object.keys(newData.slugToIdMap).length === Object.keys(oldData.slugToIdMap).length`.
+-  (c) Assert `Object.keys(newData.slotMetadataMap).length === Object.keys(oldData.slotMetadataMap).length`.
+-  (d) Assert `newData.tree.length === oldData.tree.length` (3 root nodes).
+-  (e) For each key in old `slotMetadataMap`: assert the corresponding key in new `slotMetadataMap` has identical `title`, `slug`, `type`, and `children.length`.
+-  (f) Recursively count all nodes in old `tree` vs new `tree`: assert equal totals (31).
+-  (g) Assert every `_key` in the new tree matches a valid entry in `slotMetadataMap` (for nodes that have slugs).
+-  (h) Print PASS/FAIL per assertion.
+-  - Difficulty: 5 - A(scripts/verify-catalogue-index.mjs): create catalogue-index structural comparison script ÔÇö closes DoD V3.3
+-
+-- [ ] V3.4 ÔÇö Run `node scripts/verify-catalogue-index.mjs`. All assertions must PASS.
+-  - Difficulty: 1
+-
+----
+-
+-## Layer 4: Seed Script Update
+-
+-### Scope Contract
+-
+-Rewrite `scripts/seed-catalogue.mjs` to create flat `catalogueItem` documents instead of a singleton. Each node in `RAW_CATALOGUE` becomes an individual document. Document `_id` values are generated using `createId()` (cuid2) ÔÇö same as the old `_key` generation. Children are stored as reference objects. Sort order is derived from array position. The old singleton `_id: "catalogue"` must NOT be created.
+-
+-**Files Modified:**
+-- `scripts/seed-catalogue.mjs` ÔÇö rewrite to create flat documents
+-
+-### DoD
+-
+-- [ ] 4.1 ÔÇö Rewrite `scripts/seed-catalogue.mjs`. The script must:
+-  (a) Keep the existing `RAW_CATALOGUE` data and env setup unchanged.
+-  (b) Replace `transformNode` with a new function `flattenTree(rawArray)` that:
+-      - Walks the raw tree recursively.
+-      - Generates a `cuid2` id for each node.
+-      - Returns a flat array of document objects with `_id`, `_type: "catalogueItem"`, `title`, `type`, `slug`, `icon`, `sortOrder`, and `children` as reference objects `[{ _type: "reference", _ref, _key }]`.
+-  (c) Replace the singleton `createOrReplace` with a transaction that calls `createOrReplace` for each flat document.
+-  (d) Update the read-back verification to: `*[_type == "catalogueItem"]` and assert `result.length === 31`.
+-  (e) Update the "Next steps" output to reference the flat document list in Studio.
+-  - Difficulty: 5 - C(scripts/seed-catalogue.mjs): rewrite to create flat documents ÔÇö closes DoD item 4.1
+-
+-### Verification ÔÇö Layer 4
+-
+-- [ ] V4.1 ÔÇö Delete all existing `catalogueItem` documents: run a script or GROQ mutation `*[_type == "catalogueItem"]` ÔåÆ delete. Then run `node scripts/seed-catalogue.mjs`. Verify console reports 31 documents created.
+-  - Difficulty: 2
+-
+-- [ ] V4.2 ÔÇö Run `node scripts/verify-migration.mjs` (from Layer 2) against the freshly seeded data. All assertions must PASS (same invariants apply regardless of whether data came from migration or seed).
+-  - Difficulty: 1
+-
+-- [ ] V4.3 ÔÇö Run `node scripts/build-catalogue-index.mjs` on the freshly seeded data. Verify output has 3 tree roots, correct slotMetadataMap count and slugToIdMap count.
+-  - Difficulty: 1
+-
+----
+-
+-## Layer 5: Type Fixup, Cleanup, and Final Verification
+-
+-### Scope Contract
+-
+-Fix the TypeScript type dependency in `data/catalogue.ts` that breaks when `Catalogue` type is removed from auto-generated `sanity.types`. Delete the now-unused `catalogueType.ts` file. Delete the old singleton document from the Content Lake. Regenerate `sanity.types`. Verify the full pipeline end-to-end.
+-
+-**Files Modified:**
+-- `data/catalogue.ts` ÔÇö replace `Catalogue` type import with standalone type definition
+-
+-**Files Deleted:**
+-- `sanity/schemaTypes/catalogueType.ts` ÔÇö singleton wrapper (no longer registered, safe to delete)
+-
+-### DoD
+-
+-- [ ] 5.1 ÔÇö In `data/catalogue.ts`: remove `import { Catalogue } from "@/sanity.types"` (line 1). Replace `export type CatalogueTree = Catalogue["catalogue"]` (line 4) with an inline type definition that matches the tree structure:
+-  ```
+-  export interface CatalogueTreeNode {
+-    _key: string;
+-    _type: "catalogueItem";
+-    title: string;
+-    type: "link" | "header";
+-    slug?: { _type: "slug"; current: string };
+-    icon?: string;
+-    children?: CatalogueTreeNode[];
+-  }
+-  export type CatalogueTree = CatalogueTreeNode[];
+-  ```
+-  Update the `CatalogueIndexData` interface `tree` field to use the new `CatalogueTree`.
+-  - Difficulty: 3 - C(data/catalogue.ts): replace auto-generated type with standalone tree type ÔÇö closes DoD item 5.1
+-
+-- [ ] 5.2 ÔÇö Regenerate Sanity types: run `npx sanity typegen generate`. Confirm `sanity.types.ts` no longer exports a `Catalogue` type and now exports a `CatalogueItem` document type.
+-  - Difficulty: 1 - D(sanity.types): regenerate after schema change ÔÇö closes DoD item 5.2
+-
+-- [ ] 5.3 ÔÇö Delete the old singleton document from Content Lake. Run a script that executes: `client.delete("catalogue")`. Verify `*[_id == "catalogue"]` returns empty.
+-  - Difficulty: 1 - E(content-lake): remove deprecated singleton ÔÇö closes DoD item 5.3
+-
+-- [ ] 5.4 ÔÇö Delete `sanity/schemaTypes/catalogueType.ts`. Verify no remaining imports reference it: `grep -r "catalogueType" sanity/` must return zero results (excluding node_modules).
+-  - Difficulty: 1 - E(sanity/schemaTypes): delete unused singleton schema file ÔÇö closes DoD item 5.4
+-
+-- [ ] 5.5 ÔÇö Run `npm run build`. Zero type errors. Zero build warnings related to catalogue changes.
+-  - Difficulty: 1 - E(project): verify clean build ÔÇö closes DoD item 5.5
+-
+-- [ ] 5.6 ÔÇö Run `npm run dev`. Verify in browser:
+-  (a) Sanity Studio loads, "Catalogue" shows flat document list with 31 items.
+-  (b) Navigate to a product page in the frontend ÔÇö VFS breadcrumbs render correctly.
+-  (c) Navigate to a category page ÔÇö products load via catalogueLocationKeys intersection.
+-  - Difficulty: 2 - E(project): final integration smoke test ÔÇö closes DoD item 5.6
+-
+----
+-
+-## Dependency Graph
+-
+-```
+-Layer 1 (Schema)
+-    Ôöé
+-    Ôû╝
+-Layer 2 (Migration) ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÉ
+-    Ôöé                             Ôöé
+-    Ôû╝                             Ôû╝
+-Layer 3 (Build Script) ÔùÇÔöÇÔöÇ V2.1 (verify-migration.mjs is reused in V4.2)
+-    Ôöé
+-    Ôû╝
+-Layer 4 (Seed Script)
+-    Ôöé
+-    Ôû╝
+-Layer 5 (Types, Cleanup, Verify)
+-```
+-
+----
+-
+-## Summary
+-
+-| Layer | Scope | Items | Verifications | Total Difficulty |
+-|---|---|---|---|---|
+-| Layer 1: Schema Deployment | catalogueItemType ÔåÆ document, remove singleton, update Studio structure | 3 | 2 | 8 |
+-| Layer 2: Data Migration Script | Create flat documents with _id = old _key, preserve product refs | 2 | 2 | 12 |
+-| Layer 3: Pre-Compute Script Update | Query flat docs, reconstruct tree, identical output | 3 | 4 | 18 |
+-| Layer 4: Seed Script Update | Rewrite seed for flat documents | 1 | 3 | 10 |
+-| Layer 5: Type Fixup, Cleanup, Verify | Fix TS types, delete singleton, final smoke test | 6 | 0 | 9 |
+-| **Total** | | **15** | **11** | **57** |
+-
+----
+-
+-## Key Risk Mitigations
+-
+-| Risk | Mitigation |
+-|---|---|
+-| Product `catalogueLocationKeys` reference old `_key` values | Migration sets `_id = old _key` ÔÇö product docs untouched |
+-| `catalogue-index.json` format changes break frontend | V3.3 structurally compares old vs new output |
+-| Tree reconstruction loses node ordering | `sortOrder` field preserves original array positions |
+-| Orphaned nodes or broken references | V2.1 validates every child ref resolves, checks counts |
+-| `Catalogue` TS type removed from auto-generated types | 5.1 replaces with standalone inline type before 5.2 regeneration |
+-| Regression in VFS query pattern | `catalogueLocationKeys[@ in $keys]` unchanged ÔÇö keys are same values |
+diff --git a/_projects/IMPLEMENTATION_RESEARCH_TODO.todo b/_projects/IMPLEMENTATION_RESEARCH_TODO.todo
+deleted file mode 100644
+index 5c77ff6c..00000000
+--- a/_projects/IMPLEMENTATION_RESEARCH_TODO.todo
++++ /dev/null
+@@ -1,154 +0,0 @@
+-Sprint: Sanity v3 Implementation Research (JSON Seeding & VFS Integration)
+-Scope Contract 1: JSON Document Format Research
+-Definition: Research and document the exact JSON structure used to seed rootCatalogue entities, including array nesting and n+1 recursive patterns.
+-
+-Execution DoDs:
+-
+-[ ] Document JSON Structure: Extract the complete JSON document format used to seed rootCatalogue entities from the existing seeding script.
+-
+-[ ] Document Array Nesting: Define the exact JSON syntax for array nesting within rootCatalogue documents.
+-
+-[ ] Document N+1 Nesting: Define the exact JSON syntax for n+1 recursive array nesting inside nested arrays.
+-
+-[ ] Document JSON Validation Test: Create the exact test needed to validate the JSON document format against the schema.
+-
+-Verification DoDs:
+-
+-[ ] Verify the JSON structure matches the RAW_CATALOGUE format from seed-catalogue.mjs.
+-
+-[ ] Validate the array nesting syntax supports both header and link types with proper slug structures.
+-
+-Scope Contract 2: Seeding Script Research
+-Definition: Research and document the seeding script functionality and its relationship with JSON documents and schema.
+-
+-Execution DoDs:
+-
+-[ ] Document Script Function: Define the exact purpose and functionality of the seeding script in transforming JSON to Sanity documents.
+-
+-[ ] Document Transformation Logic: Extract the flattenTree function logic and how it processes nested JSON into flat documents.
+-
+-[ ] Document Script Validation Test: Create the exact test needed to validate the seeding script produces correct Sanity documents.
+-
+-[ ] Document ID Generation: Document how cuid2 IDs are generated and used for both _id and _key references.
+-
+-Verification DoDs:
+-
+-[ ] Verify the transformation logic preserves parent-child relationships through references.
+-
+-[ ] Validate the seeding script is idempotent using createOrReplace operations.
+-
+-Scope Contract 3: Schema-Script-JSON Relationship Research
+-Definition: Research and document the exact relationships between rootCatalogue schema, seeding script, and JSON document format.
+-
+-Execution DoDs:
+-
+-[ ] Document Schema Mapping: Define how each field in the JSON maps to the catalogueItemType schema fields.
+-
+-[ ] Document Type Conversion: Document how JSON type values ("header", "link") map to schema type field.
+-
+-[ ] Document Reference Creation: Define how the script converts nested JSON children into reference arrays.
+-
+-[ ] Document Consistency Validation: Create test to validate schema-script-JSON consistency.
+-
+-Verification DoDs:
+-
+-[ ] Verify all JSON fields have corresponding schema field definitions.
+-
+-[ ] Validate the slug structure matches Sanity slug type requirements.
+-
+-Scope Contract 4: GROQ Query Research for Retrieval
+-Definition: Research and document the exact GROQ queries needed to retrieve rootCatalogue documents with full nesting.
+-
+-Execution DoDs:
+-
+-[ ] Document Basic Retrieval Query: Extract the exact GROQ query to retrieve all rootCatalogue documents.
+-
+-[ ] Document Nested Retrieval Query: Define the GROQ query to retrieve documents with all array nesting expanded.
+-
+-[ ] Document Query Performance: Document the relationship between query structure and schema design.
+-
+-[ ] Document Query Validation Test: Create testable GROQ queries with expected results.
+-
+-Verification DoDs:
+-
+-[ ] Verify the nested query retrieves all levels of hierarchy in single request.
+-
+-[ ] Validate the query syntax matches Sanity v3 GROQ specifications.
+-
+-Scope Contract 5: Population Script Research
+-Definition: Research and document the exact scripts needed to populate individual rootCatalogue documents and their relationship to JSON.
+-
+-Execution DoDs:
+-
+-[ ] Document Population Function: Define the script functionality for populating specific rootCatalogue documents.
+-
+-[ ] Document JSON to Document Mapping: Document how individual JSON structures map to Sanity documents.
+-
+-[ ] Document Population Validation: Create test to validate populated document contents match JSON source.
+-
+-[ ] Document Error Handling: Document how the script handles validation errors and edge cases.
+-
+-Verification DoDs:
+-
+-[ ] Verify population script creates documents with correct field types and references.
+-
+-[ ] Validate the script maintains referential integrity between parent and child documents.
+-
+-Scope Contract 6: VFS Index Integration Research
+-Definition: Research and document the relationship between populated rootCatalogue documents and the pre-computed catalogue-index.json for VFS functionality.
+-
+-Execution DoDs:
+-
+-[ ] Document Index Generation: Define how build-catalogue-index.mjs transforms Sanity documents into VFS index format.
+-
+-[ ] Document Index Structure: Document the exact structure of catalogue-index.json and its purpose.
+-
+-[ ] Document Slug-to-ID Mapping: Document how slugToIdMap enables O(1) VFS lookups.
+-
+-[ ] Document Metadata Structure: Document slotMetadataMap structure and its frontend usage.
+-
+-Verification DoDs:
+-
+-[ ] Verify the index generation preserves the complete hierarchy from Sanity documents.
+-
+-[ ] Validate the VFS structure supports O(1) path-based lookups as designed.
+-
+-Scope Contract 7: CRUD Operations Research
+-Definition: Research and document CRUD operations for populating rootCatalogue documents at different nesting levels.
+-
+-Execution DoDs:
+-
+-[ ] Document Root Level CRUD: Define the exact operations for creating new rootCatalogue documents.
+-
+-[ ] Document Array Level CRUD: Define the operations for modifying array contents within rootCatalogue documents.
+-
+-[ ] Document N+1 Level CRUD: Define the operations for modifying nested array items at recursive levels.
+-
+-[ ] Document CRUD Validation Tests: Create tests to validate CRUD operations at each level.
+-
+-Verification DoDs:
+-
+-[ ] Verify root level operations create proper document structure with required fields.
+-
+-[ ] Validate array level operations maintain reference integrity and sort order.
+-
+-[ ] Validate n+1 level operations handle recursive nesting without breaking referential integrity.
+-
+-Scope Contract 8: Implementation Assembly and Synthesis
+-Definition: Consolidate all researched implementation patterns into a comprehensive practical guide.
+-
+-Execution DoDs:
+-
+-[ ] Create implementation-guide.md with sequential contract execution.
+-
+-[ ] Document complete data flow from JSON ÔåÆ Schema ÔåÆ Seeding ÔåÆ GROQ ÔåÆ VFS ÔåÆ Frontend.
+-
+-[ ] Include all exact syntax examples, test cases, and validation procedures.
+-
+-[ ] Strip theoretical content; retain only pragmatic implementation details.
+-
+-Verification DoDs:
+-
+-[ ] Read through generated guide to guarantee complete implementation coverage.
+-
+-[ ] Validate all code examples are copy-paste ready and tested.
+diff --git a/_projects/RESEARCH_CURRICULUM.todo b/_projects/RESEARCH_CURRICULUM.todo
+deleted file mode 100644
+index 51e68af1..00000000
+--- a/_projects/RESEARCH_CURRICULUM.todo
++++ /dev/null
+@@ -1,104 +0,0 @@
+-Sprint: Sanity v3 Curriculum Research (Root Category Model)
+-Scope Contract 1: catalogueRoot Research
+-Definition: Research and document the foundational catalogueRoot document type, establishing the mathematical reality of a top-level entity in Sanity v3.
+-
+-Execution DoDs:
+-
+-[ ] Document Concept: Define catalogueRoot as a standalone document type in Sanity Studio, acting as the primary entry point for a specific catalog tree (e.g., "Headphones").
+-
+-[ ] Document Syntax: Extract the exact TypeScript schema definition for a standard document type in Sanity v3.
+-
+-[ ] Document Syntax Link: Locate and record the exact URL to the official Sanity v3 documentation for "document" types.
+-
+-[ ] Document CRUD in CMS: Map the exact sequence of creating, reading, updating, and deleting a root document directly within the Sanity Studio UI.
+-
+-Verification DoDs:
+-
+-[ ] Verify the documented concept explicitly contrasts a root document against an object or array type.
+-
+-[ ] Validate the syntax matches Next 15 / React 18 integration patterns (e.g., defineType).
+-
+-Scope Contract 2: nesting array Research
+-Definition: Research and document the native Sanity array of objects, which serves as the primary mechanism for storing nested lists within a document.
+-
+-Execution DoDs:
+-
+-[ ] Document Concept: Define the role of an array field containing custom objects within a Sanity document, including how Sanity stores this internally.
+-
+-[ ] Document Syntax: Extract the exact TypeScript schema definition for an array field containing an object type.
+-
+-[ ] Document Syntax Link: Locate and record the exact URL to the official Sanity v3 documentation for "array" types.
+-
+-[ ] Document CRUD in CMS: Map the exact UI interactions for adding, reordering, editing, and removing items within an array field in Sanity Studio.
+-
+-Verification DoDs:
+-
+-[ ] Verify the syntax explicitly includes the of: [{ type: 'object' }] configuration.
+-
+-Scope Contract 3: Relationship between catalogueRoot and nesting array
+-Definition: Research and document the architectural relationship and data flow when a nesting array is embedded directly inside a catalogueRoot document.
+-
+-Execution DoDs:
+-
+-[ ] Document Concept: Define the parent-child relationship, explaining how the array belongs exclusively to the single root document (no external references needed).
+-
+-[ ] Document Syntax: Extract the combined TypeScript schema showing the array defined as a field within the catalogueRoot document schema.
+-
+-[ ] Document Syntax Link: Locate and record the exact URL to the official Sanity v3 documentation demonstrating nested fields within documents.
+-
+-[ ] Document CRUD in CMS: Map how modifying the array items counts as an update to the parent catalogueRoot document (publishing the whole document vs. individual items).
+-
+-Verification DoDs:
+-
+-[ ] Verify the conceptual breakdown explicitly addresses data fetching implications (e.g., fetching the root automatically fetches the nested array in GROQ).
+-
+-Scope Contract 4: nesting level inside nesting array
+-Definition: Research and document the implementation of a second layer of nesting (an array of objects inside an object that is already inside an array).
+-
+-Execution DoDs:
+-
+-[ ] Document Concept: Define the recursive data structure concept within Sanity and the limitations or warnings regarding deep nesting in NoSQL document databases.
+-
+-[ ] Document Syntax: Extract the TypeScript schema for an object that contains its own array field, which is then used as the type for the parent array.
+-
+-[ ] Document Syntax Link: Locate and record the exact URL to the official Sanity v3 documentation regarding deep nesting and object types.
+-
+-[ ] Document CRUD in CMS: Map the editor experience of opening an array item, and then opening a nested array item inside that modal/popover in Sanity Studio.
+-
+-Verification DoDs:
+-
+-[ ] Verify the CRUD documentation notes the UI UX limitations of nested modals in Sanity Studio.
+-
+-Scope Contract 5: n+1 nesting array inside nested array
+-Definition: Research and document infinite or deep recursive nesting structures (e.g., categories within categories indefinitely) within a single Sanity document.
+-
+-Execution DoDs:
+-
+-[ ] Document Concept: Define recursive schemas in Sanity v3 (a type referencing itself) and the maximum depth limits imposed by the platform.
+-
+-[ ] Document Syntax: Extract the TypeScript schema utilizing defineType and self-referencing to achieve n+1 nesting.
+-
+-[ ] Document Syntax Link: Locate and record the exact URL to the official Sanity v3 documentation for "recursive object types" or "trees".
+-
+-[ ] Document CRUD in CMS: Map the performance and usability degradation of deep recursive editing in the CMS, identifying the practical depth limit for a human editor.
+-
+-Verification DoDs:
+-
+-[ ] Verify the documentation clearly outlines the exact depth at which Sanity Studio UI breaks or becomes unmanageable for web developers and editors.
+-
+-Scope Contract 6: Curriculum Assembly and Synthesis
+-Definition: Consolidate the researched items into a professionally designed, sequential learning curriculum file for immediate practical application.
+-
+-Execution DoDs:
+-
+-[ ] Create curriculum-sanity-vfs.md.
+-
+-[ ] Format the output sequentially from Contract 1 to Contract 5.
+-
+-[ ] Ensure no comments exist within any provided code blocks.
+-
+-[ ] Strip out all theoretical fluff; retain only strict pragmatic math, direct syntax, and explicit Studio operational guides.
+-
+-Verification DoDs:
+-
+-[ ] Read through the generated curriculum to guarantee it follows the sequence of achieving the next goal (root -> array -> relationship -> deep nesting).
+\ No newline at end of file
+diff --git a/_projects/VFS_STUDIO_TREE.todo b/_projects/VFS_STUDIO_TREE.todo
+deleted file mode 100644
+index fd166bcd..00000000
+--- a/_projects/VFS_STUDIO_TREE.todo
++++ /dev/null
+@@ -1,123 +0,0 @@
+-# VFS_STUDIO_TREE.todo
+-# Sprint Execution File ÔÇö VFS Parent References & Studio Tree Hierarchy
+-# Agent: SWE 1.5 | Risk: Zero Regression on Frontend
+-# Objective: Invert the directory structure from `children` arrays to `parent` references to achieve O(1) adjacency scalability, and build a customized Sanity Structure Tree.
+-
+----
+-
+-## Global Directives
+-
+-- Final code output must contain ZERO comments.
+-- Every commit must follow the taxonomy: A (Forward progress), B (Critical bug fix), C (Refactor), D (Configuration), E (Polish).
+-- Difficulty uses Fibonacci T-shirt scale: 1, 2, 3, 5, 8, 13.
+-- No file may be deleted until its replacement is verified working.
+-
+----
+-
+-## Layer 1: Schema Inversion (Adjacency List)
+-
+-### Scope Contract
+-Refactor `catalogueItemType.ts` from a top-down `children` array model to a bottom-up `parent` reference model. This flattens the dependency graph in the Content Lake, guaranteeing infinite scaling, trivial GROQ sub-tree queries, and pure CRUD.
+-
+-### DoD
+-
+-- [ ] 1.1 ÔÇö In `sanity/schemaTypes/catalogueItemType.ts`: Remove the `children` array field entirely.
+-  - Difficulty: 1 - C(sanity/schemaTypes/catalogueItemType.ts): remove children array
+-
+-- [ ] 1.2 ÔÇö In `sanity/schemaTypes/catalogueItemType.ts`: Add a `parent` field of type `reference` pointing to `[{ type: "catalogueItem" }]`. Configure it as optional (roots will have no parent). Add a description explaining it forms the recursive tree graph.
+-  - Difficulty: 1 - A(sanity/schemaTypes/catalogueItemType.ts): add parent reference field
+-
+-### Verification ÔÇö Layer 1
+-
+-- [ ] V1.1 ÔÇö Run `npx sanity schema extract` (or equivalent) and confirm the `catalogueItem` schema contains `parent` and NO `children` property.
+-  - Difficulty: 1
+-
+----
+-
+-## Layer 2: Seed & Migration Updates
+-
+-### Scope Contract
+-Update the logic that writes catalogue items to Sanity to populate the `parent` reference instead of `children` arrays.
+-
+-### DoD
+-
+-- [ ] 2.1 ÔÇö In `scripts/migrate-catalogue-to-flat.mjs` (if it exists) or `scripts/seed-catalogue.mjs`: Modify the tree flattening logic. When recursively walking the `RAW_CATALOGUE`, pass the current node's `_id` down to its children as their `parentId`. When creating the child document object, add `parent: { _type: 'reference', _ref: parentId }` instead of building a `children` array on the parent.
+-  - Difficulty: 3 - C(scripts/seed-catalogue.mjs): assign parent pointers instead of children arrays
+-
+-- [ ] 2.2 ÔÇö Run `node scripts/seed-catalogue.mjs` (after clearing existing catalogueItems if necessary) to physically write the new relational data to the Content Lake.
+-  - Difficulty: 2 - D(database): execute parent-pointer data seed
+-
+-### Verification ÔÇö Layer 2
+-
+-- [ ] V2.1 ÔÇö Evaluate GROQ `*[_type == "catalogueItem" && defined(parent)]`. Output must yield all non-root nodes (should be 28 nodes, based on 3 roots out of 31 total).
+-  - Difficulty: 1
+-
+-- [ ] V2.2 ÔÇö Evaluate GROQ `*[_type == "catalogueItem" && !defined(parent)]`. Output must yield exactly 3 root nodes.
+-  - Difficulty: 1
+-
+----
+-
+-## Layer 3: Studio UI (The Missing Link)
+-
+-### Scope Contract
+-Write a custom Structure Builder (Desk Tool) configuration that instructs Sanity to query the flat documents, read their parent references, and draw a visual, clickable tree hierarchy for the editors.
+-
+-### DoD
+-
+-- [ ] 3.1 ÔÇö In `sanity.config.ts`, register an initial-value template for `catalogueItem` that accepts a `parentId` parameter and dynamically sets the `parent` reference. This guarantees editors can click "Add new" inside a nested sub-level and the node is automatically linked to the correct parent.
+-  - Difficulty: 3 - A(sanity.config.ts): register initial value template for nested creation
+-
+-- [ ] 3.2 ÔÇö In `sanity/structure.ts`: Implement a recursive Structure node algorithm.
+-  Logic Outline:
+-  1. Define a function `buildCatalogueTree(S, parentId = null)`
+-  2. The function generates an `S.documentTypeList("catalogueItem")`.
+-  3. If `!parentId`, the filter is `!defined(parent)`. If `parentId`, the filter is `parent._ref == $parentId`.
+-  4. Define the `.child((documentId) => ...)` resolver for the list to return a multi-pane `S.list()` containing:
+-     - "Edit Details": `S.document().documentId(documentId).schemaType("catalogueItem")`
+-     - "View Sub-Items": a recursive call to `buildCatalogueTree(S, documentId)`
+-  - Difficulty: 8 - A(sanity/structure.ts): implement recursive visual tree hierarchy
+-
+-- [ ] 3.3 ÔÇö In `sanity/structure.ts`: Replace the standard `S.documentTypeListItem("catalogueItem")` implementation with the root-level call to the new `buildCatalogueTree(S)` function.
+-  - Difficulty: 1 - C(sanity/structure.ts): wire up custom VFS tree to main structure
+-
+-### Verification ÔÇö Layer 3
+-
+-- [ ] V3.1 ÔÇö Open Sanity Studio. Click "Catalogue". Confirm you only see the 3 root items.
+-  - Difficulty: 1
+-- [ ] V3.2 ÔÇö Click a root item. Confirm you can navigate into "View Sub-Items" to see its children natively within the Desk Tool pane. Click "Edit Details" to confirm you can edit the folder name/metadata.
+-  - Difficulty: 1
+-
+----
+-
+-## Layer 4: Pre-Compute Script Adaptation
+-
+-### Scope Contract
+-Update `scripts/build-catalogue-index.mjs` to reconstruct the VFS navigation manifest using the new database standard. Read the `parent` pointers to stitch the tree back together in-memory. The output JSON (`catalogue-index.json`) must remain structurally identical to guarantee zero frontend breakage.
+-
+-### DoD
+-
+-- [ ] 4.1 ÔÇö In `scripts/build-catalogue-index.mjs`: Update the GROQ query to fetch the parent reference `parent._ref as parentId` instead of `children`.
+-  - Difficulty: 1 - C(scripts/build-catalogue-index.mjs): update GROQ query for parent refs
+-
+-- [ ] 4.2 ÔÇö In `scripts/build-catalogue-index.mjs`: Update the in-memory tree reconstruction algorithm. Iterate `allItems`, and if an item has a `parentId`, append it to `itemById[doc.parentId].children`. Filter out any node with a `parentId` to isolate your exact root nodes. The remainder of the `traverse` mapping logic stays 100% untouched.
+-  - Difficulty: 5 - C(scripts/build-catalogue-index.mjs): rebuild tree using adjacency list inversion
+-
+-- [ ] 4.3 ÔÇö Run `node scripts/build-catalogue-index.mjs`.
+-  - Difficulty: 1 - D(scripts): rebuild production manifest
+-
+-### Verification ÔÇö Layer 4
+-
+-- [ ] V4.1 ÔÇö Diff the generated `data/catalogue-index.json` linearly against `catalogue-index.pre-flatten.json`. The newly built manifest must match the old structure flawlessly (identical slug maps, identical tree topology).
+-  - Difficulty: 2
+-
+----
+-
+-## Summary
+-
+-| Layer | Scope | Items | Verifications | Total Difficulty |
+-|---|---|---|---|---|
+-| Layer 1: Schema Inversion | Replace `children` with `parent` ref | 2 | 1 | 2 |
+-| Layer 2: Seed & Migration Updates | Update seed logic to write `parent` refs | 2 | 2 | 5 |
+-| Layer 3: Studio UI (The Missing Link) | Recursive Desk UI with intuitive editing & structured adds | 3 | 2 | 12 |
+-| Layer 4: Pre-Compute Script Adaptation | Update index builder, output invariant preserved | 3 | 1 | 7 |
+-| **Total** | | **10** | **6** | **26** |
+diff --git a/_projects/VFS_STUDIO_TREE_FILTER_HOTFIX.todo b/_projects/VFS_STUDIO_TREE_FILTER_HOTFIX.todo
+deleted file mode 100644
+index 086a54d0..00000000
+--- a/_projects/VFS_STUDIO_TREE_FILTER_HOTFIX.todo
++++ /dev/null
+@@ -1,40 +0,0 @@
+-# VFS_STUDIO_TREE_FILTER_HOTFIX.todo
+-# Sprint Execution File ÔÇö Sanity Studio Scope Filter Bug
+-# Agent: SWE 1.5 | Risk: Zero Regression
+-# Objective: Resolve the GROQ filter leak in the Studio Desk Tool that is indiscriminately pulling in all schema types and crashing the UI's sorting engine.
+-
+----
+-
+-## Global Directives
+-
+-- Final code output must contain ZERO comments.
+-- No file may be deleted.
+-- Follow B (Critical bug fix) taxonomy.
+-
+----
+-
+-## Layer 1: Missing Schema Constraint (Bug Fix)
+-
+-### Scope Contract
+-Fix the `Could not fetch list items` crash related to the nonexistent `sortOrder` field. In Sanity Structure Builder, calling `.filter()` completely overwrites the default `_type == "..."` query. Therefore, the expressions `!defined(parent)` and `parent._ref == $parentId` were globally querying ALL documents (including the `hero` schema) instead of being constrained exclusively to `catalogueItem`.
+-
+-### DoD
+-
+-- [ ] 1.1 ÔÇö In `sanity/structure.ts`: Update the `filter` variable inside `buildCatalogueTree` (around lines 5-7). Prepend `_type == "catalogueItem" && ` to both conditional filter strings.
+-  Like this:
+-  `const filter = parentId ? '_type == "catalogueItem" && parent._ref == $parentId' : '_type == "catalogueItem" && !defined(parent)';`
+-  - Difficulty: 1 - B(sanity/structure.ts): enforce schema boundary on custom VFS filter
+-
+-### Verification ÔÇö Layer 1
+-
+-- [ ] V1.1 ÔÇö Open Sanity Studio at `http://localhost:3001/studio`. Click the "Catalogue" folder in the sidebar. Confirm it only shows `Headphones`, `Audio Electronics`, and `Accessories` root nodes, and does not crash with ordering config errors.
+-  - Difficulty: 1
+-
+----
+-
+-## Summary
+-
+-| Layer | Scope | Items | Verifications | Total Difficulty |
+-|---|---|---|---|---|
+-| Layer 1 | Fix missing `_type` constraint in GROQ query | 1 | 1 | 1 |
+-| **Total** | | **1** | **1** | **1** |
+diff --git a/_projects/VFS_STUDIO_TREE_FINAL_HOTFIX.todo b/_projects/VFS_STUDIO_TREE_FINAL_HOTFIX.todo
+deleted file mode 100644
+index e4b719df..00000000
+--- a/_projects/VFS_STUDIO_TREE_FINAL_HOTFIX.todo
++++ /dev/null
+@@ -1,55 +0,0 @@
+-# VFS_STUDIO_TREE_FINAL_HOTFIX.todo
+-# Sprint Execution File ÔÇö Sanity Studio Component Hardening
+-# Agent: SWE 1.5 | Risk: Zero Regression
+-
+----
+-
+-## Global Directives
+-- Follow B (Critical bug fix) taxonomy.
+-- No files may be deleted.
+-
+----
+-
+-## Layer 1: Structure Component Hardening & Sidebar Polish
+-
+-### Scope Contract
+-Sanity Studio is defaulting its internal type evaluation to the first overall schema type (`hero`) when processing heavily customized `S.documentTypeList` configurations. Because it loses the original Type Context, it crashes when validating the `sortOrder` ordering array against the `hero` schema. We must harden the component by switching to an explicitly configured `S.documentList()`. We will also fix the duplicate "Homepage" sidebar item caused by a schema ID typo.
+-
+-### DoD
+-
+-- [ ] 1.1 ÔÇö In `sanity/structure.ts`: Refactor `buildCatalogueTree(S, parentId)` to use a pure `S.documentList()` explicitly linked to the catalogue schema. 
+-  Replace `return S.documentTypeList("catalogueItem")` and its immediate chained properties with this exact robust structure:
+-  ```typescript
+-  return S.documentList()
+-    .id(parentId ? `catalogue-node-${parentId}` : "catalogue-root")
+-    .title(parentId ? "Sub-Items" : "Catalogue")
+-    .schemaType("catalogueItem")
+-    .filter(filter)
+-    .params(parentId ? { parentId } : {})
+-    .defaultOrdering([{ field: "sortOrder", direction: "asc" }])
+-    .initialValueTemplates(
+-      parentId ? [S.initialValueTemplateItem("catalogueItem-with-parent", { parentId })] : []
+-    )
+-    .child((documentId: string) =>
+-  ```
+-  *(Leave the `.child(...)` logic untouched aside from connecting it to this modified chain)*
+-  - Difficulty: 2 - B(sanity/structure.ts): replace documentTypeList with explicitly architected documentList
+-
+-- [ ] 1.2 ÔÇö In `sanity/structure.ts`: Scroll to the bottom export. Update the global structure filter array to correctly hide the system-generated Homepage list.
+-  Change: `!["catalogueItem", "homepage"].includes(item.getId()!)` 
+-  To: `!["catalogueItem", "homepageData"].includes(item.getId()!)`
+-  - Difficulty: 1 - E(sanity/structure.ts): filter out duplicate homepage list item
+-
+-### Verification ÔÇö Layer 1
+-
+-- [ ] V1.1 ÔÇö Open Sanity Studio at `http://localhost:3001/studio`. Verify "Homepage" strictly appears ONCE in the sidebar. Click the "Catalogue" folder. It must securely render the folder nodes without any schema validation or ordering parameter crashes.
+-  - Difficulty: 1
+-
+----
+-
+-## Summary
+-
+-| Layer | Scope | Items | Verifications | Total Difficulty |
+-|---|---|---|---|---|
+-| Layer 1 | Rigorous Schema Context Locking & Sidebar Polish | 2 | 1 | 3 |
+-| **Total** | | **2** | **1** | **3** |
+diff --git a/_projects/VFS_STUDIO_TREE_HOTFIX.todo b/_projects/VFS_STUDIO_TREE_HOTFIX.todo
+deleted file mode 100644
+index dffff970..00000000
+--- a/_projects/VFS_STUDIO_TREE_HOTFIX.todo
++++ /dev/null
+@@ -1,58 +0,0 @@
+-# VFS_STUDIO_TREE_HOTFIX.todo
+-# Sprint Execution File ÔÇö Sanity Studio UI Fixes
+-# Agent: SWE 1.5 | Risk: Zero Regression
+-# Objective: Resolve the "got object" StructureBuilder error, and implement true context-aware document creation via Initial Value Templates mapping.
+-
+----
+-
+-## Global Directives
+-
+-- Final code output must contain ZERO comments.
+-- No file may be deleted.
+-- Follow D (Configuration) and B (Critical bug fix) taxonomy.
+-
+----
+-
+-## Layer 1: Structure Array Mapping (Bug Fix)
+-
+-### Scope Contract
+-Fix the critical Sanity UI crash `List items must be of type "listItem", got "object"`. The root `items()` array in Sanity's `.list()` expects `ListItemBuilder` elements, but the previous agent passed a `DocumentListBuilder` direct reference.
+-
+-### DoD
+-
+-- [ ] 1.1 ÔÇö In `sanity/structure.ts`: In the main `structure` export list (around line 38), change `buildCatalogueTree(S),` to `S.listItem().title("Catalogue").child(buildCatalogueTree(S)),`. Wrap the builder dynamically.
+-  - Difficulty: 1 - B(sanity/structure.ts): wrap root list item to resolve crash
+-
+-### Verification ÔÇö Layer 1
+-
+-- [ ] V1.1 ÔÇö Open Sanity Studio at `http://localhost:3000/studio`. Confirm the Studio loads properly without the red error screen, and the "Catalogue" folder is visible.
+-  - Difficulty: 1
+-
+----
+-
+-## Layer 2: Context-Aware Document Creation
+-
+-### Scope Contract
+-The previous sprint registered the `catalogueItem-with-parent` initial value template in `sanity.config.ts`, but failed to actually bind it to the dynamic structure list. We must tell Sanity to use this specific template (and pass it the `parentId`) when an editor clicks the "+" button while viewing a specific nested folder.
+-
+-### DoD
+-
+-- [ ] 2.1 ÔÇö In `sanity/structure.ts`: Update the `buildCatalogueTree` function. Chain the `.initialValueTemplates` method onto `S.documentTypeList("catalogueItem")` dynamically based on whether `parentId` is present.
+-  If a `parentId` is defined, call `.initialValueTemplates([ S.initialValueTemplateItem("catalogueItem-with-parent", { parentId }) ])`.
+-  If no `parentId` is defined (root level), do not chain `.initialValueTemplates` (letting Sanity use the default root document creation).
+-  - Difficulty: 3 - A(sanity/structure.ts): bind templates to contextual tree lists
+-
+-### Verification ÔÇö Layer 2
+-
+-- [ ] V2.1 ÔÇö Open Studio > Catalogue. Click a root item like "Headphones" > "View Sub-Items". Click the pencil/plus icon at the top to create a new sub-item. Ensure the right-side creation pane has the "Parent Item" reference field PRE-FILLED with "Headphones" automatically.
+-  - Difficulty: 2
+-
+----
+-
+-## Summary
+-
+-| Layer | Scope | Items | Verifications | Total Difficulty |
+-|---|---|---|---|---|
+-| Layer 1 | Fix structure array mapping bug | 1 | 1 | 1 |
+-| Layer 2 | Bind Context-Aware templates | 1 | 1 | 3 |
+-| **Total** | | **2** | **2** | **4** |
+diff --git a/app/(store)/layout.tsx b/app/(store)/layout.tsx
+index 72a46588..502eb764 100644
+--- a/app/(store)/layout.tsx
++++ b/app/(store)/layout.tsx
+@@ -25,7 +25,7 @@ export default async function RootLayout({
+ }>) {
+   // Fetch catalogue data on the server
+   const catalogueDataRaw = await getSanityCatalogueData();
+-
++  console.log(catalogueDataRaw, 'raw')
+   return (
+     <html lang="en" className={cn(montserrat.variable, "antialiased")}>
+       <body
+diff --git a/app/components/layout/catalogue/catalog-migration/legacy_catalog.json b/app/components/layout/catalogue/catalog-migration/legacy_catalog.json
+deleted file mode 100644
+index e1759ab0..00000000
+--- a/app/components/layout/catalogue/catalog-migration/legacy_catalog.json
++++ /dev/null
+@@ -1,766 +0,0 @@
+-{
+-  "_createdAt": "2026-01-02T13:08:42Z",
+-  "_id": "catalogue",
+-  "_rev": "muYbu6QSiXMnd0SVG7sWzn",
+-  "_system": {
+-    "base": {
+-      "id": "catalogue",
+-      "rev": "RMp2rLRSPHhJBIb1iNygug"
+-    }
+-  },
+-  "_type": "catalogue",
+-  "_updatedAt": "2026-01-06T05:47:30Z",
+-  "catalogue": [
+-    {
+-      "_key": "zemHaTBY7QMZEyx6WgMYi",
+-      "_type": "catalogueItem",
+-      "children": [
+-        {
+-          "_key": "gJvupOFvek9IA28wG1pJw",
+-          "_type": "catalogueItem",
+-          "children": [
+-            {
+-              "_key": "463Jo7gWrpfJ7BMSgdMQF",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "wired"
+-              },
+-              "title": "Wired",
+-              "type": "link"
+-            },
+-            {
+-              "_key": "DyVY7prFN3BC14f8eO2SE",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "wireless"
+-              },
+-              "title": "Wireless",
+-              "type": "link"
+-            },
+-            {
+-              "_key": "w80_8SIwE560_gk-Va6Jk",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "noise-cancelling"
+-              },
+-              "title": "Noise cancelling",
+-              "type": "link"
+-            },
+-            {
+-              "_key": "k3_InLGWRyJsBJfwNrnyB",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "earbuds"
+-              },
+-              "title": "Earbuds",
+-              "type": "link"
+-            }
+-          ],
+-          "title": "By category",
+-          "type": "header"
+-        },
+-        {
+-          "_key": "R9bVoOi1wleAgXnCXER9q",
+-          "_type": "catalogueItem",
+-          "children": [
+-            {
+-              "_key": "wFwdlX0H3-t0zyFmSwV6z",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "over-ear"
+-              },
+-              "title": "Over ear",
+-              "type": "link"
+-            },
+-            {
+-              "_key": "aqXYUeh6N6amoDuFDT0sG",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "in-ear"
+-              },
+-              "title": "In ear",
+-              "type": "link"
+-            }
+-          ],
+-          "title": "By fit",
+-          "type": "header"
+-        },
+-        {
+-          "_key": "cwjfSx5AHHNGTf46j6BXj",
+-          "_type": "catalogueItem",
+-          "children": [
+-            {
+-              "_key": "5M88xGQXUCgqbwR9FvLag",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "studio-and-recording"
+-              },
+-              "title": "Studio and recording",
+-              "type": "link"
+-            },
+-            {
+-              "_key": "n6pRz-Gxgikq6r3c2b3Sy",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "gaming"
+-              },
+-              "title": "Gaming",
+-              "type": "link"
+-            },
+-            {
+-              "_key": "n6ZmERWp5SWJ7iNdblPDC",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "travel"
+-              },
+-              "title": "Travel",
+-              "type": "link"
+-            }
+-          ],
+-          "title": "By use",
+-          "type": "header"
+-        }
+-      ],
+-      "icon": "headphones",
+-      "slug": {
+-        "_type": "slug",
+-        "current": "headphones"
+-      },
+-      "title": "Headphones & Personal Audio ",
+-      "type": "link"
+-    },
+-    {
+-      "_key": "X0ijjgLQc5pnVGZ5uB9Md",
+-      "_type": "catalogueItem",
+-      "children": [
+-        {
+-          "_key": "9eQyVlSBWINktO5TCFf9S",
+-          "_type": "catalogueItem",
+-          "children": [
+-            {
+-              "_key": "JBOgfU8QvaIUmzLXAqo9S",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "floor-standing-speakers"
+-              },
+-              "title": "Floor standing speakers",
+-              "type": "link"
+-            },
+-            {
+-              "_key": "zcq9tTXO8iK1_IO__4dRC",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "subwoofers"
+-              },
+-              "title": "Subwoofers",
+-              "type": "link"
+-            },
+-            {
+-              "_key": "vecmCGGu5Zp5oPVl68oqW",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "soundbars"
+-              },
+-              "title": "Soundbars",
+-              "type": "link"
+-            }
+-          ],
+-          "title": "Home theater",
+-          "type": "header"
+-        },
+-        {
+-          "_key": "xgyfkJAh90oG6JJVFlURP",
+-          "_type": "catalogueItem",
+-          "children": [
+-            {
+-              "_key": "T7XcVYmzu_WugT6Uo1Ijd",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "bookshelf-speakers"
+-              },
+-              "title": "Bookshelf speakers",
+-              "type": "link"
+-            },
+-            {
+-              "_key": "gTbPm4lOvFnLuQNTVpZrM",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "powered-speakers"
+-              },
+-              "title": "Powered speakers",
+-              "type": "link"
+-            }
+-          ],
+-          "title": "Hi-Fi Audio",
+-          "type": "header"
+-        },
+-        {
+-          "_key": "28_Sx1s6s0xgzv1t4l4k_",
+-          "_type": "catalogueItem",
+-          "children": [
+-            {
+-              "_key": "KKdarDg4DDxoWVvFKSK8f",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "bluetooth-speakers"
+-              },
+-              "title": "Bluetooth speakers",
+-              "type": "link"
+-            },
+-            {
+-              "_key": "ON20rAci84-4-HOAzszHz",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "outdoor-speakers"
+-              },
+-              "title": "Outdoor speakers",
+-              "type": "link"
+-            }
+-          ],
+-          "title": "Portable & Outdoor",
+-          "type": "header"
+-        }
+-      ],
+-      "icon": "speaker",
+-      "slug": {
+-        "_type": "slug",
+-        "current": "speakers"
+-      },
+-      "title": "Speakers",
+-      "type": "link"
+-    },
+-    {
+-      "_key": "JfWZqAwqcOLNWBMabMc5y",
+-      "_type": "catalogueItem",
+-      "children": [
+-        {
+-          "_key": "9BK0Nu0WtqIcP7_xdU_5K",
+-          "_type": "catalogueItem",
+-          "children": [
+-            {
+-              "_key": "JlpQgWMfdiEKhky3yullW",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "digital-audio-players"
+-              },
+-              "title": "Digital Audio Players",
+-              "type": "link"
+-            },
+-            {
+-              "_key": "l7xrVCUnlfxNY_xtBa4TD",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "bluetooth-receivers-and-transmitters"
+-              },
+-              "title": "Bluetooth receivers and transmitters",
+-              "type": "link"
+-            }
+-          ],
+-          "title": "Audio Players & Devices",
+-          "type": "header"
+-        },
+-        {
+-          "_key": "xJSAZj4W0ASAsSLF23jjL",
+-          "_type": "catalogueItem",
+-          "children": [
+-            {
+-              "_key": "ssDmG7x4c8HpNMZQudHPm",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "portable-dacs-and-amps"
+-              },
+-              "title": "Portable DACs and Amps",
+-              "type": "link"
+-            },
+-            {
+-              "_key": "8pEXPFELH6GtFdUPUYrgq",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "headphone-amplifiers"
+-              },
+-              "title": "Headphone amplifiers",
+-              "type": "link"
+-            }
+-          ],
+-          "title": "Amplification",
+-          "type": "header"
+-        },
+-        {
+-          "_key": "IgQ4lTv5Gn8QHTOTS3Es1",
+-          "_type": "catalogueItem",
+-          "children": [
+-            {
+-              "_key": "-JKoFdmYIGxWuS3C4e9jE",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "phone-and-tablet-accessories"
+-              },
+-              "title": "Phone and Tablet Accessories",
+-              "type": "link"
+-            },
+-            {
+-              "_key": "rfUccjFwuago3vW-xNI7j",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "carrying-cases-and-protection"
+-              },
+-              "title": "Carrying Cases and Protection",
+-              "type": "link"
+-            },
+-            {
+-              "_key": "a7i2k7KL2cVRA2ppP01yk",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "replacement-parts"
+-              },
+-              "title": "Replacement Parts",
+-              "type": "link"
+-            }
+-          ],
+-          "title": "Accessories & Parts",
+-          "type": "header"
+-        }
+-      ],
+-      "icon": "earbuds",
+-      "slug": {
+-        "_type": "slug",
+-        "current": "personal-audio"
+-      },
+-      "title": "Personal Audio",
+-      "type": "link"
+-    },
+-    {
+-      "_key": "jiS80IhRzgh41eMR_AWo6",
+-      "_type": "catalogueItem",
+-      "children": [
+-        {
+-          "_key": "Jdjqtf7kej4P8y10QaByV",
+-          "_type": "catalogueItem",
+-          "children": [
+-            {
+-              "_key": "6vL2--Pz44vl1wi8km39j",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "amplifiers"
+-              },
+-              "title": "Amplifiers",
+-              "type": "link"
+-            },
+-            {
+-              "_key": "vgMYaYb1OXxgW-kzAGGAf",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "receivers"
+-              },
+-              "title": "Receivers",
+-              "type": "link"
+-            },
+-            {
+-              "_key": "Sf3rqGgz8iflaVgeOY-v5",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "preamps"
+-              },
+-              "title": "Preamps",
+-              "type": "link"
+-            }
+-          ],
+-          "title": "Core components",
+-          "type": "header"
+-        },
+-        {
+-          "_key": "34MF_aAKZnOmEen0ZQOtG",
+-          "_type": "catalogueItem",
+-          "children": [
+-            {
+-              "_key": "w7ncMqdGwihv4CtDsUMR6",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "turntables"
+-              },
+-              "title": "Turntables",
+-              "type": "link"
+-            },
+-            {
+-              "_key": "OagjRCkHyEyJ65PvgzDTg",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "cd-players"
+-              },
+-              "title": "CD players",
+-              "type": "link"
+-            }
+-          ],
+-          "title": "Source devices",
+-          "type": "header"
+-        },
+-        {
+-          "_key": "xPjQHGOI9TRXJN9QzTaCb",
+-          "_type": "catalogueItem",
+-          "children": [
+-            {
+-              "_key": "OuMWzz2HwOCPO-IjkjKYQ",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "dacs-digital-to-analog-converters"
+-              },
+-              "title": "DACs (Digital-to-Analog Converters)",
+-              "type": "link"
+-            }
+-          ],
+-          "title": "Signal processing",
+-          "type": "header"
+-        }
+-      ],
+-      "icon": "radio",
+-      "slug": {
+-        "_type": "slug",
+-        "current": "home-audio"
+-      },
+-      "title": "Home Audio",
+-      "type": "link"
+-    },
+-    {
+-      "_key": "bhGPYfXKyPyZ2sixtvS7X",
+-      "_type": "catalogueItem",
+-      "children": [
+-        {
+-          "_key": "YSOR4-ZcEmRtJUEZGgrgl",
+-          "_type": "catalogueItem",
+-          "children": [
+-            {
+-              "_key": "Nx5kNxItLj8Y_E1UhWS16",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "microphones"
+-              },
+-              "title": "Microphones",
+-              "type": "link"
+-            },
+-            {
+-              "_key": "KMq2n89cOr_zwKh_XK4PH",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "studio-monitors"
+-              },
+-              "title": "Studio monitors",
+-              "type": "link"
+-            },
+-            {
+-              "_key": "sfZENWHgeIfwHuHhg5b5p",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "audio-interfaces"
+-              },
+-              "title": "Audio interfaces",
+-              "type": "link"
+-            }
+-          ],
+-          "title": "Recording Essentials",
+-          "type": "header"
+-        },
+-        {
+-          "_key": "igkH1-53EAidFCuwHMC9k",
+-          "_type": "catalogueItem",
+-          "children": [
+-            {
+-              "_key": "qsmtyLw79F0YhgrsZ-Aa0",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "studio-processors"
+-              },
+-              "title": "Studio Processors",
+-              "type": "link"
+-            },
+-            {
+-              "_key": "EGTqCFTBfCF6ZY0kCo2Nr",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "recording-accessories"
+-              },
+-              "title": "Recording accessories",
+-              "type": "link"
+-            }
+-          ],
+-          "title": "Processing & Accessories",
+-          "type": "header"
+-        }
+-      ],
+-      "icon": "mic2",
+-      "slug": {
+-        "_type": "slug",
+-        "current": "studio-equipment"
+-      },
+-      "title": "Studio Equipment",
+-      "type": "link"
+-    },
+-    {
+-      "_key": "_EDhByj4HR6NH7X1DHHfr",
+-      "_type": "catalogueItem",
+-      "children": [
+-        {
+-          "_key": "Qt7SYKy11ImZaDXOYObrP",
+-          "_type": "catalogueItem",
+-          "children": [
+-            {
+-              "_key": "jx7CfwhG3gRLJEEjsDXBq",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "audio-cables"
+-              },
+-              "title": "Audio cables",
+-              "type": "link"
+-            },
+-            {
+-              "_key": "214HEFSpC1XMGElkA_BnD",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "power-cables"
+-              },
+-              "title": "Power cables",
+-              "type": "link"
+-            },
+-            {
+-              "_key": "oE91U2T2GcAc3odX1XF8P",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "hdmi-cables"
+-              },
+-              "title": "HDMI Cables",
+-              "type": "link"
+-            },
+-            {
+-              "_key": "EnTFHZnrkbXRa5iRrrZue",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "rca-cables"
+-              },
+-              "title": "RCA Cables",
+-              "type": "link"
+-            },
+-            {
+-              "_key": "qouXLSWZeaxDqiXeQjpnQ",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "usb-cables"
+-              },
+-              "title": "USB Cables",
+-              "type": "link"
+-            },
+-            {
+-              "_key": "9IxBjjQK5Z3Scpnjo2Aul",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "headphone-cables"
+-              },
+-              "title": "Headphone Cables",
+-              "type": "link"
+-            },
+-            {
+-              "_key": "e5anI0ENiI9CtV65k4KkF",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "ethernet-cables"
+-              },
+-              "title": "Ethernet Cables",
+-              "type": "link"
+-            }
+-          ],
+-          "title": "Cables & Wiring",
+-          "type": "header"
+-        },
+-        {
+-          "_key": "MMsC8u8jiHf-6TEugX4dY",
+-          "_type": "catalogueItem",
+-          "children": [
+-            {
+-              "_key": "QiMcFQ8gxYJwNiQ3zcz0j",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "wall-mounts"
+-              },
+-              "title": "Wall mounts",
+-              "type": "link"
+-            },
+-            {
+-              "_key": "ZKUf_ieIR8lIJML2kXXTc",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "speaker-stands"
+-              },
+-              "title": "Speaker stands",
+-              "type": "link"
+-            }
+-          ],
+-          "title": "Mounting & Support",
+-          "type": "header"
+-        },
+-        {
+-          "_key": "wp8-KGe6cOwSbmV0KnssN",
+-          "_type": "catalogueItem",
+-          "children": [
+-            {
+-              "_key": "fHY3fZknupEJB8pr1Lexb",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "phono-cartridges"
+-              },
+-              "title": "Phono Cartridges",
+-              "type": "link"
+-            },
+-            {
+-              "_key": "D_aJ18q3VATKnzDcX1bCY",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "speaker-and-subwoofer-accessories"
+-              },
+-              "title": "Speaker and Subwoofer accessories",
+-              "type": "link"
+-            },
+-            {
+-              "_key": "NL0CuO0xRw3jwSkNMrwrd",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "microphone-accessories"
+-              },
+-              "title": "Microphone Accessories",
+-              "type": "link"
+-            }
+-          ],
+-          "title": "Audio Equipment Accessories",
+-          "type": "header"
+-        },
+-        {
+-          "_key": "jRqROPjh9R42eZ8GGN8pb",
+-          "_type": "catalogueItem",
+-          "children": [
+-            {
+-              "_key": "6s51wjZC4cv17wMH9_ofj",
+-              "_type": "catalogueItem",
+-              "children": [],
+-              "slug": {
+-                "_type": "slug",
+-                "current": "power-management"
+-              },
+-              "title": "Power Management",
+-              "type": "link"
+-            }
+-          ],
+-          "title": "Power Management",
+-          "type": "header"
+-        }
+-      ],
+-      "icon": "cable",
+-      "slug": {
+-        "_type": "slug",
+-        "current": "accessories"
+-      },
+-      "title": "Accessories",
+-      "type": "link"
+-    },
+-    {
+-      "_key": "sXIqLWIxMpCT5E2VxPkad",
+-      "_type": "catalogueItem",
+-      "children": [],
+-      "icon": null,
+-      "slug": {
+-        "_type": "slug",
+-        "current": "on-sale"
+-      },
+-      "title": "On Sale",
+-      "type": "link"
+-    }
+-  ]
+-}
+\ No newline at end of file
+diff --git a/app/components/layout/catalogue/getCatalogueData.ts b/app/components/layout/catalogue/getCatalogueData.ts
+index 13ca5ea9..e28cb3bd 100644
+--- a/app/components/layout/catalogue/getCatalogueData.ts
++++ b/app/components/layout/catalogue/getCatalogueData.ts
+@@ -47,6 +47,7 @@ function buildLegacyCatalogueItem(
+ 
+   // Return exact legacy structure
+   const legacyItem: any = {
++    id: item.slug?.current || item.title?.toLowerCase().replace(/\s+/g, '-') || item._id,
+     title: item.title,
+     type: item.type,
+   };
+@@ -80,7 +81,9 @@ export async function getSanityCatalogueData(): Promise<{ catalogue: any[] }> {
+       // Note: You may need to configure revalidate tags in your Next.js setup
+     });
+ 
+-    return transformSanityToLegacyJson(sanityItems);
++    const result = transformSanityToLegacyJson(sanityItems);
++    console.log('CATALOGUE JSON WITH IDs:', JSON.stringify(result, null, 2));
++    return result;
+   } catch (error) {
+     console.error('Error fetching catalogue data from Sanity:', error);
+ 
