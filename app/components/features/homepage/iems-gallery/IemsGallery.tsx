@@ -2,12 +2,14 @@ import React from "react";
 import Grid from "@/app/components/layout/grid/Grid";
 import IemsGalleryHeader from "./IemsGalleryHeader";
 import IemCard from "./IemCard";
-import { getIemProducts } from "./getIemProducts";
+import { IemProduct } from "./getIemProducts";
 
-export default async function IemsGallery() {
-  const products = await getIemProducts();
+interface IemsGalleryProps {
+  iemsData: IemProduct[];
+}
 
-  if (!products.length) return null;
+export default async function IemsGallery({ iemsData }: IemsGalleryProps) {
+  if (!iemsData.length) return null;
 
   return (
     <article className="w-full relative overflow-hidden bg-brand-900">
@@ -21,7 +23,7 @@ export default async function IemsGallery() {
           <div className="flex flex-col gap-4">
             <IemsGalleryHeader />
             <Grid cols={4}>
-              {products.map((iem, idx) => (
+              {iemsData.map((iem, idx) => (
                 <IemCard key={iem._id} product={iem as any} idx={idx} />
               ))}
             </Grid>

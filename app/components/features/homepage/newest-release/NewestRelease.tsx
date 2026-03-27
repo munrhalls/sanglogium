@@ -5,14 +5,16 @@ import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
 import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";
 import { CarouselSlide } from "@/app/components/layout/carousel/CarouselSlide";
 import { CarouselPrevious, CarouselNext, CarouselDots } from "@/app/components/layout/carousel/CarouselControls";
-import { getNewestRelease } from "./getNewestRelease";
+import { Spotlight1Data } from "../product-spotlight-1/getSpotlight1Data";
 
-export default async function NewestRelease() {
-  const data = await getNewestRelease();
+interface NewestReleaseProps {
+  newestReleaseData: Spotlight1Data | null;
+}
 
-  if (!data || !data.productRef) return null;
+export default async function NewestRelease({ newestReleaseData }: NewestReleaseProps) {
+  if (!newestReleaseData || !newestReleaseData.productRef) return null;
 
-  const { productRef: product, promoTitle, promoSubtitle, promoText } = data;
+  const { productRef: product, promoTitle, promoSubtitle, promoText } = newestReleaseData;
 
   return (
     <article className="w-full relative overflow-hidden border-secondary-800 bg-brand-800">

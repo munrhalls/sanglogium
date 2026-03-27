@@ -1,17 +1,18 @@
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/client";
-import { getHeroData } from "@/sanity/lib/hero/getHeroData";
 import { cn } from "@/lib/utils/tailwind";
 import { HeroData, SanityImage } from "./types";
 
-export default async function Hero() {
-  const data = await getHeroData() as HeroData | null;
+interface HeroProps {
+  heroData: HeroData | null;
+}
 
-  if (!data?.backgroundImage || !data?.headline) {
+export default async function Hero({ heroData }: HeroProps) {
+  if (!heroData?.backgroundImage || !heroData?.headline) {
     return null;
   }
 
-  const mobileBackgroundImage = data.mobileBackgroundImage || data.backgroundImage;
+  const mobileBackgroundImage = heroData.mobileBackgroundImage || heroData.backgroundImage;
 
   const getPosition = (image: SanityImage) => {
     const x = image.hotspot?.x ? image.hotspot.x * 100 : 50;
@@ -30,11 +31,11 @@ export default async function Hero() {
         <picture>
           <source
             media="(min-width: 768px)"
-            srcSet={urlFor(data.backgroundImage).width(1920).auto('format').quality(85).url()}
+            srcSet={urlFor(heroData.backgroundImage).width(1920).auto('format').quality(85).url()}
           />
           <Image
             src={urlFor(mobileBackgroundImage).width(828).auto('format').quality(85).url()}
-            alt={data.backgroundImage.alt || "Hero Image"}
+            alt={heroData.backgroundImage.alt || "Hero Image"}
             fill
             priority
             className="object-cover rounded-none"
@@ -74,14 +75,14 @@ export default async function Hero() {
                 "text-cap type-hero-headline uppercase"
               )}
             >
-              {data.headline}
+              {heroData.headline}
             </h1>
             <p
               className={cn(
                 "text-cap type-hero-sub",
               )}
             >
-              {data.subheadline}
+              {heroData.subheadline}
             </p>
           </div>
 
@@ -92,7 +93,7 @@ export default async function Hero() {
               "mt-2"
             )}
           >
-            {data.ctaText || "Explore"}
+            {heroData.ctaText || "Explore"}
           </button>
         </div>
       </div>

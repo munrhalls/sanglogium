@@ -6,8 +6,11 @@ import { CarouselSlide } from '@/app/components/layout/carousel/CarouselSlide';
 import { CarouselNext, CarouselPrevious, CarouselDots } from '@/app/components/layout/carousel/CarouselControls';
 import DacsHeader from "./DacsHeader";
 import DacCard from "./DacCard";
+import { IemProduct } from "../iems-gallery/getIemProducts";
 
-import { getDacProducts } from "./getDacProducts";
+interface DacsProps {
+  dacsData: IemProduct[];
+}
 
 const dacsBreakpointMap = {
   xl: 2,
@@ -20,10 +23,8 @@ const dacsBreakpointMap = {
   mobilePortrait: 1
 };
 
-export default async function DACs() {
-  const products = await getDacProducts();
-
-  if (!products.length) return null;
+export default async function DACs({ dacsData }: DacsProps) {
+  if (!dacsData.length) return null;
 
   return (
     <article className="w-full relative overflow-hidden border-secondary-800 bg-brand-900">
@@ -36,7 +37,7 @@ export default async function DACs() {
         <div className="mx-auto max-w-content">
           <div className="relative overflow-hidden border-secondary-800">
       <Carousel
-        itemsCount={products.length}
+        itemsCount={dacsData.length}
         breakpointMap={dacsBreakpointMap}
       >
         <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4">
@@ -45,7 +46,7 @@ export default async function DACs() {
           </div>
 
           <CarouselTrack className="w-full relative mx-0 items-stretch md:-mx-3 md:col-span-full md:row-start-2">
-            {products.map((item, idx) => (
+            {dacsData.map((item, idx) => (
               <CarouselSlide
                 key={item._id}
                 className="flex h-full flex-col px-3"

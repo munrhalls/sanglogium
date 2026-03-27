@@ -2,8 +2,12 @@ import AccessoriesHeader from "./AccessoriesHeader";
 import CategorySection from "./CategorySection";
 import { getAccessoryProducts } from "./getAccessoryProducts";
 
-export default async function Accessories() {
-  const { cables, earpads } = await getAccessoryProducts();
+interface AccessoriesProps {
+  accessoriesData: Awaited<ReturnType<typeof getAccessoryProducts>>;
+}
+
+export default async function Accessories({ accessoriesData }: AccessoriesProps) {
+  const { cables, earpads } = accessoriesData;
 
   return (
     <article className="w-full relative overflow-hidden bg-brand-700">

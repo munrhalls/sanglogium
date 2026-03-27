@@ -9,8 +9,12 @@ import {
   CarouselDots,
 } from "@/app/components/layout/carousel/CarouselControls";
 import FeaturedHeader from "./FeaturedHeader";
-import { getFeaturedProducts, FeaturedProduct } from "./getFeaturedProducts";
+import { FeaturedProduct } from "./getFeaturedProducts";
 import { ShoppingCart } from "@phosphor-icons/react/dist/ssr";
+
+interface FeaturedProps {
+  featuredData: FeaturedProduct[];
+}
 
 interface FeaturedCardProps {
   product: FeaturedProduct;
@@ -66,10 +70,8 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
   </a>
 );
 
-export default async function Featured() {
-  const finalFeatured = await getFeaturedProducts();
-
-  if (!finalFeatured || finalFeatured?.length === 0) return null;
+export default async function Featured({ featuredData }: FeaturedProps) {
+  if (!featuredData || featuredData?.length === 0) return null;
 
   return (
     <article className="w-full relative bg-brand-900">
@@ -81,7 +83,7 @@ export default async function Featured() {
       <div className="relative z-10">
         <div className="mx-auto max-w-content">
           <Carousel
-            itemsCount={finalFeatured.length}
+            itemsCount={featuredData.length}
             breakpointMap={featuredBreakpointMap}
           >
             <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4">
@@ -90,7 +92,7 @@ export default async function Featured() {
               </div>
 
               <CarouselTrack className="w-full items-stretch mx-0 md:-mx-3 md:col-span-full md:row-start-2">
-                {finalFeatured.map((p, idx) => (
+                {featuredData.map((p, idx) => (
                   <CarouselSlide
                     key={p._id || idx}
                     className="flex h-full flex-col px-3"

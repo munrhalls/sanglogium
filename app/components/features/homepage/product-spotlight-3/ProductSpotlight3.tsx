@@ -1,17 +1,19 @@
 import React from "react";
 import { Image } from "next-sanity/image";
 import { urlFor } from "@/sanity/lib/image";
-import { getSpotlight3Data } from "./getSpotlight3Data";
+import { Spotlight1Data } from "../product-spotlight-1/getSpotlight1Data";
 import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
 import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";
 import { CarouselSlide } from "@/app/components/layout/carousel/CarouselSlide";
 import { CarouselPrevious, CarouselNext, CarouselDots } from "@/app/components/layout/carousel/CarouselControls";
 
-export default async function ProductSpotlight3() {
-  const data = await getSpotlight3Data();
+interface ProductSpotlight3Props {
+  spotlightData: Spotlight1Data | null;
+}
 
-  if (!data || !data.productRef) return null;
-  const { productRef: product, promoTitle, promoSubtitle, promoText } = data;
+export default async function ProductSpotlight3({ spotlightData }: ProductSpotlight3Props) {
+  if (!spotlightData || !spotlightData.productRef) return null;
+  const { productRef: product, promoTitle, promoSubtitle, promoText } = spotlightData;
 
   return (
     <article className="w-full relative overflow-hidden border-secondary-800 bg-brand-700">
