@@ -1,0 +1,308 @@
+# PROFESSIONAL COMPLETION SPRINT — REVISED
+## Post-VFS-Integrity: Final Hardening & Category Indirection Elimination
+### Objective: Close remaining gaps to reach production-grade, professional edge codebase
+
+---
+
+## Executive Summary
+
+**Current State:** VFS Data Integrity Sprint and Product Discovery Alignment Sprint are **~85% complete**. Core catalogue infrastructure is functional:
+- ✅ VFS build script with validation (32/32 nodes in slotMetadataMap)
+- ✅ `unrollDescendantKeys()` implemented in `data/catalogue.ts`
+- ✅ Root /products page with empty keys pattern and Promise.all
+- ✅ Navigation consuming catalogue-index.json (0ms cached)
+- ✅ Category pages using VFS key resolution via `resolveSlugToId`
+- ✅ Homepage parallel data fetching via `fetchHomepageData.ts`
+- ✅ `getSelectedProducts.ts` using VFS keys: `catalogueLocationKeys[@ in $catalogueKeys]`
+- ✅ `getProductsByVfsKeys.ts` using correct VFS GROQ
+
+**Critical Remaining Gap: Category Field Indirection**
+The filter and sortable discovery functions (`getFiltersForCategoryPath.ts`, `getSortablesForCategoryPath.ts`) use a **two-step fragile lookup**:
+1. Query products by VFS keys to extract their `category` field (legacy)
+2. Query filters/sortables by that category name
+
+This creates a hard dependency on the deprecated `category` field that should be eliminated.
+
+**Secondary Gaps:**
+- 34 Client Components (target <20) - Bundle bloat
+- Missing React.cache / unstable_cache - No deduplication
+- Missing Suspense boundaries - No progressive streaming
+- Missing AI-Leverage Tier 3 - No MCP retrieval, no specialized agents
+
+---
+
+## Architecture Principles
+
+1. **Direct VFS Mapping** — Eliminate `category` field indirection in filter/sort discovery
+2. **Server-First** — Minimize client components, maximize Server Components
+3. **Deterministic Caching** — React.cache + unstable_cache for predictable performance
+4. **Zero Legacy Debt** — Complete elimination of category indirection pattern
+5. **Execute with Discipline, Verify with Tests, Ship with Confidence**
+
+---
+
+## OODA Analysis: Current vs Target
+
+### OBSERVE — Verified Current State
+
+| Component | Status | Verification |
+|-----------|--------|--------------|
+| VFS slotMetadataMap | ✅ **FIXED** | 32/32 nodes, build validation passes |
+| `unrollDescendantKeys()` | ✅ **IMPLEMENTED** | `data/catalogue.ts` lines 40-63 |
+| Root /products page | ✅ **FIXED** | Empty keys pattern, Promise.all |
+| Navigation | ✅ **FIXED** | `getCatalogueForNavigation()`, 0ms cached |
+| Category pages | ✅ **FIXED** | `resolveSlugToId` + `unrollDescendantKeys` |
+| Homepage fetching | ✅ **FIXED** | `fetchHomepageData.ts` with Promise.all |
+| `getSelectedProducts.ts` | ✅ **VFS-ENABLED** | Uses `catalogueLocationKeys[@ in $catalogueKeys]` |
+| **Filter/Sort Discovery** | ⚠️ **CATEGORY INDIRECTION** | Uses legacy `category` field lookup |
+| **Client components** | ⚠️ **34 COMPONENTS** | Target <20 |
+| **React.cache** | ❌ **MISSING** | No request deduplication |
+| **unstable_cache** | ❌ **MISSING** | No cross-request caching |
+| **AI-Leverage** | ❌ **TIER 2** | Missing retrieval, specialized agents |
+
+### ORIENT — Gap Impact Analysis
+
+**CRITICAL Gap #1: Category Field Indirection in Filter/Sort Discovery**
+
+Current flow in `getFiltersForCategoryPath.ts` (lines 79-113):
+```typescript
+// Step 1: Query products by VFS keys to get category field (LEGACY)
+const products = await client.fetch(PRODUCTS_BY_VFS_KEYS_QUERY, { catalogueKeys });
+const categories = [...new Set(products.map((p: any) => p.category).filter(Boolean))];
+const topLevelCategory = categories[0];
+
+// Step 2: Query filters by category name (LEGACY INDIRECTION)
+const filtersData = await client.fetch(FILTERS_BY_CATEGORY_QUERY, { topLevelCategory });
+```
+
+**Problems:**
+- Hard dependency on deprecated `category` field
+- Two round trips to Sanity (products → filters)
+- `category` field is not validated against VFS structure
+- Fragile: mistyped categories break filter discovery
+
+**Target flow (Direct VFS Mapping):**
+```typescript
+// Single round trip: Query filters directly by VFS slot keys
+*[_type == "vfsSlotFilters" && slotKey in $catalogueKeys] {
+  "filters": filters[]
+}
+```
+
+**Impact:** HIGH — Blocks complete VFS migration, creates maintenance burden
+
+---
+
+## Scope Contract 1: Eliminate Category Field Indirection
+
+**Goal:** Direct VFS key → filter/sortable mapping (no `category` field dependency)
+
+### Current State
+```typescript
+// getFiltersForCategoryPath.ts
+const PRODUCTS_BY_VFS_KEYS_QUERY = `*[_type == "product" && count(catalogueLocationKeys[@ in $catalogueKeys]) > 0] { category }`;
+const products = await client.fetch(PRODUCTS_BY_VFS_KEYS_QUERY, { catalogueKeys });
+const topLevelCategory = products[0]?.category; // ❌ Legacy field dependency
+
+const FILTERS_BY_CATEGORY_QUERY = `*[_type == "categoryFilters" && title == $topLevelCategory]`;
+```
+
+### Target State
+```typescript
+// Direct VFS key → filter mapping
+const FILTERS_BY_VFS_KEYS_QUERY = `*[_type == "categoryFilters" && categoryKey in $catalogueKeys][0] {
+  title,
+  "filters": filters.filterItems[]{ name, type, options, defaultValue, min, max, isMinOnly, step }
+}`;
+// ✅ Single round trip, no category indirection
+```
+
+### Implementation
+
+1. **Update Sanity Schema** (`sanity/schemaTypes/categoryFiltersType.ts`):
+   - Add `categoryKey` field (string, required) — maps to VFS slot ID
+   - Backfill existing filter documents with VFS slot keys
+
+2. **Update `getFiltersForCategoryPath.ts`**:
+   - Replace two-step lookup with direct VFS key query
+   - Query `categoryFilters` by `categoryKey in $catalogueKeys`
+   - Merge filter sets for multiple keys (parent + children)
+
+3. **Update `getSortablesForCategoryPath.ts`**:
+   - Same pattern as filters
+   - Query `categorySortables` by `categoryKey in $catalogueKeys`
+
+4. **Migration Strategy**:
+   - Create script to backfill `categoryKey` on existing filter/sortable docs
+   - Maintain backward compatibility during transition (dual lookup)
+   - Remove legacy path after verification
+
+### DoD — Verification Checklist
+
+- [ ] `categoryFilters` schema has `categoryKey` field
+- [ ] `categorySortables` schema has `categoryKey` field
+- [ ] `getFiltersForCategoryPath.ts` uses direct VFS key query
+- [ ] `getSortablesForCategoryPath.ts` uses direct VFS key query
+- [ ] Single Sanity round trip for filter discovery (verify in query logs)
+- [ ] All existing filters continue to work after migration
+- [ ] No references to `product.category` in filter/sort discovery code
+
+### Testing
+
+```bash
+# Verify filter discovery
+# 1. Navigate to /products/headphones/open-back
+# 2. Verify filters returned match expected for open-back
+# 3. Check Sanity query log - single round trip only
+
+# Verify with migrated data
+# 1. Backfill test filter document with categoryKey
+# 2. Verify filter returned correctly
+# 3. Remove legacy category field, verify still works
+```
+
+---
+
+## Scope Contract 2: Client Component Reduction
+
+**Goal:** Reduce from 34 to <20 client components
+
+### Current State
+34 files with "use client" directive. Many are stateless presentation components.
+
+### Target State
+<20 client components. Only truly interactive components remain client-side.
+
+### Implementation
+
+1. **Audit Priority Order**:
+   - Phase 2A: Info/display components (`infoTooltip.tsx`, `CategoryTitleIcon.tsx`)
+   - Phase 2B: Layout components (`AppliedFilters.tsx`, `Pagination.tsx`)
+   - Phase 2C: Complex components (careful testing required)
+
+2. **Conversion Pattern**:
+   - Extract stateful logic to small Client Component wrapper
+   - Keep parent as Server Component receiving data via props
+
+### DoD — Verification Checklist
+
+- [ ] `grep -r "use client" app/components | wc -l` shows <20
+- [ ] Bundle analyzer shows reduced client chunk
+- [ ] All interactive functionality verified (cart, drawers, pagination)
+
+---
+
+## Scope Contract 3: Caching Infrastructure
+
+**Goal:** Implement React.cache and unstable_cache
+
+### Implementation
+
+1. **Add React.cache to fetchers**:
+   - Wrap `getHeroData`, `getFeaturedProducts`, etc. with `cache()`
+
+2. **Create `sanity/lib/cache.ts`**:
+   ```typescript
+   export const cachedSanityFetch = unstable_cache(
+     async (query, params) => client.fetch(query, params),
+     ['sanity'],
+     { revalidate: 60 }
+   );
+   ```
+
+3. **Add revalidation API route**:
+   - `app/api/revalidate/route.ts` with token authentication
+
+### DoD — Verification Checklist
+
+- [ ] React.cache on all homepage data fetchers
+- [ ] unstable_cache wrapper created
+- [ ] Revalidation API route functional
+- [ ] Cache hit logging visible in development
+
+---
+
+## Scope Contract 4: AI-Leverage Tier 3
+
+**Goal:** MCP retrieval server + specialized agents
+
+### Implementation
+
+1. **Extend `.cursor/mcp-server.js`**:
+   - Add `searchContext(query: string)` tool
+   - Add `getSubsystemDocs(subsystem: string)` tool
+
+2. **Create context index** (`scripts/build-context-index.mjs`)
+
+3. **Create specialized agents**:
+   - `agents/vfs-specialist.md`
+   - `agents/sanity-schema-specialist.md`
+   - `agents/ui-specialist.md`
+
+### DoD — Verification Checklist
+
+- [ ] MCP server responds to search queries
+- [ ] Context index built and searchable
+- [ ] 3 specialized agent files created
+
+---
+
+## Sequence of Execution
+
+| Order | Scope Contract | Duration | Dependencies |
+|-------|---------------|----------|--------------|
+| 1 | Scope 1: Category Indirection Elimination | 3-4 days | None |
+| 2 | Scope 2: Client Component Reduction | 2-3 days | None |
+| 3 | Scope 3: Caching Infrastructure | 2 days | None |
+| 4 | Scope 4: AI-Leverage Tier 3 | 2-3 days | None |
+
+**Rationale:**
+- **Scope 1 first** — Unblocks complete VFS migration, highest technical debt
+- **Scope 2 parallel** — Bundle optimization independent of data layer
+- **Scope 3 after 1** — Caching benefits from stable query patterns
+- **Scope 4 last** — Developer productivity enhancement, lowest risk
+
+---
+
+## Verification Matrix
+
+| Feature | Before | After | Verification |
+|---------|--------|-------|--------------|
+| Filter discovery | 2 round trips, category indirection | 1 round trip, direct VFS | Query log analysis |
+| Sortable discovery | 2 round trips, category indirection | 1 round trip, direct VFS | Query log analysis |
+| Client components | 34 | <20 | `grep -r "use client" | wc -l` |
+| React.cache | None | All fetchers | Code review |
+| unstable_cache | None | High-traffic queries | Cache hit logs |
+| Lighthouse Performance | ~60 | >90 | Lighthouse CI |
+
+---
+
+## Risk Mitigation
+
+| Risk | Mitigation |
+|------|------------|
+| Schema migration breaks existing filters | Maintain dual lookup during transition period |
+| Client component conversion breaks UI | Test each conversion individually |
+| Cache stale data | Short TTL (60s) initially, monitoring alerts |
+| Migration data inconsistency | Backup before migration, verification script |
+
+---
+
+## Success Criteria
+
+This sprint is complete when:
+1. ✅ Zero `category` field references in filter/sort discovery code
+2. ✅ Single Sanity round trip for filter/sortable discovery
+3. ✅ <20 client components
+4. ✅ React.cache on all data fetchers
+5. ✅ unstable_cache on high-traffic queries
+6. ✅ MCP retrieval server functional
+7. ✅ Lighthouse Performance score ≥ 90
+8. ✅ All regression tests passing
+
+---
+
+*Execute with discipline. Verify with tests. Ship with confidence.*
+
+Generated: March 27, 2026 — Revision 2 (post-VFS Architecture Audit integration)
+Priority: HIGH — Final professional hardening sprint

@@ -1,0 +1,22 @@
+[] COVER SUM TOTAL TIMELINE OF ENTIRE SANG-LOGIUM DONE
+    ✔ add regression tests instructions to /sprint command @done(26-03-27 18:45)
+    ✔ add themes of scope and layer sequencing to /sprint @done(26-03-27 18:51)
+    [ ]
+
+
+
+The scope
+    [ ] It's extremely visually polished and beautiful
+    [ ] It's professionally robust, complete, full RWD portrait/landscape modes, zero bugs
+    [ ] It's professionally functional, end-to-end, all critical pathways are fully checked and tested
+    [ ] Full cross-browser testing, compatibility
+    [ ] Full cross-device testing, compatibility, works even on old iphones and androids
+
+The big NOT TO-DO LIST
+    [ ] avoid one-off's
+    [ ] premature optimization
+    [ ] premature abstraction
+    [ ] tackling many priorities at once
+    [ ] fix something because of availability - NO; SUM TOTAL TIMELINE COVER PRIORITIES > any local fix priorities
+
+

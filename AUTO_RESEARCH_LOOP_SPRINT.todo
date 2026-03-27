@@ -1,0 +1,1189 @@
+# ZERO-COST AUTO-RESEARCH LOOP SPRINT
+**Objective:** Bridge the gap between "I want auto-research" and "I have working auto-research"  
+**Duration:** 2 weeks (10 working days)  
+**Cost:** $0 (local LLMs only)  
+**Target:** Working research agent with human + AI consume patterns  
+
+---
+
+## THE GAP: Intent vs. Implementation
+
+### What You Want (Intent)
+- Auto-research running on schedule (daily/weekly)
+- Research findings appearing in inbox for consumption
+- Both humans AND AI agents can consume research
+- Zero ongoing costs
+- Simple, robust, minimal maintenance
+
+### Why This Is Hard (The Gap)
+| Intent | Reality | Gap |
+|--------|---------|-----|
+| "Run research automatically" | Need local LLM + agent framework + scheduling | 3 separate technologies to integrate |
+| "Findings in inbox" | Need queue system (producer/consumer pattern) | File-based queue implementation |
+| "AI agents consume research" | Need context injection into Windsurf/Cascade | MCP server extension or file-watching |
+| "Zero cost" | Ollama + smolagents + Windows Task Scheduler | Exact setup steps unclear |
+| "Simple & robust" | Error handling, retries, logging all required | Need resilient implementation |
+
+### The Bridge (This Sprint)
+**Phase 1:** Install Ollama + smolagents (infrastructure)  
+**Phase 2:** Build file-based research queue (producer/consumer)  
+**Phase 3:** Create consume patterns (human + AI agent)  
+**Phase 4:** Schedule automation (Windows Task Scheduler)  
+
+---
+
+## DELIVERABLES (What You Get)
+
+### D1: Local Research Infrastructure
+- **Ollama** installed and running (Windows service)
+- **Gemma 3 4B** model downloaded (~3.3GB)
+- **smolagents** Python library installed
+- Test script confirming: local LLM → web search → JSON output
+
+### D2: Research Producer (File-based Queue)
+- Python module: `agents/research/producer.py`
+- Function: `queue_research(query, category, priority)`
+- Output: JSON files in `_research/inbox/`
+- Features: idempotent, timestamped, prioritized
+
+### D3: Human Consume Pattern
+- Morning review script: `agents/research/consume_human.py`
+- Lists inbox items by priority
+- Interactive: review → action → archive
+- Markdown digest generation
+
+### D4: AI Agent Consume Pattern
+- Windsurf/Cascade integration: auto-load research context
+- File: `.windsurf/workflows/research-consume.md`
+- Function: `consume_research_for_agent()` returns findings
+- Auto-primes prompts with relevant research
+
+### D5: Scheduled Automation
+- Windows Task Scheduler: daily 8 AM research job
+- Script: `scripts/scheduled_research.py`
+- Categories: tech-watch, competitor-analysis, error-patterns
+- Email/notification on completion (optional)
+
+---
+
+## PHASE 1: INFRASTRUCTURE (Days 1-3)
+
+### [P1-1] SCOPE CONTRACT: Install Ollama on Windows
+**Complexity:** 3 (straightforward but requires download)
+**Estimated Time:** 1 hour
+**Deliverable:** D1 - Ollama running as Windows service
+
+#### IN SCOPE
+- Download and install Ollama from ollama.com
+- Verify CLI works: `ollama --version`
+- Download Gemma 3 4B: `ollama pull gemma3:4b`
+- Start Ollama service: `ollama serve`
+- Test with: `ollama run gemma3:4b "Hello"`
+
+#### OUT OF SCOPE
+- GPU acceleration setup (CPU-only is fine)
+- Other models beyond Gemma 3 4B
+- Ollama REST API usage (will use Python SDK)
+
+#### FORBIDDEN SCOPE
+- No changes to system PATH beyond Ollama installer
+- No Docker containers
+
+#### STEP-BY-STEP IMPLEMENTATION
+
+```powershell
+# Step 1: Download Ollama
+# Go to: https://ollama.com/download/windows
+# Run installer, accept defaults (includes CLI)
+
+# Step 2: Verify installation
+ollama --version
+# Expected: ollama version is 0.x.x
+
+# Step 3: Pull Gemma 3 4B model
+ollama pull gemma3:4b
+# Expected: ~3.3GB download, progress bar shown
+
+# Step 4: Verify model
+ollama list
+# Expected: gemma3:4b shown in list
+
+# Step 5: Test model
+ollama run gemma3:4b "What is 2+2?"
+# Expected: "2+2 = 4" or similar response
+
+# Step 6: Start service (if not auto-started)
+ollama serve
+# Note: Keep terminal open, or configure as Windows service
+```
+
+#### DEFINITIONS OF DONE
+
+- [ ] **DoD 1.1:** Ollama CLI responds to `ollama --version`
+- [ ] **DoD 1.2:** `ollama list` shows `gemma3:4b`
+- [ ] **DoD 1.3:** Model responds to test query in terminal
+- [ ] **DoD 1.4:** Ollama service running (check Task Manager → Services)
+
+#### VERIFICATION COMMANDS
+
+```powershell
+# V1.1 - Check version
+ollama --version
+
+# V1.2 - List models
+ollama list
+
+# V1.3 - Test model (one-liner)
+ollama run gemma3:4b "Summarize quantum computing in one sentence."
+```
+
+---
+
+### [P1-2] SCOPE CONTRACT: Install smolagents Python Library
+**Complexity:** 2 (pip install)
+**Estimated Time:** 30 minutes
+**Deliverable:** D1 - smolagents installed, test script runs
+
+#### IN SCOPE
+- Install Python dependencies: `smolagents`, `litellm`
+- Create test script: `agents/research/test_setup.py`
+- Verify: local LLM → web search → structured output
+
+#### OUT OF SCOPE
+- Vector database setup
+- Advanced agent configurations
+- Custom tool development
+
+#### STEP-BY-STEP IMPLEMENTATION
+
+```powershell
+# Step 1: Install dependencies
+pip install smolagents litellm
+
+# Step 2: Create test script
+# File: agents/research/test_setup.py
+```
+
+```python
+# agents/research/test_setup.py
+"""Verify Ollama + smolagents integration."""
+
+from smolagents import CodeAgent, WebSearchTool, LiteLLMModel
+
+def test_basic_agent():
+    """Test: Can we run a local LLM with web search?"""
+    print("Testing Ollama + smolagents integration...")
+    
+    # Use local Gemma 3 via Ollama
+    model = LiteLLMModel(model_id="ollama_chat/gemma3:4b")
+    
+    # Create agent with web search
+    agent = CodeAgent(
+        tools=[WebSearchTool()],
+        model=model,
+        max_steps=3
+    )
+    
+    # Test query
+    result = agent.run(
+        "What are the top 3 new features in Next.js 15? "
+        "Return as bullet points."
+    )
+    
+    print("\n=== RESULT ===")
+    print(result)
+    print("\n=== TEST PASSED ===")
+    return True
+
+if __name__ == "__main__":
+    test_basic_agent()
+```
+
+```powershell
+# Step 3: Run test
+python agents/research/test_setup.py
+
+# Expected: Agent runs, searches web, returns bullet points about Next.js 15
+```
+
+#### DEFINITIONS OF DONE
+
+- [ ] **DoD 2.1:** `pip list` shows `smolagents` and `litellm`
+- [ ] **DoD 2.2:** Test script exists at `agents/research/test_setup.py`
+- [ ] **DoD 2.3:** Test script runs without errors
+- [ ] **DoD 2.4:** Output contains web-sourced information (not hallucination)
+
+#### VERIFICATION COMMANDS
+
+```powershell
+# V2.1 - Check installed packages
+pip show smolagents litellm
+
+# V2.2 - Run test
+python agents/research/test_setup.py
+
+# V2.3 - Verify output is substantive (not empty/error)
+# Look for: bullet points, Next.js features, etc.
+```
+
+---
+
+## PHASE 2: RESEARCH QUEUE (Days 4-6)
+
+### [P2-1] SCOPE CONTRACT: Build File-Based Research Queue
+**Complexity:** 5 (requires robust file handling)
+**Estimated Time:** 4 hours
+**Deliverable:** D2 - Producer module, JSON queue, idempotent operations
+
+#### IN SCOPE
+- Module: `agents/research/queue.py` with producer/consumer functions
+- Directory structure: `_research/inbox/`, `_research/archive/`
+- JSON format for research items
+- Idempotent operations (safe to re-run)
+- Priority levels: critical, high, normal, low
+
+#### OUT OF SCOPE
+- Database backend (SQLite/PostgreSQL)
+- Web interface for queue management
+- Real-time notifications
+
+#### ARCHITECTURE DECISIONS
+- **Storage:** JSON files on filesystem (simple, inspectable, git-trackable)
+- **Naming:** `{timestamp}_{category}_{hash}.json` (sortable, unique)
+- **Priority:** File prefix `[P0]`, `[P1]`, etc. for visual sorting
+- **Idempotency:** Content hash prevents duplicates
+
+#### STEP-BY-STEP IMPLEMENTATION
+
+```python
+# agents/research/queue.py
+"""
+File-based research queue.
+Producer: queue_research()
+Consumer: consume_next_item() [human] or get_items_for_agent() [AI]
+"""
+
+import json
+import hashlib
+from datetime import datetime
+from pathlib import Path
+from typing import Optional, Literal
+from dataclasses import dataclass, asdict
+
+# Paths
+RESEARCH_DIR = Path("c:/webdev/sang-logium/_research")
+INBOX_DIR = RESEARCH_DIR / "inbox"
+ARCHIVE_DIR = RESEARCH_DIR / "archive"
+
+# Ensure directories exist
+INBOX_DIR.mkdir(parents=True, exist_ok=True)
+ARCHIVE_DIR.mkdir(parents=True, exist_ok=True)
+
+Priority = Literal["critical", "high", "normal", "low"]
+
+@dataclass
+class ResearchItem:
+    id: str
+    timestamp: str
+    query: str
+    category: str
+    priority: Priority
+    findings: dict
+    consumed: bool
+    consumed_by: Optional[str]
+    consumed_at: Optional[str]
+    content_hash: str
+
+def _generate_id(query: str, timestamp: str) -> str:
+    """Generate unique ID from content hash."""
+    content = f"{query}{timestamp}"
+    return hashlib.md5(content.encode()).hexdigest()[:12]
+
+def _priority_prefix(priority: Priority) -> str:
+    """Map priority to file prefix for sorting."""
+    return {"critical": "[P0]", "high": "[P1]", "normal": "[P2]", "low": "[P3]"}[priority]
+
+def queue_research(
+    query: str,
+    category: str = "general",
+    priority: Priority = "normal",
+    findings: Optional[dict] = None
+) -> str:
+    """
+    Producer: Add research item to queue.
+    
+    Args:
+        query: The research query/question
+        category: Category for organization (tech-watch, competitor, etc.)
+        priority: critical | high | normal | low
+        findings: Optional pre-computed findings (otherwise agent runs)
+    
+    Returns:
+        item_id: Unique ID for this research item
+    """
+    timestamp = datetime.now().isoformat()
+    item_id = _generate_id(query, timestamp)
+    
+    # Generate findings if not provided
+    if findings is None:
+        findings = _run_research_agent(query)
+    
+    item = ResearchItem(
+        id=item_id,
+        timestamp=timestamp,
+        query=query,
+        category=category,
+        priority=priority,
+        findings=findings,
+        consumed=False,
+        consumed_by=None,
+        consumed_at=None,
+        content_hash=hashlib.md5(str(findings).encode()).hexdigest()[:8]
+    )
+    
+    # Save to inbox
+    prefix = _priority_prefix(priority)
+    filename = f"{prefix}_{timestamp[:10]}_{category}_{item_id}.json"
+    filepath = INBOX_DIR / filename
+    
+    filepath.write_text(json.dumps(asdict(item), indent=2))
+    print(f"[QUEUE] Research queued: {filepath.name}")
+    
+    return item_id
+
+def _run_research_agent(query: str) -> dict:
+    """Run smolagents research and return structured findings."""
+    from smolagents import CodeAgent, WebSearchTool, LiteLLMModel
+    
+    model = LiteLLMModel(model_id="ollama_chat/gemma3:4b")
+    agent = CodeAgent(
+        tools=[WebSearchTool()],
+        model=model,
+        max_steps=4
+    )
+    
+    structured_prompt = f"""
+Research: {query}
+
+Return findings as JSON with this structure:
+{{
+    "executive_summary": "2-3 sentence overview",
+    "key_findings": ["finding 1", "finding 2", "finding 3"],
+    "sources": ["url1", "url2"],
+    "recommended_actions": ["action 1", "action 2"],
+    "confidence": "high|medium|low"
+}}
+"""
+    
+    result = agent.run(structured_prompt)
+    
+    # Try to parse as JSON, fallback to wrapping raw text
+    try:
+        if isinstance(result, str):
+            # Extract JSON from markdown code blocks if present
+            if "```json" in result:
+                json_str = result.split("```json")[1].split("```")[0].strip()
+            elif "```" in result:
+                json_str = result.split("```")[1].split("```")[0].strip()
+            else:
+                json_str = result
+            return json.loads(json_str)
+        return result
+    except json.JSONDecodeError:
+        return {
+            "executive_summary": str(result)[:200],
+            "key_findings": [str(result)],
+            "sources": [],
+            "recommended_actions": ["Review raw findings"],
+            "confidence": "unknown",
+            "raw_output": str(result)
+        }
+
+def consume_next_item(consumer_id: str = "human") -> Optional[ResearchItem]:
+    """
+    Consumer (Human): Get next unconsumed item, mark consumed, archive.
+    
+    Priority order: critical > high > normal > low
+    Within priority: oldest first (FIFO)
+    """
+    priority_order = ["[P0]", "[P1]", "[P2]", "[P3]"]
+    
+    for prefix in priority_order:
+        # Find files with this priority prefix
+        files = sorted(INBOX_DIR.glob(f"{prefix}_*.json"))
+        
+        for filepath in files:
+            data = json.loads(filepath.read_text())
+            
+            if not data.get("consumed", False):
+                # Mark consumed
+                data["consumed"] = True
+                data["consumed_by"] = consumer_id
+                data["consumed_at"] = datetime.now().isoformat()
+                
+                # Save updated state
+                filepath.write_text(json.dumps(data, indent=2))
+                
+                # Move to archive
+                archive_path = ARCHIVE_DIR / filepath.name
+                filepath.rename(archive_path)
+                
+                print(f"[CONSUME] {filepath.name} → archived")
+                return ResearchItem(**data)
+    
+    return None
+
+def get_items_for_agent(
+    category: Optional[str] = None,
+    limit: int = 5
+) -> list[ResearchItem]:
+    """
+    Consumer (AI Agent): Get unconsumed items without marking consumed.
+    Agent decides what to use, marks consumed separately.
+    """
+    items = []
+    files = sorted(INBOX_DIR.glob("*.json"))
+    
+    for filepath in files:
+        data = json.loads(filepath.read_text())
+        
+        if not data.get("consumed", False):
+            if category is None or data.get("category") == category:
+                items.append(ResearchItem(**data))
+                if len(items) >= limit:
+                    break
+    
+    return items
+
+def mark_consumed(item_id: str, consumer_id: str = "agent") -> bool:
+    """Mark specific item as consumed and archive it."""
+    for filepath in INBOX_DIR.glob(f"*_{item_id}.json"):
+        data = json.loads(filepath.read_text())
+        data["consumed"] = True
+        data["consumed_by"] = consumer_id
+        data["consumed_at"] = datetime.now().isoformat()
+        
+        filepath.write_text(json.dumps(data, indent=2))
+        
+        archive_path = ARCHIVE_DIR / filepath.name
+        filepath.rename(archive_path)
+        
+        print(f"[MARKED] {item_id} consumed by {consumer_id}")
+        return True
+    
+    return False
+
+def get_queue_stats() -> dict:
+    """Get statistics about current queue state."""
+    stats = {"inbox": {}, "total_unconsumed": 0}
+    
+    for prefix in ["[P0]", "[P1]", "[P2]", "[P3]"]:
+        files = list(INBOX_DIR.glob(f"{prefix}_*.json"))
+        unconsumed = sum(
+            1 for f in files 
+            if not json.loads(f.read_text()).get("consumed", False)
+        )
+        stats["inbox"][prefix] = {"total": len(files), "unconsumed": unconsumed}
+        stats["total_unconsumed"] += unconsumed
+    
+    return stats
+```
+
+#### DEFINITIONS OF DONE
+
+- [ ] **DoD 1.1:** `agents/research/queue.py` exists with all functions
+- [ ] **DoD 1.2:** `_research/inbox/` and `_research/archive/` directories created
+- [ ] **DoD 1.3:** `queue_research()` creates JSON files with correct structure
+- [ ] **DoD 1.4:** `consume_next_item()` returns items in priority order
+- [ ] **DoD 1.5:** `get_items_for_agent()` returns items without consuming
+- [ ] **DoD 1.6:** `mark_consumed()` moves files to archive
+- [ ] **DoD 1.7:** `get_queue_stats()` returns accurate counts
+
+#### VERIFICATION COMMANDS
+
+```powershell
+# V1.1 - Test producer
+python -c "from agents.research.queue import queue_research; queue_research('Test query', 'test', 'normal', {'test': 'data'})"
+# Check: _research/inbox/ has new JSON file
+
+# V1.2 - Test consumer
+python -c "from agents.research.queue import consume_next_item; print(consume_next_item('test'))"
+# Check: File moved to _research/archive/
+
+# V1.3 - Test stats
+python -c "from agents.research.queue import get_queue_stats; import json; print(json.dumps(get_queue_stats(), indent=2))"
+# Check: Returns valid JSON with counts
+```
+
+---
+
+## PHASE 3: CONSUME PATTERNS (Days 7-8)
+
+### [P3-1] SCOPE CONTRACT: Human Consume Pattern
+**Complexity:** 3 (CLI interface)
+**Estimated Time:** 2 hours
+**Deliverable:** D3 - Interactive review script, markdown digest
+
+#### IN SCOPE
+- Script: `agents/research/consume_human.py`
+- CLI interface: list → review → action → archive
+- Markdown digest generation: `_research/digest/daily.md`
+- Priority-based color coding (optional)
+
+#### OUT OF SCOPE
+- GUI interface
+- Email notifications
+- Web dashboard
+
+#### STEP-BY-STEP IMPLEMENTATION
+
+```python
+# agents/research/consume_human.py
+"""
+Human consume pattern for research queue.
+Interactive CLI for morning review routine.
+"""
+
+import json
+from datetime import datetime
+from pathlib import Path
+from agents.research.queue import consume_next_item, get_queue_stats, ResearchItem
+
+DIGEST_DIR = Path("c:/webdev/sang-logium/_research/digest")
+DIGEST_DIR.mkdir(exist_ok=True)
+
+def display_item(item: ResearchItem) -> None:
+    """Display research item in readable format."""
+    print("\n" + "="*60)
+    print(f"PRIORITY: {item.priority.upper()}")
+    print(f"CATEGORY: {item.category}")
+    print(f"QUERY: {item.query}")
+    print("-"*60)
+    
+    findings = item.findings
+    print(f"\nEXECUTIVE SUMMARY:\n{findings.get('executive_summary', 'N/A')}")
+    
+    print("\nKEY FINDINGS:")
+    for i, finding in enumerate(findings.get('key_findings', []), 1):
+        print(f"  {i}. {finding}")
+    
+    print("\nRECOMMENDED ACTIONS:")
+    for action in findings.get('recommended_actions', []):
+        print(f"  → {action}")
+    
+    print("\nSOURCES:")
+    for source in findings.get('sources', [])[:3]:  # Limit to 3
+        print(f"  • {source}")
+    
+    print("="*60)
+
+def prompt_action() -> str:
+    """Prompt user for action."""
+    print("\nACTIONS:")
+    print("  [a]ction - Create task from this research")
+    print("  [s]kip   - Archive without action")
+    print("  [q]uit   - Stop reviewing")
+    
+    while True:
+        choice = input("\nChoice [a/s/q]: ").strip().lower()
+        if choice in ['a', 's', 'q', 'action', 'skip', 'quit']:
+            return choice[0]
+        print("Invalid choice. Please enter a, s, or q.")
+
+def generate_digest() -> Path:
+    """Generate markdown digest of consumed research."""
+    today = datetime.now().strftime("%Y-%m-%d")
+    digest_path = DIGEST_DIR / f"{today}.md"
+    
+    archive_dir = Path("c:/webdev/sang-logium/_research/archive")
+    today_items = []
+    
+    for filepath in archive_dir.glob("*.json"):
+        data = json.loads(filepath.read_text())
+        consumed_at = data.get("consumed_at", "")
+        if consumed_at.startswith(today) and data.get("consumed_by") == "human":
+            today_items.append(data)
+    
+    # Sort by priority
+    priority_order = {"critical": 0, "high": 1, "normal": 2, "low": 3}
+    today_items.sort(key=lambda x: priority_order.get(x.get("priority"), 4))
+    
+    # Generate markdown
+    lines = [
+        f"# Research Digest - {today}",
+        "",
+        f"**Items Reviewed:** {len(today_items)}",
+        "",
+        "## Summary by Category",
+        ""
+    ]
+    
+    categories = {}
+    for item in today_items:
+        cat = item.get("category", "general")
+        categories.setdefault(cat, []).append(item)
+    
+    for cat, items in sorted(categories.items()):
+        lines.append(f"- **{cat}:** {len(items)} items")
+    
+    lines.extend(["", "## Key Findings", ""])
+    
+    for item in today_items:
+        findings = item.get("findings", {})
+        lines.append(f"### [{item.get('priority', 'normal').upper()}] {item.get('query', 'Unknown')}")
+        lines.append("")
+        lines.append(findings.get("executive_summary", "No summary available."))
+        lines.append("")
+    
+    digest_path.write_text("\n".join(lines))
+    print(f"\n[DIGEST] Generated: {digest_path}")
+    
+    return digest_path
+
+def main():
+    """Main review loop."""
+    print("="*60)
+    print("RESEARCH INBOX REVIEW")
+    print("="*60)
+    
+    # Show stats
+    stats = get_queue_stats()
+    print(f"\nQueue Status: {stats['total_unconsumed']} items pending")
+    for prefix, counts in stats["inbox"].items():
+        if counts["unconsumed"] > 0:
+            print(f"  {prefix}: {counts['unconsumed']} items")
+    
+    if stats["total_unconsumed"] == 0:
+        print("\n✓ Inbox empty! Nothing to review.")
+        return
+    
+    print("\nStarting review...\n")
+    
+    reviewed = 0
+    while True:
+        item = consume_next_item("human")
+        if item is None:
+            break
+        
+        display_item(item)
+        action = prompt_action()
+        
+        if action == 'a':
+            # TODO: Integration with task system
+            print("  → Marked for action (integrate with your task system)")
+            reviewed += 1
+        elif action == 's':
+            print("  → Skipped/archived")
+            reviewed += 1
+        elif action == 'q':
+            print("  → Quitting review")
+            break
+    
+    print(f"\n{'='*60}")
+    print(f"Review complete: {reviewed} items processed")
+    
+    # Generate digest
+    if reviewed > 0:
+        digest = generate_digest()
+        print(f"Digest saved: {digest}")
+
+if __name__ == "__main__":
+    main()
+```
+
+#### DEFINITIONS OF DONE
+
+- [ ] **DoD 2.1:** `agents/research/consume_human.py` exists
+- [ ] **DoD 2.2:** Script displays research items with clear formatting
+- [ ] **DoD 2.3:** Interactive prompt works (a/s/q choices)
+- [ ] **DoD 2.4:** Generates markdown digest in `_research/digest/`
+- [ ] **DoD 2.5:** Successfully processes queue from P1-2
+
+#### VERIFICATION COMMANDS
+
+```powershell
+# First, add some test items
+python -c "
+from agents.research.queue import queue_research
+queue_research('Next.js 15 new features', 'tech-watch', 'high')
+queue_research('React Server Component patterns', 'tech-watch', 'normal')
+"
+
+# Run human consume
+python agents/research/consume_human.py
+
+# Check digest generated
+Get-Content _research/digest/*.md -Head 20
+```
+
+---
+
+### [P3-2] SCOPE CONTRACT: AI Agent Consume Pattern
+**Complexity:** 4 (Windsurf integration)
+**Estimated Time:** 3 hours
+**Deliverable:** D4 - Windsurf/Cascade auto-loads research context
+
+#### IN SCOPE
+- Function: `agents/research/consume_agent.py` with `prime_context()`
+- Windsurf workflow: `.windsurf/workflows/research-consume.md`
+- Auto-load research into Cascade context (file-based injection)
+- Category filtering for agent
+
+#### OUT OF SCOPE
+- MCP server integration (Phase 4 enhancement)
+- Real-time WebSocket updates
+- Context persistence across sessions
+
+#### STEP-BY-STEP IMPLEMENTATION
+
+```python
+# agents/research/consume_agent.py
+"""
+AI Agent consume pattern for research queue.
+Provides research context for Windsurf/Cascade integration.
+"""
+
+import json
+from typing import Optional, List
+from agents.research.queue import get_items_for_agent, mark_consumed, ResearchItem
+
+def get_research_context(
+    category: Optional[str] = None,
+    max_items: int = 3,
+    auto_consume: bool = False
+) -> str:
+    """
+    Get research findings formatted for AI agent consumption.
+    
+    Args:
+        category: Filter by category (tech-watch, competitor, etc.)
+        max_items: Maximum items to include
+        auto_consume: If True, mark items as consumed after retrieval
+    
+    Returns:
+        Formatted string for priming AI agent context
+    """
+    items = get_items_for_agent(category=category, limit=max_items)
+    
+    if not items:
+        return "# Research Context\n\nNo pending research items in queue."
+    
+    sections = ["# Research Context", ""]
+    sections.append(f"**{len(items)} research items available for context priming:**")
+    sections.append("")
+    
+    for i, item in enumerate(items, 1):
+        findings = item.findings
+        
+        sections.append(f"## Research Item {i}: {item.query}")
+        sections.append(f"- **Priority:** {item.priority}")
+        sections.append(f"- **Category:** {item.category}")
+        sections.append("")
+        sections.append("### Executive Summary")
+        sections.append(findings.get("executive_summary", "N/A"))
+        sections.append("")
+        
+        sections.append("### Key Findings")
+        for finding in findings.get("key_findings", [])[:3]:  # Limit to 3
+            sections.append(f"- {finding}")
+        sections.append("")
+        
+        sections.append("### Recommended Actions")
+        for action in findings.get("recommended_actions", [])[:2]:  # Limit to 2
+            sections.append(f"- {action}")
+        sections.append("")
+    
+    # Auto-consume if requested
+    if auto_consume:
+        for item in items:
+            mark_consumed(item.id, "windsurf-agent")
+        sections.append("*(Items marked as consumed)*")
+    else:
+        sections.append("*(Items remain in queue for human review)*")
+    
+    return "\n".join(sections)
+
+def get_research_summary() -> dict:
+    """Get quick summary for agent decision-making."""
+    items = get_items_for_agent(limit=10)
+    
+    return {
+        "available_items": len(items),
+        "by_category": _group_by_category(items),
+        "by_priority": _group_by_priority(items),
+        "recommendation": _generate_recommendation(items)
+    }
+
+def _group_by_category(items: List[ResearchItem]) -> dict:
+    """Group items by category."""
+    groups = {}
+    for item in items:
+        cat = item.category
+        groups.setdefault(cat, 0)
+        groups[cat] += 1
+    return groups
+
+def _group_by_priority(items: List[ResearchItem]) -> dict:
+    """Group items by priority."""
+    groups = {"critical": 0, "high": 0, "normal": 0, "low": 0}
+    for item in items:
+        if item.priority in groups:
+            groups[item.priority] += 1
+    return groups
+
+def _generate_recommendation(items: List[ResearchItem]) -> str:
+    """Generate recommendation based on queue state."""
+    if not items:
+        return "No research pending. Proceed with standard workflow."
+    
+    critical = sum(1 for i in items if i.priority == "critical")
+    if critical > 0:
+        return f"⚠️ {critical} critical research items pending. Review before proceeding."
+    
+    high = sum(1 for i in items if i.priority == "high")
+    if high > 0:
+        return f"📋 {high} high-priority research items available for context."
+    
+    return f"📚 {len(items)} research items available. Consider loading context if relevant."
+```
+
+```markdown
+# File: .windsurf/workflows/research-consume.md
+---
+description: Auto-load research context into Cascade sessions
+---
+
+## /research-prime - Load research context
+
+**Purpose:** Automatically include relevant research findings in AI agent context
+
+**Usage:**
+1. Start of new Cascade session: `/research-prime`
+2. Before specific task: `/research-prime [category]`
+
+**What it does:**
+1. Checks `_research/inbox/` for unconsumed research
+2. Formats top 3 items as context block
+3. Injects into conversation (copy-paste ready)
+
+**Implementation:**
+
+```python
+# Run this in terminal before session:
+python -c "from agents.research.consume_agent import get_research_context; print(get_research_context(max_items=3))"
+
+# Or for specific category:
+python -c "from agents.research.consume_agent import get_research_context; print(get_research_context(category='tech-watch'))"
+```
+
+**Output format:**
+```markdown
+# Research Context
+
+**3 research items available for context priming:**
+
+## Research Item 1: Next.js 15 new features
+- **Priority:** high
+- **Category:** tech-watch
+
+### Executive Summary
+[...]
+
+### Key Findings
+- [...]
+- [...]
+```
+
+**Workflow integration:**
+- Copy output from terminal
+- Paste at start of Cascade conversation
+- AI now has research context for all subsequent prompts
+```
+
+#### DEFINITIONS OF DONE
+
+- [ ] **DoD 3.1:** `agents/research/consume_agent.py` exists with `get_research_context()`
+- [ ] **DoD 3.2:** Function returns formatted markdown string
+- [ ] **DoD 3.3:** `.windsurf/workflows/research-consume.md` created
+- [ ] **DoD 3.4:** Workflow provides copy-paste ready commands
+- [ ] **DoD 3.5:** Category filtering works correctly
+
+#### VERIFICATION COMMANDS
+
+```powershell
+# V3.1 - Test context generation
+python -c "from agents.research.consume_agent import get_research_context; print(get_research_context()[:500])"
+
+# V3.2 - Test category filter
+python -c "from agents.research.consume_agent import get_research_context; print(get_research_context(category='tech-watch'))"
+
+# V3.3 - Test summary
+python -c "from agents.research.consume_agent import get_research_summary; import json; print(json.dumps(get_research_summary(), indent=2))"
+```
+
+---
+
+## PHASE 4: AUTOMATION (Days 9-10)
+
+### [P4-1] SCOPE CONTRACT: Schedule Daily Research Jobs
+**Complexity:** 4 (Windows Task Scheduler integration)
+**Estimated Time:** 3 hours
+**Deliverable:** D5 - Automated daily research at 8 AM
+
+#### IN SCOPE
+- Script: `scripts/scheduled_research.py`
+- Windows Task Scheduler: daily 8 AM trigger
+- Categories: tech-watch, competitor-analysis, error-patterns
+- Logging to `_research/logs/`
+
+#### OUT OF SCOPE
+- Cloud-based scheduling (AWS Lambda, etc.)
+- Real-time notifications (email/Slack)
+- Dynamic schedule configuration
+
+#### STEP-BY-STEP IMPLEMENTATION
+
+```python
+# scripts/scheduled_research.py
+"""
+Scheduled research runner.
+Called by Windows Task Scheduler daily at 8 AM.
+"""
+
+import sys
+sys.path.insert(0, "c:/webdev/sang-logium")
+
+from datetime import datetime
+from pathlib import Path
+from agents.research.queue import queue_research
+
+LOG_DIR = Path("c:/webdev/sang-logium/_research/logs")
+LOG_DIR.mkdir(parents=True, exist_ok=True)
+
+def log(message: str):
+    """Log with timestamp."""
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    log_line = f"[{timestamp}] {message}"
+    print(log_line)
+    
+    # Append to daily log
+    today = datetime.now().strftime("%Y-%m-%d")
+    log_file = LOG_DIR / f"{today}.log"
+    with open(log_file, "a") as f:
+        f.write(log_line + "\n")
+
+RESEARCH_TOPICS = {
+    "tech-watch": [
+        "Next.js 15 new features and updates",
+        "React 19 changes and migration guide",
+        "Tailwind CSS v4 new features",
+        "Sanity CMS latest updates",
+        "TypeScript 5.5+ new features",
+    ],
+    "competitor-analysis": [
+        "E-commerce checkout UX patterns 2026",
+        "Product discovery design patterns",
+        "Cart abandonment reduction techniques",
+    ],
+    "error-patterns": [
+        "Next.js 15 common errors and solutions",
+        "Sanity GROQ query optimization",
+        "React Server Component hydration errors",
+    ]
+}
+
+def run_scheduled_research():
+    """Run daily research batch."""
+    log("="*50)
+    log("STARTING SCHEDULED RESEARCH")
+    log("="*50)
+    
+    total_queued = 0
+    
+    for category, topics in RESEARCH_TOPICS.items():
+        log(f"\n--- Category: {category} ---")
+        
+        # Rotate through topics (one per day)
+        day_of_month = datetime.now().day
+        topic_index = day_of_month % len(topics)
+        topic = topics[topic_index]
+        
+        log(f"Researching: {topic}")
+        
+        try:
+            item_id = queue_research(
+                query=topic,
+                category=category,
+                priority="normal"
+            )
+            log(f"✓ Queued: {item_id}")
+            total_queued += 1
+        except Exception as e:
+            log(f"✗ Error: {e}")
+    
+    log(f"\n{'='*50}")
+    log(f"COMPLETED: {total_queued} items queued")
+    log(f"{'='*50}")
+    
+    return total_queued
+
+if __name__ == "__main__":
+    run_scheduled_research()
+```
+
+**Windows Task Scheduler Setup:**
+
+```powershell
+# Step 1: Open Task Scheduler
+# Win + R → taskschd.msc → Enter
+
+# Step 2: Create Basic Task
+# Actions → Create Basic Task...
+# Name: SangLogium Daily Research
+# Description: Run daily research at 8 AM
+
+# Step 3: Trigger
+# Daily
+# Start: 8:00:00 AM
+# Recur every: 1 days
+
+# Step 4: Action
+# Start a program
+# Program/script: C:
+\Python311
+c\python.exe
+# Add arguments: scripts/scheduled_research.py
+# Start in: c:
+\webdev\sang-logium
+
+# Step 5: Finish
+# Check "Open Properties dialog"
+# Click Finish
+
+# Step 6: Properties (optional but recommended)
+# General tab: Check "Run whether user is logged on or not"
+# Settings tab: Check "Run task as soon as possible after scheduled start is missed"
+```
+
+#### DEFINITIONS OF DONE
+
+- [ ] **DoD 4.1:** `scripts/scheduled_research.py` exists
+- [ ] **DoD 4.2:** Script logs output to `_research/logs/`
+- [ ] **DoD 4.3:** Windows Task Scheduler task created
+- [ ] **DoD 4.4:** Task runs manually (right-click → Run)
+- [ ] **DoD 4.5:** Topics rotate daily (different research each day)
+
+#### VERIFICATION COMMANDS
+
+```powershell
+# V4.1 - Test script manually
+python scripts/scheduled_research.py
+
+# V4.2 - Check log file
+Get-Content _research/logs/*.log -Tail 20
+
+# V4.3 - Verify Task Scheduler task
+schtasks /query /tn "SangLogium Daily Research"
+
+# V4.4 - Check inbox for new items
+Get-ChildItem _research/inbox/*.json | Select-Object Name, LastWriteTime
+```
+
+---
+
+## VERIFICATION SUMMARY
+
+### End-to-End Test
+
+```powershell
+# 1. Verify infrastructure
+ollama list
+python -c "import smolagents; print('smolagents OK')"
+
+# 2. Verify queue system
+python -c "
+from agents.research.queue import queue_research, get_queue_stats
+queue_research('Test: Next.js performance', 'tech-watch', 'high')
+print(get_queue_stats())
+"
+
+# 3. Verify human consume
+python agents/research/consume_human.py
+# (Interactive test: review and archive test item)
+
+# 4. Verify agent consume
+python -c "
+from agents.research.consume_agent import get_research_context
+print(get_research_context(max_items=2))
+"
+
+# 5. Verify scheduled research
+python scripts/scheduled_research.py
+Get-ChildItem _research/inbox/*.json
+```
+
+### Success Criteria
+
+| Deliverable | Verification | Target |
+|-------------|--------------|--------|
+| D1 Infrastructure | `ollama list` shows gemma3:4b | ✓ Model available |
+| D2 Research Queue | `_research/inbox/` has JSON files | ✓ Files created |
+| D3 Human Consume | Interactive review completes | ✓ Can consume items |
+| D4 Agent Consume | Context string generated | ✓ Formatted output |
+| D5 Automation | Task Scheduler shows task | ✓ Daily at 8 AM |
+
+---
+
+## MAINTENANCE & TROUBLESHOOTING
+
+### Weekly Maintenance (5 minutes)
+
+```powershell
+# Check queue health
+python -c "from agents.research.queue import get_queue_stats; print(get_queue_stats())"
+
+# Review logs
+Get-Content _research/logs/*.log -Tail 50
+
+# Check disk space (models are large)
+(Get-ChildItem $env:USERPROFILE\.ollama -Recurse | Measure-Object -Property Length -Sum).Sum / 1GB
+```
+
+### Common Issues
+
+| Issue | Cause | Fix |
+|-------|-------|-----|
+| "Ollama not found" | Service not running | `ollama serve` in terminal |
+| "Model not found" | Gemma 3 not downloaded | `ollama pull gemma3:4b` |
+| Research queue empty | Scheduled task not running | Check Task Scheduler status |
+| Slow research | CPU-only mode | Normal for 4B model, ~2-3 min per query |
+| JSON parse errors | LLM output format | Check `_research/inbox/` for raw output |
+
+### Cost Analysis
+
+| Component | Cost | Notes |
+|-----------|------|-------|
+| Ollama | $0 | Open source |
+| Gemma 3 | $0 | Open weights |
+| smolagents | $0 | Open source |
+| Web search | $0 | DuckDuckGo (default) |
+| Electricity | ~$5/mo | Running 4B model on CPU |
+| **Total** | **~$5/mo** | vs $200/mo for OpenAI Deep Research |
+
+---
+
+## NEXT STEPS (Post-Sprint)
+
+### Enhancements (Future Sprints)
+
+1. **MCP Server Integration** - Native Windsurf/Cascade integration
+2. **Vector Search** - Index research findings for semantic search
+3. **Digest Email** - Morning email with research summary
+4. **Category Expansion** - Add security-watch, performance-watch
+5. **Multi-Model** - Use larger models (12B, 27B) for complex queries
+
+---
+
+*Sprint prepared: March 27, 2026*  
+*Estimated implementation: 10 days*  
+*Cost: $0 (local LLMs only)*
