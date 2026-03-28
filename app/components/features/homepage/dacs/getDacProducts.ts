@@ -1,4 +1,5 @@
 import { sanityFetch } from "@/sanity/lib/client";
+import { cache } from "react";
 
 export interface DacProduct {
   _id: string;
@@ -13,7 +14,7 @@ const DACS_QUERY = `*[_type == "homepageData"][0].dacs[]->{
   image{asset->{url}}
 }`;
 
-export async function getDacProducts(): Promise<DacProduct[]> {
+export const getDacProducts = cache(async (): Promise<DacProduct[]> => {
   const result = await sanityFetch({ query: DACS_QUERY }) as DacProduct[];
   return result ?? [];
-}
+});

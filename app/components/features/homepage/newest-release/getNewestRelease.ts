@@ -1,4 +1,5 @@
 import { sanityFetch } from "@/sanity/lib/client";
+import { cache } from "react";
 
 export interface NewestReleaseProduct {
   _id: string;
@@ -29,6 +30,6 @@ const NEWEST_RELEASE_QUERY = `*[_type == "homepageData"][0].newestReleaseData{
   }
 }`;
 
-export async function getNewestRelease(): Promise<NewestReleaseData | null> {
+export const getNewestRelease = cache(async (): Promise<NewestReleaseData | null> => {
   return sanityFetch({ query: NEWEST_RELEASE_QUERY });
-}
+});

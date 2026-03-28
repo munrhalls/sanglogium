@@ -1,4 +1,5 @@
 import { sanityFetch } from "@/sanity/lib/client";
+import { cache } from "react";
 
 export interface FeaturedProduct {
   _id: string;
@@ -25,6 +26,6 @@ const FEATURED_QUERY = `*[_type == "homepageData"][0].featuredProducts[]{
   }
 }`;
 
-export async function getFeaturedProducts(): Promise<FeaturedProduct[]> {
+export const getFeaturedProducts = cache(async (): Promise<FeaturedProduct[]> => {
   return sanityFetch({ query: FEATURED_QUERY });
-}
+});

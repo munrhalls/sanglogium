@@ -1,4 +1,5 @@
 import { sanityFetch } from "@/sanity/lib/client";
+import { cache } from "react";
 
 export interface IemProduct {
   _id: string;
@@ -20,7 +21,7 @@ const IEMS_QUERY = `*[_type == "homepageData"][0].iemsGallery[]->{
   image{asset->{url}}
 }`;
 
-export async function getIemProducts(): Promise<IemProduct[]> {
+export const getIemProducts = cache(async (): Promise<IemProduct[]> => {
   const result = await sanityFetch({ query: IEMS_QUERY }) as IemProduct[];
   return result ?? [];
-}
+});
