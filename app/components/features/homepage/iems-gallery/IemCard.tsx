@@ -19,12 +19,12 @@ export default function IemCard({ product, idx }: { product: IemProduct; idx: nu
                     loading="lazy"
                     className="object-cover w-[70%] h-[70%] xs:w-[60%] xs:h-[60%] transition-transform duration-300 group-hover:scale-105 object-center"
                 />
-                <div className="absolute left-4 top-4">
-                    <span className="text-[10px] text-red-500 xs:text-small xs:text-brand-900 font-bold uppercase tracking-editorial">{product.brand}</span>
+                <div className="absolute left-4 top-2 xs:top-4">
+                    <span className="text-[7px] xs:text-small font-bold uppercase tracking-editorial text-brand-900">{product.brand}</span>
                 </div>
             </div>
 
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2 xs:gap-3">
                 <h3 className="type-body font-medium line-clamp-2">
                     {product.name}
                 </h3>
@@ -32,7 +32,7 @@ export default function IemCard({ product, idx }: { product: IemProduct; idx: nu
                     <p className="type-price">
                         ${product.displayPrice}
                     </p>
-                    <button className="btn-cart w-full xs:w-auto">
+                    <button className="btn-cart w-full justify-center xs:w-auto">
                         <ShoppingCart size={20} weight="regular" />
                         Add
                     </button>
