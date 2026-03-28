@@ -85,12 +85,13 @@ export const SEMANTIC_CATEGORIES: Record<string, SemanticCategoryRule> = {
       negative: -50
     }
   },
-  'monitors-iems': {
-    slug: 'monitors-iems',
-    title: 'Monitors & IEMs',
-    positiveKeywords: ['in-ear', 'in ear', 'earbud', 'earbud', 'iem', 'in-ear monitor', 'earphone'],
-    negativeKeywords: ['over-ear', 'open back', 'closed back'],
-    requiredKeywords: ['monitor', 'iem', 'in-ear'],
+  'semi-open': {
+    slug: 'semi-open',
+    title: 'Semi-Open Headphones',
+    positiveKeywords: ['semi-open', 'semi open', 'vented', 'akg', 'grado', 'semi-closed'],
+    negativeKeywords: ['fully open', 'fully closed', 'sealed', 'isolation'],
+    requiredKeywords: ['headphone', 'headphones'],
+    brandMatches: ['AKG', 'Grado', 'Philips'],
     weightings: {
       name: 40,
       brand: 10,
@@ -99,12 +100,12 @@ export const SEMANTIC_CATEGORIES: Record<string, SemanticCategoryRule> = {
       negative: -50
     }
   },
-  'true-wireless-tws': {
-    slug: 'true-wireless-tws',
-    title: 'True Wireless (TWS)',
-    positiveKeywords: ['true wireless', 'tws', 'wireless earbuds', 'bluetooth earbuds'],
-    negativeKeywords: ['wired', 'cable', 'cord'],
-    requiredKeywords: ['wireless', 'bluetooth', 'tws'],
+  'monitors-iems': {
+    slug: 'monitors-iems',
+    title: 'Monitors (IEMs)',
+    positiveKeywords: ['in-ear', 'in ear', 'earbud', 'earbud', 'iem', 'in-ear monitor', 'earphone'],
+    negativeKeywords: ['over-ear', 'open back', 'closed back'],
+    requiredKeywords: ['monitor', 'iem', 'in-ear'],
     weightings: {
       name: 40,
       brand: 10,
@@ -141,6 +142,21 @@ export const SEMANTIC_CATEGORIES: Record<string, SemanticCategoryRule> = {
       negative: -50
     }
   },
+  'bluetooth-dac-amps': {
+    slug: 'bluetooth-dac-amps',
+    title: 'Bluetooth DAC/Amps',
+    positiveKeywords: ['bluetooth amp', 'bluetooth dac', 'btr', 'go blu', 'wireless amp', 'bluetooth receiver'],
+    negativeKeywords: ['wired only', 'desktop', 'stationary', 'no bluetooth'],
+    requiredKeywords: ['bluetooth'],
+    brandMatches: ['iFi', 'FiiO', 'Shanling', 'EarStudio'],
+    weightings: {
+      name: 40,
+      brand: 10,
+      required: 30,
+      positive: 20,
+      negative: -50
+    }
+  },
   'standalone-dacs': {
     slug: 'standalone-dacs',
     title: 'Standalone DACs',
@@ -161,6 +177,21 @@ export const SEMANTIC_CATEGORIES: Record<string, SemanticCategoryRule> = {
     positiveKeywords: ['dac amp', 'dac/amp', 'combo', 'integrated', 'all-in-one'],
     negativeKeywords: ['standalone', 'separate'],
     requiredKeywords: ['dac', 'amp'],
+    weightings: {
+      name: 40,
+      brand: 10,
+      required: 30,
+      positive: 20,
+      negative: -50
+    }
+  },
+  'usb-c-dacs': {
+    slug: 'usb-c-dacs',
+    title: 'USB-C/Dongle DACs',
+    positiveKeywords: ['usb-c dac', 'dongle', 'usb dac', 'dragonfly', 'cayin ru', 'mobile dac'],
+    negativeKeywords: ['standalone', 'desktop', 'separate unit', 'full-size'],
+    requiredKeywords: ['usb', 'dac'],
+    brandMatches: ['AudioQuest', 'Cayin', 'iFi', 'Hidizs'],
     weightings: {
       name: 40,
       brand: 10,
@@ -248,6 +279,21 @@ export const SEMANTIC_CATEGORIES: Record<string, SemanticCategoryRule> = {
     weightings: {
       name: 40,
       brand: 10,
+      required: 30,
+      positive: 20,
+      negative: -50
+    }
+  },
+  'eartips': {
+    slug: 'eartips',
+    title: 'Eartips',
+    positiveKeywords: ['eartip', 'ear tip', 'foam tip', 'silicone tip', 'spinfit', 'comply', 'final e'],
+    negativeKeywords: ['earpad', 'headphone', 'cable', 'case'],
+    requiredKeywords: ['tip', 'eartip'],
+    brandMatches: ['SpinFit', 'Comply', 'Final Audio', 'AZLA', 'Symbio'],
+    weightings: {
+      name: 40,
+      brand: 15,
       required: 30,
       positive: 20,
       negative: -50
