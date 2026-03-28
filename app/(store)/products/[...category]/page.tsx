@@ -45,7 +45,7 @@ export default async function ProductsPage(props: {
       ? searchParamsResolved.dir
       : "asc";
 
-  const slug = path.join("/");
+  const slug = path[path.length - 1]; // Use leaf slug, not full path
   const resolvedId = resolveSlugToId(slug);
   const catalogueKeys = resolvedId ? unrollDescendantKeys(resolvedId) : [];
 
@@ -69,6 +69,16 @@ export default async function ProductsPage(props: {
     }),
   ]);
   const { products, totalProductsCount } = productsResult;
+
+  // Development logging for data path verification
+  if (process.env.NODE_ENV === "development") {
+    console.log(`[Category] ${path.join("/")}`);
+    console.log(`  ├─ Resolved ID: ${resolvedId || "NOT FOUND"}`);
+    console.log(`  ├─ Catalogue Keys: ${catalogueKeys.length}`);
+    console.log(`  ├─ Products Count: ${products.length}`);
+    console.log(`  └─ Sample Products: ${products.slice(0, 5).map((p: { name?: string }) => p.name || "Unnamed").join(", ")}${products.length > 5 ? "..." : ""}`);
+  }
+
   return (
     <>
       <main className="container mx-auto hidden px-4 py-8 md:block">

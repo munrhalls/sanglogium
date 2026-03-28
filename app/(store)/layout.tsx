@@ -28,6 +28,11 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={cn(montserrat.variable, "antialiased")}>
+      <head>
+        {/* Performance: Preconnect to Sanity CDN for faster image loading */}
+        <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://cdn.sanity.io" />
+      </head>
       <body
         className={cn(
           "flex h-dvh w-full flex-col overflow-hidden",
