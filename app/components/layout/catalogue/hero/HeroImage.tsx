@@ -17,7 +17,7 @@ export default function HeroImage({ data }: { data: CatalogueNavItem }) {
         fill
         className="object-contain rounded-none"
         loading="lazy"
-        sizes="(max-width: 1024px) 0px, (max-width: 1280px) 288px, 400px"
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
       />
     </div>
   );
