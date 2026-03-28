@@ -14,15 +14,11 @@ const CATALOGUE_QUERY = `
   }
 }`;
 
-// Transform flat Sanity data to exact legacy JSON structure
 function transformSanityToLegacyJson(items: CatalogueItem[]): { catalogue: any[] } {
-  // Create a map for quick lookup
   const itemMap = new Map(items.map(item => [item._id, item]));
 
-  // Find root items (no parent)
   const rootItems = items.filter(item => !item.parent);
 
-  // Build recursive tree structure matching legacy JSON format
   const catalogue = rootItems.map(rootItem => {
     return buildLegacyCatalogueItem(rootItem, items, itemMap);
   });
@@ -35,24 +31,20 @@ function buildLegacyCatalogueItem(
   allItems: CatalogueItem[],
   itemMap: Map<string, CatalogueItem>
 ): any {
-  // Find direct children - the parent reference uses _id not _ref
   const children = allItems.filter(child =>
     child.parent && child.parent._id === item._id
   );
 
-  // Build children array recursively
   const childrenArray = children.map(child => {
     return buildLegacyCatalogueItem(child, allItems, itemMap);
   });
 
-  // Return exact legacy structure
   const legacyItem: any = {
     id: item.slug?.current || item.title?.toLowerCase().replace(/\s+/g, '-') || item._id,
     title: item.title,
     type: item.type,
   };
 
-  // Add slug if present (for link types)
   if (item.slug) {
     legacyItem.slug = {
       current: item.slug.current,
@@ -60,12 +52,10 @@ function buildLegacyCatalogueItem(
     };
   }
 
-  // Add icon if present (for root items)
   if (item.icon) {
     legacyItem.icon = item.icon;
   }
 
-  // Add children if any exist
   if (childrenArray.length > 0) {
     legacyItem.children = childrenArray;
   }
@@ -77,8 +67,6 @@ export async function getSanityCatalogueData(): Promise<{ catalogue: any[] }> {
   try {
     const sanityItems = await sanityFetch<CatalogueItem[]>({
       query: CATALOGUE_QUERY,
-      // Add caching tags for Next.js
-      // Note: You may need to configure revalidate tags in your Next.js setup
     });
 
     const result = transformSanityToLegacyJson(sanityItems);
@@ -87,8 +75,6 @@ export async function getSanityCatalogueData(): Promise<{ catalogue: any[] }> {
   } catch (error) {
     console.error('Error fetching catalogue data from Sanity:', error);
 
-    // Fallback to empty catalogue to prevent UI crashes
-    // In production, you might want to throw an error or implement retry logic
     return { catalogue: [] };
   }
 }

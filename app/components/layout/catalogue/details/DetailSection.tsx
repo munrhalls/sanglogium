@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils/tailwind";
+import Link from "next/link";
 import type { CatalogueNavItem } from "../catalogue-nav.types";
 
 type CatalogueSection = CatalogueNavItem["sections"][number];
@@ -40,7 +41,7 @@ export default function DetailSection({
               "group-data-[active=true]/animation-settle:[transition-delay:calc(150ms+(var(--index)*100ms))]"
             )}
           >
-            <a
+            <Link
               href={link.url}
               className={cn(
                 "pl-2 text-body text-secondary-300",
@@ -48,7 +49,7 @@ export default function DetailSection({
               )}
             >
               {link.label}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>
