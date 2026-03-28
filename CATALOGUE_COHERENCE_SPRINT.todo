@@ -1,0 +1,489 @@
+# SPRINT: Catalogue Coherence & Content Optimization
+# Based on: CATALOGUE_COHERENCE_CONTENT_AUDIT.md
+# Generated: March 28, 2026
+# Goal: Transform catalog from 20 leaf nodes to 23 leaf nodes
+#       Remove TWS (mass-market dilution), add 4 audiophile-focused categories
+
+═══════════════════════════════════════════════════════════════════════════════
+PRE-SPRINT REQUIREMENTS
+═══════════════════════════════════════════════════════════════════════════════
+
+☐ BLOCKER CHECK: Verify all prerequisite files exist
+  - data/catalogue-index.json (VFS index)
+  - lib/catalogue/semanticConfig.ts (semantic rules)
+  - scripts/build-catalogue-index.mjs (build pipeline)
+  - tests/regression/catalogue-coherence-sprint.regression.test.ts
+
+☐ PRE-SPRINT REGRESSION TEST: Execute and PASS
+  COMMAND: npx tsx tests/regression/catalogue-coherence-sprint.regression.test.ts
+  EXPECTED: All tests pass (documents baseline state with TWS present)
+  OUTPUT CAPTURE: Save output to tests/regression/baseline-results.log
+
+☐ ENVIRONMENT CHECK: Verify Sanity Studio access
+  - Can log into Sanity Studio
+  - Can view and edit catalogueItem documents
+  - Can view and edit product documents
+
+═══════════════════════════════════════════════════════════════════════════════
+REGRESSION RISK ANALYSIS & MITIGATION
+═══════════════════════════════════════════════════════════════════════════════
+
+RISK AREA 1: VFS Build Pipeline
+- AFFECTED: scripts/build-catalogue-index.mjs, data/catalogue-index.json
+- REGRESSION RISK: HIGH - Build script produces invalid index
+- MITIGATION: Build validation at line 130-171 checks for missing IDs
+- TEST: npx tsx scripts/build-catalogue-index.mjs must exit 0
+
+RISK AREA 2: Category Resolution Functions
+- AFFECTED: data/catalogue.ts (resolveSlugToId, unrollDescendantKeys)
+- REGRESSION RISK: MEDIUM - Slug resolution fails after renames
+- MITIGATION: Functions are pure, no hardcoded slugs
+- TEST: tests/integration/catalogue-to-products.test.ts
+
+RISK AREA 3: Semantic Configuration
+- AFFECTED: lib/catalogue/semanticConfig.ts
+- REGRESSION RISK: MEDIUM - Missing rules for new categories
+- MITIGATION: getSemanticRule() returns null for unknown slugs (graceful)
+- TEST: Semantic rules must have required fields
+
+RISK AREA 4: Existing Product Assignments
+- AFFECTED: Sanity CMS product documents (catalogueLocationKeys)
+- REGRESSION RISK: HIGH - Products assigned to removed TWS category
+- MITIGATION: Archive TWS products before category removal
+- TEST: vfs-semantic-audit.mjs must not crash on missing category references
+
+RISK AREA 5: Navigation & Frontend
+- AFFECTED: app/components/ui/navigation (CatalogueNav)
+- REGRESSION RISK: LOW - Navigation reads from VFS index dynamically
+- MITIGATION: No hardcoded category slugs in components
+- TEST: Visual inspection of navigation after rebuild
+
+═══════════════════════════════════════════════════════════════════════════════
+SCOPE CONTRACT 1: TWS Category Removal
+═══════════════════════════════════════════════════════════════════════════════
+
+OBJECTIVE: Remove True Wireless (TWS) category and archive associated products
+CURRENT STATE: Category exists at slug "true-wireless-tws", ID: sbbu2eig5fx84uht05ic863j
+TARGET STATE: Category removed, products archived, semantic rules removed
+
+--- LAYER 1: Product Archiving (MUST complete before category removal) ---
+
+DoD 1.1: Identify all TWS-assigned products
+  □ Query Sanity: *[_type == "product" && "sbbu2eig5fx84uht05ic863j" in catalogueLocationKeys]{_id, name, brand}
+  □ Export product list to _project/tws-products-archive-list.json
+  □ VERIFY: List has < 100 items (manual reviewable)
+  □ TEST: Count matches expected (run: node scripts/vfs-semantic-audit.mjs)
+
+DoD 1.2: Create archive migration script
+  □ SCRIPT: scripts/migrate-tws-to-archive.mjs
+    - For each TWS product:
+      a. Copy to _type == "archivedProduct"
+      b. Set archiveReason: "Category removed - off-theme (TWS)"
+      c. Set archivedAt: new Date().toISOString()
+      d. Keep all other fields intact
+  □ TEST: Script runs in --dry-run mode showing what would change
+  □ TEST: No errors during execution
+
+DoD 1.3: Execute archive migration
+  □ BACKUP: Export affected products to sanity/backups/tws-archive-backup.json
+  □ RUN: node scripts/migrate-tws-to-archive.mjs
+  □ VERIFY: Original products have _type changed to "archivedProduct"
+  □ VERIFY: No products remain with TWS key in catalogueLocationKeys
+  □ TEST: Query returns 0 results: *[_type == "product" && "sbbu2eig5fx84uht05ic863j" in catalogueLocationKeys]
+
+--- LAYER 2: Category Document Removal ---
+
+DoD 1.4: Remove TWS catalogueItem from Sanity
+  □ OPEN: Sanity Studio > Catalogue Items
+  □ DELETE: "True Wireless (TWS)" document (ID: sbbu2eig5fx84uht05ic863j)
+  □ VERIFY: Document no longer appears in Studio
+  □ TEST: Query returns null: *[_type == "catalogueItem" && _id == "sbbu2eig5fx84uht05ic863j"][0]
+
+DoD 1.5: Update parent header children array
+  □ EDIT: "In-Ear & Wireless" header (fxvwrl18sixw5b9ro2jrlepa)
+  □ REMOVE: "sbbu2eig5fx84uht05ic863j" from children array
+  □ VERIFY: Children array now has only 1 item (t2anvkkjfz9knqi85kozuaze)
+
+--- LAYER 3: Semantic Configuration Cleanup ---
+
+DoD 1.6: Remove TWS semantic rules
+  □ EDIT: lib/catalogue/semanticConfig.ts
+  □ REMOVE: 'true-wireless-tws' entry from SEMANTIC_CATEGORIES
+  □ VERIFY: File length decreases by ~20 lines
+  □ TEST: getSemanticRule('true-wireless-tws') returns null
+  □ TEST: npx tsc --noEmit passes (no type errors)
+
+DoD 1.7: Update semantic audit exclusion list (if exists)
+  □ SEARCH: vfs-semantic-audit.mjs for TWS references
+  □ REMOVE: Any hardcoded TWS checks or expectations
+  □ TEST: Audit script runs without errors
+
+--- LAYER 4: Build & Validation ---
+
+DoD 1.8: Rebuild VFS index
+  □ RUN: node scripts/build-catalogue-index.mjs
+  □ VERIFY: Build succeeds (exit 0)
+  □ VERIFY: data/catalogue-index.json updated
+  □ CHECK: slotMetadataMap no longer contains TWS ID
+  □ CHECK: slugToIdMap no longer contains "true-wireless-tws"
+  □ CHECK: Leaf count decreased by 1 (from 20 to 19)
+
+DoD 1.9: Post-removal regression test
+  □ RUN: npx tsx tests/regression/catalogue-coherence-sprint.regression.test.ts
+  □ EXPECT: TWS removal tests now PASS
+  □ OUTPUT CAPTURE: Save to tests/regression/post-tws-removal.log
+
+═══════════════════════════════════════════════════════════════════════════════
+SCOPE CONTRACT 2: New Categories Addition (4 Categories)
+═══════════════════════════════════════════════════════════════════════════════
+
+OBJECTIVE: Add 4 audiophile-focused categories to fill ecosystem gaps
+CURRENT STATE: 19 leaf categories (after TWS removal)
+TARGET STATE: 23 leaf categories (+4 net from original 20)
+
+--- CATEGORY 2.1: Semi-Open Headphones ---
+
+DoD 2.1.1: Create catalogueItem document in Sanity
+  □ CREATE: catalogueItem document
+    - _id: (auto-generated)
+    - title: "Semi-Open"
+    - type: "link"
+    - slug: { current: "semi-open" }
+    - parent: Reference to "By Design" header (ekv4twh175wcse4fl4jjdxfq)
+    - sortOrder: 2 (after Open-Back, before Closed-Back)
+  □ VERIFY: Appears in Studio under "By Design" > "Semi-Open"
+  □ TEST: Query returns document: *[_type == "catalogueItem" && slug.current == "semi-open"][0]
+
+DoD 2.1.2: Add semantic configuration
+  □ EDIT: lib/catalogue/semanticConfig.ts
+  □ ADD: 'semi-open' entry to SEMANTIC_CATEGORIES
+    - slug: 'semi-open'
+    - title: 'Semi-Open Headphones'
+    - positiveKeywords: ['semi-open', 'semi open', 'vented', 'akg', 'grado']
+    - negativeKeywords: ['fully open', 'closed', 'sealed']
+    - requiredKeywords: ['headphone', 'headphones']
+    - brandMatches: ['AKG', 'Grado', 'Philips']
+    - weightings: { name: 40, brand: 10, required: 30, positive: 20, negative: -50 }
+  □ TEST: getSemanticRule('semi-open') returns valid rule
+  □ TEST: TypeScript compilation passes
+
+DoD 2.1.3: Update parent header children array
+  □ EDIT: "By Design" header in Sanity
+  □ ADD: new Semi-Open ID to children array (between Open-Back and Closed-Back)
+  □ VERIFY: Order in Studio: Open-Back, Semi-Open, Closed-Back
+
+--- CATEGORY 2.2: Bluetooth DAC/Amps ---
+
+DoD 2.2.1: Create catalogueItem document in Sanity
+  □ CREATE: catalogueItem document
+    - title: "Bluetooth DAC/Amps"
+    - type: "link"
+    - slug: { current: "bluetooth-dac-amps" }
+    - parent: Reference to "Amplification" header (hqb22ca5czb252r0r7l1xmet)
+    - sortOrder: 2 (after Desktop Amps, before Portable Amps)
+  □ VERIFY: Appears in Studio under "Amplification"
+
+DoD 2.2.2: Add semantic configuration
+  □ EDIT: lib/catalogue/semanticConfig.ts
+  □ ADD: 'bluetooth-dac-amps' entry
+    - slug: 'bluetooth-dac-amps'
+    - title: 'Bluetooth DAC/Amps'
+    - positiveKeywords: ['bluetooth amp', 'bluetooth dac', 'btr', 'go blu', 'wireless amp']
+    - negativeKeywords: ['wired only', 'desktop', 'stationary']
+    - requiredKeywords: ['bluetooth']
+    - brandMatches: ['iFi', 'FiiO', 'Shanling', 'EarStudio']
+    - weightings: { name: 40, brand: 10, required: 30, positive: 20, negative: -50 }
+
+DoD 2.2.3: Update parent header children array
+  □ EDIT: "Amplification" header in Sanity
+  □ ADD: new Bluetooth DAC/Amps ID to children array
+
+--- CATEGORY 2.3: USB-C/Dongle DACs ---
+
+DoD 2.3.1: Create catalogueItem document in Sanity
+  □ CREATE: catalogueItem document
+    - title: "USB-C/Dongle DACs"
+    - type: "link"
+    - slug: { current: "usb-c-dacs" }
+    - parent: Reference to "Digital Sources" header (lkuqr2n1gpeivrvxisnfs3ot)
+    - sortOrder: 2 (between Standalone DACs and DAC/Amp Combos)
+  □ VERIFY: Appears in Studio under "Digital Sources"
+
+DoD 2.3.2: Add semantic configuration
+  □ EDIT: lib/catalogue/semanticConfig.ts
+  □ ADD: 'usb-c-dacs' entry
+    - slug: 'usb-c-dacs'
+    - title: 'USB-C/Dongle DACs'
+    - positiveKeywords: ['usb-c dac', 'dongle', 'usb dac', 'dragonfly', 'cayin ru']
+    - negativeKeywords: ['standalone', 'desktop', 'separate unit']
+    - requiredKeywords: ['usb', 'dac']
+    - brandMatches: ['AudioQuest', 'Cayin', 'iFi', 'Hidizs']
+    - weightings: { name: 40, brand: 10, required: 30, positive: 20, negative: -50 }
+
+DoD 2.3.3: Update parent header children array
+  □ EDIT: "Digital Sources" header in Sanity
+  □ ADD: new USB-C/Dongle DACs ID to children array
+
+--- CATEGORY 2.4: Eartips ---
+
+DoD 2.4.1: Create catalogueItem document in Sanity
+  □ CREATE: catalogueItem document
+    - title: "Eartips"
+    - type: "link"
+    - slug: { current: "eartips" }
+    - parent: Reference to "Maintenance" header (e4rct8015rxgy011710isd5e)
+    - sortOrder: 1 (before Earpads, or create new "Fit & Comfort" header)
+  □ VERIFY: Appears in Studio under parent header
+
+DoD 2.4.2: Add semantic configuration
+  □ EDIT: lib/catalogue/semanticConfig.ts
+  □ ADD: 'eartips' entry
+    - slug: 'eartips'
+    - title: 'Eartips'
+    - positiveKeywords: ['eartip', 'ear tip', 'foam tip', 'silicone tip', 'spinfit', 'comply']
+    - negativeKeywords: ['earpad', 'headphone', 'cable']
+    - requiredKeywords: ['tip', 'eartip']
+    - brandMatches: ['SpinFit', 'Comply', 'Final Audio', 'AZLA', 'Symbio']
+    - weightings: { name: 40, brand: 15, required: 30, positive: 20, negative: -50 }
+
+DoD 2.4.3: Update parent header children array
+  □ EDIT: Parent header ("Maintenance" or new "Fit & Comfort") in Sanity
+  □ ADD: new Eartips ID to children array
+
+--- LAYER 5: Bulk Build & Validation ---
+
+DoD 2.5: Rebuild VFS index after all 4 categories added
+  □ RUN: node scripts/build-catalogue-index.mjs
+  □ VERIFY: Build succeeds
+  □ VERIFY: slotMetadataMap contains 4 new category IDs
+  □ VERIFY: slugToIdMap contains 4 new slugs
+  □ CHECK: Total leaf count = 23 (was 20, -1 TWS + 4 new = 23)
+
+DoD 2.6: New categories regression test
+  □ RUN: npx tsx tests/regression/catalogue-coherence-sprint.regression.test.ts
+  □ EXPECT: New category tests now PASS
+  □ VERIFY: All 4 new slugs resolve to IDs
+  □ VERIFY: All 4 new categories have semantic rules
+
+═══════════════════════════════════════════════════════════════════════════════
+SCOPE CONTRACT 3: Category Renames
+═══════════════════════════════════════════════════════════════════════════════
+
+OBJECTIVE: Update category names for clarity and theme alignment
+
+--- RENAME 3.1: Header "In-Ear & Wireless" → "In-Ear Monitors" ---
+
+DoD 3.1.1: Update header document in Sanity
+  □ EDIT: catalogueItem (fxvwrl18sixw5b9ro2jrlepa)
+  □ CHANGE: title from "In-Ear & Wireless" to "In-Ear Monitors"
+  □ VERIFY: Change reflects in Studio immediately
+
+DoD 3.1.2: Update slotMetadataMap (automatic on rebuild)
+  □ RUN: node scripts/build-catalogue-index.mjs
+  □ VERIFY: slotMetadataMap[fxvwrl18sixw5b9ro2jrlepa].title == "In-Ear Monitors"
+
+--- RENAME 3.2: Leaf "Monitors (IEMs)" → "Universal IEMs" ---
+
+DoD 3.2.1: Update leaf document in Sanity
+  □ EDIT: catalogueItem (t2anvkkjfz9knqi85kozuaze)
+  □ CHANGE: title from "Monitors (IEMs)" to "Universal IEMs"
+  □ KEEP: slug as "monitors-iems" (changing slugs breaks URLs) OR change to "universal-iems"
+  
+  DECISION REQUIRED:
+  Option A: Keep slug "monitors-iems" (no URL change, simpler)
+  Option B: Change slug to "universal-iems" (requires URL redirect strategy)
+  
+  □ IF Option B: Create redirect from /shop/monitors-iems → /shop/universal-iems
+
+DoD 3.2.2: Update semantic configuration (if slug changed)
+  □ IF Option B: Update semanticConfig.ts to use new slug
+  □ RENAME: 'monitors-iems' → 'universal-iems' in SEMANTIC_CATEGORIES
+
+--- RENAME 3.3: Header "Maintenance" → "Fit & Comfort" ---
+
+DoD 3.3.1: Update header document in Sanity
+  □ EDIT: catalogueItem (e4rct8015rxgy011710isd5e)
+  □ CHANGE: title from "Maintenance" to "Fit & Comfort"
+  □ VERIFY: Change reflects in Studio
+
+DoD 3.3.2: Rebuild and validate
+  □ RUN: node scripts/build-catalogue-index.mjs
+  □ VERIFY: All renamed titles appear in slotMetadataMap
+
+═══════════════════════════════════════════════════════════════════════════════
+SCOPE CONTRACT 4: Build Pipeline & Index Validation
+═══════════════════════════════════════════════════════════════════════════════
+
+OBJECTIVE: Ensure VFS index correctly reflects all changes
+
+DoD 4.1: Final VFS index rebuild
+  □ RUN: node scripts/build-catalogue-index.mjs
+  □ CAPTURE: Save output to _project/sprints/build-output-final.log
+  □ VERIFY: Exit code 0
+  □ VERIFY: "Mapped 26 categories" (31 total nodes: 23 leaves + 8 headers)
+  □ VERIFY: "VALIDATION PASSED - All referenced IDs exist"
+
+DoD 4.2: Index content validation
+  □ VERIFY: data/catalogue-index.json exists and is valid JSON
+  □ VERIFY: generatedAt timestamp is recent
+  □ VERIFY: slugToIdMap has 23 entries (was 20, -1 + 4 = 23)
+  □ VERIFY: No "true-wireless-tws" in slugToIdMap
+  □ VERIFY: Contains 4 new slugs: semi-open, bluetooth-dac-amps, usb-c-dacs, eartips
+  □ VERIFY: slotMetadataMap has 31 entries (23 leaves + 8 headers)
+
+DoD 4.3: Subtree validation
+  □ TEST: unrollDescendantKeys("ugyeto8653n495dpf89nzoar") returns 12 keys (was 11, +1 semi-open)
+  □ TEST: unrollDescendantKeys("hqb22ca5czb252r0r7l1xmet") returns 4 keys (was 2, +2 new)
+  □ TEST: unrollDescendantKeys("lkuqr2n1gpeivrvxisnfs3ot") returns 6 keys (was 4, +2 new)
+  □ TEST: unrollDescendantKeys("e4rct8015rxgy011710isd5e") returns 4 keys (was 2, +1 new + renamed)
+
+DoD 4.4: Navigation integration test
+  □ RUN: npm run dev (or next dev)
+  □ VERIFY: Application starts without errors
+  □ NAVIGATE: Catalogue dropdown shows new structure
+  □ VERIFY: New categories appear in navigation
+  □ VERIFY: TWS does not appear in navigation
+  □ VERIFY: Renamed categories show new titles
+
+═══════════════════════════════════════════════════════════════════════════════
+SCOPE CONTRACT 5: Final Regression Test Suite
+═══════════════════════════════════════════════════════════════════════════════
+
+OBJECTIVE: Validate entire system after all changes
+
+DoD 5.1: Full regression test execution
+  □ RUN: npx tsx tests/regression/catalogue-coherence-sprint.regression.test.ts
+  □ EXPECT: All tests PASS
+  □ CAPTURE: Save full output to tests/regression/final-results.log
+
+DoD 5.2: Semantic audit validation
+  □ RUN: node scripts/vfs-semantic-audit.mjs
+  □ EXPECT: Generates report without errors
+  □ VERIFY: Report includes all 23 leaf categories
+  □ VERIFY: No "true-wireless-tws" in report
+  □ CAPTURE: Save report to audit-reports/coherence-spring-final-audit.md
+
+DoD 5.3: Existing integration tests
+  □ RUN: npx tsx tests/integration/catalogue-to-products.test.ts
+  □ EXPECT: All tests PASS (may need to update expected counts)
+  □ UPDATE: If leaf counts changed, update expected values in test
+
+DoD 5.4: Unit tests
+  □ RUN: npx tsx tests/unit/vfs/descendant-unrolling.test.ts
+  □ EXPECT: All tests PASS (may need to update expected counts)
+  □ UPDATE: If subtree counts changed, update expected values in test
+
+DoD 5.5: Build integration
+  □ RUN: npm run build
+  □ EXPECT: Build succeeds (exit 0)
+  □ EXPECT: No VFS-related errors in build output
+
+═══════════════════════════════════════════════════════════════════════════════
+POST-SPRINT DOCUMENTATION
+═══════════════════════════════════════════════════════════════════════════════
+
+☐ DOCUMENT: Create sprint completion summary
+  FILE: _project/sprints/completed/CATALOGUE_COHERENCE_SPRINT_SUMMARY.md
+  CONTENT:
+    - Sprint goal and outcome
+    - List of changes made
+    - Final category structure (tree diagram)
+    - Product archival summary (TWS products archived)
+    - Regression test results
+    - Known issues or follow-ups
+
+☐ ARCHIVE: Sprint artifacts
+  □ Save all test logs to _project/sprints/completed/
+  □ Save build outputs
+  □ Save audit reports
+
+☐ UPDATE: Master documentation
+  □ Update README or relevant docs with new category structure
+  □ Update any hardcoded category lists in documentation
+
+═══════════════════════════════════════════════════════════════════════════════
+SPRINT SUCCESS CRITERIA (Definition of Done)
+═══════════════════════════════════════════════════════════════════════════════
+
+ALL of the following MUST be true for sprint completion:
+
+✅ 1. TWS category fully removed
+   - No "true-wireless-tws" in slugToIdMap
+   - No TWS catalogueItem in Sanity
+   - TWS products archived (not deleted)
+   - TWS semantic rules removed
+
+✅ 2. Four new categories added and functional
+   - semi-open resolves to ID
+   - bluetooth-dac-amps resolves to ID
+   - usb-c-dacs resolves to ID
+   - eartips resolves to ID
+   - All have semantic rules
+   - All appear in navigation
+
+✅ 3. Category renames applied
+   - "In-Ear & Wireless" → "In-Ear Monitors"
+   - "Monitors (IEMs)" → "Universal IEMs"
+   - "Maintenance" → "Fit & Comfort"
+
+✅ 4. VFS index valid
+   - Build succeeds without errors
+   - 23 leaf categories in slugToIdMap
+   - All subtree queries work correctly
+   - No orphaned children references
+
+✅ 5. Regression tests pass
+   - tests/regression/catalogue-coherence-sprint.regression.test.ts: ALL PASS
+   - tests/integration/catalogue-to-products.test.ts: ALL PASS
+   - tests/unit/vfs/descendant-unrolling.test.ts: ALL PASS
+
+✅ 6. Application runs correctly
+   - npm run dev starts without errors
+   - Navigation shows correct structure
+   - No console errors related to categories
+
+✅ 7. Documentation updated
+   - Sprint summary created
+   - Category structure documented
+   - Audit report generated
+
+═══════════════════════════════════════════════════════════════════════════════
+ESTIMATED EFFORT & TIMELINE
+═══════════════════════════════════════════════════════════════════════════════
+
+SCOPE 1 (TWS Removal):        2-3 hours (mostly product archival)
+SCOPE 2 (New Categories):     3-4 hours (4 categories × ~1 hour each)
+SCOPE 3 (Renames):            30 minutes
+SCOPE 4 (Build Validation): 30 minutes
+SCOPE 5 (Regression Tests):   1 hour
+Documentation:                1 hour
+
+TOTAL ESTIMATED: 8-10 hours of focused work
+
+SEQUENCING:
+Day 1: Scope 1 (TWS removal)
+Day 2: Scope 2 (New categories - 2 per session)
+Day 3: Scopes 3-5, Documentation
+
+═══════════════════════════════════════════════════════════════════════════════
+EMERGENCY ROLLBACK PROCEDURE
+═══════════════════════════════════════════════════════════════════════════════
+
+If critical failure occurs:
+
+1. STOP: Do not continue making changes
+2. RESTORE: Revert data/catalogue-index.json from git
+   git checkout data/catalogue-index.json
+3. RESTORE: Revert semanticConfig.ts from git
+   git checkout lib/catalogue/semanticConfig.ts
+4. VERIFY: Run regression tests to confirm baseline restored
+5. DOCUMENT: Record what failed in sprint summary
+
+For Sanity CMS changes (harder to revert):
+- Keep detailed notes of all document IDs created/modified
+- Manual restoration through Studio may be required
+- Consider using Sanity CLI for scripted backup/restore
+
+═══════════════════════════════════════════════════════════════════════════════
+END OF SPRINT DEFINITION
+═══════════════════════════════════════════════════════════════════════════════
