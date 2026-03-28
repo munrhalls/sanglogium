@@ -28,7 +28,7 @@ export default function IemCard({ product, idx }: { product: IemProduct; idx: nu
                 <h3 className="type-body font-medium line-clamp-2">
                     {product.name}
                 </h3>
-                <div className="flex flex-col xs:flex-row xs:items-center justify-between gap-2">
+                <div className="flex flex-col xs:flex-row xs:items-center justify-between gap-3">
                     <p className="type-price">
                         ${product.displayPrice}
                     </p>
