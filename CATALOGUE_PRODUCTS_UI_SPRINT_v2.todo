@@ -1,0 +1,324 @@
+# Sprint: Fix Catalogue → Products Navigation & Semantic Validation
+
+## Overview
+**Goal**: Fix the critical path from catalogue item click → products page to use proper Next.js 15 patterns and add semantic product validation with console logging.
+
+**Current State**: 
+- **CRITICAL BUG**: DetailSection.tsx uses `<a>` tag (line 43-51) causing full page reloads
+- URLs generated as `/products/headphones/open-back` in data/catalogue.ts
+- Products page uses catch-all route `[...category]/page.tsx`
+- Semantic validation exists but not integrated into product fetch
+- SidebarClient.tsx has hardcoded colors (bg-blue-950)
+
+**Target State**:
+- DetailSection uses Next.js `Link` component for client-side navigation
+- Semantic validation runs on products fetch with console logging
+- Zero regression in existing functionality
+- Full adherence to Next.js 15 App Router patterns
+
+---
+
+## End-to-End Critical Path Analysis
+
+### Flow Diagram
+```
+User Clicks Catalogue Item
+    ↓
+DetailSection.tsx (HAS BUG: uses <a> not Link)
+    ↓
+URL: /products/headphones/open-back
+    ↓
+[...category]/page.tsx (catch-all route)
+    ↓
+resolveSlugToId("headphones/open-back") → catalogue ID
+    ↓
+unrollDescendantKeys(id) → all child category IDs
+    ↓
+getSelectedProducts(catalogueKeys) → products
+    ↓
+ProductsGrid displays products
+```
+
+### Problems Identified
+
+| # | Problem | Location | Impact | Severity |
+|---|---------|----------|--------|----------|
+| 1 | **Uses `<a>` not `Link`** | DetailSection.tsx:43-51 | Full page reload, state loss | 🔴 CRITICAL |
+| 2 | **Semantic validation not integrated** | getSelectedProducts.ts | No validation products match category | 🔴 CRITICAL |
+| 3 | **No console logging** | [...category]/page.tsx | Can't verify semantic matches | 🟡 MEDIUM |
+| 4 | **Hardcoded colors** | SidebarClient.tsx:18 | Design system violation | 🟡 MEDIUM |
+| 5 | **Console.log in production** | getCatalogueData.ts:73 | Data leak in production | 🟡 MEDIUM |
+
+---
+
+## Regression Risk Assessment
+
+**Code Areas at Risk**:
+1. `app/components/layout/catalogue/details/DetailSection.tsx` - Navigation fix (HIGH RISK)
+2. `sanity/lib/products/getSelectedProducts.ts` - Semantic integration (HIGH RISK)
+3. `app/(store)/products/[...category]/page.tsx` - Logging addition (MEDIUM RISK)
+4. `app/(store)/products/SidebarClient.tsx` - Color fix (LOW RISK)
+5. `data/catalogue.ts` - URL generation (MEDIUM RISK - verify still works)
+
+---
+
+## Scope Contract 1: Fix Navigation (DetailSection.tsx)
+
+**Objective**: Replace `<a>` tag with Next.js `Link` component for client-side navigation.
+
+**Files to Modify**:
+- `app/components/layout/catalogue/details/DetailSection.tsx`
+
+**DoD - Layer 1 (Structure)**:
+- [ ] Import `Link` from "next/link"
+- [ ] Replace `<a>` with `<Link>` component
+- [ ] Keep `href={link.url}` prop unchanged
+- [ ] Keep all existing className and children
+
+**DoD - Layer 2 (Layout)**:
+- [ ] No visual changes to link appearance
+- [ ] No changes to hover/active states
+- [ ] No changes to animation/transition behavior
+- [ ] Staggered animation delays preserved
+
+**DoD - Layer 3 (Surface)**:
+- [ ] Typography unchanged (text-body, text-secondary-300)
+- [ ] Colors unchanged (hover:text-brand-200, active:text-brand-400)
+- [ ] Spacing unchanged (pl-2)
+- [ ] Transitions preserved
+
+**DoD - Layer 4 (Interaction)**:
+- [ ] Client-side navigation works (no full page reload)
+- [ ] Hover states work
+- [ ] Active states work
+- [ ] Keyboard navigation works
+- [ ] Prefetching enabled by default
+
+**Verification (Testing)**:
+- [ ] E2E test: Click catalogue item → products page loads via client navigation
+- [ ] E2E test: URL changes without page reload (check document.body doesn't flash)
+- [ ] E2E test: Back button works correctly
+- [ ] E2E test: Hover states still show brand-200 color
+- [ ] Manual: Network tab shows no full document requests on navigation
+
+---
+
+## Scope Contract 2: Integrate Semantic Validation
+
+**Objective**: Add semantic product validation to product fetch with console logging.
+
+**Files to Modify**:
+- `sanity/lib/products/getSelectedProducts.ts` - Add semantic wrapper
+- `app/(store)/products/[...category]/page.tsx` - Add console logging
+
+**Files to Create**:
+- `lib/catalogue/semanticLogger.ts` - Console formatting utilities
+
+**DoD - Layer 1 (Structure)**:
+- [ ] New function `getSelectedProductsWithValidation()` wraps existing function
+- [ ] Returns same shape as original (products, totalProductsCount)
+- [ ] Semantic analysis runs on returned products array
+- [ ] Logger utility with `logSemanticSummary()` and `logSemanticDetails()` functions
+
+**DoD - Layer 2 (Layout)**:
+- [ ] Validation runs after product fetch (non-blocking to return)
+- [ ] Summary statistics calculated: valid (>=80), moderate (60-79), invalid (<60)
+- [ ] Console header format: "=== Category: [Name] | [X] products ==="
+- [ ] Per-product log format: "[emoji] [Product Name] ([score]/100)"
+- [ ] Summary line: "Valid: X | Moderate: Y | Invalid: Z | Avg: Z%"
+
+**DoD - Layer 3 (Surface)**:
+- [ ] Emojis: ✅ (>=80), ⚠️ (60-79), ❌ (<60)
+- [ ] Product names truncated at 40 chars with "..."
+- [ ] Category context included
+- [ ] Score color coding in console (if supported)
+- [ ] Empty category shows: "⚠️ No products in category"
+
+**DoD - Layer 4 (Interaction)**:
+- [ ] Only runs when `process.env.NODE_ENV === 'development'`
+- [ ] Errors in validation caught and logged, don't break fetch
+- [ ] Large product lists (>20) show summary only, not individual products
+- [ ] Feature flag: `DISABLE_SEMANTIC_LOGS` to disable
+- [ ] Performance: <5ms overhead
+
+**Verification (Testing)**:
+- [ ] Unit test: Returns same products as original function
+- [ ] Unit test: Semantic scores calculated correctly for known products
+- [ ] Unit test: Console output formatted correctly
+- [ ] E2E test: /products/headphones/open-back shows semantic logs
+- [ ] E2E test: /products/audio-electronics/desktop-amps shows semantic logs
+- [ ] E2E test: Production build has no semantic logs
+
+---
+
+## Scope Contract 3: Fix Design System Violations
+
+**Objective**: Fix hardcoded colors in SidebarClient.tsx
+
+**Files to Modify**:
+- `app/(store)/products/SidebarClient.tsx`
+
+**DoD - Layer 1 (Structure)**:
+- [ ] Replace `bg-blue-950` with design system token
+- [ ] Replace `bg-blue-700` with design system token
+- [ ] Replace `bg-white` with design system token (if not correct)
+
+**DoD - Layer 2 (Layout)**:
+- [ ] Background color matches design system intent
+- [ ] Button colors use semantic tokens
+- [ ] No visual regression from changes
+
+**DoD - Layer 3 (Surface)**:
+- [ ] Use `bg-surface.card` or `bg-brand-800` for sidebar background
+- [ ] Use `btn-primary` or `btn-secondary` classes for buttons
+- [ ] Active state uses proper accent color
+- [ ] Text uses proper text tokens
+
+**DoD - Layer 4 (Interaction)**:
+- [ ] Hover states preserved
+- [ ] Active states preserved
+- [ ] Focus states preserved
+- [ ] Transitions preserved
+
+**Verification (Testing)**:
+- [ ] Visual regression: Screenshot comparison before/after
+- [ ] Manual check: No hardcoded hex values in computed styles
+- [ ] Design review: Colors match design system
+
+---
+
+## Scope Contract 4: Remove Production Console Logs
+
+**Objective**: Remove or conditionalize console.log in getCatalogueData.ts
+
+**Files to Modify**:
+- `app/components/layout/catalogue/getCatalogueData.ts`
+
+**DoD - Layer 1 (Structure)**:
+- [ ] Console.log wrapped in environment check
+- [ ] Or removed entirely
+
+**DoD - Layer 2 (Layout)**:
+- [ ] Function still returns correct data
+- [ ] No logging in production builds
+
+**DoD - Layer 3 (Surface)**:
+- [ ] Development mode still shows logs if needed
+
+**DoD - Layer 4 (Interaction)**:
+- [ ] No performance impact
+
+**Verification (Testing)**:
+- [ ] Unit test: Function returns data with no logs in production mode
+- [ ] Build test: Production build has no catalogue data logs
+
+---
+
+## Scope Contract 5: Regression Test Suite
+
+**Objective**: Ensure zero regression in catalogue → products navigation.
+
+**Files to Create**:
+- `tests/catalogue/navigation.regression.test.ts`
+- `tests-e2e/catalogue-to-products.spec.ts`
+
+**DoD - Layer 1 (Structure)**:
+- [ ] Test file for navigation functionality
+- [ ] Mock catalogue data with 3 root categories
+- [ ] Mock products for each leaf category
+- [ ] E2E test covers all 22 category paths
+
+**DoD - Layer 2 (Layout)**:
+- [ ] Unit test: Link component renders correctly
+- [ ] Unit test: URL generation produces correct paths
+- [ ] E2E test: Click each root category → subcategory → products page
+- [ ] E2E test: Products display for each category
+- [ ] E2E test: Back navigation works
+
+**DoD - Layer 3 (Surface)**:
+- [ ] Test names: `should [behavior] when [condition]`
+- [ ] Descriptive error messages
+- [ ] Screenshot on failure
+
+**DoD - Layer 4 (Interaction)**:
+- [ ] Tests run in <60 seconds
+- [ ] Parallel execution
+- [ ] Deterministic (no flaky tests)
+
+**Verification (Execution)**:
+- [ ] Run: `npm test -- tests/catalogue/navigation.regression.test.ts` - passes
+- [ ] Run: `npx playwright test tests-e2e/catalogue-to-products.spec.ts` - passes
+- [ ] Run: `npm run test:all` - all existing tests pass
+
+---
+
+## Sprint Execution Sequence
+
+**Phase 1: Foundation & Safety (Day 1)**
+1. Write regression tests (Scope Contract 5, Layers 1-2)
+2. Fix DetailSection.tsx `<a>` → `Link` (Scope Contract 1, all layers)
+3. Run E2E tests - verify navigation works
+4. Test all 22 category navigation paths manually
+
+**Phase 2: Semantic Validation (Day 2)**
+5. Create semanticLogger.ts utility (Scope Contract 2, Layers 1-2)
+6. Integrate into getSelectedProducts.ts (Scope Contract 2, Layers 3-4)
+7. Add logging to [...category]/page.tsx
+8. Verify console output shows semantic matches
+
+**Phase 3: Polish (Day 3)**
+9. Fix SidebarClient.tsx colors (Scope Contract 3)
+10. Fix getCatalogueData.ts console.log (Scope Contract 4)
+11. Run visual regression tests
+12. Full regression test run
+
+**Phase 4: Verification (Day 4)**
+13. Test all 22 category pages for semantic matches
+14. Verify console logging output
+15. Final regression test suite
+16. Performance benchmark (navigation should be faster with Link)
+
+---
+
+## Success Criteria
+
+**Functional**:
+- [ ] Clicking catalogue item uses client-side navigation (no page reload)
+- [ ] All 22 category paths navigate correctly
+- [ ] Console shows semantic match scores for products
+- [ ] Products displayed match category semantically (>=80 score ideally)
+- [ ] No hardcoded colors in SidebarClient
+- [ ] No console.log in production build
+
+**Performance**:
+- [ ] Navigation time <100ms (was ~500-1000ms with full reload)
+- [ ] Semantic validation overhead <5ms
+- [ ] Lighthouse score improved (client-side nav)
+
+**Quality**:
+- [ ] All regression tests pass
+- [ ] All E2E tests pass
+- [ ] No TypeScript errors
+- [ ] No ESLint warnings
+- [ ] No console errors
+
+---
+
+## Rollback Plan
+
+If navigation breaks:
+1. Revert DetailSection.tsx to `<a>` temporarily
+2. Debug Link implementation
+3. Re-apply fix
+
+---
+
+## Definition of Done (Sprint Level)
+
+- [ ] All 5 Scope Contracts completed
+- [ ] All DoD items checked off
+- [ ] All verification tests passing
+- [ ] Manual QA completed on all 22 categories
+- [ ] Code review completed
+- [ ] No regression in existing functionality
+- [ ] Performance improved (faster navigation)

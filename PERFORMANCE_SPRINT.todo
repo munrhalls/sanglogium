@@ -4,26 +4,30 @@
 
 ---
 
-## Current State Summary
-- VFS Catalogue: ✅ 28/28 tests passing (data integrity confirmed)
-- Homepage: 9 sequential data fetches causing ~1.5-2s TTFB waterfall
-- Caching: No React.cache, no unstable_cache, no fetch memoization
-- Bundle: 56 client components, no dynamic imports, heavy libs in main chunk
-- Images: Inconsistent quality settings (65-90), mixed strategies
+## Current State Summary (PRODUCTION - March 28, 2026)
+- **Lighthouse Performance Score: 57/100 (FAILING)**
+- **TTFB: 10.9 seconds (Target: <200ms) - CRITICAL**
+- **LCP: 7.7 seconds (Target: <2.5s) - CRITICAL**
+- **Speed Index: 22.5 seconds (Target: <3.4s) - CRITICAL**
+- **CLS: 0.001 (Target: <0.1) - PASSING**
+- Unused JavaScript: 265 KiB wasted
+- Redirect penalty: 2.17 seconds
+- Homepage: 9 parallel fetches but no caching/deduplication
+- VFS Catalogue: ✅ 28/28 tests passing
 
 ---
 
 ## Sprint Phases
 
-### PHASE 1: Critical Path - Data Fetching Architecture
-**Duration:** 3-4 days
-**Risk Level:** Medium (requires careful testing)
-**Impact:** 500ms-2s TTFB improvement
+### PHASE 1: EMERGENCY FIXES - Critical TTFB & LCP (Week 1)
+**Duration:** 4-5 days
+**Risk Level:** HIGH (touches critical path)
+**Impact:** 50+ Lighthouse points, TTFB 10.9s → 600ms, LCP 7.7s → 2.5s
 
-#### Scope Contract 1.1: Parallelize Homepage Data Fetching
-**Objective:** Eliminate sequential fetch waterfall in page.tsx
-**Current:** 9 components each await their own data
-**Target:** Promise.all batching at page level
+#### Scope Contract 1.1: Fix Server Response Time (TTFB)
+**Objective:** Eliminate 10.9 second server response time
+**Current:** 9 unoptimized Sanity fetches, no caching layer
+**Target:** Batched queries with aggressive caching → TTFB < 600ms
 
 **DoD Sequence:**
 1. [ ] Create centralized homepage data fetcher in `app/(store)/lib/fetchHomepageData.ts`
@@ -60,10 +64,60 @@
 
 ---
 
-#### Scope Contract 1.2: Implement React.cache for Request Deduplication
-**Objective:** Prevent duplicate requests across component tree
-**Current:** Same fetch called multiple times = multiple network requests
-**Target:** React.cache deduplicates identical requests in same render pass
+#### Scope Contract 1.2: Fix Largest Contentful Paint (LCP)
+**Objective:** Reduce LCP from 7.7s to <2.5s
+**Current:** Hero image loads late, no preload, no priority hint
+**Target:** Hero image discovered immediately, loaded with high priority
+
+**DoD Sequence:**
+1. [ ] Add hero image preload link to layout `<head>`
+   - File: `app/(store)/layout.tsx`
+   - Add `<link rel="preload" as="image" href="..." fetchpriority="high">`
+   - Verification: Preload appears in HTML `<head>`
+
+2. [ ] Add fetchpriority="high" to hero Image component
+   - File: `app/components/features/homepage/hero/Hero.tsx`
+   - Add `fetchpriority="high"` prop to next/image
+   - Verification: Image has fetchpriority attribute
+
+3. [ ] Implement blur placeholder for hero
+   - File: `app/components/features/homepage/hero/Hero.tsx`
+   - Use Sanity's `metadata.lqip` for blurDataURL
+   - Verification: Blur placeholder visible before load
+
+4. [ ] Optimize hero sizes attribute
+   - Replace `sizes="100vw"` with responsive breakpoints
+   - Verification: Lighthouse "Properly size images" passes
+
+#### Scope Contract 1.3: Fix Redirect Chain (2.17s penalty)
+**Objective:** Eliminate redirect chain overhead
+**Current:** Multiple redirects (HTTP→HTTPS, canonical)
+**Target:** Zero unnecessary redirects
+
+**DoD Sequence:**
+1. [ ] Configure trailingSlash in next.config.ts
+   - Add `trailingSlash: false` to next.config.ts
+   - Verification: No trailing slash redirects
+
+2. [ ] Audit Netlify redirect rules
+   - File: `netlify.toml`
+   - Remove redundant redirects
+   - Verification: Single redirect from HTTP to HTTPS only
+
+3. [ ] Add preconnect hints
+   - Add `<link rel="preconnect" href="https://cdn.sanity.io">`
+   - Verification: DNS lookup time reduced
+
+**Verification Method:**
+- Lighthouse "Avoid multiple page redirects" score improves to 100
+- TTFB reduced by at least 2 seconds
+
+---
+
+#### Scope Contract 1.4: Implement React.cache for Request Deduplication
+**Objective:** Prevent duplicate requests across component tree in same render pass
+**Current:** Multiple components calling same fetcher = multiple network requests
+**Target:** React.cache deduplicates identical requests
 
 **DoD Sequence:**
 1. [ ] Wrap all data fetchers with React.cache
@@ -448,14 +502,20 @@
 
 ---
 
-## Success Metrics
+## Success Metrics (PRODUCTION BASELINE - March 28, 2026)
 
-| Metric | Current | Target | Measurement |
-|--------|---------|--------|-------------|
-| Homepage TTFB | ~1500ms | <400ms | Lighthouse / DevTools |
+| Metric | Current (Production) | Target | Measurement |
+|--------|---------------------|--------|-------------|
+| **Lighthouse Performance** | **57/100** | >75 | Lighthouse CI |
+| **TTFB** | **10.9 seconds** | <600ms | Lighthouse / DevTools |
+| **LCP** | **7.7 seconds** | <2.5s | Lighthouse |
+| **Speed Index** | **22.5 seconds** | <4s | Lighthouse |
+| **CLS** | **0.001 (PASS)** | <0.1 | Lighthouse |
+| **TBT** | **230ms** | <200ms | Lighthouse |
 | Bundle Size (JS) | ~800KB | <400KB | Bundle Analyzer |
-| Client Components | 56 | <20 | `grep -r "use client" | wc -l` |
-| Lighthouse Performance | ~60 | >90 | Lighthouse CI |
+| Client Components | 56 | <20 | `grep -r "use client" \| wc -l` |
+| Unused JavaScript | 265 KiB | <50 KiB | Lighthouse |
+| Redirect Penalty | 2.17s | 0s | Lighthouse |
 | Image Payload | ~2MB | <1MB | Network tab |
 | Sanity API Calls/Page | 9+ | 1-2 | Network tab |
 

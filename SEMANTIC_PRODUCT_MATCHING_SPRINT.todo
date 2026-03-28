@@ -1,0 +1,254 @@
+# Sprint: Semantic Product Matching with Console Logging
+
+## Overview
+**Goal**: Enable catalogue to return semantically matched products (products that match catalogue item name perfectly) per catalogue item, with matches logged in console.
+
+**Current State**: 
+- VFS architecture is complete and validated
+- Products are fetched via `catalogueLocationKeys` array matching
+- No semantic validation that products actually match the category meaning
+- No console logging of semantic matches
+
+**Target State**:
+- Products returned for a catalogue item are semantically validated
+- Semantic match scores are logged to console
+- Mismatches (products in wrong categories) are flagged
+- All existing functionality preserved (zero regression)
+
+---
+
+## Regression Risk Assessment
+
+**Code Areas at Risk**:
+1. `sanity/lib/products/getSelectedProducts.ts` - Core product query logic (HIGH RISK)
+2. `data/catalogue.ts` - VFS resolution and validation functions (MEDIUM RISK)
+3. `app/(store)/products/[...category]/page.tsx` - Category page data fetching (HIGH RISK)
+4. `app/(store)/products/page.tsx` - All products page (MEDIUM RISK)
+5. `sanity/schemaTypes/productType.ts` - Product schema (LOW RISK - additive only)
+
+**Risk Mitigation Strategy**:
+- All changes are additive (new functions, logging wrappers)
+- Zero modifications to existing query logic
+- Feature flag for semantic validation (can be disabled)
+- Comprehensive regression tests before any changes
+
+---
+
+## Scope Contract 1: Semantic Validation Engine
+
+**Objective**: Create a utility that scores how well a product matches a catalogue category semantically.
+
+**Files to Create**:
+- `lib/catalogue/semanticMatching.ts` - Core semantic matching logic
+- `lib/catalogue/semanticConfig.ts` - Semantic category definitions
+
+**DoD - Layer 1 (Structure)**:
+- [ ] Function `analyzeSemanticMatch(product, categorySlug)` exists with proper TypeScript types
+- [ ] Function returns structured result: `{ score: number, reasons: string[], concerns: string[] }`
+- [ ] Semantic configuration object exists mapping category slugs to keyword rules
+- [ ] All 22 leaf catalogue categories have semantic definitions
+
+**DoD - Layer 2 (Layout)**:
+- [ ] Score calculation algorithm implemented with weighted scoring
+- [ ] Keyword matching is case-insensitive
+- [ ] Positive and negative keyword support
+- [ ] Score ranges from 0-100 with clear thresholds
+
+**DoD - Layer 3 (Surface)**:
+- [ ] Semantic categories match business domain (audio equipment)
+- [ ] Keywords derived from real product data patterns
+- [ ] Brand matching incorporated in scoring
+- [ ] Edge cases handled (multiple categories, ambiguous products)
+
+**DoD - Layer 4 (Interaction)**:
+- [ ] Performance: Scoring completes in <1ms per product
+- [ ] Memory efficient: No unnecessary object allocations
+- [ ] Deterministic: Same input always produces same score
+
+**Verification (Testing)**:
+- [ ] Unit test: Open-back headphones match "open-back" category (score >= 80)
+- [ ] Unit test: Closed-back headphones don't match "open-back" (score < 40)
+- [ ] Unit test: DAC/Amp combo matches both "dac-amp-combos" and "desktop-amps" categories
+- [ ] Unit test: Earpads match "earpads" category (score >= 80)
+- [ ] Unit test: Random unrelated product scores < 20 for all categories
+- [ ] Performance test: 1000 products scored in <100ms
+
+---
+
+## Scope Contract 2: Console Logging Integration
+
+**Objective**: Add semantic match logging to the product fetch flow without disrupting existing functionality.
+
+**Files to Modify**:
+- `sanity/lib/products/getSelectedProducts.ts` - Add logging wrapper
+
+**DoD - Layer 1 (Structure)**:
+- [ ] New function `getSelectedProductsWithLogging()` wraps existing function
+- [ ] Logging only occurs when `process.env.NODE_ENV !== 'production'` or explicit flag set
+- [ ] Log format is structured and readable
+
+**DoD - Layer 2 (Layout)**:
+- [ ] Console output shows: Category name, product count, semantic match summary
+- [ ] Per-product logging shows: Product name, category, match score, pass/fail status
+- [ ] Summary statistics logged: Total products, valid matches, questionable matches, invalid matches
+
+**DoD - Layer 3 (Surface)**:
+- [ ] Log colors/emojis: ✅ for strong matches (score >= 80), ⚠️ for moderate (60-79), ❌ for weak (< 60)
+- [ ] Category context included in logs (breadcrumbs)
+- [ ] Timestamp and query duration included
+
+**DoD - Layer 4 (Interaction)**:
+- [ ] Logging is non-blocking (async fire-and-forget)
+- [ ] Errors in logging don't affect product fetch
+- [ ] Can be disabled via environment variable
+
+**Verification (Testing)**:
+- [ ] Regression test: Products still fetch correctly when logging enabled
+- [ ] Regression test: Products still fetch correctly when logging disabled
+- [ ] Manual verification: Console output is readable and informative
+- [ ] Edge case: Empty category shows appropriate message
+- [ ] Edge case: Category with 50+ products shows summary instead of individual logs
+
+---
+
+## Scope Contract 3: Category Page Integration
+
+**Objective**: Integrate semantic validation into the category page without changing UX.
+
+**Files to Modify**:
+- `app/(store)/products/[...category]/page.tsx` - Add semantic validation call
+
+**DoD - Layer 1 (Structure)**:
+- [ ] Semantic validation runs after product fetch
+- [ ] Validation results available in page component (for future UI use)
+- [ ] Zero changes to component props or returned JSX
+
+**DoD - Layer 2 (Layout)**:
+- [ ] Console shows category-specific header: "=== Category: [Name] ==="
+- [ ] Console shows resolved catalogue keys
+- [ ] Console shows semantic match breakdown by product
+
+**DoD - Layer 3 (Surface)**:
+- [ ] Integration respects existing parallel data fetching pattern
+- [ ] No waterfall requests introduced
+- [ ] Server Component remains async/await clean
+
+**DoD - Layer 4 (Interaction)**:
+- [ ] No client-side JavaScript added
+- [ ] No hydration mismatches
+- [ ] Fast page load preserved
+
+**Verification (Testing)**:
+- [ ] E2E test: Navigate to /products/headphones/open-back - products load
+- [ ] E2E test: Navigate to /products/audio-electronics/desktop-amps - products load
+- [ ] E2E test: Navigate to /products/accessories/earpads - products load
+- [ ] Regression test: All existing E2E tests pass
+- [ ] Console verification: Semantic matches logged for each category
+
+---
+
+## Scope Contract 4: Regression Test Suite
+
+**Objective**: Ensure zero regression in existing functionality.
+
+**Files to Create**:
+- `tests/catalogue/semanticMatching.unit.test.ts`
+- `tests/catalogue/productFetch.regression.test.ts`
+- `tests-e2e/category-pages.spec.ts`
+
+**DoD - Layer 1 (Structure)**:
+- [ ] Test file structure follows existing test patterns
+- [ ] Mock data for 10 representative products
+- [ ] Mock catalogue index with all 22 leaf categories
+
+**DoD - Layer 2 (Layout)**:
+- [ ] Unit tests cover all semantic scoring scenarios
+- [ ] Regression tests verify product fetch still works
+- [ ] E2E tests verify category pages render correctly
+
+**DoD - Layer 3 (Surface)**:
+- [ ] Test names are descriptive and follow pattern: `should [expected behavior] when [condition]`
+- [ ] Test failures provide clear error messages
+- [ ] Coverage report shows >90% for semantic matching module
+
+**DoD - Layer 4 (Interaction)**:
+- [ ] Tests run in <30 seconds total
+- [ ] Tests are deterministic (no flaky tests)
+- [ ] Tests can run in CI pipeline
+
+**Verification (Execution)**:
+- [ ] Run: `npm test -- tests/catalogue/semanticMatching.unit.test.ts` - passes
+- [ ] Run: `npm test -- tests/catalogue/productFetch.regression.test.ts` - passes
+- [ ] Run: `npx playwright test tests-e2e/category-pages.spec.ts` - passes
+- [ ] Run: `npm run test:all` - all existing tests still pass
+
+---
+
+## Sprint Execution Sequence
+
+**Phase 1: Foundation (Day 1)**
+1. Write regression tests first (Scope Contract 4)
+2. Run tests - verify they fail as expected (no semantic code yet)
+3. Create semantic configuration (Scope Contract 1, Layer 1)
+4. Implement semantic scoring algorithm (Scope Contract 1, Layer 2)
+
+**Phase 2: Core Implementation (Day 2)**
+5. Complete semantic validation engine (Scope Contract 1, Layers 3-4)
+6. Run unit tests - verify semantic matching works
+7. Implement console logging (Scope Contract 2, Layers 1-2)
+8. Add logging polish (Scope Contract 2, Layers 3-4)
+
+**Phase 3: Integration (Day 3)**
+9. Integrate into category page (Scope Contract 3)
+10. Run regression tests - verify zero breakage
+11. Run E2E tests - verify console logging appears
+12. Performance test - verify no degradation
+
+**Phase 4: Verification (Day 4)**
+13. Manual testing on all 22 category pages
+14. Verify semantic match quality
+15. Final regression test run
+16. Documentation update
+
+---
+
+## Success Criteria
+
+**Functional**:
+- [ ] Navigating to any category page logs semantic matches to console
+- [ ] Products with score >= 80 show as ✅ VALID
+- [ ] Products with score < 40 show as ❌ MISMATCH (flagged for review)
+- [ ] All existing product fetch functionality works unchanged
+
+**Performance**:
+- [ ] Page load time increase < 50ms (semantic validation overhead)
+- [ ] Console logging overhead < 10ms per page
+- [ ] No memory leaks from logging
+
+**Quality**:
+- [ ] All regression tests pass
+- [ ] All new unit tests pass
+- [ ] All E2E tests pass
+- [ ] No TypeScript errors
+- [ ] No ESLint warnings
+
+---
+
+## Rollback Plan
+
+If any critical issues arise:
+1. Disable semantic logging via environment variable
+2. Revert to `getSelectedProducts()` without wrapper
+3. All existing functionality remains intact
+
+---
+
+## Definition of Done (Sprint Level)
+
+- [ ] All 4 Scope Contracts completed
+- [ ] All DoD items checked off
+- [ ] All verification tests passing
+- [ ] Manual QA completed on all 22 categories
+- [ ] Code review completed
+- [ ] Documentation updated
+- [ ] No regression in existing functionality

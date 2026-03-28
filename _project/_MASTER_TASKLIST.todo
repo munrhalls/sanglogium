@@ -1,9 +1,20 @@
+28 03 2026
+9:28
+[ ] catalogue item -> products
+[ ] homepage performance
+[ ] homepage bugs
+by 12:00
+
+[ ] MVP
+by 14:00
+
+
+
 [] COVER SUM TOTAL TIMELINE OF ENTIRE SANG-LOGIUM DONE
     ✔ add regression tests instructions to /sprint command @done(26-03-27 18:45)
     ✔ add themes of scope and layer sequencing to /sprint @done(26-03-27 18:51)
     ✔ update sprint to include design system coherence first @done(26-03-27 19:07)
     [ ] get means for auto-screenshot all RWD breakpoint screens at once and pass all to AI in one go - or have AI get that capability
-
 
 [ ] DEVELOP
     CRITICAL PATHS
@@ -11,6 +22,13 @@
             ✔ write and launch prompt: /sprint -> entire architecture and functionality of crtical path catalogue item -> products page @done(26-03-27 19:10)
             ✔ run @done(26-03-27 19:27)
 
+
+Out of scope
+    [ ] meddling with a single bug for 2 hours
+    [ ] pixel pushing perfection on a single component
+    [ ] pixel pushing color perfection or typo pixels on a single element
+    [ ] entangled meddling with architecture issue
+    [ ] slow feedback loop attempts at solve some bottleneck x
 
 The scope
     [ ] It's extremely visually polished and beautiful
