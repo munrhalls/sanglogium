@@ -1,0 +1,276 @@
+#typography alias - only from global tailwind.config.ts, no tailwind aliases - only design system aliases present in tailwind.config.ts are used
+
+✔ carousel dots and nav btns - mobile / tablet / lg-touch dots and nav btns are consistent sizing and color@done(26-03-21 13:20)
+    ✔ structure - refactor carousel controls to be reach simple and robust and professional level: ensure the logic of props vs defaults is simple and consistent, structurally sound, robust, nothing unnecessary @done(26-03-21 13:19)
+    ✔ styling - nav chevrons slightly bigger on tablet sizes @done(26-03-21 13:20)
+    ✔ styling nav chevrons and dots are consistent size relative to each other at each viewport @done(26-03-21 13:20)
+        ✔ styling - nav chevrons and dots - make the appropriate same size at each viewport, if needed, reduce size of chevros to match the size of dots @done(26-03-21 13:20)
+    ✔ styling - dots - non-active dots should be empty circles, brand-400 color; active dot should be orb (as is) @done(26-03-21 12:50)
+
+Global
+✔ Data @done(26-03-23 10:54)
+  ✔ Image - should determine how to reconcile next/image and sanity v3 image optimizations to achieve lean, robust, best lcp and other performance metrics and page speed criteria - only reconcile and output research report @done(26-03-22 13:40)
+
+        Infrastructure & Setup
+        ✔ Install dependencies: npm install next-sanity @sanity/image-url @done(26-03-22 13:31)
+        ✔ Configure sanity/lib/image.ts with createImageUrlBuilder to export urlFor helper @done(26-03-22 13:47)
+        ✔ Standardize imports to use Image from next-sanity/image across all product components @done(26-03-22 13:47)
+
+        Product Spotlight & New Release Optimization
+        ✔ LCP Optimization: Apply priority, loading="eager", and fetchPriority="high" to the first slide image in every Carousel @done(26-03-22 13:47)
+        ✔ Layout Stability: Replace all <img> tags with next-sanity/image using explicit width and height to achieve CLS = 0 @done(26-03-22 13:47)
+        ✔ CDN Delegation: Ensure urlFor(image).url() is used in src to bypass Next.js server-side re-processing in favor of Sanity edge transformations @done(26-03-22 13:47)
+        ✔ Format Negotiation: Verify browser DevTools "Network" tab confirms WebP or AVIF delivery via auto=format @done(26-03-22 13:47)
+
+        Refactor & Cleanup
+        ✔ Remove any remotePatterns related to Sanity from next.config.js (now redundant) @done(26-03-22 13:47)
+        ✔ Update CarouselSlide to pass necessary dimensions down to the new Image component @done(26-03-22 13:47)
+        ✔ Apply in Featured @done(26-03-22 13:52)
+        ✔ Apply in product spotlight 1, 2, 3, new release @done(26-03-22 13:55)
+        ✔ Apply in IEMS, DACs, Accessories @done(26-03-22 14:00)
+        ✔ Status check catalogue - apply changes if needed /uses static images @done(26-03-22 14:09)
+        ✔ Status check hero - determine status @done(26-03-23 08:29)
+
+
+
+✔ Layout @done(26-03-23 10:54)
+    ✔ rwd - menu bottom bar should not appear on laptop/desktop at all and that effect should be achieved using only the lg-touch and lg-desktop tailwind classes from global config; if twMerge usage is present, preserve it, else just arrange responsive classes properly @done(26-03-21 13:47)
+    ✔ desktop - shelf - should center its direct child horizontally @done(26-03-21 13:50)
+    ✔ desktop - layout - each component's root container - should have max width 1280px @done(26-03-21 13:50)
+
+
+
+Featured Carousel - 3 slides desktop, 2 slides tablet
+Phase 1: API & Viewport Calculation (The Source)
+
+✔ DoD 1: Analyze updateVisibleCount in CarouselContext.tsx to map how window.innerWidth and orientation correlate to specific breakpointMap keys (xl, lgDesktop, mdLandscape, mobilePortrait, etc.). @done(26-03-23 11:36)
+
+✔ DoD 2: Verify the fallback behavior within the Context when a specific breakpointMap key is omitted during component instantiation. @done(26-03-23 11:36)
+
+Phase 2: CSS Variable Propagation (The Bridge)
+
+✔ DoD 3: Identify where and how visibleCount is attached to the DOM as the --visible-count CSS custom property within CarouselContext.tsx. @done(26-03-23 11:36)
+
+Phase 3: Visual Rendering (The Destination)
+
+✔ DoD 4: Inspect CarouselSlide.tsx to confirm exactly how the inline style flexBasis: calc(100% / var(--visible-count, 1)) consumes the CSS variable to dictate the slide's physical width. @done(26-03-23 11:36)
+
+Phase 4: Regression-Free Strategy formulation
+
+✔ DoD 5: Formulate the exact breakpointMap object payload required to be passed into <Carousel /> at its target usage site to achieve the 3/2/1 display requirement without altering any internal Carousel code. @done(26-03-23 11:36)
+
+Featured
+✔ desktop @done(26-03-22 10:48)
+    ✔ layout - nav btns should be top right corner, after dots
+    ✔ layout - dots should be top right corner, before nav btns @done(26-03-21 13:59)
+    ✔ layout - on md sizes too (e.g. Ipad Mini should also display nav btns and dots in the top right corner @done(26-03-22 10:47)
+    [] layout - (desktop and md sizes) nav btns and dots should be vertically centered such that middle of dots and nav btns aligns with title "FEATURED" middle   @done(26-03-21 13:58)
+    ✔ layout - distance between dots and nav btns should be proper and apply value from global spacing system @done(26-03-22 10:47)
+    ✔ layout - distance between nav prev and nav next should be smaller than distance between nav btns and dots @done(26-03-22 10:47)
+    ✔ layout - distance between dots should be small fitting value, taken from global spacing system @done(26-03-22 10:47)
+    ✔ layout - product title per slide - one line titles should align to bottom, not top (closer to price and cart btn, not closer to image container) @done(26-03-22 10:47)
+    ✔ layout - product title should have constant height to prevent layout shifts on slide shifts between 1-line/2-line/3-line product titles @done(26-03-22 10:47)
+
+    ✔ styling - featured card - bottom component - product title - typography - should be alias with secondary-300 @done(26-03-22 10:47)
+    // if the color look is not exactly right for this role - stop, global alias needs to be re-considered
+    ✔ styling - featured card - image container - should be 3/4 (wider than tall), not aspect square @done(26-03-22 10:47)
+    ✔ styling - featured card - image container - image - should be a bit smaller size, appropriate for 3/4 container symmetry @done(26-03-22 10:47)
+    ✔ styling - typography - check only typography aliases applied, no one off's @done(26-03-22 10:47)
+    ✔ styling - dots - non-active dots should be empty circles, brand-400 color @done(26-03-21 12:52)
+    ✔ styling - dots - active dot should be brand-400 orb (as is) @done(26-03-21 12:52)
+✔ tablet @done(26-03-22 10:48)
+    ✔ layout - nav btns and dots should be bottom center, nav btns first, dots after nav btns @done(26-03-22 10:48)
+    ✔ interactivity @done(26-03-22 11:18)
+        ✔ hover card - prod name color - brand-50 @done(26-03-22 11:00)
+        ✔ carousel nav buttons - should go brand-50 on hover @done(26-03-22 11:03)
+        ✔ carousel nav buttons - should remain exactly the same size and everything, except have larger clickable area - And in a way that doesn't interfere with neighbor nodes nor affects layout in any way @done(26-03-22 10:57)
+        ✔ inactive dot - should remain exactly the same size and everything, except have larger clickable area - And in a way that doesn't interfere with neighbor nodes nor affects layout in any way @done(26-03-22 10:57)
+        ✔ inactive dot - should have brand-50 background on hover @done(26-03-22 11:17)
+        ✔ inactive dot - hover highlight should be rounded @done(26-03-22 11:18)
+        ✔ inactive dot - hover highlight should be light color @done(26-03-22 11:18)
+        Powinno się wyrównać Hover state Powinno się wyrównać Hover state
+
+
+
+
+
+✔ Product Spotlight 1, 2, 3, new release - background decoration element @done(26-03-23 10:51)
+  ✔ replicate on @done(26-03-23 10:51)
+  ✔ 2, @done(26-03-23 10:51)
+  ✔ 3, @done(26-03-23 10:51)
+  ✔ 4, @done(26-03-23 10:51)
+  ✔ nedw release @done(26-03-23 10:51)
+  ✔ Data @done(26-03-23 10:51)
+    ✔ fractal star applied via css class, enabled via tailwind config @done(26-03-23 10:51)
+  ✔ Structure: A dedicated <div aria-hidden="true" className="absolute inset-0 z-0 pointer-events-none overflow-hidden"> exists specifically within the .bg-brand-800 text container. @done(26-03-23 10:53)
+   ✔ Asset Reusability: The fractal_ring.webp is applied via Tailwind configuration (bg-fractal-ring) to three separate child nodes representing the size iterations. @done(26-03-23 10:53)
+    ✔ 3D Effect Styling: @done(26-03-23 10:53)
+    ✔ Node 1 (Big): Largest background size, lowest opacity. @done(26-03-23 10:53)
+    ✔ Node 2 (Medium): Intermediate background size, moderate opacity. @done(26-03-23 10:53)
+    ✔ Node 3 (Small): Smallest background size, highest opacity. @done(26-03-23 10:53)
+    ✔ Spatial Framing (Replaces "Flow Around"): The nodes are positioned at the container's perimeter using absolute coordinate utilities to mathematically frame the text box across breakpoints, rather than computing complex text collision boundaries. @done(26-03-23 10:53)
+    ✔ Responsiveness: Tailwind breakpoint prefixes (md:, lg:) are used to adjust sizes and coordinate positions to ensure visual harmony on mobile, tablet, and desktop. @done(26-03-23 10:53)
+
+
+☐ Product Spotlight 1, 2, 3, New Release
+  ☐ Data
+    [] delete backgrounds from images
+      [] moXlkADK7m1DHgGwWtblBG, k27n1AQuIbSr5iozFz7HA5, moXlkADK7m1DHgGwWtUHWs, moXlkADK7m1DHgGwWwEUpi
+    ✔ Data - GROQ should return not just main image, but also image gallery of product and it should do so in a single query using the existing homepage query with minimal modification @done(26-03-22 12:55)
+    ✔ Data - use unified GROQ instead of re-processing on frontend @done(26-03-22 13:03)
+    ✔ Data - replicate the above change in product spotlight 2, 3 and New Release @done(26-03-22 12:56)
+    ✔ Should process product's main image and imageGallery (verify field name) into a single array of images, starting with the main image. @done(26-03-22 12:59)
+    ✔ run image bg deletion script on every product id @done(26-03-22 13:13)
+    ✔ replicate on product spotlight 2, 3 @done(26-03-22 13:18)
+     ✔ replicate on new release @done(26-03-22 13:21)
+     ✔ Consuming component (Carousel) should use the processed product images array. @done(26-03-22 13:23)
+  ✔ Structure @done(26-03-23 11:56)
+    ✔ Should use Carousel, Carousel Track, and Carousel Slide to contain product images - Carousel should not affect layout or styling in any way whatsoever, not a single change - except for providing the carousel functionality @done(26-03-22 12:50)
+    ✔ Should implement navigation buttons for carousel control. @done(26-03-22 12:50)
+    ✔ Should implement dots for carousel pagination. @done(26-03-22 12:50)
+    ✔ replicate the above in product 2, 3, New Release @done(26-03-22 12:58
+    ✔ replicate in product spotlight 2, 3, new release @done(26-03-22 13:01)
+    ✔ Replicate in product spotlight 2,3, new release @done(26-03-22 13:26)
+    ✔ Image - should be next/image with simple, robust sizing and optimization, knowing that the images are imported from sanity v3 @done(26-03-22 14:18)
+    ✔ determine root cause of image regression, only that @done(26-03-23 08:04)
+    ✔ Fix regression - image partially not visible top bottom @done(26-03-23 08:04)
+    ✔ apply in product spotlight 2,3 and new release @done(26-03-23 08:08)
+    ✔ SEE MORE button: Remove existing arrow element. @done(26-03-23 08:13)
+    ✔ Import fractal_star from public assets for background decoration. @done(26-03-23 10:10)
+    ✔ SEE MORE button: Centered horizontally. @done(26-03-23 10:17)
+
+  [] Layout
+    [] On mobile, there should be distance between spotlights 1, 2, and 2, 3
+    [] Distance should be taken from global spacing system (tailwind config)
+
+  [] Styling
+    ✔ Dots: Inactive = brand-700 circle; Active = brand-700 orb. @done(26-03-21 12:52)
+    [] Typography: Use only typography aliases; strictly no one-off styles.
+
+
+    ✔ Carousel @done(26-03-23 13:12)
+      ✔ Structure @done(26-03-23 13:12)
+          ✔ Elements mapped inside carousel - Delete unprofessional and faulty mapping of index from the second argument and replace with professional product ID to the mapped elements. @done(26-03-23 13:12)
+      ✔ Layout @done(26-03-23 13:12)
+        ✔ Dots: Centered horizontally below the image, positioned close to the bottom edge. @done(26-03-23 13:12)
+        ✔ Nav Buttons: Positioned below the image in the bottom-left corner. @done(26-03-23 13:12)
+      ✔ Styling @done(26-03-23 13:12)
+          ✔ Carousel Nav Buttons: @done(26-03-23 13:12)
+          ✔ Use thick brand-700 chevrons. @done(26-03-23 13:12)
+          ✔ Inactive state: Greyed out or low opacity. @done(26-03-23 13:12)
+      ✔ replicate on 2, 3, new release @done(26-03-23 13:16)
+      ✔ Interactivity @done(26-03-24 12:38)
+        ✔ Changing slide should trigger lean, performant animation (lean, minimal impact on performance and website speed metrics) @done(26-03-24 12:38)
+        ✔ Should not touch Carousel internals at all @done(26-03-24 12:38)
+        ✔ Should achieve animation effect f or transitioning between slides - whichever direction - by only supplying tailwind classes to the carousel components (tag calls, not definitions) inside Product spotlight 1 @done(26-03-24 12:38)
+        ✔ Animation effect should utilize the CarouselSlide for triggering - CarouselSlide has data-active or similar attribute which triggers when it becomes active @done(26-03-24 12:38)
+        ✔ Only apply in product spotlight 1 for now @done(26-03-24 12:38)
+
+      IEMS
+✔ Data @done(26-03-24 12:51)
+    ✔ run image bg deletion script on every product id @done(26-03-24 12:51)
+✔ Structure @done(26-03-24 13:19)
+  ✔ Layout @done(26-03-24 13:19)
+      ✔ brand title - should be top left corner @done(26-03-24 12:58)
+      ✔ should apply padding top to account for brand title @done(26-03-24 12:58)
+    ✔ Styling @done(26-03-24 13:19)
+      ✔ brand title - should use the same style as brand title in featured component that is also placed in the top left corner of the image area background @done(26-03-24 12:58)
+      ✔ background - should be brand-400 @done(26-03-24 12:58)
+      ✔ image - should be adjusted slightly to not overlap with the brand title @done(26-03-24 13:16)
+      ✔ add to cart button - should use global tailwind cart btn style @done(26-03-24 13:16)
+      ✔ should have cart icon from phosphor @done(26-03-24 13:16)
+      ✔ should have only "Add" text @done(26-03-24 13:16)
+✔ Interactivity @done(26-03-24 13:19)
+  ✔ hover - should not apply background color @done(26-03-24 13:19)
+
+
+  New Release
+  ✔ pre-knowledge @done(26-03-24 13:51)
+    ✔ determine why image isn't showing up @done(26-03-24 13:51)
+    ✔ fix @done(26-03-24 13:51)
+  ✔ data @done(26-03-24 13:51)
+    ✔ delete backgrounds from images via script @done(26-03-24 13:51)
+
+DACs
+✔ Data @done(26-03-24 13:56)
+    ✔ run image bg deletion script on every product id @done(26-03-24 13:56)
+✔ Structure (html only) @done(26-03-24 14:11)
+  ✔ split between image area and bottom area (with product title and price tag and cart btn) - should mimic featured @done(26-03-24 14:11)
+✔ Layout @done(26-03-24 14:05)
+  ✔ should mimic featured layout @done(26-03-24 14:04)
+  ✔ its carousel should be getting props to show 2 slides per viewport on each breakpoint up to mobile, on mobile should show 1 slide per viewport @done(26-03-24 14:04)
+  ✔ Title and subtitle should mimic featured layout @done(26-03-24 14:05)
+  ✔ Brand positioning in top left corner of image area - should mimic featured layout @done(26-03-24 14:07)
+  ✔ Sizing of the image area and aspect ratio - should be 16:9, otherwise mimic featured layout @done(26-03-24 14:11)
+✔ Style @done(26-03-24 14:07)
+  ✔ Card color - should mimic featured color usage for card bg @done(26-03-24 14:07)
+
+Accessories
+✔ Data @done(26-03-24 14:01)
+    ✔ run image bg deletion script on every product id @done(26-03-24 14:01)
+  Accessories - title and subtitle
+  [] Structure
+    ✔ Add subtitle with text "Sublime compliment" @done(26-03-24 14:25)
+    ✔ Change title to "Accessories" @done(26-03-24 14:25)
+  [] Layout
+    ✔ Title and subtitle - mimic featured layout @done(26-03-24 14:26)
+  [] Style
+    ✔ Title and subtitle - mimic featured layout @done(26-03-24 14:27)
+
+  Accessories - data and structure
+  ✔ Data @done(26-03-24 14:30)
+    ✔ delete storage from GROQ @done(26-03-24 14:30)
+  ✔ Structure (html only) @done(26-03-24 14:32)
+    ✔ Delete storage consumer element from structure @done(26-03-24 14:32)
+  Accessories - carousel
+  ✔ Structure (html only) @done(26-03-24 14:33)
+    ✔ Retain --- "CABLES" and "PADS" title elements exactly as they are @done(26-03-24 14:33)
+    ✔ Carousel - each carousel should mimic featured structure (other than above) @done(26-03-24 14:33)
+  ✔ Layout @done(26-03-24 14:33)
+    ✔ Retain --- "CABLES" and "PADS" title elements exactly as they are @done(26-03-24 14:33)
+    ✔ Carousel - each carousel should mimic featured layout (other than above) @done(26-03-24 14:33)
+  Accessories - carousel slides / viewport
+  ✔ Structure @done(26-03-24 14:36)
+    ✔ Carousel props - should mimic featured props structure but the breakpoints data should result in 4 slides on desktop viewport, 3 slides on md, 1 slides on mobile (and appropriately modified for landscape mode, where usually landscape can handle +1 slide) @done(26-03-24 15:01)
+  Accessories bottom section
+    ✔ Layout @done(26-03-24 14:42)
+      ✔ Should make room for 3 lines @done(26-03-24 14:42)
+      ✔ Product title - should stick closest to bottom as available @done(26-03-24 15:00)
+    ✔ Style @done(26-03-24 14:42)
+      ✔ Product title - should be thin font @done(26-03-24 14:42)
+
+    Accessories - Component Refinement & Professional Standards
+    ✔ Layout @done(26-03-24 15:05)
+    ✔ Standardize left-alignment — Remove double padding by deleting p-4 from text wrapper @done(26-03-24 15:05)
+    ✔ Fix Vertical Rhythm — Group Title and Price into a cohesive unit @done(26-03-24 15:05)
+    ✔ Anchor Action — Move "Add to Cart" to a dedicated footer with mt-auto and border-t @done(26-03-24 15:05)
+    ✔ Precise Spacing — Replace global gap-3 with explicit mb-4 on figure to control proximity @done(26-03-24 15:05)
+    ✔ Data & Logic @done(26-03-24 15:06)
+    ✔ Remove Data Redundancy — Delete duplicate brand name span from the text information zone @done(26-03-24 15:06)
+    ✔ Optimize Title Logic — Implement line-clamp-2 to prevent layout breaks on 3+ line titles @done(26-03-24 15:06)
+    ✔ Mathematical Constraints @done(26-03-24 15:07)
+    ✔ Info Zone Height — Set fixed h-[5.5rem] (88px) to provide exactly enough room for 2-line title + price @done(26-03-24 15:07)
+    ✔ Image Scaling — Constrain object-contain to 75% max-height/width on mobile to prevent overflow @done(26-03-24 15:07)
+  Accessories - container
+    ✔ Bugs @done(26-03-24 15:03)
+      ✔ Layout @done(26-03-24 15:03)
+        ✔ Fix lack of horizontal alignment @done(26-03-24 15:03)
+
+
+  Data - text copies
+[] Copy texts for product spotlight 1, 2, 3, new release - adapted and refined
+    [] Research
+    [] Develop new titles and copies
+    [] Migration script and payload.json
+    [] Database update via migration script
+    [] Verification
+
+    Catalogue
+    [] database pass - database records contain legacy data and products, migrate them to new data and products
+    [] data pass
+    [] desktop
+        [] layout - close button - uses proper spacing system value to be distanced from the bottom
+        [] styling - typography - check only typography aliases applied, no one off's
+        [] styling - typography - catalogue links segment titles should be secondary 300 and bold
+        [] styling - close button - should be a bit larger and remain brand-400 via alias (currently very small) -> determine proper typography alias -> use /// if alias not present - stop and process proper update to global tailwind config
+        [] styling - close button - should be thin font

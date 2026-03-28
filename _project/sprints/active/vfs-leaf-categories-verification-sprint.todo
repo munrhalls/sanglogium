@@ -1,0 +1,718 @@
+# VFS_LEAF_CATEGORIES_VERIFICATION_SPRINT.todo
+# Professional Sprint — Verify All 20 Leaf Categories Return Correct Products
+# Reference: VFS Architecture, MASTER_TASKLIST Critical Path, catalogue-index.json
+# Created: 2026-03-27
+
+---
+
+## 🎯 Sprint Objective
+
+**Verify that all 20 leaf categories correctly retrieve and display expected products using the VFS-based catalogue system, with a systematic, automated pathway to ensure continued correctness.**
+
+**Current State:** VFS infrastructure exists and appears complete (catalogue-index.json has all 20 leaf categories mapped). Products page uses VFS for queries. However, there is no systematic verification that each category returns the expected products.
+
+**Target State:** 
+- All 20 leaf categories tested and verified to return correct products
+- Automated test suite that validates VFS data integrity
+- Systematic pathway (CI/CD integration) to catch regressions
+- Documentation of expected product counts per category
+- Validation script that can be run on-demand or scheduled
+
+---
+
+## 🧪 TEST-FIRST MANDATE
+
+This sprint **MUST begin with tests** that define the expected behavior (which products belong to which categories) and **MUST end with tests** that verify the implementation. Test execution results determine sprint completion status.
+
+---
+
+## 📋 Scope Contracts
+
+---
+
+### Scope Contract 1: VFS Data Integrity Baseline
+**Rationale:** Before verifying products, we must confirm the VFS data structure is complete and consistent. This is the foundation for all category verification.
+
+**Scope:**
+- [ ] Run build-catalogue-index.mjs and confirm successful completion
+- [ ] Validate all 20 leaf slugs exist in slugToIdMap
+- [ ] Validate all 26 nodes (headers + leaves) exist in slotMetadataMap
+- [ ] Verify no orphaned children (all children IDs exist in slotMetadataMap)
+- [ ] Document the complete catalogue structure for reference
+
+**Files at Risk:**
+- `data/catalogue-index.json` - VFS data manifest
+- `data/catalogue.ts` - VFS utility functions
+- `scripts/build-catalogue-index.mjs` - Build script
+
+**Regression Tests Required:**
+- [ ] VFS build script completes without validation errors
+  - **Verification:** `node scripts/build-catalogue-index.mjs`
+  - **Expected:** "✅ VALIDATION PASSED" message
+- [ ] All 20 leaf categories have ID mappings
+  - **Verification:** `npm test -- tests/vfs/leaf-categories-exist.test.ts`
+- [ ] All slotMetadataMap entries have valid children arrays
+  - **Verification:** `npm test -- tests/vfs/metadata-integrity.test.ts`
+
+**Out of Scope:**
+- Modifying the build script logic (it already has validation)
+- Changing the VFS structure or hierarchy
+- Modifying any product schemas
+
+---
+
+### Scope Contract 2: Leaf Category Product Count Baseline
+**Rationale:** We need to know the expected product count for each of the 20 leaf categories to verify correctness. This creates a referenceable baseline.
+
+**Scope:**
+- [ ] Query Sanity for actual product counts per leaf category
+- [ ] Document expected product count for each of the 20 leaf categories
+- [ ] Verify products have correct `catalogueLocationKeys` in Sanity
+- [ ] Identify any products with missing or incorrect category assignments
+- [ ] Create a baseline manifest file with expected counts
+
+**Files at Risk:**
+- `sanity/lib/products/getProductsByVfsKeys.ts` - Product fetching
+- `sanity/lib/products/getSelectedProducts.ts` - Filtered product fetching
+- `data/catalogue-index.json` - Reference for category IDs
+
+**Regression Tests Required:**
+- [ ] Sanity connection and query execution works
+  - **Verification:** `npm test -- tests/integration/sanity-connection.test.ts`
+- [ ] All leaf category IDs return products (or confirm intentionally empty)
+  - **Verification:** `npm test -- tests/integration/leaf-category-products.test.ts`
+- [ ] Product catalogueLocationKeys match VFS structure
+  - **Verification:** `npm test -- tests/integration/product-keys-validation.test.ts`
+
+**Out of Scope:**
+- Fixing data issues in Sanity (document only, fix in separate sprint)
+- Modifying product schemas
+- Changing GROQ query logic
+
+**Architecture Decision:**
+- Document-only for data issues; do not modify production data in this sprint
+- Create follow-up sprint for data cleanup if issues found
+
+---
+
+### Scope Contract 3: Automated Category Verification Test Suite
+**Rationale:** Create a systematic, automated pathway to verify all 20 categories. This is the core deliverable that ensures continued correctness.
+
+**Scope:**
+- [ ] Create test file for all 20 leaf categories
+- [ ] Test each category returns expected products (based on baseline)
+- [ ] Test VFS unrollDescendantKeys returns correct keys for each category
+- [ ] Test slug-to-ID resolution for all 20 slugs
+- [ ] Create aggregate test that validates entire catalogue integrity
+
+**Files at Risk:**
+- `tests/` directory structure - New test files will be added
+- `data/catalogue.ts` - May need exports for testing
+- `package.json` - May need test scripts
+
+**Regression Tests Required:**
+- [ ] All 20 leaf categories have passing tests
+  - **Verification:** `npm test -- tests/vfs/all-leaf-categories.test.ts`
+  - **Expected:** 20 passing tests, 0 failures
+- [ ] VFS functions work correctly
+  - **Verification:** `npm test -- tests/vfs/vfs-functions.test.ts`
+  - **Expected:** resolveSlugToId, unrollDescendantKeys pass all cases
+
+**Out of Scope:**
+- E2E browser tests (separate concern)
+- Performance/load testing
+- Visual regression testing
+
+---
+
+### Scope Contract 4: Systematic Pathway for Continued Verification
+**Rationale:** Verification must be repeatable and automated. This creates the "systematic pathway" to ensure categories continue to work as data changes.
+
+**Scope:**
+- [ ] Create npm script for VFS validation: `npm run validate:vfs`
+- [ ] Create npm script for category verification: `npm run test:categories`
+- [ ] Add VFS validation to pre-build step (optional but recommended)
+- [ ] Create GitHub Action or scheduled workflow for automated verification
+- [ ] Document the verification process for future developers
+
+**Files at Risk:**
+- `package.json` - New npm scripts
+- `.github/workflows/` - New CI workflow file
+- `README.md` - Documentation updates
+
+**Regression Tests Required:**
+- [ ] npm scripts execute successfully
+  - **Verification:** `npm run validate:vfs && npm run test:categories`
+  - **Expected:** Exit code 0, all tests pass
+- [ ] CI workflow file is valid YAML
+  - **Verification:** Manual review + test run
+
+**Out of Scope:**
+- Deploying to production CI/CD (document only)
+- Setting up external monitoring services
+- Alerting/notification systems
+
+---
+
+### Scope Contract 5: Documentation and Baseline Manifest
+**Rationale:** Create referenceable documentation of the expected state. This enables future verification and troubleshooting.
+
+**Scope:**
+- [ ] Create `data/catalogue-baseline.json` with expected product counts per category
+- [ ] Document the 20 leaf categories and their hierarchy
+- [ ] Create troubleshooting guide for VFS issues
+- [ ] Document the verification process in README
+- [ ] Update relevant sprint documentation
+
+**Files at Risk:**
+- `data/catalogue-baseline.json` - New file
+- `README.md` - Updates
+- `_project/` - Sprint documentation updates
+
+**Regression Tests Required:**
+- [ ] Baseline file is valid JSON and matches structure
+  - **Verification:** `node -e "JSON.parse(require('fs').readFileSync('data/catalogue-baseline.json'))"`
+- [ ] Documentation is complete and accurate
+  - **Verification:** Human review checklist
+
+**Out of Scope:**
+- GitBook documentation updates (separate process)
+- Video/documentation tutorials
+
+---
+
+## 🏗️ Sequenced DoD Layers
+
+### Phase 0: Pre-Flight Regression Tests (MUST RUN FIRST)
+**Purpose:** Establish baseline system health before sprint work
+
+#### DoD 0.1 — VFS Build Validation
+- [ ] Run `node scripts/build-catalogue-index.mjs` successfully
+- [ ] Confirm output shows "✅ VALIDATION PASSED"
+- [ ] Verify `data/catalogue-index.json` is updated
+- **Verification:** `node scripts/build-catalogue-index.mjs`
+- **Code Location:** `scripts/build-catalogue-index.mjs`
+- **Regression Risk:** None (read-only verification)
+
+#### DoD 0.2 — Existing Test Suite Pass
+- [ ] Run existing npm test suite
+- [ ] Confirm no existing tests fail
+- [ ] Document any pre-existing failures
+- **Verification:** `npm test`
+- **Code Location:** `tests/` directory
+- **Regression Risk:** None (baseline check)
+
+#### DoD 0.3 — Sanity Connection Health
+- [ ] Verify Sanity client can connect
+- [ ] Test basic product query executes
+- [ ] Confirm environment variables are configured
+- **Verification:** `npm test -- tests/integration/sanity-connection.test.ts`
+- **Code Location:** `sanity/lib/client.ts`
+- **Regression Risk:** External dependency (Sanity)
+
+---
+
+### Phase 1: Data Baseline (Research Phase)
+**Purpose:** Gather actual data from Sanity to establish expected product counts
+
+#### DoD 1.1 — Query All 20 Categories
+- [ ] Create script to query product count for each leaf category
+- [ ] Execute queries against Sanity
+- [ ] Record actual product count per category
+- [ ] Identify categories with zero products (if any)
+- **Code Location:** `scripts/verify-category-products.mjs` (new)
+- **Read-Only Context:** `data/catalogue-index.json`, `sanity/lib/products/getProductsByVfsKeys.ts`
+- **Allowed Write Scope:** `scripts/verify-category-products.mjs`
+- **Verification:** `node scripts/verify-category-products.mjs` outputs counts for all 20 categories
+- **Regression Risk:** None (script only queries, no modifications)
+
+#### DoD 1.2 — Document Baseline
+- [ ] Create `data/catalogue-baseline.json` with structure:
+  ```json
+  {
+    "generatedAt": "ISO date",
+    "categories": {
+      "open-back": { "id": "...", "expectedCount": N, "description": "..." },
+      ...
+    }
+  }
+  ```
+- [ ] Include all 20 leaf categories
+- [ ] Include metadata (name, ID, breadcrumbs)
+- **Code Location:** `data/catalogue-baseline.json` (new)
+- **Allowed Write Scope:** `data/catalogue-baseline.json`
+- **Verification:** `node -e "JSON.parse(require('fs').readFileSync('data/catalogue-baseline.json'))"`
+- **Regression Risk:** None (data file only)
+
+#### DoD 1.3 — Product Key Validation
+- [ ] Query sample products from each category
+- [ ] Verify `catalogueLocationKeys` field is populated correctly
+- [ ] Document any products with missing keys
+- [ ] Cross-reference keys with VFS structure
+- **Code Location:** `scripts/verify-product-keys.mjs` (new)
+- **Allowed Write Scope:** `scripts/verify-product-keys.mjs`
+- **Verification:** `node scripts/verify-product-keys.mjs` runs without errors
+- **Regression Risk:** None (query-only)
+
+---
+
+### Phase 2: Test Suite Skeleton (Pass 1)
+**Purpose:** Create test file structure, no actual test logic yet
+
+#### DoD 2.1 — Test Directory Structure
+- [ ] Create `tests/vfs/` directory if not exists
+- [ ] Create test files:
+  - `tests/vfs/vfs-functions.test.ts` - Unit tests for VFS utilities
+  - `tests/vfs/leaf-categories.test.ts` - Tests for all 20 leaf categories
+  - `tests/vfs/catalogue-integrity.test.ts` - Overall integrity tests
+- **Code Location:** `tests/vfs/` (new)
+- **Allowed Write Scope:** `tests/vfs/*.test.ts`
+- **Verification:** `ls tests/vfs/` shows 3 test files
+- **Regression Risk:** None (empty test files)
+
+#### DoD 2.2 — Test Configuration
+- [ ] Add VFS test scripts to package.json if not present
+- [ ] Ensure Jest/Vitest configuration includes new test files
+- [ ] Verify test runner can discover new tests
+- **Code Location:** `package.json` (scripts section)
+- **Allowed Write Scope:** `package.json` (minimal addition)
+- **Verification:** `npm test -- --listTests | grep vfs` shows new test files
+- **Regression Risk:** Low (config-only, verify existing tests still run)
+
+---
+
+### Phase 3: Data Pass for Tests (Pass 2)
+**Purpose:** Implement test logic with real data queries, no assertions yet
+
+#### DoD 3.1 — VFS Functions Unit Tests
+- [ ] Test `resolveSlugToId` for all 20 slugs
+- [ ] Test `unrollDescendantKeys` for leaf nodes (returns self)
+- [ ] Test `unrollDescendantKeys` for header nodes (returns descendants)
+- [ ] Test `getCatalogue` returns valid tree structure
+- [ ] Import and use `data/catalogue.ts` functions
+- **Code Location:** `tests/vfs/vfs-functions.test.ts`
+- **Read-Only Context:** `data/catalogue.ts`, `data/catalogue-index.json`
+- **Allowed Write Scope:** `tests/vfs/vfs-functions.test.ts`
+- **Verification:** `npm test -- tests/vfs/vfs-functions.test.ts` (tests exist, may not pass yet)
+- **Regression Risk:** None (test file only)
+
+#### DoD 3.2 — Leaf Category Product Tests
+- [ ] Create test for each of the 20 leaf categories
+- [ ] Query actual products using VFS keys
+- [ ] Compare count against baseline
+- [ ] Test structure:
+  ```typescript
+  describe('Leaf Category Products', () => {
+    it('open-back returns expected products', async () => {
+      const products = await getProductsByVfsKeys([/* unrolled keys */]);
+      expect(products.length).toBeGreaterThanOrEqual(baseline.openBack.expectedCount);
+    });
+    // ... 19 more tests
+  });
+  ```
+- **Code Location:** `tests/vfs/leaf-categories.test.ts`
+- **Read-Only Context:** `data/catalogue-baseline.json`, `sanity/lib/products/getProductsByVfsKeys.ts`
+- **Allowed Write Scope:** `tests/vfs/leaf-categories.test.ts`
+- **Verification:** `npm test -- tests/vfs/leaf-categories.test.ts` discovers 20+ tests
+- **Regression Risk:** Low (tests query Sanity, no modifications)
+
+#### DoD 3.3 — Catalogue Integrity Tests
+- [ ] Test all slugToIdMap entries resolve correctly
+- [ ] Test all slotMetadataMap entries have valid children
+- [ ] Test no orphaned references in VFS structure
+- [ ] Test baseline matches actual VFS state
+- **Code Location:** `tests/vfs/catalogue-integrity.test.ts`
+- **Allowed Write Scope:** `tests/vfs/catalogue-integrity.test.ts`
+- **Verification:** `npm test -- tests/vfs/catalogue-integrity.test.ts` discovers tests
+- **Regression Risk:** None
+
+---
+
+### Phase 4: Test Assertions (Pass 3 - Desktop Layer 1-4)
+**Purpose:** Full test implementation with assertions and error handling
+
+#### DoD 4.1 — Structure Layer (Test Setup)
+- [ ] Import all required modules in test files
+- [ ] Setup test fixtures/data loading
+- [ ] Configure test environment (load env vars)
+- [ ] No assertions yet
+- **Code Location:** `tests/vfs/vfs-functions.test.ts` (imports and setup)
+- **Allowed Write Scope:** `tests/vfs/vfs-functions.test.ts`
+- **Verification:** `npm test -- tests/vfs/vfs-functions.test.ts` runs without import errors
+- **Regression Risk:** Low (test infrastructure only)
+
+#### DoD 4.2 — Layout Layer (Test Organization)
+- [ ] Organize tests using describe/it blocks
+- [ ] Group tests by category type (leaf, header, root)
+- [ ] Add test descriptions and documentation
+- [ ] No complex assertions yet
+- **Code Location:** All test files
+- **Allowed Write Scope:** Test files only
+- **Verification:** Test output shows organized structure
+- **Regression Risk:** None
+
+#### DoD 4.3 — Surface Layer (Test Implementation)
+- [ ] Implement all test assertions
+- [ ] Add proper error handling in tests
+- [ ] Add informative test failure messages
+- [ ] Use baseline data for assertions
+- **Code Location:** All test files
+- **Allowed Write Scope:** Test files only
+- **Verification:** `npm test -- tests/vfs/` all tests have assertions
+- **Regression Risk:** Low (tests don't modify data)
+
+#### DoD 4.4 — Interaction Layer (Test Polish)
+- [ ] Add timeout configurations for Sanity queries
+- [ ] Add retry logic for flaky network tests
+- [ ] Add test cleanup/teardown if needed
+- [ ] Verify test output is readable and actionable
+- **Code Location:** All test files
+- **Allowed Write Scope:** Test files only
+- **Verification:** All tests run successfully with clear output
+- **Regression Risk:** None
+
+---
+
+### Phase 5: npm Scripts and Automation (Pass 3 - Mobile)
+**Purpose:** Create command-line interface for verification
+
+#### DoD 5.1 — VFS Validation Script
+- [ ] Add to package.json: `"validate:vfs": "node scripts/verify-category-products.mjs"`
+- [ ] Ensure script outputs clear success/failure messages
+- [ ] Add exit code handling (0 = success, 1 = failure)
+- **Code Location:** `package.json`
+- **Allowed Write Scope:** `package.json` (scripts section)
+- **Verification:** `npm run validate:vfs` executes successfully
+- **Regression Risk:** Low (script addition only)
+
+#### DoD 5.2 — Category Test Script
+- [ ] Add to package.json: `"test:categories": "npm test -- tests/vfs/"`
+- [ ] Ensure it runs all VFS category tests
+- [ ] Verify it produces clear pass/fail summary
+- **Code Location:** `package.json`
+- **Allowed Write Scope:** `package.json`
+- **Verification:** `npm run test:categories` runs all 20+ category tests
+- **Regression Risk:** Low (script addition only)
+
+#### DoD 5.3 — Combined Verification Script
+- [ ] Add to package.json: `"verify:all": "npm run validate:vfs && npm run test:categories"`
+- [ ] Ensure it runs both validation and tests
+- [ ] Verify exit codes propagate correctly
+- **Code Location:** `package.json`
+- **Allowed Write Scope:** `package.json`
+- **Verification:** `npm run verify:all` executes both scripts
+- **Regression Risk:** Low
+
+---
+
+### Phase 6: CI/CD Integration (Pass 3 - Final Layer)
+**Purpose:** Create GitHub Action for automated verification
+
+#### DoD 6.1 — GitHub Action Workflow
+- [ ] Create `.github/workflows/vfs-verification.yml`
+- [ ] Configure trigger: manual (workflow_dispatch) and scheduled (weekly)
+- [ ] Setup Node.js environment
+- [ ] Configure Sanity environment variables (secrets)
+- [ ] Run validation and tests
+- **Code Location:** `.github/workflows/vfs-verification.yml` (new)
+- **Allowed Write Scope:** `.github/workflows/vfs-verification.yml`
+- **Verification:** YAML syntax validation (VS Code or `yamllint`)
+- **Regression Risk:** None (new file, no existing workflows affected)
+
+#### DoD 6.2 — Workflow Test
+- [ ] Test workflow locally with `act` (if available) or manual review
+- [ ] Verify all steps are correctly ordered
+- [ ] Confirm secrets are properly referenced
+- **Verification:** Human review + test run in GitHub (manual trigger)
+- **Regression Risk:** Low (new workflow, isolated)
+
+---
+
+### Phase 7: Documentation (Surface Pass)
+**Purpose:** Document the systematic pathway for future use
+
+#### DoD 7.1 — README Update
+- [ ] Document the 20 leaf categories
+- [ ] Explain how to run verification (`npm run verify:all`)
+- [ ] Document the baseline file structure
+- [ ] Add troubleshooting section for common VFS issues
+- **Code Location:** `README.md` (VFS section)
+- **Allowed Write Scope:** `README.md` (additions only)
+- **Verification:** Human review of documentation
+- **Regression Risk:** None (documentation only)
+
+#### DoD 7.2 — Code Comments
+- [ ] Add JSDoc comments to test functions
+- [ ] Document the baseline data structure
+- [ ] Explain the verification process in script files
+- **Code Location:** Test files, scripts
+- **Allowed Write Scope:** Comments only
+- **Verification:** Code review
+- **Regression Risk:** None
+
+---
+
+### Phase 8: Final Regression and Verification
+**Purpose:** Confirm sprint completion and system health
+
+#### DoD 8.1 — Full Test Suite Pass
+- [ ] Run complete verification: `npm run verify:all`
+- [ ] Confirm all 20 leaf category tests pass
+- [ ] Confirm VFS validation passes
+- [ ] Document any failing tests (should be none)
+- **Verification:** `npm run verify:all`
+- **Expected:** Exit code 0, all tests pass
+- **Regression Risk:** Full system test
+
+#### DoD 8.2 — Existing Test Suite Still Passes
+- [ ] Run full test suite: `npm test`
+- [ ] Confirm no existing tests broken
+- [ ] Verify no regressions in other areas
+- **Verification:** `npm test`
+- **Expected:** All existing tests still pass
+- **Regression Risk:** Full regression check
+
+#### DoD 8.3 — Build Verification
+- [ ] Run Next.js build: `npm run build`
+- [ ] Confirm no build errors
+- [ ] Verify VFS data is included in build
+- **Verification:** `npm run build`
+- **Expected:** Successful build
+- **Regression Risk:** Build process validation
+
+---
+
+## 📊 Test Matrix
+
+| Test Category | Count | Location | Status |
+|---------------|-------|----------|--------|
+| VFS Functions | 10+ | `tests/vfs/vfs-functions.test.ts` | ⬜ |
+| Leaf Categories (20) | 20+ | `tests/vfs/leaf-categories.test.ts` | ⬜ |
+| Catalogue Integrity | 5+ | `tests/vfs/catalogue-integrity.test.ts` | ⬜ |
+| Sanity Connection | 1-3 | `tests/integration/sanity-connection.test.ts` | ⬜ |
+| Product Key Validation | 5+ | `tests/integration/product-keys-validation.test.ts` | ⬜ |
+
+**Total Tests:** 40+ tests covering VFS and category verification
+
+---
+
+## 🔍 Key Architecture Decisions
+
+### ADR 1: Document-Only for Data Issues
+**Decision:** If data issues are found (missing products, incorrect keys), document them only. Do not modify production data in this sprint.
+
+**Rationale:**
+- Scope containment - this sprint is verification, not data cleanup
+- Risk mitigation - data changes require separate review and testing
+- Clear boundaries - keeps sprint focused and achievable
+
+**Code:**
+```javascript
+// In verification scripts:
+if (issuesFound) {
+  console.warn('⚠️ Data issues found:', issues);
+  fs.writeFileSync('data/catalogue-data-issues.json', JSON.stringify(issues, null, 2));
+  console.log('Issues documented to catalogue-data-issues.json');
+  // Do NOT attempt auto-fixes
+}
+```
+
+---
+
+### ADR 2: Baseline File for Expected State
+**Decision:** Create `data/catalogue-baseline.json` as the source of truth for expected product counts.
+
+**Rationale:**
+- Enables repeatable verification
+- Documents expected state for future comparison
+- Allows detection of unexpected changes
+
+**Structure:**
+```json
+{
+  "generatedAt": "2026-03-27T...",
+  "version": "1.0",
+  "categories": {
+    "open-back": {
+      "id": "o7c6baiuobsr7ni2y2vf22sh",
+      "name": "Open-Back",
+      "expectedCount": 5,
+      "type": "leaf",
+      "path": ["headphones", "by-design", "open-back"]
+    }
+  }
+}
+```
+
+---
+
+### ADR 3: npm Scripts as Command Interface
+**Decision:** Expose verification through npm scripts, not custom CLI tools.
+
+**Rationale:**
+- Standard interface for Node.js projects
+- No additional dependencies to learn
+- Easy integration with CI/CD
+- Self-documenting through package.json
+
+---
+
+### ADR 4: Test Isolation (No Production Data Modification)
+**Decision:** All tests are read-only. No test will modify Sanity data.
+
+**Rationale:**
+- Safety - cannot accidentally corrupt production data
+- Repeatability - tests can run multiple times safely
+- Speed - read-only tests are faster
+- CI/CD friendly - no write credentials needed
+
+---
+
+## 📁 File Inventory
+
+### Core Files (Modified/Created)
+| File | Type | Purpose |
+|------|------|---------|
+| `data/catalogue-baseline.json` | New | Expected product counts per category |
+| `data/catalogue-data-issues.json` | New | Documented data issues (if any) |
+| `package.json` | Modified | New npm scripts for verification |
+| `README.md` | Modified | Documentation updates |
+
+### Test Files (Created)
+| File | Type | Purpose |
+|------|------|---------|
+| `tests/vfs/vfs-functions.test.ts` | New | Unit tests for VFS utilities |
+| `tests/vfs/leaf-categories.test.ts` | New | Tests for all 20 leaf categories |
+| `tests/vfs/catalogue-integrity.test.ts` | New | Overall VFS integrity tests |
+| `tests/integration/sanity-connection.test.ts` | New | Sanity connection health |
+| `tests/integration/product-keys-validation.test.ts` | New | Product key validation |
+
+### Script Files (Created)
+| File | Type | Purpose |
+|------|------|---------|
+| `scripts/verify-category-products.mjs` | New | Query and validate category products |
+| `scripts/verify-product-keys.mjs` | New | Validate product catalogueLocationKeys |
+
+### CI/CD Files (Created)
+| File | Type | Purpose |
+|------|------|---------|
+| `.github/workflows/vfs-verification.yml` | New | Automated VFS verification workflow |
+
+---
+
+## ✅ Sprint Completion Checklist
+
+- [ ] Phase 0: All pre-flight regression tests pass
+- [ ] Phase 1: Data baseline established for all 20 categories
+- [ ] Phase 2: Test suite skeleton created
+- [ ] Phase 3: Data pass for tests complete (queries work)
+- [ ] Phase 4: Test assertions implemented and passing
+- [ ] Phase 5: npm scripts working (`npm run verify:all`)
+- [ ] Phase 6: CI/CD workflow created (manual trigger OK)
+- [ ] Phase 7: Documentation complete
+- [ ] Phase 8: Final regression tests pass
+- [ ] All 20 leaf categories verified with passing tests
+- [ ] Systematic pathway established (npm scripts + CI)
+- [ ] No regressions in existing codebase
+- [ ] Build passes successfully
+
+---
+
+## 📅 Estimated Effort
+
+| Phase | Difficulty | Est. Time | Risk Level |
+|-------|-----------|-----------|------------|
+| Phase 0 | 2 - Easy | 30 min | Low |
+| Phase 1 | 5 - Medium | 2 hours | Medium (external data dependency) |
+| Phase 2 | 3 - Relatively Easy | 1 hour | Low |
+| Phase 3 | 5 - Medium | 2 hours | Medium (Sanity queries) |
+| Phase 4 | 5 - Medium | 2 hours | Low |
+| Phase 5 | 3 - Relatively Easy | 1 hour | Low |
+| Phase 6 | 3 - Relatively Easy | 1 hour | Low |
+| Phase 7 | 2 - Easy | 1 hour | Low |
+| Phase 8 | 3 - Relatively Easy | 1 hour | Low |
+| **Total** | **Fib: 31** | **~11.5 hours** | **Medium** |
+
+---
+
+## 🚀 Execution Order
+
+1. **Phase 0** - Verify system health (30 min)
+2. **Phase 1** - Gather baseline data (2 hours)
+3. **Phase 2** - Create test skeleton (1 hour)
+4. **Phase 3** - Implement data queries (2 hours)
+5. **Phase 4** - Add test assertions (2 hours)
+6. **Phase 5** - Create npm scripts (1 hour)
+7. **Phase 6** - CI/CD workflow (1 hour)
+8. **Phase 7** - Documentation (1 hour)
+9. **Phase 8** - Final verification (1 hour)
+
+**Human Checkpoints Required:**
+- After Phase 1: Review baseline data and any data issues found
+- After Phase 4: Review test implementation and results
+- After Phase 8: Final approval of systematic pathway
+
+---
+
+## 🎨 Design System Compliance
+
+- [ ] No UI changes in this sprint (backend/verification only)
+- [ ] Any console output uses clear, consistent formatting
+- [ ] Test output is readable and actionable
+- [ ] Documentation follows project conventions
+
+---
+
+## 📊 Success Criteria
+
+**Minimum Success (Must Have):**
+- [ ] All 20 leaf categories have passing tests
+- [ ] `npm run verify:all` executes successfully
+- [ ] Baseline file documents expected product counts
+- [ ] No regressions in existing codebase
+
+**Target Success (Should Have):**
+- [ ] CI/CD workflow created and tested
+- [ ] Documentation complete and reviewed
+- [ ] Data issues (if any) documented with remediation plan
+- [ ] Test coverage >80% for VFS functions
+
+**Stretch Success (Could Have):**
+- [ ] Performance benchmarks for category queries
+- [ ] Automated alerting on verification failures
+- [ ] Integration with existing test dashboard
+
+---
+
+## 🚨 Risk Mitigation
+
+| Risk | Likelihood | Impact | Mitigation |
+|------|-----------|--------|------------|
+| Sanity API unavailable | Low | High | Add retry logic, graceful degradation |
+| Data inconsistencies found | Medium | Medium | Document only, defer fixes to new sprint |
+| Test execution slow | Medium | Medium | Add timeouts, parallel execution |
+| Environment variable issues | Medium | High | Clear error messages, setup documentation |
+| Existing test conflicts | Low | Medium | Isolated test directory, Phase 0 verification |
+
+---
+
+## 📈 Post-Sprint Actions
+
+**If Data Issues Found:**
+- Create new sprint: `VFS_DATA_CLEANUP_SPRINT.todo`
+- Scope: Fix documented data issues
+- Priority: Based on severity of issues
+
+**If All Tests Pass:**
+- Schedule weekly automated verification via GitHub Actions
+- Update MASTER_TASKLIST to mark critical path complete
+- Document learnings for future sprints
+
+**Monitoring:**
+- Run `npm run verify:all` weekly or before major releases
+- Monitor GitHub Action results
+- Track product count changes over time
+
+---
+
+**End of Sprint Definition**
