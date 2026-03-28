@@ -19,7 +19,7 @@ export default async function NewestRelease({ newestReleaseData }: NewestRelease
   return (
     <article className="w-full relative overflow-hidden border-secondary-800 bg-brand-800">
       <div className="max-w-content mx-auto relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-stretch min-h-[400px] md:min-h-[500px]">
           <div className="w-full h-full bg-brand-200 rounded-none flex items-center justify-center relative p-8 lg:p-12 overflow-hidden">
             <Carousel itemsCount={product.gallery?.length || 1} breakpointMap={{ lgDesktop: 1, mdPortrait: 1, mobilePortrait: 1 }} className="w-full h-full overflow-visible">
               <CarouselTrack className="w-full h-full">

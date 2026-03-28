@@ -20,6 +20,8 @@ const accessoriesBreakpointMap = {
   mdPortrait: 3,
   smLandscape: 3,
   smPortrait: 2,
+  xsLandscape: 2,
+  xsPortrait: 1,
   mobileLandscape: 1,
   mobilePortrait: 1
 };

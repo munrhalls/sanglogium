@@ -13,12 +13,14 @@ interface DacsProps {
 }
 
 const dacsBreakpointMap = {
-  xl: 2,
+  xl: 3,
   lgDesktop: 2,
   mdLandscape: 2,
   mdPortrait: 2,
   smLandscape: 2,
   smPortrait: 2,
+  xsLandscape: 2,
+  xsPortrait: 1,
   mobileLandscape: 1,
   mobilePortrait: 1
 };

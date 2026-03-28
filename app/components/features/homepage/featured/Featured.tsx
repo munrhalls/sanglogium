@@ -27,7 +27,8 @@ const featuredBreakpointMap = {
   mdLandscape: 2,
   mdPortrait: 2,
   smLandscape: 2,
-  smPortrait: 1,
+  smPortrait: 2,
+  xsPortrait: 1,
   mobileLandscape: 1,
   mobilePortrait: 1
 };

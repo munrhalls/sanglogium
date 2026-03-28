@@ -29,7 +29,7 @@ export default function AccessoryCard({ item, idx }: { item: AccessoryItem; idx:
       <div className="flex flex-col flex-grow">
 
         {/* ZONE 1: INFO - Height recalculated to 5.5rem (~88px) to fit Title + Price perfectly */}
-        <div className="flex flex-col h-[5.5rem] mb-4">
+        <div className="flex flex-col min-h-[5.5rem] mb-4">
 
           <h3 className="type-body line-clamp-2 font-medium mb-2">
             {item.name}

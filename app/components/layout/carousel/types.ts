@@ -3,6 +3,8 @@
 export interface CarouselBreakpoints {
   readonly mobilePortrait?: number;
   readonly mobileLandscape?: number;
+  readonly xsPortrait?: number;
+  readonly xsLandscape?: number;
   readonly smPortrait?: number;
   readonly smLandscape?: number;
   readonly mdPortrait?: number;

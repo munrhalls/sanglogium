@@ -30,6 +30,8 @@ export function CarouselProvider({
       count = isLandscape ? (breakpointMap?.mdLandscape || 1) : (breakpointMap?.mdPortrait || 1);
     } else if (w >= 640) {
       count = isLandscape ? (breakpointMap?.smLandscape || 1) : (breakpointMap?.smPortrait || 1);
+    } else if (w >= 475) {
+      count = isLandscape ? (breakpointMap?.xsLandscape || 1) : (breakpointMap?.xsPortrait || 1);
     } else if (isLandscape) {
       count = breakpointMap?.mobileLandscape || 1;
     } else {

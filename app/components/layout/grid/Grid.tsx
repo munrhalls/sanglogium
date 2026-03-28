@@ -10,7 +10,7 @@ export default function Grid({ children, className, cols = 4 }: GridProps) {
   const columnMap = {
     2: "grid-cols-2 lg:grid-cols-2",
     3: "grid-cols-2 md:grid-cols-3",
-    4: "grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
+    4: "xs:grid-cols-1 grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
   };
 
   return (
