@@ -1,0 +1,374 @@
+# VFS Data Path Critical Bug Fix Sprint
+
+**Sprint Goal**: Fix critical VFS data consistency bugs that prevent category clicks from correctly filtering products.
+
+**Target State**: 
+- All 22 catalogue leaf categories resolve to correct product sets
+- slotMetadataMap contains ALL tree nodes (headers AND links)
+- unrollDescendantKeys handles missing IDs gracefully
+- Comprehensive regression tests prevent future data path failures
+
+**Deadline**: 12:00 (2 hours)
+
+---
+
+## Scope Contract 1: Fix slotMetadataMap Generation (CRITICAL)
+
+**Objective**: Fix `scripts/build-catalogue-index.mjs` to include ALL nodes in slotMetadataMap, not just headers with children.
+
+**Regression Risk Areas**:
+- `data/catalogue-index.json` (regenerated output)
+- `data/catalogue.ts` (consumes slotMetadataMap)
+- `app/(store)/products/[...category]/page.tsx` (uses unrollDescendantKeys)
+- `app/(store)/products/page.tsx` (uses catalogue functions)
+
+**Allowed Write Paths**:
+- `scripts/build-catalogue-index.mjs` (lines 100-120)
+- `tests/build/catalogue-index-generation.test.ts` (new file)
+
+**Forbidden Actions**:
+- Do NOT modify data/catalogue-index.json manually (must be regenerated)
+- Do NOT change slugToIdMap structure
+- Do NOT change tree structure
+- Do NOT modify any component files yet
+
+**Verification Command**:
+```bash
+cd c:\webdev\sang-logium
+node scripts/build-catalogue-index.mjs
+npm run build && npx tsc --noEmit
+```
+
+### DoD Layer 1.1: Regression Tests (FIRST - Contain Risk)
+- [ ] Create `tests/build/catalogue-index-generation.test.ts`
+- [ ] Test: Verify all tree IDs exist in slotMetadataMap
+- [ ] Test: Verify leaf nodes have slotMetadataMap entries
+- [ ] Test: Verify parent-child references are valid
+- [ ] Test: Verify slugToIdMap contains only leaf slugs
+- [ ] Run tests: `npm run test:build` (expect current failures)
+
+### DoD Layer 1.2: Fix Build Script
+- [ ] Modify `buildCatalogueIndex()` in build-catalogue-index.mjs
+- [ ] Change slotMetadataMap population to include ALL nodes
+- [ ] Add metadata fields: id, children, hasChildren, slug, type
+- [ ] Run build script: `node scripts/build-catalogue-index.mjs`
+- [ ] Verify catalogue-index.json regenerated without errors
+
+### DoD Layer 1.3: Data Integrity Verification
+- [ ] Load regenerated `data/catalogue-index.json`
+- [ ] Verify all 22 leaf nodes exist in slotMetadataMap
+- [ ] Verify all header nodes exist in slotMetadataMap
+- [ ] Verify parent-child references are intact
+- [ ] Run regression tests: `npm run test:build` (expect all passing)
+
+### DoD Layer 1.4: System Verification
+- [ ] Run build: `npm run build` (must pass)
+- [ ] Run type check: `npx tsc --noEmit` (must pass)
+- [ ] Verify no console errors
+- [ ] Verify no data corruption in output
+
+---
+
+## Scope Contract 2: Fix unrollDescendantKeys (CRITICAL)
+
+**Objective**: Fix `data/catalogue.ts` to handle missing IDs in slotMetadataMap gracefully (treat as leaf nodes).
+
+**Regression Risk Areas**:
+- `app/(store)/products/[...category]/page.tsx` (calls unrollDescendantKeys)
+- `app/(store)/products/page.tsx` (calls catalogue functions)
+- All category pages that depend on catalogue key resolution
+
+**Allowed Write Paths**:
+- `data/catalogue.ts` (unrollDescendantKeys function)
+- `tests/unit/vfs/unrollDescendantKeys.test.ts` (new file)
+
+**Forbidden Actions**:
+- Do NOT modify resolveSlugToId
+- Do NOT modify slugToIdMap usage
+- Do NOT change function signature
+- Do NOT modify any UI components
+
+**Verification Command**:
+```bash
+cd c:\webdev\sang-logium
+npm run test:unit -- tests/unit/vfs/
+npm run build && npx tsc --noEmit
+```
+
+### DoD Layer 2.1: Regression Tests (FIRST - Contain Risk)
+- [ ] Create `tests/unit/vfs/unrollDescendantKeys.test.ts`
+- [ ] Test: Returns [id] for leaf nodes (no children)
+- [ ] Test: Returns [id, ...descendants] for nodes with children
+- [ ] Test: Handles missing ID in slotMetadataMap (returns [id])
+- [ ] Test: Handles circular references gracefully
+- [ ] Run tests: `npm run test:unit -- tests/unit/vfs/` (expect current failures)
+
+### DoD Layer 2.2: Implement Fix
+- [ ] Modify `unrollDescendantKeys()` in data/catalogue.ts
+- [ ] Add early return: if (!slot) return [rootId]
+- [ ] Add warning log for missing IDs (development only)
+- [ ] Verify recursion still works for valid trees
+- [ ] Run unit tests: `npm run test:unit -- tests/unit/vfs/` (expect passing)
+
+### DoD Layer 2.3: Integration Verification
+- [ ] Test slug → ID → keys flow with real catalogue-index.json
+- [ ] Test: "open-back" → ID → keys includes leaf ID
+- [ ] Test: "headphones" (header) → ID → keys includes all children
+- [ ] Test: invalid slug → null → empty keys
+- [ ] Run integration tests: `npm run test:integration`
+
+### DoD Layer 2.4: System Verification
+- [ ] Run build: `npm run build` (must pass)
+- [ ] Run type check: `npx tsc --noEmit` (must pass)
+- [ ] Clear cache: `Remove-Item -Recurse -Force .next`
+- [ ] Restart dev server: `npm run dev`
+- [ ] Verify no runtime errors
+
+---
+
+## Scope Contract 3: Data Path E2E Verification
+
+**Objective**: Verify complete data path works end-to-end: click → navigation → correct products.
+
+**Regression Risk Areas**:
+- Homepage catalogue navigation
+- All 22 category pages
+- Product filtering and sorting
+- Breadcrumb navigation
+
+**Allowed Write Paths**:
+- `tests/e2e/catalogue-navigation.spec.ts` (Playwright)
+- Console logging in page.tsx (already exists)
+
+**Forbidden Actions**:
+- Do NOT modify DetailSection.tsx (already fixed)
+- Do NOT modify product grid UI
+- Do NOT modify filter/sort logic
+- Do NOT add new dependencies
+
+**Verification Command**:
+```bash
+cd c:\webdev\sang-logium
+npx playwright test tests/e2e/catalogue-navigation.spec.ts --headed
+```
+
+### DoD Layer 3.1: E2E Test Suite
+- [ ] Create `tests/e2e/catalogue-navigation.spec.ts`
+- [ ] Test: Click "Open-Back" → navigate to /products/headphones/open-back
+- [ ] Test: Verify correct products displayed (not all products)
+- [ ] Test: Verify console logging shows correct category data
+- [ ] Test: Click "Closed-Back" → verify different products
+- [ ] Test: Test 5 different categories minimum
+
+### DoD Layer 3.2: Manual Verification (ALL 22 Categories)
+- [ ] /products/headphones/open-back
+- [ ] /products/headphones/closed-back
+- [ ] /products/headphones/in-ear
+- [ ] /products/headphones/on-ear
+- [ ] /products/audio-electronics/desktop-amps
+- [ ] /products/audio-electronics/portable-amps
+- [ ] /products/audio-electronics/desktop-dacs
+- [ ] /products/audio-electronics/portable-dacs
+- [ ] /products/accessories/earpads
+- [ ] /products/accessories/cables
+- [ ] /products/accessories/adapters
+- [ ] /products/accessories/cases
+- [ ] (continue for remaining 10 categories...)
+
+### DoD Layer 3.3: Verification Checklist per Category
+For each category URL:
+- [ ] Console shows: `[Category] {path}`
+- [ ] Console shows: `Resolved ID: {valid-id}` (NOT "NOT FOUND")
+- [ ] Console shows: `Catalogue Keys: {n}` where n > 0
+- [ ] Console shows: `Products Count: {n}` where n >= 0
+- [ ] Products displayed match category (semantic check)
+- [ ] No "Failed to fetch" errors in console
+
+### DoD Layer 3.4: Error Handling Verification
+- [ ] Test: /products/nonexistent/invalid → shows "No products found"
+- [ ] Test: /products/headphones/nonexistent → graceful error handling
+- [ ] Verify no server crashes on invalid slugs
+- [ ] Verify 404 page shown for truly invalid routes
+
+---
+
+## Scope Contract 4: VFS Data Integrity Test Suite
+
+**Objective**: Create comprehensive test suite to prevent future VFS data path regressions.
+
+**Regression Risk Areas**:
+- Future changes to catalogue structure
+- Future changes to build script
+- Future changes to product schema
+
+**Allowed Write Paths**:
+- `tests/vfs/data-integrity.test.ts` (new file)
+- `tests/vfs/slug-resolution.test.ts` (new file)
+- `tests/integration/vfs-data-path.test.ts` (new file)
+- `package.json` (test scripts only)
+
+**Forbidden Actions**:
+- Do NOT modify any production code
+- Do NOT modify build configuration
+- Do NOT add new dependencies without approval
+
+**Verification Command**:
+```bash
+cd c:\webdev\sang-logium
+npm run test:vfs
+npm run test:integration
+npm run test:all
+```
+
+### DoD Layer 4.1: Data Integrity Tests
+- [ ] Create `tests/vfs/data-integrity.test.ts`
+- [ ] Test: All tree nodes exist in slotMetadataMap
+- [ ] Test: All slotMetadataMap entries have required fields
+- [ ] Test: Parent-child references are bidirectionally consistent
+- [ ] Test: slugToIdMap keys match leaf node slugs
+- [ ] Test: No duplicate IDs in tree
+
+### DoD Layer 4.2: Slug Resolution Tests
+- [ ] Create `tests/vfs/slug-resolution.test.ts`
+- [ ] Test: All 22 leaf slugs resolve to IDs
+- [ ] Test: Invalid slugs return null/undefined
+- [ ] Test: Slug resolution is case-sensitive
+- [ ] Test: Multi-word slugs (with hyphens) work correctly
+
+### DoD Layer 4.3: Data Path Integration Tests
+- [ ] Create `tests/integration/vfs-data-path.test.ts`
+- [ ] Test: slug → resolveSlugToId → unrollDescendantKeys flow
+- [ ] Test: catalogueKeys → getSelectedProducts flow
+- [ ] Test: Empty keys returns empty products (not all products)
+- [ ] Test: Invalid slug chain returns empty products gracefully
+
+### DoD Layer 4.4: Test Infrastructure
+- [ ] Add `test:vfs` script to package.json
+- [ ] Add `test:build` script to package.json
+- [ ] Add `test:all` script to package.json
+- [ ] Create CI workflow for VFS tests
+- [ ] Document test running procedures
+
+---
+
+## Scope Contract 5: CI/CD Pipeline Setup
+
+**Objective**: Automate VFS data integrity checks in CI/CD pipeline.
+
+**Regression Risk Areas**:
+- GitHub Actions workflow
+- Build process integration
+- Data regeneration triggers
+
+**Allowed Write Paths**:
+- `.github/workflows/vfs-data-integrity.yml` (new file)
+
+**Forbidden Actions**:
+- Do NOT modify existing workflows without backup
+- Do NOT change deployment process
+- Do NOT add external services
+
+### DoD Layer 5.1: GitHub Actions Workflow
+- [ ] Create `.github/workflows/vfs-data-integrity.yml`
+- [ ] Trigger on changes to: `data/catalogue-index.json`, `scripts/build-catalogue-index.mjs`, `data/catalogue.ts`
+- [ ] Job: Run data integrity tests
+- [ ] Job: Run VFS unit tests
+- [ ] Job: Run integration tests
+- [ ] Job: Verify build passes
+
+### DoD Layer 5.2: Build Verification
+- [ ] Workflow runs `npm run build` (must pass)
+- [ ] Workflow runs `npx tsc --noEmit` (must pass)
+- [ ] Workflow runs `npm run test:all` (must pass)
+- [ ] Workflow fails on test failure
+- [ ] Workflow notifies on success/failure
+
+---
+
+## Sprint Execution Sequence
+
+**Phase 1: Contain Regression Risks (30 min)**
+1. Write regression tests for build script (DoD 1.1)
+2. Write regression tests for unrollDescendantKeys (DoD 2.1)
+3. Verify tests fail as expected (baseline)
+
+**Phase 2: Critical Bug Fixes (60 min)**
+4. Fix slotMetadataMap generation (DoD 1.2, 1.3, 1.4)
+5. Fix unrollDescendantKeys (DoD 2.2, 2.3, 2.4)
+
+**Phase 3: Verification (30 min)**
+6. Manual verification of all 22 categories (DoD 3.2)
+7. E2E test suite (DoD 3.1)
+8. Error handling verification (DoD 3.4)
+
+**Phase 4: Future-Proofing (Post-MVP)**
+9. Data integrity test suite (DoD 4.1, 4.2, 4.3)
+10. CI/CD pipeline setup (DoD 5.1, 5.2)
+
+---
+
+## Definition of Sprint Success
+
+**MVP Criteria (by 12:00)**:
+- [ ] Bugs #4 and #5 from VFS audit are fixed
+- [ ] All 22 catalogue categories return correct products
+- [ ] Console logging shows correct data for all categories
+- [ ] No runtime errors in dev or build
+- [ ] Manual verification complete for all categories
+- [ ] Regression tests exist and pass
+
+**Post-MVP Criteria**:
+- [ ] Full VFS test suite implemented
+- [ ] CI/CD pipeline for VFS data integrity
+- [ ] Documentation for VFS architecture
+
+---
+
+## Risk Mitigation
+
+**Risk 1: Build script changes corrupt data**
+- Mitigation: Regression tests verify data integrity BEFORE and AFTER changes
+- Rollback: Git revert + regenerate catalogue-index.json
+
+**Risk 2: unrollDescendantKeys change breaks category queries**
+- Mitigation: Unit tests cover all edge cases (missing ID, leaf node, parent node)
+- Rollback: Git revert, function returns to previous state
+
+**Risk 3: Regenerated catalogue-index.json has unexpected changes**
+- Mitigation: Manual review of diff before committing
+- Mitigation: Data integrity tests catch structural issues
+
+**Risk 4: Manual verification takes too long**
+- Mitigation: Prioritize top 5 categories first
+- Mitigation: Console logging provides quick verification
+
+---
+
+## Commands Reference
+
+**Development**:
+```bash
+# Clear cache and restart
+Remove-Item -Recurse -Force .next
+npm run dev
+
+# Run tests
+npm run test:unit
+npm run test:integration
+npm run test:e2e
+
+# Build
+npm run build
+npx tsc --noEmit
+```
+
+**Data Regeneration**:
+```bash
+node scripts/build-catalogue-index.mjs
+```
+
+**Manual Testing URLs**:
+- http://localhost:3000/products/headphones/open-back
+- http://localhost:3000/products/headphones/closed-back
+- http://localhost:3000/products/audio-electronics/desktop-amps
+- http://localhost:3000/products/accessories/earpads

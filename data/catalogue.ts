@@ -41,8 +41,12 @@ export const unrollDescendantKeys = (nodeId: string): string[] => {
   const data = catalogueIndex as unknown as CatalogueIndexData;
   const slotMetadataMap = data.slotMetadataMap;
 
+  // If ID not in slotMetadataMap, treat as leaf node and return itself
   if (!slotMetadataMap[nodeId]) {
-    return [];
+    if (process.env.NODE_ENV === "development") {
+      console.warn(`[VFS] ID ${nodeId} not in slotMetadataMap, treating as leaf`);
+    }
+    return [nodeId];
   }
 
   const result = new Set<string>();

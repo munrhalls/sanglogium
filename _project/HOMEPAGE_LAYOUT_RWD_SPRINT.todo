@@ -1,0 +1,536 @@
+# Homepage Layout & RWD Sprint
+
+**Based on:** HOMEPAGE_LAYOUT_RWD_AUDIT_REPORT.md  
+**Sprint Goal:** Fix all 11 critical layout/RWD red flags with zero regressions  
+**Target State:** Professional-grade responsive layout across all breakpoints and orientations
+
+---
+
+## Pre-Sprint: Regression Risk Analysis & Test Setup
+
+### At-Risk Code Areas Identified
+
+1. **Hero Component** (`app/components/features/homepage/hero/Hero.tsx`)
+   - Risk: Padding changes affect text positioning
+   - Risk: Button margin changes affect vertical rhythm
+   - Dependencies: layout.tsx CSS variables
+
+2. **Grid Component** (`app/components/layout/grid/Grid.tsx`)
+   - Risk: Column changes affect all sections using Grid
+   - Dependencies: IEMs Gallery
+
+3. **IEMs Gallery** (`app/components/features/homepage/iems-gallery/`)
+   - Risk: Header layout changes
+   - Risk: Card sizing changes
+   - Dependencies: Grid component, IemCard
+
+4. **ProductSpotlight 1-3** (`app/components/features/homepage/product-spotlight-*/`)
+   - Risk: Min-height removal affects section sizing
+   - Risk: Grid breakpoint changes affect layout timing
+   - Dependencies: Carousel system
+
+5. **Carousel System** (`app/components/layout/carousel/`)
+   - Risk: Breakpoint map changes affect all carousels
+   - Dependencies: Featured, DACs, Accessories, NewestRelease
+
+6. **Featured Section** (`app/components/features/homepage/featured/`)
+   - Risk: Breakpoint map changes affect visible slides
+   - Dependencies: CarouselContext
+
+7. **DACs Section** (`app/components/features/homepage/dacs/`)
+   - Risk: Breakpoint map changes
+   - Dependencies: Carousel system
+
+8. **Accessories Section** (`app/components/features/homepage/accessories/`)
+   - Risk: Card height changes
+   - Risk: Breakpoint map changes
+   - Dependencies: CategorySection, AccessoryCard
+
+### Regression Test Suite (Execute Before & After Sprint)
+
+**Visual Regression Test Protocol:**
+```bash
+# 1. Build and start production server
+npm run build
+npm start
+
+# 2. Run Playwright viewport tests
+npx playwright test tests/homepage/viewport-regression.spec.ts --reporter=html
+
+# 3. Screenshot comparison
+# Compare against baseline in tests/homepage/baseline-screenshots/
+```
+
+**Unit Tests Required:**
+- `tests/unit/Grid.breakpoints.test.tsx` - Verify column classes per breakpoint
+- `tests/unit/CarouselContext.breakpoints.test.tsx` - Verify visibleCount calculation
+- `tests/unit/Hero.layout.test.tsx` - Verify responsive classes applied
+
+---
+
+## Scope Contract 1: Design System Extension
+
+**Objective:** Add xs breakpoint and landscape utilities to contain all fixes within design system
+
+**DoD Sequence:**
+
+### Layer 1 — Structure
+- [ ] Add xs breakpoint to tailwind.config.ts screens
+- [ ] Add landscape modifier utilities to safelist if needed
+
+### Layer 2 — Layout
+- [ ] Configure xs: 475px breakpoint
+- [ ] Add xsPortrait/xsLandscape to CarouselContext breakpoint types
+- [ ] Verify spacing scale applies to xs breakpoint
+
+### Layer 3 — Surface
+- [ ] No color changes
+- [ ] No typography changes (already fluid via clamp())
+
+### Layer 4 — Interaction
+- [ ] No interaction changes
+
+**Verification:**
+- [ ] `npm run build` passes TypeScript compilation
+- [ ] Test: xs breakpoint classes apply correctly (e.g., `xs:grid-cols-1`)
+- [ ] Regression: Verify no changes to existing breakpoints (sm, md, lg, xl)
+
+---
+
+## Scope Contract 2: Grid Component Enhancement
+
+**Objective:** Add xs breakpoint support for single-column layouts at narrow viewports
+
+**DoD Sequence:**
+
+### Layer 1 — Structure
+- [ ] Modify `app/components/layout/grid/Grid.tsx`
+- [ ] Add xs column variant to columnMap
+
+### Layer 2 — Layout
+- [ ] Update columnMap to support xs: `xs:grid-cols-1 grid-cols-2 md:grid-cols-3 lg:grid-cols-4`
+- [ ] Verify gap progression: `gap-4 md:gap-6 lg:gap-8` (no xs-specific gap needed)
+
+### Layer 3 — Surface
+- [ ] No changes
+
+### Layer 4 — Interaction
+- [ ] No changes
+
+**Verification:**
+- [ ] Test: Grid renders 1 column at < 475px when cols=4 specified
+- [ ] Test: Grid renders 2 columns at 475-639px
+- [ ] Regression: Verify existing sections using Grid still work (IEMs only)
+
+---
+
+## Scope Contract 3: Hero Layout Fixes
+
+**Objective:** Fix landscape mobile padding and button margin imbalance
+
+**DoD Sequence:**
+
+### Layer 1 — Structure
+- [ ] Modify `app/components/features/homepage/hero/Hero.tsx`
+- [ ] Identify text container and button elements
+
+### Layer 2 — Layout
+- [ ] Add landscape padding: `landscape:px-6` to text container (line 65)
+- [ ] Update button margin: change `mt-2` to responsive `mt-2 lg:mt-4` (line 99)
+- [ ] Verify text container max-width: `landscape:max-w-full lg:landscape:max-w-4xl`
+
+### Layer 3 — Surface
+- [ ] No color changes
+- [ ] No typography changes
+
+### Layer 4 — Interaction
+- [ ] No interaction changes
+
+**Verification:**
+- [ ] Visual test: 480px landscape - text has adequate padding from viewport edges
+- [ ] Visual test: 1024px+ portrait - button margin creates proper spacing
+- [ ] Regression: Verify no changes at desktop breakpoints (1280px+)
+
+---
+
+## Scope Contract 4: IEMs Gallery Header Fix
+
+**Objective:** Remove invalid grid positioning classes from header
+
+**DoD Sequence:**
+
+### Layer 1 — Structure
+- [ ] Modify `app/components/features/homepage/iems-gallery/IemsGalleryHeader.tsx`
+- [ ] Keep semantic structure: overline + heading
+
+### Layer 2 — Layout
+- [ ] Remove invalid classes: `md:col-start-1 md:row-start-1`
+- [ ] Verify flex layout: `flex flex-col gap-4` remains
+
+### Layer 3 — Surface
+- [ ] No changes
+
+### Layer 4 — Interaction
+- [ ] No changes
+
+**Verification:**
+- [ ] Visual test: Header renders correctly at all breakpoints
+- [ ] Regression: Verify no layout shifts in IEMs section
+
+---
+
+## Scope Contract 5: IEMs Card Sizing Optimization
+
+**Objective:** Adjust card padding and image sizing for narrow viewports
+
+**DoD Sequence:**
+
+### Layer 1 — Structure
+- [ ] Modify `app/components/features/homepage/iems-gallery/IemCard.tsx`
+- [ ] Target image container and product info areas
+
+### Layer 2 — Layout
+- [ ] Add responsive padding to image container: `pt-6 xs:pt-8 md:pt-12 pb-2 xs:pb-4`
+- [ ] Adjust image size: `w-[70%] h-[70%] xs:w-[60%] xs:h-[60%]`
+- [ ] Verify price/button row: `justify-between gap-2` remains, add `xs:gap-3`
+
+### Layer 3 — Surface
+- [ ] No color changes
+- [ ] No typography changes
+
+### Layer 4 — Interaction
+- [ ] No interaction changes
+
+**Verification:**
+- [ ] Visual test: 320px portrait - card elements don't collide
+- [ ] Visual test: 480px landscape - cards are appropriately sized
+- [ ] Regression: Verify desktop card appearance unchanged (1024px+)
+
+---
+
+## Scope Contract 6: Carousel Breakpoint Map Expansion
+
+**Objective:** Add xsPortrait and xsLandscape to carousel system for better viewport utilization
+
+**DoD Sequence:**
+
+### Layer 1 — Structure
+- [ ] Modify `app/components/layout/carousel/CarouselContext.tsx`
+- [ ] Modify `app/components/layout/carousel/types.ts`
+- [ ] Update breakpoint logic
+
+### Layer 2 — Layout
+- [ ] Add xs threshold to updateVisibleCount(): `if (w >= 475 && w < 640)`
+- [ ] Add xsPortrait and xsLandscape to breakpoint calculation
+- [ ] Update CarouselProps interface to include new breakpoint keys
+
+### Layer 3 — Surface
+- [ ] No changes
+
+### Layer 4 — Interaction
+- [ ] No changes
+
+**Verification:**
+- [ ] Unit test: visibleCount returns 1 for xsPortrait, 2 for xsLandscape (when configured)
+- [ ] Regression: Verify existing breakpoint behavior unchanged
+
+---
+
+## Scope Contract 7: Featured Carousel Optimization
+
+**Objective:** Fix card visibility at 480-639px portrait to reduce whitespace
+
+**DoD Sequence:**
+
+### Layer 1 — Structure
+- [ ] Modify `app/components/features/homepage/featured/Featured.tsx`
+- [ ] Locate breakpoint map constant
+
+### Layer 2 — Layout
+- [ ] Update featuredBreakpointMap:
+  ```javascript
+  {
+    xl: 3,
+    lgDesktop: 3,
+    mdLandscape: 2,
+    mdPortrait: 2,
+    smLandscape: 2,
+    smPortrait: 2,  // Changed from 1
+    xsPortrait: 1,
+    mobileLandscape: 1,
+    mobilePortrait: 1
+  }
+  ```
+- [ ] Verify carousel control padding: `md:pr-16` may need adjustment to `lg:pr-16`
+
+### Layer 3 — Surface
+- [ ] No changes
+
+### Layer 4 — Interaction
+- [ ] No changes
+
+**Verification:**
+- [ ] Visual test: 640px portrait shows 2 cards instead of 1
+- [ ] Visual test: 480px portrait shows 1 card (xsPortrait)
+- [ ] Regression: Verify no carousel breakage at other breakpoints
+
+---
+
+## Scope Contract 8: ProductSpotlight Layout Refactor
+
+**Objective:** Remove min-height constraint and add md breakpoint for smoother transitions
+
+**Affected Files:**
+- `ProductSpotlight1.tsx`
+- `ProductSpotlight2.tsx`
+- `ProductSpotlight3.tsx`
+
+**DoD Sequence:**
+
+### Layer 1 — Structure
+- [ ] Modify all 3 ProductSpotlight components
+- [ ] Identify grid container and content areas
+
+### Layer 2 — Layout
+- [ ] Remove min-height constraints: delete `min-h-[500px] lg:min-h-[600px]`
+- [ ] Add md breakpoint to grid: change `grid-cols-1 lg:grid-cols-2` to `grid-cols-1 md:grid-cols-2`
+- [ ] Verify padding progression: `p-8 lg:p-12` (may need `md:p-10`)
+
+### Layer 3 — Surface
+- [ ] No color changes
+- [ ] No typography changes
+
+### Layer 4 — Interaction
+- [ ] No changes
+
+**Verification:**
+- [ ] Visual test: 768px-1023px portrait - two-column layout displays
+- [ ] Visual test: 768px-1023px landscape - no overflow issues
+- [ ] Visual test: Section height adapts to content without min-height
+- [ ] Regression: Verify no layout breakage at 1024px+
+
+---
+
+## Scope Contract 9: NewestRelease Consistency Fix
+
+**Objective:** Align section height behavior with ProductSpotlights
+
+**DoD Sequence:**
+
+### Layer 1 — Structure
+- [ ] Modify `app/components/features/homepage/newest-release/NewestRelease.tsx`
+- [ ] Identify grid container (same structure as ProductSpotlights)
+
+### Layer 2 — Layout
+- [ ] Add grid breakpoint: change `grid-cols-1 lg:grid-cols-2` to `grid-cols-1 md:grid-cols-2`
+- [ ] Add min-height for consistency: `min-h-[400px] md:min-h-[500px]`
+- [ ] Verify padding matches ProductSpotlights: `p-8 lg:p-12`
+
+### Layer 3 — Surface
+- [ ] No color changes
+- [ ] No typography changes
+
+### Layer 4 — Interaction
+- [ ] No changes
+
+**Verification:**
+- [ ] Visual test: Section height matches adjacent ProductSpotlight sections
+- [ ] Visual test: 768px+ displays two-column layout
+- [ ] Regression: Verify no breakage at existing breakpoints
+
+---
+
+## Scope Contract 10: DACs Carousel Optimization
+
+**Objective:** Show 3 cards at 1280px+ and fix mobile landscape
+
+**DoD Sequence:**
+
+### Layer 1 — Structure
+- [ ] Modify `app/components/features/homepage/dacs/Dacs.tsx`
+- [ ] Locate breakpoint map and carousel structure
+
+### Layer 2 — Layout
+- [ ] Update dacsBreakpointMap:
+  ```javascript
+  {
+    xl: 3,              // Changed from 2
+    lgDesktop: 2,
+    mdLandscape: 2,
+    mdPortrait: 2,
+    smLandscape: 2,     // Changed from 2 at sm
+    smPortrait: 2,
+    xsLandscape: 2,     // NEW: Better viewport utilization
+    xsPortrait: 1,
+    mobileLandscape: 1,
+    mobilePortrait: 1
+  }
+  ```
+- [ ] Verify carousel control padding (may need adjustment)
+
+### Layer 3 — Surface
+- [ ] No changes
+
+### Layer 4 — Interaction
+- [ ] No changes
+
+**Verification:**
+- [ ] Visual test: 1280px+ shows 3 DAC cards
+- [ ] Visual test: 640-767px landscape shows 2 cards (xsLandscape)
+- [ ] Regression: Verify carousel controls still functional
+
+---
+
+## Scope Contract 11: Accessories Card Height Fix
+
+**Objective:** Replace fixed height with min-height to prevent overflow
+
+**DoD Sequence:**
+
+### Layer 1 — Structure
+- [ ] Modify `app/components/features/homepage/accessories/AccessoryCard.tsx`
+- [ ] Locate info zone div (line 32)
+
+### Layer 2 — Layout
+- [ ] Change fixed height to min-height: `min-h-[5.5rem]` instead of `h-[5.5rem]`
+- [ ] Verify line-clamp-2 still applies to product name
+- [ ] Verify price displays below name
+
+### Layer 3 — Surface
+- [ ] No color changes
+- [ ] No typography changes
+
+### Layer 4 — Interaction
+- [ ] No changes
+
+**Verification:**
+- [ ] Visual test: Long product names don't overflow card boundaries
+- [ ] Visual test: Price remains visible below name
+- [ ] Regression: Verify card height doesn't collapse with short names
+
+---
+
+## Scope Contract 12: Accessories Carousel Optimization
+
+**Objective:** Improve mobile landscape viewport utilization
+
+**DoD Sequence:**
+
+### Layer 1 — Structure
+- [ ] Modify `app/components/features/homepage/accessories/CategorySection.tsx`
+- [ ] Locate breakpoint map
+
+### Layer 2 — Layout
+- [ ] Update accessoriesBreakpointMap:
+  ```javascript
+  {
+    xl: 4,
+    lgDesktop: 4,
+    mdLandscape: 4,
+    mdPortrait: 3,
+    smLandscape: 3,
+    smPortrait: 2,
+    xsLandscape: 2,    // NEW: Better than 1
+    xsPortrait: 1,
+    mobileLandscape: 1,
+    mobilePortrait: 1
+  }
+  ```
+
+### Layer 3 — Surface
+- [ ] No changes
+
+### Layer 4 — Interaction
+- [ ] No changes
+
+**Verification:**
+- [ ] Visual test: 640-767px landscape shows 2 accessory cards
+- [ ] Visual test: No excessive whitespace on sides
+- [ ] Regression: Verify carousel navigation works
+
+---
+
+## Post-Sprint: Regression Verification
+
+### Mandatory Verification Steps
+
+**1. Visual Regression Testing**
+- [ ] Screenshot comparison at all audit breakpoints:
+  - 260px, 320px, 480px (portrait & landscape)
+  - 640px, 768px (portrait & landscape)
+  - 1024px, 1280px, 1440px (portrait & landscape)
+- [ ] Verify all 11 critical issues resolved
+- [ ] Verify no new layout issues introduced
+
+**2. Functional Testing**
+- [ ] All carousels scroll correctly at all breakpoints
+- [ ] All buttons remain clickable
+- [ ] All images load without layout shift
+
+**3. Build Verification**
+- [ ] `npm run build` completes without errors
+- [ ] TypeScript compilation passes
+- [ ] No console errors in production build
+
+**4. Performance Verification**
+- [ ] Lighthouse mobile score ≥ previous
+- [ ] Lighthouse desktop score ≥ previous
+- [ ] Cumulative Layout Shift (CLS) ≤ 0.1
+
+---
+
+## Sprint Execution Order
+
+### Phase 1: Foundation (No visual changes)
+1. Scope Contract 1: Design System Extension
+2. Scope Contract 2: Grid Component Enhancement
+3. Scope Contract 6: Carousel Breakpoint Map Expansion
+
+### Phase 2: Component Fixes (Visual changes, low risk)
+4. Scope Contract 4: IEMs Gallery Header Fix
+5. Scope Contract 3: Hero Layout Fixes
+6. Scope Contract 5: IEMs Card Sizing Optimization
+7. Scope Contract 11: Accessories Card Height Fix
+
+### Phase 3: Layout Refactors (Higher risk, test thoroughly)
+8. Scope Contract 8: ProductSpotlight Layout Refactor (all 3)
+9. Scope Contract 9: NewestRelease Consistency Fix
+
+### Phase 4: Carousel Optimizations (Test all carousels)
+10. Scope Contract 7: Featured Carousel Optimization
+11. Scope Contract 10: DACs Carousel Optimization
+12. Scope Contract 12: Accessories Carousel Optimization
+
+### Phase 5: Verification
+13. Post-Sprint Regression Verification (all items)
+
+---
+
+## Files Modified Summary
+
+**Design System:**
+- `tailwind.config.ts` - xs breakpoint addition
+
+**Layout Components:**
+- `app/components/layout/grid/Grid.tsx` - xs column support
+- `app/components/layout/carousel/CarouselContext.tsx` - xs breakpoints
+- `app/components/layout/carousel/types.ts` - type updates
+
+**Section Components:**
+- `app/components/features/homepage/hero/Hero.tsx` - padding & margin
+- `app/components/features/homepage/iems-gallery/IemsGalleryHeader.tsx` - layout fix
+- `app/components/features/homepage/iems-gallery/IemCard.tsx` - responsive sizing
+- `app/components/features/homepage/product-spotlight-1/ProductSpotlight1.tsx` - grid & height
+- `app/components/features/homepage/product-spotlight-2/ProductSpotlight2.tsx` - grid & height
+- `app/components/features/homepage/product-spotlight-3/ProductSpotlight3.tsx` - grid & height
+- `app/components/features/homepage/newest-release/NewestRelease.tsx` - grid & height
+- `app/components/features/homepage/featured/Featured.tsx` - breakpoint map
+- `app/components/features/homepage/dacs/Dacs.tsx` - breakpoint map
+- `app/components/features/homepage/accessories/CategorySection.tsx` - breakpoint map
+- `app/components/features/homepage/accessories/AccessoryCard.tsx` - height fix
+
+**Total Files:** 14
+
+---
+
+**End of Sprint Document**

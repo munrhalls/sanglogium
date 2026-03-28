@@ -30,22 +30,22 @@
 **Target:** Batched queries with aggressive caching → TTFB < 600ms
 
 **DoD Sequence:**
-1. [ ] Create centralized homepage data fetcher in `app/(store)/lib/fetchHomepageData.ts`
+1. [x] Create centralized homepage data fetcher in `app/(store)/lib/fetchHomepageData.ts`
    - Aggregate all 9 data fetchers: Hero, Featured, Spotlight1-3, IemsGallery, NewestRelease, Dacs, Accessories
    - Return unified data object with strict typing
    - Verification: TypeScript compilation passes
 
-2. [ ] Refactor `app/(store)/page.tsx` to use Promise.all
+2. [x] Refactor `app/(store)/page.tsx` to use Promise.all
    - Initiate all fetches simultaneously
    - Pass data as props to Server Components
    - Verification: Console.time shows parallel fetch timing
 
-3. [ ] Refactor all 9 homepage components to receive data via props
+3. [x] Refactor all 9 homepage components to receive data via props
    - Remove internal `await getData()` calls
    - Accept pre-fetched data as props
    - Verification: Components render without internal awaits
 
-4. [ ] Add error boundary handling for partial failures
+4. [x] Add error boundary handling for partial failures
    - Individual component failures don't crash page
    - Graceful degradation with fallback content
    - Verification: Simulate API failure, page still renders
@@ -70,22 +70,22 @@
 **Target:** Hero image discovered immediately, loaded with high priority
 
 **DoD Sequence:**
-1. [ ] Add hero image preload link to layout `<head>`
+1. [x] Add hero image preload link to layout `<head>`
    - File: `app/(store)/layout.tsx`
    - Add `<link rel="preload" as="image" href="..." fetchpriority="high">`
    - Verification: Preload appears in HTML `<head>`
 
-2. [ ] Add fetchpriority="high" to hero Image component
+2. [x] Add fetchpriority="high" to hero Image component
    - File: `app/components/features/homepage/hero/Hero.tsx`
    - Add `fetchpriority="high"` prop to next/image
    - Verification: Image has fetchpriority attribute
 
-3. [ ] Implement blur placeholder for hero
+3. [x] Implement blur placeholder for hero
    - File: `app/components/features/homepage/hero/Hero.tsx`
    - Use Sanity's `metadata.lqip` for blurDataURL
    - Verification: Blur placeholder visible before load
 
-4. [ ] Optimize hero sizes attribute
+4. [x] Optimize hero sizes attribute
    - Replace `sizes="100vw"` with responsive breakpoints
    - Verification: Lighthouse "Properly size images" passes
 
@@ -95,16 +95,17 @@
 **Target:** Zero unnecessary redirects
 
 **DoD Sequence:**
-1. [ ] Configure trailingSlash in next.config.ts
+1. [x] Configure trailingSlash in next.config.ts
    - Add `trailingSlash: false` to next.config.ts
    - Verification: No trailing slash redirects
 
-2. [ ] Audit Netlify redirect rules
+2. [x] Audit Netlify redirect rules
    - File: `netlify.toml`
-   - Remove redundant redirects
-   - Verification: Single redirect from HTTP to HTTPS only
+   - **Result:** No redundant redirects found - only cache headers configured
+   - Netlify plugin handles Next.js routing automatically
+   - Verification: No additional redirect rules defined
 
-3. [ ] Add preconnect hints
+3. [x] Add preconnect hints
    - Add `<link rel="preconnect" href="https://cdn.sanity.io">`
    - Verification: DNS lookup time reduced
 
@@ -120,7 +121,7 @@
 **Target:** React.cache deduplicates identical requests
 
 **DoD Sequence:**
-1. [ ] Wrap all data fetchers with React.cache
+1. [x] Wrap all data fetchers with React.cache
    - `sanity/lib/products/getFeaturedProducts.ts`
    - `sanity/lib/hero/getHeroData.ts`
    - `sanity/lib/products/getNewestRelease.ts`
@@ -132,7 +133,7 @@
    - `sanity/lib/products/getSpotlight3Data.ts`
    - Verification: Add console.log to each fetcher, verify deduplication
 
-2. [ ] Verify cache keys are deterministic
+2. [x] Verify cache keys are deterministic
    - Same inputs = same cache key
    - No randomness or timestamps in cache keys
    - Verification: Unit test with identical calls returns same promise
