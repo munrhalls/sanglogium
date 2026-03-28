@@ -20,6 +20,9 @@ export default async function Hero({ heroData }: HeroProps) {
     return `${x}% ${y}%`;
   };
 
+  // Generate blur placeholder from Sanity LQIP
+  const blurDataURL = mobileBackgroundImage.asset?.metadata?.lqip || undefined;
+
   return (
     <section
       className={cn("relative w-full overflow-hidden", "bg-black text-white",
@@ -31,16 +34,19 @@ export default async function Hero({ heroData }: HeroProps) {
         <picture>
           <source
             media="(min-width: 768px)"
-            srcSet={urlFor(heroData.backgroundImage).width(1920).auto('format').quality(85).url()}
+            srcSet={urlFor(heroData.backgroundImage).width(1920).auto('format').quality(75).url()}
           />
           <Image
-            src={urlFor(mobileBackgroundImage).width(828).auto('format').quality(85).url()}
+            src={urlFor(mobileBackgroundImage).width(828).auto('format').quality(75).url()}
             alt={heroData.backgroundImage.alt || "Hero Image"}
             fill
             priority
+            fetchPriority="high"
+            placeholder={blurDataURL ? "blur" : undefined}
+            blurDataURL={blurDataURL}
             className="object-cover rounded-none"
-            sizes="100vw"
-            quality={90}
+            sizes="(max-width: 768px) 100vw, 100vw"
+            quality={75}
             style={{ objectPosition: getPosition(mobileBackgroundImage) }}
           />
         </picture>
