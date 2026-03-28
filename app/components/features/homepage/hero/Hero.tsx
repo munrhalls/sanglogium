@@ -62,7 +62,7 @@ export default async function Hero({ heroData }: HeroProps) {
       <div
         className={cn(
           "relative z-10 h-full w-full",
-          "px-[clamp(1.5rem,5vw,5rem)]",
+          "px-[clamp(1.5rem,5vw,5rem)] landscape:px-6",
           "flex flex-col justify-center lg-touch:items-start lg-desktop:items-start",
           "gap-6"
         )}
@@ -96,7 +96,7 @@ export default async function Hero({ heroData }: HeroProps) {
             className={cn(
               "btn-primary px-12 py-4 lg:py-6",
               "text-cta-hero font-bold",
-              "mt-2"
+              "mt-2 lg:mt-4"
             )}
           >
             {heroData.ctaText || "Explore"}
