@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
   typescript: { ignoreBuildErrors: true },
   eslint: { ignoreDuringBuilds: true },
   serverExternalPackages: ["isomorphic-dompurify"],
+  trailingSlash: false,
   experimental: {
     optimizeCss: true,
     inlineCss: true,

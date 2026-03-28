@@ -102,9 +102,17 @@ export const getSelectedProducts = async (
           .join(" && ")
       : "";
 
+  // Early return if no catalogue keys - prevents returning ALL products
+  if (!catalogueKeys || catalogueKeys.length === 0) {
+    return {
+      products: [],
+      totalProductsCount: 0,
+    };
+  }
+
   let assembledQuery = `*[_type == "product"`;
 
-  const pathQuery = catalogueKeys.length > 0 ? ` && count(catalogueLocationKeys[@ in $catalogueKeys]) > 0` : "";
+  const pathQuery = ` && count(catalogueLocationKeys[@ in $catalogueKeys]) > 0`;
 
   assembledQuery += pathQuery;
 

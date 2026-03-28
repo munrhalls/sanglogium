@@ -1,4 +1,5 @@
 import { sanityFetch } from "@/sanity/lib/client";
+import { cache } from "react";
 import type { Spotlight1Data } from "../product-spotlight-1/getSpotlight1Data";
 import type { Spotlight1Product } from "../product-spotlight-1/getSpotlight1Data";
 
@@ -24,7 +25,7 @@ function processProductImages(product: Spotlight1Product): Spotlight1Product {
   return { ...product, images };
 }
 
-export async function getSpotlight2Data(): Promise<Spotlight1Data | null> {
+export const getSpotlight2Data = cache(async (): Promise<Spotlight1Data | null> => {
   const data = await sanityFetch({ query: SPOTLIGHT2_QUERY });
 
   if (data && data.productRef) {
@@ -32,4 +33,4 @@ export async function getSpotlight2Data(): Promise<Spotlight1Data | null> {
   }
 
   return data;
-}
+});

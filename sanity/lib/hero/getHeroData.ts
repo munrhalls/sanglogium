@@ -1,7 +1,8 @@
 import { defineQuery } from "next-sanity";
 import { client } from "../client";
+import { cache } from "react";
 
-export const getHeroData = async () => {
+export const getHeroData = cache(async () => {
   // CRITICAL "WHY":
   // - Now fetching TWO separate assets for true Art Direction.
   // - "mobileImage" takes priority on small screens.
@@ -50,4 +51,4 @@ export const getHeroData = async () => {
     console.error("Error fetching hero data:", error);
     return null;
   }
-};
+});
