@@ -44,10 +44,10 @@ function runTests() {
   const openBackId = resolveSlugToId(openBackSlug);
   assert(openBackId !== undefined, "open-back slug should resolve to ID");
   assertEqual(openBackId, "o7c6baiuobsr7ni2y2vf22sh", "open-back should resolve to correct ID");
-  
+
   const openBackKeys = unrollDescendantKeys(openBackId);
   assertArrayEqual(openBackKeys, ["o7c6baiuobsr7ni2y2vf22sh"], "leaf should unroll to single key");
-  
+
   const openBackGroqKeys = buildGroqKeysParam(openBackKeys);
   assertArrayEqual(openBackGroqKeys, ["o7c6baiuobsr7ni2y2vf22sh"], "GROQ keys should match unrolled keys");
   console.log("✅ Test 1: Leaf category 'open-back' full flow works");
@@ -57,7 +57,7 @@ function runTests() {
   const headphonesSlug = "headphones";
   const headphonesId = resolveSlugToId(headphonesSlug);
   assertEqual(headphonesId, undefined, "headphones header should return undefined");
-  
+
   // When undefined, catalogueKeys should be empty array
   const headerKeys = headphonesId ? unrollDescendantKeys(headphonesId) : [];
   assertArrayEqual(headerKeys, [], "undefined ID should result in empty keys");
@@ -98,13 +98,14 @@ function runTests() {
   assertArrayEqual(emptyGroqKeys, [], "empty keys should remain empty");
   console.log("✅ Test 6: Empty keys handling works correctly");
 
-  // Test 7: All 20 leaf categories can be resolved
-  console.log("\n📋 Test 7: All 20 leaf categories resolution");
+  // Test 7: All 23 leaf categories can be resolved
+  console.log("\n📋 Test 7: All 23 leaf categories resolution");
   const allLeafSlugs = [
-    "open-back", "closed-back", "planar-magnetic", "dynamic", "electrostatic",
-    "monitors-iems", "true-wireless-tws", "desktop-amps", "portable-amps", "standalone-dacs",
-    "dac-amp-combos", "digital-players-daps", "network-streamers", "headphone-cables", "interconnects",
-    "adapters", "earpads", "care-cleaning", "headphone-stands", "carrying-cases"
+    "open-back", "closed-back", "planar-magnetic", "dynamic", "electrostatic", "semi-open",
+    "monitors-iems", "desktop-amps", "portable-amps", "bluetooth-dac-amps",
+    "standalone-dacs", "dac-amp-combos", "usb-c-dacs", "digital-players-daps", "network-streamers",
+    "headphone-cables", "interconnects", "adapters",
+    "earpads", "eartips", "care-cleaning", "headphone-stands", "carrying-cases"
   ];
 
   let resolvedCount = 0;
@@ -117,7 +118,7 @@ function runTests() {
       assertEqual(keys[0], id, `leaf ${slug} should return its own ID`);
     }
   }
-  assertEqual(resolvedCount, 20, "all 20 leaf slugs should resolve");
+  assertEqual(resolvedCount, 23, "all 23 leaf slugs should resolve");
   console.log("✅ Test 7: All 20 leaf categories resolve correctly");
 
   // Test 8: GROQ parameter building for various scenarios
@@ -129,7 +130,7 @@ function runTests() {
   assertEqual(multipleKeys.length, 2, "multiple keys should pass through");
 
   const subtreeKeys = buildGroqKeysParam(headphonesSubtreeKeys);
-  assertEqual(subtreeKeys.length, 11, "subtree keys should pass through");
+  assertEqual(subtreeKeys.length, 12, "subtree keys should pass through");
   console.log("✅ Test 8: GROQ parameter building works correctly");
 
   // Test 9: Invalid category handling

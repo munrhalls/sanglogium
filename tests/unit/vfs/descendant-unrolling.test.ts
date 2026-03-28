@@ -56,15 +56,15 @@ function runTests() {
   assert(byDesignKeys.includes("yq3p9s798zszjkzm5btnebjh"), "Should include closed-back leaf");
   console.log("✅ Test 2: Header with leaves returns correct subtree");
 
-  // Test 3: Root "headphones" returns 11 IDs (1 root + 3 headers + 7 leaves)
+  // Test 3: Root "headphones" returns 12 IDs (1 root + 3 headers + 8 leaves)
   const headphonesKeys = unrollDescendantKeys("ugyeto8653n495dpf89nzoar", slotMetadataMap);
-  assert(headphonesKeys.length === 11, `Headphones root should return 11 keys, got ${headphonesKeys.length}`);
+  assert(headphonesKeys.length === 12, `Headphones root should return 12 keys, got ${headphonesKeys.length}`);
   assert(headphonesKeys.includes("ugyeto8653n495dpf89nzoar"), "Should include headphones root");
   assert(headphonesKeys.includes("ekv4twh175wcse4fl4jjdxfq"), "Should include By Design header");
   assert(headphonesKeys.includes("px3eujo0ql1hot9dkoxleao6"), "Should include By Driver header");
   assert(headphonesKeys.includes("fxvwrl18sixw5b9ro2jrlepa"), "Should include In-Ear & Wireless header");
   assert(headphonesKeys.includes("o7c6baiuobsr7ni2y2vf22sh"), "Should include open-back leaf");
-  console.log("✅ Test 3: Headphones root returns 11 IDs");
+  console.log("✅ Test 3: Headphones root returns 12 IDs");
 
   // Test 4: Verify no duplicate IDs in unrolled results
   const allKeys = headphonesKeys;
@@ -79,7 +79,7 @@ function runTests() {
 
   // Test 6: Test audio-electronics subtree
   const audioElectronicsKeys = unrollDescendantKeys("ti2wufd15h51jxtq855ogbfa", slotMetadataMap);
-  assert(audioElectronicsKeys.length === 9, `Audio Electronics should return 9 keys, got ${audioElectronicsKeys.length}`);
+  assert(audioElectronicsKeys.length === 11, `Audio Electronics should return 11 keys, got ${audioElectronicsKeys.length}`);
   assert(audioElectronicsKeys.includes("ti2wufd15h51jxtq855ogbfa"), "Should include audio-electronics root");
   assert(audioElectronicsKeys.includes("hqb22ca5czb252r0r7l1xmet"), "Should include Amplification header");
   assert(audioElectronicsKeys.includes("lkuqr2n1gpeivrvxisnfs3ot"), "Should include Digital Sources header");
@@ -87,7 +87,7 @@ function runTests() {
 
   // Test 7: Test accessories subtree
   const accessoriesKeys = unrollDescendantKeys("j9ozs17mc0b1nv2gqn2rvmg1", slotMetadataMap);
-  assert(accessoriesKeys.length === 11, `Accessories should return 11 keys, got ${accessoriesKeys.length}`);
+  assert(accessoriesKeys.length === 12, `Accessories should return 12 keys, got ${accessoriesKeys.length}`);
   assert(accessoriesKeys.includes("j9ozs17mc0b1nv2gqn2rvmg1"), "Should include accessories root");
   assert(accessoriesKeys.includes("lhpqqb5qkfvh4kid6q6455eu"), "Should include Connectivity header");
   assert(accessoriesKeys.includes("e4rct8015rxgy011710isd5e"), "Should include Maintenance header");
