@@ -1,4 +1,5 @@
 import { sanityFetch } from "@/sanity/lib/client";
+import { cache } from "react";
 
 export interface Spotlight1Product {
   _id: string;
@@ -39,7 +40,7 @@ function processProductImages(product: Spotlight1Product): Spotlight1Product {
   return { ...product, images };
 }
 
-export async function getSpotlight1Data(): Promise<Spotlight1Data | null> {
+export const getSpotlight1Data = cache(async (): Promise<Spotlight1Data | null> => {
   const data = await sanityFetch({ query: SPOTLIGHT1_QUERY });
 
   if (data && data.productRef) {
@@ -47,4 +48,4 @@ export async function getSpotlight1Data(): Promise<Spotlight1Data | null> {
   }
 
   return data;
-}
+});
