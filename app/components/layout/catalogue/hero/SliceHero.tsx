@@ -55,8 +55,8 @@ export default function SliceHero({ data }: { data: CatalogueNavItem }) {
           "lg-desktop:landscape:hidden"
         )}
       >
-        <CarouselPrevious className="static translate-y-0" />
-        <CarouselNext className="static translate-y-0" />
+        <CarouselPrevious className="static translate-y-0 text-brand-400" />
+        <CarouselNext className="static translate-y-0 text-brand-400" />
       </div>
 
       {/* 3. Minimalist Spacer: Creates breathing room for the list below */}
