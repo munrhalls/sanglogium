@@ -1,7 +1,6 @@
 import { Product } from "@/sanity.types";
-import Image from "next/image";
 import Link from "next/link";
-import { imageUrl } from "@/lib/sanity/imageUrl";
+import { thumbnailImageUrl } from "@/lib/sanity/imageUrl";
 import BasketControls from "../basket/BasketControls";
 import { BasketItem } from "@/app/(store)/basket/basket.types";
 
@@ -24,9 +23,8 @@ const ProductThumb = ({ product }: ProductThumbProps) => {
   const originalPrice = product.displayPrice ?? 0;
   // TODO fix types properly, add types file for the basket feature
 
-  const stockImage = "";
-  const image = product.image.asset?._ref ?? stockImage;
-  // TODO add generic product image unavailable stock image url
+  // Image optimized via Sanity CDN with automatic format selection and quality
+  const imageSrc = thumbnailImageUrl(product.image).url();
 
   const basketProduct: BasketItem = {
     _id: product._id,
@@ -34,7 +32,7 @@ const ProductThumb = ({ product }: ProductThumbProps) => {
     stock: product.stock,
     displayPrice: product.displayPrice,
     quantity: 1,
-    image: image,
+    image: imageSrc,
   };
   return (
     <Link
@@ -42,12 +40,11 @@ const ProductThumb = ({ product }: ProductThumbProps) => {
       className={`group flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-200 hover:border-gray-300 hover:bg-gray-100 hover:shadow-md ${isOutOfStock ? "opacity-50" : ""}`}
     >
       <div className="p-4">
-        <Image
-          src={imageUrl(product.image).url()}
-          alt={product?.name}
-          height={300}
-          width={300}
-          className="aspect-square rounded-sm"
+        <img
+          src={imageSrc}
+          alt={product.name}
+          loading="lazy"
+          className="aspect-square w-full rounded-sm object-cover"
         />
         <h2 className="pt-2 text-lg font-semibold text-gray-800">
           {product.name}
