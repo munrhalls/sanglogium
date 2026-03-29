@@ -2,10 +2,10 @@
 ## Ericsson-Based Deliberate Practice for Web Development Velocity
 ### Externally Anchored • Lowest-Friction • Immediate Feedback • Codebase-Specific
 
-**Version:** 1.0  
-**Based on:** Ericsson, K. A. (2016). *Peak: Secrets from the New Science of Expertise*  
-**Target:** Sang Logium Velocity Dysfunction Patterns  
-**Format:** Daily 15-minute micro-practice with real codebase  
+**Version:** 1.0
+**Based on:** Ericsson, K. A. (2016). *Peak: Secrets from the New Science of Expertise*
+**Target:** Sang Logium Velocity Dysfunction Patterns
+**Format:** Daily 15-minute micro-practice with real codebase
 **Duration:** 4-6 weeks to automaticity
 
 ---
@@ -75,24 +75,24 @@ This course builds these representations through **externally-anchored micro-pra
 ### 1.3 The Training Formats (Lowest-Friction Hierarchy)
 
 **Format 1: The Pre-Commit Protocol (30 seconds)**
-Friction: Near-zero (happens before every commit)  
-Feedback: Immediate (commit categorization)  
-Anchor: Git log shows pattern immediately  
+Friction: Near-zero (happens before every commit)
+Feedback: Immediate (commit categorization)
+Anchor: Git log shows pattern immediately
 
 **Format 2: The 15-Minute Morning Drill (Daily)**
-Friction: Low (requires only terminal + browser)  
-Feedback: Immediate (timer + pattern recognition)  
-Anchor: Uses yesterday's actual commits  
+Friction: Low (requires only terminal + browser)
+Feedback: Immediate (timer + pattern recognition)
+Anchor: Uses yesterday's actual commits
 
 **Format 3: The Component Lock Ritual (Per Component)**
-Friction: Low (part of normal workflow)  
-Feedback: Delayed 1 hour (48-hour rule test)  
-Anchor: DoD checklist reality  
+Friction: Low (part of normal workflow)
+Feedback: Delayed 1 hour (48-hour rule test)
+Anchor: DoD checklist reality
 
 **Format 4: The Sprint Retrospective (Weekly)**
-Friction: Medium (requires analysis)  
-Feedback: Weekly trend visualization  
-Anchor: Sprint file + commit log cross-reference  
+Friction: Medium (requires analysis)
+Feedback: Weekly trend visualization
+Anchor: Sprint file + commit log cross-reference
 
 ---
 
@@ -106,8 +106,8 @@ Anchor: Sprint file + commit log cross-reference
 
 **The Representation:**
 ```
-Imagine a physical fence around your desk. Everything inside: allowed. 
-Everything outside: invisible. The fence has a written sign listing 
+Imagine a physical fence around your desk. Everything inside: allowed.
+Everything outside: invisible. The fence has a written sign listing
 EXACTLY what's inside. If it's not on the sign, it doesn't exist.
 
 The skill: Feeling the "bump" when you hit the fence.
@@ -136,9 +136,9 @@ The skill: Feeling the "bump" when you hit the fence.
 
 **The Representation:**
 ```
-Imagine an assembly line with three stations. Each product MUST pass 
-through Station 1 completely before entering Station 2. No exceptions. 
-No "just a little" work at next station. The line stops if any product 
+Imagine an assembly line with three stations. Each product MUST pass
+through Station 1 completely before entering Station 2. No exceptions.
+No "just a little" work at next station. The line stops if any product
 jumps ahead.
 
 The skill: Feeling anxiety when passes mix. That anxiety is your signal.
@@ -170,9 +170,9 @@ The skill: Feeling anxiety when passes mix. That anxiety is your signal.
 
 **The Representation:**
 ```
-Imagine a physical gate. When you walk through, it locks behind you 
-with an audible click. You cannot go back without a key. The key 
-requires writing a new scope contract and getting approval. The click 
+Imagine a physical gate. When you walk through, it locks behind you
+with an audible click. You cannot go back without a key. The key
+requires writing a new scope contract and getting approval. The click
 is the sound of completion.
 
 The skill: Craving the click. Feeling unfinished without it.
@@ -205,9 +205,9 @@ The skill: Craving the click. Feeling unfinished without it.
 
 **The Representation:**
 ```
-Imagine a cockpit with two dashboards. Dashboard A shows speedometer, 
-RPM, fuel level (activity metrics). Dashboard B shows arrival time, 
-remaining distance, estimated delay (outcome metrics). 
+Imagine a cockpit with two dashboards. Dashboard A shows speedometer,
+RPM, fuel level (activity metrics). Dashboard B shows arrival time,
+remaining distance, estimated delay (outcome metrics).
 
 Most pilots crash watching Dashboard A. Experts watch Dashboard B.
 
@@ -241,11 +241,11 @@ The skill: Automatic glance at Dashboard B. Dashboard A is decoration.
 
 **The Representation:**
 ```
-Imagine every development moment as a fork in a trail. At each fork, 
-two signs: LEFT (healthy velocity), RIGHT (dysfunction). The signs are 
-clear, but the trail to the right feels more comfortable. 
+Imagine every development moment as a fork in a trail. At each fork,
+two signs: LEFT (healthy velocity), RIGHT (dysfunction). The signs are
+clear, but the trail to the right feels more comfortable.
 
-The skill: Seeing the fork. Feeling the discomfort of the left path 
+The skill: Seeing the fork. Feeling the discomfort of the left path
 as the correct sensation.
 ```
 
@@ -567,7 +567,7 @@ echo "DoD closures:" && git log --since="yesterday" --pretty=format:"%s" | grep 
 4. List: Actual delivered (locked components, closed DoD items)
 5. Calculate: Promise/Reality ratio
 
-**Healthy:** 85%+  
+**Healthy:** 85%+
 **Dysfunction:** <50%
 
 **If <50% for 2 weeks:** Sprint planning is fiction. Reduce scope 50%.
@@ -780,8 +780,8 @@ Ericsson's research is clear: **Expertise is built, not born.** Your velocity dy
 
 ---
 
-*Course Version: 1.0*  
-*Based on: Ericsson (2016) Peak + Sang Logium Velocity Audit*  
-*Training Hours Required: 15 min/day × 28 days = 7 hours*  
-*Expected Outcome: Automatic healthy velocity patterns*  
+*Course Version: 1.0*
+*Based on: Ericsson (2016) Peak + Sang Logium Velocity Audit*
+*Training Hours Required: 15 min/day × 28 days = 7 hours*
+*Expected Outcome: Automatic healthy velocity patterns*
 *Alternative Cost: 4,576 hours/year of continued dysfunction*
