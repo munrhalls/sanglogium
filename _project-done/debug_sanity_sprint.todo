@@ -1,5 +1,0 @@
-# To-Do
-
-[x] 1. Schema Refactor: Rename the 4 object field keys (`spotlight1` -> `spotlight1Data`, `spotlight2` -> `spotlight2Data`, `spotlight3` -> `spotlight3Data`, `newestRelease` -> `newestReleaseData`) to force clean database paths.
-✔ 2. UI Verification: Open Sanity Studio, create a new `homepageData` document, and input dummy data into the new spotlight fields. @done(26-03-18 14:37)
-✔ 3. Publish Verification: Click "Publish" to confirm the mutation error is eliminated. @done(26-03-18 14:37)
