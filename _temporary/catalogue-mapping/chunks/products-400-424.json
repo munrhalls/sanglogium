@@ -1,0 +1,910 @@
+[
+    {
+        "_id":  "k27n1AQuIbSr5iozFz7E1H",
+        "brand":  "Focal",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             [
+                                 "headphones/over-ear"
+                             ],
+                             "headphones/wired",
+                             "headphones/gaming",
+                             "headphones/over-ear"
+                         ],
+        "description":  "Focal Radiance Review - Written review by Chrono\n\n",
+        "name":  "Focal Radiance Headphones | Limited Edition",
+        "overviewFields":  [
+                               {
+                                   "title":  "Cup style",
+                                   "value":  "Closed-Back"
+                               },
+                               {
+                                   "title":  "Wearing style",
+                                   "value":  "Over-ear"
+                               },
+                               {
+                                   "title":  "Driver type",
+                                   "value":  "Dynamic"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "k27n1AQuIbSr5iozFz7EE4",
+        "brand":  "Sennheiser",
+        "catalogueLocationKeys":  null,
+        "categoryPath":  [
+                             [
+                                 "headphones/over-ear"
+                             ],
+                             "headphones/wired",
+                             "headphones/studio",
+                             "headphones/studio-and-recording",
+                             "headphones/gaming",
+                             "headphones/over-ear"
+                         ],
+        "description":  "Today’s audiophiles monitor their music with measured purpose on a wide range of devices from headphone amplifiers, audio interfaces, computers, and more. The HD 560S delivers the linear performance required by analytical audio enthusiasts at a breakthrough value, allowing the listener to have an honest look inside their music whether for pleasure or productivity.\n\n\"The HD560S is still an excellent headphone that comes in at an attractive price tag and should be strongly considered as a reference point for what well-tuned headphones can sound like.\"",
+        "name":  "Sennheiser HD 560S",
+        "overviewFields":  [
+                               {
+                                   "title":  "Cup style",
+                                   "value":  "Open-Back"
+                               },
+                               {
+                                   "title":  "Wearing style",
+                                   "value":  "Over-ear"
+                               },
+                               {
+                                   "title":  "Driver type",
+                                   "value":  "Dynamic"
+                               },
+                               {
+                                   "title":  "Amp required",
+                                   "value":  "Yes"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               }
+                           ],
+        "specifications":  [
+                               {
+                                   "title":  "Sensitivity",
+                                   "value":  "110dB"
+                               },
+                               {
+                                   "title":  "Total Harmonic Distortion (THD)",
+                                   "value":  "\u003c 0.05 % (1 kHz / 90 dB SPL)"
+                               },
+                               {
+                                   "title":  "Frequency Response",
+                                   "value":  "6 Hz to 38 kHz (-10 dB)"
+                               },
+                               {
+                                   "title":  "Driver Type",
+                                   "value":  "Dynamic"
+                               },
+                               {
+                                   "title":  "Headphone Weight",
+                                   "value":  "240 grams"
+                               },
+                               {
+                                   "title":  "Warranty",
+                                   "value":  "2 years manufacturer\u0027s warranty"
+                               }
+                           ]
+    },
+    {
+        "_id":  "k27n1AQuIbSr5iozFz7EsP",
+        "brand":  "Focal",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             [
+                                 "headphones/over-ear"
+                             ],
+                             "headphones/wired",
+                             "headphones/gaming",
+                             "headphones/over-ear"
+                         ],
+        "description":  "Quality audio product for music enthusiasts.",
+        "name":  "Focal Clear Mg Headphones",
+        "overviewFields":  [
+                               {
+                                   "title":  "Cup style",
+                                   "value":  "Open-Back"
+                               },
+                               {
+                                   "title":  "Wearing style",
+                                   "value":  "Over-ear"
+                               },
+                               {
+                                   "title":  "Driver type",
+                                   "value":  "Dynamic"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               }
+                           ],
+        "specifications":  [
+                               {
+                                   "title":  "Sensitivity",
+                                   "value":  "104dB SPL / 1 mW @ 1kHz"
+                               },
+                               {
+                                   "title":  "Total Harmonic Distortion (THD)",
+                                   "value":  "0.25% @ 1kHz / 100dB SPL"
+                               },
+                               {
+                                   "title":  "Frequency Response",
+                                   "value":  "5Hz – 28kHz"
+                               },
+                               {
+                                   "title":  "Driver Type",
+                                   "value":  "Dynamic"
+                               },
+                               {
+                                   "title":  "Driver Materials \u0026 Size",
+                                   "value":  "40mm ‘M’-shaped magnesium dome"
+                               },
+                               {
+                                   "title":  "Headphone Weight",
+                                   "value":  "450 grams"
+                               },
+                               {
+                                   "title":  "Warranty",
+                                   "value":  "3 years manufacturer\u0027s warranty"
+                               }
+                           ]
+    },
+    {
+        "_id":  "k27n1AQuIbSr5iozFz7FSo",
+        "brand":  "Focal",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             [
+                                 "headphones/over-ear"
+                             ],
+                             "headphones/wired",
+                             "headphones/gaming",
+                             "headphones/over-ear"
+                         ],
+        "description":  "The Celestee is the true successor to Focal\u0027s previous closed-back, the Elegia. Styled in navy-blue with copper finish, the Celestee is absolutely gorgeous to behold with the sound to back it up. This is one of the best closed-back headphones next to Focal\u0027s own Stellia and is a must for anyone looking for a good pair of closed-back headphones.\n\nCelestee is a set of high-end Sang-Logiumbining elegant design and remarkable sound performance. They incorporate the latest Focal technologies: 15/8\" (40mm) Aluminium/Magnesium ‘M’-shaped dome full-range speaker drivers and acoustic treatment within the earcups to prevent resonance.",
+        "name":  "Focal Celestee High-End Headphones",
+        "overviewFields":  [
+                               {
+                                   "title":  "Cup style",
+                                   "value":  "Closed-Back"
+                               },
+                               {
+                                   "title":  "Wearing style",
+                                   "value":  "Over-ear"
+                               },
+                               {
+                                   "title":  "Driver type",
+                                   "value":  "Dynamic"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               }
+                           ],
+        "specifications":  [
+                               {
+                                   "title":  "Sensitivity",
+                                   "value":  "105dB SPL / 1 mW @ 1 kHz"
+                               },
+                               {
+                                   "title":  "Total Harmonic Distortion (THD)",
+                                   "value":  "0,1 % @ 1 kHz / 100 dB SPL"
+                               },
+                               {
+                                   "title":  "Frequency Response",
+                                   "value":  "5Hz – 23kHz"
+                               },
+                               {
+                                   "title":  "Driver Type",
+                                   "value":  "Electrodynamic full-range"
+                               },
+                               {
+                                   "title":  "Driver Materials \u0026 Size",
+                                   "value":  "40mm Aluminium/Magnesium ‘M’-shaped dome"
+                               },
+                               {
+                                   "title":  "Headphone Weight",
+                                   "value":  "430 grams"
+                               },
+                               {
+                                   "title":  "Warranty",
+                                   "value":  "3 years manufacturer\u0027s warranty"
+                               }
+                           ]
+    },
+    {
+        "_id":  "k27n1AQuIbSr5iozFz7Fdd",
+        "brand":  "Dan Clark Audio",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             [
+                                 "headphones/over-ear"
+                             ],
+                             "headphones/wired",
+                             "headphones/gaming",
+                             "headphones/over-ear"
+                         ],
+        "description":  "Audio component with solid performance.",
+        "name":  "Dan Clark Audio AEON 2 Noire Headphones",
+        "overviewFields":  [
+                               {
+                                   "title":  "Cup style",
+                                   "value":  "Closed-Back"
+                               },
+                               {
+                                   "title":  "Wearing style",
+                                   "value":  "Over-ear"
+                               },
+                               {
+                                   "title":  "Driver type",
+                                   "value":  "Planar Magnetic"
+                               },
+                               {
+                                   "title":  "Amp required",
+                                   "value":  "Yes"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "k27n1AQuIbSr5iozFz7FkW",
+        "brand":  "Audeze",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             [
+                                 "headphones/over-ear"
+                             ],
+                             "headphones/wired",
+                             "headphones/studio",
+                             "headphones/studio-and-recording",
+                             "headphones/gaming",
+                             "headphones/travel",
+                             "headphones/over-ear"
+                         ],
+        "description":  "The LCD-XC shares the same drivers as the LCD-X, meaning that it offers the same level of detail and transparency so integral to any music creator’s toolkit. Where the LCD-XC stands out is in its closed-back design which adds a heightened degree of isolation to the award-winning LCD-X formula. The LCD-XC are ideal for those looking for a top-of-the-line mixing headphone with minimal sound leakage. Our beautiful ear cups are hand-crafted to the highest aesthetic standards, ensuring that the LCD-XC will be the crown jewel in any headphone lover’s collection.\n\nThe Standard and Creator Package versions contain the same headphones, the only difference is the inclusion of the travel case. (Creator Package available in Leather only.)",
+        "name":  "Audeze LCD-XC Headphones | 2021 Creator\u0027s Edition with Economy Travel Case - Open Box",
+        "overviewFields":  [
+                               {
+                                   "title":  "Cup style",
+                                   "value":  "Closed-Back"
+                               },
+                               {
+                                   "title":  "Wearing style",
+                                   "value":  "Over-ear"
+                               },
+                               {
+                                   "title":  "Driver type",
+                                   "value":  "Planar Magnetic"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "k27n1AQuIbSr5iozFz7GSn",
+        "brand":  "Sennheiser",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             [
+                                 "headphones/on-ear"
+                             ],
+                             "headphones/wired",
+                             "headphones/studio",
+                             "headphones/studio-and-recording",
+                             "headphones/gaming",
+                             "headphones/over-ear"
+                         ],
+        "description":  "Discover the Sennheiser HD 620S Closed-Back Dynamic Headphones at Sang-Logium, where high-performance audio meets the intimacy of a closed-back design without sacrificing the expansiveness typically reserved for open-back models. Sennheiser redefines what is possible with the HD 620S, crafting an auditory experience that turns distraction off and a speaker-like open sound on. This model is perfect for the audiophile who demands a pristine sound environment even in the busiest settings. With the HD 620S, Sennheiser delivers reference-level detail, engaging dynamics, and panoramic soundstage in a design that keeps the outside world precisely where it belongs—out.\n\nThe Sennheiser HD 620S headphones feature expertly angled transducers that achieve an impressive panoramic soundstage—uncommon for closed-back designs. This setup ensures that every detail is spread wide and clear, simulating the immersive experience of a room filled with speakers. Coupled with a substantial yet perfectly balanced bass output, these headphones provide an enveloping listening experience that keeps external noises at bay, allowing for complete musical immersion.",
+        "name":  "Sennheiser HD 620S Headphones",
+        "overviewFields":  [
+                               {
+                                   "title":  "Cup style",
+                                   "value":  "Closed-Back"
+                               },
+                               {
+                                   "title":  "Wearing style",
+                                   "value":  "Over-ear"
+                               },
+                               {
+                                   "title":  "Driver type",
+                                   "value":  "Dynamic"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "k27n1AQuIbSr5iozFz7HA5",
+        "brand":  "Dan Clark Audio",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             [
+                                 "headphones/on-ear"
+                             ],
+                             "headphones/wired",
+                             "headphones/gaming",
+                             "headphones/over-ear"
+                         ],
+        "description":  "After 4 years in development, the Dan Clark Audio Stealth Flagship closed-back planar magnetic headphones are now available!\n\n",
+        "name":  "Dan Clark Audio Stealth Headphones",
+        "overviewFields":  [
+                               {
+                                   "title":  "Cup style",
+                                   "value":  "Closed-Back"
+                               },
+                               {
+                                   "title":  "Wearing style",
+                                   "value":  "Over-ear"
+                               },
+                               {
+                                   "title":  "Driver type",
+                                   "value":  "Planar Magnetic"
+                               },
+                               {
+                                   "title":  "Amp required",
+                                   "value":  "Yes"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "k27n1AQuIbSr5iozFz7IlS",
+        "brand":  "Focal",
+        "catalogueLocationKeys":  null,
+        "categoryPath":  [
+                             [
+                                 "headphones/on-ear"
+                             ],
+                             "headphones/wired",
+                             "headphones/gaming",
+                             "headphones/over-ear"
+                         ],
+        "description":  "All Focal Azurys Closed-Back Headphones are tested, inspected and cleaned by our returns team and are sold in like-new condition with their original packaging and accessories.\n\nWith Azurys, enjoy Focal sound wherever you are. These passive closed-back headphones stand out for their design, their hi-fi sound quality and the immersive listening experience they offer, whether at home or on the move. Their top-of-the-line design, infused with Focal technologies, makes them sophisticated, high-performance headphones.",
+        "name":  "Focal Azurys - Open Box",
+        "overviewFields":  [
+                               {
+                                   "title":  "Cup style",
+                                   "value":  "Closed-Back"
+                               },
+                               {
+                                   "title":  "Wearing style",
+                                   "value":  "Over-ear"
+                               },
+                               {
+                                   "title":  "Driver type",
+                                   "value":  "Dynamic"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "k27n1AQuIbSr5iozFz7KCz",
+        "brand":  "Hifiman",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             [
+                                 "headphones/on-ear"
+                             ],
+                             "headphones/wired",
+                             "headphones/studio",
+                             "headphones/studio-and-recording",
+                             "headphones/gaming",
+                             "headphones/over-ear"
+                         ],
+        "description":  "Introducing the new Hifiman Audivina, a closed-back headphone designed for studio pros and hobbyists. The Audivina relies on Hifiman’s renowned Stealth Magnets technology to enable sound waves to pass through the magnets without generating interference. The design is featured on their flagship headphone for a reason because of the fidelity and clarity that only Stealth Magnets can achieve. The Audivina features acoustical architecture based on the finest concert halls in Europe: The Beyreuth Festival Theater in Germany.\n\nThe resonance chamber is inspired and designed after the Beyreuth, which is famous for multi-stage attenuation that contributes to the listener hearing a wide, detailed soundstage in a small, enclosed space. The sound takes a circuitous route through the chamber, creating a wide soundstage beyond what is typically associated with similarly priced products.",
+        "name":  "HiFiMAN Audivina Closed-Back Headphones",
+        "overviewFields":  [
+                               {
+                                   "title":  "Cup style",
+                                   "value":  "Closed-Back"
+                               },
+                               {
+                                   "title":  "Wearing style",
+                                   "value":  "Over-ear"
+                               },
+                               {
+                                   "title":  "Driver type",
+                                   "value":  "Planar Magnetic"
+                               },
+                               {
+                                   "title":  "Amp required",
+                                   "value":  "Yes"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "k27n1AQuIbSr5iozFz7KdY",
+        "brand":  "Meze",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             [
+                                 "headphones/on-ear"
+                             ],
+                             "headphones/wired",
+                             "headphones/gaming",
+                             "headphones/travel",
+                             "headphones/over-ear"
+                         ],
+        "description":  "All Meze Audio LIRIC II Closed-Back Open Box Headphones have been tested, inspected and cleaned by our team and are guaranteed to be in like-new condition.\n\nThe Meze Audio LIRIC II represents a harmonious blend of industrial design prowess and cutting-edge technological innovation. Designed for the active audiophile who demands both mobility and exceptional sound quality, the LIRIC II offers a refined sound profile that strikes a perfect balance between warmth and clarity. Utilizing the innovative Quarter Wavelength Resonator Mask (QWRM), this headphone effectively attenuates high-frequency peaks above 7kHz, ensuring a listening experience that is both rich and non-fatiguing.",
+        "name":  "Meze Audio LIRIC II Headphones - Open Box",
+        "overviewFields":  [
+                               {
+                                   "title":  "Cup style",
+                                   "value":  "Closed-Back"
+                               },
+                               {
+                                   "title":  "Wearing style",
+                                   "value":  "Over-ear"
+                               },
+                               {
+                                   "title":  "Driver type",
+                                   "value":  "Planar Magnetic"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "k27n1AQuIbSr5iozFz9AMx",
+        "brand":  "KEF",
+        "catalogueLocationKeys":  null,
+        "categoryPath":  [
+                             "speakers/bluetooth"
+                         ],
+        "description":  "The LS50 Wireless II transcends the typical high-end speaker experience, delivering a complete audio solution in one system. Every nuance of your music collection comes through with pristine clarity, and you can stream content from virtually any platform thanks to its comprehensive wireless connectivity, including AirPlay 2 and Chromecast integration. \n\nWhen it comes to streaming options, the LS50 Wireless II leaves nothing left to be dreamed of. Access Spotify directly through the app using Spotify Connect, while the KEF Connect app opens up a world of additional services including Tidal, Amazon Music, Qobuz, and Deezer. Plus, you can enjoy internet radio stations and your favorite podcasts all through the same interface.",
+        "name":  "KEF LS50 Wireless II Bookshelf Speakers",
+        "overviewFields":  [
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wireless, Wired"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "k27n1AQuIbSr5iozFz9Bia",
+        "brand":  "KEF",
+        "catalogueLocationKeys":  null,
+        "categoryPath":  [
+                             "speakers/bookshelf"
+                         ],
+        "description":  "When space is a consideration, the KEF Q350 Passive Bookshelf Speakers offer uncompromised musical enjoyment. These speakers are designed to elevate your listening experience without limiting your space. Thanks to the Uni-Q driver and innovative port design, the Q350s can open up the soundstage, ensuring that you enjoy every nuance of your favourite music and movies.\n\nThe KEF Q350s are equipped with the signature Uni-Q driver array and a Computational Fluid Dynamics (CFD) port. These technologies work in harmony to deliver natural, detailed sound with high clarity and tight bass. The Uni-Q driver array positions the tweeter at the center of the midrange and bass cone, creating a single point source for sound that is dispersed evenly throughout the room. KEF\u0027s \u0027tangerine\u0027 waveguide over the tweeter enhances the accuracy of the three-dimensional soundstage.",
+        "name":  "KEF Q350 Passive Bookshelf Speakers (Pair)",
+        "overviewFields":  [
+                               {
+                                   "title":  "Amp required",
+                                   "value":  "Yes"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Not Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "k27n1AQuIbSr5iozG1vD4O",
+        "brand":  "iFi Audio",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             "hi-fi-audio/dacs"
+                         ],
+        "description":  "The Diablo-X is the first DAC/amp on the market to support the revolutionary xMEMS solid state monolithic speaker technology.\n\nThe xMEMS micro speaker technology uses the piezoelectric effect to create a paper-thin solid-state speaker. These micro-speakers offer great potential to push the boundaries of IEM and headphone performance.",
+        "name":  "iFi Audio Diablo-X DAC and Headphone Amplifier",
+        "overviewFields":  [
+                               {
+                                   "title":  "Amplifier type",
+                                   "value":  "Solid-state"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "k27n1AQuIbSr5iozG1vDSz",
+        "brand":  "iFi Audio",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             "hi-fi-audio/amplifiers"
+                         ],
+        "description":  "Portable DAC/amps tend to be compromised because they focus on a great digital OR a great analogue section. But not both. The xDSD Gryphon is different. Just like its mythical namesake, it is two beasts in one.From the Ultra-Res digital stage using the Burr-Brown MultiBit at the core to the PureWave analogue power section pumping out 1,000mW and other things in-between, it takes serious headphones to tame the Gryphon.\n\nUsing the latest QCC 5100 series Bluetooth 5.1 chip as the starting point, for wireless connectivity, the xDSD Gryphon is at the bleeding-edge when it comes to the latest formats:",
+        "name":  "iFi Audio xDSD Gryphon Portable Bluetooth DAC \u0026 Headphone Amplifier",
+        "overviewFields":  [
+                               {
+                                   "title":  "Amplifier type",
+                                   "value":  "Solid-state"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wireless, Wired"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Portable"
+                               }
+                           ],
+        "specifications":  [
+                               {
+                                   "title":  "Wireless Inputs",
+                                   "value":  "Bluetooth 5.1 (aptX, aptX HD, aptX Adaptive, aptX LL, LDAC, HWA, AAC and SBC Codec)"
+                               },
+                               {
+                                   "title":  "Wired Inputs (digital)",
+                                   "value":  "USB-CS/PDIF co-axial"
+                               },
+                               {
+                                   "title":  "Wired Inputs (analogue)",
+                                   "value":  "Balanced 4.4mmSingle-Ended 3.5mm"
+                               },
+                               {
+                                   "title":  "Formats",
+                                   "value":  "DSD DSD512/256/128/64, Octa/Quad/Double/Single-SpeedPCM 768/705.6/384/352.8/192/176.4/ 96/88.2/48/44.1kHzDXD 768/705.6/384/352.8kHz, Double/Single-Speed DXDMQA (Decoder) 384/352.8kHzBluetooth Up to 96kHz"
+                               },
+                               {
+                                   "title":  "DAC",
+                                   "value":  "Burr-Brown"
+                               },
+                               {
+                                   "title":  "Battery",
+                                   "value":  "USB-C charging. BC1.2 compliant up to 1900mA charging current"
+                               },
+                               {
+                                   "title":  "Dimensions",
+                                   "value":  "123x75x19 mm4.8\"x3.0\"x0.7\""
+                               },
+                               {
+                                   "title":  "Weight",
+                                   "value":  "215 grams0.5 Ibs"
+                               },
+                               {
+                                   "title":  "Outputs",
+                                   "value":  "Balanced 6.7V max. (variable)S-Bal (SE) 3.5V max. (variable)"
+                               }
+                           ]
+    },
+    {
+        "_id":  "k27n1AQuIbSr5iozG1vExT",
+        "brand":  "Feliks Audio",
+        "catalogueLocationKeys":  null,
+        "categoryPath":  [
+                             "hi-fi-audio/amplifiers"
+                         ],
+        "description":  "The Feliks Audio Echo Mark 2 is an exciting revision from Feliks Audio on their entry-level desktop tube amplifier. Made in Poland, the Echo Mk II is sleek and small with beautiful wood side finishes and weighs in at around 8 pounds. Don\u0027t let the size fool you though, the Echo Mk II packs a big punch!",
+        "name":  "Feliks Audio Echo MK II",
+        "overviewFields":  [
+                               {
+                                   "title":  "Amplifier type",
+                                   "value":  "Vacuum tube"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Not Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "k27n1AQuIbSr5iozG1vF9H",
+        "brand":  "Violectric",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             "hi-fi-audio/dacs"
+                         ],
+        "description":  "Well-built audio equipment for home setups.",
+        "name":  "Violectric V590 Desktop Headphone DAC/Amp",
+        "overviewFields":  [
+                               {
+                                   "title":  "Amplifier type",
+                                   "value":  "Solid-state"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Not Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "k27n1AQuIbSr5iozG1vG7I",
+        "brand":  "Singxer",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             "hi-fi-audio/dacs"
+                         ],
+        "description":  "The Singxer SA-1 V2 Fully Balanced Headphone Amplifier combines cutting-edge technology with exceptional audio performance. Known for their expertise in digital audio, Singxer has ventured into the analog realm with the SA-1, a fully balanced pure analog class A amplifier. This product exemplifies Singxer’s commitment to high-quality audio, offering superb amplification, a vanishingly low noise floor, and minimal distortion. Ideal for audiophiles looking to upgrade to a high-end balanced amplifier, the SA-1 also doubles as a preamp, providing versatility and superior sound quality.\n\nSince 2011, Singxer has been a leader in the audio industry, developing DACs and digital interfaces renowned for their precision. Their technical achievements in clock systems and phase-locked loop technologies have set them apart in the digital audio space. With the release of the SA-1, Singxer enters the analog market, offering a fully balanced class A amplifier that maintains the company’s high standards. The SA-1 is a testament to Singxer’s talent, delivering outstanding performance and reliability.",
+        "name":  "Singxer SA1 V2 Headphone Amplifier",
+        "overviewFields":  [
+                               {
+                                   "title":  "Amplifier type",
+                                   "value":  "Solid-state"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Not Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "k27n1AQuIbSr5iozG1vI8F",
+        "brand":  "EarMen",
+        "catalogueLocationKeys":  null,
+        "categoryPath":  [
+                             "hi-fi-audio/dacs"
+                         ],
+        "description":  "Discover the pinnacle of portable audio with the EarMen Colibri, a meticulously crafted DAC and Headphone Amplifier that promises to transform your listening experience. Whether you\u0027re an audiophile on-the-go, a professional craving precision, or simply a music lover seeking purity in sound, the Colibri is your ticket to audio nirvana.\n\nAt the heart of the Colibri beats the ES9281 PRO DAC, the crown jewel of the ESS line. Renowned for its astonishing dynamic range and minuscule distortion levels, this DAC is the choice of audiophiles demanding nothing but the best. From crystal-clear highs to profound lows, the Colibri supports a vast array of formats including 32bit/384kHz PCM, DoP, DSD64, DSD128, and MQA, ensuring your music is not just heard, but felt.",
+        "name":  "EarMen Colibri Portable DAC and Headphone Amplifier",
+        "overviewFields":  [
+
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "k27n1AQuIbSr5iozG1vIfh",
+        "brand":  "Woo Audio",
+        "catalogueLocationKeys":  null,
+        "categoryPath":  [
+                             "hi-fi-audio/amplifiers"
+                         ],
+        "description":  "The Woo Audio WA8 Eclipse is the world\u0027s smallest first battery-operated, vacuum tube headphone amplifier and DAC with performance that rivals full-size systems. Featuring SET Class-A transformer output for transparent sound quality, a built-in 24bit/384kHz DAC, and easy transportability/set-up, it’s capable of driving high-end headphones of 8–600 ohm impedance, while its ultra-low noise circuitry is ideal for in-ear monitors.\n\nWhile small, the Eclipse boasts a robust military-grade vacuum tube design rated for 5,000 hours of life. Versatile in analog and digital realms, it offers two- or three-tube operation to tailor the sound quality to a variety of headphones and in-ear monitors. The Class-A, Single-ended Triode topology uses ultra-efficient OCC single crystal copper output transformers offering high bandwidth and low loss. The Eclipse also uses an audiophile-grade ESS SABRE Reference 24bit/384kHz and up to DSD128 DAC, excelling with hi-res music files and compatible with Apple iOS and Android devices.",
+        "name":  "Woo Audio WA8 Eclipse Portable Vacuum Tube Headphone Amp \u0026 DAC",
+        "overviewFields":  [
+                               {
+                                   "title":  "Amplifier type",
+                                   "value":  "Vacuum tube"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "k27n1AQuIbSr5iozG1vJ1L",
+        "brand":  "Matrix Audio",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             "hi-fi-audio/dacs"
+                         ],
+        "description":  "Well-built audio equipment for home setups.",
+        "name":  "Matrix Audio Element i Network Streamer, DAC/Amp",
+        "overviewFields":  [
+
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "k27n1AQuIbSr5iozG1vJMz",
+        "brand":  "Burson Audio",
+        "catalogueLocationKeys":  null,
+        "categoryPath":  [
+                             "hi-fi-audio/amplifiers"
+                         ],
+        "description":  "Audio component with solid performance.",
+        "name":  "Burson Audio Funk Amplifier - Open Box",
+        "overviewFields":  [
+                               {
+                                   "title":  "Amplifier type",
+                                   "value":  "Solid-state"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Not Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "k27n1AQuIbSr5iozG1vKTr",
+        "brand":  "Lake People",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             "hi-fi-audio/amplifiers"
+                         ],
+        "description":  "The PHONE AMP G111 is the successor of famous Lake People G109 and the G100 which can be regarded as the ancestor of the HiFi / HiEnd units from Lake People and Violectric. Phone-Amp G100 was the first item from Lake People which was widely used by professional and private customers. Professionals praised the indestructible construction while private users loved the exceptional sound quality.\n\nAlso, PHONE-AMP G100 / G109 / G111 defined for the first time or technical guidelines which are still unique in their combination:",
+        "name":  "Lake People G111 Desktop Headphone Amplifier",
+        "overviewFields":  [
+                               {
+                                   "title":  "Amplifier type",
+                                   "value":  "Solid-state"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Not Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "k27n1AQuIbSr5iozG1vKge",
+        "brand":  "AudioQuest",
+        "catalogueLocationKeys":  null,
+        "categoryPath":  [
+                             "hi-fi-audio/dacs"
+                         ],
+        "description":  "Many tens of thousands of music lovers are already enjoying better audio enabled by the original AudioQuest JitterBug USB Noise Filter—plugged into cars’ USB jacks, laptop computers, USB “service-only” jacks on Ethernet Streamers, and more.\n\n",
+        "name":  "AudioQuest Jitterbug FMJ",
+        "overviewFields":  [
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "k27n1AQuIbSr5iozG1vMai",
+        "brand":  "Chord Electronics",
+        "catalogueLocationKeys":  null,
+        "categoryPath":  [
+                             "hi-fi-audio/dacs"
+                         ],
+        "description":  "The Chord Electronics Qutest is a standalone DAC whose performance belies its compact dimensions. With DAC architecture based on the award-winning Hugo 2, Qutest offers class-leading digital conversion.",
+        "name":  "Chord Electronics Qutest",
+        "overviewFields":  [
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Not Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    }
+]

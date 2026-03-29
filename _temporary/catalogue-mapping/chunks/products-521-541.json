@@ -1,0 +1,646 @@
+[
+    {
+        "_id":  "moXlkADK7m1DHgGwWwznPb",
+        "brand":  "Bowers \u0026 Wilkins",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             "headphones/wireless",
+                             "headphones/gaming",
+                             "headphones/in-ear"
+                         ],
+        "description":  "Enjoy premium sound and exceptional comfort with the Bowers \u0026 Wilkins Pi7 S2 Wireless In-Ear Headphones. These ultra-lightweight headphones offer clear, natural audio with proprietary drivers that deliver powerful bass, natural mids, and clear treble. Connect wirelessly for 8 hours of listening and make hands-free calls. Experience exceptional sound quality and convenience.\n\nExperience excellent sound quality with the Bowers \u0026 Wilkins Pi7 S2 Wireless In-Ear Headphones. Featuring a true 24-bit connection with aptX™ Adaptive technology, they deliver dynamic, high-resolution audio that adjusts automatically for rich, detailed sound. Enjoy your favorite music and movies in clarity like never before.",
+        "name":  "Bowers \u0026 Wilkins Pi7 S2 Wireless In-Ear Headphones",
+        "overviewFields":  [
+                               {
+                                   "title":  "Wearing style",
+                                   "value":  "In-ear"
+                               },
+                               {
+                                   "title":  "Driver type",
+                                   "value":  "Dynamic"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wireless"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWwzsZX",
+        "brand":  "PSB",
+        "catalogueLocationKeys":  null,
+        "categoryPath":  [
+                             "speakers/subwoofers",
+                             "speakers/powered"
+                         ],
+        "description":  "PSB redefined high performance and high value with their legendary Alpha Series speakers and the new Alpha S10 active subwoofer continues that tradition in the all-important bass region. Though the S10 is compact and affordable, it gets down to business for music and home theater systems when deep bass is a must. The Alpha S10 meets the challenge featuring a long throw 10” woofer with polypropylene cone in a specially tuned bass reflex enclosure. Add DSP control and a state-of-the-art digital amplifier and the magic begins.\n\nAffordable Excellence With Audiophile PedigreePSB has been making critically-acclaimed speakers for more than 45 years and are especially famous for speakers that deliver high bang for the buck. The Alpha S10 will astound with adding lifelike realism for both music and movies to PSB speakers or any high performance speaker.",
+        "name":  "PSB Alphas S10 - 10\" Subwoofer",
+        "overviewFields":  [
+                               {
+                                   "title":  "Driver type",
+                                   "value":  "Dynamic"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Not Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWwzwUF",
+        "brand":  "Noble Audio",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             "headphones/wireless",
+                             "headphones/gaming",
+                             "headphones/over-ear"
+                         ],
+        "description":  "Introducing the Noble Audio FoKus Apollo, a revolutionary step into the world of wireless over-ear headphones. As Noble Audio\u0027s first over-ear model, the FoKus Apollo features the world\u0027s first patented hybrid dual driver arrangement, combining a 40mm dynamic driver with a 14.5mm planar magnetic driver. This unique combination delivers an unparalleled audio experience, blending powerful bass with delicate, crystal-clear mid and high frequencies.\n\nThe Noble Audio FoKus Apollo is equipped with the latest Bluetooth 5.3 technology, providing a seamless and stable connection. With support for multipoint connection, you can easily switch between devices without any interruptions. Enjoy lossless audio quality with a range of supported codecs, including LDAC, AAC, aptX, and aptX HD, ensuring that your music sounds its best no matter what device you\u0027re using.",
+        "name":  "Noble Audio FoKus Apollo Wireless Headphones",
+        "overviewFields":  [
+                               {
+                                   "title":  "Cup style",
+                                   "value":  "Closed-Back"
+                               },
+                               {
+                                   "title":  "Wearing style",
+                                   "value":  "Over-ear"
+                               },
+                               {
+                                   "title":  "Driver type",
+                                   "value":  "Planar Magnetic, Dynamic"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wireless, Wired"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWx071u",
+        "brand":  "Final Audio",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             "headphones/wireless",
+                             "headphones/studio",
+                             "headphones/studio-and-recording",
+                             "headphones/gaming"
+                         ],
+        "description":  "Throughout the journey of pursuing true high-quality sound, by thoroughly exploring our creativity and innovation, and subsequently performing intensive R\u0026D in audio, acoustic, psychoacoustic, and material engineering, we came up with the Air Film Damping System (AFDS) planar magnetic flagship headphones model, the D8000, in 2017 and introduced the Truly Pure Beryllium diaphragm-driven flagship IEM (In-Ear Monitor) model, the A8000, in 2019. Both flagship models deliver the highest level of “Transparency” in music playback and have achieved a breakthrough in hi-fi audio, presenting a completely new perception of and experience in discovering music. The code “8000” represents the milestones of final in our relentless pursuit of new and innovative ideas, challenging limits, and realizing the impossible.\n\nNow, in 2022, we proudly introduce another new model into our 8000 flagship lineup, the ZE8000. ZE8000 is a pair of Truly Wireless Stereo (TWS) earbuds that has been delicately designed in both its hardware and software so as to manifest the acoustic properties — 8K SOUND — newly discovered by final. Utterly different from conventional sound design approaches, this brand new 8K SOUND technology exceeds the achievement of “Transparency” accomplished by the D8000 and A8000, and delivers an unprecedented level of clarity, with the true identity of every bit of sound revealed in full force, promising a whole new level of music enjoyment.",
+        "name":  "Final Audio ZE8000 True Wireless In-Ear Headphones",
+        "overviewFields":  [
+                               {
+                                   "title":  "Driver type",
+                                   "value":  "Dynamic"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wireless"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWxMiAf",
+        "brand":  "Focal",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             "accessories/stands"
+                         ],
+        "description":  "The Focal HPStand Headphone Stand was designed to support the Elear and Utopia and now the Clear! The stand shape is reminiscent of the Focal logo and allows positioning of the Elear, Clear and Utopia headphones easily and without damage to the ear cups. Designed in stainless steel with a synthetic stone base, the stand is rigid and well weighted, providing greater stability. This support is ideal to highlight the Elear, Clear and Utopia headphones at home or in a recording studio.\n\nDesigned originally for the Elear and Utopia headphones, this stand is versatile enough for any on- or over-ear headphone set including Focal\u0027s brand new Clears. With a solid base and balanced design, your headphones sit securely and comfortably on this stand.",
+        "name":  "Focal Headphone Stand",
+        "overviewFields":  [
+
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWxMiDQ",
+        "brand":  "Focal",
+        "catalogueLocationKeys":  null,
+        "categoryPath":  [
+                             "accessories/tips-and-ear-pads"
+                         ],
+        "description":  "Premium, perforated microfibre ear pads for the Focal Clear. These ear pads can be used for any of Focal\u0027s high-end headphone line-up (Elear, Elex, Elegia, Utopia).",
+        "name":  "Focal Clear Ear Pads (Pair)",
+        "overviewFields":  [
+
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWxMkTA",
+        "brand":  "KEF",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             "accessories/wall-mounts",
+                             "accessories/speaker-stands"
+                         ],
+        "description":  "The S1 Floor Stand is designed to partner the LSX II Wireless HiFi system. S1 boasts a cable management system that hides any wires, while the integrated mounting system rigidly bonds LSX II and the stand together, creating the perfect platform to perform.\n\n*Speakers are not included.",
+        "name":  "KEF S1 Floor Stand",
+        "overviewFields":  [
+
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWxMkkd",
+        "brand":  "Moondrop",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             "audio/cables"
+                         ],
+        "description":  "Unleash Superior Sound with Moondrop Free DSP IEM Cable\n\nIntroducing the Moondrop Free DSP IEM Cable, a revolution in the realm of high-fidelity audio. This cutting-edge IEM cable is crafted for audiophiles who seek unparalleled sound quality and precision in their listening experience.\n\nLow Distortion for Pure Audio Clarity\n\nThe Moondrop Free DSP IEM Cable boasts an impressively low distortion rate of just 0.0008%. This minimal distortion rate, combined with a wide dynamic range of 120dB, ensures that you hear every detail of your music with utmost clarity. Its fully balanced output and four-layer gold-plated circuit are designed to deliver audio with high precision, allowing you to immerse yourself in a world of pure, unaltered sound.\n\nExquisite Silver-Plated Design for Optimal Signal Transmission\n\nCrafted with a blend of 75-core high-purity oxygen-free copper and silver-plated wires using the Litz structure, the cable guarantees superior signal transmission. This meticulous design effectively isolates the in-line control and microphone from the audio output signals, ensuring that the sound quality remains pristine and unimpacted.\n\nHassle-Free Audio Control at Your Fingertips\n\nThe Free DSP IEM Cable features a dedicated in-line control and microphone module with three buttons, offering effortless management of volume, playback, and call functions. Experience the convenience of easily controlling your audio without compromising on sound quality.\n\nUSB-C Connectivity for Universal Compatibility\n\nEquipped with a USB-C port, the Free DSP IEM Cable offers seamless plug-and-play compatibility with a wide range of devices including smartphones, tablets, and computers. This universal connectivity eliminates the need for additional drivers, making it an ideal choice for users seeking hassle-free audio solutions.\n\nSuperior Audio Quality over USB-C\n\nUnlike typical USB-C cables, the Free DSP IEM Cable stands out with its exclusive online interactive DSP function, delivering audio quality that surpasses conventional expectations. Enjoy a high-fidelity audio experience without the usual concerns of signal transmission delays and quality degradation associated with wireless earphones.\n\nHigh-End Components for Professional Audio\n\nThe meticulously selected high-precision components and four-layer gold-plated circuit in the Moondrop Free DSP IEM Cable are engineered to meet the demands of professional audio. This high-quality engineering ensures that every note and nuance in your music is reproduced with exceptional clarity and precision.\n\nThe Ultimate Choice for Audiophiles\n\nThe Moondrop Free DSP IEM Cable is more than just a cable; it\u0027s an essential tool for audiophiles who demand the best in sound quality. With its low distortion, high-quality design, effortless control, and universal compatibility, this cable sets a new standard in the world of high-fidelity audio. Whether you\u0027re a music enthusiast, a professional sound engineer, or an audiophile, the Moondrop Free DSP IEM Cable is designed to elevate your audio experience to new heights.",
+        "name":  "Moondrop Free DSP USB-C IEM Cable",
+        "overviewFields":  [
+                               {
+                                   "title":  "Type",
+                                   "value":  "Audio Cable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWxMmzS",
+        "brand":  "Meze",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             "audio/cables"
+                         ],
+        "description":  "\n\nCopper upgrade cable for Meze Empyrean or any compatible 4 pin mini-XLR headphone (Audeze LCD Series, ZMF Headphones)\n\nBraided Furukawa PCUHD copper\n\n4 pin mini-XLR headphone termination \n\n0.04 mm*140 conductors in 8 wire to 4 wire continuous braid\n\nUSA made TPE Sleeve\n\nJensen 4% silver Soldering\n\nOxygen free copper purity is 99.99% (5 ppm or less)\n\nCompatible Headphones:\n\nMeze Audio Empyrean\n\nMeze Audio ELITE\n\nAudeze LCD-2 Classic\n\nAudeze LCD-2 Classic Closed-Back\n\nAudeze LCD-2\n\nAudeze LCD-GX\n\nAudeze LCD-X\n\nAudeze LCD-XC\n\nAudeze LCD-3\n\nAudeze LCD-4z\n\nZMF Headphones",
+        "name":  "Meze Audio Copper PCUHD 4-Pin Mini-XLR Replacement Cable",
+        "overviewFields":  [
+                               {
+                                   "title":  "Type",
+                                   "value":  "Audio Cable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWxMnjQ",
+        "brand":  "AudioQuest",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             "/accessories/audio-cables"
+                         ],
+        "description":  "When USB devices are bulky and take up excess room next to other USB ports, the DragonTail USB 2.0 Extender from AudioQuest could prove useful. This USB extender is slim and connects to a USB device to conserve space and allow you to connect other USB devices next to it. Its flexible design allows you to use it in a variety of mobile applications.\n\nAvailable in the following configurations:\n\nUSB A Male to USB A Female\n\nUSB A Female to USB Micro\n\nUSB A Female to USB C",
+        "name":  "AudioQuest DragonTail USB Extender and Adapter",
+        "overviewFields":  [
+                               {
+                                   "title":  "Type",
+                                   "value":  "Audio Cable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWxMnxD",
+        "brand":  "AudioQuest",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             "/accessories/power-cables"
+                         ],
+        "description":  "Ideal for video displays, powered speakers, and all electronics, NRG-Z3 (3-pole) cables use direction-controlled Perfect-Surface Copper (PSC) conductors in a Semi-Solid Concentric arrangement in which the individual copper strands are packed more tightly and never change position within the bundle. This construction significantly reduces strand interaction distortion. The astonishingly smooth and pure Perfect-Surface conductors minimize distortion caused by grain boundaries and surface discontinuities that exist in any metal conductor. In addition, NRG-Z3\u0027s direction-controlled silver-plated shield conductors efficiently drain RF noise to ground.\n\nSEMI-SOLID CONCENTRIC PERFECT-SURFACE COPPER+ (PSC+) CONDUCTORS\n\nIn a Semi-Solid Concentric arrangement, the conductor strands are packed more tightly and never change position within the bundle. This construction significantly reduces strand-interaction distortion. The extremely pure and smooth surface PSC+ conductors minimize distortion caused by the grain boundaries that exist within any metal conductor.\n\n\n\nSILVER-PLATED DRAIN WIRES\nDirection-controlled Silver-Plated shield conductors efficiently drain RF noise from the line and neutral shields to ground via the third “ground” pin. The net result is powerful, dynamic, and immersive.\n\n\n\n\nZERO CHARACTERISTIC IMPEDANCE\nWhile many AC power cables feature low DC resistance in order to accommodate the demand for high current, a cable’s characteristic impedance is also crucial for optimal performance. Unlike most AC cables that constrict or compress an audio-provoked transient, AudioQuest AC cables combine low DC resistance and zero (no) characteristic impedance in order to deliver uncompressed transients on demand.\n",
+        "name":  "AudioQuest NRG-Z3",
+        "overviewFields":  [
+                               {
+                                   "title":  "Type",
+                                   "value":  "Audio Cable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "n10eAegrGspodtsQvneFiH",
+        "brand":  "Hifiman",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             [
+                                 "headphones/over-ear"
+                             ],
+                             "headphones/wired",
+                             "headphones/gaming",
+                             "headphones/over-ear"
+                         ],
+        "description":  "Our Take: ﻿A direct competitor to the Sennheiser HD800S, Focal Clear and Audeze LCD-X, the Hifiman Arya are perfect for anyone that craves an expansive soundstage (not on the level of the HD800S) and a brighter sound signature. Lightweight and comfortable, the Arya are easy to leave on your head all day while you\u0027re at the office or at home listening to music. With a recent price drop from $1599 to $1299, the Hifiman Arya Planar Magnetic Headphones will not disappoint.\n\nArya is the culmination of HifiMan’s work. Never has a company brought this kind of Planar performance at this price point. Fast, wide soundstage and mind-blowing detail make the Arya a must-listen. HifiMan Arya features a driver based on the HE1000 V2 headphones, one of the best drivers on the market in our opinion, which raises the sonic characteristics to a considerably higher level than similarly priced products.",
+        "name":  "Hifiman Arya Headphones | Stealth Magnets Edition",
+        "overviewFields":  [
+                               {
+                                   "title":  "Cup style",
+                                   "value":  "Open-Back"
+                               },
+                               {
+                                   "title":  "Wearing style",
+                                   "value":  "Over-ear"
+                               },
+                               {
+                                   "title":  "Driver type",
+                                   "value":  "Planar Magnetic"
+                               },
+                               {
+                                   "title":  "Amp required",
+                                   "value":  "Yes"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "n10eAegrGspodtsQvneG1i",
+        "brand":  "Focal",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             [
+                                 "headphones/over-ear"
+                             ],
+                             "headphones/wired",
+                             "headphones/gaming",
+                             "headphones/over-ear"
+                         ],
+        "description":  "The Focal Clear is a new over-ear open-back headphone from Focal made for audiophiles. The Clear bridges the gap perfectly between the Elear and the Utopia, finally giving you an option between their price points. The Clear has all the strengths of the Elear with none of its faults. Gone is the mid-range dip and uncomfortable pads. The Clear has excellent bass extension, clear, detailed mids and highs that truly stand out. The Clear also features perforated memory foam cushions and a lighter design meaning it can be used for extended listening periods with ease!\n\n",
+        "name":  "Focal Clear Headphones - Open Box",
+        "overviewFields":  [
+                               {
+                                   "title":  "Cup style",
+                                   "value":  "Open-Back"
+                               },
+                               {
+                                   "title":  "Wearing style",
+                                   "value":  "Over-ear"
+                               },
+                               {
+                                   "title":  "Driver type",
+                                   "value":  "Dynamic"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               }
+                           ],
+        "specifications":  [
+                               {
+                                   "title":  "Sensitivity",
+                                   "value":  "104dB SPL / 1mW @ 1kHz"
+                               },
+                               {
+                                   "title":  "Total Harmonic Distortion (THD)",
+                                   "value":  "0,25% @ 1kHz / 100dB SPL"
+                               },
+                               {
+                                   "title":  "Frequency Response",
+                                   "value":  "5Hz - 28kHz"
+                               },
+                               {
+                                   "title":  "Driver Type",
+                                   "value":  "Dynamic"
+                               },
+                               {
+                                   "title":  "Driver Materials \u0026 Size",
+                                   "value":  "1.6\" (40mm) Aluminum/Magnesium \u0027M\u0027-shape dome"
+                               },
+                               {
+                                   "title":  "Headphone Weight",
+                                   "value":  "450 grams"
+                               },
+                               {
+                                   "title":  "Warranty",
+                                   "value":  "3 years manufacturer\u0027s warranty"
+                               }
+                           ]
+    },
+    {
+        "_id":  "n10eAegrGspodtsQvneN6x",
+        "brand":  "Sennheiser",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             [
+                                 "headphones/on-ear"
+                             ],
+                             "headphones/wired",
+                             "headphones/gaming",
+                             "headphones/over-ear"
+                         ],
+        "description":  "Powered by Sennheiser’s proprietary transducer technology including the “Ergonomic acoustic refinement” (E.A.R.) design, which channels the audio signal directly into your ears. Featuring a contemporary design that is both attractive and ergonomic. A real treat for all, who listen to their music with a sense of discovery.\n\nThe closed-back over-ear design of the HD 569 provides you with two benefits: Firstly, a great soundstage, brilliantly filled by Sennheiser’s proprietary transducer system with rich detail and a powerful bass response. Secondly, an effective acoustic isolation – outside noise stays out, the music stays in. So you can enjoy your music without disturbing anyone.",
+        "name":  "Sennheiser HD 569 Headphones",
+        "overviewFields":  [
+                               {
+                                   "title":  "Cup style",
+                                   "value":  "Closed-Back"
+                               },
+                               {
+                                   "title":  "Wearing style",
+                                   "value":  "Over-ear"
+                               },
+                               {
+                                   "title":  "Driver type",
+                                   "value":  "Dynamic"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "n10eAegrGspodtsQvneQBQ",
+        "brand":  "Dan Clark Audio",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             [
+                                 "headphones/on-ear"
+                             ],
+                             "headphones/wired",
+                             "headphones/gaming",
+                             "headphones/over-ear"
+                         ],
+        "description":  "The Dan Clark Audio NOIRE X Planar Magnetic Headphones redefine midrange audio performance with cutting-edge technology and an elegant, ergonomic design. As an update to the iconic AEON 2 NOIRE, NOIRE X incorporates Dan Clark Audio’s state-of-the-art Acoustic Metamaterial Tuning System™ (AMTS™) and an enhanced planar driver, delivering exceptional sound clarity and tonal accuracy. Its dramatic black-on-black aesthetic, improved ear pads, and Gorilla Glass 3-clad ear cups make it a visually stunning and highly functional audio accessory.\n\nEngineered for versatility and comfort, the NOIRE X is a game-changer in its class. Whether you’re an audiophile or casual listener, these headphones offer remarkable value by combining luxurious materials with groundbreaking acoustic engineering. Designed to deliver a fully immersive audio experience, NOIRE X is the perfect companion for all music genres and listening environments.",
+        "name":  "Dan Clark Audio NOIRE X Headphones",
+        "overviewFields":  [
+                               {
+                                   "title":  "Cup style",
+                                   "value":  "Closed-Back"
+                               },
+                               {
+                                   "title":  "Wearing style",
+                                   "value":  "Over-ear"
+                               },
+                               {
+                                   "title":  "Driver type",
+                                   "value":  "Planar Magnetic"
+                               },
+                               {
+                                   "title":  "Amp required",
+                                   "value":  "Yes"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "n10eAegrGspodtsQvneQzx",
+        "brand":  "Sennheiser",
+        "catalogueLocationKeys":  null,
+        "categoryPath":  [
+                             [
+                                 "headphones/on-ear"
+                             ],
+                             "headphones/wired",
+                             "headphones/studio",
+                             "headphones/studio-and-recording",
+                             "headphones/gaming",
+                             "headphones/over-ear"
+                         ],
+        "description":  "The Sennheiser HD 800 and the HD800S are legendary headphones in the headphone community. The brand new HD 820 Closed-Back headphones from Sennheiser looks to join them and by all accounts, is going to fit right in at the top! Featuring the sound you know and love in the HD 800 / 800S in a closed-back package, its pretty hard to go wrong the HD820.\n\nThe Sennheiser HD 820 has incorporated concave glass covers over its drivers to deliver up to 26db in passive noise cancellation. Not only does the concave glass help reduce outside noise, it also acts as a resonance reducer by reflecting sound to a dedicated absorber. You can also see through the glass and see the inner-workings of the HD 820 which is an absolutely gorgeous pair of cans. Because of the concave glass, the closed-back design of the HD 820 makes it one of the most versatile high-end headphones on the market. Whether you are using them for musical enjoyment, mixing and mastering or on the go, the HD 820 are flexible to your needs.",
+        "name":  "Sennheiser HD 820 - Open Box",
+        "overviewFields":  [
+                               {
+                                   "title":  "Cup style",
+                                   "value":  "Closed-Back"
+                               },
+                               {
+                                   "title":  "Wearing style",
+                                   "value":  "Over-ear"
+                               },
+                               {
+                                   "title":  "Driver type",
+                                   "value":  "Dynamic"
+                               },
+                               {
+                                   "title":  "Amp required",
+                                   "value":  "Yes"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "n10eAegrGspodtsQvneRgi",
+        "brand":  "Meze",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             [
+                                 "headphones/on-ear"
+                             ],
+                             "headphones/wired",
+                             "headphones/gaming",
+                             "headphones/over-ear"
+                         ],
+        "description":  "The 99 Classics from Meze are one of the most fun headphones on the market to listen to. The 99 Classics are not wholly neutral which is what we like about them. They have a natural sound with some coloured bass that gives them a truly addictive sound. The 99 Classics are seriously hard to put down and have become office favourites at Sang-Logium. The immaculate design of the 99 Classics really make them pop as well, making heads turn as soon as you walk into a room.There is a trend in the high-end headphone industry to make headphones looking luxurious while the sound quality does not match the price point. The 99 Classics not only look amazing, they sound far and above how they should at their price point. If you like headphones with a clean, detailed natural sound and punchy bass that isn’t over the top these are the headphones for you.\n\nJust like finger prints, wood grain is as unique, thus making each pair of Meze Headphone a one of a kind. You will love how they feel in your hands. Sturdy built and precise assembly. The ear cups are made with a satin finished wood grain. Put them on, sit back, and enjoy your favorite sound of plucked strings, upbeat grooves or thumping beats while looking classy.",
+        "name":  "Meze 99 Classics Headphones - Open Box",
+        "overviewFields":  [
+                               {
+                                   "title":  "Cup style",
+                                   "value":  "Closed-Back"
+                               },
+                               {
+                                   "title":  "Wearing style",
+                                   "value":  "Over-ear"
+                               },
+                               {
+                                   "title":  "Driver type",
+                                   "value":  "Dynamic"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "n10eAegrGspodtsQvnmjTT",
+        "brand":  "Kanto Living",
+        "catalogueLocationKeys":  null,
+        "categoryPath":  [
+                             "hi-fi-audio/speakers/bookshelf-speakers"
+                         ],
+        "description":  "A design element in its own right, YU2 brings character and substance to your desktop. Its built-in soundcard lets you stream high-quality audio directly from your computer’s USB port, delivering sound that challenges the notion that bigger is better. Choose a color that reflects your personality and space.",
+        "name":  "Kanto YU2 Powered Bookshelf Speakers",
+        "overviewFields":  [
+                               {
+                                   "title":  "Driver type",
+                                   "value":  "Dynamic"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired, Wireless"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Not Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "n10eAegrGspodtsQvnmnzL",
+        "brand":  "KEF",
+        "catalogueLocationKeys":  null,
+        "categoryPath":  [
+                             "speakers/bookshelf"
+                         ],
+        "description":  "Elevate your audio experience with the KEF Q150 Passive Bookshelf Speakers. These stunning speakers offer an engaging and immersive sound, making them an essential component for any high-quality audio system. With KEF\u0027s patented Uni-Q® technology, each speaker\u0027s tweeter and woofer are positioned at the acoustic center, creating a single point source for sound. This unique design expands the listening \"sweet spot,\" resulting in a more detailed and three-dimensional sound image that fills your room.\n\nWhether you\u0027re assembling a stereo music setup or enhancing your home theater system, the KEF Q150s are a perfect choice. These bookshelf speakers provide a wide soundstage and pinpoint imaging, enveloping you in your favorite music or immersing you in the world of movies. You can use them as standalone stereo speakers or as left- and right-channel speakers in a complete KEF Q Series home theater configuration.",
+        "name":  "KEF Q150 Passive Bookshelf Speakers (Pair)",
+        "overviewFields":  [
+                               {
+                                   "title":  "Amp required",
+                                   "value":  "Yes"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Not Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "n10eAegrGspodtsQvnmskl",
+        "brand":  "Kanto Living",
+        "catalogueLocationKeys":  null,
+        "categoryPath":  [
+                             "hi-fi-audio/speakers/bookshelf-speakers"
+                         ],
+        "description":  "Satisfy your craving for powerful, full-impact sound with YU6. Armed with a formidable Class D amplifier pumping out 200-Watt peak power, YU6 will have you questioning what it really means to be loud. Its 5.25-inch Kevlar® drivers and 1-inch silk dome tweeters inject detailed sound into every square inch of living space, evoking emotions that can only be expressed with an ear-to-ear grin.",
+        "name":  "Kanto YU6 Powered Bookshelf Speakers",
+        "overviewFields":  [
+                               {
+                                   "title":  "Driver type",
+                                   "value":  "Dynamic"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired, Wireless"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Not Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "n10eAegrGspodtsQvy3cvI",
+        "brand":  "SMSL",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             "hi-fi-audio/dacs"
+                         ],
+        "description":  "Introducing the SMSL SU-X Balanced Desktop DAC, the latest flagship offering from SMSL that sets a new standard for desktop digital-to-analog converters. Designed for audiophiles who demand unparalleled sound quality, the SU-X is engineered with precision components to deliver an audio experience that resonates with clarity and depth.\n\nAt the core of the SU-X are dual ESS ES9039MSPRO DAC chips, renowned for their exceptional audio reproduction capabilities. This dual DAC setup ensures that every track is rendered with utmost accuracy, supporting high-resolution audio files up to 32-bits and 768kHz. Immerse yourself in a listening experience where every subtle detail and texture of the music is unveiled.",
+        "name":  "SMSL SU-X Desktop DAC",
+        "overviewFields":  [
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Not Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    }
+]

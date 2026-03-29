@@ -1,0 +1,554 @@
+[
+    {
+        "_id":  "moXlkADK7m1DHgGwWwETNc",
+        "brand":  "EarMen",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             "hi-fi-audio/dacs"
+                         ],
+        "description":  "Introducing the EarMen Tradutto, a state-of-the-art, fully balanced DAC designed to redefine your audio experience. With its sophisticated design and wide range of capabilities, the Tradutto is not just a DAC; it\u0027s an upgrade to your entire audio system, promising to enhance the sonic performance of your favorite music and media.\n\nAt the heart of Tradutto lies the ES9038Q2M DAC, a marvel of audio engineering that effortlessly handles digital audio files up to 32bit/768kHz or DSD512. This high-performance DAC, combined with an optimized circuit that minimizes power consumption and interference, ensures that your audio experience is nothing short of extraordinary.",
+        "name":  "EarMen Tradutto Desktop DAC",
+        "overviewFields":  [
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Not Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWwETaU",
+        "brand":  "headphones.com",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             "hi-fi-audio/amplifiers"
+                         ],
+        "description":  "\n\nFirst came the Leeloo, then the Pendant. Now the Leeloo returns better than ever! Forged in collaboration with Justin and his team at Ampsandsound the Sang-Logium team is thrilled to present the new and improved Leeloo. Not only will it sound magical for your headphone needs but you can also pair it with your favourite pair of efficient speakers to produce a truly euphoric experience.",
+        "name":  "LeeLoo Desktop Tube Headphone Amplifier",
+        "overviewFields":  [
+                               {
+                                   "title":  "Amplifier type",
+                                   "value":  "Vacuum tube"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Not Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWwETjg",
+        "brand":  "Chord Electronics",
+        "catalogueLocationKeys":  null,
+        "categoryPath":  [
+                             "hi-fi-audio/dacs"
+                         ],
+        "description":  "The new Chord Electronics Anni desktop integrated amplifier brings ULTIMA technology to a desktop format for the first time and is capable of powering both high-performance headphones and desktop loudspeakers. The compact amplifier forms part of the Chord Electronics Qutest range and seamlessly complements the resolving abilities of the multi-award-winning Qutest standalone DAC and Huei phono stage. As a system, the Qutest components provide an unrivalled desktop audio solution that is perfectly supported by the compact QSS (Qutest Stand System). In consistency with the rest of the Qutest range, Anni will only be available in black.\n\nAnni offers the recently announced dual-feed-forward error-correction circuit topology whether using headphones or compact loudspeakers. Anni’s advanced technology allows it to drive any headphone load, error-monitored and compensated amplification at all times.",
+        "name":  "Chord Electronics Anni",
+        "overviewFields":  [
+                               {
+                                   "title":  "Amplifier type",
+                                   "value":  "Solid-state"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Not Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWwEUpi",
+        "brand":  "Weiss",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             "hi-fi-audio/dacs"
+                         ],
+        "description":  "Weiss Engineering’s DAC204 stands out as the ultimate digital-to-analog converter, versatile enough to cater to a wide range of audio needs. Dubbed the \"Swiss Army Knife\" of DACs, it offers easy switching between various digital sources, whether from a computer or mobile device, making it a perfect fit for both professional and audiophile environments.\n\nThe DAC204 excels in providing pristine, low-jitter conversion to analog audio. It employs an advanced setup of four oversampling sigma-delta D/A converters per channel, operated in parallel. This configuration enhances the signal-to-noise performance, ensuring top-notch audio output for both professional mixing/mastering studios and audiophile-grade listening rooms.",
+        "name":  "Weiss DAC204 Desktop DAC",
+        "overviewFields":  [
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Not Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWwEZTT",
+        "brand":  "Violectric",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             "hi-fi-audio/amplifiers"
+                         ],
+        "description":  "Audio component with solid performance.",
+        "name":  "Violectric Chronos Portable USB DAC/Amp",
+        "overviewFields":  [
+                               {
+                                   "title":  "Amplifier type",
+                                   "value":  "Solid-state"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWwEaXf",
+        "brand":  "SMSL",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             "hi-fi-audio/dacs"
+                         ],
+        "description":  "\n\nThe SU-6 Desktop Mini HiFi Audio DAC’s small footprint makes it perfect for desktop use, and includes a remote control and Bluetooth support for when you’re AFK.",
+        "name":  "SMSL SU-6 Desktop DAC",
+        "overviewFields":  [
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Not Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWwEcU6",
+        "brand":  "Benchmark Media Systems",
+        "catalogueLocationKeys":  null,
+        "categoryPath":  [
+                             "hi-fi-audio/amplifiers"
+                         ],
+        "description":  "From the first watt to the last watt, no audio power amplifier offers lower noise or lower distortion than the Benchmark AHB2.Benchmark has raised the bar by introducing a new and revolutionary amplifier!\n\n-Bascom King, BHK Labs",
+        "name":  "Benchmark AHB2 Power Amplifier",
+        "overviewFields":  [
+                               {
+                                   "title":  "Amplifier type",
+                                   "value":  "Solid-state"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Not Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWwEdEz",
+        "brand":  "Topping",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             "hi-fi-audio/amplifiers"
+                         ],
+        "description":  "Along with the latest E50 MQA desktop DAC, Topping has unveiled its latest balanced headphone amplifier, Behold the latest Topping L50. Using a redesigned NFCA circuit, the L50 brings extraordinary clean sound signal amplification with ultra-low distortion and high SNR ratings. The amplifier has a maximum output power rating of up to 3500mW or 3.5W at 16Ω of load. Even at 600Ω, the L50 provides up to 290mW of power that is more than enough to power up demanding cans without any trouble. For sensitive IEMs, don\u0027t worry, the Topping L50 has an ultra-low output impedance of \u003c0.1Ω and a super clean noise-floor, pair them without worrying about any background noise. The latest Topping L50 is designed to match with the latest E50 MQA DAC, making an amazing Desktop stack with MQA decoding and powerful output.\n\nRedesigned new NFCA circuit based on the same working principle as the one in A30 Pro. It provides 2x power at 300 Ohm compared to L30.The new circuit shares the same 0.3uV ultra-low noise and 145dB dynamic range as well as 0.00006% THD+N.With the help of NFCA, L50 easily reaches the top of the industry, and it has almost perfect performance regardless of distortion, dynamic range, and multi-tone testing.L50 has three gain options. Covering a wide gain range is sufficient to meet the needs of low-sensitivity full-sized over-ears to high-sensitivity 1EMs. With the help of extremely low noise 0.3uV, even lEMs will not hear any background noise.",
+        "name":  "Topping L50 Desktop Headphone Amplifier - Open Box",
+        "overviewFields":  [
+                               {
+                                   "title":  "Amplifier type",
+                                   "value":  "Solid-state"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Not Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWwEdNG",
+        "brand":  "Burson Audio",
+        "catalogueLocationKeys":  null,
+        "categoryPath":  [
+                             "hi-fi-audio/dacs"
+                         ],
+        "description":  "The Conductor 3X GT takes that unique Burson house sound further with a new output stage for its dual ESS9038 DACs. A new feedback based gain control allows this GT to max out at 10 Watts yet matches with even more headphones. With so many functionalities and refinement, you will never want to add another machine to your desktop.\n\nUsing what we have learned from the Soloist GT and more, we are making the Conductor GT epic!",
+        "name":  "Burson Audio Conductor 3x Grand Tourer Desktop DAC \u0026 Amp",
+        "overviewFields":  [
+                               {
+                                   "title":  "Amplifier type",
+                                   "value":  "Solid-state"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired, Wireless"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Not Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWwEdoq",
+        "brand":  "SPL",
+        "catalogueLocationKeys":  null,
+        "categoryPath":  [
+                             "hi-fi-audio/dacs"
+                         ],
+        "description":  "With innovative Phonitor Matrix, 32-bit DA-converter and outstanding sound quality.\n\nFor us the sound is always in the foreground. When it sounds good, we like to listen. To get such a sound, you need experience and technical finesse. We have incorporated both into the Series One.",
+        "name":  "SPL Phonitor One D",
+        "overviewFields":  [
+                               {
+                                   "title":  "Amplifier type",
+                                   "value":  "Solid-state"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Not Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWwEeK6",
+        "brand":  "Feliks Audio",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             "hi-fi-audio/amplifiers"
+                         ],
+        "description":  "Class A Single-ended transformer coupled, balanced amplifier, powered by the legendary 300B tubes\n\n",
+        "name":  "Feliks Audio Envy Flagship Desktop Headphone Tube Amplifier - Open Box",
+        "overviewFields":  [
+                               {
+                                   "title":  "Amplifier type",
+                                   "value":  "Vacuum tube"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Not Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWwEenW",
+        "brand":  "SPL",
+        "catalogueLocationKeys":  null,
+        "categoryPath":  [
+                             "hi-fi-audio/amplifiers"
+                         ],
+        "description":  "Well-built audio equipment for home setups.",
+        "name":  "SPL Phonitor One",
+        "overviewFields":  [
+                               {
+                                   "title":  "Amplifier type",
+                                   "value":  "Solid-state"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Not Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWwEfPD",
+        "brand":  "Chord Electronics",
+        "catalogueLocationKeys":  null,
+        "categoryPath":  [
+                             "hi-fi-audio/dacs"
+                         ],
+        "description":  "Developed from the multi-award-winning transportable Chord Electronics Hugo 2, the Chord Electronics Hugo TT 2 is bigger, better and more advanced in every way. TT 2 sets a new benchmark for table top DACs, eclipsed only by our flagship DAVE.\n\nHugo TT 2 has been radically redesigned from the ground up, not only with beautiful new casework by Chief Designer, John Franks, but with 5x the processing power of the original Hugo TT and double that of the multi-award-winning Hugo 2. Hugo TT 2 distils over 20 years of digital development by Rob Watts and takes advantage of the very latest technology.",
+        "name":  "Chord Electronics Hugo TT2",
+        "overviewFields":  [
+                               {
+                                   "title":  "Amplifier type",
+                                   "value":  "Solid-state"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wireless, Wired"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Not Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWwEgQe",
+        "brand":  "AudioQuest",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             "hi-fi-audio/dacs"
+                         ],
+        "description":  "See the Comparison Chart below for the differences between the AudioQuest Dragonfly Black, Red and Cobalt.\n\nAudioQuest Dragonfly Comparison Chart",
+        "name":  "AudioQuest Dragonfly Cobalt USB DAC/Amp",
+        "overviewFields":  [
+                               {
+                                   "title":  "Amplifier type",
+                                   "value":  "Solid-state"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWwEgal",
+        "brand":  "Topping",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             "hi-fi-audio/dacs"
+                         ],
+        "description":  "Reliable audio accessory built to last.",
+        "name":  "Topping DX3 Pro+ Desktop DAC \u0026 Headphone Amplifier",
+        "overviewFields":  [
+                               {
+                                   "title":  "Amplifier type",
+                                   "value":  "Solid-state"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Not Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWwzeV4",
+        "brand":  "KEF",
+        "catalogueLocationKeys":  null,
+        "categoryPath":  [
+                             "hi-fi-audio/speakers/wireless-speakers"
+                         ],
+        "description":  "Welcome to a world of High-Fidelity sound that is true enough to touch. This all-in-one speaker system in its second generation: upgraded to deliver a more balanced sound in higher resolution with all-inclusive connectivity. Simply stream anything including AirPlay 2, Chromecast, Spotify and Tidal, or seamlessly connect the LSX II to your laptop, TV and many other devices.\n\nKEF is obsessed with bringing a superior listening experience whatever the size of the speaker. With built-in support of streaming up to 24bit/384kHz and dedicated amplifiers inside each speaker, LSX II offers the highest quality sound in its size and makes high-fidelity sound accessible to a wider range of listeners.",
+        "name":  "KEF LSX II Wireless Powered Bookshelf Speakers",
+        "overviewFields":  [
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired, Wireless"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWwzejm",
+        "brand":  "Chord Electronics",
+        "catalogueLocationKeys":  null,
+        "categoryPath":  [
+                             "hi-fi-audio/media-players-and-streamers"
+                         ],
+        "description":  "The Chord Electronics Poly is a portable music streamer/player that combines with Mojo to wirelessly stream from connected devices and playback from its Micro SD, all with smartphone control. It enables hi-fi sound quality at home or on-the-go.\n\nPoly is a revolutionary music streamer, the first of its kind in the world. When partnered with Mojo, it enables music streamed from a range of wirelessly connected devices to be enjoyed in the best possible sound quality, whether at home or on the go. Poly is also a music player: its unlimited-capacity Micro SD card slot can house huge libraries and liberate storage on smart devices. Full smartphone control using everyday apps enables effortless music playback whether streaming or playing music from the Micro SD.Poly directly connects to Mojo’s award-winning audio processing (DAC) technology dramatically improving the audio quality of streamed music. Its advanced design enables everyday devices, including Android and Apple smartphones/tablets, to become portable ‘hi-fi-quality’ digital audio players: the smartphone becomes the controller, with Poly and Mojo doing the high-level audio processing. Poly can also be used with computers and laptops, plus it can access networked audio stored on NAS drives using popular DLNA apps. Playback is via Mojo’s twin headphone outputs, plus home and in-car audio systems with auxiliary (AUX) inputs can also benefit from improved sound quality.",
+        "name":  "Chord Electronics Poly V3",
+        "overviewFields":  [
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wireless"
+                               },
+                               {
+                                   "title":  "Portability",
+                                   "value":  "Portable"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWwzgHO",
+        "brand":  "Sennheiser",
+        "catalogueLocationKeys":  null,
+        "categoryPath":  [
+                             "speakers/soundbars"
+                         ],
+        "description":  "The world\u0027s best soundbar has a new name: AMBEO Soundbar Max harnesses the power of a multi-speaker home cinema system to deliver a 3D audio experience like you\u0027ve never heard before.\n\nAnd thanks to an advanced room calibration, it immerses you in studio-grade sound adapted to the specifics of your living room for an unforgettable 3D experience.",
+        "name":  "Sennheiser AMBEO Max Soundbar",
+        "overviewFields":  [
+                               {
+                                   "title":  "Driver type",
+                                   "value":  "Dynamic"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wired, Wireless"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWwzgvq",
+        "brand":  "Sennheiser",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             "headphones/wireless",
+                             "headphones/gaming",
+                             "headphones/over-ear"
+                         ],
+        "description":  "Enjoy your favorite music like never before with our audiophile-inspired 42mm transducer system that delivers brilliant dynamics, clarity and musicality.\n\nMake the sound perfect for you using the built-in EQ, presets, sound modes, and Sound Personalization feature, which tailors the audio to your individual hearing.",
+        "name":  "Sennheiser Momentum 4 Headphones",
+        "overviewFields":  [
+                               {
+                                   "title":  "Cup style",
+                                   "value":  "Closed-Back"
+                               },
+                               {
+                                   "title":  "Wearing style",
+                                   "value":  "Over-ear"
+                               },
+                               {
+                                   "title":  "Driver type",
+                                   "value":  "Dynamic"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wireless, Wired"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWwzilq",
+        "brand":  "KEF",
+        "catalogueLocationKeys":  null,
+        "categoryPath":  [
+                             "speakers/subwoofers",
+                             "speakers/powered"
+                         ],
+        "description":  "Introducing the KEF Kube 10 MIE, a 10-inch front-firing active subwoofer designed to deliver remarkable bass extension and control. Equipped with a sealed cabinet and 300 Watts of power, the Kube 10 MIE is optimized to dynamically enhance bass depth and dynamics, unlocking its full potential for an immersive audio experience.\n\nThe Kube 10 MIE\u0027s sealed cabinet design facilitates optimal placement, while its contemporary design seamlessly blends with any room\u0027s decor. This subwoofer not only sounds incredible but also adds a touch of elegance to your living space.",
+        "name":  "KEF Kube 10 MIE Powered Subwoofer",
+        "overviewFields":  [
+
+                           ],
+        "specifications":  [
+
+                           ]
+    },
+    {
+        "_id":  "moXlkADK7m1DHgGwWwzkms",
+        "brand":  "JBL",
+        "catalogueLocationKeys":  [
+
+                                  ],
+        "categoryPath":  [
+                             "headphones/noise-cancelling",
+                             "headphones/gaming",
+                             "headphones/travel",
+                             "headphones/in-ear"
+                         ],
+        "description":  "Experience the ultimate audio journey with the JBL Tour Pro 2. Armed with the revolutionary True Adaptive Noise Cancelling technology, these earbuds adapt to your surroundings, offering an immersive and spatial audio experience. Powered by the iconic JBL Pro Sound, the Tour Pro 2 ensures that you can enjoy your favourite tunes or relish the tranquility it provides anywhere you go.\n\nForget the hassle of misplaced earbuds. The JBL Tour Pro 2 introduces the ‘Find My Buds’ feature, where a loud sound helps locate the missing bud quickly, saving you time and worry.",
+        "name":  "JBL Tour Pro 2 True Wireless In-Ear Headphones",
+        "overviewFields":  [
+                               {
+                                   "title":  "Wearing style",
+                                   "value":  "In-ear"
+                               },
+                               {
+                                   "title":  "Driver type",
+                                   "value":  "Dynamic"
+                               },
+                               {
+                                   "title":  "Connectivity",
+                                   "value":  "Wireless"
+                               }
+                           ],
+        "specifications":  [
+
+                           ]
+    }
+]
