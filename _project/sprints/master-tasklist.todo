@@ -1,0 +1,7 @@
+SU 29 03 2026
+[ ] get new voice dictation (whisprflow expired)
+[ ] catalogue
+    Catalogue - ensure and test data mapping correctness
+    [ ] truth table of catalogue item -> products
+    [ ] delete mix ups
+    [ ] validate truth table - no products subsets contains mix ups given its catalogue item key
