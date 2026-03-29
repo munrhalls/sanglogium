@@ -1,23 +1,26 @@
 {
-  "generatedAt": "2026-03-28T12:53:40.084Z",
+  "generatedAt": "2026-03-29T09:50:15.803Z",
   "slugToIdMap": {
     "open-back": "o7c6baiuobsr7ni2y2vf22sh",
     "closed-back": "yq3p9s798zszjkzm5btnebjh",
+    "semi-open": "dW7bkxuW7lwltD3OAxQ9yH",
     "planar-magnetic": "yd9641q8fiuh9rgoupauw2zl",
     "dynamic": "j751evwbn8n9aac4elrekqi4",
     "electrostatic": "icmc3j8qzjiffr9h6tw6kg74",
     "monitors-iems": "t2anvkkjfz9knqi85kozuaze",
-    "true-wireless-tws": "sbbu2eig5fx84uht05ic863j",
     "desktop-amps": "o6mz3kbs5xla8ixastppktsd",
     "portable-amps": "ipz8oe0elii0vm2voxsbgsw6",
+    "bluetooth-dac-amps": "2Q3Hkst6W23iaT5J8DYRdm",
     "standalone-dacs": "mpni93r13d9yo2vn5moexlkp",
     "dac-amp-combos": "o37u0yjphzt3qu91ewnww2yj",
+    "usb-c-dacs": "dW7bkxuW7lwltD3OAxQBo5",
     "digital-players-daps": "o9igtdq1g5oqaahpa0zvq238",
     "network-streamers": "npwbgqg3v4t5qe95rg35wte0",
     "headphone-cables": "vnrj2n32p172vcje1tt3s4ls",
     "interconnects": "ck7d2wm9xe6lujtdfq7biyh7",
     "adapters": "jdxde1qpftseepekaivzpl8c",
     "earpads": "j2yu4yvtje69j6gie4spxutu",
+    "eartips": "9td5z7HwDgMNxTZ8edvs2d",
     "care-cleaning": "ab2xhkm6hgabf69y0f3s4oo0",
     "headphone-stands": "u9o83mfmx23cudko8phu5otx",
     "carrying-cases": "j8ls622l90d6m4xetlajua4y"
@@ -42,7 +45,8 @@
       "breadcrumbs": [],
       "children": [
         "o7c6baiuobsr7ni2y2vf22sh",
-        "yq3p9s798zszjkzm5btnebjh"
+        "yq3p9s798zszjkzm5btnebjh",
+        "dW7bkxuW7lwltD3OAxQ9yH"
       ],
       "type": "header"
     },
@@ -67,6 +71,19 @@
         {
           "label": "Closed-Back",
           "url": "/shop/closed-back"
+        }
+      ],
+      "children": [],
+      "type": "link"
+    },
+    "dW7bkxuW7lwltD3OAxQ9yH": {
+      "title": "Semi-Open",
+      "url": "/shop/semi-open",
+      "slug": "semi-open",
+      "breadcrumbs": [
+        {
+          "label": "Semi-Open",
+          "url": "/shop/semi-open"
         }
       ],
       "children": [],
@@ -124,37 +141,23 @@
       "type": "link"
     },
     "fxvwrl18sixw5b9ro2jrlepa": {
-      "title": "In-Ear & Wireless",
+      "title": "In-Ear Monitors",
       "url": "#",
       "slug": "",
       "breadcrumbs": [],
       "children": [
-        "t2anvkkjfz9knqi85kozuaze",
-        "sbbu2eig5fx84uht05ic863j"
+        "t2anvkkjfz9knqi85kozuaze"
       ],
       "type": "header"
     },
     "t2anvkkjfz9knqi85kozuaze": {
-      "title": "Monitors (IEMs)",
+      "title": "Universal IEMs",
       "url": "/shop/monitors-iems",
       "slug": "monitors-iems",
       "breadcrumbs": [
         {
-          "label": "Monitors (IEMs)",
+          "label": "Universal IEMs",
           "url": "/shop/monitors-iems"
-        }
-      ],
-      "children": [],
-      "type": "link"
-    },
-    "sbbu2eig5fx84uht05ic863j": {
-      "title": "True Wireless (TWS)",
-      "url": "/shop/true-wireless-tws",
-      "slug": "true-wireless-tws",
-      "breadcrumbs": [
-        {
-          "label": "True Wireless (TWS)",
-          "url": "/shop/true-wireless-tws"
         }
       ],
       "children": [],
@@ -178,7 +181,8 @@
       "breadcrumbs": [],
       "children": [
         "o6mz3kbs5xla8ixastppktsd",
-        "ipz8oe0elii0vm2voxsbgsw6"
+        "ipz8oe0elii0vm2voxsbgsw6",
+        "2Q3Hkst6W23iaT5J8DYRdm"
       ],
       "type": "header"
     },
@@ -208,6 +212,19 @@
       "children": [],
       "type": "link"
     },
+    "2Q3Hkst6W23iaT5J8DYRdm": {
+      "title": "Bluetooth DAC/Amps",
+      "url": "/shop/bluetooth-dac-amps",
+      "slug": "bluetooth-dac-amps",
+      "breadcrumbs": [
+        {
+          "label": "Bluetooth DAC/Amps",
+          "url": "/shop/bluetooth-dac-amps"
+        }
+      ],
+      "children": [],
+      "type": "link"
+    },
     "lkuqr2n1gpeivrvxisnfs3ot": {
       "title": "Digital Sources",
       "url": "#",
@@ -216,6 +233,7 @@
       "children": [
         "mpni93r13d9yo2vn5moexlkp",
         "o37u0yjphzt3qu91ewnww2yj",
+        "dW7bkxuW7lwltD3OAxQBo5",
         "o9igtdq1g5oqaahpa0zvq238",
         "npwbgqg3v4t5qe95rg35wte0"
       ],
@@ -242,6 +260,19 @@
         {
           "label": "DAC/Amp Combos",
           "url": "/shop/dac-amp-combos"
+        }
+      ],
+      "children": [],
+      "type": "link"
+    },
+    "dW7bkxuW7lwltD3OAxQBo5": {
+      "title": "USB-C/Dongle DACs",
+      "url": "/shop/usb-c-dacs",
+      "slug": "usb-c-dacs",
+      "breadcrumbs": [
+        {
+          "label": "USB-C/Dongle DACs",
+          "url": "/shop/usb-c-dacs"
         }
       ],
       "children": [],
@@ -337,12 +368,13 @@
       "type": "link"
     },
     "e4rct8015rxgy011710isd5e": {
-      "title": "Maintenance",
+      "title": "Fit & Comfort",
       "url": "#",
       "slug": "",
       "breadcrumbs": [],
       "children": [
         "j2yu4yvtje69j6gie4spxutu",
+        "9td5z7HwDgMNxTZ8edvs2d",
         "ab2xhkm6hgabf69y0f3s4oo0"
       ],
       "type": "header"
@@ -355,6 +387,19 @@
         {
           "label": "Earpads",
           "url": "/shop/earpads"
+        }
+      ],
+      "children": [],
+      "type": "link"
+    },
+    "9td5z7HwDgMNxTZ8edvs2d": {
+      "title": "Eartips",
+      "url": "/shop/eartips",
+      "slug": "eartips",
+      "breadcrumbs": [
+        {
+          "label": "Eartips",
+          "url": "/shop/eartips"
         }
       ],
       "children": [],
@@ -448,6 +493,15 @@
                 "_type": "slug",
                 "current": "closed-back"
               }
+            },
+            {
+              "_key": "dW7bkxuW7lwltD3OAxQ9yH",
+              "_type": "catalogueItem",
+              "title": "Semi-Open",
+              "type": "link",
+              "slug": {
+                "current": "semi-open"
+              }
             }
           ]
         },
@@ -492,27 +546,17 @@
         {
           "_key": "fxvwrl18sixw5b9ro2jrlepa",
           "_type": "catalogueItem",
-          "title": "In-Ear & Wireless",
+          "title": "In-Ear Monitors",
           "type": "header",
           "children": [
             {
               "_key": "t2anvkkjfz9knqi85kozuaze",
               "_type": "catalogueItem",
-              "title": "Monitors (IEMs)",
+              "title": "Universal IEMs",
               "type": "link",
               "slug": {
                 "_type": "slug",
                 "current": "monitors-iems"
-              }
-            },
-            {
-              "_key": "sbbu2eig5fx84uht05ic863j",
-              "_type": "catalogueItem",
-              "title": "True Wireless (TWS)",
-              "type": "link",
-              "slug": {
-                "_type": "slug",
-                "current": "true-wireless-tws"
               }
             }
           ]
@@ -555,6 +599,15 @@
                 "_type": "slug",
                 "current": "portable-amps"
               }
+            },
+            {
+              "_key": "2Q3Hkst6W23iaT5J8DYRdm",
+              "_type": "catalogueItem",
+              "title": "Bluetooth DAC/Amps",
+              "type": "link",
+              "slug": {
+                "current": "bluetooth-dac-amps"
+              }
             }
           ]
         },
@@ -582,6 +635,15 @@
               "slug": {
                 "_type": "slug",
                 "current": "dac-amp-combos"
+              }
+            },
+            {
+              "_key": "dW7bkxuW7lwltD3OAxQBo5",
+              "_type": "catalogueItem",
+              "title": "USB-C/Dongle DACs",
+              "type": "link",
+              "slug": {
+                "current": "usb-c-dacs"
               }
             },
             {
@@ -660,7 +722,7 @@
         {
           "_key": "e4rct8015rxgy011710isd5e",
           "_type": "catalogueItem",
-          "title": "Maintenance",
+          "title": "Fit & Comfort",
           "type": "header",
           "children": [
             {
@@ -671,6 +733,15 @@
               "slug": {
                 "_type": "slug",
                 "current": "earpads"
+              }
+            },
+            {
+              "_key": "9td5z7HwDgMNxTZ8edvs2d",
+              "_type": "catalogueItem",
+              "title": "Eartips",
+              "type": "link",
+              "slug": {
+                "current": "eartips"
               }
             },
             {

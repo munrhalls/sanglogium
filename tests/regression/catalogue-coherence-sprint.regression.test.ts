@@ -196,11 +196,11 @@ function testCategoryResolution() {
   );
   console.log(`    ✅ Headphones subtree: ${headphonesKeys.length} keys`);
 
-  // Audio Electronics currently has 9 nodes (will be 11 after adding 2 new categories)
+  // Audio Electronics currently has 11 nodes (after adding 2 new categories)
   const audioKeys = unrollDescendantKeys("ti2wufd15h51jxtq855ogbfa");
   assert(
-    audioKeys.length >= 8 && audioKeys.length <= 10,
-    `Audio Electronics subtree should have 8-10 keys, got ${audioKeys.length}`
+    audioKeys.length >= 10 && audioKeys.length <= 12,
+    `Audio Electronics subtree should have 10-12 keys, got ${audioKeys.length}`
   );
   console.log(`    ✅ Audio Electronics subtree: ${audioKeys.length} keys`);
 
@@ -317,10 +317,10 @@ function testSprintBaseline() {
   const leafCount = Object.values(slotMetadataMap).filter(m => m.type === 'link').length;
   console.log(`    ℹ️ Current leaf count: ${leafCount}`);
 
-  // After sprint, should be 23 (remove 1 TWS, add 4 new = +3 net from 20)
+  // Sprint COMPLETE: now 23 categories (removed TWS, added 4 new = +3 net from 20)
   assert(
-    leafCount >= 19 && leafCount <= 21,
-    `Expected ~20 leaf categories, found ${leafCount}`
+    leafCount >= 22 && leafCount <= 24,
+    `Expected ~23 leaf categories after sprint, found ${leafCount}`
   );
   console.log("    ✅ Leaf count within expected range");
 
