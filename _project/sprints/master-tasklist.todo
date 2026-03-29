@@ -1,38 +1,232 @@
 
 SU 29 03 2026
     [ ] get new voice dictation (whisprflow expired)
-Catalogue - Data Mapping Integrity
-    [x] Phase 1: Define Semantic Protocol & Safety Valve (UNCATEGORIZED)
-    [x] Phase 2: Cleanse/Truncate JSON Data (Zero-Waste Payload)
-    ✔ Figure out real robust way to map 583 products per each catalogue leaf node with 0 mix ups @done(26-03-29 17:17)
-    [ ] Phase 3: Generate Truth Tables (Current Workflow)
-        [x] 0-49 (verified)
-        [x] 50-74 (verified)
-        [x] 75-99 (verified)
-        [x] 100-125 (completed)
-        [ ] 126-149
-        [ ] 150-175
-        [ ] 176-199
-        [ ] 200-224
-        [ ] 225-249
-        [ ] 250-274
-        [ ] 275-299
-        [ ] 300-324
-        [ ] 325-349
-        [ ] 350-374
-        [ ] 375-399
-        [ ] 400-424
-        [ ] 425-449
-        [ ] 450-474
-        [ ] 476-499
-        [ ] 500-524
-        [ ] 525-549
-        [ ] 550-574
-        [ ] 575-583
-    [ ] Phase 4: Global Verification
-        [ ] Audit all FOR REVIEW sections (approx. 5 min total)
-        [ ] Validate zero mix-ups in core 23 categories
-        [ ] Finalize Master Truth Table
-    [ ] Phase 5: Execution
-        [ ] Generate Sanity Patch based on Verified Truth Table
-        [ ] Apply Patch to Studio
+
+Catalogue - Truth table sprint
+[x] Phase 1: Define Semantic Protocol & Safety Valve (UNCATEGORIZED)
+[x] Phase 2: Cleanse/Truncate JSON Data (Zero-Waste Payload)
+✔ Figure out real robust way to map 583 products per each catalogue leaf node with 0 mix ups @done(26-03-29 17:17)
+[ ] Phase 3: Generate Truth Tables (Current Workflow)
+    [x] 0-49 (verified)
+    [x] 50-74 (verified)
+    [x] 75-99 (verified)
+    [x] 100-125 (completed)
+    [ ] 126-149
+    [ ] 150-175
+    [ ] 176-199
+    [ ] 200-224
+    [ ] 225-249
+    [ ] 250-274
+    [ ] 275-299
+    [ ] 300-324
+    [ ] 325-349
+    [ ] 350-374
+    [ ] 375-399
+    [ ] 400-424
+    [ ] 425-449
+    [ ] 450-474
+    [ ] 476-499
+    [ ] 500-524
+    [ ] 525-549
+    [ ] 550-574
+    [ ] 575-583
+    [ ] Test, per chunk
+        [ ] (human review) AI -> 'view at a glance': leaf node -> products list - human confirm 0 mix ups per node
+[ ] Phase 4: Global Verification
+    [ ] Validate zero mix-ups in core 23 categories
+    [ ] Finalize Master Truth Table
+[ ] Phase 5: Execution
+    [ ] Generate Sanity Patch based on Verified Truth Table
+    [ ] Apply Patch to Studio
+    [ ] Test - .json truth table - leaf node results from truth table return the same products as VFS per leaf node
+        [ ] Test passed = truth table sprint closed
+
+Catalogue - small taxonomy expansion based on "for review"
+[ ] Phase 1 - confirm new leaf nodes
+    [ ] read all "for review" - note full path + new leaf
+    [ ] make sure it makes sense vs its header
+    [ ] make list of new leaf nodes
+    [ ] read all "for review" and put them to proper leaf nodes (human, manually)
+    [ ] make new truth table of "new leaf nodes - products"
+    [ ] verify each leaf node's product list in truth table
+[ ] Phase 2 - upload new leaf nodes
+    [ ] write regression test - original catalogue
+    [ ] write expansion test - how catalogue looks after expansion
+    [ ] update existing catalogue with new leaf nodes
+    [ ] run regression test - should pass if it confirms 100% match with non-expansion pathways
+    [ ] run expansion test - should pass
+
+Catalogue - map expansion leaf nodes
+[ ] Phase 1 - systematically update
+    [ ] write regression test
+    [ ] write after mapping test with expansion leaf node - products that "subscribe"
+    [ ] run patch script on sanity
+    [ ] run regression test
+    [ ] run after mapping test
+    [ ] tests pass = sprint closed
+[ ] Phase 2 - update master truth table
+    [ ] should reflect new catalogue
+    [ ] each leaf node should return product ids list 100% matching truth table
+
+Catalogue - VFS 1 to 1 match with truth table
+
+
+
+Phase 1 - Atomic Leaf Match (Base Truth)
+    [ ] Write test — VFS via `catalogue-index.json` returns 1:1 Product IDs for Leaf Nodes only vs Master Truth Table.
+    [ ] Write regression — Verify "For Review" expansion did not orphan or duplicate IDs at the leaf level.
+    [ ] Execute "Blind Match" — AI/Human validation of 10 random Leaf Nodes.
+    [ ] Lockdown — Atomic Leaf Truth verified.
+
+Phase 2 - Aggregate Parent Match (Recursive Truth)
+    [ ] Write test — Parent category IDs return the exact mathematical union of all their nested child leaf IDs.
+    [ ] Trace "Bus Stops" — Verify every junction in the VFS path correctly aggregates IDs from its subtree.
+    [ ] Verify Error Handling — Ensure invalid or empty Node IDs return `[]` and do not break the union logic.
+    [ ] Test Passed — VFS logic locked; Truth Table Sprint closed.
+
+
+Sprint the sprint - Post-Homepage product discovery components sprint
+Phase 1: test clarity
+    [ ] Verify and lock Post-Homepage product discovery components sprint items in terms of clear meaning
+Phase 2: test sequence
+    [ ] Verify no sequence errors
+Phase 3: test feasibility
+    [ ] Verify no "impossibles" or will take 10x longer
+Phase 4: test scoping
+    [ ] Verify no bundles, too much at once big items
+Phase 4: test presence of clear regression tests
+    [ ] Verify, where appropriate, regression tests are present and made before execution
+Phase 5: test presence of target state tests, existing BEFORE execution steps
+    [ ] Verify target state is defined clearly
+    [ ] Verify tests for target state exist before execution steps
+
+
+Sprint: Post-Homepage Product Discovery Components (Pass 1)
+Phase 1: Search & Filter Layout (Pass 1)
+[ ] Define SearchOverlay.tsx skeleton — container, input field, and result slot.
+[ ] Define FilterSidebar.tsx skeleton — category list and price range placeholder.
+[ ] Define SearchResultsGrid.tsx skeleton — layout for product cards in search view.
+[ ] Lockdown — Search & Filter skeleton integration verified.
+
+Phase 2: Category Discovery Flow (Pass 1)
+[ ] Define CategoryHero.tsx skeleton — breadcrumb, title, and banner slot.
+[ ] Define SubCategoryNav.tsx skeleton — horizontal scroll or grid for child leaf nodes.
+[ ] Define CategoryGrid.tsx skeleton — standard 4-column layout for product cards.
+[ ] Lockdown — Category discovery skeleton integration verified.
+
+Phase 3: Product Detail View (Pass 1)
+[ ] Define ProductDetailsLayout.tsx skeleton — split view: gallery left, info right.
+[ ] Define ImageGallery.tsx skeleton — main image and thumbnail carousel placeholder.
+[ ] Define ProductMeta.tsx skeleton — title, brand, price, and CTA slots.
+[ ] Define RelatedProducts.tsx skeleton — "People also bought" carousel placeholder.
+[ ] Lockdown — Product detail skeleton integration verified.
+
+Phase 4: Integration Review
+[ ] Verify navigation path: Search/Category → Grid → Product Detail (Skeleton level).
+[ ] Ensure no styling beyond structural borders (Pass 1 Discipline).
+[ ] Test Passed — Discovery components Pass 1 closed.
+
+
+
+Sprint: Post-Homepage Product Discovery Components (Pass 2 - Data)
+Focus: Data Connectivity (Pass 2) using catalogue-index.json and Sanity.
+Dependency: Pass 1 Skeletons Complete; Atomic Leaf Truth Verified.
+Difficulty: 8 - A, Forward progress: Data integration for discovery flow — → closes 0 DoD items, Pass 2 Baseline
+
+Velocity Scope Contract: Discovery Data Pass
+Target: Data Flow Only.
+
+1. The Fenced Territory (IN SCOPE)
+Objective: Map the verified Truth Table IDs to the actual UI slots created in Pass 1.
+
+DoD Item: Navigating to a Category ID displays the exact product list defined in catalogue-index.json.
+
+DoD Item: Clicking a product in the grid loads the correct document data on the Detail page.
+
+2. The Forbidden Territory (OUT OF SCOPE)
+No CSS/Tailwind: Do not "fix" the layout if the data makes it look weird.
+
+No Loading States: Use standard text "Loading..." or empty slots; no complex skeletons/spinners yet.
+
+No Error UI: If data fails, console log it; do not build "Not Found" pages in this pass.
+
+Phase 1: Search & Filter Data (Pass 2)
+[ ] Connect SearchOverlay.tsx — implement Fuse.js or simple filter against catalogue-index.json product list.
+[ ] Connect FilterSidebar.tsx — map category tree from JSON to navigation links.
+[ ] Connect SearchResultsGrid.tsx — pass filtered ID array to Sanity groq fetcher.
+[ ] Lockdown — Search returns valid product data based on ID match.
+
+Phase 2: Category Discovery Flow (Pass 2)
+[ ] Connect CategoryHero.tsx — fetch active category metadata (title, description) from Sanity.
+[ ] Connect SubCategoryNav.tsx — fetch child node titles/slugs based on parent Node ID.
+[ ] Connect CategoryGrid.tsx — implement getProductsByNode(id) logic using Truth Table logic.
+[ ] Lockdown — Category pages render correct product sets per leaf/parent node.
+
+Phase 3: Product Detail View (Pass 2)
+[ ] Connect ProductDetailsLayout.tsx — fetch full product document by slug (image, description, specs).
+[ ] Connect ImageGallery.tsx — map Sanity image array to source URLs.
+[ ] Connect ProductMeta.tsx — bind brand, price, and availability status.
+[ ] Connect RelatedProducts.tsx — fetch first 4 products from the same leaf node ID.
+[ ] Lockdown — Product detail page displays 1:1 data match with Sanity Studio.
+
+Phase 4: Data Integrity Check
+[ ] Verify "Bus Stop" trace — data flows from JSON index → ID Array → Sanity Fetch → Component.
+[ ] Ensure zero styling — no layout adjustments, no hover states, no custom fonts (Pass 2 Discipline).
+[ ] Test Passed — Discovery components Pass 2 closed.
+
+
+
+Sprint: Post-Homepage Product Discovery Components (Pass 3 — High-Fidelity)
+Focus: Visual & Interactive Lockdown per Component.
+Execution: End-to-End completion of one component (Steps 1-4) before starting the next.
+Difficulty: 13 - E, Polish: High-fidelity component locking — → closes 0 DoD items, Pass 3 Complete
+
+Component Build Protocol
+No Leapfrogging: Component [N] must be 100% styled and tested before Component [N+1] structure starts.
+
+Lockdown: Once a component passes its specific test and manual UI review, it is LOCKED.
+
+
+Component 1: SearchOverlay.tsx
+[ ] Step 1: Structure — Define HTML5 semantic tags, focus trap wrapper, and input/results container.
+
+[ ] Step 2: Layout — Apply Flex/Grid for positioning (centered modal or full-screen slide).
+
+[ ] Step 3: Styling — Apply colors, typography, backdrop-blur, and borders.
+
+[ ] Step 4: Interactivity — Implement Framer Motion transitions and hover/focus ring states.
+
+[ ] Test: it('renders valid structure and toggles visibility')
+
+Component 2: FilterSidebar.tsx
+[ ] Step 1: Structure — Define <aside> with nested <section> tags for filter groups.
+
+[ ] Step 2: Layout — Sticky positioning, vertical spacing, and alignment of checkboxes.
+
+[ ] Step 3: Styling — Custom checkbox styles, accent colors, and scrollbar aesthetics.
+
+[ ] Step 4: Interactivity — Accordion expand/collapse logic and hover feedback on labels.
+
+[ ] Test: it('correctly toggles filter group sections')
+
+Component 3: CategoryGrid.tsx
+[ ] Step 1: Structure — Define <section> wrapper and <ul> list for product cards.
+
+[ ] Step 2: Layout — Lock responsive grid (e.g., grid-cols-1 md:grid-cols-3 lg:grid-cols-4).
+
+[ ] Step 3: Styling — Container padding, gap sizing, and background tokens.
+
+[ ] Step 4: Interactivity — Implement staggered entrance animations for the grid items.
+
+[ ] Test: it('matches specified grid column count at 1440px')
+
+Component 4: ProductDetails.tsx
+[ ] Step 1: Structure — Define <main> with two primary columns: Gallery and Meta.
+
+[ ] Step 2: Layout — Aspect-ratio locking for images and vertical flow for text hierarchy.
+
+[ ] Step 3: Styling — High-contrast CTA buttons, price typography, and spec tables.
+
+[ ] Step 4: Interactivity — Image thumbnail syncing and "Add to Cart" button bounce states.
+
+[ ] Test: it('syncs main image when thumbnail is clicked')
