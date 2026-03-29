@@ -1,0 +1,442 @@
+{
+  "summary": {
+    "totalProducts": 581,
+    "uniquePaths": 72,
+    "uniqueLeafCategories": 69
+  },
+  "pathCounts": {
+    "audio/cables": 11,
+    "/accessories/audio-cables": 8,
+    "Studio Equipment/Studio Monitors": 4,
+    "Speakers/Outdoor Speakers": 14,
+    "Speakers/Subwoofers": 20,
+    "Accessories/Wall Mounts": 12,
+    "Speakers/Floor Standing Speakers": 3,
+    "Accessories/Speaker Stands": 6,
+    "Accessories/HDMI Cables": 15,
+    "Accessories/Headphone Cables": 12,
+    "Studio Equipment/Microphones": 15,
+    "": 1,
+    "accessories/audio-cables": 1,
+    "home-audio/amplifiers": 1,
+    "Accessories/RCA Cables": 11,
+    "Accessories/Microphone Accessories": 2,
+    "Accessories/Power Management": 8,
+    "Headphones/Noise Cancelling": 5,
+    "Personal Audio/Digital Audio Players": 15,
+    "Personal Audio/Bluetooth Receivers and Transmitters": 18,
+    "Personal Audio/Portable Dacs and Amps": 8,
+    "Personal Audio/Headphone Amplifiers": 3,
+    "Personal Audio/Phone and Tablet Accessories": 5,
+    "Personal Audio/Carrying Cases and Protection": 12,
+    "Personal Audio/Replacement Parts": 3,
+    "Home Audio/Amplifiers": 12,
+    "Home Audio/Receivers": 6,
+    "Home Audio/Preamps": 14,
+    "Home Audio/Turntables": 9,
+    "Home Audio/CD Players": 14,
+    "Home Audio/DACs (Digital-to-Analog Converters)": 14,
+    "Studio Equipment/Audio Interfaces": 5,
+    "Studio Equipment/Studio Processors": 10,
+    "Studio Equipment/Recording Accessories": 4,
+    "Headphones/Earbuds": 16,
+    "Speakers/Bluetooth Speakers": 15,
+    "Speakers/Bookshelf Speakers": 19,
+    "Speakers/Soundbars": 23,
+    "Speakers/Powered Speakers": 18,
+    "Accessories/Power Cables": 9,
+    "Accessories/USB Cables": 7,
+    "Accessories/Ethernet Cables": 8,
+    "Accessories/Speaker and Subwoofer accessories": 2,
+    "headphones/wired": 36,
+    "headphones/gaming": 53,
+    "headphones/over-ear": 44,
+    "headphones/studio": 11,
+    "headphones/studio-and-recording": 11,
+    "headphones/travel": 12,
+    "speakers/bluetooth": 10,
+    "speakers/bookshelf": 3,
+    "hi-fi-audio/dacs": 36,
+    "hi-fi-audio/amplifiers": 22,
+    "headphones/wireless": 12,
+    "headphones/in-ear": 8,
+    "hi-fi-audio/speakers/subwoofers": 2,
+    "speakers/subwoofers": 4,
+    "speakers/powered": 6,
+    "hi-fi-audio/media-players-and-streamers": 12,
+    "speakers/outdoor": 1,
+    "headphones/noise-cancelling": 2,
+    "accessories/power-strips": 2,
+    "accessories/speaker-stands": 4,
+    "accessories/tips-and-ear-pads": 6,
+    "headphones/on-ear": 1,
+    "hi-fi-audio/speakers/bookshelf-speakers": 4,
+    "hi-fi-audio/speakers/wireless-speakers": 1,
+    "speakers/soundbars": 1,
+    "accessories/stands": 1,
+    "accessories/wall-mounts": 2,
+    "/accessories/power-cables": 2,
+    "speakers/floor-standing": 1
+  },
+  "leafCounts": {
+    "cables": 11,
+    "audio-cables": 9,
+    "Studio Monitors": 4,
+    "Outdoor Speakers": 14,
+    "Subwoofers": 20,
+    "Wall Mounts": 12,
+    "Floor Standing Speakers": 3,
+    "Speaker Stands": 6,
+    "HDMI Cables": 15,
+    "Headphone Cables": 12,
+    "Microphones": 15,
+    "": 1,
+    "amplifiers": 23,
+    "RCA Cables": 11,
+    "Microphone Accessories": 2,
+    "Power Management": 8,
+    "Noise Cancelling": 5,
+    "Digital Audio Players": 15,
+    "Bluetooth Receivers and Transmitters": 18,
+    "Portable Dacs and Amps": 8,
+    "Headphone Amplifiers": 3,
+    "Phone and Tablet Accessories": 5,
+    "Carrying Cases and Protection": 12,
+    "Replacement Parts": 3,
+    "Amplifiers": 12,
+    "Receivers": 6,
+    "Preamps": 14,
+    "Turntables": 9,
+    "CD Players": 14,
+    "DACs (Digital-to-Analog Converters)": 14,
+    "Audio Interfaces": 5,
+    "Studio Processors": 10,
+    "Recording Accessories": 4,
+    "Earbuds": 16,
+    "Bluetooth Speakers": 15,
+    "Bookshelf Speakers": 19,
+    "Soundbars": 23,
+    "Powered Speakers": 18,
+    "Power Cables": 9,
+    "USB Cables": 7,
+    "Ethernet Cables": 8,
+    "Speaker and Subwoofer accessories": 2,
+    "wired": 36,
+    "gaming": 53,
+    "over-ear": 44,
+    "studio": 11,
+    "studio-and-recording": 11,
+    "travel": 12,
+    "bluetooth": 10,
+    "bookshelf": 3,
+    "dacs": 36,
+    "wireless": 12,
+    "in-ear": 8,
+    "subwoofers": 6,
+    "powered": 6,
+    "media-players-and-streamers": 12,
+    "outdoor": 1,
+    "noise-cancelling": 2,
+    "power-strips": 2,
+    "speaker-stands": 4,
+    "tips-and-ear-pads": 6,
+    "on-ear": 1,
+    "bookshelf-speakers": 4,
+    "wireless-speakers": 1,
+    "soundbars": 1,
+    "stands": 1,
+    "wall-mounts": 2,
+    "power-cables": 2,
+    "floor-standing": 1
+  },
+  "legacyCategoryCounts": [
+    {
+      "path": "audio/cables",
+      "productCount": 11
+    },
+    {
+      "path": "/accessories/audio-cables",
+      "productCount": 8
+    },
+    {
+      "path": "Studio Equipment/Studio Monitors",
+      "productCount": 4
+    },
+    {
+      "path": "Speakers/Outdoor Speakers",
+      "productCount": 14
+    },
+    {
+      "path": "Speakers/Subwoofers",
+      "productCount": 20
+    },
+    {
+      "path": "Accessories/Wall Mounts",
+      "productCount": 12
+    },
+    {
+      "path": "Speakers/Floor Standing Speakers",
+      "productCount": 3
+    },
+    {
+      "path": "Accessories/Speaker Stands",
+      "productCount": 6
+    },
+    {
+      "path": "Accessories/HDMI Cables",
+      "productCount": 15
+    },
+    {
+      "path": "Accessories/Headphone Cables",
+      "productCount": 12
+    },
+    {
+      "path": "Studio Equipment/Microphones",
+      "productCount": 15
+    },
+    {
+      "path": "",
+      "productCount": 1
+    },
+    {
+      "path": "accessories/audio-cables",
+      "productCount": 1
+    },
+    {
+      "path": "home-audio/amplifiers",
+      "productCount": 1
+    },
+    {
+      "path": "Accessories/RCA Cables",
+      "productCount": 11
+    },
+    {
+      "path": "Accessories/Microphone Accessories",
+      "productCount": 2
+    },
+    {
+      "path": "Accessories/Power Management",
+      "productCount": 8
+    },
+    {
+      "path": "Headphones/Noise Cancelling",
+      "productCount": 5
+    },
+    {
+      "path": "Personal Audio/Digital Audio Players",
+      "productCount": 15
+    },
+    {
+      "path": "Personal Audio/Bluetooth Receivers and Transmitters",
+      "productCount": 18
+    },
+    {
+      "path": "Personal Audio/Portable Dacs and Amps",
+      "productCount": 8
+    },
+    {
+      "path": "Personal Audio/Headphone Amplifiers",
+      "productCount": 3
+    },
+    {
+      "path": "Personal Audio/Phone and Tablet Accessories",
+      "productCount": 5
+    },
+    {
+      "path": "Personal Audio/Carrying Cases and Protection",
+      "productCount": 12
+    },
+    {
+      "path": "Personal Audio/Replacement Parts",
+      "productCount": 3
+    },
+    {
+      "path": "Home Audio/Amplifiers",
+      "productCount": 12
+    },
+    {
+      "path": "Home Audio/Receivers",
+      "productCount": 6
+    },
+    {
+      "path": "Home Audio/Preamps",
+      "productCount": 14
+    },
+    {
+      "path": "Home Audio/Turntables",
+      "productCount": 9
+    },
+    {
+      "path": "Home Audio/CD Players",
+      "productCount": 14
+    },
+    {
+      "path": "Home Audio/DACs (Digital-to-Analog Converters)",
+      "productCount": 14
+    },
+    {
+      "path": "Studio Equipment/Audio Interfaces",
+      "productCount": 5
+    },
+    {
+      "path": "Studio Equipment/Studio Processors",
+      "productCount": 10
+    },
+    {
+      "path": "Studio Equipment/Recording Accessories",
+      "productCount": 4
+    },
+    {
+      "path": "Headphones/Earbuds",
+      "productCount": 16
+    },
+    {
+      "path": "Speakers/Bluetooth Speakers",
+      "productCount": 15
+    },
+    {
+      "path": "Speakers/Bookshelf Speakers",
+      "productCount": 19
+    },
+    {
+      "path": "Speakers/Soundbars",
+      "productCount": 23
+    },
+    {
+      "path": "Speakers/Powered Speakers",
+      "productCount": 18
+    },
+    {
+      "path": "Accessories/Power Cables",
+      "productCount": 9
+    },
+    {
+      "path": "Accessories/USB Cables",
+      "productCount": 7
+    },
+    {
+      "path": "Accessories/Ethernet Cables",
+      "productCount": 8
+    },
+    {
+      "path": "Accessories/Speaker and Subwoofer accessories",
+      "productCount": 2
+    },
+    {
+      "path": "headphones/wired",
+      "productCount": 36
+    },
+    {
+      "path": "headphones/gaming",
+      "productCount": 53
+    },
+    {
+      "path": "headphones/over-ear",
+      "productCount": 44
+    },
+    {
+      "path": "headphones/studio",
+      "productCount": 11
+    },
+    {
+      "path": "headphones/studio-and-recording",
+      "productCount": 11
+    },
+    {
+      "path": "headphones/travel",
+      "productCount": 12
+    },
+    {
+      "path": "speakers/bluetooth",
+      "productCount": 10
+    },
+    {
+      "path": "speakers/bookshelf",
+      "productCount": 3
+    },
+    {
+      "path": "hi-fi-audio/dacs",
+      "productCount": 36
+    },
+    {
+      "path": "hi-fi-audio/amplifiers",
+      "productCount": 22
+    },
+    {
+      "path": "headphones/wireless",
+      "productCount": 12
+    },
+    {
+      "path": "headphones/in-ear",
+      "productCount": 8
+    },
+    {
+      "path": "hi-fi-audio/speakers/subwoofers",
+      "productCount": 2
+    },
+    {
+      "path": "speakers/subwoofers",
+      "productCount": 4
+    },
+    {
+      "path": "speakers/powered",
+      "productCount": 6
+    },
+    {
+      "path": "hi-fi-audio/media-players-and-streamers",
+      "productCount": 12
+    },
+    {
+      "path": "speakers/outdoor",
+      "productCount": 1
+    },
+    {
+      "path": "headphones/noise-cancelling",
+      "productCount": 2
+    },
+    {
+      "path": "accessories/power-strips",
+      "productCount": 2
+    },
+    {
+      "path": "accessories/speaker-stands",
+      "productCount": 4
+    },
+    {
+      "path": "accessories/tips-and-ear-pads",
+      "productCount": 6
+    },
+    {
+      "path": "headphones/on-ear",
+      "productCount": 1
+    },
+    {
+      "path": "hi-fi-audio/speakers/bookshelf-speakers",
+      "productCount": 4
+    },
+    {
+      "path": "hi-fi-audio/speakers/wireless-speakers",
+      "productCount": 1
+    },
+    {
+      "path": "speakers/soundbars",
+      "productCount": 1
+    },
+    {
+      "path": "accessories/stands",
+      "productCount": 1
+    },
+    {
+      "path": "accessories/wall-mounts",
+      "productCount": 2
+    },
+    {
+      "path": "/accessories/power-cables",
+      "productCount": 2
+    },
+    {
+      "path": "speakers/floor-standing",
+      "productCount": 1
+    }
+  ]
+}
