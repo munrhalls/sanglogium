@@ -1,0 +1,2670 @@
+{
+  "validatedAt": "2026-03-29T12:53:34.093Z",
+  "summary": {
+    "total": 583,
+    "valid": 216,
+    "invalid": 232,
+    "unassigned": 135,
+    "accuracy": 37.05
+  },
+  "byCategory": {
+    "vnrj2n32p172vcje1tt3s4ls": {
+      "category": "Headphone Cables",
+      "slug": "headphone-cables",
+      "valid": [
+        "3O1ZNp54LWQGln4uEAU7Vs",
+        "3O1ZNp54LWQGln4uEAUFVf",
+        "3O1ZNp54LWQGln4uEAUFjw",
+        "3O1ZNp54LWQGln4uEAUGAa",
+        "3O1ZNp54LWQGln4uEAUGRi",
+        "3O1ZNp54LWQGln4uEAUIek",
+        "A5Y8wEwAn6Fo0zYQ5BM56Y",
+        "A5Y8wEwAn6Fo0zYQ5BM7Yv",
+        "E5AJbuTajbv7O6i4rY3WSR",
+        "E5AJbuTajbv7O6i4rY3eHh",
+        "E5AJbuTajbv7O6i4rY3eQO",
+        "E5AJbuTajbv7O6i4rY3eZs",
+        "E5AJbuTajbv7O6i4rY3hnp",
+        "E5AJbuTajbv7O6i4rY3kDC",
+        "EuRMMuzWxDMHyuoMMSy2uy",
+        "Y7l1IhzX2fnyiano57aRUw",
+        "Y7l1IhzX2fnyiano57aSNT",
+        "Y7l1IhzX2fnyiano58Fk2j",
+        "Y7l1IhzX2fnyiano58Fnge",
+        "Y7l1IhzX2fnyiano58Fza8",
+        "Y7l1IhzX2fnyiano58G1YB",
+        "Y7l1IhzX2fnyiano58Giz2",
+        "Y7l1IhzX2fnyiano58Gmxj",
+        "Y7l1IhzX2fnyiano58GsCK",
+        "Y7l1IhzX2fnyiano58H1hn",
+        "Y7l1IhzX2fnyiano58H5OJ",
+        "Y7l1IhzX2fnyiano58H8UT",
+        "Y7l1IhzX2fnyiano58H9fB",
+        "Y7l1IhzX2fnyiano58HAxg",
+        "ZuUKzmkqDyQwdcwhxwSmoW",
+        "ZuUKzmkqDyQwdcwhxwzjR5",
+        "ZuUKzmkqDyQwdcwhxxfYPW",
+        "ZuUKzmkqDyQwdcwhxxfZqP",
+        "ZuUKzmkqDyQwdcwhxxfaEe",
+        "ZuUKzmkqDyQwdcwhxxfbt0",
+        "ZuUKzmkqDyQwdcwhxxfkX1",
+        "ZuUKzmkqDyQwdcwhxxfuOS",
+        "ZuUKzmkqDyQwdcwhxxfwju",
+        "ZuUKzmkqDyQwdcwhxxfx04",
+        "ZuUKzmkqDyQwdcwhxxfy5P",
+        "ZuUKzmkqDyQwdcwhxxfzYz",
+        "ZuUKzmkqDyQwdcwhxxg3jZ",
+        "ZuUKzmkqDyQwdcwhxxgKaf",
+        "ZuUKzmkqDyQwdcwhxxgLtT",
+        "ZuUKzmkqDyQwdcwhxxgOnw",
+        "ZuUKzmkqDyQwdcwhxxgQd4",
+        "ZuUKzmkqDyQwdcwhxxgTaE",
+        "ZuUKzmkqDyQwdcwhxxgUXU",
+        "ZuUKzmkqDyQwdcwhxxgUt2",
+        "ZuUKzmkqDyQwdcwhxxgVqI",
+        "dLGDVDmEEI2lV8CArJ16Oy",
+        "dLGDVDmEEI2lV8CArJ18Au",
+        "dLGDVDmEEI2lV8CArJPuQO",
+        "dLGDVDmEEI2lV8CArJPvOm",
+        "dLGDVDmEEI2lV8CArJQ0om",
+        "dLGDVDmEEI2lV8CArJQ9PQ",
+        "dLGDVDmEEI2lV8CArJQB24",
+        "dLGDVDmEEI2lV8CArJQDa0",
+        "dLGDVDmEEI2lV8CArJQFFk",
+        "dLGDVDmEEI2lV8CArJQFqu",
+        "dLGDVDmEEI2lV8CArJQGE8",
+        "dLGDVDmEEI2lV8CArJQSL6",
+        "dLGDVDmEEI2lV8CArJQStA",
+        "dLGDVDmEEI2lV8CArJQYG4",
+        "dLGDVDmEEI2lV8CArJQabc",
+        "dLGDVDmEEI2lV8CArJQcP6",
+        "k27n1AQuIbSr5iozG37Y6n",
+        "k27n1AQuIbSr5iozG37cuu",
+        "k27n1AQuIbSr5iozG37d4k",
+        "k27n1AQuIbSr5iozG37dFZ",
+        "mhejwYdgiH5W70wqaK7Cw6",
+        "moXlkADK7m1DHgGwWxMkkd",
+        "moXlkADK7m1DHgGwWxMmzS",
+        "moXlkADK7m1DHgGwWxMnxD",
+        "n10eAegrGspodtsQw2njvA",
+        "n10eAegrGspodtsQw2nmUX"
+      ],
+      "invalid": [
+        {
+          "id": "A5Y8wEwAn6Fo0zYQ5BM3KK",
+          "name": "Kanto ST34P 34\" Universal Bookshelf Speaker Floor Stand with Plywood Base- Black (Pair)",
+          "score": 0
+        },
+        {
+          "id": "IysVzF92P1Ckj0vYj2qiBH",
+          "name": "JBL Live 670NC Wireless On-Ear Adaptive Noise Cancelling Headphones (White)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano56QdsC",
+          "name": "McIntosh MX180 A/V Processor",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano572wHv",
+          "name": "JBL PartyBox Encore Essential Portable Party Speaker",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano574L4R",
+          "name": "Bose TV Speaker with Bluetooth and HDMI-ARC (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano574QDq",
+          "name": "JBL Bar 1000 Surround Sound System with 7.1.4 Channel Soundbar, 10\" Wireless Subwoofer, and Detachable Rear Speakers",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano57anzP",
+          "name": "Sanus Adjustable Speaker Wall Mount for Sonos Era 100 - Each (White)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano57aoPN",
+          "name": "Sanus Adjustable Speaker Wall Mount for Sonos Era 100 - Pair (White)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano57aozj",
+          "name": "Sanus Adjustable Speaker Wall Mount for Sonos Era 300 - Each (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano57auEK",
+          "name": "Sanus Adjustable Speaker Wall Mounts for Sonos Era 300 - Pair (White)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxkuPin",
+          "name": "Panasonic DP-UB154P-K 4K Ultra HD DVD/CD/3D Blu-Ray Player with HDR10, Dolby Digital Plus, & Dolby TrueHD",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwRGfb",
+          "name": "JBL PartyBox 710 Bluetooth Portable Party Speaker with Built-in Light and Splashproof Design",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwSku0",
+          "name": "JBL Bar 2.1 Deep Bass MK2 Bluetooth Soundbar with 6.5\" Wireless Subwoofer",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwztFp",
+          "name": "Chief XSM1U Large Fusion Adjustable Fixed TV Mount for 55\" - 82\"",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxx0JMe",
+          "name": "Sanus Adjustable Speaker Wall Mount for Sonos Era 100 - Each (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArIgbTY",
+          "name": "Sony WHCH720N/B Hybrid Wired & Wireless Bluetooth Noise Canceling Headphones",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArIgbyW",
+          "name": "Soundcore Q20i Wireless Headphones (White)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArJ1QxI",
+          "name": "Sanus Adjustable Speaker Wall Mount for Sonos Era 300 - Each (White)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArJ1STk",
+          "name": "Sanus Adjustable Speaker Wall Mounts for Sonos Era 300 - Pair (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArJ1cT6",
+          "name": "Sanus WSBWM1 Extendable Soundbar Mount for Dolby Atmos Soundbars",
+          "score": 0
+        },
+        {
+          "id": "mhejwYdgiH5W70wqaK7V9a",
+          "name": "Sonos Speaker Floor Stand for Era 300 - Each (Black)",
+          "score": 0
+        },
+        {
+          "id": "mhejwYdgiH5W70wqaK7b7W",
+          "name": "Sanus BF24 24\" Fixed-Height Basic Foundations Speaker Stands - Pair (Black)",
+          "score": 0
+        },
+        {
+          "id": "mhejwYdgiH5W70wqaK7x5C",
+          "name": "Klipsch Nashville Portable Waterproof Bluetooth Speaker",
+          "score": 0
+        }
+      ]
+    },
+    "dW7bkxuW7lwltD3OAxQBo5": {
+      "category": "USB-C/Dongle DACs",
+      "slug": "usb-c-dacs",
+      "valid": [
+        "3O1ZNp54LWQGln4uEAUFVf",
+        "E5AJbuTajbv7O6i4rY3eQO",
+        "EuRMMuzWxDMHyuoMMSyEDW",
+        "Y7l1IhzX2fnyiano4idEgt",
+        "Y7l1IhzX2fnyiano4ipzcN",
+        "Y7l1IhzX2fnyiano4jNrzP",
+        "Y7l1IhzX2fnyiano4jO6bg",
+        "Y7l1IhzX2fnyiano4jOIfY",
+        "Y7l1IhzX2fnyiano4jOM95",
+        "Y7l1IhzX2fnyiano58Gmxj",
+        "Y7l1IhzX2fnyiano58GsCK",
+        "ZuUKzmkqDyQwdcwhxkuPVK",
+        "ZuUKzmkqDyQwdcwhxl77C3",
+        "ZuUKzmkqDyQwdcwhxlJkHG",
+        "ZuUKzmkqDyQwdcwhxlJlJu",
+        "ZuUKzmkqDyQwdcwhxxg3jZ",
+        "dLGDVDmEEI2lV8CArAWFhc",
+        "dLGDVDmEEI2lV8CArAWG7w",
+        "dLGDVDmEEI2lV8CArAcaQ0",
+        "dLGDVDmEEI2lV8CArAcay4",
+        "dLGDVDmEEI2lV8CArAcd7E",
+        "dLGDVDmEEI2lV8CArAcfBk",
+        "dLGDVDmEEI2lV8CArJQFFk",
+        "dLGDVDmEEI2lV8CArJQFqu",
+        "dLGDVDmEEI2lV8CArJQGE8",
+        "k27n1AQuIbSr5iozG1vD4O",
+        "k27n1AQuIbSr5iozG1vDSz",
+        "k27n1AQuIbSr5iozG1vTNo",
+        "k27n1AQuIbSr5iozG1vUvF",
+        "k27n1AQuIbSr5iozG2j4HV",
+        "k27n1AQuIbSr5iozG37cuu",
+        "k27n1AQuIbSr5iozG37d4k",
+        "mhejwYdgiH5W70wqaK7ngk",
+        "mhejwYdgiH5W70wqaK7rUs",
+        "moXlkADK7m1DHgGwWwESUS",
+        "moXlkADK7m1DHgGwWwEZTT",
+        "moXlkADK7m1DHgGwWwEgQe",
+        "moXlkADK7m1DHgGwWxMnjQ"
+      ],
+      "invalid": [
+        {
+          "id": "dLGDVDmEEI2lV8CArAXBoi",
+          "name": "iFi Audio Zen Blue 3 Lossless Bluetooth Transmitter & Receiver",
+          "score": 0
+        }
+      ]
+    },
+    "ck7d2wm9xe6lujtdfq7biyh7": {
+      "category": "Interconnects",
+      "slug": "interconnects",
+      "valid": [
+        "3O1ZNp54LWQGln4uEAUFVf",
+        "3O1ZNp54LWQGln4uEAUFjw",
+        "3O1ZNp54LWQGln4uEAUGRi",
+        "E5AJbuTajbv7O6i4rY3WSR",
+        "E5AJbuTajbv7O6i4rY3eHh",
+        "E5AJbuTajbv7O6i4rY3eQO",
+        "E5AJbuTajbv7O6i4rY3eZs",
+        "E5AJbuTajbv7O6i4rY3hnp",
+        "E5AJbuTajbv7O6i4rY3kDC",
+        "EuRMMuzWxDMHyuoMMSy2uy",
+        "Y7l1IhzX2fnyiano58Giz2",
+        "ZuUKzmkqDyQwdcwhxxfuOS",
+        "ZuUKzmkqDyQwdcwhxxfwju",
+        "ZuUKzmkqDyQwdcwhxxfx04",
+        "ZuUKzmkqDyQwdcwhxxfy5P",
+        "dLGDVDmEEI2lV8CArJQ9PQ",
+        "dLGDVDmEEI2lV8CArJQB24",
+        "dLGDVDmEEI2lV8CArJQDa0",
+        "dLGDVDmEEI2lV8CArJQcP6",
+        "k27n1AQuIbSr5iozG37Y6n",
+        "k27n1AQuIbSr5iozG37cuu",
+        "k27n1AQuIbSr5iozG37d4k",
+        "mhejwYdgiH5W70wqaK7lmg",
+        "moXlkADK7m1DHgGwWxMmzS"
+      ],
+      "invalid": [
+        {
+          "id": "EuRMMuzWxDMHyuoMMSxkzT",
+          "name": "Definitive Technology Descend DN8 8\" Subwoofer (White)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4iwQoE",
+          "name": "JBL MA710 7.2-Channel 8K AV Receiver (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4jFapj",
+          "name": "Denon DCD-1700NE CD/SACD Player with Advanced AL32 Processing Plus (Silver)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano56QdsC",
+          "name": "McIntosh MX180 A/V Processor",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano574lSP",
+          "name": "Sonos Premium Entertainment Set with Beam Soundbar (Gen 2) & Sub 4 Subwoofer(Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano575EWZ",
+          "name": "Sonos Ray Compact Sound Bar for TV, Gaming, and Music (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano58H5OJ",
+          "name": "Meze Audio Mono 3.5mm to 4.4mm Balanced Silver-Plated Cable - 4.2 ft.",
+          "score": 9
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxlG9HH",
+          "name": "McIntosh C49 2-Channel Solid State Preamplifier",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxlHmXw",
+          "name": "Audio-Technica AT-LP120XUSB-BK Direct-Drive 3-Speed Turntable with USB Output (Black)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxlIcNL",
+          "name": "Denon DCD-1700NE CD/SACD Player with Advanced AL32 Processing Plus (Black)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwTIRQ",
+          "name": "Sonos Ray Compact Sound Bar for TV, Gaming, and Music (White)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxxgKaf",
+          "name": "Meze Audio Mono 3.5mm to 2.5mm Balanced Silver-Plated Cable - 4.2 ft.",
+          "score": 9
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxxgOnw",
+          "name": "Meze Audio Mono 3.5mm to 4-Pin Balanced Silver-Plated Cables - 8.2 ft.",
+          "score": 9
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAk2Ky",
+          "name": "Audio-Technica AT-LP3xBT Fully Automatic Wireless Belt-Drive Turntable with Bluetooth (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArIhgWy",
+          "name": "Sonos Premium Entertainment Set with Beam Soundbar (Gen 2) & Sub 4 Subwoofer (White)",
+          "score": 0
+        }
+      ]
+    },
+    "u9o83mfmx23cudko8phu5otx": {
+      "category": "Headphone Stands",
+      "slug": "headphone-stands",
+      "valid": [
+        "Y7l1IhzX2fnyiano56UtMV",
+        "ZuUKzmkqDyQwdcwhxwzc3B",
+        "dLGDVDmEEI2lV8CArILLFU",
+        "dLGDVDmEEI2lV8CArJ0zJE",
+        "k27n1AQuIbSr5iozG37Xq4",
+        "k27n1AQuIbSr5iozG37bo2",
+        "moXlkADK7m1DHgGwWxMkTA",
+        "n10eAegrGspodtsQw2nfHW"
+      ],
+      "invalid": [
+        {
+          "id": "A5Y8wEwAn6Fo0zYQ5BLsNg",
+          "name": "IsoAcoustics ISO-PUCK 76 Isolator Feet for Large Studio Monitors and Speakers - Pair",
+          "score": 0
+        },
+        {
+          "id": "A5Y8wEwAn6Fo0zYQ5BLszV",
+          "name": "Bose 251 Environmental Speakers - Pair (White)",
+          "score": 0
+        },
+        {
+          "id": "BwEkTpjVMW9iHZxZmNGMJD",
+          "name": "JBL Stage 200P 10\" Subwoofer (White)",
+          "score": 0
+        },
+        {
+          "id": "BwEkTpjVMW9iHZxZmNGMYh",
+          "name": "JBL Stage 220P 12\" Powered Subwoofer (White)",
+          "score": 0
+        },
+        {
+          "id": "EuRMMuzWxDMHyuoMMSyEDW",
+          "name": "iFi Audio iSilencer Max USB-C Noise Filter with Active Noise Cancellation",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4idKTF",
+          "name": "TEAC W-1200 Dual Cassette Player Recorder with Pitch Control Mic Input & USB Out (Silver)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4irw9t",
+          "name": "Bose Ultra Open Bluetooth Earbuds with Spatial Audio & Water Resistance (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4iujdj",
+          "name": "Advance Paris A12 Classic Integrated Amplifier",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4iumWu",
+          "name": "Integra DRX-5.4 9.2 Channel Network 8K AV Reciever with Dolby Atmos",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4iwYtP",
+          "name": "Sony STR-AN1000 7.2 Channel 8K Home Theater AV Receiver with Dolby Atmos, DTS: X, IMAX Enhanced, Google Assistant, & Works with Sonos",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4jAD6d",
+          "name": "Marantz LINK 10n Streaming Preamplifier (Champagne)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano55v1Ln",
+          "name": "Shure MV7X XLR Dynamic Podcast Microphone",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano55v6vA",
+          "name": "Shure Nexadyne NXN8/C Cardioid XLR Handheld Vocal Microphone (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano572DVy",
+          "name": "Sony WF-G700N INZONE Buds Truly Wireless Noise Cancelling Earbud Bundle with gSport Case (White)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano572xd1",
+          "name": "Kanto ORA4 Powered Bluetooth Desktop Speakers - Pair (Matte White)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano573ium",
+          "name": "Sonus faber Lumina I Bookshelf Speakers - Pair (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano57Yl5B",
+          "name": "Polk Audio Atrium 5 All-Weather Outdoor Loudspeaker - Pair (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano57YqmL",
+          "name": "Polk Audio Atrium 4 All-Weather Outdoor Loudspeaker - Pair (White)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano57Zavz",
+          "name": "JBL Stage 200P 10\" Subwoofer (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano57aELY",
+          "name": "Kanto ORA4 Powered Bluetooth Desktop Speakers - Pair (Matte Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano57aL8E",
+          "name": "Kanto YU4 Powered Bookshelf Speakers with Built-In Bluetooth - Pair (Walnut)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxkuRih",
+          "name": "Sony UBP-X800M2 4K UHD Blu-Ray Disc Player",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxl8p4E",
+          "name": "Bose Ultra Open Bluetooth Earbuds with Spatial Audio & Water Resistance (Moonstone Blue)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxlBINl",
+          "name": "McIntosh MI347 7-Channel Digital Amplifier",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxlGDH5",
+          "name": "McIntosh MX123 A/V Processor",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxvlsnw",
+          "name": "madVR Envy Extreme MK2 Video Processor",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwRhWD",
+          "name": "Kanto YU6 Powered Bookshelf Speakers with Built-In Bluetooth - Pair (Matte White)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwS4iZ",
+          "name": "Sonus faber Sonetto I G2 Bookshelf Speakers - Pair (Walnut)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwxjcT",
+          "name": "Polk Audio Atrium 6 All-Weather Outdoor Loudspeaker - Pair (Black)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwyq5V",
+          "name": "JBL Stage 220P 12\" Powered Subwoofer (Black)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwzCoE",
+          "name": "Sonus faber Gravis III Active Subwoofer - Each (Wenge)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwzFg0",
+          "name": "SVS PB-1000 Pro Ported Subwoofer (Premium Black Ash)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwzXBV",
+          "name": "Kanto YU4 Powered Bookshelf Speakers with Built-In Bluetooth - Pair (Matte White)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwzgpT",
+          "name": "Kanto YU6 Powered Bookshelf Speakers with Built-In Bluetooth - Pair (Walnut)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAWGqq",
+          "name": "TEAC W-1200 Dual Cassette Player Recorder with Pitch Control Mic Input & USB Out (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAXHKu",
+          "name": "Marantz Cinema 40 9.4 Channel 8K Ultra HD Home Theater Receiver with Dolby Atmos/DTS:X & HEOS Built-In Streaming",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAdTYq",
+          "name": "Bose Ultra Open Bluetooth Earbuds with Spatial Audio & Water Resistance (White Smoke)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAkrl6",
+          "name": "Denon DCD-900NE CD Player and PMA-900HNE Integrated Network Amplifier (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAksSS",
+          "name": "Denon DCD-900NE CD Player with Advanced AL32 Processing Plus and USB",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArI3Elg",
+          "name": "Shure Nexadyne NXN8/S Supercardioid XLR Handheld Vocal Microphone (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArIgSA0",
+          "name": "Sony WF-G700N INZONE Buds Truly Wireless Noise Cancelling Earbud Bundle with gSport Case (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArIhWiS",
+          "name": "LG SC9S Sound Bar & Subwoofer for OLED evo C Series TVs",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArIhqRg",
+          "name": "Sony HT-A8000 BRAVIA Theater Bar 8 with Dolby Atmos",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArIzZyW",
+          "name": "Focal Littora 4.1 Channel Outdoor Speaker Bundle (Dark)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArIzcGy",
+          "name": "Polk Audio Atrium 4 All-Weather Outdoor Loudspeaker - Pair (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArIzzQK",
+          "name": "Polk Audio Atrium 5 All-Weather Outdoor Loudspeakers - Pair (White)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArJ09gi",
+          "name": "Polk Audio Atrium 6 All-Weather Outdoor Loudspeaker - Pair (White)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArJ0Qzk",
+          "name": "Bowers & Wilkins ASW 610XP 10\" Subwoofer (White)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArJ116i",
+          "name": "Kanto YU6 Powered Bookshelf Speakers with Built-In Bluetooth - Pair (Matte Black)",
+          "score": 0
+        },
+        {
+          "id": "mhejwYdgiH5W70wqaK6bvi",
+          "name": "Polk Audio Atrium 8 SDi All-Weather Outdoor Loudspeaker - Each (Black)",
+          "score": 0
+        },
+        {
+          "id": "mhejwYdgiH5W70wqaK6oJ8",
+          "name": "Victrola Rock Speaker Connect Bluetooth Outdoor Speaker with Solar Charging - 4 Pack (Stone)",
+          "score": 0
+        },
+        {
+          "id": "mhejwYdgiH5W70wqaK79tC",
+          "name": "Panasonic DP-UB420-K 4K Ultra HD Blu-ray Player with HDR10+ and HLG Playback",
+          "score": 0
+        },
+        {
+          "id": "moXlkADK7m1DHgGwWxMiAf",
+          "name": "Focal Headphone Stand",
+          "score": 23
+        },
+        {
+          "id": "vZXDZuB60yFsa0meNdLotx",
+          "name": "Polk Audio Monitor XT15 Compact High-Resolution Bookshelf Speakers - Pair",
+          "score": 0
+        }
+      ]
+    },
+    "ab2xhkm6hgabf69y0f3s4oo0": {
+      "category": "Care & Cleaning",
+      "slug": "care-cleaning",
+      "valid": [
+        "dLGDVDmEEI2lV8CArILH1o"
+      ],
+      "invalid": [
+        {
+          "id": "A5Y8wEwAn6Fo0zYQ5BLsNg",
+          "name": "IsoAcoustics ISO-PUCK 76 Isolator Feet for Large Studio Monitors and Speakers - Pair",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4iwXVi",
+          "name": "Marantz STEREO 70s 8K 2-Channel Home Theater Receiver with HEOS Built-in",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4jAD6d",
+          "name": "Marantz LINK 10n Streaming Preamplifier (Champagne)",
+          "score": 0
+        }
+      ]
+    },
+    "o6mz3kbs5xla8ixastppktsd": {
+      "category": "Desktop Amps",
+      "slug": "desktop-amps",
+      "valid": [
+        "E5AJbuTajbv7O6i4rYAyMZ",
+        "Y7l1IhzX2fnyiano4iq6jp",
+        "Y7l1IhzX2fnyiano4iujdj",
+        "Y7l1IhzX2fnyiano4iutWZ",
+        "Y7l1IhzX2fnyiano4jAK8t",
+        "Y7l1IhzX2fnyiano56QKeH",
+        "Y7l1IhzX2fnyiano56QTUC",
+        "Y7l1IhzX2fnyiano57aRcj",
+        "Y7l1IhzX2fnyiano57aS06",
+        "ZuUKzmkqDyQwdcwhxl7Puy",
+        "ZuUKzmkqDyQwdcwhxlBINl",
+        "ZuUKzmkqDyQwdcwhxlG5Xd",
+        "ZuUKzmkqDyQwdcwhxvlkgF",
+        "ZuUKzmkqDyQwdcwhxvloXy",
+        "ZuUKzmkqDyQwdcwhxwzlxJ",
+        "dLGDVDmEEI2lV8CArAcpNU",
+        "dLGDVDmEEI2lV8CArAerls",
+        "dLGDVDmEEI2lV8CArAfLRM",
+        "dLGDVDmEEI2lV8CArAj4E0",
+        "dLGDVDmEEI2lV8CArAj5FU",
+        "dLGDVDmEEI2lV8CArAj6ce",
+        "dLGDVDmEEI2lV8CArIJEpo",
+        "dLGDVDmEEI2lV8CArIJG0a",
+        "k27n1AQuIbSr5iozG1vKTr",
+        "k27n1AQuIbSr5iozG1vNxK",
+        "mhejwYdgiH5W70wqaK79Fq",
+        "moXlkADK7m1DHgGwWwET3O",
+        "moXlkADK7m1DHgGwWwETaU",
+        "moXlkADK7m1DHgGwWwEdEz",
+        "n10eAegrGspodtsQvy3xAp",
+        "n10eAegrGspodtsQvy4Df8",
+        "n10eAegrGspodtsQvy4FrB"
+      ],
+      "invalid": [
+        {
+          "id": "A5Y8wEwAn6Fo0zYQ5BLszV",
+          "name": "Bose 251 Environmental Speakers - Pair (White)",
+          "score": 0
+        },
+        {
+          "id": "BwEkTpjVMW9iHZxZmNGMJD",
+          "name": "JBL Stage 200P 10\" Subwoofer (White)",
+          "score": 0
+        },
+        {
+          "id": "BwEkTpjVMW9iHZxZmNGMYh",
+          "name": "JBL Stage 220P 12\" Powered Subwoofer (White)",
+          "score": 0
+        },
+        {
+          "id": "EuRMMuzWxDMHyuoMMSxkzT",
+          "name": "Definitive Technology Descend DN8 8\" Subwoofer (White)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4ietix",
+          "name": "Denon AVRX1800H 7.2 Channel 8K Home Theater Receiver with Dolby Atmos, HEOS Built-In, and Audyssey Room Correction",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4iwXVi",
+          "name": "Marantz STEREO 70s 8K 2-Channel Home Theater Receiver with HEOS Built-in",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4jDQDh",
+          "name": "Audio-Technica AT-LP60X-BK Fully Automatic Belt-Drive Stereo Turntable (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4jG0dL",
+          "name": "Marantz CD 50n High-Resolution Network Digital Audio and CD Player (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4jHQNa",
+          "name": "Yamaha CD-C603BL 5-Disc CD Changer with USB Playback and PlayXChange (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano573dVn",
+          "name": "Polk Audio Signature Elite ES20 Bookshelf Speakers - Pair (Walnut)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano574i1T",
+          "name": "Sonos Premium Entertainment Set with Arc Ultra Soundbar and Sub 4 Wireless Subwoofer (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano574lSP",
+          "name": "Sonos Premium Entertainment Set with Beam Soundbar (Gen 2) & Sub 4 Subwoofer(Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano574tSO",
+          "name": "Sonos Premium Immersive Set with Arc Ultra Soundbar, Sub 4 Subwoofer, & Pair of Era 100 Wireless Speakers (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano575EWZ",
+          "name": "Sonos Ray Compact Sound Bar for TV, Gaming, and Music (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano575WMn",
+          "name": "Sonos Ultimate Immersive Set with Arc Ultra Soundbar, Sub 4 Subwoofer, & Pair of Era 300 Wireless Speakers (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano57Zavz",
+          "name": "JBL Stage 200P 10\" Subwoofer (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano57a0wa",
+          "name": "SVS 3000 Micro Sealed Subwoofer with Fully Active Dual 8-inch Drivers (Piano Gloss White)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano57aL8E",
+          "name": "Kanto YU4 Powered Bookshelf Speakers with Built-In Bluetooth - Pair (Walnut)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxlIewG",
+          "name": "Denon RCD-N12 Network Connected Mini Hi-Fi System",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxlIfVH",
+          "name": "Marantz CD 60 CD Player (Silver Gold)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwRhWD",
+          "name": "Kanto YU6 Powered Bookshelf Speakers with Built-In Bluetooth - Pair (Matte White)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwS0qq",
+          "name": "Polk Audio Signature Elite ES20 Bookshelf Speakers - Pair (White)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwSztH",
+          "name": "Sonos Arc Ultra Soundbar (Black)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwT96J",
+          "name": "Sonos Premium Immersive Set with Beam Soundbar (Gen 2), Sub 4 Subwoofer, & Pair of Era 100 Wireless Speakers (Black)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwTF8i",
+          "name": "Sonos Premium Surround Set with Arc Ultra Soundbar & Pair of Era 300 Wireless Speakers (White)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwTIRQ",
+          "name": "Sonos Ray Compact Sound Bar for TV, Gaming, and Music (White)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwTKLw",
+          "name": "Sonos Surround Set with Arc Ultra Soundbar & Pair of Era 100 Wireless Speakers (Black)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwTMxY",
+          "name": "Sonos Surround Set with Arc Ultra Soundbar & Pair of Era 100 Wireless Speakers (White)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwx0pQ",
+          "name": "Marantz Model M1 Stereo Outdoor System",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwyq5V",
+          "name": "JBL Stage 220P 12\" Powered Subwoofer (Black)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwyxLK",
+          "name": "Sonos Premium Home Theater Completion Set with Sub4 & Pair of Era 100s (White)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwyyou",
+          "name": "Sonos Sub 4 Wireless Subwoofer (Black)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwz6Vf",
+          "name": "Sonos Ultimate Home Theater Completion Set with Sub 4 Subwoofer & Pair of Era 300 Wireless Speakers (Black)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwzCoE",
+          "name": "Sonus faber Gravis III Active Subwoofer - Each (Wenge)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwzFg0",
+          "name": "SVS PB-1000 Pro Ported Subwoofer (Premium Black Ash)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwzLiP",
+          "name": "Audio-Technica AT-SP3X Powered Bluetooth Bookshelf Speakers",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwzXBV",
+          "name": "Kanto YU4 Powered Bookshelf Speakers with Built-In Bluetooth - Pair (Matte White)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwzc3B",
+          "name": "Kanto YU6 Powered Bookshelf Speakers (Matte White) with SE6 Elevated Desktop Speaker Stands (White)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwzgpT",
+          "name": "Kanto YU6 Powered Bookshelf Speakers with Built-In Bluetooth - Pair (Walnut)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArALYRY",
+          "name": "Marantz CD 50n High-Resolution Network Digital Audio and CD Player (Silver)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAXHKu",
+          "name": "Marantz Cinema 40 9.4 Channel 8K Ultra HD Home Theater Receiver with Dolby Atmos/DTS:X & HEOS Built-In Streaming",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAXHXI",
+          "name": "Onkyo TX-RZ30 9.2-Channel AV Receiver",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAXHw4",
+          "name": "Sony STR-DH190 Stereo Receiver with Phono Input and Bluetooth Connectivity",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAcgSi",
+          "name": "McIntosh MHA200 2-Channel Vacuum Tube Headphone Amplifier",
+          "score": 7
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAk2Ky",
+          "name": "Audio-Technica AT-LP3xBT Fully Automatic Wireless Belt-Drive Turntable with Bluetooth (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAk3Bc",
+          "name": "Audio-Technica AT-LP60XBT-BK Fully Automatic Belt-Drive Stereo Turntable with Bluetooth (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAkqaK",
+          "name": "Denon DCD-600NE CD Player with AL32 Processing",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAkzwy",
+          "name": "Marantz CD 60 CD Player (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAl3Uq",
+          "name": "Marantz M-CR612 Network CD Receiver with HEOS, Bluetooth, and Voice Control",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArIhCf6",
+          "name": "Polk Audio Signature Elite ES20 Bookshelf Speakers - Pair (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArIhgWy",
+          "name": "Sonos Premium Entertainment Set with Beam Soundbar (Gen 2) & Sub 4 Subwoofer (White)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArIhkg0",
+          "name": "Sonos Premium Immersive Set with Beam Soundbar (Gen 2), Sub 4 Subwoofer, & Pair of Era 100 Wireless Speakers (White)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArIhlj2",
+          "name": "Sonos Premium Surround Set with Arc Ultra Soundbar & Pair of Era 300 Wireless Speakers (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArIhqRg",
+          "name": "Sony HT-A8000 BRAVIA Theater Bar 8 with Dolby Atmos",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArJ0Qzk",
+          "name": "Bowers & Wilkins ASW 610XP 10\" Subwoofer (White)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArJ0ViO",
+          "name": "Sonos Premium Home Theater Completion Set with Sub4 & Pair of Era 100s (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArJ0ZKu",
+          "name": "Sonos Sub 4 Wireless Subwoofer (White)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArJ0dvo",
+          "name": "Sonos Ultimate Home Theater Completion Set with Sub 4 Subwoofer & Pair of Era 300 Wireless Speakers (White)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArJ0eCq",
+          "name": "Sonus faber Gravis I Subwoofer - Each (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArJ0eTs",
+          "name": "Sonus faber Gravis II Active Subwoofer - Each (Walnut)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArJ0zJE",
+          "name": "Kanto YU6 Powered Bookshelf Speakers (Matte Black) with SE6 Elevated Desktop Speaker Stands (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArJ116i",
+          "name": "Kanto YU6 Powered Bookshelf Speakers with Built-In Bluetooth - Pair (Matte Black)",
+          "score": 0
+        },
+        {
+          "id": "k27n1AQuIbSr5iozG1vG7I",
+          "name": "Singxer SA1 V2 Headphone Amplifier",
+          "score": 23
+        },
+        {
+          "id": "mhejwYdgiH5W70wqaK7lmg",
+          "name": "SVS SoundPath RCA Audio Interconnect Cable for Subwoofers - 9.84 ft. (3m)",
+          "score": 0
+        },
+        {
+          "id": "n10eAegrGspodtsQvy4P4a",
+          "name": "Topping A50 III Headphone Amplifier",
+          "score": 23
+        },
+        {
+          "id": "n10eAegrGspodtsQvy4Z6W",
+          "name": "Topping A70 Pro Headphone Amplifier",
+          "score": 23
+        },
+        {
+          "id": "vZXDZuB60yFsa0meNdLotx",
+          "name": "Polk Audio Monitor XT15 Compact High-Resolution Bookshelf Speakers - Pair",
+          "score": 0
+        }
+      ]
+    },
+    "icmc3j8qzjiffr9h6tw6kg74": {
+      "category": "Electrostatic",
+      "slug": "electrostatic",
+      "valid": [
+        "A5Y8wEwAn6Fo0zYQ5BM7Yv",
+        "IysVzF92P1Ckj0vYj2qiBH",
+        "Y7l1IhzX2fnyiano4jOIfY",
+        "ZuUKzmkqDyQwdcwhxl77C3",
+        "ZuUKzmkqDyQwdcwhxl9CGa",
+        "ZuUKzmkqDyQwdcwhxl9DU0",
+        "ZuUKzmkqDyQwdcwhxxgHdV",
+        "dLGDVDmEEI2lV8CArAcaQ0",
+        "dLGDVDmEEI2lV8CArAcd7E",
+        "dLGDVDmEEI2lV8CArAcfBk",
+        "dLGDVDmEEI2lV8CArAchHo",
+        "dLGDVDmEEI2lV8CArAcpNU",
+        "dLGDVDmEEI2lV8CArIgVky",
+        "dLGDVDmEEI2lV8CArJQRxs",
+        "dLGDVDmEEI2lV8CArJQSL6",
+        "dLGDVDmEEI2lV8CArJQStA",
+        "k27n1AQuIbSr5iozG1vDSz",
+        "k27n1AQuIbSr5iozG1vF9H",
+        "k27n1AQuIbSr5iozG1vKTr",
+        "k27n1AQuIbSr5iozG1vNxK",
+        "k27n1AQuIbSr5iozG1vPuL",
+        "k27n1AQuIbSr5iozG1vTNo",
+        "k27n1AQuIbSr5iozG1vTYd",
+        "k27n1AQuIbSr5iozG1vToN",
+        "moXlkADK7m1DHgGwWwETaU",
+        "moXlkADK7m1DHgGwWwEdEz",
+        "moXlkADK7m1DHgGwWwEeK6",
+        "moXlkADK7m1DHgGwWwEgal",
+        "n10eAegrGspodtsQvy3jJm",
+        "n10eAegrGspodtsQvy4Df8",
+        "n10eAegrGspodtsQvy4cvd",
+        "n10eAegrGspodtsQw2nfmc"
+      ],
+      "invalid": [
+        {
+          "id": "Y7l1IhzX2fnyiano4is7Vc",
+          "name": "Sony WFL910 Linkbuds Truly Wireless Earbuds (White)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4ivQJq",
+          "name": "McIntosh MB25 Bluetooth Transceiver",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4jAB3O",
+          "name": "iFi Audio Zen Phono 3 MM & MC Phono Stage with Subsonic Filter",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4jAFf2",
+          "name": "McIntosh C2800 2-Channel Vacuum Tube Preamplifier",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4jAK8t",
+          "name": "McIntosh C8 2-Channel Vacuum Tube Stereo Preamplifier",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4jG0dL",
+          "name": "Marantz CD 50n High-Resolution Network Digital Audio and CD Player (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano55uwHa",
+          "name": "Meze Audio Boom Mic Add-On Omnidirectional Microphone",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxlBLNc",
+          "name": "NAD Electronics C 3050 HybridDigital Stereophonic Amplifier",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxlIewG",
+          "name": "Denon RCD-N12 Network Connected Mini Hi-Fi System",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxlJlJu",
+          "name": "iFi Audio GO bar Kensei Portable Hi-Res USB DAC and Preamp",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxlJmi6",
+          "name": "iFi Audio ZEN Air Blue HD Bluetooth Desktop DAC",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwScFz",
+          "name": "Bose Smart Soundbar (Black)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwzSsq",
+          "name": "Kanto TUK Premium Powered Speakers with SE6 Elevated Desktop Speaker Stands (Black)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwzUP7",
+          "name": "Kanto TUK Premium Powered Speakers with SE6 Elevated Desktop Speaker Stands (White)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxx0Vhc",
+          "name": "Kanto YU2 Powered Desktop Speakers and SE2 Speaker Stands for Small Speakers - Pair (Matte Black/Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArALYRY",
+          "name": "Marantz CD 50n High-Resolution Network Digital Audio and CD Player (Silver)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAXBoi",
+          "name": "iFi Audio Zen Blue 3 Lossless Bluetooth Transmitter & Receiver",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAXHw4",
+          "name": "Sony STR-DH190 Stereo Receiver with Phono Input and Bluetooth Connectivity",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAj4E0",
+          "name": "McIntosh C55 2-Channel Solid State Preamplifier",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAk3Bc",
+          "name": "Audio-Technica AT-LP60XBT-BK Fully Automatic Belt-Drive Stereo Turntable with Bluetooth (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAk7ES",
+          "name": "JBL Spinner BT Semi-Automatic Belt-Drive Turntable with Bluetooth 5.3 and Installed Audio Technica Cartridge (Black & Orange)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArI30xQ",
+          "name": "Shure MV5 Digital Condenser Microphone (Silver)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArI9DSO",
+          "name": "Yamaha ZG01 Gaming Audio Mixer with USB-C Interface",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArJ0wVo",
+          "name": "Kanto YU2 Powered Desktop Speakers - Pair (Walnut)",
+          "score": 0
+        },
+        {
+          "id": "mhejwYdgiH5W70wqaK7rUs",
+          "name": "JBL Quantum Stream Wireless Wearable Streaming Microphone - USB-C (Black)",
+          "score": 0
+        },
+        {
+          "id": "moXlkADK7m1DHgGwWtUHWs",
+          "name": "Utopia",
+          "score": 0
+        }
+      ]
+    },
+    "npwbgqg3v4t5qe95rg35wte0": {
+      "category": "Network Streamers",
+      "slug": "network-streamers",
+      "valid": [
+        "Y7l1IhzX2fnyiano4idEgt",
+        "Y7l1IhzX2fnyiano4iumWu",
+        "Y7l1IhzX2fnyiano4jG0dL",
+        "ZuUKzmkqDyQwdcwhxkuPVK",
+        "ZuUKzmkqDyQwdcwhxlIewG",
+        "ZuUKzmkqDyQwdcwhxlJjyP",
+        "dLGDVDmEEI2lV8CArALYRY",
+        "dLGDVDmEEI2lV8CArAWFhc",
+        "dLGDVDmEEI2lV8CArAWG7w",
+        "dLGDVDmEEI2lV8CArAXCwO",
+        "dLGDVDmEEI2lV8CArAkrl6",
+        "dLGDVDmEEI2lV8CArAl3Uq",
+        "k27n1AQuIbSr5iozG1vJ1L",
+        "k27n1AQuIbSr5iozG2jBER",
+        "mhejwYdgiH5W70wqaK79Fq",
+        "n10eAegrGspodtsQw13RKz"
+      ],
+      "invalid": [
+        {
+          "id": "BwEkTpjVMW9iHZxZmNGMJD",
+          "name": "JBL Stage 200P 10\" Subwoofer (White)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4ietix",
+          "name": "Denon AVRX1800H 7.2 Channel 8K Home Theater Receiver with Dolby Atmos, HEOS Built-In, and Audyssey Room Correction",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4iwXVi",
+          "name": "Marantz STEREO 70s 8K 2-Channel Home Theater Receiver with HEOS Built-in",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4jAD6d",
+          "name": "Marantz LINK 10n Streaming Preamplifier (Champagne)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4jAFf2",
+          "name": "McIntosh C2800 2-Channel Vacuum Tube Preamplifier",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4jNrzP",
+          "name": "HiFi Rose RD160 DAC (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano572xd1",
+          "name": "Kanto ORA4 Powered Bluetooth Desktop Speakers - Pair (Matte White)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano573EqI",
+          "name": "Kanto REN Powered Bluetooth Bookshelf Speakers - Pair (Matte Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano573jsV",
+          "name": "Sonus faber Lumina II Amator Bookshelf Speakers - Pair (Red)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano57Zavz",
+          "name": "JBL Stage 200P 10\" Subwoofer (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano57aCAW",
+          "name": "Kanto ORA Powered Reference Desktop Speakers with Bluetooth - Pair (Matte Gray)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano57aELY",
+          "name": "Kanto ORA4 Powered Bluetooth Desktop Speakers - Pair (Matte Black)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxkuPin",
+          "name": "Panasonic DP-UB154P-K 4K Ultra HD DVD/CD/3D Blu-Ray Player with HDR10, Dolby Digital Plus, & Dolby TrueHD",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxl7Puy",
+          "name": "iFi Audio iCan Phantom Analog Headphone Amplifier",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxlBLNc",
+          "name": "NAD Electronics C 3050 HybridDigital Stereophonic Amplifier",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxlG5Xd",
+          "name": "Denon HEOS Link HS2 Wireless Pre-Amplifier For Multi-Room Audio",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxlJkHG",
+          "name": "HiFi Rose RD160 DAC (Silver)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxlJpXB",
+          "name": "McIntosh DS200 Streaming DAC",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxvGuTi",
+          "name": "Shure MV6 USB Gaming Microphone",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxvGwh5",
+          "name": "Shure MV7+ Hybrid Output USB-C & XLR Podcast Microphone (Black)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxvGzO5",
+          "name": "Shure MV7+ Hybrid Output USB-C & XLR Podcast Microphone (White)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwRfpA",
+          "name": "Kanto REN Powered Bluetooth Bookshelf Speakers - Pair (Matte Blue)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwRi7v",
+          "name": "KLH Model Three 2-way 8-inch Acoustic Suspension Bookshelf Speaker - Each (Nordic Noir)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwS2lM",
+          "name": "Sonus faber Lumina II Amator Bookshelf Speakers - Pair (Walnut)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwx0pQ",
+          "name": "Marantz Model M1 Stereo Outdoor System",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArATLwK",
+          "name": "JBL MP350 Classic Streaming Digital Media Player",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAXHKu",
+          "name": "Marantz Cinema 40 9.4 Channel 8K Ultra HD Home Theater Receiver with Dolby Atmos/DTS:X & HEOS Built-In Streaming",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAXHXI",
+          "name": "Onkyo TX-RZ30 9.2-Channel AV Receiver",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAerls",
+          "name": "Marantz Model M1 Stereo In-Ceiling System",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArI3Sd2",
+          "name": "Shure SM7dB Cardioid Dynamic Vocal Microphone with Built-In Active Preamp",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArIh2CK",
+          "name": "Kanto REN Powered Bluetooth Bookshelf Speakers - Pair (Matte Grey)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArIh2b6",
+          "name": "Kanto REN Powered Bluetooth Bookshelf Speakers - Pair (Matte White)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArIhqRg",
+          "name": "Sony HT-A8000 BRAVIA Theater Bar 8 with Dolby Atmos",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArJ0qWC",
+          "name": "Kanto ORA Powered Reference Desktop Speakers with Bluetooth - Pair (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArJ0rF6",
+          "name": "Kanto ORA Powered Reference Desktop Speakers with Bluetooth (Pink)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArJ0rUa",
+          "name": "Kanto ORA Powered Reference Desktop Speakers with Bluetooth (White)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArJ13nw",
+          "name": "PSB Alpha iQ Powered Streaming Speakers - Pair (Black)",
+          "score": 0
+        },
+        {
+          "id": "mhejwYdgiH5W70wqaK79tC",
+          "name": "Panasonic DP-UB420-K 4K Ultra HD Blu-ray Player with HDR10+ and HLG Playback",
+          "score": 0
+        },
+        {
+          "id": "mhejwYdgiH5W70wqaK7ngk",
+          "name": "AudioQuest Pearl USB-A to USB-B Cable - 4.92ft. (1.5m)",
+          "score": 0
+        }
+      ]
+    },
+    "o37u0yjphzt3qu91ewnww2yj": {
+      "category": "DAC/Amp Combos",
+      "slug": "dac-amp-combos",
+      "valid": [
+        "E5AJbuTajbv7O6i4rYAyMZ",
+        "Y7l1IhzX2fnyiano4idEgt",
+        "Y7l1IhzX2fnyiano4iuoNA",
+        "Y7l1IhzX2fnyiano4ius6H",
+        "Y7l1IhzX2fnyiano4iutWZ",
+        "Y7l1IhzX2fnyiano4jOIfY",
+        "Y7l1IhzX2fnyiano4jOa8P",
+        "ZuUKzmkqDyQwdcwhxkuPVK",
+        "ZuUKzmkqDyQwdcwhxlG5Xd",
+        "ZuUKzmkqDyQwdcwhxlJrGv",
+        "ZuUKzmkqDyQwdcwhxlJsZj",
+        "dLGDVDmEEI2lV8CArAestY",
+        "dLGDVDmEEI2lV8CArAetJs",
+        "dLGDVDmEEI2lV8CArAkrl6",
+        "dLGDVDmEEI2lV8CArAmdy8",
+        "k27n1AQuIbSr5iozG1vF9H",
+        "k27n1AQuIbSr5iozG1vJ1L",
+        "k27n1AQuIbSr5iozG1vUvF",
+        "mhejwYdgiH5W70wqaK79Fq",
+        "moXlkADK7m1DHgGwWwEZTT",
+        "moXlkADK7m1DHgGwWwEgQe",
+        "n10eAegrGspodtsQw12tbj"
+      ],
+      "invalid": [
+        {
+          "id": "Y7l1IhzX2fnyiano4iew6y",
+          "name": "JBL MA9100HP 9.2-Channel 8K AV Receiver (White)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4is7Vc",
+          "name": "Sony WFL910 Linkbuds Truly Wireless Earbuds (White)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4iwQoE",
+          "name": "JBL MA710 7.2-Channel 8K AV Receiver (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4iwYtP",
+          "name": "Sony STR-AN1000 7.2 Channel 8K Home Theater AV Receiver with Dolby Atmos, DTS: X, IMAX Enhanced, Google Assistant, & Works with Sonos",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4jDQDh",
+          "name": "Audio-Technica AT-LP60X-BK Fully Automatic Belt-Drive Stereo Turntable (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4jFapj",
+          "name": "Denon DCD-1700NE CD/SACD Player with Advanced AL32 Processing Plus (Silver)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano55vQM4",
+          "name": "Shure SM4 Condenser Microphone Kit with Shock Mount & Carrying Case",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano5726Gj",
+          "name": "Sony WF-1000XM5 Wireless Noise Cancelling In-Ear Headphone Bundle with gSport Hardshell Case (Pink)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano5729pS",
+          "name": "Sony WF-1000XM5 Wireless Over-Ear Noise Canceling Headphones (Pink)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano574QDq",
+          "name": "JBL Bar 1000 Surround Sound System with 7.1.4 Channel Soundbar, 10\" Wireless Subwoofer, and Detachable Rear Speakers",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano57aL8E",
+          "name": "Kanto YU4 Powered Bookshelf Speakers with Built-In Bluetooth - Pair (Walnut)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxkwakL",
+          "name": "JBL MA9100HP 9.2-Channel 8K AV Receiver (Black)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxl99sR",
+          "name": "Sony WF-1000XM5 Wireless Noise Cancelling In-Ear Headphone Bundle with gSport Hardshell Case (Black)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxl9BBF",
+          "name": "Sony WH-1000XM5 Wireless Over-Ear Noise Canceling Headphones (Pink)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxlCAFl",
+          "name": "JBL MA710 7.2-Channel 8K AV Receiver (White)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxlCAe0",
+          "name": "JBL MA7100HP 7.2-Channel 8K AV Receiver (Black)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxlIcNL",
+          "name": "Denon DCD-1700NE CD/SACD Player with Advanced AL32 Processing Plus (Black)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxlIfVH",
+          "name": "Marantz CD 60 CD Player (Silver Gold)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxvLNjw",
+          "name": "JBL 4329P Studio Monitor Powered Loudspeaker System (White)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwQPfT",
+          "name": "Sony WF-1000XM5 Wireless Noise Cancelling In-Ear Headphone Bundle with gSport Hardshell Case (Silver)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwQheb",
+          "name": "Sony ULT WEAR Wireless Noise Canceling Headphones",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwRhWD",
+          "name": "Kanto YU6 Powered Bookshelf Speakers with Built-In Bluetooth - Pair (Matte White)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwSmoW",
+          "name": "JBL BAR 700 5.1 Soundbar Bundle with 10 in. Wireless Subwoofer Detachable Rear Speakers and AudioQuest Sky 3m HDMI Cable",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwzXBV",
+          "name": "Kanto YU4 Powered Bookshelf Speakers with Built-In Bluetooth - Pair (Matte White)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwzc3B",
+          "name": "Kanto YU6 Powered Bookshelf Speakers (Matte White) with SE6 Elevated Desktop Speaker Stands (White)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwzgpT",
+          "name": "Kanto YU6 Powered Bookshelf Speakers with Built-In Bluetooth - Pair (Walnut)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxxgrAp",
+          "name": "iFi Audio iPower2 9V Ultra Low Noise DC Power Supply",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAk3Bc",
+          "name": "Audio-Technica AT-LP60XBT-BK Fully Automatic Belt-Drive Stereo Turntable with Bluetooth (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAkBFk",
+          "name": "Pro-Ject Debut PRO S Turntable with Pick it S2 C Integrated Cartridge",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAkzwy",
+          "name": "Marantz CD 60 CD Player (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArI3NNs",
+          "name": "Shure SM4 Condenser Microphone with Hard Mount",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArI9DSO",
+          "name": "Yamaha ZG01 Gaming Audio Mixer with USB-C Interface",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArIgVky",
+          "name": "Sony WFL910 Linkbuds Truly Wireless Earbuds (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArJ0zJE",
+          "name": "Kanto YU6 Powered Bookshelf Speakers (Matte Black) with SE6 Elevated Desktop Speaker Stands (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArJ116i",
+          "name": "Kanto YU6 Powered Bookshelf Speakers with Built-In Bluetooth - Pair (Matte Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArJ13nw",
+          "name": "PSB Alpha iQ Powered Streaming Speakers - Pair (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArJQiAm",
+          "name": "iFi Audio iPower2 12V Ultra Low Noise DC Power Supply",
+          "score": 0
+        },
+        {
+          "id": "lnsXffMpY6mbKrdRVUNxQL",
+          "name": "JBL 4329P Studio Monitor Powered Loudspeaker System (Black)",
+          "score": 0
+        },
+        {
+          "id": "lnsXffMpY6mbKrdRVUO9VB",
+          "name": "JBL 4329P Studio Monitor Powered Loudspeaker System (Walnut)",
+          "score": 0
+        }
+      ]
+    },
+    "mpni93r13d9yo2vn5moexlkp": {
+      "category": "Standalone DACs",
+      "slug": "standalone-dacs",
+      "valid": [
+        "dLGDVDmEEI2lV8CArAlBc4",
+        "k27n1AQuIbSr5iozG1vPcd",
+        "moXlkADK7m1DHgGwWwETNc",
+        "moXlkADK7m1DHgGwWwEUpi",
+        "moXlkADK7m1DHgGwWwEaXf",
+        "n10eAegrGspodtsQvy3cvI",
+        "n10eAegrGspodtsQvy3lt9",
+        "n10eAegrGspodtsQvy4b6u",
+        "n10eAegrGspodtsQw134Ce"
+      ],
+      "invalid": [
+        {
+          "id": "EuRMMuzWxDMHyuoMMSyEDW",
+          "name": "iFi Audio iSilencer Max USB-C Noise Filter with Active Noise Cancellation",
+          "score": 0
+        }
+      ]
+    },
+    "j751evwbn8n9aac4elrekqi4": {
+      "category": "Dynamic",
+      "slug": "dynamic",
+      "valid": [
+        "Y7l1IhzX2fnyiano4idJqI",
+        "Y7l1IhzX2fnyiano564JAF",
+        "Y7l1IhzX2fnyiano571d4m",
+        "Y7l1IhzX2fnyiano571jeT",
+        "Y7l1IhzX2fnyiano571oLJ",
+        "Y7l1IhzX2fnyiano5726Gj",
+        "Y7l1IhzX2fnyiano5729pS",
+        "ZuUKzmkqDyQwdcwhxl99sR",
+        "ZuUKzmkqDyQwdcwhxl9BBF",
+        "ZuUKzmkqDyQwdcwhxwQPfT",
+        "ZuUKzmkqDyQwdcwhxwQheb",
+        "dLGDVDmEEI2lV8CArAcgSi",
+        "dLGDVDmEEI2lV8CArIgBZs",
+        "dLGDVDmEEI2lV8CArIgBmG",
+        "dLGDVDmEEI2lV8CArIgC3I",
+        "dLGDVDmEEI2lV8CArIgKzc",
+        "dLGDVDmEEI2lV8CArIgbTY",
+        "dLGDVDmEEI2lV8CArIgbyW",
+        "k27n1AQuIbSr5iozFz2UJn",
+        "k27n1AQuIbSr5iozFz2utm",
+        "k27n1AQuIbSr5iozFz2v2d",
+        "k27n1AQuIbSr5iozFz3ieD",
+        "k27n1AQuIbSr5iozFz3jNT",
+        "k27n1AQuIbSr5iozFz7E1H",
+        "k27n1AQuIbSr5iozFz7EsP",
+        "k27n1AQuIbSr5iozFz7FSo",
+        "k27n1AQuIbSr5iozFz7GSn",
+        "k27n1AQuIbSr5iozG2ivGf",
+        "k27n1AQuIbSr5iozG2iyZJ",
+        "moXlkADK7m1DHgGwWtX5bB",
+        "moXlkADK7m1DHgGwWtXuiC",
+        "moXlkADK7m1DHgGwWtXvWl",
+        "moXlkADK7m1DHgGwWtbjv7",
+        "moXlkADK7m1DHgGwWtbklW",
+        "moXlkADK7m1DHgGwWtblsT",
+        "moXlkADK7m1DHgGwWtbmis",
+        "moXlkADK7m1DHgGwWtbnF3",
+        "moXlkADK7m1DHgGwWwzgvq",
+        "moXlkADK7m1DHgGwWwzkms",
+        "moXlkADK7m1DHgGwWwznPb",
+        "moXlkADK7m1DHgGwWx071u",
+        "n10eAegrGspodtsQvneG1i",
+        "n10eAegrGspodtsQvneN6x",
+        "n10eAegrGspodtsQvneRgi",
+        "n10eAegrGspodtsQw12meG",
+        "n10eAegrGspodtsQw13THU"
+      ],
+      "invalid": [
+        {
+          "id": "Y7l1IhzX2fnyiano4jAFf2",
+          "name": "McIntosh C2800 2-Channel Vacuum Tube Preamplifier",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4jAK8t",
+          "name": "McIntosh C8 2-Channel Vacuum Tube Stereo Preamplifier",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4jO6bg",
+          "name": "iFi Audio hip-dac 3 Portable USB DAC & Amplifier",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4jOa8P",
+          "name": "NAD Electronics C399 Hybrid Digital DAC Amplifier with MDC2 BluOS-D Module",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano574i1T",
+          "name": "Sonos Premium Entertainment Set with Arc Ultra Soundbar and Sub 4 Wireless Subwoofer (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano574tSO",
+          "name": "Sonos Premium Immersive Set with Arc Ultra Soundbar, Sub 4 Subwoofer, & Pair of Era 100 Wireless Speakers (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano575WMn",
+          "name": "Sonos Ultimate Immersive Set with Arc Ultra Soundbar, Sub 4 Subwoofer, & Pair of Era 300 Wireless Speakers (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano58HK3B",
+          "name": "iFi Audio iPower X 15V Active Noise Cancelling DC Power Supply",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxlIfVH",
+          "name": "Marantz CD 60 CD Player (Silver Gold)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxlIflR",
+          "name": "Marantz SACD10 CD Player (Black)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxlJrGv",
+          "name": "NAD Electronics C 389 HybridDigital DAC Amplifier",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxlJsZj",
+          "name": "NAD Electronics D 3045 HybridDigital DAC Amplifier",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxvGuTi",
+          "name": "Shure MV6 USB Gaming Microphone",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxvGwh5",
+          "name": "Shure MV7+ Hybrid Output USB-C & XLR Podcast Microphone (Black)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxvGzO5",
+          "name": "Shure MV7+ Hybrid Output USB-C & XLR Podcast Microphone (White)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxvQrp2",
+          "name": "Shure MV7i USB-C Dynamic Microphone & Interface",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwSztH",
+          "name": "Sonos Arc Ultra Soundbar (Black)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwT96J",
+          "name": "Sonos Premium Immersive Set with Beam Soundbar (Gen 2), Sub 4 Subwoofer, & Pair of Era 100 Wireless Speakers (Black)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwTF8i",
+          "name": "Sonos Premium Surround Set with Arc Ultra Soundbar & Pair of Era 300 Wireless Speakers (White)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwTKLw",
+          "name": "Sonos Surround Set with Arc Ultra Soundbar & Pair of Era 100 Wireless Speakers (Black)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwTMxY",
+          "name": "Sonos Surround Set with Arc Ultra Soundbar & Pair of Era 100 Wireless Speakers (White)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwyxLK",
+          "name": "Sonos Premium Home Theater Completion Set with Sub4 & Pair of Era 100s (White)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAWFhc",
+          "name": "TEAC NT-505-X USB DAC and Network Player with Built-In Preamplifier",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAWG7w",
+          "name": "TEAC UD-701N Dual-Mono Fully-Balanced Network Player with Built-In Preamplifier and USB DAC",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAXIA0",
+          "name": "Yamaha RX-V385BL 5.1 Channel AV Receiver with YPAO Automatic Room Calibration",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAcay4",
+          "name": "iFi Audio GO Link Max Portable Amp & DAC",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAestY",
+          "name": "McIntosh MSA5500 Streaming Integrated Amplifier",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAetJs",
+          "name": "NAD Electronics C 316BEE V2 Stereo Integrated Amplifier",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAj4E0",
+          "name": "McIntosh C55 2-Channel Solid State Preamplifier",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAkzwy",
+          "name": "Marantz CD 60 CD Player (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAmZ1Y",
+          "name": "NAD Electronics C 379 HybridDigital DAC Amplifier",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArI2xi8",
+          "name": "JBL Quantum Stream Studio Quad-Pattern USB Microphone for Streaming, Recording, & Gaming",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArIhkg0",
+          "name": "Sonos Premium Immersive Set with Beam Soundbar (Gen 2), Sub 4 Subwoofer, & Pair of Era 100 Wireless Speakers (White)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArIhlj2",
+          "name": "Sonos Premium Surround Set with Arc Ultra Soundbar & Pair of Era 300 Wireless Speakers (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArJ0ViO",
+          "name": "Sonos Premium Home Theater Completion Set with Sub4 & Pair of Era 100s (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArJQfsK",
+          "name": "iFi Audio iPower X 12V Active Noise Cancelling DC Power Supply",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArJQhwq",
+          "name": "iFi Audio iPower X 5V Active Noise Cancelling DC Power Supply",
+          "score": 0
+        }
+      ]
+    },
+    "yq3p9s798zszjkzm5btnebjh": {
+      "category": "Closed-Back",
+      "slug": "closed-back",
+      "valid": [
+        "Y7l1IhzX2fnyiano4idJqI",
+        "ZuUKzmkqDyQwdcwhxl77C3",
+        "ZuUKzmkqDyQwdcwhxl9BBF",
+        "dLGDVDmEEI2lV8CArAcd7E",
+        "dLGDVDmEEI2lV8CArIgbTY",
+        "drafts.moXlkADK7m1DHgGwWtWl8T",
+        "k27n1AQuIbSr5iozFz3jNT",
+        "k27n1AQuIbSr5iozFz3jQQ",
+        "k27n1AQuIbSr5iozFz7E1H",
+        "k27n1AQuIbSr5iozFz7FSo",
+        "k27n1AQuIbSr5iozFz7Fdd",
+        "k27n1AQuIbSr5iozFz7FkW",
+        "k27n1AQuIbSr5iozFz7GSn",
+        "k27n1AQuIbSr5iozFz7HA5",
+        "k27n1AQuIbSr5iozFz7KCz",
+        "k27n1AQuIbSr5iozFz7KdY",
+        "k27n1AQuIbSr5iozG2ivGf",
+        "k27n1AQuIbSr5iozG2iyZJ",
+        "moXlkADK7m1DHgGwWtWl8T",
+        "moXlkADK7m1DHgGwWtX5bB",
+        "moXlkADK7m1DHgGwWtXuiC",
+        "moXlkADK7m1DHgGwWtbjv7",
+        "moXlkADK7m1DHgGwWtbklW",
+        "moXlkADK7m1DHgGwWtbkq7",
+        "moXlkADK7m1DHgGwWtblBG",
+        "moXlkADK7m1DHgGwWtblsT",
+        "moXlkADK7m1DHgGwWtbmis",
+        "moXlkADK7m1DHgGwWtbnF3",
+        "moXlkADK7m1DHgGwWwzgvq",
+        "moXlkADK7m1DHgGwWwzwUF",
+        "n10eAegrGspodtsQvneN6x",
+        "n10eAegrGspodtsQvneQBQ",
+        "n10eAegrGspodtsQvneRgi"
+      ],
+      "invalid": [
+        {
+          "id": "ZuUKzmkqDyQwdcwhxlJsZj",
+          "name": "NAD Electronics D 3045 HybridDigital DAC Amplifier",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxvGwh5",
+          "name": "Shure MV7+ Hybrid Output USB-C & XLR Podcast Microphone (Black)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxvGzO5",
+          "name": "Shure MV7+ Hybrid Output USB-C & XLR Podcast Microphone (White)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxvQrp2",
+          "name": "Shure MV7i USB-C Dynamic Microphone & Interface",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAXHw4",
+          "name": "Sony STR-DH190 Stereo Receiver with Phono Input and Bluetooth Connectivity",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArI2xi8",
+          "name": "JBL Quantum Stream Studio Quad-Pattern USB Microphone for Streaming, Recording, & Gaming",
+          "score": 0
+        }
+      ]
+    },
+    "dW7bkxuW7lwltD3OAxQ9yH": {
+      "category": "Semi-Open",
+      "slug": "semi-open",
+      "valid": [
+        "Y7l1IhzX2fnyiano4idJqI"
+      ],
+      "invalid": []
+    },
+    "2Q3Hkst6W23iaT5J8DYRdm": {
+      "category": "Bluetooth DAC/Amps",
+      "slug": "bluetooth-dac-amps",
+      "valid": [
+        "Y7l1IhzX2fnyiano4iexZr",
+        "Y7l1IhzX2fnyiano4if5Zq",
+        "Y7l1IhzX2fnyiano4ivQJq",
+        "Y7l1IhzX2fnyiano4jOM95",
+        "dLGDVDmEEI2lV8CArAXBoi",
+        "dLGDVDmEEI2lV8CArAcaQ0",
+        "dLGDVDmEEI2lV8CArAchHo",
+        "k27n1AQuIbSr5iozG1vDSz",
+        "n10eAegrGspodtsQw13BE0"
+      ],
+      "invalid": [
+        {
+          "id": "Y7l1IhzX2fnyiano4ipzcN",
+          "name": "iFi Audio iDSD Valkyrie Portable Amp & DAC",
+          "score": 0
+        }
+      ]
+    },
+    "ipz8oe0elii0vm2voxsbgsw6": {
+      "category": "Portable Amps",
+      "slug": "portable-amps",
+      "valid": [
+        "Y7l1IhzX2fnyiano4ipzcN",
+        "dLGDVDmEEI2lV8CArAcay4"
+      ],
+      "invalid": []
+    },
+    "t2anvkkjfz9knqi85kozuaze": {
+      "category": "Universal IEMs",
+      "slug": "monitors-iems",
+      "valid": [
+        "Y7l1IhzX2fnyiano571d4m",
+        "Y7l1IhzX2fnyiano571jeT",
+        "Y7l1IhzX2fnyiano571oLJ",
+        "Y7l1IhzX2fnyiano5726Gj",
+        "ZuUKzmkqDyQwdcwhxl99sR",
+        "ZuUKzmkqDyQwdcwhxwQPfT",
+        "dLGDVDmEEI2lV8CArIgBZs",
+        "dLGDVDmEEI2lV8CArIgBmG",
+        "dLGDVDmEEI2lV8CArIgC3I",
+        "dLGDVDmEEI2lV8CArIgKzc",
+        "k27n1AQuIbSr5iozG2itJe",
+        "k27n1AQuIbSr5iozG2j7uo",
+        "k27n1AQuIbSr5iozG2jAqp",
+        "k27n1AQuIbSr5iozG2jDTA",
+        "moXlkADK7m1DHgGwWwzkms",
+        "moXlkADK7m1DHgGwWwznPb",
+        "moXlkADK7m1DHgGwWx071u",
+        "moXlkADK7m1DHgGwWxMkkd",
+        "n10eAegrGspodtsQw12meG",
+        "n10eAegrGspodtsQw13THU"
+      ],
+      "invalid": [
+        {
+          "id": "Y7l1IhzX2fnyiano4iq6jp",
+          "name": "iFi Audio Zen Can 3 Analog Headphone Amplifier",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4is7Vc",
+          "name": "Sony WFL910 Linkbuds Truly Wireless Earbuds (White)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4jO6bg",
+          "name": "iFi Audio hip-dac 3 Portable USB DAC & Amplifier",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano572DVy",
+          "name": "Sony WF-G700N INZONE Buds Truly Wireless Noise Cancelling Earbud Bundle with gSport Case (White)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxl7Puy",
+          "name": "iFi Audio iCan Phantom Analog Headphone Amplifier",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxl96BU",
+          "name": "Sennheiser Accentum True Wireless Noise-Cancelling Earbuds (Black)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxlJlJu",
+          "name": "iFi Audio GO bar Kensei Portable Hi-Res USB DAC and Preamp",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwQHiY",
+          "name": "Sennheiser Momentum Sport True Wireless Earbuds with Adaptive Noise Cancellation (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAcpNU",
+          "name": "iFi Audio ZEN Air CAN High-Power Analogue Headphone Amplifier",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArIgSA0",
+          "name": "Sony WF-G700N INZONE Buds Truly Wireless Noise Cancelling Earbud Bundle with gSport Case (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArIgVky",
+          "name": "Sony WFL910 Linkbuds Truly Wireless Earbuds (Black)",
+          "score": 0
+        }
+      ]
+    },
+    "o7c6baiuobsr7ni2y2vf22sh": {
+      "category": "Open-Back",
+      "slug": "open-back",
+      "valid": [
+        "Y7l1IhzX2fnyiano4iq6jp",
+        "k27n1AQuIbSr5iozFz2UJn",
+        "k27n1AQuIbSr5iozFz2tf2",
+        "k27n1AQuIbSr5iozFz2utm",
+        "k27n1AQuIbSr5iozFz2v2d",
+        "k27n1AQuIbSr5iozFz3ieD",
+        "k27n1AQuIbSr5iozFz3iys",
+        "k27n1AQuIbSr5iozFz7EsP",
+        "moXlkADK7m1DHgGwWtXu6V",
+        "moXlkADK7m1DHgGwWtXvWl",
+        "moXlkADK7m1DHgGwWtbizC",
+        "n10eAegrGspodtsQvneFiH",
+        "n10eAegrGspodtsQvneG1i",
+        "n10eAegrGspodtsQw136D2"
+      ],
+      "invalid": [
+        {
+          "id": "moXlkADK7m1DHgGwWtUHWs",
+          "name": "Utopia",
+          "score": 0
+        }
+      ]
+    },
+    "j8ls622l90d6m4xetlajua4y": {
+      "category": "Carrying Cases",
+      "slug": "carrying-cases",
+      "valid": [
+        "Y7l1IhzX2fnyiano4irsdl",
+        "Y7l1IhzX2fnyiano4irw9t",
+        "Y7l1IhzX2fnyiano55vQM4",
+        "ZuUKzmkqDyQwdcwhxl8p4E",
+        "ZuUKzmkqDyQwdcwhxl8saP",
+        "ZuUKzmkqDyQwdcwhxl96BU",
+        "dLGDVDmEEI2lV8CArAdTYq",
+        "dLGDVDmEEI2lV8CArAdYEO",
+        "mhejwYdgiH5W70wqaK7C6w"
+      ],
+      "invalid": [
+        {
+          "id": "Y7l1IhzX2fnyiano4iqf5B",
+          "name": "Shure MoveMic Two 2-Channel Direct to Phone Wireless Lavalier Microphone System",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4jNrzP",
+          "name": "HiFi Rose RD160 DAC (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano55v6vA",
+          "name": "Shure Nexadyne NXN8/C Cardioid XLR Handheld Vocal Microphone (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano5723aX",
+          "name": "Sony Linkbuds Fit Truly Wireless Noise Cancelling Earbuds (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano572DVy",
+          "name": "Sony WF-G700N INZONE Buds Truly Wireless Noise Cancelling Earbud Bundle with gSport Case (White)",
+          "score": 18
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano572G6y",
+          "name": "Bose QuietComfort Ultra Wireless Noise Cancelling Earbuds - 2024 (Diamond 60th Edition)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano573jsV",
+          "name": "Sonus faber Lumina II Amator Bookshelf Speakers - Pair (Red)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano573lIn",
+          "name": "Sonus faber Lumina II Bookshelf Speakers - Pair (Black)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxlJkHG",
+          "name": "HiFi Rose RD160 DAC (Silver)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwQLK7",
+          "name": "Sony Linkbuds Fit Truly Wireless Noise Cancelling Earbuds (White)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwS2lM",
+          "name": "Sonus faber Lumina II Amator Bookshelf Speakers - Pair (Walnut)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwS4iZ",
+          "name": "Sonus faber Sonetto I G2 Bookshelf Speakers - Pair (Walnut)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAd3oS",
+          "name": "Shure MoveMic One Single Channel Direct to Phone Wireless Lavalier Microphone System",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAd4mq",
+          "name": "Shure MoveMic Two Receiver Kit with 2 Direct to Phone Wireless Lavalier Microphones & Receiver",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArI3Elg",
+          "name": "Shure Nexadyne NXN8/S Supercardioid XLR Handheld Vocal Microphone (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArI3Sd2",
+          "name": "Shure SM7dB Cardioid Dynamic Vocal Microphone with Built-In Active Preamp",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArIgSA0",
+          "name": "Sony WF-G700N INZONE Buds Truly Wireless Noise Cancelling Earbud Bundle with gSport Case (Black)",
+          "score": 18
+        }
+      ]
+    },
+    "o9igtdq1g5oqaahpa0zvq238": {
+      "category": "Digital Players (DAPs)",
+      "slug": "digital-players-daps",
+      "valid": [
+        "moXlkADK7m1DHgGwWxMnjQ"
+      ],
+      "invalid": [
+        {
+          "id": "Y7l1IhzX2fnyiano4jArWW",
+          "name": "McIntosh MX200 A/V Processor",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano4jDQDh",
+          "name": "Audio-Technica AT-LP60X-BK Fully Automatic Belt-Drive Stereo Turntable (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano574lSP",
+          "name": "Sonos Premium Entertainment Set with Beam Soundbar (Gen 2) & Sub 4 Subwoofer(Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano575EWZ",
+          "name": "Sonos Ray Compact Sound Bar for TV, Gaming, and Music (Black)",
+          "score": 0
+        },
+        {
+          "id": "Y7l1IhzX2fnyiano57YqmL",
+          "name": "Polk Audio Atrium 4 All-Weather Outdoor Loudspeaker - Pair (White)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwS4iZ",
+          "name": "Sonus faber Sonetto I G2 Bookshelf Speakers - Pair (Walnut)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwTIRQ",
+          "name": "Sonos Ray Compact Sound Bar for TV, Gaming, and Music (White)",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwzLiP",
+          "name": "Audio-Technica AT-SP3X Powered Bluetooth Bookshelf Speakers",
+          "score": 0
+        },
+        {
+          "id": "ZuUKzmkqDyQwdcwhxxgrAp",
+          "name": "iFi Audio iPower2 9V Ultra Low Noise DC Power Supply",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAk2Ky",
+          "name": "Audio-Technica AT-LP3xBT Fully Automatic Wireless Belt-Drive Turntable with Bluetooth (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArAkBFk",
+          "name": "Pro-Ject Debut PRO S Turntable with Pick it S2 C Integrated Cartridge",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArIJG0a",
+          "name": "Alpine KTA-200M Mono Power Pack Amplifier",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArIhgWy",
+          "name": "Sonos Premium Entertainment Set with Beam Soundbar (Gen 2) & Sub 4 Subwoofer (White)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArIzcGy",
+          "name": "Polk Audio Atrium 4 All-Weather Outdoor Loudspeaker - Pair (Black)",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArJQiAm",
+          "name": "iFi Audio iPower2 12V Ultra Low Noise DC Power Supply",
+          "score": 0
+        },
+        {
+          "id": "mhejwYdgiH5W70wqaK6oJ8",
+          "name": "Victrola Rock Speaker Connect Bluetooth Outdoor Speaker with Solar Charging - 4 Pack (Stone)",
+          "score": 0
+        }
+      ]
+    },
+    "jdxde1qpftseepekaivzpl8c": {
+      "category": "Adapters",
+      "slug": "adapters",
+      "valid": [],
+      "invalid": [
+        {
+          "id": "Y7l1IhzX2fnyiano55uwHa",
+          "name": "Meze Audio Boom Mic Add-On Omnidirectional Microphone",
+          "score": 0
+        },
+        {
+          "id": "dLGDVDmEEI2lV8CArI30xQ",
+          "name": "Shure MV5 Digital Condenser Microphone (Silver)",
+          "score": 0
+        },
+        {
+          "id": "mhejwYdgiH5W70wqaK6oJ8",
+          "name": "Victrola Rock Speaker Connect Bluetooth Outdoor Speaker with Solar Charging - 4 Pack (Stone)",
+          "score": 0
+        }
+      ]
+    },
+    "9td5z7HwDgMNxTZ8edvs2d": {
+      "category": "Eartips",
+      "slug": "eartips",
+      "valid": [],
+      "invalid": [
+        {
+          "id": "ZuUKzmkqDyQwdcwhxwQHiY",
+          "name": "Sennheiser Momentum Sport True Wireless Earbuds with Adaptive Noise Cancellation (Black)",
+          "score": 0
+        }
+      ]
+    },
+    "yd9641q8fiuh9rgoupauw2zl": {
+      "category": "Planar Magnetic",
+      "slug": "planar-magnetic",
+      "valid": [
+        "drafts.moXlkADK7m1DHgGwWtWl8T",
+        "k27n1AQuIbSr5iozFz2tf2",
+        "k27n1AQuIbSr5iozFz3iys",
+        "k27n1AQuIbSr5iozFz3jQQ",
+        "k27n1AQuIbSr5iozFz7Fdd",
+        "k27n1AQuIbSr5iozFz7FkW",
+        "k27n1AQuIbSr5iozFz7HA5",
+        "k27n1AQuIbSr5iozFz7KCz",
+        "k27n1AQuIbSr5iozFz7KdY",
+        "moXlkADK7m1DHgGwWtWl8T",
+        "moXlkADK7m1DHgGwWtXu6V",
+        "moXlkADK7m1DHgGwWtbizC",
+        "moXlkADK7m1DHgGwWtbkq7",
+        "moXlkADK7m1DHgGwWtblBG",
+        "n10eAegrGspodtsQvneFiH",
+        "n10eAegrGspodtsQvneQBQ",
+        "n10eAegrGspodtsQw136D2"
+      ],
+      "invalid": []
+    }
+  },
+  "sampleInvalid": [
+    {
+      "productId": "A5Y8wEwAn6Fo0zYQ5BLsNg",
+      "name": "IsoAcoustics ISO-PUCK 76 Isolator Feet for Large Studio Monitors and Speakers - Pair",
+      "brand": "IsoAcoustics",
+      "validations": [
+        {
+          "key": "u9o83mfmx23cudko8phu5otx",
+          "category": "Headphone Stands",
+          "slug": "headphone-stands",
+          "valid": false,
+          "score": 0,
+          "reasons": [
+            "Missing required keywords"
+          ]
+        },
+        {
+          "key": "ab2xhkm6hgabf69y0f3s4oo0",
+          "category": "Care & Cleaning",
+          "slug": "care-cleaning",
+          "valid": false,
+          "score": 0,
+          "reasons": [
+            "Missing required keywords"
+          ]
+        }
+      ]
+    },
+    {
+      "productId": "A5Y8wEwAn6Fo0zYQ5BLszV",
+      "name": "Bose 251 Environmental Speakers - Pair (White)",
+      "brand": "Bose",
+      "validations": [
+        {
+          "key": "o6mz3kbs5xla8ixastppktsd",
+          "category": "Desktop Amps",
+          "slug": "desktop-amps",
+          "valid": false,
+          "score": 0,
+          "reasons": [
+            "Missing required keywords"
+          ]
+        },
+        {
+          "key": "u9o83mfmx23cudko8phu5otx",
+          "category": "Headphone Stands",
+          "slug": "headphone-stands",
+          "valid": false,
+          "score": 0,
+          "reasons": [
+            "Missing required keywords"
+          ]
+        }
+      ]
+    },
+    {
+      "productId": "A5Y8wEwAn6Fo0zYQ5BM3KK",
+      "name": "Kanto ST34P 34\" Universal Bookshelf Speaker Floor Stand with Plywood Base- Black (Pair)",
+      "brand": "Kanto",
+      "validations": [
+        {
+          "key": "vnrj2n32p172vcje1tt3s4ls",
+          "category": "Headphone Cables",
+          "slug": "headphone-cables",
+          "valid": false,
+          "score": 0,
+          "reasons": [
+            "Missing required keywords"
+          ]
+        }
+      ]
+    },
+    {
+      "productId": "BwEkTpjVMW9iHZxZmNGMJD",
+      "name": "JBL Stage 200P 10\" Subwoofer (White)",
+      "brand": "JBL",
+      "validations": [
+        {
+          "key": "o6mz3kbs5xla8ixastppktsd",
+          "category": "Desktop Amps",
+          "slug": "desktop-amps",
+          "valid": false,
+          "score": 0,
+          "reasons": [
+            "Missing required keywords"
+          ]
+        },
+        {
+          "key": "u9o83mfmx23cudko8phu5otx",
+          "category": "Headphone Stands",
+          "slug": "headphone-stands",
+          "valid": false,
+          "score": 0,
+          "reasons": [
+            "Missing required keywords"
+          ]
+        },
+        {
+          "key": "npwbgqg3v4t5qe95rg35wte0",
+          "category": "Network Streamers",
+          "slug": "network-streamers",
+          "valid": false,
+          "score": 0,
+          "reasons": [
+            "Missing required keywords"
+          ]
+        }
+      ]
+    },
+    {
+      "productId": "BwEkTpjVMW9iHZxZmNGMYh",
+      "name": "JBL Stage 220P 12\" Powered Subwoofer (White)",
+      "brand": "JBL",
+      "validations": [
+        {
+          "key": "o6mz3kbs5xla8ixastppktsd",
+          "category": "Desktop Amps",
+          "slug": "desktop-amps",
+          "valid": false,
+          "score": 0,
+          "reasons": [
+            "Missing required keywords"
+          ]
+        },
+        {
+          "key": "u9o83mfmx23cudko8phu5otx",
+          "category": "Headphone Stands",
+          "slug": "headphone-stands",
+          "valid": false,
+          "score": 0,
+          "reasons": [
+            "Missing required keywords"
+          ]
+        }
+      ]
+    },
+    {
+      "productId": "EuRMMuzWxDMHyuoMMSxkzT",
+      "name": "Definitive Technology Descend DN8 8\" Subwoofer (White)",
+      "brand": "Definitive Technology",
+      "validations": [
+        {
+          "key": "o6mz3kbs5xla8ixastppktsd",
+          "category": "Desktop Amps",
+          "slug": "desktop-amps",
+          "valid": false,
+          "score": 0,
+          "reasons": [
+            "Missing required keywords"
+          ]
+        },
+        {
+          "key": "ck7d2wm9xe6lujtdfq7biyh7",
+          "category": "Interconnects",
+          "slug": "interconnects",
+          "valid": false,
+          "score": 0,
+          "reasons": [
+            "Missing required keywords"
+          ]
+        }
+      ]
+    },
+    {
+      "productId": "EuRMMuzWxDMHyuoMMSyEDW",
+      "name": "iFi Audio iSilencer Max USB-C Noise Filter with Active Noise Cancellation",
+      "brand": "iFi Audio",
+      "validations": [
+        {
+          "key": "dW7bkxuW7lwltD3OAxQBo5",
+          "category": "USB-C/Dongle DACs",
+          "slug": "usb-c-dacs",
+          "valid": true,
+          "score": 40,
+          "reasons": [
+            "Brand match"
+          ]
+        },
+        {
+          "key": "mpni93r13d9yo2vn5moexlkp",
+          "category": "Standalone DACs",
+          "slug": "standalone-dacs",
+          "valid": false,
+          "score": 0,
+          "reasons": [
+            "Missing required keywords"
+          ]
+        },
+        {
+          "key": "u9o83mfmx23cudko8phu5otx",
+          "category": "Headphone Stands",
+          "slug": "headphone-stands",
+          "valid": false,
+          "score": 0,
+          "reasons": [
+            "Missing required keywords"
+          ]
+        }
+      ]
+    },
+    {
+      "productId": "IysVzF92P1Ckj0vYj2qiBH",
+      "name": "JBL Live 670NC Wireless On-Ear Adaptive Noise Cancelling Headphones (White)",
+      "brand": "JBL",
+      "validations": [
+        {
+          "key": "vnrj2n32p172vcje1tt3s4ls",
+          "category": "Headphone Cables",
+          "slug": "headphone-cables",
+          "valid": false,
+          "score": 0,
+          "reasons": [
+            "Missing required keywords"
+          ]
+        },
+        {
+          "key": "icmc3j8qzjiffr9h6tw6kg74",
+          "category": "Electrostatic",
+          "slug": "electrostatic",
+          "valid": true,
+          "score": 36,
+          "reasons": [
+            "Positive: es"
+          ]
+        }
+      ]
+    },
+    {
+      "productId": "Y7l1IhzX2fnyiano4idKTF",
+      "name": "TEAC W-1200 Dual Cassette Player Recorder with Pitch Control Mic Input & USB Out (Silver)",
+      "brand": "TEAC",
+      "validations": [
+        {
+          "key": "u9o83mfmx23cudko8phu5otx",
+          "category": "Headphone Stands",
+          "slug": "headphone-stands",
+          "valid": false,
+          "score": 0,
+          "reasons": [
+            "Missing required keywords"
+          ]
+        }
+      ]
+    },
+    {
+      "productId": "Y7l1IhzX2fnyiano4ietix",
+      "name": "Denon AVRX1800H 7.2 Channel 8K Home Theater Receiver with Dolby Atmos, HEOS Built-In, and Audyssey Room Correction",
+      "brand": "Denon",
+      "validations": [
+        {
+          "key": "o6mz3kbs5xla8ixastppktsd",
+          "category": "Desktop Amps",
+          "slug": "desktop-amps",
+          "valid": false,
+          "score": 0,
+          "reasons": [
+            "Missing required keywords"
+          ]
+        },
+        {
+          "key": "npwbgqg3v4t5qe95rg35wte0",
+          "category": "Network Streamers",
+          "slug": "network-streamers",
+          "valid": false,
+          "score": 0,
+          "reasons": [
+            "Missing required keywords"
+          ]
+        }
+      ]
+    }
+  ]
+}
