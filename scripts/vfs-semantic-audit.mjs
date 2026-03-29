@@ -484,10 +484,10 @@ ${category.expectedTypes.map(t => `- ${t}`).join('\n') || '- None defined'}
         const emoji = product.score >= 80 ? '✅' : product.score >= 60 ? '⚠️' : '❌';
         report += `${emoji} **${product.productName}** (${product.brand || 'Unknown Brand'})\n`;
         report += `   - Score: ${product.score}/100 | Status: ${product.status}\n`;
-        if (product.reasons.length > 0) {
+        if (product.reasons && product.reasons.length > 0) {
           report += `   - Reasons: ${product.reasons.join(', ')}\n`;
         }
-        if (product.concerns.length > 0) {
+        if (product.concerns && product.concerns.length > 0) {
           report += `   - ⚠️ Concerns: ${product.concerns.join(', ')}\n`;
         }
         report += `\n`;
