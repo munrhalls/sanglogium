@@ -1,0 +1,364 @@
+SU 29 03 2026
+    [ ] get new voice dictation (whisprflow expired)
+
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+GLOBAL DEFINITIONS (read before executing any sprint)
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+
+    LOCKDOWN definition:
+        A phase or component is LOCKED when ALL of the following are true:
+            (1) All checklist items in the phase are marked [x]
+            (2) All automated tests for that phase are GREEN (no skipped)
+            (3) One manual smoke test is logged inline as a comment with date + result
+            (4) A human has signed off in writing (comment in this file or PR description)
+        A LOCKED item cannot be re-opened without a written reason.
+
+    VERIFICATION definition (for Truth Table chunks):
+        A chunk is VERIFIED when ALL of the following are true:
+            (1) AI generated truth table output for the chunk
+            (2) Human reviewed each leaf node → product list pairing for 0 mix-ups
+            (3) Product count per node matches inventory_counts.json baseline
+            (4) Result logged inline: "verified [date] — N nodes, 0 mix-ups"
+
+    REGRESSION GATE definition:
+        Before any sprint that modifies existing data or catalogue structure:
+            (1) Run existing test suite — all green, result logged
+            (2) Snapshot current state (catalogue JSON, product counts) to /data/snapshots/[sprint-name]-pre.json
+            (3) Only then begin execution steps
+        This gate is a PRE-CONDITION, not a sprint step.
+
+    DEPENDENCY GATE definition:
+        A sprint marked [BLOCKED] cannot begin execution until the named blocker sprint
+        has reached full LOCKDOWN. Blocked sprints may have prep/planning steps executed.
+
+
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+SPRINT 1: Catalogue — Truth Table
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+
+    Status: IN PROGRESS
+    Blocks: Sprint 2, Sprint 3, Sprint 4, Discovery Pass 2
+    DoD: Master Truth Table exists as a verified file where every leaf node maps to
+         a product ID list with zero mix-ups, confirmed by human review per chunk.
+
+    [x] Phase 1: Define Semantic Protocol & Safety Valve (UNCATEGORIZED)
+    [x] Phase 2: Cleanse/Truncate JSON Data (Zero-Waste Payload)
+    [x] Figure out robust mapping of 583 products per each catalogue leaf node with 0 mix-ups
+
+    [ ] Phase 3: Generate Truth Tables
+        NOTE: "verified" means the VERIFICATION definition above is satisfied — not just AI output reviewed.
+        [x] 0-49     @verified(26-03-29) — nodes confirmed, 0 mix-ups
+        [x] 50-74    @verified(26-03-29) — nodes confirmed, 0 mix-ups
+        [x] 75-99    @verified(26-03-29) — nodes confirmed, 0 mix-ups
+        [x] 100-125  @completed — PENDING full VERIFICATION sign-off
+        ✔ 126-149 @done(26-03-30 10:02)
+        ✔ 150-175 @done(26-03-30 10:09)
+        ✔ 176-199 @done(26-03-30 10:12)
+        ✔ 200-224 @done(26-03-30 10:14)
+        ✔ 225-249 @done(26-03-30 10:20)
+        ✔ 250-274 @done(26-03-30 10:21)
+        ✔ 275-299 @done(26-03-30 10:24)
+        ✔ 300-324 @done(26-03-30 10:26)
+        ✔ 325-349 @done(26-03-30 10:40)
+        ✔ 350-374 @done(26-03-30 10:40)
+        ✔ 375-399 @done(26-03-30 10:41)
+        ✔ 400-424 @done(26-03-30 10:42)
+        ✔ 425-449 @done(26-03-30 10:49)
+        ✔ 450-474 @done(26-03-30 10:49)
+        ✔ 476-499 @done(26-03-30 10:49)
+        ✔ 500-524 @done(26-03-30 10:56)
+        ✔ 525-549 @done(26-03-30 10:56)
+        ✔ 550-574 @done(26-03-30 10:56)
+        ✔ 575-583 @done(26-03-30 10:56)
+        ✔ Per-chunk test: AI → 'view at a glance' leaf node → product list — human confirms 0 mix-ups @done(26-03-30 12:45)
+            ✔ view at a glance - truth table as input -> output shorthand version of pathway/leaf node - [ product names list] in verification-<number-number>.md @done(26-03-30 12:45)
+                Example:
+                - leaf node ### /accessories/connectivity/headphone-cables
+                - product names list
+                    - * **Meze Audio 99 Series 2.5mm or 4.4mm Replacement Cable**
+                    - * **64 Audio Premium Pearl Cable (3.5mm)**
+                    - * **Meze Audio OFC Mini 4-Pin XLR Replacement Cable**
+                    etc
+
+    [] Phase 4 - test correctness and 100% sum-total match of consolidated path - product listings
+        ✔ test script that parses truth-table.md chunks vs verification.consolidated.md -> each path and listed products are verified against truth tables 100% @done(26-03-30 12:53)
+        ✔ test script - count entries per path from truth-table chunks, count from consolidated .md, check exact same count per path @done(26-03-30 12:57)
+        [ ] consolidated - add product id per product name, access product id from truth tables
+        [ ] test script - each product id can be found in truth tables, and name accessed in truth tables matches the name in consolidated
+        [ ] Snapshot Master Truth Table to /data/catalogue-truth-table.json
+            [ ] format: path/.../.../.../leaf catalogue node - product entries containing only name, id
+        [ ] Log: "Master Truth Table locked [date] — N leaf nodes, 583 products, 0 duplicates, 0 orphans"
+        [ ] LOCKDOWN — Phase 4 verified and signed off
+
+    [ ] Phase 5: Execution
+        [ ] Write test - GROQ per catalogue leaf node:
+            output products that have catalogue leaf node id in product's catalogueLocationKeys array
+            === catalogue-truth-table.json products per that leaf node id
+        [ ] Generate Sanity Patch based on Verified Truth Table
+        [ ] Apply Patch to Studio
+        [ ] Test: truth table leaf node → product IDs match VFS output per leaf node (automated)
+            [ ] VFS output equals selected VFS leaf node -> GROQ for products which have leaf node id in their catalogueLocationKeys array -> get product ids from results -> compare product ids vs truth table product ids for that same leaf node
+        [ ] Test passed → log result → LOCKDOWN Sprint 1
+
+
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+SPRINT 2: Catalogue — Taxonomy Expansion (based on "for review" items)
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+
+    Status: [BLOCKED] — requires Sprint 1 LOCKDOWN
+    Blocks: Sprint 3
+    DoD: Catalogue is updated with new leaf nodes. Regression passes. Expansion test passes.
+         New leaf nodes are present in a supplementary truth table, human-verified.
+
+    [ ] PRE-CONDITION: Sprint 1 is LOCKED (check before starting)
+    [ ] REGRESSION GATE: run test suite → all green → snapshot catalogue state
+        [ ] snapshot saved to /data/snapshots/taxonomy-expansion-pre.json
+        [ ] test run logged: "regression baseline [date] — N tests green"
+
+    [ ] Phase 1: Define New Leaf Nodes
+        [ ] Read all "for review" items — note full path + proposed new leaf for each
+        [ ] Validate each proposed leaf: does it make sense under its parent header?
+        [ ] Produce written list of new leaf nodes (file: /data/new-leaf-nodes.md)
+        [ ] Manually assign all "for review" products to proper new leaf nodes
+        [ ] Build supplementary truth table: new leaf node → product ID list
+        [ ] Human verify each new leaf node's product list (same VERIFICATION definition as Sprint 1)
+        [ ] LOCKDOWN Phase 1 — new leaf node list is final and signed off
+
+    [ ] Phase 2: Upload New Leaf Nodes
+        [ ] Write regression test — asserts 100% match with non-expansion pathways (existing catalogue untouched)
+        [ ] Write expansion test — asserts new leaf nodes exist and return correct product sets
+        [ ] Update existing catalogue with new leaf nodes
+        [ ] Run regression test — must pass (0 regressions in existing pathways)
+        [ ] Run expansion test — must pass (new nodes return correct product sets)
+        [ ] Log test results with date
+        [ ] LOCKDOWN Sprint 2
+
+
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+SPRINT 3: Catalogue — Map Expansion Leaf Nodes to Products
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+
+    Status: [BLOCKED] — requires Sprint 2 LOCKDOWN
+    Blocks: Sprint 4
+    DoD: All new leaf nodes have correct product mappings in Sanity. Master Truth Table
+         updated to reflect full expanded catalogue. Regression + mapping tests pass.
+
+    [ ] PRE-CONDITION: Sprint 2 is LOCKED (check before starting)
+    [ ] REGRESSION GATE: run test suite → all green → snapshot catalogue + mapping state
+        [ ] snapshot saved to /data/snapshots/map-expansion-pre.json
+        [ ] test run logged: "regression baseline [date] — N tests green"
+
+    [ ] Phase 1: Systematically Update Mappings
+        [ ] Write regression test — asserts all pre-expansion mappings are unchanged
+        [ ] Write mapping test — asserts each expansion leaf node returns its verified product ID set
+        [ ] Run patch script on Sanity (maps new leaf nodes → correct product IDs)
+        [ ] Run regression test — must pass
+        [ ] Run mapping test — must pass
+        [ ] Log test results with date
+        [ ] LOCKDOWN Phase 1
+
+    [ ] Phase 2: Update Master Truth Table
+        [ ] Merge expansion leaf nodes into /data/truth-table-master-v1.json → v2.json
+        [ ] Assert: every leaf node (original + new) maps to correct product IDs
+        [ ] Assert: no product ID is orphaned or duplicated across nodes
+        [ ] Human spot-check: 5 random new leaf nodes verified manually
+        [ ] Log: "Master Truth Table v2 locked [date]"
+        [ ] LOCKDOWN Sprint 3
+
+
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+SPRINT 4: Catalogue — VFS 1:1 Match with Truth Table
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+
+    Status: [BLOCKED] — requires Sprint 3 LOCKDOWN
+    Blocks: Discovery Pass 2
+    DoD: VFS output matches Master Truth Table v2 for every leaf node and every parent
+         node (recursive union). All tests green. Sprint closed.
+
+    [ ] PRE-CONDITION: Sprint 3 is LOCKED. Master Truth Table v2 exists. (check before starting)
+    [ ] CONFIRM: getProductsByNode(id) function exists and has unit test coverage
+        If missing → this is a BLOCKER. Build and test it before continuing.
+
+    [ ] Phase 1: Atomic Leaf Match (Base Truth)
+        [ ] Write test — VFS via catalogue-index.json returns 1:1 product IDs for leaf nodes vs Master Truth Table v2
+        [ ] Write regression — verify taxonomy expansion did not orphan or duplicate IDs at leaf level
+        [ ] Execute "Blind Match" — human validation of 10 random leaf nodes (VFS output vs truth table)
+        [ ] Log: "Blind Match [date] — 10 nodes checked, N matches, 0 discrepancies"
+        [ ] All tests green
+        [ ] LOCKDOWN Phase 1 — Atomic Leaf Truth verified
+
+    [ ] Phase 2: Aggregate Parent Match (Recursive Truth)
+        [ ] Write test — parent category IDs return exact mathematical union of all nested child leaf IDs
+        [ ] Trace "Bus Stops" — verify every junction in the VFS path correctly aggregates IDs from its subtree
+        [ ] Write test — invalid or empty node IDs return [] and do not break union logic
+        [ ] All tests green
+        [ ] Log test results with date
+        [ ] LOCKDOWN Phase 2 — VFS logic locked
+
+    [ ] LOCKDOWN Sprint 4 — Truth Table Sprint fully closed
+
+
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+SPRINT 5: Discovery Components — Pass 1 (Skeleton)
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+
+    Status: READY (no upstream blockers)
+    Blocks: Discovery Pass 2 (Sprint 6)
+    DoD: All 8 skeleton components exist, render without errors, integration path
+         (Search → Grid → Detail) navigable at skeleton level. Zero styling beyond
+         structural borders. All lockdowns signed off.
+
+    Pass 1 discipline: NO styling beyond structural borders (1px dashed border to show slot).
+    No real data. No colour tokens. No animations. Structure only.
+
+    [ ] Define component interface contracts BEFORE writing any component
+        [ ] SearchOverlay: props in / events out (what does it emit to FilterSidebar?)
+        [ ] FilterSidebar: props in / events out (what does it emit to SearchResultsGrid?)
+        [ ] CategoryGrid / SearchResultsGrid: shared product card slot interface
+        [ ] ProductDetails: props in (product ID or slug?)
+        Document contracts in /app/components/features/discovery/CONTRACTS.md
+
+    [ ] Phase 1: Search & Filter Skeletons
+        [ ] SearchOverlay.tsx — container, input field, result slot
+        [ ] FilterSidebar.tsx — category list slot, price range slot
+        [ ] SearchResultsGrid.tsx — layout slot for product cards in search view
+        [ ] Manual smoke test: SearchOverlay renders, input is focusable, result slot visible
+        [ ] LOCKDOWN Phase 1
+
+    [ ] Phase 2: Category Discovery Skeletons
+        [ ] CategoryHero.tsx — breadcrumb slot, title slot, banner slot
+        [ ] SubCategoryNav.tsx — horizontal scroll or grid slot for child leaf nodes
+        [ ] CategoryGrid.tsx — 4-column layout slot for product cards
+        [ ] Manual smoke test: CategoryHero → SubCategoryNav → CategoryGrid renders in sequence
+        [ ] LOCKDOWN Phase 2
+
+    [ ] Phase 3: Product Detail Skeletons
+        [ ] ProductDetailsLayout.tsx — split view: gallery left, info right
+        [ ] ImageGallery.tsx — main image slot, thumbnail carousel slot
+        [ ] ProductMeta.tsx — title, brand, price, CTA slots
+        [ ] RelatedProducts.tsx — carousel slot
+        [ ] Manual smoke test: ProductDetailsLayout renders with all 4 sub-components
+        [ ] LOCKDOWN Phase 3
+
+    [ ] Phase 4: Integration Review
+        [ ] Verify navigation path: Search/Category → Grid → Product Detail (skeleton level, no errors)
+        [ ] Assert: zero Tailwind styling beyond structural border utility (code review)
+        [ ] Assert: no data fetching in any Pass 1 component (code review)
+        [ ] LOCKDOWN Sprint 5 — Discovery Pass 1 closed
+
+
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+SPRINT 6: Discovery Components — Pass 2 (Data)
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+
+    Status: [BLOCKED] — requires Sprint 4 LOCKDOWN + Sprint 5 LOCKDOWN
+    Blocks: Discovery Pass 3 (Sprint 7)
+    DoD: All components receive correct data. Navigating to a category ID displays
+         exact product set from catalogue-index.json. Product detail loads correct
+         Sanity document. Zero styling changes from Pass 1. All lockdowns signed off.
+
+    [ ] PRE-CONDITION: Sprint 4 LOCKED (VFS verified) — check before starting
+    [ ] PRE-CONDITION: Sprint 5 LOCKED (all skeletons complete) — check before starting
+    [ ] PRE-CONDITION: getProductsByNode(id) exists and is tested — check before starting
+
+    DECISION (resolve before writing a single line of data code):
+    [ ] Search strategy decision: Fuse.js (client-side, ~500 products) vs GROQ filter (Sanity-side)?
+        Criteria: bundle size impact, query cost, offline behaviour, filter complexity
+        Decision logged here: _______________________________________________
+        Once logged this decision is LOCKED for Pass 2. Do not revisit mid-sprint.
+
+    Pass 2 discipline:
+        NO CSS/Tailwind changes. If data makes layout look weird — log it, do not fix it.
+        NO loading spinners or skeleton loaders. Use plain text "Loading..." or empty slot.
+        NO error UI. On failure: console.error only, no "Not Found" pages.
+
+    [ ] Phase 1: Search & Filter Data
+        [ ] Connect SearchOverlay.tsx — implement chosen search strategy against catalogue-index.json product list
+        [ ] Connect FilterSidebar.tsx — map category tree from catalogue-index.json to navigation links
+        [ ] Connect SearchResultsGrid.tsx — pass filtered ID array to Sanity GROQ fetcher
+        [ ] Test: search for a known product name → correct product appears in results grid
+        [ ] LOCKDOWN Phase 1
+
+    [ ] Phase 2: Category Discovery Data
+        [ ] Connect CategoryHero.tsx — fetch active category metadata (title, description) from Sanity
+        [ ] Connect SubCategoryNav.tsx — fetch child node titles/slugs based on parent node ID
+        [ ] Connect CategoryGrid.tsx — call getProductsByNode(id) → pass IDs to Sanity fetcher
+        [ ] Test: navigate to leaf node ID → product set matches truth table entry for that node
+        [ ] Test: navigate to parent node ID → product set equals union of all child leaf node sets
+        [ ] LOCKDOWN Phase 2
+
+    [ ] Phase 3: Product Detail Data
+        [ ] Connect ProductDetailsLayout.tsx — fetch full product document by slug from Sanity
+        [ ] Connect ImageGallery.tsx — map Sanity image array to source URLs
+        [ ] Connect ProductMeta.tsx — bind brand, price, availability status
+        [ ] Connect RelatedProducts.tsx — fetch first 4 products from same leaf node ID
+        [ ] Test: product detail page fields match Studio document 1:1 (manual spot-check, 3 products)
+        [ ] LOCKDOWN Phase 3
+
+    [ ] Phase 4: Data Integrity Check
+        [ ] Verify "Bus Stop" trace: data flows catalogue-index.json → ID array → Sanity fetch → component
+        [ ] Assert: zero Tailwind/CSS changes introduced in this pass (git diff review)
+        [ ] Log: "Pass 2 data integrity check [date] — bus stop traced, no styling drift"
+        [ ] LOCKDOWN Sprint 6 — Discovery Pass 2 closed
+
+
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+SPRINT 7: Discovery Components — Pass 3 (High-Fidelity)
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+
+    Status: [BLOCKED] — requires Sprint 6 LOCKDOWN
+    DoD: All 4 components are fully styled, interactive, and individually locked.
+         No component N+1 started before component N is LOCKED.
+         Visual smoke test + behaviour test pass per component.
+
+    Pass 3 discipline:
+        No leapfrogging — Component N must be 100% styled and tested before Component N+1 structure starts.
+        Lockdown = tests green + visual smoke test logged + signed off.
+
+    Component Build Protocol (applies to all 4 components):
+        Step 1: Structure — semantic HTML, accessibility roles, focus management
+        Step 2: Layout — Flex/Grid, responsive breakpoints, aspect ratios
+        Step 3: Styling — color tokens, typography, border styles, spacing scale
+        Step 4: Interactivity — Framer Motion transitions, hover/focus states, user events
+        Step 5: Test (automated) — behaviour test as specified below
+        Step 6: Visual smoke test — log screenshot result or manual review note with date
+        Step 7: LOCKDOWN this component before touching the next
+
+    [ ] Component 1: SearchOverlay.tsx
+        [ ] Step 1: Structure — semantic HTML5, focus trap wrapper, input/results container, ARIA roles
+        [ ] Step 2: Layout — centered modal or full-screen slide positioning via Flex/Grid
+        [ ] Step 3: Styling — colors, typography, backdrop-blur, borders, dark mode check
+        [ ] Step 4: Interactivity — Framer Motion open/close transition, hover/focus ring states
+        [ ] Step 5: Test: it('renders valid structure and toggles visibility correctly')
+        [ ] Step 6: Visual smoke: log result _______________________________________________
+        [ ] LOCKDOWN Component 1
+
+    [ ] Component 2: FilterSidebar.tsx
+        [ ] Step 1: Structure — <aside> with nested <section> tags per filter group, ARIA expanded
+        [ ] Step 2: Layout — sticky positioning, vertical spacing, checkbox alignment
+        [ ] Step 3: Styling — custom checkbox styles, accent colors, scrollbar aesthetics, dark mode check
+        [ ] Step 4: Interactivity — accordion expand/collapse logic, hover feedback on labels
+        [ ] Step 5: Test: it('correctly toggles filter group sections open and closed')
+        [ ] Step 6: Visual smoke: log result _______________________________________________
+        [ ] LOCKDOWN Component 2
+
+    [ ] Component 3: CategoryGrid.tsx
+        [ ] Step 1: Structure — <section> wrapper, <ul> list for product cards, semantic markup
+        [ ] Step 2: Layout — responsive grid (grid-cols-1 md:grid-cols-3 lg:grid-cols-4), gap sizing
+        [ ] Step 3: Styling — container padding, background tokens, dark mode check
+        [ ] Step 4: Interactivity — staggered entrance animations for grid items (Framer Motion)
+        [ ] Step 5: Test: it('renders correct grid column count at 1440px viewport width')
+        [ ] Step 6: Visual smoke: log result _______________________________________________
+        [ ] LOCKDOWN Component 3
+
+    [ ] Component 4: ProductDetails.tsx
+        [ ] Step 1: Structure — <main> with two primary columns: Gallery and Meta, semantic regions
+        [ ] Step 2: Layout — aspect-ratio locking for images, vertical flow for text hierarchy
+        [ ] Step 3: Styling — high-contrast CTA buttons, price typography, spec table styles, dark mode check
+        [ ] Step 4: Interactivity — thumbnail → main image sync, "Add to Cart" button states
+        [ ] Step 5: Test: it('syncs main image display when a thumbnail is clicked')
+        [ ] Step 6: Visual smoke: log result _______________________________________________
+        [ ] LOCKDOWN Component 4
+
+    [ ] Final integration check: navigate Search → Grid → ProductDetails — no visual regressions
+    [ ] LOCKDOWN Sprint 7 — Discovery Pass 3 closed
