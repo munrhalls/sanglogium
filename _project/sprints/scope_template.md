@@ -1,3 +1,36 @@
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+GLOBAL DEFINITIONS (read before executing any sprint)
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+
+    LOCKDOWN definition:
+        A phase or component is LOCKED when ALL of the following are true:
+            (1) All checklist items in the phase are marked [x]
+            (2) All automated tests for that phase are GREEN (no skipped)
+            (3) One manual smoke test is logged inline as a comment with date + result
+            (4) A human has signed off in writing (comment in this file or PR description)
+        A LOCKED item cannot be re-opened without a written reason.
+
+    VERIFICATION definition (for Truth Table chunks):
+        A chunk is VERIFIED when ALL of the following are true:
+            (1) AI generated truth table output for the chunk
+            (2) Human reviewed each leaf node → product list pairing for 0 mix-ups
+            (3) Product count per node matches inventory_counts.json baseline
+            (4) Result logged inline: "verified [date] — N nodes, 0 mix-ups"
+
+    REGRESSION GATE definition:
+        Before any sprint that modifies existing data or catalogue structure:
+            (1) Run existing test suite — all green, result logged
+            (2) Snapshot current state (catalogue JSON, product counts) to /data/snapshots/[sprint-name]-pre.json
+            (3) Only then begin execution steps
+        This gate is a PRE-CONDITION, not a sprint step.
+
+    DEPENDENCY GATE definition:
+        A sprint marked [BLOCKED] cannot begin execution until the named blocker sprint
+        has reached full LOCKDOWN. Blocked sprints may have prep/planning steps executed.
+
+
+
+
 # <ComponentName>
 
 ## Deliverable State
