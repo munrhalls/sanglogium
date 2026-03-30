@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => {
     plugins: [tsconfigPaths()],
     test: {
       globals: true,
-      environment: "node",
+      environment: "jsdom",
       env: env,
     },
   };
