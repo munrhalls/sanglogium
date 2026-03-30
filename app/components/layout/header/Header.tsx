@@ -1,5 +1,8 @@
+// purely homepage implementation - functionality awaiting for post-homepage products discovery ui development
+
 import { cn } from "@/lib/utils/tailwind";
 import BrandLogo from "./BrandLogo";
+import Searchbar from "./Searchbar";
 import NavbarActionsServer from "./NavbarActionsServer";
 import NavbarActionsSkeleton from "./NavbarActionsSkeleton";
 import { Suspense } from "react";
@@ -14,6 +17,7 @@ export default function Header() {
       )}
     >
       <BrandLogo />
+      <Searchbar />
       <Suspense fallback={<NavbarActionsSkeleton />}>
         <NavbarActionsServer />
       </Suspense>
