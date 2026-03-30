@@ -272,10 +272,198 @@ function verifyMappings(consolidatedData, truthIndex) {
 }
 
 // ============================================================================
-// MAIN
+// ENRICHED CONSOLIDATED FILE PARSER (with IDs)
 // ============================================================================
 
+function parseEnrichedConsolidatedFile() {
+  const content = fs.readFileSync(OUTPUT_FILE, 'utf-8');
+  const lines = content.split('\n');
+
+  const products = [];
+  let currentSection = null;
+  let pendingProduct = null;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const lineNumber = i + 1;
+
+    // Section header (e.g., "### /headphones/by-design/closed-back")
+    const sectionMatch = line.match(/^###\s+(\/[^\s]+)$/);
+    if (sectionMatch) {
+      currentSection = sectionMatch[1];
+      continue;
+    }
+
+    // Product line with name (e.g., "- Product Name  ")
+    const productMatch = line.match(/^-\s+(.+?)\s*$/);
+    if (productMatch) {
+      const name = productMatch[1].trim();
+      // Don't process checklist lines or other non-product lines
+      if (!name.startsWith('[') && !name.startsWith('**')) {
+        pendingProduct = {
+          name: name,
+          section: currentSection,
+          lineNumber: lineNumber
+        };
+      }
+      continue;
+    }
+
+    // ID line (e.g., "  **ID:** `abc123`")
+    const idMatch = line.match(/^\s+\*\*ID:\*\*\s*`([^`]+)`/);
+    if (idMatch && pendingProduct) {
+      pendingProduct.id = idMatch[1];
+      products.push({ ...pendingProduct });
+      pendingProduct = null;
+    }
+  }
+
+  return { content, lines, products };
+}
+
+// ============================================================================
+// ID VERIFICATION FUNCTION
+// ============================================================================
+
+function verifyIdsAgainstTruthTables(enrichedData, truthIndex) {
+  const results = {
+    verified: [],
+    idNotFound: [],
+    nameMismatch: [],
+    summary: {
+      totalProducts: enrichedData.products.length,
+      verified: 0,
+      idNotFound: 0,
+      nameMismatch: 0
+    }
+  };
+
+  for (const product of enrichedData.products) {
+    const truthEntry = truthIndex.idToName.get(product.id);
+
+    if (!truthEntry) {
+      results.idNotFound.push({
+        name: product.name,
+        id: product.id,
+        section: product.section,
+        lineNumber: product.lineNumber
+      });
+      results.summary.idNotFound++;
+    } else if (truthEntry.name !== product.name) {
+      results.nameMismatch.push({
+        consolidatedName: product.name,
+        truthTableName: truthEntry.name,
+        id: product.id,
+        section: product.section,
+        lineNumber: product.lineNumber,
+        sourceFile: truthEntry.sourceFile
+      });
+      results.summary.nameMismatch++;
+    } else {
+      results.verified.push({
+        name: product.name,
+        id: product.id,
+        section: product.section,
+        sourceFile: truthEntry.sourceFile
+      });
+      results.summary.verified++;
+    }
+  }
+
+  return results;
+}
+
+// ============================================================================
+// ID VERIFICATION TEST (separate mode)
+// ============================================================================
+
+function testIdVerification() {
+  console.log('=' .repeat(70));
+  console.log('ID VERIFICATION TEST');
+  console.log('  Verifies: each product ID in consolidated exists in truth tables');
+  console.log('            and name in consolidated matches name in truth tables');
+  console.log('=' .repeat(70));
+  console.log();
+
+  // Step 1: Parse truth tables
+  console.log('[1/3] Parsing truth tables...');
+  const truthIndex = parseTruthTables();
+  console.log(`      Found ${truthIndex.allEntries.length} products in truth tables`);
+  console.log();
+
+  // Step 2: Parse enriched consolidated file
+  console.log('[2/3] Parsing enriched consolidated file...');
+  const enrichedData = parseEnrichedConsolidatedFile();
+  console.log(`      Found ${enrichedData.products.length} products with IDs`);
+  console.log();
+
+  // Step 3: Verify IDs
+  console.log('[3/3] Verifying product IDs against truth tables...');
+  const verificationResults = verifyIdsAgainstTruthTables(enrichedData, truthIndex);
+
+  console.log(`      ✓ Verified: ${verificationResults.summary.verified}/${verificationResults.summary.totalProducts}`);
+  console.log(`      ✗ ID not found: ${verificationResults.summary.idNotFound}`);
+  console.log(`      ✗ Name mismatch: ${verificationResults.summary.nameMismatch}`);
+  console.log();
+
+  if (verificationResults.idNotFound.length > 0) {
+    console.log('      IDs not found in truth tables:');
+    for (const item of verificationResults.idNotFound.slice(0, 5)) {
+      console.log(`         - "${item.name}" (ID: ${item.id}, line ${item.lineNumber})`);
+    }
+    if (verificationResults.idNotFound.length > 5) {
+      console.log(`         ... and ${verificationResults.idNotFound.length - 5} more`);
+    }
+    console.log();
+  }
+
+  if (verificationResults.nameMismatch.length > 0) {
+    console.log('      Name mismatches (consolidated vs truth table):');
+    for (const item of verificationResults.nameMismatch.slice(0, 5)) {
+      console.log(`         - ID: ${item.id}`);
+      console.log(`           Consolidated: "${item.consolidatedName}"`);
+      console.log(`           Truth table:  "${item.truthTableName}" (${item.sourceFile})`);
+    }
+    if (verificationResults.nameMismatch.length > 5) {
+      console.log(`         ... and ${verificationResults.nameMismatch.length - 5} more`);
+    }
+    console.log();
+  }
+
+  // Summary
+  console.log('=' .repeat(70));
+  console.log('TEST SUMMARY');
+  console.log('=' .repeat(70));
+  console.log(`Total products tested:     ${verificationResults.summary.totalProducts}`);
+  console.log(`Verified (ID+name match):  ${verificationResults.summary.verified}`);
+  console.log(`ID not found:              ${verificationResults.summary.idNotFound}`);
+  console.log(`Name mismatch:             ${verificationResults.summary.nameMismatch}`);
+  console.log();
+
+  // Exit code
+  const allPassed = verificationResults.summary.idNotFound === 0 &&
+                    verificationResults.summary.nameMismatch === 0;
+
+  if (allPassed) {
+    console.log('✓ All product IDs verified successfully!');
+    console.log('  Each ID exists in truth tables and names match exactly.');
+    process.exit(0);
+  } else {
+    console.log('✗ TEST FAILED - see errors above');
+    process.exit(1);
+  }
+}
+
 function main() {
+  const args = process.argv.slice(2);
+  const mode = args[0] || 'enrich';
+
+  if (mode === 'test') {
+    testIdVerification();
+    return;
+  }
+
+  // Default: enrichment mode
   console.log('=' .repeat(70));
   console.log('CONSOLIDATED FILE ENRICHER & VERIFIER');
   console.log('=' .repeat(70));

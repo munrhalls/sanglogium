@@ -255,7 +255,6 @@
 - Sony WH-1000XM5 Wireless Headphones
 - Denon AHD9200 Headphones
 - Denon AH-D7200 Headphones
-- Sennheiser Momentum 4 Headphones
 - Noble Audio FoKus Apollo Wireless Headphones
 - Sennheiser HD 569 Headphones
 - Dan Clark Audio NOIRE X Headphones
