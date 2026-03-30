@@ -83,21 +83,18 @@ SPRINT 1: Catalogue — Truth Table
     [] Phase 4 - test correctness and 100% sum-total match of consolidated path - product listings
         ✔ test script that parses truth-table.md chunks vs verification.consolidated.md -> each path and listed products are verified against truth tables 100% @done(26-03-30 12:53)
         ✔ test script - count entries per path from truth-table chunks, count from consolidated .md, check exact same count per path @done(26-03-30 12:57)
-        [ ] consolidated - add product id per product name, access product id from truth tables
-        [ ] test script - each product id can be found in truth tables, and name accessed in truth tables matches the name in consolidated
-        [ ] Snapshot Master Truth Table to /data/catalogue-truth-table.json
-            [ ] format: path/.../.../.../leaf catalogue node - product entries containing only name, id
-        [ ] Log: "Master Truth Table locked [date] — N leaf nodes, 583 products, 0 duplicates, 0 orphans"
+        ✔ consolidated - add product id per product name, access product id from truth tables @done(26-03-30 13:14)
+        ✔ test script - each product id can be found in truth tables, and name accessed in truth tables matches the name in consolidated @done(26-03-30 13:28)
+        ✔ download and assemble catalogue structure from CMS @done(26-03-30 13:37)
+        [ ] Snapshot verified-consolidated-with-ids.md  /data/catalogue-truth-table.json and to _temporary/catalouge-mapping/catalogue-truth-table.json
+        [ ] Log: "Master Truth Table .json locked [date] — N leaf nodes, 583 products, 0 duplicates, 0 orphans"
         [ ] LOCKDOWN — Phase 4 verified and signed off
 
     [ ] Phase 5: Execution
-        [ ] Write test - GROQ per catalogue leaf node:
-            output products that have catalogue leaf node id in product's catalogueLocationKeys array
-            === catalogue-truth-table.json products per that leaf node id
+        [ ] Write test - each CMS-catalogue-structure.json leaf node -> product ids list === each catalogue-truth-table.json leaf node -> product ids list
+
         [ ] Generate Sanity Patch based on Verified Truth Table
         [ ] Apply Patch to Studio
-        [ ] Test: truth table leaf node → product IDs match VFS output per leaf node (automated)
-            [ ] VFS output equals selected VFS leaf node -> GROQ for products which have leaf node id in their catalogueLocationKeys array -> get product ids from results -> compare product ids vs truth table product ids for that same leaf node
         [ ] Test passed → log result → LOCKDOWN Sprint 1
 
 
