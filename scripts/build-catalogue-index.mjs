@@ -45,6 +45,7 @@ async function buildCatalogueIndex() {
     // Tree reconstruction function
     function buildTreeNode(doc) {
       const node = {
+        id: doc._id,
         _key: doc._id,
         _type: "catalogueItem",
         title: doc.title,
@@ -87,15 +88,19 @@ async function buildCatalogueIndex() {
         const isHeader = node.type === "header";
         const currentSlug = node.slug?.current;
 
-        // Skip invalid non-header nodes that lack a slug entirely
-        if (!isHeader && !currentSlug) continue;
-
-        const pathSegments = isHeader || !currentSlug
+        // Build path segments - headers without slugs inherit parent path
+        const pathSegments = isHeader && !currentSlug
           ? parentPath
-          : [...parentPath, currentSlug];
+          : currentSlug
+            ? [...parentPath, currentSlug]
+            : parentPath;
 
         const urlString = pathSegments.join("/");
 
+        // For slugToIdMap, use leaf-only slug for leaf nodes (no children)
+        const isLeafNode = !node.children || node.children.length === 0;
+
+        // Build breadcrumbs for links only
         const nextBreadcrumbs = isHeader || !currentSlug
           ? parentBreadcrumbs
           : [
@@ -103,22 +108,28 @@ async function buildCatalogueIndex() {
               { label: node.title, url: `/shop/${urlString}` },
             ];
 
-        // Register ALL nodes (both headers and links) in slotMetadataMap
-        // Headers without slugs still need to be included for subtree traversal
-        if (currentSlug || isHeader) {
-          if (!isHeader && currentSlug) {
-            slugToIdMap[urlString] = node._key;
-          }
-
-          slotMetadataMap[node._key] = {
-            title: node.title,
-            url: isHeader ? "#" : `/shop/${urlString}`,
-            slug: currentSlug || "",
-            breadcrumbs: nextBreadcrumbs,
-            children: node.children?.map((c) => c._key) || [],
-            type: node.type,
-          };
+        // Register leaf slugs in slugToIdMap (for direct resolution)
+        if (currentSlug && !isHeader && isLeafNode) {
+          slugToIdMap[currentSlug] = node._key;
         }
+
+        // Also register full path for nested lookups
+        if (currentSlug && !isHeader) {
+          slugToIdMap[urlString] = node._key;
+        }
+
+        // Always add to slotMetadataMap - every node needs metadata
+        slotMetadataMap[node._key] = {
+          title: node.title,
+          url: isHeader ? "#" : currentSlug ? `/shop/${urlString}` : "#",
+          slug: currentSlug || "",
+          breadcrumbs: nextBreadcrumbs,
+          children: node.children?.map((c) => c._key) || [],
+          type: node.type,
+          path: "/" + urlString,
+          sortOrder: node.sortOrder || 0,
+          icon: node.icon,
+        };
 
         traverse(node.children, pathSegments, nextBreadcrumbs);
       }
