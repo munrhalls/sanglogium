@@ -1,5 +1,26 @@
 # CORE ARCHITECTURAL CONSTRAINTS
 
+## Signal Density Optimization (AI-Leverage)
+
+> **Maximize signal density before Opus. Ground factor: (load-bearing facts) ÷ (time cost).**
+
+### Model Role Specialization
+- **Cheap models (Kimi/Haiku/Local):** Discovery and extraction only — read docs, scan code, extract patterns
+- **Opus:** Synthesis and decision only — structure sprint docs, decide scope sequence
+- **Never feed raw research to Opus** — always `/compress` first (10× token reduction, identical quality)
+
+### Compression Rules
+- No prose, no explanation — only verified facts
+- Token names must be component classes from `addComponents`, not utilities
+- File paths must exist (verified in codebase)
+- GROQ shapes from live queries only
+- Maximum Opus input for sprint generation: **1000 tokens**
+
+### Load-Bearing Fact Definition
+Any fact that, if missing or wrong, would cause the sprint doc to drift or the executor model to fail.
+
+---
+
 ## Next.js 15 App Router Strict Adherence
 - Primary pages MUST be Server Components (no arbitrary "use client" directives)
 - Data fetching MUST be parallelized on the server to reduce waterfall requests
@@ -79,3 +100,4 @@ After EVERY sprint, debug, or implementation:
 - **Data:** Verify actual data before code changes (debugging)
 - **Components:** Complete functional groups, not isolated components
 - **SVG:** Don't assume SVGR — use Image component unless verified
+- **Velocity:** Run /commits-diagnostics before sprint planning — reject if D-type > 30% or real:illusory < 2:1
