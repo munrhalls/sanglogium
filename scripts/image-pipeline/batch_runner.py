@@ -45,7 +45,7 @@ def run_pipeline(product_id: str) -> tuple[bool, str]:
             cmd,
             capture_output=True,
             text=True,
-            timeout=300  # 5 minute timeout per product
+            timeout=600  # 10 minute timeout per product
         )
         if result.returncode == 0:
             return True, ""
