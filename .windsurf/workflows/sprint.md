@@ -25,7 +25,7 @@ Critical: forward progress of a sprint happens only if regression risks are full
 
 The start of a sprint must begin with:
 - systematically identifying and processing all code areas at risk of regressions or unrelated changes due to sprint code changes
-- systematically inserting scope and systematically sequenced layers of DoDs of writing simple, robust, professional regression tests per code code area at risk of regressions at the beginning of the sprint
+- systematically inserting scope and systematically sequenced layers of DoDs of writing simple, robust, professional regression tests per code code area at risk of regressions at the beginning of the sprint; it should be as concise as possible, while providing evidence of 0 regressions
 - systematically enforcing scope and sequenced layers of DoDs of executing simple, robust, professional regression tests and systematically verifying lack of regressions after sprint
 
 Output full, verified sprint in .md file in proper folder, in the _project/sprints

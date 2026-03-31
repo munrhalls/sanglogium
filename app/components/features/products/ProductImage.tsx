@@ -14,7 +14,7 @@ interface ProductImageProps {
 export function ProductImage({ image, alt, className, priority = false }: ProductImageProps) {
   if (!image?.asset?._ref) {
     return (
-      <div className={`bg-gray-200 rounded ${className}`} data-testid="product-image-placeholder">
+      <div className={`aspect-[4/3] bg-surface-productImage rounded ${className}`} data-testid="product-image-placeholder">
         <span className="sr-only">No image</span>
       </div>
     );
@@ -23,7 +23,7 @@ export function ProductImage({ image, alt, className, priority = false }: Produc
   const imageUrl = urlFor(image).width(400).height(300).url();
 
   return (
-    <div className={`relative aspect-[4/3] ${className}`} data-testid="product-image">
+    <div className={`relative aspect-[4/3] bg-surface-productImage ${className}`} data-testid="product-image">
       <Image
         src={imageUrl}
         alt={alt}

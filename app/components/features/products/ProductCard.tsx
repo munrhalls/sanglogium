@@ -18,24 +18,27 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   return (
-    <Link
-      href={`/product/${product.slug.current}`}
-      className="group block space-y-3"
+    <article
+      className="group border border-border-secondary bg-transparent p-4 shadow-cardDark transition-all duration-300 pointer-fine:hover:shadow-cardHoverDark pointer-fine:hover:-translate-y-0.5 pointer-fine:hover:border-brand-400"
       data-testid="product-card"
     >
-      <ProductImage
-        image={product.image}
-        alt={product.name}
-        className="group-hover:opacity-90 transition-opacity"
-      />
+      <Link
+        href={`/product/${product.slug.current}`}
+        className="block space-y-3"
+      >
+        <ProductImage
+          image={product.image}
+          alt={product.name}
+        />
 
-      <div className="space-y-1">
-        {product.brand?.name && (
-          <p className="text-sm text-gray-600">{product.brand.name}</p>
-        )}
-        <h3 className="font-medium text-headline line-clamp-2">{product.name}</h3>
-        <Price value={product.displayPrice} />
-      </div>
-    </Link>
+        <div className="space-y-1">
+          {product.brand?.name && (
+            <p className="type-caption text-secondary-500">{product.brand.name}</p>
+          )}
+          <h3 className="type-card-title line-clamp-2">{product.name}</h3>
+          <Price value={product.displayPrice} />
+        </div>
+      </Link>
+    </article>
   );
 }
