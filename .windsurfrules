@@ -54,3 +54,28 @@
 
 ## /implement Command Protocol
 When the user types /implement in Cascade, immediately read, strictly adopt, and execute the exact protocol defined in C:\webdev\sang-logium\_project\COMMANDS\Implement_v2.md. Do not deviate from its phases.
+
+## Learning Circuit — Compound Engineering
+
+### Pre-Work Lessons Retrieval (MANDATORY)
+Before ANY work begins:
+1. Query `_project/lessons/INDEX.md` for relevant keywords
+2. Load Critical/High severity lessons first
+3. Apply prevention rules as active constraints
+4. Execute work with learned constraints in context
+
+### Post-Work /learn Execution (MANDATORY)
+After EVERY sprint, debug, or implementation:
+1. Extract raw learnings from experience
+2. Thematize to ONE primary theme (patterns, failures, workflows, etc.)
+3. Codify into appropriate infrastructure
+4. Update INDEX.md with new keywords
+5. Verify compound effect (next work will benefit)
+
+### Universal Prevention Rules
+- **GROQ:** Verify field type before using reference syntax (->)
+- **Build:** Build passing ≠ bug fixed — need runtime verification
+- **Modules:** ES modules only — no require() in this codebase
+- **Data:** Verify actual data before code changes (debugging)
+- **Components:** Complete functional groups, not isolated components
+- **SVG:** Don't assume SVGR — use Image component unless verified
