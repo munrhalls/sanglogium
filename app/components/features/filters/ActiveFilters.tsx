@@ -59,17 +59,17 @@ export function ActiveFilters({ filterGroups }: ActiveFiltersProps) {
           key={filterKey}
           type="button"
           onClick={() => handleRemoveFilter(filterKey)}
-          className="inline-flex items-center gap-2 px-3 py-1.5 bg-surface-card border border-secondary-700 text-body text-brand-200 hover:border-brand-400 transition-colors cursor-pointer"
+          className="inline-flex items-center gap-1.5 px-3 py-1 bg-surface-elevated border border-brand-400 rounded-sm type-caption text-primary hover:border-brand-200 transition-colors cursor-pointer"
         >
           <span>{labelMap.get(filterKey) || filterKey}</span>
-          <span aria-label={`Remove filter`} className="text-secondary-500 hover:text-error-500">×</span>
+          <span aria-label={`Remove filter`} className="text-caption hover:text-primary transition-colors">×</span>
         </button>
       ))}
 
       <button
         type="button"
         onClick={handleClearAll}
-        className="text-body text-secondary-400 hover:text-brand-400 underline cursor-pointer transition-colors"
+        className="type-caption text-accent-500 underline hover:text-brand-100 transition-colors cursor-pointer"
       >
         Clear all
       </button>

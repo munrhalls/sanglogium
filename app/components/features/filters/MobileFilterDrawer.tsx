@@ -85,49 +85,36 @@ export function MobileFilterDrawer({ isOpen, onClose, filters }: MobileFilterDra
       {/* Backdrop overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          className="fixed inset-0 bg-brand-900/60 z-40 lg:hidden"
           onClick={onClose}
           aria-hidden="true"
         />
       )}
 
-      {/* Slide-in drawer */}
+      {/* Bottom sheet drawer */}
       <aside
         data-testid="mobile-filter-drawer"
         className={`
-          fixed top-0 left-0 z-50 w-[300px] h-full bg-surface-card
+          fixed bottom-0 left-0 right-0 z-50 max-h-[85vh]
           transform transition-transform duration-300 ease-out
           lg:hidden
-          ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+          ${isOpen ? 'translate-y-0' : 'translate-y-full'}
         `}
         aria-label="Filter options"
       >
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full bg-surface-card rounded-t-sm">
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-secondary-700">
+          <div className="flex items-center justify-between p-4 border-b border-border-secondary">
             <h2 className="type-overline">
               Filters
             </h2>
             <button
               type="button"
               onClick={onClose}
-              className="p-2 text-secondary-400 hover:text-brand-100 transition-colors"
+              className="p-2 text-secondary hover:text-primary transition-colors"
               aria-label="Close filters"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-              </svg>
+              Done
             </button>
           </div>
 
@@ -136,27 +123,57 @@ export function MobileFilterDrawer({ isOpen, onClose, filters }: MobileFilterDra
             <form className="space-y-6">
               {filters.map((group) => (
                 <fieldset key={group.field} className="space-y-3">
-                  <legend className="type-overline">
+                  <legend className="type-overline text-accent-500 section-header-anchor">
                     {group.label}
                   </legend>
 
                   <div className="space-y-2">
-                    {group.options.map((option) => (
-                      <label
-                        key={option.value}
-                        className="flex items-center gap-3 text-body text-brand-200 hover:text-brand-100 transition-colors cursor-pointer"
-                      >
-                        <input
-                          type="checkbox"
-                          name={group.field}
-                          value={option.value}
-                          checked={isFilterActive(searchParams, group.field, option.value)}
-                          onChange={() => handleToggleFilter(group.field, option.value)}
-                          className="w-4 h-4 accent-accent-500 cursor-pointer"
-                        />
-                        {option.label}
-                      </label>
-                    ))}
+                    {group.options.map((option) => {
+                      const isChecked = isFilterActive(searchParams, group.field, option.value);
+                      return (
+                        <label
+                          key={option.value}
+                          className="flex items-center gap-3 cursor-pointer group"
+                        >
+                          <div className="relative flex items-center">
+                            <input
+                              type="checkbox"
+                              name={group.field}
+                              value={option.value}
+                              checked={isChecked}
+                              onChange={() => handleToggleFilter(group.field, option.value)}
+                              className="peer sr-only"
+                            />
+                            <div className={`
+                              w-4 h-4 border rounded-sm transition-all
+                              ${isChecked
+                                ? 'bg-brand-400 border-brand-400'
+                                : 'border-border-primary bg-transparent group-hover:border-brand-400'
+                              }
+                            `}>
+                              {isChecked && (
+                                <svg
+                                  className="w-4 h-4 text-brand-900"
+                                  viewBox="0 0 16 16"
+                                  fill="none"
+                                >
+                                  <path
+                                    d="M3 8L6.5 11.5L13 5"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                  />
+                                </svg>
+                              )}
+                            </div>
+                          </div>
+                          <span className="type-body text-body group-hover:text-primary transition-colors">
+                            {option.label}
+                          </span>
+                        </label>
+                      );
+                    })}
                   </div>
                 </fieldset>
               ))}
@@ -164,11 +181,11 @@ export function MobileFilterDrawer({ isOpen, onClose, filters }: MobileFilterDra
           </div>
 
           {/* Sticky Footer */}
-          <div className="sticky bottom-0 p-4 border-t border-secondary-700 bg-surface-card shadow-[0_-4px_20px_rgba(0,0,0,0.1)]">
+          <div className="sticky bottom-0 p-4 border-t border-border-secondary bg-surface-card">
             <button
               type="button"
               onClick={onClose}
-              className="w-full px-4 py-3 bg-surface-elevated border border-secondary-700 text-body text-brand-200 uppercase tracking-editorial hover:border-brand-400 hover:text-brand-100 transition-colors"
+              className="w-full btn-primary"
             >
               Show Results
             </button>

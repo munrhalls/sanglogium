@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import { useSearchParams } from 'next/navigation';
 import { SortDropdown } from './SortDropdown';
 
 interface MobileControlsBarProps {
@@ -14,18 +15,19 @@ export function MobileControlsBar({
   onOpenFilters,
   currentSort = 'featured'
 }: MobileControlsBarProps) {
-  const countLabel = productCount === 1 ? 'product' : 'products';
+  const searchParams = useSearchParams();
+  const activeFilterCount = searchParams.getAll('f').length;
 
   return (
     <div
       data-testid="mobile-controls-bar"
-      className="flex items-center gap-3 lg:hidden mb-4"
+      className="flex items-center gap-3 lg:hidden mb-4 px-4"
     >
       {/* Filters button */}
       <button
         type="button"
         onClick={onOpenFilters}
-        className="flex items-center gap-2 px-4 py-3 rounded-sm bg-surface-elevated border border-border-secondary text-body text-brand-200 uppercase tracking-editorial hover:border-brand-400 hover:text-brand-100 active:bg-surface-subtle transition-colors cursor-pointer"
+        className="flex-1 flex items-center justify-center gap-2 px-4 py-3 btn-secondary"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -48,16 +50,16 @@ export function MobileControlsBar({
           <line x1="9" y1="8" x2="15" y2="8"></line>
           <line x1="17" y1="16" x2="23" y2="16"></line>
         </svg>
-        Filters
+        <span className="type-caption">
+          Filters {activeFilterCount > 0 && `(${activeFilterCount})`}
+        </span>
       </button>
 
-      {/* Product count */}
-      <span className="type-metadata flex-1">
-        {productCount} {countLabel}
-      </span>
-
       {/* Sort dropdown */}
-      <SortDropdown currentSort={currentSort} />
+      <div className="flex-1">
+        <SortDropdown currentSort={currentSort} />
+      </div>
     </div>
   );
 }
+
