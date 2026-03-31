@@ -13,7 +13,15 @@ interface ProductImageProps {
 }
 
 export function ProductImage({ image, alt, className, imgClassName, priority = false }: ProductImageProps) {
-  if (!image?.asset?._ref) {
+  // Debug: log actual image structure in development
+  if (process.env.NODE_ENV === 'development' && image) {
+    console.log('[ProductImage] Image data:', JSON.stringify(image, null, 2));
+  }
+
+  // Get the asset reference - Sanity can use either _ref or _id
+  const assetRef = image?.asset?._ref || image?.asset?._id;
+
+  if (!assetRef) {
     return (
       <div className={`aspect-[4/3] bg-surface-productImage rounded ${className}`} data-testid="product-image-placeholder">
         <span className="sr-only">No image</span>
@@ -21,7 +29,9 @@ export function ProductImage({ image, alt, className, imgClassName, priority = f
     );
   }
 
-  const imageUrl = urlFor(image).width(400).height(300).url();
+  // Construct a proper image source object if needed
+  const imageSource = image?.asset?._ref ? image : { asset: { _ref: assetRef } };
+  const imageUrl = urlFor(imageSource).width(400).height(300).url();
 
   return (
     <div className={`relative aspect-[4/3] bg-surface-productImage ${className}`} data-testid="product-image">

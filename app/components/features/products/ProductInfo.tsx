@@ -1,37 +1,89 @@
-import React from 'react';
+"use client";
+
+import { Product } from '@/sanity/lib/products/getProductBySlug';
+import { urlFor } from '@/sanity/lib/image';
+import { useBasketStore } from '@/store/store';
+import { useState } from 'react';
 import { Price } from '@/app/components/ui/Price';
 
-interface ProductInfoProps {
-  name: string;
-  brand: { _id: string; name: string };
-  displayPrice: number;
-  description?: string;
-}
+export function ProductInfo({ product }: { product: Product }) {
+  const [quantity, setQuantity] = useState(1);
+  const addItem = useBasketStore((s) => s.addItem);
 
-export function ProductInfo({ name, brand, displayPrice, description }: ProductInfoProps) {
+  const handleAddToCart = () => {
+    if (product.stock > 0) {
+      addItem({
+        _id: product._id,
+        name: product.name,
+        displayPrice: product.displayPrice,
+        stock: product.stock,
+        quantity: quantity,
+        image: product.image ? urlFor(product.image).width(100).height(100).url() : '',
+        brand: product.brand ? { _id: product.brand._id, name: product.brand.name } : null,
+      });
+    }
+  };
+
+  const getStockStatus = () => {
+    if (product.stock === 0) return { text: 'Out of Stock', color: 'text-error-500' };
+    if (product.stock <= 5) return { text: `Only ${product.stock} left`, color: 'text-warning-500' };
+    return { text: 'In Stock', color: 'text-success-500' };
+  };
+
+  const stockStatus = getStockStatus();
   return (
     <div className="space-y-6" data-testid="product-info">
       <div className="space-y-2">
-        <p className="text-sm text-gray-600 uppercase tracking-wide">{brand.name}</p>
-        <h1 className="text-3xl font-bold text-gray-900">{name}</h1>
-        <div className="text-2xl">
-          <Price value={displayPrice} />
+        <p className="type-overline text-accent-500">{product.brand?.name || 'Unknown Brand'}</p>
+        <h1 className="type-section-hed text-headline">{product.name}</h1>
+        <div className="flex items-center gap-4">
+          <Price value={product.displayPrice} />
         </div>
+        <p className="type-caption text-secondary">SKU: {product.sku}</p>
+        <p className={`type-caption ${stockStatus.color}`}>{stockStatus.text}</p>
       </div>
 
-      {description && (
-        <div className="prose prose-sm max-w-none">
-          <p className="text-gray-700 leading-relaxed">{description}</p>
+      {product.overviewFields && product.overviewFields.length > 0 && (
+        <div className="grid grid-cols-2 gap-4 py-4 border-y border-border-secondary">
+          {product.overviewFields.map((field) => (
+            <div key={field.title}>
+              <p className="type-caption uppercase text-secondary">{field.title}</p>
+              <p className="type-body text-primary">{field.value}</p>
+            </div>
+          ))}
         </div>
       )}
 
-      {/* Add to Cart Placeholder */}
-      <div className="pt-4">
+      <div className="pt-4 space-y-4">
+        <div className="flex items-center gap-4">
+          <span className="type-body text-secondary">Quantity:</span>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setQuantity(Math.max(1, quantity - 1))}
+              disabled={quantity <= 1}
+              className="btn-secondary w-10 h-10 flex items-center justify-center"
+              aria-label="Decrease quantity"
+            >
+              -
+            </button>
+            <span className="w-12 text-center type-body text-primary">{quantity}</span>
+            <button
+              onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
+              disabled={quantity >= product.stock}
+              className="btn-secondary w-10 h-10 flex items-center justify-center"
+              aria-label="Increase quantity"
+            >
+              +
+            </button>
+          </div>
+        </div>
+
         <button
-          className="w-full bg-black text-white py-4 px-6 rounded-lg font-medium hover:bg-gray-800 transition-colors"
-          disabled
+          onClick={handleAddToCart}
+          disabled={product.stock === 0}
+          className="btn-primary w-full py-4"
         >
-          Add to Cart (Coming Soon)
+          {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
         </button>
       </div>
     </div>

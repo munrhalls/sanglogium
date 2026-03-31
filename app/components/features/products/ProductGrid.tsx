@@ -19,8 +19,8 @@ interface ProductGridProps {
 export function ProductGrid({ products, className }: ProductGridProps) {
   if (products.length === 0) {
     return (
-      <div className="py-12 text-center" data-testid="empty-products">
-        <p className="text-gray-600">No products found in this category.</p>
+      <div className="py-12 px-4 text-center" role="status" data-testid="empty-products">
+        <p className="type-body text-secondary">No products found in this category.</p>
       </div>
     );
   }
@@ -29,7 +29,7 @@ export function ProductGrid({ products, className }: ProductGridProps) {
     <div
       data-testid="product-grid"
       className={cn(
-        "grid gap-4 md:gap-6 lg:gap-8",
+        "grid gap-6",
         "grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
         className
       )}
