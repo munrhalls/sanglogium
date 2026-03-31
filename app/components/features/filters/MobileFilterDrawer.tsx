@@ -1,7 +1,8 @@
 "use client";
 
-import React from 'react';
-import { useFilterUrl } from './useFilterUrl';
+import React, { useEffect } from 'react';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import { isFilterActive, toggleFilter } from '@/lib/filters/urlParams';
 
 interface FilterOption {
   value: string;
@@ -21,7 +22,63 @@ interface MobileFilterDrawerProps {
 }
 
 export function MobileFilterDrawer({ isOpen, onClose, filters }: MobileFilterDrawerProps) {
-  const { isFilterActive, toggleFilter } = useFilterUrl();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  // Escape key handler
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
+  // Focus trap
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const drawer = document.querySelector('[data-testid="mobile-filter-drawer"]') as HTMLElement;
+    if (!drawer) return;
+
+    const focusableElements = drawer.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    const firstElement = focusableElements[0] as HTMLElement;
+    const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
+
+    const handleTabKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return;
+
+      if (e.shiftKey) {
+        if (document.activeElement === firstElement) {
+          e.preventDefault();
+          lastElement?.focus();
+        }
+      } else {
+        if (document.activeElement === lastElement) {
+          e.preventDefault();
+          firstElement?.focus();
+        }
+      }
+    };
+
+    // Focus first element when drawer opens
+    firstElement?.focus();
+    drawer.addEventListener('keydown', handleTabKey);
+    return () => drawer.removeEventListener('keydown', handleTabKey);
+  }, [isOpen]);
+
+  const handleToggleFilter = (field: string, value: string) => {
+    const newUrl = toggleFilter(pathname, new URLSearchParams(searchParams.toString()), field, value);
+    router.push(newUrl, { scroll: false });
+  };
 
   return (
     <>
@@ -48,7 +105,7 @@ export function MobileFilterDrawer({ isOpen, onClose, filters }: MobileFilterDra
         <div className="flex flex-col h-full">
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-secondary-700">
-            <h2 className="text-h4 font-semibold text-headline tracking-editorial uppercase">
+            <h2 className="type-overline">
               Filters
             </h2>
             <button
@@ -79,7 +136,7 @@ export function MobileFilterDrawer({ isOpen, onClose, filters }: MobileFilterDra
             <form className="space-y-6">
               {filters.map((group) => (
                 <fieldset key={group.field} className="space-y-3">
-                  <legend className="text-small font-medium text-secondary uppercase tracking-editorial">
+                  <legend className="type-overline">
                     {group.label}
                   </legend>
 
@@ -93,8 +150,8 @@ export function MobileFilterDrawer({ isOpen, onClose, filters }: MobileFilterDra
                           type="checkbox"
                           name={group.field}
                           value={option.value}
-                          checked={isFilterActive(group.field, option.value)}
-                          onChange={() => toggleFilter(group.field, option.value)}
+                          checked={isFilterActive(searchParams, group.field, option.value)}
+                          onChange={() => handleToggleFilter(group.field, option.value)}
                           className="w-4 h-4 accent-accent-500 cursor-pointer"
                         />
                         {option.label}
@@ -106,8 +163,8 @@ export function MobileFilterDrawer({ isOpen, onClose, filters }: MobileFilterDra
             </form>
           </div>
 
-          {/* Footer */}
-          <div className="p-4 border-t border-secondary-700">
+          {/* Sticky Footer */}
+          <div className="sticky bottom-0 p-4 border-t border-secondary-700 bg-surface-card shadow-[0_-4px_20px_rgba(0,0,0,0.1)]">
             <button
               type="button"
               onClick={onClose}

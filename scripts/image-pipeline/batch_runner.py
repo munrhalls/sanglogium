@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 SCRIPT_DIR = Path(__file__).parent
 PROCESSED_FILE = SCRIPT_DIR / "processed.json"
 ERROR_LOG = SCRIPT_DIR / "batch_errors.txt"
+VENV_PYTHON = SCRIPT_DIR / "venv" / "Scripts" / "python.exe"
 
 def load_processed_data() -> dict:
     """Load processed data from JSON file."""
@@ -35,10 +36,10 @@ def log_error(product_id: str, error_msg: str):
     with open(ERROR_LOG, "a") as f:
         f.write(f"{timestamp} | {product_id} | {error_msg}\n")
 
-def run_pipeline(product_id: str) -> bool:
-    """Run pipeline.py for a single product. Returns True on success."""
-    cmd = [sys.executable, str(SCRIPT_DIR / "pipeline.py"), product_id]
-    
+def run_pipeline(product_id: str) -> tuple[bool, str]:
+    """Run pipeline.py for a single product. Returns (success, error_message)."""
+    cmd = [str(VENV_PYTHON), str(SCRIPT_DIR / "pipeline.py"), product_id]
+
     try:
         result = subprocess.run(
             cmd,
@@ -46,13 +47,18 @@ def run_pipeline(product_id: str) -> bool:
             text=True,
             timeout=300  # 5 minute timeout per product
         )
-        return result.returncode == 0
+        if result.returncode == 0:
+            return True, ""
+        else:
+            # Capture stderr or stdout if stderr is empty
+            error_msg = result.stderr.strip() if result.stderr else result.stdout.strip()
+            if not error_msg:
+                error_msg = "pipeline.py exited with non-zero code"
+            return False, error_msg
     except subprocess.TimeoutExpired:
-        log_error(product_id, "TIMEOUT after 5 minutes")
-        return False
+        return False, "TIMEOUT after 5 minutes"
     except Exception as e:
-        log_error(product_id, f"EXCEPTION: {e}")
-        return False
+        return False, f"EXCEPTION: {e}"
 
 def main():
     # Get list of remaining products from fetch_products.py
@@ -60,18 +66,18 @@ def main():
     if not fetch_script.exists():
         print("ERROR: fetch_products.py not found")
         sys.exit(1)
-    
+
     # Run fetch script to get IDs
     result = subprocess.run(
-        [sys.executable, str(fetch_script)],
+        [str(VENV_PYTHON), str(fetch_script)],
         capture_output=True,
         text=True
     )
-    
+
     if result.returncode != 0:
         print(f"ERROR: fetch_products.py failed: {result.stderr}")
         sys.exit(1)
-    
+
     # Parse IDs from stdout (skip header lines)
     lines = result.stdout.strip().split("\n")
     product_ids = []
@@ -80,27 +86,28 @@ def main():
         # Skip empty lines, separators, and status messages
         if line and not line.startswith("=") and not line.startswith("Total") and not line.startswith("Already") and not line.startswith("Remaining") and not line.startswith("Fetching") and not line.startswith("No products") and not line.startswith("All products"):
             product_ids.append(line)
-    
+
     if not product_ids:
         print("No products to process.")
         sys.exit(0)
-    
+
     total = len(product_ids)
     print(f"\nBatch processing {total} products...")
     print(f"Progress saved to: {PROCESSED_FILE}")
     print(f"Errors logged to: {ERROR_LOG}")
     print(f"{'='*50}\n")
-    
+
     # Load current progress
     data = load_processed_data()
     processed_list = data.get("processed", [])
     completed = len(processed_list)
-    
+
     # Process each product
     for i, product_id in enumerate(product_ids, 1):
         print(f"[{i}/{total}] Processing: {product_id}")
-        
-        if run_pipeline(product_id):
+
+        success, error_msg = run_pipeline(product_id)
+        if success:
             # Success - update progress immediately
             processed_list.append(product_id)
             data["processed"] = processed_list
@@ -109,10 +116,11 @@ def main():
             save_processed_data(data)
             print(f"  ✓ Success ({len(processed_list)} total completed)")
         else:
-            print(f"  ✗ Failed (see {ERROR_LOG})")
-        
+            log_error(product_id, error_msg)
+            print(f"  ✗ Failed: {error_msg[:100]}")
+
         print()
-    
+
     # Final summary
     print(f"{'='*50}")
     print(f"Batch complete!")

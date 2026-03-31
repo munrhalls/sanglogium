@@ -1,19 +1,32 @@
 "use client";
 
 import React from 'react';
-import { useFilterUrl } from './useFilterUrl';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import { buildFilterUrl } from '@/lib/filters/urlParams';
 
-interface SortDropdownProps {
-  currentSort?: string;
-}
+export function SortDropdown() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-export function SortDropdown({ currentSort = 'featured' }: SortDropdownProps) {
+  const currentSort = searchParams.get('sort') || 'featured';
+
+  const handleSortChange = (value: string) => {
+    const newUrl = buildFilterUrl(
+      pathname,
+      new URLSearchParams(searchParams.toString()),
+      { sort: value === 'featured' ? null : value }
+    );
+    router.push(newUrl, { scroll: false });
+  };
+
   return (
     <div data-testid="sort-dropdown" className="flex items-center gap-2">
       <label htmlFor="sort" className="type-caption text-secondary-500">Sort by</label>
       <select
         id="sort"
-        defaultValue={currentSort}
+        value={currentSort}
+        onChange={(e) => handleSortChange(e.target.value)}
         className="input-select"
       >
         <option value="featured">Featured</option>

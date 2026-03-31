@@ -8,10 +8,11 @@ interface ProductImageProps {
   image: any;
   alt: string;
   className?: string;
+  imgClassName?: string;
   priority?: boolean;
 }
 
-export function ProductImage({ image, alt, className, priority = false }: ProductImageProps) {
+export function ProductImage({ image, alt, className, imgClassName, priority = false }: ProductImageProps) {
   if (!image?.asset?._ref) {
     return (
       <div className={`aspect-[4/3] bg-surface-productImage rounded ${className}`} data-testid="product-image-placeholder">
@@ -29,7 +30,7 @@ export function ProductImage({ image, alt, className, priority = false }: Produc
         alt={alt}
         fill
         sizes="(max-width: 768px) 50vw, 25vw"
-        className="object-cover rounded"
+        className={`object-cover rounded ${imgClassName || ''}`}
         priority={priority}
       />
     </div>

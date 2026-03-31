@@ -1,7 +1,8 @@
 "use client";
 
 import React from 'react';
-import { useFilterUrl } from './useFilterUrl';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import { isFilterActive, toggleFilter } from '@/lib/filters/urlParams';
 
 interface FilterOption {
   value: string;
@@ -19,7 +20,14 @@ interface FilterSidebarProps {
 }
 
 export function FilterSidebar({ filters }: FilterSidebarProps) {
-  const { isFilterActive, toggleFilter } = useFilterUrl();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const handleToggleFilter = (field: string, value: string) => {
+    const newUrl = toggleFilter(pathname, new URLSearchParams(searchParams.toString()), field, value);
+    router.push(newUrl, { scroll: false });
+  };
 
   return (
     <aside
@@ -46,8 +54,8 @@ export function FilterSidebar({ filters }: FilterSidebarProps) {
                       type="checkbox"
                       name={group.field}
                       value={option.value}
-                      checked={isFilterActive(group.field, option.value)}
-                      onChange={() => toggleFilter(group.field, option.value)}
+                      checked={isFilterActive(searchParams, group.field, option.value)}
+                      onChange={() => handleToggleFilter(group.field, option.value)}
                       className="w-4 h-4 appearance-none border border-border-secondary bg-surface-elevated checked:bg-accent-500 checked:border-accent-500 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-1 focus:ring-offset-surface-elevated cursor-pointer"
                     />
                     {option.label}
