@@ -4,12 +4,16 @@ import groq from 'groq';
 export interface Product {
   _id: string;
   name: string;
-  brand: { _id: string; name: string };
+  brand: { _id: string; name: string } | null;
   displayPrice: number;
+  stock: number;
+  sku: string;
   image: any;
-  images?: any[];
+  gallery?: any[];
   slug: { current: string };
   description?: string;
+  overviewFields?: { title: string; value: string; information?: string }[];
+  specifications?: { title: string; value: string; information?: string }[];
   catalogueLocationKeys: string[];
 }
 
@@ -23,16 +27,28 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
         name
       },
       displayPrice,
+      stock,
+      sku,
       image,
-      images,
+      gallery,
       slug {
         current
       },
       description,
+      overviewFields[] {
+        title,
+        value,
+        information
+      },
+      specifications[] {
+        title,
+        value,
+        information
+      },
       catalogueLocationKeys
     }`,
     params: { slug }
   });
-  
+
   return products[0] || null;
 }

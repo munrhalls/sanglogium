@@ -1,35 +1,69 @@
 import Link from "next/link";
+
 interface BreadcrumbsProps {
   categoryParts: string[];
-  isMobile: boolean;
 }
+
 export default function Breadcrumbs({
   categoryParts,
-  isMobile,
 }: BreadcrumbsProps) {
-  const shouldSlice = isMobile && categoryParts[0] === "products";
-  const partsToRender = shouldSlice ? categoryParts.slice(1) : categoryParts;
-  const indexOffset = shouldSlice ? 1 : 0;
+  // Build href for each part
+  const buildHref = (index: number) => {
+    return `/products/${categoryParts.slice(0, index + 1).join("/")}`;
+  };
+
+  // Format part for display (capitalize, replace hyphens with spaces)
+  const formatPart = (part: string) => {
+    return part
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
   return (
-    <nav className="md:px-4 flex items-center md:gap-2 text-xs md:text-sm text-gray-600 lg:row-start-1 lg:col-start-2">
-      {!isMobile && <Link href="/products">Products</Link>}
-      {partsToRender.map((part, index) => {
-        const originalIndex = index + indexOffset;
-        return (
-          <span key={index}>
-            <span className="mx-1 md:mx-2">/</span>
-            <Link
-              href={`/products/${categoryParts.slice(indexOffset, originalIndex + 1).join("/")}`}
-              className={`${originalIndex === categoryParts.length - 1 ? "font-semibold" : ""} truncate`}
-            >
-              {part
-                .split("-")
-                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                .join(" ")}
-            </Link>
-          </span>
-        );
-      })}
+    <nav aria-label="Breadcrumb" className="flex items-center gap-2 mb-6" data-testid="breadcrumb">
+      <ol className="flex items-center gap-2">
+        {/* Home link */}
+        <li>
+          <Link
+            href="/"
+            className="type-caption text-secondary hover:text-primary hover:underline transition-colors"
+          >
+            Home
+          </Link>
+        </li>
+
+        {/* Separator */}
+        <li>
+          <span className="type-caption text-caption select-none">/</span>
+        </li>
+
+        {categoryParts.map((part, index) => {
+          const isLast = index === categoryParts.length - 1;
+          const href = buildHref(index);
+
+          return (
+            <li key={part} className="flex items-center gap-2">
+              {isLast ? (
+                <span className="type-caption text-primary font-medium">
+                  {formatPart(part)}
+                </span>
+              ) : (
+                <>
+                  <Link
+                    href={href}
+                    className="type-caption text-secondary hover:text-primary hover:underline transition-colors"
+                  >
+                    {formatPart(part)}
+                  </Link>
+                  <span className="type-caption text-caption select-none">/</span>
+                </>
+              )}
+            </li>
+          );
+        })}
+      </ol>
     </nav>
   );
 }
+

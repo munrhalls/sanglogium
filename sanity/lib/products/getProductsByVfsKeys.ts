@@ -1,12 +1,11 @@
 import { sanityFetch } from '@/sanity/lib/client';
 import groq from 'groq';
+import { cache } from 'react';
 
 // React cache is only available in React Server Components
 // In test environments, we skip caching
-const withCache = (fn: Function): Function => {
+const withCache = <T extends (...args: any[]) => any>(fn: T): T => {
   try {
-    // Dynamic import to avoid breaking in non-React environments
-    const { cache } = require('react');
     return cache(fn);
   } catch {
     return fn;
@@ -53,11 +52,12 @@ const getProductsByVfsKeysFn = async ({
   const filterClause = filters.length > 0
     ? filters.map(f => {
         const [field, value] = f.split(':');
-        // Handle brand filter specially
+        // Brand is a string field (not reference)
         if (field === 'brand') {
-          return `&& brand->name == "${value}"`;
+          return `&& brand == "${value}"`;
         }
-        return `&& ${field} == "${value}"`;
+        // Other filters check both overviewFields and specifications arrays
+        return `&& (count(overviewFields[@.title == "${field}" && @.value == "${value}"]) > 0 || count(specifications[@.title == "${field}" && @.value == "${value}"]) > 0)`;
       }).join(' ')
     : '';
 
@@ -70,7 +70,11 @@ const getProductsByVfsKeysFn = async ({
         name
       },
       displayPrice,
-      image,
+      image {
+        asset {
+          _ref
+        }
+      },
       slug {
         current
       },
