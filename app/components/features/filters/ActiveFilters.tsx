@@ -30,7 +30,7 @@ export function ActiveFilters({ filters }: ActiveFiltersProps) {
 
       <button
         type="button"
-        className="px-4 py-3 bg-surface-elevated border border-secondary-700 text-body text-brand-200 uppercase tracking-editorial hover:border-brand-400 hover:text-brand-100 transition-colors lg:hidden mb-2 cursor-pointer"
+        className="text-body text-secondary-400 hover:text-brand-400 underline cursor-pointer transition-colors"
       >
         Clear all
       </button>
