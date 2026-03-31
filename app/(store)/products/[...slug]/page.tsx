@@ -4,6 +4,13 @@ import { resolveSlugToId, unrollDescendantKeys } from '@/data/catalogue';
 import { getProductsByVfsKeys, getCategoryMetadata } from '@/sanity/lib/products';
 import { ShopLayout } from '@/app/components/features/shop/ShopLayout';
 import { ShopHeader, ProductGrid } from '@/app/components/features/products';
+import {
+  FilterSidebar,
+  SortDropdown,
+  ActiveFilters,
+  MobileFilterToggle,
+  FilterConfigProvider,
+} from '@/app/components/features/filters';
 
 interface CategoryPageProps {
   params: Promise<{ slug: string[] }>;
@@ -23,10 +30,27 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   const metadata = await getCategoryMetadata(nodeId);
 
   return (
-    <ShopLayout>
-      <ShopHeader title={metadata.name} productCount={products.length} />
-      <ProductGrid products={products} />
-    </ShopLayout>
+    <FilterConfigProvider>
+      {({ filters }) => (
+        <ShopLayout sidebar={<FilterSidebar filters={filters} />}>
+          <main className="flex-1 min-w-0">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+              <ShopHeader title={metadata.name} productCount={products.length} />
+              <SortDropdown />
+            </div>
+
+            <MobileFilterToggle />
+
+            <ActiveFilters filters={[
+              { field: 'brand', value: 'sennheiser', label: 'Brand: Sennheiser' },
+              { field: 'driverType', value: 'dynamic', label: 'Driver: Dynamic' },
+            ]} />
+
+            <ProductGrid products={products} />
+          </main>
+        </ShopLayout>
+      )}
+    </FilterConfigProvider>
   );
 }
 
