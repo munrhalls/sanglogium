@@ -11,7 +11,7 @@ export function SortDropdown({ currentSort = 'featured' }: SortDropdownProps) {
       <select
         id="sort"
         value={currentSort}
-        className="w-full px-4 py-3 bg-surface-elevated border border-secondary-700 text-body text-brand-200 appearance-none cursor-pointer hover:border-brand-400 focus-visible:outline-2 focus-visible:outline-brand-600 focus-visible:outline-offset-2 transition-colors"
+        className="w-full px-4 py-3 bg-surface-elevated border border-secondary-700 text-body text-brand-200 appearance-none cursor-pointer hover:border-brand-400 focus-visible:ring-2 focus-visible:ring-accent-500 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-page transition-colors"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23C7C6C4' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
           backgroundPosition: 'right 12px center',

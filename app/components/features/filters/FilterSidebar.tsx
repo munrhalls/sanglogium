@@ -19,7 +19,7 @@ export function FilterSidebar({ filters }: FilterSidebarProps) {
   return (
     <aside
       data-testid="filter-sidebar"
-      className="w-full lg:border-r border-secondary-700"
+      className="w-full h-full bg-surface-subtle lg:border-r border-secondary-700"
     >
       <div className="p-4 lg:p-6 space-y-6">
         <h3 className="text-h4 font-semibold text-headline tracking-editorial uppercase">
