@@ -13,6 +13,7 @@ import Footer from "@/app/components/layout/footer/Footer";
 import DrawersManager from "@/app/components/layout/drawers/DrawersManager";
 import ActionBar from "@/app/components/layout/navigation/ActionBar";
 import CatalogueNavbar from "@/app/components/layout/catalogue/CatalogueNavbar";
+import { WebVitals } from "@/app/components/analytics/WebVitals";
 import { getCatalogueForNavigation } from "@/data/catalogue";
 import { Suspense } from "react";
 
@@ -69,6 +70,7 @@ export default async function RootLayout({
               <Suspense fallback={null}>
                 <DrawersManager catalogueDataRaw={catalogueDataRaw} />
                 <ActionBar />
+                <WebVitals />
               </Suspense>
             </div>
           </NuqsAdapter>

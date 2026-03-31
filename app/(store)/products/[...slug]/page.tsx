@@ -8,6 +8,7 @@ import { ShopHeader } from '@/app/components/features/products/ShopHeader';
 import { FilterSidebar } from '@/app/components/features/filters/FilterSidebar';
 import { FilterConfigProvider } from '@/app/components/features/filters/FilterConfigProvider';
 import { CategoryPageClient } from './CategoryPageClient';
+import Breadcrumbs from '@/app/components/ui/breadcrumbs/CategoryBreadcrumbs';
 
 interface CategoryPageProps {
   params: Promise<{ slug: string[] }>;
@@ -25,16 +26,25 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   }
 
   // Parse URL params
-  const sort = typeof query.s === 'string' ? query.s : 'featured';
+  const sort = typeof query.sort === 'string' ? query.sort : 'featured';
   const filters = Array.isArray(query.f) ? query.f : query.f ? [query.f] : [];
 
   const descendantKeys = unrollDescendantKeys(nodeId);
-  const products = await getProductsByVfsKeys({
-    keys: descendantKeys,
-    sort,
-    filters
-  });
-  const metadata = await getCategoryMetadata(nodeId);
+
+  // Parallel data fetching to prevent waterfalls
+  const [products, metadata] = await Promise.all([
+    getProductsByVfsKeys({
+      keys: descendantKeys,
+      sort,
+      filters
+    }),
+    getCategoryMetadata(nodeId)
+  ]);
+
+  // Build category path for overline (e.g., "HEADPHONES · OPEN-BACK")
+  const categoryPath = slug
+    .map(part => part.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '))
+    .join(' · ');
 
   return (
     <FilterConfigProvider>
@@ -42,7 +52,8 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
         <>
           {/* Full-width header */}
           <div className="container mx-auto px-4 pt-6 pb-4">
-            <ShopHeader title={metadata.name} productCount={products.length} />
+            <Breadcrumbs categoryParts={slug} />
+            <ShopHeader title={metadata.name} overline={categoryPath} />
           </div>
 
           {/* Sidebar + content split */}
