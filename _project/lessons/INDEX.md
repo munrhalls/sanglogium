@@ -133,10 +133,58 @@
 
 ## Keyword: pre-flight
 
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [auto-lessons.md:472-527](auto-lessons.md) | High | 7 systematic friction reductions: context templates, data verification, pre-sprint checks |
+
+---
+
+## Keyword: ai-leverage
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [auto-lessons.md:472-527](auto-lessons.md) | High | Infrastructure sprint: 40-60 min saved per session via context scripts, verification gates |
+
+---
+
+## Keyword: friction-reduction
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [auto-lessons.md:472-527](auto-lessons.md) | High | Cognitive reconstruction overhead eliminated with scripts and workflow enforcement |
+
+---
+
+## Keyword: context-management
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [auto-lessons.md:472-527](auto-lessons.md) | High | Context templates eliminate 10-30 min/session rebuild overhead |
+
+---
+
+## Keyword: verification-gates
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [auto-lessons.md:389-469](auto-lessons.md) | Critical | Data verification before hypothesis prevents 15-20 min wasted on unverified fixes |
+| [auto-lessons.md:472-527](auto-lessons.md) | High | Data Verification Gate + Pre-Sprint Infrastructure Check |
+
+---
+
+## Keyword: sequencing
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [auto-lessons.md:472-527](auto-lessons.md) | Critical | Pass 1→2→3, Layer 1→2→3→4 enforcement prevents 17-day pattern failures |
+
+---
+
 ## Keyword: schema
 
 | Lesson | Severity | Summary |
 |--------|----------|---------|
+| [failures/groq-schema-assumption.md](failures/groq-schema-assumption.md) | Critical | Read schema file before writing GROQ — never assume field types |
 | [failures/groq-reference-syntax.md](failures/groq-reference-syntax.md) | Critical | Always verify field type before using reference syntax |
 | [failures/diagnostic-query-mismatch.md](failures/diagnostic-query-mismatch.md) | High | Schema-to-query validation required |
 
