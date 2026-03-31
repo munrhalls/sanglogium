@@ -1,0 +1,645 @@
+# PLP Design System Alignment Sprint
+## Post-Homepage Products Discovery UI — Audit Remediation
+
+> **Source Audit**: `01_audit_ratings_and_gaps.md`
+> **End-State Spec**: `03_end_state_specifications.md`
+> **Goal**: Close all 20 audit gaps (G-01 through G-20) to achieve professional PLP that implements the design system fully and maintains homepage editorial-luxury personality.
+
+---
+
+## Scope Lock Rules
+
+- **NO** changes to `globals.css` — scoped Tailwind only
+- **NO** homepage content/layout changes — regression containment required
+- **NO** data structure changes — VFS and Sanity schemas frozen
+- **NO** arbitrary values — design system tokens only
+- **NO** new npm dependencies
+
+---
+
+## Pre-Sprint Regression Containment
+
+### At-Risk Code Areas Identified
+
+| Area | File(s) | Risk | Containment Strategy |
+|------|---------|------|---------------------|
+| Homepage Cards | `AccessoryCard.tsx`, `DacCard.tsx`, `IemCard.tsx`, `Featured/card/Card.tsx` | Use `.card-product` class or `shadow-card` tokens | Visual regression tests for homepage product cards |
+| Tailwind Config | `tailwind.config.ts` — `.card-product` component class | Changing shadow tokens affects light-surface cards | Create `.card-product-dark` variant instead of modifying base class |
+| Other Product Grids | Check all `ProductGrid` imports | Layout changes may affect other pages | Component-level isolation, page-specific wrappers |
+
+### Regression Tests (Run Before & After Sprint)
+
+```bash
+# 1. Homepage Product Cards Visual Check
+npm run build
+npx playwright test --grep "homepage" --reporter=list
+
+# 2. PLP Page Renders Without Error
+curl -s http://localhost:3000/products/headphones/open-back | head -20
+
+# 3. Build Passes
+npm run build
+
+# 4. No Tailwind Class Errors
+grep -r "shadow-card" app/ --include="*.tsx" | wc -l  # Should remain 6 (current count)
+```
+
+---
+
+## Sprint Architecture
+
+### Pass Sequencing
+
+**Pass 1 — Skeleton Pass (all components, no styling)**
+- All 10 scope contracts: semantic HTML/JSX structure only
+- No Tailwind classes beyond layout primitives
+- No colors, no typography, no borders
+
+**Pass 2 — Data Pass (all components, real data, no styling)**
+- All 10 scope contracts: integrate real data flow
+- Props drilling verified
+- No visual styling yet
+
+**Pass 3 — Build Pass (one component at a time, full scope)**
+- Desktop-first (1280px), then mobile (375px)
+- Layer 1→2→3→4 per component
+
+### Layer Sequencing (Per Component in Pass 3)
+
+```
+Layer 1 — Structure:    Semantic HTML/JSX skeleton. No classes. No logic.
+Layer 2 — Layout:       Tailwind flex/grid/spacing/sizing only.
+                        No colors. No typography. No borders.
+Layer 3 — Surface:      Colors, typography, brand tokens, imagery.
+Layer 4 — Interaction:  Hover states, transitions, animations.
+```
+
+---
+
+## Scope Contracts (10 Total)
+
+---
+
+### Scope Contract 1: Global Design System — Shadow Tokens
+**Gap Coverage**: G-14 (Shadows — Dark-Surface)
+
+**Current State**: `.card-product` uses `boxShadow.card` designed for light surfaces. On dark PLP background, shadows are invisible.
+
+**Target State**:
+- Add `.card-product-dark` component class using `cardDark`/`cardDarkHover` tokens
+- Leave `.card-product` untouched (homepage regression containment)
+- PLP cards use `.card-product-dark`
+
+**DoD — Pass 1: Skeleton**
+- [ ] Audit all files using `.card-product` (6 files identified)
+- [ ] Document which files should use `.card-product` vs `.card-product-dark`
+- [ ] Add `.card-product-dark` class definition in `tailwind.config.ts` (structure only, no styling)
+
+**DoD — Pass 2: Data**
+- [ ] Verify `cardDark`/`cardDarkHover` tokens exist in tailwind config
+- [ ] Confirm token values match spec: `0 0 0 1px rgba(246,227,213,0.06), 0 4px 20px rgba(0,0,0,0.4)`
+
+**DoD — Pass 3: Build (Desktop → Mobile)**
+
+*Layer 1 — Structure*
+- [ ] Add `.card-product-dark` CSS component class in `tailwind.config.ts`
+
+*Layer 2 — Layout*
+- [ ] Same padding/spacing as `.card-product`
+- [ ] Border and radius structure in place
+
+*Layer 3 — Surface*
+- [ ] Apply `boxShadow.cardDark` token
+- [ ] Border color: `border.secondary`
+- [ ] Background: transparent
+
+*Layer 4 — Interaction*
+- [ ] Hover: `boxShadow.cardDarkHover`
+- [ ] Hover: `border-brand-400`
+- [ ] Hover: `translateY(-2px)`
+- [ ] Transition: `all 300ms ease-out`
+
+**Verification**
+```bash
+# Verify tokens exist
+grep -A2 "cardDark:" tailwind.config.ts
+# Verify class added
+grep "card-product-dark" tailwind.config.ts
+# Build passes
+npm run build
+```
+
+---
+
+### Scope Contract 2: Page Header Block
+**Gap Coverage**: G-01 (Page Header — No overline, no anchor rule, no accent)
+
+**Current State**: `ShopHeader.tsx` has centered layout, count under title, missing category path overline
+
+**Target State**:
+- Left-aligned layout
+- Overline: "HEADPHONES · OPEN-BACK" in `accent.500` with `section-header-anchor` rule
+- H1: `type-section-hed` with rule
+- Result count moved to Controls Bar (see Contract 3)
+
+**DoD — Pass 1: Skeleton**
+- [ ] `ShopHeader.tsx`: semantic header > span + h1 structure
+- [ ] Remove count span from component
+
+**DoD — Pass 2: Data**
+- [ ] Accept `categoryPath` prop (array of category names)
+- [ ] Join with " · " separator
+- [ ] Pass from `page.tsx` via metadata
+
+**DoD — Pass 3: Build (Desktop → Mobile)**
+
+*Layer 1 — Structure*
+- [ ] Container: `header` > `div.flex.flex-col.gap-2`
+- [ ] Overline wrapper: `span` + `::before` rule element
+- [ ] Title: `h1`
+
+*Layer 2 — Layout*
+- [ ] Container: `flex flex-col gap-2 mb-8`
+- [ ] Left-aligned (remove any centering)
+- [ ] `section-header-anchor`: flex, gap-3, items-center
+
+*Layer 3 — Surface*
+- [ ] Overline: `.type-overline` + `text-accent-500` + `.section-header-anchor`
+- [ ] Rule: 32px width, 1px height, `bg-brand-400`
+- [ ] H1: `.type-section-hed`
+
+*Layer 4 — Interaction*
+- [ ] No hover states needed for header
+
+**Verification**
+```bash
+npx playwright test --grep "ShopHeader"
+npm run build
+```
+
+---
+
+### Scope Contract 3: Controls Bar
+**Gap Coverage**: G-12 (Controls Bar — Anchoring), G-20 (Result Count Display)
+
+**Current State**: Sort dropdown only, no result count, no visual anchor
+
+**Target State**:
+- Left: Sort dropdown (`.input-select`)
+- Right: Result count (`.type-metadata`)
+- Separator: `border-b border-border-secondary pb-4 mb-4`
+
+**DoD — Pass 1: Skeleton**
+- [ ] `CategoryPageClient.tsx`: semantic `div` > `label` + `select` + `span` structure
+- [ ] Move `SortDropdown` and count into single controls row
+
+**DoD — Pass 2: Data**
+- [ ] Accept `productCount` prop in controls bar
+- [ ] Pass from parent component
+
+**DoD — Pass 3: Build (Desktop → Mobile)**
+
+*Layer 1 — Structure*
+- [ ] Container: `div` with flex layout
+- [ ] Left: sort wrapper
+- [ ] Right: count span
+
+*Layer 2 — Layout*
+- [ ] `flex items-center justify-between`
+- [ ] `border-b border-border-secondary pb-4 mb-4`
+- [ ] Sort dropdown: `w-44`
+
+*Layer 3 — Surface*
+- [ ] Sort: `.input-select` + `rounded-sm`
+- [ ] Count: `.type-metadata` + `text-secondary`
+
+*Layer 4 — Interaction*
+- [ ] Sort dropdown focus ring
+
+**Verification**
+```bash
+npx playwright test --grep "controls"
+npm run build
+```
+
+---
+
+### Scope Contract 4: Breadcrumb Navigation
+**Gap Coverage**: G-02 (Breadcrumb — No path context)
+
+**Current State**: `CategoryBreadcrumbs.tsx` exists but NOT used in page.tsx
+
+**Target State**:
+- Full path: Home / Headphones / Open-Back
+- Use existing `CategoryBreadcrumbs` component with styling updates
+- `.type-caption` styling per spec
+
+**DoD — Pass 1: Skeleton**
+- [ ] Import `CategoryBreadcrumbs` in `page.tsx`
+- [ ] Add to layout structure before `ShopHeader`
+
+**DoD — Pass 2: Data**
+- [ ] Pass `categoryParts` array from slug path
+- [ ] `isMobile` prop from viewport (or use CSS responsive)
+
+**DoD — Pass 3: Build (Desktop → Mobile)**
+
+*Layer 1 — Structure*
+- [ ] `nav` > `ol` > `li` structure for accessibility
+- [ ] Each segment: `Link` or `span`
+
+*Layer 2 — Layout*
+- [ ] `flex items-center gap-2 mb-6`
+- [ ] Separator: `span.select-none` between items
+
+*Layer 3 — Surface*
+- [ ] Container segments: `.type-caption` + `text-secondary`
+- [ ] Hover: `text-primary` + underline
+- [ ] Current segment: `.type-caption` + `text-primary` + `font-medium`
+- [ ] Separator: `text-caption` color
+
+*Layer 4 — Interaction*
+- [ ] Link hover transitions
+
+**Verification**
+```bash
+npx playwright test --grep "breadcrumb"
+npm run build
+```
+
+---
+
+### Scope Contract 5: Product Card — Typography & Structure
+**Gap Coverage**: G-04 (Product Card — Typography), G-05 (Add to Cart)
+
+**Current State**: Uses `type-body` for name, `Price` component for price
+
+**Target State**:
+- Name: `.type-card-title` (h3 scale, semibold, `letterSpacing: 0.05em`)
+- Price: `.type-price` (h4 scale, `text.priceTag`, semibold, `letterSpacing: 0.1em`)
+- Add to cart: `.btn-cart` full width below price
+
+**DoD — Pass 1: Skeleton**
+- [ ] `ProductCard.tsx`: `article` > `Link` > `figure` + `div` structure
+- [ ] Body: `h3` + `p` + `button` semantic order
+
+**DoD — Pass 2: Data**
+- [ ] Product data props verified (name, price, image, slug)
+- [ ] Cart button action (or placeholder for future)
+
+**DoD — Pass 3: Build (Desktop → Mobile)**
+
+*Layer 1 — Structure*
+- [ ] `article` container
+- [ ] `figure` for image section
+- [ ] `div` for body section
+- [ ] `h3` for name, `p` for price, `button` for cart
+
+*Layer 2 — Layout*
+- [ ] Card: `.card-product-dark` (from Contract 1)
+- [ ] Body: `flex flex-col gap-1 p-4`
+- [ ] Cart button: `w-full mt-3`
+
+*Layer 3 — Surface*
+- [ ] Name: `.type-card-title` + `text-headline` + `line-clamp-2`
+- [ ] Price: `.type-price` + `text-priceTag`
+- [ ] Button: `.btn-cart`
+
+*Layer 4 — Interaction*
+- [ ] Card hover: shadow + border + translateY (from `.card-product-dark`)
+- [ ] Image scale on card hover
+- [ ] Cart button active state
+
+**Verification**
+```bash
+npx playwright test --grep "ProductCard"
+npm run build
+```
+
+---
+
+### Scope Contract 6: Filter Sidebar — Visual System
+**Gap Coverage**: G-07 (Visual Separation), G-08 (Width), G-09 (Checkbox Style)
+
+**Current State**: `w-full`, browser-native checkboxes, no section header anchors
+
+**Target State**:
+- Width: 240px fixed
+- Background: `surface.elevated` with border
+- Custom checkboxes: 14×14, `brand.400` checked state
+- Section labels with `section-header-anchor` rule
+
+**DoD — Pass 1: Skeleton**
+- [ ] `FilterSidebar.tsx`: `aside` > `form` > `fieldset` > `legend` + `div` structure
+- [ ] Checkbox: hidden native input + custom div
+
+**DoD — Pass 2: Data**
+- [ ] Filter groups and options data flow verified
+
+**DoD — Pass 3: Build (Desktop → Mobile)**
+
+*Layer 1 — Structure*
+- [ ] `aside` sidebar container
+- [ ] `form` with multiple `fieldset`
+- [ ] Each `fieldset`: `legend` + checkbox list
+- [ ] Checkbox: hidden `input` + visual `div` sibling
+
+*Layer 2 — Layout*
+- [ ] Sidebar: `w-60` (240px) fixed
+- [ ] Sticky: `sticky top-desktop-header-h`
+- [ ] Padding: `p-6`
+- [ ] Sections: `space-y-6`
+- [ ] Checkboxes: `flex items-center gap-3`
+
+*Layer 3 — Surface*
+- [ ] Container: `bg-surface-elevated` + `border border-border-secondary` + `rounded-sm`
+- [ ] Header "FILTERS": `.type-overline` + `text-caption`
+- [ ] Section labels: `.type-overline` + `text-accent-500` + `.section-header-anchor`
+- [ ] Checkbox unchecked: `w-4 h-4 border border-border-primary rounded-sm`
+- [ ] Checkbox checked: `bg-brand-400 border-brand-400` + SVG checkmark
+- [ ] Label: `.type-body` + `text-body` color
+
+*Layer 4 — Interaction*
+- [ ] Checkbox hover: border → `brand-400`
+- [ ] Label hover: `text-primary`
+- [ ] Focus ring: `ring-2 ring-brand-600`
+
+**Verification**
+```bash
+npx playwright test --grep "FilterSidebar"
+npm run build
+```
+
+---
+
+### Scope Contract 7: Active Filter Chips
+**Gap Coverage**: G-10 (Active Filter Chips — Style)
+
+**Current State**: `surface-card` background, `secondary-700` border, wrong border-radius
+
+**Target State**:
+- Background: `surface.elevated`
+- Border: `brand.400` (warm cream)
+- Radius: `rounded-sm` (2px)
+- "Clear all": `accent.500` underline style
+
+**DoD — Pass 1: Skeleton**
+- [ ] `ActiveFilters.tsx`: `div` > `button` (chips) + `button` (clear) structure
+
+**DoD — Pass 2: Data**
+- [ ] Active filter data from URL params
+- [ ] Label mapping from filter groups
+
+**DoD — Pass 3: Build (Desktop → Mobile)**
+
+*Layer 1 — Structure*
+- [ ] Container: `div.flex.flex-wrap.gap-2`
+- [ ] Each chip: `button[type="button"]`
+- [ ] Clear button: separate `button`
+
+*Layer 2 — Layout*
+- [ ] Chip: `inline-flex items-center gap-1.5 px-3 py-1`
+- [ ] Dismiss icon: inline with label
+
+*Layer 3 — Surface*
+- [ ] Chip: `bg-surface-elevated` + `border border-brand-400` + `rounded-sm`
+- [ ] Label: `.type-caption` + `text-primary`
+- [ ] Dismiss: `text-caption` hover → `text-primary`
+- [ ] Clear all: `text-accent-500` + underline + hover `text-brand-100`
+
+*Layer 4 — Interaction*
+- [ ] Chip hover: border transition
+- [ ] Clear all hover: color transition
+- [ ] Remove filter on chip click
+
+**Verification**
+```bash
+npx playwright test --grep "ActiveFilters"
+npm run build
+```
+
+---
+
+### Scope Contract 8: Mobile Filter Drawer
+**Gap Coverage**: G-16 (Mobile — Filter UX)
+
+**Current State**: Left slide-in drawer (`-translate-x-full`)
+
+**Target State**:
+- Bottom sheet pattern: slides up from bottom
+- `max-h-[85vh]` with scroll
+- "Done" button in header
+- Backdrop overlay
+
+**DoD — Pass 1: Skeleton**
+- [ ] `MobileFilterDrawer.tsx`: backdrop `div` + drawer `aside` structure
+- [ ] Header: title + close button
+- [ ] Content: scrollable filter sections
+- [ ] Footer: "Show Results" button
+
+**DoD — Pass 2: Data**
+- [ ] Same filter data as desktop sidebar
+- [ ] Sync filter state between drawer and page
+
+**DoD — Pass 3: Build (Desktop → Mobile)**
+
+*Layer 1 — Structure*
+- [ ] Backdrop: fixed overlay `div`
+- [ ] Drawer: `aside` with flex column
+- [ ] Header: flex between title and close button
+- [ ] Content: `div.flex-1.overflow-y-auto`
+- [ ] Footer: sticky bottom button
+
+*Layer 2 — Layout*
+- [ ] Drawer: `fixed bottom-0 left-0 right-0 max-h-[85vh]`
+- [ ] Transform: `translateY(100%)` → `translateY(0)`
+- [ ] Animation: `duration-300 ease-out`
+- [ ] Backdrop: `bg-brand-900/60`
+
+*Layer 3 — Surface*
+- [ ] Drawer: `bg-surface-card` + `rounded-t-sm`
+- [ ] Header: border-bottom
+- [ ] Filter sections: same as desktop sidebar
+
+*Layer 4 — Interaction*
+- [ ] Open/close animation
+- [ ] Backdrop tap to close
+- [ ] Swipe down to close (if time permits)
+- [ ] "Done" button closes drawer
+
+**Verification**
+```bash
+npx playwright test --grep "MobileFilterDrawer"
+npm run build
+```
+
+---
+
+### Scope Contract 9: Mobile Layout & Controls
+**Gap Coverage**: G-18 (Mobile — Controls Row)
+
+**Current State**: `MobileControlsBar` has filters button + count + sort
+
+**Target State**:
+- "FILTERS (2)" button with filter icon, count in parentheses
+- Sort dropdown right side
+- Active filters in horizontal scroll row below
+
+**DoD — Pass 1: Skeleton**
+- [ ] `MobileControlsBar.tsx`: flex row structure
+- [ ] Count display in filters button when > 0
+
+**DoD — Pass 2: Data**
+- [ ] Active filter count from URL params
+- [ ] Product count passed as prop
+
+**DoD — Pass 3: Build (Desktop → Mobile)**
+
+*Layer 1 — Structure*
+- [ ] Container: `div.flex.items-center.gap-3`
+- [ ] Left: filters button with icon + count
+- [ ] Right: sort dropdown
+
+*Layer 2 — Layout*
+- [ ] Filters button: `flex-1` for equal width
+- [ ] Sort: `flex-1`
+- [ ] Mobile padding: `px-4`
+
+*Layer 3 — Surface*
+- [ ] Filters button: `.btn-secondary` + filter icon
+- [ ] Count in parentheses when > 0
+- [ ] Sort: `.input-select`
+
+*Layer 4 — Interaction*
+- [ ] Button tap states
+- [ ] Drawer open on filters click
+
+**Verification**
+```bash
+npx playwright test --grep "MobileControlsBar"
+npm run build
+```
+
+---
+
+### Scope Contract 10: Product Card Hover States & Grid Spacing
+**Gap Coverage**: G-06 (Card Hover), G-03 (Image Container consistency)
+
+**Current State**: Generic `shadow-cardHover`, no border color change
+
+**Target State**:
+- Image container: consistent `aspect-[4/3]`, `surface.productImage` bg
+- Card hover: `cardDarkHover` shadow + `border-brand-400` + `translateY(-2px)`
+- Image zoom on card hover: `scale(1.03)`
+
+**DoD — Pass 1: Skeleton**
+- [ ] `ProductCard.tsx`: figure with image container structure
+- [ ] Group hover context established
+
+**DoD — Pass 2: Data**
+- [ ] Image data with dimensions for aspect ratio
+
+**DoD — Pass 3: Build (Desktop → Mobile)**
+
+*Layer 1 — Structure*
+- [ ] Card container with group class
+- [ ] Figure with image wrapper
+
+*Layer 2 — Layout*
+- [ ] Figure: `aspect-[4/3]` + `overflow-hidden`
+- [ ] Grid: `grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6`
+
+*Layer 3 — Surface*
+- [ ] Figure bg: `bg-surface-productImage`
+- [ ] Card: `.card-product-dark` (from Contract 1)
+
+*Layer 4 — Interaction*
+- [ ] Card hover: shadow + border + translateY (via `.card-product-dark`)
+- [ ] Image: `transition-transform duration-500` + `group-hover:scale-[1.03]`
+
+**Verification**
+```bash
+npx playwright test --grep "ProductCard"
+npm run build
+```
+
+---
+
+## Verification Matrix
+
+### Build Gate (Required for Sprint Lock)
+```bash
+npm run build
+```
+**Must pass with 0 errors.**
+
+### Per-Contract Playwright Tests
+| Contract | Test Command |
+|----------|-------------|
+| 1 | `npx playwright test --grep "tailwind"` |
+| 2 | `npx playwright test --grep "ShopHeader"` |
+| 3 | `npx playwright test --grep "controls"` |
+| 4 | `npx playwright test --grep "breadcrumb"` |
+| 5 | `npx playwright test --grep "ProductCard"` |
+| 6 | `npx playwright test --grep "FilterSidebar"` |
+| 7 | `npx playwright test --grep "ActiveFilters"` |
+| 8 | `npx playwright test --grep "MobileFilterDrawer"` |
+| 9 | `npx playwright test --grep "MobileControlsBar"` |
+| 10 | `npx playwright test --grep "ProductCard"` |
+
+### Regression Verification
+```bash
+# 1. Homepage Product Cards Unchanged
+npx playwright test --grep "homepage" --reporter=list
+
+# 2. No New Tailwind Classes
+grep -r "shadow-card" app/ --include="*.tsx" | wc -l  # Should equal 6
+
+# 3. Build Output
+dir .next\static  # Verify assets generated
+```
+
+---
+
+## File Change Manifest
+
+| File | Change Type | Contracts Affected |
+|------|-------------|-------------------|
+| `tailwind.config.ts` | Modify | 1 |
+| `app/components/features/products/ShopHeader.tsx` | Modify | 2 |
+| `app/(store)/products/[...slug]/page.tsx` | Modify | 2, 4 |
+| `app/components/features/products/CategoryPageClient.tsx` | Modify | 3 |
+| `app/components/features/filters/SortDropdown.tsx` | Modify | 3 |
+| `app/components/ui/breadcrumbs/CategoryBreadcrumbs.tsx` | Modify | 4 |
+| `app/components/features/products/ProductCard.tsx` | Modify | 5, 10 |
+| `app/components/features/filters/FilterSidebar.tsx` | Modify | 6 |
+| `app/components/features/filters/ActiveFilters.tsx` | Modify | 7 |
+| `app/components/features/filters/MobileFilterDrawer.tsx` | Modify | 8 |
+| `app/components/features/filters/MobileControlsBar.tsx` | Modify | 9 |
+| `app/components/features/products/ProductGrid.tsx` | Modify | 10 |
+
+---
+
+## End-State Checklist
+
+- [ ] All 20 audit gaps (G-01 through G-20) addressed
+- [ ] Build passes with 0 errors
+- [ ] All 10 scope contracts marked complete
+- [ ] Homepage product cards unchanged (regression containment verified)
+- [ ] Mobile filter drawer uses bottom sheet pattern
+- [ ] Breadcrumb displays full category path
+- [ ] Product cards use `.card-product-dark` with visible shadows
+- [ ] Typography tokens applied consistently (`type-card-title`, `type-price`)
+- [ ] Active filter chips use `brand.400` border
+- [ ] All hover states implemented per spec
+
+---
+
+## Post-Sprint Lock
+
+**Sprint Complete When:**
+1. Build passes: `npm run build` exits 0
+2. All Playwright tests pass
+3. Homepage regression tests pass (no visual changes)
+4. All 10 scope contracts marked done
+5. This file updated with completion notes
