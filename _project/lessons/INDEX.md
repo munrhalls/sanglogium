@@ -6,6 +6,38 @@
 
 ---
 
+## Keyword: baseline
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/pre-flight-baseline-check.md](workflows/pre-flight-baseline-check.md) | High | Always verify baseline build before sprint work |
+
+---
+
+## Keyword: nuqs
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/url-state-shallow-routing.md](patterns/url-state-shallow-routing.md) | Medium | Use `shallow: true` for high-frequency URL state to avoid server roundtrips |
+
+---
+
+## Keyword: url-state
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/url-state-shallow-routing.md](patterns/url-state-shallow-routing.md) | Medium | nuqs + shallow routing for instant filter/sort UI feedback |
+
+---
+
+## Keyword: performance
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/url-state-shallow-routing.md](patterns/url-state-shallow-routing.md) | Medium | Router navigation causes 200-500ms lag; use shallow client updates |
+
+---
+
 ## Keyword: groq
 
 | Lesson | Severity | Summary |
@@ -95,8 +127,11 @@
 | Lesson | Severity | Summary |
 |--------|----------|---------|
 | [workflows/implement-phase-gates.md](workflows/implement-phase-gates.md) | Medium | Need pre-flight branch checks and execution mode flags |
+| [workflows/pre-flight-baseline-check.md](workflows/pre-flight-baseline-check.md) | High | Always verify baseline build before sprint work to prevent false correlation |
 
 ---
+
+## Keyword: pre-flight
 
 ## Keyword: schema
 
