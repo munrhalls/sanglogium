@@ -27,7 +27,7 @@ export function CarouselTrack({
     <div className={cn(className, "w-full overflow-hidden")} ref={scrollRef}>
       {/* The Belt: Animates smoothly when 'offset' changes */}
       <div
-        className="flex h-full w-full will-change-transform transition-transform duration-500 ease-in-out"
+        className="flex h-full w-full items-stretch will-change-transform transition-transform duration-500 ease-in-out"
         style={{
           transform: `translateX(-${offset}%)`,
         }}
