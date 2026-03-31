@@ -10,8 +10,8 @@ export function ShopHeader({ title, productCount }: ShopHeaderProps) {
 
   return (
     <div className="mb-6" data-testid="shop-header">
-      <h1 className="text-2xl font-bold text-gray-900">{title}</h1>
-      <p className="text-gray-600 mt-1">
+      <h1 className="text-h1 font-semibold text-headline">{title}</h1>
+      <p className="text-body text-secondary mt-1">
         {productCount} {countLabel}
       </p>
     </div>

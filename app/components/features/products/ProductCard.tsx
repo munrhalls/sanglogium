@@ -33,7 +33,7 @@ export function ProductCard({ product }: ProductCardProps) {
         {product.brand?.name && (
           <p className="text-sm text-gray-600">{product.brand.name}</p>
         )}
-        <h3 className="font-medium text-gray-900 line-clamp-2">{product.name}</h3>
+        <h3 className="font-medium text-headline line-clamp-2">{product.name}</h3>
         <Price value={product.displayPrice} />
       </div>
     </Link>
