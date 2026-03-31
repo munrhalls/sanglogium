@@ -15,5 +15,5 @@ export function Price({ value, currency = 'USD' }: PriceProps) {
     maximumFractionDigits: 0,
   }).format(value);
 
-  return <span className="font-semibold tabular-nums">{formatted}</span>;
+  return <span className="type-price tabular-nums">{formatted}</span>;
 }

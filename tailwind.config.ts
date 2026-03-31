@@ -483,6 +483,8 @@ export default {
       boxShadow: {
         card: '0 4px 20px rgba(0, 0, 0, 0.03)',
         cardHover: '0 8px 30px rgba(0, 0, 0, 0.08)',
+        cardDark: '0 4px 20px rgba(255, 255, 255, 0.03), 0 0 0 1px rgba(255, 255, 255, 0.05)',
+        cardHoverDark: '0 8px 30px rgba(255, 255, 255, 0.06), 0 0 0 1px rgba(255, 255, 255, 0.08)',
         button: '0 2px 8px rgba(0, 0, 0, 0.15)',
         buttonHover: '0 4px 16px rgba(0, 0, 0, 0.25)',
       }
