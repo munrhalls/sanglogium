@@ -1,8 +1,7 @@
 "use client";
 
 import React from 'react';
-import { useRouter, usePathname, useSearchParams } from 'next/navigation';
-import { isFilterActive, toggleFilter } from '@/lib/filters/urlParams';
+import { useFilterNuqs } from './useFilterNuqs';
 import { Checkbox } from '@/app/components/ui/Checkbox';
 
 interface FilterOption {
@@ -21,14 +20,7 @@ interface FilterSidebarProps {
 }
 
 export function FilterSidebar({ filters }: FilterSidebarProps) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  const handleToggleFilter = (field: string, value: string) => {
-    const newUrl = toggleFilter(pathname, new URLSearchParams(searchParams.toString()), field, value);
-    router.push(newUrl, { scroll: false });
-  };
+  const { isFilterActive, toggleFilter } = useFilterNuqs();
 
   return (
     <aside
@@ -49,14 +41,14 @@ export function FilterSidebar({ filters }: FilterSidebarProps) {
 
               <div className="space-y-2">
                 {group.options.map((option) => {
-                  const isChecked = isFilterActive(searchParams, group.field, option.value);
+                  const isChecked = isFilterActive(group.field, option.value);
                   return (
                     <Checkbox
                       key={option.value}
                       name={group.field}
                       value={option.value}
                       checked={isChecked}
-                      onChange={() => handleToggleFilter(group.field, option.value)}
+                      onChange={() => toggleFilter(group.field, option.value)}
                       label={option.label}
                     />
                   );

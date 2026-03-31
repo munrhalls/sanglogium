@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useEffect } from 'react';
-import { useRouter, usePathname, useSearchParams } from 'next/navigation';
-import { isFilterActive, toggleFilter } from '@/lib/filters/urlParams';
+import { useFilterNuqs } from './useFilterNuqs';
 
 interface FilterOption {
   value: string;
@@ -22,9 +21,7 @@ interface MobileFilterDrawerProps {
 }
 
 export function MobileFilterDrawer({ isOpen, onClose, filters }: MobileFilterDrawerProps) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const { isFilterActive, toggleFilter } = useFilterNuqs();
 
   // Escape key handler
   useEffect(() => {
@@ -75,10 +72,6 @@ export function MobileFilterDrawer({ isOpen, onClose, filters }: MobileFilterDra
     return () => drawer.removeEventListener('keydown', handleTabKey);
   }, [isOpen]);
 
-  const handleToggleFilter = (field: string, value: string) => {
-    const newUrl = toggleFilter(pathname, new URLSearchParams(searchParams.toString()), field, value);
-    router.push(newUrl, { scroll: false });
-  };
 
   return (
     <>
@@ -129,7 +122,7 @@ export function MobileFilterDrawer({ isOpen, onClose, filters }: MobileFilterDra
 
                   <div className="space-y-2">
                     {group.options.map((option) => {
-                      const isChecked = isFilterActive(searchParams, group.field, option.value);
+                      const isChecked = isFilterActive(group.field, option.value);
                       return (
                         <label
                           key={option.value}
@@ -141,7 +134,7 @@ export function MobileFilterDrawer({ isOpen, onClose, filters }: MobileFilterDra
                               name={group.field}
                               value={option.value}
                               checked={isChecked}
-                              onChange={() => handleToggleFilter(group.field, option.value)}
+                              onChange={() => toggleFilter(group.field, option.value)}
                               className="peer sr-only"
                             />
                             <div className={`

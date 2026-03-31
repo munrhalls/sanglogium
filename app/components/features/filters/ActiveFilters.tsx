@@ -1,8 +1,7 @@
 "use client";
 
 import React from 'react';
-import { useRouter, usePathname, useSearchParams } from 'next/navigation';
-import { buildFilterUrl } from '@/lib/filters/urlParams';
+import { useFilterNuqs } from './useFilterNuqs';
 
 interface FilterGroup {
   field: string;
@@ -15,18 +14,13 @@ interface ActiveFiltersProps {
 }
 
 export function ActiveFilters({ filterGroups }: ActiveFiltersProps) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const { filters, parsedFilters, removeFilter, clearAllFilters, hasActiveFilters } = useFilterNuqs();
 
-  // Get active filters from URL
-  const activeFilters = searchParams.getAll('f');
-
-  if (activeFilters.length === 0) {
+  if (!hasActiveFilters) {
     return null;
   }
 
-  // Build label map from filter groups
+  // Build label map from filter groups for display
   const labelMap = new Map<string, string>();
   filterGroups.forEach((group) => {
     group.options.forEach((opt) => {
@@ -34,41 +28,26 @@ export function ActiveFilters({ filterGroups }: ActiveFiltersProps) {
     });
   });
 
-  const handleRemoveFilter = (filterKey: string) => {
-    const newUrl = buildFilterUrl(
-      pathname,
-      new URLSearchParams(searchParams.toString()),
-      { removeFilter: filterKey }
-    );
-    router.push(newUrl, { scroll: false });
-  };
-
-  const handleClearAll = () => {
-    const newUrl = buildFilterUrl(
-      pathname,
-      new URLSearchParams(searchParams.toString()),
-      { clearFilters: true }
-    );
-    router.push(newUrl, { scroll: false });
-  };
-
   return (
     <div data-testid="active-filters" className="flex flex-wrap gap-2 mb-6">
-      {activeFilters.map((filterKey) => (
-        <button
-          key={filterKey}
-          type="button"
-          onClick={() => handleRemoveFilter(filterKey)}
-          className="inline-flex items-center gap-1.5 px-3 py-1 bg-surface-elevated border border-brand-400 rounded-sm type-caption text-primary hover:border-brand-200 transition-colors cursor-pointer"
-        >
-          <span>{labelMap.get(filterKey) || filterKey}</span>
-          <span aria-label={`Remove filter`} className="text-caption hover:text-primary transition-colors">×</span>
-        </button>
-      ))}
+      {parsedFilters.map((filter) => {
+        const filterKey = `${filter.field}:${filter.value}`;
+        return (
+          <button
+            key={filterKey}
+            type="button"
+            onClick={() => removeFilter(filter.field, filter.value)}
+            className="inline-flex items-center gap-1.5 px-3 py-1 bg-surface-elevated border border-brand-400 rounded-sm type-caption text-primary hover:border-brand-200 transition-colors cursor-pointer"
+          >
+            <span>{labelMap.get(filterKey) || filterKey}</span>
+            <span aria-label={`Remove filter`} className="text-caption hover:text-primary transition-colors">×</span>
+          </button>
+        );
+      })}
 
       <button
         type="button"
-        onClick={handleClearAll}
+        onClick={clearAllFilters}
         className="type-caption text-accent-500 underline hover:text-brand-100 transition-colors cursor-pointer"
       >
         Clear all
