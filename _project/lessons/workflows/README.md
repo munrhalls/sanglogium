@@ -14,6 +14,7 @@
 
 | Lesson | Date | Severity | Summary |
 |--------|------|----------|---------|
+| [velocity-aware-sprint-planning.md](velocity-aware-sprint-planning.md) | 2026-03-31 | High | Inverted velocity ratio (1:1.5) — compress context, tight sprint doc, single execution |
 | [implement-phase-gates.md](implement-phase-gates.md) | 2026-03-31 | Medium | Rigid phase gates vs continuous execution mode |
 
 ---
@@ -23,10 +24,10 @@
 ```markdown
 # workflows: [Concise Title — Max 5 words]
 
-**Date:** YYYY-MM-DD  
-**Source:** [Sprint/Task where friction occurred]  
-**Severity:** [Critical/High/Medium/Low]  
-**Frequency:** [One-time/Recurring/Systemic]  
+**Date:** YYYY-MM-DD
+**Source:** [Sprint/Task where friction occurred]
+**Severity:** [Critical/High/Medium/Low]
+**Frequency:** [One-time/Recurring/Systemic]
 **Status:** [Active/Superseded/Archived]
 
 ---
