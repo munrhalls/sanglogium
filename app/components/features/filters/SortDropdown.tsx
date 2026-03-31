@@ -1,4 +1,7 @@
+"use client";
+
 import React from 'react';
+import { useFilterUrl } from './useFilterUrl';
 
 interface SortDropdownProps {
   currentSort?: string;
@@ -6,19 +9,12 @@ interface SortDropdownProps {
 
 export function SortDropdown({ currentSort = 'featured' }: SortDropdownProps) {
   return (
-    <div data-testid="sort-dropdown" className="w-full sm:w-[200px]">
-      <label htmlFor="sort" className="sr-only">Sort by</label>
+    <div data-testid="sort-dropdown" className="flex items-center gap-2">
+      <label htmlFor="sort" className="type-caption text-secondary-500">Sort by</label>
       <select
         id="sort"
-        value={currentSort}
-        className="w-full px-4 py-3 bg-surface-elevated border border-secondary-700 text-body text-brand-200 appearance-none cursor-pointer hover:border-brand-400 focus-visible:ring-2 focus-visible:ring-accent-500 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-page transition-colors"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23C7C6C4' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
-          backgroundPosition: 'right 12px center',
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: '1.25em 1.25em',
-          paddingRight: '40px',
-        }}
+        defaultValue={currentSort}
+        className="input-select"
       >
         <option value="featured">Featured</option>
         <option value="displayPrice:asc">Price: Low to High</option>

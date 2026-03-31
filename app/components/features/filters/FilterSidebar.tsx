@@ -1,4 +1,7 @@
+"use client";
+
 import React from 'react';
+import { useFilterUrl } from './useFilterUrl';
 
 interface FilterOption {
   value: string;
@@ -16,20 +19,22 @@ interface FilterSidebarProps {
 }
 
 export function FilterSidebar({ filters }: FilterSidebarProps) {
+  const { isFilterActive, toggleFilter } = useFilterUrl();
+
   return (
     <aside
       data-testid="filter-sidebar"
-      className="w-full h-full bg-surface-subtle lg:border-r border-secondary-700"
+      className="w-full h-full bg-surface-elevated lg:border-r border-border-secondary"
     >
       <div className="p-4 lg:p-6 space-y-6">
-        <h3 className="text-h4 font-semibold text-headline tracking-editorial uppercase">
+        <h3 className="type-overline">
           Filters
         </h3>
 
         <form className="space-y-6">
           {filters.map((group) => (
             <fieldset key={group.field} className="space-y-3">
-              <legend className="text-small font-medium text-secondary uppercase tracking-editorial">{group.label}</legend>
+              <legend className="type-overline">{group.label}</legend>
 
               <div className="space-y-2">
                 {group.options.map((option) => (
@@ -41,7 +46,9 @@ export function FilterSidebar({ filters }: FilterSidebarProps) {
                       type="checkbox"
                       name={group.field}
                       value={option.value}
-                      className="w-4 h-4 accent-accent-500 cursor-pointer"
+                      checked={isFilterActive(group.field, option.value)}
+                      onChange={() => toggleFilter(group.field, option.value)}
+                      className="w-4 h-4 appearance-none border border-border-secondary bg-surface-elevated checked:bg-accent-500 checked:border-accent-500 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-1 focus:ring-offset-surface-elevated cursor-pointer"
                     />
                     {option.label}
                   </label>

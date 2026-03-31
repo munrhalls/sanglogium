@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import { useFilterUrl } from './useFilterUrl';
 
 interface FilterOption {
   value: string;
@@ -20,6 +21,8 @@ interface MobileFilterDrawerProps {
 }
 
 export function MobileFilterDrawer({ isOpen, onClose, filters }: MobileFilterDrawerProps) {
+  const { isFilterActive, toggleFilter } = useFilterUrl();
+
   return (
     <>
       {/* Backdrop overlay */}
@@ -90,6 +93,8 @@ export function MobileFilterDrawer({ isOpen, onClose, filters }: MobileFilterDra
                           type="checkbox"
                           name={group.field}
                           value={option.value}
+                          checked={isFilterActive(group.field, option.value)}
+                          onChange={() => toggleFilter(group.field, option.value)}
                           className="w-4 h-4 accent-accent-500 cursor-pointer"
                         />
                         {option.label}
