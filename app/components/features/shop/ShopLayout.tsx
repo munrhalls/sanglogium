@@ -13,7 +13,7 @@ export function ShopLayout({ children, sidebar, className }: ShopLayoutProps) {
       <div className="flex gap-8">
         {/* Sidebar */}
         {sidebar && (
-          <aside className="hidden lg:block w-72 shrink-0">
+          <aside className="hidden lg:block w-60 shrink-0">
             {sidebar}
           </aside>
         )}

@@ -40,17 +40,17 @@ export function ActiveFilters({ filterGroups }: ActiveFiltersProps) {
           key={`${filter.field}:${filter.value}`}
           type="button"
           onClick={() => removeFilter(filter.field, filter.value)}
-          className="inline-flex items-center gap-2 px-3 py-1.5 bg-surface-elevated border border-secondary-700 text-body text-brand-200 hover:border-brand-400 hover:text-brand-100 transition-colors cursor-pointer"
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-sm bg-surface-elevated border border-accent-500 text-accent-500 hover:bg-surface-subtle transition-colors cursor-pointer"
         >
           <span>{labelMap.get(`${filter.field}:${filter.value}`) || `${filter.field}: ${filter.value}`}</span>
-          <span aria-label={`Remove filter`} className="text-secondary-400 hover:text-brand-400">X</span>
+          <span aria-label={`Remove filter`} className="text-accent-400 hover:text-accent-300">×</span>
         </button>
       ))}
 
       <button
         type="button"
         onClick={clearAllFilters}
-        className="text-body text-secondary-400 hover:text-brand-400 underline cursor-pointer transition-colors"
+        className="text-body text-accent-500 hover:text-accent-400 underline cursor-pointer transition-colors"
       >
         Clear all
       </button>

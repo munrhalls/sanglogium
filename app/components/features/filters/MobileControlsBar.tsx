@@ -9,23 +9,23 @@ interface MobileControlsBarProps {
   currentSort?: string;
 }
 
-export function MobileControlsBar({ 
-  productCount, 
-  onOpenFilters, 
-  currentSort = 'featured' 
+export function MobileControlsBar({
+  productCount,
+  onOpenFilters,
+  currentSort = 'featured'
 }: MobileControlsBarProps) {
   const countLabel = productCount === 1 ? 'product' : 'products';
 
   return (
-    <div 
-      data-testid="mobile-controls-bar" 
+    <div
+      data-testid="mobile-controls-bar"
       className="flex items-center gap-3 lg:hidden mb-4"
     >
       {/* Filters button */}
       <button
         type="button"
         onClick={onOpenFilters}
-        className="flex items-center gap-2 px-4 py-3 bg-surface-elevated border border-secondary-700 text-body text-brand-200 uppercase tracking-editorial hover:border-brand-400 hover:text-brand-100 transition-colors cursor-pointer"
+        className="flex items-center gap-2 px-4 py-3 rounded-sm bg-surface-elevated border border-border-secondary text-body text-brand-200 uppercase tracking-editorial hover:border-brand-400 hover:text-brand-100 active:bg-surface-subtle transition-colors cursor-pointer"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +52,7 @@ export function MobileControlsBar({
       </button>
 
       {/* Product count */}
-      <span className="text-body text-secondary flex-1">
+      <span className="type-metadata flex-1">
         {productCount} {countLabel}
       </span>
 
