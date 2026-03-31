@@ -81,7 +81,7 @@ Layer 4 — Interaction:  URL updates, drawer animation, hover states.
   </form>
 </aside>
 
-// SortDropdown Structure  
+// SortDropdown Structure
 <div data-testid="sort-dropdown" className="border-2 border-blue-500">
   <select>
     <option>Featured</option>
@@ -230,7 +230,7 @@ export function SortDropdown({ currentSort }: SortDropdownProps) {
   };
 
   return (
-    <select 
+    <select
       value={currentSort}
       onChange={(e) => handleSort(e.target.value)}
       className="..."
@@ -303,12 +303,12 @@ export function FilterSidebar({ filters, isOpen, onClose }: FilterSidebarProps) 
     <>
       {/* Mobile overlay */}
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/50 z-40 lg:hidden"
           onClick={onClose}
         />
       )}
-      
+
       {/* Sidebar with slide animation */}
       <aside className={`
         fixed lg:static inset-y-0 left-0 z-50 w-[300px] lg:w-[280px]
@@ -322,7 +322,7 @@ export function FilterSidebar({ filters, isOpen, onClose }: FilterSidebarProps) 
               <XIcon />
             </button>
           </div>
-          
+
           {/* Filter groups */}
         </div>
       </aside>
@@ -390,17 +390,17 @@ interface GetProductsOptions {
   }>;
 }
 
-export async function getProductsByVfsKeys({ 
-  keys, 
+export async function getProductsByVfsKeys({
+  keys,
   sort = 'featured',
-  filters = [] 
+  filters = []
 }: GetProductsOptions): Promise<Product[]> {
   // Build sort clause
   const [sortField, sortDir] = sort.split(':');
-  const orderClause = sort === 'featured' 
-    ? '' 
+  const orderClause = sort === 'featured'
+    ? ''
     : `| order(${sortField} ${sortDir === 'asc' ? 'asc' : 'desc'})`;
-  
+
   // Build filter clause
   const filterClause = filters.length > 0
     ? filters.map(f => `&& ${f.field} == "${f.value}"`).join(' ')
@@ -435,14 +435,14 @@ export interface FilterState {
 export function parseFilterParams(searchParams: ReadonlyURLSearchParams): FilterState {
   // Sort: ?s=displayPrice:asc
   const sort = searchParams.get('s') || 'featured';
-  
+
   // Filters: ?f=brand:Sennheiser&f=driverType:Dynamic
   const filterParams = searchParams.getAll('f');
   const filters = filterParams.map(f => {
     const [field, value] = f.split(':');
     return { field, value };
   });
-  
+
   return { sort, filters };
 }
 
@@ -461,7 +461,7 @@ export function buildFilterLabel(field: string, value: string): string {
       // ...
     }
   };
-  
+
   return labels[field]?.[value.toLowerCase()] || value;
 }
 ```
@@ -543,7 +543,7 @@ import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
 describe('SortDropdown', () => {
   const mockPush = jest.fn();
-  
+
   beforeEach(() => {
     (useRouter as jest.Mock).mockReturnValue({ push: mockPush });
     (usePathname as jest.Mock).mockReturnValue('/products/headphones');
