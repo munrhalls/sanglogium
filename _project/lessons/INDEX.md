@@ -6,6 +6,46 @@
 
 ---
 
+## Keyword: ai-leverage
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/ai-leverage-infrastructure.md](workflows/ai-leverage-infrastructure.md) | High | 7 true bottlenecks identified: context loss, sequencing violations, data assumption, etc. |
+
+---
+
+## Keyword: context-loss
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/ai-leverage-infrastructure.md](workflows/ai-leverage-infrastructure.md) | High | 10-30 min/session friction — fixed with context templates |
+
+---
+
+## Keyword: sequencing
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/ai-leverage-infrastructure.md](workflows/ai-leverage-infrastructure.md) | Critical | 17-day failure pattern — Pass 1→2→3 enforcement required |
+
+---
+
+## Keyword: infrastructure
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/ai-leverage-infrastructure.md](workflows/ai-leverage-infrastructure.md) | High | Workflow hardening: data verification, pre-sprint checks, MCP retrieval |
+
+---
+
+## Keyword: bottleneck
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/ai-leverage-infrastructure.md](workflows/ai-leverage-infrastructure.md) | High | 7 true bottlenecks with evidence-based time sink quantification |
+
+---
+
 ## Keyword: baseline
 
 | Lesson | Severity | Summary |
@@ -42,6 +82,7 @@
 
 | Lesson | Severity | Summary |
 |--------|----------|---------|
+| [failures/groq-schema-assumption.md](failures/groq-schema-assumption.md) | Critical | Never assume field types — always read schema first |
 | [failures/groq-reference-syntax.md](failures/groq-reference-syntax.md) | Critical | Reference syntax (->) on non-reference string fields returns empty results silently |
 | [failures/diagnostic-query-mismatch.md](failures/diagnostic-query-mismatch.md) | High | Diagnostic traced data flow but failed to verify GROQ against schema |
 
