@@ -9,6 +9,20 @@
 ---
 
 ## PHASE 1: Plan and Contain (Agent Output Required Before Coding)
+
+### Pre-Flight Checklist
+*Execute before every sprint to prevent false correlation investigations*
+
+1. **Branch Check:** Verify on correct branch (`git status`)
+2. **Baseline Build:** Run `npm run build` and document result
+   - If build fails: Document pre-existing failures before sprint work
+   - If build passes: Proceed with confidence
+3. **Scope Lock:** Confirm no other sprint work in progress
+
+*Historical Evidence: `auto-lessons.md:79-126` — 15 min wasted on false correlation*
+
+---
+
 1. **Explicit Refined Scope:** [Translate the Rough Scope into a strict, optimized technical target state. Optimize the "how" but strictly adhere 100% to the "what".]
 2. **Explicit Refined DoDs:** [Translate the Rough DoDs into atomic, sequential, mechanical tasks required to reach the Refined Scope.]
 3. **Read-Only Context Paths:** [Map human scope to exact repository paths. List files required for context, including Sanity Studio schemas. Modifying these is forbidden.]
@@ -21,7 +35,8 @@
 1. Strictly execute the **Explicit Refined DoDs** in exact sequential order.
 2. Contain all changes strictly within the **Allowed Write Scope Paths**. Modifying any file outside this list is a critical failure.
 3. **Styling & CSS Constraint:** Do not modify global CSS files unless explicitly requested in the input. All styling changes must use strictly scoped Tailwind utility classes directly on the target elements to prevent global blast radius.
-4. Determine the optimal code implementation to achieve the **Explicit Refined Scope**, ensuring absolute zero risk to unrelated components.
+4. **UI Component Execution:** When implementing UI components, invoke `/build [COMPONENT] [PASS] [LAYER] [BREAKPOINT]` per `@/_project/core-building-pattern.md` to ensure atomic Pass/Layer execution.
+5. Determine the optimal code implementation to achieve the **Explicit Refined Scope**, ensuring absolute zero risk to unrelated components.
 
 ---
 

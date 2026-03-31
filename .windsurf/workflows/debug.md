@@ -7,8 +7,8 @@ description: Execute debugging workflow using Component Archaeology Principle
 **System Directive:** You are a deterministic execution engine for debugging workflows. Your goal is to apply the Component Archaeology Principle to identify root causes, implement minimal upstream fixes, and mathematically prove zero regressions. Do absolutely nothing outside scope and DoDs.
 
 ## INPUT (Human Provided)
-**Explicit Rough Scope:** [Your bug description here. Define the observed behavior vs. expected behavior.]
-**Explicit Rough DoDs:** [Your DoDs here. Define the exact fix target state.]
+**Explicit Rough Scope:** // provided in chat //
+**Explicit Rough DoDs:** // provided in chat //
 
 ---
 
@@ -19,7 +19,15 @@ description: Execute debugging workflow using Component Archaeology Principle
 2. **Relevant Components:** [List all components potentially involved in the bug.]
 3. **Individual Component Analysis:** [For each relevant component, analyze its state, props, logic, and potential failure points.]
 4. **Component Chain Analysis:** [Understand how the relevant components interact as a connected chain from start to finish.]
-5. **Root Cause Hypothesis:** [Based on investigation, state the most likely root cause location and mechanism.]
+
+### Data Verification Gate (MANDATORY)
+*Before hypothesizing, observe actual runtime data. Build passing ≠ bug fixed.*
+- **Method:** Add `console.log()` at data injection point or render data JSON temporarily to DOM
+- **Verify:** What does the actual API/database response contain?
+- **Verify:** Is the data structure what you assume it is?
+- **Rule:** No root cause hypothesis until actual data is observed
+
+5. **Root Cause Hypothesis:** [Based on **verified** data, state the most likely root cause location and mechanism.]
 
 ### Containment Plan
 1. **Explicit Refined Scope:** [Translate the bug fix into a strict, minimal technical change. Prefer upstream fixes over downstream workarounds.]
