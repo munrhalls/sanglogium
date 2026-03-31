@@ -6,6 +6,120 @@
 
 ---
 
+## Keyword: velocity
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/velocity-aware-sprint-planning.md](workflows/velocity-aware-sprint-planning.md) | High | Inverted velocity ratio (1:1.5) — workflow generates more overhead than delivery |
+
+---
+
+## Keyword: batched-decisions
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/velocity-aware-sprint-planning.md](workflows/velocity-aware-sprint-planning.md) | High | 4 serial decision gates per task → batch to planning phase only |
+
+---
+
+## Keyword: sprint
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/velocity-aware-sprint-planning.md](workflows/velocity-aware-sprint-planning.md) | High | Compressed context → tight sprint doc → single execution → fast review |
+| [workflows/velocity-aware-sprint-planning.md](workflows/velocity-aware-sprint-planning.md) | Medium | Research unused after 2 hours becomes stale — consume immediately or compress |
+
+---
+
+## Keyword: research-staleness
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/velocity-aware-sprint-planning.md](workflows/velocity-aware-sprint-planning.md) | High | 14 causal factors — intent clarity, ground truth, compression accuracy, review speed |
+
+---
+
+## Keyword: optimization
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/velocity-aware-sprint-planning.md](workflows/velocity-aware-sprint-planning.md) | High | 14 causal factors — intent clarity, ground truth, compression accuracy, review speed |
+
+---
+
+## Keyword: cognitive-load
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/velocity-aware-sprint-planning.md](workflows/velocity-aware-sprint-planning.md) | High | Batch decisions to planning phase only — no re-planning during execution |
+
+---
+
+## Keyword: throughput
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/velocity-aware-sprint-planning.md](workflows/velocity-aware-sprint-planning.md) | High | Human (not AI) became throughput limiter — serial gates, not parallel flow |
+
+---
+
+## Keyword: commits
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/velocity-aware-sprint-planning.md](workflows/velocity-aware-sprint-planning.md) | High | D-type 34% (target <20%), illusory velocity 61% (target <40%) |
+
+---
+
+## Keyword: diagnostics
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/velocity-aware-sprint-planning.md](workflows/velocity-aware-sprint-planning.md) | High | /commits-diagnostics for instant velocity visibility before any sprint |
+
+---
+
+## Keyword: signal-density
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [prompting/signal-density-optimization.md](prompting/signal-density-optimization.md) | Critical | Opus token cost 10× reduction via /compress — cheap model extracts, Opus only decides |
+| [workflows/velocity-aware-sprint-planning.md](workflows/velocity-aware-sprint-planning.md) | High | 90 min output in 12 hours — context switching destroys throughput |
+
+---
+
+## Keyword: re-entry-cost
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/velocity-aware-sprint-planning.md](workflows/velocity-aware-sprint-planning.md) | High | 90 min output in 12 hours — context switching destroys throughput |
+
+---
+
+## Keyword: token-cost
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [prompting/signal-density-optimization.md](prompting/signal-density-optimization.md) | Critical | Ground factor: Signal density ÷ time cost. Maximize load-bearing facts per token. |
+
+---
+
+## Keyword: opus
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [prompting/signal-density-optimization.md](prompting/signal-density-optimization.md) | Critical | Opus never discovers — only synthesizes. Cheap models do all extraction. |
+
+---
+
+## Keyword: compression
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [prompting/signal-density-optimization.md](prompting/signal-density-optimization.md) | Critical | /compress command: 8000 raw tokens → 800 dense tokens before Opus sees context |
+
+---
+
 ## Keyword: ai-leverage
 
 | Lesson | Severity | Summary |
