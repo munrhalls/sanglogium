@@ -9,62 +9,58 @@ export default function BasketSummary() {
   const getTotal = useBasketStore((s) => s.getTotal);
 
   const shipping = 15.99;
-  // TODO calculate shipping based on address / items / promotions etc. - for now it's a flat rate
   const subtotal = getTotal();
   const total = subtotal + shipping;
+  const itemCount = basket.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <>
-      <h2 className="mb-6 border-b border-gray-200 pb-4 text-lg font-bold">
+      <h2 className="type-section-sub border-b border-secondary pb-4 mb-6">
         Basket Summary
       </h2>
-      <div className="mb-6 space-y-4">
-        <div className="flex justify-between text-gray-700">
-          <div>
-            Subtotal ({basket.reduce((sum, item) => sum + item.quantity, 0)}{" "}
-            items)
-          </div>
-          <div className="font-medium">${subtotal.toFixed(2)}</div>
+
+      <div className="space-y-4">
+        <div className="flex justify-between type-body">
+          <div className="text-body">Subtotal ({itemCount} items)</div>
+          <div className="type-price">${subtotal.toFixed(2)}</div>
         </div>
-        <div className="flex justify-between text-gray-700">
-          <div>Shipping</div>
-          <div className="font-medium">${shipping.toFixed(2)}</div>
+
+        <div className="flex justify-between type-body">
+          <div className="text-body">Shipping</div>
+          <div className="type-price">${shipping.toFixed(2)}</div>
         </div>
-        <div className="mt-4 border-t border-gray-200 pt-4">
-          <div className="flex justify-between text-xl font-bold">
-            <div>Total</div>
-            <div>${total.toFixed(2)}</div>
+
+        <div className="border-t border-secondary pt-4">
+          <div className="flex justify-between">
+            <div className="type-section-sub">Total</div>
+            <div className="type-section-sub">${total.toFixed(2)}</div>
           </div>
-          <div className="mt-1 text-xs text-gray-500">Including VAT</div>
+          <div className="type-caption text-caption mt-1">Including VAT</div>
         </div>
       </div>
 
-      <Link
-        href="/checkout"
-        className="flex w-full items-center justify-center rounded-sm bg-black py-4 text-lg font-medium text-white transition-colors hover:bg-gray-800"
-      >
+      <Link href="/checkout" className="btn-primary block text-center mt-6">
         Checkout
       </Link>
-      <div className="mt-4 hidden lg:block">
-        <Link
-          href="/products"
-          className="flex w-full items-center justify-center gap-2 rounded-sm border border-gray-300 py-3 font-medium text-gray-700 transition-colors hover:bg-gray-50"
-        >
-          <ArrowLeft size={16} />
-          Continue Shopping
-        </Link>
-      </div>
 
-      <div className="mt-6 border-t border-gray-200 pt-6">
-        <div className="flex flex-col gap-2 text-xs text-gray-500">
-          <p className="font-medium text-gray-700">We Accept:</p>
-          <div className="flex items-center gap-2">
-            <div className="h-6 w-10 rounded bg-gray-200"></div>
-            <div className="h-6 w-10 rounded bg-gray-200"></div>
-            <div className="h-6 w-10 rounded bg-gray-200"></div>
-            <div className="h-6 w-10 rounded bg-gray-200"></div>
-          </div>
-          <p className="mt-2">Secure checkout powered by Stripe</p>
+      <Link
+        href="/products"
+        className="btn-secondary block text-center mt-4"
+      >
+        <ArrowLeft size={16} className="inline mr-2" />
+        Continue Shopping
+      </Link>
+
+      <div className="border-t border-secondary pt-6 mt-6">
+        <div className="type-caption text-caption mb-2">We Accept:</div>
+        <div className="flex items-center gap-2">
+          <div className="h-6 w-10 rounded bg-surface-elevated border border-secondary"></div>
+          <div className="h-6 w-10 rounded bg-surface-elevated border border-secondary"></div>
+          <div className="h-6 w-10 rounded bg-surface-elevated border border-secondary"></div>
+          <div className="h-6 w-10 rounded bg-surface-elevated border border-secondary"></div>
+        </div>
+        <div className="type-caption text-caption mt-2">
+          Secure checkout powered by Stripe
         </div>
       </div>
     </>

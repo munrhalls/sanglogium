@@ -1,19 +1,31 @@
-import LogoOrbit from "@/public/logo-orbit.svg";
-import LogoOrbitWhite from "@/public/logo-orbit-white.svg";
+import Image from "next/image";
+
 export default function SegmentTitle({
   title,
-  width,
   white = false,
 }: {
   title: string;
   white?: boolean;
-  width?: number;
-  height?: number;
 }) {
   return (
-    <div className={`flex items-center justify-center gap-1`}>
-      {}
-      {}
+    <div className="flex items-center justify-center gap-3">
+      <Image
+        src="/logo-orbit.svg"
+        alt=""
+        width={32}
+        height={32}
+        className="h-8 w-8 text-brand-400"
+      />
+      <h1 className="type-section-hed uppercase section-header-anchor text-center">
+        {title}
+      </h1>
+      <Image
+        src="/logo-orbit.svg"
+        alt=""
+        width={32}
+        height={32}
+        className="h-8 w-8 text-brand-400"
+      />
     </div>
   );
 }

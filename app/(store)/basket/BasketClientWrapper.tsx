@@ -14,12 +14,12 @@ export default function BasketClientWrapper() {
   return (
     <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
       <div className="lg:col-span-2">
-        <div className="overflow-hidden rounded-sm bg-white shadow-sm">
+        <div className="card-base overflow-hidden">
           <Basket />
         </div>
       </div>
       <div className="lg:col-span-1">
-        <div className="sticky top-4 rounded-sm bg-white p-6 shadow-sm">
+        <div className="card-base sticky top-4">
           <BasketSummary />
         </div>
       </div>

@@ -3,19 +3,14 @@ import Link from "next/link";
 
 export default function EmptyBasketContent() {
   return (
-    <div className="flex flex-col items-center justify-center rounded-sm bg-white p-12 shadow-sm">
-      <ShoppingCart className="mb-6 text-gray-400" size={80} />
-      <h2 className="text-2xl font-medium text-gray-800">
-        Your basket is empty
-      </h2>
-      <p className="mb-8 mt-3 max-w-md text-center text-gray-600">
+    <div className="card-base flex flex-col items-center justify-center p-8 lg:p-12">
+      <ShoppingCart className="mb-6 text-secondary" size={64} />
+      <h2 className="type-section-sub text-center">Your basket is empty</h2>
+      <p className="type-body text-body mb-8 max-w-md text-center">
         Looks like you haven&apos;t added any products to your basket yet.
         Browse our collection to find something you&apos;ll love.
       </p>
-      <Link
-        href="/products"
-        className="flex items-center gap-2 rounded-sm bg-black px-8 py-3 text-white transition-colors hover:bg-gray-800"
-      >
+      <Link href="/products" className="btn-primary flex items-center gap-2">
         <ArrowLeft size={16} />
         Browse Products
       </Link>
