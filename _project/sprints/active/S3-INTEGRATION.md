@@ -30,13 +30,13 @@
 **End-to-End Verification:**
 - [ ] `/shop/headphones/open-back` displays 7 real products with real data
 - [ ] `/shop/headphones/closed-back` displays 31 real products with real data
-- [ ] Product cards link to `/product/[slug]` (pages don't need to exist yet)
+- [ ] Product cards link to `/product/[slug]` (pages exist from Sprint 2)
+- [ ] Product detail page displays real product data (image, name, brand, price, description)
 
 ### OUT OF SCOPE (Explicitly Forbidden)
 
 - ❌ Filters UI (Sprint 4)
 - ❌ Sort dropdown (Sprint 4)
-- ❌ Product detail page (Sprint 4)
 - ❌ Cart functionality
 - ❌ Search functionality
 - ❌ Animations beyond simple hover
@@ -47,21 +47,29 @@
 ## Files to Create/Modify
 
 ```
-app/(store)/shop/[...slug]/
-└── page.tsx                      # MODIFY: Replace skeletons with real components
+app/(store)/
+├── shop/
+│   └── [...slug]/
+│       └── page.tsx                # MODIFY: Replace skeletons with real components
+└── product/
+    └── [slug]/
+        └── page.tsx                # MODIFY: Replace skeleton with real components
 
 app/components/features/products/
-├── ProductGrid.tsx               # NEW: Real data grid
+├── ProductGrid.tsx                 # NEW: Real data grid
 ├── ProductCard.tsx                 # NEW: Real product card
 ├── ProductImage.tsx                # NEW: Image component (Client)
 ├── ShopHeader.tsx                  # NEW: Real header
+├── ProductDetail.tsx               # NEW: Real product detail page component
+├── ProductInfo.tsx                 # NEW: Product info section
+├── ImageGallery.tsx                # NEW: Image gallery
 ├── index.ts                        # NEW: Barrel export
 └── __tests__/
-    └── integration.test.tsx        # NEW: Component tests
+    └── integration.test.tsx      # NEW: Component tests
 
 app/components/ui/
 ├── Price.tsx                       # NEW: Price formatter (Client)
-└── Link.tsx                        # NEW: Next.js link wrapper (optional)
+└── Badge.tsx                       # NEW: Design system badge
 ```
 
 ---
@@ -211,9 +219,9 @@ describe('L5 E2E: Data Flow Verification', () => {
     const nodeId = resolveSlugToId('open-back');
     const keys = unrollDescendantKeys(nodeId);
     const products = await getProductsByVfsKeys(keys);
-    
+
     expect(products.length).toBeGreaterThanOrEqual(7);
-    
+
     // Verify product structure
     products.forEach(p => {
       expect(p._id).toBeDefined();
@@ -227,7 +235,7 @@ describe('L5 E2E: Data Flow Verification', () => {
     const nodeId = resolveSlugToId('closed-back');
     const keys = unrollDescendantKeys(nodeId);
     const products = await getProductsByVfsKeys(keys);
-    
+
     expect(products.length).toBeGreaterThanOrEqual(31);
   });
 
@@ -235,7 +243,7 @@ describe('L5 E2E: Data Flow Verification', () => {
     const nodeId = resolveSlugToId('open-back');
     const keys = unrollDescendantKeys(nodeId);
     const products = await getProductsByVfsKeys(keys);
-    
+
     if (products.length > 0) {
       const p = products[0];
       expect(p._id).toBeDefined();
@@ -347,7 +355,7 @@ export function ProductCard({ product }: ProductCardProps) {
         alt={product.name}
         className="group-hover:opacity-90 transition-opacity"
       />
-      
+
       <div className="space-y-1">
         <p className="text-sm text-gray-600">{product.brand.name}</p>
         <h3 className="font-medium text-gray-900 line-clamp-2">{product.name}</h3>
@@ -503,8 +511,12 @@ export async function generateMetadata({ params }: CategoryPageProps) {
 - [ ] Create `ProductCard.tsx`
 - [ ] Create `ProductGrid.tsx`
 - [ ] Create `ShopHeader.tsx`
+- [ ] Create `ProductDetail.tsx` — Real product detail component
+- [ ] Create `ProductInfo.tsx` — Product info section
+- [ ] Create `ImageGallery.tsx` — Image gallery component
 - [ ] Create barrel export `index.ts`
-- [ ] Modify `page.tsx` to use real components
+- [ ] Modify `shop/[...slug]/page.tsx` to use real components
+- [ ] Modify `product/[slug]/page.tsx` to use real components
 - [ ] Create test files (2 files)
 
 ### Verification Phase — Automated Tests
@@ -528,18 +540,42 @@ export async function generateMetadata({ params }: CategoryPageProps) {
   - [ ] L5-E2E-02: PASS — Closed-back returns 31+ products
   - [ ] L5-E2E-03: PASS — Products have required fields
 
-### Manual Verification (User Sign-off)
-- [ ] Navigate to `/shop/headphones/open-back` — see 7 real product cards
-- [ ] Navigate to `/shop/headphones/closed-back` — see 31+ real product cards
-- [ ] Click product card — URL changes to `/product/[slug]` (404 is OK for now)
-- [ ] Verify images load from Sanity CDN (check Network tab)
-- [ ] Verify responsive behavior (2→3→4 columns)
-- [ ] Verify empty state: navigate to category with 0 products (if possible)
+### Manual Verification — End-to-End Journey (CRITICAL)
+
+#### Category Page Verification
+- [ ] **Journey S3-01:** Navigate to `/shop/headphones/open-back` — see **7 real products** with actual data
+  - Verify: Product names are real (not placeholders)
+  - Verify: Brand names display
+  - Verify: Prices display in $X,XXX format
+  - Verify: Images load from Sanity CDN (check Network tab for image requests)
+- [ ] **Journey S3-02:** Navigate to `/shop/headphones/closed-back` — see **31+ real products** with actual data
+- [ ] **Journey S3-03:** Resize browser mobile→tablet→desktop — grid columns change **2→3→4**
+- [ ] **Journey S3-04:** Empty state test — verify graceful handling if category has 0 products
+
+#### Product Detail Page Verification
+- [ ] **Journey S3-05:** Click any product card from `/shop/headphones/open-back` — navigate to `/product/[slug]`
+  - Verify: URL changes to `/product/sennheiser-hd800s` (or similar real slug)
+  - Verify: Page loads without 404
+  - Verify: **Real product image** displays
+  - Verify: **Real product name** displays (not skeleton)
+  - Verify: **Real brand name** displays
+  - Verify: **Real price** displays
+  - Verify: **Product description** displays (if available in CMS)
+- [ ] **Journey S3-06:** Navigate directly to `/product/sennheiser-hd800s` (or any real product slug) — works without clicking from category
+- [ ] **Journey S3-07:** Navigate to `/product/invalid-slug` — 404 page displays correctly
+- [ ] **Journey S3-08:** Browser back button from product detail → returns to category page with scroll position maintained (or acceptable behavior)
+
+#### Data Accuracy Verification
+- [ ] **Journey S3-09:** Spot-check 3 products — verify data matches Sanity CMS
+  - Compare product name, brand, price against CMS
+- [ ] **Journey S3-10:** Verify image aspect ratios — should be consistent 4:3 or square
+- [ ] **Journey S3-11:** Verify image quality — not pixelated, proper Sanity CDN sizing
 
 ### Lockdown
 - [ ] All 17 automated tests passing
-- [ ] Manual verification completed
-- [ ] Product images loading correctly
+- [ ] All 11 manual journey tests completed
+- [ ] Product images loading correctly from Sanity CDN
+- [ ] Product detail pages display real data
 - [ ] User sign-off comment: `LOCKED [date] — User: [name]`
 
 ---
@@ -557,15 +593,15 @@ Context:
 - Sanity image URL builder exists at @/sanity/lib/imageUrl
 
 Your Task:
-1. Create 4 real components (ProductGrid, ProductCard, ProductImage, ShopHeader)
+1. Create 7 real components (ProductGrid, ProductCard, ProductImage, ShopHeader, ProductDetail, ProductInfo, ImageGallery)
 2. Create 1 UI component (Price)
-3. Modify page.tsx to use real components instead of skeletons
-4. Create test files with 17 total tests
-5. Ensure all tests pass
+3. Modify shop page.tsx to use real components instead of skeletons
+4. Modify product page.tsx to use real components instead of skeletons
+5. Create test files with 17 total tests
+6. Ensure all tests pass
 
 Constraints:
 - NO filters or sorting (Sprint 4)
-- NO product detail pages (Sprint 4)
 - NO cart functionality
 - Minimal styling (follow existing patterns)
 - ProductImage is Client Component (needs "use client")
@@ -578,10 +614,14 @@ Deliverables:
 - Created: app/components/features/products/ProductCard.tsx
 - Created: app/components/features/products/ProductGrid.tsx
 - Created: app/components/features/products/ShopHeader.tsx
+- Created: app/components/features/products/ProductDetail.tsx
+- Created: app/components/features/products/ProductInfo.tsx
+- Created: app/components/features/products/ImageGallery.tsx
 - Created: app/components/features/products/index.ts
 - Created: app/components/features/products/__tests__/integration.test.tsx
 - Created: tests/integration/e2e-data-flow.test.ts
 - Modified: app/(store)/shop/[...slug]/page.tsx
+- Modified: app/(store)/product/[slug]/page.tsx
 
 Run tests and provide output showing all 17 tests pass.
 ```
@@ -592,7 +632,7 @@ Run tests and provide output showing all 17 tests pass.
 
 **Sprint 4 is UNLOCKED when:**
 1. This sprint reaches LOCKED status (all DoD items checked)
-2. User verifies: real products display, images load, links work
-3. User comments sign-off in this file
+2. User verifies all 11 manual journey tests completed
+3. User comments sign-off in this file: `LOCKED [date] — User: [name]`
 
-**Sprint 4 Scope:** L6 Features — Sort dropdown, Filter sidebar, Product detail pages
+**Sprint 4 Scope:** L6 Features — Sort dropdown, Filter sidebar, Related products carousel
