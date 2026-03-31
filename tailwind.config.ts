@@ -203,6 +203,19 @@ const uiComponentsPlugin = plugin(function ({ addComponents, theme }) {
         transform: "translateY(-2px)",
       },
     },
+    ".card-product-dark": {
+      backgroundColor: "transparent",
+      padding: theme("spacing.6") as string,
+      borderRadius: theme("borderRadius.lg") as string,
+      boxShadow: theme("boxShadow.cardDark") as string,
+      border: `1px solid ${theme("colors.border.secondary")}`,
+      transition: "all 300ms ease-out",
+      "&:hover": {
+        boxShadow: theme("boxShadow.cardHoverDark") as string,
+        borderColor: theme("colors.brand.400") as string,
+        transform: "translateY(-2px)",
+      },
+    },
     ".input-base": {
       backgroundColor: theme("colors.surface.elevated") as string,
       border: `1px solid ${theme("colors.border.primary")}`,

@@ -17,14 +17,18 @@ lhci autorun --config=lighthouserc.js
 lhci autorun --config=lighthouserc.js --collect.url=https://sanglogium.com
 ```
 
-### 2. Run Performance Budget Tests
+### 2. Run Performance Tests
 
 ```bash
 # Run all performance tests
 npx playwright test tests/performance/
 
-# Run specific test file
+# Run specific test suites
+npx playwright test tests/performance/web-vitals.spec.ts
+npx playwright test tests/performance/core-web-vitals.spec.ts
+npx playwright test tests/performance/api-efficiency.spec.ts
 npx playwright test tests/performance/homepage-budget.spec.ts
+npx playwright test tests/performance/regression/
 
 # Run with UI mode for debugging
 npx playwright test tests/performance/ --ui
@@ -34,45 +38,105 @@ npx playwright test tests/performance/ --ui
 
 ```bash
 # Build with bundle analyzer
-ANALYZE=true npm run build
+npm run analyze
 
 # Opens browser with interactive bundle visualization
 ```
 
 ## Test Categories
 
-### 1. Homepage Budget Tests (`homepage-budget.spec.ts`)
+### 1. Web Vitals RUM Tests (`web-vitals.spec.ts`)
 
-These tests enforce performance budgets:
+Validates the WebVitals component collects all Core Web Vitals:
+- LCP, FCP, FID, INP, CLS, TTFB
+- Component loads without errors
+- Metrics are properly reported
+
+### 2. Core Web Vitals Budget Tests (`core-web-vitals.spec.ts`)
+
+These tests enforce Core Web Vitals thresholds:
 
 | Metric | Budget | Test |
 |--------|--------|------|
-| TTFB | < 600ms | `TTFB should be under budget` |
-| FCP | < 2000ms | `FCP should be under budget` |
-| LCP | < 2500ms | `LCP should be under budget` |
-| Total JS | < 400KB | `JavaScript bundle should be under budget` |
-| Total Images | < 1MB | `Total page weight should be under budget` |
-| CLS | < 0.1 | `CLS should be under budget` |
+| TTFB | < 600ms | `TTFB < 600ms` |
+| FCP | < 1800ms | `FCP < 1800ms` |
+| LCP | < 2500ms | `LCP < 2500ms` |
+| CLS | < 0.1 | `CLS < 0.1` |
+| TBT | < 200ms | `TBT < 200ms` |
+| TTI | < 3800ms | `TTI < 3800ms` |
 
-### 2. Sanity API Efficiency Tests
+### 3. API Efficiency Tests (`api-efficiency.spec.ts`)
 
-Verifies homepage makes minimal API calls:
-- Target: 1-2 batched requests
-- Fail: >3 individual requests
+Verifies minimal Sanity API calls:
+- Homepage: ≤ 3 requests (target: 1-2)
+- PLP: ≤ 2 requests
+- No duplicate queries
+- Proper caching headers
 
-### 3. Image Optimization Tests
+### 4. Homepage Budget Tests (`homepage-budget.spec.ts`)
 
-Checks for:
-- Modern image formats (WebP/AVIF)
-- Proper loading attributes (lazy/priority)
-- Image sizing strategy
+Legacy performance budget tests:
+- JavaScript bundle size
+- Image optimization
+- Total page weight
 
-### 4. Lighthouse CI Configuration (`lighthouserc.js`)
+### 5. Regression Tests (`regression/`)
 
-Automated Lighthouse testing with assertions:
+Infrastructure validation tests:
+- Lighthouse config exists and is valid
+- WebVitals component exists
+- All test files present
+- Bundle analyzer configured
+
+### 6. Performance Budgets Documentation (`BUDGETS.md`)
+
+Centralized documentation of all performance budgets:
+- Time budgets (TTFB, LCP, FCP, etc.)
+- Size budgets (JS, images, total weight)
+- Request count budgets
+- Score budgets (Lighthouse)
+
+## Performance Budget Reference
+
+See `BUDGETS.md` for complete budget documentation.
+
+### Quick Reference
+
+| Category | Current | Target | Priority |
+|----------|---------|--------|----------|
+| Lighthouse Performance | ~45 | ≥ 70 | P0 |
+| TTFB | ~10.9s | < 600ms | P0 |
+| LCP | ~7.7s | < 2500ms | P0 |
+| FCP | ~2.1s | < 1800ms | P0 |
+| CLS | ~0.05 | < 0.1 | P0 |
+| Total JS | ~400KB | < 400KB | P0 |
+| Homepage API Calls | ~9 | ≤ 3 | P0 |
+
+## CI/CD Integration
+
+### GitHub Actions Workflow
+
+The `lighthouse-ci.yml` workflow runs on every PR:
+
+```yaml
+name: Lighthouse CI
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+```
+
+Jobs:
+1. Build application
+2. Run Lighthouse CI with assertions
+3. Upload reports as artifacts
+
+### Lighthouse CI Configuration
+
+Key thresholds from `lighthouserc.js`:
 
 ```javascript
-// Key thresholds
 {
   'categories:performance': ['warn', { minScore: 0.7 }],
   'largest-contentful-paint': ['error', { maxNumericValue: 3000 }],
@@ -81,60 +145,20 @@ Automated Lighthouse testing with assertions:
 }
 ```
 
-## Production Audit Results (March 28, 2026)
+## Web Vitals RUM
 
-### Current State
+The `WebVitals` component in `app/components/analytics/WebVitals.tsx` provides:
 
-| Metric | Production | Target | Status |
-|--------|------------|--------|--------|
-| Lighthouse Performance | 57/100 | >75 | ❌ FAIL |
-| TTFB | 10.9s | <600ms | ❌ CRITICAL |
-| LCP | 7.7s | <2.5s | ❌ CRITICAL |
-| Speed Index | 22.5s | <4s | ❌ CRITICAL |
-| CLS | 0.001 | <0.1 | ✅ PASS |
+- Real-time Core Web Vitals collection
+- Console logging in development
+- Threshold warnings for poor metrics
+- Extensible for production analytics
 
-### Critical Issues
+### Disabling
 
-1. **TTFB: 10.9s** - Server response time is catastrophic
-2. **LCP: 7.7s** - Hero image loading too late
-3. **Speed Index: 22.5s** - Visual content appears extremely slowly
-4. **Unused JavaScript: 265 KiB** - Significant bundle waste
-5. **Redirect penalty: 2.17s** - Multiple unnecessary redirects
-
-## CI/CD Integration
-
-### GitHub Actions Workflow
-
-Add to `.github/workflows/performance.yml`:
-
-```yaml
-name: Performance Tests
-on: [push, pull_request]
-
-jobs:
-  lighthouse:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 20
-      - run: npm ci
-      - run: npm run build
-      - run: npm install -g @lhci/cli
-      - run: lhci autorun
-        env:
-          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-
-  playwright-perf:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-      - run: npm ci
-      - run: npx playwright install
-      - run: npm run build
-      - run: npx playwright test tests/performance/
+Set environment variable to disable in production:
+```bash
+NEXT_PUBLIC_DISABLE_WEB_VITALS=true
 ```
 
 ## Manual Testing Commands
@@ -157,9 +181,10 @@ npx lighthouse https://sanglogium.com/ --output=html --output-path=./lighthouse-
 
 Tests will **FAIL** if budgets are exceeded. To update budgets:
 
-1. Edit `BUDGETS` object in `homepage-budget.spec.ts`
+1. Edit `BUDGETS` object in `core-web-vitals.spec.ts`
 2. Update `lighthouserc.js` assertions
-3. Document budget changes in sprint notes
+3. Update `BUDGETS.md` documentation
+4. Document changes in sprint notes
 
 ## Troubleshooting
 
@@ -180,7 +205,13 @@ npx playwright test --retries=3
 **Bundle analyzer won't open:**
 ```bash
 # Check for port conflicts
-ANALYZE_PORT=8888 ANALYZE=true npm run build
+ANALYZE_PORT=8888 npm run analyze
+```
+
+**Web Vitals not showing in console:**
+```bash
+# Ensure you're in development mode
+npm run dev
 ```
 
 ## Resources
@@ -189,8 +220,9 @@ ANALYZE_PORT=8888 ANALYZE=true npm run build
 - [Lighthouse CI Documentation](https://github.com/GoogleChrome/lighthouse-ci)
 - [Playwright Best Practices](https://playwright.dev/docs/best-practices)
 - [Next.js Performance Optimization](https://nextjs.org/docs/app/building-your-application/optimizing)
+- [web-vitals Library](https://github.com/GoogleChrome/web-vitals)
 
 ---
 
-**Last Updated:** March 28, 2026  
-**Next Review:** After Phase 1 completion
+**Last Updated:** March 31, 2026
+**Sprint:** S8-PERFORMANCE-TESTING-INFRASTRUCTURE
