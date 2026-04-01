@@ -28,7 +28,13 @@ export default function NavbarManager({
 
   const isOpen = activeId !== null;
 
-
+  // Inject onClose prop into children for cascading close functionality
+  const childrenWithOnClose = React.Children.map(children, (child) => {
+    if (React.isValidElement(child)) {
+      return React.cloneElement(child, { onClose: closeMenu } as any);
+    }
+    return child;
+  });
   return (
     <div className="w-full">
       {/* 1. Navbar buttons */}
