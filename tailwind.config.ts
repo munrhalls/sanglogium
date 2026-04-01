@@ -331,11 +331,11 @@ const uiComponentsPlugin = plugin(function ({ addComponents, theme }) {
       color: theme("colors.text.subtitle") as string,
     },
     ".type-card-title": {
-      fontSize: theme("fontSize.h3[0]") as string,
-      lineHeight: theme("fontSize.h3[1].lineHeight") as string,
-      letterSpacing: theme("fontSize.h3[1].letterSpacing") as string,
+      fontSize: theme("fontSize.body[0]") as string,
+      lineHeight: theme("fontSize.body[1].lineHeight") as string,
+      letterSpacing: theme("fontSize.body[1].letterSpacing") as string,
       fontWeight: theme("fontWeight.semibold") as string,
-      color: theme("colors.text.headline") as string,
+      color: theme("colors.text.body") as string,
     },
     ".type-metadata": {
       fontSize: theme("fontSize.h4[0]") as string,
