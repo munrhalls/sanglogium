@@ -4,7 +4,6 @@ import { resolveSlugToId, unrollDescendantKeys } from '@/data/catalogue';
 import { getProductsByVfsKeys } from '@/sanity/lib/products/getProductsByVfsKeys';
 import { getCategoryMetadata } from '@/sanity/lib/products/getCategoryMetadata';
 import { getFiltersForCategoryPath } from '@/sanity/lib/products/filter/getFiltersForCategoryPath';
-import { ShopLayout } from '@/app/components/features/shop/ShopLayout';
 import { ShopHeader } from '@/app/components/features/products/ShopHeader';
 import { FilterSidebar } from '@/app/components/features/filters/FilterSidebar';
 import { CategoryPageClient } from './CategoryPageClient';
@@ -58,30 +57,34 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
     .join(' · ');
 
   return (
-    <>
-      {/* Full-width header - static, renders immediately */}
-      <div className="container mx-auto px-4 pt-6 pb-4">
-        <Breadcrumbs categoryParts={slug} />
-        <ShopHeader title={metadata.name} overline={categoryPath} />
-      </div>
-
-      {/* Sidebar + content with Suspense boundaries */}
-      <ShopLayout
-        sidebar={
+    <div className="container mx-auto px-4 pb-6 h-[calc(100vh-var(--desktop-header-h))]">
+      <div className="flex gap-8 h-full overflow-hidden">
+        {/* Sidebar - full height on left */}
+        <aside className="hidden lg:block w-60 shrink-0 pt-6 h-full overflow-y-auto">
           <Suspense fallback={<FilterSidebarSkeleton />}>
             <FilterSection filtersPromise={filtersPromise} />
           </Suspense>
-        }
-      >
-        <Suspense fallback={<ProductGridSkeleton />}>
-          <ProductsSection
-            productsPromise={productsPromise}
-            filtersPromise={filtersPromise}
-            categoryName={metadata.name}
-          />
-        </Suspense>
-      </ShopLayout>
-    </>
+        </aside>
+
+        {/* Main content - header + products stacked */}
+        <main className="flex-1 min-w-0 h-full overflow-y-auto">
+          {/* Header now in right column */}
+          <div className="pt-6 pb-4">
+            <Breadcrumbs categoryParts={slug} />
+            <ShopHeader title={metadata.name} overline={categoryPath} />
+          </div>
+
+          {/* Products section */}
+          <Suspense fallback={<ProductGridSkeleton />}>
+            <ProductsSection
+              productsPromise={productsPromise}
+              filtersPromise={filtersPromise}
+              categoryName={metadata.name}
+            />
+          </Suspense>
+        </main>
+      </div>
+    </div>
   );
 }
 
