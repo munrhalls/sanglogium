@@ -1,0 +1,558 @@
+# Sprint: Product Discovery UI Design System Implementation
+
+**Date:** 2026-04-01  
+**Target State:** Professional-grade product discovery UI with 100% design system adherence  
+**Reference:** Homepage visual language (Hero, Featured, ProductSpotlights)  
+**Sprint Type:** Design System Alignment / Visual Polish
+
+---
+
+## Pre-Work Lessons Retrieved (Phase 0)
+
+### Critical Lessons Applied
+| Keyword | Lesson | Impact on Sprint |
+|---------|--------|------------------|
+| **tailwind** | failures/tailwind-breakpoint-shadowing.md | Use `lg-desktop:` not `lg:` for responsive layouts |
+| **responsive** | Custom breakpoints shadow defaults | Must use `xs:`, `lg-desktop:`, `lg-touch:` variants |
+| **functional-grouping** | patterns/functional-grouping.md | Filter system treated as complete group, not isolated components |
+| **suspense-streaming** | patterns/suspense-streaming-components.md | Skeleton states must match final layout exactly |
+| **sequencing** | Pass 1→2→3, Layer 1→4 enforcement | No skipping passes, no mixing layers |
+| **signal-density** | prompting/signal-density-optimization.md | Maximum load-bearing facts per token in specs |
+
+### Prevention Rules as Constraints
+- **NO** use of `lg:`, `md:`, `sm:` — use custom breakpoints only
+- **NO** mixing of skeleton styling with Pass 3 work
+- **COMPLETE** functional groups (filter panel = sidebar + sliders + checkboxes)
+- **MATCH** skeleton grid to final grid exactly (4 cols, gap-6)
+
+---
+
+## Phase 1: Audit & Gap Analysis
+
+### End-State Delineation (ASCII Spatial Maps)
+
+#### Desktop (1280px) — Target State
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ [NAV HEADER — full width, fixed, var(--desktop-header-h)]                │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ [CATALOGUE NAV — full width, fixed, var(--desktop-catalogue-nav-h)]        │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │ CONTAINER: max-w-content (1280px), mx-auto, px-8                     │   │
+│  │                                                                      │   │
+│  │ ┌─────────────┐    ┌──────────────────────────────────────────────┐ │   │
+│  │ │ SIDEBAR     │    │ MAIN CONTENT                                  │ │   │
+│  │ │ w-60 (240px)│    │ flex-1                                        │ │   │
+│  │ │             │    │                                               │ │   │
+│  │ │ • Filters   │    │ Breadcrumbs (type-caption, secondary)        │ │   │
+│  │ │ • Price     │    │                                               │ │   │
+│  │ │ • Stock     │    │ OVERLINE: type-overline + section-header-     │ │   │
+│  │ │ • Brand     │    │           anchor (gold line prefix)           │ │   │
+│  │ │             │    │                                               │ │   │
+│  │ │ bg-surface- │    │ HEADLINE: type-section-hed (3.2rem clamp)      │ │   │
+│  │ │ elevated    │    │                                               │ │   │
+│  │ │             │    │ ┌─────────────────────────────────────────┐   │ │   │
+│  │ │ gap-6       │    │ │ TOOLBAR                                 │   │ │   │
+│  │ │             │    │ │ Sort + Count (type-metadata)            │   │ │   │
+│  │ └─────────────┘    │ └─────────────────────────────────────────┘   │ │   │
+│  │                    │                                               │ │   │
+│  │   sticky top       │ ┌─────────────────────────────────────────┐   │ │   │
+│  │                    │ │ PRODUCT GRID                              │   │ │   │
+│  │   h-full           │ │ grid-cols-4 gap-6                       │   │ │   │
+│  │   overflow-y-auto  │ │                                         │   │ │   │
+│  │   scrollbar-none   │ │ ┌──────────┐ ┌──────────┐ ┌──────────┐ │   │ │   │
+│  │                    │ │ │ CARD 1   │ │ CARD 2   │ │ CARD 3   │ │   │ │   │
+│  │                    │ │ │ .card-   │ │ .card-   │ │ .card-   │ │   │ │   │
+│  │                    │ │ │ product  │ │ product  │ │ product  │ │   │ │   │
+│  │                    │ │ │ -dark    │ │ -dark    │ │ -dark    │ │   │ │   │
+│  │                    │ │ └──────────┘ └──────────┘ └──────────┘ │   │ │   │
+│  │                    │ └─────────────────────────────────────────┘   │ │   │
+│  │                    └──────────────────────────────────────────────────┘ │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+#### Mobile (375px) — Target State
+```
+┌─────────────────────────────────────┐
+│ [NAV HEADER — fixed, 60px height]   │
+├─────────────────────────────────────┤
+│ [CATALOGUE NAV — collapsed/drawer]  │
+├─────────────────────────────────────┤
+│                                     │
+│  ┌─────────────────────────────────┐│
+│  │ CONTAINER: px-4                 ││
+│  │                                 ││
+│  │ Breadcrumbs (truncated)         ││
+│  │                                 ││
+│  │ OVERLINE: type-overline         ││
+│  │                                 ││
+│  │ HEADLINE: type-section-hed      ││
+│  │ (smaller clamp on mobile)       ││
+│  │                                 ││
+│  │ ┌─────────────────────────┐    ││
+│  │ │ MOBILE CONTROLS BAR     │    ││
+│  │ │ Sort + Filter Button    │    ││
+│  │ │ (triggers drawer)       │    ││
+│  │ └─────────────────────────┘    ││
+│  │                                 ││
+│  │ ┌─────────────────────────┐    ││
+│  │ │ PRODUCT GRID            │    ││
+│  │ │ grid-cols-1 xs:cols-2   │    ││
+│  │ │ gap-4                   │    ││
+│  │ │                         │    ││
+│  │ │ ┌─────────────────┐    │    ││
+│  │ │ │ CARD 1          │    │    ││
+│  │ │ │ .card-product   │    │    ││
+│  │ │ │ -dark           │    │    ││
+│  │ │ └─────────────────┘    │    ││
+│  │ │ ┌─────────────────┐    │    ││
+│  │ │ │ CARD 2          │    │    ││
+│  │ │ │ .card-product   │    │    ││
+│  │ │ │ -dark           │    │    ││
+│  │ │ └─────────────────┘    │    ││
+│  │ │                         │    ││
+│  │ └─────────────────────────┘    ││
+│  │                                 ││
+│  └─────────────────────────────────┘│
+│                                     │
+│ ┌─────────────────────────────────┐ │
+│ │ FILTER DRAWER (slide from left) │ │
+│ │ Full overlay, w-60              │ │
+│ │ Same content as desktop sidebar │ │
+│ └─────────────────────────────────┘ │
+│                                     │
+└─────────────────────────────────────┘
+```
+
+### Gap Analysis (G-XX IDs)
+
+| ID | Component | Current State | Target State | Severity |
+|----|-----------|---------------|--------------|----------|
+| **G-01** | `ProductGridSkeleton` | 3 columns, `gap-4`, beige placeholder | 4 columns, `gap-6`, `card-product-dark` structure | **High** |
+| **G-02** | `FilterSidebarSkeleton` | Basic pulse blocks, no structure | Mirrors `FilterSidebar` exactly (sections, checkboxes, sliders) | **Medium** |
+| **G-03** | `ShopHeader` | `type-section-hed` (3.2rem), minimal presence | Enhanced scale OR decorative header background | **High** |
+| **G-04** | `FilterSidebar` | `bg-surface-elevated`, flat gray, complex height calc | Styled panel with section dividers, clean scroll behavior | **Medium** |
+| **G-05** | `PriceRangeSlider` | Inline hex colors (`#D4AF37`, `#2E2E2D`), inline gradient styles | Design system tokens only (`bg-accent-500`, `bg-surface-elevated`) | **Medium** |
+| **G-06** | `ProductGrid` | Functional but utilitarian | Consistent with homepage card aesthetics | **Medium** |
+| **G-07** | `MobileControlsBar` | Presumably minimal (not audited) | Full-featured with filter drawer trigger | **Medium** |
+| **G-08** | `MobileFilterDrawer` | Presumably basic | Full sidebar content in slide-out drawer | **Medium** |
+| **G-09** | Page Layout | `h-[calc(100vh-...)]`, complex container math | Clean semantic layout with proper overflow | **Low** |
+| **G-10** | Visual Polish | Zero decorative elements | Subtle fractal decorations or header texture (optional) | **Low** |
+
+---
+
+## Phase 2: Scope Contracts (Maximum 10)
+
+### Scope Contract 1: ProductGridSkeleton — G-01
+**Gap Coverage:** Skeleton grid mismatch causing visual jump on load
+
+#### Target State
+Skeleton renders 4-column grid with `gap-6`, using `card-product-dark` structure (transparent bg, proper spacing, shadow placeholder). Loading state is visually indistinguishable from populated state except for animated pulse.
+
+#### DoD (Sequenced)
+- [ ] **Pass 1 — Skeleton:** Debug border version showing 4 columns, gap-6
+- [ ] **Pass 2 — Data:** N/A (skeleton has no data)
+- [ ] **Pass 3 — Layer 2 (Desktop Layout):** 4-column grid (lg:grid-cols-4), gap-6
+- [ ] **Pass 3 — Layer 3 (Desktop Surface):** `bg-surface-card` for placeholder blocks, rounded-lg
+- [ ] **Pass 3 — Layer 4 (Desktop Interaction):** `animate-pulse` on placeholder blocks
+- [ ] **Pass 3 — Layer 2 (Mobile Layout):** 1 col default, xs:2 cols, gap-4
+- [ ] **Pass 3 — Layer 3 (Mobile Surface):** Same as desktop
+- [ ] **Pass 3 — Layer 4 (Mobile Interaction):** Same pulse animation
+
+#### Delegation
+```
+/implement "Update ProductGridSkeleton to match ProductGrid layout exactly: 4 columns (lg), gap-6, card-product-dark structure with bg-surface-card placeholder blocks and animate-pulse. Mobile: xs:grid-cols-2 gap-4."
+```
+
+#### Verification
+```bash
+npm run build
+# Visual check: Skeleton grid columns align with loaded grid (no jump)
+```
+
+---
+
+### Scope Contract 2: FilterSidebarSkeleton — G-02
+**Gap Coverage:** Filter skeleton doesn't mirror filter structure
+
+#### Target State
+Skeleton shows filter group titles, checkbox placeholders, and slider placeholders in exact positions where real filters will render.
+
+#### DoD (Sequenced)
+- [ ] **Pass 1 — Skeleton:** Debug borders showing "FILTERS" header + 3 filter sections
+- [ ] **Pass 2 — Data:** N/A
+- [ ] **Pass 3 — Layer 2 (Desktop Layout):** space-y-6 sections, space-y-2 options
+- [ ] **Pass 3 — Layer 3 (Desktop Surface):** Section titles (type-overline), checkbox blocks, slider blocks
+- [ ] **Pass 3 — Layer 4 (Desktop Interaction):** Staggered pulse animation
+- [ ] **Pass 3 — Layer 2-4 (Mobile):** Same structure (renders inside drawer)
+
+#### Delegation
+```
+/implement "Create FilterSidebarSkeleton matching FilterSidebar layout: type-overline 'FILTERS' header, 3 filter sections (Price Range, Availability, Brand), each with checkbox placeholders and slider track placeholders. space-y-6 between sections."
+```
+
+---
+
+### Scope Contract 3: ShopHeader Enhancement — G-03
+**Gap Coverage:** Header underscaled compared to homepage hero
+
+#### Target State
+Category header has visual presence matching homepage sections. Two options to evaluate:
+- **Option A:** Increase headline scale beyond `type-section-hed`
+- **Option B:** Add decorative header background (subtle gradient or texture)
+
+Decision: Implement Option A (scale increase) first; Option B if still underwhelming.
+
+#### DoD (Sequenced)
+- [ ] **Pass 1 — Skeleton:** Debug border "ShopHeader" in correct position
+- [ ] **Pass 2 — Data:** Real category name and path render
+- [ ] **Pass 3 — Layer 2 (Desktop Layout):** Flex column, gap-2, proper mb-
+- [ ] **Pass 3 — Layer 3 (Desktop Surface):** 
+  - Breadcrumbs: `type-caption text-secondary`
+  - Overline: `type-overline text-accent-500 section-header-anchor`
+  - Headline: Custom scale (evaluate `text-h1` or larger) OR keep `type-section-hed` with decorative treatment
+- [ ] **Pass 3 — Layer 4 (Desktop Interaction):** None (static header)
+- [ ] **Pass 3 — Layer 2-3 (Mobile):** Same typography, adjusted spacing
+
+#### Delegation
+```
+/implement "Enhance ShopHeader visual presence: Option A - test larger headline scale (text-h1 or custom clamp), maintain type-overline with section-header-anchor gold line prefix for overline. Must feel as premium as homepage hero headline."
+```
+
+---
+
+### Scope Contract 4: FilterSidebar Panel Styling — G-04
+**Gap Coverage:** Flat gray panel lacks visual refinement
+
+#### Target State
+Filter panel feels like a styled component, not a utility box. Section dividers between filter groups. Clean scroll without visible scrollbar.
+
+#### DoD (Sequenced)
+- [ ] **Pass 1 — Skeleton:** Debug border sidebar structure
+- [ ] **Pass 2 — Data:** Real filter config renders (titles, options)
+- [ ] **Pass 3 — Layer 2 (Desktop Layout):** 
+  - Container: `w-60`, `sticky`, `h-full`, `overflow-y-auto scrollbar-none`
+  - Inner: `bg-surface-elevated`, `border border-border-secondary`, `rounded-lg`
+  - Padding: `p-6`
+  - Sections: `space-y-6`
+- [ ] **Pass 3 — Layer 3 (Desktop Surface):**
+  - Header: `type-overline text-caption`
+  - Section titles: `type-overline text-accent-500 section-header-anchor`
+  - Dividers: `border-t border-border-secondary` between sections (optional)
+- [ ] **Pass 3 — Layer 4 (Desktop Interaction):** Smooth scroll behavior
+- [ ] **Pass 3 — Layer 2-4 (Mobile):** Same styling (renders in drawer context)
+
+#### Delegation
+```
+/implement "Style FilterSidebar as premium panel: bg-surface-elevated container with border-border-secondary, rounded-lg, p-6. Section headers use type-overline + section-header-anchor for gold line prefix. space-y-6 between filter groups. scrollbar-none for clean scroll."
+```
+
+---
+
+### Scope Contract 5: PriceRangeSlider Token Alignment — G-05
+**Gap Coverage:** Hardcoded hex colors, inline gradient styles
+
+#### Target State
+Slider uses only design system tokens: `bg-accent-500` for active track, `bg-surface-elevated` for background. No inline hex values. Custom gradient extracted to CSS or utility classes.
+
+#### DoD (Sequenced)
+- [ ] **Pass 1 — Skeleton:** Debug border slider containers
+- [ ] **Pass 2 — Data:** Real min/max values, real current values
+- [ ] **Pass 3 — Layer 2 (Desktop Layout):** Full-width track, thumb positioning
+- [ ] **Pass 3 — Layer 3 (Desktop Surface):**
+  - Active track: `bg-accent-500` (not `#D4AF37`)
+  - Inactive track: `bg-surface-elevated` (not `#2E2E2D`)
+  - Labels: `type-caption text-secondary-500`
+  - Remove inline `style={{ background: 'linear-gradient...' }}` — use CSS custom properties or Tailwind arbitrary values that reference theme
+- [ ] **Pass 3 — Layer 4 (Desktop Interaction):** Thumb hover states, active drag states
+- [ ] **Pass 3 — Layer 2-4 (Mobile):** Touch-friendly thumb size
+
+#### Delegation
+```
+/implement "Refactor PriceRangeSlider to use design system tokens only: bg-accent-500 for active, bg-surface-elevated for inactive track. Replace inline hex colors (#D4AF37, #2E2E2D) with theme references. Remove inline style gradient — use CSS variables or Tailwind classes."
+```
+
+---
+
+### Scope Contract 6: ProductCard Polish — G-06
+**Gap Coverage:** Cards functional but need homepage-level refinement
+
+#### Target State
+Product cards match homepage `FeaturedCard` aesthetic: cream image background (`bg-surface-productImage`), subtle shadows, gold border on hover, consistent type hierarchy.
+
+#### DoD (Sequenced)
+- [ ] **Pass 1 — Skeleton:** Debug border card structure
+- [ ] **Pass 2 — Data:** Real product name, brand, price, image
+- [ ] **Pass 3 — Layer 2 (Desktop Layout):**
+  - Container: `.card-product-dark` (already implemented)
+  - Image: `aspect-[4/3]`, `bg-surface-productImage`
+  - Content: `p-4`, flex column
+- [ ] **Pass 3 — Layer 3 (Desktop Surface):**
+  - Brand: `type-caption` (top-left absolute)
+  - Name: `type-card-title line-clamp-2`
+  - Price: `type-price`
+  - Button: `.btn-cart` (already implemented)
+  - Image: `mix-blend-multiply` (if needed for white backgrounds)
+- [ ] **Pass 3 — Layer 4 (Desktop Interaction):**
+  - Card hover: `translateY(-2px)`, `boxShadow.cardHoverDark`, `border-color: brand-400`
+  - Button hover: Standard `.btn-cart` hover
+  - Image: Subtle scale on hover (optional)
+- [ ] **Pass 3 — Layer 2-4 (Mobile):** Same behavior, touch-optimized
+
+#### Delegation
+```
+/implement "Polish ProductCard to match homepage FeaturedCard: verify .card-product-dark hover states (lift + gold border), ensure bg-surface-productImage on image container, check type-card-title and type-price usage. Optional: add subtle image scale on hover."
+```
+
+---
+
+### Scope Contract 7: MobileControlsBar — G-07
+**Gap Coverage:** Mobile filter/sort controls presumably minimal
+
+#### Target State
+Mobile toolbar provides sort dropdown and filter trigger button. Clean layout, full-width, matches desktop aesthetic.
+
+#### DoD (Sequenced)
+- [ ] **Pass 1 — Skeleton:** Debug border mobile controls container
+- [ ] **Pass 2 — Data:** Integrate with SortDropdown, hook up filter drawer trigger
+- [ ] **Pass 3 — Layer 2 (Mobile Layout):** Flex row, justify-between, gap-4
+- [ ] **Pass 3 — Layer 3 (Mobile Surface):**
+  - Sort: `.input-select` (compact)
+  - Filter button: `.btn-secondary` with filter icon + count badge
+- [ ] **Pass 3 — Layer 4 (Mobile Interaction):** Button triggers drawer, badge updates
+
+**Note:** Desktop version hides this (lg:hidden), so Pass 3 mobile-only.
+
+#### Delegation
+```
+/implement "Complete MobileControlsBar: flex row with SortDropdown (.input-select compact) and filter button (.btn-secondary with icon). Filter button triggers MobileFilterDrawer. Show active filter count badge when filters applied."
+```
+
+---
+
+### Scope Contract 8: MobileFilterDrawer — G-08
+**Gap Coverage:** Mobile filter experience presumably basic
+
+#### Target State
+Full-featured slide-out drawer containing all sidebar filters. Smooth animation, proper overlay, accessible focus trapping.
+
+#### DoD (Sequenced)
+- [ ] **Pass 1 — Skeleton:** Debug border drawer structure (hidden by default)
+- [ ] **Pass 2 — Data:** Reuse FilterSidebar content (same config)
+- [ ] **Pass 3 — Layer 2 (Mobile Layout):**
+  - Drawer: Fixed position, full height, w-60
+  - Overlay: Backdrop blur, dark bg
+  - Content: Scrollable filter panel
+- [ ] **Pass 3 — Layer 3 (Mobile Surface):**
+  - Same styling as desktop FilterSidebar
+  - Close button: X icon, top-right
+  - Header: "Filters" with count
+- [ ] **Pass 3 — Layer 4 (Mobile Interaction):**
+  - Slide in/out animation (300ms ease)
+  - Overlay click to close
+  - Swipe to close (optional)
+  - Body scroll lock when open
+
+**Note:** Desktop version doesn't use drawer (hidden lg:block on sidebar), so Pass 3 mobile-only.
+
+#### Delegation
+```
+/implement "Complete MobileFilterDrawer: slide-out from left, w-60, full filter content from FilterSidebar, overlay backdrop, close button, smooth animation. Body scroll lock when open. Same styling tokens as desktop sidebar."
+```
+
+---
+
+### Scope Contract 9: ActiveFilters Display — G-09
+**Gap Coverage:** No visible indication of active filters in main content area
+
+#### Target State
+Active filter pills appear below toolbar, showing selected filters with remove buttons. Clicking pill removes that filter.
+
+#### DoD (Sequenced)
+- [ ] **Pass 1 — Skeleton:** Debug border active filters row
+- [ ] **Pass 2 — Data:** Parse URL params, display active filters
+- [ ] **Pass 3 — Layer 2 (Desktop Layout):** Flex row wrap, gap-2, below toolbar
+- [ ] **Pass 3 — Layer 3 (Desktop Surface):**
+  - Pill: `.btn-secondary` compact or custom chip style
+  - Text: `type-caption`
+  - Remove icon: X icon
+- [ ] **Pass 3 — Layer 4 (Desktop Interaction):** Click to remove, URL updates
+- [ ] **Pass 3 — Layer 2-4 (Mobile):** Same, smaller pills
+
+**Note:** May already exist as `ActiveFilters` component — verify and complete.
+
+#### Delegation
+```
+/implement "Verify ActiveFilters component: display active filter pills below toolbar, each with remove button. type-caption text, compact .btn-secondary or chip style. Click removes filter and updates URL."
+```
+
+---
+
+### Scope Contract 10: Page Layout Refinement — G-09/G-10
+**Gap Coverage:** Complex height calculations, no decorative elements
+
+#### Target State
+Clean semantic layout without arbitrary calc() values. Optional decorative header treatment (low priority).
+
+#### DoD (Sequenced)
+- [ ] **Pass 1 — Skeleton:** Debug border page structure
+- [ ] **Pass 2 — Data:** All components receiving correct data
+- [ ] **Pass 3 — Layer 2 (Desktop Layout):**
+  - Container: `container mx-auto px-4 pb-6` (no height calc if possible)
+  - Layout: Flex row gap-8
+  - Sidebar: `w-60 sticky top-[var(--desktop-header-h)]`
+  - Main: `flex-1 min-w-0`
+- [ ] **Pass 3 — Layer 3 (Desktop Surface):** 
+  - Evaluate if header needs decorative background
+  - Optional: subtle fractal ring or gradient
+- [ ] **Pass 3 — Layer 4 (Desktop Interaction):** Smooth scroll behavior
+- [ ] **Pass 3 — Layer 2-4 (Mobile):** Stack layout, drawer for filters
+
+#### Delegation
+```
+/implement "Refine page.tsx layout: simplify height calculations if possible, ensure sticky sidebar works correctly, optional decorative header background (subtle gradient or texture matching homepage)."
+```
+
+---
+
+## Phase 3: Regression Containment
+
+### Files at Risk
+
+| File | Risk Description | Mitigation Strategy |
+|------|------------------|---------------------|
+| `app/(store)/products/[...slug]/page.tsx` | Layout changes could break SSR/Suspense streaming | Test data loading, verify Suspense boundaries intact |
+| `app/components/features/filters/FilterSidebar.tsx` | Style changes could affect functionality | Verify filter interactions still work (checkboxes, sliders) |
+| `app/components/features/filters/PriceRangeSlider.tsx` | Token refactor could break slider behavior | Test min/max validation, clear functionality |
+| `app/components/features/products/ProductCard.tsx` | Hover changes could impact clickability | Verify Link wrapping, button click handlers |
+| `app/components/features/products/ProductGrid.tsx` | Grid changes affect responsive behavior | Test all breakpoints (xs, md, lg) |
+| `app/components/skeletons/*.tsx` | Skeleton changes must match final layout exactly | Visual regression test (screenshot comparison) |
+
+### Pre-Sprint Baseline
+**Action:** Run `/test` baseline capture before any changes
+```bash
+npm run build
+npx playwright test --grep "product-discovery" --update-snapshots
+```
+
+---
+
+## Scope Lock Rules
+
+**NON-NEGOTIABLE CONSTRAINTS:**
+
+1. **NO** changes to `globals.css` — use Tailwind utilities only
+2. **NO** changes to homepage components (`Hero`, `Featured`, etc.)
+3. **NO** changes to data structures (Sanity schemas, GROQ queries)
+4. **NO** changes to filter logic — visual-only changes to filter UI
+5. **NO** additions to tailwind.config.ts during sprint — use existing tokens
+6. **NO** new dependencies — work with existing stack (Tailwind, Phosphor icons, next-sanity)
+
+**ALLOWED:**
+- New component files for skeletons if missing
+- Style-only changes to existing components
+- Mobile-specific components (drawer, mobile controls)
+
+---
+
+## RWD Strategy Summary
+
+### Breakpoint Reference
+```javascript
+// From tailwind.config.ts
+screens: {
+  "xs": "475px",           // Small phones
+  "lg-desktop": "(min-width: 1024px and min-height: 851px)",  // Desktop
+  "lg-touch": "(min-width: 1024px and max-height: 850px)",    // Tablet
+}
+```
+
+### Component Breakpoint Behavior
+
+| Component | Mobile (375px) | Tablet (768px) | Desktop (1280px) |
+|-----------|----------------|----------------|------------------|
+| **ShopHeader** | Stack, smaller overline | Stack | Stack with full spacing |
+| **ProductGrid** | 1 col, gap-4 | xs:2 cols | lg:4 cols, gap-6 |
+| **Sidebar** | Hidden (drawer) | Hidden (drawer) | Block, sticky |
+| **MobileControls** | Block | Block | lg:hidden |
+| **MobileDrawer** | Full overlay | Full overlay | Hidden |
+
+---
+
+## Phase 4: Execution Delegation
+
+### Execution Sequence
+
+```
+PHASE 1: All Skeletons (SC1, SC2) — Parallel execution possible
+  └─> /implement SC1 (ProductGridSkeleton)
+  └─> /implement SC2 (FilterSidebarSkeleton)
+  └─> /test — Verify skeleton alignment with final grids
+
+PHASE 2: Core Components (SC3, SC4, SC5, SC6) — Sequential recommended
+  └─> /implement SC3 (ShopHeader)
+      └─> /test — Verify header presence
+  └─> /implement SC4 (FilterSidebar)
+      └─> /test — Verify filter functionality intact
+  └─> /implement SC5 (PriceRangeSlider)
+      └─> /test — Verify slider behavior
+  └─> /implement SC6 (ProductCard)
+      └─> /test — Verify card hover states
+
+PHASE 3: Mobile Experience (SC7, SC8) — Sequential
+  └─> /implement SC7 (MobileControlsBar)
+  └─> /implement SC8 (MobileFilterDrawer)
+  └─> /test — Mobile viewport testing
+
+PHASE 4: Polish (SC9, SC10) — Parallel
+  └─> /implement SC9 (ActiveFilters)
+  └─> /implement SC10 (Page Layout)
+  └─> /test — Full regression test
+```
+
+### Verification Commands per Contract
+
+```bash
+# After EACH scope contract:
+npm run build
+
+# After Pass 3 completion for each component:
+npx playwright test --grep "[ComponentName]"
+
+# Final verification:
+npx playwright test --grep "product-discovery"
+npm run build && echo "BUILD PASSED"
+```
+
+---
+
+## Evidence Log (To Be Filled During Execution)
+
+| Date | Scope Contract | DoD | Result | Evidence |
+|------|----------------|-----|--------|----------|
+| | | | | |
+
+---
+
+## Success Criteria (Sprint Lock)
+
+- [ ] All 10 scope contracts complete with all DoDs checked
+- [ ] Build passes: `npm run build` exits 0
+- [ ] No visual jump between skeleton and loaded state
+- [ ] Filter functionality intact (apply, clear, slider validation)
+- [ ] Mobile drawer opens/closes smoothly
+- [ ] Homepage unaffected (visual regression test)
+- [ ] All design system tokens used correctly (no hardcoded hex values except in config)
+
+---
+
+## Post-Sprint /learn Trigger
+
+**Execute after sprint lock:**
+```
+/learn "Product discovery UI design system alignment sprint — extract patterns for future UI sprints, update INDEX.md with new keywords if needed"
+```

@@ -1,0 +1,802 @@
+# SPRINT: Search UI — Product Search Feature
+# Date: 2026-04-01
+# Source: _project/specs/search-ui-design-specs.md
+# Target: Fully functional product search — field, autocomplete, results page
+# Type: Greenfield feature (Pass 1 → Pass 2 → Pass 3 full sequence)
+
+# ═══════════════════════════════════════════════════════════════
+# SPRINT METADATA
+# ═══════════════════════════════════════════════════════════════
+
+# Sprint Type: Greenfield feature build (Three Passes & Four Layers)
+# Pattern: _project/core-building-pattern.md
+# Specs: _project/specs/search-ui-design-specs.md
+# Grouping: Functional groups per _project/lessons/patterns/functional-grouping.md
+#
+# Functional Groups:
+#   A. Data Layer (GROQ query) — foundation, no UI dependency
+#   B. Search Results Page (Server Component route) — depends on A
+#   C. Search Field + Autocomplete (Client Components) — depends on A
+#   D. Empty State + Polish — depends on B, C
+
+# ═══════════════════════════════════════════════════════════════
+# LESSONS APPLIED (MANDATORY CONSTRAINTS)
+# ═══════════════════════════════════════════════════════════════
+
+# [CRITICAL] groq-reference-syntax.md:
+#   - `brand` IS a reference in productType.ts (line 35-39)
+#   - CORRECT: brand->name match $query
+#   - VERIFIED 2026-04-01 against sanity/schemaTypes/productType.ts
+#
+# [CRITICAL] groq-schema-assumption.md:
+#   - Never assume field types — schema verified before query design
+#   - Searchable fields verified: name (string), brand (reference), sku (string)
+#
+# [CRITICAL] tailwind-breakpoint-shadowing.md:
+#   - NEVER use bare `lg:` for responsive layout
+#   - USE `lg-desktop:` and `lg-touch:` for 1024px+ breakpoints
+#   - Default `md:`, `xs:` are safe
+#
+# [CRITICAL] sequencing:
+#   - Pass 1→2→3, Layer 1→2→3→4 enforcement
+#   - All skeletons first, then all data, then build one-at-a-time
+#
+# [HIGH] functional-grouping.md:
+#   - Complete functional groups together
+#   - Data layer → Results page → Search field+autocomplete → Polish
+#
+# [HIGH] suspense-streaming-components.md:
+#   - Create promises in parent, pass to async children
+#   - Wrap in Suspense with skeleton fallbacks
+#
+# [HIGH] pre-flight-baseline-check.md:
+#   - npm run build MUST PASS before any changes
+#
+# [HIGH] type-consolidation.md:
+#   - Export shared SearchProduct type from data layer
+#   - Single source of truth for search result shape
+#
+# [HIGH] velocity-aware-sprint-planning.md:
+#   - Each SC verifiable in <5 min via npm run build
+#   - No re-planning during execution
+#
+# [MEDIUM] url-state-shallow-routing.md:
+#   - Results page uses searchParams (server-read)
+#   - Autocomplete uses local state (no URL)
+
+# ═══════════════════════════════════════════════════════════════
+# SCOPE LOCK RULES
+# ═══════════════════════════════════════════════════════════════
+
+# ❌ NO globals.css changes
+# ❌ NO homepage component changes
+# ❌ NO PLP component changes (reuse only, never modify)
+# ❌ NO Sanity schema changes
+# ❌ NO tailwind.config.ts changes
+# ❌ NO new npm dependencies (use existing: next/navigation, Phosphor icons)
+# ❌ NO bare `lg:` breakpoint classes (use lg-desktop:/lg-touch:)
+# ❌ NO client-side filtering of search results (server-only via GROQ)
+# ✅ NEW files allowed (this is greenfield)
+# ✅ Searchbar.tsx modification allowed (enhancing existing component)
+# ✅ Header.tsx minor modification allowed (swapping Searchbar → SearchField)
+
+# ═══════════════════════════════════════════════════════════════
+# PRE-FLIGHT BASELINE
+# ═══════════════════════════════════════════════════════════════
+
+# Action: npm run build
+# Expected: PASS (clean build)
+# Blocking: If build fails, DO NOT start sprint — fix pre-existing issues first
+
+# ═══════════════════════════════════════════════════════════════
+# END-STATE SPATIAL MAPS
+# ═══════════════════════════════════════════════════════════════
+
+# ── SEARCH FIELD (Desktop 1280px) ──
+#
+# Header: bg-brand-900, h-[var(--desktop-header-h)], sticky top-0
+# ┌──────────────────────────────────────────────────────────────┐
+# │ [Logo]      [═══════ SearchField ═══════]      [🛒] [👤]    │
+# │             ┌──────────────────────────────┐                 │
+# │             │ 🔍  Search products...       │  h-9 (36px)    │
+# │             │    bg-secondary-300          │  max-w-xl      │
+# │             │    rounded-md (3px)          │                 │
+# │             └──────────────────────────────┘                 │
+# │             ┌──────────────────────────────┐                 │
+# │             │ bg-surface-elevated          │  AUTOCOMPLETE   │
+# │             │ shadow-cardDark rounded-lg   │  OVERLAY        │
+# │             │                              │                 │
+# │             │ Products (type-overline)     │                 │
+# │             │ ┌────┐ Product Name          │  max 6 items   │
+# │             │ │IMG │ Brand · $Price        │  h-16 each     │
+# │             │ └────┘                       │                 │
+# │             │ ┌────┐ Product Name          │                 │
+# │             │ │IMG │ Brand · $Price        │                 │
+# │             │ └────┘                       │                 │
+# │             │ ...                          │                 │
+# │             │ View all results for '...' → │  footer link   │
+# │             └──────────────────────────────┘                 │
+# └──────────────────────────────────────────────────────────────┘
+
+# ── SEARCH FIELD (Mobile 375px) ──
+#
+# Default state: Search icon only in header
+# ┌─────────────────────────────┐
+# │ [Logo]         [🔍] [🛒]   │
+# └─────────────────────────────┘
+#                   ↓ tap
+# Expanded state: Full-width search
+# ┌─────────────────────────────┐
+# │ [←] [══ Search... ══] [✕]  │
+# ├─────────────────────────────┤
+# │ Product Name                │  No thumbnails on mobile
+# │ Brand · $Price              │
+# │ ─────────────────────────── │
+# │ Product Name                │
+# │ Brand · $Price              │
+# │ ─────────────────────────── │
+# │ View all results →          │
+# └─────────────────────────────┘
+
+# ── SEARCH RESULTS PAGE (Desktop 1280px) ──
+#
+# ┌──────────────────────────────────────────────────────────────┐
+# │ NAV HEADER (SearchField pre-filled with query)               │
+# ├──────────────────────────────────────────────────────────────┤
+# │ mx-auto max-w-content px-8 pt-6 pb-12                       │
+# │                                                              │
+# │ Home / Search                          (Breadcrumbs)         │
+# │ ── Search Results                      (overline + anchor)   │
+# │ "HEADPHONES"                           (echoed query, h1)    │
+# │                                                              │
+# │ Sort ▼ ──────────────────────── 12 products                 │
+# │ ─────────────────────────────────────────────(border-b)───── │
+# │                                                              │
+# │ ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐   4-col grid (no       │
+# │ │ CARD │ │ CARD │ │ CARD │ │ CARD │   sidebar = 4 cols)    │
+# │ └──────┘ └──────┘ └──────┘ └──────┘                         │
+# │ ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐                         │
+# │ │ CARD │ │ CARD │ │ CARD │ │ CARD │                         │
+# │ └──────┘ └──────┘ └──────┘ └──────┘                         │
+# │                                                              │
+# │ pb-12                                                        │
+# └──────────────────────────────────────────────────────────────┘
+
+# ── SEARCH RESULTS PAGE (Mobile 375px) ──
+#
+# ┌───────────────────────────┐
+# │ NAV HEADER                │
+# ├───────────────────────────┤
+# │ Home / Search             │
+# │ ── Search Results         │
+# │ "HEADPHONES"              │
+# ├───────────────────────────┤
+# │ [Sort ▼]      12 products │
+# ├───────────────────────────┤
+# │ ┌───────────────────────┐ │  1-col base
+# │ │ CARD (full-width)     │ │
+# │ └───────────────────────┘ │
+# │ ┌─────────┐┌─────────┐   │  2-col xs+
+# │ │ CARD    ││ CARD    │   │
+# │ └─────────┘└─────────┘   │
+# └───────────────────────────┘
+
+# ── EMPTY STATE (No Results) ──
+#
+# ┌──────────────────────────────────────┐
+# │          text-center py-16           │
+# │                                      │
+# │    🔍 (48px, text-secondary-500)     │
+# │                                      │
+# │    "No products found"               │
+# │    type-h3 text-primary              │
+# │                                      │
+# │    "We couldn't find any products    │
+# │     matching 'xyz'"                  │
+# │    type-body text-secondary          │
+# │                                      │
+# │    ── Try Instead                    │
+# │    [Headphones] [IEMs] [DACs]        │
+# │    btn-secondary buttons             │
+# │                                      │
+# │    "Browse all products →"           │
+# │    btn-ghost                         │
+# └──────────────────────────────────────┘
+
+# ═══════════════════════════════════════════════════════════════
+# GAP ANALYSIS (Greenfield — all gaps are "does not exist yet")
+# ═══════════════════════════════════════════════════════════════
+
+# | ID   | Component              | Current         | Target                              | Severity |
+# |------|------------------------|-----------------|-------------------------------------|----------|
+# | G-01 | GROQ search query      | Does not exist  | searchProducts.ts with match query  | Critical |
+# | G-02 | Search results route   | Does not exist  | /search?q= server-rendered page     | Critical |
+# | G-03 | SearchField component  | Static form, no function | Functional input + form submit | Critical |
+# | G-04 | AutocompleteOverlay    | Does not exist  | Debounced suggestions dropdown      | High     |
+# | G-05 | AutocompleteItem       | Does not exist  | Product suggestion row w/ thumbnail | High     |
+# | G-06 | SearchEmpty state      | Does not exist  | Zero-results recovery UI            | High     |
+# | G-07 | SearchHeader           | Does not exist  | Breadcrumb + echoed query title     | Medium   |
+# | G-08 | Mobile search expand   | Hidden on sm+   | Icon-only → full-width expansion    | Medium   |
+# | G-09 | Keyboard navigation    | None            | Arrow keys, Enter, Escape in overlay| Medium   |
+# | G-10 | Header.tsx integration | Uses Searchbar  | Swap to SearchField                 | Low      |
+
+# ═══════════════════════════════════════════════════════════════
+# REGRESSION CONTAINMENT
+# ═══════════════════════════════════════════════════════════════
+
+# | File                  | Risk                                    | Mitigation                         |
+# |-----------------------|-----------------------------------------|------------------------------------|
+# | Header.tsx            | Swapping Searchbar → SearchField        | Build gate after SC8               |
+# | Searchbar.tsx         | Being replaced/renamed                  | Old file kept until SC8 confirmed  |
+# | ProductGrid.tsx       | Reused on search page — must not modify | Scope lock: reuse only             |
+# | ProductCard.tsx       | Reused on search page — must not modify | Scope lock: reuse only             |
+# | SortDropdown.tsx      | Reused on search page — must not modify | Scope lock: reuse only             |
+# | page.tsx (PLP)        | Must not be affected by search route    | Different route group entirely     |
+
+# Pre-sprint: npm run build (baseline gate)
+# Post-sprint: npm run build + manual visual check
+
+# ═══════════════════════════════════════════════════════════════
+# PASS 1: SKELETON — ALL COMPONENTS (no styling, no data)
+# Purpose: Confirm page composition and component tree before investment
+# ═══════════════════════════════════════════════════════════════
+
+## SC1: Pass 1 — All Component Skeletons [G-01 through G-10]
+
+### Files to CREATE
+# sanity/lib/products/searchProducts.ts       — empty exported functions
+# app/(store)/search/page.tsx                  — skeleton with debug border
+# app/components/features/search/SearchHeader.tsx    — skeleton
+# app/components/features/search/SearchEmpty.tsx     — skeleton
+# app/components/features/search/AutocompleteOverlay.tsx — skeleton
+# app/components/features/search/AutocompleteItem.tsx    — skeleton
+# app/components/layout/header/SearchField.tsx           — skeleton
+
+### Target State
+# Every component exists as a file with:
+#   - Named export
+#   - Debug border (border-2 border-red-500 for page, blue for features, green for layout)
+#   - Component name as text content
+#   - No styling, no data, no logic
+#   - Correct TypeScript interface stubs (empty props where needed)
+
+### DoD
+# - [ ] All 7 new files created with skeleton exports
+# - [ ] searchProducts.ts exports: searchProductsAutocomplete(), searchProductsFull()
+#       (return empty arrays, correct return type stubs)
+# - [ ] search/page.tsx renders: SearchHeader + "ProductGrid placeholder" + SearchEmpty
+#       (reads searchParams.q — passes as prop, no fetch yet)
+# - [ ] SearchField.tsx renders: form with input (no functionality beyond existing Searchbar)
+# - [ ] AutocompleteOverlay.tsx renders: "AutocompleteOverlay" text with debug border
+# - [ ] AutocompleteItem.tsx renders: "AutocompleteItem" text with debug border
+# - [ ] SearchEmpty.tsx renders: "SearchEmpty" text with debug border
+# - [ ] SearchHeader.tsx renders: "SearchHeader" text with debug border
+# - [ ] Verify: npm run build passes
+# - [ ] Verify: Navigate to /search?q=test — page renders with skeleton components
+
+### Delegation
+# /implement SC1 from SPRINT_2026_04_01_SEARCH_UI
+# Build gate: npm run build
+
+# ═══════════════════════════════════════════════════════════════
+# PASS 2: DATA — ALL COMPONENTS (real data flows, no styling)
+# Purpose: Confirm data layer works before visual investment
+# ═══════════════════════════════════════════════════════════════
+
+## SC2: Pass 2 — GROQ Search Query + Data Flow [G-01]
+
+### Files
+# sanity/lib/products/searchProducts.ts
+
+### Target State
+# Working GROQ queries that return real product data from Sanity.
+# Two exported functions with proper TypeScript types.
+
+### GROQ Query Design (VERIFIED against schema 2026-04-01)
+#
+# Schema verification:
+#   - name: string (productType.ts line 13-16) ✅
+#   - brand: reference to brand document (productType.ts line 35-39) ✅
+#     → brand->name is CORRECT (reference traversal)
+#   - sku: string (productType.ts line 64-67) ✅
+#   - displayPrice: number (productType.ts line 49-54) ✅
+#   - slug: slug type (productType.ts line 24-32) ✅
+#   - image: image type (productType.ts line 69-76) ✅
+#   - stock: number (productType.ts line 56-60) ✅
+#
+# Autocomplete query (max 6 results):
+#   *[_type == "product" && (
+#     name match $query ||
+#     brand->name match $query ||
+#     sku match $query
+#   )] | order(name asc) [0...6] {
+#     _id, name, "brand": brand->name, displayPrice,
+#     slug { current }, image
+#   }
+#
+# Full results query (all matches, sortable):
+#   *[_type == "product" && (
+#     name match $query ||
+#     brand->name match $query ||
+#     sku match $query
+#   )] | order($orderClause) {
+#     _id, name, "brand": { "name": brand->name }, displayPrice,
+#     stock, slug { current }, image
+#   }
+#
+# Parameters:
+#   - $query: "${userInput}*" (append wildcard for prefix matching)
+#   - Guard: minimum 2 characters
+#   - Sort: name asc (default), name desc, displayPrice asc, displayPrice desc
+
+### Shared Type (exported from this file — single source of truth)
+# export interface SearchProduct {
+#   _id: string;
+#   name: string;
+#   brand: { name: string } | null;
+#   displayPrice: number;
+#   stock: number;
+#   slug: { current: string };
+#   image: any;
+# }
+#
+# export interface AutocompleteProduct {
+#   _id: string;
+#   name: string;
+#   brand: string | null;
+#   displayPrice: number;
+#   slug: { current: string };
+#   image: any;
+# }
+
+### DoD
+# - [ ] SearchProduct and AutocompleteProduct types exported
+# - [ ] searchProductsAutocomplete(query: string) → Promise<AutocompleteProduct[]>
+#       Uses sanityFetch, appends "*" wildcard, returns max 6, guards <2 chars
+# - [ ] searchProductsFull(query: string, sort?: string) → Promise<SearchProduct[]>
+#       Uses sanityFetch, appends "*" wildcard, supports sort param, guards <2 chars
+# - [ ] Both functions use groq template literal (import groq from 'groq')
+# - [ ] Both functions follow sanityFetch pattern from sanity/lib/client.ts
+# - [ ] Verify: npm run build passes
+# - [ ] Verify: Import in search/page.tsx, call with real query, confirm data returns
+
+### Delegation
+# /implement SC2 from SPRINT_2026_04_01_SEARCH_UI
+# Build gate: npm run build
+
+## SC3: Pass 2 — Search Results Page Data Integration [G-02, G-07]
+
+### Files
+# app/(store)/search/page.tsx
+# app/components/features/search/SearchHeader.tsx
+
+### Target State
+# Server Component reads searchParams.q, calls searchProductsFull(),
+# passes real products to existing ProductGrid component.
+# SearchHeader shows breadcrumb + query text (unstyled).
+
+### Architecture (follows suspense-streaming pattern)
+# page.tsx:
+#   - Read searchParams.q and searchParams.sort
+#   - Guard: if no q or empty q, show message
+#   - Create productsPromise = searchProductsFull(q, sort)
+#   - Render SearchHeader (sync — just text)
+#   - Render Suspense > ProductsSection with productsPromise
+#
+# SearchHeader:
+#   - Props: query (string)
+#   - Renders breadcrumb: Home / Search
+#   - Renders overline: "Search Results"
+#   - Renders h1: query text (uppercased)
+
+### DoD
+# - [ ] page.tsx reads searchParams.q, searchParams.sort
+# - [ ] page.tsx calls searchProductsFull(q, sort)
+# - [ ] page.tsx renders SearchHeader with query prop
+# - [ ] page.tsx renders SortDropdown + result count (unstyled)
+# - [ ] page.tsx renders ProductGrid with real search results
+# - [ ] page.tsx renders SearchEmpty when results.length === 0
+# - [ ] SearchHeader renders breadcrumb + overline + h1 with query (unstyled)
+# - [ ] Verify: npm run build passes
+# - [ ] Verify: /search?q=headphone shows real matching products
+
+### Delegation
+# /implement SC3 from SPRINT_2026_04_01_SEARCH_UI
+# Build gate: npm run build
+
+## SC4: Pass 2 — SearchField Data Integration [G-03]
+
+### Files
+# app/components/layout/header/SearchField.tsx
+
+### Target State
+# Client component with working form submit that navigates to /search?q=
+# Replaces static Searchbar. No autocomplete yet. No styling beyond basic function.
+
+### Behavior
+# - useState for query input value
+# - onSubmit: router.push(`/search?q=${encodeURIComponent(query)}`)
+# - Guard: don't navigate if query is empty or <2 chars
+# - If on /search page, pre-fill input from URL searchParams.q
+
+### DoD
+# - [ ] "use client" directive
+# - [ ] useState for query value
+# - [ ] Form onSubmit navigates to /search?q= via router.push
+# - [ ] Input is controlled (value + onChange)
+# - [ ] Guard: empty/short query prevented
+# - [ ] Pre-fill from searchParams when on /search page (useSearchParams)
+# - [ ] Verify: npm run build passes
+# - [ ] Verify: Type "headphone", press Enter → navigates to /search?q=headphone
+
+### Delegation
+# /implement SC4 from SPRINT_2026_04_01_SEARCH_UI
+# Build gate: npm run build
+
+# ═══════════════════════════════════════════════════════════════
+# PASS 3: BUILD — One functional group at a time, L1→L4, desktop→mobile
+# ═══════════════════════════════════════════════════════════════
+
+# ── FUNCTIONAL GROUP A: SEARCH RESULTS PAGE ──
+# Ship condition: Full results page styled and functional
+
+## SC5: Pass 3 — Search Results Page Build [G-02, G-07]
+
+### Files
+# app/(store)/search/page.tsx
+# app/components/features/search/SearchHeader.tsx
+
+### Target State
+# Fully styled search results page matching PLP design language:
+# - SearchHeader with breadcrumb, gold overline anchor, uppercase query title
+# - Sort bar with SortDropdown + result count
+# - ProductGrid (reused) with 4-col lg-desktop (no sidebar)
+# - Proper page container, spacing, responsive behavior
+
+### DoD (Layer 2 → 3 → 4, Desktop → Mobile)
+# - [ ] L2 Desktop: page.tsx has max-w-content mx-auto px-4 md:px-8 pt-6 pb-12
+# - [ ] L2 Desktop: SearchHeader, sort bar, ProductGrid stacked vertically
+# - [ ] L2 Desktop: Sort bar flex row with justify-between, border-b
+# - [ ] L2 Mobile: Same stack, full-width, sort bar wraps properly
+# - [ ] L3 Desktop: SearchHeader uses type-overline text-accent-500 section-header-anchor
+# - [ ] L3 Desktop: Query title uses type-section-hed uppercase
+# - [ ] L3 Desktop: Breadcrumb uses type-caption tokens (same as CategoryBreadcrumbs)
+# - [ ] L3 Desktop: Sort bar uses border-border-secondary, type-metadata for count
+# - [ ] L3 Mobile: Same surface tokens (inherits desktop)
+# - [ ] L4 Desktop: Breadcrumb links have hover:text-primary transition
+# - [ ] L4 Mobile: No additional interaction (inherits desktop)
+# - [ ] Grid columns: grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg-desktop:grid-cols-4 lg-touch:grid-cols-3
+#       (4 cols on lg-desktop because NO sidebar, unlike PLP's 3)
+# - [ ] Verify: npm run build passes
+# - [ ] Verify: /search?q=headphone renders styled page matching design system
+
+### Delegation
+# /implement SC5 from SPRINT_2026_04_01_SEARCH_UI
+# Build gate: npm run build
+
+# ── FUNCTIONAL GROUP B: EMPTY STATE ──
+
+## SC6: Pass 3 — Search Empty State Build [G-06]
+
+### Files
+# app/components/features/search/SearchEmpty.tsx
+
+### Target State
+# Zero-results recovery UI:
+# - Centered layout with icon, heading, subtext
+# - Category suggestion buttons (btn-secondary)
+# - "Browse all products" ghost link (btn-ghost)
+# - Uses all design system tokens
+
+### Props
+# interface SearchEmptyProps {
+#   query: string;
+# }
+
+### DoD (Layer 2 → 3 → 4)
+# - [ ] L2: Centered container with py-16, flex-col items-center gap structure
+# - [ ] L3: MagnifyingGlass icon 48px text-secondary-500
+# - [ ] L3: "No products found" — type-h3 text-primary mb-2
+# - [ ] L3: "We couldn't find any products matching '{query}'" — type-body text-secondary mb-8
+# - [ ] L3: "Try Instead" — type-overline text-accent-500 section-header-anchor
+# - [ ] L3: Category buttons — btn-secondary linking to /products/headphones, /products/iems, etc.
+# - [ ] L3: "Browse all products →" — btn-ghost linking to /products (or first category)
+# - [ ] L4: Button hover states (already in btn-secondary/btn-ghost tokens)
+# - [ ] Verify: npm run build passes
+# - [ ] Verify: /search?q=xyznonexistent shows empty state with suggestions
+
+### Category Links (hardcoded top-level for v1)
+# - Headphones → /products/headphones
+# - IEMs → /products/iems
+# - DACs → /products/dacs-and-amps
+# - Accessories → /products/accessories
+# (These match the catalogue structure visible in homepage screenshot)
+
+### Delegation
+# /implement SC6 from SPRINT_2026_04_01_SEARCH_UI
+# Build gate: npm run build
+
+# ── FUNCTIONAL GROUP C: SEARCH FIELD + AUTOCOMPLETE ──
+# Ship condition: Full interactive search from header
+
+## SC7: Pass 3 — SearchField Build (Desktop + Mobile) [G-03, G-08]
+
+### Files
+# app/components/layout/header/SearchField.tsx
+
+### Target State
+# Fully styled, functional search input matching existing Searchbar design language.
+# Desktop: Visible input in header (same position as current Searchbar).
+# Mobile: Icon-only default → expands to full-width on tap.
+
+### Design Tokens (from specs + existing Searchbar.tsx)
+# Container: bg-secondary-300, rounded-md (3px via style), h-9
+# Focused: bg-brand-400 shadow-md
+# Input text: text-brand-700
+# Placeholder: placeholder:text-secondary-600, focus:placeholder:text-brand-800
+# Selection: selection:bg-brand-700 selection:text-brand-400
+# Search icon: MagnifyingGlass from Phosphor, 16px
+# Clear button: X from Phosphor, 14px (appears when input has value)
+# Mobile toggle: MagnifyingGlass icon button in header
+
+### DoD (Layer 2 → 3 → 4, Desktop → Mobile)
+# - [ ] L2 Desktop: Form with input, icon, positioned in header flex
+# - [ ] L2 Desktop: max-w-xl, h-9, flex items-center gap-4 px-4
+# - [ ] L2 Mobile: Icon-only button (hidden input), sm:flex for visible input
+# - [ ] L2 Mobile: Expanded state: full-width input with back arrow + clear button
+# - [ ] L3 Desktop: bg-secondary-300, rounded-md, text-brand-700, placeholder colors
+# - [ ] L3 Desktop: Clear (×) button visible when input has value
+# - [ ] L3 Mobile: Same surface tokens, full-screen overlay feel when expanded
+# - [ ] L4 Desktop: focus-within:bg-brand-400 focus-within:shadow-md transition-all duration-300
+# - [ ] L4 Desktop: Icon color transitions on focus
+# - [ ] L4 Mobile: Expand/collapse animation transition-all duration-300
+# - [ ] ARIA: role="search", aria-label="Search products", aria-expanded, aria-controls
+# - [ ] Verify: npm run build passes
+# - [ ] Verify: Desktop — input visible, submits on Enter
+# - [ ] Verify: Mobile — icon shows, tap expands, type + Enter navigates
+
+### Delegation
+# /implement SC7 from SPRINT_2026_04_01_SEARCH_UI
+# Build gate: npm run build
+
+## SC8: Pass 3 — AutocompleteOverlay + Items Build [G-04, G-05, G-09]
+
+### Files
+# app/components/features/search/AutocompleteOverlay.tsx
+# app/components/features/search/AutocompleteItem.tsx
+# app/components/layout/header/SearchField.tsx (integration)
+
+### Target State
+# Debounced autocomplete dropdown below search field.
+# Max 6 product suggestions with thumbnails (desktop), without (mobile).
+# Keyboard navigation (arrow keys, Enter, Escape).
+# "View all results" footer link.
+
+### Data Flow
+# SearchField manages:
+#   - query state (useState)
+#   - isOverlayOpen state (useState)
+#   - autocompleteResults state (useState)
+#   - activeIndex state (useState, -1 = none)
+#   - Debounced fetch: 300ms after last keystroke, call searchProductsAutocomplete(query)
+#   - Race condition guard: AbortController or check query matches
+# SearchField renders AutocompleteOverlay when isOverlayOpen && results.length > 0
+
+### AutocompleteOverlay Design Tokens
+# Container: bg-surface-elevated, border border-border-secondary, rounded-lg, shadow-cardDark
+# Section label: type-overline text-accent-500 — "Products"
+# Item: p-3, flex items-center gap-3
+# Item hover: bg-surface-card rounded-md (transition-colors duration-150)
+# Item active (keyboard): bg-surface-card border-l-2 border-brand-400
+# Thumbnail (desktop only): w-12 h-12, rounded-md, bg-surface-productImage
+# Product name: type-body text-primary
+# Product meta: type-caption text-secondary — "Brand · $Price"
+# Footer: type-caption text-brand-400 hover:underline, p-3, border-t border-border-secondary
+
+### DoD (Layer 2 → 3 → 4, Desktop → Mobile)
+# - [ ] L2 Desktop: Overlay positioned below search field, w-full (of input), mt-2
+# - [ ] L2 Desktop: AutocompleteItem has flex row with thumbnail + text stack
+# - [ ] L2 Desktop: Footer link at bottom
+# - [ ] L2 Mobile: Full-width overlay below expanded search header, no thumbnails
+# - [ ] L3 Desktop: bg-surface-elevated, shadow-cardDark, rounded-lg, all tokens applied
+# - [ ] L3 Desktop: Thumbnail with bg-surface-productImage, object-contain, mix-blend-multiply
+# - [ ] L3 Desktop: "Products" label as type-overline text-accent-500
+# - [ ] L3 Mobile: Same surface tokens, border-b dividers between items
+# - [ ] L4 Desktop: Hover bg on items (transition-colors duration-150)
+# - [ ] L4 Desktop: Active suggestion highlight (border-l-2 border-brand-400)
+# - [ ] L4 Desktop: Overlay open animation (opacity + translateY, duration-200)
+# - [ ] L4: Keyboard — ArrowDown/ArrowUp moves activeIndex through items
+# - [ ] L4: Keyboard — Enter on item navigates to /product/[slug]
+# - [ ] L4: Keyboard — Enter on no selection navigates to /search?q=
+# - [ ] L4: Keyboard — Escape closes overlay
+# - [ ] L4: Click outside closes overlay
+# - [ ] L4: Debounced fetch — 300ms, min 2 chars, AbortController for race conditions
+# - [ ] Loading state: 3 skeleton items (bg-secondary-800 animate-pulse)
+# - [ ] Empty state: "No products match '{query}'" with type-body text-secondary
+# - [ ] ARIA: role="listbox", role="option", aria-selected, aria-activedescendant
+# - [ ] Verify: npm run build passes
+# - [ ] Verify: Type 2+ chars → suggestions appear after 300ms
+# - [ ] Verify: Arrow keys navigate, Enter selects, Escape closes
+
+### Delegation
+# /implement SC8 from SPRINT_2026_04_01_SEARCH_UI
+# Build gate: npm run build
+
+# ── FUNCTIONAL GROUP D: INTEGRATION + POLISH ──
+
+## SC9: Header Integration — Swap Searchbar → SearchField [G-10]
+
+### Files
+# app/components/layout/header/Header.tsx
+
+### Target State
+# Header imports and renders SearchField instead of Searchbar.
+# Old Searchbar.tsx can be deleted or kept as backup.
+
+### Changes (Exact)
+# 1. CHANGE import:
+#    FROM: import Searchbar from "./Searchbar";
+#    TO:   import SearchField from "./SearchField";
+# 2. CHANGE render:
+#    FROM: <Searchbar />
+#    TO:   <SearchField />
+
+### DoD
+# - [ ] Header.tsx imports SearchField
+# - [ ] Header.tsx renders <SearchField /> in place of <Searchbar />
+# - [ ] No other changes to Header.tsx
+# - [ ] Verify: npm run build passes
+# - [ ] Verify: Header shows functional search field on all pages
+# - [ ] Verify: Homepage still renders correctly (no regression)
+
+### Delegation
+# /implement SC9 from SPRINT_2026_04_01_SEARCH_UI
+# Build gate: npm run build
+
+## SC10: Search Results Page — Suspense + Skeleton Polish [Streaming pattern]
+
+### Files
+# app/(store)/search/page.tsx
+
+### Target State
+# Search results wrapped in Suspense with ProductGridSkeleton fallback.
+# Follows suspense-streaming-components pattern from lessons.
+
+### Architecture
+# page.tsx:
+#   const productsPromise = searchProductsFull(q, sort);
+#   return (
+#     <div className="...container...">
+#       <SearchHeader query={q} />
+#       <Suspense fallback={<ProductGridSkeleton />}>
+#         <SearchResultsSection productsPromise={productsPromise} query={q} />
+#       </Suspense>
+#     </div>
+#   )
+#
+# SearchResultsSection (new async component in same route folder):
+#   export async function SearchResultsSection({ productsPromise, query }) {
+#     const products = await productsPromise;
+#     if (products.length === 0) return <SearchEmpty query={query} />;
+#     return (
+#       <>
+#         <SortBar count={products.length} />
+#         <ProductGrid products={products} className="..." />
+#       </>
+#     );
+#   }
+
+### DoD
+# - [ ] SearchResultsSection async component created
+# - [ ] Suspense wraps SearchResultsSection with ProductGridSkeleton fallback
+# - [ ] Products promise created in page.tsx (not awaited)
+# - [ ] SearchResultsSection awaits promise internally
+# - [ ] Empty → SearchEmpty, Results → SortBar + ProductGrid
+# - [ ] Verify: npm run build passes
+# - [ ] Verify: Loading state shows skeleton, then results stream in
+
+### Delegation
+# /implement SC10 from SPRINT_2026_04_01_SEARCH_UI
+# Build gate: npm run build
+
+# ═══════════════════════════════════════════════════════════════
+# EXECUTION SEQUENCE
+# ═══════════════════════════════════════════════════════════════
+
+# 0. Pre-flight: npm run build (MUST PASS)
+#
+# Pass 1 — Skeletons (all components):
+#   1. /implement SC1 → npm run build
+#
+# Pass 2 — Data (all components):
+#   2. /implement SC2 → npm run build (GROQ queries)
+#   3. /implement SC3 → npm run build (Results page data)
+#   4. /implement SC4 → npm run build (SearchField data)
+#
+# Pass 3 — Build (functional groups):
+#   Group A — Results Page:
+#     5. /implement SC5 → npm run build
+#   Group B — Empty State:
+#     6. /implement SC6 → npm run build
+#   Group C — Search Field + Autocomplete:
+#     7. /implement SC7 → npm run build
+#     8. /implement SC8 → npm run build
+#   Group D — Integration + Polish:
+#     9. /implement SC9 → npm run build
+#    10. /implement SC10 → npm run build
+#
+# Final: npm run build (full verification)
+# Final: One visual check (desktop + mobile)
+# Post-sprint: /learn
+
+# ═══════════════════════════════════════════════════════════════
+# RWD STRATEGY
+# ═══════════════════════════════════════════════════════════════
+
+# | Breakpoint     | Search Field          | Autocomplete         | Results Grid |
+# |----------------|-----------------------|----------------------|--------------|
+# | base (0px)     | Icon only in header   | Full-width, no imgs  | 1 column     |
+# | xs (475px)     | Icon only             | Full-width, no imgs  | 2 columns    |
+# | sm (640px)     | Visible input field   | Aligned to input     | 2 columns    |
+# | md (768px)     | Visible, max-w-sm     | With thumbnails      | 3 columns    |
+# | lg-touch       | Visible, max-w-md     | With thumbnails      | 3 columns    |
+# | lg-desktop     | Visible, max-w-xl     | With thumbnails      | 4 columns    |
+
+# ═══════════════════════════════════════════════════════════════
+# FILE CREATION MAP
+# ═══════════════════════════════════════════════════════════════
+
+# NEW FILES (7):
+# sanity/lib/products/searchProducts.ts
+# app/(store)/search/page.tsx
+# app/components/features/search/SearchHeader.tsx
+# app/components/features/search/SearchEmpty.tsx
+# app/components/features/search/AutocompleteOverlay.tsx
+# app/components/features/search/AutocompleteItem.tsx
+# app/components/layout/header/SearchField.tsx
+#
+# MODIFIED FILES (1):
+# app/components/layout/header/Header.tsx (SC9: swap import)
+#
+# REUSED FILES (not modified):
+# app/components/features/products/ProductGrid.tsx
+# app/components/features/products/ProductCard.tsx
+# app/components/features/products/ProductImage.tsx
+# app/components/features/products/ProductCardSkeleton.tsx
+# app/components/features/filters/SortDropdown.tsx
+
+# ═══════════════════════════════════════════════════════════════
+# EVIDENCE LOG (filled during execution)
+# ═══════════════════════════════════════════════════════════════
+
+# | SC   | Pass | Build Gate | Visual Check | Notes |
+# |------|------|-----------|--------------|-------|
+# | SC1  | P1   | ⬜        | ⬜           |       |
+# | SC2  | P2   | ⬜        | ⬜           |       |
+# | SC3  | P2   | ⬜        | ⬜           |       |
+# | SC4  | P2   | ⬜        | ⬜           |       |
+# | SC5  | P3   | ⬜        | ⬜           |       |
+# | SC6  | P3   | ⬜        | ⬜           |       |
+# | SC7  | P3   | ⬜        | ⬜           |       |
+# | SC8  | P3   | ⬜        | ⬜           |       |
+# | SC9  | P3   | ⬜        | ⬜           |       |
+# | SC10 | P3   | ⬜        | ⬜           |       |
+# | FINAL|      | ⬜        | ⬜           |       |
+
+# ═══════════════════════════════════════════════════════════════
+# SPRINT LOCK CRITERIA
+# ═══════════════════════════════════════════════════════════════
+
+# - [ ] npm run build passes (ALL scope contracts)
+# - [ ] /search?q=headphone returns real product results
+# - [ ] /search?q=xyznonexistent shows empty state with recovery
+# - [ ] Autocomplete shows suggestions after 300ms debounce
+# - [ ] Keyboard navigation works (arrows, Enter, Escape)
+# - [ ] Mobile: icon-only → expand → search → results flow works
+# - [ ] Header.tsx uses SearchField (not old Searchbar)
+# - [ ] No bare `lg:` classes in new files
+# - [ ] No console.log in new files
+# - [ ] No off-system colors in new files
+# - [ ] No PLP/homepage files modified (scope lock)
+# - [ ] One final visual check (desktop + mobile)
+# - [ ] /learn executed post-sprint
