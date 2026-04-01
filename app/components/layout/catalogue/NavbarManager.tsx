@@ -10,10 +10,6 @@ export default function NavbarManager({
   navLinks,
   children,
 }: NavbarManagerProps) {
-  useEffect(() => {
-    console.log("[SRIP Trace] Manager Mount | Link Count:", navLinks.length, "| Children Count:", children.length);
-  }, [navLinks.length, children.length]);
-
   const [activeId, setActiveId] = useState<string | null>(null);
   const [displayIndex, setDisplayIndex] = useState(0);
 
@@ -32,13 +28,6 @@ export default function NavbarManager({
 
   const isOpen = activeId !== null;
 
-  // Clone children and pass onClose prop
-  const childrenWithOnClose = React.Children.map(children, (child) => {
-    if (React.isValidElement(child)) {
-      return React.cloneElement(child, { onClose: closeMenu } as React.Attributes);
-    }
-    return child;
-  });
 
   return (
     <div className="w-full">
