@@ -22,6 +22,7 @@ interface FilterSidebarProps {
 export function FilterSidebar({ filters }: FilterSidebarProps) {
   const { isFilterActive, toggleFilter } = useFilterNuqs();
 
+
   return (
     <aside
       data-testid="filter-sidebar"

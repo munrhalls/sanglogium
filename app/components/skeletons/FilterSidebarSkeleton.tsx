@@ -8,7 +8,7 @@ export function FilterSidebarSkeleton() {
         <div key={i} className="mb-6">
           {/* Filter group title */}
           <div className="h-4 w-24 bg-surface-elevated rounded mb-3" />
-          
+
           {/* Filter options */}
           <div className="space-y-2">
             {Array.from({ length: 4 }).map((_, j) => (
