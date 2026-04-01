@@ -148,10 +148,53 @@ export function useFilterNuqs() {
   };
 
   /**
+   * Get stock minimum from filters
+   */
+  const getStockMinimum = (): number => {
+    const stockFilters = parsedFilters.filter(f => f.field === 'stockMin');
+
+    if (stockFilters.length === 0) return 0;
+
+    const value = parseInt(stockFilters[0].value, 10);
+    return isNaN(value) ? 0 : value;
+  };
+
+  /**
+   * Set stock minimum
+   */
+  const setStockMinimum = (value: number) => {
+    setFilters((prev) => {
+      const current = prev || [];
+      const withoutStock = current.filter(f => !f.startsWith('stockMin:'));
+
+      if (value <= 0) {
+        // Clear filter if value is 0 or negative
+        return withoutStock;
+      }
+
+      return [...withoutStock, `stockMin:${value}`];
+    });
+  };
+
+  /**
+   * Clear stock minimum
+   */
+  const clearStockMinimum = () => {
+    setFilters((prev) => (prev || []).filter(f => !f.startsWith('stockMin:')));
+  };
+
+  /**
    * Check if price range is active
    */
   const isPriceRangeActive = (): boolean => {
     return parsedFilters.some(f => f.field === 'priceRange');
+  };
+
+  /**
+   * Check if stock minimum is active
+   */
+  const isStockMinimumActive = (): boolean => {
+    return parsedFilters.some(f => f.field === 'stockMin');
   };
 
   return {
@@ -166,5 +209,9 @@ export function useFilterNuqs() {
     setPriceRange,
     clearPriceRange,
     isPriceRangeActive,
+    getStockMinimum,
+    setStockMinimum,
+    clearStockMinimum,
+    isStockMinimumActive,
   };
 }

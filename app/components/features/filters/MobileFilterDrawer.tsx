@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react';
 import { useFilterNuqs } from './useFilterNuqs';
 import { PriceRangeSlider } from './PriceRangeSlider';
+import { StockMinimumSlider } from './StockMinimumSlider';
 
 interface FilterOption {
   value: string;
@@ -20,11 +21,13 @@ interface MobileFilterDrawerProps {
   onClose: () => void;
   filters: FilterGroup[];
   priceRange?: { minPrice: number | null; maxPrice: number | null };
+  maxStock?: number | null;
 }
 
-export function MobileFilterDrawer({ isOpen, onClose, filters, priceRange: priceRangeData }: MobileFilterDrawerProps) {
-  const { isFilterActive, toggleFilter, getPriceRange, setPriceRange, clearPriceRange } = useFilterNuqs();
+export function MobileFilterDrawer({ isOpen, onClose, filters, priceRange: priceRangeData, maxStock }: MobileFilterDrawerProps) {
+  const { isFilterActive, toggleFilter, getPriceRange, setPriceRange, clearPriceRange, getStockMinimum, setStockMinimum, clearStockMinimum } = useFilterNuqs();
   const currentPriceRange = getPriceRange();
+  const currentStockMinimum = getStockMinimum();
 
   // Escape key handler
   useEffect(() => {
@@ -123,6 +126,13 @@ export function MobileFilterDrawer({ isOpen, onClose, filters, priceRange: price
                 value={currentPriceRange}
                 onChange={setPriceRange}
                 onClear={clearPriceRange}
+              />
+
+              <StockMinimumSlider
+                maxStock={maxStock ?? 100}
+                value={currentStockMinimum}
+                onChange={setStockMinimum}
+                onClear={clearStockMinimum}
               />
 
               {filters.map((group) => (

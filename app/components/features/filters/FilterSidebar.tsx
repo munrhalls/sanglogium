@@ -3,6 +3,7 @@
 import React from 'react';
 import { useFilterNuqs } from './useFilterNuqs';
 import { PriceRangeSlider } from './PriceRangeSlider';
+import { StockMinimumSlider } from './StockMinimumSlider';
 import { Checkbox } from '@/app/components/ui/Checkbox';
 
 interface FilterOption {
@@ -19,11 +20,13 @@ interface FilterGroup {
 interface FilterSidebarProps {
   filters: FilterGroup[];
   priceRange?: { minPrice: number | null; maxPrice: number | null };
+  maxStock?: number | null;
 }
 
-export function FilterSidebar({ filters, priceRange: priceRangeData }: FilterSidebarProps) {
-  const { getPriceRange, setPriceRange, clearPriceRange, isFilterActive, toggleFilter } = useFilterNuqs();
+export function FilterSidebar({ filters, priceRange: priceRangeData, maxStock }: FilterSidebarProps) {
+  const { getPriceRange, setPriceRange, clearPriceRange, isFilterActive, toggleFilter, getStockMinimum, setStockMinimum, clearStockMinimum } = useFilterNuqs();
   const currentPriceRange = getPriceRange();
+  const currentStockMinimum = getStockMinimum();
 
   return (
     <aside
@@ -42,6 +45,13 @@ export function FilterSidebar({ filters, priceRange: priceRangeData }: FilterSid
             value={currentPriceRange}
             onChange={setPriceRange}
             onClear={clearPriceRange}
+          />
+
+          <StockMinimumSlider
+            maxStock={maxStock ?? 100}
+            value={currentStockMinimum}
+            onChange={setStockMinimum}
+            onClear={clearStockMinimum}
           />
 
           {filters.map((group) => (
