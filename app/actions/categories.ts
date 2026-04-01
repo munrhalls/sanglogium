@@ -10,7 +10,8 @@ export async function getFiltersForCategoryPathAction(catalogueKeys: string[]) {
     console.error("Error:", error);
     return {
       filters: [],
-      priceRange: { minPrice: null, maxPrice: null }
+      priceRange: { minPrice: null, maxPrice: null },
+      maxStock: null
     };
   }
 }

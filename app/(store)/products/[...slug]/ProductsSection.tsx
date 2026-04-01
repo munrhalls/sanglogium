@@ -21,6 +21,7 @@ export async function ProductsSection({
     <CategoryPageClient
       filters={filterResult.filters}
       priceRange={filterResult.priceRange}
+      maxStock={filterResult.maxStock}
       products={products}
       categoryName={categoryName}
     />

@@ -1,10 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderHook, waitFor } from '@testing-library/react';
+import { renderHook } from '@testing-library/react';
 import { useFilterNuqs } from '../../../app/components/features/filters/useFilterNuqs';
 
-// Mock nuqs
+// Mock nuqs with proper structure
+const mockUseQueryState = vi.fn();
 vi.mock('nuqs', () => ({
-  useQueryState: vi.fn(),
+  useQueryState: mockUseQueryState,
   parseAsArrayOf: {
     withOptions: vi.fn(() => ({
       withDefault: vi.fn(() => [])
@@ -19,9 +20,7 @@ describe('useFilterNuqs - Stock Minimum State', () => {
   });
 
   it('returns 0 as default stock minimum', () => {
-    // Mock empty filters array
-    const { useQueryState } = require('nuqs');
-    useQueryState.mockReturnValue([[], vi.fn()]);
+    mockUseQueryState.mockReturnValue([[], vi.fn()]);
 
     const { result } = renderHook(() => useFilterNuqs());
 
@@ -29,9 +28,7 @@ describe('useFilterNuqs - Stock Minimum State', () => {
   });
 
   it('parses stock minimum from URL filters', () => {
-    // Mock filters array with stock filter
-    const { useQueryState } = require('nuqs');
-    useQueryState.mockReturnValue([['stockMin:5'], vi.fn()]);
+    mockUseQueryState.mockReturnValue([['stockMin:5'], vi.fn()]);
 
     const { result } = renderHook(() => useFilterNuqs());
 
@@ -39,9 +36,7 @@ describe('useFilterNuqs - Stock Minimum State', () => {
   });
 
   it('handles invalid stock filter gracefully', () => {
-    // Mock filters array with invalid stock filter
-    const { useQueryState } = require('nuqs');
-    useQueryState.mockReturnValue([['stockMin:invalid'], vi.fn()]);
+    mockUseQueryState.mockReturnValue([['stockMin:invalid'], vi.fn()]);
 
     const { result } = renderHook(() => useFilterNuqs());
 
@@ -50,8 +45,7 @@ describe('useFilterNuqs - Stock Minimum State', () => {
 
   it('sets stock minimum and updates URL', () => {
     const mockSetFilters = vi.fn();
-    const { useQueryState } = require('nuqs');
-    useQueryState.mockReturnValue([[], mockSetFilters]);
+    mockUseQueryState.mockReturnValue([[], mockSetFilters]);
 
     const { result } = renderHook(() => useFilterNuqs());
 
@@ -65,8 +59,7 @@ describe('useFilterNuqs - Stock Minimum State', () => {
 
   it('clears stock minimum when value is 0 or negative', () => {
     const mockSetFilters = vi.fn();
-    const { useQueryState } = require('nuqs');
-    useQueryState.mockReturnValue([['stockMin:5', 'brand:test'], mockSetFilters]);
+    mockUseQueryState.mockReturnValue([['stockMin:5', 'brand:test'], mockSetFilters]);
 
     const { result } = renderHook(() => useFilterNuqs());
 
@@ -81,8 +74,7 @@ describe('useFilterNuqs - Stock Minimum State', () => {
 
   it('clears stock minimum filter', () => {
     const mockSetFilters = vi.fn();
-    const { useQueryState } = require('nuqs');
-    useQueryState.mockReturnValue([['stockMin:5', 'brand:test'], mockSetFilters]);
+    mockUseQueryState.mockReturnValue([['stockMin:5', 'brand:test'], mockSetFilters]);
 
     const { result } = renderHook(() => useFilterNuqs());
 
@@ -96,15 +88,13 @@ describe('useFilterNuqs - Stock Minimum State', () => {
   });
 
   it('detects when stock minimum is active', () => {
-    const { useQueryState } = require('nuqs');
-    
     // Test inactive
-    useQueryState.mockReturnValue([[], vi.fn()]);
+    mockUseQueryState.mockReturnValue([[], vi.fn()]);
     const { result: resultInactive } = renderHook(() => useFilterNuqs());
     expect(resultInactive.current.isStockMinimumActive()).toBe(false);
 
     // Test active
-    useQueryState.mockReturnValue([['stockMin:5'], vi.fn()]);
+    mockUseQueryState.mockReturnValue([['stockMin:5'], vi.fn()]);
     const { result: resultActive } = renderHook(() => useFilterNuqs());
     expect(resultActive.current.isStockMinimumActive()).toBe(true);
   });

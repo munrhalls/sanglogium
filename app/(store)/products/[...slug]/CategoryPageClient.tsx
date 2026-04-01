@@ -29,6 +29,7 @@ interface FilterGroup {
 interface CategoryPageClientProps {
   filters: FilterGroup[];
   priceRange: { minPrice: number | null; maxPrice: number | null };
+  maxStock: number | null;
   products: Product[];
   categoryName?: string;
 }
@@ -36,6 +37,7 @@ interface CategoryPageClientProps {
 export function CategoryPageClient({
   filters,
   priceRange,
+  maxStock,
   products,
   categoryName,
 }: CategoryPageClientProps) {
@@ -63,6 +65,7 @@ export function CategoryPageClient({
         onClose={() => setIsDrawerOpen(false)}
         filters={filters}
         priceRange={priceRange}
+        maxStock={maxStock}
       />
 
       <main className="flex-1 min-w-0">

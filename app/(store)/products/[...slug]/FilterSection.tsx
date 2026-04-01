@@ -9,5 +9,5 @@ interface FilterSectionProps {
 export async function FilterSection({ filtersPromise }: FilterSectionProps) {
   const filterResult = await filtersPromise;
 
-  return <FilterSidebar filters={filterResult.filters} priceRange={filterResult.priceRange} />;
+  return <FilterSidebar filters={filterResult.filters} priceRange={filterResult.priceRange} maxStock={filterResult.maxStock} />;
 }
