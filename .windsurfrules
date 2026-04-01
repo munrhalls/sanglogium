@@ -103,3 +103,4 @@ After EVERY sprint, debug, or implementation:
 - **Components:** Complete functional groups, not isolated components
 - **SVG:** Don't assume SVGR — use Image component unless verified
 - **Velocity:** Run /commits-diagnostics before sprint planning — reject if D-type > 30% or real:illusory < 2:1
+- **cloneElement:** NEVER use cloneElement for prop injection — use React Context instead

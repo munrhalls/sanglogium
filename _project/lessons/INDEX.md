@@ -581,6 +581,30 @@
 
 ---
 
+## Keyword: cloneElement
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/clone-element-anti-pattern.md](failures/clone-element-anti-pattern.md) | High | cloneElement breaks component contracts - use React Context for prop injection |
+
+---
+
+## Keyword: context
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/clone-element-anti-pattern.md](failures/clone-element-anti-pattern.md) | High | React Context eliminates prop drilling without cloneElement hacks |
+
+---
+
+## Keyword: prop-drilling
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/clone-element-anti-pattern.md](failures/clone-element-anti-pattern.md) | High | Use Context instead of prop drilling for 3+ level prop sharing |
+
+---
+
 ## New Lesson Template
 
 ```markdown
