@@ -28,13 +28,15 @@ export interface FilterResult {
     minPrice: number | null;
     maxPrice: number | null;
   };
+  maxStock: number | null;
 }
 
 const getFiltersForCategoryPathFn = async (catalogueKeys: string[]): Promise<FilterResult> => {
   if (!catalogueKeys.length) {
     return {
       filters: [],
-      priceRange: { minPrice: null, maxPrice: null }
+      priceRange: { minPrice: null, maxPrice: null },
+      maxStock: null
     };
   }
 
@@ -61,6 +63,16 @@ const getFiltersForCategoryPathFn = async (catalogueKeys: string[]): Promise<Fil
     minPrice: minPriceQuery?.displayPrice ?? null,
     maxPrice: maxPriceQuery?.displayPrice ?? null
   };
+
+  // Query maximum stock for slider upper bound
+  const maxStockQuery = await sanityFetch<{
+    stock: number | null;
+  }>({
+    query: groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0 && defined(stock)] | order(stock desc)[0] {
+      stock
+    }`,
+    params: { keys: catalogueKeys }
+  });
 
   // Query products to extract unique filter values (original groq restored)
   const products = await sanityFetch<{
@@ -145,7 +157,8 @@ const getFiltersForCategoryPathFn = async (catalogueKeys: string[]): Promise<Fil
 
   return {
     filters,
-    priceRange
+    priceRange,
+    maxStock: maxStockQuery?.stock ?? null
   };
 };
 
