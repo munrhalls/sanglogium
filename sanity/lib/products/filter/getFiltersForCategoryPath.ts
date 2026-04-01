@@ -29,14 +29,14 @@ const getFiltersForCategoryPathFn = async (catalogueKeys: string[]): Promise<Fil
 
   // Query products to extract unique filter values
   const products = await sanityFetch<{
-    brand: { name: string } | null;
-    overviewFields: Array<{ title: string; value: string }> | null;
+    displayPrice: number | null;
+    brand: string | null;
+    stock: number | null;
   }[]>({
     query: groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0] {
-      brand->{
-        name
-      },
-      overviewFields
+      displayPrice,
+      brand,
+      stock
     }`,
     params: { keys: catalogueKeys }
   });
@@ -50,21 +50,9 @@ const getFiltersForCategoryPathFn = async (catalogueKeys: string[]): Promise<Fil
   const fieldMap = new Map<string, Set<string>>();
 
   for (const product of products) {
-    // Collect brand names from reference
-    if (product.brand?.name) {
-      brandSet.add(product.brand.name);
-    }
-
-    // Collect overview field values
-    if (product.overviewFields) {
-      for (const field of product.overviewFields) {
-        if (field.title && field.value) {
-          if (!fieldMap.has(field.title)) {
-            fieldMap.set(field.title, new Set());
-          }
-          fieldMap.get(field.title)!.add(field.value);
-        }
-      }
+    // Collect brand names
+    if (product.brand) {
+      brandSet.add(product.brand);
     }
   }
 
