@@ -1,0 +1,576 @@
+# Sprint: Product Discovery Data Architecture — Critical Fixes
+
+**Sprint ID:** PDDA-SPRINT-1
+**Date:** 2026-04-01
+**Source:** `audit-reports/PRODUCT_DISCOVERY_DATA_ARCHITECTURE_AUDIT.md`
+**Target Grade:** B- → A- (Architecture Health 7/10 → 9/10)
+**Verified Gaps:** 8 real issues (3 Critical, 5 High)
+
+---
+
+## Pre-Sprint Lessons Applied
+
+### Critical Severity Lessons (MUST APPLY)
+
+| Lesson | Source | Application |
+|--------|--------|-------------|
+| **GROQ schema verification** | `failures/groq-schema-assumption.md` | Verify field types before reference syntax usage |
+| **Reference syntax on non-ref fields** | `failures/groq-reference-syntax.md` | Brand is string, NOT reference — fix before GROQ queries |
+| **Signal density optimization** | `prompting/signal-density-optimization.md` | Compress context before execution — 10× token reduction |
+| **Sequencing enforcement** | `auto-lessons.md:472-527` | Pass 1→2→3, Layer 1→2→3→4 mandatory |
+
+### High Severity Lessons (MUST APPLY)
+
+| Lesson | Source | Application |
+|--------|--------|-------------|
+| **Data verification before hypothesis** | `failures/debug-data-assumption.md` | Verify actual data before code changes |
+| **Pre-flight baseline check** | `workflows/pre-flight-baseline-check.md` | Verify baseline build before sprint work |
+| **Parallel data fetching** | `patterns/parallel-data-fetching.md` | Use Promise.all for independent fetches |
+| **VFS catalog architecture** | `patterns/vfs-catalog-architecture.md` | Leverage O(1) lookups, avoid recursive queries |
+
+---
+
+## Scope Lock Rules
+
+**ABSOLUTE CONSTRAINTS — No Exceptions:**
+
+1. **NO globals.css modifications** — All styling via Tailwind utility classes only
+2. **NO homepage changes** — Product discovery pages only
+3. **NO data structure changes outside Brand scope** — Isolate migrations to SC8
+4. **NO client-side state management changes** — Use existing nuqs patterns
+5. **NO arbitrary schema field additions** — Brand reference only, no scope creep
+6. **NO Suspense boundary changes outside product discovery** — Isolate to category pages
+
+---
+
+## Pre-Sprint Regression Containment
+
+### Regression Risk Matrix
+
+| Code Area | Risk Level | Regression Test | Location |
+|-----------|------------|-----------------|----------|
+| `getProductsByVfsKeys.ts` | **CRITICAL** | Query returns products | `tests/catalogue/vfs-query.test.ts` |
+| `FilterConfigProvider.tsx` | **HIGH** | Filters render without error | `tests/component/FilterConfigProvider.spec.tsx` |
+| `CategoryPageClient.tsx` | **HIGH** | Sort dropdown functions | `tests/component/CategoryPageClient.spec.tsx` |
+| `productType.ts schema` | **CRITICAL** | Existing products valid | `tests/catalogue/schema-validation.test.ts` |
+| `sanity.types.ts` | **HIGH** | Type generation succeeds | `npm run typegen` |
+| `FilterSidebar.tsx` | **MEDIUM** | Filter options display | `tests/component/FilterSidebar.spec.tsx` |
+| `ProductGrid.tsx` | **MEDIUM** | Product grid renders | `tests/component/ProductGrid.spec.tsx` |
+
+### Baseline Regression Test Suite
+
+```bash
+# Pre-sprint baseline capture — RUN BEFORE ANY CHANGES
+npm run build
+npx playwright test --grep "product-discovery"
+npx vitest run tests/catalogue/
+```
+
+**Baseline Commitment:** All above tests must pass BEFORE sprint begins. Any failures are pre-existing and must be documented.
+
+---
+
+## Scope Contracts (8 Total)
+
+**Note:** Gap #7 (VFS Metadata Query) removed — already implemented (O(1) VFS lookup, not CMS query).
+
+---
+
+## Scope Contract 1: Unbounded GROQ Queries — Gap #2 (CRITICAL)
+
+### Target State
+All product queries have bounded results with pagination support. No query returns >200 products. Cursor-based pagination available for large datasets.
+
+### DoD (Definition of Done)
+
+**Pass 1: Skeleton (Schema & Interface)**
+- [ ] Add `MAX_PRODUCTS_LIMIT = 200` constant
+- [ ] Define `GetProductsOptions` interface with `cursor?: string | null` and `limit?: number`
+- [ ] Define `ProductsResponse` interface with `products`, `nextCursor`, `hasMore`
+
+**Pass 2: Data (Query Implementation)**
+- [ ] Update `getProductsByVfsKeys.ts` to accept options object
+- [ ] Add slice syntax `[0...$limit]` to GROQ query
+- [ ] Implement cursor-based pagination logic
+- [ ] Return `nextCursor` and `hasMore` in response
+
+**Pass 3: Build (Integration & Testing)**
+- [ ] Layer 1: Structure — Update function signature, no styling
+- [ ] Layer 2: Layout — Error boundary positioning
+- [ ] Layer 3: Surface — Loading states for pagination
+- [ ] Layer 4: Interaction — "Load More" button behavior
+- [ ] Desktop (1280px): Pagination controls positioned correctly
+- [ ] Mobile (375px): Touch-friendly pagination
+
+### Verification
+
+```bash
+# Build gate
+npm run build
+
+# Specification tests
+npx vitest run tests/catalogue/pagination.test.ts
+
+# Runtime verification
+npm run test:perf -- --category=headphones
+# Expected: TTFB < 500ms, max 200 products returned
+```
+
+### Files Modified
+- `@/sanity/lib/products/getProductsByVfsKeys.ts`
+- `@/app/(store)/products/[...slug]/page.tsx` (integration)
+- `@/app/components/skeletons/ProductGridSkeleton.tsx` (new)
+
+---
+
+## Scope Contract 2: Sanity Typegen Integration — Gap #3 (CRITICAL)
+
+### Target State
+All product-related types use generated Sanity types. Manual type definitions eliminated. Full compile-time type safety for GROQ queries.
+
+### DoD (Definition of Done)
+
+**Pass 1: Skeleton (Type Analysis)**
+- [ ] Audit all manual Product interfaces
+- [ ] Map manual types to generated `sanity.types.ts` equivalents
+- [ ] Identify optional fields requiring null checks
+
+**Pass 2: Data (Type Migration)**
+- [ ] Replace manual `Product` interface with `Pick<SanityProduct, ...>`
+- [ ] Update `brand` field to use generated reference type
+- [ ] Add null checks for optional `image` field
+- [ ] Update all dependent client components
+
+**Pass 3: Build (Validation & CI)**
+- [ ] Layer 1: Structure — Type imports only, no runtime changes
+- [ ] Layer 2: Layout — N/A (type-only change)
+- [ ] Layer 3: Surface — N/A (type-only change)
+- [ ] Layer 4: Interaction — N/A (type-only change)
+- [ ] Add `npm run typegen` to pre-build step
+- [ ] Verify no `any` types remain in product data flow
+
+### Verification
+
+```bash
+# Build gate
+npm run build
+
+# Type generation
+npm run typegen
+
+# Type checking
+npx tsc --noEmit
+
+# Specification tests
+npx vitest run tests/catalogue/type-safety.test.ts
+```
+
+### Files Modified
+- `@/sanity/lib/products/getProductsByVfsKeys.ts`
+- `@/sanity.types.ts` (regenerate)
+- `@/app/components/product/ProductCard.tsx`
+- `@/app/components/product/ProductGrid.tsx`
+
+---
+
+## Scope Contract 3: Dynamic Filter Configuration — Gap #4 (HIGH)
+
+### Target State
+Filter options are fetched from CMS/product data, not hardcoded. FilterSidebar displays real available filters per category.
+
+### DoD (Definition of Done)
+
+**Pass 1: Skeleton (Data Layer)**
+- [ ] Update `FilterConfigProvider` to accept `categoryKeys` prop
+- [ ] Import `getFiltersForCategoryPathAction` from actions
+- [ ] Define filter extraction query interface
+
+**Pass 2: Data (Implementation)**
+- [ ] Replace mockFilters with dynamic fetch: `getFiltersForCategoryPathAction(categoryKeys)`
+- [ ] Implement filter extraction from products (brand, driverType, etc.)
+- [ ] Add deduplication and sorting of filter options
+- [ ] Handle empty/no-filter categories
+
+**Pass 3: Build (Integration)**
+- [ ] Layer 1: Structure — Update page.tsx to pass categoryKeys
+- [ ] Layer 2: Layout — Filter sidebar width unchanged
+- [ ] Layer 3: Surface — Loading state for filters
+- [ ] Layer 4: Interaction — Filter selection instant feedback
+- [ ] Desktop (1280px): Filter sidebar renders with real options
+- [ ] Mobile (375px): Mobile filter drawer with real options
+
+### Verification
+
+```bash
+# Build gate
+npm run build
+
+# Specification tests
+npx vitest run tests/catalogue/dynamic-filters.test.ts
+npx vitest run tests/component/FilterConfigProvider.spec.tsx
+
+# Runtime verification
+npm run dev
+# Navigate to /products/headphones/open-back
+# Verify filter options match actual products in category
+```
+
+### Files Modified
+- `@/app/components/features/filters/FilterConfigProvider.tsx`
+- `@/app/(store)/products/[...slug]/page.tsx`
+- `@/sanity/lib/products/filter/getFiltersForCategoryPath.ts` (implement)
+- `@/app/components/features/filters/FilterSidebar.tsx`
+
+---
+
+## Scope Contract 4: Server-Side Sorting — Gap #5 (HIGH)
+
+### Target State
+Sorting happens on server via GROQ, not client-side. No main-thread blocking on large product sets.
+
+### DoD (Definition of Done)
+
+**Pass 1: Skeleton (URL Integration)**
+- [ ] Update `SortDropdown` to use `shallow: false` for full page reload
+- [ ] Remove client-side sort state management
+- [ ] Verify sort param reaches server component
+
+**Pass 2: Data (Server Implementation)**
+- [ ] Confirm `getProductsByVfsKeys` accepts sort parameter (already implemented)
+- [ ] Remove client-side sorting from `CategoryPageClient`
+- [ ] Verify GROQ `order()` clause applies correctly
+
+**Pass 3: Build (UI Polish)**
+- [ ] Layer 1: Structure — Sort dropdown unchanged
+- [ ] Layer 2: Layout — Loading state positioning
+- [ ] Layer 3: Surface — Sort active state styling
+- [ ] Layer 4: Interaction — Transition feedback during sort
+- [ ] Desktop (1280px): Sort dropdown functional
+- [ ] Mobile (375px): Mobile sort dropdown functional
+
+### Verification
+
+```bash
+# Build gate
+npm run build
+
+# Specification tests
+npx vitest run tests/catalogue/server-sort.test.ts
+npx vitest run tests/component/SortDropdown.spec.tsx
+
+# Performance verification
+npm run test:perf -- --category=headphones
+# Expected: No main-thread jank when sorting 200+ products
+```
+
+### Files Modified
+- `@/app/components/features/filters/SortDropdown.tsx`
+- `@/app/(store)/products/[...slug]/CategoryPageClient.tsx`
+- `@/app/(store)/products/[...slug]/page.tsx`
+
+---
+
+## Scope Contract 5: Suspense Boundaries — Gap #6 (HIGH)
+
+### Target State
+Category page streams with Suspense. Static shell renders immediately, dynamic content streams in.
+
+### DoD (Definition of Done)
+
+**Pass 1: Skeleton (Component Split)**
+- [ ] Create `ProductsSection` async component
+- [ ] Create `FilterSection` async component
+- [ ] Define skeleton components: `ProductGridSkeleton`, `FilterSidebarSkeleton`
+
+**Pass 2: Data (Streaming Setup)**
+- [ ] Update page.tsx to not await products/metadata
+- [ ] Pass promises to streaming components
+- [ ] Wrap dynamic sections in `<Suspense>`
+- [ ] Add `ShopHeaderSkeleton` for immediate render
+
+**Pass 3: Build (Skeleton Styling)**
+- [ ] Layer 1: Structure — Skeleton placeholder blocks
+- [ ] Layer 2: Layout — Skeleton matches real component dimensions
+- [ ] Layer 3: Surface — animate-pulse styling
+- [ ] Layer 4: Interaction — None (skeletons are static)
+- [ ] Desktop (1280px): Skeletons match grid layout
+- [ ] Mobile (375px): Skeletons match mobile layout
+
+### Verification
+
+```bash
+# Build gate
+npm run build
+
+# Specification tests
+npx vitest run tests/catalogue/suspense-streaming.test.ts
+npx vitest run tests/component/ProductGridSkeleton.spec.tsx
+
+# Runtime verification
+npm run dev
+# Verify shell renders before products load
+# Check Network tab for streaming response
+```
+
+### Files Modified
+- `@/app/(store)/products/[...slug]/page.tsx`
+- `@/app/components/skeletons/ProductGridSkeleton.tsx` (new)
+- `@/app/components/skeletons/FilterSidebarSkeleton.tsx` (new)
+- `@/app/components/skeletons/ShopHeaderSkeleton.tsx` (new)
+
+---
+
+## Scope Contract 6: VFS Data Integrity Validation — Gap #9 (MEDIUM)
+
+### Target State
+Build process validates all product `catalogueLocationKeys` point to valid VFS slots. Orphaned keys detected and reported.
+
+### DoD (Definition of Done)
+
+**Pass 1: Skeleton (Validation Script)**
+- [ ] Create `validateProductKeys()` function in build script
+- [ ] Extract all unique keys from `slotMetadataMap`
+- [ ] Define `OrphanedKey` interface for reporting
+
+**Pass 2: Data (Implementation)**
+- [ ] Query all products for `catalogueLocationKeys`
+- [ ] Check each key exists in `allValidIds` set
+- [ ] Collect orphaned keys with product ID references
+- [ ] Generate console.table report
+
+**Pass 3: Build (Integration)**
+- [ ] Layer 1: Structure — Add validation call to build script
+- [ ] Layer 2: Layout — N/A (script only)
+- [ ] Layer 3: Surface — N/A (script only)
+- [ ] Layer 4: Interaction — N/A (script only)
+- [ ] Fail build on orphaned keys (configurable)
+- [ ] Add cleanup script reference to error message
+
+### Verification
+
+```bash
+# Build gate (triggers validation)
+npm run build:catalogue
+
+# Manual validation
+node scripts/validate-product-keys.mjs
+
+# Specification tests
+npx vitest run tests/catalogue/data-integrity.test.ts
+```
+
+### Files Modified
+- `@/scripts/build-catalogue-index.mjs`
+- `@/scripts/validate-product-keys.mjs` (new)
+
+---
+
+## Scope Contract 7: Filter Architecture Clarification — Gap #8 (MEDIUM)
+
+### Target State
+Single source of truth for filtering. Server does ALL filtering, client removes duplicate brand-only filter.
+
+### DoD (Definition of Done)
+
+**Pass 1: Skeleton (Strategy Decision)**
+- [ ] Document decision: Server-driven filtering (URL-based)
+- [ ] Update architecture notes: hybrid → server-only
+- [ ] Define URL filter param structure
+
+**Pass 2: Data (Server Implementation)**
+- [ ] Verify GROQ filter clause applies ALL active filters
+- [ ] Remove client-side filter logic from `CategoryPageClient`
+- [ ] Update `getProductsByVfsKeys` to handle all filter types
+- [ ] Ensure filter state survives hydration correctly
+
+**Pass 3: Build (Integration)**
+- [ ] Layer 1: Structure — No changes (data layer only)
+- [ ] Layer 2: Layout — No changes
+- [ ] Layer 3: Surface — No changes
+- [ ] Layer 4: Interaction — Filter application instant (page reload)
+- [ ] Desktop (1280px): Filter behavior unchanged
+- [ ] Mobile (375px): Filter behavior unchanged
+
+### Verification
+
+```bash
+# Build gate
+npm run build
+
+# Specification tests
+npx vitest run tests/catalogue/server-filter.test.ts
+npx vitest run tests/component/ActiveFilters.spec.tsx
+
+# Integration test
+npx playwright test --grep "filter-flow"
+# Verify no flash of wrong content on hydration
+```
+
+### Files Modified
+- `@/app/(store)/products/[...slug]/CategoryPageClient.tsx`
+- `@/sanity/lib/products/getProductsByVfsKeys.ts`
+- `@/app/components/features/filters/ActiveFilters.tsx`
+
+---
+
+## Scope Contract 8: Brand Data Model — Gap #1 (CRITICAL)
+
+### Target State
+Brand is a reference document type, not a string. All products reference brand documents. Filtering works consistently across brand name variations.
+
+### DoD (Definition of Done)
+
+**Pass 1: Skeleton (Schema Definition)**
+- [ ] Create `@/sanity/schemaTypes/brandType.ts`
+- [ ] Define fields: `name`, `slug`, `logo`
+- [ ] Update `productType.ts` brand field to reference type
+- [ ] Add brandType to sanity.config.ts schemaTypes
+
+**Pass 2: Data (Migration)**
+- [ ] Create migration script: `scripts/migrate-brands.mjs`
+- [ ] Extract unique brand strings from all products
+- [ ] Create brand documents (normalized names)
+- [ ] Update all products to reference correct brand
+- [ ] Validate all products have valid brand reference
+
+**Pass 3: Build (Query & Component Updates)**
+- [ ] Layer 1: Structure — Update GROQ projections: `brand-> { _id, name, slug }`
+- [ ] Layer 2: Layout — Update ProductCard brand display positioning
+- [ ] Layer 3: Surface — Brand logo rendering in product cards
+- [ ] Layer 4: Interaction — Brand link hover states
+- [ ] Desktop (1280px): Brand display in grid layout
+- [ ] Mobile (375px): Brand display in compact layout
+
+### Verification
+
+```bash
+# Build gate
+npm run build
+
+# Migration verification
+node scripts/migrate-brands.mjs --dry-run
+
+# Specification tests
+npx vitest run tests/catalogue/brand-reference.test.ts
+npx vitest run tests/component/ProductCard.spec.tsx
+
+# Filter integration
+npx playwright test --grep "brand-filter"
+```
+
+### Files Modified
+- `@/sanity/schemaTypes/brandType.ts` (new)
+- `@/sanity/schemaTypes/productType.ts`
+- `@/sanity/config.ts`
+- `@/scripts/migrate-brands.mjs` (new)
+- `@/sanity/lib/products/getProductsByVfsKeys.ts`
+- `@/app/components/product/ProductCard.tsx`
+- `@/app/components/filters/FilterSidebar.tsx`
+
+---
+
+## Execution Sequence
+
+**Sprint Order:** SC2 → SC3 → SC4 → SC5 → SC6 → SC7 → SC1 → SC8
+
+| Order | Contract | Rationale |
+|-------|----------|-----------|
+| 1 | SC2: Typegen | Foundation for all other changes |
+| 2 | SC3: Dynamic Filters | Enables real filter data for testing |
+| 3 | SC4: Server-Side Sort | Removes client blocking before Suspense |
+| 4 | SC5: Suspense Boundaries | Streaming infrastructure |
+| 5 | SC6: Data Integrity | Validates data before pagination |
+| 6 | SC7: Filter Architecture | Clean single-source-of-truth |
+| 7 | SC1: Pagination | Build on clean type + filter + sort foundation |
+| 8 | SC8: Brand Model | Largest change, last to minimize conflicts |
+
+---
+
+## Test Evidence Log
+
+### Pre-Sprint Baseline
+| Date | /test Invocation | Tests | Pass Rate | Verdict |
+|------|------------------|-------|-----------|---------|
+| 2026-04-01 | Baseline capture | 16 | 100% | ⏳ PENDING |
+
+### Per Scope Contract
+| Scope Contract | /test Date | DoD Tests | Pass Rate | Verdict |
+|----------------|------------|-----------|-----------|---------|
+| SC2: Typegen | — | 4/4 | — | ⏳ PENDING |
+| SC3: Dynamic Filters | — | 4/4 | — | ⏳ PENDING |
+| SC4: Server-Side Sort | — | 3/3 | — | ⏳ PENDING |
+| SC5: Suspense Boundaries | — | 4/4 | — | ⏳ PENDING |
+| SC6: Data Integrity | — | 3/3 | — | ⏳ PENDING |
+| SC7: Filter Architecture | — | 3/3 | — | ⏳ PENDING |
+| SC1: Pagination | — | 5/5 | — | ⏳ PENDING |
+| SC8: Brand Model | — | 6/6 | — | ⏳ PENDING |
+
+### Post-Sprint Final
+| Date | /test Invocation | Total Tests | Pass Rate | Sprint Verdict |
+|------|------------------|-------------|-----------|----------------|
+| — | Final verification | 32/32 | 100% | ⏳ PENDING |
+
+---
+
+## Final Evidence Dashboard Template
+
+```markdown
+## Final Evidence Dashboard - Sprint PDDA-SPRINT-1
+
+### Specification Coverage (DoD Enforcement)
+| Scope Contract | DoD Tests | Pass Rate | Status |
+|----------------|-----------|-----------|--------|
+| SC2: Typegen | 4/4 | 100% | ⏳ |
+| SC3: Dynamic Filters | 4/4 | 100% | ⏳ |
+| SC4: Server-Side Sort | 3/3 | 100% | ⏳ |
+| SC5: Suspense Boundaries | 4/4 | 100% | ⏳ |
+| SC6: Data Integrity | 3/3 | 100% | ⏳ |
+| SC7: Filter Architecture | 3/3 | 100% | ⏳ |
+| SC1: Pagination | 5/5 | 100% | ⏳ |
+| SC8: Brand Model | 6/6 | 100% | ⏳ |
+| **TOTAL** | **32/32** | **100%** | **⏳** |
+
+### Regression Coverage (Safety Net)
+| Critical Path | Tests | Pass Rate | Status |
+|---------------|-------|-----------|--------|
+| VFS Product Queries | 3/3 | 100% | ⏳ |
+| Filter Rendering | 2/2 | 100% | ⏳ |
+| Sort Functionality | 2/2 | 100% | ⏳ |
+| Schema Validation | 2/2 | 100% | ⏳ |
+
+### Build Gate
+| Check | Status |
+|-------|--------|
+| npm run build | ⏳ |
+| npm run typegen | ⏳ |
+| npx tsc --noEmit | ⏳ |
+| Smoke tests | ⏳ |
+
+### Sprint Lock Verdict
+⏳ **SPRINT IN PROGRESS**
+```
+
+---
+
+## Summary
+
+**Total Estimated Effort:** 45 hours
+**Scope Contracts:** 8 (2 Critical, 5 High, 1 Medium)
+**Risk Level:** Medium-High (data migration in SC8)
+**Expected Outcome:** Architecture Health 7/10 → 9/10, Data Consistency 6/10 → 9/10
+
+**Key Deliverables:**
+1. Full type safety via Sanity Typegen
+2. Dynamic CMS-driven filters (no hardcoding)
+3. Server-side sorting (no client blocking)
+4. Streaming with Suspense boundaries
+5. Data integrity validation in build process
+6. Single-source-of-truth filter architecture
+7. Bounded product queries with pagination
+8. Brand as reference document (data model fix)
+
+**Lock Mechanism:** Build passing + 100% specification test pass rate
+
+---
+
+**End of Sprint Document**
