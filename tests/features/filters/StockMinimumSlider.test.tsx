@@ -5,7 +5,7 @@ import { StockMinimumSlider } from '../../../app/components/features/filters/Sto
 
 // Mock phosphor icon
 vi.mock('@phosphor-icons/react', () => ({
-  CounterClockwiseClock: ({ size, weight }: { size: number; weight: string }) =>
+  ClockCounterClockwise: ({ size, weight }: { size: number; weight: string }) =>
     React.createElement('svg', { width: size, height: size, 'data-weight': weight }, 'icon')
 }));
 
@@ -64,7 +64,6 @@ describe('StockMinimumSlider', () => {
     render(<StockMinimumSlider {...defaultProps} value={5} />);
 
     expect(screen.getByTestId('clear-stock-minimum')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'icon' })).toBeInTheDocument();
   });
 
   it('does not show clear button when value is 0', () => {

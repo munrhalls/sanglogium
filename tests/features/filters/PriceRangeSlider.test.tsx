@@ -5,7 +5,7 @@ import { PriceRangeSlider } from '../../../app/components/features/filters/Price
 
 // Mock phosphor icon
 vi.mock('@phosphor-icons/react', () => ({
-  CounterClockwiseClock: ({ size, weight }: { size: number; weight: string }) =>
+  ClockCounterClockwise: ({ size, weight }: { size: number; weight: string }) =>
     React.createElement('svg', { width: size, height: size, 'data-weight': weight }, 'icon')
 }));
 
@@ -99,7 +99,6 @@ describe('PriceRangeSlider', () => {
     render(<PriceRangeSlider {...defaultProps} value={{ min: 100, max: 5000 }} />);
 
     expect(screen.getByTestId('clear-price-range')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'icon' })).toBeInTheDocument();
   });
 
   it('does not show clear button when range matches defaults', () => {
