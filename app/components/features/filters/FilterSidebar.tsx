@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useFilterNuqs } from './useFilterNuqs';
+import { PriceRangeSlider } from './PriceRangeSlider';
 import { Checkbox } from '@/app/components/ui/Checkbox';
 
 interface FilterOption {
@@ -20,8 +21,8 @@ interface FilterSidebarProps {
 }
 
 export function FilterSidebar({ filters }: FilterSidebarProps) {
-  const { isFilterActive, toggleFilter } = useFilterNuqs();
-
+  const { getPriceRange, setPriceRange, clearPriceRange, isFilterActive, toggleFilter } = useFilterNuqs();
+  const priceRange = getPriceRange();
 
   return (
     <aside
@@ -34,6 +35,14 @@ export function FilterSidebar({ filters }: FilterSidebarProps) {
         </h3>
 
         <form className="space-y-6">
+          <PriceRangeSlider
+            min={0}
+            max={10000}
+            value={priceRange}
+            onChange={setPriceRange}
+            onClear={clearPriceRange}
+          />
+
           {filters.map((group) => (
             <fieldset key={group.field} className="space-y-3">
               <legend className="type-overline text-accent-500 section-header-anchor">

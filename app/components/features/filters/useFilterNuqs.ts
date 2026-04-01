@@ -88,11 +88,71 @@ export function useFilterNuqs() {
   };
 
   /**
-   * Get parsed filter states for client-side filtering
-   */
+ * Get parsed filter states for client-side filtering
+ */
   const parsedFilters: FilterState[] = filters
     .map(parseFilter)
     .filter((f): f is FilterState => f !== null);
+
+  /**
+   * Get price range from filters
+   */
+  const getPriceRange = (): { min?: number; max?: number } => {
+    const priceFilters = parsedFilters.filter(f => f.field === 'priceRange');
+    const range: { min?: number; max?: number } = {};
+
+    priceFilters.forEach(filter => {
+      if (filter.value.startsWith('min:')) {
+        const min = parseInt(filter.value.slice(4), 10);
+        if (!isNaN(min)) range.min = min;
+      } else if (filter.value.startsWith('max:')) {
+        const max = parseInt(filter.value.slice(4), 10);
+        if (!isNaN(max)) range.max = max;
+      }
+    });
+
+    return range;
+  };
+
+  /**
+   * Set price range
+   */
+  const setPriceRange = (range: { min?: number; max?: number }) => {
+    setFilters((prev) => {
+      const current = prev || [];
+      const withoutPrice = current.filter(f => !f.startsWith('priceRange:'));
+      const newFilters = [...withoutPrice];
+
+      // Validate that min < max
+      if (range.min !== undefined && range.max !== undefined && range.min >= range.max) {
+        // Don't set invalid range
+        return current;
+      }
+
+      if (range.min !== undefined) {
+        newFilters.push(`priceRange:min:${range.min}`);
+      }
+      if (range.max !== undefined) {
+        newFilters.push(`priceRange:max:${range.max}`);
+      }
+
+      return newFilters;
+    });
+  };
+
+  /**
+   * Clear price range
+   */
+  const clearPriceRange = () => {
+    setFilters((prev) => (prev || []).filter(f => !f.startsWith('priceRange:')));
+  };
+
+  /**
+   * Check if price range is active
+   */
+  const isPriceRangeActive = (): boolean => {
+    return parsedFilters.some(f => f.field === 'priceRange');
+  };
 
   return {
     filters,
@@ -102,5 +162,9 @@ export function useFilterNuqs() {
     clearAllFilters,
     isFilterActive,
     hasActiveFilters: filters.length > 0,
+    getPriceRange,
+    setPriceRange,
+    clearPriceRange,
+    isPriceRangeActive,
   };
 }
