@@ -1,18 +1,20 @@
+import React from 'react';
 import { renderHook, act } from '@testing-library/react';
+import { vi, describe, it, expect, beforeEach } from 'vitest';
 import { useFilterNuqs } from '../../app/components/features/filters/useFilterNuqs';
 
 // Mock nuqs
-jest.mock('nuqs', () => ({
-  useQueryState: jest.fn(),
+vi.mock('nuqs', () => ({
+  useQueryState: vi.fn(),
 }));
 
-const mockUseQueryState = require('nuqs').useQueryState;
+const mockUseQueryState = vi.hoisted(() => vi.fn());
 
 describe('useFilterNuqs - Price Range', () => {
-  const mockSetFilters = jest.fn();
+  const mockSetFilters = vi.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     mockUseQueryState.mockReturnValue([[], mockSetFilters]);
   });
 

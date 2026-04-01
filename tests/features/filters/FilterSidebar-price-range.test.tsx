@@ -1,16 +1,18 @@
+import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { vi, describe, it, expect, beforeEach } from 'vitest';
 import { FilterSidebar } from '../../app/components/features/filters/FilterSidebar';
 
 // Mock the useFilterNuqs hook
-jest.mock('../../app/components/features/filters/useFilterNuqs', () => ({
-  useFilterNuqs: jest.fn(),
+vi.mock('../../app/components/features/filters/useFilterNuqs', () => ({
+  useFilterNuqs: vi.fn(),
 }));
 
-const mockUseFilterNuqs = require('../../app/components/features/filters/useFilterNuqs').useFilterNuqs;
+const mockUseFilterNuqs = vi.hoisted(() => vi.fn());
 
 // Mock PriceRangeSlider
-jest.mock('../../app/components/features/filters/PriceRangeSlider', () => ({
-  PriceRangeSlider: jest.fn(({ onChange, onClear, value }) => (
+vi.mock('../../app/components/features/filters/PriceRangeSlider', () => ({
+  PriceRangeSlider: vi.fn(({ onChange, onClear, value }) => (
     <div data-testid="price-range-slider">
       <button onClick={() => onChange({ min: 100, max: 500 })}>Set Range</button>
       <button onClick={onClear}>Clear Range</button>
@@ -40,75 +42,75 @@ describe('FilterSidebar - Price Range Integration', () => {
   ];
 
   beforeEach(() => {
-    jest.clearAllMocks();
-    
+    vi.clearAllMocks();
+
     mockUseFilterNuqs.mockReturnValue({
-      getPriceRange: jest.fn().mockReturnValue({ min: undefined, max: undefined }),
-      setPriceRange: jest.fn(),
-      clearPriceRange: jest.fn(),
-      isFilterActive: jest.fn().mockReturnValue(false),
-      toggleFilter: jest.fn(),
+      getPriceRange: vi.fn().mockReturnValue({ min: undefined, max: undefined }),
+      setPriceRange: vi.fn(),
+      clearPriceRange: vi.fn(),
+      isFilterActive: vi.fn().mockReturnValue(false),
+      toggleFilter: vi.fn(),
     });
   });
 
   it('renders PriceRangeSlider component', () => {
     render(<FilterSidebar filters={mockFilters} />);
-    
+
     expect(screen.getByTestId('price-range-slider')).toBeInTheDocument();
   });
 
   it('passes correct price range to PriceRangeSlider', () => {
     const mockPriceRange = { min: 100, max: 500 };
     mockUseFilterNuqs.mockReturnValue({
-      getPriceRange: jest.fn().mockReturnValue(mockPriceRange),
-      setPriceRange: jest.fn(),
-      clearPriceRange: jest.fn(),
-      isFilterActive: jest.fn().mockReturnValue(false),
-      toggleFilter: jest.fn(),
+      getPriceRange: vi.fn().mockReturnValue(mockPriceRange),
+      setPriceRange: vi.fn(),
+      clearPriceRange: vi.fn(),
+      isFilterActive: vi.fn().mockReturnValue(false),
+      toggleFilter: vi.fn(),
     });
 
     render(<FilterSidebar filters={mockFilters} />);
-    
+
     expect(screen.getByTestId('price-range-value')).toHaveTextContent(JSON.stringify(mockPriceRange));
   });
 
   it('calls setPriceRange when PriceRangeSlider onChange is called', () => {
-    const mockSetPriceRange = jest.fn();
+    const mockSetPriceRange = vi.fn();
     mockUseFilterNuqs.mockReturnValue({
-      getPriceRange: jest.fn().mockReturnValue({}),
+      getPriceRange: vi.fn().mockReturnValue({}),
       setPriceRange: mockSetPriceRange,
-      clearPriceRange: jest.fn(),
-      isFilterActive: jest.fn().mockReturnValue(false),
-      toggleFilter: jest.fn(),
+      clearPriceRange: vi.fn(),
+      isFilterActive: vi.fn().mockReturnValue(false),
+      toggleFilter: vi.fn(),
     });
 
     render(<FilterSidebar filters={mockFilters} />);
-    
+
     fireEvent.click(screen.getByText('Set Range'));
-    
+
     expect(mockSetPriceRange).toHaveBeenCalledWith({ min: 100, max: 500 });
   });
 
   it('calls clearPriceRange when PriceRangeSlider onClear is called', () => {
-    const mockClearPriceRange = jest.fn();
+    const mockClearPriceRange = vi.fn();
     mockUseFilterNuqs.mockReturnValue({
-      getPriceRange: jest.fn().mockReturnValue({}),
-      setPriceRange: jest.fn(),
+      getPriceRange: vi.fn().mockReturnValue({}),
+      setPriceRange: vi.fn(),
       clearPriceRange: mockClearPriceRange,
-      isFilterActive: jest.fn().mockReturnValue(false),
-      toggleFilter: jest.fn(),
+      isFilterActive: vi.fn().mockReturnValue(false),
+      toggleFilter: vi.fn(),
     });
 
     render(<FilterSidebar filters={mockFilters} />);
-    
+
     fireEvent.click(screen.getByText('Clear Range'));
-    
+
     expect(mockClearPriceRange).toHaveBeenCalled();
   });
 
   it('renders other filter components alongside price range', () => {
     render(<FilterSidebar filters={mockFilters} />);
-    
+
     expect(screen.getByText('Brand')).toBeInTheDocument();
     expect(screen.getByText('Type')).toBeInTheDocument();
     expect(screen.getByText('Sony')).toBeInTheDocument();
@@ -118,17 +120,17 @@ describe('FilterSidebar - Price Range Integration', () => {
   });
 
   it('maintains filter functionality with price range', () => {
-    const mockToggleFilter = jest.fn();
+    const mockToggleFilter = vi.fn();
     mockUseFilterNuqs.mockReturnValue({
-      getPriceRange: jest.fn().mockReturnValue({}),
-      setPriceRange: jest.fn(),
-      clearPriceRange: jest.fn(),
-      isFilterActive: jest.fn().mockReturnValue(false),
+      getPriceRange: vi.fn().mockReturnValue({}),
+      setPriceRange: vi.fn(),
+      clearPriceRange: vi.fn(),
+      isFilterActive: vi.fn().mockReturnValue(false),
       toggleFilter: mockToggleFilter,
     });
 
     render(<FilterSidebar filters={mockFilters} />);
-    
+
     // Find and click a checkbox (this would require the actual Checkbox component implementation)
     const checkboxes = screen.getAllByRole('checkbox');
     if (checkboxes.length > 0) {
