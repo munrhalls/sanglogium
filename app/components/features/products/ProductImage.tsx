@@ -13,12 +13,6 @@ interface ProductImageProps {
 }
 
 export function ProductImage({ image, alt, className, imgClassName, priority = false }: ProductImageProps) {
-  // Debug: log actual image structure in development
-  console.log('[DEBUG ProductImage] Received image:', JSON.stringify(image, null, 2));
-  console.log('[DEBUG ProductImage] image?.asset:', image?.asset);
-  console.log('[DEBUG ProductImage] image?.asset?._ref:', image?.asset?._ref);
-  console.log('[DEBUG ProductImage] image?.asset?._id:', image?.asset?._id);
-
   // Get the asset reference - Sanity can use either _ref or _id
   const assetRef = image?.asset?._ref || image?.asset?._id;
 
