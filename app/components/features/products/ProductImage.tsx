@@ -2,7 +2,10 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { urlFor } from '@/sanity/lib/image';
+import { dataset, projectId } from '@/sanity/lib/api/api';
+import urlBuilder from '@sanity/image-url';
+
+const builder = urlBuilder({ projectId, dataset });
 
 interface ProductImageProps {
   image: any;
@@ -15,6 +18,7 @@ interface ProductImageProps {
 export function ProductImage({ image, alt, className, imgClassName, priority = false }: ProductImageProps) {
   // Get the asset reference - Sanity can use either _ref or _id
   const assetRef = image?.asset?._ref || image?.asset?._id;
+  console.log(assetRef)
 
   if (!assetRef) {
     return (
@@ -24,19 +28,25 @@ export function ProductImage({ image, alt, className, imgClassName, priority = f
     );
   }
 
-  // Construct a proper image source object if needed
-  const imageSource = image?.asset?._ref ? image : { asset: { _ref: assetRef } };
-  const imageUrl = urlFor(imageSource).width(400).height(300).url();
-
   return (
     <div className={`relative aspect-[4/3] bg-surface-productImage ${className}`} data-testid="product-image">
       <Image
-        src={imageUrl}
+        src={assetRef}
         alt={alt}
         fill
         sizes="(max-width: 768px) 50vw, 25vw"
         className={`object-cover rounded ${imgClassName || ''}`}
         priority={priority}
+        loader={({ src, width, quality }) => {
+          const url = builder
+            .image(src)
+            .width(width)
+            .quality(quality || 75)
+            .auto("format")
+            .url();
+          console.log('Loader URL:', url);
+          return url;
+        }}
       />
     </div>
   );

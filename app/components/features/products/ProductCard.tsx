@@ -38,7 +38,7 @@ export function ProductCard({ product }: ProductCardProps) {
         </figure>
 
         <div className="flex flex-col flex-grow p-4">
-          <h3 className="type-card-title text-headline line-clamp-2 mb-1">
+          <h3 className="type-card-title line-clamp-2 mb-1">
             {product.name}
           </h3>
           <p className="type-price text-priceTag mb-3">
