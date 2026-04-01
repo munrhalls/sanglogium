@@ -22,12 +22,47 @@ export interface FilterGroup {
   options: FilterOption[];
 }
 
-const getFiltersForCategoryPathFn = async (catalogueKeys: string[]): Promise<FilterGroup[]> => {
+export interface FilterResult {
+  filters: FilterGroup[];
+  priceRange: {
+    minPrice: number | null;
+    maxPrice: number | null;
+  };
+}
+
+const getFiltersForCategoryPathFn = async (catalogueKeys: string[]): Promise<FilterResult> => {
   if (!catalogueKeys.length) {
-    return [];
+    return {
+      filters: [],
+      priceRange: { minPrice: null, maxPrice: null }
+    };
   }
 
-  // Query products to extract unique filter values
+  // Query price range using GROQ order and slicing (efficient alternative to aggregation)
+  const minPriceQuery = await sanityFetch<{
+    displayPrice: number | null;
+  }>({
+    query: groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0 && defined(displayPrice)] | order(displayPrice asc)[0] {
+      displayPrice
+    }`,
+    params: { keys: catalogueKeys }
+  });
+
+  const maxPriceQuery = await sanityFetch<{
+    displayPrice: number | null;
+  }>({
+    query: groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0 && defined(displayPrice)] | order(displayPrice desc)[0] {
+      displayPrice
+    }`,
+    params: { keys: catalogueKeys }
+  });
+
+  const priceRange = {
+    minPrice: minPriceQuery?.displayPrice ?? null,
+    maxPrice: maxPriceQuery?.displayPrice ?? null
+  };
+
+  // Query products to extract unique filter values (original groq restored)
   const products = await sanityFetch<{
     displayPrice: number | null;
     brand: string | null;
@@ -41,8 +76,12 @@ const getFiltersForCategoryPathFn = async (catalogueKeys: string[]): Promise<Fil
     params: { keys: catalogueKeys }
   });
 
+
   if (!products.length) {
-    return [];
+    return {
+      filters: [],
+      priceRange
+    };
   }
 
   // Extract unique brands
@@ -71,25 +110,6 @@ const getFiltersForCategoryPathFn = async (catalogueKeys: string[]): Promise<Fil
           label: brand
         }))
     });
-  }
-
-  // Process other fields from products
-  for (const product of products) {
-    if (product.displayPrice !== null) {
-      const priceRanges = fieldMap.get('price') || new Set<string>();
-      if (product.displayPrice < 100) priceRanges.add('Under $100');
-      else if (product.displayPrice < 500) priceRanges.add('$100-$500');
-      else if (product.displayPrice < 1000) priceRanges.add('$500-$1000');
-      else priceRanges.add('Over $1000');
-      fieldMap.set('price', priceRanges);
-    }
-
-    if (product.stock !== null) {
-      const stockStatus = fieldMap.get('stock') || new Set<string>();
-      if (product.stock > 0) stockStatus.add('In Stock');
-      else stockStatus.add('Out of Stock');
-      fieldMap.set('stock', stockStatus);
-    }
   }
 
   // Add price filter if any price ranges exist
@@ -123,7 +143,10 @@ const getFiltersForCategoryPathFn = async (catalogueKeys: string[]): Promise<Fil
   }
 
 
-  return filters;
+  return {
+    filters,
+    priceRange
+  };
 };
 
 export const getFiltersForCategoryPath = withCache(getFiltersForCategoryPathFn);
