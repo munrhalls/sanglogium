@@ -48,6 +48,35 @@ button {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Price Range Slider Styles */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #D4AF37;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #D4AF37;
+  margin-top: -6px;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #D4AF37;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #D4AF37;
+}
+
 @layer utilities {
   @media (min-width: 1024px) and (hover: hover) {
     .hide-on-desktop-hover {
