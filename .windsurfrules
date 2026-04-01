@@ -158,3 +158,88 @@ When fixing failing tests:
 - **Never fix multiple tests simultaneously** - One test at a time only
 - **Never run full suite during fixing** - Only single test isolation
 - **Test quality check is mandatory** - Badly written tests must be rejected before any implementation changes
+
+---
+
+## Opus Sprint Specification Quality (Universal)
+
+When generating sprint specs with Opus, output MUST include:
+
+### 1. Gap Coverage Mapping
+- Every SC explicitly references audit gaps (G1, G2, G3...)
+- Traceability: Audit finding → Spec → Implementation
+
+### 2. Line-Number Precision
+- Exact file paths with line numbers/ranges
+- Exact class names for before/after states
+
+### 3. Constraint-First Architecture
+- Scope Lock Rules section FIRST (what NOT to touch)
+- Anti-patterns section with explicit DON'Ts
+
+### 4. Layer-Based Sequencing
+- Pass 1: Skeleton (semantic HTML)
+- Pass 2: Data (real data integration)
+- Pass 3: Build (Structure → Layout → Surface → Interaction)
+
+### 5. Verifiable DoDs
+- Build gate after EVERY SC
+- Objective pass/fail criteria only
+- No subjective "looks good" requirements
+
+### 6. Functional Grouping
+- Group A: Foundation (layout, structure)
+- Group B: Core UX (product display)
+- Group C: Functional systems (filters)
+- Group D: Polish (skeletons, semantics)
+
+**Reference:** `_project/lessons/workflows/opus-sprint-specification-generation.md`
+
+---
+
+## Opus Audit Pattern (Universal)
+
+When generating design audits with Opus, output MUST follow 8-part structure:
+
+### Part 1: Design System Summary
+- Ground truth tokens from tailwind.config.ts
+- Component tokens from addComponents
+- Reference standard identified (homepage/canonical implementation)
+
+### Part 2: Research-Verified Best Practices
+- Sources: Baymard, Nielsen Norman Group, authoritative UX research
+- Each practice has consensus rating (High/Medium/Low)
+- No subjective recommendations without source
+
+### Part 3: Component-by-Component Audit
+- Current implementation (code structure)
+- Issues classified: ✅ Correct / ⚠️ Warning / ❌ Critical
+- Exact file paths and line ranges
+
+### Part 4: Design Ratings (Quantified)
+- 10-15 dimensions rated 1-10
+- Evidence cited per rating
+- Aggregate score calculated
+
+### Part 5: Gap Analysis
+- Numbered gaps (G1, G2, G3...)
+- Columns: Gap | Current State | Target State | Components Affected
+- Severity tiers: Critical / Major / Minor
+
+### Part 6: Sequenced Change Specifications
+- SC1, SC2... with Gap Coverage mapping
+- Before/after code blocks (exact)
+- Change list (numbered steps)
+
+### Part 7: Verification Checklist
+- Binary pass/fail criteria
+- Searchable commands
+- No subjective criteria
+
+### Part 8: Expected Results
+- Target ratings post-implementation
+- Measurable success criteria
+
+**Critical:** Audit must transition directly to sprint via Gap Coverage mapping.
+
+**Reference:** `_project/lessons/patterns/opus-audit-to-sprint-pipeline.md`

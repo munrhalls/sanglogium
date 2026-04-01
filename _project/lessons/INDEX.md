@@ -605,6 +605,94 @@
 
 ---
 
+## Keyword: opus
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/opus-sprint-specification-generation.md](workflows/opus-sprint-specification-generation.md) | High | Opus generates superior sprint specs with gap coverage, line-number precision, constraint-first architecture |
+
+---
+
+## Keyword: sprint-spec
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/opus-sprint-specification-generation.md](workflows/opus-sprint-specification-generation.md) | High | Compress input to <1000 tokens, include Gap Coverage mapping, Scope Lock Rules, line numbers, anti-patterns |
+
+---
+
+## Keyword: scope-contract
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/opus-sprint-specification-generation.md](workflows/opus-sprint-specification-generation.md) | High | Each SC must have Gap Coverage reference, explicit DoDs, build gate, and verification command |
+
+---
+
+## Keyword: gap-coverage
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/opus-sprint-specification-generation.md](workflows/opus-sprint-specification-generation.md) | High | Every SC must explicitly map to audit gaps (G1, G2, etc.) for traceability |
+
+---
+
+## Keyword: layer-sequencing
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/opus-sprint-specification-generation.md](workflows/opus-sprint-specification-generation.md) | High | Four Layers: Structure → Layout → Surface → Interaction. Pass 1/2/3 sequencing |
+
+---
+
+## Keyword: constraint-first
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/opus-sprint-specification-generation.md](workflows/opus-sprint-specification-generation.md) | High | List Scope Lock Rules (what NOT to touch) BEFORE implementation details |
+
+---
+
+## Keyword: opus-audit
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/opus-audit-to-sprint-pipeline.md](patterns/opus-audit-to-sprint-pipeline.md) | High | 8-part audit structure: Design System → Research → Component Audit → Ratings → Gap Analysis → SCs → Verification → Targets |
+
+---
+
+## Keyword: design-audit
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/opus-audit-to-sprint-pipeline.md](patterns/opus-audit-to-sprint-pipeline.md) | High | Use 8-part structure with numbered gaps (G1, G2...) and traceable SCs |
+
+---
+
+## Keyword: gap-analysis
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/opus-audit-to-sprint-pipeline.md](patterns/opus-audit-to-sprint-pipeline.md) | High | Gap table: Current State | Target State | Components | with G1, G2 numbering |
+
+---
+
+## Keyword: reference-standard
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/opus-audit-to-sprint-pipeline.md](patterns/opus-audit-to-sprint-pipeline.md) | High | Homepage/canonical implementation as reference for all target states |
+
+---
+
+## Keyword: sequenced-changes
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/opus-audit-to-sprint-pipeline.md](patterns/opus-audit-to-sprint-pipeline.md) | High | SC1, SC2... with Gap Coverage mapping, before/after code, exact file paths |
+
+---
+
 ## New Lesson Template
 
 ```markdown
