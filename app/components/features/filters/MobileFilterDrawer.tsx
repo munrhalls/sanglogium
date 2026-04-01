@@ -2,6 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { useFilterNuqs } from './useFilterNuqs';
+import { PriceRangeSlider } from './PriceRangeSlider';
 
 interface FilterOption {
   value: string;
@@ -18,10 +19,12 @@ interface MobileFilterDrawerProps {
   isOpen: boolean;
   onClose: () => void;
   filters: FilterGroup[];
+  priceRange?: { minPrice: number | null; maxPrice: number | null };
 }
 
-export function MobileFilterDrawer({ isOpen, onClose, filters }: MobileFilterDrawerProps) {
-  const { isFilterActive, toggleFilter } = useFilterNuqs();
+export function MobileFilterDrawer({ isOpen, onClose, filters, priceRange: priceRangeData }: MobileFilterDrawerProps) {
+  const { isFilterActive, toggleFilter, getPriceRange, setPriceRange, clearPriceRange } = useFilterNuqs();
+  const currentPriceRange = getPriceRange();
 
   // Escape key handler
   useEffect(() => {
@@ -114,6 +117,14 @@ export function MobileFilterDrawer({ isOpen, onClose, filters }: MobileFilterDra
           {/* Filter content */}
           <div className="flex-1 overflow-y-auto p-4">
             <form className="space-y-6">
+              <PriceRangeSlider
+                min={priceRangeData?.minPrice ?? 0}
+                max={priceRangeData?.maxPrice ?? 10000}
+                value={currentPriceRange}
+                onChange={setPriceRange}
+                onClear={clearPriceRange}
+              />
+
               {filters.map((group) => (
                 <fieldset key={group.field} className="space-y-3">
                   <legend className="type-overline text-accent-500 section-header-anchor">

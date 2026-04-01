@@ -18,11 +18,12 @@ interface FilterGroup {
 
 interface FilterSidebarProps {
   filters: FilterGroup[];
+  priceRange?: { minPrice: number | null; maxPrice: number | null };
 }
 
-export function FilterSidebar({ filters }: FilterSidebarProps) {
+export function FilterSidebar({ filters, priceRange: priceRangeData }: FilterSidebarProps) {
   const { getPriceRange, setPriceRange, clearPriceRange, isFilterActive, toggleFilter } = useFilterNuqs();
-  const priceRange = getPriceRange();
+  const currentPriceRange = getPriceRange();
 
   return (
     <aside
@@ -36,9 +37,9 @@ export function FilterSidebar({ filters }: FilterSidebarProps) {
 
         <form className="space-y-6">
           <PriceRangeSlider
-            min={0}
-            max={10000}
-            value={priceRange}
+            min={priceRangeData?.minPrice ?? 0}
+            max={priceRangeData?.maxPrice ?? 10000}
+            value={currentPriceRange}
             onChange={setPriceRange}
             onClear={clearPriceRange}
           />
