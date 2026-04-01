@@ -571,3 +571,81 @@ ModuleNotFoundError: No module named 'rembg'
 2026-03-31T13:23:05.352456+00:00 | ZuUKzmkqDyQwdcwhxl9DU0 | TIMEOUT after 5 minutes
 2026-03-31T13:28:05.390214+00:00 | ZuUKzmkqDyQwdcwhxlIcNL | TIMEOUT after 5 minutes
 2026-03-31T13:28:53.692605+00:00 | ZuUKzmkqDyQwdcwhxl99sR | TIMEOUT after 5 minutes
+2026-03-31T13:37:39.516061+00:00 | ZuUKzmkqDyQwdcwhxl9CGa | TIMEOUT after 5 minutes
+2026-03-31T13:37:41.487576+00:00 | ZuUKzmkqDyQwdcwhxlIflR | TIMEOUT after 5 minutes
+2026-03-31T13:42:39.549952+00:00 | ZuUKzmkqDyQwdcwhxl9DU0 | TIMEOUT after 5 minutes
+2026-03-31T13:47:31.023647+00:00 | ZuUKzmkqDyQwdcwhxlJlJu | TIMEOUT after 5 minutes
+2026-03-31T14:00:02.075803+00:00 | ZuUKzmkqDyQwdcwhxlJlJu | TIMEOUT after 5 minutes
+2026-03-31T14:02:15.272953+00:00 | ZuUKzmkqDyQwdcwhxwQPfT | TIMEOUT after 5 minutes
+2026-03-31T14:05:02.113930+00:00 | ZuUKzmkqDyQwdcwhxlJpXB | TIMEOUT after 5 minutes
+2026-03-31T14:07:15.296873+00:00 | dLGDVDmEEI2lV8CArAcaQ0 | TIMEOUT after 5 minutes
+2026-03-31T14:10:02.144788+00:00 | ZuUKzmkqDyQwdcwhxwQHiY | TIMEOUT after 5 minutes
+2026-03-31T14:15:07.299767+00:00 | dLGDVDmEEI2lV8CArAcd7E | TIMEOUT after 5 minutes
+2026-03-31T14:18:48.389530+00:00 | ZuUKzmkqDyQwdcwhxwQPfT | TIMEOUT after 5 minutes
+2026-03-31T14:20:07.345343+00:00 | dLGDVDmEEI2lV8CArAcfBk | TIMEOUT after 5 minutes
+2026-03-31T14:23:48.432624+00:00 | dLGDVDmEEI2lV8CArAcaQ0 | TIMEOUT after 5 minutes
+2026-03-31T14:25:07.414728+00:00 | dLGDVDmEEI2lV8CArAcgSi | TIMEOUT after 5 minutes
+2026-03-31T14:30:07.449329+00:00 | dLGDVDmEEI2lV8CArAcpNU | TIMEOUT after 5 minutes
+2026-03-31T14:32:31.182834+00:00 | dLGDVDmEEI2lV8CArAcd7E | TIMEOUT after 5 minutes
+2026-03-31T14:35:07.485558+00:00 | dLGDVDmEEI2lV8CArAdTYq | TIMEOUT after 5 minutes
+2026-03-31T14:37:31.336378+00:00 | dLGDVDmEEI2lV8CArAcfBk | TIMEOUT after 5 minutes
+2026-03-31T14:40:07.515843+00:00 | dLGDVDmEEI2lV8CArIgBZs | TIMEOUT after 5 minutes
+2026-03-31T14:42:31.396601+00:00 | dLGDVDmEEI2lV8CArAcgSi | TIMEOUT after 5 minutes
+2026-03-31T14:45:07.553024+00:00 | dLGDVDmEEI2lV8CArIgBmG | TIMEOUT after 5 minutes
+2026-03-31T14:47:31.429735+00:00 | dLGDVDmEEI2lV8CArAcpNU | TIMEOUT after 5 minutes
+2026-03-31T14:50:07.640661+00:00 | dLGDVDmEEI2lV8CArIgC3I | TIMEOUT after 5 minutes
+2026-03-31T14:52:31.464414+00:00 | dLGDVDmEEI2lV8CArAdTYq | TIMEOUT after 5 minutes
+2026-03-31T14:55:07.679412+00:00 | dLGDVDmEEI2lV8CArIgKzc | TIMEOUT after 5 minutes
+2026-03-31T14:57:31.489927+00:00 | dLGDVDmEEI2lV8CArIgBZs | TIMEOUT after 5 minutes
+2026-03-31T15:00:07.706801+00:00 | dLGDVDmEEI2lV8CArIgSA0 | TIMEOUT after 5 minutes
+2026-03-31T15:02:31.520755+00:00 | dLGDVDmEEI2lV8CArIgBmG | TIMEOUT after 5 minutes
+2026-03-31T15:05:07.725040+00:00 | dLGDVDmEEI2lV8CArIgVky | TIMEOUT after 5 minutes
+2026-03-31T15:07:31.551179+00:00 | dLGDVDmEEI2lV8CArIgC3I | TIMEOUT after 5 minutes
+2026-03-31T15:10:07.755303+00:00 | dLGDVDmEEI2lV8CArIgbTY | TIMEOUT after 5 minutes
+2026-03-31T15:12:31.576323+00:00 | dLGDVDmEEI2lV8CArIgKzc | TIMEOUT after 5 minutes
+2026-03-31T15:24:22.875723+00:00 | k27n1AQuIbSr5iozFz7EsP | TIMEOUT after 5 minutes
+2026-03-31T15:25:39.293803+00:00 | dLGDVDmEEI2lV8CArIgbTY | TIMEOUT after 5 minutes
+2026-03-31T15:33:33.281223+00:00 | k27n1AQuIbSr5iozFz7E1H | TIMEOUT after 5 minutes
+2026-03-31T15:36:35.509320+00:00 | k27n1AQuIbSr5iozFz7GSn | TIMEOUT after 5 minutes
+2026-03-31T15:41:21.608413+00:00 | k27n1AQuIbSr5iozFz7EsP | TIMEOUT after 5 minutes
+2026-03-31T15:45:01.675816+00:00 | k27n1AQuIbSr5iozFz7IlS | TIMEOUT after 5 minutes
+2026-03-31T15:55:35.006793+00:00 | k27n1AQuIbSr5iozFz7IlS | TIMEOUT after 5 minutes
+2026-03-31T16:32:13.803311+00:00 | k27n1AQuIbSr5iozG1vOH0 | TIMEOUT after 5 minutes
+2026-03-31T16:34:34.879706+00:00 | k27n1AQuIbSr5iozG2itJe | TIMEOUT after 5 minutes
+2026-03-31T16:46:38.487002+00:00 | k27n1AQuIbSr5iozG2iztx | TIMEOUT after 5 minutes
+2026-03-31T16:55:47.997848+00:00 | k27n1AQuIbSr5iozG2j7uo | TIMEOUT after 5 minutes
+2026-03-31T16:58:48.286541+00:00 | k27n1AQuIbSr5iozG2itJe | TIMEOUT after 5 minutes
+2026-03-31T17:02:25.918539+00:00 | k27n1AQuIbSr5iozG2iyZJ | Traceback (most recent call last):
+  File "C:\webdev\sang-logium\scripts\image-pipeline\pipeline.py", line 183, in <module>
+    main()
+  File "C:\webdev\sang-logium\scripts\image-pipeline\pipeline.py", line 126, in main
+    print(f"Found: {product.get('name', 'untitled')}")
+  File "C:\Python312\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2116' in position 21: character maps to <undefined>
+2026-03-31T17:10:23.514043+00:00 | moXlkADK7m1DHgGwWtX5bB | TIMEOUT after 5 minutes
+2026-03-31T17:18:10.367430+00:00 | moXlkADK7m1DHgGwWtUHWs | TIMEOUT after 5 minutes
+2026-03-31T17:25:06.671267+00:00 | moXlkADK7m1DHgGwWtbkq7 | TIMEOUT after 5 minutes
+2026-03-31T17:27:34.883574+00:00 | moXlkADK7m1DHgGwWtX5bB | TIMEOUT after 5 minutes
+2026-03-31T17:30:06.696049+00:00 | moXlkADK7m1DHgGwWtblBG | TIMEOUT after 5 minutes
+2026-03-31T17:32:34.910039+00:00 | moXlkADK7m1DHgGwWtXu6V | TIMEOUT after 5 minutes
+2026-03-31T17:35:06.709998+00:00 | moXlkADK7m1DHgGwWtblsT | TIMEOUT after 5 minutes
+2026-03-31T17:37:34.932892+00:00 | moXlkADK7m1DHgGwWtbizC | TIMEOUT after 5 minutes
+2026-03-31T17:40:06.741230+00:00 | moXlkADK7m1DHgGwWtbmis | TIMEOUT after 5 minutes
+2026-03-31T17:42:34.954715+00:00 | moXlkADK7m1DHgGwWtbjv7 | TIMEOUT after 5 minutes
+2026-03-31T17:45:06.741185+00:00 | moXlkADK7m1DHgGwWtbnF3 | TIMEOUT after 5 minutes
+2026-03-31T17:47:34.998013+00:00 | moXlkADK7m1DHgGwWtbklW | TIMEOUT after 5 minutes
+2026-03-31T17:52:35.052721+00:00 | moXlkADK7m1DHgGwWtbkq7 | TIMEOUT after 5 minutes
+2026-03-31T17:57:35.076471+00:00 | moXlkADK7m1DHgGwWtblBG | TIMEOUT after 5 minutes
+2026-03-31T17:58:11.435118+00:00 | moXlkADK7m1DHgGwWwET3O | TIMEOUT after 5 minutes
+2026-03-31T18:02:35.104688+00:00 | moXlkADK7m1DHgGwWtblsT | TIMEOUT after 5 minutes
+2026-03-31T18:03:11.466091+00:00 | moXlkADK7m1DHgGwWwETNc | TIMEOUT after 5 minutes
+2026-03-31T18:19:28.139554+00:00 | moXlkADK7m1DHgGwWwEeK6 | TIMEOUT after 5 minutes
+2026-03-31T18:26:01.461365+00:00 | moXlkADK7m1DHgGwWwEfPD | TIMEOUT after 5 minutes
+2026-03-31T18:40:23.207746+00:00 | moXlkADK7m1DHgGwWwzkms | TIMEOUT after 5 minutes
+2026-03-31T18:40:58.066049+00:00 | moXlkADK7m1DHgGwWwEeK6 | TIMEOUT after 5 minutes
+2026-03-31T18:45:23.249956+00:00 | moXlkADK7m1DHgGwWwznPb | TIMEOUT after 5 minutes
+2026-03-31T18:50:23.274709+00:00 | moXlkADK7m1DHgGwWwzwUF | TIMEOUT after 5 minutes
+2026-03-31T19:32:35.090663+00:00 | n10eAegrGspodtsQw12meG | TIMEOUT after 5 minutes
+2026-03-31T19:51:07.208055+00:00 | n10eAegrGspodtsQw12meG | TIMEOUT after 5 minutes
