@@ -47,13 +47,12 @@ jobs:
 
           # If script fails, create fallback report
           if [ ! -f "_project/research/nightly/$(date +%Y-%m-%d)/DI-$(date +%Y-%m-%d).md" ]; then
-            cat > "_project/research/nightly/$(date +%Y-%m-%d)/DI-$(date +%Y-%m-%d).md" << 'EOF'
-# Data Integrity Report — $(date +%Y-%m-%d)
-
-**Status:** ⚠️ Analysis Error
-**Error:** Validation script failed to execute
-**Action:** Check workflow logs
-EOF
+            echo "# Data Integrity Report" > "_project/research/nightly/$(date +%Y-%m-%d)/DI-$(date +%Y-%m-%d).md"
+            echo "" >> "_project/research/nightly/$(date +%Y-%m-%d)/DI-$(date +%Y-%m-%d).md"
+            echo "Status: Analysis Error" >> "_project/research/nightly/$(date +%Y-%m-%d)/DI-$(date +%Y-%m-%d).md"
+            echo "Date: $(date +%Y-%m-%d)" >> "_project/research/nightly/$(date +%Y-%m-%d)/DI-$(date +%Y-%m-%d).md"
+            echo "Error: Validation script failed to execute" >> "_project/research/nightly/$(date +%Y-%m-%d)/DI-$(date +%Y-%m-%d).md"
+            echo "Action: Check workflow logs" >> "_project/research/nightly/$(date +%Y-%m-%d)/DI-$(date +%Y-%m-%d).md"
           fi
         continue-on-error: true
 
@@ -92,13 +91,11 @@ EOF
           node scripts/research/contract-validation.mjs || true
 
           if [ ! -f "_project/research/nightly/$(date +%Y-%m-%d)/CV-$(date +%Y-%m-%d).md" ]; then
-            cat > "_project/research/nightly/$(date +%Y-%m-%d)/CV-$(date +%Y-%m-%d).md" << 'EOF'
-# Contract Validation Report — $(date +%Y-%m-%d)
-
-**Status:** ⚠️ Analysis Error
-**Error:** Validation script failed
-**Action:** Check workflow logs
-EOF
+            echo "# Contract Validation Report" > "_project/research/nightly/$(date +%Y-%m-%d)/CV-$(date +%Y-%m-%d).md"
+            echo "" >> "_project/research/nightly/$(date +%Y-%m-%d)/CV-$(date +%Y-%m-%d).md"
+            echo "Status: Analysis Error" >> "_project/research/nightly/$(date +%Y-%m-%d)/CV-$(date +%Y-%m-%d).md"
+            echo "Date: $(date +%Y-%m-%d)" >> "_project/research/nightly/$(date +%Y-%m-%d)/CV-$(date +%Y-%m-%d).md"
+            echo "Error: Validation script failed" >> "_project/research/nightly/$(date +%Y-%m-%d)/CV-$(date +%Y-%m-%d).md"
           fi
         continue-on-error: true
 
@@ -137,13 +134,11 @@ EOF
           node scripts/research/dependency-risk.mjs || true
 
           if [ ! -f "_project/research/nightly/$(date +%Y-%m-%d)/DR-$(date +%Y-%m-%d).md" ]; then
-            cat > "_project/research/nightly/$(date +%Y-%m-%d)/DR-$(date +%Y-%m-%d).md" << 'EOF'
-# Dependency Risk Report — $(date +%Y-%m-%d)
-
-**Status:** ⚠️ Analysis Error
-**Error:** Risk analysis script failed
-**Action:** Check workflow logs
-EOF
+            echo "# Dependency Risk Report" > "_project/research/nightly/$(date +%Y-%m-%d)/DR-$(date +%Y-%m-%d).md"
+            echo "" >> "_project/research/nightly/$(date +%Y-%m-%d)/DR-$(date +%Y-%m-%d).md"
+            echo "Status: Analysis Error" >> "_project/research/nightly/$(date +%Y-%m-%d)/DR-$(date +%Y-%m-%d).md"
+            echo "Date: $(date +%Y-%m-%d)" >> "_project/research/nightly/$(date +%Y-%m-%d)/DR-$(date +%Y-%m-%d).md"
+            echo "Error: Risk analysis script failed" >> "_project/research/nightly/$(date +%Y-%m-%d)/DR-$(date +%Y-%m-%d).md"
           fi
         continue-on-error: true
 
