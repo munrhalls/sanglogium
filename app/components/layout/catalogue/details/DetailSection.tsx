@@ -4,11 +4,15 @@ import type { CatalogueNavItem } from "../catalogue-nav.types";
 
 type CatalogueSection = CatalogueNavItem["sections"][number];
 
+interface DetailSectionProps {
+  section: CatalogueSection;
+  onClose?: () => void;
+}
+
 export default function DetailSection({
   section,
-}: {
-  section: CatalogueSection;
-}) {
+  onClose,
+}: DetailSectionProps) {
   return (
     <div
       className={cn(
@@ -43,6 +47,7 @@ export default function DetailSection({
           >
             <Link
               href={link.url}
+              onClick={onClose}
               className={cn(
                 "pl-2 text-body text-secondary-300",
                 "transition-colors hover:text-brand-200 active:text-brand-400"
