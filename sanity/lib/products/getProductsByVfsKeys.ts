@@ -60,7 +60,7 @@ const getProductsByVfsKeysFn = async ({
       }).join(' ')
     : '';
 
-  return sanityFetch({
+  const results = await sanityFetch({
     query: groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0 ${filterClause}] ${orderClause} [0...${effectiveLimit}] {
       _id,
       name,
@@ -82,6 +82,13 @@ const getProductsByVfsKeysFn = async ({
     }`,
     params: { keys }
   });
+
+  // Debug: Log first product's image data to verify structure
+  if (results.length > 0) {
+    console.log('[DEBUG getProductsByVfsKeys] First product image:', JSON.stringify(results[0].image, null, 2));
+  }
+
+  return results;
 };
 
 export const getProductsByVfsKeys = withCache(getProductsByVfsKeysFn) as (options: GetProductsOptions) => Promise<Product[]>;
