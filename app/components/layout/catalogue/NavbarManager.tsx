@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { NavbarManagerProps } from "@/app/components/layout/carousel/types";
 import { cn } from "@/lib/utils/tailwind";
 import { CaretDownIcon } from "@phosphor-icons/react";
@@ -31,6 +31,14 @@ export default function NavbarManager({
   const closeMenu = () => setActiveId(null);
 
   const isOpen = activeId !== null;
+
+  // Clone children and pass onClose prop
+  const childrenWithOnClose = React.Children.map(children, (child) => {
+    if (React.isValidElement(child)) {
+      return React.cloneElement(child, { onClose: closeMenu } as React.Attributes);
+    }
+    return child;
+  });
 
   return (
     <div className="w-full">
@@ -83,7 +91,7 @@ export default function NavbarManager({
               transform: `translateX(-${displayIndex * 100}%)`
             }}
           >
-            {children.map((child: React.ReactNode, idx: number) => (
+            {childrenWithOnClose?.map((child: React.ReactNode, idx: number) => (
               <div
                 key={navLinks[idx]?.id}
                 className="w-full shrink-0 group/animation-settle overflow-hidden no-scrollbar"
