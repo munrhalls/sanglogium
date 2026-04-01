@@ -73,31 +73,55 @@ const getFiltersForCategoryPathFn = async (catalogueKeys: string[]): Promise<Fil
     });
   }
 
-  // Add other fields as filters
-  const fieldLabelMap: Record<string, string> = {
-    'driverType': 'Driver Type',
-    'driverSize': 'Driver Size',
-    'impedance': 'Impedance',
-    'frequencyResponse': 'Frequency Response',
-    'connection': 'Connection',
-    'openClosed': 'Design',
-  };
+  // Process other fields from products
+  for (const product of products) {
+    if (product.displayPrice !== null) {
+      const priceRanges = fieldMap.get('price') || new Set<string>();
+      if (product.displayPrice < 100) priceRanges.add('Under $100');
+      else if (product.displayPrice < 500) priceRanges.add('$100-$500');
+      else if (product.displayPrice < 1000) priceRanges.add('$500-$1000');
+      else priceRanges.add('Over $1000');
+      fieldMap.set('price', priceRanges);
+    }
 
-  for (const [field, values] of fieldMap) {
-    if (values.size > 0 && values.size < products.length) {
-      // Only add filter if there are multiple values but not every product has it
-      filters.push({
-        field: field.toLowerCase(),
-        label: fieldLabelMap[field] || field,
-        options: Array.from(values)
-          .sort()
-          .map(value => ({
-            value,
-            label: value
-          }))
-      });
+    if (product.stock !== null) {
+      const stockStatus = fieldMap.get('stock') || new Set<string>();
+      if (product.stock > 0) stockStatus.add('In Stock');
+      else stockStatus.add('Out of Stock');
+      fieldMap.set('stock', stockStatus);
     }
   }
+
+  // Add price filter if any price ranges exist
+  const priceRanges = fieldMap.get('price');
+  if (priceRanges && priceRanges.size > 0) {
+    filters.push({
+      field: 'price',
+      label: 'Price Range',
+      options: Array.from(priceRanges)
+        .sort()
+        .map(range => ({
+          value: range,
+          label: range
+        }))
+    });
+  }
+
+  // Add stock filter if any stock statuses exist
+  const stockStatuses = fieldMap.get('stock');
+  if (stockStatuses && stockStatuses.size > 0) {
+    filters.push({
+      field: 'stock',
+      label: 'Availability',
+      options: Array.from(stockStatuses)
+        .sort()
+        .map(status => ({
+          value: status,
+          label: status
+        }))
+    });
+  }
+
 
   return filters;
 };
