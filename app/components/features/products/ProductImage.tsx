@@ -11,14 +11,12 @@ interface ProductImageProps {
   image: any;
   alt: string;
   className?: string;
-  imgClassName?: string;
   priority?: boolean;
 }
 
-export function ProductImage({ image, alt, className, imgClassName, priority = false }: ProductImageProps) {
+export function ProductImage({ image, alt, className, priority = false }: ProductImageProps) {
   // Get the asset reference - Sanity can use either _ref or _id
   const assetRef = image?.asset?._ref || image?.asset?._id;
-  console.log(assetRef)
 
   if (!assetRef) {
     return (
@@ -29,13 +27,13 @@ export function ProductImage({ image, alt, className, imgClassName, priority = f
   }
 
   return (
-    <div className={`relative aspect-[4/3] bg-surface-productImage ${className}`} data-testid="product-image">
+    <div className={`relative w-[85%] h-[85%] bg-surface-productImage ${className || ''}`} data-testid="product-image">
       <Image
         src={assetRef}
         alt={alt}
         fill
         sizes="(max-width: 768px) 50vw, 25vw"
-        className={`object-cover rounded ${imgClassName || ''}`}
+        className={`object-contain rounded`}
         priority={priority}
         loader={({ src, width, quality }) => {
           const url = builder
