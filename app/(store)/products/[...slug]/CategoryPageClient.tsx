@@ -7,6 +7,13 @@ import { SortDropdown } from '@/app/components/features/filters/SortDropdown';
 import { ActiveFilters } from '@/app/components/features/filters/ActiveFilters';
 import { MobileControlsBar } from '@/app/components/features/filters/MobileControlsBar';
 import { MobileFilterDrawer } from '@/app/components/features/filters/MobileFilterDrawer';
+import type { SanityProduct } from '@/sanity/lib/products/getProductsByVfsKeys';
+
+// Product type aligned with Sanity generated types - brand is now reference (SC8)
+type Product = Pick<SanityProduct, '_id' | 'name' | 'displayPrice' | 'image'> & {
+  brand: { _id: string; name: string; slug?: { current: string } } | null;
+  slug: { current: string };
+};
 
 interface FilterOption {
   value: string;
@@ -17,15 +24,6 @@ interface FilterGroup {
   field: string;
   label: string;
   options: FilterOption[];
-}
-
-interface Product {
-  _id: string;
-  name: string;
-  brand?: { _id: string; name: string } | null;
-  displayPrice: number;
-  image: any;
-  slug: { current: string };
 }
 
 interface CategoryPageClientProps {
@@ -42,10 +40,7 @@ export function CategoryPageClient({
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const searchParams = useSearchParams();
 
-  // Parse sort from URL
-  const sort = searchParams.get('sort') || 'featured';
-
-  // Parse active filters from URL
+  // Parse active filters from URL for display purposes only
   const activeFilters = useMemo(() => {
     const filterParams = searchParams.getAll('f');
     return filterParams.map(f => {
@@ -54,53 +49,8 @@ export function CategoryPageClient({
     });
   }, [searchParams]);
 
-  // Filter products client-side
-  const filteredProducts = useMemo(() => {
-    if (activeFilters.length === 0) return products;
-
-    return products.filter(product => {
-      // Product must match ALL active filters (AND logic)
-      return activeFilters.every(filter => {
-        if (filter.field === 'brand') {
-          return product.brand?.name === filter.value;
-        }
-        // For other filters, we'd need overviewFields/specifications data
-        // For now, pass through (server-side filtering handles complex cases)
-        return true;
-      });
-    });
-  }, [products, activeFilters]);
-
-  // Sort products client-side
-  const sortedProducts = useMemo(() => {
-    if (sort === 'featured') return filteredProducts;
-
-    const [sortField, sortDir] = sort.split(':');
-    const sorted = [...filteredProducts];
-
-    sorted.sort((a, b) => {
-      let aVal: string | number;
-      let bVal: string | number;
-
-      if (sortField === 'displayPrice') {
-        aVal = a.displayPrice;
-        bVal = b.displayPrice;
-      } else if (sortField === 'name') {
-        aVal = a.name.toLowerCase();
-        bVal = b.name.toLowerCase();
-      } else {
-        return 0;
-      }
-
-      if (aVal < bVal) return sortDir === 'asc' ? -1 : 1;
-      if (aVal > bVal) return sortDir === 'asc' ? 1 : -1;
-      return 0;
-    });
-
-    return sorted;
-  }, [filteredProducts, sort]);
-
-  const productCount = sortedProducts.length;
+  // Products are already filtered server-side via GROQ
+  const productCount = products.length;
   const countLabel = productCount === 1 ? 'product' : 'products';
 
   return (
@@ -124,15 +74,15 @@ export function CategoryPageClient({
         {/* Mobile controls */}
         <div className="lg:hidden">
           <MobileControlsBar
-            productCount={sortedProducts.length}
+            productCount={products.length}
             onOpenFilters={() => setIsDrawerOpen(true)}
           />
         </div>
 
         {/* Active filters */}
-        <ActiveFilters filterGroups={filters} />
+        <ActiveFilters filterGroups={filters} activeFilters={activeFilters} />
 
-        <ProductGrid products={sortedProducts} />
+        <ProductGrid products={products} />
       </main>
     </>
   );

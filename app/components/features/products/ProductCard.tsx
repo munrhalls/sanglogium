@@ -2,11 +2,12 @@ import React from 'react';
 import Link from 'next/link';
 import { ProductImage } from './ProductImage';
 import { ShoppingCart } from '@phosphor-icons/react/dist/ssr';
+import type { Product } from '@/sanity/lib/products/getProductsByVfsKeys';
 
 export interface Product {
   _id: string;
   name: string;
-  brand?: { _id: string; name: string } | null;
+  brand: { _id: string; name: string; slug?: { current: string } } | null;
   displayPrice: number;
   image: any;
   slug: { current: string };

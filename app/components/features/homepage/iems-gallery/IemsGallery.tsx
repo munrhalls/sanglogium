@@ -1,5 +1,4 @@
 import React from "react";
-import Grid from "@/app/components/layout/grid/Grid";
 import IemsGalleryHeader from "./IemsGalleryHeader";
 import IemCard from "./IemCard";
 import { IemProduct } from "./getIemProducts";
@@ -22,11 +21,11 @@ export default async function IemsGallery({ iemsData }: IemsGalleryProps) {
         <div className="mx-auto max-w-content">
           <div className="flex flex-col gap-4">
             <IemsGalleryHeader />
-            <Grid cols={4}>
+            <div className="grid gap-4 md:gap-6 lg:gap-8 grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg-desktop:grid-cols-4 lg-touch:grid-cols-3">
               {iemsData.map((iem, idx) => (
                 <IemCard key={iem._id} product={iem as any} idx={idx} />
               ))}
-            </Grid>
+            </div>
           </div>
         </div>
       </div>

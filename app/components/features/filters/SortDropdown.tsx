@@ -1,23 +1,28 @@
 "use client";
 
 import React from 'react';
-import { useRouter, usePathname, useSearchParams } from 'next/navigation';
-import { buildFilterUrl } from '@/lib/filters/urlParams';
+import { useSearchParams } from 'next/navigation';
 
 export function SortDropdown() {
-  const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
-
   const currentSort = searchParams.get('sort') || 'featured';
 
+  // Build current query string excluding sort param
+  const otherParams = new URLSearchParams(searchParams.toString());
+  otherParams.delete('sort');
+  const otherParamsString = otherParams.toString();
+
   const handleSortChange = (value: string) => {
-    const newUrl = buildFilterUrl(
-      pathname,
-      new URLSearchParams(searchParams.toString()),
-      { sort: value === 'featured' ? null : value }
-    );
-    router.push(newUrl, { scroll: false });
+    // Build new URL with updated sort parameter
+    const params = new URLSearchParams(otherParamsString);
+    if (value !== 'featured') {
+      params.set('sort', value);
+    }
+    const queryString = params.toString();
+    const newUrl = `${window.location.pathname}${queryString ? `?${queryString}` : ''}`;
+
+    // Full page reload for server-side sorting
+    window.location.href = newUrl;
   };
 
   return (

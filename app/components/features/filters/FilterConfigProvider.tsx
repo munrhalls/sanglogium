@@ -1,4 +1,5 @@
 import React from 'react';
+import { getFiltersForCategoryPathAction } from '@/app/actions/categories';
 
 interface FilterOption {
   value: string;
@@ -12,32 +13,13 @@ interface FilterGroup {
 }
 
 interface FilterConfigProviderProps {
+  categoryKeys: string[];
   children: (props: { filters: FilterGroup[] }) => React.ReactNode;
 }
 
-export async function FilterConfigProvider({ children }: FilterConfigProviderProps) {
-  // TODO: Fetch from CMS in L5
-  const mockFilters: FilterGroup[] = [
-    {
-      field: 'brand',
-      label: 'Brand',
-      options: [
-        { value: 'sennheiser', label: 'Sennheiser' },
-        { value: 'sony', label: 'Sony' },
-        { value: 'focal', label: 'Focal' },
-        { value: 'beyerdynamic', label: 'Beyerdynamic' },
-      ],
-    },
-    {
-      field: 'driverType',
-      label: 'Driver Type',
-      options: [
-        { value: 'dynamic', label: 'Dynamic' },
-        { value: 'planar', label: 'Planar Magnetic' },
-        { value: 'electrostatic', label: 'Electrostatic' },
-      ],
-    },
-  ];
+export async function FilterConfigProvider({ categoryKeys, children }: FilterConfigProviderProps) {
+  // Fetch dynamic filters based on category path
+  const filters = await getFiltersForCategoryPathAction(categoryKeys);
 
-  return <>{children({ filters: mockFilters })}</>;
+  return <>{children({ filters })}</>;
 }
