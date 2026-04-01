@@ -31,7 +31,7 @@ export function FilterSidebar({ filters, priceRange: priceRangeData, maxStock }:
   return (
     <aside
       data-testid="filter-sidebar"
-      className="hidden lg:block w-60 sticky top-desktop-header-h"
+      className="hidden lg:block w-60 sticky top-[var(--desktop-header-h)] h-full overflow-y-auto"
     >
       <div className="bg-surface-elevated border border-border-secondary rounded-sm p-6 space-y-6">
         <h3 className="type-overline text-caption">
