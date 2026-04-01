@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect } from 'react';
-import { CounterClockwiseClock } from '@phosphor-icons/react';
+import { ClockCounterClockwise } from '@phosphor-icons/react';
 
 interface StockMinimumSliderProps {
   maxStock: number;
@@ -45,19 +45,18 @@ export function StockMinimumSlider({ maxStock, value, onChange, onClear }: Stock
         <legend className="type-overline text-accent-500 section-header-anchor">
           Availability
         </legend>
-        {isActive && (
-          <button
+        <button
             type="button"
             onClick={handleClear}
             className={`p-1 rounded transition-colors ${
-              isActive ? 'text-accent-500 hover:text-accent-400' : 'text-secondary-500 hover:text-secondary-400'
+              isActive ? 'text-brand-400 hover:text-brand-300' : 'text-secondary-600 opacity-50 cursor-not-allowed'
             }`}
             data-testid="clear-stock-minimum"
-            title="Clear filter"
+            title={isActive ? "Clear filter" : "Filter not active"}
+            disabled={!isActive}
           >
-            <CounterClockwiseClock size={16} weight="bold" />
+            <ClockCounterClockwise size={16} weight="bold" />
           </button>
-        )}
       </div>
 
       <div className="space-y-4">
