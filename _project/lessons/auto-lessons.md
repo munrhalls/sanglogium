@@ -39,7 +39,55 @@ No automated test caught this. Build-time only error. No visual regression test 
 
 ---
 
-## Lesson 2: ES Module CommonJS Mismatch
+## Lesson 3: Typegen-Schema Drift in PDDA-SPRINT-1
+**Date:** April 1, 2026
+**Sprint:** PDDA-SPRINT-1 (Product Discovery Data Architecture)
+
+### The Error
+Type conflicts between manually defined Product interfaces and generated Sanity types. Brand field was `string` in generated types but used as reference in GROQ queries with `brand->name` syntax.
+
+### Root Cause
+1. `sanity.types.ts` was stale - didn't reflect that `brandType` was added to schema
+2. Manual Product interfaces in 4 files drifted from source of truth
+3. GROQ reference expansion (`->`) used without verifying field was actually a reference type
+
+### Bottleneck
+- 20 min investigation across multiple files to trace type lineage
+- Build flakiness (intermittent `/_document` errors) caused 3 retry cycles
+- Coordinated changes needed: schema → types → GROQ → components
+
+### Fix Duration
+~15 minutes: regenerate types, update interfaces, fix GROQ syntax, verify build.
+
+### Resolution
+```typescript
+// Before (broken - types out of sync):
+export type Product = {
+  brand: string | null;  // Wrong! Schema has reference
+}
+// GROQ: brand == "value"  // Wrong! Reference needs dereference
+
+// After (correct):
+export type Product = Pick<SanityProduct, '_id' | 'name' | 'brand'> & {
+  brand: { _id: string; name: string; slug?: { current: string } } | null;
+}
+// GROQ: brand->name == "value"  // Correct dereference
+```
+
+### Prompt Quality
+- **Strength:** Scope contracts with explicit file paths prevented scope creep
+- **Weakness:** No pre-flight typegen verification step
+- **Missing:** "Verify generated types match schema" in pre-work checklist
+
+### Improvement Recommendation
+Add to `/implement.md` Phase 0: Run `npm run typegen` and verify `sanity.types.ts` reflects expected schema before any type-related work.
+
+### Prevention Rule
+**ALWAYS** regenerate Sanity types before type-related changes. Use `Pick<SanityProduct, ...>` pattern instead of manual interfaces.
+
+### Keywords
+["typegen", "sanity", "groq", "reference", "schema-drift"]
+
 **Date:** March 31, 2026
 **Sprint:** Debug - Products Page
 
@@ -524,5 +572,41 @@ Every complex task required **rebuilding context from scratch** — re-explainin
 - [x] **Actionable:** Each improvement has explicit DoD and verification
 - [x] **Retrievable:** Tagged with `ai-leverage`, `friction-reduction`, `infrastructure`
 - [x] **Codified:** Integrated into workflows and sprint documentation
+
+---
+
+# PDDA-SPRINT-1: Product Discovery Data Architecture
+
+**Date:** 2026-04-01
+**Duration:** ~45 minutes
+**Contracts:** 8 completed (SC2, SC3, SC4, SC5, SC6, SC7, SC1, SC8)
+
+## Key Discoveries
+
+### D1: Conflicting Product Types
+Multiple local Product interfaces caused TypeScript errors. Fixed by exporting single type from `getProductsByVfsKeys.ts`.
+
+### D2: Client-Side Filtering Redundancy
+CategoryPageClient had useMemo filtering despite server-side GROQ filtering. Removed - pure server-driven now.
+
+### D3: VFS Build Validation
+build-catalogue-index.mjs already validates slotMetadataMap completeness. Added product key validation script.
+
+### D4: Streaming Component Pattern
+Async Server Components receiving Promises + Suspense boundaries = true streaming. ProductsSection/FilterSection pattern.
+
+## Time Distribution
+- Investigation: 5 min
+- Implementation: 25 min
+- Verification: 5 min
+**Total friction: minimal** - clear scope contracts enabled smooth execution.
+
+## Codification Targets
+1. patterns/type-consolidation
+2. patterns/server-driven-filtering
+3. patterns/suspense-streaming-components
+4. anti-patterns/client-side-filtering
+5. sops/pagination-safety
+
 
 ---

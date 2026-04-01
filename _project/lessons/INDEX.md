@@ -2,7 +2,153 @@
 
 **Purpose:** Searchable keyword → lesson mapping for pre-work retrieval.
 
-**Last Updated:** 2026-03-31
+**Last Updated:** 2026-04-01
+
+---
+
+## Keyword: tailwind
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/tailwind-breakpoint-shadowing.md](failures/tailwind-breakpoint-shadowing.md) | Critical | Custom breakpoints shadow defaults - use lg-desktop:/lg-touch: instead of lg: |
+
+---
+
+## Keyword: breakpoints
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/tailwind-breakpoint-shadowing.md](failures/tailwind-breakpoint-shadowing.md) | Critical | Check tailwind.config.ts screens section before responsive layout work |
+
+---
+
+## Keyword: responsive
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/tailwind-breakpoint-shadowing.md](failures/tailwind-breakpoint-shadowing.md) | Critical | Default lg:/md:/sm: may not apply when custom breakpoints defined |
+
+---
+
+## Keyword: grid
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/tailwind-breakpoint-shadowing.md](failures/tailwind-breakpoint-shadowing.md) | Critical | Grid columns not rendering? Check for breakpoint shadowing in config |
+
+---
+
+## Keyword: shadowing
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/tailwind-breakpoint-shadowing.md](failures/tailwind-breakpoint-shadowing.md) | Critical | Tailwind custom breakpoints shadow default variants |
+
+---
+
+## Keyword: lg-desktop
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/tailwind-breakpoint-shadowing.md](failures/tailwind-breakpoint-shadowing.md) | Critical | Use lg-desktop: instead of lg: when config has custom breakpoints |
+
+---
+
+## Keyword: lg-touch
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/tailwind-breakpoint-shadowing.md](failures/tailwind-breakpoint-shadowing.md) | Critical | Use lg-touch: for tablet-height desktop viewports |
+
+---
+
+## Keyword: type-consolidation
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/type-consolidation.md](patterns/type-consolidation.md) | High | Export shared types from data layer - single source of truth prevents conflicting type definitions |
+
+---
+
+## Keyword: server-driven-filtering
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/server-driven-filtering.md](patterns/server-driven-filtering.md) | High | All filtering server-side via GROQ - client components receive already-filtered data |
+| [anti-patterns/client-side-filtering.md](anti-patterns/client-side-filtering.md) | High | Never filter server-fetched data client-side - causes double work and state mismatch |
+
+---
+
+## Keyword: suspense-streaming
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/suspense-streaming-components.md](patterns/suspense-streaming-components.md) | Medium | Async Server Components + Suspense boundaries enable true streaming with skeleton fallbacks |
+
+---
+
+## Keyword: pagination-safety
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [sops/pagination-safety.md](sops/pagination-safety.md) | Critical | All list queries require MAX_LIMIT constant to prevent unbounded queries |
+
+---
+
+## Keyword: streaming
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/suspense-streaming-components.md](patterns/suspense-streaming-components.md) | Medium | Async Server Components + Suspense boundaries enable true streaming |
+
+---
+
+## Keyword: client-side-filtering
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [anti-patterns/client-side-filtering.md](anti-patterns/client-side-filtering.md) | High | Never filter server-fetched data client-side - use server-driven filtering |
+
+---
+
+## Keyword: max-limit
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [sops/pagination-safety.md](sops/pagination-safety.md) | Critical | All list queries require MAX_LIMIT constant |
+
+---
+
+## Keyword: workflow
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/command-singular-focus.md](workflows/command-singular-focus.md) | High | /sprint plans, /implement executes, /test verifies, /build constructs — clear delegation chain |
+| [workflows/velocity-aware-sprint-planning.md](workflows/velocity-aware-sprint-planning.md) | High | Compressed context → tight sprint doc → single execution → fast review |
+
+---
+
+## Keyword: command
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/command-singular-focus.md](workflows/command-singular-focus.md) | High | Each command does ONE thing — singular focus prevents responsibility ambiguity |
+
+---
+
+## Keyword: delegation
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/command-singular-focus.md](workflows/command-singular-focus.md) | High | /sprint delegates to /implement → /implement invokes /build + /test |
+
+---
+
+## Keyword: singular-focus
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/command-singular-focus.md](workflows/command-singular-focus.md) | High | Commands must have single responsibility — no overlap, clear delegation |
 
 ---
 
@@ -217,10 +363,54 @@
 |--------|----------|---------|
 | [failures/groq-reference-syntax.md](failures/groq-reference-syntax.md) | Critical | Schema drift: brand field changed from reference to string, query didn't |
 | [patterns/vfs-catalog-architecture.md](patterns/vfs-catalog-architecture.md) | High | Virtual File System pre-computed at build time for O(1) lookups |
+| [patterns/type-safety-generated-types.md](patterns/type-safety-generated-types.md) | High | Use `Pick<SanityProduct, ...>` pattern instead of manual interfaces |
 
 ---
 
-## Keyword: build
+## Keyword: typegen
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/type-safety-generated-types.md](patterns/type-safety-generated-types.md) | High | ALWAYS regenerate types before type-related changes |
+| [failures/groq-reference-syntax-assumption.md](failures/groq-reference-syntax-assumption.md) | Critical | Stale types caused reference syntax on string field |
+
+---
+
+## Keyword: generated-types
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/type-safety-generated-types.md](patterns/type-safety-generated-types.md) | High | `Pick<SanityProduct, ...>` pattern prevents type drift |
+
+---
+
+## Keyword: schema-drift
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/groq-reference-syntax-assumption.md](failures/groq-reference-syntax-assumption.md) | Critical | Types out of sync with schema caused silent query failures |
+| [patterns/type-safety-generated-types.md](patterns/type-safety-generated-types.md) | High | Prevention: regenerate types before any type work |
+
+---
+
+## Keyword: typescript
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/type-safety-generated-types.md](patterns/type-safety-generated-types.md) | High | Single source of truth via generated types |
+| [patterns/type-consolidation.md](patterns/type-consolidation.md) | High | Export shared types from data layer |
+
+---
+
+## Keyword: type-check
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/groq-reference-syntax-assumption.md](failures/groq-reference-syntax-assumption.md) | Critical | Verify field type with `grep -A 5 "field\?:" sanity.types.ts` |
+
+---
+
+## Keyword: schemabuild
 
 | Lesson | Severity | Summary |
 |--------|----------|---------|
