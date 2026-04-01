@@ -3,6 +3,12 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 import { PriceRangeSlider } from '../../../app/components/features/filters/PriceRangeSlider';
 
+// Mock phosphor icon
+vi.mock('@phosphor-icons/react', () => ({
+  CounterClockwiseClock: ({ size, weight }: { size: number; weight: string }) =>
+    React.createElement('svg', { width: size, height: size, 'data-weight': weight }, 'icon')
+}));
+
 describe('PriceRangeSlider', () => {
   const mockOnChange = vi.fn();
   const mockOnClear = vi.fn();
@@ -90,22 +96,21 @@ describe('PriceRangeSlider', () => {
   });
 
   it('shows clear button when range has values different from defaults', () => {
-    render(<PriceRangeSlider {...defaultProps} value={{ min: 100, max: 500 }} />);
+    render(<PriceRangeSlider {...defaultProps} value={{ min: 100, max: 5000 }} />);
 
     expect(screen.getByTestId('clear-price-range')).toBeInTheDocument();
-    expect(screen.getByText('Clear')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'icon' })).toBeInTheDocument();
   });
 
   it('does not show clear button when range matches defaults', () => {
     render(<PriceRangeSlider {...defaultProps} value={{ min: 0, max: 10000 }} />);
 
-    // When min equals the min prop (0) and max equals the max prop (10000),
     // the range is considered inactive and clear button should not show
     expect(screen.queryByTestId('clear-price-range')).not.toBeInTheDocument();
   });
 
   it('calls onClear when clear button is clicked', () => {
-    render(<PriceRangeSlider {...defaultProps} value={{ min: 100, max: 500 }} />);
+    render(<PriceRangeSlider {...defaultProps} value={{ min: 100, max: 5000 }} />);
 
     const clearButton = screen.getByTestId('clear-price-range');
     fireEvent.click(clearButton);
