@@ -28,6 +28,36 @@ export function ActiveFilters({ filterGroups }: ActiveFiltersProps) {
     });
   });
 
+  // Format filter for display
+  const formatFilterLabel = (filter: { field: string; value: string }): string => {
+    const filterKey = `${filter.field}:${filter.value}`;
+
+    // Check if it's in the label map first
+    if (labelMap.has(filterKey)) {
+      return labelMap.get(filterKey)!;
+    }
+
+    // Handle priceRange filters
+    if (filter.field === 'priceRange') {
+      if (filter.value.startsWith('min:')) {
+        const min = filter.value.slice(4);
+        return `Price above: $${min}`;
+      }
+      if (filter.value.startsWith('max:')) {
+        const max = filter.value.slice(4);
+        return `Price up to: $${max}`;
+      }
+    }
+
+    // Handle stockMin filters
+    if (filter.field === 'stockMin') {
+      return `Min stock: ${filter.value}`;
+    }
+
+    // Fallback to raw filter key
+    return filterKey;
+  };
+
   return (
     <div data-testid="active-filters" className="flex flex-wrap gap-2 mb-6">
       {parsedFilters.map((filter) => {
@@ -39,7 +69,7 @@ export function ActiveFilters({ filterGroups }: ActiveFiltersProps) {
             onClick={() => removeFilter(filter.field, filter.value)}
             className="inline-flex items-center gap-1.5 px-3 py-1 bg-surface-elevated border border-brand-400 rounded-sm type-caption text-primary hover:border-brand-200 transition-colors cursor-pointer"
           >
-            <span>{labelMap.get(filterKey) || filterKey}</span>
+            <span>{formatFilterLabel(filter)}</span>
             <span aria-label={`Remove filter`} className="text-caption hover:text-primary transition-colors">×</span>
           </button>
         );
