@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect } from 'react';
+import { CounterClockwiseClock } from '@phosphor-icons/react';
 
 interface PriceRangeSliderProps {
   min: number;
@@ -66,10 +67,13 @@ export function PriceRangeSlider({ min, max, value, onChange, onClear }: PriceRa
           <button
             type="button"
             onClick={handleClear}
-            className="type-caption text-secondary-500 hover:text-accent-500 transition-colors"
+            className={`p-1 rounded transition-colors ${
+              isActive ? 'text-accent-500 hover:text-accent-400' : 'text-secondary-500 hover:text-secondary-400'
+            }`}
             data-testid="clear-price-range"
+            title="Clear filter"
           >
-            Clear
+            <CounterClockwiseClock size={16} weight="bold" />
           </button>
         )}
       </div>
@@ -86,11 +90,15 @@ export function PriceRangeSlider({ min, max, value, onChange, onClear }: PriceRa
               max={max}
               value={clampedValue.min ?? min}
               onChange={(e) => handleMinSliderChange(parseInt(e.target.value, 10))}
-              className="w-full h-2 bg-accent-500 rounded-lg appearance-none cursor-pointer accent-accent-500"
+              className={`w-full h-2 rounded-lg appearance-none cursor-pointer transition-opacity ${
+                isActive ? 'bg-accent-500 accent-accent-500' : 'opacity-60 bg-surface-tertiary accent-surface-tertiary'
+              }`}
               data-testid="price-min-slider"
               style={{
                 WebkitAppearance: 'none',
-                background: `linear-gradient(to right, #D4AF37 0%, #D4AF37 ${((clampedValue.min ?? min) / max) * 100}%, #2E2E2D ${((clampedValue.min ?? min) / max) * 100}%, #2E2E2D 100%)`
+                background: isActive
+                  ? `linear-gradient(to right, #D4AF37 0%, #D4AF37 ${((clampedValue.min ?? min) / max) * 100}%, #2E2E2D ${((clampedValue.min ?? min) / max) * 100}%, #2E2E2D 100%)`
+                  : `linear-gradient(to right, #6B7280 0%, #6B7280 ${((clampedValue.min ?? min) / max) * 100}%, #374151 ${((clampedValue.min ?? min) / max) * 100}%, #374151 100%)`
               }}
             />
           </div>
@@ -106,11 +114,15 @@ export function PriceRangeSlider({ min, max, value, onChange, onClear }: PriceRa
               max={max}
               value={clampedValue.max ?? max}
               onChange={(e) => handleMaxSliderChange(parseInt(e.target.value, 10))}
-              className="w-full h-2 bg-accent-500 rounded-lg appearance-none cursor-pointer accent-accent-500"
+              className={`w-full h-2 rounded-lg appearance-none cursor-pointer transition-opacity ${
+                isActive ? 'bg-accent-500 accent-accent-500' : 'opacity-60 bg-surface-tertiary accent-surface-tertiary'
+              }`}
               data-testid="price-max-slider"
               style={{
                 WebkitAppearance: 'none',
-                background: `linear-gradient(to right, #D4AF37 0%, #D4AF37 ${((clampedValue.max ?? max) / max) * 100}%, #2E2E2D ${((clampedValue.max ?? max) / max) * 100}%, #2E2E2D 100%)`
+                background: isActive
+                  ? `linear-gradient(to right, #D4AF37 0%, #D4AF37 ${((clampedValue.max ?? min) / max) * 100}%, #2E2E2D ${((clampedValue.max ?? min) / max) * 100}%, #2E2E2D 100%)`
+                  : `linear-gradient(to right, #6B7280 0%, #6B7280 ${((clampedValue.max ?? min) / max) * 100}%, #374151 ${((clampedValue.max ?? min) / max) * 100}%, #374151 100%)`
               }}
             />
           </div>

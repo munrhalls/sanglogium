@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect } from 'react';
+import { CounterClockwiseClock } from '@phosphor-icons/react';
 
 interface StockMinimumSliderProps {
   maxStock: number;
@@ -48,10 +49,13 @@ export function StockMinimumSlider({ maxStock, value, onChange, onClear }: Stock
           <button
             type="button"
             onClick={handleClear}
-            className="type-caption text-secondary-500 hover:text-accent-500 transition-colors"
+            className={`p-1 rounded transition-colors ${
+              isActive ? 'text-accent-500 hover:text-accent-400' : 'text-secondary-500 hover:text-secondary-400'
+            }`}
             data-testid="clear-stock-minimum"
+            title="Clear filter"
           >
-            Clear
+            <CounterClockwiseClock size={16} weight="bold" />
           </button>
         )}
       </div>
@@ -68,11 +72,15 @@ export function StockMinimumSlider({ maxStock, value, onChange, onClear }: Stock
             max={maxStock || 100}
             value={value}
             onChange={(e) => handleSliderChange(parseInt(e.target.value, 10))}
-            className="w-full h-2 bg-accent-500 rounded-lg appearance-none cursor-pointer accent-accent-500"
+            className={`w-full h-2 rounded-lg appearance-none cursor-pointer transition-opacity ${
+              isActive ? 'bg-accent-500 accent-accent-500' : 'opacity-60 bg-surface-tertiary accent-surface-tertiary'
+            }`}
             data-testid="stock-minimum-slider"
             style={{
               WebkitAppearance: 'none',
-              background: `linear-gradient(to right, #D4AF37 0%, #D4AF37 ${(value / (maxStock || 100)) * 100}%, #2E2E2D ${(value / (maxStock || 100)) * 100}%, #2E2E2D 100%)`
+              background: isActive
+                ? `linear-gradient(to right, #D4AF37 0%, #D4AF37 ${(value / (maxStock || 100)) * 100}%, #2E2E2D ${(value / (maxStock || 100)) * 100}%, #2E2E2D 100%)`
+                : `linear-gradient(to right, #6B7280 0%, #6B7280 ${(value / (maxStock || 100)) * 100}%, #374151 ${(value / (maxStock || 100)) * 100}%, #374151 100%)`
             }}
           />
         </div>
