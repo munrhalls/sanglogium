@@ -58,19 +58,19 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
     .join(' ');
 
   return (
-    <div className="container mx-auto px-4 pb-6 h-[calc(100vh-var(--desktop-header-h))]">
-      <div className="flex gap-8 h-full overflow-hidden">
+    <div className="mx-auto max-w-content px-4 md:px-8 pb-12">
+      <div className="flex gap-8">
         {/* Sidebar - full height on left */}
-        <aside className="hidden lg:block w-60 shrink-0 pt-6 h-full overflow-y-auto scrollbar-none">
+        <aside className="hidden lg-desktop:block lg-touch:block w-60 shrink-0 sticky top-[var(--desktop-header-h)] h-[calc(100vh-var(--desktop-header-h))] overflow-y-auto scrollbar-none pt-6">
           <Suspense fallback={<FilterSidebarSkeleton />}>
             <FilterSection filtersPromise={filtersPromise} />
           </Suspense>
         </aside>
 
         {/* Main content - header + products stacked */}
-        <main className="flex-1 min-w-0 h-full overflow-y-auto scrollbar-none">
+        <main className="flex-1 min-w-0 pt-6">
           {/* Header now in right column */}
-          <div className="pt-6 pb-4">
+          <div className="pb-4">
             <Breadcrumbs categoryParts={slug} />
             <ShopHeader title={metadata.name} overline={categoryPath} />
           </div>

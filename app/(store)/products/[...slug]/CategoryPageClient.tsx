@@ -68,7 +68,7 @@ export function CategoryPageClient({
         maxStock={maxStock}
       />
 
-      <main className="flex-1 min-w-0">
+      <div className="flex-1 min-w-0">
         {/* Desktop: Sort + Result count */}
         <div className="hidden lg:flex lg:flex-row lg:items-center lg:justify-between gap-4 pb-4 mb-6 border-b border-border-secondary">
           <SortDropdown />
@@ -89,7 +89,7 @@ export function CategoryPageClient({
         <ActiveFilters filterGroups={filters} activeFilters={activeFilters} />
 
         <ProductGrid products={products} />
-      </main>
+      </div>
     </>
   );
 }
