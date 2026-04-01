@@ -12,6 +12,73 @@ const client = createClient({
   apiVersion: "2023-05-03",
 });
 
+// SC6: Validate all product catalogueLocationKeys point to valid VFS slots
+async function validateProductKeys(slotMetadataMap, sanityClient) {
+  console.log("🔍 Validating product catalogueLocationKeys...");
+
+  try {
+    // Get all valid slot IDs from the VFS
+    const validSlotIds = new Set(Object.keys(slotMetadataMap));
+
+    // Query all products with their catalogueLocationKeys
+    const products = await sanityClient.fetch(`
+      *[_type == "product" && defined(catalogueLocationKeys)]{
+        _id,
+        name,
+        catalogueLocationKeys
+      }
+    `);
+
+    const orphanedKeys = new Map(); // key -> product IDs
+
+    for (const product of products) {
+      if (!product.catalogueLocationKeys) continue;
+
+      for (const key of product.catalogueLocationKeys) {
+        if (!validSlotIds.has(key)) {
+          if (!orphanedKeys.has(key)) {
+            orphanedKeys.set(key, []);
+          }
+          orphanedKeys.get(key).push({ id: product._id, name: product.name });
+        }
+      }
+    }
+
+    if (orphanedKeys.size > 0) {
+      console.log(`\n⚠️  FOUND ${orphanedKeys.size} ORPHANED KEY(S):`);
+      console.log("   These keys don't exist in the VFS slotMetadataMap:\n");
+
+      for (const [key, products] of orphanedKeys) {
+        console.log(`   ❌ "${key}"`);
+        console.log(`      Referenced by ${products.length} product(s):`);
+        products.slice(0, 3).forEach(p => {
+          console.log(`        - ${p.name} (${p.id})`);
+        });
+        if (products.length > 3) {
+          console.log(`        ... and ${products.length - 3} more`);
+        }
+      }
+
+      console.log("\n📋 RECOMMENDATION: Run migration to fix orphaned keys");
+      console.log("   or update products to reference valid catalogue slots.\n");
+
+      // Don't fail build - just warn (configurable)
+      // process.exit(1);
+    } else {
+      console.log(`✅ All ${products.length} products have valid catalogueLocationKeys`);
+    }
+
+    return {
+      totalProducts: products.length,
+      orphanedKeyCount: orphanedKeys.size,
+      orphanedKeys: Object.fromEntries(orphanedKeys)
+    };
+  } catch (error) {
+    console.error("❌ Product key validation failed:", error.message);
+    return { error: error.message };
+  }
+}
+
 async function buildCatalogueIndex() {
   console.log("🏗️  Building Catalogue Virtual File System...");
 
@@ -180,6 +247,9 @@ async function buildCatalogueIndex() {
     }
 
     validateSlotMetadataCompleteness(slotMetadataMap);
+
+    // SC6: Validate all product catalogueLocationKeys point to valid VFS slots
+    await validateProductKeys(slotMetadataMap, client);
 
     const output = {
       generatedAt: new Date().toISOString(),

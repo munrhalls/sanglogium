@@ -4,7 +4,12 @@ import type { CatalogueNavItem } from "./catalogue-nav.types";
 import SliceHero from "./hero/SliceHero";
 import SliceDetails from "./details/SliceDetails";
 
-export function CatalogueView({ data }: { data: CatalogueNavItem }) {
+interface CatalogueViewProps {
+  data: CatalogueNavItem;
+  onClose?: () => void;
+}
+
+export function CatalogueView({ data, onClose }: CatalogueViewProps) {
   return (
     <div
       className={cn(
@@ -15,7 +20,7 @@ export function CatalogueView({ data }: { data: CatalogueNavItem }) {
       )}
     >
       <SliceHero data={data} />
-      <SliceDetails data={data} />
+      <SliceDetails data={data} onClose={onClose} />
     </div>
   );
 }
