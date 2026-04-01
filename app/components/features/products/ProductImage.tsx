@@ -27,13 +27,13 @@ export function ProductImage({ image, alt, className, priority = false }: Produc
   }
 
   return (
-    <div className={`relative w-[85%] h-[85%] bg-surface-productImage ${className || ''}`} data-testid="product-image">
+    <div className={`relative w-full h-full ${className || ''}`} data-testid="product-image">
       <Image
         src={assetRef}
         alt={alt}
         fill
         sizes="(max-width: 768px) 50vw, 25vw"
-        className={`object-contain rounded`}
+        className="object-contain mix-blend-multiply transition-transform duration-700"
         priority={priority}
         loader={({ src, width, quality }) => {
           const url = builder
@@ -42,7 +42,6 @@ export function ProductImage({ image, alt, className, priority = false }: Produc
             .quality(quality || 75)
             .auto("format")
             .url();
-          console.log('Loader URL:', url);
           return url;
         }}
       />

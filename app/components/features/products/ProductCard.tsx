@@ -20,11 +20,11 @@ interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps) {
   return (
     <article
-      className="card-product-dark group flex h-full flex-col"
+      className="card-product-dark group flex h-full flex-col col-span-1"
       data-testid="product-card"
     >
       <Link href={`/product/${product.slug.current}`} className="block">
-        <figure className="aspect-[4/3] relative flex w-full items-center justify-center overflow-hidden bg-surface-productImage">
+        <figure className="aspect-[4/3] relative flex w-full items-center justify-center overflow-hidden bg-surface-productImage p-6">
           {product.brand?.name && (
             <span className="absolute left-4 top-4 type-caption text-brand-900 z-10">
               {product.brand.name}
@@ -33,29 +33,31 @@ export function ProductCard({ product }: ProductCardProps) {
           <ProductImage
             image={product.image}
             alt={product.name}
-            imgClassName="object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-[1.03]"
+            className="group-hover:scale-110"
           />
         </figure>
 
-        <div className="flex flex-col flex-grow p-4">
-          <h3 className="type-card-title line-clamp-2 mb-1">
+        <div className="flex flex-col flex-grow gap-3 p-4">
+          <h3 className="type-body font-medium line-clamp-2">
             {product.name}
           </h3>
-          <p className="type-price text-priceTag mb-3">
-            ${product.displayPrice.toLocaleString()}
-          </p>
-          <button
-            className="btn-cart w-full justify-center mt-auto"
-            aria-label={`Add ${product.name} to cart`}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              // Cart functionality to be implemented
-            }}
-          >
-            <ShoppingCart size={18} weight="regular" />
-            <span className="text-cap font-bold">Add</span>
-          </button>
+          <div className="mt-auto flex items-center justify-between pt-2">
+            <p className="type-price">
+              ${product.displayPrice.toLocaleString()}
+            </p>
+            <button
+              className="btn-cart"
+              aria-label={`Add ${product.name} to cart`}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                // Cart functionality to be implemented
+              }}
+            >
+              <ShoppingCart size={18} weight="regular" />
+              <span className="text-cap font-bold">Add</span>
+            </button>
+          </div>
         </div>
       </Link>
     </article>

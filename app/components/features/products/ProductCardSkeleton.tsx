@@ -4,31 +4,34 @@ export function ProductCardSkeleton() {
   return (
     <div
       data-testid="product-card-skeleton"
-      className="space-y-3 animate-pulse"
+      className="card-product-dark flex flex-col"
     >
       {/* Image placeholder */}
       <div
         data-testid="skeleton-image"
-        className="aspect-[4/3] bg-gray-200 rounded"
+        className="aspect-[4/3] bg-secondary-800 animate-pulse"
       />
 
-      {/* Brand placeholder */}
-      <div
-        data-testid="skeleton-brand"
-        className="h-4 bg-gray-200 rounded w-1/3"
-      />
+      {/* Content area matching ProductCard structure */}
+      <div className="flex flex-col gap-3 p-4">
+        {/* Title placeholder */}
+        <div
+          data-testid="skeleton-title"
+          className="h-4 bg-secondary-800 rounded w-full animate-pulse"
+        />
 
-      {/* Title placeholder */}
-      <div
-        data-testid="skeleton-title"
-        className="h-5 bg-gray-200 rounded w-full"
-      />
-
-      {/* Price placeholder */}
-      <div
-        data-testid="skeleton-price"
-        className="h-5 bg-gray-200 rounded w-1/4"
-      />
+        {/* Price + CTA row */}
+        <div className="flex items-center justify-between pt-2">
+          <div
+            data-testid="skeleton-price"
+            className="h-4 bg-secondary-800 rounded w-1/4 animate-pulse"
+          />
+          <div
+            data-testid="skeleton-button"
+            className="h-8 bg-secondary-800 rounded w-16 animate-pulse"
+          />
+        </div>
+      </div>
     </div>
   );
 }
