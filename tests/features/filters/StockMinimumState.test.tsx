@@ -2,8 +2,10 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import { useFilterNuqs } from '../../../app/components/features/filters/useFilterNuqs';
 
-// Mock nuqs with proper structure
+// Mock nuqs with proper structure using hoisted pattern
+const { vi } = await import('vitest');
 const mockUseQueryState = vi.fn();
+
 vi.mock('nuqs', () => ({
   useQueryState: mockUseQueryState,
   parseAsArrayOf: {

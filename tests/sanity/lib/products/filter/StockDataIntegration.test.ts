@@ -13,10 +13,11 @@ describe('getFiltersForCategoryPath - Stock Data Integration', () => {
   it('queries max stock using GROQ order and slicing', async () => {
     // Mock max stock query response
     const mockMaxStock = { stock: 25 };
-    
-    // Mock price queries
+
+    // Mock all four queries in order
     vi.mocked(sanityFetch)
-      .mockResolvedValueOnce({ minPrice: 100, maxPrice: 5000 }) // Price range
+      .mockResolvedValueOnce({ minPrice: 100, maxPrice: 5000 }) // Min price
+      .mockResolvedValueOnce({ minPrice: 100, maxPrice: 5000 }) // Max price
       .mockResolvedValueOnce(mockMaxStock) // Max stock
       .mockResolvedValueOnce([ // Products
         { displayPrice: 100, brand: 'Brand A', stock: 5 },
@@ -37,11 +38,12 @@ describe('getFiltersForCategoryPath - Stock Data Integration', () => {
   it('returns null maxStock when no products have stock', async () => {
     // Mock empty max stock query
     const mockMaxStock = null;
-    
+
     vi.mocked(sanityFetch)
-      .mockResolvedValueOnce({ minPrice: 100, maxPrice: 5000 })
-      .mockResolvedValueOnce(mockMaxStock)
-      .mockResolvedValueOnce([]);
+      .mockResolvedValueOnce({ minPrice: 100, maxPrice: 5000 }) // Min price
+      .mockResolvedValueOnce({ minPrice: 100, maxPrice: 5000 }) // Max price
+      .mockResolvedValueOnce(mockMaxStock) // Max stock
+      .mockResolvedValueOnce([]); // Products
 
     const result = await getFiltersForCategoryPath(['category1']);
 
@@ -50,11 +52,12 @@ describe('getFiltersForCategoryPath - Stock Data Integration', () => {
 
   it('includes maxStock in FilterResult structure', async () => {
     const mockMaxStock = { stock: 50 };
-    
+
     vi.mocked(sanityFetch)
-      .mockResolvedValueOnce({ minPrice: 100, maxPrice: 5000 })
-      .mockResolvedValueOnce(mockMaxStock)
-      .mockResolvedValueOnce([{ displayPrice: 200, brand: 'Test', stock: 10 }]);
+      .mockResolvedValueOnce({ minPrice: 100, maxPrice: 5000 }) // Min price
+      .mockResolvedValueOnce({ minPrice: 100, maxPrice: 5000 }) // Max price
+      .mockResolvedValueOnce(mockMaxStock) // Max stock
+      .mockResolvedValueOnce([{ displayPrice: 200, brand: 'Test', stock: 10 }]); // Products
 
     const result = await getFiltersForCategoryPath(['category1']);
 
