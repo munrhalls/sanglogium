@@ -6,6 +6,10 @@ BACKLOG
 Pass 2:
 [ ] products data - many have 0 stock -> all should be > 1
 
+Pass 3:4 interactivity
+[ ]   onClose={() => setIsDrawerOpen(false)} fix suboptimal, re-created on every render
+[ ] find all occurances, set target after-state, check safety of target after-state, fix for safety, implement, test after-state 0 regressions
+
 
 Featured
 [] Layout
