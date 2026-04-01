@@ -22,7 +22,7 @@
     "predeploy": "node verify-env.js",
     "seed": "ts-node --esm seedCategories.ts",
     "typegen": "sanity schema extract && sanity typegen generate",
-    "test": "vitest",
+    "test": "vitest run --reporter=verbose",
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",

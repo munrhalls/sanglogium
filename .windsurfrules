@@ -113,6 +113,35 @@ After EVERY sprint, debug, or implementation:
 - **USE vi.mock(), vi.fn(), describe(), it(), expect() from Vitest**
 - **All test files must use Vitest syntax and APIs**
 
+## Test Execution Automation
+- **ALWAYS use headless mode**: `npx vitest run --reporter=verbose`
+- **NEVER use interactive watch mode** - requires manual "q" to exit
+- **Auto-exit after completion** - CI mode exits naturally
+- **No manual intervention** - tests run and complete automatically
+- **Preferred command**: `npm test` should map to `npx vitest run --reporter=verbose`
+
+## Test Quality & Minimal Impact Principles
+- **MINIMAL TESTS ONLY** - Least, smallest, minimal tests needed for full-impact coverage
+- **Test user behavior, not implementation** - Focus on what users experience, not how it's built
+- **AVOID testing UI details** - Never test icon existence, button text, CSS classes, DOM structure
+- **Test state changes and outcomes** - URL updates, filter effects, data flow, user actions
+- **Resilient over brittle** - Tests should survive UI refactoring, not break on visual changes
+- **Value-driven testing** - Each test must prove critical user value, not implementation correctness
+
+### What TO Test:
+- User can filter by price range and see results
+- URL updates correctly when filters change
+- State persists and restores properly
+- Critical user workflows end-to-end
+
+### What NOT to Test:
+- Icon/button existence or appearance
+- Text content of UI elements
+- CSS classes or styling
+- DOM structure details
+- Component implementation specifics
+- Anything that changes during UI refactoring
+
 ## Systematic Test Fixing Workflow
 When fixing failing tests:
 1. **Run test suite once** - Store only failing tests
