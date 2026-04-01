@@ -1,10 +1,11 @@
 "use client";
 
 import React from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 export function SortDropdown() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const currentSort = searchParams.get('sort') || 'featured';
 
   // Build current query string excluding sort param
@@ -21,8 +22,8 @@ export function SortDropdown() {
     const queryString = params.toString();
     const newUrl = `${window.location.pathname}${queryString ? `?${queryString}` : ''}`;
 
-    // Full page reload for server-side sorting
-    window.location.href = newUrl;
+    // Client-side navigation for instant feedback (no full page reload)
+    router.push(newUrl, { scroll: false });
   };
 
   return (

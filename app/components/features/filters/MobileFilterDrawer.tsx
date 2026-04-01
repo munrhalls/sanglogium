@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { useFilterNuqs } from './useFilterNuqs';
 import { PriceRangeSlider } from './PriceRangeSlider';
 import { StockMinimumSlider } from './StockMinimumSlider';
+import { Checkbox } from '@/app/components/ui/Checkbox';
 
 interface FilterOption {
   value: string;
@@ -101,7 +102,7 @@ export function MobileFilterDrawer({ isOpen, onClose, filters, priceRange: price
         `}
         aria-label="Filter options"
       >
-        <div className="flex flex-col h-full bg-surface-card rounded-t-sm">
+        <div className="flex flex-col h-full bg-surface-card rounded-t-lg">
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-border-secondary">
             <h2 className="type-overline">
@@ -145,47 +146,14 @@ export function MobileFilterDrawer({ isOpen, onClose, filters, priceRange: price
                     {group.options.map((option) => {
                       const isChecked = isFilterActive(group.field, option.value);
                       return (
-                        <label
+                        <Checkbox
                           key={option.value}
-                          className="flex items-center gap-3 cursor-pointer group"
-                        >
-                          <div className="relative flex items-center">
-                            <input
-                              type="checkbox"
-                              name={group.field}
-                              value={option.value}
-                              checked={isChecked}
-                              onChange={() => toggleFilter(group.field, option.value)}
-                              className="peer sr-only"
-                            />
-                            <div className={`
-                              w-4 h-4 border rounded-sm transition-all
-                              ${isChecked
-                                ? 'bg-brand-400 border-brand-400'
-                                : 'border-border-primary bg-transparent group-hover:border-brand-400'
-                              }
-                            `}>
-                              {isChecked && (
-                                <svg
-                                  className="w-4 h-4 text-brand-900"
-                                  viewBox="0 0 16 16"
-                                  fill="none"
-                                >
-                                  <path
-                                    d="M3 8L6.5 11.5L13 5"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                  />
-                                </svg>
-                              )}
-                            </div>
-                          </div>
-                          <span className="type-body text-body group-hover:text-primary transition-colors">
-                            {option.label}
-                          </span>
-                        </label>
+                          name={group.field}
+                          value={option.value}
+                          checked={isChecked}
+                          onChange={() => toggleFilter(group.field, option.value)}
+                          label={option.label}
+                        />
                       );
                     })}
                   </div>

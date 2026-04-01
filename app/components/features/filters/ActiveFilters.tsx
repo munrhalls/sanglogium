@@ -67,7 +67,7 @@ export function ActiveFilters({ filterGroups }: ActiveFiltersProps) {
             key={filterKey}
             type="button"
             onClick={() => removeFilter(filter.field, filter.value)}
-            className="inline-flex items-center gap-1.5 px-3 py-1 bg-surface-elevated border border-brand-400 rounded-sm type-caption text-primary hover:border-brand-200 transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3 py-1 bg-surface-elevated border border-brand-400 rounded-lg type-caption text-primary hover:border-brand-200 transition-colors cursor-pointer"
           >
             <span>{formatFilterLabel(filter)}</span>
             <span aria-label={`Remove filter`} className="text-caption hover:text-primary transition-colors">×</span>
