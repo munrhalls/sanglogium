@@ -104,3 +104,28 @@ After EVERY sprint, debug, or implementation:
 - **SVG:** Don't assume SVGR — use Image component unless verified
 - **Velocity:** Run /commits-diagnostics before sprint planning — reject if D-type > 30% or real:illusory < 2:1
 - **cloneElement:** NEVER use cloneElement for prop injection — use React Context instead
+
+## Testing Framework Rules
+- **NEVER use Jest** - Jest is prohibited in this codebase
+- **ALWAYS use Vitest** for unit and integration tests
+- **Playwright remains unchanged** for end-to-end testing
+- **NO jest.mock(), jest.fn(), describe(), it(), expect() from Jest**
+- **USE vi.mock(), vi.fn(), describe(), it(), expect() from Vitest**
+- **All test files must use Vitest syntax and APIs**
+
+## Systematic Test Fixing Workflow
+When fixing failing tests:
+1. **Run test suite once** - Store only failing tests
+2. **Pick 1st failing test** - Run in isolation only that test
+3. **Check test quality** - Verify test is well-written before fixing
+   - Test expectations must match logical component behavior
+   - Test must clearly define what "prevention/validation" means
+   - Test should not have ambiguous or contradictory expectations
+4. **If test is badly written** - Exit immediately and inform user. Do not proceed with fixing
+5. **Fix implementation** - Address only that 1 test (only if test is well-written)
+6. **Run only that test** - Verify fix works
+7. **Test passes?** - Yes: move to next failing test; No: return to step 5
+8. **Repeat max 2 times** - If still failing after 2 attempts, stop and inform immediately
+- **Never fix multiple tests simultaneously** - One test at a time only
+- **Never run full suite during fixing** - Only single test isolation
+- **Test quality check is mandatory** - Badly written tests must be rejected before any implementation changes
