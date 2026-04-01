@@ -6,10 +6,9 @@ import SliceDetails from "./details/SliceDetails";
 
 interface CatalogueViewProps {
   data: CatalogueNavItem;
-  onClose?: () => void;
 }
 
-export function CatalogueView({ data, onClose }: CatalogueViewProps) {
+export function CatalogueView({ data }: CatalogueViewProps) {
   return (
     <div
       className={cn(
@@ -20,7 +19,7 @@ export function CatalogueView({ data, onClose }: CatalogueViewProps) {
       )}
     >
       <SliceHero data={data} />
-      <SliceDetails data={data} onClose={onClose} />
+      <SliceDetails data={data} />
     </div>
   );
 }

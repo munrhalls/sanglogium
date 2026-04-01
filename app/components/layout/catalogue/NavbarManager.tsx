@@ -1,8 +1,14 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, createContext, useEffect } from "react";
 import { NavbarManagerProps } from "@/app/components/layout/carousel/types";
 import { cn } from "@/lib/utils/tailwind";
 import { CaretDownIcon } from "@phosphor-icons/react";
+
+// Context for providing closeMenu to nested components
+const NavContext = createContext<{ closeMenu: () => void }>({ closeMenu: () => {} });
+
+export const useNavContext = () => React.useContext(NavContext);
+
 // BACKLOG TODO - make sure navbar manager is hidden on anything less than lg-desktop (including lg-touch)
 // BACKLOG TODO - make sure catalogue carousel drawer is not accessible on lg-desktop -> should result in normal homepage with navbar on lg-desktop
 
@@ -28,15 +34,9 @@ export default function NavbarManager({
 
   const isOpen = activeId !== null;
 
-  // Inject onClose prop into children for cascading close functionality
-  const childrenWithOnClose = React.Children.map(children, (child) => {
-    if (React.isValidElement(child)) {
-      return React.cloneElement(child, { onClose: closeMenu } as any);
-    }
-    return child;
-  });
   return (
-    <div className="w-full">
+    <NavContext.Provider value={{ closeMenu }}>
+      <div className="w-full">
       {/* 1. Navbar buttons */}
       <div className="flex justify-center gap-10 h-[var(--desktop-catalogue-nav-h)] items-center">
         {navLinks.map((link: { id: string; label: string }) => {
@@ -86,7 +86,7 @@ export default function NavbarManager({
               transform: `translateX(-${displayIndex * 100}%)`
             }}
           >
-            {childrenWithOnClose?.map((child: React.ReactNode, idx: number) => (
+            {children?.map((child: React.ReactNode, idx: number) => (
               <div
                 key={navLinks[idx]?.id}
                 className="w-full shrink-0 group/animation-settle overflow-hidden no-scrollbar"
@@ -116,6 +116,7 @@ export default function NavbarManager({
           </button>
         </div>
       </div>
-    </div>
+      </div>
+    </NavContext.Provider>
   );
 }

@@ -5,10 +5,9 @@ import DetailSection from "./DetailSection";
 
 interface SliceDetailsProps {
   data: CatalogueNavItem;
-  onClose?: () => void;
 }
 
-export default function SliceDetails({ data, onClose }: SliceDetailsProps) {
+export default function SliceDetails({ data }: SliceDetailsProps) {
   return (
     <div
       className={cn(
@@ -44,7 +43,7 @@ export default function SliceDetails({ data, onClose }: SliceDetailsProps) {
             )}
           >
             {data.sections.map((section, idx) => (
-              <DetailSection key={idx} section={section} onClose={onClose} />
+              <DetailSection key={idx} section={section} />
             ))}
           </div>
         </div>

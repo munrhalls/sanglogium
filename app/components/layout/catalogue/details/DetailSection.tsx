@@ -1,18 +1,19 @@
+"use client";
 import { cn } from "@/lib/utils/tailwind";
 import Link from "next/link";
 import type { CatalogueNavItem } from "../catalogue-nav.types";
+import { useNavContext } from "../NavbarManager";
 
 type CatalogueSection = CatalogueNavItem["sections"][number];
 
 interface DetailSectionProps {
   section: CatalogueSection;
-  onClose?: () => void;
 }
 
 export default function DetailSection({
   section,
-  onClose,
 }: DetailSectionProps) {
+  const { closeMenu } = useNavContext();
   return (
     <div
       className={cn(
@@ -47,7 +48,7 @@ export default function DetailSection({
           >
             <Link
               href={link.url}
-              onClick={onClose}
+              onClick={closeMenu}
               className={cn(
                 "pl-2 text-body text-secondary-300",
                 "transition-colors hover:text-brand-200 active:text-brand-400"
