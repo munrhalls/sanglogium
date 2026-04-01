@@ -120,6 +120,15 @@
 
 ---
 
+## Keyword: grinde
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [prompting/signal-density-optimization.md](prompting/signal-density-optimization.md) | Critical | 16 causal factors → 1 ground factor: Signal density ÷ time cost |
+| [workflows/velocity-aware-sprint-planning.md](workflows/velocity-aware-sprint-planning.md) | High | Justin Sung mind mapping method for bottleneck analysis |
+
+---
+
 ## Keyword: ai-leverage
 
 | Lesson | Severity | Summary |
