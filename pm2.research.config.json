@@ -1,0 +1,29 @@
+{
+  "name": "sanglogium-research",
+  "script": "./scripts/research/continuous-loop.mjs",
+  "args": "daemon",
+  "instances": 1,
+  "exec_mode": "fork",
+  "autorestart": true,
+  "watch": false,
+  "max_memory_restart": "1G",
+  "env": {
+    "RESEARCH_MODEL": "llama3.2:3b",
+    "RESEARCH_INTERVAL": "10"
+  },
+  "env_production": {
+    "RESEARCH_INTERVAL": "30"
+  },
+  "log_file": "./logs/research-combined.log",
+  "out_file": "./logs/research-out.log",
+  "err_file": "./logs/research-error.log",
+  "log_date_format": "YYYY-MM-DD HH:mm:ss Z",
+  "merge_logs": true,
+  "time": true,
+  "kill_timeout": 5000,
+  "wait_ready": false,
+  "max_restarts": 10,
+  "min_uptime": "10s",
+  "listen_timeout": 10000,
+  "restart_delay": 30000
+}

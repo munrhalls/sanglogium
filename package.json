@@ -36,7 +36,15 @@
     "test:homepage:all": "npm run test:homepage:unit && npm run test:homepage:component && npm run test:homepage:e2e",
     "ts-check": "tsc --noEmit --pretty",
     "ts-check:watch": "tsc --noEmit --watch",
-    "analyze": "ANALYZE=true npm run build"
+    "analyze": "ANALYZE=true npm run build",
+    "research:start": "pm2 start pm2.research.config.json",
+    "research:stop": "pm2 stop sanglogium-research && node scripts/research/loop-control.mjs pause",
+    "research:pause": "node scripts/research/loop-control.mjs pause",
+    "research:resume": "node scripts/research/loop-control.mjs resume",
+    "research:focus": "node scripts/research/loop-control.mjs focus",
+    "research:unfocus": "node scripts/research/loop-control.mjs unfocus",
+    "research:status": "node scripts/research/loop-control.mjs status",
+    "research:once": "node scripts/research/continuous-loop.mjs once"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.16.0",
@@ -56,6 +64,7 @@
     "@stripe/react-stripe-js": "^5.3.0",
     "@stripe/stripe-js": "^8.2.0",
     "@types/webpack": "^5.28.5",
+    "chromadb": "^1.10.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
