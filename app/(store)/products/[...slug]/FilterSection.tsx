@@ -1,13 +1,13 @@
 import React from 'react';
 import { FilterSidebar } from '@/app/components/features/filters/FilterSidebar';
-import type { FilterGroup } from '@/sanity/lib/products/filter/getFiltersForCategoryPath';
+import type { FilterResult } from '@/sanity/lib/products/filter/getFiltersForCategoryPath';
 
 interface FilterSectionProps {
-  filtersPromise: Promise<FilterGroup[]>;
+  filtersPromise: Promise<FilterResult>;
 }
 
 export async function FilterSection({ filtersPromise }: FilterSectionProps) {
-  const filters = await filtersPromise;
-  
-  return <FilterSidebar filters={filters} />;
+  const filterResult = await filtersPromise;
+
+  return <FilterSidebar filters={filterResult.filters} priceRange={filterResult.priceRange} />;
 }

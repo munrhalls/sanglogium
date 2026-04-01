@@ -4,11 +4,14 @@ import { getSortablesForCategoryPath } from "@/sanity/lib/products/sort/getSorta
 
 export async function getFiltersForCategoryPathAction(catalogueKeys: string[]) {
   try {
-    const filters = await getFiltersForCategoryPath(catalogueKeys);
-    return filters;
+    const filterResult = await getFiltersForCategoryPath(catalogueKeys);
+    return filterResult;
   } catch (error) {
     console.error("Error:", error);
-    return [];
+    return {
+      filters: [],
+      priceRange: { minPrice: null, maxPrice: null }
+    };
   }
 }
 

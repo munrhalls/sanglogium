@@ -14,12 +14,12 @@ interface FilterGroup {
 
 interface FilterConfigProviderProps {
   categoryKeys: string[];
-  children: (props: { filters: FilterGroup[] }) => React.ReactNode;
+  children: (props: { filters: FilterGroup[]; priceRange: { minPrice: number | null; maxPrice: number | null } }) => React.ReactNode;
 }
 
 export async function FilterConfigProvider({ categoryKeys, children }: FilterConfigProviderProps) {
   // Fetch dynamic filters based on category path
-  const filters = await getFiltersForCategoryPathAction(categoryKeys);
+  const filterResult = await getFiltersForCategoryPathAction(categoryKeys);
 
-  return <>{children({ filters })}</>;
+  return <>{children({ filters: filterResult.filters, priceRange: filterResult.priceRange })}</>;
 }
