@@ -94,9 +94,11 @@ After EVERY sprint, debug, or implementation:
 5. Verify compound effect (next work will benefit)
 
 ### Universal Prevention Rules
+- **Pre-Flight:** Before ANY work, execute: branch check, baseline build verification, scope lock confirmation
 - **GROQ:** Verify field type before using reference syntax (->)
 - **Build:** Build passing ≠ bug fixed — need runtime verification
 - **Modules:** ES modules only — no require() in this codebase
+- **Typegen:** ALWAYS run `npm run typegen` before type-related changes — use `Pick<SanityProduct, ...>` pattern
 - **Data:** Verify actual data before code changes (debugging)
 - **Components:** Complete functional groups, not isolated components
 - **SVG:** Don't assume SVGR — use Image component unless verified

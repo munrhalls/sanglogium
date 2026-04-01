@@ -8,6 +8,28 @@
 
 ---
 
+## PHASE 0: Pre-Work Lessons Retrieval (MANDATORY)
+
+Before ANY planning or coding, query `_project/lessons/INDEX.md` for relevant keywords:
+
+1. **Extract keywords** from Rough Scope:
+   - Technology stack (e.g., "sanity", "nextjs", "groq")
+   - Component patterns (e.g., "server-components", "data-fetching")
+   - Domain concepts (e.g., "vfs", "catalogue", "filters")
+
+2. **Query INDEX.md** for matching keywords
+
+3. **Load lessons by severity:**
+   - Critical severity: MUST read before proceeding
+   - High severity: MUST read before proceeding
+   - Medium/Low: Read if time permits
+
+4. **Apply prevention rules** as active constraints for this implementation
+
+**Failure to retrieve lessons = workflow violation.**
+
+---
+
 ## PHASE 1: Plan and Contain (Agent Output Required Before Coding)
 
 ### Pre-Flight Checklist
@@ -31,17 +53,83 @@
 
 ---
 
-## PHASE 2: Execution Rules
-1. Strictly execute the **Explicit Refined DoDs** in exact sequential order.
-2. Contain all changes strictly within the **Allowed Write Scope Paths**. Modifying any file outside this list is a critical failure.
-3. **Styling & CSS Constraint:** Do not modify global CSS files unless explicitly requested in the input. All styling changes must use strictly scoped Tailwind utility classes directly on the target elements to prevent global blast radius.
-4. **UI Component Execution:** When implementing UI components, invoke `/build [COMPONENT] [PASS] [LAYER] [BREAKPOINT]` per `@/_project/core-building-pattern.md` to ensure atomic Pass/Layer execution.
-5. Determine the optimal code implementation to achieve the **Explicit Refined Scope**, ensuring absolute zero risk to unrelated components.
+## PHASE 2: Execution with /Test Integration
+
+### Per DoD Execution Sequence
+
+**For EACH DoD item in Explicit Refined DoDs:**
+
+1. **Execute DoD**
+   - Implement the specific DoD item
+   - If UI component: invoke `/build [COMPONENT] [PASS] [LAYER] [BREAKPOINT]` for atomic execution
+   - Contain changes strictly within Allowed Write Scope Paths
+
+2. **Invoke /test (MANDATORY — 100% BLOCKING)**
+   ```
+   INVOKE: /test with:
+   - DoD item as specification
+   - Single test, single assertion
+   - Max 5 seconds runtime
+
+   OUTPUT: Evidence dashboard from /test
+   ```
+
+   **Verdict Handling:**
+   - ✅ **PASS:** Proceed to next DoD
+   - ❌ **FAIL:** Fix implementation, re-run /test until PASS
+   - **NO FORWARD PROGRESS** on test failure
+
+3. **Verification Gate**
+   ```bash
+   npm run build
+   ```
+   - Must pass 100%
+   - If fails: revert, fix, re-verify
+
+4. **Proceed to Next DoD**
+   - Only after /test PASS + build PASS
 
 ---
 
-## PHASE 3: Verification & Output
-1. Execute the **Verification Command** using PowerShell.
-2. If the command fails, automatically revert the specific change, re-evaluate, and fix. Do not proceed until the verification command passes 100%.
-3. Once the mechanical verification command passes, **PAUSE** and prompt the human for **Visual Verification** of the UI/DOM state.
-4. Only after explicit human approval of the visual state, generate the git commit message using the repository's required taxonomy format, present in the `_project/COMMIT_TEMPLATE.txt` file.
+### Execution Rules
+
+1. Strictly execute DoDs in exact sequential order.
+2. **MANDATORY /test per DoD** — No exceptions.
+3. Contain changes strictly within Allowed Write Scope Paths.
+4. **Styling Constraint:** No global CSS. Scoped Tailwind only.
+5. **UI Components:** Use `/build` for Pass/Layer atomicity.
+
+---
+
+## PHASE 3: Final Verification & Output
+
+### Step 1: Full /test Suite
+```
+INVOKE: /test for complete scope
+OUTPUT: Final evidence dashboard
+BLOCKING: 100% specification pass rate required
+```
+
+### Step 2: Build Gate
+```bash
+npm run build
+```
+**Blocking:** Must pass 100%
+
+### Step 3: Visual Verification
+**PAUSE** and prompt human for visual approval of UI/DOM state.
+
+### Step 4: Commit
+Generate commit message per `_project/COMMIT_TEMPLATE.txt`.
+
+---
+
+## Constraint Rules
+
+- **NO** DoD without /test invocation
+- **NO** progress on test failure
+- **NO** file modifications outside Allowed Write Scope Paths
+- **NO** global CSS changes
+- **YES** atomic Pass/Layer via /build
+- **YES** 1 test per DoD (mathematical 1:1)
+- **YES** 100% specification pass rate for completion

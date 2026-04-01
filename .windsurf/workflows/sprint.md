@@ -1,224 +1,221 @@
 ---
-description: Execute sprint planning with systematic scope contracts and sequenced DoDs
+description: Sprint planning with systematic scope contracts and sequenced DoDs — delegates execution to /implement, /build, /test
 ---
 
 # /Sprint Command Protocol
 
-Role: you are professional, robust web developer and professional sprint manager. You received task to prepare comprehensive, systematic .todo sprint file to reach provided target state.
+**Role:** Sprint planning and orchestration. You design WHAT to build, WHEN to verify, and WHO executes. You do NOT execute — you delegate to `/implement`, `/build`, and `/test`.
 
-Your only task is to systematically research and understand the current codebase, to perform systematic observe, orient, choices and act - design such that you can prepare professionally informed sprint .todo file with systematic, professional scope contracts, verification per scope contract, meticulously and professionally sequenced layers of DoDs per scope contract, and simple, robust, minimal testing required per scope contract.
+**Output:** Comprehensive `.todo` sprint file in `_project/sprints/` with:
+- Scope contracts (max 10)
+- Sequenced DoDs per contract
+- Delegation commands for sub-workflows
+- Regression containment plan
 
-It's true for all sprints in general but especially for sprints that affect frontend ui, it's vital to abide by the themes of ai-webdev-spatial-curriculum-v3.md to write proper quality scope contracts and to sequence DoD layers properly and avoid the mistake of mixing up **Pass 1 — Skeleton Pass (all components, no styling):** **Pass 2 — Data Pass (all components, real data, no styling):** **Pass 3 — Build Pass (one component at a time, full scope):**
-            1. Build component to DoD at desktop (1280px). Lock the desktop DoD items.
-            2. Immediately build the same component to DoD at mobile (375px). Lock the mobile DoD items.
-            Within a single component during Pass 3, there is also a sequencing rule. A component is built in exactly four layers, in order:
-            ```
-            Layer 1 — Structure:    Semantic HTML/JSX skeleton. No classes. No logic.
-            Layer 2 — Layout:       Tailwind flex/grid/spacing/sizing only.
-                                    No colors. No typography. No borders.
-            Layer 3 — Surface:      Colors, typography, brand tokens, imagery.
-            Layer 4 — Interaction:  Hover states, transitions, animations.
-            ```
-Professional sprint must enforce adherence to global design system (tailwind.config.ts for styling) first, in order to contain and seal shut risks of one-off's and disconnected implementations that fix a problem locally but disrupt global coherence, hence creating problems elsewhere by lack of discipline in adhering to global design system first. Hence, that discipline must be rigurously enforced and checked.
-
-**Build Execution:** When executing Pass 3 DoD items, invoke `/build [COMPONENT] [PASS] [LAYER] [BREAKPOINT]` to ensure atomic Pass/Layer execution per `@/_project/core-building-pattern.md`.
-
-Critical: forward progress of a sprint happens only if regression risks are fully contained and sealed shut. Sprint must be extremely rigorous about not improving or changing anything outside the scope.
-
-The start of a sprint must begin with:
-- **PRE-SPRINT LESSONS RETRIEVAL** — Query `_project/lessons/INDEX.md` for relevant keywords, load Critical/High severity lessons, apply constraints to sprint plan
-- systematically identifying and processing all code areas at risk of regressions or unrelated changes due to sprint code changes
-- systematically inserting scope and systematically sequenced layers of DoDs of writing simple, robust, professional regression tests per code code area at risk of regressions at the beginning of the sprint; it should be as concise as possible, while providing evidence of 0 regressions
-- systematically enforcing scope and sequenced layers of DoDs of executing simple, robust, professional regression tests and systematically verifying lack of regressions after sprint
-
-Output full, verified sprint in .md file in proper folder, in the _project/sprints
+**Does NOT:**
+- Execute code changes (delegate to `/implement`)
+- Run tests (delegate to `/test`)
+- Build components (delegate to `/build`)
 
 ---
 
-## MANDATORY /TEST INTEGRATION STEP (100% UNSKIPPABLE)
+## PHASE 0: Pre-Work Lessons Retrieval (MANDATORY)
 
-**Position in sequence:** After regression containment at sprint start, after each scope contract completion, before sprint finalization.
+Before ANY planning, query `_project/lessons/INDEX.md` for relevant keywords:
 
-**Rule:** Sprint CANNOT proceed without /test execution. No scope contract is complete without /test evidence dashboard showing 100% specification test pass rate.
+1. **Extract keywords** from target state:
+   - Technology stack (e.g., "sanity", "nextjs", "groq")
+   - Component patterns (e.g., "server-components", "data-fetching")
+   - Domain concepts (e.g., "vfs", "catalogue", "filters")
 
-### Step 1: Pre-Sprint /Test Execution (At Sprint Start)
-**Trigger:** Immediately after regression risks identified and containment tests defined.
+2. **Query INDEX.md** for matching keywords
 
-**Action:** Invoke `/test` with:
-- **Scope:** Sprint DoD items from scope contracts
-- **DoDs:** Sequenced DoD layers per scope contract
-- **Context:** Regression risks identified for containment
+3. **Load lessons by severity:**
+   - Critical: MUST read before proceeding
+   - High: MUST read before proceeding
+   - Medium/Low: Read if time permits
 
-**Output required from /test:**
-1. Test mapping table (DoD → test file)
-2. Evidence dashboard showing baseline (pre-sprint)
-3. **Verdict:** BASELINE CAPTURED
+4. **Apply prevention rules** as constraints for sprint design
 
-**Blocking:** YES - Sprint cannot start without baseline test suite established.
+---
 
-### Step 2: Per-Scope-Contract /Test Execution (During Sprint)
-**Trigger:** After each scope contract's Pass 3 Build completion.
+## PHASE 1: Research and Audit
 
-**Action:** Invoke `/test` with:
-- **Scope:** Current scope contract DoD items only
-- **DoDs:** Pass 3 DoD items for that specific component
-- **Build Command:** Invoke `/build` for each Pass 3 DoD item to ensure atomic Pass/Layer execution
-- **Context:** Component-specific regression risks
+### Step 1: Read Context
+- `tailwind.config.ts` — design system tokens
+- `@/_project/core-building-pattern.md` — Pass/Layer sequencing
+- Current implementation files (read-only)
+- Audit reports (if available)
 
-**Output required from /test:**
-```markdown
-## Evidence Dashboard - Scope Contract N
+### Step 2: End-State Delineation
+Create ASCII spatial maps:
+```
+Desktop (1280px):
+[NAV HEADER — full width]
+[PAGE CONTENT — max-w-content, mx-auto, px-8]
+  [AREA A — width, behavior]
+  [AREA B — width, behavior]
 
-### Coverage
-| Tier | Count | Runtime | Pass Rate | Blocking |
-|------|-------|---------|-----------|----------|
-| Specification (DoD) | X/X | Xs | 100% | ✅ YES |
-| Regression | X/X | Xs | 100% | ⚠️ WARN |
-| Smoke | X/X | Xs | 100% | ✅ YES |
-
-### Verdict
-✅ **SCOPE CONTRACT N COMPLETE** - All DoD tests pass
-OR
-❌ **SCOPE CONTRACT N BLOCKED** - Fix failing DoD tests before proceeding
+Mobile (375px):
+[SAME AREAS — stacked/altered behavior]
 ```
 
-**Blocking:** YES 100% - If any specification test fails, scope contract is NOT complete. Fix and re-run /test until 100% pass rate.
+### Step 3: Gap Analysis
+| ID | Component | Current | Target | Severity |
+|----|-----------|---------|--------|----------|
+| G-01 | [Name] | [Current] | [Target] | High |
 
-### Step 3: Post-Sprint /Test Execution (At Sprint Finalization)
-**Trigger:** After all scope contracts complete.
+---
 
-**Action:** Invoke `/test` with:
-- **Scope:** Full sprint DoD items + regression safety net
-- **DoDs:** All sprint DoDs + full regression suite
-- **Context:** Complete regression risk matrix
+## PHASE 2: Scope Contract Generation
 
-**Output required from /test:**
+### Scope Contract Template
+
 ```markdown
-## Final Evidence Dashboard - Sprint [Name]
+## Scope Contract N: [Component] — [Gap Coverage]
 
-### Specification Coverage (DoD Enforcement)
-| Scope Contract | DoD Tests | Pass Rate | Status |
-|----------------|-----------|-----------|--------|
-| SC1: [Name] | X/X | 100% | ✅ |
-| SC2: [Name] | X/X | 100% | ✅ |
-| ... | ... | ... | ... |
-| **TOTAL** | **X/X** | **100%** | **✅** |
+### Target State
+[What done looks like]
 
-### Regression Coverage (Safety Net)
-| Critical Path | Tests | Pass Rate | Status |
-|---------------|-------|-----------|--------|
-| [Path 1] | X/X | 100% | ✅ |
-| [Path 2] | X/X | 100% | ✅ |
+### DoD (Sequenced)
+- [ ] Pass 1: Skeleton (semantic HTML, debug borders)
+- [ ] Pass 2: Data (real data, no styling)
+- [ ] Pass 3 — Layer 2: Desktop layout (1280px)
+- [ ] Pass 3 — Layer 3: Desktop surface (1280px)
+- [ ] Pass 3 — Layer 4: Desktop interaction (1280px)
+- [ ] Pass 3 — Layer 2: Mobile layout (375px)
+- [ ] Pass 3 — Layer 3: Mobile surface (375px)
+- [ ] Pass 3 — Layer 4: Mobile interaction (375px)
 
-### Build Gate
-| Check | Status |
-|-------|--------|
-| npm run build | ✅ PASS |
-| Smoke tests | ✅ PASS |
+### Delegation
+**Execution:** `/implement [scope from this contract]`
+**Build:** `/build [COMPONENT] [PASS] [LAYER] [BREAKPOINT]` per DoD
+**Verify:** `/test` after each Pass 3 Layer completion
+```
 
-### Sprint Lock Verdict
-✅ **SPRINT COMPLETE & SHIPPABLE**
+### Sequencing Rules
+- **Pass 1:** All components skeleton (no styling, no logic)
+- **Pass 2:** All components data (real data flows)
+- **Pass 3:** One component at a time, Layer 1→4, desktop then mobile
+
+---
+
+## PHASE 3: Regression Containment
+
+### Identify at Risk
+| File | Risk | Mitigation |
+|------|------|------------|
+| `[file]` | [description] | [test/hook] |
+
+### Pre-Sprint Baseline
+**Action:** Invoke `/test` for baseline capture
+- Scope: Current state before sprint
+- DoDs: Existing functionality
+- Output: BASELINE CAPTURED
+
+---
+
+## PHASE 4: Output Sprint File
+
+### File Structure
+```
+_project/sprints/
+└── [SPRINT_NAME].todo
+```
+
+### Content Sections
+1. **Sprint Metadata** — Date, target state, scope lock rules
+2. **Scope Contracts** — Numbered SC1, SC2... with DoDs
+3. **RWD Strategy** — Breakpoint behavior per component
+4. **Files at Risk** — Regression mitigation
+5. **Delegation Commands** — /implement, /build, /test per contract
+6. **Evidence Log** — Placeholder for /test results (filled during execution)
+
+### Scope Lock Rules (Mandatory)
+- **NO** globals.css changes
+- **NO** homepage changes (unless in scope)
+- **NO** data structure changes
+- **NO** improvements outside scope contracts
+
+---
+
+## PHASE 5: Execution Delegation (During Sprint)
+
+### Per Scope Contract Execution
+
+```
+FOR EACH Scope Contract:
+  1. User: /implement "[scope contract description]"
+     → /implement executes with /test per DoD
+
+  2. /implement invokes /build for Pass/Layer execution
+
+  3. /implement invokes /test after each DoD completion
+     → Evidence dashboard generated
+     → Blocking: Must PASS before next DoD
+
+  4. Scope Contract marked complete when all DoDs pass /test
+```
+
+### Final Verification
+**Action:** Invoke `/test` for full sprint
+- Scope: All scope contracts
+- DoDs: All sprint DoDs
+- Output: FINAL EVIDENCE DASHBOARD
+
+**Sprint Lock Criteria:**
 - All specification tests pass (100%)
 - All critical regressions contained
 - Build gate passed
 
-**OR**
+---
 
-❌ **SPRINT BLOCKED**
-- [ ] Fix failing specification tests
-- [ ] Re-run /test until 100% pass rate
-```
+## PHASE 6: Post-Sprint /learn (MANDATORY)
 
-**Blocking:** YES 100% MANDATORY - Sprint is NOT complete without final evidence dashboard showing 100% specification test pass rate.
+**Trigger:** After sprint lock
+
+**Action:** Execute `/learn` protocol
+- Extract lessons from sprint experience
+- Codify to `_project/lessons/`
+- Update INDEX.md
+- Update .windsurfrules if universal constraint discovered
 
 ---
 
-## /TEST CONSTRAINT RULES (Enforced Within /Sprint)
+## Constraint Rules
 
-- **NO** scope contract marked complete without /test evidence dashboard
-- **NO** sprint finalization without post-sprint /test execution
-- **NO** test suite with >12 tests total
-- **NO** test runtime >2 minutes
-- **YES** 1 test per DoD item (mathematical 1:1 mapping)
-- **YES** evidence dashboard generated at each /test invocation
-- **YES** 100% specification test pass rate required for forward progress
-
----
-
-## /TEST INTEGRATION OUTPUT FORMAT
-
-Each sprint .todo file must include:
-
-```markdown
-## TEST EVIDENCE LOG
-
-### Pre-Sprint Baseline
-| Date | /test Invocation | Tests | Pass Rate | Verdict |
-|------|------------------|-------|-----------|---------|
-| YYYY-MM-DD | Baseline capture | X | 100% | ✅ BASELINE |
-
-### Per Scope Contract
-| Scope Contract | /test Date | DoD Tests | Pass Rate | Verdict |
-|----------------|------------|-----------|-----------|---------|
-| SC1 | YYYY-MM-DD | X/X | 100% | ✅ COMPLETE |
-| SC2 | YYYY-MM-DD | X/X | 100% | ✅ COMPLETE |
-
-### Post-Sprint Final
-| Date | /test Invocation | Total Tests | Pass Rate | Sprint Verdict |
-|------|------------------|-------------|-----------|----------------|
-| YYYY-MM-DD | Final verification | X | 100% | ✅ SHIPPABLE |
+- **NO** prose descriptions without ASCII spatial maps
+- **NO** gaps without G-XX IDs
+- **NO** RWD without breakpoint values (1280px, 375px)
+- **NO** DoD without corresponding /test delegation
+- **YES** max 10 scope contracts per sprint
+- **YES** /implement delegation per scope contract
+- **YES** /test invocation after each DoD
+- **YES** /learn execution post-sprint
 
 ---
 
-## POST-SPRINT /LEARN EXECUTION (MANDATORY)
+## Integration Map
 
-**Trigger:** Immediately after sprint completion and final /test evidence dashboard.
+| /Sprint Output | Delegated To | When |
+|----------------|--------------|------|
+| Scope Contract N | /implement | Execution phase |
+| DoD: Pass 1 Skeleton | /implement | Per DoD |
+| DoD: Pass 2 Data | /implement | Per DoD |
+| DoD: Pass 3 Layer X | /build + /test | Per Layer |
+| Baseline capture | /test | Sprint start |
+| Final verification | /test | Sprint end |
+| Learnings capture | /learn | Sprint end |
 
-**Action:** Execute `/learn` protocol to extract and codify sprint learnings.
+---
 
-**Required Output:**
-1. Raw extraction from sprint experience
-2. Thematic organization (patterns, failures, workflows)
-3. Codification into appropriate infrastructure:
-   - Update `.windsurfrules` if universal constraint discovered
-   - Update workflow file if process improvement identified
-   - Add lesson to thematic storage (`_project/lessons/[theme]/`)
-   - Update `INDEX.md` with new keywords
-4. Integration verification
+## Verification Commands (For Sprint File)
 
-**Learning Capture Template:**
-```markdown
-## Sprint [Name] — Learnings
+```bash
+# Validate sprint structure
+npm run build
 
-**Sprint completed:** YYYY-MM-DD
-**Total duration:** [time]
-**Unexpected issues:** [count]
-
-### Lesson 1: [Theme] — [Title]
-**Severity:** [Critical/High/Medium/Low]
-
-**The Problem:**
-[What went wrong]
-
-**Root Cause:**
-[Why it happened]
-
-**Prevention:**
-[How to never repeat]
-
-**Codified to:**
-- [ ] `_project/lessons/[theme]/[file].md`
-- [ ] Workflow updated: [file]
-- [ ] Rule added to: [file]
-```
-
-**Compound Effect Verification:**
-```markdown
-## Compound Effect Check
-
-- [ ] At least 1 lesson extracted and codified
-- [ ] INDEX.md updated with new keywords
-- [ ] Relevant workflow file updated
-- [ ] Next sprint will benefit from this learning
+# Verify no regressions (baseline vs current)
+npx playwright test --grep "regression"
 ```
 ```
