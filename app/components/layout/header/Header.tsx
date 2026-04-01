@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils/tailwind";
 import BrandLogo from "./BrandLogo";
-import Searchbar from "./Searchbar";
+import SearchField from "./SearchField";
 import NavbarActionsServer from "./NavbarActionsServer";
 import NavbarActionsSkeleton from "./NavbarActionsSkeleton";
 import { Suspense } from "react";
@@ -17,7 +17,9 @@ export default function Header() {
       )}
     >
       <BrandLogo />
-      <Searchbar />
+      <Suspense>
+        <SearchField />
+      </Suspense>
       <Suspense fallback={<NavbarActionsSkeleton />}>
         <NavbarActionsServer />
       </Suspense>
