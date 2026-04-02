@@ -8,7 +8,7 @@ const SPOTLIGHT2_QUERY = `*[_type == "homepageData"][0].spotlight2Data{
   promoSubtitle,
   promoText,
   productRef->{
-    _id, name, brand, displayPrice,
+    _id, name, brand->{ _id, name, slug }, displayPrice,
     image{asset->{url}},
     gallery[]{asset->{url}}
   }

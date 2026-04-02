@@ -58,7 +58,7 @@ export default async function ProductSpotlight1({ spotlightData }: ProductSpotli
                         </div>
 
                         <div className="flex flex-col gap-2 relative z-10">
-                            <span className="text-small tracking-editorial text-accent-500 uppercase">{product.brand}</span>
+                            <span className="text-small tracking-editorial text-accent-500 uppercase">{product.brand.name}</span>
                             <h2 className="text-h1 uppercase">{promoTitle || product.name}</h2>
                         </div>
                         <div className="flex flex-col gap-4 relative z-10">

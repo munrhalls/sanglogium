@@ -4,7 +4,11 @@ import { cache } from "react";
 export interface IemProduct {
   _id: string;
   name: string;
-  brand: string;
+  brand: {
+    _id: string;
+    name: string;
+    slug: string;
+  };
   displayPrice: number;
   slug: string;
   imageUrl: string;
@@ -14,7 +18,7 @@ export interface IemProduct {
 const IEMS_QUERY = `*[_type == "homepageData"][0].iemsGallery[]->{
   _id,
   name,
-  brand,
+  brand->{ _id, name, slug },
   displayPrice,
   "slug": slug.current,
   "imageUrl": image.asset->url,

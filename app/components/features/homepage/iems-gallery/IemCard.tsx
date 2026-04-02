@@ -20,7 +20,7 @@ export default function IemCard({ product, idx }: { product: IemProduct; idx: nu
                     className="object-cover w-[70%] h-[70%] xs:w-[60%] xs:h-[60%] transition-transform duration-300 group-hover:scale-105 object-center"
                 />
                 <div className="absolute left-2 top-2 xs:top-4">
-                    <span className="text-[7px] xs:text-small font-bold uppercase tracking-editorial text-brand-900 whitespace-nowrap xs:whitespace-normal">{product.brand}</span>
+                    <span className="text-[7px] xs:text-small font-bold uppercase tracking-editorial text-brand-900 whitespace-nowrap xs:whitespace-normal">{product.brand.name}</span>
                 </div>
             </div>
 

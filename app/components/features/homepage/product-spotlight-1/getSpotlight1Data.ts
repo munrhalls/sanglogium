@@ -4,7 +4,11 @@ import { cache } from "react";
 export interface Spotlight1Product {
   _id: string;
   name: string;
-  brand: string;
+  brand: {
+    _id: string;
+    name: string;
+    slug: string;
+  };
   displayPrice: number;
   image: { asset: { url: string }; alt?: string };
   gallery?: Array<{ asset: { url: string }; alt?: string }>;
@@ -23,7 +27,7 @@ const SPOTLIGHT1_QUERY = `*[_type == "homepageData"][0].spotlight1Data{
   promoSubtitle,
   promoText,
   productRef->{
-    _id, name, brand, displayPrice,
+    _id, name, brand->{ _id, name, slug }, displayPrice,
     image{asset->{url}},
     gallery[]{asset->{url}}
   }
