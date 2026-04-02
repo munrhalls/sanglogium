@@ -597,6 +597,18 @@ Every complex task required **rebuilding context from scratch** — re-explainin
 1. **Context amnesia** — No more "re-explain VFS structure" between sessions
 2. **Assumption-based debugging** — Data verification gate forces observation before hypothesis
 3. **False causality** — Pre-sprint baseline eliminates "did I break this?" investigations
+
+---
+
+## 2026-04-02: ActiveFilters useQueryState Hydration Failure
+
+**Raw Learning:**
+- Error: `TypeError: Cannot read properties of undefined (reading 'map')` in ActiveFilters
+- Root cause: `useQueryState` returns undefined during React hydration
+- Time lost: 15 min (5 min investigation, 5 min wrong VFS assumption, 5 min fixes)
+- Fix: Added null checks `(filters || []).map()` and made props optional
+
+**Prevention added:** Universal rule for useQueryState null checks
 4. **Documentation theater** — DoD markers separate real progress from configuration polish
 5. **Sequencing chaos** — Pass/layer guards prevent 17-day pattern failures
 

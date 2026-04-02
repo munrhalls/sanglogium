@@ -106,6 +106,7 @@ After EVERY sprint, debug, or implementation:
 - **Velocity:** Run /commits-diagnostics before sprint planning — reject if D-type > 30% or real:illusory < 2:1
 - **cloneElement:** NEVER use cloneElement for prop injection — use React Context instead
 - **Sanity Migrations:** When migrating fields from primitive to reference types: search entire codebase first, create comprehensive checklist, update ALL interfaces/queries/components in single atomic change
+- **useQueryState:** ALWAYS add null checks - `useQueryState` returns undefined during hydration. Use `(filters || []).map()` pattern or destructure with defaults `const [filters = []] = useQueryState(...)`
 
 ## Testing Framework Rules
 - **NEVER use Jest** - Jest is prohibited in this codebase

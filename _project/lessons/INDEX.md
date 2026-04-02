@@ -806,11 +806,11 @@
 
 ---
 
-## Keyword: scope-assessment
+## Keyword: useQueryState
 
 | Lesson | Severity | Summary |
 |--------|----------|---------|
-| [failures/brand-reference-migration-failure.md](failures/brand-reference-migration-failure.md) | Critical | Sanity field migration requires application-level scope assessment, not component-level |
+| [failures/useQueryState-hydration-failure.md](failures/useQueryState-hydration-failure.md) | High | useQueryState returns undefined during hydration - always add null checks |
 
 ---
 
