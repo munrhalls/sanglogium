@@ -5,11 +5,42 @@ export interface FilterState {
   filters: string[]; // ['brand:sennheiser', 'driverType:dynamic']
 }
 
+export function parseFilterParams(searchParams: URLSearchParams) {
+  const rawFilters = searchParams.getAll('f');
+  return rawFilters.flatMap(f => {
+    const parts = f.split(',');
+    const result = [];
+    let currentField = null;
+
+    for (const part of parts) {
+      if (part.includes(':')) {
+        const [field, value] = part.split(':');
+        // If this is a sub-value like "max:500" and we have a currentField,
+        // treat it as currentField:max:500
+        if (currentField && (field === 'min' || field === 'max')) {
+          result.push(`${currentField}:${field}:${value}`);
+        } else {
+          result.push(part);
+          currentField = field;
+        }
+      } else if (currentField) {
+        // This is just a value, prepend with current field
+        result.push(`${currentField}:${part}`);
+      } else {
+        // No current field, treat as-is
+        result.push(part);
+      }
+    }
+
+    return result;
+  });
+}
+
 /**
  * Parse URL search params into filter state
  * URL format: ?sort=displayPrice:asc&f=brand:sennheiser&f=driverType:dynamic
  */
-export function parseFilterParams(searchParams: ReadonlyURLSearchParams | URLSearchParams): FilterState {
+export function parseFilterState(searchParams: ReadonlyURLSearchParams | URLSearchParams): FilterState {
   // Sort: ?sort=displayPrice:asc
   const sort = searchParams.get('sort') || 'featured';
 

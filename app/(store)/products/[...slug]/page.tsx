@@ -30,7 +30,10 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
 
   // Parse URL params
   const sort = typeof query.sort === 'string' ? query.sort : 'featured';
-  const filters = Array.isArray(query.f) ? query.f : query.f ? [query.f] : [];
+  const rawFilters = Array.isArray(query.f) ? query.f : query.f ? [query.f] : [];
+
+  // Handle comma-separated filters: "brand:Hifiman,brand:Focal" -> ["brand:Hifiman", "brand:Focal"]
+  const filters = rawFilters.flatMap(f => f.split(','));
 
   const descendantKeys = unrollDescendantKeys(nodeId);
 
