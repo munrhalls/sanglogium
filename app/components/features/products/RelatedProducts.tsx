@@ -28,6 +28,7 @@ export function RelatedProducts({ products, currentProductName }: RelatedProduct
     <section
       aria-labelledby="related-heading"
       className="mt-12 pt-8 border-t border-border-secondary"
+      data-testid="related-products"
     >
       <h2
         id="related-heading"

@@ -42,7 +42,7 @@ export function ProductCard({ product }: ProductCardProps) {
             {product.name}
           </h3>
           <div className="mt-auto flex items-center justify-between pt-2">
-            <p className="type-price">
+            <p className="type-price" data-testid="product-price">
               ${product.displayPrice.toLocaleString()}
             </p>
             <button

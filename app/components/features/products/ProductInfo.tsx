@@ -5,6 +5,7 @@ import { urlFor } from '@/sanity/lib/image';
 import { useBasketStore } from '@/store/store';
 import { useState } from 'react';
 import { Price } from '@/app/components/ui/Price';
+import { ShoppingCart } from '@phosphor-icons/react/dist/ssr';
 
 export function ProductInfo({ product }: { product: Product }) {
   const [quantity, setQuantity] = useState(1);
@@ -81,8 +82,9 @@ export function ProductInfo({ product }: { product: Product }) {
         <button
           onClick={handleAddToCart}
           disabled={product.stock === 0}
-          className="btn-primary w-full py-4"
+          className="btn-cart w-full"
         >
+          <ShoppingCart size={20} weight="regular" />
           {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
         </button>
       </div>
