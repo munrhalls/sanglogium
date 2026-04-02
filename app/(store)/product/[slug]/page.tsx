@@ -11,6 +11,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = await params;
   const product = await getProductBySlug(slug);
 
+  console.log(product)
   if (!product) {
     notFound();
   }
@@ -59,7 +60,7 @@ export async function generateMetadata({ params }: ProductPageProps) {
   }
 
   return {
-    title: `${product.name} — ${product.brand.name} — Sang Logium`,
-    description: product.description?.substring(0, 160) || `Buy ${product.name} from ${product.brand.name}`,
+    title: `${product.name} — ${product.brand || ''} — Sang Logium`,
+    description: (typeof product.description === 'string' ? product.description.substring(0, 160) : '') || `Buy ${product.name} from ${product.brand || ''}`,
   };
 }

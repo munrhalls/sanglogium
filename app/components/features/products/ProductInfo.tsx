@@ -19,7 +19,7 @@ export function ProductInfo({ product }: { product: Product }) {
         stock: product.stock,
         quantity: quantity,
         image: product.image ? urlFor(product.image).width(100).height(100).url() : '',
-        brand: product.brand ? { _id: product.brand._id, name: product.brand.name } : null,
+        brand: product.brand ? { _id: '', name: product.brand } : null,
       });
     }
   };
@@ -34,7 +34,7 @@ export function ProductInfo({ product }: { product: Product }) {
   return (
     <div className="space-y-6" data-testid="product-info">
       <div className="space-y-2">
-        <p className="type-overline text-accent-500">{product.brand?.name || 'Unknown Brand'}</p>
+        <p className="type-overline text-accent-500">{product.brand || ''}</p>
         <h1 className="type-section-hed text-headline">{product.name}</h1>
         <div className="flex items-center gap-4">
           <Price value={product.displayPrice} />

@@ -4,14 +4,14 @@ import groq from 'groq';
 export interface Product {
   _id: string;
   name: string;
-  brand: { _id: string; name: string } | null;
+  brand: string | null;
   displayPrice: number;
   stock: number;
   sku: string;
   image: any;
   gallery?: any[];
   slug: { current: string };
-  description?: string;
+  description?: any;
   overviewFields?: { title: string; value: string; information?: string }[];
   specifications?: { title: string; value: string; information?: string }[];
   catalogueLocationKeys: string[];
@@ -22,10 +22,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
     query: groq`*[_type == "product" && slug.current == $slug] {
       _id,
       name,
-      brand {
-        _id,
-        name
-      },
+      brand,
       displayPrice,
       stock,
       sku,
