@@ -20,7 +20,7 @@ export async function getRelatedProducts(
   }
 
   const products = await sanityFetch({
-    query: groq`*[_type == "product" 
+    query: groq`*[_type == "product"
       && _id != $currentId
       && count(catalogueLocationKeys[@ in $catalogueKeys]) > 0
     ] | order(displayPrice asc) [0...$limit] {
