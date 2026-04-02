@@ -1,79 +1,138 @@
 import { NextRequest, NextResponse } from "next/server";
-// import { stripe } from "@/lib/stripe/stripe";
-// import { currentUser } from "@clerk/nextjs/server";
-import { backendClient } from "@/sanity/lib/backendClient";
+import { stripe } from "@/lib/stripe/stripe";
+import { currentUser } from "@clerk/nextjs/server";
+import { checkoutClient } from "@/sanity/lib/checkoutClient";
 import type {
   ServerProduct,
   BasketCheckoutItem,
 } from "@/app/(store)/checkout/checkout.types";
 
+// Simple in-memory rate limiting (use Redis in production)
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT_MAX = 5;
+const RATE_LIMIT_WINDOW_MS = 60000; // 1 minute
+
+function checkRateLimit(identifier: string): boolean {
+  const now = Date.now();
+  const record = rateLimitMap.get(identifier);
+
+  if (!record || now > record.resetAt) {
+    rateLimitMap.set(identifier, {
+      count: 1,
+      resetAt: now + RATE_LIMIT_WINDOW_MS,
+    });
+    return true;
+  }
+
+  if (record.count >= RATE_LIMIT_MAX) {
+    return false;
+  }
+
+  record.count++;
+  return true;
+}
+
+function sanitizeId(id: string): string {
+  return id.replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 64);
+}
+
+function sanitizeQuantity(quantity: unknown): number | null {
+  const num = typeof quantity === "string" ? parseInt(quantity, 10) : quantity;
+  if (typeof num !== "number" || !Number.isFinite(num) || num < 1 || num > 99) {
+    return null;
+  }
+  return Math.floor(num);
+}
+
+function validateBasketItem(item: unknown): item is BasketCheckoutItem {
+  if (!item || typeof item !== "object") return false;
+
+  const { _id, quantity } = item as Record<string, unknown>;
+
+  if (typeof _id !== "string" || _id.length < 1 || _id.length > 64) {
+    return false;
+  }
+
+  const sanitizedQty = sanitizeQuantity(quantity);
+  if (sanitizedQty === null) {
+    return false;
+  }
+
+  return true;
+}
+
+function validateBasket(basket: unknown): BasketCheckoutItem[] | null {
+  if (!Array.isArray(basket) || basket.length === 0 || basket.length > 50) {
+    return null;
+  }
+
+  const validated: BasketCheckoutItem[] = [];
+  for (const item of basket) {
+    if (!validateBasketItem(item)) {
+      return null;
+    }
+    validated.push({
+      _id: sanitizeId(item._id as string),
+      quantity: sanitizeQuantity(item.quantity) as number,
+    });
+  }
+
+  // Check for duplicate product IDs
+  const idSet = new Set(validated.map((i) => i._id));
+  if (idSet.size !== validated.length) {
+    return null;
+  }
+
+  return validated;
+}
+
 export async function POST(req: NextRequest) {
+  const reservedItems: Array<{ productId: string; quantity: number }> = [];
+
   try {
-    const { publicBasket }: { publicBasket: BasketCheckoutItem[] } =
-      await req.json();
-    // const user = await currentUser();
-    // const userEmail = user?.primaryEmailAddress?.emailAddress;
+    // Rate limiting check
+    const clientId =
+      req.headers.get("x-forwarded-for") ||
+      req.headers.get("x-real-ip") ||
+      "anonymous";
+    if (!checkRateLimit(clientId)) {
+      return NextResponse.json(
+        { error: "Rate limit exceeded. Please try again later." },
+        { status: 429 }
+      );
+    }
 
-    // TODO check What about shipping data? Not needed in the payment?
-    // TODO decrement sanity stock intantly in order to prevent race conditions
-    // TODO only after failed payment / unsuccessful checkout - perform stock check and rollback safely (another customer might have bought in the meantime)
-    // TODO validate publicBasket structure more thoroughly
-    // TODO type it properly
-    // TODO after checkout session is completed, send order data to sanity and only then decrement stock
+    const body = await req.json();
 
-    // TODO IMPORTANT !!!! "Two-Phase Commit"
-    // // A. Try to decrement stock in Sanity (Atomic Transaction)
-    // This ensures nobody else grabbed the last item 1ms ago
-    // / B. DECISION TIME
-    // if (transactionResult) {
-    // Success: Stock is ours. TAKE THE MONEY.
-    // Failure: Stock is gone (Race Condition). RELEASE THE MONEY.
-    if (
-      !publicBasket ||
-      !Array.isArray(publicBasket) ||
-      publicBasket.length === 0
-    ) {
+    // Validation: MUST happen before any Sanity query
+    const validatedBasket = validateBasket(body.publicBasket);
+    if (!validatedBasket) {
       return NextResponse.json(
         { error: "Invalid basket data" },
         { status: 400 }
       );
     }
 
+    const publicBasket = validatedBasket;
+    const user = await currentUser();
+    const userEmail = user?.primaryEmailAddress?.emailAddress;
+    const origin = req.headers.get("origin") || req.nextUrl.origin;
+
     const productIds = publicBasket.map((item) => item._id);
 
-    // STOCK RESERVATION SYSTEM:
-    // Available Stock = stock - reservedStock
-    // 1. Fetch products with: stock, reservedStock, _rev
-    // 2. Check: (stock - reservedStock) >= requestedQuantity
-    // 3. If YES: Atomically increment reservedStock using _rev
-    // 4. If NO: Return error "Item being purchased by another user"
-    // 5. On payment success: Decrement both stock AND reservedStock
-    // 6. On payment failure/expiry: Only decrement reservedStock after 15-30min timeout
-    // 7. Race condition handled by _rev - first transaction wins, second fails
-    const serverProducts: ServerProduct[] = await backendClient.fetch(
+    const serverProducts: ServerProduct[] = await checkoutClient.fetch(
       `*[_type == "product" && _id in $productIds] {
         _id,
         name,
-        price,
         stock,
+        reservedStock,
         stripePriceId,
         _rev,
       }`,
       { productIds }
     );
 
-    // const origin = req.headers.get("origin") || req.nextUrl.origin;
-
-    // STOCK VALIDATION LOGIC:
-    // TODO: Add reservedStock field to Product schema in Sanity
-    // TODO: Fetch reservedStock along with stock in the query above
-    // TODO: Calculate availableStock = stock - reservedStock
-    // TODO: Check if availableStock >= clientItem.quantity (not just stock)
-    // TODO: If availableStock < quantity but stock >= quantity: Return 409 "Item being purchased"
-    // TODO: Use transaction to atomically: increment reservedStock + check _rev
-    // TODO: Frontend should display: stock - reservedStock as "Available Now"
     const lineItems: Array<{ price: string; quantity: number }> = [];
-    const sanityTransaction = backendClient.transaction();
 
     for (const clientItem of publicBasket) {
       const serverProduct = serverProducts.find(
@@ -82,26 +141,17 @@ export async function POST(req: NextRequest) {
 
       if (!serverProduct) {
         return NextResponse.json(
-          { error: `Product with ID ${clientItem._id} no longer exists.` },
+          { error: `Product no longer exists.` },
           { status: 400 }
         );
       }
 
-      if (serverProduct.stock <= 0) {
-        return NextResponse.json(
-          { error: `Sorry, ${serverProduct.name} is out of stock.` },
-          { status: 409 }
-        );
-      }
+      const availableStock =
+        serverProduct.stock - (serverProduct.reservedStock || 0);
 
-      // TODO: Replace with: stock < clientItem.quantity
-      // TODO handle gracefully - the client should get back payload intel so client can deduce how much stock is left and update UI accordingly
-
-      if (serverProduct.stock < clientItem.quantity) {
+      if (availableStock < clientItem.quantity) {
         return NextResponse.json(
-          {
-            error: `Sorry, ${serverProduct.name} is out of stock. Available: ${serverProduct.stock}`,
-          },
+          { error: `Insufficient stock for ${serverProduct.name}.` },
           { status: 409 }
         );
       }
@@ -111,70 +161,75 @@ export async function POST(req: NextRequest) {
         quantity: clientItem.quantity,
       });
 
-      // CURRENT: Decrementing stock immediately (causes race conditions)
-      // TODO: Change to increment reservedStock instead: p.inc({ reservedStock: clientItem.quantity })
-      // TODO: Keep stock unchanged at this stage (only reserve, don't decrement)
-      // TODO: Stock will be decremented later in webhook on successful payment
-      sanityTransaction.patch(serverProduct._id, (p) =>
-        p.dec({ stock: clientItem.quantity }).ifRevisionId(serverProduct._rev)
+      await checkoutClient
+        .patch(serverProduct._id)
+        .inc({ reservedStock: clientItem.quantity })
+        .ifRevisionId(serverProduct._rev)
+        .commit();
+
+      reservedItems.push({
+        productId: serverProduct._id,
+        quantity: clientItem.quantity,
+      });
+    }
+
+    let session;
+    try {
+      session = await stripe.checkout.sessions.create({
+        ui_mode: "embedded",
+        line_items: lineItems,
+        mode: "payment",
+        return_url: `${origin}/checkout/return?session_id={CHECKOUT_SESSION_ID}`,
+        ...(userEmail && {
+          customer_email: userEmail,
+          customer_creation: "always",
+        }),
+        metadata: {
+          productsIntent: publicBasket
+            .map((item) => `${item._id}:${item.quantity}`)
+            .join(","),
+          clerkUserId: user?.id || "guest",
+        },
+        expires_at: Math.floor(Date.now() / 1000) + 25 * 60,
+      });
+    } catch (stripeError) {
+      console.error("Stripe session creation failed:", stripeError);
+      await rollbackReservations(reservedItems);
+      return NextResponse.json(
+        { error: "Failed to create payment session" },
+        { status: 500 }
       );
     }
 
-    await sanityTransaction.commit();
-
-    // const session = await stripe.checkout.sessions.create({
-    //   ui_mode: "embedded",
-    //   line_items: lineItems,
-    //   mode: "payment",
-    //   return_url: `${origin}/checkout/return?session_id={CHECKOUT_SESSION_ID}`,
-    //   ...(userEmail && {
-    //     customer_email: userEmail,
-    //     customer_creation: "always",
-    //   }),
-    //   metadata: {
-    //     productsIntent: publicBasket
-    //       .map((item: PublicBasketItem) => `${item._id}:${item.quantity}`)
-    //       .join(","),
-    //     clerkUserId: user?.id || "guest",
-    //   },
-    //   expires_at: Math.floor(Date.now() / 1000) + 25 * 60,
-    // });
-
-    // return NextResponse.json({ client_secret: session.client_secret });
+    return NextResponse.json({ client_secret: session.client_secret });
   } catch (error) {
-    console.error("Checkout session creation error:", error);
-    // TODO: Technically, if Stripe creation fails here but Sanity succeeded,
-    // we have a phantom decrement. In a perfect world, we would rollback Sanity here.
+    console.error("Checkout error:", error);
+    if (reservedItems.length > 0) {
+      await rollbackReservations(reservedItems);
+    }
+    // Generic error message to avoid information leakage
     return NextResponse.json(
-      { error: "Failed to create checkout session" },
+      { error: "An error occurred during checkout. Please try again." },
       { status: 500 }
     );
   }
 }
 
-// WEBHOOK HANDLER: Expired Sessions
-// TODO: Listen for 'checkout.session.expired' event
-// TODO: Parse metadata.productsIntent to get productId:quantity pairs
-// TODO: Wait 15-30 minutes before rollback (grace period for user to retry)
-// TODO: Decrement reservedStock for each product (release reservation)
-// TODO: Do NOT touch stock field (it was never decremented from total inventory)
-// TODO: Use inc() not set() to safely handle concurrent operations
-// export async function handleExpiredSession(req: NextRequest) {
-// const { session_id } = await req.json();
-// TODO: Rollback stock using session metadata
-// }
+async function rollbackReservations(
+  items: Array<{ productId: string; quantity: number }>
+) {
+  for (const item of items) {
+    try {
+      await checkoutClient
+        .patch(item.productId)
+        .dec({ reservedStock: item.quantity })
+        .commit();
+    } catch (rollbackError) {
+      console.error(
+        `Failed to rollback reservation for ${item.productId}:`,
+        rollbackError
+      );
+    }
+  }
+}
 
-// WEBHOOK HANDLER: Failed Payments
-// TODO: Listen for 'checkout.session.async_payment_failed' event
-// TODO: Parse metadata.productsIntent to get productId:quantity pairs
-// TODO: Immediately decrement reservedStock (no grace period needed)
-// TODO: Do NOT touch stock field
-// export async function handleFailedPayment(req: NextRequest) {
-// const { session_id } = await req.json();
-// }
-
-// TODO also handle random error, e.g. network dc etc. - it's almost the same as failed payment but need to ensure the customer was NOT charged or if they were, that it's impossible the order was not created
-// TODO if payment is successful but order creation in sanity fails - need to handle that too (maybe retry order creation a few times, then alert admin?)
-// TODO if order creation fails, still need to rollback stock properly
-// TODO if payment is successful but order creation fails, need to ensure reservedStock is decremented properly
-// TODO if payment is successful but network dc'd or some error went down, need to ensure the customer isn't screwed over - the order still needs to be created so their payment doesn't go to waste
