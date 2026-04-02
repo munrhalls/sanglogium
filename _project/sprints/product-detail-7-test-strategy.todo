@@ -1,0 +1,416 @@
+# Product Detail Page 7-Test Strategy Sprint
+
+**Date:** 2026-04-02
+**Target State:** Complete 7-test coverage for product detail page proving robust, professional architecture and functionality
+**Estimated Duration:** 2 days
+
+---
+
+## Sprint Metadata
+
+### Scope Lock Rules
+- **NO** globals.css changes
+- **NO** homepage changes
+- **NO** data structure changes
+- **NO** modifications outside product detail page scope
+- **NO** new dependencies without approval
+
+### Pre-Work Lessons Applied
+- **Critical**: Tailwind breakpoint shadowing (use lg-desktop: not lg:)
+- **Critical**: GROQ schema assumptions (verify field types)
+- **High**: Type consolidation (export from data layer)
+- **High**: Server-driven filtering (no client-side filtering)
+- **High**: Pre-flight baseline check required
+
+---
+
+## Research & Audit Context
+
+### Current Architecture
+```
+app/(store)/product/[slug]/page.tsx (Server Component)
+├── getProductBySlug() (Data Layer)
+├── ProductDetail (Client Component)
+│   ├── ImageGallery (Client Component)
+│   ├── ProductInfo (Client Component)
+│   │   ├── Price (Client Component)
+│   │   └── QuantitySelector (Client Component)
+│   └── RelatedProducts (Client Component)
+```
+
+### Design System Tokens Available
+- `type-section-hed`, `type-price`, `type-overline`
+- `btn-primary`, `btn-cart` (unused)
+- `surface-productImage`, `text-accent-500`
+- Custom breakpoints: `lg-desktop:`, `lg-touch:`
+
+---
+
+## Scope Contracts
+
+### SC1: Architecture Integrity Test (Test 0)
+**Gap Coverage:** Foundation validation
+**Target State:** Prove architecture is simple, robust, professional
+
+#### DoD (Sequenced)
+- [ ] Pass 1: Create test file structure (tests/e2e/architecture.spec.ts)
+- [ ] Pass 2: Implement 5 architecture assertions (circular deps, data independence, interface stability, unidirectional flow, error isolation)
+- [ ] Pass 3 — Layer 2: Desktop test execution (1280px)
+- [ ] Pass 3 — Layer 4: Desktop interaction (test execution)
+- [ ] Pass 3 — Layer 2: Mobile test execution (375px)
+- [ ] Pass 3 — Layer 4: Mobile interaction (test execution)
+
+#### Delegation
+**Execution:** `/implement "architecture integrity test with 5 assertions"`
+**Build:** `/build architecture-test Pass1` → `/build architecture-test Pass2` → `/build architecture-test Pass3-L2` → `/build architecture-test Pass3-L4`
+**Verify:** `/test` after Pass 3 completion
+
+---
+
+### SC2: Page Load & Data Integrity Test (Test 1)
+**Gap Coverage:** Core functionality validation
+**Target State:** Verify page loads correctly with all data displaying
+
+#### DoD (Sequenced)
+- [ ] Pass 1: Test page navigation and 404 handling
+- [ ] Pass 2: Test data fetching and display (name, brand, price, stock)
+- [ ] Pass 3 — Layer 2: Desktop layout verification (1280px)
+- [ ] Pass 3 — Layer 3: Desktop surface (visual verification)
+- [ ] Pass 3 — Layer 4: Desktop interaction (data display)
+- [ ] Pass 3 — Layer 2: Mobile layout verification (375px)
+- [ ] Pass 3 — Layer 3: Mobile surface (touch interaction)
+- [ ] Pass 3 — Layer 4: Mobile interaction (data display)
+
+#### Delegation
+**Execution:** `/implement "page load and data integrity test"`
+**Build:** `/build page-load-test Pass1` → `/build page-load-test Pass2` → `/build page-load-test Pass3-L2` → `/build page-load-test Pass3-L4`
+**Verify:** `/test` after each Pass 3 Layer
+
+---
+
+### SC3: Add to Cart Button Test (Test 2)
+**Gap Coverage:** Component interface validation
+**Target State:** Verify add to cart button wires data correctly to external callback
+
+#### Hard Boundary Constraints
+- **IN SCOPE**: Button click, data preparation, callback invocation
+- **OUT OF SCOPE**: Basket functionality, cart state management, checkout flow
+- **BOUNDARY**: Component stops at addItem() callback invocation
+- **NO TESTING**: What happens to data after callback
+- **NO TESTING**: Cart UI updates, basket page, checkout process
+
+#### DoD (Sequenced)
+- [ ] Pass 1: Test button exists and is enabled/disabled correctly
+- [ ] Pass 2: Test button click with correct data payload (product ID, name, price, quantity, image, brand)
+- [ ] Pass 3 — Layer 2: Desktop button interaction (1280px)
+- [ ] Pass 3 — Layer 4: Desktop interaction (click, verify addItem called with correct data)
+- [ ] Pass 3 — Layer 2: Mobile button interaction (375px)
+- [ ] Pass 3 — Layer 4: Mobile interaction (touch, verify addItem called)
+
+#### Verification Requirements
+- **MUST**: Mock addItem function (jest.fn())
+- **MUST**: Verify addItem called exactly once with correct data structure
+- **MUST NOT**: Test what addItem does with the data
+- **MUST NOT**: Test cart state changes
+- **MUST NOT**: Test any basket/store functionality
+
+#### Delegation
+**Execution:** `/implement "add to cart button component interface test"`
+**Build:** `/build add-cart-button-test Pass1` → `/build add-cart-button-test Pass2` → `/build add-cart-button-test Pass3-L4`
+**Verify:** `/test` after Pass 3 completion
+
+---
+
+### SC4: Navigation Links Test (Test 3)
+**Gap Coverage:** Link integrity validation
+**Target State:** Verify all links on product page navigate to valid destinations
+
+#### Hard Boundary Constraints
+- **IN SCOPE**: Link clicks, URL navigation, destination page loads
+- **OUT OF SCOPE**: Destination page functionality, external site behavior
+- **BOUNDARY**: Test stops at destination page load verification
+- **NO TESTING**: What happens on destination pages
+- **NO TESTING**: External site functionality, third-party behavior
+
+#### DoD (Sequenced)
+- [ ] Pass 1: Test breadcrumb links navigate to correct URLs
+- [ ] Pass 2: Test related products links navigate to product pages (load verification only)
+- [ ] Pass 3 — Layer 2: Desktop link navigation (1280px)
+- [ ] Pass 3 — Layer 4: Desktop interaction (click links, verify URL changes, verify page loads)
+- [ ] Pass 3 — Layer 2: Mobile link navigation (375px)
+- [ ] Pass 3 — Layer 4: Mobile interaction (touch links, verify URL changes, verify page loads)
+
+#### Verification Requirements
+- **MUST**: Test link href attributes are correct
+- **MUST**: Test navigation results in correct URL
+- **MUST**: Test destination page loads (no 404)
+- **MUST NOT**: Test functionality on destination pages
+- **MUST NOT**: Test external site behavior
+- **MUST NOT**: Test what happens after navigation
+
+#### Delegation
+**Execution:** `/implement "navigation links component interface test"`
+**Build:** `/build navigation-links-test Pass1` → `/build navigation-links-test Pass2` → `/build navigation-links-test Pass3-L4`
+**Verify:** `/test` after Pass 3 completion
+
+---
+
+### SC5: Responsive Layout Test (Test 4)
+**Gap Coverage:** Component layout adaptation validation
+**Target State:** Verify product detail components adapt correctly to viewports
+
+#### Hard Boundary Constraints
+- **IN SCOPE**: Component layout changes, element visibility, touch target sizes
+- **OUT OF SCOPE**: Browser behavior, OS interactions, external responsive behavior
+- **BOUNDARY**: Test stops at component DOM adaptation verification
+- **NO TESTING**: Browser window resizing behavior
+- **NO TESTING**: OS-level responsive features
+
+#### DoD (Sequenced)
+- [ ] Pass 1: Test component layout changes at critical breakpoints (375px, 768px, 1920px)
+- [ ] Pass 2: Test component visibility and positioning changes
+- [ ] Pass 3 — Layer 2: Mobile component layout (375px)
+- [ ] Pass 3 — Layer 3: Mobile surface (component visual regression)
+- [ ] Pass 3 — Layer 4: Mobile interaction (component touch targets)
+- [ ] Pass 3 — Layer 2: Desktop component layout (1920px)
+- [ ] Pass 3 — Layer 3: Desktop surface (component visual regression)
+- [ ] Pass 3 — Layer 4: Desktop interaction (component hover states)
+
+#### Verification Requirements
+- **MUST**: Test component DOM structure changes at breakpoints
+- **MUST**: Test component visibility and positioning
+- **MUST**: Test component touch targets meet minimum size
+- **MUST NOT**: Test browser window behavior
+- **MUST NOT**: Test OS-level responsive features
+- **MUST NOT**: Test external system responsive behavior
+
+#### Delegation
+**Execution:** `/implement "responsive component layout test"`
+**Build:** `/build responsive-layout-test Pass1` → `/build responsive-layout-test Pass2` → `/build responsive-layout-test Pass3-L4`
+**Verify:** `/test` with component screenshots after each Layer
+
+---
+
+### SC6: Edge Case Data Test (Test 5)
+**Gap Coverage:** Component data handling validation
+**Target State:** Verify product detail components handle problematic data gracefully
+
+#### Hard Boundary Constraints
+- **IN SCOPE**: Component data display, null/undefined handling, error boundaries
+- **OUT OF SCOPE**: Data source validation, server error handling, external data issues
+- **BOUNDARY**: Test stops at component data rendering verification
+- **NO TESTING**: Data fetching errors, server responses, external data sources
+- **NO TESTING**: Database validation, API error handling
+
+#### DoD (Sequenced)
+- [ ] Pass 1: Test component display with null brand, out of stock, no images data
+- [ ] Pass 2: Test component behavior with very long names, special characters, malformed data
+- [ ] Pass 3 — Layer 2: Desktop component error handling (1280px)
+- [ ] Pass 3 — Layer 4: Desktop interaction (component graceful degradation)
+- [ ] Pass 3 — Layer 2: Mobile component error handling (375px)
+- [ ] Pass 3 — Layer 4: Mobile interaction (component error boundaries)
+
+#### Verification Requirements
+- **MUST**: Test component renders correctly with null/undefined data
+- **MUST**: Test component handles malformed data without crashing
+- **MUST**: Test component displays fallbacks for missing data
+- **MUST NOT**: Test data source validation
+- **MUST NOT**: Test server error handling
+- **MUST NOT**: Test external data source reliability
+
+#### Delegation
+**Execution:** `/implement "edge case component data handling test"`
+**Build:** `/build edge-case-data-test Pass1` → `/build edge-case-data-test Pass2` → `/build edge-case-data-test Pass3-L4`
+**Verify:** `/test` after Pass 3 completion
+
+---
+
+### SC7: Invalid Route Handling Test (Test 6)
+**Gap Coverage**: Route error handling validation
+**Target State**: Verify product detail page handles invalid routes gracefully
+
+#### Hard Boundary Constraints
+- **IN SCOPE**: Route resolution, 404 page display, error component rendering
+- **OUT OF SCOPE**: Server routing, external redirects, DNS resolution
+- **BOUNDARY**: Test stops at error page component verification
+- **NO TESTING**: Server configuration, external routing, network issues
+- **NO TESTING**: DNS resolution, load balancer behavior, CDN routing
+
+#### DoD (Sequenced)
+- [ ] Pass 1: Test non-existent product routes display 404 component
+- [ ] Pass 2: Test malformed URLs and special characters are handled by routing
+- [ ] Pass 3 — Layer 2: Desktop error component display (1280px)
+- [ ] Pass 3 — Layer 4: Desktop interaction (error component navigation)
+- [ ] Pass 3 — Layer 2: Mobile error component display (375px)
+- [ ] Pass 3 — Layer 4: Mobile interaction (error component navigation)
+
+#### Verification Requirements
+- **MUST**: Test route resolution fails gracefully
+- **MUST**: Test 404 component displays correctly
+- **MUST**: Test error component provides navigation options
+- **MUST NOT**: Test server routing configuration
+- **MUST NOT**: Test external routing systems
+- **MUST NOT**: Test network-level error handling
+
+#### Delegation
+**Execution:** `/implement "invalid route component handling test"`
+**Build:** `/build invalid-route-test Pass1` → `/build invalid-route-test Pass2` → `/build invalid-route-test Pass3-L4`
+**Verify:** `/test` after Pass 3 completion
+- [ ] Pass 3 — Layer 2: Desktop error pages (1280px)
+- [ ] Pass 3 — Layer 4: Desktop interaction (error navigation)
+- [ ] Pass 3 — Layer 2: Mobile error pages (375px)
+- [ ] Pass 3 — Layer 4: Mobile interaction (error navigation)
+
+#### Delegation
+**Execution:** `/implement "invalid routes handling test"`
+**Build:** `/build invalid-routes-test Pass1` → `/build invalid-routes-test Pass2` → `/build invalid-routes-test Pass3-L4`
+**Verify:** `/test` after Pass 3 completion
+
+---
+
+## RWD Strategy
+
+| Component | Desktop (1280px) | Mobile (375px) | Implementation |
+|-----------|------------------|----------------|----------------|
+| Test Execution | Full browser automation | Mobile viewport | Playwright projects |
+| Visual Checks | Screenshot comparison | Screenshot comparison |toHaveScreenshot() |
+| Interactions | Mouse events | Touch events | touch/pointer events |
+
+---
+
+## Files at Risk of Regression
+
+| File | Risk | Mitigation |
+|------|------|------------|
+| `getProductBySlug.ts` | Brand data structure changes | Test 1 & 5 verify component data handling |
+| `ProductInfo.tsx` | Add to cart logic changes | Test 2 verifies component interface only |
+| `page.tsx` | Metadata generation changes | Test 1 verifies page load component |
+| `ImageGallery.tsx` | Zoom modal changes | Test 3 verifies navigation links only |
+| `tailwind.config.ts` | Token additions affect styling | Test 4 verifies component responsive layout |
+
+---
+
+## Pre-Sprint Baseline
+
+### Action Required: `/test` for baseline capture
+- Scope: Current product detail page functionality
+- DoDs: Existing page load, add to cart, navigation
+- Output: BASELINE CAPTURED before sprint work
+
+**Execute Before Sprint Start:**
+```bash
+npm run build
+npx playwright test --grep "product detail" --baseline
+```
+
+---
+
+## Delegation Commands
+
+### Sprint Execution Sequence
+```bash
+# 1. Architecture foundation (Test 0)
+/implement "architecture integrity test with 5 assertions"
+
+# 2. Core functionality (Tests 1-3)
+/implement "page load and data integrity test"
+/implement "add to cart functionality test"
+/implement "navigation and link integrity test"
+
+# 3. Responsive and edge cases (Tests 4-6)
+/implement "responsive design test with visual regression"
+/implement "edge case data handling test"
+/implement "invalid routes handling test"
+```
+
+### Verification Commands
+```bash
+# After each SC completion
+npx playwright test tests/e2e/architecture.spec.ts
+npx playwright test tests/e2e/product-detail.spec.ts
+
+# Final sprint verification
+npx playwright test tests/e2e/
+npm run build
+```
+
+---
+
+## Evidence Log (To be filled during execution)
+
+### SC1: Architecture Test
+- [ ] Test 0: ✅ PASS/FAIL - Evidence link
+- [ ] All 5 assertions verified
+- [ ] No circular dependencies found
+
+### SC2: Page Load Test
+- [ ] Test 1: ✅ PASS/FAIL - Evidence link
+- [ ] All data displays correctly
+- [ ] No 404s encountered
+
+### SC3: Add to Cart Test
+- [ ] Test 2: ✅ PASS/FAIL - Evidence link
+- [ ] Cart functionality verified
+- [ ] Stock management working
+
+### SC4: Navigation Test
+- [ ] Test 3: ✅ PASS/FAIL - Evidence link
+- [ ] All links work correctly
+- [ ] No broken navigation
+
+### SC5: Responsive Test
+- [ ] Test 4: ✅ PASS/FAIL - Evidence link
+- [ ] All viewports working
+- [ ] Visual regression passed
+
+### SC6: Edge Case Test
+- [ ] Test 5: ✅ PASS/FAIL - Evidence link
+- [ ] All edge cases handled
+- [ ] Graceful degradation verified
+
+### SC7: Invalid Routes Test
+- [ ] Test 6: ✅ PASS/FAIL - Evidence link
+- [ ] Error pages working
+- [ ] No crashes on invalid URLs
+
+---
+
+## Success Criteria
+
+### Sprint Lock Requirements
+- [ ] All 7 tests pass consistently (100% pass rate)
+- [ ] Build passes without errors
+- [ ] No critical regressions introduced
+- [ ] Test execution time under 30 seconds total
+- [ ] Visual regression tests pass
+- [ ] Architecture integrity verified
+
+### Definition of "Done"
+- **Professional Architecture**: Test 0 passes
+- **Functional Correctness**: Tests 1-3 pass
+- **Cross-Device Compatibility**: Test 4 passes
+- **Robustness**: Tests 5-6 pass
+- **Production Ready**: All tests pass in CI/CD
+
+---
+
+## Post-Sprint Actions
+
+### Required: `/learn` execution after sprint lock
+- Extract lessons from 7-test implementation
+- Codify testing patterns to `_project/lessons/testing/`
+- Update INDEX.md with testing keywords
+- Verify compound effect for future testing sprints
+
+### Integration Notes
+- Tests integrate with existing CI/CD pipeline
+- Playwright configuration updated for mobile/desktop projects
+- Baseline screenshots stored for visual regression
+- Test data fixtures created for edge cases
+
+---
+
+**Sprint Status:** 📋 Ready for execution
+**Total Scope Contracts:** 7 (Tests 0-6)
+**Estimated Test Coverage:** 100% of critical paths
+**Maintenance Overhead:** Low (7 tests total)

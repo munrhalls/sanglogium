@@ -1,0 +1,739 @@
+# SPRINT: Product Import Pipeline — Implementation
+
+**Goal:** Build simplest possible, robust pipeline for human-in-the-loop product scraping
+**Duration:** 5-7 days
+**Output:** Working CLI tool in `sang-logium-data/` workspace
+
+---
+
+## Pre-Flight Checklist
+
+- [ ] Create `sang-logium-data/` folder adjacent to `sang-logium/`
+- [ ] Initialize Node.js + TypeScript project
+- [ ] Copy `catalogue-index.json` from main project
+- [ ] Set up Sanity API credentials
+
+---
+
+## Phase 1: Foundation (Day 1)
+
+### Setup Project Structure
+
+```bash
+cd c:\webdev
+mkdir sang-logium-data
+cd sang-logium-data
+npm init -y
+npm install typescript ts-node @types/node zod @sanity/client playwright dotenv
+npx tsc --init
+npx playwright install chromium
+```
+
+### Create Directory Structure
+
+```
+sang-logium-data/
+├── plans/
+├── scraped/
+│   └── [plan-id]/
+│       ├── batch-001.json
+│       └── images/
+├── validation/
+├── uploads/
+├── src/
+│   ├── plan/
+│   ├── scrape/
+│   ├── transform/
+│   ├── validate/
+│   ├── upload/
+│   └── lib/
+├── config/
+└── scripts/
+```
+
+### Copy Catalogue Index
+
+```bash
+cp ../sang-logium/data/catalogue-index.json config/
+```
+
+### Create Core Types
+
+```typescript
+// src/lib/types.ts
+export interface ScrapePlan {
+  planId: string;
+  source: {
+    name: string;
+    baseUrl: string;
+    type: 'manufacturer' | 'retailer' | 'api';
+  };
+  target: {
+    catalogueSlug: string;
+    catalogueId: string;
+  };
+  selectors: {
+    productList: string;
+    productName: string;
+    productPrice: string;
+    productImage: string;
+    productUrl: string;
+    nextPage?: string;
+  };
+  constraints: {
+    maxProducts: number;
+    rateLimit: number;
+    maxPages: number;
+  };
+  status: 'pending' | 'approved' | 'rejected';
+}
+
+export type BatchStatus =
+  | 'scraped'        // Raw data, needs transform
+  | 'transformed'    // Transformed, needs review
+  | 'reviewed'       // Decisions made, needs upload
+  | 'uploaded';      // Complete
+
+export interface ScrapedBatch {
+  batchId: string;
+  planId: string;
+  scrapedAt: string;
+  status: BatchStatus;
+  products: ScrapedProduct[];
+  metadata: {
+    productsFound: number;
+    productsScraped: number;
+    errors: number;
+  };
+}
+
+export interface ScrapedProduct {
+  _scrapedId: string;
+  sourceUrl: string;
+  sourceId: string;
+  raw: {
+    name: string;
+    price: string;
+    image: string;
+    description?: string;
+    specifications?: Record<string, string>;
+    [key: string]: any;
+  };
+  transformed?: TransformedData;
+  validation?: ValidationResult;
+  decision?: 'approve' | 'reject' | 'skip';
+}
+
+export interface TransformedData {
+  name: string;
+  slug: string;
+  sku: string;
+  displayPrice: number;
+  brand: {
+    sourceName: string;
+    sanityBrandId?: string;
+    isNewBrand: boolean;
+  };
+  catalogueLocationKeys: string[];
+  stripePriceId: string;
+  image: {
+    sourceUrl: string;
+    localPath?: string;
+    sanityAssetId?: string;
+  };
+  description?: string;
+  specifications?: Array<{title: string; value: string}>;
+  overviewFields?: Array<{title: string; value: string; information?: string}>;
+}
+
+export interface ValidationResult {
+  hasRequiredFields: boolean;
+  missingFields: string[];
+  brandExists: boolean;
+  skuIsUnique: boolean;
+  imageExists: boolean;
+  overall: 'ready' | 'needs_review';
+}
+```
+
+---
+
+## Phase 2: Plan Stage (Day 1-2)
+
+### Create Plan Manager
+
+```typescript
+// src/plan/createPlan.ts
+import { ScrapePlan } from '../lib/types';
+import { slugify } from '../lib/utils';
+import * as fs from 'fs/promises';
+import * as path from 'path';
+
+export async function createPlan(
+  sourceName: string,
+  sourceUrl: string,
+  catalogueSlug: string,
+  selectors: ScrapePlan['selectors']
+): Promise<ScrapePlan> {
+
+  // Load catalogue index
+  const catalogueIndex = await loadCatalogueIndex();
+  const catalogueId = catalogueIndex.slugToIdMap[catalogueSlug];
+
+  if (!catalogueId) {
+    throw new Error(`Unknown catalogue slug: ${catalogueSlug}`);
+  }
+
+  const plan: ScrapePlan = {
+    planId: `${slugify(sourceName)}-${catalogueSlug}-${new Date().toISOString().slice(0, 10)}`,
+    source: {
+      name: sourceName,
+      baseUrl: sourceUrl,
+      type: 'manufacturer'
+    },
+    target: {
+      catalogueSlug,
+      catalogueId
+    },
+    selectors,
+    constraints: {
+      maxProducts: 10,
+      rateLimit: 1000,
+      maxPages: 2
+    },
+    status: 'pending'
+  };
+
+  // Save plan
+  await fs.writeFile(
+    path.join('plans', `${plan.planId}.plan.json`),
+    JSON.stringify(plan, null, 2)
+  );
+
+  return plan;
+}
+```
+
+### CLI: Create Plan
+
+```typescript
+// scripts/plan-create.ts
+import { createPlan } from '../src/plan/createPlan';
+
+async function main() {
+  const plan = await createPlan(
+    process.argv[2],           // source name
+    process.argv[3],           // source URL
+    process.argv[4],           // catalogue slug
+    {
+      productList: '.product-item',
+      productName: '.product-title',
+      productPrice: '.price',
+      productImage: 'img.product-img',
+      productUrl: 'a.product-link'
+    }
+  );
+  console.log(`Created plan: ${plan.planId}`);
+}
+
+main();
+```
+
+### CLI: Approve Plan
+
+```typescript
+// src/plan/approvePlan.ts
+export async function approvePlan(planId: string): Promise<void> {
+  const planPath = `plans/${planId}.plan.json`;
+  const plan = JSON.parse(await fs.readFile(planPath, 'utf-8'));
+
+  plan.status = 'approved';
+  plan.approvedAt = new Date().toISOString();
+
+  await fs.writeFile(planPath, JSON.stringify(plan, null, 2));
+  console.log(`Plan ${planId} approved`);
+}
+```
+
+---
+
+## Phase 3: Scrape Stage (Day 2-3)
+
+### Playwright Scraper
+
+```typescript
+// src/scrape/executePlan.ts
+import { chromium, Page } from 'playwright';
+import { ScrapePlan, ScrapedBatch, ScrapedProduct } from '../lib/types';
+import * as fs from 'fs/promises';
+import * as path from 'path';
+
+export async function executePlan(plan: ScrapePlan): Promise<ScrapedBatch> {
+  const browser = await chromium.launch({ headless: true });
+  const context = await browser.newContext({
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+  });
+
+  const products: ScrapedProduct[] = [];
+  let currentPage = 1;
+
+  try {
+    const page = await context.newPage();
+
+    // Navigate to source
+    await page.goto(plan.source.baseUrl, { waitUntil: 'networkidle' });
+
+    while (products.length < plan.constraints.maxProducts && currentPage <= plan.constraints.maxPages) {
+      // Wait for products to load
+      await page.waitForSelector(plan.selectors.productList, { timeout: 10000 });
+
+      // Extract product data
+      const pageProducts = await page.evaluate((selectors) => {
+        const items = document.querySelectorAll(selectors.productList);
+        return Array.from(items).map((item, index) => {
+          const nameEl = item.querySelector(selectors.productName);
+          const priceEl = item.querySelector(selectors.productPrice);
+          const imageEl = item.querySelector(selectors.productImage) as HTMLImageElement;
+          const urlEl = item.querySelector(selectors.productUrl) as HTMLAnchorElement;
+
+          return {
+            _scrapedId: `raw-${index}`,
+            sourceUrl: urlEl?.href || '',
+            sourceId: urlEl?.href?.split('/').pop() || `unknown-${index}`,
+            raw: {
+              name: nameEl?.textContent?.trim() || '',
+              price: priceEl?.textContent?.trim() || '',
+              image: imageEl?.src || '',
+              brand: item.querySelector(selectors.productBrand)?.textContent?.trim() || ''
+            }
+          };
+        });
+      }, plan.selectors);
+
+      products.push(...pageProducts);
+
+      // Rate limiting
+      await sleep(plan.constraints.rateLimit);
+
+      // Next page
+      const nextPageEl = await page.$(plan.selectors.nextPage);
+      if (nextPageEl) {
+        await nextPageEl.click();
+        await page.waitForNavigation({ waitUntil: 'networkidle' });
+        currentPage++;
+      } else {
+        break;
+      }
+    }
+  } finally {
+    await browser.close();
+  }
+
+  // Generate batch ID: planId + 3-digit counter
+  const existingBatches = await fs.readdir(`scraped/${plan.planId}`).catch(() => []);
+  const batchCount = existingBatches.filter(f => f.endsWith('.json')).length;
+  const batchId = `${plan.planId}-${String(batchCount + 1).padStart(3, '0')}`;
+
+  const batch: ScrapedBatch = {
+    batchId,
+    planId: plan.planId,
+    scrapedAt: new Date().toISOString(),
+    status: 'scraped',
+    products: products.slice(0, plan.constraints.maxProducts),
+    metadata: {
+      productsFound: products.length,
+      productsScraped: Math.min(products.length, plan.constraints.maxProducts),
+      errors: 0
+    }
+  };
+
+  // Save batch
+  await fs.writeFile(
+    `scraped/${plan.planId}/${batchId}.json`,
+    JSON.stringify(batch, null, 2)
+  );
+
+  return batch;
+}
+```
+
+---
+
+## Phase 4: Transform Stage (Day 3-4)
+
+### Transform Engine
+
+```typescript
+// src/transform/transformBatch.ts
+import { ScrapedBatch, ScrapedProduct, TransformedData, ValidationResult } from '../lib/types';
+import { loadCatalogueIndex } from '../lib/catalogueIndex';
+import { loadBrands, resolveBrand } from '../lib/brands';
+import { sanityClient } from '../lib/sanityClient';
+import { slugify } from '../lib/utils';
+import * as fs from 'fs/promises';
+
+// Transform with brand cache (simple exact match)
+export async function transformBatch(batch: ScrapedBatch): Promise<ScrapedBatch> {
+  const catalogueIndex = await loadCatalogueIndex();
+  const plan = await loadPlan(batch.planId);
+
+  // Load brands once for all products (G-13 fix)
+  const brandCache = await loadBrands();
+
+  for (const product of batch.products) {
+    product.transformed = await transformProduct(product, plan, catalogueIndex, brandCache);
+    product.validation = await validateProduct(product);
+  }
+
+  batch.status = 'transformed';
+
+  // Save transformed batch inline (no separate transformed/ directory)
+  await fs.writeFile(
+    `scraped/${batch.planId}/${batch.batchId}.json`,
+    JSON.stringify(batch, null, 2)
+  );
+
+  return batch;
+}
+
+async function transformProduct(
+  product: ScrapedProduct,
+  plan: ScrapePlan,
+  catalogueIndex: any,
+  brandCache: Map<string, string>
+): Promise<TransformedData> {
+  const raw = product.raw;
+
+  // Parse price
+  const priceMatch = raw.price.match(/[\d,]+\.?\d*/);
+  const displayPrice = priceMatch ? parseFloat(priceMatch[0].replace(',', '')) : 0;
+
+  // Resolve brand (simple exact match from cache)
+  const brandName = raw.brand || raw.name.split(' ')[0];
+  const brandResolution = await resolveBrand(brandName, brandCache);
+
+  // Generate SKU
+  const sku = generateSKU(raw.name, product.sourceId);
+
+  return {
+    name: raw.name.trim(),
+    slug: slugify(raw.name),
+    sku,
+    displayPrice,
+    brand: {
+      sourceName: brandName,
+      sanityBrandId: brandResolution.id || undefined,
+      isNewBrand: brandResolution.isNew
+    },
+    catalogueLocationKeys: [plan.target.catalogueId],
+    stripePriceId: 'PENDING_MANUAL_SETUP',
+    image: {
+      sourceUrl: raw.image,
+      localPath: `scraped/${plan.planId}/images/${product.sourceId}-source.jpg`
+    },
+    description: raw.description,
+    specifications: raw.specifications ?
+      Object.entries(raw.specifications).map(([title, value]) => ({ title, value })) :
+      undefined
+  };
+}
+
+async function validateProduct(product: ScrapedProduct): Promise<ValidationResult> {
+  const t = product.transformed!;
+  const missingFields: string[] = [];
+
+  if (!t.name || t.name.length < 2) missingFields.push('name');
+  if (!t.displayPrice || t.displayPrice <= 0) missingFields.push('price');
+  if (!t.sku) missingFields.push('sku');
+  if (!t.image.localPath) missingFields.push('image');
+
+  // Simple brand check (exact match only)
+  const brandExists = !!t.brand.sanityBrandId;
+
+  // Check SKU uniqueness against Sanity
+  const skuIsUnique = !(await checkSkuExists(t.sku));
+
+  // Check image exists
+  const imageExists = await fs.access(t.image.localPath).then(() => true).catch(() => false);
+
+  const needsReview = missingFields.length > 0 || !brandExists || !skuIsUnique || !imageExists;
+
+  return {
+    hasRequiredFields: missingFields.length === 0,
+    missingFields,
+    brandExists,
+    skuIsUnique,
+    imageExists,
+    overall: needsReview ? 'needs_review' : 'ready'
+  };
+}
+
+function generateSKU(name: string, sourceId: string): string {
+  const prefix = name.slice(0, 3).toUpperCase().replace(/[^A-Z]/g, '');
+  const suffix = sourceId.slice(-4).toUpperCase();
+  return `${prefix}-${suffix}`;
+}
+
+// src/lib/brands.ts
+import { sanityClient } from './sanityClient';
+
+let brandCache: Map<string, string> | null = null;
+
+export async function loadBrands(): Promise<Map<string, string>> {
+  if (brandCache) return brandCache;
+
+  // Simple exact match only - no fuzzy matching (G-01 fix)
+  const brands = await sanityClient.fetch(`
+    *[_type == "brand"]{_id, name}
+  `);
+
+  brandCache = new Map<string, string>();
+  for (const b of brands) {
+    brandCache.set(b.name.toLowerCase(), b._id);
+  }
+  return brandCache;
+}
+
+export async function resolveBrand(
+  name: string,
+  brandCache: Map<string, string>
+): Promise<{id: string; isNew: boolean}> {
+  const match = brandCache.get(name.toLowerCase());
+  if (match) {
+    return { id: match, isNew: false };
+  }
+  return { id: '', isNew: true };
+}
+```
+
+---
+
+## Phase 5: Review Stage (Day 4-5)
+
+### Review Engine
+
+```typescript
+import { loadBatch } from '../src/lib/loadBatch';
+import { reviewBatch } from '../src/validate/reviewBatch';
+
+async function main() {
+  const batchId = process.argv[2];
+  const batch = await loadBatch(batchId, 'scraped');
+
+  await reviewBatch(batch);
+  console.log('\nReview complete. Decisions saved.');
+
+  process.exit(0);
+}
+
+main();
+```
+
+---
+
+## Phase 6: Upload Stage (Day 5-6)
+
+### Sanity Upload
+
+```typescript
+// src/upload/executeUpload.ts
+import { createClient } from '@sanity/client';
+import { ScrapedBatch, ScrapedProduct } from '../lib/types';
+import * as fs from 'fs/promises';
+import * as path from 'path';
+
+const sanityClient = createClient({
+  projectId: process.env.SANITY_PROJECT_ID!,
+  dataset: process.env.SANITY_DATASET || 'production',
+  token: process.env.SANITY_API_TOKEN!,
+  apiVersion: '2024-01-01',
+  useCdn: false
+});
+
+export async function uploadBatch(
+  batch: ScrapedBatch,
+  dryRun: boolean = false
+): Promise<void> {
+  const approved = batch.products.filter(p => p.decision === 'approve');
+
+  console.log(`\nUploading batch: ${batch.batchId}`);
+  console.log(`Approved products: ${approved.length}`);
+
+  if (dryRun) {
+    console.log('DRY RUN - no changes will be made');
+    for (const product of approved) {
+      console.log(`  Would create: ${product.transformed!.name}`);
+    }
+    return;
+  }
+
+  // Step 1: Create new brands
+  const newBrands = approved.filter(p => p.transformed!.brand.isNewBrand);
+  for (const product of newBrands) {
+    const brand = await sanityClient.create({
+      _type: 'brand',
+      name: product.transformed!.brand.sourceName,
+      slug: { current: slugify(product.transformed!.brand.sourceName) }
+    });
+    product.transformed!.brand.sanityBrandId = brand._id;
+    console.log(`Created brand: ${brand.name} (${brand._id})`);
+  }
+
+  // Step 2: Upload images
+  for (const product of approved) {
+    const imagePath = product.transformed!.image.localPath!;
+    const imageBuffer = await fs.readFile(imagePath);
+
+    const asset = await sanityClient.assets.upload('image', imageBuffer, {
+      filename: path.basename(imagePath)
+    });
+
+    product.transformed!.image.sanityAssetId = asset._id;
+    console.log(`Uploaded image: ${asset._id}`);
+  }
+
+  // Step 3: Create products
+  const created: Array<{sourceId: string; sanityId: string}> = [];
+
+  for (const product of approved) {
+    const t = product.transformed!;
+
+    const sanityProduct = {
+      _type: 'product',
+      name: t.name,
+      slug: { current: t.slug },
+      sku: t.sku,
+      displayPrice: t.displayPrice,
+      stripePriceId: 'PENDING_MANUAL_SETUP',
+      brand: { _type: 'reference', _ref: t.brand.sanityBrandId! },
+      catalogueLocationKeys: t.catalogueLocationKeys,
+      image: {
+        _type: 'image',
+        asset: { _type: 'reference', _ref: t.image.sanityAssetId! }
+      },
+      description: t.description,
+      specifications: t.specifications,
+      overviewFields: t.overviewFields
+    };
+
+    const createdProduct = await sanityClient.create(sanityProduct);
+    console.log(`Created product: ${createdProduct.name} (${createdProduct._id})`);
+
+    created.push({
+      sourceId: product._scrapedId,
+      sanityId: createdProduct._id
+    });
+  }
+
+  // Save upload report
+  await fs.writeFile(
+    `uploads/${batch.batchId}-upload.json`,
+    JSON.stringify({
+      batchId: batch.batchId,
+      uploadedAt: new Date().toISOString(),
+      productsCreated: created.length,
+      products: created,
+      nextSteps: [
+        `1. Create Stripe products for ${created.length} products`,
+        '2. Update stripePriceId in Sanity Studio',
+        '3. Run image pipeline for background removal'
+      ]
+    }, null, 2)
+  );
+}
+```
+
+### CLI: Upload
+
+```typescript
+// scripts/upload.ts
+import { loadBatch } from '../src/lib/loadBatch';
+import { uploadBatch } from '../src/upload/executeUpload';
+
+async function main() {
+  const batchId = process.argv[2];
+  const dryRun = process.argv.includes('--dry-run');
+
+  const batch = await loadBatch(batchId, 'validation');
+
+  await uploadBatch(batch, dryRun);
+
+  if (!dryRun) {
+    console.log('\nUpload complete!');
+    console.log('Next: Create Stripe products and update stripePriceId');
+  }
+}
+
+main();
+```
+
+---
+
+## Phase 7: Integration & Testing (Day 6-7)
+
+### End-to-End Test
+
+```bash
+# 1. Create plan
+npm run plan:create Sennheiser https://www.sennheiser.com open-back
+
+# 2. Approve plan
+npm run plan:approve sennheiser-open-back-2026-04-02
+
+# 3. Scrape
+npm run scrape sennheiser-open-back-2026-04-02
+
+# 4. Transform
+npm run transform sennheiser-open-back-2026-04-02-001
+
+# 5. Review (interactive)
+npm run review sennheiser-open-back-2026-04-02-001
+
+# 6. Upload dry run
+npm run upload sennheiser-open-back-2026-04-02-001 --dry-run
+
+# 7. Upload
+npm run upload sennheiser-open-back-2026-04-02-001
+```
+
+### Package.json Scripts
+
+```json
+{
+  "scripts": {
+    "plan:create": "ts-node scripts/plan-create.ts",
+    "plan:approve": "ts-node scripts/plan-approve.ts",
+    "scrape": "ts-node scripts/scrape.ts",
+    "transform": "ts-node scripts/transform.ts",
+    "review": "ts-node scripts/review.ts",
+    "upload": "ts-node scripts/upload.ts",
+    "test": "vitest"
+  }
+}
+```
+
+---
+
+## Success Criteria
+
+- [ ] Can create and approve a scrape plan
+- [ ] Can execute scrape (respecting rate limits)
+- [ ] Can transform raw data to Sanity schema
+- [ ] Integrity checks catch: missing fields, new brands, duplicate SKUs
+- [ ] Can review and approve/reject individual products
+- [ ] Can upload approved products to Sanity
+- [ ] Images are uploaded as Sanity assets
+- [ ] Products appear in Sanity Studio with correct catalogueLocationKeys
+- [ ] Upload reports guide next steps (Stripe setup)
+
+---
+
+## Post-Implementation
+
+After pipeline is working:
+1. Run pilot: 1 manufacturer, 10 products
+2. Fix any issues
+3. Scale to multiple sources
+4. Add automation (scheduled scrapes) if needed
+5. Build web UI if CLI becomes cumbersome
+
