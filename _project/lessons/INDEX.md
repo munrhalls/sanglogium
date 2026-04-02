@@ -873,6 +873,38 @@
 
 ---
 
+## Keyword: search-consistency
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| Search Consistency Pattern | High | Maintain identical field coverage across all search endpoints (autocomplete, full search, API) |
+
+---
+
+## Keyword: autocomplete
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| Search Consistency Pattern | High | Autocomplete must match full search field coverage for consistent user experience |
+
+---
+
+## Keyword: field-coverage
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| Search Consistency Pattern | High | All search endpoints must search same fields: name, brand, sku, specifications, overview |
+
+---
+
+## Keyword: api-parity
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| Search Consistency Pattern | High | Feature parity required between autocomplete and full search APIs |
+
+---
+
 ## Keyword: sequenced-changes
 
 | Lesson | Severity | Summary |
