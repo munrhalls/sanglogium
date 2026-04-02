@@ -1,0 +1,690 @@
+# PORTFOLIO DIAMOND SPRINT — REVISED
+## 5-Day Professional Sprint (Post-Audit) — Route-Group Isolated Portfolio
+
+**Sprint Date:** April 2, 2026  
+**Target State:** Production-ready developer portfolio at `/portfolio` route, diamond layout, accessible code typing animation  
+**Output:** Deployed portfolio, Lighthouse 90+ all categories  
+**Executor:** AI Agent (via /implement, /build, /test delegation)  
+**Audit Reference:** `_project/sprints/PORTFOLIO_DIAMOND_AUDIT_2026-04-02.md`
+
+---
+
+## 🚨 PRE-EXECUTION CHECKLIST (MANDATORY)
+
+**CRITICAL FIXES FROM AUDIT — Complete Before Day 1:**
+
+```bash
+# 1. VERIFY: Check Tailwind breakpoints
+grep -n "screens:" tailwind.config.ts
+# → Document output in sprint notes below
+
+# 2. INSTALL: Missing dependencies
+npm install framer-motion@^11.0.0 lucide-react
+
+# 3. VERIFY: Existing build passes
+npm run build
+# → Must pass before any work begins
+
+# 4. CREATE: Route group isolation
+mkdir -p app/(portfolio)/components/diamond
+mkdir -p app/(portfolio)/components/quadrants
+mkdir -p app/(portfolio)/components/sections
+mkdir -p data/portfolio
+mkdir -p tests/e2e/portfolio
+```
+
+**Tailwind Breakpoint Verification:**
+```
+# PASTE OUTPUT HERE BEFORE EXECUTION:
+# Example: screens: { "lg-desktop": {...}, "lg-touch": {...} }
+# → If custom found, use those prefixes in SC3/SC5
+```
+
+---
+
+## 📋 SPRINT METADATA
+
+### Scope Lock Rules (AUDIT-ENFORCED)
+
+| Rule | Enforcement |
+|------|-------------|
+| **NO** modifications to `(admin)`, `(store)`, `(studio)` | Route groups isolated — existing code protected |
+| **NO** modifications to `data/*` outside `data/portfolio/` | Existing VFS/catalogue data protected |
+| **NO** modifications to `app/components/*` (164 items) | Use `app/(portfolio)/components/` |
+| **NO** changes to `tailwind.config.ts` | Extend via `(portfolio)/globals.css` only |
+| **NO** modifications to build scripts | Work with existing prebuild pipeline |
+| **YES** all work in `app/(portfolio)/` | Route group isolation mandatory |
+| **YES** verify breakpoints before responsive work | Pre-step for SC3 (document above) |
+| **YES** install missing dependencies first | `framer-motion`, `lucide-react` |
+
+### Pre-Flight Lessons Applied
+
+**CRITICAL:** `tailwind-breakpoint-shadowing` — Before SC3/SC5:
+```bash
+# Verify tailwind.config.ts breakpoints
+grep -A 10 "screens:" tailwind.config.ts
+# If custom lg-touch/lg-desktop exist, use those instead of lg:/md:
+```
+
+**CRITICAL:** Route group isolation (from audit G-PROJ-01)
+- All portfolio work in `app/(portfolio)/`
+- Existing `app/components/` (164 items) untouched
+- Existing `data/` (10 items) protected via `data/portfolio/` subfolder
+
+**HIGH:** `pre-flight-baseline-check` — Verify before Day 1:
+```bash
+npm run build
+# Must pass before any sprint work begins
+```
+
+---
+
+## 🗺️ SPATIAL ARCHITECTURE
+
+### Route Structure
+
+```
+app/
+├── (portfolio)/                    # NEW — Isolated route group
+│   ├── page.tsx                   # Portfolio at /portfolio
+│   ├── layout.tsx                 # Portfolio-specific layout
+│   ├── globals.css                # Portfolio design tokens
+│   └── components/
+│       ├── diamond/
+│       ├── quadrants/
+│       └── sections/
+│
+├── (admin)/                        # EXISTING — Untouched
+├── (store)/                        # EXISTING — Untouched
+└── (studio)/                       # EXISTING — Untouched
+```
+
+### Desktop (1280px+)
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                              [HEADER]                                │
+│                    Name / Title — Minimal, Clean                     │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│       ┌──────────────┐                    ┌──────────────┐           │
+│       │              │                    │              │           │
+│       │   SKILLS     │◄──── Diamond ────►│    ABOUT     │           │
+│       │   (Hover)    │      Center       │    (Hover)   │           │
+│       │              │    ┌────────┐     │              │           │
+│       └──────────────┘    │  ◆◆◆◆  │     └──────────────┘           │
+│                           │  CODE  │                                │
+│       ┌──────────────┐    │ TYPING │     ┌──────────────┐           │
+│       │              │    └────────┘     │              │           │
+│       │   JOURNEY    │◄──────────────────►│   CONTACT    │           │
+│       │   (Hover)    │                    │   (Hover)    │           │
+│       │              │                    │              │           │
+│       └──────────────┘                    └──────────────┘           │
+│                                                                     │
+│  ┌─────────────────────────────────────────────────────────────────┐│
+│  │              FLAGSHIP PROJECT SHOWCASE                          ││
+│  │     Sang-Logium stats, innovations, stack badges                ││
+│  └─────────────────────────────────────────────────────────────────┘│
+│                                                                     │
+├─────────────────────────────────────────────────────────────────────┤
+│                              [FOOTER]                                │
+│              GitHub • LinkedIn • Email • Download CV                 │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+### Tablet (768px)
+
+```
+┌─────────────────────────────────────────┐
+│              [HEADER]                    │
+├─────────────────────────────────────────┤
+│                                         │
+│           ┌────────────┐                │
+│           │    ◆◆◆◆    │                │
+│           │   CODE     │                │
+│           │  TYPING    │                │
+│           └────────────┘                │
+│                                         │
+│     ┌──────────┐      ┌──────────┐      │
+│     │  SKILLS  │      │  ABOUT   │      │
+│     └──────────┘      └──────────┘      │
+│                                         │
+│     ┌──────────┐      ┌──────────┐      │
+│     │  JOURNEY │      │ CONTACT  │      │
+│     └──────────┘      └──────────┘      │
+│                                         │
+│  ┌─────────────────────────────────────┐│
+│  │     FLAGSHIP PROJECT SHOWCASE       ││
+│  └─────────────────────────────────────┘│
+│                                         │
+├─────────────────────────────────────────┤
+│              [FOOTER]                    │
+└─────────────────────────────────────────┘
+```
+
+### Mobile (375px)
+
+```
+┌─────────────────────┐
+│      [HEADER]       │
+├─────────────────────┤
+│                     │
+│  ┌──────────────┐   │
+│  │     ◆◆◆◆     │   │
+│  │    CODE      │   │
+│  │   TYPING     │   │
+│  └──────────────┘   │
+│                     │
+│  ┌──────────────┐   │
+│  │    SKILLS    │   │
+│  └──────────────┘   │
+│                     │
+│  ┌──────────────┐   │
+│  │    ABOUT     │   │
+│  └──────────────┘   │
+│                     │
+│  ┌──────────────┐   │
+│  │    JOURNEY   │   │
+│  └──────────────┘   │
+│                     │
+│  ┌──────────────┐   │
+│  │   CONTACT    │   │
+│  └──────────────┘   │
+│                     │
+│  ┌──────────────┐   │
+│  │   FLAGSHIP   │   │
+│  └──────────────┘   │
+│                     │
+├─────────────────────┤
+│      [FOOTER]       │
+└─────────────────────┘
+```
+
+---
+
+## 📦 SCOPE CONTRACTS (6 Total — REVISED FOR AUDIT FIXES)
+
+### SC1: Portfolio Route Setup — REVISED
+
+**Gap Coverage:** G-PROJ-01 (Greenfield → Route Group Isolation)
+
+**Target State:**
+```
+app/
+├── (portfolio)/                    # NEW route group
+│   ├── components/                 # Empty structure
+│   ├── globals.css                # Portfolio design tokens
+│   ├── layout.tsx                 # Portfolio layout
+│   └── page.tsx                   # Placeholder
+├── (admin)/                        # EXISTING — unchanged
+├── (store)/                        # EXISTING — unchanged
+└── (studio)/                       # EXISTING — unchanged
+```
+
+**DoD (Sequenced):**
+- [ ] **PRE-STEP:** Install missing dependencies
+  ```bash
+  npm install framer-motion@^11.0.0 lucide-react
+  ```
+
+- [ ] Pass 1: Create `(portfolio)/` route group structure
+  - [ ] `mkdir -p app/(portfolio)/components/{diamond,quadrants,sections}`
+  - [ ] `app/(portfolio)/page.tsx` — placeholder component
+  - [ ] `app/(portfolio)/layout.tsx` — portfolio layout with fonts
+
+- [ ] Pass 2: Portfolio-specific Tailwind extension
+  - [ ] `(portfolio)/globals.css` with CSS variables
+  - [ ] Background: `--portfolio-bg: #121212`
+  - [ ] Accent: `--portfolio-gold: #C9A962`
+  - [ ] Diamond: `--diamond-glow: 0 0 20px rgba(201, 169, 98, 0.3)`
+
+- [ ] Pass 3 — Layer 2: Font configuration
+  - [ ] Add `JetBrains Mono` to layout (Inter already available)
+  - [ ] `font-display: swap` for performance
+
+- [ ] Pass 3 — Layer 4: Verification
+  - [ ] `npm run build` passes (works with existing prebuild)
+  - [ ] Route accessible at `/portfolio`
+
+**Delegation:**
+```
+/implement "Create app/(portfolio)/ route group with layout.tsx and page.tsx. Install framer-motion@^11.0.0 and lucide-react dependencies. Create (portfolio)/globals.css with portfolio-specific CSS variables (dark luxury palette: #121212 background, #C9A962 gold accent). Add JetBrains Mono font. Verify build passes and route /portfolio is accessible."
+```
+
+**Verification:**
+```bash
+npm run build
+curl http://localhost:3000/portfolio
+# Must return 200 OK
+```
+
+---
+
+### SC2: Portfolio Data — REVISED
+
+**Gap Coverage:** G-PROJ-02 (data/ isolation)
+
+**Target State:**
+```
+data/
+├── portfolio/                      # NEW subfolder
+│   └── portfolio.json             # Isolated from existing data
+└── catalogue/                      # EXISTING — untouched
+
+lib/
+├── portfolio/                      # NEW isolated lib folder
+│   ├── data.ts                    # Import + types
+│   └── validation.ts              # Zod schema
+└── [existing files]                # EXISTING — untouched
+```
+
+**DoD (Sequenced):**
+- [ ] Pass 1: Data structure in isolated subfolder
+  - [ ] `data/portfolio/portfolio.json` with all sections
+  - [ ] `meta` object (name, title, description, location, email, github, linkedin)
+  - [ ] `flagship` object (project, duration, stats, innovations, stack)
+  - [ ] `skills` array (categories with items)
+  - [ ] `journey` array (milestones)
+
+- [ ] Pass 2: Runtime validation
+  - [ ] `lib/portfolio/validation.ts` with Zod schemas
+  - [ ] `lib/portfolio/data.ts` importing and validating JSON
+  - [ ] Runtime error if validation fails
+
+- [ ] Pass 3 — Layer 2: TypeScript integration
+  - [ ] Exported types from `lib/portfolio/data.ts`
+  - [ ] Type inference from Zod schema
+
+- [ ] Pass 3 — Layer 4: Verification
+  - [ ] `npm run build` passes
+  - [ ] Data accessible in portfolio page
+
+**Delegation:**
+```
+/implement "Create data/portfolio/portfolio.json with complete portfolio content. Create lib/portfolio/validation.ts with Zod schema for runtime validation. Create lib/portfolio/data.ts that imports JSON and validates with Zod. Export TypeScript types. Verify data is accessible from portfolio page."
+```
+
+**Verification:**
+```bash
+npm run build
+tsc --noEmit
+```
+
+---
+
+### SC3: Diamond Layout — REVISED (Config-Aware)
+
+**Gap Coverage:** G-PROJ-03 (Component isolation), G-DS-01 (Design system extension)
+
+**Target State:**
+```
+app/(portfolio)/components/diamond/
+├── DiamondContainer.tsx            # "use client" — Main wrapper
+├── AccessibleDiamond.tsx           # aria-hidden + parallel nav
+└── DiamondShape.tsx                 # Clip-path implementation
+```
+
+**CRITICAL PRE-STEP:**
+```bash
+# MUST VERIFY BEFORE IMPLEMENTATION:
+grep -n "screens:" tailwind.config.ts
+# → If custom breakpoints found (e.g., lg-touch, lg-desktop):
+#    USE THOSE PREFIXES instead of lg:/md:
+# → If NO custom breakpoints:
+#    Use standard lg:/md: prefixes
+```
+
+**DoD (Sequenced):**
+- [ ] **PRE-STEP:** Document existing Tailwind breakpoints in sprint notes
+
+- [ ] Pass 1: HTML skeleton
+  - [ ] `DiamondContainer.tsx` with semantic structure
+  - [ ] `data-testid` attributes for E2E testing
+  - [ ] Placeholder quadrants
+
+- [ ] Pass 2: Clip-path implementation (CONFIG-AWARE)
+  - [ ] `DiamondShape.tsx` with CSS clip-path polygon
+  - [ ] Responsive using **verified** breakpoints
+  - [ ] Desktop: diamond + positioned quadrants
+  - [ ] Tablet: center diamond + 2×2 grid
+  - [ ] Mobile: stacked cards
+
+- [ ] Pass 3 — Layer 2 (Structure): Accessible parallel navigation
+  - [ ] `aria-hidden="true"` on visual diamond
+  - [ ] `nav` with `sr-only` class containing section links
+  - [ ] Semantic HTML: `ul > li > a` structure
+
+- [ ] Pass 3 — Layer 3 (Surface): Visual styling
+  - [ ] Diamond border with `--diamond-glow` box-shadow
+  - [ ] Dark background `#121212`
+
+- [ ] Pass 3 — Layer 4 (Interaction): RWD verification
+  - [ ] Desktop (1280px): Verified in DevTools
+  - [ ] Tablet (768px): Verified in DevTools
+  - [ ] Mobile (375px): Verified in DevTools
+
+**Delegation:**
+```
+/implement "Create diamond layout components in app/(portfolio)/components/diamond/. DiamondContainer.tsx (use client), AccessibleDiamond.tsx with aria-hidden visual + parallel sr-only navigation. DiamondShape.tsx with clip-path polygon. CRITICAL: Use verified breakpoint prefixes from tailwind.config.ts (check if custom breakpoints exist). Implement responsive: desktop diamond with positioned quadrants, tablet 2x2 grid, mobile stacked. Test all 3 breakpoints in DevTools."
+```
+
+**Verification:**
+```bash
+npm run build
+npx playwright test tests/e2e/portfolio/layout.spec.ts
+```
+
+---
+
+### SC4: Code Typing Animation — UNCHANGED (✓ Audit Passed)
+
+**Gap Coverage:** N/A
+
+**Target State:**
+```
+app/(portfolio)/components/diamond/
+└── ScreenSafeTyping.tsx             # aria-hidden + sr-only pattern
+app/(portfolio)/globals.css
+└── .typing-animation                 # CSS keyframes
+```
+
+**DoD (Sequenced):**
+- [ ] Pass 1: CSS animation skeleton
+  - [ ] `@keyframes typing` with `steps(40)`
+  - [ ] `.typing-animation` class with `width: 0 → 100%`
+  - [ ] `overflow: hidden`, `white-space: nowrap`
+
+- [ ] Pass 2: Screen-safe implementation
+  - [ ] `ScreenSafeTyping.tsx` with `aria-hidden="true"` wrapper
+  - [ ] Parallel `sr-only` `pre > code` with complete code
+  - [ ] Reduced motion: `animation: none` when `prefers-reduced-motion`
+
+- [ ] Pass 3 — Layer 2 (Structure): Integration
+  - [ ] Component integrated into `DiamondShape`
+  - [ ] `useReducedMotion()` hook for conditional rendering
+  - [ ] Static version shown when reduced motion preferred
+
+- [ ] Pass 3 — Layer 3 (Surface): Visual polish
+  - [ ] JetBrains Mono font applied
+  - [ ] Color: `--text-secondary` (#E0E0E0)
+  - [ ] Background: `--bg-surface-1` (#1A1A1A)
+
+- [ ] Pass 3 — Layer 4 (Interaction): Accessibility verification
+  - [ ] Screen reader test: hears complete code once (not progressive)
+  - [ ] Reduced motion test: static display when enabled
+  - [ ] Animation completes in 3s
+
+**Delegation:**
+```
+/implement "Create ScreenSafeTyping.tsx in app/(portfolio)/components/diamond/ with CSS steps() typing animation. CRITICAL: Use aria-hidden on visual animation + sr-only parallel content for screen readers. Implement useReducedMotion() check for static fallback. Add CSS keyframes to (portfolio)/globals.css. Test: Enable VoiceOver, verify complete code announced once (not 'c... co... con...')."
+```
+
+**Verification:**
+```bash
+npm run build
+npx playwright test --grep "typing"
+# Manual: VoiceOver/NVDA test for screen reader behavior
+```
+
+---
+
+### SC5: Quadrant System — REVISED (Config-Aware)
+
+**Gap Coverage:** G-PROJ-03 (Component isolation)
+
+**Target State:**
+```
+app/(portfolio)/components/quadrants/
+├── QuadrantGrid.tsx                 # Layout wrapper
+├── QuadrantCard.tsx                 # Reusable card
+├── SkillsQuadrant.tsx               # Content + hover
+├── AboutQuadrant.tsx                # Content + hover
+├── JourneyQuadrant.tsx              # Content + hover
+└── ContactQuadrant.tsx              # Content + hover
+```
+
+**DoD (Sequenced):**
+- [ ] Pass 1: Skeleton components
+  - [ ] `QuadrantGrid.tsx` responsive grid wrapper (CONFIG-AWARE breakpoints)
+  - [ ] `QuadrantCard.tsx` with `data-testid`
+  - [ ] 4 quadrant content components (placeholders)
+
+- [ ] Pass 2: Content integration
+  - [ ] All quadrants consume data from `lib/portfolio/data.ts`
+  - [ ] Skills: Category list with level badges
+  - [ ] About: Bio + photo placeholder
+  - [ ] Journey: Timeline component
+  - [ ] Contact: Links + email
+
+- [ ] Pass 3 — Layer 2 (Structure): Motion hover states
+  - [ ] `whileHover={{ scale: 1.02 }}` on cards
+  - [ ] Glow effect with box-shadow transition
+  - [ ] Accessible focus states for keyboard navigation
+
+- [ ] Pass 3 — Layer 3 (Surface): Visual polish
+  - [ ] Card backgrounds `--bg-surface-1`
+  - [ ] Borders with `--diamond-glow` on hover
+  - [ ] Typography hierarchy
+
+- [ ] Pass 3 — Layer 4 (Interaction): Full verification
+  - [ ] All 4 quadrants hoverable
+  - [ ] Click navigates to section anchor
+  - [ ] Keyboard accessible (Tab navigation)
+  - [ ] Mobile tap targets ≥ 44×44px
+
+**Delegation:**
+```
+/implement "Create quadrant system in app/(portfolio)/components/quadrants/. QuadrantGrid.tsx for responsive layout (use verified breakpoint prefixes), QuadrantCard.tsx with Motion hover animations (scale + glow). 4 content quadrants consuming data from lib/portfolio/data.ts: Skills (with badges), About (bio), Journey (timeline), Contact (links). Implement keyboard navigation and focus states. Verify mobile tap targets ≥44px."
+```
+
+**Verification:**
+```bash
+npm run build
+npx playwright test tests/e2e/portfolio/layout.spec.ts
+```
+
+---
+
+### SC6: Testing & Deploy — REVISED (Realistic Targets)
+
+**Gap Coverage:** N/A
+
+**Target State:**
+```
+app/(portfolio)/components/sections/
+├── FlagshipSection.tsx              # Sang-Logium showcase
+└── FooterSection.tsx                # Links + CV
+app/(portfolio)/page.tsx               # Final assembly
+tests/
+└── e2e/portfolio/
+    ├── layout.spec.ts               # Responsive breakpoints
+    ├── accessibility.spec.ts        # Axe + screen reader
+    └── performance.spec.ts          # Lighthouse thresholds
+dist/                                  # Static export
+```
+
+**DoD (Sequenced):**
+- [ ] Pass 1: Flagship section skeleton
+  - [ ] `FlagshipSection.tsx` component
+  - [ ] Stats display (products, components, tests, months)
+  - [ ] Innovation list
+  - [ ] Stack badges
+
+- [ ] Pass 2: Footer + final assembly
+  - [ ] `FooterSection.tsx` with social links
+  - [ ] `page.tsx` assembling all sections
+  - [ ] Section anchors (`#skills`, `#about`, etc.)
+
+- [ ] Pass 3 — Layer 2 (Structure): E2E test suite (MINIMAL HIGH-IMPACT)
+  - [ ] `tests/e2e/portfolio/layout.spec.ts` — responsive breakpoints
+  - [ ] `tests/e2e/portfolio/accessibility.spec.ts` — axe-core + sr-only assertions
+  - [ ] `tests/e2e/portfolio/performance.spec.ts` — Lighthouse thresholds
+
+- [ ] Pass 3 — Layer 3 (Surface): Performance optimization
+  - [ ] Font `font-display: swap` verified
+  - [ ] CSS purged (Tailwind does this automatically)
+
+- [ ] Pass 3 — Layer 4 (Interaction): Deploy
+  - [ ] Static build with existing export config
+  - [ ] Deploy to Netlify/Vercel
+
+- [ ] Pass 3 — Verification Gates (REALISTIC TARGETS):
+  - [ ] **Lighthouse:** Performance 85+, Accessibility 95+, Best Practices 95+, SEO 90+
+  - [ ] **Screen Reader:** Manual test with NVDA or VoiceOver
+  - [ ] **Cross-browser:** Chrome, Firefox, Safari
+
+**Delegation:**
+```
+/implement "Create FlagshipSection.tsx and FooterSection.tsx in app/(portfolio)/components/sections/. Assemble final page.tsx with all sections. Write 3 E2E test files: layout.spec.ts (responsive), accessibility.spec.ts (axe-core + sr-only assertions), performance.spec.ts (Lighthouse 85+ Performance, 95+ Accessibility). Configure deploy."
+```
+
+**Verification:**
+```bash
+npm run build
+npx playwright test tests/e2e/portfolio/
+npx lighthouse http://localhost:3000/portfolio --preset=desktop
+```
+
+---
+
+## ⚠️ REGRESSION CONTAINMENT (AUDIT-UPDATED)
+
+### Files at Risk
+
+| File | Risk | Mitigation |
+|------|------|------------|
+| `app/(store)/*` | Route pollution | Keep all work in `(portfolio)/` |
+| `app/(admin)/*` | Route pollution | Keep all work in `(portfolio)/` |
+| `data/catalogue/*` | Data corruption | Use `data/portfolio/` subfolder |
+| `tailwind.config.ts` | Design system drift | Extend via CSS only, no config changes |
+| `package.json` | Dependency conflicts | Add only, never remove |
+
+### Pre-Sprint Baseline
+
+```bash
+# EXECUTE BEFORE DAY 1:
+git checkout -b portfolio-sprint-2026-04-02
+npm install framer-motion@^11.0.0 lucide-react
+npm run build
+# CAPTURE BASELINE — must pass
+```
+
+### Regression Test Suite
+
+```typescript
+// tests/e2e/portfolio/regression.spec.ts
+test.describe('Portfolio Regression', () => {
+  test('build passes', async () => {
+    const build = spawn('npm', ['run', 'build']);
+    await expect(build).toExit(0);
+  });
+  
+  test('route accessible', async ({ page }) => {
+    const response = await page.goto('/portfolio');
+    expect(response?.status()).toBe(200);
+  });
+  
+  test('existing routes untouched', async ({ page }) => {
+    // Verify /store still works
+    const response = await page.goto('/store');
+    expect(response?.status()).toBe(200);
+  });
+});
+```
+
+---
+
+## 🎯 DELEGATION COMMANDS (REVISED)
+
+### Execution Sequence
+
+```
+PRE-SPRINT:
+├── Run: grep -n "screens:" tailwind.config.ts
+├── Run: npm install framer-motion@^11.0.0 lucide-react
+├── Run: mkdir -p app/(portfolio)/components/{diamond,quadrants,sections}
+├── Run: mkdir -p data/portfolio
+└── Run: mkdir -p tests/e2e/portfolio
+
+DAY 1: /implement SC1 (Route Setup)
+  ├─ /build: Pass 1 → Pass 2 → Pass 3 Layers
+  └─ /test after each DoD
+
+DAY 2: /implement SC2 (Data)
+  ├─ /build: Pass 1 → Pass 2 → Pass 3
+  └─ /test after each DoD
+
+DAY 3: /implement SC3 (Diamond Layout)
+  ├─ Pre-step: Document breakpoints
+  ├─ /build: Pass 1 → Pass 2 → Pass 3 Layers
+  └─ /test after each DoD
+
+DAY 4: /implement SC4 + SC5 (Animation + Quadrants)
+  ├─ /build SC4: Pass 1 → Pass 2 → Pass 3 Layers
+  ├─ /test SC4
+  ├─ /build SC5: Pass 1 → Pass 2 → Pass 3 Layers
+  └─ /test SC5
+
+DAY 5: /implement SC6 (Testing & Deploy)
+  ├─ /build: Pass 1 → Pass 2 → Pass 3 Layers
+  ├─ /test
+  ├─ Manual verification (screen reader)
+  └─ Deploy
+
+DAY 6 (BUFFER): /implement Unknown Unknowns
+  ├─ Safari fixes
+  ├─ Animation tuning
+  └─ Final polish
+```
+
+---
+
+## 📊 EVIDENCE LOG (Fill During Sprint)
+
+| SC | DoD | Status | Evidence |
+|----|-----|--------|----------|
+| PRE | Breakpoints verified | ⬜ | Screenshot of grep output |
+| PRE | Dependencies installed | ⬜ | package.json diff |
+| PRE | Folders created | ⬜ | ls output |
+| SC1 | Pass 1 | ⬜ | |
+| SC1 | Pass 2 | ⬜ | |
+| SC1 | Pass 3 | ⬜ | |
+| ... | ... | ... | |
+
+### Final Verification
+
+- [ ] All 6 Scope Contracts complete
+- [ ] Lighthouse 85+ Performance, 95+ Accessibility
+- [ ] Screen reader manual test passed
+- [ ] Cross-browser verified
+- [ ] Route isolation verified (/portfolio works, /store untouched)
+- [ ] /learn executed for sprint retrospective
+
+---
+
+## 🏁 SPRINT LOCK CRITERIA
+
+**Sprint is LOCKED when:**
+1. ✅ All specification tests pass (100%)
+2. ✅ All critical regressions contained (baseline = current)
+3. ✅ Build gate passed (`npm run build` succeeds)
+4. ✅ Lighthouse scores: Performance 85+, Accessibility 95+, Best Practices 95+, SEO 90+
+5. ✅ Manual accessibility verification complete
+6. ✅ Route isolation verified (existing routes untouched)
+
+**DO NOT MODIFY SPRINT after lock.**
+
+---
+
+## 📝 POST-SPRINT /LEARN TRIGGER
+
+After sprint lock, execute:
+```
+/learn "Extract lessons from portfolio sprint: route group isolation effectiveness, Tailwind breakpoint verification, dependency management, timing accuracy against reality"
+```
+
+---
+
+**END OF REVISED SPRINT DOCUMENT**
+
+*This sprint addresses all 4 critical audit findings: (1) route group isolation in app/(portfolio)/, (2) dependency installation pre-step, (3) Tailwind breakpoint verification, (4) data/portfolio/ subfolder isolation. Ready for AI execution.*

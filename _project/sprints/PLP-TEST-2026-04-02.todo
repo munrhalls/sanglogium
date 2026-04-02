@@ -1,0 +1,219 @@
+# Sprint: PLP-TEST-2026-04-02 — Products Page Test Suite Implementation
+
+## Sprint Metadata
+- **Date:** 2026-04-02
+- **Type:** Testing Infrastructure
+- **Duration:** 60-75 minutes
+- **Status:** READY FOR EXECUTION
+
+## Scope Lock Rules
+- NO modifications to globals.css
+- NO modifications to existing component logic
+- NO changes to VFS data layer (67 existing tests untouched)
+- NO homepage or other page tests
+- NO visual regression tests
+
+---
+
+## Phase 1: Foundation (SC1) — IN PROGRESS
+
+### SC1: Test Utilities Foundation — G-01 Coverage
+**File:** `tests/utils/products-page-helpers.ts`
+
+#### Pass 1: Skeleton [ ]
+- [ ] Create file at tests/utils/products-page-helpers.ts
+- [ ] Add imports: Page from '@playwright/test'
+- [ ] Define PLP_SELECTORS object structure
+
+#### Pass 2: Implementation [ ]
+- [ ] Add data-testid selectors:
+  - productGrid: '[data-testid="product-grid"]'
+  - productCard: '[data-testid="product-card"]'
+  - emptyProducts: '[data-testid="empty-products"]'
+  - filterSidebar: '[data-testid="filter-sidebar"]'
+  - sortDropdown: '[data-testid="sort-dropdown"]'
+  - mobileFilterButton: 'button:has-text("Filters")'
+  - mobileFilterDrawer: '[data-testid="mobile-filter-drawer"]'
+- [ ] Add navigateToCategory(page, slug) function
+- [ ] Add getProductCount(page) function
+- [ ] Add TEST_CATEGORIES constant:
+  - openBack: 'headphones/open-back'
+  - closedBack: 'headphones/closed-back'
+  - invalid: 'non-existent-12345'
+- [ ] Add viewports constant:
+  - desktop: { width: 1280, height: 720 }
+  - mobile: { width: 375, height: 844 }
+
+#### Pass 3: Verification [ ]
+- [ ] TypeScript compiles without errors
+- [ ] All exports are defined
+
+**Build Gate:** `npx tsc --noEmit tests/utils/products-page-helpers.ts`
+
+---
+
+## Phase 2: Integration (SC2) — PENDING
+
+### SC2: Integration Tests — G-02 Coverage
+**Directory:** `tests/integration/products/`
+
+#### Test File 1: ProductGrid.integration.test.tsx
+
+**Pass 1: Skeleton [ ]**
+- [ ] Create file with imports (React, render/screen from testing-library, vitest, ProductGrid)
+- [ ] Add describe block: 'ProductGrid Component'
+
+**Pass 2: Tests [ ]**
+- [ ] Test: 'renders products with correct data'
+  - Mock 2 products with _id, name, displayPrice, brand, image, slug
+  - Assert: product-grid visible
+  - Assert: 2 product-card elements
+  - Assert: product names rendered
+  - Assert: prices formatted with $
+- [ ] Test: 'shows empty state when no products'
+  - Pass empty array
+  - Assert: empty-products visible
+  - Assert: 'No products found' text present
+
+**Build Gate:** `npx vitest run tests/integration/products/ProductGrid.integration.test.tsx`
+
+#### Test File 2: CategoryPageClient.integration.test.tsx
+
+**Pass 1: Skeleton [ ]**
+- [ ] Create file with imports (vitest, testing-library, CategoryPageClient)
+- [ ] Add describe block: 'CategoryPageClient'
+
+**Pass 2: Tests [ ]**
+- [ ] Test: 'displays correct product count with pluralization'
+  - Mock 42 products
+  - Assert: '42 products' visible (plural)
+  - Mock 1 product
+  - Assert: '1 product' visible (singular)
+
+**Build Gate:** `npx vitest run tests/integration/products/`
+
+---
+
+## Phase 3: E2E (SC3) — PENDING
+
+### SC3: E2E Critical Flows — G-03 Coverage
+**File:** `tests/e2e/products-page/critical-flows.spec.ts`
+
+#### Pass 1: Skeleton [ ]
+- [ ] Create file with imports (test, expect from '@playwright/test')
+- [ ] Import helpers from '../utils/products-page-helpers'
+- [ ] Add test.describe('Products Page Critical Flows')
+- [ ] Add beforeEach for console error capture
+
+#### Pass 2: Tests [ ]
+
+**E2E-01: Category page loads and displays products [ ]**
+- [ ] Navigate to /products/headphones/open-back
+- [ ] Assert: product-grid visible
+- [ ] Assert: h1 contains 'Open-Back'
+- [ ] Assert: at least 1 product-card visible
+
+**E2E-02: Invalid category slug shows 404 [ ]**
+- [ ] Navigate to /products/non-existent-12345
+- [ ] Assert: 404 text or 'Not Found' visible
+
+**E2E-03: Empty category shows "no products" message [ ]**
+- [ ] Navigate to empty category (find or mock)
+- [ ] Assert: empty-products visible
+- [ ] Assert: 'no products found' text present
+
+**E2E-04: Mobile filter drawer opens and closes [ ]**
+- [ ] Set viewport: 375×844
+- [ ] Navigate to category
+- [ ] Click Filters button
+- [ ] Assert: mobile-filter-drawer visible
+- [ ] Click Done button
+- [ ] Assert: mobile-filter-drawer not visible
+
+**E2E-05: Sort selection updates URL and results [ ]**
+- [ ] Navigate to category
+- [ ] Get initial first product name
+- [ ] Select 'Price: High to Low' from sort dropdown
+- [ ] Assert: URL contains 'sort=displayPrice:desc'
+- [ ] Assert: product-grid still visible (re-rendered)
+
+**E2E-06: Loading skeleton visible during data fetch [ ]**
+- [ ] Navigate to category with slow 3G throttling (if possible)
+- [ ] OR verify skeleton structure exists in loading.tsx
+- [ ] Assert: skeleton structure renders before products
+
+#### Pass 3: RWD Layer 2 (Desktop) [ ]
+- [ ] Run all tests at 1280×720
+- [ ] All 6 tests pass
+
+#### Pass 3: RWD Layer 2 (Mobile) [ ]
+- [ ] Run E2E-04 at 375×844
+- [ ] Test passes
+
+#### Pass 3: Layer 3 (Surface) [ ]
+- [ ] Screenshot capture for manual review (optional)
+
+#### Pass 3: Layer 4 (Interaction) [ ]
+- [ ] CI execution time < 90 seconds for all 6 tests
+
+**Build Gate:** `npx playwright test tests/e2e/products-page/critical-flows.spec.ts --reporter=list`
+
+---
+
+## Phase 4: Lock — PENDING
+
+### Final Verification [ ]
+- [ ] 67 VFS baseline tests still passing
+- [ ] 3 integration tests passing
+- [ ] 6 E2E tests passing
+- [ ] npm run build succeeds
+- [ ] Total new test execution < 90s
+
+### Evidence Log [ ]
+- [ ] Baseline VFS test result captured
+- [ ] SC1 TypeScript check result captured
+- [ ] SC2 integration test result captured
+- [ ] SC3 E2E test result captured
+- [ ] Final build result captured
+
+---
+
+## Delegation Commands
+
+```bash
+# Execute SC1
+/implement "Create tests/utils/products-page-helpers.ts with PLP_SELECTORS including product-grid, product-card, empty-products, filter-sidebar, sort-dropdown, mobile-filter-drawer, plus navigateToCategory function, TEST_CATEGORIES constant with openBack, closedBack, invalid, and viewports for desktop and mobile"
+
+# Execute SC2 - Part 1
+/implement "Create tests/integration/products/ProductGrid.integration.test.tsx with two tests: renders products with correct data (mock 2 products, verify grid and cards visible), and shows empty state when no products (verify empty-products testid and no products found message)"
+
+# Execute SC2 - Part 2
+/implement "Create tests/integration/products/CategoryPageClient.integration.test.tsx with one test: displays correct product count with pluralization (test 42 products vs 1 product text)"
+
+# Execute SC3
+/implement "Create tests/e2e/products-page/critical-flows.spec.ts with 6 Playwright tests: (1) category loads products and shows grid, (2) invalid slug shows 404, (3) empty category shows no products message, (4) mobile filter drawer opens and closes at 375px, (5) sort updates URL to include sort param, (6) loading skeleton visible during data fetch. Import helpers from products-page-helpers."
+
+# Verify each phase
+/test --file tests/utils/products-page-helpers.ts
+test --suite integration/products
+test --suite e2e/products-page
+
+# Final verification
+test --suite all
+```
+
+---
+
+## Blockers / Dependencies
+
+- [ ] None identified — test IDs already present in components
+- [ ] Requires: Vitest configured (✅ confirmed)
+- [ ] Requires: Playwright configured (✅ confirmed)
+
+---
+
+## Notes
+
+- **Critical Finding:** Re-verification discovered all data-testid attributes already present in components — no component modifications required
+- **Time Savings:** ~15 minutes saved (no test ID additions needed)
+- **Baseline:** 67 VFS tests must remain passing throughout sprint
