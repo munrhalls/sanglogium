@@ -74,12 +74,8 @@ const getFiltersForCategoryPathFn = async (catalogueKeys: string[]): Promise<Fil
     params: { keys: catalogueKeys }
   });
 
-  // Query products to extract unique filter values (original groq restored)
-  const products = await sanityFetch<{
-    displayPrice: number | null;
-    brand: string | null;
-    stock: number | null;
-  }[]>({
+  // Query products to extract unique filter values
+  const products = await sanityFetch<any[]>({
     query: groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0] {
       displayPrice,
       brand,
