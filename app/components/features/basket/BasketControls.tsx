@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import { useBasketStore } from "@/store/store";
-import { X, ShoppingCart } from "@phosphor-icons/react";
-import { BasketItem } from "../basket/basket.types";
+import { X } from "@phosphor-icons/react";
+import { BasketItem } from "@/app/(store)/basket/basket.types";
 
 const BasketControls = function BasketControls({
   product,
@@ -13,44 +13,10 @@ const BasketControls = function BasketControls({
   const item = useBasketStore((s) =>
     s.basket.find((i) => i._id === product._id)
   );
-  const addItem = useBasketStore((s) => s.addItem);
   const updateQuantity = useBasketStore((s) => s.updateQuantity);
   const removeItem = useBasketStore((s) => s.removeItem);
-  if (!item) {
-    const basketItem = {
-      _id: product._id,
-      stock: product.stock,
-      name: product.name,
-      displayPrice: product.displayPrice,
-      quantity: 1,
-    };
-    return (
-      <div
-        className="flex flex-col items-center justify-start"
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-        }}
-      >
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            addItem(basketItem);
-          }}
-          aria-label="Add to Cart"
-          className="mt-2 flex h-10 w-10 flex-col items-center justify-center rounded-lg bg-black text-black transition-colors hover:bg-gray-800"
-        >
-          <span
-            className="p-1"
-            style={{ display: "inline-flex", lineHeight: 0 }}
-          >
-            <ShoppingCart className="text-white" size={24} />
-          </span>
-        </button>
-      </div>
-    );
-  }
+
+  if (!item) return null;
   const canIncrement = item.quantity < product.stock;
   const handleDecrement = (_e: React.MouseEvent) => {
     if (item.quantity === 1) {
@@ -68,12 +34,7 @@ const BasketControls = function BasketControls({
     }
   };
   return (
-    <div
-      onClick={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-      }}
-    >
+    <div>
       <div className="text-lg font-bold">Purchase quantity:</div>
       <div className="flex items-center gap-x-2">
         <button
@@ -102,9 +63,6 @@ const BasketControls = function BasketControls({
       </div>
     </div>
   );
-};
-(prevProps, nextProps) => {
-  return prevProps.product._id === nextProps.product._id;
 };
 
 export default BasketControls;

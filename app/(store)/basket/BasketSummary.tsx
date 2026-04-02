@@ -1,17 +1,16 @@
 "use client";
 import React from "react";
-import { useBasketStore } from "@/store/store";
+import { useBasketStore, selectBasketTotal, selectBasketCount, selectIsCheckoutEnabled } from "@/store/store";
 import { ArrowLeft } from "@phosphor-icons/react";
 import Link from "next/link";
 
 export default function BasketSummary() {
-  const basket = useBasketStore((s) => s.basket);
-  const getTotal = useBasketStore((s) => s.getTotal);
+  const subtotal = useBasketStore(selectBasketTotal);
+  const itemCount = useBasketStore(selectBasketCount);
+  const isCheckoutEnabled = useBasketStore(selectIsCheckoutEnabled);
 
   const shipping = 15.99;
-  const subtotal = getTotal();
   const total = subtotal + shipping;
-  const itemCount = basket.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <>
@@ -39,9 +38,18 @@ export default function BasketSummary() {
         </div>
       </div>
 
-      <Link href="/checkout" className="btn-primary block text-center mt-6">
-        Checkout
-      </Link>
+      {isCheckoutEnabled ? (
+        <Link href="/checkout" className="btn-primary block text-center mt-6">
+          Checkout
+        </Link>
+      ) : (
+        <button
+          disabled
+          className="btn-primary block text-center mt-6 opacity-50 cursor-not-allowed"
+        >
+          Checkout
+        </button>
+      )}
 
       <Link
         href="/products"

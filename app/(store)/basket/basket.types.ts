@@ -5,4 +5,5 @@ export interface BasketItem {
   stock: number;
   quantity: number;
   image: string;
+  slug: string;
 }

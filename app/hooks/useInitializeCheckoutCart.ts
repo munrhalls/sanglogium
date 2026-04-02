@@ -9,7 +9,7 @@ export default function useInitializeCheckoutCart() {
       const formattedItems = basketItems.map((item) => ({
         id: item._id,
         name: item.name,
-        price: item.price,
+        price: item.displayPrice,
         quantity: item.quantity,
       }));
       set({ cartItems: formattedItems });
