@@ -1,0 +1,395 @@
+# BASKET DATA INTEGRITY SPRINT
+# Date: 2026-04-02
+# Input: _project/audits/BASKET_AUDIT.md + _project/audits/BASKET_SPECIFICATIONS.md
+# Target: Professional basket with correct data flow, type safety, hydration, and test coverage
+# Scope: Structure, data pass, state management, user flow, robustness, testing
+# Out of scope: Styling, layout, interactivity polish, payments/checkout internals
+
+# ═══════════════════════════════════════════════════════════════
+# LESSONS APPLIED (from _project/lessons/INDEX.md)
+# ═══════════════════════════════════════════════════════════════
+# [Critical] type-consolidation: Single source of truth for types at data layer
+# [Critical] sequencing: Pass 1→2→3 enforcement, no mixing
+# [Critical] verification-gates: Data verification before hypothesis
+# [High] functional-grouping: Complete functional groups, not isolated components
+# [High] velocity-aware-sprint-planning: Compressed scope, verifiable DoD, no re-planning during execution
+# [High] field-consistency: Frontend/backend field naming must match (price vs displayPrice)
+# [High] baseline: Verify baseline before sprint work
+
+# ═══════════════════════════════════════════════════════════════
+# SCOPE LOCK RULES (MANDATORY — what NOT to touch)
+# ═══════════════════════════════════════════════════════════════
+# ✗ NO globals.css changes
+# ✗ NO homepage component changes
+# ✗ NO Sanity schema changes
+# ✗ NO Tailwind config changes
+# ✗ NO checkout/payment internals (Stripe, webhook, order creation)
+# ✗ NO styling/layout changes (existing Tailwind classes preserved unless broken)
+# ✗ NO new dependencies (zustand already installed, vitest already installed)
+# ✗ NO build runs except at sprint end (use dev server for verification)
+# ✗ NO modifications outside listed files per scope contract
+
+# ═══════════════════════════════════════════════════════════════
+# PRE-SPRINT BASELINE (MANDATORY)
+# ═══════════════════════════════════════════════════════════════
+# Action: Verify dev server starts without error
+# Command: npx next dev (confirm no crash on basket-related pages)
+# Action: Verify no existing basket tests to regress
+# Status: Archived tests are 100% commented out — no active test baseline
+
+# ═══════════════════════════════════════════════════════════════
+# GAP TABLE (from BASKET_AUDIT.md)
+# ═══════════════════════════════════════════════════════════════
+# G-01 | BUG-1  | addItem ignores user quantity          | Critical
+# G-02 | BUG-2  | useInitializeCheckoutCart item.price    | Critical
+# G-03 | BUG-3  | Dead memo comparator in BasketControls  | Medium
+# G-04 | BUG-4  | Missing image in BasketControls add     | High
+# G-05 | BUG-5  | _hasHydrated never set to true          | High
+# G-06 | BUG-6  | Hydration flash (empty basket shown)    | High
+# G-07 | TYPE-1 | Missing slug in BasketItem              | High
+# G-08 | TYPE-2 | ProductInfo passes brand (not in type)   | Medium
+# G-09 | TYPE-3 | BasketControls wrong import path        | Medium
+# G-10 | TYPE-4 | No rehydration validation               | Medium
+# G-11 | ARCH-2 | isCheckoutEnabled never called           | Medium
+# G-12 | ARCH-3 | No basket count in ActionBar             | High
+# G-13 | ARCH-4 | Product link uses _id not slug           | High
+# G-14 | ARCH-5 | Raw <img> instead of next/image          | Medium
+# G-15 | ARCH-6 | Console.log in production                | Low
+# G-16 | ARCH-8 | Duplicate clear-basket pattern           | Low
+
+# ═══════════════════════════════════════════════════════════════
+# REGRESSION CONTAINMENT
+# ═══════════════════════════════════════════════════════════════
+# File at Risk              | Risk Description                    | Mitigation
+# store/store.ts            | Changing store shape breaks consumers| SC1 updates type+selectors first, SC4 updates all consumers
+# BasketControls.tsx        | Removing add-to-cart path            | Only used on basket page (verified via grep) — safe to remove
+# ProductInfo.tsx           | Changing addItem payload             | SC3 updates after SC1+SC2 store changes land
+# ActionBar.tsx             | Adding client state to nav           | Hydration guard prevents SSR mismatch
+# checkout/payment/page.tsx | Store shape change                   | Only reads basket array (unchanged shape), maps to {_id, quantity}
+
+# ═══════════════════════════════════════════════════════════════
+# SCOPE CONTRACTS (8 total, dependency-sequenced)
+# ═══════════════════════════════════════════════════════════════
+
+# ═══════════════════════════════════════════════════════════════
+# SC1: BasketItem Type + Store Foundation
+# Gap Coverage: G-05, G-07, G-10, G-15
+# Files: app/(store)/basket/basket.types.ts, store/store.ts
+# ═══════════════════════════════════════════════════════════════
+#
+# Target State:
+#   BasketItem includes slug field. Store exports selector functions
+#   (selectBasketTotal, selectBasketCount, selectIsCheckoutEnabled,
+#   selectHasHydrated) instead of getTotal/isCheckoutEnabled methods.
+#   Persist config has version:1, migrate function (price→displayPrice),
+#   onRehydrateStorage validates item shape and sets _hasHydrated=true.
+#   Console.log removed from rehydration.
+#
+# DoD:
+☐ Add slug:string to BasketItem interface @basket.types.ts
+☐ Remove getTotal and isCheckoutEnabled as store methods @store.ts
+☐ Export selectBasketTotal, selectBasketCount, selectIsCheckoutEnabled, selectHasHydrated as selector functions @store.ts
+☐ Fix onRehydrateStorage: validate item shapes + set _hasHydrated=true @store.ts
+☐ Add version:1 and migrate function (price→displayPrice, add slug fallback) to persist config @store.ts
+☐ Remove console.log from onRehydrateStorage @store.ts
+#
+# Verification:
+#   npx tsc --noEmit (no type errors in store/store.ts)
+#   Dev server: /basket page loads without crash
+#
+# Delegation:
+#   /implement "SC1: BasketItem type + store selectors + hydration + persist migration"
+
+# ═══════════════════════════════════════════════════════════════
+# SC2: addItem Mutation Fix
+# Gap Coverage: G-01
+# Files: store/store.ts
+# Depends on: SC1
+# ═══════════════════════════════════════════════════════════════
+#
+# Target State:
+#   addItem respects item.quantity parameter. When item exists,
+#   increments by item.quantity (not always 1), clamped to stock.
+#   When new, uses Math.min(item.quantity, item.stock).
+#   Updates existing item's stock value from caller.
+#   Validates slug and image fields as required.
+#
+# DoD:
+☐ Fix addItem: new items use Math.min(item.quantity, item.stock) not Math.min(1, item.stock) @store.ts
+☐ Fix addItem: existing items increment by item.quantity, clamped to stock @store.ts
+☐ Fix addItem: update existing item's stock from caller data @store.ts
+☐ Fix addItem: add slug and image to input validation @store.ts
+#
+# Verification:
+#   Manual: Add item with quantity 3 from PDP → basket shows quantity 3
+#   Dev server: no console errors
+#
+# Delegation:
+#   /implement "SC2: addItem mutation fix — respect quantity parameter"
+
+# ═══════════════════════════════════════════════════════════════
+# SC3: Product→Basket Data Mapping
+# Gap Coverage: G-03, G-04, G-08, G-09
+# Files: app/components/features/basket/BasketControls.tsx,
+#        app/components/features/products/ProductInfo.tsx
+# Depends on: SC1, SC2
+# ═══════════════════════════════════════════════════════════════
+#
+# Target State:
+#   ProductInfo.tsx passes slug, excludes brand from addItem payload.
+#   BasketControls.tsx: fix import path to @/app/(store)/basket/basket.types,
+#   remove dead memo comparator (lines 106-108), remove "add to cart"
+#   button path (lines 19-52) since component is only used on basket page
+#   where items are already in basket. Remove wrapper div
+#   stopPropagation (not needed on basket page).
+#
+# DoD:
+☐ ProductInfo.tsx: add slug:product.slug.current to addItem payload @ProductInfo.tsx
+☐ ProductInfo.tsx: remove brand from addItem payload @ProductInfo.tsx
+☐ BasketControls.tsx: fix import path to @/app/(store)/basket/basket.types @BasketControls.tsx
+☐ BasketControls.tsx: remove dead memo comparator (lines 106-108) @BasketControls.tsx
+☐ BasketControls.tsx: remove "not in basket" add-to-cart path (lines 19-52) @BasketControls.tsx
+☐ BasketControls.tsx: remove wrapper div e.preventDefault/e.stopPropagation @BasketControls.tsx
+#
+# Verification:
+#   npx tsc --noEmit (no type errors)
+#   Dev server: PDP add-to-cart still works, basket page quantity controls still work
+#
+# Delegation:
+#   /implement "SC3: Product→basket data mapping fixes"
+
+# ═══════════════════════════════════════════════════════════════
+# SC4: Basket Page Data Integrity
+# Gap Coverage: G-06, G-11, G-13, G-14
+# Files: app/(store)/basket/BasketClientWrapper.tsx,
+#        app/(store)/basket/Basket.tsx,
+#        app/(store)/basket/BasketSummary.tsx
+# Depends on: SC1
+# ═══════════════════════════════════════════════════════════════
+#
+# Target State:
+#   BasketClientWrapper: hydration guard using selectHasHydrated.
+#   Shows loading skeleton while !hydrated (NOT empty state).
+#   Basket.tsx: product link uses slug (/product/[slug]),
+#   next/image instead of raw <img>, React key is item._id only.
+#   BasketSummary: uses selectBasketTotal + selectBasketCount selectors,
+#   checkout button guarded by selectIsCheckoutEnabled.
+#
+# DoD:
+☐ BasketClientWrapper: add hydration guard with selectHasHydrated @BasketClientWrapper.tsx
+☐ BasketClientWrapper: render lightweight skeleton while !hydrated @BasketClientWrapper.tsx
+☐ Basket.tsx: change href from /product/${item._id} to /product/${item.slug} @Basket.tsx
+☐ Basket.tsx: replace <img> with next/image (unoptimized since src is Sanity CDN URL) @Basket.tsx
+☐ Basket.tsx: fix React key to item._id (remove string concatenation) @Basket.tsx
+☐ BasketSummary: replace getTotal() with useBasketStore(selectBasketTotal) @BasketSummary.tsx
+☐ BasketSummary: replace manual reduce with useBasketStore(selectBasketCount) @BasketSummary.tsx
+☐ BasketSummary: guard checkout link with selectIsCheckoutEnabled (disabled when false) @BasketSummary.tsx
+#
+# Verification:
+#   Dev server: /basket page shows skeleton briefly on hard refresh, then real data
+#   Dev server: product links navigate to /product/[slug] correctly
+#   Dev server: checkout button disabled when basket is invalid
+#
+# Delegation:
+#   /implement "SC4: Basket page data integrity — hydration guard, slug links, selectors"
+
+# ═══════════════════════════════════════════════════════════════
+# SC5: ActionBar Basket Count Badge
+# Gap Coverage: G-12
+# Files: app/components/layout/navigation/ActionBar.tsx
+# Depends on: SC1
+# ═══════════════════════════════════════════════════════════════
+#
+# Target State:
+#   ActionBar subscribes to selectBasketCount and selectHasHydrated.
+#   Renders numeric badge on ShoppingBag icon when hydrated and count > 0.
+#   Badge shows total quantity (sum of all item quantities).
+#   Suppressed during SSR (only shows after hydration to prevent mismatch).
+#
+# DoD:
+☐ Import useBasketStore, selectBasketCount, selectHasHydrated in ActionBar @ActionBar.tsx
+☐ Subscribe to count and hydration state in ActionButtons component @ActionBar.tsx
+☐ Render badge (absolute positioned, small circle with count) when hydrated && count > 0 @ActionBar.tsx
+#
+# Verification:
+#   Dev server: add item on PDP → ActionBar shows badge with count
+#   Dev server: hard refresh → no hydration mismatch warning in console
+#
+# Delegation:
+#   /implement "SC5: ActionBar basket count badge"
+
+# ═══════════════════════════════════════════════════════════════
+# SC6: Checkout Handoff Fix
+# Gap Coverage: G-02, G-16
+# Files: app/hooks/useInitializeCheckoutCart.ts,
+#        app/hooks/useClearBasketOnMount.ts
+# Depends on: SC1
+# ═══════════════════════════════════════════════════════════════
+#
+# Target State:
+#   useInitializeCheckoutCart maps item.displayPrice (not item.price).
+#   Evaluate useClearBasketOnMount: if only used by OrderSuccessClient,
+#   consolidate (delete hook, inline useEffect in OrderSuccessClient —
+#   which already has it). If used elsewhere, keep.
+#
+# DoD:
+☐ Fix item.price → item.displayPrice in useInitializeCheckoutCart @useInitializeCheckoutCart.ts
+☐ Audit useClearBasketOnMount usage — grep for all imports @codebase
+☐ If only used by OrderSuccessClient: add TODO comment noting redundancy (do NOT delete without confirming) @useClearBasketOnMount.ts
+#
+# Verification:
+#   npx tsc --noEmit (no type errors)
+#   Dev server: no console errors on checkout page
+#
+# Delegation:
+#   /implement "SC6: Checkout handoff fix — displayPrice mapping"
+
+# ═══════════════════════════════════════════════════════════════
+# SC7: Store + Rehydration Unit Tests
+# Gap Coverage: Spec §7.2, §7.3
+# Files: tests/basket/store.unit.test.ts (NEW),
+#        tests/basket/rehydration.unit.test.ts (NEW)
+# Depends on: SC1, SC2
+# ═══════════════════════════════════════════════════════════════
+#
+# Target State:
+#   Vitest unit tests for all store mutations and selectors.
+#   Vitest unit tests for rehydration validation and migration.
+#   Tests run via: npx vitest run tests/basket/
+#
+# DoD — store.unit.test.ts:
+☐ Test addItem: adds new item with correct quantity
+☐ Test addItem: respects caller quantity (not always 1)
+☐ Test addItem: clamps quantity to stock
+☐ Test addItem: rejects item with stock=0
+☐ Test addItem: rejects item with missing required fields (_id, name, image, slug)
+☐ Test addItem: increments existing item by requested amount
+☐ Test addItem: clamps existing item to stock ceiling
+☐ Test removeItem: removes by _id, no-op for non-existent
+☐ Test updateQuantity: clamps to [1, stock]
+☐ Test clearBasket: empties array
+☐ Test selectBasketTotal: correct sum of displayPrice × quantity
+☐ Test selectBasketCount: correct sum of quantities
+☐ Test selectIsCheckoutEnabled: false when empty, true when valid, false when stock=0
+#
+# DoD — rehydration.unit.test.ts:
+☐ Test: filters out items with missing _id
+☐ Test: filters out items with non-number displayPrice
+☐ Test: filters out items with missing image
+☐ Test: sets _hasHydrated to true after rehydration
+☐ Test: migrates version 0 data (price → displayPrice)
+☐ Test: handles corrupted localStorage gracefully
+#
+# Verification:
+#   npx vitest run tests/basket/ (all tests pass)
+#
+# Delegation:
+#   /implement "SC7: Store unit tests + rehydration tests"
+
+# ═══════════════════════════════════════════════════════════════
+# SC8: Data Flow Integration + E2E Smoke Tests
+# Gap Coverage: Spec §7.4, §7.5
+# Files: tests/basket/data-flow.integration.test.ts (NEW),
+#        tests/basket/basket-e2e.spec.ts (NEW)
+# Depends on: SC3, SC4, SC5, SC6
+# ═══════════════════════════════════════════════════════════════
+#
+# Target State:
+#   Vitest integration test for Product→Store→Checkout data pipeline.
+#   Playwright E2E smoke test for add→basket→verify user flow.
+#
+# DoD — data-flow.integration.test.ts:
+☐ Test: Product data maps to BasketItem correctly (all fields present, no brand)
+☐ Test: BasketItem contains slug (not just _id)
+☐ Test: BasketItem contains image URL string
+☐ Test: selectBasketTotal correct after addItem
+☐ Test: Checkout handoff maps to {_id, quantity} only (no price sent to server)
+☐ Test: Adding same item twice increments quantity
+#
+# DoD — basket-e2e.spec.ts:
+☐ Test: Add product from PDP → navigate to /basket → item visible with correct name
+☐ Test: Increment quantity on basket page → total updates
+☐ Test: Remove item → empty basket state shown
+☐ Test: Refresh page → basket persists (localStorage)
+#
+# Verification:
+#   npx vitest run tests/basket/data-flow.integration.test.ts
+#   npx playwright test tests/basket/basket-e2e.spec.ts
+#
+# Delegation:
+#   /implement "SC8: Data flow integration tests + E2E smoke tests"
+
+# ═══════════════════════════════════════════════════════════════
+# EXECUTION SEQUENCE
+# ═══════════════════════════════════════════════════════════════
+#
+# Phase A — Foundation (SC1 → SC2)
+#   SC1: Types + store selectors + hydration + persist  [NO DEPS]
+#   SC2: addItem mutation fix                           [AFTER SC1]
+#
+# Phase B — Component Integration (SC3, SC4, SC5, SC6 — parallel-safe)
+#   SC3: ProductInfo + BasketControls fixes             [AFTER SC1+SC2]
+#   SC4: Basket page data integrity                     [AFTER SC1]
+#   SC5: ActionBar basket count badge                   [AFTER SC1]
+#   SC6: Checkout handoff fix                           [AFTER SC1]
+#
+# Phase C — Testing (SC7, SC8)
+#   SC7: Store + rehydration unit tests                 [AFTER SC1+SC2]
+#   SC8: Data flow integration + E2E smoke              [AFTER SC3+SC4+SC5+SC6]
+#
+# DEPENDENCY GRAPH:
+#   SC1 ──→ SC2 ──→ SC3
+#    │                    ↘
+#    ├──→ SC4 ──────────→ SC8
+#    ├──→ SC5 ──────────→ SC8
+#    ├──→ SC6 ──────────→ SC8
+#    └──→ SC7
+#    ↑
+#   SC2 ──→ SC7
+
+# ═══════════════════════════════════════════════════════════════
+# FILES TOUCHED PER SC (for conflict avoidance)
+# ═══════════════════════════════════════════════════════════════
+# SC1: basket.types.ts, store/store.ts
+# SC2: store/store.ts
+# SC3: BasketControls.tsx, ProductInfo.tsx
+# SC4: BasketClientWrapper.tsx, Basket.tsx, BasketSummary.tsx
+# SC5: ActionBar.tsx
+# SC6: useInitializeCheckoutCart.ts, useClearBasketOnMount.ts
+# SC7: tests/basket/store.unit.test.ts (NEW), tests/basket/rehydration.unit.test.ts (NEW)
+# SC8: tests/basket/data-flow.integration.test.ts (NEW), tests/basket/basket-e2e.spec.ts (NEW)
+#
+# No file conflicts between SC3-SC6 (parallel-safe within Phase B)
+# SC1 and SC2 both touch store.ts — MUST be sequential
+
+# ═══════════════════════════════════════════════════════════════
+# VERIFICATION COMMANDS
+# ═══════════════════════════════════════════════════════════════
+# After SC1+SC2: npx tsc --noEmit
+# After SC3-SC6: npx tsc --noEmit + dev server manual check
+# After SC7:     npx vitest run tests/basket/store.unit.test.ts tests/basket/rehydration.unit.test.ts
+# After SC8:     npx vitest run tests/basket/data-flow.integration.test.ts
+#                npx playwright test tests/basket/basket-e2e.spec.ts
+# Sprint end:    npm run build (single build gate, sprint completion only)
+
+# ═══════════════════════════════════════════════════════════════
+# EVIDENCE LOG (filled during execution)
+# ═══════════════════════════════════════════════════════════════
+# SC1: [ ] tsc --noEmit pass | [ ] dev server /basket loads
+# SC2: [ ] tsc --noEmit pass | [ ] manual add-with-quantity works
+# SC3: [ ] tsc --noEmit pass | [ ] PDP add-to-cart works | [ ] basket controls work
+# SC4: [ ] hydration guard works | [ ] slug links correct | [ ] selectors wired
+# SC5: [ ] badge shows after add | [ ] no hydration mismatch
+# SC6: [ ] tsc --noEmit pass | [ ] displayPrice mapped correctly
+# SC7: [ ] vitest basket/store pass | [ ] vitest basket/rehydration pass
+# SC8: [ ] vitest basket/data-flow pass | [ ] playwright basket-e2e pass
+# BUILD: [ ] npm run build pass (sprint end only)
+
+# ═══════════════════════════════════════════════════════════════
+# POST-SPRINT: /learn (MANDATORY)
+# ═══════════════════════════════════════════════════════════════
+# After sprint lock, execute /learn to:
+# - Extract lessons from basket data integrity work
+# - Codify to _project/lessons/
+# - Update INDEX.md with new keywords (zustand, hydration, persist, basket)
+# - Update .windsurfrules if universal constraint discovered
