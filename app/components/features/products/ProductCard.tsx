@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ProductImage } from './ProductImage';
 import { ShoppingCart } from '@phosphor-icons/react/dist/ssr';
 import type { Product } from '@/sanity/lib/products/getProductsByVfsKeys';
+import { Price } from '@/app/components/ui/Price';
 
 export interface Product {
   _id: string;
@@ -44,9 +45,7 @@ export function ProductCard({ product }: ProductCardProps) {
             {product.name}
           </h3>
           <div className="mt-auto flex items-center justify-between pt-2">
-            <p className="type-price" data-testid="product-price">
-              ${product.displayPrice.toLocaleString()}
-            </p>
+            <Price value={product.displayPrice} />
             <button
               className="btn-cart"
               aria-label={`Add ${product.name} to cart`}

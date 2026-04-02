@@ -5,10 +5,12 @@ import { urlFor } from '@/sanity/lib/image';
 import { useBasketStore } from '@/store/store';
 import { useState } from 'react';
 import { Price } from '@/app/components/ui/Price';
-import { ShoppingCart } from '@phosphor-icons/react/dist/ssr';
+import { ShoppingCart, Check } from '@phosphor-icons/react/dist/ssr';
+import { QuantitySelector } from '@/app/components/ui/QuantitySelector';
 
 export function ProductInfo({ product }: { product: Product }) {
   const [quantity, setQuantity] = useState(1);
+  const [feedbackState, setFeedbackState] = useState<'idle' | 'added'>('idle');
   const addItem = useBasketStore((s) => s.addItem);
 
   const handleAddToCart = () => {
@@ -22,6 +24,8 @@ export function ProductInfo({ product }: { product: Product }) {
         image: product.image ? urlFor(product.image).width(100).height(100).url() : '',
         slug: product.slug.current,
       });
+      setFeedbackState('added');
+      setTimeout(() => setFeedbackState('idle'), 2000);
     }
   };
 
@@ -58,35 +62,34 @@ export function ProductInfo({ product }: { product: Product }) {
       <div className="pt-4 space-y-4">
         <div className="flex items-center gap-4">
           <span className="type-body text-secondary">Quantity:</span>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              disabled={quantity <= 1}
-              className="btn-secondary w-10 h-10 flex items-center justify-center"
-              aria-label="Decrease quantity"
-            >
-              -
-            </button>
-            <span className="w-12 text-center type-body text-primary">{quantity}</span>
-            <button
-              onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
-              disabled={quantity >= product.stock}
-              className="btn-secondary w-10 h-10 flex items-center justify-center"
-              aria-label="Increase quantity"
-            >
-              +
-            </button>
-          </div>
+          <QuantitySelector
+            quantity={quantity}
+            min={1}
+            max={product.stock}
+            onIncrement={() => setQuantity(Math.min(product.stock, quantity + 1))}
+            onDecrement={() => setQuantity(Math.max(1, quantity - 1))}
+            size="md"
+          />
         </div>
 
-        <button
-          onClick={handleAddToCart}
-          disabled={product.stock === 0}
-          className="btn-cart w-full"
-        >
-          <ShoppingCart size={20} weight="regular" />
-          {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
-        </button>
+        {feedbackState === 'added' ? (
+          <button
+            disabled
+            className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-sm bg-success-700 text-brand-50 transition-colors duration-200"
+          >
+            <Check size={20} weight="bold" />
+            Added
+          </button>
+        ) : (
+          <button
+            onClick={handleAddToCart}
+            disabled={product.stock === 0}
+            className="btn-cart w-full"
+          >
+            <ShoppingCart size={20} weight="regular" />
+            {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
+          </button>
+        )}
       </div>
     </div>
   );
