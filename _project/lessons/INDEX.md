@@ -6,6 +6,105 @@
 
 ---
 
+## Keyword: bus-stop-debugging
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/bus-stop-debugging-methodology.md](patterns/bus-stop-debugging-methodology.md) | Critical | Trace end-to-end → verify each bus stop → isolate broken stop → fix |
+
+---
+
+## Keyword: end-to-end-trace
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/bus-stop-debugging-methodology.md](patterns/bus-stop-debugging-methodology.md) | Critical | Map complete data flow before any implementation |
+| [anti-patterns/implementation-first-debugging.md](anti-patterns/implementation-first-debugging.md) | Critical | Never implement before tracing complete flow |
+
+---
+
+## Keyword: systematic-debugging
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/bus-stop-debugging-methodology.md](patterns/bus-stop-debugging-methodology.md) | Critical | Verify each transfer point systematically before fixing |
+| [anti-patterns/implementation-first-debugging.md](anti-patterns/implementation-first-debugging.md) | Critical | Use decision tree: trace first, then implement |
+
+---
+
+## Keyword: flow-verification
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/bus-stop-debugging-methodology.md](patterns/bus-stop-debugging-methodology.md) | Critical | Check every data transfer point works before implementation |
+
+---
+
+## Keyword: isolate-before-fix
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/bus-stop-debugging-methodology.md](patterns/bus-stop-debugging-methodology.md) | Critical | Find exact broken bus stop before writing any code |
+
+---
+
+## Keyword: implementation-first
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [anti-patterns/implementation-first-debugging.md](anti-patterns/implementation-first-debugging.md) | Critical | Never start with code - always trace first |
+
+---
+
+## Keyword: code-before-understanding
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [anti-patterns/implementation-first-debugging.md](anti-patterns/implementation-first-debugging.md) | Critical | 22min → 5min when tracing precedes implementation |
+
+---
+
+## Keyword: filter-flow
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/end-to-end-filter-flow-testing.md](patterns/end-to-end-filter-flow-testing.md) | Medium | Test UI → URL → GROQ → Results pipeline for each filter type |
+
+---
+
+## Keyword: field-consistency
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/end-to-end-filter-flow-testing.md](patterns/end-to-end-filter-flow-testing.md) | Medium | Verify frontend/backend field naming consistency across codebase |
+| [failures/filter-field-name-mismatch.md](failures/filter-field-name-mismatch.md) | High | Frontend priceRange vs backend price field naming caused 0 results |
+
+---
+
+## Keyword: integration-testing
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/end-to-end-filter-flow-testing.md](patterns/end-to-end-filter-flow-testing.md) | Medium | Create end-to-end tests for filter flows, not just unit tests |
+
+---
+
+## Keyword: groq-mapping
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/filter-field-name-mismatch.md](failures/filter-field-name-mismatch.md) | High | Map frontend field names to backend GROQ field handlers |
+
+---
+
+## Keyword: frontend-backend-sync
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/filter-field-name-mismatch.md](failures/filter-field-name-mismatch.md) | High | Ensure consistent field naming between useFilterNuqs and getProductsByVfsKeys |
+
+---
+
 ## Keyword: tailwind
 
 | Lesson | Severity | Summary |
