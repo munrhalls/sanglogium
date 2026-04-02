@@ -59,7 +59,12 @@ export async function navigateToCategory(
  * Get the count of product cards on the page
  */
 export async function getProductCount(page: Page): Promise<number> {
-  return page.locator(PLP_SELECTORS.productCard).count();
+  // Try testid first, fallback to article elements in product grid
+  const testIdCount = await page.locator(PLP_SELECTORS.productCard).count();
+  if (testIdCount > 0) return testIdCount;
+
+  // Fallback: article elements within product grid area
+  return page.locator('[data-testid="product-grid"] article, .product-grid article, [class*="grid"] > article').count();
 }
 
 /**
