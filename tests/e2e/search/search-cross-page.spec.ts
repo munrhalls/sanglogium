@@ -38,7 +38,7 @@ test.describe('Search - Cross Page Functionality', () => {
     await page.waitForLoadState('networkidle');
 
     // Modify search
-    await page.fill('[aria-label="Search products"]', 'iem');
+    await page.fill('input[aria-label="Search products"]', 'iem');
     await page.keyboard.press('Enter');
 
     // Verify URL updated

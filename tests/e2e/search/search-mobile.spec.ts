@@ -19,7 +19,7 @@ test.describe('Search - Mobile Functionality', () => {
 
     // Verify mobile overlay opened
     await expect(page.locator('[aria-label="Close search"]')).toBeVisible();
-    await expect(page.locator('[aria-label="Search products"]')).toBeVisible();
+    await expect(page.locator('input[aria-label="Search products"]')).toBeVisible();
   });
 
   test('mobile input is auto-focused on expand', async ({ page }) => {
@@ -27,7 +27,7 @@ test.describe('Search - Mobile Functionality', () => {
     await page.click('[aria-label="Open search"]');
 
     // Verify input is focused
-    await expect(page.locator('[aria-label="Search products"]')).toBeFocused();
+    await expect(page.locator('input[aria-label="Search products"]')).toBeFocused();
   });
 
   test('mobile overlay closes on result click', async ({ page }) => {
