@@ -693,6 +693,62 @@
 
 ---
 
+## Keyword: playwright
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [sops/playwright-single-browser-testing.md](sops/playwright-single-browser-testing.md) | High | Always use --project=chromium to prevent multi-browser explosion |
+
+---
+
+## Keyword: e2e
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [sops/playwright-single-browser-testing.md](sops/playwright-single-browser-testing.md) | High | Single browser testing prevents 5-10x slowdown |
+
+---
+
+## Keyword: testing
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [sops/playwright-single-browser-testing.md](sops/playwright-single-browser-testing.md) | High | Playwright config fixed to chromium only |
+
+---
+
+## Keyword: pre-flight
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [sops/playwright-test-pre-flight.md](sops/playwright-test-pre-flight.md) | High | Verify URL, elements, action, result BEFORE writing tests |
+
+---
+
+## Keyword: verification
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [sops/playwright-test-pre-flight.md](sops/playwright-test-pre-flight.md) | High | Manual verification prevents wasted test debugging |
+
+---
+
+## Keyword: state-definition
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [sops/playwright-test-pre-flight.md](sops/playwright-test-pre-flight.md) | High | Before-state, target element, user action, after-state must be specifically defined |
+
+---
+
+## Keyword: specificity
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [sops/playwright-test-pre-flight.md](sops/playwright-test-pre-flight.md) | High | No vague definitions - exact counts, selectors, and expectations required |
+
+---
+
 ## New Lesson Template
 
 ```markdown
