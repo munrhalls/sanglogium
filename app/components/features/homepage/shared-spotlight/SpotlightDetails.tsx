@@ -18,7 +18,7 @@ export default function SpotlightDetails({ data, accentColor, className }: Spotl
     <div className={cn("flex flex-col justify-center gap-10", className)}>
       <div className="flex flex-col gap-8">
         <span className={cn("text-small font-bold uppercase tracking-signature", accentColor)}>
-          {data.brand}
+          {data.brand.name}
         </span>
 
         <div className="flex flex-col">

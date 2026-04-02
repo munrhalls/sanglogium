@@ -1,7 +1,11 @@
 export interface SpotlightProduct {
   _id: string;
   name: string;
-  brand: string;
+  brand: {
+    _id: string;
+    name: string;
+    slug: string;
+  };
   displayPrice: number;
   image: {
     asset: {

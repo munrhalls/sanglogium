@@ -64,7 +64,11 @@ export interface HeroData {
 export interface FeaturedProduct {
   _id: string;
   name: string;
-  brand: string;
+  brand: {
+    _id: string;
+    name: string;
+    slug: string;
+  };
   displayPrice: number;
   productPromo: string;
   image: {
@@ -78,7 +82,11 @@ export interface FeaturedProduct {
 export interface SpotlightProduct {
   _id: string;
   name: string;
-  brand: string;
+  brand: {
+    _id: string;
+    name: string;
+    slug: string;
+  };
   displayPrice: number;
   image: { asset: { url: string }; alt?: string };
   gallery?: Array<{ asset: { url: string }; alt?: string }>;
@@ -95,7 +103,11 @@ export interface SpotlightData {
 export interface IemProduct {
   _id: string;
   name: string;
-  brand: string;
+  brand: {
+    _id: string;
+    name: string;
+    slug: string;
+  };
   displayPrice: number;
   slug: string;
   imageUrl: string;
@@ -105,7 +117,11 @@ export interface IemProduct {
 export interface NewestReleaseProduct {
   _id: string;
   name: string;
-  brand: string;
+  brand: {
+    _id: string;
+    name: string;
+    slug: string;
+  };
   displayPrice: number;
   image: { asset: { url: string }; alt?: string };
   gallery: Array<{ asset: { url: string }; alt?: string }>;
@@ -121,7 +137,11 @@ export interface NewestReleaseData {
 export interface DacProduct {
   _id: string;
   name: string;
-  brand: string;
+  brand: {
+    _id: string;
+    name: string;
+    slug: string;
+  };
   displayPrice: number;
   image: { asset: { url: string }; alt?: string };
 }
@@ -129,7 +149,11 @@ export interface DacProduct {
 export interface AccessoryProduct {
   _id: string;
   name: string;
-  brand: string;
+  brand: {
+    _id: string;
+    name: string;
+    slug: string;
+  };
   displayPrice: number;
   imageUrl: string;
   image: { asset: { url: string }; alt?: string };
@@ -168,7 +192,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
       ...productRef->{
         _id,
         name,
-        brand,
+        brand->{ _id, name, slug },
         displayPrice,
         image { asset->{url} }
       }
@@ -182,7 +206,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
       productRef->{
         _id,
         name,
-        brand,
+        brand->{ _id, name, slug },
         displayPrice,
         image { asset->{url} },
         gallery[] { asset->{url} }
@@ -197,7 +221,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
       productRef->{
         _id,
         name,
-        brand,
+        brand->{ _id, name, slug },
         displayPrice,
         image { asset->{url} },
         gallery[] { asset->{url} }
@@ -212,7 +236,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
       productRef->{
         _id,
         name,
-        brand,
+        brand->{ _id, name, slug },
         displayPrice,
         image { asset->{url} },
         gallery[] { asset->{url} }
@@ -223,7 +247,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
     "iemsGallery": iemsGallery[]->{
       _id,
       name,
-      brand,
+      brand->{ _id, name, slug },
       displayPrice,
       "slug": slug.current,
       "imageUrl": image.asset->url,
@@ -238,7 +262,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
       productRef->{
         _id,
         name,
-        brand,
+        brand->{ _id, name, slug },
         displayPrice,
         image { asset->{url} },
         gallery[] { asset->{url} }
@@ -249,7 +273,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
     "dacs": dacs[]->{
       _id,
       name,
-      brand,
+      brand->{ _id, name, slug },
       displayPrice,
       image { asset->{url} }
     },
@@ -258,7 +282,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
     "accessoriesCables": accessoriesCables[]->{
       _id,
       name,
-      brand,
+      brand->{ _id, name, slug },
       displayPrice,
       "imageUrl": image.asset->url,
       image { asset->{url} }
@@ -268,7 +292,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
     "accessoriesEarpads": accessoriesEarpads[]->{
       _id,
       name,
-      brand,
+      brand->{ _id, name, slug },
       displayPrice,
       "imageUrl": image.asset->url,
       image { asset->{url} }
