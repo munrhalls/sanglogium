@@ -1,0 +1,580 @@
+CHECKOUT & PAYMENTS FLOW — IMPLEMENTATION SPRINT
+═══════════════════════════════════════════════════
+
+Date: 2026-04-02
+Audit Source: _project/research/checkout-payments-audit.md
+Target: Functional end-to-end checkout → payment → order creation flow
+Overall Rating Before: 3.2/10
+Overall Rating Target: 7+/10 (professional e-commerce minimum)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SPRINT METADATA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SCOPE LOCK RULES (MANDATORY — WHAT NOT TO TOUCH):
+  ✗ NO globals.css changes
+  ✗ NO homepage changes
+  ✗ NO catalogue/VFS changes
+  ✗ NO product page changes
+  ✗ NO basket UI changes (BasketSummary.tsx styling stays)
+  ✗ NO Sanity Studio configuration changes
+  ✗ NO order management post-creation (out of scope)
+  ✗ NO shipping cost calculation (hardcoded $15.99 stays for now)
+  ✗ NO country list expansion (PL/GB stays for now)
+  ✗ NO build runs except after final SC8 completion
+
+EXECUTION MODEL — BACKEND SPRINT ADAPTATION:
+  Pass 1 = Infrastructure (schema, types, clients)
+  Pass 2 = Core Logic (business logic implementation)
+  Pass 3 = Hardening (security, validation, error handling, tests)
+
+  Sequencing: SC1 → SC2 → SC3 → SC4 → SC5 → SC6 → SC7 → SC8
+  Each SC is BLOCKING — must pass verification before next SC begins.
+
+LESSONS APPLIED AS ACTIVE CONSTRAINTS:
+  ✓ Bus-stop methodology: Each SC maps to specific audit bus stops
+  ✓ Schema verification: Run typegen before any GROQ/type work
+  ✓ Functional grouping: Complete webhook handler (all events), not isolated
+  ✓ Type consolidation: Single address mapper, single source of truth
+  ✓ Verification gates: Dev server verification per SC, no builds until end
+  ✓ No data assumptions: Verify actual Sanity data before GROQ changes
+  ✓ GROQ syntax: brand->name NOT brand->{name} for reference derefs
+  ✓ ES modules only: No require() in this codebase
+
+PRE-FLIGHT CHECKLIST (MANDATORY BEFORE SC1):
+  ☐ Branch check: Create feature branch from main
+  ☐ Dev server starts: npm run dev — no errors
+  ☐ Verify Sanity product schema has `stock` field (not reserved yet)
+  ☐ Verify STRIPE_SECRET_KEY exists in .env.local
+  ☐ Verify STRIPE_WEBHOOK_SECRET exists in .env.local
+  ☐ Verify NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY exists in .env.local
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+GAP → SCOPE CONTRACT MAPPING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+| SC  | Gap Coverage                        | Audit Gaps      | Bus Stops |
+|-----|-------------------------------------|-----------------|-----------|
+| SC1 | Infrastructure: Client + Schema     | C4, H1          | 4         |
+| SC2 | Checkout Route: Reserve + Stripe    | C1, C3, H1      | 4, 5      |
+| SC3 | Webhook: Payment Success → Order    | C2               | 6         |
+| SC4 | Webhook: Expired + Failed Sessions  | H3               | 6, 8      |
+| SC5 | Return Page: Data Flow Fix          | H2               | 7         |
+| SC6 | Address Format Unification          | field-consistency | 3, 6      |
+| SC7 | Input Validation + Security         | M1               | 4, 8      |
+| SC8 | Test Suite: Unit + Integration      | all              | all       |
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+END-STATE: WHAT "DONE" LOOKS LIKE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Bus Route (Complete Flow):
+  BASKET → POST /api/checkout → STRIPE EMBEDDED → WEBHOOK → SANITY ORDER → RETURN PAGE
+
+Bus Stop Expectations:
+  Stop 1: Basket has items, checkout enabled gate works
+  Stop 2: Layout fetches user/guest address, provides to context
+  Stop 3: Address validated via Google API, format mapped correctly
+  Stop 4: Stock reserved (not decremented), Stripe session created, client_secret returned
+  Stop 5: Stripe Embedded Checkout renders with payment form
+  Stop 6: Webhook receives event, verifies signature, creates order, finalizes stock
+  Stop 7: Return page fetches order from Sanity by session ID, shows confirmation
+  Stop 8: All failure paths handled — rollback reservations, show user-friendly errors
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+REGRESSION CONTAINMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+| File                                    | Risk                                 | Mitigation                          |
+|-----------------------------------------|--------------------------------------|-------------------------------------|
+| store/store.ts                          | Basket state regression              | DO NOT MODIFY — read-only reference |
+| app/(store)/basket/*                    | Basket UI break                      | Scope lock — no basket UI changes   |
+| sanity/schemaTypes/productType.ts       | Adding reservedStock breaks existing | Add field with initialValue: 0      |
+| sanity/lib/backendClient.ts             | CDN client used elsewhere            | CREATE NEW client, don't modify old |
+| app/(store)/checkout/shipping/*         | Address form break                   | Minimal changes — only mapper layer |
+| app/(store)/checkout/CheckoutProvider   | State management break               | DO NOT MODIFY core context logic    |
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SCOPE CONTRACT 1: Infrastructure — Non-CDN Client + ReservedStock Schema
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Gap Coverage: C4 (CDN-cached stock reads), H1 (no reservation field)
+Bus Stops: 4
+Pass: 1 (Infrastructure)
+
+TARGET STATE:
+  - New Sanity client with useCdn: false for checkout/mutation operations
+  - Product schema has `reservedStock` number field (default 0)
+  - Types regenerated via typegen
+  - Existing backendClient UNCHANGED (used by read-only operations)
+
+DoD (Sequenced):
+  ☐ 1.1 Create `sanity/lib/checkoutClient.ts` — identical to backendClient but useCdn: false
+  ☐ 1.2 Add `reservedStock` field to product schema in `sanity/schemaTypes/productType.ts`
+        — type: number, initialValue: 0, readOnly: false
+        — description: "Stock reserved by active checkout sessions"
+  ☐ 1.3 Run `npm run typegen` — regenerate sanity.types.ts
+  ☐ 1.4 Verify: dev server starts, no type errors
+
+FILES TO CREATE:
+  sanity/lib/checkoutClient.ts
+
+FILES TO MODIFY:
+  sanity/schemaTypes/productType.ts (ADD field only — do not modify existing fields)
+
+VERIFICATION:
+  npm run dev — starts without error
+  grep "reservedStock" sanity.types.ts — field exists in generated types
+  grep "useCdn: false" sanity/lib/checkoutClient.ts — confirms non-CDN
+
+DELEGATION:
+  /implement "SC1: Create checkoutClient with useCdn:false, add reservedStock field to product schema, run typegen"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SCOPE CONTRACT 2: Checkout Route — Stock Reservation + Stripe Session
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Gap Coverage: C1 (Stripe disabled), C3 (phantom decrement), H1 (no reservation)
+Bus Stops: 4, 5
+Pass: 2 (Core Logic)
+Depends On: SC1
+
+TARGET STATE:
+  POST /api/checkout:
+    1. Validates publicBasket (array, non-empty, valid items)
+    2. Fetches products via checkoutClient (non-CDN, fresh stock)
+    3. Calculates availableStock = stock - reservedStock per item
+    4. Checks availableStock >= requested quantity
+    5. Atomically increments reservedStock via ifRevisionId (NOT dec stock)
+    6. Creates Stripe checkout session with:
+       - line_items from validated products
+       - return_url: /checkout/return?session_id={CHECKOUT_SESSION_ID}
+       - metadata.productsIntent: "productId:quantity,productId:quantity"
+       - metadata.clerkUserId: user?.id || "guest"
+       - expires_at: Math.floor(Date.now() / 1000) + 25 * 60
+       - customer_email if authenticated
+       - ui_mode: "embedded"
+    7. Returns { client_secret: session.client_secret }
+    8. On Stripe failure: ROLLBACK reservedStock (dec what was inc'd)
+    9. On any error: ROLLBACK reservedStock + return appropriate status code
+
+DoD (Sequenced):
+  ☐ 2.1 Replace backendClient import with checkoutClient in route.ts
+  ☐ 2.2 Uncomment and update Clerk currentUser() for metadata
+  ☐ 2.3 Modify GROQ query: add reservedStock to product fetch projection
+  ☐ 2.4 Replace stock decrement logic with reservedStock increment:
+        — Calculate: availableStock = serverProduct.stock - (serverProduct.reservedStock || 0)
+        — Check: availableStock >= clientItem.quantity
+        — Patch: p.inc({ reservedStock: clientItem.quantity }).ifRevisionId(serverProduct._rev)
+  ☐ 2.5 Uncomment and update Stripe session creation with all required params
+  ☐ 2.6 Add rollback in catch block: for each reserved item, dec reservedStock
+  ☐ 2.7 Add rollback between reservation commit and Stripe call (wrap Stripe in try/catch)
+  ☐ 2.8 Return { client_secret: session.client_secret } on success
+  ☐ 2.9 Verify: dev server, navigate to /checkout/payment — Stripe form loads
+
+FILES TO MODIFY:
+  app/api/checkout/route.ts (REWRITE — keep structure, replace logic)
+
+CRITICAL CONSTRAINTS:
+  — NEVER dec({ stock }) in this route — only inc({ reservedStock })
+  — Stock decrement happens ONLY in webhook on payment success
+  — Rollback MUST happen if Stripe session creation fails
+  — Use checkoutClient (non-CDN) for ALL queries in this route
+  — ifRevisionId is MANDATORY for atomic reservation
+
+VERIFICATION:
+  Dev server running → navigate to /checkout/payment with basket items
+  Stripe embedded form should appear (test mode)
+  Check Sanity: product reservedStock incremented after checkout initiation
+  Check: closing Stripe form does NOT decrement stock (only reservedStock was touched)
+
+DELEGATION:
+  /implement "SC2: Rewrite checkout route with stock reservation + Stripe session creation + rollback"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SCOPE CONTRACT 3: Webhook — Payment Success → Order Creation
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Gap Coverage: C2 (webhook disabled)
+Bus Stops: 6
+Pass: 2 (Core Logic)
+Depends On: SC1, SC2
+
+TARGET STATE:
+  POST /api/webhook handles checkout.session.completed:
+    1. Verifies Stripe signature via stripe.webhooks.constructEvent
+    2. Checks idempotency: query Sanity for existing order with same stripeCheckoutSessionId
+    3. Retrieves full session with line items expanded
+    4. Verifies amount: calculated line items total === session.amount_total
+    5. Parses metadata.productsIntent to get product:quantity pairs
+    6. Creates order in Sanity via createOrder() from sanity/lib/orders/addOrder.ts
+       — Maps Stripe line items to OrderItem format
+       — Sets payment.stripeCheckoutSessionId
+       — Sets status: "processing"
+       — Sets dates.orderedAt and dates.paidAt
+    7. Finalizes stock: for each product, dec({ stock: qty, reservedStock: qty })
+    8. Returns 200
+
+DoD (Sequenced):
+  ☐ 3.1 Uncomment and rewrite webhook route.ts — fresh implementation, not patch
+  ☐ 3.2 Implement signature verification with stripe.webhooks.constructEvent
+  ☐ 3.3 Add event type switch for "checkout.session.completed"
+  ☐ 3.4 Implement idempotency check:
+        — GROQ: *[_type == "order" && payment.stripeCheckoutSessionId == $sessionId][0]
+        — If exists: return 200 (skip duplicate)
+  ☐ 3.5 Retrieve full session: stripe.checkout.sessions.retrieve with expand line_items
+  ☐ 3.6 Verify amount: line items total === session.amount_total
+  ☐ 3.7 Parse metadata.productsIntent: split(",") → split(":") → [{productId, quantity}]
+  ☐ 3.8 Map to CreateOrderOptions format:
+        — Fetch products from Sanity for snapshots (name, slug, image)
+        — Build OrderItem[] with price from Stripe (authoritative), quantity, subtotal
+        — Build pricing object from session totals
+        — Build payment object with stripeCheckoutSessionId, stripePaymentIntentId
+  ☐ 3.9 Call createOrder() from sanity/lib/orders/addOrder.ts
+  ☐ 3.10 Finalize stock: checkoutClient.transaction() — for each product:
+         patch(productId).dec({ stock: quantity, reservedStock: quantity })
+  ☐ 3.11 Verify: Use Stripe CLI to send test webhook, confirm order created in Sanity
+
+FILES TO MODIFY:
+  app/api/webhook/route.ts (FULL REWRITE — uncomment and restructure)
+
+CRITICAL CONSTRAINTS:
+  — Signature verification is NON-NEGOTIABLE — never skip
+  — Use checkoutClient for Sanity writes (non-CDN)
+  — createOrder() already validates — don't duplicate validation
+  — Stock finalization: dec BOTH stock AND reservedStock atomically
+  — Order items MUST be snapshots (price at purchase time, not current)
+  — Handle missing metadata.productsIntent gracefully
+
+VERIFICATION:
+  stripe listen --forward-to localhost:3000/api/webhook
+  stripe trigger checkout.session.completed
+  Check Sanity Studio: order document created with correct data
+  Check Sanity: product stock and reservedStock both decremented
+
+DELEGATION:
+  /implement "SC3: Implement webhook handler for checkout.session.completed with order creation and stock finalization"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SCOPE CONTRACT 4: Webhook — Expired + Failed Session Handlers
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Gap Coverage: H3 (no failure recovery)
+Bus Stops: 6, 8
+Pass: 2 (Core Logic)
+Depends On: SC3
+
+TARGET STATE:
+  POST /api/webhook also handles:
+    - checkout.session.expired → release reservedStock
+    - checkout.session.async_payment_failed → release reservedStock
+
+  For both events:
+    1. Parse metadata.productsIntent
+    2. For each product: dec({ reservedStock: quantity }) — do NOT touch stock
+    3. Return 200
+
+DoD (Sequenced):
+  ☐ 4.1 Add "checkout.session.expired" to permittedEvents array
+  ☐ 4.2 Add "checkout.session.async_payment_failed" to permittedEvents
+  ☐ 4.3 Implement shared helper: parseProductsIntent(metadata: string) → [{productId, quantity}]
+  ☐ 4.4 Implement shared helper: releaseReservations(items: [{productId, quantity}]) → void
+        — For each item: checkoutClient.patch(productId).dec({ reservedStock: quantity })
+  ☐ 4.5 Wire expired handler: parse intent → releaseReservations
+  ☐ 4.6 Wire failed handler: parse intent → releaseReservations
+  ☐ 4.7 Verify: stripe trigger checkout.session.expired — reservedStock decremented
+
+FILES TO MODIFY:
+  app/api/webhook/route.ts (ADD to existing from SC3)
+
+CRITICAL CONSTRAINTS:
+  — NEVER dec({ stock }) on expired/failed — only reservedStock
+  — releaseReservations must be idempotent (dec to minimum 0, not negative)
+  — Helper functions should be extracted (DRY with SC3's stock finalization)
+
+VERIFICATION:
+  stripe trigger checkout.session.expired
+  Check Sanity: reservedStock decremented, stock UNCHANGED
+  stripe trigger checkout.session.async_payment_failed
+  Check Sanity: same behavior
+
+DELEGATION:
+  /implement "SC4: Add expired and failed session handlers to webhook with reservation release"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SCOPE CONTRACT 5: Return Page — Direct Sanity Query + Error Handling
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Gap Coverage: H2 (order API non-functional)
+Bus Stops: 7
+Pass: 2 (Core Logic)
+Depends On: SC3
+
+TARGET STATE:
+  /checkout/return?session_id=xxx:
+    1. getOrderBySession queries Sanity DIRECTLY (not via /api/order)
+    2. GROQ: *[_type == "order" && payment.stripeCheckoutSessionId == $sessionId][0]
+    3. Maps Sanity order to component props
+    4. If order not found: polls every 2s for up to 20s (webhook may be delayed)
+    5. Shows success page with order data OR "processing" message
+
+DoD (Sequenced):
+  ☐ 5.1 Rewrite getOrderBySession.ts:
+        — Remove fetch to /api/order
+        — Import backendClient (CDN ok for reads)
+        — Direct GROQ query for order by stripeCheckoutSessionId
+        — Map Sanity order shape to component Order interface
+  ☐ 5.2 Update Order interface in getOrderBySession.ts to match Sanity order shape
+  ☐ 5.3 Update return/page.tsx to handle "order processing" state:
+        — If no order on first load: show "Your order is being processed..."
+        — Client component polls getOrderBySession every 2s (max 10 attempts)
+        — On success: show full order summary
+        — On timeout: show "Order confirmed, details coming via email"
+  ☐ 5.4 Update OrderSummary.tsx to handle Sanity order shape (items[].name, pricing.total)
+  ☐ 5.5 Verify: complete Stripe test checkout → return page shows order
+
+FILES TO MODIFY:
+  app/actions/checkout/getOrderBySession.ts (REWRITE)
+  app/(store)/checkout/return/page.tsx (UPDATE for polling)
+  app/(store)/checkout/return/components/OrderSummary.tsx (UPDATE interface)
+
+FILES TO DELETE OR DEPRECATE:
+  app/api/order/route.ts — mark as deprecated (or delete if no other consumers)
+
+CRITICAL CONSTRAINTS:
+  — Server action queries Sanity directly — NO fetch to own API route
+  — Polling happens client-side (separate component) — server component does initial fetch
+  — Order interface must match Sanity order document shape from orderTypes.ts
+  — Handle null order gracefully — never crash
+
+VERIFICATION:
+  Dev server → complete test checkout → /checkout/return shows order data
+  Dev server → navigate to /checkout/return?session_id=fake → shows error gracefully
+
+DELEGATION:
+  /implement "SC5: Rewrite return page to query Sanity directly with polling for delayed webhook"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SCOPE CONTRACT 6: Address Format Unification
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Gap Coverage: field-consistency lesson, address mismatch (audit Appendix B)
+Bus Stops: 3, 6
+Pass: 3 (Hardening)
+Depends On: SC3
+
+TARGET STATE:
+  Single address mapping utility handles conversion between:
+    - Checkout Address: { street, streetNumber, city, postalCode, regionCode }
+    - Order ShippingAddress: { name, line1, line2, city, state, postalCode, country, phone }
+    - Cookie GuestContext: { line1, line2, city, postal_code, country }
+
+  Webhook uses mapper to convert checkout address → order shippingAddress.
+  Cookie reader uses mapper to convert cookie → checkout address.
+
+DoD (Sequenced):
+  ☐ 6.1 Create lib/checkout/addressMapper.ts with:
+        — toOrderAddress(checkout: Address, name?: string): ShippingAddress
+        — toCheckoutAddress(order: ShippingAddress): Address
+        — fromCookie(cookie: GuestContext["address"]): Address
+        — toCookie(checkout: Address): GuestContext["address"]
+  ☐ 6.2 Create app/actions/address/setCheckoutCookie.ts:
+        — Server action that signs JWT with address + sets cookie
+        — Called after successful address validation in CheckoutProvider
+  ☐ 6.3 Update CheckoutProvider.tsx submitAddress: after ACCEPT, call setCheckoutCookie
+  ☐ 6.4 Update webhook (SC3): use toOrderAddress() when creating order
+  ☐ 6.5 Update checkout layout.tsx: use fromCookie() for guest address parsing
+  ☐ 6.6 Verify: guest checkout → address saved in cookie → page refresh → address still there
+
+FILES TO CREATE:
+  lib/checkout/addressMapper.ts
+  app/actions/address/setCheckoutCookie.ts
+
+FILES TO MODIFY:
+  app/(store)/checkout/CheckoutProvider.tsx (ADD cookie setter call after ACCEPT)
+  app/(store)/checkout/layout.tsx (USE fromCookie mapper)
+  app/api/webhook/route.ts (USE toOrderAddress mapper)
+
+CRITICAL CONSTRAINTS:
+  — Mapper is PURE FUNCTIONS only — no side effects, no async
+  — Import ShippingAddress type from sanity/lib/orders/orderTypes.ts
+  — Import Address type from checkout.types.ts
+  — Do NOT change Address or ShippingAddress types — only create mappers between them
+  — Cookie secret: use CHECKOUT_JWT_SECRET from env (already exists in cookies.ts)
+
+VERIFICATION:
+  Dev server → submit address as guest → refresh page → address persists
+  Check: cookie "checkout_context" contains JWT with address data
+
+DELEGATION:
+  /implement "SC6: Create address mapping utilities and guest checkout cookie persistence"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SCOPE CONTRACT 7: Input Validation + Security Hardening
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Gap Coverage: M1 (stock exposure), security layer gaps
+Bus Stops: 4, 8
+Pass: 3 (Hardening)
+Depends On: SC2
+
+TARGET STATE:
+  Checkout route has hardened input validation:
+    1. Product IDs validated against Sanity ID format (alphanumeric + limited chars)
+    2. Quantity is positive integer, max 10 per item
+    3. Error messages do NOT expose exact stock counts
+    4. Authentication context captured (but not required — guest checkout works)
+    5. Console.log statements with sensitive data removed
+
+DoD (Sequenced):
+  ☐ 7.1 Add input validation to checkout route:
+        — Validate each _id matches /^[a-zA-Z0-9._-]+$/ pattern
+        — Validate quantity: Number.isInteger(q) && q > 0 && q <= 10
+        — Return 400 with generic message if validation fails
+  ☐ 7.2 Sanitize error messages:
+        — Replace "Available: ${serverProduct.stock}" with "Insufficient stock"
+        — Remove product IDs from user-facing error messages
+        — Keep detailed logging server-side only (console.error, not in response)
+  ☐ 7.3 Remove/guard sensitive console.log statements:
+        — CheckoutProvider DevHUD: already gated by NODE_ENV ✓
+        — layout.tsx line 78: remove "LAYOUT COMP" console.log
+        — address.ts line 110: remove "Address Line:" console.log
+  ☐ 7.4 Add auth context to checkout metadata (non-blocking):
+        — Uncomment currentUser() in checkout route
+        — Use for Stripe metadata only — don't block guest checkout
+  ☐ 7.5 Verify: attempt checkout with malformed IDs → 400 returned
+  ☐ 7.6 Verify: out-of-stock error does NOT contain stock number
+
+FILES TO MODIFY:
+  app/api/checkout/route.ts (ADD validation, SANITIZE errors)
+  app/(store)/checkout/layout.tsx (REMOVE debug console.log)
+  app/actions/address/address.ts (REMOVE debug console.log)
+
+CRITICAL CONSTRAINTS:
+  — Guest checkout MUST still work — auth is optional metadata
+  — Validation must happen BEFORE any Sanity query (fail fast)
+  — Error messages to client: generic and helpful, never revealing
+  — Server logs: keep detailed for debugging
+
+VERIFICATION:
+  Dev server → POST /api/checkout with { publicBasket: [{ _id: "'; DROP TABLE", quantity: 1 }] }
+  Expected: 400 "Invalid basket data"
+  Dev server → checkout with quantity 999 → 400 or 409 with generic message
+
+DELEGATION:
+  /implement "SC7: Harden input validation, sanitize error messages, clean debug logs"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SCOPE CONTRACT 8: Test Suite — Unit + Integration
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Gap Coverage: All gaps — verification layer
+Bus Stops: All
+Pass: 3 (Hardening)
+Depends On: SC1-SC7
+
+TARGET STATE:
+  Comprehensive test suite covering:
+    - Unit: stock calculation, address mapping, input validation, order validation
+    - Integration: checkout API, webhook handler, return page data flow
+
+DoD (Sequenced):
+  ☐ 8.1 Unit: Stock calculation tests (tests/checkout/stock-calculation.unit.test.ts)
+        — availableStock = stock - reservedStock
+        — availableStock < quantity blocks checkout
+        — stock === 0 returns out of stock
+        — reservedStock === stock returns "being purchased"
+  ☐ 8.2 Unit: Address mapper tests (tests/checkout/address-mapper.unit.test.ts)
+        — toOrderAddress maps all fields correctly
+        — toCheckoutAddress maps all fields correctly
+        — fromCookie handles missing fields gracefully
+        — toCookie produces correct shape
+  ☐ 8.3 Unit: Input validation tests (tests/checkout/input-validation.unit.test.ts)
+        — Valid Sanity ID passes
+        — SQL injection string rejected
+        — Negative quantity rejected
+        — Float quantity rejected
+        — Quantity > 10 rejected
+        — Empty basket rejected
+  ☐ 8.4 Unit: productsIntent parser tests (tests/checkout/products-intent.unit.test.ts)
+        — "id1:2,id2:3" → [{productId: "id1", quantity: 2}, {productId: "id2", quantity: 3}]
+        — Empty string → []
+        — Malformed string handled gracefully
+  ☐ 8.5 Integration: Checkout API tests (tests/checkout/checkout-api.integration.test.ts)
+        — Mock Sanity + Stripe
+        — Empty basket → 400
+        — Non-existent product → 400
+        — Out of stock → 409
+        — Successful → reserves stock + returns client_secret
+        — Stripe failure → rollback reservedStock
+  ☐ 8.6 Integration: Webhook tests (tests/checkout/webhook.integration.test.ts)
+        — Mock Stripe + Sanity
+        — Invalid signature → 400
+        — checkout.session.completed → order created
+        — Duplicate session → 200, no duplicate order
+        — checkout.session.expired → reservedStock released
+  ☐ 8.7 Verify: npx vitest run tests/checkout/ — all pass
+  ☐ 8.8 FINAL: npm run build — build passes (ONLY build run in entire sprint)
+
+FILES TO CREATE:
+  tests/checkout/stock-calculation.unit.test.ts
+  tests/checkout/address-mapper.unit.test.ts
+  tests/checkout/input-validation.unit.test.ts
+  tests/checkout/products-intent.unit.test.ts
+  tests/checkout/checkout-api.integration.test.ts
+  tests/checkout/webhook.integration.test.ts
+
+CRITICAL CONSTRAINTS:
+  — Unit tests: NO external calls, NO mocking libraries for pure logic
+  — Integration tests: Mock Sanity client and Stripe client
+  — Do NOT test Stripe SDK internals — mock at boundary
+  — Use vitest (already configured in project)
+  — Extract testable pure functions from route handlers if needed
+
+VERIFICATION:
+  npx vitest run tests/checkout/ — all tests pass
+  npm run build — build passes (FINAL GATE)
+
+DELEGATION:
+  /implement "SC8: Create unit and integration test suite for checkout, webhook, address mapper, and validation"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EXECUTION SEQUENCE — COMPLETE SPRINT FLOW
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PHASE A — INFRASTRUCTURE (Pass 1):
+  ☐ Pre-flight checklist (all items above)
+  ☐ SC1: checkoutClient + reservedStock schema + typegen
+  ☐ Verify SC1: dev server starts, types regenerated
+
+PHASE B — CORE LOGIC (Pass 2):
+  ☐ SC2: Checkout route rewrite (reservation + Stripe + rollback)
+  ☐ Verify SC2: Stripe form loads on /checkout/payment
+  ☐ SC3: Webhook — payment success → order creation
+  ☐ Verify SC3: stripe trigger → order in Sanity
+  ☐ SC4: Webhook — expired/failed → reservation release
+  ☐ Verify SC4: stripe trigger expired → reservedStock released
+  ☐ SC5: Return page — direct Sanity query + polling
+  ☐ Verify SC5: return page shows order after checkout
+
+PHASE C — HARDENING (Pass 3):
+  ☐ SC6: Address format unification + guest cookie
+  ☐ Verify SC6: guest address persists across refresh
+  ☐ SC7: Input validation + security
+  ☐ Verify SC7: malformed input rejected
+  ☐ SC8: Test suite + final build gate
+  ☐ Verify SC8: all tests pass + build passes
+
+POST-SPRINT:
+  ☐ /learn — extract lessons from sprint experience
+  ☐ Update _project/lessons/INDEX.md with new keywords
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EVIDENCE LOG (Filled During Execution)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SC1 Result: ___
+SC2 Result: ___
+SC3 Result: ___
+SC4 Result: ___
+SC5 Result: ___
+SC6 Result: ___
+SC7 Result: ___
+SC8 Result: ___
+
+Final Build: ___
+Test Suite: ___
+
+Sprint Lock: ☐ All SCs verified + build passing + tests passing

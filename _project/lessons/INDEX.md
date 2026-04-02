@@ -1097,6 +1097,38 @@
 
 ---
 
+## Keyword: stock-reservation
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/stock-reservation-checkout.md](patterns/stock-reservation-checkout.md) | High | Reserve stock during checkout, decrement only on payment success |
+
+---
+
+## Keyword: inventory-management
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/stock-reservation-checkout.md](patterns/stock-reservation-checkout.md) | High | Use reservedStock field to prevent race conditions in checkout |
+
+---
+
+## Keyword: two-phase-commit
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/stock-reservation-checkout.md](patterns/stock-reservation-checkout.md) | High | Reserve inventory in checkout, finalize in webhook, rollback on failure |
+
+---
+
+## Keyword: sanity-transaction
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/stock-reservation-checkout.md](patterns/stock-reservation-checkout.md) | High | Use ifRevisionId and atomic patches for inventory operations |
+
+---
+
 ## New Lesson Template
 
 ```markdown
