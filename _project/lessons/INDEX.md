@@ -905,6 +905,38 @@
 
 ---
 
+## Keyword: compound-development
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [Compound Development Lessons](../_contexts/general/compound-development-lessons.md) | Critical | End-to-end trace with bus stop expectations is only worthwhile development method |
+
+---
+
+## Keyword: time-worth
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [Compound Development Lessons](../_contexts/general/compound-development-lessons.md) | Critical | Only bus stop tracing is worth time in web development, everything else is waste |
+
+---
+
+## Keyword: playwright-waste
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [Compound Development Lessons](../_contexts/general/compound-development-lessons.md) | Critical | Playwright tests are colossal waste without clear targets and end results |
+
+---
+
+## Keyword: test-pyramid
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [Compound Development Lessons](../_contexts/general/compound-development-lessons.md) | Critical | Simple pre-flight test first, then pyramid layer up - abandon if basic test fails |
+
+---
+
 ## Keyword: sequenced-changes
 
 | Lesson | Severity | Summary |
