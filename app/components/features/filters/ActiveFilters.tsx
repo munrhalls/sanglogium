@@ -10,13 +10,13 @@ interface FilterGroup {
 }
 
 interface ActiveFiltersProps {
-  filterGroups: FilterGroup[];
+  filterGroups?: FilterGroup[];
 }
 
 export function ActiveFilters({ filterGroups }: ActiveFiltersProps) {
   const { filters, parsedFilters, removeFilter, clearAllFilters, hasActiveFilters } = useFilterNuqs();
 
-  if (!hasActiveFilters) {
+  if (!hasActiveFilters || !filterGroups) {
     return null;
   }
 
@@ -60,7 +60,8 @@ export function ActiveFilters({ filterGroups }: ActiveFiltersProps) {
 
   return (
     <div data-testid="active-filters" className="flex flex-wrap gap-2 mb-6">
-      {parsedFilters.map((filter) => {
+      {parsedFilters?.map((filter) => {
+        if (!filter || !filter.field || !filter.value) return null;
         const filterKey = `${filter.field}:${filter.value}`;
         return (
           <button

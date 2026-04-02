@@ -55,8 +55,9 @@ export function useFilterNuqs() {
   const toggleFilter = (field: string, value: string) => {
     startTransition(() => {
       setFilters((currentFilters) => {
+        const current = currentFilters || [];
         const filterString = `${field}:${value}`;
-        const filterIndex = currentFilters.indexOf(filterString);
+        const filterIndex = current.indexOf(filterString);
 
         if (filterIndex === -1) {
           // Add filter
@@ -97,13 +98,13 @@ export function useFilterNuqs() {
    */
   const isFilterActive = (field: string, value: string): boolean => {
     const filterKey = `${field}:${value}`;
-    return filters.includes(filterKey);
+    return (filters || []).includes(filterKey);
   };
 
   /**
  * Get parsed filter states for client-side filtering
  */
-  const parsedFilters: FilterState[] = filters
+  const parsedFilters: FilterState[] = (filters || [])
     .map(parseFilter)
     .filter((f): f is FilterState => f !== null);
 
@@ -229,7 +230,7 @@ export function useFilterNuqs() {
     removeFilter,
     clearAllFilters,
     isFilterActive,
-    hasActiveFilters: filters.length > 0,
+    hasActiveFilters: (filters || []).length > 0,
     getPriceRange,
     setPriceRange,
     clearPriceRange,
