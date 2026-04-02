@@ -3,11 +3,14 @@ import React from "react";
 import { useBasketStore } from "@/store/store";
 import { X } from "@phosphor-icons/react";
 import { BasketItem } from "@/app/(store)/basket/basket.types";
+import { QuantitySelector } from "@/app/components/ui/QuantitySelector";
 
 const BasketControls = function BasketControls({
   product,
+  onRemoveStart,
 }: {
   product: BasketItem;
+  onRemoveStart?: (id: string) => void;
 }) {
   const _id = product._id;
   const item = useBasketStore((s) =>
@@ -17,50 +20,46 @@ const BasketControls = function BasketControls({
   const removeItem = useBasketStore((s) => s.removeItem);
 
   if (!item) return null;
-  const canIncrement = item.quantity < product.stock;
-  const handleDecrement = (_e: React.MouseEvent) => {
-    if (item.quantity === 1) {
+
+  const triggerRemove = () => {
+    if (onRemoveStart) {
+      onRemoveStart(_id);
+    } else {
       removeItem(_id);
+    }
+  };
+
+  const handleDecrement = () => {
+    if (item.quantity === 1) {
+      triggerRemove();
     } else {
       updateQuantity(_id, item.quantity - 1);
     }
   };
-  const handleRemove = (_e: React.MouseEvent) => {
-    removeItem(_id);
-  };
-  const handleIncrement = (_e: React.MouseEvent) => {
-    if (canIncrement) {
+
+  const handleIncrement = () => {
+    if (item.quantity < product.stock) {
       updateQuantity(_id, item.quantity + 1);
     }
   };
+
   return (
-    <div>
-      <div className="text-lg font-bold">Purchase quantity:</div>
-      <div className="flex items-center gap-x-2">
-        <button
-          aria-label="Increase quantity"
-          onClick={handleIncrement}
-          disabled={!canIncrement}
-          className="flex h-9 w-9 items-center justify-center rounded bg-black p-2 text-white transition-colors hover:bg-gray-800 disabled:opacity-50"
-        >
-          +
-        </button>
-        <span className="w-6 text-center font-black">{item.quantity}</span>
-        <button
-          aria-label="Decrease quantity"
-          onClick={handleDecrement}
-          className="flex h-9 w-9 items-center justify-center rounded bg-black p-2 text-white transition-colors hover:bg-gray-800"
-        >
-          -
-        </button>
-        <button
-          aria-label="Remove from basket"
-          onClick={handleRemove}
-          className="flex h-9 w-9 items-center justify-center rounded p-2 text-gray-400 transition-colors hover:text-red-500"
-        >
-          <X size={20} />
-        </button>
-      </div>
+    <div className="flex items-center gap-3">
+      <QuantitySelector
+        quantity={item.quantity}
+        min={1}
+        max={product.stock}
+        onIncrement={handleIncrement}
+        onDecrement={handleDecrement}
+        size="sm"
+      />
+      <button
+        onClick={triggerRemove}
+        aria-label={`Remove ${product.name} from basket`}
+        className="w-8 h-8 flex items-center justify-center rounded-sm text-secondary-500 transition-colors duration-200 hover:text-error-500 hover:bg-error-500/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500"
+      >
+        <X size={16} />
+      </button>
     </div>
   );
 };
