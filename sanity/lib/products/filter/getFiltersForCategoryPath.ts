@@ -78,7 +78,7 @@ const getFiltersForCategoryPathFn = async (catalogueKeys: string[]): Promise<Fil
   const products = await sanityFetch<any[]>({
     query: groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0] {
       displayPrice,
-      brand->name,
+      brand->{name},
       stock
     }`,
     params: { keys: catalogueKeys }
