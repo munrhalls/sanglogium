@@ -2,7 +2,7 @@
 
 **Purpose:** Searchable keyword → lesson mapping for pre-work retrieval.
 
-**Last Updated:** 2026-04-01
+**Last Updated:** 2026-04-02
 
 ---
 
@@ -357,11 +357,20 @@
 
 ---
 
+## Keyword: type-mismatch
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/reference-vs-string-schema-mismatch.md](failures/reference-vs-string-schema-mismatch.md) | Critical | Schema defined brand as reference but data had strings - GROQ dereference failed silently |
+
+---
+
 ## Keyword: sanity
 
 | Lesson | Severity | Summary |
 |--------|----------|---------|
 | [failures/groq-reference-syntax.md](failures/groq-reference-syntax.md) | Critical | Schema drift: brand field changed from reference to string, query didn't |
+| [failures/reference-vs-string-schema-mismatch.md](failures/reference-vs-string-schema-mismatch.md) | Critical | ALWAYS verify actual data before querying - schema ≠ data reality |
 | [patterns/vfs-catalog-architecture.md](patterns/vfs-catalog-architecture.md) | High | Virtual File System pre-computed at build time for O(1) lookups |
 | [patterns/type-safety-generated-types.md](patterns/type-safety-generated-types.md) | High | Use `Pick<SanityProduct, ...>` pattern instead of manual interfaces |
 
@@ -746,6 +755,62 @@
 | Lesson | Severity | Summary |
 |--------|----------|---------|
 | [sops/playwright-test-pre-flight.md](sops/playwright-test-pre-flight.md) | High | No vague definitions - exact counts, selectors, and expectations required |
+
+---
+
+## Keyword: brand-migration
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/brand-reference-migration-failure.md](failures/brand-reference-migration-failure.md) | Critical | Sanity field migration from string to reference requires updating ALL interfaces, queries, and components atomically |
+
+---
+
+## Keyword: reference-fields
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/brand-reference-migration-failure.md](failures/brand-reference-migration-failure.md) | Critical | Reference field changes need comprehensive codebase search and atomic updates |
+
+---
+
+## Keyword: react-rendering
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/brand-reference-migration-failure.md](failures/brand-reference-migration-failure.md) | Critical | Objects with {_ref, _type} cannot be rendered as React children - must dereference to .name |
+
+---
+
+## Keyword: type-safety
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/brand-reference-migration-failure.md](failures/brand-reference-migration-failure.md) | Critical | Schema changes without complete type updates cause runtime React errors |
+
+---
+
+## Keyword: build-time
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [anti-patterns/build-time-destruction-rule.md](anti-patterns/build-time-destruction-rule.md) | Critical | Build runs banned during development - use dev server for verification |
+
+---
+
+## Keyword: verification
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [anti-patterns/build-time-destruction-rule.md](anti-patterns/build-time-destruction-rule.md) | Critical | Reserve builds for sprint completion, explicit override, or pre-deployment only |
+
+---
+
+## Keyword: scope-assessment
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/brand-reference-migration-failure.md](failures/brand-reference-migration-failure.md) | Critical | Sanity field migration requires application-level scope assessment, not component-level |
 
 ---
 

@@ -48,6 +48,48 @@ Type conflicts between manually defined Product interfaces and generated Sanity 
 
 ### Root Cause
 1. `sanity.types.ts` was stale - didn't reflect that `brandType` was added to schema
+
+---
+
+## Lesson 4: Brand Reference Migration Failure
+**Date:** April 2, 2026
+**Sprint:** Brand field migration debug
+
+### The Error
+React error: "Objects are not valid as a React child (found: object with keys {_ref, _type})" on homepage after brand field migration.
+
+### Root Cause
+Incomplete migration - updated Sanity schema but failed to update all TypeScript interfaces, GROQ queries, and component rendering logic to handle brand as reference object instead of string.
+
+### Bottleneck
+- **Investigation:** 15 minutes to trace error from homepage through data fetching to component rendering
+- **Friction:** Had to search entire codebase for brand field usage patterns
+- **Wait time:** None - investigation was sequential
+
+### Fix Duration
+~45 minutes total: 15 min investigation + 25 min fixing 24 files + 5 min verification
+
+### Resolution
+Updated 8 TypeScript interfaces, 8 GROQ queries, and 8 component files:
+- Changed interfaces from `brand: string` to `brand: { _id: string, name: string, slug: string }`
+- Updated GROQ from `brand,` to `brand->{ _id, name, slug },`
+- Changed JSX from `{product.brand}` to `{product.brand.name}`
+
+### Prompt Quality
+- **Strength:** Component Archaeology Principle helped systematically trace the error
+- **Weakness:** No pre-work lesson retrieval for "sanity-migration" or "reference-fields"
+
+### Test Coverage Gap
+No automated test caught this - React rendering error only appeared at runtime with real data.
+
+### Prevention Rule
+**MANDATORY**: When migrating Sanity fields from primitive to reference types:
+1. Search entire codebase for field usage patterns BEFORE migration
+2. Create comprehensive checklist of all files that need updates
+3. Update ALL interfaces, queries, and components in single atomic change
+4. Add build-time validation for reference field shapes
+
+---
 2. Manual Product interfaces in 4 files drifted from source of truth
 3. GROQ reference expansion (`->`) used without verifying field was actually a reference type
 
@@ -608,5 +650,42 @@ Async Server Components receiving Promises + Suspense boundaries = true streamin
 4. anti-patterns/client-side-filtering
 5. sops/pagination-safety
 
+
+---
+
+## Lesson 5: Brand Migration Scope Creep
+**Date:** April 2, 2026
+**Sprint:** Brand field migration completion
+
+### The Error
+After fixing homepage brand rendering, discovered additional brand field inconsistencies in product detail page, search functionality, and other components.
+
+### Root Cause
+Initial scope assessment was incomplete - brand field migration affected entire application, not just homepage.
+
+### Bottleneck
+- **Investigation:** 10 minutes to systematically check all product-related files
+- **Friction:** Had to trace data flow through GROQ queries → interfaces → components
+- **Scope Creep:** Homepage fix revealed deeper systemic issue
+
+### Fix Duration
+~20 minutes: 10 min investigation + 10 min fixing product detail and search pages
+
+### Resolution
+Updated brand handling in:
+- Product detail page: getProductBySlug.ts, ProductInfo.tsx, title-optimization.ts
+- Search functionality: searchProducts.ts, AutocompleteItem.tsx
+- All components now consistently use brand.name instead of brand object
+
+### Prompt Quality
+- **Strength:** Systematic approach using Component Archaeology Principle
+- **Weakness:** No pre-work lesson retrieval for "brand-migration"
+- **Missing:** Scope assessment should have included entire application
+
+### Test Coverage Gap
+No automated tests for consistent brand field handling across application.
+
+### Prevention Rule
+**MANDATORY:** When migrating Sanity fields, assess scope at application level, not component level. Search entire codebase for field usage before starting.
 
 ---
