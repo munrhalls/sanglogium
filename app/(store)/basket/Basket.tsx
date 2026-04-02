@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useBasketStore } from "@/store/store";
 import BasketControls from "@/app/components/features/basket/BasketControls";
@@ -19,20 +20,22 @@ export default function Basket() {
 
       {basket.map((item) => (
         <div
-          key={item._id + "Basket page"}
+          key={item._id}
           className="grid grid-cols-1 gap-5 border-b border-secondary p-5 lg:grid-cols-[3fr_1fr_1fr_auto] transition-colors duration-200 hover:bg-surface-subtle"
         >
           {/* Product column */}
           <div className="flex items-center gap-5">
-            <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-sm bg-surface-productImage">
-              <img
+            <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-sm bg-surface-productImage relative">
+              <Image
                 src={item.image}
                 alt={item.name}
-                className="h-full w-full object-contain"
+                fill
+                unoptimized
+                className="object-contain"
               />
             </div>
             <div>
-              <Link href={`/product/${item._id}`}>
+              <Link href={`/product/${item.slug}`}>
                 <h3 className="type-body hover:text-brand-100 transition-colors">
                   {item.name}
                 </h3>
