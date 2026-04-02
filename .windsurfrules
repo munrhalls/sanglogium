@@ -108,6 +108,7 @@ After EVERY sprint, debug, or implementation:
 - **Sanity Migrations:** When migrating fields from primitive to reference types: search entire codebase first, create comprehensive checklist, update ALL interfaces/queries/components in single atomic change
 - **useQueryState:** ALWAYS add null checks - `useQueryState` returns undefined during hydration. Use `(filters || []).map()` pattern or destructure with defaults `const [filters = []] = useQueryState(...)`
 - **Playwright Performance:** ALWAYS use parallel workers, headless mode, no fixed waits. `workers: process.env.CI ? 2 : 4`, `headless: true`, NEVER `waitForTimeout`
+- **Validation:** ALWAYS check type AND content - `typeof field === "string" && field !== ""`. Empty strings pass type guards but are invalid data.
 
 ## Testing Framework Rules
 - **NEVER use Jest** - Jest is prohibited in this codebase

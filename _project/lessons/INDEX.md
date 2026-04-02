@@ -1057,6 +1057,46 @@
 
 ---
 
+## Keyword: validation
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/test-validation-consistency.md](patterns/test-validation-consistency.md) | Medium | Type checking alone doesn't catch empty strings - check content too |
+
+---
+
+## Keyword: type-guards
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/test-validation-consistency.md](patterns/test-validation-consistency.md) | Medium | Validation must check type AND content (typeof + non-empty) |
+
+---
+
+## Keyword: empty-string
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/test-validation-consistency.md](patterns/test-validation-consistency.md) | Medium | Empty strings pass typeof === "string" but are invalid data |
+
+---
+
+## Keyword: data-quality
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/test-validation-consistency.md](patterns/test-validation-consistency.md) | Medium | Test negative cases: empty strings, zero-length arrays, whitespace |
+
+---
+
+## Keyword: test-alignment
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/test-validation-consistency.md](patterns/test-validation-consistency.md) | Medium | Keep test validation logic in sync with implementation |
+
+---
+
 ## New Lesson Template
 
 ```markdown
