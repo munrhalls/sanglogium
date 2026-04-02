@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
   typescript: { ignoreBuildErrors: true },
   eslint: { ignoreDuringBuilds: true },
   serverExternalPackages: ["isomorphic-dompurify"],
+  transpilePackages: ["@sanity/ui", "@sanity/icons", "next-sanity"],
   trailingSlash: false,
   experimental: {
     optimizeCss: true,
