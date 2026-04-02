@@ -1,6 +1,8 @@
 "use client";
 
 import { useQueryState, parseAsArrayOf, parseAsString } from "nuqs";
+import { useRouter, usePathname } from "next/navigation";
+import { startTransition } from "react";
 
 export interface FilterState {
   field: string;
@@ -24,17 +26,20 @@ function parseFilter(filterString: string): FilterState | null {
 
 /**
  * Hook for managing filter state in URL with nuqs
- * Uses shallow routing for instant UI updates (no server roundtrip)
+ * Uses router.refresh() to trigger server re-render with new filters
  */
 export function useFilterNuqs() {
+  const router = useRouter();
+  const pathname = usePathname();
+
   // Array of active filters: ?f=brand:sennheiser&f=type:open-back
   const [filters, setFilters] = useQueryState(
     "f",
     parseAsArrayOf(parseAsString)
       .withOptions({
-        // Shallow: true = client-only URL update, NO server re-render
-        // This eliminates the lag from router.push()
-        shallow: true,
+        // Deep: true = triggers server re-render (default)
+        // This allows server to re-fetch with new filters
+        shallow: false,
         // Throttle URL updates to prevent browser rate-limiting
         throttleMs: 50,
         // Clear param when empty array (clean URLs)
@@ -45,38 +50,46 @@ export function useFilterNuqs() {
 
   /**
    * Toggle a filter on/off
-   * Instant UI feedback, URL updates in background
+   * Updates URL and triggers server re-render
    */
   const toggleFilter = (field: string, value: string) => {
-    const filterKey = `${field}:${value}`;
+    startTransition(() => {
+      setFilters((currentFilters) => {
+        const filterString = `${field}:${value}`;
+        const filterIndex = currentFilters.indexOf(filterString);
 
-    setFilters((prev) => {
-      const current = prev || [];
-      const exists = current.includes(filterKey);
+        if (filterIndex === -1) {
+          // Add filter
+          return [...currentFilters, filterString];
+        } else {
+          // Remove filter
+          return currentFilters.filter((_, index) => index !== filterIndex);
+        }
+      });
 
-      if (exists) {
-        // Remove filter
-        return current.filter((f) => f !== filterKey);
-      } else {
-        // Add filter
-        return [...current, filterKey];
-      }
+      // Trigger server re-render to fetch filtered products
+      router.refresh();
     });
   };
-
-  /**
+    /**
    * Remove a specific filter
    */
   const removeFilter = (field: string, value: string) => {
-    const filterKey = `${field}:${value}`;
-    setFilters((prev) => (prev || []).filter((f) => f !== filterKey));
+    startTransition(() => {
+      const filterKey = `${field}:${value}`;
+      setFilters((prev) => (prev || []).filter((f) => f !== filterKey));
+      router.refresh();
+    });
   };
 
   /**
    * Clear all filters
    */
   const clearAllFilters = () => {
-    setFilters([]);
+    startTransition(() => {
+      setFilters([]);
+      router.refresh();
+    });
   };
 
   /**
@@ -118,25 +131,28 @@ export function useFilterNuqs() {
    * Set price range
    */
   const setPriceRange = (range: { min?: number; max?: number }) => {
-    setFilters((prev) => {
-      const current = prev || [];
-      const withoutPrice = current.filter(f => !f.startsWith('priceRange:'));
-      const newFilters = [...withoutPrice];
+    startTransition(() => {
+      setFilters((prev) => {
+        const current = prev || [];
+        const withoutPrice = current.filter(f => !f.startsWith('priceRange:'));
+        const newFilters = [...withoutPrice];
 
-      // Validate that min < max
-      if (range.min !== undefined && range.max !== undefined && range.min >= range.max) {
-        // Don't set invalid range
-        return current;
-      }
+        // Validate that min < max
+        if (range.min !== undefined && range.max !== undefined && range.min >= range.max) {
+          // Don't set invalid range
+          return current;
+        }
 
-      if (range.min !== undefined) {
-        newFilters.push(`priceRange:min:${range.min}`);
-      }
-      if (range.max !== undefined) {
-        newFilters.push(`priceRange:max:${range.max}`);
-      }
+        if (range.min !== undefined) {
+          newFilters.push(`priceRange:min:${range.min}`);
+        }
+        if (range.max !== undefined) {
+          newFilters.push(`priceRange:max:${range.max}`);
+        }
 
-      return newFilters;
+        return newFilters;
+      });
+      router.refresh();
     });
   };
 
@@ -144,7 +160,10 @@ export function useFilterNuqs() {
    * Clear price range
    */
   const clearPriceRange = () => {
-    setFilters((prev) => (prev || []).filter(f => !f.startsWith('priceRange:')));
+    startTransition(() => {
+      setFilters((prev) => (prev || []).filter(f => !f.startsWith('priceRange:')));
+      router.refresh();
+    });
   };
 
   /**
@@ -163,16 +182,19 @@ export function useFilterNuqs() {
    * Set stock minimum
    */
   const setStockMinimum = (value: number) => {
-    setFilters((prev) => {
-      const current = prev || [];
-      const withoutStock = current.filter(f => !f.startsWith('stockMin:'));
+    startTransition(() => {
+      setFilters((prev) => {
+        const current = prev || [];
+        const withoutStock = current.filter(f => !f.startsWith('stockMin:'));
 
-      if (value <= 0) {
-        // Clear filter if value is 0 or negative
-        return withoutStock;
-      }
+        if (value <= 0) {
+          // Clear filter if value is 0 or negative
+          return withoutStock;
+        }
 
-      return [...withoutStock, `stockMin:${value}`];
+        return [...withoutStock, `stockMin:${value}`];
+      });
+      router.refresh();
     });
   };
 
@@ -180,7 +202,10 @@ export function useFilterNuqs() {
    * Clear stock minimum
    */
   const clearStockMinimum = () => {
-    setFilters((prev) => (prev || []).filter(f => !f.startsWith('stockMin:')));
+    startTransition(() => {
+      setFilters((prev) => (prev || []).filter(f => !f.startsWith('stockMin:')));
+      router.refresh();
+    });
   };
 
   /**
@@ -199,7 +224,7 @@ export function useFilterNuqs() {
 
   return {
     filters,
-    parsedFilters,
+    setFilters,
     toggleFilter,
     removeFilter,
     clearAllFilters,

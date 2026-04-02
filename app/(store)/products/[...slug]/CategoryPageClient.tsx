@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { ProductGrid } from '@/app/components/features/products';
 import { SortDropdown } from '@/app/components/features/filters/SortDropdown';
 import { ActiveFilters } from '@/app/components/features/filters/ActiveFilters';
@@ -42,7 +42,10 @@ export function CategoryPageClient({
   categoryName,
 }: CategoryPageClientProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isPending, startTransition] = React.useTransition();
   const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
 
   // Parse active filters from URL for display purposes only
   const activeFilters = useMemo(() => {
@@ -73,7 +76,7 @@ export function CategoryPageClient({
         <div className="hidden lg:flex lg:flex-row lg:items-center lg:justify-between gap-4 pb-4 mb-6 border-b border-border-secondary">
           <SortDropdown />
           <span className="type-metadata text-secondary">
-            {productCount} {countLabel}
+            {productCount} {countLabel} {isPending && '(Loading...)'}
           </span>
         </div>
 
