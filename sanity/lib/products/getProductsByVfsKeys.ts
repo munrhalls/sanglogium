@@ -56,9 +56,19 @@ const getProductsByVfsKeysFn = async ({
       const parts = filter.split(':');
       if (parts.length >= 2) {
         const field = parts[0];
-        const value = parts.slice(1).join(':'); // Join remaining parts
-        if (!acc[field]) acc[field] = [];
-        acc[field].push(value);
+        let value = parts.slice(1).join(':');
+
+        // Special handling for priceRange with comma-separated min/max values
+        if (field === 'priceRange' && value.includes(',')) {
+          // Split "min:500,max:1500" into ["min:500", "max:1500"]
+          const subValues = value.split(',').map(v => v.trim());
+          if (!acc[field]) acc[field] = [];
+          acc[field].push(...subValues);
+        } else {
+          // Normal case: single value
+          if (!acc[field]) acc[field] = [];
+          acc[field].push(value);
+        }
       }
       return acc;
     }, {} as Record<string, string[]>);
