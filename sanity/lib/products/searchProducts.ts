@@ -7,7 +7,7 @@ const MIN_QUERY_LENGTH = 2;
 export interface AutocompleteProduct {
   _id: string;
   name: string;
-  brand: string | null;
+  brand: { _id: string; name: string; slug: string } | null;
   displayPrice: number;
   slug: { current: string };
   image: any;
@@ -16,7 +16,7 @@ export interface AutocompleteProduct {
 export interface SearchProduct {
   _id: string;
   name: string;
-  brand: { name: string } | null;
+  brand: { _id: string; name: string; slug: string } | null;
   displayPrice: number;
   stock: number;
   slug: { current: string };
@@ -38,7 +38,7 @@ export async function searchProductsAutocomplete(query: string): Promise<Autocom
     )] | order(name asc) [0...${MAX_AUTOCOMPLETE}] {
       _id,
       name,
-      "brand": brand->name,
+      brand->{ _id, name, slug },
       displayPrice,
       slug { current },
       image
@@ -71,7 +71,7 @@ export async function searchProductsFull(query: string, sort?: string): Promise<
     )] | order(${orderClause}) {
       _id,
       name,
-      "brand": { "name": brand->name },
+      brand->{ _id, name, slug },
       displayPrice,
       stock,
       slug { current },

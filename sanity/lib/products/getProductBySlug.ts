@@ -4,7 +4,7 @@ import groq from 'groq';
 export interface Product {
   _id: string;
   name: string;
-  brand: string | null;
+  brand: { _id: string; name: string; slug: string } | null;
   displayPrice: number;
   stock: number;
   sku: string;
@@ -22,7 +22,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
     query: groq`*[_type == "product" && slug.current == $slug] {
       _id,
       name,
-      brand,
+      brand->{ _id, name, slug },
       displayPrice,
       stock,
       sku,
