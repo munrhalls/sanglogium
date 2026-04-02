@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getProductBySlug, getRelatedProducts } from '@/sanity/lib/products';
 import { ProductDetail } from '@/app/components/features/products';
+import { generateOptimizedTitle, generateSEOTitle, generateMetaDescription } from '@/lib/utils/title-optimization';
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>;
@@ -35,7 +36,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </li>
           <li className="type-caption text-caption">/</li>
           <li>
-            <Link href="/products/headphones" className="type-caption text-secondary hover:text-primary transition-colors">
+            <Link href="/products" className="type-caption text-secondary hover:text-primary transition-colors">
               Products
             </Link>
           </li>
@@ -59,8 +60,43 @@ export async function generateMetadata({ params }: ProductPageProps) {
     return { title: 'Product Not Found' };
   }
 
+  // Generate optimized titles for different contexts
+  const optimizedTitle = generateOptimizedTitle({
+    productName: product.name,
+    brand: product.brand,
+    siteName: 'Sang Logium'
+  });
+
+  const seoTitle = generateSEOTitle({
+    productName: product.name,
+    brand: product.brand,
+    siteName: 'Sang Logium'
+  });
+
+  const metaDescription = generateMetaDescription(
+    product.description,
+    product.name,
+    product.brand
+  );
+
   return {
-    title: `${product.name} — ${product.brand || ''} — Sang Logium`,
-    description: (typeof product.description === 'string' ? product.description.substring(0, 160) : '') || `Buy ${product.name} from ${product.brand || ''}`,
+    title: optimizedTitle, // Browser-optimized title
+    description: metaDescription,
+    // Additional SEO metadata
+    openGraph: {
+      title: seoTitle, // Full SEO title for social sharing
+      description: metaDescription,
+      type: 'website',
+      siteName: 'Sang Logium',
+    },
+    twitter: {
+      title: seoTitle, // Full title for Twitter cards
+      description: metaDescription,
+      card: 'summary_large_image',
+    },
+    // Structured data for search engines
+    other: {
+      'seo-title': seoTitle, // Custom meta for SEO tracking
+    }
   };
 }
