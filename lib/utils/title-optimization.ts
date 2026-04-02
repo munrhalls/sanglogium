@@ -1,20 +1,20 @@
 /**
  * Smart Title Optimization for Product Pages
- * 
+ *
  * Handles browser tab character limits while preserving SEO value
  * and brand recognition across all product pages systematically.
  */
 
 export interface TitleOptions {
   productName: string;
-  brand?: string | null;
+  brand?: { _id: string; name: string; slug: string } | null;
   siteName?: string;
   maxLength?: number;
 }
 
 /**
  * Generates optimized page titles for browser tabs and SEO
- * 
+ *
  * Strategy:
  * 1. Prioritize product name (most important for search)
  * 2. Include brand if space allows
@@ -31,18 +31,18 @@ export function generateOptimizedTitle(options: TitleOptions): string {
 
   // Base components
   const components = [productName];
-  
+
   // Add brand if it exists and isn't already in product name
-  if (brand && !productName.toLowerCase().includes(brand.toLowerCase())) {
-    components.push(brand);
+  if (brand && !productName.toLowerCase().includes(brand.name.toLowerCase())) {
+    components.push(brand.name);
   }
-  
+
   // Always add site name
   components.push(siteName);
 
   // Build title with different strategies based on length
   let title = components.join(" — ");
-  
+
   // If title is within limits, return as-is
   if (title.length <= maxLength) {
     return title;
@@ -50,13 +50,13 @@ export function generateOptimizedTitle(options: TitleOptions): string {
 
   // Strategy 1: Remove site name if product name is very long
   if (productName.length > maxLength - 10) {
-    return productName.length <= maxLength 
-      ? productName 
+    return productName.length <= maxLength
+      ? productName
       : truncateProductName(productName, maxLength);
   }
 
   // Strategy 2: Try brand + site name (shorter product names)
-  const withBrandAndSite = `${productName} — ${brand} — ${siteName}`;
+  const withBrandAndSite = `${productName} — ${brand?.name} — ${siteName}`;
   if (withBrandAndSite.length <= maxLength) {
     return withBrandAndSite;
   }
@@ -85,7 +85,7 @@ function truncateProductName(name: string, maxLength: number): string {
 
   // Try to preserve important words (avoid cutting in middle of brand names)
   const words = name.split(" ");
-  
+
   // If we can fit most words, truncate the last one
   let result = "";
   for (const word of words) {
@@ -111,11 +111,11 @@ function truncateProductName(name: string, maxLength: number): string {
  */
 export function generateSEOTitle(options: TitleOptions): string {
   const { productName, brand, siteName = "Sang Logium" } = options;
-  
-  if (brand && !productName.toLowerCase().includes(brand.toLowerCase())) {
-    return `${productName} — ${brand} — ${siteName}`;
+
+  if (brand && !productName.toLowerCase().includes(brand.name.toLowerCase())) {
+    return `${productName} — ${brand.name} — ${siteName}`;
   }
-  
+
   return `${productName} — ${siteName}`;
 }
 
@@ -125,23 +125,23 @@ export function generateSEOTitle(options: TitleOptions): string {
 export function generateMetaDescription(
   description: string | undefined | null,
   productName: string,
-  brand?: string | null,
+  brand?: { _id: string; name: string; slug: string } | null,
   maxLength: number = 160
 ): string {
   // If we have a proper description, use it
   if (description && typeof description === 'string') {
-    return description.length <= maxLength 
-      ? description 
+    return description.length <= maxLength
+      ? description
       : description.substring(0, maxLength - 3) + "...";
   }
 
   // Generate fallback description
-  const fallback = brand 
-    ? `Buy ${productName} from ${brand}. Premium audio equipment with fast shipping and expert support.`
+  const fallback = brand
+    ? `Buy ${productName} from ${brand.name}. Premium audio equipment with fast shipping and expert support.`
     : `Buy ${productName}. Premium audio equipment with fast shipping and expert support.`;
 
-  return fallback.length <= maxLength 
-    ? fallback 
+  return fallback.length <= maxLength
+    ? fallback
     : fallback.substring(0, maxLength - 3) + "...";
 }
 
@@ -156,14 +156,14 @@ export function analyzeTitleLength(title: string): {
 } {
   const browserTabLimit = 60;
   const serpLimit = 70; // Google typically shows ~70 chars
-  
+
   return {
     length: title.length,
-    browserTabDisplay: title.length <= browserTabLimit 
-      ? title 
+    browserTabDisplay: title.length <= browserTabLimit
+      ? title
       : title.substring(0, browserTabLimit - 3) + "...",
-    serpDisplay: title.length <= serpLimit 
-      ? title 
+    serpDisplay: title.length <= serpLimit
+      ? title
       : title.substring(0, serpLimit - 3) + "...",
     recommendations: [
       ...(title.length > browserTabLimit ? [`Browser tab: Consider shorter title (${browserTabLimit} chars)`] : []),
