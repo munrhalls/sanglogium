@@ -184,6 +184,7 @@ export type Product = {
   stripePriceId?: string;
   displayPrice?: number;
   stock?: number;
+  reservedStock?: number;
   sku?: string;
   image?: {
     asset?: {
@@ -447,7 +448,7 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./app/lib/data/homepageBatch.ts
 // Variable: HOMEPAGE_DATA_QUERY
-// Query: *[_type == "homepageData"][0] {    // Featured products section    "featured": featuredProducts[] {      productPromo,      ...productRef->{        _id,        name,        brand,        displayPrice,        image { asset->{url} }      }    },    // Spotlight 1 section    "spotlight1": spotlight1Data {      promoTitle,      promoSubtitle,      promoText,      productRef->{        _id,        name,        brand,        displayPrice,        image { asset->{url} },        gallery[] { asset->{url} }      }    },    // Spotlight 2 section    "spotlight2": spotlight2Data {      promoTitle,      promoSubtitle,      promoText,      productRef->{        _id,        name,        brand,        displayPrice,        image { asset->{url} },        gallery[] { asset->{url} }      }    },    // Spotlight 3 section    "spotlight3": spotlight3Data {      promoTitle,      promoSubtitle,      promoText,      productRef->{        _id,        name,        brand,        displayPrice,        image { asset->{url} },        gallery[] { asset->{url} }      }    },    // IEMs gallery section    "iemsGallery": iemsGallery[]->{      _id,      name,      brand,      displayPrice,      "slug": slug.current,      "imageUrl": image.asset->url,      image { asset->{url} }    },    // Newest release section    "newestRelease": newestReleaseData {      promoTitle,      promoSubtitle,      promoText,      productRef->{        _id,        name,        brand,        displayPrice,        image { asset->{url} },        gallery[] { asset->{url} }      }    },    // DACs section    "dacs": dacs[]->{      _id,      name,      brand,      displayPrice,      image { asset->{url} }    },    // Accessories - cables section    "accessoriesCables": accessoriesCables[]->{      _id,      name,      brand,      displayPrice,      "imageUrl": image.asset->url,      image { asset->{url} }    },    // Accessories - earpads section    "accessoriesEarpads": accessoriesEarpads[]->{      _id,      name,      brand,      displayPrice,      "imageUrl": image.asset->url,      image { asset->{url} }    }  }
+// Query: *[_type == "homepageData"][0] {    // Featured products section    "featured": featuredProducts[] {      productPromo,      ...productRef->{        _id,        name,        brand->{ _id, name, slug },        displayPrice,        image { asset->{url} }      }    },    // Spotlight 1 section    "spotlight1": spotlight1Data {      promoTitle,      promoSubtitle,      promoText,      productRef->{        _id,        name,        brand->{ _id, name, slug },        displayPrice,        image { asset->{url} },        gallery[] { asset->{url} }      }    },    // Spotlight 2 section    "spotlight2": spotlight2Data {      promoTitle,      promoSubtitle,      promoText,      productRef->{        _id,        name,        brand->{ _id, name, slug },        displayPrice,        image { asset->{url} },        gallery[] { asset->{url} }      }    },    // Spotlight 3 section    "spotlight3": spotlight3Data {      promoTitle,      promoSubtitle,      promoText,      productRef->{        _id,        name,        brand->{ _id, name, slug },        displayPrice,        image { asset->{url} },        gallery[] { asset->{url} }      }    },    // IEMs gallery section    "iemsGallery": iemsGallery[]->{      _id,      name,      brand->{ _id, name, slug },      displayPrice,      "slug": slug.current,      "imageUrl": image.asset->url,      image { asset->{url} }    },    // Newest release section    "newestRelease": newestReleaseData {      promoTitle,      promoSubtitle,      promoText,      productRef->{        _id,        name,        brand->{ _id, name, slug },        displayPrice,        image { asset->{url} },        gallery[] { asset->{url} }      }    },    // DACs section    "dacs": dacs[]->{      _id,      name,      brand->{ _id, name, slug },      displayPrice,      image { asset->{url} }    },    // Accessories - cables section    "accessoriesCables": accessoriesCables[]->{      _id,      name,      brand->{ _id, name, slug },      displayPrice,      "imageUrl": image.asset->url,      image { asset->{url} }    },    // Accessories - earpads section    "accessoriesEarpads": accessoriesEarpads[]->{      _id,      name,      brand->{ _id, name, slug },      displayPrice,      "imageUrl": image.asset->url,      image { asset->{url} }    }  }
 export type HOMEPAGE_DATA_QUERYResult = {
   featured: Array<
     | {
@@ -455,10 +456,9 @@ export type HOMEPAGE_DATA_QUERYResult = {
         _id: string;
         name: string | null;
         brand: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "brand";
+          _id: string;
+          name: string | null;
+          slug: Slug | null;
         } | null;
         displayPrice: number | null;
         image: {
@@ -479,10 +479,9 @@ export type HOMEPAGE_DATA_QUERYResult = {
       _id: string;
       name: string | null;
       brand: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "brand";
+        _id: string;
+        name: string | null;
+        slug: Slug | null;
       } | null;
       displayPrice: number | null;
       image: {
@@ -505,10 +504,9 @@ export type HOMEPAGE_DATA_QUERYResult = {
       _id: string;
       name: string | null;
       brand: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "brand";
+        _id: string;
+        name: string | null;
+        slug: Slug | null;
       } | null;
       displayPrice: number | null;
       image: {
@@ -531,10 +529,9 @@ export type HOMEPAGE_DATA_QUERYResult = {
       _id: string;
       name: string | null;
       brand: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "brand";
+        _id: string;
+        name: string | null;
+        slug: Slug | null;
       } | null;
       displayPrice: number | null;
       image: {
@@ -553,10 +550,9 @@ export type HOMEPAGE_DATA_QUERYResult = {
     _id: string;
     name: string | null;
     brand: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "brand";
+      _id: string;
+      name: string | null;
+      slug: Slug | null;
     } | null;
     displayPrice: number | null;
     slug: string | null;
@@ -575,10 +571,9 @@ export type HOMEPAGE_DATA_QUERYResult = {
       _id: string;
       name: string | null;
       brand: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "brand";
+        _id: string;
+        name: string | null;
+        slug: Slug | null;
       } | null;
       displayPrice: number | null;
       image: {
@@ -597,10 +592,9 @@ export type HOMEPAGE_DATA_QUERYResult = {
     _id: string;
     name: string | null;
     brand: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "brand";
+      _id: string;
+      name: string | null;
+      slug: Slug | null;
     } | null;
     displayPrice: number | null;
     image: {
@@ -613,10 +607,9 @@ export type HOMEPAGE_DATA_QUERYResult = {
     _id: string;
     name: string | null;
     brand: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "brand";
+      _id: string;
+      name: string | null;
+      slug: Slug | null;
     } | null;
     displayPrice: number | null;
     imageUrl: string | null;
@@ -630,10 +623,9 @@ export type HOMEPAGE_DATA_QUERYResult = {
     _id: string;
     name: string | null;
     brand: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "brand";
+      _id: string;
+      name: string | null;
+      slug: Slug | null;
     } | null;
     displayPrice: number | null;
     imageUrl: string | null;
@@ -722,7 +714,7 @@ export type FETCH_PROFILE_QUERYResult = null;
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '\n  *[_type == "homepageData"][0] {\n    // Featured products section\n    "featured": featuredProducts[] {\n      productPromo,\n      ...productRef->{\n        _id,\n        name,\n        brand,\n        displayPrice,\n        image { asset->{url} }\n      }\n    },\n\n    // Spotlight 1 section\n    "spotlight1": spotlight1Data {\n      promoTitle,\n      promoSubtitle,\n      promoText,\n      productRef->{\n        _id,\n        name,\n        brand,\n        displayPrice,\n        image { asset->{url} },\n        gallery[] { asset->{url} }\n      }\n    },\n\n    // Spotlight 2 section\n    "spotlight2": spotlight2Data {\n      promoTitle,\n      promoSubtitle,\n      promoText,\n      productRef->{\n        _id,\n        name,\n        brand,\n        displayPrice,\n        image { asset->{url} },\n        gallery[] { asset->{url} }\n      }\n    },\n\n    // Spotlight 3 section\n    "spotlight3": spotlight3Data {\n      promoTitle,\n      promoSubtitle,\n      promoText,\n      productRef->{\n        _id,\n        name,\n        brand,\n        displayPrice,\n        image { asset->{url} },\n        gallery[] { asset->{url} }\n      }\n    },\n\n    // IEMs gallery section\n    "iemsGallery": iemsGallery[]->{\n      _id,\n      name,\n      brand,\n      displayPrice,\n      "slug": slug.current,\n      "imageUrl": image.asset->url,\n      image { asset->{url} }\n    },\n\n    // Newest release section\n    "newestRelease": newestReleaseData {\n      promoTitle,\n      promoSubtitle,\n      promoText,\n      productRef->{\n        _id,\n        name,\n        brand,\n        displayPrice,\n        image { asset->{url} },\n        gallery[] { asset->{url} }\n      }\n    },\n\n    // DACs section\n    "dacs": dacs[]->{\n      _id,\n      name,\n      brand,\n      displayPrice,\n      image { asset->{url} }\n    },\n\n    // Accessories - cables section\n    "accessoriesCables": accessoriesCables[]->{\n      _id,\n      name,\n      brand,\n      displayPrice,\n      "imageUrl": image.asset->url,\n      image { asset->{url} }\n    },\n\n    // Accessories - earpads section\n    "accessoriesEarpads": accessoriesEarpads[]->{\n      _id,\n      name,\n      brand,\n      displayPrice,\n      "imageUrl": image.asset->url,\n      image { asset->{url} }\n    }\n  }\n': HOMEPAGE_DATA_QUERYResult;
+    '\n  *[_type == "homepageData"][0] {\n    // Featured products section\n    "featured": featuredProducts[] {\n      productPromo,\n      ...productRef->{\n        _id,\n        name,\n        brand->{ _id, name, slug },\n        displayPrice,\n        image { asset->{url} }\n      }\n    },\n\n    // Spotlight 1 section\n    "spotlight1": spotlight1Data {\n      promoTitle,\n      promoSubtitle,\n      promoText,\n      productRef->{\n        _id,\n        name,\n        brand->{ _id, name, slug },\n        displayPrice,\n        image { asset->{url} },\n        gallery[] { asset->{url} }\n      }\n    },\n\n    // Spotlight 2 section\n    "spotlight2": spotlight2Data {\n      promoTitle,\n      promoSubtitle,\n      promoText,\n      productRef->{\n        _id,\n        name,\n        brand->{ _id, name, slug },\n        displayPrice,\n        image { asset->{url} },\n        gallery[] { asset->{url} }\n      }\n    },\n\n    // Spotlight 3 section\n    "spotlight3": spotlight3Data {\n      promoTitle,\n      promoSubtitle,\n      promoText,\n      productRef->{\n        _id,\n        name,\n        brand->{ _id, name, slug },\n        displayPrice,\n        image { asset->{url} },\n        gallery[] { asset->{url} }\n      }\n    },\n\n    // IEMs gallery section\n    "iemsGallery": iemsGallery[]->{\n      _id,\n      name,\n      brand->{ _id, name, slug },\n      displayPrice,\n      "slug": slug.current,\n      "imageUrl": image.asset->url,\n      image { asset->{url} }\n    },\n\n    // Newest release section\n    "newestRelease": newestReleaseData {\n      promoTitle,\n      promoSubtitle,\n      promoText,\n      productRef->{\n        _id,\n        name,\n        brand->{ _id, name, slug },\n        displayPrice,\n        image { asset->{url} },\n        gallery[] { asset->{url} }\n      }\n    },\n\n    // DACs section\n    "dacs": dacs[]->{\n      _id,\n      name,\n      brand->{ _id, name, slug },\n      displayPrice,\n      image { asset->{url} }\n    },\n\n    // Accessories - cables section\n    "accessoriesCables": accessoriesCables[]->{\n      _id,\n      name,\n      brand->{ _id, name, slug },\n      displayPrice,\n      "imageUrl": image.asset->url,\n      image { asset->{url} }\n    },\n\n    // Accessories - earpads section\n    "accessoriesEarpads": accessoriesEarpads[]->{\n      _id,\n      name,\n      brand->{ _id, name, slug },\n      displayPrice,\n      "imageUrl": image.asset->url,\n      image { asset->{url} }\n    }\n  }\n': HOMEPAGE_DATA_QUERYResult;
     '\n  *[_type == "hero"] | order(_updatedAt desc)[0] {\n    headline,\n    subheadline,\n    ctaText,\n    backgroundImage {\n      asset->{\n        _id,\n        url,\n        metadata {\n          dimensions,\n          lqip\n        }\n      },\n      hotspot,\n      crop,\n      alt\n    },\n    mobileBackgroundImage {\n      asset->{\n        _id,\n        url,\n        metadata {\n          dimensions,\n          lqip\n        }\n      },\n      hotspot,\n      crop,\n      alt\n    }\n  }\n': HERO_QUERYResult;
     '*[_type == "commercial" && feature == "hero-main" && defined(image.asset)]\n  | order(displayOrder asc) [0]\n  {\n    _id,\n    "image": image.asset->url + "?fm=webp&w=1200&q=55",\n    "blurDataURL": image.asset->url + "?w=20&h=20&blur=10&q=20",\n    text,\n    ctaLink,\n    sale-> {\n      discount,\n      validUntil,\n      _id\n    }\n  }': GET_COMMERCIALS_HERO_MAINResult;
     '*[_type == "commercial" && feature == $feature] | order(displayOrder asc) {\n    _id,\n    title,\n    "image": image.asset->url,\n    variant,\n    displayOrder,\n    text,\n    ctaLink,\n    "products": products[]-> {\n      _id,\n      brand,\n      name,\n      description,\n      price,\n      "image": image.asset->url,\n    },\n    sale-> {\n      discount,\n      validUntil,\n      _id\n    }\n  }': GET_COMMERCIALS_BY_FEATURE_QUERYResult;

@@ -1098,6 +1098,13 @@
         },
         "optional": true
       },
+      "reservedStock": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "number"
+        },
+        "optional": true
+      },
       "sku": {
         "type": "objectAttribute",
         "value": {
