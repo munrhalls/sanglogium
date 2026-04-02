@@ -120,6 +120,16 @@ After EVERY sprint, debug, or implementation:
 - **No manual intervention** - tests run and complete automatically
 - **Preferred command**: `npm test` should map to `npx vitest run --reporter=verbose`
 
+## Playwright Testing Rules - CRITICAL
+- **PRE-FLIGHT CHECKLIST REQUIRED**: Define and verify 4 states BEFORE writing tests
+- **BEFORE-STATE must be specific**: Exact URL, counts, content, parameters
+- **TARGET ELEMENT must be specific**: Exact selector, location, interaction method
+- **USER ACTION must be specific**: Exact method, immediate result expected
+- **AFTER-STATE must be specific**: Exact expected changes, counts, content
+- **NO VAGUE DEFINITIONS**: "Check products change" → "Product count should change from 6 to filtered count"
+- **NO ASSUMED SELECTORS**: "Click filter" → "Click `page.locator('[data-testid="filter-sidebar"] label').first()`"
+- **MANUAL VERIFICATION REQUIRED**: All 4 states must be verified in browser before test writing
+
 ## Test Quality & Minimal Impact Principles
 - **MINIMAL TESTS ONLY** - Least, smallest, minimal tests needed for full-impact coverage
 - **Test user behavior, not implementation** - Focus on what users experience, not how it's built

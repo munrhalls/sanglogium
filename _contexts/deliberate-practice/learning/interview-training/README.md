@@ -25,6 +25,18 @@ This context contains evidence-based interview preparation materials specificall
 - Platform-specific strategies
 - Progress tracking
 
+### [DSA Fundamental Insights Framework](./dsa-fundamental-insights-framework.md)
+- Justin Sung methodology applied to algorithmic pattern recognition
+- Refined 6-operation framework based on user insights
+- Higher-order learning principles and stress testing
+- Complete pattern recognition system
+
+### [DSA Learning Session Transcript](./dsa-learning-session-transcript.md)
+- Complete transcript of Justin Sung methodology application
+- User insight analysis and stress testing process
+- Framework refinement and validation
+- Practical examples and connection building
+
 ## Key Findings Summary
 
 ### 🚨 Critical Skills (Interview Killers)
@@ -67,7 +79,21 @@ This context contains evidence-based interview preparation materials specificall
 1. Start with the main strategy document for overview
 2. Review the triage analysis for detailed reasoning
 3. Follow the 6-week pathway for systematic preparation
-4. Track progress using the success metrics provided
+4. **NEW:** Study the DSA Fundamental Insights Framework for pattern recognition mastery
+5. **NEW:** Review the Learning Session Transcript to understand the methodology
+6. Track progress using the success metrics provided
+
+## Justin Sung DSA Methodology
+
+**Core Documents for Algorithmic Mastery:**
+- [DSA Fundamental Insights Framework](./dsa-fundamental-insights-framework.md) - Complete pattern recognition system
+- [DSA Learning Session Transcript](./dsa-learning-session-transcript.md) - Methodology in action
+
+**Key Principles:**
+- Build mental models, don't memorize patterns
+- Question classifications and frameworks
+- Connect insights across domains
+- Focus on first principles and understanding
 
 ## Research Sources
 
