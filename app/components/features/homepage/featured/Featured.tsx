@@ -38,7 +38,7 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
     <article className="card-product flex h-full flex-col gap-4 group-hover:shadow-cardHover group-hover:-translate-y-1 transition-all duration-300">
     <figure className="aspect-[4/3] relative flex w-full items-center justify-center overflow-hidden bg-surface-productImage p-6">
       <span className="absolute left-4 top-4 text-small font-bold uppercase tracking-editorial text-brand-900 z-10">
-        {product.brand}
+        {product.brand.name}
       </span>
       <Image
         src={urlFor(product.image).width(450).auto('format').quality(75).url()}

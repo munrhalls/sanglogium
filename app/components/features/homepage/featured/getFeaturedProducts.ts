@@ -4,7 +4,11 @@ import { cache } from "react";
 export interface FeaturedProduct {
   _id: string;
   name: string;
-  brand: string;
+  brand: {
+    _id: string;
+    name: string;
+    slug: string;
+  };
   displayPrice: number;
   productPromo: string;
   image: {
@@ -20,7 +24,7 @@ const FEATURED_QUERY = `*[_type == "homepageData"][0].featuredProducts[]{
   ...productRef->{
     _id,
     name,
-    brand,
+    brand->{ _id, name, slug },
     displayPrice,
     image{asset->{url}}
   }

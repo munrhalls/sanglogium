@@ -4,7 +4,11 @@ import CardDetails from "./CardDetails";
 interface CardProps {
   product: {
     name: string;
-    brand: string;
+    brand: {
+      _id: string;
+      name: string;
+      slug: string;
+    };
     displayPrice: number;
     imageUrl: string;
   };

@@ -13,7 +13,7 @@ export default function AccessoryCard({ item, idx }: { item: AccessoryItem; idx:
 
         <figure className="aspect-[4/3] rounded-none relative flex w-full items-center justify-center overflow-hidden bg-surface-productImage p-6 md:pt-12 md:pb-4 md:px-4 mb-4">
           <span className="absolute left-4 top-4 text-small font-bold uppercase tracking-editorial text-brand-900">
-            {item.brand}
+            {item.brand.name}
           </span>
           <Image
             src={urlFor(item.image).width(450).auto('format').quality(75).url()}

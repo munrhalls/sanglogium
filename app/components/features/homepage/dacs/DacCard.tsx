@@ -7,7 +7,7 @@ export default function DacCard({ item, idx }: { item: any; idx: number }) {
   if (!item) return null;
 
   const productName = item.name || "Unknown Product";
-  const brandName = item.brand || "Generic";
+  const brandName = item.brand?.name || "Generic";
   const price = item.displayPrice ? `$${item.displayPrice}` : "Contact for Price";
 
   return (

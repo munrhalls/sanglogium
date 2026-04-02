@@ -4,13 +4,17 @@ import { cache } from "react";
 export interface DacProduct {
   _id: string;
   name: string;
-  brand: string;
+  brand: {
+    _id: string;
+    name: string;
+    slug: string;
+  };
   displayPrice: number;
   image: { asset: { url: string }; alt?: string };
 }
 
 const DACS_QUERY = `*[_type == "homepageData"][0].dacs[]->{
-  _id, name, brand, displayPrice,
+  _id, name, brand->{ _id, name, slug }, displayPrice,
   image{asset->{url}}
 }`;
 

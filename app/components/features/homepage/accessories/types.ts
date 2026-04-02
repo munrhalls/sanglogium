@@ -1,6 +1,10 @@
 ﻿export interface AccessoryItem {
   readonly _id: string;
-  readonly brand: string;
+  readonly brand: {
+    _id: string;
+    name: string;
+    slug: string;
+  };
   readonly name: string;
   readonly slug: string;
   readonly displayPrice: number;

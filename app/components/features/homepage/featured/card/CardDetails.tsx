@@ -7,7 +7,11 @@ export default function CardDetails({
   description = "Premium acoustic engineering with artisan craftsmanship."
 }: {
   name: string;
-  brand: string;
+  brand: {
+    _id: string;
+    name: string;
+    slug: string;
+  };
   price: number;
   description?: string;
 }) {
@@ -18,7 +22,7 @@ export default function CardDetails({
       <div className="flex flex-col gap-2 p-5 sm:p-8 pb-4 sm:pb-6">
         <div className="flex items-center gap-2">
           <span className="font-mono font-bold tracking-[0.2em] text-secondary-500">
-            {brand}
+            {brand.name}
           </span>
           <div className="h-[1px] w-4 bg-brand-500/30" />
         </div>
