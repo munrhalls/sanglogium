@@ -347,6 +347,86 @@
 
 ---
 
+## Keyword: sanity-groq
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/brand-groq-syntax-regression.md](failures/brand-groq-syntax-regression.md) | Critical | Use `brand->name` NOT `brand->{name}` for Sanity reference dereferencing |
+
+---
+
+## Keyword: reference-dereferencing
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/brand-groq-syntax-regression.md](failures/brand-groq-syntax-regression.md) | Critical | Sanity reference syntax: `brand->name` for single field, `brand->{_id, name, slug}` for objects |
+
+---
+
+## Keyword: brand-filter
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/brand-groq-syntax-regression.md](failures/brand-groq-syntax-regression.md) | Critical | Brand filter regression fixed with correct GROQ dereferencing syntax |
+
+---
+
+## Keyword: groq-syntax
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/brand-groq-syntax-regression.md](failures/brand-groq-syntax-regression.md) | Critical | Reference dereferencing: `brand->name` not `brand->{name}` |
+
+---
+
+## Keyword: query-debugging
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/brand-groq-syntax-regression.md](failures/brand-groq-syntax-regression.md) | Critical | Console debugging + manual URL testing faster than Playwright for data flow issues |
+
+---
+
+## Keyword: debugging-workflow
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/live-console-debugging-vs-playwright.md](workflows/live-console-debugging-vs-playwright.md) | High | Console debugging 15min vs Playwright 45min for data flow issues |
+
+---
+
+## Keyword: console-logging
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/live-console-debugging-vs-playwright.md](workflows/live-console-debugging-vs-playwright.md) | High | Live console logs for API calls, query building, data transformation |
+
+---
+
+## Keyword: live-testing
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/live-console-debugging-vs-playwright.md](workflows/live-console-debugging-vs-playwright.md) | High | Manual URL testing for parameter parsing and routing issues |
+
+---
+
+## Keyword: playwright-alternative
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/live-console-debugging-vs-playwright.md](workflows/live-console-debugging-vs-playwright.md) | High | Use console debugging for data flow, Playwright for UI workflows |
+
+---
+
+## Keyword: data-flow-debugging
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/live-console-debugging-vs-playwright.md](workflows/live-console-debugging-vs-playwright.md) | High | Console logs at URL parsing → filter construction → GROQ generation → results |
+
+---
+
 ## Keyword: groq
 
 | Lesson | Severity | Summary |
@@ -806,11 +886,11 @@
 
 ---
 
-## Keyword: useQueryState
+## Keyword: playwright
 
 | Lesson | Severity | Summary |
 |--------|----------|---------|
-| [failures/useQueryState-hydration-failure.md](failures/useQueryState-hydration-failure.md) | High | useQueryState returns undefined during hydration - always add null checks |
+| [patterns/playwright-performance-optimization.md](patterns/playwright-performance-optimization.md) | High | Use parallel workers, headless mode, no fixed waits for fast tests |
 
 ---
 

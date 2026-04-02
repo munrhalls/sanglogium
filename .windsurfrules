@@ -107,6 +107,7 @@ After EVERY sprint, debug, or implementation:
 - **cloneElement:** NEVER use cloneElement for prop injection — use React Context instead
 - **Sanity Migrations:** When migrating fields from primitive to reference types: search entire codebase first, create comprehensive checklist, update ALL interfaces/queries/components in single atomic change
 - **useQueryState:** ALWAYS add null checks - `useQueryState` returns undefined during hydration. Use `(filters || []).map()` pattern or destructure with defaults `const [filters = []] = useQueryState(...)`
+- **Playwright Performance:** ALWAYS use parallel workers, headless mode, no fixed waits. `workers: process.env.CI ? 2 : 4`, `headless: true`, NEVER `waitForTimeout`
 
 ## Testing Framework Rules
 - **NEVER use Jest** - Jest is prohibited in this codebase
@@ -132,6 +133,7 @@ After EVERY sprint, debug, or implementation:
 - **NO VAGUE DEFINITIONS**: "Check products change" → "Product count should change from 6 to filtered count"
 - **NO ASSUMED SELECTORS**: "Click filter" → "Click `page.locator('[data-testid="filter-sidebar"] label').first()`"
 - **MANUAL VERIFICATION REQUIRED**: All 4 states must be verified in browser before test writing
+- **PERFORMANCE MANDATORY**: Always use `workers: process.env.CI ? 2 : 4`, `headless: true`, NEVER `waitForTimeout`
 
 ## Test Quality & Minimal Impact Principles
 - **MINIMAL TESTS ONLY** - Least, smallest, minimal tests needed for full-impact coverage

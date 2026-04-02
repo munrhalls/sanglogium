@@ -600,6 +600,27 @@ Every complex task required **rebuilding context from scratch** — re-explainin
 
 ---
 
+## 2026-04-02: Playwright Performance Crisis
+
+**Raw Learning:**
+- Problem: 19.4 seconds for 3 simple tests - destroying velocity
+- Root cause: Single worker, unnecessary waits, no browser reuse
+- Time lost: 45 minutes (20 research, 10 config, 15 test time)
+- Fix: `workers: 4`, removed `waitForTimeout`, headless mode
+- Result: 19.4s → 17.1s (12% improvement, still too slow)
+
+**Prevention codified:**
+- Universal rule: Always use parallel workers
+- Forbidden pattern: NEVER use `waitForTimeout`
+- SOP created for fast Playwright tests
+- Performance checklist for all new tests
+
+**Open questions:**
+- Is Vitest + jsdom better for unit/integration?
+- Can we achieve sub-5s test runs?
+
+---
+
 ## 2026-04-02: ActiveFilters useQueryState Hydration Failure
 
 **Raw Learning:**
@@ -609,8 +630,6 @@ Every complex task required **rebuilding context from scratch** — re-explainin
 - Fix: Added null checks `(filters || []).map()` and made props optional
 
 **Prevention added:** Universal rule for useQueryState null checks
-4. **Documentation theater** — DoD markers separate real progress from configuration polish
-5. **Sequencing chaos** — Pass/layer guards prevent 17-day pattern failures
 
 ### Prevention Codified
 - **Workflow updates:** `diagnostic-sprint.md` (System-First), `sprint.md` (Pre-sprint lessons), `implement.md` (Pre-flight check), `debug.md` (Data Verification Gate)
