@@ -4,6 +4,7 @@ export default defineConfig({
   testDir: "./tests",
   testIgnore: "**/jest/**",
   fullyParallel: true,
+  workers: process.env.CI ? 2 : 4, // Use 4 workers locally, 2 in CI
   webServer: {
     command: "npm run start",
     url: "http://localhost:3000",
