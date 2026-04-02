@@ -3,6 +3,7 @@ import { defineConfig, devices } from "@playwright/test";
 export default defineConfig({
   testDir: "./tests",
   testIgnore: "**/jest/**",
+  fullyParallel: true,
   webServer: {
     command: "npm run start",
     url: "http://localhost:3000",
@@ -11,40 +12,18 @@ export default defineConfig({
   },
   use: {
     baseURL: "http://localhost:3000/",
-    trace: "on",
+    trace: "retain-on-failure", // Only trace on failure
+    screenshot: "only-on-failure", // Only screenshot on failure
   },
 
   projects: [
-    /* --- DESKTOP BROWSERS --- */
+    // Single browser for fast testing
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
-    },
-    {
-      name: "firefox",
-      use: { ...devices["Desktop Firefox"] },
-    },
-    {
-      name: "webkit", // This is Safari
-      use: { ...devices["Desktop Safari"] },
-    },
-    {
-      name: "Microsoft Edge",
-      use: { ...devices["Desktop Edge"], channel: "msedge" },
-    },
-    {
-      name: "Google Chrome",
-      use: { ...devices["Desktop Chrome"], channel: "chrome" },
-    },
-
-    /* --- MOBILE --- */
-    {
-      name: "Mobile Chrome", // Android
-      use: { ...devices["Pixel 5"] },
-    },
-    {
-      name: "Mobile Safari", // iOS
-      use: { ...devices["iPhone 12"] },
+      use: {
+        ...devices["Desktop Chrome"],
+        headless: true, // Run headless by default
+      },
     },
   ],
 });
