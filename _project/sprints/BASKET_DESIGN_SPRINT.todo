@@ -1,0 +1,514 @@
+BASKET DESIGN SYSTEM ALIGNMENT SPRINT
+======================================
+
+Date: 2026-04-02
+Source: _project/audits/BASKET_DESIGN_AUDIT_AND_SPEC.md
+Current Score: 4.3/10
+Target Score: 9.1/10
+Gap Count: 18 (DG-01 through DG-18)
+Scope Contracts: 8
+
+================================================================================
+LESSONS APPLIED (from INDEX.md retrieval)
+================================================================================
+
+CRITICAL:
+  ☐ tailwind-breakpoint-shadowing: Use lg-desktop:/lg-touch: NOT lg: for all responsive
+    → Current basket uses lg: in 12+ places — MUST convert all to lg-desktop:/lg-touch:
+  ☐ sequencing: Pass 1→2→3, Layer 1→2→3→4 enforcement
+  ☐ build-time-destruction: NO builds during development — dev server only
+  ☐ compound-development: End-to-end trace with bus stop expectations
+
+HIGH:
+  ☐ functional-grouping: Complete functional groups together, not isolated components
+  ☐ type-consolidation: Export shared types from data layer — single source of truth
+  ☐ velocity-aware-sprint-planning: Compressed context, no re-planning during execution
+  ☐ scope-contract: Each SC must map to audit gaps (DG-XX) for traceability
+  ☐ constraint-first: Scope Lock Rules before implementation details
+
+================================================================================
+SCOPE LOCK RULES (what NOT to touch)
+================================================================================
+
+  ✗ NO globals.css changes
+  ✗ NO homepage component changes
+  ✗ NO data structure / schema changes
+  ✗ NO Sanity query changes
+  ✗ NO store mutations or state logic changes (covered by BASKET_DATA_INTEGRITY_SPRINT)
+  ✗ NO builds during development — dev server for verification
+  ✗ NO lg: breakpoint classes — MUST use lg-desktop: and lg-touch: per lesson
+  ✗ NO raw Tailwind colors (bg-black, text-white, text-gray-*, hover:text-red-*)
+  ✗ NO raw Tailwind typography (text-lg, font-bold, font-black outside type-* tokens)
+  ✗ NO improvements outside scope contracts
+
+================================================================================
+BREAKPOINT CONSTRAINT (from tailwind-breakpoint-shadowing lesson)
+================================================================================
+
+  CRITICAL: This codebase has custom breakpoints that shadow defaults.
+  
+  BANNED breakpoints: lg:
+  REQUIRED breakpoints: lg-desktop: and lg-touch:
+  
+  Files requiring lg: → lg-desktop:/lg-touch: conversion:
+    - app/(store)/basket/BasketClientWrapper.tsx (lg:grid-cols-3, lg:col-span-2, lg:col-span-1)
+    - app/(store)/basket/Basket.tsx (lg:grid, lg:grid-cols-[...], lg:flex, lg:items-center, lg:justify-center, lg:hidden)
+    - app/(store)/basket/BasketSummary.tsx (if any)
+  
+  Reference pattern (from ProductGrid.tsx):
+    grid-cols-1 xs:grid-cols-2 lg-desktop:grid-cols-3 lg-touch:grid-cols-2
+
+================================================================================
+DEPENDENCY GRAPH
+================================================================================
+
+  Phase A — Foundation (parallel, no dependencies):
+    SC1: QuantitySelector ─────────────┐
+    SC2: Price Standardization ────────┤
+                                       │
+  Phase B — Controls (depends on A):   │
+    SC3: BasketControls Rewrite ←──── SC1
+    SC4: PDP Controls + Feedback ←─── SC1
+                                       │
+  Phase C — Page Components:           │
+    SC5: Basket Item List ←─────────── SC2 + SC3
+    SC6: Basket Summary ←───────────── SC2
+    SC7: Loading & Empty States (parallel, low dependency)
+                                       │
+  Phase D — Polish (depends on C):     │
+    SC8: Removal Animation + A11y ←─── SC3 + SC5
+
+================================================================================
+SCOPE CONTRACTS
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+SC1: QuantitySelector Shared Component — [DG-11]
+────────────────────────────────────────────────────────────────────────────────
+
+  Gap Coverage: DG-11 (Quantity controls differ between PDP and basket)
+
+  Target State:
+    New shared component at app/components/ui/QuantitySelector.tsx
+    Used identically on PDP (size="md") and basket page (size="sm")
+    btn-secondary token for ± buttons
+    type-body text-primary for quantity display
+    aria-label on buttons, role="status" aria-live="polite" on quantity
+
+  ASCII Layout:
+    size="sm" (basket):  [−] [2] [+]   w-8 h-8 buttons, w-8 quantity, gap-1
+    size="md" (PDP):     [ − ] [ 2 ] [ + ]   w-10 h-10 buttons, w-12 quantity, gap-2
+
+  Props Interface:
+    quantity: number
+    min?: number (default 1)
+    max: number (stock limit)
+    onIncrement: () => void
+    onDecrement: () => void
+    size?: 'sm' | 'md' (default 'md')
+
+  Files:
+    CREATE: app/components/ui/QuantitySelector.tsx
+
+  DoD:
+    ☐ Pass 1: Skeleton — semantic HTML (3 elements: button, span, button), debug borders
+    ☐ Pass 2: Data — props wired, callbacks connected, disabled states functional
+    ☐ Pass 3 — L1: Structure — semantic button + span elements, no classes
+    ☐ Pass 3 — L2: Layout — flex, gap, width/height sizing per size prop
+    ☐ Pass 3 — L3: Surface — btn-secondary token, type-body, text-primary
+    ☐ Pass 3 — L4: Interaction — hover (btn-secondary hover), disabled opacity, focus-visible outline, aria attributes
+
+  Delegation:
+    /implement "Create QuantitySelector shared component per SC1 in BASKET_DESIGN_SPRINT.todo"
+
+  Verification:
+    Dev server: Render QuantitySelector in isolation (both sizes)
+    Manual check: Both sizes render correctly, disabled states work
+
+────────────────────────────────────────────────────────────────────────────────
+SC2: Price Component Standardization — [DG-04]
+────────────────────────────────────────────────────────────────────────────────
+
+  Gap Coverage: DG-04 (Price formatting inconsistency — 3 approaches in 1 app)
+
+  Target State:
+    All price displays use <Price /> component from app/components/ui/Price.tsx
+    Consistent format: $X,XXX (Intl.NumberFormat, no decimals for whole, tabular-nums)
+    Summary totals: Intl.NumberFormat with minimumFractionDigits: 2 for totals including shipping
+
+  Current → Target:
+    ProductCard:      $product.displayPrice.toLocaleString()  → <Price value={} />
+    Basket item:      $item.displayPrice.toFixed(2)           → <Price value={} />
+    BasketSummary:    $subtotal.toFixed(2)                    → <Price value={} /> or formatted total
+    PDP:              <Price value={} />                      → ✅ Already correct
+
+  Files:
+    MODIFY: app/components/ui/Price.tsx (add variant prop for summary totals if needed)
+    MODIFY: app/(store)/basket/Basket.tsx (replace .toFixed(2))
+    MODIFY: app/(store)/basket/BasketSummary.tsx (replace .toFixed(2))
+    MODIFY: app/components/features/products/ProductCard.tsx (replace .toLocaleString())
+
+  DoD:
+    ☐ Verify Price component handles whole numbers and decimals correctly
+    ☐ Replace Basket.tsx inline price formatting with <Price /> component
+    ☐ Replace BasketSummary.tsx inline formatting with <Price /> or consistent Intl format
+    ☐ Replace ProductCard.tsx .toLocaleString() with <Price />
+    ☐ All prices render consistently across PDP, product cards, basket, summary
+
+  Delegation:
+    /implement "Standardize price formatting per SC2 in BASKET_DESIGN_SPRINT.todo"
+
+  Verification:
+    Dev server: Compare price rendering on PDP, product card, basket item, basket summary
+    Manual check: Formatting consistent ($X,XXX pattern), tabular-nums aligned
+
+────────────────────────────────────────────────────────────────────────────────
+SC3: BasketControls Rewrite — [DG-01, DG-02, DG-03, DG-10]
+────────────────────────────────────────────────────────────────────────────────
+
+  Gap Coverage:
+    DG-01: Off-system buttons (bg-black → btn-secondary)
+    DG-02: Off-system typography (text-lg font-bold → remove label)
+    DG-03: Off-system colors (text-gray-400, hover:text-red-500 → text-secondary-500, hover:text-error-500)
+    DG-10: Remove button disconnected (add gap-3 separator)
+
+  Target State:
+    BasketControls wraps QuantitySelector (size="sm") + separated remove button
+    No "Purchase quantity:" label (column header provides context)
+    All styling uses design tokens exclusively
+
+  ASCII Layout:
+    [−] [2] [+]   [×]
+    QuantitySelector    Remove
+         gap-1         gap-3 (visual separator)
+
+  Styling Spec:
+    Wrapper: flex items-center gap-3
+    QuantitySelector: size="sm"
+    Remove button: w-8 h-8 flex items-center justify-center rounded-sm
+                   text-secondary-500 transition-colors duration-200
+                   hover:text-error-500 hover:bg-error-500/10
+    Remove icon: X from Phosphor, size={16}
+
+  Files:
+    MODIFY: app/components/features/basket/BasketControls.tsx (full rewrite)
+
+  DoD:
+    ☐ Remove "Purchase quantity:" label entirely
+    ☐ Replace inline ± buttons with <QuantitySelector size="sm" />
+    ☐ Replace all raw colors (bg-black, text-white, text-gray-400, hover:text-red-500)
+    ☐ Replace all raw typography (text-lg, font-bold, font-black)
+    ☐ Add gap-3 visual separation between quantity controls and remove button
+    ☐ Remove button: text-secondary-500 hover:text-error-500 hover:bg-error-500/10
+    ☐ Zero raw Tailwind colors or typography remaining in file
+
+  Delegation:
+    /implement "Rewrite BasketControls per SC3 in BASKET_DESIGN_SPRINT.todo"
+
+  Verification:
+    Dev server: Basket page with items — controls match design system
+    Manual check: Zero raw colors, zero raw typography, visual separation correct
+    Grep check: grep -n "bg-black\|text-white\|text-gray\|hover:text-red\|text-lg\|font-black" BasketControls.tsx → 0 results
+
+────────────────────────────────────────────────────────────────────────────────
+SC4: PDP Quantity Controls + Add-to-Cart Feedback — [DG-11, DG-08]
+────────────────────────────────────────────────────────────────────────────────
+
+  Gap Coverage:
+    DG-11: PDP quantity controls use inline buttons → use QuantitySelector (size="md")
+    DG-08: No add-to-cart feedback → button state change ("Added ✓" for 2s)
+
+  Target State:
+    PDP quantity controls replaced with <QuantitySelector size="md" />
+    Add-to-Cart button: after click → "Added ✓" state (bg-success-700 text-brand-50) for 2s → revert
+
+  Add-to-Cart Feedback States:
+    Default:    [🛒 Add to Cart]     btn-cart w-full
+    Adding:     [✓ Added]            bg-success-700 text-brand-50 w-full (2s)
+    Return:     [🛒 Add to Cart]     btn-cart w-full
+
+  Files:
+    MODIFY: app/components/features/products/ProductInfo.tsx
+
+  DoD:
+    ☐ Replace inline ± buttons with <QuantitySelector size="md" />
+    ☐ Remove local quantity state management (delegate to QuantitySelector)
+    ☐ Add useState for feedback state (idle | added)
+    ☐ After addItem(): set state to "added", setTimeout 2s → revert to "idle"
+    ☐ Render conditional button: idle → btn-cart, added → bg-success-700 text-brand-50 with Check icon
+    ☐ Button disabled during "added" state
+
+  Delegation:
+    /implement "Unify PDP quantity controls + add-to-cart feedback per SC4 in BASKET_DESIGN_SPRINT.todo"
+
+  Verification:
+    Dev server: PDP page — quantity controls match basket controls visual language
+    Manual check: Click "Add to Cart" → button changes to "Added ✓" green → reverts after 2s
+
+────────────────────────────────────────────────────────────────────────────────
+SC5: Basket Item List Enhancement — [DG-07, DG-13, DG-14, breakpoint fix]
+────────────────────────────────────────────────────────────────────────────────
+
+  Gap Coverage:
+    DG-07: Missing line total column (desktop)
+    DG-13: Basket row hover enhancement (left accent bar)
+    DG-14: Mobile basket layout optimization
+    LESSON: lg: → lg-desktop:/lg-touch: breakpoint conversion
+
+  Target State Desktop:
+    ┌──────────────────────────────────────────────────────────┐
+    │ Product          │  Price   │  Qty    │  Total           │
+    ├──────────────────┼──────────┼─────────┼──────────────────┤
+    │ [img] Name       │  $179    │ [−]1[+] │  $179            │
+    │ [img] Name       │  $6,000  │ [−]2[+] │  $12,000         │
+    └──────────────────┴──────────┴─────────┴──────────────────┘
+
+  Target State Mobile:
+    ┌─────────────────────────────┐
+    │ [img] Product Name          │
+    │       $179 × 1              │
+    │       [−] 1 [+]  [×]       │
+    ├─────────────────────────────┤
+    │ [img] Product Name          │
+    │       $6,000 × 2            │
+    │       [−] 2 [+]  [×]       │
+    └─────────────────────────────┘
+
+  Breakpoint Conversion Required:
+    BEFORE: hidden lg:grid lg:grid-cols-[3fr_1fr_1fr_auto]
+    AFTER:  hidden lg-desktop:grid lg-touch:grid lg-desktop:grid-cols-[3fr_1fr_1fr_1fr] lg-touch:grid-cols-[3fr_1fr_1fr_1fr]
+
+    ALL lg: classes in Basket.tsx MUST convert to lg-desktop: + lg-touch:
+
+  Column Header Row:
+    type-caption uppercase tracking-editorial text-secondary-500
+    Headers: "Product", "Price", "Qty", "Total"
+    px-6 py-3 border-b border-border-secondary
+
+  Item Row Hover:
+    transition-colors duration-200
+    hover:bg-secondary-900/50 (subtle lightening on dark card)
+
+  Line Total Column (desktop only):
+    hidden lg-desktop:flex lg-touch:flex items-center justify-end
+    <Price value={item.displayPrice * item.quantity} />
+
+  Files:
+    MODIFY: app/(store)/basket/Basket.tsx
+
+  DoD:
+    ☐ Convert ALL lg: classes to lg-desktop: + lg-touch: variants
+    ☐ Add 4th column "Total" to header row
+    ☐ Add line total column per item (desktop: <Price value={price * qty} />)
+    ☐ Update grid to grid-cols-[3fr_1fr_1fr_1fr]
+    ☐ Column headers: type-caption uppercase tracking-editorial text-secondary-500
+    ☐ Row hover: hover:bg-secondary-900/50
+    ☐ Mobile: inline price × qty under product name, stacked layout
+    ☐ Zero lg: classes remaining in file
+
+  Delegation:
+    /implement "Enhance basket item list per SC5 in BASKET_DESIGN_SPRINT.todo"
+
+  Verification:
+    Dev server: Desktop — 4-column grid with line totals, row hover effect
+    Dev server: Mobile — stacked cards with price × qty inline
+    Grep check: grep -n " lg:" Basket.tsx → 0 results
+
+────────────────────────────────────────────────────────────────────────────────
+SC6: Basket Summary Polish — [DG-18, DG-12, DG-16]
+────────────────────────────────────────────────────────────────────────────────
+
+  Gap Coverage:
+    DG-18: Checkout button sizing (add explicit padding py-3)
+    DG-12: Payment icons are empty placeholders
+    DG-16: Payment section styling
+
+  Target State:
+    Checkout: btn-primary w-full py-3 text-center type-body font-bold uppercase tracking-editorial
+    Continue: btn-secondary w-full py-3 text-center mt-3
+    Payment section: REMOVE entirely (empty placeholders erode trust — re-add when real icons available)
+
+  Files:
+    MODIFY: app/(store)/basket/BasketSummary.tsx
+
+  DoD:
+    ☐ Checkout button: add py-3 px-6, uppercase tracking-editorial
+    ☐ Continue Shopping button: add py-3 for consistent sizing
+    ☐ Remove entire "We Accept" payment placeholder section (lines 62-73)
+    ☐ Summary labels: text-secondary-400 for label, type-price for values
+    ☐ Total section: verify border-t spacing, type-section-sub for totals
+
+  Delegation:
+    /implement "Polish basket summary per SC6 in BASKET_DESIGN_SPRINT.todo"
+
+  Verification:
+    Dev server: Summary card — buttons properly sized, no empty payment placeholders
+    Manual check: Buttons visually match PDP "Add to Cart" sizing
+
+────────────────────────────────────────────────────────────────────────────────
+SC7: Loading & Empty States — [DG-05, DG-06, DG-15]
+────────────────────────────────────────────────────────────────────────────────
+
+  Gap Coverage:
+    DG-05: Skeleton uses bg-gray-200 (wrong — should be bg-secondary-800 per ProductCardSkeleton pattern)
+    DG-06: Card shadow variant (card-base uses shadow-card, should evaluate shadow-cardDark)
+    DG-15: Empty state minor refinements
+
+  Target State:
+    Skeleton: bg-secondary-800 animate-pulse (matches ProductCardSkeleton)
+    Skeleton structure mirrors real layout (image placeholders, text bars, button bars)
+    Empty state: ShoppingCart icon text-secondary-600, btn-primary with py-3 px-6
+
+  Breakpoint Conversion Required:
+    BasketClientWrapper.tsx uses lg:grid-cols-3, lg:col-span-2, lg:col-span-1
+    ALL must convert to lg-desktop: + lg-touch:
+
+  Files:
+    MODIFY: app/(store)/basket/BasketClientWrapper.tsx
+    MODIFY: app/(store)/basket/EmptyBasketContent.tsx
+
+  DoD:
+    ☐ Replace ALL bg-gray-200 with bg-secondary-800 in skeleton
+    ☐ Convert ALL lg: classes to lg-desktop: + lg-touch: in BasketClientWrapper
+    ☐ Skeleton items: image placeholder h-20 w-20 rounded-sm, text bars at varying widths
+    ☐ Skeleton summary: heading placeholder, line placeholders, button placeholder
+    ☐ Add aria-busy="true" and aria-label="Loading basket" to skeleton wrapper
+    ☐ EmptyBasketContent: icon text-secondary-600, button py-3 px-6
+    ☐ Zero bg-gray-* and zero lg: classes remaining
+
+  Delegation:
+    /implement "Fix loading and empty states per SC7 in BASKET_DESIGN_SPRINT.todo"
+
+  Verification:
+    Dev server: Clear localStorage, reload — skeleton renders with correct dark colors
+    Grep check: grep -n "bg-gray\| lg:" BasketClientWrapper.tsx → 0 results
+
+────────────────────────────────────────────────────────────────────────────────
+SC8: Item Removal Animation + Accessibility — [DG-09, DG-17]
+────────────────────────────────────────────────────────────────────────────────
+
+  Gap Coverage:
+    DG-09: No item removal animation (items vanish instantly)
+    DG-17: Missing accessibility attributes on interactive elements
+
+  Target State:
+    Removal: Row fades out (opacity 0, 200ms) then collapses (max-h-0, 300ms)
+    Accessibility: aria-live regions, descriptive aria-labels, keyboard nav
+
+  Animation Spec:
+    1. User clicks remove → row gets opacity-0 transition-opacity duration-200
+    2. After 200ms → row gets max-h-0 overflow-hidden transition-[max-height] duration-300
+    3. After 500ms total → removeItem() called on store
+
+  Accessibility Spec:
+    QuantitySelector: aria-label on ± buttons, quantity role="status" aria-live="polite"
+    Remove button: aria-label="Remove {product.name} from basket"
+    Summary total: wrap in aria-live="polite" region
+    Skeleton: aria-busy="true" (handled in SC7)
+
+  Files:
+    MODIFY: app/components/features/basket/BasketControls.tsx (removal animation trigger)
+    MODIFY: app/(store)/basket/Basket.tsx (row animation classes)
+    MODIFY: app/components/ui/QuantitySelector.tsx (if a11y not already done in SC1)
+    MODIFY: app/(store)/basket/BasketSummary.tsx (aria-live on total)
+
+  DoD:
+    ☐ Item removal: fade-out + collapse animation before store removal
+    ☐ Remove button: aria-label="Remove {product.name} from basket"
+    ☐ QuantitySelector quantity: role="status" aria-live="polite"
+    ☐ BasketSummary total: aria-live="polite" region
+    ☐ All interactive elements keyboard-focusable with visible focus indicators
+
+  Delegation:
+    /implement "Add removal animation and accessibility per SC8 in BASKET_DESIGN_SPRINT.todo"
+
+  Verification:
+    Dev server: Remove item → smooth fade + collapse → item gone
+    Manual check: Tab through basket — all controls focusable, focus rings visible
+
+================================================================================
+FILES AT RISK — REGRESSION CONTAINMENT
+================================================================================
+
+  | File | Risk | Mitigation |
+  |------|------|------------|
+  | app/components/features/products/ProductInfo.tsx | SC4 modifies quantity + feedback | Preserve handleAddToCart logic, only change UI layer |
+  | app/components/features/products/ProductCard.tsx | SC2 modifies price rendering | Preserve Link, image, brand. Only change price format |
+  | app/(store)/basket/Basket.tsx | SC5 heavy modification | Preserve store subscriptions, map iteration, key props |
+  | app/(store)/basket/BasketSummary.tsx | SC6 removes payment section | Preserve selectBasketTotal/Count/IsCheckoutEnabled usage |
+  | app/(store)/basket/BasketClientWrapper.tsx | SC7 skeleton + breakpoint fix | Preserve hydration guard logic, store subscriptions |
+  | app/components/features/basket/BasketControls.tsx | SC3 full rewrite | Preserve store subscriptions (updateQuantity, removeItem) |
+  | store/store.ts | NOT MODIFIED | Zero changes — all store logic preserved from data integrity sprint |
+  | app/(store)/basket/basket.types.ts | NOT MODIFIED | Zero changes — BasketItem interface preserved |
+
+  CRITICAL CONSTRAINT: store/store.ts and basket.types.ts are NOT touched in this sprint.
+  All changes are UI-layer only (components, styling, presentation).
+
+================================================================================
+EXECUTION SEQUENCE
+================================================================================
+
+  Phase A — Foundation (parallel, ~30 min):
+    1. /implement SC1 (QuantitySelector)
+    2. /implement SC2 (Price standardization)
+       → Verify: Both components render correctly on dev server
+
+  Phase B — Controls (parallel after A, ~45 min):
+    3. /implement SC3 (BasketControls rewrite)
+    4. /implement SC4 (PDP quantity + feedback)
+       → Verify: Basket controls and PDP controls visually identical, feedback works
+
+  Phase C — Page Components (~45 min):
+    5. /implement SC5 (Basket item list + breakpoints)
+    6. /implement SC6 (Basket summary)
+    7. /implement SC7 (Loading & empty states + breakpoints)
+       → Verify: Full basket page renders correctly at desktop and mobile widths
+
+  Phase D — Polish (~20 min):
+    8. /implement SC8 (Removal animation + accessibility)
+       → Verify: Smooth removal, keyboard navigation works
+
+  Final:
+    → Visual check: Full user journey (PDP add → basket view → quantity change → remove → empty state)
+    → Grep audit: Zero lg: classes, zero bg-gray-*, zero bg-black/text-white in basket files
+
+================================================================================
+VERIFICATION COMMANDS
+================================================================================
+
+  # Verify zero off-system breakpoints in basket files
+  grep -rn " lg:" app/(store)/basket/ app/components/features/basket/
+
+  # Verify zero raw colors in basket files
+  grep -rn "bg-black\|bg-gray\|text-white\|text-gray\|hover:text-red\|hover:bg-gray" app/(store)/basket/ app/components/features/basket/
+
+  # Verify zero raw typography in basket files
+  grep -rn "text-lg\|font-black" app/(store)/basket/ app/components/features/basket/
+
+  # Dev server verification
+  npm run dev
+  # Then manually check: /basket, /product/[any-slug], product cards
+
+================================================================================
+POST-SPRINT
+================================================================================
+
+  ☐ /learn — Extract lessons from sprint experience
+  ☐ Update _project/lessons/INDEX.md with new keywords
+  ☐ Build verification (sprint completion only — per build-time-destruction rule)
+
+================================================================================
+EVIDENCE LOG (filled during execution)
+================================================================================
+
+  SC1 QuantitySelector:          [ ] PASS  [ ] FAIL
+  SC2 Price Standardization:     [ ] PASS  [ ] FAIL
+  SC3 BasketControls Rewrite:    [ ] PASS  [ ] FAIL
+  SC4 PDP Controls + Feedback:   [ ] PASS  [ ] FAIL
+  SC5 Basket Item List:          [ ] PASS  [ ] FAIL
+  SC6 Basket Summary:            [ ] PASS  [ ] FAIL
+  SC7 Loading & Empty States:    [ ] PASS  [ ] FAIL
+  SC8 Removal Animation + A11y:  [ ] PASS  [ ] FAIL
+
+  Grep Audit (zero violations):  [ ] PASS  [ ] FAIL
+  Visual Journey Check:          [ ] PASS  [ ] FAIL
