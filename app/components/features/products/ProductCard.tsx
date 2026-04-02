@@ -3,15 +3,17 @@
 import React from 'react';
 import Link from 'next/link';
 import { ProductImage } from './ProductImage';
-import { ShoppingCart } from '@phosphor-icons/react/dist/ssr';
 import type { Product } from '@/sanity/lib/products/getProductsByVfsKeys';
 import { Price } from '@/app/components/ui/Price';
+import { AddToCartButton } from '@/app/components/ui/AddToCartButton';
+import { urlFor } from '@/sanity/lib/image';
 
 export interface Product {
   _id: string;
   name: string;
   brand: { _id: string; name: string; slug?: { current: string } } | null;
   displayPrice: number;
+  stock?: number;
   image: any;
   slug: { current: string };
 }
@@ -21,6 +23,8 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const imageUrl = product.image ? urlFor(product.image).width(100).height(100).url() : '';
+
   return (
     <article
       className="card-product-dark group flex h-full flex-col col-span-1"
@@ -46,18 +50,14 @@ export function ProductCard({ product }: ProductCardProps) {
           </h3>
           <div className="mt-auto flex items-center justify-between pt-2">
             <Price value={product.displayPrice} />
-            <button
-              className="btn-cart"
-              aria-label={`Add ${product.name} to cart`}
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                // Cart functionality to be implemented
-              }}
-            >
-              <ShoppingCart size={18} weight="regular" />
-              <span className="text-cap font-bold">Add</span>
-            </button>
+            <AddToCartButton
+              productId={product._id}
+              name={product.name}
+              displayPrice={product.displayPrice}
+              stock={product.stock ?? 99}
+              imageUrl={imageUrl}
+              slug={product.slug.current}
+            />
           </div>
         </div>
       </Link>

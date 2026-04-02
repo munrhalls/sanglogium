@@ -9,9 +9,15 @@ import { ShoppingCart, Check } from '@phosphor-icons/react/dist/ssr';
 import { QuantitySelector } from '@/app/components/ui/QuantitySelector';
 
 export function ProductInfo({ product }: { product: Product }) {
-  const [quantity, setQuantity] = useState(1);
-  const [feedbackState, setFeedbackState] = useState<'idle' | 'added'>('idle');
+  const [preAddQty, setPreAddQty] = useState(1);
+  const basketItem = useBasketStore((s) =>
+    s.basket.find((i) => i._id === product._id)
+  );
   const addItem = useBasketStore((s) => s.addItem);
+  const updateQuantity = useBasketStore((s) => s.updateQuantity);
+  const removeItem = useBasketStore((s) => s.removeItem);
+
+  const isInBasket = !!basketItem;
 
   const handleAddToCart = () => {
     if (product.stock > 0) {
@@ -20,12 +26,26 @@ export function ProductInfo({ product }: { product: Product }) {
         name: product.name,
         displayPrice: product.displayPrice,
         stock: product.stock,
-        quantity: quantity,
+        quantity: preAddQty,
         image: product.image ? urlFor(product.image).width(100).height(100).url() : '',
         slug: product.slug.current,
       });
-      setFeedbackState('added');
-      setTimeout(() => setFeedbackState('idle'), 2000);
+    }
+  };
+
+  const handleBasketIncrement = () => {
+    if (basketItem && basketItem.quantity < product.stock) {
+      updateQuantity(product._id, basketItem.quantity + 1);
+    }
+  };
+
+  const handleBasketDecrement = () => {
+    if (basketItem) {
+      if (basketItem.quantity <= 1) {
+        removeItem(product._id);
+      } else {
+        updateQuantity(product._id, basketItem.quantity - 1);
+      }
     }
   };
 
@@ -60,35 +80,49 @@ export function ProductInfo({ product }: { product: Product }) {
       )}
 
       <div className="pt-4 space-y-4">
-        <div className="flex items-center gap-4">
-          <span className="type-body text-secondary">Quantity:</span>
-          <QuantitySelector
-            quantity={quantity}
-            min={1}
-            max={product.stock}
-            onIncrement={() => setQuantity(Math.min(product.stock, quantity + 1))}
-            onDecrement={() => setQuantity(Math.max(1, quantity - 1))}
-            size="md"
-          />
-        </div>
-
-        {feedbackState === 'added' ? (
-          <button
-            disabled
-            className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-sm bg-success-700 text-brand-50 transition-colors duration-200"
-          >
-            <Check size={20} weight="bold" />
-            Added
-          </button>
+        {isInBasket ? (
+          <>
+            <div className="flex items-center gap-4">
+              <span className="type-body text-secondary">In cart:</span>
+              <QuantitySelector
+                quantity={basketItem.quantity}
+                min={1}
+                max={product.stock}
+                onIncrement={handleBasketIncrement}
+                onDecrement={handleBasketDecrement}
+                size="md"
+              />
+            </div>
+            <button
+              disabled
+              className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-sm bg-success-700 text-brand-50 type-body font-bold"
+            >
+              <Check size={20} weight="bold" />
+              {basketItem.quantity} in Cart
+            </button>
+          </>
         ) : (
-          <button
-            onClick={handleAddToCart}
-            disabled={product.stock === 0}
-            className="btn-cart w-full"
-          >
-            <ShoppingCart size={20} weight="regular" />
-            {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
-          </button>
+          <>
+            <div className="flex items-center gap-4">
+              <span className="type-body text-secondary">Quantity:</span>
+              <QuantitySelector
+                quantity={preAddQty}
+                min={1}
+                max={product.stock}
+                onIncrement={() => setPreAddQty(Math.min(product.stock, preAddQty + 1))}
+                onDecrement={() => setPreAddQty(Math.max(1, preAddQty - 1))}
+                size="md"
+              />
+            </div>
+            <button
+              onClick={handleAddToCart}
+              disabled={product.stock === 0}
+              className="btn-cart w-full"
+            >
+              <ShoppingCart size={20} weight="regular" />
+              {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
+            </button>
+          </>
         )}
       </div>
     </div>
