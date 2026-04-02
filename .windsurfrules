@@ -97,6 +97,7 @@ After EVERY sprint, debug, or implementation:
 - **Pre-Flight:** Before ANY work, execute: branch check, baseline build verification, scope lock confirmation
 - **GROQ:** Verify field type before using reference syntax (->)
 - **Build:** Build passing ≠ bug fixed — need runtime verification
+- **BUILD TIME DESTRUCTION:** Build runs are BANNED except after big sprints, explicit user override, or pre-deployment only. Use dev server for verification.
 - **Modules:** ES modules only — no require() in this codebase
 - **Typegen:** ALWAYS run `npm run typegen` before type-related changes — use `Pick<SanityProduct, ...>` pattern
 - **Data:** Verify actual data before code changes (debugging)
@@ -104,6 +105,7 @@ After EVERY sprint, debug, or implementation:
 - **SVG:** Don't assume SVGR — use Image component unless verified
 - **Velocity:** Run /commits-diagnostics before sprint planning — reject if D-type > 30% or real:illusory < 2:1
 - **cloneElement:** NEVER use cloneElement for prop injection — use React Context instead
+- **Sanity Migrations:** When migrating fields from primitive to reference types: search entire codebase first, create comprehensive checklist, update ALL interfaces/queries/components in single atomic change
 
 ## Testing Framework Rules
 - **NEVER use Jest** - Jest is prohibited in this codebase
