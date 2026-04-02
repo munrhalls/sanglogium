@@ -10,7 +10,7 @@ import {
 } from "@/app/components/layout/carousel/CarouselControls";
 import FeaturedHeader from "./FeaturedHeader";
 import { FeaturedProduct } from "./getFeaturedProducts";
-import { ShoppingCart } from "@phosphor-icons/react/dist/ssr";
+import { AddToCartButton } from "@/app/components/ui/AddToCartButton";
 
 interface FeaturedProps {
   featuredData: FeaturedProduct[];
@@ -57,14 +57,14 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
       </h3>
       <div className="mt-auto flex items-center justify-between pt-2">
         <p className="type-price">${product.displayPrice}</p>
-        <button
-        className="btn-cart transition-all active:scale-95"
-        style={{ borderRadius: '3px' }}
-        aria-label={`Add ${product.name} to cart`}
-      >
-        <ShoppingCart size={18} weight="regular" />
-        <span className="text-cap font-bold">Add</span>
-      </button>
+        <AddToCartButton
+          productId={product._id}
+          name={product.name}
+          displayPrice={product.displayPrice}
+          stock={product.stock ?? 99}
+          imageUrl={product.image?.asset?.url ?? ''}
+          slug={product.slug}
+        />
       </div>
     </div>
   </article>

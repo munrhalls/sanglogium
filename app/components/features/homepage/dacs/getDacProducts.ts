@@ -10,11 +10,14 @@ export interface DacProduct {
     slug: string;
   };
   displayPrice: number;
+  stock: number;
+  slug: string;
   image: { asset: { url: string }; alt?: string };
 }
 
 const DACS_QUERY = `*[_type == "homepageData"][0].dacs[]->{
-  _id, name, brand->{ _id, name, slug }, displayPrice,
+  _id, name, brand->{ _id, name, slug }, displayPrice, stock,
+  "slug": slug.current,
   image{asset->{url}}
 }`;
 

@@ -10,6 +10,7 @@ export interface IemProduct {
     slug: string;
   };
   displayPrice: number;
+  stock: number;
   slug: string;
   imageUrl: string;
   image: { asset: { url: string }; alt?: string };
@@ -20,6 +21,7 @@ const IEMS_QUERY = `*[_type == "homepageData"][0].iemsGallery[]->{
   name,
   brand->{ _id, name, slug },
   displayPrice,
+  stock,
   "slug": slug.current,
   "imageUrl": image.asset->url,
   image{asset->{url}}

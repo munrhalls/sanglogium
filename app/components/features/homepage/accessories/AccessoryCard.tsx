@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils/tailwind";
 import { Image } from "next-sanity/image";
 import { urlFor } from "@/sanity/lib/image";
-import { ShoppingCart } from "@phosphor-icons/react/dist/ssr";
 import type { AccessoryItem } from "./types";
+import { AddToCartButton } from "@/app/components/ui/AddToCartButton";
 
 export default function AccessoryCard({ item, idx }: { item: AccessoryItem; idx: number }) {
   if (!item) return null;
@@ -39,11 +39,17 @@ export default function AccessoryCard({ item, idx }: { item: AccessoryItem; idx:
         </div>
 
         <div className="mt-auto pt-4 border-t border-border-secondary/50">
-          <button className="btn-cart w-full justify-center transition-all active:scale-95">
-            <ShoppingCart size={18} weight="regular" />
-            <span className="hidden md:block text-cap font-bold ml-2">Add to Cart</span>
-            <span className="md:hidden text-cap font-bold ml-2">Add</span>
-          </button>
+          <AddToCartButton
+            productId={item._id}
+            name={item.name}
+            displayPrice={item.displayPrice}
+            stock={(item as any).stock ?? 99}
+            imageUrl={item.imageUrl ?? ''}
+            slug={item.slug}
+            className="w-full justify-center"
+            label="Add to Cart"
+            shortLabel="Add"
+          />
         </div>
       </div>
     </article>

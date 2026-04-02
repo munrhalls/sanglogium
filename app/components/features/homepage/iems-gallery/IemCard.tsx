@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils/tailwind"
 import { Image } from "next-sanity/image"
 import { urlFor } from "@/sanity/lib/image"
 import { IemProduct } from "./getIemProducts"
-import { ShoppingCart } from "@phosphor-icons/react/dist/ssr"
+import { AddToCartButton } from "@/app/components/ui/AddToCartButton"
 
 export default function IemCard({ product, idx }: { product: IemProduct; idx: number }) {
     if (!product) return null;
@@ -32,10 +32,15 @@ export default function IemCard({ product, idx }: { product: IemProduct; idx: nu
                     <p className="type-price">
                         ${product.displayPrice}
                     </p>
-                    <button className="btn-cart w-full justify-center xs:w-auto">
-                        <ShoppingCart size={20} weight="regular" />
-                        Add
-                    </button>
+                    <AddToCartButton
+                        productId={product._id}
+                        name={product.name}
+                        displayPrice={product.displayPrice}
+                        stock={product.stock ?? 99}
+                        imageUrl={product.imageUrl ?? ''}
+                        slug={product.slug}
+                        className="w-full justify-center xs:w-auto"
+                    />
                 </div>
             </div>
         </article>

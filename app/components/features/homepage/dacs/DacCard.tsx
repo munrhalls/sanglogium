@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils/tailwind";
 import { Image } from "next-sanity/image";
 import { urlFor } from "@/sanity/lib/image";
-import { ShoppingCart } from "@phosphor-icons/react/dist/ssr";
+import { AddToCartButton } from "@/app/components/ui/AddToCartButton";
 
 export default function DacCard({ item, idx }: { item: any; idx: number }) {
   if (!item) return null;
@@ -34,10 +34,16 @@ export default function DacCard({ item, idx }: { item: any; idx: number }) {
       </div>
       <div className="mt-auto flex items-center">
         <p className="text-cap type-price text-center">{price}</p>
-        <button className="btn-cart transition-all active:scale-95 ml-auto">
-          <ShoppingCart size={18} weight="regular" />
-          <span className="text-cap font-bold">Add</span>
-        </button>
+        <div className="ml-auto">
+          <AddToCartButton
+            productId={item._id}
+            name={productName}
+            displayPrice={item.displayPrice ?? 0}
+            stock={item.stock ?? 99}
+            imageUrl={item.image?.asset?.url ?? ''}
+            slug={item.slug ?? ''}
+          />
+        </div>
       </div>
     </article>
   </a>

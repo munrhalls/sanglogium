@@ -10,6 +10,8 @@ export interface FeaturedProduct {
     slug: string;
   };
   displayPrice: number;
+  stock: number;
+  slug: string;
   productPromo: string;
   image: {
     asset: {
@@ -26,6 +28,8 @@ const FEATURED_QUERY = `*[_type == "homepageData"][0].featuredProducts[]{
     name,
     brand->{ _id, name, slug },
     displayPrice,
+    stock,
+    "slug": slug.current,
     image{asset->{url}}
   }
 }`;
