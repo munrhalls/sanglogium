@@ -20,7 +20,7 @@ export function ProductInfo({ product }: { product: Product }) {
         stock: product.stock,
         quantity: quantity,
         image: product.image ? urlFor(product.image).width(100).height(100).url() : '',
-        brand: product.brand ? { _id: product.brand._id, name: product.brand.name } : null,
+        slug: product.slug.current,
       });
     }
   };

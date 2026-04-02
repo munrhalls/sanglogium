@@ -3,30 +3,18 @@
 import React from "react";
 import { ListIcon, XIcon, List as Menu, MagnifyingGlass as Search, ShoppingBag } from "@phosphor-icons/react";
 import Link from "next/link";
-// import dynamic from "next/dynamic";
-// import { useQueryState } from "nuqs";
 import { usePathname } from "next/navigation";
 import { useDrawer } from "@/app/hooks/nuqs/useDrawer";
 import { cn } from "@/lib/utils/tailwind";
-
-// const Authentication = dynamic(
-//   () => import("@/app/components/features/auth/Authentication"),
-//   {
-//     loading: () => (
-//       <div className="flex text-white">
-//         <div className="mx-auto h-[24px] w-[24px] animate-pulse rounded-full bg-blue-700" />
-//         <span className="sr-only text-cap pl-2">Loading...</span>
-//       </div>
-//     ),
-//     ssr: false,
-//   }
-// );
+import { useBasketStore, selectBasketCount, selectHasHydrated } from "@/store/store";
 
 
 
 function ActionButtons() {
   const pathname = usePathname();
   const { isOpen, openDrawer, closeDrawer } = useDrawer();
+  const basketCount = useBasketStore(selectBasketCount);
+  const hasHydrated = useBasketStore(selectHasHydrated);
 
   return (
     <div className="flex h-full items-center justify-around px-4">
@@ -70,11 +58,16 @@ function ActionButtons() {
       {/* <Authentication /> */}
       <Link
         href="/basket"
-        className="flex cursor-pointer touch-manipulation flex-col items-center"
+        className="flex cursor-pointer touch-manipulation flex-col items-center relative"
         type="button"
         style={{ isolation: "isolate" }}
       >
         <ShoppingBag className="h-5 w-5" />
+        {hasHydrated && basketCount > 0 && (
+          <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-accent-500 text-white text-xs flex items-center justify-center font-bold">
+            {basketCount > 99 ? '99+' : basketCount}
+          </span>
+        )}
         <span className="sr-only mt-1 hidden text-xs text-cap sm:inline-block">
           Basket
         </span>
