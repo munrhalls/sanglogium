@@ -1,0 +1,760 @@
+# PORTFOLIO DIAMOND SPRINT — STANDALONE
+## 6-Day Professional Sprint (Post-Audit) — Brand New Project
+
+**Sprint Date:** April 2, 2026  
+**Target State:** Production-ready developer portfolio at `C:/webdev/portfolio/`  
+**Output:** Deployed diamond-layout portfolio, Lighthouse 85+ Performance / 95+ Accessibility  
+**Executor:** AI Agent (via /implement, /build, /test delegation)  
+**Prerequisites:** This is a **STANDALONE PROJECT** — not within Sang-Logium  
+**Audit Reference:** `_project/audits/PORTFOLIO_SPRINT_AUDIT_2026-04-02.md`
+
+---
+
+## 🚨 PRE-EXECUTION CHECKLIST (MANDATORY)
+
+**Run these commands before Day 1:**
+
+```bash
+# 1. Navigate to webdev folder
+cd C:/webdev
+
+# 2. Create standalone Next.js 15 project
+npx create-next-app@latest portfolio \
+  --typescript \
+  --tailwind \
+  --eslint \
+  --app \
+  --src-dir=false \
+  --import-alias="@/*"
+
+# 3. Navigate to project
+cd portfolio
+
+# 4. Install minimal dependencies
+npm install framer-motion lucide-react clsx tailwind-merge
+
+# 5. Install test dependencies
+npm install --save-dev @playwright/test @axe-core/playwright
+
+# 6. Verify baseline build
+npm run build
+# MUST PASS before any sprint work begins
+```
+
+**Folder Structure After Setup:**
+```
+C:/webdev/portfolio/
+├── app/
+│   ├── page.tsx
+│   ├── layout.tsx
+│   └── globals.css
+├── components/
+├── lib/
+├── tests/
+│   └── e2e/
+├── public/
+├── tailwind.config.ts
+├── next.config.ts
+└── package.json
+```
+
+---
+
+## 📋 SPRINT METADATA
+
+### Scope Lock Rules
+
+| Rule | Enforcement |
+|------|-------------|
+| **NO** modifications to Sang-Logium | Complete isolation — separate project |
+| **NO** shared dependencies | Fresh `package.json` in `portfolio/` |
+| **NO** Motion 34kb full bundle | Use `m` + `LazyMotion` (4.6kb) or CSS-first |
+| **NO** hardcoded colors in components | All via `tailwind.config.ts` tokens |
+| **NO** arbitrary Tailwind values | All utilities from config only |
+| **YES** CSS-first animation | `steps()` for typing, `transform` for hover |
+| **YES** build passes after every Pass | Never proceed with failing build |
+| **YES** 3-file test suite | layout, accessibility, performance |
+
+### Design System Specification
+
+**Color Tokens (tailwind.config.ts):**
+```typescript
+colors: {
+  background: {
+    base: "#121212",        // Main background
+    surface: "#1A1A1A",     // Card backgrounds
+    elevated: "#242424",    // Hover states
+  },
+  gold: {
+    400: "#D4AF37",         // Primary accent
+    500: "#C9A962",         // Hover state
+    glow: "rgba(201, 169, 98, 0.3)",
+  },
+  text: {
+    primary: "#FFFFFF",
+    secondary: "#E0E0E0",
+    muted: "#9E9E9E",
+  },
+}
+```
+
+**Typography Tokens:**
+```typescript
+fontFamily: {
+  sans: ["Inter", "system-ui", "sans-serif"],
+  mono: ["JetBrains Mono", "monospace"],
+}
+fontSize: {
+  hero: ["clamp(2.5rem, 5vw + 1rem, 4rem)", { lineHeight: "1.1" }],
+  h1: ["clamp(2rem, 4vw + 0.5rem, 3rem)", { lineHeight: "1.2" }],
+  h2: ["clamp(1.5rem, 3vw + 0.5rem, 2.25rem)", { lineHeight: "1.25" }],
+  body: ["1rem", { lineHeight: "1.6" }],
+  code: ["0.875rem", { lineHeight: "1.5" }],
+}
+```
+
+---
+
+## 🗺️ SPATIAL ARCHITECTURE
+
+### Desktop (1280px+)
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                              [HEADER]                                │
+│                    Name / Title — Minimal, Clean                     │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│       ┌──────────────┐                    ┌──────────────┐           │
+│       │              │                    │              │           │
+│       │   SKILLS     │◄──── Diamond ────►│    ABOUT     │           │
+│       │   (Hover)    │      Center       │    (Hover)   │           │
+│       │              │    ┌────────┐     │              │           │
+│       └──────────────┘    │  ◆◆◆◆  │     └──────────────┘           │
+│                           │  CODE  │                                │
+│       ┌──────────────┐    │ TYPING │     ┌──────────────┐           │
+│       │              │    └────────┘     │              │           │
+│       │   JOURNEY    │◄──────────────────►│   CONTACT    │           │
+│       │   (Hover)    │                    │   (Hover)    │           │
+│       │              │                    │              │           │
+│       └──────────────┘                    └──────────────┘           │
+│                                                                     │
+│  ┌─────────────────────────────────────────────────────────────────┐│
+│  │              FLAGSHIP PROJECT SHOWCASE                          ││
+│  │     Sang-Logium stats, innovations, stack badges                ││
+│  └─────────────────────────────────────────────────────────────────┘│
+│                                                                     │
+├─────────────────────────────────────────────────────────────────────┤
+│                              [FOOTER]                                │
+│              GitHub • LinkedIn • Email • Download CV                 │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+### Tablet (768px)
+
+```
+┌─────────────────────────────────────────┐
+│              [HEADER]                    │
+├─────────────────────────────────────────┤
+│                                         │
+│           ┌────────────┐                │
+│           │    ◆◆◆◆    │                │
+│           │   CODE     │                │
+│           │  TYPING    │                │
+│           └────────────┘                │
+│                                         │
+│     ┌──────────┐      ┌──────────┐      │
+│     │  SKILLS  │      │  ABOUT   │      │
+│     └──────────┘      └──────────┘      │
+│                                         │
+│     ┌──────────┐      ┌──────────┐      │
+│     │  JOURNEY │      │ CONTACT  │      │
+│     └──────────┘      └──────────┘      │
+│                                         │
+│  ┌─────────────────────────────────────┐│
+│  │     FLAGSHIP PROJECT SHOWCASE       ││
+│  └─────────────────────────────────────┘│
+│                                         │
+├─────────────────────────────────────────┤
+│              [FOOTER]                    │
+└─────────────────────────────────────────┘
+```
+
+### Mobile (375px)
+
+```
+┌─────────────────────┐
+│      [HEADER]       │
+├─────────────────────┤
+│                     │
+│  ┌──────────────┐   │
+│  │     ◆◆◆◆     │   │
+│  │    CODE      │   │
+│  │   TYPING     │   │
+│  └──────────────┘   │
+│                     │
+│  ┌──────────────┐   │
+│  │    SKILLS    │   │
+│  └──────────────┘   │
+│                     │
+│  ┌──────────────┐   │
+│  │    ABOUT     │   │
+│  └──────────────┘   │
+│                     │
+│  ┌──────────────┐   │
+│  │    JOURNEY   │   │
+│  └──────────────┘   │
+│                     │
+│  ┌──────────────┐   │
+│  │   CONTACT    │   │
+│  └──────────────┘   │
+│                     │
+│  ┌──────────────┐   │
+│  │   FLAGSHIP   │   │
+│  └──────────────┘   │
+│                     │
+├─────────────────────┤
+│      [FOOTER]       │
+└─────────────────────┘
+```
+
+---
+
+## 📦 SCOPE CONTRACTS (6 Total)
+
+### SC1: Project Setup & Design System
+
+**Target State:**
+```
+portfolio/
+├── tailwind.config.ts          # Design system tokens
+├── app/
+│   ├── globals.css             # CSS variables + Tailwind
+│   ├── layout.tsx              # Font loading (Inter + JetBrains Mono)
+│   └── page.tsx                # Placeholder
+└── lib/
+    └── utils.ts                # cn() helper
+```
+
+**DoD (Sequenced):**
+
+- [ ] Pass 1: Project initialization
+  ```bash
+  cd C:/webdev
+  npx create-next-app@latest portfolio --typescript --tailwind --eslint --app --src-dir=false --import-alias="@/*"
+  cd portfolio
+  npm install framer-motion lucide-react clsx tailwind-merge
+  npm install --save-dev @playwright/test @axe-core/playwright
+  npm run build
+  ```
+  - [ ] Verify: Build passes
+  - [ ] Verify: `npm run dev` starts server
+
+- [ ] Pass 2: Tailwind configuration
+  - [ ] `tailwind.config.ts` with semantic color tokens
+  - [ ] `tailwind.config.ts` with typography tokens
+  - [ ] `tailwind.config.ts` with font families
+  - [ ] Verify: `npx tailwindcss --config tailwind.config.ts --help` works
+
+- [ ] Pass 3 — Layer 2 (Structure): CSS variables
+  - [ ] `app/globals.css` with design token CSS variables
+  - [ ] `@tailwind` directives present
+  - [ ] Verify: DevTools shows CSS variables
+
+- [ ] Pass 3 — Layer 3 (Surface): Fonts
+  - [ ] `app/layout.tsx` with `next/font` (Inter)
+  - [ ] `app/layout.tsx` with `next/font` (JetBrains Mono)
+  - [ ] `font-display: swap` configured
+  - [ ] Verify: Fonts load on page
+
+- [ ] Pass 3 — Layer 4 (Interaction): Build verification
+  - [ ] `npm run build` passes
+  - [ ] `npm run build` completes in <30 seconds
+
+**Delegation:**
+```
+/implement "Create new standalone Next.js 15 project at C:/webdev/portfolio/ with TypeScript, Tailwind 3.4, ESLint, App Router. Install dependencies: framer-motion, lucide-react, clsx, tailwind-merge. Install dev dependencies: @playwright/test, @axe-core/playwright. Configure tailwind.config.ts with semantic color tokens (background, gold, text), typography tokens (hero, h1, h2, body, code), and font families (Inter, JetBrains Mono). Set up app/layout.tsx with next/font for both fonts. Verify npm run build passes."
+```
+
+**Verification:**
+```bash
+cd C:/webdev/portfolio
+npm run build
+# Must pass
+```
+
+---
+
+### SC2: Static Data & Validation
+
+**Target State:**
+```
+portfolio/
+├── data/
+│   └── portfolio.json          # Single source of truth
+├── lib/
+│   ├── data.ts                 # Import + types
+│   └── validation.ts           # Zod schemas
+```
+
+**DoD (Sequenced):**
+
+- [ ] Pass 1: Data structure
+  - [ ] `data/portfolio.json` with all sections
+  - [ ] `meta` object (name, title, description, location, email, github, linkedin)
+  - [ ] `flagship` object (project, duration, stats, innovations, stack)
+  - [ ] `skills` array (categories with items)
+  - [ ] `journey` array (milestones with dates, titles, descriptions)
+
+- [ ] Pass 2: Runtime validation
+  - [ ] `lib/validation.ts` with Zod schemas
+  - [ ] `lib/data.ts` importing JSON and validating
+  - [ ] Runtime error if validation fails
+
+- [ ] Pass 3 — Layer 2: TypeScript integration
+  - [ ] Exported types from `lib/data.ts`
+  - [ ] Type inference: `z.infer<typeof PortfolioSchema>`
+
+- [ ] Pass 3 — Layer 4: Verification
+  - [ ] `npm run build` passes
+  - [ ] `tsc --noEmit` passes
+
+**Delegation:**
+```
+/implement "Create data/portfolio.json with complete portfolio content: meta (name, title, description, location, email, github, linkedin), flagship project (Sang-Logium with duration, stats: products/components/tests/months, innovations array, stack badges), skills array with categories (Frontend, Backend, DevOps, Design), journey array with milestones. Create lib/validation.ts with Zod schemas for runtime validation. Create lib/data.ts that imports JSON, validates with Zod, exports TypeScript types via z.infer. Verify npm run build passes and tsc --noEmit passes."
+```
+
+**Verification:**
+```bash
+npm run build
+tsc --noEmit
+```
+
+---
+
+### SC3: Diamond Layout — Structure
+
+**Target State:**
+```
+portfolio/
+├── components/
+│   └── diamond/
+│       ├── DiamondContainer.tsx      # Main wrapper
+│       ├── DiamondShape.tsx            # Clip-path + typing
+│       ├── AccessibleNavigation.tsx    # sr-only parallel nav
+│       └── QuadrantGrid.tsx            # Responsive grid
+```
+
+**DoD (Sequenced):**
+
+- [ ] Pass 1: HTML skeleton
+  - [ ] `DiamondContainer.tsx` semantic structure
+  - [ ] `data-testid="diamond"` for E2E
+  - [ ] Placeholder quadrants with `data-testid`
+  - [ ] Debug borders visible
+
+- [ ] Pass 2: Clip-path implementation
+  - [ ] `DiamondShape.tsx` with CSS clip-path polygon
+  - [ ] Polygon: `polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)`
+  - [ ] Responsive breakpoints:
+    - Desktop (1280px+): Diamond visible, quadrants positioned
+    - Tablet (768px): Diamond centered, quadrants 2×2 grid
+    - Mobile (375px): Diamond hidden, quadrants stacked
+
+- [ ] Pass 3 — Layer 2 (Structure): Accessible navigation
+  - [ ] `AccessibleNavigation.tsx` with `aria-hidden="true"` on visual
+  - [ ] `nav` with `sr-only` class containing section links
+  - [ ] Semantic: `ul > li > a` structure
+
+- [ ] Pass 3 — Layer 3 (Surface): Visual styling
+  - [ ] Diamond border with `--diamond-glow` box-shadow
+  - [ ] Dark background `#121212`
+  - [ ] Quadrant card styling with hover placeholder
+
+- [ ] Pass 3 — Layer 4 (Interaction): RWD verification
+  - [ ] Desktop (1280px): Verified in DevTools
+  - [ ] Tablet (768px): Verified in DevTools
+  - [ ] Mobile (375px): Verified in DevTools
+
+**Delegation:**
+```
+/implement "Create diamond layout components in components/diamond/. DiamondContainer.tsx with semantic structure and data-testid attributes. DiamondShape.tsx with CSS clip-path polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%). AccessibleNavigation.tsx with aria-hidden on visual diamond + parallel sr-only navigation. Implement responsive: desktop (1280px) shows diamond with positioned quadrants, tablet (768px) shows centered diamond + 2x2 grid, mobile (375px) hides diamond and stacks quadrants. Apply diamond glow box-shadow and dark background. Verify all 3 breakpoints in DevTools."
+```
+
+**Verification:**
+```bash
+npm run build
+npx playwright test tests/layout.spec.ts
+```
+
+---
+
+### SC4: Code Typing Animation — CSS-First
+
+**Target State:**
+```
+portfolio/
+├── components/
+│   └── diamond/
+│       └── ScreenSafeTyping.tsx        # aria-hidden + sr-only
+├── app/
+│   └── globals.css
+│       └── .typing-animation            # CSS keyframes
+```
+
+**DoD (Sequenced):**
+
+- [ ] Pass 1: CSS animation skeleton
+  ```css
+  @keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+  .typing-animation {
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typing 3s steps(40) forwards;
+  }
+  ```
+
+- [ ] Pass 2: Screen-safe implementation
+  - [ ] `ScreenSafeTyping.tsx` with `aria-hidden="true"` wrapper
+  - [ ] Parallel `sr-only` element with complete code
+  ```tsx
+  <>
+    <div aria-hidden="true">
+      <pre className="typing-animation"><code>{code}</code></pre>
+    </div>
+    <pre className="sr-only"><code>{code}</code></pre>
+  </>
+  ```
+
+- [ ] Pass 3 — Layer 2 (Structure): Reduced motion
+  - [ ] `@media (prefers-reduced-motion: reduce)` query
+  - [ ] `animation: none` + `width: 100%` for reduced motion
+  - [ ] `useReducedMotion()` hook integration
+
+- [ ] Pass 3 — Layer 3 (Surface): Visual polish
+  - [ ] JetBrains Mono font applied
+  - [ ] Color: `text-secondary` (#E0E0E0)
+  - [ ] Background: `bg-surface` (#1A1A1A)
+
+- [ ] Pass 3 — Layer 4 (Interaction): Accessibility verification
+  - [ ] Screen reader test: hears complete code once (not progressive)
+  - [ ] Reduced motion test: static display when enabled
+
+**Delegation:**
+```
+/implement "Create ScreenSafeTyping.tsx in components/diamond/ with CSS steps() typing animation. CRITICAL: Use aria-hidden on visual animation + sr-only parallel content for screen readers. Add CSS keyframes to globals.css: @keyframes typing { from { width: 0; } to { width: 100%; } }. Add .typing-animation class with overflow: hidden, white-space: nowrap, animation: typing 3s steps(40) forwards. Add @media (prefers-reduced-motion: reduce) { .typing-animation { animation: none; width: 100%; } }. Apply JetBrains Mono font and dark theme colors. Test with VoiceOver/NVDA: should hear complete code once, not progressive 'c... co... con...'."
+```
+
+**Verification:**
+```bash
+npm run build
+npx playwright test tests/accessibility.spec.ts
+# Manual: Screen reader test
+```
+
+---
+
+### SC5: Quadrant System & Content
+
+**Target State:**
+```
+portfolio/
+├── components/
+│   ├── quadrants/
+│   │   ├── QuadrantGrid.tsx
+│   │   ├── QuadrantCard.tsx
+│   │   ├── SkillsQuadrant.tsx
+│   │   ├── AboutQuadrant.tsx
+│   │   ├── JourneyQuadrant.tsx
+│   │   └── ContactQuadrant.tsx
+```
+
+**DoD (Sequenced):**
+
+- [ ] Pass 1: Skeleton components
+  - [ ] `QuadrantGrid.tsx` responsive grid
+  - [ ] `QuadrantCard.tsx` with `data-testid`
+  - [ ] 4 quadrant components (placeholders)
+
+- [ ] Pass 2: Content integration
+  - [ ] Consume data from `lib/data.ts`
+  - [ ] Skills: Category list with level badges
+  - [ ] About: Bio + location
+  - [ ] Journey: Timeline with dates
+  - [ ] Contact: Links + email
+
+- [ ] Pass 3 — Layer 2 (Structure): Hover states (CSS-FIRST)
+  ```css
+  .quadrant-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .quadrant-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px var(--diamond-glow);
+  }
+  ```
+  - [ ] CSS `transform: scale()` — zero JS overhead
+  - [ ] CSS `box-shadow` glow effect
+  - [ ] Focus states for keyboard navigation
+
+- [ ] Pass 3 — Layer 3 (Surface): Visual polish
+  - [ ] Card backgrounds `bg-surface`
+  - [ ] Typography hierarchy
+  - [ ] Tap targets ≥44px (`min-height: 44px`)
+
+- [ ] Pass 3 — Layer 4 (Interaction): Full verification
+  - [ ] All 4 quadrants hoverable
+  - [ ] Click navigates to section anchor
+  - [ ] Keyboard accessible (Tab navigation)
+
+**Delegation:**
+```
+/implement "Create quadrant system in components/quadrants/. QuadrantGrid.tsx responsive grid wrapper. QuadrantCard.tsx with CSS hover animations (NOT Motion): transform: scale(1.02) and box-shadow glow. 4 content quadrants consuming data from lib/data.ts: Skills (with level badges), About (bio + location), Journey (timeline), Contact (links + email). Implement keyboard navigation with focus-visible states. Ensure tap targets min-height: 44px for mobile. Verify all 4 quadrants hoverable and keyboard accessible."
+```
+
+**Verification:**
+```bash
+npm run build
+npx playwright test tests/layout.spec.ts
+```
+
+---
+
+### SC6: Flagship Section, Testing & Deploy
+
+**Target State:**
+```
+portfolio/
+├── components/
+│   └── sections/
+│       ├── FlagshipSection.tsx
+│       └── FooterSection.tsx
+├── app/
+│   └── page.tsx                    # Final assembly
+├── tests/
+│   └── e2e/
+│       ├── layout.spec.ts
+│       ├── accessibility.spec.ts
+│       └── performance.spec.ts
+└── dist/                           # Static export
+```
+
+**DoD (Sequenced):**
+
+- [ ] Pass 1: Flagship section skeleton
+  - [ ] `FlagshipSection.tsx` component
+  - [ ] Stats: products, components, tests, months
+  - [ ] Innovation list (5 items)
+  - [ ] Stack badges (Next.js, TypeScript, Tailwind, etc.)
+
+- [ ] Pass 2: Footer + final assembly
+  - [ ] `FooterSection.tsx` with social links (GitHub, LinkedIn, Email)
+  - [ ] `page.tsx` assembling all sections
+  - [ ] Section anchors (`#skills`, `#about`, `#journey`, `#contact`)
+
+- [ ] Pass 3 — Layer 2 (Structure): E2E test suite (3 FILES)
+
+  **File 1: `tests/layout.spec.ts`**
+  ```typescript
+  test.describe("Layout", () => {
+    test("desktop shows diamond", async ({ page }) => {
+      await page.setViewportSize({ width: 1280, height: 800 });
+      await page.goto("/");
+      await expect(page.locator("[data-testid='diamond']")).toBeVisible();
+    });
+    
+    test("mobile stacks quadrants", async ({ page }) => {
+      await page.setViewportSize({ width: 375, height: 800 });
+      await page.goto("/");
+      await expect(page.locator("[data-testid='quadrant-grid']")).toBeVisible();
+    });
+  });
+  ```
+
+  **File 2: `tests/accessibility.spec.ts`**
+  ```typescript
+  test.describe("Accessibility", () => {
+    test("no axe violations", async ({ page }) => {
+      await page.goto("/");
+      const violations = await page.evaluate(async () => {
+        const axe = await import("@axe-core/playwright");
+        return await axe.default.run();
+      });
+      expect(violations.violations).toHaveLength(0);
+    });
+    
+    test("screen reader can access code", async ({ page }) => {
+      await page.goto("/");
+      await expect(page.locator(".sr-only code")).toHaveCount(1);
+    });
+  });
+  ```
+
+  **File 3: `tests/performance.spec.ts`**
+  ```typescript
+  test.describe("Performance", () => {
+    test("meets Lighthouse thresholds", async () => {
+      // Via CI or manual verification
+    });
+  });
+  ```
+
+- [ ] Pass 3 — Layer 3 (Surface): Performance optimization
+  - [ ] `next.config.ts` with `output: 'export'`
+  - [ ] `dist/` folder generated
+  - [ ] Fonts optimized
+
+- [ ] Pass 3 — Layer 4 (Interaction): Deploy
+  - [ ] Deploy to Netlify/Vercel
+  - [ ] Custom domain configured (optional)
+
+- [ ] Pass 3 — Verification Gates:
+  - [ ] **Lighthouse:** Performance 85+, Accessibility 95+, Best Practices 95+, SEO 90+
+  - [ ] **Screen Reader:** Manual test passed
+  - [ ] **Cross-browser:** Chrome, Firefox, Safari verified
+
+**Delegation:**
+```
+/implement "Create FlagshipSection.tsx showcasing Sang-Logium project with stats (products, components, tests, months), innovation list, and stack badges. Create FooterSection.tsx with GitHub, LinkedIn, Email links. Assemble final page.tsx with all sections and section anchors. Write 3 E2E test files: tests/layout.spec.ts (responsive diamond layout), tests/accessibility.spec.ts (axe-core + sr-only assertions), tests/performance.spec.ts (Lighthouse thresholds). Configure next.config.ts with output: 'export' for static build. Deploy to Netlify/Vercel."
+```
+
+**Verification:**
+```bash
+npm run build
+npx playwright test
+npx lighthouse http://localhost:3000 --preset=desktop
+# Lighthouse: 85+ Performance, 95+ Accessibility
+```
+
+---
+
+## ⚠️ REGRESSION CONTAINMENT
+
+### Pre-Sprint Baseline
+
+```bash
+# EXECUTE BEFORE DAY 1:
+cd C:/webdev
+npx create-next-app@latest portfolio --typescript --tailwind --eslint --app --src-dir=false --import-alias="@/*"
+cd portfolio
+npm install framer-motion lucide-react clsx tailwind-merge
+npm install --save-dev @playwright/test @axe-core/playwright
+npm run build
+# CAPTURE BASELINE — must pass
+```
+
+### Recovery Patterns
+
+```bash
+# Build gate — never proceed with failing build
+npm run build
+
+# Git checkpoints after each Pass
+git add .
+git commit -m "PASS 1: Diamond skeleton complete"
+
+# Recovery to last known good
+git reset --hard HEAD~1
+```
+
+---
+
+## 🎯 DELEGATION COMMANDS
+
+### Execution Sequence
+
+```
+DAY 1: /implement SC1
+  ├─ Create Next.js project at C:/webdev/portfolio/
+  ├─ Configure Tailwind with design tokens
+  ├─ Set up fonts (Inter + JetBrains Mono)
+  └─ Verify: npm run build passes
+
+DAY 2: /implement SC2
+  ├─ Create data/portfolio.json
+  ├─ Create lib/validation.ts (Zod)
+  ├─ Create lib/data.ts with types
+  └─ Verify: tsc --noEmit passes
+
+DAY 3: /implement SC3
+  ├─ Create diamond layout components
+  ├─ Implement clip-path
+  ├─ Implement responsive breakpoints
+  ├─ Add accessible parallel navigation
+  └─ Verify: All 3 breakpoints work
+
+DAY 4: /implement SC4 + SC5
+  ├─ CSS typing animation with aria-hidden + sr-only
+  ├─ Quadrant system with CSS hover states
+  ├─ Content integration
+  └─ Verify: Screen reader test, hover states work
+
+DAY 5: /implement SC6
+  ├─ Flagship section + Footer
+  ├─ Write 3 E2E test files
+  ├─ Configure static export
+  └─ Deploy
+
+DAY 6 (BUFFER): Polish
+  ├─ Lighthouse optimization
+  ├─ Cross-browser testing
+  └─ Final visual polish
+```
+
+---
+
+## 📊 EVIDENCE LOG (Fill During Sprint)
+
+| SC | DoD | Status | Evidence |
+|----|-----|--------|----------|
+| SC1 | Project created | ⬜ | `ls C:/webdev/portfolio/` |
+| SC1 | Build passes | ⬜ | `npm run build` output |
+| SC2 | Data JSON | ⬜ | `cat data/portfolio.json` |
+| SC2 | Zod validation | ⬜ | `lib/validation.ts` |
+| SC3 | Diamond layout | ⬜ | Screenshot 1280px |
+| SC3 | Mobile layout | ⬜ | Screenshot 375px |
+| SC4 | CSS typing | ⬜ | DevTools animation |
+| SC4 | Screen reader test | ⬜ | VoiceOver/NVDA log |
+| SC5 | Quadrants | ⬜ | Hover state working |
+| SC6 | Tests pass | ⬜ | `npx playwright test` |
+| SC6 | Lighthouse | ⬜ | Screenshot scores |
+
+### Final Verification
+
+- [ ] All 6 Scope Contracts complete
+- [ ] Lighthouse 85+ Performance, 95+ Accessibility
+- [ ] Screen reader manual test passed
+- [ ] Cross-browser verified (Chrome, Firefox, Safari)
+- [ ] Deployed to production
+- [ ] /learn executed for sprint retrospective
+
+---
+
+## 🏁 SPRINT LOCK CRITERIA
+
+**Sprint is LOCKED when:**
+1. ✅ All specification tests pass (100%)
+2. ✅ All critical regressions contained (baseline = current)
+3. ✅ Build gate passed (`npm run build` succeeds)
+4. ✅ Lighthouse scores ≥85 Performance, ≥95 Accessibility
+5. ✅ Manual accessibility verification complete
+
+**DO NOT MODIFY SPRINT after lock.**
+
+---
+
+## 📝 POST-SPRINT /LEARN TRIGGER
+
+After sprint lock, execute:
+```
+/learn "Extract lessons from standalone portfolio sprint: CSS-first animation effectiveness, design system coherence, test coverage adequacy, timing accuracy"
+```
+
+---
+
+**END OF SPRINT DOCUMENT**
+
+*This sprint follows the orchestrator pattern with strict Pass/Layer sequencing, build gate verification, and regression containment. Execute via /implement → /build → /test delegation only. All critical audit findings addressed: standalone project, CSS-first animation, coherent design system, minimal test suite.*
