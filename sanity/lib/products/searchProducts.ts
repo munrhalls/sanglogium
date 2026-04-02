@@ -34,7 +34,9 @@ export async function searchProductsAutocomplete(query: string): Promise<Autocom
     query: groq`*[_type == "product" && (
       name match $query ||
       brand->name match $query ||
-      sku match $query
+      sku match $query ||
+      specifications[].value match $query ||
+      overviewFields[].value match $query
     )] | order(name asc) [0...${MAX_AUTOCOMPLETE}] {
       _id,
       name,
@@ -67,7 +69,9 @@ export async function searchProductsFull(query: string, sort?: string): Promise<
     query: groq`*[_type == "product" && (
       name match $query ||
       brand->name match $query ||
-      sku match $query
+      sku match $query ||
+      specifications[].value match $query ||
+      overviewFields[].value match $query
     )] | order(${orderClause}) {
       _id,
       name,
