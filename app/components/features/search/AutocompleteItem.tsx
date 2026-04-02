@@ -39,7 +39,7 @@ export function AutocompleteItem({ product, isActive, index, showThumbnail = tru
         <div className="flex flex-col min-w-0">
           <span className="type-body text-primary truncate">{product.name}</span>
           <span className="type-caption text-secondary">
-            {product.brand && `${product.brand} · `}${product.displayPrice.toLocaleString()}
+            {product.brand?.name && `${product.brand.name} · `}${product.displayPrice.toLocaleString()}
           </span>
         </div>
       </Link>
