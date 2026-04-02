@@ -1,27 +1,47 @@
 "use client";
-import React from "react";
+import React, { useState, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useBasketStore } from "@/store/store";
 import BasketControls from "@/app/components/features/basket/BasketControls";
+import { Price } from "@/app/components/ui/Price";
 
 export default function Basket() {
   const basket = useBasketStore((s) => s.basket);
+  const removeItem = useBasketStore((s) => s.removeItem);
+  const [removingIds, setRemovingIds] = useState<Set<string>>(new Set());
+
+  const handleRemoveStart = useCallback((id: string) => {
+    setRemovingIds((prev) => new Set(prev).add(id));
+    setTimeout(() => {
+      removeItem(id);
+      setRemovingIds((prev) => {
+        const next = new Set(prev);
+        next.delete(id);
+        return next;
+      });
+    }, 500);
+  }, [removeItem]);
 
   return (
     <div>
       {/* Header row - desktop only */}
-      <div className="hidden lg:grid lg:grid-cols-[3fr_1fr_1fr_auto] border-b border-secondary p-5 type-metadata">
-        <div className="text-secondary">Product</div>
-        <div className="text-center text-secondary">Price</div>
-        <div className="text-center text-secondary">Quantity</div>
-        <div></div>
+      <div className="hidden lg-desktop:grid lg-touch:grid lg-desktop:grid-cols-[3fr_1fr_1fr_1fr] lg-touch:grid-cols-[3fr_1fr_1fr_1fr] border-b border-border-secondary px-6 py-3">
+        <div className="type-caption uppercase tracking-editorial text-secondary-500">Product</div>
+        <div className="type-caption uppercase tracking-editorial text-secondary-500 text-center">Price</div>
+        <div className="type-caption uppercase tracking-editorial text-secondary-500 text-center">Qty</div>
+        <div className="type-caption uppercase tracking-editorial text-secondary-500 text-right">Total</div>
       </div>
 
-      {basket.map((item) => (
+      {basket.map((item) => {
+        const isRemoving = removingIds.has(item._id);
+        return (
         <div
           key={item._id}
-          className="grid grid-cols-1 gap-5 border-b border-secondary p-5 lg:grid-cols-[3fr_1fr_1fr_auto] transition-colors duration-200 hover:bg-surface-subtle"
+          className={`grid grid-cols-1 gap-5 border-b border-border-secondary p-5 lg-desktop:grid-cols-[3fr_1fr_1fr_1fr] lg-touch:grid-cols-[3fr_1fr_1fr_1fr] transition-all duration-200 hover:bg-secondary-900/50 ${
+            isRemoving ? 'opacity-0 max-h-0 overflow-hidden py-0 px-5 border-b-0' : 'opacity-100 max-h-96'
+          }`}
+          style={isRemoving ? { transitionDuration: '200ms, 300ms', transitionProperty: 'opacity, max-height, padding' } : undefined}
         >
           {/* Product column */}
           <div className="flex items-center gap-5">
@@ -40,25 +60,30 @@ export default function Basket() {
                   {item.name}
                 </h3>
               </Link>
-              <p className="type-metadata lg:hidden">
-                <span className="type-price">${item.displayPrice.toFixed(2)}</span>
+              <p className="type-metadata lg-desktop:hidden lg-touch:hidden">
+                <Price value={item.displayPrice} />
                 {" "}× {item.quantity}
               </p>
             </div>
           </div>
 
           {/* Price column - desktop only */}
-          <div className="hidden lg:flex lg:items-center lg:justify-center">
-            <span className="type-price">${item.displayPrice.toFixed(2)}</span>
+          <div className="hidden lg-desktop:flex lg-touch:flex items-center justify-center">
+            <Price value={item.displayPrice} />
           </div>
 
           {/* Quantity column */}
-          <div className="flex items-center lg:justify-center">
-            <div className="mr-3 lg:hidden type-caption">Quantity:</div>
-            <BasketControls product={item} />
+          <div className="flex items-center lg-desktop:justify-center lg-touch:justify-center">
+            <BasketControls product={item} onRemoveStart={handleRemoveStart} />
+          </div>
+
+          {/* Total column - desktop only */}
+          <div className="hidden lg-desktop:flex lg-touch:flex items-center justify-end">
+            <Price value={item.displayPrice * item.quantity} />
           </div>
         </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

@@ -3,6 +3,7 @@ import React from "react";
 import { useBasketStore, selectBasketTotal, selectBasketCount, selectIsCheckoutEnabled } from "@/store/store";
 import { ArrowLeft } from "@phosphor-icons/react";
 import Link from "next/link";
+import { Price } from "@/app/components/ui/Price";
 
 export default function BasketSummary() {
   const subtotal = useBasketStore(selectBasketTotal);
@@ -20,32 +21,32 @@ export default function BasketSummary() {
 
       <div className="space-y-4">
         <div className="flex justify-between type-body">
-          <div className="text-body">Subtotal ({itemCount} items)</div>
-          <div className="type-price">${subtotal.toFixed(2)}</div>
+          <div className="text-secondary-400">Subtotal ({itemCount} items)</div>
+          <Price value={subtotal} variant="summary" />
         </div>
 
         <div className="flex justify-between type-body">
-          <div className="text-body">Shipping</div>
-          <div className="type-price">${shipping.toFixed(2)}</div>
+          <div className="text-secondary-400">Shipping</div>
+          <Price value={shipping} variant="summary" />
         </div>
 
-        <div className="border-t border-secondary pt-4">
+        <div className="border-t border-secondary pt-4" aria-live="polite">
           <div className="flex justify-between">
             <div className="type-section-sub">Total</div>
-            <div className="type-section-sub">${total.toFixed(2)}</div>
+            <Price value={total} variant="summary" />
           </div>
           <div className="type-caption text-caption mt-1">Including VAT</div>
         </div>
       </div>
 
       {isCheckoutEnabled ? (
-        <Link href="/checkout" className="btn-primary block text-center mt-6">
+        <Link href="/checkout" className="btn-primary block text-center mt-6 py-3 px-6 uppercase tracking-editorial type-body font-bold">
           Checkout
         </Link>
       ) : (
         <button
           disabled
-          className="btn-primary block text-center mt-6 opacity-50 cursor-not-allowed"
+          className="btn-primary block text-center mt-6 py-3 px-6 uppercase tracking-editorial type-body font-bold opacity-50 cursor-not-allowed"
         >
           Checkout
         </button>
@@ -53,24 +54,11 @@ export default function BasketSummary() {
 
       <Link
         href="/products"
-        className="btn-secondary block text-center mt-4"
+        className="btn-secondary block text-center mt-3 py-3"
       >
         <ArrowLeft size={16} className="inline mr-2" />
         Continue Shopping
       </Link>
-
-      <div className="border-t border-secondary pt-6 mt-6">
-        <div className="type-caption text-caption mb-2">We Accept:</div>
-        <div className="flex items-center gap-2">
-          <div className="h-6 w-10 rounded bg-surface-elevated border border-secondary"></div>
-          <div className="h-6 w-10 rounded bg-surface-elevated border border-secondary"></div>
-          <div className="h-6 w-10 rounded bg-surface-elevated border border-secondary"></div>
-          <div className="h-6 w-10 rounded bg-surface-elevated border border-secondary"></div>
-        </div>
-        <div className="type-caption text-caption mt-2">
-          Secure checkout powered by Stripe
-        </div>
-      </div>
     </>
   );
 }
