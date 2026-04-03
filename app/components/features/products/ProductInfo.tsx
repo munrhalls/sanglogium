@@ -2,22 +2,20 @@
 
 import { Product } from '@/sanity/lib/products/getProductBySlug';
 import { urlFor } from '@/sanity/lib/image';
-import { useBasketStore } from '@/store/store';
+import { useBasketStore, selectBasketItem } from '@/store/store';
 import { useState } from 'react';
 import { Price } from '@/app/components/ui/Price';
-import { ShoppingCart, Check } from '@phosphor-icons/react/dist/ssr';
+import { ShoppingCartIcon, CheckIcon } from '@phosphor-icons/react/dist/ssr';
 import { QuantitySelector } from '@/app/components/ui/QuantitySelector';
 
 export function ProductInfo({ product }: { product: Product }) {
-  const [preAddQty, setPreAddQty] = useState(1);
-  const basketItem = useBasketStore((s) =>
-    s.basket.find((i) => i._id === product._id)
-  );
+  const [preAddQty, setPreAddQty] = useState(0);
+  const basketItem = useBasketStore(selectBasketItem(product._id));
+
   const addItem = useBasketStore((s) => s.addItem);
   const updateQuantity = useBasketStore((s) => s.updateQuantity);
   const removeItem = useBasketStore((s) => s.removeItem);
 
-  const isInBasket = !!basketItem;
 
   const handleAddToCart = () => {
     if (product.stock > 0) {
@@ -41,6 +39,7 @@ export function ProductInfo({ product }: { product: Product }) {
 
   const handleBasketDecrement = () => {
     if (basketItem) {
+      console.log(basketItem.quantity)
       if (basketItem.quantity <= 1) {
         removeItem(product._id);
       } else {
@@ -54,7 +53,6 @@ export function ProductInfo({ product }: { product: Product }) {
     if (product.stock <= 5) return { text: `Only ${product.stock} left`, color: 'text-warning-500' };
     return { text: 'In Stock', color: 'text-success-500' };
   };
-
   const stockStatus = getStockStatus();
   return (
     <div className="space-y-6" data-testid="product-info">
@@ -80,13 +78,13 @@ export function ProductInfo({ product }: { product: Product }) {
       )}
 
       <div className="pt-4 space-y-4">
-        {isInBasket ? (
+        {basketItem ? (
           <>
             <div className="flex items-center gap-4">
               <span className="type-body text-secondary">In cart:</span>
               <QuantitySelector
                 quantity={basketItem.quantity}
-                min={1}
+                min={0}
                 max={product.stock}
                 onIncrement={handleBasketIncrement}
                 onDecrement={handleBasketDecrement}
@@ -97,29 +95,18 @@ export function ProductInfo({ product }: { product: Product }) {
               disabled
               className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-sm bg-success-700 text-brand-50 type-body font-bold"
             >
-              <Check size={20} weight="bold" />
+              <CheckIcon size={20} weight="bold" />
               {basketItem.quantity} in Cart
             </button>
           </>
         ) : (
           <>
-            <div className="flex items-center gap-4">
-              <span className="type-body text-secondary">Quantity:</span>
-              <QuantitySelector
-                quantity={preAddQty}
-                min={1}
-                max={product.stock}
-                onIncrement={() => setPreAddQty(Math.min(product.stock, preAddQty + 1))}
-                onDecrement={() => setPreAddQty(Math.max(1, preAddQty - 1))}
-                size="md"
-              />
-            </div>
             <button
               onClick={handleAddToCart}
               disabled={product.stock === 0}
               className="btn-cart w-full"
             >
-              <ShoppingCart size={20} weight="regular" />
+              <ShoppingCartIcon size={20} weight="regular" />
               {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
             </button>
           </>

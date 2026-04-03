@@ -24,6 +24,9 @@ export const selectIsCheckoutEnabled = (state: BasketState) => {
 
 export const selectHasHydrated = (state: BasketState) => state._hasHydrated;
 
+export const selectBasketItem = (id: string) => (state: BasketState) =>
+  state.basket.find((i) => i._id === id);
+
 export const useBasketStore = create<BasketState>()(
   persist(
     (set, get) => ({
@@ -42,7 +45,6 @@ export const useBasketStore = create<BasketState>()(
         ) {
           return;
         }
-        console.log('click')
         const basket = get().basket;
         const existing = basket.find((i) => i._id === item._id);
         if (existing) {
