@@ -4,24 +4,38 @@ import {
   ShoppingCartIcon,
   UserIcon,
   SignInIcon,
-  SignOutIcon,
 } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils/tailwind";
+import { useBasketStore, selectBasketCount } from "@/store/store";
+import { useState, useEffect } from "react";
+import Link from "next/link";
 
 interface NavbarActionsProps {
   isAuthenticated: boolean;
-  cartCount: number;
+  cartCount?: number; // Kept for compatibility but prioritized store
 }
 
-const NavbarActions = ({ isAuthenticated, cartCount }: NavbarActionsProps) => {
+const NavbarActions = ({ isAuthenticated }: NavbarActionsProps) => {
+  const [mounted, setMounted] = useState(false);
+  const realCartCount = useBasketStore(selectBasketCount);
+
+  // Sync hydration state
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const displayCount = mounted ? realCartCount : 0;
+
   return (
     <div className={cn("ml-6 hidden items-center gap-6", "lg:flex")}>
       {/* Cart Action */}
-      <NavActionItem
-        icon={<ShoppingCartIcon size={24} />}
-        label="Cart"
-        badgeCount={cartCount}
-      />
+      <Link href="/basket">
+        <NavActionItem
+          icon={<ShoppingCartIcon size={24} />}
+          label="Cart"
+          badgeCount={displayCount}
+        />
+      </Link>
 
       {/* Account / Auth Group */}
       <div className={cn("group relative")}>
