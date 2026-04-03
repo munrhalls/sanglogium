@@ -18,12 +18,27 @@ export default defineConfig({
   },
 
   projects: [
-    // Single browser for fast testing
+    // Desktop Chromium
     {
       name: "chromium",
       use: {
         ...devices["Desktop Chrome"],
-        headless: true, // Run headless by default
+        headless: true,
+      },
+    },
+    // Mobile Viewports
+    {
+      name: "Mobile Chrome",
+      use: {
+        ...devices["Pixel 5"],
+        headless: true,
+      },
+    },
+    {
+      name: "Mobile Safari",
+      use: {
+        ...devices["iPhone 13"],
+        headless: true,
       },
     },
   ],
