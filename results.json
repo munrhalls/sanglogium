@@ -1,0 +1,391 @@
+{
+  "config": {
+    "configFile": "C:\\webdev\\sang-logium\\playwright.config.ts",
+    "rootDir": "C:/webdev/sang-logium/tests",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/webdev/sang-logium/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/webdev/sang-logium/tests",
+        "testIgnore": [
+          "**/jest/**"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "runAgents": "none",
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.58.2",
+    "workers": 4,
+    "webServer": {
+      "command": "npm run start",
+      "url": "http://localhost:3000",
+      "reuseExistingServer": true,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e\\basket-navigation.spec.ts",
+      "file": "e2e/basket-navigation.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Basket Navigation",
+          "file": "e2e/basket-navigation.spec.ts",
+          "line": 13,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should navigate directly to basket and render correctly",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 7407,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Your Basket')\nExpected: visible\nError: strict mode violation: getByText('Your Basket') resolved to 3 elements:\n    1) <h1 class=\"type-section-hed uppercase section-header-anchor text-center\">Your Basket</h1> aka getByRole('heading', { name: 'Your Basket', exact: true })\n    2) <h2 class=\"type-section-sub text-center\">Your basket is empty</h2> aka getByRole('heading', { name: 'Your basket is empty' })\n    3) <p class=\"type-body text-body mb-8 max-w-md text-center\">Looks like you haven't added any products to your…</p> aka getByText('Looks like you haven\\'t added')\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Your Basket')\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Your Basket')\nExpected: visible\nError: strict mode violation: getByText('Your Basket') resolved to 3 elements:\n    1) <h1 class=\"type-section-hed uppercase section-header-anchor text-center\">Your Basket</h1> aka getByRole('heading', { name: 'Your Basket', exact: true })\n    2) <h2 class=\"type-section-sub text-center\">Your basket is empty</h2> aka getByRole('heading', { name: 'Your basket is empty' })\n    3) <p class=\"type-body text-body mb-8 max-w-md text-center\">Looks like you haven't added any products to your…</p> aka getByText('Looks like you haven\\'t added')\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Your Basket')\u001b[22m\n\n    at C:\\webdev\\sang-logium\\tests\\e2e\\basket-navigation.spec.ts:24:31",
+                        "location": {
+                          "file": "C:\\webdev\\sang-logium\\tests\\e2e\\basket-navigation.spec.ts",
+                          "column": 31,
+                          "line": 24
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 22 |\u001b[39m     \u001b[90m// Check for unique content that defines the basket page\u001b[39m\n \u001b[90m 23 |\u001b[39m     \u001b[36mconst\u001b[39m basketTitle \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Your Basket'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 24 |\u001b[39m     \u001b[36mawait\u001b[39m expect(basketTitle)\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 25 |\u001b[39m     \n \u001b[90m 26 |\u001b[39m     \u001b[90m// Ensure the shelf layout is present\u001b[39m\n \u001b[90m 27 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mlocator(\u001b[32m'main'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\webdev\\sang-logium\\tests\\e2e\\basket-navigation.spec.ts",
+                            "column": 31,
+                            "line": 24
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Your Basket')\nExpected: visible\nError: strict mode violation: getByText('Your Basket') resolved to 3 elements:\n    1) <h1 class=\"type-section-hed uppercase section-header-anchor text-center\">Your Basket</h1> aka getByRole('heading', { name: 'Your Basket', exact: true })\n    2) <h2 class=\"type-section-sub text-center\">Your basket is empty</h2> aka getByRole('heading', { name: 'Your basket is empty' })\n    3) <p class=\"type-body text-body mb-8 max-w-md text-center\">Looks like you haven't added any products to your…</p> aka getByText('Looks like you haven\\'t added')\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Your Basket')\u001b[22m\n\n\n\u001b[0m \u001b[90m 22 |\u001b[39m     \u001b[90m// Check for unique content that defines the basket page\u001b[39m\n \u001b[90m 23 |\u001b[39m     \u001b[36mconst\u001b[39m basketTitle \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Your Basket'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 24 |\u001b[39m     \u001b[36mawait\u001b[39m expect(basketTitle)\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 25 |\u001b[39m     \n \u001b[90m 26 |\u001b[39m     \u001b[90m// Ensure the shelf layout is present\u001b[39m\n \u001b[90m 27 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mlocator(\u001b[32m'main'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at C:\\webdev\\sang-logium\\tests\\e2e\\basket-navigation.spec.ts:24:31\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-03T11:40:55.881Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\webdev\\sang-logium\\test-results\\e2e-basket-navigation-Bask-fe5a8-basket-and-render-correctly-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\webdev\\sang-logium\\test-results\\e2e-basket-navigation-Bask-fe5a8-basket-and-render-correctly-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\webdev\\sang-logium\\test-results\\e2e-basket-navigation-Bask-fe5a8-basket-and-render-correctly-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\webdev\\sang-logium\\tests\\e2e\\basket-navigation.spec.ts",
+                        "column": 31,
+                        "line": 24
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "04bd629c87d2852b6f4b-8984f137ee2a238cc14e",
+              "file": "e2e/basket-navigation.spec.ts",
+              "line": 15,
+              "column": 3
+            },
+            {
+              "title": "should navigate to basket from home page links and support history nav",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 16445,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Your Basket')\nExpected: visible\nError: strict mode violation: getByText('Your Basket') resolved to 3 elements:\n    1) <h1 class=\"type-section-hed uppercase section-header-anchor text-center\">Your Basket</h1> aka getByRole('heading', { name: 'Your Basket', exact: true })\n    2) <h2 class=\"type-section-sub text-center\">Your basket is empty</h2> aka getByRole('heading', { name: 'Your basket is empty' })\n    3) <p class=\"type-body text-body mb-8 max-w-md text-center\">Looks like you haven't added any products to your…</p> aka getByText('Looks like you haven\\'t added')\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Your Basket')\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Your Basket')\nExpected: visible\nError: strict mode violation: getByText('Your Basket') resolved to 3 elements:\n    1) <h1 class=\"type-section-hed uppercase section-header-anchor text-center\">Your Basket</h1> aka getByRole('heading', { name: 'Your Basket', exact: true })\n    2) <h2 class=\"type-section-sub text-center\">Your basket is empty</h2> aka getByRole('heading', { name: 'Your basket is empty' })\n    3) <p class=\"type-body text-body mb-8 max-w-md text-center\">Looks like you haven't added any products to your…</p> aka getByText('Looks like you haven\\'t added')\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Your Basket')\u001b[22m\n\n    at C:\\webdev\\sang-logium\\tests\\e2e\\basket-navigation.spec.ts:59:53",
+                        "location": {
+                          "file": "C:\\webdev\\sang-logium\\tests\\e2e\\basket-navigation.spec.ts",
+                          "column": 53,
+                          "line": 59
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 57 |\u001b[39m         \u001b[90m// Verification: Destination rendered\u001b[39m\n \u001b[90m 58 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page)\u001b[33m.\u001b[39mtoHaveURL(\u001b[35m/\\/basket/\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 59 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Your Basket'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 60 |\u001b[39m\n \u001b[90m 61 |\u001b[39m         \u001b[90m// Action: Browser Back\u001b[39m\n \u001b[90m 62 |\u001b[39m         \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoBack()\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\webdev\\sang-logium\\tests\\e2e\\basket-navigation.spec.ts",
+                            "column": 53,
+                            "line": 59
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Your Basket')\nExpected: visible\nError: strict mode violation: getByText('Your Basket') resolved to 3 elements:\n    1) <h1 class=\"type-section-hed uppercase section-header-anchor text-center\">Your Basket</h1> aka getByRole('heading', { name: 'Your Basket', exact: true })\n    2) <h2 class=\"type-section-sub text-center\">Your basket is empty</h2> aka getByRole('heading', { name: 'Your basket is empty' })\n    3) <p class=\"type-body text-body mb-8 max-w-md text-center\">Looks like you haven't added any products to your…</p> aka getByText('Looks like you haven\\'t added')\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Your Basket')\u001b[22m\n\n\n\u001b[0m \u001b[90m 57 |\u001b[39m         \u001b[90m// Verification: Destination rendered\u001b[39m\n \u001b[90m 58 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page)\u001b[33m.\u001b[39mtoHaveURL(\u001b[35m/\\/basket/\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 59 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Your Basket'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 60 |\u001b[39m\n \u001b[90m 61 |\u001b[39m         \u001b[90m// Action: Browser Back\u001b[39m\n \u001b[90m 62 |\u001b[39m         \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoBack()\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at C:\\webdev\\sang-logium\\tests\\e2e\\basket-navigation.spec.ts:59:53\u001b[22m"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "Testing link 1/2 at [1067.09375, 12]\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-03T11:40:55.900Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\webdev\\sang-logium\\test-results\\e2e-basket-navigation-Bask-5af86-nks-and-support-history-nav-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\webdev\\sang-logium\\test-results\\e2e-basket-navigation-Bask-5af86-nks-and-support-history-nav-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\webdev\\sang-logium\\test-results\\e2e-basket-navigation-Bask-5af86-nks-and-support-history-nav-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\webdev\\sang-logium\\tests\\e2e\\basket-navigation.spec.ts",
+                        "column": 53,
+                        "line": 59
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "04bd629c87d2852b6f4b-bec61496711a14b866c9",
+              "file": "e2e/basket-navigation.spec.ts",
+              "line": 30,
+              "column": 3
+            },
+            {
+              "title": "should navigate to basket from a product page and support history nav",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "timedOut",
+                      "duration": 30446,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "C:\\webdev\\sang-logium\\tests\\e2e\\basket-navigation.spec.ts",
+                            "column": 23,
+                            "line": 88
+                          },
+                          "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a[href^=\"/product/\"]').first()\u001b[22m\n\n\n\u001b[0m \u001b[90m 86 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 87 |\u001b[39m     \u001b[36mconst\u001b[39m productLink \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'a[href^=\"/product/\"]'\u001b[39m)\u001b[33m.\u001b[39mfirst()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 88 |\u001b[39m     \u001b[36mawait\u001b[39m productLink\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 89 |\u001b[39m     \n \u001b[90m 90 |\u001b[39m     \u001b[36mconst\u001b[39m preceedingUrl \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39murl()\u001b[33m;\u001b[39m\n \u001b[90m 91 |\u001b[39m     expect(preceedingUrl)\u001b[33m.\u001b[39mtoContain(\u001b[32m'/product/'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at C:\\webdev\\sang-logium\\tests\\e2e\\basket-navigation.spec.ts:88:23\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-03T11:40:55.865Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\webdev\\sang-logium\\test-results\\e2e-basket-navigation-Bask-75548-age-and-support-history-nav-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\webdev\\sang-logium\\test-results\\e2e-basket-navigation-Bask-75548-age-and-support-history-nav-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\webdev\\sang-logium\\test-results\\e2e-basket-navigation-Bask-75548-age-and-support-history-nav-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "04bd629c87d2852b6f4b-1848039d6e16f9358eab",
+              "file": "e2e/basket-navigation.spec.ts",
+              "line": 83,
+              "column": 3
+            }
+          ],
+          "suites": [
+            {
+              "title": "Mobile Navigation",
+              "file": "e2e/basket-navigation.spec.ts",
+              "line": 110,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "should navigate via ActionBar on mobile",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 3,
+                          "parallelIndex": 3,
+                          "status": "failed",
+                          "duration": 16565,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Your Basket')\nExpected: visible\nError: strict mode violation: getByText('Your Basket') resolved to 3 elements:\n    1) <h1 class=\"type-section-hed uppercase section-header-anchor text-center\">Your Basket</h1> aka getByRole('heading', { name: 'Your Basket', exact: true })\n    2) <h2 class=\"type-section-sub text-center\">Your basket is empty</h2> aka getByRole('heading', { name: 'Your basket is empty' })\n    3) <p class=\"type-body text-body mb-8 max-w-md text-center\">Looks like you haven't added any products to your…</p> aka getByText('Looks like you haven\\'t added')\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Your Basket')\u001b[22m\n",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Your Basket')\nExpected: visible\nError: strict mode violation: getByText('Your Basket') resolved to 3 elements:\n    1) <h1 class=\"type-section-hed uppercase section-header-anchor text-center\">Your Basket</h1> aka getByRole('heading', { name: 'Your Basket', exact: true })\n    2) <h2 class=\"type-section-sub text-center\">Your basket is empty</h2> aka getByRole('heading', { name: 'Your basket is empty' })\n    3) <p class=\"type-body text-body mb-8 max-w-md text-center\">Looks like you haven't added any products to your…</p> aka getByText('Looks like you haven\\'t added')\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Your Basket')\u001b[22m\n\n    at C:\\webdev\\sang-logium\\tests\\e2e\\basket-navigation.spec.ts:123:51",
+                            "location": {
+                              "file": "C:\\webdev\\sang-logium\\tests\\e2e\\basket-navigation.spec.ts",
+                              "column": 51,
+                              "line": 123
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 121 |\u001b[39m       \n \u001b[90m 122 |\u001b[39m       \u001b[36mawait\u001b[39m expect(page)\u001b[33m.\u001b[39mtoHaveURL(\u001b[35m/\\/basket/\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 123 |\u001b[39m       \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Your Basket'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                                   \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 124 |\u001b[39m\n \u001b[90m 125 |\u001b[39m       \u001b[90m// Back/Forward check\u001b[39m\n \u001b[90m 126 |\u001b[39m       \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoBack()\u001b[33m;\u001b[39m\u001b[0m"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "C:\\webdev\\sang-logium\\tests\\e2e\\basket-navigation.spec.ts",
+                                "column": 51,
+                                "line": 123
+                              },
+                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Your Basket')\nExpected: visible\nError: strict mode violation: getByText('Your Basket') resolved to 3 elements:\n    1) <h1 class=\"type-section-hed uppercase section-header-anchor text-center\">Your Basket</h1> aka getByRole('heading', { name: 'Your Basket', exact: true })\n    2) <h2 class=\"type-section-sub text-center\">Your basket is empty</h2> aka getByRole('heading', { name: 'Your basket is empty' })\n    3) <p class=\"type-body text-body mb-8 max-w-md text-center\">Looks like you haven't added any products to your…</p> aka getByText('Looks like you haven\\'t added')\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Your Basket')\u001b[22m\n\n\n\u001b[0m \u001b[90m 121 |\u001b[39m       \n \u001b[90m 122 |\u001b[39m       \u001b[36mawait\u001b[39m expect(page)\u001b[33m.\u001b[39mtoHaveURL(\u001b[35m/\\/basket/\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 123 |\u001b[39m       \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'Your Basket'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                                   \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 124 |\u001b[39m\n \u001b[90m 125 |\u001b[39m       \u001b[90m// Back/Forward check\u001b[39m\n \u001b[90m 126 |\u001b[39m       \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoBack()\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at C:\\webdev\\sang-logium\\tests\\e2e\\basket-navigation.spec.ts:123:51\u001b[22m"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-04-03T11:40:55.883Z",
+                          "annotations": [],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "C:\\webdev\\sang-logium\\test-results\\e2e-basket-navigation-Bask-616c8-ate-via-ActionBar-on-mobile-chromium\\test-failed-1.png"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "C:\\webdev\\sang-logium\\test-results\\e2e-basket-navigation-Bask-616c8-ate-via-ActionBar-on-mobile-chromium\\error-context.md"
+                            },
+                            {
+                              "name": "trace",
+                              "contentType": "application/zip",
+                              "path": "C:\\webdev\\sang-logium\\test-results\\e2e-basket-navigation-Bask-616c8-ate-via-ActionBar-on-mobile-chromium\\trace.zip"
+                            }
+                          ],
+                          "errorLocation": {
+                            "file": "C:\\webdev\\sang-logium\\tests\\e2e\\basket-navigation.spec.ts",
+                            "column": 51,
+                            "line": 123
+                          }
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "04bd629c87d2852b6f4b-a4e0cbf127c2a9729627",
+                  "file": "e2e/basket-navigation.spec.ts",
+                  "line": 113,
+                  "column": 5
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-04-03T11:40:51.407Z",
+    "duration": 35581.013999999996,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}

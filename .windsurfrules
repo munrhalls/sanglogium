@@ -74,7 +74,10 @@ Any fact that, if missing or wrong, would cause the sprint doc to drift or the e
 - Work on a one-by-one basis for fixes
 
 ## /implement Command Protocol
-When the user types /implement in Cascade, immediately read, strictly adopt, and execute the exact protocol defined in C:\webdev\sang-logium\_project\COMMANDS\Implement_v2.md. Do not deviate from its phases.
+When the user types /implement in Cascade, immediately read, strictly adopt, and execute the exact protocol defined in C:\webdev\sang-logium\_agent\workflows\implement.md. Do not deviate from its phases.
+
+## /contain Command Protocol
+When the user types /contain in Cascade, immediately read and strictly adopt the protocol defined in C:\webdev\sang-logium\.windsurf\workflows\contain.md. This command MANDATES zero-lateral movement and forbids any unrelated changes, improvements, or refactors outside of the explicit scope.
 
 ## Learning Circuit — Compound Engineering
 

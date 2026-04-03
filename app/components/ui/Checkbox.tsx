@@ -26,8 +26,8 @@ export function Checkbox({ name, value, checked, onChange, label }: CheckboxProp
           className={`
             w-4 h-4 border rounded-sm transition-all duration-150
             ${checked
-              ? 'bg-brand-400 border-brand-400'
-              : 'border-border-primary bg-transparent group-hover:border-brand-400'
+              ? 'bg-accent-500 border-accent-500'
+              : 'border-border-primary bg-transparent group-hover:border-accent-500'
             }
           `}
         >

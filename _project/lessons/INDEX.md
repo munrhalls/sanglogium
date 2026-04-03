@@ -4,6 +4,11 @@
 
 **Last Updated:** 2026-04-02
 
+## Keyword: contain
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [.windsurf/workflows/contain.md](.windsurf/workflows/contain.md) | High | Strict scope containment protocol — zero lateral movement, zero unrelated changes |
+
 ---
 
 ## Keyword: bus-stop-debugging
