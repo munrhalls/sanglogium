@@ -61,7 +61,6 @@ function validateOrderData(options: CreateOrderOptions): string | null {
     !addr.name ||
     !addr.line1 ||
     !addr.city ||
-    !addr.state ||
     !addr.postalCode ||
     !addr.country
   ) {

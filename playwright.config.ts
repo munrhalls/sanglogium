@@ -1,4 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
+import dotenv from "dotenv";
+
+dotenv.config({ path: ".env.local" });
 
 export default defineConfig({
   testDir: "./tests",
@@ -17,28 +20,54 @@ export default defineConfig({
     screenshot: "only-on-failure", // Only screenshot on failure
   },
 
+  reporter: [
+    ['html', { open: 'never', outputFolder: 'playwright-report' }],
+    ['list'],
+  ],
+
   projects: [
-    // Desktop Chromium
+    // ─── Tier 1: Desktop (primary development target) ───
     {
-      name: "chromium",
+      name: 'desktop-chromium',
       use: {
-        ...devices["Desktop Chrome"],
+        ...devices['Desktop Chrome'],
         headless: true,
+        viewport: { width: 1440, height: 900 },
       },
     },
-    // Mobile Viewports
+
+    // ─── Tier 2: Modern Android Phone ───
     {
-      name: "Mobile Chrome",
+      name: 'android-pixel',
       use: {
-        ...devices["Pixel 5"],
+        ...devices['Pixel 7'],
         headless: true,
+        // Simulate 4G network
+        launchOptions: {
+          args: ['--disable-dev-shm-usage'],
+        },
       },
     },
+
+    // ─── Tier 3: Old iPhone (Constraint Device) ───
     {
-      name: "Mobile Safari",
+      name: 'iphone-legacy',
       use: {
-        ...devices["iPhone 13"],
+        ...devices['iPhone 8'],         // 375×667 viewport, webkit
         headless: true,
+        // Simulate slow 3G
+      },
+    },
+
+    // ─── Tier 4: API-only (no browser, for webhook/server tests) ───
+    {
+      name: 'api',
+      testMatch: /\/(api|webhook|stock|worst-case)\//,
+      use: {
+        baseURL: 'http://localhost:3000',
+        extraHTTPHeaders: {
+          'Content-Type': 'application/json',
+        },
       },
     },
   ],

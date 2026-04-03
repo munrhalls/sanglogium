@@ -36,52 +36,51 @@ export default function Basket() {
       {basket.map((item) => {
         const isRemoving = removingIds.has(item._id);
         return (
-        <div
-          key={item._id}
-          className={`grid grid-cols-1 gap-5 border-b border-border-secondary p-5 lg-desktop:grid-cols-[3fr_1fr_1fr_1fr] lg-touch:grid-cols-[3fr_1fr_1fr_1fr] transition-all duration-200 hover:bg-secondary-900/50 ${
-            isRemoving ? 'opacity-0 max-h-0 overflow-hidden py-0 px-5 border-b-0' : 'opacity-100 max-h-96'
-          }`}
-          style={isRemoving ? { transitionDuration: '200ms, 300ms', transitionProperty: 'opacity, max-height, padding' } : undefined}
-        >
-          {/* Product column */}
-          <div className="flex items-center gap-5">
-            <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-sm bg-surface-productImage relative">
-              <Image
-                src={item.image}
-                alt={item.name}
-                fill
-                unoptimized
-                className="object-contain"
-              />
+          <div
+            key={item._id}
+            className={`grid grid-cols-1 gap-5 border-b border-border-secondary p-5 lg-desktop:grid-cols-[3fr_1fr_1fr_1fr] lg-touch:grid-cols-[3fr_1fr_1fr_1fr] transition-all duration-200 hover:bg-secondary-900/50 ${isRemoving ? 'opacity-0 max-h-0 overflow-hidden py-0 px-5 border-b-0' : 'opacity-100 max-h-96'
+              }`}
+            style={isRemoving ? { transitionDuration: '200ms, 300ms', transitionProperty: 'opacity, max-height, padding' } : undefined}
+          >
+            {/* Product column */}
+            <div className="flex items-center gap-5">
+              <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-sm bg-surface-productImage relative">
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  fill
+                  unoptimized
+                  className="object-contain"
+                />
+              </div>
+              <div>
+                <Link href={`/product/${item.slug}`}>
+                  <h3 className="type-body hover:text-brand-100 transition-colors">
+                    {item.name}
+                  </h3>
+                </Link>
+                <p className="type-metadata lg-desktop:hidden lg-touch:hidden">
+                  <Price value={item.displayPrice} />
+                  {" "}× {item.quantity}
+                </p>
+              </div>
             </div>
-            <div>
-              <Link href={`/product/${item.slug}`}>
-                <h3 className="type-body hover:text-brand-100 transition-colors">
-                  {item.name}
-                </h3>
-              </Link>
-              <p className="type-metadata lg-desktop:hidden lg-touch:hidden">
-                <Price value={item.displayPrice} />
-                {" "}× {item.quantity}
-              </p>
+
+            {/* Price column - desktop only */}
+            <div className="hidden lg-desktop:flex lg-touch:flex items-center justify-center">
+              <Price value={item.displayPrice} />
+            </div>
+
+            {/* Quantity column */}
+            <div className="flex items-center lg-desktop:justify-center lg-touch:justify-center">
+              <BasketControls product={item} onRemoveStart={handleRemoveStart} />
+            </div>
+
+            {/* Total column - desktop only */}
+            <div className="hidden lg-desktop:flex lg-touch:flex items-center justify-end">
+              <Price value={item.displayPrice * item.quantity} />
             </div>
           </div>
-
-          {/* Price column - desktop only */}
-          <div className="hidden lg-desktop:flex lg-touch:flex items-center justify-center">
-            <Price value={item.displayPrice} />
-          </div>
-
-          {/* Quantity column */}
-          <div className="flex items-center lg-desktop:justify-center lg-touch:justify-center">
-            <BasketControls product={item} onRemoveStart={handleRemoveStart} />
-          </div>
-
-          {/* Total column - desktop only */}
-          <div className="hidden lg-desktop:flex lg-touch:flex items-center justify-end">
-            <Price value={item.displayPrice * item.quantity} />
-          </div>
-        </div>
         );
       })}
     </div>

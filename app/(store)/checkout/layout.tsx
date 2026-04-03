@@ -44,7 +44,6 @@ export default async function CheckoutLayout({
               postalCode: savedAddr.postalCode!,
               regionCode: savedAddr.country!,
             };
-            initialStatus = "CONFIRMED";
           } else {
             console.warn("Incomplete address data in Sanity:", {
               hasLine1: !!savedAddr.line1,
@@ -71,7 +70,6 @@ export default async function CheckoutLayout({
         postalCode: guestContext.address.postal_code,
         regionCode: guestContext.address.country,
       };
-      initialStatus = "CONFIRMED";
     }
   }
 

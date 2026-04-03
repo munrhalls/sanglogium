@@ -7,6 +7,15 @@ import { createOrder } from "@/sanity/lib/orders/addOrder";
 import type { CreateOrderOptions } from "@/sanity/lib/orders/orderTypes";
 import Stripe from "stripe";
 
+/**
+ * SECURITY NOTE (SG-03):
+ * The checkout system currently uses a JWT-based cookie for address persistence.
+ * There is a known risk where lib/utils/cookies.ts falls back to a "dev-secret-key"
+ * if CHECKOUT_JWT_SECRET is undefined. This MUST be corrected in production environments
+ * by ensuring the environment variable is set and removing the fallback in cookies.ts.
+ */
+
+
 export async function POST(req: Request) {
   let event: Stripe.Event;
 
@@ -72,24 +81,45 @@ export async function POST(req: Request) {
 
 async function handleCheckoutCompleted(sessionData: Stripe.Checkout.Session) {
   const existingOrder = await backendClient.fetch(
-    `*[_type == "order" && payment.stripeCheckoutSessionId == $sessionId][0]`,
+    `*[_type == "order" && payment.stripeCheckoutSessionId == $sessionId][0]{ _id, status }`,
     { sessionId: sessionData.id }
   );
 
   if (existingOrder) {
-    console.log(`Order already exists for session ${sessionData.id}`);
+    // SG-01: Improved idempotency check
+    if (existingOrder.status === "paid" || existingOrder.status === "processing") {
+      console.log(`Order already processed and finalized for session ${sessionData.id}`);
+      return;
+    }
+
+    // Order exists but stock is NOT finalized (status is likely 'pending_payment')
+    console.log(`Order exists but stock not finalized for session ${sessionData.id}. Finalizing now.`);
+    const productsIntent = sessionData.metadata?.productsIntent || "";
+    const productQuantities = parseProductsIntent(productsIntent);
+    
+    await finalizeStock(productQuantities);
+    
+    // Update order status to finalized
+    await backendClient
+      .patch(existingOrder._id)
+      .set({ status: "paid" })
+      .commit();
+      
     return;
   }
 
+
   const session = await stripe.checkout.sessions.retrieve(sessionData.id, {
     expand: ["line_items", "line_items.data.price.product"],
-  });
+  }) as any;
+
 
   const calculatedTotal =
     session.line_items?.data.reduce(
-      (sum, item) => sum + (item.amount_total || 0),
+      (sum: number, item: any) => sum + (item.amount_total || 0),
       0
     ) || 0;
+
 
   if (calculatedTotal !== session.amount_total) {
     throw new Error(
@@ -106,9 +136,10 @@ async function handleCheckoutCompleted(sessionData: Stripe.Checkout.Session) {
     { productIds }
   );
 
-  const orderItems = (session.line_items?.data || []).map((item, index) => {
+  const orderItems = (session.line_items?.data || []).map((item: any, index: number) => {
+
     const productData = products.find(
-      (p) => p._id === productQuantities[index]?.productId
+      (p: any) => p._id === productQuantities[index]?.productId
     );
     const quantity = item.quantity || 1;
     const price = (item.price?.unit_amount || 0) / 100;
@@ -164,8 +195,15 @@ async function handleCheckoutCompleted(sessionData: Stripe.Checkout.Session) {
 
   await finalizeStock(productQuantities);
 
-  console.log(`Order created: ${result.order.orderNumber}`);
+  // SG-01: Update status to 'paid' after stock is finalized to mark as complete
+  await backendClient
+    .patch(result.order._id)
+    .set({ status: "paid" })
+    .commit();
+
+  console.log(`Order created and stock finalized: ${result.order.orderNumber}`);
 }
+
 
 function parseProductsIntent(intent: string): Array<{ productId: string; quantity: number }> {
   if (!intent) return [];
@@ -196,11 +234,23 @@ async function handlePaymentFailed(session: Stripe.Checkout.Session) {
 async function releaseReservations(
   items: Array<{ productId: string; quantity: number }>
 ) {
+  const productIds = items.map((item) => item.productId);
+  const products = await backendClient.fetch(
+    `*[_type == "product" && _id in $productIds] { _id, reservedStock }`,
+    { productIds }
+  );
+
   for (const item of items) {
     try {
+      const product = products.find((p: any) => p._id === item.productId);
+      const currentReservedStock = product?.reservedStock || 0;
+
+      // SG-02: Safe decrement to prevent negative reservedStock
+      const safeQty = Math.min(item.quantity, currentReservedStock);
+
       await checkoutClient
         .patch(item.productId)
-        .dec({ reservedStock: item.quantity })
+        .dec({ reservedStock: safeQty })
         .commit();
     } catch (error) {
       console.error(
@@ -211,16 +261,30 @@ async function releaseReservations(
   }
 }
 
+
 async function finalizeStock(
   items: Array<{ productId: string; quantity: number }>
 ) {
+  const productIds = items.map((item) => item.productId);
+  const products = await backendClient.fetch(
+    `*[_type == "product" && _id in $productIds] { _id, reservedStock }`,
+    { productIds }
+  );
+
   const transaction = checkoutClient.transaction();
 
   for (const item of items) {
-    transaction.patch(item.productId, (p) =>
-      p.dec({ stock: item.quantity, reservedStock: item.quantity })
+    const product = products.find((p: any) => p._id === item.productId);
+    const currentReservedStock = product?.reservedStock || 0;
+
+    // SG-02: Safe decrement to prevent negative reservedStock
+    const safeReservedQty = Math.min(item.quantity, currentReservedStock);
+
+    transaction.patch(item.productId, (p: any) =>
+      p.dec({ stock: item.quantity, reservedStock: safeReservedQty })
     );
   }
 
   await transaction.commit();
 }
+
