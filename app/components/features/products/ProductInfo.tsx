@@ -76,7 +76,7 @@ export function ProductInfo({ product }: { product: Product }) {
         </div>
       )}
 
-      <div className="pt-4 space-y-4 ">
+      <div className="pt-4 space-y-6 ">
 
         {basketItem ? (
           <>
@@ -100,16 +100,14 @@ export function ProductInfo({ product }: { product: Product }) {
             </div>
           </>
         ) : (
-          <div>
-            <button
-              onClick={handleAddToCart}
-              disabled={product.stock === 0}
-              className="btn-cart-large w-full flex justify-center"
-            >
-              <ShoppingCartIcon size={24} weight="bold" />
-              {product.stock === 0 ? 'Out of stock' : 'Add to cart'}
-            </button>
-          </div>
+          <button
+            onClick={handleAddToCart}
+            disabled={product.stock === 0}
+            className="btn-cart-large w-full flex justify-center"
+          >
+            <ShoppingCartIcon size={24} weight="bold" />
+            {product.stock === 0 ? 'Out of stock' : 'Add to cart'}
+          </button>
         )}
       </div>
     </div >
