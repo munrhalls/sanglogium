@@ -36,38 +36,38 @@ const featuredBreakpointMap = {
 export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
   <a href={`/products/${product.slug}`} className="block group">
     <article className="card-product flex h-full flex-col gap-4 group-hover:shadow-cardHover group-hover:-translate-y-1 transition-all duration-300">
-    <figure className="aspect-[4/3] relative flex w-full items-center justify-center overflow-hidden bg-surface-productImage p-6">
-      <span className="absolute left-4 top-4 text-small font-bold uppercase tracking-editorial text-brand-900 z-10">
-        {product.brand.name}
-      </span>
-      <Image
-        src={urlFor(product.image).width(450).auto('format').quality(75).url()}
-        alt={product.name}
-        width={450}
-        height={450}
-        priority={idx === 0}
-        loading={idx === 0 ? "eager" : "lazy"}
-        className="h-full w-full object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-110"
-      />
-    </figure>
-
-    <div className="flex flex-col flex-grow gap-3">
-      <h3 className="type-body font-medium line-clamp-2">
-        {product.name}
-      </h3>
-      <div className="mt-auto flex items-center justify-between pt-2">
-        <p className="type-price">${product.displayPrice}</p>
-        <AddToCartButton
-          productId={product._id}
-          name={product.name}
-          displayPrice={product.displayPrice}
-          stock={product.stock ?? 99}
-          imageUrl={product.image?.asset?.url ?? ''}
-          slug={product.slug}
+      <figure className="aspect-[4/3] relative flex w-full items-center justify-center overflow-hidden bg-surface-productImage p-6">
+        <span className="absolute left-4 top-4 text-small font-bold uppercase tracking-editorial text-brand-900 z-10">
+          {product.brand.name}
+        </span>
+        <Image
+          src={urlFor(product.image).width(450).auto('format').quality(75).url()}
+          alt={product.name}
+          width={450}
+          height={450}
+          priority={idx === 0}
+          loading={idx === 0 ? "eager" : "lazy"}
+          className="h-full w-full object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-110"
         />
+      </figure>
+
+      <div className="flex flex-col flex-grow gap-3">
+        <h3 className="type-body font-medium line-clamp-2">
+          {product.name}
+        </h3>
+        <div className="mt-auto flex items-center justify-between pt-2">
+          <p className="type-price">${product.displayPrice}</p>
+          <AddToCartButton
+            productId={product._id}
+            name={product.name}
+            displayPrice={product.displayPrice}
+            stock={product.stock ?? 99}
+            imageUrl={product.image?.asset?.url ?? ''}
+            slug={product.slug}
+          />
+        </div>
       </div>
-    </div>
-  </article>
+    </article>
   </a>
 );
 

@@ -70,6 +70,8 @@ export interface FeaturedProduct {
     slug: string;
   };
   displayPrice: number;
+  stock: number;
+  slug: string;
   productPromo: string;
   image: {
     asset: {
@@ -88,6 +90,8 @@ export interface SpotlightProduct {
     slug: string;
   };
   displayPrice: number;
+  stock: number;
+  slug: string;
   image: { asset: { url: string }; alt?: string };
   gallery?: Array<{ asset: { url: string }; alt?: string }>;
   images?: Array<{ asset: { url: string }; alt?: string }>;
@@ -110,6 +114,7 @@ export interface IemProduct {
   };
   displayPrice: number;
   slug: string;
+  stock: number;
   imageUrl: string;
   image: { asset: { url: string }; alt?: string };
 }
@@ -123,6 +128,8 @@ export interface NewestReleaseProduct {
     slug: string;
   };
   displayPrice: number;
+  stock: number;
+  slug: string;
   image: { asset: { url: string }; alt?: string };
   gallery: Array<{ asset: { url: string }; alt?: string }>;
 }
@@ -143,6 +150,8 @@ export interface DacProduct {
     slug: string;
   };
   displayPrice: number;
+  stock: number;
+  slug: string;
   image: { asset: { url: string }; alt?: string };
 }
 
@@ -155,6 +164,8 @@ export interface AccessoryProduct {
     slug: string;
   };
   displayPrice: number;
+  stock: number;
+  slug: string;
   imageUrl: string;
   image: { asset: { url: string }; alt?: string };
 }
@@ -194,6 +205,8 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
         name,
         brand->{ _id, name, slug },
         displayPrice,
+        stock,
+        "slug": slug.current,
         image { asset->{url} }
       }
     },
@@ -208,6 +221,8 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
         name,
         brand->{ _id, name, slug },
         displayPrice,
+        stock,
+        "slug": slug.current,
         image { asset->{url} },
         gallery[] { asset->{url} }
       }
@@ -223,6 +238,8 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
         name,
         brand->{ _id, name, slug },
         displayPrice,
+        stock,
+        "slug": slug.current,
         image { asset->{url} },
         gallery[] { asset->{url} }
       }
@@ -238,6 +255,8 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
         name,
         brand->{ _id, name, slug },
         displayPrice,
+        stock,
+        "slug": slug.current,
         image { asset->{url} },
         gallery[] { asset->{url} }
       }
@@ -249,6 +268,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
       name,
       brand->{ _id, name, slug },
       displayPrice,
+      stock,
       "slug": slug.current,
       "imageUrl": image.asset->url,
       image { asset->{url} }
@@ -264,6 +284,8 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
         name,
         brand->{ _id, name, slug },
         displayPrice,
+        stock,
+        "slug": slug.current,
         image { asset->{url} },
         gallery[] { asset->{url} }
       }
@@ -275,6 +297,8 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
       name,
       brand->{ _id, name, slug },
       displayPrice,
+      stock,
+      "slug": slug.current,
       image { asset->{url} }
     },
 
@@ -284,6 +308,8 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
       name,
       brand->{ _id, name, slug },
       displayPrice,
+      stock,
+      "slug": slug.current,
       "imageUrl": image.asset->url,
       image { asset->{url} }
     },
@@ -294,6 +320,8 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
       name,
       brand->{ _id, name, slug },
       displayPrice,
+      stock,
+      "slug": slug.current,
       "imageUrl": image.asset->url,
       image { asset->{url} }
     }

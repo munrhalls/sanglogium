@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useBasketStore } from "@/store/store";
-import { ShoppingCart } from "@phosphor-icons/react";
+import { ShoppingCartIcon } from "@phosphor-icons/react";
 
 interface AddToCartButtonProps {
   productId: string;
@@ -112,7 +112,7 @@ export function AddToCartButton({
       className={`btn-cart transition-all active:scale-95 ${className}`}
       aria-label={`Add ${name} to cart`}
     >
-      <ShoppingCart size={18} weight="regular" />
+      <ShoppingCartIcon size={18} weight="regular" />
       {shortLabel ? (
         <>
           <span className={`hidden md:block ${labelClassName}`}>{label}</span>

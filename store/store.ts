@@ -42,6 +42,7 @@ export const useBasketStore = create<BasketState>()(
         ) {
           return;
         }
+        console.log('click')
         const basket = get().basket;
         const existing = basket.find((i) => i._id === item._id);
         if (existing) {
