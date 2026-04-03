@@ -32,22 +32,20 @@ describe('ProductInfo Basket Logic', () => {
     });
   });
 
-  it('updates basketItem variable after adding to cart', async () => {
+  it('immediately updates UI to "in Cart" after adding a product', async () => {
     // @ts-ignore
     render(<ProductInfo product={mockProduct} />);
 
     // Trigger handleAddToCart
-    const addButton = screen.getByText(/Add to Cart/i);
+    const addButton = screen.getByRole('button', { name: /add to cart/i });
     fireEvent.click(addButton);
 
-    // Assert: "1 in Cart" should appear once basketItem is defined
+    // Assert: "1 in Cart" should appear once the internal basketItem is defined
+    // This confirms that ProductInfo has detected the addition.
     const inCartText = await screen.findByText(/1 in Cart/i);
-    expect(inCartText).toBeDefined();
+    expect(inCartText).toBeInTheDocument();
     
-    // Explicitly check store state as well
-    const state = useBasketStore.getState();
-    const basketItem = state.basket.find(i => i._id === mockProduct._id);
-    expect(basketItem).toBeDefined();
-    expect(basketItem?.quantity).toBe(1);
+    // Explicitly verify the "Add to cart" button is replaced
+    expect(screen.queryByText(/add to cart/i)).toBeNull();
   });
 });

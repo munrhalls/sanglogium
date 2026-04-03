@@ -9,7 +9,7 @@ import { ShoppingCartIcon, CheckIcon } from '@phosphor-icons/react/dist/ssr';
 import { QuantitySelector } from '@/app/components/ui/QuantitySelector';
 
 export function ProductInfo({ product }: { product: Product }) {
-  const [preAddQty, setPreAddQty] = useState(0);
+  const [preAddQty, setPreAddQty] = useState(1);
   const basketItem = useBasketStore(selectBasketItem(product._id));
 
   const addItem = useBasketStore((s) => s.addItem);
@@ -39,7 +39,6 @@ export function ProductInfo({ product }: { product: Product }) {
 
   const handleBasketDecrement = () => {
     if (basketItem) {
-      console.log(basketItem.quantity)
       if (basketItem.quantity <= 1) {
         removeItem(product._id);
       } else {
@@ -93,7 +92,7 @@ export function ProductInfo({ product }: { product: Product }) {
             </div>
             <button
               disabled
-              className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-sm bg-success-700 text-brand-50 type-body font-bold"
+              className="btn-in-basket-large w-full flex justify-center"
             >
               <CheckIcon size={20} weight="bold" />
               {basketItem.quantity} in Cart
@@ -104,10 +103,10 @@ export function ProductInfo({ product }: { product: Product }) {
             <button
               onClick={handleAddToCart}
               disabled={product.stock === 0}
-              className="btn-cart w-full"
+              className="btn-cart-large w-full flex justify-center"
             >
-              <ShoppingCartIcon size={20} weight="regular" />
-              {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
+              <ShoppingCartIcon size={24} weight="bold" />
+              {product.stock === 0 ? 'Out of stock' : 'Add to cart'}
             </button>
           </>
         )}
