@@ -43,6 +43,7 @@ const accent = {
 const success = {
   500: "#4ADE80",
   700: "#15803D",
+  800: "#10642D",
 };
 
 const error = {
@@ -147,6 +148,64 @@ const uiComponentsPlugin = plugin(function ({ addComponents, theme }) {
       "&:disabled": {
         opacity: "0.4",
         cursor: "not-allowed",
+      },
+    },
+    ".btn-cart-large": {
+      display: "inline-flex antialiased",
+      alignItems: "center",
+      gap: theme("spacing.4") as string,
+      backgroundColor: theme("colors.brand.400") as string,
+      color: theme("colors.brand.700") as string,
+      fontWeight: theme("fontWeight.bold") as string,
+      fontSize: theme("fontSize.actionLarge[0]") as string,
+      lineHeight: theme("fontSize.actionLarge[1].lineHeight") as string,
+      padding: `${theme("spacing.4")} ${theme("spacing.4")}`,
+      borderRadius: theme("borderRadius.sm") as string,
+      boxShadow: theme("boxShadow.button") as string,
+      transition: "background-color 0.2s ease, box-shadow 0.2s ease",
+      "&:hover": {
+        backgroundColor: theme("colors.brand.500") as string,
+        boxShadow: theme("boxShadow.buttonHover") as string,
+      },
+      "&:focus-visible": {
+        outline: `2px solid ${theme("colors.brand.500")}`,
+        outlineOffset: "2px",
+      },
+      "&:active": {
+        backgroundColor: theme("colors.brand.500") as string,
+      },
+      "&:disabled": {
+        opacity: "0.4",
+        cursor: "not-allowed",
+      },
+    },
+    ".btn-in-basket-large": {
+      display: "inline-flex antialiased",
+      alignItems: "center",
+      gap: theme("spacing.4") as string,
+      backgroundColor: theme("colors.success.700") as string,
+      color: theme("colors.brand.50") as string,
+      fontWeight: theme("fontWeight.bold") as string,
+      fontSize: theme("fontSize.actionLarge[0]") as string,
+      lineHeight: theme("fontSize.actionLarge[1].lineHeight") as string,
+      padding: `${theme("spacing.4")} ${theme("spacing.4")}`,
+      borderRadius: theme("borderRadius.sm") as string,
+      boxShadow: theme("boxShadow.button") as string,
+      transition: "background-color 0.2s ease, box-shadow 0.2s ease",
+      "&:hover": {
+        backgroundColor: theme("colors.success.800") as string,
+        boxShadow: theme("boxShadow.buttonHover") as string,
+        cursor: "default",
+      },
+      "&:focus-visible": {
+        outline: `2px solid ${theme("colors.success.700")}`,
+        outlineOffset: "2px",
+      },
+      "&:active": {
+        backgroundColor: theme("colors.success.700") as string,
+      },
+      "&:disabled": {
+        opacity: "1",
       },
     },
     ".btn-secondary": {
@@ -465,6 +524,7 @@ export default {
         ],
         body: ["16px", { lineHeight: "24px", letterSpacing: "0em" }],
         action: ["14px", { lineHeight: "21px", letterSpacing: "0.05em" }],
+        actionLarge: ["clamp(1.125rem, 1.03vw + 0.883rem, 1.8125rem)", { lineHeight: "1.2", letterSpacing: "0.05em" }],
         small: ["12px", { lineHeight: "16px", letterSpacing: "0.05em" }],
         "cta-hero": [
           "clamp(1.125rem, 1vw + 0.9rem, 1.75rem)",
