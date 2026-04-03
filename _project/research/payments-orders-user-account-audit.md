@@ -544,42 +544,42 @@ app/(store)/account/orders/[orderId]/page.tsx
   ↓ Verify signature (stripe.webhooks.constructEvent)
   ↓ Expected: 200 response within 5 seconds
   ↓ CURRENT: ✅ Works (route.ts:10-36)
-  
+
 [BUS STOP 2: Event Routing]
   ↓ Switch on event.type
   ↓ Expected: Route checkout.session.completed + async_payment_succeeded
   ↓ CURRENT: ⚠️ Missing async_payment_succeeded (route.ts:38-42)
-  
+
 [BUS STOP 3: Idempotency Check]
   ↓ Query existing order by stripeCheckoutSessionId
   ↓ Expected: Skip if order exists, create if not
   ↓ CURRENT: ❌ BROKEN — uses CDN-cached read (backendClient useCdn:true)
-  
+
 [BUS STOP 4: Session Retrieval + Validation]
   ↓ Retrieve full session with line_items expanded
   ↓ Verify amount_total matches calculated total
   ↓ Expected: Reject on mismatch
   ↓ CURRENT: ✅ Works (route.ts:84-98)
-  
+
 [BUS STOP 5: Product Data Enrichment]
   ↓ Parse productsIntent metadata
   ↓ Fetch product details from Sanity
   ↓ Build order items with snapshots
   ↓ Expected: Complete product snapshot (name, slug, image, price)
   ↓ CURRENT: ✅ Works (route.ts:100-125)
-  
+
 [BUS STOP 6: Order Creation]
   ↓ Generate order number + ID
   ↓ Validate all fields
   ↓ Create order document in Sanity
   ↓ Expected: Order document with status "pending_payment" → immediately "processing"
   ↓ CURRENT: ⚠️ Creates with "pending_payment" but never transitions to "processing"
-  
+
 [BUS STOP 7: Stock Finalization]
   ↓ Decrement stock and reservedStock via transaction
   ↓ Expected: Atomic stock update
   ↓ CURRENT: ✅ Works — uses transaction (route.ts:214-226)
-  
+
 [BUS STOP 8: Side Effects]
   ↓ Send confirmation email
   ↓ Update user profile with order reference
@@ -882,7 +882,7 @@ export const VALID_TRANSITIONS: Record<string, string[]> = {
   // Payment phase
   created_unpaid: ["paid_confirmed", "payment_failed"],
   payment_failed: ["paid_confirmed", "created_unpaid"],
-  
+
   // Forward pipe
   paid_confirmed: ["to_pack"],
   to_pack: ["packing_locked", "hold_inventory_missing", "hold_address_invalid", "cancelled_pending_unpack", "refunded_no_restock"],
@@ -890,24 +890,24 @@ export const VALID_TRANSITIONS: Record<string, string[]> = {
   packed_label_generated: ["shipped_in_transit"],
   shipped_in_transit: ["delivered_success", "hold_address_invalid"],
   delivered_success: ["completed", "return_requested"],
-  
+
   // Holds
   hold_inventory_missing: ["to_pack", "hold_waiting_customer_choice", "cancelled_pending_unpack"],
   hold_address_invalid: ["to_pack", "cancelled_pending_unpack"],
   hold_waiting_customer_choice: ["to_pack", "cancelled_pending_unpack"],
   hold_waiting_payment_balance: ["paid_confirmed", "cancelled_pending_unpack"],
-  
+
   // Cancellation
   cancelled_pending_unpack: ["cancelled_restocked"],
   cancelled_restocked: [], // Dead state
   refunded_no_restock: [], // Dead state
-  
+
   // Returns
   return_requested: ["return_received_pending_inspection"],
   return_received_pending_inspection: ["returned_restocked", "returned_discarded"],
   returned_restocked: [], // Dead state
   returned_discarded: [], // Dead state
-  
+
   // Meta
   completed: ["return_requested"],
 };

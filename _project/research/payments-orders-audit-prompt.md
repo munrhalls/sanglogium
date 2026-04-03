@@ -1,10 +1,5 @@
 # Payments → Orders Management → User Account - Professional Technical Architecture Audit
 
-**Use with:** `/research` and `/audit` workflows
-**Target:** Opus model
-**Date:** 2026-04-02
-
----
 
 ## Prompt for Opus
 
