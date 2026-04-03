@@ -105,7 +105,7 @@ const NavActionItem = ({ icon, label, badgeCount }: NavActionItemProps) => {
             className={cn(
               "absolute -right-1.5 -top-1.5",
               "flex h-4 w-4 items-center justify-center rounded-none",
-              "bg-accent-600 text-[10px] font-bold text-brand-100"
+              "bg-brand-400 text-[10px] font-bold text-brand-900 rounded-[2px]"
             )}
           >
             {badgeCount}
