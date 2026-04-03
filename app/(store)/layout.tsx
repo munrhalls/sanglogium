@@ -26,7 +26,7 @@ export default async function RootLayout({
 }>) {
   // Get catalogue data from pre-built VFS
   const catalogueDataRaw = { catalogue: getCatalogueForNavigation() };
-
+  const redeploy = true;
   return (
     <html lang="en" className={cn(montserrat.variable, "antialiased")}>
       <head>
