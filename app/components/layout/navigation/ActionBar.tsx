@@ -64,7 +64,7 @@ function ActionButtons() {
       >
         <ShoppingBag className="h-5 w-5" />
         {hasHydrated && basketCount > 0 && (
-          <span className="absolute -top-2 -right-4 h-5 w-5 rounded-full bg-brand-400 text-brand-900 text-xs flex items-center justify-center font-bold rounded-[2px]">
+          <span className="absolute -top-1 -right-2 h-4 w-4 rounded-full bg-brand-400 text-brand-900 text-xs flex items-center justify-center font-bold rounded-[2px]">
             {basketCount > 99 ? '99+' : basketCount}
           </span>
         )}
