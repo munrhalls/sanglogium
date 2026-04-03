@@ -33,18 +33,23 @@ export async function searchProductsAutocomplete(query: string): Promise<Autocom
   return sanityFetch<AutocompleteProduct[]>({
     query: groq`*[_type == "product" && (
       name match $query ||
-      brand->name match $query ||
       sku match $query ||
+      brand._ref in *[_type == "brand" && name match $query]._id ||
       specifications[].value match $query ||
       overviewFields[].value match $query
-    )] | order(name asc) [0...${MAX_AUTOCOMPLETE}] {
+    )] {
       _id,
       name,
-      brand->{ _id, name, slug },
       displayPrice,
-      slug { current },
-      image
-    }`,
+      "brand": brand->{ _id, name, slug },
+      slug,
+      image,
+      "score": select(
+        name match $query => 20,
+        brand->name match $query => 15,
+        10
+      )
+    } | order(score desc, name asc) [0...${MAX_AUTOCOMPLETE}]`,
     params: { query: searchTerm },
   });
 }
@@ -68,19 +73,24 @@ export async function searchProductsFull(query: string, sort?: string): Promise<
   return sanityFetch<SearchProduct[]>({
     query: groq`*[_type == "product" && (
       name match $query ||
-      brand->name match $query ||
       sku match $query ||
+      brand._ref in *[_type == "brand" && name match $query]._id ||
       specifications[].value match $query ||
       overviewFields[].value match $query
-    )] | order(${orderClause}) {
+    )] {
       _id,
       name,
-      brand->{ _id, name, slug },
       displayPrice,
       stock,
-      slug { current },
-      image
-    }`,
+      "brand": brand->{ _id, name, slug },
+      slug,
+      image,
+      "score": select(
+        name match $query => 20,
+        brand->name match $query => 15,
+        10
+      )
+    } | order(score desc, ${orderClause})`,
     params: { query: searchTerm },
   });
 }
