@@ -22,6 +22,7 @@ const BasketControls = function BasketControls({
   if (!item) return null;
 
   const triggerRemove = () => {
+    console.log('click')
     if (onRemoveStart) {
       onRemoveStart(_id);
     } else {
@@ -30,7 +31,11 @@ const BasketControls = function BasketControls({
   };
 
   const handleDecrement = () => {
+    console.log('click')
+    console.log(item.quantity)
     if (item.quantity === 1) {
+      console.log('click 2')
+
       triggerRemove();
     } else {
       updateQuantity(_id, item.quantity - 1);
@@ -49,6 +54,7 @@ const BasketControls = function BasketControls({
         quantity={item.quantity}
         min={1}
         max={product.stock}
+
         onIncrement={handleIncrement}
         onDecrement={handleDecrement}
         size="sm"
