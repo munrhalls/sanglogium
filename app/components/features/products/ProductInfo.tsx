@@ -76,9 +76,17 @@ export function ProductInfo({ product }: { product: Product }) {
         </div>
       )}
 
-      <div className="pt-4 space-y-4">
+      <div className="pt-4 space-y-4 ">
+
         {basketItem ? (
           <>
+            <button
+              disabled
+              className="btn-in-basket-large w-full flex justify-center"
+            >
+              <CheckIcon size={20} weight="bold" />
+              {basketItem.quantity} in Cart
+            </button>
             <div className="flex items-center gap-4">
               <span className="type-body text-secondary">In cart:</span>
               <QuantitySelector
@@ -90,16 +98,9 @@ export function ProductInfo({ product }: { product: Product }) {
                 size="md"
               />
             </div>
-            <button
-              disabled
-              className="btn-in-basket-large w-full flex justify-center"
-            >
-              <CheckIcon size={20} weight="bold" />
-              {basketItem.quantity} in Cart
-            </button>
           </>
         ) : (
-          <>
+          <div>
             <button
               onClick={handleAddToCart}
               disabled={product.stock === 0}
@@ -108,9 +109,9 @@ export function ProductInfo({ product }: { product: Product }) {
               <ShoppingCartIcon size={24} weight="bold" />
               {product.stock === 0 ? 'Out of stock' : 'Add to cart'}
             </button>
-          </>
+          </div>
         )}
       </div>
-    </div>
+    </div >
   );
 }
