@@ -6,7 +6,8 @@ import { homepageDataType } from "./homepageDataType";
 import { categoryFiltersType } from "./categoryFiltersType";
 import { categorySortablesType } from "./categorySortablesType";
 import { brandType } from "./brandType";
+import { orderType } from "./orderType";
 
 export const schema = {
-  types: [heroType, catalogueItemType, productType, homepageDataType, categoryFiltersType, categorySortablesType, brandType],
+  types: [heroType, catalogueItemType, productType, homepageDataType, categoryFiltersType, categorySortablesType, brandType, orderType],
 };

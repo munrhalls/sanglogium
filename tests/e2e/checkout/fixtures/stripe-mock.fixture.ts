@@ -1,5 +1,12 @@
-import { stripe } from "../../../../lib/stripe/stripe.js";
+import Stripe from "stripe";
+import dotenv from "dotenv";
 import { STRIPE_TEST_CARDS } from "./test-data";
+
+dotenv.config({ path: ".env.local" });
+
+export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "sk_test_123", {
+  apiVersion: "2023-10-16" as any,
+});
 
 /**
  * Stripe Test Fixture
@@ -25,7 +32,7 @@ export const stripeMock = {
         object: {
           id: sessionId,
           metadata: {
-            productsIntent: "id_test_product_1:1"
+            productsIntent: "3O1ZNp54LWQGln4uEAU7Vs:1"
           }
         }
       }

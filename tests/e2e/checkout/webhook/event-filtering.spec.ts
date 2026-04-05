@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { stripe } from "../../../../lib/stripe/stripe.js";
+import { stripe } from "../fixtures/stripe-mock.fixture";
 import { stripeMock } from "../fixtures/stripe-mock.fixture";
 
 const WEBHOOK_URL = "/api/webhook";
@@ -26,7 +26,39 @@ test.describe("Webhook Event Filtering (WH-EVT-01..05)", () => {
   });
 
   test("WH-EVT-02: Permitted event (checkout.session.completed) is processed", async ({ request }) => {
-    const res = await sendWebhookEvent(request, "checkout.session.completed", `cs_test_${Date.now()}`);
+    const sessionId = `cs_test_${Date.now()}`;
+
+    // Create a minimal mock session payload
+    const payloadObject = {
+      id: `evt_test_${Date.now()}`,
+      type: "checkout.session.completed",
+      data: {
+        object: {
+          id: sessionId,
+          amount_total: 1999,
+          metadata: {
+            productsIntent: "3O1ZNp54LWQGln4uEAU7Vs:1",
+            clerkUserId: "guest"
+          },
+          line_items: {
+            data: [{
+              amount_total: 1999,
+              quantity: 1,
+              price: { unit_amount: 1999, currency: "usd" },
+            }]
+          },
+          customer_details: { email: "test@example.com", name: "Test User" }
+        }
+      }
+    };
+
+    const payload = JSON.stringify(payloadObject);
+    const signature = stripe.webhooks.generateTestHeaderString({ payload, secret: SECRET });
+
+    const res = await request.post(WEBHOOK_URL, {
+      data: payload,
+      headers: { "stripe-signature": signature, "Content-Type": "application/json" },
+    });
     expect(res.status()).toBe(200);
   });
 

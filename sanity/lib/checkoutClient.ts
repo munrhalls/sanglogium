@@ -7,5 +7,5 @@ export const checkoutClient = createClient({
   apiVersion,
   dataset,
   useCdn: false,
-  token: process.env.SANITY_API_TOKEN,
+  token: process.env.SANITY_STUDIO_READ_WRITE_CREATE || process.env.SANITY_API_TOKEN,
 });

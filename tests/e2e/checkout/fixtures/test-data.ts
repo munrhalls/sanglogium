@@ -4,8 +4,8 @@
  */
 
 export const TEST_PRODUCT_IDS = [
-  "id_test_product_1",
-  "id_test_product_2"
+  "3O1ZNp54LWQGln4uEAU7Vs",
+  "3O1ZNp54LWQGln4uEAUFVf"
 ];
 
 export const TEST_ADDRESSES = {

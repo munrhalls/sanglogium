@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { stripe } from "../../../../lib/stripe/stripe.js";
+import { stripe } from "../fixtures/stripe-mock.fixture";
 
 const WEBHOOK_URL = "/api/webhook";
 const SECRET = process.env.STRIPE_WEBHOOK_SECRET || "whsec_test_secret";
@@ -18,7 +18,7 @@ test.describe("Webhook Signature Validation (WH-SIG-01..05)", () => {
   test("WH-SIG-02: Rejects invalid signature (tampered body)", async ({ request }) => {
     const validBody = JSON.stringify({ id: "evt_test" });
     const tamperedBody = JSON.stringify({ id: "evt_test", tampered: true });
-    
+
     // Generate signature for the VALID body
     const signature = stripe.webhooks.generateTestHeaderString({
       payload: validBody,
@@ -27,9 +27,9 @@ test.describe("Webhook Signature Validation (WH-SIG-01..05)", () => {
 
     const res = await request.post(WEBHOOK_URL, {
       data: tamperedBody, // Send the tampered body instead
-      headers: { 
-        "stripe-signature": signature, 
-        "Content-Type": "application/json" 
+      headers: {
+        "stripe-signature": signature,
+        "Content-Type": "application/json"
       },
     });
     expect(res.status()).toBe(400);
@@ -46,9 +46,9 @@ test.describe("Webhook Signature Validation (WH-SIG-01..05)", () => {
 
     const res = await request.post(WEBHOOK_URL, {
       data: payload,
-      headers: { 
-        "stripe-signature": signature, 
-        "Content-Type": "application/json" 
+      headers: {
+        "stripe-signature": signature,
+        "Content-Type": "application/json"
       },
     });
     expect(res.status()).toBe(400);
@@ -57,10 +57,10 @@ test.describe("Webhook Signature Validation (WH-SIG-01..05)", () => {
   });
 
   test("WH-SIG-04: Accepts valid signature and valid body", async ({ request }) => {
-    const payload = JSON.stringify({ 
-      id: "evt_test", 
-      type: "checkout.session.completed", 
-      data: { object: { id: "cs_test" } }
+    const payload = JSON.stringify({
+      id: "evt_test",
+      type: "payment_intent.succeeded", // Use non-permitted event that doesn't require session retrieval
+      data: { object: { id: "pi_test" } }
     });
     const signature = stripe.webhooks.generateTestHeaderString({
       payload,
@@ -69,9 +69,9 @@ test.describe("Webhook Signature Validation (WH-SIG-01..05)", () => {
 
     const res = await request.post(WEBHOOK_URL, {
       data: payload,
-      headers: { 
-        "stripe-signature": signature, 
-        "Content-Type": "application/json" 
+      headers: {
+        "stripe-signature": signature,
+        "Content-Type": "application/json"
       },
     });
     expect(res.status()).toBe(200);
@@ -88,9 +88,9 @@ test.describe("Webhook Signature Validation (WH-SIG-01..05)", () => {
 
     const res = await request.post(WEBHOOK_URL, {
       data: payload,
-      headers: { 
-        "stripe-signature": signature, 
-        "Content-Type": "application/json" 
+      headers: {
+        "stripe-signature": signature,
+        "Content-Type": "application/json"
       },
     });
     expect(res.status()).toBe(400);

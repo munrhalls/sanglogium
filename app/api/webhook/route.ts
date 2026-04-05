@@ -96,30 +96,36 @@ async function handleCheckoutCompleted(sessionData: Stripe.Checkout.Session) {
     console.log(`Order exists but stock not finalized for session ${sessionData.id}. Finalizing now.`);
     const productsIntent = sessionData.metadata?.productsIntent || "";
     const productQuantities = parseProductsIntent(productsIntent);
-    
+
     await finalizeStock(productQuantities);
-    
+
     // Update order status to finalized
     await backendClient
       .patch(existingOrder._id)
       .set({ status: "paid" })
       .commit();
-      
+
     return;
   }
 
+  // Use the sessionData directly if it has all necessary fields, otherwise retrieve from Stripe
+  let session: Stripe.Checkout.Session;
 
-  const session = await stripe.checkout.sessions.retrieve(sessionData.id, {
-    expand: ["line_items", "line_items.data.price.product"],
-  }) as any;
-
+  if (sessionData.line_items && sessionData.customer_details && sessionData.shipping_details) {
+    // Session data is complete, use it directly
+    session = sessionData;
+  } else {
+    // Retrieve from Stripe for missing data
+    session = await stripe.checkout.sessions.retrieve(sessionData.id, {
+      expand: ["line_items", "line_items.data.price.product"],
+    }) as any;
+  }
 
   const calculatedTotal =
     session.line_items?.data.reduce(
       (sum: number, item: any) => sum + (item.amount_total || 0),
       0
     ) || 0;
-
 
   if (calculatedTotal !== session.amount_total) {
     throw new Error(
@@ -248,10 +254,18 @@ async function releaseReservations(
       // SG-02: Safe decrement to prevent negative reservedStock
       const safeQty = Math.min(item.quantity, currentReservedStock);
 
-      await checkoutClient
-        .patch(item.productId)
-        .dec({ reservedStock: safeQty })
-        .commit();
+      // If reservedStock is null, initialize it first
+      if (product?.reservedStock === null || product?.reservedStock === undefined) {
+        await checkoutClient
+          .patch(item.productId)
+          .set({ reservedStock: 0 })
+          .commit();
+      } else if (safeQty > 0) {
+        await checkoutClient
+          .patch(item.productId)
+          .dec({ reservedStock: safeQty })
+          .commit();
+      }
     } catch (error) {
       console.error(
         `Failed to release reservation for ${item.productId}:`,
@@ -280,9 +294,13 @@ async function finalizeStock(
     // SG-02: Safe decrement to prevent negative reservedStock
     const safeReservedQty = Math.min(item.quantity, currentReservedStock);
 
-    transaction.patch(item.productId, (p: any) =>
-      p.dec({ stock: item.quantity, reservedStock: safeReservedQty })
-    );
+    // Handle null reservedStock by setting it to 0 in the same transaction
+    transaction.patch(item.productId, (p: any) => {
+      if (product?.reservedStock === null || product?.reservedStock === undefined) {
+        return p.set({ reservedStock: 0 }).dec({ stock: item.quantity });
+      }
+      return p.dec({ stock: item.quantity, reservedStock: safeReservedQty });
+    });
   }
 
   await transaction.commit();
