@@ -1,20 +1,32 @@
 import { create } from 'zustand'
 
+type CheckoutStatus = 'IDLE' | 'PROCESSING' | 'ERROR_NETWORK' | 'ERROR_BASKET' | 'SUCCESS'
+
 type CheckoutState = {
-  status: 'IDLE' | 'STEP_1' | 'STEP_2'
-  nextStep: () => void
+  status: CheckoutStatus
+  startProcessing: () => void
+  setResult: (result: 'SUCCESS' | 'ERROR_NETWORK' | 'ERROR_BASKET') => void
   reset: () => void
 }
 
 export const useCheckoutStore = create<CheckoutState>((set) => ({
   status: 'IDLE',
 
-  nextStep: () =>
+  startProcessing: () =>
     set((state) => {
-      if (state.status === 'IDLE') return { status: 'STEP_1' }
-      if (state.status === 'STEP_1') return { status: 'STEP_2' }
+      if (state.status === 'IDLE' || state.status.startsWith('ERROR')) {
+        return { status: 'PROCESSING' }
+      }
       return state
     }),
-  reset: () => set({ status: 'IDLE' }),
 
+  setResult: (result) =>
+    set((state) => {
+      if (state.status === 'PROCESSING') {
+        return { status: result }
+      }
+      return state
+    }),
+
+  reset: () => set({ status: 'IDLE' }),
 }))
