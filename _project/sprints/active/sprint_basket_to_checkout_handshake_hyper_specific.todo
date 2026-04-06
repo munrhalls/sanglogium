@@ -823,20 +823,22 @@ discrepancy diffs, and action buttons render correctly per state.
       Touch targets: minimum 44px height on all buttons (per WCAG 2.5.5).
       /test: Playwright e2e at mobile viewport.
 
-- [ ] Neighbour flow sync check:
+✔ [ ] Neighbour flow sync check: @done(26-04-06 19:28)
       Verify: Basket item controls (quantity/remove) interact with basketStore
               directly. The checkout state machine does not own basket items.
               When state !== IDLE, controls are visually disabled but the
               basketStore is NOT locked — RESET → IDLE restores editability.
       Verify: The "Update basket" button (RESET from ERROR_VALIDATION) returns to
               IDLE and the basket item controls become interactive again.
-      [] write neighbour sync integration test
+      ✔ write neighbour sync integration test @done(26-04-06 19:28)
 
-- [ ] Global flow sync check:
+✔ Global flow sync check:
       Verify: CheckoutPanel does not import any downstream checkout components
               (wizard steps, address form, etc.). This is the boundary.
       Verify: No Stripe.js client SDK loaded on this page. Stripe session is
               created server-side; client only receives a URL.
+      ✔ write global sync test @done(26-04-06 19:36)
+
 
 **Delegation:**
   Execute: `/implement SC8 — Basket UI state-driven rendering`
