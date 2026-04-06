@@ -1,0 +1,76 @@
+# Sprint: Reserved Stock Data Integrity Migration
+
+## Problem Statement
+Current checkout implementation uses `setIfMissing({ reservedStock: 0 })` hack to handle missing `reservedStock` field on products. This creates data inconsistency and potential race conditions.
+
+## Root Cause Analysis
+- `reservedStock` field added to schema but existing products don't have it populated
+- Checkout logic assumes field exists, leading to runtime patches
+- No proper migration strategy for existing data
+
+## Research Required
+1. **Sanity Migration Patterns**: Research Sanity's recommended approaches for schema migrations
+2. **Atomic Operations**: Investigate Sanity's transaction capabilities for safe field additions
+3. **Data Migration Best Practices**: How to safely migrate thousands of product documents
+4. **Rollback Strategies**: Safe rollback if migration fails midway
+
+## Scope Contracts
+
+### Contract 1: Research & Planning (G-01)
+**Target State**: Comprehensive understanding of Sanity migration patterns and safe approach
+**DoD**:
+- [ ] Research Sanity schema migration documentation
+- [ ] Investigate `createIfMissing` vs `setIfMissing` patterns
+- [ ] Analyze current product data state (how many missing `reservedStock`)
+- [ ] Design migration strategy with rollback plan
+- [ ] Create migration script with dry-run capability
+
+### Contract 2: Schema Migration (G-02) 
+**Target State**: All products have `reservedStock: 0` field properly set
+**DoD**:
+- [ ] Create migration script to add `reservedStock: 0` to all products
+- [ ] Test migration on small batch first
+- [ ] Run full migration with progress tracking
+- [ ] Verify all products have field populated
+- [ ] Update checkout code to remove `setIfMissing` hack
+
+### Contract 3: Validation & Testing (G-03)
+**Target State**: Confirmed data integrity with no regressions
+**DoD**:
+- [ ] Create tests to verify `reservedStock` field exists on all products
+- [ ] Test checkout flow end-to-end with migrated data
+- [ ] Run regression tests on product fetching/display
+- [ ] Verify GROQ queries work consistently
+- [ ] Performance test with migrated schema
+
+## Implementation Notes
+- **Migration Safety**: Use transactions, batch processing, progress tracking
+- **Rollback Plan**: Keep backup, ability to revert changes
+- **Testing**: Comprehensive before/after validation
+- **Monitoring**: Add schema validation checks
+
+## Risk Mitigation
+- **Data Loss**: Full backup before migration
+- **Downtime**: Schedule migration during low-traffic period
+- **Performance**: Batch processing to avoid timeouts
+- **Consistency**: Verify all products migrated before removing hack
+
+## Success Criteria
+- All products have consistent `reservedStock` field
+- Checkout code uses standard field access (no `setIfMissing`)
+- No data loss or corruption
+- No performance regression
+- Full test coverage
+
+## Timeline Estimate
+- Research: 2-4 hours
+- Migration development: 2-3 hours  
+- Migration execution: 1-2 hours (depending on data size)
+- Testing & validation: 2-3 hours
+- **Total: 7-12 hours**
+
+## Dependencies
+- Sanity CMS access
+- Product data backup
+- Low-traffic window for migration
+- Test environment verification

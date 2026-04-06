@@ -484,7 +484,7 @@ not as a UI convention.
 
 **DoD (Sequenced):**
 
-✔ [ ] Pass 1 — Skeleton: @done(26-04-06 17:18)
+✔ Pass 1 — Skeleton: @done(26-04-06 17:18)
       Create useAcceptDiscrepancies.ts:
         "use client"
         export function useAcceptDiscrepancies(
@@ -498,7 +498,7 @@ not as a UI convention.
       Body: stub.
       /test: `npx tsc --noEmit` passes.
 
-✔ [ ] Pass 2 — Mutation logic per §7: @done(26-04-06 17:22)
+✔ Pass 2 — Mutation logic per §7: @done(26-04-06 17:22)
       Implement acceptAndContinue:
         if (discrepancy.type === "STRIPE_CONFIG") {
           // No mutation possible. Do not dispatch START_VALIDATION.
@@ -542,7 +542,7 @@ not as a UI convention.
               - Mutation throws: no dispatch, no executeValidation call
             Run: `npx vitest run tests/unit/preCheckout/useAcceptDiscrepancies.test.ts`
 
-- [ ] Neighbour flow sync check:
+✔ [ ] Neighbour flow sync check: @done(26-04-06 17:50)
       Verify: basketStore.updateItemPrice, updateItemQuantity, removeItem API matches
               actual basketStore exports. Read basketStore.ts before implementing.
               Do not assume method names — read source of truth.
@@ -593,7 +593,7 @@ into one composable unit consumed by the basket UI component.
       Body: stub returning IDLE state and no-op functions.
       /test: `npx tsc --noEmit` passes.
 
-✔ [ ] Pass 2 — State wiring: @done(26-04-06 17:43)
+✔ Pass 2 — State wiring: @done(26-04-06 17:43)
       Implement using React.useReducer with the transition function from SC1:
         const [{ state, context }, dispatch] = useReducer(
           (prev, event) => preCheckoutMachine.transition(prev.state, event, prev.context),
@@ -644,19 +644,19 @@ into one composable unit consumed by the basket UI component.
 - Pass 3 — Desktop layout (1280px):
       Not applicable — this is a hook, no visual output. Skip.
 
-✔ [ ] Neighbour flow sync check: @done(26-04-06 17:47)
+✔ Neighbour flow sync check: @done(26-04-06 17:47)
       Verify: The hook's public API (checkout, retry, acceptAndContinue, reset)
               maps 1:1 to the triggering actions in §9 Transition to Action Mapping.
       Verify: basketSnapshot used internally is sourced from the same basketStore
               that the basket page renders from. No separate copy.
       ✔ write small neighbour sync integration test @done(26-04-06 17:47)
-
-- [ ] Global flow sync check:
+✔ @done(26-04-06 17:50)
+✔ Global flow sync check: @done(26-04-06 17:50)
       Verify: Hook is not imported by any Server Component. It must live exclusively
               in "use client" components.
       Verify: All 5 states from §2 are reachable from the hook's public API.
               No state is orphaned (no path to reach it = dead code = spec violation).
-      [ ] write small global sync test
+      ✔ write small global sync test @done(26-04-06 17:50)
 
 **Delegation:**
   Execute: `/implement SC6 — usePreCheckout orchestrator hook`
@@ -678,12 +678,12 @@ Per §9 "Cancel URL and back-navigation".
 
 **DoD (Sequenced):**
 
-- [ ] Pass 1 — Skeleton:
+✔ Pass 1 — Skeleton: @done(26-04-06 18:14)
       In BasketPage.tsx, add a useEffect that reads searchParams for
       `checkout=cancelled`. Body: no-op. Confirm it does not break existing render.
       /test: `npx tsc --noEmit` passes.
 
-- [ ] Pass 2 — Handler logic:
+✔ Pass 2 — Handler logic: @done(26-04-06 18:19)
       Implement per §9:
         useEffect(() => {
           const params = new URLSearchParams(window.location.search);
@@ -706,19 +706,22 @@ Per §9 "Cancel URL and back-navigation".
               - URL does NOT have param: no effect
             Run: `npx vitest run tests/unit/preCheckout/basketCancelHandler.test.tsx`
 
-- [ ] Pass 3 — Desktop layout (1280px):
+- Pass 3 — Desktop layout (1280px):
       No visual change — URL param handling has no UI output.
 
-- [ ] Neighbour flow sync check:
+✔ Neighbour flow sync check: @done(26-04-06 18:22)
       Verify: The cancel_url set in SC2 validateBasket exactly matches the
               basket page route + `?checkout=cancelled` param.
       Verify: The success_url set in SC2 does NOT route back to basket page
               (would trigger cancel handler erroneously).
+    ✔ write neighbour sync integration test @done(26-04-06 18:22)
 
-- [ ] Global flow sync check:
+✔ Global flow sync check: @done(26-04-06 18:28)
       Verify: If Stripe posts back to cancel_url with additional Stripe params
               (e.g. session_id), the handler does not break. It only checks
               `checkout=cancelled`; other params are ignored.
+    ✔ write global sync test @done(26-04-06 18:28)
+
 
 **Delegation:**
   Execute: `/implement SC7 — Cancel URL handler in BasketPage`
@@ -744,7 +747,7 @@ discrepancy diffs, and action buttons render correctly per state.
 
 **DoD (Sequenced):**
 
-- [ ] Pass 1 — Skeleton:
+✔ [ ] Pass 1 — Skeleton: @done(26-04-06 19:15)
       Create CheckoutPanel.tsx accepting props:
         { state, context, checkout, retry, acceptAndContinue, reset }
       Render: static HTML shell with semantic elements, no styling.
@@ -759,7 +762,7 @@ discrepancy diffs, and action buttons render correctly per state.
       /test: `npx tsc --noEmit` passes.
             Smoke: render CheckoutPanel with state="IDLE" → panel-idle visible.
 
-- [ ] Pass 2 — Data (real content, no styling):
+✔ [ ] Pass 2 — Data (real content, no styling): @done(26-04-06 18:45)
       Populate each state branch with real content per §8:
         IDLE: Checkout button (onClick=checkout)
         PROCESSING: Disabled checkout button + "Processing..." text
@@ -783,14 +786,14 @@ discrepancy diffs, and action buttons render correctly per state.
               - SUCCESS: no buttons, "Redirecting" text
             Run: `npx vitest run tests/integration/checkout/CheckoutPanel.test.tsx`
 
-- [ ] Pass 3 — Layer 2: Desktop layout (1280px):
+✔ Pass 3 — Layer 2: Desktop layout (1280px): @done(26-04-06 18:46)
       Apply layout-only Tailwind classes to CheckoutPanel (no colour, no shadow):
         - Panel: flex flex-col gap-4 w-full
         - Buttons: w-full
         - Discrepancy list: space-y-2
       /test: `/test --viewport=1280` visual check — no overlapping elements.
 
-- [ ] Pass 3 — Layer 3: Desktop surface (1280px):
+✔ Pass 3 — Layer 3: Desktop surface (1280px): @done(26-04-06 18:50)
       Apply colour, typography, border tokens from tailwind.config.ts:
         - Error banner: bg matching design system danger colour
         - Buttons: primary and secondary variants per design system
@@ -798,7 +801,7 @@ discrepancy diffs, and action buttons render correctly per state.
           new price highlighted)
       /test: visual regression — no layout breaks.
 
-- [ ] Pass 3 — Layer 4: Desktop interaction (1280px):
+✔ Pass 3 — Layer 4: Desktop interaction (1280px): @done(26-04-06 18:50)
       - Checkout button: hover state, focus ring, loading cursor during PROCESSING
       - Retry button: hover state, focus ring
       - Accept & Continue: disabled appearance when mutations not yet applied
@@ -808,15 +811,15 @@ discrepancy diffs, and action buttons render correctly per state.
                test("retry button visible and functional in ERROR_NETWORK")
              Run: `npx playwright test tests/e2e/checkout/basket_to_checkout/`
 
-- [ ] Pass 3 — Layer 2: Mobile layout (375px):
+✔ Pass 3 — Layer 2: Mobile layout (375px): @done(26-04-06 18:10)
       Order summary panel full width below items. All elements stack vertically.
       /test: `/test --viewport=375` layout check.
 
-- [ ] Pass 3 — Layer 3: Mobile surface (375px):
+✔  Pass 3 — Layer 3: Mobile surface (375px): @done(26-04-06 18:10)
       Surface tokens consistent with desktop (same Tailwind classes apply).
       /test: visual regression at 375px.
 
-- [ ] Pass 3 — Layer 4: Mobile interaction (375px):
+✔ Pass 3 — Layer 4: Mobile interaction (375px): @done(26-04-06 18:10)
       Touch targets: minimum 44px height on all buttons (per WCAG 2.5.5).
       /test: Playwright e2e at mobile viewport.
 
@@ -827,6 +830,7 @@ discrepancy diffs, and action buttons render correctly per state.
               basketStore is NOT locked — RESET → IDLE restores editability.
       Verify: The "Update basket" button (RESET from ERROR_VALIDATION) returns to
               IDLE and the basket item controls become interactive again.
+      [] write neighbour sync integration test
 
 - [ ] Global flow sync check:
       Verify: CheckoutPanel does not import any downstream checkout components
