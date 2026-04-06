@@ -73,8 +73,6 @@ export default async function CheckoutLayout({
     }
   }
 
-  console.log("LAYOUT COMP", initialAddress, initialStatus);
-
   return (
     <CheckoutProvider
       initialAddress={initialAddress}

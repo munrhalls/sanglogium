@@ -1,0 +1,2 @@
+- checkout process state machine changes placeholder states
+- state machine guards prevent guarded state shift

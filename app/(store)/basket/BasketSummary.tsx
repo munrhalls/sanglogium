@@ -1,6 +1,8 @@
 "use client";
 import React from "react";
 import { useBasketStore, selectBasketTotal, selectBasketCount, selectIsCheckoutEnabled } from "@/store/store";
+import { useCheckoutStore } from '@/store/checkout';
+
 import { ArrowLeftIcon } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -14,6 +16,11 @@ export default function BasketSummary() {
 
   const shipping = 15.99;
   const total = subtotal + shipping;
+  const checkoutStatus = useCheckoutStore((state) => state.status);
+
+  const handleCheckout = function () {
+    useCheckoutStore.getState().nextStep();
+  }
 
   return (
     <>
@@ -42,13 +49,23 @@ export default function BasketSummary() {
       </div>
 
       {isCheckoutEnabled ? (
-        <Link href="/checkout" className="btn-primary block text-center mt-6 py-3 px-6 uppercase tracking-editorial type-body font-bold text-brand-700">
-          Checkout
-        </Link>
+        <>
+          {checkoutStatus === "IDLE" && (
+            <button
+              onClick={handleCheckout}
+              className="btn-primary block text-center mt-6 py-3 px-6 uppercase tracking-editorial type-body font-bold text-brand-700"
+            >
+              Checkout
+            </button>
+          )}
+          {checkoutStatus !== "IDLE" && (
+            <div className="mt-6 text-center">Processing...</div>
+          )}
+        </>
       ) : (
         <button
           disabled
-          className="btn-primary block text-center mt-6 py-3 px-6 uppercase tracking-editorial type-body font-bold opacity-50 cursor-not-allowed text-brand-700 "
+          className="btn-primary block text-center mt-6 py-3 px-6 uppercase tracking-editorial type-body font-bold opacity-50 cursor-not-allowed text-brand-700"
         >
           Checkout
         </button>
