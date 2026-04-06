@@ -8,9 +8,11 @@ import { QuantitySelector } from "@/app/components/ui/QuantitySelector";
 const BasketControls = function BasketControls({
   product,
   onRemoveStart,
+  disabled = false,
 }: {
   product: BasketItem;
   onRemoveStart?: (id: string) => void;
+  disabled?: boolean;
 }) {
   const _id = product._id;
   const item = useBasketStore((s) =>
@@ -22,6 +24,7 @@ const BasketControls = function BasketControls({
   if (!item) return null;
 
   const triggerRemove = () => {
+    if (disabled) return;
     console.log('click')
     if (onRemoveStart) {
       onRemoveStart(_id);
@@ -31,6 +34,7 @@ const BasketControls = function BasketControls({
   };
 
   const handleDecrement = () => {
+    if (disabled) return;
     console.log('click')
     console.log(item.quantity)
     if (item.quantity === 1) {
@@ -43,6 +47,7 @@ const BasketControls = function BasketControls({
   };
 
   const handleIncrement = () => {
+    if (disabled) return;
     if (item.quantity < product.stock) {
       updateQuantity(_id, item.quantity + 1);
     }
@@ -54,15 +59,19 @@ const BasketControls = function BasketControls({
         quantity={item.quantity}
         min={1}
         max={product.stock}
-
         onIncrement={handleIncrement}
         onDecrement={handleDecrement}
         size="sm"
+        disabled={disabled}
       />
       <button
         onClick={triggerRemove}
+        disabled={disabled}
+        aria-disabled={disabled}
         aria-label={`Remove ${product.name} from basket`}
-        className="w-8 h-8 flex items-center justify-center rounded-sm text-secondary-500 transition-colors duration-200 hover:text-error-500 hover:bg-error-500/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500"
+        className={`w-8 h-8 flex items-center justify-center rounded-sm text-secondary-500 transition-colors duration-200 hover:text-error-500 hover:bg-error-500/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500 ${
+          disabled ? 'pointer-events-none opacity-50' : ''
+        }`}
       >
         <X size={16} />
       </button>

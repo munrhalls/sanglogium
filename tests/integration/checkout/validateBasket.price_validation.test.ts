@@ -87,7 +87,7 @@ describe('validateBasket - Price validation', () => {
       discrepancy: {
         type: "PRICE",
         items: [{
-          productId: 'item-2',
+          id: 'item-2',
           productName: 'Product 2',
           expected: 100, // Basket price per item (300 / 3 items)
           actual: 120   // Sanity price
@@ -126,7 +126,7 @@ describe('validateBasket - Price validation', () => {
       discrepancy: {
         type: "INVENTORY",
         items: [{
-          productId: 'item-2',
+          id: 'item-2',
           productName: 'Product item-2',
           available: 0,
           requested: 1

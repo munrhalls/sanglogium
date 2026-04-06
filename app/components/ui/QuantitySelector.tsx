@@ -9,6 +9,7 @@ interface QuantitySelectorProps {
   onIncrement: () => void;
   onDecrement: () => void;
   size?: "sm" | "md";
+  disabled?: boolean;
 }
 
 export function QuantitySelector({
@@ -18,9 +19,10 @@ export function QuantitySelector({
   onIncrement,
   onDecrement,
   size = "md",
+  disabled = false,
 }: QuantitySelectorProps) {
-  const canDecrement = quantity > min;
-  const canIncrement = quantity < max;
+  const canDecrement = quantity > min && !disabled;
+  const canIncrement = quantity < max && !disabled;
 
   const btnSize = size === "sm" ? "w-8 h-8" : "w-10 h-10";
   const qtySize = size === "sm" ? "w-8" : "w-12";
@@ -31,6 +33,7 @@ export function QuantitySelector({
       <button
         onClick={onDecrement}
         disabled={!canDecrement}
+        aria-disabled={!canDecrement}
         className={`btn-secondary ${btnSize} flex items-center justify-center disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500`}
         aria-label="Decrease quantity"
       >
@@ -46,6 +49,7 @@ export function QuantitySelector({
       <button
         onClick={onIncrement}
         disabled={!canIncrement}
+        aria-disabled={!canIncrement}
         className={`btn-secondary ${btnSize} flex items-center justify-center disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500`}
         aria-label="Increase quantity"
       >

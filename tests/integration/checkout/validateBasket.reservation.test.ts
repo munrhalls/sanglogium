@@ -115,7 +115,7 @@ describe('validateBasket - Inventory reservation', () => {
       discrepancy: {
         type: "INVENTORY",
         items: [{
-          productId: 'item-1',
+          id: 'item-1',
           productName: 'Product item-1',
           available: 0,
           requested: 2

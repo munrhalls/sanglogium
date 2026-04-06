@@ -87,7 +87,7 @@ describe('validateBasket - Stock validation', () => {
       discrepancy: {
         type: "INVENTORY",
         items: [{
-          productId: 'item-1',
+          id: 'item-1',
           productName: 'Product 1',
           available: 1,
           requested: 2
