@@ -1,0 +1,997 @@
+# SPRINT: basket_to_checkout_handshake — Hyper-Specific
+# Generated from: /hyper-specificity-sprint protocol
+# Spec source: pre-checkout-state-machine-spec v2.0 (fixed)
+# Target agent: SWE 1.5 (Windsurf)
+# Date: 2026-04-06
+
+---
+
+## SPRINT METADATA
+
+Sprint name:     basket_to_checkout_handshake
+Chunk scope:     From user clicking "Checkout" on basket page to successful
+                 window.location.assign(stripeUrl) executing — and all failure
+                 paths that branch from that corridor.
+Spec authority:  pre-checkout-state-machine-spec v2.0 §1–§10
+Global pipeline: This chunk is Phase 1 of the checkout pipeline.
+                 Neighbour upstream:   basket page (product/quantity management)
+                 Neighbour downstream: Stripe hosted checkout → success/cancel URL landing
+
+Scope lock rules (MANDATORY — violations block sprint lock):
+  - NO changes to globals.css
+  - NO changes to homepage components
+  - NO changes to basket item data structures (shape is fixed input)
+  - NO changes to Sanity schema or GROQ queries
+  - NO changes to Inngest job definitions (lock expiry is out-of-band, read-only here)
+  - NO improvements outside scope contracts below
+  - ALL new files go under app/components/features/basket/checkout/ or
+    app/actions/checkout/ or store/preCheckout/ unless a contract explicitly
+    states otherwise
+  - ZERO server-side redirect() calls. All navigation via window.location.assign()
+
+---
+
+## PHASE 0: PRE-WORK LESSONS RETRIEVAL
+
+Before writing a single line of code, agent MUST:
+
+  1. Read _project/lessons/INDEX.md
+     Query keywords: "state-machine", "zustand", "server-action", "stripe",
+     "abort-controller", "idempotency", "inngest", "basket", "checkout",
+     "next-redirect", "use-client"
+
+  2. Load all lessons tagged severity: Critical or High that match above keywords.
+
+  3. Apply every prevention rule found as a hard constraint throughout this sprint.
+     If a lesson says "never call redirect() inside try/catch in a server action",
+     treat that as a scope-lock rule with the same weight as the list above.
+
+  4. If INDEX.md does not exist yet: create it as an empty scaffold and proceed.
+     Flag this as a post-sprint /learn deliverable.
+
+---
+
+## PHASE 1: RESEARCH AND AUDIT (read-only — no edits)
+
+### Step 1: Read these files before any implementation
+
+  - tailwind.config.ts                          (design tokens — colour, spacing)
+  - store/basketStore.ts (or equivalent)        (basket state shape — read only)
+  - app/components/features/basket/             (existing basket UI — read only)
+  - app/actions/ (any existing checkout action) (existing server action pattern)
+  - middleware.ts                               (auth/clerk routing — read only)
+  - lib/ (stripe client setup if exists)        (Stripe SDK instantiation pattern)
+
+### Step 2: End-State Spatial Map
+
+Desktop (1280px) — Basket page, IDLE state:
+  [HEADER — full width]
+  [BASKET PAGE — max-w-content, mx-auto, px-8]
+    [BASKET ITEM LIST — left col, ~60% width]
+    [ORDER SUMMARY PANEL — right col, ~40% width]
+      [CHECKOUT BUTTON — full width of panel, enabled]
+
+Desktop (1280px) — PROCESSING state:
+  [SAME LAYOUT]
+    [BASKET ITEM LIST — all controls disabled, opacity-50 or similar lock]
+    [ORDER SUMMARY PANEL]
+      [CHECKOUT BUTTON — disabled, spinner visible, "Processing..." text]
+
+Desktop (1280px) — ERROR_NETWORK state:
+  [SAME LAYOUT]
+    [BASKET ITEM LIST — all controls STILL disabled]
+    [ORDER SUMMARY PANEL]
+      [ERROR BANNER — "Connection failed", full-width of panel]
+      [RETRY BUTTON — sole CTA, full-width of panel]
+
+Desktop (1280px) — ERROR_VALIDATION state:
+  [SAME LAYOUT]
+    [BASKET ITEM LIST — all controls STILL disabled (user must use Update basket)]
+    [ORDER SUMMARY PANEL]
+      [VALIDATION BANNER — "Your basket has been updated" + per-item diff list]
+      [ACCEPT & CONTINUE BUTTON — disabled until basket mutations complete]
+      [UPDATE BASKET BUTTON — secondary CTA, fires RESET → IDLE]
+
+Desktop (1280px) — SUCCESS state:
+  [SAME LAYOUT — all controls disabled]
+    [ORDER SUMMARY PANEL]
+      ["Redirecting to payment..." message — no buttons]
+
+Mobile (375px) — all states:
+  [HEADER]
+  [BASKET ITEMS — full width, stacked]
+  [ORDER SUMMARY PANEL — full width, below items]
+    [Same state-driven content as desktop panel, full width]
+
+### Step 3: Gap Analysis
+
+| ID    | Component                        | Current                       | Target (per spec §)        | Severity |
+|-------|----------------------------------|-------------------------------|----------------------------|----------|
+| G-01  | PreCheckoutMachine (state logic) | Does not exist                | §2 states + §3 events      | Critical |
+| G-02  | Machine context shape            | Does not exist                | §10 PreCheckoutContext      | Critical |
+| G-03  | Idempotency key generation       | Does not exist                | §4 UUIDv4 per attempt       | Critical |
+| G-04  | validateBasket server action     | Unknown / partial             | §5 full payload contract    | Critical |
+| G-05  | AbortController + 10s timeout    | Does not exist                | §6 call-site owned timer    | Critical |
+| G-06  | Redirect watchdog (5s)           | Does not exist                | §6 SUCCESS entry watchdog   | Critical |
+| G-07  | RESET from SUCCESS lock release  | Does not exist                | §3 fire-and-forget          | Critical |
+| G-08  | Accept & Continue guard          | Does not exist                | §7 mutation precondition    | Critical |
+| G-09  | Discrepancy payload UI           | Does not exist                | §8 ERROR_VALIDATION view    | High     |
+| G-10  | Cancel URL back-nav handler      | Does not exist                | §9 ?checkout=cancelled      | High     |
+| G-11  | Basket lock UI (PROCESSING)      | Unknown                       | §8 all controls disabled    | High     |
+| G-12  | Stripe 400 → FAIL_VALIDATION     | Not handled                   | §5 STRIPE_CONFIG type       | High     |
+| G-13  | DiscrepancyPayload TypeScript    | Does not exist                | §5 discriminated union      | High     |
+
+---
+
+## PHASE 2: SCOPE CONTRACTS
+
+---
+
+### SC1: PreCheckoutMachine — State Machine Core (G-01, G-02, G-03)
+
+**Target state:**
+A pure TypeScript finite state machine module at
+`store/preCheckout/preCheckoutMachine.ts` that encodes all states (§2),
+all events (§3), and the full context shape (§10). No React, no side effects
+in this file. Pure transition logic only.
+
+**Files owned by this contract:**
+  - store/preCheckout/preCheckoutMachine.ts   (CREATE)
+  - store/preCheckout/preCheckoutTypes.ts     (CREATE — shared types)
+  - store/preCheckout/index.ts               (CREATE — barrel)
+
+**DoD (Sequenced):**
+
+✔ [ ] Pass 1 — Skeleton: @done(26-04-06 14:41)
+      Create preCheckoutTypes.ts with:
+        ✔ PreCheckoutState union type: "IDLE" | "PROCESSING" | "ERROR_NETWORK" | @done(26-04-06 14:34)
+          "ERROR_VALIDATION" | "SUCCESS"
+        ✔ PreCheckoutEvent union type: all 7 events from §3 with their payloads @done(26-04-06 14:36)
+        ✔ PreCheckoutContext interface from §10 (all 4 fields, all nullable) @done(26-04-06 14:40)
+        ✔ DiscrepancyPayload discriminated union from §5 (INVENTORY | PRICE | STRIPE_CONFIG) @done(26-04-06 14:41)
+          with required fields enforced per type (available: number required for INVENTORY;
+          expected: number and actual: number required for PRICE)
+      Create preCheckoutMachine.ts as empty module exporting placeholder.
+      TypeScript must compile with zero errors.
+      /test: `npx tsc --noEmit` passes.
+
+- [ ] Pass 2 — Transition logic:
+      Implement the transition function in preCheckoutMachine.ts:
+        transition(state: PreCheckoutState, event: PreCheckoutEvent,
+                   context: PreCheckoutContext): { state, context }
+      Rules per §3:
+        - START_VALIDATION from IDLE or ERROR_NETWORK → PROCESSING
+          context: generate UUIDv4 for idempotencyKey (use crypto.randomUUID())
+        - START_VALIDATION from ERROR_VALIDATION → PROCESSING
+          ONLY IF guard passes: context.discrepancy === null (mutations cleared it)
+          context: generate UUIDv4 for idempotencyKey
+        - FAIL_NETWORK from PROCESSING or SUCCESS → ERROR_NETWORK
+          context: idempotencyKey = null
+        - FAIL_VALIDATION from PROCESSING → ERROR_VALIDATION
+          context: discrepancy = event.payload; idempotencyKey = null
+        - PASS_VALIDATION from PROCESSING → SUCCESS
+          context: stripeUrl = event.stripeUrl (retain idempotencyKey per §4)
+        - RESET from ERROR_VALIDATION or ERROR_NETWORK → IDLE
+          context: full reset (all fields null)
+        - RESET from SUCCESS → IDLE
+          context: full reset (all fields null)
+          NOTE: side effect (lock release) is NOT in this function — see SC4
+        - Any event not listed for current state → return state unchanged (no-op)
+      /test: `npx tsc --noEmit` passes.
+            Unit tests in tests/unit/preCheckout/preCheckoutMachine.test.ts:
+              ✔ All 13 valid transitions produce correct next state @done(26-04-06 15:01)
+              ✔ All 4 context mutations (key gen, key clear, payload set, full reset) @done(26-04-06 15:01)
+              ✔ Guard: START_VALIDATION from ERROR_VALIDATION with non-null discrepancy @done(26-04-06 15:01)
+                returns ERROR_VALIDATION unchanged
+              ✔ Illegal events on every state return state unchanged @done(26-04-06 15:01)
+            Run: `npx vitest run tests/unit/preCheckout/`
+
+✔ [ ] Neighbour flow sync check: @done(26-04-06 15:01)
+      Verify: preCheckoutTypes.ts DiscrepancyPayload is importable from basket components
+      Verify: PreCheckoutContext shape does not conflict with basketStore shape
+      No changes to basketStore — read its types and ensure no field name collisions.
+
+✔ [ ] Global flow sync check: @done(26-04-06 15:02)
+      Verify: The machine has no direct Stripe SDK import, no fetch call, no window reference.
+      Pure logic only. Server action and browser APIs live in SC4 and SC5.
+
+**Delegation:**
+  Execute: `/implement SC1 — PreCheckoutMachine core logic and types`
+  Build:   `/build preCheckoutMachine Pass1 Skeleton`
+           `/build preCheckoutMachine Pass2 TransitionLogic`
+  Verify:  `/test tests/unit/preCheckout/preCheckoutMachine.test.ts`
+
+---
+
+### SC2: validateBasket Server Action (G-04, G-12, G-13)
+
+**Target state:**
+A Next.js server action at `app/actions/checkout/validateBasket.ts` that
+executes the full §5 processing pipeline: Sanity fetch → inventory reservation
+→ Stripe session creation. Returns a typed result union — never throws to the
+client. Never calls redirect().
+
+**Files owned by this contract:**
+  - app/actions/checkout/validateBasket.ts   (CREATE)
+  - app/actions/checkout/validateBasket.types.ts (CREATE — server result types)
+  - app/actions/checkout/index.ts            (CREATE — barrel)
+
+**DoD (Sequenced):**
+
+✔ [ ] Pass 1 — Skeleton: @done(26-04-06 15:10)
+      Create validateBasket.types.ts:
+        type ValidateBasketResult =
+          | { outcome: "PASS"; stripeUrl: string }
+          | { outcome: "FAIL_VALIDATION"; discrepancy: DiscrepancyPayload }
+          | { outcome: "FAIL_NETWORK" }
+      Create validateBasket.ts:
+        "use server"
+        export async function validateBasket(
+          payload: BasketPayload,
+          idempotencyKey: string,
+          options?: { signal?: AbortSignal }
+        ): Promise<ValidateBasketResult>
+      Body: return { outcome: "FAIL_NETWORK" } as stub.
+      /test: `npx tsc --noEmit` passes.
+
+✔ [ ] Pass 2 — Sanity validation step: @done(26-04-06 15:15)
+      Implement Step 1 of §5: fetch current prices and stock levels from Sanity CMS
+      for all basket line items. Use existing GROQ query patterns from lib/.
+      Map results:
+        - 5xx or thrown error → return { outcome: "FAIL_NETWORK" }
+        - Any item with price mismatch → build PRICE DiscrepancyPayload,
+          return { outcome: "FAIL_VALIDATION", discrepancy }
+          (expected = basket price, actual = Sanity price)
+        - Any item with stock < basket quantity → build INVENTORY DiscrepancyPayload,
+          return { outcome: "FAIL_VALIDATION", discrepancy }
+          (available = current stock count)
+      /test: `npx tsc --noEmit` passes.
+            Integration tests in tests/integration/checkout/validateBasket.sanity.test.ts:
+              - Mock Sanity client: price match → passes through
+              - Mock Sanity client: price mismatch on item-2 → FAIL_VALIDATION PRICE payload
+                with correct expected/actual values
+              - Mock Sanity client: stock shortage → FAIL_VALIDATION INVENTORY payload
+                with correct available value
+              - Mock Sanity client: 5xx → FAIL_NETWORK
+            Run: `npx vitest run tests/integration/checkout/`
+
+✔ [ ] Pass 3 — Inventory reservation step: @done(26-04-06 15:21)
+      Implement Step 2 of §5: call inventory reservation endpoint/service.
+      Map results:
+        - 400 (stock unavailable) → return { outcome: "FAIL_VALIDATION", discrepancy }
+          with INVENTORY type
+        - 200 OK → proceed to Stripe step
+        - 5xx → return { outcome: "FAIL_NETWORK" }
+      /test: integration test added for reservation 400 and 200 paths.
+
+✔ [ ] Pass 4 — Stripe session creation step: @done(26-04-06 15:31)
+      Implement Step 3 of §5:
+        - Use existing Stripe client from lib/.
+        - Pass idempotencyKey as Stripe-Idempotency-Key header.
+        - Set cancel_url to `${process.env.NEXT_PUBLIC_BASE_URL}/basket?checkout=cancelled`
+        - Set success_url to checkout success page URL.
+        - 200 OK → return { outcome: "PASS", stripeUrl: session.url }
+        - 400 (bad params) → return { outcome: "FAIL_VALIDATION", discrepancy }
+          with STRIPE_CONFIG type (per §5, §12 note on Stripe 400s)
+          items array: [{ id: "stripe", issue: "Order configuration error" }]
+        - 5xx / timeout → return { outcome: "FAIL_NETWORK" }
+      CRITICAL: Do NOT call redirect() anywhere in this function. Return the URL.
+      /test: integration tests for all 3 Stripe result paths (200, 400, 5xx).
+            Run: `npx vitest run tests/integration/checkout/`
+
+✔ [ ] Neighbour flow sync check: @done(26-04-06 15:35)
+      Verify: cancel_url domain matches basket page route exactly (no trailing slash mismatch).
+      Verify: success_url points to the correct downstream route (e.g. /checkout/success
+              or /orders/confirmation — confirm with downstream chunk owner).
+      Verify: BasketPayload shape matches what basketStore exports — no silent field
+              truncation.
+
+✔ [ ] Global flow sync check: @done(26-04-06 15:41)
+      Verify: validateBasket is not exported from any file reachable by a client component
+              without "use server" boundary. Server action boundary must be explicit.
+      Verify: Stripe secret key is consumed only server-side (never in client bundle).
+              Run: `npx next build` and confirm no "server-only" warnings.
+
+**Delegation:**
+  Execute: `/implement SC2 — validateBasket server action full pipeline`
+  Build:   `/build validateBasket Pass1 Skeleton`
+           `/build validateBasket Pass2 SanityStep`
+           `/build validateBasket Pass3 ReservationStep`
+           `/build validateBasket Pass4 StripeStep`
+  Verify:  `/test tests/integration/checkout/validateBasket.*.test.ts`
+
+---
+
+### SC3: Timeout and Abort Architecture (G-05)
+
+**Target state:**
+A client-side hook or utility at
+`app/components/features/basket/checkout/useCheckoutAction.ts` that
+owns the AbortController, the 10-second timeout, and dispatches
+FAIL_NETWORK or PASS_VALIDATION/FAIL_VALIDATION to the machine.
+Exactly matches §6 implementation pattern.
+
+**Files owned by this contract:**
+  - app/components/features/basket/checkout/useCheckoutAction.ts (CREATE)
+
+**DoD (Sequenced):**
+
+✔ [ ] Pass 1 — Skeleton: @done(26-04-06 15:57)
+      Create useCheckoutAction.ts:
+        "use client"
+        export function useCheckoutAction(
+          dispatch: (event: PreCheckoutEvent) => void
+        ): { executeValidation: (payload: BasketPayload, idempotencyKey: string) => void }
+      Body: stub returning no-op.
+      /test: `npx tsc --noEmit` passes.
+
+✔ [ ] Pass 2 — AbortController + timeout wiring: @done(26-04-06 16:02)
+      Implement per §6 exactly:
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10_000);
+        try {
+          const result = await validateBasket(payload, idempotencyKey,
+                                              { signal: controller.signal });
+          clearTimeout(timeoutId);
+          if (result.outcome === "PASS") {
+            dispatch({ type: "PASS_VALIDATION", stripeUrl: result.stripeUrl });
+          } else if (result.outcome === "FAIL_VALIDATION") {
+            dispatch({ type: "FAIL_VALIDATION", payload: result.discrepancy });
+          } else {
+            dispatch({ type: "FAIL_NETWORK" });
+          }
+        } catch (error) {
+          clearTimeout(timeoutId);
+          dispatch({ type: "FAIL_NETWORK" });
+        }
+      The AbortController is created inside executeValidation (call-site scoped),
+      NOT in useState or useRef. This ensures unmount does not suppress FAIL_NETWORK.
+      /test: unit tests in tests/unit/preCheckout/useCheckoutAction.test.ts:
+              - Mock validateBasket returning PASS → PASS_VALIDATION dispatched
+              - Mock validateBasket returning FAIL_VALIDATION → FAIL_VALIDATION dispatched
+              - Mock validateBasket returning FAIL_NETWORK → FAIL_NETWORK dispatched
+              - Mock validateBasket throwing AbortError → FAIL_NETWORK dispatched
+              - Mock validateBasket throwing generic Error → FAIL_NETWORK dispatched
+              - Timer fires after 10000ms mock: abort() called on controller
+            Run: `npx vitest run tests/unit/preCheckout/`
+
+- [ ] Neighbour flow sync check:
+      Verify: dispatch function signature matches PreCheckoutEvent union from SC1.
+      Verify: BasketPayload consumed here matches shape produced by basketStore.
+
+- [ ] Global flow sync check:
+      Verify: No direct Stripe SDK import in this file — all Stripe work is
+              server-side in SC2.
+      Verify: validateBasket import path resolves through the "use server" boundary
+              correctly (Next.js App Router server action import rules).
+
+**Delegation:**
+  Execute: `/implement SC3 — useCheckoutAction with AbortController and timeout`
+  Build:   `/build useCheckoutAction Pass1 Skeleton`
+           `/build useCheckoutAction Pass2 AbortWiring`
+  Verify:  `/test tests/unit/preCheckout/useCheckoutAction.test.ts`
+
+---
+
+### SC4: SUCCESS State Entry — Redirect + Watchdog + Lock Release (G-06, G-07)
+
+**Target state:**
+A client-side utility at
+`app/components/features/basket/checkout/useSuccessHandler.ts`
+that handles SUCCESS state entry: calls window.location.assign(),
+starts the 5-second redirect watchdog, and exposes the fire-and-forget
+lock release call for RESET-from-SUCCESS.
+
+**Files owned by this contract:**
+  - app/components/features/basket/checkout/useSuccessHandler.ts (CREATE)
+  - app/actions/checkout/releaseInventoryLock.ts                 (CREATE)
+
+**DoD (Sequenced):**
+
+- [ ] Pass 1 — Skeleton:
+      Create releaseInventoryLock.ts:
+        "use server"
+        export async function releaseInventoryLock(
+          idempotencyKey: string
+        ): Promise<void>
+      Body: stub (no-op).
+      Create useSuccessHandler.ts:
+        "use client"
+        export function useSuccessHandler(
+          dispatch: (event: PreCheckoutEvent) => void
+        ): {
+          onSuccessEntry: (stripeUrl: string, watchdogRef: React.MutableRefObject<number | null>) => void;
+          onResetFromSuccess: (idempotencyKey: string | null) => void;
+        }
+      Body: stubs.
+      /test: `npx tsc --noEmit` passes.
+
+- [ ] Pass 2 — Redirect + watchdog:
+      Implement onSuccessEntry per §6:
+        window.location.assign(stripeUrl);
+        watchdogRef.current = window.setTimeout(() => {
+          dispatch({ type: "FAIL_NETWORK" });
+        }, 5_000) as unknown as number;
+      watchdogRef is a React ref passed in from the parent component so the
+      component can clear it on unmount.
+      /test: unit test (jsdom environment):
+              - window.location.assign is called with correct stripeUrl
+              - After 5000ms mock: FAIL_NETWORK dispatched
+              - If component clears watchdogRef before 5000ms: FAIL_NETWORK not dispatched
+            Run: `npx vitest run tests/unit/preCheckout/useSuccessHandler.test.ts`
+
+- [ ] Pass 3 — Lock release (RESET from SUCCESS):
+      Implement onResetFromSuccess:
+        if (idempotencyKey) {
+          releaseInventoryLock(idempotencyKey).catch(() => {
+            // Fire-and-forget: swallow error. Inngest expiry is safety net.
+          });
+        }
+      This function returns void immediately. It does NOT await.
+      /test: unit test:
+              - releaseInventoryLock is called with the idempotencyKey
+              - If releaseInventoryLock throws, onResetFromSuccess does not throw
+              - If idempotencyKey is null, releaseInventoryLock is not called
+            Run: `npx vitest run tests/unit/preCheckout/useSuccessHandler.test.ts`
+
+- [ ] Pass 4 — releaseInventoryLock server action implementation:
+      Wire releaseInventoryLock.ts to call the inventory service to release the
+      lock for the given idempotencyKey. Use the same inventory service client
+      used in SC2 Step 2 (reservation). On any error: swallow silently and log
+      server-side only. Never throw to client.
+      /test: integration test confirming fire-and-forget contract:
+              - 200 response: resolves void
+              - 5xx response: resolves void (no throw)
+            Run: `npx vitest run tests/integration/checkout/releaseInventoryLock.test.ts`
+
+- [ ] Neighbour flow sync check:
+      Verify: cancel_url set in SC2 matches the route where the downstream
+              cancel handler (SC7) listens.
+      Verify: success_url set in SC2 is confirmed with downstream chunk.
+
+- [ ] Global flow sync check:
+      Verify: Lock release failure does NOT prevent the machine from reaching IDLE.
+              The transition is synchronous; the async call is a side effect only.
+      Verify: No double-release is possible: onResetFromSuccess checks for null
+              idempotencyKey before calling releaseInventoryLock.
+
+**Delegation:**
+  Execute: `/implement SC4 — SUCCESS entry, watchdog, lock release`
+  Build:   `/build useSuccessHandler Pass1 Skeleton`
+           `/build useSuccessHandler Pass2 RedirectWatchdog`
+           `/build useSuccessHandler Pass3 LockRelease`
+           `/build useSuccessHandler Pass4 ServerAction`
+  Verify:  `/test tests/unit/preCheckout/useSuccessHandler.test.ts`
+           `/test tests/integration/checkout/releaseInventoryLock.test.ts`
+
+---
+
+### SC5: Accept & Continue Guard and Basket Mutation (G-08)
+
+**Target state:**
+A mutation handler at
+`app/components/features/basket/checkout/useAcceptDiscrepancies.ts`
+that applies basket store mutations for each discrepancy type before
+dispatching START_VALIDATION. Implements the §7 guard condition as code,
+not as a UI convention.
+
+**Files owned by this contract:**
+  - app/components/features/basket/checkout/useAcceptDiscrepancies.ts (CREATE)
+
+**DoD (Sequenced):**
+
+- [ ] Pass 1 — Skeleton:
+      Create useAcceptDiscrepancies.ts:
+        "use client"
+        export function useAcceptDiscrepancies(
+          dispatch: (event: PreCheckoutEvent) => void,
+          executeValidation: ReturnType<typeof useCheckoutAction>["executeValidation"],
+          basketPayload: BasketPayload
+        ): {
+          acceptAndContinue: (discrepancy: DiscrepancyPayload,
+                              idempotencyKey: string) => Promise<void>;
+        }
+      Body: stub.
+      /test: `npx tsc --noEmit` passes.
+
+- [ ] Pass 2 — Mutation logic per §7:
+      Implement acceptAndContinue:
+        if (discrepancy.type === "STRIPE_CONFIG") {
+          // No mutation possible. Do not dispatch START_VALIDATION.
+          // Log warning. Button should have been hidden — this is a safety guard.
+          return;
+        }
+        let mutationsSucceeded = true;
+        try {
+          if (discrepancy.type === "PRICE") {
+            for (const item of discrepancy.items) {
+              basketStore.updateItemPrice(item.id, item.actual);
+              // If basketStore throws: mutationsSucceeded = false; break;
+            }
+          }
+          if (discrepancy.type === "INVENTORY") {
+            for (const item of discrepancy.items) {
+              if (item.available === 0) {
+                basketStore.removeItem(item.id);
+              } else {
+                basketStore.updateItemQuantity(item.id, item.available);
+              }
+            }
+          }
+        } catch {
+          mutationsSucceeded = false;
+        }
+        if (!mutationsSucceeded) {
+          // Do not dispatch START_VALIDATION. Surface error to user (separate concern).
+          return;
+        }
+        // Mutations succeeded. Now dispatch (new idempotency key generated inside machine).
+        const newKey = crypto.randomUUID();
+        dispatch({ type: "START_VALIDATION" });
+        executeValidation(basketPayload, newKey);
+      /test: unit tests in tests/unit/preCheckout/useAcceptDiscrepancies.test.ts:
+              - PRICE discrepancy: basketStore.updateItemPrice called for each item
+                with item.actual; START_VALIDATION dispatched; executeValidation called
+              - INVENTORY discrepancy available > 0: updateItemQuantity called
+              - INVENTORY discrepancy available === 0: removeItem called
+              - STRIPE_CONFIG: no dispatch, no executeValidation call
+              - Mutation throws: no dispatch, no executeValidation call
+            Run: `npx vitest run tests/unit/preCheckout/useAcceptDiscrepancies.test.ts`
+
+- [ ] Neighbour flow sync check:
+      Verify: basketStore.updateItemPrice, updateItemQuantity, removeItem API matches
+              actual basketStore exports. Read basketStore.ts before implementing.
+              Do not assume method names — read source of truth.
+      Verify: After mutations, basketStore state is consistent with what the next
+              validateBasket call will receive. Do a manual trace: mutated basket →
+              SC2 Step 1 Sanity fetch → should pass if mutations were correct.
+
+- [ ] Global flow sync check:
+      Verify: Basket mutations here do not corrupt the basket for the downstream
+              order creation step. The downstream order is built from the same
+              basket store; mutated prices/quantities must be intentional and
+              clearly documented for the downstream chunk.
+
+**Delegation:**
+  Execute: `/implement SC5 — Accept & Continue guard and basket mutation`
+  Build:   `/build useAcceptDiscrepancies Pass1 Skeleton`
+           `/build useAcceptDiscrepancies Pass2 MutationLogic`
+  Verify:  `/test tests/unit/preCheckout/useAcceptDiscrepancies.test.ts`
+
+---
+
+### SC6: usePreCheckout — Orchestrator Hook (G-01, G-02, G-03, G-04, G-05, G-06, G-07, G-08)
+
+**Target state:**
+A single orchestrator hook at
+`app/components/features/basket/checkout/usePreCheckout.ts`
+that wires SC1 machine + SC3 action + SC4 success handler + SC5 accept handler
+into one composable unit consumed by the basket UI component.
+
+**Files owned by this contract:**
+  - app/components/features/basket/checkout/usePreCheckout.ts (CREATE)
+
+**DoD (Sequenced):**
+
+- [ ] Pass 1 — Skeleton:
+      Create usePreCheckout.ts:
+        "use client"
+        export function usePreCheckout(): {
+          state: PreCheckoutState;
+          context: PreCheckoutContext;
+          checkout: () => void;
+          retry: () => void;
+          acceptAndContinue: () => void;
+          reset: () => void;
+        }
+      Body: stub returning IDLE state and no-op functions.
+      /test: `npx tsc --noEmit` passes.
+
+- [ ] Pass 2 — State wiring:
+      Implement using React.useReducer with the transition function from SC1:
+        const [{ state, context }, dispatch] = useReducer(
+          (prev, event) => preCheckoutMachine.transition(prev.state, event, prev.context),
+          { state: "IDLE", context: initialContext }
+        );
+      Wire watchdogRef = useRef<number | null>(null).
+      Wire useCheckoutAction, useSuccessHandler, useAcceptDiscrepancies.
+      Implement checkout():
+        const key = crypto.randomUUID();  // key generated here for IDLE path
+        dispatch({ type: "START_VALIDATION" });
+        executeValidation(basketSnapshot, key);
+      Implement retry():
+        const key = crypto.randomUUID();
+        dispatch({ type: "START_VALIDATION" });
+        executeValidation(basketSnapshot, key);
+      Implement reset():
+        if (state === "SUCCESS") {
+          onResetFromSuccess(context.idempotencyKey);
+          clearTimeout(watchdogRef.current ?? undefined);
+          watchdogRef.current = null;
+        }
+        dispatch({ type: "RESET" });
+      Implement acceptAndContinue():
+        if (!context.discrepancy) return;
+        acceptAndContinueHandler(context.discrepancy, context.idempotencyKey ?? "");
+      Wire SUCCESS state entry effect:
+        useEffect(() => {
+          if (state === "SUCCESS" && context.stripeUrl) {
+            onSuccessEntry(context.stripeUrl, watchdogRef);
+          }
+        }, [state]);
+      Cleanup on unmount:
+        useEffect(() => {
+          return () => { clearTimeout(watchdogRef.current ?? undefined); };
+        }, []);
+      /test: integration tests in tests/integration/checkout/usePreCheckout.test.tsx:
+              - Render hook; call checkout(); mock validateBasket returning PASS →
+                state transitions IDLE → PROCESSING → SUCCESS
+              - state SUCCESS → window.location.assign called
+              - Watchdog fires after 5s: state becomes ERROR_NETWORK
+              - call retry() from ERROR_NETWORK → state becomes PROCESSING
+              - Mock validateBasket returning FAIL_VALIDATION → ERROR_VALIDATION
+              - call acceptAndContinue(); mutations applied; validateBasket called again
+              - call reset() from ERROR_VALIDATION → state becomes IDLE
+              - call reset() from SUCCESS → lock release called; state IDLE
+            Run: `npx vitest run tests/integration/checkout/usePreCheckout.test.tsx`
+
+- [ ] Pass 3 — Desktop layout (1280px):
+      Not applicable — this is a hook, no visual output. Skip.
+
+- [ ] Neighbour flow sync check:
+      Verify: The hook's public API (checkout, retry, acceptAndContinue, reset)
+              maps 1:1 to the triggering actions in §9 Transition to Action Mapping.
+      Verify: basketSnapshot used internally is sourced from the same basketStore
+              that the basket page renders from. No separate copy.
+
+- [ ] Global flow sync check:
+      Verify: Hook is not imported by any Server Component. It must live exclusively
+              in "use client" components.
+      Verify: All 5 states from §2 are reachable from the hook's public API.
+              No state is orphaned (no path to reach it = dead code = spec violation).
+
+**Delegation:**
+  Execute: `/implement SC6 — usePreCheckout orchestrator hook`
+  Build:   `/build usePreCheckout Pass1 Skeleton`
+           `/build usePreCheckout Pass2 StateWiring`
+  Verify:  `/test tests/integration/checkout/usePreCheckout.test.tsx`
+
+---
+
+### SC7: Cancel URL Back-Navigation Handler (G-10)
+
+**Target state:**
+The basket page component detects `?checkout=cancelled` query param on mount,
+dispatches RESET if machine is in SUCCESS state, and cleans the URL.
+Per §9 "Cancel URL and back-navigation".
+
+**Files owned by this contract:**
+  - app/components/features/basket/BasketPage.tsx  (EDIT — add handler only)
+
+**DoD (Sequenced):**
+
+- [ ] Pass 1 — Skeleton:
+      In BasketPage.tsx, add a useEffect that reads searchParams for
+      `checkout=cancelled`. Body: no-op. Confirm it does not break existing render.
+      /test: `npx tsc --noEmit` passes.
+
+- [ ] Pass 2 — Handler logic:
+      Implement per §9:
+        useEffect(() => {
+          const params = new URLSearchParams(window.location.search);
+          if (params.get("checkout") === "cancelled") {
+            if (checkoutState === "SUCCESS") {
+              reset(); // dispatches RESET from SUCCESS → fires lock release
+            }
+            // Clean URL regardless of state to prevent re-trigger on re-render
+            const cleanUrl = window.location.pathname;
+            window.history.replaceState({}, "", cleanUrl);
+          }
+        }, []);  // Runs once on mount only
+      /test: unit test (jsdom):
+              - URL has ?checkout=cancelled AND state is SUCCESS:
+                reset() called; URL cleaned
+              - URL has ?checkout=cancelled AND state is ERROR_NETWORK:
+                reset() called (harmless); URL cleaned
+              - URL has ?checkout=cancelled AND state is IDLE:
+                URL cleaned; no dispatch
+              - URL does NOT have param: no effect
+            Run: `npx vitest run tests/unit/preCheckout/basketCancelHandler.test.tsx`
+
+- [ ] Pass 3 — Desktop layout (1280px):
+      No visual change — URL param handling has no UI output.
+
+- [ ] Neighbour flow sync check:
+      Verify: The cancel_url set in SC2 validateBasket exactly matches the
+              basket page route + `?checkout=cancelled` param.
+      Verify: The success_url set in SC2 does NOT route back to basket page
+              (would trigger cancel handler erroneously).
+
+- [ ] Global flow sync check:
+      Verify: If Stripe posts back to cancel_url with additional Stripe params
+              (e.g. session_id), the handler does not break. It only checks
+              `checkout=cancelled`; other params are ignored.
+
+**Delegation:**
+  Execute: `/implement SC7 — Cancel URL handler in BasketPage`
+  Build:   `/build BasketPage Pass1 CancelHandlerSkeleton`
+           `/build BasketPage Pass2 CancelHandlerLogic`
+  Verify:  `/test tests/unit/preCheckout/basketCancelHandler.test.tsx`
+
+---
+
+### SC8: Basket UI — State-Driven Lock and Error Rendering (G-09, G-11)
+
+**Target state:**
+The basket page UI renders the correct visual state for all 5 machine states
+per §8 State to UI Presentation Mapping. Basket controls are locked in
+PROCESSING, ERROR_NETWORK, ERROR_VALIDATION, and SUCCESS. Error banners,
+discrepancy diffs, and action buttons render correctly per state.
+
+**Files owned by this contract:**
+  - app/components/features/basket/BasketPage.tsx                     (EDIT)
+  - app/components/features/basket/checkout/CheckoutPanel.tsx         (CREATE)
+  - app/components/features/basket/checkout/ValidationErrorBanner.tsx (CREATE)
+  - app/components/features/basket/checkout/NetworkErrorBanner.tsx    (CREATE)
+
+**DoD (Sequenced):**
+
+- [ ] Pass 1 — Skeleton:
+      Create CheckoutPanel.tsx accepting props:
+        { state, context, checkout, retry, acceptAndContinue, reset }
+      Render: static HTML shell with semantic elements, no styling.
+      Debug borders visible (border border-red-500 on each region).
+      All 5 state branches present as empty divs with data-testid:
+        data-testid="panel-idle"
+        data-testid="panel-processing"
+        data-testid="panel-error-network"
+        data-testid="panel-error-validation"
+        data-testid="panel-success"
+      Only the active state's div is visible; others display:none.
+      /test: `npx tsc --noEmit` passes.
+            Smoke: render CheckoutPanel with state="IDLE" → panel-idle visible.
+
+- [ ] Pass 2 — Data (real content, no styling):
+      Populate each state branch with real content per §8:
+        IDLE: Checkout button (onClick=checkout)
+        PROCESSING: Disabled checkout button + "Processing..." text
+        ERROR_NETWORK: "Connection failed" text + Retry button (onClick=retry)
+        ERROR_VALIDATION: Banner + per-item discrepancy list from context.discrepancy +
+                          "Accept & Continue" button (disabled until mutations done,
+                          onClick=acceptAndContinue) +
+                          "Update basket" button (onClick=reset)
+                          For STRIPE_CONFIG type: no "Accept & Continue" — only
+                          "Contact support" link and "Update basket" button.
+        SUCCESS: "Redirecting to payment..." text, no buttons
+      Basket item controls (quantity selector, remove button) disabled when
+      state !== "IDLE". Use aria-disabled and pointer-events-none.
+      /test: integration tests in tests/integration/checkout/CheckoutPanel.test.tsx:
+              - IDLE: checkout button enabled, basket controls enabled
+              - PROCESSING: checkout button disabled, basket controls disabled
+              - ERROR_NETWORK: retry button present, basket controls disabled
+              - ERROR_VALIDATION PRICE: banner shows old price and new price per item
+              - ERROR_VALIDATION INVENTORY: banner shows available quantity per item
+              - ERROR_VALIDATION STRIPE_CONFIG: no "Accept & Continue" button
+              - SUCCESS: no buttons, "Redirecting" text
+            Run: `npx vitest run tests/integration/checkout/CheckoutPanel.test.tsx`
+
+- [ ] Pass 3 — Layer 2: Desktop layout (1280px):
+      Apply layout-only Tailwind classes to CheckoutPanel (no colour, no shadow):
+        - Panel: flex flex-col gap-4 w-full
+        - Buttons: w-full
+        - Discrepancy list: space-y-2
+      /test: `/test --viewport=1280` visual check — no overlapping elements.
+
+- [ ] Pass 3 — Layer 3: Desktop surface (1280px):
+      Apply colour, typography, border tokens from tailwind.config.ts:
+        - Error banner: bg matching design system danger colour
+        - Buttons: primary and secondary variants per design system
+        - Discrepancy list items: clear visual diff (old price struck through,
+          new price highlighted)
+      /test: visual regression — no layout breaks.
+
+- [ ] Pass 3 — Layer 4: Desktop interaction (1280px):
+      - Checkout button: hover state, focus ring, loading cursor during PROCESSING
+      - Retry button: hover state, focus ring
+      - Accept & Continue: disabled appearance when mutations not yet applied
+      - All disabled basket controls: no hover effects, aria-disabled="true"
+      /test: Playwright e2e in tests/e2e/checkout/basket_to_checkout/:
+               test("checkout button triggers PROCESSING state")
+               test("retry button visible and functional in ERROR_NETWORK")
+             Run: `npx playwright test tests/e2e/checkout/basket_to_checkout/`
+
+- [ ] Pass 3 — Layer 2: Mobile layout (375px):
+      Order summary panel full width below items. All elements stack vertically.
+      /test: `/test --viewport=375` layout check.
+
+- [ ] Pass 3 — Layer 3: Mobile surface (375px):
+      Surface tokens consistent with desktop (same Tailwind classes apply).
+      /test: visual regression at 375px.
+
+- [ ] Pass 3 — Layer 4: Mobile interaction (375px):
+      Touch targets: minimum 44px height on all buttons (per WCAG 2.5.5).
+      /test: Playwright e2e at mobile viewport.
+
+- [ ] Neighbour flow sync check:
+      Verify: Basket item controls (quantity/remove) interact with basketStore
+              directly. The checkout state machine does not own basket items.
+              When state !== IDLE, controls are visually disabled but the
+              basketStore is NOT locked — RESET → IDLE restores editability.
+      Verify: The "Update basket" button (RESET from ERROR_VALIDATION) returns to
+              IDLE and the basket item controls become interactive again.
+
+- [ ] Global flow sync check:
+      Verify: CheckoutPanel does not import any downstream checkout components
+              (wizard steps, address form, etc.). This is the boundary.
+      Verify: No Stripe.js client SDK loaded on this page. Stripe session is
+              created server-side; client only receives a URL.
+
+**Delegation:**
+  Execute: `/implement SC8 — Basket UI state-driven rendering`
+  Build:   `/build CheckoutPanel Pass1 Skeleton`
+           `/build CheckoutPanel Pass2 Data`
+           `/build CheckoutPanel Pass3 Layer2 Desktop`
+           `/build CheckoutPanel Pass3 Layer3 Desktop`
+           `/build CheckoutPanel Pass3 Layer4 Desktop`
+           `/build CheckoutPanel Pass3 Layer2 Mobile`
+           `/build CheckoutPanel Pass3 Layer3 Mobile`
+           `/build CheckoutPanel Pass3 Layer4 Mobile`
+  Verify:  `/test tests/integration/checkout/CheckoutPanel.test.tsx`
+           `/test tests/e2e/checkout/basket_to_checkout/`
+
+---
+
+## PHASE 3: REGRESSION CONTAINMENT
+
+### Files at Risk
+
+| File | Risk | Mitigation |
+|------|------|------------|
+| store/basketStore.ts | SC5 reads method names; wrong assumption breaks mutations | Read source before SC5 Pass 2; add integration test asserting post-mutation basket shape |
+| app/components/features/basket/BasketPage.tsx | SC7 and SC8 both edit this file | SC7 completes before SC8 begins; SC8 reads SC7 output first |
+| lib/ Stripe client | SC2 uses existing client; version or config mismatch | Read lib/stripe.ts before SC2 Pass 4; do not re-instantiate SDK |
+| middleware.ts | Clerk auth may intercept checkout action route | Read middleware before SC2; confirm server action path is not intercepted |
+| app/actions/ (any existing) | Naming collision with new checkout/ folder | Search app/actions/ for existing checkout-related files before creating |
+
+### Pre-Sprint Baseline
+
+**Action:** `/test` — capture baseline before any changes.
+  Scope:  Full existing test suite
+  Output: BASELINE CAPTURED — store pass/fail counts in sprint evidence log below.
+
+---
+
+## PHASE 4: TEST FILE STRUCTURE
+
+All new test files follow this structure (aligned with checkout e2e test conventions):
+
+```
+tests/
+  unit/
+    preCheckout/
+      preCheckoutMachine.test.ts       (SC1)
+      useCheckoutAction.test.ts        (SC3)
+      useSuccessHandler.test.ts        (SC4)
+      useAcceptDiscrepancies.test.ts   (SC5)
+      basketCancelHandler.test.tsx     (SC7)
+  integration/
+    checkout/
+      validateBasket.sanity.test.ts    (SC2)
+      releaseInventoryLock.test.ts     (SC4)
+      usePreCheckout.test.tsx          (SC6)
+      CheckoutPanel.test.tsx           (SC8)
+  e2e/
+    checkout/
+      basket_to_checkout/
+        happy_path.spec.ts             (SC8 — full IDLE→PROCESSING→SUCCESS)
+        network_error.spec.ts          (SC8 — FAIL_NETWORK → Retry)
+        validation_error_price.spec.ts (SC8 — FAIL_VALIDATION PRICE → Accept)
+        validation_error_stock.spec.ts (SC8 — FAIL_VALIDATION INVENTORY → Accept)
+        cancel_url.spec.ts             (SC7 — back from Stripe)
+```
+
+---
+
+## PHASE 5: EXECUTION ORDER
+
+Execute scope contracts in this exact sequence. Do not begin a contract until
+the previous contract's /test gate passes.
+
+  1. SC1 — Machine core (no dependencies)
+  2. SC2 — Server action (depends on SC1 types)
+  3. SC3 — AbortController hook (depends on SC1 types, SC2 function)
+  4. SC4 — SUCCESS handler + lock release (depends on SC1 types, SC2 action)
+  5. SC5 — Accept & Continue guard (depends on SC1 types, SC3 hook)
+  6. SC6 — Orchestrator hook (depends on SC1–SC5 all)
+  7. SC7 — Cancel URL handler (depends on SC6 hook)
+  8. SC8 — UI rendering (depends on SC6 hook, SC7 handler)
+
+---
+
+## PHASE 6: POST-SPRINT /LEARN (MANDATORY)
+
+After sprint lock, execute `/learn` protocol:
+
+  Lessons to codify:
+    1. "AbortController must be call-site scoped, not stored in useState or useRef,
+       to ensure timeout fires on component unmount."
+       Severity: Critical. Tag: abort-controller, checkout, state-machine.
+
+    2. "Never call redirect() inside a server action that is called from a client
+       component — return the URL and navigate client-side with window.location.assign()."
+       Severity: Critical. Tag: next-redirect, server-action, stripe.
+
+    3. "Idempotency key must be UUIDv4 per-attempt, not basket ID. Basket ID causes
+       15-minute cache collision on retry after basket mutation."
+       Severity: Critical. Tag: idempotency, stripe, checkout.
+
+    4. "RESET from SUCCESS must be fire-and-forget for lock release. Never block
+       the state transition on async I/O."
+       Severity: High. Tag: inventory-lock, state-machine, inngest.
+
+    5. "Stripe 400 is FAIL_VALIDATION not FAIL_NETWORK. Retrying a 400 with the
+       same params produces the same 400. Always generate a new idempotency key
+       after any failure."
+       Severity: High. Tag: stripe, error-handling, idempotency.
+
+  Update _project/lessons/INDEX.md with above entries.
+  Update .windsurfrules if any lesson qualifies as a universal constraint.
+
+---
+
+## SPRINT LOCK CRITERIA
+
+The sprint is locked ONLY when ALL of the following pass:
+
+  [ ] npx tsc --noEmit — zero errors across entire project
+  [ ] npx vitest run tests/unit/preCheckout/ — 100% pass
+  [ ] npx vitest run tests/integration/checkout/ — 100% pass
+  [ ] npx playwright test tests/e2e/checkout/basket_to_checkout/ — 100% pass
+  [ ] npx next build — zero warnings about server-only boundary violations
+  [ ] Manual state machine invariant checklist:
+      [ ] IDLE → START_VALIDATION → PROCESSING (10s timer active)
+      [ ] PROCESSING → PASS_VALIDATION → SUCCESS → window.location.assign fired
+      [ ] SUCCESS → 5s elapses → ERROR_NETWORK (watchdog)
+      [ ] SUCCESS → RESET → IDLE (lock release fire-and-forget confirmed in network tab)
+      [ ] PROCESSING → FAIL_NETWORK (abort after 10s) → ERROR_NETWORK
+      [ ] ERROR_NETWORK → START_VALIDATION (Retry) → PROCESSING (fresh key confirmed in request header)
+      [ ] PROCESSING → FAIL_VALIDATION PRICE → ERROR_VALIDATION (prices shown in UI)
+      [ ] ERROR_VALIDATION → acceptAndContinue (PRICE) → basket updated → PROCESSING (fresh key)
+      [ ] PROCESSING → FAIL_VALIDATION INVENTORY → ERROR_VALIDATION (stock shown)
+      [ ] ERROR_VALIDATION → acceptAndContinue (INVENTORY) → basket updated → PROCESSING
+      [ ] ERROR_VALIDATION STRIPE_CONFIG → no "Accept & Continue" button visible
+      [ ] ERROR_VALIDATION → RESET → IDLE (basket editable again)
+      [ ] Navigate to basket page with ?checkout=cancelled + machine in SUCCESS → RESET fired, lock released, URL cleaned
+  [ ] Regression: baseline test counts match or improve (zero new failures)
+  [ ] Proof of Wholeness: this chunk delivers a complete IDLE → SUCCESS redirect path
+      with all failure branches handled, all invariants enforced, and no inventory
+      lock can be left orphaned by any client-side event including component unmount,
+      redirect failure, or back navigation from Stripe.
+
+---
+
+## EVIDENCE LOG
+
+(Filled during execution by /test output)
+
+Pre-sprint baseline:
+  Unit tests:        _____ passing / _____ failing
+  Integration tests: _____ passing / _____ failing
+  E2E tests:         _____ passing / _____ failing
+  Build:             PASS / FAIL
+
+SC1 /test result:    _____ / _____   Date: _________
+SC2 /test result:    _____ / _____   Date: _________
+SC3 /test result:    _____ / _____   Date: _________
+SC4 /test result:    _____ / _____   Date: _________
+SC5 /test result:    _____ / _____   Date: _________
+SC6 /test result:    _____ / _____   Date: _________
+SC7 /test result:    _____ / _____   Date: _________
+SC8 /test result:    _____ / _____   Date: _________
+
+Final verification:
+  Unit tests:        _____ passing / _____ failing
+  Integration tests: _____ passing / _____ failing
+  E2E tests:         _____ passing / _____ failing
+  Build:             PASS / FAIL
+  Sprint lock:       LOCKED / BLOCKED — reason: _______________________
