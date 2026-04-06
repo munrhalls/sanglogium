@@ -1,0 +1,156 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e6] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=e7]:
+      - img [ref=e8]
+    - generic [ref=e11]:
+      - button "Open issues overlay" [ref=e12]:
+        - generic [ref=e13]:
+          - generic [ref=e14]: "0"
+          - generic [ref=e15]: "1"
+        - generic [ref=e16]: Issue
+      - button "Collapse issues badge" [ref=e17]:
+        - img [ref=e18]
+  - generic [ref=e20]:
+    - banner [ref=e21]:
+      - generic [ref=e22]:
+        - generic [ref=e23]: SANG
+        - img [ref=e24]
+        - generic [ref=e26]: LOGIUM
+      - button "Open search" [ref=e27] [cursor=pointer]:
+        - img [ref=e28]
+    - main [ref=e30]:
+      - generic [ref=e32]:
+        - heading "Your Basket" [level=1] [ref=e35]
+        - generic [ref=e36]:
+          - img [ref=e37]
+          - heading "Your basket is empty" [level=2] [ref=e39]
+          - paragraph [ref=e40]: Looks like you haven't added any products to your basket yet. Browse our collection to find something you'll love.
+          - button "Browse Products" [ref=e41] [cursor=pointer]:
+            - img [ref=e42]
+            - text: Browse Products
+      - generic [ref=e45]:
+        - generic [ref=e46]:
+          - heading "PURCHASES" [level=1] [ref=e48]
+          - list [ref=e49]:
+            - listitem [ref=e50]:
+              - link "Order Status" [ref=e51] [cursor=pointer]:
+                - /url: /purchases/order-status
+            - listitem [ref=e52]:
+              - link "Shipping Policy" [ref=e53] [cursor=pointer]:
+                - /url: /purchases/shipping-policy
+            - listitem [ref=e54]:
+              - link "Returns Policy" [ref=e55] [cursor=pointer]:
+                - /url: /purchases/returns
+        - generic [ref=e56]:
+          - heading "SUPPORT" [level=1] [ref=e58]
+          - list [ref=e59]:
+            - listitem [ref=e60]:
+              - link "Contact Us" [ref=e61] [cursor=pointer]:
+                - /url: /support/contact
+            - listitem [ref=e62]:
+              - link "FAQ" [ref=e63] [cursor=pointer]:
+                - /url: /support/faq
+        - generic [ref=e64]:
+          - heading "ABOUT US" [level=1] [ref=e66]
+          - list [ref=e67]:
+            - listitem [ref=e68]:
+              - link "About Us" [ref=e69] [cursor=pointer]:
+                - /url: /support/privacy-policy
+            - listitem [ref=e70]:
+              - link "Terms of Service" [ref=e71] [cursor=pointer]:
+                - /url: /support/privacy-policy
+            - listitem [ref=e72]:
+              - link "Privacy Policy" [ref=e73] [cursor=pointer]:
+                - /url: /support/privacy-policy
+        - generic [ref=e74]:
+          - heading "FIND US" [level=1] [ref=e76]
+          - list [ref=e77]
+        - generic [ref=e78]:
+          - heading "BEST BRANDS" [level=1] [ref=e80]
+          - list [ref=e81]:
+            - listitem [ref=e82]:
+              - link "Sennheiser" [ref=e83] [cursor=pointer]:
+                - /url: /brands/sennheiser
+                - generic [ref=e84]: Sennheiser
+            - listitem [ref=e85]:
+              - link "Sony" [ref=e86] [cursor=pointer]:
+                - /url: /brands/sony
+                - generic [ref=e87]: Sony
+            - listitem [ref=e88]:
+              - link "Bose" [ref=e89] [cursor=pointer]:
+                - /url: /brands/bose
+                - generic [ref=e90]: Bose
+            - listitem [ref=e91]:
+              - link "AKG" [ref=e92] [cursor=pointer]:
+                - /url: /brands/akg
+                - generic [ref=e93]: AKG
+            - listitem [ref=e94]:
+              - link "Audio-Technica" [ref=e95] [cursor=pointer]:
+                - /url: /brands/audio-technica
+                - generic [ref=e96]: Audio-Technica
+            - listitem [ref=e97]:
+              - link "Beyerdynamic" [ref=e98] [cursor=pointer]:
+                - /url: /brands/beyerdynamic
+                - generic [ref=e99]: Beyerdynamic
+            - listitem [ref=e100]:
+              - link "DPA" [ref=e101] [cursor=pointer]:
+                - /url: /brands/dpa
+                - generic [ref=e102]: DPA
+            - listitem [ref=e103]:
+              - link "Dynaudio" [ref=e104] [cursor=pointer]:
+                - /url: /brands/dynaudio
+                - generic [ref=e105]: Dynaudio
+            - listitem [ref=e106]:
+              - link "Focal" [ref=e107] [cursor=pointer]:
+                - /url: /brands/focal
+                - generic [ref=e108]: Focal
+            - listitem [ref=e109]:
+              - link "Genelec" [ref=e110] [cursor=pointer]:
+                - /url: /brands/genelec
+                - generic [ref=e111]: Genelec
+            - listitem [ref=e112]:
+              - link "JBL" [ref=e113] [cursor=pointer]:
+                - /url: /brands/jbl
+                - generic [ref=e114]: JBL
+            - listitem [ref=e115]:
+              - link "Klipsch" [ref=e116] [cursor=pointer]:
+                - /url: /brands/klipsch
+                - generic [ref=e117]: Klipsch
+            - listitem [ref=e118]:
+              - link "Mackie" [ref=e119] [cursor=pointer]:
+                - /url: /brands/mackie
+                - generic [ref=e120]: Mackie
+            - listitem [ref=e121]:
+              - link "Pioneer" [ref=e122] [cursor=pointer]:
+                - /url: /brands/pioneer
+                - generic [ref=e123]: Pioneer
+            - listitem [ref=e124]:
+              - link "Presonus" [ref=e125] [cursor=pointer]:
+                - /url: /brands/presonus
+                - generic [ref=e126]: Presonus
+            - listitem [ref=e127]:
+              - link "Roland" [ref=e128] [cursor=pointer]:
+                - /url: /brands/roland
+                - generic [ref=e129]: Roland
+            - listitem [ref=e130]:
+              - link "Shure" [ref=e131] [cursor=pointer]:
+                - /url: /brands/shure
+                - generic [ref=e132]: Shure
+            - listitem [ref=e133]:
+              - link "Universal Audio" [ref=e134] [cursor=pointer]:
+                - /url: /brands/universal-audio
+                - generic [ref=e135]: Universal Audio
+    - generic [ref=e137]:
+      - button [ref=e138] [cursor=pointer]:
+        - img [ref=e139]
+      - link [ref=e141] [cursor=pointer]:
+        - /url: /basket?search=true
+        - img [ref=e142]
+      - link [ref=e144] [cursor=pointer]:
+        - /url: /basket
+        - img [ref=e145]
+  - alert [ref=e147]
+```
