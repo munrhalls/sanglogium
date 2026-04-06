@@ -579,7 +579,7 @@ into one composable unit consumed by the basket UI component.
 
 **DoD (Sequenced):**
 
-- [ ] Pass 1 — Skeleton:
+✔ Pass 1 — Skeleton: @done(26-04-06 17:35)
       Create usePreCheckout.ts:
         "use client"
         export function usePreCheckout(): {
@@ -593,7 +593,7 @@ into one composable unit consumed by the basket UI component.
       Body: stub returning IDLE state and no-op functions.
       /test: `npx tsc --noEmit` passes.
 
-- [ ] Pass 2 — State wiring:
+✔ [ ] Pass 2 — State wiring: @done(26-04-06 17:43)
       Implement using React.useReducer with the transition function from SC1:
         const [{ state, context }, dispatch] = useReducer(
           (prev, event) => preCheckoutMachine.transition(prev.state, event, prev.context),
@@ -641,20 +641,22 @@ into one composable unit consumed by the basket UI component.
               - call reset() from SUCCESS → lock release called; state IDLE
             Run: `npx vitest run tests/integration/checkout/usePreCheckout.test.tsx`
 
-- [ ] Pass 3 — Desktop layout (1280px):
+- Pass 3 — Desktop layout (1280px):
       Not applicable — this is a hook, no visual output. Skip.
 
-- [ ] Neighbour flow sync check:
+✔ [ ] Neighbour flow sync check: @done(26-04-06 17:47)
       Verify: The hook's public API (checkout, retry, acceptAndContinue, reset)
               maps 1:1 to the triggering actions in §9 Transition to Action Mapping.
       Verify: basketSnapshot used internally is sourced from the same basketStore
               that the basket page renders from. No separate copy.
+      ✔ write small neighbour sync integration test @done(26-04-06 17:47)
 
 - [ ] Global flow sync check:
       Verify: Hook is not imported by any Server Component. It must live exclusively
               in "use client" components.
       Verify: All 5 states from §2 are reachable from the hook's public API.
               No state is orphaned (no path to reach it = dead code = spec violation).
+      [ ] write small global sync test
 
 **Delegation:**
   Execute: `/implement SC6 — usePreCheckout orchestrator hook`
