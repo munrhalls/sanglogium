@@ -8,6 +8,8 @@ interface BasketState {
   addItem: (item: BasketItem) => void;
   removeItem: (_id: string) => void;
   updateQuantity: (_id: string, quantity: number) => void;
+  updateItemPrice: (_id: string, price: number) => void;
+  updateItemQuantity: (_id: string, quantity: number) => void;
   clearBasket: () => void;
 }
 
@@ -77,6 +79,30 @@ export const useBasketStore = create<BasketState>()(
         set({ basket: basket.filter((i) => i._id !== _id) });
       },
       updateQuantity: (_id, quantity) => {
+        const basket = get().basket;
+        set({
+          basket: basket.map((i) => {
+            if (i._id === _id) {
+              let safeQuantity = Math.max(1, quantity);
+              safeQuantity = Math.min(safeQuantity, i.stock);
+              return { ...i, quantity: safeQuantity };
+            }
+            return i;
+          }),
+        });
+      },
+      updateItemPrice: (_id, price) => {
+        const basket = get().basket;
+        set({
+          basket: basket.map((i) => {
+            if (i._id === _id) {
+              return { ...i, displayPrice: price };
+            }
+            return i;
+          }),
+        });
+      },
+      updateItemQuantity: (_id, quantity) => {
         const basket = get().basket;
         set({
           basket: basket.map((i) => {

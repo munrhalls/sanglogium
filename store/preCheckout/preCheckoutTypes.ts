@@ -34,14 +34,14 @@ export type DiscrepancyPayload =
   | { type: "STRIPE_CONFIG"; message: string };
 
 export interface InventoryDiscrepancy {
-  productId: string;
+  id: string;
   productName: string;
   requested: number;
   available: number;
 }
 
 export interface PriceDiscrepancy {
-  productId: string;
+  id: string;
   productName: string;
   expected: number;
   actual: number;
