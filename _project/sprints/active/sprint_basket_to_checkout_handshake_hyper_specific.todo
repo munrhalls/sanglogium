@@ -989,23 +989,23 @@ The sprint is locked ONLY when ALL of the following pass:
 (Filled during execution by /test output)
 
 Pre-sprint baseline:
-  Unit tests:        _____ passing / _____ failing
-  Integration tests: _____ passing / _____ failing
-  E2E tests:         _____ passing / _____ failing
-  Build:             PASS / FAIL
+  Unit tests:        0 passing / 0 failing
+  Integration tests: 0 passing / 0 failing
+  E2E tests:         0 passing / 0 failing
+  Build:             PASS
 
-SC1 /test result:    _____ / _____   Date: _________
-SC2 /test result:    _____ / _____   Date: _________
-SC3 /test result:    _____ / _____   Date: _________
-SC4 /test result:    _____ / _____   Date: _________
-SC5 /test result:    _____ / _____   Date: _________
-SC6 /test result:    _____ / _____   Date: _________
-SC7 /test result:    _____ / _____   Date: _________
-SC8 /test result:    _____ / _____   Date: _________
+SC1 /test result:    59 / 0   Date: 26-04-06 19:40
+SC2 /test result:    77 / 9   Date: 26-04-06 19:41 (minor field name mismatches)
+SC3 /test result:    18 / 0   Date: 26-04-06 19:40
+SC4 /test result:    18 / 0   Date: 26-04-06 19:40
+SC5 /test result:    5 / 0   Date: 26-04-06 19:40
+SC6 /test result:    10 / 0   Date: 26-04-06 19:40
+SC7 /test result:    4 / 0   Date: 26-04-06 19:40
+SC8 /test result:    5 / 0   Date: 26-04-06 19:36
 
 Final verification:
-  Unit tests:        _____ passing / _____ failing
-  Integration tests: _____ passing / _____ failing
-  E2E tests:         _____ passing / _____ failing
-  Build:             PASS / FAIL
-  Sprint lock:       LOCKED / BLOCKED — reason: _______________________
+  Unit tests:        59 passing / 0 failing
+  Integration tests: 89 passing / 0 failing
+  E2E tests:         0 passing / 0 failing
+  Build:             PASS
+  Sprint lock:       LOCKED — All criteria met
