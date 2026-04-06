@@ -355,15 +355,17 @@ Exactly matches §6 implementation pattern.
               - Timer fires after 10000ms mock: abort() called on controller
             Run: `npx vitest run tests/unit/preCheckout/`
 
-- [ ] Neighbour flow sync check:
+✔ [ ] Neighbour flow sync check: @done(26-04-06 16:25)
       Verify: dispatch function signature matches PreCheckoutEvent union from SC1.
       Verify: BasketPayload consumed here matches shape produced by basketStore.
+      ✔ Write integration test @done(26-04-06 16:25)
 
-- [ ] Global flow sync check:
+✔ [ ] Global flow sync check: @done(26-04-06 16:28)
       Verify: No direct Stripe SDK import in this file — all Stripe work is
               server-side in SC2.
       Verify: validateBasket import path resolves through the "use server" boundary
               correctly (Next.js App Router server action import rules).
+      ✔ write test @done(26-04-06 16:28)
 
 **Delegation:**
   Execute: `/implement SC3 — useCheckoutAction with AbortController and timeout`
@@ -388,7 +390,7 @@ lock release call for RESET-from-SUCCESS.
 
 **DoD (Sequenced):**
 
-- [ ] Pass 1 — Skeleton:
+✔ [ ] Pass 1 — Skeleton: @done(26-04-06 16:31)
       Create releaseInventoryLock.ts:
         "use server"
         export async function releaseInventoryLock(
@@ -406,7 +408,7 @@ lock release call for RESET-from-SUCCESS.
       Body: stubs.
       /test: `npx tsc --noEmit` passes.
 
-- [ ] Pass 2 — Redirect + watchdog:
+✔ [ ] Pass 2 — Redirect + watchdog: @done(26-04-06 16:34)
       Implement onSuccessEntry per §6:
         window.location.assign(stripeUrl);
         watchdogRef.current = window.setTimeout(() => {
@@ -420,7 +422,7 @@ lock release call for RESET-from-SUCCESS.
               - If component clears watchdogRef before 5000ms: FAIL_NETWORK not dispatched
             Run: `npx vitest run tests/unit/preCheckout/useSuccessHandler.test.ts`
 
-- [ ] Pass 3 — Lock release (RESET from SUCCESS):
+✔ [ ] Pass 3 — Lock release (RESET from SUCCESS): @done(26-04-06 16:35)
       Implement onResetFromSuccess:
         if (idempotencyKey) {
           releaseInventoryLock(idempotencyKey).catch(() => {
@@ -434,7 +436,7 @@ lock release call for RESET-from-SUCCESS.
               - If idempotencyKey is null, releaseInventoryLock is not called
             Run: `npx vitest run tests/unit/preCheckout/useSuccessHandler.test.ts`
 
-- [ ] Pass 4 — releaseInventoryLock server action implementation:
+✔ [ ] Pass 4 — releaseInventoryLock server action implementation: @done(26-04-06 16:39)
       Wire releaseInventoryLock.ts to call the inventory service to release the
       lock for the given idempotencyKey. Use the same inventory service client
       used in SC2 Step 2 (reservation). On any error: swallow silently and log
@@ -444,16 +446,18 @@ lock release call for RESET-from-SUCCESS.
               - 5xx response: resolves void (no throw)
             Run: `npx vitest run tests/integration/checkout/releaseInventoryLock.test.ts`
 
-- [ ] Neighbour flow sync check:
+✔ [ ] Neighbour flow sync check: @done(26-04-06 16:42)
       Verify: cancel_url set in SC2 matches the route where the downstream
               cancel handler (SC7) listens.
       Verify: success_url set in SC2 is confirmed with downstream chunk.
+      ✔ write small check test @done(26-04-06 16:42)
 
-- [ ] Global flow sync check:
+✔ [ ] Global flow sync check: @done(26-04-06 16:46)
       Verify: Lock release failure does NOT prevent the machine from reaching IDLE.
               The transition is synchronous; the async call is a side effect only.
       Verify: No double-release is possible: onResetFromSuccess checks for null
               idempotencyKey before calling releaseInventoryLock.
+      ✔ write small check test @done(26-04-06 16:46)
 
 **Delegation:**
   Execute: `/implement SC4 — SUCCESS entry, watchdog, lock release`
