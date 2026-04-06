@@ -484,7 +484,7 @@ not as a UI convention.
 
 **DoD (Sequenced):**
 
-- [ ] Pass 1 — Skeleton:
+✔ [ ] Pass 1 — Skeleton: @done(26-04-06 17:18)
       Create useAcceptDiscrepancies.ts:
         "use client"
         export function useAcceptDiscrepancies(
@@ -498,7 +498,7 @@ not as a UI convention.
       Body: stub.
       /test: `npx tsc --noEmit` passes.
 
-- [ ] Pass 2 — Mutation logic per §7:
+✔ [ ] Pass 2 — Mutation logic per §7: @done(26-04-06 17:22)
       Implement acceptAndContinue:
         if (discrepancy.type === "STRIPE_CONFIG") {
           // No mutation possible. Do not dispatch START_VALIDATION.
@@ -549,12 +549,14 @@ not as a UI convention.
       Verify: After mutations, basketStore state is consistent with what the next
               validateBasket call will receive. Do a manual trace: mutated basket →
               SC2 Step 1 Sanity fetch → should pass if mutations were correct.
+      ✔  write neighbour sync integration test @done(26-04-06 17:26)
 
-- [ ] Global flow sync check:
+✔ Global flow sync check: @done(26-04-06 17:27)
       Verify: Basket mutations here do not corrupt the basket for the downstream
               order creation step. The downstream order is built from the same
               basket store; mutated prices/quantities must be intentional and
               clearly documented for the downstream chunk.
+      ✔  write global sync integration test @done(26-04-06 17:26)
 
 **Delegation:**
   Execute: `/implement SC5 — Accept & Continue guard and basket mutation`
