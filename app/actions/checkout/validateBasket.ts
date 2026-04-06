@@ -77,7 +77,9 @@ async function reserveInventory(
 
     for (const item of toReserve) {
       transaction.patch(item._id, (p) =>
-        p.inc({ reservedStock: item.quantity })
+        p
+          .setIfMissing({ reservedStock: 0 })
+          .inc({ reservedStock: item.quantity })
       );
     }
 
@@ -100,7 +102,9 @@ async function rollbackReservations(reservedItems: Array<{ _id: string; quantity
 
     for (const item of reservedItems) {
       transaction.patch(item._id, (p) =>
-        p.dec({ reservedStock: item.quantity })
+        p
+          .setIfMissing({ reservedStock: 0 })
+          .dec({ reservedStock: item.quantity })
       );
     }
 
@@ -145,7 +149,7 @@ export async function validateBasket(
           discrepancy: {
             type: "INVENTORY",
             items: [{
-              productId: basketItem._id,
+              id: basketItem._id,
               productName: `Product ${basketItem._id}`,
               available: 0,
               requested: basketItem.quantity
@@ -154,17 +158,19 @@ export async function validateBasket(
         };
       }
 
-      // Check price mismatch
-      const basketItemPrice = payload.total / payload.items.reduce((sum, item) => sum + item.quantity, 0);
-      if (product.displayPrice !== basketItemPrice) {
+      // Check price mismatch - calculate average price per item
+      const totalQuantity = payload.items.reduce((sum, item) => sum + item.quantity, 0);
+      const averagePricePerItem = totalQuantity > 0 ? payload.total / totalQuantity : 0;
+
+      if (product.displayPrice !== averagePricePerItem) {
         return {
           outcome: "FAIL_VALIDATION",
           discrepancy: {
             type: "PRICE",
             items: [{
-              productId: basketItem._id,
+              id: basketItem._id,
               productName: product.name,
-              expected: basketItemPrice,
+              expected: averagePricePerItem,
               actual: product.displayPrice
             }]
           }
@@ -178,7 +184,7 @@ export async function validateBasket(
           discrepancy: {
             type: "INVENTORY",
             items: [{
-              productId: basketItem._id,
+              id: basketItem._id,
               productName: product.name,
               available: product.stock,
               requested: basketItem.quantity
@@ -197,7 +203,7 @@ export async function validateBasket(
         discrepancy: {
           type: "INVENTORY",
           items: reservationResult.unavailable.map(productId => ({
-            productId,
+            id: productId,
             productName: `Product ${productId}`,
             available: 0,
             requested: payload.items.find(item => item._id === productId)?.quantity || 0
