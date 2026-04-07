@@ -5,12 +5,14 @@ import { useBasketStore, selectBasketTotal, selectBasketCount } from "@/store/st
 import { ArrowLeftIcon } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
 import { Price } from "@/app/components/ui/Price";
-import CheckoutButton from "./CheckoutButton";
+import CheckoutPanel from "@/app/components/features/basket/checkout/CheckoutPanel";
+import { usePreCheckout } from "@/app/components/features/basket/checkout/usePreCheckout";
 
 export default function BasketSummary() {
   const subtotal = useBasketStore(selectBasketTotal);
   const itemCount = useBasketStore(selectBasketCount);
   const router = useRouter();
+  const preCheckout = usePreCheckout();
 
   const shipping = 15.99;
   const total = subtotal + shipping;
@@ -42,7 +44,15 @@ export default function BasketSummary() {
         </div>
       </div>
 
-      <CheckoutButton />
+      <CheckoutPanel
+        state={preCheckout.state}
+        context={preCheckout.context}
+        checkout={preCheckout.checkout}
+        retry={preCheckout.retry}
+        acceptAndContinue={preCheckout.acceptAndContinue}
+        reset={preCheckout.reset}
+        isAccepting={false}
+      />
 
       <button
         type="button"

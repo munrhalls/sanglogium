@@ -5,11 +5,14 @@ import Link from "next/link";
 import { useBasketStore } from "@/store/store";
 import BasketControls from "@/app/components/features/basket/BasketControls";
 import { Price } from "@/app/components/ui/Price";
+import { usePreCheckout } from "@/app/components/features/basket/checkout/usePreCheckout";
 
 export default function Basket() {
   const basket = useBasketStore((s) => s.basket);
   const removeItem = useBasketStore((s) => s.removeItem);
   const [removingIds, setRemovingIds] = useState<Set<string>>(new Set());
+  const { state: checkoutState } = usePreCheckout();
+  const isBasketLocked = checkoutState !== "IDLE";
 
   const handleRemoveStart = useCallback((id: string) => {
     setRemovingIds((prev) => new Set(prev).add(id));
@@ -73,7 +76,11 @@ export default function Basket() {
 
             {/* Quantity column */}
             <div className="flex items-center lg-desktop:justify-center lg-touch:justify-center">
-              <BasketControls product={item} onRemoveStart={handleRemoveStart} />
+              <BasketControls
+                product={item}
+                onRemoveStart={handleRemoveStart}
+                disabled={isBasketLocked}
+              />
             </div>
 
             {/* Total column - desktop only */}

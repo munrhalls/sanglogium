@@ -78,7 +78,6 @@ async function reserveInventory(
     for (const item of toReserve) {
       transaction.patch(item._id, (p) =>
         p
-          .setIfMissing({ reservedStock: 0 })
           .inc({ reservedStock: item.quantity })
       );
     }
@@ -103,7 +102,6 @@ async function rollbackReservations(reservedItems: Array<{ _id: string; quantity
     for (const item of reservedItems) {
       transaction.patch(item._id, (p) =>
         p
-          .setIfMissing({ reservedStock: 0 })
           .dec({ reservedStock: item.quantity })
       );
     }
