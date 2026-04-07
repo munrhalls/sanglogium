@@ -91,10 +91,18 @@ Before ANY work begins:
 ### Post-Work /learn Execution (MANDATORY)
 After EVERY sprint, debug, or implementation:
 1. Extract raw learnings from experience
-2. Thematize to ONE primary theme (patterns, failures, workflows, etc.)
-3. Codify into appropriate infrastructure
-4. Update INDEX.md with new keywords
-5. Verify compound effect (next work will benefit)
+2. **Quality Gate: If no new insights, skip /learn - 0 lessons > diluted lessons**
+3. Thematize to primary theme(s) - may span patterns, failures, workflows, or be interdisciplinary
+4. Codify into appropriate infrastructure (choose best fit or create cross-reference)
+5. Update INDEX.md with new keywords
+6. Verify compound effect (next work will benefit)
+
+**Lesson Quality Criteria:**
+- New insight not already documented
+- Prevents future time loss or errors
+- Actionable and retrievable
+- Not obvious or routine
+- **Cross-theme lessons allowed** when insights span multiple domains
 
 ### Universal Prevention Rules
 - **Pre-Flight:** Before ANY work, execute: branch check, baseline build verification, scope lock confirmation
