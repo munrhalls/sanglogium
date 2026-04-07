@@ -1,0 +1,295 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]: SANG
+        - img [ref=e6]
+        - generic [ref=e8]: LOGIUM
+      - search "Search products" [ref=e10]:
+        - generic [ref=e11]:
+          - img [ref=e12]
+          - textbox "Search products" [ref=e14]:
+            - /placeholder: Search products...
+      - generic [ref=e15]:
+        - link "Cart" [ref=e16] [cursor=pointer]:
+          - /url: /basket
+          - button "Cart" [ref=e17]:
+            - img [ref=e19]
+            - generic [ref=e21]: Cart
+        - button "Sign In" [ref=e23] [cursor=pointer]:
+          - img [ref=e25]
+          - generic [ref=e27]: Sign In
+    - navigation "Catalogue Navigation" [ref=e28]:
+      - generic [ref=e30]:
+        - generic [ref=e31]:
+          - button "Headphones" [ref=e32] [cursor=pointer]:
+            - generic [ref=e33]: Headphones
+            - img [ref=e34]
+          - button "Audio Electronics" [ref=e36] [cursor=pointer]:
+            - generic [ref=e37]: Audio Electronics
+            - img [ref=e38]
+          - button "Accessories" [ref=e40] [cursor=pointer]:
+            - generic [ref=e41]: Accessories
+            - img [ref=e42]
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - img "Headphones"
+                      - generic:
+                        - heading "Headphones" [level=1]
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - heading "By Design" [level=3]
+                              - list:
+                                - listitem:
+                                  - link "Open-Back":
+                                    - /url: /products/headphones/open-back
+                                - listitem:
+                                  - link "Closed-Back":
+                                    - /url: /products/headphones/closed-back
+                                - listitem:
+                                  - link "Semi-Open":
+                                    - /url: /products/headphones/semi-open
+                            - generic:
+                              - heading "By Driver" [level=3]
+                              - list:
+                                - listitem:
+                                  - link "Planar Magnetic":
+                                    - /url: /products/headphones/planar-magnetic
+                                - listitem:
+                                  - link "Dynamic":
+                                    - /url: /products/headphones/dynamic
+                                - listitem:
+                                  - link "Electrostatic":
+                                    - /url: /products/headphones/electrostatic
+                            - generic:
+                              - heading "In-Ear Monitors" [level=3]
+                              - list:
+                                - listitem:
+                                  - link "Universal IEMs":
+                                    - /url: /products/headphones/monitors-iems
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - img "Audio Electronics"
+                      - generic:
+                        - heading "Audio Electronics" [level=1]
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - heading "Amplification" [level=3]
+                              - list:
+                                - listitem:
+                                  - link "Desktop Amps":
+                                    - /url: /products/audio-electronics/desktop-amps
+                                - listitem:
+                                  - link "Portable Amps":
+                                    - /url: /products/audio-electronics/portable-amps
+                                - listitem:
+                                  - link "Bluetooth DAC/Amps":
+                                    - /url: /products/audio-electronics/bluetooth-dac-amps
+                            - generic:
+                              - heading "Digital Sources" [level=3]
+                              - list:
+                                - listitem:
+                                  - link "Standalone DACs":
+                                    - /url: /products/audio-electronics/standalone-dacs
+                                - listitem:
+                                  - link "DAC/Amp Combos":
+                                    - /url: /products/audio-electronics/dac-amp-combos
+                                - listitem:
+                                  - link "USB-C/Dongle DACs":
+                                    - /url: /products/audio-electronics/usb-c-dacs
+                                - listitem:
+                                  - link "Digital Players (DAPs)":
+                                    - /url: /products/audio-electronics/digital-players-daps
+                                - listitem:
+                                  - link "Network Streamers":
+                                    - /url: /products/audio-electronics/network-streamers
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - img "Accessories"
+                      - generic:
+                        - heading "Accessories" [level=1]
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - heading "Connectivity" [level=3]
+                              - list:
+                                - listitem:
+                                  - link "Headphone Cables":
+                                    - /url: /products/accessories/headphone-cables
+                                - listitem:
+                                  - link "Interconnects":
+                                    - /url: /products/accessories/interconnects
+                                - listitem:
+                                  - link "Adapters":
+                                    - /url: /products/accessories/adapters
+                            - generic:
+                              - heading "Fit & Comfort" [level=3]
+                              - list:
+                                - listitem:
+                                  - link "Earpads":
+                                    - /url: /products/accessories/earpads
+                                - listitem:
+                                  - link "Eartips":
+                                    - /url: /products/accessories/eartips
+                                - listitem:
+                                  - link "Care & Cleaning":
+                                    - /url: /products/accessories/care-cleaning
+                            - generic:
+                              - heading "Storage" [level=3]
+                              - list:
+                                - listitem:
+                                  - link "Headphone Stands":
+                                    - /url: /products/accessories/headphone-stands
+                                - listitem:
+                                  - link "Carrying Cases":
+                                    - /url: /products/accessories/carrying-cases
+          - button "Close" [ref=e44] [cursor=pointer]:
+            - generic [ref=e45]: Close
+            - img [ref=e46]
+    - main [ref=e48]:
+      - generic [ref=e50]:
+        - heading "Your Basket" [level=1] [ref=e53]
+        - generic [ref=e54]:
+          - img [ref=e55]
+          - heading "Your basket is empty" [level=2] [ref=e57]
+          - paragraph [ref=e58]: Looks like you haven't added any products to your basket yet. Browse our collection to find something you'll love.
+          - button "Browse Products" [ref=e59] [cursor=pointer]:
+            - img [ref=e60]
+            - text: Browse Products
+      - generic [ref=e63]:
+        - generic [ref=e64]:
+          - heading "PURCHASES" [level=1] [ref=e66]
+          - list [ref=e67]:
+            - listitem [ref=e68]:
+              - link "Order Status" [ref=e69] [cursor=pointer]:
+                - /url: /purchases/order-status
+            - listitem [ref=e70]:
+              - link "Shipping Policy" [ref=e71] [cursor=pointer]:
+                - /url: /purchases/shipping-policy
+            - listitem [ref=e72]:
+              - link "Returns Policy" [ref=e73] [cursor=pointer]:
+                - /url: /purchases/returns
+        - generic [ref=e74]:
+          - heading "SUPPORT" [level=1] [ref=e76]
+          - list [ref=e77]:
+            - listitem [ref=e78]:
+              - link "Contact Us" [ref=e79] [cursor=pointer]:
+                - /url: /support/contact
+            - listitem [ref=e80]:
+              - link "FAQ" [ref=e81] [cursor=pointer]:
+                - /url: /support/faq
+        - generic [ref=e82]:
+          - heading "ABOUT US" [level=1] [ref=e84]
+          - list [ref=e85]:
+            - listitem [ref=e86]:
+              - link "About Us" [ref=e87] [cursor=pointer]:
+                - /url: /support/privacy-policy
+            - listitem [ref=e88]:
+              - link "Terms of Service" [ref=e89] [cursor=pointer]:
+                - /url: /support/privacy-policy
+            - listitem [ref=e90]:
+              - link "Privacy Policy" [ref=e91] [cursor=pointer]:
+                - /url: /support/privacy-policy
+        - generic [ref=e92]:
+          - heading "FIND US" [level=1] [ref=e94]
+          - list [ref=e95]
+        - generic [ref=e96]:
+          - heading "BEST BRANDS" [level=1] [ref=e98]
+          - list [ref=e99]:
+            - listitem [ref=e100]:
+              - link "Sennheiser" [ref=e101] [cursor=pointer]:
+                - /url: /brands/sennheiser
+                - generic [ref=e102]: Sennheiser
+            - listitem [ref=e103]:
+              - link "Sony" [ref=e104] [cursor=pointer]:
+                - /url: /brands/sony
+                - generic [ref=e105]: Sony
+            - listitem [ref=e106]:
+              - link "Bose" [ref=e107] [cursor=pointer]:
+                - /url: /brands/bose
+                - generic [ref=e108]: Bose
+            - listitem [ref=e109]:
+              - link "AKG" [ref=e110] [cursor=pointer]:
+                - /url: /brands/akg
+                - generic [ref=e111]: AKG
+            - listitem [ref=e112]:
+              - link "Audio-Technica" [ref=e113] [cursor=pointer]:
+                - /url: /brands/audio-technica
+                - generic [ref=e114]: Audio-Technica
+            - listitem [ref=e115]:
+              - link "Beyerdynamic" [ref=e116] [cursor=pointer]:
+                - /url: /brands/beyerdynamic
+                - generic [ref=e117]: Beyerdynamic
+            - listitem [ref=e118]:
+              - link "DPA" [ref=e119] [cursor=pointer]:
+                - /url: /brands/dpa
+                - generic [ref=e120]: DPA
+            - listitem [ref=e121]:
+              - link "Dynaudio" [ref=e122] [cursor=pointer]:
+                - /url: /brands/dynaudio
+                - generic [ref=e123]: Dynaudio
+            - listitem [ref=e124]:
+              - link "Focal" [ref=e125] [cursor=pointer]:
+                - /url: /brands/focal
+                - generic [ref=e126]: Focal
+            - listitem [ref=e127]:
+              - link "Genelec" [ref=e128] [cursor=pointer]:
+                - /url: /brands/genelec
+                - generic [ref=e129]: Genelec
+            - listitem [ref=e130]:
+              - link "JBL" [ref=e131] [cursor=pointer]:
+                - /url: /brands/jbl
+                - generic [ref=e132]: JBL
+            - listitem [ref=e133]:
+              - link "Klipsch" [ref=e134] [cursor=pointer]:
+                - /url: /brands/klipsch
+                - generic [ref=e135]: Klipsch
+            - listitem [ref=e136]:
+              - link "Mackie" [ref=e137] [cursor=pointer]:
+                - /url: /brands/mackie
+                - generic [ref=e138]: Mackie
+            - listitem [ref=e139]:
+              - link "Pioneer" [ref=e140] [cursor=pointer]:
+                - /url: /brands/pioneer
+                - generic [ref=e141]: Pioneer
+            - listitem [ref=e142]:
+              - link "Presonus" [ref=e143] [cursor=pointer]:
+                - /url: /brands/presonus
+                - generic [ref=e144]: Presonus
+            - listitem [ref=e145]:
+              - link "Roland" [ref=e146] [cursor=pointer]:
+                - /url: /brands/roland
+                - generic [ref=e147]: Roland
+            - listitem [ref=e148]:
+              - link "Shure" [ref=e149] [cursor=pointer]:
+                - /url: /brands/shure
+                - generic [ref=e150]: Shure
+            - listitem [ref=e151]:
+              - link "Universal Audio" [ref=e152] [cursor=pointer]:
+                - /url: /brands/universal-audio
+                - generic [ref=e153]: Universal Audio
+  - alert [ref=e154]
+```
