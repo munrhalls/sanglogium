@@ -1,9 +1,0 @@
-{
-  "name": "performance-sprint-regression",
-  "version": "1.0.0",
-  "description": "Regression test suite for performance sprint",
-  "type": "module",
-  "scripts": {
-    "test": "node --import ./register-ts.js tests/regression/performance-sprint-regression.ts"
-  }
-}
