@@ -95,13 +95,6 @@ export function usePreCheckout(): {
     }
   }, [state, context.stripeUrl]);
 
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      clearTimeout(watchdogRef.current ?? undefined);
-    };
-  }, []);
-
   return {
     state,
     context,

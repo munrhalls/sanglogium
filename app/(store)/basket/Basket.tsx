@@ -41,6 +41,7 @@ export default function Basket() {
         return (
           <div
             key={item._id}
+            data-testid={`basket-item-${item._id}`}
             className={`grid grid-cols-1 gap-5 border-b border-border-secondary p-5 lg-desktop:grid-cols-[3fr_1fr_1fr_1fr] lg-touch:grid-cols-[3fr_1fr_1fr_1fr] transition-all duration-200 hover:bg-secondary-900/50 ${isRemoving ? 'opacity-0 max-h-0 overflow-hidden py-0 px-5 border-b-0' : 'opacity-100 max-h-96'
               }`}
             style={isRemoving ? { transitionDuration: '200ms, 300ms', transitionProperty: 'opacity, max-height, padding' } : undefined}

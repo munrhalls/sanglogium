@@ -18,16 +18,28 @@ export function ProductInfo({ product }: { product: Product }) {
 
 
   const handleAddToCart = () => {
+    // TODO: Remove console logs - temporary for manual verification
+    console.log('Add to Cart clicked for product:', product.name);
+    console.log('Product stock:', product.stock);
+    console.log('Pre-add quantity:', preAddQty);
+
     if (product.stock > 0) {
-      addItem({
+      console.log('Adding item to basket...');
+      const itemToAdd = {
         _id: product._id,
         name: product.name,
         displayPrice: product.displayPrice,
         stock: product.stock,
         quantity: preAddQty,
-        image: product.image ? urlFor(product.image).width(100).height(100).url() : '',
+        image: product.image ? urlFor(product.image).width(100).height(100).url() : '/images/placeholder-product.jpg', // TODO: Remove test product fix - temporary for manual verification
         slug: product.slug.current,
-      });
+      };
+      console.log('Item to add:', itemToAdd);
+
+      addItem(itemToAdd);
+      console.log('Item added to basket');
+    } else {
+      console.log('Product out of stock, not adding');
     }
   };
 
@@ -103,6 +115,7 @@ export function ProductInfo({ product }: { product: Product }) {
           <button
             onClick={handleAddToCart}
             disabled={product.stock === 0}
+            data-testid={`add-to-basket-${product._id}`}
             className="btn-cart-large w-full flex justify-center"
           >
             <ShoppingCartIcon size={24} weight="bold" />

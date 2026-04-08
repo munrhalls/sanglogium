@@ -35,6 +35,8 @@ export const useBasketStore = create<BasketState>()(
       basket: [],
       _hasHydrated: false,
       addItem: (item) => {
+        // TODO: Remove console log - temporary for manual verification
+        console.log('Basket store addItem called with:', item);
         if (
           !item ||
           typeof item !== "object" ||
@@ -45,6 +47,7 @@ export const useBasketStore = create<BasketState>()(
           !item.image ||
           !item.slug
         ) {
+          console.log('Item validation failed, returning');
           return;
         }
         const basket = get().basket;

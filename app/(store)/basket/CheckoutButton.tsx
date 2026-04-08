@@ -1,6 +1,6 @@
 import { useBasketStore, selectIsCheckoutEnabled } from "@/store/store";
 import { useCheckoutStore } from "@/store/checkout";
-import { processMockCheckout } from "@/app/actions/checkout/checkoutAction";
+import { validateBasket } from "@/app/actions/checkout/validateBasket";
 import { useTransition } from "react";
 
 export default function CheckoutButton() {
@@ -12,10 +12,23 @@ export default function CheckoutButton() {
 
     const handleCheckout = function () {
         startTransition(async () => {
-            const response = await processMockCheckout();
+            const basket = useBasketStore.getState();
+            // Generate simple idempotency key
+            const idempotencyKey = `checkout-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+
+            const response = await validateBasket({
+                items: basket.items.map(item => ({
+                    _id: item._id,
+                    quantity: item.quantity
+                }))
+            }, idempotencyKey);
 
             if (response.success) {
                 nextCheckoutStep();
+            } else {
+                // Handle validation failures
+                console.error('Checkout failed:', response);
+                // TODO: Show error to user
             }
         });
     }
@@ -27,6 +40,7 @@ export default function CheckoutButton() {
                     <button
                         onClick={handleCheckout}
                         disabled={isPending}
+                        data-testid="checkout-button"
                         className="btn-primary block text-center mt-6 py-3 px-6 uppercase tracking-editorial type-body font-bold text-brand-700"
                     >
                         {isPending ? "Connecting..." : "Checkout"}

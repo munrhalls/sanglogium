@@ -13,6 +13,7 @@ import { checkoutClient } from "../../../sanity/lib/checkoutClient";
 import { groq } from 'next-sanity';
 import type { Product as SanityProduct } from "../../../sanity.types";
 import { stripe } from "../../../lib/stripe/stripe";
+import { TEST_CONFIG } from "../../../config/test";
 
 // Product type for validation - includes stock and reservedStock fields
 type ValidationProduct = Pick<SanityProduct, '_id' | 'name' | 'displayPrice' | 'stock' | 'reservedStock' | 'stripePriceId'>;
@@ -22,7 +23,8 @@ type ValidationProduct = Pick<SanityProduct, '_id' | 'name' | 'displayPrice' | '
  * Returns 400 if stock unavailable, 200 if successful
  */
 async function reserveInventory(
-  items: BasketPayload['items']
+  items: BasketPayload['items'],
+  idempotencyKey: string
 ): Promise<{ status: 200; reserved: Array<{ _id: string; quantity: number; stripePriceId: string }> } | { status: 400; unavailable: string[] }> {
   try {
     // First, fetch current stock and reservedStock for all items
@@ -32,10 +34,11 @@ async function reserveInventory(
       _id,
       stock,
       reservedStock,
-      stripePriceId
+      stripePriceId,
+      reservations
     }`;
 
-    const products: Pick<SanityProduct, '_id' | 'stock' | 'reservedStock' | 'stripePriceId'>[] = await checkoutClient.fetch(
+    const products: Pick<SanityProduct, '_id' | 'stock' | 'reservedStock' | 'stripePriceId' | 'reservations'>[] = await checkoutClient.fetch(
       stockQuery,
       { ids: productIds }
     );
@@ -72,13 +75,20 @@ async function reserveInventory(
       return { status: 400, unavailable };
     }
 
-    // Atomically reserve stock for all items
+    // Atomically reserve stock for all items with test-friendly expiration
     const transaction = checkoutClient.transaction();
+    const expiresAt = new Date(Date.now() + TEST_CONFIG.RESERVATION_EXPIRY_MS);
 
     for (const item of toReserve) {
       transaction.patch(item._id, (p) =>
         p
           .inc({ reservedStock: item.quantity })
+          .append('reservations', [{
+            idempotencyKey,
+            quantity: item.quantity,
+            expiresAt: expiresAt.toISOString(),
+            status: 'active'
+          }])
       );
     }
 
@@ -117,11 +127,18 @@ export async function validateBasket(
   idempotencyKey: string,
   options?: { signal?: AbortSignal }
 ): Promise<ValidateBasketResult> {
+  console.log('=== VALIDATE BASKET START ===');
+  console.log('Idempotency Key:', idempotencyKey);
+  console.log('Basket Items:', payload.items.length);
+  console.log('Basket Total:', payload.total);
+
   let reservedItems: Array<{ _id: string; quantity: number }> = [];
 
   try {
-    // Step 1: Fetch current prices and stock from Sanity
+    // Step 1: Fetch current products and stock
+    console.log('\n--- Step 1: Fetch Products ---');
     const productIds = payload.items.map(item => item._id);
+    console.log('Product IDs:', productIds);
 
     const query = groq`*[_type == "product" && _id in $ids] {
       _id,
@@ -136,12 +153,20 @@ export async function validateBasket(
       params: { ids: productIds }
     });
 
+    console.log('Products Found:', products.length);
+    products.forEach(p => {
+      console.log(`  - ${p.name}: $${p.displayPrice} (stock: ${p.stock})`);
+    });
+
     // Step 2: Validate prices and stock
+    console.log('\n--- Step 2: Validate Prices & Stock ---');
+    // Calculate expected total based on current prices
+    let expectedTotal = 0;
     for (const basketItem of payload.items) {
       const product = products.find(p => p._id === basketItem._id);
 
       if (!product) {
-        // Product not found - treat as validation failure
+        console.log(`Product NOT FOUND: ${basketItem._id}`);
         return {
           outcome: "FAIL_VALIDATION",
           discrepancy: {
@@ -156,34 +181,21 @@ export async function validateBasket(
         };
       }
 
-      // Check price mismatch - calculate average price per item
-      const totalQuantity = payload.items.reduce((sum, item) => sum + item.quantity, 0);
-      const averagePricePerItem = totalQuantity > 0 ? payload.total / totalQuantity : 0;
-
-      if (product.displayPrice !== averagePricePerItem) {
-        return {
-          outcome: "FAIL_VALIDATION",
-          discrepancy: {
-            type: "PRICE",
-            items: [{
-              id: basketItem._id,
-              productName: product.name,
-              expected: averagePricePerItem,
-              actual: product.displayPrice
-            }]
-          }
-        };
-      }
+      // Add this product's total to expected total
+      expectedTotal += product.displayPrice * basketItem.quantity;
+      console.log(`${product.name}: ${basketItem.quantity} × $${product.displayPrice} = $${product.displayPrice * basketItem.quantity}`);
 
       // Check stock shortage
       if (product.stock !== undefined && product.stock < basketItem.quantity) {
+        console.log(`STOCK SHORTAGE: ${product.name}`);
+        console.log(`  Available: ${product.stock}, Requested: ${basketItem.quantity}`);
         return {
           outcome: "FAIL_VALIDATION",
           discrepancy: {
             type: "INVENTORY",
             items: [{
               id: basketItem._id,
-              productName: product.name,
+              productName: product.name || '',
               available: product.stock,
               requested: basketItem.quantity
             }]
@@ -192,10 +204,50 @@ export async function validateBasket(
       }
     }
 
+    console.log(`Expected Total: $${expectedTotal}`);
+    console.log(`Basket Total: $${payload.total}`);
+
+    // Check if total matches
+    if (expectedTotal !== payload.total) {
+      console.log('PRICE MISMATCH DETECTED!');
+      console.log(`Expected: $${expectedTotal}, Actual: $${payload.total}`);
+
+      // Find which items have price discrepancies
+      const discrepancyItems = [];
+      for (const basketItem of payload.items) {
+        const product = products.find(p => p._id === basketItem._id);
+        if (product) {
+          // Calculate what the basket thinks this item costs
+          const basketPricePerItem = payload.total / payload.items.reduce((sum, item) => sum + item.quantity, 0);
+          discrepancyItems.push({
+            id: basketItem._id,
+            productName: product.name || '',
+            expected: product.displayPrice,
+            actual: basketPricePerItem
+          });
+        }
+      }
+
+      return {
+        outcome: "FAIL_VALIDATION",
+        discrepancy: {
+          type: "PRICE",
+          items: discrepancyItems
+        }
+      };
+    }
+
+    console.log('Price validation: PASSED');
+
     // Step 3: Reserve inventory
-    const reservationResult = await reserveInventory(payload.items);
+    console.log('\n--- Step 3: Reserve Inventory ---');
+    const reservationResult = await reserveInventory(payload.items, idempotencyKey);
 
     if (reservationResult.status === 400) {
+      console.log('INVENTORY RESERVATION FAILED (400)');
+      reservationResult.unavailable.forEach(id => {
+        console.log(`  Unavailable: ${id}`);
+      });
       return {
         outcome: "FAIL_VALIDATION",
         discrepancy: {
@@ -210,21 +262,29 @@ export async function validateBasket(
       };
     }
 
-    // Store reserved items for potential rollback
-    reservedItems = reservationResult.reserved.map(r => ({ _id: r._id, quantity: r.quantity }));
+    console.log('Inventory reservation: SUCCESS');
+    reservedItems = payload.items.map(item => ({ _id: item._id, quantity: item.quantity }));
+    console.log('Reserved items:', reservedItems);
 
     // Step 4: Create Stripe session
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    console.log('\n--- Step 4: Create Stripe Session ---');
 
-    // Build line items for Stripe
-    const lineItems = reservationResult.reserved.map(item => ({
-      price: item.stripePriceId,
-      quantity: payload.items.find(bi => bi._id === item._id)?.quantity || 1
-    }));
+    const lineItems = payload.items.map(item => {
+      const product = products.find(p => p._id === item._id);
+      return {
+        price: product?.stripePriceId || '',
+        quantity: item.quantity
+      };
+    });
 
-    // Validate that all items have stripePriceId
-    const missingPriceIds = reservationResult.reserved.filter(item => !item.stripePriceId);
+    // Check for missing price IDs
+    const missingPriceIds = lineItems.filter(item => !item.price);
     if (missingPriceIds.length > 0) {
+      console.log('MISSING STRIPE PRICE IDs');
+      missingPriceIds.forEach((item, i) => {
+        const product = products.find(p => p._id === payload.items[i]._id);
+        console.log(`  - ${product?.name}: No price ID`);
+      });
       await rollbackReservations(reservedItems);
 
       const discrepancy: StripeConfigDiscrepancy = {
@@ -241,8 +301,15 @@ export async function validateBasket(
       };
     }
 
+    console.log('Stripe line items:');
+    lineItems.forEach((item, i) => {
+      const product = products.find(p => p._id === payload.items[i]._id);
+      console.log(`  - ${product?.name}: ${item.quantity} × ${item.price}`);
+    });
+
     let session;
     try {
+      const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
       session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         line_items: lineItems,
@@ -282,17 +349,22 @@ export async function validateBasket(
       throw stripeError;
     }
 
+    console.log('Stripe session created:', session.url);
+    console.log('\n=== VALIDATE BASKET SUCCESS ===');
+
     return {
       outcome: "PASS",
-      stripeUrl: session.url
+      stripeUrl: session.url || ''
     };
 
   } catch (error) {
     // Handle 5xx or network errors
     console.error('validateBasket error:', error);
+    console.log('\n=== VALIDATE BASKET FAILED (NETWORK) ===');
 
     // Rollback any reservations if we got that far
     if (reservedItems.length > 0) {
+      console.log('Rolling back reservations:', reservedItems);
       await rollbackReservations(reservedItems);
     }
 
