@@ -2,7 +2,7 @@
 
 **Purpose:** Searchable keyword → lesson mapping for pre-work retrieval.
 
-**Last Updated:** 2026-04-02
+**Last Updated:** 2026-04-08
 
 ## Keyword: contain
 | Lesson | Severity | Summary |
@@ -875,6 +875,79 @@
 | Lesson | Severity | Summary |
 |--------|----------|---------|
 | [patterns/opus-audit-to-sprint-pipeline.md](patterns/opus-audit-to-sprint-pipeline.md) | High | Homepage/canonical implementation as reference for all target states |
+
+---
+
+## Keyword: cargo-cult-testing
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [anti-patterns/cargo-cult-testing.md](anti-patterns/cargo-cult-testing.md) | Critical | Tests passed 100% but system didn't work - tests mocked core functionality instead of testing it |
+
+---
+
+## Keyword: human-verification
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/human-first-verification.md](workflows/human-first-verification.md) | Critical | Always verify manually before writing tests - tests document verified behavior, don't create it |
+
+---
+
+## Keyword: directness
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/directness-principle.md](patterns/directness-principle.md) | Critical | Maintain direct human observation - indirect verification creates blind spots |
+
+---
+
+## Keyword: test-verification
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [anti-patterns/cargo-cult-testing.md](anti-patterns/cargo-cult-testing.md) | Critical | Every test must be anchored in human verification first |
+| [workflows/human-first-verification.md](workflows/human-first-verification.md) | Critical | Manual verification required before test writing |
+
+---
+
+## Keyword: mock-abuse
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [anti-patterns/cargo-cult-testing.md](anti-patterns/cargo-cult-testing.md) | Critical | Never mock the core functionality being tested |
+
+---
+
+## Keyword: manual-first
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/human-first-verification.md](workflows/human-first-verification.md) | Critical | Make it work manually, then write tests to document that working code |
+
+---
+
+## Keyword: test-documentation
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/human-first-verification.md](workflows/human-first-verification.md) | Critical | Tests should document verified behavior, not speculate about it |
+
+---
+
+## Keyword: human-observation
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/directness-principle.md](patterns/directness-principle.md) | Critical | Every verification must be directly observable by humans |
+
+---
+
+## Keyword: no-mocking-core
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/directness-principle.md](patterns/directness-principle.md) | Critical | Only mock external dependencies, never core flow |
 
 ---
 
