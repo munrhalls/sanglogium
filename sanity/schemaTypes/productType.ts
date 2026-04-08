@@ -69,6 +69,30 @@ export const productType = defineType({
       validation: (Rule) => Rule.min(0),
     }),
     defineField({
+      name: "reservations",
+      title: "Active Reservations",
+      type: "array",
+      description: "Individual reservations with expiration tracking",
+      of: [
+        defineArrayMember({
+          name: "reservation",
+          type: "object",
+          fields: [
+            { name: "idempotencyKey", type: "string", title: "Idempotency Key" },
+            { name: "quantity", type: "number", title: "Quantity", validation: (Rule) => Rule.min(1) },
+            {
+              name: "expiresAt",
+              type: "datetime",
+              title: "Expires At",
+              validation: (Rule) => Rule.required()
+            },
+            { name: "status", type: "string", title: "Status", initialValue: "active" },
+          ],
+        }),
+      ],
+      initialValue: [],
+    }),
+    defineField({
       name: "sku",
       title: "SKU",
       type: "string",
