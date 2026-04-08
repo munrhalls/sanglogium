@@ -1,0 +1,127 @@
+{
+  "timestamp": "2026-04-07T05:18:13.016Z",
+  "sprint": "basket_to_checkout_handshake",
+  "summary": {
+    "total": 22,
+    "passed": 21,
+    "failed": 0,
+    "skipped": 1
+  },
+  "results": {
+    "passed": [
+      {
+        "command": "npx tsc --noEmit --project tsconfig.sprint.json",
+        "description": "TypeScript compilation - zero errors across sprint files",
+        "output": ""
+      },
+      {
+        "command": "npx vitest run tests/unit/preCheckout/ --reporter=verbose",
+        "description": "Unit tests - 100% pass required",
+        "output": "\n\u001b[1m\u001b[46m RUN \u001b[49m\u001b[22m \u001b[36mv4.0.18 \u001b[39m\u001b[90mC:/webdev/sang-logium\u001b[39m\n\n \u001b[32m✓\u001b[39m tests/unit/preCheckout/useCheckoutAction.global.test.ts\u001b[2m > \u001b[22museCheckoutAction - Global Flow Sync\u001b[2m > "
+      },
+      {
+        "command": "npx vitest run tests/integration/checkout/ --reporter=verbose",
+        "description": "Integration tests - 100% pass required",
+        "output": "\n\u001b[1m\u001b[46m RUN \u001b[49m\u001b[22m \u001b[36mv4.0.18 \u001b[39m\u001b[90mC:/webdev/sang-logium\u001b[39m\n\n \u001b[32m✓\u001b[39m tests/integration/checkout/basketCancelHandler.neighbour-sync.test.tsx\u001b[2m > \u001b[22mBasketPage - Neighbour Flow "
+      },
+      {
+        "command": "npx next build",
+        "description": "Next.js build - zero warnings about server-only boundary violations",
+        "output": "   ▲ Next.js 15.5.12\n   - Environments: .env.local, .env\n   - Experiments (use with caution):\n     ✓ inlineCss\n     ✓ optimizeCss\n     · optimizePackageImports\n\n   Creating an optimized production bui"
+      },
+      {
+        "check": "file_exists",
+        "description": "State machine core",
+        "path": "store/preCheckout/preCheckoutMachine.ts"
+      },
+      {
+        "check": "file_exists",
+        "description": "State machine types",
+        "path": "store/preCheckout/preCheckoutTypes.ts"
+      },
+      {
+        "check": "file_exists",
+        "description": "Basket validation server action",
+        "path": "app/actions/checkout/validateBasket.ts"
+      },
+      {
+        "check": "file_exists",
+        "description": "Checkout action hook",
+        "path": "app/components/features/basket/checkout/useCheckoutAction.ts"
+      },
+      {
+        "check": "file_exists",
+        "description": "Success handler hook",
+        "path": "app/components/features/basket/checkout/useSuccessHandler.ts"
+      },
+      {
+        "check": "file_exists",
+        "description": "Accept discrepancies hook",
+        "path": "app/components/features/basket/checkout/useAcceptDiscrepancies.ts"
+      },
+      {
+        "check": "file_exists",
+        "description": "Orchestrator hook",
+        "path": "app/components/features/basket/checkout/usePreCheckout.ts"
+      },
+      {
+        "check": "file_exists",
+        "description": "Checkout UI component",
+        "path": "app/components/features/basket/checkout/CheckoutPanel.tsx"
+      },
+      {
+        "check": "file_exists",
+        "description": "Inventory lock release action",
+        "path": "app/actions/checkout/releaseInventoryLock.ts"
+      },
+      {
+        "check": "file_exists",
+        "description": "State machine unit tests",
+        "path": "tests/unit/preCheckout/preCheckoutMachine.test.ts"
+      },
+      {
+        "check": "file_exists",
+        "description": "Checkout action unit tests",
+        "path": "tests/unit/preCheckout/useCheckoutAction.test.ts"
+      },
+      {
+        "check": "file_exists",
+        "description": "Success handler unit tests",
+        "path": "tests/unit/preCheckout/useSuccessHandler.test.ts"
+      },
+      {
+        "check": "file_exists",
+        "description": "Accept discrepancies unit tests",
+        "path": "tests/unit/preCheckout/useAcceptDiscrepancies.test.ts"
+      },
+      {
+        "check": "file_exists",
+        "description": "Cancel handler unit tests",
+        "path": "tests/unit/preCheckout/basketCancelHandler.test.tsx"
+      },
+      {
+        "check": "file_exists",
+        "description": "Basket validation integration tests",
+        "path": "tests/integration/checkout/validateBasket.sanity.test.ts"
+      },
+      {
+        "check": "file_exists",
+        "description": "Orchestrator integration tests",
+        "path": "tests/integration/checkout/usePreCheckout.test.tsx"
+      },
+      {
+        "check": "file_exists",
+        "description": "Checkout panel integration tests",
+        "path": "tests/integration/checkout/CheckoutPanel.test.tsx"
+      }
+    ],
+    "failed": [],
+    "skipped": [
+      {
+        "command": "npx playwright test",
+        "description": "E2E tests skipped - dev server not running",
+        "reason": "Dev server required for E2E tests"
+      }
+    ]
+  }
+}

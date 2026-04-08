@@ -1,0 +1,22 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": [
+    "store/preCheckout/**/*",
+    "app/actions/checkout/**/*",
+    "app/components/features/basket/checkout/**/*",
+    "sanity/lib/checkoutClient.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "tests/**/*",
+    ".next/**/*",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "scripts/**/*"
+  ]
+}

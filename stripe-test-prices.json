@@ -1,0 +1,8 @@
+{
+  "price_test_happy_path_a": "price_1TJU0HEQ2a2vW56g5nVkS96K",
+  "price_test_happy_path_b": "price_1TJU0JEQ2a2vW56g2XSkjz7g",
+  "price_test_price_mismatch": "price_1TJU0LEQ2a2vW56gNfbQ5taC",
+  "price_test_inventory_shortage": "price_1TJU0NEQ2a2vW56gjVcdNOmC",
+  "price_test_out_of_stock": "price_1TJU0PEQ2a2vW56gWBin5NzA",
+  "price_test_network_error": "price_1TJU0REQ2a2vW56gwT0shc0o"
+}
