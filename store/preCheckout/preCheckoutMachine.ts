@@ -1,196 +1,210 @@
 /**
  * Pre-checkout finite state machine
- * Pure transition logic - no side effects
+ * Research-validated 3-state implementation from flow per ux slice.md
  */
 
 import type {
-  PreCheckoutState,
-  PreCheckoutEvent,
-  PreCheckoutContext,
+  CheckoutState,
+  CheckoutEvent,
+  CheckoutContext,
   TransitionResult
 } from "./preCheckoutTypes";
 
 /**
  * Transition function for the pre-checkout state machine
- * Implements all state transitions per §3
+ * Implements 3 states: idle | processing | complete
  */
 export function transition(
-  state: PreCheckoutState,
-  event: PreCheckoutEvent,
-  context: PreCheckoutContext
+  state: CheckoutState['status'],
+  event: CheckoutEvent,
+  context: CheckoutContext
 ): TransitionResult {
   switch (state) {
-    case "IDLE":
+    case "idle":
       return handleIdleState(event, context);
 
-    case "PROCESSING":
+    case "processing":
       return handleProcessingState(event, context);
 
-    case "ERROR_NETWORK":
-      return handleNetworkErrorState(event, context);
-
-    case "ERROR_VALIDATION":
-      return handleValidationErrorState(event, context);
-
-    case "SUCCESS":
-      return handleSuccessState(event, context);
+    case "complete":
+      return handleCompleteState(event, context);
 
     default:
       // Invalid state - return unchanged
-      return { state, context };
+      return { state: context, context };
   }
 }
 
 function handleIdleState(
-  event: PreCheckoutEvent,
-  context: PreCheckoutContext
+  event: CheckoutEvent,
+  context: CheckoutContext
 ): TransitionResult {
   switch (event.type) {
-    case "START_VALIDATION":
+    case "CHECKOUT_CLICK":
       return {
-        state: "PROCESSING",
+        state: {
+          ...context,
+          status: 'processing',
+          idempotencyKey: `checkout_${Date.now()}_${crypto.randomUUID().slice(-8)}`,
+          errorMessage: null
+        },
         context: {
           ...context,
-          idempotencyKey: crypto.randomUUID(),
-          discrepancy: null
+          status: 'processing',
+          idempotencyKey: `checkout_${Date.now()}_${crypto.randomUUID().slice(-8)}`,
+          errorMessage: null
         }
       };
 
+    case "RESET":
+      return {
+        state: createInitialState(),
+        context: createInitialState()
+      };
+
     default:
-      return { state: "IDLE", context };
+      return { state: context, context };
   }
 }
 
 function handleProcessingState(
-  event: PreCheckoutEvent,
-  context: PreCheckoutContext
+  event: CheckoutEvent,
+  context: CheckoutContext
 ): TransitionResult {
   switch (event.type) {
-    case "FAIL_NETWORK":
+    case "SET_ADDRESS_SUBMIT":
       return {
-        state: "ERROR_NETWORK",
+        state: {
+          ...context,
+          status: 'idle',
+          errorMessage: null
+        },
         context: {
           ...context,
-          idempotencyKey: null
+          status: 'idle',
+          errorMessage: null
         }
       };
 
-    case "FAIL_VALIDATION":
+    case "SET_ERROR":
       return {
-        state: "ERROR_VALIDATION",
+        state: {
+          ...context,
+          status: 'idle',
+          errorMessage: event.payload
+        },
         context: {
           ...context,
-          discrepancy: event.payload,
-          idempotencyKey: null
-        }
-      };
-
-    case "PASS_VALIDATION":
-      return {
-        state: "SUCCESS",
-        context: {
-          ...context,
-          stripeUrl: event.stripeUrl
-          // Keep idempotencyKey per §4
+          status: 'idle',
+          errorMessage: event.payload
         }
       };
 
     default:
-      return { state: "PROCESSING", context };
+      return { state: context, context };
   }
 }
 
-function handleNetworkErrorState(
-  event: PreCheckoutEvent,
-  context: PreCheckoutContext
+function handleCompleteState(
+  event: CheckoutEvent,
+  context: CheckoutContext
 ): TransitionResult {
   switch (event.type) {
-    case "START_VALIDATION":
-      return {
-        state: "PROCESSING",
-        context: {
-          ...context,
-          idempotencyKey: crypto.randomUUID(),
-          discrepancy: null
-        }
-      };
-
-    case "FAIL_NETWORK":
-      // Already in ERROR_NETWORK - no change
-      return { state: "ERROR_NETWORK", context };
-
     case "RESET":
       return {
-        state: "IDLE",
-        context: createInitialContext()
+        state: createInitialState(),
+        context: createInitialState()
       };
 
     default:
-      return { state: "ERROR_NETWORK", context };
+      return { state: context, context };
   }
 }
 
-function handleValidationErrorState(
-  event: PreCheckoutEvent,
-  context: PreCheckoutContext
-): TransitionResult {
-  switch (event.type) {
-    case "START_VALIDATION":
-      // Guard: only allow if discrepancy is null (mutations cleared)
-      if (context.discrepancy !== null) {
-        return { state: "ERROR_VALIDATION", context };
-      }
-      return {
-        state: "PROCESSING",
-        context: {
-          ...context,
-          idempotencyKey: crypto.randomUUID(),
-          discrepancy: null
-        }
-      };
-
-    case "RESET":
-      return {
-        state: "IDLE",
-        context: createInitialContext()
-      };
-
-    default:
-      return { state: "ERROR_VALIDATION", context };
-  }
-}
-
-function handleSuccessState(
-  event: PreCheckoutEvent,
-  context: PreCheckoutContext
-): TransitionResult {
-  switch (event.type) {
-    case "FAIL_NETWORK":
-      // Can transition from SUCCESS to ERROR_NETWORK
-      return {
-        state: "ERROR_NETWORK",
-        context: {
-          ...context,
-          idempotencyKey: null
-        }
-      };
-
-    case "RESET":
-      return {
-        state: "IDLE",
-        context: createInitialContext()
-      };
-
-    default:
-      return { state: "SUCCESS", context };
-  }
-}
-
-function createInitialContext(): PreCheckoutContext {
+function createInitialState(): CheckoutState {
   return {
+    status: 'idle',
+    errorMessage: null,
     idempotencyKey: null,
-    discrepancy: null,
-    stripeUrl: null,
-    redirectWatchdogId: null
+    clientSecret: null,
+    reservationId: null,
+    expiresAt: null
   };
+}
+
+/**
+ * FSM Machine with state and methods
+ */
+export class PreCheckoutMachine {
+  private state: CheckoutState;
+  private context: CheckoutContext;
+
+  constructor() {
+    this.state = createInitialState();
+    this.context = { ...this.state };
+  }
+
+  /**
+   * Generate UUIDv4 idempotency key and set status to processing
+   */
+  checkoutClick(): void {
+    const result = transition(this.state.status, { type: 'CHECKOUT_CLICK' }, this.context);
+    this.state = result.state;
+    this.context = result.context;
+  }
+
+  /**
+   * Set status to idle for address slice
+   */
+  setAddressSubmit(): void {
+    const result = transition(this.state.status, { type: 'SET_ADDRESS_SUBMIT' }, this.context);
+    this.state = result.state;
+    this.context = result.context;
+  }
+
+  /**
+   * Set status to complete
+   */
+  setPaymentComplete(): void {
+    this.state = {
+      ...this.state,
+      status: 'complete'
+    };
+    this.context = {
+      ...this.context,
+      status: 'complete'
+    };
+  }
+
+  /**
+   * Set error message and return to idle
+   */
+  setError(message: string): void {
+    const result = transition(this.state.status, { type: 'SET_ERROR', payload: message }, this.context);
+    this.state = result.state;
+    this.context = result.context;
+  }
+
+  /**
+   * Reset to initial state
+   */
+  reset(): void {
+    const result = transition(this.state.status, { type: 'RESET' }, this.context);
+    this.state = result.state;
+    this.context = result.context;
+  }
+
+  /**
+   * Get current state
+   */
+  getState(): CheckoutState {
+    return this.state;
+  }
+
+  /**
+   * Get current context
+   */
+  getContext(): CheckoutContext {
+    return this.context;
+  }
 }

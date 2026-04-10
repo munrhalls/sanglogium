@@ -1,54 +1,33 @@
 /**
  * Pre-checkout state machine types
- * Implements the finite state machine for basket-to-checkout handshake
+ * Research-validated implementation from flow per ux slice.md
  */
 
-// States §2
-export type PreCheckoutState =
-  | "IDLE"
-  | "PROCESSING"
-  | "ERROR_NETWORK"
-  | "ERROR_VALIDATION"
-  | "SUCCESS";
-
-// Events §3
-export type PreCheckoutEvent =
-  | { type: "START_VALIDATION" }
-  | { type: "FAIL_NETWORK" }
-  | { type: "FAIL_VALIDATION"; payload: DiscrepancyPayload }
-  | { type: "PASS_VALIDATION"; stripeUrl: string }
-  | { type: "RESET" };
-
-// Context §10
-export interface PreCheckoutContext {
+// FSM State Shape (research-validated)
+export interface CheckoutState {
+  status: 'idle' | 'processing' | 'complete';
+  errorMessage: string | null;            // null when no error
   idempotencyKey: string | null;
-  discrepancy: DiscrepancyPayload | null;
-  stripeUrl: string | null;
-  redirectWatchdogId: number | null;
+  clientSecret: string | null;
+  reservationId: string | null;
+  expiresAt: number | null;               // Unix timestamp ms
 }
 
-// Discrepancy Payload §5
-export type DiscrepancyPayload =
-  | { type: "INVENTORY"; items: InventoryDiscrepancy[] }
-  | { type: "PRICE"; items: PriceDiscrepancy[] }
-  | { type: "STRIPE_CONFIG"; message: string };
+// FSM Events
+export type CheckoutEvent =
+  | { type: 'CHECKOUT_CLICK' }
+  | { type: 'SET_ADDRESS_SUBMIT' }
+  | { type: 'SET_PAYMENT_COMPLETE' }
+  | { type: 'SET_ERROR'; payload: string }
+  | { type: 'RESET' };
 
-export interface InventoryDiscrepancy {
-  id: string;
-  productName: string;
-  requested: number;
-  available: number;
-}
-
-export interface PriceDiscrepancy {
-  id: string;
-  productName: string;
-  expected: number;
-  actual: number;
+// FSM Context (extends state with additional runtime data)
+export interface CheckoutContext extends CheckoutState {
+  // Additional runtime context can be added here
 }
 
 // Transition result
 export interface TransitionResult {
-  state: PreCheckoutState;
-  context: PreCheckoutContext;
+  state: CheckoutState;
+  context: CheckoutContext;
 }
