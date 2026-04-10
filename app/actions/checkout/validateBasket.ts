@@ -8,12 +8,50 @@
  */
 
 import type { ValidateBasketResult, BasketPayload, StripeConfigDiscrepancy } from "./validateBasket.types";
+
+// Network request logging helper
+function logNetworkRequest(step: string, url: string, method: string, body?: any, headers?: Record<string, string>) {
+  console.log(`=== NETWORK REQUEST: ${step} ===`);
+  console.log(`   URL: ${url}`);
+  console.log(`   Method: ${method}`);
+  if (headers) {
+    console.log(`   Headers: ${JSON.stringify(headers, null, 2)}`);
+  }
+  if (body) {
+    console.log(`   Body: ${JSON.stringify(body, null, 2)}`);
+  }
+  console.log(`   Timestamp: ${new Date().toISOString()}`);
+}
+
 import { sanityFetch } from "../../../sanity/lib/client";
 import { checkoutClient } from "../../../sanity/lib/checkoutClient";
 import { groq } from 'next-sanity';
 import type { Product as SanityProduct } from "../../../sanity.types";
 import { stripe } from "../../../lib/stripe/stripe";
 import { TEST_CONFIG } from "../../../config/test";
+
+// Mock Stripe for development
+const mockStripe = TEST_CONFIG.MOCK_STRIPE ? {
+  checkout: {
+    sessions: {
+      create: async (params: any) => {
+        console.log('=== MOCK STRIPE: Creating session ===');
+        console.log('   Params:', JSON.stringify(params, null, 2));
+
+        // Return mock session with fake URL
+        return {
+          id: 'cs_mock_' + Date.now(),
+          url: `https://checkout.stripe.com/mock-session/${Date.now()}`,
+          payment_status: 'unpaid',
+          success_url: params.success_url,
+          cancel_url: params.cancel_url,
+          line_items: params.line_items,
+          metadata: params.metadata
+        };
+      }
+    }
+  }
+} : stripe;
 
 // Product type for validation - includes stock and reservedStock fields
 type ValidationProduct = Pick<SanityProduct, '_id' | 'name' | 'displayPrice' | 'stock' | 'reservedStock' | 'stripePriceId'>;
@@ -38,10 +76,20 @@ async function reserveInventory(
       reservations
     }`;
 
+    // Log Sanity fetch request for stock check
+    logNetworkRequest(
+      "SANITY_STOCK_CHECK",
+      "https://PROJECT_ID.api.sanity.io/v2021-10-25/data/query/production",
+      "POST",
+      { query: stockQuery, params: { ids: productIds } }
+    );
+
     const products: Pick<SanityProduct, '_id' | 'stock' | 'reservedStock' | 'stripePriceId' | 'reservations'>[] = await checkoutClient.fetch(
       stockQuery,
       { ids: productIds }
     );
+
+    console.log(`   Sanity response: ${JSON.stringify(products, null, 2)}`);
 
     // Check availability and collect items to reserve
     const unavailable: string[] = [];
@@ -61,7 +109,16 @@ async function reserveInventory(
         unavailable.push(basketItem._id);
       } else {
         // Get revision ID for atomic update
-        const productWithRevision = await checkoutClient.fetch(groq`*[_id == $id][0]{_rev}`, { id: basketItem._id });
+        const revisionQuery = groq`*[_id == $id][0]{_rev}`;
+        logNetworkRequest(
+          "SANITY_REVISION_CHECK",
+          "https://PROJECT_ID.api.sanity.io/v2021-10-25/data/query/production",
+          "POST",
+          { query: revisionQuery, params: { id: basketItem._id } }
+        );
+
+        const productWithRevision = await checkoutClient.fetch(revisionQuery, { id: basketItem._id });
+        console.log(`   Revision response for ${basketItem._id}: ${JSON.stringify(productWithRevision, null, 2)}`);
         toReserve.push({
           _id: basketItem._id,
           quantity: basketItem.quantity,
@@ -92,7 +149,29 @@ async function reserveInventory(
       );
     }
 
-    await transaction.commit();
+    // Log Sanity transaction commit
+    logNetworkRequest(
+      "SANITY_TRANSACTION_COMMIT",
+      "https://PROJECT_ID.api.sanity.io/v2021-10-25/data/mutate/production",
+      "POST",
+      { mutations: toReserve.map(item => ({
+        id: item._id,
+        patch: {
+          inc: { reservedStock: item.quantity },
+          append: {
+            reservations: [{
+              idempotencyKey,
+              quantity: item.quantity,
+              expiresAt: expiresAt.toISOString(),
+              status: 'active'
+            }]
+          }
+        }
+      })) }
+    );
+
+    const commitResult = await transaction.commit();
+    console.log(`   Transaction commit result: ${JSON.stringify(commitResult, null, 2)}`);
 
     return { status: 200, reserved: toReserve.map(r => ({ _id: r._id, quantity: r.quantity, stripePriceId: r.stripePriceId })) };
 
@@ -310,7 +389,7 @@ export async function validateBasket(
     let session;
     try {
       const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
-      session = await stripe.checkout.sessions.create({
+      const stripeParams = {
         payment_method_types: ['card'],
         line_items: lineItems,
         mode: 'payment',
@@ -322,9 +401,25 @@ export async function validateBasket(
           items: payload.items.map(item => `${item._id}:${item.quantity}`).join(',')
         },
         expires_at: Math.floor(Date.now() / 1000) + (30 * 60), // 30 minutes
-      }, {
+      };
+
+      // Log Stripe API request
+      logNetworkRequest(
+        "STRIPE_SESSION_CREATE",
+        TEST_CONFIG.MOCK_STRIPE ? "MOCK STRIPE API" : "https://api.stripe.com/v1/checkout/sessions",
+        "POST",
+        stripeParams,
+        {
+          "Authorization": "Bearer sk_test_...",
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
+      );
+
+      session = await mockStripe.checkout.sessions.create(stripeParams, {
         idempotencyKey
       });
+
+      console.log(`   Stripe session response: ${JSON.stringify(session, null, 2)}`);
     } catch (stripeError) {
       console.error('Stripe session creation failed:', stripeError);
       await rollbackReservations(reservedItems);

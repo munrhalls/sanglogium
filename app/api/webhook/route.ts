@@ -254,13 +254,8 @@ async function releaseReservations(
       // SG-02: Safe decrement to prevent negative reservedStock
       const safeQty = Math.min(item.quantity, currentReservedStock);
 
-      // If reservedStock is null, initialize it first
-      if (product?.reservedStock === null || product?.reservedStock === undefined) {
-        await checkoutClient
-          .patch(item.productId)
-          .set({ reservedStock: 0 })
-          .commit();
-      } else if (safeQty > 0) {
+      // reservedStock field is guaranteed to exist on all products
+      if (safeQty > 0) {
         await checkoutClient
           .patch(item.productId)
           .dec({ reservedStock: safeQty })
@@ -294,11 +289,8 @@ async function finalizeStock(
     // SG-02: Safe decrement to prevent negative reservedStock
     const safeReservedQty = Math.min(item.quantity, currentReservedStock);
 
-    // Handle null reservedStock by setting it to 0 in the same transaction
+    // reservedStock field is guaranteed to exist on all products
     transaction.patch(item.productId, (p: any) => {
-      if (product?.reservedStock === null || product?.reservedStock === undefined) {
-        return p.set({ reservedStock: 0 }).dec({ stock: item.quantity });
-      }
       return p.dec({ stock: item.quantity, reservedStock: safeReservedQty });
     });
   }
