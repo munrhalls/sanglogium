@@ -1,102 +1,74 @@
 "use client"
 
-import { useReducer, useRef, useEffect } from "react";
-import { transition } from "@/store/preCheckout/preCheckoutMachine";
-import type { PreCheckoutState, PreCheckoutContext, PreCheckoutEvent } from "@/store/preCheckout/preCheckoutTypes";
-import { useCheckoutAction } from "./useCheckoutAction";
-import { useSuccessHandler } from "./useSuccessHandler";
-import { useAcceptDiscrepancies } from "./useAcceptDiscrepancies";
-import { useBasketStore, selectBasketTotal } from "@/store/store";
-import type { BasketPayload } from "@/app/actions/checkout/validateBasket.types";
+import { useState, useEffect, useRef } from "react";
+import { PreCheckoutMachine } from "@/store/preCheckout/preCheckoutMachine";
+import type { CheckoutState, CheckoutContext } from "@/store/preCheckout/preCheckoutTypes";
+import { useRouter } from "next/navigation";
 
 /**
- * usePreCheckout — Orchestrator Hook
- * Wires SC1 machine + SC3 action + SC4 success handler + SC5 accept handler
- * into one composable unit consumed by the basket UI component
+ * usePreCheckout - Simplified Hook for new PreCheckoutMachine
+ * Generates idempotency key and navigates to address page on checkout click
  */
 export function usePreCheckout(): {
-  state: PreCheckoutState;
-  context: PreCheckoutContext;
+  state: CheckoutState['status'];
+  context: CheckoutContext;
   checkout: () => void;
   retry: () => void;
   acceptAndContinue: () => void;
   reset: () => void;
 } {
-  // State machine with useReducer
-  const [{ state, context }, dispatch] = useReducer(
-    (prev: { state: PreCheckoutState; context: PreCheckoutContext }, event: PreCheckoutEvent) => {
-      const result = transition(prev.state, event, prev.context);
-      return { state: result.state, context: result.context };
-    },
-    { state: "IDLE" as PreCheckoutState, context: createInitialContext() }
-  );
+  const router = useRouter();
+  const [machine] = useState(() => new PreCheckoutMachine());
+  const [state, setState] = useState(machine.getState());
+  const [context, setContext] = useState(machine.getContext());
 
-  // Watchdog ref for SUCCESS state timeout
-  const watchdogRef = useRef<number | null>(null);
+  // Update local state when machine state changes
+  const updateState = () => {
+    setState(machine.getState());
+    setContext(machine.getContext());
+  };
 
-  // Child hooks
-  const { executeValidation } = useCheckoutAction(dispatch);
-  const { onSuccessEntry, onResetFromSuccess } = useSuccessHandler(dispatch);
-  const { acceptAndContinue: acceptAndContinueHandler } = useAcceptDiscrepancies(dispatch, executeValidation, getBasketPayload());
+  // Navigate to address page when checkout click completes
+  useEffect(() => {
+    if (state.status === 'processing' && state.idempotencyKey) {
+      console.log('Checkout click processed, navigating to address page');
+      console.log('Idempotency key:', state.idempotencyKey);
 
-  // Get basket snapshot for validation
-  function getBasketPayload(): BasketPayload {
-    const basketStore = useBasketStore.getState();
-    return {
-      items: basketStore.basket.map(item => ({
-        _id: item._id,
-        quantity: item.quantity
-      })),
-      total: selectBasketTotal(basketStore)
-    };
-  }
+      // Reset to idle for address slice
+      machine.setAddressSubmit();
+      updateState();
 
-  // Create initial context
-  function createInitialContext(): PreCheckoutContext {
-    return {
-      idempotencyKey: null,
-      discrepancy: null,
-      stripeUrl: null,
-      redirectWatchdogId: null
-    };
-  }
+      // Navigate to address page
+      router.push('/checkout/address');
+    }
+  }, [state.status, state.idempotencyKey, router]);
 
   // Public API methods
   const checkout = () => {
-    const key = crypto.randomUUID(); // key generated here for IDLE path
-    dispatch({ type: "START_VALIDATION" });
-    executeValidation(getBasketPayload(), key);
+    console.log('Checkout button clicked');
+    machine.checkoutClick();
+    updateState();
   };
 
   const retry = () => {
-    const key = crypto.randomUUID();
-    dispatch({ type: "START_VALIDATION" });
-    executeValidation(getBasketPayload(), key);
+    console.log('Retry checkout');
+    machine.checkoutClick();
+    updateState();
   };
 
   const reset = () => {
-    if (state === "SUCCESS") {
-      onResetFromSuccess(context.idempotencyKey);
-      clearTimeout(watchdogRef.current ?? undefined);
-      watchdogRef.current = null;
-    }
-    dispatch({ type: "RESET" });
+    console.log('Reset checkout state');
+    machine.reset();
+    updateState();
   };
 
   const acceptAndContinue = () => {
-    if (!context.discrepancy) return;
-    acceptAndContinueHandler(context.discrepancy, context.idempotencyKey ?? "");
+    console.log('Accept and continue (not implemented for new flow)');
+    // This method is kept for compatibility but not used in the simplified flow
   };
 
-  // SUCCESS state entry effect
-  useEffect(() => {
-    if (state === "SUCCESS" && context.stripeUrl) {
-      onSuccessEntry(context.stripeUrl, watchdogRef);
-    }
-  }, [state, context.stripeUrl]);
-
   return {
-    state,
+    state: state.status,
     context,
     checkout,
     retry,

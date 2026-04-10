@@ -6,23 +6,38 @@ import { ArrowLeftIcon } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
 import { Price } from "@/app/components/ui/Price";
 import CheckoutPanel from "@/app/components/features/basket/checkout/CheckoutPanel";
-import { usePreCheckout } from "@/app/components/features/basket/checkout/usePreCheckout";
+import { useCheckoutFlow } from "@/app/components/features/basket/checkout/useCheckoutFlow";
 
 export default function BasketSummary() {
+  const basket = useBasketStore((s) => s.basket);
   const subtotal = useBasketStore(selectBasketTotal);
   const itemCount = useBasketStore(selectBasketCount);
   const router = useRouter();
-  const preCheckout = usePreCheckout();
+  const checkoutFlow = useCheckoutFlow();
 
-  const shipping = 15.99;
-  const total = subtotal + shipping;
-
+  // Simple client-side validation
+  const isBasketEmpty = basket.length === 0;
+  const hasInvalidQuantities = basket.some(item => item.quantity <= 0);
+  const isDisabled = isBasketEmpty || hasInvalidQuantities || checkoutFlow.isProcessing;
 
   return (
     <>
       <h2 className="type-section-sub border-b border-secondary pb-4 mb-6">
         Basket Summary
       </h2>
+
+      {/* Simple status messages */}
+      {isBasketEmpty && (
+        <div className="mb-4 p-3 bg-gray-50 border border-gray-200 rounded-lg">
+          <p className="text-gray-800 text-sm">Your basket is empty</p>
+        </div>
+      )}
+
+      {hasInvalidQuantities && (
+        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+          <p className="text-red-800 text-sm">Some items have invalid quantities</p>
+        </div>
+      )}
 
       <div className="space-y-4">
         <div className="flex justify-between type-body">
@@ -32,26 +47,28 @@ export default function BasketSummary() {
 
         <div className="flex justify-between type-body">
           <div className="text-secondary-400">Shipping</div>
-          <Price value={shipping} variant="summary" />
+          <span className="text-green-600">FREE</span>
+        </div>
+
+        <div className="flex justify-between type-body">
+          <div className="text-secondary-400">Tax</div>
+          <Price value={subtotal * 0.2} variant="summary" />
         </div>
 
         <div className="border-t border-secondary pt-4" aria-live="polite">
           <div className="flex justify-between">
             <div className="type-section-sub">Total</div>
-            <Price value={total} variant="summary" />
+            <Price value={subtotal * 1.2} variant="summary" />
           </div>
           <div className="type-caption text-caption mt-1">Including VAT</div>
         </div>
       </div>
 
       <CheckoutPanel
-        state={preCheckout.state}
-        context={preCheckout.context}
-        checkout={preCheckout.checkout}
-        retry={preCheckout.retry}
-        acceptAndContinue={preCheckout.acceptAndContinue}
-        reset={preCheckout.reset}
-        isAccepting={false}
+        state={checkoutFlow.isProcessing ? 'processing' : (checkoutFlow.hasError ? 'idle' : 'idle')}
+        errorMessage={checkoutFlow.errorMessage}
+        checkout={checkoutFlow.startCheckout}
+        disabled={isDisabled}
       />
 
       <button

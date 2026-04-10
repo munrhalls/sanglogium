@@ -10,8 +10,8 @@ export function useSuccessHandler(
   onResetFromSuccess: (idempotencyKey: string | null) => void;
 } {
   const onSuccessEntry = (stripeUrl: string, watchdogRef: React.MutableRefObject<number | null>): void => {
-    // Redirect to Stripe checkout
-    window.location.assign(stripeUrl);
+    // Dispatch navigation event instead of direct navigation
+    dispatch({ type: "NAVIGATE_TO_STRIPE", payload: { stripeUrl } });
 
     // Start 5-second watchdog timer
     watchdogRef.current = window.setTimeout(() => {

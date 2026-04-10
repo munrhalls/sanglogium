@@ -6,4 +6,5 @@ export interface BasketItem {
   quantity: number;
   image: string;
   slug: string;
+  stripePriceId?: string;
 }

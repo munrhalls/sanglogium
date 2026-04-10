@@ -1,14 +1,10 @@
 "use client";
 
 import type { PreCheckoutEvent, DiscrepancyPayload } from "../../../../../store/preCheckout/preCheckoutTypes";
-import type { BasketPayload } from "../../../../../app/actions/checkout/validateBasket.types";
-import { useCheckoutAction } from "./useCheckoutAction";
 import { useBasketStore } from "../../../../../store/store";
 
 export function useAcceptDiscrepancies(
-  dispatch: (event: PreCheckoutEvent) => void,
-  executeValidation: ReturnType<typeof useCheckoutAction>["executeValidation"],
-  basketPayload: BasketPayload
+  dispatch: (event: PreCheckoutEvent) => void
 ): {
   acceptAndContinue: (discrepancy: DiscrepancyPayload,
                               idempotencyKey: string) => Promise<void>;
@@ -19,7 +15,7 @@ export function useAcceptDiscrepancies(
   ): Promise<void> => {
     if (discrepancy.type === "STRIPE_CONFIG") {
       // No mutation possible. Do not dispatch START_VALIDATION.
-      // Log warning. Button should have been hidden — this is a safety guard.
+      // Log warning. Button should have been hidden - this is a safety guard.
       console.warn("STRIPE_CONFIG discrepancy cannot be auto-accepted");
       return;
     }
@@ -54,10 +50,10 @@ export function useAcceptDiscrepancies(
       return;
     }
 
-    // Mutations succeeded. Now dispatch (new idempotency key generated inside machine).
+    // Mutations succeeded. Now dispatch ACCEPT_DISCREPANCIES_AND_RETRY
+    // The work trigger will automatically execute validation when state becomes PROCESSING
     const newKey = crypto.randomUUID();
-    dispatch({ type: "START_VALIDATION" });
-    executeValidation(basketPayload, newKey);
+    dispatch({ type: "ACCEPT_DISCREPANCIES_AND_RETRY", payload: { idempotencyKey: newKey } });
   };
 
   return { acceptAndContinue };
