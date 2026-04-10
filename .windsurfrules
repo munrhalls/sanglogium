@@ -120,6 +120,9 @@ After EVERY sprint, debug, or implementation:
 - **useQueryState:** ALWAYS add null checks - `useQueryState` returns undefined during hydration. Use `(filters || []).map()` pattern or destructure with defaults `const [filters = []] = useQueryState(...)`
 - **Playwright Performance:** ALWAYS use parallel workers, headless mode, no fixed waits. `workers: process.env.CI ? 2 : 4`, `headless: true`, NEVER `waitForTimeout`
 - **Validation:** ALWAYS check type AND content - `typeof field === "string" && field !== ""`. Empty strings pass type guards but are invalid data.
+- **AS-SIMPLE-AS-POSSIBLE:** If it takes more than 5 minutes to explain, it's too complex. If it needs more than one page to document, it's too complex. If tests are longer than feature code, it's too complex.
+- **Quick-Workflow:** For any feature at risk of over-complication, use /quick-workflow: UX flows (15min) -> Manual verification (15min) -> Simple architecture (15min) -> Guardrails (10min) -> Sprint template (10min).
+- **Human-First Sprint:** All sprints must follow: UX flows -> End-state overview -> Architecture contract -> Tiny scope contracts (UX slice + arch slice + human verification + minimal tests) -> Implement -> Verify immediately -> Next scope. No big phases, no end-only verification.
 
 ## Testing Framework Rules
 - **NEVER use Jest** - Jest is prohibited in this codebase

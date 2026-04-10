@@ -2,7 +2,7 @@
 
 **Purpose:** Searchable keyword → lesson mapping for pre-work retrieval.
 
-**Last Updated:** 2026-04-08
+**Last Updated:** 2026-04-09
 
 ## Keyword: contain
 | Lesson | Severity | Summary |
@@ -42,6 +42,137 @@
 | Lesson | Severity | Summary |
 |--------|----------|---------|
 | [patterns/bus-stop-debugging-methodology.md](patterns/bus-stop-debugging-methodology.md) | Critical | Check every data transfer point works before implementation |
+| [patterns/event-flow-logging.md](patterns/event-flow-logging.md) | High | Complete event flow tracing with expectation verification |
+
+---
+
+## Keyword: event-flow-logging
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/event-flow-logging.md](patterns/event-flow-logging.md) | High | Numbered story format for complete event flow verification |
+
+---
+
+## Keyword: expectation-verification
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/event-flow-logging.md](patterns/event-flow-logging.md) | High | True/false verification at each event flow step with discrepancy logging |
+
+---
+
+## Keyword: discrepancy-logging
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/event-flow-logging.md](patterns/event-flow-logging.md) | High | Log actual vs expected only when expectations fail |
+
+---
+
+## Keyword: complete-trace
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/bus-stop-debugging-methodology.md](patterns/bus-stop-debugging-methodology.md) | Critical | Map complete data flow before any implementation |
+| [patterns/event-flow-logging.md](patterns/event-flow-logging.md) | High | UI Event -> State -> Work -> Result -> State complete tracing |
+| [anti-patterns/implementation-first-debugging.md](anti-patterns/implementation-first-debugging.md) | Critical | Never implement before tracing complete flow |
+
+---
+
+## Keyword: event-driven-architecture
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/event-flow-logging.md](patterns/event-flow-logging.md) | High | Standardized logging for event-driven systems |
+
+---
+
+## Keyword: architecture-agnostic
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/architecture-agnostic-logging.md](patterns/architecture-agnostic-logging.md) | High | Universal logging system that works for any architecture type |
+
+---
+
+## Keyword: universal-flow-logging
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/architecture-agnostic-logging.md](patterns/architecture-agnostic-logging.md) | High | Architecture-agnostic logging with universal flow logger |
+
+---
+
+## Keyword: procedural-logging
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/architecture-agnostic-logging.md](patterns/architecture-agnostic-logging.md) | High | Sequential step logging for procedural architectures |
+
+---
+
+## Keyword: functional-logging
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/architecture-agnostic-logging.md](patterns/architecture-agnostic-logging.md) | High | Function composition logging for functional architectures |
+
+---
+
+## Keyword: pipeline-logging
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/architecture-agnostic-logging.md](patterns/architecture-agnostic-logging.md) | High | ETL/data pipeline logging with extract-transform-load tracing |
+
+---
+
+## Keyword: service-logging
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/architecture-agnostic-logging.md](patterns/architecture-agnostic-logging.md) | High | Service-oriented architecture logging with service call tracing |
+
+---
+
+## Keyword: object-logging
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/architecture-agnostic-logging.md](patterns/architecture-agnostic-logging.md) | High | Object-oriented architecture logging with method and instantiation tracing |
+
+---
+
+## Keyword: pattern-agnostic
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/architecture-agnostic-logging.md](patterns/architecture-agnostic-logging.md) | High | Pattern-agnostic logging that adapts to any programming paradigm |
+
+---
+
+## Keyword: false-positive-logging
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [anti-patterns/false-positive-logging.md](anti-patterns/false-positive-logging.md) | Critical | Never hardcode verification results - perform actual comparison in logging systems |
+
+---
+
+## Keyword: verification-honesty
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [anti-patterns/false-positive-logging.md](anti-patterns/false-positive-logging.md) | Critical | Logging systems must report actual verification results, not hardcoded "true" |
+
+---
+
+## Keyword: logging-integrity
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [anti-patterns/false-positive-logging.md](anti-patterns/false-positive-logging.md) | Critical | Maintain logging system integrity with real verification and discrepancy logging |
 
 ---
 
@@ -951,6 +1082,87 @@
 
 ---
 
+## Keyword: human-first-sprint
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/human-first-sprint-methodology.md](workflows/human-first-sprint-methodology.md) | Critical | 7-step methodology: UX flows -> End-state overview -> Architecture contract -> Tiny scopes -> Continuous verification -> Human-confidence tests -> Simplicity guardrails |
+
+---
+
+## Keyword: ux-flows
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/human-first-sprint-methodology.md](workflows/human-first-sprint-methodology.md) | Critical | Start every sprint with "user does X -> system shows Y -> user can do Z" before any code |
+
+---
+
+## Keyword: architecture-contracts
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/human-first-sprint-methodology.md](workflows/human-first-sprint-methodology.md) | Critical | Explicit event->state->side-effect->result event contracts prevent fatal vagueness |
+
+---
+
+## Keyword: continuous-verification
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/human-first-sprint-methodology.md](workflows/human-first-sprint-methodology.md) | Critical | Verify immediately after each scope contract, no big phases, no blind spots |
+
+---
+
+## Keyword: tiny-scopes
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/human-first-sprint-methodology.md](workflows/human-first-sprint-methodology.md) | Critical | Each scope contract: UX slice + arch slice + human verification + minimal tests, self-contained |
+
+---
+
+## Keyword: simplicity-guardrails
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/human-first-sprint-methodology.md](workflows/human-first-sprint-methodology.md) | Critical | "Is this the simplest possible way?" test before any code, tests, or concepts |
+
+---
+
+## Keyword: quick-workflow
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/quick-workflow-pattern.md](workflows/quick-workflow-pattern.md) | Critical | 5-step pattern (75min total) to prevent over-complication: UX flows -> Manual verification -> Architecture -> Guardrails -> Sprint template |
+
+---
+
+## Keyword: simplicity-contract
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/as-simple-as-possible-contract.md](patterns/as-simple-as-possible-contract.md) | Critical | 5-minute explanation rule, one-page documentation rule, test-length rule to prevent over-complication |
+
+---
+
+## Keyword: over-complication
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [workflows/quick-workflow-pattern.md](workflows/quick-workflow-pattern.md) | Critical | Use /quick-workflow for any feature at risk of over-complication |
+| [patterns/as-simple-as-possible-contract.md](patterns/as-simple-as-possible-contract.md) | Critical | AS-SIMPLE-AS-POSSIBLE contract prevents over-complication |
+
+---
+
+## Keyword: guardrails
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/as-simple-as-possible-contract.md](patterns/as-simple-as-possible-contract.md) | Critical | Guardrails: 5-minute rule, one-page rule, test-length rule |
+
+---
+
 ## Keyword: search-consistency
 
 | Lesson | Severity | Summary |
@@ -1204,6 +1416,64 @@
 | Lesson | Severity | Summary |
 |--------|----------|---------|
 | [patterns/stock-reservation-checkout.md](patterns/stock-reservation-checkout.md) | High | Use ifRevisionId and atomic patches for inventory operations |
+
+---
+
+## Keyword: rhythm
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [core/optimal-development-rhythm.md](core/optimal-development-rhythm.md) | Critical | Balance acceleration and pacing - signal density ÷ cycle time optimization |
+
+---
+
+## Keyword: pace
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [core/optimal-development-rhythm.md](core/optimal-development-rhythm.md) | Critical | When to slow down: schema changes, architecture, integrations, security, performance |
+
+---
+
+## Keyword: acceleration
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [core/optimal-development-rhythm.md](core/optimal-development-rhythm.md) | Critical | When to accelerate: clear flows, verified data, single-sentence scope, no dependencies |
+
+---
+
+## Keyword: tempo
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [core/optimal-development-rhythm.md](core/optimal-development-rhythm.md) | Critical | Development tempo optimization - avoid planning paralysis and verification deferral |
+
+---
+
+## Keyword: signal-density
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [core/optimal-development-rhythm.md](core/optimal-development-rhythm.md) | Critical | Core ground factor: signal density ÷ time cost - maximize load-bearing facts per token |
+| [prompting/signal-density-optimization.md](prompting/signal-density-optimization.md) | Critical | Opus token cost 10× reduction via /compress |
+
+---
+
+## Keyword: cycle-time
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [core/optimal-development-rhythm.md](core/optimal-development-rhythm.md) | Critical | Optimize cycle time while maintaining signal density - avoid 90min/12hr thrash |
+
+---
+
+## Keyword: throughput
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [core/optimal-development-rhythm.md](core/optimal-development-rhythm.md) | Critical | Maximize throughput via vertical slices, 15-min specs, continuous verification |
+| [workflows/velocity-aware-sprint-planning.md](workflows/velocity-aware-sprint-planning.md) | High | Human (not AI) became throughput limiter - serial gates, not parallel flow |
 
 ---
 

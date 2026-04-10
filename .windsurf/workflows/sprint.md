@@ -1,21 +1,25 @@
 ---
-description: Sprint planning with systematic scope contracts and sequenced DoDs — delegates execution to /implement, /build, /test
+description: Human-first sprint planning - starts with UX flows, enforces continuous verification, prevents over-complication
 ---
 
 # /Sprint Command Protocol
 
-**Role:** Sprint planning and orchestration. You design WHAT to build, WHEN to verify, and WHO executes. You do NOT execute — you delegate to `/implement`, `/build`, and `/test`.
+**Role:** Human-first sprint planning. You design from user experience, not code. You enforce simplicity, continuous verification, and explicit architecture contracts.
 
 **Output:** Comprehensive `.todo` sprint file in `_project/sprints/` with:
-- Scope contracts (max 10)
-- Sequenced DoDs per contract
-- Delegation commands for sub-workflows
-- Regression containment plan
+- UX flows (starting point)
+- End-state overview (one paragraph)
+- Architecture contract (explicit rules)
+- Tiny scope contracts (UX slice + arch slice + verification + tests)
+- Continuous verification checkpoints
+- Simplicity guardrails
 
-**Does NOT:**
-- Execute code changes (delegate to `/implement`)
-- Run tests (delegate to `/test`)
-- Build components (delegate to `/build`)
+**Core Rules (NEVER broken):**
+- Start with UX flows - "user does X -> system shows Y -> user can do Z"
+- Event -> State -> Side Effect -> Result Event flow
+- Human verification after EACH scope contract
+- Tests serve human confidence, not coverage
+- "Is this the simplest possible way?" guardrail
 
 ---
 
@@ -39,83 +43,103 @@ Before ANY planning, query `_project/lessons/INDEX.md` for relevant keywords:
 
 ---
 
-## PHASE 1: Research and Audit
+## PHASE 1: UX Flows First (MANDATORY - STARTING POINT)
 
-### Step 1: Read Context
-- `tailwind.config.ts` — design system tokens
-- `@/_project/core-building-pattern.md` — Pass/Layer sequencing
-- Current implementation files (read-only)
-- Audit reports (if available)
-
-### Step 2: End-State Delineation
-Create ASCII spatial maps:
+### Step 1: Define All User Interactions
+List every user action that touches the feature:
 ```
-Desktop (1280px):
-[NAV HEADER — full width]
-[PAGE CONTENT — max-w-content, mx-auto, px-8]
-  [AREA A — width, behavior]
-  [AREA B — width, behavior]
-
-Mobile (375px):
-[SAME AREAS — stacked/altered behavior]
+1. [Current State]: user does X -> system shows Y -> user can do Z
+2. [Current State]: user does A -> system shows B -> user can do C
+...
 ```
 
-### Step 3: Gap Analysis
-| ID | Component | Current | Target | Severity |
-|----|-----------|---------|--------|----------|
-| G-01 | [Name] | [Current] | [Target] | High |
+### Step 2: End-State Overview
+Write ONE paragraph describing target experience:
+- What stays identical for the user
+- What becomes simpler or faster
+- No technical details
 
 ---
 
-## PHASE 2: Scope Contract Generation
+## PHASE 2: Architecture Contract (MANDATORY)
+
+### Event-State-Server Flow
+Define explicit contracts:
+```
+Event -> State Update FIRST -> Side Effects -> Result Event -> New State
+```
+
+### Three Readable Contracts
+1. **Events + Payloads** - All event shapes
+2. **Transition Table** - State to state mapping
+3. **Context Shape** - Data carried by state machine
+
+### Simplicity Guardrail
+"If it can be done with fewer lines or no new abstraction, do it that way"
+
+---
+
+## PHASE 3: Tiny Scope Contracts (MAX 5)
 
 ### Scope Contract Template
 
 ```markdown
-## Scope Contract N: [Component] — [Gap Coverage]
+## Scope Contract N: [Feature] - [UX Impact]
 
-### Target State
-[What done looks like]
+### UX Slice (2-3 bullets max)
+- User does X -> system shows Y -> user can do Z
+- ...
 
-### DoD (Sequenced)
-- [ ] Pass 1: Skeleton (semantic HTML, debug borders)
-- [ ] Pass 2: Data (real data, no styling)
-- [ ] Pass 3 — Layer 2: Desktop layout (1280px)
-- [ ] Pass 3 — Layer 3: Desktop surface (1280px)
-- [ ] Pass 3 — Layer 4: Desktop interaction (1280px)
-- [ ] Pass 3 — Layer 2: Mobile layout (375px)
-- [ ] Pass 3 — Layer 3: Mobile surface (375px)
-- [ ] Pass 3 — Layer 4: Mobile interaction (375px)
+### Architecture Slice
+- How this plugs into state machine
+- Event(s) it handles
+- State(s) it affects
 
-### Delegation
-**Execution:** `/implement [scope from this contract]`
-**Build:** `/build [COMPONENT] [PASS] [LAYER] [BREAKPOINT]` per DoD
-**Verify:** `/test` after each Pass 3 Layer completion
+### Human Verification Checklist (<5 minutes)
+- [ ] Check [specific observable behavior]
+- [ ] Verify [specific UI state]
+- [ ] Confirm [specific user action outcome]
+
+### Minimal Tests (ONLY if needed for human confidence)
+- Test [specific user behavior]
+- Test [specific edge case]
 ```
 
-### Sequencing Rules
-- **Pass 1:** All components skeleton (no styling, no logic)
-- **Pass 2:** All components data (real data flows)
-- **Pass 3:** One component at a time, Layer 1→4, desktop then mobile
+### Scope Rules
+- Each contract is self-contained
+- No touching other contracts' code
+- Verify immediately after implementation
 
 ---
 
-## PHASE 3: Regression Containment
+## PHASE 4: Continuous Verification (MANDATORY)
 
-### Identify at Risk
-| File | Risk | Mitigation |
-|------|------|------------|
-| `[file]` | [description] | [test/hook] |
+### Per Scope Contract Workflow
+1. Implement scope contract
+2. Run human verification checklist IMMEDIATELY
+3. Run minimal tests (if any)
+4. Only then: move to next scope contract
 
-### Pre-Sprint Baseline
-**Action:** Invoke `/test` for baseline capture
-- Scope: Current state before sprint
-- DoDs: Existing functionality
-- Output: BASELINE CAPTURED
+### No Big Phases
+- No "implement all then test"
+- No separate test phases
+- No waiting until end for verification
 
 ---
 
-## PHASE 4: Output Sprint File
+## PHASE 5: Final Human Check
+
+### End-to-End Verification
+After all scope contracts:
+- Verify against original UX flows
+- Confirm end-state overview achieved
+- Only then is sprint complete
+
+---
+
+---
+
+## PHASE 6: Sprint File Output
 
 ### File Structure
 ```
@@ -124,98 +148,83 @@ _project/sprints/
 ```
 
 ### Content Sections
-1. **Sprint Metadata** — Date, target state, scope lock rules
-2. **Scope Contracts** — Numbered SC1, SC2... with DoDs
-3. **RWD Strategy** — Breakpoint behavior per component
-4. **Files at Risk** — Regression mitigation
-5. **Delegation Commands** — /implement, /build, /test per contract
-6. **Evidence Log** — Placeholder for /test results (filled during execution)
+1. **UX Flows** - All user interactions (starting point)
+2. **End-State Overview** - One paragraph target description
+3. **Architecture Contract** - Event-state-server rules
+4. **Scope Contracts** - Tiny, self-contained (max 5)
+5. **Verification Checkpoints** - Per scope contract
+6. **Simplicity Guardrails** - "Is this the simplest possible way?"
 
 ### Scope Lock Rules (Mandatory)
-- **NO** globals.css changes
-- **NO** homepage changes (unless in scope)
-- **NO** data structure changes
-- **NO** improvements outside scope contracts
+- **NO** changes outside scope contracts
+- **NO** adding complexity without necessity
+- **NO** skipping human verification
+- **NO** tests that don't serve human confidence
 
 ---
 
-## PHASE 5: Execution Delegation (During Sprint)
+## PHASE 7: Execution Protocol
 
-### Per Scope Contract Execution
-
+### Per Scope Contract
 ```
-FOR EACH Scope Contract:
-  1. User: /implement "[scope contract description]"
-     → /implement executes with /test per DoD
-
-  2. /implement invokes /build for Pass/Layer execution
-
-  3. /implement invokes /test after each DoD completion
-     → Evidence dashboard generated
-     → Blocking: Must PASS before next DoD
-
-  4. Scope Contract marked complete when all DoDs pass /test
+1. Implement scope contract
+2. Run human verification checklist IMMEDIATELY
+3. Run minimal tests (if any)
+4. Confirm: "Is this the simplest possible way?"
+5. Only then: move to next scope contract
 ```
 
-### Final Verification
-**Action:** Invoke `/test` for full sprint
-- Scope: All scope contracts
-- DoDs: All sprint DoDs
-- Output: FINAL EVIDENCE DASHBOARD
-
-**Sprint Lock Criteria:**
-- All specification tests pass (100%)
-- All critical regressions contained
-- Build gate passed
+### Delegation Commands
+- **Implementation:** `/implement [scope contract description]`
+- **Verification:** Human checklist + minimal tests
+- **Final Check:** End-to-end verification against UX flows
 
 ---
 
-## PHASE 6: Post-Sprint /learn (MANDATORY)
+## PHASE 8: Post-Sprint /learn (MANDATORY)
 
-**Trigger:** After sprint lock
+**Trigger:** After final human check
 
 **Action:** Execute `/learn` protocol
 - Extract lessons from sprint experience
-- Codify to `_project/lessons/`
-- Update INDEX.md
-- Update .windsurfrules if universal constraint discovered
+- Did human-first approach prevent over-complication?
+- Did continuous verification catch issues early?
+- Were simplicity guardrails effective?
 
 ---
 
 ## Constraint Rules
 
-- **NO** prose descriptions without ASCII spatial maps
-- **NO** gaps without G-XX IDs
-- **NO** RWD without breakpoint values (1280px, 375px)
-- **NO** DoD without corresponding /test delegation
-- **YES** max 10 scope contracts per sprint
-- **YES** /implement delegation per scope contract
-- **YES** /test invocation after each DoD
-- **YES** /learn execution post-sprint
+- **NO** starting from code or architecture
+- **NO** big phases or end-only verification
+- **NO** unit/integration/e2e test splits
+- **NO** tests that exceed human readability
+- **YES** UX flows first always
+- **YES** tiny scope contracts only
+- **YES** human verification after each scope
+- **YES** "Is this the simplest possible way?" check
 
 ---
 
 ## Integration Map
 
-| /Sprint Output | Delegated To | When |
-|----------------|--------------|------|
-| Scope Contract N | /implement | Execution phase |
-| DoD: Pass 1 Skeleton | /implement | Per DoD |
-| DoD: Pass 2 Data | /implement | Per DoD |
-| DoD: Pass 3 Layer X | /build + /test | Per Layer |
-| Baseline capture | /test | Sprint start |
-| Final verification | /test | Sprint end |
-| Learnings capture | /learn | Sprint end |
+| Phase | Output | When |
+|-------|--------|------|
+| UX Flows | User interaction list | Start |
+| Architecture | Event-state contracts | Before code |
+| Scope Contract | Implementation | Per contract |
+| Verification | Human checklist | After each scope |
+| Final Check | End-to-end confirmation | End |
+| Learnings | /learn execution | After final check |
 
 ---
 
-## Verification Commands (For Sprint File)
+## Fatal Flaws This Prevents
 
-```bash
-# Validate sprint structure
-npm run build
-
-# Verify no regressions (baseline vs current)
-npx playwright test --grep "regression"
-```
+1. **Over-complication** - Simplicity guardrails
+2. **No human verification** - Continuous checkpoints
+3. **Vague architecture** - Explicit contracts
+4. **Cargo cult testing** - Tests serve human confidence
+5. **Big verification windows** - Verify after each scope
+6. **Starting from code** - UX flows first
 ```
