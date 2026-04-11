@@ -8,6 +8,14 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ["isomorphic-dompurify"],
   transpilePackages: ["@sanity/ui", "@sanity/icons", "next-sanity"],
   trailingSlash: false,
+  // Suppress Next.js image warnings in development
+  ...(process.env.NODE_ENV === 'development' && {
+    logging: {
+      fetches: {
+        fullUrl: false,
+      },
+    },
+  }),
   experimental: {
     optimizeCss: true,
     inlineCss: true,
