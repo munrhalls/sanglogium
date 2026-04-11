@@ -206,6 +206,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
         brand->{ _id, name, slug },
         displayPrice,
         stock,
+        stripePriceId,
         "slug": slug.current,
         image { asset->{url} }
       }
@@ -222,6 +223,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
         brand->{ _id, name, slug },
         displayPrice,
         stock,
+        stripePriceId,
         "slug": slug.current,
         image { asset->{url} },
         gallery[] { asset->{url} }
@@ -239,6 +241,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
         brand->{ _id, name, slug },
         displayPrice,
         stock,
+        stripePriceId,
         "slug": slug.current,
         image { asset->{url} },
         gallery[] { asset->{url} }
@@ -256,6 +259,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
         brand->{ _id, name, slug },
         displayPrice,
         stock,
+        stripePriceId,
         "slug": slug.current,
         image { asset->{url} },
         gallery[] { asset->{url} }
@@ -269,6 +273,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
       brand->{ _id, name, slug },
       displayPrice,
       stock,
+      stripePriceId,
       "slug": slug.current,
       "imageUrl": image.asset->url,
       image { asset->{url} }
@@ -285,6 +290,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
         brand->{ _id, name, slug },
         displayPrice,
         stock,
+        stripePriceId,
         "slug": slug.current,
         image { asset->{url} },
         gallery[] { asset->{url} }
@@ -298,6 +304,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
       brand->{ _id, name, slug },
       displayPrice,
       stock,
+      stripePriceId,
       "slug": slug.current,
       image { asset->{url} }
     },
@@ -309,6 +316,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
       brand->{ _id, name, slug },
       displayPrice,
       stock,
+      stripePriceId,
       "slug": slug.current,
       "imageUrl": image.asset->url,
       image { asset->{url} }
@@ -321,6 +329,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
       brand->{ _id, name, slug },
       displayPrice,
       stock,
+      stripePriceId,
       "slug": slug.current,
       "imageUrl": image.asset->url,
       image { asset->{url} }
