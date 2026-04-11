@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { PreCheckoutMachine } from "@/store/preCheckout/preCheckoutMachine";
 import type { CheckoutState, CheckoutContext } from "@/store/preCheckout/preCheckoutTypes";
 import { useRouter } from "next/navigation";
@@ -23,10 +23,10 @@ export function usePreCheckout(): {
   const [context, setContext] = useState(machine.getContext());
 
   // Update local state when machine state changes
-  const updateState = () => {
+  const updateState = useCallback(() => {
     setState(machine.getState());
     setContext(machine.getContext());
-  };
+  }, [machine]);
 
   // Navigate to address page when checkout click completes
   useEffect(() => {
@@ -36,30 +36,30 @@ export function usePreCheckout(): {
 
       // Reset to idle for address slice
       machine.setAddressSubmit();
-      updateState();
+      setTimeout(updateState, 0);
 
       // Navigate to address page
       router.push('/checkout/address');
     }
-  }, [state.status, state.idempotencyKey, router]);
+  }, [state.status, state.idempotencyKey, router, machine, updateState]);
 
   // Public API methods
   const checkout = () => {
     console.log('Checkout button clicked');
     machine.checkoutClick();
-    updateState();
+    setTimeout(updateState, 0);
   };
 
   const retry = () => {
     console.log('Retry checkout');
     machine.checkoutClick();
-    updateState();
+    setTimeout(updateState, 0);
   };
 
   const reset = () => {
     console.log('Reset checkout state');
     machine.reset();
-    updateState();
+    setTimeout(updateState, 0);
   };
 
   const acceptAndContinue = () => {
