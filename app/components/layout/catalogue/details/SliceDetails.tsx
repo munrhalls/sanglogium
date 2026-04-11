@@ -13,7 +13,8 @@ export default function SliceDetails({ data }: SliceDetailsProps) {
       className={cn(
         "relative h-full max-h-full w-full max-w-screen-xl",
         "overflow-hidden",
-        "lg-desktop:landscape:w-2/3"
+        "lg-desktop:landscape:w-2/3",
+        "min-h-[1px]"
       )}
     >
       <DetailWatermark imageUrl={data.imageUrl} />

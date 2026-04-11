@@ -8,8 +8,10 @@ export default function DetailWatermark({ imageUrl }: { imageUrl: string }) {
         "absolute bottom-0 left-0 z-0",
         "pointer-events-none overflow-hidden",
         "opacity-[0.05] grayscale",
-        "h-full min-h-full w-full"
+        // "h-full w-full",
+        "inset-0"
       )}
+      style={{ height: '100%' }}
     >
       <div
         className={cn(
@@ -23,6 +25,12 @@ export default function DetailWatermark({ imageUrl }: { imageUrl: string }) {
           fill
           className={cn("object-contain object-center rounded-none", "sm:object-bottom")}
           priority
+          sizes="(max-width: 768px) 100vw, 100vw"
+          style={{
+            position: 'absolute',
+            height: '100%',
+            width: '100%'
+          }}
         />
       </div>
     </div>
