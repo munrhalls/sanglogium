@@ -29,11 +29,7 @@ vi.mock('@stripe/stripe-js', () => ({
   }),
 }));
 
-// Mock Sanity client
-vi.mock('@/sanity/lib/client', () => ({
-  sanityFetch: vi.fn(),
-}));
-
+// Mock only checkout client, keep sanity client for real queries
 vi.mock('@/sanity/lib/checkoutClient', () => ({
   checkoutClient: {
     fetch: vi.fn(),
