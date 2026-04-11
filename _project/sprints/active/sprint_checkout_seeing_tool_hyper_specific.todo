@@ -1,0 +1,239 @@
+# Sprint: Checkout Seeing Tool - Development Only Data Integrity Visibility
+# Date: 2026-04-11 | Source: Research document + hyper-specific protocol
+# Purpose: Development-only seeing tool for checkout flow data integrity
+# Constraint: ZERO production interference, simple, robust, 100% trustworthy
+
+# PHASE 0: Pre-Work Lessons Applied
+# Keywords: ["data-integrity", "event-logging", "redis", "checkout-flow", "debugging"]
+# Critical Lessons Applied:
+# - Directness Principle: No mocking core functionality
+# - Human-First Verification: Manual verification before tests
+# - Build Time Destruction: NO npm run build during development
+# - Live Console Debugging: Use console.log for data flow visibility
+
+# PHASE 1: UX Flows First - DEVELOPER EXPERIENCE
+# 1. Developer runs checkout flow locally
+#   -> System logs ALL events to Redis list
+#   -> Developer can query entire flow by idempotencyKey
+#   -> Developer sees data integrity violations in real-time
+
+# 2. Developer opens seeing tool UI
+#   -> System shows all checkout flows in progress
+#   -> Developer clicks flow to see complete event timeline
+#   -> System highlights data mutations and integrity checks
+
+# 3. Developer investigates issue
+#   -> System shows before/after states for each event
+#   -> System shows correlation between events across Redis/Stripe/Sanity
+#   -> Developer can replay flow to understand corruption point
+
+# End-State Overview:
+# Developers can see entire checkout flow event stream with all data mutations in a single view,
+# enabling immediate detection of data integrity issues without affecting production.
+# The tool runs only in development and provides 100% trustworthy visibility into
+# stock reservations, payment intents, and session state.
+
+# PHASE 2: Architecture Contract
+
+# Event-State-Server Flow:
+# Event -> Log to Redis -> Update Integrity Monitor -> Notify Dev UI -> New State
+
+# Three Readable Contracts:
+
+# 1. Events + Payloads
+interface CheckoutEvent {
+  timestamp: string;
+  correlationId: string;
+  slice: "basket-address" | "address-submit" | "payment-init" | "payment-submit" | "webhook";
+  event: string;
+  data: any;
+  outcome: "success" | "error";
+  error?: any;
+}
+
+# 2. Transition Table
+# Any checkout action -> Log event -> Check integrity -> Update UI
+
+# 3. Context Shape
+interface SeeingToolState {
+  activeFlows: Map<string, CheckoutEvent[]>;
+  integrityViolations: Array<{
+    correlationId: string;
+    type: string;
+    description: string;
+    timestamp: string;
+  }>;
+}
+
+# Simplicity Guardrail:
+# "If it can be done with Redis list + console.log, do it that way"
+
+# PHASE 3: Tiny Scope Contracts (MAX 5)
+
+## Scope Contract 1: Event Stream Logger
+### UX Slice
+- Developer runs checkout flow -> events logged to Redis -> developer can query by idempotencyKey
+
+### Architecture Slice
+- Middleware on checkout actions logs structured events
+- Uses existing Redis infrastructure
+- No performance impact on production
+
+### Human Verification Checklist (<5 minutes)
+- [ ] Run checkout flow with test product
+- [ ] Check Redis list contains events
+- [ ] Verify correlationId matches idempotencyKey
+- [ ] Confirm events are queryable by correlationId
+
+### Minimal Tests
+- Test event logging format consistency
+- Test Redis list append operation
+
+## Scope Contract 2: Data Integrity Monitor
+### UX Slice
+- Developer runs flow -> integrity checks run -> violations logged immediately
+
+### Architecture Slice
+- Monitors Redis hash consistency
+- Validates stock reservation atomicity
+- Checks JSON reservation format
+- Runs periodic checksum verification
+
+### Human Verification Checklist (<5 minutes)
+- [ ] Trigger stock reservation
+- [ ] Verify integrity check passes
+- [ ] Force corruption (test) -> violation logged
+- [ ] Check violation appears in UI
+
+### Minimal Tests
+- Test integrity check on valid data
+- Test violation detection on corrupted data
+
+## Scope Contract 3: Development UI Interface
+### UX Slice
+- Developer opens /dev/seeing-tool -> sees active flows -> clicks flow to see timeline
+
+### Architecture Slice
+- Simple Next.js page (development only)
+- Reads from Redis event list
+- Shows events grouped by correlationId
+- Highlights integrity violations
+
+### Human Verification Checklist (<5 minutes)
+- [ ] Navigate to /dev/seeing-tool
+- [ ] Verify page loads only in development
+- [ ] Start checkout flow -> appears in UI
+- [ ] Click flow -> see event timeline
+
+### Minimal Tests
+- Test UI renders events correctly
+- Test development-only route protection
+
+## Scope Contract 4: Event Query Interface
+### UX Slice
+- Developer queries by idempotencyKey -> sees complete flow -> can filter by slice
+
+### Architecture Slice
+- API endpoint: GET /dev/seeing-tool/events?idempotencyKey=X
+- Optional filter: ?slice=address-submit
+- Returns structured event array
+
+### Human Verification Checklist (<5 minutes)
+- [ ] Call API with valid idempotencyKey
+- [ ] Verify response contains all events
+- [ ] Test slice filter returns subset
+- [ ] Test invalid key returns empty array
+
+### Minimal Tests
+- Test API response format
+- Test slice filtering logic
+
+## Scope Contract 5: Integrity Violation Alerts
+### UX Slice
+- Integrity violation detected -> logged to Redis -> UI shows alert
+
+### Architecture Slice
+- Violation logging to separate Redis list
+- Real-time updates in UI via polling
+- Clear violation descriptions
+
+### Human Verification Checklist (<5 minutes)
+- [ ] Trigger known violation
+- [ ] Verify violation logged
+- [ ] Check UI shows alert
+- [ ] Confirm alert includes correlationId
+
+### Minimal Tests
+- Test violation logging
+- Test UI alert display
+
+# PHASE 4: Continuous Verification
+
+### Per Scope Contract Workflow
+1. Implement scope contract
+2. Run human verification checklist IMMEDIATELY
+3. Run minimal tests (if any)
+4. Only then: move to next scope contract
+
+# PHASE 5: Final Human Check
+
+### End-to-End Verification
+- [ ] Complete full checkout flow
+- [ ] Verify all events logged
+- [ ] Check integrity monitor passes
+- [ ] Confirm UI shows complete timeline
+- [ ] Test query interface returns correct events
+- [ ] Verify violations detected and shown
+
+# PHASE 6: Scope Lock Rules
+
+### DO NOT TOUCH:
+- Production checkout flow (app/(store)/checkout/*)
+- Stripe integration (lib/stripe.ts)
+- Sanity client configuration
+- Redis production keys
+- Any user-facing checkout components
+
+### ONLY MODIFY:
+- Development-only routes (/dev/*)
+- Event logging middleware
+- Integrity monitoring functions
+- Development UI components
+
+### ZERO PRODUCTION INTERFERENCE:
+- All new code behind dev-only checks
+- No performance impact on production
+- No production database writes
+- No user-facing changes
+
+# PHASE 7: Sprint Lock Criteria
+
+### ALL must be GREEN before completion:
+[ ] L1. Event logger captures all checkout events
+[ ] L2. Integrity monitor detects violations
+[ ] L3. Development UI shows active flows
+[ ] L4. Query interface returns correct events
+[ ] L5. Violation alerts appear in UI
+[ ] L6. Zero production interference verified
+[ ] L7. Development-only route protection works
+[ ] L8. Redis list operations performant
+[ ] L9. Event format consistent across slices
+[ ] L10. Manual verification of complete flow visibility
+
+# PHASE 8: Implementation Priority
+
+### Execution Order:
+1. Event Stream Logger (foundation)
+2. Data Integrity Monitor (core value)
+3. Development UI Interface (visibility)
+4. Event Query Interface (access)
+5. Integrity Violation Alerts (completion)
+
+# PHASE 9: Success Definition
+
+### Sprint Complete When:
+- Developer can run checkout flow and see ALL events in single view
+- Data integrity violations are detected immediately
+- Tool works only in development (zero production impact)
+- Implementation is simple and robust (Redis + console.log pattern)
+- 100% trustworthy visibility into checkout data integrity
