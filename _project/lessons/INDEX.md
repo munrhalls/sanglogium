@@ -16,6 +16,15 @@
 | Lesson | Severity | Summary |
 |--------|----------|---------|
 | [patterns/bus-stop-debugging-methodology.md](patterns/bus-stop-debugging-methodology.md) | Critical | Trace end-to-end → verify each bus stop → isolate broken stop → fix |
+| [.windsurf/workflows/trace.md](../../.windsurf/workflows/trace.md) | Critical | /trace command - systematic bus stop debugging with expected results |
+
+---
+
+## Keyword: trace
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [.windsurf/workflows/trace.md](../../.windsurf/workflows/trace.md) | Critical | /trace command - execute flow trace with expectations at each bus stop |
 
 ---
 
