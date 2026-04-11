@@ -13,6 +13,7 @@ export default function PaymentPage() {
 
   const [sessionId, setSessionId] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
+  const [amountPln, setAmountPln] = useState<number>(0);
 
   useEffect(() => {
     const loadPaymentData = async () => {
@@ -42,6 +43,9 @@ export default function PaymentPage() {
         reservationId: guestSession.reservationId,
         expiresAt: guestSession.expiresAt
       });
+
+      // Store amountPln for payment button display
+      setAmountPln(guestSession.amountPln || 0);
 
       setIsLoading(false);
     };
@@ -81,6 +85,7 @@ export default function PaymentPage() {
           clientSecret={checkout.clientSecret}
           reservationId={checkout.reservationId}
           expiresAt={checkout.expiresAt}
+          amountPln={amountPln}
         />
       </div>
     </div>

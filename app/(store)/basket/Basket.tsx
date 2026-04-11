@@ -5,14 +5,12 @@ import Link from "next/link";
 import { useBasketStore } from "@/store/store";
 import BasketControls from "@/app/components/features/basket/BasketControls";
 import { Price } from "@/app/components/ui/Price";
-import { usePreCheckout } from "@/app/components/features/basket/checkout/usePreCheckout";
-
 export default function Basket() {
   const basket = useBasketStore((s) => s.basket);
   const removeItem = useBasketStore((s) => s.removeItem);
   const [removingIds, setRemovingIds] = useState<Set<string>>(new Set());
-  const { state: checkoutState } = usePreCheckout();
-  const isBasketLocked = checkoutState !== "IDLE";
+  // Basket is no longer locked by old checkout flow
+  const isBasketLocked = false;
 
   const handleRemoveStart = useCallback((id: string) => {
     setRemovingIds((prev) => new Set(prev).add(id));
