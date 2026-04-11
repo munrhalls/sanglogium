@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { headers } from 'next/headers';
-import stripe from '@/lib/stripe';
+import { stripe } from '@/lib/stripe';
 import { Redis } from '@upstash/redis';
-import { createClient } from '@/sanity/lib/client';
+import { client } from '@/sanity/lib/client';
 
 // Redis client
 const redis = new Redis({
@@ -11,7 +11,7 @@ const redis = new Redis({
 });
 
 // Sanity client
-const sanityClient = createClient();
+const sanityClient = client;
 
 // Store processed event IDs to prevent duplicate processing
 async function isEventProcessed(eventId: string): Promise<boolean> {
@@ -35,22 +35,26 @@ async function commitReservation(reservationId: string, paymentIntentId: string)
     }
 
     // Parse reservation data
-    const [productId, quantity] = reservationData.split(':');
-    
+    let items: Array<{ productId: string; quantity: number }>;
+    try {
+      items = JSON.parse(reservationData as string);
+    } catch {
+      const [pid, qty] = (reservationData as string).split(':');
+      items = [{ productId: pid, quantity: parseInt(qty) }];
+    }
+
     // Create order record in Sanity
     const order = await sanityClient.create({
       _type: 'order',
       paymentIntentId,
       reservationId,
       status: 'paid',
-      items: [{
+      items: items.map(item => ({
         _type: 'orderItem',
-        product: {
-          _type: 'reference',
-          _ref: productId
-        },
-        quantity: parseInt(quantity)
-      }],
+        _key: item.productId,
+        product: { _type: 'reference', _ref: item.productId },
+        quantity: item.quantity,
+      })),
       createdAt: new Date().toISOString(),
       paidAt: new Date().toISOString()
     });
@@ -59,7 +63,7 @@ async function commitReservation(reservationId: string, paymentIntentId: string)
 
     // Update stock to permanently remove (already reserved)
     // Stock was already decremented during reservation, so we just need to ensure it stays that way
-    
+
     // Send confirmation email (implementation would go here)
     console.log('Confirmation email sent for order:', order._id);
 
@@ -80,12 +84,22 @@ async function releaseReservation(reservationId: string) {
     if (!reservationData) return;
 
     // Parse and restore stock
-    const [productId, quantity] = reservationData.split(':');
-    await redis.hincrby('product_stock', productId, parseInt(quantity));
-    
+    let items: Array<{ productId: string; quantity: number }>;
+    try {
+      items = JSON.parse(reservationData as string);
+    } catch {
+      const [pid, qty] = (reservationData as string).split(':');
+      items = [{ productId: pid, quantity: parseInt(qty) }];
+    }
+    for (const item of items) {
+      if (item.productId && item.quantity) {
+        await redis.hincrby('product_stock', item.productId, item.quantity);
+      }
+    }
+
     // Remove reservation
     await redis.hdel('reservations', reservationId);
-    
+
     console.log('Stock released for reservation:', reservationId);
   } catch (error) {
     console.error('Release reservation error:', error);
@@ -100,7 +114,7 @@ async function updateGuestSession(sessionId: string, updates: any) {
 
     const sessionData = JSON.parse(session);
     Object.assign(sessionData, updates);
-    
+
     await redis.setex(
       `guest_session:${sessionId}`,
       15 * 60, // 15 minutes
@@ -113,7 +127,7 @@ async function updateGuestSession(sessionId: string, updates: any) {
 
 export async function POST(request: NextRequest) {
   const body = await request.text();
-  const signature = headers().get('stripe-signature');
+  const signature = (await headers()).get('stripe-signature');
 
   if (!signature) {
     return NextResponse.json({ error: 'Missing Stripe signature' }, { status: 400 });
@@ -143,31 +157,31 @@ export async function POST(request: NextRequest) {
     switch (event.type) {
       case 'payment_intent.succeeded':
         const paymentIntent = event.data.object;
-        
+
         // Commit reservation (mark as permanent in DB)
         await commitReservation(
           paymentIntent.metadata.reservationId,
           paymentIntent.id
         );
-        
+
         // Create order record
         // Already done in commitReservation
-        
+
         // Send confirmation email
         // Already done in commitReservation
-        
+
         // Release idempotency cache (optional - keeps for replay safety)
         // Already handled in commitReservation
-        
+
         console.log('Payment succeeded:', paymentIntent.id);
         break;
 
       case 'payment_intent.payment_failed':
         const failedPaymentIntent = event.data.object;
-        
+
         // Release Redis stock reservation
         await releaseReservation(failedPaymentIntent.metadata.reservationId);
-        
+
         // Update guest session: clear paymentIntentId
         if (failedPaymentIntent.metadata.sessionId) {
           await updateGuestSession(failedPaymentIntent.metadata.sessionId, {
@@ -175,16 +189,16 @@ export async function POST(request: NextRequest) {
             status: 'payment_failed'
           });
         }
-        
+
         console.log('Payment failed:', failedPaymentIntent.id);
         break;
 
       case 'payment_intent.canceled':
         const canceledPaymentIntent = event.data.object;
-        
+
         // Release Redis stock reservation
         await releaseReservation(canceledPaymentIntent.metadata.reservationId);
-        
+
         console.log('Payment canceled:', canceledPaymentIntent.id);
         break;
 
