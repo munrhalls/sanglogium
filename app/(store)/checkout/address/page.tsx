@@ -1,67 +1,33 @@
-'use client';
+import { redirect } from 'next/navigation';
+import { Suspense } from 'react';
+import AddressFormClient from './AddressFormClient';
+import Loader from '@/app/components/common/Loader';
 
-import { useState, useEffect } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
-import AddressForm from '@/components/checkout/AddressForm';
-import { useBasketStore } from '@/store/store';
+interface AddressPageProps {
+  searchParams: {
+    sessionId?: string;
+    idempotencyKey?: string;
+  };
+}
 
-export default function AddressPage() {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const basket = useBasketStore((s) => s.basket);
+export default function AddressPage({ searchParams }: AddressPageProps) {
+  // Get parameters from URL
+  const sessionId = searchParams.sessionId;
+  const idempotencyKey = searchParams.idempotencyKey;
 
-  const [sessionId, setSessionId] = useState<string>('');
-  const [idempotencyKey, setIdempotencyKey] = useState<string>('');
-
-  useEffect(() => {
-    // Get parameters from URL
-    const sessionIdParam = searchParams.get('sessionId');
-    const idempotencyKeyParam = searchParams.get('idempotencyKey');
-
-    if (!sessionIdParam || !idempotencyKeyParam) {
-      // Missing required parameters, redirect to basket
-      router.push('/basket');
-      return;
-    }
-
-    setSessionId(sessionIdParam);
-    setIdempotencyKey(idempotencyKeyParam);
-  }, [searchParams, router]);
-
-  // Prepare basket data for address form - filter out items without stripePriceId
-  const basketData = basket
-    .filter(item => item.stripePriceId) // Only include items with stripePriceId
-    .map(item => ({
-      _id: item._id,
-      quantity: item.quantity,
-      stripePriceId: item.stripePriceId!
-    }));
-
+  // Validate required parameters
   if (!sessionId || !idempotencyKey) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-      </div>
-    );
-  }
-
-  // Redirect to basket if empty
-  if (basketData.length === 0) {
-    router.push('/basket');
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-      </div>
-    );
+    redirect('/basket');
   }
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <AddressForm
-        sessionId={sessionId}
-        idempotencyKey={idempotencyKey}
-        basketData={basketData}
-      />
+      <Suspense fallback={<Loader />}>
+        <AddressFormClient
+          sessionId={sessionId}
+          idempotencyKey={idempotencyKey}
+        />
+      </Suspense>
     </div>
   );
 }
