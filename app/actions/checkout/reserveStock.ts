@@ -5,6 +5,8 @@ import { client } from '@/sanity/lib/client';
 import { stripe } from '@/lib/stripe';
 import { Redis } from '@upstash/redis';
 import { randomUUID } from 'crypto';
+import { logCheckoutEvent } from '@/lib/dev/event-logger';
+import { checkStockReservationIntegrity, checkStockLevels } from '@/lib/dev/integrity-monitor';
 
 // Redis client for stock reservations
 const redis = new Redis({
@@ -70,6 +72,15 @@ return {ok = "RESERVED", stock}
 
 export async function reserveStock(request: ReserveStockRequest): Promise<ReserveStockResponse> {
   try {
+    // Log start of address submission
+    await logCheckoutEvent({
+      correlationId: request.idempotencyKey,
+      slice: 'address-submit',
+      event: 'RESERVE_STOCK_START',
+      data: { sessionId: request.sessionId, itemCount: request.basketData.length },
+      outcome: 'success'
+    });
+
     // Validate environment variables
     if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
       throw new Error('Redis configuration missing');
@@ -140,6 +151,21 @@ export async function reserveStock(request: ReserveStockRequest): Promise<Reserv
     await redis.hset('reservations', reservationId, JSON.stringify(reservationItems));
     await redis.expire('reservations', ttl);
 
+    // Log successful stock reservation
+    await logCheckoutEvent({
+      correlationId: request.idempotencyKey,
+      slice: 'address-submit',
+      event: 'STOCK_RESERVED',
+      data: { reservationId, items: reservationItems },
+      outcome: 'success'
+    });
+
+    // Check stock reservation integrity
+    await checkStockReservationIntegrity(request.idempotencyKey, reservationId, reservationItems);
+
+    // Check stock levels are not negative
+    await checkStockLevels(request.idempotencyKey, request.basketData.map(item => item._id));
+
     // 5. Calculate total amount
     const totalAmount = basketValidation.totalAmount;
 
@@ -158,7 +184,32 @@ export async function reserveStock(request: ReserveStockRequest): Promise<Reserv
         },
         { idempotencyKey: `pi_${request.idempotencyKey}` }
       );
+
+      // Log successful PaymentIntent creation
+      await logCheckoutEvent({
+        correlationId: request.idempotencyKey,
+        slice: 'address-submit',
+        event: 'PAYMENT_INTENT_CREATED',
+        data: {
+          paymentIntentId: paymentIntent.id,
+          amount: paymentIntent.amount,
+          currency: paymentIntent.currency,
+          reservationId,
+          sessionId: request.sessionId
+        },
+        outcome: 'success'
+      });
     } catch (stripeError) {
+      // Log Stripe error
+      await logCheckoutEvent({
+        correlationId: request.idempotencyKey,
+        slice: 'address-submit',
+        event: 'PAYMENT_INTENT_FAILED',
+        data: { error: String(stripeError), reservationId },
+        outcome: 'error',
+        error: String(stripeError)
+      });
+
       // COMPENSATION: Release Redis reservation immediately
       await rollbackReservation(reservationId);
 
@@ -201,6 +252,20 @@ export async function reserveStock(request: ReserveStockRequest): Promise<Reserv
       ttl,
       JSON.stringify(cacheData)
     );
+
+    // Log successful completion
+    await logCheckoutEvent({
+      correlationId: request.idempotencyKey,
+      slice: 'address-submit',
+      event: 'RESERVE_STOCK_COMPLETE',
+      data: {
+        reservationId,
+        paymentIntentId: paymentIntent.id,
+        expiresAt: guestSession.expiresAt,
+        amountPln: guestSession.amountPln
+      },
+      outcome: 'success'
+    });
 
     return {
       success: true,
