@@ -21,9 +21,6 @@ export function useCheckoutFlow() {
     // Step 3: Create/verify guest cookie session
     const sessionId = getOrCreateGuestSession();
 
-    // Step 4: Store idempotency key in session storage (not URL!)
-    sessionStorage.setItem('checkout_idempotencyKey', idempotencyKey);
-
     // Step 5: Disable checkout button, show loading state (handled by FSM)
     // Step 6: Store key in FSM context (handled by checkout.startCheckout)
 
@@ -34,8 +31,8 @@ export function useCheckoutFlow() {
       return;
     }
 
-    // Step 8: Navigate to address page
-    router.push(`/checkout/address?sessionId=${sessionId}`);
+    // Step 8: Navigate to address page with idempotencyKey in URL
+    router.push(`/checkout/address?sessionId=${sessionId}&idempotencyKey=${idempotencyKey}`);
   };
 
   return {
@@ -77,11 +74,6 @@ function validateBasketLocally(basket: any[]) {
 
     if (item.quantity <= 0) {
       return { valid: false, error: 'Invalid quantities in basket' };
-    }
-
-    // stripePriceId is optional for now, but will be required for checkout
-    if (!item.stripePriceId) {
-      console.warn('Item missing stripePriceId:', item._id);
     }
   }
 
