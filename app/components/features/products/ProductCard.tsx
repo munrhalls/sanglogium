@@ -16,6 +16,7 @@ export interface Product {
   stock?: number;
   image: any;
   slug: { current: string };
+  stripePriceId?: string;
 }
 
 interface ProductCardProps {
@@ -57,6 +58,7 @@ export function ProductCard({ product }: ProductCardProps) {
               stock={product.stock ?? 99}
               imageUrl={imageUrl}
               slug={product.slug.current}
+              stripePriceId={product.stripePriceId}
             />
           </div>
         </div>

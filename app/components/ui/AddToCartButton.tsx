@@ -11,6 +11,7 @@ interface AddToCartButtonProps {
   stock: number;
   imageUrl: string;
   slug: string;
+  stripePriceId?: string;
   className?: string;
   labelClassName?: string;
   label?: string;
@@ -24,6 +25,7 @@ export function AddToCartButton({
   stock,
   imageUrl,
   slug,
+  stripePriceId,
   className = "",
   labelClassName = "text-cap font-bold",
   label = "Add",
@@ -51,6 +53,7 @@ export function AddToCartButton({
       quantity: 1,
       image: imageUrl,
       slug,
+      stripePriceId,
     });
   };
 

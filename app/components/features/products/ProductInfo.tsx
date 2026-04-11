@@ -33,6 +33,7 @@ export function ProductInfo({ product }: { product: Product }) {
         quantity: preAddQty,
         image: product.image ? urlFor(product.image).width(100).height(100).url() : '/images/placeholder-product.jpg', // TODO: Remove test product fix - temporary for manual verification
         slug: product.slug.current,
+        stripePriceId: product.stripePriceId,
       };
       console.log('Item to add:', itemToAdd);
 
