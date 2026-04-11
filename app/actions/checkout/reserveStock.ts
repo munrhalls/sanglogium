@@ -1,7 +1,7 @@
 'use server';
 
 import { cookies } from 'next/headers';
-import { client } from 'sanity/lib/client';
+import { client } from '@/sanity/lib/client';
 import { stripe } from '@/lib/stripe';
 import { Redis } from '@upstash/redis';
 import { randomUUID } from 'crypto';
@@ -70,6 +70,14 @@ return {ok = "RESERVED", stock}
 
 export async function reserveStock(request: ReserveStockRequest): Promise<ReserveStockResponse> {
   try {
+    // Validate environment variables
+    if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
+      throw new Error('Redis configuration missing');
+    }
+
+    if (!process.env.STRIPE_SECRET_KEY) {
+      throw new Error('Stripe configuration missing');
+    }
     // 1. Check idempotency cache
     const cached = await redis.get(`idempotency:${request.idempotencyKey}`);
     if (cached) {
@@ -98,49 +106,39 @@ export async function reserveStock(request: ReserveStockRequest): Promise<Reserv
     const reservationId = `reserve_${randomUUID()}`;
     const ttl = 15 * 60; // 15 minutes
 
-    // 4. Reserve stock for each item (simplified without Lua script for now)
-    const reservationPromises = request.basketData.map(async (item) => {
-      // Check current stock
-      const stock = await redis.hget('product_stock', item._id);
-      if (!stock || parseInt(stock) < item.quantity) {
-        return { err: 'INSUFFICIENT_STOCK' };
-      }
+    // 4. Reserve stock with inline compensation tracking
+    // Check + decrement in single pass; track for partial-failure inline rollback
+    // Reservation record stored AFTER all items succeed (not before)
+    const reserved: Array<{ id: string; quantity: number }> = [];
 
-      // Reserve stock
-      await redis.hincrby('product_stock', item._id, -item.quantity);
-      await redis.hset('reservations', reservationId, `${item._id}:${item.quantity}`);
-      await redis.expire('reservations', ttl);
+    for (const item of request.basketData) {
+      let currentStock = await redis.hget('product_stock', item._id);
 
-      return { ok: 'RESERVED', stock: parseInt(stock) - item.quantity };
-    });
-
-    const reservationResults = await Promise.all(reservationPromises);
-
-    // Check if any reservation failed
-    for (const result of reservationResults) {
-      if (result.err) {
-        // Rollback any successful reservations
-        await rollbackReservation(reservationId);
-
-        if (result.err === 'INSUFFICIENT_STOCK') {
-          return {
-            success: false,
-            error: {
-              code: 'INSUFFICIENT_STOCK',
-              message: 'One or more items are out of stock'
-            }
-          };
+      // Sanity fallback: seed Redis from already-fetched Sanity products (cold miss)
+      if (currentStock === null) {
+        const sanityProduct = basketValidation.products?.find((p) => p._id === item._id);
+        if (!sanityProduct?.stock) {
+          for (const r of reserved) { await redis.hincrby('product_stock', r.id, r.quantity); }
+          return { success: false, error: { code: 'PRODUCT_NOT_FOUND', message: 'Product not available' } };
         }
-
-        return {
-          success: false,
-          error: {
-            code: 'STOCK_RESERVATION_FAILED',
-            message: 'Failed to reserve stock'
-          }
-        };
+        await redis.hset('product_stock', { [item._id]: sanityProduct.stock.toString() });
+        currentStock = sanityProduct.stock.toString();
+        console.log(`[reserveStock] Redis seeded from Sanity: ${item._id} = ${sanityProduct.stock}`);
       }
+
+      if (parseInt(currentStock as string) < item.quantity) {
+        for (const r of reserved) { await redis.hincrby('product_stock', r.id, r.quantity); }
+        return { success: false, error: { code: 'INSUFFICIENT_STOCK', message: 'One or more items are out of stock' } };
+      }
+
+      await redis.hincrby('product_stock', item._id, -item.quantity);
+      reserved.push({ id: item._id, quantity: item.quantity });
     }
+
+    // Store reservation record AFTER all items successfully decremented
+    const reservationItems = reserved.map(r => ({ productId: r.id, quantity: r.quantity }));
+    await redis.hset('reservations', reservationId, JSON.stringify(reservationItems));
+    await redis.expire('reservations', ttl);
 
     // 5. Calculate total amount
     const totalAmount = basketValidation.totalAmount;
@@ -148,16 +146,18 @@ export async function reserveStock(request: ReserveStockRequest): Promise<Reserv
     // 6. Create Stripe PaymentIntent with compensation pattern
     let paymentIntent;
     try {
-      paymentIntent = await stripe.paymentIntents.create({
-        amount: totalAmount,
-        currency: 'usd',
-        automatic_payment_methods: { enabled: true },
-        metadata: {
-          reservationId,
-          sessionId: request.sessionId
+      paymentIntent = await stripe.paymentIntents.create(
+        {
+          amount: totalAmount,
+          currency: 'pln',
+          automatic_payment_methods: { enabled: true },
+          metadata: {
+            reservationId,
+            sessionId: request.sessionId
+          },
         },
-        idempotencyKey: `pi_${request.idempotencyKey}`
-      });
+        { idempotencyKey: `pi_${request.idempotencyKey}` }
+      );
     } catch (stripeError) {
       // COMPENSATION: Release Redis reservation immediately
       await rollbackReservation(reservationId);
@@ -174,8 +174,10 @@ export async function reserveStock(request: ReserveStockRequest): Promise<Reserv
     // 7. Store in guest session
     const guestSession = {
       paymentIntentId: paymentIntent.id,
+      clientSecret: paymentIntent.client_secret,
       reservationId,
       expiresAt: Date.now() + (ttl * 1000),
+      amountPln: totalAmount / 100, // Convert back from cents to PLN
       addressData: request.addressData,
       basketData: request.basketData
     };
@@ -213,7 +215,7 @@ export async function reserveStock(request: ReserveStockRequest): Promise<Reserv
       success: false,
       error: {
         code: 'INTERNAL_ERROR',
-        message: 'An unexpected error occurred'
+        message: error instanceof Error ? error.message : 'An unexpected error occurred'
       }
     };
   }
@@ -221,13 +223,22 @@ export async function reserveStock(request: ReserveStockRequest): Promise<Reserv
 
 async function validateBasket(basketData: ReserveStockRequest['basketData']) {
   try {
+    // Early validation: empty basket is invalid
+    if (!basketData || basketData.length === 0) {
+      return {
+        valid: false,
+        error: 'Basket is empty',
+        totalAmount: 0
+      };
+    }
+
     // Fetch all products in basket
     const productIds = basketData.map(item => item._id);
     const products = await sanityClient.fetch(`
       *[_type == "product" && _id in $productIds] {
         _id,
         name,
-        price,
+        displayPrice,
         stock,
         stripePriceId,
         "images": images[].asset->url
@@ -263,7 +274,7 @@ async function validateBasket(basketData: ReserveStockRequest['basketData']) {
         };
       }
 
-      totalAmount += product.price * basketItem.quantity;
+      totalAmount += product.displayPrice * basketItem.quantity;
     }
 
     return {
@@ -276,7 +287,7 @@ async function validateBasket(basketData: ReserveStockRequest['basketData']) {
     console.error('Basket validation error:', error);
     return {
       valid: false,
-      error: 'Failed to validate basket',
+      error: error instanceof Error ? error.message : 'Failed to validate basket',
       totalAmount: 0
     };
   }
@@ -284,17 +295,25 @@ async function validateBasket(basketData: ReserveStockRequest['basketData']) {
 
 async function rollbackReservation(reservationId: string) {
   try {
-    // Get reservation details
     const reservationData = await redis.hget('reservations', reservationId);
     if (!reservationData) return;
 
-    // Parse and release stock
-    const [productId, quantity] = reservationData.split(':');
-    await redis.hincrby('product_stock', productId, parseInt(quantity));
+    let items: Array<{ productId: string; quantity: number }>;
+    try {
+      items = JSON.parse(reservationData as string);
+    } catch {
+      // Legacy format: "productId:quantity"
+      const [pid, qty] = (reservationData as string).split(':');
+      items = [{ productId: pid, quantity: parseInt(qty) }];
+    }
 
-    // Remove reservation
+    for (const item of items) {
+      if (item.productId && item.quantity) {
+        await redis.hincrby('product_stock', item.productId, item.quantity);
+      }
+    }
+
     await redis.hdel('reservations', reservationId);
-
   } catch (error) {
     console.error('Rollback error:', error);
   }
@@ -304,7 +323,15 @@ async function rollbackReservation(reservationId: string) {
 export async function getGuestSession(sessionId: string) {
   try {
     const session = await redis.get(`guest_session:${sessionId}`);
-    return session ? JSON.parse(session) : null;
+    if (!session) return null;
+
+    // Handle both JSON string and object cases
+    if (typeof session === 'string') {
+      return JSON.parse(session);
+    } else if (typeof session === 'object') {
+      return session;
+    }
+    return null;
   } catch (error) {
     console.error('Get guest session error:', error);
     return null;
