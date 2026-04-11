@@ -10,12 +10,14 @@ interface StripePaymentFormProps {
   clientSecret: string;
   reservationId: string;
   expiresAt: number;
+  amountPln: number;
 }
 
 export default function StripePaymentForm({
   clientSecret,
   reservationId,
-  expiresAt
+  expiresAt,
+  amountPln
 }: StripePaymentFormProps) {
   const [isExpired, setIsExpired] = useState(false);
 
@@ -44,9 +46,9 @@ export default function StripePaymentForm({
 
   // B-1: useMemo on options prevents StripeElements remount bug
   const options = useMemo(
-    () => ({ 
-      clientSecret, 
-      appearance: { theme: 'stripe' } 
+    () => ({
+      clientSecret,
+      appearance: { theme: 'stripe' }
     }),
     [clientSecret]   // Prevents StripeElements remount bug B-1
   );
@@ -54,9 +56,10 @@ export default function StripePaymentForm({
   // B-3: Only render Elements when clientSecret exists (prevents B-3)
   return clientSecret ? (
     <Elements stripe={stripePromise} options={options}>
-      <PaymentForm 
+      <PaymentForm
         reservationId={reservationId}
         expiresAt={expiresAt}
+        amountPln={amountPln}
       />
     </Elements>
   ) : (

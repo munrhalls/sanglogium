@@ -8,6 +8,7 @@ import { getGuestSession, clearGuestSession } from '@/app/actions/checkout/reser
 
 interface AddressFormProps {
   sessionId: string;
+  idempotencyKey: string;
   basketData: Array<{
     _id: string;
     quantity: number;
@@ -15,7 +16,7 @@ interface AddressFormProps {
   }>;
 }
 
-export default function AddressForm({ sessionId, basketData }: AddressFormProps) {
+export default function AddressForm({ sessionId, idempotencyKey, basketData }: AddressFormProps) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -49,13 +50,7 @@ export default function AddressForm({ sessionId, basketData }: AddressFormProps)
     setIsProcessing(true);
     setErrorMessage(null);
 
-    // Get idempotency key from session storage (not URL!)
-    const idempotencyKey = sessionStorage.getItem('checkout_idempotencyKey');
-    if (!idempotencyKey) {
-      setErrorMessage('Session expired. Please start checkout again.');
-      setIsProcessing(false);
-      return;
-    }
+    // idempotencyKey is now passed as prop
 
     try {
       console.log('=== Address Form Submission ===');

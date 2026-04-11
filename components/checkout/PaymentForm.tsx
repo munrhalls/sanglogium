@@ -1,22 +1,24 @@
 'use client';
 
 import { useState } from 'react';
-import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useRouter } from 'next/navigation';
 import { useCheckoutMachine } from '@/store/checkout/checkoutMachine';
 
 interface PaymentFormProps {
   reservationId: string;
   expiresAt: number;
+  amountPln: number;
 }
 
 export default function PaymentForm({
   reservationId,
-  expiresAt
+  expiresAt,
+  amountPln
 }: PaymentFormProps) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  
+
   const stripe = useStripe();
   const elements = useElements();
   const router = useRouter();
@@ -69,9 +71,9 @@ export default function PaymentForm({
           reservationId,
           expiresAt
         });
-        
-        // Navigate to /checkout/success
-        router.push('/checkout/success');
+
+        // Navigate to /checkout/success with payment_intent ID
+        router.push(`/checkout/success?payment_intent=${paymentIntent.id}`);
       }
 
     } catch (error) {
@@ -86,22 +88,7 @@ export default function PaymentForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="p-4 border rounded-lg">
-        <CardElement
-          options={{
-            style: {
-              base: {
-                fontSize: '16px',
-                color: '#424770',
-                '::placeholder': {
-                  color: '#aab7c4',
-                },
-              },
-              invalid: {
-                color: '#9e2146',
-              },
-            },
-          }}
-        />
+        <PaymentElement />
       </div>
 
       {errorMessage && (
@@ -126,7 +113,7 @@ export default function PaymentForm({
             Processing...
           </span>
         ) : (
-          `Pay $${(parseFloat(checkout.clientSecret || '0') / 100).toFixed(2)}`
+          `Pay ${amountPln.toFixed(2)} PLN`
         )}
       </button>
 
