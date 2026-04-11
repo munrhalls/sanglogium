@@ -265,7 +265,7 @@ NEXT_PUBLIC_SANITY_PROJECT_ID=
 // Server Component - fetch data
 export default async function BasketPage() {
   const basket = await getBasket();
-  
+
   return <BasketClient initialData={basket} />;
 }
 
@@ -273,7 +273,7 @@ export default async function BasketPage() {
 'use client';
 export default function BasketClient({ initialData }) {
   const [basket, setBasket] = useState(initialData);
-  
+
   // Proper state updates in useEffect/event handlers
   const updateBasket = () => {
     // Defer state updates
