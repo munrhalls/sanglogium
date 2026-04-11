@@ -19,13 +19,14 @@ export interface Product {
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {
   const products = await sanityFetch({
-    query: groq`*[_type == "product" && slug.current == $slug] {
+    query: groq`*[_type == "product" && slug.current == $slug && defined(stripePriceId)] {
       _id,
       name,
       brand->{ _id, name, slug },
       displayPrice,
       stock,
       sku,
+      stripePriceId,
       image,
       gallery,
       slug {

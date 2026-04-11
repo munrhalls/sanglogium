@@ -23,6 +23,7 @@ export async function getRelatedProducts(
     query: groq`*[_type == "product"
       && _id != $currentId
       && count(catalogueLocationKeys[@ in $catalogueKeys]) > 0
+      && defined(stripePriceId)
     ] | order(displayPrice asc) [0...$limit] {
       _id,
       name,
@@ -31,6 +32,7 @@ export async function getRelatedProducts(
         name
       },
       displayPrice,
+      stripePriceId,
       image,
       slug {
         current
