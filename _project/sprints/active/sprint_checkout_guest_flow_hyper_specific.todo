@@ -617,3 +617,78 @@
 #   route.ts:83 — same corruption bug as G-NEW-03 but in webhook
 #   payment_intent.payment_failed → corrupt Redis key, stock never restored
 #   Fix: Parse JSON with legacy fallback, restore ALL items
+
+# ═══════════════════════════════════════════════════════════════════
+# IMPLEMENTATION STATUS CHECK — SCOPE BY SCOPE
+# ═══════════════════════════════════════════════════════════════════
+# Checking each scope contract's implementation against DoD requirements
+
+# SCOPE CONTRACT 1: Navigation Bridge — IMPLEMENTED
+# DoD Check:
+# SC1.1 useCheckoutFlow.ts:35 - idempotencyKey added to URL
+# SC1.2 address/page.tsx:62 - idempotencyKey prop passed
+# SC1.3 AddressForm.tsx:11 - idempotencyKey in props, no sessionStorage
+# CHECKPOINT 1.A: Click Checkout → /checkout/address loads (NOT redirected)
+
+# SCOPE CONTRACT 2: ReserveStock — IMPLEMENTED
+# DoD Check:
+# SC2.1 PI creation: currency=pln, idempotencyKey in options
+# SC2.2 guestSession includes clientSecret + amountPln
+# SC2.3 validateBasket uses displayPrice
+# SC2.4 JSON reservation array + stock loop - ALREADY CORRECTLY IMPLEMENTED:
+#   Sanity fallback implemented (lines 117-127)
+#   Reservation stored AFTER loop (lines 139-141)
+#   rollbackReservation parses JSON (lines 301-308)
+#   validateBasket returns products array (line 283)
+# Status: SC2-AMENDMENT NOT NEEDED - already correct
+
+# SCOPE CONTRACT 3: Payment Page — IMPLEMENTED
+# DoD Check:
+# SC3.1 PaymentElement, amountPln interface
+# SC3.2 StripePaymentForm amountPln passthrough
+# SC3.3 payment/page.tsx reads amountPln from guestSession
+# BUG-4: amountPln display - ALREADY CORRECT (line 116: amountPln.toFixed(2))
+# BUG-5: success navigation - ALREADY CORRECT (line 76: passes payment_intent ID)
+# Status: SC3-AMENDMENT NOT NEEDED - already correct
+
+# SCOPE CONTRACT 4: Success Page — IMPLEMENTED
+# DoD Check:
+# SC4.1 getPaymentStatus.ts - CREATED (Stripe PI verification)
+# SC4.2 success/page.tsx - REWRITTEN with real PI verification
+#   Verifies payment via Stripe API
+#   Clears basket on successful verification
+#   Shows payment reference (not fake orderId)
+#   Error handling with redirect
+# Status: FULLY IMPLEMENTED
+
+# SCOPE CONTRACT 5: Webhook — IMPLEMENTED
+# DoD Check:
+# SC5.1 headers() async - FIXED (line 116: await headers())
+# SC5.2 commitReservation() - FIXED JSON parsing (lines 38-44)
+# SC5.3 releaseReservation() - FIXED JSON parsing (lines 87-98)
+# SC5.4 Archive old webhook - DONE (renamed to ARCHIVED_route.ts)
+# Status: ALL FIXES APPLIED
+
+# ═══════════════════════════════════════════════════════════════════
+# IMPLEMENTATION SUMMARY
+# ═══════════════════════════════════════════════════════════════════
+#
+# OVERALL STATUS: 5/5 scopes fully implemented
+#
+# ALL SCOPES COMPLETED:
+# - SC1: Navigation Bridge (Basket → Address)
+# - SC2: ReserveStock (Sanity fallback + JSON reservations)
+# - SC3: Payment Page (correct amount display + PI ID)
+# - SC4: Success Page (real PI verification + basket clear)
+# - SC5: Webhook (async headers + JSON parsing)
+#
+# IMPLEMENTATION DETAILS:
+# - SC2 was already correctly implemented (no amendments needed)
+# - SC3 was already correctly implemented (no amendments needed)
+# - SC4: Created getPaymentStatus.ts + rewrote success page
+# - SC5: Fixed headers() await + JSON parsing in both functions
+# - SC5.4: Archived old webhook route to ARCHIVED_route.ts
+#
+# BUILD STATUS:  PASSING (npm run build successful)
+#
+# READY FOR SPRINT LOCK CRITERIA VERIFICATION
