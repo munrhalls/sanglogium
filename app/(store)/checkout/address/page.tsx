@@ -10,10 +10,11 @@ interface AddressPageProps {
   };
 }
 
-export default function AddressPage({ searchParams }: AddressPageProps) {
-  // Get parameters from URL
-  const sessionId = searchParams.sessionId;
-  const idempotencyKey = searchParams.idempotencyKey;
+export default async function AddressPage({ searchParams }: AddressPageProps) {
+  // Get parameters from URL (await for Next.js 15)
+  const params = await searchParams;
+  const sessionId = params.sessionId;
+  const idempotencyKey = params.idempotencyKey;
 
   // Validate required parameters
   if (!sessionId || !idempotencyKey) {
