@@ -32,7 +32,10 @@ export function useCheckoutFlow() {
     }
 
     // Step 8: Navigate to address page with idempotencyKey in URL
-    router.push(`/checkout/address?sessionId=${sessionId}&idempotencyKey=${idempotencyKey}`);
+    // TEMPORARILY DISABLED FOR TESTING
+    // router.push(`/checkout/address?sessionId=${sessionId}&idempotencyKey=${idempotencyKey}`);
+    console.log('=== CHECKOUT CLICKED - NAVIGATION DISABLED FOR TESTING ===');
+    console.log('Would navigate to:', `/checkout/address?sessionId=${sessionId}&idempotencyKey=${idempotencyKey}`);
   };
 
   return {
