@@ -12,6 +12,7 @@ import type {
 } from './types'
 import { getLogger, getMetrics } from './logging'
 import { LogCategory } from './types'
+import { TokenManager, EnhancedIdempotencyManager } from './redis-managers'
 
 // ============================================================================
 // FIFOQueue Class
@@ -24,8 +25,8 @@ export class FIFOQueue {
   private circuitBreakerOpen = false
   private circuitBreakerFailures = 0
   private circuitBreakerLastFailure: Date | null = null
-  private idempotencyStore = new Map<string, { requestFingerprint: string; response: unknown }>()
-  private tokenStore = new Map<string, ReservationToken>()
+  private tokenManager: TokenManager
+  private idempotencyManager: EnhancedIdempotencyManager
 
   private logger = getLogger()
   private metrics = getMetrics()
@@ -35,7 +36,10 @@ export class FIFOQueue {
     private onCreateReservation?: (request: QueueRequest) => Promise<void>,
     private onRollbackReservation?: (request: QueueRequest) => Promise<void>,
     private onRealizeReservation?: (request: QueueRequest) => Promise<void>,
-  ) {}
+  ) {
+    this.tokenManager = new TokenManager(redis)
+    this.idempotencyManager = new EnhancedIdempotencyManager(redis)
+  }
 
   // ============================================================================
   // Enqueue
@@ -59,7 +63,7 @@ export class FIFOQueue {
     }
 
     // Check idempotency
-    const existing = this.idempotencyStore.get(request.idempotencyKey)
+    const existing = await this.idempotencyManager.getResponse(request.idempotencyKey)
     if (existing) {
       const currentFingerprint = this.generateFingerprint(request)
       if (existing.requestFingerprint !== currentFingerprint) {
@@ -144,7 +148,7 @@ export class FIFOQueue {
     try {
       // Check for concurrent operation on token
       if (request.reservationToken) {
-        const token = this.tokenStore.get(request.reservationToken)
+        const token = await this.tokenManager.getToken(request.reservationToken)
         if (token && token.state !== 'FREE' && token.state !== 'ACTIVE') {
           throw new Error('operation_in_progress')
         }
@@ -237,7 +241,7 @@ export class FIFOQueue {
     }
 
     // Atomic token state transition
-    this.tokenStore.set(token, reservationToken)
+    await this.tokenManager.setToken(token, reservationToken)
 
     // Set Redis TTL key
     await this.redis.setex(`reservation:${token}`, 600, JSON.stringify({
@@ -250,12 +254,12 @@ export class FIFOQueue {
     // Update token state to ACTIVE
     reservationToken.state = 'ACTIVE'
     reservationToken.updatedAt = new Date()
-    this.tokenStore.set(token, reservationToken)
+    await this.tokenManager.updateToken(token, reservationToken)
 
     // Store idempotency response
-    this.idempotencyStore.set(request.idempotencyKey, {
-      requestFingerprint: reservationToken.requestFingerprint,
-      response: { reservationToken: token, success: true }
+    await this.idempotencyManager.setResponse(request.idempotencyKey, reservationToken.requestFingerprint, {
+      reservationToken: token,
+      success: true
     })
 
     // Execute external handler (Sanity stock decrement, etc.)
@@ -274,13 +278,13 @@ export class FIFOQueue {
   private async processRollbackReservation(request: QueueRequest): Promise<void> {
     if (!request.reservationToken) throw new Error('Missing reservation token')
 
-    const token = this.tokenStore.get(request.reservationToken)
+    const token = await this.tokenManager.getToken(request.reservationToken)
     if (!token) throw new Error('Token not found')
 
     // Update token state to CANCELLING
     token.state = 'CANCELLING'
     token.updatedAt = new Date()
-    this.tokenStore.set(request.reservationToken, token)
+    await this.tokenManager.updateToken(request.reservationToken, token)
 
     // Remove from Redis
     await this.redis.del(`reservation:${request.reservationToken}`)
@@ -288,7 +292,7 @@ export class FIFOQueue {
     // Update token state to FREE
     token.state = 'FREE'
     token.updatedAt = new Date()
-    this.tokenStore.set(request.reservationToken, token)
+    await this.tokenManager.updateToken(request.reservationToken, token)
 
     // Execute external handler (Sanity stock restore, etc.)
     if (this.onRollbackReservation) {
@@ -305,13 +309,13 @@ export class FIFOQueue {
   private async processRealizeReservation(request: QueueRequest): Promise<void> {
     if (!request.reservationToken) throw new Error('Missing reservation token')
 
-    const token = this.tokenStore.get(request.reservationToken)
+    const token = await this.tokenManager.getToken(request.reservationToken)
     if (!token) throw new Error('Token not found')
 
     // Update token state to REALIZING
     token.state = 'REALIZING'
     token.updatedAt = new Date()
-    this.tokenStore.set(request.reservationToken, token)
+    await this.tokenManager.updateToken(request.reservationToken, token)
 
     // Remove from Redis
     await this.redis.del(`reservation:${request.reservationToken}`)
@@ -319,7 +323,7 @@ export class FIFOQueue {
     // Update token state to FREE
     token.state = 'FREE'
     token.updatedAt = new Date()
-    this.tokenStore.set(request.reservationToken, token)
+    await this.tokenManager.updateToken(request.reservationToken, token)
 
     // Execute external handler (finalize order, etc.)
     if (this.onRealizeReservation) {
@@ -385,8 +389,9 @@ export class FIFOQueue {
   // Test Helpers / Observability
   // ============================================================================
 
-  getTokenState(token: string): TokenState | undefined {
-    return this.tokenStore.get(token)?.state
+  async getTokenState(token: string): Promise<TokenState | undefined> {
+    const tokenData = await this.tokenManager.getToken(token)
+    return tokenData?.state
   }
 
   getCircuitBreakerState(): { open: boolean; failures: number } {

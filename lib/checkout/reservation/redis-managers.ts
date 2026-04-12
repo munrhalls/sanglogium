@@ -1,12 +1,13 @@
 // Guest Checkout Inventory Reservation - Redis Schema Managers
-// ReservationTTLManager, CircuitBreakerManager, IdempotencyManager
+// ReservationTTLManager, CircuitBreakerManager, IdempotencyManager, TokenManager
 // Matches redis-schema.test.ts interfaces exactly
 
 import type Redis from 'ioredis'
 import type {
   ReservationTTLData,
   CircuitBreakerState,
-  IdempotencyCacheData
+  IdempotencyCacheData,
+  ReservationToken
 } from './types'
 
 // ============================================================================
@@ -102,5 +103,70 @@ export class IdempotencyManager {
     const key = `idempotency:${idempotencyKey}`
     const data = await this.redis.get(key)
     return data ? JSON.parse(data) : null
+  }
+}
+
+// ============================================================================
+// TokenManager
+// Key pattern: token:{token}
+// TTL: 600 seconds (10 minutes) per PRD
+// ============================================================================
+
+export class TokenManager {
+  constructor(private redis: Redis) {}
+
+  async setToken(token: string, reservationToken: ReservationToken): Promise<void> {
+    const key = `token:${token}`
+    // Set with 10-minute TTL (600 seconds) per PRD
+    await this.redis.setex(key, 600, JSON.stringify(reservationToken))
+  }
+
+  async getToken(token: string): Promise<ReservationToken | null> {
+    const key = `token:${token}`
+    const data = await this.redis.get(key)
+    return data ? JSON.parse(data) : null
+  }
+
+  async updateToken(token: string, reservationToken: ReservationToken): Promise<void> {
+    const key = `token:${token}`
+    // Update with TTL refresh
+    await this.redis.setex(key, 600, JSON.stringify(reservationToken))
+  }
+
+  async deleteToken(token: string): Promise<void> {
+    const key = `token:${token}`
+    await this.redis.del(key)
+  }
+}
+
+// ============================================================================
+// Enhanced IdempotencyManager with 24-hour TTL
+// Key pattern: idempotency:{idempotencyKey}
+// TTL: 86400 seconds (24 hours) per PRD
+// ============================================================================
+
+export class EnhancedIdempotencyManager {
+  constructor(private redis: Redis) {}
+
+  async setResponse(idempotencyKey: string, requestFingerprint: string, response: unknown): Promise<void> {
+    const key = `idempotency:${idempotencyKey}`
+    const data: IdempotencyCacheData = {
+      requestFingerprint,
+      response,
+      createdAt: new Date().toISOString()
+    }
+    // Set with 24-hour TTL (86400 seconds) per PRD
+    await this.redis.setex(key, 86400, JSON.stringify(data))
+  }
+
+  async getResponse(idempotencyKey: string): Promise<IdempotencyCacheData | null> {
+    const key = `idempotency:${idempotencyKey}`
+    const data = await this.redis.get(key)
+    return data ? JSON.parse(data) : null
+  }
+
+  async deleteResponse(idempotencyKey: string): Promise<void> {
+    const key = `idempotency:${idempotencyKey}`
+    await this.redis.del(key)
   }
 }
