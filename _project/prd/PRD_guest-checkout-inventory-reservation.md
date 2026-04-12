@@ -1,0 +1,94 @@
+# PRD: Guest Checkout Client Basket -> Reserved Basket
+
+# Scope
+Solution design for invariant relationship between client basket, reserved basket, idempotent FIFO CMS create/delete requests queue for reserved basket, immutable client reserved basket state, ui, delete (rollback reserved basket) timeout. UX slice 1 - basket page, checkout ui interaction.
+
+# Out of scope
+Further checkout ux slices, payment intent, embedded react stripe elements, anything other that reservation and rollback solution design based on mapping invariant relationships.
+Payment success - explicitly out of scope.
+
+# Description
+Clicking checkout sends client basket as payload to CMS checkout queue. CMS processes first request from queue fully, atomic. CMS returns reserved basket data with unique reservation token. UI is temporarily locked and processes reserved basket data onto immutable client state, which can be:
+1) reserved basket fully available, user moved to next checkout slice
+2) reserved basket had decrements based on available stock, user shown updates message and data in checkout panel with "Approve & Proceed" and "Cancel" buttons,
+3) reserved basket has 0 available products in stock, user shown clear message.
+
+Payment success (future PRD) will trigger reservation realize via Stripe webhook metadata passing to priority queue.
+
+UI cancel button, reserved basket rollback timeout - both add reserved basket request to single CMS FIFO queue.
+
+CMS FIFO queue: both cancel and rollback and any reserved basket request, whether new one to reserve or rollback, are processed in singular FIFO queue. Checkout UI temporarily blocked between request and response.
+
+Client basket is 100% separate from reserved basket at all times, regardless of anything.
+
+Reserved basket always reflects the latest, true state of CMS stock availability and price data based on stripePriceId check, on each of reserved basket products. Reserved basket is NEVER influenced by client basket in any way. Reserved basket immutable state is always pure reflection of latest CMS state and nothing more. Reserved basket is only acquired from CMS response.
+
+Reserved basket request to queue should be idempotent up to 3 tries. CMS always processes first FIFO queue request until finished. After 3 tries, first request deleted from queue, error payload response.
+
+
+# Core requirements - execution flow
+- click checkout -> freeze checkout ui -> generate UUIDv4 idempotency key -> send client basket payload + idempotency key to CMS FIFO queue -> handle response with reservation token as reserved basket -> display proper 1 or 2 or 3 or 4 checkout ui based on reserved basket
+- click cancel - generate UUIDv4 idempotency key -> send reservation token + idempotency key to CMS FIFO queue for rollback
+- timeout - cancelled by external success signal (payment success PRD to plug in here), which generates UUIDv4 idempotency key -> sends reservation token + idempotency key to CMS PRIORITY queue to realize reserved basket - decrementing real stock counts on products  (priority queue processed before regular FIFO queue)
+
+# Requirements
+- Reserved basket persisted in localStorage via Zustand persist middleware for UX continuity
+- CMS returns unique reservation token (UUID) on successful reservation, used for all rollback/realize requests
+- Client generates UUIDv4 idempotency key for each request, CMS stores key with result for 24 hours
+- Payment realize requests use separate priority queue processed before regular FIFO queue
+- Stripe webhook passes reservation token via metadata for payment realize requests
+- Webhook signature verification replaces authentication for payment realize requests
+- Backend enforces one active operation per reservation token to prevent multi-tab race conditions
+- CMS tracks reservation token state (FREE/RESERVING/ACTIVE/CANCELLING) with atomic transitions
+- Rollback requests use exponential backoff: 1s base delay, 30s max delay, ±25% jitter, max 10 retries
+- Circuit breaker opens after 5 consecutive failures, 30s cooldown, fails fast during open state
+- Transient errors (network, timeout) trigger retry with backoff, non-transient errors fail immediately
+- All UI enabled events have strict deduplication to prevent double requests on user spam clicks or any user-issued events
+
+# Important
+- zero cookies usage
+- no guest JWT cookie or authentication of any kind
+
+# DoD
+
+## API & State Management
+- [ ] Click checkout button sends POST to CMS queue API with UUIDv4 idempotency key, response with reservation token saved to immutable reserved basket state
+- [ ] Zustand store mirrors create/delete operations exactly: saves on create, deletes on rollback
+- [ ] Document.cookie is never set, no Set-Cookie headers in responses
+- [ ] CMS generates unique reservation token (UUID) on successful reservation, stored with reserved basket
+- [ ] CMS stores idempotency key with response for 24 hours, returns cached response on duplicate keys
+- [ ] Stripe webhook signature verification validates payment realize requests without authentication
+
+## UI Behavior
+- [ ] Checkout button disabled during CMS queue processing, re-enabled only if client basket modified after reserved basket created; cancel button remains available, sends rollback request on click
+- [ ] Clicking re-enabled checkout sends two separate atomic requests: rollback first, then new reservation request
+- [ ] All UI enabled events implement strict deduplication with 0 possibility of creating double requests on user spam clicks or any user-issued events
+
+## UI States
+- [ ] UI state 1: Reserved basket fully available - user proceeds to next checkout slice automatically
+- [ ] UI state 2: Reserved basket has stock decrements - user shown updates with "Approve & Proceed" and "Cancel" buttons and "We've had to revise your basket based on latest inventory check." message.
+- [ ] UI state 3: Reserved basket has 0 available products - user shown clear out of stock message, "We apologize - these products are out of stock."
+- [ ] UI state 4: Network failure - user shown retry button with automatic retry up to 3 attempts
+- [ ] UI state 5: Operation in progress - user shown "Please wait, operation in progress in another tab" message when concurrent operation detected
+
+## CMS Queue & Inventory
+- [ ] Cancel button sends reservation token to CMS queue for rollback, CMS restores product stock counts
+- [ ] Server-side 10-minute TTL triggers automatic rollback if not cancelled by external success signal (payment success PRD plug point)
+- [ ] CMS queue processes requests sequentially, second reservation fails if first reserved last item
+- [ ] CMS queue processes one request at a time using FIFO order
+- [ ]  Queue is implemented with Redis Streams (or BullMQ) for persistence, atomic processing, and priority support.
+- [ ] Priority queue processes payment realize requests before regular FIFO queue
+- [ ] Stripe webhook metadata passes reservation token for payment realize requests
+- [ ] Backend rejects concurrent operations on same reservation token with "operation_in_progress" error
+- [ ] CMS tracks reservation token state atomically to prevent multi-tab race conditions
+- [ ] CMS implements server-side 10-minute TTL on reservation token (Redis TTL) that automatically issues rollback if state remains ACTIVE
+- [ ] All queue operations are atomic within a single database transaction; reservation token state transitions guarded by DB-level locks
+- [ ] On idempotency key collision, CMS returns cached response only if request parameters exactly match original (parameter fingerprint validation)
+- [ ] All stock updates are performed via Redis + Sanity in a two-phase pattern: first atomically reserve in Redis (with lock), then patch Sanity. Queue processor uses Redis `WATCH` / `MULTI` for optimistic locking.
+
+## Retry Logic
+- [ ] Create requests retry up to 3 times with exponential backoff (1s base, ±25% jitter), after 3 failures return clear error to user
+- [ ] Delete (rollback) requests retry up to 10 times with exponential backoff (1s base, 30s max, ±25% jitter), escalate to human after max retries
+- [ ] Circuit breaker opens after 5 consecutive failures, returns "service_temporarily_unavailable", closes after 30s cooldown
+- [ ] Transient errors (network, timeout, 5xx) trigger retry with backoff, non-transient errors (4xx, invalid token) fail immediately
+- [ ] CMS validates request parameters match original when using same idempotency key
