@@ -15,6 +15,7 @@ import type {
 } from '@/lib/checkout/reservation/types'
 import { client } from '@/sanity/lib/client'
 import type { ReservedProduct } from '@/lib/checkout/reservation/types'
+import { AtomicReservationManager } from '@/lib/checkout/reservation/atomic-reservation-manager'
 
 // ============================================================================
 // Queue Handler Functions
@@ -22,110 +23,37 @@ import type { ReservedProduct } from '@/lib/checkout/reservation/types'
 
 async function handleReservationCreation(clientBasket: any) {
   const logger = getLogger()
+  const redis = getRedisClient()
+  const atomicManager = new AtomicReservationManager(redis)
 
-  // Fetch product data from Sanity
-  const productIds = clientBasket.products.map((p: any) => p.id)
-  const products = await client.fetch<Array<{
-    _id: string
-    name: string
-    stock: number
-    reservedStock: number
-    pricePln: number
-    slug: { current: string }
-    stripePriceId: string
-    image: string | null
-    brand: { _id: string; name: string; slug: { current: string } } | null
-  }>>(
-    `*[_type == "product" && _id in $ids]{
-      _id, name, stock, reservedStock, pricePln,
-      slug, stripePriceId,
-      "image": image.asset->url,
-      brand->{ _id, name, slug }
-    }`,
-    { ids: productIds }
-  )
+  // Use AtomicReservationManager with WATCH/MULTI pattern
+  const result = await atomicManager.reserveStock(clientBasket)
 
-  // Build reserved products with stock check
-  const reservedProducts: ReservedProduct[] = clientBasket.products.map((item: any) => {
-    const product = products.find(p => p._id === item.id)
-    if (!product) {
-      return {
-        id: item.id,
-        name: 'Unknown Product',
-        stripePriceId: item.stripePriceId,
-        requestedQuantity: item.quantity,
-        reservedQuantity: 0,
-        availableQuantity: 0,
-        pricePln: 0,
-        totalPricePln: 0,
-        imageUrl: null,
-        slug: '',
-        brand: { id: '', name: '', slug: '' }
-      }
-    }
-
-    // Calculate available stock: stock - reservedStock
-    const availableQuantity = Math.max(0, product.stock - product.reservedStock)
-    const reservedQuantity = Math.min(item.quantity, availableQuantity)
-
-    return {
-      id: product._id,
-      name: product.name,
-      stripePriceId: product.stripePriceId || item.stripePriceId,
-      requestedQuantity: item.quantity,
-      reservedQuantity,
-      availableQuantity,
-      pricePln: product.pricePln,
-      totalPricePln: reservedQuantity * product.pricePln,
-      imageUrl: product.image || null,
-      slug: typeof product.slug === 'object' ? product.slug.current : product.slug,
-      brand: product.brand ? {
-        id: product.brand._id,
-        name: product.brand.name,
-        slug: typeof product.brand.slug === 'object' ? product.brand.slug.current : product.brand.slug
-      } : { id: '', name: '', slug: '' }
-    }
-  })
-
-  // Increment reservedStock for reserved items (PRD requirement)
-  for (const rp of reservedProducts) {
-    if (rp.reservedQuantity > 0) {
-      try {
-        await client
-          .patch(rp.id)
-          .inc({ reservedStock: rp.reservedQuantity })
-          .commit()
-
-        logger.info(`Incremented reservedStock for ${rp.id}`, {
-          component: 'ReservationHandler',
-          category: LogCategory.RESERVATION,
-          metadata: {
-            productId: rp.id,
-            reservedQuantity: rp.reservedQuantity,
-            requestedQuantity: rp.requestedQuantity
-          }
-        })
-      } catch (err) {
-        logger.error(`Failed to increment reservedStock for ${rp.id}`, {
-          component: 'ReservationHandler',
-          category: LogCategory.RESERVATION,
-          error: {
-            name: err instanceof Error ? err.name : 'Unknown',
-            message: err instanceof Error ? err.message : String(err)
-          }
-        })
-        throw err
-      }
-    }
+  if (!result.success) {
+    logger.error(`Atomic reservation failed: ${result.error}`, {
+      component: 'ReservationHandler',
+      category: LogCategory.RESERVATION,
+      metadata: { error: result.error }
+    })
+    throw new Error(result.error || 'Reservation failed')
   }
 
-  return reservedProducts
+  logger.info(`Atomic reservation successful: ${result.reservationId}`, {
+    component: 'ReservationHandler',
+    category: LogCategory.RESERVATION,
+    reservationId: result.reservationId,
+    metadata: { productCount: result.products?.length }
+  })
+
+  return result.products
 }
 
 async function handleReservationRollback(payload: any) {
   const logger = getLogger()
+  const redis = getRedisClient()
+  const atomicManager = new AtomicReservationManager(redis)
 
-  if (!payload.products || !Array.isArray(payload.products)) {
+  if (!payload.reservationId || !payload.products || !Array.isArray(payload.products)) {
     logger.error('Invalid rollback payload', {
       component: 'ReservationHandler',
       category: LogCategory.RESERVATION,
@@ -134,41 +62,33 @@ async function handleReservationRollback(payload: any) {
     return
   }
 
-  // Decrement reservedStock for rollback (PRD requirement)
-  for (const product of payload.products) {
-    if (product.id && product.reservedQuantity > 0) {
-      try {
-        await client
-          .patch(product.id)
-          .dec({ reservedStock: product.reservedQuantity })
-          .commit()
+  const success = await atomicManager.rollbackReservation(
+    payload.reservationId,
+    payload.products
+  )
 
-        logger.info(`Decremented reservedStock for rollback: ${product.id}`, {
-          component: 'ReservationHandler',
-          category: LogCategory.RESERVATION,
-          metadata: {
-            productId: product.id,
-            reservedQuantity: product.reservedQuantity
-          }
-        })
-      } catch (err) {
-        logger.error(`Failed to decrement reservedStock for rollback: ${product.id}`, {
-          component: 'ReservationHandler',
-          category: LogCategory.RESERVATION,
-          error: {
-            name: err instanceof Error ? err.name : 'Unknown',
-            message: err instanceof Error ? err.message : String(err)
-          }
-        })
-      }
-    }
+  if (!success) {
+    logger.error(`Atomic rollback failed: ${payload.reservationId}`, {
+      component: 'ReservationHandler',
+      category: LogCategory.RESERVATION,
+      reservationId: payload.reservationId
+    })
+    throw new Error('Rollback failed')
   }
+
+  logger.info(`Atomic rollback successful: ${payload.reservationId}`, {
+    component: 'ReservationHandler',
+    category: LogCategory.RESERVATION,
+    reservationId: payload.reservationId
+  })
 }
 
 async function handleReservationRealization(payload: any) {
   const logger = getLogger()
+  const redis = getRedisClient()
+  const atomicManager = new AtomicReservationManager(redis)
 
-  if (!payload.products || !Array.isArray(payload.products)) {
+  if (!payload.reservationId || !payload.products || !Array.isArray(payload.products)) {
     logger.error('Invalid realization payload', {
       component: 'ReservationHandler',
       category: LogCategory.RESERVATION,
@@ -177,38 +97,25 @@ async function handleReservationRealization(payload: any) {
     return
   }
 
-  // Decrement both stock and reservedStock for payment realization (PRD requirement)
-  for (const product of payload.products) {
-    if (product.id && product.reservedQuantity > 0) {
-      try {
-        await client
-          .patch(product.id)
-          .dec({
-            stock: product.reservedQuantity,
-            reservedStock: product.reservedQuantity
-          })
-          .commit()
+  const success = await atomicManager.realizeReservation(
+    payload.reservationId,
+    payload.products
+  )
 
-        logger.info(`Realized reservation: decremented stock and reservedStock for ${product.id}`, {
-          component: 'ReservationHandler',
-          category: LogCategory.RESERVATION,
-          metadata: {
-            productId: product.id,
-            reservedQuantity: product.reservedQuantity
-          }
-        })
-      } catch (err) {
-        logger.error(`Failed to realize reservation for ${product.id}`, {
-          component: 'ReservationHandler',
-          category: LogCategory.RESERVATION,
-          error: {
-            name: err instanceof Error ? err.name : 'Unknown',
-            message: err instanceof Error ? err.message : String(err)
-          }
-        })
-      }
-    }
+  if (!success) {
+    logger.error(`Atomic realization failed: ${payload.reservationId}`, {
+      component: 'ReservationHandler',
+      category: LogCategory.RESERVATION,
+      reservationId: payload.reservationId
+    })
+    throw new Error('Realization failed')
   }
+
+  logger.info(`Atomic realization successful: ${payload.reservationId}`, {
+    component: 'ReservationHandler',
+    category: LogCategory.RESERVATION,
+    reservationId: payload.reservationId
+  })
 }
 
 export async function POST(request: NextRequest): Promise<NextResponse<APIResponse>> {
