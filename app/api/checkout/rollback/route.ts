@@ -6,11 +6,209 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { v4 as uuidv4 } from 'uuid'
 import { getRedisClient } from '@/lib/checkout/reservation/redis-client'
-import { ReservationTTLManager, IdempotencyManager } from '@/lib/checkout/reservation/redis-managers'
+import { FIFOQueue } from '@/lib/checkout/reservation/fifo-queue'
 import { getLogger } from '@/lib/checkout/reservation/logging'
 import { LogCategory } from '@/lib/checkout/reservation/types'
-import type { APIResponse } from '@/lib/checkout/reservation/types'
+import type {
+  QueueRequest,
+  APIResponse,
+} from '@/lib/checkout/reservation/types'
 import { client } from '@/sanity/lib/client'
+
+// ============================================================================
+// Queue Handler Functions (shared with reserve API)
+// ============================================================================
+
+async function handleReservationCreation(clientBasket: any) {
+  const logger = getLogger()
+
+  // Fetch product data from Sanity
+  const productIds = clientBasket.products.map((p: any) => p.id)
+  const products = await client.fetch<Array<{
+    _id: string
+    name: string
+    stock: number
+    reservedStock: number
+    pricePln: number
+    slug: { current: string }
+    stripePriceId: string
+    image: string | null
+    brand: { _id: string; name: string; slug: { current: string } } | null
+  }>>(
+    `*[_type == "product" && _id in $ids]{
+      _id, name, stock, reservedStock, pricePln,
+      slug, stripePriceId,
+      "image": image.asset->url,
+      brand->{ _id, name, slug }
+    }`,
+    { ids: productIds }
+  )
+
+  // Build reserved products with stock check
+  const reservedProducts: any[] = clientBasket.products.map((item: any) => {
+    const product = products.find(p => p._id === item.id)
+    if (!product) {
+      return {
+        id: item.id,
+        name: 'Unknown Product',
+        stripePriceId: item.stripePriceId,
+        requestedQuantity: item.quantity,
+        reservedQuantity: 0,
+        availableQuantity: 0,
+        pricePln: 0,
+        totalPricePln: 0,
+        imageUrl: null,
+        slug: '',
+        brand: { id: '', name: '', slug: '' }
+      }
+    }
+
+    // Calculate available stock: stock - reservedStock
+    const availableQuantity = Math.max(0, product.stock - product.reservedStock)
+    const reservedQuantity = Math.min(item.quantity, availableQuantity)
+
+    return {
+      id: product._id,
+      name: product.name,
+      stripePriceId: product.stripePriceId || item.stripePriceId,
+      requestedQuantity: item.quantity,
+      reservedQuantity,
+      availableQuantity,
+      pricePln: product.pricePln,
+      totalPricePln: reservedQuantity * product.pricePln,
+      imageUrl: product.image || null,
+      slug: typeof product.slug === 'object' ? product.slug.current : product.slug,
+      brand: product.brand ? {
+        id: product.brand._id,
+        name: product.brand.name,
+        slug: typeof product.brand.slug === 'object' ? product.brand.slug.current : product.brand.slug
+      } : { id: '', name: '', slug: '' }
+    }
+  })
+
+  // Increment reservedStock for reserved items (PRD requirement)
+  for (const rp of reservedProducts) {
+    if (rp.reservedQuantity > 0) {
+      try {
+        await client
+          .patch(rp.id)
+          .inc({ reservedStock: rp.reservedQuantity })
+          .commit()
+
+        logger.info(`Incremented reservedStock for ${rp.id}`, {
+          component: 'RollbackHandler',
+          category: LogCategory.RESERVATION,
+          metadata: {
+            productId: rp.id,
+            reservedQuantity: rp.reservedQuantity,
+            requestedQuantity: rp.requestedQuantity
+          }
+        })
+      } catch (err) {
+        logger.error(`Failed to increment reservedStock for ${rp.id}`, {
+          component: 'RollbackHandler',
+          category: LogCategory.RESERVATION,
+          error: {
+            name: err instanceof Error ? err.name : 'Unknown',
+            message: err instanceof Error ? err.message : String(err)
+          }
+        })
+        throw err
+      }
+    }
+  }
+
+  return reservedProducts
+}
+
+async function handleReservationRollback(payload: any) {
+  const logger = getLogger()
+
+  if (!payload.products || !Array.isArray(payload.products)) {
+    logger.error('Invalid rollback payload', {
+      component: 'RollbackHandler',
+      category: LogCategory.RESERVATION,
+      metadata: { payload }
+    })
+    return
+  }
+
+  // Decrement reservedStock for rollback (PRD requirement)
+  for (const product of payload.products) {
+    if (product.id && product.reservedQuantity > 0) {
+      try {
+        await client
+          .patch(product.id)
+          .dec({ reservedStock: product.reservedQuantity })
+          .commit()
+
+        logger.info(`Decremented reservedStock for rollback: ${product.id}`, {
+          component: 'RollbackHandler',
+          category: LogCategory.RESERVATION,
+          metadata: {
+            productId: product.id,
+            reservedQuantity: product.reservedQuantity
+          }
+        })
+      } catch (err) {
+        logger.error(`Failed to decrement reservedStock for rollback: ${product.id}`, {
+          component: 'RollbackHandler',
+          category: LogCategory.RESERVATION,
+          error: {
+            name: err instanceof Error ? err.name : 'Unknown',
+            message: err instanceof Error ? err.message : String(err)
+          }
+        })
+      }
+    }
+  }
+}
+
+async function handleReservationRealization(payload: any) {
+  const logger = getLogger()
+
+  if (!payload.products || !Array.isArray(payload.products)) {
+    logger.error('Invalid realization payload', {
+      component: 'RollbackHandler',
+      category: LogCategory.RESERVATION,
+      metadata: { payload }
+    })
+    return
+  }
+
+  // Decrement both stock and reservedStock for payment realization (PRD requirement)
+  for (const product of payload.products) {
+    if (product.id && product.reservedQuantity > 0) {
+      try {
+        await client
+          .patch(product.id)
+          .dec({
+            stock: product.reservedQuantity,
+            reservedStock: product.reservedQuantity
+          })
+          .commit()
+
+        logger.info(`Realized reservation: decremented stock and reservedStock for ${product.id}`, {
+          component: 'RollbackHandler',
+          category: LogCategory.RESERVATION,
+          metadata: {
+            productId: product.id,
+            reservedQuantity: product.reservedQuantity
+          }
+        })
+      } catch (err) {
+        logger.error(`Failed to realize reservation for ${product.id}`, {
+          component: 'RollbackHandler',
+          category: LogCategory.RESERVATION,
+          error: {
+            name: err instanceof Error ? err.name : 'Unknown',
+            message: err instanceof Error ? err.message : String(err)
+          }
+        })
+      }
+    }
+  }
+}
 
 export async function POST(request: NextRequest): Promise<NextResponse<APIResponse>> {
   const logger = getLogger()
@@ -60,104 +258,70 @@ export async function POST(request: NextRequest): Promise<NextResponse<APIRespon
       } as APIResponse, { status: 400 })
     }
 
-    const { reservationToken } = body
-
-    // Check idempotency cache
+    // Initialize queue with handlers
     const redis = getRedisClient()
-    const idempotencyManager = new IdempotencyManager(redis)
-    const cached = await idempotencyManager.getResponse(idempotencyKey)
-
-    if (cached) {
-      const currentFingerprint = JSON.stringify(body)
-      if (cached.requestFingerprint !== currentFingerprint) {
-        return NextResponse.json({
-          success: false,
-          requestId,
-          status: 'failed',
-          error: {
-            code: 'IDEMPOTENCY_KEY_PARAMETER_MISMATCH',
-            message: 'Request parameters do not match original'
-          }
-        } as APIResponse, { status: 400 })
+    const queue = new FIFOQueue(
+      redis,
+      async (request: QueueRequest) => {
+        // Handle reservation creation
+        await handleReservationCreation(request.payload.clientBasket)
+      },
+      async (request: QueueRequest) => {
+        // Handle rollback
+        await handleReservationRollback(request.payload)
+      },
+      async (request: QueueRequest) => {
+        // Handle realization
+        await handleReservationRealization(request.payload)
       }
-
-      return NextResponse.json({
-        success: true,
-        requestId,
-        status: 'completed',
-        data: cached.response
-      } as APIResponse, { status: 200 })
-    }
-
-    // Check reservation exists in Redis
-    const ttlManager = new ReservationTTLManager(redis)
-    const reservationData = await ttlManager.checkReservationToken(reservationToken)
-
-    if (!reservationData) {
-      logger.warn('Rollback attempted for non-existent/expired reservation', {
-        component: 'RollbackAPI',
-        category: LogCategory.RESERVATION,
-        requestId,
-        reservationToken
-      })
-      // Still return success for idempotency (reservation may have already expired)
-    }
-
-    // Remove Redis TTL key
-    await ttlManager.removeReservationToken(reservationToken)
-
-    // Restore stock in Sanity (fetch reservation data to know quantities)
-    // In production, reservation data would be stored in Sanity or Redis
-    // For now, the client sends the products to rollback
-    if (body.products && Array.isArray(body.products)) {
-      for (const product of body.products) {
-        if (product.id && product.reservedQuantity > 0) {
-          try {
-            await client
-              .patch(product.id)
-              .inc({ stock: product.reservedQuantity })
-              .commit()
-          } catch (err) {
-            logger.error(`Failed to restore stock for ${product.id}`, {
-              component: 'RollbackAPI',
-              category: LogCategory.RESERVATION,
-              error: {
-                name: 'SanityPatchError',
-                message: err instanceof Error ? err.message : String(err)
-              }
-            })
-          }
-        }
-      }
-    }
-
-    // Build response
-    const responseData = {
-      message: 'Reservation rolled back successfully',
-      rollbackCompleted: true
-    }
-
-    // Store in idempotency cache
-    await idempotencyManager.storeResponse(
-      idempotencyKey,
-      responseData,
-      JSON.stringify(body)
     )
 
-    logger.info('Reservation rolled back successfully', {
+    // Enqueue rollback request
+    const queueRequest: QueueRequest = {
+      id: uuidv4(),
+      type: 'rollback_reservation',
+      idempotencyKey,
+      priority: 'normal',
+      reservationToken: body.reservationToken,
+      payload: {
+        reservationToken: body.reservationToken,
+        products: body.products
+      },
+      retryCount: 0
+    }
+
+    const queueResponse = await queue.enqueue(queueRequest)
+
+    if (queueResponse.status === 'error') {
+      return NextResponse.json({
+        success: false,
+        requestId,
+        status: 'failed',
+        error: {
+          code: queueResponse.error || 'QUEUE_ERROR',
+          message: 'Failed to process rollback request'
+        }
+      } as APIResponse, { status: 500 })
+    }
+
+    logger.info('Rollback request enqueued', {
       component: 'RollbackAPI',
-      category: LogCategory.RESERVATION,
+      category: LogCategory.QUEUE,
       requestId,
-      reservationToken,
+      reservationToken: body.reservationToken,
       duration: Date.now() - startTime
     })
 
+    // Return processing status for async queue processing
     return NextResponse.json({
       success: true,
       requestId,
-      status: 'completed',
-      data: responseData
-    } as APIResponse, { status: 200 })
+      status: 'processing',
+      data: {
+        reservationId: queueResponse.requestId,
+        message: 'Rollback is being processed'
+      }
+    } as APIResponse, { status: 202 })
 
   } catch (error) {
     const err = error instanceof Error ? error : new Error(String(error))
