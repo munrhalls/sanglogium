@@ -88,7 +88,7 @@ Reserved basket request to queue should be idempotent up to 3 tries. CMS always 
 
 ## Retry Logic
 - [ ] Create requests retry up to 3 times with exponential backoff (1s base, ±25% jitter), after 3 failures return clear error to user
-- [ ] Delete (rollback) requests retry up to 10 times with exponential backoff (1s base, 30s max, ±25% jitter), escalate to human after max retries
+- [ ] Delete (rollback) requests retry up to 10 times with exponential backoff (1s base, 30s max, ±25% jitter), log as stuck-reservation after max retries
 - [ ] Circuit breaker opens after 5 consecutive failures, returns "service_temporarily_unavailable", closes after 30s cooldown
 - [ ] Transient errors (network, timeout, 5xx) trigger retry with backoff, non-transient errors (4xx, invalid token) fail immediately
 - [ ] CMS validates request parameters match original when using same idempotency key
