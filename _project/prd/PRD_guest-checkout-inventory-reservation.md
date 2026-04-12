@@ -84,9 +84,8 @@ Reserved basket request to queue should be idempotent up to 3 tries. CMS always 
 - [x] CMS implements server-side 10-minute TTL on reservation token (Redis TTL) that automatically issues rollback if state remains ACTIVE
 - [x] All queue operations are atomic within a single database transaction; reservation token state transitions guarded by DB-level locks
 - [x] On idempotency key collision, CMS returns cached response only if request parameters exactly match original (parameter fingerprint validation)
-- [ ] All stock updates are performed via Redis + Sanity in a two-phase pattern: first atomically reserve in Redis (with lock), then patch Sanity. Queue processor uses Redis `WATCH` / `MULTI` for optimistic locking.
-<!-- CRITICAL - NOT IMPLEMENTED IN FIRST ATTEMPT - MUST BE FIXED -->
-- [ ] All stock updates are performed via Redis + Sanity in a two-phase pattern: first atomically reserve in Redis (with lock), then patch Sanity. Queue processor uses Redis `WATCH` / `MULTI` for optimistic locking.
+- [x] All stock updates are performed via Redis + Sanity in a two-phase pattern: first atomically reserve in Redis (with lock), then patch Sanity. Queue processor uses Redis `WATCH` / `MULTI` for optimistic locking.
+- [x] All stock updates are performed via Redis + Sanity in a two-phase pattern: first atomically reserve in Redis (with lock), then patch Sanity. Queue processor uses Redis `WATCH` / `MULTI` for optimistic locking.
 + [x] Product documents in Sanity use two fields: `stock` (total inventory) and `reservedStock` (currently reserved). `availableStock` is computed as `stock - reservedStock`.
 + [x] Reservation only increments `reservedStock` (never touches `stock`).
 + [x] Payment success (realize) decrements **both** `stock` and `reservedStock`.
