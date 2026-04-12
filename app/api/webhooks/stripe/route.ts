@@ -3,6 +3,8 @@ import { headers } from 'next/headers';
 import { stripe } from '@/lib/stripe';
 import { Redis } from '@upstash/redis';
 import { client } from '@/sanity/lib/client';
+import { getRedisClient } from '@/lib/checkout/reservation/redis-client';
+import { ReservationTTLManager } from '@/lib/checkout/reservation/redis-managers';
 
 // Redis client
 const redis = new Redis({
@@ -201,6 +203,20 @@ export async function POST(request: NextRequest) {
 
         console.log('Payment canceled:', canceledPaymentIntent.id);
         break;
+
+      case 'checkout.session.completed': {
+        const session = event.data.object;
+        const reservationToken = session.metadata?.reservation_token;
+
+        if (reservationToken) {
+          // Realize reservation: remove TTL key (stock already decremented)
+          const reservationRedis = getRedisClient();
+          const ttlManager = new ReservationTTLManager(reservationRedis);
+          await ttlManager.removeReservationToken(reservationToken);
+          console.log('Reservation realized via checkout.session.completed:', reservationToken);
+        }
+        break;
+      }
 
       default:
         console.log('Unhandled event type:', event.type);
