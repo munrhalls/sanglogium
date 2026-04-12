@@ -19,6 +19,8 @@ export interface SearchProduct {
   brand: { _id: string; name: string; slug: string } | null;
   displayPrice: number;
   stock: number;
+  reservedStock: number;
+  availableStock: number;
   slug: { current: string };
   image: any;
 }
@@ -83,6 +85,8 @@ export async function searchProductsFull(query: string, sort?: string): Promise<
       name,
       displayPrice,
       stock,
+      reservedStock,
+      "availableStock": stock - reservedStock,
       stripePriceId,
       "brand": brand->{ _id, name, slug },
       slug,
