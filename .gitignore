@@ -67,3 +67,8 @@ env/
 __pycache__/
 *.pyc
 scripts/image-pipeline/.env
+
+# Test artifacts and generated data
+test-results/
+playwright-report/
+data/catalogue-index.json
