@@ -1,4 +1,4 @@
-import { currentUser } from "@clerk/nextjs/server";
+// import { currentUser } from "@clerk/nextjs/server";
 import { backendClient } from "@/sanity/lib/backendClient";
 import { getCheckoutCookie } from "@/lib/utils/cookies";
 import CheckoutProvider from "./CheckoutProvider";
@@ -10,7 +10,8 @@ export default async function CheckoutLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const user = await currentUser();
+  // const user = await currentUser();
+  const user = null; // DISABLED CLERK
 
   let initialAddress: Address | null = null;
   let initialStatus: Status = "EDITING";

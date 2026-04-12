@@ -1,11 +1,14 @@
 "use client";
-import { useUser, useClerk } from "@clerk/nextjs";
+// import { useUser, useClerk } from "@clerk/nextjs";
 import Link from "next/link";
 import { useState } from "react";
 
 export default function AuthMenu() {
-  const { user, isLoaded } = useUser();
-  const { signOut } = useClerk();
+  // const { user, isLoaded } = useUser();
+  // const { signOut } = useClerk();
+  const user = null; // DISABLED CLERK
+  const isLoaded = true; // DISABLED CLERK
+  const signOut = () => {}; // DISABLED CLERK
   const [isOpen, setIsOpen] = useState(false);
 
   // Handle logout: clear both Clerk session AND Stripe Link session
@@ -44,14 +47,14 @@ export default function AuthMenu() {
         onClick={() => setIsOpen(true)}
         className="h-8 w-8 rounded-full bg-blue-500 text-black"
       >
-        {user?.firstName?.[0] || "U"}
+        {user?.firstName?.[0] || "G"}
       </button>
       {}
       {isOpen && (
         <div className="fixed right-0 top-0 h-full w-64 bg-white text-black shadow-lg">
           <button onClick={() => setIsOpen(false)}>Close</button>
           <div>
-            <p>Welcome, {user?.firstName || "Guest"}!</p>
+            <p>Welcome, Guest!</p>
             <button className="flex w-full items-center space-x-2 rounded p-2 text-left hover:bg-gray-100">
               <span>Manage Account</span>
             </button>
