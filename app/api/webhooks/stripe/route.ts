@@ -5,6 +5,9 @@ import { Redis } from '@upstash/redis';
 import { client } from '@/sanity/lib/client';
 import { getRedisClient } from '@/lib/checkout/reservation/redis-client';
 import { ReservationTTLManager } from '@/lib/checkout/reservation/redis-managers';
+import { FIFOQueue } from '@/lib/checkout/reservation/fifo-queue';
+import { realizeReservationHandler } from '@/lib/checkout/reservation/sanity-handlers';
+import { v4 as uuidv4 } from 'uuid';
 
 // Redis client
 const redis = new Redis({
@@ -209,11 +212,33 @@ export async function POST(request: NextRequest) {
         const reservationToken = session.metadata?.reservation_token;
 
         if (reservationToken) {
-          // Realize reservation: remove TTL key (stock already decremented)
-          const reservationRedis = getRedisClient();
-          const ttlManager = new ReservationTTLManager(reservationRedis);
-          await ttlManager.removeReservationToken(reservationToken);
-          console.log('Reservation realized via checkout.session.completed:', reservationToken);
+          // Initialize queue with realize handler
+          const queueRedis = getRedisClient();
+          const queue = new FIFOQueue(
+            queueRedis,
+            undefined, // create handler not needed
+            undefined, // rollback handler not needed
+            realizeReservationHandler
+          );
+
+          // Enqueue priority request to realize reservation
+          const realizeResponse = await queue.enqueue({
+            id: uuidv4(),
+            type: 'realize_reservation',
+            priority: 'high', // Priority queue for payment success
+            idempotencyKey: `realize-${session.id}`,
+            reservationToken,
+            payload: {
+              sessionId: session.id,
+              paymentIntentId: session.payment_intent as string
+            }
+          });
+
+          if (realizeResponse.status === 'error') {
+            console.error('Failed to enqueue reservation realization:', realizeResponse.error);
+          } else {
+            console.log('Reservation realization enqueued with priority:', reservationToken);
+          }
         }
         break;
       }

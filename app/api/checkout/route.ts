@@ -6,6 +6,10 @@ import type {
   ServerProduct,
   BasketCheckoutItem,
 } from "@/app/(store)/checkout/checkout.types";
+import { v4 as uuidv4 } from 'uuid';
+import { FIFOQueue } from '@/lib/checkout/reservation/fifo-queue';
+import { createReservationHandler, rollbackReservationHandler } from '@/lib/checkout/reservation/sanity-handlers';
+import { getRedisClient } from '@/lib/checkout/reservation/redis-client';
 
 // Simple in-memory rate limiting (use Redis in production)
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
@@ -87,8 +91,6 @@ function validateBasket(basket: unknown): BasketCheckoutItem[] | null {
 }
 
 export async function POST(req: NextRequest) {
-  const reservedItems: Array<{ productId: string; quantity: number }> = [];
-
   try {
     // Rate limiting check
     const clientId =
@@ -132,8 +134,7 @@ export async function POST(req: NextRequest) {
       { productIds }
     );
 
-    const lineItems: Array<{ price: string; quantity: number }> = [];
-
+    // Check stock availability
     for (const clientItem of publicBasket) {
       const serverProduct = serverProducts.find(
         (p) => p._id === clientItem._id
@@ -155,20 +156,51 @@ export async function POST(req: NextRequest) {
           { status: 409 }
         );
       }
+    }
 
+    // Initialize queue with handlers
+    const redis = getRedisClient();
+    const queue = new FIFOQueue(
+      redis,
+      createReservationHandler,
+      rollbackReservationHandler
+    );
+
+    // Generate idempotency key
+    const idempotencyKey = `checkout-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+
+    // Enqueue reservation request
+    const reservationResponse = await queue.enqueue({
+      id: uuidv4(),
+      type: 'create_reservation',
+      priority: 'normal',
+      idempotencyKey,
+      payload: {
+        products: publicBasket.map(item => ({
+          productId: item._id,
+          quantity: item.quantity
+        }))
+      }
+    });
+
+    if (reservationResponse.status === 'error') {
+      return NextResponse.json(
+        { error: reservationResponse.error },
+        { status: 500 }
+      );
+    }
+
+    // Wait for processing (in production, this would be async with polling/webhooks)
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    // Create Stripe session
+    const lineItems: Array<{ price: string; quantity: number }> = [];
+    for (const clientItem of publicBasket) {
+      const serverProduct = serverProducts.find(
+        (p) => p._id === clientItem._id
+      );
       lineItems.push({
-        price: serverProduct.stripePriceId,
-        quantity: clientItem.quantity,
-      });
-
-      await checkoutClient
-        .patch(serverProduct._id)
-        .inc({ reservedStock: clientItem.quantity })
-        .ifRevisionId(serverProduct._rev)
-        .commit();
-
-      reservedItems.push({
-        productId: serverProduct._id,
+        price: serverProduct!.stripePriceId,
         quantity: clientItem.quantity,
       });
     }
@@ -189,47 +221,47 @@ export async function POST(req: NextRequest) {
             .map((item) => `${item._id}:${item.quantity}`)
             .join(","),
           clerkUserId: user?.id || "guest",
+          reservationToken: reservationResponse.data?.reservationToken || '',
         },
         expires_at: Math.floor(Date.now() / 1000) + 25 * 60,
       });
     } catch (stripeError) {
       console.error("Stripe session creation failed:", stripeError);
-      await rollbackReservations(reservedItems);
+
+      // Enqueue rollback request
+      if (reservationResponse.data?.reservationToken) {
+        await queue.enqueue({
+          id: uuidv4(),
+          type: 'rollback_reservation',
+          priority: 'high',
+          idempotencyKey: `rollback-${Date.now()}`,
+          reservationToken: reservationResponse.data.reservationToken,
+          payload: {
+            products: publicBasket.map(item => ({
+              productId: item._id,
+              quantity: item.quantity
+            }))
+          }
+        });
+      }
+
       return NextResponse.json(
         { error: "Failed to create payment session" },
         { status: 500 }
       );
     }
 
-    return NextResponse.json({ client_secret: session.client_secret });
+    return NextResponse.json({
+      client_secret: session.client_secret,
+      reservationToken: reservationResponse.data?.reservationToken
+    });
   } catch (error) {
     console.error("Checkout error:", error);
-    if (reservedItems.length > 0) {
-      await rollbackReservations(reservedItems);
-    }
     // Generic error message to avoid information leakage
     return NextResponse.json(
       { error: "An error occurred during checkout. Please try again." },
       { status: 500 }
     );
-  }
-}
-
-async function rollbackReservations(
-  items: Array<{ productId: string; quantity: number }>
-) {
-  for (const item of items) {
-    try {
-      await checkoutClient
-        .patch(item.productId)
-        .dec({ reservedStock: item.quantity })
-        .commit();
-    } catch (rollbackError) {
-      console.error(
-        `Failed to rollback reservation for ${item.productId}:`,
-        rollbackError
-      );
-    }
   }
 }
 
