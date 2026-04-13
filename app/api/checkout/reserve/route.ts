@@ -26,8 +26,21 @@ async function handleReservationCreation(clientBasket: any) {
   const redis = getRedisClient()
   const atomicManager = new AtomicReservationManager(redis)
 
+  console.log('handleReservationCreation called with:', JSON.stringify(clientBasket, null, 2))
+
   // Use AtomicReservationManager with WATCH/MULTI pattern
-  const result = await atomicManager.reserveStock(clientBasket)
+  let result;
+  try {
+    result = await atomicManager.reserveStock(clientBasket)
+    console.log('AtomicReservationManager result:', JSON.stringify(result, null, 2))
+    console.log('Products in result:', result.products?.length || 0)
+    if (result.products && result.products.length > 0) {
+      console.log('First product:', JSON.stringify(result.products[0], null, 2))
+    }
+  } catch (error) {
+    console.error('AtomicReservationManager threw error:', error)
+    throw error
+  }
 
   if (!result.success) {
     logger.error(`Atomic reservation failed: ${result.error}`, {

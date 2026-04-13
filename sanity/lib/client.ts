@@ -16,6 +16,20 @@ export const client = createClient({
   perspective: "published",
 });
 
+// Write-enabled client for atomic operations
+export const writeClient = createClient({
+  projectId,
+  dataset,
+  apiVersion,
+  useCdn: false, // Must be false for writes
+  token: process.env.SANITY_API_TOKEN,
+});
+
+// Debug: Verify token is loaded
+console.log('WriteClient token loaded:', process.env.SANITY_API_TOKEN ? 'YES' : 'NO');
+console.log('WriteClient projectId:', projectId);
+console.log('WriteClient dataset:', dataset);
+
 const builder = imageUrlBuilder(client);
 
 // Helper to generate image URLs from Sanity source

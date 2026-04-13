@@ -21,6 +21,13 @@ export function CheckoutButton() {
   const setError = useReservedBasketStore((s) => s.setError)
 
   const handleCheckoutAction = useCallback(async () => {
+    // Bus Stop 1: Button Click Handler
+    console.log('TRACE: Checkout button clicked', {
+      requestId: uuidv4(),
+      idempotencyKey: uuidv4(),
+      timestamp: Date.now()
+    });
+
     // Validate basket not empty
     if (basket.length === 0) {
       setError('Your basket is empty')
@@ -39,23 +46,45 @@ export function CheckoutButton() {
     try {
       const idempotencyKey = uuidv4()
 
+      // Bus Stop 2: Request Formation
+      const requestPayload = {
+        clientBasket: {
+          products: basket.map((item) => ({
+            id: item._id,
+            stripePriceId: item.stripePriceId || '',
+            quantity: item.quantity,
+          })),
+          totalAmount: basket.reduce((sum, item) => sum + item.displayPrice * item.quantity, 0),
+          currency: 'PLN',
+        },
+      };
+
+      console.log('TRACE: Queue request formed', {
+        request: {
+          idempotencyKey,
+          payloadKeys: Object.keys(requestPayload),
+          clientBasketKeys: Object.keys(requestPayload.clientBasket),
+          productCount: requestPayload.clientBasket.products.length,
+          totalAmount: requestPayload.clientBasket.totalAmount,
+          currency: requestPayload.clientBasket.currency,
+        }
+      });
+
+      // Bus Stop 3: API Call Initiation
+      console.log('TRACE: API call initiated', {
+        url: '/api/checkout/reserve',
+        method: 'POST',
+        bodySize: JSON.stringify(requestPayload).length,
+        headers: { 'Content-Type': 'application/json', 'Idempotency-Key': idempotencyKey }
+      });
+
       const response = await fetch('/api/checkout/reserve', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Idempotency-Key': idempotencyKey,
         },
-        body: JSON.stringify({
-          clientBasket: {
-            products: basket.map((item) => ({
-              id: item._id,
-              stripePriceId: item.stripePriceId || '',
-              quantity: item.quantity,
-            })),
-            totalAmount: basket.reduce((sum, item) => sum + item.displayPrice * item.quantity, 0),
-            currency: 'PLN',
-          },
-        }),
+        body: JSON.stringify(requestPayload),
       })
 
       const result = await response.json()

@@ -6,7 +6,7 @@ import type Redis from 'ioredis'
 import { v4 as uuidv4 } from 'uuid'
 import { getLogger } from './logging'
 import { LogCategory } from './types'
-import { client } from '@sanity/client'
+import { client, writeClient } from '@/sanity/lib/client'
 
 interface StockCheck {
   productId: string
@@ -153,7 +153,7 @@ export class AtomicReservationManager {
     reservationId: string
   ): Promise<ReservationResult> {
     const productIds = products.map(p => p.id)
-    
+
     // Fetch current stock from Sanity
     const sanityProducts = await client.fetch<Array<{
       _id: string
@@ -170,7 +170,7 @@ export class AtomicReservationManager {
         _id, name, stock, reservedStock, pricePln,
         slug, stripePriceId,
         "image": image.asset->url,
-        brand->{ _id, name, slug }
+        brand->{_id, name, slug}
       }`,
       { ids: productIds }
     )
@@ -228,7 +228,7 @@ export class AtomicReservationManager {
 
     // Atomic Redis operation with WATCH/MULTI
     const watchKeys = redisLocks.map(lock => lock.key)
-    
+
     // Start WATCH transaction
     await this.redis.watch(...watchKeys)
 
@@ -246,7 +246,7 @@ export class AtomicReservationManager {
 
     // MULTI transaction to set locks
     const multi = this.redis.multi()
-    
+
     // Set locks with 5-minute TTL
     for (const lock of redisLocks) {
       multi.setex(lock.key, 300, lock.value) // 5 minutes
@@ -284,7 +284,7 @@ export class AtomicReservationManager {
   ): Promise<ReservationResult> {
     try {
       // Increment reservedStock for all reserved items
-      const sanityTransaction = client.transaction()
+      const sanityTransaction = writeClient.transaction()
 
       for (const product of products) {
         if (product.reservedQuantity > 0) {
@@ -293,7 +293,9 @@ export class AtomicReservationManager {
         }
       }
 
+      console.log('Committing Sanity transaction...')
       await sanityTransaction.commit()
+      console.log('Sanity transaction committed successfully')
 
       return {
         success: true,
@@ -324,12 +326,12 @@ export class AtomicReservationManager {
   private async commitRedisLocks(reservationId: string): Promise<void> {
     const reservationKey = `reservation:${reservationId}`
     const reservation = await this.redis.get(reservationKey)
-    
+
     if (reservation) {
       const data = JSON.parse(reservation)
       data.status = 'active'
       data.committedAt = new Date().toISOString()
-      
+
       await this.redis.setex(reservationKey, 600, JSON.stringify(data)) // 10 minutes TTL
     }
   }
@@ -342,19 +344,19 @@ export class AtomicReservationManager {
       // Get reservation data to find locks
       const reservationKey = `reservation:${reservationId}`
       const reservation = await this.redis.get(reservationKey)
-      
+
       if (reservation) {
         const data = JSON.parse(reservation)
-        
+
         // Delete all stock locks for this reservation
         const pipeline = this.redis.pipeline()
-        
+
         if (data.products) {
           for (const product of data.products) {
             pipeline.del(`stock_lock:${product.id}`)
           }
         }
-        
+
         pipeline.del(reservationKey)
         await pipeline.exec()
       }
@@ -377,7 +379,7 @@ export class AtomicReservationManager {
   async rollbackReservation(reservationId: string, products: any[]): Promise<boolean> {
     try {
       // Phase 1: Decrement reservedStock in Sanity
-      const sanityTransaction = client.transaction()
+      const sanityTransaction = writeClient.transaction()
 
       for (const product of products) {
         if (product.id && product.reservedQuantity > 0) {
@@ -386,7 +388,9 @@ export class AtomicReservationManager {
         }
       }
 
+      console.log('Committing Sanity transaction...')
       await sanityTransaction.commit()
+      console.log('Sanity transaction committed successfully')
 
       // Phase 2: Clean up Redis
       await this.rollbackRedisLocks(reservationId)
@@ -420,19 +424,21 @@ export class AtomicReservationManager {
   async realizeReservation(reservationId: string, products: any[]): Promise<boolean> {
     try {
       // Phase 1: Decrement both stock and reservedStock in Sanity
-      const sanityTransaction = client.transaction()
+      const sanityTransaction = writeClient.transaction()
 
       for (const product of products) {
         if (product.id && product.reservedQuantity > 0) {
           sanityTransaction.patch(product.id)
-            .dec({ 
+            .dec({
               stock: product.reservedQuantity,
               reservedStock: product.reservedQuantity
             })
         }
       }
 
+      console.log('Committing Sanity transaction...')
       await sanityTransaction.commit()
+      console.log('Sanity transaction committed successfully')
 
       // Phase 2: Clean up Redis
       await this.rollbackRedisLocks(reservationId)
