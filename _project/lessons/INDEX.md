@@ -890,6 +890,46 @@
 
 ---
 
+## Keyword: test-drift
+
+| Lesson | Severity | Summary |
+|----------|---------|---------|
+| [failures/test-implementation-drift.md](failures/test-implementation-drift.md) | Critical | Tests copied functions instead of importing, creating phantom coverage and false confidence |
+
+---
+
+## Keyword: import-only
+
+| Lesson | Severity | Summary |
+|----------|---------|---------|
+| [failures/test-implementation-drift.md](failures/test-implementation-drift.md) | Critical | Unit tests MUST import functions directly from source files - no copying, no recreating |
+
+---
+
+## Keyword: phantom-tests
+
+| Lesson | Severity | Summary |
+|----------|---------|---------|
+| [failures/test-implementation-drift.md](failures/test-implementation-drift.md) | Critical | 3 test files tested functions that don't exist in implementation |
+
+---
+
+## Keyword: test-verification
+
+| Lesson | Severity | Summary |
+|----------|---------|---------|
+| [failures/test-implementation-drift.md](failures/test-implementation-drift.md) | Critical | Create /audit-tests command to detect phantom implementations |
+
+---
+
+## Keyword: unit-testing
+
+| Lesson | Severity | Summary |
+|----------|---------|---------|
+| [failures/test-implementation-drift.md](failures/test-implementation-drift.md) | Critical | Import discipline prevents phantom tests and implementation drift |
+
+---
+
 ## Keyword: test-organization
 
 | Lesson | Severity | Summary |
