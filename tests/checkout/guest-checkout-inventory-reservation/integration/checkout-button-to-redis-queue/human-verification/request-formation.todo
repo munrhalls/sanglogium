@@ -9,7 +9,7 @@ Button click handling and API request formation
 
 ### Bus Stop 1: Button Click Handler
 **Location:** Checkout button component
-**Expected:** 
+**Expected:**
 - Button click triggers onClick handler
 - UUID v4 generated for request ID
 - UUID v4 generated for idempotency key
@@ -22,10 +22,10 @@ Button click handling and API request formation
 
 **Console Log to Add:**
 ```typescript
-console.log('TRACE: Checkout button clicked', { 
-  requestId: uuidv4(), 
+console.log('TRACE: Checkout button clicked', {
+  requestId: uuidv4(),
   idempotencyKey: uuidv4(),
-  timestamp: Date.now() 
+  timestamp: Date.now()
 });
 ```
 
@@ -89,10 +89,10 @@ console.log('TRACE: API call initiated', {
 // In checkout button component
 const handleCheckout = async () => {
   // Stop 1
-  console.log('TRACE: Checkout button clicked', { 
-    requestId: uuidv4(), 
+  console.log('TRACE: Checkout button clicked', {
+    requestId: uuidv4(),
     idempotencyKey: uuidv4(),
-    timestamp: Date.now() 
+    timestamp: Date.now()
   });
 
   const request: QueueRequest = {
@@ -132,14 +132,14 @@ const handleCheckout = async () => {
 ## Manual Verification Checklist
 
 ### Before Testing
-- [ ] Next.js dev server running (`npm run dev`)
-- [ ] Browser dev tools opened to Console and Network tabs
-- [ ] Test products in basket with stripePriceId
+✔ [ ] Next.js dev server running (`npm run dev`) @done(26-04-13 10:37)
+✔ [ ] Browser dev tools opened to Console and Network tabs @done(26-04-13 10:38)
+✔ [ ] Test products in basket with stripePriceId @done(26-04-13 10:38)
 
 ### During Testing
-- [ ] Console shows Stop 1-3 TRACE logs
-- [ ] Network tab shows POST to /api/checkout/reserve
-- [ ] Request body contains valid QueueRequest
+✔ [ ] Console shows Stop 1-3 TRACE logs @done(26-04-13 11:13)
+✔ [ ] Network tab shows POST to /api/checkout/reserve @done(26-04-13 11:13)
+✔ [ ] Request body contains valid QueueRequest @done(26-04-13 11:13)
 
 ### Expected Results
 - All 3 bus stops show PASS status

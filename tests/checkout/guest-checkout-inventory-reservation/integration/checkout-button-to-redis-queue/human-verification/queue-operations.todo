@@ -1,8 +1,8 @@
 # Human Verification: Queue Operations
 
 ## Scope
-Redis queue addition and successful operations
-**IN SCOPE:** Server receives request -> Redis connection -> Queue enqueue -> Response formation
+Redis Stream queue operations and token management
+**IN SCOPE:** Server receives request -> Redis connection -> Redis Stream XADD -> Stream processing -> Response formation
 **OUT OF SCOPE:** Request formation, error handling, client-side response
 
 ## Bus Stops
@@ -31,17 +31,19 @@ console.log('TRACE: Server received request', {
 
 ---
 
-### Bus Stop 5: Redis Connection
-**Location:** Redis client initialization
+### Bus Stop 5: Redis Connection + Stream Init
+**Location:** Redis client initialization + FIFOQueue constructor
 **Expected:**
 - Redis connection established (localhost:6379)
 - Database selected (DB 0 or configured)
 - Connection status: "ready"
+- Consumer groups created on queue:stream:priority and queue:stream:normal
 
 **Manual Verification:**
 1. Check Redis is running: `redis-cli ping`
 2. Verify connection in server logs
-3. Check for connection errors
+3. Verify streams exist: `redis-cli XINFO STREAM queue:stream:normal`
+4. Verify consumer group: `redis-cli XINFO GROUPS queue:stream:normal`
 
 **Console Log to Add:**
 ```typescript
@@ -55,25 +57,27 @@ console.log('TRACE: Redis connection status', {
 
 ---
 
-### Bus Stop 6: Queue Enqueue Operation
+### Bus Stop 6: Queue Enqueue via XADD
 **Location:** FIFOQueue.enqueue()
 **Expected:**
-- Request added to Redis queue
-- TTL set (e.g., 300 seconds)
+- Request serialized and added to Redis Stream via XADD
+- Stream key: queue:stream:normal (or queue:stream:priority for high priority)
+- Immediate processing triggered via XREADGROUP
 - QueueResponse returned with requestId and status
 
 **Manual Verification:**
-1. Check Redis queue: `redis-cli LRANGE queue:reservations 0 -1`
-2. Verify request in queue
-3. Check TTL: `redis-cli TTL queue:reservations`
+1. Check server logs for enqueue trace
+2. Verify stream length: `redis-cli XLEN queue:stream:normal`
+3. After processing, stream should be empty (XACK + XDEL clean up)
 
 **Console Log to Add:**
 ```typescript
 console.log('TRACE: Queue enqueue operation', {
   requestId: request.id,
-  queueName: 'queue:reservations',
-  operation: 'LPUSH',
-  success: true
+  queueType: 'redis-stream',
+  stream: request.priority === 'high' ? 'queue:stream:priority' : 'queue:stream:normal',
+  operation: 'XADD',
+  immediateProcessing: true
 });
 ```
 
@@ -147,12 +151,17 @@ console.log('TRACE: Redis connection status', {
 });
 
 // Stop 6
+const queueLengthsBefore = await queue.getQueueLengths();
 const result = await queue.enqueue(request);
+const queueLengthsAfter = await queue.getQueueLengths();
 console.log('TRACE: Queue enqueue operation', {
   requestId: request.id,
-  queueName: 'queue:reservations',
-  operation: 'LPUSH',
-  success: true
+  queueType: 'redis-stream',
+  stream: request.priority === 'high' ? 'queue:stream:priority' : 'queue:stream:normal',
+  operation: 'XADD',
+  queueLengthsBefore,
+  queueLengthsAfter,
+  processedImmediately: queueLengthsAfter.normal === 0 && queueLengthsAfter.priority === 0
 });
 
 // Stop 7
@@ -177,34 +186,57 @@ return Response.json(result, { status: 202 });
 ## Manual Verification Checklist
 
 ### Before Testing
-- [ ] Redis server running (`redis-cli ping` returns PONG)
-- [ ] Next.js dev server running (`npm run dev`)
-- [ ] Browser dev tools opened to Console and Network tabs
+✔ [ ] Redis server running (`redis-cli ping` returns PONG) @done(26-04-13 11:14)
+✔ [ ] Next.js dev server running (`npm run dev`) @done(26-04-13 11:15)
+✔ [ ] Browser dev tools opened to Console and Network tabs @done(26-04-13 11:15)
 
 ### During Testing
-- [ ] Server console shows Stop 4-8 TRACE logs
-- [ ] Network tab shows response status 202
+☐ [ ] Server console shows Stop 4-8 TRACE logs
+☐ [ ] Network tab shows response status 202
 - [ ] Response body contains requestId and status
 
 ### After Testing
-- [ ] Redis contains reservation in queue: `redis-cli LRANGE queue:reservations 0 -1`
-- [ ] Queue entry has TTL: `redis-cli TTL queue:reservations`
+- [ ] Check Redis for streams: `redis-cli XINFO STREAM queue:stream:normal`
+- [ ] Check Redis for reservation tokens: `redis-cli KEYS reservation:*`
+- [ ] Verify token state: `redis-cli GET reservation:<token-id>`
+- [ ] Verify streams are drained: `redis-cli XLEN queue:stream:normal` (should be 0)
 
 ### Expected Redis State
 After successful checkout:
 ```
-redis-cli> LRANGE queue:reservations 0 -1
-1) "{\"id\":\"uuid-here\",\"type\":\"create_reservation\",...}"
+redis-cli> KEYS queue:stream:*
+1) "queue:stream:normal"
+2) "queue:stream:priority"
 
-redis-cli> TTL queue:reservations
-(integer) 300
+redis-cli> XLEN queue:stream:normal
+(integer) 0
+
+redis-cli> XINFO GROUPS queue:stream:normal
+1) 1) "name"
+   2) "reservation-group"
+   ...
+
+redis-cli> KEYS reservation:*
+1) "reservation:uuid-here"
+
+redis-cli> GET reservation:uuid-here
+{"state":"ACTIVE","token":"uuid-here","createdAt":"...","expiresAt":"..."}
+
+NOTE: Streams exist persistently. Processed messages are XACK'd + XDEL'd.
+Queue uses Redis Streams — requests survive server restarts.
 ```
 
 ## Common Failure Points
 
-1. **Stop 5 Fails:** Redis not running or connection failed
-2. **Stop 6 Fails:** Queue implementation error
+1. **Stop 5 Fails:** Redis not running or consumer group creation failed
+2. **Stop 6 Fails:** XADD failed, stream doesn't exist, or XREADGROUP error
 3. **Stop 8 Fails:** Response serialization error
 
 ## Success Criteria
-All 5 bus stops (4-8) show PASS status with expected console logs and Redis queue contains the reservation request.
+All 5 bus stops (4-8) show PASS status with:
+- Redis Streams created (queue:stream:normal, queue:stream:priority)
+- Consumer group "reservation-group" active
+- XADD operations visible in Redis MONITOR
+- Queue length 0 after processing (XLEN returns 0)
+- Reservation tokens created in Redis
+- No in-memory arrays used for queue storage
