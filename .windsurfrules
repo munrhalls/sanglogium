@@ -124,6 +124,7 @@ After EVERY sprint, debug, or implementation:
 - **Quick-Workflow:** For any feature at risk of over-complication, use /quick-workflow: UX flows (15min) -> Manual verification (15min) -> Simple architecture (15min) -> Guardrails (10min) -> Sprint template (10min).
 - **Human-First Sprint:** All sprints must follow: UX flows -> End-state overview -> Architecture contract -> Tiny scope contracts (UX slice + arch slice + human verification + minimal tests) -> Implement -> Verify immediately -> Next scope. No big phases, no end-only verification.
 - **TEST SCOPE CREEP:** When writing unit tests, "A to B" means ONLY A to B. Parse flow name, stop at endpoint, write explicit OUT OF SCOPE section. Never include what happens next.
+- **TEST IMPORT DISCIPLINE:** Unit tests MUST import functions directly from source files. NO copying, NO recreating, NO "test utils" that duplicate source logic. Tests must fail to compile if source function doesn't exist.
 
 ## Testing Framework Rules
 - **NEVER use Jest** - Jest is prohibited in this codebase
