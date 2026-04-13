@@ -205,7 +205,7 @@ export class AtomicReservationManager {
         stripePriceId: product.stripePriceId || item.stripePriceId,
         requestedQuantity: item.quantity,
         reservedQuantity,
-        availableQuantity,
+        availableQuantity: availableStock,
         pricePln: product.pricePln,
         totalPricePln: reservedQuantity * product.pricePln,
         imageUrl: product.image || null,

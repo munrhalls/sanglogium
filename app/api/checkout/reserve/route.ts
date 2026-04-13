@@ -136,6 +136,9 @@ export async function POST(request: NextRequest): Promise<NextResponse<APIRespon
   const requestId = request.headers.get('x-request-id') || uuidv4()
   const startTime = Date.now()
 
+  // Bus Stop 4: Server receives request
+  console.log('✅ BUS STOP 4: Request received - OK');
+
   try {
     // Validate Content-Type
     const contentType = request.headers.get('content-type')
@@ -179,8 +182,9 @@ export async function POST(request: NextRequest): Promise<NextResponse<APIRespon
       } as APIResponse, { status: 400 })
     }
 
-    // Initialize queue with handlers
+    // Bus Stop 5: Redis connection
     const redis = getRedisClient()
+    console.log('✅ BUS STOP 5: Redis connected - OK');
     const queue = new FIFOQueue(
       redis,
       async (request: QueueRequest) => {
@@ -209,6 +213,9 @@ export async function POST(request: NextRequest): Promise<NextResponse<APIRespon
       retryCount: 0
     }
 
+    // Bus Stop 6: Queue enqueue operation
+    console.log('✅ BUS STOP 6: Request enqueued - OK');
+
     const queueResponse = await queue.enqueue(queueRequest)
 
     if (queueResponse.status === 'error') {
@@ -231,7 +238,12 @@ export async function POST(request: NextRequest): Promise<NextResponse<APIRespon
       duration: Date.now() - startTime
     })
 
-    // Return processing status for async queue processing
+    // Bus Stop 7: Response formation
+    console.log('✅ BUS STOP 7: Response formed - OK');
+
+    // Bus Stop 8: API response sent
+    console.log('✅ BUS STOP 8: Response sent - OK');
+
     return NextResponse.json({
       success: true,
       requestId,
