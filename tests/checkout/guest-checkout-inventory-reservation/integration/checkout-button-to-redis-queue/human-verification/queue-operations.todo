@@ -1,0 +1,210 @@
+# Human Verification: Queue Operations
+
+## Scope
+Redis queue addition and successful operations
+**IN SCOPE:** Server receives request -> Redis connection -> Queue enqueue -> Response formation
+**OUT OF SCOPE:** Request formation, error handling, client-side response
+
+## Bus Stops
+
+### Bus Stop 4: Server Receives Request
+**Location:** API route handler
+**Expected:**
+- Request received at /api/checkout/reserve
+- Request body parsed successfully
+- QueueRequest object reconstructed
+
+**Manual Verification:**
+1. Check server console logs
+2. Verify request parsing
+3. Confirm QueueRequest reconstruction
+
+**Console Log to Add (in API route):**
+```typescript
+console.log('TRACE: Server received request', {
+  endpoint: '/api/checkout/reserve',
+  requestId: request.id,
+  type: request.type,
+  bodyParsed: true
+});
+```
+
+---
+
+### Bus Stop 5: Redis Connection
+**Location:** Redis client initialization
+**Expected:**
+- Redis connection established (localhost:6379)
+- Database selected (DB 0 or configured)
+- Connection status: "ready"
+
+**Manual Verification:**
+1. Check Redis is running: `redis-cli ping`
+2. Verify connection in server logs
+3. Check for connection errors
+
+**Console Log to Add:**
+```typescript
+console.log('TRACE: Redis connection status', {
+  connected: redis.status,
+  host: redis.options.host,
+  port: redis.options.port,
+  db: redis.options.db
+});
+```
+
+---
+
+### Bus Stop 6: Queue Enqueue Operation
+**Location:** FIFOQueue.enqueue()
+**Expected:**
+- Request added to Redis queue
+- TTL set (e.g., 300 seconds)
+- QueueResponse returned with requestId and status
+
+**Manual Verification:**
+1. Check Redis queue: `redis-cli LRANGE queue:reservations 0 -1`
+2. Verify request in queue
+3. Check TTL: `redis-cli TTL queue:reservations`
+
+**Console Log to Add:**
+```typescript
+console.log('TRACE: Queue enqueue operation', {
+  requestId: request.id,
+  queueName: 'queue:reservations',
+  operation: 'LPUSH',
+  success: true
+});
+```
+
+---
+
+### Bus Stop 7: Response Formation
+**Location:** API response creation
+**Expected:**
+- QueueResponse object created
+- Contains requestId and status: 'processing'
+- Response serialized to JSON
+
+**Manual Verification:**
+1. Check server logs for response creation
+2. Verify response structure
+3. Confirm requestId matches request
+
+**Console Log to Add:**
+```typescript
+console.log('TRACE: Response formed', {
+  response: {
+    requestId: response.requestId,
+    status: response.status,
+    timestamp: Date.now()
+  }
+});
+```
+
+---
+
+### Bus Stop 8: API Response Sent
+**Location:** API route return
+**Expected:**
+- HTTP 202 status code (Accepted)
+- Response body contains QueueResponse
+- Headers include Content-Type: application/json
+
+**Manual Verification:**
+1. Check Network tab for response
+2. Verify status code 202
+3. Check response body structure
+
+**Console Log to Add:**
+```typescript
+console.log('TRACE: API response sent', {
+  statusCode: 202,
+  responseSize: JSON.stringify(response).length,
+  requestId: response.requestId
+});
+```
+
+## Verification Script
+
+Add to `/api/checkout/reserve` route:
+
+```typescript
+// Stop 4
+console.log('TRACE: Server received request', {
+  endpoint: '/api/checkout/reserve',
+  requestId: request.id,
+  type: request.type,
+  bodyParsed: true
+});
+
+// Stop 5
+console.log('TRACE: Redis connection status', {
+  connected: redis.status,
+  host: redis.options.host,
+  port: redis.options.port,
+  db: redis.options.db
+});
+
+// Stop 6
+const result = await queue.enqueue(request);
+console.log('TRACE: Queue enqueue operation', {
+  requestId: request.id,
+  queueName: 'queue:reservations',
+  operation: 'LPUSH',
+  success: true
+});
+
+// Stop 7
+console.log('TRACE: Response formed', {
+  response: {
+    requestId: result.requestId,
+    status: result.status,
+    timestamp: Date.now()
+  }
+});
+
+// Stop 8
+console.log('TRACE: API response sent', {
+  statusCode: 202,
+  responseSize: JSON.stringify(result).length,
+  requestId: result.requestId
+});
+
+return Response.json(result, { status: 202 });
+```
+
+## Manual Verification Checklist
+
+### Before Testing
+- [ ] Redis server running (`redis-cli ping` returns PONG)
+- [ ] Next.js dev server running (`npm run dev`)
+- [ ] Browser dev tools opened to Console and Network tabs
+
+### During Testing
+- [ ] Server console shows Stop 4-8 TRACE logs
+- [ ] Network tab shows response status 202
+- [ ] Response body contains requestId and status
+
+### After Testing
+- [ ] Redis contains reservation in queue: `redis-cli LRANGE queue:reservations 0 -1`
+- [ ] Queue entry has TTL: `redis-cli TTL queue:reservations`
+
+### Expected Redis State
+After successful checkout:
+```
+redis-cli> LRANGE queue:reservations 0 -1
+1) "{\"id\":\"uuid-here\",\"type\":\"create_reservation\",...}"
+
+redis-cli> TTL queue:reservations
+(integer) 300
+```
+
+## Common Failure Points
+
+1. **Stop 5 Fails:** Redis not running or connection failed
+2. **Stop 6 Fails:** Queue implementation error
+3. **Stop 8 Fails:** Response serialization error
+
+## Success Criteria
+All 5 bus stops (4-8) show PASS status with expected console logs and Redis queue contains the reservation request.
