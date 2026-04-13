@@ -1,0 +1,38 @@
+# Integration Operations for Testing
+# Guest Checkout Inventory Reservation System
+#
+# These operations require external dependencies (Redis, Sanity, time, etc.)
+# and are not suitable for pure unit testing
+
+## 1. State Machine Logic
+### Token State Management
+- [ ] Cache successful responses for 24 hours with TTL [INTEGRATION ONLY - Requires Redis/cache store]
+- [ ] Return cached response on duplicate keys [INTEGRATION ONLY - Requires cache store]
+
+## 2. Priority Processing Logic
+### Queue Routing
+- [ ] Queue processor checks priority queue first each cycle [INTEGRATION ONLY - Requires queue system]
+
+## 3. Circuit Breaker Logic
+### Failure Tracking
+- [ ] Allow one test request after 30s cooldown to determine state [INTEGRATION ONLY - Requires time/system clock]
+
+## 4. Timeout Logic
+### TTL Management
+- [ ] 10-minute TTL on reservation tokens [INTEGRATION ONLY - Requires Redis TTL, PRD lines 76, 84]
+- [ ] Automatic rollback on timeout [INTEGRATION ONLY - Requires system triggers]
+
+## 5. Core Queue Operations
+### Queue Management
+- [ ] Get queue lengths (BullMQ queue.getWaiting()) [INTEGRATION ONLY - Requires queue connection]
+
+## 6. Request Validation Logic
+### Input Verification
+- [ ] Check if reservation token state is not FREE [INTEGRATION ONLY - Requires shared state]
+
+# SUMMARY:
+# Total integration operations: 7
+# Require Redis: 3
+# Require queue system: 2
+# Require time/system clock: 1
+# Require shared state: 1
