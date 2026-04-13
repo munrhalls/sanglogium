@@ -1,0 +1,506 @@
+// Guest Checkout Inventory Reservation - FIFO Queue with Priority
+// PRD Line 79: "Queue is implemented with Redis Streams for persistence, atomic processing, and priority support."
+// Uses XADD/XREADGROUP/XACK/XDEL — requests survive server restarts, one consumer at a time.
+
+import { v4 as uuidv4 } from 'uuid'
+import type Redis from 'ioredis'
+import type {
+  QueueRequest,
+  QueueResponse,
+  TokenState,
+  ReservationToken,
+} from './types'
+import { getLogger, getMetrics } from './logging'
+import { LogCategory } from './types'
+import { TokenManager, EnhancedIdempotencyManager, CircuitBreakerManager } from './redis-managers'
+
+// ============================================================================
+// Redis Stream Keys & Consumer Group Constants
+// ============================================================================
+
+const PRIORITY_STREAM = 'queue:stream:priority'
+const NORMAL_STREAM = 'queue:stream:normal'
+const GROUP_NAME = 'reservation-group'
+const CONSUMER_NAME = `worker-${process.pid}-${Date.now()}`
+const CB_SERVICE = 'queue'
+
+// ============================================================================
+// Serialization helpers (Date ↔ ISO string)
+// ============================================================================
+
+function serializeRequest(request: QueueRequest): string {
+  return JSON.stringify({
+    ...request,
+    createdAt: request.createdAt instanceof Date ? request.createdAt.toISOString() : request.createdAt,
+    lastRetryAt: request.lastRetryAt instanceof Date ? request.lastRetryAt.toISOString() : (request.lastRetryAt ?? null),
+  })
+}
+
+function deserializeRequest(raw: string): QueueRequest {
+  const parsed = JSON.parse(raw)
+  return {
+    ...parsed,
+    createdAt: new Date(parsed.createdAt),
+    lastRetryAt: parsed.lastRetryAt ? new Date(parsed.lastRetryAt) : undefined,
+  }
+}
+
+// ============================================================================
+// FIFOQueue Class — Redis Streams backed
+// ============================================================================
+
+export class FIFOQueue {
+  private processing = false
+  private streamsReady: Promise<void>
+  private tokenManager: TokenManager
+  private idempotencyManager: EnhancedIdempotencyManager
+  private cbManager: CircuitBreakerManager
+
+  private logger = getLogger()
+  private metrics = getMetrics()
+
+  constructor(
+    private redis: Redis,
+    private onCreateReservation?: (request: QueueRequest) => Promise<void>,
+    private onRollbackReservation?: (request: QueueRequest) => Promise<void>,
+    private onRealizeReservation?: (request: QueueRequest) => Promise<void>,
+  ) {
+    this.tokenManager = new TokenManager(redis)
+    this.idempotencyManager = new EnhancedIdempotencyManager(redis)
+    this.cbManager = new CircuitBreakerManager(redis)
+    this.streamsReady = this.ensureStreams()
+  }
+
+  // ============================================================================
+  // Stream Initialization — creates streams + consumer group if absent
+  // ============================================================================
+
+  private async ensureStreams(): Promise<void> {
+    for (const stream of [PRIORITY_STREAM, NORMAL_STREAM]) {
+      try {
+        await this.redis.xgroup('CREATE', stream, GROUP_NAME, '0', 'MKSTREAM')
+      } catch (err: unknown) {
+        // BUSYGROUP = consumer group already exists, safe to ignore
+        if (err instanceof Error && !err.message.includes('BUSYGROUP')) {
+          throw err
+        }
+      }
+    }
+  }
+
+  // ============================================================================
+  // Enqueue — XADD to the appropriate Redis Stream
+  // ============================================================================
+
+  async enqueue(request: QueueRequest): Promise<QueueResponse> {
+    await this.streamsReady
+    this.metrics.increment('queue.requests.total')
+
+    // Check circuit breaker (Redis-persisted, survives restarts)
+    const cbState = await this.cbManager.getCircuitBreakerState(CB_SERVICE)
+    if (cbState?.state === 'OPEN') {
+      if (cbState.nextAttemptTime && new Date(cbState.nextAttemptTime) > new Date()) {
+        this.logger.warn('Circuit breaker is OPEN, rejecting request', {
+          component: 'FIFOQueue',
+          category: LogCategory.QUEUE,
+          metadata: { requestId: request.id, type: request.type }
+        })
+        return {
+          requestId: request.id,
+          status: 'error',
+          error: 'service_temporarily_unavailable'
+        }
+      }
+      // Cooldown expired → HALF_OPEN, allow one probe request through
+      await this.cbManager.setCircuitBreakerState(CB_SERVICE, {
+        ...cbState,
+        state: 'HALF_OPEN',
+      })
+    }
+
+    // Check idempotency (Redis-persisted)
+    const existing = await this.idempotencyManager.getResponse(request.idempotencyKey)
+    if (existing) {
+      const currentFingerprint = this.generateFingerprint(request)
+      if (existing.requestFingerprint !== currentFingerprint) {
+        this.logger.warn('Idempotency key parameter mismatch', {
+          component: 'FIFOQueue',
+          category: LogCategory.QUEUE,
+          metadata: { idempotencyKey: request.idempotencyKey }
+        })
+        return {
+          requestId: request.id,
+          status: 'error',
+          error: 'idempotency_key_parameter_mismatch'
+        }
+      }
+      this.logger.info('Returning cached idempotent response', {
+        component: 'FIFOQueue',
+        category: LogCategory.QUEUE,
+        metadata: { idempotencyKey: request.idempotencyKey }
+      })
+      return {
+        requestId: request.id,
+        status: 'success',
+        data: existing.response
+      }
+    }
+
+    // XADD to appropriate Redis Stream (persistent, atomic)
+    const stream = request.priority === 'high' ? PRIORITY_STREAM : NORMAL_STREAM
+    await this.redis.xadd(stream, '*', 'data', serializeRequest(request))
+
+    if (request.priority === 'high') {
+      this.metrics.increment('queue.priority.enqueued')
+    } else {
+      this.metrics.increment('queue.normal.enqueued')
+    }
+
+    // Kick off processing (non-blocking)
+    this.processQueue()
+
+    return {
+      requestId: request.id,
+      status: 'processing'
+    }
+  }
+
+  // ============================================================================
+  // Process Queue — priority stream first, then normal stream
+  // ============================================================================
+
+  private async processQueue(): Promise<void> {
+    if (this.processing) return
+    this.processing = true
+
+    try {
+      await this.streamsReady
+      // Drain priority stream before touching normal stream
+      while (await this.processNextFrom(PRIORITY_STREAM)) { /* keep draining */ }
+      while (await this.processNextFrom(NORMAL_STREAM)) { /* keep draining */ }
+    } finally {
+      this.processing = false
+    }
+  }
+
+  // ============================================================================
+  // Process one message from a Redis Stream
+  // Returns true if a message was consumed, false if stream is empty
+  // ============================================================================
+
+  private async processNextFrom(stream: string): Promise<boolean> {
+    // XREADGROUP: atomic delivery of next unprocessed message to this consumer
+    const result = await this.redis.xreadgroup(
+      'GROUP', GROUP_NAME, CONSUMER_NAME,
+      'COUNT', '1',
+      'STREAMS', stream, '>'
+    ) as [string, [string, string[]][]][] | null
+
+    if (!result || result.length === 0) return false
+    const entries = result[0][1]
+    if (!entries || entries.length === 0) return false
+
+    const [messageId, fields] = entries[0]
+    // fields layout from XADD: ['data', '{"...json..."}']
+    const request = deserializeRequest(fields[1])
+    const startTime = Date.now()
+
+    try {
+      await this.processRequest(request)
+
+      // ACK + DEL on success (cleans stream, prevents redelivery)
+      await this.redis.xack(stream, GROUP_NAME, messageId)
+      await this.redis.xdel(stream, messageId)
+
+      // Reset circuit breaker on success
+      await this.cbManager.resetFailureCount(CB_SERVICE)
+      await this.cbManager.setCircuitBreakerState(CB_SERVICE, {
+        state: 'CLOSED',
+        failureCount: 0,
+        lastFailureTime: null,
+        nextAttemptTime: null,
+      })
+
+      this.metrics.increment('queue.requests.success')
+      this.metrics.histogram('queue.processing.duration', Date.now() - startTime)
+
+    } catch (error: unknown) {
+      const err = error instanceof Error ? error : new Error(String(error))
+
+      // Always ACK + DEL the failed message so it doesn't block the stream
+      await this.redis.xack(stream, GROUP_NAME, messageId)
+      await this.redis.xdel(stream, messageId)
+
+      this.logger.error(`Queue processing failed: ${err.message}`, {
+        component: 'FIFOQueue',
+        category: LogCategory.QUEUE,
+        error: { name: err.name, message: err.message, stack: err.stack },
+        metadata: { requestId: request.id, type: request.type, retryCount: request.retryCount }
+      })
+
+      // Handle circuit breaker (Redis-persisted)
+      const failureCount = await this.cbManager.incrementFailureCount(CB_SERVICE)
+      if (failureCount >= 5) {
+        await this.cbManager.setCircuitBreakerState(CB_SERVICE, {
+          state: 'OPEN',
+          failureCount,
+          lastFailureTime: new Date().toISOString(),
+          nextAttemptTime: new Date(Date.now() + 30_000).toISOString(), // 30s cooldown per PRD
+        })
+        this.logger.error('Circuit breaker OPENED after 5 consecutive failures', {
+          component: 'FIFOQueue',
+          category: LogCategory.QUEUE,
+        })
+      }
+
+      this.metrics.increment('queue.requests.failed')
+
+      // Retry logic for transient errors — re-XADD after delay (persistent retry)
+      if (this.isTransientError(err)) {
+        request.retryCount++
+        if (request.retryCount < this.getMaxRetries(request.type)) {
+          request.lastRetryAt = new Date()
+          const delay = this.calculateRetryDelay(request.retryCount)
+
+          this.logger.info(`Scheduling retry ${request.retryCount} in ${delay}ms`, {
+            component: 'FIFOQueue',
+            category: LogCategory.QUEUE,
+            metadata: { requestId: request.id, delay }
+          })
+
+          // Re-add to stream after delay (retry goes to back of queue)
+          setTimeout(async () => {
+            try {
+              await this.redis.xadd(stream, '*', 'data', serializeRequest(request))
+              this.processQueue()
+            } catch (retryErr) {
+              this.logger.error('Failed to re-queue for retry', {
+                component: 'FIFOQueue',
+                category: LogCategory.QUEUE,
+                error: {
+                  name: retryErr instanceof Error ? retryErr.name : 'UnknownError',
+                  message: retryErr instanceof Error ? retryErr.message : String(retryErr),
+                },
+              })
+            }
+          }, delay)
+        }
+      }
+    }
+
+    return true
+  }
+
+  // ============================================================================
+  // Process Single Request (business logic — unchanged from original)
+  // ============================================================================
+
+  private async processRequest(request: QueueRequest): Promise<void> {
+    // Check for concurrent operation on token
+    if (request.reservationToken) {
+      const token = await this.tokenManager.getToken(request.reservationToken)
+      if (token && token.state !== 'FREE' && token.state !== 'ACTIVE') {
+        throw new Error('operation_in_progress')
+      }
+    }
+
+    switch (request.type) {
+      case 'create_reservation':
+        await this.processCreateReservation(request)
+        break
+      case 'rollback_reservation':
+        await this.processRollbackReservation(request)
+        break
+      case 'realize_reservation':
+        await this.processRealizeReservation(request)
+        break
+    }
+  }
+
+  // ============================================================================
+  // Request Handlers
+  // ============================================================================
+
+  private async processCreateReservation(request: QueueRequest): Promise<void> {
+    const token = uuidv4()
+    const reservationToken: ReservationToken = {
+      token,
+      state: 'RESERVING',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      expiresAt: new Date(Date.now() + 10 * 60 * 1000), // 10 minutes
+      idempotencyKey: request.idempotencyKey,
+      requestFingerprint: this.generateFingerprint(request)
+    }
+
+    // Atomic token state transition
+    await this.tokenManager.setToken(token, reservationToken)
+
+    // Set Redis TTL key
+    await this.redis.setex(`reservation:${token}`, 600, JSON.stringify({
+      state: 'ACTIVE',
+      token,
+      createdAt: reservationToken.createdAt.toISOString(),
+      expiresAt: reservationToken.expiresAt.toISOString()
+    }))
+
+    // Update token state to ACTIVE
+    reservationToken.state = 'ACTIVE'
+    reservationToken.updatedAt = new Date()
+    await this.tokenManager.updateToken(token, reservationToken)
+
+    // Store idempotency response
+    await this.idempotencyManager.setResponse(request.idempotencyKey, reservationToken.requestFingerprint, {
+      reservationToken: token,
+      success: true
+    })
+
+    // Execute external handler (Sanity stock decrement, etc.)
+    if (this.onCreateReservation) {
+      await this.onCreateReservation(request)
+    }
+
+    this.logger.info(`Reservation created: ${token}`, {
+      component: 'FIFOQueue',
+      category: LogCategory.RESERVATION,
+      reservationToken: token,
+      metadata: { idempotencyKey: request.idempotencyKey }
+    })
+  }
+
+  private async processRollbackReservation(request: QueueRequest): Promise<void> {
+    if (!request.reservationToken) throw new Error('Missing reservation token')
+
+    const token = await this.tokenManager.getToken(request.reservationToken)
+    if (!token) throw new Error('Token not found')
+
+    // Update token state to CANCELLING
+    token.state = 'CANCELLING'
+    token.updatedAt = new Date()
+    await this.tokenManager.updateToken(request.reservationToken, token)
+
+    // Remove from Redis
+    await this.redis.del(`reservation:${request.reservationToken}`)
+
+    // Update token state to FREE
+    token.state = 'FREE'
+    token.updatedAt = new Date()
+    await this.tokenManager.updateToken(request.reservationToken, token)
+
+    // Execute external handler (Sanity stock restore, etc.)
+    if (this.onRollbackReservation) {
+      await this.onRollbackReservation(request)
+    }
+
+    this.logger.info(`Reservation rolled back: ${request.reservationToken}`, {
+      component: 'FIFOQueue',
+      category: LogCategory.RESERVATION,
+      reservationToken: request.reservationToken
+    })
+  }
+
+  private async processRealizeReservation(request: QueueRequest): Promise<void> {
+    if (!request.reservationToken) throw new Error('Missing reservation token')
+
+    const token = await this.tokenManager.getToken(request.reservationToken)
+    if (!token) throw new Error('Token not found')
+
+    // Update token state to REALIZING
+    token.state = 'REALIZING'
+    token.updatedAt = new Date()
+    await this.tokenManager.updateToken(request.reservationToken, token)
+
+    // Remove from Redis
+    await this.redis.del(`reservation:${request.reservationToken}`)
+
+    // Update token state to FREE
+    token.state = 'FREE'
+    token.updatedAt = new Date()
+    await this.tokenManager.updateToken(request.reservationToken, token)
+
+    // Execute external handler (finalize order, etc.)
+    if (this.onRealizeReservation) {
+      await this.onRealizeReservation(request)
+    }
+
+    this.logger.info(`Reservation realized: ${request.reservationToken}`, {
+      component: 'FIFOQueue',
+      category: LogCategory.RESERVATION,
+      reservationToken: request.reservationToken
+    })
+  }
+
+  // ============================================================================
+  // Fingerprint Generation
+  // ============================================================================
+
+  private generateFingerprint(request: QueueRequest): string {
+    return JSON.stringify({
+      type: request.type,
+      payload: request.payload
+    })
+  }
+
+  // ============================================================================
+  // Retry Logic
+  // ============================================================================
+
+  private isTransientError(error: Error): boolean {
+    const transientErrors = ['network', 'timeout', 'ECONNREFUSED', 'ETIMEDOUT']
+    return transientErrors.some(err => error.message.toLowerCase().includes(err.toLowerCase()))
+  }
+
+  private getMaxRetries(type: QueueRequest['type']): number {
+    switch (type) {
+      case 'create_reservation':
+        return 3
+      case 'rollback_reservation':
+        return 10 // Higher retry count for rollbacks per PRD
+      case 'realize_reservation':
+        return 3
+      default:
+        return 3
+    }
+  }
+
+  private calculateRetryDelay(retryCount: number): number {
+    const baseDelay = 1000 // 1 second
+    const maxDelay = 30000 // 30 seconds max for rollback
+    const jitter = 0.25 // ±25% jitter
+
+    let delay = baseDelay * Math.pow(2, retryCount - 1)
+    delay = Math.min(delay, maxDelay)
+
+    // Add jitter
+    const jitterAmount = delay * jitter
+    delay = delay + (Math.random() * 2 - 1) * jitterAmount
+
+    return Math.floor(delay)
+  }
+
+  // ============================================================================
+  // Observability (async — queries Redis)
+  // ============================================================================
+
+  async getTokenState(token: string): Promise<TokenState | undefined> {
+    const tokenData = await this.tokenManager.getToken(token)
+    return tokenData?.state
+  }
+
+  async getCircuitBreakerState(): Promise<{ open: boolean; failures: number }> {
+    const state = await this.cbManager.getCircuitBreakerState(CB_SERVICE)
+    return {
+      open: state?.state === 'OPEN',
+      failures: state?.failureCount ?? 0,
+    }
+  }
+
+  async getQueueLengths(): Promise<{ normal: number; priority: number }> {
+    await this.streamsReady
+    const [normal, priority] = await Promise.all([
+      this.redis.xlen(NORMAL_STREAM),
+      this.redis.xlen(PRIORITY_STREAM),
+    ])
+    return { normal, priority }
+  }
+}
