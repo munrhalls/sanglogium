@@ -32,6 +32,8 @@
     "test:e2e:dev": "npx playwright test --project=desktop-chromium",
     "test:checkout": "npx playwright test tests/checkout/guest-checkout-inventory-reservation/ --project=desktop-chromium",
     "test:checkout:all": "npx playwright test tests/checkout/guest-checkout-inventory-reservation/",
+    "test:checkout:quick": "npx playwright test tests/checkout/quick-test.test.ts --config=playwright.checkout.config.ts",
+    "test:checkout:fast": "npx playwright test --config=playwright.checkout.config.ts",
     "setup:test-data": "node scripts/setup-test-data.mjs",
     "verify:test-env": "node scripts/verify-test-environment.mjs",
     "migrate:reservations": "node scripts/migrate-reservations-field.mjs",
