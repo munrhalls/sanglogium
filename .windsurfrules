@@ -123,6 +123,7 @@ After EVERY sprint, debug, or implementation:
 - **AS-SIMPLE-AS-POSSIBLE:** If it takes more than 5 minutes to explain, it's too complex. If it needs more than one page to document, it's too complex. If tests are longer than feature code, it's too complex.
 - **Quick-Workflow:** For any feature at risk of over-complication, use /quick-workflow: UX flows (15min) -> Manual verification (15min) -> Simple architecture (15min) -> Guardrails (10min) -> Sprint template (10min).
 - **Human-First Sprint:** All sprints must follow: UX flows -> End-state overview -> Architecture contract -> Tiny scope contracts (UX slice + arch slice + human verification + minimal tests) -> Implement -> Verify immediately -> Next scope. No big phases, no end-only verification.
+- **TEST SCOPE CREEP:** When writing unit tests, "A to B" means ONLY A to B. Parse flow name, stop at endpoint, write explicit OUT OF SCOPE section. Never include what happens next.
 
 ## Testing Framework Rules
 - **NEVER use Jest** - Jest is prohibited in this codebase

@@ -2,7 +2,7 @@
 
 **Purpose:** Searchable keyword → lesson mapping for pre-work retrieval.
 
-**Last Updated:** 2026-04-09
+**Last Updated:** 2026-04-13
 
 ## Keyword: contain
 | Lesson | Severity | Summary |
@@ -801,6 +801,38 @@
 
 ---
 
+## Keyword: test-scope
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [anti-patterns/test-scope-creep.md](anti-patterns/test-scope-creep.md) | High | "A to B" means ONLY A to B - parse flow name, stop at endpoint, write explicit OUT OF SCOPE |
+
+---
+
+## Keyword: test-boundaries
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [anti-patterns/test-scope-creep.md](anti-patterns/test-scope-creep.md) | High | Enforce strict test boundaries - never include what happens next in the flow |
+
+---
+
+## Keyword: flow-testing
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [anti-patterns/test-scope-creep.md](anti-patterns/test-scope-creep.md) | High | Flow-based testing requires explicit endpoint enforcement |
+
+---
+
+## Keyword: scope-creep
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [anti-patterns/test-scope-creep.md](anti-patterns/test-scope-creep.md) | High | Natural tendency to over-scope tests - prevent with explicit OUT OF SCOPE sections |
+
+---
+
 ## Keyword: component
 
 | Lesson | Severity | Summary |
@@ -851,6 +883,166 @@
 ---
 
 ## Keyword: verification-gates
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [sops/test-development-sop.md](sops/test-development-sop.md) | High | Quality gates for test development - file size, scope, organization validation |
+
+---
+
+## Keyword: test-organization
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/test-organization-patterns.md](patterns/test-organization-patterns.md) | High | Thematic test organization - avoid monolithic files, maintain execution flow |
+| [anti-patterns/monolithic-testing.md](anti-patterns/monolithic-testing.md) | Critical | Anti-pattern: Single large test files with mixed concerns |
+| [sops/test-development-sop.md](sops/test-development-sop.md) | High | SOP for test development with organization guidelines |
+
+---
+
+## Keyword: monolithic-tests
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [anti-patterns/monolithic-testing.md](anti-patterns/monolithic-testing.md) | Critical | Files > 15 tests or > 200 lines must be split thematically |
+
+---
+
+## Keyword: thematic-testing
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/test-organization-patterns.md](patterns/test-organization-patterns.md) | High | Group tests by domain concern with clear thematic boundaries |
+
+---
+
+## Keyword: integration-flows
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/test-organization-patterns.md](patterns/test-organization-patterns.md) | High | Integration tests must follow real user flows: 1 action -> 2 steps maximum |
+
+---
+
+## Keyword: test-naming
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [sops/test-development-sop.md](sops/test-development-sop.md) | High | Descriptive file names: {theme}.test.ts, avoid generic names |
+
+---
+
+## Keyword: test-sop
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [sops/test-development-sop.md](sops/test-development-sop.md) | High | Standard Operating Procedure for all test development |
+
+---
+
+## Keyword: file-structure
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [sops/test-development-sop.md](sops/test-development-sop.md) | High | Directory structure: unit/{theme}.test.ts, integration/{flow}/{theme}.test.ts |
+
+---
+
+## Keyword: test-maintainability
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [anti-patterns/monolithic-testing.md](anti-patterns/monolithic-testing.md) | Critical | Large files create cognitive overhead and navigation difficulty |
+
+---
+
+## Keyword: cognitive-overload
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [anti-patterns/monolithic-testing.md](anti-patterns/monolithic-testing.md) | Critical | Monolithic test files create cognitive overhead for developers |
+
+---
+
+## Keyword: human-verification
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/human-verification-patterns.md](patterns/human-verification-patterns.md) | High | Co-locate verification guides with tests, mirror thematic organization |
+| [sops/human-verification-sop.md](sops/human-verification-sop.md) | High | SOP for creating human verification guides aligned with test structure |
+
+---
+
+## Keyword: verification-guides
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/human-verification-patterns.md](patterns/human-verification-patterns.md) | High | Manual verification guides must match test organization and scope |
+| [sops/human-verification-sop.md](sops/human-verification-sop.md) | High | Create verification guides in human-verification folder alongside tests |
+
+---
+
+## Keyword: test-alignment
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/human-verification-patterns.md](patterns/human-verification-patterns.md) | High | Verification files must mirror test file names and thematic boundaries |
+
+---
+
+## Keyword: bus-stops
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/human-verification-patterns.md](patterns/human-verification-patterns.md) | High | Bus stop organization must align with test scope boundaries |
+
+---
+
+## Keyword: manual-testing
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [sops/human-verification-sop.md](sops/human-verification-sop.md) | High | Manual testing procedures with clear verification steps and expected results |
+
+---
+
+## Keyword: integration-verification
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/human-verification-patterns.md](patterns/human-verification-patterns.md) | High | Integration verification requires co-located guides matching test structure |
+
+---
+
+## Keyword: todo-files
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/todo-file-extension-pattern.md](patterns/todo-file-extension-pattern.md) | Medium | Use .todo extension for task-oriented content, .md for documentation |
+
+---
+
+## Keyword: file-extensions
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/todo-file-extension-pattern.md](patterns/todo-file-extension-pattern.md) | Medium | File extension should match content purpose: .todo for tasks, .md for docs |
+
+---
+
+## Keyword: task-oriented
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/todo-file-extension-pattern.md](patterns/todo-file-extension-pattern.md) | Medium | Task-oriented content (checklists, procedures) should use .todo extension |
+
+---
+
+## Keyword: documentation-organization
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/todo-file-extension-pattern.md](patterns/todo-file-extension-pattern.md) | Medium | Clear file extension rules distinguish documentation from task lists |
 
 | Lesson | Severity | Summary |
 |--------|----------|---------|
@@ -1449,6 +1641,7 @@
 | Lesson | Severity | Summary |
 |--------|----------|---------|
 | [core/optimal-development-rhythm.md](core/optimal-development-rhythm.md) | Critical | When to accelerate: clear flows, verified data, single-sentence scope, no dependencies |
+| [core/optimal-development-rhythm.md](core/optimal-development-rhythm.md) | Critical | When to accelerate: UI, copy, styles, simple features, well-defined requirements |
 
 ---
 
@@ -1483,6 +1676,62 @@
 |--------|----------|---------|
 | [core/optimal-development-rhythm.md](core/optimal-development-rhythm.md) | Critical | Maximize throughput via vertical slices, 15-min specs, continuous verification |
 | [workflows/velocity-aware-sprint-planning.md](workflows/velocity-aware-sprint-planning.md) | High | Human (not AI) became throughput limiter - serial gates, not parallel flow |
+
+---
+
+## Keyword: env-prefix
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [core/env-prefix-discipline.md](core/env-prefix-discipline.md) | Critical | Use feature-specific prefixes for all environment variables to prevent 500 errors |
+
+---
+
+## Keyword: sanity-client
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/sanity-read-write-client-separation.md](patterns/sanity-read-write-client-separation.md) | Critical | Separate read (CDN) and write (token) clients for Sanity operations |
+
+---
+
+## Keyword: groq-syntax
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [anti-patterns/groq-reference-syntax-errors.md](anti-patterns/groq-reference-syntax-errors.md) | Critical | Use `brand->name` not `brand->{name}` for Sanity reference dereferencing |
+
+---
+
+## Keyword: test-integrity
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/test-data-integrity.md](patterns/test-data-integrity.md) | High | Atomic test isolation with state restoration for real data testing |
+
+---
+
+## Keyword: debug-truncation
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [anti-patterns/debug-output-truncation.md](anti-patterns/debug-output-truncation.md) | High | Console.log truncates at 500 chars - use direct object logging |
+
+---
+
+## Keyword: redis-isolation
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/redis-test-isolation.md](patterns/redis-test-isolation.md) | High | Use dedicated DB (15) for tests to prevent pollution |
+
+---
+
+## Keyword: async-queue
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/async-queue-testing.md](patterns/async-queue-testing.md) | High | Test both immediate 202 response and eventual async processing state |
 
 ---
 
