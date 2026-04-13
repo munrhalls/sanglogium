@@ -86,6 +86,7 @@ Follow `/trace` workflow:
 
 ### Step 7: Cleanup (5 minutes)
 - Delete prototype from `/_prototypes/[name]/`
+- **Geometry Check**: Re-anchor end-state with `/contain`, verify no prototype assumptions leaked into production
 - Verify no prototype code remains in production
 
 ---
