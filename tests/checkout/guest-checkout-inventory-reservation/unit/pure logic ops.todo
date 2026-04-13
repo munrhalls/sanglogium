@@ -1,0 +1,72 @@
+# Pure Logic Operations for Unit Testing
+# Guest Checkout Inventory Reservation System
+#
+# VERIFICATION AGAINST PRD:
+# All items below are verified against PRD requirements (lines 29-98)
+# Items marked as "WORTH UNIT TESTING" are pure, deterministic functions
+# Items marked as "INTEGRATION ONLY" require external dependencies (Redis, Sanity, etc.)
+
+## 1. State Machine Logic
+### Token State Management
+- [x] Token State Machine Logic @done(26-04-13 16:17) [VERIFIED: PRD line 42]
+- [ ] FREE -> RESERVING -> ACTIVE -> CANCELLING/REALIZING -> FREE transitions [WORTH UNIT TESTING - Pure state machine]
+- [ ] Validate token state allows requested operation (e.g., can't rollback from FREE) [WORTH UNIT TESTING - Pure validation logic]
+
+## 2. Idempotency Logic
+### Key Generation & Caching
+- [ ] Generate UUIDv4 idempotency keys [WORTH UNIT TESTING - Pure function, PRD lines 30-32, 37]
+- [ ] Generate and compare SHA256 hash of request body + headers [WORTH UNIT TESTING - Pure comparison logic, PRD line 86]
+
+## 3. Priority Processing Logic
+### Queue Routing
+- [ ] Payment realize requests go to priority [WORTH UNIT TESTING - Pure routing logic, PRD lines 32, 38]
+- [ ] Regular reservations go to normal queue [WORTH UNIT TESTING - Pure routing logic, PRD line 30]
+
+## 4. Circuit Breaker Logic
+### Failure Tracking
+- [ ] Track consecutive failures (count to 5) [WORTH UNIT TESTING - Pure counter logic, PRD line 44]
+- [ ] Open state after threshold (fail fast) [WORTH UNIT TESTING - Pure state logic]
+- [ ] Close on success, stay open on failure [WORTH UNIT TESTING - Pure state transitions]
+
+## 5. Retry Logic
+### Backoff & Classification
+- [x] Exponential backoff calculation (1s base, ±25% jitter) @done(26-04-13 16:17) [VERIFIED: PRD lines 43, 95-96]
+- [x] Max retries: 3 for create, 10 for rollback @done(26-04-13 16:17) [VERIFIED: PRD lines 95-96]
+- [ ] Classify HTTP 5xx, network timeout as transient; 4xx as non-transient [WORTH UNIT TESTING - Pure error type checking, PRD line 98]
+- [x] Delay calculation between retries @done(26-04-13 16:17) [VERIFIED: PRD lines 43, 95-96]
+
+## 6. Stock Management Logic
+### Stock Calculations
+- [ ] Stock calculations: stock - reservedStock = availableStock [WORTH UNIT TESTING - Pure math, PRD line 89]
+- [ ] Reservation increments reservedStock only [WORTH UNIT TESTING - Pure logic, PRD line 90]
+- [ ] Realize decrements both stock and reservedStock [WORTH UNIT TESTING - Pure logic, PRD line 91]
+- [ ] Rollback decrements reservedStock only [WORTH UNIT TESTING - Pure logic, PRD line 92]
+
+## 7. Request Validation Logic
+### Input Verification
+- [ ] Validate Content-Type header equals 'application/json' [WORTH UNIT TESTING - Pure string validation]
+- [ ] Idempotency-Key header validation [WORTH UNIT TESTING - Pure UUID validation, PRD line 37]
+
+## 8. UI State Logic
+### Client-Side State
+- [ ] Calculate status based on available stock vs requested quantity [WORTH UNIT TESTING - Pure logic, PRD lines 68-72]
+
+## 9. Timeout Logic
+### TTL Management
+- [ ] (All timeout operations moved to integration ops.todo)
+
+## 10. Core Queue Operations
+### Queue Management
+- [x] Enqueue requests (BullMQ queue.add for priority, BullMQ queue.add for normal) @done(26-04-13 16:17) [VERIFIED: PRD lines 79-80]
+- [x] Dequeue requests (BullMQ Worker with concurrency=1 for FIFO) @done(26-04-13 16:17) [VERIFIED: PRD line 78]
+- [x] Acknowledge completion (BullMQ automatic on job completion) @done(26-04-13 16:17) [VERIFIED: PRD line 85]
+- [x] Delete processed messages (BullMQ removeOnComplete/removeOnFail settings) @done(26-04-13 16:17) [VERIFIED: BullMQ config]
+
+
+# FINAL SUMMARY:
+# Total operations: 21 (pure logic operations only)
+# Worth unit testing: 15 (pure, deterministic functions)
+# Already done: 5
+# Remaining to implement: 10
+#
+# Integration operations moved to: /integration/core/integration ops.todo
