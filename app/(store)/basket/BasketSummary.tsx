@@ -5,20 +5,17 @@ import { useBasketStore, selectBasketTotal, selectBasketCount } from "@/store/st
 import { ArrowLeftIcon } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
 import { Price } from "@/app/components/ui/Price";
-import CheckoutPanel from "@/app/components/features/basket/checkout/CheckoutPanel";
-import { useCheckoutFlow } from "@/app/components/features/basket/checkout/useCheckoutFlow";
+import { CheckoutButton } from "@/components/checkout/reservation/CheckoutButton";
 
 export default function BasketSummary() {
   const basket = useBasketStore((s) => s.basket);
   const subtotal = useBasketStore(selectBasketTotal);
   const itemCount = useBasketStore(selectBasketCount);
   const router = useRouter();
-  const checkoutFlow = useCheckoutFlow();
 
   // Simple client-side validation
   const isBasketEmpty = basket.length === 0;
   const hasInvalidQuantities = basket.some(item => item.quantity <= 0);
-  const isDisabled = isBasketEmpty || hasInvalidQuantities || checkoutFlow.isProcessing;
 
   return (
     <>
@@ -64,12 +61,7 @@ export default function BasketSummary() {
         </div>
       </div>
 
-      <CheckoutPanel
-        state={checkoutFlow.isProcessing ? 'processing' : (checkoutFlow.hasError ? 'idle' : 'idle')}
-        errorMessage={checkoutFlow.errorMessage}
-        checkout={checkoutFlow.startCheckout}
-        disabled={isDisabled}
-      />
+      <CheckoutButton />
 
       <button
         type="button"
