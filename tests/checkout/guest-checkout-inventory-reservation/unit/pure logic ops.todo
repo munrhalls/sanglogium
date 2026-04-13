@@ -9,8 +9,8 @@
 ## 1. State Machine Logic
 ### Token State Management
 - [x] Token State Machine Logic @done(26-04-13 16:17) [VERIFIED: PRD line 42]
-- [ ] FREE -> RESERVING -> ACTIVE -> CANCELLING/REALIZING -> FREE transitions [WORTH UNIT TESTING - Pure state machine]
-- [ ] Validate token state allows requested operation (e.g., can't rollback from FREE) [WORTH UNIT TESTING - Pure validation logic]
+✔ [ ] FREE -> RESERVING -> ACTIVE -> CANCELLING/REALIZING -> FREE transitions [WORTH UNIT TESTING - Pure state machine] @done(26-04-13 17:09)
+✔ [ ] Validate token state allows requested operation (e.g., can't rollback from FREE) [WORTH UNIT TESTING - Pure validation logic] @done(26-04-13 17:09)
 
 ## 2. Idempotency Logic
 ### Key Generation & Caching
