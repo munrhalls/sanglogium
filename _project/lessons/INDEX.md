@@ -809,6 +809,30 @@
 
 ---
 
+## Keyword: phantom-coverage
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/test-implementation-drift-systemic-analysis.md](failures/test-implementation-drift-systemic-analysis.md) | Critical | Tests creating their own implementations instead of importing from source |
+
+---
+
+## Keyword: test-local
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [anti-patterns/test-local-implementations.md](anti-patterns/test-local-implementations.md) | Critical | Never define functions/classes in tests that exist in implementation |
+
+---
+
+## Keyword: scoped-audit
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/scoped-lesson-detection.md](patterns/scoped-lesson-detection.md) | High | Scan current scope files for lesson violations, not entire codebase |
+
+---
+
 ## Keyword: test-boundaries
 
 | Lesson | Severity | Summary |
