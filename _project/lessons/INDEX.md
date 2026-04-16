@@ -519,6 +519,22 @@
 
 ---
 
+## Keyword: file-exists
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/file-exists-blocking.md](failures/file-exists-blocking.md) | Medium | Check file existence before creation to prevent progress blocking |
+
+---
+
+## Keyword: file-handling
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/file-handling-patterns.md](patterns/file-handling-patterns.md) | Medium | Safe file creation patterns with existence checks and handling strategies |
+
+---
+
 ## Keyword: ai-leverage
 
 | Lesson | Severity | Summary |

@@ -1,5 +1,38 @@
 # Auto-Lessons from S7-BASKET-DESIGN-ALIGNMENT
 
+## Lesson 0: File Exists Blocking Progress
+**Date:** April 14, 2026
+**Sprint:** Conversation Access Research
+
+### The Error
+Cascade AI agent got stuck when trying to create prompts_log.txt because the file already existed, halting progress on the conversation access task.
+
+### Root Cause
+The write_to_file tool returns an error when the target file already exists, and the agent didn't have a default strategy to handle this common scenario.
+
+### Fix Duration
+~2 minutes to identify and implement solution.
+
+### Resolution
+```bash
+# Check if file exists first
+if (Test-Path $targetFile) {
+    # Append or update existing file
+    Add-Content $targetFile $newContent
+} else {
+    # Create new file
+    New-Item $targetFile -Value $newContent
+}
+```
+
+### Prevention Rule
+Always check file existence before creation. If file exists, have a clear strategy: append, overwrite, update, or version.
+
+### Keywords
+file-exists, file-handling, error-handling, progress-blocking
+
+---
+
 ## Lesson 1: SVG Import Assumption Failure
 **Date:** March 31, 2026
 **Sprint:** S7-BASKET-DESIGN-ALIGNMENT

@@ -16,8 +16,8 @@ import { TokenManager, EnhancedIdempotencyManager, CircuitBreakerManager } from 
 // BullMQ Queue Names & Configuration
 // ============================================================================
 
-const PRIORITY_QUEUE_NAME = 'queue:priority'
-const NORMAL_QUEUE_NAME = 'queue:reservations'
+const PRIORITY_QUEUE_NAME = 'queue-priority'
+const NORMAL_QUEUE_NAME = 'queue-reservations'
 const CB_SERVICE = 'queue'
 
 // ============================================================================
@@ -80,7 +80,7 @@ export class FIFOQueue {
     )
 
     this.tokenManager = new TokenManager(redis)
-    this.idempotencyManager = new IdempotencyManager(redis)
+    this.idempotencyManager = new EnhancedIdempotencyManager(redis)
     this.cbManager = new CircuitBreakerManager(redis)
 
     // Handle worker errors
