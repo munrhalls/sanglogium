@@ -1,0 +1,22 @@
+{
+  "conversationMapping": {
+    "Checkout Button to Redis": "5575fab1-0a7f-4356-b62c-fea06411f676",
+    "Token State Transition Unit Test": "68004950-82a9-4f55-9897-feb093839626",
+    "Refining Queue Routing Tests": "5e2d4fc4-0251-4014-a94a-1ae183e00d96",
+    "Queue Routing Unit Testing": "bba8942b-078f-4c0d-8d9f-23ad547dbdad",
+    "Idempotency Logic Unit Testing": "16a3e6ae-25e9-43ec-8192-d9b5da659616",
+    "Unit Test Pure Logic": "ffebb231-a6b6-42b5-b19f-1d4f27caf96f",
+    "Refining Queue Operations Tests": "453b2417-67c6-4117-8810-564d9c64fbb7",
+    "Fixing Redis Queue Inconsistency": "2b2905bc-d57e-449b-813d-d201d9389767",
+    "Refining Unit Test Coverage": "ba8597a0-4661-4be6-ae01-f8a1d46867a8",
+    "Redis Queue Research for E-commerce": "b18e425c-385d-430d-80a4-1e494e2b654d",
+    "Simplify Verification Process": "a4313e61-6c29-4edd-9762-118bf4647450",
+    "Refactor Checkout and Inventory": "78154f92-ea85-4719-9747-d0668bf35301"
+  },
+  "metadata": {
+    "createdAt": "2026-04-14T17:03:00.000Z",
+    "source": "user-request-additional_metadata",
+    "totalConversations": 12,
+    "duplicateNote": "Simplify Verification Process appears twice in request"
+  }
+}
