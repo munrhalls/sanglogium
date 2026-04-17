@@ -1,0 +1,177 @@
+{
+  "config": {
+    "configFile": "C:\\webdev\\sang-logium\\playwright.integration.config.ts",
+    "rootDir": "C:/webdev/sang-logium/tests/checkout/guest-checkout-inventory-reservation/integration",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/webdev/sang-logium/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "integration",
+        "name": "integration",
+        "testDir": "C:/webdev/sang-logium/tests/checkout/guest-checkout-inventory-reservation/integration",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "html",
+        {
+          "outputFolder": "playwright-report"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results.json"
+        }
+      ],
+      [
+        "line",
+        null
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "test-results.xml"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "runAgents": "none",
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.58.2",
+    "workers": 6,
+    "webServer": {
+      "command": "echo \"Dev server should already be running on port 3002\"",
+      "port": 3002,
+      "reuseExistingServer": true,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "checkout-button-click-to-redis-queue\\simple-queue-test.spec.ts",
+      "file": "checkout-button-click-to-redis-queue/simple-queue-test.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Queue Processing Test",
+          "file": "checkout-button-click-to-redis-queue/simple-queue-test.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should enqueue request in Redis queue",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "integration",
+                  "projectName": "integration",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 498,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m202\u001b[39m\nReceived: \u001b[31m500\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m202\u001b[39m\nReceived: \u001b[31m500\u001b[39m\n    at C:\\webdev\\sang-logium\\tests\\checkout\\guest-checkout-inventory-reservation\\integration\\checkout-button-click-to-redis-queue\\simple-queue-test.spec.ts:31:31",
+                        "location": {
+                          "file": "C:\\webdev\\sang-logium\\tests\\checkout\\guest-checkout-inventory-reservation\\integration\\checkout-button-click-to-redis-queue\\simple-queue-test.spec.ts",
+                          "column": 31,
+                          "line": 31
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 29 |\u001b[39m     })\n \u001b[90m 30 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 31 |\u001b[39m     expect(response\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m202\u001b[39m)\n \u001b[90m    |\u001b[39m                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 32 |\u001b[39m     \n \u001b[90m 33 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mPromise\u001b[39m(resolve \u001b[33m=>\u001b[39m setTimeout(resolve\u001b[33m,\u001b[39m \u001b[35m2000\u001b[39m))\n \u001b[90m 34 |\u001b[39m     \u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\webdev\\sang-logium\\tests\\checkout\\guest-checkout-inventory-reservation\\integration\\checkout-button-click-to-redis-queue\\simple-queue-test.spec.ts",
+                            "column": 31,
+                            "line": 31
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m202\u001b[39m\nReceived: \u001b[31m500\u001b[39m\n\n\u001b[0m \u001b[90m 29 |\u001b[39m     })\n \u001b[90m 30 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 31 |\u001b[39m     expect(response\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m202\u001b[39m)\n \u001b[90m    |\u001b[39m                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 32 |\u001b[39m     \n \u001b[90m 33 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mPromise\u001b[39m(resolve \u001b[33m=>\u001b[39m setTimeout(resolve\u001b[33m,\u001b[39m \u001b[35m2000\u001b[39m))\n \u001b[90m 34 |\u001b[39m     \u001b[0m\n\u001b[2m    at C:\\webdev\\sang-logium\\tests\\checkout\\guest-checkout-inventory-reservation\\integration\\checkout-button-click-to-redis-queue\\simple-queue-test.spec.ts:31:31\u001b[22m"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "{\"timestamp\":\"2026-04-16T10:55:12.243Z\",\"level\":2,\"message\":\"Redis connected\",\"component\":\"RedisClient\",\"category\":\"redis\",\"metadata\":{\"host\":\"localhost\",\"port\":6379,\"db\":0}}\n"
+                        },
+                        {
+                          "text": "Redis test database cleared\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-16T10:55:12.217Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\webdev\\sang-logium\\test-results\\checkout-button-click-to-r-01267-ueue-request-in-Redis-queue-integration\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\webdev\\sang-logium\\tests\\checkout\\guest-checkout-inventory-reservation\\integration\\checkout-button-click-to-redis-queue\\simple-queue-test.spec.ts",
+                        "column": 31,
+                        "line": 31
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "401f0a8b20c3ff212f7c-525e262026c58dfc0734",
+              "file": "checkout-button-click-to-redis-queue/simple-queue-test.spec.ts",
+              "line": 13,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-04-16T10:55:10.532Z",
+    "duration": 2269.433,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

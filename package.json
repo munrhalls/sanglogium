@@ -26,6 +26,8 @@
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",
+    "test:integration": "vitest run --config vitest.integration.config.ts --reporter=verbose",
+    "test:integration:watch": "vitest --config vitest.integration.config.ts",
     "test:homepage:unit": "vitest run tests/unit/homepage/",
     "test:homepage:component": "npx playwright test-ct tests/component/",
     "test:e2e": "npm run build && npx playwright test",

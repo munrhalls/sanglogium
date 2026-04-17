@@ -17,16 +17,20 @@ export const client = createClient({
 });
 
 // Write-enabled client for atomic operations
+// Uses SANITY_STUDIO_READ_WRITE_CREATE which has create/delete permissions
+const writeToken = process.env.SANITY_STUDIO_READ_WRITE_CREATE || process.env.SANITY_API_TOKEN;
+
 export const writeClient = createClient({
   projectId,
   dataset,
   apiVersion,
   useCdn: false, // Must be false for writes
-  token: process.env.SANITY_API_TOKEN,
+  token: writeToken,
 });
 
 // Debug: Verify token is loaded
-console.log('WriteClient token loaded:', process.env.SANITY_API_TOKEN ? 'YES' : 'NO');
+console.log('WriteClient token loaded:', writeToken ? 'YES' : 'NO');
+console.log('WriteClient token source:', process.env.SANITY_STUDIO_READ_WRITE_CREATE ? 'SANITY_STUDIO_READ_WRITE_CREATE' : 'SANITY_API_TOKEN');
 console.log('WriteClient projectId:', projectId);
 console.log('WriteClient dataset:', dataset);
 

@@ -1,5 +1,49 @@
 # Auto-Lessons from S7-BASKET-DESIGN-ALIGNMENT
 
+## Lesson N: Windows Playwright Command Hanging Prevention
+**Date:** April 16, 2026
+**Work Unit:** Playwright Integration Test Conversion
+**Duration:** 30+ minutes (blocked) + 5 minutes (resolution)
+
+### What Was the Error/Surprise?
+Windows PowerShell commands were hanging for 30+ minutes when trying to run Playwright tests. No output, no progress, just infinite blocking.
+
+### Root Cause
+Previous Playwright test run left a zombie Node.js process (PID 2880) consuming 87+ CPU seconds that never terminated, blocking all subsequent command execution.
+
+### Time Bottlenecks
+- **Investigation:** 5 minutes to identify zombie process
+- **Friction:** Windows PowerShell process management complexity
+- **Wait time:** 30+ minutes of blocked command execution
+- **Resolution:** 10 seconds to kill process and unblock system
+
+### Prompt Quality
+- **Strength:** Clear test execution goal
+- **Weakness:** No pre-flight process check
+- **Missing:** Process cleanup protocol, timeout specifications
+
+### Test Coverage Gap
+Should have had:
+- Process health checks before test execution
+- Automatic cleanup of background processes
+- Timeout mechanisms for command execution
+- Environment verification (Redis version, connectivity)
+
+### Fix Applied
+```powershell
+# Identified zombie process
+Get-Process node | Where-Object {$_.CPU -gt 10}
+
+# Killed blocking process
+Stop-Process -Id 2880 -Force
+
+# Test ran successfully after cleanup
+npx playwright test --config playwright.integration.config.ts simple-queue-test.spec.ts
+```
+
+### Keywords
+windows, playwright, process-hanging, zombie-processes, redis, test-environment, prevention
+
 ## Lesson 0: File Exists Blocking Progress
 **Date:** April 14, 2026
 **Sprint:** Conversation Access Research

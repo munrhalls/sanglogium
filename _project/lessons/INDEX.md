@@ -886,6 +886,54 @@
 | Lesson | Severity | Summary |
 |--------|----------|---------|
 | [workflows/implement-phase-gates.md](workflows/implement-phase-gates.md) | Medium | Need pre-flight branch checks and execution mode flags |
+
+---
+
+## Keyword: windows
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [sops/windows-playwright-process-management.md](sops/windows-playwright-process-management.md) | Critical | Windows Playwright hanging prevention - process cleanup, Redis version, timeouts |
+
+---
+
+## Keyword: playwright
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [sops/windows-playwright-process-management.md](sops/windows-playwright-process-management.md) | Critical | Pre-flight process checks, --maxWorkers=1, timeout configuration |
+
+---
+
+## Keyword: process-hanging
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [sops/windows-playwright-process-management.md](sops/windows-playwright-process-management.md) | Critical | Zombie Node processes hang PowerShell - kill with Stop-Process -Force |
+
+---
+
+## Keyword: zombie-processes
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [sops/windows-playwright-process-management.md](sops/windows-playwright-process-management.md) | Critical | Previous test runs leave Node processes - pre-flight cleanup required |
+
+---
+
+## Keyword: test-environment
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [sops/windows-playwright-process-management.md](sops/windows-playwright-process-management.md) | Critical | Isolate test processes, monitor resources, dedicated configs |
+
+---
+
+## Keyword: prevention
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [sops/windows-playwright-process-management.md](sops/windows-playwright-process-management.md) | Critical | Systematic prevention protocol for Windows Playwright issues |
 | [workflows/pre-flight-baseline-check.md](workflows/pre-flight-baseline-check.md) | High | Always verify baseline build before sprint work to prevent false correlation |
 
 ---

@@ -3,11 +3,6 @@ import { headers } from 'next/headers';
 import { stripe } from '@/lib/stripe';
 import { Redis } from '@upstash/redis';
 import { client } from '@/sanity/lib/client';
-import { getRedisClient } from '@/lib/checkout/reservation/redis-client';
-import { ReservationTTLManager } from '@/lib/checkout/reservation/redis-managers';
-import { FIFOQueue } from '@/lib/checkout/reservation/fifo-queue';
-import { realizeReservationHandler } from '@/lib/checkout/reservation/sanity-handlers';
-import { v4 as uuidv4 } from 'uuid';
 
 // Redis client
 const redis = new Redis({
@@ -209,37 +204,8 @@ export async function POST(request: NextRequest) {
 
       case 'checkout.session.completed': {
         const session = event.data.object;
-        const reservationToken = session.metadata?.reservation_token;
-
-        if (reservationToken) {
-          // Initialize queue with realize handler
-          const queueRedis = getRedisClient();
-          const queue = new FIFOQueue(
-            queueRedis,
-            undefined, // create handler not needed
-            undefined, // rollback handler not needed
-            realizeReservationHandler
-          );
-
-          // Enqueue priority request to realize reservation
-          const realizeResponse = await queue.enqueue({
-            id: uuidv4(),
-            type: 'realize_reservation',
-            priority: 'high', // Priority queue for payment success
-            idempotencyKey: `realize-${session.id}`,
-            reservationToken,
-            payload: {
-              sessionId: session.id,
-              paymentIntentId: session.payment_intent as string
-            }
-          });
-
-          if (realizeResponse.status === 'error') {
-            console.error('Failed to enqueue reservation realization:', realizeResponse.error);
-          } else {
-            console.log('Reservation realization enqueued with priority:', reservationToken);
-          }
-        }
+        // Reservation realization would be handled here in future PRD
+        console.log('Checkout session completed:', session.id);
         break;
       }
 

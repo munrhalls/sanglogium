@@ -1,0 +1,279 @@
+## Signal Density Optimization (AI-Leverage)
+
+> **Maximize signal density before Opus. Ground factor: (load-bearing facts) ÷ (time cost).**
+
+### Model Role Specialization
+- **Cheap models (Kimi/Haiku/Local):** Discovery and extraction only — read docs, scan code, extract patterns
+- **Opus:** Synthesis and decision only — structure sprint docs, decide scope sequence
+- **Never feed raw research to Opus** — always `/compress` first (10× token reduction, identical quality)
+
+### Compression Rules
+- No prose, no explanation — only verified facts
+- Token names must be component classes from `addComponents`, not utilities
+- File paths must exist (verified in codebase)
+- GROQ shapes from live queries only
+- Maximum Opus input for sprint generation: **1000 tokens**
+
+### Load-Bearing Fact Definition
+Any fact that, if missing or wrong, would cause the sprint doc to drift or the executor model to fail.
+
+---
+
+# CORE ARCHITECTURAL CONSTRAINTS
+
+## Next.js 15 App Router Strict Adherence
+- Primary pages MUST be Server Components (no arbitrary "use client" directives)
+- Data fetching MUST be parallelized on the server to reduce waterfall requests
+- Server-first routing is the absolute default pattern
+
+## Sanity CMS & Type Safety
+- Sanity Typegen outputs are the ABSOLUTE source of truth for schema types
+- NEVER manually define types that conflict with generated Sanity types
+- All GROQ queries MUST respect the generated type contracts
+- Fetch Strategy: Sanity Schema → Localhost Studio → GROQ Library → React Server Component → Prebuilt Props → Client Components
+
+## Styling Constraints
+- ALL styling MUST use scoped Tailwind utility classes ONLY
+- NEVER modify global CSS files unless explicitly requested
+- NO arbitrary global CSS modifications permitted
+- Styling changes MUST be applied directly on target elements to prevent global blast radius
+
+## Virtual File System (VFS) - Catalogue Architecture
+- VFS is pre-computed at build time via daily automatic rebuild (cron)
+- NEVER query the database recursively for category trees
+- Lookup complexity is O(1) via path-based prefix matching
+- Moving catalogue slots automatically updates ALL associated product locations
+- Any catalogue change requires ZERO subsequent update work
+
+## Finite State Machine (FSM) - Order Lifecycle
+- FSM states are the ABSOLUTE source of truth for sorder lifecycle
+- Order state transitions MUST follow strict, pre-determined enumerable variable transitions
+- NEVER bypass FSM state validation
+- Idempotent background queues (Inngest) guarantee exactly-once execution for Stripe refunds and inventory re-stocking
+
+## Image Optimization Strategy
+- ALL image transformations MUST be handled by Sanity CDN (NOT Next.js image optimization server)
+- Use next/image with Custom Loader (@sanity/image-url)
+- ALWAYS fetch metadata.dimensions from Sanity to provide base aspect ratio
+- Apply Sanity's .rect() parameters within the loader for hotspot/crop
+
+## Component Archaeology Principle (Debugging Workflow)
+1. Analyze what the problem is
+2. Determine what components are relevant
+3. Check each relevant component one by one, analyze and understand individually
+4. Understand relevant components as a connected chain, analyze interactions
+5. Investigate the problem space and analyze reality BEFORE proposing solutions
+6. Solve the problem as asked - do not jump ahead to un-asked optimizations
+
+## Development Workflow
+- Specifications first
+- Turn each specification into test case code one by one
+- Run the failing test
+- Implement feature until test succeeds
+- Test manually
+- Work on a one-by-one basis for fixes
+
+## /implement Command Protocol
+When the user types /implement in Cascade, immediately read, strictly adopt, and execute the exact protocol defined in C:\webdev\sang-logium\_agent\workflows\implement.md. Do not deviate from its phases.
+
+## /contain Command Protocol
+When the user types /contain in Cascade, immediately read and strictly adopt the protocol defined in C:\webdev\sang-logium\.windsurf\workflows\contain.md. This command MANDATES zero-lateral movement and forbids any unrelated changes, improvements, or refactors outside of the explicit scope.
+
+## Learning Circuit — Compound Engineering
+
+### Pre-Work Lessons Retrieval (MANDATORY)
+Before ANY work begins:
+1. Query `_project/lessons/INDEX.md` for relevant keywords
+2. Load Critical/High severity lessons first
+3. Apply prevention rules as active constraints
+4. Execute work with learned constraints in context
+
+### Post-Work /learn Execution (MANDATORY)
+After EVERY sprint, debug, or implementation:
+1. Extract raw learnings from experience
+2. **Quality Gate: If no new insights, skip /learn - 0 lessons > diluted lessons**
+3. Thematize to primary theme(s) - may span patterns, failures, workflows, or be interdisciplinary
+4. Codify into appropriate infrastructure (choose best fit or create cross-reference)
+5. Update INDEX.md with new keywords
+6. Verify compound effect (next work will benefit)
+
+**Lesson Quality Criteria:**
+- New insight not already documented
+- Prevents future time loss or errors
+- Actionable and retrievable
+- Not obvious or routine
+- **Cross-theme lessons allowed** when insights span multiple domains
+
+### Universal Prevention Rules
+- **Pre-Flight:** Before ANY work, execute: branch check, baseline build verification, scope lock confirmation
+- **GROQ:** Verify field type before using reference syntax (->)
+- **Build:** Build passing ≠ bug fixed — need runtime verification
+- **BUILD TIME DESTRUCTION:** Build runs are BANNED except after big sprints, explicit user override, or pre-deployment only. Use dev server for verification.
+- **Modules:** ES modules only — no require() in this codebase
+- **Typegen:** ALWAYS run `npm run typegen` before type-related changes — use `Pick<SanityProduct, ...>` pattern
+- **Data:** Verify actual data before code changes (debugging)
+- **Components:** Complete functional groups, not isolated components
+- **SVG:** Don't assume SVGR — use Image component unless verified
+- **Velocity:** Run /commits-diagnostics before sprint planning — reject if D-type > 30% or real:illusory < 2:1
+- **cloneElement:** NEVER use cloneElement for prop injection — use React Context instead
+- **Sanity Migrations:** When migrating fields from primitive to reference types: search entire codebase first, create comprehensive checklist, update ALL interfaces/queries/components in single atomic change
+- **useQueryState:** ALWAYS add null checks - `useQueryState` returns undefined during hydration. Use `(filters || []).map()` pattern or destructure with defaults `const [filters = []] = useQueryState(...)`
+- **Playwright Performance:** ALWAYS use parallel workers, headless mode, no fixed waits. `workers: process.env.CI ? 2 : 4`, `headless: true`, NEVER `waitForTimeout`
+- **Validation:** ALWAYS check type AND content - `typeof field === "string" && field !== ""`. Empty strings pass type guards but are invalid data.
+- **AS-SIMPLE-AS-POSSIBLE:** If it takes more than 5 minutes to explain, it's too complex. If it needs more than one page to document, it's too complex. If tests are longer than feature code, it's too complex.
+- **Quick-Workflow:** For any feature at risk of over-complication, use /quick-workflow: UX flows (15min) -> Manual verification (15min) -> Simple architecture (15min) -> Guardrails (10min) -> Sprint template (10min).
+- **Human-First Sprint:** All sprints must follow: UX flows -> End-state overview -> Architecture contract -> Tiny scope contracts (UX slice + arch slice + human verification + minimal tests) -> Implement -> Verify immediately -> Next scope. No big phases, no end-only verification.
+- **TEST SCOPE CREEP:** When writing unit tests, "A to B" means ONLY A to B. Parse flow name, stop at endpoint, write explicit OUT OF SCOPE section. Never include what happens next.
+- **TEST IMPORT DISCIPLINE:** Unit tests MUST import functions directly from source files. NO copying, NO recreating, NO "test utils" that duplicate source logic. Tests must fail to compile if source function doesn't exist.
+- **ZERO TOLERANCE FOR PHANTOM COVERAGE:** Tests MUST NOT define functions, classes, or logic that exists in implementation. NO TEST is better than a lying test. Test-first allowed only if importing from non-existent source (will fail until implementation exists).
+- **WINDOWS PLAYWRIGHT PRE-FLIGHT:** Before ANY Playwright test on Windows, execute: `Get-Process node | Where-Object {$_.CPU -gt 10}` and kill zombie processes. Use `--maxWorkers=1` and explicit timeouts to prevent hanging.
+
+## Testing Framework Rules
+- **NEVER use Jest** - Jest is prohibited in this codebase
+- **ALWAYS use Vitest** for unit and integration tests
+- **Playwright remains unchanged** for end-to-end testing
+- **NO jest.mock(), jest.fn(), describe(), it(), expect() from Jest**
+- **USE vi.mock(), vi.fn(), describe(), it(), expect() from Vitest**
+- **All test files must use Vitest syntax and APIs**
+
+## Test Execution Automation
+- **ALWAYS use headless mode**: `npx vitest run --reporter=verbose`
+- **NEVER use interactive watch mode** - requires manual "q" to exit
+- **Auto-exit after completion** - CI mode exits naturally
+- **No manual intervention** - tests run and complete automatically
+- **Preferred command**: `npm test` should map to `npx vitest run --reporter=verbose`
+
+## Playwright Testing Rules - CRITICAL
+- **PRE-FLIGHT CHECKLIST REQUIRED**: Define and verify 4 states BEFORE writing tests
+- **BEFORE-STATE must be specific**: Exact URL, counts, content, parameters
+- **TARGET ELEMENT must be specific**: Exact selector, location, interaction method
+- **USER ACTION must be specific**: Exact method, immediate result expected
+- **AFTER-STATE must be specific**: Exact expected changes, counts, content
+- **NO VAGUE DEFINITIONS**: "Check products change" → "Product count should change from 6 to filtered count"
+- **NO ASSUMED SELECTORS**: "Click filter" → "Click `page.locator('[data-testid="filter-sidebar"] label').first()`"
+- **MANUAL VERIFICATION REQUIRED**: All 4 states must be verified in browser before test writing
+- **PERFORMANCE MANDATORY**: Always use `workers: process.env.CI ? 2 : 4`, `headless: true`, NEVER `waitForTimeout`
+
+## Test Quality & Minimal Impact Principles
+- **MINIMAL TESTS ONLY** - Least, smallest, minimal tests needed for full-impact coverage
+- **Test user behavior, not implementation** - Focus on what users experience, not how it's built
+- **AVOID testing UI details** - Never test icon existence, button text, CSS classes, DOM structure
+- **Test state changes and outcomes** - URL updates, filter effects, data flow, user actions
+- **Resilient over brittle** - Tests should survive UI refactoring, not break on visual changes
+- **Value-driven testing** - Each test must prove critical user value, not implementation correctness
+
+### What TO Test:
+- User can filter by price range and see results
+- URL updates correctly when filters change
+- State persists and restores properly
+- Critical user workflows end-to-end
+
+### What NOT to Test:
+- Icon/button existence or appearance
+- Text content of UI elements
+- CSS classes or styling
+- DOM structure details
+- Component implementation specifics
+- Anything that changes during UI refactoring
+
+## Systematic Test Fixing Workflow
+When fixing failing tests:
+1. **Run test suite once** - Store only failing tests
+2. **Pick 1st failing test** - Run in isolation only that test
+3. **Check test quality** - Verify test is well-written before fixing
+   - Test expectations must match logical component behavior
+   - Test must clearly define what "prevention/validation" means
+   - Test should not have ambiguous or contradictory expectations
+4. **If test is badly written** - Exit immediately and inform user. Do not proceed with fixing
+5. **Fix implementation** - Address only that 1 test (only if test is well-written)
+6. **Run only that test** - Verify fix works
+7. **Test passes?** - Yes: move to next failing test; No: return to step 5
+8. **Repeat max 2 times** - If still failing after 2 attempts, stop and inform immediately
+- **Never fix multiple tests simultaneously** - One test at a time only
+- **Never run full suite during fixing** - Only single test isolation
+- **Test quality check is mandatory** - Badly written tests must be rejected before any implementation changes
+
+---
+
+## Opus Sprint Specification Quality (Universal)
+
+When generating sprint specs with Opus, output MUST include:
+
+### 1. Gap Coverage Mapping
+- Every SC explicitly references audit gaps (G1, G2, G3...)
+- Traceability: Audit finding → Spec → Implementation
+
+### 2. Line-Number Precision
+- Exact file paths with line numbers/ranges
+- Exact class names for before/after states
+
+### 3. Constraint-First Architecture
+- Scope Lock Rules section FIRST (what NOT to touch)
+- Anti-patterns section with explicit DON'Ts
+
+### 4. Layer-Based Sequencing
+- Pass 1: Skeleton (semantic HTML)
+- Pass 2: Data (real data integration)
+- Pass 3: Build (Structure → Layout → Surface → Interaction)
+
+### 5. Verifiable DoDs
+- Build gate after EVERY SC
+- Objective pass/fail criteria only
+- No subjective "looks good" requirements
+
+### 6. Functional Grouping
+- Group A: Foundation (layout, structure)
+- Group B: Core UX (product display)
+- Group C: Functional systems (filters)
+- Group D: Polish (skeletons, semantics)
+
+**Reference:** `_project/lessons/workflows/opus-sprint-specification-generation.md`
+
+---
+
+## Opus Audit Pattern (Universal)
+
+When generating design audits with Opus, output MUST follow 8-part structure:
+
+### Part 1: Design System Summary
+- Ground truth tokens from tailwind.config.ts
+- Component tokens from addComponents
+- Reference standard identified (homepage/canonical implementation)
+
+### Part 2: Research-Verified Best Practices
+- Sources: Baymard, Nielsen Norman Group, authoritative UX research
+- Each practice has consensus rating (High/Medium/Low)
+- No subjective recommendations without source
+
+### Part 3: Component-by-Component Audit
+- Current implementation (code structure)
+- Issues classified: ✅ Correct / ⚠️ Warning / ❌ Critical
+- Exact file paths and line ranges
+
+### Part 4: Design Ratings (Quantified)
+- 10-15 dimensions rated 1-10
+- Evidence cited per rating
+- Aggregate score calculated
+
+### Part 5: Gap Analysis
+- Numbered gaps (G1, G2, G3...)
+- Columns: Gap | Current State | Target State | Components Affected
+- Severity tiers: Critical / Major / Minor
+
+### Part 6: Sequenced Change Specifications
+- SC1, SC2... with Gap Coverage mapping
+- Before/after code blocks (exact)
+- Change list (numbered steps)
+
+### Part 7: Verification Checklist
+- Binary pass/fail criteria
+- Searchable commands
+- No subjective criteria
+
+### Part 8: Expected Results
+- Target ratings post-implementation
+- Measurable success criteria
+
+**Critical:** Audit must transition directly to sprint via Gap Coverage mapping.
+
+**Reference:** `_project/lessons/patterns/opus-audit-to-sprint-pipeline.md`

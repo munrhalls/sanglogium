@@ -19,6 +19,12 @@ export default defineConfig(({ mode }) => {
       environment: "jsdom",
       env: env,
       setupFiles: ['./vitest.setup.ts'],
+      exclude: [
+        '**/node_modules/**',
+        '**/dist/**',
+        '**/.next/**',
+        'tests/checkout-queue-skeleton/e2e/**',
+      ],
     },
   };
 });

@@ -1,0 +1,39 @@
+<testsuites id="" name="" tests="1" failures="1" skipped="0" errors="0" time="2.269433">
+<testsuite name="checkout-button-click-to-redis-queue\simple-queue-test.spec.ts" timestamp="2026-04-16T10:55:10.852Z" hostname="integration" tests="1" failures="1" skipped="0" time="0.498" errors="0">
+<testcase name="Queue Processing Test › should enqueue request in Redis queue" classname="checkout-button-click-to-redis-queue\simple-queue-test.spec.ts" time="0.498">
+<failure message="simple-queue-test.spec.ts:13:3 should enqueue request in Redis queue" type="FAILURE">
+<![CDATA[  [integration] › checkout-button-click-to-redis-queue\simple-queue-test.spec.ts:13:3 › Queue Processing Test › should enqueue request in Redis queue 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 202
+    Received: 500
+
+      29 |     })
+      30 |
+    > 31 |     expect(response.status()).toBe(202)
+         |                               ^
+      32 |     
+      33 |     await new Promise(resolve => setTimeout(resolve, 2000))
+      34 |     
+        at C:\webdev\sang-logium\tests\checkout\guest-checkout-inventory-reservation\integration\checkout-button-click-to-redis-queue\simple-queue-test.spec.ts:31:31
+
+    attachment #1: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\..\test-results\checkout-button-click-to-r-01267-ueue-request-in-Redis-queue-integration\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\..\test-results\checkout-button-click-to-r-01267-ueue-request-in-Redis-queue-integration\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[{"timestamp":"2026-04-16T10:55:12.243Z","level":2,"message":"Redis connected","component":"RedisClient","category":"redis","metadata":{"host":"localhost","port":6379,"db":0}}
+Redis test database cleared
+
+[[ATTACHMENT|test-results\checkout-button-click-to-r-01267-ueue-request-in-Redis-queue-integration\trace.zip]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+</testsuites>
