@@ -8,6 +8,7 @@
 import { describe, it, expect } from 'vitest'
 import { spawnSync } from 'node:child_process'
 import path from 'node:path'
+import { existsSync } from 'node:fs'
 
 const FIXTURE = path.resolve(
   __dirname,
@@ -19,6 +20,13 @@ const TSCONFIG = path.resolve(__dirname, 'tsconfig.fixture.json')
 
 describe('TypeScript type validation', () => {
   it('bad-request fixture: every malformed line is caught by tsc', () => {
+    // Pre-flight: verify fixture files exist
+    if (!existsSync(FIXTURE)) {
+      throw new Error(`Fixture file not found: ${FIXTURE}`)
+    }
+    if (!existsSync(TSCONFIG)) {
+      throw new Error(`Tsconfig file not found: ${TSCONFIG}`)
+    }
     const result = spawnSync(
       'npx',
       ['--no-install', 'tsc', '--noEmit', '-p', TSCONFIG],

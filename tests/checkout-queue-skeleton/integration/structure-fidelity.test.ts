@@ -4,24 +4,18 @@
 // structure check logs valid:false.
 
 import { describe, it, expect, beforeAll, beforeEach } from 'vitest'
-import { getQueueRedis } from '@/lib/queue/redis'
-import { TRACE_LIST_KEY, QUEUE_LIST_KEY } from '@/lib/queue/constants'
+import { fetch } from 'undici'
 
 const BASE = process.env.QUEUE_TEST_BASE_URL || 'http://localhost:3000'
 
 async function readTrace() {
-  const redis = getQueueRedis()
-  const raw = await redis.lrange(TRACE_LIST_KEY, 0, -1)
-  return raw
-    .map((r) => (typeof r === 'string' ? JSON.parse(r) : r))
-    .reverse() as Array<{ event: string; payload?: { structure?: string; valid?: boolean } }>
+  const res = await fetch(`${BASE}/api/checkout-queue/trace`)
+  const entries = await res.json()
+  return entries as Array<{ event: string; payload?: { structure?: string; valid?: boolean } }>
 }
 
 async function clearState() {
-  const redis = getQueueRedis()
-  await redis.del(TRACE_LIST_KEY)
-  await redis.del(QUEUE_LIST_KEY)
-  await redis.del('lock:checkout:processing')
+  await fetch(`${BASE}/api/checkout-queue/clear-trace`, { method: 'POST' })
 }
 
 describe('Type/structure fidelity', () => {
@@ -38,7 +32,7 @@ describe('Type/structure fidelity', () => {
     const r = await fetch(`${BASE}/api/checkout-queue`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ n: 42 }),
+      body: JSON.stringify({ publicBasket: [{ _id: 'prod-1', quantity: 1 }] }),
     })
     expect(r.ok).toBe(true)
 

@@ -2,9 +2,10 @@
 // Hits the real Next.js dev server on :3000 with 9 concurrent POSTs.
 // Asserts atomicity via the trace Redis list (pushed server-side by processInline).
 
-import { describe, it, expect, beforeAll, beforeEach } from 'vitest'
-import { getQueueRedis } from '@/lib/queue/redis'
-import { TRACE_LIST_KEY, QUEUE_LIST_KEY } from '@/lib/queue/constants'
+import { describe, it, expect, beforeAll } from 'vitest'
+
+// Use undici for Node.js fetch
+import { fetch } from 'undici'
 
 const BASE = process.env.QUEUE_TEST_BASE_URL || 'http://localhost:3000'
 
@@ -16,19 +17,13 @@ interface TraceEntry {
 }
 
 async function readTrace(): Promise<TraceEntry[]> {
-  const redis = getQueueRedis()
-  const raw = await redis.lrange(TRACE_LIST_KEY, 0, -1)
-  const entries = raw
-    .map((r) => (typeof r === 'string' ? JSON.parse(r) : r))
-    .reverse() // LPUSH means newest-first; reverse to chronological
+  const res = await fetch(`${BASE}/api/checkout-queue/trace`)
+  const entries = await res.json()
   return entries as TraceEntry[]
 }
 
 async function clearState() {
-  const redis = getQueueRedis()
-  await redis.del(TRACE_LIST_KEY)
-  await redis.del(QUEUE_LIST_KEY)
-  await redis.del('lock:checkout:processing')
+  await fetch(`${BASE}/api/checkout-queue/clear-trace`, { method: 'POST' })
 }
 
 describe('Sequential FIFO processing', () => {
@@ -43,7 +38,9 @@ describe('Sequential FIFO processing', () => {
   })
 
   it('processes 9 concurrent requests atomically (no interleaving)', async () => {
-    const payloads = Array.from({ length: 9 }, (_, i) => ({ n: i + 1 }))
+    const payloads = Array.from({ length: 9 }, (_, i) => ({
+      publicBasket: [{ _id: `prod-${i + 1}`, quantity: i + 1 }]
+    }))
 
     const responses = await Promise.all(
       payloads.map((p) =>
@@ -59,19 +56,19 @@ describe('Sequential FIFO processing', () => {
     responses.forEach((r: { ok: boolean }) => expect(r.ok).toBe(true))
 
     const trace = await readTrace()
-    const processing = trace.filter((t) => t.event === 'Processing request')
+    const launch = trace.filter((t) => t.event === 'launch first in queue to cms')
     const complete = trace.filter((t) => t.event === 'Request complete')
 
-    expect(processing.length).toBe(9)
+    expect(launch.length).toBe(9)
     expect(complete.length).toBe(9)
 
-    // Atomicity: for every pair (Processing X, Complete X) there must be no other
-    // Processing event between them.
+    // Atomicity: for every pair (launch X, Complete X) there must be no other
+    // launch event between them.
     const procComp = trace.filter(
-      (t) => t.event === 'Processing request' || t.event === 'Request complete'
+      (t) => t.event === 'launch first in queue to cms' || t.event === 'Request complete'
     )
     for (let i = 0; i < procComp.length; i += 2) {
-      expect(procComp[i].event).toBe('Processing request')
+      expect(procComp[i].event).toBe('launch first in queue to cms')
       expect(procComp[i + 1].event).toBe('Request complete')
       expect(procComp[i + 1].requestId).toBe(procComp[i].requestId)
     }
