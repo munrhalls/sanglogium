@@ -1,13 +1,16 @@
 // Strict request/response types for the checkout queue skeleton.
 
 export interface UIRequest {
-  n: number
+  publicBasket: Array<{
+    _id: string
+    quantity: number
+  }>
 }
 
 export interface UIResponse {
   ok: boolean
   requestId: string
-  n: number
+  basketItemCount: number
   productId: string | null
   durationMs: number
 }
@@ -33,9 +36,20 @@ export interface CMSResponse {
 export function isUIRequest(v: unknown): v is UIRequest {
   if (typeof v !== 'object' || v === null) return false
   const keys = Object.keys(v)
-  if (keys.length !== 1 || keys[0] !== 'n') return false
-  const n = (v as { n: unknown }).n
-  return typeof n === 'number' && Number.isFinite(n)
+  if (keys.length !== 1 || keys[0] !== 'publicBasket') return false
+  const publicBasket = (v as { publicBasket: unknown }).publicBasket
+  if (!Array.isArray(publicBasket)) return false
+  if (publicBasket.length === 0) return false
+  for (const item of publicBasket) {
+    if (typeof item !== 'object' || item === null) return false
+    const itemKeys = Object.keys(item)
+    if (itemKeys.length !== 2) return false
+    if (!itemKeys.includes('_id') || !itemKeys.includes('quantity')) return false
+    const id = (item as { _id: unknown })._id
+    const qty = (item as { quantity: unknown }).quantity
+    if (typeof id !== 'string' || typeof qty !== 'number') return false
+  }
+  return true
 }
 
 export function isRedisQueueItem(v: unknown): v is RedisQueueItem {
@@ -70,7 +84,7 @@ export function isUIResponse(v: unknown): v is UIResponse {
   return (
     typeof o.ok === 'boolean' &&
     typeof o.requestId === 'string' &&
-    typeof o.n === 'number' &&
+    typeof o.basketItemCount === 'number' &&
     (o.productId === null || typeof o.productId === 'string') &&
     typeof o.durationMs === 'number'
   )

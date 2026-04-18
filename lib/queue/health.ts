@@ -42,3 +42,6 @@ export function startHealthInterval(): void {
     void healthCheck()
   }, 60_000).unref?.()
 }
+
+// Start health interval on module load to ensure queue monitoring runs on server startup
+startHealthInterval()

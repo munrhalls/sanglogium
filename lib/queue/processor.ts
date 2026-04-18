@@ -85,7 +85,7 @@ export async function processInline(raw: unknown): Promise<ProcessResult> {
   }
   const uiReq = raw as UIRequest
 
-  await trace('Request received', requestId, { type: 'UIRequest', n: uiReq.n })
+  await trace('get new request', requestId, { type: 'UIRequest', itemCount: uiReq.publicBasket.length })
 
   // 2. Enqueue + RedisQueue structure check
   const item: RedisQueueItem = {
@@ -99,6 +99,7 @@ export async function processInline(raw: unknown): Promise<ProcessResult> {
   }
 
   const redis = getQueueRedis()
+  await trace('queue it', requestId, { queuePosition: -1 })
   await redis.rpush(QUEUE_LIST_KEY, JSON.stringify(item))
 
   // 3. Spin: acquire lock + check head == me
@@ -137,7 +138,7 @@ export async function processInline(raw: unknown): Promise<ProcessResult> {
   }
 
   try {
-    await trace('Processing request', requestId, { queuePosition })
+    await trace('launch first in queue to cms', requestId, { queuePosition })
 
     // 4. CMSRequest structure check
     const cmsReq: CMSRequest = {
@@ -147,6 +148,7 @@ export async function processInline(raw: unknown): Promise<ProcessResult> {
     await logStructure(requestId, 'CMSRequest', cmsReq)
 
     // 5. Sanity read-only probe
+    await trace('wait for response', requestId, { waiting: true })
     let productId: string | null = null
     let sanitySuccess = false
     try {
@@ -171,13 +173,16 @@ export async function processInline(raw: unknown): Promise<ProcessResult> {
     const uiResp: UIResponse = {
       ok: sanitySuccess,
       requestId,
-      n: uiReq.n,
+      basketItemCount: uiReq.publicBasket.length,
       productId,
       durationMs: Date.now() - start,
     }
     await logStructure(requestId, 'UIResponse', uiResp)
 
+    await trace('return response to ui', requestId, { ok: sanitySuccess, duration: uiResp.durationMs })
+
     // 9. Pop head + release lock
+    await trace('pop 1st in queue (atomic)', requestId, { popping: true })
     await redis.lpop(QUEUE_LIST_KEY)
     await redis.del(LOCK_KEY)
 
