@@ -1,0 +1,24 @@
+# Anti Failed Rollback Concern
+
+## Scope
+Ensure stock rollback always succeeds using atomic transactions - if rollback fails, system must retry or alert, never leave stock in reserved state indefinitely.
+
+## Out of Scope
+Complex rollback strategies, manual retry intervention, rollback persistence beyond atomic transaction.
+
+# Aftermath target
+After completion: atomic transaction wrapping reserve and rollback operations, rollback failure detection with retry logic, rollback failure alerting. No stock left in reserved state after failed rollback.
+
+## Definition of Done
+[ ] Atomic transaction: wrap reserve and rollback in single transaction
+    [ ] Verification: `console.log('TRACE: Transaction started', { requestId })` before reserve
+    [ ] Verification: `console.log('TRACE: Transaction committed', { requestId })` after success
+    [ ] Verification: `console.log('TRACE: Transaction rolled back', { requestId })` after rollback
+    [ ] Test: Reserve stock, verify transaction atomic (all succeed or all fail)
+[ ] Rollback failure detection: detect and retry failed rollbacks
+    [ ] Verification: `console.log('TRACE: Rollback failed', { requestId, error })` on rollback failure
+    [ ] Verification: `console.log('TRACE: Rollback retry', { requestId, attempt })` on retry
+    [ ] Test: Simulate rollback failure, verify retry triggered
+[ ] Rollback alerting: alert if rollback fails after retries
+    [ ] Verification: `console.log('TRACE: Rollback failed permanently', { requestId, error })` after final failure
+    [ ] Test: Fail rollback repeatedly, verify alert logged

@@ -1,0 +1,23 @@
+# Anti Miscount Concern
+
+## Scope
+Prevent stock count drift by using CMS as single source of truth - all stock operations go through CMS with atomic increments/decrements, no local caching of stock values.
+
+## Out of Scope
+Complex reconciliation processes, manual stock adjustment workflows, distributed stock aggregation beyond CMS.
+
+# Aftermath target
+After completion: CMS as single source of truth for stock, all stock operations atomic in CMS, no local stock caching, stock count always accurate. No drift between actual and reported stock.
+
+## Definition of Done
+[ ] Single source of truth: CMS is only stock storage
+    [ ] Verification: `console.log('TRACE: Stock fetch from CMS', { productId, stock })` when reading stock
+    [ ] Verification: `console.log('TRACE: Stock update in CMS', { productId, delta })` when updating stock
+    [ ] Test: All stock reads go to CMS, no local cache
+[ ] Atomic operations: stock changes atomic in CMS
+    [ ] Verification: `console.log('TRACE: Atomic stock increment', { productId, delta, newStock })` on increment
+    [ ] Verification: `console.log('TRACE: Atomic stock decrement', { productId, delta, newStock })` on decrement
+    [ ] Test: Concurrent stock updates, verify no drift
+[ ] No local caching: never cache stock locally
+    [ ] Verification: `console.log('TRACE: Stock cache check', { hasLocalCache: false })` on every stock operation
+    [ ] Test: Verify no local stock variables in code

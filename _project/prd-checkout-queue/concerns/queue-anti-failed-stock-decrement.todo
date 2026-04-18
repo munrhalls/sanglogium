@@ -1,0 +1,22 @@
+# Anti Failed Stock Decrement Concern
+
+## Scope
+Ensure stock always decrements on successful payment using atomic operations - payment success must trigger stock decrement, failure must not decrement stock.
+
+## Out of Scope
+Complex payment workflows beyond single payment→stock decrement, manual stock correction, distributed transaction beyond CMS atomic operations.
+
+# Aftermath target
+After completion: payment success always triggers stock decrement atomically, payment failure never decrements stock, stock decrement verification after payment. No successful payment without stock decrement.
+
+## Definition of Done
+[ ] Payment success triggers decrement: atomic stock decrement on payment success
+    [ ] Verification: `console.log('TRACE: Payment success, decrementing stock', { requestId, productId, quantity })` on payment success
+    [ ] Verification: `console.log('TRACE: Stock decremented', { productId, oldStock, newStock })` after decrement
+    [ ] Test: Process successful payment, verify stock decremented
+[ ] Payment failure no decrement: no stock change on payment failure
+    [ ] Verification: `console.log('TRACE: Payment failed, no stock decrement', { requestId, error })` on payment failure
+    [ ] Test: Process failed payment, verify stock unchanged
+[ ] Decrement verification: verify decrement after payment
+    [ ] Verification: `console.log('TRACE: Stock decrement verified', { productId, expectedStock, actualStock })` after decrement
+    [ ] Test: After payment, verify stock matches expected value

@@ -2,7 +2,7 @@
 
 **Purpose:** Searchable keyword → lesson mapping for pre-work retrieval.
 
-**Last Updated:** 2026-04-13
+**Last Updated:** 2026-04-18
 
 ## Keyword: contain
 | Lesson | Severity | Summary |
@@ -231,6 +231,63 @@
 | Lesson | Severity | Summary |
 |--------|----------|---------|
 | [patterns/end-to-end-filter-flow-testing.md](patterns/end-to-end-filter-flow-testing.md) | Medium | Create end-to-end tests for filter flows, not just unit tests |
+| [patterns/cover-and-move-testing-protocol.md](patterns/cover-and-move-testing-protocol.md) | High | Systematic verification that each test step sets ground for the next |
+
+---
+
+## Keyword: cover-and-move
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/cover-and-move-testing-protocol.md](patterns/cover-and-move-testing-protocol.md) | High | Verify each step covers for the next - never hand back until chain verified |
+
+---
+
+## Keyword: test-setup
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/cover-and-move-testing-protocol.md](patterns/cover-and-move-testing-protocol.md) | High | Pre-flight verification of all dependencies before test execution |
+
+---
+
+## Keyword: pre-flight
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/cover-and-move-testing-protocol.md](patterns/cover-and-move-testing-protocol.md) | High | Verify dev server, API endpoints, event names, state clearing before running tests |
+
+---
+
+## Keyword: chain-verification
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/cover-and-move-testing-protocol.md](patterns/cover-and-move-testing-protocol.md) | High | Step N must verify ground is set for step N+1 before proceeding |
+
+---
+
+## Keyword: simple
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/cover-and-move-testing-protocol.md](patterns/cover-and-move-testing-protocol.md) | Critical | Keep everything simplest possible - single-line fixes, minimal abstractions, no over-engineering |
+
+---
+
+## Keyword: minimal
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/cover-and-move-testing-protocol.md](patterns/cover-and-move-testing-protocol.md) | Critical | Minimal API endpoints, minimal code, minimal complexity |
+
+---
+
+## Keyword: over-engineering
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/cover-and-move-testing-protocol.md](patterns/cover-and-move-testing-protocol.md) | Critical | Prevent over-engineering - if >5 min to explain, too complex |
 
 ---
 
