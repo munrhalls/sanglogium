@@ -122,10 +122,10 @@ Every lesson file follows this structure:
 ```markdown
 # [Theme]: [Concise Title — Max 5 words]
 
-**Date:** YYYY-MM-DD  
-**Source:** [Sprint name / Debug session / Task ID]  
-**Severity:** [Critical | High | Medium | Low]  
-**Frequency:** [One-time | Recurring | Systemic]  
+**Date:** YYYY-MM-DD
+**Source:** [Sprint name / Debug session / Task ID]
+**Severity:** [Critical | High | Medium | Low]
+**Frequency:** [One-time | Recurring | Systemic]
 **Status:** [Active | Superseded | Archived]
 
 ---
