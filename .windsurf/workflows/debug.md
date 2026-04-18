@@ -40,11 +40,13 @@ description: Execute debugging workflow using Component Archaeology Principle
 
 ## PHASE 2: Execution Rules
 1. Strictly execute the **Explicit Refined DoDs** in exact sequential order.
-2. **Minimal Fix Principle:** Use single-line changes when sufficient. Avoid over-engineering.
-3. **Upstream First:** Fix root cause, not symptoms. Avoid downstream workarounds.
-4. **Styling & CSS Constraint:** Do not modify global CSS files unless the bug is explicitly in global styles. Use scoped Tailwind utility classes.
-5. Contain all changes strictly within the **Allowed Write Scope Paths**.
-6. **Regression Test:** Add a regression test if the bug was not caught by existing tests, but keep implementation minimal.
+2. **Cover and Move:** Each step must verify ground is set for the next step before proceeding. Never hand back work until the chain is verified.
+3. **Simple Principle:** Keep everything simplest possible. Single-line fixes when sufficient. Minimal abstractions. If >5 min to explain, too complex.
+4. **Minimal Fix Principle:** Use single-line changes when sufficient. Avoid over-engineering.
+5. **Upstream First:** Fix root cause, not symptoms. Avoid downstream workarounds.
+6. **Styling & CSS Constraint:** Do not modify global CSS files unless the bug is explicitly in global styles. Use scoped Tailwind utility classes.
+7. Contain all changes strictly within the **Allowed Write Scope Paths**.
+8. **Regression Test:** Add a regression test if the bug was not caught by existing tests, but keep implementation minimal.
 
 ---
 

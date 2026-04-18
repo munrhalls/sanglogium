@@ -1,5 +1,6 @@
 // import { clerkMiddleware } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
+import "@/lib/queue/health"; // Import to ensure queue health interval starts on server startup
 
 export default async function middleware(request: Request) {
   const response = NextResponse.next();

@@ -19,6 +19,8 @@ description: Human-first sprint planning - starts with UX flows, enforces contin
 - Event -> State -> Side Effect -> Result Event flow
 - Human verification after EACH scope contract
 - Tests serve human confidence, not coverage
+- **Cover and Move:** Each scope contract must verify ground is set for the next before proceeding
+- **Simple Principle:** Keep everything simplest possible. Single-line fixes. Minimal abstractions. If >5 min to explain, too complex
 - "Is this the simplest possible way?" guardrail
 
 ---

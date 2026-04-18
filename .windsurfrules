@@ -1,7 +1,7 @@
 # Windsurf-Specific Rules for Sang-Logium
 
-> **Full guidelines:** @AGENTS.md  
-> **Examples:** @examples/gold-standard.tsx  
+> **Full guidelines:** @AGENTS.md
+> **Examples:** @examples/gold-standard.tsx
 > **Feedback Loop:** @.windsurf/feedback-loop.md
 
 ---
@@ -37,5 +37,26 @@ See **AGENTS.md** for:
 
 ---
 
-**Last Updated:** 2026-04-16  
+## Universal Principles
+
+**Cover and Move + Simple:**
+- **Cover and Move:** Each step must verify ground is set for the next step before proceeding. Never hand back work until the chain is verified.
+- **Simple:** Keep everything simplest possible. Single-line fixes when sufficient. Minimal API endpoints. No unnecessary complexity. If >5 min to explain, too complex.
+
+**Cover and Move Checklist:**
+- [ ] Does step N verify what step N+1 needs?
+- [ ] Is the ground for step N+1 actually set?
+- [ ] Can I prove step N+1 will work before running it?
+- [ ] Is the solution simplest possible (no over-engineering)?
+
+**Simple Checklist:**
+- [ ] Can this be done in 1 line instead of 10?
+- [ ] Am I creating unnecessary abstractions?
+- [ ] Can I use existing infrastructure instead of creating new?
+- [ ] Would this take >5 minutes to explain?
+
+---
+
+**Last Updated:** 2026-04-18
 **Full Documentation:** @AGENTS.md
+**Learn more:** `_project/lessons/patterns/cover-and-move-testing-protocol.md`
