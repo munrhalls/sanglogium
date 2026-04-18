@@ -51,8 +51,8 @@ After completion: single Upstash Redis queue running 24/7, processing basket res
     ✔ Verification: `console.log('TRACE: Request complete', { requestId, duration })` at end @done(26-04-18 09:25)
     ✔ Test: `for i in {1..9}; do curl -X POST http://localhost:3000/api/checkout-queue -H "Content-Type: application/json" -d "{\"publicBasket\":[{\"_id\":\"prod-$i\",\"quantity\":$i}]}" & done; wait`, verify logs show exactly: "Processing request 1 → "Request complete 1" → "Processing request 2 → "Request complete 2" → ... → "Processing request 9" → "Request complete 9" @done(26-04-18 09:25)
 
-[ ] INPUT/OUTPUT streams flow: Basket reservation requests stream from ui → queued one at a time → atomic → stream to Sanity CMS → on response, pop currently processed from queue -> pass response back to UI
-    [ ] Incrementally build, run and verify queue-skeleton-e2e-test-page.todo
+✔ INPUT/OUTPUT streams flow: Basket reservation requests stream from ui → queued one at a time → atomic → stream to Sanity CMS → on response, pop currently processed from queue -> pass response back to UI @done(26-04-18 16:00)
+    ✔ Incrementally build, run and verify queue-skeleton-e2e-test-page.todo @done(26-04-18 16:00)
 
 
 ✔ Type/structure fidelity: UI request structure → Redis queue structure → CMS request structure, CMS response structure → Redis queue structure → UI response structure @done(26-04-18 11:32)
