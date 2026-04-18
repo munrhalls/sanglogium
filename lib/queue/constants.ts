@@ -4,3 +4,5 @@ export const LOCK_KEY = 'lock:checkout:processing'
 export const LOCK_TTL_SEC = 30
 export const TRACE_LIST_KEY = 'trace:checkout-queue'
 export const TRACE_MAX = 500
+export const SANITY_TRACE_LIST_KEY = 'trace:sanity-cms'
+export const SANITY_TRACE_MAX = 500

@@ -7,7 +7,7 @@
 import { randomUUID } from 'node:crypto'
 import { getQueueRedis } from './redis'
 import { startHealthInterval } from './health'
-import { trace } from './trace'
+import { trace, traceSanity } from './trace'
 import {
   QUEUE_LIST_KEY,
   LOCK_KEY,
@@ -143,18 +143,25 @@ export async function processInline(raw: unknown): Promise<ProcessResult> {
     // 4. CMSRequest structure check
     const cmsReq: CMSRequest = {
       requestId,
-      query: '*[_type=="product"][0]{_id}',
+      query: '*[_type=="product"][0]{_id, stock, reservedStock}',
     }
     await logStructure(requestId, 'CMSRequest', cmsReq)
 
     // 5. Sanity read-only probe
     await trace('wait for response', requestId, { waiting: true })
     let productId: string | null = null
+    let stock: number | null = null
+    let reservedStock: number | null = null
     let sanitySuccess = false
+
     try {
-      const r = (await backendClient.fetch(cmsReq.query)) as { _id?: string } | null
+      await traceSanity('before sanity request', requestId, { query: cmsReq.query })
+      const r = (await backendClient.fetch(cmsReq.query)) as { _id?: string; stock?: number; reservedStock?: number } | null
       productId = r?._id ?? null
+      stock = r?.stock ?? null
+      reservedStock = r?.reservedStock ?? null
       sanitySuccess = true
+      await traceSanity('after sanity response', requestId, { productId, stock, reservedStock, response: r })
     } catch (err) {
       console.error('TRACE: Sanity probe failed', { requestId, err })
       sanitySuccess = false
