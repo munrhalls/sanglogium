@@ -1,21 +1,45 @@
 'use client'
 
-// url http://localhost:3000/checkout-queue-e2e-test-page
+// Test page: http://localhost:3000/checkout-queue-e2e-test-page
+//
+// Fires 9 concurrent basket-reservation requests against /api/checkout-queue
+// and shows each request's status + trace timeline so you can visually confirm
+// requests are processed strictly one-at-a-time (atomic FIFO).
 
 import { useState, useEffect } from 'react'
 
-const formatTime = (isoString: string | null) => {
-  if (!isoString) return ''
-  return new Date(isoString).toLocaleTimeString('en-US', { hour12: false })
+// Two real test products exist in Sanity — same IDs as tests/helpers/test-data.ts.
+// Requests alternate between them so reservedStock increments are visible.
+const TEST_PRODUCTS = [
+  { _id: 'YcMKSEyusPBTcaoe1xiP1b', stripePriceId: 'price_1TLPiKEQ2a2vW56gjYdhtw9g' },
+  { _id: 'MHd9dKrYZDArdj3morESVD', stripePriceId: 'price_1TLPiKEQ2a2vW56gjYdhtw9g' },
+] as const
+
+const CONCURRENT_REQUESTS = 9
+
+interface BasketReservationResponse {
+  ok: true
+  reservationId: string
+  products: Array<{ id: string; realPrice: number; reservedStock: number; stock: number }>
 }
+
+interface ErrorResponse {
+  ok: false
+  error: string
+}
+
+type ApiResponse = BasketReservationResponse | ErrorResponse
 
 interface RequestState {
   id: number
-  requestId: string | null
+  reservationId: string | null
   status: 'pending' | 'success' | 'error'
-  result: any
-  requestBody: { publicBasket: { _id: string; quantity: number }[] }
-  issuedAt: string | null
+  result: ApiResponse | null
+  requestBody: {
+    publicBasket: Array<{ _id: string; quantity: number; stripePriceId: string }>
+    createdAt: string
+  }
+  issuedAt: string
   responseAt: string | null
 }
 
@@ -26,156 +50,212 @@ interface TraceEntry {
   payload?: Record<string, unknown>
 }
 
-export default function QueueSkeletonE2ETestPage() {
+const formatTime = (iso: string | null) =>
+  iso ? new Date(iso).toLocaleTimeString('en-US', { hour12: false }) : ''
+
+export default function CheckoutQueueE2ETestPage() {
   const [requests, setRequests] = useState<RequestState[]>([])
   const [loading, setLoading] = useState(false)
   const [traceEntries, setTraceEntries] = useState<TraceEntry[]>([])
   const [polling, setPolling] = useState(false)
 
-  const fetchTraceLogs = async () => {
-    console.log('TRACE: fetchTraceLogs called')
+  const fetchTraces = async () => {
     try {
       const res = await fetch('/api/checkout-queue/trace')
-      console.log('TRACE: Response status', { status: res.status, ok: res.ok })
-      const data = await res.json()
-      console.log('TRACE: Fetched trace entries', { count: data.length, data })
+      const data = (await res.json()) as TraceEntry[]
       setTraceEntries(data)
-    } catch (error) {
-      console.error('TRACE: Fetch error', error)
+    } catch (err) {
+      console.error('TRACE fetch error', err)
     }
   }
 
   useEffect(() => {
     if (!polling) return
-    fetchTraceLogs()
-    const interval = setInterval(fetchTraceLogs, 1000)
+    fetchTraces()
+    const interval = setInterval(fetchTraces, 1000)
     return () => clearInterval(interval)
   }, [polling])
 
   const handleClick = async () => {
     setLoading(true)
     setPolling(true)
-    setRequests(
-      Array.from({ length: 9 }, (_, i) => ({
+
+    // Clear server-side traces/queue so this run is visually isolated.
+    await fetch('/api/checkout-queue/clear-trace', { method: 'POST' }).catch(() => null)
+
+    const now = new Date().toISOString()
+    const initial: RequestState[] = Array.from({ length: CONCURRENT_REQUESTS }, (_, i) => {
+      const product = TEST_PRODUCTS[i % TEST_PRODUCTS.length]
+      return {
         id: i + 1,
-        requestId: null,
-        status: 'pending' as const,
+        reservationId: null,
+        status: 'pending',
         result: null,
-        requestBody: { publicBasket: [{ _id: `prod-${i + 1}`, quantity: i + 1 }] },
-        issuedAt: new Date().toISOString(),
-        responseAt: null
-      }))
-    )
+        requestBody: {
+          publicBasket: [{ _id: product._id, quantity: 1, stripePriceId: product.stripePriceId }],
+          createdAt: now,
+        },
+        issuedAt: now,
+        responseAt: null,
+      }
+    })
+    setRequests(initial)
 
     try {
       await Promise.all(
-        Array.from({ length: 9 }, (_, i) =>
+        initial.map((req) =>
           fetch('/api/checkout-queue', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ publicBasket: [{ _id: `prod-${i + 1}`, quantity: i + 1 }] })
-          }).then(async (res) => {
-            const data = await res.json()
-            setRequests((prev) =>
-              prev.map((req) =>
-                req.id === i + 1
-                  ? {
-                      ...req,
-                      requestId: data.requestId,
-                      status: data.ok ? 'success' : 'error',
-                      result: data,
-                      responseAt: new Date().toISOString()
-                    }
-                  : req
-              )
-            )
+            body: JSON.stringify(req.requestBody),
           })
+            .then(async (res) => {
+              const data = (await res.json()) as ApiResponse
+              setRequests((prev) =>
+                prev.map((r) =>
+                  r.id === req.id
+                    ? {
+                        ...r,
+                        reservationId: data.ok ? data.reservationId : null,
+                        status: data.ok ? 'success' : 'error',
+                        result: data,
+                        responseAt: new Date().toISOString(),
+                      }
+                    : r
+                )
+              )
+            })
+            .catch((err) => {
+              console.error('request error', err)
+              setRequests((prev) =>
+                prev.map((r) =>
+                  r.id === req.id
+                    ? { ...r, status: 'error', responseAt: new Date().toISOString() }
+                    : r
+                )
+              )
+            })
         )
       )
-    } catch (error) {
-      console.error('Checkout error:', error)
-      setRequests((prev) => prev.map((req) => ({ ...req, status: 'error' as const })))
     } finally {
       setLoading(false)
-      setPolling(false)
+      // Keep polling briefly so trailing trace entries land.
+      setTimeout(() => setPolling(false), 2000)
     }
   }
 
-  const pendingRequests = requests.filter((req) => req.status === 'pending')
-  const realizedRequests = requests.filter((req) => req.status !== 'pending')
+  const pending = requests.filter((r) => r.status === 'pending')
+  const realized = requests.filter((r) => r.status !== 'pending')
 
-  const groupedTraces = traceEntries.reduce((acc, entry) => {
-    if (!acc[entry.requestId]) {
-      acc[entry.requestId] = []
-    }
+  // Group trace entries by reservationId, filter to only the current run's IDs.
+  const currentIds = new Set(requests.map((r) => r.reservationId).filter(Boolean) as string[])
+  const traceGroups = traceEntries.reduce<Record<string, TraceEntry[]>>((acc, entry) => {
+    if (!currentIds.has(entry.requestId)) return acc
+    if (!acc[entry.requestId]) acc[entry.requestId] = []
     acc[entry.requestId].push(entry)
     return acc
-  }, {} as Record<string, TraceEntry[]>)
-
-  console.log('TRACE: groupedTraces', { keys: Object.keys(groupedTraces), groupedTraces })
+  }, {})
 
   return (
-    <div className="bg-white  text-black min-h-dvh overflow-y-auto">
-
-        <script dangerouslySetInnerHTML={{
-          __html: `mermaid.initialize({ startOnLoad: true });`
-        }} />
-
+    <div className="bg-white text-black min-h-dvh overflow-y-auto">
+      <script
+        dangerouslySetInnerHTML={{ __html: `mermaid.initialize({ startOnLoad: true });` }}
+      />
       <div className="flex justify-center items-center">
-            <div className="mermaid">{`flowchart LR
-              UI[UI] --> Queue[Queue<br/>one at a time]
-              Queue --> Atomic[Atomic<br/>processing]
-              Atomic --> CMS[Sanity CMS]
-              CMS --> Pop[Queue<br/>pop]
-              Pop --> Response[UI response]`}
-            </div>
-        </div>
-
+        <div className="mermaid">{`flowchart LR
+          UI[UI] --> Queue[Queue<br/>one at a time]
+          Queue --> Atomic[Atomic<br/>processing]
+          Atomic --> CMS[Sanity CMS]
+          CMS --> Pop[Queue<br/>pop]
+          Pop --> Response[UI response]`}</div>
+      </div>
 
       <div className="p-8 flex flex-col gap-4">
-        <button data-testid="checkout-btn" onClick={handleClick} disabled={loading} className="btn-cart-large">
+        <button
+          data-testid="checkout-btn"
+          onClick={handleClick}
+          disabled={loading}
+          className="btn-cart-large"
+        >
           {loading ? 'Processing...' : 'Checkout click'}
         </button>
         <p>
-          {loading ? 'Processing 9 simultaneous basket reservation requests...' : 'Make 9 concurrent requests in 9 separate browser contexts'}
+          Purpose: fires {CONCURRENT_REQUESTS} concurrent basket-reservation requests and verifies
+          they are processed <strong>one at a time</strong> (atomic FIFO) by the checkout queue.
         </p>
-        <p>Purpose: test if concurrent basket reservation requests to actual CMS are queued and processed one at a time (atomically), to verify the checkout queue skeleton works properly</p>
-        <p>Why: queing basket reservation requests and one-at-a-time atomic processing prevents double-reservation, available stock mis-counting, CMS stock data corruption.</p>
-        <p>Expected behavior: button click - 9 concurrent (simultaneous requests) for basket reservation {'->'} requests turn to 'success' one by one, instead of all at once.</p>
-
+        <p>
+          Why: serializing reservation writes prevents double-reservation, stock mis-counting and
+          Sanity `reservedStock` corruption under concurrent checkout clicks.
+        </p>
+        <p>
+          Expected: pending requests turn &quot;success&quot; one by one (not all at once), and
+          each request&apos;s trace timeline shows <em>queued → processing → reservation document
+          created → reservedStock incremented → complete</em> without interleaving another
+          request&apos;s <em>processing</em> event in between.
+        </p>
       </div>
+
       <div className="p-8">
         <div data-testid="pending-row" className="flex flex-col gap-2">
-          {pendingRequests.map((req) => (
-            <div key={req.id} className="bg-slate-300">
-              Request {req.id}: pending - {JSON.stringify(req.requestBody)}
-              <div className="text-xs text-gray-600">issued: {formatTime(req.issuedAt)}</div>
+          {pending.map((r) => (
+            <div key={r.id} className="bg-slate-300 p-2">
+              <div>
+                Request {r.id}: pending — {JSON.stringify(r.requestBody)}
+              </div>
+              <div className="text-xs text-gray-600">issued: {formatTime(r.issuedAt)}</div>
             </div>
           ))}
         </div>
         <div data-testid="realized-row" className="flex flex-col gap-2 mt-2">
-          {realizedRequests.map((req) => (
-            <div key={req.id} className="bg-green-300">
-              Request {req.id}: {req.status} {req.requestId && `(${req.requestId})`} - {JSON.stringify(req.requestBody)}
-              <div className="text-xs text-gray-600">issued: {formatTime(req.issuedAt)} | response: {formatTime(req.responseAt)}</div>
+          {realized.map((r) => (
+            <div
+              key={r.id}
+              className={r.status === 'success' ? 'bg-green-300 p-2' : 'bg-red-300 p-2'}
+            >
+              <div>
+                Request {r.id}: {r.status}
+                {r.reservationId && <span className="text-xs"> ({r.reservationId})</span>}
+              </div>
+              <div className="text-xs text-gray-600">
+                issued: {formatTime(r.issuedAt)} | response: {formatTime(r.responseAt)}
+              </div>
+              {r.result && r.result.ok && (
+                <div className="text-xs mt-1">
+                  products:{' '}
+                  {r.result.products
+                    .map((p) => `${p.id} stock=${p.stock} reserved=${p.reservedStock}`)
+                    .join(' | ')}
+                </div>
+              )}
+              {r.result && !r.result.ok && (
+                <div className="text-xs mt-1 text-red-900">error: {r.result.error}</div>
+              )}
             </div>
           ))}
         </div>
       </div>
+
       <div className="p-8">
         <div className="flex items-center gap-2 mb-2">
-          <h3 className="font-bold">Trace FIFO Queue Logs ({Object.keys(groupedTraces).length} requests)</h3>
-          <button onClick={fetchTraceLogs} className="text-xs border px-2 py-1">Refresh</button>
+          <h3 className="font-bold">Trace timeline ({Object.keys(traceGroups).length} requests)</h3>
+          <button onClick={fetchTraces} className="text-xs border px-2 py-1">
+            Refresh
+          </button>
         </div>
-        {Object.keys(groupedTraces).length === 0 ? (
-          <div className="text-sm text-gray-500">No trace entries yet. Click checkout to generate traces.</div>
+        {Object.keys(traceGroups).length === 0 ? (
+          <div className="text-sm text-gray-500">
+            No trace entries yet. Click checkout to generate traces.
+          </div>
         ) : (
-          Object.entries(groupedTraces).map(([requestId, entries]) => (
-            <div key={requestId} className="mb-4 border p-2">
-              <div className="font-semibold text-sm">{requestId}</div>
-              {entries.map((entry, idx) => (
+          Object.entries(traceGroups).map(([rid, entries]) => (
+            <div key={rid} className="mb-4 border p-2">
+              <div className="font-semibold text-sm">{rid}</div>
+              {entries.map((e, idx) => (
                 <div key={idx} className="text-xs ml-2">
-                  {new Date(entry.ts).toLocaleTimeString('en-US', { hour12: false })}: {entry.event}
+                  {new Date(e.ts).toLocaleTimeString('en-US', { hour12: false })}: {e.event}
+                  {e.payload && (
+                    <span className="text-gray-600"> {JSON.stringify(e.payload)}</span>
+                  )}
                 </div>
               ))}
             </div>
