@@ -8,8 +8,8 @@ export const basketReservationType = defineType({
   icon: ShoppingCartIcon,
   fields: [
     defineField({
-      name: "publicBasket",
-      title: "Public Basket",
+      name: "basketReservation",
+      title: "Basket Reservation",
       type: "array",
       of: [
         defineArrayMember({
@@ -28,10 +28,10 @@ export const basketReservationType = defineType({
               validation: (Rule) => Rule.required().min(1),
             }),
             defineField({
-              name: "stripePriceId",
-              title: "Stripe Price ID",
-              type: "string",
-              validation: (Rule) => Rule.required(),
+              name: "verifiedPrice",
+              title: "Verified Price",
+              type: "number",
+              validation: (Rule) => Rule.required().min(0),
             }),
           ],
         }),

@@ -25,6 +25,7 @@ import {
   type BasketReservationResponse,
   type RedisQueueItem,
 } from './types'
+import { getVerifiedPrice } from '@/lib/stripe'
 
 // Sanity client with a token that has both create and update permissions.
 // Verified via scripts/diagnose-sanity-tokens.mjs:
@@ -63,7 +64,7 @@ export async function processInline(raw: unknown): Promise<ProcessResult> {
   const requestId = randomUUID()
   const start = Date.now()
 
-  await trace('request received', requestId, { itemCount: request.publicBasket.length })
+  await trace('request received', requestId, { itemCount: request.basketReservation.length })
 
   // 2. Enqueue
   const redis = getQueueRedis()
@@ -112,30 +113,38 @@ export async function processInline(raw: unknown): Promise<ProcessResult> {
   await trace('processing', requestId)
 
   try {
-    // 4. Create reservation doc
+    // 4. Verify prices and transform to CMS format
+    const cmsBasketReservation = await Promise.all(
+      request.basketReservation.map(async (p, i) => {
+        const verifiedPrice = await getVerifiedPrice(p.stripePriceId)
+        return {
+          _key: `${p._id}-${i}`,
+          _id: p._id,
+          quantity: p.quantity,
+          verifiedPrice,
+        }
+      })
+    )
+
+    // 5. Create reservation doc
     const doc = await sanity.create({
       _id: requestId,
       _type: 'basketReservation',
-      publicBasket: request.publicBasket.map((p, i) => ({
-        _key: `${p._id}-${i}`,
-        _id: p._id,
-        quantity: p.quantity,
-        stripePriceId: p.stripePriceId,
-      })),
+      basketReservation: cmsBasketReservation,
       createdAt: request.createdAt,
     })
     await trace('reservation document created', requestId, { docId: doc._id })
 
-    // 5. Increment reservedStock atomically
+    // 6. Increment reservedStock atomically
     const tx = sanity.transaction()
-    for (const item of request.publicBasket) {
+    for (const item of request.basketReservation) {
       tx.patch(item._id, (p) => p.inc({ reservedStock: item.quantity }))
     }
     await tx.commit()
     await trace('reservedStock incremented', requestId)
 
-    // 6. Fetch updated products
-    const productIds = request.publicBasket.map((p) => p._id)
+    // 7. Fetch updated products
+    const productIds = request.basketReservation.map((p) => p._id)
     const products = (await sanity.fetch(
       `*[_id in $ids]{ _id, stock, reservedStock, displayPrice }`,
       { ids: productIds }
