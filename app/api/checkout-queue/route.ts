@@ -8,6 +8,7 @@ export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
 export async function POST(req: NextRequest) {
+  console.log('TRACE Bus Stop 4: API route received POST request', { timestamp: Date.now() })
   let raw: unknown
   try {
     raw = await req.json()
@@ -15,6 +16,7 @@ export async function POST(req: NextRequest) {
     raw = null
   }
   const result = await processInline(raw)
+  console.log('TRACE Bus Stop 12: API returning response', { status: result.status, body: result.body, timestamp: Date.now() })
   return NextResponse.json(result.body, { status: result.status })
 }
 

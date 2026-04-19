@@ -5,7 +5,7 @@ export class TestServer {
   private port: number
   private ready: boolean = false
 
-  constructor(port = 3002) {
+  constructor(port = Number(process.env.INTEGRATION_TEST_PORT) || 3002) {
     this.port = port
   }
 

@@ -1,10 +1,25 @@
+import { createClient } from 'next-sanity';
 import { client } from '../../sanity/lib/client';
+import { apiVersion, dataset, projectId } from '../../sanity/env';
+
+// Write-capable client for test setup (reset stock, etc). Uses the token with
+// full update permission (verified via scripts/diagnose-sanity-tokens.mjs).
+const testWriteClient = createClient({
+  projectId,
+  dataset,
+  apiVersion,
+  useCdn: false,
+  token:
+    process.env.SANITY_STUDIO_READ_WRITE ||
+    process.env.SANITY_STUDIO_READ_WRITE_CREATE,
+});
 
 export const TEST_PRODUCTS = [
   {
     _id: "YcMKSEyusPBTcaoe1xiP1b",
     name: "Test Product Alpha - Full Stock",
     stock: 5,
+    reservedStock: 0,
     stripePriceId: "price_1TLPiKEQ2a2vW56gjYdhtw9g",
     displayPrice: 10000
   },
@@ -12,28 +27,22 @@ export const TEST_PRODUCTS = [
     _id: "MHd9dKrYZDArdj3morESVD",
     name: "Test Product Beta - Limited Stock",
     stock: 2,
+    reservedStock: 0,
     stripePriceId: "price_1TLPiKEQ2a2vW56gjYdhtw9g",
     displayPrice: 20000
-  },
-  {
-    _id: "MHd9dKrYZDArdj3morESpg",
-    name: "Test Product Gamma - Out of Stock",
-    stock: 0,
-    stripePriceId: "price_1TLPiKEQ2a2vW56gjYdhtw9g",
-    displayPrice: 30000
   }
 ];
 
 export async function getTestProducts() {
   return client.fetch(`
     *[_type == "product" && (name match "test" || name match "Test")]{
-      _id, name, stock, stripePriceId, slug, displayPrice
+      _id, name, stock, reservedStock, stripePriceId, slug, displayPrice
     } | order(name asc)
   `);
 }
 
 export async function resetProductStock(productId: string, initialStock: number) {
-  await client.patch(productId).set({ stock: initialStock }).commit();
+  await testWriteClient.patch(productId).set({ stock: initialStock, reservedStock: 0 }).commit();
 }
 
 export async function getProductStock(productId: string): Promise<number> {

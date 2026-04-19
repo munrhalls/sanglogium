@@ -24,6 +24,7 @@ export default defineConfig(({ mode }) => {
       include: [
         'tests/checkout/guest-checkout-inventory-reservation/integration/**/*.test.tsx',
         'tests/checkout/guest-checkout-inventory-reservation/integration/**/*.test.ts',
+        'tests/atomic-basket-reservation/integration/**/*.test.ts',
       ],
       exclude: [
         'tests/checkout/guest-checkout-inventory-reservation/integration/**/node_modules/**',

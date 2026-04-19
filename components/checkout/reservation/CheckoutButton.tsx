@@ -10,56 +10,53 @@ export function CheckoutButton() {
   const basket = useBasketStore((s) => s.basket)
 
   const handleCheckout = useCallback(async () => {
+    console.log('TRACE: User clicked checkout button', { basketLength: basket.length })
+
     if (basket.length === 0) {
+      console.log('TRACE: Basket empty, aborting checkout')
       setError('Your basket is empty')
       return
     }
 
+    console.log('TRACE: Setting processing state to true')
     setIsProcessing(true)
     setError(null)
 
     try {
-      const response = await fetch('/api/checkout', {
+      const requestBody = {
+        publicBasket: basket.map((item) => ({
+          _id: item._id,
+          quantity: item.quantity,
+        })),
+      }
+      console.log('TRACE: API request formation', { endpoint: '/api/checkout-queue', body: requestBody })
+
+      const response = await fetch('/api/checkout-queue', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          publicBasket: basket.map((item) => ({
-            _id: item._id,
-            quantity: item.quantity,
-          })),
-        }),
+        body: JSON.stringify(requestBody),
       })
 
-      const result = await response.json()
+      console.log('TRACE: API response received', { status: response.status, ok: response.ok })
 
-      if (!response.ok) {
-        setError(result.error || 'Failed to create checkout session')
+      const result = await response.json()
+      console.log('TRACE: Data parsed', { result })
+
+      if (!response.ok || !result.ok) {
+        console.log('TRACE: Checkout failed', { responseOk: response.ok, resultOk: result.ok, error: result.error })
+        setError(result.error || 'Failed to process checkout')
         return
       }
 
-      // Redirect to Stripe checkout
-      if (result.client_secret) {
-        const { loadStripe } = await import('@stripe/stripe-js')
-        const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
-
-        if (stripe) {
-          const { error } = await stripe.confirmPayment({
-            clientSecret: result.client_secret,
-            confirmParams: {
-              return_url: `${window.location.origin}/checkout/return`,
-            },
-          })
-
-          if (error) {
-            setError(error.message || 'Payment failed')
-          }
-        }
-      }
-    } catch {
-      setError('Failed to create checkout session')
+      // Success - queue processed the request
+      console.log('TRACE: Checkout queued successfully', { requestId: result.requestId })
+    } catch (error) {
+      console.log('TRACE: Error occurred', { error })
+      setError('Failed to process checkout')
     } finally {
+      console.log('TRACE: Setting processing state to false')
       setIsProcessing(false)
     }
   }, [basket])

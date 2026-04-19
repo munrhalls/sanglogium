@@ -32,6 +32,27 @@ export interface CMSResponse {
   success: boolean
 }
 
+// Basket reservation types for atomic basket reservation skeleton
+export interface BasketReservation {
+  publicBasket: Array<{
+    _id: string
+    quantity: number
+    stripePriceId: string
+  }>
+  createdAt: string
+}
+
+export interface BasketReservationResponse {
+  ok: true
+  reservationId: string
+  products: Array<{
+    id: string
+    realPrice: number
+    reservedStock: number
+    stock: number
+  }>
+}
+
 // Runtime guards used by the structure-fidelity log helper.
 export function isUIRequest(v: unknown): v is UIRequest {
   if (typeof v !== 'object' || v === null) return false

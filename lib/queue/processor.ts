@@ -68,6 +68,7 @@ export interface ProcessResult {
  * Atomic one-at-a-time across all concurrent callers.
  */
 export async function processInline(raw: unknown): Promise<ProcessResult> {
+  console.log('TRACE Bus Stop 5: processInline called', { timestamp: Date.now(), raw })
   startHealthInterval()
 
   const requestId = randomUUID()
@@ -100,11 +101,13 @@ export async function processInline(raw: unknown): Promise<ProcessResult> {
 
   const redis = getQueueRedis()
   await trace('queue it', requestId, { queuePosition: -1 })
+  console.log('TRACE Bus Stop 6: Enqueuing to Redis', { requestId, timestamp: Date.now() })
   await redis.rpush(QUEUE_LIST_KEY, JSON.stringify(item))
 
   // 3. Spin: acquire lock + check head == me
   const deadline = start + 45_000
   let queuePosition = -1
+  let lockAttempts = 0
   while (true) {
     if (Date.now() > deadline) {
       await redis.lrem(QUEUE_LIST_KEY, 1, JSON.stringify(item))
@@ -112,13 +115,19 @@ export async function processInline(raw: unknown): Promise<ProcessResult> {
     }
 
     const got = await redis.set(LOCK_KEY, requestId, { nx: true, ex: LOCK_TTL_SEC })
+    lockAttempts++
     if (got !== 'OK') {
+      if (lockAttempts % 20 === 0) {
+        console.log('TRACE Bus Stop 7: Lock acquisition retrying', { requestId, attempts: lockAttempts, timestamp: Date.now() })
+      }
       await sleep(25)
       continue
     }
+    console.log('TRACE Bus Stop 7: Lock acquired', { requestId, attempts: lockAttempts, timestamp: Date.now() })
 
     // Lock held. Check if we're the head.
     const headRaw = await redis.lindex(QUEUE_LIST_KEY, 0)
+    console.log('TRACE Bus Stop 8: Head verification', { requestId, hasHead: !!headRaw, timestamp: Date.now() })
     if (!headRaw) {
       await redis.del(LOCK_KEY)
       await sleep(25)
@@ -127,6 +136,7 @@ export async function processInline(raw: unknown): Promise<ProcessResult> {
     const head =
       typeof headRaw === 'string' ? (JSON.parse(headRaw) as RedisQueueItem) : (headRaw as RedisQueueItem)
     if (head.id !== requestId) {
+      console.log('TRACE Bus Stop 8: Not at head, releasing lock', { requestId, headId: head.id, timestamp: Date.now() })
       await redis.del(LOCK_KEY)
       await sleep(25)
       continue
@@ -134,6 +144,7 @@ export async function processInline(raw: unknown): Promise<ProcessResult> {
 
     // Measure queue position (for TRACE)
     queuePosition = 0
+    console.log('TRACE Bus Stop 8: At head, proceeding to process', { requestId, timestamp: Date.now() })
     break
   }
 
@@ -156,14 +167,16 @@ export async function processInline(raw: unknown): Promise<ProcessResult> {
 
     try {
       await traceSanity('before sanity request', requestId, { query: cmsReq.query })
+      console.log('TRACE Bus Stop 9: Executing Sanity probe', { requestId, query: cmsReq.query, timestamp: Date.now() })
       const r = (await backendClient.fetch(cmsReq.query)) as { _id?: string; stock?: number; reservedStock?: number } | null
       productId = r?._id ?? null
       stock = r?.stock ?? null
       reservedStock = r?.reservedStock ?? null
       sanitySuccess = true
+      console.log('TRACE Bus Stop 9: Sanity probe completed', { requestId, productId, stock, reservedStock, timestamp: Date.now() })
       await traceSanity('after sanity response', requestId, { productId, stock, reservedStock, response: r })
     } catch (err) {
-      console.error('TRACE: Sanity probe failed', { requestId, err })
+      console.error('TRACE Bus Stop 9: Sanity probe failed', { requestId, err, timestamp: Date.now() })
       sanitySuccess = false
     }
 
@@ -184,12 +197,14 @@ export async function processInline(raw: unknown): Promise<ProcessResult> {
       productId,
       durationMs: Date.now() - start,
     }
+    console.log('TRACE Bus Stop 10: UIResponse built', { requestId, ok: sanitySuccess, durationMs: uiResp.durationMs, timestamp: Date.now() })
     await logStructure(requestId, 'UIResponse', uiResp)
 
     await trace('return response to ui', requestId, { ok: sanitySuccess, duration: uiResp.durationMs })
 
     // 9. Pop head + release lock
     await trace('pop 1st in queue (atomic)', requestId, { popping: true })
+    console.log('TRACE Bus Stop 11: Popping from queue and releasing lock', { requestId, timestamp: Date.now() })
     await redis.lpop(QUEUE_LIST_KEY)
     await redis.del(LOCK_KEY)
 
