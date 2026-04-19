@@ -21,15 +21,16 @@ describe('Checkout queue — basket reservation flow', () => {
   })
 
   beforeEach(async () => {
+    await fetch(`${BASE}/api/checkout-queue/clear-trace`, { method: 'POST' })
     await resetProductStock(TEST_PRODUCTS[0]._id, TEST_PRODUCTS[0].stock)
     await resetProductStock(TEST_PRODUCTS[1]._id, TEST_PRODUCTS[1].stock)
   })
 
   it('queues request → creates reservation doc in Sanity → returns BasketReservationResponse', async () => {
     const request: BasketReservation = {
-      publicBasket: [
-        { _id: TEST_PRODUCTS[0]._id, quantity: 1, stripePriceId: TEST_PRODUCTS[0].stripePriceId },
-        { _id: TEST_PRODUCTS[1]._id, quantity: 2, stripePriceId: TEST_PRODUCTS[1].stripePriceId },
+      basketReservation: [
+        { _id: TEST_PRODUCTS[0]._id, quantity: 1, stripePriceId: TEST_PRODUCTS[0].stripePriceId, displayPrice: TEST_PRODUCTS[0].displayPrice },
+        { _id: TEST_PRODUCTS[1]._id, quantity: 2, stripePriceId: TEST_PRODUCTS[1].stripePriceId, displayPrice: TEST_PRODUCTS[1].displayPrice },
       ],
       createdAt: new Date().toISOString(),
     }
@@ -48,29 +49,30 @@ describe('Checkout queue — basket reservation flow', () => {
     expect(Array.isArray(data.products)).toBe(true)
     expect(data.products.length).toBe(2)
 
-    // Reservation doc exists in Sanity with matching publicBasket items.
+    // Reservation doc exists in Sanity with matching basketReservation items.
     const doc = await client.fetch(
       `*[_type == "basketReservation" && _id == $id][0]`,
       { id: data.reservationId }
     )
     expect(doc).toBeDefined()
     expect(doc._type).toBe('basketReservation')
-    expect(Array.isArray(doc.publicBasket)).toBe(true)
-    expect(doc.publicBasket.length).toBe(request.publicBasket.length)
+    expect(Array.isArray(doc.basketReservation)).toBe(true)
+    expect(doc.basketReservation.length).toBe(request.basketReservation.length)
 
-    for (const item of doc.publicBasket) {
-      const original = request.publicBasket.find((p) => p._id === item._id)
+    for (const item of doc.basketReservation) {
+      const original = request.basketReservation.find((p) => p._id === item._id)
       expect(original).toBeDefined()
       expect(item.quantity).toBe(original?.quantity)
-      expect(item.stripePriceId).toBe(original?.stripePriceId)
+      expect(item.verifiedPrice).toBeGreaterThan(0)
+      expect(item.stripePriceId).toBeUndefined()
     }
   }, 60_000)
 
   it('increments reservedStock on each product by the requested quantity', async () => {
     const request: BasketReservation = {
-      publicBasket: [
-        { _id: TEST_PRODUCTS[0]._id, quantity: 1, stripePriceId: TEST_PRODUCTS[0].stripePriceId },
-        { _id: TEST_PRODUCTS[1]._id, quantity: 2, stripePriceId: TEST_PRODUCTS[1].stripePriceId },
+      basketReservation: [
+        { _id: TEST_PRODUCTS[0]._id, quantity: 1, stripePriceId: TEST_PRODUCTS[0].stripePriceId, displayPrice: TEST_PRODUCTS[0].displayPrice },
+        { _id: TEST_PRODUCTS[1]._id, quantity: 2, stripePriceId: TEST_PRODUCTS[1].stripePriceId, displayPrice: TEST_PRODUCTS[1].displayPrice },
       ],
       createdAt: new Date().toISOString(),
     }
@@ -95,8 +97,8 @@ describe('Checkout queue — basket reservation flow', () => {
 
   it('response product snapshot matches the freshly-updated Sanity product doc', async () => {
     const request: BasketReservation = {
-      publicBasket: [
-        { _id: TEST_PRODUCTS[0]._id, quantity: 1, stripePriceId: TEST_PRODUCTS[0].stripePriceId },
+      basketReservation: [
+        { _id: TEST_PRODUCTS[0]._id, quantity: 1, stripePriceId: TEST_PRODUCTS[0].stripePriceId, displayPrice: TEST_PRODUCTS[0].displayPrice },
       ],
       createdAt: new Date().toISOString(),
     }

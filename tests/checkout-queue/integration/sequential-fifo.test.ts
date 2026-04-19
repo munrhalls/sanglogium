@@ -44,7 +44,7 @@ describe('Checkout queue — sequential FIFO processing', () => {
     const payloads: BasketReservation[] = Array.from({ length: 9 }, (_, i) => {
       const product = TEST_PRODUCTS[i % TEST_PRODUCTS.length]
       return {
-        publicBasket: [{ _id: product._id, quantity: 1, stripePriceId: product.stripePriceId }],
+        basketReservation: [{ _id: product._id, quantity: 1, stripePriceId: product.stripePriceId, displayPrice: product.displayPrice }],
         createdAt,
       }
     })

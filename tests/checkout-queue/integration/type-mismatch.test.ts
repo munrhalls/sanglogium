@@ -31,10 +31,10 @@ describe('Checkout queue — type-mismatch rejection', () => {
     await clearTrace()
   })
 
-  it('rejects payload missing stripePriceId / createdAt with 400 and no processing trace', async () => {
+  it('rejects payload missing stripePriceId / displayPrice / createdAt with 400 and no processing trace', async () => {
     const invalid = {
-      publicBasket: [{ _id: 'test-product-1', quantity: 1 }],
-      // missing createdAt, missing stripePriceId inside item
+      basketReservation: [{ _id: 'test-product-1', quantity: 1 }],
+      // missing createdAt, missing stripePriceId and displayPrice inside item
     }
 
     const response = await fetch(`${BASE}/api/checkout-queue`, {

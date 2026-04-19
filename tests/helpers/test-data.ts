@@ -20,15 +20,15 @@ export const TEST_PRODUCTS = [
     name: "Test Product Alpha - Full Stock",
     stock: 5,
     reservedStock: 0,
-    stripePriceId: "price_1TLPiKEQ2a2vW56gjYdhtw9g",
+    stripePriceId: "price_1TJU0HEQ2a2vW56g5nVkS96K",
     displayPrice: 10000
   },
   {
     _id: "MHd9dKrYZDArdj3morESVD",
     name: "Test Product Beta - Limited Stock",
     stock: 2,
-    reservedStock: 0,
-    stripePriceId: "price_1TLPiKEQ2a2vW56gjYdhtw9g",
+    reservedStock:  0,
+    stripePriceId: "price_1TJU0JEQ2a2vW56g2XSkjz7g",
     displayPrice: 20000
   }
 ];
