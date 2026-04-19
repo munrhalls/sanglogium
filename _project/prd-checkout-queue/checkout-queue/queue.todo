@@ -1,0 +1,20 @@
+# Queue Requirements
+
+## Scope
+FIFO queue system for Sanity CMS basket reservation requests (create, rollback, realize) to prevent race conditions. Sequential processing, atomic operations, persistence, idempotency, concurrency control, retry logic, circuit breaker.
+
+## Out of Scope
+Multiple queue instances, extra test/verification queues, payment processing (only stock decrement on payment success), UI blocking logic implementation, CMS schema changes.
+
+## Definition of Done
+[ ] Single production queue (no other instances), 0 cost, runs 24/7
+[ ] INPUT: basket reservation requests stream, OUTPUT: queued, one at a time, atomic (waiting for 1 request to finish 100% before starting next), stream of basket reservation requests to sanity CMS, passing sanity reservation basket back to ui
+[ ] Sequential FIFO processing, atomic operations:
+    - Means: One request at a time via processQueue() while loop, priority queue first then normal queue, DB transaction wraps entire request operation (trx() - either all succeed or all fail)
+    - Human verification: Add TRACE logs at processQueue() entry, transaction start, transaction commit/rollback, request complete. Send 3 requests rapidly, check logs show sequential processing (request 1 complete before request 2 starts), verify transaction boundaries, confirm no overlapping processing
+[ ] Priority queue: realize requests before regular requests
+[ ] Idempotency: UUIDv4 key, fingerprint, 24h CMS cache
+[ ] Fingerprint: prevents malicious same idempotency key request attempts, 24h CMS cache TTL along with idempotency key
+[ ] Concurrency control: one operation per reservation token
+[ ] Retry logic: create (3x), rollback (10x), transient vs non-transient
+[ ] Circuit breaker: open after 5 failures, 30s cooldown
