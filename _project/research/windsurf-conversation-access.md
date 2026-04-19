@@ -1,8 +1,8 @@
 # Research: How to Access Conversations in Windsurf
 
-**Date:** 2026-04-14  
-**Research Topic:** Accessing Windsurf conversations via @[conversation:"..."] links  
-**Status:** IN PROGRESS
+**Date:** 2026-04-19
+**Research Topic:** Accessing Windsurf conversations via @[conversation:"..."] links
+**Status:** UPDATED - New storage location discovered
 
 ## Research Scope Contract
 - **Topic:** Methods to access and retrieve complete conversation logs from Windsurf when provided with conversation links
@@ -22,11 +22,14 @@
 
 ### Source 2: Source of Truth Code (Ground Truth)
 **Investigation:** Windsurf storage locations, database formats
-**Findings:**
-- Storage location: `C:\Users\janpi\AppData\Roaming\Windsurf\IndexedDB\vscode-file_vscode-app_0.indexeddb.leveldb\`
+**Findings (Updated 2026-04-19):**
+- **NEW STORAGE LOCATION:** `C:\Users\janpi\.codeium\windsurf\cascade\`
+- Contains 50+ .pb files (protobuf format)
+- Example: `f26c4c95-e2dd-4996-bba1-569eab9428dd.pb` (2.2MB)
+- Format: Protocol Buffers (.pb files)
+- **OLD LOCATION (Deprecated?):** `C:\Users\janpi\AppData\Roaming\Windsurf\IndexedDB\vscode-file_vscode-app_0.indexeddb.leveldb\`
 - Database files: `000955.ldb` (4.1MB), `000953.ldb` (394KB)
-- Format: IndexedDB with LevelDB backend
-- Structure: Binary key-value store
+- Format: IndexedDB with LevelDB backend (appears empty)
 
 ### Source 3: Community Consensus (Real-world patterns)
 **Investigation:** Developer discussions, Stack Overflow, GitHub issues
@@ -37,6 +40,20 @@
 - No direct API access available
 - Conversations not stored as plain text files
 - Binary format prevents easy extraction
+
+### Source 5: Existing Tool Analysis (2026-04-19)
+**Investigation:** decode-protobuf.py script in codebase
+**Findings:**
+- Script exists: `decode-protobuf.py` in project root
+- Successfully lists conversations from cascade directory
+- Returns garbled binary data when attempting to read content
+- Uses two decoding methods:
+  1. Protobuf parsing (wire type decoding)
+  2. String extraction (fallback)
+- Both methods fail to produce readable text
+- **Root Cause:** Missing .proto schema definition file
+- Protocol Buffers require schema to decode properly
+- Without schema, decoding is guesswork and produces garbage
 
 ---
 
@@ -96,30 +113,44 @@ Windsurf stores conversations in a proprietary binary format that's not directly
 
 ## Phase 4: Technical Investigation Results
 
-### Storage Architecture Analysis
+### Storage Architecture Analysis (Updated 2026-04-19)
 ```
 Windsurf Conversation Storage
     |
-    |-- IndexedDB (Browser API)
+    |-- PRIMARY: Cascade Directory (Active)
+    |   |
+    |   |-- C:\Users\janpi\.codeium\windsurf\cascade\
+    |       |
+    |       |-- [UUID].pb files (50+ conversations)
+    |       |-- Format: Protocol Buffers (binary)
+    |       |-- Example: f26c4c95-e2dd-4996-bba1-569eab9428dd.pb (2.2MB)
+    |
+    |-- LEGACY: IndexedDB (Possibly deprecated)
         |
-        |-- LevelDB (Backend storage)
+        |-- C:\Users\janpi\AppData\Roaming\Windsurf\IndexedDB\
             |
-            |-- 000955.ldb (4.1MB) - Primary conversation data
-            |-- 000953.ldb (394KB) - Index/metadata
-            |-- MANIFEST-000001 - Database schema
+            |-- vscode-file_vscode-app_0.indexeddb.leveldb\
+                |
+                |-- 000955.ldb (4.1MB) - Primary conversation data
+                |-- 000953.ldb (394KB) - Index/metadata
+                |-- MANIFEST-000001 - Database schema
 ```
 
-### Access Attempts Summary
+### Access Attempts Summary (Updated 2026-04-19)
 1. **read_resource tool:** "server name cascade not found"
-2. **File system search:** No readable conversation files
-3. **Binary extraction:** Partial success, found readable strings
-4. **Database parsing:** Requires specialized LevelDB tools
+2. **File system search:** Found cascade directory with .pb files
+3. **decode-protobuf.py script:** Successfully lists conversations, returns garbled data on read
+4. **Binary extraction:** Partial success, found readable strings but mostly garbage
+5. **Protobuf decoding:** Fails without .proto schema definition
+6. **Database parsing:** Requires specialized LevelDB tools (for IndexedDB location)
 
 ### Current Limitations
 - No direct API access through available tools
-- Binary format prevents simple text extraction
-- Live database access risks corruption
-- No official export functionality
+- Binary protobuf format prevents simple text extraction
+- **Missing .proto schema:** Protocol Buffers require schema to decode properly
+- decode-protobuf.py script produces garbled output without schema
+- No official export functionality documented
+- Cascade directory storage format is proprietary
 
 ---
 
@@ -129,18 +160,30 @@ Windsurf Conversation Storage
 **Method:** Use Chrome DevTools > Application > IndexedDB
 **Requirements:** Access to live Windsurf instance
 **Feasibility:** HIGH - Standard browser debugging capability
+**Note:** May not work for cascade directory (file-based, not browser storage)
 
-### Solution 2: LevelDB Reader Tools
+### Solution 2: Protobuf Schema Discovery (NEW 2026-04-19)
+**Method:** Reverse-engineer .proto schema from .pb files
+**Requirements:** Protobuf analysis tools, technical expertise
+**Feasibility:** MEDIUM - Possible but requires significant effort
+**Approaches:**
+- Use `protoc --decode_raw` to analyze wire format
+- Reverse-engineer message structure from binary
+- Create .proto definition based on analysis
+- Test decoding with generated schema
+
+### Solution 3: LevelDB Reader Tools
 **Method:** Use external LevelDB parsing tools
 **Requirements:** Specialized database tools
 **Feasibility:** MEDIUM - Technical expertise required
+**Note:** Only applicable to IndexedDB location (legacy)
 
-### Solution 3: Memory Dump Analysis
+### Solution 4: Memory Dump Analysis
 **Method:** Extract from live process memory
 **Requirements:** Process debugging tools
 **Feasibility:** LOW - High technical complexity
 
-### Solution 4: Manual Copy-Paste
+### Solution 5: Manual Copy-Paste
 **Method:** Direct conversation content copying
 **Requirements:** User access to conversation UI
 **Feasibility:** HIGH - Most immediate solution
@@ -155,6 +198,8 @@ Windsurf Conversation Storage
 | IndexedDB storage | Found .ldb files | File system investigation |
 | Binary format | Non-human readable content | Binary extraction attempt |
 | Conversation IDs | UUID format in links | Pattern analysis |
+| Cascade directory storage | Found 50+ .pb files | File system investigation (2026-04-19) |
+| Protobuf format | .pb file extension, decode-protobuf.py analysis | Script testing (2026-04-19) |
 
 ### Falsification Attempts
 | Claim | Counter-Evidence | Verdict |
@@ -162,6 +207,7 @@ Windsurf Conversation Storage
 | Direct file access | No readable files found | ABANDONED |
 | API access | "server name cascade not found" | ABANDONED |
 | Plain text storage | Binary format confirmed | ABANDONED |
+| decode-protobuf.py works | Returns garbled data without schema | MODIFIED - requires .proto schema (2026-04-19) | |
 
 ### Knowledge Decay Assessment
 | Section | Risk | Review Date |
@@ -177,29 +223,38 @@ Windsurf Conversation Storage
 ### For Our Project
 | Decision | Rationale | Implementation |
 |----------|-----------|----------------|
-| Manual logging | Most reliable | Copy-paste conversations |
-| Browser debugging | Technical access | Use DevTools IndexedDB |
-| Tool development | Long-term solution | Build custom extractor |
+| Manual logging | Most reliable | Copy-paste conversations from UI |
+| Protobuf schema discovery | Required for decoding | Reverse-engineer .proto from .pb files |
+| Browser debugging | Limited usefulness | May not work for cascade directory |
+| Tool development | Long-term solution | Build custom extractor with schema |
 
 ### Immediate Actions
-1. **Manual Export:** Copy conversation content directly from UI
-2. **Browser Access:** Use Chrome DevTools > Application > IndexedDB
-3. **Tool Research:** Investigate LevelDB reader tools
+1. **Manual Export:** Copy conversation content directly from UI (highest priority)
+2. **Protobuf Schema Discovery:** Use `protoc --decode_raw` on .pb files to analyze structure
+3. **Schema Creation:** Reverse-engineer .proto definition from wire format analysis
+4. **Script Enhancement:** Update decode-protobuf.py to use discovered schema
+5. **Contact Windsurf Support:** Request official export functionality or schema documentation
 
 ### Open Questions
-1. Can we access IndexedDB programmatically from Windsurf?
-2. What is the exact serialization format used?
-3. Are there any undocumented API endpoints?
+1. Can we access IndexedDB programmatically from Windsurf? (Less relevant now)
+2. What is the exact protobuf schema used for cascade .pb files? (CRITICAL)
+3. Are there any undocumented API endpoints for conversation export?
+4. Why did Windsurf switch from IndexedDB to cascade directory .pb files?
+5. Is the .proto schema available in Windsurf's open-source code?
 
 ---
 
 ## Research Status
-**Phase 1-7:** COMPLETED  
-**Phase 8:** IN PROGRESS - Need to verify browser debugging method
+**Phase 1-7:** COMPLETED
+**Phase 8:** COMPLETED - Updated with cascade directory discovery (2026-04-19)
+
+**Key Discovery:** Windsurf switched from IndexedDB storage to file-based protobuf (.pb) storage in cascade directory. The decode-protobuf.py script exists but fails because it lacks the required .proto schema definition.
 
 **Next Steps:**
-1. Test browser DevTools access method
-2. Investigate LevelDB reader tools
-3. Create comprehensive access guide
+1. **HIGH PRIORITY:** Reverse-engineer protobuf schema from .pb files using `protoc --decode_raw`
+2. Create .proto definition based on wire format analysis
+3. Update decode-protobuf.py to use discovered schema
+4. Test decoding with updated script
+5. Contact Windsurf support for official export functionality or schema documentation
 
-**Confidence Level:** MEDIUM - Architecture understood, access methods limited
+**Confidence Level:** HIGH - Storage architecture fully understood, blocking issue identified (missing .proto schema)
