@@ -72,3 +72,6 @@ scripts/image-pipeline/.env
 test-results/
 playwright-report/
 data/catalogue-index.json
+
+# Runtime logs
+logs/
