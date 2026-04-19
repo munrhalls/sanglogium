@@ -882,6 +882,152 @@
 
 ---
 
+## Keyword: prd-todo
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/prd-todo-verification-specificity.md](patterns/prd-todo-verification-specificity.md) | Critical | All PRD .todo verification items must be EXACT: show exact code, exact output, copy-pasteable commands |
+
+---
+
+## Keyword: verification-specificity
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/prd-todo-verification-specificity.md](patterns/prd-todo-verification-specificity.md) | Critical | Removes interpretation gap, enables verification by anyone, makes DoD objective |
+
+---
+
+## Keyword: exact-verification
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/prd-todo-verification-specificity.md](patterns/prd-todo-verification-specificity.md) | Critical | Show exact console.log code to add, exact expected output format |
+
+---
+
+## Keyword: copy-pasteable-tests
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/prd-todo-verification-specificity.md](patterns/prd-todo-verification-specificity.md) | Critical | Test commands must be copy-pasteable, no manual steps required |
+
+---
+
+## Keyword: objective-success-criteria
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/prd-todo-verification-specificity.md](patterns/prd-todo-verification-specificity.md) | Critical | Makes DoD objective, not subjective - prevents "it works on my machine" debates |
+| [patterns/test-dod-exactness.md](patterns/test-dod-exactness.md) | Critical | Exact expected outcome - no interpretation needed |
+
+---
+
+## Keyword: test-dod
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/test-dod-exactness.md](patterns/test-dod-exactness.md) | Critical | All test DoD items: Trace, Setup, Start conditions, Assertion, Justification, Real feedback |
+
+---
+
+## Keyword: test-exactness
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/test-dod-exactness.md](patterns/test-dod-exactness.md) | Critical | Exact expected outcome, explicit preconditions, objective success criteria |
+
+---
+
+## Keyword: test-preconditions
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/test-dod-exactness.md](patterns/test-dod-exactness.md) | Critical | Setup (what must exist), Start conditions (what state must be in) |
+
+---
+
+## Keyword: business-value-connection
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/test-dod-exactness.md](patterns/test-dod-exactness.md) | Critical | Justification (why this matters), Real feedback (what bugs this catches) |
+
+---
+
+## Keyword: incremental-verification
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/cover-and-move-application.md](patterns/cover-and-move-application.md) | Critical | Break into smallest steps, verify each step before moving forward |
+
+---
+
+## Keyword: smallest-steps
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/cover-and-move-application.md](patterns/cover-and-move-application.md) | Critical | One change per step, verify independently, have rollback plan |
+
+---
+
+## Keyword: verified-ground
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/cover-and-move-application.md](patterns/cover-and-move-application.md) | Critical | Build only on verified ground, no assumptions, ground set before moving forward |
+
+---
+
+## Keyword: failure-isolation
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/cover-and-move-application.md](patterns/cover-and-move-application.md) | Critical | Failure isolated to one step, rollback simple (revert one file) |
+
+---
+
+## Keyword: simplicity
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/cover-and-move-testing-protocol.md](patterns/cover-and-move-testing-protocol.md) | Critical | Keep everything simplest possible - single-line fixes, minimal abstractions |
+| [patterns/simplicity-principles.md](patterns/simplicity-principles.md) | Critical | Separate over modify, duplicate over complex, remove complexity, simple over clever |
+
+---
+
+## Keyword: separate-over-modify
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/simplicity-principles.md](patterns/simplicity-principles.md) | Critical | Create separate parallel implementation, don't modify existing working code |
+
+---
+
+## Keyword: duplicate-over-complex
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/simplicity-principles.md](patterns/simplicity-principles.md) | Critical | Copy code if it keeps it simple, don't create abstractions for DRY |
+
+---
+
+## Keyword: remove-complexity
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/simplicity-principles.md](patterns/simplicity-principles.md) | Critical | Less complexity is better than fewer lines, don't optimize prematurely |
+
+---
+
+## Keyword: simple-over-clever
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/simplicity-principles.md](patterns/simplicity-principles.md) | Critical | Maintainability over cleverness, use obvious code over clever patterns |
+
+---
+
 ## Keyword: phantom-coverage
 
 | Lesson | Severity | Summary |
