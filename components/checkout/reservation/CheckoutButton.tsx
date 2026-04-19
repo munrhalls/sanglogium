@@ -2,10 +2,12 @@
 
 import { useCallback, useState } from 'react'
 import { useBasketStore } from '@/store/store'
+import { useRouter } from 'next/navigation'
 
 export function CheckoutButton() {
   const [isProcessing, setIsProcessing] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const router = useRouter()
 
   const basket = useBasketStore((s) => s.basket)
 
@@ -23,11 +25,21 @@ export function CheckoutButton() {
     setError(null)
 
     try {
+      const validItems = basket.filter((item) => item.stripePriceId && item.stripePriceId.length > 0)
+      if (validItems.length === 0) {
+        console.log('TRACE: No valid items with stripePriceId, aborting checkout')
+        setError('No valid items in basket')
+        return
+      }
+
       const requestBody = {
-        publicBasket: basket.map((item) => ({
+        basketReservation: validItems.map((item) => ({
           _id: item._id,
           quantity: item.quantity,
+          stripePriceId: item.stripePriceId,
+          displayPrice: item.displayPrice,
         })),
+        createdAt: new Date().toISOString(),
       }
       console.log('TRACE: API request formation', { endpoint: '/api/checkout-queue', body: requestBody })
 
@@ -51,7 +63,9 @@ export function CheckoutButton() {
       }
 
       // Success - queue processed the request
-      console.log('TRACE: Checkout queued successfully', { requestId: result.requestId })
+      console.log('TRACE: Checkout queued successfully', { reservationId: result.reservationId })
+      setError(null)
+      router.push('/checkout')
     } catch (error) {
       console.log('TRACE: Error occurred', { error })
       setError('Failed to process checkout')
