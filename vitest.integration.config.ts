@@ -21,6 +21,8 @@ export default defineConfig(({ mode }) => {
       setupFiles: ['./vitest.integration.setup.ts'],
       hookTimeout: 60000, // 60s for server start/stop
       testTimeout: 30000, // 30s per test
+      fileParallelism: false, // Run test files sequentially for isolation
+      maxWorkers: 1, // Single worker to prevent race conditions
       include: [
         'tests/checkout/guest-checkout-inventory-reservation/integration/**/*.test.tsx',
         'tests/checkout/guest-checkout-inventory-reservation/integration/**/*.test.ts',
