@@ -1,228 +1,172 @@
-// Inline FIFO processor for the checkout queue skeleton.
-// Sequential guarantee via:
-//   1. RPUSH to a Redis list (preserves enqueue order in Redis single-threaded event loop)
-//   2. Spin loop: SET NX lock, peek head with LINDEX, process only if head is me, LPOP, DEL lock
-// One request at a time across all concurrent handlers.
+// Unified checkout-queue processor.
+//
+// Flow (matches tests/checkout-queue/e2e/checkout-queue-e2e-test-page/flow-diagram.md):
+//   UI -> Queue (one at a time) -> Atomic processing (Sanity CMS) -> Pop -> UI response
+//
+// Steps:
+//   1. Validate BasketReservation shape (400 on mismatch).
+//   2. RPUSH item onto Redis FIFO list.
+//   3. Spin: SET NX lock + LINDEX head check; only head proceeds.
+//   4. Create Sanity basketReservation doc with _id = requestId.
+//   5. Transaction-inc reservedStock for each product.
+//   6. Fetch updated products, build BasketReservationResponse.
+//   7. LPOP + DEL lock. Return 202.
 
 import { randomUUID } from 'node:crypto'
+import { createClient } from 'next-sanity'
 import { getQueueRedis } from './redis'
 import { startHealthInterval } from './health'
-import { trace, traceSanity } from './trace'
+import { trace } from './trace'
+import { QUEUE_LIST_KEY, LOCK_KEY, LOCK_TTL_SEC } from './constants'
+import { apiVersion, dataset, projectId } from '@/sanity/env'
 import {
-  QUEUE_LIST_KEY,
-  LOCK_KEY,
-  LOCK_TTL_SEC,
-} from './constants'
-import {
-  isUIRequest,
-  isRedisQueueItem,
-  isCMSRequest,
-  isCMSResponse,
-  isUIResponse,
-  type UIRequest,
-  type UIResponse,
+  isBasketReservation,
+  type BasketReservation,
+  type BasketReservationResponse,
   type RedisQueueItem,
-  type CMSRequest,
-  type CMSResponse,
 } from './types'
-import { backendClient } from '@/sanity/lib/backendClient'
 
-async function logStructure(
-  requestId: string,
-  structure: 'UIRequest' | 'RedisQueue' | 'CMSRequest' | 'CMSResponse' | 'UIResponse',
-  value: unknown
-): Promise<boolean> {
-  let valid = false
-  switch (structure) {
-    case 'UIRequest':
-      valid = isUIRequest(value)
-      break
-    case 'RedisQueue':
-      valid = isRedisQueueItem(value)
-      break
-    case 'CMSRequest':
-      valid = isCMSRequest(value)
-      break
-    case 'CMSResponse':
-      valid = isCMSResponse(value)
-      break
-    case 'UIResponse':
-      valid = isUIResponse(value)
-      break
-  }
-  await trace('structure exists', requestId, { structure, valid })
-  return valid
+// Sanity client with a token that has both create and update permissions.
+// Verified via scripts/diagnose-sanity-tokens.mjs:
+//   SANITY_STUDIO_READ_WRITE        -> UPDATE OK
+//   SANITY_STUDIO_READ_WRITE_CREATE -> UPDATE OK
+//   SANITY_API_TOKEN                -> UPDATE FAIL (create-only role)
+const writeToken =
+  process.env.SANITY_STUDIO_READ_WRITE ||
+  process.env.SANITY_STUDIO_READ_WRITE_CREATE
+
+const sanity = createClient({
+  projectId,
+  dataset,
+  apiVersion,
+  useCdn: false,
+  token: writeToken,
+})
+
+export interface ProcessResult {
+  status: 202 | 400 | 500
+  body: BasketReservationResponse | { ok: false; error: string }
 }
 
-async function sleep(ms: number): Promise<void> {
+function sleep(ms: number): Promise<void> {
   return new Promise((r) => setTimeout(r, ms))
 }
 
-export interface ProcessResult {
-  status: 200 | 400 | 500
-  body: UIResponse | { ok: false; error: string }
-}
-
-/**
- * Enqueue, wait for turn, process Sanity probe, return UI response.
- * Atomic one-at-a-time across all concurrent callers.
- */
 export async function processInline(raw: unknown): Promise<ProcessResult> {
-  console.log('TRACE Bus Stop 5: processInline called', { timestamp: Date.now(), raw })
   startHealthInterval()
 
+  // 1. Validate
+  if (!isBasketReservation(raw)) {
+    return { status: 400, body: { ok: false, error: 'Invalid BasketReservation' } }
+  }
+  const request = raw as BasketReservation
   const requestId = randomUUID()
   const start = Date.now()
 
-  await trace('Type validation', requestId, {
-    requestType: 'UIRequest',
-    responseType: 'UIResponse',
-  })
+  await trace('request received', requestId, { itemCount: request.publicBasket.length })
 
-  // 1. UIRequest structure check
-  const uiValid = await logStructure(requestId, 'UIRequest', raw)
-  if (!uiValid) {
-    return { status: 400, body: { ok: false, error: 'Invalid UIRequest' } }
-  }
-  const uiReq = raw as UIRequest
-
-  await trace('get new request', requestId, { type: 'UIRequest', itemCount: uiReq.publicBasket.length })
-
-  // 2. Enqueue + RedisQueue structure check
-  const item: RedisQueueItem = {
+  // 2. Enqueue
+  const redis = getQueueRedis()
+  const queueItem: RedisQueueItem = {
     id: requestId,
     enqueuedAt: Date.now(),
-    payload: uiReq,
+    payload: request,
   }
-  const redisValidIn = await logStructure(requestId, 'RedisQueue', item)
-  if (!redisValidIn) {
-    return { status: 500, body: { ok: false, error: 'Invalid Redis queue item' } }
-  }
+  const queueItemStr = JSON.stringify(queueItem)
+  await redis.rpush(QUEUE_LIST_KEY, queueItemStr)
+  await trace('queued', requestId)
 
-  const redis = getQueueRedis()
-  await trace('queue it', requestId, { queuePosition: -1 })
-  console.log('TRACE Bus Stop 6: Enqueuing to Redis', { requestId, timestamp: Date.now() })
-  await redis.rpush(QUEUE_LIST_KEY, JSON.stringify(item))
-
-  // 3. Spin: acquire lock + check head == me
+  // 3. Spin lock + head check
   const deadline = start + 45_000
-  let queuePosition = -1
-  let lockAttempts = 0
   while (true) {
     if (Date.now() > deadline) {
-      await redis.lrem(QUEUE_LIST_KEY, 1, JSON.stringify(item))
+      await redis.lrem(QUEUE_LIST_KEY, 1, queueItemStr)
+      await trace('timeout', requestId)
       return { status: 500, body: { ok: false, error: 'Queue wait timeout' } }
     }
 
     const got = await redis.set(LOCK_KEY, requestId, { nx: true, ex: LOCK_TTL_SEC })
-    lockAttempts++
     if (got !== 'OK') {
-      if (lockAttempts % 20 === 0) {
-        console.log('TRACE Bus Stop 7: Lock acquisition retrying', { requestId, attempts: lockAttempts, timestamp: Date.now() })
-      }
       await sleep(25)
       continue
     }
-    console.log('TRACE Bus Stop 7: Lock acquired', { requestId, attempts: lockAttempts, timestamp: Date.now() })
 
-    // Lock held. Check if we're the head.
     const headRaw = await redis.lindex(QUEUE_LIST_KEY, 0)
-    console.log('TRACE Bus Stop 8: Head verification', { requestId, hasHead: !!headRaw, timestamp: Date.now() })
     if (!headRaw) {
       await redis.del(LOCK_KEY)
       await sleep(25)
       continue
     }
     const head =
-      typeof headRaw === 'string' ? (JSON.parse(headRaw) as RedisQueueItem) : (headRaw as RedisQueueItem)
+      typeof headRaw === 'string'
+        ? (JSON.parse(headRaw) as RedisQueueItem)
+        : (headRaw as RedisQueueItem)
     if (head.id !== requestId) {
-      console.log('TRACE Bus Stop 8: Not at head, releasing lock', { requestId, headId: head.id, timestamp: Date.now() })
       await redis.del(LOCK_KEY)
       await sleep(25)
       continue
     }
-
-    // Measure queue position (for TRACE)
-    queuePosition = 0
-    console.log('TRACE Bus Stop 8: At head, proceeding to process', { requestId, timestamp: Date.now() })
     break
   }
 
+  await trace('processing', requestId)
+
   try {
-    await trace('launch first in queue to cms', requestId, { queuePosition })
+    // 4. Create reservation doc
+    const doc = await sanity.create({
+      _id: requestId,
+      _type: 'basketReservation',
+      publicBasket: request.publicBasket.map((p, i) => ({
+        _key: `${p._id}-${i}`,
+        _id: p._id,
+        quantity: p.quantity,
+        stripePriceId: p.stripePriceId,
+      })),
+      createdAt: request.createdAt,
+    })
+    await trace('reservation document created', requestId, { docId: doc._id })
 
-    // 4. CMSRequest structure check
-    const cmsReq: CMSRequest = {
-      requestId,
-      query: '*[_type=="product"][0]{_id, stock, reservedStock}',
+    // 5. Increment reservedStock atomically
+    const tx = sanity.transaction()
+    for (const item of request.publicBasket) {
+      tx.patch(item._id, (p) => p.inc({ reservedStock: item.quantity }))
     }
-    await logStructure(requestId, 'CMSRequest', cmsReq)
+    await tx.commit()
+    await trace('reservedStock incremented', requestId)
 
-    // 5. Sanity read-only probe
-    await trace('wait for response', requestId, { waiting: true })
-    let productId: string | null = null
-    let stock: number | null = null
-    let reservedStock: number | null = null
-    let sanitySuccess = false
+    // 6. Fetch updated products
+    const productIds = request.publicBasket.map((p) => p._id)
+    const products = (await sanity.fetch(
+      `*[_id in $ids]{ _id, stock, reservedStock, displayPrice }`,
+      { ids: productIds }
+    )) as Array<{ _id: string; stock: number; reservedStock: number; displayPrice: number }>
 
-    try {
-      await traceSanity('before sanity request', requestId, { query: cmsReq.query })
-      console.log('TRACE Bus Stop 9: Executing Sanity probe', { requestId, query: cmsReq.query, timestamp: Date.now() })
-      const r = (await backendClient.fetch(cmsReq.query)) as { _id?: string; stock?: number; reservedStock?: number } | null
-      productId = r?._id ?? null
-      stock = r?.stock ?? null
-      reservedStock = r?.reservedStock ?? null
-      sanitySuccess = true
-      console.log('TRACE Bus Stop 9: Sanity probe completed', { requestId, productId, stock, reservedStock, timestamp: Date.now() })
-      await traceSanity('after sanity response', requestId, { productId, stock, reservedStock, response: r })
-    } catch (err) {
-      console.error('TRACE Bus Stop 9: Sanity probe failed', { requestId, err, timestamp: Date.now() })
-      sanitySuccess = false
+    const response: BasketReservationResponse = {
+      ok: true,
+      reservationId: doc._id,
+      products: products.map((p) => ({
+        id: p._id,
+        realPrice: p.displayPrice,
+        reservedStock: p.reservedStock,
+        stock: p.stock,
+      })),
     }
 
-    // 6. CMSResponse structure check
-    const cmsResp: CMSResponse = { requestId, productId, success: sanitySuccess }
-    await logStructure(requestId, 'CMSResponse', cmsResp)
-
-    await trace('Sanity response', requestId, { success: sanitySuccess })
-
-    // 7. RedisQueue structure check (outbound)
-    await logStructure(requestId, 'RedisQueue', item)
-
-    // 8. Build UIResponse + structure check
-    const uiResp: UIResponse = {
-      ok: sanitySuccess,
-      requestId,
-      basketItemCount: uiReq.publicBasket.length,
-      productId,
-      durationMs: Date.now() - start,
-    }
-    console.log('TRACE Bus Stop 10: UIResponse built', { requestId, ok: sanitySuccess, durationMs: uiResp.durationMs, timestamp: Date.now() })
-    await logStructure(requestId, 'UIResponse', uiResp)
-
-    await trace('return response to ui', requestId, { ok: sanitySuccess, duration: uiResp.durationMs })
-
-    // 9. Pop head + release lock
-    await trace('pop 1st in queue (atomic)', requestId, { popping: true })
-    console.log('TRACE Bus Stop 11: Popping from queue and releasing lock', { requestId, timestamp: Date.now() })
+    // 7. Pop + release
     await redis.lpop(QUEUE_LIST_KEY)
     await redis.del(LOCK_KEY)
+    await trace('complete', requestId, { durationMs: Date.now() - start })
 
-    await trace('Request complete', requestId, { duration: uiResp.durationMs })
-
-    return { status: 200, body: uiResp }
+    return { status: 202, body: response }
   } catch (err) {
-    // Best-effort cleanup
     try {
       await redis.lpop(QUEUE_LIST_KEY)
     } catch {
       /* ignore */
     }
     await redis.del(LOCK_KEY)
-    await trace('Request complete', requestId, {
-      duration: Date.now() - start,
-      error: err instanceof Error ? err.message : String(err),
-    })
-    return { status: 500, body: { ok: false, error: 'processing error' } }
+    const message = err instanceof Error ? err.message : String(err)
+    await trace('error', requestId, { error: message })
+    return { status: 500, body: { ok: false, error: message } }
   }
 }

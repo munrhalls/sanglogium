@@ -1,8 +1,6 @@
-// Shared Redis keys for checkout queue skeleton.
+// Shared Redis keys for the unified checkout queue (basket reservation).
 export const QUEUE_LIST_KEY = 'queue:checkout'
 export const LOCK_KEY = 'lock:checkout:processing'
 export const LOCK_TTL_SEC = 30
 export const TRACE_LIST_KEY = 'trace:checkout-queue'
 export const TRACE_MAX = 500
-export const SANITY_TRACE_LIST_KEY = 'trace:sanity-cms'
-export const SANITY_TRACE_MAX = 500
