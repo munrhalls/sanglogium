@@ -64,6 +64,10 @@ export function CheckoutButton() {
 
       // Success - queue processed the request
       console.log('TRACE: Checkout queued successfully', { reservationId: result.reservationId })
+
+      // Save reservationId to sessionStorage
+      sessionStorage.setItem('basketReservationId', result.reservationId)
+
       setError(null)
       router.push('/checkout')
     } catch (error) {
