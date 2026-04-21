@@ -6,7 +6,7 @@ import Shelf from "@/app/components/layout/general/Shelf";
 
 export default function BasketPage() {
   return (
-    <Shelf>
+    <Shelf data-testid="basket-page">
       <div className="mb-12">
         <SegmentTitle title="Your Basket" />
       </div>
