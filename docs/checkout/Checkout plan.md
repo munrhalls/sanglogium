@@ -1,0 +1,7 @@
+The user starts on the basket page and clicks checkout. This triggers a queue that runs an atomic reservation operation, saves a checkout reservation document in Sanity CMS, and redirects the user to the address page.
+On the address page, the user fills in their details. The system verifies the address using the Google API, saves the verified address to the reservation document, and moves the user to the shipping page.
+On the shipping page, the system combines the user’s address with company and parcel data, calls the Shippo API to fetch shipping options and rates, and shows them to the user.
+The user picks a shipping option and clicks continue. The chosen shipping data is saved back to the reservation document, and the user is redirected to the payment page.
+On the payment page, the user sees Stripe Elements. They can check a box to use the same address for billing or fill in a different billing address. After entering payment details, the system uses the reservation document to create the final order.
+The order creation updates the real product stock using the reservedStock values and then deletes the reservation document.
+Finally, the user lands on the return/success page, which displays the order details and shows a clean success message.
