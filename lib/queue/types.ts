@@ -23,12 +23,20 @@ export interface BasketReservation {
 export interface BasketReservationResponse {
   ok: true
   reservationId: string
+  ttl: number
   products: Array<{
     id: string
     realPrice: number
     reservedStock: number
     stock: number
   }>
+  debug?: {
+    stripeVerification: Array<{
+      productId: string
+      stripePriceId: string
+      verifiedPrice: number
+    }>
+  }
 }
 
 export interface RedisQueueItem {

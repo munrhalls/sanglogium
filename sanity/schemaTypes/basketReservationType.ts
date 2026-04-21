@@ -45,6 +45,12 @@ export const basketReservationType = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "expiresAt",
+      title: "Expires At",
+      type: "datetime",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "shippingAddress",
       title: "Shipping Address",
       type: "object",

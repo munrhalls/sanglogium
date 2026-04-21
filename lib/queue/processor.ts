@@ -13,12 +13,11 @@
 //   7. LPOP + DEL lock. Return 202.
 
 import { randomUUID } from 'node:crypto'
-import { createClient } from 'next-sanity'
 import { getQueueRedis } from './redis'
 import { startHealthInterval } from './health'
 import { trace } from './trace'
-import { QUEUE_LIST_KEY, LOCK_KEY, LOCK_TTL_SEC } from './constants'
-import { apiVersion, dataset, projectId } from '@/sanity/env'
+import { QUEUE_LIST_KEY, LOCK_KEY, LOCK_TTL_SEC, RESERVATION_TTL_SEC } from './constants'
+import { getBackendClient } from '@/sanity/lib/backendClient'
 import {
   isBasketReservation,
   type BasketReservation,
@@ -26,23 +25,6 @@ import {
   type RedisQueueItem,
 } from './types'
 import { getVerifiedPrice } from '@/lib/stripe'
-
-// Sanity client with a token that has both create and update permissions.
-// Verified via scripts/diagnose-sanity-tokens.mjs:
-//   SANITY_STUDIO_READ_WRITE        -> UPDATE OK
-//   SANITY_STUDIO_READ_WRITE_CREATE -> UPDATE OK
-//   SANITY_API_TOKEN                -> UPDATE FAIL (create-only role)
-const writeToken =
-  process.env.SANITY_STUDIO_READ_WRITE ||
-  process.env.SANITY_STUDIO_READ_WRITE_CREATE
-
-const sanity = createClient({
-  projectId,
-  dataset,
-  apiVersion,
-  useCdn: false,
-  token: writeToken,
-})
 
 export interface ProcessResult {
   status: 202 | 400 | 500
@@ -114,9 +96,15 @@ export async function processInline(raw: unknown): Promise<ProcessResult> {
 
   try {
     // 4. Verify prices and transform to CMS format
+    const stripeVerificationData: Array<{ productId: string; stripePriceId: string; verifiedPrice: number }> = []
     const cmsBasketReservation = await Promise.all(
       request.basketReservation.map(async (p, i) => {
         const verifiedPrice = await getVerifiedPrice(p.stripePriceId)
+        stripeVerificationData.push({
+          productId: p._id,
+          stripePriceId: p.stripePriceId,
+          verifiedPrice,
+        })
         return {
           _key: `${p._id}-${i}`,
           _id: p._id,
@@ -127,11 +115,14 @@ export async function processInline(raw: unknown): Promise<ProcessResult> {
     )
 
     // 5. Create reservation doc
+    const expiresAt = new Date(Date.now() + RESERVATION_TTL_SEC * 1000).toISOString()
+    const sanity = getBackendClient()
     const doc = await sanity.create({
       _id: requestId,
       _type: 'basketReservation',
       basketReservation: cmsBasketReservation,
       createdAt: request.createdAt,
+      expiresAt,
     })
     await trace('reservation document created', requestId, { docId: doc._id })
 
@@ -153,12 +144,16 @@ export async function processInline(raw: unknown): Promise<ProcessResult> {
     const response: BasketReservationResponse = {
       ok: true,
       reservationId: doc._id,
+      ttl: RESERVATION_TTL_SEC,
       products: products.map((p) => ({
         id: p._id,
         realPrice: p.displayPrice,
         reservedStock: p.reservedStock,
         stock: p.stock,
       })),
+      debug: {
+        stripeVerification: stripeVerificationData,
+      },
     }
 
     // 7. Pop + release
