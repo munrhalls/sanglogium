@@ -12,12 +12,12 @@ export default defineConfig({
   testIgnore: "**/jest/**",
   fullyParallel: true,
   workers: process.env.CI ? 2 : 4, // Use 4 workers locally, 2 in CI
-  webServer: {
-    command: "npm run start",
-    url: "http://localhost:3000",
-    reuseExistingServer: !process.env.CI,
-    timeout: 120 * 1000,
-  },
+  // webServer: {
+  //   command: "npm run start",
+  //   url: "http://localhost:3000",
+  //   reuseExistingServer: !process.env.CI,
+  //   timeout: 120 * 1000,
+  // },
   use: {
     baseURL: "http://localhost:3000/",
     trace: "retain-on-failure", // Only trace on failure

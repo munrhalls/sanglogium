@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "dev-no-turbo": "next dev",
-    "dev:test": "next dev --turbopack -p 3001",
+    "dev:test": "dotenv -e .env.test -- next dev --turbopack -p 3000",
     "webhook": "stripe listen --forward-to localhost:3000/api/webhook",
     "dev:stripe": "concurrently \"npm run dev\" \"npm run webhook\"",
     "prebuild": "node scripts/build-catalogue-index.mjs",
@@ -148,6 +148,7 @@
     "critters": "^0.0.25",
     "cross-env": "^10.1.0",
     "cssnano": "^7.1.1",
+    "dotenv-cli": "^11.0.0",
     "eslint": "^9.39.4",
     "eslint-config-next": "^16.2.1",
     "eslint-config-prettier": "^10.1.8",
