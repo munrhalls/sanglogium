@@ -240,6 +240,7 @@
 | Lesson | Severity | Summary |
 |--------|----------|---------|
 | [patterns/cover-and-move-testing-protocol.md](patterns/cover-and-move-testing-protocol.md) | High | Verify each step covers for the next - never hand back until chain verified |
+| [failures/cover-and-move-pre-requirement-verification.md](failures/cover-and-move-pre-requirement-verification.md) | Critical | Pre-flight verification of environment variables, config, and input values before symptom investigation |
 
 ---
 
@@ -256,6 +257,7 @@
 | Lesson | Severity | Summary |
 |--------|----------|---------|
 | [patterns/cover-and-move-testing-protocol.md](patterns/cover-and-move-testing-protocol.md) | High | Verify dev server, API endpoints, event names, state clearing before running tests |
+| [failures/cover-and-move-pre-requirement-verification.md](failures/cover-and-move-pre-requirement-verification.md) | Critical | Pre-flight verification of environment variables, config, and input values before debugging |
 
 ---
 
@@ -264,6 +266,38 @@
 | Lesson | Severity | Summary |
 |--------|----------|---------|
 | [patterns/cover-and-move-testing-protocol.md](patterns/cover-and-move-testing-protocol.md) | High | Step N must verify ground is set for step N+1 before proceeding |
+
+---
+
+## Keyword: path-flow-trace
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/cover-and-move-pre-requirement-verification.md](failures/cover-and-move-pre-requirement-verification.md) | Critical | Trace complete flow from setup → data preparation → API call → failure before investigating symptoms |
+
+---
+
+## Keyword: environment-differences
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/cover-and-move-pre-requirement-verification.md](failures/cover-and-move-pre-requirement-verification.md) | Critical | Compare environment variables, config, and input values across test and production before debugging |
+
+---
+
+## Keyword: pre-requirement-verification
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/cover-and-move-pre-requirement-verification.md](failures/cover-and-move-pre-requirement-verification.md) | Critical | Verify environment variables, configuration, and input values before investigating symptoms |
+
+---
+
+## Keyword: debugging-protocol
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [failures/cover-and-move-pre-requirement-verification.md](failures/cover-and-move-pre-requirement-verification.md) | Critical | 5-step debugging protocol: verify pre-requirements → trace path flow → log values → compare → investigate symptoms |
 
 ---
 
@@ -855,6 +889,7 @@
 | Lesson | Severity | Summary |
 |--------|----------|---------|
 | [failures/debug-data-assumption.md](failures/debug-data-assumption.md) | High | Verify actual data before code changes — build passing ≠ bug fixed |
+| [failures/cover-and-move-pre-requirement-verification.md](failures/cover-and-move-pre-requirement-verification.md) | Critical | Pre-flight verification prevents rabbit holes in debugging |
 
 ---
 

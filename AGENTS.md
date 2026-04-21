@@ -243,7 +243,7 @@ These are enforced by CI/CD. Generated code MUST pass:
 ```bash
 npm run lint      # ESLint with custom rules
 npm run typecheck # TypeScript strict mode
-npm run test:unit # Vitest (zero mocks policy)
+npm run test:unit # Vitest
 ```
 
 **Custom Lint Rules (enforced by CI):**

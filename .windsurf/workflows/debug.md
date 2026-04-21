@@ -12,6 +12,21 @@ description: Execute debugging workflow using Component Archaeology Principle
 
 ---
 
+## PHASE 0: Pre-Flight Verification (MANDATORY - Before Any Investigation)
+### Pre-Requirement Verification
+*Before investigating symptoms, verify pre-requirements. This prevents rabbit holes.*
+- **Environment Variables:** What values are loaded in each environment (test vs production)?
+- **Configuration:** What config differs between environments?
+- **Input Values:** What are the actual input values (not just whether they exist)?
+- **Path Flow Trace:** Trace complete flow from setup → data preparation → API call → failure
+- **Value Comparison:** Compare values across environments before investigating symptoms
+
+**Rule:** No symptom investigation until pre-requirements verified and values compared across environments.
+
+**Failure Example:** Investigating Google Maps API 401 when actual issue was token mismatch between test and API environments (SANITY_STUDIO_READ_WRITE vs SANITY_STUDIO_READ_WRITE_CREATE).
+
+---
+
 ## PHASE 1: Plan and Contain (Agent Output Required Before Fixing)
 ### Component Archaeology Analysis
 *Analyze the problem systematically. Present findings to the chat strictly before modifying any files.*
