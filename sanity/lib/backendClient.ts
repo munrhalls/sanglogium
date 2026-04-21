@@ -1,11 +1,17 @@
 import { createClient } from "next-sanity";
 
-import { apiVersion, dataset, projectId } from "../env";
+import { apiVersion, projectId, dataset } from "../env";
 
-export const backendClient = createClient({
-  projectId,
-  apiVersion,
-  dataset,
-  useCdn: true,
-  token: process.env.SANITY_STUDIO_READ_WRITE_CREATE || process.env.SANITY_API_TOKEN,
-});
+export function getBackendClient() {
+  const writeToken =
+    process.env.SANITY_STUDIO_READ_WRITE ||
+    process.env.SANITY_STUDIO_READ_WRITE_CREATE
+
+  return createClient({
+    projectId,
+    apiVersion,
+    dataset,
+    useCdn: false,
+    token: writeToken,
+  });
+}
