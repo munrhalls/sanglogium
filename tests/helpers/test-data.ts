@@ -1,12 +1,19 @@
 import { createClient } from 'next-sanity';
-import { client } from '../../sanity/lib/client';
-import { apiVersion, dataset, projectId } from '../../sanity/env';
+import { apiVersion, projectId } from '../../sanity/env';
+
+// Read client for test dataset
+const testClient = createClient({
+  projectId,
+  dataset: "test",
+  apiVersion,
+  useCdn: false,
+});
 
 // Write-capable client for test setup (reset stock, etc). Uses the token with
 // full update permission (verified via scripts/diagnose-sanity-tokens.mjs).
 const testWriteClient = createClient({
   projectId,
-  dataset,
+  dataset: "test",
   apiVersion,
   useCdn: false,
   token:
@@ -34,7 +41,7 @@ export const TEST_PRODUCTS = [
 ];
 
 export async function getTestProducts() {
-  return client.fetch(`
+  return testClient.fetch(`
     *[_type == "product" && (name match "test" || name match "Test")]{
       _id, name, stock, reservedStock, stripePriceId, slug, displayPrice
     } | order(name asc)
@@ -43,7 +50,7 @@ export async function getTestProducts() {
 
 export async function resetProductStock(productId: string, initialStock: number) {
   // Check if product exists before trying to patch it
-  const product = await client.fetch(`*[_id == $productId]{_id}[0]`, { productId });
+  const product = await testClient.fetch(`*[_id == $productId]{_id}[0]`, { productId });
   if (!product) {
     console.log(`Product ${productId} not found in dataset, skipping stock reset`);
     return;
@@ -52,7 +59,7 @@ export async function resetProductStock(productId: string, initialStock: number)
 }
 
 export async function getProductStock(productId: string): Promise<number> {
-  const product = await client.fetch(
+  const product = await testClient.fetch(
     `*[_id == $productId]{stock}[0]`,
     { productId }
   );
