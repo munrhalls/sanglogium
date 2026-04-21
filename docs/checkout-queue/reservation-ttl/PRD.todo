@@ -1,0 +1,10 @@
+# Scope: reservation creation -> automatic TTL assignment -> expiresAt timestamp in Sanity -> background cleanup releases stock -> expired doc deletion
+
+## Definition of Done - happy path
+
+✔ [ ] API response includes TTL field (15 minutes) given reservation request @done(26-04-21 19:57)
+✔ [ ] Sanity basketReservation doc includes expiresAt timestamp given reservation creation @done(26-04-21 20:04)
+[ ] Background cleanup releases reservedStock back to available stock given expired reservation
+[ ] Expired basketReservation doc deleted from Sanity given expired reservation
+[ ] Redis queue items have TTL set given queue enqueue
+[ ] All tests use only real API calls and queries, no mocking or implementation logic
