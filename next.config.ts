@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ["isomorphic-dompurify"],
   transpilePackages: ["@sanity/ui", "@sanity/icons", "next-sanity"],
   trailingSlash: false,
+  env: {
+    NEXT_PUBLIC_SANITY_DATASET: process.env.NODE_ENV === 'test' ? 'test' : process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
+  },
   // Suppress Next.js image warnings in development
   ...(process.env.NODE_ENV === 'development' && {
     logging: {
