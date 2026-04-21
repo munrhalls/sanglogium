@@ -42,6 +42,12 @@ export async function getTestProducts() {
 }
 
 export async function resetProductStock(productId: string, initialStock: number) {
+  // Check if product exists before trying to patch it
+  const product = await client.fetch(`*[_id == $productId]{_id}[0]`, { productId });
+  if (!product) {
+    console.log(`Product ${productId} not found in dataset, skipping stock reset`);
+    return;
+  }
   await testWriteClient.patch(productId).set({ stock: initialStock, reservedStock: 0 }).commit();
 }
 

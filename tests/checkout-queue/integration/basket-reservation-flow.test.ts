@@ -10,12 +10,22 @@ import { describe, it, expect, beforeAll, beforeEach } from 'vitest'
 import { fetch } from 'undici'
 import type { BasketReservation, BasketReservationResponse } from '@/lib/queue/types'
 import { TEST_PRODUCTS, resetProductStock } from '@/tests/helpers/test-data'
-import { client } from '@/sanity/lib/client'
+import { createClient } from 'next-sanity'
+import { apiVersion, projectId } from '@/sanity/env'
 
 const BASE = process.env.QUEUE_TEST_BASE_URL || 'http://localhost:3000'
 
-describe('Checkout queue — basket reservation flow', () => {
+// Read client for querying test dataset
+const client = createClient({
+  projectId,
+  dataset: "test",
+  apiVersion,
+  useCdn: false,
+})
+
+describe('Checkout button click -> Checkout queue — atomic CMS operation - basket reservation flow', () => {
   beforeAll(async () => {
+    // Check if queue is active and available for tests
     const res = await fetch(`${BASE}/api/checkout-queue`, { method: 'OPTIONS' }).catch(() => null)
     if (!res) throw new Error(`Dev server not running at ${BASE}. Run 'npm run dev' first.`)
   })
