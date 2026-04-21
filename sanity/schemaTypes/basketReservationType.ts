@@ -44,5 +44,37 @@ export const basketReservationType = defineType({
       type: "datetime",
       validation: (Rule) => Rule.required(),
     }),
+    defineField({
+      name: "shippingAddress",
+      title: "Shipping Address",
+      type: "object",
+      fields: [
+        defineField({
+          name: "regionCode",
+          title: "Region Code",
+          type: "string",
+        }),
+        defineField({
+          name: "postalCode",
+          title: "Postal Code",
+          type: "string",
+        }),
+        defineField({
+          name: "street",
+          title: "Street",
+          type: "string",
+        }),
+        defineField({
+          name: "streetNumber",
+          title: "Street Number",
+          type: "string",
+        }),
+        defineField({
+          name: "city",
+          title: "City",
+          type: "string",
+        }),
+      ],
+    }),
   ],
 });

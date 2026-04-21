@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { CheckCircle, Package, ArrowRight } from "@phosphor-icons/react";
@@ -22,7 +22,7 @@ interface Order {
   items: OrderItem[];
 }
 
-export default function SuccessPage() {
+function SuccessPage() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id");
   const clearBasket = useBasketStore((s) => s.clearBasket);
@@ -188,5 +188,20 @@ export default function SuccessPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-center">
+          <div className="mb-4 inline-block h-12 w-12 animate-spin rounded-full border-4 border-gray-300 border-t-blue-600"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    }>
+      <SuccessPage />
+    </Suspense>
   );
 }

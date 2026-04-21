@@ -41,9 +41,10 @@ export default function CheckoutLayout({
   const validateShipping = async (formData: ShippingAddress) => {
     setIsLoading(true);
     try {
+      const reservationId = typeof window !== 'undefined' ? window.sessionStorage.getItem('reservationId') : null;
       const res = await fetch("/api/shipping", {
         method: "POST",
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, reservationId }),
       });
       const {
         status: apiAddressStatus,
@@ -66,6 +67,7 @@ export default function CheckoutLayout({
         };
 
         setShippingAddress(parsedApiCorrectedAddress);
+        setIsLoading(false);
         router.push("/checkout/shipping/confirmation");
       } else {
         setIsLoading(false);
