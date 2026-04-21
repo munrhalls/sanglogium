@@ -1,4 +1,4 @@
-# Scope: checkout button click on basket page -> basket reservation flow -> ui response, saving basket reservation id to session.
+# Scope: checkout button click on basket page -> checkout-queue -> atomic save basket reservation to CMS -> CMS response to queue -> queue pop 1, pass response -> ui receive response, save basket reservation id to session.
 
 ## Definition of Done - happy path
 
@@ -8,4 +8,5 @@
 ✔ [ ] Increments reservedStock atomically on each product by requested quantity @done(26-04-21 17:24)
 ✔ [ ] Returns BasketReservationResponse with reservationId and product snapshot (stock, reservedStock, realPrice) @done(26-04-21 17:24)
 ✔ [ ] Saves reservationId to session and navigates user to checkout address page @done(26-04-21 17:24)
+[ ] Reservations expire after TTL (15 minutes) and reservedStock is released back to available stock, basket reservation is deleted after
 
