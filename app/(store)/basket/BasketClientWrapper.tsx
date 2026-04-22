@@ -3,10 +3,46 @@ import { useBasketStore, selectHasHydrated } from "@/store/store";
 import EmptyBasketContent from "./EmptyBasketContent";
 import Basket from "./Basket";
 import BasketSummary from "./BasketSummary";
+import { useEffect, useState } from "react";
+import { fetchBasketProducts } from "@/app/actions/basket";
+import { BasketItem } from "./basket.types";
+import { urlFor } from "@/sanity/lib/image";
 
 export default function BasketClientWrapper() {
   const basket = useBasketStore((s) => s.basket);
   const hasHydrated = useBasketStore(selectHasHydrated);
+  const setBasket = useBasketStore((s) => s.setBasket);
+  const [isFetchingFresh, setIsFetchingFresh] = useState(false);
+
+  useEffect(() => {
+    const fetchFreshData = async () => {
+      if (!hasHydrated || basket.length === 0 || isFetchingFresh) return;
+
+      setIsFetchingFresh(true);
+      const ids = basket.map((item) => item._id);
+      const freshProducts = await fetchBasketProducts(ids);
+
+      // Merge fresh product data with persisted quantities
+      const mergedBasket: BasketItem[] = freshProducts.map((product) => {
+        const persistedItem = basket.find((item) => item._id === product._id);
+        return {
+          _id: product._id,
+          name: product.name,
+          displayPrice: product.displayPrice,
+          stock: product.stock,
+          quantity: persistedItem?.quantity || 1,
+          image: product.image ? urlFor(product.image).width(100).height(100).url() : '/images/placeholder-product.jpg',
+          slug: product.slug.current,
+          stripePriceId: product.stripePriceId,
+        };
+      });
+
+      setBasket(mergedBasket);
+      setIsFetchingFresh(false);
+    };
+
+    fetchFreshData();
+  }, [hasHydrated, basket, setBasket, isFetchingFresh]);
 
   // Show skeleton while hydrating to prevent flash of empty state
   if (!hasHydrated) {
