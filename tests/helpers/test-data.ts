@@ -4,7 +4,7 @@ import { apiVersion, projectId } from '../../sanity/env';
 // Read client for test dataset
 const testClient = createClient({
   projectId,
-  dataset: process.env.SANITY_STUDIO_DATASET || "production",
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
   apiVersion,
   useCdn: false,
 });
@@ -13,32 +13,13 @@ const testClient = createClient({
 // full update permission (verified via scripts/diagnose-sanity-tokens.mjs).
 const testWriteClient = createClient({
   projectId,
-  dataset: process.env.SANITY_STUDIO_DATASET || "production",
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
   apiVersion,
   useCdn: false,
   token:
     process.env.SANITY_STUDIO_READ_WRITE ||
     process.env.SANITY_STUDIO_READ_WRITE_CREATE,
 });
-
-export const TEST_PRODUCTS = [
-  {
-    _id: "YcMKSEyusPBTcaoe1xiP1b",
-    name: "Test Product Alpha - Full Stock",
-    stock: 5,
-    reservedStock: 0,
-    stripePriceId: "price_1TJU0HEQ2a2vW56g5nVkS96K",
-    displayPrice: 10000
-  },
-  {
-    _id: "MHd9dKrYZDArdj3morESVD",
-    name: "Test Product Beta - Limited Stock",
-    stock: 2,
-    reservedStock:  0,
-    stripePriceId: "price_1TJU0JEQ2a2vW56g2XSkjz7g",
-    displayPrice: 20000
-  }
-];
 
 export async function getTestProducts() {
   return testClient.fetch(`
