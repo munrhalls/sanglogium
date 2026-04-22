@@ -5,14 +5,14 @@ import { describe, it, expect, beforeAll } from 'vitest'
 import { fetch } from 'undici'
 import { getTestProducts } from '@/tests/helpers/test-data'
 import { createClient } from 'next-sanity'
-import { apiVersion, projectId } from '@/sanity/env'
+import { apiVersion, projectId, dataset } from '@/sanity/env'
 
 const BASE = process.env.QUEUE_TEST_BASE_URL || 'http://localhost:3000'
 
 // Read client for querying test dataset
 const client = createClient({
   projectId,
-  dataset: "test",
+  dataset,
   apiVersion,
   useCdn: false,
 })
