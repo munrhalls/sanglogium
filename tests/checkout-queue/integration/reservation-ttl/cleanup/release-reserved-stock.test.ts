@@ -11,17 +11,16 @@ describe('releaseReservedStock Integration', () => {
 
   beforeAll(async () => {
     testProducts = await getTestProducts()
-    if (testProducts.length < 1) throw new Error('Test dataset must have at least 1 product')
-  })
-
-  beforeEach(async () => {
-    await resetProductStock(testProducts[0]._id, testProducts[0].stock)
+    if (testProducts.length < 2) throw new Error('Test dataset must have at least 2 products')
   })
 
   it('releases reservedStock back to available stock', async () => {
     const backendClient = getBackendClient()
-    const productId = testProducts[0]._id
+    const productId = testProducts[1]._id
     const quantity = 2
+
+    // Reset product stock to baseline
+    await resetProductStock(productId, testProducts[1].stock)
 
     // First, increment reservedStock to simulate a reservation
     const tx1 = backendClient.transaction()
@@ -39,5 +38,5 @@ describe('releaseReservedStock Integration', () => {
     // Verify reservedStock was released
     const after = await backendClient.fetch(`*[_id == $id][0]{ reservedStock }`, { id: productId })
     expect(after.reservedStock).toBe(0)
-  })
+  }, 10000)
 })

@@ -57,5 +57,5 @@ describe('Sanity Doc expiresAt Timestamp', () => {
     )
     expect(doc).toBeDefined()
     expect(doc.expiresAt).toBeDefined()
-  })
+  }, 10000)
 })

@@ -20,6 +20,7 @@ export default defineConfig(({ mode }) => {
       env: {
         ...env,
         NODE_ENV: "test",
+        RESERVATION_TTL_SEC: "5",
       },
       setupFiles: ['./vitest.integration.setup.ts'],
       hookTimeout: 60000, // 60s for server start/stop

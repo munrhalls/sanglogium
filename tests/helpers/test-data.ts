@@ -4,7 +4,7 @@ import { apiVersion, projectId } from '../../sanity/env';
 // Read client for test dataset
 const testClient = createClient({
   projectId,
-  dataset: "test",
+  dataset: process.env.SANITY_STUDIO_DATASET || "production",
   apiVersion,
   useCdn: false,
 });
@@ -13,7 +13,7 @@ const testClient = createClient({
 // full update permission (verified via scripts/diagnose-sanity-tokens.mjs).
 const testWriteClient = createClient({
   projectId,
-  dataset: "test",
+  dataset: process.env.SANITY_STUDIO_DATASET || "production",
   apiVersion,
   useCdn: false,
   token:

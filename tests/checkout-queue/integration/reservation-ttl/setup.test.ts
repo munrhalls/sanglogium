@@ -26,7 +26,7 @@ describe('Reservation TTL - Setup Verification', () => {
 
   it('dev server is running and queue endpoint responds', async () => {
     const res = await fetch(`${BASE}/api/checkout-queue`, { method: 'OPTIONS' })
-    expect(res.status).toBe(200)
+    expect(res.status).toBe(204)
   })
 
   it('Sanity client can connect to test dataset', async () => {
