@@ -23,3 +23,9 @@
 # Proper Next.js fallback handling is managed by @netlify/plugin-nextjs
 # Remove SPA fallback which conflicts with Next.js asset handling
 
+# Scheduled function: cleanup expired reservations every 5 minutes
+[[scheduled]]
+name = "cleanup-expired-reservations"
+cron = "*/5 * * * *"
+path = "/api/cleanup/expired-reservations"
+

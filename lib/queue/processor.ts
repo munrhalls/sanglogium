@@ -16,7 +16,9 @@ import { randomUUID } from 'node:crypto'
 import { getQueueRedis } from './redis'
 import { startHealthInterval } from './health'
 import { trace } from './trace'
-import { QUEUE_LIST_KEY, LOCK_KEY, LOCK_TTL_SEC, RESERVATION_TTL_SEC } from './constants'
+import { QUEUE_LIST_KEY, LOCK_KEY, LOCK_TTL_SEC } from './constants'
+
+const RESERVATION_TTL_SEC = parseInt(process.env.RESERVATION_TTL_SEC || '900', 10)
 import { getBackendClient } from '@/sanity/lib/backendClient'
 import {
   isBasketReservation,
@@ -115,7 +117,8 @@ export async function processInline(raw: unknown): Promise<ProcessResult> {
     )
 
     // 5. Create reservation doc
-    const expiresAt = new Date(Date.now() + RESERVATION_TTL_SEC * 1000).toISOString()
+    const ttlSec = parseInt(process.env.RESERVATION_TTL_SEC || '900', 10)
+    const expiresAt = new Date(Date.now() + ttlSec * 1000).toISOString()
     const sanity = getBackendClient()
     const doc = await sanity.create({
       _id: requestId,
