@@ -2,7 +2,7 @@
 
 **Purpose:** Searchable keyword → lesson mapping for pre-work retrieval.
 
-**Last Updated:** 2026-04-18
+**Last Updated:** 2026-04-22
 
 ## Keyword: contain
 | Lesson | Severity | Summary |
@@ -249,6 +249,38 @@
 | Lesson | Severity | Summary |
 |--------|----------|---------|
 | [patterns/cover-and-move-testing-protocol.md](patterns/cover-and-move-testing-protocol.md) | High | Pre-flight verification of all dependencies before test execution |
+
+---
+
+## Keyword: test-environment
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/test-environment-simple.md](patterns/test-environment-simple.md) | High | Single source of truth (NODE_ENV) drives all test configuration |
+
+---
+
+## Keyword: sanity-dataset
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/test-environment-simple.md](patterns/test-environment-simple.md) | High | Centralized dataset access via sanity/env.ts - no hardcoded values |
+
+---
+
+## Keyword: node-env
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/test-environment-simple.md](patterns/test-environment-simple.md) | High | NODE_ENV=test switches to test dataset automatically via next.config.ts |
+
+---
+
+## Keyword: environment-configuration
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [patterns/test-environment-simple.md](patterns/test-environment-simple.md) | High | Unified environment configuration - no .env.test files, no redundant configs |
 
 ---
 
@@ -2098,6 +2130,30 @@
 | Lesson | Severity | Summary |
 |--------|----------|---------|
 | [patterns/async-queue-testing.md](patterns/async-queue-testing.md) | High | Test both immediate 202 response and eventual async processing state |
+
+---
+
+## Keyword: context-reporting
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [prompting/env-file-status-reporting.md](prompting/env-file-status-reporting.md) | High | Always explain WHY a state exists, not just WHAT the state is |
+
+---
+
+## Keyword: gitignored-files
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [prompting/env-file-status-reporting.md](prompting/env-file-status-reporting.md) | High | Explain gitignore behavior when reporting file system states |
+
+---
+
+## Keyword: status-communication
+
+| Lesson | Severity | Summary |
+|--------|----------|---------|
+| [prompting/env-file-status-reporting.md](prompting/env-file-status-reporting.md) | High | Status updates must include context about expected behavior |
 
 ---
 
