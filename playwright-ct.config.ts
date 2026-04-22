@@ -3,7 +3,7 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './tests',
   testIgnore: ['**/jest/**', '**/e2e/**'],
-  
+
   // Component testing setup
   use: {
     trace: 'on',
@@ -13,24 +13,37 @@ export default defineConfig({
     {
       name: 'component-chromium',
       use: { ...devices['Desktop Chrome'] },
-      testMatch: '**/component/**/*.spec.ts',
+      testMatch: '**/component/**/*.spec.tsx',
     },
     {
-      name: 'component-firefox', 
+      name: 'component-firefox',
       use: { ...devices['Desktop Firefox'] },
-      testMatch: '**/component/**/*.spec.ts',
+      testMatch: '**/component/**/*.spec.tsx',
     },
     {
       name: 'component-webkit',
       use: { ...devices['Desktop Safari'] },
-      testMatch: '**/component/**/*.spec.ts',
+      testMatch: '**/component/**/*.spec.tsx',
     },
   ],
 
   webServer: {
-    command: 'npm run dev:test',
-    port: 3001,
+    command: 'npm run dev',
+    port: 3000,
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,
+  },
+
+  // Next.js module resolution and setup
+  moduleResolution: 'node',
+  setupFiles: ['./tests/component/setup.ts'],
+
+  // Module aliases for Next.js
+  resolve: {
+    alias: {
+      'next/link': 'next/link.js',
+      'next/image': 'next/image.js',
+      'next/navigation': 'next/navigation.js',
+    },
   },
 });

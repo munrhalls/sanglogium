@@ -19,7 +19,6 @@ export default defineConfig(({ mode }) => {
       environment: "jsdom",
       env: {
         ...env,
-        ...loadEnv("test", process.cwd(), ""),
       },
       setupFiles: ['./vitest.setup.ts'],
       exclude: [
