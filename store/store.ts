@@ -2,15 +2,22 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { BasketItem } from "@/app/(store)/basket/basket.types";
 
+interface PersistedBasketItem {
+  _id: string;
+  quantity: number;
+  stock: number;
+}
+
 interface BasketState {
   basket: BasketItem[];
   _hasHydrated: boolean;
-  addItem: (item: BasketItem) => void;
+  addItem: (item: PersistedBasketItem) => void;
   removeItem: (_id: string) => void;
   updateQuantity: (_id: string, quantity: number) => void;
   updateItemPrice: (_id: string, price: number) => void;
   updateItemQuantity: (_id: string, quantity: number) => void;
   clearBasket: () => void;
+  setBasket: (basket: BasketItem[]) => void;
 }
 
 export const selectBasketTotal = (state: BasketState) =>
@@ -35,46 +42,22 @@ export const useBasketStore = create<BasketState>()(
       basket: [],
       _hasHydrated: false,
       addItem: (item) => {
-        // TODO: Remove console log - temporary for manual verification
-        console.log('Basket store addItem called with:', item);
-        if (
-          !item ||
-          typeof item !== "object" ||
-          !item._id ||
-          !item.name ||
-          typeof item.displayPrice !== "number" ||
-          typeof item.stock !== "number" ||
-          !item.image ||
-          !item.slug
-        ) {
-          console.log('Item validation failed, returning');
+        if (!item || !item._id || typeof item.quantity !== "number") {
           return;
         }
         const basket = get().basket;
         const existing = basket.find((i) => i._id === item._id);
         if (existing) {
-          // Update stock from caller data
-          const updatedStock = item.stock;
-          // Increment by requested quantity, clamped to stock
-          const newQuantity = Math.min(
-            existing.quantity + item.quantity,
-            updatedStock
-          );
+          const newQuantity = existing.quantity + item.quantity;
           set({
             basket: basket.map((i) =>
-              i._id === item._id
-                ? { ...i, quantity: newQuantity, stock: updatedStock }
-                : i
+              i._id === item._id ? { ...i, quantity: newQuantity } : i
             ),
           });
         } else {
-          // New item: use requested quantity clamped to stock
-          const initialQuantity = Math.min(item.quantity, item.stock);
-          if (initialQuantity > 0) {
-            set({
-              basket: [...basket, { ...item, quantity: initialQuantity }],
-            });
-          }
+          set({
+            basket: [...basket, { ...item, quantity: item.quantity }],
+          });
         }
       },
       removeItem: (_id) => {
@@ -119,11 +102,12 @@ export const useBasketStore = create<BasketState>()(
         });
       },
       clearBasket: () => set({ basket: [] }),
+      setBasket: (basket) => set({ basket }),
     }),
     {
       name: "basket-storage",
-      version: 1,
-      migrate: (persistedState: unknown) => {
+      version: 2,
+      migrate: (persistedState: unknown, version: number) => {
         if (!persistedState || typeof persistedState !== "object") {
           return { basket: [], _hasHydrated: false };
         }
@@ -131,41 +115,41 @@ export const useBasketStore = create<BasketState>()(
         if (!state.basket || !Array.isArray(state.basket)) {
           return { basket: [], _hasHydrated: false };
         }
-        // Migrate old items: price -> displayPrice, add slug fallback
-        const migratedBasket = state.basket.map((item: unknown) => {
+        // Version 2: Only persist _id and quantity
+        if (version === 0) {
+          // Migrate from version 0 (full data) to version 1 (displayPrice)
+          const migratedBasket = state.basket.map((item: unknown) => {
+            if (!item || typeof item !== "object") return null;
+            const i = item as Record<string, unknown>;
+            return {
+              _id: String(i._id || ""),
+              name: String(i.name || ""),
+              displayPrice: typeof i.displayPrice === "number" ? i.displayPrice : typeof i.price === "number" ? i.price : 0,
+              stock: typeof i.stock === "number" ? i.stock : 0,
+              quantity: typeof i.quantity === "number" ? i.quantity : 1,
+              image: String(i.image || ""),
+              slug: String(i.slug || i._id || ""),
+            };
+          }).filter((item): item is BasketItem => item !== null && item._id !== "");
+          return { basket: migratedBasket, _hasHydrated: false };
+        }
+        // Version 1 to 2: Strip down to _id and quantity only
+        const minimalBasket = state.basket.map((item: unknown) => {
           if (!item || typeof item !== "object") return null;
           const i = item as Record<string, unknown>;
           return {
             _id: String(i._id || ""),
-            name: String(i.name || ""),
-            displayPrice: typeof i.displayPrice === "number" ? i.displayPrice : typeof i.price === "number" ? i.price : 0,
-            stock: typeof i.stock === "number" ? i.stock : 0,
             quantity: typeof i.quantity === "number" ? i.quantity : 1,
-            image: String(i.image || ""),
-            slug: String(i.slug || i._id || ""),
           };
-        }).filter((item): item is BasketItem => item !== null && item._id !== "");
-        return { basket: migratedBasket, _hasHydrated: false };
+        }).filter((item): item is PersistedBasketItem => item !== null && item._id !== "");
+        return { basket: minimalBasket, _hasHydrated: false };
       },
-      partialize: (state) => ({ basket: state.basket }),
+      partialize: (state) => ({
+        basket: state.basket.map((item) => ({ _id: item._id, quantity: item.quantity })),
+      }),
       onRehydrateStorage: () => {
         return (state) => {
           if (state) {
-            // Validate rehydrated items
-            const validBasket = state.basket.filter((item) => {
-              return (
-                item &&
-                typeof item._id === "string" &&
-                item._id !== "" &&
-                typeof item.name === "string" &&
-                typeof item.displayPrice === "number" &&
-                typeof item.image === "string" &&
-                item.image !== "" &&
-                typeof item.slug === "string" &&
-                item.slug !== ""
-              );
-            });
-            state.basket = validBasket;
             state._hasHydrated = true;
           }
         };
