@@ -9,38 +9,44 @@
 import { describe, it, expect, beforeAll, beforeEach } from 'vitest'
 import { fetch } from 'undici'
 import type { BasketReservation, BasketReservationResponse } from '@/lib/queue/types'
-import { TEST_PRODUCTS, resetProductStock } from '@/tests/helpers/test-data'
+import { getTestProducts, resetProductStock } from '@/tests/helpers/test-data'
 import { createClient } from 'next-sanity'
-import { apiVersion, projectId } from '@/sanity/env'
+import { apiVersion, projectId, dataset } from '@/sanity/env'
 
 const BASE = process.env.QUEUE_TEST_BASE_URL || 'http://localhost:3000'
 
 // Read client for querying test dataset
 const client = createClient({
   projectId,
-  dataset: "test",
+  dataset,
   apiVersion,
   useCdn: false,
 })
 
 describe('Checkout button click -> Checkout queue — atomic CMS operation - basket reservation flow', () => {
+  let testProducts: Awaited<ReturnType<typeof getTestProducts>>
+
   beforeAll(async () => {
     // Check if queue is active and available for tests
     const res = await fetch(`${BASE}/api/checkout-queue`, { method: 'OPTIONS' }).catch(() => null)
     if (!res) throw new Error(`Dev server not running at ${BASE}. Run 'npm run dev' first.`)
+
+    // Fetch products from test dataset
+    testProducts = await getTestProducts()
+    if (testProducts.length < 2) throw new Error('Test dataset must have at least 2 products')
   })
 
   beforeEach(async () => {
     await fetch(`${BASE}/api/checkout-queue/clear-trace`, { method: 'POST' })
-    await resetProductStock(TEST_PRODUCTS[0]._id, TEST_PRODUCTS[0].stock)
-    await resetProductStock(TEST_PRODUCTS[1]._id, TEST_PRODUCTS[1].stock)
+    await resetProductStock(testProducts[0]._id, testProducts[0].stock)
+    await resetProductStock(testProducts[1]._id, testProducts[1].stock)
   })
 
   it('queues request → creates reservation doc in Sanity → returns BasketReservationResponse', async () => {
     const request: BasketReservation = {
       basketReservation: [
-        { _id: TEST_PRODUCTS[0]._id, quantity: 1, stripePriceId: TEST_PRODUCTS[0].stripePriceId, displayPrice: TEST_PRODUCTS[0].displayPrice },
-        { _id: TEST_PRODUCTS[1]._id, quantity: 2, stripePriceId: TEST_PRODUCTS[1].stripePriceId, displayPrice: TEST_PRODUCTS[1].displayPrice },
+        { _id: testProducts[0]._id, quantity: 1, stripePriceId: testProducts[0].stripePriceId, displayPrice: testProducts[0].displayPrice },
+        { _id: testProducts[1]._id, quantity: 2, stripePriceId: testProducts[1].stripePriceId, displayPrice: testProducts[1].displayPrice },
       ],
       createdAt: new Date().toISOString(),
     }
@@ -81,8 +87,8 @@ describe('Checkout button click -> Checkout queue — atomic CMS operation - bas
   it('increments reservedStock on each product by the requested quantity', async () => {
     const request: BasketReservation = {
       basketReservation: [
-        { _id: TEST_PRODUCTS[0]._id, quantity: 1, stripePriceId: TEST_PRODUCTS[0].stripePriceId, displayPrice: TEST_PRODUCTS[0].displayPrice },
-        { _id: TEST_PRODUCTS[1]._id, quantity: 2, stripePriceId: TEST_PRODUCTS[1].stripePriceId, displayPrice: TEST_PRODUCTS[1].displayPrice },
+        { _id: testProducts[0]._id, quantity: 1, stripePriceId: testProducts[0].stripePriceId, displayPrice: testProducts[0].displayPrice },
+        { _id: testProducts[1]._id, quantity: 2, stripePriceId: testProducts[1].stripePriceId, displayPrice: testProducts[1].displayPrice },
       ],
       createdAt: new Date().toISOString(),
     }
@@ -96,19 +102,19 @@ describe('Checkout button click -> Checkout queue — atomic CMS operation - bas
     await response.json()
 
     const p1 = await client.fetch(`*[_id == $id][0]{ reservedStock }`, {
-      id: TEST_PRODUCTS[0]._id,
+      id: testProducts[0]._id,
     })
     const p2 = await client.fetch(`*[_id == $id][0]{ reservedStock }`, {
-      id: TEST_PRODUCTS[1]._id,
+      id: testProducts[1]._id,
     })
-    expect(p1.reservedStock).toBe(TEST_PRODUCTS[0].reservedStock + 1)
-    expect(p2.reservedStock).toBe(TEST_PRODUCTS[1].reservedStock + 2)
+    expect(p1.reservedStock).toBe(testProducts[0].reservedStock + 1)
+    expect(p2.reservedStock).toBe(testProducts[1].reservedStock + 2)
   }, 60_000)
 
   it('response product snapshot matches the freshly-updated Sanity product doc', async () => {
     const request: BasketReservation = {
       basketReservation: [
-        { _id: TEST_PRODUCTS[0]._id, quantity: 1, stripePriceId: TEST_PRODUCTS[0].stripePriceId, displayPrice: TEST_PRODUCTS[0].displayPrice },
+        { _id: testProducts[0]._id, quantity: 1, stripePriceId: testProducts[0].stripePriceId, displayPrice: testProducts[0].displayPrice },
       ],
       createdAt: new Date().toISOString(),
     }
@@ -122,9 +128,9 @@ describe('Checkout button click -> Checkout queue — atomic CMS operation - bas
 
     const cms = await client.fetch(
       `*[_id == $id][0]{ stock, reservedStock, displayPrice }`,
-      { id: TEST_PRODUCTS[0]._id }
+      { id: testProducts[0]._id }
     )
-    const respProd = data.products.find((p) => p.id === TEST_PRODUCTS[0]._id)
+    const respProd = data.products.find((p) => p.id === testProducts[0]._id)
 
     expect(respProd).toBeDefined()
     expect(respProd?.stock).toBe(cms.stock)

@@ -7,7 +7,7 @@
 import { describe, it, expect, beforeAll, beforeEach } from 'vitest'
 import { fetch } from 'undici'
 import type { BasketReservation, BasketReservationResponse } from '@/lib/queue/types'
-import { TEST_PRODUCTS, resetProductStock } from '@/tests/helpers/test-data'
+import { getTestProducts, resetProductStock } from '@/tests/helpers/test-data'
 
 const BASE = process.env.QUEUE_TEST_BASE_URL || 'http://localhost:3000'
 
@@ -28,21 +28,26 @@ async function clearState() {
 }
 
 describe('Checkout queue — sequential FIFO processing', () => {
+  let testProducts: Awaited<ReturnType<typeof getTestProducts>>
+
   beforeAll(async () => {
     const res = await fetch(`${BASE}/api/checkout-queue`, { method: 'OPTIONS' }).catch(() => null)
     if (!res) throw new Error(`Dev server not running at ${BASE}. Run 'npm run dev' first.`)
+
+    testProducts = await getTestProducts()
+    if (testProducts.length < 2) throw new Error('Test dataset must have at least 2 products')
   })
 
   beforeEach(async () => {
     await clearState()
-    await resetProductStock(TEST_PRODUCTS[0]._id, TEST_PRODUCTS[0].stock)
-    await resetProductStock(TEST_PRODUCTS[1]._id, TEST_PRODUCTS[1].stock)
+    await resetProductStock(testProducts[0]._id, testProducts[0].stock)
+    await resetProductStock(testProducts[1]._id, testProducts[1].stock)
   })
 
   it('processes 9 concurrent requests one at a time (no interleaving)', async () => {
     const createdAt = new Date().toISOString()
     const payloads: BasketReservation[] = Array.from({ length: 9 }, (_, i) => {
-      const product = TEST_PRODUCTS[i % TEST_PRODUCTS.length]
+      const product = testProducts[i % testProducts.length]
       return {
         basketReservation: [{ _id: product._id, quantity: 1, stripePriceId: product.stripePriceId, displayPrice: product.displayPrice }],
         createdAt,
