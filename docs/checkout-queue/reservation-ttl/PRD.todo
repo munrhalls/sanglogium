@@ -2,9 +2,9 @@
 
 ## Definition of Done - happy path
 
-✔ [ ] API response includes TTL field (15 minutes) given reservation request @done(26-04-21 19:57)
-✔ [ ] Sanity basketReservation doc includes expiresAt timestamp given reservation creation @done(26-04-21 20:04)
-✔ [ ] Background cleanup releases reservedStock back to available stock given expired reservation @done(26-04-21 20:36)
-✔ [ ] Expired basketReservation doc deleted from Sanity given expired reservation @done(26-04-21 20:36)
-[ ] Redis queue items have TTL set given queue enqueue
+✔ [ ] API response includes TTL field (15 minutes) given reservation request @done(2026-04-22)
+✔ [ ] Sanity basketReservation doc includes expiresAt timestamp given reservation creation @done(2026-04-22)
+✔ [ ] Redis queue item has TTL set given queue enqueue
+✔ [x] Background cleanup releases reservedStock back to available stock given expired reservation @done(2026-04-22)
+✔ [x] Expired basketReservation doc deleted from Sanity given expired reservation @done(2026-04-22)
 ✔ [ ] All tests use only real API calls and queries, no mocking or implementation logic @done(26-04-21 20:36)
