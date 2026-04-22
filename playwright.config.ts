@@ -1,11 +1,4 @@
 import { defineConfig, devices } from "@playwright/test";
-import dotenv from "dotenv";
-import { fileURLToPath } from "url";
-import path from "path";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-dotenv.config({ path: ".env.local" });
 
 export default defineConfig({
   testDir: "./tests",
