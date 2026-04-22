@@ -28,7 +28,7 @@
 import { test, expect } from '@playwright/test'
 import { createClient } from 'next-sanity'
 import { apiVersion, dataset, projectId } from '@/sanity/env'
-import { TEST_PRODUCTS, resetProductStock } from '@/tests/helpers/test-data'
+import { getTestProducts, resetProductStock } from '@/tests/helpers/test-data'
 import { testAddresses } from '@/tests/checkout/test-data/test-addresses'
 
 const readClient = createClient({
@@ -53,18 +53,24 @@ const writeClient = createClient({
 
 test.describe('Checkout address flow (E2E)', () => {
   let reservationId: string
+  let testProducts: Awaited<ReturnType<typeof getTestProducts>>
+
+  test.beforeAll(async () => {
+    testProducts = await getTestProducts()
+    if (testProducts.length < 1) throw new Error('Test dataset must have at least 1 product')
+  })
 
   test.beforeEach(async () => {
-    await resetProductStock(TEST_PRODUCTS[0]._id, TEST_PRODUCTS[0].stock)
+    await resetProductStock(testProducts[0]._id, testProducts[0].stock)
 
     // Step 1: Create reservation document
     const reservation = await writeClient.create({
       _type: 'basketReservation',
       basketReservation: [
         {
-          _id: TEST_PRODUCTS[0]._id,
+          _id: testProducts[0]._id,
           quantity: 1,
-          verifiedPrice: TEST_PRODUCTS[0].displayPrice,
+          verifiedPrice: testProducts[0].displayPrice,
         },
       ],
       createdAt: new Date().toISOString(),
@@ -112,7 +118,7 @@ test.describe('Checkout address flow (E2E)', () => {
     } catch {
       /* already gone */
     }
-    await resetProductStock(TEST_PRODUCTS[0]._id, TEST_PRODUCTS[0].stock)
+    await resetProductStock(testProducts[0]._id, testProducts[0].stock)
   })
 
   test('submits a valid address, Google validates it, Sanity doc receives shippingAddress', async ({
