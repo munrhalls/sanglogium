@@ -3,7 +3,7 @@
 
 import { describe, it, expect, beforeAll } from 'vitest'
 import { fetch } from 'undici'
-import { getTestProducts } from '@/tests/helpers/test-data'
+import { getTestProducts } from '@/tests/helpers/sanity-test-products'
 import { createClient } from 'next-sanity'
 import { apiVersion, projectId, dataset } from '@/sanity/env'
 

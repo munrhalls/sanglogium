@@ -1,6 +1,6 @@
 // Setup test: Verify test dataset and product fetching
 import { describe, it, expect } from 'vitest'
-import { getTestProducts } from '@/tests/helpers/test-data'
+import { getTestProducts } from '@/tests/helpers/sanity-test-products'
 
 describe('Test setup verification', () => {
   it('fetches products from test dataset', async () => {

@@ -3,7 +3,7 @@
 
 import { describe, it, expect, beforeAll, beforeEach } from 'vitest'
 import { releaseReservedStock } from '@/lib/queue/cleanup'
-import { getTestProducts, resetProductStock } from '@/tests/helpers/test-data'
+import { getTestProducts, resetProductStock } from '@/tests/helpers/sanity-test-products'
 import { getBackendClient } from '@/sanity/lib/backendClient'
 
 describe('releaseReservedStock Integration', () => {

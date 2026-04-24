@@ -2,7 +2,7 @@
 import { test, expect } from '@playwright/test'
 import { createClient } from 'next-sanity'
 import { apiVersion, projectId } from '@/sanity/env'
-import { resetProductStock, getTestProducts } from '@/tests/helpers/test-data'
+import { resetProductStock, getTestProducts } from '@/tests/helpers/sanity-test-products'
 
 const client = createClient({
   projectId,

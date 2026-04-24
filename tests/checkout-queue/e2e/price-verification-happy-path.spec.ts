@@ -1,6 +1,6 @@
 // npx playwright test tests/checkout-queue/e2e/price-verification-happy-path.spec.ts --headed --project=desktop-chromium
 import { test, expect } from '@playwright/test'
-import { resetProductStock, getTestProducts } from '@/tests/helpers/test-data'
+import { resetProductStock, getTestProducts } from '@/tests/helpers/sanity-test-products'
 
 test.describe('Price Verification Happy Path', () => {
   test.beforeEach(async () => {

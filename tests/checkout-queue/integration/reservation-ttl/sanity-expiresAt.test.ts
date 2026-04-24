@@ -4,7 +4,7 @@
 import { describe, it, expect, beforeAll, beforeEach } from 'vitest'
 import { fetch } from 'undici'
 import type { BasketReservation } from '@/lib/queue/types'
-import { getTestProducts, resetProductStock } from '@/tests/helpers/test-data'
+import { getTestProducts, resetProductStock } from '@/tests/helpers/sanity-test-products'
 import { createClient } from 'next-sanity'
 import { apiVersion, projectId, dataset } from '@/sanity/env'
 

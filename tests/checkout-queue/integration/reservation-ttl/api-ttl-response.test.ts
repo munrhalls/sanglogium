@@ -4,7 +4,7 @@
 import { describe, it, expect, beforeAll, beforeEach } from 'vitest'
 import { fetch } from 'undici'
 import type { BasketReservation } from '@/lib/queue/types'
-import { getTestProducts, resetProductStock } from '@/tests/helpers/test-data'
+import { getTestProducts, resetProductStock } from '@/tests/helpers/sanity-test-products'
 
 const BASE = process.env.QUEUE_TEST_BASE_URL || 'http://localhost:3000'
 
