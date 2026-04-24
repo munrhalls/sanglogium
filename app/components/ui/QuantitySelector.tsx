@@ -50,6 +50,7 @@ export function QuantitySelector({
         onClick={onIncrement}
         disabled={!canIncrement}
         aria-disabled={!canIncrement}
+        data-testid="increment"
         className={`btn-secondary ${btnSize} flex items-center justify-center disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500`}
         aria-label="Increase quantity"
       >

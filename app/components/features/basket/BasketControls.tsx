@@ -69,6 +69,7 @@ const BasketControls = function BasketControls({
         disabled={disabled}
         aria-disabled={disabled}
         aria-label={`Remove ${product.name} from basket`}
+        data-testid="remove-from-basket"
         className={`w-8 h-8 flex items-center justify-center rounded-sm text-secondary-500 transition-colors duration-200 hover:text-error-500 hover:bg-error-500/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500 ${
           disabled ? 'pointer-events-none opacity-50' : ''
         }`}
