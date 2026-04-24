@@ -1,5 +1,3 @@
-# Scope: checkout button click on basket page -> checkout-queue -> atomic save basket reservation to CMS -> CMS response to queue -> queue pop 1, pass response -> ui receive response, save basket reservation id to session.
-
 ## Definition of Done - happy path
 
 ✔ [ ] API endpoint `/api/checkout-queue` accepts valid BasketReservation requests and queues them for processing @done(26-04-21 17:24)

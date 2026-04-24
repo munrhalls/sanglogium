@@ -1,5 +1,3 @@
-# Scope: basket checkout button → address page (Google API verification) → shipping page (Shippo API options) → payment page (Stripe Elements) → order creation (stock update from reservedStock) → reservation cleanup → success page
-
 ## Definition of Done - happy path
 
 ☐ [ ] Address page validates user input, calls Google API for address verification, saves verified address to basket reservation address update request, makes request to sanity cms utilizing basket reservation id from session storage, on success response (basket reservation address update) redirects to shipping page
