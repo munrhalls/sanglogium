@@ -18,11 +18,11 @@
 
 | Need to... | Command |
 |------------|---------|
-| Implement feature | Type `/implement` in chat |
+| Generate PRD | Type `/prd` in chat |
 | Debug issue | Type `/debug` in chat |
-| Sprint planning | Type `/sprint` in chat |
 | Audit codebase | Type `/audit` in chat |
-| Learn from work | Type `/learn` in chat |
+| Get feature tree | Type `/get-tree` in chat |
+| Prevent rabbit holes | Type `/rabbit-hole-check` in chat |
 
 ---
 
@@ -57,6 +57,23 @@ See **AGENTS.md** for:
 
 ---
 
-**Last Updated:** 2026-04-18
+## Rabbit Hole Prevention
+
+**MANDATORY Pre-Flight Check (before ANY work):**
+
+Answer these 3 questions. If ANY answer is NO, STOP and clarify/simplify:
+
+1. **Is this SIMPLE?** (Can be explained in <5 minutes, minimal steps, no unnecessary complexity)
+2. **Is this CLEAR?** (Exact start/end states, no ambiguity, verifiable outcomes)
+3. **Does this start from VERIFIED GROUND?** (Previous step confirmed working, no assumptions)
+
+**Rabbit Hole Definition:**
+Work that is NOT simple, NOT clear, or violates Cover & Move (starting from unverified ground or building in unclear order).
+
+**Trigger:** Type `/rabbit-hole-check` before starting any work.
+
+---
+
+**Last Updated:** 2026-04-23
 **Full Documentation:** @AGENTS.md
 **Learn more:** `_project/lessons/patterns/cover-and-move-testing-protocol.md`

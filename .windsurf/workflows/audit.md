@@ -5,7 +5,7 @@ description: Output feature audit with end-state delineation, spatial architectu
 # /audit [FEATURE_NAME]
 
 **Input:** Human describes feature to audit and target state (e.g., "post-homepage products discovery UI")
-**Output:** `_project/sprints/01_audit_[FEATURE_NAME].md` — structured for `/sprint` command consumption
+**Output:** `_project/sprints/01_audit_[FEATURE_NAME].md` — structured audit with gap analysis
 
 ## Execution Steps
 

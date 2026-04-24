@@ -1,2 +1,2 @@
-1 execute
-2 if complications, stop and ask
+1 execute, simplest possible
+2 if anything starts complicating, stop and ask
