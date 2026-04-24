@@ -1,1 +1,0 @@
-[] research sprint - maximizing AI leverage
