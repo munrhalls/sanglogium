@@ -3,7 +3,7 @@
 // Server component that uses test products from Sanity test dataset
 // and passes them to client component for interactive testing.
 
-import { TEST_PRODUCTS } from '@/tests/helpers/test-data'
+import { TEST_PRODUCTS } from '@/tests/helpers/sanity-test-products'
 import CheckoutQueueTestClient from './CheckoutQueueTestClient'
 
 export default function CheckoutQueueE2ETestPage() {
