@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 /**
  * Dependency Risk Mapping Script
- * 
+ *
  * Purpose: Identify cross-component dependencies and regression risks
  * Output: Risk assessment tables for sprint pre-flight checks
- * 
+ *
  * STRICT CONSTRAINTS:
  * - Read-only analysis of imports and file relationships
  * - Generates "Files at Risk" tables for sprint specs
@@ -24,12 +24,12 @@ const ROOT = path.resolve(__dirname, '../../..');
 const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 const MODEL = 'meta-llama/llama-3.3-70b-instruct:free';
 const DATE = new Date().toISOString().split('T')[0];
-const OUTPUT_DIR = path.join(ROOT, '_project', 'research', 'nightly', DATE);
+const OUTPUT_DIR = path.join(ROOT, '../_archived_sanglogium', 'research', 'nightly', DATE);
 
 // High-risk shared components (from acceleration audit)
 const CRITICAL_FILES = [
   'ProductCard.tsx',
-  'ProductGrid.tsx', 
+  'ProductGrid.tsx',
   'tailwind.config.ts',
   'globals.css',
   'getProductsByVfsKeys.ts',
@@ -45,26 +45,26 @@ async function buildDependencyGraph() {
     sharedFiles: [],
     riskLevels: {}
   };
-  
+
   // Find all component files
   const componentDirs = [
     path.join(ROOT, 'app', 'components'),
     path.join(ROOT, 'app', '(store)')
   ];
-  
+
   for (const dir of componentDirs) {
     const files = await findFiles(dir, ['.tsx', '.ts']);
-    
+
     for (const file of files) {
       const relativePath = path.relative(ROOT, file);
       const content = await fs.readFile(file, 'utf-8');
-      
+
       // Extract imports
       const imports = extractImports(content);
-      
+
       // Find where this file is used (reverse dependencies)
       const usedBy = [];
-      
+
       graph.components[relativePath] = {
         imports,
         usedBy,
@@ -72,7 +72,7 @@ async function buildDependencyGraph() {
       };
     }
   }
-  
+
   // Calculate reverse dependencies
   for (const [file, data] of Object.entries(graph.components)) {
     for (const importedFile of data.imports) {
@@ -81,11 +81,11 @@ async function buildDependencyGraph() {
       }
     }
   }
-  
+
   // Calculate risk levels
   for (const [file, data] of Object.entries(graph.components)) {
     const usageCount = data.usedBy.length;
-    
+
     if (usageCount >= 3) {
       data.riskLevel = 'Critical';
       graph.sharedFiles.push({ file, usageCount, reason: 'Used in 3+ locations' });
@@ -97,25 +97,25 @@ async function buildDependencyGraph() {
       graph.sharedFiles.push({ file, usageCount: data.usedBy.length, reason: 'Known critical file' });
     }
   }
-  
+
   return graph;
 }
 
 function extractImports(content) {
   const imports = [];
-  
+
   // ES6 imports
   const es6Matches = content.matchAll(/import\s+.*?\s+from\s+['"]([^'"]+)['"];?/g);
   for (const match of es6Matches) {
     imports.push(resolveImportPath(match[1]));
   }
-  
+
   // Dynamic imports
   const dynamicMatches = content.matchAll(/import\(['"]([^'"]+)['"]\)/g);
   for (const match of dynamicMatches) {
     imports.push(resolveImportPath(match[1]));
   }
-  
+
   return [...new Set(imports)].filter(Boolean);
 }
 
@@ -124,12 +124,12 @@ function resolveImportPath(importPath) {
   if (importPath.startsWith('@/')) {
     return importPath.replace('@/', '');
   }
-  
+
   // Skip node_modules
   if (!importPath.startsWith('.') && !importPath.startsWith('@/')) {
     return null;
   }
-  
+
   return importPath;
 }
 
@@ -138,7 +138,7 @@ function resolveImportPath(importPath) {
 // ─────────────────────────────────────────────────────────────────
 function analyzeRisks(graph) {
   const risks = [];
-  
+
   // Identify cross-page risks
   const pageContexts = {
     homepage: [],
@@ -147,10 +147,10 @@ function analyzeRisks(graph) {
     basket: [],
     shared: []
   };
-  
+
   for (const [file, data] of Object.entries(graph.components)) {
     const contexts = [];
-    
+
     if (file.includes('homepage') || file.includes('(store)/page.tsx')) {
       contexts.push('homepage');
     }
@@ -163,7 +163,7 @@ function analyzeRisks(graph) {
     if (file.includes('basket')) {
       contexts.push('basket');
     }
-    
+
     // Check usedBy contexts
     for (const usedByFile of data.usedBy) {
       if (usedByFile.includes('homepage')) contexts.push('homepage');
@@ -171,9 +171,9 @@ function analyzeRisks(graph) {
       if (usedByFile.includes('product/[')) contexts.push('pdp');
       if (usedByFile.includes('basket')) contexts.push('basket');
     }
-    
+
     const uniqueContexts = [...new Set(contexts)];
-    
+
     if (uniqueContexts.length > 1) {
       risks.push({
         file,
@@ -185,12 +185,12 @@ function analyzeRisks(graph) {
       });
     }
   }
-  
+
   // Identify data flow risks
-  const dataFiles = Object.keys(graph.components).filter(f => 
+  const dataFiles = Object.keys(graph.components).filter(f =>
     f.includes('sanity/lib') || f.includes('getProducts') || f.includes('vfs')
   );
-  
+
   for (const file of dataFiles) {
     const data = graph.components[file];
     if (data.usedBy.length > 1) {
@@ -203,7 +203,7 @@ function analyzeRisks(graph) {
       });
     }
   }
-  
+
   // Design system risks
   if (graph.components['tailwind.config.ts']) {
     risks.push({
@@ -214,7 +214,7 @@ function analyzeRisks(graph) {
       mitigation: 'READ-ONLY — never modify existing tokens'
     });
   }
-  
+
   return risks;
 }
 
@@ -223,11 +223,11 @@ function analyzeRisks(graph) {
 // ─────────────────────────────────────────────────────────────────
 async function callOpenRouter(prompt, maxRetries = 3) {
   const apiKey = process.env.OPENROUTER_API_KEY;
-  
+
   if (!apiKey) {
     throw new Error('OPENROUTER_API_KEY not set');
   }
-  
+
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
       const response = await fetch(OPENROUTER_API_URL, {
@@ -254,15 +254,15 @@ async function callOpenRouter(prompt, maxRetries = 3) {
           max_tokens: 2000
         })
       });
-      
+
       if (!response.ok) {
         const error = await response.text();
         throw new Error(`OpenRouter API error: ${response.status} ${error}`);
       }
-      
+
       const data = await response.json();
       return data.choices[0].message.content;
-      
+
     } catch (error) {
       if (attempt === maxRetries) throw error;
       await new Promise(r => setTimeout(r, 1000 * attempt));
@@ -278,10 +278,10 @@ async function aiAnalyzeRisks(risks, graph) {
       recommendations: []
     };
   }
-  
+
   const criticalCount = risks.filter(r => r.severity === 'Critical').length;
   const highCount = risks.filter(r => r.severity === 'High').length;
-  
+
   const prompt = `
 Analyze these dependency risks for sprint planning:
 
@@ -304,15 +304,15 @@ Output JSON with:
 
 Valid JSON only.
 `;
-  
+
   try {
     const aiResponse = await callOpenRouter(prompt);
     const jsonMatch = aiResponse.match(/\{[\s\S]*\}/);
-    
+
     if (jsonMatch) {
       return JSON.parse(jsonMatch[0]);
     }
-    
+
     return {
       status: (criticalCount > 0 || highCount > 0) ? '⚠️ Risk Detected' : '✅ Clean',
       summary: `Found ${criticalCount} critical, ${highCount} high risks`,
@@ -320,7 +320,7 @@ Valid JSON only.
       sprint_recommendations: risks.map(r => `Test ${r.file} in all contexts before sprint`),
       files_at_risk_table: generateRiskTable(risks)
     };
-    
+
   } catch (error) {
     return {
       status: '⚠️ Risk Detected',
@@ -334,7 +334,7 @@ Valid JSON only.
 
 function generateRiskTable(risks) {
   const criticalAndHigh = risks.filter(r => r.severity === 'Critical' || r.severity === 'High');
-  
+
   return `
 | File | Risk Level | Used In | Protection Strategy |
 |------|------------|---------|---------------------|
@@ -347,13 +347,13 @@ ${criticalAndHigh.slice(0, 10).map(r => `| ${r.file} | ${r.severity} | ${r.conte
 // ─────────────────────────────────────────────────────────────────
 function generateReport(graph, risks, aiAnalysis) {
   const sharedComponents = graph.sharedFiles.sort((a, b) => b.usageCount - a.usageCount);
-  
+
   return `# Dependency Risk Report — ${DATE}
 
-**Status:** ${aiAnalysis.status}  
-**Critical Risks:** ${risks.filter(r => r.severity === 'Critical').length}  
-**High Risks:** ${risks.filter(r => r.severity === 'High').length}  
-**Shared Components:** ${sharedComponents.length}  
+**Status:** ${aiAnalysis.status}
+**Critical Risks:** ${risks.filter(r => r.severity === 'Critical').length}
+**High Risks:** ${risks.filter(r => r.severity === 'High').length}
+**Shared Components:** ${sharedComponents.length}
 **Generated:** ${new Date().toISOString()}
 
 ## Summary
@@ -365,16 +365,16 @@ ${aiAnalysis.summary}
 ${aiAnalysis.top_risks ? aiAnalysis.top_risks.map((risk, i) => `
 ### ${i + 1}. ${risk.file}
 
-**Risk Type:** ${risk.type}  
-**Severity:** ${risk.severity}  
-**Used By:** ${risk.usedByCount} files  
-**Contexts:** ${risk.contexts?.join(', ') || 'N/A'}  
+**Risk Type:** ${risk.type}
+**Severity:** ${risk.severity}
+**Used By:** ${risk.usedByCount} files
+**Contexts:** ${risk.contexts?.join(', ') || 'N/A'}
 **Mitigation:** ${risk.mitigation}
 `).join('\n') : risks.slice(0, 3).map((risk, i) => `
 ### ${i + 1}. ${risk.file}
 
-**Risk Type:** ${risk.type}  
-**Severity:** ${risk.severity}  
+**Risk Type:** ${risk.type}
+**Severity:** ${risk.severity}
 **Mitigation:** ${risk.mitigation}
 `).join('\n')}
 
@@ -393,8 +393,8 @@ ${sharedComponents.map(c => `| ${c.file} | ${c.usageCount} | ${graph.components[
 ${risks.filter(r => r.type === 'Cross-Context').map(r => `
 ### ${r.file}
 
-**Appears in:** ${r.contexts.join(', ')}  
-**Change Impact:** ALL contexts must be tested  
+**Appears in:** ${r.contexts.join(', ')}
+**Change Impact:** ALL contexts must be tested
 **Sprint Impact:** High (affects multiple pages)
 `).join('\n') || 'No cross-context dependencies detected.'}
 
@@ -466,7 +466,7 @@ Based on _project/lessons/ analysis:
 
 ---
 
-*This report auto-generates "Files at Risk" tables for sprint specs.*  
+*This report auto-generates "Files at Risk" tables for sprint specs.*
 *Generated by Nightly Research Loop — Dependency Risk Analysis*
 `;
 }
@@ -476,14 +476,14 @@ Based on _project/lessons/ analysis:
 // ─────────────────────────────────────────────────────────────────
 async function findFiles(dir, extensions) {
   const files = [];
-  
+
   async function walk(currentDir) {
     try {
       const entries = await fs.readdir(currentDir, { withFileTypes: true });
-      
+
       for (const entry of entries) {
         const fullPath = path.join(currentDir, entry.name);
-        
+
         if (entry.isDirectory() && !entry.name.startsWith('.') && entry.name !== 'node_modules') {
           await walk(fullPath);
         } else if (entry.isFile() && extensions.some(ext => entry.name.endsWith(ext))) {
@@ -494,7 +494,7 @@ async function findFiles(dir, extensions) {
       // Directory might not exist
     }
   }
-  
+
   await walk(dir);
   return files;
 }
@@ -504,55 +504,55 @@ async function findFiles(dir, extensions) {
 // ─────────────────────────────────────────────────────────────────
 async function main() {
   console.log('🔍 Starting Dependency Risk Analysis...');
-  
+
   try {
     await fs.mkdir(OUTPUT_DIR, { recursive: true });
-    
+
     // Build dependency graph
     console.log('\n📋 Building dependency graph...');
     const graph = await buildDependencyGraph();
     console.log(`  ✓ Analyzed ${Object.keys(graph.components).length} components`);
     console.log(`  ✓ Found ${graph.sharedFiles.length} shared components`);
-    
+
     // Analyze risks
     console.log('\n📋 Analyzing risks...');
     const risks = analyzeRisks(graph);
     console.log(`  ✓ Found ${risks.length} risks`);
     console.log(`  ✓ Critical: ${risks.filter(r => r.severity === 'Critical').length}`);
     console.log(`  ✓ High: ${risks.filter(r => r.severity === 'High').length}`);
-    
+
     // AI analysis
     console.log('\n🤖 Running AI analysis...');
     const aiAnalysis = await aiAnalyzeRisks(risks, graph);
-    
+
     // Generate report
     console.log('📝 Generating report...');
     const report = generateReport(graph, risks, aiAnalysis);
-    
+
     // Write report
     const outputPath = path.join(OUTPUT_DIR, `DR-${DATE}.md`);
     await fs.writeFile(outputPath, report, 'utf-8');
-    
+
     console.log(`\n✅ Report saved: ${outputPath}`);
     console.log(`📊 Status: ${aiAnalysis.status}`);
     console.log(`🎯 Risks: ${risks.length} total`);
     console.log(`⚠️  Critical/High: ${risks.filter(r => r.severity === 'Critical' || r.severity === 'High').length}`);
-    
+
     // Exit code
     if (risks.some(r => r.severity === 'Critical')) {
       process.exit(1);  // Critical risks found
     } else {
       process.exit(0);  // Success
     }
-    
+
   } catch (error) {
     console.error('\n❌ Fatal error:', error);
-    
+
     try {
       await fs.mkdir(OUTPUT_DIR, { recursive: true });
       const errorReport = `# Dependency Risk Report — ${DATE}
 
-**Status:** ⚠️ Analysis Error  
+**Status:** ⚠️ Analysis Error
 **Error:** ${error.message}
 
 ## Manual Dependency Check
@@ -572,7 +572,7 @@ grep -r "from.*tailwind" app/ --include="*.tsx" | head -10
     } catch (writeError) {
       console.error('Failed to write error report:', writeError);
     }
-    
+
     process.exit(2);
   }
 }

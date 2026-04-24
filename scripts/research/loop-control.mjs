@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Loop Control CLI — Control Interface for Research Loop
- * 
+ *
  * Purpose: Send control signals to the continuous research loop
  * Commands: pause, resume, focus, status
  */
@@ -12,7 +12,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '../../..');
-const CONTROL_DIR = path.join(ROOT, '_project', 'research');
+const CONTROL_DIR = path.join(ROOT, '../_archived_sanglogium', 'research');
 
 const SIGNAL_FILES = {
   pause: path.join(CONTROL_DIR, '.pause'),
@@ -48,14 +48,14 @@ async function sendPauseSignal() {
 async function sendResumeSignal() {
   try {
     await fs.mkdir(CONTROL_DIR, { recursive: true });
-    
+
     // Remove pause signal if exists
     try {
       await fs.unlink(SIGNAL_FILES.pause);
     } catch {
       // File doesn't exist, ignore
     }
-    
+
     // Send resume signal
     await fs.writeFile(SIGNAL_FILES.resume, '', 'utf-8');
     console.log('▶️  Resume signal sent');
@@ -73,7 +73,7 @@ async function sendFocusSignal(dimension) {
     RESEARCH_DIMENSIONS.forEach(d => console.log(`  - ${d}`));
     process.exit(1);
   }
-  
+
   try {
     await fs.mkdir(CONTROL_DIR, { recursive: true });
     await fs.writeFile(SIGNAL_FILES.focus, dimension, 'utf-8');
@@ -102,14 +102,14 @@ async function getStatus() {
       focused: false,
       focusDimension: null
     };
-    
+
     try {
       await fs.access(SIGNAL_FILES.pause);
       status.paused = true;
     } catch {
       // Not paused
     }
-    
+
     try {
       const focusContent = await fs.readFile(SIGNAL_FILES.focus, 'utf-8');
       status.focused = true;
@@ -117,15 +117,15 @@ async function getStatus() {
     } catch {
       // No focus
     }
-    
+
     console.log('📊 Research Loop Status\n');
     console.log(`Paused: ${status.paused ? '⏸️  Yes' : '▶️  No'}`);
     console.log(`Focused: ${status.focused ? `🎯 ${status.focusDimension}` : '❌ No'}`);
-    
+
     if (!status.paused && !status.focused) {
       console.log('\n✅ Loop is running normally');
     }
-    
+
   } catch (error) {
     console.error('❌ Failed to get status:', error);
     process.exit(1);
@@ -165,11 +165,11 @@ switch (command) {
   case 'pause':
     await sendPauseSignal();
     break;
-  
+
   case 'resume':
     await sendResumeSignal();
     break;
-  
+
   case 'focus':
     if (!arg) {
       console.error('❌ Missing dimension argument');
@@ -178,21 +178,21 @@ switch (command) {
     }
     await sendFocusSignal(arg);
     break;
-  
+
   case 'unfocus':
     await clearFocusSignal();
     break;
-  
+
   case 'status':
     await getStatus();
     break;
-  
+
   case 'help':
   case '--help':
   case '-h':
     showHelp();
     break;
-  
+
   default:
     console.error(`❌ Unknown command: ${command}`);
     showHelp();

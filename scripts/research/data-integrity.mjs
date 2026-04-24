@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 /**
  * Data Integrity Validation Script
- * 
+ *
  * Purpose: Automated analysis of VFS, Sanity schema, and data consistency
  * Output: Markdown report with status (Clean/Warning/Critical)
- * 
+ *
  * STRICT CONSTRAINTS:
  * - Read-only: Never modifies source files
  * - Analysis-only: Generates recommendations, not fixes
@@ -24,19 +24,19 @@ const ROOT = path.resolve(__dirname, '../../..');
 const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 const MODEL = 'meta-llama/llama-3.3-70b-instruct:free';  // Fallback: mistralai/mistral-small-3.1-24b-instruct:free
 const DATE = new Date().toISOString().split('T')[0];
-const OUTPUT_DIR = path.join(ROOT, '_project', 'research', 'nightly', DATE);
+const OUTPUT_DIR = path.join(ROOT, '../_archived_sanglogium', 'research', 'nightly', DATE);
 
 // ─────────────────────────────────────────────────────────────────
 // DATA INTEGRITY CHECKS
 // ─────────────────────────────────────────────────────────────────
 async function checkVFSIntegrity() {
   const issues = [];
-  
+
   try {
     // Check if catalogue-index.json exists and is valid JSON
     const catalogueIndexPath = path.join(ROOT, 'data', 'catalogue-index.json');
     const catalogueIndex = JSON.parse(await fs.readFile(catalogueIndexPath, 'utf-8'));
-    
+
     // Validate structure
     if (!catalogueIndex.tree) {
       issues.push({
@@ -47,7 +47,7 @@ async function checkVFSIntegrity() {
         lesson: 'Lesson 6: VFS data consistency'
       });
     }
-    
+
     if (!catalogueIndex.slotMetadataMap) {
       issues.push({
         severity: 'Critical',
@@ -57,22 +57,22 @@ async function checkVFSIntegrity() {
         lesson: 'Lesson 6: VFS data consistency'
       });
     }
-    
+
     // Check for slotMetadataMap completeness (Lesson 6 issue)
     if (catalogueIndex.tree && catalogueIndex.slotMetadataMap) {
       const treeIds = new Set();
-      
+
       // Collect all IDs from tree
       function collectIds(node) {
         if (node._id) treeIds.add(node._id);
         if (node.children) node.children.forEach(collectIds);
       }
       catalogueIndex.tree.forEach(collectIds);
-      
+
       // Check if all tree IDs exist in slotMetadataMap
       const metadataIds = new Set(Object.keys(catalogueIndex.slotMetadataMap));
       const missingIds = [...treeIds].filter(id => !metadataIds.has(id));
-      
+
       if (missingIds.length > 0) {
         issues.push({
           severity: 'Critical',
@@ -84,7 +84,7 @@ async function checkVFSIntegrity() {
         });
       }
     }
-    
+
     // Check slugToIdMap
     if (!catalogueIndex.slugToIdMap) {
       issues.push({
@@ -94,7 +94,7 @@ async function checkVFSIntegrity() {
         file: 'data/catalogue-index.json'
       });
     }
-    
+
   } catch (error) {
     if (error.code === 'ENOENT') {
       issues.push({
@@ -120,18 +120,18 @@ async function checkVFSIntegrity() {
       });
     }
   }
-  
+
   return issues;
 }
 
 async function checkProductSchema() {
   const issues = [];
-  
+
   try {
     // Read product schema
     const schemaPath = path.join(ROOT, 'sanity', 'schemaTypes', 'productType.ts');
     const schemaContent = await fs.readFile(schemaPath, 'utf-8');
-    
+
     // Check for required fields
     const requiredFields = ['name', 'brand', 'image', 'catalogueLocationKeys'];
     for (const field of requiredFields) {
@@ -144,7 +144,7 @@ async function checkProductSchema() {
         });
       }
     }
-    
+
     // Check brand field type (Lesson 7: reference vs string)
     const brandFieldMatch = schemaContent.match(/name:\s*["']brand["'][^}]+type:\s*["']([^"']+)["']/s);
     if (brandFieldMatch) {
@@ -166,7 +166,7 @@ async function checkProductSchema() {
         });
       }
     }
-    
+
   } catch (error) {
     issues.push({
       severity: 'Warning',
@@ -175,21 +175,21 @@ async function checkProductSchema() {
       file: 'sanity/schemaTypes/productType.ts'
     });
   }
-  
+
   return issues;
 }
 
 async function checkGROQQueries() {
   const issues = [];
-  
+
   try {
     // Find all files with GROQ queries
     const libDir = path.join(ROOT, 'sanity', 'lib');
     const files = await findFiles(libDir, '.ts');
-    
+
     for (const file of files) {
       const content = await fs.readFile(file, 'utf-8');
-      
+
       // Check for GROQ patterns
       if (content.includes('groq`') || content.includes('count(') || content.includes('==')) {
         // Check for brand->name pattern (Lesson 7 warning)
@@ -202,7 +202,7 @@ async function checkGROQQueries() {
             lesson: 'Lesson 7: Schema-query mismatch'
           });
         }
-        
+
         // Check for catalogueLocationKeys pattern
         if (content.includes('catalogueLocationKeys') && !content.includes('[@ in')) {
           issues.push({
@@ -214,7 +214,7 @@ async function checkGROQQueries() {
         }
       }
     }
-    
+
   } catch (error) {
     issues.push({
       severity: 'Warning',
@@ -222,7 +222,7 @@ async function checkGROQQueries() {
       message: `Error analyzing GROQ queries: ${error.message}`
     });
   }
-  
+
   return issues;
 }
 
@@ -231,11 +231,11 @@ async function checkGROQQueries() {
 // ─────────────────────────────────────────────────────────────────
 async function callOpenRouter(prompt, maxRetries = 3) {
   const apiKey = process.env.OPENROUTER_API_KEY;
-  
+
   if (!apiKey) {
     throw new Error('OPENROUTER_API_KEY not set');
   }
-  
+
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
       const response = await fetch(OPENROUTER_API_URL, {
@@ -262,15 +262,15 @@ async function callOpenRouter(prompt, maxRetries = 3) {
           max_tokens: 2000
         })
       });
-      
+
       if (!response.ok) {
         const error = await response.text();
         throw new Error(`OpenRouter API error: ${response.status} ${error}`);
       }
-      
+
       const data = await response.json();
       return data.choices[0].message.content;
-      
+
     } catch (error) {
       if (attempt === maxRetries) throw error;
       console.error(`Attempt ${attempt} failed, retrying...`);
@@ -287,10 +287,10 @@ async function aiAnalyzeIssues(issues) {
       recommendations: []
     };
   }
-  
+
   const criticalCount = issues.filter(i => i.severity === 'Critical').length;
   const warningCount = issues.filter(i => i.severity === 'Warning').length;
-  
+
   // Build prompt for AI
   const prompt = `
 Analyze the following data integrity issues for a Next.js e-commerce codebase:
@@ -317,16 +317,16 @@ TASK:
 
 Respond with ONLY valid JSON. No markdown, no explanation.
 `;
-  
+
   try {
     const aiResponse = await callOpenRouter(prompt);
-    
+
     // Try to extract JSON
     const jsonMatch = aiResponse.match(/\{[\s\S]*\}/);
     if (jsonMatch) {
       return JSON.parse(jsonMatch[0]);
     }
-    
+
     // Fallback: manual analysis
     return {
       status: criticalCount > 0 ? '❌ Critical' : warningCount > 0 ? '⚠️ Warning' : '✅ Clean',
@@ -335,7 +335,7 @@ Respond with ONLY valid JSON. No markdown, no explanation.
       top_issues: issues.slice(0, 3),
       recommendations: issues.map(i => `Fix ${i.type} issue in ${i.file}`)
     };
-    
+
   } catch (error) {
     console.error('AI analysis failed:', error);
     return {
@@ -354,9 +354,9 @@ Respond with ONLY valid JSON. No markdown, no explanation.
 function generateReport(issues, aiAnalysis) {
   const report = `# Data Integrity Report — ${DATE}
 
-**Status:** ${aiAnalysis.status}  
-**Sprint Impact:** ${aiAnalysis.sprint_impact || 'None detected'}  
-**Generated:** ${new Date().toISOString()}  
+**Status:** ${aiAnalysis.status}
+**Sprint Impact:** ${aiAnalysis.sprint_impact || 'None detected'}
+**Generated:** ${new Date().toISOString()}
 **Check:** Data Integrity (VFS, Schema, GROQ)
 
 ## Summary
@@ -372,14 +372,14 @@ ${aiAnalysis.sprint_impact && aiAnalysis.sprint_impact !== 'None immediately blo
 ${aiAnalysis.top_issues ? aiAnalysis.top_issues.map((issue, i) => `
 ### ${i + 1}. [${issue.severity}] ${issue.type}
 
-**Location:** \`${issue.file}\`  
-**Issue:** ${issue.message}  
+**Location:** \`${issue.file}\`
+**Issue:** ${issue.message}
 ${issue.details ? `**Details:** ${issue.details}  ` : ''}
 ${issue.lesson ? `**Lesson:** ${issue.lesson}  ` : ''}
 `).join('\n') : issues.slice(0, 3).map((issue, i) => `
 ### ${i + 1}. [${issue.severity}] ${issue.type}
 
-**Location:** \`${issue.file}\`  
+**Location:** \`${issue.file}\`
 **Issue:** ${issue.message}
 `).join('\n')}
 
@@ -408,7 +408,7 @@ ${issues.filter(i => i.lesson).map(i => `- ${i.lesson}`).filter((v, i, a) => a.i
 *This report was generated automatically by the Nightly Research Loop.*
 *For false positives or to adjust validation rules, see \`.github/workflows/nightly-research.yml\`*
 `;
-  
+
   return report;
 }
 
@@ -417,14 +417,14 @@ ${issues.filter(i => i.lesson).map(i => `- ${i.lesson}`).filter((v, i, a) => a.i
 // ─────────────────────────────────────────────────────────────────
 async function findFiles(dir, extension) {
   const files = [];
-  
+
   async function walk(currentDir) {
     try {
       const entries = await fs.readdir(currentDir, { withFileTypes: true });
-      
+
       for (const entry of entries) {
         const fullPath = path.join(currentDir, entry.name);
-        
+
         if (entry.isDirectory() && !entry.name.startsWith('.') && entry.name !== 'node_modules') {
           await walk(fullPath);
         } else if (entry.isFile() && entry.name.endsWith(extension)) {
@@ -435,7 +435,7 @@ async function findFiles(dir, extension) {
       // Directory might not exist, skip
     }
   }
-  
+
   await walk(dir);
   return files;
 }
@@ -447,59 +447,59 @@ async function main() {
   console.log('🔍 Starting Data Integrity Validation...');
   console.log(`📅 Date: ${DATE}`);
   console.log(`📁 Output: ${OUTPUT_DIR}`);
-  
+
   try {
     // Ensure output directory exists
     await fs.mkdir(OUTPUT_DIR, { recursive: true });
-    
+
     // Run all checks
     console.log('\n📋 Running checks...');
-    
+
     const vfsIssues = await checkVFSIntegrity();
     console.log(`  ✓ VFS Integrity: ${vfsIssues.length} issues`);
-    
+
     const schemaIssues = await checkProductSchema();
     console.log(`  ✓ Product Schema: ${schemaIssues.length} issues`);
-    
+
     const groqIssues = await checkGROQQueries();
     console.log(`  ✓ GROQ Queries: ${groqIssues.length} issues`);
-    
+
     // Combine all issues
     const allIssues = [...vfsIssues, ...schemaIssues, ...groqIssues];
-    
+
     // AI analysis
     console.log('\n🤖 Running AI analysis...');
     const aiAnalysis = await aiAnalyzeIssues(allIssues);
-    
+
     // Generate report
     console.log('📝 Generating report...');
     const report = generateReport(allIssues, aiAnalysis);
-    
+
     // Write report
     const outputPath = path.join(OUTPUT_DIR, `DI-${DATE}.md`);
     await fs.writeFile(outputPath, report, 'utf-8');
-    
+
     console.log(`\n✅ Report saved: ${outputPath}`);
     console.log(`📊 Status: ${aiAnalysis.status}`);
     console.log(`🎯 Issues: ${allIssues.length} total`);
-    
+
     // Exit with appropriate code
     if (allIssues.some(i => i.severity === 'Critical')) {
       process.exit(1);  // Critical issues found
     } else {
       process.exit(0);  // Success (warnings are acceptable)
     }
-    
+
   } catch (error) {
     console.error('\n❌ Fatal error:', error);
-    
+
     // Write error report
     try {
       await fs.mkdir(OUTPUT_DIR, { recursive: true });
       const errorReport = `# Data Integrity Report — ${DATE}
 
-**Status:** ⚠️ Analysis Error  
-**Error:** ${error.message}  
+**Status:** ⚠️ Analysis Error
+**Error:** ${error.message}
 **Stack:** ${error.stack}
 
 The validation script encountered an error. Please check:
@@ -521,7 +521,7 @@ npm run build
     } catch (writeError) {
       console.error('Failed to write error report:', writeError);
     }
-    
+
     process.exit(2);  // Script error
   }
 }

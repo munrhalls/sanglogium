@@ -33,7 +33,7 @@ const ROOT = path.resolve(__dirname, '../../..');
 const OLLAMA_URL = 'http://localhost:11434/api/generate';
 const MODEL = process.env.RESEARCH_MODEL || 'llama3.2:3b'; // phi3:mini for smaller
 const INTERVAL_MINUTES = parseInt(process.env.RESEARCH_INTERVAL) || 10;
-const OUTPUT_DIR = path.join(ROOT, '_project', 'research', 'continuous');
+const OUTPUT_DIR = path.join(ROOT, '../_archived_sanglogium', 'research', 'continuous');
 
 // Research dimensions for Sanglogium with effort/impact weights
 const RESEARCH_DIMENSIONS = [
@@ -248,7 +248,7 @@ async function validateHypothesis(hypothesis, observations) {
   const contradictions = [];
 
   try {
-    const lessonsIndex = await readFile('_project/lessons/INDEX.md');
+    const lessonsIndex = await readFile('../_archived_sanglogium/lessons/INDEX.md');
     const keywords = hypothesis.hypothesis.toLowerCase().split(' ');
 
     if (lessonsIndex.includes('NO GLOBALS') && hypothesis.hypothesis.includes('globals.css')) {
@@ -366,7 +366,7 @@ ${validation.contradictions.map(c => `- ${c}`).join('\n')}
 // ─────────────────────────────────────────────────────────────────
 // CONTROL INTERFACE
 // ─────────────────────────────────────────────────────────────────
-const CONTROL_DIR = path.join(ROOT, '_project', 'research');
+const CONTROL_DIR = path.join(ROOT, '../_archived_sanglogium', 'research');
 const SIGNAL_FILES = {
   pause: path.join(CONTROL_DIR, '.pause'),
   resume: path.join(CONTROL_DIR, '.resume'),
@@ -500,7 +500,7 @@ async function startDaemon() {
 ╠════════════════════════════════════════════════════════════╣
 ║  Model:        ${MODEL.padEnd(35)} ║
 ║  Interval:     ${String(INTERVAL_MINUTES + ' minutes').padEnd(35)} ║
-║  Output:       ${'_project/research/continuous/'.padEnd(35)} ║
+║  Output:       ${'../_archived_sanglogium/research/continuous/'.padEnd(35)} ║
 ║  Cost:         $0 (local Ollama)${' '.repeat(19)} ║
 ╚════════════════════════════════════════════════════════════╝
 `);
