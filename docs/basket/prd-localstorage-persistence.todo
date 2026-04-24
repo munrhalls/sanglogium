@@ -1,0 +1,22 @@
+## PRD: LocalStorage Persistence with TTL
+
+### What Is
+Basket store does not persist to localStorage, causing cart data loss on page refresh.
+
+### What Should Be
+Basket persists to localStorage with 30-day TTL to prevent ghost carts from stale data.
+
+### Definition of Done
+
+[ ] Add localStorage persistence to zustand store
+[ ] Add savedAt timestamp to state shape
+[ ] Add onRehydrateStorage with TTL check (1 day)
+[ ] Add _hasHydrated guard to useStore
+[ ] Unit test: persists only {productId, quantity, savedAt}
+[ ] Unit test: clears cart after 30 days
+
+### Verification
+
+```bash
+npm run test:unit
+```
