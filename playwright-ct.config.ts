@@ -1,8 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
-  testDir: './tests',
-  testIgnore: ['**/jest/**', '**/e2e/**'],
+  testDir: './tests/component',
 
   // Component testing setup
   use: {
