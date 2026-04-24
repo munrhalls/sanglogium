@@ -28,7 +28,7 @@
 import { test, expect } from '@playwright/test'
 import { createClient } from 'next-sanity'
 import { apiVersion, dataset, projectId } from '@/sanity/env'
-import { getTestProducts, resetProductStock } from '@/tests/helpers/test-data'
+import { getTestProducts, resetProductStock } from '@/tests/helpers/sanity-test-products'
 import { testAddresses } from '@/tests/checkout/test-data/test-addresses'
 
 const readClient = createClient({
