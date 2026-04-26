@@ -40,6 +40,12 @@
     "**/*.spec.ts",
     "**/*.spec.tsx",
     "**/*.test.ts",
-    "**/*.test.tsx"
+    "**/*.test.tsx",
+    "test-results",
+    "playwright-report",
+    "data",
+    ".sanity",
+    "dist",
+    "build"
   ]
 }
