@@ -1,0 +1,48 @@
+Definition of Done
+# 1. Basket Core State (Data Layer)
+
+[ ] client basket is a Zustand store strictly holding an array of {productId, quantity} objects.
+
+[ ] zero unnecessary data: the store does not cache historical prices, titles, or CMS assets.
+
+[ ] exposes API actions: addProduct, removeProduct, incrementQuantity, decrementQuantity.
+
+[ ] boundary enforcement: decrementQuantity contains mathematical logic to strictly stop at 0.
+
+[ ] boundary enforcement: incrementQuantity accepts a stockLimit parameter and mathematically prevents exceeding it.
+
+[ ] exposes derived state selectors: e.g., selectTotalItemsCount calculates the sum of all quantities.
+
+# 2. Basket Persistence (Data Layer)
+
+[ ] persistence middleware: store automatically syncs {productId, quantity} to localStorage.
+
+[ ] hydration guard: initializes with hasHydrated: false to prevent React 18 hydration mismatches.
+
+[ ] initialization check: on mount, if localStorage has items, the store correctly populates the array and sets hasHydrated: true.
+
+# 3. Basket UI Controls (View Layer)
+
+[ ] dumb components: UI components perform zero boundary math; they only dispatch intents and read state.
+
+[ ] ui add button: dispatches addProduct(productId) on click.
+
+[ ] ui increment button: reads current CMS stock limit, dispatches incrementQuantity(productId, stockLimit) on click. Renders in a disabled visual state if quantity >= stockLimit.
+
+[ ] ui decrement button: dispatches decrementQuantity(productId) on click. Renders in a disabled visual state (or swaps to an 'X' icon) if quantity <= 1.
+
+[ ] ui conditional rendering: basket control components return null (do not render) if the target productId is not found in the store array.
+
+[ ] ui cart header icon: consumes the selectTotalItemsCount from the data layer and renders the integer.
+
+[ ] ui cart header routing: pushes the user to the /basket route on click.
+
+# 4. Basket Freshness (Data & View Integration)
+
+[ ] data layer flow: basket page mount triggers async fetch of latest CMS data (price, stock) for all active productIds.
+
+[ ] data layer auto-correction: if the fetched CMS stock is lower than the store quantity, the store automatically drops the quantity to match the new reality.
+
+[ ] view layer alert: if auto-correction fires, the UI renders a single non-blocking top banner notifying the user of inventory adjustments.
+
+[ ] view layer render: basket items render using strictly the freshly fetched CMS data.
