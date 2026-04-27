@@ -29,5 +29,19 @@ describe('Basket Persistence (Data Layer)', () => {
       // Assert: The store's items array remains empty
       // Assert: The hasHydrated flag is strictly true
     })
+
+    it('synchronizes state seamlessly when the basket is modified in a different browser tab', () => {
+      "Arrange: Initialize the Zustand store in the primary environment";
+      "Act: Simulate the browser firing a native StorageEvent containing new basket data from a secondary tab";
+      "Assert: Verify the primary store's internal items array automatically updates to match the secondary tab's data without a page refresh";
+    })
+
+    it('fails gracefully and initializes an empty basket without crashing if the localStorage string is corrupted or invalid JSON', () => {
+      "Arrange: Forceably inject a malformed, invalid JSON string directly into window.localStorage";
+      "Act: Trigger the store initialization and hydration lifecycle";
+      "Assert: Verify the application intercepts the parsing error without throwing a fatal JavaScript exception";
+      "Assert: Verify the store safely falls back to its default empty state array";
+      "Assert: Verify the hasHydrated flag is still set to true to unblock UI rendering";
+    })
   })
 })
