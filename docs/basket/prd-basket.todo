@@ -13,6 +13,8 @@ Definition of Done
 
 [ ] exposes derived state selectors: e.g., selectTotalItemsCount calculates the sum of all quantities.
 
+[ ] action debouncing: persistence middleware debounces rapid localStorage writes to prevent race conditions and excessive re-renders.
+
 # 2. Basket Persistence (Data Layer)
 
 [ ] persistence middleware: store automatically syncs {productId, quantity} to localStorage.
@@ -37,11 +39,19 @@ Definition of Done
 
 [ ] ui cart header routing: pushes the user to the /basket route on click.
 
+[ ] accessibility: all basket control buttons include aria-label attributes for screen reader clarity.
+
+[ ] accessibility: cart header badge uses aria-live="polite" region to announce count changes to screen readers.
+
 4. Basket Latest Sync (Data & View Integration)
 
 [ ] preparation: sanity cms uses price_data in cents format, basket store uses displayPrice, sanity cms uses stock and reservedStock, thus availableStock = stock - reservedStock
 
 [ ] data layer flow: basket page mount triggers async fetch of latest CMS data (price, stock) for all active productIds.
+
+[ ] data layer sync status tracking: store includes syncStatus field with states: 'idle' | 'loading' | 'error' | 'success'. syncFreshness action updates syncStatus through the lifecycle.
+
+[ ] data layer error handling: if CMS fetch fails (500 error, network offline), syncFreshness sets syncStatus to 'error' and preserves current basket state.
 
 [ ] data layer basket update to latest:
     if there are discrepancies for an available item, adds metadata: { old_...: ... } to the item object.
@@ -49,6 +59,8 @@ Definition of Done
     unavailable (availableStock === 0) items are filtered into a separate list.
 
     returns: [availableItems[], { unavailable: unavailableItems[] }]
+
+[ ] view layer error banner: if syncStatus is 'error', renders a non-blocking error banner with message "Unable to verify latest stock and prices. Please check your connection."
 
 [ ] view layer alert:
     if any item in availableItems contains a metadata property, the UI renders a single non-blocking top banner notifying the user of inventory adjustments.
@@ -66,3 +78,9 @@ Definition of Done
     if unavailable list is not empty, shows a banner/header and the unavailable items list with an 'X' checkmark per item.
 
     if availableItems has 0 items but unavailable has items, renders only the adjustment banner and the unavailable list.
+
+[ ] accessibility: unavailable items banner uses aria-live="polite" region to announce inventory changes to screen readers.
+
+# 5. Server-Side Validation Boundary (Security)
+
+[ ] checkout gateway re-calculation: final total calculation for the actual checkout gateway - on checkout button click, it starts checkout flow, which re-calculates client basket server-side against sanity CMS (price_data, stock, reservedStock), which uses basket reservation document as source of truth until either the user completes payment or basket reservation document expires and is deleted by background job. Re-calculation server-side is to prevent malicious user tampering with the Zustand store and making falsely modified basket reservation request. Client-side pricing and stock data is treated as untrusted for payment processing.
