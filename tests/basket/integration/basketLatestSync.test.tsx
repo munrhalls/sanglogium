@@ -3,6 +3,12 @@ import { describe, it, expect } from 'vitest'
 describe('Basket Latest Sync', () => {
 
   describe('when basket mounts with cached data', () => {
+    it('triggers syncFreshness with productIds after hydration completes', () => {
+      // Arrange: Mock store with cached items and spy on syncFreshness
+      // Act: Mount the basket page component
+      // Assert: syncFreshness is called exactly once with correct productIds
+    })
+
     it('renders cached items instantly from localStorage before sync completes', () => {
       // Arrange: Pre-populate localStorage with basket items
       // Act: Mount the basket page component
@@ -15,6 +21,14 @@ describe('Basket Latest Sync', () => {
       // Arrange: Mock store syncFreshness to return available items with no metadata
       // Act: Trigger sync completion
       // Assert: Items render, no banners visible
+    })
+  })
+
+  describe('when sync encounters network error', () => {
+    it('renders error banner and preserves current basket state', () => {
+      // Arrange: Mock store syncFreshness to fail and set syncStatus to error
+      // Act: Trigger sync failure
+      // Assert: Error banner visible with connection message, basket items remain unchanged
     })
   })
 
