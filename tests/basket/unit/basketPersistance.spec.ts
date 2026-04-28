@@ -1,13 +1,8 @@
-export interface BasketItem {
-  productId: string
-  quantity: number
-  displayPrice: number
-  availableStock?: number 
-  metadata?: BasketItemMetadata // If present, item is "adjusted"
-}
+import { describe, it, expect } from 'vitest'
 
-describe('Basket Persistence (Data Layer)', () => {
-  describe('Hydration Guard', () => {
+describe('Basket Persistence', () => {
+
+  describe('when initializing the store', () => {
     it('initializes with hasHydrated set to false to prevent React 18 hydration mismatches', () => {
       // Arrange: Initialize the Zustand store before any client-side mounting occurs
       // Act: Retrieve the initial state
@@ -15,21 +10,21 @@ describe('Basket Persistence (Data Layer)', () => {
     })
   })
 
-  describe('Persistence Middleware', () => {
-    it('automatically syncs {productId, displayPrice, quantity} state updates to localStorage', () => {
+  describe('when persisting state updates', () => {
+    it('automatically syncs product ID, display price, and quantity state updates to localStorage', () => {
       // Arrange: Ensure localStorage is currently empty
       // Act: Trigger a store update via the API (e.g., add a product)
-      // Assert: window.localStorage contains the exact {productId, displayPrice, quantity} state as a JSON string
-    })
-    it('does not save {availableStock, metadata} state updates to localStorage', () => {
-      // Arrange: Initialize store with a product that includes availableStock and correction metadata
-      // Act: Trigger the persistence sync (e.g., via a dummy update or automated middleware tick)
-      // Assert: Retrieve the stored string from localStorage and verify it excludes the availableStock and metadata keys
+      // Assert: window.localStorage contains the exact product ID, display price, and quantity state as a JSON string
     })
 
+    it('does not save available stock and metadata state updates to localStorage', () => {
+      // Arrange: Initialize store with a product that includes available stock and correction metadata
+      // Act: Trigger the persistence sync (e.g., via a dummy update or automated middleware tick)
+      // Assert: Retrieve the stored string from localStorage and verify it excludes the available stock and metadata keys
+    })
   })
 
-  describe('Initialization Check', () => {
+  describe('when checking initialization', () => {
     it('populates the store and sets hasHydrated to true on mount if localStorage contains existing items', () => {
       // Arrange: Pre-populate window.localStorage with a valid JSON string of basket items
       // Act: Trigger the store initialization and hydration lifecycle
@@ -58,4 +53,5 @@ describe('Basket Persistence (Data Layer)', () => {
       // Assert: Verify the hasHydrated flag is still set to true to unblock UI rendering
     })
   })
+
 })
