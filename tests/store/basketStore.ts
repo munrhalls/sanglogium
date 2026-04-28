@@ -28,7 +28,7 @@ interface BasketActions {
   removeProduct: (productId: string) => void
   incrementQuantity: (productId: string, stockLimit: number) => void
   decrementQuantity: (productId: string) => void
-  clearAdjustments: () => void 
+  selectTotalItemsCount: () => number
 }
 
 export type BasketStore = BasketState & BasketActions
