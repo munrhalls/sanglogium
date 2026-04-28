@@ -37,12 +37,32 @@ Definition of Done
 
 [ ] ui cart header routing: pushes the user to the /basket route on click.
 
-# 4. Basket Freshness (Data & View Integration)
+4. Basket Latest Sync (Data & View Integration)
+
+[ ] preparation: sanity cms uses price_data in cents format, basket store uses displayPrice, sanity cms uses stock and reservedStock, thus availableStock = stock - reservedStock
 
 [ ] data layer flow: basket page mount triggers async fetch of latest CMS data (price, stock) for all active productIds.
 
-[ ] data layer auto-correction: if the fetched CMS stock is lower than the store quantity, the store automatically drops the quantity to match the new reality.
+[ ] data layer basket update to latest:
+    if there are discrepancies for an available item, adds metadata: { old_...: ... } to the item object.
 
-[ ] view layer alert: if auto-correction fires, the UI renders a single non-blocking top banner notifying the user of inventory adjustments.
+    unavailable (availableStock === 0) items are filtered into a separate list.
 
-[ ] view layer render: basket items render using strictly the freshly fetched CMS data.
+    returns: [availableItems[], { unavailable: unavailableItems[] }]
+
+[ ] view layer alert:
+    if any item in availableItems contains a metadata property, the UI renders a single non-blocking top banner notifying the user of inventory adjustments.
+
+    if {unavailable: [...]} is found in the response, displays banner Items unavailable under available items list (if present); displays list of unavailable items below banner with 'X' checkmark per item
+
+    if availableItems is empty and unavailable is also empty, view alert displays "Your basket is empty" message.
+
+[ ] view layer render:
+
+    basket items render using strictly the freshly fetched CMS data.
+
+    if an item has a metadata object, additionally renders those values (e.g., strike-through old_price), each strikethrough value to the left of its latest value
+
+    if unavailable list is not empty, shows a banner/header and the unavailable items list with an 'X' checkmark per item.
+
+    if availableItems has 0 items but unavailable has items, renders only the adjustment banner and the unavailable list.
