@@ -42,7 +42,7 @@ export default function BasketClientWrapper() {
     };
 
     fetchFreshData();
-  }, [hasHydrated, basket, setBasket, isFetchingFresh]);
+  }, [hasHydrated, setBasket, isFetchingFresh]);
 
   // Show skeleton while hydrating to prevent flash of empty state
   if (!hasHydrated) {
