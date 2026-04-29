@@ -1,7 +1,7 @@
 Definition of Done
 # 1. Basket Core State (Data Layer)
 
-[ ] client basket is a Zustand store strictly holding an array of {productId, quantity, displayPrice?, availableStock?, metadata?} objects. displayPrice?, availableStock?, metadata? are optional, meant for basket sync to latest CMS data status on basket page.
+[ ] client basket is a Zustand store strictly holding an array of {productId, quantity, displayPrice, availableStock, metadata} objects. displayPrice, availableStock, metadata? are optional, meant for basket sync to latest CMS data status on basket page.
 
 [ ] zero unnecessary data: the store does not cache historical prices, titles, or CMS assets.
 
@@ -61,7 +61,7 @@ Definition of Done
 
 [ ] preparation: sanity cms uses price_data in cents format, basket store uses displayPrice, sanity cms uses stock and reservedStock, thus availableStock = stock - reservedStock
 
-[ ] data layer flow: basket page mount triggers async fetch of latest CMS data (price, stock) for all active productIds.
+[ ] data layer flow: basket page mount or refresh triggers async fetch of latest CMS data (price, stock) for all active productIds.
 
 ## Edge Cases
 
@@ -100,6 +100,9 @@ Definition of Done
 
 [ ] accessibility: unavailable items banner uses aria-live="polite" region to announce inventory changes to screen readers.
 
-# 5. Server-Side Validation Boundary (Security)
+# 5 Basket consumers (Data & View Layer Integration)
+[ ] search page, products page, product detail page pass displayPrice and (stock - reservedStock) to basket controls
 
-[ ] checkout gateway re-calculation: final total calculation for the actual checkout gateway - on checkout button click, it starts checkout flow, which re-calculates client basket server-side against sanity CMS (price_data, stock, reservedStock), which uses basket reservation document as source of truth until either the user completes payment or basket reservation document expires and is deleted by background job. Re-calculation server-side is to prevent malicious user tampering with the Zustand store and making falsely modified basket reservation request. Client-side pricing and stock data is treated as untrusted for payment processing.
+# Server-Side Validation Boundary (Security)
+
+* (outside of basket scope but present for clarity) checkout gateway re-calculation: final total calculation for the actual checkout gateway - on checkout button click, it starts checkout flow, which re-calculates client basket server-side against sanity CMS (price_data, stock, reservedStock), which uses basket reservation document as source of truth until either the user completes payment or basket reservation document expires and is deleted by background job. Re-calculation server-side is to prevent malicious user tampering with the Zustand store and making falsely modified basket reservation request. Client-side pricing and stock data is treated as untrusted for payment processing.
