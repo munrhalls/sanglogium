@@ -1,15 +1,12 @@
 # ADR-001: Basket Architecture Decisions
 
-## Status
-Accepted
-
 ## Context
-The basket feature requires persistence, CMS sync, and error handling. The design process focused on questioning requirements and eliminating unnecessary complexity.
+The basket feature requires persistence, CMS sync, and error handling. The design process focused on questioning requirements and deleting anything unnecessary.
 
 ## Decisions
 
 ### 1. CMS-Native Price Data and Stock Calculation
-**Questioned:** Should we use Stripe price IDs and fetch pricing from Stripe API, or store price data directly in CMS?
+**Questioned:** Should I use Stripe price IDs and fetch pricing from Stripe API, or store price data directly in CMS?
 
 **Decision:** Store price_data directly in CMS product. Calculate available stock as `stock - reservedStock`.
 
@@ -19,30 +16,56 @@ The basket feature requires persistence, CMS sync, and error handling. The desig
 
 **Consequences:**
 - No Stripe price ID management
-- No network requests to fetch pricing
-- Stock reservation system built into CMS
+- No extra network requests to fetch pricing
+- Stock reservation system built into CMS (designed that its via basket reservation CMS document, going through redis queue for concurrency control)
 - Simpler checkout flow
 - Price updates handled in CMS, not Stripe
 
 ---
 
-### 2. Minimal Persistence Schema
-**Questioned:** Should we persist displayPrice, availableStock, and other CMS data to localStorage?
+### 2. In-Memory Basket Shape
+**Questioned:** Should the in-memory BasketItem include CMS data (displayPrice, availableStock) or only product id and quantity?
+
+**Decision:** BasketItem includes `{productId, quantity, displayPrice, availableStock, metadata}`. CMS data populated by syncFreshness on mount.
+
+**Rationale:** User Experience Intent is that after latest basket check vs CMS:
+- UI shows price / stock disprepancies between client items and latest CMS data after sync
+- UI shows no longer available items 
+
+Not having those extra fields in basket store schema -> would have to design complex logic and flows for how the ui can handle the above. With those fields: can use metadata to capture only disprepancies per item, and also unavailable items.  
+
+**Consequences:**
+- COST: Two extra fields in basket item schema: `displayPrice` and `availableStock` 
+- TRADE-OFF/BENEFIT: a simple, robust one-time CMS sync vs latest data flow 
+- TRADE-OFF/BENEFIT: disprepancies/unavailable items - easy for Ui to render based on one source of truth (basket items, metadata) - 0 complex workarounds
+- TRADE-OFF/BENEFIT: PLUS - also, metadata is source of truth for whether basket has been corrected or not - all else is derived, no extra state, no flags  
+
+
+---
+
+### 3. Minimal Persistence Schema
+**Questioned:** Should I persist displayPrice, availableStock, and other CMS data to localStorage?
+
+// Not to be confused with basket shape !!! 
 
 **Decision:** No. Only persist `{productId, quantity}`.
 
 **Deleted:** All CMS data (price, stock, titles, assets) from persistence.
 
-**Rationale:** CMS data changes frequently. Persisting it risks stale data. Sync on mount provides fresh data. Persisting only user intent (what they want to buy) is sufficient.
+**Rationale:** There is ZERO need for local storage to store anything else because price / stock are only needed on basket page *when* there are disprepancies after check vs latest CMS data - and basket page triggers sync check vs latest CMS data automatically. 
+
+So basket page always gets the freshest CMS-checked data (1st soft sync) anyway.
 
 **Consequences:**
 - Smaller localStorage footprint
-- Always fresh pricing/stock on basket page
+- Always fresh pricing/stock on basket page due to auto sync on open basket page
 - Simpler hydration logic
+
+// Not to be confused with basket shape !!! 
 
 ---
 
-### 3. In-Memory Sync Status
+### 4. In-Memory Sync Status
 **Questioned:** Should syncStatus persist across sessions?
 
 **Decision:** No. syncStatus is in-memory only.
@@ -58,24 +81,10 @@ The basket feature requires persistence, CMS sync, and error handling. The desig
 
 ---
 
-### 4. Basket Metadata for Change Detection
-**Questioned:** How do we detect if CMS data changed since last sync?
-
-**Decision:** Use `metadata` field on BasketItem. Attach `{old_price, old_availableStock}` if CMS differs from client.
-
-**Deleted:** Separate "change log" or diff engine.
-
-**Rationale:** Simple boolean flag insufficient—need to show what changed. Metadata enables strikethrough pricing without complex diff logic.
-
-**Consequences:**
-- Self-contained change detection
-- UI renders strikethrough old prices
-- No external change tracking system
-
 ---
 
 ### 5. Debounced Persistence
-**Questioned:** Should we write to localStorage on every state change?
+**Questioned:** Should I write to localStorage on every state change?
 
 **Decision:** No. Debounce rapid writes.
 
@@ -108,7 +117,7 @@ The basket feature requires persistence, CMS sync, and error handling. The desig
 ## Eliminated Complexity
 **Questioned and removed:**
 - flag for tracking basket status vs cms payload basket - unnecessary, ui can use derived state based on presence of metadata / unavailable items after sync 
-- UI-level edge cases (stock limit changes during interaction, component unmounts, rapid clicks) - handled by sync mechanism or irrelevant
+- UI-level edge cases (stock limit changes during interaction, component unmounts, rapid clicks) - controls disabled on boundaries, rest is client-level sync operations, no factor, latest stock limit only relevant on basket page and handled by one simple sync vs CMS flow
 - CMS-level edge cases (malformed data, timeout, navigate away, rapid sync calls) - scope creep
-- Checkout-level edge cases (server-side failure, reservation expiry, payment timeout) - outside basket scope
-- localStorage cleared while running - acceptable edge case, no handling needed
+- Checkout-level edge cases (server-side failure, reservation expiry, payment timeout) - OUTSIDE BASKET SCOPE
+- localStorage cleared while running - no factor, acceptable edge case

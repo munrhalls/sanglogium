@@ -1,7 +1,7 @@
 Definition of Done
 # 1. Basket Core State (Data Layer)
 
-[ ] client basket is a Zustand store strictly holding an array of {productId, quantity} objects.
+[ ] client basket is a Zustand store strictly holding an array of {productId, quantity, displayPrice?, availableStock?, metadata?} objects. displayPrice?, availableStock?, metadata? are optional, meant for basket sync to latest CMS data status on basket page.
 
 [ ] zero unnecessary data: the store does not cache historical prices, titles, or CMS assets.
 
