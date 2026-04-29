@@ -6,7 +6,8 @@ import {
   SignInIcon,
 } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils/tailwind";
-import { useBasketStore, selectBasketCount } from "@/store/store";
+// TODO: Import from new basket store when implemented
+// import { useBasketStore, selectBasketCount } from "@/store/store";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
@@ -17,7 +18,9 @@ interface NavbarActionsProps {
 
 const NavbarActions = ({ isAuthenticated }: NavbarActionsProps) => {
   const [mounted, setMounted] = useState(false);
-  const realCartCount = useBasketStore(selectBasketCount);
+  // TODO: Re-implement when new basket store is available
+  // const realCartCount = useBasketStore(selectBasketCount);
+  const realCartCount = 0; // TODO: Remove placeholder
 
   // Sync hydration state
   useEffect(() => {

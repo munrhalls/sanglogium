@@ -2,7 +2,8 @@
 
 import { Product } from '@/sanity/lib/products/getProductBySlug';
 import { urlFor } from '@/sanity/lib/image';
-import { useBasketStore, selectBasketItem } from '@/store/store';
+// TODO: Import from new basket store when implemented
+// import { useBasketStore, selectBasketItem } from '@/store/store';
 import { useState } from 'react';
 import { Price } from '@/app/components/ui/Price';
 import { ShoppingCartIcon, CheckIcon } from '@phosphor-icons/react/dist/ssr';
@@ -10,54 +11,45 @@ import { QuantitySelector } from '@/app/components/ui/QuantitySelector';
 
 export function ProductInfo({ product }: { product: Product }) {
   const [preAddQty, setPreAddQty] = useState(1);
-  const basketItem = useBasketStore(selectBasketItem(product._id));
-
-  const addItem = useBasketStore((s) => s.addItem);
-  const updateQuantity = useBasketStore((s) => s.updateQuantity);
-  const removeItem = useBasketStore((s) => s.removeItem);
-
+  // TODO: Re-implement when new basket store is available
+  // const basketItem = useBasketStore(selectBasketItem(product._id));
+  // const addItem = useBasketStore((s) => s.addItem);
+  // const updateQuantity = useBasketStore((s) => s.updateQuantity);
+  // const removeItem = useBasketStore((s) => s.removeItem);
 
   const handleAddToCart = () => {
-    // TODO: Remove console logs - temporary for manual verification
-    console.log('Add to Cart clicked for product:', product.name);
-    console.log('Product stock:', product.stock);
-    console.log('Pre-add quantity:', preAddQty);
-
-    if (product.stock > 0) {
-      console.log('Adding item to basket...');
-      const itemToAdd = {
-        _id: product._id,
-        name: product.name,
-        displayPrice: product.displayPrice,
-        stock: product.stock,
-        quantity: preAddQty,
-        image: product.image ? urlFor(product.image).width(100).height(100).url() : '/images/placeholder-product.jpg', // TODO: Remove test product fix - temporary for manual verification
-        slug: product.slug.current,
-        stripePriceId: product.stripePriceId,
-      };
-      console.log('Item to add:', itemToAdd);
-
-      addItem(itemToAdd);
-      console.log('Item added to basket');
-    } else {
-      console.log('Product out of stock, not adding');
-    }
+    // TODO: Re-implement when new basket store is available
+    // if (product.stock > 0) {
+    //   const itemToAdd = {
+    //     _id: product._id,
+    //     name: product.name,
+    //     displayPrice: product.displayPrice,
+    //     stock: product.stock,
+    //     quantity: preAddQty,
+    //     image: product.image ? urlFor(product.image).width(100).height(100).url() : '/images/placeholder-product.jpg',
+    //     slug: product.slug.current,
+    //     stripePriceId: product.stripePriceId,
+    //   };
+    //   addItem(itemToAdd);
+    // }
   };
 
   const handleBasketIncrement = () => {
-    if (basketItem && basketItem.quantity < product.stock) {
-      updateQuantity(product._id, basketItem.quantity + 1);
-    }
+    // TODO: Re-implement when new basket store is available
+    // if (basketItem && basketItem.quantity < product.stock) {
+    //   updateQuantity(product._id, basketItem.quantity + 1);
+    // }
   };
 
   const handleBasketDecrement = () => {
-    if (basketItem) {
-      if (basketItem.quantity <= 1) {
-        removeItem(product._id);
-      } else {
-        updateQuantity(product._id, basketItem.quantity - 1);
-      }
-    }
+    // TODO: Re-implement when new basket store is available
+    // if (basketItem) {
+    //   if (basketItem.quantity <= 1) {
+    //     removeItem(product._id);
+    //   } else {
+    //     updateQuantity(product._id, basketItem.quantity - 1);
+    //   }
+    // }
   };
 
   const getStockStatus = () => {
@@ -90,8 +82,8 @@ export function ProductInfo({ product }: { product: Product }) {
       )}
 
       <div className="pt-4 space-y-6 ">
-
-        {basketItem ? (
+        {/* TODO: Re-implement basket state when new basket store is available */}
+        {/* {basketItem ? (
           <>
             <button
               disabled
@@ -112,7 +104,7 @@ export function ProductInfo({ product }: { product: Product }) {
               />
             </div>
           </>
-        ) : (
+        ) : ( */}
           <button
             onClick={handleAddToCart}
             disabled={product.stock === 0}
@@ -122,7 +114,7 @@ export function ProductInfo({ product }: { product: Product }) {
             <ShoppingCartIcon size={24} weight="bold" />
             {product.stock === 0 ? 'Out of stock' : 'Add to cart'}
           </button>
-        )}
+        {/* )} */}
       </div>
     </div >
   );

@@ -1,7 +1,8 @@
 'use client'
 
 import { useCallback, useState } from 'react'
-import { useBasketStore } from '@/store/store'
+// TODO: Import from new basket store when implemented
+// import { useBasketStore } from '@/store/store'
 import { useRouter } from 'next/navigation'
 
 export function CheckoutButton() {
@@ -9,7 +10,9 @@ export function CheckoutButton() {
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
 
-  const basket = useBasketStore((s) => s.basket)
+  // TODO: Re-implement when new basket store is available
+  // const basket = useBasketStore((s) => s.basket)
+  const basket: any[] = [] // TODO: Remove placeholder
 
   const handleCheckout = useCallback(async () => {
     console.log('TRACE: User clicked checkout button', { basketLength: basket.length })

@@ -6,15 +6,19 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useDrawer } from "@/app/hooks/nuqs/useDrawer";
 import { cn } from "@/lib/utils/tailwind";
-import { useBasketStore, selectBasketCount, selectHasHydrated } from "@/store/store";
+// TODO: Import from new basket store when implemented
+// import { useBasketStore, selectBasketCount, selectHasHydrated } from "@/store/store";
 
 
 
 function ActionButtons() {
   const pathname = usePathname();
   const { isOpen, openDrawer, closeDrawer } = useDrawer();
-  const basketCount = useBasketStore(selectBasketCount);
-  const hasHydrated = useBasketStore(selectHasHydrated);
+  // TODO: Re-implement when new basket store is available
+  // const basketCount = useBasketStore(selectBasketCount);
+  // const hasHydrated = useBasketStore(selectHasHydrated);
+  const basketCount = 0; // TODO: Remove placeholder
+  const hasHydrated = true; // TODO: Remove placeholder
 
   return (
     <div className="flex h-full items-center justify-around px-4">
