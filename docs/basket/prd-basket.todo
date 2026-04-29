@@ -13,15 +13,27 @@ Definition of Done
 
 [ ] exposes derived state selectors: e.g., selectTotalItemsCount calculates the sum of all quantities.
 
+## Edge Cases
+
 [ ] action debouncing: persistence middleware debounces rapid localStorage writes to prevent race conditions and excessive re-renders.
+
+[ ] localStorage write error handling: wrap localStorage writes in try/catch. On error (quota exceeded, disabled), attempt fallback to session storage. If session storage also fails, do nothing (graceful degradation).
+
+[ ] input validation: addProduct validates productId format, incrementQuantity rejects if quantity < 0, decrementQuantity rejects if quantity <= 0.
 
 # 2. Basket Persistence (Data Layer)
 
-[ ] persistence middleware: store automatically syncs {productId, quantity} to localStorage.
+[ ] persistence middleware: store automatically syncs {productId, quantity} to localStorage. displayPrice and other CMS data are not persisted because they are re-fetched from CMS on basket page mount or refresh, ensuring users always see latest pricing and stock information before checkout.
 
 [ ] hydration guard: initializes with hasHydrated: false to prevent React 18 hydration mismatches.
 
 [ ] initialization check: on mount, if localStorage has items, the store correctly populates the array and sets hasHydrated: true.
+
+## Edge Cases
+
+[ ] localStorage read error handling: wrap JSON.parse in try/catch. On parse error (malformed JSON), clear localStorage and start empty basket.
+
+[ ] schema validation: on hydration, validate each item has required keys (productId, quantity). Discard invalid entries and hydrate with valid items only.
 
 # 3. Basket UI Controls (View Layer)
 
@@ -39,6 +51,8 @@ Definition of Done
 
 [ ] ui cart header routing: pushes the user to the /basket route on click.
 
+## Edge Cases
+
 [ ] accessibility: all basket control buttons include aria-label attributes for screen reader clarity.
 
 [ ] accessibility: cart header badge uses aria-live="polite" region to announce count changes to screen readers.
@@ -49,9 +63,12 @@ Definition of Done
 
 [ ] data layer flow: basket page mount triggers async fetch of latest CMS data (price, stock) for all active productIds.
 
-[ ] data layer sync status tracking: store includes syncStatus field with states: 'idle' | 'loading' | 'error' | 'success'. syncFreshness action updates syncStatus through the lifecycle.
+## Edge Cases
 
-[ ] data layer error handling: if CMS fetch fails (500 error, network offline), syncFreshness sets syncStatus to 'error' and preserves current basket state.
+[ ] data layer sync status tracking: store includes syncStatus field with states: 'idle' | 'loading' | 'error' | 'success'. syncFreshness action updates syncStatus through the lifecycle. syncStatus is in-memory state only, not persisted to localStorage. On page refresh or component unmount, syncStatus resets to 'idle' and syncFreshness retriggers on mount. On 'success', small banner with "Basket items verified <checkmark>" shows and disappears after 1 second. 
+
+[ ] data layer error handling: if CMS fetch fails (500 error, network offline), syncFreshness sets syncStatus to 'error' and preserves current basket state. 
+- checkout button click launches checkout flow, which is outside of basket scope, except case where 2nd check vs latest sanity CMS products data fails - which results in updated basket for user to approve or unavailability message - all of which stays outside basket scope   
 
 [ ] data layer basket update to latest:
     if there are discrepancies for an available item, adds metadata: { old_...: ... } to the item object.
@@ -60,7 +77,9 @@ Definition of Done
 
     returns: [availableItems[], { unavailable: unavailableItems[] }]
 
-[ ] view layer error banner: if syncStatus is 'error', renders a non-blocking error banner with message "Unable to verify latest stock and prices. Please check your connection."
+[ ] view layer error banner: if syncStatus is 'error', renders a non-blocking error banner with message "Unable to verify latest stock and prices. Please check your connection." and a retry button that triggers syncFreshness again without page refresh. Retry button shows loader while sync is in progress. 
+
+[ ] accessibility: unavailable items banner uses aria-live="polite" region to announce inventory changes to screen readers.
 
 [ ] view layer alert:
     if any item in availableItems contains a metadata property, the UI renders a single non-blocking top banner notifying the user of inventory adjustments.
