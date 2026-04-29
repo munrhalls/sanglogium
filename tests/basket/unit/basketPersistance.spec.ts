@@ -54,4 +54,20 @@ describe('Basket Persistence', () => {
     })
   })
 
+  describe('Edge Cases', () => {
+    describe('when hydrating', () => {
+      it('validates each item has required keys (productId, quantity)', () => {
+        // Arrange: Pre-populate localStorage with items missing required keys
+        // Act: Trigger the store initialization and hydration lifecycle
+        // Assert: Items without required keys are discarded during validation
+      })
+
+      it('discards invalid entries and hydrates with valid items only', () => {
+        // Arrange: Pre-populate localStorage with mix of valid and invalid items
+        // Act: Trigger the store initialization and hydration lifecycle
+        // Assert: Store contains only valid items with required keys, invalid entries discarded
+      })
+    })
+  })
+
 })

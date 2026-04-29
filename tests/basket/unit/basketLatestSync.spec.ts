@@ -50,4 +50,32 @@ describe('Basket Sync System', () => {
     })
   })
 
+  describe('Edge Cases', () => {
+    describe('when syncFreshness tracks syncStatus', () => {
+      it('updates syncStatus through the lifecycle from idle to loading to success', () => {
+        // Arrange: Initialize store with items, syncStatus is 'idle'
+        // Act: Call syncFreshness to trigger CMS fetch
+        // Assert: syncStatus transitions 'idle' -> 'loading' -> 'success'
+      })
+    })
+
+    describe('when CMS fetch fails', () => {
+      it('sets syncStatus to error and preserves current basket state', () => {
+        // Arrange: Mock CMS fetch to return 500 error or network failure
+        // Act: Call syncFreshness
+        // Assert: syncStatus is set to 'error'
+        // Assert: Current basket items are preserved without modification
+      })
+    })
+
+    describe('when page refreshes or component unmounts', () => {
+      it('resets syncStatus to idle and syncFreshness retriggers on mount', () => {
+        // Arrange: syncStatus is 'success' or 'error' from previous session
+        // Act: Trigger page refresh or component unmount/mount
+        // Assert: syncStatus resets to 'idle'
+        // Assert: syncFreshness automatically retriggers on mount
+      })
+    })
+  })
+
 })

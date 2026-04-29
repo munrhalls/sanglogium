@@ -50,4 +50,54 @@ describe('Basket Store', () => {
     })
   })
 
+  describe('Edge Cases', () => {
+    describe('when debouncing rapid writes', () => {
+      it('prevents race conditions and excessive re-renders', () => {
+        // Arrange: Configure persistence middleware with debounce
+        // Act: Trigger multiple rapid addProduct calls within debounce window
+        // Assert: Only one localStorage write occurs, preventing race conditions
+      })
+    })
+
+    describe('when localStorage write fails due to quota exceeded', () => {
+      it('attempts fallback to session storage', () => {
+        // Arrange: Mock localStorage.setItem to throw quota exceeded error
+        // Act: Trigger basket state update that requires persistence
+        // Assert: Middleware attempts to write to session storage as fallback
+      })
+    })
+
+    describe('when both localStorage and session storage fail', () => {
+      it('gracefully degrades without errors', () => {
+        // Arrange: Mock both localStorage and session storage to throw errors
+        // Act: Trigger basket state update that requires persistence
+        // Assert: Application continues without throwing, basket state updates in memory only
+      })
+    })
+
+    describe('when addProduct receives invalid productId format', () => {
+      it('rejects the input', () => {
+        // Arrange: Prepare invalid productId (e.g., empty string, wrong format)
+        // Act: Call addProduct with invalid productId
+        // Assert: Function rejects input and does not add item to basket
+      })
+    })
+
+    describe('when incrementQuantity receives negative quantity', () => {
+      it('rejects the input', () => {
+        // Arrange: Add product to basket
+        // Act: Call incrementQuantity with negative quantity parameter
+        // Assert: Function rejects input and does not modify item quantity
+      })
+    })
+
+    describe('when decrementQuantity receives quantity <= 0', () => {
+      it('rejects the input', () => {
+        // Arrange: Add product to basket with quantity 1
+        // Act: Call decrementQuantity with quantity parameter <= 0
+        // Assert: Function rejects input and does not modify item quantity
+      })
+    })
+  })
+
 })
