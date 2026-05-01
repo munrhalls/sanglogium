@@ -3,7 +3,8 @@ import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { CheckCircle, Package, ArrowRight } from "@phosphor-icons/react";
-import { useBasketStore } from "@/store/store";
+// TODO: Import from new basket store when implemented
+// import { useBasketStore } from "@/store/store";
 
 interface OrderItem {
   id: string;
@@ -25,7 +26,9 @@ interface Order {
 function SuccessPage() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id");
-  const clearBasket = useBasketStore((s) => s.clearBasket);
+  // TODO: Re-implement when new basket store is available
+  // const clearBasket = useBasketStore((s) => s.clearBasket);
+  const clearBasket = () => {}; // TODO: Remove placeholder
 
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);

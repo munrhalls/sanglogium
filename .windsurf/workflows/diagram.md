@@ -24,19 +24,29 @@ description: Diagram standards and conventions for Mermaid diagrams
 ## Diagram Standards
 
 1. Structural Foundation
-Direction: Always use graph TD (Top-Down). This allows the height to be dynamic while keeping node width—and therefore font size—consistent and readable.
+Direction: Use graph LR (Left-Right) for flows and graph TD (Top-Down) for hierarchies. Horizontal layout aligns with natural left-to-right eye scanning, improving readability for sequential information.
+
+Node Count: Maximum 7-9 nodes per flow. Beyond this limit, split into multiple diagrams stacked vertically to respect cognitive load limits (working memory capacity: 7±2 items).
 
 Isolation: If an executable spec has more than three distinct logic branches or logical layers (e.g., UI, State, API), it must be split into separate, focused diagrams.
+
+Grouping: Use subgraphs to group related elements (enclosure principle). This reduces cognitive load by creating visual "chunks" of information.
 
 2. Visual Configuration (Global Standard)
 Every diagram must include a classDef block using these specific CSS constraints to override default tiny scaling:
 
 ```mermaid
-classDef large font-size:20px,padding:15px,stroke-width:2px;
-classDef logic fill:#fff4dd,stroke:#d4a017,font-size:20px;
-classDef state fill:#e1f5fe,stroke:#01579b,font-size:20px;
-classDef action fill:#e8f5e9,stroke:#2e7d32,font-size:20px;
+classDef large font-size:18px,padding:12px,stroke-width:2px;
+classDef logic fill:#fff4dd,stroke:#d4a017,font-size:18px;
+classDef state fill:#e1f5fe,stroke:#01579b,font-size:18px;
+classDef action fill:#e8f5e9,stroke:#2e7d32,font-size:18px;
 ```
+
+Font Size: Minimum 18px. Below this requires conscious decoding effort and increases cognitive load.
+
+Color Palette: Limit to 3-5 colors maximum. More colors increase cognitive load and violate similarity principle. Use color to encode meaning, not decoration.
+
+White Space: Use padding: 12px intentionally as "breathing room" that guides attention, not empty space.
 
 3. Labeling Constraints
 Verb-Noun Only: Labels must not exceed 4 words.
