@@ -4,14 +4,17 @@ import EmptyBasketContent from "./EmptyBasketContent";
 import Basket from "./Basket";
 import BasketSummary from "./BasketSummary";
 import { useEffect, useState } from "react";
-import { fetchBasketProducts } from "@/app/actions/basket";
+import { syncBasketProducts } from "@/app/actions/basket";
 import { BasketItem } from "./basket.types";
 import { urlFor } from "@/sanity/lib/image";
 
 export default function BasketClientWrapper() {
-  const basket = useBasketStore((s) => s.basket);
+  const basket = useBasketStore((s) => s.items);
   const hasHydrated = useBasketStore(selectHasHydrated);
-  const setBasket = useBasketStore((s) => s.setBasket);
+  const setBasket = useBasketStore((s) => s.setItems);
+  const setSyncStatus = useBasketStore((s) => s.setSyncStatus);
+  const setSyncResult = useBasketStore((s) => s.setSyncResult);
+  const syncStatus = useBasketStore((s) => s.syncStatus);
   const [isFetchingFresh, setIsFetchingFresh] = useState(false);
 
   useEffect(() => {
@@ -19,30 +22,35 @@ export default function BasketClientWrapper() {
       if (!hasHydrated || basket.length === 0 || isFetchingFresh) return;
 
       setIsFetchingFresh(true);
-      const ids = basket.map((item) => item._id);
-      const freshProducts = await fetchBasketProducts(ids);
+      setSyncStatus('loading');
 
-      // Merge fresh product data with persisted quantities
-      const mergedBasket: BasketItem[] = freshProducts.map((product) => {
-        const persistedItem = basket.find((item) => item._id === product._id);
-        return {
-          _id: product._id,
-          name: product.name,
-          displayPrice: product.displayPrice,
-          stock: product.stock,
-          quantity: persistedItem?.quantity || 1,
-          image: product.image ? urlFor(product.image).width(100).height(100).url() : '/images/placeholder-product.jpg',
-          slug: product.slug.current,
-          stripePriceId: product.stripePriceId,
-        };
-      });
+      try {
+        const productIds = basket.map((item) => item.productId);
+        const response = await syncBasketProducts({ productIds });
 
-      setBasket(mergedBasket);
-      setIsFetchingFresh(false);
+        // Transform response to basket items format
+        const mergedBasket: BasketItem[] = response.available.map((item) => {
+          const persistedItem = basket.find((i) => i.productId === item.productId);
+          return {
+            productId: item.productId,
+            quantity: persistedItem?.quantity || 1,
+            displayPrice: item.displayPrice,
+            availableStock: item.availableStock,
+          };
+        });
+
+        setBasket(mergedBasket);
+        setSyncResult([response.available, { unavailable: response.unavailable }]);
+        setSyncStatus('success');
+      } catch (error) {
+        setSyncStatus('error');
+      } finally {
+        setIsFetchingFresh(false);
+      }
     };
 
     fetchFreshData();
-  }, [hasHydrated, setBasket, isFetchingFresh]);
+  }, [hasHydrated, setBasket, setSyncStatus, setSyncResult, isFetchingFresh]);
 
   // Show skeleton while hydrating to prevent flash of empty state
   if (!hasHydrated) {

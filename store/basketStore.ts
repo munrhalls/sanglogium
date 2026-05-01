@@ -11,24 +11,26 @@ export interface BasketItem {
   metadata?: BasketItemMetadata // If present, item is "adjusted"
 }
 
-export interface UnavailablePartition {
-  unavailable: BasketItem[]
-}
-
-export type SyncResult = [BasketItem[], UnavailablePartition]
+export type SyncStatus = 'idle' | 'loading' | 'error' | 'success'
 
 interface BasketState {
   items: BasketItem[]
+  unavailable: BasketItem[]
   hasHydrated: boolean
+  syncStatus: SyncStatus
 }
 
 interface BasketActions {
-  syncFreshness: () => Promise<SyncResult>
+  setSyncStatus: (status: SyncStatus) => void
+  syncWithCMS: (cmsProducts: Array<{ _id: string; price_data: number; stock: number; reservedStock: number }>) => void
   addProduct: (productId: string) => void
   removeProduct: (productId: string) => void
-  incrementQuantity: (productId: string, stockLimit: number) => void
+  incrementQuantity: (productId: string) => void
   decrementQuantity: (productId: string) => void
-  selectTotalItemsCount: () => number
 }
+
+// Selector for derived state (outside actions)
+export const selectTotalItemsCount = (state: BasketState) => 
+  state.items.reduce((sum, item) => sum + item.quantity, 0)
 
 export type BasketStore = BasketState & BasketActions

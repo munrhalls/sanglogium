@@ -14,6 +14,7 @@ export async function getProductsByIds(ids: string[]): Promise<Product[]> {
       brand->{ _id, name, slug },
       displayPrice,
       stock,
+      reservedStock,
       sku,
       stripePriceId,
       image,

@@ -7,6 +7,7 @@ export interface Product {
   brand: { _id: string; name: string; slug: string } | null;
   displayPrice: number;
   stock: number;
+  reservedStock: number;
   sku: string;
   image: any;
   gallery?: any[];
@@ -18,7 +19,7 @@ export interface Product {
 }
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {
-  const products = await sanityFetch({
+  const products = await sanityFetch<Product[]>({
     query: groq`*[_type == "product" && slug.current == $slug && defined(stripePriceId)] {
       _id,
       name,
@@ -48,5 +49,5 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
     params: { slug }
   });
 
-  return products[0] || null;
+  return (products as Product[])[0] || null;
 }
