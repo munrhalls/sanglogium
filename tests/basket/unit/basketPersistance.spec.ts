@@ -2,71 +2,145 @@ import { describe, it, expect } from 'vitest'
 
 describe('Basket Persistence', () => {
 
-  describe('when initializing the store', () => {
-    it('initializes with hasHydrated set to false to prevent React 18 hydration mismatches', () => {
-      // Arrange: Initialize the Zustand store before any client-side mounting occurs
-      // Act: Retrieve the initial state
-      // Assert: The hasHydrated flag is strictly false
+  describe('initialize', () => {
+    it('sets hasHydrated to false and basket to empty Record', () => {
+      // Arrange: hasHydrated is false
+      // Act: Call initialize()
+      // Assert: hasHydrated is false, basket is empty Record, storageFallback is 'localStorage'
+    })
+
+    it('requires hasHydrated is false', () => {
+      // Arrange: hasHydrated is true
+      // Act: Call initialize()
+      // Assert: Operation is rejected
     })
   })
 
-  describe('when persisting state updates', () => {
-    it('automatically syncs product ID, display price, and quantity state updates to localStorage', () => {
-      // Arrange: Ensure localStorage is currently empty
-      // Act: Trigger a store update via the API (e.g., add a product)
-      // Assert: window.localStorage contains the exact product ID, display price, and quantity state as a JSON string
+  describe('validatePayload', () => {
+    it('returns true for valid Array of BasketItem objects', () => {
+      // Arrange: Prepare valid payload (Array of BasketItem objects)
+      // Act: Call validatePayload(payload)
+      // Assert: Returns true
     })
 
-    it('does not save available stock and metadata state updates to localStorage', () => {
-      // Arrange: Initialize store with a product that includes available stock and correction metadata
-      // Act: Trigger the persistence sync (e.g., via a dummy update or automated middleware tick)
-      // Assert: Retrieve the stored string from localStorage and verify it excludes the available stock and metadata keys
-    })
-  })
-
-  describe('when checking initialization', () => {
-    it('populates the store and sets hasHydrated to true on mount if localStorage contains existing items', () => {
-      // Arrange: Pre-populate window.localStorage with a valid JSON string of basket items
-      // Act: Trigger the store initialization and hydration lifecycle
-      // Assert: The store's items array exactly matches the pre-populated localStorage data
-      // Assert: The hasHydrated flag is strictly true
-    })
-
-    it('sets hasHydrated to true on mount to unblock rendering even if localStorage is completely empty', () => {
-      // Arrange: Ensure window.localStorage is empty
-      // Act: Trigger the store initialization and hydration lifecycle
-      // Assert: The store's items array remains empty
-      // Assert: The hasHydrated flag is strictly true
-    })
-
-    it('synchronizes state seamlessly when the basket is modified in a different browser tab', () => {
-      // Arrange: Initialize the Zustand store in the primary environment
-      // Act: Simulate the browser firing a native StorageEvent containing new basket data from a secondary tab
-      // Assert: Verify the primary store's internal items array automatically updates to match the secondary tab's data without a page refresh
-    })
-
-    it('fails gracefully and initializes an empty basket without crashing if the localStorage string is corrupted or invalid JSON', () => {
-      // Arrange: Forceably inject a malformed, invalid JSON string directly into window.localStorage
-      // Act: Trigger the store initialization and hydration lifecycle
-      // Assert: Verify the application intercepts the parsing error without throwing a fatal JavaScript exception
-      // Assert: Verify the store safely falls back to its default empty state array
-      // Assert: Verify the hasHydrated flag is still set to true to unblock UI rendering
+    it('returns false for invalid payload', () => {
+      // Arrange: Prepare invalid payload (not Array, or invalid objects)
+      // Act: Call validatePayload(payload)
+      // Assert: Returns false
     })
   })
 
-  describe('Edge Cases', () => {
-    describe('when hydrating', () => {
-      it('validates each item has required keys (productId, quantity)', () => {
-        // Arrange: Pre-populate localStorage with items missing required keys
-        // Act: Trigger the store initialization and hydration lifecycle
-        // Assert: Items without required keys are discarded during validation
-      })
+  describe('saveToLocalStorage', () => {
+    it('saves basketItems to localStorage when accessible', () => {
+      // Arrange: localStorage is accessible, prepare valid basketItems
+      // Act: Call saveToLocalStorage(basketItems)
+      // Assert: localStorage['basket'] contains serialized basketItems
+    })
 
-      it('discards invalid entries and hydrates with valid items only', () => {
-        // Arrange: Pre-populate localStorage with mix of valid and invalid items
-        // Act: Trigger the store initialization and hydration lifecycle
-        // Assert: Store contains only valid items with required keys, invalid entries discarded
-      })
+    it('calls saveToSessionStorage when localStorage throws error', () => {
+      // Arrange: Mock localStorage.setItem to throw error
+      // Act: Call saveToLocalStorage(basketItems)
+      // Assert: saveToSessionStorage is called
+    })
+  })
+
+  describe('saveToSessionStorage', () => {
+    it('saves to sessionStorage when accessible', () => {
+      // Arrange: sessionStorage is accessible, prepare valid basketItems
+      // Act: Call saveToSessionStorage(basketItems)
+      // Assert: sessionStorage['basket'] contains serialized basketItems, storageFallback is 'sessionStorage'
+    })
+
+    it('sets storageFallback to none when sessionStorage throws error', () => {
+      // Arrange: Mock sessionStorage.setItem to throw error
+      // Act: Call saveToSessionStorage(basketItems)
+      // Assert: storageFallback is 'none', does nothing
+    })
+  })
+
+  describe('loadFromLocalStorage', () => {
+    it('returns localStorage payload when accessible', () => {
+      // Arrange: localStorage is accessible, contains valid data
+      // Act: Call loadFromLocalStorage()
+      // Assert: Returns localStorage['basket'] payload
+    })
+
+    it('calls loadFromSessionStorage when localStorage throws error', () => {
+      // Arrange: Mock localStorage.getItem to throw error
+      // Act: Call loadFromLocalStorage()
+      // Assert: loadFromSessionStorage is called
+    })
+
+    it('returns empty array when payload is invalid or missing', () => {
+      // Arrange: localStorage is accessible, payload is invalid or missing
+      // Act: Call loadFromLocalStorage()
+      // Assert: Returns empty array
+    })
+  })
+
+  describe('loadFromSessionStorage', () => {
+    it('returns sessionStorage payload when accessible', () => {
+      // Arrange: sessionStorage is accessible, contains valid data
+      // Act: Call loadFromSessionStorage()
+      // Assert: Returns sessionStorage['basket'] payload
+    })
+
+    it('returns empty array and sets storageFallback to none when throws error', () => {
+      // Arrange: Mock sessionStorage.getItem to throw error
+      // Act: Call loadFromSessionStorage()
+      // Assert: Returns empty array, storageFallback is 'none'
+    })
+  })
+
+  describe('hydrateStore', () => {
+    it('sets hasHydrated to true and populates basket when payload is valid', () => {
+      // Arrange: hasHydrated is false, validatePayload returns true
+      // Act: Call hydrateStore()
+      // Assert: hasHydrated is true, basket contains validated BasketItems from storage
+    })
+
+    it('sets hasHydrated to true and basket to empty Record when payload is invalid', () => {
+      // Arrange: hasHydrated is false, validatePayload returns false
+      // Act: Call hydrateStore()
+      // Assert: hasHydrated is true, basket is empty Record
+    })
+
+    it('requires hasHydrated is false', () => {
+      // Arrange: hasHydrated is true
+      // Act: Call hydrateStore()
+      // Assert: Operation is rejected
+    })
+  })
+
+  describe('Invariants', () => {
+    it('hasHydrated is true if and only if store.basket has been populated from storage', () => {
+      // Arrange: Perform hydration
+      // Act: Check state
+      // Assert: hasHydrated is true only after basket populated from storage
+    })
+
+    it('storageFallback is localStorage when localStorage is accessible', () => {
+      // Arrange: localStorage is accessible
+      // Act: Perform save/load operations
+      // Assert: storageFallback is 'localStorage'
+    })
+
+    it('storageFallback is sessionStorage when localStorage fails but sessionStorage accessible', () => {
+      // Arrange: localStorage throws error, sessionStorage accessible
+      // Act: Perform save/load operations
+      // Assert: storageFallback is 'sessionStorage'
+    })
+
+    it('storageFallback is none when both fail', () => {
+      // Arrange: Both localStorage and sessionStorage throw errors
+      // Act: Perform save/load operations
+      // Assert: storageFallback is 'none'
+    })
+
+    it('gracefully degrades to in-memory Zustand state when storageFallback is none', () => {
+      // Arrange: storageFallback is 'none'
+      // Act: Perform basket operations
+      // Assert: Application functions using in-memory state, user can still check out
     })
   })
 

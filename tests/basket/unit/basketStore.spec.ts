@@ -2,101 +2,161 @@ import { describe, it, expect } from 'vitest'
 
 describe('Basket Store', () => {
 
-  describe('when initializing the store', () => {
-    it('initializes with an empty items array and zero unnecessary cached data', () => {
-      // Arrange: Initialize the Zustand store
-      // Act: Retrieve the current state
-      // Assert: The items array is empty and contains no historical data properties
+  describe('addItem', () => {
+    it('creates new item when productId is not in basket', () => {
+      // Arrange: Basket is empty
+      // Act: Call addItem(productId, quantity, displayPrice, availableStock)
+      // Assert: basket[productId] = { quantity, snapshot: { displayPrice, availableStock } }
+    })
+
+    it('increments quantity when productId is in basket', () => {
+      // Arrange: Basket contains productId with quantity 1
+      // Act: Call addItem(productId, quantity, displayPrice, availableStock)
+      // Assert: basket[productId].quantity = oldQuantity + quantity
+    })
+
+    it('requires quantity > 0', () => {
+      // Arrange: Prepare invalid quantity (0 or negative)
+      // Act: Call addItem with invalid quantity
+      // Assert: Operation is rejected
+    })
+
+    it('requires displayPrice > 0', () => {
+      // Arrange: Prepare invalid displayPrice (0 or negative)
+      // Act: Call addItem with invalid displayPrice
+      // Assert: Operation is rejected
+    })
+
+    it('requires availableStock >= 0', () => {
+      // Arrange: Prepare invalid availableStock (negative)
+      // Act: Call addItem with invalid availableStock
+      // Assert: Operation is rejected
     })
   })
 
-  describe('when adding products', () => {
-    it('adds a new product to the basket with a quantity of 1', () => {
-      // Arrange: Store is empty
-      // Act: Call addProduct with a specific productId
-      // Assert: Store contains one object with the correct productId and a quantity of 1
+  describe('incrementItem', () => {
+    it('increments quantity by 1 when quantity < availableStock', () => {
+      // Arrange: Basket contains productId with quantity 1, availableStock is 3
+      // Act: Call incrementItem(productId)
+      // Assert: basket[productId].quantity = 2
+    })
+
+    it('stops incrementing when quantity == availableStock', () => {
+      // Arrange: Basket contains productId with quantity 3, availableStock is 3
+      // Act: Call incrementItem(productId)
+      // Assert: basket[productId].quantity = 3 (unchanged)
+    })
+
+    it('requires productId is in basket', () => {
+      // Arrange: Basket does not contain productId
+      // Act: Call incrementItem(productId)
+      // Assert: Operation is rejected
     })
   })
 
-  describe('when removing products', () => {
-    it('removes a product entirely from the basket', () => {
-      // Arrange: Store contains a specific productId
-      // Act: Call removeProduct with that productId
-      // Assert: Store no longer contains the object with that productId
+  describe('decrementItem', () => {
+    it('decrements quantity by 1', () => {
+      // Arrange: Basket contains productId with quantity 2
+      // Act: Call decrementItem(productId)
+      // Assert: basket[productId].quantity = 1
+    })
+
+    it('deletes item when quantity is 1', () => {
+      // Arrange: Basket contains productId with quantity 1
+      // Act: Call decrementItem(productId)
+      // Assert: productId is not in basket
+    })
+
+    it('requires productId is in basket', () => {
+      // Arrange: Basket does not contain productId
+      // Act: Call decrementItem(productId)
+      // Assert: Operation is rejected
+    })
+
+    it('requires quantity > 0', () => {
+      // Arrange: Basket contains productId with quantity 0
+      // Act: Call decrementItem(productId)
+      // Assert: Operation is rejected
     })
   })
 
-  describe('when decrementing product quantity', () => {
-    it('decrements a product quantity but strictly stops at 0', () => {
-      // Arrange: Add 1 item
-      // Act: Decrement twice
-      // Assert: Quantity is 0, not -1
+  describe('removeItem', () => {
+    it('deletes item from basket', () => {
+      // Arrange: Basket contains productId
+      // Act: Call removeItem(productId)
+      // Assert: productId is not in basket
+    })
+
+    it('requires productId is in basket', () => {
+      // Arrange: Basket does not contain productId
+      // Act: Call removeItem(productId)
+      // Assert: Operation is rejected
     })
   })
 
-  describe('when incrementing product quantity', () => {
-    it('increments a product quantity but strictly stops at the provided stock limit', () => {
-      // Arrange: Add 1 item, establish a stock limit of 2
-      // Act: Call incrementQuantity twice with a stockLimit parameter of 2
-      // Assert: Quantity is 2, not 3
+  describe('updateItemSnapshot', () => {
+    it('updates snapshot with new displayPrice and availableStock', () => {
+      // Arrange: Basket contains productId with existing snapshot
+      // Act: Call updateItemSnapshot(productId, newDisplayPrice, newAvailableStock)
+      // Assert: basket[productId].snapshot = { displayPrice: newDisplayPrice, availableStock: newAvailableStock }
+    })
+
+    it('requires productId is in basket', () => {
+      // Arrange: Basket does not contain productId
+      // Act: Call updateItemSnapshot(productId, displayPrice, availableStock)
+      // Assert: Operation is rejected
+    })
+
+    it('requires displayPrice > 0', () => {
+      // Arrange: Basket contains productId, prepare invalid displayPrice (0 or negative)
+      // Act: Call updateItemSnapshot(productId, invalidDisplayPrice, availableStock)
+      // Assert: Operation is rejected
+    })
+
+    it('requires availableStock >= 0', () => {
+      // Arrange: Basket contains productId, prepare invalid availableStock (negative)
+      // Act: Call updateItemSnapshot(productId, displayPrice, invalidAvailableStock)
+      // Assert: Operation is rejected
     })
   })
 
-  describe('when calculating derived state', () => {
-    it('calculates the total sum of all item quantities accurately', () => {
-      // Arrange: Add product A with quantity 2, and product B with quantity 3
-      // Act: Call the selectTotalItemsCount selector
-      // Assert: The returned total is 5
+  describe('getTotalItems', () => {
+    it('returns total sum count of all item quantities', () => {
+      // Arrange: Basket has product A with quantity 2, product B with quantity 3
+      // Act: Call getTotalItems()
+      // Assert: Returns 5
+    })
+
+    it('returns 0 when basket is empty', () => {
+      // Arrange: Basket is empty
+      // Act: Call getTotalItems()
+      // Assert: Returns 0
     })
   })
 
-  describe('Edge Cases', () => {
-    describe('when debouncing rapid writes', () => {
-      it('prevents race conditions and excessive re-renders', () => {
-        // Arrange: Configure persistence middleware with debounce
-        // Act: Trigger multiple rapid addProduct calls within debounce window
-        // Assert: Only one localStorage write occurs, preventing race conditions
-      })
+  describe('Invariants', () => {
+    it('maintains quantity >= 0 for all items', () => {
+      // Arrange: Basket contains items
+      // Act: Perform operations
+      // Assert: All basket items have quantity >= 0
     })
 
-    describe('when localStorage write fails due to quota exceeded', () => {
-      it('attempts fallback to session storage', () => {
-        // Arrange: Mock localStorage.setItem to throw quota exceeded error
-        // Act: Trigger basket state update that requires persistence
-        // Assert: Middleware attempts to write to session storage as fallback
-      })
+    it('maintains quantity <= availableStock for all items', () => {
+      // Arrange: Basket contains items
+      // Act: Perform operations (increment, add, update snapshot)
+      // Assert: All basket items have quantity <= availableStock
     })
 
-    describe('when both localStorage and session storage fail', () => {
-      it('gracefully degrades without errors', () => {
-        // Arrange: Mock both localStorage and session storage to throw errors
-        // Act: Trigger basket state update that requires persistence
-        // Assert: Application continues without throwing, basket state updates in memory only
-      })
+    it('maintains displayPrice > 0 for all snapshots', () => {
+      // Arrange: Basket contains items
+      // Act: Perform operations
+      // Assert: All basket snapshots have displayPrice > 0
     })
 
-    describe('when addProduct receives invalid productId format', () => {
-      it('rejects the input', () => {
-        // Arrange: Prepare invalid productId (e.g., empty string, wrong format)
-        // Act: Call addProduct with invalid productId
-        // Assert: Function rejects input and does not add item to basket
-      })
-    })
-
-    describe('when incrementQuantity receives negative quantity', () => {
-      it('rejects the input', () => {
-        // Arrange: Add product to basket
-        // Act: Call incrementQuantity with negative quantity parameter
-        // Assert: Function rejects input and does not modify item quantity
-      })
-    })
-
-    describe('when decrementQuantity receives quantity <= 0', () => {
-      it('rejects the input', () => {
-        // Arrange: Add product to basket with quantity 1
-        // Act: Call decrementQuantity with quantity parameter <= 0
-        // Assert: Function rejects input and does not modify item quantity
-      })
+    it('maintains availableStock >= 0 for all snapshots', () => {
+      // Arrange: Basket contains items
+      // Act: Perform operations
+      // Assert: All basket snapshots have availableStock >= 0
     })
   })
 

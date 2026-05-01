@@ -1,109 +1,198 @@
 import { describe, it, expect } from 'vitest'
 
-describe('Basket UI Controls', () => {
+describe('Basket Controls View Contract', () => {
 
-  describe('when product is not in basket', () => {
-    it('renders the add to basket button', () => {
-      // Arrange: Mock the Zustand store to return an empty items array
-      // Act: Query for the add to basket button
-      // Assert: The button is visible in the document, increment/decrement UI is not visible
+  describe('renderControls', () => {
+    it('does not render controls when availableStock is 0', () => {
+      // Arrange: Mock product with availableStock = 0
+      // Act: Call renderControls()
+      // Assert: No controls are rendered
+    })
+
+    it('renders only add button when product is not in basket', () => {
+      // Arrange: Mock product with availableStock > 0, product not in basket
+      // Act: Call renderControls()
+      // Assert: Only add button is rendered
+    })
+
+    it('renders increment, decrement, remove, quantity display when product is in basket', () => {
+      // Arrange: Mock product with availableStock > 0, product in basket
+      // Act: Call renderControls()
+      // Assert: Increment, decrement, remove buttons and quantity display are rendered
+    })
+
+    it('renders close button when context is basket page', () => {
+      // Arrange: Mock product in basket, context is basket page
+      // Act: Call renderControls()
+      // Assert: Close button (X) is rendered
     })
   })
 
-  describe('when product is in basket', () => {
-    it('renders increment and decrement controls instead of the add button', () => {
-      // Arrange: Mock store with product at quantity 1
-      // Act: Query for quantity controls
-      // Assert: Increment/decrement UI is visible, add button is not
+  describe('renderAddButton', () => {
+    it('renders add button with correct parameters', () => {
+      // Arrange: Mock productId, displayPrice, availableStock
+      // Act: Call renderAddButton()
+      // Assert: Add button is rendered
     })
   })
 
-  describe('when clicking add button', () => {
-    it('dispatches the addProduct action with the correct productId', () => {
-      // Arrange: Mock the Zustand store and spy on the addProduct function, render the add button component
-      // Act: Simulate a user click on the add button
-      // Assert: The mocked addProduct function was called exactly once with the target productId
+  describe('renderIncrementButton', () => {
+    it('renders increment button when quantity < availableStock', () => {
+      // Arrange: Mock product in basket, quantity < availableStock
+      // Act: Call renderIncrementButton()
+      // Assert: Increment button is rendered
     })
   })
 
-  describe('when clicking increment button', () => {
-    it('dispatches the incrementQuantity action with the productId and CMS stock limit', () => {
-      // Arrange: Mock store with quantity 1, pass a CMS stock limit of 5 as a prop, render the component
-      // Act: Simulate a user click on the increment button
-      // Assert: The mocked incrementQuantity function was called with the productId and the stock limit of 5
+  describe('renderDecrementButton', () => {
+    it('renders decrement button when quantity > 0', () => {
+      // Arrange: Mock product in basket, quantity > 0
+      // Act: Call renderDecrementButton()
+      // Assert: Decrement button is rendered
     })
 
-    it('renders in a disabled visual state and blocks clicks when current quantity equals or exceeds the stock limit', () => {
-      // Arrange: Mock store with quantity 5, pass CMS stock limit of 5, render component
-      // Act: Attempt to simulate a user click on the increment button
-      // Assert: The HTML button element possesses the disabled attribute
-      // Assert: The mocked incrementQuantity function was never called
+    it('disables decrement button when quantity === 1', () => {
+      // Arrange: Mock product in basket, quantity === 1
+      // Act: Call renderDecrementButton()
+      // Assert: Decrement button is disabled
     })
-  })
 
-  describe('when clicking decrement button on basket page', () => {
-    it('dispatches decrementQuantity when quantity is greater than 1', () => {
-      // Arrange: quantity is 2
-      // Act: Click decrement
-      // Assert: decrementQuantity is called
+    it('enables decrement button when quantity > 1', () => {
+      // Arrange: Mock product in basket, quantity > 1
+      // Act: Call renderDecrementButton()
+      // Assert: Decrement button is enabled
     })
   })
 
-  describe('when clicking decrement button on other pages', () => {
-    it('dispatches removeProduct when decrementing from 1 to 0', () => {
-      // Arrange: isBasketPage is false, quantity is 1
-      // Act: Click decrement
-      // Assert: removeProduct is called
+  describe('renderRemoveButton', () => {
+    it('renders remove button when product is in basket', () => {
+      // Arrange: Mock product in basket
+      // Act: Call renderRemoveButton()
+      // Assert: Remove button is rendered
     })
   })
 
-  describe('when clicking remove button', () => {
-    it('dispatches removeProduct immediately', () => {
-      // Arrange: isBasketPage is true
-      // Act: Click remove button
-      // Assert: removeProduct is called with productId
+  describe('renderCloseButton', () => {
+    it('renders X close button when context is basket page', () => {
+      // Arrange: Mock product in basket, context is basket page
+      // Act: Call renderCloseButton()
+      // Assert: X close button is rendered
     })
   })
 
-  describe('when rendering on basket page', () => {
-    it('renders the remove button and disables decrement when quantity is 1', () => {
-      // Arrange: Render with isBasketPage true, quantity 1
-      // Assert: Remove button is visible, decrement button is disabled
+  describe('renderQuantityDisplay', () => {
+    it('displays current quantity value', () => {
+      // Arrange: Mock product in basket with quantity
+      // Act: Call renderQuantityDisplay()
+      // Assert: Quantity value is displayed
     })
   })
 
-  describe('when rendering on other pages', () => {
-    it('hides the remove button and allows decrement to reach 0', () => {
-      // Arrange: Render with isBasketPage false, quantity 1
-      // Assert: Remove button is not in DOM, decrement button is enabled
+  describe('handleAddClick', () => {
+    it('calls basketStore.addItem with correct parameters', () => {
+      // Arrange: Mock basketStore.addItem, mock productId, displayPrice, availableStock
+      // Act: Call handleAddClick()
+      // Assert: basketStore.addItem is called with productId, 1, displayPrice, availableStock
     })
   })
 
-  describe('when viewing header cart button', () => {
-    it('consumes the selectTotalItemsCount selector and renders the exact integer in the badge', () => {
-      // Arrange: Mock the store's selectTotalItemsCount to return 7, render the header cart button
-      // Act: Query the DOM for the badge element
-      // Assert: The badge element contains the text 7
-    })
-
-    it('pushes the user to the basket route when the cart icon is clicked', () => {
-      // Arrange: Mock the Next.js useRouter hook, render the header cart button
-      // Act: Simulate a user click on the cart icon
-      // Assert: The mocked router.push function was called with the exact string basket route
+  describe('handleIncrementClick', () => {
+    it('calls basketStore.incrementItem with productId', () => {
+      // Arrange: Mock basketStore.incrementItem, mock productId in basket
+      // Act: Call handleIncrementClick()
+      // Assert: basketStore.incrementItem is called with productId
     })
   })
 
-  describe('when verifying accessibility compliance', () => {
-    it('includes aria-label attributes on all basket control buttons', () => {
-      // Arrange: Render basket control components
-      // Act: Query for button elements
-      // Assert: All buttons have aria-label attributes present
+  describe('handleDecrementClick', () => {
+    it('calls basketStore.decrementItem with productId', () => {
+      // Arrange: Mock basketStore.decrementItem, mock productId in basket
+      // Act: Call handleDecrementClick()
+      // Assert: basketStore.decrementItem is called with productId
+    })
+  })
+
+  describe('handleRemoveClick', () => {
+    it('calls basketStore.removeItem with productId', () => {
+      // Arrange: Mock basketStore.removeItem, mock productId in basket
+      // Act: Call handleRemoveClick()
+      // Assert: basketStore.removeItem is called with productId
+    })
+  })
+
+  describe('syncWithBasketState', () => {
+    it('syncs quantity from basketStore when productId in basket', () => {
+      // Arrange: Mock basketStore with productId in basket
+      // Act: Call syncWithBasketState()
+      // Assert: quantity = basketStore.basket[productId].quantity
     })
 
-    it('uses aria-live region for cart header badge to announce count changes', () => {
-      // Arrange: Mock store with changing item count, render header cart button
-      // Act: Update store to change count
-      // Assert: Cart badge element has aria-live attribute set to polite
+    it('syncs displayPrice from basketStore when productId in basket', () => {
+      // Arrange: Mock basketStore with productId in basket
+      // Act: Call syncWithBasketState()
+      // Assert: displayPrice = basketStore.basket[productId].snapshot.displayPrice
+    })
+
+    it('syncs availableStock from basketStore when productId in basket', () => {
+      // Arrange: Mock basketStore with productId in basket
+      // Act: Call syncWithBasketState()
+      // Assert: availableStock = basketStore.basket[productId].snapshot.availableStock
+    })
+  })
+
+  describe('renderCmsFetchFailedBanner', () => {
+    it('renders banner with message and Retry button when cmsFetchFailed is true', () => {
+      // Arrange: Mock cmsFetchFailed = true
+      // Act: Call renderCmsFetchFailedBanner()
+      // Assert: Banner with message "Check against latest inventory did not succeed." and Retry button is rendered
+    })
+  })
+
+  describe('handleRetryClick', () => {
+    it('re-mounts the page to retry CMS fetch', () => {
+      // Arrange: Mock cmsFetchFailed = true
+      // Act: Call handleRetryClick()
+      // Assert: Page re-mounts to retry CMS fetch
+    })
+  })
+
+  describe('Invariants', () => {
+    it('maintains quantity <= availableStock (enforced by data layer)', () => {
+      // Arrange: Basket controls with quantity and availableStock
+      // Act: Check state
+      // Assert: quantity is always <= availableStock (data layer enforces this invariant)
+    })
+  })
+
+  describe('State', () => {
+    it('maintains productId state', () => {
+      // Arrange: Product is selected
+      // Act: Check state
+      // Assert: productId is set to current product
+    })
+
+    it('maintains quantity state', () => {
+      // Arrange: Product is in basket
+      // Act: Check state
+      // Assert: quantity reflects current basket quantity
+    })
+
+    it('maintains displayPrice state', () => {
+      // Arrange: Product is selected
+      // Act: Check state
+      // Assert: displayPrice is set to product display price
+    })
+
+    it('maintains availableStock state', () => {
+      // Arrange: Product is selected
+      // Act: Check state
+      // Assert: availableStock is set to product available stock
+    })
+
+    it('maintains cmsFetchFailed state', () => {
+      // Arrange: CMS fetch operation
+      // Act: Check state
+      // Assert: cmsFetchFailed is true if CMS fetch failed, false otherwise
     })
   })
 
