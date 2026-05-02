@@ -8,9 +8,11 @@ import { useState } from 'react';
 import { Price } from '@/app/components/ui/Price';
 import { ShoppingCartIcon, CheckIcon } from '@phosphor-icons/react/dist/ssr';
 import { QuantitySelector } from '@/app/components/ui/QuantitySelector';
+import { centsToDisplay } from '@/lib/utils/price';
 
 export function ProductInfo({ product }: { product: Product }) {
   const [preAddQty, setPreAddQty] = useState(1);
+  const displayPrice = centsToDisplay(product.price_data.unit_amount);
   // TODO: Re-implement when new basket store is available
   // const basketItem = useBasketStore(selectBasketItem(product._id));
   // const addItem = useBasketStore((s) => s.addItem);
@@ -64,7 +66,7 @@ export function ProductInfo({ product }: { product: Product }) {
         <p className="type-overline text-accent-500">{product.brand?.name || ''}</p>
         <h1 className="type-section-hed text-headline">{product.name}</h1>
         <div className="flex items-center gap-4">
-          <Price value={product.displayPrice} />
+          <Price value={displayPrice} />
         </div>
         <p className="type-caption text-secondary">SKU: {product.sku}</p>
         <p className={`type-caption ${stockStatus.color}`}>{stockStatus.text}</p>

@@ -7,12 +7,13 @@ import type { Product } from '@/sanity/lib/products/getProductsByVfsKeys';
 import { Price } from '@/app/components/ui/Price';
 import { AddToCartButton } from '@/app/components/ui/AddToCartButton';
 import { urlFor } from '@/sanity/lib/image';
+import { centsToDisplay } from '@/lib/utils/price';
 
 export interface Product {
   _id: string;
   name: string;
   brand: { _id: string; name: string; slug?: { current: string } } | null;
-  displayPrice: number;
+  price_data: { currency: string; unit_amount: number };
   stock?: number;
   image: any;
   slug: { current: string };
@@ -25,6 +26,7 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const imageUrl = product.image ? urlFor(product.image).width(100).height(100).url() : '';
+  const displayPrice = centsToDisplay(product.price_data.unit_amount);
 
   return (
     <article
@@ -50,11 +52,11 @@ export function ProductCard({ product }: ProductCardProps) {
             {product.name}
           </h3>
           <div className="mt-auto flex items-center justify-between pt-2">
-            <Price value={product.displayPrice} />
+            <Price value={displayPrice} />
             <AddToCartButton
               productId={product._id}
               name={product.name}
-              displayPrice={product.displayPrice}
+              displayPrice={displayPrice}
               stock={product.stock ?? 99}
               imageUrl={imageUrl}
               slug={product.slug.current}

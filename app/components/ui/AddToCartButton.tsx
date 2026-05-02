@@ -7,7 +7,7 @@ import { ShoppingCartIcon } from "@phosphor-icons/react";
 interface AddToCartButtonProps {
   productId: string;
   name: string;
-  displayPrice: number;
+  displayPrice: number; // Display price in dollars (converted from price_data.unit_amount)
   stock: number;
   imageUrl: string;
   slug: string;

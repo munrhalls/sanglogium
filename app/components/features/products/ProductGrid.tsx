@@ -6,7 +6,7 @@ interface Product {
   _id: string;
   name: string;
   brand: { _id: string; name: string; slug?: { current: string } } | null;
-  displayPrice: number;
+  price_data: { currency: string; unit_amount: number };
   image: any;
   slug: { current: string };
 }

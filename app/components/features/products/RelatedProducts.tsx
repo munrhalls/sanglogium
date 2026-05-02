@@ -4,12 +4,13 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { urlFor } from '@/sanity/lib/image';
+import { centsToDisplay } from '@/lib/utils/price';
 
 interface RelatedProduct {
   _id: string;
   name: string;
   brand: { _id: string; name: string } | null;
-  displayPrice: number;
+  price_data: { currency: string; unit_amount: number };
   image: any;
   slug: { current: string };
 }
@@ -84,7 +85,7 @@ export function RelatedProducts({ products, currentProductName }: RelatedProduct
                 {product.brand && (
                   <p className="type-metadata">{product.brand.name}</p>
                 )}
-                <p className="type-price">${product.displayPrice.toFixed(2)}</p>
+                <p className="type-price">${centsToDisplay(product.price_data.unit_amount).toFixed(2)}</p>
               </div>
             </Link>
           </article>
