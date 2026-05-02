@@ -8,7 +8,7 @@ export interface AutocompleteProduct {
   _id: string;
   name: string;
   brand: { _id: string; name: string; slug: string } | null;
-  displayPrice: number;
+  price_data: { currency: string; unit_amount: number };
   slug: { current: string };
   image: any;
 }
@@ -17,7 +17,7 @@ export interface SearchProduct {
   _id: string;
   name: string;
   brand: { _id: string; name: string; slug: string } | null;
-  displayPrice: number;
+  price_data: { currency: string; unit_amount: number };
   stock: number;
   reservedStock: number;
   availableStock: number;
@@ -42,7 +42,7 @@ export async function searchProductsAutocomplete(query: string): Promise<Autocom
     )] {
       _id,
       name,
-      displayPrice,
+      price_data,
       stripePriceId,
       "brand": brand->{ _id, name, slug },
       slug,
@@ -68,7 +68,7 @@ export async function searchProductsFull(query: string, sort?: string): Promise<
   let orderClause = 'name asc';
   if (sort) {
     const [field, dir] = sort.split(':');
-    if (['name', 'displayPrice'].includes(field) && ['asc', 'desc'].includes(dir)) {
+    if (['name', 'unit_amount'].includes(field) && ['asc', 'desc'].includes(dir)) {
       orderClause = `${field} ${dir}`;
     }
   }
@@ -83,7 +83,7 @@ export async function searchProductsFull(query: string, sort?: string): Promise<
     )] {
       _id,
       name,
-      displayPrice,
+      price_data,
       stock,
       reservedStock,
       "availableStock": stock - reservedStock,

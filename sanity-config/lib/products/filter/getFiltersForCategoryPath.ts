@@ -42,26 +42,26 @@ const getFiltersForCategoryPathFn = async (catalogueKeys: string[]): Promise<Fil
 
   // Query price range using GROQ order and slicing (efficient alternative to aggregation)
   const minPriceQuery = await sanityFetch<{
-    displayPrice: number | null;
+    price_data: { unit_amount: number } | null;
   }>({
-    query: groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0 && defined(displayPrice)] | order(displayPrice asc)[0] {
-      displayPrice
+    query: groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0 && defined(price_data)] | order(price_data.unit_amount asc)[0] {
+      price_data
     }`,
     params: { keys: catalogueKeys }
   });
 
   const maxPriceQuery = await sanityFetch<{
-    displayPrice: number | null;
+    price_data: { unit_amount: number } | null;
   }>({
-    query: groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0 && defined(displayPrice)] | order(displayPrice desc)[0] {
-      displayPrice
+    query: groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0 && defined(price_data)] | order(price_data.unit_amount desc)[0] {
+      price_data
     }`,
     params: { keys: catalogueKeys }
   });
 
   const priceRange = {
-    minPrice: minPriceQuery?.displayPrice ?? null,
-    maxPrice: maxPriceQuery?.displayPrice ?? null
+    minPrice: minPriceQuery?.price_data?.unit_amount ?? null,
+    maxPrice: maxPriceQuery?.price_data?.unit_amount ?? null
   };
 
   // Query maximum stock for slider upper bound
@@ -77,7 +77,7 @@ const getFiltersForCategoryPathFn = async (catalogueKeys: string[]): Promise<Fil
   // Query products to extract unique filter values
   const products = await sanityFetch<any[]>({
     query: groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0] {
-      displayPrice,
+      price_data,
       brand->{name},
       stock
     }`,

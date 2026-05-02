@@ -5,7 +5,7 @@ export interface RelatedProduct {
   _id: string;
   name: string;
   brand: { _id: string; name: string } | null;
-  displayPrice: number;
+  price_data: { currency: string; unit_amount: number };
   image: any;
   slug: { current: string };
 }
@@ -24,14 +24,14 @@ export async function getRelatedProducts(
       && _id != $currentId
       && count(catalogueLocationKeys[@ in $catalogueKeys]) > 0
       && defined(stripePriceId)
-    ] | order(displayPrice asc) [0...$limit] {
+    ] | order(price_data.unit_amount asc) [0...$limit] {
       _id,
       name,
       brand {
         _id,
         name
       },
-      displayPrice,
+      price_data,
       stripePriceId,
       image,
       slug {

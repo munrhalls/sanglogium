@@ -86,12 +86,12 @@ export class FilterBuilder {
     const priceConditions = values.map(value => {
       if (value.startsWith('min:')) {
         const minPrice = value.split(':')[1];
-        return `displayPrice >= ${minPrice}`;
+        return `price_data.unit_amount >= ${minPrice}`;
       } else if (value.startsWith('max:')) {
         const maxPrice = value.split(':')[1];
-        return `displayPrice <= ${maxPrice}`;
+        return `price_data.unit_amount <= ${maxPrice}`;
       }
-      return `displayPrice == ${value}`;
+      return `price_data.unit_amount == ${value}`;
     }).join(' && ');
     const clause = `&& (${priceConditions})`;
     console.log('price clause:', clause);
@@ -106,12 +106,12 @@ export class FilterBuilder {
     const priceConditions = values.map(value => {
       if (value.startsWith('min:')) {
         const minPrice = value.split(':')[1];
-        return `displayPrice >= ${minPrice}`;
+        return `price_data.unit_amount >= ${minPrice}`;
       } else if (value.startsWith('max:')) {
         const maxPrice = value.split(':')[1];
-        return `displayPrice <= ${maxPrice}`;
+        return `price_data.unit_amount <= ${maxPrice}`;
       }
-      return `displayPrice == ${value}`;
+      return `price_data.unit_amount == ${value}`;
     }).join(' && ');
     const clause = `&& (${priceConditions})`;
     console.log('priceRange clause:', clause);

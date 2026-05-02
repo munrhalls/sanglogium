@@ -18,7 +18,7 @@ const withCache = <T extends (...args: any[]) => any>(fn: T): T => {
 };
 
 // Product type using generated Sanity types - brand is now reference (SC8 complete)
-export type Product = Pick<SanityProduct, '_id' | 'name' | 'displayPrice' | 'image' | 'catalogueLocationKeys' | 'brand'> & {
+export type Product = Pick<SanityProduct, '_id' | 'name' | 'price_data' | 'image' | 'catalogueLocationKeys' | 'brand'> & {
   slug: { current: string };
   stock: number;
   reservedStock: number;
@@ -62,7 +62,7 @@ const getProductsByVfsKeysFn = async ({
         name,
         slug
       },
-      displayPrice,
+      price_data,
       stripePriceId,
       stock,
       reservedStock,

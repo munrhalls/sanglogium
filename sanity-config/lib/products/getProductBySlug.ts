@@ -5,7 +5,7 @@ export interface Product {
   _id: string;
   name: string;
   brand: { _id: string; name: string; slug: string } | null;
-  displayPrice: number;
+  price_data: { currency: string; unit_amount: number };
   stock: number;
   reservedStock: number;
   sku: string;
@@ -24,7 +24,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
       _id,
       name,
       brand->{ _id, name, slug },
-      displayPrice,
+      price_data,
       stock,
       sku,
       stripePriceId,

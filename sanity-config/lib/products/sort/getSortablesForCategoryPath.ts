@@ -26,8 +26,8 @@ const getSortablesForCategoryPathFn = async (catalogueKeys: string[]): Promise<S
   // Default sort options available for all categories
   const defaultSorts: SortOption[] = [
     { name: 'featured', displayName: 'Featured', field: 'featured', direction: 'desc' },
-    { name: 'price-asc', displayName: 'Price: Low to High', field: 'displayPrice', direction: 'asc' },
-    { name: 'price-desc', displayName: 'Price: High to Low', field: 'displayPrice', direction: 'desc' },
+    { name: 'price-asc', displayName: 'Price: Low to High', field: 'unit_amount', direction: 'asc' },
+    { name: 'price-desc', displayName: 'Price: High to Low', field: 'unit_amount', direction: 'desc' },
     { name: 'name-asc', displayName: 'Name: A to Z', field: 'name', direction: 'asc' },
     { name: 'name-desc', displayName: 'Name: Z to A', field: 'name', direction: 'desc' },
   ];

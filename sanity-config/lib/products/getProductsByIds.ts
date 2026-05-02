@@ -12,7 +12,7 @@ export async function getProductsByIds(ids: string[]): Promise<Product[]> {
       _id,
       name,
       brand->{ _id, name, slug },
-      displayPrice,
+      price_data,
       stock,
       reservedStock,
       sku,
