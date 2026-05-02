@@ -18,7 +18,7 @@ export default function SandboxPage() {
             _id: '1',
             name: mockFeaturedData.title,
             brand: mockFeaturedData.overline,
-            displayPrice: mockFeaturedData.price,
+            price_data: { currency: 'usd', unit_amount: 29999 },
             image: {
               asset: {
                 url: mockFeaturedData.imageUrl

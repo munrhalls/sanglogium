@@ -36,8 +36,8 @@ export function SortDropdown() {
         className="input-select"
       >
         <option value="featured">Featured</option>
-        <option value="displayPrice:asc">Price: Low to High</option>
-        <option value="displayPrice:desc">Price: High to Low</option>
+        <option value="price_data.unit_amount:asc">Price: Low to High</option>
+        <option value="price_data.unit_amount:desc">Price: High to Low</option>
         <option value="name:asc">Name: A-Z</option>
         <option value="name:desc">Name: Z-A</option>
       </select>
