@@ -140,9 +140,9 @@ export async function processInline(raw: unknown): Promise<ProcessResult> {
     // 7. Fetch updated products
     const productIds = request.basketReservation.map((p) => p._id)
     const products = (await sanity.fetch(
-      `*[_id in $ids]{ _id, stock, reservedStock, displayPrice }`,
+      `*[_id in $ids]{ _id, stock, reservedStock, price_data }`,
       { ids: productIds }
-    )) as Array<{ _id: string; stock: number; reservedStock: number; displayPrice: number }>
+    )) as Array<{ _id: string; stock: number; reservedStock: number; price_data: { currency: string; unit_amount: number } }>
 
     const response: BasketReservationResponse = {
       ok: true,
@@ -150,7 +150,7 @@ export async function processInline(raw: unknown): Promise<ProcessResult> {
       ttl: RESERVATION_TTL_SEC,
       products: products.map((p) => ({
         id: p._id,
-        realPrice: p.displayPrice,
+        realPrice: p.price_data.unit_amount / 100,
         reservedStock: p.reservedStock,
         stock: p.stock,
       })),
