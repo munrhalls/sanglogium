@@ -10,7 +10,7 @@ import { MobileFilterDrawer } from '@/app/components/features/filters/MobileFilt
 import type { SanityProduct } from '@/sanity/lib/products/getProductsByVfsKeys';
 
 // Product type aligned with Sanity generated types - brand is now reference (SC8)
-type Product = Pick<SanityProduct, '_id' | 'name' | 'displayPrice' | 'image'> & {
+type Product = Pick<SanityProduct, '_id' | 'name' | 'price_data' | 'image'> & {
   brand: { _id: string; name: string; slug?: { current: string } } | null;
   slug: { current: string };
 };

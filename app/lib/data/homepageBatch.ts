@@ -69,7 +69,7 @@ export interface FeaturedProduct {
     name: string;
     slug: string;
   };
-  displayPrice: number;
+  price_data: { currency: string; unit_amount: number };
   stock: number;
   slug: string;
   productPromo: string;
@@ -89,7 +89,7 @@ export interface SpotlightProduct {
     name: string;
     slug: string;
   };
-  displayPrice: number;
+  price_data: { currency: string; unit_amount: number };
   stock: number;
   slug: string;
   image: { asset: { url: string }; alt?: string };
@@ -112,7 +112,7 @@ export interface IemProduct {
     name: string;
     slug: string;
   };
-  displayPrice: number;
+  price_data: { currency: string; unit_amount: number };
   slug: string;
   stock: number;
   imageUrl: string;
@@ -127,7 +127,7 @@ export interface NewestReleaseProduct {
     name: string;
     slug: string;
   };
-  displayPrice: number;
+  price_data: { currency: string; unit_amount: number };
   stock: number;
   slug: string;
   image: { asset: { url: string }; alt?: string };
@@ -149,7 +149,7 @@ export interface DacProduct {
     name: string;
     slug: string;
   };
-  displayPrice: number;
+  price_data: { currency: string; unit_amount: number };
   stock: number;
   slug: string;
   image: { asset: { url: string }; alt?: string };
@@ -163,7 +163,7 @@ export interface AccessoryProduct {
     name: string;
     slug: string;
   };
-  displayPrice: number;
+  price_data: { currency: string; unit_amount: number };
   stock: number;
   slug: string;
   imageUrl: string;
@@ -204,7 +204,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
         _id,
         name,
         brand->{ _id, name, slug },
-        displayPrice,
+        price_data,
         stock,
         stripePriceId,
         "slug": slug.current,
@@ -221,7 +221,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
         _id,
         name,
         brand->{ _id, name, slug },
-        displayPrice,
+        price_data,
         stock,
         stripePriceId,
         "slug": slug.current,
@@ -239,7 +239,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
         _id,
         name,
         brand->{ _id, name, slug },
-        displayPrice,
+        price_data,
         stock,
         stripePriceId,
         "slug": slug.current,
@@ -257,7 +257,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
         _id,
         name,
         brand->{ _id, name, slug },
-        displayPrice,
+        price_data,
         stock,
         stripePriceId,
         "slug": slug.current,
@@ -271,7 +271,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
       _id,
       name,
       brand->{ _id, name, slug },
-      displayPrice,
+      price_data,
       stock,
       stripePriceId,
       "slug": slug.current,
@@ -288,7 +288,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
         _id,
         name,
         brand->{ _id, name, slug },
-        displayPrice,
+        price_data,
         stock,
         stripePriceId,
         "slug": slug.current,
@@ -302,7 +302,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
       _id,
       name,
       brand->{ _id, name, slug },
-      displayPrice,
+      price_data,
       stock,
       stripePriceId,
       "slug": slug.current,
@@ -314,7 +314,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
       _id,
       name,
       brand->{ _id, name, slug },
-      displayPrice,
+      price_data,
       stock,
       stripePriceId,
       "slug": slug.current,
@@ -327,7 +327,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
       _id,
       name,
       brand->{ _id, name, slug },
-      displayPrice,
+      price_data,
       stock,
       stripePriceId,
       "slug": slug.current,

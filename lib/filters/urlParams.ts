@@ -38,10 +38,10 @@ export function parseFilterParams(searchParams: URLSearchParams) {
 
 /**
  * Parse URL search params into filter state
- * URL format: ?sort=displayPrice:asc&f=brand:sennheiser&f=driverType:dynamic
+ * URL format: ?sort=price_data.unit_amount:asc&f=brand:sennheiser&f=driverType:dynamic
  */
 export function parseFilterState(searchParams: ReadonlyURLSearchParams | URLSearchParams): FilterState {
-  // Sort: ?sort=displayPrice:asc
+  // Sort: ?sort=price_data.unit_amount:asc
   const sort = searchParams.get('sort') || 'featured';
 
   // Filters: ?f=brand:sennheiser&f=driverType:dynamic
