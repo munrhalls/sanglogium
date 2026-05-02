@@ -9,7 +9,8 @@ const nextConfig: NextConfig = {
   transpilePackages: ["@sanity/ui", "@sanity/icons", "next-sanity"],
   trailingSlash: false,
   env: {
-    NEXT_PUBLIC_SANITY_DATASET: process.env.NODE_ENV === 'production' ? (process.env.NEXT_PUBLIC_SANITY_DATASET || 'production') : 'test',
+      NEXT_PUBLIC_SANITY_DATASET: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
+
   },
   // Suppress Next.js image warnings in development
   ...(process.env.NODE_ENV === 'development' && {
