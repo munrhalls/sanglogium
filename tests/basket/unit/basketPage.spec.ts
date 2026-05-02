@@ -134,10 +134,10 @@ describe('Basket Page Contracts', () => {
 
   describe('CMS Data Processor Contract', () => {
     describe('processCmsData', () => {
-      it('returns processed displayPrice and availableStock when data is valid', () => {
+      it('returns processed price_data.unit_amount / 100 and availableStock when data is valid', () => {
         // Arrange: cmsResponse is valid with price_data and stock/reservedStock
         // Act: Call processCmsData(cmsResponse)
-        // Assert: Returns Array with processed displayPrice and availableStock (stock - reservedStock)
+        // Assert: Returns Array with processed price_data.unit_amount / 100 and availableStock (stock - reservedStock)
       })
 
       it('returns empty array and sets cmsFetchFailed when price_data is missing or invalid', () => {
@@ -157,15 +157,15 @@ describe('Basket Page Contracts', () => {
   describe('Basket Item Comparator Contract', () => {
     describe('compare', () => {
       it('keeps item in basket store unchanged when no discrepancies', () => {
-        // Arrange: basketItems and syncedCmsItems have matching displayPrice and availableStock
+        // Arrange: basketItems and syncedCmsItems have matching price_data.unit_amount / 100 and availableStock
         // Act: Call compare(basketItems, syncedCmsItems)
         // Assert: item in basket store unchanged
       })
 
-      it('adds to discrepancies array and updates basket store snapshot when displayPrice differs', () => {
-        // Arrange: basketItems and syncedCmsItems have different displayPrice
+      it('adds to discrepancies array and updates basket store snapshot when price_data.unit_amount / 100 differs', () => {
+        // Arrange: basketItems and syncedCmsItems have different price_data.unit_amount / 100
         // Act: Call compare(basketItems, syncedCmsItems)
-        // Assert: adds to discrepancies array with {basketItemId, discrepancies: {oldDisplayPrice, newDisplayPrice}}, updates basket store snapshot to new displayPrice, hasDiscrepancies is true
+        // Assert: adds to discrepancies array with {basketItemId, discrepancies: {oldprice_data.unit_amount / 100, newprice_data.unit_amount / 100}}, updates basket store snapshot to new price_data.unit_amount / 100, hasDiscrepancies is true
       })
 
       it('adds to discrepancies array, updates snapshot, and adjusts quantity when availableStock drops and oldQuantity > newAvailableStock', () => {

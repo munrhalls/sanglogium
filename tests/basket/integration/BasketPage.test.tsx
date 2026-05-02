@@ -3,10 +3,10 @@ import { describe, it, expect } from 'vitest'
 describe('Basket Page View Contract', () => {
 
   describe('renderBasketItems', () => {
-    it('renders basket items immediately with current displayPrice and availableStock', () => {
+    it('renders basket items immediately with current price and availableStock', () => {
       // Arrange: Mock basketItemsArray with valid items
       // Act: Call renderBasketItems(basketItems)
-      // Assert: Basket items are rendered with displayPrice and availableStock from snapshot
+      // Assert: Basket items are rendered with price and availableStock from snapshot
     })
 
     it('renders basket controls per basket item', () => {
@@ -29,16 +29,16 @@ describe('Basket Page View Contract', () => {
   })
 
   describe('renderWithDiscrepancies', () => {
-    it('renders basket items with old displayPrice and oldAvailableStock struck through', () => {
-      // Arrange: Mock basketItems with oldDisplayPrice, oldAvailableStock, displayPrice, availableStock
+    it('renders basket items with old price and oldAvailableStock struck through', () => {
+      // Arrange: Mock basketItems with oldPrice, oldAvailableStock, price, availableStock
       // Act: Call renderWithDiscrepancies(basketItems)
-      // Assert: Old displayPrice and oldAvailableStock are struck through
+      // Assert: Old price and oldAvailableStock are struck through
     })
 
-    it('displays new displayPrice and availableStock to the right of struck-through values', () => {
+    it('displays new price and availableStock to the right of struck-through values', () => {
       // Arrange: Mock basketItems with discrepancies
       // Act: Call renderWithDiscrepancies(basketItems)
-      // Assert: New displayPrice and availableStock are displayed to the right
+      // Assert: New price and availableStock are displayed to the right
     })
 
     it('sets isDiscrepancyBannerVisible to true', () => {

@@ -5,13 +5,13 @@ describe('Basket Store', () => {
   describe('addItem', () => {
     it('creates new item when productId is not in basket', () => {
       // Arrange: Basket is empty
-      // Act: Call addItem(productId, quantity, displayPrice, availableStock)
-      // Assert: basket[productId] = { quantity, snapshot: { displayPrice, availableStock } }
+      // Act: Call addItem(productId, quantity, price_data.unit_amount / 100, availableStock)
+      // Assert: basket[productId] = { quantity, snapshot: { price_data.unit_amount / 100, availableStock } }
     })
 
     it('increments quantity when productId is in basket', () => {
       // Arrange: Basket contains productId with quantity 1
-      // Act: Call addItem(productId, quantity, displayPrice, availableStock)
+      // Act: Call addItem(productId, quantity, price_data.unit_amount / 100, availableStock)
       // Assert: basket[productId].quantity = oldQuantity + quantity
     })
 
@@ -21,9 +21,9 @@ describe('Basket Store', () => {
       // Assert: Operation is rejected
     })
 
-    it('requires displayPrice > 0', () => {
-      // Arrange: Prepare invalid displayPrice (0 or negative)
-      // Act: Call addItem with invalid displayPrice
+    it('requires price_data.unit_amount / 100 > 0', () => {
+      // Arrange: Prepare invalid price_data.unit_amount / 100 (0 or negative)
+      // Act: Call addItem with invalid price_data.unit_amount / 100
       // Assert: Operation is rejected
     })
 
@@ -95,27 +95,27 @@ describe('Basket Store', () => {
   })
 
   describe('updateItemSnapshot', () => {
-    it('updates snapshot with new displayPrice and availableStock', () => {
+    it('updates snapshot with new price_data.unit_amount / 100 and availableStock', () => {
       // Arrange: Basket contains productId with existing snapshot
-      // Act: Call updateItemSnapshot(productId, newDisplayPrice, newAvailableStock)
-      // Assert: basket[productId].snapshot = { displayPrice: newDisplayPrice, availableStock: newAvailableStock }
+      // Act: Call updateItemSnapshot(productId, newprice_data.unit_amount / 100, newAvailableStock)
+      // Assert: basket[productId].snapshot = { price_data.unit_amount / 100: newprice_data.unit_amount / 100, availableStock: newAvailableStock }
     })
 
     it('requires productId is in basket', () => {
       // Arrange: Basket does not contain productId
-      // Act: Call updateItemSnapshot(productId, displayPrice, availableStock)
+      // Act: Call updateItemSnapshot(productId, price_data.unit_amount / 100, availableStock)
       // Assert: Operation is rejected
     })
 
-    it('requires displayPrice > 0', () => {
-      // Arrange: Basket contains productId, prepare invalid displayPrice (0 or negative)
-      // Act: Call updateItemSnapshot(productId, invalidDisplayPrice, availableStock)
+    it('requires price_data.unit_amount / 100 > 0', () => {
+      // Arrange: Basket contains productId, prepare invalid price_data.unit_amount / 100 (0 or negative)
+      // Act: Call updateItemSnapshot(productId, invalidprice_data.unit_amount / 100, availableStock)
       // Assert: Operation is rejected
     })
 
     it('requires availableStock >= 0', () => {
       // Arrange: Basket contains productId, prepare invalid availableStock (negative)
-      // Act: Call updateItemSnapshot(productId, displayPrice, invalidAvailableStock)
+      // Act: Call updateItemSnapshot(productId, price_data.unit_amount / 100, invalidAvailableStock)
       // Assert: Operation is rejected
     })
   })
@@ -147,10 +147,10 @@ describe('Basket Store', () => {
       // Assert: All basket items have quantity <= availableStock
     })
 
-    it('maintains displayPrice > 0 for all snapshots', () => {
+    it('maintains price_data.unit_amount / 100 > 0 for all snapshots', () => {
       // Arrange: Basket contains items
       // Act: Perform operations
-      // Assert: All basket snapshots have displayPrice > 0
+      // Assert: All basket snapshots have price_data.unit_amount / 100 > 0
     })
 
     it('maintains availableStock >= 0 for all snapshots', () => {

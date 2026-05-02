@@ -30,7 +30,7 @@ describe('Basket Controls View Contract', () => {
 
   describe('renderAddButton', () => {
     it('renders add button with correct parameters', () => {
-      // Arrange: Mock productId, displayPrice, availableStock
+      // Arrange: Mock productId, price_data, availableStock
       // Act: Call renderAddButton()
       // Assert: Add button is rendered
     })
@@ -90,9 +90,9 @@ describe('Basket Controls View Contract', () => {
 
   describe('handleAddClick', () => {
     it('calls basketStore.addItem with correct parameters', () => {
-      // Arrange: Mock basketStore.addItem, mock productId, displayPrice, availableStock
+      // Arrange: Mock basketStore.addItem, mock productId, price_data, availableStock
       // Act: Call handleAddClick()
-      // Assert: basketStore.addItem is called with productId, 1, displayPrice, availableStock
+      // Assert: basketStore.addItem is called with productId, 1, price_data, availableStock
     })
   })
 
@@ -127,10 +127,10 @@ describe('Basket Controls View Contract', () => {
       // Assert: quantity = basketStore.basket[productId].quantity
     })
 
-    it('syncs displayPrice from basketStore when productId in basket', () => {
+    it('syncs price_data from basketStore when productId in basket', () => {
       // Arrange: Mock basketStore with productId in basket
       // Act: Call syncWithBasketState()
-      // Assert: displayPrice = basketStore.basket[productId].snapshot.displayPrice
+      // Assert: price_data = basketStore.basket[productId].snapshot.price_data
     })
 
     it('syncs availableStock from basketStore when productId in basket', () => {
@@ -177,10 +177,10 @@ describe('Basket Controls View Contract', () => {
       // Assert: quantity reflects current basket quantity
     })
 
-    it('maintains displayPrice state', () => {
+    it('maintains price_data state', () => {
       // Arrange: Product is selected
       // Act: Check state
-      // Assert: displayPrice is set to product display price
+      // Assert: price_data is set to product price
     })
 
     it('maintains availableStock state', () => {

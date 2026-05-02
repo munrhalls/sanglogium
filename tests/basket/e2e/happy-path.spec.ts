@@ -11,7 +11,7 @@ test.describe('Commercial Happy Path: Basket Domain Boundary', () => {
     // Assert: Verify view cart button is not rendered (basket is empty)
 
     // Act: Click the 'Add to Basket' button
-    // Assert: Verify basketStore.addItem is called with productId, quantity=1, displayPrice, availableStock
+    // Assert: Verify basketStore.addItem is called with productId, quantity=1, price_data.unit_amount / 100, availableStock
     // Assert: Verify basket state is updated with new item
     // Assert: Verify saveToLocalStorage is called
     // Assert: Verify localStorage['basket'] contains serialized basket item
@@ -27,7 +27,7 @@ test.describe('Commercial Happy Path: Basket Domain Boundary', () => {
     // Assert: Verify server action fetchProducts is called with product IDs
     // Assert: Verify CMS response is processed through CMS Data Processor
     // Assert: Verify Basket Item Comparator compares basket items with synced CMS items
-    // Assert: Verify basket items are rendered immediately with displayPrice and availableStock from snapshot
+    // Assert: Verify basket items are rendered immediately with price_data.unit_amount / 100 and availableStock from snapshot
     // Assert: Verify basket controls are rendered per item (add, increment, decrement, remove)
     // Assert: Verify decrement button is disabled when quantity === 1
 
@@ -84,8 +84,8 @@ test.describe('Commercial Happy Path: Basket Domain Boundary', () => {
     // Act: Mock CMS to return price discrepancy
     // Act: Refresh basket page
     // Assert: Verify hasDiscrepancies is set to true
-    // Assert: Verify items are rendered with old displayPrice struck through
-    // Assert: Verify new displayPrice is displayed to the right
+    // Assert: Verify items are rendered with old price_data.unit_amount / 100 struck through
+    // Assert: Verify new price_data.unit_amount / 100 is displayed to the right
     // Assert: Verify discrepancy banner is rendered with close button
 
     // Act: Close discrepancy banner
