@@ -14,22 +14,24 @@ Criteria: 0 unnecessary verbiage, 0 unnecessary characters
 
 ## 2. Scope Boundaries
 In Scope:
+- User perspective - what user sees, can do and experiences
 - [Core capability 1]
 - [Core capability 2]
 - [Core capability 3]
 
 Out of Scope:
+- Anything outside user perspective - what happens under the hood, how it's implemented, etc.
 - [Explicitly excluded edge case 1]
 - [Explicitly excluded feature request 2]
 
 ## 3. Requirements & Definition of Done (DoD)
 
-### DoD [1]: [when] [activity on location], I want to [action]
+### [ ] DoD [1]: [when] [activity on location], I want to [action]
 - When I go to [page], I see [element]
 - I [action]
 - [result]
 
-### DoD [2]: [when] [activity on location], I want to [action]
+### [ ] DoD [2]: [when] [activity on location], I want to [action]
 - When I go to [page], I see [element]
 - I [action]
 - [result]
