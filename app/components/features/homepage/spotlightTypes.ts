@@ -6,7 +6,7 @@ export interface SpotlightProduct {
     name: string;
     slug: string;
   };
-  displayPrice: number;
+  price_data: { currency: string; unit_amount: number };
   image: {
     asset: {
       url: string;

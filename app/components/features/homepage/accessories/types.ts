@@ -7,7 +7,7 @@
   };
   readonly name: string;
   readonly slug: string;
-  readonly displayPrice: number;
+  readonly price_data: { currency: string; unit_amount: number };
   readonly imageUrl: string;
   readonly category?: string;
 }

@@ -2,13 +2,14 @@ import { cn } from "@/lib/utils/tailwind";
 import { Image } from "next-sanity/image";
 import { urlFor } from "@/sanity/lib/image";
 import { AddToCartButton } from "@/app/components/ui/AddToCartButton";
+import { centsToDisplay } from "@/lib/utils/price";
 
 export default function DacCard({ item, idx }: { item: any; idx: number }) {
   if (!item) return null;
 
   const productName = item.name || "Unknown Product";
   const brandName = item.brand?.name || "Generic";
-  const price = item.displayPrice ? `$${item.displayPrice}` : "Contact for Price";
+  const price = item.price_data ? `$${centsToDisplay(item.price_data.unit_amount)}` : "Contact for Price";
 
   return (
   <a href={`/products/${item.slug}`} className="block group">
@@ -38,7 +39,7 @@ export default function DacCard({ item, idx }: { item: any; idx: number }) {
           <AddToCartButton
             productId={item._id}
             name={productName}
-            displayPrice={item.displayPrice ?? 0}
+            displayPrice={item.price_data ? centsToDisplay(item.price_data.unit_amount) : 0}
             stock={item.stock ?? 99}
             imageUrl={item.image?.asset?.url ?? ''}
             slug={item.slug ?? ''}

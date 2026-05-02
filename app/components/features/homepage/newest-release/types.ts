@@ -3,7 +3,7 @@
   readonly tag: string;
   readonly name: string;
   readonly brand: string;
-  readonly displayPrice: number;
+  readonly price_data: { currency: string; unit_amount: number };
   readonly description: string;
   readonly imageUrl: string;
   readonly images: readonly string[];

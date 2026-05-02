@@ -1,5 +1,6 @@
 ﻿import CardMedia from "./CardMedia";
 import CardDetails from "./CardDetails";
+import { centsToDisplay } from "@/lib/utils/price";
 
 interface CardProps {
   product: {
@@ -9,7 +10,7 @@ interface CardProps {
       name: string;
       slug: string;
     };
-    displayPrice: number;
+    price_data: { currency: string; unit_amount: number };
     imageUrl: string;
   };
 }
@@ -21,7 +22,7 @@ export default function Card({ product }: CardProps) {
       <CardDetails
         name={product.name}
         brand={product.brand}
-        price={product.displayPrice}
+        price={centsToDisplay(product.price_data.unit_amount)}
       />
     </div>
   );

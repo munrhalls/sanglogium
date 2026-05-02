@@ -3,6 +3,7 @@ import { Image } from "next-sanity/image"
 import { urlFor } from "@/sanity/lib/image"
 import { IemProduct } from "./getIemProducts"
 import { AddToCartButton } from "@/app/components/ui/AddToCartButton"
+import { centsToDisplay } from "@/lib/utils/price"
 
 export default function IemCard({ product, idx }: { product: IemProduct; idx: number }) {
     if (!product) return null;
@@ -30,12 +31,12 @@ export default function IemCard({ product, idx }: { product: IemProduct; idx: nu
                 </h3>
                 <div className="flex flex-col xs:flex-row xs:items-center justify-between gap-3">
                     <p className="type-price">
-                        ${product.displayPrice}
+                        ${centsToDisplay(product.price_data.unit_amount)}
                     </p>
                     <AddToCartButton
                         productId={product._id}
                         name={product.name}
-                        displayPrice={product.displayPrice}
+                        displayPrice={centsToDisplay(product.price_data.unit_amount)}
                         stock={product.stock ?? 99}
                         imageUrl={product.imageUrl ?? ''}
                         slug={product.slug}

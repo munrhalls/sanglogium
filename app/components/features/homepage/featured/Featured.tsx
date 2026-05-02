@@ -11,6 +11,7 @@ import {
 import FeaturedHeader from "./FeaturedHeader";
 import { FeaturedProduct } from "./getFeaturedProducts";
 import { AddToCartButton } from "@/app/components/ui/AddToCartButton";
+import { centsToDisplay } from "@/lib/utils/price";
 
 interface FeaturedProps {
   featuredData: FeaturedProduct[];
@@ -56,11 +57,11 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
           {product.name}
         </h3>
         <div className="mt-auto flex items-center justify-between pt-2">
-          <p className="type-price">${product.displayPrice}</p>
+          <p className="type-price">${centsToDisplay(product.price_data.unit_amount)}</p>
           <AddToCartButton
             productId={product._id}
             name={product.name}
-            displayPrice={product.displayPrice}
+            displayPrice={centsToDisplay(product.price_data.unit_amount)}
             stock={product.stock ?? 99}
             imageUrl={product.image?.asset?.url ?? ''}
             slug={product.slug}

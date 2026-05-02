@@ -9,7 +9,7 @@ export interface IemProduct {
     name: string;
     slug: string;
   };
-  displayPrice: number;
+  price_data: { currency: string; unit_amount: number };
   stock: number;
   slug: string;
   imageUrl: string;
@@ -20,7 +20,7 @@ const IEMS_QUERY = `*[_type == "homepageData"][0].iemsGallery[]->{
   _id,
   name,
   brand->{ _id, name, slug },
-  displayPrice,
+  price_data,
   stock,
   "slug": slug.current,
   "imageUrl": image.asset->url,

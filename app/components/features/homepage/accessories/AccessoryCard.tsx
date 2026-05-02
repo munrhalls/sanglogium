@@ -3,6 +3,7 @@ import { Image } from "next-sanity/image";
 import { urlFor } from "@/sanity/lib/image";
 import type { AccessoryItem } from "./types";
 import { AddToCartButton } from "@/app/components/ui/AddToCartButton";
+import { centsToDisplay } from "@/lib/utils/price";
 
 export default function AccessoryCard({ item, idx }: { item: AccessoryItem; idx: number }) {
   if (!item) return null;
@@ -35,14 +36,14 @@ export default function AccessoryCard({ item, idx }: { item: AccessoryItem; idx:
             {item.name}
           </h3>
 
-          <p className="type-price">${item.displayPrice}</p>
+          <p className="type-price">${centsToDisplay(item.price_data.unit_amount)}</p>
         </div>
 
         <div className="mt-auto pt-4 border-t border-border-secondary/50">
           <AddToCartButton
             productId={item._id}
             name={item.name}
-            displayPrice={item.displayPrice}
+            displayPrice={centsToDisplay(item.price_data.unit_amount)}
             stock={(item as any).stock ?? 99}
             imageUrl={item.imageUrl ?? ''}
             slug={item.slug}

@@ -9,7 +9,7 @@ export interface NewestReleaseProduct {
     name: string;
     slug: string;
   };
-  displayPrice: number;
+  price_data: { currency: string; unit_amount: number };
   image: { asset: { url: string }; alt?: string };
   gallery: Array<{ asset: { url: string }; alt?: string }>;
 }
@@ -28,7 +28,7 @@ const NEWEST_RELEASE_QUERY = `*[_type == "homepageData"][0].newestReleaseData{
   promoSubtitle,
   promoText,
   productRef->{
-    _id, name, brand->{ _id, name, slug }, displayPrice,
+    _id, name, brand->{ _id, name, slug }, price_data,
     image{asset->{url}},
     gallery[]{asset->{url}}
   }
