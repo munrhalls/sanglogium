@@ -1,10 +1,10 @@
-import { structureTool } from "sanity/structure";
-import { dataset, projectId } from "./sanity/env";
-import { schema } from "./sanity/schemaTypes";
-import { structure } from "./sanity/structure";
+import { dataset, projectId } from "./sanity-config/env";
+import { schema } from "./sanity-config/schemaTypes";
+import { structure } from "./sanity-config/structure";
 // import { colorInput } from "@sanity/color-input";
 import { visionTool } from "@sanity/vision";
 import { defineConfig } from "sanity";
+import { structureTool } from "sanity/structure";
 
 const sanityConfig = defineConfig({
   basePath: "/studio",

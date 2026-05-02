@@ -2,7 +2,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -20,27 +24,30 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": [
+        "./*"
+      ]
     }
   },
   "include": [
-    "next-env.d.ts",
     "app/**/*.ts",
     "app/**/*.tsx",
     "components/**/*.ts",
     "components/**/*.tsx",
+    "eslint.config.mjs",
     "lib/**/*.ts",
     "lib/**/*.tsx",
+    "middleware.ts",
+    "next-env.d.ts",
+    "next.config.ts",
+    "postcss.config.mjs",
+    "sanity.cli.ts",
+    "sanity.config.ts",
+    "sanity-config/**/*.ts",
     "store/**/*.ts",
     "store/**/*.tsx",
-    "sanity/**/*.ts",
-    "middleware.ts",
-    "next.config.ts",
     "tailwind.config.ts",
-    "postcss.config.mjs",
-    "eslint.config.mjs",
-    "sanity.config.ts",
-    "sanity.cli.ts"
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
