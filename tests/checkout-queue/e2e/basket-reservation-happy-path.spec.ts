@@ -87,7 +87,7 @@ test.describe('Basket Reservation Happy Path', () => {
       expect(basketItem).toBeDefined()
       expect(requestItem.quantity).toBe(basketItem?.quantity)
       expect(requestItem.stripePriceId).toBe(basketItem?.stripePriceId)
-      expect(requestItem.displayPrice).toBe(basketItem?.displayPrice)
+      expect(requestItem.price_data.unit_amount / 100).toBe(basketItem?.price_data.unit_amount / 100)
     }
 
     // Wait for API response
@@ -108,7 +108,7 @@ test.describe('Basket Reservation Happy Path', () => {
     expect(typeof stripeVerification.verifiedPrice).toBe('number')
     expect(stripeVerification.verifiedPrice).toBeGreaterThan(0)
 
-    // Verify Stripe verifiedPrice matches CMS displayPrice (realPrice in response)
+    // Verify Stripe verifiedPrice matches CMS price_data.unit_amount / 100 (realPrice in response)
     const cmsProduct = responseData.products[0]
     expect(stripeVerification.verifiedPrice).toBe(cmsProduct.realPrice)
 

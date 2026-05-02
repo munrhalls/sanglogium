@@ -45,8 +45,8 @@ describe('Checkout button click -> Checkout queue — atomic CMS operation - bas
   it('queues request → creates reservation doc in Sanity → returns BasketReservationResponse', async () => {
     const request: BasketReservation = {
       basketReservation: [
-        { _id: testProducts[0]._id, quantity: 1, stripePriceId: testProducts[0].stripePriceId, displayPrice: testProducts[0].displayPrice },
-        { _id: testProducts[1]._id, quantity: 2, stripePriceId: testProducts[1].stripePriceId, displayPrice: testProducts[1].displayPrice },
+        { _id: testProducts[0]._id, quantity: 1, stripePriceId: testProducts[0].stripePriceId, price_data: testProducts[0].price_data },
+        { _id: testProducts[1]._id, quantity: 2, stripePriceId: testProducts[1].stripePriceId, price_data: testProducts[1].price_data },
       ],
       createdAt: new Date().toISOString(),
     }
@@ -87,8 +87,8 @@ describe('Checkout button click -> Checkout queue — atomic CMS operation - bas
   it('increments reservedStock on each product by the requested quantity', async () => {
     const request: BasketReservation = {
       basketReservation: [
-        { _id: testProducts[0]._id, quantity: 1, stripePriceId: testProducts[0].stripePriceId, displayPrice: testProducts[0].displayPrice },
-        { _id: testProducts[1]._id, quantity: 2, stripePriceId: testProducts[1].stripePriceId, displayPrice: testProducts[1].displayPrice },
+        { _id: testProducts[0]._id, quantity: 1, stripePriceId: testProducts[0].stripePriceId, price_data: testProducts[0].price_data },
+        { _id: testProducts[1]._id, quantity: 2, stripePriceId: testProducts[1].stripePriceId, price_data: testProducts[1].price_data },
       ],
       createdAt: new Date().toISOString(),
     }
@@ -114,7 +114,7 @@ describe('Checkout button click -> Checkout queue — atomic CMS operation - bas
   it('response product snapshot matches the freshly-updated Sanity product doc', async () => {
     const request: BasketReservation = {
       basketReservation: [
-        { _id: testProducts[0]._id, quantity: 1, stripePriceId: testProducts[0].stripePriceId, displayPrice: testProducts[0].displayPrice },
+        { _id: testProducts[0]._id, quantity: 1, stripePriceId: testProducts[0].stripePriceId, price_data: testProducts[0].price_data },
       ],
       createdAt: new Date().toISOString(),
     }
@@ -127,7 +127,7 @@ describe('Checkout button click -> Checkout queue — atomic CMS operation - bas
     const data = (await response.json()) as BasketReservationResponse
 
     const cms = await client.fetch(
-      `*[_id == $id][0]{ stock, reservedStock, displayPrice }`,
+      `*[_id == $id][0]{ stock, reservedStock, price_data }`,
       { id: testProducts[0]._id }
     )
     const respProd = data.products.find((p) => p.id === testProducts[0]._id)
@@ -135,6 +135,6 @@ describe('Checkout button click -> Checkout queue — atomic CMS operation - bas
     expect(respProd).toBeDefined()
     expect(respProd?.stock).toBe(cms.stock)
     expect(respProd?.reservedStock).toBe(cms.reservedStock)
-    expect(respProd?.realPrice).toBe(cms.displayPrice)
+    expect(respProd?.realPrice).toBe(cms.price_data.unit_amount / 100)
   }, 60_000)
 })

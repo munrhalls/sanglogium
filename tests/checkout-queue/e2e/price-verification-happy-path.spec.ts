@@ -13,7 +13,7 @@ test.describe('Price Verification Happy Path', () => {
     }
   })
 
-  test('checkout button click -> Stripe price verification matches CMS displayPrice', async ({ page }) => {
+  test('checkout button click -> Stripe price verification matches CMS price_data.unit_amount / 100', async ({ page }) => {
     // Navigate to test product page
     await page.goto('/product/test-64-audio-premium-pearl-cable-3-5mm')
     await page.getByTestId('product-info').waitFor()
@@ -39,7 +39,7 @@ test.describe('Price Verification Happy Path', () => {
     const apiResponse = await apiResponsePromise
     const responseData = await apiResponse.json()
 
-    // Verify Stripe verifiedPrice matches CMS displayPrice
+    // Verify Stripe verifiedPrice matches CMS price_data.unit_amount / 100
     expect(responseData.debug).toBeDefined()
     expect(responseData.debug.stripeVerification).toBeDefined()
     expect(responseData.debug.stripeVerification.length).toBe(1)
