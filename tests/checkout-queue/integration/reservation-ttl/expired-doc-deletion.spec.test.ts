@@ -42,7 +42,7 @@ describe('Expired Doc Deletion Specification', () => {
       _id: testReservationId,
       _type: 'basketReservation',
       basketReservation: [
-        { _id: testProducts[0]._id, quantity: 2, stripePriceId: testProducts[0].stripePriceId, displayPrice: testProducts[0].displayPrice },
+        { _id: testProducts[0]._id, quantity: 2, stripePriceId: testProducts[0].stripePriceId, price_data: testProducts[0].price_data },
       ],
       createdAt: new Date().toISOString(),
       expiresAt,

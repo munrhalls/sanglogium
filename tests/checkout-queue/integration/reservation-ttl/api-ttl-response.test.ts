@@ -27,7 +27,7 @@ describe('API Response TTL Field', () => {
   it('API response includes TTL field given reservation request', async () => {
     const request: BasketReservation = {
       basketReservation: [
-        { _id: testProducts[0]._id, quantity: 1, stripePriceId: testProducts[0].stripePriceId, displayPrice: testProducts[0].displayPrice },
+        { _id: testProducts[0]._id, quantity: 1, stripePriceId: testProducts[0].stripePriceId, price_data: testProducts[0].price_data },
       ],
       createdAt: new Date().toISOString(),
     }

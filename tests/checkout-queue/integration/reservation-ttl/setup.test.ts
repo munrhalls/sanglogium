@@ -40,7 +40,7 @@ describe('Reservation TTL - Setup Verification', () => {
     const firstProduct = products[0]
     expect(firstProduct._id).toBeDefined()
     expect(firstProduct.stripePriceId).toBeDefined()
-    expect(firstProduct.displayPrice).toBeDefined()
+    expect(firstProduct.price_data.unit_amount / 100).toBeDefined()
     expect(firstProduct.stock).toBeDefined()
   })
 })
