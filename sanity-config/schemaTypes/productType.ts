@@ -39,19 +39,27 @@ export const productType = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "stripePriceId",
-      title: "Stripe Price ID",
-      type: "string",
-      description:
-        "The unique ID for the Price object in Stripe (e.g., price_...).",
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "displayPrice",
-      title: "Display Price (e.g., 19.99)",
-      type: "number",
-      description: "The human-readable price, must match the price on Stripe.",
-      validation: (Rule) => Rule.required().min(0),
+      name: "price_data",
+      title: "Price Data",
+      type: "object",
+      description: "Price data for Stripe PaymentIntent (currency in cents)",
+      fields: [
+        defineField({
+          name: "currency",
+          title: "Currency",
+          type: "string",
+          description: "Three-letter ISO currency code (e.g., usd)",
+          initialValue: "usd",
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+          name: "unit_amount",
+          title: "Unit Amount (cents)",
+          type: "number",
+          description: "Price in smallest currency unit (cents, e.g., 1999 for $19.99)",
+          validation: (Rule) => Rule.required().min(0),
+        }),
+      ],
     }),
     defineField({
       name: "stock",
@@ -165,11 +173,12 @@ export const productType = defineType({
       title: "name",
       id: "_id",
       media: "image",
-      price: "displayPrice",
+      unitAmount: "price_data.unit_amount",
     },
     prepare(selection) {
+      const displayPrice = (selection.unitAmount / 100).toFixed(2);
       return {
-        title: `${selection.title} - $${selection.price}`,
+        title: `${selection.title} - $${displayPrice}`,
         subtitle: `ID: ${selection.id}`,
         media: selection.media,
       };
