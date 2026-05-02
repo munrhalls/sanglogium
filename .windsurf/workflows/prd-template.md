@@ -1,5 +1,6 @@
-Template: PRD Template
 Adhere with strict discipline: keep everything robust, coherent, simplest possible. If anything complicates or is vague, stop immediately.
+
+Template: PRD Template
 
 Goal: capture accurate minimalest requirements for coherent, intuitive, simple user see -> actions -> goal experience
 Criteria: 0 unnecessary verbiage, 0 unnecessary characters
