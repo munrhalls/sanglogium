@@ -22,7 +22,7 @@ export async function syncBasketProducts(
   // Transform CMS data to basket store format
   const transformed: TransformedProductData[] = products.map((product) => ({
     productId: product._id,
-    displayPrice: product.displayPrice,
+    price_data: product.price_data,
     availableStock: product.stock - product.reservedStock,
   }));
 

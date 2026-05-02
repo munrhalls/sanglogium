@@ -34,7 +34,7 @@ export default function BasketClientWrapper() {
           return {
             productId: item.productId,
             quantity: persistedItem?.quantity || 1,
-            displayPrice: item.displayPrice,
+            price_data: item.price_data,
             availableStock: item.availableStock,
           };
         });

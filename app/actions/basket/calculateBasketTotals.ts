@@ -1,6 +1,7 @@
 "use server";
 
 import { BasketItem } from "@/app/(store)/basket/basket.types";
+import { centsToDisplay } from "@/lib/utils/price";
 
 interface BasketTotals {
   subtotal: number;
@@ -23,8 +24,11 @@ interface BasketTotals {
 export async function calculateBasketTotals(basket: BasketItem[]): Promise<BasketTotals> {
   console.log('=== Bus Stop 1: Calculate Basket Totals ===');
   
-  // Calculate subtotal
-  const subtotal = basket.reduce((sum, item) => sum + (item.displayPrice * item.quantity), 0);
+  // Calculate subtotal from price_data
+  const subtotal = basket.reduce((sum, item) => {
+    const displayPrice = centsToDisplay(item.price_data.unit_amount);
+    return sum + (displayPrice * item.quantity);
+  }, 0);
   console.log(`Subtotal: $${subtotal.toFixed(2)} from ${basket.length} items`);
   
   // Calculate shipping (simplified logic - could be based on weight, location, etc.)

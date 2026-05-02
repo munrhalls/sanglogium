@@ -6,8 +6,8 @@ export interface BasketItemMetadata {
 export interface BasketItem {
   productId: string
   quantity: number
-  displayPrice: number
-  availableStock?: number 
+  price_data: { currency: string; unit_amount: number }
+  availableStock?: number
   metadata?: BasketItemMetadata // If present, item is "adjusted"
 }
 
@@ -22,7 +22,7 @@ interface BasketState {
 
 interface BasketActions {
   setSyncStatus: (status: SyncStatus) => void
-  syncWithCMS: (cmsProducts: Array<{ _id: string; price_data: number; stock: number; reservedStock: number }>) => void
+  syncWithCMS: (cmsProducts: Array<{ _id: string; price_data: { currency: string; unit_amount: number }; stock: number; reservedStock: number }>) => void
   addProduct: (productId: string) => void
   removeProduct: (productId: string) => void
   incrementQuantity: (productId: string) => void

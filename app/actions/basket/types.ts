@@ -6,15 +6,15 @@ export interface BasketSyncRequest {
 // CMS product data as returned from Sanity
 export interface CMSProductData {
   _id: string
-  price_data: number // cents
+  price_data: { currency: string; unit_amount: number }
   stock: number
   reservedStock: number
 }
 
-// Transformed product data after CMS fetch (cents → displayPrice, availableStock calculated)
+// Transformed product data after CMS fetch (price_data, availableStock calculated)
 export interface TransformedProductData {
   productId: string
-  displayPrice: number
+  price_data: { currency: string; unit_amount: number }
   availableStock: number
 }
 

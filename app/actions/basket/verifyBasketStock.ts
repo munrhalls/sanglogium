@@ -2,6 +2,12 @@
 
 import { checkoutClient } from "@/sanity/lib/checkoutClient";
 import { groq } from "next-sanity";
+import { centsToDisplay } from "@/lib/utils/price";
+
+// Helper function to convert price_data to display price
+function convertToDisplayPrice(product: any): number {
+  return centsToDisplay(product.price_data.unit_amount);
+}
 
 export async function verifyBasketStock(basket: Array<{_id: string, quantity: number}>) {
   console.log('=== Bus Stop 1: Verify Basket Stock ===');
@@ -15,7 +21,7 @@ export async function verifyBasketStock(basket: Array<{_id: string, quantity: nu
       name,
       stock,
       reservedStock,
-      displayPrice
+      price_data
     }`;
 
     console.log('Fetching stock data for products:', productIds);
@@ -38,6 +44,7 @@ export async function verifyBasketStock(basket: Array<{_id: string, quantity: nu
 
       const availableStock = (typeof product.stock === 'number' ? product.stock : 0) - (product.reservedStock || 0);
       const isAvailable = availableStock >= basketItem.quantity;
+      const currentPrice = convertToDisplayPrice(product);
 
       console.log(`Product ${product.name}:`);
       console.log(`  - Stock: ${product.stock}`);
@@ -52,21 +59,17 @@ export async function verifyBasketStock(basket: Array<{_id: string, quantity: nu
         available: isAvailable,
         requestedQuantity: basketItem.quantity,
         availableStock,
-        currentPrice: product.displayPrice,
+        currentPrice,
         reason: isAvailable ? 'Available' : `Insufficient stock (${availableStock} available)`
       };
     });
 
     const unavailableItems = verificationResults.filter(r => !r.available);
-    const priceChanges = verificationResults.filter(r =>
-      basket.find(item => item._id === r._id)?.displayPrice !== r.currentPrice
-    );
 
     console.log('\n=== Verification Summary ===');
     console.log(`Total items: ${verificationResults.length}`);
     console.log(`Available: ${verificationResults.length - unavailableItems.length}`);
     console.log(`Unavailable: ${unavailableItems.length}`);
-    console.log(`Price changes: ${priceChanges.length}`);
 
     if (unavailableItems.length > 0) {
       console.log('\nUnavailable items:');
@@ -75,19 +78,10 @@ export async function verifyBasketStock(basket: Array<{_id: string, quantity: nu
       });
     }
 
-    if (priceChanges.length > 0) {
-      console.log('\nPrice changes:');
-      priceChanges.forEach(item => {
-        const oldPrice = basket.find(b => b._id === item._id)?.displayPrice || 0;
-        console.log(`  - ${item.name}: $${oldPrice} -> $${item.currentPrice}`);
-      });
-    }
-
     return {
       success: unavailableItems.length === 0,
       verificationResults,
       unavailableItems,
-      priceChanges,
       message: unavailableItems.length === 0
         ? 'All items available'
         : `${unavailableItems.length} items no longer available`
@@ -99,7 +93,6 @@ export async function verifyBasketStock(basket: Array<{_id: string, quantity: nu
       success: false,
       verificationResults: [],
       unavailableItems: [],
-      priceChanges: [],
       message: 'Failed to verify stock availability'
     };
   }

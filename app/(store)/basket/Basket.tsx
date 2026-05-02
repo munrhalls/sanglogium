@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useBasketStore } from "@/store/store";
 import BasketControls from "@/app/components/features/basket/BasketControls";
 import { Price } from "@/app/components/ui/Price";
+import { centsToDisplay } from "@/lib/utils/price";
 export default function Basket() {
   const basket = useBasketStore((s) => s.basket);
   const removeItem = useBasketStore((s) => s.removeItem);
@@ -62,7 +63,7 @@ export default function Basket() {
                   </h3>
                 </Link>
                 <p className="type-metadata lg-desktop:hidden lg-touch:hidden">
-                  <Price value={item.displayPrice} />
+                  <Price value={centsToDisplay(item.price_data.unit_amount)} />
                   {" "}× {item.quantity}
                 </p>
               </div>
@@ -70,7 +71,7 @@ export default function Basket() {
 
             {/* Price column - desktop only */}
             <div className="hidden lg-desktop:flex lg-touch:flex items-center justify-center">
-              <Price value={item.displayPrice} />
+              <Price value={centsToDisplay(item.price_data.unit_amount)} />
             </div>
 
             {/* Quantity column */}
@@ -84,7 +85,7 @@ export default function Basket() {
 
             {/* Total column - desktop only */}
             <div className="hidden lg-desktop:flex lg-touch:flex items-center justify-end">
-              <Price value={item.displayPrice * item.quantity} />
+              <Price value={centsToDisplay(item.price_data.unit_amount) * item.quantity} />
             </div>
           </div>
         );
