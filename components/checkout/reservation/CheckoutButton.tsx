@@ -4,6 +4,7 @@ import { useCallback, useState } from 'react'
 // TODO: Import from new basket store when implemented
 // import { useBasketStore } from '@/store/store'
 import { useRouter } from 'next/navigation'
+import { centsToDisplay } from '@/lib/utils/price'
 
 export function CheckoutButton() {
   const [isProcessing, setIsProcessing] = useState(false)
@@ -40,7 +41,7 @@ export function CheckoutButton() {
           _id: item._id,
           quantity: item.quantity,
           stripePriceId: item.stripePriceId,
-          displayPrice: item.displayPrice,
+          displayPrice: centsToDisplay(item.price_data.unit_amount),
         })),
         createdAt: new Date().toISOString(),
       }

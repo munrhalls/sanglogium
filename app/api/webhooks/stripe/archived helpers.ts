@@ -13,7 +13,7 @@
 //   _id: string;
 //   name: string;
 //   stripePriceId: string;
-//   displayPrice?: number;
+//   price_data: { currency: string; unit_amount: number };
 //   price?: number;
 //   image?: unknown;
 //   slug?: { current: string };
@@ -28,7 +28,7 @@
 //       _id,
 //       name,
 //       stripePriceId,
-//       displayPrice,
+//       price_data,
 //       price,
 //       image,
 //       slug,
