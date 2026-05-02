@@ -11,7 +11,7 @@ export default function CheckoutQueueE2ETestPage() {
   const productsForClient = TEST_PRODUCTS.map((product) => ({
     _id: product._id,
     stripePriceId: product.stripePriceId,
-    displayPrice: product.displayPrice,
+    price_data: product.price_data,
   }))
 
   return <CheckoutQueueTestClient testProducts={productsForClient} />

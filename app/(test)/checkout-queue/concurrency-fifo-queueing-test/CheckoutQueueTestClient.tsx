@@ -25,7 +25,7 @@ interface RequestState {
   status: 'pending' | 'success' | 'error'
   result: ApiResponse | null
   requestBody: {
-    basketReservation: Array<{ _id: string; quantity: number; stripePriceId: string; displayPrice: number }>
+    basketReservation: Array<{ _id: string; quantity: number; stripePriceId: string; price_data: { currency: string; unit_amount: number } }>
     createdAt: string
   }
   issuedAt: string
@@ -42,7 +42,7 @@ interface TraceEntry {
 interface TestProduct {
   _id: string
   stripePriceId: string
-  displayPrice: number
+  price_data: { currency: string; unit_amount: number }
 }
 
 const formatTime = (iso: string | null) =>
@@ -211,7 +211,7 @@ export default function CheckoutQueueTestClient({ testProducts }: CheckoutQueueT
         status: 'pending',
         result: null,
         requestBody: {
-          basketReservation: [{ _id: product._id, quantity: 1, stripePriceId: product.stripePriceId, displayPrice: product.displayPrice }],
+          basketReservation: [{ _id: product._id, quantity: 1, stripePriceId: product.stripePriceId, price_data: product.price_data }],
           createdAt: now,
         },
         issuedAt: now,
