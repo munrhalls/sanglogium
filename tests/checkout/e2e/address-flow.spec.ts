@@ -70,7 +70,7 @@ test.describe('Checkout address flow (E2E)', () => {
         {
           _id: testProducts[0]._id,
           quantity: 1,
-          verifiedPrice: testProducts[0].displayPrice,
+          verifiedPrice: testProducts[0].price_data.unit_amount / 100,
         },
       ],
       createdAt: new Date().toISOString(),

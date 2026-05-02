@@ -24,7 +24,7 @@ const testWriteClient = createClient({
 export async function getTestProducts() {
   return testClient.fetch(`
     *[_type == "product" && (name match "test" || name match "Test")]{
-      _id, name, stock, reservedStock, stripePriceId, slug, displayPrice
+      _id, name, stock, reservedStock, stripePriceId, slug, price_data
     } | order(name asc)
   `);
 }

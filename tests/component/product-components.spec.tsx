@@ -12,7 +12,7 @@ function generateMockProduct(overrides = {}) {
     _id: 'product-123',
     name: 'HD 800S',
     brand: { _id: 'brand-1', name: 'Sennheiser' },
-    displayPrice: 1699,
+    price_data: { currency: 'usd', unit_amount: 169900 },
     image: { asset: { _ref: 'image-abc' } },
     slug: { current: 'sennheiser-hd800s' },
     catalogueLocationKeys: ['key-1'],
@@ -48,7 +48,7 @@ test.describe('L5 Integration: Product Components', () => {
     });
 
     test('L5-05: Renders formatted price', async ({ mount }) => {
-      const product = generateMockProduct({ displayPrice: 1699 });
+      const product = generateMockProduct({ price_data: { currency: 'usd', unit_amount: 169900 } });
       const component = await mount(<ProductCard product={product} />);
       await expect(component).toContainText('$1,699');
     });
@@ -137,12 +137,12 @@ test.describe('L5 Integration: Product Components', () => {
 
   test.describe('ProductInfo', () => {
     test('L5-17: Renders brand name with uppercase styling', async ({ mount }) => {
-      const component = await mount(<ProductInfo name="Test" brand={{ _id: '1', name: 'Sennheiser' }} displayPrice={100} />);
+      const component = await mount(<ProductInfo name="Test" brand={{ _id: '1', name: 'Sennheiser' }} price_data={{ currency: 'usd', unit_amount: 10000 }} />);
       await expect(component).toContainText('Sennheiser');
     });
 
     test('L5-18: Renders description when provided', async ({ mount }) => {
-      const component = await mount(<ProductInfo name="Test" brand={{ _id: '1', name: 'Brand' }} displayPrice={100} description="Test description" />);
+      const component = await mount(<ProductInfo name="Test" brand={{ _id: '1', name: 'Brand' }} price_data={{ currency: 'usd', unit_amount: 10000 }} description="Test description" />);
       await expect(component).toContainText('Test description');
     });
   });
