@@ -1,4 +1,4 @@
-Adhere with strict discipline: keep everything robust, coherent, simplest possible. If anything complicates or is vague, please stop immediately and ask for clarification.
+Adhere with strict discipline: keep everything robust, coherent, simplest possible, professional. If anything complicates or is vague, please stop immediately and ask for clarification.
 
 Template: Technical Solution Design
 Goal: capture technical solution design in minimalest possible way
