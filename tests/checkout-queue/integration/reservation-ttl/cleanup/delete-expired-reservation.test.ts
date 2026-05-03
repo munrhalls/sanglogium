@@ -3,7 +3,7 @@
 
 import { describe, it, expect, beforeAll, beforeEach } from 'vitest'
 import { deleteExpiredReservation } from '@/lib/queue/cleanup'
-import { getBackendClient } from '@/sanity/lib/backendClient'
+import { getBackendClient } from '@/sanity-config/lib/backendClient'
 
 describe('deleteExpiredReservation Integration', () => {
   let testReservationId: string

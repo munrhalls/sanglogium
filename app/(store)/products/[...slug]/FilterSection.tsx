@@ -1,6 +1,6 @@
 import React from 'react';
 import { FilterSidebar } from '@/app/components/features/filters/FilterSidebar';
-import type { FilterResult } from '@/sanity/lib/products/filter/getFiltersForCategoryPath';
+import type { FilterResult } from '@/sanity-config/lib/products/filter/getFiltersForCategoryPath';
 
 interface FilterSectionProps {
   filtersPromise: Promise<FilterResult>;

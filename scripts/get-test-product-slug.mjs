@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { backendClient } from '../sanity/lib/backendClient.js'
+import { backendClient } from '../sanity-config/lib/backendClient.js'
 
 const productId = 'YcMKSEyusPBTcaoe1xiP1b'
 

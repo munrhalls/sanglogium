@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils/tailwind";
 import { Image } from "next-sanity/image";
-import { urlFor } from "@/sanity/lib/image";
+import { urlFor } from "@/sanity-config/lib/image";
 import type { AccessoryItem } from "./types";
 import { AddToCartButton } from "@/app/components/ui/AddToCartButton";
 import { centsToDisplay } from "@/lib/utils/price";

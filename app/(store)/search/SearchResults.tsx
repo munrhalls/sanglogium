@@ -2,7 +2,7 @@ import React from 'react';
 import { SearchEmpty } from '@/app/components/features/search/SearchEmpty';
 import { ProductGrid } from '@/app/components/features/products/ProductGrid';
 import { SortDropdown } from '@/app/components/features/filters/SortDropdown';
-import type { SearchProduct } from '@/sanity/lib/products/searchProducts';
+import type { SearchProduct } from '@/sanity-config/lib/products/searchProducts';
 
 interface SearchResultsProps {
   productsPromise: Promise<SearchProduct[]>;

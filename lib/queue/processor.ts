@@ -19,7 +19,7 @@ import { trace } from './trace'
 import { QUEUE_LIST_KEY, LOCK_KEY, LOCK_TTL_SEC } from './constants'
 
 const RESERVATION_TTL_SEC = parseInt(process.env.RESERVATION_TTL_SEC || '900', 10)
-import { getBackendClient } from '@/sanity/lib/backendClient'
+import { getBackendClient } from '@/sanity-config/lib/backendClient'
 import {
   isBasketReservation,
   type BasketReservation,

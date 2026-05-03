@@ -3,7 +3,7 @@
 // Cleanup script for E2E Playwright tests
 // Resets test product reservedStock and clears traces/queue after test runs
 
-import { backendClient } from '../sanity/lib/backendClient.js'
+import { backendClient } from '../sanity-config/lib/backendClient.js'
 
 const TEST_PRODUCT_IDS = [
   'YcMKSEyusPBTcaoe1xiP1b',

@@ -3,10 +3,10 @@
 import React from 'react';
 import Link from 'next/link';
 import { ProductImage } from './ProductImage';
-import type { Product } from '@/sanity/lib/products/getProductsByVfsKeys';
+import type { Product } from '@/sanity-config/lib/products/getProductsByVfsKeys';
 import { Price } from '@/app/components/ui/Price';
 import { AddToCartButton } from '@/app/components/ui/AddToCartButton';
-import { urlFor } from '@/sanity/lib/image';
+import { urlFor } from '@/sanity-config/lib/image';
 import { centsToDisplay } from '@/lib/utils/price';
 
 export interface Product {

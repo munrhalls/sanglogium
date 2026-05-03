@@ -5,7 +5,7 @@ Criteria: 0 unnecessary verbiage, 0 unnecessary characters
 
 ## For each test in this slice:
 1. Pick one failing test
-2. Write minimal code to pass it
+2. Write minimal, simple, robust, professional code to pass it (if UI component: apply relevant segments from the Core Building Pattern /core-building-pattern) 
 3. Verify test passes
 4. Evaluate: does code need refactor?
 5. If yes: refactor, verify tests still pass

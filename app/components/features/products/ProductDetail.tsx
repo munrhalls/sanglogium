@@ -1,5 +1,5 @@
-import { Product } from '@/sanity/lib/products/getProductBySlug';
-import { RelatedProduct } from '@/sanity/lib/products/getRelatedProducts';
+import { Product } from '@/sanity-config/lib/products/getProductBySlug';
+import { RelatedProduct } from '@/sanity-config/lib/products/getRelatedProducts';
 import { ImageGallery } from './ImageGallery';
 import { ProductInfo } from './ProductInfo';
 import { RelatedProducts } from './RelatedProducts';

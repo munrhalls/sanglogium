@@ -5,8 +5,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { MagnifyingGlass, X, ArrowLeft } from '@phosphor-icons/react';
 import { cn } from '@/lib/utils/tailwind';
 import { AutocompleteOverlay } from '@/app/components/features/search/AutocompleteOverlay';
-import { searchProductsAutocomplete } from '@/sanity/lib/products/searchProducts';
-import type { AutocompleteProduct } from '@/sanity/lib/products/searchProducts';
+import { searchProductsAutocomplete } from '@/sanity-config/lib/products/searchProducts';
+import type { AutocompleteProduct } from '@/sanity-config/lib/products/searchProducts';
 
 const DEBOUNCE_MS = 300;
 const MIN_QUERY_LENGTH = 2;

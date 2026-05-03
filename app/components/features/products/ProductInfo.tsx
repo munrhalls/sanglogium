@@ -1,7 +1,7 @@
 "use client";
 
-import { Product } from '@/sanity/lib/products/getProductBySlug';
-import { urlFor } from '@/sanity/lib/image';
+import { Product } from '@/sanity-config/lib/products/getProductBySlug';
+import { urlFor } from '@/sanity-config/lib/image';
 // TODO: Import from new basket store when implemented
 // import { useBasketStore, selectBasketItem } from '@/store/store';
 import { useState } from 'react';

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { headers } from 'next/headers';
-import { checkoutClient } from '@/sanity/lib/checkoutClient';
+import { checkoutClient } from '@/sanity-config/lib/checkoutClient';
 import { groq } from 'next-sanity';
 import Stripe from 'stripe';
 

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { headers } from 'next/headers';
 import { stripe } from '@/lib/stripe';
 import { Redis } from '@upstash/redis';
-import { client } from '@/sanity/lib/client';
+import { client } from '@/sanity-config/lib/client';
 
 // Redis client
 const redis = new Redis({

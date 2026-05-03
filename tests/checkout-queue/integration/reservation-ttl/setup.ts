@@ -1,7 +1,7 @@
 // Global setup for reservation-ttl tests
 // Cleans up ALL test reservations before any tests run to prevent pollution
 
-import { getBackendClient } from '@/sanity/lib/backendClient'
+import { getBackendClient } from '@/sanity-config/lib/backendClient'
 
 export async function setup() {
   const sanity = getBackendClient()

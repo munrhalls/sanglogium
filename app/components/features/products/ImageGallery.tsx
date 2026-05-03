@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
-import { urlFor } from '@/sanity/lib/image';
+import { urlFor } from '@/sanity-config/lib/image';
 
 interface ImageGalleryProps {
   images: any[];

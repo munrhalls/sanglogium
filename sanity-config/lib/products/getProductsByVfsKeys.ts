@@ -1,4 +1,4 @@
-import { sanityFetch } from '@/sanity/lib/client';
+import { sanityFetch } from '@/sanity-config/lib/client';
 import { groq } from 'next-sanity';
 import { FilterBuilder } from './FilterBuilder';
 import { client } from './client';
