@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  ShoppingCartIcon,
   UserIcon,
   SignInIcon,
 } from "@phosphor-icons/react";
@@ -10,6 +9,7 @@ import { cn } from "@/lib/utils/tailwind";
 // import { useBasketStore, selectBasketCount } from "@/store/store";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { BasketButton } from "@/components/features/basket/BasketButton";
 
 interface NavbarActionsProps {
   isAuthenticated: boolean;
@@ -32,13 +32,7 @@ const NavbarActions = ({ isAuthenticated }: NavbarActionsProps) => {
   return (
     <div className={cn("ml-6 hidden items-center gap-6", "lg:flex")}>
       {/* Cart Action */}
-      <Link href="/basket">
-        <NavActionItem
-          icon={<ShoppingCartIcon size={24} />}
-          label="Cart"
-          badgeCount={displayCount}
-        />
-      </Link>
+      <BasketButton />
 
       {/* Account / Auth Group */}
       <div className={cn("group relative")}>
@@ -105,6 +99,7 @@ const NavActionItem = ({ icon, label, badgeCount }: NavActionItemProps) => {
         {icon}
         {badgeCount !== undefined && badgeCount > 0 && (
           <span
+            data-testid="basket-badge"
             className={cn(
               "absolute -right-1.5 -top-1.5",
               "flex h-4 w-4 items-center justify-center rounded-none",
@@ -149,4 +144,5 @@ const DropdownItem = ({ label, onClick, isDestructive }: DropdownItemProps) => {
   );
 };
 
+export { NavActionItem };
 export default NavbarActions;

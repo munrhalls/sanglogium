@@ -5,7 +5,7 @@
 // - Reason: Foundation for basket state management
 
 import { describe, it, expect, beforeEach } from 'vitest'
-import useBasketStore from '../../../../../store/basketStore'
+import useBasketStore, { selectTotalItemsCount } from '../../../../../store/basketStore'
 
 describe('BasketStore Actions', () => {
   beforeEach(() => {
@@ -119,6 +119,45 @@ describe('BasketStore Actions', () => {
       // ASSERT - verify item removed from items array
       const state = useBasketStore.getState()
       expect(state.items).toHaveLength(0)
+    })
+  })
+})
+
+describe('selectTotalItemsCount', () => {
+  beforeEach(() => {
+    useBasketStore.setState({ items: [] })
+  })
+
+  describe('when basket has items', () => {
+    it('returns sum of all item quantities', () => {
+      // ARRANGE - setup test state with basket containing items with quantities
+      useBasketStore.setState({
+        items: [
+          { productId: 'product-1', quantity: 2, displayPriceAtAdd: 100, availableStockAtAdd: 10 },
+          { productId: 'product-2', quantity: 3, displayPriceAtAdd: 200, availableStockAtAdd: 20 },
+        ],
+      })
+
+      // ACT - call selectTotalItemsCount selector
+      const state = useBasketStore.getState()
+      const result = selectTotalItemsCount(state)
+
+      // ASSERT - verify sum of all item quantities returned
+      expect(result).toBe(5)
+    })
+  })
+
+  describe('when basket is empty', () => {
+    it('returns 0', () => {
+      // ARRANGE - setup test state with empty basket
+      useBasketStore.setState({ items: [] })
+
+      // ACT - call selectTotalItemsCount selector
+      const state = useBasketStore.getState()
+      const result = selectTotalItemsCount(state)
+
+      // ASSERT - verify 0 returned
+      expect(result).toBe(0)
     })
   })
 })

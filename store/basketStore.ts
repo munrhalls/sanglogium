@@ -127,4 +127,8 @@ const useBasketStore = create<BasketStore>()(
   )
 )
 
+// Selector for total count
+export const selectTotalItemsCount = (state: BasketState) =>
+  state.items.reduce((sum, item) => sum + item.quantity, 0)
+
 export default useBasketStore
