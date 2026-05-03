@@ -1,0 +1,49 @@
+# Execution Specs TODO: Non-Local Basket
+
+## Slice 1: Data Layer - Zustand Store
+✔ Unit tests: basketStore actions (add, remove, increment, decrement) @done(26-05-03 11:39)
+✔ Unit tests: persistence (localStorage/sessionStorage) @done(26-05-03 11:40)
+✔ Unit tests: hydration validation with Zod @done(26-05-03 11:40)
+✔ Unit tests: fallback storage strategy @done(26-05-03 11:41)
+✔ Integration tests: store with persist middleware @done(26-05-03 11:42)
+
+## Slice 2: Component Layer - BasketControls
+- [ ] Integration tests: BasketControls rendering
+- [ ] Integration tests: add button dispatch
+- [ ] Integration tests: increment button dispatch
+- [ ] Integration tests: decrement button dispatch
+- [ ] Integration tests: remove button dispatch
+
+## Slice 3: Component Layer - BasketButton
+- [ ] Unit tests: selectTotalItemsCount selector
+- [ ] Integration tests: BasketButton rendering
+- [ ] Integration tests: badge count display
+- [ ] Integration tests: button navigation to basket page
+
+## Slice 4: Page Integration - Product Detail
+- [ ] Integration tests: ProductInfo with BasketControls
+- [ ] Integration tests: add product from product detail
+- [ ] Integration tests: increment quantity from product detail
+- [ ] Integration tests: decrement quantity from product detail
+- [ ] Integration tests: remove product from product detail
+
+## Slice 5: Page Integration - Product Grid
+- [ ] Integration tests: ProductCard with BasketControls
+- [ ] Integration tests: add product from product grid
+- [ ] Integration tests: increment quantity from product grid
+- [ ] Integration tests: decrement quantity from product grid
+- [ ] Integration tests: remove product from product grid
+
+## Slice 6: Page Integration - Search
+- [ ] Integration tests: SearchResults with BasketControls
+- [ ] Integration tests: AutocompleteItem with BasketControls
+- [ ] Integration tests: add product from search results
+- [ ] Integration tests: add product from autocomplete
+
+## Slice 7: Cross-Tab Synchronization
+- [ ] Integration tests: storage event handling
+- [ ] Integration tests: cross-tab state sync
+
+## E2E Tests (Happy Path Only)
+- [ ] E2E: add product to basket from product detail, manage quantities, navigate to basket page
+- [ ] E2E: cross-tab basket synchronization
