@@ -131,4 +131,7 @@ const useBasketStore = create<BasketStore>()(
 export const selectTotalItemsCount = (state: BasketState) =>
   state.items.reduce((sum, item) => sum + item.quantity, 0)
 
+// Selector for items
+export const selectItems = (state: BasketState) => state.items
+
 export default useBasketStore
