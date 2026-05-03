@@ -1,3 +1,42 @@
+
+
+Goal: implement tests using red-green-refactor cycle for specific slice
+Criteria: 0 unnecessary verbiage, 0 unnecessary characters
+
+Before writing execution spects, write entries in RGR-core-building-pattern.todo in the /docs/<feature name>/implementation/RGR-core-building-pattern.todo; file should already exist - if not, make it.
+
+# Critical SEQUENCE: 
+1. Unit tests - data layer. 
+2. Integration tests - view layer.
+3. e2e tests - across all layers.
+
+# Red-Green-Refactor: [Slice Name]
+
+## For each test in this slice:
+1. Pick first failing test. 
+2. Gather relevant intelligence in professional manner to know what professional, robust, well-checked solution should look like. Know that your code build sequence must apply /core-building-pattern, outlined at the end of this file in order to be systematic.
+3. Plan writing code. Make simplest possible, professional, robust plan.
+4. Scan the plan for gaps, red flags, omissions, false assumptions, false positives, end to end. 
+Keep scanning, finding, and fixing  gaps, red flags, omissions, false assumptions, false positives, end to end, until the solution is professionally robust, simplest possible, reliable.   
+5. Execute to plan to write minimal, simple, robust, professional code to pass it (if UI component: apply relevant segments from the Core Building Pattern /core-building-pattern) 
+6. Verify test passes in professional manner.
+7. Scan for gaps, red flags, omissions, false assumptions, false positives, end to end. Keep scanning, finding, and fixing  gaps, red flags, omissions, false assumptions, false positives, end to end, until the solution is professionally robust, simplest possible, reliable.
+8. Evaluate: does code need refactor?
+9. If yes: refactor, verify tests still pass
+10. If no: move to next test
+
+## Repeat Until All Tests in This Slice Pass
+Continue until all tests for this slice pass.
+This slice is complete.
+
+## ...
+
+
+
+/core-building-pattern
+
+# Core building pattern 
+
 Adhere with strict discipline: keep everything robust, coherent, simplest possible, professional. If anything complicates or is vague, please stop immediately and ask for clarification.
 
 # Core Building Pattern: Three Passes & Four Layers
@@ -316,3 +355,4 @@ CONSTRAINTS:
 | 3 | Commit | Component locked |
 
 ---
+=

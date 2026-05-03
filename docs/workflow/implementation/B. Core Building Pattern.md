@@ -1,5 +1,3 @@
-Adhere with strict discipline: keep everything robust, coherent, simplest possible, professional. If anything complicates or is vague, please stop immediately and ask for clarification.
-
 # Core Building Pattern: Three Passes & Four Layers
 
 ## ⚠️ IMPORTANT: All Component Names Are Examples
@@ -316,3 +314,4 @@ CONSTRAINTS:
 | 3 | Commit | Component locked |
 
 ---
+
