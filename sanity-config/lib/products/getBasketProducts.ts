@@ -16,15 +16,20 @@ export async function getBasketProducts(ids: string[]): Promise<BasketProduct[]>
     return [];
   }
 
-  const products = await sanityFetch<BasketProduct[]>({
-    query: groq`*[_type == "product" && _id in $ids && defined(stripePriceId)] {
-      _id,
-      price_data,
-      stock,
-      reservedStock
-    }`,
-    params: { ids }
-  });
+  try {
+    const products = await sanityFetch<BasketProduct[]>({
+      query: groq`*[_type == "product" && _id in $ids && defined(stripePriceId)] {
+        _id,
+        price_data,
+        stock,
+        reservedStock
+      }`,
+      params: { ids }
+    });
 
-  return products || [];
+    return products || [];
+  } catch (error) {
+    console.error('Failed to fetch basket products:', error);
+    return [];
+  }
 }

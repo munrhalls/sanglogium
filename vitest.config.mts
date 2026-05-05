@@ -27,6 +27,7 @@ export default defineConfig(({ mode }) => {
         'tests/**/*.test.tsx',
         'tests/**/*.test.ts',
         'docs/basket/non-local-basket/__tests__/integration/**/*.spec.tsx',
+        'docs/basket/non-local-basket/__tests__/unit/**/*.spec.ts',
       ],
       exclude: [
         '**/node_modules/**',
