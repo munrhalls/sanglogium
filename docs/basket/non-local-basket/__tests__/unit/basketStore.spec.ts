@@ -89,6 +89,25 @@ describe('BasketStore Actions', () => {
       const state = useBasketStore.getState()
       expect(state.items[0].quantity).toBe(2)
     })
+
+    it('does not increment quantity beyond availableStockAtAdd', () => {
+      // ARRANGE - setup test state with product at stock limit
+      const productId = 'product-1'
+      const availableStockAtAdd = 5
+      useBasketStore.getState().addProduct(productId, 100, availableStockAtAdd)
+      
+      // Increment to stock limit
+      for (let i = 0; i < availableStockAtAdd - 1; i++) {
+        useBasketStore.getState().incrementQuantity(productId)
+      }
+
+      // ACT - attempt to increment beyond stock limit
+      useBasketStore.getState().incrementQuantity(productId)
+
+      // ASSERT - verify quantity does not exceed availableStockAtAdd
+      const state = useBasketStore.getState()
+      expect(state.items[0].quantity).toBe(availableStockAtAdd)
+    })
   })
 
   describe('when decrementing quantity above 1', () => {

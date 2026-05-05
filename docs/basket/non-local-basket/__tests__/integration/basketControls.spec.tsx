@@ -189,4 +189,32 @@ describe('basketControls', () => {
       expect(screen.getByTestId('quantity-display')).toHaveTextContent('1')
     })
   })
+
+  describe('when quantity reaches availableStockAtAdd', () => {
+    it('disables increment button', () => {
+      // ARRANGE - setup test state with product in basket at stock limit
+      const productId = 'product-1'
+      const displayPriceAtAdd = 100
+      const availableStockAtAdd = 3
+      act(() => {
+        useBasketStore.getState().addProduct(productId, displayPriceAtAdd, availableStockAtAdd)
+        // Increment to stock limit
+        for (let i = 1; i < availableStockAtAdd; i++) {
+          useBasketStore.getState().incrementQuantity(productId)
+        }
+      })
+
+      render(
+        <BasketControls
+          productId={productId}
+          displayPriceAtAdd={displayPriceAtAdd}
+          availableStockAtAdd={availableStockAtAdd}
+          isBasketPage={false}
+        />
+      )
+
+      // ASSERT - verify increment button is disabled
+      expect(screen.getByTestId('increment-product-1')).toBeDisabled()
+    })
+  })
 })
