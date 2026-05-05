@@ -7,6 +7,12 @@ interface BasketControlsProps {
   displayPriceAtAdd: number;
   availableStockAtAdd: number;
   isBasketPage: boolean;
+  addClassName?: string;
+  removeClassName?: string;
+  decrementClassName?: string;
+  incrementClassName?: string;
+  quantityClassName?: string;
+  wrapperClassName?: string;
 }
 
 export function BasketControls({
@@ -14,6 +20,12 @@ export function BasketControls({
   displayPriceAtAdd,
   availableStockAtAdd,
   isBasketPage,
+  addClassName,
+  removeClassName,
+  decrementClassName,
+  incrementClassName,
+  quantityClassName,
+  wrapperClassName,
 }: BasketControlsProps) {
   const items = useBasketStore(selectItems);
   const store = useBasketStore();
@@ -50,8 +62,9 @@ export function BasketControls({
     return (
       <button
         onClick={handleAdd}
-        data-testid="add-button"
+        data-testid={`add-to-basket-${productId}`}
         type="button"
+        className={addClassName}
       >
         Add
       </button>
@@ -59,29 +72,32 @@ export function BasketControls({
   }
 
   return (
-    <div>
+    <div className={wrapperClassName}>
       {isBasketPage && (
         <button
           onClick={handleRemove}
-          data-testid="remove-button"
+          data-testid={`remove-${productId}`}
           type="button"
+          className={removeClassName}
         >
           Remove
         </button>
       )}
       <button
         onClick={handleDecrement}
-        data-testid="decrement-button"
+        data-testid={`decrement-${productId}`}
         type="button"
         disabled={isBasketPage && quantity <= 1}
+        className={decrementClassName}
       >
         -
       </button>
-      <span data-testid="quantity-display">{quantity}</span>
+      <span data-testid="quantity-display" className={quantityClassName}>{quantity}</span>
       <button
         onClick={handleIncrement}
-        data-testid="increment-button"
+        data-testid={`increment-${productId}`}
         type="button"
+        className={incrementClassName}
       >
         +
       </button>
