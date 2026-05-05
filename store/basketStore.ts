@@ -31,39 +31,51 @@ const createFallbackStorage = () => {
   const storage = {
     getItem: (name: string) => {
       try {
-        return localStorage.getItem(name)
+        if (typeof localStorage !== 'undefined') {
+          return localStorage.getItem(name)
+        }
       } catch (e) {
         console.warn('localStorage getItem failed, trying sessionStorage', e)
-        try {
-          return sessionStorage.getItem(name)
-        } catch (e2) {
-          console.warn('sessionStorage getItem failed', e2)
-          return null
-        }
       }
+      try {
+        if (typeof sessionStorage !== 'undefined') {
+          return sessionStorage.getItem(name)
+        }
+      } catch (e2) {
+        console.warn('sessionStorage getItem failed', e2)
+      }
+      return null
     },
     setItem: (name: string, value: string) => {
       try {
-        localStorage.setItem(name, value)
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem(name, value)
+        }
       } catch (e) {
         console.warn('localStorage setItem failed, trying sessionStorage', e)
-        try {
+      }
+      try {
+        if (typeof sessionStorage !== 'undefined') {
           sessionStorage.setItem(name, value)
-        } catch (e2) {
-          console.warn('sessionStorage setItem failed, graceful degradation', e2)
         }
+      } catch (e2) {
+        console.warn('sessionStorage setItem failed, graceful degradation', e2)
       }
     },
     removeItem: (name: string) => {
       try {
-        localStorage.removeItem(name)
+        if (typeof localStorage !== 'undefined') {
+          localStorage.removeItem(name)
+        }
       } catch (e) {
         console.warn('localStorage removeItem failed, trying sessionStorage', e)
-        try {
+      }
+      try {
+        if (typeof sessionStorage !== 'undefined') {
           sessionStorage.removeItem(name)
-        } catch (e2) {
-          console.warn('sessionStorage removeItem failed', e2)
         }
+      } catch (e2) {
+        console.warn('sessionStorage removeItem failed', e2)
       }
     }
   }
@@ -99,7 +111,12 @@ const useBasketStore = create<BasketStore>()(
         set({ items: get().items.filter((item) => item.productId !== productId) })
       },
       incrementQuantity: (productId) => {
-        set({ items: get().items.map((item) => item.productId === productId ? { ...item, quantity: item.quantity + 1 } : item) })
+        set({ items: get().items.map((item) => {
+          if (item.productId === productId && item.quantity < item.availableStockAtAdd) {
+            return { ...item, quantity: item.quantity + 1 }
+          }
+          return item
+        })})
       },
       decrementQuantity: (productId) => {
         set({ items: get().items.map((item) => {
@@ -126,6 +143,22 @@ const useBasketStore = create<BasketStore>()(
     }
   )
 )
+
+// Cross-tab synchronization: listen for storage events from other tabs
+if (typeof window !== 'undefined') {
+  window.addEventListener('storage', (event) => {
+    if (event.key === 'basket-storage' && event.newValue) {
+      try {
+        const parsed = JSON.parse(event.newValue)
+        if (parsed.state) {
+          useBasketStore.setState(parsed.state)
+        }
+      } catch (e) {
+        console.error('Failed to rehydrate from storage event:', e)
+      }
+    }
+  })
+}
 
 // Selector for total count
 export const selectTotalItemsCount = (state: BasketState) =>

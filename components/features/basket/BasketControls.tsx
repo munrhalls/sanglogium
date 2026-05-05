@@ -97,6 +97,7 @@ export function BasketControls({
         onClick={handleIncrement}
         data-testid={`increment-${productId}`}
         type="button"
+        disabled={quantity >= availableStockAtAdd}
         className={incrementClassName}
       >
         +
