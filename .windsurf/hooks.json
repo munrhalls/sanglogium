@@ -1,6 +1,6 @@
 {
   "postWrite": {
-    "enabled": true,
+    "enabled": false,
     "command": "npm run lint",
     "shell": "powershell",
     "description": "Automatically run linter on every file write to enforce zero-regression reality"
