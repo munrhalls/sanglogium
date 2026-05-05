@@ -4,8 +4,9 @@ When working with test files in this directory:
 
 ## Naming
 - Unit tests: `[subject].test.ts` or `[subject].test.tsx`
-- Integration tests: `[subject].spec.tsx`
-- E2E tests: `[feature].e2e.spec.ts`
+- Integration tests: `[subject].test.ts`
+- E2E tests: `[feature].spec.ts`
+- Component tests: `[subject].spec.tsx`
 
 ## Structure (Contract-Based)
 - Top-level `describe`: Contract or system name (e.g., "Basket Store", "Basket Page Contracts")

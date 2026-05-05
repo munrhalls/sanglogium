@@ -4,19 +4,10 @@ description: Create minimal tests plan with diagram and file list
 
 # /tests-plan [FEATURE_NAME]
 
-**Input:** Feature name or path to __tests__ folder
-**Output:** `docs/[feature]/[X]. Tests Plan.md` — diagram + file list with 1-sentence descriptions
+**Input:** Folder link <feature name> or <sub-feature-name>, 1. 1. PRD.md, 2. HTML Structure.md, Technical Solution Design.md inside `docs/[feature]/...` or `docs/[feature]/[sub-feature]/...`
+**Output:** `docs/[feature]/(optionally [sub-feature]/Tests Plan.md` — diagram + file list with 1-sentence descriptions
 
 ## Execution Steps
-
-**If tests exist (inventory mode):**
-1. **List:** Scan __tests__ folder structure (unit, integration, e2e)
-2. **Read:** Each test file to understand what it tests
-3. **Diagram:** Create Mermaid flowchart showing test layers and files
-4. **Describe:** For each file, write 1-sentence description of what it tests
-5. **Format:** Use universal format (diagram + file list)
-
-**If tests don't exist (plan mode):**
 1. **Plan:** Define test layers (unit, integration, e2e) based on feature
 2. **List:** Planned test files with paths
 3. **Diagram:** Create Mermaid flowchart showing planned test layers and files
