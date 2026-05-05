@@ -1,7 +1,7 @@
 # Test-First Principles
 
 ## Rule
-**Write tests BEFORE implementation. Tests must FAIL first (red), then you implement to make them PASS (green).**
+**Write tests BEFORE implementation. Tests must FAIL first (red) and they are meant to specify what correct implementation behaves like.**
 
 ## RGR (Red-Green-Refactor)
 1. **Red**: Write minimal, professional, simple, robust test for feature that doesn't exist yet. Test MUST fail because it TESTS WHAT DOESN'T EXIST YET.
