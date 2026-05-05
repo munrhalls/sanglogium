@@ -21,6 +21,13 @@ export default defineConfig(({ mode }) => {
         ...env,
       },
       setupFiles: ['./vitest.setup.ts'],
+      include: [
+        'tests/**/*.spec.tsx',
+        'tests/**/*.spec.ts',
+        'tests/**/*.test.tsx',
+        'tests/**/*.test.ts',
+        'docs/basket/non-local-basket/__tests__/integration/**/*.spec.tsx',
+      ],
       exclude: [
         '**/node_modules/**',
         '**/dist/**',
