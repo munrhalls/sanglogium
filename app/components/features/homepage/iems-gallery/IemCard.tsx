@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils/tailwind"
 import { Image } from "next-sanity/image"
 import { urlFor } from "@/sanity-config/lib/image"
 import { IemProduct } from "./getIemProducts"
-import { AddToCartButton } from "@/app/components/ui/AddToCartButton"
+import { BasketControls } from "@/components/features/basket/BasketControls"
 import { centsToDisplay } from "@/lib/utils/price"
 
 export default function IemCard({ product, idx }: { product: IemProduct; idx: number }) {
@@ -33,14 +33,16 @@ export default function IemCard({ product, idx }: { product: IemProduct; idx: nu
                     <p className="type-price">
                         ${centsToDisplay(product.price_data.unit_amount)}
                     </p>
-                    <AddToCartButton
+                    <BasketControls
                         productId={product._id}
-                        name={product.name}
-                        displayPrice={centsToDisplay(product.price_data.unit_amount)}
-                        stock={product.stock ?? 99}
-                        imageUrl={product.imageUrl ?? ''}
-                        slug={product.slug}
-                        className="w-full justify-center xs:w-auto"
+                        displayPriceAtAdd={centsToDisplay(product.price_data.unit_amount)}
+                        availableStockAtAdd={product.stock ?? 99}
+                        isBasketPage={false}
+                        addClassName="btn-cart w-full justify-center xs:w-auto"
+                        wrapperClassName="flex items-center gap-1"
+                        decrementClassName="btn-secondary w-8 h-8 flex items-center justify-center"
+                        incrementClassName="btn-secondary w-8 h-8 flex items-center justify-center disabled:opacity-50"
+                        quantityClassName="w-7 text-center type-body text-primary tabular-nums"
                     />
                 </div>
             </div>

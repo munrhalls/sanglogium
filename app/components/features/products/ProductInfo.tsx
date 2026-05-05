@@ -2,57 +2,16 @@
 
 import { Product } from '@/sanity-config/lib/products/getProductBySlug';
 import { urlFor } from '@/sanity-config/lib/image';
-// TODO: Import from new basket store when implemented
-// import { useBasketStore, selectBasketItem } from '@/store/store';
 import { useState } from 'react';
 import { Price } from '@/app/components/ui/Price';
 import { ShoppingCartIcon, CheckIcon } from '@phosphor-icons/react/dist/ssr';
 import { QuantitySelector } from '@/app/components/ui/QuantitySelector';
 import { centsToDisplay } from '@/lib/utils/price';
+import { BasketControls } from '@/components/features/basket/BasketControls';
 
 export function ProductInfo({ product }: { product: Product }) {
   const [preAddQty, setPreAddQty] = useState(1);
   const displayPrice = centsToDisplay(product.price_data.unit_amount);
-  // TODO: Re-implement when new basket store is available
-  // const basketItem = useBasketStore(selectBasketItem(product._id));
-  // const addItem = useBasketStore((s) => s.addItem);
-  // const updateQuantity = useBasketStore((s) => s.updateQuantity);
-  // const removeItem = useBasketStore((s) => s.removeItem);
-
-  const handleAddToCart = () => {
-    // TODO: Re-implement when new basket store is available
-    // if (product.stock > 0) {
-    //   const itemToAdd = {
-    //     _id: product._id,
-    //     name: product.name,
-    //     displayPrice: product.displayPrice,
-    //     stock: product.stock,
-    //     quantity: preAddQty,
-    //     image: product.image ? urlFor(product.image).width(100).height(100).url() : '/images/placeholder-product.jpg',
-    //     slug: product.slug.current,
-    //     stripePriceId: product.stripePriceId,
-    //   };
-    //   addItem(itemToAdd);
-    // }
-  };
-
-  const handleBasketIncrement = () => {
-    // TODO: Re-implement when new basket store is available
-    // if (basketItem && basketItem.quantity < product.stock) {
-    //   updateQuantity(product._id, basketItem.quantity + 1);
-    // }
-  };
-
-  const handleBasketDecrement = () => {
-    // TODO: Re-implement when new basket store is available
-    // if (basketItem) {
-    //   if (basketItem.quantity <= 1) {
-    //     removeItem(product._id);
-    //   } else {
-    //     updateQuantity(product._id, basketItem.quantity - 1);
-    //   }
-    // }
-  };
 
   const getStockStatus = () => {
     if (product.stock === 0) return { text: 'Out of Stock', color: 'text-error-500' };
@@ -84,39 +43,17 @@ export function ProductInfo({ product }: { product: Product }) {
       )}
 
       <div className="pt-4 space-y-6 ">
-        {/* TODO: Re-implement basket state when new basket store is available */}
-        {/* {basketItem ? (
-          <>
-            <button
-              disabled
-              className="btn-in-basket-large w-full flex justify-center"
-            >
-              <CheckIcon size={20} weight="bold" />
-              {basketItem.quantity} in Cart
-            </button>
-            <div className="flex items-center gap-4">
-              <span className="type-body text-secondary">In cart:</span>
-              <QuantitySelector
-                quantity={basketItem.quantity}
-                min={0}
-                max={product.stock}
-                onIncrement={handleBasketIncrement}
-                onDecrement={handleBasketDecrement}
-                size="md"
-              />
-            </div>
-          </>
-        ) : ( */}
-          <button
-            onClick={handleAddToCart}
-            disabled={product.stock === 0}
-            data-testid={`add-to-basket-${product._id}`}
-            className="btn-cart-large w-full flex justify-center"
-          >
-            <ShoppingCartIcon size={24} weight="bold" />
-            {product.stock === 0 ? 'Out of stock' : 'Add to cart'}
-          </button>
-        {/* )} */}
+        <BasketControls
+          productId={product._id}
+          displayPriceAtAdd={displayPrice}
+          availableStockAtAdd={product.stock}
+          isBasketPage={false}
+          addClassName="btn-cart-large w-full flex justify-center"
+          wrapperClassName="flex items-center gap-4"
+          decrementClassName="btn-secondary w-8 h-8 flex items-center justify-center"
+          incrementClassName="btn-secondary w-8 h-8 flex items-center justify-center disabled:opacity-50"
+          quantityClassName="w-7 text-center type-body text-primary tabular-nums"
+        />
       </div>
     </div >
   );

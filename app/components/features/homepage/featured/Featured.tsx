@@ -10,7 +10,7 @@ import {
 } from "@/app/components/layout/carousel/CarouselControls";
 import FeaturedHeader from "./FeaturedHeader";
 import { FeaturedProduct } from "./getFeaturedProducts";
-import { AddToCartButton } from "@/app/components/ui/AddToCartButton";
+import { BasketControls } from "@/components/features/basket/BasketControls";
 import { centsToDisplay } from "@/lib/utils/price";
 
 interface FeaturedProps {
@@ -58,13 +58,16 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
         </h3>
         <div className="mt-auto flex items-center justify-between pt-2">
           <p className="type-price">${centsToDisplay(product.price_data.unit_amount)}</p>
-          <AddToCartButton
+          <BasketControls
             productId={product._id}
-            name={product.name}
-            displayPrice={centsToDisplay(product.price_data.unit_amount)}
-            stock={product.stock ?? 99}
-            imageUrl={product.image?.asset?.url ?? ''}
-            slug={product.slug}
+            displayPriceAtAdd={centsToDisplay(product.price_data.unit_amount)}
+            availableStockAtAdd={product.stock ?? 99}
+            isBasketPage={false}
+            addClassName="btn-cart"
+            wrapperClassName="flex items-center gap-1"
+            decrementClassName="btn-secondary w-8 h-8 flex items-center justify-center"
+            incrementClassName="btn-secondary w-8 h-8 flex items-center justify-center disabled:opacity-50"
+            quantityClassName="w-7 text-center type-body text-primary tabular-nums"
           />
         </div>
       </div>

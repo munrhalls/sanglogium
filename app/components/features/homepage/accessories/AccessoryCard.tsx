@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils/tailwind";
 import { Image } from "next-sanity/image";
 import { urlFor } from "@/sanity-config/lib/image";
 import type { AccessoryItem } from "./types";
-import { AddToCartButton } from "@/app/components/ui/AddToCartButton";
+import { BasketControls } from "@/components/features/basket/BasketControls";
 import { centsToDisplay } from "@/lib/utils/price";
 
 export default function AccessoryCard({ item, idx }: { item: AccessoryItem; idx: number }) {
@@ -40,16 +40,16 @@ export default function AccessoryCard({ item, idx }: { item: AccessoryItem; idx:
         </div>
 
         <div className="mt-auto pt-4 border-t border-border-secondary/50">
-          <AddToCartButton
+          <BasketControls
             productId={item._id}
-            name={item.name}
-            displayPrice={centsToDisplay(item.price_data.unit_amount)}
-            stock={(item as any).stock ?? 99}
-            imageUrl={item.imageUrl ?? ''}
-            slug={item.slug}
-            className="w-full justify-center"
-            label="Add to Cart"
-            shortLabel="Add"
+            displayPriceAtAdd={centsToDisplay(item.price_data.unit_amount)}
+            availableStockAtAdd={(item as any).stock ?? 99}
+            isBasketPage={false}
+            addClassName="btn-cart w-full justify-center"
+            wrapperClassName="flex items-center gap-1"
+            decrementClassName="btn-secondary w-8 h-8 flex items-center justify-center"
+            incrementClassName="btn-secondary w-8 h-8 flex items-center justify-center disabled:opacity-50"
+            quantityClassName="w-7 text-center type-body text-primary tabular-nums"
           />
         </div>
       </div>

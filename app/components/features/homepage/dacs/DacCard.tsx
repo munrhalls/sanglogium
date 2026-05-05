@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils/tailwind";
 import { Image } from "next-sanity/image";
 import { urlFor } from "@/sanity-config/lib/image";
-import { AddToCartButton } from "@/app/components/ui/AddToCartButton";
+import { BasketControls } from "@/components/features/basket/BasketControls";
 import { centsToDisplay } from "@/lib/utils/price";
 
 export default function DacCard({ item, idx }: { item: any; idx: number }) {
@@ -36,13 +36,16 @@ export default function DacCard({ item, idx }: { item: any; idx: number }) {
       <div className="mt-auto flex items-center">
         <p className="text-cap type-price text-center">{price}</p>
         <div className="ml-auto">
-          <AddToCartButton
+          <BasketControls
             productId={item._id}
-            name={productName}
-            displayPrice={item.price_data ? centsToDisplay(item.price_data.unit_amount) : 0}
-            stock={item.stock ?? 99}
-            imageUrl={item.image?.asset?.url ?? ''}
-            slug={item.slug ?? ''}
+            displayPriceAtAdd={item.price_data ? centsToDisplay(item.price_data.unit_amount) : 0}
+            availableStockAtAdd={item.stock ?? 99}
+            isBasketPage={false}
+            addClassName="btn-cart"
+            wrapperClassName="flex items-center gap-1"
+            decrementClassName="btn-secondary w-8 h-8 flex items-center justify-center"
+            incrementClassName="btn-secondary w-8 h-8 flex items-center justify-center disabled:opacity-50"
+            quantityClassName="w-7 text-center type-body text-primary tabular-nums"
           />
         </div>
       </div>

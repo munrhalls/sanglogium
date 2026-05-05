@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { ProductImage } from './ProductImage';
 import type { Product } from '@/sanity-config/lib/products/getProductsByVfsKeys';
 import { Price } from '@/app/components/ui/Price';
-import { AddToCartButton } from '@/app/components/ui/AddToCartButton';
+import { BasketControls } from '@/components/features/basket/BasketControls';
 import { urlFor } from '@/sanity-config/lib/image';
 import { centsToDisplay } from '@/lib/utils/price';
 
@@ -51,20 +51,23 @@ export function ProductCard({ product }: ProductCardProps) {
           <h3 className="type-body font-medium line-clamp-2">
             {product.name}
           </h3>
-          <div className="mt-auto flex items-center justify-between pt-2">
-            <Price value={displayPrice} />
-            <AddToCartButton
-              productId={product._id}
-              name={product.name}
-              displayPrice={displayPrice}
-              stock={product.stock ?? 99}
-              imageUrl={imageUrl}
-              slug={product.slug.current}
-              stripePriceId={product.stripePriceId}
-            />
-          </div>
         </div>
       </Link>
+
+      <div className="flex items-center justify-between px-4 pb-4">
+        <Price value={displayPrice} />
+        <BasketControls
+          productId={product._id}
+          displayPriceAtAdd={displayPrice}
+          availableStockAtAdd={product.stock ?? 99}
+          isBasketPage={false}
+          addClassName="btn-cart"
+          wrapperClassName="flex items-center gap-1"
+          decrementClassName="btn-secondary w-8 h-8 flex items-center justify-center"
+          incrementClassName="btn-secondary w-8 h-8 flex items-center justify-center disabled:opacity-50"
+          quantityClassName="w-7 text-center type-body text-primary tabular-nums"
+        />
+      </div>
     </article>
   );
 }
