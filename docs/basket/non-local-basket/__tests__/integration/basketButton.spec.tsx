@@ -35,6 +35,7 @@ describe('BasketButton', () => {
 
       // ASSERT - verify basket button and badge render
       expect(screen.getByTestId('basket-button')).toBeInTheDocument()
+      expect(screen.getByTestId('basket-badge')).toBeInTheDocument()
     })
   })
 
@@ -56,9 +57,9 @@ describe('BasketButton', () => {
     })
   })
 
-  describe('when user clicks basket button', () => {
-    it('navigates to basket page', () => {
-      // ARRANGE - setup test state with rendered BasketButton
+  describe('when rendering', () => {
+    it('has link to basket page', () => {
+      // ARRANGE - render BasketButton component
       render(<BasketButton />)
 
       // ACT - find basket button link
