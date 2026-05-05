@@ -369,18 +369,18 @@ describe('Basket Controls Integration Across App', () => {
         })
 
         it('renders increment/decrement controls', () => {
-          render(<BasketControls productId={mockProductId} displayPriceAtAdd={100} availableStockAtAdd={10} isBasketPage={true} />)
+          render(<BasketControls isBasketPage={true} productId={mockProductId} displayPriceAtAdd={100} availableStockAtAdd={10} />)
           expect(screen.getByTestId(`increment-${mockProductId}`)).toBeInTheDocument()
           expect(screen.getByTestId(`decrement-${mockProductId}`)).toBeInTheDocument()
         })
 
         it('renders remove button', () => {
-          render(<BasketControls productId={mockProductId} displayPriceAtAdd={100} availableStockAtAdd={10} isBasketPage={true} />)
+          render(<BasketControls isBasketPage={true} productId={mockProductId} displayPriceAtAdd={100} availableStockAtAdd={10} />)
           expect(screen.getByTestId(`remove-${mockProductId}`)).toBeInTheDocument()
         })
 
         it('caps decrement at 1 (does not remove)', () => {
-          render(<BasketControls productId={mockProductId} displayPriceAtAdd={100} availableStockAtAdd={10} isBasketPage={true} />)
+          render(<BasketControls isBasketPage={true} productId={mockProductId} displayPriceAtAdd={100} availableStockAtAdd={10} />)
           const decrementButton = screen.getByTestId(`decrement-${mockProductId}`)
           decrementButton.click()
           expect(screen.getByTestId('quantity-display')).toHaveTextContent('1')
@@ -388,7 +388,7 @@ describe('Basket Controls Integration Across App', () => {
         })
 
         it('removes item via remove button', async () => {
-          render(<BasketControls productId={mockProductId} displayPriceAtAdd={100} availableStockAtAdd={10} isBasketPage={true} />)
+          render(<BasketControls isBasketPage={true} productId={mockProductId} displayPriceAtAdd={100} availableStockAtAdd={10} />)
           screen.getByTestId(`remove-${mockProductId}`).click()
           await new Promise(resolve => setTimeout(resolve, 0))
           expect(screen.queryByTestId('quantity-display')).not.toBeInTheDocument()

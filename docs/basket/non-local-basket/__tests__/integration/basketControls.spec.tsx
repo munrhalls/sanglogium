@@ -33,11 +33,11 @@ describe('basketControls', () => {
       )
 
       // ASSERT - verify add button renders
-      expect(screen.getByTestId('add-button')).toBeInTheDocument()
+      expect(screen.getByTestId('add-to-basket-product-1')).toBeInTheDocument()
       // ASSERT - verify increment/decrement/remove buttons do NOT render (product page context)
-      expect(screen.queryByTestId('increment-button')).not.toBeInTheDocument()
-      expect(screen.queryByTestId('decrement-button')).not.toBeInTheDocument()
-      expect(screen.queryByTestId('remove-button')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('increment-product-1')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('decrement-product-1')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('remove-product-1')).not.toBeInTheDocument()
     })
   })
 
@@ -62,11 +62,11 @@ describe('basketControls', () => {
       )
 
       // ASSERT - verify increment/decrement buttons render
-      expect(screen.getByTestId('increment-button')).toBeInTheDocument()
-      expect(screen.getByTestId('decrement-button')).toBeInTheDocument()
+      expect(screen.getByTestId('increment-product-1')).toBeInTheDocument()
+      expect(screen.getByTestId('decrement-product-1')).toBeInTheDocument()
       // ASSERT - verify add/remove buttons do NOT render (product page context)
-      expect(screen.queryByTestId('add-button')).not.toBeInTheDocument()
-      expect(screen.queryByTestId('remove-button')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('add-to-basket-product-1')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('remove-product-1')).not.toBeInTheDocument()
     })
   })
 
@@ -88,14 +88,14 @@ describe('basketControls', () => {
 
       // ACT - trigger user click on add button
       act(() => {
-        screen.getByTestId('add-button').click()
+        screen.getByTestId('add-to-basket-product-1').click()
       })
 
       // ASSERT - verify add button no longer renders
-      expect(screen.queryByTestId('add-button')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('add-to-basket-product-1')).not.toBeInTheDocument()
       // ASSERT - verify increment/decrement buttons render
-      expect(screen.getByTestId('increment-button')).toBeInTheDocument()
-      expect(screen.getByTestId('decrement-button')).toBeInTheDocument()
+      expect(screen.getByTestId('increment-product-1')).toBeInTheDocument()
+      expect(screen.getByTestId('decrement-product-1')).toBeInTheDocument()
     })
   })
 
@@ -120,14 +120,14 @@ describe('basketControls', () => {
 
       // ACT - trigger user click on decrement button
       act(() => {
-        screen.getByTestId('decrement-button').click()
+        screen.getByTestId('decrement-product-1').click()
       })
 
       // ASSERT - verify add button renders again
-      expect(screen.getByTestId('add-button')).toBeInTheDocument()
+      expect(screen.getByTestId('add-to-basket-product-1')).toBeInTheDocument()
       // ASSERT - verify increment/decrement buttons no longer render
-      expect(screen.queryByTestId('increment-button')).not.toBeInTheDocument()
-      expect(screen.queryByTestId('decrement-button')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('increment-product-1')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('decrement-product-1')).not.toBeInTheDocument()
     })
   })
 
@@ -152,7 +152,7 @@ describe('basketControls', () => {
 
       // ACT - trigger user click on increment button
       act(() => {
-        screen.getByTestId('increment-button').click()
+        screen.getByTestId('increment-product-1').click()
       })
 
       // ASSERT - verify quantity display updated (UI state change, not store state)
@@ -182,7 +182,7 @@ describe('basketControls', () => {
 
       // ACT - trigger user click on decrement button
       act(() => {
-        screen.getByTestId('decrement-button').click()
+        screen.getByTestId('decrement-product-1').click()
       })
 
       // ASSERT - verify quantity display updated (UI state change, not store state)

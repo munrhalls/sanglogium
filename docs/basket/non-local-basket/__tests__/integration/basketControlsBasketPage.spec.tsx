@@ -36,11 +36,11 @@ describe('basketControlsBasketPage', () => {
       )
 
       // ASSERT - verify increment/decrement/remove buttons render
-      expect(screen.getByTestId('increment-button')).toBeInTheDocument()
-      expect(screen.getByTestId('decrement-button')).toBeInTheDocument()
-      expect(screen.getByTestId('remove-button')).toBeInTheDocument()
+      expect(screen.getByTestId('increment-product-1')).toBeInTheDocument()
+      expect(screen.getByTestId('decrement-product-1')).toBeInTheDocument()
+      expect(screen.getByTestId('remove-product-1')).toBeInTheDocument()
       // ASSERT - verify add button does NOT render (basket page context)
-      expect(screen.queryByTestId('add-button')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('add-to-basket-product-1')).not.toBeInTheDocument()
     })
   })
 
@@ -65,13 +65,13 @@ describe('basketControlsBasketPage', () => {
 
       // ACT - trigger user click on remove button
       act(() => {
-        screen.getByTestId('remove-button').click()
+        screen.getByTestId('remove-product-1').click()
       })
 
       // ASSERT - verify increment/decrement/remove buttons no longer render
-      expect(screen.queryByTestId('increment-button')).not.toBeInTheDocument()
-      expect(screen.queryByTestId('decrement-button')).not.toBeInTheDocument()
-      expect(screen.queryByTestId('remove-button')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('increment-product-1')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('decrement-product-1')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('remove-product-1')).not.toBeInTheDocument()
     })
   })
 
@@ -97,9 +97,9 @@ describe('basketControlsBasketPage', () => {
       // ACT - no action needed, just check disabled state
 
       // ASSERT - verify decrement button is disabled (basket page behavior - capped at 1)
-      expect(screen.getByTestId('decrement-button')).toBeDisabled()
+      expect(screen.getByTestId('decrement-product-1')).toBeDisabled()
       // ASSERT - verify remove button is still enabled (only way to remove on basket page)
-      expect(screen.getByTestId('remove-button')).not.toBeDisabled()
+      expect(screen.getByTestId('remove-product-1')).not.toBeDisabled()
     })
   })
 })
