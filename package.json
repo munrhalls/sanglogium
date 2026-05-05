@@ -59,7 +59,10 @@
     "research:focus": "node scripts/research/loop-control.mjs focus",
     "research:unfocus": "node scripts/research/loop-control.mjs unfocus",
     "research:status": "node scripts/research/loop-control.mjs status",
-    "research:once": "node scripts/research/continuous-loop.mjs once"
+    "research:once": "node scripts/research/continuous-loop.mjs once",
+    "autoresearch": "node scripts/research/autoresearch.mjs once",
+    "autoresearch:daemon": "node scripts/research/autoresearch.mjs daemon",
+    "autoresearch:verify": "node scripts/research/verify.mjs"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.16.0",
