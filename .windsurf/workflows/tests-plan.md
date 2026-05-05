@@ -9,10 +9,18 @@ description: Create minimal tests plan with diagram and file list
 
 ## Execution Steps
 
+**If tests exist (inventory mode):**
 1. **List:** Scan __tests__ folder structure (unit, integration, e2e)
 2. **Read:** Each test file to understand what it tests
 3. **Diagram:** Create Mermaid flowchart showing test layers and files
 4. **Describe:** For each file, write 1-sentence description of what it tests
+5. **Format:** Use universal format (diagram + file list)
+
+**If tests don't exist (plan mode):**
+1. **Plan:** Define test layers (unit, integration, e2e) based on feature
+2. **List:** Planned test files with paths
+3. **Diagram:** Create Mermaid flowchart showing planned test layers and files
+4. **Describe:** For each planned file, write 1-sentence description of what it will test
 5. **Format:** Use universal format (diagram + file list)
 
 ## Output Format

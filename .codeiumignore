@@ -29,5 +29,4 @@ scripts/image-pipeline/*.txt
 sanity/update/*.json
 # .todo files trigger pathological re-indexing in language server on edit
 # (confirmed Apr 26 — 1 KB file edits grew RAM from 1.1 GB to 8.7 GB)
-# Temporarily lifted to read prd-basket.todo for verification
-# *.todo
+*.todo
