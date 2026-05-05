@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { getProductBySlug, getRelatedProducts } from '@/sanity/lib/products';
+import { getProductBySlug, getRelatedProducts } from '@/sanity-config/lib/products';
 import { ProductDetail } from '@/app/components/features/products';
 import { generateOptimizedTitle, generateSEOTitle, generateMetaDescription } from '@/lib/utils/title-optimization';
 
