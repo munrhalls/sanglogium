@@ -54,7 +54,7 @@ interface BasketControlsProps {
 ```
 
 **WHY:** Props that control rendering indicate context-aware component.
-  
+
 ## How to Test Context-Aware Components
 
 ### Rule: Test Each Context Separately
