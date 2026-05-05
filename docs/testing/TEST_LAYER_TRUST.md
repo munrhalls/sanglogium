@@ -14,7 +14,7 @@
 ### Integration Tests (View Layer)
 - Test component rendering given state
 - Test user interaction dispatches proper events to store
-- **Exclusive domain**: UI rendering and user interactions
+- **Exclusive domain**: UI rendering and user interactions (view layer)
 
 ## Cooperation Principle
 Testing layers cooperate as a team with synergy. Unit tests handle data layer exclusively. Integration tests trust unit tests and never re-test what unit tests already tested.

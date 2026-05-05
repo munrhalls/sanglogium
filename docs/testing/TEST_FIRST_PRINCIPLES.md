@@ -13,8 +13,14 @@
 - **Act**: Call function/behavior being tested
 - **Assert**: Verify expected outcome
 
-## Critical Principle
-Integration tests are written AS IF the component already exists. Never write tests that pass immediately - that's a false positive and provides no verification.
+## Critical Principle - 1
+Integration tests are written AS IF the component/implementation already exists. Never write tests that pass immediately - that's a false positive and provides no verification.
+
+## Critical Principle - 2
+Description and it block must follow test naming convention [@/TestsNamingConvention.md] - AND be accurate and one to one specific with what the test does.
+
+## Critical Principle - 3
+Tests specify behavior, never implement inside tests. No implementation inside tests - tests verify behavioral contract based on their layer (data layer = data contract, view layer = ui contract), components implement. 
 
 ## Example
 ```typescript
@@ -27,13 +33,12 @@ describe('BasketButton', () => {
   })
 })
 
-// ❌ WRONG - Test written to pass immediately, no verification
+// ❌ WRONG - Test claims to test badge count but tests button existence
 describe('BasketButton', () => {
   it('displays badge with correct count', () => {
-    // Note: Badge element will be added when component is implemented
     useBasketStore.setState({ items: [{ productId: 'p1', quantity: 2, ... }] })
     render(<BasketButton />)
-    expect(screen.getByTestId('basket-button')).toBeInTheDocument() // Doesn't test badge
+    expect(screen.getByTestId('basket-button')).toBeInTheDocument() // Tests button, not badge
   })
 })
 ```
@@ -45,3 +50,11 @@ describe('BasketButton', () => {
 - Stable ground to implement upon: ONLY TRUSTWORTHY tests with 0% false positives risk are a stable ground
 - Prevents false positives (tests passing without exercising implementation)
 - A single false positive can ruin entire codebase, it's the worst disaster and nightmare to avoid at all cost
+
+## Common Failure Mode: Removing Tests for Non-Existent Implementation
+
+**Symptom:** You see tests failing because component doesn't exist, so you remove them.
+
+**Correct Action:** KEEP the failing tests. They are specifications. When you implement the component, tests will pass.
+
+**Why:** Tests failing first is the "Red" in RGR. Removing them skips the Red phase entirely.
