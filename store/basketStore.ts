@@ -167,4 +167,16 @@ export const selectTotalItemsCount = (state: BasketState) =>
 // Selector for items
 export const selectItems = (state: BasketState) => state.items
 
+// Selector for item by productId
+export const selectItem = (state: BasketState, productId: string) =>
+  state.items.find((item) => item.productId === productId)
+
+// Selector for item quantity
+export const selectItemQuantity = (state: BasketState, productId: string) =>
+  selectItem(state, productId)?.quantity ?? 0
+
+// Selector for checking if item exists in basket
+export const selectHasItem = (state: BasketState, productId: string) =>
+  state.items.some((item) => item.productId === productId)
+
 export default useBasketStore
