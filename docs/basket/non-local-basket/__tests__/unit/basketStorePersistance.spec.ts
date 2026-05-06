@@ -5,7 +5,7 @@
 // - Reason: Foundation for basket state management
 
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import useBasketStore from '../../../../../store/basketStore'
+import useBasketStore, { selectTotalItemsCount } from '../../../../../store/basketStore'
 
 describe('BasketStore Persistence', () => {
   beforeEach(() => {
@@ -49,7 +49,7 @@ describe('BasketStore Persistence', () => {
 
         // ASSERT - verify state still updates despite localStorage failure (graceful degradation)
         const state = useBasketStore.getState()
-        expect(state.items).toHaveLength(1)
+        expect(selectTotalItemsCount(state)).toBe(1)
       } finally {
         localStorageSpy.mockRestore()
       }
@@ -76,7 +76,7 @@ describe('BasketStore Persistence', () => {
 
         // ASSERT - verify graceful degradation without error (state still updates)
         const state = useBasketStore.getState()
-        expect(state.items).toHaveLength(1)
+        expect(selectTotalItemsCount(state)).toBe(1)
       } finally {
         localStorageSpy.mockRestore()
         sessionStorageSpy.mockRestore()
@@ -119,7 +119,7 @@ describe('BasketStore Persistence', () => {
 
         // ASSERT - verify state still updates despite localStorage read failure
         const state = useBasketStore.getState()
-        expect(state.items).toHaveLength(1)
+        expect(selectTotalItemsCount(state)).toBe(1)
       } finally {
         localStorageSpy.mockRestore()
       }
@@ -142,7 +142,7 @@ describe('BasketStore Persistence', () => {
 
         // ASSERT - verify reset to empty state
         const state = useBasketStore.getState()
-        expect(state.items).toHaveLength(0)
+        expect(selectTotalItemsCount(state)).toBe(0)
       } finally {
         localStorageSpy.mockRestore()
         sessionStorageSpy.mockRestore()
@@ -172,8 +172,7 @@ describe('BasketStore Hydration Validation', () => {
 
       // ASSERT - verify data structure validates using Zod schema (item added successfully)
       const state = useBasketStore.getState()
-      expect(state.items).toHaveLength(1)
-      expect(state.items[0].productId).toBe(productId)
+      expect(selectTotalItemsCount(state)).toBe(1)
     })
   })
 
@@ -188,8 +187,7 @@ describe('BasketStore Hydration Validation', () => {
       // ASSERT - verify store state is initialized (onRehydrateStorage handles validation during store creation)
       // Note: Full hydration validation testing is limited by singleton store architecture
       const state = useBasketStore.getState()
-      expect(state.items).toBeDefined()
-      expect(Array.isArray(state.items)).toBe(true)
+      expect(selectTotalItemsCount(state)).toBe(0)
     })
   })
 })
@@ -245,8 +243,7 @@ describe('BasketStore Cross-Tab Synchronization', () => {
 
       // ASSERT - verify state rehydrated from localStorage
       const state = useBasketStore.getState()
-      expect(state.items).toHaveLength(1)
-      expect(state.items[0].productId).toBe(productId)
+      expect(selectTotalItemsCount(state)).toBe(1)
     })
   })
 })

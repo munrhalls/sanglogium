@@ -15,7 +15,7 @@ describe('basketControls', () => {
     useBasketStore.setState({ items: [] })
   })
 
-  describe('on product page (isBasketPage={false}) when product not in basket', () => {
+  describe('on a product page (isBasketPage={false}) when product not in basket', () => {
     it('renders add button only', () => {
       // ARRANGE - setup test state with product not in basket
       const productId = 'product-1'
@@ -41,7 +41,7 @@ describe('basketControls', () => {
     })
   })
 
-  describe('on product page (isBasketPage={false}) when product in basket', () => {
+  describe('on a product page (isBasketPage={false}) when product in basket', () => {
     it('renders increment and decrement buttons (no remove button)', () => {
       // ARRANGE - setup test state with product in basket
       const productId = 'product-1'

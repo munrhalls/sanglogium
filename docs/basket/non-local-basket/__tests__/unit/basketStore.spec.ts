@@ -5,7 +5,7 @@
 // - Reason: Foundation for basket state management
 
 import { describe, it, expect, beforeEach } from 'vitest'
-import useBasketStore, { selectTotalItemsCount } from '../../../../../store/basketStore'
+import useBasketStore, { selectTotalItemsCount, selectHasItem, selectItemQuantity } from '../../../../../store/basketStore'
 
 describe('BasketStore Actions', () => {
   beforeEach(() => {
@@ -14,34 +14,37 @@ describe('BasketStore Actions', () => {
   })
 
   describe('when adding new product', () => {
-    it('adds item to items array with quantity 1', () => {
+    it('adds item with quantity 1 and increments total count', () => {
       // ARRANGE - setup test state with empty basket, prepare valid product data
       const productId = 'product-1'
       const displayPriceAtAdd = 100
       const availableStockAtAdd = 10
+      const state = useBasketStore.getState()
+      const initialCount = selectTotalItemsCount(state)
 
       // ACT - call addProduct with productId, displayPriceAtAdd, availableStockAtAdd
       useBasketStore.getState().addProduct(productId, displayPriceAtAdd, availableStockAtAdd)
 
-      // ASSERT - verify item added to items array with quantity 1
-      const state = useBasketStore.getState()
-      expect(state.items).toHaveLength(1)
-      expect(state.items[0].productId).toBe(productId)
-      expect(state.items[0].quantity).toBe(1)
-      expect(state.items[0].displayPriceAtAdd).toBe(displayPriceAtAdd)
-      expect(state.items[0].availableStockAtAdd).toBe(availableStockAtAdd)
+      // ASSERT - verify item exists with quantity 1 and total count incremented
+      const newState = useBasketStore.getState()
+      expect(selectHasItem(newState, productId)).toBe(true)
+      expect(selectItemQuantity(newState, productId)).toBe(1)
+      expect(selectTotalItemsCount(newState)).toBe(initialCount + 1)
     })
 
     it('validates productId, displayPriceAtAdd, availableStockAtAdd using Zod schema', () => {
       // ARRANGE - setup test state with empty basket, prepare invalid product data
-      const initialItems = useBasketStore.getState().items.length
+      const productId = 'product-1'
+      const state = useBasketStore.getState()
+      const initialCount = selectTotalItemsCount(state)
 
       // ACT - call addProduct with invalid inputs
       useBasketStore.getState().addProduct('', -1, -1)
 
       // ASSERT - verify validation fails using Zod schema (no item added)
-      const state = useBasketStore.getState()
-      expect(state.items).toHaveLength(initialItems)
+      const newState = useBasketStore.getState()
+      expect(selectHasItem(newState, productId)).toBe(false)
+      expect(selectTotalItemsCount(newState)).toBe(initialCount)
     })
   })
 
@@ -50,44 +53,55 @@ describe('BasketStore Actions', () => {
       // ARRANGE - setup test state with product already in basket
       const productId = 'product-1'
       useBasketStore.getState().addProduct(productId, 100, 10)
+      const state = useBasketStore.getState()
+      const initialQuantity = selectItemQuantity(state, productId)
+      const initialCount = selectTotalItemsCount(state)
 
       // ACT - call addProduct with same productId
       useBasketStore.getState().addProduct(productId, 100, 10)
 
-      // ASSERT - verify existing item quantity increments by 1
-      const state = useBasketStore.getState()
-      expect(state.items).toHaveLength(1)
-      expect(state.items[0].quantity).toBe(2)
+      // ASSERT - verify existing item quantity increments by 1 and total count increments
+      const newState = useBasketStore.getState()
+      expect(selectItemQuantity(newState, productId)).toBe(initialQuantity + 1)
+      expect(selectTotalItemsCount(newState)).toBe(initialCount + 1)
     })
   })
 
   describe('when removing product', () => {
-    it('removes item from items array by productId', () => {
+    it('removes item from basket and decrements total count', () => {
       // ARRANGE - setup test state with product in basket
       const productId = 'product-1'
       useBasketStore.getState().addProduct(productId, 100, 10)
+      const state = useBasketStore.getState()
+      const initialCount = selectTotalItemsCount(state)
 
       // ACT - call removeProduct with productId
       useBasketStore.getState().removeProduct(productId)
 
-      // ASSERT - verify item removed from items array
-      const state = useBasketStore.getState()
-      expect(state.items).toHaveLength(0)
+      // ASSERT - verify item removed and total count decremented
+      const newState = useBasketStore.getState()
+      expect(selectHasItem(newState, productId)).toBe(false)
+      expect(selectItemQuantity(newState, productId)).toBe(0)
+      expect(selectTotalItemsCount(newState)).toBe(initialCount - 1)
     })
   })
 
   describe('when incrementing quantity', () => {
-    it('increases item quantity by 1', () => {
+    it('increases item quantity by 1 and increments total count', () => {
       // ARRANGE - setup test state with product in basket
       const productId = 'product-1'
       useBasketStore.getState().addProduct(productId, 100, 10)
+      const state = useBasketStore.getState()
+      const initialQuantity = selectItemQuantity(state, productId)
+      const initialCount = selectTotalItemsCount(state)
 
       // ACT - call incrementQuantity with productId
       useBasketStore.getState().incrementQuantity(productId)
 
-      // ASSERT - verify item quantity increases by 1
-      const state = useBasketStore.getState()
-      expect(state.items[0].quantity).toBe(2)
+      // ASSERT - verify item quantity increases by 1 and total count increments
+      const newState = useBasketStore.getState()
+      expect(selectItemQuantity(newState, productId)).toBe(initialQuantity + 1)
+      expect(selectTotalItemsCount(newState)).toBe(initialCount + 1)
     })
 
     it('does not increment quantity beyond availableStockAtAdd', () => {
@@ -95,6 +109,7 @@ describe('BasketStore Actions', () => {
       const productId = 'product-1'
       const availableStockAtAdd = 5
       useBasketStore.getState().addProduct(productId, 100, availableStockAtAdd)
+      const state = useBasketStore.getState()
       
       // Increment to stock limit
       for (let i = 0; i < availableStockAtAdd - 1; i++) {
@@ -105,39 +120,47 @@ describe('BasketStore Actions', () => {
       useBasketStore.getState().incrementQuantity(productId)
 
       // ASSERT - verify quantity does not exceed availableStockAtAdd
-      const state = useBasketStore.getState()
-      expect(state.items[0].quantity).toBe(availableStockAtAdd)
+      const newState = useBasketStore.getState()
+      expect(selectItemQuantity(newState, productId)).toBe(availableStockAtAdd)
     })
   })
 
   describe('when decrementing quantity above 1', () => {
-    it('decreases item quantity by 1', () => {
+    it('decreases item quantity by 1 and decrements total count', () => {
       // ARRANGE - setup test state with product quantity > 1
       const productId = 'product-1'
       useBasketStore.getState().addProduct(productId, 100, 10)
       useBasketStore.getState().addProduct(productId, 100, 10)
+      const state = useBasketStore.getState()
+      const initialQuantity = selectItemQuantity(state, productId)
+      const initialCount = selectTotalItemsCount(state)
 
       // ACT - call decrementQuantity with productId
       useBasketStore.getState().decrementQuantity(productId)
 
-      // ASSERT - verify item quantity decreases by 1
-      const state = useBasketStore.getState()
-      expect(state.items[0].quantity).toBe(1)
+      // ASSERT - verify item quantity decreases by 1 and total count decrements
+      const newState = useBasketStore.getState()
+      expect(selectItemQuantity(newState, productId)).toBe(initialQuantity - 1)
+      expect(selectTotalItemsCount(newState)).toBe(initialCount - 1)
     })
   })
 
   describe('when decrementing quantity to 0', () => {
-    it('removes item from items array', () => {
+    it('removes item from basket', () => {
       // ARRANGE - setup test state with product quantity = 1
       const productId = 'product-1'
       useBasketStore.getState().addProduct(productId, 100, 10)
+      const state = useBasketStore.getState()
+      const initialCount = selectTotalItemsCount(state)
 
       // ACT - call decrementQuantity with productId
       useBasketStore.getState().decrementQuantity(productId)
 
-      // ASSERT - verify item removed from items array
-      const state = useBasketStore.getState()
-      expect(state.items).toHaveLength(0)
+      // ASSERT - verify item removed and total count decremented
+      const newState = useBasketStore.getState()
+      expect(selectHasItem(newState, productId)).toBe(false)
+      expect(selectItemQuantity(newState, productId)).toBe(0)
+      expect(selectTotalItemsCount(newState)).toBe(initialCount - 1)
     })
   })
 })

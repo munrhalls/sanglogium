@@ -5,7 +5,7 @@
 // - Reason: Foundation for basket state management
 
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import useBasketStore from '../../../../../store/basketStore'
+import useBasketStore, { selectTotalItemsCount } from '../../../../../store/basketStore'
 
 describe('Fallback Storage Strategy', () => {
   beforeEach(() => {
@@ -49,7 +49,7 @@ describe('Fallback Storage Strategy', () => {
 
         // ASSERT - verify state still updates despite localStorage failure (graceful degradation)
         const state = useBasketStore.getState()
-        expect(state.items).toHaveLength(1)
+        expect(selectTotalItemsCount(state)).toBe(1)
       } finally {
         localStorageSpy.mockRestore()
       }
@@ -76,7 +76,7 @@ describe('Fallback Storage Strategy', () => {
 
         // ASSERT - verify storage adapter handles gracefully without error (no crash)
         const state = useBasketStore.getState()
-        expect(state.items).toHaveLength(1) // State still updated, just not persisted
+        expect(selectTotalItemsCount(state)).toBe(1) // State still updated, just not persisted
       } finally {
         localStorageSpy.mockRestore()
         sessionStorageSpy.mockRestore()
@@ -106,7 +106,7 @@ describe('Store with Persist Middleware', () => {
 
       // ASSERT - verify store loads from storage or initializes with empty state
       const state = useBasketStore.getState()
-      expect(state.items).toHaveLength(1)
+      expect(selectTotalItemsCount(state)).toBe(1)
     })
   })
 
@@ -124,7 +124,8 @@ describe('Store with Persist Middleware', () => {
       const stored = localStorage.getItem('basket-storage')
       expect(stored).not.toBeNull()
       const parsed = JSON.parse(stored!)
-      expect(parsed.state.items).toHaveLength(1)
+      expect(parsed.state).toBeDefined()
+      expect(selectTotalItemsCount(parsed.state)).toBe(1)
     })
   })
 
@@ -141,8 +142,7 @@ describe('Store with Persist Middleware', () => {
       // Since the store is a singleton, we cannot easily test rehydration in this context
       // This test verifies that the store remains functional even with invalid storage data
       const state = useBasketStore.getState()
-      expect(state.items).toBeDefined()
-      expect(Array.isArray(state.items)).toBe(true)
+      expect(selectTotalItemsCount(state)).toBe(0)
     })
   })
 })
