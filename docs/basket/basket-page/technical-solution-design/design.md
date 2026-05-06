@@ -7,23 +7,29 @@ Criteria: 0 unnecessary verbiage, 0 unnecessary characters
 sequenceDiagram
     participant Page as Basket Page
     participant Store as Zustand Store
-    participant Logic as Sync Logic
+    participant CMSFetch as CMS Fetch Module
     participant Sanity as Sanity CMS
+    participant Logic as Sync Logic
     participant UI as UI Components
 
     Page->>Store: updateBasketFromCMSPayload()
     Store->>Store: setSyncStatus('loading')
-    Store->>Sanity: Fetch products by IDs
-    Sanity-->>Store: Return product data
-    Store->>Logic: comparePrices()
-    Store->>Logic: compareStock()
-    Store->>Logic: checkAvailability()
-    Store->>Logic: updateBasketItem()
-    Store->>Store: Update items with metadata
+    Store->>CMSFetch: getBasketProducts(productIds)
+    CMSFetch->>CMSFetch: Validate input
+    CMSFetch->>Sanity: GROQ query with IDs
+    Sanity-->>CMSFetch: CmsProduct array
+    CMSFetch-->>Store: CmsProduct array
+    loop For each basket item
+        Store->>Logic: comparePrices(displayPriceAtAdd, cmsPrice)
+        Store->>Logic: compareStock(quantity, cmsAvailableStock)
+        Store->>Logic: checkAvailability(cmsProduct, cmsAvailableStock)
+        Store->>Store: Store syncResults[productId]
+    end
     Store->>Store: Move unavailable items
     Store->>Store: setSyncStatus('success'/'error')
     Store-->>Page: State updated
-    Page->>UI: Render with comparison
+    Page->>UI: Render items + syncResults (strikethrough old values)
+    Page->>UI: Calculate total from syncResults.currentPrice * adjustedQuantity
 ```
 
 
@@ -70,20 +76,24 @@ sequenceDiagram
 
 ### State Layer (manages UI state)
 - **Zustand Store** manages: items, unavailable, syncResults, syncStatus
-- **Items** array stores pure basket state (productId, quantity, displayPriceAtAdd, availableStockAtAdd)
-- **Unavailable** array stores items moved here when out of stock
-- **SyncResults** object stores separate comparison results (current CMS data + old values + change flags)
+- **Items** array stores pure basket snapshots (productId, quantity, displayPriceAtAdd, availableStockAtAdd)
+- **Unavailable** array stores out-of-stock items for separate display
+- **SyncResults** object maps productId to comparison data (currentPrice, currentAvailableStock, hasPriceChange, hasStockChange, adjustedQuantity)
 - **SyncStatus** ('idle' | 'loading' | 'error' | 'success') controls sync-bar and checkout button
 
 ### Data Layer (fetches data)
-- **Sanity Client** fetches product data via GROQ query (getBasketProducts)
-- **CMS Product Data** provides: price_data.unit_amount (cents), stock, reservedStock
+- **CMS Fetch Module** (see cms-fetch.md) handles request/response with clear typing
+- **getBasketProducts Function** takes product IDs array, returns CmsProduct array
+- **Request Type:** GetBasketProductsRequest = string[] (product IDs)
+- **Response Type:** GetBasketProductsResponse = CmsProduct[] with price_data, stock, reservedStock
+- **Sanity Client** executes GROQ query via sanityFetch
+- **Error Handling:** Returns empty array on error with console logging
 
 ### Logic Layer (processes data)
-- **updateBasketFromCMSPayload** orchestrates sync process on page mount, populates syncResults
+- **updateBasketFromCMSPayload** orchestrates sync process on page mount
 - **comparePrices** compares stored displayPriceAtAdd vs CMS displayPrice (dollars)
 - **compareStock** compares stored quantity vs CMS availableStock
 - **checkAvailability** determines if product unavailable (stock - reservedStock === 0)
+- **updateBasketItem** updates item with comparison metadata (old_displayPrice, old_availableStock)
 - **centsToDisplay** converts price_data.unit_amount (cents) to displayPrice (dollars)
-- **Sync results** stored separately from basket state (fresh on each page mount)
 

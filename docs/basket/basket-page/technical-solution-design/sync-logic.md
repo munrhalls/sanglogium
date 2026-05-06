@@ -1,46 +1,73 @@
 # Sync Logic: Basket Page Comparison Functions
 
-## comparePrices(storedPrice: number, cmsPrice: number)
+```mermaid
+flowchart TD
+    Start([Basket Item + CMS Product]) --> Convert[Convert price_data.unit_amount / 100]
+    Convert --> CompareP[comparePrices]
+    CompareP --> PriceResult{hasPriceChange?}
+    PriceResult -->|Yes| PriceOut[currentPrice, hasPriceChange: true]
+    PriceResult -->|No| PriceOut[currentPrice, hasPriceChange: false]
+    PriceOut --> CompareS[compareStock]
+    CompareS --> StockResult{hasStockChange?}
+    StockResult -->|Yes| StockOut[currentAvailableStock, hasStockChange: true, adjustedQuantity: cmsAvailableStock]
+    StockResult -->|No| StockOut[currentAvailableStock, hasStockChange: false, adjustedQuantity: quantity]
+    StockOut --> Check[checkAvailability]
+    Check --> Available{isAvailable?}
+    Available -->|No| Unavailable[Move to unavailable array]
+    Available -->|Yes| Build[buildSyncResult]
+    Build --> SyncResult[SyncResult object]
+    SyncResult --> End([Store in syncResults])
 
-Compares stored price with current CMS price.
+    style Start fill:#e1f5ff
+    style End fill:#e1f5ff
+    style PriceResult fill:#fff4e1
+    style StockResult fill:#fff4e1
+    style Available fill:#fff4e1
+    style Unavailable fill:#ffe1e1
+    style SyncResult fill:#e1ffe1
+```
+
+## comparePrices(displayPriceAtAdd: number, cmsPrice: number)
+
+Compares stored price (when added) with current CMS price.
 
 **Input:**
-- storedPrice: Price when item was added to basket (dollars)
+- displayPriceAtAdd: Price when item was added to basket (dollars)
 - cmsPrice: Current price from CMS (dollars)
 
 **Output:**
 ```typescript
 {
-  hasChanged: boolean,
-  oldPrice?: number,
-  newPrice: number
+  currentPrice: number,
+  hasPriceChange: boolean
 }
 ```
 
 **Logic:**
-- If storedPrice !== cmsPrice: hasChanged = true, oldPrice = storedPrice, newPrice = cmsPrice
-- If storedPrice === cmsPrice: hasChanged = false, newPrice = cmsPrice
+- currentPrice = cmsPrice
+- hasPriceChange = (displayPriceAtAdd !== cmsPrice)
 
-## compareStock(storedQuantity: number, cmsAvailableStock: number)
+## compareStock(quantity: number, cmsAvailableStock: number)
 
 Compares stored quantity with current CMS available stock.
 
 **Input:**
-- storedQuantity: Quantity in basket
+- quantity: Quantity in basket
 - cmsAvailableStock: Current available stock from CMS (stock - reservedStock)
 
 **Output:**
 ```typescript
 {
-  hasChanged: boolean,
-  oldQuantity?: number,
-  newQuantity: number
+  currentAvailableStock: number,
+  hasStockChange: boolean,
+  adjustedQuantity: number
 }
 ```
 
 **Logic:**
-- If cmsAvailableStock < storedQuantity: hasChanged = true, oldQuantity = storedQuantity, newQuantity = cmsAvailableStock
-- If cmsAvailableStock >= storedQuantity: hasChanged = false, newQuantity = storedQuantity
+- currentAvailableStock = cmsAvailableStock
+- hasStockChange = (cmsAvailableStock < quantity)
+- adjustedQuantity = hasStockChange ? cmsAvailableStock : quantity
 
 ## checkAvailability(cmsProduct: CmsProduct | null, cmsAvailableStock: number)
 
@@ -57,27 +84,32 @@ Determines if product is unavailable.
 - If !cmsProduct || cmsAvailableStock === 0: return true (unavailable)
 - Otherwise: return false (available)
 
-## updateBasketItem(item: BasketItem, cmsProduct: CmsProduct, priceResult, stockResult)
+## buildSyncResult(basketItem: BasketItem, cmsProduct: CmsProduct, priceResult, stockResult)
 
-Updates basket item with comparison metadata.
+Builds sync result object for UI display and checkout calculation.
 
 **Input:**
-- item: Current basket item
+- basketItem: Pure basket snapshot (productId, quantity, displayPriceAtAdd, availableStockAtAdd)
 - cmsProduct: CMS product data
 - priceResult: Result from comparePrices
 - stockResult: Result from compareStock
 
 **Output:**
 ```typescript
-BasketItem with updated fields:
-- displayPrice: current CMS price
-- availableStock: current CMS available stock
-- quantity: adjusted quantity if stock limited
-- metadata: { old_displayPrice?, old_availableStock? } if changes occurred
+SyncResult:
+{
+  currentPrice: number,
+  currentAvailableStock: number,
+  hasPriceChange: boolean,
+  hasStockChange: boolean,
+  adjustedQuantity: number
+}
 ```
 
 **Logic:**
-- Set displayPrice = priceResult.newPrice
-- Set availableStock = stockResult.newQuantity
-- If stock limited: set quantity = stockResult.newQuantity
-- Build metadata object with old values if hasChanged is true
+- currentPrice = priceResult.currentPrice
+- currentAvailableStock = stockResult.currentAvailableStock
+- hasPriceChange = priceResult.hasPriceChange
+- hasStockChange = stockResult.hasStockChange
+- adjustedQuantity = stockResult.adjustedQuantity
+

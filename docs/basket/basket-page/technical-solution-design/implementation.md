@@ -1,5 +1,39 @@
 # Implementation: Basket Page
 
+```mermaid
+flowchart TD
+    Start([updateBasketFromCMSPayload]) --> Validate[Validate CMS products with Zod]
+    Validate --> Valid{Valid?}
+    Valid -->|No| Error[Set syncStatus: error]
+    Valid -->|Yes| Init[Initialize syncResults object]
+    Init --> Loop[Loop through basket items]
+    Loop --> Fetch[Fetch CMS product by ID]
+    Fetch --> Calc[Calculate cmsAvailableStock]
+    Calc --> Check[checkAvailability]
+    Check --> Unavail{Unavailable?}
+    Unavail -->|Yes| AddUnavail[Add to unavailable array]
+    Unavail -->|No| Convert[Convert unit_amount / 100]
+    Convert --> CompareP[comparePrices]
+    CompareP --> CompareS[compareStock]
+    CompareS --> Build[buildSyncResult]
+    Build --> Store[Store in syncResults]
+    Store --> Next{More items?}
+    AddUnavail --> Next
+    Next -->|Yes| Loop
+    Next -->|No| Update[Update state: syncResults, unavailable]
+    Update --> Success[Set syncStatus: success]
+    Error --> End([Done])
+    Success --> End
+
+    style Start fill:#e1f5ff
+    style End fill:#e1f5ff
+    style Valid fill:#fff4e1
+    style Unavail fill:#fff4e1
+    style Next fill:#fff4e1
+    style Error fill:#ffe1e1
+    style Success fill:#e1ffe1
+```
+
 ```typescript
 import { create } from 'zustand'
 import { z } from 'zod'
@@ -17,28 +51,34 @@ const CmsProductSchema = z.object({
 
 type CmsProduct = z.infer<typeof CmsProductSchema>
 
-// Zod schema for BasketItem (same as non-local-basket for consistency)
+// Zod schema for BasketItem (pure snapshot of what user added)
 const BasketItemSchema = z.object({
   productId: z.string().min(1),
   quantity: z.number().int().positive(),
   displayPriceAtAdd: z.number().nonnegative(),
-  availableStockAtAdd: z.number().nonnegative(),
-  displayPrice: z.number().nonnegative().optional(),
-  availableStock: z.number().nonnegative().optional(),
-  metadata: z.object({
-    old_displayPrice: z.number().nonnegative().optional(),
-    old_availableStock: z.number().nonnegative().optional()
-  }).optional()
+  availableStockAtAdd: z.number().nonnegative()
 })
 
 // Infer TypeScript types from Zod schema
 type BasketItem = z.infer<typeof BasketItemSchema>
+
+// Sync results state (separate from basket snapshot)
+type SyncResult = {
+  currentPrice: number
+  currentAvailableStock: number
+  hasPriceChange: boolean
+  hasStockChange: boolean
+  adjustedQuantity: number
+}
+
+type SyncResults = Record<string, SyncResult>
 
 type SyncStatus = 'idle' | 'loading' | 'error' | 'success'
 
 interface BasketState {
   items: BasketItem[]
   unavailable: BasketItem[]
+  syncResults: SyncResults
   hasHydrated: boolean
   syncStatus: SyncStatus
 }
@@ -57,9 +97,10 @@ type BasketStore = BasketState & BasketActions
 const useBasketStore = create<BasketStore>()((set, get) => ({
   items: [],
   unavailable: [],
+  syncResults: {},
   hasHydrated: false,
   syncStatus: 'idle',
-  
+
   setSyncStatus: (status) => set({ syncStatus: status }),
 
   updateBasketFromCMSPayload: (cmsProducts) => {
@@ -73,7 +114,7 @@ const useBasketStore = create<BasketStore>()((set, get) => ({
 
     const items = get().items
     const unavailable: BasketItem[] = []
-    const updatedItems: BasketItem[] = []
+    const syncResults: SyncResults = {}
 
     items.forEach((item) => {
       const cmsProduct = result.data.find((p) => p._id === item.productId)
@@ -90,47 +131,30 @@ const useBasketStore = create<BasketStore>()((set, get) => ({
 
       // Price comparison
       const priceResult = {
-        hasChanged: cmsDisplayPrice !== item.displayPriceAtAdd,
-        oldPrice: cmsDisplayPrice !== item.displayPriceAtAdd ? item.displayPriceAtAdd : undefined,
-        newPrice: cmsDisplayPrice
+        currentPrice: cmsDisplayPrice,
+        hasPriceChange: cmsDisplayPrice !== item.displayPriceAtAdd
       }
 
       // Stock comparison
       const stockResult = {
-        hasChanged: cmsAvailableStock < item.quantity,
-        oldQuantity: cmsAvailableStock < item.quantity ? item.quantity : undefined,
-        newQuantity: cmsAvailableStock < item.quantity ? cmsAvailableStock : item.quantity
+        currentAvailableStock: cmsAvailableStock,
+        hasStockChange: cmsAvailableStock < item.quantity,
+        adjustedQuantity: cmsAvailableStock < item.quantity ? cmsAvailableStock : item.quantity
       }
 
-      // Update item with comparison results
-      const metadata: BasketItem['metadata'] = {}
-      let updatedItem = { ...item }
-
-      updatedItem.displayPrice = priceResult.newPrice
-      updatedItem.availableStock = stockResult.newQuantity
-
-      if (stockResult.hasChanged) {
-        updatedItem.quantity = stockResult.newQuantity
+      // Build sync result
+      syncResults[item.productId] = {
+        currentPrice: priceResult.currentPrice,
+        currentAvailableStock: stockResult.currentAvailableStock,
+        hasPriceChange: priceResult.hasPriceChange,
+        hasStockChange: stockResult.hasStockChange,
+        adjustedQuantity: stockResult.adjustedQuantity
       }
-
-      if (priceResult.hasChanged) {
-        metadata.old_displayPrice = priceResult.oldPrice
-      }
-
-      if (stockResult.hasChanged) {
-        metadata.old_availableStock = stockResult.oldQuantity
-      }
-
-      if (Object.keys(metadata).length > 0) {
-        updatedItem.metadata = metadata
-      }
-
-      updatedItems.push(updatedItem)
     })
 
-    set({ items: updatedItems, unavailable, syncStatus: 'success' })
+    set({ syncResults, unavailable, syncStatus: 'success' })
   },
-  
+
   addProduct: (productId, displayPriceAtAdd, availableStockAtAdd) => {
     const items = get().items
     const existing = items.find((item) => item.productId === productId)
@@ -140,15 +164,15 @@ const useBasketStore = create<BasketStore>()((set, get) => ({
       set({ items: [...items, { productId, quantity: 1, displayPriceAtAdd, availableStockAtAdd }] })
     }
   },
-  
+
   removeProduct: (productId) => {
     set({ items: get().items.filter((item) => item.productId !== productId) })
   },
-  
+
   incrementQuantity: (productId) => {
     set({ items: get().items.map((item) => item.productId === productId ? { ...item, quantity: item.quantity + 1 } : item) })
   },
-  
+
   decrementQuantity: (productId) => {
     set({ items: get().items.map((item) => {
       if (item.productId === productId && item.quantity > 1) {
@@ -159,20 +183,27 @@ const useBasketStore = create<BasketStore>()((set, get) => ({
   },
 }))
 
-// Selector for total cost
-const selectTotalCost = (state: BasketState) => 
-  state.items.reduce((sum, item) => sum + ((item.displayPrice ?? item.displayPriceAtAdd) * item.quantity), 0)
+// Selector for total cost (calculated from syncResults, not basket snapshot)
+const selectTotalCost = (state: BasketState) =>
+  state.items.reduce((sum, item) => {
+    const syncResult = state.syncResults[item.productId]
+    if (syncResult) {
+      return sum + (syncResult.currentPrice * syncResult.adjustedQuantity)
+    }
+    return sum + (item.displayPriceAtAdd * item.quantity)
+  }, 0)
 ```
 
 ## Notes
-- updateBasketFromCMSPayload orchestrates sync process with extracted comparison functions
-- comparePrices compares stored displayPriceAtAdd with current CMS displayPrice
-- compareStock compares stored quantity with current CMS availableStock
-- checkAvailability determines if product is unavailable
-- CMS provides price_data.unit_amount in cents, converted to dollars (unit_amount / 100) for comparison
+- BasketItem is pure snapshot (productId, quantity, displayPriceAtAdd, availableStockAtAdd)
+- SyncResults stores comparison data separately (currentPrice, currentAvailableStock, hasPriceChange, hasStockChange, adjustedQuantity)
+- updateBasketFromCMSPayload builds syncResults object, does not modify basket items
+- UI layer combines basket items + syncResults for display (strikethrough old values)
+- Checkout calculation uses syncResults.currentPrice * adjustedQuantity
+- CMS provides price_data.unit_amount in cents, converted to dollars (unit_amount / 100)
 - Stored displayPriceAtAdd is in dollars (user-visible from non-local-basket)
-- Metadata stores old values for comparison display (strikethrough)
 - CMS availableStock calculated as stock - reservedStock
 - Unavailable items moved to separate array for separate display
 - Sync status controls loading states and checkout button state
 - Comparison logic handles price and stock discrepancies separately
+
