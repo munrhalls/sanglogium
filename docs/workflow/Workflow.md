@@ -49,8 +49,30 @@ Pure describe, it blocks tests.
 Writing failing test → verify test fails → write minimal code → verify test passes → refactor → next test
 Repeat until slice is complete.
 
+**AI-Assisted Development** (Optional):
+When using AI assistants (Cascade, Claude, etc.) for implementation:
+- See `docs/research/workflow/battle tested workflow.md` for AI-assisted TDD strategies
+- Use verification loops to prevent hallucinations (syntax → SWE, logic → Opus)
+- Provide actual assertions to reduce hallucination risk by 70%
+- Test micro-level decisions (one assertion at a time for complex logic)
+- Always verify AI-generated code with actual tool execution
+
 7. # Repeat for next slice
 Select next vertical slice → repeat step 6 until feature done.
 
-After: manual verification of the whole. Cross-browser tests. Cross-OS tests. Cross-device tests. Simple, robust, targeting > 80% users. 
+After: manual verification of the whole. Cross-browser tests. Cross-OS tests. Cross-device tests. Simple, robust, targeting > 80% users.
+
+## Post-Implementation Operations
+
+8. # Deployment and Monitoring
+- Deploy via CI/CD pipeline (see `docs/diagrams/diagram-deployment-pipeline-stages.md`)
+- Monitor performance (Lighthouse CI, Web Vitals)
+- Set up error tracking and alerting (see `docs/workflow/operations/Monitoring and Alerting Strategy.md`)
+- Health checks for critical services (Redis, database)
+
+9. # Design QA (if applicable)
+- Compare implementation against Figma mockups
+- Verify responsive design at all breakpoints
+- Check accessibility compliance
+- Sign-off from UX Designer 
 
