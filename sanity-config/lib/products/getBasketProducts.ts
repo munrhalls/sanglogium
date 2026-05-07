@@ -18,7 +18,7 @@ export async function getBasketProducts(ids: string[]): Promise<BasketProduct[]>
 
   try {
     const products = await sanityFetch<BasketProduct[]>({
-      query: groq`*[_type == "product" && _id in $ids && defined(stripePriceId)] {
+      query: groq`*[_type == "product" && _id in $ids && defined(price_data)] {
         _id,
         price_data,
         stock,
