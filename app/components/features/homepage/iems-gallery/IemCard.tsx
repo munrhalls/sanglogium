@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils/tailwind"
 import { Image } from "next-sanity/image"
 import { urlFor } from "@/sanity-config/lib/image"
 import { IemProduct } from "./getIemProducts"
-import { BasketControls } from "@/components/features/basket/BasketControls"
+import { BasketControls } from "@/app/components/features/basket/BasketControls";
 import { centsToDisplay } from "@/lib/utils/price"
 
 export default function IemCard({ product, idx }: { product: IemProduct; idx: number }) {

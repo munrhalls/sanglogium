@@ -5,11 +5,7 @@ import {
   SignInIcon,
 } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils/tailwind";
-// TODO: Import from new basket store when implemented
-// import { useBasketStore, selectBasketCount } from "@/store/store";
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import { BasketButton } from "@/components/features/basket/BasketButton";
+import { BasketButton } from "@/app/components/features/basket/BasketButton";
 
 interface NavbarActionsProps {
   isAuthenticated: boolean;
@@ -17,18 +13,6 @@ interface NavbarActionsProps {
 }
 
 const NavbarActions = ({ isAuthenticated }: NavbarActionsProps) => {
-  const [mounted, setMounted] = useState(false);
-  // TODO: Re-implement when new basket store is available
-  // const realCartCount = useBasketStore(selectBasketCount);
-  const realCartCount = 0; // TODO: Remove placeholder
-
-  // Sync hydration state
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const displayCount = mounted ? realCartCount : 0;
-
   return (
     <div className={cn("ml-6 hidden items-center gap-6", "lg:flex")}>
       {/* Cart Action */}

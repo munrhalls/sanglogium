@@ -10,7 +10,7 @@ import {
 } from "@/app/components/layout/carousel/CarouselControls";
 import FeaturedHeader from "./FeaturedHeader";
 import { FeaturedProduct } from "./getFeaturedProducts";
-import { BasketControls } from "@/components/features/basket/BasketControls";
+import { BasketControls } from "@/app/components/features/basket/BasketControls";
 import { centsToDisplay } from "@/lib/utils/price";
 
 interface FeaturedProps {

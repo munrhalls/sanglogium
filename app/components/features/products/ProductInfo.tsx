@@ -7,7 +7,7 @@ import { Price } from '@/app/components/ui/Price';
 import { ShoppingCartIcon, CheckIcon } from '@phosphor-icons/react/dist/ssr';
 import { QuantitySelector } from '@/app/components/ui/QuantitySelector';
 import { centsToDisplay } from '@/lib/utils/price';
-import { BasketControls } from '@/components/features/basket/BasketControls';
+import { BasketControls } from "@/app/components/features/basket/BasketControls";
 
 export function ProductInfo({ product }: { product: Product }) {
   const [preAddQty, setPreAddQty] = useState(1);

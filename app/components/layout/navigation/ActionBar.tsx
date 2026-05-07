@@ -6,22 +6,17 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useDrawer } from "@/app/hooks/nuqs/useDrawer";
 import { cn } from "@/lib/utils/tailwind";
-import useBasketStore, { selectTotalItemsCount } from "@/store/basketStore";
+import useBasketStore, { selectTotalItemsCount, selectHasHydrated } from "@/store/basketStore";
 
 
 
 function ActionButtons() {
   const pathname = usePathname();
   const { isOpen, openDrawer, closeDrawer } = useDrawer();
-  const [mounted, setMounted] = React.useState(false);
   const basketCount = useBasketStore(selectTotalItemsCount);
+  const hasHydrated = useBasketStore(selectHasHydrated);
 
-  // Sync hydration state
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const displayCount = mounted ? basketCount : 0;
+  const displayCount = hasHydrated ? basketCount : 0;
 
   return (
     <div className="flex h-full items-center justify-around px-4">
@@ -71,7 +66,7 @@ function ActionButtons() {
         data-testid="basket-button"
       >
         <ShoppingBag className="h-5 w-5" />
-        {mounted && basketCount > 0 && (
+        {hasHydrated && basketCount > 0 && (
           <span data-testid="basket-badge" className="absolute -top-1 -right-2 h-4 w-4 rounded-full bg-brand-400 text-brand-900 text-xs flex items-center justify-center font-bold rounded-[2px]">
             {basketCount > 99 ? '99+' : basketCount}
           </span>

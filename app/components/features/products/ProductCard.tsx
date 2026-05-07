@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { ProductImage } from './ProductImage';
 import type { Product } from '@/sanity-config/lib/products/getProductsByVfsKeys';
 import { Price } from '@/app/components/ui/Price';
-import { BasketControls } from '@/components/features/basket/BasketControls';
+import { BasketControls } from "@/app/components/features/basket/BasketControls";
 import { urlFor } from '@/sanity-config/lib/image';
 import { centsToDisplay } from '@/lib/utils/price';
 

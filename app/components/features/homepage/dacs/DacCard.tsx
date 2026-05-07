@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils/tailwind";
 import { Image } from "next-sanity/image";
 import { urlFor } from "@/sanity-config/lib/image";
-import { BasketControls } from "@/components/features/basket/BasketControls";
+import { BasketControls } from "@/app/components/features/basket/BasketControls";
 import { centsToDisplay } from "@/lib/utils/price";
 
 export default function DacCard({ item, idx }: { item: any; idx: number }) {
