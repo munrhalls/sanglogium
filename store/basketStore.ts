@@ -15,6 +15,7 @@ type BasketItem = z.infer<typeof BasketItemSchema>
 
 interface BasketState {
   items: BasketItem[]
+  _hasHydrated: boolean
 }
 
 interface BasketActions {
@@ -22,6 +23,8 @@ interface BasketActions {
   removeProduct: (productId: string) => void
   incrementQuantity: (productId: string) => void
   decrementQuantity: (productId: string) => void
+  clear: () => void
+  setHasHydrated: (state: boolean) => void
 }
 
 type BasketStore = BasketState & BasketActions
@@ -84,8 +87,9 @@ const createFallbackStorage = () => {
 
 const useBasketStore = create<BasketStore>()(
   persist(
-    (set, get) => ({
-      items: [],
+    (set, get): BasketStore => ({
+      items: [] as BasketItem[],
+      _hasHydrated: false,
       addProduct: (productId, displayPriceAtAdd, availableStockAtAdd) => {
         // Input validation using Zod schema
         const result = BasketItemSchema.safeParse({
@@ -126,11 +130,19 @@ const useBasketStore = create<BasketStore>()(
           return item
         }).filter((item) => item.quantity > 0) })
       },
+      clear: () => {
+        set({ items: [] })
+      },
+      setHasHydrated: (state) => {
+        set({ _hasHydrated: state })
+      },
     }),
     {
       name: 'basket-storage',
       storage: createJSONStorage(() => createFallbackStorage()),
       onRehydrateStorage: () => (state) => {
+        // Set hydration flag to prevent hydration errors in Next.js SSR
+        state?.setHasHydrated(true)
         // Hydration validation using Zod schema
         if (state) {
           const result = z.array(BasketItemSchema).safeParse(state.items)
@@ -140,6 +152,9 @@ const useBasketStore = create<BasketStore>()(
           }
         }
       },
+      partialize: (state) => ({
+        items: state.items
+      }),
     }
   )
 )
@@ -178,5 +193,8 @@ export const selectItemQuantity = (state: BasketState, productId: string) =>
 // Selector for checking if item exists in basket
 export const selectHasItem = (state: BasketState, productId: string) =>
   state.items.some((item) => item.productId === productId)
+
+// Selector for checking if store has hydrated (prevents SSR hydration errors)
+export const selectHasHydrated = (state: BasketState) => state._hasHydrated
 
 export default useBasketStore
