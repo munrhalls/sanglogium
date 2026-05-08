@@ -575,20 +575,6 @@ export type AllSanitySchemaTypes =
   | Slug
   | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
-// Source: ./app/actions/basket/verifyBasketStock.ts
-// Variable: stockQuery
-// Query: *[_type == "product" && _id in $ids] {      _id,      name,      stock,      reservedStock,      price_data    }
-export type StockQueryResult = Array<{
-  _id: string;
-  name: string | null;
-  stock: number | null;
-  reservedStock: number | null;
-  price_data: {
-    currency?: string;
-    unit_amount?: number;
-  } | null;
-}>;
-
 // Source: ./app/api/checkout/webhook/ARCHIVED_route.ts
 // Variable: query
 // Query: *[_type == "product" && reservations[idempotencyKey == $idempotencyKey && status == "active"]]{        _id,        name,        stock,        reservedStock,        reservations      }
@@ -875,7 +861,6 @@ export type HERO_QUERYResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '*[_type == "product" && _id in $ids] {\n      _id,\n      name,\n      stock,\n      reservedStock,\n      price_data\n    }': StockQueryResult;
     '*[_type == "product" && reservations[idempotencyKey == $idempotencyKey && status == "active"]]{\n        _id,\n        name,\n        stock,\n        reservedStock,\n        reservations\n      }': QueryResult;
     '\n  *[_type == "homepageData"][0] {\n    // Featured products section\n    "featured": featuredProducts[] {\n      productPromo,\n      ...productRef->{\n        _id,\n        name,\n        brand->{ _id, name, slug },\n        price_data,\n        stock,\n        stripePriceId,\n        "slug": slug.current,\n        image { asset->{url} }\n      }\n    },\n\n    // Spotlight 1 section\n    "spotlight1": spotlight1Data {\n      promoTitle,\n      promoSubtitle,\n      promoText,\n      productRef->{\n        _id,\n        name,\n        brand->{ _id, name, slug },\n        price_data,\n        stock,\n        stripePriceId,\n        "slug": slug.current,\n        image { asset->{url} },\n        gallery[] { asset->{url} }\n      }\n    },\n\n    // Spotlight 2 section\n    "spotlight2": spotlight2Data {\n      promoTitle,\n      promoSubtitle,\n      promoText,\n      productRef->{\n        _id,\n        name,\n        brand->{ _id, name, slug },\n        price_data,\n        stock,\n        stripePriceId,\n        "slug": slug.current,\n        image { asset->{url} },\n        gallery[] { asset->{url} }\n      }\n    },\n\n    // Spotlight 3 section\n    "spotlight3": spotlight3Data {\n      promoTitle,\n      promoSubtitle,\n      promoText,\n      productRef->{\n        _id,\n        name,\n        brand->{ _id, name, slug },\n        price_data,\n        stock,\n        stripePriceId,\n        "slug": slug.current,\n        image { asset->{url} },\n        gallery[] { asset->{url} }\n      }\n    },\n\n    // IEMs gallery section\n    "iemsGallery": iemsGallery[]->{\n      _id,\n      name,\n      brand->{ _id, name, slug },\n      price_data,\n      stock,\n      stripePriceId,\n      "slug": slug.current,\n      "imageUrl": image.asset->url,\n      image { asset->{url} }\n    },\n\n    // Newest release section\n    "newestRelease": newestReleaseData {\n      promoTitle,\n      promoSubtitle,\n      promoText,\n      productRef->{\n        _id,\n        name,\n        brand->{ _id, name, slug },\n        price_data,\n        stock,\n        stripePriceId,\n        "slug": slug.current,\n        image { asset->{url} },\n        gallery[] { asset->{url} }\n      }\n    },\n\n    // DACs section\n    "dacs": dacs[]->{\n      _id,\n      name,\n      brand->{ _id, name, slug },\n      price_data,\n      stock,\n      stripePriceId,\n      "slug": slug.current,\n      image { asset->{url} }\n    },\n\n    // Accessories - cables section\n    "accessoriesCables": accessoriesCables[]->{\n      _id,\n      name,\n      brand->{ _id, name, slug },\n      price_data,\n      stock,\n      stripePriceId,\n      "slug": slug.current,\n      "imageUrl": image.asset->url,\n      image { asset->{url} }\n    },\n\n    // Accessories - earpads section\n    "accessoriesEarpads": accessoriesEarpads[]->{\n      _id,\n      name,\n      brand->{ _id, name, slug },\n      price_data,\n      stock,\n      stripePriceId,\n      "slug": slug.current,\n      "imageUrl": image.asset->url,\n      image { asset->{url} }\n    }\n  }\n': HOMEPAGE_DATA_QUERYResult;
     '\n  *[_type == "hero"] | order(_updatedAt desc)[0] {\n    headline,\n    subheadline,\n    ctaText,\n    backgroundImage {\n      asset->{\n        _id,\n        url,\n        metadata {\n          dimensions,\n          lqip\n        }\n      },\n      hotspot,\n      crop,\n      alt\n    },\n    mobileBackgroundImage {\n      asset->{\n        _id,\n        url,\n        metadata {\n          dimensions,\n          lqip\n        }\n      },\n      hotspot,\n      crop,\n      alt\n    }\n  }\n': HERO_QUERYResult;
