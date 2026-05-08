@@ -1,10 +1,9 @@
 // Types and runtime guards for the unified checkout-queue (basket reservation).
 
-// Client basket (input from frontend) - includes stripePriceId and price_data for verification
+// Client basket (input from frontend) - uses price_data only
 export interface ClientBasketItem {
   _id: string
   quantity: number
-  stripePriceId: string
   price_data: { currency: string; unit_amount: number }
 }
 
@@ -31,9 +30,8 @@ export interface BasketReservationResponse {
     stock: number
   }>
   debug?: {
-    stripeVerification: Array<{
+    priceVerification: Array<{
       productId: string
-      stripePriceId: string
       verifiedPrice: number
     }>
   }
@@ -55,7 +53,6 @@ export function isBasketReservation(v: unknown): v is BasketReservation {
     const it = item as Record<string, unknown>
     if (typeof it._id !== 'string' || it._id.length === 0) return false
     if (typeof it.quantity !== 'number' || !Number.isFinite(it.quantity) || it.quantity < 1) return false
-    if (typeof it.stripePriceId !== 'string' || it.stripePriceId.length === 0) return false
     if (typeof it.price_data !== 'object' || it.price_data === null) return false
     const pd = it.price_data as Record<string, unknown>
     if (typeof pd.unit_amount !== 'number' || !Number.isFinite(pd.unit_amount) || pd.unit_amount < 0) return false

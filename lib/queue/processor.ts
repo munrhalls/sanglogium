@@ -26,7 +26,6 @@ import {
   type BasketReservationResponse,
   type RedisQueueItem,
 } from './types'
-import { getVerifiedPrice } from '@/lib/stripe'
 
 export interface ProcessResult {
   status: 202 | 400 | 500
@@ -98,13 +97,12 @@ export async function processInline(raw: unknown): Promise<ProcessResult> {
 
   try {
     // 4. Verify prices and transform to CMS format
-    const stripeVerificationData: Array<{ productId: string; stripePriceId: string; verifiedPrice: number }> = []
+    const priceVerificationData: Array<{ productId: string; verifiedPrice: number }> = []
     const cmsBasketReservation = await Promise.all(
       request.basketReservation.map(async (p, i) => {
-        const verifiedPrice = await getVerifiedPrice(p.stripePriceId)
-        stripeVerificationData.push({
+        const verifiedPrice = p.price_data.unit_amount
+        priceVerificationData.push({
           productId: p._id,
-          stripePriceId: p.stripePriceId,
           verifiedPrice,
         })
         return {
@@ -155,7 +153,7 @@ export async function processInline(raw: unknown): Promise<ProcessResult> {
         stock: p.stock,
       })),
       debug: {
-        stripeVerification: stripeVerificationData,
+        priceVerification: priceVerificationData,
       },
     }
 

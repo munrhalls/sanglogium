@@ -1,25 +1,79 @@
 'use client'
 
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+
 export interface CheckoutButtonProps {
-  disabled?: boolean
-  isProcessing?: boolean
-  error?: string | null
-  onClick?: () => void
   basketData?: Array<{ productId: string; quantity: number; price_data: { currency: string; unit_amount: number } }>
 }
 
 export function CheckoutButton({
-  disabled = false,
-  isProcessing = false,
-  error = null,
-  onClick,
   basketData,
 }: CheckoutButtonProps) {
+  const router = useRouter()
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  const disabled = !basketData || basketData.length === 0 || isProcessing
+
+  const handleCheckout = async () => {
+    if (!basketData || basketData.length === 0) {
+      setError('Basket is empty')
+      return
+    }
+
+    setIsProcessing(true)
+    setError(null)
+
+    try {
+      // Transform basketData to BasketReservation format
+      const basketReservation = basketData.map(item => ({
+        _id: item.productId,
+        quantity: item.quantity,
+        price_data: item.price_data
+      }))
+
+      const payload = {
+        basketReservation,
+        createdAt: new Date().toISOString()
+      }
+
+      // Call checkout-queue API
+      const response = await fetch('/api/checkout-queue', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ error: 'Checkout failed' }))
+        throw new Error(errorData.error || 'Checkout failed')
+      }
+
+      const result = await response.json()
+
+      // Save reservationId to sessionStorage
+      if (result.reservationId) {
+        sessionStorage.setItem('basketReservationId', result.reservationId)
+      }
+
+      // Redirect to checkout
+      router.push('/checkout')
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Checkout failed'
+      setError(message)
+    } finally {
+      setIsProcessing(false)
+    }
+  }
+
   return (
     <>
       <button
         data-testid="checkout-button"
-        onClick={onClick}
+        onClick={handleCheckout}
         disabled={disabled}
         aria-label="Checkout button"
         aria-disabled={disabled}

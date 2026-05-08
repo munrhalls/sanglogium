@@ -63,7 +63,6 @@ type BasketReservationRequest = {
   basketReservation: Array<{
     _id: string
     quantity: number
-    stripePriceId: string
     price_data: { currency: string; unit_amount: number }
   }>
   createdAt: string
@@ -81,9 +80,8 @@ type BasketReservationResponse = {
     stock: number
   }>
   debug?: {
-    stripeVerification: Array<{
+    priceVerification: Array<{
       productId: string
-      stripePriceId: string
       verifiedPrice: number
     }>
   }
@@ -141,7 +139,7 @@ type CheckoutButtonContext = {
 - Event: Component mounts → reads from basketStore via useBasketStore
 - State: basketItems array with productId and quantity
 - Side Effect: Fetch product details via getProductsByIds
-- Transform: Merge basket quantities with product data (stripePriceId, price_data)
+- Transform: Merge basket quantities with product data (price_data)
 
 **Human Verification Checklist (<5 minutes)**
 - [ ] Add item to basket on product page
@@ -159,16 +157,15 @@ type CheckoutButtonContext = {
 
 **UX Slice (2-3 bullets max)**
 - Component transforms basket items to BasketReservation format
-- Component includes stripePriceId and price_data for each item
+- Component includes price_data for each item
 - Component includes createdAt timestamp
-
 **Architecture Slice**
 - Event: User clicks checkout → transform basket to API payload
 - State: BasketReservationRequest object
 - Side Effect: None (transformation only)
-- Validation: Ensure all items have stripePriceId
+- Validation: Ensure all items have price_data
 
-**Human Verification Checklist (<5 minutes)**
+**Human Verification Checklist (<5 me**_ata
 - [ ] Add item to basket
 - [ ] Click checkout button
 - [ ] Check browser network tab for request payload
@@ -176,7 +173,7 @@ type CheckoutButtonContext = {
 
 **Minimal Tests (ONLY if needed for human confidence)**
 - Test: Basket transformation produces correct API payload
-- Test: Transformation handles items without stripePriceId
+- Test: Transformation handles items without price_data
 
 ---
 
