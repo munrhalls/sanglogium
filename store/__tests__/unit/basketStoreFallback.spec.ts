@@ -20,16 +20,14 @@ describe('Fallback Storage Strategy', () => {
     it('persists state across store resets', () => {
       // ARRANGE - setup test state with localStorage available
       const productId = 'product-1'
-      const displayPriceAtAdd = 100
-      const availableStockAtAdd = 10
 
       // ACT - add product to store
-      useBasketStore.getState().addProduct(productId, displayPriceAtAdd, availableStockAtAdd)
+      useBasketStore.getState().addProduct(productId)
       const countBeforeReset = selectTotalItemsCount(useBasketStore.getState())
 
       // Simulate store reset (triggers rehydration from storage)
       useBasketStore.getState().clear()
-      useBasketStore.getState().addProduct(productId, displayPriceAtAdd, availableStockAtAdd)
+      useBasketStore.getState().addProduct(productId)
 
       // ASSERT - verify state is persisted and rehydrated
       const countAfterReset = selectTotalItemsCount(useBasketStore.getState())
@@ -47,11 +45,9 @@ describe('Fallback Storage Strategy', () => {
 
       try {
         const productId = 'product-1'
-        const displayPriceAtAdd = 100
-        const availableStockAtAdd = 10
 
         // ACT - add product to store
-        useBasketStore.getState().addProduct(productId, displayPriceAtAdd, availableStockAtAdd)
+        useBasketStore.getState().addProduct(productId)
 
         // ASSERT - verify state still updates despite localStorage failure (graceful degradation)
         const state = useBasketStore.getState()
@@ -74,11 +70,9 @@ describe('Fallback Storage Strategy', () => {
 
       try {
         const productId = 'product-1'
-        const displayPriceAtAdd = 100
-        const availableStockAtAdd = 10
 
         // ACT - add product to store
-        useBasketStore.getState().addProduct(productId, displayPriceAtAdd, availableStockAtAdd)
+        useBasketStore.getState().addProduct(productId)
 
         // ASSERT - verify state still updates despite storage failures (graceful degradation)
         const state = useBasketStore.getState()
@@ -115,11 +109,9 @@ describe('Store with Persist Middleware', () => {
     it('persists state changes to storage', () => {
       // ARRANGE - setup test state with initialized store
       const productId = 'product-1'
-      const displayPriceAtAdd = 100
-      const availableStockAtAdd = 10
 
       // ACT - trigger store state change via action
-      useBasketStore.getState().addProduct(productId, displayPriceAtAdd, availableStockAtAdd)
+      useBasketStore.getState().addProduct(productId)
 
       // ASSERT - verify state is persisted by checking storage is not empty
       // Note: Checking storage is acceptable here as it's a boundary concern, not internal state
