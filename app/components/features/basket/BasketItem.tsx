@@ -8,11 +8,10 @@ interface BasketItemProps {
   productId: string
   name: string
   quantity: number
-  displayPriceAtAdd: number
-  availableStockAtAdd: number
+  displayPrice: number
 }
 
-export default function BasketItem({ productId, name, quantity, displayPriceAtAdd, availableStockAtAdd }: BasketItemProps) {
+export default function BasketItem({ productId, name, quantity, displayPrice }: BasketItemProps) {
   return (
     <div
       className="grid grid-cols-1 gap-5 border-b border-border-secondary p-5 lg-desktop:grid-cols-[3fr_1fr_1fr_1fr] lg-touch:grid-cols-[3fr_1fr_1fr_1fr] hover:bg-secondary-900/50"
@@ -33,7 +32,7 @@ export default function BasketItem({ productId, name, quantity, displayPriceAtAd
             {name}
           </h3>
           <p className="type-metadata lg-desktop:hidden lg-touch:hidden">
-            <Price value={displayPriceAtAdd} />
+            <Price value={displayPrice} />
             {" "}× {quantity}
           </p>
         </div>
@@ -41,22 +40,20 @@ export default function BasketItem({ productId, name, quantity, displayPriceAtAd
 
       {/* Price column - desktop only */}
       <div className="hidden lg-desktop:flex lg-touch:flex items-center justify-center">
-        <Price value={displayPriceAtAdd} />
+        <Price value={displayPrice} />
       </div>
 
       {/* Quantity column */}
       <div className="flex items-center lg-desktop:justify-center lg-touch:justify-center">
         <BasketControls
           productId={productId}
-          displayPriceAtAdd={displayPriceAtAdd}
-          availableStockAtAdd={availableStockAtAdd}
           isBasketPage={true}
         />
       </div>
 
       {/* Total column - desktop only */}
       <div className="hidden lg-desktop:flex lg-touch:flex items-center justify-end">
-        <Price value={displayPriceAtAdd * quantity} />
+        <Price value={displayPrice * quantity} />
       </div>
     </div>
   );

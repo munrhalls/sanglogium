@@ -4,8 +4,6 @@ interface BasketViewProps {
   basket: Array<{
     productId: string
     quantity: number
-    displayPriceAtAdd: number
-    availableStockAtAdd: number
   }>
   cmsBasketItems: Array<{
     productId: string
@@ -36,8 +34,7 @@ export default function BasketView({ basket, cmsBasketItems }: BasketViewProps) 
               productId={item.productId}
               name={cmsItem.name}
               quantity={item.quantity}
-              displayPriceAtAdd={item.displayPriceAtAdd}
-              availableStockAtAdd={item.availableStockAtAdd}
+              displayPrice={cmsItem.displayPrice}
             />
           );
         })

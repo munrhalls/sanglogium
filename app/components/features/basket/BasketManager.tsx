@@ -28,8 +28,8 @@ export default function BasketManager() {
   }> = basket.map((item) => ({
     productId: item.productId,
     name: "Product 1",
-    displayPrice: item.displayPriceAtAdd,
-    availableStock: item.availableStockAtAdd
+    displayPrice: 0,
+    availableStock: 99
   }));
 
   return (

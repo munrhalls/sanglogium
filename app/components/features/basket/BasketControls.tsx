@@ -4,8 +4,6 @@ import useBasketStore, { selectItems } from "@/store/basketStore";
 
 interface BasketControlsProps {
   productId: string;
-  displayPriceAtAdd: number;
-  availableStockAtAdd: number;
   isBasketPage: boolean;
   addClassName?: string;
   removeClassName?: string;
@@ -17,8 +15,6 @@ interface BasketControlsProps {
 
 export function BasketControls({
   productId,
-  displayPriceAtAdd,
-  availableStockAtAdd,
   isBasketPage,
   addClassName,
   removeClassName,
@@ -35,7 +31,7 @@ export function BasketControls({
   const quantity = basketItem?.quantity || 0;
 
   const handleAdd = () => {
-    store.addProduct(productId, displayPriceAtAdd, availableStockAtAdd);
+    store.addProduct(productId);
   };
 
   const handleIncrement = () => {
@@ -97,7 +93,6 @@ export function BasketControls({
         onClick={handleIncrement}
         data-testid={`increment-${productId}`}
         type="button"
-        disabled={quantity >= availableStockAtAdd}
         className={incrementClassName}
       >
         +
