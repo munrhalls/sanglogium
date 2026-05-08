@@ -1,4 +1,4 @@
-import { BasketProduct } from '@/sanity-config/lib/products/getBasketProducts'
+import { BasketProduct } from '@/sanity-cms/lib/products/getBasketProducts'
 
 export interface CMSBasketItem {
   productId: string

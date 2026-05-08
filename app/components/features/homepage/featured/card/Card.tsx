@@ -1,4 +1,4 @@
-﻿import CardMedia from "./CardMedia";
+import CardMedia from "./CardMedia";
 import CardDetails from "./CardDetails";
 import { centsToDisplay } from "@/lib/utils/price";
 

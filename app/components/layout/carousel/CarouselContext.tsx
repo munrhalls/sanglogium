@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { createContext, useContext, useRef, useState, useCallback, useEffect, useMemo } from "react";
 import { CarouselContextType, CarouselBreakpoints, CarouselProviderProps } from "./types";

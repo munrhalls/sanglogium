@@ -1,4 +1,4 @@
-import { sanityFetch } from "@/sanity/lib/client";
+import { sanityFetch } from "@/sanity-cms/lib/client";
 import { cache } from "react";
 import type { Spotlight1Data } from "../product-spotlight-1/getSpotlight1Data";
 import type { Spotlight1Product } from "../product-spotlight-1/getSpotlight1Data";

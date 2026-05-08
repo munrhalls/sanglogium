@@ -1,4 +1,4 @@
-import { sanityFetch } from "@/sanity/lib/client";
+import { sanityFetch } from "@/sanity-cms/lib/client";
 import { cache } from "react";
 
 export interface FeaturedProduct {

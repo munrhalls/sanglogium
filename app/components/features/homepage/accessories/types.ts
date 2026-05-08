@@ -1,4 +1,4 @@
-﻿export interface AccessoryItem {
+export interface AccessoryItem {
   readonly _id: string;
   readonly brand: {
     _id: string;

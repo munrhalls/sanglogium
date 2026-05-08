@@ -1,5 +1,5 @@
 // import stripe from "@/lib/stripe";
-// import { client } from "@/sanity/lib/client";
+// import { client } from "@/sanity-cms/lib/client";
 // import Stripe from "stripe";
 // export async function fetchStripeLineItems(sessionId: string) {
 //   console.log("📦 Fetching line items for session:", sessionId);

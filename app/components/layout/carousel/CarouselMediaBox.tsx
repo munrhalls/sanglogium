@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { urlFor } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity-cms/lib/client";
 
 interface CarouselMediaBoxProps {
   src: any;

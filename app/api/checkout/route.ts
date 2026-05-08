@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe/stripe";
 import { currentUser } from "@clerk/nextjs/server";
-import { checkoutClient } from "@/sanity/lib/checkoutClient";
+import { checkoutClient } from "@/sanity-cms/lib/checkoutClient";
 import type {
   ServerProduct,
   BasketCheckoutItem,

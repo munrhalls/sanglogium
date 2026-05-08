@@ -1,8 +1,8 @@
 import React from 'react';
 import { ProductGrid } from '@/app/components/features/products';
 import { CategoryPageClient } from './CategoryPageClient';
-import type { Product } from '@/sanity-config/lib/products/getProductsByVfsKeys';
-import type { FilterResult } from '@/sanity-config/lib/products/filter/getFiltersForCategoryPath';
+import type { Product } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
+import type { FilterResult } from '@/sanity-cms/lib/products/filter/getFiltersForCategoryPath';
 
 interface ProductsSectionProps {
   productsPromise: Promise<Product[]>;

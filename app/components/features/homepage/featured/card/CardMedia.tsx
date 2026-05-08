@@ -1,4 +1,4 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 
 export default function CardMedia({ src, alt }: { src: string; alt: string }) {
   return (

@@ -2,7 +2,7 @@
 
 // Server action to update test products with real Stripe price IDs
 
-import { backendClient } from "../../sanity/lib/backendClient";
+import { getBackendClient } from "../../sanity-cms/lib/backendClient";
 import { groq } from 'next-sanity';
 
 export async function updateTestProductPrices() {
@@ -13,7 +13,7 @@ export async function updateTestProductPrices() {
       'test-item-2': 'price_1TKDdBEQ2a2vW56gfy4LjTuA'  // $25.00
     };
 
-    console.log('Updating test products with real Stripe price IDs...');
+    const backendClient = getBackendClient();
 
     // Update test-item-1
     console.log('Updating test-item-1...');

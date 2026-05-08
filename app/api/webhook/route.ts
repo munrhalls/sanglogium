@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { stripe } from "@/lib/stripe/stripe";
-import { checkoutClient } from "@/sanity/lib/checkoutClient";
-import { backendClient } from "@/sanity/lib/backendClient";
-import { createOrder } from "@/sanity/lib/orders/addOrder";
-import type { CreateOrderOptions } from "@/sanity/lib/orders/orderTypes";
+import { checkoutClient } from "@/sanity-cms/lib/checkoutClient";
+import { backendClient } from "@/sanity-cms/lib/backendClient";
+import { createOrder } from "@/sanity-cms/lib/orders/addOrder";
+import type { CreateOrderOptions } from "@/sanity-cms/lib/orders/orderTypes";
 import Stripe from "stripe";
 
 /**

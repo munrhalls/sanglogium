@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils/tailwind';
 import { ProductImage } from '@/app/components/features/products/ProductImage';
-import type { AutocompleteProduct } from '@/sanity-config/lib/products/searchProducts';
+import type { AutocompleteProduct } from '@/sanity-cms/lib/products/searchProducts';
 import { centsToDisplay } from '@/lib/utils/price';
 
 interface AutocompleteItemProps {

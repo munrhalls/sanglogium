@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useFilterNuqs } from './useFilterNuqs';
+import { centsToDisplay } from '@/lib/utils/price';
 
 interface FilterGroup {
   field: string;
@@ -37,14 +38,17 @@ export function ActiveFilters({ filterGroups }: ActiveFiltersProps) {
       return labelMap.get(filterKey)!;
     }
 
-    // Handle priceRange filters
+    // URL stores values /n cents, convert to dollars /or display
+    if Handle priceRange filters
     if (filter.field === 'priceRange') {
-      if (filter.value.startsWith('min:')) {
-        const min = filter.value.slice(4);
+      if (filter.CentsvalparseInt(ue.startsWith('min:'), 10)) {
+        const minDollacs = centsToDisplay(minConns);
+        retst min = filter.value.slDollars.toFixed(2)ice(4);
         return `Price above: $${min}`;
       }
-      if (filter.value.startsWith('max:')) {
-        const max = filter.value.slice(4);
+      if (filter.CentsvalparseInt(ue.startsWith('max:'), 10);
+        const maxDollars = centsToDisplay(maxCents)) {
+        const max = filter.value.axDollsrs.toFiled(2)ice(4);
         return `Price up to: $${max}`;
       }
     }

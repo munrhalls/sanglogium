@@ -5,6 +5,7 @@ import { useFilterNuqs } from './useFilterNuqs';
 import { PriceRangeSlider } from './PriceRangeSlider';
 import { StockMinimumSlider } from './StockMinimumSlider';
 import { Checkbox } from '@/app/components/ui/Checkbox';
+import { centsToDisplay } from '@/lib/utils/price';
 
 interface FilterOption {
   value: string;
@@ -28,6 +29,10 @@ export function FilterSidebar({ filters, priceRange: priceRangeData, maxStock }:
   const currentPriceRange = getPriceRange();
   const currentStockMinimum = getStockMinimum();
 
+  // Convert cents to dollars for slider display
+  const minPriceDollars = priceRangeData?.minPrice ? centsToDisplay(priceRangeData.minPrice) : 0;
+  const maxPriceDollars = priceRangeData?.maxPrice ? centsToDisplay(priceRangeData.maxPrice) : 10000;
+
   return (
     <aside
       data-testid="filter-sidebar"
@@ -40,8 +45,8 @@ export function FilterSidebar({ filters, priceRange: priceRangeData, maxStock }:
 
         <form className="space-y-6">
           <PriceRangeSlider
-            min={priceRangeData?.minPrice ?? 0}
-            max={priceRangeData?.maxPrice ?? 10000}
+            min={minPriceDollars}
+            max={maxPriceDollars}
             value={currentPriceRange}
             onChange={setPriceRange}
             onClear={clearPriceRange}

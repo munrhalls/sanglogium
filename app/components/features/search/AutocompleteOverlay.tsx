@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils/tailwind';
 import { AutocompleteItem } from './AutocompleteItem';
-import type { AutocompleteProduct } from '@/sanity-config/lib/products/searchProducts';
+import type { AutocompleteProduct } from '@/sanity-cms/lib/products/searchProducts';
 
 interface AutocompleteOverlayProps {
   results: AutocompleteProduct[];

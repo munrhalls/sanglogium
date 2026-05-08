@@ -1,9 +1,9 @@
 import React, { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import { resolveSlugToId, unrollDescendantKeys } from '@/data/catalogue';
-import { getProductsByVfsKeys } from '@/sanity-config/lib/products/getProductsByVfsKeys';
-import { getCategoryMetadata } from '@/sanity-config/lib/products/getCategoryMetadata';
-import { getFiltersForCategoryPath } from '@/sanity-config/lib/products/filter/getFiltersForCategoryPath';
+import { getProductsByVfsKeys } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
+import { getCategoryMetadata } from '@/sanity-cms/lib/products/getCategoryMetadata';
+import { getFiltersForCategoryPath } from '@/sanity-cms/lib/products/filter/getFiltersForCategoryPath';
 import { ShopHeader } from '@/app/components/features/products/ShopHeader';
 import { FilterSidebar } from '@/app/components/features/filters/FilterSidebar';
 import { CategoryPageClient } from './CategoryPageClient';

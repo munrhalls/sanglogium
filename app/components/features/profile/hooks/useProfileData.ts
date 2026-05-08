@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useUserProfile } from "@/app/hooks/useUserProfile";
-import { UserProfile } from "@/sanity/lib/profiles/profileTypes";
+import { UserProfile } from "@/sanity-cms/lib/profiles/profileTypes";
 import { useErrorHandler } from "./useErrorHandler";
 interface UseProfileDataReturn {
   profile: UserProfile | null;

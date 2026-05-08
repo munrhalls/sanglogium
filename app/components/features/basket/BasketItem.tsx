@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { dataset, projectId } from '@/sanity-config/env';
+import { dataset, projectId } from '@/sanity-cms/env';
 import urlBuilder from '@sanity/image-url';
 import { Price } from "@/app/components/ui/Price";
 import { BasketControls } from "./BasketControls";

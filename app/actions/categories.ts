@@ -1,6 +1,6 @@
 "use server";
-import { getFiltersForCategoryPath } from "@/sanity/lib/products/filter/getFiltersForCategoryPath";
-import { getSortablesForCategoryPath } from "@/sanity/lib/products/sort/getSortablesForCategoryPath";
+import { getFiltersForCategoryPath } from "@/sanity-cms/lib/products/filter/getFiltersForCategoryPath";
+import { getSortablesForCategoryPath } from "@/sanity-cms/lib/products/sort/getSortablesForCategoryPath";
 
 export async function getFiltersForCategoryPathAction(catalogueKeys: string[]) {
   try {

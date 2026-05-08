@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getBasketProducts } from '@/sanity-config/lib/products/getBasketProducts'
+import { getBasketProducts } from '@/sanity-cms/lib/products/getBasketProducts'
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)

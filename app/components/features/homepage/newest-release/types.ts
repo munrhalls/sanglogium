@@ -1,4 +1,4 @@
-﻿export interface SpotlightRelease {
+export interface SpotlightRelease {
   readonly _id: string;
   readonly tag: string;
   readonly name: string;

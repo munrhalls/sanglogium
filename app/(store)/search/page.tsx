@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { SearchHeader } from '@/app/components/features/search/SearchHeader';
-import { searchProductsFull } from '@/sanity-config/lib/products/searchProducts';
+import { searchProductsFull } from '@/sanity-cms/lib/products/searchProducts';
 import { ProductGridSkeleton } from '@/app/components/skeletons/ProductGridSkeleton';
 import { SearchResults } from './SearchResults';
 

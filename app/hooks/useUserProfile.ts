@@ -1,7 +1,7 @@
 "use client";
 import { useUser } from "@clerk/nextjs";
 import { useState, useEffect } from "react";
-import { UserProfile } from "@/sanity/lib/profiles/profileTypes";
+import { UserProfile } from "@/sanity-cms/lib/profiles/profileTypes";
 import {
   fetchProfileByClerkIdAction,
   createUserProfileAction,

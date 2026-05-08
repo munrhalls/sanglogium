@@ -1,5 +1,5 @@
 import { MetadataRoute } from "next";
-import { client } from "@/sanity/lib/client";
+import { client } from "@/sanity-cms/lib/client";
 
 const SITE_URL = "https://sang-logium.com";
 

@@ -1,4 +1,4 @@
-﻿export interface IemProduct {
+export interface IemProduct {
   readonly _id: string;
   readonly brand: string;
   readonly name: string;

@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { backendClient } from '@/sanity/lib/backendClient'
+import { getBackendClient } from '@/sanity-cms/lib/backendClient'
 
 export async function GET() {
   try {
+    const backendClient = getBackendClient()
     const query = `*[_type == "basketReservation"] | order(_createdAt desc)`
     const reservations = await backendClient.fetch(query)
     return NextResponse.json({ count: reservations.length, reservations })
@@ -17,6 +18,7 @@ export async function GET() {
 
 export async function DELETE() {
   try {
+    const backendClient = getBackendClient()
     const query = `*[_type == "basketReservation"]`
     const reservations = await backendClient.fetch(query)
     

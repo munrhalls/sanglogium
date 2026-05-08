@@ -7,7 +7,7 @@ import { SortDropdown } from '@/app/components/features/filters/SortDropdown';
 import { ActiveFilters } from '@/app/components/features/filters/ActiveFilters';
 import { MobileControlsBar } from '@/app/components/features/filters/MobileControlsBar';
 import { MobileFilterDrawer } from '@/app/components/features/filters/MobileFilterDrawer';
-import type { SanityProduct } from '@/sanity-config/lib/products/getProductsByVfsKeys';
+import type { SanityProduct } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
 
 // Product type aligned with Sanity generated types - brand is now reference (SC8)
 type Product = Pick<SanityProduct, '_id' | 'name' | 'price_data' | 'image'> & {

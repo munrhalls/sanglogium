@@ -1,6 +1,6 @@
 import React from "react";
 import { Image } from "next-sanity/image";
-import { urlFor } from "@/sanity-config/lib/image";
+import { urlFor } from "@/sanity-cms/lib/image";
 import { Spotlight1Data } from "./getSpotlight1Data";
 import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
 import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";

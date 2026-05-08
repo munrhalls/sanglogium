@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { backendClient } from '@/sanity/lib/backendClient'
+import { getBackendClient } from '@/sanity-cms/lib/backendClient'
 
 export async function GET(
   request: NextRequest,
@@ -8,6 +8,7 @@ export async function GET(
   try {
     const { id } = params
 
+    const backendClient = getBackendClient()
     const query = `*[_type == "basketReservation" && _id == $id][0]`
     const reservation = await backendClient.fetch(query, { id })
 

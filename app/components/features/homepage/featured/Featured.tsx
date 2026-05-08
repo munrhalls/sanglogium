@@ -1,5 +1,5 @@
 import { Image } from "next-sanity/image";
-import { urlFor } from "@/sanity-config/lib/image";
+import { urlFor } from "@/sanity-cms/lib/image";
 import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
 import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";
 import { CarouselSlide } from "@/app/components/layout/carousel/CarouselSlide";

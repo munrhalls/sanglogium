@@ -1,4 +1,4 @@
-import { sanityFetch } from "@/sanity-config/lib/client";
+import { sanityFetch } from "@/sanity-cms/lib/client";
 import type { CatalogueItem } from "@/sanity.types";
 
 const CATALOGUE_QUERY = `

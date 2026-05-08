@@ -1,5 +1,5 @@
 import React from "react";
-import { sanityFetch } from "@/sanity/lib/client";
+import { sanityFetch } from "@/sanity-cms/lib/client";
 import { Carousel } from '@/app/components/layout/carousel/CarouselRoot';
 import { CarouselTrack } from '@/app/components/layout/carousel/CarouselTrack';
 import { CarouselSlide } from '@/app/components/layout/carousel/CarouselSlide';

@@ -1,7 +1,7 @@
 "use client";
 
-import { Product } from '@/sanity-config/lib/products/getProductBySlug';
-import { urlFor } from '@/sanity-config/lib/image';
+import { Product } from '@/sanity-cms/lib/products/getProductBySlug';
+import { urlFor } from '@/sanity-cms/lib/image';
 import { useState } from 'react';
 import { Price } from '@/app/components/ui/Price';
 import { ShoppingCartIcon, CheckIcon } from '@phosphor-icons/react/dist/ssr';

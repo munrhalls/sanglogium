@@ -1,6 +1,6 @@
 // Final SanityImage implementation
 import Image from "next/image";
-import { dataset, projectId } from "@/sanity/lib/api/api";
+import { dataset, projectId } from "@/sanity-cms/lib/api/api";
 import urlBuilder from "@sanity/image-url";
 
 const builder = urlBuilder({ projectId, dataset });

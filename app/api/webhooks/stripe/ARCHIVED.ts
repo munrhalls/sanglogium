@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { stripe } from "@/lib/stripe";
-import { backendClient } from "@/sanity/lib/backendClient";
+import { backendClient } from "@/sanity-cms/lib/backendClient";
 import Stripe from "stripe";
 
 export async function POST(req: Request) {

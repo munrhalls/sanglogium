@@ -1,4 +1,4 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import brandsSource from "./data.json";
 import { BrandLogo } from "./types";
 

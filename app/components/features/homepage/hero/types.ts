@@ -1,4 +1,4 @@
-﻿export interface SanityImage {
+export interface SanityImage {
   readonly _type: 'image';
   readonly asset: {
     readonly _ref: string;

@@ -3,6 +3,7 @@
 import { useQueryState, parseAsArrayOf, parseAsString } from "nuqs";
 import { useRouter, usePathname } from "next/navigation";
 import { startTransition } from "react";
+import { displayToCents, centsToDisplay } from "@/lib/utils/price";
 
 export interface FilterState {
   field: string;
@@ -130,6 +131,7 @@ export function useFilterNuqs() {
 
   /**
    * Set price range
+   * Convert dollars to cents for URL storage (FilterBuilder expects cents)
    */
   const setPriceRange = (range: { min?: number; max?: number }) => {
     startTransition(() => {
@@ -145,10 +147,12 @@ export function useFilterNuqs() {
         }
 
         if (range.min !== undefined) {
-          newFilters.push(`priceRange:min:${range.min}`);
+          const minCents = displayToCents(range.min);
+          newFilters.push(`priceRange:min:${minCents}`);
         }
         if (range.max !== undefined) {
-          newFilters.push(`priceRange:max:${range.max}`);
+          const maxCents = displayToCents(range.max);
+          newFilters.push(`priceRange:max:${maxCents}`);
         }
 
         return newFilters;
