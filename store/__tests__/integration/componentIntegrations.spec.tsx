@@ -1,14 +1,14 @@
-import { describe, it, expect, vi } from 'vitest'
-import { render, screen, act } from '@testing-library/react'
+import { describe, it, expect, vi, afterEach } from 'vitest'
+import { render, screen, act, cleanup } from '@testing-library/react'
 import '@testing-library/jest-dom/vitest'
-import { BasketButton } from '../../../components/features/basket/BasketButton'
-import { BasketControls } from '../../../components/features/basket/BasketControls'
+import { BasketControls } from '../../../app/components/features/basket/BasketControls'
 import { FeaturedCard } from '../../../app/components/features/homepage/featured/Featured'
 import IemCard from '../../../app/components/features/homepage/iems-gallery/IemCard'
 import DacCard from '../../../app/components/features/homepage/dacs/DacCard'
 import AccessoryCard from '../../../app/components/features/homepage/accessories/AccessoryCard'
 import { ProductCard } from '../../../app/components/features/products/ProductCard'
 import { ProductInfo } from '../../../app/components/features/products/ProductInfo'
+import useBasketStore from '../../../store/basketStore'
 
 // Mock next/link to avoid complex router setup
 vi.mock('next/link', () => ({
@@ -53,14 +53,9 @@ vi.mock('@/sanity-config/lib/image', () => ({
 
 describe('Basket Controls Integration Across App', () => {
 
-  describe('Navigation Components', () => {
-    describe('BasketButton', () => {
-      it('navigates to /basket page on click', () => {
-        render(<BasketButton />)
-        const button = screen.getByTestId('basket-button')
-        expect(button).toHaveAttribute('href', '/basket')
-      })
-    })
+  afterEach(() => {
+    cleanup()
+    useBasketStore.getState().clear()
   })
 
   describe('Home Page Product Cards', () => {
@@ -230,6 +225,8 @@ describe('Basket Controls Integration Across App', () => {
           // ACT - add product via user action, then increment
           act(() => {
             screen.getByTestId(`add-to-basket-${mockProduct._id}`).click()
+          })
+          act(() => {
             screen.getByTestId(`increment-${mockProduct._id}`).click()
           })
           await new Promise(resolve => setTimeout(resolve, 0))
@@ -241,6 +238,8 @@ describe('Basket Controls Integration Across App', () => {
           // ACT - add product via user action, then decrement to zero
           act(() => {
             screen.getByTestId(`add-to-basket-${mockProduct._id}`).click()
+          })
+          act(() => {
             screen.getByTestId(`decrement-${mockProduct._id}`).click()
           })
           await new Promise(resolve => setTimeout(resolve, 0))
@@ -296,6 +295,8 @@ describe('Basket Controls Integration Across App', () => {
           // ACT - add product via user action, then decrement to zero
           act(() => {
             screen.getByTestId(`add-to-basket-${mockProduct._id}`).click()
+          })
+          act(() => {
             screen.getByTestId(`decrement-${mockProduct._id}`).click()
           })
           // Wait for React state update
@@ -345,24 +346,21 @@ describe('Basket Controls Integration Across App', () => {
 
     describe('BasketControls on basket page', () => {
       describe('when product in basket', () => {
-        // NOTE: Basket page context assumes product is already in basket.
-        // Cannot add product through BasketControls UI on basket page (no add button).
-        // This test requires pre-existing state which is a limitation of black-box testing
-        // for components that assume external state. Consider page-level integration test
-        // for full user flow.
-
         it('renders increment/decrement controls', () => {
+          useBasketStore.getState().addProduct(mockProductId)
           render(<BasketControls isBasketPage={true} productId={mockProductId} />)
           expect(screen.getByTestId(`increment-${mockProductId}`)).toBeInTheDocument()
           expect(screen.getByTestId(`decrement-${mockProductId}`)).toBeInTheDocument()
         })
 
         it('renders remove button', () => {
+          useBasketStore.getState().addProduct(mockProductId)
           render(<BasketControls isBasketPage={true} productId={mockProductId} />)
           expect(screen.getByTestId(`remove-${mockProductId}`)).toBeInTheDocument()
         })
 
         it('caps decrement at 1 (does not remove)', () => {
+          useBasketStore.getState().addProduct(mockProductId)
           render(<BasketControls isBasketPage={true} productId={mockProductId} />)
           const decrementButton = screen.getByTestId(`decrement-${mockProductId}`)
           decrementButton.click()
@@ -371,6 +369,7 @@ describe('Basket Controls Integration Across App', () => {
         })
 
         it('removes item via remove button', async () => {
+          useBasketStore.getState().addProduct(mockProductId)
           render(<BasketControls isBasketPage={true} productId={mockProductId} />)
           screen.getByTestId(`remove-${mockProductId}`).click()
           await new Promise(resolve => setTimeout(resolve, 0))

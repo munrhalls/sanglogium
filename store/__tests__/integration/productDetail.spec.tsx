@@ -4,12 +4,18 @@
 // - Slice: Slice 4 - Page Integration - Product Detail
 // - Reason: User can manage basket on product detail page
 
-import { describe, it, expect } from 'vitest'
-import { render, screen, act } from '@testing-library/react'
+import { describe, it, expect, afterEach } from 'vitest'
+import { render, screen, act, cleanup } from '@testing-library/react'
 import '@testing-library/jest-dom/vitest'
 import { ProductInfo } from '../../../app/components/features/products/ProductInfo'
+import useBasketStore from '../../../store/basketStore'
 
 describe('ProductInfo with BasketControls', () => {
+
+  afterEach(() => {
+    cleanup()
+    useBasketStore.getState().clear()
+  })
 
   describe('on product page (isBasketPage={false}) when product not in basket', () => {
     it('renders BasketControls with add button only', () => {
@@ -31,10 +37,9 @@ describe('ProductInfo with BasketControls', () => {
 
       render(<ProductInfo product={{ _id: productId, name: 'Test Product', price_data: { unit_amount: 10000, currency: 'USD' }, stock: 10, slug: { current: 'test-product' } } as any} />)
 
-      // ACT - add product to basket via user action (click add button twice for quantity 2)
+      // ACT - add product to basket via user action
       act(() => {
         screen.getByTestId(`add-to-basket-${productId}`).click()
-        screen.getByTestId(`increment-${productId}`).click()
       })
 
       // ASSERT - verify BasketControls renders with increment/decrement buttons

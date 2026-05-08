@@ -8,11 +8,13 @@ import { describe, it, expect, afterEach } from 'vitest'
 import { render, screen, act, cleanup } from '@testing-library/react'
 import '@testing-library/jest-dom/vitest'
 import { ProductCard } from '../../../app/components/features/products/ProductCard'
+import useBasketStore from '../../../store/basketStore'
 
 describe('ProductCard with BasketControls', () => {
 
   afterEach(() => {
     cleanup()
+    useBasketStore.getState().clear()
   })
 
   describe('on product page (isBasketPage={false}) when product not in basket', () => {
@@ -70,9 +72,12 @@ describe('ProductCard with BasketControls', () => {
 
       render(<ProductCard product={{ _id: productId, name: 'Test Product', price_data: { unit_amount: 10000, currency: 'USD' }, stock: 10, slug: { current: 'test-product' } } as any} />)
 
-      // ACT - add product to basket via user action, then click increment button
+      // ACT - add product to basket, then click increment button
       act(() => {
         screen.getByTestId(`add-to-basket-${productId}`).click()
+      })
+      
+      act(() => {
         const incrementButton = screen.getByTestId(`increment-${productId}`)
         incrementButton.click()
       })
@@ -87,10 +92,16 @@ describe('ProductCard with BasketControls', () => {
 
       render(<ProductCard product={{ _id: productId, name: 'Test Product', price_data: { unit_amount: 10000, currency: 'USD' }, stock: 10, slug: { current: 'test-product' } } as any} />)
 
-      // ACT - add product to basket twice via user actions (quantity 2), then click decrement button
+      // ACT - add product to basket, increment to quantity 2, then click decrement button
       act(() => {
         screen.getByTestId(`add-to-basket-${productId}`).click()
+      })
+      
+      act(() => {
         screen.getByTestId(`increment-${productId}`).click()
+      })
+      
+      act(() => {
         const decrementButton = screen.getByTestId(`decrement-${productId}`)
         decrementButton.click()
       })

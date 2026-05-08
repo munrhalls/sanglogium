@@ -4,12 +4,18 @@
 // - Slice: Slice 2 - Component Layer - BasketControls
 // - Reason: Basket controls for product pages (isBasketPage={false} determines context)
 
-import { describe, it, expect } from 'vitest'
-import { render, screen, act } from '@testing-library/react'
+import { describe, it, expect, afterEach } from 'vitest'
+import { render, screen, act, cleanup, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom/vitest'
-import { BasketControls } from '../../../components/features/basket/BasketControls'
+import { BasketControls } from '../../../app/components/features/basket/BasketControls'
+import useBasketStore from '../../../store/basketStore'
 
 describe('basketControls', () => {
+
+  afterEach(() => {
+    cleanup()
+    useBasketStore.getState().clear()
+  })
 
   describe('on a product page (isBasketPage={false}) when product not in basket', () => {
     it('renders add button only', () => {
@@ -99,6 +105,8 @@ describe('basketControls', () => {
       // ACT - add product to basket via user action, then decrement to zero
       act(() => {
         screen.getByTestId('add-to-basket-product-1').click()
+      })
+      act(() => {
         screen.getByTestId('decrement-product-1').click()
       })
 
@@ -125,6 +133,8 @@ describe('basketControls', () => {
       // ACT - add product to basket via user action, then increment
       act(() => {
         screen.getByTestId('add-to-basket-product-1').click()
+      })
+      act(() => {
         screen.getByTestId('increment-product-1').click()
       })
 
@@ -148,7 +158,11 @@ describe('basketControls', () => {
       // ACT - add product twice via user action (quantity = 2), then decrement
       act(() => {
         screen.getByTestId('add-to-basket-product-1').click()
+      })
+      act(() => {
         screen.getByTestId('increment-product-1').click()
+      })
+      act(() => {
         screen.getByTestId('decrement-product-1').click()
       })
 
@@ -158,7 +172,7 @@ describe('basketControls', () => {
   })
 
   describe('when incrementing quantity', () => {
-    it('increments without limit', () => {
+    it('increments without limit', async () => {
       // ARRANGE - setup test state with rendered BasketControls, product in basket
       const productId = 'product-1'
 
@@ -169,9 +183,18 @@ describe('basketControls', () => {
         />
       )
 
-      // ACT - add product and increment many times
+      // ACT - add product
       act(() => {
         screen.getByTestId('add-to-basket-product-1').click()
+      })
+
+      // Wait for increment button to appear
+      await waitFor(() => {
+        expect(screen.getByTestId('increment-product-1')).toBeInTheDocument()
+      })
+
+      // Increment many times
+      act(() => {
         for (let i = 0; i < 10; i++) {
           screen.getByTestId('increment-product-1').click()
         }

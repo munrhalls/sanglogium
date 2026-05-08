@@ -4,22 +4,24 @@
 // - Slice: Slice 2 - Component Layer - BasketControls
 // - Reason: Basket controls for basket page (isBasketPage={true} determines context)
 
-import { describe, it, expect } from 'vitest'
-import { render, screen, act } from '@testing-library/react'
+import { describe, it, expect, afterEach } from 'vitest'
+import { render, screen, act, cleanup } from '@testing-library/react'
 import '@testing-library/jest-dom/vitest'
-import { BasketControls } from '../../../components/features/basket/BasketControls'
+import { BasketControls } from '../../../app/components/features/basket/BasketControls'
+import useBasketStore from '../../../store/basketStore'
 
 describe('basketControlsBasketPage', () => {
+
+  afterEach(() => {
+    cleanup()
+    useBasketStore.getState().clear()
+  })
 
   describe('on basket page (isBasketPage={true}) when product in basket', () => {
     it('renders increment, decrement, and remove buttons', () => {
       // ARRANGE - setup test state with product in basket
-      // NOTE: Basket page context assumes product is already in basket.
-      // Cannot add product through BasketControls UI on basket page (no add button).
-      // This test requires pre-existing state which is a limitation of black-box testing
-      // for components that assume external state. Consider integration with parent component
-      // or page-level test for full user flow.
       const productId = 'product-1'
+      useBasketStore.getState().addProduct(productId)
 
       // ACT - render BasketControls component with isBasketPage={true}
       render(
@@ -30,7 +32,6 @@ describe('basketControlsBasketPage', () => {
       )
 
       // ASSERT - verify increment/decrement/remove buttons render when product in basket
-      // (This assertion will fail without pre-existing basket state)
       expect(screen.getByTestId('increment-product-1')).toBeInTheDocument()
       expect(screen.getByTestId('decrement-product-1')).toBeInTheDocument()
       expect(screen.getByTestId('remove-product-1')).toBeInTheDocument()
@@ -42,8 +43,8 @@ describe('basketControlsBasketPage', () => {
   describe('when user clicks remove button (basket page)', () => {
     it('removes product from basket and hides controls', () => {
       // ARRANGE - setup test state with rendered BasketControls, product in basket
-      // NOTE: Requires pre-existing basket state (see first test note)
       const productId = 'product-1'
+      useBasketStore.getState().addProduct(productId)
 
       render(
         <BasketControls
@@ -67,8 +68,8 @@ describe('basketControlsBasketPage', () => {
   describe('when quantity is 1 (basket page)', () => {
     it('disables decrement button', () => {
       // ARRANGE - setup test state with rendered BasketControls, product in basket with quantity 1
-      // NOTE: Requires pre-existing basket state (see first test note)
       const productId = 'product-1'
+      useBasketStore.getState().addProduct(productId)
 
       render(
         <BasketControls
