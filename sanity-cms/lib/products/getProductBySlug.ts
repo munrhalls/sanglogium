@@ -19,7 +19,7 @@ export interface Product {
   catalogueLocationKeys: string[];
 }
 
-export async function getProductBySlug(slug: string): Promise<Product | null> {
+export const getProductBySlug = cache(async (slug: string): Promise<Product | null> => {
   const products = await sanityFetch<Product[]>({
     query: groq`*[_type == "product" && slug.current == $slug && defined(stripePriceId)] {
       _id,
