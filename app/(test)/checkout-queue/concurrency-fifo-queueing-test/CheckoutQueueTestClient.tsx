@@ -25,7 +25,7 @@ interface RequestState {
   status: 'pending' | 'success' | 'error'
   result: ApiResponse | null
   requestBody: {
-    basketReservation: Array<{ _id: string; quantity: number; stripePriceId: string; price_data: { currency: string; unit_amount: number } }>
+    basketReservation: Array<{ _id: string; quantity: number; price_data: { currency: string; unit_amount: number } }>
     createdAt: string
   }
   issuedAt: string
@@ -41,7 +41,6 @@ interface TraceEntry {
 
 interface TestProduct {
   _id: string
-  stripePriceId: string
   price_data: { currency: string; unit_amount: number }
 }
 
@@ -211,7 +210,7 @@ export default function CheckoutQueueTestClient({ testProducts }: CheckoutQueueT
         status: 'pending',
         result: null,
         requestBody: {
-          basketReservation: [{ _id: product._id, quantity: 1, stripePriceId: product.stripePriceId, price_data: product.price_data }],
+          basketReservation: [{ _id: product._id, quantity: 1, price_data: product.price_data }],
           createdAt: now,
         },
         issuedAt: now,
@@ -441,7 +440,7 @@ export default function CheckoutQueueTestClient({ testProducts }: CheckoutQueueT
                     </div>
                     {cmsData && !hasError && (
                       <div className="text-xs mt-1 bg-slate-100 p-2 whitespace-pre-wrap">
-                        {JSON.stringify(cmsData, null, 2)}
+                        {JSON.stringify(cmsData as Record<string, unknown>, null, 2)}
                       </div>
                     )}
                   </div>
