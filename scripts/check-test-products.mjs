@@ -1,6 +1,6 @@
 import { createClient } from 'next-sanity'
 import dotenv from 'dotenv'
-dotenv.config({ path: '.env.local' })
+dotenv.config({ path: '.env.test' })
 
 const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,

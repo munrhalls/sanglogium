@@ -10,8 +10,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { config } from 'dotenv';
 
-// Load environment variables from .env.local
-config({ path: path.join(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '.env.local') });
+// Load environment variables from .env.test
+config({ path: path.join(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '.env.test') });
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
