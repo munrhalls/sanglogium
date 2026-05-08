@@ -21,20 +21,20 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
 
   return (
     <div
-      className="grid grid-cols-1 gap-4 border-b border-border-secondary p-4 lg-desktop:grid-cols-[3fr_1fr_1fr_1fr] lg-touch:grid-cols-[3fr_1fr_1fr_1fr] lg-desktop:gap-5 lg-desktop:p-5 lg-touch:gap-5 lg-touch:p-5 hover:bg-secondary-900/50"
+      className="grid grid-cols-1 gap-6 border-b border-border-secondary/60 p-4 lg-desktop:grid-cols-[3fr_1fr_1fr_1fr] lg-touch:grid-cols-[3fr_1fr_1fr_1fr] lg-desktop:gap-5 lg-desktop:p-5 lg-touch:gap-5 lg-touch:p-5 hover:bg-secondary-900/50"
     >
       {/* Product column */}
       <div className="flex flex-col gap-4 lg-desktop:flex-row lg-desktop:gap-5 lg-desktop:items-center lg-touch:flex-row lg-touch:gap-5 lg-touch:items-center">
         {/* Row 1: Image + name */}
         <div className="flex items-start gap-4">
-          <div className="h-20 w-24 flex-shrink-0 overflow-hidden rounded-sm bg-surface-productImage relative">
+          <div className="h-20 w-24 flex-shrink-0 overflow-hidden rounded-sm bg-surface-subtle border border-border-secondary relative">
             {assetRef ? (
               <Image
                 src={assetRef}
                 alt={name}
                 fill
                 sizes="96px"
-                className="object-contain"
+                className="object-contain mix-blend-multiply"
                 loader={({ src, width, quality }) => {
                   const url = builder
                     .image(src)
@@ -63,14 +63,14 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
         </div>
 
         {/* Row 2: Controls at bottom for thumb zone (mobile only) */}
-        <div className="flex items-center justify-end pr-2 lg-desktop:hidden lg-touch:hidden">
+        <div className="flex items-center justify-end pr-4 lg-desktop:hidden lg-touch:hidden">
           <BasketControls
             productId={productId}
             isBasketPage={true}
-            decrementClassName="bg-surface-elevated text-text-body rounded p-2 h-9 w-9 flex items-center justify-center hover:bg-surface-subtle transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            incrementClassName="bg-surface-elevated text-text-body rounded p-2 h-9 w-9 flex items-center justify-center hover:bg-surface-subtle transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            quantityClassName="font-bold w-6 text-center type-body"
-            removeClassName="bg-error-500 text-white hover:bg-error-700 transition-colors rounded p-2 h-9 w-9 flex items-center justify-center"
+            decrementClassName="bg-surface-elevated text-text-body rounded-md p-2 h-9 w-9 flex items-center justify-center hover:bg-surface-subtle transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            incrementClassName="bg-surface-elevated text-text-body rounded-md p-2 h-9 w-9 flex items-center justify-center hover:bg-surface-subtle transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            quantityClassName="font-bold w-6 text-center type-body bg-surface-elevated border border-border-secondary rounded"
+            removeClassName="bg-error-500 text-white hover:bg-error-700 transition-colors rounded-md p-2 h-9 w-9 flex items-center justify-center"
             wrapperClassName="gap-1"
           />
         </div>
