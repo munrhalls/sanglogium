@@ -1,17 +1,18 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { Price } from "@/app/components/ui/Price";
+import { BasketControls } from "./BasketControls";
 
 interface BasketItemProps {
   productId: string
+  name: string
   quantity: number
   displayPriceAtAdd: number
   availableStockAtAdd: number
 }
 
-export default function BasketItem({ productId, quantity, displayPriceAtAdd, availableStockAtAdd }: BasketItemProps) {
+export default function BasketItem({ productId, name, quantity, displayPriceAtAdd, availableStockAtAdd }: BasketItemProps) {
   return (
     <div
       className="grid grid-cols-1 gap-5 border-b border-border-secondary p-5 lg-desktop:grid-cols-[3fr_1fr_1fr_1fr] lg-touch:grid-cols-[3fr_1fr_1fr_1fr] hover:bg-secondary-900/50"
@@ -28,11 +29,9 @@ export default function BasketItem({ productId, quantity, displayPriceAtAdd, ava
           />
         </div>
         <div>
-          <Link href={`/product/${productId}`}>
-            <h3 className="type-body hover:text-brand-100 transition-colors">
-              {productId}
-            </h3>
-          </Link>
+          <h3 className="type-body">
+            {name}
+          </h3>
           <p className="type-metadata lg-desktop:hidden lg-touch:hidden">
             <Price value={displayPriceAtAdd} />
             {" "}× {quantity}
@@ -47,7 +46,12 @@ export default function BasketItem({ productId, quantity, displayPriceAtAdd, ava
 
       {/* Quantity column */}
       <div className="flex items-center lg-desktop:justify-center lg-touch:justify-center">
-        {/* <BasketControls /> */}
+        <BasketControls
+          productId={productId}
+          displayPriceAtAdd={displayPriceAtAdd}
+          availableStockAtAdd={availableStockAtAdd}
+          isBasketPage={true}
+        />
       </div>
 
       {/* Total column - desktop only */}

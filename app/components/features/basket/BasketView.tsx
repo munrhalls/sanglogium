@@ -9,6 +9,7 @@ interface BasketViewProps {
   }>
   cmsBasketItems: Array<{
     productId: string
+    name: string
     displayPrice: number
     availableStock: number
   }>
@@ -25,15 +26,22 @@ export default function BasketView({ basket, cmsBasketItems }: BasketViewProps) 
         <div className="type-caption uppercase tracking-editorial text-secondary-500 text-right">Total</div>
       </div>
 
-      {basket.map((item) => (
-        <BasketItem
-          key={item.productId}
-          productId={item.productId}
-          quantity={item.quantity}
-          displayPriceAtAdd={item.displayPriceAtAdd}
-          availableStockAtAdd={item.availableStockAtAdd}
-        />
-      ))}
+      {basket
+        .map((item) => {
+          const cmsItem = cmsBasketItems.find(cms => cms.productId === item.productId);
+          if (!cmsItem) return null;
+          return (
+            <BasketItem
+              key={item.productId}
+              productId={item.productId}
+              name={cmsItem.name}
+              quantity={item.quantity}
+              displayPriceAtAdd={item.displayPriceAtAdd}
+              availableStockAtAdd={item.availableStockAtAdd}
+            />
+          );
+        })
+        .filter(Boolean)}
     </div>
   );
 }
