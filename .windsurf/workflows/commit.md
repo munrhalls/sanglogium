@@ -40,15 +40,15 @@ Read these constraints carefully. Violating any of these is a hard failure of yo
 
 **Commit Message Template Options:**
 *Option 1 (Tied to DoD):*
-`Difficulty: <1-13> - <A|B|C|D|E>, <Category> (<scope/filenames>): <action> — → closes DoD item [N] on [SprintName]`
+`Difficulty: <1-13> - <A|B|C|D|E>, <Category> (<scope/filenames>): <action> → DoD:<SprintName>-<item>`
 
 *Option 2 (No DoD impact):*
-`Difficulty: <1-13> - <A|B|C|D|E>, <Category> (<scope/filenames>): <action> — → closes 0 DoD items, <infrastructure/deferred/etc>`
+`Difficulty: <1-13> - <A|B|C|D|E>, <Category> (<scope/filenames>): <action> → DoD:0 <infrastructure/deferred/etc>`
 
 ---
 
 ## 🚀 Phase 4: Final Output & AUTONOMOUS EXECUTION
 After completing Phase 1 and orienting yourself within the constraints of Phases 2 and 3:
 1. Output your planned commands in a formatted PowerShell code block so the user can see what is about to happen. Each unit must follow this syntax:
-   `git add <specific/file1> <specific/file2>; git commit -m 'Difficulty: <Fib> - <TaxonomyType>, <Category> (<scope>): <action> — → <impact>'`
+   `git add <specific/file1> <specific/file2>; git commit -m 'Difficulty: <Fib> - <TaxonomyType>, <Category> (<scope>): <action> → DoD:<SprintName-item or 0>'`
 2. **IMMEDIATELY EXECUTE THE COMMANDS.** You must use your terminal/execution tool to run the formulated `git add` and `git commit` commands directly in the local repository. Do not stop and wait for the user to copy-paste them.
