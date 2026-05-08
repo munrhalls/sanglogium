@@ -42,8 +42,6 @@ export default function AccessoryCard({ item, idx }: { item: AccessoryItem; idx:
         <div className="mt-auto pt-4 border-t border-border-secondary/50">
           <BasketControls
             productId={item._id}
-            displayPriceAtAdd={centsToDisplay(item.price_data.unit_amount)}
-            availableStockAtAdd={(item as any).stock ?? 99}
             isBasketPage={false}
             addClassName="btn-cart w-full justify-center"
             wrapperClassName="flex items-center gap-1"

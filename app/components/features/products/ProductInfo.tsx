@@ -45,8 +45,6 @@ export function ProductInfo({ product }: { product: Product }) {
       <div className="pt-4 space-y-6 ">
         <BasketControls
           productId={product._id}
-          displayPriceAtAdd={displayPrice}
-          availableStockAtAdd={product.stock}
           isBasketPage={false}
           addClassName="btn-cart-large w-full flex justify-center"
           wrapperClassName="flex items-center gap-4"

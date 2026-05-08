@@ -58,8 +58,6 @@ export function ProductCard({ product }: ProductCardProps) {
         <Price value={displayPrice} />
         <BasketControls
           productId={product._id}
-          displayPriceAtAdd={displayPrice}
-          availableStockAtAdd={product.stock ?? 99}
           isBasketPage={false}
           addClassName="btn-cart"
           wrapperClassName="flex items-center gap-1"

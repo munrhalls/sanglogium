@@ -2,8 +2,6 @@
 export type BasketItem = {
   productId: string
   quantity: number
-  displayPriceAtAdd: number
-  availableStockAtAdd: number
 }
 
 export type PreSyncResult =

@@ -60,8 +60,6 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
           <p className="type-price">${centsToDisplay(product.price_data.unit_amount)}</p>
           <BasketControls
             productId={product._id}
-            displayPriceAtAdd={centsToDisplay(product.price_data.unit_amount)}
-            availableStockAtAdd={product.stock ?? 99}
             isBasketPage={false}
             addClassName="btn-cart"
             wrapperClassName="flex items-center gap-1"

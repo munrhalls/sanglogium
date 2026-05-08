@@ -35,8 +35,6 @@ export default function IemCard({ product, idx }: { product: IemProduct; idx: nu
                     </p>
                     <BasketControls
                         productId={product._id}
-                        displayPriceAtAdd={centsToDisplay(product.price_data.unit_amount)}
-                        availableStockAtAdd={product.stock ?? 99}
                         isBasketPage={false}
                         addClassName="btn-cart w-full justify-center xs:w-auto"
                         wrapperClassName="flex items-center gap-1"

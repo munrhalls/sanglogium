@@ -38,8 +38,6 @@ export default function DacCard({ item, idx }: { item: any; idx: number }) {
         <div className="ml-auto">
           <BasketControls
             productId={item._id}
-            displayPriceAtAdd={item.price_data ? centsToDisplay(item.price_data.unit_amount) : 0}
-            availableStockAtAdd={item.stock ?? 99}
             isBasketPage={false}
             addClassName="btn-cart"
             wrapperClassName="flex items-center gap-1"
