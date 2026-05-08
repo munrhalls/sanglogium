@@ -34,7 +34,7 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
                 alt={name}
                 fill
                 sizes="96px"
-                className="object-contain mix-blend-multiply"
+                className="object-contain"
                 loader={({ src, width, quality }) => {
                   const url = builder
                     .image(src)
