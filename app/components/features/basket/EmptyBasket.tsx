@@ -1,7 +1,7 @@
 "use client";
 import { ArrowLeftIcon, ShoppingCartIcon } from "@phosphor-icons/react";
 
-export default function BasketEmpty() {
+export default function EmptyBasket() {
   return (
     <div className="card-base flex flex-col items-center justify-center p-8 lg-desktop:p-12 lg-touch:p-12">
       <ShoppingCartIcon className="mb-6 text-secondary-600" size={64} />

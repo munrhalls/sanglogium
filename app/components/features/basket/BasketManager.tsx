@@ -7,8 +7,8 @@ import BasketSkeleton from "./BasketSkeleton";
 import EmptyBasket from "./EmptyBasket";
 import BasketItem from "./BasketItem";
 import BasketSummary from "./BasketSummary";
-import { parseBasketItems } from "@/lib/basket/parseBasketItems";
-import { separateByAvailability } from "@/lib/basket/availabilityHandler";
+import { parseBasketItems } from "./lib/parseBasketItems";
+import { separateByAvailability } from "./lib/availabilityHandler";
 
 export default function BasketManager() {
   const { items: basket, _hasHydrated: hasHydrated } = useBasketStore(
@@ -60,6 +60,19 @@ export default function BasketManager() {
   const filteredCmsItems = useMemo(() => {
     return cmsBasketItems.filter(cms => basket.some(item => item.productId === cms.productId));
   }, [cmsBasketItems, basket]);
+
+  // Calculate summary data
+  const { itemCount, subtotal } = useMemo(() => {
+    const count = basket.reduce((sum, item) => sum + item.quantity, 0);
+    const total = filteredCmsItems.reduce((sum, cms) => {
+      const basketItem = basket.find(item => item.productId === cms.productId);
+      if (basketItem) {
+        return sum + (cms.displayPrice * basketItem.quantity);
+      }
+      return sum;
+    }, 0);
+    return { itemCount: count, subtotal: total };
+  }, [basket, filteredCmsItems]);
 
 
   if (!hasHydrated) {
@@ -114,7 +127,7 @@ export default function BasketManager() {
       </div>
       <div className="lg-desktop:col-span-1 lg-touch:col-span-1">
         <div className="card-base sticky bottom-0 lg-desktop:top-4 lg-touch:top-4 lg-desktop:bottom-auto lg-touch:bottom-auto z-10">
-          <BasketSummary />
+          <BasketSummary itemCount={itemCount} subtotal={subtotal} />
         </div>
       </div>
     </div>
