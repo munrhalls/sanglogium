@@ -1,0 +1,86 @@
+[
+  {
+    "_type": "category",
+    "_id": "category-accessories",
+    "name": "Accessories",
+    "icon": "wave",
+    "slug": {
+      "_type": "slug",
+      "current": "accessories-wSzqte"
+    },
+    "metadata": {
+      "path": "accessories",
+      "depth": 1
+    }
+  },
+  {
+    "_type": "category",
+    "_id": "category-cables",
+    "name": "Cables",
+    "icon": "wave",
+    "slug": {
+      "_type": "slug",
+      "current": "cables-bw5hKW"
+    },
+    "metadata": {
+      "path": "accessories/cables",
+      "depth": 2
+    }
+  },
+  {
+    "_type": "category",
+    "_id": "category-cases",
+    "name": "Cases",
+    "icon": "wave",
+    "slug": {
+      "_type": "slug",
+      "current": "cases-7zJoJO"
+    },
+    "metadata": {
+      "path": "accessories/cases",
+      "depth": 2
+    }
+  },
+  {
+    "_type": "category",
+    "_id": "category-stands",
+    "name": "Stands",
+    "icon": "wave",
+    "slug": {
+      "_type": "slug",
+      "current": "stands-w4P2kz"
+    },
+    "metadata": {
+      "path": "accessories/stands",
+      "depth": 2
+    }
+  },
+  {
+    "_type": "category",
+    "_id": "category-adapters",
+    "name": "Adapters",
+    "icon": "wave",
+    "slug": {
+      "_type": "slug",
+      "current": "adapters-gfYdnz"
+    },
+    "metadata": {
+      "path": "accessories/adapters",
+      "depth": 2
+    }
+  },
+  {
+    "_type": "category",
+    "_id": "category-replacement-parts",
+    "name": "Replacement Parts",
+    "icon": "wave",
+    "slug": {
+      "_type": "slug",
+      "current": "replacement-parts-xPzkgH"
+    },
+    "metadata": {
+      "path": "accessories/replacement-parts",
+      "depth": 2
+    }
+  }
+]
