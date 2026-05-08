@@ -21,42 +21,58 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
 
   return (
     <div
-      className="grid grid-cols-1 gap-5 border-b border-border-secondary p-5 lg-desktop:grid-cols-[3fr_1fr_1fr_1fr] lg-touch:grid-cols-[3fr_1fr_1fr_1fr] hover:bg-secondary-900/50"
+      className="grid grid-cols-1 gap-4 border-b border-border-secondary p-4 lg-desktop:grid-cols-[3fr_1fr_1fr_1fr] lg-touch:grid-cols-[3fr_1fr_1fr_1fr] lg-desktop:gap-5 lg-desktop:p-5 lg-touch:gap-5 lg-touch:p-5 hover:bg-secondary-900/50"
     >
       {/* Product column */}
-      <div className="flex items-center gap-5">
-        <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-sm bg-surface-productImage relative">
-          {assetRef ? (
-            <Image
-              src={assetRef}
-              alt={name}
-              fill
-              sizes="96px"
-              className="object-contain"
-              loader={({ src, width, quality }) => {
-                const url = builder
-                  .image(src)
-                  .width(width)
-                  .quality(quality || 75)
-                  .auto("format")
-                  .url();
-                return url;
-              }}
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center text-text-caption type-caption">
-              No image
-            </div>
-          )}
+      <div className="flex flex-col gap-4 lg-desktop:flex-row lg-desktop:gap-5 lg-desktop:items-center lg-touch:flex-row lg-touch:gap-5 lg-touch:items-center">
+        {/* Row 1: Image + name */}
+        <div className="flex items-start gap-4">
+          <div className="h-20 w-24 flex-shrink-0 overflow-hidden rounded-sm bg-surface-productImage relative">
+            {assetRef ? (
+              <Image
+                src={assetRef}
+                alt={name}
+                fill
+                sizes="96px"
+                className="object-contain"
+                loader={({ src, width, quality }) => {
+                  const url = builder
+                    .image(src)
+                    .width(width)
+                    .quality(quality || 75)
+                    .auto("format")
+                    .url();
+                  return url;
+                }}
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-text-caption type-caption">
+                No image
+              </div>
+            )}
+          </div>
+          <div className="flex flex-col gap-2 flex-1">
+            <h3 className="type-body text-secondary-400">
+              {name}
+            </h3>
+            {/* Total - prominent on mobile */}
+            <p className="type-h3 font-bold text-text-primary">
+              Total: <Price value={displayPrice * quantity} />
+            </p>
+          </div>
         </div>
-        <div>
-          <h3 className="type-body">
-            {name}
-          </h3>
-          <p className="type-metadata lg-desktop:hidden lg-touch:hidden">
-            <Price value={displayPrice} />
-            {" "}× {quantity}
-          </p>
+
+        {/* Row 2: Controls at bottom for thumb zone (mobile only) */}
+        <div className="flex items-center justify-end pr-2 lg-desktop:hidden lg-touch:hidden">
+          <BasketControls
+            productId={productId}
+            isBasketPage={true}
+            decrementClassName="bg-surface-elevated text-text-body rounded p-2 h-9 w-9 flex items-center justify-center hover:bg-surface-subtle transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            incrementClassName="bg-surface-elevated text-text-body rounded p-2 h-9 w-9 flex items-center justify-center hover:bg-surface-subtle transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            quantityClassName="font-bold w-6 text-center type-body"
+            removeClassName="bg-error-500 text-white hover:bg-error-700 transition-colors rounded p-2 h-9 w-9 flex items-center justify-center"
+            wrapperClassName="gap-1"
+          />
         </div>
       </div>
 
@@ -65,8 +81,8 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
         <Price value={displayPrice} />
       </div>
 
-      {/* Quantity column */}
-      <div className="flex items-center lg-desktop:justify-center lg-touch:justify-center">
+      {/* Quantity column - desktop only */}
+      <div className="hidden lg-desktop:flex lg-touch:flex items-center justify-center">
         <BasketControls
           productId={productId}
           isBasketPage={true}
