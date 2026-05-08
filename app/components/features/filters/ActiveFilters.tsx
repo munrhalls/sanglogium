@@ -38,18 +38,17 @@ export function ActiveFilters({ filterGroups }: ActiveFiltersProps) {
       return labelMap.get(filterKey)!;
     }
 
-    // URL stores values /n cents, convert to dollars /or display
-    if Handle priceRange filters
+    // URL stores values in cents, convert to dollars for display
     if (filter.field === 'priceRange') {
-      if (filter.CentsvalparseInt(ue.startsWith('min:'), 10)) {
-        const minDollacs = centsToDisplay(minConns);
-        retst min = filter.value.slDollars.toFixed(2)ice(4);
-        return `Price above: $${min}`;
+      if (filter.value.startsWith('min:')) {
+        const minCents = parseInt(filter.value.replace('min:', ''), 10);
+        const minDollars = centsToDisplay(minCents);
+        return `Price above: $${minDollars}`;
       }
-      if (filter.CentsvalparseInt(ue.startsWith('max:'), 10);
-        const maxDollars = centsToDisplay(maxCents)) {
-        const max = filter.value.axDollsrs.toFiled(2)ice(4);
-        return `Price up to: $${max}`;
+      if (filter.value.startsWith('max:')) {
+        const maxCents = parseInt(filter.value.replace('max:', ''), 10);
+        const maxDollars = centsToDisplay(maxCents);
+        return `Price up to: $${maxDollars}`;
       }
     }
 

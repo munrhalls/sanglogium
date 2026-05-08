@@ -14,9 +14,9 @@
 // ❌ NEVER: Add "use client" to pages that just fetch data
 
 // CORRECT EXAMPLE:
-import { sanityClient } from '@/sanity/lib/client'
-import { productQuery, relatedProductsQuery } from '@/sanity/lib/queries'
-import type { SanityProduct } from '@/sanity/types'
+import { sanityClient } from '@/sanity-cms/lib/client'
+import { productQuery, relatedProductsQuery } from '@/sanity-cms/lib/queries'
+import type { SanityProduct } from '@/sanity-cms/types'
 
 interface ProductPageProps {
   params: { slug: string }
@@ -313,7 +313,7 @@ export function useTheme() {
 // ❌ NEVER: Manually define types that conflict with Sanity types
 
 // CORRECT EXAMPLE:
-import type { SanityProduct } from '@/sanity/types' // <- Typegen output
+import type { SanityProduct } from '@/sanity-cms/types' // <- Typegen output
 
 // ✅ Pick pattern for subset types
 type ProductCardData = Pick<SanityProduct, '_id' | 'name' | 'pricePln' | 'images'>

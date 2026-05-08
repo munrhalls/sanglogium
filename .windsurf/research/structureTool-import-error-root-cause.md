@@ -148,7 +148,7 @@ Node.js ESM module resolution prioritizes local files over node_modules when bar
 When a local directory named `sanity/` exists, the bare specifier `"sanity/structure"` resolves to `sanity/structure.ts` instead of `node_modules/sanity/structure`.
 
 **Edge Cases:**
-1. Works if local directory is renamed (e.g., `sanity-config/`)
+1. Works if local directory is renamed (e.g., `sanity-cms/`)
 2. Works if using package.json `"exports"` field
 3. Fails silently until export mismatch is discovered
 
@@ -294,7 +294,7 @@ import { structureTool } from "sanity/structure"; // Keep as-is but ensure resol
 ```
 
 **Option 2: Rename local directory**
-Rename `sanity/` to `sanity-config/` or `sanity-studio/` and update all imports.
+Rename `sanity/` to `sanity-cms/` or `sanity-studio/` and update all imports.
 
 **Option 3: Use tsconfig paths (if using TypeScript path mapping)**
 ```json
