@@ -11,6 +11,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  // Environment guard: only render in development
+  if (process.env.NODE_ENV !== 'development') {
+    return null
+  }
+
   return (
     <html lang="en">
       <head>
