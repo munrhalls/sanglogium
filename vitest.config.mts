@@ -26,6 +26,8 @@ export default defineConfig(({ mode }) => {
         'tests/**/*.spec.ts',
         'tests/**/*.test.tsx',
         'tests/**/*.test.ts',
+        'store/__tests__/unit/**/*.spec.ts',
+        'store/__tests__/integration/**/*.spec.tsx',
         'docs/basket/non-local-basket/__tests__/integration/**/*.spec.tsx',
         'docs/basket/non-local-basket/__tests__/unit/**/*.spec.ts',
       ],

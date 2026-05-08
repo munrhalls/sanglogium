@@ -1,10 +1,10 @@
 import { createClient } from 'next-sanity';
-import { apiVersion, projectId } from '../../sanity/env';
+import { apiVersion, projectId, dataset } from '../../sanity-config/env';
 
 // Read client for test dataset
 const testClient = createClient({
   projectId,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
+  dataset,
   apiVersion,
   useCdn: false,
 });
@@ -13,7 +13,7 @@ const testClient = createClient({
 // full update permission (verified via scripts/diagnose-sanity-tokens.mjs).
 const testWriteClient = createClient({
   projectId,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
+  dataset,
   apiVersion,
   useCdn: false,
   token:
