@@ -29,6 +29,7 @@ export default defineConfig(({ mode }) => {
       maxWorkers: 1, // Single worker to prevent race conditions
       include: [
         'tests/basket/integration/**/*.test.ts',
+        'app/components/features/basket/__tests__/integration/**/*.test.ts',
         'tests/checkout/guest-checkout-inventory-reservation/integration/**/*.test.tsx',
         'tests/checkout/guest-checkout-inventory-reservation/integration/**/*.test.ts',
         'tests/checkout-queue/integration/**/*.test.ts',
