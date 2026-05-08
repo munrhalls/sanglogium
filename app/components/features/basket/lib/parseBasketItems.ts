@@ -5,6 +5,7 @@ export interface CMSBasketItem {
   name: string
   displayPrice: number
   availableStock: number
+  price_data: { currency: string; unit_amount: number }
   image: any
 }
 
@@ -14,6 +15,7 @@ export function parseBasketItems(cmsProducts: BasketProduct[]): CMSBasketItem[] 
     name: product.name,
     displayPrice: product.price_data.unit_amount / 100, // cents to dollars
     availableStock: product.stock - product.reservedStock,
+    price_data: product.price_data,
     image: product.image
   }))
 }

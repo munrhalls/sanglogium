@@ -74,6 +74,21 @@ export default function BasketManager() {
     return { itemCount: count, subtotal: total };
   }, [basket, filteredCmsItems]);
 
+  // Prepare basket data for checkout
+  const basketData = useMemo(() => {
+    return basket
+      .map(item => {
+        const cmsItem = filteredCmsItems.find(cms => cms.productId === item.productId);
+        if (!cmsItem) return null;
+        return {
+          productId: item.productId,
+          quantity: item.quantity,
+          price_data: cmsItem.price_data
+        };
+      })
+      .filter((item): item is { productId: string; quantity: number; price_data: { currency: string; unit_amount: number } } => item !== null);
+  }, [basket, filteredCmsItems]);
+
 
   if (!hasHydrated) {
     return <BasketSkeleton />;
@@ -127,7 +142,7 @@ export default function BasketManager() {
       </div>
       <div className="lg-desktop:col-span-1 lg-touch:col-span-1">
         <div className="card-base sticky bottom-0 lg-desktop:top-4 lg-touch:top-4 lg-desktop:bottom-auto lg-touch:bottom-auto z-10">
-          <BasketSummary itemCount={itemCount} subtotal={subtotal} />
+          <BasketSummary itemCount={itemCount} subtotal={subtotal} basketData={basketData} />
         </div>
       </div>
     </div>

@@ -7,9 +7,10 @@ import { CheckoutButton } from "@/app/components/features/checkout/reservation/C
 interface BasketSummaryProps {
   itemCount: number;
   subtotal: number;
+  basketData?: Array<{ productId: string; quantity: number; price_data: { currency: string; unit_amount: number } }>;
 }
 
-export default function BasketSummary({ itemCount, subtotal }: BasketSummaryProps) {
+export default function BasketSummary({ itemCount, subtotal, basketData }: BasketSummaryProps) {
   return (
     <>
       <h2 className="type-section-sub border-b border-secondary pb-4 mb-6">
@@ -41,7 +42,7 @@ export default function BasketSummary({ itemCount, subtotal }: BasketSummaryProp
         </div>
       </div>
 
-      <CheckoutButton />
+      <CheckoutButton basketData={basketData} />
 
       <button
         type="button"

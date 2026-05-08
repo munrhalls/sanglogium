@@ -71,7 +71,7 @@ export default async function RootLayout({
               <Suspense fallback={null}>
                 <DrawersManager catalogueDataRaw={catalogueDataRaw} />
                 <ActionBar />
-                {/* <WebVitals /> */}
+                <WebVitals />
               </Suspense>
             </div>
           </NuqsAdapter>

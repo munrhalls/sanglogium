@@ -1,95 +1,25 @@
 'use client'
 
-import { useCallback, useState } from 'react'
-// TODO: Import from new basket store when implemented
-// import { useBasketStore } from '@/store/store'
-import { useRouter } from 'next/navigation'
-import { centsToDisplay } from '@/lib/utils/price'
+export interface CheckoutButtonProps {
+  disabled?: boolean
+  isProcessing?: boolean
+  error?: string | null
+  onClick?: () => void
+  basketData?: Array<{ productId: string; quantity: number; price_data: { currency: string; unit_amount: number } }>
+}
 
-export function CheckoutButton() {
-  const [isProcessing, setIsProcessing] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const router = useRouter()
-
-  // TODO: Re-implement when new basket store is available
-  // const basket = useBasketStore((s) => s.basket)
-  const basket: any[] = [] // TODO: Remove placeholder
-
-  const handleCheckout = useCallback(async () => {
-    console.log('TRACE: User clicked checkout button', { basketLength: basket.length })
-
-    if (basket.length === 0) {
-      console.log('TRACE: Basket empty, aborting checkout')
-      setError('Your basket is empty')
-      return
-    }
-
-    console.log('TRACE: Setting processing state to true')
-    setIsProcessing(true)
-    setError(null)
-
-    try {
-      const validItems = basket.filter((item) => item.stripePriceId && item.stripePriceId.length > 0)
-      if (validItems.length === 0) {
-        console.log('TRACE: No valid items with stripePriceId, aborting checkout')
-        setError('No valid items in basket')
-        return
-      }
-
-      const requestBody = {
-        basketReservation: validItems.map((item) => ({
-          _id: item._id,
-          quantity: item.quantity,
-          stripePriceId: item.stripePriceId,
-          displayPrice: centsToDisplay(item.price_data.unit_amount),
-        })),
-        createdAt: new Date().toISOString(),
-      }
-      console.log('TRACE: API request formation', { endpoint: '/api/checkout-queue', body: requestBody })
-
-      const response = await fetch('/api/checkout-queue', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestBody),
-      })
-
-      console.log('TRACE: API response received', { status: response.status, ok: response.ok })
-
-      const result = await response.json()
-      console.log('TRACE: Data parsed', { result })
-
-      if (!response.ok || !result.ok) {
-        console.log('TRACE: Checkout failed', { responseOk: response.ok, resultOk: result.ok, error: result.error })
-        setError(result.error || 'Failed to process checkout')
-        return
-      }
-
-      // Success - queue processed the request
-      console.log('TRACE: Checkout queued successfully', { reservationId: result.reservationId })
-
-      // Save reservationId to sessionStorage
-      sessionStorage.setItem('basketReservationId', result.reservationId)
-
-      setError(null)
-      router.push('/checkout')
-    } catch (error) {
-      console.log('TRACE: Error occurred', { error })
-      setError('Failed to process checkout')
-    } finally {
-      console.log('TRACE: Setting processing state to false')
-      setIsProcessing(false)
-    }
-  }, [basket])
-
-  const disabled = isProcessing || basket.length === 0
-
+export function CheckoutButton({
+  disabled = false,
+  isProcessing = false,
+  error = null,
+  onClick,
+  basketData,
+}: CheckoutButtonProps) {
   return (
     <>
       <button
         data-testid="checkout-button"
-        onClick={handleCheckout}
+        onClick={onClick}
         disabled={disabled}
         aria-label="Checkout button"
         aria-disabled={disabled}
