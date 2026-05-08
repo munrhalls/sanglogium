@@ -5,9 +5,7 @@ import { z } from 'zod'
 // Zod schema for validation
 const BasketItemSchema = z.object({
   productId: z.string().min(1),
-  quantity: z.number().int().positive(),
-  displayPriceAtAdd: z.number().nonnegative(),
-  availableStockAtAdd: z.number().nonnegative()
+  quantity: z.number().int().positive()
 })
 
 // Infer TypeScript types from Zod schema
@@ -19,7 +17,7 @@ interface BasketState {
 }
 
 interface BasketActions {
-  addProduct: (productId: string, displayPriceAtAdd: number, availableStockAtAdd: number) => void
+  addProduct: (productId: string) => void
   removeProduct: (productId: string) => void
   incrementQuantity: (productId: string) => void
   decrementQuantity: (productId: string) => void
@@ -90,13 +88,11 @@ const useBasketStore = create<BasketStore>()(
     (set, get): BasketStore => ({
       items: [] as BasketItem[],
       _hasHydrated: false,
-      addProduct: (productId, displayPriceAtAdd, availableStockAtAdd) => {
+      addProduct: (productId) => {
         // Input validation using Zod schema
         const result = BasketItemSchema.safeParse({
           productId,
-          quantity: 1,
-          displayPriceAtAdd,
-          availableStockAtAdd
+          quantity: 1
         })
         if (!result.success) {
           console.error('Invalid input:', result.error)
@@ -116,7 +112,7 @@ const useBasketStore = create<BasketStore>()(
       },
       incrementQuantity: (productId) => {
         set({ items: get().items.map((item) => {
-          if (item.productId === productId && item.quantity < item.availableStockAtAdd) {
+          if (item.productId === productId) {
             return { ...item, quantity: item.quantity + 1 }
           }
           return item
