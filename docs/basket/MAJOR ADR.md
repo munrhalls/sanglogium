@@ -13,17 +13,20 @@ Split basket into two independent PRDs:
 - Negative: Two PRDs to maintain, coordination needed for shared interfaces
 
 
-## ADR #2: Snapshot Data for Discrepancy Display
+## ADR #2: ~~Snapshot Data for Discrepancy Display~~ (REMOVED)
 
-## Context
-Users add items at one price/stock level, but CMS data may change before checkout. Users need transparency about what changed since adding items.
+## ~~Context~~
+~~Users add items at one price/stock level, but CMS data may change before checkout. Users need transparency about what changed since adding items.~~
 
-## Decision
-Store displayPriceAtAdd and availableStockAtAdd at add time to compare with current CMS data on basket page, showing users discrepancies via strikethrough display before checkout.
+## ~~Decision~~
+~~Store displayPriceAtAdd and availableStockAtAdd at add time to compare with current CMS data on basket page, showing users discrepancies via strikethrough display before checkout.~~
 
-## Consequences
-- Positive: Transparency (users see changes), simple implementation, no complex diffing
-- Negative: Larger localStorage footprint, data stale until basket page visit
+## ~~Consequences~~
+~~- Positive: Transparency (users see changes), simple implementation, no complex diffing~~
+~~- Negative: Larger localStorage footprint, data stale until basket page visit~~
+
+## Updated Decision
+Removed snapshot data feature as overcomplication. Price and stock are now fetched live from CMS at display time, reducing complexity and localStorage footprint.
 
 
 ## ADR #3: Cross-Tab Synchronization Strategy
