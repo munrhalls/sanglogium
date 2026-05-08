@@ -20,15 +20,11 @@ describe('basketControlsBasketPage', () => {
       // for components that assume external state. Consider integration with parent component
       // or page-level test for full user flow.
       const productId = 'product-1'
-      const displayPriceAtAdd = 100
-      const availableStockAtAdd = 10
 
       // ACT - render BasketControls component with isBasketPage={true}
       render(
         <BasketControls
           productId={productId}
-          displayPriceAtAdd={displayPriceAtAdd}
-          availableStockAtAdd={availableStockAtAdd}
           isBasketPage={true}
         />
       )
@@ -48,14 +44,10 @@ describe('basketControlsBasketPage', () => {
       // ARRANGE - setup test state with rendered BasketControls, product in basket
       // NOTE: Requires pre-existing basket state (see first test note)
       const productId = 'product-1'
-      const displayPriceAtAdd = 100
-      const availableStockAtAdd = 10
 
       render(
         <BasketControls
           productId={productId}
-          displayPriceAtAdd={displayPriceAtAdd}
-          availableStockAtAdd={availableStockAtAdd}
           isBasketPage={true}
         />
       )
@@ -77,14 +69,10 @@ describe('basketControlsBasketPage', () => {
       // ARRANGE - setup test state with rendered BasketControls, product in basket with quantity 1
       // NOTE: Requires pre-existing basket state (see first test note)
       const productId = 'product-1'
-      const displayPriceAtAdd = 100
-      const availableStockAtAdd = 10
 
       render(
         <BasketControls
           productId={productId}
-          displayPriceAtAdd={displayPriceAtAdd}
-          availableStockAtAdd={availableStockAtAdd}
           isBasketPage={true}
         />
       )

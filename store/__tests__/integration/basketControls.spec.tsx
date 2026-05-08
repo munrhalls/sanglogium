@@ -15,15 +15,11 @@ describe('basketControls', () => {
     it('renders add button only', () => {
       // ARRANGE - setup test state with product not in basket
       const productId = 'product-1'
-      const displayPriceAtAdd = 100
-      const availableStockAtAdd = 10
 
       // ACT - render BasketControls component with isBasketPage={false}
       render(
         <BasketControls
           productId={productId}
-          displayPriceAtAdd={displayPriceAtAdd}
-          availableStockAtAdd={availableStockAtAdd}
           isBasketPage={false}
         />
       )
@@ -41,14 +37,10 @@ describe('basketControls', () => {
     it('renders increment and decrement buttons (no remove button)', () => {
       // ARRANGE - setup test state with product in basket
       const productId = 'product-1'
-      const displayPriceAtAdd = 100
-      const availableStockAtAdd = 10
 
       render(
         <BasketControls
           productId={productId}
-          displayPriceAtAdd={displayPriceAtAdd}
-          availableStockAtAdd={availableStockAtAdd}
           isBasketPage={false}
         />
       )
@@ -71,14 +63,10 @@ describe('basketControls', () => {
     it('hides add button and renders increment/decrement buttons', () => {
       // ARRANGE - setup test state with rendered BasketControls, product not in basket
       const productId = 'product-1'
-      const displayPriceAtAdd = 100
-      const availableStockAtAdd = 10
 
       render(
         <BasketControls
           productId={productId}
-          displayPriceAtAdd={displayPriceAtAdd}
-          availableStockAtAdd={availableStockAtAdd}
           isBasketPage={false}
         />
       )
@@ -100,14 +88,10 @@ describe('basketControls', () => {
     it('removes product from basket and shows add button', () => {
       // ARRANGE - setup test state with rendered BasketControls, product in basket with quantity 1
       const productId = 'product-1'
-      const displayPriceAtAdd = 100
-      const availableStockAtAdd = 10
 
       render(
         <BasketControls
           productId={productId}
-          displayPriceAtAdd={displayPriceAtAdd}
-          availableStockAtAdd={availableStockAtAdd}
           isBasketPage={false}
         />
       )
@@ -130,14 +114,10 @@ describe('basketControls', () => {
     it('updates quantity display', () => {
       // ARRANGE - setup test state with rendered BasketControls, product in basket
       const productId = 'product-1'
-      const displayPriceAtAdd = 100
-      const availableStockAtAdd = 10
 
       render(
         <BasketControls
           productId={productId}
-          displayPriceAtAdd={displayPriceAtAdd}
-          availableStockAtAdd={availableStockAtAdd}
           isBasketPage={false}
         />
       )
@@ -157,14 +137,10 @@ describe('basketControls', () => {
     it('updates quantity display', () => {
       // ARRANGE - setup test state with rendered BasketControls, product in basket with quantity > 1
       const productId = 'product-1'
-      const displayPriceAtAdd = 100
-      const availableStockAtAdd = 10
 
       render(
         <BasketControls
           productId={productId}
-          displayPriceAtAdd={displayPriceAtAdd}
-          availableStockAtAdd={availableStockAtAdd}
           isBasketPage={false}
         />
       )
@@ -181,32 +157,29 @@ describe('basketControls', () => {
     })
   })
 
-  describe('when quantity reaches availableStockAtAdd', () => {
-    it('disables increment button', () => {
-      // ARRANGE - setup test state with product in basket at stock limit
+  describe('when incrementing quantity', () => {
+    it('increments without limit', () => {
+      // ARRANGE - setup test state with rendered BasketControls, product in basket
       const productId = 'product-1'
-      const displayPriceAtAdd = 100
-      const availableStockAtAdd = 3
 
       render(
         <BasketControls
           productId={productId}
-          displayPriceAtAdd={displayPriceAtAdd}
-          availableStockAtAdd={availableStockAtAdd}
           isBasketPage={false}
         />
       )
 
-      // ACT - add product and increment to stock limit via user actions
+      // ACT - add product and increment many times
       act(() => {
         screen.getByTestId('add-to-basket-product-1').click()
-        // Increment to stock limit (3 clicks: 1->2->3)
-        screen.getByTestId('increment-product-1').click()
-        screen.getByTestId('increment-product-1').click()
+        for (let i = 0; i < 10; i++) {
+          screen.getByTestId('increment-product-1').click()
+        }
       })
 
-      // ASSERT - verify increment button is disabled
-      expect(screen.getByTestId('increment-product-1')).toBeDisabled()
+      // ASSERT - verify increment button is still enabled (no stock limit)
+      expect(screen.getByTestId('increment-product-1')).not.toBeDisabled()
+      expect(screen.getByTestId('quantity-display')).toHaveTextContent('11')
     })
   })
 })

@@ -352,18 +352,18 @@ describe('Basket Controls Integration Across App', () => {
         // for full user flow.
 
         it('renders increment/decrement controls', () => {
-          render(<BasketControls isBasketPage={true} productId={mockProductId} displayPriceAtAdd={100} availableStockAtAdd={10} />)
+          render(<BasketControls isBasketPage={true} productId={mockProductId} />)
           expect(screen.getByTestId(`increment-${mockProductId}`)).toBeInTheDocument()
           expect(screen.getByTestId(`decrement-${mockProductId}`)).toBeInTheDocument()
         })
 
         it('renders remove button', () => {
-          render(<BasketControls isBasketPage={true} productId={mockProductId} displayPriceAtAdd={100} availableStockAtAdd={10} />)
+          render(<BasketControls isBasketPage={true} productId={mockProductId} />)
           expect(screen.getByTestId(`remove-${mockProductId}`)).toBeInTheDocument()
         })
 
         it('caps decrement at 1 (does not remove)', () => {
-          render(<BasketControls isBasketPage={true} productId={mockProductId} displayPriceAtAdd={100} availableStockAtAdd={10} />)
+          render(<BasketControls isBasketPage={true} productId={mockProductId} />)
           const decrementButton = screen.getByTestId(`decrement-${mockProductId}`)
           decrementButton.click()
           expect(screen.getByTestId('quantity-display')).toHaveTextContent('1')
@@ -371,7 +371,7 @@ describe('Basket Controls Integration Across App', () => {
         })
 
         it('removes item via remove button', async () => {
-          render(<BasketControls isBasketPage={true} productId={mockProductId} displayPriceAtAdd={100} availableStockAtAdd={10} />)
+          render(<BasketControls isBasketPage={true} productId={mockProductId} />)
           screen.getByTestId(`remove-${mockProductId}`).click()
           await new Promise(resolve => setTimeout(resolve, 0))
           expect(screen.queryByTestId('quantity-display')).not.toBeInTheDocument()

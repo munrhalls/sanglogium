@@ -15,8 +15,6 @@ describe('ProductInfo with BasketControls', () => {
     it('renders BasketControls with add button only', () => {
       // ARRANGE - setup test state with product data
       const productId = 'product-1'
-      const displayPrice = 100
-      const availableStockAtAdd = 10
 
       // ACT - render ProductInfo component with BasketControls
       render(<ProductInfo product={{ _id: productId, name: 'Test Product', price_data: { unit_amount: 10000, currency: 'USD' }, stock: 10, slug: { current: 'test-product' } } as any} />)
@@ -51,8 +49,6 @@ describe('ProductInfo with BasketControls', () => {
     it('hides add button and renders increment/decrement buttons', () => {
       // ARRANGE - setup test state with rendered ProductInfo
       const productId = 'product-1'
-      const displayPrice = 100
-      const availableStockAtAdd = 10
 
       render(<ProductInfo product={{ _id: productId, name: 'Test Product', price_data: { unit_amount: 10000, currency: 'USD' }, stock: 10, slug: { current: 'test-product' } } as any} />)
 

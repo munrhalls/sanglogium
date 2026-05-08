@@ -28,8 +28,6 @@ describe('BasketButton', () => {
       render(
         <BasketControls
           productId='product-1'
-          displayPriceAtAdd={100}
-          availableStockAtAdd={10}
           isBasketPage={false}
         />
       )
@@ -62,14 +60,10 @@ describe('BasketButton', () => {
         <>
           <BasketControls
             productId='product-1'
-            displayPriceAtAdd={100}
-            availableStockAtAdd={10}
             isBasketPage={false}
           />
           <BasketControls
             productId='product-2'
-            displayPriceAtAdd={200}
-            availableStockAtAdd={20}
             isBasketPage={false}
           />
         </>
