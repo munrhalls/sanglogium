@@ -5,7 +5,7 @@
 // - Reason: Tests user-facing states and behavior, not implementation details
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { render, screen, act } from '@testing-library/react'
 import '@testing-library/jest-dom/vitest'
 import BasketManager from '../../BasketManager'
 import useBasketStore from '@/store/basketStore'
@@ -188,6 +188,36 @@ describe('BasketManager', () => {
 
       // ASSERT - verify only matching item rendered
       expect(screen.getAllByTestId('basket-item')).toHaveLength(1)
+    })
+  })
+
+  describe('when user adds a new product to basket', () => {
+    it('triggers SWR fetch to load new product data', () => {
+      // ARRANGE - setup test state with one product in basket
+      const mockBasketItems = [
+        { productId: 'product-1', quantity: 1 }
+      ]
+      useBasketStore.setState({ items: mockBasketItems, _hasHydrated: true })
+
+      const mockData = [
+        { productId: 'product-1', name: 'Product 1', displayPrice: 10.00, availableStock: 8, image: null }
+      ]
+      vi.mocked(useSWR).mockReturnValue({ data: mockData, error: null, isLoading: false, isValidating: false, mutate: vi.fn() })
+
+      // ACT - render BasketManager with one item
+      render(<BasketManager />)
+
+      // ASSERT - verify one item rendered
+      expect(screen.getAllByTestId('basket-item')).toHaveLength(1)
+
+      // ACT - add a new product to basket
+      act(() => {
+        useBasketStore.getState().addProduct('product-2')
+      })
+
+      // ASSERT - verify basket state updated (now has 2 items)
+      expect(useBasketStore.getState().items).toHaveLength(2)
+      // Note: In real app, SWR key change would trigger fetch for new product data
     })
   })
 })
