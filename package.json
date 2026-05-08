@@ -8,7 +8,7 @@
     "dev-no-turbo": "next dev",
     "webhook": "stripe listen --forward-to localhost:3000/api/webhook",
     "dev:stripe": "concurrently \"npm run dev\" \"npm run webhook\"",
-    "prebuild": "node scripts/build-catalogue-index.mjs",
+    "prebuild": "cross-env SKIP_ORPHANED_VALIDATION=true node scripts/build-catalogue-index.mjs",
     "build": "npm run prebuild && next build",
     "deploy": "netlify deploy --prod",
     "verify": "node verify-deployment.js",

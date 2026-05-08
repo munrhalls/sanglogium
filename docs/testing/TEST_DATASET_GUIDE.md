@@ -10,7 +10,7 @@ The project uses a simplified dataset switching approach:
 
 ### Auto-Switching (Application Code)
 
-Application code uses centralized configuration in `sanity-config/env.ts`:
+Application code uses centralized configuration in `sanity-cms/env.ts`:
 
 ```typescript
 export const dataset = assertValue(
