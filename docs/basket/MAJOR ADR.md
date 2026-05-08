@@ -6,7 +6,7 @@ Basket feature combines global state management (persistence, cross-tab sync, pr
 ## Decision
 Split basket into two independent PRDs:
 - non-local-basket: Global state, persistence, cross-tab sync, product controls
-- basket-page: Dedicated page, CMS inventory sync, item sync comparision display, freeze checkout button until sync completes
+- basket-page: Dedicated page, CMS inventory fetch, available/unavailable item display
 
 ## Consequences
 - Positive: Clear separation of concerns, independent development streams, simpler testing, focused failure handling

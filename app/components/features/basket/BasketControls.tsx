@@ -1,6 +1,7 @@
 "use client";
 
-import useBasketStore, { selectItems } from "@/store/basketStore";
+import { useShallow } from 'zustand/shallow';
+import useBasketStore from "@/store/basketStore";
 
 interface BasketControlsProps {
   productId: string;
@@ -23,35 +24,42 @@ export function BasketControls({
   quantityClassName,
   wrapperClassName,
 }: BasketControlsProps) {
-  const items = useBasketStore(selectItems);
-  const store = useBasketStore();
+  const { items, addProduct, removeProduct, incrementQuantity, decrementQuantity } = useBasketStore(
+    useShallow((state) => ({
+      items: state.items,
+      addProduct: state.addProduct,
+      removeProduct: state.removeProduct,
+      incrementQuantity: state.incrementQuantity,
+      decrementQuantity: state.decrementQuantity,
+    }))
+  );
 
   const basketItem = items.find((item: any) => item.productId === productId);
   const isInBasket = !!basketItem;
   const quantity = basketItem?.quantity || 0;
 
   const handleAdd = () => {
-    store.addProduct(productId);
+    addProduct(productId);
   };
 
   const handleIncrement = () => {
-    store.incrementQuantity(productId);
+    incrementQuantity(productId);
   };
 
   const handleDecrement = () => {
     if (isBasketPage) {
       // On basket page, decrement capped at 1
       if (quantity > 1) {
-        store.decrementQuantity(productId);
+        decrementQuantity(productId);
       }
     } else {
       // On product page, decrement to 0 removes item
-      store.decrementQuantity(productId);
+      decrementQuantity(productId);
     }
   };
 
   const handleRemove = () => {
-    store.removeProduct(productId);
+    removeProduct(productId);
   };
 
   if (!isInBasket) {

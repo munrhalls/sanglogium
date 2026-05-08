@@ -19,7 +19,7 @@ sequenceDiagram
     OtherTab->>User: UI updates
 ```
 
-## Basket Page: CMS Sync Flow
+## Basket Page: CMS Fetch Flow
 
 ```mermaid
 sequenceDiagram
@@ -27,15 +27,12 @@ sequenceDiagram
     participant Store as Zustand Store
     participant Sanity as Sanity CMS
     participant UI as UI Components
-    
-    Page->>Store: syncWithCMS()
-    Store->>Store: setSyncStatus('loading')
-    Store->>Sanity: Fetch products by IDs
-    Sanity-->>Store: Return product data
-    Store->>Store: Compare basket vs CMS
-    Store->>Store: Update items with metadata
-    Store->>Store: Move unavailable items
-    Store->>Store: setSyncStatus('success'/'error')
-    Store-->>Page: State updated
-    Page->>UI: Render with comparison
+
+    Page->>Store: Get basket items
+    Store-->>Page: Return items (productId, quantity)
+    Page->>Sanity: Fetch products by IDs
+    Sanity-->>Page: Return product data (name, price, stock)
+    Page->>Page: Check availability (stock > 0)
+    Page->>UI: Render available items
+    Page->>UI: Render unavailable items
 ```
