@@ -5,7 +5,7 @@
 // - Reason: Converts CMS product data to basket display format
 
 import { describe, it, expect } from 'vitest'
-import { parseBasketItems } from '../parseBasketItems'
+import { parseBasketItems } from '../../parseBasketItems'
 
 describe('parseBasketItems', () => {
   describe('when converting price_data to displayPrice', () => {

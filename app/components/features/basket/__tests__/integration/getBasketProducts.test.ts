@@ -5,8 +5,8 @@
 // - Reason: Fetches products from Sanity CMS for basket page
 
 import { describe, it, expect, beforeAll, afterAll } from 'vitest'
-import { getBasketProducts, BasketProduct } from '../getBasketProducts'
-import { getTestProducts, resetProductStock } from '../../../../tests/helpers/sanity-test-products'
+import { getBasketProducts, BasketProduct } from '@/sanity-config/lib/products/getBasketProducts'
+import { getTestProducts, resetProductStock } from '@/tests/helpers/sanity-test-products'
 
 describe('getBasketProducts', () => {
   let testProductIds: string[]

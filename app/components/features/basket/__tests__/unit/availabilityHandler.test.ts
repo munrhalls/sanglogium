@@ -5,7 +5,7 @@
 // - Reason: Separates items by stock availability (stock > 0)
 
 import { describe, it, expect } from 'vitest'
-import { separateByAvailability } from '../availabilityHandler'
+import { separateByAvailability } from '../../availabilityHandler'
 
 describe('separateByAvailability', () => {
   describe('when all items have availableStock > 0', () => {

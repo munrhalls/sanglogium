@@ -7,17 +7,17 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { render, screen, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom/vitest'
-import BasketManager from '../BasketManager'
+import BasketManager from '../../BasketManager'
 import useBasketStore from '@/store/basketStore'
-import { getBasketProducts } from '@/sanity-config/lib/products/getBasketProducts'
-import { parseBasketItems } from '../parseBasketItems'
-import { separateByAvailability } from '../availabilityHandler'
+import { getBasketProductsAction } from '@/app/actions/getBasketProducts'
+import { parseBasketItems } from '../../parseBasketItems'
+import { separateByAvailability } from '../../availabilityHandler'
 
 // Mock data layer functions
-vi.mock('@/sanity-config/lib/products/getBasketProducts')
+vi.mock('@/app/actions/getBasketProducts')
 vi.mock('@/app/components/features/basket/parseBasketItems')
 vi.mock('@/app/components/features/basket/availabilityHandler')
-vi.mock('../BasketSummary', () => ({
+vi.mock('../../BasketSummary', () => ({
   default: () => <div data-testid="basket-summary">Basket Summary</div>
 }))
 
@@ -57,14 +57,14 @@ describe('BasketManager', () => {
           image: { asset: { _ref: 'image-2' } }
         }
       ]
-      vi.mocked(getBasketProducts).mockResolvedValue(mockCMSProducts)
+      vi.mocked(getBasketProductsAction).mockResolvedValue({ success: true, data: mockCMSProducts })
 
       // ACT - render BasketManager
       render(<BasketManager />)
 
-      // ASSERT - verify getBasketProducts called with basket item IDs
+      // ASSERT - verify getBasketProductsAction called with basket item IDs
       await waitFor(() => {
-        expect(getBasketProducts).toHaveBeenCalledWith(['product-1', 'product-2'])
+        expect(getBasketProductsAction).toHaveBeenCalledWith(['product-1', 'product-2'])
       })
     })
 
@@ -85,7 +85,7 @@ describe('BasketManager', () => {
           image: { asset: { _ref: 'image-1' } }
         }
       ]
-      vi.mocked(getBasketProducts).mockResolvedValue(mockCMSProducts)
+      vi.mocked(getBasketProductsAction).mockResolvedValue({ success: true, data: mockCMSProducts })
 
       const mockParsedItems = [
         {
@@ -133,7 +133,7 @@ describe('BasketManager', () => {
           image: null
         }
       ]
-      vi.mocked(getBasketProducts).mockResolvedValue(mockCMSProducts)
+      vi.mocked(getBasketProductsAction).mockResolvedValue({ success: true, data: mockCMSProducts })
 
       const mockParsedItems = [
         {
@@ -185,7 +185,7 @@ describe('BasketManager', () => {
           image: null
         }
       ]
-      vi.mocked(getBasketProducts).mockResolvedValue(mockCMSProducts)
+      vi.mocked(getBasketProductsAction).mockResolvedValue({ success: true, data: mockCMSProducts })
 
       const mockParsedItems = [
         {
@@ -230,7 +230,7 @@ describe('BasketManager', () => {
           image: null
         }
       ]
-      vi.mocked(getBasketProducts).mockResolvedValue(mockCMSProducts)
+      vi.mocked(getBasketProductsAction).mockResolvedValue({ success: true, data: mockCMSProducts })
 
       const mockParsedItems = [
         {
@@ -278,8 +278,8 @@ describe('BasketManager', () => {
       // ACT - render BasketManager
       render(<BasketManager />)
 
-      // ASSERT - verify getBasketProducts not called
-      expect(getBasketProducts).not.toHaveBeenCalled()
+      // ASSERT - verify getBasketProductsAction not called
+      expect(getBasketProductsAction).not.toHaveBeenCalled()
     })
   })
 
@@ -291,7 +291,7 @@ describe('BasketManager', () => {
       ]
       useBasketStore.setState({ items: mockBasketItems, _hasHydrated: true })
 
-      vi.mocked(getBasketProducts).mockRejectedValue(new Error('CMS fetch failed'))
+      vi.mocked(getBasketProductsAction).mockResolvedValue({ success: false, error: 'Unable to load products' })
 
       // ACT - render BasketManager
       render(<BasketManager />)
@@ -309,7 +309,7 @@ describe('BasketManager', () => {
       ]
       useBasketStore.setState({ items: mockBasketItems, _hasHydrated: true })
 
-      vi.mocked(getBasketProducts).mockRejectedValue(new Error('CMS fetch failed'))
+      vi.mocked(getBasketProductsAction).mockResolvedValue({ success: false, error: 'Unable to load products' })
 
       // ACT - render BasketManager
       render(<BasketManager />)
