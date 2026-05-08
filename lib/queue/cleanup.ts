@@ -1,7 +1,7 @@
 // Cleanup infrastructure for expired basket reservations
 // Handles stock release and document deletion for TTL-expired reservations
 
-import { getBackendClient } from '@/sanity-config/lib/backendClient'
+import { getBackendClient } from '@/sanity-cms/lib/backendClient'
 
 /**
  * Release reservedStock back to available stock
