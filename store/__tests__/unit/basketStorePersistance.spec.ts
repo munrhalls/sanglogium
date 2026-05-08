@@ -23,11 +23,9 @@ describe('BasketStore Persistence', () => {
     it('persists state across store resets', () => {
       // ARRANGE - setup test state with localStorage available
       const productId = 'product-1'
-      const displayPriceAtAdd = 100
-      const availableStockAtAdd = 10
 
       // ACT - trigger state change to persist
-      useBasketStore.getState().addProduct(productId, displayPriceAtAdd, availableStockAtAdd)
+      useBasketStore.getState().addProduct(productId)
       const countBeforeReset = selectTotalItemsCount(useBasketStore.getState())
 
       // Reset store to trigger rehydration from storage
@@ -50,11 +48,9 @@ describe('BasketStore Persistence', () => {
 
       try {
         const productId = 'product-1'
-        const displayPriceAtAdd = 100
-        const availableStockAtAdd = 10
 
         // ACT - trigger state change to persist
-        useBasketStore.getState().addProduct(productId, displayPriceAtAdd, availableStockAtAdd)
+        useBasketStore.getState().addProduct(productId)
 
         // ASSERT - verify state still updates despite localStorage failure (graceful degradation)
         const state = useBasketStore.getState()
@@ -77,11 +73,9 @@ describe('BasketStore Persistence', () => {
 
       try {
         const productId = 'product-1'
-        const displayPriceAtAdd = 100
-        const availableStockAtAdd = 10
 
         // ACT - trigger state change to persist
-        useBasketStore.getState().addProduct(productId, displayPriceAtAdd, availableStockAtAdd)
+        useBasketStore.getState().addProduct(productId)
 
         // ASSERT - verify graceful degradation without error (state still updates)
         const state = useBasketStore.getState()
@@ -97,11 +91,9 @@ describe('BasketStore Persistence', () => {
     it('rehydrates state from localStorage', () => {
       // ARRANGE - setup test state with valid data in localStorage
       const productId = 'product-1'
-      const displayPriceAtAdd = 100
-      const availableStockAtAdd = 10
 
       // ACT - initialize store (add item to trigger persistence)
-      useBasketStore.getState().addProduct(productId, displayPriceAtAdd, availableStockAtAdd)
+      useBasketStore.getState().addProduct(productId)
 
       // ASSERT - verify state is accessible via public selector
       const state = useBasketStore.getState()
@@ -118,11 +110,9 @@ describe('BasketStore Persistence', () => {
 
       try {
         const productId = 'product-1'
-        const displayPriceAtAdd = 100
-        const availableStockAtAdd = 10
 
         // ACT - initialize store (add item)
-        useBasketStore.getState().addProduct(productId, displayPriceAtAdd, availableStockAtAdd)
+        useBasketStore.getState().addProduct(productId)
 
         // ASSERT - verify state still updates despite localStorage read failure
         const state = useBasketStore.getState()
@@ -171,11 +161,9 @@ describe('BasketStore Hydration Validation', () => {
     it('validates data structure using Zod schema', () => {
       // ARRANGE - setup test state with valid data structure in storage
       const productId = 'product-1'
-      const displayPriceAtAdd = 100
-      const availableStockAtAdd = 10
 
       // ACT - initialize store with hydration (add valid item)
-      useBasketStore.getState().addProduct(productId, displayPriceAtAdd, availableStockAtAdd)
+      useBasketStore.getState().addProduct(productId)
 
       // ASSERT - verify data structure validates using Zod schema (item added successfully)
       const state = useBasketStore.getState()
@@ -216,7 +204,7 @@ describe('BasketStore Cross-Tab Synchronization', () => {
     it('dispatches storage events without error', () => {
       // ARRANGE - setup valid data in storage
       const productId = 'product-1'
-      useBasketStore.getState().addProduct(productId, 100, 10)
+      useBasketStore.getState().addProduct(productId)
       const countBeforeEvent = selectTotalItemsCount(useBasketStore.getState())
 
       // ACT - dispatch storage event (simulating other tab change)
