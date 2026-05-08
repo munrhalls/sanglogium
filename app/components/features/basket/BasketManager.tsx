@@ -1,14 +1,14 @@
 "use client";
 import { useShallow } from 'zustand/shallow';
-import { useMemo } from 'react';
+import { useMemo, useEffect, useRef } from 'react';
 import useSWR from 'swr';
 import useBasketStore from "@/store/basketStore";
 import BasketSkeleton from "./BasketSkeleton";
 import EmptyBasket from "./EmptyBasket";
 import BasketItem from "./BasketItem";
 import BasketSummary from "./BasketSummary";
-import { parseBasketItems } from "./parseBasketItems";
-import { separateByAvailability } from "./availabilityHandler";
+import { parseBasketItems } from "@/lib/basket/parseBasketItems";
+import { separateByAvailability } from "@/lib/basket/availabilityHandler";
 
 export default function BasketManager() {
   const { items: basket, _hasHydrated: hasHydrated } = useBasketStore(
@@ -17,12 +17,14 @@ export default function BasketManager() {
 
   const productIds = useMemo(() => basket.map(item => item.productId), [basket]);
 
-  const swrKey = hasHydrated && productIds.length > 0 ? ['basket-products', productIds] : null;
+  // Stable SWR key - doesn't include productIds to prevent re-fetch on basket mutations
+  const swrKey = hasHydrated ? ['basket-products'] : null;
 
-  const { data: cmsBasketItems = [], error, isLoading } = useSWR(
+  const { data: cmsBasketItems = [], error, isLoading, mutate } = useSWR(
     swrKey,
-    async ([_, ids]: [string, string[]]) => {
-      const res = await fetch(`/api/basket/products?ids=${ids.join(',')}`);
+    async () => {
+      if (productIds.length === 0) return [];
+      const res = await fetch(`/api/basket/products?ids=${productIds.join(',')}`);
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
         throw new Error(body.error || 'Unable to load products');
@@ -34,8 +36,31 @@ export default function BasketManager() {
       const parsedItems = parseBasketItems(result.data || []);
       const { available, unavailable } = separateByAvailability(parsedItems);
       return [...available, ...unavailable];
+    },
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      dedupingInterval: 5000,
     }
   );
+
+  // Track previously fetched product IDs to avoid unnecessary re-fetches
+  const previousProductIdsRef = useRef<string[]>([]);
+
+  useEffect(() => {
+    // Only fetch if we have new product IDs that aren't in the cache
+    const newIds = productIds.filter(id => !previousProductIdsRef.current.includes(id));
+    if (newIds.length > 0) {
+      mutate();
+    }
+    previousProductIdsRef.current = productIds;
+  }, [productIds, mutate]);
+
+  // Filter cached items to match current basket
+  const filteredCmsItems = useMemo(() => {
+    return cmsBasketItems.filter(cms => basket.some(item => item.productId === cms.productId));
+  }, [cmsBasketItems, basket]);
+
 
   if (!hasHydrated) {
     return <BasketSkeleton />;
@@ -71,7 +96,7 @@ export default function BasketManager() {
 
           {basket
             .map((item) => {
-              const cmsItem = cmsBasketItems.find(cms => cms.productId === item.productId);
+              const cmsItem = filteredCmsItems.find(cms => cms.productId === item.productId);
               if (!cmsItem) return null;
               return (
                 <BasketItem
