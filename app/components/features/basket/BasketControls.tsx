@@ -68,7 +68,7 @@ export function BasketControls({
         onClick={handleAdd}
         data-testid={`add-to-basket-${productId}`}
         type="button"
-        className={addClassName}
+        className={addClassName || "btn-cart"}
       >
         Add
       </button>
@@ -76,35 +76,35 @@ export function BasketControls({
   }
 
   return (
-    <div className={wrapperClassName}>
-      {isBasketPage && (
-        <button
-          onClick={handleRemove}
-          data-testid={`remove-${productId}`}
-          type="button"
-          className={removeClassName}
-        >
-          Remove
-        </button>
-      )}
+    <div className={`flex items-center gap-2 ${wrapperClassName || ""}`}>
       <button
         onClick={handleDecrement}
         data-testid={`decrement-${productId}`}
         type="button"
         disabled={isBasketPage && quantity <= 1}
-        className={decrementClassName}
+        className={decrementClassName || "bg-surface-elevated text-text-body rounded p-2 h-9 w-9 flex items-center justify-center hover:bg-surface-subtle transition-colors disabled:opacity-50 disabled:cursor-not-allowed"}
       >
         -
       </button>
-      <span data-testid="quantity-display" className={quantityClassName}>{quantity}</span>
+      <span data-testid="quantity-display" className={quantityClassName || "font-bold w-6 text-center type-body"}>{quantity}</span>
       <button
         onClick={handleIncrement}
         data-testid={`increment-${productId}`}
         type="button"
-        className={incrementClassName}
+        className={incrementClassName || "bg-surface-elevated text-text-body rounded p-2 h-9 w-9 flex items-center justify-center hover:bg-surface-subtle transition-colors disabled:opacity-50 disabled:cursor-not-allowed"}
       >
         +
       </button>
+      {isBasketPage && (
+        <button
+          onClick={handleRemove}
+          data-testid={`remove-${productId}`}
+          type="button"
+          className={removeClassName || "text-text-caption hover:text-error-500 transition-colors rounded p-2 h-9 w-9 flex items-center justify-center"}
+        >
+          X
+        </button>
+      )}
     </div>
   );
 }
