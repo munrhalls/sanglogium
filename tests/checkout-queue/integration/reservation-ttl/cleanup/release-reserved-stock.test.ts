@@ -4,7 +4,7 @@
 import { describe, it, expect, beforeAll, beforeEach } from 'vitest'
 import { releaseReservedStock } from '@/lib/queue/cleanup'
 import { getTestProducts, resetProductStock } from '@/tests/helpers/sanity-test-products'
-import { getBackendClient } from '@/sanity-config/lib/backendClient'
+import { getBackendClient } from '@/sanity-cms/lib/backendClient'
 
 describe('releaseReservedStock Integration', () => {
   let testProducts: Awaited<ReturnType<typeof getTestProducts>>

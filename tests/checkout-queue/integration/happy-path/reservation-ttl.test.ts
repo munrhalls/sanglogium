@@ -13,7 +13,7 @@ import { fetch } from 'undici'
 import type { BasketReservation, BasketReservationResponse } from '@/lib/queue/types'
 import { getTestProducts, resetProductStock } from '@/tests/helpers/sanity-test-products'
 import { createClient } from 'next-sanity'
-import { apiVersion, projectId, dataset } from '@/sanity/env'
+import { apiVersion, projectId, dataset } from '@/sanity-cms/env'
 
 const BASE = process.env.QUEUE_TEST_BASE_URL || 'http://localhost:3000'
 

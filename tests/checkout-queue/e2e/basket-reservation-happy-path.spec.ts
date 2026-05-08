@@ -1,7 +1,7 @@
 // npx playwright test tests/checkout-queue/e2e/basket-reservation-happy-path.spec.ts --headed --project=desktop-chromium
 import { test, expect } from '@playwright/test'
 import { createClient } from 'next-sanity'
-import { apiVersion, projectId } from '@/sanity/env'
+import { apiVersion, projectId } from '@/sanity-cms/env'
 import { resetProductStock, getTestProducts } from '@/tests/helpers/sanity-test-products'
 
 const client = createClient({

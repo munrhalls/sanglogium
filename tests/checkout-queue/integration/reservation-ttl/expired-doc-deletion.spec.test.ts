@@ -5,7 +5,7 @@
 import { describe, it, expect, beforeAll, beforeEach, afterEach } from 'vitest'
 import { backgroundCleanupJob } from '@/lib/queue/cleanup'
 import { getTestProducts, resetProductStock } from '@/tests/helpers/sanity-test-products'
-import { getBackendClient } from '@/sanity-config/lib/backendClient'
+import { getBackendClient } from '@/sanity-cms/lib/backendClient'
 
 describe('Expired Doc Deletion Specification', () => {
   let testProducts: Awaited<ReturnType<typeof getTestProducts>>
