@@ -1,328 +1,137 @@
-// # Execution Specs: Slice - Basket Page Data Layer - BasketManager Integration
+// # Execution Specs: Slice - Basket Page Data Layer - BasketManager Component
 
 // ## Selected Slice
-// - Slice: BasketManager Integration with Data Layer
-// - Reason: Integrates CMS fetcher, parser, and availability handler
+// - Slice: BasketManager Component UI Behavior
+// - Reason: Tests user-facing states and behavior, not implementation details
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom/vitest'
 import BasketManager from '../../BasketManager'
 import useBasketStore from '@/store/basketStore'
-import { getBasketProductsAction } from '@/app/actions/getBasketProducts'
-import { parseBasketItems } from '../../parseBasketItems'
-import { separateByAvailability } from '../../availabilityHandler'
+import useSWR from 'swr'
 
-// Mock data layer functions
-vi.mock('@/app/actions/getBasketProducts')
-vi.mock('@/app/components/features/basket/parseBasketItems')
-vi.mock('@/app/components/features/basket/availabilityHandler')
+// Mock SWR at the boundary
+vi.mock('swr', () => ({
+  default: vi.fn()
+}))
+
+// Mock child components to isolate BasketManager behavior
 vi.mock('../../BasketSummary', () => ({
   default: () => <div data-testid="basket-summary">Basket Summary</div>
+}))
+vi.mock('../../BasketItem', () => ({
+  default: ({ name, quantity, displayPrice }: any) => (
+    <div data-testid="basket-item">
+      <span data-testid="item-name">{name}</span>
+      <span data-testid="item-quantity">{quantity}</span>
+      <span data-testid="item-price">{displayPrice}</span>
+    </div>
+  )
 }))
 
 describe('BasketManager', () => {
   beforeEach(() => {
     useBasketStore.getState().clear()
-  })
-
-  afterEach(() => {
     vi.clearAllMocks()
   })
 
   describe('when basket has items', () => {
-    it('fetches CMS products for basket items', async () => {
-      // ARRANGE - setup test state with basket items
+    it('renders items with live data', () => {
+      // ARRANGE - setup test state with basket items and mock SWR data
+      const mockBasketItems = [
+        { productId: 'product-1', quantity: 2 }
+      ]
+      useBasketStore.setState({ items: mockBasketItems, _hasHydrated: true })
+
+      const mockData = [
+        { productId: 'product-1', name: 'Product 1', displayPrice: 10.00, availableStock: 8, image: null }
+      ]
+      vi.mocked(useSWR).mockReturnValue({ data: mockData, error: null, isLoading: false, isValidating: false, mutate: vi.fn() })
+
+      // ACT - render BasketManager
+      render(<BasketManager />)
+
+      // ASSERT - verify item rendered with live data
+      expect(screen.getByTestId('item-name')).toHaveTextContent('Product 1')
+      expect(screen.getByTestId('item-quantity')).toHaveTextContent('2')
+      expect(screen.getByTestId('item-price')).toHaveTextContent('10')
+    })
+
+    it('renders multiple items', () => {
+      // ARRANGE - setup test state with multiple basket items
       const mockBasketItems = [
         { productId: 'product-1', quantity: 2 },
         { productId: 'product-2', quantity: 1 }
       ]
       useBasketStore.setState({ items: mockBasketItems, _hasHydrated: true })
 
-      const mockCMSProducts = [
-        {
-          _id: 'product-1',
-          price_data: { currency: 'USD', unit_amount: 1000 },
-          stock: 10,
-          reservedStock: 2,
-          name: 'Product 1',
-          image: { asset: { _ref: 'image-1' } }
-        },
-        {
-          _id: 'product-2',
-          price_data: { currency: 'USD', unit_amount: 2000 },
-          stock: 5,
-          reservedStock: 1,
-          name: 'Product 2',
-          image: { asset: { _ref: 'image-2' } }
-        }
+      const mockData = [
+        { productId: 'product-1', name: 'Product 1', displayPrice: 10.00, availableStock: 8, image: null },
+        { productId: 'product-2', name: 'Product 2', displayPrice: 20.00, availableStock: 4, image: null }
       ]
-      vi.mocked(getBasketProductsAction).mockResolvedValue({ success: true, data: mockCMSProducts })
+      vi.mocked(useSWR).mockReturnValue({ data: mockData, error: null, isLoading: false, isValidating: false, mutate: vi.fn() })
 
       // ACT - render BasketManager
       render(<BasketManager />)
 
-      // ASSERT - verify getBasketProductsAction called with basket item IDs
-      await waitFor(() => {
-        expect(getBasketProductsAction).toHaveBeenCalledWith(['product-1', 'product-2'])
-      })
+      // ASSERT - verify all items rendered
+      expect(screen.getAllByTestId('basket-item')).toHaveLength(2)
     })
+  })
 
-    it('parses CMS data to display format', async () => {
-      // ARRANGE - setup test state with basket items and mock CMS data
+  describe('when loading', () => {
+    it('shows loading skeleton', () => {
+      // ARRANGE - setup test state with basket items and mock SWR loading state
       const mockBasketItems = [
         { productId: 'product-1', quantity: 2 }
       ]
       useBasketStore.setState({ items: mockBasketItems, _hasHydrated: true })
 
-      const mockCMSProducts = [
-        {
-          _id: 'product-1',
-          price_data: { currency: 'USD', unit_amount: 1000 },
-          stock: 10,
-          reservedStock: 2,
-          name: 'Product 1',
-          image: { asset: { _ref: 'image-1' } }
-        }
-      ]
-      vi.mocked(getBasketProductsAction).mockResolvedValue({ success: true, data: mockCMSProducts })
-
-      const mockParsedItems = [
-        {
-          productId: 'product-1',
-          name: 'Product 1',
-          displayPrice: 10.00,
-          availableStock: 8,
-          image: { asset: { _ref: 'image-1' } }
-        }
-      ]
-      vi.mocked(parseBasketItems).mockReturnValue(mockParsedItems)
+      vi.mocked(useSWR).mockReturnValue({ data: undefined, error: null, isLoading: true, isValidating: false, mutate: vi.fn() })
 
       // ACT - render BasketManager
       render(<BasketManager />)
 
-      // ASSERT - verify parseBasketItems called with CMS products
-      await waitFor(() => {
-        expect(parseBasketItems).toHaveBeenCalledWith(mockCMSProducts)
-      })
+      // ASSERT - verify skeleton rendered (empty basket message not shown)
+      expect(screen.queryByText(/your basket is empty/i)).not.toBeInTheDocument()
     })
+  })
 
-    it('separates available/unavailable items', async () => {
-      // ARRANGE - setup test state with basket items, mock CMS data, and parsed items
-      const mockBasketItems = [
-        { productId: 'product-1', quantity: 2 },
-        { productId: 'product-2', quantity: 1 }
-      ]
-      useBasketStore.setState({ items: mockBasketItems, _hasHydrated: true })
-
-      const mockCMSProducts = [
-        {
-          _id: 'product-1',
-          price_data: { currency: 'USD', unit_amount: 1000 },
-          stock: 10,
-          reservedStock: 2,
-          name: 'Product 1',
-          image: null
-        },
-        {
-          _id: 'product-2',
-          price_data: { currency: 'USD', unit_amount: 2000 },
-          stock: 0,
-          reservedStock: 0,
-          name: 'Product 2',
-          image: null
-        }
-      ]
-      vi.mocked(getBasketProductsAction).mockResolvedValue({ success: true, data: mockCMSProducts })
-
-      const mockParsedItems = [
-        {
-          productId: 'product-1',
-          name: 'Product 1',
-          displayPrice: 10.00,
-          availableStock: 8,
-          image: null
-        },
-        {
-          productId: 'product-2',
-          name: 'Product 2',
-          displayPrice: 20.00,
-          availableStock: 0,
-          image: null
-        }
-      ]
-      vi.mocked(parseBasketItems).mockReturnValue(mockParsedItems)
-
-      const mockSeparated = {
-        available: [mockParsedItems[0]],
-        unavailable: [mockParsedItems[1]]
-      }
-      vi.mocked(separateByAvailability).mockReturnValue(mockSeparated)
-
-      // ACT - render BasketManager
-      render(<BasketManager />)
-
-      // ASSERT - verify separateByAvailability called with parsed items
-      await waitFor(() => {
-        expect(separateByAvailability).toHaveBeenCalledWith(mockParsedItems)
-      })
-    })
-
-    it('renders available items with live data', async () => {
-      // ARRANGE - setup test state with available items
+  describe('when fetch fails', () => {
+    it('shows error message', () => {
+      // ARRANGE - setup test state with basket items and mock SWR error
       const mockBasketItems = [
         { productId: 'product-1', quantity: 2 }
       ]
       useBasketStore.setState({ items: mockBasketItems, _hasHydrated: true })
 
-      const mockCMSProducts = [
-        {
-          _id: 'product-1',
-          price_data: { currency: 'USD', unit_amount: 1000 },
-          stock: 10,
-          reservedStock: 2,
-          name: 'Product 1',
-          image: null
-        }
-      ]
-      vi.mocked(getBasketProductsAction).mockResolvedValue({ success: true, data: mockCMSProducts })
-
-      const mockParsedItems = [
-        {
-          productId: 'product-1',
-          name: 'Product 1',
-          displayPrice: 10.00,
-          availableStock: 8,
-          image: null
-        }
-      ]
-      vi.mocked(parseBasketItems).mockReturnValue(mockParsedItems)
-
-      const mockSeparated = {
-        available: mockParsedItems,
-        unavailable: []
-      }
-      vi.mocked(separateByAvailability).mockReturnValue(mockSeparated)
+      const mockError = new Error('Unable to load products')
+      vi.mocked(useSWR).mockReturnValue({ data: undefined, error: mockError, isLoading: false, isValidating: false, mutate: vi.fn() })
 
       // ACT - render BasketManager
       render(<BasketManager />)
 
-      // ASSERT - verify available item rendered with live data
-      await waitFor(() => {
-        expect(screen.getByText('Product 1')).toBeInTheDocument()
-      })
-    })
-
-    it('renders unavailable items with out-of-stock banner', async () => {
-      // ARRANGE - setup test state with unavailable items
-      const mockBasketItems = [
-        { productId: 'product-1', quantity: 2 }
-      ]
-      useBasketStore.setState({ items: mockBasketItems, _hasHydrated: true })
-
-      const mockCMSProducts = [
-        {
-          _id: 'product-1',
-          price_data: { currency: 'USD', unit_amount: 1000 },
-          stock: 0,
-          reservedStock: 0,
-          name: 'Product 1',
-          image: null
-        }
-      ]
-      vi.mocked(getBasketProductsAction).mockResolvedValue({ success: true, data: mockCMSProducts })
-
-      const mockParsedItems = [
-        {
-          productId: 'product-1',
-          name: 'Product 1',
-          displayPrice: 10.00,
-          availableStock: 0,
-          image: null
-        }
-      ]
-      vi.mocked(parseBasketItems).mockReturnValue(mockParsedItems)
-
-      const mockSeparated = {
-        available: [],
-        unavailable: mockParsedItems
-      }
-      vi.mocked(separateByAvailability).mockReturnValue(mockSeparated)
-
-      // ACT - render BasketManager
-      render(<BasketManager />)
-
-      // ASSERT - verify unavailable item rendered
-      await waitFor(() => {
-        expect(screen.getByText('Product 1')).toBeInTheDocument()
-      })
+      // ASSERT - verify error message shown
+      expect(screen.getByText(/unable to load products/i)).toBeInTheDocument()
     })
   })
 
   describe('when basket is empty', () => {
-    it('renders EmptyBasket component', () => {
+    it('renders empty basket state', () => {
       // ARRANGE - setup test state with empty basket
       useBasketStore.setState({ items: [], _hasHydrated: true })
 
       // ACT - render BasketManager
       render(<BasketManager />)
 
-      // ASSERT - verify EmptyBasket rendered
+      // ASSERT - verify empty basket message shown
       expect(screen.getByText(/your basket is empty/i)).toBeInTheDocument()
-    })
-
-    it('does not call CMS fetcher', () => {
-      // ARRANGE - setup test state with empty basket
-      useBasketStore.setState({ items: [], _hasHydrated: true })
-
-      // ACT - render BasketManager
-      render(<BasketManager />)
-
-      // ASSERT - verify getBasketProductsAction not called
-      expect(getBasketProductsAction).not.toHaveBeenCalled()
-    })
-  })
-
-  describe('when CMS fetch fails', () => {
-    it('handles error gracefully', async () => {
-      // ARRANGE - setup test state with basket items and mock CMS failure
-      const mockBasketItems = [
-        { productId: 'product-1', quantity: 2 }
-      ]
-      useBasketStore.setState({ items: mockBasketItems, _hasHydrated: true })
-
-      vi.mocked(getBasketProductsAction).mockResolvedValue({ success: false, error: 'Unable to load products' })
-
-      // ACT - render BasketManager
-      render(<BasketManager />)
-
-      // ASSERT - verify error state shown (or graceful degradation)
-      await waitFor(() => {
-        expect(screen.getByText('Unable to load products')).toBeInTheDocument()
-      })
-    })
-
-    it('shows error state to user', async () => {
-      // ARRANGE - setup test state with basket items and mock CMS failure
-      const mockBasketItems = [
-        { productId: 'product-1', quantity: 2 }
-      ]
-      useBasketStore.setState({ items: mockBasketItems, _hasHydrated: true })
-
-      vi.mocked(getBasketProductsAction).mockResolvedValue({ success: false, error: 'Unable to load products' })
-
-      // ACT - render BasketManager
-      render(<BasketManager />)
-
-      // ASSERT - verify user-friendly error message
-      await waitFor(() => {
-        expect(screen.getByText(/unable to load products/i)).toBeInTheDocument()
-      })
     })
   })
 
   describe('when basket not hydrated', () => {
-    it('renders BasketSkeleton', () => {
+    it('shows loading skeleton', () => {
       // ARRANGE - setup test state with basket not hydrated
       useBasketStore.setState({ items: [], _hasHydrated: false })
 
@@ -330,8 +139,55 @@ describe('BasketManager', () => {
       render(<BasketManager />)
 
       // ASSERT - verify skeleton rendered
-      // Note: This depends on BasketSkeleton implementation
       expect(screen.queryByText(/your basket is empty/i)).not.toBeInTheDocument()
+    })
+  })
+
+  describe('when items have mixed availability', () => {
+    it('renders available items before unavailable items', () => {
+      // ARRANGE - setup test state with mixed available/unavailable items
+      const mockBasketItems = [
+        { productId: 'product-1', quantity: 2 },
+        { productId: 'product-2', quantity: 1 }
+      ]
+      useBasketStore.setState({ items: mockBasketItems, _hasHydrated: true })
+
+      const mockData = [
+        { productId: 'product-1', name: 'Product 1', displayPrice: 10.00, availableStock: 8, image: null },
+        { productId: 'product-2', name: 'Product 2', displayPrice: 20.00, availableStock: 0, image: null }
+      ]
+      vi.mocked(useSWR).mockReturnValue({ data: mockData, error: null, isLoading: false, isValidating: false, mutate: vi.fn() })
+
+      // ACT - render BasketManager
+      render(<BasketManager />)
+
+      // ASSERT - verify available item rendered before unavailable item
+      const items = screen.getAllByTestId('basket-item')
+      expect(items).toHaveLength(2)
+      expect(items[0]).toHaveTextContent('Product 1') // available (stock > 0)
+      expect(items[1]).toHaveTextContent('Product 2') // unavailable (stock = 0)
+    })
+  })
+
+  describe('when CMS item not found', () => {
+    it('does not render item without CMS data', () => {
+      // ARRANGE - setup test state with basket item but no matching CMS data
+      const mockBasketItems = [
+        { productId: 'product-1', quantity: 2 },
+        { productId: 'product-missing', quantity: 1 }
+      ]
+      useBasketStore.setState({ items: mockBasketItems, _hasHydrated: true })
+
+      const mockData = [
+        { productId: 'product-1', name: 'Product 1', displayPrice: 10.00, availableStock: 8, image: null }
+      ]
+      vi.mocked(useSWR).mockReturnValue({ data: mockData, error: null, isLoading: false, isValidating: false, mutate: vi.fn() })
+
+      // ACT - render BasketManager
+      render(<BasketManager />)
+
+      // ASSERT - verify only matching item rendered
+      expect(screen.getAllByTestId('basket-item')).toHaveLength(1)
     })
   })
 })
