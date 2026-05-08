@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { backendClient } from '../sanity-config/lib/backendClient.js'
+import { backendClient } from '../sanity-cms/lib/backendClient.js'
 
 async function checkTestProducts() {
   const products = await backendClient.fetch(`

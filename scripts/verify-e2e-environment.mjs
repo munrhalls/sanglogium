@@ -3,7 +3,7 @@
 // Verification script for E2E Playwright test environment
 // Checks dev server, Redis, and Sanity are accessible
 
-import { backendClient } from '../sanity-config/lib/backendClient.js'
+import { backendClient } from '../sanity-cms/lib/backendClient.js'
 
 async function checkDevServer() {
   console.log('🌐 Checking dev server...')

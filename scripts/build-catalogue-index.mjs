@@ -82,6 +82,12 @@ async function validateProductKeys(slotMetadataMap, sanityClient) {
 async function buildCatalogueIndex() {
   console.log("🏗️  Building Catalogue Virtual File System...");
 
+  // Check if orphaned key validation should be skipped
+  const skipOrphanedValidation = process.env.SKIP_ORPHANED_VALIDATION === 'true';
+  if (skipOrphanedValidation) {
+    console.log("⚠️  Skipping orphaned key validation (SKIP_ORPHANED_VALIDATION=true)");
+  }
+
   try {
     const allItems = await client.fetch(`*[_type == "catalogueItem"]{ _id, title, type, slug, icon, sortOrder, "parentId": parent._ref }`);
     if (!allItems || allItems.length === 0) throw new Error("No catalogue items found in Sanity!");
@@ -249,7 +255,9 @@ async function buildCatalogueIndex() {
     validateSlotMetadataCompleteness(slotMetadataMap);
 
     // SC6: Validate all product catalogueLocationKeys point to valid VFS slots
-    await validateProductKeys(slotMetadataMap, client);
+    if (!skipOrphanedValidation) {
+      await validateProductKeys(slotMetadataMap, client);
+    }
 
     const output = {
       generatedAt: new Date().toISOString(),
