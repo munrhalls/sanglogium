@@ -51,4 +51,4 @@ export const getProductBySlug = cache(async (slug: string): Promise<Product | nu
   });
 
   return (products as Product[])[0] || null;
-}
+});
