@@ -1,6 +1,6 @@
-import { dataset, projectId } from "./sanity-config/env";
-import { schema } from "./sanity-config/schemaTypes";
-import { structure } from "./sanity-config/structure";
+import { dataset, projectId } from "./sanity-cms/env";
+import { schema } from "./sanity-cms/schemaTypes";
+import { structure } from "./sanity-cms/structure";
 // import { colorInput } from "@sanity/color-input";
 import { visionTool } from "@sanity/vision";
 import { defineConfig } from "sanity";
