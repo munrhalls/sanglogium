@@ -24,7 +24,7 @@ You must execute this phase BEFORE formulating any git commands.
 
 ## 🚫 Phase 2: Strict Constraints & Forbidden Actions (CRITICAL)
 Read these constraints carefully. Violating any of these is a hard failure of your execution constraints.
-1. **NO FILE DELETION:** You are STRICTLY FORBIDDEN from using `rm`, `git rm`, `del`, or any other file deletion commands. Even if a file appears obsolete or deleted in the diff, do not include removal commands in your output.
+1. **NO FILE DELETION:** You are STRICTLY FORBIDDEN from using `rm`, `git rm`, `del`, or any other file deletion commands. You MUST NOT actively delete files. However, if files are already deleted in the working directory (shown by git status as "deleted"), you SHOULD stage those deletions using `git add <file>` to record the state change. The prohibition is on deletion commands, not on staging pre-existing deletions.
 2. **NO BLANKET STAGING:** You are STRICTLY FORBIDDEN from using `git add .`, `git add -A`, or `git commit -a`. Files must be staged individually and precisely.
 3. **NO CUSTOM ALIASES:** Do not use the `git ac` alias.
 
