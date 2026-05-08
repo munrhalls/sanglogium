@@ -54,7 +54,7 @@ const getProductsByVfsKeysFn = async ({
   // Build filter clause using FilterBuilder
   const filterClause = FilterBuilder.buildClause(filters);
 
-  const finalQuery = groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0 && defined(stripePriceId) ${filterClause}] ${orderClause} [0...${effectiveLimit}] {
+  const finalQuery = groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0 ${filterClause}] ${orderClause} [0...${effectiveLimit}] {
       _id,
       name,
       brand->{
@@ -63,7 +63,6 @@ const getProductsByVfsKeysFn = async ({
         slug
       },
       price_data,
-      stripePriceId,
       stock,
       reservedStock,
       "availableStock": stock - reservedStock,

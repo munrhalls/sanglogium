@@ -33,7 +33,7 @@ export async function searchProductsAutocomplete(query: string): Promise<Autocom
   const searchTerm = `${query.trim()}*`;
 
   return sanityFetch<AutocompleteProduct[]>({
-    query: groq`*[_type == "product" && defined(stripePriceId) && (
+    query: groq`*[_type == "product" && (
       name match $query ||
       sku match $query ||
       brand._ref in *[_type == "brand" && name match $query]._id ||
@@ -43,7 +43,6 @@ export async function searchProductsAutocomplete(query: string): Promise<Autocom
       _id,
       name,
       price_data,
-      stripePriceId,
       "brand": brand->{ _id, name, slug },
       slug,
       image,
@@ -74,7 +73,7 @@ export async function searchProductsFull(query: string, sort?: string): Promise<
   }
 
   return sanityFetch<SearchProduct[]>({
-    query: groq`*[_type == "product" && defined(stripePriceId) && (
+    query: groq`*[_type == "product" && (
       name match $query ||
       sku match $query ||
       brand._ref in *[_type == "brand" && name match $query]._id ||
@@ -87,7 +86,6 @@ export async function searchProductsFull(query: string, sort?: string): Promise<
       stock,
       reservedStock,
       "availableStock": stock - reservedStock,
-      stripePriceId,
       "brand": brand->{ _id, name, slug },
       slug,
       image,

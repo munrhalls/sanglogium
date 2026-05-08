@@ -19,11 +19,10 @@ export async function getRelatedProducts(
     return [];
   }
 
-  const products = await sanityFetch({
+  const products = await sanityFetch<RelatedProduct[]>({
     query: groq`*[_type == "product"
       && _id != $currentId
       && count(catalogueLocationKeys[@ in $catalogueKeys]) > 0
-      && defined(stripePriceId)
     ] | order(price_data.unit_amount asc) [0...$limit] {
       _id,
       name,
@@ -32,7 +31,6 @@ export async function getRelatedProducts(
         name
       },
       price_data,
-      stripePriceId,
       image,
       slug {
         current

@@ -8,7 +8,7 @@ export async function getProductsByIds(ids: string[]): Promise<Product[]> {
   }
 
   const products = await sanityFetch<Product[]>({
-    query: groq`*[_type == "product" && _id in $ids && defined(stripePriceId)] {
+    query: groq`*[_type == "product" && _id in $ids] {
       _id,
       name,
       brand->{ _id, name, slug },
@@ -16,7 +16,6 @@ export async function getProductsByIds(ids: string[]): Promise<Product[]> {
       stock,
       reservedStock,
       sku,
-      stripePriceId,
       image,
       gallery,
       slug {
