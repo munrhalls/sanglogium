@@ -1,12 +1,12 @@
 "use client";
 import { useShallow } from 'zustand/shallow';
-import { useState, useEffect } from 'react';
+import { useMemo } from 'react';
+import useSWR from 'swr';
 import useBasketStore from "@/store/basketStore";
 import BasketSkeleton from "./BasketSkeleton";
 import EmptyBasket from "./EmptyBasket";
 import BasketItem from "./BasketItem";
 import BasketSummary from "./BasketSummary";
-import { getBasketProducts } from "@/sanity-config/lib/products/getBasketProducts";
 import { parseBasketItems } from "./parseBasketItems";
 import { separateByAvailability } from "./availabilityHandler";
 
@@ -15,45 +15,27 @@ export default function BasketManager() {
     useShallow((state) => ({ items: state.items, _hasHydrated: state._hasHydrated }))
   );
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [cmsBasketItems, setCmsBasketItems] = useState<Array<{
-    productId: string
-    name: string
-    displayPrice: number
-    availableStock: number
-    image?: any
-  }>>([]);
+  const productIds = useMemo(() => basket.map(item => item.productId), [basket]);
 
-  useEffect(() => {
-    async function fetchBasketData() {
-      if (basket.length === 0) {
-        setCmsBasketItems([]);
-        return;
+  const swrKey = hasHydrated && productIds.length > 0 ? ['basket-products', productIds] : null;
+
+  const { data: cmsBasketItems = [], error, isLoading } = useSWR(
+    swrKey,
+    async ([_, ids]: [string, string[]]) => {
+      const res = await fetch(`/api/basket/products?ids=${ids.join(',')}`);
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.error || 'Unable to load products');
       }
-
-      setIsLoading(true);
-      setError(null);
-
-      try {
-        const productIds = basket.map(item => item.productId);
-        const cmsProducts = await getBasketProducts(productIds);
-        const parsedItems = parseBasketItems(cmsProducts);
-        const { available, unavailable } = separateByAvailability(parsedItems);
-
-        // Combine available and unavailable, available first
-        setCmsBasketItems([...available, ...unavailable]);
-      } catch (err) {
-        console.error('Failed to fetch basket data:', err);
-        setError('Unable to load products');
-        setCmsBasketItems([]);
-      } finally {
-        setIsLoading(false);
+      const result = await res.json();
+      if (!result.success) {
+        throw new Error(result.error || 'Unable to load products');
       }
+      const parsedItems = parseBasketItems(result.data || []);
+      const { available, unavailable } = separateByAvailability(parsedItems);
+      return [...available, ...unavailable];
     }
-
-    fetchBasketData();
-  }, [basket]);
+  );
 
   if (!hasHydrated) {
     return <BasketSkeleton />;
@@ -70,7 +52,7 @@ export default function BasketManager() {
   if (error) {
     return (
       <div className="card-base p-6">
-        <p className="text-error-500">{error}</p>
+        <p className="text-error-500">{error.message || 'Unable to load products'}</p>
       </div>
     );
   }
@@ -106,7 +88,7 @@ export default function BasketManager() {
         </div>
       </div>
       <div className="lg-desktop:col-span-1 lg-touch:col-span-1">
-        <div className="card-base sticky top-4">
+        <div className="card-base sticky bottom-0 lg-desktop:top-4 lg-touch:top-4 lg-desktop:bottom-auto lg-touch:bottom-auto z-10">
           <BasketSummary />
         </div>
       </div>
