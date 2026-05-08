@@ -1,5 +1,5 @@
 import { createClient } from 'next-sanity';
-import { apiVersion, projectId, dataset } from '../sanity-cms/env';
+import { apiVersion, projectId, dataset } from '../../sanity-cms/env';
 
 // Read client for test dataset
 const testClient = createClient({
