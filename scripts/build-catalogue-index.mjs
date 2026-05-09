@@ -29,9 +29,14 @@ async function validateProductKeys(slotMetadataMap, sanityClient) {
       }
     `);
 
+    // Filter out test products (names containing "test" or "Test")
+    const productionProducts = products.filter(product => 
+      !product.name.toLowerCase().includes('test')
+    );
+
     const orphanedKeys = new Map(); // key -> product IDs
 
-    for (const product of products) {
+    for (const product of productionProducts) {
       if (!product.catalogueLocationKeys) continue;
 
       for (const key of product.catalogueLocationKeys) {
@@ -65,11 +70,14 @@ async function validateProductKeys(slotMetadataMap, sanityClient) {
       // Don't fail build - just warn (configurable)
       // process.exit(1);
     } else {
-      console.log(`✅ All ${products.length} products have valid catalogueLocationKeys`);
+      console.log(`✅ All ${productionProducts.length} production products have valid catalogueLocationKeys`);
+      if (products.length !== productionProducts.length) {
+        console.log(`   (Filtered out ${products.length - productionProducts.length} test products from validation)`);
+      }
     }
 
     return {
-      totalProducts: products.length,
+      totalProducts: productionProducts.length,
       orphanedKeyCount: orphanedKeys.size,
       orphanedKeys: Object.fromEntries(orphanedKeys)
     };
@@ -81,12 +89,6 @@ async function validateProductKeys(slotMetadataMap, sanityClient) {
 
 async function buildCatalogueIndex() {
   console.log("🏗️  Building Catalogue Virtual File System...");
-
-  // Check if orphaned key validation should be skipped
-  const skipOrphanedValidation = process.env.SKIP_ORPHANED_VALIDATION === 'true';
-  if (skipOrphanedValidation) {
-    console.log("⚠️  Skipping orphaned key validation (SKIP_ORPHANED_VALIDATION=true)");
-  }
 
   try {
     const allItems = await client.fetch(`*[_type == "catalogueItem"]{ _id, title, type, slug, icon, sortOrder, "parentId": parent._ref }`);
@@ -255,9 +257,7 @@ async function buildCatalogueIndex() {
     validateSlotMetadataCompleteness(slotMetadataMap);
 
     // SC6: Validate all product catalogueLocationKeys point to valid VFS slots
-    if (!skipOrphanedValidation) {
-      await validateProductKeys(slotMetadataMap, client);
-    }
+    await validateProductKeys(slotMetadataMap, client);
 
     const output = {
       generatedAt: new Date().toISOString(),
