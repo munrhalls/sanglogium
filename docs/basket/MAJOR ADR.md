@@ -40,16 +40,14 @@ Split basket into two independent PRDs:
 ## Updated Decision
 Removed snapshot data feature as overcomplication. Price and stock are now fetched live from CMS at display time, reducing complexity and localStorage footprint.
 
-
-## ADR #3: Cross-Tab Synchronization Strategy
+## ~~ADR #4: Removal of Cross-Tab Synchronization~~
 
 ## Context
-Users may have multiple tabs open; basket state changes in one tab should reflect in others automatically.
+Cross-tab synchronization was implemented using browser storage event API (ADR #3). However, this caused a critical race condition bug: storage events fire in ALL tabs including the originating tab, not just other tabs as incorrectly documented. The event handler would overwrite in-memory state with stale localStorage data, causing UI/storage mismatches (e.g., UI showing 11 items while localStorage contained 1 item with quantity 9).
 
 ## Decision
-Use browser storage event API for automatic cross-tab synchronization when localStorage changes via Zustand persist middleware. Events only fire in other tabs (not originating tab), sufficient for sync needs. Simpler than BroadcastChannel.
+Remove cross-tab synchronization entirely. The feature is not critical for core basket functionality and introduces state corruption bugs. Single-tab persistence via Zustand persist middleware is sufficient for the use case.
 
 ## Consequences
-- Positive: Automatic sync, simple implementation, no additional dependencies
-- Negative: Events only fire in other tabs, requires modern browser, manual refresh fallback
-
+- Positive: Eliminates race condition bug, simpler codebase, removes unnecessary complexity
+- Negative: No automatic sync across browser tabs (users must refresh to see changes from other tabs)

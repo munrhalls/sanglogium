@@ -2,7 +2,7 @@
 
 ## Overview
 
-The non-local basket provides persistent shopping cart functionality across page navigation and browser tabs. Users can add products from any page, see basket counts update in real-time, and have their items preserved across reloads and tab switches. The implementation uses Zustand for state management with localStorage persistence and cross-tab synchronization.
+The non-local basket provides persistent shopping cart functionality across page navigation. Users can add products from any page, see basket counts update in real-time, and have their items preserved across reloads. The implementation uses Zustand for state management with localStorage persistence.
 
 ## Architecture
 
@@ -12,20 +12,15 @@ sequenceDiagram
     participant Store as Zustand Store
     participant Zod as Zod Validation
     participant Storage as localStorage/sessionStorage
-    participant Event as Storage Event
-    participant OtherTab as Other Tab Store
     
     User->>Store: addProduct/increment/decrement/remove
     Store->>Zod: Validate input
     Zod-->>Store: Valid/Invalid
     Store->>Store: Update state
     Store->>Storage: Persist state
-    Storage->>Event: Fire storage event
-    Event->>OtherTab: Receive event
-    OtherTab->>Storage: Re-hydrate from storage
     Storage->>Zod: Validate data
-    Zod-->>OtherTab: Valid/Invalid
-    OtherTab->>User: UI updates
+    Zod-->>Store: Valid/Invalid
+    Store->>User: UI updates
 ```
 
 ## Key Components
@@ -33,7 +28,6 @@ sequenceDiagram
 - **basketStore.ts** (`store/basketStore.ts`) - Zustand store with persist middleware
 - **Zod Schema** - Input validation for basket items (productId, quantity)
 - **Fallback Storage** - localStorage → sessionStorage graceful degradation
-- **Storage Event Listener** - Cross-tab synchronization
 - **Selectors** - Computed values (totalItems, hasItem, itemQuantity)
 
 ## Data Flow
@@ -43,9 +37,7 @@ sequenceDiagram
 3. Store updates state atomically
 4. Persist middleware writes to storage
 5. Storage writes fallback: localStorage → sessionStorage → silent fail
-6. Storage event fires on write, other tabs receive event
-7. Other tabs re-hydrate from storage with Zod validation
-8. UI updates reflect new state
+6. UI updates reflect new state
 
 ## Validation Strategy
 

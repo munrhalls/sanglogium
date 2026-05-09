@@ -55,43 +55,6 @@ test.describe('Non-Local Basket E2E', () => {
     })
   })
 
-  test.describe('when basket state changes across tabs', () => {
-    test('basket state syncs across tabs', async ({ context }) => {
-      // ARRANGE - open tab A and add product
-      const pageA = await context.newPage()
-      await pageA.goto(`/product/${TEST_CONFIG.productSlug}`)
-      await pageA.getByTestId('product-info').waitFor({ state: 'attached' })
-
-      const addToBasketButton = pageA.getByTestId(`add-to-basket-${TEST_CONFIG.productId}`)
-      await addToBasketButton.click()
-
-      // ACT - open tab B and verify sync
-      const pageB = await context.newPage()
-      await pageB.goto(`/product/${TEST_CONFIG.productSlug}`)
-      await pageB.getByTestId('product-info').waitFor({ state: 'attached' })
-
-      // ASSERT - verify header badge shows "1" in tab B
-      const basketBadgeB = pageB.getByTestId('basket-badge').first()
-      await expect(basketBadgeB).toHaveText('1')
-
-      // ACT - increment in tab B
-      const incrementButtonB = pageB.getByTestId(`increment-${TEST_CONFIG.productId}`)
-      await incrementButtonB.click()
-
-      // ASSERT - wait for cross-tab sync and verify header badge updated in tab A
-      // Use proper waiting strategy instead of timeout
-      await pageA.waitForFunction(
-        () => {
-          const badge = document.querySelector('[data-testid="basket-badge"]')
-          return badge?.textContent === '2'
-        },
-        { timeout: 5000 }
-      )
-      const basketBadgeA = pageA.getByTestId('basket-badge').first()
-      await expect(basketBadgeA).toHaveText('2')
-    })
-  })
-
   test.describe('when page is refreshed', () => {
     test('basket state persists after page reload', async ({ page }) => {
       // ARRANGE - navigate to product page and add product

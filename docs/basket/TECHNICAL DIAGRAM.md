@@ -1,22 +1,17 @@
 # Technical Diagrams: Basket Feature
 
-## Non-Local Basket (with Cross-Tab Synchronization)
+## Non-Local Basket
 
 ```mermaid
 sequenceDiagram
     participant User as User
     participant Store as Zustand Store
     participant LocalStorage as localStorage
-    participant Event as Storage Event
-    participant OtherTab as Other Tab Store
     
     User->>Store: addProduct/increment/decrement/remove
     Store->>Store: Update state
     Store->>LocalStorage: Persist state
-    LocalStorage->>Event: Fire storage event
-    Event->>OtherTab: Receive event
-    OtherTab->>OtherTab: Re-hydrate from localStorage
-    OtherTab->>User: UI updates
+    Store->>User: UI updates
 ```
 
 ## Basket Page: CMS Fetch Flow
