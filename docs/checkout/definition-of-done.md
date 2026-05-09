@@ -1,0 +1,8 @@
+## Definition of Done - happy path
+
+☐ [ ] Address page validates user input, calls Google API for address verification, saves verified address to basket reservation address update request, makes request to sanity cms utilizing basket reservation id from session storage, on success response (basket reservation address update) redirects to shipping page
+☐ [ ] Shipping page combines user address with company/parcel data, calls Shippo API to fetch shipping options and rates, displays options to user
+☐ [ ] User selects shipping option, system saves shipping choice to reservation document, redirects to payment page
+☐ [ ] Payment page renders Stripe Elements, allows billing address reuse or separate entry, processes payment details
+☐ [ ] Order creation uses reservation document data, atomically updates product stock from reservedStock to real stock, deletes reservation document
+☐ [ ] Success page displays order confirmation with order details and clean success message
