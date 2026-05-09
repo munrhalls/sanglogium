@@ -2,11 +2,7 @@
   command = "npm install --legacy-peer-deps; npm run build"
   publish = ".next"
 
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
-
 [build.environment]
-  NEXT_USE_NETLIFY_EDGE = "true"
   NPM_FLAGS = "--legacy-peer-deps"
 
 # Add proper cache headers
@@ -20,8 +16,7 @@
   [headers.values]
     Cache-Control = "public, max-age=86400"
 
-# Proper Next.js fallback handling is managed by @netlify/plugin-nextjs
-# Remove SPA fallback which conflicts with Next.js asset handling
+# Next.js fallback handling is managed automatically by Netlify's OpenNext adapter
 
 # Scheduled function: cleanup expired reservations every 5 minutes
 [[scheduled]]
