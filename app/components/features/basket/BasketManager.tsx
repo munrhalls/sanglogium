@@ -50,6 +50,14 @@ export default function BasketManager() {
     }
   );
 
+  // Check if CMS data has loaded for all basket items
+  const isCmsDataReady = useMemo(() => {
+    if (basket.length === 0) return true;
+    return basket.every((item) =>
+      cmsProducts.some((p: any) => p._id === item.productId)
+    );
+  }, [basket, cmsProducts]);
+
   // Filter cached CMS data to match CURRENT basket
   // This happens locally - no refetch
   const enrichedItems = useMemo(() => {
@@ -101,7 +109,7 @@ export default function BasketManager() {
     };
   }, [basket, enrichedItems]);
 
-  if (!_hasHydrated || isLoading) return <BasketSkeleton />;
+  if (!_hasHydrated || isLoading || !isCmsDataReady) return <BasketSkeleton />;
   if (basket.length === 0) return <EmptyBasket />;
   if (error) {
     return (
