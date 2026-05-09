@@ -133,7 +133,7 @@ export default function Footer() {
           )}
         >
           <ColTitle title="BEST BRANDS" />
-          <ul className={cn("grid justify-center gap-2")}>
+          {/* <ul className={cn("grid justify-center gap-2")}>
             {[
               { name: "Sennheiser" },
               { name: "Sony" },
@@ -157,13 +157,13 @@ export default function Footer() {
               <li key={brand.name} className={cn("text-center")}>
                 <Link
                   className={cn("grid place-content-center text-xl")}
-                  href={`/brands/${brand.name.toLowerCase().replace(" ", "-")}`}
+                  href={`/brand/${brand.name.toLowerCase().replace(" ", "-")}`}
                 >
                   <span>{brand.name}</span>
                 </Link>
               </li>
             ))}
-          </ul>
+          </ul> */}
         </div>
       </div>
     </footer>
