@@ -23,7 +23,7 @@ interface CmsProduct {
 async function fetchBasketProducts(productIds: string[]) {
   if (productIds.length === 0) return [];
   
-  const res = await fetch(`/api/basket/products?ids=${productIds.join(",")}`);
+  const res = await fetch(`/api/basket/products?ids=${productIds.map(encodeURIComponent).join(",")}`);
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
     throw new Error(body.error || "Unable to load products");
@@ -56,14 +56,15 @@ export default function BasketManager() {
   useEffect(() => {
     if (!_hasHydrated) return;
     setTrackedIds((prev) => {
-      const newIds = currentProductIds.filter((id) => !prev.includes(id));
+      const prevSet = new Set(prev);
+      const newIds = currentProductIds.filter((id) => !prevSet.has(id));
       return newIds.length > 0 ? [...prev, ...newIds] : prev;
     });
   }, [currentProductIds, _hasHydrated]);
 
   // SWR relies ONLY on trackedIds, never currentProductIds
   const swrKey = _hasHydrated && trackedIds.length > 0
-    ? `basket-products:${trackedIds.sort().join(",")}`
+    ? `basket-products:${[...trackedIds].sort().join(",")}`
     : null;
 
   const { data: cmsProducts = [], error, isLoading } = useSWR<CmsProduct[]>(
@@ -108,7 +109,7 @@ export default function BasketManager() {
 
   // Summary calculations from filtered items
   const { itemCount, subtotal, checkoutData } = useMemo(() => {
-    const count = basket.reduce((sum, item) => sum + item.quantity, 0);
+    const count = enrichedItems.reduce((sum, item) => sum + item.quantity, 0);
     const total = enrichedItems.reduce(
       (sum, item) => sum + item.displayPrice * item.quantity,
       0
@@ -124,7 +125,7 @@ export default function BasketManager() {
       subtotal: total, 
       checkoutData: checkoutItems 
     };
-  }, [basket, enrichedItems]);
+  }, [enrichedItems]);
 
   if (!_hasHydrated || isLoading) return <BasketSkeleton />;
   if (basket.length === 0) return <EmptyBasket />;
