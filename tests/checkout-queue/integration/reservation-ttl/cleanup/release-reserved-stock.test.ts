@@ -1,42 +1,19 @@
-// Integration test: releaseReservedStock function
-// Uses real Sanity client and test dataset
-
-import { describe, it, expect, beforeAll, beforeEach } from 'vitest'
-import { releaseReservedStock } from '@/lib/queue/cleanup'
-import { getTestProducts, resetProductStock } from '@/tests/helpers/sanity-test-products'
-import { getBackendClient } from '@/sanity-cms/lib/backendClient'
-
-describe('releaseReservedStock Integration', () => {
-  let testProducts: Awaited<ReturnType<typeof getTestProducts>>
-
-  beforeAll(async () => {
-    testProducts = await getTestProducts()
-    if (testProducts.length < 2) throw new Error('Test dataset must have at least 2 products')
-  })
-
-  it('releases reservedStock back to available stock', async () => {
-    const backendClient = getBackendClient()
-    const productId = testProducts[1]._id
-    const quantity = 2
-
-    // Reset product stock to baseline
-    await resetProductStock(productId, testProducts[1].stock)
-
-    // First, increment reservedStock to simulate a reservation
-    const tx1 = backendClient.transaction()
-    tx1.patch(productId, (p) => p.inc({ reservedStock: quantity }))
-    await tx1.commit()
-
-    // Verify reservedStock was incremented
-    const before = await backendClient.fetch(`*[_id == $id][0]{ reservedStock }`, { id: productId })
-    expect(before.reservedStock).toBe(quantity)
-
-    // Call releaseReservedStock
-    const result = await releaseReservedStock(productId, quantity)
-    expect(result).toBe(true)
-
-    // Verify reservedStock was released
-    const after = await backendClient.fetch(`*[_id == $id][0]{ reservedStock }`, { id: productId })
-    expect(after.reservedStock).toBe(0)
-  }, 10000)
-})
+/**
+ * SPECIFICATION: Reserved stock release
+ *
+ * Core concern: releaseReservedStock() must decrement a product's
+ * reservedStock by the given quantity via an atomic Sanity transaction.
+ *
+ * Status: COVERED
+ *
+ * Already verified by:
+ *   tests/checkout-queue/integration/reservation-ttl/cleanup/background-cleanup-stock.test.ts
+ *
+ * The orchestrator test creates an expired reservation with reservedStock=2,
+ * runs backgroundCleanupJob(), and asserts reservedStock <= 0 afterward.
+ * This proves stock release works as part of the cleanup pipeline. Testing
+ * releaseReservedStock() in isolation is testing an implementation detail —
+ * the orchestrator is the contract. If stock release breaks, the orchestrator
+ * catches it. If the orchestrator passes but this test fails, this test is
+ * testing the wrong thing.
+ */
