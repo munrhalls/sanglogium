@@ -101,7 +101,6 @@ const useBasketStore = create<BasketStore>()(
           console.error("Invalid input:", result.error);
           return;
         }
-
         const items = get().items;
         const existing = items.find((item) => item.productId === productId);
         if (existing) {
@@ -172,22 +171,6 @@ const useBasketStore = create<BasketStore>()(
     },
   ),
 );
-
-// Cross-tab synchronization: listen for storage events from other tabs
-if (typeof window !== "undefined") {
-  window.addEventListener("storage", (event) => {
-    if (event.key === "basket-storage" && event.newValue) {
-      try {
-        const parsed = JSON.parse(event.newValue);
-        if (parsed.state) {
-          useBasketStore.setState(parsed.state);
-        }
-      } catch (e) {
-        console.error("Failed to rehydrate from storage event:", e);
-      }
-    }
-  });
-}
 
 export const selectTotalItemsCount = (state: BasketState) =>
   state.items.reduce((sum, item) => sum + item.quantity, 0);

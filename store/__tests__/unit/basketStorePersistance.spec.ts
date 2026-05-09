@@ -190,39 +190,3 @@ describe('BasketStore Hydration Validation', () => {
     })
   })
 })
-
-describe('BasketStore Cross-Tab Synchronization', () => {
-  beforeEach(() => {
-    // Reset store before each test using public API
-    useBasketStore.getState().clear()
-    // Clear localStorage and sessionStorage
-    localStorage.clear()
-    sessionStorage.clear()
-  })
-
-  describe('when storage event listener is registered', () => {
-    it('dispatches storage events without error', () => {
-      // ARRANGE - setup valid data in storage
-      const productId = 'product-1'
-      useBasketStore.getState().addProduct(productId)
-      const countBeforeEvent = selectTotalItemsCount(useBasketStore.getState())
-
-      // ACT - dispatch storage event (simulating other tab change)
-      // Note: StorageEvent is a browser API, not internal state
-      // Note: Cross-tab sync rehydration is an integration concern requiring actual browser tabs
-      // This test verifies the listener is registered and doesn't throw errors
-      const mockEvent = new StorageEvent('storage', {
-        key: STORAGE_KEY,
-        newValue: null,
-        oldValue: null,
-        url: window.location.href,
-        storageArea: localStorage
-      })
-      window.dispatchEvent(mockEvent)
-
-      // ASSERT - verify store remains functional after event (no crash, state intact)
-      const countAfterEvent = selectTotalItemsCount(useBasketStore.getState())
-      expect(countAfterEvent).toBe(countBeforeEvent)
-    })
-  })
-})
