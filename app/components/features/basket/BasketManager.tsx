@@ -1,6 +1,6 @@
 "use client";
 import { useShallow } from "zustand/shallow";
-import { useMemo, useEffect, useRef, useState } from "react";
+import { useMemo, useRef } from "react";
 import useSWR from "swr";
 import useBasketStore from "@/store/basketStore";
 import BasketSkeleton from "./BasketSkeleton";
@@ -8,12 +8,10 @@ import EmptyBasket from "./EmptyBasket";
 import BasketItem from "./BasketItem";
 import BasketSummary from "./BasketSummary";
 
-// Fetcher - called ONCE on mount
 async function fetchBasketProducts(productIds: string[]) {
   if (productIds.length === 0) return [];
   
   const res = await fetch(`/api/basket/products?ids=${productIds.join(",")}`);
-  
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
     throw new Error(body.error || "Unable to load products");
@@ -35,44 +33,20 @@ export default function BasketManager() {
     }))
   );
 
-  const prevIdsRef = useRef<string[]>([]);
-  const currentProductIds = useMemo(() => {
-    const ids = basket.map((item) => item.productId);
-    const prev = prevIdsRef.current;
-    if (ids.length === prev.length && ids.every((id, i) => id === prev[i])) {
-      return prev;
-    }
-    prevIdsRef.current = ids;
-    return ids;
-  }, [basket]);
+  // Capture basket IDs at mount - never changes after that
+  const mountProductIds = useRef<string[]>([]);
+  
+  if (_hasHydrated && mountProductIds.current.length === 0) {
+    mountProductIds.current = basket.map((item) => item.productId);
+  }
 
-  const fetchedIdsRef = useRef<Set<string>>(new Set());
-  const [swrKey, setSwrKey] = useState<string[] | null>(null);
-
-  useEffect(() => {
-    if (!_hasHydrated || currentProductIds.length === 0) {
-      fetchedIdsRef.current.clear();
-      setSwrKey(null);
-      return;
-    }
-
-    const newIds = currentProductIds.filter(
-      (id) => !fetchedIdsRef.current.has(id)
-    );
-
-    if (newIds.length > 0) {
-      newIds.forEach((id) => fetchedIdsRef.current.add(id));
-      setSwrKey(["basket-products", ...currentProductIds]);
-    }
-  }, [currentProductIds, _hasHydrated]);
-
+  // Fetch once on mount with those IDs
   const { data: cmsProducts = [], error, isLoading } = useSWR(
-    swrKey,
-    () => fetchBasketProducts(currentProductIds),
+    _hasHydrated ? "basket-cms-data" : null,
+    () => fetchBasketProducts(mountProductIds.current),
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
-      dedupingInterval: 5000, // Dedup rapid basket changes within 5 seconds
     }
   );
 
@@ -127,25 +101,12 @@ export default function BasketManager() {
     };
   }, [basket, enrichedItems]);
 
-  // Loading states
-  if (!_hasHydrated) {
-    return <BasketSkeleton />;
-  }
-
-  if (basket.length === 0) {
-    return <EmptyBasket />;
-  }
-
-  if (isLoading) {
-    return <BasketSkeleton />;
-  }
-
+  if (!_hasHydrated || isLoading) return <BasketSkeleton />;
+  if (basket.length === 0) return <EmptyBasket />;
   if (error) {
     return (
       <div className="card-base p-6">
-        <p className="text-error-500">
-          {error.message || "Unable to load products"}
-        </p>
+        <p className="text-error-500">{error.message}</p>
       </div>
     );
   }
