@@ -31,6 +31,31 @@ sequenceDiagram
     end
 ```
 
+## State Synchronization Flow
+
+```mermaid
+sequenceDiagram
+    participant User as User
+    participant Store as Zustand Store
+    participant Manager as BasketManager
+    participant SWR as SWR Cache
+    participant API as CMS API
+    
+    User->>Store: Add/remove products
+    Store->>Store: Update localStorage
+    Store->>Manager: Notify subscribers
+    Manager->>Manager: Track product IDs (High Water Mark)
+    Manager->>SWR: Check cache for product data
+    alt Data not cached
+        SWR->>API: Fetch products
+        API-->>SWR: Return product data
+        SWR->>SWR: Cache product data
+    end
+    SWR-->>Manager: Return cached data
+    Manager->>Manager: Filter to match current basket
+    Manager->>User: Render enriched basket items
+```
+
 ## Key Components
 
 - **BasketPage** (`app/(store)/basket/page.tsx`) - Route entry point with Suspense boundary
@@ -70,6 +95,17 @@ BasketManager uses High Water Mark pattern to prevent unnecessary refetches and 
 - **SWR** - Data fetching and caching
 - **Sanity CMS** - Product data source
 - **TypeScript** - Type safety
+
+## Why Client Component for Data Fetching
+
+BasketManager uses Client Component for data fetching because:
+
+1. **Basket IDs live in client-side Zustand store** - Server Components cannot access client state
+2. **Fetch depends on dynamic client data** - Product IDs required for CMS fetch are in client store
+3. **SWRConfig fallback requires Server Component to know fetch keys** - Impossible without client state access
+4. **Requirements**: No refetch on delete/quantity change, refetch on navigate back - High Water Mark pattern achieves this
+
+Server Component prefetching is not possible here. The High Water Mark pattern is the correct solution for this constraint.
 
 ## Related Documentation
 
