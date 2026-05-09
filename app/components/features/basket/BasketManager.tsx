@@ -35,8 +35,15 @@ export default function BasketManager() {
     }))
   );
 
+  const prevIdsRef = useRef<string[]>([]);
   const currentProductIds = useMemo(() => {
-    return basket.map((item) => item.productId);
+    const ids = basket.map((item) => item.productId);
+    const prev = prevIdsRef.current;
+    if (ids.length === prev.length && ids.every((id, i) => id === prev[i])) {
+      return prev;
+    }
+    prevIdsRef.current = ids;
+    return ids;
   }, [basket]);
 
   const fetchedIdsRef = useRef<Set<string>>(new Set());
