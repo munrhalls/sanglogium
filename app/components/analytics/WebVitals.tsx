@@ -66,15 +66,25 @@ function logMetric(metric: Metric, name: MetricName) {
 }
 
 function sendToAnalytics(metric: Metric, name: string) {
-  // TODO: Extend for production analytics (Vercel Analytics, custom endpoint, etc.)
-  // Example: vercel analytics
-  // import { track } from '@vercel/analytics';
-  // track(name, { value: metric.value, rating: metric.rating });
+  const payload = JSON.stringify({
+    name,
+    value: metric.value,
+    rating: metric.rating,
+    delta: metric.delta,
+    id: metric.id,
+    navigationType: metric.navigationType,
+  });
 
-  // For now, only log in development
-  if (process.env.NODE_ENV === "development") {
-    // eslint-disable-next-line no-console
-    console.log(`[Web Vitals Analytics] ${name}:`, metric);
+  const blob = new Blob([payload], { type: "application/json" });
+
+  if (navigator.sendBeacon) {
+    navigator.sendBeacon("/api/analytics/vitals", blob);
+  } else {
+    fetch("/api/analytics/vitals", {
+      body: blob,
+      method: "POST",
+      keepalive: true,
+    }).catch(() => {});
   }
 }
 
@@ -83,8 +93,11 @@ export function WebVitals() {
     // Only run in browser
     if (typeof window === "undefined") return;
 
-    // Skip in production if explicitly disabled
     if (process.env.NEXT_PUBLIC_DISABLE_WEB_VITALS === "true") return;
+
+    const sampleRate =
+      Number(process.env.NEXT_PUBLIC_WEB_VITALS_SAMPLE_RATE) || 1;
+    if (Math.random() > sampleRate) return;
 
     try {
       // Collect all Core Web Vitals
