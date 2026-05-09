@@ -1,12 +1,24 @@
 "use client";
 import { useShallow } from "zustand/shallow";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import useSWR from "swr";
 import useBasketStore from "@/store/basketStore";
 import BasketSkeleton from "./BasketSkeleton";
 import EmptyBasket from "./EmptyBasket";
 import BasketItem from "./BasketItem";
 import BasketSummary from "./BasketSummary";
+
+interface CmsProduct {
+  _id: string;
+  name: string;
+  image: string;
+  stock: number;
+  reservedStock: number;
+  price_data: {
+    unit_amount: number;
+    currency: string;
+  };
+}
 
 async function fetchBasketProducts(productIds: string[]) {
   if (productIds.length === 0) return [];
@@ -41,21 +53,20 @@ export default function BasketManager() {
   // High Water Mark state - only ever adds, never subtracts
   const [trackedIds, setTrackedIds] = useState<string[]>([]);
 
-  // React 18 Render Phase State Update
-  // Synchronous, avoids useEffect race conditions
-  if (_hasHydrated) {
-    const newIds = currentProductIds.filter((id) => !trackedIds.includes(id));
-    if (newIds.length > 0) {
-      setTrackedIds([...trackedIds, ...newIds]);
-    }
-  }
+  useEffect(() => {
+    if (!_hasHydrated) return;
+    setTrackedIds((prev) => {
+      const newIds = currentProductIds.filter((id) => !prev.includes(id));
+      return newIds.length > 0 ? [...prev, ...newIds] : prev;
+    });
+  }, [currentProductIds, _hasHydrated]);
 
   // SWR relies ONLY on trackedIds, never currentProductIds
   const swrKey = _hasHydrated && trackedIds.length > 0
     ? `basket-products:${trackedIds.sort().join(",")}`
     : null;
 
-  const { data: cmsProducts = [], error, isLoading } = useSWR(
+  const { data: cmsProducts = [], error, isLoading } = useSWR<CmsProduct[]>(
     swrKey,
     () => fetchBasketProducts(trackedIds),
     {
@@ -69,7 +80,7 @@ export default function BasketManager() {
   const enrichedItems = useMemo(() => {
     return basket
       .map((item) => {
-        const product = cmsProducts.find((p: any) => p._id === item.productId);
+        const product = cmsProducts.find((p) => p._id === item.productId);
         if (!product) return null;
         
         const displayPrice = product.price_data.unit_amount / 100; // cents to dollars

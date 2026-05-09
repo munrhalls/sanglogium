@@ -43,12 +43,24 @@ sequenceDiagram
 ## Data Flow
 
 1. Page mounts and BasketManager reads from Zustand basket store
-2. If basket has items, SWR fetches product data from `/api/basket/products`
-3. CMS returns product data (price, stock, reservedStock)
-4. Parser converts CMS data to display format (cents to dollars)
-5. Availability handler separates items into available/unavailable
-6. BasketManager renders items with live CMS data
-7. Quantity mutations update basket store and trigger re-fetch
+2. High Water Mark pattern tracks product IDs (useState only adds, never subtracts)
+3. SWR fetches product data from `/api/basket/products` using dynamic key based on tracked IDs
+4. CMS returns product data (price, stock, reservedStock)
+5. Parser converts CMS data to display format (cents to dollars)
+6. Availability handler separates items into available/unavailable
+7. BasketManager renders items with live CMS data
+8. Quantity mutations update basket store (tracked IDs unchanged, no re-fetch)
+9. Adding items triggers render phase state update, SWR refetches with expanded ID list
+
+## High Water Mark Pattern
+
+BasketManager uses High Water Mark pattern to prevent unnecessary refetches and permanent loading states:
+
+- **trackedIds (useState)**: Only ever adds product IDs, never subtracts
+- **Render phase state update**: Synchronous state update avoids useEffect race conditions
+- **Dynamic SWR key**: `basket-products:${trackedIds.sort().join(",")}` changes only when new IDs added
+- **No refetch on**: Item deletion, quantity changes, navigation (component unmount resets trackedIds)
+- **Refetch on**: New items added after mount (trackedIds expands, SWR key changes)
 
 ## Tech Stack
 
