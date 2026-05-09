@@ -27,9 +27,6 @@ export async function fetchHomepageData(): Promise<HomepageData> {
     return data;
   } catch (error) {
     console.error('Error fetching homepage data:', error);
-    if (process.env.NODE_ENV === 'development') {
-      console.timeEnd('Homepage Data Fetch');
-    }
 
     // Return empty data structure to prevent page crashes
     return {
