@@ -117,9 +117,7 @@ const useBasketStore = create<BasketStore>()(
         }
       },
       removeProduct: (productId) => {
-        set({
-          items: get().items.filter((item) => item.productId !== productId),
-        });
+        set({ items: get().items.filter((item) => item.productId !== productId) });
       },
       incrementQuantity: (productId) => {
         set({

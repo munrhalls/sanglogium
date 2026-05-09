@@ -1,115 +1,116 @@
 "use client";
 import { useShallow } from "zustand/shallow";
-import { useMemo, useEffect } from "react";
+import { useMemo } from "react";
 import useSWR from "swr";
 import useBasketStore from "@/store/basketStore";
 import BasketSkeleton from "./BasketSkeleton";
 import EmptyBasket from "./EmptyBasket";
 import BasketItem from "./BasketItem";
 import BasketSummary from "./BasketSummary";
-import { parseBasketItems } from "./lib/parseBasketItems";
-import { separateByAvailability } from "./lib/availabilityHandler";
+
+// Fetcher - called ONCE on mount
+async function fetchBasketProducts(productIds: string[]) {
+  if (productIds.length === 0) return [];
+  
+  const res = await fetch(`/api/basket/products?ids=${productIds.join(",")}`);
+  
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error(body.error || "Unable to load products");
+  }
+  
+  const result = await res.json();
+  if (!result.success) {
+    throw new Error(result.error || "Unable to load products");
+  }
+  
+  return result.data || [];
+}
 
 export default function BasketManager() {
-  const { items: basket, _hasHydrated: hasHydrated } = useBasketStore(
+  const { items: basket, _hasHydrated } = useBasketStore(
     useShallow((state) => ({
       items: state.items,
       _hasHydrated: state._hasHydrated,
-    })),
+    }))
   );
 
-  const productIds = useMemo(
-    () => basket.map((item) => item.productId),
-    [basket],
-  );
+  // Capture initial productIds at mount - this is what we fetch
+  const initialProductIds = useMemo(() => {
+    return basket.map((item) => item.productId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [_hasHydrated]); // Only recalculate when hydration completes
 
-  // Stable SWR key - doesn't include productIds to prevent re-fetch on basket mutations
-  const swrKey = hasHydrated ? ["basket-products"] : null;
+  // STABLE key - does NOT change when basket mutates
+  // Only fetches once per mount
+  const swrKey = _hasHydrated && initialProductIds.length > 0
+    ? "basket-products-session"
+    : null;
 
-  const {
-    data: cmsBasketItems = [],
-    error,
-    isLoading,
-    mutate,
-  } = useSWR(
+  const { data: cmsProducts = [], error, isLoading } = useSWR(
     swrKey,
-    async () => {
-      if (productIds.length === 0) return [];
-      const res = await fetch(
-        `/api/basket/products?ids=${productIds.join(",")}`,
-      );
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}));
-        throw new Error(body.error || "Unable to load products");
-      }
-      const result = await res.json();
-      if (!result.success) {
-        throw new Error(result.error || "Unable to load products");
-      }
-      const parsedItems = parseBasketItems(result.data || []);
-      const { available, unavailable } = separateByAvailability(parsedItems);
-      return [...available, ...unavailable];
-    },
+    () => fetchBasketProducts(initialProductIds),
     {
-      revalidateIfStale: true,
       revalidateOnFocus: false,
-      dedupingInterval: 5000,
-    },
+      revalidateOnReconnect: false,
+      revalidateIfStale: false,
+      // Fetch once, cache for session
+    }
   );
 
-  // Re-fetch when productIds change to ensure cache is up-to-date
-  useEffect(() => {
-    mutate();
-  }, [productIds, mutate]);
-
-  // Filter cached items to match current basket
-  const filteredCmsItems = useMemo(() => {
-    return cmsBasketItems.filter((cms) =>
-      basket.some((item) => item.productId === cms.productId),
-    );
-  }, [cmsBasketItems, basket]);
-
-  // Calculate summary data
-  const { itemCount, subtotal } = useMemo(() => {
-    const count = basket.reduce((sum, item) => sum + item.quantity, 0);
-    const total = filteredCmsItems.reduce((sum, cms) => {
-      const basketItem = basket.find(
-        (item) => item.productId === cms.productId,
-      );
-      if (basketItem) {
-        return sum + cms.displayPrice * basketItem.quantity;
-      }
-      return sum;
-    }, 0);
-    return { itemCount: count, subtotal: total };
-  }, [basket, filteredCmsItems]);
-
-  // Prepare basket data for checkout
-  const basketData = useMemo(() => {
+  // Filter cached CMS data to match CURRENT basket
+  // This happens locally - no refetch
+  const enrichedItems = useMemo(() => {
     return basket
       .map((item) => {
-        const cmsItem = filteredCmsItems.find(
-          (cms) => cms.productId === item.productId,
-        );
-        if (!cmsItem) return null;
+        const product = cmsProducts.find((p: any) => p._id === item.productId);
+        if (!product) return null;
+        
+        const displayPrice = product.price_data.unit_amount / 100; // cents to dollars
+        const availableStock = product.stock - product.reservedStock;
+        
         return {
           productId: item.productId,
           quantity: item.quantity,
-          price_data: cmsItem.price_data,
+          name: product.name,
+          displayPrice,
+          image: product.image,
+          price_data: product.price_data,
+          availableStock,
         };
       })
-      .filter(
-        (
-          item,
-        ): item is {
-          productId: string;
-          quantity: number;
-          price_data: { currency: string; unit_amount: number };
-        } => item !== null,
-      );
-  }, [basket, filteredCmsItems]);
+      .filter((item): item is NonNullable<typeof item> => item !== null)
+      .sort((a, b) => {
+        // Available items first, then by original basket order
+        const aAvailable = a.availableStock > 0;
+        const bAvailable = b.availableStock > 0;
+        if (aAvailable === bAvailable) return 0;
+        return aAvailable ? -1 : 1;
+      });
+  }, [basket, cmsProducts]);
 
-  if (!hasHydrated) {
+  // Summary calculations from filtered items
+  const { itemCount, subtotal, checkoutData } = useMemo(() => {
+    const count = basket.reduce((sum, item) => sum + item.quantity, 0);
+    const total = enrichedItems.reduce(
+      (sum, item) => sum + item.displayPrice * item.quantity,
+      0
+    );
+    const checkoutItems = enrichedItems.map((item) => ({
+      productId: item.productId,
+      quantity: item.quantity,
+      price_data: item.price_data,
+    }));
+    
+    return { 
+      itemCount: count, 
+      subtotal: total, 
+      checkoutData: checkoutItems 
+    };
+  }, [basket, enrichedItems]);
+
+  // Loading states
+  if (!_hasHydrated) {
     return <BasketSkeleton />;
   }
 
@@ -135,7 +136,7 @@ export default function BasketManager() {
     <div className="grid grid-cols-1 gap-8 lg-touch:grid-cols-3 lg-desktop:grid-cols-3">
       <div className="lg-touch:col-span-2 lg-desktop:col-span-2">
         <div className="card-base overflow-hidden">
-          {/* Header row - desktop only */}
+          {/* Header */}
           <div className="hidden border-b border-border-secondary px-6 py-3 lg-touch:grid lg-touch:grid-cols-[3fr_1fr_1fr_1fr] lg-desktop:grid lg-desktop:grid-cols-[3fr_1fr_1fr_1fr]">
             <div className="type-caption uppercase tracking-editorial text-secondary-500">
               Product
@@ -151,32 +152,25 @@ export default function BasketManager() {
             </div>
           </div>
 
-          {basket
-            .map((item) => {
-              const cmsItem = filteredCmsItems.find(
-                (cms) => cms.productId === item.productId,
-              );
-              if (!cmsItem) return null;
-              return (
-                <BasketItem
-                  key={item.productId}
-                  productId={item.productId}
-                  name={cmsItem.name}
-                  quantity={item.quantity}
-                  displayPrice={cmsItem.displayPrice}
-                  image={cmsItem.image}
-                />
-              );
-            })
-            .filter(Boolean)}
+          {enrichedItems.map((item) => (
+            <BasketItem
+              key={item.productId}
+              productId={item.productId}
+              name={item.name}
+              quantity={item.quantity}
+              displayPrice={item.displayPrice}
+              image={item.image}
+            />
+          ))}
         </div>
       </div>
+      
       <div className="lg-touch:col-span-1 lg-desktop:col-span-1">
         <div className="card-base sticky bottom-0 z-10 lg-touch:bottom-auto lg-touch:top-4 lg-desktop:bottom-auto lg-desktop:top-4">
           <BasketSummary
             itemCount={itemCount}
             subtotal={subtotal}
-            basketData={basketData}
+            basketData={checkoutData}
           />
         </div>
       </div>
