@@ -1,5 +1,17 @@
 # Major ADR: Split Basket Feature into Two Subproducts
 
+## ADR #0: Data Fetching Library Selection (SWR vs React Query)
+
+## Context
+BasketManager needs to fetch CMS product data for items in the basket. The fetch should only trigger when new items are added, not on every basket change (removal, quantity changes).
+
+## Decision
+Use SWR instead of React Query. React Query's queryKey changes on every basket change (add, remove, quantity change), causing unnecessary refetches. The "only fetch when array grows" requirement requires manual tracking (useRef + useEffect + useState pattern) in both libraries. Switching to React Query would add a new dependency, provider setup, and test migration without removing any core logic.
+
+## Consequences
+- Positive: Avoids new dependency, no provider setup overhead, existing SWR implementation is already minimal correct solution
+- Negative: Manual deduplication logic required (~15 lines), but this is inherent to the business requirement, not a library limitation
+
 ## Context
 Basket feature combines global state management (persistence, cross-tab sync, product controls) with basket page rendering (inventory sync, item display). These have different technical concerns, failure modes, and user contexts.
 
