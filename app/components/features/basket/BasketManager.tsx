@@ -1,6 +1,6 @@
 "use client";
 import { useShallow } from "zustand/shallow";
-import { useMemo } from "react";
+import { useMemo, useEffect, useRef, useState } from "react";
 import useSWR from "swr";
 import useBasketStore from "@/store/basketStore";
 import BasketSkeleton from "./BasketSkeleton";
@@ -35,26 +35,37 @@ export default function BasketManager() {
     }))
   );
 
-  // Capture initial productIds at mount - this is what we fetch
-  const initialProductIds = useMemo(() => {
+  const currentProductIds = useMemo(() => {
     return basket.map((item) => item.productId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [_hasHydrated]); // Only recalculate when hydration completes
+  }, [basket]);
 
-  // STABLE key - does NOT change when basket mutates
-  // Only fetches once per mount
-  const swrKey = _hasHydrated && initialProductIds.length > 0
-    ? "basket-products-session"
-    : null;
+  const fetchedIdsRef = useRef<Set<string>>(new Set());
+  const [swrKey, setSwrKey] = useState<string[] | null>(null);
+
+  useEffect(() => {
+    if (!_hasHydrated || currentProductIds.length === 0) {
+      fetchedIdsRef.current.clear();
+      setSwrKey(null);
+      return;
+    }
+
+    const newIds = currentProductIds.filter(
+      (id) => !fetchedIdsRef.current.has(id)
+    );
+
+    if (newIds.length > 0) {
+      newIds.forEach((id) => fetchedIdsRef.current.add(id));
+      setSwrKey(["basket-products", ...currentProductIds]);
+    }
+  }, [currentProductIds, _hasHydrated]);
 
   const { data: cmsProducts = [], error, isLoading } = useSWR(
     swrKey,
-    () => fetchBasketProducts(initialProductIds),
+    () => fetchBasketProducts(currentProductIds),
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
-      revalidateIfStale: false,
-      // Fetch once, cache for session
+      dedupingInterval: 5000, // Dedup rapid basket changes within 5 seconds
     }
   );
 

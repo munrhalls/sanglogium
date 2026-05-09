@@ -36,7 +36,7 @@ describe('BasketManager', () => {
       useBasketStore.setState({ items: mockBasketItems, _hasHydrated: true })
 
       const mockData = [
-        { productId: 'product-1', name: 'Product 1', displayPrice: 10.00, availableStock: 8, image: null }
+        { _id: 'product-1', name: 'Product 1', price_data: { unit_amount: 1000, currency: 'USD' }, stock: 10, reservedStock: 2, image: null }
       ]
       vi.mocked(useSWR).mockReturnValue({ data: mockData, error: null, isLoading: false, isValidating: false, mutate: vi.fn() })
 
