@@ -75,3 +75,6 @@ data/catalogue-index.json
 
 # Runtime logs
 logs/
+
+# Lighthouse CI artifacts
+.lighthouseci/
