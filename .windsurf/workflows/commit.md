@@ -50,5 +50,5 @@ Read these constraints carefully. Violating any of these is a hard failure of yo
 ## 🚀 Phase 4: Final Output & AUTONOMOUS EXECUTION
 After completing Phase 1 and orienting yourself within the constraints of Phases 2 and 3:
 1. Output your planned commands in a formatted PowerShell code block so the user can see what is about to happen. Each unit must follow this syntax:
-   `git add <specific/file1> <specific/file2>; git commit -m 'Difficulty: <Fib> - <TaxonomyType>, <Category> (<scope>): <action> → DoD:<SprintName-item or 0>'`
-2. **IMMEDIATELY EXECUTE THE COMMANDS.** You must use your terminal/execution tool to run the formulated `git add` and `git commit` commands directly in the local repository. Do not stop and wait for the user to copy-paste them.
+   `git add <specific/file1> <specific/file2>; git commit -m 'Difficulty: <Fib> - <TaxonomyType>, <Category> (<scope>): <action> → DoD:<SprintName-item or 0>'; git push origin main`
+2. **IMMEDIATELY EXECUTE THE COMMANDS.** You must use your terminal/execution tool to run the formulated `git add`, `git commit`, and `git push origin main` commands directly in the local repository. Do not stop and wait for the user to copy-paste them.
