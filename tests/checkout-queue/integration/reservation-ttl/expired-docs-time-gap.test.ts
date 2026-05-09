@@ -1,48 +1,34 @@
-// Integration test: Expired docs remain detectable over time
-// Tests that expired docs don't slip through based on time gaps
-
-import { describe, it, expect, beforeAll, beforeEach, afterEach } from 'vitest'
-import { findExpiredReservations } from '@/lib/queue/cleanup'
-import { getBackendClient } from '@/sanity-cms/lib/backendClient'
-
-describe('Expired Docs Time Gap Integration', () => {
-  let testReservationId: string
-
-  beforeAll(async () => {
-    const sanity = getBackendClient()
-    // Create a test reservation with expired timestamp (1 hour ago)
-    testReservationId = `test-time-gap-${Date.now()}`
-    const expiresAt = new Date(Date.now() - 60 * 60 * 1000).toISOString()
-    await sanity.create({
-      _id: testReservationId,
-      _type: 'basketReservation',
-      basketReservation: [],
-      createdAt: new Date().toISOString(),
-      expiresAt,
-    })
-  })
-
-  afterEach(async () => {
-    // Clean up test reservation after each test
-    const sanity = getBackendClient()
-    try {
-      await sanity.delete(testReservationId)
-    } catch {
-      // Ignore if already deleted
-    }
-  })
-
-  it('expired docs remain detectable over time, no slip-through based on time', async () => {
-    // Wait a short delay to simulate time passing
-    await new Promise(resolve => setTimeout(resolve, 1000))
-
-    // Verify expired reservation is still detected after time passes
-    const expired = await findExpiredReservations()
-    expect(Array.isArray(expired)).toBe(true)
-
-    // Verify our test reservation is found
-    const found = expired.find((r: any) => r._id === testReservationId)
-    expect(found).toBeTruthy()
-    expect(found.expiresAt).toBeDefined()
-  }, 10000)
-})
+/**
+ * SPECIFICATION: Expired vs. non-expired reservation boundary
+ *
+ * Core concern: The GROQ query `expiresAt < now()` must correctly distinguish
+ * expired reservations from active ones. A bug in the query (off-by-one,
+ * timezone mishandling, string comparison instead of date comparison) could
+ * cause active reservations to be deleted or expired ones to persist forever.
+ *
+ * Status: NEEDS NEW TEST — the original test was cargo cult (waited 1 second
+ * and checked an already-1-hour-expired doc was still findable — proving
+ * nothing). The real concern is the boundary condition.
+ *
+ * Real black-box test specification:
+ *
+ *   Given: Two basketReservation docs exist in Sanity:
+ *     - Doc A: expiresAt = 1 hour in the past (definitely expired)
+ *     - Doc B: expiresAt = 1 hour in the future (definitely active)
+ *
+ *   When: findExpiredReservations() is called
+ *
+ *   Then:
+ *     - Doc A is present in the results
+ *     - Doc B is NOT present in the results
+ *
+ *   This proves the GROQ query correctly filters on the expiresAt boundary.
+ *   The existing orchestrator test only proves that an expired doc IS found
+ *   and deleted — it never proves that an active doc is NOT falsely included.
+ *
+ * Implementation notes:
+ *   - Use getBackendClient() to create both docs directly in Sanity
+ *   - Clean up both docs in afterEach
+ *   - No need to go through /api/checkout-queue — this is a query test
+ *   - Timeout: 10s (two Sanity writes + one query)
+ */
