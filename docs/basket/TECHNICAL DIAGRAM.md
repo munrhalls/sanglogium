@@ -18,16 +18,27 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    participant Page as Basket Page
+    participant Manager as BasketManager
     participant Store as Zustand Store
-    participant Sanity as Sanity CMS
+    participant SWR as SWR Cache
+    participant API as /api/basket/products
+    participant CMS as Sanity CMS
     participant UI as UI Components
 
-    Page->>Store: Get basket items
-    Store-->>Page: Return items (productId, quantity)
-    Page->>Sanity: Fetch products by IDs
-    Sanity-->>Page: Return product data (name, price, stock)
-    Page->>Page: Check availability (stock > 0)
-    Page->>UI: Render available items
-    Page->>UI: Render unavailable items
+    Manager->>Store: Get basket items
+    Store-->>Manager: Return items (productId, quantity)
+    Manager->>Manager: Track IDs (High Water Mark)
+    Manager->>SWR: Check cache for product data
+    alt Data not cached
+        SWR->>API: Fetch products by IDs
+        API->>CMS: Query product data
+        CMS-->>API: Return product data
+        API-->>SWR: Return product data
+        SWR->>SWR: Cache product data
+    end
+    SWR-->>Manager: Return cached data
+    Manager->>Manager: Filter to match current basket
+    Manager->>Manager: Check availability (stock > 0)
+    Manager->>UI: Render available items
+    Manager->>UI: Render unavailable items
 ```
