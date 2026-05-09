@@ -87,15 +87,13 @@ Basket API (`/api/basket/products`) could benefit from short-term CDN caching wi
 
 ## 4. Monitoring & Testing
 
-Full implementation details in [`MONITORING_IMPLEMENTATION.md`](./MONITORING_IMPLEMENTATION.md).
-
 ### 4.1 WebVitals RUM ✅ Active
 
-The `WebVitals` component is mounted in `app/(store)/layout.tsx:74` and sends Core Web Vitals to `/api/analytics/vitals` via `navigator.sendBeacon()`. The endpoint logs structured JSON with periodic p75 summaries. See `app/api/analytics/vitals/route.ts`.
+The `WebVitals` component is mounted in `app/(store)/layout.tsx:74` and sends Core Web Vitals to `/api/analytics/vitals` via `navigator.sendBeacon()`. The endpoint logs structured JSON. See `app/api/analytics/vitals/route.ts`.
 
-### 4.2 Lighthouse CI ✅ Configured
+### 4.2 Lighthouse CI ✅ Active
 
-Runs on every push/PR via `.github/workflows/lighthouse-ci.yml`. Assertions in `lighthouserc.js`:
+Runs on every push/PR via `.github/workflows/lighthouse-ci.yml`. Tests homepage, PDP, and category page. Assertions in `lighthouserc.cjs`:
 - Performance: warn below 70
 - FCP: error above 2000ms
 - LCP: error above 3000ms
@@ -104,17 +102,14 @@ Runs on every push/PR via `.github/workflows/lighthouse-ci.yml`. Assertions in `
 - TTFB: error above 600ms
 - Total byte weight: warn above 2.5MB
 
+Run locally:
+```powershell
+npx lhci autorun --config=lighthouserc.cjs
+```
+
 ### 4.3 Bundle Analysis
 
 Run `npm run analyze` to generate bundle treemap. Target: no single chunk over 200KB uncompressed.
-
-### 4.4 Playwright Performance Tests ✅ Implemented
-
-Performance regression tests for critical pages at `tests/e2e/performance/critical-pages.spec.ts`. Uses shared helper at `tests/helpers/performance.ts`.
-
-```powershell
-npx playwright test tests/e2e/performance/ --project=desktop-chromium
-```
 
 ---
 
