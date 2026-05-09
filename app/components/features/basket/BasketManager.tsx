@@ -1,6 +1,6 @@
 "use client";
 import { useShallow } from "zustand/shallow";
-import { useMemo, useRef } from "react";
+import { useMemo, useState } from "react";
 import useSWR from "swr";
 import useBasketStore from "@/store/basketStore";
 import BasketSkeleton from "./BasketSkeleton";
@@ -33,30 +33,36 @@ export default function BasketManager() {
     }))
   );
 
-  // Capture basket IDs at mount - never changes after that
-  const mountProductIds = useRef<string[]>([]);
-  
-  if (_hasHydrated && mountProductIds.current.length === 0) {
-    mountProductIds.current = basket.map((item) => item.productId);
+  const currentProductIds = useMemo(
+    () => basket.map((item) => item.productId),
+    [basket]
+  );
+
+  // High Water Mark state - only ever adds, never subtracts
+  const [trackedIds, setTrackedIds] = useState<string[]>([]);
+
+  // React 18 Render Phase State Update
+  // Synchronous, avoids useEffect race conditions
+  if (_hasHydrated) {
+    const newIds = currentProductIds.filter((id) => !trackedIds.includes(id));
+    if (newIds.length > 0) {
+      setTrackedIds([...trackedIds, ...newIds]);
+    }
   }
 
-  // Fetch once on mount with those IDs
+  // SWR relies ONLY on trackedIds, never currentProductIds
+  const swrKey = _hasHydrated && trackedIds.length > 0
+    ? `basket-products:${trackedIds.sort().join(",")}`
+    : null;
+
   const { data: cmsProducts = [], error, isLoading } = useSWR(
-    _hasHydrated ? "basket-cms-data" : null,
-    () => fetchBasketProducts(mountProductIds.current),
+    swrKey,
+    () => fetchBasketProducts(trackedIds),
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
     }
   );
-
-  // Check if CMS data has loaded for all basket items
-  const isCmsDataReady = useMemo(() => {
-    if (basket.length === 0) return true;
-    return basket.every((item) =>
-      cmsProducts.some((p: any) => p._id === item.productId)
-    );
-  }, [basket, cmsProducts]);
 
   // Filter cached CMS data to match CURRENT basket
   // This happens locally - no refetch
@@ -109,7 +115,7 @@ export default function BasketManager() {
     };
   }, [basket, enrichedItems]);
 
-  if (!_hasHydrated || isLoading || !isCmsDataReady) return <BasketSkeleton />;
+  if (!_hasHydrated || isLoading) return <BasketSkeleton />;
   if (basket.length === 0) return <EmptyBasket />;
   if (error) {
     return (
