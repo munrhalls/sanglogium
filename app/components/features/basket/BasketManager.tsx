@@ -50,7 +50,6 @@ export default function BasketManager() {
     [basket]
   );
 
-  // High Water Mark state - only ever adds, never subtracts
   const [trackedIds, setTrackedIds] = useState<string[]>([]);
 
   useEffect(() => {
@@ -76,8 +75,7 @@ export default function BasketManager() {
     }
   );
 
-  // Filter cached CMS data to match CURRENT basket
-  // This happens locally - no refetch
+  
   const enrichedItems = useMemo(() => {
     return basket
       .map((item) => {
@@ -99,7 +97,6 @@ export default function BasketManager() {
       })
       .filter((item): item is NonNullable<typeof item> => item !== null)
       .sort((a, b) => {
-        // Available items first, then by original basket order
         const aAvailable = a.availableStock > 0;
         const bAvailable = b.availableStock > 0;
         if (aAvailable === bAvailable) return 0;
@@ -107,7 +104,6 @@ export default function BasketManager() {
       });
   }, [basket, cmsProducts]);
 
-  // Summary calculations from filtered items
   const { itemCount, subtotal, checkoutData } = useMemo(() => {
     const count = enrichedItems.reduce((sum, item) => sum + item.quantity, 0);
     const total = enrichedItems.reduce(
