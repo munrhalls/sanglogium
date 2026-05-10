@@ -1,11 +1,9 @@
 import { defineType, defineField, defineArrayMember } from "sanity";
-import { ShoppingCartIcon } from "@sanity/icons";
 
 export const basketReservationType = defineType({
   name: "basketReservation",
   title: "Basket Reservation",
   type: "document",
-  icon: ShoppingCartIcon,
   fields: [
     defineField({
       name: "basketReservation",
@@ -79,6 +77,43 @@ export const basketReservationType = defineType({
           name: "city",
           title: "City",
           type: "string",
+        }),
+      ],
+    }),
+    defineField({
+      name: "shippingChoice",
+      title: "Shipping Choice",
+      type: "object",
+      fields: [
+        defineField({
+          name: "provider",
+          title: "Provider",
+          type: "string",
+        }),
+        defineField({
+          name: "serviceLevel",
+          title: "Service Level",
+          type: "string",
+        }),
+        defineField({
+          name: "rateId",
+          title: "Rate ID",
+          type: "string",
+        }),
+        defineField({
+          name: "amount",
+          title: "Amount",
+          type: "number",
+        }),
+        defineField({
+          name: "currency",
+          title: "Currency",
+          type: "string",
+        }),
+        defineField({
+          name: "estimatedDays",
+          title: "Estimated Days",
+          type: "number",
         }),
       ],
     }),
