@@ -13,17 +13,10 @@ export type { HomepageData } from "@/app/lib/data/homepageBatch";
  * TTFB Impact: ~10.9s → <600ms
  */
 export async function fetchHomepageData(): Promise<HomepageData> {
-  if (process.env.NODE_ENV === 'development') {
-    console.time('Homepage Data Fetch');
-  }
-
   try {
     // Use batched fetcher - single query for all homepage sections
     const data = await fetchHomepageDataBatched();
 
-    if (process.env.NODE_ENV === 'development') {
-      console.timeEnd('Homepage Data Fetch');
-    }
     return data;
   } catch (error) {
     console.error('Error fetching homepage data:', error);
