@@ -41,10 +41,10 @@ export default function CheckoutLayout({
   const validateShipping = async (formData: ShippingAddress) => {
     setIsLoading(true);
     try {
-      const reservationId = typeof window !== 'undefined' ? window.sessionStorage.getItem('reservationId') : null;
+      const basketReservationId = typeof window !== 'undefined' ? window.sessionStorage.getItem('basketReservationId') : null;
       const res = await fetch("/api/shipping", {
         method: "POST",
-        body: JSON.stringify({ ...formData, reservationId }),
+        body: JSON.stringify({ ...formData, reservationId: basketReservationId }),
       });
       const {
         status: apiAddressStatus,

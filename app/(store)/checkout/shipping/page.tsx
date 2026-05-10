@@ -1,114 +1,188 @@
 "use client";
-import { useForm } from "react-hook-form";
-import { X } from "@phosphor-icons/react";
-import Loader from "@/app/components/common/Loader";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useCheckout } from "@/app/(store)/checkout/layout";
-import CheckoutContextType from "@/app/(store)/checkout/layout";
+import Loader from "@/app/components/common/Loader";
 
-type FormData = {
-  regionCode: string;
-  postalCode: string;
-  street: string;
-  streetNumber: number;
-  city: string;
-};
+interface ShippingOption {
+  provider: string;
+  servicelevel: {
+    name: string;
+  };
+  rateId: string;
+  amount: number;
+  currency: string;
+  estimatedDays: number;
+}
+
+interface ShippingChoice {
+  provider: string;
+  serviceLevel: string;
+  rateId: string;
+  amount: number;
+  currency: string;
+  estimatedDays: number;
+}
 
 export default function Page() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-  } = useForm<FormData>({ mode: "onBlur" });
   const router = useRouter();
-  const { validateShipping, isLoading, shippingAPIValidation } = useCheckout();
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [shippingOptions, setShippingOptions] = useState<ShippingOption[]>([]);
+  const [selectedOption, setSelectedOption] = useState<ShippingOption | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleAddressSubmit = (data: FormData) => {
-    validateShipping(data);
+  useEffect(() => {
+    const fetchShippingOptions = async () => {
+      try {
+        const basketReservationId = sessionStorage.getItem("basketReservationId");
+
+        if (!basketReservationId) {
+          router.push("/basket");
+          return;
+        }
+
+        const response = await fetch(
+          `/api/shipping/rates?basketReservationId=${basketReservationId}`
+        );
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          if (errorData.error === "Shipping address not found in reservation") {
+            router.push("/checkout/address");
+            return;
+          }
+          throw new Error(errorData.error || "Failed to fetch shipping rates");
+        }
+
+        const data = await response.json();
+        setShippingOptions(data.options || []);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to load shipping options");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchShippingOptions();
+  }, [router]);
+
+  const handleSelectOption = (option: ShippingOption) => {
+    setSelectedOption(option);
   };
 
-  // TODO handle API error state in the UI
-  // TODO prevent DDOS etc. by disabling submit button while loading and by limiting amount submits per minute / hour / day
-  return (
-    <div className="flex min-h-screen justify-center">
-      <div className="relative rounded bg-white p-4">
-        {!isLoading && (
+  const handleContinue = async () => {
+    if (!selectedOption) return;
+
+    setIsSubmitting(true);
+    try {
+      const basketReservationId = sessionStorage.getItem("basketReservationId");
+      if (!basketReservationId) {
+        router.push("/basket");
+        return;
+      }
+
+      const shippingChoice: ShippingChoice = {
+        provider: selectedOption.provider,
+        serviceLevel: selectedOption.servicelevel.name,
+        rateId: selectedOption.rateId,
+        amount: selectedOption.amount,
+        currency: selectedOption.currency,
+        estimatedDays: selectedOption.estimatedDays,
+      };
+
+      const response = await fetch(`/api/basket-reservations/${basketReservationId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ shippingChoice }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save shipping choice");
+      }
+
+      router.push("/checkout/payment");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to save shipping choice");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <Loader message="Loading shipping options..." color="border-t-black" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="rounded bg-white p-6 shadow">
+          <p className="text-red-600">{error}</p>
           <button
             onClick={() => router.back()}
-            className="absolute right-3 top-3 z-50 rounded px-4 py-2 text-black"
+            className="mt-4 rounded bg-black px-4 py-2 text-white"
           >
-            <X size={24} />
+            Go Back
           </button>
-        )}
-        <div className="relative min-h-96 w-80">
-          {!isLoading && (
-            <form onSubmit={handleSubmit(handleAddressSubmit)}>
-              <h2 className="mb-4 text-lg font-bold">Enter Shipping Address</h2>
-              <p className="text-sm font-black tracking-wide">Country</p>
-              <select
-                {...register("regionCode", { required: true })}
-                className="mb-4 w-full border border-gray-300 p-2"
-              >
-                <option value="PL">Poland</option>
-                <option value="EN">England</option>
-              </select>
-              <p className="text-sm font-black tracking-wide">Postal code</p>
-              <input
-                {...register("postalCode", { required: true })}
-                type="text"
-                placeholder="Postal Code"
-                className="mb-2 w-full border border-gray-300 p-2"
-              />
-              <div className="grid grid-cols-8 gap-2">
-                <div className="col-span-6">
-                  <p className="text-sm font-black tracking-wide">Street</p>
-                  <input
-                    {...register("street", { required: true })}
-                    type="text"
-                    placeholder="Street"
-                    className="mb-2 w-full border border-gray-300 p-2"
-                  />
-                </div>
-                <div className="col-span-2">
-                  <p className="text-sm font-black tracking-wide">Number</p>
-                  <input
-                    {...register("streetNumber", { required: true })}
-                    type="number"
-                    placeholder="..."
-                    className="mb-2 flex w-full items-center justify-center border border-gray-300 p-2"
-                  />
-                </div>
-              </div>
-              <p className="text-sm font-black tracking-wide">City</p>
-              <input
-                {...register("city", { required: true })}
-                type="text"
-                placeholder="City"
-                className="mb-2 w-full border border-gray-300 p-2"
-              />
-              <button
-                disabled={!isValid}
-                type="submit"
-                className={`w-full rounded px-4 py-2 ${
-                  !isValid
-                    ? "cursor-not-allowed bg-gray-400 text-gray-600"
-                    : "bg-black text-white"
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex min-h-screen justify-center p-4">
+      <div className="w-full max-w-2xl rounded bg-white p-6 shadow">
+        <h1 className="mb-6 text-2xl font-bold">Select Shipping Method</h1>
+
+        {shippingOptions.length === 0 ? (
+          <p className="text-gray-600">No shipping options available.</p>
+        ) : (
+          <div className="space-y-4">
+            {shippingOptions.map((option) => (
+              <div
+                key={option.rateId}
+                onClick={() => handleSelectOption(option)}
+                className={`cursor-pointer rounded border p-4 transition-colors ${
+                  selectedOption?.rateId === option.rateId
+                    ? "border-black bg-gray-50"
+                    : "border-gray-300"
                 }`}
               >
-                Submit Address
-              </button>
-            </form>
-          )}
-          {shippingAPIValidation === "FIX" && (
-            <p className="mt-4 text-sm text-red-600">
-              Could not locate provided address on the map. Please review and
-              make sure it is correct.
-            </p>
-          )}
-          {isLoading && (
-            <Loader message="Processing..." color="border-t-black" />
-          )}
-        </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-semibold">{option.provider}</p>
+                    <p className="text-sm text-gray-600">{option.servicelevel.name}</p>
+                    <p className="text-sm text-gray-500">
+                      Estimated delivery: {option.estimatedDays} days
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-lg font-bold">
+                      {(option.amount / 100).toFixed(2)} {option.currency}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <button
+          onClick={handleContinue}
+          disabled={!selectedOption || isSubmitting}
+          className={`mt-6 w-full rounded px-4 py-3 font-semibold ${
+            !selectedOption || isSubmitting
+              ? "cursor-not-allowed bg-gray-400 text-gray-600"
+              : "bg-black text-white hover:bg-gray-800"
+          }`}
+        >
+          {isSubmitting ? "Processing..." : "Continue to Payment"}
+        </button>
       </div>
     </div>
   );
