@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { render, screen, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom/vitest'
+import { mutate } from 'swr'
 import BasketManager from '../../BasketManager'
 import useBasketStore from './../../../../../../store/basketStore'
 
@@ -23,6 +24,7 @@ describe('BasketManager', () => {
   beforeEach(() => {
     useBasketStore.setState({ items: [], _hasHydrated: true })
     vi.clearAllMocks()
+    mutate(() => true, undefined, { revalidate: false })
     mockFetchResponse({ success: true, data: [] })
   })
 
@@ -70,11 +72,81 @@ describe('BasketManager', () => {
     expect(screen.getByTestId('basket-summary')).toHaveTextContent('3 items, $69.97')
   })
 
-  // BP-2 [SYNC-NEW-ITEM]: new item added after initial load → SWR refetches with expanded trackedIds
-  // BP-3 [SYNC-NO-REFETCH-ON-REMOVE]: item removed → no network call, item disappears from UI
-  // BP-4 [SYNC-NO-REFETCH-ON-QUANTITY]: quantity changed → no network call, count updates locally
   // BP-5 [EMPTY]: basket is empty → EmptyBasket rendered
+  it('renders empty state when basket has no items', () => {
+    render(<BasketManager />)
+
+    expect(screen.getByText('Your basket is empty')).toBeInTheDocument()
+    expect(screen.queryByTestId('basket-summary')).not.toBeInTheDocument()
+  })
+
   // BP-6 [ERROR]: fetch fails → error message rendered
+  it('renders error message when fetch fails', async () => {
+    useBasketStore.setState({
+      _hasHydrated: true,
+      items: [{ productId: 'prod-1', quantity: 1 }],
+    })
+
+    mockFetchResponse({ error: 'Network failure' }, false)
+
+    render(<BasketManager />)
+
+    await waitFor(() => {
+      expect(screen.getByText('Network failure')).toBeInTheDocument()
+    })
+  })
+
   // BP-7 [LOADING]: fetch in progress → skeleton rendered, empty state NOT shown
+  it('renders skeleton during fetch, not empty state', () => {
+    useBasketStore.setState({
+      _hasHydrated: true,
+      items: [{ productId: 'prod-1', quantity: 1 }],
+    })
+
+    let resolveFetch: (value: unknown) => void
+    global.fetch = vi.fn().mockImplementation(
+      () => new Promise((resolve) => { resolveFetch = resolve })
+    )
+
+    render(<BasketManager />)
+
+    expect(screen.getByLabelText('Loading basket')).toBeInTheDocument()
+    expect(screen.queryByText('Your basket is empty')).not.toBeInTheDocument()
+
+    resolveFetch!({ ok: true, json: () => Promise.resolve({ success: true, data: [] }) })
+  })
+
   // BP-8 [DATA-GAP]: item in basket but missing from CMS → item not rendered, count excludes it
+  it('excludes items missing from CMS data and adjusts count', async () => {
+    useBasketStore.setState({
+      _hasHydrated: true,
+      items: [
+        { productId: 'prod-1', quantity: 2 },
+        { productId: 'prod-2', quantity: 1 },
+      ],
+    })
+
+    mockFetchResponse({
+      success: true,
+      data: [
+        {
+          _id: 'prod-1',
+          name: 'Wireless Headphones',
+          image: null,
+          stock: 10,
+          reservedStock: 0,
+          price_data: { unit_amount: 1999, currency: 'usd' },
+        },
+      ],
+    })
+
+    render(<BasketManager />)
+
+    await waitFor(() => {
+      expect(screen.getByText('Wireless Headphones')).toBeInTheDocument()
+    })
+
+    expect(screen.queryByText('USB-C Hub')).not.toBeInTheDocument()
+    expect(screen.getByTestId('basket-summary')).toHaveTextContent('2 items, $39.98')
+  })
 })
