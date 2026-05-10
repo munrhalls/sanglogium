@@ -10,6 +10,14 @@ interface ShippingChoice {
   estimatedDays: number
 }
 
+interface ShippingAddress {
+  regionCode: string
+  postalCode: string
+  street: string
+  streetNumber: string
+  city: string
+}
+
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
@@ -45,11 +53,14 @@ export async function PATCH(
   try {
     const { id } = params
     const body = await request.json()
-    const { shippingChoice } = body as { shippingChoice?: ShippingChoice }
+    const { shippingChoice, shippingAddress } = body as {
+      shippingChoice?: ShippingChoice
+      shippingAddress?: ShippingAddress
+    }
 
-    if (!shippingChoice) {
+    if (!shippingChoice && !shippingAddress) {
       return NextResponse.json(
-        { error: 'shippingChoice is required' },
+        { error: 'shippingChoice or shippingAddress is required' },
         { status: 400 }
       )
     }
@@ -67,13 +78,17 @@ export async function PATCH(
       )
     }
 
-    // Update reservation with shipping choice
+    // Update reservation with provided fields
+    const updateData: { shippingChoice?: ShippingChoice; shippingAddress?: ShippingAddress } = {}
+    if (shippingChoice) updateData.shippingChoice = shippingChoice
+    if (shippingAddress) updateData.shippingAddress = shippingAddress
+
     await backendClient
       .patch(id)
-      .set({ shippingChoice })
+      .set(updateData)
       .commit()
 
-    return NextResponse.json({ success: true, shippingChoice })
+    return NextResponse.json({ ok: true })
   } catch (error) {
     console.error('Error updating basket reservation:', error)
     return NextResponse.json(

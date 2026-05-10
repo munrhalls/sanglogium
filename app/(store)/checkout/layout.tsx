@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState } from "react";
 import { useRouter } from "next/navigation";
+import { submitShippingAction } from "@/app/actions/address/address";
 
 export type ShippingAddress = {
   regionCode: string;
@@ -41,39 +42,39 @@ export default function CheckoutLayout({
   const validateShipping = async (formData: ShippingAddress) => {
     setIsLoading(true);
     try {
+      // Step 1: Call server action for Google validation
+      const validation = await submitShippingAction(formData);
+
+      if (validation.status === "FIX" || !validation.address) {
+        setShippingAPIValidation("FIX");
+        setIsLoading(false);
+        return;
+      }
+
+      // Step 2: On ACCEPT, call PATCH endpoint to save address
       const basketReservationId = typeof window !== 'undefined' ? window.sessionStorage.getItem('basketReservationId') : null;
-      const res = await fetch("/api/shipping", {
-        method: "POST",
-        body: JSON.stringify({ ...formData, reservationId: basketReservationId }),
+      if (!basketReservationId) {
+        throw new Error("No basket reservation ID found in session storage");
+      }
+
+      const patchRes = await fetch(`/api/basket-reservations/${basketReservationId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ shippingAddress: validation.address }),
       });
-      const {
-        status: apiAddressStatus,
-        correctedAddress: apiCorrectedAddress,
-      } = await res.json();
 
-      if (!apiCorrectedAddress) {
-        throw new Error("No corrected address returned from API");
+      if (!patchRes.ok) {
+        throw new Error("Failed to save shipping address");
       }
-      setShippingAPIValidation(apiAddressStatus);
-      console.log(apiAddressStatus, "api address status @layout");
 
-      if (apiAddressStatus === "CONFIRMED" || apiAddressStatus === "PARTIAL") {
-        const parsedApiCorrectedAddress: ShippingAddress = {
-          street: apiCorrectedAddress.street,
-          streetNumber: apiCorrectedAddress.streetNumber,
-          city: apiCorrectedAddress.city,
-          postalCode: apiCorrectedAddress.postalCode,
-          regionCode: apiCorrectedAddress.regionCode,
-        };
-
-        setShippingAddress(parsedApiCorrectedAddress);
-        setIsLoading(false);
-        router.push("/checkout/shipping/confirmation");
-      } else {
-        setIsLoading(false);
-      }
+      // Step 3: On success, set state and redirect
+      setShippingAPIValidation("CONFIRMED");
+      setShippingAddress(validation.address);
+      setIsLoading(false);
+      router.push("/checkout/shipping");
     } catch (error) {
       console.error("Error validating shipping address:", error);
+      setShippingAPIValidation("FIX");
       setIsLoading(false);
     }
   };
