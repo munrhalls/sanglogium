@@ -15,3 +15,6 @@ export function getBackendClient() {
     token: writeToken,
   });
 }
+
+// Named export for backward compatibility
+export const backendClient = getBackendClient();

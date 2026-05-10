@@ -3,11 +3,24 @@
 
 import { Redis } from '@upstash/redis';
 
-// Redis client for event logging
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL!,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
-});
+// Lazy Redis client initialization to prevent build-time failures
+let redis: Redis | null = null;
+
+function getRedis(): Redis {
+  if (redis) return redis;
+
+  const url = process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+
+  if (!url || !token) {
+    throw new Error(
+      'UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN must be set for event logging'
+    );
+  }
+
+  redis = new Redis({ url, token });
+  return redis;
+}
 
 // Development check
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -38,13 +51,13 @@ export async function logCheckoutEvent(event: Omit<CheckoutEvent, 'timestamp'>):
 
   try {
     // Append to Redis list for this correlation
-    await redis.lpush(
+    await getRedis().lpush(
       `checkout_events:${fullEvent.correlationId}`,
       JSON.stringify(fullEvent)
     );
 
     // Set TTL to prevent memory leaks (24 hours)
-    await redis.expire(`checkout_events:${fullEvent.correlationId}`, 86400);
+    await getRedis().expire(`checkout_events:${fullEvent.correlationId}`, 86400);
 
     // Also add to global list for recent events view
     const recentEvent = {
@@ -54,13 +67,13 @@ export async function logCheckoutEvent(event: Omit<CheckoutEvent, 'timestamp'>):
       event: fullEvent.event,
       outcome: fullEvent.outcome,
     };
-    await redis.lpush(
+    await getRedis().lpush(
       'checkout_events:recent',
       JSON.stringify(recentEvent)
     );
 
     // Keep only 100 recent events
-    await redis.ltrim('checkout_events:recent', 0, 99);
+    await getRedis().ltrim('checkout_events:recent', 0, 99);
 
     console.log(`[DEV] Checkout event logged: ${fullEvent.slice}:${fullEvent.event} (${fullEvent.correlationId})`);
   } catch (error) {
@@ -77,7 +90,7 @@ export async function getCheckoutEvents(correlationId: string): Promise<Checkout
   }
 
   try {
-    const events = await redis.lrange(`checkout_events:${correlationId}`, 0, -1);
+    const events = await getRedis().lrange(`checkout_events:${correlationId}`, 0, -1);
 
     return events.map(event => {
       // Handle both string and object returns from Redis
@@ -120,7 +133,7 @@ export async function getRecentCheckoutEvents(): Promise<Array<{
   }
 
   try {
-    const events = await redis.lrange('checkout_events:recent', 0, -1);
+    const events = await getRedis().lrange('checkout_events:recent', 0, -1);
 
     return events.map(event => {
       // Handle both string and object returns from Redis
@@ -157,7 +170,7 @@ export async function clearCheckoutEvents(correlationId: string): Promise<void> 
   }
 
   try {
-    await redis.del(`checkout_events:${correlationId}`);
+    await getRedis().del(`checkout_events:${correlationId}`);
     console.log(`[DEV] Cleared events for: ${correlationId}`);
   } catch (error) {
     console.error('[DEV] Failed to clear checkout events:', error);

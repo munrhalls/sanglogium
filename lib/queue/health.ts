@@ -43,5 +43,10 @@ export function startHealthInterval(): void {
   }, 60_000).unref?.()
 }
 
-// Start health interval on module load to ensure queue monitoring runs on server startup
-startHealthInterval()
+// Start health interval on module load to ensure queue monitoring runs on server startup.
+// Guarded: missing Redis config must not crash unrelated requests (e.g. middleware import).
+try {
+  startHealthInterval()
+} catch {
+  // Redis config missing — health monitoring unavailable
+}
