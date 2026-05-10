@@ -1,32 +1,26 @@
-// # Execution Specs: Slice - Basket Page Data Layer - CMS Fetcher
-
-// ## Selected Slice
-// - Slice: CMS Fetcher - getBasketProducts
-// - Reason: Fetches products from Sanity CMS for basket page
-
 import { describe, it, expect } from 'vitest'
-import { getBasketProducts } from '../../../../../../sanity-config/lib/products/getBasketProducts'
+import { getBasketProducts } from '../../../../../../sanity-cms/lib/products/getBasketProducts'
+
+const TEST_PRODUCT_ID = process.env.TEST_PRODUCT_ID || 'k27n1AQuIbSr5iozFz7EE4'
 
 describe('getBasketProducts', () => {
   it('returns empty array for non-existent product IDs', async () => {
-    // ARRANGE - setup test state with non-existent product IDs
     const ids = ['non-existent-product-1', 'non-existent-product-2']
-
-    // ACT - call getBasketProducts with non-existent IDs
     const products = await getBasketProducts(ids)
-
-    // ASSERT - verify empty array returned
     expect(products).toHaveLength(0)
   })
 
-  it('returns empty array for empty input', async () => {
-    // ARRANGE - setup test state with empty array
-    const ids: string[] = []
+  it('returns products with correct shape for real product IDs', async () => {
+    const products = await getBasketProducts([TEST_PRODUCT_ID])
 
-    // ACT - call getBasketProducts with empty array
-    const products = await getBasketProducts(ids)
-
-    // ASSERT - verify empty array returned
-    expect(products).toHaveLength(0)
+    expect(products).toHaveLength(1)
+    expect(products[0]._id).toBe(TEST_PRODUCT_ID)
+    expect(typeof products[0].name).toBe('string')
+    expect(products[0].name.length).toBeGreaterThan(0)
+    expect(products[0].price_data).toBeDefined()
+    expect(typeof products[0].price_data.unit_amount).toBe('number')
+    expect(typeof products[0].price_data.currency).toBe('string')
+    expect(typeof products[0].stock).toBe('number')
+    expect(typeof products[0].reservedStock).toBe('number')
   })
 })
