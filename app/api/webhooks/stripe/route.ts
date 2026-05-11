@@ -4,31 +4,44 @@ import { stripe } from '@/lib/stripe';
 import { Redis } from '@upstash/redis';
 import { client } from '@/sanity-cms/lib/client';
 
-// Redis client
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL!,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
-});
+// Lazy Redis client initialization to prevent build-time failures
+let redis: Redis | null = null;
+
+function getRedis(): Redis {
+  if (redis) return redis;
+
+  const url = process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+
+  if (!url || !token) {
+    throw new Error(
+      'UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN must be set for stripe webhook'
+    );
+  }
+
+  redis = new Redis({ url, token });
+  return redis;
+}
 
 // Sanity client
 const sanityClient = client;
 
 // Store processed event IDs to prevent duplicate processing
 async function isEventProcessed(eventId: string): Promise<boolean> {
-  const processed = await redis.get(`processed_event:${eventId}`);
+  const processed = await getRedis().get(`processed_event:${eventId}`);
   return !!processed;
 }
 
 // Mark event as processed
 async function markEventProcessed(eventId: string) {
-  await redis.setex(`processed_event:${eventId}`, 86400, '1'); // 24 hours
+  await getRedis().setex(`processed_event:${eventId}`, 86400, '1'); // 24 hours
 }
 
 // Commit reservation (mark as permanent in DB)
 async function commitReservation(reservationId: string, paymentIntentId: string) {
   try {
     // Get reservation details from Redis
-    const reservationData = await redis.hget('reservations', reservationId);
+    const reservationData = await getRedis().hget('reservations', reservationId);
     if (!reservationData) {
       console.error('Reservation not found:', reservationId);
       return;
@@ -80,7 +93,7 @@ async function commitReservation(reservationId: string, paymentIntentId: string)
 async function releaseReservation(reservationId: string) {
   try {
     // Get reservation details
-    const reservationData = await redis.hget('reservations', reservationId);
+    const reservationData = await getRedis().hget('reservations', reservationId);
     if (!reservationData) return;
 
     // Parse and restore stock
@@ -93,12 +106,12 @@ async function releaseReservation(reservationId: string) {
     }
     for (const item of items) {
       if (item.productId && item.quantity) {
-        await redis.hincrby('product_stock', item.productId, item.quantity);
+        await getRedis().hincrby('product_stock', item.productId, item.quantity);
       }
     }
 
     // Remove reservation
-    await redis.hdel('reservations', reservationId);
+    await getRedis().hdel('reservations', reservationId);
 
     console.log('Stock released for reservation:', reservationId);
   } catch (error) {
@@ -109,13 +122,13 @@ async function releaseReservation(reservationId: string) {
 // Update guest session
 async function updateGuestSession(sessionId: string, updates: any) {
   try {
-    const session = await redis.get(`guest_session:${sessionId}`);
+    const session = await getRedis().get(`guest_session:${sessionId}`);
     if (!session) return;
 
-    const sessionData = JSON.parse(session);
+    const sessionData = typeof session === 'string' ? JSON.parse(session) : session;
     Object.assign(sessionData, updates);
 
-    await redis.setex(
+    await getRedis().setex(
       `guest_session:${sessionId}`,
       15 * 60, // 15 minutes
       JSON.stringify(sessionData)

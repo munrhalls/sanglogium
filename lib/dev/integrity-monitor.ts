@@ -4,11 +4,24 @@
 import { Redis } from '@upstash/redis';
 import { logCheckoutEvent } from './event-logger';
 
-// Redis client
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL!,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
-});
+// Lazy Redis client initialization to prevent build-time failures
+let redis: Redis | null = null;
+
+function getRedis(): Redis {
+  if (redis) return redis;
+
+  const url = process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+
+  if (!url || !token) {
+    throw new Error(
+      'UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN must be set for integrity monitor'
+    );
+  }
+
+  redis = new Redis({ url, token });
+  return redis;
+}
 
 // Development check
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -32,7 +45,7 @@ export async function checkStockReservationIntegrity(
   if (!isDevelopment) return true;
 
   try {
-    const reservationData = await redis.hget('reservations', reservationId);
+    const reservationData = await getRedis().hget('reservations', reservationId);
 
     if (!reservationData) {
       await logIntegrityViolation(correlationId, 'MISSING_RESERVATION',
@@ -95,7 +108,7 @@ export async function checkStockLevels(
   try {
     const stockChecks = await Promise.all(
       productIds.map(async (productId) => {
-        const stock = await redis.hget('product_stock', productId);
+        const stock = await getRedis().hget('product_stock', productId);
         const stockLevel = parseInt(stock as string || '0');
         return { productId, stockLevel };
       })
@@ -193,13 +206,13 @@ async function logIntegrityViolation(
 
   try {
     // Log to violations list
-    await redis.lpush(
+    await getRedis().lpush(
       'checkout_integrity_violations',
       JSON.stringify(violation)
     );
 
     // Keep only 50 violations
-    await redis.ltrim('checkout_integrity_violations', 0, 49);
+    await getRedis().ltrim('checkout_integrity_violations', 0, 49);
 
     // Also log as checkout event
     await logCheckoutEvent({
@@ -224,7 +237,7 @@ export async function getIntegrityViolations(): Promise<IntegrityViolation[]> {
   if (!isDevelopment) return [];
 
   try {
-    const violations = await redis.lrange('checkout_integrity_violations', 0, -1);
+    const violations = await getRedis().lrange('checkout_integrity_violations', 0, -1);
 
     return violations.map(v => {
       // Handle both string and object returns from Redis
@@ -259,7 +272,7 @@ export async function clearIntegrityViolations(): Promise<void> {
   if (!isDevelopment) return;
 
   try {
-    await redis.del('checkout_integrity_violations');
+    await getRedis().del('checkout_integrity_violations');
     console.log('[DEV] Cleared integrity violations');
   } catch (error) {
     console.error('[DEV] Failed to clear integrity violations:', error);
