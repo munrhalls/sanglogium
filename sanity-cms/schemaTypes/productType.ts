@@ -1,5 +1,3 @@
-// TODO implement the Reference Pattern and switches to Markdown
-
 import { defineType, defineField, defineArrayMember } from "sanity";
 import { TrolleyIcon } from "@sanity/icons";
 
@@ -15,12 +13,6 @@ export const productType = defineType({
       type: "string",
       validation: (Rule) => Rule.required(),
     }),
-    // TODO FIX 1: Switched to Markdown (Install 'sanity-plugin-markdown')
-    // defineField({
-    //   name: "description",
-    //   title: "Description",
-    //   type: "blockContent",
-    // }),
     defineField({
       name: "slug",
       title: "Slug",
@@ -68,6 +60,56 @@ export const productType = defineType({
       validation: (Rule) => Rule.min(0),
     }),
     defineField({
+      name: "parcel",
+      title: "Parcel Data",
+      type: "object",
+      description: "Shipping dimensions and weight for Shippo API",
+      fields: [
+        defineField({
+          name: "length",
+          title: "Length (cm)",
+          type: "number",
+          initialValue: 10,
+          validation: (Rule) => Rule.required().min(1),
+        }),
+        defineField({
+          name: "width",
+          title: "Width (cm)",
+          type: "number",
+          initialValue: 10,
+          validation: (Rule) => Rule.required().min(1),
+        }),
+        defineField({
+          name: "height",
+          title: "Height (cm)",
+          type: "number",
+          initialValue: 5,
+          validation: (Rule) => Rule.required().min(1),
+        }),
+        defineField({
+          name: "weight",
+          title: "Weight (g)",
+          type: "number",
+          initialValue: 500,
+          validation: (Rule) => Rule.required().min(1),
+        }),
+        defineField({
+          name: "distance_unit",
+          title: "Distance Unit",
+          type: "string",
+          initialValue: "cm",
+          readOnly: true,
+        }),
+        defineField({
+          name: "mass_unit",
+          title: "Mass Unit",
+          type: "string",
+          initialValue: "g",
+          readOnly: true,
+        }),
+      ],
+    }),
+    defineField({
       name: "reservedStock",
       title: "Reserved Stock",
       type: "number",
@@ -98,27 +140,12 @@ export const productType = defineType({
       title: "Image Gallery",
       of: [defineArrayMember({ type: "image" })],
     }),
-    // defineField({
-    //   name: "categories",
-    //   title: "Categories",
-    //   description:
-    //     "The first category in this list will be treated as the 'Primary' category for breadcrumbs and URLs.",
-    //   type: "array",
-    //   of: [
-    //     {
-    //       type: "reference",
-    //       to: [{ type: "category" }],
-    //     },
-    //   ],
-    //   validation: (Rule) => Rule.required().min(1),
-    // }),
     defineField({
       name: "catalogueLocationKeys",
       title: "Catalogue Location",
       description: "Select where this product appears in the catalogue.",
       type: "array",
       of: [{ type: "string" }],
-      // components: { input: MenuLocationInput }, // <--- UNCOMMENT THIS when component exists
       validation: (Rule) => Rule.required().min(1),
     }),
 

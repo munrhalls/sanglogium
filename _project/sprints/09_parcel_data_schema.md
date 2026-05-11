@@ -189,28 +189,7 @@ defineField({
 
 ---
 
-### Scope 4: Migration Script for 567 Products (20 min)
-
-**UX Impact**: All existing products get default parcel data automatically
-
-**What**: Script that patches every product with default parcel object
-
-**File**: `scripts/migrations/addParcelData.mjs`
-
-**Script logic**:
-1. Fetch all products from Sanity
-2. For each product without `parcel` field, patch with defaults
-3. Log progress every 50 products
-4. Report summary at end
-
-**Verification**:
-- [ ] Run `node scripts/migrations/addParcelData.mjs`
-- [ ] All 567 products have parcel data
-- [ ] No products lost or corrupted
-
----
-
-### Scope 5: Type Generation Update (5 min)
+### Scope 4: Type Generation Update (5 min)
 
 **UX Impact**: TypeScript types reflect new parcel field
 
@@ -230,9 +209,8 @@ defineField({
 |-------|-------|------|
 | 1 | Shipping rates display on page | ☐ |
 | 2 | Parcel fields visible in Sanity Studio | ☐ |
-| 3 | Rates use product parcel data | ☐ |
-| 4 | All 567 products have parcel data | ☐ |
-| 5 | TypeScript compiles clean | ☐ |
+| 3 | Rates use product parcel data when available, fallback when not | ☐ |
+| 4 | TypeScript compiles clean | ☐ |
 
 ---
 
@@ -240,6 +218,6 @@ defineField({
 
 - **No new abstractions** - parcel data is a plain object on product
 - **No new API endpoints** - reuse existing `/api/shipping/rates`
-- **Single migration script** - one file, one run
 - **Snake_case only** - match Shippo API exactly, no mapping layer
-- **Default values** - 10x10x5cm, 500g as sensible audio gear defaults
+- **No blind migration** - products without parcel data use hardcoded fallback. Real data entered organically.
+- **Fallback is explicit** - PARCEL_DATA constant in route.ts is the single source of fallback values
