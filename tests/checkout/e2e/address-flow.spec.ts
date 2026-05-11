@@ -4,26 +4,25 @@
 //   1. Seed a basketReservation doc in the Sanity test dataset.
 //   2. Inject the reservationId into sessionStorage (as the basket page
 //      would after POST /api/checkout-queue).
-//   3. Open /checkout/shipping in a real browser.
+//   3. Open /checkout/address in a real browser.
 //   4. Fill the address form with a real valid Polish address.
-//   5. Click "Submit Address" → the UI calls /api/shipping which hits the
-//      real Google Address Validation API and patches the reservation doc.
-//   6. Wait for navigation to /checkout/shipping/confirmation.
-//   7. Query Sanity and assert that `shippingAddress` has been persisted
+//   5. Click "Continue to Shipping" → the UI calls submitShippingAction (server action)
+//      which hits the real Google Address Validation API.
+//   6. On ACCEPT, UI calls PATCH /api/basket-reservations/[id] to save address.
+//   7. Wait for navigation to /checkout/shipping.
+//   8. Query Sanity and assert that `shippingAddress` has been persisted
 //      on the reservation document.
 //
 // Zero mocks: real browser, real Google API, real Sanity writes.
 //
-// Expected to fail until the client includes `reservationId` in the
-// shipping request body so that /api/shipping can patch the doc.
-//
 // Data shape references:
-//   - Shipping page form:  app/(store)/checkout/shipping/page.tsx
-//   - Checkout context:    app/(store)/checkout/layout.tsx
-//   - Shipping API route:  app/api/shipping/route.ts
-//   - Sanity schema:       sanity/schemaTypes/basketReservationType.ts
-//   - Test addresses:      tests/checkout/test-data/test-addresses.ts
-//   - Test products:       tests/helpers/test-data.ts
+//   - Address page form:     app/(store)/checkout/address/page.tsx
+//   - Checkout context:      app/(store)/checkout/layout.tsx
+//   - Server action:         app/actions/address/address.ts
+//   - PATCH endpoint:        app/api/basket-reservations/[id]/route.ts
+//   - Sanity schema:         sanity/schemaTypes/basketReservationType.ts
+//   - Test addresses:        tests/checkout/test-data/test-addresses.ts
+//   - Test products:         tests/helpers/test-data.ts
 
 import { test, expect } from '@playwright/test'
 import { createClient } from 'next-sanity'
@@ -128,77 +127,62 @@ test.describe('Checkout address flow (E2E)', () => {
 
     // Step 1: Inject reservationId into sessionStorage
     await page.addInitScript((id) => {
-      window.sessionStorage.setItem('reservationId', id)
+      window.sessionStorage.setItem('basketReservationId', id)
     }, reservationId)
 
     // Step 2: Open address page and verify it loaded
-    await page.goto('/checkout/shipping')
-    await expect(page.locator('h2')).toContainText('Enter Shipping Address')
+    await page.goto('/checkout/address')
+    await expect(page.locator('h1')).toContainText('Shipping Address')
 
     // Step 3: Verify form fields are visible
-    await expect(page.getByPlaceholder('Postal Code')).toBeVisible()
-    await expect(page.getByPlaceholder('Street')).toBeVisible()
-    await expect(page.getByPlaceholder('City')).toBeVisible()
+    await expect(page.getByLabel('Country')).toBeVisible()
+    await expect(page.getByLabel('Postal Code')).toBeVisible()
+    await expect(page.getByLabel('Street')).toBeVisible()
+    await expect(page.getByLabel('Number')).toBeVisible()
+    await expect(page.getByLabel('City')).toBeVisible()
 
     // Step 4: Fill form field by field with verification
-    await page.selectOption('select', address.regionCode)
-    const postalCodeInput = page.getByPlaceholder('Postal Code')
+    await page.getByLabel('Country').selectOption(address.regionCode)
+
+    const postalCodeInput = page.getByLabel('Postal Code')
     await postalCodeInput.fill(address.postalCode)
     await postalCodeInput.blur()
     await expect(postalCodeInput).toHaveValue(address.postalCode)
 
-    const streetInput = page.getByPlaceholder('Street')
+    const streetInput = page.getByLabel('Street')
     await streetInput.fill(address.street)
     await streetInput.blur()
     await expect(streetInput).toHaveValue(address.street)
 
-    const streetNumberInput = page.locator('input[name="streetNumber"]')
+    const streetNumberInput = page.getByLabel('Number')
     await streetNumberInput.fill(String(address.streetNumber))
     await streetNumberInput.blur()
     await expect(streetNumberInput).toHaveValue(String(address.streetNumber))
 
-    const cityInput = page.getByPlaceholder('City')
+    const cityInput = page.getByLabel('City')
     await cityInput.fill(address.city)
     await cityInput.blur()
     await expect(cityInput).toHaveValue(address.city)
 
     // Step 5: Verify submit button is enabled
-    const submitButton = page.getByRole('button', { name: 'Submit Address' })
+    const submitButton = page.getByRole('button', { name: 'Continue to Shipping' })
     await expect(submitButton).toBeEnabled()
 
-    // Step 6: Click button and wait for API response
-    const shippingResponsePromise = page.waitForResponse(
+    // Step 6: Click button and wait for PATCH endpoint to be called
+    const patchResponsePromise = page.waitForResponse(
       (res) =>
-        res.url().includes('/api/shipping') && res.request().method() === 'POST'
+        res.url().includes('/api/basket-reservations/') && res.request().method() === 'PATCH'
     )
     await submitButton.click()
-    const shippingResponse = await shippingResponsePromise
+    const patchResponse = await patchResponsePromise
 
-    // Step 7: Verify API response status
-    expect(shippingResponse.status()).toBe(200)
+    // Step 7: Verify PATCH response status
+    expect(patchResponse.status()).toBe(200)
 
-    // Step 8: Parse and verify API response body structure
-    const shippingBody = (await shippingResponse.json()) as {
-      status: 'CONFIRMED' | 'PARTIAL' | 'FIX'
-      correctedAddress: {
-        street: string
-        streetNumber: string
-        city: string
-        postalCode: string
-        regionCode: string
-      } | null
-    }
-    expect(shippingBody).toHaveProperty('status')
-    expect(shippingBody).toHaveProperty('correctedAddress')
+    // Step 8: Wait for navigation to shipping options page
+    await page.waitForURL('/checkout/shipping')
 
-    // Step 9: Verify API response status field
-    expect(shippingBody.status).toBe('CONFIRMED')
-
-    // Step 10: Verify corrected address exists
-    expect(shippingBody.correctedAddress).not.toBeNull()
-    const corrected = shippingBody.correctedAddress!
-
-    // Step 11: Query Sanity and verify doc exists
+    // Step 9: Query Sanity and verify doc exists with shippingAddress
     let doc: {
       _id: string
       shippingAddress?: {
@@ -218,22 +202,22 @@ test.describe('Checkout address flow (E2E)', () => {
          }`,
         { id: reservationId }
       )
-      if (doc) break
+      if (doc && doc.shippingAddress) break
       await new Promise((r) => setTimeout(r, 500))
     }
 
     expect(doc).not.toBeNull()
     expect(doc!._id).toBe(reservationId)
 
-    // Step 14: Verify shippingAddress exists on doc
+    // Step 10: Verify shippingAddress exists on doc
     expect(doc!.shippingAddress).toBeTruthy()
 
-    // Step 15: Verify shippingAddress data matches API response
+    // Step 11: Verify shippingAddress data matches submitted address
     const saved = doc!.shippingAddress!
-    expect(saved.regionCode).toBe(corrected.regionCode)
-    expect(saved.postalCode).toBe(corrected.postalCode)
-    expect(saved.street).toBe(corrected.street)
-    expect(String(saved.streetNumber)).toBe(String(corrected.streetNumber))
-    expect(saved.city).toBe(corrected.city)
+    expect(saved.regionCode).toBe(address.regionCode)
+    expect(saved.postalCode).toBe(address.postalCode)
+    expect(saved.street).toBe(address.street)
+    expect(String(saved.streetNumber)).toBe(String(address.streetNumber))
+    expect(saved.city).toBe(address.city)
   })
 })
