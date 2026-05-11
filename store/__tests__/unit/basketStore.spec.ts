@@ -28,7 +28,7 @@ describe('BasketStore Actions', () => {
       expect(selectTotalItemsCount(useBasketStore.getState())).toBe(initialCount + 1)
     })
 
-    it('validates productId using Zod schema', () => {
+    it('rejects empty productId', () => {
       // ARRANGE - setup test state with empty basket, prepare invalid product data
       const productId = 'product-1'
       const initialCount = selectTotalItemsCount(useBasketStore.getState())

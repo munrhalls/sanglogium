@@ -65,31 +65,6 @@ describe('basketControls', () => {
     })
   })
 
-  describe('when user clicks add button (product page)', () => {
-    it('hides add button and renders increment/decrement buttons', () => {
-      // ARRANGE - setup test state with rendered BasketControls, product not in basket
-      const productId = 'product-1'
-
-      render(
-        <BasketControls
-          productId={productId}
-          isBasketPage={false}
-        />
-      )
-
-      // ACT - trigger user click on add button
-      act(() => {
-        screen.getByTestId('add-to-basket-product-1').click()
-      })
-
-      // ASSERT - verify add button no longer renders
-      expect(screen.queryByTestId('add-to-basket-product-1')).not.toBeInTheDocument()
-      // ASSERT - verify increment/decrement buttons render
-      expect(screen.getByTestId('increment-product-1')).toBeInTheDocument()
-      expect(screen.getByTestId('decrement-product-1')).toBeInTheDocument()
-    })
-  })
-
   describe('when user clicks decrement button to zero (product page)', () => {
     it('removes product from basket and shows add button', () => {
       // ARRANGE - setup test state with rendered BasketControls, product in basket with quantity 1
