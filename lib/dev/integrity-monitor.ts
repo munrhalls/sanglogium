@@ -29,6 +29,8 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 export interface IntegrityViolation {
   correlationId: string;
   type: string;
+
+  
   description: string;
   timestamp: string;
   details: Record<string, unknown>;
