@@ -32,6 +32,7 @@ interface GoogleValidationVerdict {
   addressComplete: boolean;
   hasReplacedComponents: boolean;
   hasSpellCorrectedComponents: boolean;
+  hasInferredComponents: boolean;
 }
 
 export interface GoogleValidationResponse {
@@ -78,7 +79,7 @@ const formatCleanAddress = (
 function isAcceptedAddress(verdict: GoogleValidationVerdict): boolean {
   if (!verdict.addressComplete) return false;
 
-  if (verdict.hasReplacedComponents || verdict.hasSpellCorrectedComponents) {
+  if (verdict.hasInferredComponents) {
     return false;
   }
 
