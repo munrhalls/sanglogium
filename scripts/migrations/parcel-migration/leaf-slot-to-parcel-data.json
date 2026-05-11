@@ -1,0 +1,186 @@
+{
+  "/headphones/open-back": {
+    "length": 25,
+    "width": 22,
+    "height": 12,
+    "weight": 850,
+    "distance_unit": "cm",
+    "mass_unit": "g"
+  },
+  "/headphones/closed-back": {
+    "length": 25,
+    "width": 22,
+    "height": 12,
+    "weight": 900,
+    "distance_unit": "cm",
+    "mass_unit": "g"
+  },
+  "/headphones/semi-open": {
+    "length": 25,
+    "width": 22,
+    "height": 12,
+    "weight": 850,
+    "distance_unit": "cm",
+    "mass_unit": "g"
+  },
+  "/headphones/planar-magnetic": {
+    "length": 30,
+    "width": 25,
+    "height": 15,
+    "weight": 1200,
+    "distance_unit": "cm",
+    "mass_unit": "g"
+  },
+  "/headphones/dynamic": {
+    "length": 25,
+    "width": 22,
+    "height": 12,
+    "weight": 800,
+    "distance_unit": "cm",
+    "mass_unit": "g"
+  },
+  "/headphones/electrostatic": {
+    "length": 35,
+    "width": 28,
+    "height": 15,
+    "weight": 1500,
+    "distance_unit": "cm",
+    "mass_unit": "g"
+  },
+  "/headphones/monitors-iems": {
+    "length": 15,
+    "width": 10,
+    "height": 5,
+    "weight": 250,
+    "distance_unit": "cm",
+    "mass_unit": "g"
+  },
+  "/audio-electronics/desktop-amps": {
+    "length": 35,
+    "width": 25,
+    "height": 15,
+    "weight": 3500,
+    "distance_unit": "cm",
+    "mass_unit": "g"
+  },
+  "/audio-electronics/portable-amps": {
+    "length": 15,
+    "width": 10,
+    "height": 5,
+    "weight": 350,
+    "distance_unit": "cm",
+    "mass_unit": "g"
+  },
+  "/audio-electronics/bluetooth-dac-amps": {
+    "length": 12,
+    "width": 8,
+    "height": 4,
+    "weight": 200,
+    "distance_unit": "cm",
+    "mass_unit": "g"
+  },
+  "/audio-electronics/standalone-dacs": {
+    "length": 30,
+    "width": 25,
+    "height": 10,
+    "weight": 2500,
+    "distance_unit": "cm",
+    "mass_unit": "g"
+  },
+  "/audio-electronics/dac-amp-combos": {
+    "length": 35,
+    "width": 25,
+    "height": 15,
+    "weight": 4000,
+    "distance_unit": "cm",
+    "mass_unit": "g"
+  },
+  "/audio-electronics/usb-c-dacs": {
+    "length": 10,
+    "width": 5,
+    "height": 2,
+    "weight": 100,
+    "distance_unit": "cm",
+    "mass_unit": "g"
+  },
+  "/audio-electronics/digital-players-daps": {
+    "length": 18,
+    "width": 12,
+    "height": 6,
+    "weight": 450,
+    "distance_unit": "cm",
+    "mass_unit": "g"
+  },
+  "/audio-electronics/network-streamers": {
+    "length": 40,
+    "width": 30,
+    "height": 15,
+    "weight": 4500,
+    "distance_unit": "cm",
+    "mass_unit": "g"
+  },
+  "/accessories/headphone-cables": {
+    "length": 15,
+    "width": 10,
+    "height": 3,
+    "weight": 150,
+    "distance_unit": "cm",
+    "mass_unit": "g"
+  },
+  "/accessories/interconnects": {
+    "length": 15,
+    "width": 10,
+    "height": 3,
+    "weight": 150,
+    "distance_unit": "cm",
+    "mass_unit": "g"
+  },
+  "/accessories/adapters": {
+    "length": 10,
+    "width": 10,
+    "height": 2,
+    "weight": 50,
+    "distance_unit": "cm",
+    "mass_unit": "g"
+  },
+  "/accessories/earpads": {
+    "length": 15,
+    "width": 12,
+    "height": 4,
+    "weight": 100,
+    "distance_unit": "cm",
+    "mass_unit": "g"
+  },
+  "/accessories/eartips": {
+    "length": 10,
+    "width": 8,
+    "height": 2,
+    "weight": 30,
+    "distance_unit": "cm",
+    "mass_unit": "g"
+  },
+  "/accessories/care-cleaning": {
+    "length": 15,
+    "width": 10,
+    "height": 5,
+    "weight": 200,
+    "distance_unit": "cm",
+    "mass_unit": "g"
+  },
+  "/accessories/headphone-stands": {
+    "length": 30,
+    "width": 20,
+    "height": 15,
+    "weight": 1000,
+    "distance_unit": "cm",
+    "mass_unit": "g"
+  },
+  "/accessories/carrying-cases": {
+    "length": 25,
+    "width": 20,
+    "height": 10,
+    "weight": 400,
+    "distance_unit": "cm",
+    "mass_unit": "g"
+  }
+}
