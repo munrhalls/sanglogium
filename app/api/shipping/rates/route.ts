@@ -48,6 +48,10 @@ const PARCEL_DATA: ParcelData = {
 
 const SHIPPO_API_KEY = process.env.SHIPPO_API_KEY;
 
+console.log('[DEBUG] SHIPPO_API_KEY loaded:', !!SHIPPO_API_KEY);
+console.log('[DEBUG] SHIPPO_API_KEY length:', SHIPPO_API_KEY?.length);
+console.log('[DEBUG] SHIPPO_API_KEY prefix:', SHIPPO_API_KEY?.substring(0, 10));
+
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const basketReservationId = searchParams.get('basketReservationId');
@@ -99,6 +103,26 @@ export async function GET(req: Request) {
 
     const { shippingAddress } = reservation;
 
+    console.log('[DEBUG] Request body structure:', JSON.stringify({
+      address_from: {
+        name: 'Sang Logium',
+        street1: '123 Main St',
+        city: 'Warsaw',
+        state: 'MZ',
+        zip: '00-001',
+        country: 'PL',
+      },
+      address_to: {
+        name: 'Customer',
+        street1: `${shippingAddress.street} ${shippingAddress.streetNumber}`,
+        city: shippingAddress.city,
+        state: '',
+        zip: shippingAddress.postalCode,
+        country: shippingAddress.regionCode,
+      },
+      parcels: [PARCEL_DATA],
+    }, null, 2));
+
     // Call Shippo API to fetch rates
     const shippoResponse = await fetch('https://api.goshippo.com/shipments/', {
       method: 'POST',
@@ -129,9 +153,10 @@ export async function GET(req: Request) {
 
     if (!shippoResponse.ok) {
       const errorText = await shippoResponse.text();
-      console.error('Shippo API error:', errorText);
+      console.error('[DEBUG] Shippo API status:', shippoResponse.status);
+      console.error('[DEBUG] Shippo API error:', errorText);
       return Response.json(
-        { error: 'Failed to fetch shipping rates from Shippo' },
+        { error: 'Failed to fetch shipping rates from Shippo', details: errorText },
         { status: 500 }
       );
     }
