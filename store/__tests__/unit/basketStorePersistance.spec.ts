@@ -7,9 +7,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import useBasketStore, { selectTotalItemsCount } from './../../basketStore'
 
-// Storage key used by persist middleware - extracted to avoid hardcoding implementation details
-const STORAGE_KEY = 'basket-storage'
-
 describe('BasketStore Persistence', () => {
   beforeEach(() => {
     // Reset store before each test using public API
@@ -19,23 +16,29 @@ describe('BasketStore Persistence', () => {
     sessionStorage.clear()
   })
 
-  describe('when localStorage write succeeds', () => {
-    it('persists state across store resets', () => {
-      // ARRANGE - setup test state with localStorage available
+  describe('when store initializes', () => {
+    it('initializes with empty state when no data exists', () => {
+      // ARRANGE - setup test state with empty storage
+      // ACT - get initial store state
+      const state = useBasketStore.getState()
+
+      // ASSERT - verify store initializes with empty state
+      expect(selectTotalItemsCount(state)).toBe(0)
+    })
+  })
+
+  describe('when state changes', () => {
+    it('persists state changes to storage', () => {
+      // ARRANGE - setup test state with initialized store
       const productId = 'product-1'
 
-      // ACT - trigger state change to persist
+      // ACT - trigger store state change via action
       useBasketStore.getState().addProduct(productId)
-      const countBeforeReset = selectTotalItemsCount(useBasketStore.getState())
 
-      // Reset store to trigger rehydration from storage
-      useBasketStore.getState().clear()
-
-      // ASSERT - verify state persists via public selector
-      const countAfterReset = selectTotalItemsCount(useBasketStore.getState())
-      expect(countBeforeReset).toBe(1)
-      // Note: Due to singleton store architecture, true rehydration testing is limited
-      // This test verifies the persistence mechanism is active
+      // ASSERT - verify state is persisted by checking storage is not empty
+      // Note: Checking storage is acceptable here as it's a boundary concern, not internal state
+      const storageKeys = Object.keys(localStorage)
+      expect(storageKeys.length).toBeGreaterThan(0)
     })
   })
 
@@ -61,7 +64,7 @@ describe('BasketStore Persistence', () => {
     })
   })
 
-  describe('when sessionStorage write fails', () => {
+  describe('when both storages write fail', () => {
     it('degrades gracefully without error', () => {
       // ARRANGE - setup test state with both localStorage and sessionStorage unavailable
       const localStorageSpy = vi.spyOn(localStorage, 'setItem').mockImplementation(() => {
@@ -88,7 +91,7 @@ describe('BasketStore Persistence', () => {
   })
 
   describe('when localStorage read succeeds', () => {
-    it('rehydrates state from localStorage', () => {
+    it('adds product and updates state', () => {
       // ARRANGE - setup test state with valid data in localStorage
       const productId = 'product-1'
 
@@ -123,7 +126,7 @@ describe('BasketStore Persistence', () => {
     })
   })
 
-  describe('when both localStorage and sessionStorage read fail', () => {
+  describe('when both storages read fail', () => {
     it('resets to empty state', () => {
       // ARRANGE - setup test state with both storages unavailable or corrupt
       const localStorageSpy = vi.spyOn(localStorage, 'getItem').mockImplementation(() => {
@@ -158,7 +161,7 @@ describe('BasketStore Hydration Validation', () => {
   })
 
   describe('when hydration succeeds', () => {
-    it('validates data structure using Zod schema', () => {
+    it('adds product with valid data structure', () => {
       // ARRANGE - setup test state with valid data structure in storage
       const productId = 'product-1'
 

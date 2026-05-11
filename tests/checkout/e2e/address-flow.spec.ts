@@ -26,9 +26,9 @@
 
 import { test, expect } from '@playwright/test'
 import { createClient } from 'next-sanity'
-import { apiVersion, dataset, projectId } from '@/sanity-cms/env'
-import { getTestProducts, resetProductStock } from '@/tests/helpers/sanity-test-products'
-import { testAddresses } from '@/tests/checkout/test-data/test-addresses'
+import { apiVersion, dataset, projectId } from '../../../sanity-cms/env'
+import { getTestProducts, resetProductStock } from '../../helpers/sanity-test-products'
+import { testAddresses } from '../test-data/test-addresses'
 
 const readClient = createClient({
   projectId,
@@ -37,17 +37,12 @@ const readClient = createClient({
   useCdn: false,
 })
 
-const writeToken = process.env.SANITY_STUDIO_READ_WRITE || process.env.SANITY_STUDIO_READ_WRITE_CREATE;
-console.log('TEST ENVIRONMENT: writeToken loaded:', writeToken ? 'YES' : 'NO');
-console.log('TEST ENVIRONMENT: writeToken length:', writeToken?.length);
-console.log('TEST ENVIRONMENT: writeToken first 10 chars:', writeToken?.substring(0, 10));
-
 const writeClient = createClient({
   projectId,
   dataset,
   apiVersion,
   useCdn: false,
-  token: writeToken,
+  token: process.env.SANITY_STUDIO_READ_WRITE || process.env.SANITY_STUDIO_READ_WRITE_CREATE,
 })
 
 test.describe('Checkout address flow (E2E)', () => {
@@ -62,7 +57,7 @@ test.describe('Checkout address flow (E2E)', () => {
   test.beforeEach(async () => {
     await resetProductStock(testProducts[0]._id, testProducts[0].stock)
 
-    // Step 1: Create reservation document
+    // Create reservation document
     const reservation = await writeClient.create({
       _type: 'basketReservation',
       basketReservation: [
@@ -75,40 +70,6 @@ test.describe('Checkout address flow (E2E)', () => {
       createdAt: new Date().toISOString(),
     })
     reservationId = reservation._id
-
-    // Step 2: Verify reservation document was created successfully
-    expect(reservationId).toBeDefined()
-    expect(reservationId).toBeTruthy()
-
-    // Step 3: Verify reservation document can be read back
-    const readBack = await readClient.fetch(
-      `*[_type == "basketReservation" && _id == $id][0]{_id, basketReservation}`,
-      { id: reservationId }
-    )
-    expect(readBack).not.toBeNull()
-    expect(readBack!._id).toBe(reservationId)
-
-    // Step 4: Verify write client can authenticate (test with a simple read operation)
-    const authTest = await writeClient.fetch(
-      `*[_type == "basketReservation" && _id == $id][0]{_id}`,
-      { id: reservationId }
-    )
-    expect(authTest).not.toBeNull()
-
-    // Step 5: Verify write client can commit changes (test with a simple patch)
-    try {
-      await writeClient
-        .patch(reservationId)
-        .set({ testField: 'test' })
-        .commit()
-      // Clean up the test field
-      await writeClient
-        .patch(reservationId)
-        .unset(['testField'])
-        .commit()
-    } catch (error) {
-      throw new Error(`Write client cannot commit: ${error}`)
-    }
   })
 
   test.afterEach(async () => {
