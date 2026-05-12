@@ -4,6 +4,23 @@
 
 The shipping slice allows users to select shipping options and rates after their address has been validated. It combines the verified address with company and parcel data, calls the Shippo API to fetch available shipping options, displays the options to the user, and saves their selection to the basket reservation document.
 
+## CMS Pre-Requirements
+
+Products in Sanity CMS must include parcel data for shipping calculations. The product schema requires a `parcel` object field with Shippo API-compliant format:
+
+```typescript
+parcel: {
+  length: number,      // cm
+  width: number,       // cm
+  height: number,      // cm
+  weight: number,      // grams
+  distance_unit: 'cm', // fixed
+  mass_unit: 'g'       // fixed
+}
+```
+
+**Migration Pattern:** Use the incremental phase approach (Discovery → Mapping → Transformation → Schema Update → Migration Script) to add parcel data to existing products. Reference: `_project/patterns/migration/incremental-phase-pattern.md`
+
 ## Architecture
 
 ```mermaid
