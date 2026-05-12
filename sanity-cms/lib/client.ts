@@ -1,3 +1,6 @@
+// READ-ONLY client for public/frontend access
+// No token required - uses CDN for performance
+// Used for: product catalog, homepage components, public queries
 import { createClient } from "next-sanity";
 import { apiVersion, dataset, projectId } from "../env";
 import imageUrlBuilder from "@sanity/image-url";
@@ -16,8 +19,9 @@ export const client = createClient({
   perspective: "published",
 });
 
-// Write-enabled client for atomic operations
-// Uses SANITY_STUDIO_READ_WRITE_CREATE which has create/delete permissions
+// WRITE client for backend atomic operations
+// Uses SANITY_STUDIO_READ_WRITE_CREATE (preferred) or SANITY_API_TOKEN (fallback)
+// Used for: basket reservations, stock updates, profile operations
 const writeToken = process.env.SANITY_STUDIO_READ_WRITE_CREATE || process.env.SANITY_API_TOKEN;
 
 export const writeClient = createClient({
