@@ -163,6 +163,65 @@ export async function GET(req: Request) {
       );
     }
 
+    // Select sender address based on destination country
+    const countryCode = shippingAddress.regionCode.toUpperCase();
+    const getSenderAddress = (country: string) => {
+      // Try country-specific address first (SHIPPO_SENDER_{COUNTRY}_*)
+      const prefix = `SHIPPO_SENDER_${country}_`;
+      const name = process.env[`${prefix}NAME`];
+      const street = process.env[`${prefix}STREET`];
+      const city = process.env[`${prefix}CITY`];
+      const state = process.env[`${prefix}STATE`];
+      const zip = process.env[`${prefix}ZIP`];
+      const countryField = process.env[`${prefix}COUNTRY`];
+      const phone = process.env[`${prefix}PHONE`];
+      const email = process.env[`${prefix}EMAIL`];
+
+      // If country-specific address is configured, use it
+      if (name && street && city && zip && countryField) {
+        return { name, street, city, state, zip, country: countryField, phone, email };
+      }
+
+      // Fallback to DEFAULT address (SHIPPO_SENDER_DEFAULT_*)
+      const defaultName = process.env['SHIPPO_SENDER_DEFAULT_NAME'];
+      const defaultStreet = process.env['SHIPPO_SENDER_DEFAULT_STREET'];
+      const defaultCity = process.env['SHIPPO_SENDER_DEFAULT_CITY'];
+      const defaultState = process.env['SHIPPO_SENDER_DEFAULT_STATE'];
+      const defaultZip = process.env['SHIPPO_SENDER_DEFAULT_ZIP'];
+      const defaultCountry = process.env['SHIPPO_SENDER_DEFAULT_COUNTRY'];
+      const defaultPhone = process.env['SHIPPO_SENDER_DEFAULT_PHONE'];
+      const defaultEmail = process.env['SHIPPO_SENDER_DEFAULT_EMAIL'];
+
+      if (defaultName && defaultStreet && defaultCity && defaultZip && defaultCountry) {
+        return { name: defaultName, street: defaultStreet, city: defaultCity, state: defaultState, zip: defaultZip, country: defaultCountry, phone: defaultPhone, email: defaultEmail };
+      }
+
+      // Backward compatibility: Use legacy SHIPPO_SENDER_* (no country suffix)
+      if (SHIPPO_SENDER_NAME && SHIPPO_SENDER_STREET && SHIPPO_SENDER_CITY && SHIPPO_SENDER_ZIP && SHIPPO_SENDER_COUNTRY) {
+        return {
+          name: SHIPPO_SENDER_NAME,
+          street: SHIPPO_SENDER_STREET,
+          city: SHIPPO_SENDER_CITY,
+          state: SHIPPO_SENDER_STATE || '',
+          zip: SHIPPO_SENDER_ZIP,
+          country: SHIPPO_SENDER_COUNTRY,
+          phone: SHIPPO_SENDER_PHONE,
+          email: SHIPPO_SENDER_EMAIL,
+        };
+      }
+
+      return null;
+    };
+
+    const senderAddress = getSenderAddress(countryCode);
+
+    if (!senderAddress) {
+      return Response.json(
+        { error: 'Sender address not configured for destination country', errorClass: 'CONFIGURATION', retryable: false },
+        { status: 500 }
+      );
+    }
+
     if (!shippingAddress.postalCode || shippingAddress.postalCode.trim() === '') {
       return Response.json(
         { error: 'Postal code is required.', errorClass: 'VALIDATION', retryable: false },
@@ -223,14 +282,14 @@ export async function GET(req: Request) {
 
     console.log('[DEBUG] Request body structure:', JSON.stringify({
       address_from: {
-        name: SHIPPO_SENDER_NAME,
-        street1: SHIPPO_SENDER_STREET,
-        city: SHIPPO_SENDER_CITY,
-        state: SHIPPO_SENDER_STATE || '',
-        zip: SHIPPO_SENDER_ZIP,
-        country: SHIPPO_SENDER_COUNTRY,
-        phone: SHIPPO_SENDER_PHONE,
-        email: SHIPPO_SENDER_EMAIL,
+        name: senderAddress.name,
+        street1: senderAddress.street,
+        city: senderAddress.city,
+        state: senderAddress.state || '',
+        zip: senderAddress.zip,
+        country: senderAddress.country,
+        phone: senderAddress.phone,
+        email: senderAddress.email,
       },
       address_to: {
         name: 'Customer',
@@ -271,14 +330,14 @@ export async function GET(req: Request) {
           },
           body: JSON.stringify({
             address_from: {
-              name: SHIPPO_SENDER_NAME,
-              street1: SHIPPO_SENDER_STREET,
-              city: SHIPPO_SENDER_CITY,
-              state: SHIPPO_SENDER_STATE || '',
-              zip: SHIPPO_SENDER_ZIP,
-              country: SHIPPO_SENDER_COUNTRY,
-              phone: SHIPPO_SENDER_PHONE,
-              email: SHIPPO_SENDER_EMAIL,
+              name: senderAddress.name,
+              street1: senderAddress.street,
+              city: senderAddress.city,
+              state: senderAddress.state || '',
+              zip: senderAddress.zip,
+              country: senderAddress.country,
+              phone: senderAddress.phone,
+              email: senderAddress.email,
             },
             address_to: {
               name: 'Customer',
