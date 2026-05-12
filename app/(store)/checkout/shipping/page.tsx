@@ -27,6 +27,8 @@ export default function Page() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [errorClass, setErrorClass] = useState<string | null>(null);
+  const [retryable, setRetryable] = useState(false);
   const [shippingOptions, setShippingOptions] = useState<ShippingOption[]>([]);
   const [selectedOption, setSelectedOption] = useState<ShippingOption | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -51,7 +53,10 @@ export default function Page() {
             router.push("/checkout/address");
             return;
           }
-          throw new Error(errorData.error || "Failed to fetch shipping rates");
+          setError(errorData.error || "Failed to fetch shipping rates");
+          setErrorClass(errorData.errorClass || null);
+          setRetryable(errorData.retryable || false);
+          return;
         }
 
         const data = await response.json();
@@ -68,6 +73,15 @@ export default function Page() {
 
   const handleSelectOption = (option: ShippingOption) => {
     setSelectedOption(option);
+  };
+
+  const handleRetry = () => {
+    setError(null);
+    setErrorClass(null);
+    setRetryable(false);
+    setIsLoading(true);
+    // Trigger re-fetch by re-running the useEffect
+    window.location.reload();
   };
 
   const handleContinue = async () => {
@@ -123,12 +137,22 @@ export default function Page() {
       <div className="flex min-h-screen items-center justify-center">
         <div className="rounded bg-white p-6 shadow">
           <p className="text-red-600">{error}</p>
-          <button
-            onClick={() => router.back()}
-            className="mt-4 rounded bg-black px-4 py-2 text-white"
-          >
-            Go Back
-          </button>
+          <div className="mt-4 flex gap-2">
+            {retryable && (
+              <button
+                onClick={handleRetry}
+                className="rounded bg-black px-4 py-2 text-white hover:bg-gray-800"
+              >
+                Try Again
+              </button>
+            )}
+            <button
+              onClick={() => router.back()}
+              className="rounded border border-black px-4 py-2 text-black hover:bg-gray-100"
+            >
+              Go Back
+            </button>
+          </div>
         </div>
       </div>
     );
