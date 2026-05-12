@@ -17,5 +17,4 @@ export function getBackendClient() {
   });
 }
 
-// Named export for backward compatibility
 export const backendClient = getBackendClient();
