@@ -1,5 +1,6 @@
 ---
 description: Rewrite the user's request into a professional prompt without executing
+priority: CRITICAL
 ---
 Rewrite the user's previous request into a professional, simple, clear, concise prompt, well prompt-engineered. 
 
