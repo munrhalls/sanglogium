@@ -110,15 +110,6 @@ export async function GET(req: Request) {
     );
   }
 
-  // Validate required sender address fields
-  if (!SHIPPO_SENDER_NAME || !SHIPPO_SENDER_STREET || !SHIPPO_SENDER_CITY || !SHIPPO_SENDER_ZIP || !SHIPPO_SENDER_COUNTRY) {
-    console.error('[CONFIGURATION] Missing required SHIPPO_SENDER_* environment variables');
-    return Response.json(
-      { error: 'Sender address not configured', errorClass: 'CONFIGURATION', retryable: false },
-      { status: 500 }
-    );
-  }
-
   // Fetch reservation from Sanity CMS
   const client = getBackendClient();
 
