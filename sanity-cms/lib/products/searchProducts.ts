@@ -33,7 +33,7 @@ export async function searchProductsAutocomplete(query: string): Promise<Autocom
   const searchTerm = `${query.trim()}*`;
 
   return sanityFetch<AutocompleteProduct[]>({
-    query: groq`*[_type == "product" && (
+    query: groq`*[_type == "product" && defined(catalogueLocationKeys) && count(catalogueLocationKeys) > 0 && (
       name match $query ||
       sku match $query ||
       brand._ref in *[_type == "brand" && name match $query]._id ||
@@ -73,7 +73,7 @@ export async function searchProductsFull(query: string, sort?: string): Promise<
   }
 
   return sanityFetch<SearchProduct[]>({
-    query: groq`*[_type == "product" && (
+    query: groq`*[_type == "product" && defined(catalogueLocationKeys) && count(catalogueLocationKeys) > 0 && (
       name match $query ||
       sku match $query ||
       brand._ref in *[_type == "brand" && name match $query]._id ||
