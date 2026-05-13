@@ -236,10 +236,28 @@ export async function GET(req: Request) {
 
     // Fetch product parcel data from Sanity
     const productIds = basketReservation.map((item) => item._id);
+    const draftIds = productIds.map((id) => `drafts.${id}`);
     const products = await client.fetch(
-      `*[_id in $ids]{ _id, parcel }`,
-      { ids: productIds }
+      `*[_id in $ids || _id in $draftIds]{ _id, parcel }`,
+      { ids: productIds, draftIds }
     );
+
+    console.log('[DEBUG] productIds:', productIds);
+    console.log('[DEBUG] products found:', products.length);
+    for (const p of products) {
+      console.log(`[DEBUG] product ${p._id} parcel:`, JSON.stringify(p.parcel));
+    }
+
+    // Deduplicate: prefer draft if it has parcel data, otherwise use published
+    const productMap = new Map<string, (typeof products)[number]>();
+    for (const p of products) {
+      const baseId = p._id.replace(/^drafts\./, '');
+      const existing = productMap.get(baseId);
+      if (!existing || (p.parcel && !existing.parcel)) {
+        productMap.set(baseId, p);
+      }
+    }
+    const dedupedProducts = Array.from(productMap.values());
 
     // Aggregate parcel data: sum weights, use max dimensions
     let totalWeight = 0;
@@ -247,15 +265,16 @@ export async function GET(req: Request) {
     let maxWidth = 0;
     let maxHeight = 0;
 
-    for (const product of products) {
+    for (const product of dedupedProducts) {
       if (!product.parcel) {
         return Response.json(
-          { error: `Product ${product._id} missing parcel data`, errorClass: 'VALIDATION', retryable: false },
+          { error: `Product ${product._id.replace(/^drafts\./, '')} missing parcel data`, errorClass: 'VALIDATION', retryable: false },
           { status: 400 }
         );
       }
 
-      const quantity = basketReservation.find((item) => item._id === product._id)?.quantity || 1;
+      const baseId = product._id.replace(/^drafts\./, '');
+      const quantity = basketReservation.find((item) => item._id === baseId)?.quantity || 1;
       totalWeight += product.parcel.weight * quantity;
       maxLength = Math.max(maxLength, product.parcel.length);
       maxWidth = Math.max(maxWidth, product.parcel.width);

@@ -20,7 +20,7 @@ async function retrieveTestProducts() {
     name,
     slug,
     brand->{_id, name},
-    stripePriceId,
+    price_data,
     displayPrice,
     stock,
     reservedStock,
@@ -39,7 +39,7 @@ async function retrieveTestProducts() {
       console.log('Name:', product.name);
       console.log('Slug:', product.slug?.current || 'NO');
       console.log('Brand:', product.brand?.name || 'NO');
-      console.log('Stripe Price ID:', product.stripePriceId);
+      console.log('Price Data:', JSON.stringify(product.price_data));
       console.log('Display Price:', product.displayPrice);
       console.log('Stock:', product.stock);
       console.log('Reserved Stock:', product.reservedStock);

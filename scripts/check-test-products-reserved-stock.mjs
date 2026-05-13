@@ -9,7 +9,7 @@ async function checkTestProducts() {
       name, 
       stock, 
       reservedStock,
-      stripePriceId,
+      price_data,
       displayPrice
     } | order(name asc)
   `)

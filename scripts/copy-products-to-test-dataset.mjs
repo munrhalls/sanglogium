@@ -31,7 +31,7 @@ async function copyProductsToTestDataset() {
     name,
     slug,
     brand->{_id, name, slug},
-    stripePriceId,
+    price_data,
     displayPrice,
     stock,
     reservedStock,

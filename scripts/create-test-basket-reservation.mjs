@@ -18,7 +18,7 @@ async function createTestBasketReservation() {
   // Fetch one test product to use in reservation
   const productQuery = `*[_type == "product" && name match "Test"][0]{
     _id,
-    stripePriceId,
+    price_data,
     displayPrice
   }`;
 

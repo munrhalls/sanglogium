@@ -13,9 +13,6 @@ const client = createClient({
   token: process.env.SANITY_STUDIO_READ_WRITE_CREATE || process.env.SANITY_API_TOKEN,
 });
 
-// Real Stripe price ID from stripe-test-prices.json
-const REAL_STRIPE_PRICE_ID = 'price_1TJU0HEQ2a2vW56g5nVkS96K';
-
 // Simple 1x1 PNG placeholder image (transparent)
 const PLACEHOLDER_IMAGE_BASE64 = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==';
 
@@ -30,7 +27,7 @@ const testProducts = [
     _type: 'product',
     name: 'Test Product 1',
     slug: { current: 'test-product-1' },
-    stripePriceId: REAL_STRIPE_PRICE_ID,
+    price_data: { currency: 'usd', unit_amount: 9999 },
     displayPrice: 99.99,
     stock: 10,
     reservedStock: 0,

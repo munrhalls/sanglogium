@@ -17,7 +17,6 @@ export interface Product {
   stock?: number;
   image: any;
   slug: { current: string };
-  stripePriceId?: string;
 }
 
 interface ProductCardProps {

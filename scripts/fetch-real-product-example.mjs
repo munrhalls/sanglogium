@@ -21,7 +21,7 @@ async function fetchRealProduct() {
     name,
     slug,
     brand->{_id, name, slug},
-    stripePriceId,
+    price_data,
     displayPrice,
     stock,
     reservedStock,
@@ -37,7 +37,7 @@ async function fetchRealProduct() {
     console.log('Name:', product.name);
     console.log('Slug:', JSON.stringify(product.slug));
     console.log('Brand:', JSON.stringify(product.brand));
-    console.log('Stripe Price ID:', product.stripePriceId);
+    console.log('Price Data:', JSON.stringify(product.price_data));
     console.log('Display Price:', product.displayPrice);
     console.log('Stock:', product.stock);
     console.log('Reserved Stock:', product.reservedStock);

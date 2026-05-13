@@ -19,7 +19,7 @@ async function verifyTestDataset() {
     _id,
     name,
     slug,
-    stripePriceId,
+    price_data,
     displayPrice,
     stock,
     reservedStock
@@ -34,7 +34,7 @@ async function verifyTestDataset() {
       console.log(`ID: ${product._id}`);
       console.log(`Name: ${product.name}`);
       console.log(`Slug: ${product.slug.current}`);
-      console.log(`Stripe Price ID: ${product.stripePriceId || 'N/A'}`);
+      console.log(`Price Data: ${JSON.stringify(product.price_data)}`);
       console.log(`Display Price: ${product.displayPrice}`);
       console.log(`Stock: ${product.stock}`);
       console.log(`Reserved Stock: ${product.reservedStock}`);
