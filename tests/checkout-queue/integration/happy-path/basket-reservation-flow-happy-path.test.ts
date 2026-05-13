@@ -45,8 +45,8 @@ describe('Checkout button click -> Checkout queue — atomic CMS operation - bas
   it('queues request → creates reservation doc in Sanity → returns BasketReservationResponse', async () => {
     const request: BasketReservation = {
       basketReservation: [
-        { _id: testProducts[0]._id, quantity: 1, stripePriceId: testProducts[0].stripePriceId, price_data: testProducts[0].price_data },
-        { _id: testProducts[1]._id, quantity: 2, stripePriceId: testProducts[1].stripePriceId, price_data: testProducts[1].price_data },
+        { _id: testProducts[0]._id, quantity: 1, price_data: testProducts[0].price_data },
+        { _id: testProducts[1]._id, quantity: 2, price_data: testProducts[1].price_data },
       ],
       createdAt: new Date().toISOString(),
     }
@@ -80,15 +80,14 @@ describe('Checkout button click -> Checkout queue — atomic CMS operation - bas
       expect(original).toBeDefined()
       expect(item.quantity).toBe(original?.quantity)
       expect(item.verifiedPrice).toBeGreaterThan(0)
-      expect(item.stripePriceId).toBeUndefined()
     }
   }, 60_000)
 
   it('increments reservedStock on each product by the requested quantity', async () => {
     const request: BasketReservation = {
       basketReservation: [
-        { _id: testProducts[0]._id, quantity: 1, stripePriceId: testProducts[0].stripePriceId, price_data: testProducts[0].price_data },
-        { _id: testProducts[1]._id, quantity: 2, stripePriceId: testProducts[1].stripePriceId, price_data: testProducts[1].price_data },
+        { _id: testProducts[0]._id, quantity: 1, price_data: testProducts[0].price_data },
+        { _id: testProducts[1]._id, quantity: 2, price_data: testProducts[1].price_data },
       ],
       createdAt: new Date().toISOString(),
     }
@@ -114,7 +113,7 @@ describe('Checkout button click -> Checkout queue — atomic CMS operation - bas
   it('response product snapshot matches the freshly-updated Sanity product doc', async () => {
     const request: BasketReservation = {
       basketReservation: [
-        { _id: testProducts[0]._id, quantity: 1, stripePriceId: testProducts[0].stripePriceId, price_data: testProducts[0].price_data },
+        { _id: testProducts[0]._id, quantity: 1, price_data: testProducts[0].price_data },
       ],
       createdAt: new Date().toISOString(),
     }

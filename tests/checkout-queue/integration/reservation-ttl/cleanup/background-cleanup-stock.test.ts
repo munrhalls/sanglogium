@@ -41,7 +41,7 @@ describe('Background Cleanup Job Integration', () => {
       _id: testReservationId,
       _type: 'basketReservation',
       basketReservation: [
-        { _id: testProducts[0]._id, quantity: 2, stripePriceId: testProducts[0].stripePriceId, price_data: testProducts[0].price_data },
+        { _id: testProducts[0]._id, quantity: 2, price_data: testProducts[0].price_data },
       ],
       createdAt: new Date().toISOString(),
       expiresAt,

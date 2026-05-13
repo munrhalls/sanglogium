@@ -86,7 +86,6 @@ test.describe('Basket Reservation Happy Path', () => {
       const basketItem = basketData.state.basket.find((p: any) => p._id === requestItem._id)
       expect(basketItem).toBeDefined()
       expect(requestItem.quantity).toBe(basketItem?.quantity)
-      expect(requestItem.stripePriceId).toBe(basketItem?.stripePriceId)
       expect(requestItem.price_data.unit_amount / 100).toBe(basketItem?.price_data.unit_amount / 100)
     }
 
@@ -104,7 +103,6 @@ test.describe('Basket Reservation Happy Path', () => {
     // Verify Stripe verification data matches product
     const stripeVerification = responseData.debug.stripeVerification[0]
     expect(stripeVerification.productId).toBe(expectedProductId)
-    expect(stripeVerification.stripePriceId).toBeDefined()
     expect(typeof stripeVerification.verifiedPrice).toBe('number')
     expect(stripeVerification.verifiedPrice).toBeGreaterThan(0)
 

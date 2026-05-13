@@ -46,7 +46,7 @@ describe('Reservation TTL expiration', () => {
   it('reservation includes TTL field and expires after TTL, releasing reservedStock and deleting doc', async () => {
     const request: BasketReservation = {
       basketReservation: [
-        { _id: testProducts[0]._id, quantity: 1, stripePriceId: testProducts[0].stripePriceId, price_data: testProducts[0].price_data },
+        { _id: testProducts[0]._id, quantity: 1, price_data: testProducts[0].price_data },
       ],
       createdAt: new Date().toISOString(),
     }

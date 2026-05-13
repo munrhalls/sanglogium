@@ -26,7 +26,6 @@ export type ServerProduct = {
   name: string;
   price: number;
   stock: number;
-  stripePriceId: string;
   _rev: string;
 };
 
