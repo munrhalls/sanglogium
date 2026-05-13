@@ -20,10 +20,10 @@ interface ShippingAddress {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params
+    const { id } = await params
 
     const backendClient = getBackendClient()
     const query = `*[_type == "basketReservation" && _id == $id][0]`
@@ -48,10 +48,10 @@ export async function GET(
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params
+    const { id } = await params
     const body = await request.json()
     const { shippingChoice, shippingAddress } = body as {
       shippingChoice?: ShippingChoice
