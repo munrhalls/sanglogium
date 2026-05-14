@@ -82,6 +82,7 @@
     "@stripe/stripe-js": "^8.11.0",
     "@types/webpack": "^5.28.5",
     "@upstash/redis": "^1.37.0",
+    "beads": "^0.2.1",
     "bullmq": "^5.73.5",
     "chromadb": "^1.10.5",
     "class-variance-authority": "^0.7.0",
