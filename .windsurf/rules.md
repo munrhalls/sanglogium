@@ -1,5 +1,25 @@
 # Project Rules
 
+## Task Tracking with Beads
+
+This project uses `bd` (beads) for issue tracking.
+
+**Essential Commands:**
+- Run `bd prime` for workflow context and command guidance
+- Run `bd ready` to see available tasks with no blockers
+- Run `bd show <id>` to view issue details
+- Run `bd update <id> --claim` to claim a task before working on it
+- Run `bd close <id>` to mark a task as complete
+- Run `bd remember "insight"` to save project learnings
+
+**Workflow:**
+1. Check `bd ready` to see what tasks are available
+2. Claim a task with `bd update <id> --claim`
+3. Work on the task
+4. Close with `bd close <id>`
+
+**Do not** use markdown TODO lists for task tracking.
+
 ## Test Storage Location
 
 Tests must be stored in:
