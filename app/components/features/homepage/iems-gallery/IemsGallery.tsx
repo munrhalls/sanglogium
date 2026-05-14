@@ -18,7 +18,7 @@ export default async function IemsGallery({ iemsData }: IemsGalleryProps) {
         <div className="absolute bottom-[10%] right-[10%] w-[30%] h-[30%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-10" />
       </div>
       <div className="relative z-10">
-        <div className="mx-auto max-w-content">
+        <div className="mx-auto max-w-content py-12 md:py-16 lg:py-20">
           <div className="flex flex-col gap-4">
             <IemsGalleryHeader />
             <div className="grid gap-4 md:gap-6 lg:gap-8 grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg-desktop:grid-cols-4 lg-touch:grid-cols-3">

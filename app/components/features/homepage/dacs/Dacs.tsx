@@ -36,7 +36,7 @@ export default async function DACs({ dacsData }: DacsProps) {
         <div className="absolute bottom-[5%] right-[5%] w-[40%] h-[40%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-10" />
       </div>
       <div className="relative z-10">
-        <div className="mx-auto max-w-content">
+        <div className="mx-auto max-w-content py-12 md:py-16 lg:py-20">
           <div className="relative overflow-hidden border-secondary-800">
       <Carousel
         itemsCount={dacsData.length}
