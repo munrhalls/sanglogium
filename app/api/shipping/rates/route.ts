@@ -1,4 +1,6 @@
 import { getBackendClient } from '@/sanity-cms/lib/backendClient';
+import { getPolandDomesticRates, getCityCoordinates } from '@/lib/shipping/carrier-rates';
+import { fetchPacklinkRates } from '@/lib/shipping/packlink-rates';
 
 export const runtime = 'nodejs';
 
@@ -100,13 +102,6 @@ export async function GET(req: Request) {
     return Response.json(
       { error: 'basketReservationId is required', errorClass: 'VALIDATION', retryable: false },
       { status: 400 }
-    );
-  }
-
-  if (!SHIPPO_API_KEY) {
-    return Response.json(
-      { error: 'Shippo API key not configured', errorClass: 'CONFIGURATION', retryable: false },
-      { status: 500 }
     );
   }
 
@@ -236,28 +231,10 @@ export async function GET(req: Request) {
 
     // Fetch product parcel data from Sanity
     const productIds = basketReservation.map((item) => item._id);
-    const draftIds = productIds.map((id) => `drafts.${id}`);
     const products = await client.fetch(
-      `*[_id in $ids || _id in $draftIds]{ _id, parcel }`,
-      { ids: productIds, draftIds }
+      `*[_id in $ids]{ _id, parcel }`,
+      { ids: productIds }
     );
-
-    console.log('[DEBUG] productIds:', productIds);
-    console.log('[DEBUG] products found:', products.length);
-    for (const p of products) {
-      console.log(`[DEBUG] product ${p._id} parcel:`, JSON.stringify(p.parcel));
-    }
-
-    // Deduplicate: prefer draft if it has parcel data, otherwise use published
-    const productMap = new Map<string, (typeof products)[number]>();
-    for (const p of products) {
-      const baseId = p._id.replace(/^drafts\./, '');
-      const existing = productMap.get(baseId);
-      if (!existing || (p.parcel && !existing.parcel)) {
-        productMap.set(baseId, p);
-      }
-    }
-    const dedupedProducts = Array.from(productMap.values());
 
     // Aggregate parcel data: sum weights, use max dimensions
     let totalWeight = 0;
@@ -265,16 +242,15 @@ export async function GET(req: Request) {
     let maxWidth = 0;
     let maxHeight = 0;
 
-    for (const product of dedupedProducts) {
+    for (const product of products) {
       if (!product.parcel) {
         return Response.json(
-          { error: `Product ${product._id.replace(/^drafts\./, '')} missing parcel data`, errorClass: 'VALIDATION', retryable: false },
+          { error: `Product ${product._id} missing parcel data`, errorClass: 'VALIDATION', retryable: false },
           { status: 400 }
         );
       }
 
-      const baseId = product._id.replace(/^drafts\./, '');
-      const quantity = basketReservation.find((item) => item._id === baseId)?.quantity || 1;
+      const quantity = basketReservation.find((item) => item._id === product._id)?.quantity || 1;
       totalWeight += product.parcel.weight * quantity;
       maxLength = Math.max(maxLength, product.parcel.length);
       maxWidth = Math.max(maxWidth, product.parcel.width);
@@ -290,126 +266,122 @@ export async function GET(req: Request) {
       mass_unit: 'g',
     };
 
-    console.log('[DEBUG] Request body structure:', JSON.stringify({
-      address_from: {
-        name: senderAddress.name,
-        street1: senderAddress.street,
-        city: senderAddress.city,
-        state: senderAddress.state || '',
-        zip: senderAddress.zip,
-        country: senderAddress.country,
-        phone: senderAddress.phone,
-        email: senderAddress.email,
-      },
-      address_to: {
-        name: 'Customer',
-        street1: `${shippingAddress.street} ${shippingAddress.streetNumber}`,
-        city: shippingAddress.city,
-        state: '',
-        zip: shippingAddress.postalCode,
-        country: shippingAddress.regionCode,
-      },
-      parcels: [aggregatedParcel],
-    }, null, 2));
+    // Determine sender country (same as destination for domestic shipping)
+    const senderCountry = senderAddress.country;
 
-    // Circuit breaker check
-    const now = Date.now();
-    if (now < circuitOpenUntil) {
-      console.error('[CIRCUIT BREAKER] Circuit open, failing fast');
-      return Response.json(
-        { error: 'Shipping rates temporarily unavailable. Please try again.', errorClass: 'NETWORK', retryable: true },
-        { status: 502 }
-      );
-    }
+    // === Tier 1: Packlink PRO (free production API, real rates) ===
+    const packlinkServices = await fetchPacklinkRates({
+      fromCountry: senderCountry,
+      fromZip: senderAddress.zip,
+      toCountry: shippingAddress.regionCode,
+      toZip: shippingAddress.postalCode,
+      packages: [{
+        width: maxWidth,
+        height: maxHeight,
+        length: maxLength,
+        weight: totalWeight,
+      }],
+    });
 
-    // Reset failure count if window expired
-    if (now - circuitOpenUntil > CIRCUIT_BREAKER_WINDOW_MS) {
-      failureCount = 0;
-    }
+    let shippingOptions: ShippingOption[] = packlinkServices.map((s) => ({
+      provider: s.carrier_name,
+      servicelevel: { name: s.name },
+      rateId: `packlink_${s.id}`,
+      amount: s.price.total_price,
+      currency: s.price.currency,
+      estimatedDays: Math.ceil(parseInt(s.transit_hours) / 24) || 1,
+    }));
 
-    // Call Shippo API to fetch rates with resilience
-    let shippoResponse;
-    try {
-      shippoResponse = await fetchWithRetry(
-        'https://api.goshippo.com/shipments/',
-        {
-          method: 'POST',
-          headers: {
-            'Authorization': `ShippoToken ${SHIPPO_API_KEY}`,
-            'Content-Type': 'application/json',
+    // === Tier 2: Shippo fallback (if Packlink returned nothing) ===
+    if (shippingOptions.length === 0 && SHIPPO_API_KEY) {
+      console.log('[SHIPPO] Packlink returned no rates, falling back to Shippo');
+
+      const now = Date.now();
+      if (now < circuitOpenUntil) {
+        console.error('[CIRCUIT BREAKER] Circuit open, skipping Shippo');
+      } else {
+        if (now - circuitOpenUntil > CIRCUIT_BREAKER_WINDOW_MS) {
+          failureCount = 0;
+        }
+
+        const shippoRequestBody = {
+          address_from: {
+            name: senderAddress.name,
+            street1: senderAddress.street,
+            city: senderAddress.city,
+            state: senderAddress.state || '',
+            zip: senderAddress.zip,
+            country: senderAddress.country,
+            phone: senderAddress.phone,
+            email: senderAddress.email,
           },
-          body: JSON.stringify({
-            address_from: {
-              name: senderAddress.name,
-              street1: senderAddress.street,
-              city: senderAddress.city,
-              state: senderAddress.state || '',
-              zip: senderAddress.zip,
-              country: senderAddress.country,
-              phone: senderAddress.phone,
-              email: senderAddress.email,
-            },
-            address_to: {
-              name: 'Customer',
-              street1: `${shippingAddress.street} ${shippingAddress.streetNumber}`,
-              city: shippingAddress.city,
-              state: '',
-              zip: shippingAddress.postalCode,
-              country: shippingAddress.regionCode,
-            },
-            parcels: [aggregatedParcel],
-          }),
-        },
-        15000, // 15s timeout
-        2 // 2 retries
-      );
+          address_to: {
+            name: 'Customer',
+            street1: `${shippingAddress.street} ${shippingAddress.streetNumber}`,
+            city: shippingAddress.city,
+            state: '',
+            zip: shippingAddress.postalCode,
+            country: shippingAddress.regionCode,
+          },
+          parcels: [aggregatedParcel],
+        };
 
-      // Success - reset circuit breaker
-      failureCount = 0;
-    } catch (error) {
-      // Failure - increment circuit breaker
-      failureCount++;
-      if (failureCount >= CIRCUIT_BREAKER_THRESHOLD) {
-        circuitOpenUntil = Date.now() + CIRCUIT_BREAKER_TIMEOUT_MS;
-        console.error(`[CIRCUIT BREAKER] Threshold reached, opening circuit for ${CIRCUIT_BREAKER_TIMEOUT_MS}ms`);
+        try {
+          const shippoResponse = await fetchWithRetry(
+            'https://api.goshippo.com/shipments/',
+            {
+              method: 'POST',
+              headers: {
+                'Authorization': `ShippoToken ${SHIPPO_API_KEY}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(shippoRequestBody),
+            },
+            15000,
+            2
+          );
+
+          failureCount = 0;
+
+          if (shippoResponse.ok) {
+            const shippoData = await shippoResponse.json();
+            shippingOptions = shippoData.rates
+              .filter((rate: any) => rate.object_state === 'VALID')
+              .map((rate: any) => ({
+                provider: rate.provider,
+                servicelevel: { name: rate.servicelevel?.name || rate.servicelevel },
+                rateId: rate.object_id,
+                amount: rate.amount,
+                currency: rate.currency,
+                estimatedDays: rate.estimated_days || 0,
+              }));
+          } else {
+            failureCount++;
+            if (failureCount >= CIRCUIT_BREAKER_THRESHOLD) {
+              circuitOpenUntil = Date.now() + CIRCUIT_BREAKER_TIMEOUT_MS;
+            }
+          }
+        } catch (error) {
+          failureCount++;
+          if (failureCount >= CIRCUIT_BREAKER_THRESHOLD) {
+            circuitOpenUntil = Date.now() + CIRCUIT_BREAKER_TIMEOUT_MS;
+          }
+          console.error('[SHIPPO] Fetch failed:', error);
+        }
       }
-      console.error('[NETWORK] Shippo fetch failed:', error);
-      return Response.json(
-        { error: 'Shipping rates temporarily unavailable. Please try again.', errorClass: 'NETWORK', retryable: true },
-        { status: 502 }
-      );
     }
 
-    if (!shippoResponse.ok) {
-      const errorText = await shippoResponse.text();
-      console.error('[PROVIDER] Shippo API error:', shippoResponse.status, errorText);
-      // Increment circuit breaker on provider errors
-      failureCount++;
-      if (failureCount >= CIRCUIT_BREAKER_THRESHOLD) {
-        circuitOpenUntil = Date.now() + CIRCUIT_BREAKER_TIMEOUT_MS;
-        console.error(`[CIRCUIT BREAKER] Threshold reached, opening circuit for ${CIRCUIT_BREAKER_TIMEOUT_MS}ms`);
-      }
-      return Response.json(
-        { error: 'Failed to fetch shipping rates from Shippo', errorClass: 'PROVIDER', retryable: true },
-        { status: 502 }
+    // === Tier 3: Mock rates (last resort for PL domestic) ===
+    if (shippingOptions.length === 0 && countryCode === 'PL') {
+      console.log('[MOCK] Using realistic mock rates for Poland domestic shipping');
+      const senderLocation = getCityCoordinates(senderAddress.city);
+      const recipientLocation = getCityCoordinates(shippingAddress.city);
+      shippingOptions = getPolandDomesticRates(
+        { length: maxLength, width: maxWidth, height: maxHeight, weight: totalWeight },
+        senderLocation,
+        recipientLocation
       );
     }
-
-    const shippoData = await shippoResponse.json();
-
-    // Extract shipping options from Shippo response
-    const shippingOptions: ShippingOption[] = shippoData.rates
-      .filter((rate: any) => rate.object_state === 'VALID')
-      .map((rate: any) => ({
-        provider: rate.provider,
-        servicelevel: {
-          name: rate.servicelevel?.name || rate.servicelevel,
-        },
-        rateId: rate.object_id,
-        amount: rate.amount,
-        currency: rate.currency,
-        estimatedDays: rate.estimated_days || 0,
-      }));
 
     return Response.json({ options: shippingOptions });
   } catch (error) {
