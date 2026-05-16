@@ -54,10 +54,10 @@ export interface PacklinkRatesInput {
 }
 
 /**
- * Get the Packlink API key for a given sender country
+ * Get the Packlink API key (single account works for all countries)
  */
-function getApiKey(country: string): string | undefined {
-  const key = process.env[`PACKLINK_PRO_${country}_API`];
+function getApiKey(): string | undefined {
+  const key = process.env['PACKLINK_PRO_API'];
   return key || undefined;
 }
 
@@ -68,9 +68,9 @@ function getApiKey(country: string): string | undefined {
 export async function fetchPacklinkRates(
   input: PacklinkRatesInput
 ): Promise<PacklinkService[]> {
-  const apiKey = getApiKey(input.fromCountry);
+  const apiKey = getApiKey();
   if (!apiKey) {
-    console.log(`[PACKLINK] No API key for country ${input.fromCountry}`);
+    console.log('[PACKLINK] No API key configured');
     return [];
   }
 

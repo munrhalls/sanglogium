@@ -2,11 +2,11 @@
 
 ## Overview
 
-The shipping slice allows users to select shipping options and rates after their address has been validated. It combines the verified address with company and parcel data, calls the Shippo API to fetch available shipping options, displays the options to the user, and saves their selection to the basket reservation document.
+The shipping slice allows users to select shipping options and rates after their address has been validated. It combines the verified address with company and parcel data, calls the Packlink PRO API to fetch available shipping options, displays the options to the user, and saves their selection to the basket reservation document.
 
 ## CMS Pre-Requirements
 
-Products in Sanity CMS must include parcel data for shipping calculations. The product schema requires a `parcel` object field with Shippo API-compliant format:
+Products in Sanity CMS must include parcel data for shipping calculations. The product schema requires a `parcel` object field with shipping API-compliant format:
 
 ```typescript
 parcel: {
@@ -28,9 +28,9 @@ The shipping rates API supports destination-based sender address selection to ha
 ### Environment Variable Convention
 
 **Priority Order (first match wins):**
-1. **Country-specific**: `SHIPPO_SENDER_{COUNTRY}_*` (e.g., `SHIPPO_SENDER_PL_NAME`, `SHIPPO_SENDER_US_NAME`)
-2. **Default fallback**: `SHIPPO_SENDER_DEFAULT_*`
-3. **Legacy backward compatibility**: `SHIPPO_SENDER_*` (no country suffix)
+1. **Country-specific**: `SENDER_ADDRESS_{COUNTRY}_*` (e.g., `SENDER_ADDRESS_PL_NAME`, `SENDER_ADDRESS_US_NAME`)
+2. **Default fallback**: `SENDER_ADDRESS_DEFAULT_*`
+3. **Base fallback**: `SENDER_ADDRESS_*` (no country suffix)
 
 **Required fields for each sender address:**
 - `NAME` - Company name
@@ -48,42 +48,45 @@ The shipping rates API supports destination-based sender address selection to ha
 
 ```bash
 # Default sender address (fallback for all countries)
-SHIPPO_SENDER_DEFAULT_NAME=Sang Logium
-SHIPPO_SENDER_DEFAULT_STREET=123 Main St
-SHIPPO_SENDER_DEFAULT_CITY=Warsaw
-SHIPPO_SENDER_DEFAULT_STATE=MZ
-SHIPPO_SENDER_DEFAULT_ZIP=00-001
-SHIPPO_SENDER_DEFAULT_COUNTRY=PL
-SHIPPO_SENDER_DEFAULT_PHONE=+48123456789
-SHIPPO_SENDER_DEFAULT_EMAIL=sender@example.com
+# Currently not configured - using country-specific addresses only
 
 # Country-specific: Poland (PL)
-SHIPPO_SENDER_PL_NAME=Sang Logium PL
-SHIPPO_SENDER_PL_STREET=456 Warsaw St
-SHIPPO_SENDER_PL_CITY=Warsaw
-SHIPPO_SENDER_PL_STATE=MZ
-SHIPPO_SENDER_PL_ZIP=00-001
-SHIPPO_SENDER_PL_COUNTRY=PL
-SHIPPO_SENDER_PL_PHONE=+48123456789
-SHIPPO_SENDER_PL_EMAIL=sender-pl@example.com
+SENDER_ADDRESS_PL_NAME=Sang Logium PL
+SENDER_ADDRESS_PL_STREET=Mokotowska 63
+SENDER_ADDRESS_PL_CITY=Warszawa
+SENDER_ADDRESS_PL_STATE=MZ
+SENDER_ADDRESS_PL_ZIP=00-533
+SENDER_ADDRESS_PL_COUNTRY=PL
+SENDER_ADDRESS_PL_PHONE=+48123456789
+SENDER_ADDRESS_PL_EMAIL=pl@sanglogium.com
 
-# Country-specific: United States (US)
-SHIPPO_SENDER_US_NAME=Sang Logium US
-SHIPPO_SENDER_US_STREET=789 New York Ave
-SHIPPO_SENDER_US_CITY=New York
-SHIPPO_SENDER_US_STATE=NY
-SHIPPO_SENDER_US_ZIP=10001
-SHIPPO_SENDER_US_COUNTRY=US
-SHIPPO_SENDER_US_PHONE=+11234567890
-SHIPPO_SENDER_US_EMAIL=sender-us@example.com
+# Country-specific: Germany (DE)
+SENDER_ADDRESS_DE_NAME=Sang Logium DE
+SENDER_ADDRESS_DE_STREET=Residenzstraße 18
+SENDER_ADDRESS_DE_CITY=München
+SENDER_ADDRESS_DE_STATE=BY
+SENDER_ADDRESS_DE_ZIP=80333
+SENDER_ADDRESS_DE_COUNTRY=DE
+SENDER_ADDRESS_DE_PHONE=+49123456789
+SENDER_ADDRESS_DE_EMAIL=de@sanglogium.com
+
+# Country-specific: United Kingdom (GB)
+SENDER_ADDRESS_GB_NAME=Sang Logium GB
+SENDER_ADDRESS_GB_STREET=17 Kensington Church Street
+SENDER_ADDRESS_GB_CITY=London
+SENDER_ADDRESS_GB_STATE=ENG
+SENDER_ADDRESS_GB_ZIP=W8 4LF
+SENDER_ADDRESS_GB_COUNTRY=GB
+SENDER_ADDRESS_GB_PHONE=+44123456789
+SENDER_ADDRESS_GB_EMAIL=gb@sanglogium.com
 ```
 
 ### Selection Logic
 
 The API reads the destination country from `shippingAddress.regionCode` (validated as 2-letter ISO code) and:
-1. Checks for country-specific sender address (`SHIPPO_SENDER_{REGIONCODE}_*`)
-2. Falls back to default sender address (`SHIPPO_SENDER_DEFAULT_*`)
-3. Falls back to legacy sender address (`SHIPPO_SENDER_*`) for backward compatibility
+1. Checks for country-specific sender address (`SENDER_ADDRESS_{REGIONCODE}_*`)
+2. Falls back to default sender address (`SENDER_ADDRESS_DEFAULT_*`)
+3. Falls back to base sender address (`SENDER_ADDRESS_*`)
 4. Returns CONFIGURATION error if no sender address is configured
 
 ### Error Handling
@@ -105,7 +108,7 @@ sequenceDiagram
     participant Page as Shipping Page
     participant API as /api/shipping/rates
     participant Sanity as Sanity CMS
-    participant Shippo as Shippo API
+    participant Packlink as Packlink PRO API
     participant Patch as /api/basket-reservations/[id]
 
     User->>Page: Navigate to shipping page
@@ -114,13 +117,13 @@ sequenceDiagram
     API->>Sanity: Fetch reservation document
     Sanity-->>API: Return reservation (address, basket)
     API->>API: Validate shipping address fields (including regionCode)
-    API->>API: Select sender address based on destination country (SHIPPO_SENDER_{COUNTRY}_* → DEFAULT → LEGACY)
+    API->>API: Select sender address based on destination country (SENDER_ADDRESS_{COUNTRY}_* → DEFAULT → BASE)
     API->>Sanity: Fetch product parcel data
     Sanity-->>API: Return parcel data
     API->>API: Aggregate parcel (sum weights, max dimensions)
     API->>API: Combine address + selected sender address + parcel
-    API->>Shippo: POST shipments (with resilience: timeout, retry, circuit breaker)
-    Shippo-->>API: Return rates (provider, service, price, ETA)
+    API->>Packlink: Fetch shipping rates
+    Packlink-->>API: Return rates (provider, service, price, ETA)
     API-->>Page: Return { options, errorClass?, retryable? }
     Page->>User: Display shipping options inline
     User->>Page: Select shipping option
@@ -134,7 +137,7 @@ sequenceDiagram
 ## Key Components
 
 - **ShippingPage** (`app/(store)/checkout/shipping/page.tsx`) - Route entry point that displays shipping options and handles selection inline
-- **ShippingRatesAPI** (`app/api/shipping/rates/route.ts`) - API endpoint that fetches reservation, validates address, derives parcel data from products, and calls Shippo API
+- **ShippingRatesAPI** (`app/api/shipping/rates/route.ts`) - API endpoint that fetches reservation, validates address, derives parcel data from products, and calls Packlink PRO API
 
 ## Data Flow
 
@@ -146,8 +149,8 @@ sequenceDiagram
 6. API fetches product parcel data from Sanity CMS
 7. API aggregates parcel data (sums weights, uses max dimensions)
 8. API combines address with sender address (from env vars) and aggregated parcel data
-9. API calls Shippo API with resilience (timeout 15s, retry 2x, circuit breaker)
-10. Shippo returns rates (provider, service level, price, estimated delivery)
+9. API calls Packlink PRO API to fetch shipping rates
+10. Packlink PRO returns rates (provider, service level, price, estimated delivery)
 11. API returns shipping options to page with error classification (VALIDATION, CONFIGURATION, NETWORK, PROVIDER)
 12. Page displays shipping options to user inline
 13. User selects preferred shipping option
@@ -156,25 +159,25 @@ sequenceDiagram
 
 ## Resilience Features
 
-The shipping rates API implements resilience patterns to handle external dependencies:
+The shipping rates API implements a two-tier fallback architecture:
 
-- **Timeout**: 15-second timeout for Shippo API calls
-- **Retry**: Automatic retry with exponential backoff (500ms, 1500ms) for 5xx errors
-- **Circuit Breaker**: Opens circuit after 5 consecutive failures within 60 seconds, blocks requests for 30 seconds
-- **Error Classification**: Errors classified as VALIDATION (user input), CONFIGURATION (env vars), NETWORK (connectivity), or PROVIDER (Shippo API)
+- **Tier 1**: Packlink PRO API (free production API, real calculated rates)
+- **Tier 2**: Mock rates for Poland domestic shipping (last resort)
+- **Error Classification**: Errors classified as VALIDATION (user input), CONFIGURATION (env vars), NETWORK (connectivity), or PROVIDER (Packlink API)
 - **Retryable Flag**: Frontend displays retry button for retryable errors (NETWORK, PROVIDER)
 
 ## Tech Stack
 
 - **React 18** - UI framework
 - **Next.js** - App router and server components
-- **Shippo API** - Shipping rates and label generation with resilience (timeout, retry, circuit breaker)
+- **Packlink PRO API** - Shipping rates and label generation (free production API)
 - **Sanity CMS** - Basket reservation storage and product parcel data
 - **TypeScript** - Type safety
-- **Environment Variables** - Sender address configuration (SHIPPO_SENDER_*)
+- **Environment Variables** - Sender address configuration (SENDER_ADDRESS_*)
 
 ## Related Documentation
 
 - [PRD](./1. PRD.md) - Product requirements and definition of done
 - [Technical Solution](./2. Minimal Viable Solution Design.md) - Detailed technical design
 - [Flow Diagram](./shipping-slice.md) - Visual flow of shipping slice
+- [Sanglogium Sender Addresses](./SanglogiumSenderAddresses.md) - Verified sender address configurations
