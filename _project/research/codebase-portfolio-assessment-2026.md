@@ -10,8 +10,7 @@
 - **Stripe 19.1.0** - Payment processing
 - **Tailwind CSS 3.3.5** - Utility-first CSS (commonly required)
 - **Zustand 5.0.1** - State management
-- **BullMQ 5.73.5** - Job queue system
-- **Redis (Upstash)** - Queue backend
+- **Redis (Upstash)** - Queue backend (custom FIFO implementation, NOT BullMQ)
 - **Clerk 6.16.0** - Authentication
 - **Playwright 1.59.1** - E2E testing
 - **Vitest 4.1.5** - Unit/integration testing
@@ -27,15 +26,15 @@
 
 **High-Value Architectural Patterns:**
 - **Virtual File System (VFS)** - Pre-computed catalogue with O(1) lookup (sophisticated optimization)
-- **Finite State Machine (FSM)** - Order lifecycle with strict state transitions (enterprise pattern)
+- **Custom Redis FIFO Queue** - RPUSH + SET NX + LINDEX head check + LPOP with 45s deadline (solves BullMQ concurrency gap)
 - **Server Components First** - Next.js 15 App Router with parallel data fetching (modern pattern)
-- **Idempotent Background Queues** - BullMQ for transaction finality (production-grade)
 - **Authorize-First Payment** - Server-side Stripe integration (security best practice)
 - **Type-Safe Sanity Integration** - Auto-generated types from schema (professional approach)
 - **Scoped Tailwind Architecture** - Component isolation (prevents cascade conflicts)
 
 **Real-World Complexity:**
 - E-commerce checkout queue with inventory reservation
+- Custom Redis FIFO queue with distributed locks (RPUSH + SET NX + LINDEX head check)
 - Multi-step checkout wizard (guest/user modes)
 - Google Address Validation API integration
 - Real-time shipping rates
@@ -112,24 +111,19 @@
 
 ### Weaknesses (Gaps to Address)
 
-**1. No Live Deployment**
-- Codebase exists locally but no public URL
-- Hiring managers expect live demos (source: portfolio research)
-- Missing "production understanding" signal
-
-**2. README Quality Unknown**
+**1. README Quality Unknown**
 - No project-level README visible
 - Missing "interview before the interview" opportunity
 - Can't showcase technical thinking upfront
 
-**3. Commercial Experience Gap**
+**2. Commercial Experience Gap**
 - Personal project, not commercial work
 - Senior roles require 5+ years commercial experience
 - No team collaboration evidence
 
-**4. No Users/Engagement**
+**3. No Users/Engagement**
 - No evidence of real users
-- "I built it locally" vs "people are using it" distinction critical
+- Live deployment exists but no user metrics
 
 ## Hiring Chances Assessment
 
@@ -146,7 +140,6 @@
 
 **Barriers:**
 - Lack of commercial experience (expected for mid-level)
-- No live deployment (easily fixable)
 - No team collaboration evidence (expected for personal project)
 
 ### Target Role: Senior Developer
@@ -156,8 +149,9 @@
 **Why:**
 - Senior postings require 5+ years commercial experience (explicitly stated)
 - No leadership/mentoring experience
-- No production deployment at scale evidence
+- **No production deployment at scale evidence**
 - Personal project vs commercial work distinction
+- Live deployment exists (sanglogium.com) but no user metrics
 
 **Path to Senior:**
 - Deploy publicly and get users
@@ -167,30 +161,27 @@
 
 ## Immediate Actions to Improve Hiring Chances
 
-1. **Deploy Publicly** (Highest Priority)
-   - Deploy to Vercel/Netlify
-   - Add custom domain (under $15/year)
-   - This single change increases interview callbacks significantly
-
-2. **Create Excellent README**
+1. **Create Excellent README** (Highest Priority)
    - Problem solved: E-commerce with inventory reservation
-   - Tech stack rationale: Why Sanity? Why BullMQ? Why FSM?
+   - Tech stack rationale: Why Sanity? Why custom Redis FIFO (not BullMQ)? Why VFS?
    - Technical decisions: What was hard? What would you change?
-   - Live demo link prominently displayed
+   - Live demo link prominently displayed (sanglogium.com)
 
-3. **Add 1-2 Smaller Projects**
+2. **Add 1-2 Smaller Projects**
    - Domain-specific (not tutorial clones)
    - Deployed with good READMEs
    - Shows breadth beyond single large project
 
-4. **Prepare Interview Narratives**
+3. **Prepare Interview Narratives**
    - Practice explaining architectural decisions under pressure
    - Be ready for: "Why VFS instead of recursive queries?"
+   - Be ready for: "Why custom Redis FIFO instead of BullMQ?"
    - Self-awareness: "I'd use X instead of Y because Z"
 
-5. **Emphasize Right Things**
+4. **Emphasize Right Things**
    - Headless CMS expertise (Sanity)
    - E-commerce domain knowledge
+   - Custom queue implementation (solved BullMQ concurrency gap)
    - Testing approach (not just "I have tests")
    - Architectural thinking (not just "I built features")
 
@@ -200,4 +191,4 @@
 
 **Hiring Chances:** HIGH for mid-level (13,000-21,000 PLN), LOW for senior (18,000-28,000 PLN) due to commercial experience requirement.
 
-**Critical Gap:** No live deployment. Fixing this single issue significantly improves interview chances.
+**Status:** Live deployment exists (sanglogium.com) - major strength. Critical gap: README quality and portfolio documentation.

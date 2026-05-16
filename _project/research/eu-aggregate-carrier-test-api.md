@@ -206,7 +206,7 @@ Created a free German Packlink PRO account at `pro.packlink.de`, generated a pro
 
 2. **API mechanics confirmed.** GET (not POST) with query parameters. Auth is raw API key (no "Bearer" prefix). Base URL: `https://api.packlink.com/v1/services`.
 
-3. **Account-per-country limitation.** A German account only has DE-origin carriers. PL domestic and GB domestic need separate accounts at `pro.packlink.pl` and `pro.packlink.co.uk`.
+3. **CORRECTED: Single account architecture.** Packlink PRO uses a single account at `pro.packlink.com` or `auth.packlink.com` with one API key that works for all countries. Language/country selection is handled via API parameters (fromCountry, toCountry), not separate accounts. PREVIOUS FINDING ABOUT COUNTRY-SPECIFIC DOMAINS WAS INCORRECT.
 
 4. **Rates are real.** Prices vary by carrier, service level, and route. DPD Classic DE→DE at €5.42 vs DHL Express at €28.13 shows genuine carrier differentiation.
 
@@ -221,6 +221,7 @@ Created a free German Packlink PRO account at `pro.packlink.de`, generated a pro
 
 ### Next Steps
 
-- Create free PL account at `pro.packlink.pl` to enable PL→PL domestic rates
-- Create free GB account at `pro.packlink.co.uk` to enable GB→GB domestic rates
-- Add API keys to `.env`
+- Use existing single Packlink PRO account at `pro.packlink.com` or `auth.packlink.com`
+- One API key works for all countries (DE, PL, GB domestic and international)
+- Update `.env` to use single `PACKLINK_PRO_API` key instead of per-country keys
+- Test PL→PL and GB→GB domestic rates with existing API key

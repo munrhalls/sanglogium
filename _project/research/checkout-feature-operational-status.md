@@ -100,18 +100,16 @@
 1. On mount, fetches `/api/shipping/rates?basketReservationId=...`
 2. API fetches reservation from Sanity, validates address fields, aggregates parcel data from products
 3. **Tier 1:** Calls Packlink PRO API (`fetchPacklinkRates`) — free production API, real calculated rates
-4. **Tier 2:** If Packlink returns nothing and `SHIPPO_API_KEY` exists, calls Shippo with circuit breaker + retry logic
-5. **Tier 3:** If still no rates and country is PL, returns realistic mock domestic rates (`getPolandDomesticRates`)
-6. Displays options as selectable cards
-7. On select + continue, PATCHes reservation with `shippingChoice`, redirects to `/checkout/payment`
+4. **Tier 2:** If still no rates and country is PL, returns realistic mock domestic rates (`getPolandDomesticRates`)
+5. Displays options as selectable cards
+6. On select + continue, PATCHes reservation with `shippingChoice`, redirects to `/checkout/payment`
 
 **Evidence of Functionality:**
 - E2E test `app/(store)/checkout/shipping/shipping-page.spec.ts:71-134` verifies options load, selection works, PATCH succeeds, redirect happens
 - Integration test `app/(store)/checkout/shipping/shipping-rates.test.ts:59-88` tests API response structure against running dev server
-- Circuit breaker, timeout, and retry logic are implemented inline (lines 57-91 in rates route)
 
 **Failure Modes:**
-- Missing `SHIPPO_API_KEY` AND missing `PACKLINK_PRO_*_API` AND non-PL address → returns empty options array → UI shows "No shipping options available"
+- Missing `PACKLINK_PRO_API` AND non-PL address → returns empty options array → UI shows "No shipping options available"
 - Product missing `parcel` data → API returns 400 "missing parcel data"
 - Sender address env vars missing → API returns 500 "Sender address not configured"
 
@@ -221,9 +219,9 @@ The checkout feature requires **all** of the following to function:
 | Variable | Used In | Stage | Critical? |
 |----------|---------|-------|-----------|
 | `GOOGLE_MAPS_API_KEY` | `app/actions/address/address.ts:95` | Address validation | **YES** |
-| `SHIPPO_API_KEY` | `app/api/shipping/rates/route.ts:45` | Shipping rates (Tier 2) | No (has fallback) |
+| `PACKLINK_PRO_API` | `lib/shipping/packlink-rates.ts:59` | Shipping rates (Tier 1) | No (has fallback) |
 | `PACKLINK_PRO_*_API` | `lib/shipping/packlink-rates.ts:59` | Shipping rates (Tier 1) | No (has fallback) |
-| `SHIPPO_SENDER_*` | `app/api/shipping/rates/route.ts:48-55` | Shipping sender address | **YES** (for non-PL) |
+| `SENDER_ADDRESS_*` | `app/api/shipping/rates/route.ts:46-53` | Shipping sender address | **YES** (for non-PL) |
 | `STRIPE_SECRET_KEY` | `lib/stripe.ts:3` | Payment intent | **YES** |
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | `app/(store)/checkout/payment/_components/PaymentForm.tsx:8` | Stripe Elements | **YES** |
 | `SANITY_STUDIO_READ_WRITE` | Multiple | All Sanity operations | **YES** |
