@@ -42,57 +42,16 @@ interface BasketReservation {
   }>;
 }
 
-const SHIPPO_API_KEY = process.env.SHIPPO_API_KEY;
-
 // Sender address from environment variables
-const SHIPPO_SENDER_NAME = process.env.SHIPPO_SENDER_NAME;
-const SHIPPO_SENDER_STREET = process.env.SHIPPO_SENDER_STREET;
-const SHIPPO_SENDER_CITY = process.env.SHIPPO_SENDER_CITY;
-const SHIPPO_SENDER_STATE = process.env.SHIPPO_SENDER_STATE;
-const SHIPPO_SENDER_ZIP = process.env.SHIPPO_SENDER_ZIP;
-const SHIPPO_SENDER_COUNTRY = process.env.SHIPPO_SENDER_COUNTRY;
-const SHIPPO_SENDER_PHONE = process.env.SHIPPO_SENDER_PHONE;
-const SHIPPO_SENDER_EMAIL = process.env.SHIPPO_SENDER_EMAIL;
+const SENDER_ADDRESS_NAME = process.env.SENDER_ADDRESS_NAME;
+const SENDER_ADDRESS_STREET = process.env.SENDER_ADDRESS_STREET;
+const SENDER_ADDRESS_CITY = process.env.SENDER_ADDRESS_CITY;
+const SENDER_ADDRESS_STATE = process.env.SENDER_ADDRESS_STATE;
+const SENDER_ADDRESS_ZIP = process.env.SENDER_ADDRESS_ZIP;
+const SENDER_ADDRESS_COUNTRY = process.env.SENDER_ADDRESS_COUNTRY;
+const SENDER_ADDRESS_PHONE = process.env.SENDER_ADDRESS_PHONE;
+const SENDER_ADDRESS_EMAIL = process.env.SENDER_ADDRESS_EMAIL;
 
-// Circuit breaker state (module-level, simplest approach)
-let failureCount = 0;
-let circuitOpenUntil = 0;
-const CIRCUIT_BREAKER_THRESHOLD = 5;
-const CIRCUIT_BREAKER_WINDOW_MS = 60000; // 60 seconds
-const CIRCUIT_BREAKER_TIMEOUT_MS = 30000; // 30 seconds
-
-// Timeout helper (inline)
-async function fetchWithTimeout(url: string, options: RequestInit, timeoutMs: number) {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), timeoutMs);
-  try {
-    return await fetch(url, { ...options, signal: controller.signal });
-  } finally {
-    clearTimeout(timer);
-  }
-}
-
-// Retry helper (inline)
-async function fetchWithRetry(url: string, options: RequestInit, timeoutMs: number, retries: number) {
-  const backoffDelays = [500, 1500]; // exponential backoff
-  for (let i = 0; i <= retries; i++) {
-    try {
-      const res = await fetchWithTimeout(url, options, timeoutMs);
-      if (res.ok || res.status < 500) return res; // don't retry 4xx
-      if (i === retries) return res;
-    } catch (e) {
-      if (i === retries) throw e;
-    }
-    if (i < retries) {
-      await new Promise(r => setTimeout(r, backoffDelays[i] || 500));
-    }
-  }
-  throw new Error('Max retries exceeded');
-}
-
-console.log('[DEBUG] SHIPPO_API_KEY loaded:', !!SHIPPO_API_KEY);
-console.log('[DEBUG] SHIPPO_API_KEY length:', SHIPPO_API_KEY?.length);
-console.log('[DEBUG] SHIPPO_API_KEY prefix:', SHIPPO_API_KEY?.substring(0, 10));
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -152,8 +111,8 @@ export async function GET(req: Request) {
     // Select sender address based on destination country
     const countryCode = shippingAddress.regionCode.toUpperCase();
     const getSenderAddress = (country: string) => {
-      // Try country-specific address first (SHIPPO_SENDER_{COUNTRY}_*)
-      const prefix = `SHIPPO_SENDER_${country}_`;
+      // Try country-specific address first (SENDER_ADDRESS_{COUNTRY}_*)
+      const prefix = `SENDER_ADDRESS_${country}_`;
       const name = process.env[`${prefix}NAME`];
       const street = process.env[`${prefix}STREET`];
       const city = process.env[`${prefix}CITY`];
@@ -168,31 +127,31 @@ export async function GET(req: Request) {
         return { name, street, city, state, zip, country: countryField, phone, email };
       }
 
-      // Fallback to DEFAULT address (SHIPPO_SENDER_DEFAULT_*)
-      const defaultName = process.env['SHIPPO_SENDER_DEFAULT_NAME'];
-      const defaultStreet = process.env['SHIPPO_SENDER_DEFAULT_STREET'];
-      const defaultCity = process.env['SHIPPO_SENDER_DEFAULT_CITY'];
-      const defaultState = process.env['SHIPPO_SENDER_DEFAULT_STATE'];
-      const defaultZip = process.env['SHIPPO_SENDER_DEFAULT_ZIP'];
-      const defaultCountry = process.env['SHIPPO_SENDER_DEFAULT_COUNTRY'];
-      const defaultPhone = process.env['SHIPPO_SENDER_DEFAULT_PHONE'];
-      const defaultEmail = process.env['SHIPPO_SENDER_DEFAULT_EMAIL'];
+      // Fallback to DEFAULT address (SENDER_ADDRESS_DEFAULT_*)
+      const defaultName = process.env['SENDER_ADDRESS_DEFAULT_NAME'];
+      const defaultStreet = process.env['SENDER_ADDRESS_DEFAULT_STREET'];
+      const defaultCity = process.env['SENDER_ADDRESS_DEFAULT_CITY'];
+      const defaultState = process.env['SENDER_ADDRESS_DEFAULT_STATE'];
+      const defaultZip = process.env['SENDER_ADDRESS_DEFAULT_ZIP'];
+      const defaultCountry = process.env['SENDER_ADDRESS_DEFAULT_COUNTRY'];
+      const defaultPhone = process.env['SENDER_ADDRESS_DEFAULT_PHONE'];
+      const defaultEmail = process.env['SENDER_ADDRESS_DEFAULT_EMAIL'];
 
       if (defaultName && defaultStreet && defaultCity && defaultZip && defaultCountry) {
         return { name: defaultName, street: defaultStreet, city: defaultCity, state: defaultState, zip: defaultZip, country: defaultCountry, phone: defaultPhone, email: defaultEmail };
       }
 
-      // Backward compatibility: Use legacy SHIPPO_SENDER_* (no country suffix)
-      if (SHIPPO_SENDER_NAME && SHIPPO_SENDER_STREET && SHIPPO_SENDER_CITY && SHIPPO_SENDER_ZIP && SHIPPO_SENDER_COUNTRY) {
+      // Fallback to base SENDER_ADDRESS_* (no country suffix)
+      if (SENDER_ADDRESS_NAME && SENDER_ADDRESS_STREET && SENDER_ADDRESS_CITY && SENDER_ADDRESS_ZIP && SENDER_ADDRESS_COUNTRY) {
         return {
-          name: SHIPPO_SENDER_NAME,
-          street: SHIPPO_SENDER_STREET,
-          city: SHIPPO_SENDER_CITY,
-          state: SHIPPO_SENDER_STATE || '',
-          zip: SHIPPO_SENDER_ZIP,
-          country: SHIPPO_SENDER_COUNTRY,
-          phone: SHIPPO_SENDER_PHONE,
-          email: SHIPPO_SENDER_EMAIL,
+          name: SENDER_ADDRESS_NAME,
+          street: SENDER_ADDRESS_STREET,
+          city: SENDER_ADDRESS_CITY,
+          state: SENDER_ADDRESS_STATE || '',
+          zip: SENDER_ADDRESS_ZIP,
+          country: SENDER_ADDRESS_COUNTRY,
+          phone: SENDER_ADDRESS_PHONE,
+          email: SENDER_ADDRESS_EMAIL,
         };
       }
 
@@ -292,86 +251,7 @@ export async function GET(req: Request) {
       estimatedDays: Math.ceil(parseInt(s.transit_hours) / 24) || 1,
     }));
 
-    // === Tier 2: Shippo fallback (if Packlink returned nothing) ===
-    if (shippingOptions.length === 0 && SHIPPO_API_KEY) {
-      console.log('[SHIPPO] Packlink returned no rates, falling back to Shippo');
-
-      const now = Date.now();
-      if (now < circuitOpenUntil) {
-        console.error('[CIRCUIT BREAKER] Circuit open, skipping Shippo');
-      } else {
-        if (now - circuitOpenUntil > CIRCUIT_BREAKER_WINDOW_MS) {
-          failureCount = 0;
-        }
-
-        const shippoRequestBody = {
-          address_from: {
-            name: senderAddress.name,
-            street1: senderAddress.street,
-            city: senderAddress.city,
-            state: senderAddress.state || '',
-            zip: senderAddress.zip,
-            country: senderAddress.country,
-            phone: senderAddress.phone,
-            email: senderAddress.email,
-          },
-          address_to: {
-            name: 'Customer',
-            street1: `${shippingAddress.street} ${shippingAddress.streetNumber}`,
-            city: shippingAddress.city,
-            state: '',
-            zip: shippingAddress.postalCode,
-            country: shippingAddress.regionCode,
-          },
-          parcels: [aggregatedParcel],
-        };
-
-        try {
-          const shippoResponse = await fetchWithRetry(
-            'https://api.goshippo.com/shipments/',
-            {
-              method: 'POST',
-              headers: {
-                'Authorization': `ShippoToken ${SHIPPO_API_KEY}`,
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(shippoRequestBody),
-            },
-            15000,
-            2
-          );
-
-          failureCount = 0;
-
-          if (shippoResponse.ok) {
-            const shippoData = await shippoResponse.json();
-            shippingOptions = shippoData.rates
-              .filter((rate: any) => rate.object_state === 'VALID')
-              .map((rate: any) => ({
-                provider: rate.provider,
-                servicelevel: { name: rate.servicelevel?.name || rate.servicelevel },
-                rateId: rate.object_id,
-                amount: rate.amount,
-                currency: rate.currency,
-                estimatedDays: rate.estimated_days || 0,
-              }));
-          } else {
-            failureCount++;
-            if (failureCount >= CIRCUIT_BREAKER_THRESHOLD) {
-              circuitOpenUntil = Date.now() + CIRCUIT_BREAKER_TIMEOUT_MS;
-            }
-          }
-        } catch (error) {
-          failureCount++;
-          if (failureCount >= CIRCUIT_BREAKER_THRESHOLD) {
-            circuitOpenUntil = Date.now() + CIRCUIT_BREAKER_TIMEOUT_MS;
-          }
-          console.error('[SHIPPO] Fetch failed:', error);
-        }
-      }
-    }
-
-    // === Tier 3: Mock rates (last resort for PL domestic) ===
+    // === Tier 2: Mock rates (fallback for PL domestic) ===
     if (shippingOptions.length === 0 && countryCode === 'PL') {
       console.log('[MOCK] Using realistic mock rates for Poland domestic shipping');
       const senderLocation = getCityCoordinates(senderAddress.city);

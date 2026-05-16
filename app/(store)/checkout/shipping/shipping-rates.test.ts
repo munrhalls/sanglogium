@@ -58,7 +58,7 @@ describe('Shipping Rates API Integration', () => {
 
   test('success path: returns shipping options when called with valid reservation', async () => {
     // Note: This test requires dev server running on localhost:3000
-    // and valid SHIPPO_API_KEY configured
+    // and valid PACKLINK_PRO_API configured
     const response = await fetch(
       `http://localhost:3000/api/shipping/rates?basketReservationId=${reservationId}`
     )
@@ -140,7 +140,7 @@ describe('Shipping Rates API Integration', () => {
     }
   })
 
-  test('configuration error: returns 500 when SHIPPO_SENDER env vars are missing', async () => {
+  test('configuration error: returns 500 when SENDER_ADDRESS env vars are missing', async () => {
     // This test validates the error handling logic
     // In a real scenario, this would require temporarily unsetting env vars
     // For now, we document the expected behavior
