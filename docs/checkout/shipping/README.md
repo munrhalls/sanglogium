@@ -23,12 +23,12 @@ parcel: {
 
 ## Sender Address Configuration
 
-The shipping rates API supports destination-based sender address selection to handle multiple shipping origins (e.g., Poland warehouse, US warehouse). The API automatically selects the appropriate sender address based on the destination country.
+The shipping rates API supports destination-based sender address selection to handle multiple shipping origins (e.g., Netherlands warehouse, US warehouse). The API automatically selects the appropriate sender address based on the destination country.
 
 ### Environment Variable Convention
 
 **Priority Order (first match wins):**
-1. **Country-specific**: `SENDER_ADDRESS_{COUNTRY}_*` (e.g., `SENDER_ADDRESS_PL_NAME`, `SENDER_ADDRESS_US_NAME`)
+1. **Country-specific**: `SENDER_ADDRESS_{COUNTRY}_*` (e.g., `SENDER_ADDRESS_NL_NAME`, `SENDER_ADDRESS_US_NAME`)
 2. **Default fallback**: `SENDER_ADDRESS_DEFAULT_*`
 3. **Base fallback**: `SENDER_ADDRESS_*` (no country suffix)
 
@@ -50,15 +50,15 @@ The shipping rates API supports destination-based sender address selection to ha
 # Default sender address (fallback for all countries)
 # Currently not configured - using country-specific addresses only
 
-# Country-specific: Poland (PL)
-SENDER_ADDRESS_PL_NAME=Sang Logium PL
-SENDER_ADDRESS_PL_STREET=Mokotowska 63
-SENDER_ADDRESS_PL_CITY=Warszawa
-SENDER_ADDRESS_PL_STATE=MZ
-SENDER_ADDRESS_PL_ZIP=00-533
-SENDER_ADDRESS_PL_COUNTRY=PL
-SENDER_ADDRESS_PL_PHONE=+48123456789
-SENDER_ADDRESS_PL_EMAIL=pl@sanglogium.com
+# Country-specific: Netherlands (NL)
+SENDER_ADDRESS_NL_NAME=Sang Logium NL
+SENDER_ADDRESS_NL_STREET=Keizersgracht 391 A
+SENDER_ADDRESS_NL_CITY=Amsterdam
+SENDER_ADDRESS_NL_STATE=NH
+SENDER_ADDRESS_NL_ZIP=1016 EJ
+SENDER_ADDRESS_NL_COUNTRY=NL
+SENDER_ADDRESS_NL_PHONE=+31123456789
+SENDER_ADDRESS_NL_EMAIL=nl@sanglogium.com
 
 # Country-specific: Germany (DE)
 SENDER_ADDRESS_DE_NAME=Sang Logium DE
@@ -162,7 +162,7 @@ sequenceDiagram
 The shipping rates API implements a two-tier fallback architecture:
 
 - **Tier 1**: Packlink PRO API (free production API, real calculated rates)
-- **Tier 2**: Mock rates for Poland domestic shipping (last resort)
+- **Tier 2**: Mock rates for Netherlands domestic shipping (last resort)
 - **Error Classification**: Errors classified as VALIDATION (user input), CONFIGURATION (env vars), NETWORK (connectivity), or PROVIDER (Packlink API)
 - **Retryable Flag**: Frontend displays retry button for retryable errors (NETWORK, PROVIDER)
 

@@ -2,16 +2,18 @@
 
 This document documents the verified sender address configurations used in production for the shipping rates API.
 
-## Poland (PL)
+## Netherlands (NL)
 
-**Company:** Sang Logium PL
-**Address:** Mokotowska 63, 00-533 Warszawa, Poland
-**State:** MZ (Mazowieckie)
-**Phone:** +48123456789
-**Email:** pl@sanglogium.com
+**Company:** Sang Logium NL
+**Address:** Keizersgracht 391 A, 1016 EJ Amsterdam, Netherlands
+**State:** NH (Noord-Holland)
+**Phone:** +31123456789
+**Email:** nl@sanglogium.com
 
 **Verification:**
-- Postal code verified via Polish postal code DB (kody-pocztowe.com.pl)
+- Postal code verified via Dutch postal code DB (1016 EJ Amsterdam)
+- Address verified via Planviewer (real office building, built 1671)
+- Located in Grachtengordel-West (UNESCO World Heritage canal belt)
 - No audio competitor at address
 
 ## Germany (DE)
@@ -43,15 +45,15 @@ This document documents the verified sender address configurations used in produ
 These addresses are configured in `.env` using the following pattern:
 
 ```bash
-# Poland (PL)
-SENDER_ADDRESS_PL_NAME=Sang Logium PL
-SENDER_ADDRESS_PL_STREET=Mokotowska 63
-SENDER_ADDRESS_PL_CITY=Warszawa
-SENDER_ADDRESS_PL_STATE=MZ
-SENDER_ADDRESS_PL_ZIP=00-533
-SENDER_ADDRESS_PL_COUNTRY=PL
-SENDER_ADDRESS_PL_PHONE=+48123456789
-SENDER_ADDRESS_PL_EMAIL=pl@sanglogium.com
+# Netherlands (NL)
+SENDER_ADDRESS_NL_NAME=Sang Logium NL
+SENDER_ADDRESS_NL_STREET=Keizersgracht 391 A
+SENDER_ADDRESS_NL_CITY=Amsterdam
+SENDER_ADDRESS_NL_STATE=NH
+SENDER_ADDRESS_NL_ZIP=1016 EJ
+SENDER_ADDRESS_NL_COUNTRY=NL
+SENDER_ADDRESS_NL_PHONE=+31123456789
+SENDER_ADDRESS_NL_EMAIL=nl@sanglogium.com
 
 # Germany (DE)
 SENDER_ADDRESS_DE_NAME=Sang Logium DE
@@ -78,7 +80,7 @@ SENDER_ADDRESS_GB_EMAIL=gb@sanglogium.com
 
 The shipping rates API automatically selects the appropriate sender address based on the destination country code (`regionCode`):
 
-1. **PL destinations** → Sang Logium PL (Warsaw)
+1. **NL destinations** → Sang Logium NL (Amsterdam)
 2. **DE destinations** → Sang Logium DE (Munich)
 3. **GB destinations** → Sang Logium GB (London)
 4. **Other countries** → Currently not configured (requires `SENDER_ADDRESS_DEFAULT_*` or base fallback)
