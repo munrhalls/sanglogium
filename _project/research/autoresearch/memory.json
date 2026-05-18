@@ -1,7 +1,0 @@
-[
-  {
-    "hypothesis": "Add unit tests for the basket store addItem edge case when quantity exceeds stock.",
-    "dimension": "test-coverage-gaps",
-    "priority": "High"
-  }
-]
