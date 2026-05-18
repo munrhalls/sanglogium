@@ -36,6 +36,16 @@ export default function Page() {
   useEffect(() => {
     const fetchShippingOptions = async () => {
       try {
+        // Experiment 2: Read shippingAddress from sessionStorage
+        const shippingAddressFromStorage = sessionStorage.getItem("shippingAddress");
+        console.log("[SHIPPING PAGE] shippingAddress from sessionStorage:", shippingAddressFromStorage);
+
+        // If found, use it instead of fetching from CMS
+        if (shippingAddressFromStorage) {
+          console.log("[SHIPPING PAGE] Using shippingAddress from sessionStorage, skipping CMS fetch");
+          // TODO: Pass to API in Experiment 3
+        }
+
         const basketReservationId = sessionStorage.getItem("basketReservationId");
 
         if (!basketReservationId) {
@@ -43,9 +53,18 @@ export default function Page() {
           return;
         }
 
-        const response = await fetch(
-          `/api/shipping/rates?basketReservationId=${basketReservationId}`
-        );
+        // Experiment 4: Pass shippingAddress in request body (revert to original plan)
+        // Use POST instead of GET to avoid header encoding issues
+        const body: any = { basketReservationId };
+        if (shippingAddressFromStorage) {
+          body.shippingAddress = JSON.parse(shippingAddressFromStorage);
+        }
+
+        const response = await fetch("/api/shipping/rates", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
 
         if (!response.ok) {
           const errorData = await response.json();
@@ -163,39 +182,6 @@ export default function Page() {
       <div className="w-full max-w-2xl rounded bg-white p-6 shadow">
         <h1 className="mb-6 text-2xl font-bold">Select Shipping Method</h1>
 
-        {shippingOptions.length === 0 ? (
-          <p className="text-gray-600">No shipping options available.</p>
-        ) : (
-          <div className="space-y-4">
-            {shippingOptions.map((option) => (
-              <div
-                key={option.rateId}
-                onClick={() => handleSelectOption(option)}
-                className={`cursor-pointer rounded border p-4 transition-colors ${
-                  selectedOption?.rateId === option.rateId
-                    ? "border-black bg-gray-50"
-                    : "border-gray-300"
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-semibold">{option.provider}</p>
-                    <p className="text-sm text-gray-600">{option.servicelevel.name}</p>
-                    <p className="text-sm text-gray-500">
-                      Estimated delivery: {option.estimatedDays} days
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-lg font-bold">
-                      {(option.amount / 100).toFixed(2)} {option.currency}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
         <button
           onClick={handleContinue}
           disabled={!selectedOption || isSubmitting}
@@ -207,6 +193,8 @@ export default function Page() {
         >
           {isSubmitting ? "Processing..." : "Continue to Payment"}
         </button>
+
+       
       </div>
     </div>
   );

@@ -53,9 +53,9 @@ const SENDER_ADDRESS_PHONE = process.env.SENDER_ADDRESS_PHONE;
 const SENDER_ADDRESS_EMAIL = process.env.SENDER_ADDRESS_EMAIL;
 
 
-export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url);
-  const basketReservationId = searchParams.get('basketReservationId');
+export async function POST(req: Request) {
+  const body = await req.json();
+  const { basketReservationId, shippingAddress: shippingAddressFromBody } = body;
 
   if (!basketReservationId) {
     return Response.json(
@@ -64,18 +64,45 @@ export async function GET(req: Request) {
     );
   }
 
+  // Experiment 3: Accept shippingAddress from request body (optional)
+  // Reverted from header approach to avoid encoding issues
+  let providedShippingAddress: ShippingAddress | null = shippingAddressFromBody || null;
+
+  if (providedShippingAddress) {
+    console.log("[API RATES] Received shippingAddress from request body:", providedShippingAddress);
+  }
+
   // Fetch reservation from Sanity CMS
   const client = getBackendClient();
 
   try {
-    const reservation = await client.fetch<BasketReservation>(
-      `*[_id == $id][0]{
-        _id,
-        shippingAddress,
-        basketReservation[]{ _id, quantity, verifiedPrice }
-      }`,
-      { id: basketReservationId }
-    );
+    // If shippingAddress provided in body, use it; otherwise fetch from CMS
+    let reservation: BasketReservation;
+
+    if (providedShippingAddress) {
+      // Fetch basket data only (shippingAddress already provided)
+      reservation = await client.fetch<BasketReservation>(
+        `*[_id == $id][0]{
+          _id,
+          basketReservation[]{ _id, quantity, verifiedPrice }
+        }`,
+        { id: basketReservationId }
+      );
+      // Add provided shippingAddress to reservation
+      if (reservation) {
+        reservation.shippingAddress = providedShippingAddress;
+      }
+    } else {
+      // Fetch full reservation including shippingAddress from CMS
+      reservation = await client.fetch<BasketReservation>(
+        `*[_id == $id][0]{
+          _id,
+          shippingAddress,
+          basketReservation[]{ _id, quantity, verifiedPrice }
+        }`,
+        { id: basketReservationId }
+      );
+    }
 
     if (!reservation) {
       return Response.json(
@@ -238,7 +265,7 @@ export async function GET(req: Request) {
         width: maxWidth,
         height: maxHeight,
         length: maxLength,
-        weight: totalWeight,
+        weight: totalWeight / 1000,
       }],
     });
 

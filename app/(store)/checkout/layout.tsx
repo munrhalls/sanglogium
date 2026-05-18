@@ -67,6 +67,10 @@ export default function CheckoutLayout({
         throw new Error("Failed to save shipping address");
       }
 
+      // Experiment 1: Save to sessionStorage for optimization
+      sessionStorage.setItem("shippingAddress", JSON.stringify(validation.address));
+      console.log("[ADDRESS SLICE] Saved shippingAddress to sessionStorage:", validation.address);
+
       // Step 3: On success, set state and redirect
       setShippingAPIValidation("CONFIRMED");
       setShippingAddress(validation.address);
