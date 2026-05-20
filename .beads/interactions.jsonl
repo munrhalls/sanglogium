@@ -28,3 +28,4 @@
 {"id":"int-ae4e4a73","kind":"field_change","created_at":"2026-05-17T06:43:01.1151867Z","actor":"Munrhalls","issue_id":"sang-logium-151","extra":{"field":"status","new_value":"closed","old_value":"open","reason":"Closed"}}
 {"id":"int-ea8be7e6","kind":"field_change","created_at":"2026-05-17T06:43:01.9233085Z","actor":"Munrhalls","issue_id":"sang-logium-nzn","extra":{"field":"status","new_value":"closed","old_value":"open","reason":"Closed"}}
 {"id":"int-15490438","kind":"field_change","created_at":"2026-05-17T06:43:02.3797692Z","actor":"Munrhalls","issue_id":"sang-logium-viu","extra":{"field":"status","new_value":"closed","old_value":"open","reason":"Closed"}}
+{"id":"int-45100ce2","kind":"field_change","created_at":"2026-05-20T11:28:59.7796266Z","actor":"Munrhalls","issue_id":"sang-logium-khp","extra":{"field":"status","new_value":"closed","old_value":"open","reason":"Closed"}}
