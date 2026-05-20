@@ -135,6 +135,15 @@ export async function POST(req: NextRequest) {
 
   let shippingOptions: ShippingOption[] = [];
 
+  // DEBUG: Log parcel data to understand what's being sent
+  console.log('[DEBUG] parcelData:', parcelData);
+  console.log('[DEBUG] Total weight:', totalWeight, 'g');
+  console.log('[DEBUG] Total volume:', totalVolume, 'cm³');
+  console.log('[DEBUG] Parcels by weight:', parcelsByWeight);
+  console.log('[DEBUG] Parcels by volume:', parcelsByVolume);
+  console.log('[DEBUG] Total parcels to send:', numParcels);
+  console.log('[DEBUG] Packages array:', packages);
+
   // Call country-specific shipping API
   if (countryCode === 'PL') {
     const alleKurierServices = await fetchAlleKurierRates({
