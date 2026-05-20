@@ -25,6 +25,28 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   const { parcelData, countryCode } = body;
 
+  // Aggregate parcels into single virtual parcel
+  let totalWeight = 0;
+  let maxLength = 0;
+  let maxWidth = 0;
+  let maxHeight = 0;
+
+  if (Array.isArray(parcelData)) {
+    for (const parcel of parcelData) {
+      totalWeight += parcel.weight;
+      maxLength = Math.max(maxLength, parcel.length);
+      maxWidth = Math.max(maxWidth, parcel.width);
+      maxHeight = Math.max(maxHeight, parcel.height);
+    }
+  }
+
+  const aggregatedParcel = {
+    length: maxLength,
+    width: maxWidth,
+    height: maxHeight,
+    weight: totalWeight,
+  };
+
   // Select sender address based on country
   const getSenderAddress = (country: string) => {
     const prefix = `SENDER_ADDRESS_${country}_`;
@@ -72,12 +94,12 @@ export async function POST(req: NextRequest) {
       fromZip: senderAddress?.zip || '',
       toCountry: countryCode,
       toZip: '02-001', // Warsaw - Polish domestic shipping uses flat rates
-      packages: parcelData.map((parcel: ParcelData) => ({
-        width: parcel.width,
-        height: parcel.height,
-        length: parcel.length,
-        weight: parcel.weight / 1000, // Convert g to kg
-      })),
+      packages: [{
+        width: aggregatedParcel.width,
+        height: aggregatedParcel.height,
+        length: aggregatedParcel.length,
+        weight: aggregatedParcel.weight / 1000, // Convert g to kg
+      }],
     });
 
     shippingOptions = alleKurierServices.map(transformAlleKurierToShippingOption);
