@@ -2,55 +2,87 @@
 
 ## Overview
 
-The basket page displays shipping costs upfront based on the user's detected origin country (PL/GB/DE). It uses parcel data already fetched from CMS during the initial basket page load, calls country-specific shipping APIs, selects the cheapest option, and includes it in the cart total to prevent abandonment from hidden fees. No basket reservation is involved in this flow.
+The basket page displays shipping costs for Poland (PL) domestic shipping. It aggregates parcel data from basket items, calculates parcel splitting for oversized carts, calls AlleKurier API for rates, and displays the cost in the basket summary.
 
 ## Architecture
 
 ```mermaid
 sequenceDiagram
     participant Page as Basket Page
-    participant CMS as Sanity CMS
+    participant Manager as BasketManager
     participant Detector as CountryDetector
-    participant API as /api/shipping/rates
-    participant ShipAPI as Shipping APIs
-    participant UI as Basket Summary
+    participant API as /api/basket/shipping-rates
+    participant AlleKurier as AlleKurier API
+    participant UI as BasketSummary
 
-    Page->>CMS: Fetch product data (including parcel data)
-    CMS-->>Page: Return products with parcel data
-    Page->>Detector: Detect user country
-    Detector-->>Page: Return country (PL/GB/DE)
-    Page->>API: POST parcel data + country
-    API->>ShipAPI: Fetch rates (country-specific)
-    ShipAPI-->>API: Return shipping options
-    API->>API: Select cheapest option
-    API-->>Page: Return cheapest rate
-    Page->>UI: Display shipping cost in summary
+    Page->>Manager: Basket items change
+    Manager->>Manager: Calculate parcel data
+    Manager->>Manager: Set shippingCost to null (Calculating...)
+    Manager->>Detector: Detect country (with 500ms debounce)
+    Detector-->>Manager: Return country (PL/GB/DE)
+    Manager->>API: POST parcel data + country
+    API->>API: Aggregate parcels (weight, volume, dimensions)
+    API->>API: Calculate parcel splitting (if 25kg/99,000cm³ exceeded)
+    API->>AlleKurier: Fetch rates with parcels
+    AlleKurier-->>API: Return shipping options
+    API-->>Manager: Return cheapest rate
+    Manager->>UI: Update shipping cost
+    UI->>UI: Display shipping cost in summary
 ```
 
 ## Key Components
 
-- **CountryDetector** - Detects user origin country (PL/GB/DE)
-- **BasketPage** - Fetches product data from CMS including parcel data
-- **ShippingRatesAPI** - New API endpoint for basket page rate fetching
-- **BasketSummary** - Updated to display shipping cost
-- **SenderAddressConfig** - Environment variables for country-specific sender addresses
+- **BasketManager** - Manages basket state and shipping cost fetching with 500ms debouncing
+- **CountryDetector** - Detects user origin country with 1-hour caching (ipapi.co → browser locale → default PL)
+- **ShippingRatesAPI** - `/api/basket/shipping-rates` endpoint for rate fetching
+- **BasketSummary** - Displays shipping cost, shows "Calculating..." during debounce
+- **ParcelSplittingLogic** - Splits parcels when weight exceeds 25kg or volume exceeds 99,000 cm³
 
 ## Data Flow
 
-1. Basket page loads
-2. Basket page fetches product data from CMS (including parcel data for inventory display)
-3. CountryDetector detects user origin country (PL/GB/DE)
-4. Basket page calls shipping rate API with parcel data + country + default shipping address
-5. API calls country-specific shipping API (AlleKurier for PL, others for GB/DE)
-6. API selects cheapest shipping option
-7. API returns cheapest rate to basket page
-8. Basket summary displays: Subtotal + Shipping (cheapest) + Total
+1. Basket page loads with items
+2. BasketManager calculates parcel data from basket items
+3. User changes basket item quantity (triggers useEffect)
+4. BasketManager sets `shippingCost` to null (shows "Calculating...")
+5. After 500ms debounce, CountryDetector detects country
+6. BasketManager calls `/api/basket/shipping-rates` with parcel data + country
+7. API aggregates parcels (sums weights, uses max dimensions)
+8. API calculates parcel splitting if limits exceeded
+9. API calls AlleKurier with parcel data (converted to kg)
+10. API returns cheapest rate to BasketManager
+11. BasketManager updates `shippingCost` state
+12. BasketSummary displays shipping cost
+
+## Parcel Splitting Logic
+
+**Courier Limits:**
+- Max weight: 25kg (25,000g)
+- Max volume: 99,000 cm³
+
+**Calculation:**
+- Total weight = sum of all item weights
+- Total volume = sum of all item volumes (length × width × height)
+- Parcels by weight = ceil(total weight / 25,000g)
+- Parcels by volume = ceil(total volume / 99,000cm³)
+- Total parcels = max(parcels by weight, parcels by volume, 1)
+
+**Distribution:**
+- Items distributed evenly across required number of parcels
+- Each parcel aggregated (sum weights, max dimensions)
+- Multiple parcels sent to AlleKurier API
+- Total cost = sum of all parcel rates
 
 ## Country Detection
 
-- **PL**: AlleKurier API (preferred due to simpler auth and test mode)
-- **GB**: Shipping API (TBD based on research)
-- **DE**: Shipping API (TBD based on research)
+**Priority:**
+1. IP geolocation (ipapi.co/json/) with 1-hour caching
+2. Browser locale fallback
+3. Default: Poland (PL)
+
+**Supported Countries:**
+- **PL**: AlleKurier API (implemented)
+- **GB**: Not implemented (TODO)
+- **DE**: Not implemented (TODO)
 
 ## Sender Address Configuration
 
@@ -70,12 +102,11 @@ Fallback to `SENDER_ADDRESS_DEFAULT_*` if country-specific not configured.
 
 - **React 18** - UI framework
 - **Next.js** - App router and server components
-- **Sanity CMS** - Product and parcel data
 - **AlleKurier API** - Polish shipping rates
 - **TypeScript** - Type safety
 
 ## Related Documentation
 
-- [PRD](./1. PRD.md) - Product requirements and definition of done
-- [Technical Solution](./2. Minimal Viable Solution Design.md) - Detailed technical design
+- [PRD](./PRD.md) - Product requirements and definition of done
+- [Technical Solution](./Minimal Viable Solution Design.md) - Detailed technical design
 - [Technical Diagrams](./TECHNICAL DIAGRAM.md) - Sequence diagrams
