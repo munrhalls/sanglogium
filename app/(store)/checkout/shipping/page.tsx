@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Loader from "@/app/components/common/Loader";
+import { formatPolishPrice, formatDeliveryEstimate } from "@/lib/utils/formatting";
 
 interface ShippingOption {
   provider: string;
@@ -72,7 +73,7 @@ export default function Page() {
             router.push("/checkout/address");
             return;
           }
-          setError(errorData.error || "Failed to fetch shipping rates");
+          setError(errorData.error || "Nie udało się pobrać stawek dostawy");
           setErrorClass(errorData.errorClass || null);
           setRetryable(errorData.retryable || false);
           return;
@@ -81,7 +82,7 @@ export default function Page() {
         const data = await response.json();
         setShippingOptions(data.options || []);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to load shipping options");
+        setError(err instanceof Error ? err.message : "Nie udało się załadować opcji dostawy");
       } finally {
         setIsLoading(false);
       }
@@ -132,12 +133,12 @@ export default function Page() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to save shipping choice");
+        throw new Error("Nie udało się zapisać wyboru dostawy");
       }
 
       router.push("/checkout/payment");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to save shipping choice");
+      setError(err instanceof Error ? err.message : "Nie udało się zapisać wyboru dostawy");
     } finally {
       setIsSubmitting(false);
     }
@@ -146,7 +147,7 @@ export default function Page() {
   if (isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <Loader message="Loading shipping options..." color="border-t-black" />
+        <Loader message="Ładowanie opcji dostawy..." color="border-t-black" />
       </div>
     );
   }
@@ -162,14 +163,14 @@ export default function Page() {
                 onClick={handleRetry}
                 className="rounded bg-black px-4 py-2 text-white hover:bg-gray-800"
               >
-                Try Again
+                Spróbuj ponownie
               </button>
             )}
             <button
               onClick={() => router.back()}
               className="rounded border border-black px-4 py-2 text-black hover:bg-gray-100"
             >
-              Go Back
+              Wróć
             </button>
           </div>
         </div>
@@ -180,18 +181,47 @@ export default function Page() {
   return (
     <div className="flex min-h-screen justify-center p-4">
       <div className="w-full max-w-2xl rounded bg-white p-6 shadow">
-        <h1 className="mb-6 text-2xl font-bold">Select Shipping Method</h1>
+        <h1 className="mb-6 text-2xl font-bold">Wybierz metodę dostawy</h1>
+
+        {shippingOptions.length > 0 ? (
+          <div className="space-y-3">
+            {shippingOptions.map((option) => (
+              <div
+                key={option.rateId}
+                onClick={() => handleSelectOption(option)}
+                className={`cursor-pointer rounded border-2 p-4 transition-colors ${
+                  selectedOption?.rateId === option.rateId
+                    ? "border-black bg-gray-50"
+                    : "border-gray-200 hover:border-gray-300"
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-semibold">{option.provider}</p>
+                    <p className="text-sm text-black">{option.servicelevel.name}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-semibold">{formatPolishPrice(option.amount)}</p>
+                    <p className="text-sm text-black">{formatDeliveryEstimate(option.estimatedDays)}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-black">Brak dostępnych opcji dostawy</p>
+        )}
 
         <button
           onClick={handleContinue}
           disabled={!selectedOption || isSubmitting}
           className={`mt-6 w-full rounded px-4 py-3 font-semibold ${
             !selectedOption || isSubmitting
-              ? "cursor-not-allowed bg-gray-400 text-gray-600"
+              ? "cursor-not-allowed bg-gray-400 text-black"
               : "bg-black text-white hover:bg-gray-800"
           }`}
         >
-          {isSubmitting ? "Processing..." : "Continue to Payment"}
+          {isSubmitting ? "Przetwarzanie..." : "Przejdź do płatności"}
         </button>
 
        

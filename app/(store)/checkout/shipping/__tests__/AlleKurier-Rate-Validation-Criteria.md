@@ -23,8 +23,7 @@ This document defines validation criteria and test scenarios to verify that ship
 
 **File: `.env`**
 - Has: ALLEKURIER_EMAIL, ALLEKURIER_PASSWORD ✓
-- Has: SENDER_ADDRESS_NL_*, SENDER_ADDRESS_DE_*, SENDER_ADDRESS_GB_* ✓
-- Missing: SENDER_ADDRESS_PL_* ✗
+- Has: SENDER_ADDRESS_PL_*, SENDER_ADDRESS_DE_*, SENDER_ADDRESS_GB_* ✓
 
 ### Rate Calculation Factors (from API Documentation)
 
@@ -165,16 +164,14 @@ The test matrix covers three dimensions:
 ### Critical Gap 1: Missing Poland Sender Address in .env
 
 **Current State:**
-- .env has SENDER_ADDRESS_NL_*, SENDER_ADDRESS_DE_*, SENDER_ADDRESS_GB_*
-- .env does NOT have SENDER_ADDRESS_PL_*
+- .env has SENDER_ADDRESS_PL_*, SENDER_ADDRESS_DE_*, SENDER_ADDRESS_GB_*
 
 **Impact:**
 - Cannot test sender address variations (Scenario 5)
 - AlleKurier implementation uses hardcoded "Test Sender" in Warsaw
 - Inconsistent with other country sender address configurations
 
-**Recommendation:**
-Add to .env:
+**Status:** RESOLVED - SENDER_ADDRESS_PL_* variables added to .env
 ```
 # Poland (PL)
 SENDER_ADDRESS_PL_NAME=Sang Logium PL
@@ -234,7 +231,7 @@ Create comprehensive test script that executes all test scenarios:
 ## Validation Execution Plan
 
 ### Phase 1: Configuration Fixes (Pre-requisite)
-1. Add SENDER_ADDRESS_PL_* variables to .env
+1. ✓ Add SENDER_ADDRESS_PL_* variables to .env (COMPLETED)
 2. Update `lib/shipping/allekurier.ts` to read from .env
 3. Verify test account status with AlleKurier support
 
@@ -292,7 +289,7 @@ You can trust the rates when:
 2. **All validation criteria met**: Phases 1-8 complete with all success criteria
 3. **Consistent behavior**: Repeated tests produce consistent rates (±5% variance acceptable)
 4. **Professional review**: Rates compared with public carrier calculators and deemed reasonable
-5. **Production readiness**: Configuration gaps (SENDER_ADDRESS_PL_*, hardcoded data) resolved
+5. **Production readiness**: Configuration gaps (hardcoded data) resolved
 
 ## Risk Mitigation
 
