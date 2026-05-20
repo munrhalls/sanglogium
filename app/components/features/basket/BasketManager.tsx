@@ -148,25 +148,29 @@ export default function BasketManager() {
   useEffect(() => {
     if (parcelData.length === 0) return;
 
-    const fetchShippingRates = async () => {
-      try {
-        const country = await detectCountry();
-        const res = await fetch('/api/basket/shipping-rates', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            parcelData,
-            countryCode: country,
-          }),
-        });
-        const data = await res.json();
-        setShippingCost(data.rate.amount);
-      } catch (e) {
-        console.error('Failed to fetch shipping rates:', e);
-      }
-    };
+    const timeoutId = setTimeout(() => {
+      const fetchShippingRates = async () => {
+        try {
+          const country = await detectCountry();
+          const res = await fetch('/api/basket/shipping-rates', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              parcelData,
+              countryCode: country,
+            }),
+          });
+          const data = await res.json();
+          setShippingCost(data.rate.amount);
+        } catch (e) {
+          console.error('Failed to fetch shipping rates:', e);
+        }
+      };
 
-    fetchShippingRates();
+      fetchShippingRates();
+    }, 500); // 500ms debounce delay
+
+    return () => clearTimeout(timeoutId);
   }, [parcelData]);
 
   if (!_hasHydrated || isLoading) return <BasketSkeleton />;
