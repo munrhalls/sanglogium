@@ -1,6 +1,7 @@
 import { getBackendClient } from '@/sanity-cms/lib/backendClient';
 import { getPolandDomesticRates, getCityCoordinates } from '@/lib/shipping/carrier-rates';
 import { fetchPacklinkRates } from '@/lib/shipping/packlink-rates';
+import { fetchAlleKurierRates, transformAlleKurierToShippingOption } from '@/lib/shipping/allekurier-rates';
 
 export const runtime = 'nodejs';
 
@@ -39,6 +40,14 @@ interface BasketReservation {
     _id: string;
     quantity: number;
     verifiedPrice: number;
+    parcel?: {
+      length: number;
+      width: number;
+      height: number;
+      weight: number;
+      distance_unit: string;
+      mass_unit: string;
+    };
   }>;
 }
 
@@ -84,7 +93,7 @@ export async function POST(req: Request) {
       reservation = await client.fetch<BasketReservation>(
         `*[_id == $id][0]{
           _id,
-          basketReservation[]{ _id, quantity, verifiedPrice }
+          basketReservation[]{ _id, quantity, verifiedPrice, parcel }
         }`,
         { id: basketReservationId }
       );
@@ -98,7 +107,7 @@ export async function POST(req: Request) {
         `*[_id == $id][0]{
           _id,
           shippingAddress,
-          basketReservation[]{ _id, quantity, verifiedPrice }
+          basketReservation[]{ _id, quantity, verifiedPrice, parcel }
         }`,
         { id: basketReservationId }
       );
@@ -215,32 +224,24 @@ export async function POST(req: Request) {
       );
     }
 
-    // Fetch product parcel data from Sanity
-    const productIds = basketReservation.map((item) => item._id);
-    const products = await client.fetch(
-      `*[_id in $ids]{ _id, parcel }`,
-      { ids: productIds }
-    );
-
-    // Aggregate parcel data: sum weights, use max dimensions
+    // Aggregate parcel data from basket reservation: sum weights, use max dimensions
     let totalWeight = 0;
     let maxLength = 0;
     let maxWidth = 0;
     let maxHeight = 0;
 
-    for (const product of products) {
-      if (!product.parcel) {
+    for (const item of basketReservation) {
+      if (!item.parcel) {
         return Response.json(
-          { error: `Product ${product._id} missing parcel data`, errorClass: 'VALIDATION', retryable: false },
+          { error: `Product ${item._id} missing parcel data`, errorClass: 'VALIDATION', retryable: false },
           { status: 400 }
         );
       }
 
-      const quantity = basketReservation.find((item) => item._id === product._id)?.quantity || 1;
-      totalWeight += product.parcel.weight * quantity;
-      maxLength = Math.max(maxLength, product.parcel.length);
-      maxWidth = Math.max(maxWidth, product.parcel.width);
-      maxHeight = Math.max(maxHeight, product.parcel.height);
+      totalWeight += item.parcel.weight * item.quantity;
+      maxLength = Math.max(maxLength, item.parcel.length);
+      maxWidth = Math.max(maxWidth, item.parcel.width);
+      maxHeight = Math.max(maxHeight, item.parcel.height);
     }
 
     const aggregatedParcel: ParcelData = {
@@ -255,30 +256,70 @@ export async function POST(req: Request) {
     // Determine sender country (same as destination for domestic shipping)
     const senderCountry = senderAddress.country;
 
-    // === Tier 1: Packlink PRO (free production API, real rates) ===
-    const packlinkServices = await fetchPacklinkRates({
-      fromCountry: senderCountry,
-      fromZip: senderAddress.zip,
-      toCountry: shippingAddress.regionCode,
-      toZip: shippingAddress.postalCode,
-      packages: [{
-        width: maxWidth,
-        height: maxHeight,
-        length: maxLength,
-        weight: totalWeight / 1000,
-      }],
-    });
+    let shippingOptions: ShippingOption[] = [];
+    let errorClass: string | null = null;
+    let retryable = false;
 
-    let shippingOptions: ShippingOption[] = packlinkServices.map((s) => ({
-      provider: s.carrier_name,
-      servicelevel: { name: s.name },
-      rateId: `packlink_${s.id}`,
-      amount: s.price.total_price,
-      currency: s.price.currency,
-      estimatedDays: Math.ceil(parseInt(s.transit_hours) / 24) || 1,
-    }));
+    // === Tier 1: AlleKurier API (Polish shipping rates) ===
+    // AlleKurier is preferred for Polish market due to simpler auth and explicit test mode
+    if (countryCode === 'PL') {
+      console.log('[ALLEKURIER] Fetching rates for Polish domestic shipping');
+      const alleKurierServices = await fetchAlleKurierRates({
+        fromCountry: senderCountry,
+        fromZip: senderAddress.zip,
+        toCountry: shippingAddress.regionCode,
+        toZip: shippingAddress.postalCode,
+        packages: [{
+          width: maxWidth,
+          height: maxHeight,
+          length: maxLength,
+          weight: totalWeight / 1000,
+        }],
+      });
 
-    // === Tier 2: Mock rates (fallback for PL domestic) ===
+      if (alleKurierServices.length > 0) {
+        shippingOptions = alleKurierServices.map(transformAlleKurierToShippingOption);
+        console.log(`[ALLEKURIER] Transformed ${shippingOptions.length} shipping options`);
+      } else {
+        console.log('[ALLEKURIER] No services returned, falling back to Packlink');
+        errorClass = 'PROVIDER';
+        retryable = true;
+      }
+    }
+
+    // === Tier 2: Packlink PRO (free production API, real rates) ===
+    // Fallback for non-Polish routes or if AlleKurier fails
+    if (shippingOptions.length === 0) {
+      console.log('[PACKLINK] Fetching rates as fallback');
+      const packlinkServices = await fetchPacklinkRates({
+        fromCountry: senderCountry,
+        fromZip: senderAddress.zip,
+        toCountry: shippingAddress.regionCode,
+        toZip: shippingAddress.postalCode,
+        packages: [{
+          width: maxWidth,
+          height: maxHeight,
+          length: maxLength,
+          weight: totalWeight / 1000,
+        }],
+      });
+
+      if (packlinkServices.length > 0) {
+        shippingOptions = packlinkServices.map((s) => ({
+          provider: s.carrier_name,
+          servicelevel: { name: s.name },
+          rateId: `packlink_${s.id}`,
+          amount: s.price.total_price,
+          currency: s.price.currency,
+          estimatedDays: Math.ceil(parseInt(s.transit_hours) / 24) || 1,
+        }));
+      } else {
+        errorClass = errorClass || 'PROVIDER';
+        retryable = true;
+      }
+    }
+
+    // === Tier 3: Mock rates (fallback for PL domestic) ===
     if (shippingOptions.length === 0 && countryCode === 'PL') {
       console.log('[MOCK] Using realistic mock rates for Poland domestic shipping');
       const senderLocation = getCityCoordinates(senderAddress.city);
@@ -287,6 +328,19 @@ export async function POST(req: Request) {
         { length: maxLength, width: maxWidth, height: maxHeight, weight: totalWeight },
         senderLocation,
         recipientLocation
+      );
+    }
+
+    // Return shipping options with error classification if applicable
+    if (shippingOptions.length === 0) {
+      return Response.json(
+        {
+          error: 'No shipping options available',
+          errorClass: errorClass || 'PROVIDER',
+          retryable,
+          options: [],
+        },
+        { status: 503 }
       );
     }
 

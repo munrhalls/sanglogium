@@ -11,6 +11,14 @@ export interface BasketProduct {
   stock: number;
   reservedStock: number;
   image: any;
+  parcel?: {
+    length: number;
+    width: number;
+    height: number;
+    weight: number;
+    distance_unit: string;
+    mass_unit: string;
+  };
 }
 
 export async function getBasketProducts(ids: string[]): Promise<BasketProduct[]> {
@@ -30,6 +38,14 @@ export async function getBasketProducts(ids: string[]): Promise<BasketProduct[]>
           asset {
             _ref
           }
+        },
+        parcel {
+          length,
+          width,
+          height,
+          weight,
+          distance_unit,
+          mass_unit
         }
       }`,
       params: { ids }

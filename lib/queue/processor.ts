@@ -111,6 +111,7 @@ export async function processInline(raw: unknown): Promise<ProcessResult> {
             _id: p._id,
             quantity: p.quantity,
             verifiedPrice,
+            parcel: p.parcel,
           }
         })
       )

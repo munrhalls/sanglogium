@@ -18,6 +18,14 @@ interface CmsProduct {
     unit_amount: number;
     currency: string;
   };
+  parcel?: {
+    length: number;
+    width: number;
+    height: number;
+    weight: number;
+    distance_unit: string;
+    mass_unit: string;
+  };
 }
 
 async function fetchBasketProducts(productIds: string[]) {
@@ -81,10 +89,10 @@ export default function BasketManager() {
       .map((item) => {
         const product = cmsProducts.find((p) => p._id === item.productId);
         if (!product) return null;
-        
+
         const displayPrice = product.price_data.unit_amount / 100; // cents to dollars
         const availableStock = product.stock - product.reservedStock;
-        
+
         return {
           productId: item.productId,
           quantity: item.quantity,
@@ -93,6 +101,7 @@ export default function BasketManager() {
           image: product.image,
           price_data: product.price_data,
           availableStock,
+          parcel: product.parcel,
         };
       })
       .filter((item): item is NonNullable<typeof item> => item !== null)
@@ -114,12 +123,13 @@ export default function BasketManager() {
       productId: item.productId,
       quantity: item.quantity,
       price_data: item.price_data,
+      parcel: item.parcel,
     }));
-    
-    return { 
-      itemCount: count, 
-      subtotal: total, 
-      checkoutData: checkoutItems 
+
+    return {
+      itemCount: count,
+      subtotal: total,
+      checkoutData: checkoutItems
     };
   }, [enrichedItems]);
 

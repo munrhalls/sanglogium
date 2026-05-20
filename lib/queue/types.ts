@@ -5,6 +5,14 @@ export interface ClientBasketItem {
   _id: string
   quantity: number
   price_data: { currency: string; unit_amount: number }
+  parcel?: {
+    length: number
+    width: number
+    height: number
+    weight: number
+    distance_unit: string
+    mass_unit: string
+  }
 }
 
 // CMS basket reservation (saved to Sanity) - includes verifiedPrice, no stripePriceId
@@ -12,6 +20,14 @@ export interface CmsBasketReservationItem {
   _id: string
   quantity: number
   verifiedPrice: number
+  parcel?: {
+    length: number
+    width: number
+    height: number
+    weight: number
+    distance_unit: string
+    mass_unit: string
+  }
 }
 
 export interface BasketReservation {

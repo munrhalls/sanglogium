@@ -31,6 +31,43 @@ export const basketReservationType = defineType({
               type: "number",
               validation: (Rule) => Rule.required().min(0),
             }),
+            defineField({
+              name: "parcel",
+              title: "Parcel Data",
+              type: "object",
+              fields: [
+                defineField({
+                  name: "length",
+                  title: "Length (cm)",
+                  type: "number",
+                }),
+                defineField({
+                  name: "width",
+                  title: "Width (cm)",
+                  type: "number",
+                }),
+                defineField({
+                  name: "height",
+                  title: "Height (cm)",
+                  type: "number",
+                }),
+                defineField({
+                  name: "weight",
+                  title: "Weight (g)",
+                  type: "number",
+                }),
+                defineField({
+                  name: "distance_unit",
+                  title: "Distance Unit",
+                  type: "string",
+                }),
+                defineField({
+                  name: "mass_unit",
+                  title: "Mass Unit",
+                  type: "string",
+                }),
+              ],
+            }),
           ],
         }),
       ],

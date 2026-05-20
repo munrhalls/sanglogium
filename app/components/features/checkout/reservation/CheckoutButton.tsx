@@ -4,7 +4,19 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 export interface CheckoutButtonProps {
-  basketData?: Array<{ productId: string; quantity: number; price_data: { currency: string; unit_amount: number } }>
+  basketData?: Array<{
+    productId: string;
+    quantity: number;
+    price_data: { currency: string; unit_amount: number };
+    parcel?: {
+      length: number;
+      width: number;
+      height: number;
+      weight: number;
+      distance_unit: string;
+      mass_unit: string;
+    };
+  }>
 }
 
 export function CheckoutButton({
@@ -30,7 +42,8 @@ export function CheckoutButton({
       const basketReservation = basketData.map(item => ({
         _id: item.productId,
         quantity: item.quantity,
-        price_data: item.price_data
+        price_data: item.price_data,
+        parcel: item.parcel
       }))
 
       const payload = {
