@@ -137,6 +137,10 @@ export async function POST(req: NextRequest) {
   }
 
   // Select cheapest rate
+  if (shippingOptions.length === 0) {
+    return NextResponse.json({ rate: null });
+  }
+
   const cheapestRate = shippingOptions.reduce((min, option) =>
     option.amount < min.amount ? option : min
   );
