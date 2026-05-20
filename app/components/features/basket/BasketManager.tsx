@@ -148,6 +148,9 @@ export default function BasketManager() {
   useEffect(() => {
     if (parcelData.length === 0) return;
 
+    // Reset shipping cost to null to show "Calculating..." during debounce delay
+    setShippingCost(null);
+
     const timeoutId = setTimeout(() => {
       const fetchShippingRates = async () => {
         try {
