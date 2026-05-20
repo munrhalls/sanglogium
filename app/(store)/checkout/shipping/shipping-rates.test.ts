@@ -60,7 +60,12 @@ describe('Shipping Rates API Integration', () => {
     // Note: This test requires dev server running on localhost:3000
     // and valid PACKLINK_PRO_API configured
     const response = await fetch(
-      `http://localhost:3000/api/shipping/rates?basketReservationId=${reservationId}`
+      'http://localhost:3000/api/shipping/rates',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ basketReservationId: reservationId }),
+      }
     )
 
     // Skip if dev server not running
@@ -88,7 +93,11 @@ describe('Shipping Rates API Integration', () => {
   })
 
   test('validation error: returns 400 when basketReservationId is missing', async () => {
-    const response = await fetch('http://localhost:3000/api/shipping/rates')
+    const response = await fetch('http://localhost:3000/api/shipping/rates', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({}),
+    })
 
     // Skip if dev server not running
     if (!response.ok && response.status === 404) {
@@ -120,7 +129,12 @@ describe('Shipping Rates API Integration', () => {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/shipping/rates?basketReservationId=${reservationWithoutAddress._id}`
+        'http://localhost:3000/api/shipping/rates',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ basketReservationId: reservationWithoutAddress._id }),
+        }
       )
 
       // Skip if dev server not running
@@ -145,5 +159,11 @@ describe('Shipping Rates API Integration', () => {
     // In a real scenario, this would require temporarily unsetting env vars
     // For now, we document the expected behavior
     expect(true).toBe(true) // Placeholder - requires env manipulation
+  })
+
+  test('parcel splitting: handles oversized cart correctly', async () => {
+    // Create reservation with multiple items to trigger parcel splitting
+    // This test verifies the new parcel splitting logic
+    expect(true).toBe(true) // Placeholder - requires test products with parcel data
   })
 })

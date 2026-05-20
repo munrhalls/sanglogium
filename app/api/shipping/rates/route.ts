@@ -1,5 +1,4 @@
 import { getBackendClient } from '@/sanity-cms/lib/backendClient';
-import { getPolandDomesticRates, getCityCoordinates } from '@/lib/shipping/carrier-rates';
 import { fetchPacklinkRates } from '@/lib/shipping/packlink-rates';
 import { fetchAlleKurierRates, transformAlleKurierToShippingOption } from '@/lib/shipping/allekurier-rates';
 
@@ -51,17 +50,6 @@ interface BasketReservation {
   }>;
 }
 
-// Sender address from environment variables
-const SENDER_ADDRESS_NAME = process.env.SENDER_ADDRESS_NAME;
-const SENDER_ADDRESS_STREET = process.env.SENDER_ADDRESS_STREET;
-const SENDER_ADDRESS_CITY = process.env.SENDER_ADDRESS_CITY;
-const SENDER_ADDRESS_STATE = process.env.SENDER_ADDRESS_STATE;
-const SENDER_ADDRESS_ZIP = process.env.SENDER_ADDRESS_ZIP;
-const SENDER_ADDRESS_COUNTRY = process.env.SENDER_ADDRESS_COUNTRY;
-const SENDER_ADDRESS_PHONE = process.env.SENDER_ADDRESS_PHONE;
-const SENDER_ADDRESS_EMAIL = process.env.SENDER_ADDRESS_EMAIL;
-
-
 export async function POST(req: Request) {
   const body = await req.json();
   const { basketReservationId, shippingAddress: shippingAddressFromBody } = body;
@@ -73,23 +61,18 @@ export async function POST(req: Request) {
     );
   }
 
-  // Experiment 3: Accept shippingAddress from request body (optional)
-  // Reverted from header approach to avoid encoding issues
   let providedShippingAddress: ShippingAddress | null = shippingAddressFromBody || null;
 
   if (providedShippingAddress) {
     console.log("[API RATES] Received shippingAddress from request body:", providedShippingAddress);
   }
 
-  // Fetch reservation from Sanity CMS
   const client = getBackendClient();
 
   try {
-    // If shippingAddress provided in body, use it; otherwise fetch from CMS
     let reservation: BasketReservation;
 
     if (providedShippingAddress) {
-      // Fetch basket data only (shippingAddress already provided)
       reservation = await client.fetch<BasketReservation>(
         `*[_id == $id][0]{
           _id,
@@ -97,12 +80,10 @@ export async function POST(req: Request) {
         }`,
         { id: basketReservationId }
       );
-      // Add provided shippingAddress to reservation
       if (reservation) {
         reservation.shippingAddress = providedShippingAddress;
       }
     } else {
-      // Fetch full reservation including shippingAddress from CMS
       reservation = await client.fetch<BasketReservation>(
         `*[_id == $id][0]{
           _id,
@@ -136,7 +117,6 @@ export async function POST(req: Request) {
 
     const { shippingAddress, basketReservation } = reservation;
 
-    // Validate shipping address fields
     if (!shippingAddress.regionCode || !/^[A-Z]{2}$/.test(shippingAddress.regionCode)) {
       return Response.json(
         { error: 'Invalid country code. Please use 2-letter ISO country code.', errorClass: 'VALIDATION', retryable: false },
@@ -144,10 +124,9 @@ export async function POST(req: Request) {
       );
     }
 
-    // Select sender address based on destination country
     const countryCode = shippingAddress.regionCode.toUpperCase();
+
     const getSenderAddress = (country: string) => {
-      // Try country-specific address first (SENDER_ADDRESS_{COUNTRY}_*)
       const prefix = `SENDER_ADDRESS_${country}_`;
       const name = process.env[`${prefix}NAME`];
       const street = process.env[`${prefix}STREET`];
@@ -155,39 +134,26 @@ export async function POST(req: Request) {
       const state = process.env[`${prefix}STATE`];
       const zip = process.env[`${prefix}ZIP`];
       const countryField = process.env[`${prefix}COUNTRY`];
-      const phone = process.env[`${prefix}PHONE`];
-      const email = process.env[`${prefix}EMAIL`];
 
-      // If country-specific address is configured, use it
       if (name && street && city && zip && countryField) {
-        return { name, street, city, state, zip, country: countryField, phone, email };
+        return { name, street, city, state, zip, country: countryField };
       }
 
-      // Fallback to DEFAULT address (SENDER_ADDRESS_DEFAULT_*)
       const defaultName = process.env['SENDER_ADDRESS_DEFAULT_NAME'];
       const defaultStreet = process.env['SENDER_ADDRESS_DEFAULT_STREET'];
       const defaultCity = process.env['SENDER_ADDRESS_DEFAULT_CITY'];
       const defaultState = process.env['SENDER_ADDRESS_DEFAULT_STATE'];
       const defaultZip = process.env['SENDER_ADDRESS_DEFAULT_ZIP'];
       const defaultCountry = process.env['SENDER_ADDRESS_DEFAULT_COUNTRY'];
-      const defaultPhone = process.env['SENDER_ADDRESS_DEFAULT_PHONE'];
-      const defaultEmail = process.env['SENDER_ADDRESS_DEFAULT_EMAIL'];
 
       if (defaultName && defaultStreet && defaultCity && defaultZip && defaultCountry) {
-        return { name: defaultName, street: defaultStreet, city: defaultCity, state: defaultState, zip: defaultZip, country: defaultCountry, phone: defaultPhone, email: defaultEmail };
-      }
-
-      // Fallback to base SENDER_ADDRESS_* (no country suffix)
-      if (SENDER_ADDRESS_NAME && SENDER_ADDRESS_STREET && SENDER_ADDRESS_CITY && SENDER_ADDRESS_ZIP && SENDER_ADDRESS_COUNTRY) {
         return {
-          name: SENDER_ADDRESS_NAME,
-          street: SENDER_ADDRESS_STREET,
-          city: SENDER_ADDRESS_CITY,
-          state: SENDER_ADDRESS_STATE || '',
-          zip: SENDER_ADDRESS_ZIP,
-          country: SENDER_ADDRESS_COUNTRY,
-          phone: SENDER_ADDRESS_PHONE,
-          email: SENDER_ADDRESS_EMAIL,
+          name: defaultName,
+          street: defaultStreet,
+          city: defaultCity,
+          state: defaultState,
+          zip: defaultZip,
+          country: defaultCountry,
         };
       }
 
@@ -224,8 +190,13 @@ export async function POST(req: Request) {
       );
     }
 
-    // Aggregate parcel data from basket reservation: sum weights, use max dimensions
+    // Courier limits (from basket endpoint)
+    const MAX_WEIGHT_G = 25000;
+    const MAX_VOLUME_CM3 = 99000;
+
+    // Aggregate parcels with volume calculation (from basket endpoint)
     let totalWeight = 0;
+    let totalVolume = 0;
     let maxLength = 0;
     let maxWidth = 0;
     let maxHeight = 0;
@@ -239,29 +210,71 @@ export async function POST(req: Request) {
       }
 
       totalWeight += item.parcel.weight * item.quantity;
+      totalVolume += item.parcel.length * item.parcel.width * item.parcel.height * item.quantity;
       maxLength = Math.max(maxLength, item.parcel.length);
       maxWidth = Math.max(maxWidth, item.parcel.width);
       maxHeight = Math.max(maxHeight, item.parcel.height);
     }
 
-    const aggregatedParcel: ParcelData = {
-      length: maxLength,
-      width: maxWidth,
-      height: maxHeight,
-      weight: totalWeight,
-      distance_unit: 'cm',
-      mass_unit: 'g',
-    };
+    // Calculate number of parcels needed (from basket endpoint)
+    const parcelsByWeight = Math.ceil(totalWeight / MAX_WEIGHT_G);
+    const parcelsByVolume = Math.ceil(totalVolume / MAX_VOLUME_CM3);
+    const numParcels = Math.max(parcelsByWeight, parcelsByVolume, 1);
 
-    // Determine sender country (same as destination for domestic shipping)
+    // Split parcelData into multiple parcels if needed (from basket endpoint)
+    const parcelsPerSplit = Math.ceil(basketReservation.length / numParcels);
+    const splitParcels: ParcelData[] = [];
+
+    for (let i = 0; i < numParcels; i++) {
+      const startIdx = i * parcelsPerSplit;
+      const endIdx = Math.min(startIdx + parcelsPerSplit, basketReservation.length);
+      const subset = basketReservation.slice(startIdx, endIdx);
+
+      let splitWeight = 0;
+      let splitMaxLength = 0;
+      let splitMaxWidth = 0;
+      let splitMaxHeight = 0;
+
+      for (const item of subset) {
+        if (item.parcel) {
+          splitWeight += item.parcel.weight * item.quantity;
+          splitMaxLength = Math.max(splitMaxLength, item.parcel.length);
+          splitMaxWidth = Math.max(splitMaxWidth, item.parcel.width);
+          splitMaxHeight = Math.max(splitMaxHeight, item.parcel.height);
+        }
+      }
+
+      splitParcels.push({
+        length: splitMaxLength,
+        width: splitMaxWidth,
+        height: splitMaxHeight,
+        weight: splitWeight,
+        distance_unit: 'cm',
+        mass_unit: 'g',
+      });
+    }
+
+    // If only one parcel, use aggregated (from basket endpoint)
+    const packages = numParcels === 1
+      ? [{
+          width: maxWidth,
+          height: maxHeight,
+          length: maxLength,
+          weight: totalWeight / 1000,
+        }]
+      : splitParcels.map(p => ({
+          width: p.width,
+          height: p.height,
+          length: p.length,
+          weight: p.weight / 1000,
+        }));
+
     const senderCountry = senderAddress.country;
-
     let shippingOptions: ShippingOption[] = [];
     let errorClass: string | null = null;
     let retryable = false;
 
-    // === Tier 1: AlleKurier API (Polish shipping rates) ===
-    // AlleKurier is preferred for Polish market due to simpler auth and explicit test mode
+    // AlleKurier API (Polish shipping rates)
     if (countryCode === 'PL') {
       console.log('[ALLEKURIER] Fetching rates for Polish domestic shipping');
       const alleKurierServices = await fetchAlleKurierRates({
@@ -269,12 +282,7 @@ export async function POST(req: Request) {
         fromZip: senderAddress.zip,
         toCountry: shippingAddress.regionCode,
         toZip: shippingAddress.postalCode,
-        packages: [{
-          width: maxWidth,
-          height: maxHeight,
-          length: maxLength,
-          weight: totalWeight / 1000,
-        }],
+        packages: packages,
       });
 
       if (alleKurierServices.length > 0) {
@@ -287,8 +295,7 @@ export async function POST(req: Request) {
       }
     }
 
-    // === Tier 2: Packlink PRO (free production API, real rates) ===
-    // Fallback for non-Polish routes or if AlleKurier fails
+    // Packlink PRO (fallback for non-Polish routes or if AlleKurier fails)
     if (shippingOptions.length === 0) {
       console.log('[PACKLINK] Fetching rates as fallback');
       const packlinkServices = await fetchPacklinkRates({
@@ -296,12 +303,7 @@ export async function POST(req: Request) {
         fromZip: senderAddress.zip,
         toCountry: shippingAddress.regionCode,
         toZip: shippingAddress.postalCode,
-        packages: [{
-          width: maxWidth,
-          height: maxHeight,
-          length: maxLength,
-          weight: totalWeight / 1000,
-        }],
+        packages: packages,
       });
 
       if (packlinkServices.length > 0) {
@@ -319,19 +321,6 @@ export async function POST(req: Request) {
       }
     }
 
-    // === Tier 3: Mock rates (fallback for PL domestic) ===
-    if (shippingOptions.length === 0 && countryCode === 'PL') {
-      console.log('[MOCK] Using realistic mock rates for Poland domestic shipping');
-      const senderLocation = getCityCoordinates(senderAddress.city);
-      const recipientLocation = getCityCoordinates(shippingAddress.city);
-      shippingOptions = getPolandDomesticRates(
-        { length: maxLength, width: maxWidth, height: maxHeight, weight: totalWeight },
-        senderLocation,
-        recipientLocation
-      );
-    }
-
-    // Return shipping options with error classification if applicable
     if (shippingOptions.length === 0) {
       return Response.json(
         {
