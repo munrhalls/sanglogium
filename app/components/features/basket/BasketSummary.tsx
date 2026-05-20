@@ -8,9 +8,12 @@ interface BasketSummaryProps {
   itemCount: number;
   subtotal: number;
   basketData?: Array<{ productId: string; quantity: number; price_data: { currency: string; unit_amount: number } }>;
+  shippingCost: number | null;
 }
 
-export default function BasketSummary({ itemCount, subtotal, basketData }: BasketSummaryProps) {
+export default function BasketSummary({ itemCount, subtotal, basketData, shippingCost }: BasketSummaryProps) {
+  const total = shippingCost !== null ? subtotal + shippingCost : subtotal;
+
   return (
     <>
       <h2 className="type-section-sub border-b border-secondary pb-4 mb-6">
@@ -25,7 +28,11 @@ export default function BasketSummary({ itemCount, subtotal, basketData }: Baske
 
         <div className="flex justify-between type-body">
           <div className="text-secondary-400">Shipping</div>
-          <span className="text-green-600">FREE</span>
+          {shippingCost !== null ? (
+            <Price value={shippingCost} variant="summary" />
+          ) : (
+            <span className="text-secondary-400">Calculating...</span>
+          )}
         </div>
 
         <div className="flex justify-between type-body">
@@ -36,7 +43,7 @@ export default function BasketSummary({ itemCount, subtotal, basketData }: Baske
         <div className="border-t border-secondary pt-4">
           <div className="flex justify-between">
             <div className="type-section-sub">Total</div>
-            <Price value={subtotal} variant="summary" />
+            <Price value={total} variant="summary" />
           </div>
           <div className="type-caption text-caption mt-1">Including VAT</div>
         </div>

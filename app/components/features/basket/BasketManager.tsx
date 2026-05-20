@@ -3,6 +3,7 @@ import { useShallow } from "zustand/shallow";
 import { useMemo, useState, useEffect } from "react";
 import useSWR from "swr";
 import useBasketStore from "@/store/basketStore";
+import { detectCountry } from "@/lib/shipping/countryDetector";
 import BasketSkeleton from "./BasketSkeleton";
 import EmptyBasket from "./EmptyBasket";
 import BasketItem from "./BasketItem";
@@ -52,6 +53,8 @@ export default function BasketManager() {
       _hasHydrated: state._hasHydrated,
     }))
   );
+
+  const [shippingCost, setShippingCost] = useState<number | null>(null);
 
   const currentProductIds = useMemo(
     () => basket.map((item) => item.productId),
@@ -113,7 +116,7 @@ export default function BasketManager() {
       });
   }, [basket, cmsProducts]);
 
-  const { itemCount, subtotal, checkoutData } = useMemo(() => {
+  const { itemCount, subtotal, checkoutData, parcelData } = useMemo(() => {
     const count = enrichedItems.reduce((sum, item) => sum + item.quantity, 0);
     const total = enrichedItems.reduce(
       (sum, item) => sum + item.displayPrice * item.quantity,
@@ -126,12 +129,42 @@ export default function BasketManager() {
       parcel: item.parcel,
     }));
 
+    const parcels = enrichedItems
+      .filter((item) => item.parcel)
+      .map((item) => item.parcel!);
+
     return {
       itemCount: count,
       subtotal: total,
-      checkoutData: checkoutItems
+      checkoutData: checkoutItems,
+      parcelData: parcels,
     };
   }, [enrichedItems]);
+
+  // Fetch shipping rates
+  useEffect(() => {
+    if (parcelData.length === 0) return;
+
+    const fetchShippingRates = async () => {
+      try {
+        const country = await detectCountry();
+        const res = await fetch('/api/basket/shipping-rates', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            parcelData,
+            countryCode: country,
+          }),
+        });
+        const data = await res.json();
+        setShippingCost(data.rate.amount);
+      } catch (e) {
+        console.error('Failed to fetch shipping rates:', e);
+      }
+    };
+
+    fetchShippingRates();
+  }, [parcelData]);
 
   if (!_hasHydrated || isLoading) return <BasketSkeleton />;
   if (basket.length === 0) return <EmptyBasket />;
@@ -182,6 +215,7 @@ export default function BasketManager() {
             itemCount={itemCount}
             subtotal={subtotal}
             basketData={checkoutData}
+            shippingCost={shippingCost}
           />
         </div>
       </div>
