@@ -31,6 +31,7 @@ export async function POST(req: NextRequest) {
 
   // Aggregate parcels
   let totalWeight = 0;
+  let totalVolume = 0;
   let maxLength = 0;
   let maxWidth = 0;
   let maxHeight = 0;
@@ -38,13 +39,12 @@ export async function POST(req: NextRequest) {
   if (Array.isArray(parcelData)) {
     for (const parcel of parcelData) {
       totalWeight += parcel.weight;
+      totalVolume += parcel.length * parcel.width * parcel.height;
       maxLength = Math.max(maxLength, parcel.length);
       maxWidth = Math.max(maxWidth, parcel.width);
       maxHeight = Math.max(maxHeight, parcel.height);
     }
   }
-
-  const totalVolume = maxLength * maxWidth * maxHeight;
 
   // Calculate number of parcels needed
   const parcelsByWeight = Math.ceil(totalWeight / MAX_WEIGHT_G);
@@ -134,14 +134,6 @@ export async function POST(req: NextRequest) {
   const senderAddress = getSenderAddress(countryCode);
 
   let shippingOptions: ShippingOption[] = [];
-
-  // DEBUG: Log parcel splitting data
-  console.log('[DEBUG] Total weight:', totalWeight, 'g');
-  console.log('[DEBUG] Total volume:', totalVolume, 'cm³');
-  console.log('[DEBUG] Parcels by weight:', parcelsByWeight);
-  console.log('[DEBUG] Parcels by volume:', parcelsByVolume);
-  console.log('[DEBUG] Total parcels to send:', numParcels);
-  console.log('[DEBUG] Packages array:', packages);
 
   // Call country-specific shipping API
   if (countryCode === 'PL') {
