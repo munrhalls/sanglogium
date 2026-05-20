@@ -25,7 +25,11 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   const { parcelData, countryCode } = body;
 
-  // Aggregate parcels into single virtual parcel
+  // Courier limits
+  const MAX_WEIGHT_G = 25000; // 25kg in grams
+  const MAX_VOLUME_CM3 = 99000; // ~99,000 cm³
+
+  // Aggregate parcels
   let totalWeight = 0;
   let maxLength = 0;
   let maxWidth = 0;
@@ -40,12 +44,56 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  const aggregatedParcel = {
-    length: maxLength,
-    width: maxWidth,
-    height: maxHeight,
-    weight: totalWeight,
-  };
+  const totalVolume = maxLength * maxWidth * maxHeight;
+
+  // Calculate number of parcels needed
+  const parcelsByWeight = Math.ceil(totalWeight / MAX_WEIGHT_G);
+  const parcelsByVolume = Math.ceil(totalVolume / MAX_VOLUME_CM3);
+  const numParcels = Math.max(parcelsByWeight, parcelsByVolume, 1);
+
+  // Split parcelData into multiple parcels if needed
+  const parcelsPerSplit = Math.ceil(parcelData.length / numParcels);
+  const splitParcels: ParcelData[] = [];
+
+  for (let i = 0; i < numParcels; i++) {
+    const startIdx = i * parcelsPerSplit;
+    const endIdx = Math.min(startIdx + parcelsPerSplit, parcelData.length);
+    const subset = parcelData.slice(startIdx, endIdx);
+
+    let splitWeight = 0;
+    let splitMaxLength = 0;
+    let splitMaxWidth = 0;
+    let splitMaxHeight = 0;
+
+    for (const parcel of subset) {
+      splitWeight += parcel.weight;
+      splitMaxLength = Math.max(splitMaxLength, parcel.length);
+      splitMaxWidth = Math.max(splitMaxWidth, parcel.width);
+      splitMaxHeight = Math.max(splitMaxHeight, parcel.height);
+    }
+
+    splitParcels.push({
+      length: splitMaxLength,
+      width: splitMaxWidth,
+      height: splitMaxHeight,
+      weight: splitWeight,
+    });
+  }
+
+  // If only one parcel, use aggregated (for backward compatibility)
+  const packages = numParcels === 1
+    ? [{
+        width: maxLength,
+        height: maxHeight,
+        length: maxLength,
+        weight: totalWeight / 1000,
+      }]
+    : splitParcels.map(p => ({
+        width: p.width,
+        height: p.height,
+        length: p.length,
+        weight: p.weight / 1000,
+      }));
 
   // Select sender address based on country
   const getSenderAddress = (country: string) => {
@@ -94,12 +142,7 @@ export async function POST(req: NextRequest) {
       fromZip: senderAddress?.zip || '',
       toCountry: countryCode,
       toZip: '02-001', // Warsaw - Polish domestic shipping uses flat rates
-      packages: [{
-        width: aggregatedParcel.width,
-        height: aggregatedParcel.height,
-        length: aggregatedParcel.length,
-        weight: aggregatedParcel.weight / 1000, // Convert g to kg
-      }],
+      packages: packages,
     });
 
     shippingOptions = alleKurierServices.map(transformAlleKurierToShippingOption);
