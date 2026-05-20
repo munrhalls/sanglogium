@@ -131,7 +131,10 @@ export default function BasketManager() {
 
     const parcels = enrichedItems
       .filter((item) => item.parcel)
-      .map((item) => item.parcel!);
+      .flatMap((item) => {
+        // Add parcel multiple times based on quantity for accurate weight calculation
+        return Array(item.quantity).fill(item.parcel!);
+      });
 
     return {
       itemCount: count,
