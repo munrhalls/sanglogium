@@ -52,3 +52,5 @@
 {"id":"int-666057b6","kind":"field_change","created_at":"2026-05-20T15:38:19.3064754Z","actor":"Munrhalls","issue_id":"sang-logium-65p","extra":{"field":"status","new_value":"closed","old_value":"open","reason":"Closed"}}
 {"id":"int-310c26ec","kind":"field_change","created_at":"2026-05-20T15:57:56.2528033Z","actor":"Munrhalls","issue_id":"sang-logium-nx8","extra":{"field":"status","new_value":"closed","old_value":"open"}}
 {"id":"int-13e5a16e","kind":"field_change","created_at":"2026-05-20T16:20:32.9100006Z","actor":"Munrhalls","issue_id":"sang-logium-edw","extra":{"field":"status","new_value":"closed","old_value":"open","reason":"Closed"}}
+{"id":"int-20e91e2d","kind":"field_change","created_at":"2026-05-21T03:51:57.2673374Z","actor":"Munrhalls","issue_id":"sang-logium-abk","extra":{"field":"status","new_value":"closed","old_value":"in_progress","reason":"bug fix - no structural change"}}
+{"id":"int-ed06ab23","kind":"field_change","created_at":"2026-05-21T03:52:20.9400205Z","actor":"Munrhalls","issue_id":"sang-logium-sf4","extra":{"field":"status","new_value":"closed","old_value":"in_progress","reason":"implemented new integration (structural change)"}}
