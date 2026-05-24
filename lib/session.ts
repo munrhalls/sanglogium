@@ -12,6 +12,8 @@ export interface CheckoutSession {
   };
   shippingCode?: string;
   shippingCost?: number;
+  paymentIntentId?: string;
+  completedPaymentIntentId?: string;
 }
 
 export async function getCheckoutSession() {

@@ -419,6 +419,15 @@ export const orderType = defineType({
       ],
     }),
 
+    // ============ PAYMENT INTENT ID (top-level, for GROQ lookup by return flow + webhook) ============
+    defineField({
+      name: "paymentIntentId",
+      title: "Payment Intent ID",
+      type: "string",
+      description: "Stripe PaymentIntent ID — top-level for fast GROQ lookup by return flow and webhook handler",
+      readOnly: true,
+    }),
+
     // ============ PAYMENT INFO (for later) ============
     defineField({
       name: "payment",
