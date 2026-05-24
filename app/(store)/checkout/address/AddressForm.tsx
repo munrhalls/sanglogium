@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useCheckout } from "@/app/(store)/checkout/layout";
-import type { ShippingAddress } from "@/app/(store)/checkout/layout";
+import { saveAddress } from "@/app/actions/checkout";
 import Loader from "@/app/components/common/Loader";
 
 const REGIONS = [
@@ -11,11 +10,9 @@ const REGIONS = [
 ] as const;
 
 export default function AddressForm() {
-  const checkout = useCheckout();
-  if (!checkout) return null;
-
-  const { validateShipping, isLoading, shippingAPIValidation } = checkout;
-  const [form, setForm] = useState<ShippingAddress>({
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [form, setForm] = useState({
     regionCode: "",
     postalCode: "",
     street: "",
@@ -23,13 +20,32 @@ export default function AddressForm() {
     city: "",
   });
 
-  const handleChange = (field: keyof ShippingAddress, value: string) => {
+  const handleChange = (field: keyof typeof form, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    validateShipping(form);
+  const handleSubmit = async (formData: FormData) => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const addressData = {
+        regionCode: formData.get("regionCode") as string,
+        postalCode: formData.get("postalCode") as string,
+        street: formData.get("street") as string,
+        streetNumber: formData.get("streetNumber") as string,
+        city: formData.get("city") as string,
+      };
+
+      const result = await saveAddress(addressData);
+      if (result && result.status === "FIX") {
+        setError("Address could not be verified. Please check your details and try again.");
+        setIsLoading(false);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to save address");
+      setIsLoading(false);
+    }
   };
 
   if (isLoading) {
@@ -45,20 +61,19 @@ export default function AddressForm() {
       <div className="w-full max-w-xl rounded bg-white p-6 shadow">
         <h1 className="mb-6 text-2xl font-bold">Shipping Address</h1>
 
-        {shippingAPIValidation === "FIX" && (
+        {error && (
           <div className="mb-4 rounded border border-red-200 bg-red-50 p-3">
-            <p className="text-sm text-red-700">
-              Address could not be verified. Please check your details and try again.
-            </p>
+            <p className="text-sm text-red-700">{error}</p>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form action={handleSubmit} className="space-y-4">
           <div>
             <label className="mb-1 block text-sm font-medium text-gray-700">
               Country
             </label>
             <select
+              name="regionCode"
               value={form.regionCode}
               onChange={(e) => handleChange("regionCode", e.target.value)}
               required
@@ -76,6 +91,7 @@ export default function AddressForm() {
               City
             </label>
             <input
+              name="city"
               type="text"
               value={form.city}
               onChange={(e) => handleChange("city", e.target.value)}
@@ -90,6 +106,7 @@ export default function AddressForm() {
                 Street
               </label>
               <input
+                name="street"
                 type="text"
                 value={form.street}
                 onChange={(e) => handleChange("street", e.target.value)}
@@ -102,6 +119,7 @@ export default function AddressForm() {
                 Number
               </label>
               <input
+                name="streetNumber"
                 type="text"
                 value={form.streetNumber}
                 onChange={(e) => handleChange("streetNumber", e.target.value)}
@@ -116,6 +134,7 @@ export default function AddressForm() {
               Postal Code
             </label>
             <input
+              name="postalCode"
               type="text"
               value={form.postalCode}
               onChange={(e) => handleChange("postalCode", e.target.value)}
