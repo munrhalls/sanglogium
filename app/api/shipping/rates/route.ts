@@ -1,6 +1,7 @@
 import { getBackendClient } from '@/sanity-cms/lib/backendClient';
 import { fetchPacklinkRates } from '@/lib/shipping/packlink-rates';
 import { fetchAlleKurierRates, transformAlleKurierToShippingOption } from '@/lib/shipping/allekurier-rates';
+import { calculatePackagesFromReservation } from '@/lib/shipping/parcel-calculator';
 
 export const runtime = 'nodejs';
 
@@ -190,84 +191,8 @@ export async function POST(req: Request) {
       );
     }
 
-    // Courier limits (from basket endpoint)
-    const MAX_WEIGHT_G = 25000;
-    const MAX_VOLUME_CM3 = 99000;
-
-    // Aggregate parcels with volume calculation (from basket endpoint)
-    let totalWeight = 0;
-    let totalVolume = 0;
-    let maxLength = 0;
-    let maxWidth = 0;
-    let maxHeight = 0;
-
-    for (const item of basketReservation) {
-      if (!item.parcel) {
-        return Response.json(
-          { error: `Product ${item._id} missing parcel data`, errorClass: 'VALIDATION', retryable: false },
-          { status: 400 }
-        );
-      }
-
-      totalWeight += item.parcel.weight * item.quantity;
-      totalVolume += item.parcel.length * item.parcel.width * item.parcel.height * item.quantity;
-      maxLength = Math.max(maxLength, item.parcel.length);
-      maxWidth = Math.max(maxWidth, item.parcel.width);
-      maxHeight = Math.max(maxHeight, item.parcel.height);
-    }
-
-    // Calculate number of parcels needed (from basket endpoint)
-    const parcelsByWeight = Math.ceil(totalWeight / MAX_WEIGHT_G);
-    const parcelsByVolume = Math.ceil(totalVolume / MAX_VOLUME_CM3);
-    const numParcels = Math.max(parcelsByWeight, parcelsByVolume, 1);
-
-    // Split parcelData into multiple parcels if needed (from basket endpoint)
-    const parcelsPerSplit = Math.ceil(basketReservation.length / numParcels);
-    const splitParcels: ParcelData[] = [];
-
-    for (let i = 0; i < numParcels; i++) {
-      const startIdx = i * parcelsPerSplit;
-      const endIdx = Math.min(startIdx + parcelsPerSplit, basketReservation.length);
-      const subset = basketReservation.slice(startIdx, endIdx);
-
-      let splitWeight = 0;
-      let splitMaxLength = 0;
-      let splitMaxWidth = 0;
-      let splitMaxHeight = 0;
-
-      for (const item of subset) {
-        if (item.parcel) {
-          splitWeight += item.parcel.weight * item.quantity;
-          splitMaxLength = Math.max(splitMaxLength, item.parcel.length);
-          splitMaxWidth = Math.max(splitMaxWidth, item.parcel.width);
-          splitMaxHeight = Math.max(splitMaxHeight, item.parcel.height);
-        }
-      }
-
-      splitParcels.push({
-        length: splitMaxLength,
-        width: splitMaxWidth,
-        height: splitMaxHeight,
-        weight: splitWeight,
-        distance_unit: 'cm',
-        mass_unit: 'g',
-      });
-    }
-
-    // If only one parcel, use aggregated (from basket endpoint)
-    const packages = numParcels === 1
-      ? [{
-          width: maxWidth,
-          height: maxHeight,
-          length: maxLength,
-          weight: totalWeight / 1000,
-        }]
-      : splitParcels.map(p => ({
-          width: p.width,
-          height: p.height,
-          length: p.length,
-          weight: p.weight / 1000,
-        }));
+    // Calculate packages using shared utility (handles quantity aggregation)
+    const packages = calculatePackagesFromReservation(basketReservation);
 
     const senderCountry = senderAddress.country;
     let shippingOptions: ShippingOption[] = [];

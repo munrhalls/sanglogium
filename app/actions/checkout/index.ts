@@ -4,6 +4,7 @@ import { getCheckoutSession } from "@/lib/session";
 import { redirect } from "next/navigation";
 import { submitShippingAction } from "@/app/actions/address/address";
 import { fetchAlleKurierRates, transformAlleKurierToShippingOption } from "@/lib/shipping/allekurier-rates";
+import { calculatePackages } from "@/lib/shipping/parcel-calculator";
 import { getProductsByIds } from "@/sanity-cms/lib/products/getProductsByIds";
 import type { Address } from "@/app/(store)/checkout/checkout.types";
 
@@ -79,14 +80,9 @@ export async function saveShippingAction(shippingCode: string) {
   const products = await getProductsByIds(basketIds);
   console.log("[SAVE SHIPPING] Fetched products:", products.length);
 
-  const packages = products.map((product) => ({
-    weight: (product.parcel?.weight || 500) / 1000, // convert grams to kg
-    width: product.parcel?.width || 10, // cm
-    height: product.parcel?.height || 5, // cm
-    length: product.parcel?.length || 10, // cm
-  }));
-
-  console.log("[SAVE SHIPPING] Parcel packages:", packages);
+  // Calculate packages using shared utility (handles quantity aggregation)
+  const packages = calculatePackages(session.basket, products);
+  console.log("[SAVE SHIPPING] Calculated packages:", packages.length);
 
   // Call AlleKurier API server-side with full payload
   const senderZip = process.env.SENDER_ADDRESS_DEFAULT_ZIP || "00-001";

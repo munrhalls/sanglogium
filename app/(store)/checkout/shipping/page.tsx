@@ -1,6 +1,7 @@
 import { getCheckoutSession } from "@/lib/session";
 import { redirect } from "next/navigation";
 import { fetchAlleKurierRates, transformAlleKurierToShippingOption } from "@/lib/shipping/allekurier-rates";
+import { calculatePackages } from "@/lib/shipping/parcel-calculator";
 import { getProductsByIds } from "@/sanity-cms/lib/products/getProductsByIds";
 import ShippingPageClient from "./ShippingPageClient";
 
@@ -24,15 +25,9 @@ export default async function Page() {
   const products = await getProductsByIds(basketIds);
   console.log("[SHIPPING PAGE] Fetched products:", products.length);
 
-  // Extract parcel dimensions (convert weight from grams to kg for AlleKurier API)
-  const packages = products.map((product) => ({
-    weight: (product.parcel?.weight || 500) / 1000, // convert grams to kg
-    width: product.parcel?.width || 10, // cm
-    height: product.parcel?.height || 5, // cm
-    length: product.parcel?.length || 10, // cm
-  }));
-
-  console.log("[SHIPPING PAGE] Parcel packages:", packages);
+  // Calculate packages using shared utility (handles quantity aggregation)
+  const packages = calculatePackages(session.basket, products);
+  console.log("[SHIPPING PAGE] Calculated packages:", packages.length);
 
   // Call AlleKurier API
   const senderZip = process.env.SENDER_ADDRESS_DEFAULT_ZIP || "00-001";
