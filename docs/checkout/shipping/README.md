@@ -2,7 +2,7 @@
 
 ## Overview
 
-The shipping slice allows users to select shipping options and rates after their address has been validated. It combines the verified address with company and parcel data, calls the Packlink PRO API to fetch available shipping options, displays the options to the user, and saves their selection to the basket reservation document.
+The shipping slice allows users to select shipping options and rates after their address has been validated. It combines the verified address with company and parcel data, calls country-specific shipping APIs (AlleKurier for PL domestic, Packlink PRO for international) to fetch available shipping options, displays the options to the user, and saves their selection to the basket reservation document.
 
 ## CMS Pre-Requirements
 
@@ -149,8 +149,8 @@ sequenceDiagram
 6. API fetches product parcel data from Sanity CMS
 7. API aggregates parcel data (sums weights, uses max dimensions)
 8. API combines address with sender address (from env vars) and aggregated parcel data
-9. API calls Packlink PRO API to fetch shipping rates
-10. Packlink PRO returns rates (provider, service level, price, estimated delivery)
+9. API calls country-specific shipping API (AlleKurier for PL domestic, Packlink PRO for international/fallback)
+10. Shipping API returns rates (provider, service level, price, estimated delivery)
 11. API returns shipping options to page with error classification (VALIDATION, CONFIGURATION, NETWORK, PROVIDER)
 12. Page displays shipping options to user inline
 13. User selects preferred shipping option
@@ -159,21 +159,22 @@ sequenceDiagram
 
 ## Resilience Features
 
-The shipping rates API implements a two-tier fallback architecture:
+The shipping rates API implements a country-specific API strategy:
 
-- **Tier 1**: Packlink PRO API (free production API, real calculated rates)
-- **Tier 2**: Mock rates for Netherlands domestic shipping (last resort)
-- **Error Classification**: Errors classified as VALIDATION (user input), CONFIGURATION (env vars), NETWORK (connectivity), or PROVIDER (Packlink API)
+- **Poland (PL)**: AlleKurier API for domestic shipping rates
+- **International**: Packlink PRO API for cross-border shipping (fallback for PL if AlleKurier fails)
+- **Error Classification**: Errors classified as VALIDATION (user input), CONFIGURATION (env vars), NETWORK (connectivity), or PROVIDER (shipping API)
 - **Retryable Flag**: Frontend displays retry button for retryable errors (NETWORK, PROVIDER)
 
 ## Tech Stack
 
 - **React 18** - UI framework
 - **Next.js** - App router and server components
-- **Packlink PRO API** - Shipping rates and label generation (free production API)
+- **AlleKurier API** - Polish domestic shipping rates
+- **Packlink PRO API** - International shipping rates and label generation (fallback for PL)
 - **Sanity CMS** - Basket reservation storage and product parcel data
 - **TypeScript** - Type safety
-- **Environment Variables** - Sender address configuration (SENDER_ADDRESS_*)
+- **Environment Variables** - Sender address configuration (SENDER_ADDRESS_*) and AlleKurier credentials (ALLEKURIER_EMAIL, ALLEKURIER_PASSWORD)
 
 ## Related Documentation
 
