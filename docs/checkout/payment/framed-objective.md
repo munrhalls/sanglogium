@@ -1,5 +1,7 @@
 # Payment Page - Framed Objective
 
+**Happy path tracer only.**
+
 - Implement payment page as part of checkout system using Stripe Payment Intents + Stripe Elements
 - Build Server Component (`/checkout/payment/page.tsx`) that:
   - Implements funnel guards (redirect if missing address or shippingCost from iron-session)

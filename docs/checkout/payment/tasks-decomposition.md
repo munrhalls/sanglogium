@@ -1,5 +1,7 @@
 # Payment Page - Tasks Decomposition
 
+**Happy path tracer only.**
+
 ## Task Graph
 
 ```
