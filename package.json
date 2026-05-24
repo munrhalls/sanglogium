@@ -91,6 +91,7 @@
     "dotenv": "^16.4.5",
     "groq-builder": "^0.10.0",
     "ioredis": "^5.10.1",
+    "iron-session": "^8.0.4",
     "jose": "^6.1.2",
     "lodash": "^4.17.21",
     "nanoid": "^5.0.9",
