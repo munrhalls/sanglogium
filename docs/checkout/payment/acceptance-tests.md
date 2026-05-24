@@ -6,7 +6,7 @@
 
 ## Test 1: Payment page guard redirects to shipping if session missing
 - Clear session, navigate to /checkout/payment
-- [ ] Redirects to /checkout/shipping
+- [ x] Redirects to /checkout/shipping
 
 ## Test 2: Payment page guard redirects to address if shippingCost missing
 - Session has address but no shippingCost, navigate to /checkout/payment
@@ -14,10 +14,10 @@
 
 ## Test 3: Server Component reads session correctly
 - Navigate to /checkout/payment with valid session (basket, address, shippingCode, shippingCost)
-- [ ] Server logs show session.basket
-- [ ] Server logs show session.address
-- [ ] Server logs show session.shippingCode
-- [ ] Server logs show session.shippingCost (in cents)
+- [ x] Server logs show session.basket
+- [ x] Server logs show session.address
+- [ x] Server logs show session.shippingCode
+- [ x] Server logs show session.shippingCost (in cents)
 
 ## Test 4: Server Component fetches product prices from Sanity
 - On payment page with valid session
