@@ -8,7 +8,7 @@
 - User selects shipping option (e.g., DPD Courier)
 - UI submits selected shipping serviceCode to Server Action (CRITICAL: Never submit price from client)
 - Server Action receives shippingCode, calls AlleKurier API server-side using shippingCode and session.address to fetch exact current price
-- Server Action converts price to integer (cents)
+- Server Action converts price to integer (grosz)
 - Server Action saves BOTH session.shippingCode AND session.shippingCost to encrypted iron-session
 - Server Action redirects to `/checkout/payment`
 - Session state becomes: `{ basket, address, shippingCode, shippingCost }`
