@@ -28,6 +28,7 @@ export default async function Page() {
   // Calculate packages using shared utility (handles quantity aggregation)
   const packages = calculatePackages(session.basket, products);
   console.log("[SHIPPING PAGE] Calculated packages:", packages.length);
+  console.log("[SHIPPING PAGE] Parcel dimensions:", JSON.stringify(packages, null, 2));
 
   // Call AlleKurier API
   const senderZip = process.env.SENDER_ADDRESS_DEFAULT_ZIP || "00-001";
