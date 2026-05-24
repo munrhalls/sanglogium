@@ -1,7 +1,6 @@
 import { getCheckoutSession } from "@/lib/session";
 import { redirect } from "next/navigation";
 import { client } from "@/sanity-cms/lib/client";
-import { stripe } from "@/lib/stripe";
 import groq from "groq";
 import PaymentForm from "./PaymentForm.client";
 
@@ -74,39 +73,17 @@ export default async function Page() {
     city: address.city,
   };
 
-  let result: { id: string; client_secret: string | null };
+  const response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/api/checkout/payment-intent/session`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ grandTotal, metadata }),
+  })
 
-  if (session.paymentIntentId) {
-    try {
-      result = await stripe.paymentIntents.update(session.paymentIntentId, {
-        amount: grandTotal,
-        metadata,
-      });
-    } catch {
-      session.paymentIntentId = undefined;
-      result = await stripe.paymentIntents.create({
-        amount: grandTotal,
-        currency: "pln",
-        automatic_payment_methods: { enabled: true },
-        metadata,
-      });
-      session.paymentIntentId = result.id;
-    }
-  } else {
-    result = await stripe.paymentIntents.create({
-      amount: grandTotal,
-      currency: "pln",
-      automatic_payment_methods: { enabled: true },
-      metadata,
-    });
-    session.paymentIntentId = result.id;
+  if (!response.ok) {
+    throw new Error('Failed to create payment intent')
   }
 
-  if (!result.client_secret) {
-    throw new Error("Stripe did not return client_secret");
-  }
+  const { clientSecret } = await response.json()
 
-  await session.save();
-
-  return <PaymentForm clientSecret={result.client_secret} address={address} />;
+  return <PaymentForm clientSecret={clientSecret} address={address} />;
 }

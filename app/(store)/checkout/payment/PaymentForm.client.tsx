@@ -88,7 +88,7 @@ export default function PaymentForm({ clientSecret, address }: PaymentFormProps)
   if (!clientSecret) return <p>Loading payment form…</p>;
 
   return (
-    <Elements stripe={stripePromise} options={{ clientSecret, currency: "pln" }}>
+    <Elements stripe={stripePromise} options={{ clientSecret }}>
       <PaymentFormInner address={address} />
     </Elements>
   );
