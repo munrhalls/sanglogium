@@ -32,7 +32,13 @@ export async function getProductsByIds(ids: string[]): Promise<Product[]> {
         value,
         information
       },
-      catalogueLocationKeys
+      catalogueLocationKeys,
+      parcel {
+        length,
+        width,
+        height,
+        weight
+      }
     }`,
     params: { ids }
   });

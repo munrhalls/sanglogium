@@ -17,6 +17,12 @@ export interface Product {
   overviewFields?: { title: string; value: string; information?: string }[];
   specifications?: { title: string; value: string; information?: string }[];
   catalogueLocationKeys: string[];
+  parcel?: {
+    length: number;
+    width: number;
+    height: number;
+    weight: number;
+  };
 }
 
 export const getProductBySlug = cache(async (slug: string): Promise<Product | null> => {
