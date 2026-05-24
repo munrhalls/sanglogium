@@ -180,7 +180,7 @@ export default function Page() {
 
   return (
     <div className="flex min-h-screen justify-center p-4">
-      <div className="w-full max-w-2xl rounded bg-white p-6 shadow">
+      <div className="w-full max-w-2xl rounded bg-slate-500 p-6 shadow">
         <h1 className="mb-6 text-2xl font-bold">Wybierz metodę dostawy</h1>
 
         {shippingOptions.length > 0 ? (
