@@ -83,3 +83,6 @@ logs/
 .dolt/
 *.db
 .beads-credential-key
+
+# Repomix output
+repomix-output.xml
