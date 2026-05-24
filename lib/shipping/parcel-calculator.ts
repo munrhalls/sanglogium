@@ -121,7 +121,8 @@ export function calculatePackages(
     });
   }
 
-  return packages;
+  // Filter out empty packages (can happen when splitting single-item baskets)
+  return packages.filter(pkg => pkg.weight > 0);
 }
 
 /**
@@ -197,5 +198,6 @@ export function calculatePackagesFromReservation(
     });
   }
 
-  return packages;
+  // Filter out empty packages (can happen when splitting single-item baskets)
+  return packages.filter(pkg => pkg.weight > 0);
 }
