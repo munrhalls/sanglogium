@@ -1,6 +1,14 @@
 # Q & A - CRITICAL Q'S ONLY INTELLIGENCE GATHERING - Return Page
 
+## Foundational Clarifications
 
+**Q6: Stripe webhook + order persistence in this sprint scope?**
+- Status: ✅ RESOLVED
+- Decision: THIS IS PART OF CHECKOUT SYSTEM HAPPY PATH ONLY GUEST CHECKOUT ONLY TRACER
+- Implementation: Webhook handler is IN SCOPE for this tracer (not deferred)
+- Scope: Webhook creates order document in Sanity, decrements stock on payment_intent.succeeded
+
+---
 
 ## Return Page Role in 4-Layer Architecture
 

@@ -1,6 +1,20 @@
 # Q & A - CRITICAL Q'S ONLY INTELLIGENCE GATHERING - Payment Page
 
+## Foundational Clarifications
 
+**Q2: If guest: email capture location (address page or payment page)?**
+- Status: ✅ RESOLVED
+- Decision: ON PAYMENT PAGE
+- Implementation: Payment form must capture email field for order confirmations and support
+- Session impact: session.email added to CheckoutSession interface (not yet added to lib/session.ts - needs update)
+
+**Q3: Itemized order summary before final payment button?**
+- Status: ✅ RESOLVED
+- Decision: YES. THAT SHOULD BE THERE. THIS IS PART OF CHECKOUT SYSTEM HAPPY PATH ONLY GUEST CHECKOUT ONLY TRACER
+- Implementation: Payment page must display itemized order summary before payment button
+- Purpose: Users verify what they're paying for before final payment (reduces chargebacks and support tickets)
+
+---
 
 # Centerpiece - The Payment Page: Stripe Payment Intent + Stripe Elements
 

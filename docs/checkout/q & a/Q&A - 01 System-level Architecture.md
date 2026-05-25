@@ -1,5 +1,28 @@
 # Q & A - CRITICAL Q'S ONLY INTELLIGENCE GATHERING - System-Level Architecture
 
+## Q & A - FOUNDATIONAL QUESTIONS AND CLARIFICATIONS
+
+# Q & A - CLARIFICATIONS TO FOUNDATIONAL QUESTIONS
+
+**Q2: If guest: email capture location (address page or payment page)?**
+- Status: ❌ UNRESOLVED
+- Evidence: Email field exists in Zod schema, confirmation emails mentioned, but NO explicit decision on WHERE to capture it
+- Decision: ON PAYMENT PAGE
+
+**Q3: Itemized order summary before final payment button?**
+- Status: ❌ UNRESOLVED
+- Evidence: No documentation of order summary on payment page; basket review mentioned only on basket page
+- Decision: YES. THAT SHOULD BE THERE. THIS IS PART OF CHECKOUT SYSTEM HAPPY PATH ONLY GUEST CHECKOUT ONLY TRACER
+
+**Q4: Recipient name + phone on address page?**
+- Status: ❌ UNRESOLVED (identified as technical debt)
+- Evidence: payment/framed-objective.md: "address page must collect a name" - currently NO name field in session.address; migration issue documented
+- Decision: MUST CAPTURE NAME AND PHONE ON THE ADDRESS PAGE
+
+**Q6: Stripe webhook + order persistence in this sprint scope?**
+- Status: ❌ UNRESOLVED (deferred)
+- Evidence: Webhook documented as "separate scope" in multiple files; SYSTEM-SYNTHESIS.md: "no order creation in current implementation - webhook missing"
+- Decision: THIS IS PART OF CHECKOUT SYSTEM HAPPY PATH ONLY GUEST CHECKOUT ONLY TRACER 
 
 
 ## Layers

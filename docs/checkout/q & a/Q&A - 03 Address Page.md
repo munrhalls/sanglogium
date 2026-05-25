@@ -1,6 +1,14 @@
 # Q & A - CRITICAL Q'S ONLY INTELLIGENCE GATHERING - Address Page
 
+## Foundational Clarifications
 
+**Q4: Recipient name + phone on address page?**
+- Status: ✅ RESOLVED
+- Decision: MUST CAPTURE NAME AND PHONE ON THE ADDRESS PAGE
+- Implementation: Address form must collect firstName, lastName, phone fields
+- Session impact: session.address now includes firstName, lastName, phone (added to lib/session.ts CheckoutSession interface)
+
+---
 
 ## The "Bus Stop" Trace: The Checkout Funnel
 
