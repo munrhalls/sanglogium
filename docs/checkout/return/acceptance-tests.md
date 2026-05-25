@@ -88,6 +88,13 @@ For each row:
 - [ ] Sanity order document was queried by field name `paymentIntentId` (cross-checked vs payment Test 14 — both must use the same camelCase field name).
 - [ ] If `<OrderDetails />` returns `null`, Test 7 lag-state applies. If it never resolves, the webhook is broken (see Test 0 preconditions).
 
+### Test 6.5: Webhook handles new session fields
+- Complete a payment with address including firstName, lastName, phone, and email on payment page
+- [ ] Webhook creates order document with address.firstName, address.lastName, address.phone fields populated
+- [ ] Webhook creates order document with email field populated from session.email
+- [ ] Order document in Sanity contains all new fields: firstName, lastName, phone, email
+- [ ] Verify webhook idempotency: if webhook redelivered, no duplicate fields or duplicate stock decrements
+
 ### Test 7: Webhook lag — success page renders before order document exists
 - **Option A (real)**: in Stripe Dashboard → Developers → Webhooks, temporarily disable the endpoint. Complete a payment. The Route Handler still runs (Stripe redirect is independent of webhook delivery), so the user lands on `/checkout/success` but Sanity has no order yet.
 - **Option B (faster)**: leave the webhook enabled and rely on the natural ordering window (Stripe redirect typically arrives ~100–1000ms before the webhook fires).

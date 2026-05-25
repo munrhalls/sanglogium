@@ -173,11 +173,12 @@ See `acceptance-tests.md`. Tests are numbered to mirror the payment scope (`X`, 
 ## Dependencies (load-bearing prerequisites)
 
 - **Payment scope** (`docs/checkout/payment/`) implements the canonical paymentIntentId lifecycle, sets `session.paymentIntentId`, and uses `return_url: ${origin}/api/checkout/return` (NOT `/checkout/return`).
-- **Stripe webhook** at `app/api/webhooks/stripe/route.ts` (separate scope; not implemented here):
+- **Stripe webhook** at `app/api/webhooks/stripe/route.ts` (IN SCOPE for this tracer, not deferred):
   - Verifies the Stripe signature using `STRIPE_WEBHOOK_SECRET`.
   - Listens for `payment_intent.succeeded`.
   - **Idempotently** finds-or-creates the Sanity order keyed on `paymentIntentId` (Stripe delivers events at-least-once).
   - Decrements product stock exactly once per PaymentIntent.
+  - Handles new session fields: address.firstName, address.lastName, address.phone, session.email
   - Without this, Test 6 (order details displayed) and payment Test 14 always fail.
 - **Sanity order schema**: `_type` and field names pinned in Task 1.2.
 - **iron-session**: configured per `lib/session.ts`. The `CheckoutSession` interface must include `completedPaymentIntentId?: string`.

@@ -2,6 +2,8 @@
 
 **Happy path tracer only.**
 
+**Webhook scope clarification:** Stripe webhook handler for order persistence is IN SCOPE for this tracer (not deferred). Webhook creates order document in Sanity and decrements stock on payment_intent.succeeded event.
+
 The return flow is **two endpoints**, never one:
 
 1. **`/api/checkout/return`** — Route Handler at `app/api/checkout/return/route.ts`. Stripe's `return_url` target. Verifies the PaymentIntent server-side, manages `iron-session` lifecycle, redirects to `/checkout/success`. **Mutating endpoint** — the only place the return flow touches the session.
@@ -58,7 +60,7 @@ The previous single-page design at `/checkout/return` does **not** exist. Every 
 ## Cross-cut invariants (single source of truth)
 
 - **paymentIntentId lifecycle** — see `docs/checkout/payment/framed-objective.md`. Both scopes share the canonical lifecycle table.
-- **Webhook ordering**: Stripe's `payment_intent.succeeded` may land before, during, or after the user's browser reaches `/checkout/success`. The `<OrderDetails />` Suspense + null-handling MUST cover all three orderings. The webhook handler itself is a separate scope (`docs/checkout/webhook/`, when created).
+- **Webhook ordering**: Stripe's `payment_intent.succeeded` may land before, during, or after the user's browser reaches `/checkout/success`. The `<OrderDetails />` Suspense + null-handling MUST cover all three orderings. The webhook handler is IN SCOPE for this tracer (not deferred).
 - **Webhook idempotency**: Stripe delivers events at-least-once. The webhook handler must `find-or-create` the order keyed on `paymentIntentId` and reject duplicate stock decrements. The success page assumes this; without it, refreshes during a webhook redelivery can momentarily show two orders.
 - **Currency unit**: integer grosz throughout (smallest PLN unit). Never "cents", never "złoty as float". Stripe's `amount` field is grosz; Sanity `price_data.unit_amount` is grosz; the order document `total` is grosz.
 
