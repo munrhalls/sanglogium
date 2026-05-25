@@ -14,7 +14,6 @@
 
 import { randomUUID } from 'node:crypto'
 import { getQueueRedis } from './redis'
-import { startHealthInterval } from './health'
 import { trace } from './trace'
 import { QUEUE_LIST_KEY, LOCK_KEY, LOCK_TTL_SEC } from './constants'
 
@@ -38,8 +37,6 @@ function sleep(ms: number): Promise<void> {
 
 export async function processInline(raw: unknown): Promise<ProcessResult> {
   try {
-    startHealthInterval()
-
     // 1. Validate
     if (!isBasketReservation(raw)) {
       return { status: 400, body: { ok: false, error: 'Invalid BasketReservation' } }
