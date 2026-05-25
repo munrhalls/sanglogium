@@ -4,12 +4,16 @@ import { cookies } from "next/headers";
 export interface CheckoutSession {
   basket: Array<{ productId: string; quantity: number }>;
   address?: {
+    firstName: string;
+    lastName: string;
+    phone: string;
     regionCode: string;
     postalCode: string;
     street: string;
     streetNumber: string;
     city: string;
   };
+  email?: string;
   shippingCode?: string;
   shippingCost?: number;
   paymentIntentId?: string;
