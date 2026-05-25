@@ -36,9 +36,10 @@ T6: Verify session state on existing shipping page
 - Current: AddressForm calls validateShipping via checkout context
 - Current: submitShippingAction in actions/address/address.ts calls Google API
 - Need: After Google validation returns ACCEPT, save to iron-session
+- **Add firstName, lastName, phone fields to address form** (foundational requirement)
 - Modify or create Server Action that:
   - Calls submitShippingAction for validation
-  - On ACCEPT, saves address to session
+  - On ACCEPT, saves address (including firstName, lastName, phone) to session
   - On FIX, returns error to user
 - **Output**: Google validation integrated with session
 
