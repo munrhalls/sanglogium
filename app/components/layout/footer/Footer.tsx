@@ -77,13 +77,14 @@ export default function Footer() {
         <div className={cn("grid content-start gap-4")}>
           <ColTitle title="ABOUT US" />
           <ul className={cn("grid justify-center gap-2")}>
-            <li>
-              <Link className={cn("text-xl")} href="/support/privacy-policy">
+            {/* TODO: Create pages for these links */}
+            {/* <li>
+              <Link className={cn("text-xl")} href="/support/about-us">
                 About Us
               </Link>
             </li>
             <li>
-              <Link className={cn("text-xl")} href="/support/privacy-policy">
+              <Link className={cn("text-xl")} href="/support/terms-of-service">
                 Terms of Service
               </Link>
             </li>
@@ -91,7 +92,7 @@ export default function Footer() {
               <Link className={cn("text-xl")} href="/support/privacy-policy">
                 Privacy Policy
               </Link>
-            </li>
+            </li> */}
           </ul>
         </div>
         <div
