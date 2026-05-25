@@ -86,3 +86,6 @@ logs/
 
 # Repomix output
 repomix-output.xml
+
+.vercel
+.env*
