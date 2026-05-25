@@ -226,7 +226,20 @@
 │       <Elements stripe={stripePromise} options={{ clientSecret, currency: 'pln' }}>
 │       // currency: 'pln' pre-filters payment methods before form renders
 │
-├── Task 10: Render Stripe PaymentElement
+├── Task 10: Add email field capture
+│   └── Render email input field in PaymentForm component
+│   └── Validate email format (Zod schema or HTML5 email validation)
+│   └── Save email to session.email on form submission via Server Action
+│   └── Email is required field for order confirmations and support
+
+├── Task 11: Render itemized order summary
+│   └── Create OrderSummary component (Server Component or Client Component)
+│   └── Display basket items with: product name, quantity, price per item, line total
+│   └── Display subtotal, shipping cost, grand total
+│   └── Position order summary before payment button for user verification
+│   └── Purpose: Users verify what they're paying for before final payment (reduces chargebacks)
+
+├── Task 12: Render Stripe PaymentElement
 │   └── Use <PaymentElement /> from @stripe/react-stripe-js
 │   └── SUPPRESS billing address collection — we already have it in session.address:
 │       <PaymentElement options={{ fields: { billingDetails: { address: 'never' } } }} />
@@ -234,9 +247,9 @@
 │       // the user types the address twice; the version stored on the resulting
 │       // PaymentMethod will diverge from session.address. Suppressing pushes the
 │       // single canonical address (session.address) into the PaymentIntent at
-│       // confirm time via confirmParams.payment_method_data (Task 11).
+│       // confirm time via confirmParams.payment_method_data (Task 13).
 │
-└── Task 11: Implement payment execution
+└── Task 13: Implement payment execution
     └── const stripe = useStripe()
     └── const elements = useElements()
     └── Add isLoading (boolean) + error (string | null) state (useState)

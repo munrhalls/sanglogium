@@ -139,6 +139,20 @@
 - [ ] Stripe Elements iframe loads with valid clientSecret
 - [ ] PaymentElement displays (card input, Blik, Apple Pay options)
 
+## Test 9.5: Email field capture
+- [ ] Payment page renders email input field
+- [ ] Email field is required (cannot submit without email)
+- [ ] Email validation rejects invalid email format
+- [ ] Email is saved to session.email on form submission
+- [ ] session.email is included in Stripe PaymentIntent metadata for order tracking
+
+## Test 9.6: Itemized order summary display
+- [ ] Payment page displays itemized order summary before payment button
+- [ ] Order summary shows: product name, quantity, price per item, line total for each item
+- [ ] Order summary shows subtotal, shipping cost, grand total
+- [ ] Order summary is positioned above payment button for user verification
+- [ ] Order summary data matches session.basket and session.shippingCost
+
 ## Test 10: Payment execution — happy path
 - Wait for PaymentElement to fully initialize, enter valid test card details, click Pay
 - [ ] Pay button is disabled and shows loading state during processing

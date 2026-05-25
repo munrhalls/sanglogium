@@ -3,6 +3,8 @@
 **Happy path tracer only.**
 
 - Implement payment page as part of checkout system using Stripe Payment Intents + Stripe Elements
+- **Capture email field** for order confirmations and support (foundational requirement)
+- **Display itemized order summary** before payment button (foundational requirement)
 - Build Server Component (`/checkout/payment/page.tsx`) that:
   - Implements funnel guards (ORDER MATTERS — evaluated top-to-bottom, BEFORE any external call):
     1. `if (!session.basket?.length)` → redirect `/basket` (basket is the funnel entry point)
@@ -18,15 +20,18 @@
   - Idempotent Payment Intent:
     - If `session.paymentIntentId` exists → try `stripe.paymentIntents.update()` with `{ amount, metadata: { ...flattenedAddressKeys } }`; if throws, clear `paymentIntentId` and fall through to create. **NOTE**: this catch-all swallows non-terminal errors too (network failure, rate limit, invalid key) and silently retries as `create()`. Acceptable for tracer; production should inspect `error.code` to distinguish `payment_intent_unexpected_state` (terminal — fall through) from transient errors (terminal — surface to user).
     - If no `paymentIntentId` → `stripe.paymentIntents.create({ amount, currency: 'pln', automatic_payment_methods: { enabled: true }, metadata: { ...flattenedAddressKeys } })`; store `paymentIntentId` in session
-    - Flatten all address fields as individual string metadata keys: `regionCode`, `postalCode`, `street`, `streetNumber`, `city`
+    - Flatten all address fields as individual string metadata keys: `firstName`, `lastName`, `phone`, `regionCode`, `postalCode`, `street`, `streetNumber`, `city`
+    - Include `email` from session.email in metadata for order confirmation and support
     - **Address-field placement — known constraint**: Stripe exposes a first-class `shipping: { name, address: { line1, postal_code, city, state, country } }` parameter that is the correct destination for structured address (shows in Dashboard's Shipping section, used by Radar for fraud signals). `metadata` is a free-form, app-specific tracking surface and is the wrong tool for structured address. **However**, `shipping.name` is required by Stripe and `session.address` (see `lib/session.ts` `CheckoutSession`) currently has NO `name` field. Upstream blocker: the address page must collect a name (e.g. `firstName`, `lastName`) before this PI parameter can migrate. **Until then**, metadata flattening stays — but this is technical debt, not the target design. Add an issue: "Address page collects name → payment page migrates from `metadata` flattening to Stripe `shipping` parameter; metadata becomes app-specific keys only (e.g. `basketHash`)."
     - After both branches: `if (!client_secret) throw new Error('Stripe did not return client_secret')`; then `session.save()` unconditionally *(deliberate trade-off for simplicity — on the update path `paymentIntentId` is unchanged so this is a redundant cookie write; production may skip `save()` when no session field changed)*
   - Passes `client_secret` to Client Component
+  - **Display itemized order summary** before payment button: render basket items with product names, quantities, prices, subtotal, shipping cost, and grand total for user verification before final payment
   - Note: Unhandled errors in Sanity or Stripe API calls propagate to Next.js error boundary. `app/checkout/error.tsx` is **mandatory** before this code ships — without it, any thrown error (product mismatch, Stripe API failure, missing `client_secret`) renders the global Next.js 500 page and loses all checkout context.
   - **Cross-cut — upstream invalidation**: this page assumes the address page and shipping page implement their session cascade (editing address clears `shippingCost`; editing basket clears `shippingCost`). `paymentIntentId` itself is NOT cleared on upstream edits — it is refreshed by `update()` on the next visit to `/checkout/payment` with the new amount + metadata. The PI is therefore never stale at the moment of confirmation, by induction from the funnel guards (no payment page render → no PI confirm) plus the idempotent update.
 - **Cross-cut — order persistence is webhook-driven, NOT return-flow-driven**: neither `/api/checkout/return` (Route Handler) nor `/checkout/success` (Server Component) creates the order. Authoritative order creation and stock decrement MUST happen in a Stripe webhook handler (`payment_intent.succeeded` event → create order document in Sanity → decrement stock). A user who closes the browser between Stripe's redirect and `/api/checkout/return` is still successfully charged; without a webhook, that order is never recorded. `/checkout/success` only reads the resulting order. See `docs/checkout/return/` for the return-flow contract and the webhook handler spec (separate doc / handler at `app/api/webhooks/stripe/route.ts`, with idempotent `find-or-create` by `paymentIntentId` to tolerate Stripe's at-least-once delivery).
 - Build Client Component (`PaymentForm.client.tsx`) that:
   - **Starts with `'use client'` as the first line of the file** — mandatory; without it `useState`, `useStripe`, `useElements` throw a server-context error. The `.client.tsx` filename is a human convention only; Next.js enforces the directive, not the filename.
+  - **Capture email field** for order confirmations and support: render email input field, validate email format, save to session.email on form submission
   - Initializes outside component: `const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)`
   - Guards: `if (!clientSecret) return <p>Loading payment form…</p>` before mounting `<Elements>`
   - Mounts: `<Elements stripe={stripePromise} options={{ clientSecret, currency: 'pln' }}>`
