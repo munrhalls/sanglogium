@@ -1,3 +1,47 @@
+dev tools console:
+ Server  [ADDRESS PAGE] session.basket: [{…}]
+catalogue.ts:113  Server  ✅ Catalogue index validation passed
+event-logger.ts:72  Server  [LOG] Checkout event logged: address-submit:shipping_page_load (chk_1779805129196_z4lyjuh)
+page.tsx:25  Server  [SHIPPING PAGE] Fetching products for basket IDs: ['k27n1AQuIbSr5iozFz7FkW']
+page.tsx:28  Server  [SHIPPING PAGE] Fetched products: 1
+event-logger.ts:72  Server  [LOG] Checkout event logged: address-submit:shipping_products_fetched (chk_1779805129196_z4lyjuh)
+page.tsx:34  Server  [SHIPPING PAGE] Calculated packages: 1
+page.tsx:35  Server  [SHIPPING PAGE] Parcel dimensions: [
+  {
+    "weight": 0.9,
+    "width": 22,
+    "height": 12,
+    "length": 25
+  }
+]
+event-logger.ts:72  Server  [LOG] Checkout event logged: address-submit:shipping_packages_calculated (chk_1779805129196_z4lyjuh)
+event-logger.ts:72  Server  [LOG] Checkout event logged: address-submit:shipping_allekurier_request (chk_1779805129196_z4lyjuh)
+event-logger.ts:72  Server  [LOG] Checkout event logged: address-submit:allekurier_request_start (chk_1779805129196_z4lyjuh)
+allekurier-rates.ts:160  Server  [ALLEKURIER] PL->PL: 10 services (traceId: chk_1779805129196_z4lyjuh)
+event-logger.ts:72  Server  [LOG] Checkout event logged: address-submit:allekurier_success (chk_1779805129196_z4lyjuh)
+page.tsx:53  Server  [SHIPPING PAGE] AlleKurier rates: 10
+event-logger.ts:72  Server  [LOG] Checkout event logged: address-submit:shipping_allekurier_response (chk_1779805129196_z4lyjuh)
+catalogue.ts:113  Server  ✅ Catalogue index validation passed
+event-logger.ts:72  Server  [LOG] Checkout event logged: payment-init:payment_page_load (chk_1779805129196_z4lyjuh)
+event-logger.ts:72  Server  [LOG] Checkout event logged: payment-init:payment_sanity_query_start (chk_1779805129196_z4lyjuh)
+event-logger.ts:72  Server  [LOG] Checkout event logged: payment-init:payment_sanity_query_complete (chk_1779805129196_z4lyjuh)
+event-logger.ts:72  Server  [LOG] Checkout event logged: payment-init:payment_calculation (chk_1779805129196_z4lyjuh)
+page.tsx:85  Server  [PAYMENT PAGE] subtotal: 99900 grandTotal: 102692
+event-logger.ts:72  Server  [LOG] Checkout event logged: payment-init:payment_intent_create (chk_1779805129196_z4lyjuh)
+installHook.js:1 Error: Cookies can only be modified in a Server Action or Route Handler. Read more: https://nextjs.org/docs/app/api-reference/functions/cookies#options
+    at Page (page.tsx:143:3)
+    at resolveErrorDev (react-server-dom-turbopack-client.browser.development.js:2385:46)
+    at processFullStringRow (react-server-dom-turbopack-client.browser.development.js:2871:23)
+    at processFullBinaryRow (react-server-dom-turbopack-client.browser.development.js:2814:7)
+    at processBinaryChunk (react-server-dom-turbopack-client.browser.development.js:3017:15)
+    at progress (react-server-dom-turbopack-client.browser.development.js:3283:13)
+
+The above error occurred in the <Page> component. It was handled by the <ErrorBoundaryHandler> error boundary.
+
+
+
+
+
 PS C:\webdev\sang-logium> node scripts/get-trace.mjs chk_1748265432_x7k3m9q
 No events found for traceId: chk_1748265432_x7k3m9q
 PS C:\webdev\sang-logium> node scripts/get-trace.mjs chk_1779805129196_z4lyjuh
