@@ -39,7 +39,8 @@ export default function Footer() {
           "md:max-w-[1400px] md:grid-cols-4"
         )}
       >
-        <div className={cn("grid content-start gap-4")}>
+        {/* TODO: Create pages for these links - commenting out to prevent 404s on production */}
+        {/* <div className={cn("grid content-start gap-4")}>
           <ColTitle title="PURCHASES" />
           <ul className={cn("grid justify-center gap-2")}>
             <li>
@@ -58,8 +59,9 @@ export default function Footer() {
               </Link>
             </li>
           </ul>
-        </div>
-        <div className={cn("grid content-start gap-4")}>
+        </div> */}
+        {/* TODO: Create pages for these links - commenting out to prevent 404s on production */}
+        {/* <div className={cn("grid content-start gap-4")}>
           <ColTitle title="SUPPORT" />
           <ul className={cn("grid justify-center gap-2")}>
             <li>
@@ -73,7 +75,7 @@ export default function Footer() {
               </Link>
             </li>
           </ul>
-        </div>
+        </div> */}
         <div className={cn("grid content-start gap-4")}>
           <ColTitle title="ABOUT US" />
           <ul className={cn("grid justify-center gap-2")}>
