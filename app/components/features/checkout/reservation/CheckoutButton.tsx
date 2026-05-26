@@ -19,6 +19,11 @@ export interface CheckoutButtonProps {
   }>
 }
 
+// Generate checkoutSessionId on client side
+function generateCheckoutSessionId(): string {
+  return `chk_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+}
+
 export function CheckoutButton({
   basketData,
 }: CheckoutButtonProps) {
@@ -37,14 +42,17 @@ export function CheckoutButton({
     setError(null)
 
     try {
+      // Generate checkoutSessionId (traceId) at first click
+      const checkoutSessionId = generateCheckoutSessionId()
+
       // Transform basketData to minimal payload format
       const items = basketData.map(item => ({
         productId: item.productId,
         quantity: item.quantity
       }))
 
-      // Call Server Action to create session and redirect
-      await initCheckoutSession(items)
+      // Call Server Action with checkoutSessionId
+      await initCheckoutSession(items, checkoutSessionId)
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Checkout failed'
       setError(message)

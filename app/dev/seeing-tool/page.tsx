@@ -93,6 +93,49 @@ export default function SeeingToolPage() {
     }
   };
 
+  const copyTraceToClipboard = async (correlationId: string) => {
+    try {
+      const events = await getCheckoutEvents(correlationId);
+      const traceData = {
+        traceId: correlationId,
+        eventCount: events.length,
+        events: events.reverse(), // Chronological order
+        exportedAt: new Date().toISOString(),
+      };
+      await navigator.clipboard.writeText(JSON.stringify(traceData, null, 2));
+    } catch (error) {
+      console.error('[DEV] Failed to copy trace:', error);
+    }
+  };
+
+  const clearAllEvents = async () => {
+    try {
+      const response = await fetch('/api/dev/seeing-tool/clear', { method: 'POST' });
+      const result = await response.json();
+
+      if (result.success) {
+        setActiveFlows(new Map());
+        setRecentEvents([]);
+        setSelectedFlow(null);
+      }
+    } catch (error) {
+      console.error('[DEV] Failed to clear events:', error);
+    }
+  };
+
+  const copyAllTracesToClipboard = async () => {
+    try {
+      const response = await fetch('/api/dev/seeing-tool/all-traces');
+      const data = await response.json();
+
+      if (data.success) {
+        await navigator.clipboard.writeText(JSON.stringify(data.traces, null, 2));
+      }
+    } catch (error) {
+      console.error('[DEV] Failed to copy all traces:', error);
+    }
+  };
+
   const formatTimestamp = (timestamp: string) => {
     return new Date(timestamp).toLocaleTimeString();
   };
@@ -119,13 +162,29 @@ export default function SeeingToolPage() {
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Checkout Seeing Tool (Development Only)
-          </h1>
-          <p className="text-gray-600">
-            Real-time visibility into checkout flow data integrity
-          </p>
+        <div className="mb-8 flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              Checkout Seeing Tool (Development Only)
+            </h1>
+            <p className="text-gray-600">
+              Real-time visibility into checkout flow data integrity
+            </p>
+          </div>
+          <div className="flex space-x-2">
+            <button
+              onClick={copyAllTracesToClipboard}
+              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            >
+              Copy All Traces
+            </button>
+            <button
+              onClick={clearAllEvents}
+              className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+            >
+              Clear All Traces
+            </button>
+          </div>
         </div>
 
         {/* Redis Status */}
@@ -215,12 +274,18 @@ export default function SeeingToolPage() {
                         {getOutcomeIcon(event.outcome)}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm space-x-2">
                       <button
                         onClick={() => loadFlowDetails(event.correlationId)}
                         className="text-blue-600 hover:text-blue-900"
                       >
                         View Flow
+                      </button>
+                      <button
+                        onClick={() => copyTraceToClipboard(event.correlationId)}
+                        className="text-green-600 hover:text-green-900"
+                      >
+                        Copy Trace
                       </button>
                     </td>
                   </tr>
@@ -233,9 +298,17 @@ export default function SeeingToolPage() {
         {/* Selected Flow Details */}
         {selectedFlow && activeFlows.has(selectedFlow) && (
           <div>
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Flow Details: {selectedFlow}
-            </h2>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-semibold text-gray-900">
+                Flow Details: {selectedFlow}
+              </h2>
+              <button
+                onClick={() => copyTraceToClipboard(selectedFlow)}
+                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+              >
+                Copy Full Trace
+              </button>
+            </div>
             <div className="bg-white rounded-lg shadow p-6">
               <div className="space-y-4">
                 {activeFlows.get(selectedFlow)?.map((event, index) => (
