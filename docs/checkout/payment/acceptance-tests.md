@@ -116,7 +116,7 @@
 - **First visit** (no paymentIntentId in session):
   - [ ] Server logs show stripe.paymentIntents.create() called
   - [ ] amount = grand total (integer), currency = 'pln'
-  - [ ] Metadata shows all 5 address fields as strings (regionCode, postalCode, street, streetNumber, city)
+  - [ ] Metadata shows all 8 address fields + email as strings (firstName, lastName, phone, regionCode, postalCode, street, streetNumber, city, email)
   - [ ] Server logs show client_secret is not null
   - [ ] Server logs show client_secret extracted
   - [ ] paymentIntentId stored in session
@@ -177,9 +177,9 @@
 - **How to navigate**: Stripe Dashboard → Developers → **Payments** (or **Payment Intents** under Developers → Events → filter by `payment_intent.succeeded`) → find the PI by amount + timestamp → click the row → scroll to the **Metadata** section.
 - [ ] Stripe Dashboard shows PaymentIntent with correct integer amount (grosz)
 - [ ] Stripe Dashboard shows currency = pln
-- [ ] Stripe Dashboard shows all 5 address metadata fields as strings
-  (regionCode, postalCode, street, streetNumber, city)
-- *(Known technical debt: address belongs in Stripe's first-class `shipping` parameter, not `metadata`. Blocked on the address page collecting `name`. Until then, metadata is the documented fallback. See framed-objective.md.)*
+- [ ] Stripe Dashboard shows all 8 address metadata fields + email as strings
+  (firstName, lastName, phone, regionCode, postalCode, street, streetNumber, city, email)
+- *(Known technical debt: address belongs in Stripe's first-class `shipping` parameter, not `metadata`. Blocked on collecting a Stripe-compatible full `name`. Until then, metadata is the documented fallback. See framed-objective.md.)*
 
 ## Test 13: Stale-PI invariant after upstream edits
 - Complete address → shipping → land on /checkout/payment (PI created, paymentIntentId in session)

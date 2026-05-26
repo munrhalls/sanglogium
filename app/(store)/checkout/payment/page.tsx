@@ -2,6 +2,7 @@ import { getCheckoutSession } from "@/lib/session";
 import { redirect } from "next/navigation";
 import { client } from "@/sanity-cms/lib/client";
 import groq from "groq";
+import { stripe } from "@/lib/stripe";
 import PaymentForm from "./PaymentForm.client";
 
 interface PaymentProduct {
@@ -66,24 +67,52 @@ export default async function Page() {
   const address = session.address!;
 
   const metadata: Record<string, string> = {
+    firstName: address.firstName,
+    lastName: address.lastName,
+    phone: address.phone,
     regionCode: address.regionCode,
     postalCode: address.postalCode,
     street: address.street,
     streetNumber: address.streetNumber,
     city: address.city,
+    email: session.email ?? "",
   };
 
-  const response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/api/checkout/payment-intent/session`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ grandTotal, metadata }),
-  })
+  let result: { id: string; client_secret: string | null };
 
-  if (!response.ok) {
-    throw new Error('Failed to create payment intent')
+  if (session.paymentIntentId) {
+    try {
+      result = await stripe.paymentIntents.update(session.paymentIntentId, {
+        amount: grandTotal,
+        metadata,
+      });
+    } catch {
+      session.paymentIntentId = undefined;
+      result = await stripe.paymentIntents.create({
+        amount: grandTotal,
+        currency: "pln",
+        automatic_payment_methods: { enabled: true },
+        metadata,
+      });
+      session.paymentIntentId = result.id;
+    }
+  } else {
+    result = await stripe.paymentIntents.create({
+      amount: grandTotal,
+      currency: "pln",
+      automatic_payment_methods: { enabled: true },
+      metadata,
+    });
+    session.paymentIntentId = result.id;
   }
 
-  const { clientSecret } = await response.json()
+  if (!result.client_secret) {
+    throw new Error("Stripe did not return client_secret");
+  }
+
+  await session.save();
+
+  const clientSecret = result.client_secret;
 
   return <PaymentForm clientSecret={clientSecret} address={address} />;
 }

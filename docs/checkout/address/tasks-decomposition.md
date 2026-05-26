@@ -22,7 +22,7 @@ T6: Verify session state on existing shipping page
 
 ### T1: Verify iron-session exists and contains basket data
 - Verify session cookie is present (created by basket page transition)
-- Verify session.basket contains [{ id, quantity }]
+- Verify session.basket contains [{ productId, quantity }]
 - If missing, redirect to basket page (guard)
 - **Prerequisite**: iron-session should already be configured from basket page scope
 

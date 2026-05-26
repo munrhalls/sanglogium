@@ -147,24 +147,28 @@
 │       // with no recovery path. Redirect keeps the user inside the funnel.
 │
 ├── Task 7: Idempotent Stripe Payment Intent
-│   └── Build flattenedMetadata from session.address:
+│   └── Build flattenedMetadata from session.address + session.email:
 │       {
+│         firstName: address.firstName,
+│         lastName: address.lastName,
+│         phone: address.phone,
 │         regionCode: address.regionCode,
 │         postalCode: address.postalCode,
 │         street: address.street,
 │         streetNumber: address.streetNumber,
-│         city: address.city
+│         city: address.city,
+│         email: session.email ?? ''  // from session.email; required for order confirmation and support
 │       }
-│       // all 5 address fields — do NOT pass address object directly (Stripe metadata = strings)
+│       // all 8 address fields + email — do NOT pass address object directly (Stripe metadata = strings)
 │       // TECHNICAL DEBT (tracked, not fixed in this tracer):
 │       //   Stripe's first-class `shipping: { name, address: { line1, postal_code,
 │       //   city, state, country } }` parameter is the correct destination for
 │       //   structured address (Dashboard Shipping section, Radar fraud signals).
-│       //   `shipping.name` is REQUIRED. lib/session.ts CheckoutSession.address has
-│       //   no name field today — the address page must collect one first. Until
-│       //   that upstream change lands, address stays flattened into metadata.
+│       //   `shipping.name` requires a full name. Until the address page collects
+│       //   name in a Stripe-compatible format, address stays flattened into metadata.
 │       //   Migration issue: "Address page collects name → payment page moves
-│       //   address from metadata to Stripe `shipping` parameter."
+│       //   address from metadata to Stripe `shipping` parameter; metadata keeps
+│       //   app-specific keys only (e.g. basketHash, email)."
 │   │
 │   └── Branch A — session.paymentIntentId exists:
 │       └── try:

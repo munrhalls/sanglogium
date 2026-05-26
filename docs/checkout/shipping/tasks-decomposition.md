@@ -100,8 +100,8 @@
 ### Task 9: Implement security: Server Action fetches price server-side and saves BOTH shippingCode AND shippingCost
 - Extract rateId (e.g., "dpd_dpd_classic") from form submission
 - Call AlleKurier API server-side using shippingCode and session.address to fetch exact current price
-- Convert price to integer (cents)
-- Save BOTH `session.shippingCode = rateId` AND `session.shippingCost = priceInCents`
+- Convert price to integer (grosz — PLN's smallest unit; 1 PLN = 100 grosz)
+- Save BOTH `session.shippingCode = rateId` AND `session.shippingCost = priceInGrosze`
 - This prevents client-side price tampering (price fetched server-side, tamper-proof in encrypted cookie)
 
 ### Task 10: Implement redirect to /checkout/payment after save
