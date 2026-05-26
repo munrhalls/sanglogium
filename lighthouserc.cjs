@@ -49,7 +49,7 @@ module.exports = {
           disabled: false,
         },
         emulatedUserAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        skipAudits: ['uses-http2'], // Netlify handles HTTP/2 automatically
+        skipAudits: ['uses-http2'], // Vercel handles HTTP/2 automatically
       },
     },
 

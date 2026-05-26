@@ -66,9 +66,9 @@ Currently in `dependencies` — should be `devDependencies` only.
 
 ## 3. Caching & CDN (Week 2–3)
 
-### 3.1 Verify Netlify CDN Headers
+### 3.1 Verify Vercel CDN Headers
 
-The `netlify.toml` already sets immutable caching for `/static/*`. Verify in production response headers that:
+Vercel automatically sets immutable caching for `/_next/static/*`. Verify in production response headers that:
 - `/_next/static/*` returns `Cache-Control: public, max-age=31536000, immutable`
 - Images return `Cache-Control: public, max-age=31536000`
 
@@ -126,7 +126,7 @@ The codebase already has strong performance foundations. **Do not regress these:
 - Preconnect to `cdn.sanity.io` in layout `<head>`
 - `poweredByHeader: false`, `compress: true`
 - Security headers with 5-minute CDN cache
-- Netlify immutable caching for static assets
+- Vercel immutable caching for static assets
 - Bundle analyzer configured (`npm run analyze`)
 - Lighthouse CI in GitHub Actions
 - Homepage data batched (10 calls → 2 calls)

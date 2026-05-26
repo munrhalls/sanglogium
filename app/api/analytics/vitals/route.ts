@@ -4,8 +4,8 @@ import { NextRequest, NextResponse } from "next/server";
  * POST /api/analytics/vitals
  *
  * Receives Core Web Vitals beacons from the WebVitals RUM component.
- * Logs structured JSON for consumption by log aggregators (Netlify logs,
- * Datadog, Grafana, etc.) and maintains lightweight in-memory aggregation
+ * Logs structured JSON for consumption by log aggregators (Datadog, Grafana, etc.)
+ * and maintains lightweight in-memory aggregation
  * for periodic summary logging.
  *
  * Metrics received: LCP, INP, CLS, TTFB, FCP

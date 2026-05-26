@@ -34,11 +34,12 @@ This checklist outlines the critical gaps and recommendations for deploying the 
 - `RESERVATION_TTL_SEC` - Reservation time-to-live (defaults to 900 seconds)
 - `NODE_ENV` - Environment mode (recommended for dataset selection)
 
-## Netlify Configuration
+## Vercel Configuration
 
 ### Required
-- Build command: `npm install --legacy-peer-deps; npm run build`
-- Scheduled function: Cleanup job every 5 minutes at `/api/cleanup/expired-reservations`
+- Build command: `npm run build` (Vercel auto-detects Next.js)
+- Install command: `npm install --legacy-peer-deps` (for peer dependencies)
+- Cron job: Cleanup job every 5 minutes at `/api/cleanup/expired-reservations`
 
 ### Runtime
 - Runtime: `nodejs` (required for Redis operations)
