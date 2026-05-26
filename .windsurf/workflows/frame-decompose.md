@@ -7,3 +7,7 @@ nothing else
 De-compose tasks and make tasks graph.
 Show it to me.
 
+3. based on those two, only do this:
+in acceptance-tests.md
+in it, write
+simplest possible, minimalest live dev server or prod running app checks 
