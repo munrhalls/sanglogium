@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { stripe } from '@/lib/stripe'
 import { backendClient } from '@/sanity-cms/lib/backendClient'
+import { getCheckoutLogger } from '@/lib/logging/checkout-logger'
 
 // Stripe requires the raw request body for signature verification —
 // Next.js App Router does NOT automatically parse it, so we read it as text.
@@ -38,6 +39,10 @@ interface ProductDoc {
 
 async function handlePaymentIntentSucceeded(pi: Stripe.PaymentIntent): Promise<void> {
   const paymentIntentId = pi.id
+  const checkoutSessionId = pi.metadata?.checkoutSessionId
+  const logger = getCheckoutLogger(checkoutSessionId)
+
+  await logger.info('webhook_payment_succeeded_start', { paymentIntentId, checkoutSessionId });
 
   // Step 1: Idempotency — skip if order already exists for this PI
   const existing = await backendClient.fetch<{ _id: string } | null>(
@@ -45,6 +50,7 @@ async function handlePaymentIntentSucceeded(pi: Stripe.PaymentIntent): Promise<v
     { paymentIntentId }
   )
   if (existing) {
+    await logger.info('webhook_order_already_exists', { paymentIntentId });
     if (process.env.NODE_ENV !== 'production') {
       console.log(`[WEBHOOK] Order already exists for PI ${paymentIntentId} — skipping`)
     }
@@ -54,6 +60,7 @@ async function handlePaymentIntentSucceeded(pi: Stripe.PaymentIntent): Promise<v
   // Step 2: Read basketReservationId from PI metadata
   const basketReservationId = pi.metadata?.basketReservationId
   if (!basketReservationId) {
+    await logger.error('webhook_missing_basket_reservation_id', new Error('No basketReservationId in metadata'), { paymentIntentId });
     console.error(`[WEBHOOK] PI ${paymentIntentId} has no basketReservationId in metadata`)
     return
   }
@@ -70,6 +77,7 @@ async function handlePaymentIntentSucceeded(pi: Stripe.PaymentIntent): Promise<v
   )
 
   if (!reservation) {
+    await logger.error('webhook_reservation_not_found', new Error('Reservation not found'), { basketReservationId, paymentIntentId });
     console.error(`[WEBHOOK] Reservation ${basketReservationId} not found for PI ${paymentIntentId}`)
     return
   }
@@ -150,6 +158,13 @@ async function handlePaymentIntentSucceeded(pi: Stripe.PaymentIntent): Promise<v
 
   await backendClient.create(orderDoc)
 
+  await logger.info('webhook_order_created', { 
+    orderNumber, 
+    orderId, 
+    paymentIntentId,
+    itemCount: items.length 
+  });
+
   if (process.env.NODE_ENV !== 'production') {
     console.log(`[WEBHOOK] Order ${orderNumber} created for PI ${paymentIntentId}`)
   }
@@ -164,9 +179,13 @@ async function handlePaymentIntentSucceeded(pi: Stripe.PaymentIntent): Promise<v
     )
   )
 
+  await logger.info('webhook_stock_decremented', { itemCount: reservation.basketReservation.length });
+
   if (process.env.NODE_ENV !== 'production') {
     console.log(`[WEBHOOK] Stock decremented for ${reservation.basketReservation.length} items`)
   }
+
+  await logger.info('webhook_payment_succeeded_complete', { paymentIntentId, orderNumber });
 }
 
 export async function POST(request: NextRequest) {
@@ -199,16 +218,24 @@ export async function POST(request: NextRequest) {
 
   if (event.type === 'payment_intent.succeeded') {
     const pi = event.data.object as Stripe.PaymentIntent
+    const checkoutSessionId = pi.metadata?.checkoutSessionId
+    const logger = getCheckoutLogger(checkoutSessionId)
+    
     try {
       await handlePaymentIntentSucceeded(pi)
     } catch (err) {
+      logger.error('webhook_processing_error', err as Error, { paymentIntentId: pi.id });
       console.error(`[WEBHOOK] Error processing payment_intent.succeeded for ${pi.id}:`, err)
       // Return 500 so Stripe retries delivery
       return NextResponse.json({ error: 'Order processing failed' }, { status: 500 })
     }
   } else if (event.type === 'payment_intent.payment_failed') {
     const pi = event.data.object as Stripe.PaymentIntent
+    const checkoutSessionId = pi.metadata?.checkoutSessionId
+    const logger = getCheckoutLogger(checkoutSessionId)
     const failureMessage = (pi as { last_payment_error?: { message?: string } }).last_payment_error?.message ?? 'unknown'
+    
+    logger.error('webhook_payment_failed', new Error(failureMessage), { paymentIntentId: pi.id });
     console.error(`[WEBHOOK] payment_intent.payment_failed — PI: ${pi.id} — reason: ${failureMessage}`)
   }
 

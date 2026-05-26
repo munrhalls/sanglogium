@@ -13,6 +13,7 @@ interface PaymentProduct {
 
 export default async function Page() {
   const session = await getCheckoutSession();
+  const checkoutSessionId = session.checkoutSessionId;
 
   if (!session.basket?.length) {
     redirect("/basket");
@@ -31,6 +32,7 @@ export default async function Page() {
   }
 
   const ids = session.basket.map((i) => i.productId);
+
   const sanityProducts = await client.fetch<PaymentProduct[]>(
     groq`*[_type == "product" && _id in $ids]{ _id, price_data { unit_amount }, stock }`,
     { ids }
@@ -76,6 +78,7 @@ export default async function Page() {
     streetNumber: address.streetNumber,
     city: address.city,
     email: session.email ?? "",
+    ...(checkoutSessionId && { checkoutSessionId }),
   };
 
   let result: { id: string; client_secret: string | null };
@@ -86,7 +89,7 @@ export default async function Page() {
         amount: grandTotal,
         metadata,
       });
-    } catch {
+    } catch (err) {
       session.paymentIntentId = undefined;
       result = await stripe.paymentIntents.create({
         amount: grandTotal,
