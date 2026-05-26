@@ -16,9 +16,10 @@ interface ShippingOption {
 
 interface ShippingPageClientProps {
   shippingOptions: ShippingOption[];
+  traceId: string;
 }
 
-export default function ShippingPageClient({ shippingOptions }: ShippingPageClientProps) {
+export default function ShippingPageClient({ shippingOptions, traceId }: ShippingPageClientProps) {
   const [selectedOption, setSelectedOption] = useState<ShippingOption | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -33,12 +34,34 @@ export default function ShippingPageClient({ shippingOptions }: ShippingPageClie
     setIsSubmitting(true);
     setError(null);
 
+    // Log shipping selection (frontend) — fire-and-forget, don't block navigation
+    fetch('/api/trace', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        traceId,
+        step: 'shipping_option_selected',
+        data: {
+          rateId: selectedOption.rateId,
+          provider: selectedOption.provider,
+          service: selectedOption.servicelevel.name,
+          amount: selectedOption.amount
+        }
+      })
+    }).catch(() => {});
+
     try {
-      await saveShippingAction(selectedOption.rateId);
+      await saveShippingAction(selectedOption.rateId, Math.round(selectedOption.amount * 100));
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Nie udało się zapisać wyboru dostawy");
-    } finally {
-      setIsSubmitting(false);
+      // Only handle real errors — Next.js redirect() throws a non-Error internally;
+      // checking digest ensures we never swallow it
+      if (err instanceof Error) {
+        setError(err.message || "Nie udało się zapisać wyboru dostawy");
+        setIsSubmitting(false);
+      } else {
+        // Not a real Error (e.g. Next.js redirect internal throw) — rethrow
+        throw err;
+      }
     }
   };
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
@@ -17,9 +17,10 @@ interface Address {
 interface PaymentFormProps {
   clientSecret: string;
   address: Address;
+  traceId: string;
 }
 
-function PaymentFormInner({ address }: { address: Address }) {
+function PaymentFormInner({ address, traceId }: { address: Address; traceId: string }) {
   const stripe = useStripe();
   const elements = useElements();
   const [isLoading, setIsLoading] = useState(false);
@@ -31,8 +32,28 @@ function PaymentFormInner({ address }: { address: Address }) {
     setIsLoading(true);
     setError(null);
 
+    // Log payment submission start (frontend)
+    await fetch('/api/trace', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        traceId,
+        step: 'payment_submit_start',
+        data: { hasStripe: !!stripe, hasElements: !!elements }
+      })
+    })
+
     const { error: submitError } = await elements.submit();
     if (submitError) {
+      await fetch('/api/trace', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          traceId,
+          step: 'payment_submit_error',
+          data: { error: submitError.message }
+        })
+      })
       setError(submitError.message ?? "Please check your payment details.");
       setIsLoading(false);
       return;
@@ -48,6 +69,17 @@ function PaymentFormInner({ address }: { address: Address }) {
       },
     };
 
+    // Log confirmPayment call (frontend)
+    await fetch('/api/trace', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        traceId,
+        step: 'payment_confirm_call',
+        data: { returnUrl: `${window.location.origin}/api/checkout/return` }
+      })
+    })
+
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
@@ -55,6 +87,18 @@ function PaymentFormInner({ address }: { address: Address }) {
         payment_method_data: { billing_details },
       },
     });
+
+    if (error) {
+      await fetch('/api/trace', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          traceId,
+          step: 'payment_confirm_error',
+          data: { error: error.message }
+        })
+      })
+    }
 
     setError(error?.message ?? "Payment failed. Please try again.");
     setIsLoading(false);
@@ -84,12 +128,26 @@ function PaymentFormInner({ address }: { address: Address }) {
   );
 }
 
-export default function PaymentForm({ clientSecret, address }: PaymentFormProps) {
+export default function PaymentForm({ clientSecret, address, traceId }: PaymentFormProps) {
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    console.log('[CLIENT] PaymentForm mount', { hasClientSecret: !!clientSecret });
+    if (!clientSecret) {
+      setError('No client secret provided');
+      console.error('[CLIENT] PaymentForm error: No client secret');
+    }
+  }, [clientSecret]);
+
   if (!clientSecret) return <p>Loading payment form…</p>;
+
+  if (error) {
+    return <p className="text-red-600">Error: {error}</p>;
+  }
 
   return (
     <Elements stripe={stripePromise} options={{ clientSecret }}>
-      <PaymentFormInner address={address} />
+      <PaymentFormInner address={address} traceId={traceId} />
     </Elements>
   );
 }

@@ -11,8 +11,10 @@ export default async function Page() {
     redirect("/basket");
   }
 
+  const traceId = session.checkoutSessionId || 'unknown';
+
   // TRACER: Log session basket to server console
   console.log("[ADDRESS PAGE] session.basket:", session.basket);
 
-  return <AddressForm />;
+  return <AddressForm traceId={traceId} />;
 }

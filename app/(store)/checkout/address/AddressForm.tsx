@@ -9,7 +9,11 @@ const REGIONS = [
   { code: "GB", label: "United Kingdom" },
 ] as const;
 
-export default function AddressForm() {
+interface AddressFormProps {
+  traceId: string;
+}
+
+export default function AddressForm({ traceId }: AddressFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [form, setForm] = useState({
@@ -36,6 +40,17 @@ export default function AddressForm() {
         streetNumber: formData.get("streetNumber") as string,
         city: formData.get("city") as string,
       };
+
+      // Log address form submission (frontend)
+      await fetch('/api/trace', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          traceId,
+          step: 'address_form_submit',
+          data: addressData
+        })
+      })
 
       const result = await saveAddress(addressData);
       if (result && result.status === "FIX") {
