@@ -2,6 +2,42 @@
 
 **Happy path tracer only.**
 
+## Flow Diagram
+
+```mermaid
+flowchart TD
+    A[User navigates to /checkout/payment] --> B[Server Component: page.tsx]
+    B --> C{Funnel Guards}
+    C -->|basket empty| D[Redirect to /basket]
+    C -->|invalid quantity| D
+    C -->|no address| E[Redirect to /checkout/address]
+    C -->|no shippingCost| F[Redirect to /checkout/shipping]
+    C -->|all valid| G[Query Sanity CMS]
+    G --> H{Data Integrity}
+    H -->|product mismatch| I[Throw Error]
+    H -->|invalid price| I
+    H -->|stock = 0| J[Redirect to /basket?error=out_of_stock]
+    H -->|all valid| K[Calculate Totals]
+    K --> L{Idempotent Payment Intent}
+    L -->|paymentIntentId exists| M[stripe.paymentIntents.update]
+    L -->|no paymentIntentId| N[stripe.paymentIntents.create]
+    M -->|throws| N
+    M -->|success| O[Save session.paymentIntentId]
+    N --> O
+    O --> P[Pass client_secret to Client Component]
+    P --> Q[Client Component: PaymentForm.client.tsx]
+    Q --> R[Capture email field]
+    R --> S[Initialize Stripe Elements]
+    S --> T[Render PaymentElement]
+    T --> U[User submits payment]
+    U --> V[stripe.confirmPayment]
+    V --> W[Redirect to /api/checkout/return]
+    W --> X[Route Handler verifies PI status]
+    X --> Y[Manage session lifecycle]
+    Y --> Z[Redirect to /checkout/success]
+    Z --> AA[Success page displays order]
+```
+
 - Implement payment page as part of checkout system using Stripe Payment Intents + Stripe Elements
 - **Capture email field** for order confirmations and support (foundational requirement)
 - **Display itemized order summary** before payment button (foundational requirement)

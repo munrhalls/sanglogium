@@ -78,3 +78,30 @@ The previous single-page design at `/checkout/return` does **not** exist. Every 
 - 4-layer architecture (Routing → Presentation → Mutation → Service Infrastructure).
 - The Route Handler at `/api/checkout/return` is the **Mutation** layer; the success page is the **Routing/Presentation** layer; `lib/stripe.ts` and the Sanity client are **Service Infrastructure**.
 - Vertical slicing (tracer bullet): build Layer 4 → Route Handler → success page → Suspense → error states, in that order.
+
+## Flow Diagram
+
+```mermaid
+flowchart TD
+    A[Stripe Redirect] -->|payment_intent in URL| B["/api/checkout/return"]
+    B -->|stripe.paymentIntents.retrieve| C{Stripe API}
+    C -->|succeeded| D[Set session.completedPaymentIntentId]
+    C -->|requires_payment_method| D
+    C -->|canceled| D
+    C -->|processing| D
+    D -->|Partial clear session fields| E{Status}
+    E -->|succeeded| F["/checkout/success"]
+    E -->|failed| F
+    E -->|canceled| F
+    E -->|processing| F
+    F -->|Privacy guard check| G{session.completedPaymentIntentId matches?}
+    G -->|No| H["/basket"]
+    G -->|Yes| I[stripe.paymentIntents.retrieve]
+    I -->|succeeded| J[OrderDetails Suspense]
+    I -->|other status| K[Error State Display]
+    J -->|Webhook lag| L[Placeholder: Generating invoice]
+    J -->|Order exists| M[Render Order Details]
+    N[Stripe Webhook] -->|payment_intent.succeeded| O[Create Sanity Order]
+    O -->|Decrement Stock| P[Order Document Ready]
+    P -.->|Async| J
+```
