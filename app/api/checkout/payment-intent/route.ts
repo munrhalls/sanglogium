@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getBackendClient } from '@/sanity-cms/lib/backendClient'
 import { stripe } from '@/lib/stripe'
+import { logCheckoutEvent } from '@/lib/dev/event-logger'
 
 interface BasketReservationItem {
   _id: string
@@ -33,9 +34,12 @@ interface ProductPriceData {
 
 export async function POST(request: NextRequest) {
   try {
-    // Step 1: Parse basketReservationId from request body
+    // Step 1: Parse basketReservationId and checkoutSessionId from request body
     const body = await request.json()
-    const { basketReservationId } = body as { basketReservationId?: string }
+    const { basketReservationId, checkoutSessionId } = body as { 
+      basketReservationId?: string
+      checkoutSessionId?: string 
+    }
 
     if (!basketReservationId || typeof basketReservationId !== 'string') {
       return NextResponse.json(
@@ -43,6 +47,15 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       )
     }
+
+    // Log trace event
+    await logCheckoutEvent({
+      correlationId: checkoutSessionId || 'unknown',
+      slice: 'payment-init',
+      event: 'payment_intent_creation_start',
+      data: { basketReservationId },
+      outcome: 'success',
+    });
 
     // Step 2: Fetch reservation from Sanity
     const backendClient = getBackendClient()
@@ -133,13 +146,24 @@ export async function POST(request: NextRequest) {
 
     const currency = normalizedCurrencies[0]
 
-    // Step 6: Create Stripe PaymentIntent
+    // Step 6: Create Stripe PaymentIntent with trace ID in metadata
     const paymentIntent = await stripe.paymentIntents.create({
       amount: totalCents,
       currency: currency,
       automatic_payment_methods: { enabled: true },
-      metadata: { basketReservationId },
+      metadata: { 
+        basketReservationId,
+        ...(checkoutSessionId && { checkoutSessionId })
+      },
     })
+
+    await logCheckoutEvent({
+      correlationId: checkoutSessionId || 'unknown',
+      slice: 'payment-init',
+      event: 'payment_intent_created',
+      data: { paymentIntentId: paymentIntent.id, amount: totalCents, currency, basketReservationId },
+      outcome: 'success',
+    });
 
     // Step 7: Return clientSecret
     return NextResponse.json({

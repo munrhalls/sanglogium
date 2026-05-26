@@ -3,30 +3,30 @@
 import { getCheckoutSession } from "@/lib/session";
 import { redirect } from "next/navigation";
 import { submitShippingAction } from "@/app/actions/address/address";
-import { fetchAlleKurierRates, transformAlleKurierToShippingOption } from "@/lib/shipping/allekurier-rates";
-import { calculatePackages } from "@/lib/shipping/parcel-calculator";
-import { getProductsByIds } from "@/sanity-cms/lib/products/getProductsByIds";
+import { stripe } from "@/lib/stripe";
 import type { Address } from "@/app/(store)/checkout/checkout.types";
-import { getCheckoutLogger, generateCheckoutSessionId } from "@/lib/logging/checkout-logger";
-import { resetTrace } from "@/lib/logging/trace-logger";
+import { logCheckoutEvent, clearCheckoutEvents, generateCheckoutSessionId } from "@/lib/dev/event-logger";
 
-export async function initCheckoutSession(items: Array<{ productId: string; quantity: number }>) {
+export async function initCheckoutSession(items: Array<{ productId: string; quantity: number }>, checkoutSessionId?: string) {
   const session = await getCheckoutSession();
 
-  // Blank slate: Reset trace file for new checkout
-  const checkoutSessionId = generateCheckoutSessionId();
-  await resetTrace();
-  session.checkoutSessionId = checkoutSessionId;
-
-  const logger = getCheckoutLogger(checkoutSessionId);
+  // Use provided checkoutSessionId or generate new one (fallback)
+  const finalCheckoutSessionId = checkoutSessionId || generateCheckoutSessionId();
+  
+  // Blank slate: Clear previous trace for this session
+  await clearCheckoutEvents(finalCheckoutSessionId);
+  session.checkoutSessionId = finalCheckoutSessionId;
 
   // Save items directly to the secure iron-session cookie
   session.basket = items;
   await session.save();
 
-  await logger.info('checkout_init', {
-    itemCount: items.length,
-    items: items.map(i => ({ productId: i.productId, quantity: i.quantity })),
+  await logCheckoutEvent({
+    correlationId: finalCheckoutSessionId,
+    slice: 'basket-address',
+    event: 'checkout_init',
+    data: { itemCount: items.length, items: items.map(i => ({ productId: i.productId, quantity: i.quantity })) },
+    outcome: 'success',
   });
 
   // Transition to the next page
@@ -45,18 +45,35 @@ export async function saveAddress(address: Address) {
   // Get or create logger (use existing checkoutSessionId if present)
   const checkoutSessionId = session.checkoutSessionId || generateCheckoutSessionId();
   session.checkoutSessionId = checkoutSessionId;
-  const logger = getCheckoutLogger(checkoutSessionId);
 
-  await logger.info('address_submit_start', { address: { city: address.city, postalCode: address.postalCode } });
+  await logCheckoutEvent({
+    correlationId: checkoutSessionId,
+    slice: 'address-submit',
+    event: 'address_submit_start',
+    data: { address: { city: address.city, postalCode: address.postalCode } },
+    outcome: 'success',
+  });
 
   // Call Google Address Validation
   const validationResult = await submitShippingAction(address);
 
-  await logger.info('address_validation_result', { status: validationResult.status });
+  await logCheckoutEvent({
+    correlationId: checkoutSessionId,
+    slice: 'address-submit',
+    event: 'address_validation_result',
+    data: { status: validationResult.status },
+    outcome: validationResult.status === 'ACCEPT' ? 'success' : 'error',
+  });
 
   // Only proceed if validation succeeds
   if (validationResult.status !== "ACCEPT") {
-    await logger.error('address_validation_failed', new Error('Google validation failed'), { errors: validationResult.errors });
+    await logCheckoutEvent({
+      correlationId: checkoutSessionId,
+      slice: 'address-submit',
+      event: 'address_validation_failed',
+      data: { errors: validationResult.errors },
+      outcome: 'error',
+    });
     return validationResult;
   }
 
@@ -69,16 +86,19 @@ export async function saveAddress(address: Address) {
 
   await session.save();
 
-  await logger.info('address_saved', { 
-    hasAddress: !!session.address,
-    basketItemCount: session.basket.length 
+  await logCheckoutEvent({
+    correlationId: checkoutSessionId,
+    slice: 'address-submit',
+    event: 'address_saved',
+    data: { hasAddress: !!session.address, basketItemCount: session.basket.length },
+    outcome: 'success',
   });
 
   // Redirect to shipping page
   redirect("/checkout/shipping");
 }
 
-export async function saveShippingAction(shippingCode: string) {
+export async function saveShippingAction(shippingCode: string, priceInCents: number) {
   const session = await getCheckoutSession();
 
   // Guard: Ensure basket and address exist
@@ -98,64 +118,33 @@ export async function saveShippingAction(shippingCode: string) {
     console.error("[SAVE SHIPPING] No checkoutSessionId in session");
     redirect("/basket");
   }
-  const logger = getCheckoutLogger(checkoutSessionId);
 
-  await logger.info('shipping_selection_start', { shippingCode });
-
-  // Rebuild payload: Fetch parcel data from Sanity
-  const basketIds = session.basket.map((item) => item.productId);
-  await logger.info('shipping_fetch_products', { basketIds });
-
-  const products = await getProductsByIds(basketIds);
-  await logger.info('shipping_products_fetched', { productCount: products.length });
-
-  // Calculate packages using shared utility (handles quantity aggregation)
-  const packages = calculatePackages(session.basket, products);
-  await logger.info('shipping_packages_calculated', { packageCount: packages.length });
-
-  // Call AlleKurier API server-side with full payload
-  const senderZip = process.env.SENDER_ADDRESS_DEFAULT_ZIP || "00-001";
-  const allekurierPayload = {
-    fromCountry: "PL",
-    fromZip: senderZip,
-    toCountry: "PL",
-    toZip: session.address.postalCode,
-    packages,
-  };
-  
-  await logger.info('shipping_allekurier_request', { 
-    payload: allekurierPayload,
-    packageCount: packages.length,
-    totalWeight: packages.reduce((sum, p) => sum + p.weight, 0),
-  });
-  
-  const rates = await fetchAlleKurierRates(allekurierPayload, checkoutSessionId);
-
-  await logger.info('shipping_allekurier_response', { 
-    rateCount: rates.length,
-    rates: rates.map(r => ({
-      carrier: r.Carrier.name,
-      service: r.Service.name,
-      price: r.Order.gross,
-    }))
+  await logCheckoutEvent({
+    correlationId: checkoutSessionId,
+    slice: 'address-submit',
+    event: 'shipping_selection_start',
+    data: { shippingCode },
+    outcome: 'success',
   });
 
-  // Filter response for selected shippingCode
-  const shippingOptions = rates.map(transformAlleKurierToShippingOption);
-  const selectedOption = shippingOptions.find((opt) => opt.rateId === shippingCode);
-
-  if (!selectedOption) {
-    await logger.error('shipping_option_not_found', new Error('Invalid shipping option'), { shippingCode, availableOptions: shippingOptions.map(o => o.rateId) });
-    throw new Error("Invalid shipping option");
+  // Validate priceInCents is a positive integer
+  if (!Number.isInteger(priceInCents) || priceInCents < 1) {
+    await logCheckoutEvent({
+      correlationId: checkoutSessionId,
+      slice: 'address-submit',
+      event: 'shipping_invalid_price',
+      data: { shippingCode, priceInCents },
+      outcome: 'error',
+    });
+    throw new Error("Invalid shipping price");
   }
 
-  // Convert price to cents
-  const priceInCents = Math.round(selectedOption.amount * 100);
-  await logger.info('shipping_option_selected', { 
-    provider: selectedOption.provider,
-    service: selectedOption.servicelevel.name,
-    amount: selectedOption.amount,
-    priceInCents 
+  await logCheckoutEvent({
+    correlationId: checkoutSessionId,
+    slice: 'address-submit',
+    event: 'shipping_option_selected',
+    data: { shippingCode, priceInCents },
+    outcome: 'success',
   });
 
   // Save BOTH shippingCode AND shippingCost to session
@@ -164,11 +153,50 @@ export async function saveShippingAction(shippingCode: string) {
 
   await session.save();
 
-  await logger.info('shipping_saved', { 
-    shippingCode: session.shippingCode,
-    shippingCost: session.shippingCost 
+  await logCheckoutEvent({
+    correlationId: checkoutSessionId,
+    slice: 'address-submit',
+    event: 'shipping_saved',
+    data: { shippingCode: session.shippingCode, shippingCost: session.shippingCost },
+    outcome: 'success',
   });
 
   // Redirect to payment
   redirect("/checkout/payment");
+}
+
+export async function initPaymentAction(
+  grandTotal: number,
+  metadata: Record<string, string>
+): Promise<{ clientSecret: string }> {
+  const session = await getCheckoutSession();
+  const traceId = session.checkoutSessionId || 'unknown';
+
+  let result: { id: string; client_secret: string | null };
+
+  if (session.paymentIntentId) {
+    try {
+      result = await stripe.paymentIntents.update(session.paymentIntentId, { amount: grandTotal, metadata });
+      await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_update', data: { paymentIntentId: session.paymentIntentId, amount: grandTotal }, outcome: 'success' });
+    } catch (err) {
+      await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_update_failed', data: { error: err instanceof Error ? err.message : String(err) }, outcome: 'error' });
+      session.paymentIntentId = undefined;
+      result = await stripe.paymentIntents.create({ amount: grandTotal, currency: 'pln', automatic_payment_methods: { enabled: true }, metadata });
+      session.paymentIntentId = result.id;
+      await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_create', data: { paymentIntentId: result.id, amount: grandTotal, currency: 'pln' }, outcome: 'success' });
+    }
+  } else {
+    result = await stripe.paymentIntents.create({ amount: grandTotal, currency: 'pln', automatic_payment_methods: { enabled: true }, metadata });
+    session.paymentIntentId = result.id;
+    await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_create', data: { paymentIntentId: result.id, amount: grandTotal, currency: 'pln' }, outcome: 'success' });
+  }
+
+  if (!result.client_secret) {
+    await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_no_client_secret', data: { paymentIntentId: result.id }, outcome: 'error' });
+    throw new Error('Stripe did not return client_secret');
+  }
+
+  await session.save();
+
+  return { clientSecret: result.client_secret };
 }
