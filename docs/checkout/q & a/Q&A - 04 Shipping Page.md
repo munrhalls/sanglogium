@@ -8,7 +8,7 @@ What happens at each "bus stop" of checkout? Here is the exact technical executi
 
 ### Stop 3: The Shipping Page
 
-**Action:** The Server Component reads the cookie's address and calls the Furgonetka API to display accurate rates. The user selects a rate (e.g., DPD Courier) and clicks "Continue".
+**Action:** The Server Component reads the cookie's address and calls the AlleKurier API to display accurate rates. The user selects a rate (e.g., DPD Courier) and clicks "Continue".
 
 **How Data Moves:** The UI submits the selected Shipping ID to a Server Action. (You only store the ID, never the price, to prevent tampering).
 
@@ -26,7 +26,7 @@ What happens at each "bus stop" of checkout? Here is the exact technical executi
 
 ### How it works
 
-On the Shipping Page, you call the Allekurier/Packlink API. It returns an array of available services for that address/parcel:
+On the Shipping Page, you call the AlleKurier API. It returns an array of available services for that address/parcel:
 
 ```javascript
 [
