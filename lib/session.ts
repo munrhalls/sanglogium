@@ -18,6 +18,7 @@ export interface CheckoutSession {
   shippingCost?: number;
   paymentIntentId?: string;
   completedPaymentIntentId?: string;
+  checkoutSessionId?: string; // Unified Trace ID for checkout flow logging
 }
 
 export async function getCheckoutSession() {
