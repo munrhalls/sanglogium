@@ -1,12 +1,13 @@
-// Development-only event logger for checkout flow
-// Runs only in development - zero production interference
+// Checkout event logger for composite log retrieval
+// Stores logs in Redis keyed by traceId for complete journey retrieval
+// Works in both development and production
 
 import { Redis } from '@upstash/redis';
 
 // Lazy Redis client initialization to prevent build-time failures
 let redis: Redis | null = null;
 
-function getRedis(): Redis {
+export function getRedis(): Redis {
   if (redis) return redis;
 
   const url = process.env.UPSTASH_REDIS_REST_URL;
@@ -22,9 +23,6 @@ function getRedis(): Redis {
   return redis;
 }
 
-// Development check
-const isDevelopment = process.env.NODE_ENV === 'development';
-
 export interface CheckoutEvent {
   timestamp: string;
   correlationId: string;
@@ -36,14 +34,10 @@ export interface CheckoutEvent {
 }
 
 /**
- * Log checkout event to Redis list (development only)
- * Uses idempotencyKey as correlationId for flow tracing
+ * Log checkout event to Redis list
+ * Uses traceId as correlationId for composite log retrieval
  */
 export async function logCheckoutEvent(event: Omit<CheckoutEvent, 'timestamp'>): Promise<void> {
-  if (!isDevelopment) {
-    return; // Silently skip in production
-  }
-
   const fullEvent: CheckoutEvent = {
     ...event,
     timestamp: new Date().toISOString(),
@@ -75,20 +69,17 @@ export async function logCheckoutEvent(event: Omit<CheckoutEvent, 'timestamp'>):
     // Keep only 100 recent events
     await getRedis().ltrim('checkout_events:recent', 0, 99);
 
-    console.log(`[DEV] Checkout event logged: ${fullEvent.slice}:${fullEvent.event} (${fullEvent.correlationId})`);
+    console.log(`[LOG] Checkout event logged: ${fullEvent.slice}:${fullEvent.event} (${fullEvent.correlationId})`);
   } catch (error) {
-    console.error('[DEV] Failed to log checkout event:', error);
+    console.error('[LOG] Failed to log checkout event:', error);
   }
 }
 
 /**
- * Get all events for a specific correlation ID
+ * Get all events for a specific correlation ID (traceId)
+ * Returns array of events in chronological order
  */
 export async function getCheckoutEvents(correlationId: string): Promise<CheckoutEvent[]> {
-  if (!isDevelopment) {
-    return [];
-  }
-
   try {
     const events = await getRedis().lrange(`checkout_events:${correlationId}`, 0, -1);
 
@@ -97,13 +88,13 @@ export async function getCheckoutEvents(correlationId: string): Promise<Checkout
       if (typeof event === 'string') {
         // Check if it's HTML (error page) instead of JSON
         if (event.startsWith('<!DOCTYPE')) {
-          console.error('[DEV] Redis returned HTML instead of JSON. Check Redis configuration.');
+          console.error('[LOG] Redis returned HTML instead of JSON. Check Redis configuration.');
           return null;
         }
         try {
           return JSON.parse(event);
         } catch {
-          console.error('[DEV] Failed to parse event JSON:', event);
+          console.error('[LOG] Failed to parse event JSON:', event);
           return null;
         }
       } else if (typeof event === 'object' && event !== null) {
@@ -113,7 +104,7 @@ export async function getCheckoutEvents(correlationId: string): Promise<Checkout
       return null;
     }).filter(Boolean) as CheckoutEvent[];
   } catch (error) {
-    console.error('[DEV] Failed to get checkout events:', error);
+    console.error('[LOG] Failed to get checkout events:', error);
     return [];
   }
 }
@@ -128,10 +119,6 @@ export async function getRecentCheckoutEvents(): Promise<Array<{
   event: string;
   outcome: string;
 }>> {
-  if (!isDevelopment) {
-    return [];
-  }
-
   try {
     const events = await getRedis().lrange('checkout_events:recent', 0, -1);
 
@@ -140,13 +127,13 @@ export async function getRecentCheckoutEvents(): Promise<Array<{
       if (typeof event === 'string') {
         // Check if it's HTML (error page) instead of JSON
         if (event.startsWith('<!DOCTYPE')) {
-          console.error('[DEV] Redis returned HTML instead of JSON in recent events. Check Redis configuration.');
+          console.error('[LOG] Redis returned HTML instead of JSON in recent events. Check Redis configuration.');
           return null;
         }
         try {
           return JSON.parse(event);
         } catch {
-          console.error('[DEV] Failed to parse recent event JSON:', event);
+          console.error('[LOG] Failed to parse recent event JSON:', event);
           return null;
         }
       } else if (typeof event === 'object' && event !== null) {
@@ -156,7 +143,7 @@ export async function getRecentCheckoutEvents(): Promise<Array<{
       return null;
     }).filter(Boolean);
   } catch (error) {
-    console.error('[DEV] Failed to get recent checkout events:', error);
+    console.error('[LOG] Failed to get recent checkout events:', error);
     return [];
   }
 }
@@ -165,14 +152,41 @@ export async function getRecentCheckoutEvents(): Promise<Array<{
  * Clear events for a specific correlation ID (for testing)
  */
 export async function clearCheckoutEvents(correlationId: string): Promise<void> {
-  if (!isDevelopment) {
-    return;
-  }
-
   try {
     await getRedis().del(`checkout_events:${correlationId}`);
-    console.log(`[DEV] Cleared events for: ${correlationId}`);
+    console.log(`[LOG] Cleared events for: ${correlationId}`);
   } catch (error) {
-    console.error('[DEV] Failed to clear checkout events:', error);
+    console.error('[LOG] Failed to clear checkout events:', error);
+  }
+}
+
+/**
+ * Generate unique checkout session ID (Trace ID)
+ * Format: chk_<timestamp>_<random>
+ */
+export function generateCheckoutSessionId(): string {
+  const timestamp = Date.now();
+  const random = Math.random().toString(36).substring(2, 9);
+  return `chk_${timestamp}_${random}`;
+}
+
+/**
+ * Clear all checkout events from Redis (development only)
+ * Clears both individual trace lists and the recent events list
+ */
+export async function clearAllCheckoutEvents(): Promise<void> {
+  try {
+    // Clear the recent events list
+    await getRedis().del('checkout_events:recent');
+
+    // Find all checkout_events:* keys and delete them
+    const keys = await getRedis().keys('checkout_events:*');
+    if (keys.length > 0) {
+      await getRedis().del(...keys);
+    }
+
+    console.log(`[LOG] Cleared all checkout events (${keys.length} traces)`);
+  } catch (error) {
+    console.error('[LOG] Failed to clear all checkout events:', error);
   }
 }
