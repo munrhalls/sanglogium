@@ -1,3 +1,21 @@
+// ============================================================================
+// ⚠️  LEGACY - DEPRECATED - NO LONGER USED IN ACTIVE CHECKOUT FLOW ⚠️
+// ============================================================================
+// This checkout-queue system is LEGACY and NOT part of the current checkout implementation.
+// 
+// Current checkout flow uses:
+//   - iron-session for state management (no queue)
+//   - Direct Sanity API calls (no Redis queue)
+//   - See: app/actions/checkout/index.ts
+//
+// DO NOT use this code for new features. It exists only for:
+//   - Historical reference
+//   - Legacy test compatibility
+//   - Potential future audit needs
+//
+// To delete safely: Remove all files in lib/queue/, app/api/checkout-queue/, tests/checkout-queue/
+// ============================================================================
+
 // Integration test: 9 concurrent basket-reservation requests must be processed
 // atomically (one at a time) by /api/checkout-queue.
 //
