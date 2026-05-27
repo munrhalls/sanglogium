@@ -1,56 +1,12 @@
-dev tools console:
- Server  [ADDRESS PAGE] session.basket: [{…}]
-catalogue.ts:113  Server  ✅ Catalogue index validation passed
-event-logger.ts:72  Server  [LOG] Checkout event logged: address-submit:shipping_page_load (chk_1779805129196_z4lyjuh)
-page.tsx:25  Server  [SHIPPING PAGE] Fetching products for basket IDs: ['k27n1AQuIbSr5iozFz7FkW']
-page.tsx:28  Server  [SHIPPING PAGE] Fetched products: 1
-event-logger.ts:72  Server  [LOG] Checkout event logged: address-submit:shipping_products_fetched (chk_1779805129196_z4lyjuh)
-page.tsx:34  Server  [SHIPPING PAGE] Calculated packages: 1
-page.tsx:35  Server  [SHIPPING PAGE] Parcel dimensions: [
-  {
-    "weight": 0.9,
-    "width": 22,
-    "height": 12,
-    "length": 25
-  }
-]
-event-logger.ts:72  Server  [LOG] Checkout event logged: address-submit:shipping_packages_calculated (chk_1779805129196_z4lyjuh)
-event-logger.ts:72  Server  [LOG] Checkout event logged: address-submit:shipping_allekurier_request (chk_1779805129196_z4lyjuh)
-event-logger.ts:72  Server  [LOG] Checkout event logged: address-submit:allekurier_request_start (chk_1779805129196_z4lyjuh)
-allekurier-rates.ts:160  Server  [ALLEKURIER] PL->PL: 10 services (traceId: chk_1779805129196_z4lyjuh)
-event-logger.ts:72  Server  [LOG] Checkout event logged: address-submit:allekurier_success (chk_1779805129196_z4lyjuh)
-page.tsx:53  Server  [SHIPPING PAGE] AlleKurier rates: 10
-event-logger.ts:72  Server  [LOG] Checkout event logged: address-submit:shipping_allekurier_response (chk_1779805129196_z4lyjuh)
-catalogue.ts:113  Server  ✅ Catalogue index validation passed
-event-logger.ts:72  Server  [LOG] Checkout event logged: payment-init:payment_page_load (chk_1779805129196_z4lyjuh)
-event-logger.ts:72  Server  [LOG] Checkout event logged: payment-init:payment_sanity_query_start (chk_1779805129196_z4lyjuh)
-event-logger.ts:72  Server  [LOG] Checkout event logged: payment-init:payment_sanity_query_complete (chk_1779805129196_z4lyjuh)
-event-logger.ts:72  Server  [LOG] Checkout event logged: payment-init:payment_calculation (chk_1779805129196_z4lyjuh)
-page.tsx:85  Server  [PAYMENT PAGE] subtotal: 99900 grandTotal: 102692
-event-logger.ts:72  Server  [LOG] Checkout event logged: payment-init:payment_intent_create (chk_1779805129196_z4lyjuh)
-installHook.js:1 Error: Cookies can only be modified in a Server Action or Route Handler. Read more: https://nextjs.org/docs/app/api-reference/functions/cookies#options
-    at Page (page.tsx:143:3)
-    at resolveErrorDev (react-server-dom-turbopack-client.browser.development.js:2385:46)
-    at processFullStringRow (react-server-dom-turbopack-client.browser.development.js:2871:23)
-    at processFullBinaryRow (react-server-dom-turbopack-client.browser.development.js:2814:7)
-    at processBinaryChunk (react-server-dom-turbopack-client.browser.development.js:3017:15)
-    at progress (react-server-dom-turbopack-client.browser.development.js:3283:13)
+PS C:\webdev\sang-logium> node scripts/get-trace.mjs 
+Using latest trace: chk_1779885256609_q1mzg40
 
-The above error occurred in the <Page> component. It was handled by the <ErrorBoundaryHandler> error boundary.
-
-
-
-
-
-PS C:\webdev\sang-logium> node scripts/get-trace.mjs chk_1748265432_x7k3m9q
-No events found for traceId: chk_1748265432_x7k3m9q
-PS C:\webdev\sang-logium> node scripts/get-trace.mjs chk_1779805129196_z4lyjuh
 {
-  "traceId": "chk_1779805129196_z4lyjuh",
-  "eventCount": 26,
+  "traceId": "chk_1779885256609_q1mzg40",
+  "eventCount": 21,
   "events": [
     {
-      "correlationId": "chk_1779805129196_z4lyjuh",
+      "correlationId": "chk_1779885256609_q1mzg40",
       "slice": "basket-address",
       "event": "checkout_init",
       "data": {
@@ -63,47 +19,47 @@ PS C:\webdev\sang-logium> node scripts/get-trace.mjs chk_1779805129196_z4lyjuh
         ]
       },
       "outcome": "success",
-      "timestamp": "2026-05-26T14:18:49.605Z"
+      "timestamp": "2026-05-27T12:34:17.305Z"
     },
     {
-      "correlationId": "chk_1779805129196_z4lyjuh",
+      "correlationId": "chk_1779885256609_q1mzg40",
       "slice": "payment-submit",
       "event": "address_form_submit",
       "data": {
         "regionCode": "PL",
-        "postalCode": "54-129",
-        "street": "Balonowa",
-        "streetNumber": "9",
+        "postalCode": "54-153",
+        "street": "Pałucka",
+        "streetNumber": "71/5",
         "city": "Wrocław"
       },
       "outcome": "success",
-      "timestamp": "2026-05-26T14:18:56.729Z"
+      "timestamp": "2026-05-27T12:34:24.972Z"
     },
     {
-      "correlationId": "chk_1779805129196_z4lyjuh",
+      "correlationId": "chk_1779885256609_q1mzg40",
       "slice": "address-submit",
       "event": "address_submit_start",
       "data": {
         "address": {
           "city": "Wrocław",
-          "postalCode": "54-129"
+          "postalCode": "54-153"
         }
       },
       "outcome": "success",
-      "timestamp": "2026-05-26T14:18:57.893Z"
+      "timestamp": "2026-05-27T12:34:25.949Z"
     },
     {
-      "correlationId": "chk_1779805129196_z4lyjuh",
+      "correlationId": "chk_1779885256609_q1mzg40",
       "slice": "address-submit",
       "event": "address_validation_result",
       "data": {
         "status": "ACCEPT"
       },
       "outcome": "success",
-      "timestamp": "2026-05-26T14:18:58.533Z"
+      "timestamp": "2026-05-27T12:34:26.737Z"
     },
     {
-      "correlationId": "chk_1779805129196_z4lyjuh",
+      "correlationId": "chk_1779885256609_q1mzg40",
       "slice": "address-submit",
       "event": "address_saved",
       "data": {
@@ -111,10 +67,10 @@ PS C:\webdev\sang-logium> node scripts/get-trace.mjs chk_1779805129196_z4lyjuh
         "basketItemCount": 1
       },
       "outcome": "success",
-      "timestamp": "2026-05-26T14:18:58.851Z"
+      "timestamp": "2026-05-27T12:34:27.071Z"
     },
     {
-      "correlationId": "chk_1779805129196_z4lyjuh",
+      "correlationId": "chk_1779885256609_q1mzg40",
       "slice": "address-submit",
       "event": "shipping_page_load",
       "data": {
@@ -122,10 +78,10 @@ PS C:\webdev\sang-logium> node scripts/get-trace.mjs chk_1779805129196_z4lyjuh
         "hasBasket": true
       },
       "outcome": "success",
-      "timestamp": "2026-05-26T14:18:59.403Z"
+      "timestamp": "2026-05-27T12:34:28.838Z"
     },
     {
-      "correlationId": "chk_1779805129196_z4lyjuh",
+      "correlationId": "chk_1779885256609_q1mzg40",
       "slice": "address-submit",
       "event": "shipping_products_fetched",
       "data": {
@@ -135,10 +91,10 @@ PS C:\webdev\sang-logium> node scripts/get-trace.mjs chk_1779805129196_z4lyjuh
         "productCount": 1
       },
       "outcome": "success",
-      "timestamp": "2026-05-26T14:19:00.054Z"
+      "timestamp": "2026-05-27T12:34:29.484Z"
     },
     {
-      "correlationId": "chk_1779805129196_z4lyjuh",
+      "correlationId": "chk_1779885256609_q1mzg40",
       "slice": "address-submit",
       "event": "shipping_packages_calculated",
       "data": {
@@ -146,10 +102,10 @@ PS C:\webdev\sang-logium> node scripts/get-trace.mjs chk_1779805129196_z4lyjuh
         "totalWeight": 0.9
       },
       "outcome": "success",
-      "timestamp": "2026-05-26T14:19:00.474Z"
+      "timestamp": "2026-05-27T12:34:29.802Z"
     },
     {
-      "correlationId": "chk_1779805129196_z4lyjuh",
+      "correlationId": "chk_1779885256609_q1mzg40",
       "slice": "address-submit",
       "event": "shipping_allekurier_request",
       "data": {
@@ -157,7 +113,7 @@ PS C:\webdev\sang-logium> node scripts/get-trace.mjs chk_1779805129196_z4lyjuh
           "fromCountry": "PL",
           "fromZip": "00-533",
           "toCountry": "PL",
-          "toZip": "54-129",
+          "toZip": "54-153",
           "packages": [
             {
               "weight": 0.9,
@@ -171,24 +127,24 @@ PS C:\webdev\sang-logium> node scripts/get-trace.mjs chk_1779805129196_z4lyjuh
         "totalWeight": 0.9
       },
       "outcome": "success",
-      "timestamp": "2026-05-26T14:19:00.882Z"
+      "timestamp": "2026-05-27T12:34:30.119Z"
     },
     {
-      "correlationId": "chk_1779805129196_z4lyjuh",
+      "correlationId": "chk_1779885256609_q1mzg40",
       "slice": "address-submit",
       "event": "allekurier_request_start",
       "data": {
         "fromCountry": "PL",
         "fromZip": "00-533",
         "toCountry": "PL",
-        "toZip": "54-129",
+        "toZip": "54-153",
         "packageCount": 1
       },
       "outcome": "success",
-      "timestamp": "2026-05-26T14:19:01.271Z"
+      "timestamp": "2026-05-27T12:34:30.489Z"
     },
     {
-      "correlationId": "chk_1779805129196_z4lyjuh",
+      "correlationId": "chk_1779885256609_q1mzg40",
       "slice": "address-submit",
       "event": "allekurier_success",
       "data": {
@@ -196,10 +152,10 @@ PS C:\webdev\sang-logium> node scripts/get-trace.mjs chk_1779805129196_z4lyjuh
         "route": "PL->PL"
       },
       "outcome": "success",
-      "timestamp": "2026-05-26T14:19:02.938Z"
+      "timestamp": "2026-05-27T12:34:31.967Z"
     },
     {
-      "correlationId": "chk_1779805129196_z4lyjuh",
+      "correlationId": "chk_1779885256609_q1mzg40",
       "slice": "address-submit",
       "event": "shipping_allekurier_response",
       "data": {
@@ -258,182 +214,55 @@ PS C:\webdev\sang-logium> node scripts/get-trace.mjs chk_1779805129196_z4lyjuh
         ]
       },
       "outcome": "success",
-      "timestamp": "2026-05-26T14:19:03.266Z"
+      "timestamp": "2026-05-27T12:34:32.318Z"
     },
     {
-      "correlationId": "chk_1779805129196_z4lyjuh",
-      "slice": "payment-submit",
-      "event": "shipping_option_selected",
-      "data": {
-        "rateId": "dhl_dhlstandard",
-        "provider": "DHL Parcel",
-        "service": "DHL Standard",
-        "amount": 27.92
-      },
-      "outcome": "success",
-      "timestamp": "2026-05-26T14:19:10.145Z"
-    },
-    {
-      "correlationId": "chk_1779805129196_z4lyjuh",
+      "correlationId": "chk_1779885256609_q1mzg40",
       "slice": "address-submit",
       "event": "shipping_selection_start",
       "data": {
-        "shippingCode": "dhl_dhlstandard"
+        "shippingCode": "orlen_paczkawruchu"
       },
       "outcome": "success",
-      "timestamp": "2026-05-26T14:19:11.092Z"
+      "timestamp": "2026-05-27T12:34:36.050Z"
     },
     {
-      "correlationId": "chk_1779805129196_z4lyjuh",
-      "slice": "address-submit",
-      "event": "shipping_products_fetched",
+      "correlationId": "chk_1779885256609_q1mzg40",
+      "slice": "payment-submit",
+      "event": "shipping_option_selected",
       "data": {
-        "productCount": 1,
-        "basketIds": [
-          "k27n1AQuIbSr5iozFz7FkW"
-        ]
+        "rateId": "orlen_paczkawruchu",
+        "provider": "Orlen Paczka",
+        "service": "Orlen Paczka",
+        "amount": 11.71
       },
       "outcome": "success",
-      "timestamp": "2026-05-26T14:19:11.734Z"
+      "timestamp": "2026-05-27T12:34:36.218Z"
     },
     {
-      "correlationId": "chk_1779805129196_z4lyjuh",
-      "slice": "address-submit",
-      "event": "shipping_allekurier_request",
-      "data": {
-        "payload": {
-          "fromCountry": "PL",
-          "fromZip": "00-533",
-          "toCountry": "PL",
-          "toZip": "54-129",
-          "packages": [
-            {
-              "weight": 0.9,
-              "width": 22,
-              "height": 12,
-              "length": 25
-            }
-          ]
-        },
-        "packageCount": 1,
-        "totalWeight": 0.9
-      },
-      "outcome": "success",
-      "timestamp": "2026-05-26T14:19:12.170Z"
-    },
-    {
-      "correlationId": "chk_1779805129196_z4lyjuh",
-      "slice": "address-submit",
-      "event": "allekurier_request_start",
-      "data": {
-        "fromCountry": "PL",
-        "fromZip": "00-533",
-        "toCountry": "PL",
-        "toZip": "54-129",
-        "packageCount": 1
-      },
-      "outcome": "success",
-      "timestamp": "2026-05-26T14:19:12.547Z"
-    },
-    {
-      "correlationId": "chk_1779805129196_z4lyjuh",
-      "slice": "address-submit",
-      "event": "allekurier_success",
-      "data": {
-        "serviceCount": 10,
-        "route": "PL->PL"
-      },
-      "outcome": "success",
-      "timestamp": "2026-05-26T14:19:14.067Z"
-    },
-    {
-      "correlationId": "chk_1779805129196_z4lyjuh",
-      "slice": "address-submit",
-      "event": "shipping_allekurier_response",
-      "data": {
-        "rateCount": 10,
-        "rates": [
-          {
-            "carrier": "Orlen Paczka",
-            "service": "Orlen Paczka",
-            "price": 11.71
-          },
-          {
-            "carrier": "InPost Paczkomaty",
-            "service": "Inpost Paczkomaty 24/7",
-            "price": 17.27
-          },
-          {
-            "carrier": "InPost Kurier",
-            "service": "InPost Kurier",
-            "price": 22.41
-          },
-          {
-            "carrier": "DPD Polska",
-            "service": "DPD Classic",
-            "price": 23.21
-          },
-          {
-            "carrier": "FedEx Polska",
-            "service": "FedEx Economy",
-            "price": 23.57
-          },
-          {
-            "carrier": "DHL Parcel",
-            "service": "DHL Standard",
-            "price": 27.92
-          },
-          {
-            "carrier": "UPS Polska",
-            "service": "UPS Access Point to Access Point",
-            "price": 28.38
-          },
-          {
-            "carrier": "UPS Polska",
-            "service": "UPS Access Point to Door",
-            "price": 39.42
-          },
-          {
-            "carrier": "UPS Polska",
-            "service": "UPS Standard",
-            "price": 42.9
-          },
-          {
-            "carrier": "UPS Polska",
-            "service": "UPS Express Saver",
-            "price": 55.24
-          }
-        ]
-      },
-      "outcome": "success",
-      "timestamp": "2026-05-26T14:19:14.405Z"
-    },
-    {
-      "correlationId": "chk_1779805129196_z4lyjuh",
+      "correlationId": "chk_1779885256609_q1mzg40",
       "slice": "address-submit",
       "event": "shipping_option_selected",
       "data": {
-        "provider": "DHL Parcel",
-        "service": "DHL Standard",
-        "amount": 27.92,
-        "priceInCents": 2792
+        "shippingCode": "orlen_paczkawruchu",
+        "priceInCents": 1171
       },
       "outcome": "success",
-      "timestamp": "2026-05-26T14:19:14.694Z"
+      "timestamp": "2026-05-27T12:34:36.603Z"
     },
     {
-      "correlationId": "chk_1779805129196_z4lyjuh",
+      "correlationId": "chk_1779885256609_q1mzg40",
       "slice": "address-submit",
       "event": "shipping_saved",
       "data": {
-        "shippingCode": "dhl_dhlstandard",
-        "shippingCost": 2792
+        "shippingCode": "orlen_paczkawruchu",
+        "shippingCost": 1171
       },
       "outcome": "success",
-      "timestamp": "2026-05-26T14:19:15.020Z"
+      "timestamp": "2026-05-27T12:34:36.838Z"
     },
     {
-      "correlationId": "chk_1779805129196_z4lyjuh",
+      "correlationId": "chk_1779885256609_q1mzg40",
       "slice": "payment-init",
       "event": "payment_page_load",
       "data": {
@@ -442,10 +271,10 @@ PS C:\webdev\sang-logium> node scripts/get-trace.mjs chk_1779805129196_z4lyjuh
         "hasShippingCost": true
       },
       "outcome": "success",
-      "timestamp": "2026-05-26T14:19:15.555Z"
+      "timestamp": "2026-05-27T12:34:38.518Z"
     },
     {
-      "correlationId": "chk_1779805129196_z4lyjuh",
+      "correlationId": "chk_1779885256609_q1mzg40",
       "slice": "payment-init",
       "event": "payment_sanity_query_start",
       "data": {
@@ -460,10 +289,10 @@ PS C:\webdev\sang-logium> node scripts/get-trace.mjs chk_1779805129196_z4lyjuh
         ]
       },
       "outcome": "success",
-      "timestamp": "2026-05-26T14:19:16.003Z"
+      "timestamp": "2026-05-27T12:34:38.977Z"
     },
     {
-      "correlationId": "chk_1779805129196_z4lyjuh",
+      "correlationId": "chk_1779885256609_q1mzg40",
       "slice": "payment-init",
       "event": "payment_sanity_query_complete",
       "data": {
@@ -471,40 +300,31 @@ PS C:\webdev\sang-logium> node scripts/get-trace.mjs chk_1779805129196_z4lyjuh
         "expectedCount": 1
       },
       "outcome": "success",
-      "timestamp": "2026-05-26T14:19:16.646Z"
+      "timestamp": "2026-05-27T12:34:39.587Z"
     },
     {
-      "correlationId": "chk_1779805129196_z4lyjuh",
+      "correlationId": "chk_1779885256609_q1mzg40",
       "slice": "payment-init",
       "event": "payment_calculation",
       "data": {
         "subtotal": 99900,
-        "shippingCost": 2792,
-        "grandTotal": 102692
+        "shippingCost": 1171,
+        "grandTotal": 101071
       },
       "outcome": "success",
-      "timestamp": "2026-05-26T14:19:17.102Z"
+      "timestamp": "2026-05-27T12:34:39.966Z"
     },
     {
-      "correlationId": "chk_1779805129196_z4lyjuh",
+      "correlationId": "chk_1779885256609_q1mzg40",
       "slice": "payment-init",
       "event": "payment_intent_create",
       "data": {
-        "paymentIntentId": "pi_3TbLpCEQ2a2vW56g1fh0RBrw",
-        "amount": 102692,
-        "currency": "pln",
-        "metadata": {
-          "regionCode": "PL",
-          "postalCode": "54-129",
-          "street": "Balonowa",
-          "streetNumber": "9",
-          "city": "Wrocław",
-          "email": "",
-          "checkoutSessionId": "chk_1779805129196_z4lyjuh"
-        }
+        "paymentIntentId": "pi_3TbgfVEQ2a2vW56g0xFL0bXA",
+        "amount": 101071,
+        "currency": "pln"
       },
       "outcome": "success",
-      "timestamp": "2026-05-26T14:19:18.111Z"
+      "timestamp": "2026-05-27T12:34:41.084Z"
     }
   ]
 }
