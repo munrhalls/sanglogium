@@ -21,7 +21,7 @@ export type Order = {
   _rev: string;
   orderNumber?: string;
   orderId?: string;
-  clerkUserId?: string;
+  userId?: string;
   customerEmail?: string;
   customerPhone?: string;
   isGuest?: boolean;

@@ -85,7 +85,7 @@ export interface OrderMetadata {
 
 export interface CreateOrderOptions {
   // Customer info
-  clerkUserId?: string;
+  userId?: string;
   customerEmail: string;
   customerPhone?: string;
   isGuest?: boolean;

@@ -28,10 +28,10 @@ export const orderType = defineType({
 
     // ============ CUSTOMER INFO ============
     defineField({
-      name: "clerkUserId",
+      name: "userId",
       title: "User ID",
       type: "string",
-      description: "Clerk user ID (null for guest orders)",
+      description: "User ID (null for guest orders)",
       // NOT required - allows guest checkout
     }),
     defineField({

@@ -112,7 +112,7 @@ export async function createOrder(
       orderId,
 
       // Customer info
-      clerkUserId: options.clerkUserId,
+      userId: options.userId,
       customerEmail: options.customerEmail,
       customerPhone: options.customerPhone,
       isGuest: options.isGuest ?? false,
