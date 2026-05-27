@@ -1,7 +1,6 @@
 import "./../globals.css";
 import "../suppress-warnings";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
-// import { ClerkProvider } from "@clerk/nextjs";
 import { cn } from "@/lib/utils/tailwind";
 
 // Fonts & Config
@@ -42,8 +41,7 @@ export default async function RootLayout({
           "selection:bg-brand-accent-600 selection:text-brand-800"
         )}
       >
-        {/* <ClerkProvider> */}
-          <NuqsAdapter>
+        <NuqsAdapter>
             <div
               className={cn(
                 "relative flex flex-1 flex-col overflow-hidden",
@@ -75,7 +73,6 @@ export default async function RootLayout({
               </Suspense>
             </div>
           </NuqsAdapter>
-        {/* </ClerkProvider> */}
       </body>
     </html>
   );

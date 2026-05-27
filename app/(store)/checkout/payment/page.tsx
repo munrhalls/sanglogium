@@ -4,7 +4,6 @@ import { client } from "@/sanity-cms/lib/client";
 import groq from "groq";
 import PaymentForm from "./PaymentForm.client";
 import { logCheckoutEvent } from "@/lib/dev/event-logger";
-import { createOrUpdatePaymentIntent } from "@/lib/checkout/createOrUpdatePaymentIntent";
 
 interface PaymentProduct {
   _id: string;
@@ -97,7 +96,5 @@ export default async function Page() {
     ...(checkoutSessionId && { checkoutSessionId }),
   };
 
-  const clientSecret = await createOrUpdatePaymentIntent(session, grandTotal, metadata);
-
-  return <PaymentForm clientSecret={clientSecret} address={address} traceId={traceId} />;
+  return <PaymentForm grandTotal={grandTotal} metadata={metadata} address={address} traceId={traceId} />;
 }

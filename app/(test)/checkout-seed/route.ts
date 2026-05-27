@@ -88,6 +88,15 @@ export async function GET(request: NextRequest) {
       session.completedPaymentIntentId = "pi_processing_test_id";
       break;
 
+    case "happy-path":
+      session.basket = VALID_BASKET;
+      session.address = VALID_ADDRESS;
+      session.shippingCode = "dpd";
+      session.shippingCost = 1899;
+      session.paymentIntentId = undefined;
+      session.completedPaymentIntentId = undefined;
+      break;
+
     default:
       return NextResponse.json(
         { error: `Unknown scenario: ${scenario}. Valid scenarios: missing-address, shipping-zero, invalid-product-id, zero-quantity, grand-total-zero, succeeded-pi, processing-pi` },

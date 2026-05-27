@@ -165,6 +165,13 @@ export async function saveShippingAction(shippingCode: string, priceInCents: num
   redirect("/checkout/payment");
 }
 
+export async function saveEmailToSession(email: string) {
+  "use server";
+  const session = await getCheckoutSession();
+  session.email = email;
+  await session.save();
+}
+
 export async function initPaymentAction(
   grandTotal: number,
   metadata: Record<string, string>

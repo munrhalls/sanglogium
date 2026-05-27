@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { saveEmailToSession } from "@/app/actions/checkout";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
@@ -15,9 +16,37 @@ interface Address {
 }
 
 interface PaymentFormProps {
-  clientSecret: string;
+  grandTotal: number;
+  metadata: Record<string, string>;
   address: Address;
   traceId: string;
+}
+
+function EmailInput({
+  email,
+  onChange,
+  disabled,
+}: {
+  email: string;
+  onChange: (value: string) => void;
+  disabled?: boolean;
+}) {
+  return (
+    <div className="space-y-2">
+      <label htmlFor="checkout-email" className="block text-sm font-medium text-gray-700">
+        Email
+      </label>
+      <input
+        id="checkout-email"
+        type="email"
+        value={email}
+        onChange={(e) => onChange(e.target.value)}
+        disabled={disabled}
+        placeholder="you@example.com"
+        className="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black disabled:bg-gray-100 disabled:text-gray-400"
+      />
+    </div>
+  );
 }
 
 function PaymentFormInner({ address, traceId }: { address: Address; traceId: string }) {
@@ -128,26 +157,52 @@ function PaymentFormInner({ address, traceId }: { address: Address; traceId: str
   );
 }
 
-export default function PaymentForm({ clientSecret, address, traceId }: PaymentFormProps) {
+export default function PaymentForm({ grandTotal, metadata, address, traceId }: PaymentFormProps) {
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [email, setEmail] = useState(metadata.email ?? "");
+  const [isSavingEmail, setIsSavingEmail] = useState(false);
+
+  const initPayment = useCallback(
+    async (meta: Record<string, string>) => {
+      try {
+        const res = await fetch("/api/checkout/payment-intent-session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ grandTotal, metadata: meta }),
+        });
+        const data = await res.json();
+        if (data.error) setError(data.error);
+        else setClientSecret(data.clientSecret);
+      } catch {
+        setError("Failed to initialize payment.");
+      }
+    },
+    [grandTotal]
+  );
 
   useEffect(() => {
-    console.log('[CLIENT] PaymentForm mount', { hasClientSecret: !!clientSecret });
-    if (!clientSecret) {
-      setError('No client secret provided');
-      console.error('[CLIENT] PaymentForm error: No client secret');
-    }
-  }, [clientSecret]);
+    initPayment(metadata);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const handleEmailChange = async (value: string) => {
+    setEmail(value);
+    setIsSavingEmail(true);
+    await saveEmailToSession(value);
+    setIsSavingEmail(false);
+    // Re-sync PI metadata with updated email
+    await initPayment({ ...metadata, email: value });
+  };
+
+  if (error) return <p className="text-red-600">Error: {error}</p>;
   if (!clientSecret) return <p>Loading payment form…</p>;
 
-  if (error) {
-    return <p className="text-red-600">Error: {error}</p>;
-  }
-
   return (
-    <Elements stripe={stripePromise} options={{ clientSecret }}>
-      <PaymentFormInner address={address} traceId={traceId} />
-    </Elements>
+    <div className="space-y-6">
+      <EmailInput email={email} onChange={handleEmailChange} disabled={isSavingEmail} />
+      <Elements stripe={stripePromise} options={{ clientSecret }}>
+        <PaymentFormInner address={address} traceId={traceId} />
+      </Elements>
+    </div>
   );
 }

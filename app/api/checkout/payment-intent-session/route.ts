@@ -28,21 +28,32 @@ export async function POST(request: NextRequest) {
     const session = await getCheckoutSession()
     const traceId = session.checkoutSessionId || 'unknown'
 
+    // Merge session data into metadata so the webhook can build the order
+    // without depending on basketReservation documents
+    const enrichedMetadata: Record<string, string> = {
+      ...metadata,
+      basket: JSON.stringify(session.basket ?? []),
+      address: JSON.stringify(session.address ?? {}),
+      shippingCode: session.shippingCode ?? '',
+      shippingCost: String(session.shippingCost ?? ''),
+      email: session.email ?? '',
+    }
+
     let result: { id: string; client_secret: string | null }
 
     if (session.paymentIntentId) {
       try {
-        result = await stripe.paymentIntents.update(session.paymentIntentId, { amount: grandTotal, metadata })
+        result = await stripe.paymentIntents.update(session.paymentIntentId, { amount: grandTotal, metadata: enrichedMetadata })
         await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_update', data: { paymentIntentId: session.paymentIntentId, amount: grandTotal }, outcome: 'success' })
       } catch (err) {
         await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_update_failed', data: { error: err instanceof Error ? err.message : String(err) }, outcome: 'error' })
         session.paymentIntentId = undefined
-        result = await stripe.paymentIntents.create({ amount: grandTotal, currency: 'pln', automatic_payment_methods: { enabled: true }, metadata })
+        result = await stripe.paymentIntents.create({ amount: grandTotal, currency: 'pln', automatic_payment_methods: { enabled: true }, metadata: enrichedMetadata })
         session.paymentIntentId = result.id
         await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_create', data: { paymentIntentId: result.id, amount: grandTotal, currency: 'pln' }, outcome: 'success' })
       }
     } else {
-      result = await stripe.paymentIntents.create({ amount: grandTotal, currency: 'pln', automatic_payment_methods: { enabled: true }, metadata })
+      result = await stripe.paymentIntents.create({ amount: grandTotal, currency: 'pln', automatic_payment_methods: { enabled: true }, metadata: enrichedMetadata })
       session.paymentIntentId = result.id
       await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_create', data: { paymentIntentId: result.id, amount: grandTotal, currency: 'pln' }, outcome: 'success' })
     }

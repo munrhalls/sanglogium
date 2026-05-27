@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { getCheckoutSession } from "@/lib/session";
 import { retrievePaymentIntent } from "@/lib/stripe";
 import { logCheckoutEvent } from "@/lib/dev/event-logger";
+import { createOrderFromPaymentIntent } from "@/lib/checkout/createOrderFromPaymentIntent";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -51,6 +52,20 @@ export async function GET(request: Request) {
       session.address = undefined;
       session.shippingCode = undefined;
       session.shippingCost = undefined;
+
+      // Create order synchronously so the success page shows it immediately
+      try {
+        await createOrderFromPaymentIntent(pi);
+        await logCheckoutEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_order_created', data: { paymentIntentId: pi.id }, outcome: 'success' });
+      } catch (err) {
+        const message = err instanceof Error ? err.message : String(err);
+        await logCheckoutEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_order_create_failed', data: { paymentIntentId: pi.id, error: message }, outcome: 'error' });
+        // Don't block redirect — webhook will retry as fallback
+        if (process.env.NODE_ENV !== 'production') {
+          console.error(`[RETURN HANDLER] Order creation failed for PI ${pi.id}:`, message);
+        }
+      }
+
       await logCheckoutEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_session_cleared_succeeded', data: {}, outcome: 'success' });
       break;
 
