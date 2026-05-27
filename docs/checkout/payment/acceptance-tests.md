@@ -51,6 +51,13 @@
 - [ ] Does NOT redirect to /checkout/shipping
 - [ ] Grand total = subtotal (no shipping added)
 
+## Test 2.75: Server Action boundary for session.save() (cookie write fix)
+- Navigate to /checkout/payment with valid session
+- [ ] No "Cookies can only be modified in a Server Action or Route Handler" error in console
+- [ ] Server logs show payment_intent_create or payment_intent_update event
+- [ ] PaymentForm renders with clientSecret
+- [ ] session.save() succeeds in Server Action context
+
 ## Test 3: Server Component reads session correctly
 - Navigate to /checkout/payment with valid session (basket, address, shippingCode, shippingCost)
 - [ ] Server logs show session.basket (array of `{ productId, quantity }`)

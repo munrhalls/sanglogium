@@ -1,5 +1,11 @@
 # Payment Page - Framed Objective
 
+**Objective:** Fix cookie write error by properly invoking Server Action boundary for session.save() in payment page
+
+- Move Stripe PI logic back to Server Action `initPaymentAction` in `app/actions/checkout/index.ts`
+- Invoke Server Action properly from Server Component via `startTransition` to ensure Server Action boundary is respected
+- Server Components cannot modify cookies in Next.js 15 — only Server Actions and Route Handlers can
+
 **Happy path tracer only.**
 
 ## Flow Diagram
@@ -59,7 +65,8 @@ flowchart TD
     - Flatten all address fields as individual string metadata keys: `firstName`, `lastName`, `phone`, `regionCode`, `postalCode`, `street`, `streetNumber`, `city`
     - Include `email` from session.email in metadata for order confirmation and support
     - **Address-field placement — known constraint**: Stripe exposes a first-class `shipping: { name, address: { line1, postal_code, city, state, country } }` parameter that is the correct destination for structured address (shows in Dashboard's Shipping section, used by Radar for fraud signals). `metadata` is a free-form, app-specific tracking surface and is the wrong tool for structured address. **However**, `shipping.name` is required by Stripe and `session.address` (see `lib/session.ts` `CheckoutSession`) currently has NO `name` field. Upstream blocker: the address page must collect a name (e.g. `firstName`, `lastName`) before this PI parameter can migrate. **Until then**, metadata flattening stays — but this is technical debt, not the target design. Add an issue: "Address page collects name → payment page migrates from `metadata` flattening to Stripe `shipping` parameter; metadata becomes app-specific keys only (e.g. `basketHash`)."
-    - After both branches: `if (!client_secret) throw new Error('Stripe did not return client_secret')`; then `session.save()` unconditionally *(deliberate trade-off for simplicity — on the update path `paymentIntentId` is unchanged so this is a redundant cookie write; production may skip `save()` when no session field changed)*
+    - After both branches: `if (!client_secret) throw new Error('Stripe did not return client_secret')`; then `session.save()` MUST happen in a Server Action or Route Handler (Server Components cannot modify cookies in Next.js 15)
+    - **Implementation**: Move Stripe PI logic back to Server Action `initPaymentAction` in `app/actions/checkout/index.ts`, then invoke it properly from Server Component via `startTransition` or form action to ensure Server Action boundary is respected
   - Passes `client_secret` to Client Component
   - **Display itemized order summary** before payment button: render basket items with product names, quantities, prices, subtotal, shipping cost, and grand total for user verification before final payment
   - Note: Unhandled errors in Sanity or Stripe API calls propagate to Next.js error boundary. `app/checkout/error.tsx` is **mandatory** before this code ships — without it, any thrown error (product mismatch, Stripe API failure, missing `client_secret`) renders the global Next.js 500 page and loses all checkout context.

@@ -1,5 +1,36 @@
 # Payment Page - Tasks Decomposition
 
+## Tasks Graph
+
+```mermaid
+graph TD
+    A[Restore initPaymentAction in app/actions/checkout/index.ts] --> B[Move Stripe PI logic from page.tsx back to Server Action]
+    B --> C[Add import initPaymentAction to page.tsx]
+    C --> D[Invoke Server Action via startTransition in page.tsx]
+    D --> E[Handle loading state for clientSecret]
+    E --> F[Test payment page loads without cookie error]
+```
+
+## Task Details
+
+1. **Restore initPaymentAction in app/actions/checkout/index.ts**
+   - Move Stripe PI create/update logic from page.tsx lines 100-122 back to initPaymentAction
+   - Include session.save() call
+   - Keep all logging events
+
+2. **Add import initPaymentAction to page.tsx**
+   - Import initPaymentAction from @/app/actions/checkout
+
+3. **Invoke Server Action via startTransition in page.tsx**
+   - Replace inline Stripe logic with startTransition(() => initPaymentAction(grandTotal, metadata))
+   - Handle async result to get clientSecret
+   - Pass clientSecret to PaymentForm
+
+4. **Test payment page loads without cookie error**
+   - Navigate to /checkout/payment with valid session
+   - Verify no "Cookies can only be modified in a Server Action" error
+   - Verify PaymentForm renders with clientSecret
+
 **Happy path tracer only.**
 
 ## Task Graph

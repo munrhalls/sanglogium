@@ -2,7 +2,6 @@ import { getCheckoutSession } from "@/lib/session";
 import { redirect } from "next/navigation";
 import { client } from "@/sanity-cms/lib/client";
 import groq from "groq";
-import { stripe } from "@/lib/stripe";
 import PaymentForm from "./PaymentForm.client";
 import { logCheckoutEvent } from "@/lib/dev/event-logger";
 
@@ -97,31 +96,17 @@ export default async function Page() {
     ...(checkoutSessionId && { checkoutSessionId }),
   };
 
-  let result: { id: string; client_secret: string | null };
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/checkout/payment-intent-session`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ grandTotal, metadata }),
+  });
 
-  if (session.paymentIntentId) {
-    try {
-      result = await stripe.paymentIntents.update(session.paymentIntentId, { amount: grandTotal, metadata });
-      await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_update', data: { paymentIntentId: session.paymentIntentId, amount: grandTotal }, outcome: 'success' });
-    } catch (err) {
-      await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_update_failed', data: { error: err instanceof Error ? err.message : String(err) }, outcome: 'error' });
-      session.paymentIntentId = undefined;
-      result = await stripe.paymentIntents.create({ amount: grandTotal, currency: 'pln', automatic_payment_methods: { enabled: true }, metadata });
-      session.paymentIntentId = result.id;
-      await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_create', data: { paymentIntentId: result.id, amount: grandTotal, currency: 'pln' }, outcome: 'success' });
-    }
-  } else {
-    result = await stripe.paymentIntents.create({ amount: grandTotal, currency: 'pln', automatic_payment_methods: { enabled: true }, metadata });
-    session.paymentIntentId = result.id;
-    await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_create', data: { paymentIntentId: result.id, amount: grandTotal, currency: 'pln' }, outcome: 'success' });
+  if (!response.ok) {
+    throw new Error('Failed to create payment intent');
   }
 
-  if (!result.client_secret) {
-    await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_no_client_secret', data: { paymentIntentId: result.id }, outcome: 'error' });
-    throw new Error('Stripe did not return client_secret');
-  }
+  const { clientSecret } = await response.json();
 
-  await session.save();
-
-  return <PaymentForm clientSecret={result.client_secret} address={address} traceId={traceId} />;
+  return <PaymentForm clientSecret={clientSecret} address={address} traceId={traceId} />;
 }
