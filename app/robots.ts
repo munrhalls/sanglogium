@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: "/studio/",
     },
-    sitemap: "https://sang-logium.com/sitemap.xml",
+    sitemap: "https://sanglogium.com/sitemap.xml",
   };
 }

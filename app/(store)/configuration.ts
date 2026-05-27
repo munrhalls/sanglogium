@@ -3,7 +3,7 @@ import { Montserrat } from "next/font/google";
 
 export const metadata: Metadata = {
   alternates: {
-    canonical: "https://sang-logium.com",
+    canonical: "https://sanglogium.com",
   },
   title: "Sang Logium Audio Shop",
 
