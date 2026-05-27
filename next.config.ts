@@ -23,7 +23,7 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizeCss: true,
     inlineCss: true,
-    optimizePackageImports: ["@clerk/nextjs", "@phosphor-icons/react"],
+    optimizePackageImports: ["@phosphor-icons/react"],
   },
   images: {
     formats: ["image/avif", "image/webp"],

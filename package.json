@@ -63,7 +63,6 @@
     "autoresearch:verify": "node scripts/research/verify.mjs"
   },
   "dependencies": {
-    "@clerk/nextjs": "^6.16.0",
     "@googlemaps/addressvalidation": "^3.2.1",
     "@hookform/resolvers": "^5.2.2",
     "@next/bundle-analyzer": "^16.1.3",
