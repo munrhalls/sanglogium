@@ -4,6 +4,7 @@ import { client } from "@/sanity-cms/lib/client";
 import groq from "groq";
 import PaymentForm from "./PaymentForm.client";
 import { logCheckoutEvent } from "@/lib/dev/event-logger";
+import { createOrUpdatePaymentIntent } from "@/lib/checkout/createOrUpdatePaymentIntent";
 
 interface PaymentProduct {
   _id: string;
@@ -96,17 +97,7 @@ export default async function Page() {
     ...(checkoutSessionId && { checkoutSessionId }),
   };
 
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/checkout/payment-intent-session`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ grandTotal, metadata }),
-  });
-
-  if (!response.ok) {
-    throw new Error('Failed to create payment intent');
-  }
-
-  const { clientSecret } = await response.json();
+  const clientSecret = await createOrUpdatePaymentIntent(session, grandTotal, metadata);
 
   return <PaymentForm clientSecret={clientSecret} address={address} traceId={traceId} />;
 }
