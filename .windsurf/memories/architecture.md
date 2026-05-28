@@ -111,15 +111,24 @@ Sanity Schema → Localhost Studio → GROQ Library → React Server Component �
 
 ## Checkout & Payment Architecture
 
-**Absolute Constraint:** "Authorize-first" server-side pattern to lock inventory before capturing funds.
+**Absolute Constraint:** Iron-session encrypted cookie checkout with synchronous order creation.
 
 **Critical Rules:**
-- Secure utilization of embedded Stripe checkout sessions (sensitive data hidden from client)
-- Idempotency ensured via Inngest for transaction finality
-- Multi-step wizard supports guest and user modes with seamless transitions
-- Fully idempotent architecture ensures transactions resolve correctly even if connectivity drops mid-process
+- State managed via encrypted iron-session cookies (basket, address, shipping, paymentIntentId)
+- 4-layer vertical slicing: Routing (Server Components) → Presentation → Mutation (Server Actions) → Infrastructure (SDKs)
+- Stripe Payment Element handles card/BLIK/Apple Pay on client, server creates Payment Intent
+- Synchronous order creation in return handler (not webhook) to eliminate race conditions
+- Order created directly in Sanity on successful payment, stock decremented immediately
+- Session cascade validation: upstream changes clear downstream data (address change → shipping cleared)
 
-**Prevents:** Race conditions and overselling
+**Prevents:** Race conditions, overselling, session tampering, funnel jumping
+
+**Current implementation (verify against beads issues before trusting):**
+- Payment page: `sang-logium-oss` (closed, happy path complete)
+- Return page: `sang-logium-2di` (closed, happy path complete)
+- Basket page: `sang-logium-mwk` (open, happy path in progress)
+- Address collection: `sang-logium-mpx` (open, happy path in progress)
+- Shipping selection: `sang-logium-3ez` (open, happy path in progress)
 
 ---
 

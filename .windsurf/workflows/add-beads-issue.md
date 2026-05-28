@@ -15,11 +15,21 @@ Run `bd types` to verify. Common types:
 **Note:** `research` and `infra` are NOT valid `bd` types. Use `spike` for investigations, `chore` for infrastructure.
 
 ### What Goes in Beads Issues
-- One feature or one bug per issue. No bundling.
-- Source code changes (diff summary, files touched)
-- Live check results (pass/fail with evidence)
-- Logs (trace IDs, error messages)
-- Blockers (if any)
+
+Each issue has **exactly two paths**:
+
+#### Path A: Happy Path (always present)
+- **What the feature should do** (core user flow, expected behavior)
+- **What the source code IS** (current implementation: file paths, key functions, data flow — NOT what changed; git tracks changes)
+- **Live check results** (pass/fail with evidence)
+- **Logs** (trace IDs, error messages)
+
+#### Path B: Edge Cases Path (always present, initially empty/locked)
+- **Known edge cases, error handling, additional capabilities**
+- Each edge case has its own "should be", source code, live checks
+- **LOCKED until happy path is complete** — see ordering rule below
+
+- **Blockers** (if any)
 - Nothing else
 
 ### What Does NOT Go in Beads Issues
@@ -47,6 +57,23 @@ professionally determine simple, clear type (run `bd types` first)
 later reference must be simple, clear, well-organized
 must fit into overall beads organization, so beads stays coherent, simple, easy to navigate and use
 
+### What Counts as One Feature
+
+A feature is a **user-facing capability** with a clear boundary:
+
+- **Basket page** = one feature (display basket, update quantities, remove items)
+- **Address collection** = one feature (form, validation, save to session)
+- **Shipping selection** = one feature (fetch rates, display options, save selection)
+- **Payment page** = one feature (funnel guards, Stripe integration, order creation)
+- **Return page** = one feature (display order confirmation, show order details)
+
+**NOT one feature:**
+- "Checkout flow" (too broad — spans 5+ features)
+- "Payment + return page" (two separate features)
+- "Basket + payment" (unrelated capabilities)
+
+If in doubt, split. One small feature per issue is better than one kitchen sink.
+
 ### When to Create an Issue (Default Mode — 90% of work)
 
 Create a beads issue when:
@@ -71,6 +98,18 @@ Trigger: Same feature/bug has 2+ failed attempts, scope drift, or root cause is 
 
 Then run `@/system-and-root-cause-analyzer` on the existing issue.
 
+### Enforcement — No Work Without Issue
+
+**Every agent MUST:**
+1. **Read the beads issue completely** before touching any code
+2. **Check `bd ready`** before creating a new issue — if an issue exists for this feature, update it
+3. **Update the issue** with live check results before declaring done or handing off
+
+**Violations:**
+- Working on a feature without reading its issue = **STOP.** Demand issue ID first.
+- Creating a new issue when one exists = **STOP.** Update existing issue instead.
+- Declaring "done" without updating the issue = **NOT done.** Live check evidence must be in the issue.
+
 ### Content Guard — Prevent Pre-Diagnosis
 
 If the issue description contains a theory ("the problem is X" or "we should do Y"):
@@ -83,6 +122,27 @@ Never create an issue that tells an agent what to implement without evidence.
 
 - **Already investigated with no fixable target:** STOP. An agent already spent compute and concluded "no concrete fix target exists." Creating an issue to re-investigate = noise. Capture a reproducible stack trace first, or close the thread.
 - **Duplicate issue:** STOP. Check `bd ready` first. If an issue exists for this feature/bug, update it instead of creating a new one.
+- **Scope change mid-issue:** STOP. If the feature definition changes (e.g., "payment page" → "payment page + return page + email capture"), close the current issue and create a new one. Never expand scope inside an existing issue.
+- **Separate issue for edge case of existing feature:** STOP. Edge cases belong in the parent issue's Edge Cases Path. Close the new issue, merge content into parent. One feature = one issue = two paths.
+
+### Happy-Path-First Ordering Rule
+
+**Happy path must be complete before ANY edge case work begins.**
+
+| Phase | What Agent Does | Edge Cases Path |
+|-------|-----------------|-----------------|
+| **Happy path in progress** | Implement core flow, run live checks | **LOCKED** — list known concerns only, no tasks |
+| **Happy path complete** | All live checks ✓, issue updated with evidence | **UNLOCKED** — now frame and implement edge cases |
+| **Edge cases in progress** | Work through edge cases list one by one | Active tasks with acceptance checks |
+
+**"Complete" definition:** All happy path live checks pass with evidence (logs, screenshots).
+
+**Agent MUST NOT touch edge cases until:**
+1. All happy path live checks marked ✓
+2. Issue updated with evidence
+3. User or orchestrator explicitly unlocks edge cases
+
+**Violation:** Agent working on error handling, fallback UX, or "what if" scenarios before core flow works = **STOP.** Redirect to happy path.
 
 ## Lifecycle Context
 
