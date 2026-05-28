@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { urlFor } from "@/sanity-cms/lib/client";
+import { sanityImageLoader } from "@/lib/utils/sanityImageLoader";
 import { cn } from "@/lib/utils/tailwind";
 import { HeroData, SanityImage } from "./types";
 
@@ -23,6 +23,15 @@ export default async function Hero({ heroData }: HeroProps) {
   // Generate blur placeholder from Sanity LQIP
   const blurDataURL = mobileBackgroundImage.asset?.metadata?.lqip || undefined;
 
+  // Raw Sanity asset refs for responsive image loading
+  const desktopRef = heroData.backgroundImage.asset?._ref || heroData.backgroundImage.asset?._id;
+  const mobileRef = mobileBackgroundImage.asset?._ref || mobileBackgroundImage.asset?._id;
+
+  // Responsive srcset for desktop source
+  const desktopSrcSet = [640, 750, 1080, 1200, 1920, 2048]
+    .map((w) => `${sanityImageLoader({ src: desktopRef, width: w, quality: 75 })} ${w}w`)
+    .join(", ");
+
   return (
     <section
       className={cn("relative w-full overflow-hidden", "bg-black text-white",
@@ -34,10 +43,11 @@ export default async function Hero({ heroData }: HeroProps) {
         <picture>
           <source
             media="(min-width: 768px)"
-            srcSet={urlFor(heroData.backgroundImage).width(1920).auto('format').quality(75).url()}
+            srcSet={desktopSrcSet}
           />
           <Image
-            src={urlFor(mobileBackgroundImage).width(828).auto('format').quality(75).url()}
+            src={mobileRef}
+            loader={sanityImageLoader}
             alt={heroData.backgroundImage.alt || "Hero Image"}
             fill
             priority
@@ -45,7 +55,7 @@ export default async function Hero({ heroData }: HeroProps) {
             placeholder={blurDataURL ? "blur" : undefined}
             blurDataURL={blurDataURL}
             className="object-cover rounded-none"
-            sizes="(max-width: 768px) 100vw, 100vw"
+            sizes="100vw"
             quality={75}
             style={{ objectPosition: getPosition(mobileBackgroundImage) }}
           />

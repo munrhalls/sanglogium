@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
-import { urlFor } from '@/sanity-cms/lib/image';
+import { sanityImageLoader } from '@/lib/utils/sanityImageLoader';
 
 interface ImageGalleryProps {
   images: any[];
@@ -49,8 +49,7 @@ export function ImageGallery({ images, productName }: ImageGalleryProps) {
   }
 
   const mainImage = validImages[selectedIndex];
-  const imageUrl = urlFor(mainImage).width(800).height(800).url();
-  const zoomImageUrl = urlFor(mainImage).width(1600).height(1600).url();
+  const mainImageRef = mainImage?.asset?._ref || mainImage?.asset?._id;
 
   return (
     <>
@@ -63,7 +62,8 @@ export function ImageGallery({ images, productName }: ImageGalleryProps) {
         >
           <figure className="w-full h-full">
             <Image
-              src={imageUrl}
+              src={mainImageRef}
+              loader={sanityImageLoader}
               alt={`${productName} - Image ${selectedIndex + 1}`}
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
@@ -77,7 +77,7 @@ export function ImageGallery({ images, productName }: ImageGalleryProps) {
         {validImages.length > 1 && (
           <div className="flex gap-2 overflow-x-auto pb-2">
             {validImages.map((image, index) => {
-              const thumbUrl = urlFor(image).width(80).height(80).url();
+              const thumbRef = image?.asset?._ref || image?.asset?._id;
               const isSelected = index === selectedIndex;
 
               return (
@@ -93,7 +93,8 @@ export function ImageGallery({ images, productName }: ImageGalleryProps) {
                   aria-pressed={isSelected}
                 >
                   <Image
-                    src={thumbUrl}
+                    src={thumbRef}
+                    loader={sanityImageLoader}
                     alt={`${productName} thumbnail ${index + 1}`}
                     fill
                     sizes="80px"
@@ -147,7 +148,8 @@ export function ImageGallery({ images, productName }: ImageGalleryProps) {
               onClick={(e) => e.stopPropagation()}
             >
               <Image
-                src={zoomImageUrl}
+                src={mainImageRef}
+                loader={sanityImageLoader}
                 alt={`${productName} - Full size image ${selectedIndex + 1}`}
                 width={1600}
                 height={1600}

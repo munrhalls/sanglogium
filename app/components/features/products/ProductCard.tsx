@@ -6,7 +6,6 @@ import { ProductImage } from './ProductImage';
 import type { Product } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
 import { Price } from '@/app/components/ui/Price';
 import { BasketControls } from "@/app/components/features/basket/BasketControls";
-import { urlFor } from '@/sanity-cms/lib/image';
 import { centsToDisplay } from '@/lib/utils/price';
 
 export interface Product {
@@ -24,7 +23,6 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  const imageUrl = product.image ? urlFor(product.image).width(100).height(100).url() : '';
   const displayPrice = centsToDisplay(product.price_data.unit_amount);
 
   return (

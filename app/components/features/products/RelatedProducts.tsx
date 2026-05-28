@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { urlFor } from '@/sanity-cms/lib/image';
+import { sanityImageLoader } from '@/lib/utils/sanityImageLoader';
 import { centsToDisplay } from '@/lib/utils/price';
 
 interface RelatedProduct {
@@ -52,7 +52,8 @@ export function RelatedProducts({ products, currentProductName }: RelatedProduct
               <div className="relative aspect-[4/3] bg-surface-productImage rounded-sm overflow-hidden mb-3">
                 {product.image ? (
                   <Image
-                    src={urlFor(product.image).width(224).height(168).url()}
+                    src={product.image?.asset?._ref || product.image?.asset?._id}
+                    loader={sanityImageLoader}
                     alt={product.name}
                     fill
                     sizes="224px"

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { urlFor } from "@/sanity-cms/lib/client";
+import { sanityImageLoader } from "@/lib/utils/sanityImageLoader";
 
 interface CarouselMediaBoxProps {
   src: any;
@@ -10,12 +10,13 @@ export default function CarouselMediaBox({ src, alt }: CarouselMediaBoxProps) {
   if (!src) return <div className="bg-secondary-100 aspect-square w-full animate-pulse rounded-sm" />;
 
   const isStringUrl = typeof src === "string";
-  const imagePath = isStringUrl ? src : urlFor(src).url();
+  const imageRef = isStringUrl ? src : (src?.asset?._ref || src?.asset?._id);
 
   return (
     <div className="relative aspect-square w-full overflow-hidden">
       <Image
-        src={imagePath}
+        src={imageRef}
+        loader={isStringUrl ? undefined : sanityImageLoader}
         alt={alt || "Product image"}
         fill
         sizes="(max-width: 768px) 40vw, 20vw"

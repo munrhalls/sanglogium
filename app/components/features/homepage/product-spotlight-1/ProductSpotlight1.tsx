@@ -1,6 +1,5 @@
 import React from "react";
 import { Image } from "next-sanity/image";
-import { urlFor } from "@/sanity-cms/lib/image";
 import { Spotlight1Data } from "./getSpotlight1Data";
 import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
 import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";
@@ -28,11 +27,12 @@ export default async function ProductSpotlight1({ spotlightData }: ProductSpotli
                                         className="aspect-square w-full flex items-center justify-center pb-4 opacity-0 scale-95 transition-[opacity,transform] duration-500 ease-out data-[active=true]:opacity-100 data-[active=true]:scale-100"
                                     >
                                         <Image
-                                            src={urlFor(image).width(800).auto('format').quality(75).url()}
+                                            src={image}
                                             alt={product.name}
                                             width={800}
                                             height={800}
                                             priority={idx === 0}
+                                            sizes="(max-width: 1024px) 100vw, 50vw"
                                             className="max-w-full max-h-[80%] w-auto h-auto object-contain mix-blend-multiply"
                                         />
                                     </CarouselSlide>

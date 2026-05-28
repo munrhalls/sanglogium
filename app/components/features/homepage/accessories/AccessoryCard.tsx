@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils/tailwind";
 import { Image } from "next-sanity/image";
 import Link from "next/link";
-import { urlFor } from "@/sanity-cms/lib/image";
 import type { AccessoryItem } from "./types";
 import { BasketControls } from "@/app/components/features/basket/BasketControls";
 import { centsToDisplay } from "@/lib/utils/price";
@@ -23,12 +22,13 @@ export default function AccessoryCard({
             {item.brand.name}
           </span>
           <Image
-            src={urlFor(item.image).width(450).auto("format").quality(75).url()}
+            src={item.image}
             alt={item.name}
             width={450}
             height={450}
             priority={idx === 0}
             loading={idx === 0 ? "eager" : "lazy"}
+            sizes="(max-width: 768px) 50vw, 25vw"
             className="h-auto max-h-[75%] w-auto max-w-[75%] transform object-contain object-center mix-blend-multiply transition-transform duration-700 group-hover:scale-110 md:h-full md:max-h-full md:w-full md:max-w-full"
           />
         </figure>
