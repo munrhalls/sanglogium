@@ -22,12 +22,12 @@ Your report is consumed by `/beads-orchestrator`, which turns it into a properly
 
 ## Workflow
 
-1. **Read spec** — The spec is created by `@[/frame-decompose]`. Read in this priority:
-   - **If user provides a beads issue ID**: Read the issue first (`bd show <id>`). The active `/frame-decompose` may live in the issue notes.
-   - **Then read docs/**: `docs/*/framed-objective.md`, `docs/*/tasks-decomposition.md`, `docs/*/acceptance-tests.md` — these are the canonical specs.
-   - **Also read** `docs/adr/*.md` if relevant.
-   
-   Compare: Does the beads issue frame-decompose match the docs/ spec? If they diverge, the docs/ spec may be stale. This is "what should be."
+1. **Read spec** — The spec lives inside the beads issue only.
+   - **If user provides a beads issue ID**: Read the issue first (`bd show <id>`). The active `/frame-decompose` output lives in the issue notes.
+   - **If no beads issue ID**: STOP. Demand issue ID first. `@/frame-decompose` output NEVER goes in `docs/` during active work.
+   - **Historical context only**: `docs/adr/*.md` may be read for background, but beads issue notes are the ONLY canonical spec during active work.
+
+   This is "what should be."
 2. **Read source** — The implementation files referenced by the spec. If the spec does not name files explicitly, infer from context (e.g., payment spec → `app/(store)/checkout/payment/page.tsx`). This is "what is implemented." Spec and code drift; verify they match before trusting either.
 3. **Read logs** — Files, traces, curl output, or build errors the user provides. This is "what actually happened."
 4. **Compare all three** —

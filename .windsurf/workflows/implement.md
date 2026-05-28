@@ -8,16 +8,18 @@
 
 ---
 
-## PHASE 0: Pre-Work Lessons Retrieval (MANDATORY)
+## PHASE 0: Pre-Work — Beads Issue + Lessons Retrieval (MANDATORY)
 
-Before ANY planning or coding, query `_project/lessons/INDEX.md` for relevant keywords:
+Before ANY planning or coding:
 
-1. **Extract keywords** from Rough Scope:
+1. **Read beads tracker** — Run `bd ready`, identify the feature's canonical issue
+   - If issue exists: Read it completely (`bd show <id>`). Use existing framing.
+   - If no issue exists: STOP. Create beads issue first via `@/add-beads-issue`.
+
+2. **Query `_project/lessons/INDEX.md`** for relevant keywords:
    - Technology stack (e.g., "sanity", "nextjs", "groq")
    - Component patterns (e.g., "server-components", "data-fetching")
    - Domain concepts (e.g., "vfs", "catalogue", "filters")
-
-2. **Query INDEX.md** for matching keywords
 
 3. **Load lessons by severity:**
    - Critical severity: MUST read before proceeding
@@ -26,7 +28,7 @@ Before ANY planning or coding, query `_project/lessons/INDEX.md` for relevant ke
 
 4. **Apply prevention rules** as active constraints for this implementation
 
-**Failure to retrieve lessons = workflow violation.**
+**Failure to retrieve lessons OR read beads issue = workflow violation.**
 
 ---
 
@@ -64,20 +66,15 @@ Before ANY planning or coding, query `_project/lessons/INDEX.md` for relevant ke
    - If UI component: invoke `/build [COMPONENT] [PASS] [LAYER] [BREAKPOINT]` for atomic execution
    - Contain changes strictly within Allowed Write Scope Paths
 
-2. **Invoke /test (MANDATORY — 100% BLOCKING)**
-   ```
-   INVOKE: /test with:
-   - DoD item as specification
-   - Single test, single assertion
-   - Max 5 seconds runtime
-
-   OUTPUT: Evidence dashboard from /test
-   ```
+2. **Run Live Check + Update Beads Issue (MANDATORY)**
+   - Run the DoD item manually (live check, not just /test)
+   - Capture evidence: logs, screenshots, curl output
+   - **Update the beads issue** with result: `bd note <id> -- "Live check [N]: [PASS/FAIL] — [evidence]"`
 
    **Verdict Handling:**
    - ✅ **PASS:** Proceed to next DoD
-   - ❌ **FAIL:** Fix implementation, re-run /test until PASS
-   - **NO FORWARD PROGRESS** on test failure
+   - ❌ **FAIL:** Fix implementation, re-run live check, update issue until PASS
+   - **NO FORWARD PROGRESS** on live check failure
 
 3. **Verification Gate**
    ```bash
@@ -87,7 +84,7 @@ Before ANY planning or coding, query `_project/lessons/INDEX.md` for relevant ke
    - If fails: revert, fix, re-verify
 
 4. **Proceed to Next DoD**
-   - Only after /test PASS + build PASS
+   - Only after live check PASS + build PASS + beads issue updated
 
 ---
 
@@ -119,8 +116,9 @@ npm run build
 ### Step 3: Visual Verification
 **PAUSE** and prompt human for visual approval of UI/DOM state.
 
-### Step 4: Commit
-Generate commit message per `_project/COMMIT_TEMPLATE.txt`.
+### Step 4: Hand Off
+Implementation complete. Do NOT commit or push from this workflow.
+Git commit and push are handled by a separate `@/commit` agent in a dedicated conversation.
 
 ---
 

@@ -25,16 +25,18 @@ description: Human-first sprint planning - starts with UX flows, enforces contin
 
 ---
 
-## PHASE 0: Pre-Work Lessons Retrieval (MANDATORY)
+## PHASE 0: Pre-Work — Beads Issue + Lessons Retrieval (MANDATORY)
 
-Before ANY planning, query `_project/lessons/INDEX.md` for relevant keywords:
+Before ANY planning:
 
-1. **Extract keywords** from target state:
+1. **Read beads tracker** — Run `bd ready`, identify the feature's canonical issue
+   - If issue exists: Read it completely (`bd show <id>`). Use existing framing.
+   - If no issue exists: STOP. Create beads issue first via `@/add-beads-issue`.
+
+2. **Query `_project/lessons/INDEX.md`** for relevant keywords:
    - Technology stack (e.g., "sanity", "nextjs", "groq")
    - Component patterns (e.g., "server-components", "data-fetching")
    - Domain concepts (e.g., "vfs", "catalogue", "filters")
-
-2. **Query INDEX.md** for matching keywords
 
 3. **Load lessons by severity:**
    - Critical: MUST read before proceeding
@@ -42,6 +44,8 @@ Before ANY planning, query `_project/lessons/INDEX.md` for relevant keywords:
    - Medium/Low: Read if time permits
 
 4. **Apply prevention rules** as constraints for sprint design
+
+**NO work outside beads issues.** The `.todo` sprint file is a planning aid, NOT a work tracker. All implementation progress goes into the beads issue.
 
 ---
 

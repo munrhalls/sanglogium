@@ -32,6 +32,7 @@ This workflow produces minimal, high-value tests by focusing on:
 **Questions to answer:**
 1. What user behavior does this feature support?
 2. What are the critical use cases (happy path, key edge cases)?
+   **Note:** Edge case tests only after happy path tests pass and are marked ✓ in beads issue.
 3. What would break if this fails in production?
 4. What is already tested by integration/contract tests?
 
