@@ -6,14 +6,19 @@ import { Redis } from '@upstash/redis';
 
 // Lazy Redis client initialization to prevent build-time failures
 let redis: Redis | null = null;
+let redisUnavailable = false;
 
 export function getRedis(): Redis {
   if (redis) return redis;
+  if (redisUnavailable) {
+    throw new Error('Redis is unavailable (previously failed to connect)');
+  }
 
   const url = process.env.UPSTASH_REDIS_REST_URL;
   const token = process.env.UPSTASH_REDIS_REST_TOKEN;
 
   if (!url || !token) {
+    redisUnavailable = true;
     throw new Error(
       'UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN must be set for event logging'
     );
@@ -21,6 +26,11 @@ export function getRedis(): Redis {
 
   redis = new Redis({ url, token });
   return redis;
+}
+
+/** Return true if Redis is configured and available */
+export function isRedisAvailable(): boolean {
+  return !!process.env.UPSTASH_REDIS_REST_URL && !!process.env.UPSTASH_REDIS_REST_TOKEN && !redisUnavailable;
 }
 
 export interface CheckoutEvent {
@@ -33,27 +43,38 @@ export interface CheckoutEvent {
   error?: Record<string, unknown> | string;
 }
 
+export interface LogEvent {
+  timestamp: string;
+  correlationId: string;
+  slice: string;
+  event: string;
+  data: Record<string, unknown>;
+  outcome: "success" | "error";
+  error?: Record<string, unknown> | string;
+}
+
 /**
- * Log checkout event to Redis list
- * Uses traceId as correlationId for composite log retrieval
+ * Generic event logger — works for any slice/feature.
+ * Gracefully falls back to console when Redis is unavailable.
  */
-export async function logCheckoutEvent(event: Omit<CheckoutEvent, 'timestamp'>): Promise<void> {
-  const fullEvent: CheckoutEvent = {
+export async function logEvent(event: Omit<LogEvent, 'timestamp'>): Promise<void> {
+  const fullEvent: LogEvent = {
     ...event,
     timestamp: new Date().toISOString(),
   };
 
+  if (!isRedisAvailable()) {
+    console.log(`[LOG][fallback] ${fullEvent.slice}:${fullEvent.event} (${fullEvent.correlationId})`, JSON.stringify(fullEvent.data));
+    return;
+  }
+
   try {
-    // Append to Redis list for this correlation
     await getRedis().lpush(
       `checkout_events:${fullEvent.correlationId}`,
       JSON.stringify(fullEvent)
     );
-
-    // Set TTL to prevent memory leaks (24 hours)
     await getRedis().expire(`checkout_events:${fullEvent.correlationId}`, 86400);
 
-    // Also add to global list for recent events view
     const recentEvent = {
       correlationId: fullEvent.correlationId,
       timestamp: fullEvent.timestamp,
@@ -61,18 +82,21 @@ export async function logCheckoutEvent(event: Omit<CheckoutEvent, 'timestamp'>):
       event: fullEvent.event,
       outcome: fullEvent.outcome,
     };
-    await getRedis().lpush(
-      'checkout_events:recent',
-      JSON.stringify(recentEvent)
-    );
-
-    // Keep only 100 recent events
+    await getRedis().lpush('checkout_events:recent', JSON.stringify(recentEvent));
     await getRedis().ltrim('checkout_events:recent', 0, 99);
 
-    console.log(`[LOG] Checkout event logged: ${fullEvent.slice}:${fullEvent.event} (${fullEvent.correlationId})`);
+    console.log(`[LOG] ${fullEvent.slice}:${fullEvent.event} (${fullEvent.correlationId})`);
   } catch (error) {
-    console.error('[LOG] Failed to log checkout event:', error);
+    console.error('[LOG] Failed to log event:', error);
   }
+}
+
+/**
+ * Legacy checkout-specific wrapper — delegates to generic logEvent.
+ * Kept for backward compatibility with existing checkout code.
+ */
+export async function logCheckoutEvent(event: Omit<CheckoutEvent, 'timestamp'>): Promise<void> {
+  return logEvent(event as Omit<LogEvent, 'timestamp'>);
 }
 
 /**
@@ -161,8 +185,19 @@ export async function clearCheckoutEvents(correlationId: string): Promise<void> 
 }
 
 /**
+ * Generate generic trace ID for any journey/feature
+ * Format: tr_<timestamp>_<random>
+ */
+export function generateTraceId(): string {
+  const timestamp = Date.now();
+  const random = Math.random().toString(36).substring(2, 9);
+  return `tr_${timestamp}_${random}`;
+}
+
+/**
  * Generate unique checkout session ID (Trace ID)
  * Format: chk_<timestamp>_<random>
+ * Kept for backward compatibility.
  */
 export function generateCheckoutSessionId(): string {
   const timestamp = Date.now();
