@@ -4,7 +4,7 @@ import { getCheckoutSession } from "@/lib/session";
 import { redirect } from "next/navigation";
 import { submitShippingAction } from "@/app/actions/address/address";
 import type { Address } from "@/app/(store)/checkout/checkout.types";
-import { logCheckoutEvent, clearCheckoutEvents, generateCheckoutSessionId } from "@/lib/dev/event-logger";
+import { logCheckoutEvent, generateCheckoutSessionId } from "@/lib/dev/event-logger";
 
 export async function initCheckoutSession(items: Array<{ productId: string; quantity: number }>, checkoutSessionId?: string) {
   const session = await getCheckoutSession();
@@ -12,8 +12,6 @@ export async function initCheckoutSession(items: Array<{ productId: string; quan
   // Use provided checkoutSessionId or generate new one (fallback)
   const finalCheckoutSessionId = checkoutSessionId || generateCheckoutSessionId();
   
-  // Blank slate: Clear previous trace for this session
-  await clearCheckoutEvents(finalCheckoutSessionId);
   session.checkoutSessionId = finalCheckoutSessionId;
 
   // Save items directly to the secure iron-session cookie
