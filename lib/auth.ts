@@ -34,7 +34,7 @@ if (!process.env.BETTER_AUTH_SECRET) {
 }
 
 export const auth = betterAuth({
-  database: kyselyAdapter(db),
+  database: kyselyAdapter(db, { type: "sqlite" }),
   secret: process.env.BETTER_AUTH_SECRET,
   baseUrl: process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_BASE_URL,
   socialProviders: {

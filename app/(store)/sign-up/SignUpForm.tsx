@@ -2,10 +2,14 @@
 
 import { useActionState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { createUserProfile } from "./actions";
 
 export default function SignUpForm() {
+  const searchParams = useSearchParams();
+  const emailFromUrl = searchParams.get("email");
+
   const [state, formAction, isPending] = useActionState(
     async (_prevState: unknown, formData: FormData) => {
       const email = formData.get("email") as string;
@@ -84,6 +88,7 @@ export default function SignUpForm() {
             name="email"
             type="email"
             required
+            defaultValue={emailFromUrl ?? ''}
             className="w-full rounded border border-gray-300 p-2 text-black"
           />
         </div>
