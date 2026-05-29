@@ -30,6 +30,46 @@ describe('CheckoutSummary', () => {
     expect(screen.getByText('Total')).toBeInTheDocument();
   });
 
+  it('renders human-readable shipping label when carrier and method are provided', () => {
+    const items = [
+      { productId: 'prod1', name: 'Product A', quantity: 1, unitPrice: 1999, lineTotal: 1999 },
+    ];
+
+    render(
+      <CheckoutSummary
+        items={items}
+        shippingCost={1899}
+        shippingCode="fedex_fedex"
+        shippingCarrier="FedEx"
+        shippingMethodName="Standard"
+        subtotal={1999}
+        grandTotal={3898}
+      />
+    );
+
+    expect(screen.getByText('FedEx — Standard')).toBeInTheDocument();
+    expect(screen.queryByText('Shipping (fedex_fedex)')).not.toBeInTheDocument();
+  });
+
+  it('renders carrier-only label when method name is missing', () => {
+    const items = [
+      { productId: 'prod1', name: 'Product A', quantity: 1, unitPrice: 1999, lineTotal: 1999 },
+    ];
+
+    render(
+      <CheckoutSummary
+        items={items}
+        shippingCost={1899}
+        shippingCode="dpd"
+        shippingCarrier="DPD"
+        subtotal={1999}
+        grandTotal={3898}
+      />
+    );
+
+    expect(screen.getByText('DPD')).toBeInTheDocument();
+  });
+
   it('handles missing shipping code gracefully', () => {
     // Arrange
     const items = [

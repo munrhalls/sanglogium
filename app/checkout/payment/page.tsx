@@ -113,6 +113,8 @@ export default async function Page() {
           items={items}
           shippingCost={session.shippingCost as number}
           shippingCode={session.shippingCode}
+          shippingCarrier={session.shippingCarrier}
+          shippingMethodName={session.shippingMethodName}
           subtotal={subtotal}
           grandTotal={grandTotal}
         />

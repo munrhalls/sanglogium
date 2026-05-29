@@ -78,7 +78,7 @@ export default async function OrderDetails({ paymentIntentId, fallbackTotal }: P
             Shipping
             {order.shippingMethod && (
               <span className="ml-1 text-gray-400">
-                ({order.shippingMethod.carrier} — {order.shippingMethod.estimatedDays ?? '?'} days)
+                ({order.shippingMethod.carrier} — {order.shippingMethod.estimatedDays ?? '?'} {order.shippingMethod.estimatedDays === 1 ? 'day' : 'days'})
               </span>
             )}
           </span>
@@ -136,6 +136,19 @@ export default async function OrderDetails({ paymentIntentId, fallbackTotal }: P
         )}
         <p className="mt-1 text-gray-500">Tracking number will appear here once shipped.</p>
       </div>
+
+      {order.isGuest && (
+        <div className="mt-4 rounded border border-blue-100 bg-blue-50 p-4 text-sm">
+          <p className="mb-1 font-semibold text-blue-800">Create an account to track your order</p>
+          <p className="mb-3 text-gray-600">Save your details for faster checkout next time.</p>
+          <Link
+            href={`/sign-up${order.customerEmail ? `?email=${encodeURIComponent(order.customerEmail)}` : ''}`}
+            className="inline-block rounded bg-gray-900 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-700"
+          >
+            Create account
+          </Link>
+        </div>
+      )}
 
       <div className="mt-6 flex flex-wrap gap-3">
         {!order.isGuest && (

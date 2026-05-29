@@ -10,6 +10,8 @@ interface CheckoutSummaryProps {
   items: CheckoutItem[];
   shippingCost: number;
   shippingCode?: string;
+  shippingCarrier?: string;
+  shippingMethodName?: string;
   subtotal: number;
   grandTotal: number;
 }
@@ -25,9 +27,18 @@ export default function CheckoutSummary({
   items,
   shippingCost,
   shippingCode,
+  shippingCarrier,
+  shippingMethodName,
   subtotal,
   grandTotal,
 }: CheckoutSummaryProps) {
+  const shippingLabel = shippingCarrier && shippingMethodName
+    ? `${shippingCarrier} — ${shippingMethodName}`
+    : shippingCarrier
+    ? shippingCarrier
+    : shippingCode
+    ? `Shipping (${shippingCode})`
+    : "Shipping";
   return (
     <div className="space-y-4 rounded-lg border border-gray-200 p-4">
       <h2 className="text-lg font-semibold">Order Summary</h2>
@@ -52,9 +63,7 @@ export default function CheckoutSummary({
 
       <div className="border-t pt-2">
         <div className="flex justify-between text-sm">
-          <span>
-            Shipping{shippingCode ? ` (${shippingCode})` : ""}
-          </span>
+          <span>{shippingLabel}</span>
           <span>{formatPLN(shippingCost)}</span>
         </div>
       </div>

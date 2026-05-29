@@ -143,7 +143,10 @@ function PaymentFormInner({
           });
         }}
       />
-      <PaymentElement options={{ fields: { billingDetails: { address: "never" } } }} />
+      <div className="border-t border-gray-100 pt-4">
+        <p className="mb-3 text-center text-xs text-gray-500">Or pay with card, BLIK, or other methods</p>
+        <PaymentElement options={{ fields: { billingDetails: { address: "never" } } }} />
+      </div>
       {error && (
         <p className="text-sm text-red-600">{error}</p>
       )}
@@ -213,7 +216,7 @@ export default function PaymentForm({ grandTotal, metadata, address, traceId }: 
   return (
     <div className="space-y-6">
       <Elements stripe={stripePromise} options={{ clientSecret, defaultValues: { billingDetails: { email: metadata.email } } } as any}>
-        {grandTotal >= 5000 && grandTotal <= 500000 && (
+        {grandTotal >= 5000 && (
           <div className="mb-4">
             <PaymentMethodMessagingElement
               options={{

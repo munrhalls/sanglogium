@@ -40,7 +40,7 @@ export async function createOrderFromPaymentIntent(pi: Stripe.PaymentIntent): Pr
   const shippingMethodName = pi.metadata?.shippingMethodName ?? ''
   const shippingCarrier = pi.metadata?.shippingCarrier ?? ''
   const shippingEstimatedDaysStr = pi.metadata?.shippingEstimatedDays ?? ''
-  const customerEmail = pi.metadata?.email ?? ''
+  const customerEmail = pi.metadata?.email || pi.receipt_email || ''
 
   if (!rawBasket || !rawAddress) {
     await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_missing_metadata', data: { paymentIntentId }, outcome: 'error' })
@@ -134,7 +134,7 @@ export async function createOrderFromPaymentIntent(pi: Stripe.PaymentIntent): Pr
     orderNumber,
     orderId,
     paymentIntentId,
-    customerEmail: customerEmail || 'guest@checkout',
+    customerEmail: customerEmail || '',
     isGuest: true,
     items,
     shippingAddress,
