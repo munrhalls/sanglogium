@@ -1,5 +1,22 @@
 # Architectural Invariants - Sang Logium E-Commerce Platform
 
+**Last Verified:** 2026-05-29
+**Status:** Image Optimization section updated after cross-cutting pattern incident. Checkout sections may be stale — verify against beads issues.
+
+---
+
+## Universal Debugging Rule
+
+**Component Archaeology Principle (Debugging):**
+1. Analyze what the problem is
+2. Determine what components are relevant
+3. Check each relevant component one by one, analyze individually
+4. Understand relevant components as a connected chain, analyze interactions
+5. Investigate the problem space and analyze reality BEFORE proposing solutions
+6. Solve the problem as asked — do not jump ahead to un-asked optimizations
+
+---
+
 ## Virtual File System (VFS) - Catalogue Architecture
 
 **Absolute Constraint:** VFS is pre-computed at build time via daily automatic rebuild (cron job).
@@ -73,21 +90,21 @@ Sanity Schema → Localhost Studio → GROQ Library → React Server Component �
 
 ## Image Optimization Strategy
 
-**Absolute Constraint:** ALL image transformations MUST be handled by Sanity CDN (NOT Next.js image optimization server).
+**Constraint:** Image handling is NOT uniform. There are 4 distinct patterns. Conflating them causes cascade failures.
+
+| Pattern | Import | Context | src Type | Valid Approach |
+|---------|--------|---------|----------|----------------|
+| Local images | `next/image` | Server | string URL | Default Next.js loader. No custom loader. |
+| Product gallery | `next/image` | Client | Sanity asset ref | Inline `loader={sanityImageLoader}`. Keep `"use client"`. |
+| Hero / Server-rendered | `next/image` | Server | Sanity asset ref | Pre-build URL: `urlFor().width(N).auto('format').quality(75).url()` |
+| Spotlight cards | `next-sanity/image` | Server | Sanity object | `urlFor().width(N).auto('format').quality(75).url()` string |
 
 **Critical Rules:**
-- Use `next/image` with Custom Loader (`@sanity/image-url`)
+- NEVER use a global custom loader in `next.config.ts` — it breaks local images
+- NEVER pass raw Sanity objects as `src` to `next-sanity/image` — it expects URL strings
+- NEVER pass `loader` function props from Server Components to Client Components
 - ALWAYS fetch `metadata.dimensions` from Sanity to provide base aspect ratio
-- Apply Sanity's `.rect()` parameters within the loader for hotspot/crop
-- Direct all transformation requests (width, quality, format) to Sanity's API
-- Bypass Next.js image optimization server to reduce server load and improve TTFB
-
-**Implementation Pattern:**
-```typescript
-// Custom loader using @sanity/image-url
-// Fetch dimensions from Sanity metadata
-// Apply transformations via Sanity CDN parameters
-```
+- Apply Sanity's `.rect()` parameters for hotspot/crop within `urlFor()`
 
 ---
 
@@ -185,11 +202,3 @@ Sanity Schema → Localhost Studio → GROQ Library → React Server Component �
 4. Implement feature until test succeeds
 5. Test manually
 6. Work on a one-by-one basis for fixes
-
-**Component Archaeology Principle (Debugging):**
-1. Analyze what the problem is
-2. Determine what components are relevant
-3. Check each relevant component one by one, analyze individually
-4. Understand relevant components as a connected chain, analyze interactions
-5. Investigate the problem space and analyze reality BEFORE proposing solutions
-6. Solve the problem as asked - do not jump ahead to un-asked optimizations

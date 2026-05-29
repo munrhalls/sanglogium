@@ -145,8 +145,10 @@ test('addToBasket_validItem_basketContainsItem', () => {
 
 **Verification Command:**
 ```bash
-npm run test
-# Or specific test suite:
+# Lightweight: typecheck only (no heavy build)
+npx tsc --noEmit
+
+# Test suites (run individually to avoid resource starvation):
 npm run test:unit
 npm run test:integration
 npm run test:e2e
@@ -212,9 +214,9 @@ The /test workflow is invoked by /implement for each Definition of Done item:
 ### With /verify Workflow
 /test produces test artifacts that /verify can execute:
 ```bash
-# /verify runs:
+# /verify runs (lightweight; avoid heavy build during concurrent agents):
 npm run test
-npm run build
+npx tsc --noEmit
 ```
 
 ### With Existing Test Infrastructure

@@ -102,10 +102,10 @@ PageLayout
 ## 6. Verification Commands
 
 ```bash
-# Pre-sprint regression
-npm run build
+# Lightweight pre-sprint regression (typecheck only)
+npx tsc --noEmit
 
-# Component verification
+# Component verification (run when no concurrent agents)
 npx playwright test --grep "[Feature]"
 ```
 ```

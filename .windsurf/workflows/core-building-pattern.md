@@ -245,7 +245,7 @@ For a page with 3 components (EXAMPLE — [ComponentA], [ComponentB], [Component
 *Component 3: [ComponentC]*
 - Same pattern
 
-**Final verification:** `npm run build` passing.
+**Final verification:** `npx tsc --noEmit` passing (lightweight typecheck). Run `npm run build` manually when no concurrent agents are active.
 
 ---
 

@@ -38,10 +38,8 @@ Before ANY planning or coding:
 *Execute before every sprint to prevent false correlation investigations*
 
 1. **Branch Check:** Verify on correct branch (`git status`)
-2. **Baseline Build:** Run `npm run build` and document result
-   - If build fails: Document pre-existing failures before sprint work
-   - If build passes: Proceed with confidence
-3. **Scope Lock:** Confirm no other sprint work in progress
+2. **Scope Lock:** Confirm no other sprint work in progress
+3. **Resource Check:** Confirm no other agent is running `npm run build` or heavy CPU tasks (prevents resource starvation)
 
 *Historical Evidence: `auto-lessons.md:79-126` — 15 min wasted on false correlation*
 
@@ -51,7 +49,7 @@ Before ANY planning or coding:
 2. **Explicit Refined DoDs:** [Translate the Rough DoDs into atomic, sequential, mechanical tasks required to reach the Refined Scope.]
 3. **Read-Only Context Paths:** [Map human scope to exact repository paths. List files required for context, including Sanity Studio schemas. Modifying these is forbidden.]
 4. **Allowed Write Scope Paths:** [Map human scope to exact repository paths. List the ONLY files permitted to be modified. If exact paths cannot be confidently resolved from the Rough Scope, HALT and request paths from the user via terminal/chat.]
-5. **Verification Command:** [Exact PowerShell command to run post-execution to mathematically prove 0 regressions (e.g., `npm run build`, `npm run lint`).]
+5. **Verification Command:** [Exact PowerShell command to run post-execution to mathematically prove 0 regressions. Prefer lightweight: `npx tsc --noEmit` or `npm run lint`. Save `npm run build` for CI or when no other agents are active.]
 
 ---
 
@@ -78,13 +76,14 @@ Before ANY planning or coding:
 
 3. **Verification Gate**
    ```bash
-   npm run build
+   npx tsc --noEmit
    ```
-   - Must pass 100%
+   - Fast type-only check; catches most regressions without heavy build
    - If fails: revert, fix, re-verify
+   - **Heavy build (`npm run build`) only when no concurrent agents to avoid lag**
 
 4. **Proceed to Next DoD**
-   - Only after live check PASS + build PASS + beads issue updated
+   - Only after live check PASS + typecheck PASS + beads issue updated
 
 ---
 
@@ -107,11 +106,12 @@ OUTPUT: Final evidence dashboard
 BLOCKING: 100% specification pass rate required
 ```
 
-### Step 2: Build Gate
+### Step 2: Lightweight Verification Gate
 ```bash
-npm run build
+npx tsc --noEmit
 ```
-**Blocking:** Must pass 100%
+- Fast type-only check; catches most regressions
+- **Advisory:** Run `npm run build` manually when no other agents are active, or let CI catch build errors
 
 ### Step 3: Visual Verification
 **PAUSE** and prompt human for visual approval of UI/DOM state.

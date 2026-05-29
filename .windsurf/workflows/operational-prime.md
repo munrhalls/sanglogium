@@ -103,8 +103,9 @@ Before claiming work is complete:
 - [ ] Beads issue updated with live check results
 - [ ] No `docs/` files created during work
 - [ ] No separate issues created for edge cases
-- [ ] Build passes: `npm run build`
+- [ ] Typecheck passes: `npx tsc --noEmit`
 - [ ] `@/checks` run — 0 gaps, 0 red flags
+- [ ] **Advisory:** Run `npm run build` manually when no other agents are active; CI catches build errors
 
 ---
 

@@ -1,3 +1,5 @@
+CRITICAL: You are operating in a parallel multi-agent environment. Before modifying ANY files, you MUST read and strictly adhere to the rules in .windsurf/rules/parallel-guardrails.md
+
 # Agent Instructions
 
 This project uses **bd** (beads) for issue tracking. Run `bd prime` for full workflow context.
