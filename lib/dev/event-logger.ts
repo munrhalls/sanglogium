@@ -12,7 +12,7 @@ function shouldEmit(level: LogLevel): boolean {
 export interface CheckoutEvent {
   timestamp: string;
   correlationId: string;
-  slice: "basket-address" | "address-submit" | "payment-init" | "payment-submit" | "webhook";
+  slice: "basket-address" | "address-submit" | "payment-init" | "payment-submit" | "webhook" | "order-create";
   event: string;
   data: Record<string, unknown>;
   outcome: "success" | "error";
