@@ -40,6 +40,36 @@ const getFiltersForCategoryPathFn = async (catalogueKeys: string[]): Promise<Fil
     };
   }
 
+  // Fetch CMS categoryFilters config for this category (if any)
+  const cmsFilters = await sanityFetch<{
+    filterItems: Array<{
+      name: string;
+      type: string;
+      field: string;
+      options: string[];
+      defaultValue: string | null;
+      min: number | null;
+      max: number | null;
+      isMinOnly: boolean;
+      step: number;
+    }>;
+  } | null>({
+    query: groq`*[_type == "categoryFilters" && categoryKey in $keys][0] {
+      "filterItems": filters.filterItems[] {
+        name,
+        type,
+        field,
+        options,
+        defaultValue,
+        min,
+        max,
+        isMinOnly,
+        step
+      }
+    }`,
+    params: { keys: catalogueKeys }
+  });
+
   // Query price range using GROQ order and slicing (efficient alternative to aggregation)
   const minPriceQuery = await sanityFetch<{
     price_data: { unit_amount: number } | null;
@@ -88,16 +118,14 @@ const getFiltersForCategoryPathFn = async (catalogueKeys: string[]): Promise<Fil
   if (!products.length) {
     return {
       filters: [],
-      priceRange
+      priceRange,
+      maxStock: maxStockQuery?.stock ?? null
     };
   }
 
-  // Extract unique brands
+  // Extract unique brands from actual products
   const brandSet = new Set<string>();
-  const fieldMap = new Map<string, Set<string>>();
-
   for (const product of products) {
-    // Collect brand names
     if (product.brand?.name) {
       brandSet.add(product.brand.name);
     }
@@ -106,50 +134,67 @@ const getFiltersForCategoryPathFn = async (catalogueKeys: string[]): Promise<Fil
   // Build filter groups
   const filters: FilterGroup[] = [];
 
-  // Brand filter (always include if any brands exist)
-  if (brandSet.size > 0) {
+  // Convert CMS filter items to FilterGroups (checkbox, radio, multiselect, boolean)
+  if (cmsFilters?.filterItems?.length) {
+    for (const item of cmsFilters.filterItems) {
+      if (item.type === 'checkbox' || item.type === 'radio' || item.type === 'multiselect') {
+        const options = (item.options || [])
+          .filter(opt => opt && opt.length > 0)
+          .map(opt => ({ value: opt, label: opt }));
+        if (options.length > 0) {
+          filters.push({
+            field: item.field || item.name,
+            label: item.name,
+            options
+          });
+        }
+      } else if (item.type === 'boolean') {
+        filters.push({
+          field: item.field || item.name,
+          label: item.name,
+          options: [
+            { value: 'true', label: 'Yes' },
+            { value: 'false', label: 'No' }
+          ]
+        });
+      }
+      // Range filters are handled by PriceRangeSlider / StockMinimumSlider UI
+    }
+  }
+
+  // Brand filter: if CMS has a brand filter, intersect with actual product brands
+  // Otherwise, add brand filter from extracted brands
+  const hasCmsBrandFilter = cmsFilters?.filterItems?.some(
+    item => (item.field || item.name).toLowerCase() === 'brand'
+  );
+
+  if (hasCmsBrandFilter) {
+    // Find the CMS brand filter and intersect options with actual brands
+    const cmsBrandItem = cmsFilters!.filterItems.find(
+      item => (item.field || item.name).toLowerCase() === 'brand'
+    );
+    const validBrands = (cmsBrandItem?.options || [])
+      .filter(brand => brandSet.has(brand))
+      .sort()
+      .map(brand => ({ value: brand, label: brand }));
+
+    if (validBrands.length > 0) {
+      // Replace any existing brand filter from CMS with intersected version
+      const brandIndex = filters.findIndex(f => f.field.toLowerCase() === 'brand');
+      if (brandIndex >= 0) {
+        filters[brandIndex] = { field: 'brand', label: cmsBrandItem!.name, options: validBrands };
+      } else {
+        filters.push({ field: 'brand', label: cmsBrandItem!.name, options: validBrands });
+      }
+    }
+  } else if (brandSet.size > 0) {
+    // No CMS brand filter — add from extracted products
     filters.push({
       field: 'brand',
       label: 'Brand',
-      options: Array.from(brandSet)
-        .sort()
-        .map(brand => ({
-          value: brand,
-          label: brand
-        }))
+      options: Array.from(brandSet).sort().map(brand => ({ value: brand, label: brand }))
     });
   }
-
-  // Add price filter if any price ranges exist
-  const priceRanges = fieldMap.get('price');
-  if (priceRanges && priceRanges.size > 0) {
-    filters.push({
-      field: 'price',
-      label: 'Price Range',
-      options: Array.from(priceRanges)
-        .sort()
-        .map(range => ({
-          value: range,
-          label: range
-        }))
-    });
-  }
-
-  // Add stock filter if any stock statuses exist
-  const stockStatuses = fieldMap.get('stock');
-  if (stockStatuses && stockStatuses.size > 0) {
-    filters.push({
-      field: 'stock',
-      label: 'Availability',
-      options: Array.from(stockStatuses)
-        .sort()
-        .map(status => ({
-          value: status,
-          label: status
-        }))
-    });
-  }
-
 
   return {
     filters,

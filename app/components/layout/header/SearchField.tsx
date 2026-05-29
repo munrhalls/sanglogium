@@ -21,6 +21,7 @@ export default function SearchField() {
   const [autocompleteResults, setAutocompleteResults] = useState<AutocompleteProduct[]>([]);
   const [activeIndex, setActiveIndex] = useState(-1);
   const [isLoading, setIsLoading] = useState(false);
+  const [autocompleteError, setAutocompleteError] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const mobileInputRef = useRef<HTMLInputElement>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -31,6 +32,7 @@ export default function SearchField() {
     setIsOverlayOpen(false);
     setActiveIndex(-1);
     setAutocompleteResults([]);
+    setAutocompleteError(false);
   }, []);
 
   const handleSubmit = useCallback((e: React.FormEvent) => {
@@ -76,6 +78,7 @@ export default function SearchField() {
 
     setIsLoading(true);
     setIsOverlayOpen(true);
+    setAutocompleteError(false);
 
     debounceRef.current = setTimeout(async () => {
       const controller = new AbortController();
@@ -87,10 +90,12 @@ export default function SearchField() {
           setAutocompleteResults(results);
           setActiveIndex(-1);
           setIsLoading(false);
+          setAutocompleteError(false);
         }
       } catch {
         if (!controller.signal.aborted) {
           setIsLoading(false);
+          setAutocompleteError(true);
         }
       }
     }, DEBOUNCE_MS);
@@ -231,6 +236,7 @@ export default function SearchField() {
                   isLoading={isLoading}
                   showThumbnails={false}
                   onItemClick={handleOverlayItemClick}
+                  error={autocompleteError}
                 />
               )}
             </form>
@@ -307,6 +313,7 @@ export default function SearchField() {
             isLoading={isLoading}
             showThumbnails={true}
             onItemClick={handleOverlayItemClick}
+            error={autocompleteError}
           />
         )}
       </div>

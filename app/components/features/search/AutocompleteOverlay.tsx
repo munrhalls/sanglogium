@@ -11,6 +11,7 @@ interface AutocompleteOverlayProps {
   isLoading: boolean;
   showThumbnails?: boolean;
   onItemClick?: () => void;
+  error?: boolean;
 }
 
 function AutocompleteSkeletonItem() {
@@ -32,6 +33,7 @@ export function AutocompleteOverlay({
   isLoading,
   showThumbnails = true,
   onItemClick,
+  error = false,
 }: AutocompleteOverlayProps) {
   return (
     <div
@@ -43,7 +45,13 @@ export function AutocompleteOverlay({
       role="listbox"
       id="autocomplete-listbox"
     >
-      {isLoading ? (
+      {error ? (
+        <div className="p-4">
+          <p className="type-body text-secondary">
+            Unable to load suggestions. Please try again.
+          </p>
+        </div>
+      ) : isLoading ? (
         <ul className="py-2">
           {Array.from({ length: 3 }).map((_, i) => (
             <AutocompleteSkeletonItem key={i} />

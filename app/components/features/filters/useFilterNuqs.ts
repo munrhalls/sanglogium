@@ -33,6 +33,28 @@ export function useFilterNuqs() {
   const router = useRouter();
   const pathname = usePathname();
 
+  // Sort state: ?sort=price_data.unit_amount:asc
+  const [sort, setSort] = useQueryState(
+    "sort",
+    parseAsString
+      .withOptions({
+        shallow: false,
+        throttleMs: 50,
+        clearOnDefault: true,
+      })
+      .withDefault("featured")
+  );
+
+  // Page state: ?page=2
+  const [, setPage] = useQueryState(
+    "page",
+    parseAsString.withOptions({
+      shallow: false,
+      throttleMs: 50,
+      clearOnDefault: true,
+    })
+  );
+
   // Array of active filters: ?f=brand:sennheiser&f=type:open-back
   const [filters, setFilters] = useQueryState(
     "f",
@@ -55,6 +77,7 @@ export function useFilterNuqs() {
    */
   const toggleFilter = (field: string, value: string) => {
     startTransition(() => {
+      setPage(null);
       setFilters((currentFilters) => {
         const current = currentFilters || [];
         const filterString = `${field}:${value}`;
@@ -78,6 +101,7 @@ export function useFilterNuqs() {
    */
   const removeFilter = (field: string, value: string) => {
     startTransition(() => {
+      setPage(null);
       const filterKey = `${field}:${value}`;
       setFilters((prev) => (prev || []).filter((f) => f !== filterKey));
       router.refresh();
@@ -89,6 +113,7 @@ export function useFilterNuqs() {
    */
   const clearAllFilters = () => {
     startTransition(() => {
+      setPage(null);
       setFilters([]);
       router.refresh();
     });
@@ -135,6 +160,7 @@ export function useFilterNuqs() {
    */
   const setPriceRange = (range: { min?: number; max?: number }) => {
     startTransition(() => {
+      setPage(null);
       setFilters((prev) => {
         const current = prev || [];
         const withoutPrice = current.filter(f => !f.startsWith('priceRange:'));
@@ -166,6 +192,7 @@ export function useFilterNuqs() {
    */
   const clearPriceRange = () => {
     startTransition(() => {
+      setPage(null);
       setFilters((prev) => (prev || []).filter(f => !f.startsWith('priceRange:')));
       router.refresh();
     });
@@ -188,6 +215,7 @@ export function useFilterNuqs() {
    */
   const setStockMinimum = (value: number) => {
     startTransition(() => {
+      setPage(null);
       setFilters((prev) => {
         const current = prev || [];
         const withoutStock = current.filter(f => !f.startsWith('stockMin:'));
@@ -208,6 +236,7 @@ export function useFilterNuqs() {
    */
   const clearStockMinimum = () => {
     startTransition(() => {
+      setPage(null);
       setFilters((prev) => (prev || []).filter(f => !f.startsWith('stockMin:')));
       router.refresh();
     });
@@ -227,6 +256,17 @@ export function useFilterNuqs() {
     return parsedFilters.some(f => f.field === 'stockMin');
   };
 
+  /**
+   * Change sort option
+   */
+  const handleSortChange = (value: string) => {
+    startTransition(() => {
+      setPage(null);
+      setSort(value === "featured" ? null : value);
+      router.refresh();
+    });
+  };
+
   return {
     filters,
     setFilters,
@@ -235,6 +275,7 @@ export function useFilterNuqs() {
     clearAllFilters,
     isFilterActive,
     hasActiveFilters: (filters || []).length > 0,
+    parsedFilters,
     getPriceRange,
     setPriceRange,
     clearPriceRange,
@@ -243,5 +284,7 @@ export function useFilterNuqs() {
     setStockMinimum,
     clearStockMinimum,
     isStockMinimumActive,
+    sort: sort || "featured",
+    handleSortChange,
   };
 }

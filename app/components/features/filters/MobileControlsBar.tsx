@@ -7,13 +7,11 @@ import { SortDropdown } from './SortDropdown';
 interface MobileControlsBarProps {
   productCount: number;
   onOpenFilters: () => void;
-  currentSort?: string;
 }
 
 export function MobileControlsBar({
   productCount,
   onOpenFilters,
-  currentSort = 'featured'
 }: MobileControlsBarProps) {
   const searchParams = useSearchParams();
   const activeFilterCount = searchParams.getAll('f').length;
@@ -57,7 +55,7 @@ export function MobileControlsBar({
 
       {/* Sort dropdown */}
       <div className="flex-1">
-        <SortDropdown currentSort={currentSort} />
+        <SortDropdown />
       </div>
     </div>
   );

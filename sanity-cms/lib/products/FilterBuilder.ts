@@ -3,6 +3,27 @@
  * Extracted from getProductsByVfsKeys for better testability and maintainability
  */
 export class FilterBuilder {
+  // Known safe filter fields — anything else is treated as generic (overviewFields/specifications)
+  private static readonly KNOWN_FIELDS = new Set(['brand', 'price', 'priceRange', 'stockMin']);
+
+  /**
+   * Sanitize a string value for safe GROQ interpolation.
+   * Escapes double quotes to prevent GROQ injection.
+   */
+  private static sanitizeString(value: string): string {
+    return value.replace(/"/g, '\\"');
+  }
+
+  /**
+   * Validate that a string is a safe numeric value (integer).
+   * Returns the number if valid, null otherwise.
+   */
+  private static validateNumeric(value: string): number | null {
+    const num = Number(value);
+    if (Number.isNaN(num) || !Number.isFinite(num)) return null;
+    return Number.isInteger(num) ? num : null;
+  }
+
   /**
    * Build complete filter clause from filter array
    */
@@ -13,14 +34,9 @@ export class FilterBuilder {
 
     // Group filters by field
     const filtersByField = this.groupFiltersByField(filters);
-    console.log('=== FILTER GROUPING DEBUG ===');
-    console.log('input filters:', filters);
-    console.log('filtersByField:', filtersByField);
 
     // Build clause for each field group
     const fieldClauses = Object.entries(filtersByField).map(([field, values]) => {
-      console.log(`Building clause for field: ${field}, values:`, values);
-      
       if (field === 'brand') {
         return this.buildBrandFilter(values);
       } else if (field === 'price') {
@@ -35,9 +51,6 @@ export class FilterBuilder {
     });
 
     const filterClause = fieldClauses.join(' ');
-    console.log('=== FINAL FILTER CLAUSE ===');
-    console.log('filterClause:', filterClause);
-    
     return filterClause;
   }
 
@@ -72,78 +85,92 @@ export class FilterBuilder {
    */
   private static buildBrandFilter(values: string[]): string {
     // Multiple brands: OR logic
-    const brandConditions = values.map(value => `lower(brand->name) == lower("${value}")`).join(' || ');
-    const clause = `&& (${brandConditions})`;
-    console.log('brand clause:', clause);
-    return clause;
+    const brandConditions = values
+      .map(v => this.sanitizeString(v))
+      .filter(v => v.length > 0)
+      .map(value => `lower(brand->name) == lower("${value}")`)
+      .join(' || ');
+    if (!brandConditions) return '';
+    return `&& (${brandConditions})`;
   }
 
   /**
    * Build price filter clause
    */
   private static buildPriceFilter(values: string[]): string {
-    // Price filtering: handle min/max values
     const priceConditions = values.map(value => {
       if (value.startsWith('min:')) {
-        const minPrice = value.split(':')[1];
-        return `price_data.unit_amount >= ${minPrice}`;
+        const num = this.validateNumeric(value.split(':')[1] ?? '');
+        if (num === null) return null;
+        return `price_data.unit_amount >= ${num}`;
       } else if (value.startsWith('max:')) {
-        const maxPrice = value.split(':')[1];
-        return `price_data.unit_amount <= ${maxPrice}`;
+        const num = this.validateNumeric(value.split(':')[1] ?? '');
+        if (num === null) return null;
+        return `price_data.unit_amount <= ${num}`;
       }
-      return `price_data.unit_amount == ${value}`;
-    }).join(' && ');
-    const clause = `&& (${priceConditions})`;
-    console.log('price clause:', clause);
-    return clause;
+      const num = this.validateNumeric(value);
+      if (num === null) return null;
+      return `price_data.unit_amount == ${num}`;
+    }).filter((c): c is string => c !== null);
+
+    if (priceConditions.length === 0) return '';
+    return `&& (${priceConditions.join(' && ')})`;
   }
 
   /**
    * Build price range filter clause (from sliders)
    */
   private static buildPriceRangeFilter(values: string[]): string {
-    // Price range filtering: handle min/max values from slider
     const priceConditions = values.map(value => {
       if (value.startsWith('min:')) {
-        const minPrice = value.split(':')[1];
-        return `price_data.unit_amount >= ${minPrice}`;
+        const num = this.validateNumeric(value.split(':')[1] ?? '');
+        if (num === null) return null;
+        return `price_data.unit_amount >= ${num}`;
       } else if (value.startsWith('max:')) {
-        const maxPrice = value.split(':')[1];
-        return `price_data.unit_amount <= ${maxPrice}`;
+        const num = this.validateNumeric(value.split(':')[1] ?? '');
+        if (num === null) return null;
+        return `price_data.unit_amount <= ${num}`;
       }
-      return `price_data.unit_amount == ${value}`;
-    }).join(' && ');
-    const clause = `&& (${priceConditions})`;
-    console.log('priceRange clause:', clause);
-    return clause;
+      const num = this.validateNumeric(value);
+      if (num === null) return null;
+      return `price_data.unit_amount == ${num}`;
+    }).filter((c): c is string => c !== null);
+
+    if (priceConditions.length === 0) return '';
+    return `&& (${priceConditions.join(' && ')})`;
   }
 
   /**
    * Build stock filter clause
    */
   private static buildStockFilter(values: string[]): string {
-    // Stock minimum filtering: handle stock values from slider
     const stockConditions = values.map(value => {
-      const stockValue = parseInt(value, 10);
-      // Note: Assuming stock field exists as 'stock' in product schema
-      // If stock field doesn't exist, this will return 0 results
-      return `stock >= ${stockValue}`;
-    }).join(' && ');
-    const clause = `&& (${stockConditions})`;
-    console.log('stockMin clause:', clause);
-    return clause;
+      const num = this.validateNumeric(value);
+      if (num === null) return null;
+      return `stock >= ${num}`;
+    }).filter((c): c is string => c !== null);
+
+    if (stockConditions.length === 0) return '';
+    return `&& (${stockConditions.join(' && ')})`;
   }
 
   /**
    * Build generic filter clause for overviewFields/specifications
    */
   private static buildGenericFilter(field: string, values: string[]): string {
-    // Other filters: OR logic within field
-    const conditions = values.map(value =>
-      `(count(overviewFields[@.title == "${field}" && @.value == "${value}"]) > 0 || count(specifications[@.title == "${field}" && @.value == "${value}"]) > 0)`
-    ).join(' || ');
-    const clause = `&& (${conditions})`;
-    console.log('other clause:', clause);
-    return clause;
+    // Reject empty or overly long field names
+    if (!field || field.length > 100) return '';
+
+    const safeField = this.sanitizeString(field);
+    const conditions = values
+      .map(v => this.sanitizeString(v))
+      .filter(v => v.length > 0)
+      .map(value =>
+        `(count(overviewFields[@.title == "${safeField}" && @.value == "${value}"]) > 0 || count(specifications[@.title == "${safeField}" && @.value == "${value}"]) > 0)`
+      )
+      .join(' || ');
+
+    if (!conditions) return '';
+    return `&& (${conditions})`;
   }
 }
