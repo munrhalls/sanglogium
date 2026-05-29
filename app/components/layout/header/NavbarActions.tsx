@@ -1,11 +1,14 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import {
   UserIcon,
   SignInIcon,
 } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils/tailwind";
 import { BasketButton } from "@/app/components/features/basket/BasketButton";
+import { authClient } from "@/lib/auth-client";
 
 interface NavbarActionsProps {
   isAuthenticated: boolean;
@@ -13,6 +16,13 @@ interface NavbarActionsProps {
 }
 
 const NavbarActions = ({ isAuthenticated }: NavbarActionsProps) => {
+  const router = useRouter();
+
+  async function handleSignOut() {
+    await authClient.signOut();
+    router.refresh();
+  }
+
   return (
     <div className={cn("ml-6 hidden items-center gap-6", "lg:flex")}>
       {/* Cart Action */}
@@ -43,13 +53,19 @@ const NavbarActions = ({ isAuthenticated }: NavbarActionsProps) => {
           >
             {isAuthenticated ? (
               <>
-                <DropdownItem label="My Account" />
-                <DropdownItem label="Orders" />
+                <Link href="/account" className="block w-full">
+                  <DropdownItem label="My Account" />
+                </Link>
+                <Link href="/account/orders" className="block w-full">
+                  <DropdownItem label="Orders" />
+                </Link>
                 <div className={cn("my-1 h-px w-full bg-secondary-300")} />
-                <DropdownItem label="Sign Out" isDestructive />
+                <DropdownItem label="Sign Out" isDestructive onClick={handleSignOut} />
               </>
             ) : (
-              <DropdownItem label="Sign In" />
+              <Link href="/sign-in" className="block w-full">
+                <DropdownItem label="Sign In" />
+              </Link>
             )}
           </div>
         </div>
