@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { sanityImageLoader } from "@/lib/utils/sanityImageLoader";
 

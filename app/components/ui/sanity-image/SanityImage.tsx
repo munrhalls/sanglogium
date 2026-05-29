@@ -1,9 +1,7 @@
-// Final SanityImage implementation
-import Image from "next/image";
-import { dataset, projectId } from "@/sanity-cms/lib/api/api";
-import urlBuilder from "@sanity/image-url";
+"use client";
 
-const builder = urlBuilder({ projectId, dataset });
+import Image from "next/image";
+import { sanityImageLoader } from "@/lib/utils/sanityImageLoader";
 
 export default function SanityImage({
   src,
@@ -22,15 +20,8 @@ export default function SanityImage({
       // 1. Use the Sanity asset ID as the source
       src={src.asset._ref || src.asset._id}
       alt={alt}
-      // 2. Delegate resizing to Sanity's CDN
-      loader={({ src, width, quality }) =>
-        builder
-          .image(src)
-          .width(width)
-          .quality(quality || 75)
-          .auto("format")
-          .url()
-      }
+      // 2. Custom loader for Sanity CDN resizing
+      loader={sanityImageLoader}
       // 3. Keep Next.js layout features
       fill={fill}
       width={fill ? undefined : width}
