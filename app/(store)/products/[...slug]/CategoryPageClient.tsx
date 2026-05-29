@@ -1,19 +1,12 @@
 "use client";
 
-import React, { useState, useMemo } from 'react';
-import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+import React, { useState } from 'react';
 import { ProductGrid } from '@/app/components/features/products';
 import { SortDropdown } from '@/app/components/features/filters/SortDropdown';
 import { ActiveFilters } from '@/app/components/features/filters/ActiveFilters';
 import { MobileControlsBar } from '@/app/components/features/filters/MobileControlsBar';
 import { MobileFilterDrawer } from '@/app/components/features/filters/MobileFilterDrawer';
-import type { SanityProduct } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
-
-// Product type aligned with Sanity generated types - brand is now reference (SC8)
-type Product = Pick<SanityProduct, '_id' | 'name' | 'price_data' | 'image'> & {
-  brand: { _id: string; name: string; slug?: { current: string } } | null;
-  slug: { current: string };
-};
+// Product type is passed through from server; ProductGrid has its own compatible local type
 
 interface FilterOption {
   value: string;
@@ -30,7 +23,7 @@ interface CategoryPageClientProps {
   filters: FilterGroup[];
   priceRange: { minPrice: number | null; maxPrice: number | null };
   maxStock: number | null;
-  products: Product[];
+  products: any[];
   categoryName?: string;
 }
 
@@ -42,20 +35,7 @@ export function CategoryPageClient({
   categoryName,
 }: CategoryPageClientProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [isPending, startTransition] = React.useTransition();
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const pathname = usePathname();
-
-  // Parse active filters from URL for display purposes only
-  const activeFilters = useMemo(() => {
-    const filterParams = searchParams.getAll('f');
-    return filterParams.map(f => {
-      const [field, value] = f.split(':');
-      return { field, value };
-    });
-  }, [searchParams]);
-
+  const [isPending] = React.useTransition();
   // Products are already filtered server-side via GROQ
   const productCount = products.length;
   const countLabel = productCount === 1 ? 'product' : 'products';
@@ -89,7 +69,7 @@ export function CategoryPageClient({
         </div>
 
         {/* Active filters */}
-        <ActiveFilters filterGroups={filters} activeFilters={activeFilters} />
+        <ActiveFilters filterGroups={filters} />
 
         <ProductGrid products={products} />
       </div>
