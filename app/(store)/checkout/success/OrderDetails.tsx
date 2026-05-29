@@ -7,14 +7,18 @@ interface Props {
   fallbackTotal: number
 }
 
+function formatPLN(cents: number): string {
+  return (cents / 100).toLocaleString('pl-PL', {
+    style: 'currency',
+    currency: 'PLN',
+  })
+}
+
 export default async function OrderDetails({ paymentIntentId, fallbackTotal }: Props) {
   const order = await fetchOrderByPaymentIntentId(paymentIntentId)
 
   if (!order) {
-    const fallbackPLN = (fallbackTotal / 100).toLocaleString('pl-PL', {
-      style: 'currency',
-      currency: 'PLN',
-    })
+    const fallbackPLN = formatPLN(fallbackTotal)
     return (
       <div className="rounded border border-gray-200 p-6 text-center">
         <p className="text-lg font-semibold">Payment successful — generating your invoice…</p>
@@ -24,41 +28,78 @@ export default async function OrderDetails({ paymentIntentId, fallbackTotal }: P
     )
   }
 
-  const totalPLN = (order.pricing.total / 100).toLocaleString('pl-PL', {
-    style: 'currency',
-    currency: 'PLN',
-  })
+  const orderedAt = new Date(order.dates.orderedAt)
+  const estimatedDelivery = order.shippingMethod?.estimatedDays
+    ? new Date(orderedAt.getTime() + order.shippingMethod.estimatedDays * 24 * 60 * 60 * 1000)
+    : null
 
   return (
     <div className="mt-6 rounded border border-gray-200 p-6">
       <h2 className="mb-4 text-xl font-semibold">Order Details</h2>
 
-      <p className="mb-1 text-sm text-gray-500">Order ID: <span className="font-mono text-gray-900">{order._id}</span></p>
-      <p className="mb-4 text-sm text-gray-500">
-        Date: {new Date(order.dates.orderedAt).toLocaleDateString('pl-PL', {
-          year: 'numeric', month: 'long', day: 'numeric',
-        })}
+      <p className="mb-1 text-sm text-gray-500">
+        Order: <span className="font-mono font-semibold text-gray-900">{order.orderNumber}</span>
       </p>
+      <p className="mb-1 text-sm text-gray-500">
+        Date: {orderedAt.toLocaleDateString('pl-PL', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </p>
+      {order.customerEmail && (
+        <p className="mb-4 text-sm text-gray-500">
+          Confirmation sent to: <span className="text-gray-900">{order.customerEmail}</span>
+        </p>
+      )}
 
-      <h3 className="mb-2 font-semibold">Items</h3>
-      <ul className="mb-4 space-y-2">
-        {order.items.map((item, i) => {
-          const linePLN = (item.subtotal / 100).toLocaleString('pl-PL', {
-            style: 'currency',
-            currency: 'PLN',
-          })
-          return (
-            <li key={i} className="flex justify-between text-sm">
-              <span>{item.name} × {item.quantity}</span>
-              <span>{linePLN}</span>
-            </li>
-          )
-        })}
-      </ul>
+      <div className="mb-4">
+        <h3 className="mb-2 font-semibold">Items</h3>
+        <ul className="space-y-2">
+          {order.items.map((item, i) => {
+            const unitPLN = formatPLN(item.price)
+            const linePLN = formatPLN(item.subtotal)
+            return (
+              <li key={i} className="flex justify-between text-sm">
+                <span>
+                  {item.name} <span className="text-gray-500">× {item.quantity}</span>
+                  <span className="ml-1 text-gray-400">({unitPLN} each)</span>
+                </span>
+                <span className="font-medium">{linePLN}</span>
+              </li>
+            )
+          })}
+        </ul>
+      </div>
 
-      <div className="flex justify-between border-t pt-3 font-bold">
-        <span>Total</span>
-        <span>{totalPLN}</span>
+      <div className="space-y-1 border-t pt-3 text-sm">
+        <div className="flex justify-between">
+          <span className="text-gray-600">Subtotal</span>
+          <span>{formatPLN(order.pricing.subtotal)}</span>
+        </div>
+        <div className="flex justify-between">
+          <span className="text-gray-600">
+            Shipping
+            {order.shippingMethod && (
+              <span className="ml-1 text-gray-400">
+                ({order.shippingMethod.carrier} — {order.shippingMethod.estimatedDays ?? '?'} days)
+              </span>
+            )}
+          </span>
+          <span>{formatPLN(order.pricing.shipping)}</span>
+        </div>
+        {order.pricing.tax > 0 && (
+          <div className="flex justify-between">
+            <span className="text-gray-600">Tax</span>
+            <span>{formatPLN(order.pricing.tax)}</span>
+          </div>
+        )}
+        {order.pricing.discount > 0 && (
+          <div className="flex justify-between">
+            <span className="text-gray-600">Discount</span>
+            <span className="text-green-600">-{formatPLN(order.pricing.discount)}</span>
+          </div>
+        )}
+        <div className="flex justify-between border-t pt-2 text-base font-bold">
+          <span>Total</span>
+          <span>{formatPLN(order.pricing.total)}</span>
+        </div>
       </div>
 
       <div className="mt-4 rounded bg-gray-50 p-4 text-sm">
@@ -70,10 +111,44 @@ export default async function OrderDetails({ paymentIntentId, fallbackTotal }: P
         <p>{order.shippingAddress.country}</p>
       </div>
 
-      <div className="mt-6">
+      <div className="mt-4 rounded bg-blue-50 p-4 text-sm">
+        <h3 className="mb-2 font-semibold text-blue-800">What happens next?</h3>
+        <div className="flex items-center gap-2">
+          <span className="inline-block h-2 w-2 rounded-full bg-green-500" />
+          <span>Order confirmed</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="inline-block h-2 w-2 rounded-full bg-gray-300" />
+          <span>Processing</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="inline-block h-2 w-2 rounded-full bg-gray-300" />
+          <span>Shipped</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="inline-block h-2 w-2 rounded-full bg-gray-300" />
+          <span>Delivered</span>
+        </div>
+        {estimatedDelivery && (
+          <p className="mt-2 text-blue-700">
+            Estimated delivery: {estimatedDelivery.toLocaleDateString('pl-PL', { year: 'numeric', month: 'long', day: 'numeric' })}
+          </p>
+        )}
+        <p className="mt-1 text-gray-500">Tracking number will appear here once shipped.</p>
+      </div>
+
+      <div className="mt-6 flex flex-wrap gap-3">
+        {!order.isGuest && (
+          <Link
+            href="/account/orders"
+            className="inline-block rounded border border-gray-300 px-4 py-2 text-sm font-semibold hover:bg-gray-50"
+          >
+            View my orders
+          </Link>
+        )}
         <Link
-          href="/basket"
-          className="inline-block rounded bg-gray-900 px-6 py-2 text-sm font-semibold text-white hover:bg-gray-700"
+          href="/"
+          className="inline-block rounded bg-gray-900 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-700"
         >
           Continue shopping
         </Link>

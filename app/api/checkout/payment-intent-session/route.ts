@@ -36,10 +36,20 @@ export async function POST(request: NextRequest) {
       address: JSON.stringify(session.address ?? {}),
       shippingCode: session.shippingCode ?? '',
       shippingCost: String(session.shippingCost ?? ''),
+      shippingMethodName: session.shippingMethodName ?? '',
+      shippingCarrier: session.shippingCarrier ?? '',
+      shippingEstimatedDays: String(session.shippingEstimatedDays ?? ''),
       email: session.email ?? '',
     }
 
     let result: { id: string; client_secret: string | null }
+
+    // Payment method strategy: automatic_payment_methods delegates method availability
+    // to the Stripe Dashboard. For Polish market compliance, verify in Dashboard:
+    // Settings > Payment methods — BLIK, P24, Apple Pay, Google Pay, Link must be enabled.
+    // Fallback (if Dashboard methods are unavailable): switch to explicit
+    // payment_method_types: ['card', 'blik', 'p24'] on the create() calls below.
+    // See beads issue sang-logium-oss — Task 9 for verification checklist.
 
     if (session.paymentIntentId) {
       try {

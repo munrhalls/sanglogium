@@ -3,10 +3,12 @@ import { redirect } from "next/navigation";
 import { client } from "@/sanity-cms/lib/client";
 import groq from "groq";
 import PaymentForm from "./PaymentForm.client";
+import CheckoutSummary from "./_components/CheckoutSummary";
 import { logCheckoutEvent } from "@/lib/dev/event-logger";
 
 interface PaymentProduct {
   _id: string;
+  name: string | null;
   price_data: { unit_amount: number } | null;
   stock: number | null;
 }
@@ -44,7 +46,7 @@ export default async function Page() {
   await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_sanity_query_start', data: { productIds: ids, quantities: session.basket.map(i => ({ productId: i.productId, quantity: i.quantity })) }, outcome: 'success' });
 
   const sanityProducts = await client.fetch<PaymentProduct[]>(
-    groq`*[_type == "product" && _id in $ids]{ _id, price_data { unit_amount }, stock }`,
+    groq`*[_type == "product" && _id in $ids]{ _id, name, price_data { unit_amount }, stock }`,
     { ids }
   );
 
@@ -66,11 +68,19 @@ export default async function Page() {
     }
   }
 
-  const subtotal = session.basket.reduce((sum, item) => {
+  const items = session.basket.map((item) => {
     const product = sanityProducts.find((p) => p._id === item.productId)!;
-    return sum + product.price_data!.unit_amount * item.quantity;
-  }, 0);
+    const unitPrice = product.price_data!.unit_amount;
+    return {
+      productId: item.productId,
+      name: product.name ?? "Product",
+      quantity: item.quantity,
+      unitPrice,
+      lineTotal: unitPrice * item.quantity,
+    };
+  });
 
+  const subtotal = items.reduce((sum, item) => sum + item.lineTotal, 0);
   const grandTotal = Math.round(subtotal + (session.shippingCost as number));
 
   await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_calculation', data: { subtotal, shippingCost: session.shippingCost, grandTotal }, outcome: 'success' });
@@ -96,5 +106,20 @@ export default async function Page() {
     ...(checkoutSessionId && { checkoutSessionId }),
   };
 
-  return <PaymentForm grandTotal={grandTotal} metadata={metadata} address={address} traceId={traceId} />;
+  return (
+    <div className="grid gap-6 md:grid-cols-2">
+      <div>
+        <CheckoutSummary
+          items={items}
+          shippingCost={session.shippingCost as number}
+          shippingCode={session.shippingCode}
+          subtotal={subtotal}
+          grandTotal={grandTotal}
+        />
+      </div>
+      <div>
+        <PaymentForm grandTotal={grandTotal} metadata={metadata} address={address} traceId={traceId} />
+      </div>
+    </div>
+  );
 }

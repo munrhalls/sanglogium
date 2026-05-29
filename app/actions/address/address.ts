@@ -66,6 +66,9 @@ const formatCleanAddress = (
   const get = (type: string) => components.get(type);
 
   return {
+    firstName: input.firstName,
+    lastName: input.lastName,
+    phone: input.phone,
     street: get("route") || input.street,
     streetNumber:
       [get("street_number"), get("subpremise")].filter(Boolean).join("/") ||

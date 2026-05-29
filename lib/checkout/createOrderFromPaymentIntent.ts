@@ -37,6 +37,9 @@ export async function createOrderFromPaymentIntent(pi: Stripe.PaymentIntent): Pr
   const rawAddress = pi.metadata?.address
   const shippingCode = pi.metadata?.shippingCode ?? ''
   const shippingCostStr = pi.metadata?.shippingCost ?? '0'
+  const shippingMethodName = pi.metadata?.shippingMethodName ?? ''
+  const shippingCarrier = pi.metadata?.shippingCarrier ?? ''
+  const shippingEstimatedDaysStr = pi.metadata?.shippingEstimatedDays ?? ''
   const customerEmail = pi.metadata?.email ?? ''
 
   if (!rawBasket || !rawAddress) {
@@ -83,7 +86,15 @@ export async function createOrderFromPaymentIntent(pi: Stripe.PaymentIntent): Pr
     }
   })
 
-  // Step 5: Map address → order shippingAddress shape
+  // Step 5: Build shippingMethod from metadata
+  const shippingMethod = shippingMethodName ? {
+    name: shippingMethodName,
+    carrier: shippingCarrier || shippingCode,
+    price: parseInt(shippingCostStr, 10) || 0,
+    estimatedDays: parseInt(shippingEstimatedDaysStr, 10) || undefined,
+  } : undefined
+
+  // Step 6: Map address → order shippingAddress shape
   const shippingAddress = {
     name: `${address.firstName ?? ''} ${address.lastName ?? ''}`.trim() || 'Guest',
     line1: `${address.street} ${address.streetNumber}`.trim(),
@@ -93,7 +104,7 @@ export async function createOrderFromPaymentIntent(pi: Stripe.PaymentIntent): Pr
     country: address.regionCode,
   }
 
-  // Step 6: Compute pricing
+  // Step 7: Compute pricing
   const subtotal = items.reduce((sum, item) => sum + item.subtotal, 0)
   const shippingCost = parseInt(shippingCostStr, 10) || 0
   const total = pi.amount
@@ -107,7 +118,7 @@ export async function createOrderFromPaymentIntent(pi: Stripe.PaymentIntent): Pr
     currency,
   }
 
-  // Step 7: Generate order identifiers
+  // Step 8: Generate order identifiers
   const year = new Date().getFullYear()
   const orderCount = await backendClient.fetch<number>(
     `count(*[_type == "order" && dates.orderedAt >= $yearStart])`,
@@ -117,9 +128,9 @@ export async function createOrderFromPaymentIntent(pi: Stripe.PaymentIntent): Pr
   const orderId = `order_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`
   const now = new Date().toISOString()
 
-  // Step 8: Create order document
+  // Step 9: Create order document
   const orderDoc = {
-    _type: 'order',
+    _type: 'order' as const,
     orderNumber,
     orderId,
     paymentIntentId,
@@ -128,7 +139,7 @@ export async function createOrderFromPaymentIntent(pi: Stripe.PaymentIntent): Pr
     items,
     shippingAddress,
     pricing,
-    status: 'processing',
+    status: 'processing' as const,
     dates: {
       orderedAt: now,
       paidAt: now,
@@ -136,9 +147,10 @@ export async function createOrderFromPaymentIntent(pi: Stripe.PaymentIntent): Pr
     payment: {
       stripePaymentIntentId: paymentIntentId,
     },
+    ...(shippingMethod ? { shippingMethod } : {}),
   }
 
-  await backendClient.create(orderDoc)
+  await backendClient.create(orderDoc as Parameters<typeof backendClient.create>[0])
 
   await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_created', data: { orderNumber, orderId, paymentIntentId, itemCount: items.length }, outcome: 'success' })
 

@@ -1,6 +1,7 @@
 import { getCheckoutSession } from "@/lib/session";
 import { redirect } from "next/navigation";
 import AddressForm from "./AddressForm";
+import type { Address } from "../checkout.types";
 
 export default async function Page() {
   const session = await getCheckoutSession();
@@ -13,8 +14,9 @@ export default async function Page() {
 
   const traceId = session.checkoutSessionId || 'unknown';
 
-  // TRACER: Log session basket to server console
+  // TRACER: Log session state to server console for verification
   console.log("[ADDRESS PAGE] session.basket:", session.basket);
+  console.log("[ADDRESS PAGE] session.address:", session.address);
 
-  return <AddressForm traceId={traceId} />;
+  return <AddressForm traceId={traceId} initialAddress={session.address} />;
 }

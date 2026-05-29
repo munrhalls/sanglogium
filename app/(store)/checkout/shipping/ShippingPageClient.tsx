@@ -51,7 +51,13 @@ export default function ShippingPageClient({ shippingOptions, traceId }: Shippin
     }).catch(() => {});
 
     try {
-      await saveShippingAction(selectedOption.rateId, Math.round(selectedOption.amount * 100));
+      await saveShippingAction(
+        selectedOption.rateId,
+        Math.round(selectedOption.amount * 100),
+        selectedOption.servicelevel.name,
+        selectedOption.provider,
+        selectedOption.estimatedDays
+      );
     } catch (err) {
       // Only handle real errors — Next.js redirect() throws a non-Error internally;
       // checking digest ensures we never swallow it

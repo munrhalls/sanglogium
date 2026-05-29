@@ -1,4 +1,7 @@
 export type Address = {
+  firstName: string;
+  lastName: string;
+  phone: string;
   regionCode: string;
   postalCode: string;
   street: string;

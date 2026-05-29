@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { saveAddress } from "@/app/actions/checkout";
 import Loader from "@/app/components/common/Loader";
+import type { Address } from "../checkout.types";
 
 const REGIONS = [
   { code: "PL", label: "Poland" },
@@ -11,18 +12,39 @@ const REGIONS = [
 
 interface AddressFormProps {
   traceId: string;
+  initialAddress?: Address;
 }
 
-export default function AddressForm({ traceId }: AddressFormProps) {
+export default function AddressForm({ traceId, initialAddress }: AddressFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    phone: "",
     regionCode: "",
     postalCode: "",
     street: "",
     streetNumber: "",
     city: "",
   });
+
+  // Hydrate form from session address when user returns via Back button
+  useEffect(() => {
+    console.log("[AddressForm] initialAddress from session:", initialAddress);
+    if (initialAddress) {
+      setForm({
+        firstName: initialAddress.firstName || "",
+        lastName: initialAddress.lastName || "",
+        phone: initialAddress.phone || "",
+        regionCode: initialAddress.regionCode || "",
+        postalCode: initialAddress.postalCode || "",
+        street: initialAddress.street || "",
+        streetNumber: initialAddress.streetNumber || "",
+        city: initialAddress.city || "",
+      });
+    }
+  }, [initialAddress]);
 
   const handleChange = (field: keyof typeof form, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -34,6 +56,9 @@ export default function AddressForm({ traceId }: AddressFormProps) {
 
     try {
       const addressData = {
+        firstName: formData.get("firstName") as string,
+        lastName: formData.get("lastName") as string,
+        phone: formData.get("phone") as string,
         regionCode: formData.get("regionCode") as string,
         postalCode: formData.get("postalCode") as string,
         street: formData.get("street") as string,
@@ -83,6 +108,55 @@ export default function AddressForm({ traceId }: AddressFormProps) {
         )}
 
         <form action={handleSubmit} className="space-y-4">
+          <h2 className="text-lg font-semibold text-gray-900">Contact Information</h2>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="mb-1 block text-sm font-medium text-gray-700">
+                First Name
+              </label>
+              <input
+                name="firstName"
+                type="text"
+                value={form.firstName}
+                onChange={(e) => handleChange("firstName", e.target.value)}
+                required
+                className="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
+              />
+            </div>
+            <div>
+              <label className="mb-1 block text-sm font-medium text-gray-700">
+                Last Name
+              </label>
+              <input
+                name="lastName"
+                type="text"
+                value={form.lastName}
+                onChange={(e) => handleChange("lastName", e.target.value)}
+                required
+                className="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="mb-1 block text-sm font-medium text-gray-700">
+              Phone Number
+            </label>
+            <input
+              name="phone"
+              type="tel"
+              value={form.phone}
+              onChange={(e) => handleChange("phone", e.target.value)}
+              required
+              className="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
+            />
+          </div>
+
+          <hr className="border-gray-200" />
+
+          <h2 className="text-lg font-semibold text-gray-900">Shipping Address</h2>
+
           <div>
             <label className="mb-1 block text-sm font-medium text-gray-700">
               Country

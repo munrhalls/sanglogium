@@ -2,7 +2,14 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { loadStripe } from "@stripe/stripe-js";
-import { Elements, PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import {
+  Elements,
+  PaymentElement,
+  useStripe,
+  useElements,
+  ExpressCheckoutElement,
+  PaymentMethodMessagingElement,
+} from "@stripe/react-stripe-js";
 import { saveEmailToSession } from "@/app/actions/checkout";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
@@ -49,7 +56,15 @@ function EmailInput({
   );
 }
 
-function PaymentFormInner({ address, traceId }: { address: Address; traceId: string }) {
+function PaymentFormInner({
+  address,
+  traceId,
+  grandTotal,
+}: {
+  address: Address;
+  traceId: string;
+  grandTotal: number;
+}) {
   const stripe = useStripe();
   const elements = useElements();
   const [isLoading, setIsLoading] = useState(false);
@@ -124,17 +139,38 @@ function PaymentFormInner({ address, traceId }: { address: Address; traceId: str
         body: JSON.stringify({
           traceId,
           step: 'payment_confirm_error',
-          data: { error: error.message }
+          data: { error: error.message, type: error.type }
         })
       })
+
+      // Only show custom error for API/system failures
+      // card_error and validation_error are displayed natively by PaymentElement
+      if (error.type === 'api_error') {
+        setError(error.message ?? "A payment system error occurred. Please try again later.");
+      }
     }
 
-    setError(error?.message ?? "Payment failed. Please try again.");
     setIsLoading(false);
   };
 
   return (
     <div className="space-y-6">
+      <ExpressCheckoutElement
+        options={{
+          buttonHeight: 44,
+          buttonTheme: { applePay: 'black', googlePay: 'black' },
+          layout: { maxColumns: 2 },
+        }}
+        onConfirm={async () => {
+          if (!stripe || !elements) return;
+          await stripe.confirmPayment({
+            elements,
+            confirmParams: {
+              return_url: `${window.location.origin}/api/checkout/return`,
+            },
+          });
+        }}
+      />
       <PaymentElement options={{ fields: { billingDetails: { address: "never" } } }} />
       {error && (
         <p className="text-sm text-red-600">{error}</p>
@@ -153,6 +189,22 @@ function PaymentFormInner({ address, traceId }: { address: Address; traceId: str
           "Pay"
         )}
       </button>
+      <div className="flex flex-col items-center gap-2 border-t border-gray-100 pt-4">
+        <div className="flex items-center gap-1.5 text-xs text-gray-500">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-600">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          Secure payment encrypted by Stripe
+        </div>
+        <div className="flex items-center gap-2 text-xs text-gray-400">
+          <span className="font-medium">Visa</span>
+          <span>·</span>
+          <span className="font-medium">Mastercard</span>
+          <span>·</span>
+          <span className="font-medium">BLIK</span>
+        </div>
+      </div>
     </div>
   );
 }
@@ -201,7 +253,18 @@ export default function PaymentForm({ grandTotal, metadata, address, traceId }: 
     <div className="space-y-6">
       <EmailInput email={email} onChange={handleEmailChange} disabled={isSavingEmail} />
       <Elements stripe={stripePromise} options={{ clientSecret }}>
-        <PaymentFormInner address={address} traceId={traceId} />
+        {grandTotal >= 5000 && grandTotal <= 500000 && (
+          <div className="mb-4">
+            <PaymentMethodMessagingElement
+              options={{
+                amount: grandTotal,
+                currency: 'PLN',
+                paymentMethodTypes: ['klarna'],
+              }}
+            />
+          </div>
+        )}
+        <PaymentFormInner address={address} traceId={traceId} grandTotal={grandTotal} />
       </Elements>
     </div>
   );

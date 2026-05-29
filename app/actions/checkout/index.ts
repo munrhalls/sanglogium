@@ -53,6 +53,8 @@ export async function saveAddress(address: Address) {
 
   // Call Google Address Validation
   const validationResult = await submitShippingAction(address);
+  console.log("[SAVE ADDRESS] validationResult.status:", validationResult.status);
+  console.log("[SAVE ADDRESS] validationResult.address:", validationResult.address);
 
   await logCheckoutEvent({
     correlationId: checkoutSessionId,
@@ -74,14 +76,19 @@ export async function saveAddress(address: Address) {
     return validationResult;
   }
 
-  // Save validated address to session
-  session.address = validationResult.address || address;
+  // Save validated address to session, preserving contact info from the original input
+  session.address = { ...address, ...(validationResult.address || {}) };
+  console.log("[SAVE ADDRESS] About to save session.address:", session.address);
 
   // Cascade invalidation: Delete downstream shipping data
   session.shippingCode = undefined;
   session.shippingCost = undefined;
+  session.shippingMethodName = undefined;
+  session.shippingCarrier = undefined;
+  session.shippingEstimatedDays = undefined;
 
   await session.save();
+  console.log("[SAVE ADDRESS] Session saved. session.address after save:", session.address);
 
   await logCheckoutEvent({
     correlationId: checkoutSessionId,
@@ -95,7 +102,13 @@ export async function saveAddress(address: Address) {
   redirect("/checkout/shipping");
 }
 
-export async function saveShippingAction(shippingCode: string, priceInCents: number) {
+export async function saveShippingAction(
+  shippingCode: string,
+  priceInCents: number,
+  shippingMethodName?: string,
+  shippingCarrier?: string,
+  shippingEstimatedDays?: number
+) {
   const session = await getCheckoutSession();
 
   // Guard: Ensure basket and address exist
@@ -140,13 +153,16 @@ export async function saveShippingAction(shippingCode: string, priceInCents: num
     correlationId: checkoutSessionId,
     slice: 'address-submit',
     event: 'shipping_option_selected',
-    data: { shippingCode, priceInCents },
+    data: { shippingCode, priceInCents, shippingMethodName, shippingCarrier, shippingEstimatedDays },
     outcome: 'success',
   });
 
-  // Save BOTH shippingCode AND shippingCost to session
+  // Save shipping details to session
   session.shippingCode = shippingCode;
   session.shippingCost = priceInCents;
+  session.shippingMethodName = shippingMethodName;
+  session.shippingCarrier = shippingCarrier;
+  session.shippingEstimatedDays = shippingEstimatedDays;
 
   await session.save();
 

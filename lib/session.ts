@@ -16,6 +16,9 @@ export interface CheckoutSession {
   email?: string;
   shippingCode?: string;
   shippingCost?: number;
+  shippingMethodName?: string;
+  shippingCarrier?: string;
+  shippingEstimatedDays?: number;
   paymentIntentId?: string;
   completedPaymentIntentId?: string;
   checkoutSessionId?: string; // Unified Trace ID for checkout flow logging
