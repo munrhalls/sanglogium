@@ -1,5 +1,5 @@
 "use server";
-import { Address, ServerResponse } from "@/app/(store)/checkout/checkout.types";
+import { Address, ServerResponse } from "@/app/checkout/checkout.types";
 
 interface RequestBody {
   address: {

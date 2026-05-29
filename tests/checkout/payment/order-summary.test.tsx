@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import CheckoutSummary from '@/app/(store)/checkout/payment/_components/CheckoutSummary';
+import CheckoutSummary from '@/app/checkout/payment/_components/CheckoutSummary';
 
 describe('CheckoutSummary', () => {
   it('renders itemized basket with PLN formatting', () => {

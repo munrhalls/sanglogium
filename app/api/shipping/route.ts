@@ -15,7 +15,11 @@ export async function POST(req: Request) {
   const { regionCode, postalCode, street, streetNumber, city } = body as ShippingRequestBody;
 
   // Call server action for Google validation
+  // Contact fields are not required for standalone address validation
   const validation = await submitShippingAction({
+    firstName: "",
+    lastName: "",
+    phone: "",
     regionCode,
     postalCode,
     street,

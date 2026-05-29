@@ -3,7 +3,7 @@
 import { getCheckoutSession } from "@/lib/session";
 import { redirect } from "next/navigation";
 import { submitShippingAction } from "@/app/actions/address/address";
-import type { Address } from "@/app/(store)/checkout/checkout.types";
+import type { Address } from "@/app/checkout/checkout.types";
 import { logCheckoutEvent, generateCheckoutSessionId } from "@/lib/dev/event-logger";
 
 export async function initCheckoutSession(items: Array<{ productId: string; quantity: number }>, checkoutSessionId?: string) {
