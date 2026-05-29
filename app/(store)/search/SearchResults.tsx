@@ -1,16 +1,17 @@
 import React from 'react';
 import { SearchEmpty } from '@/app/components/features/search/SearchEmpty';
+import { SearchPagination } from '@/app/components/features/search/SearchPagination';
 import { ProductGrid } from '@/app/components/features/products/ProductGrid';
 import { SortDropdown } from '@/app/components/features/filters/SortDropdown';
-import type { SearchProduct } from '@/sanity-cms/lib/products/searchProducts';
+import type { SearchResult } from '@/sanity-cms/lib/products/searchProducts';
 
 interface SearchResultsProps {
-  productsPromise: Promise<SearchProduct[]>;
+  resultsPromise: Promise<SearchResult>;
   query: string;
 }
 
-export async function SearchResults({ productsPromise, query }: SearchResultsProps) {
-  const products = await productsPromise;
+export async function SearchResults({ resultsPromise, query }: SearchResultsProps) {
+  const { products, totalCount } = await resultsPromise;
 
   if (products.length === 0) {
     return <SearchEmpty query={query} />;
@@ -20,12 +21,13 @@ export async function SearchResults({ productsPromise, query }: SearchResultsPro
     <>
       <div className="flex items-center justify-between border-b border-border-secondary pb-4 mb-6">
         <SortDropdown />
-        <span className="type-metadata text-secondary">{products.length} products</span>
+        <span className="type-metadata text-secondary">{totalCount} products</span>
       </div>
       <ProductGrid
         products={products}
         className="grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg-desktop:grid-cols-4 lg-touch:grid-cols-3"
       />
+      <SearchPagination totalCount={totalCount} />
     </>
   );
 }
