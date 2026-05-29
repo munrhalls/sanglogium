@@ -50,21 +50,8 @@
     "ts-check": "tsc --noEmit --pretty",
     "ts-check:watch": "tsc --noEmit --watch",
     "analyze": "ANALYZE=true npm run build",
-    "research:start": "pm2 start pm2.research.config.json",
-    "research:stop": "pm2 stop sanglogium-research && node scripts/research/loop-control.mjs pause",
-    "research:pause": "node scripts/research/loop-control.mjs pause",
-    "research:resume": "node scripts/research/loop-control.mjs resume",
-    "research:focus": "node scripts/research/loop-control.mjs focus",
-    "research:unfocus": "node scripts/research/loop-control.mjs unfocus",
-    "research:status": "node scripts/research/loop-control.mjs status",
-    "research:once": "node scripts/research/continuous-loop.mjs once",
-    "logs:clear": "node scripts/clear-redis-logs.mjs",
     "logs:get": "node scripts/get-trace.mjs",
-    "logs:list": "node scripts/get-trace.mjs --list",
-    "logs:recent": "node scripts/get-recent-checkout-logs.mjs",
-    "autoresearch": "node scripts/research/autoresearch.mjs once",
-    "autoresearch:daemon": "node scripts/research/autoresearch.mjs daemon",
-    "autoresearch:verify": "node scripts/research/verify.mjs"
+    "logs:list": "node scripts/get-trace.mjs --list"
   },
   "dependencies": {
     "@googlemaps/addressvalidation": "^3.2.1",
