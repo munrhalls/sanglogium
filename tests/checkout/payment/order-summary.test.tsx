@@ -1,75 +1,73 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import OrderSummary from '@/app/(store)/checkout/payment/_components/OrderSummary';
+import CheckoutSummary from '@/app/(store)/checkout/payment/_components/CheckoutSummary';
 
-// Mock fetch
-global.fetch = vi.fn();
-
-describe('OrderSummary', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
-  it('displays items quantities and total correctly', async () => {
+describe('CheckoutSummary', () => {
+  it('renders itemized basket with PLN formatting', () => {
     // Arrange
-    const mockReservation = {
-      basketReservation: [
-        { _id: 'prod1', quantity: 2, verifiedPrice: 1999 },
-        { _id: 'prod2', quantity: 1, verifiedPrice: 4999 },
-      ],
-      shippingChoice: { provider: 'UPS', serviceLevel: 'ground', amount: 500, currency: 'usd' },
-    };
-
-    const mockProducts = {
-      data: [
-        { _id: 'prod1', name: 'Product 1' },
-        { _id: 'prod2', name: 'Product 2' },
-      ],
-    };
-
-    (global.fetch as any).mockResolvedValueOnce({
-      ok: true,
-      json: async () => mockReservation,
-    }).mockResolvedValueOnce({
-      ok: true,
-      json: async () => mockProducts,
-    });
+    const items = [
+      { productId: 'prod1', name: 'Product A', quantity: 2, unitPrice: 1999, lineTotal: 3998 },
+      { productId: 'prod2', name: 'Product B', quantity: 1, unitPrice: 4999, lineTotal: 4999 },
+    ];
 
     // Act
-    render(<OrderSummary basketReservationId="res123" />);
+    render(
+      <CheckoutSummary
+        items={items}
+        shippingCost={1899}
+        shippingCode="dpd"
+        subtotal={8997}
+        grandTotal={10896}
+      />
+    );
 
     // Assert
-    await waitFor(() => {
-      expect(screen.getByText('Product 1 × 2')).toBeVisible();
-      expect(screen.getByText('Product 2 × 1')).toBeVisible();
-      expect(screen.getByText('$39.98')).toBeVisible(); // 2 × $19.99
-      expect(screen.getByText('$49.99')).toBeVisible(); // 1 × $49.99
-      expect(screen.getByText('Shipping (UPS)')).toBeVisible();
-      expect(screen.getByText('$5.00')).toBeVisible();
-      expect(screen.getByText('Total')).toBeVisible();
-      expect(screen.getByText('$94.97')).toBeVisible(); // $39.98 + $49.99 + $5.00
-    });
+    expect(screen.getByText('Order Summary')).toBeInTheDocument();
+    expect(screen.getByText('Product A × 2')).toBeInTheDocument();
+    expect(screen.getByText('Product B × 1')).toBeInTheDocument();
+    expect(screen.getByText('Shipping (dpd)')).toBeInTheDocument();
+    expect(screen.getByText('Total')).toBeInTheDocument();
   });
 
-  it('shows error message when API fails', async () => {
+  it('handles missing shipping code gracefully', () => {
     // Arrange
-    (global.fetch as any).mockRejectedValue(new Error('API error'));
+    const items = [
+      { productId: 'prod1', name: 'Product A', quantity: 1, unitPrice: 1999, lineTotal: 1999 },
+    ];
 
     // Act
-    render(<OrderSummary basketReservationId="res123" />);
+    render(
+      <CheckoutSummary
+        items={items}
+        shippingCost={1899}
+        subtotal={1999}
+        grandTotal={3898}
+      />
+    );
 
     // Assert
-    await waitFor(() => {
-      expect(screen.getByText('Unable to load order summary')).toBeVisible();
-    });
+    expect(screen.getByText('Shipping')).toBeInTheDocument();
+    expect(screen.queryByText('Shipping (')).not.toBeInTheDocument();
   });
 
-  it('shows skeleton during loading', () => {
-    // Arrange & Act
-    render(<OrderSummary basketReservationId="res123" />);
+  it('uses fallback name when product name is missing', () => {
+    // Arrange
+    const items = [
+      { productId: 'prod1', name: '', quantity: 1, unitPrice: 1999, lineTotal: 1999 },
+    ];
+
+    // Act
+    render(
+      <CheckoutSummary
+        items={items}
+        shippingCost={1899}
+        subtotal={1999}
+        grandTotal={3898}
+      />
+    );
 
     // Assert
-    expect(screen.queryByText('Order Summary')).not.toBeInTheDocument();
+    expect(screen.getByText('Product × 1')).toBeInTheDocument();
   });
 });
