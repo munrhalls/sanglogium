@@ -1,12 +1,9 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { dataset, projectId } from '@/sanity-cms/env';
-import urlBuilder from '@sanity/image-url';
 import { Price } from "@/app/components/ui/Price";
 import { BasketControls } from "./BasketControls";
-
-const builder = urlBuilder({ projectId, dataset });
+import { sanityImageLoader } from "@/lib/utils/sanityImageLoader";
 
 interface BasketItemProps {
   productId: string
@@ -31,19 +28,11 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
             {assetRef ? (
               <Image
                 src={assetRef}
+                loader={sanityImageLoader}
                 alt={name}
                 fill
                 sizes="96px"
                 className="object-contain"
-                loader={({ src, width, quality }) => {
-                  const url = builder
-                    .image(src)
-                    .width(width)
-                    .quality(quality || 75)
-                    .auto("format")
-                    .url();
-                  return url;
-                }}
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-text-caption type-caption">

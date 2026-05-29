@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils/tailwind";
 import { Image } from "next-sanity/image";
+import { urlFor } from "@/sanity-cms/lib/image";
 import Link from "next/link";
 import { BasketControls } from "@/app/components/features/basket/BasketControls";
 import { centsToDisplay } from "@/lib/utils/price";
@@ -21,7 +22,7 @@ export default function DacCard({ item, idx }: { item: any; idx: number }) {
             {brandName}
           </span>
           <Image
-            src={item.image}
+            src={urlFor(item.image).width(400).auto("format").quality(75).url()}
             alt={productName}
             width={400}
             height={400}

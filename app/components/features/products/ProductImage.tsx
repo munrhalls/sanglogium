@@ -2,10 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { dataset, projectId } from '@/sanity-cms/lib/api/api';
-import urlBuilder from '@sanity/image-url';
-
-const builder = urlBuilder({ projectId, dataset });
+import { sanityImageLoader } from '@/lib/utils/sanityImageLoader';
 
 interface ProductImageProps {
   image: any;
@@ -30,20 +27,12 @@ export function ProductImage({ image, alt, className, priority = false }: Produc
     <div className={`relative w-full h-full ${className || ''}`} data-testid="product-image">
       <Image
         src={assetRef}
+        loader={sanityImageLoader}
         alt={alt}
         fill
         sizes="(max-width: 768px) 50vw, 25vw"
         className="object-contain mix-blend-multiply transition-transform duration-700"
         priority={priority}
-        loader={({ src, width, quality }) => {
-          const url = builder
-            .image(src)
-            .width(width)
-            .quality(quality || 75)
-            .auto("format")
-            .url();
-          return url;
-        }}
       />
     </div>
   );

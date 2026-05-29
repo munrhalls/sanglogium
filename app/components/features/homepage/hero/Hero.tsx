@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { urlFor } from "@/sanity-cms/lib/client";
 import { sanityImageLoader } from "@/lib/utils/sanityImageLoader";
 import { cn } from "@/lib/utils/tailwind";
 import { HeroData, SanityImage } from "./types";
@@ -23,14 +24,16 @@ export default async function Hero({ heroData }: HeroProps) {
   // Generate blur placeholder from Sanity LQIP
   const blurDataURL = mobileBackgroundImage.asset?.metadata?.lqip || undefined;
 
-  // Raw Sanity asset refs for responsive image loading
+  // Raw Sanity asset ref for desktop srcset (built server-side via direct function call)
   const desktopRef = heroData.backgroundImage.asset?._ref || heroData.backgroundImage.asset?._id;
-  const mobileRef = mobileBackgroundImage.asset?._ref || mobileBackgroundImage.asset?._id;
 
   // Responsive srcset for desktop source
   const desktopSrcSet = [640, 750, 1080, 1200, 1920, 2048]
     .map((w) => `${sanityImageLoader({ src: desktopRef, width: w, quality: 75 })} ${w}w`)
     .join(", ");
+
+  // Pre-built mobile URL — Server Component cannot pass function props to Client Components
+  const mobileImageUrl = urlFor(mobileBackgroundImage).width(828).auto('format').quality(75).url();
 
   return (
     <section
@@ -46,8 +49,7 @@ export default async function Hero({ heroData }: HeroProps) {
             srcSet={desktopSrcSet}
           />
           <Image
-            src={mobileRef}
-            loader={sanityImageLoader}
+            src={mobileImageUrl}
             alt={heroData.backgroundImage.alt || "Hero Image"}
             fill
             priority
