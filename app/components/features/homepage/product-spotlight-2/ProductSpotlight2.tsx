@@ -1,6 +1,6 @@
 import React from "react";
-import { Image } from "next-sanity/image";
-import { urlFor } from "@/sanity-cms/lib/image";
+import Image from "next/image";
+import { sanityImageLoader } from "@/lib/utils/sanityImageLoader";
 import { Spotlight1Data } from "../product-spotlight-1/getSpotlight1Data";
 import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
 import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";
@@ -25,7 +25,7 @@ export default async function ProductSpotlight2({ spotlightData }: ProductSpotli
                                 {product.images?.map((image, idx) => (
                                     <CarouselSlide key={`${product._id}-${idx}`} className="aspect-square w-full flex items-center justify-center pb-4 opacity-0 scale-95 transition-[opacity,transform] duration-500 ease-out data-[active=true]:opacity-100 data-[active=true]:scale-100">
                                         <Image
-                                            src={urlFor(image).width(800).auto('format').quality(75).url()}
+                                            src={image?.asset?._id ? sanityImageLoader({ src: image?.asset?._id, width: 800, quality: 75 }) : ""}
                                             alt={product.name}
                                             width={800}
                                             height={800}

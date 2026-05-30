@@ -75,6 +75,7 @@ export interface FeaturedProduct {
   productPromo: string;
   image: {
     asset: {
+      _id: string;
       url: string;
     };
     alt?: string;
@@ -92,9 +93,9 @@ export interface SpotlightProduct {
   price_data: { currency: string; unit_amount: number };
   stock: number;
   slug: string;
-  image: { asset: { url: string }; alt?: string };
-  gallery?: Array<{ asset: { url: string }; alt?: string }>;
-  images?: Array<{ asset: { url: string }; alt?: string }>;
+  image: { asset: { _id: string; url: string }; alt?: string };
+  gallery?: Array<{ asset: { _id: string; url: string }; alt?: string }>;
+  images?: Array<{ asset: { _id: string; url: string }; alt?: string }>;
 }
 
 export interface SpotlightData {
@@ -116,7 +117,7 @@ export interface IemProduct {
   slug: string;
   stock: number;
   imageUrl: string;
-  image: { asset: { url: string }; alt?: string };
+  image: { asset: { _id: string; url: string }; alt?: string };
 }
 
 export interface NewestReleaseProduct {
@@ -130,8 +131,8 @@ export interface NewestReleaseProduct {
   price_data: { currency: string; unit_amount: number };
   stock: number;
   slug: string;
-  image: { asset: { url: string }; alt?: string };
-  gallery: Array<{ asset: { url: string }; alt?: string }>;
+  image: { asset: { _id: string; url: string }; alt?: string };
+  gallery: Array<{ asset: { _id: string; url: string }; alt?: string }>;
 }
 
 export interface NewestReleaseData {
@@ -152,7 +153,7 @@ export interface DacProduct {
   price_data: { currency: string; unit_amount: number };
   stock: number;
   slug: string;
-  image: { asset: { url: string }; alt?: string };
+  image: { asset: { _id: string; url: string }; alt?: string };
 }
 
 export interface AccessoryProduct {
@@ -167,7 +168,7 @@ export interface AccessoryProduct {
   stock: number;
   slug: string;
   imageUrl: string;
-  image: { asset: { url: string }; alt?: string };
+  image: { asset: { _id: string; url: string }; alt?: string };
 }
 
 export interface AccessoryData {
@@ -208,7 +209,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
         stock,
         stripePriceId,
         "slug": slug.current,
-        image { asset->{url} }
+        image { asset->{_id, url} }
       }
     },
 
@@ -225,8 +226,8 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
         stock,
         stripePriceId,
         "slug": slug.current,
-        image { asset->{url} },
-        gallery[] { asset->{url} }
+        image { asset->{_id, url} },
+        gallery[] { asset->{_id, url} }
       }
     },
 
@@ -243,8 +244,8 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
         stock,
         stripePriceId,
         "slug": slug.current,
-        image { asset->{url} },
-        gallery[] { asset->{url} }
+        image { asset->{_id, url} },
+        gallery[] { asset->{_id, url} }
       }
     },
 
@@ -261,8 +262,8 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
         stock,
         stripePriceId,
         "slug": slug.current,
-        image { asset->{url} },
-        gallery[] { asset->{url} }
+        image { asset->{_id, url} },
+        gallery[] { asset->{_id, url} }
       }
     },
 
@@ -276,7 +277,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
       stripePriceId,
       "slug": slug.current,
       "imageUrl": image.asset->url,
-      image { asset->{url} }
+      image { asset->{_id, url} }
     },
 
     // Newest release section
@@ -292,8 +293,8 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
         stock,
         stripePriceId,
         "slug": slug.current,
-        image { asset->{url} },
-        gallery[] { asset->{url} }
+        image { asset->{_id, url} },
+        gallery[] { asset->{_id, url} }
       }
     },
 
@@ -306,7 +307,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
       stock,
       stripePriceId,
       "slug": slug.current,
-      image { asset->{url} }
+      image { asset->{_id, url} }
     },
 
     // Accessories - cables section
@@ -319,7 +320,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
       stripePriceId,
       "slug": slug.current,
       "imageUrl": image.asset->url,
-      image { asset->{url} }
+      image { asset->{_id, url} }
     },
 
     // Accessories - earpads section
@@ -332,7 +333,7 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
       stripePriceId,
       "slug": slug.current,
       "imageUrl": image.asset->url,
-      image { asset->{url} }
+      image { asset->{_id, url} }
     }
   }
 `);

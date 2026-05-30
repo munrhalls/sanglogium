@@ -1,8 +1,16 @@
 export interface SanityImage {
-  readonly _type: 'image';
+  readonly _type?: 'image';
   readonly asset: {
-    readonly _ref: string;
-    readonly _type: 'reference';
+    readonly _id: string;
+    readonly url: string;
+    readonly metadata?: {
+      readonly dimensions: {
+        readonly width: number;
+        readonly height: number;
+        readonly aspectRatio: number;
+      };
+      readonly lqip: string;
+    };
   };
   readonly alt?: string;
   readonly hotspot?: {

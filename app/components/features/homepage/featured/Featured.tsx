@@ -1,6 +1,6 @@
-import { Image } from "next-sanity/image";
+import Image from "next/image";
+import { sanityImageLoader } from "@/lib/utils/sanityImageLoader";
 import Link from "next/link";
-import { urlFor } from "@/sanity-cms/lib/image";
 import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
 import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";
 import { CarouselSlide } from "@/app/components/layout/carousel/CarouselSlide";
@@ -43,11 +43,7 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
           {product.brand.name}
         </span>
         <Image
-          src={urlFor(product.image)
-            .width(450)
-            .auto("format")
-            .quality(75)
-            .url()}
+          src={product.image?.asset?._id ? sanityImageLoader({ src: product.image?.asset?._id, width: 450, quality: 75 }) : ""}
           alt={product.name}
           width={450}
           height={450}

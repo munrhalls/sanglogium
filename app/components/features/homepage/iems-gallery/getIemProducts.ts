@@ -13,7 +13,7 @@ export interface IemProduct {
   stock: number;
   slug: string;
   imageUrl: string;
-  image: { asset: { url: string }; alt?: string };
+  image: { asset: { _id: string; url: string }; alt?: string };
 }
 
 const IEMS_QUERY = `*[_type == "homepageData"][0].iemsGallery[]->{
@@ -24,7 +24,7 @@ const IEMS_QUERY = `*[_type == "homepageData"][0].iemsGallery[]->{
   stock,
   "slug": slug.current,
   "imageUrl": image.asset->url,
-  image{asset->{url}}
+  image{asset->{_id, url}}
 }`;
 
 export const getIemProducts = cache(async (): Promise<IemProduct[]> => {

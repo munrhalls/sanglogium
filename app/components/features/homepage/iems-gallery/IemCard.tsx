@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils/tailwind";
-import { Image } from "next-sanity/image";
+import Image from "next/image";
+import { sanityImageLoader } from "@/lib/utils/sanityImageLoader";
 import Link from "next/link";
-import { urlFor } from "@/sanity-cms/lib/image";
 import { IemProduct } from "./getIemProducts";
 import { BasketControls } from "@/app/components/features/basket/BasketControls";
 import { centsToDisplay } from "@/lib/utils/price";
@@ -20,11 +20,7 @@ export default function IemCard({
       <Link href={`/product/${product.slug}`} className="block">
         <div className="rounded-none relative flex aspect-square w-full cursor-pointer items-center justify-center overflow-hidden bg-surface-productImage pb-0 pt-0 md:pt-12 xs:pb-4 xs:pt-8">
           <Image
-            src={urlFor(product.image)
-              .width(375)
-              .auto("format")
-              .quality(75)
-              .url()}
+            src={product.image?.asset?._id ? sanityImageLoader({ src: product.image?.asset?._id, width: 375, quality: 75 }) : ""}
             alt={product.name}
             width={375}
             height={375}

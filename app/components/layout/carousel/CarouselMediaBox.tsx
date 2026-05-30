@@ -6,9 +6,10 @@ import { sanityImageLoader } from "@/lib/utils/sanityImageLoader";
 interface CarouselMediaBoxProps {
   src: any;
   alt: string;
+  priority?: boolean;
 }
 
-export default function CarouselMediaBox({ src, alt }: CarouselMediaBoxProps) {
+export default function CarouselMediaBox({ src, alt, priority }: CarouselMediaBoxProps) {
   if (!src) return <div className="bg-secondary-100 aspect-square w-full animate-pulse rounded-sm" />;
 
   const isStringUrl = typeof src === "string";
@@ -23,7 +24,7 @@ export default function CarouselMediaBox({ src, alt }: CarouselMediaBoxProps) {
         fill
         sizes="(max-width: 768px) 40vw, 20vw"
         className="object-contain transition-transform duration-700 group-hover:scale-105"
-        priority
+        priority={priority}
       />
     </div>
   );

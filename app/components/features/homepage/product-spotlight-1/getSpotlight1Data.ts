@@ -10,9 +10,9 @@ export interface Spotlight1Product {
     slug: string;
   };
   price_data: { currency: string; unit_amount: number };
-  image: { asset: { url: string }; alt?: string };
-  gallery?: Array<{ asset: { url: string }; alt?: string }>;
-  images?: Array<{ asset: { url: string }; alt?: string }>;
+  image: { asset: { _id: string; url: string }; alt?: string };
+  gallery?: Array<{ asset: { _id: string; url: string }; alt?: string }>;
+  images?: Array<{ asset: { _id: string; url: string }; alt?: string }>;
 }
 
 export interface Spotlight1Data {
@@ -28,8 +28,8 @@ const SPOTLIGHT1_QUERY = `*[_type == "homepageData"][0].spotlight1Data{
   promoText,
   productRef->{
     _id, name, brand->{ _id, name, slug }, price_data,
-    image{asset->{url}},
-    gallery[]{asset->{url}}
+    image{asset->{_id, url}},
+    gallery[]{asset->{_id, url}}
   }
 }`;
 

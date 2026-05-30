@@ -9,6 +9,7 @@ export interface AccessoryItem {
   readonly slug: string;
   readonly price_data: { currency: string; unit_amount: number };
   readonly imageUrl: string;
+  readonly image: { asset: { _id: string; url: string }; alt?: string };
   readonly category?: string;
 }
 

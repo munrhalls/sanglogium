@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils/tailwind";
-import { Image } from "next-sanity/image";
-import { urlFor } from "@/sanity-cms/lib/image";
+import Image from "next/image";
+import { sanityImageLoader } from "@/lib/utils/sanityImageLoader";
 import Link from "next/link";
 import type { AccessoryItem } from "./types";
 import { BasketControls } from "@/app/components/features/basket/BasketControls";
@@ -23,7 +23,7 @@ export default function AccessoryCard({
             {item.brand.name}
           </span>
           <Image
-            src={urlFor(item.image).width(450).auto("format").quality(75).url()}
+            src={item.image?.asset?._id ? sanityImageLoader({ src: item.image?.asset?._id, width: 450, quality: 75 }) : ""}
             alt={item.name}
             width={450}
             height={450}

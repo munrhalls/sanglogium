@@ -13,7 +13,7 @@ export interface AccessoryProduct {
   stock: number;
   slug: string;
   imageUrl: string;
-  image: { asset: { url: string }; alt?: string };
+  image: { asset: { _id: string; url: string }; alt?: string };
 }
 
 export interface AccessoryData {
@@ -23,8 +23,8 @@ export interface AccessoryData {
 
 const BASE = `*[_type == "homepageData"][0]`;
 
-const CABLES_Q = `${BASE}.accessoriesCables[]->{_id,name,brand->{ _id, name, slug },price_data,stock,"slug": slug.current,"imageUrl": image.asset->url,image{asset->{url}}}`;
-const EARPADS_Q = `${BASE}.accessoriesEarpads[]->{_id,name,brand->{ _id, name, slug },price_data,stock,"slug": slug.current,"imageUrl": image.asset->url,image{asset->{url}}}`;
+const CABLES_Q = `${BASE}.accessoriesCables[]->{_id,name,brand->{ _id, name, slug },price_data,stock,"slug": slug.current,"imageUrl": image.asset->url,image{asset->{_id, url}}}`;
+const EARPADS_Q = `${BASE}.accessoriesEarpads[]->{_id,name,brand->{ _id, name, slug },price_data,stock,"slug": slug.current,"imageUrl": image.asset->url,image{asset->{_id, url}}}`;
 
 export const getAccessoryProducts = cache(async (): Promise<AccessoryData> => {
   const [cables, earpads] = await Promise.all([
