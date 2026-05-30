@@ -181,7 +181,7 @@ export default function BasketManager() {
   if (error) {
     return (
       <div className="card-base p-6">
-        <p className="text-error-500">{error.message}</p>
+        <p className="text-error-700 type-body">{error.message}</p>
       </div>
     );
   }
@@ -192,16 +192,16 @@ export default function BasketManager() {
         <div className="card-base overflow-hidden">
           {/* Header */}
           <div className="hidden border-b border-border-secondary px-6 py-3 lg-touch:grid lg-touch:grid-cols-[3fr_1fr_1fr_1fr] lg-desktop:grid lg-desktop:grid-cols-[3fr_1fr_1fr_1fr]">
-            <div className="type-caption uppercase tracking-editorial text-secondary-500">
+            <div className="type-caption uppercase tracking-editorial text-text-caption">
               Product
             </div>
-            <div className="type-caption text-center uppercase tracking-editorial text-secondary-500">
+            <div className="type-caption text-center uppercase tracking-editorial text-text-caption">
               Price
             </div>
-            <div className="type-caption text-center uppercase tracking-editorial text-secondary-500">
+            <div className="type-caption text-center uppercase tracking-editorial text-text-caption">
               Quantity
             </div>
-            <div className="type-caption text-right uppercase tracking-editorial text-secondary-500">
+            <div className="type-caption text-right uppercase tracking-editorial text-text-caption">
               Total
             </div>
           </div>

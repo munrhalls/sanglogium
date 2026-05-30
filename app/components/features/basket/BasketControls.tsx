@@ -1,6 +1,7 @@
 "use client";
 
 import { useShallow } from 'zustand/shallow';
+import { TrashIcon } from "@phosphor-icons/react";
 import useBasketStore from "@/store/basketStore";
 
 interface BasketControlsProps {
@@ -82,7 +83,7 @@ export function BasketControls({
         data-testid={`decrement-${productId}`}
         type="button"
         disabled={isBasketPage && quantity <= 1}
-        className={decrementClassName || "bg-surface-elevated text-text-body rounded p-2 h-9 w-9 flex items-center justify-center hover:bg-surface-subtle transition-colors disabled:opacity-50 disabled:cursor-not-allowed"}
+        className={decrementClassName || "btn-secondary h-9 w-9 flex items-center justify-center p-0"}
       >
         -
       </button>
@@ -91,7 +92,7 @@ export function BasketControls({
         onClick={handleIncrement}
         data-testid={`increment-${productId}`}
         type="button"
-        className={incrementClassName || "bg-surface-elevated text-text-body rounded p-2 h-9 w-9 flex items-center justify-center hover:bg-surface-subtle transition-colors disabled:opacity-50 disabled:cursor-not-allowed"}
+        className={incrementClassName || "btn-secondary h-9 w-9 flex items-center justify-center p-0"}
       >
         +
       </button>
@@ -100,9 +101,9 @@ export function BasketControls({
           onClick={handleRemove}
           data-testid={`remove-${productId}`}
           type="button"
-          className={removeClassName || "text-text-caption hover:text-error-500 transition-colors rounded p-2 h-9 w-9 flex items-center justify-center"}
+          className={removeClassName || "btn-ghost h-9 w-9 flex items-center justify-center p-0 hover:text-error-500"}
         >
-          X
+          <TrashIcon size={18} />
         </button>
       )}
     </div>
