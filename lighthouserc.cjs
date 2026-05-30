@@ -15,8 +15,8 @@ module.exports = {
   ci: {
     // Collect configuration
     collect: {
-      // Start dev server and test against it
-      startServerCommand: 'npm run dev',
+      // Start production build server for stable measurements
+      startServerCommand: 'npm run build && npm run start',
       url: [
         'http://localhost:3000/',
         'http://localhost:3000/product/test-64-audio-premium-pearl-cable-3-5mm',
