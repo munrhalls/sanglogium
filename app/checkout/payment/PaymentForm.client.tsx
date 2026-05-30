@@ -126,7 +126,7 @@ function PaymentFormInner({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="card-base space-y-6">
       <ExpressCheckoutElement
         options={{
           buttonHeight: 44,
@@ -143,42 +143,41 @@ function PaymentFormInner({
           });
         }}
       />
-      <div className="border-t border-gray-100 pt-4">
-        <p className="mb-3 text-center text-xs text-gray-500">Or pay with card, BLIK, or other methods</p>
+      <div className="border-t border-border-secondary pt-4">
+        <p className="mb-3 text-center type-caption text-text-caption">Or pay by card</p>
         <PaymentElement options={{ fields: { billingDetails: { address: "never" } } }} />
       </div>
       {error && (
-        <p className="text-sm text-red-600">{error}</p>
+        <p className="type-body text-error-500">{error}</p>
       )}
+      {/* Security trust signal — positioned at peak anxiety point, just above Pay button */}
+      <div className="flex items-center justify-center gap-1.5 type-caption text-text-caption">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-success-500">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+        Secure payment encrypted by Stripe
+      </div>
       <button
         onClick={handlePay}
         disabled={isLoading || !stripe || !elements}
-        className="w-full rounded-lg bg-black py-3 font-semibold text-white transition-colors hover:bg-gray-800 disabled:cursor-not-allowed disabled:bg-gray-400"
+        className="btn-cart-large w-full justify-center py-4"
       >
         {isLoading ? (
           <span className="flex items-center justify-center gap-2">
-            <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+            <span className="h-4 w-4 animate-spin rounded-full border-2 border-brand-700 border-t-transparent" />
             Processing…
           </span>
         ) : (
           "Pay"
         )}
       </button>
-      <div className="flex flex-col items-center gap-2 border-t border-gray-100 pt-4">
-        <div className="flex items-center gap-1.5 text-xs text-gray-500">
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-600">
-            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-          </svg>
-          Secure payment encrypted by Stripe
-        </div>
-        <div className="flex items-center gap-2 text-xs text-gray-400">
-          <span className="font-medium">Visa</span>
-          <span>·</span>
-          <span className="font-medium">Mastercard</span>
-          <span>·</span>
-          <span className="font-medium">BLIK</span>
-        </div>
+      <div className="flex items-center justify-center gap-2 type-caption text-text-secondary pt-2">
+        <span className="font-medium">Visa</span>
+        <span>·</span>
+        <span className="font-medium">Mastercard</span>
+        <span>·</span>
+        <span className="font-medium">BLIK</span>
       </div>
     </div>
   );
@@ -210,8 +209,8 @@ export default function PaymentForm({ grandTotal, metadata, address, traceId }: 
     initPayment(metadata);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  if (error) return <p className="text-red-600">Error: {error}</p>;
-  if (!clientSecret) return <p>Loading payment form…</p>;
+  if (error) return <p className="type-body text-error-500">Error: {error}</p>;
+  if (!clientSecret) return <p className="type-caption text-text-caption">Loading payment form…</p>;
 
   return (
     <div className="space-y-6">

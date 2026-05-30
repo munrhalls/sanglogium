@@ -110,4 +110,71 @@ describe('CheckoutSummary', () => {
     // Assert
     expect(screen.getByText('Product × 1')).toBeInTheDocument();
   });
+
+  it('renders shipping address when provided', () => {
+    const items = [
+      { productId: 'prod1', name: 'Product A', quantity: 1, unitPrice: 1999, lineTotal: 1999 },
+    ];
+    const address = {
+      firstName: 'Jan',
+      lastName: 'Kowalski',
+      street: 'Marszałkowska',
+      streetNumber: '1',
+      city: 'Warszawa',
+      postalCode: '00-001',
+      regionCode: 'PL',
+    };
+
+    render(
+      <CheckoutSummary
+        items={items}
+        shippingCost={1899}
+        subtotal={1999}
+        grandTotal={3898}
+        address={address}
+      />
+    );
+
+    expect(screen.getByText('Deliver to')).toBeInTheDocument();
+    expect(screen.getByText('Jan Kowalski')).toBeInTheDocument();
+    expect(screen.getByText('Marszałkowska 1')).toBeInTheDocument();
+    expect(screen.getByText('00-001 Warszawa')).toBeInTheDocument();
+  });
+
+  it('renders VAT included line', () => {
+    const items = [
+      { productId: 'prod1', name: 'Product A', quantity: 1, unitPrice: 1999, lineTotal: 1999 },
+    ];
+
+    render(
+      <CheckoutSummary
+        items={items}
+        shippingCost={1899}
+        subtotal={1999}
+        grandTotal={3898}
+      />
+    );
+
+    expect(screen.getByText('VAT (included)')).toBeInTheDocument();
+  });
+
+  it('renders delivery estimate when provided', () => {
+    const items = [
+      { productId: 'prod1', name: 'Product A', quantity: 1, unitPrice: 1999, lineTotal: 1999 },
+    ];
+
+    render(
+      <CheckoutSummary
+        items={items}
+        shippingCost={1899}
+        shippingCarrier="DPD"
+        shippingMethodName="Classic"
+        shippingEstimatedDays={3}
+        subtotal={1999}
+        grandTotal={3898}
+      />
+    );
+
+    expect(screen.getByText('3 business days')).toBeInTheDocument();
+  });
 });

@@ -1,5 +1,6 @@
 import { getCheckoutSession } from "@/lib/session";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import { client } from "@/sanity-cms/lib/client";
 import groq from "groq";
 import PaymentForm from "./PaymentForm.client";
@@ -39,6 +40,15 @@ export default async function Page() {
   if (session.shippingCost === undefined || session.shippingCost === null) {
     await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_guard_no_shipping_cost', data: {}, outcome: 'error' });
     redirect("/checkout/shipping");
+  }
+
+  // Quantity sanity check — prevent unreasonably high orders
+  const MAX_QUANTITY_PER_ITEM = 10;
+  for (const item of session.basket) {
+    if (item.quantity > MAX_QUANTITY_PER_ITEM) {
+      await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_guard_excessive_quantity', data: { productId: item.productId, quantity: item.quantity, max: MAX_QUANTITY_PER_ITEM }, outcome: 'error' });
+      redirect(`/basket?error=excessive_quantity&id=${item.productId}`);
+    }
   }
 
   const ids = session.basket.map((i) => i.productId);
@@ -107,20 +117,52 @@ export default async function Page() {
   };
 
   return (
-    <div className="grid gap-6 md:grid-cols-2">
-      <div>
-        <CheckoutSummary
-          items={items}
-          shippingCost={session.shippingCost as number}
-          shippingCode={session.shippingCode}
-          shippingCarrier={session.shippingCarrier}
-          shippingMethodName={session.shippingMethodName}
-          subtotal={subtotal}
-          grandTotal={grandTotal}
-        />
-      </div>
-      <div>
-        <PaymentForm grandTotal={grandTotal} metadata={metadata} address={address} traceId={traceId} />
+    <div className="space-y-6">
+      {/* Checkout progress stepper */}
+      <nav aria-label="Checkout progress" className="flex items-center justify-center gap-2 type-caption text-text-caption">
+        <Link href="/basket" className="hover:text-text-body transition-colors">Basket</Link>
+        <span className="text-border-primary">→</span>
+        <Link href="/checkout/address" className="hover:text-text-body transition-colors">Address</Link>
+        <span className="text-border-primary">→</span>
+        <Link href="/checkout/shipping" className="hover:text-text-body transition-colors">Shipping</Link>
+        <span className="text-border-primary">→</span>
+        <span className="text-text-body font-medium">Payment</span>
+      </nav>
+
+      <div className="grid gap-8 grid-cols-1 lg-touch:grid-cols-2 lg-desktop:grid-cols-2">
+        <div className="min-w-0 space-y-4">
+          <CheckoutSummary
+            items={items}
+            shippingCost={session.shippingCost as number}
+            shippingCode={session.shippingCode}
+            shippingCarrier={session.shippingCarrier}
+            shippingMethodName={session.shippingMethodName}
+            shippingEstimatedDays={session.shippingEstimatedDays}
+            address={session.address}
+            subtotal={subtotal}
+            grandTotal={grandTotal}
+          />
+          {/* Back navigation */}
+          <div className="flex items-center justify-between gap-4">
+            <Link
+              href="/checkout/shipping"
+              className="inline-flex items-center gap-1 type-caption text-text-caption hover:text-text-body transition-colors"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+              Back to shipping
+            </Link>
+            <Link
+              href="/basket"
+              className="inline-flex items-center gap-1 type-caption text-text-caption hover:text-text-body transition-colors"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+              Edit basket
+            </Link>
+          </div>
+        </div>
+        <div className="min-w-0">
+          <PaymentForm grandTotal={grandTotal} metadata={metadata} address={address} traceId={traceId} />
+        </div>
       </div>
     </div>
   );
