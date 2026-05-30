@@ -15,6 +15,12 @@ export default async function Page() {
     redirect("/checkout/address");
   }
 
+  // Guard: Redirect to basket if session.basket missing or empty
+  if (!session.basket || session.basket.length === 0) {
+    console.log("[SHIPPING PAGE] No basket in session, redirecting to basket");
+    redirect("/basket");
+  }
+
   const traceId = session.checkoutSessionId || 'unknown';
 
   // Log shipping page load
@@ -30,7 +36,31 @@ export default async function Page() {
   await logCheckoutEvent({ correlationId: traceId, slice: 'address-submit', event: 'shipping_products_fetched', data: { basketIds, productCount: products.length }, outcome: 'success' });
 
   // Calculate packages using shared utility (handles quantity aggregation)
-  const packages = calculatePackages(session.basket, products);
+  let packages;
+  try {
+    packages = calculatePackages(session.basket, products);
+  } catch (err) {
+    const errorMessage = err instanceof Error ? err.message : "Failed to calculate shipping packages";
+    console.error("[SHIPPING PAGE] Package calculation error:", errorMessage);
+    await logCheckoutEvent({
+      correlationId: traceId,
+      slice: 'address-submit',
+      event: 'shipping_package_calculation_error',
+      data: { error: errorMessage, basketIds },
+      outcome: 'error',
+    });
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="w-full max-w-2xl rounded bg-white p-6 shadow">
+          <h1 className="mb-4 text-2xl font-bold">Shipping Error</h1>
+          <p className="text-red-600">{errorMessage}</p>
+          <p className="mt-4 text-gray-600">
+            Some items in your basket cannot be shipped. Please remove them or contact support.
+          </p>
+        </div>
+      </div>
+    );
+  }
   console.log("[SHIPPING PAGE] Calculated packages:", packages.length);
   console.log("[SHIPPING PAGE] Parcel dimensions:", JSON.stringify(packages, null, 2));
 
