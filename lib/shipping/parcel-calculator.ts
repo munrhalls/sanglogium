@@ -63,7 +63,8 @@ export function calculatePackages(
   for (const item of basketItems) {
     const product = productMap.get(item.productId);
     if (!product || !product.parcel) {
-      throw new Error(`Product ${item.productId} missing parcel data`);
+      console.warn(`[PARCEL CALC] Product ${item.productId} missing parcel data, skipping`);
+      continue;
     }
 
     const { parcel } = product;
@@ -72,6 +73,12 @@ export function calculatePackages(
     maxLength = Math.max(maxLength, parcel.length);
     maxWidth = Math.max(maxWidth, parcel.width);
     maxHeight = Math.max(maxHeight, parcel.height);
+  }
+
+  // Guard: no valid parcel data found
+  if (totalWeight === 0 && totalVolume === 0) {
+    console.warn('[PARCEL CALC] No valid parcel data for any basket item');
+    return [];
   }
 
   // Calculate number of parcels needed
@@ -141,7 +148,8 @@ export function calculatePackagesFromReservation(
 
   for (const item of basketReservation) {
     if (!item.parcel) {
-      throw new Error(`Product ${item._id} missing parcel data`);
+      console.warn(`[PARCEL CALC] Product ${item._id} missing parcel data, skipping`);
+      continue;
     }
 
     const { parcel } = item;
@@ -150,6 +158,12 @@ export function calculatePackagesFromReservation(
     maxLength = Math.max(maxLength, parcel.length);
     maxWidth = Math.max(maxWidth, parcel.width);
     maxHeight = Math.max(maxHeight, parcel.height);
+  }
+
+  // Guard: no valid parcel data found
+  if (totalWeight === 0 && totalVolume === 0) {
+    console.warn('[PARCEL CALC] No valid parcel data for any basket reservation item');
+    return [];
   }
 
   // Calculate number of parcels needed

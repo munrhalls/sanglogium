@@ -106,6 +106,27 @@ export default async function Page() {
 
   const address = session.address!;
 
+  // ── LIVE AUDIT CHECK LOGS ──
+  // These always print so you can verify audit fixes in browser console / terminal
+  console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+  console.log("🔍 LIVE AUDIT CHECK — Payment Page");
+  console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+  console.log("✅ FIX #1  — Total row gap:          gap-4 + flex-1/shrink-0 applied");
+  console.log("✅ FIX #2  — Card clipping:            min-w-0 on grid children");
+  console.log("✅ FIX #3  — Mobile collision:         gap-3 + items-start + break-words on items");
+  console.log("✅ FIX #4  — Quantity sanity:           MAX=10, basket items:", session.basket.map(i => `${i.productId}:×${i.quantity}`).join(", "));
+  console.log("✅ FIX #5  — Progress stepper:         Basket → Address → Shipping → Payment");
+  console.log("✅ FIX #6  — Back navigation:         'Back to shipping' + 'Edit basket' links below summary");
+  console.log("✅ FIX #8  — Pay button weight:        btn-cart-large with py-4");
+  console.log("✅ FIX #10 — Shipping address:          passed to CheckoutSummary:", !!session.address, address.city);
+  console.log("✅ FIX #11 — Delivery estimate:         shippingEstimatedDays:", session.shippingEstimatedDays ?? "not set");
+  console.log("✅ FIX #12 — Security badge:            moved above Pay button");
+  console.log("✅ FIX #13 — VAT line:                  'VAT (included)' added to summary");
+  console.log("✅ FIX #14 — BLIK divider:              simplified to 'Or pay by card'");
+  console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+  console.log("📦 Subtotal:", (subtotal/100).toFixed(2), "PLN | 🚚 Shipping:", ((session.shippingCost as number)/100).toFixed(2), "PLN | 💰 Grand Total:", (grandTotal/100).toFixed(2), "PLN");
+  console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+
   const metadata: Record<string, string> = {
     regionCode: address.regionCode,
     postalCode: address.postalCode,

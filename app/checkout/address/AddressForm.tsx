@@ -54,35 +54,39 @@ export default function AddressForm({ traceId, initialAddress }: AddressFormProp
     setIsLoading(true);
     setError(null);
 
-    try {
-      const addressData = {
-        firstName: formData.get("firstName") as string,
-        lastName: formData.get("lastName") as string,
-        phone: formData.get("phone") as string,
-        regionCode: formData.get("regionCode") as string,
-        postalCode: formData.get("postalCode") as string,
-        street: formData.get("street") as string,
-        streetNumber: formData.get("streetNumber") as string,
-        city: formData.get("city") as string,
-      };
+    const addressData = {
+      firstName: formData.get("firstName") as string,
+      lastName: formData.get("lastName") as string,
+      phone: formData.get("phone") as string,
+      regionCode: formData.get("regionCode") as string,
+      postalCode: formData.get("postalCode") as string,
+      street: formData.get("street") as string,
+      streetNumber: formData.get("streetNumber") as string,
+      city: formData.get("city") as string,
+    };
 
-      // Log address form submission (frontend)
-      await fetch('/api/trace', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          traceId,
-          step: 'address_form_submit',
-          data: addressData
-        })
+    // Fire-and-forget trace logging — never block submission on trace failure
+    fetch('/api/trace', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        traceId,
+        step: 'address_form_submit',
+        data: addressData
       })
+    }).catch(() => {});
 
+    try {
       const result = await saveAddress(addressData);
       if (result && result.status === "FIX") {
         setError("Address could not be verified. Please check your details and try again.");
         setIsLoading(false);
       }
     } catch (err) {
+      // NEVER intercept Next.js redirect errors — let the framework handle navigation
+      if (err instanceof Error && err.message === "NEXT_REDIRECT") {
+        throw err;
+      }
       setError(err instanceof Error ? err.message : "Failed to save address");
       setIsLoading(false);
     }

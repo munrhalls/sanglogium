@@ -59,15 +59,12 @@ export default function ShippingPageClient({ shippingOptions, traceId }: Shippin
         selectedOption.estimatedDays
       );
     } catch (err) {
-      // Only handle real errors — Next.js redirect() throws a non-Error internally;
-      // checking digest ensures we never swallow it
-      if (err instanceof Error) {
-        setError(err.message || "Nie udało się zapisać wyboru dostawy");
-        setIsSubmitting(false);
-      } else {
-        // Not a real Error (e.g. Next.js redirect internal throw) — rethrow
+      // NEVER intercept Next.js redirect errors — let the framework handle navigation
+      if (err instanceof Error && err.message === "NEXT_REDIRECT") {
         throw err;
       }
+      setError(err instanceof Error ? err.message : "Nie udało się zapisać wyboru dostawy");
+      setIsSubmitting(false);
     }
   };
 
