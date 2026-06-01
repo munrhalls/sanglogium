@@ -3,8 +3,8 @@ import type { NextConfig } from "next";
 import withBundleAnalyzer from "@next/bundle-analyzer";
 
 const nextConfig: NextConfig = {
-  typescript: { ignoreBuildErrors: true },
-  eslint: { ignoreDuringBuilds: true },
+  typescript: { ignoreBuildErrors: false },
+  eslint: { ignoreDuringBuilds: false },
   serverExternalPackages: ["isomorphic-dompurify"],
   transpilePackages: ["@sanity/ui", "@sanity/icons", "next-sanity"],
   trailingSlash: false,
