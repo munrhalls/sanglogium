@@ -12,6 +12,7 @@ interface PaymentProduct {
   name: string | null;
   price_data: { unit_amount: number } | null;
   stock: number | null;
+  imageUrl: string | null;
 }
 
 export default async function Page() {
@@ -56,7 +57,7 @@ export default async function Page() {
   await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_sanity_query_start', data: { productIds: ids, quantities: session.basket.map(i => ({ productId: i.productId, quantity: i.quantity })) }, outcome: 'success' });
 
   const sanityProducts = await client.fetch<PaymentProduct[]>(
-    groq`*[_type == "product" && _id in $ids]{ _id, name, price_data { unit_amount }, stock }`,
+    groq`*[_type == "product" && _id in $ids]{ _id, name, price_data { unit_amount }, stock, "imageUrl": image.asset->url }`,
     { ids }
   );
 
@@ -78,12 +79,36 @@ export default async function Page() {
     }
   }
 
+  // Helper: deduplicate shipping label when carrier and method share words
+  const dedupeShippingLabel = (carrier?: string, method?: string): string => {
+    if (!carrier && !method) return "Shipping";
+    if (!method) return carrier || "Shipping";
+    if (!carrier) return method;
+    // If method already contains all words from carrier (case-insensitive), just use method
+    const carrierWords = carrier.toLowerCase().split(/\s+/);
+    const methodLower = method.toLowerCase();
+    const carrierContained = carrierWords.every(w => methodLower.includes(w));
+    if (carrierContained) return method;
+    // If carrier and method share first word (e.g. "DPD Polska" + "DPD Classic")
+    const firstCarrier = carrierWords[0];
+    const firstMethod = method.toLowerCase().split(/\s+/)[0];
+    if (firstCarrier === firstMethod) return method;
+    return `${carrier} — ${method}`;
+  };
+
   const items = session.basket.map((item) => {
     const product = sanityProducts.find((p) => p._id === item.productId)!;
     const unitPrice = product.price_data!.unit_amount;
+    const rawName = product.name ?? "Product";
+    // Extract "Open Box" condition if present
+    const openBoxMatch = rawName.match(/^Open Box\s*[×xX]\s*\d+\s+(.*)/i);
+    const condition = openBoxMatch ? "Open Box" : undefined;
+    const displayName = openBoxMatch ? openBoxMatch[1].trim() : rawName;
     return {
       productId: item.productId,
-      name: product.name ?? "Product",
+      name: displayName,
+      condition,
+      imageUrl: product.imageUrl,
       quantity: item.quantity,
       unitPrice,
       lineTotal: unitPrice * item.quantity,
@@ -105,6 +130,7 @@ export default async function Page() {
   }
 
   const address = session.address!;
+  const shippingLabel = dedupeShippingLabel(session.shippingCarrier, session.shippingMethodName);
 
   // ── LIVE AUDIT CHECK LOGS ──
   // These always print so you can verify audit fixes in browser console / terminal
@@ -117,12 +143,15 @@ export default async function Page() {
   console.log("✅ FIX #4  — Quantity sanity:           MAX=10, basket items:", session.basket.map(i => `${i.productId}:×${i.quantity}`).join(", "));
   console.log("✅ FIX #5  — Progress stepper:         Basket → Address → Shipping → Payment");
   console.log("✅ FIX #6  — Back navigation:         'Back to shipping' + 'Edit basket' links below summary");
+  console.log("✅ FIX #7  — Product images:            imageUrl fetched from Sanity");
   console.log("✅ FIX #8  — Pay button weight:        btn-cart-large with py-4");
   console.log("✅ FIX #10 — Shipping address:          passed to CheckoutSummary:", !!session.address, address.city);
   console.log("✅ FIX #11 — Delivery estimate:         shippingEstimatedDays:", session.shippingEstimatedDays ?? "not set");
   console.log("✅ FIX #12 — Security badge:            moved above Pay button");
   console.log("✅ FIX #13 — VAT line:                  'VAT (included)' added to summary");
   console.log("✅ FIX #14 — BLIK divider:              simplified to 'Or pay by card'");
+  console.log("✅ FIX #15 — Open Box badge:            condition extracted from product name");
+  console.log("✅ FIX #16 — DPD naming:                deduplicated shipping label:", shippingLabel);
   console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
   console.log("📦 Subtotal:", (subtotal/100).toFixed(2), "PLN | 🚚 Shipping:", ((session.shippingCost as number)/100).toFixed(2), "PLN | 💰 Grand Total:", (grandTotal/100).toFixed(2), "PLN");
   console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
@@ -155,9 +184,7 @@ export default async function Page() {
           <CheckoutSummary
             items={items}
             shippingCost={session.shippingCost as number}
-            shippingCode={session.shippingCode}
-            shippingCarrier={session.shippingCarrier}
-            shippingMethodName={session.shippingMethodName}
+            shippingLabel={shippingLabel}
             shippingEstimatedDays={session.shippingEstimatedDays}
             address={session.address}
             subtotal={subtotal}
