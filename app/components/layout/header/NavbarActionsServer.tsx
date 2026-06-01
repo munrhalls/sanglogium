@@ -1,10 +1,11 @@
-import { cookies } from "next/headers";
+import { headers } from "next/headers";
+import { getSessionCookie } from "better-auth/cookies";
 import NavbarActions from "./NavbarActions";
 
 export default async function NavbarActionsServer() {
-  const cookieStore = await cookies();
-  const sessionCookie = cookieStore.get("better-auth.session_token");
-  const isAuthenticated = !!sessionCookie;
+  const headersList = await headers();
+  const sessionToken = getSessionCookie(headersList);
+  const isAuthenticated = !!sessionToken;
 
   // Cart count: hardcode 0 for now — cart state is managed client-side via Zustand
   const cartCount = 0;

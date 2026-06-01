@@ -1,13 +1,14 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { createUserProfile } from "./actions";
 
 export default function SignUpForm() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const emailFromUrl = searchParams.get("email");
 
   const [state, formAction, isPending] = useActionState(
@@ -46,6 +47,12 @@ export default function SignUpForm() {
     null
   );
 
+  useEffect(() => {
+    if (state?.success) {
+      router.push("/account");
+    }
+  }, [state, router]);
+
   return (
     <div className="mx-auto max-w-md p-6">
       <h1 className="mb-6 text-2xl font-bold">Create Account</h1>
@@ -58,10 +65,7 @@ export default function SignUpForm() {
 
       {state?.success && (
         <div className="mb-4 rounded border border-green-400 bg-green-100 p-3 text-green-700">
-          Account created successfully!{" "}
-          <Link href="/account" className="underline">
-            Go to your account
-          </Link>
+          Account created successfully! Redirecting...
         </div>
       )}
 

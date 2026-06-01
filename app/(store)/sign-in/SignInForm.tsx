@@ -1,10 +1,12 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 
 export default function SignInForm() {
+  const router = useRouter();
   const [state, formAction, isPending] = useActionState(
     async (_prevState: unknown, formData: FormData) => {
       const email = formData.get("email") as string;
@@ -23,6 +25,12 @@ export default function SignInForm() {
     },
     null
   );
+
+  useEffect(() => {
+    if (state?.success) {
+      router.push("/account");
+    }
+  }, [state, router]);
 
   async function handleGoogleSignIn() {
     await authClient.signIn.social({
