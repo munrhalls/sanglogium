@@ -74,6 +74,15 @@ A feature is a **user-facing capability** with a clear boundary:
 
 If in doubt, split. One small feature per issue is better than one kitchen sink.
 
+### Meta Issues (research, testing, cross-cutting concerns)
+
+Meta issues are background concerns that don't follow the two-path structure:
+- **Examples:** AI research, testing strategy, tooling exploration, architectural investigation
+- **Status:** Set `status = meta` after creation: `bd update <id> --status meta`
+- **Type:** Use `spike` (timeboxed investigation) or `task` as the `bd` type
+- **No two-path required** — describe what to research/track; record findings in notes
+- **No happy-path-first rule** — meta issues have no user-facing flow to validate
+
 ### When to Create an Issue (Default Mode — 90% of work)
 
 Create a beads issue when:

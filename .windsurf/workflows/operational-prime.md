@@ -23,6 +23,7 @@ Identify the feature's canonical issue. If multiple match, ask: "Which feature?"
 bd show <id>
 ```
 - Read the issue **completely** (description + all notes)
+- If `status = meta`: skip Steps 2–3 rules — meta issues (research, testing, cross-cutting) have no happy-path structure; work directly on the research/tracking objective
 - Verify two-path structure: Happy Path + Edge Cases Path
 - Check lock state: 🔒 (locked) or 🔓 (unlocked)
 - Determine: work on happy path OR edge cases

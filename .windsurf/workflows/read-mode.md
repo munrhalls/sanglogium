@@ -16,7 +16,7 @@ You are in **read-only mode** for this conversation.
 - **NO long-running or resource-heavy commands** — no dev servers, no watchers, no background processes
 
 ## Allowed
-
+- Beads issue updates
 - Read files using read_file
 - Search code using code_search, grep_search, find_by_name
 - Analyze, suggest, explain, plan, research
