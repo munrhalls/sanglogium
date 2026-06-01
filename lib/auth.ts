@@ -37,6 +37,16 @@ export const auth = betterAuth({
   database: kyselyAdapter(db, { type: "sqlite" }),
   secret: process.env.BETTER_AUTH_SECRET,
   baseUrl: process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_BASE_URL,
+  trustedOrigins: [process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"].filter(Boolean),
+  rateLimit: {
+    window: 60,
+    max: 10,
+  },
+  emailAndPassword: {
+    enabled: true,
+    requireEmailVerification: false,
+    autoSignIn: true,
+  },
   socialProviders: {
     ...(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET
       ? {

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { getSessionCookie } from "better-auth/cookies";
 
 export default async function middleware(request: NextRequest) {
   const response = NextResponse.next();
@@ -7,8 +8,8 @@ export default async function middleware(request: NextRequest) {
 
   // Auth protection for /account/* routes
   if (pathname.startsWith("/account")) {
-    const sessionCookie = request.cookies.get("better-auth.session_token");
-    if (!sessionCookie) {
+    const sessionToken = getSessionCookie(request);
+    if (!sessionToken) {
       return NextResponse.redirect(new URL("/sign-in", request.url));
     }
   }
