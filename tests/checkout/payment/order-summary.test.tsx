@@ -16,7 +16,7 @@ describe('CheckoutSummary', () => {
       <CheckoutSummary
         items={items}
         shippingCost={1899}
-        shippingCode="dpd"
+        shippingLabel="Shipping (dpd)"
         subtotal={8997}
         grandTotal={10896}
       />
@@ -30,7 +30,7 @@ describe('CheckoutSummary', () => {
     expect(screen.getByText('Total')).toBeInTheDocument();
   });
 
-  it('renders human-readable shipping label when carrier and method are provided', () => {
+  it('renders deduplicated shipping label', () => {
     const items = [
       { productId: 'prod1', name: 'Product A', quantity: 1, unitPrice: 1999, lineTotal: 1999 },
     ];
@@ -39,16 +39,14 @@ describe('CheckoutSummary', () => {
       <CheckoutSummary
         items={items}
         shippingCost={1899}
-        shippingCode="fedex_fedex"
-        shippingCarrier="FedEx"
-        shippingMethodName="Standard"
+        shippingLabel="DPD Classic"
         subtotal={1999}
         grandTotal={3898}
       />
     );
 
-    expect(screen.getByText('FedEx — Standard')).toBeInTheDocument();
-    expect(screen.queryByText('Shipping (fedex_fedex)')).not.toBeInTheDocument();
+    expect(screen.getByText('DPD Classic')).toBeInTheDocument();
+    expect(screen.queryByText('DPD Polska — DPD Classic')).not.toBeInTheDocument();
   });
 
   it('renders carrier-only label when method name is missing', () => {
@@ -60,8 +58,7 @@ describe('CheckoutSummary', () => {
       <CheckoutSummary
         items={items}
         shippingCost={1899}
-        shippingCode="dpd"
-        shippingCarrier="DPD"
+        shippingLabel="DPD"
         subtotal={1999}
         grandTotal={3898}
       />
@@ -70,7 +67,7 @@ describe('CheckoutSummary', () => {
     expect(screen.getByText('DPD')).toBeInTheDocument();
   });
 
-  it('handles missing shipping code gracefully', () => {
+  it('handles missing shipping label gracefully', () => {
     // Arrange
     const items = [
       { productId: 'prod1', name: 'Product A', quantity: 1, unitPrice: 1999, lineTotal: 1999 },
@@ -81,6 +78,7 @@ describe('CheckoutSummary', () => {
       <CheckoutSummary
         items={items}
         shippingCost={1899}
+        shippingLabel="Shipping"
         subtotal={1999}
         grandTotal={3898}
       />
@@ -102,6 +100,7 @@ describe('CheckoutSummary', () => {
       <CheckoutSummary
         items={items}
         shippingCost={1899}
+        shippingLabel="Shipping"
         subtotal={1999}
         grandTotal={3898}
       />
@@ -129,6 +128,7 @@ describe('CheckoutSummary', () => {
       <CheckoutSummary
         items={items}
         shippingCost={1899}
+        shippingLabel="Shipping"
         subtotal={1999}
         grandTotal={3898}
         address={address}
@@ -150,6 +150,7 @@ describe('CheckoutSummary', () => {
       <CheckoutSummary
         items={items}
         shippingCost={1899}
+        shippingLabel="Shipping"
         subtotal={1999}
         grandTotal={3898}
       />
@@ -167,8 +168,7 @@ describe('CheckoutSummary', () => {
       <CheckoutSummary
         items={items}
         shippingCost={1899}
-        shippingCarrier="DPD"
-        shippingMethodName="Classic"
+        shippingLabel="DPD Classic"
         shippingEstimatedDays={3}
         subtotal={1999}
         grandTotal={3898}
@@ -176,5 +176,42 @@ describe('CheckoutSummary', () => {
     );
 
     expect(screen.getByText('3 business days')).toBeInTheDocument();
+  });
+
+  it('renders Open Box condition badge when condition is provided', () => {
+    const items = [
+      { productId: 'prod1', name: 'Audeze LCD-XC', condition: 'Open Box', quantity: 1, unitPrice: 1698300, lineTotal: 1698300 },
+    ];
+
+    render(
+      <CheckoutSummary
+        items={items}
+        shippingCost={1899}
+        shippingLabel="Shipping"
+        subtotal={1698300}
+        grandTotal={1700199}
+      />
+    );
+
+    expect(screen.getByText('Open Box')).toBeInTheDocument();
+    expect(screen.getByText('Audeze LCD-XC × 1')).toBeInTheDocument();
+  });
+
+  it('renders product image when imageUrl is provided', () => {
+    const items = [
+      { productId: 'prod1', name: 'Product A', imageUrl: 'https://cdn.sanity.io/test.jpg', quantity: 1, unitPrice: 1999, lineTotal: 1999 },
+    ];
+
+    render(
+      <CheckoutSummary
+        items={items}
+        shippingCost={1899}
+        shippingLabel="Shipping"
+        subtotal={1999}
+        grandTotal={3898}
+      />
+    );
+
+    expect(screen.getByAltText('Product A')).toBeInTheDocument();
   });
 });
