@@ -6,10 +6,10 @@ import { CarouselSlide } from '@/app/components/layout/carousel/CarouselSlide';
 import { CarouselNext, CarouselPrevious, CarouselDots } from '@/app/components/layout/carousel/CarouselControls';
 import DacsHeader from "./DacsHeader";
 import DacCard from "./DacCard";
-import { IemProduct } from "../iems-gallery/getIemProducts";
+import { DacProduct } from "./getDacProducts";
 
 interface DacsProps {
-  dacsData: IemProduct[];
+  dacsData: DacProduct[];
 }
 
 const dacsBreakpointMap = {
