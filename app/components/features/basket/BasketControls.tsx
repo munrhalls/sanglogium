@@ -6,7 +6,9 @@ import useBasketStore from "@/store/basketStore";
 
 interface BasketControlsProps {
   productId: string;
+  name?: string;
   isBasketPage: boolean;
+  maxQuantity?: number;
   addClassName?: string;
   removeClassName?: string;
   decrementClassName?: string;
@@ -17,7 +19,9 @@ interface BasketControlsProps {
 
 export function BasketControls({
   productId,
+  name,
   isBasketPage,
+  maxQuantity,
   addClassName,
   removeClassName,
   decrementClassName,
@@ -44,6 +48,7 @@ export function BasketControls({
   };
 
   const handleIncrement = () => {
+    if (maxQuantity !== undefined && quantity >= maxQuantity) return;
     incrementQuantity(productId);
   };
 
@@ -77,31 +82,35 @@ export function BasketControls({
   }
 
   return (
-    <div className={`flex items-center gap-2 ${wrapperClassName || ""}`}>
-      <button
-        onClick={handleDecrement}
-        data-testid={`decrement-${productId}`}
-        type="button"
-        disabled={isBasketPage && quantity <= 1}
-        className={decrementClassName || "btn-secondary h-9 w-9 flex items-center justify-center p-0"}
-      >
-        -
-      </button>
-      <span data-testid="quantity-display" className={quantityClassName || "font-bold w-6 text-center type-body"}>{quantity}</span>
-      <button
-        onClick={handleIncrement}
-        data-testid={`increment-${productId}`}
-        type="button"
-        className={incrementClassName || "btn-secondary h-9 w-9 flex items-center justify-center p-0"}
-      >
-        +
-      </button>
+    <div className={`flex items-center ${wrapperClassName || ""}`}>
+      <div className="flex items-center">
+        <button
+          onClick={handleDecrement}
+          data-testid={`decrement-${productId}`}
+          type="button"
+          disabled={isBasketPage && quantity <= 1}
+          className={decrementClassName || "h-10 w-10 flex items-center justify-center bg-surface-elevated border border-border-secondary rounded-l-sm border-r-0 text-text-secondary hover:border-border-primary hover:text-text-primary transition-colors duration-150 disabled:opacity-30 disabled:cursor-not-allowed"}
+        >
+          −
+        </button>
+        <span data-testid="quantity-display" className={quantityClassName || "h-10 w-10 flex items-center justify-center bg-surface-elevated border-y border-border-secondary type-card-title tabular-nums select-none"}>{quantity}</span>
+        <button
+          onClick={handleIncrement}
+          data-testid={`increment-${productId}`}
+          type="button"
+          disabled={maxQuantity !== undefined && quantity >= maxQuantity}
+          className={incrementClassName || "h-10 w-10 flex items-center justify-center bg-surface-elevated border border-border-secondary rounded-r-sm border-l-0 text-text-secondary hover:border-border-primary hover:text-text-primary transition-colors duration-150"}
+        >
+          +
+        </button>
+      </div>
       {isBasketPage && (
         <button
           onClick={handleRemove}
           data-testid={`remove-${productId}`}
           type="button"
-          className={removeClassName || "btn-ghost h-9 w-9 flex items-center justify-center p-0 hover:text-error-500"}
+          aria-label={name ? `Remove ${name} from basket` : "Remove from basket"}
+          className={removeClassName || "ml-3 h-10 w-10 flex items-center justify-center text-text-caption hover:text-error-500 transition-colors duration-150 rounded-sm"}
         >
           <TrashIcon size={18} />
         </button>

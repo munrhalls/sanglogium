@@ -21,6 +21,7 @@ interface BasketActions {
   removeProduct: (productId: string) => void;
   incrementQuantity: (productId: string) => void;
   decrementQuantity: (productId: string) => void;
+  setQuantity: (productId: string, quantity: number) => void;
   clear: () => void;
   setHasHydrated: (state: boolean) => void;
 }
@@ -139,6 +140,30 @@ const useBasketStore = create<BasketStore>()(
             })
             .filter((item) => item.quantity > 0),
         });
+      },
+      setQuantity: (productId, quantity) => {
+        if (quantity <= 0) {
+          set({ items: get().items.filter((item) => item.productId !== productId) });
+          return;
+        }
+        const result = BasketItemSchema.safeParse({ productId, quantity });
+        if (!result.success) {
+          console.error("Invalid quantity:", result.error);
+          return;
+        }
+        const items = get().items;
+        const existing = items.find((item) => item.productId === productId);
+        if (existing) {
+          set({
+            items: items.map((item) =>
+              item.productId === productId
+                ? { ...item, quantity: result.data.quantity }
+                : item,
+            ),
+          });
+        } else {
+          set({ items: [...items, result.data] });
+        }
       },
       clear: () => {
         set({ items: [] });

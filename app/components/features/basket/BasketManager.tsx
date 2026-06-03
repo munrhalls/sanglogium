@@ -55,6 +55,9 @@ export default function BasketManager() {
   );
 
   const [shippingCost, setShippingCost] = useState<number | null>(null);
+  const [stockAdjustments, setStockAdjustments] = useState<Map<string, number>>(new Map());
+
+  const setQuantity = useBasketStore((state) => state.setQuantity);
 
   const currentProductIds = useMemo(
     () => basket.map((item) => item.productId),
@@ -144,6 +147,19 @@ export default function BasketManager() {
     };
   }, [enrichedItems]);
 
+  // Auto-adjust quantities when CMS stock is lower than basket quantity
+  useEffect(() => {
+    enrichedItems.forEach((item) => {
+      if (item.quantity > item.availableStock && item.quantity !== item.availableStock) {
+        setStockAdjustments((prev) => {
+          if (prev.has(item.productId)) return prev;
+          return new Map(prev).set(item.productId, item.quantity);
+        });
+        setQuantity(item.productId, item.availableStock);
+      }
+    });
+  }, [enrichedItems, setQuantity]);
+
   // Fetch shipping rates
   useEffect(() => {
     if (parcelData.length === 0) return;
@@ -192,16 +208,16 @@ export default function BasketManager() {
         <div className="card-base overflow-hidden">
           {/* Header */}
           <div className="hidden border-b border-border-secondary px-6 py-3 lg-touch:grid lg-touch:grid-cols-[3fr_1fr_1fr_1fr] lg-desktop:grid lg-desktop:grid-cols-[3fr_1fr_1fr_1fr]">
-            <div className="type-caption uppercase tracking-editorial text-text-caption">
+            <div className="type-overline">
               Product
             </div>
-            <div className="type-caption text-center uppercase tracking-editorial text-text-caption">
+            <div className="type-overline text-center">
               Price
             </div>
-            <div className="type-caption text-center uppercase tracking-editorial text-text-caption">
+            <div className="type-overline text-center">
               Quantity
             </div>
-            <div className="type-caption text-right uppercase tracking-editorial text-text-caption">
+            <div className="type-overline text-right">
               Total
             </div>
           </div>
@@ -214,13 +230,15 @@ export default function BasketManager() {
               quantity={item.quantity}
               displayPrice={item.displayPrice}
               image={item.image}
+              availableStock={item.availableStock}
+              originalQuantity={stockAdjustments.get(item.productId)}
             />
           ))}
         </div>
       </div>
       
       <div className="lg-touch:col-span-1 lg-desktop:col-span-1">
-        <div className="card-base sticky bottom-0 z-10 lg-touch:bottom-auto lg-touch:top-4 lg-desktop:bottom-auto lg-desktop:top-4">
+        <div className="card-product-dark sticky bottom-0 z-10 lg-touch:bottom-auto lg-touch:top-4 lg-desktop:bottom-auto lg-desktop:top-4">
           <BasketSummary
             itemCount={itemCount}
             subtotal={subtotal}
