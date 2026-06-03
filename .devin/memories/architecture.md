@@ -141,11 +141,11 @@ Sanity Schema → Localhost Studio → GROQ Library → React Server Component �
 **Prevents:** Race conditions, overselling, session tampering, funnel jumping
 
 **Current implementation (verify against beads issues before trusting):**
-- Payment page: `sang-logium-oss` (closed, happy path complete)
-- Return page: `sang-logium-2di` (closed, happy path complete)
-- Basket page: `sang-logium-mwk` (open, happy path in progress)
-- Address collection: `sang-logium-mpx` (open, happy path in progress)
-- Shipping selection: `sang-logium-3ez` (open, happy path in progress)
+- Payment page: `sang-logium-oss` (closed, Scope 1 complete)
+- Return page: `sang-logium-2di` (closed, Scope 1 complete)
+- Basket page: `sang-logium-mwk` (open, Scope 1 in progress)
+- Address collection: `sang-logium-mpx` (open, Scope 1 in progress)
+- Shipping selection: `sang-logium-3ez` (open, Scope 1 in progress)
 
 ---
 

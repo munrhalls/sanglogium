@@ -1,5 +1,5 @@
 ---
-description: Prime every AI conversation with beads-aware context — find issue, establish two-path framework, enforce happy-path-first ordering
+description: Prime every AI conversation with beads-aware context — find issue, identify active scope, enforce scope-sequential ordering
 ---
 
 # /operational-prime
@@ -23,24 +23,24 @@ Identify the feature's canonical issue. If multiple match, ask: "Which feature?"
 bd show <id>
 ```
 - Read the issue **completely** (description + all notes)
-- If `status = meta`: skip Steps 2–3 rules — meta issues (research, testing, cross-cutting) have no happy-path structure; work directly on the research/tracking objective
-- Verify two-path structure: Happy Path + Edge Cases Path
-- Check lock state: 🔒 (locked) or 🔓 (unlocked)
-- Determine: work on happy path OR edge cases
+- If `status = meta`: skip Steps 2–3 rules — meta issues have no scope structure; work directly on the research/tracking objective
+- Verify structure: Critical Intelligence + SHOULD BE Scopes + DoD Items
+- Identify **active scope**: first scope with any DoD item not marked PASS
+- Verify: all prior scopes have ALL DoD items PASS. If not → complete prior scope first
 
 ### If NO issue exists:
 **STOP. Do NOT proceed without a beads issue.**
-- Run `@/add-beads-issue` to create one with two-path structure
-- The new issue MUST include: Happy Path (tasks + acceptance) + Edge Cases Path (🔒 LOCKED placeholder)
+- Run `@/add-beads-issue` to create one with three-section structure
+- The new issue MUST include: Critical Intelligence (optional) + SHOULD BE Scopes + DoD Items
 
 ---
 
 ## Step 2: Work Approach Rules (NEVER broken)
 
-### Rule 1: Happy-Path-First Ordering
-- If happy path live checks are NOT all passing → work **ONLY** on happy path
-- Edge cases path is **LOCKED** until happy path is complete
-- **Never** work on edge cases before happy path passes with evidence
+### Rule 1: Scope-Sequential Ordering
+- Work **ONLY** on the active scope (first incomplete scope)
+- Later scopes are inactive until all DoD items for the active scope pass with evidence
+- **Never** work on Scope N+1 before Scope N is done
 
 ### Rule 2: Frame Inside Issue Only
 - `@/frame-decompose` output goes **INSIDE** the beads issue notes
@@ -48,10 +48,10 @@ bd show <id>
 - **NEVER** create `framed-objective.md` or `tasks-decomposition.md` in `docs/`
 - Beads issue is the **only** canonical spec during active work
 
-### Rule 3: No Separate Issues for Edge Cases
-- Edge cases go into the parent issue's **Edge Cases Path**
-- Creating a new issue for an edge case = **VIOLATION**
-- If you find an edge case issue → **close it**, add to parent
+### Rule 3: One Issue Per Feature
+- All scopes for one feature live in one issue
+- Creating a new issue for the same feature = **VIOLATION**
+- If you find a duplicate issue → **close it**, merge content into canonical issue
 
 ### Rule 4: Live Checks + Update Issue
 - Every task needs a live check (manual verification, not just `/test`)
@@ -81,18 +81,15 @@ After reading the issue, output this format:
 
 **Feature:** [title]
 **Status:** [open / in_progress / blocked / closed]
-**Happy Path:** [in_progress / complete / not_started]
-**Edge Cases:** [🔒 LOCKED / 🔓 UNLOCKED]
+**Active Scope:** [Scope N: description]
+**Prior Scopes:** [N-1 complete / X incomplete]
 
-### Happy Path Progress
-[Current tasks + which are done]
-
-### Live Checks
-- [ ] [Check 1]
-- [ ] [Check 2]
+### Active Scope DoD
+- [ ] [DoD item 1]
+- [ ] [DoD item 2]
 
 ### What to Work On Next
-[Recommended next task based on happy-path-first rule]
+[Implement active scope until all DoD items pass]
 ```
 
 ---
@@ -100,10 +97,10 @@ After reading the issue, output this format:
 ## Step 4: Verification Before Claiming Done
 
 Before claiming work is complete:
-- [ ] All happy path acceptance checks pass with evidence
+- [ ] All DoD items for active scope PASS with evidence
 - [ ] Beads issue updated with live check results
 - [ ] No `docs/` files created during work
-- [ ] No separate issues created for edge cases
+- [ ] No separate issues created for scopes
 - [ ] Typecheck passes: `npx tsc --noEmit`
 - [ ] `@/checks` run — 0 gaps, 0 red flags
 - [ ] **Advisory:** Run `npm run build` manually when no other agents are active; CI catches build errors
@@ -114,8 +111,8 @@ Before claiming work is complete:
 
 | Pattern | Why It Breaks |
 |---------|---------------|
-| Working on edge cases before happy path | Core flow broken, no foundation, wasted effort |
-| Creating separate issue for edge case | Violates one-feature-one-issue; scatters context |
+| Working on Scope N+1 before Scope N is done | No foundation, untested assumptions, wasted effort |
+| Creating separate issue for same feature | Violates one-feature-one-issue; scatters context |
 | Frame output in `docs/` | Spec drift; beads issue becomes stale |
 | Skipping beads issue, working from prompt | No tracking, no acceptance criteria, scope drift |
 | One conversation doing analysis + implementation | Scope creep, noise, no clear hand-off |

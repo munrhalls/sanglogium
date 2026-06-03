@@ -16,18 +16,21 @@ Run `bd types` to verify. Common types:
 
 ### What Goes in Beads Issues
 
-Each issue has **exactly two paths**:
+Each issue has **exactly three sections**:
 
-#### Path A: Happy Path (always present)
-- **What the feature should do** (core user flow, expected behavior)
-- **What the source code IS** (current implementation: file paths, key functions, data flow — NOT what changed; git tracks changes)
-- **Live check results** (pass/fail with evidence)
-- **Logs** (trace IDs, error messages)
+#### 1. Critical Intelligence (optional)
+- Max 5 bullets of key context. If more → link to a `.md` file.
+- Links to research, architecture, or key files go here.
 
-#### Path B: Edge Cases Path (always present, initially empty/locked)
-- **Known edge cases, error handling, additional capabilities**
-- Each edge case has its own "should be", source code, live checks
-- **LOCKED until happy path is complete** — see ordering rule below
+#### 2. SHOULD BE Scopes
+Ordered list. Each scope is one concrete, symptom-only behavior.
+- **Right:** "Payment page renders Stripe PaymentElement with client_secret from server"
+- **Wrong:** "Fix Server Component → Route Handler communication"
+
+#### 3. DoD Items Per Scope
+For each scope, a checklist of binary verifications.
+- Each item must be objectively pass/fail.
+- Mark with evidence: "PASS — screenshot of Stripe form, trace xyz"
 
 - **Blockers** (if any)
 - Nothing else
@@ -132,36 +135,30 @@ Never create an issue that tells an agent what to implement without evidence.
 - **Already investigated with no fixable target:** STOP. An agent already spent compute and concluded "no concrete fix target exists." Creating an issue to re-investigate = noise. Capture a reproducible stack trace first, or close the thread.
 - **Duplicate issue:** STOP. Check `bd ready` first. If an issue exists for this feature/bug, update it instead of creating a new one.
 - **Scope change mid-issue:** STOP. If the feature definition changes (e.g., "payment page" → "payment page + return page + email capture"), close the current issue and create a new one. Never expand scope inside an existing issue.
-- **Separate issue for edge case of existing feature:** STOP. Edge cases belong in the parent issue's Edge Cases Path. Close the new issue, merge content into parent. One feature = one issue = two paths.
+- **Separate issue for edge case of existing feature:** STOP. Edge cases are later scopes in the same issue. Close the new issue, merge content into parent. One feature = one issue.
 
-### Happy-Path-First Ordering Rule
+### Scope Ordering
 
-**Happy path must be complete before ANY edge case work begins.**
+**Work on Scope N only after all DoD items for Scope N-1 are PASS with evidence.**
 
-| Phase | What Agent Does | Edge Cases Path |
-|-------|-----------------|-----------------|
-| **Happy path in progress** | Implement core flow, run live checks | **LOCKED** — list known concerns only, no tasks |
-| **Happy path complete** | All live checks ✓, issue updated with evidence | **UNLOCKED** — now frame and implement edge cases |
-| **Edge cases in progress** | Work through edge cases list one by one | Active tasks with acceptance checks |
+- Scope 1 = core behavior. Later scopes = extensions / edge cases.
+- Later scopes are inactive until prior scopes are complete.
 
-**"Complete" definition:** All happy path live checks pass with evidence (logs, screenshots).
+**"Complete" definition:** All DoD items for a scope pass with evidence (logs, screenshots).
 
-**Agent MUST NOT touch edge cases until:**
-1. All happy path live checks marked ✓
+**Agent MUST NOT touch later scopes until:**
+1. All prior scope DoD items marked PASS
 2. Issue updated with evidence
-3. User or orchestrator explicitly unlocks edge cases
+3. User or orchestrator explicitly approves next scope
 
-**Violation:** Agent working on error handling, fallback UX, or "what if" scenarios before core flow works = **STOP.** Redirect to happy path.
+**Violation:** Agent working on Scope N+1 before Scope N is done = **STOP.** Redirect to active scope.
 
 ## Lifecycle Context
 
 This workflow creates the issue **container**. The issue becomes the canonical record of:
-- **What the feature should do** (expected behavior)
-- **What the source code IS** (current implementation state — NOT what changed; git tracks changes)
-- **Whether live checks passed or failed** (dev/prod manual checks, logs vs expected)
-- **What logs were captured** (trace IDs, errors)
-
-**Why "source code IS" not "what changed":** Git already tracks diffs. The next agent needs to know the CURRENT state of files to work from — not a changelog. Document the actual implementation: file paths, key functions, data flow.
+- **Critical Intelligence** (key context, linked files)
+- **SHOULD BE Scopes** (what the feature should do, ordered)
+- **DoD Items** (pass/fail checks with evidence)
 
 Agents read the issue before touching code. Agents update the issue before handing off. The issue is the hand-off artifact.
 
