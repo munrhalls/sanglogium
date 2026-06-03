@@ -6,6 +6,7 @@ import groq from "groq";
 import PaymentForm from "./PaymentForm.client";
 import CheckoutSummary from "./_components/CheckoutSummary";
 import { logCheckoutEvent } from "@/lib/dev/event-logger";
+import { cn } from "@/lib/utils/tailwind";
 
 interface PaymentProduct {
   _id: string;
@@ -166,20 +167,85 @@ export default async function Page() {
     ...(checkoutSessionId && { checkoutSessionId }),
   };
 
+  const steps = [
+    { label: "Basket", href: "/basket" },
+    { label: "Address", href: "/checkout/address" },
+    { label: "Shipping", href: "/checkout/shipping" },
+    { label: "Payment", href: null },
+  ];
+  const currentStep = 3; // 0-indexed, Payment is active
+
+  const CHECK_ICON = (
+    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20 6 9 17l-5-5" />
+    </svg>
+  );
+
   return (
     <div className="space-y-6">
-      {/* Checkout progress stepper */}
-      <nav aria-label="Checkout progress" className="flex items-center justify-center gap-2 type-caption text-text-caption">
-        <Link href="/basket" className="hover:text-text-body transition-colors">Basket</Link>
-        <span className="text-border-primary">→</span>
-        <Link href="/checkout/address" className="hover:text-text-body transition-colors">Address</Link>
-        <span className="text-border-primary">→</span>
-        <Link href="/checkout/shipping" className="hover:text-text-body transition-colors">Shipping</Link>
-        <span className="text-border-primary">→</span>
-        <span className="text-text-body font-medium">Payment</span>
+      {/* Checkout progress stepper — visual 4-node */}
+      <nav aria-label="Checkout progress" className="mb-6">
+        {/* Mobile: circles + connectors, labels hidden */}
+        <ol className="flex lg-touch:hidden lg-desktop:hidden items-center justify-center gap-1">
+          {steps.map((step, i) => (
+            <li key={step.label} className="flex items-center gap-1">
+              <span
+                className={cn(
+                  "flex h-8 w-8 items-center justify-center rounded-full text-sm font-medium transition-colors",
+                  i === currentStep
+                    ? "bg-brand-400 text-brand-700"
+                    : i < currentStep
+                      ? "bg-brand-400 text-brand-700"
+                      : "bg-surface-elevated text-text-caption border border-border-secondary"
+                )}
+                style={i === currentStep ? { boxShadow: "0 0 0 3px rgba(246,227,213,0.2)" } : undefined}
+              >
+                {i < currentStep ? CHECK_ICON : i + 1}
+              </span>
+              {i < steps.length - 1 && (
+                <span
+                  className={cn(
+                    "w-6 h-px transition-colors",
+                    i < currentStep ? "bg-brand-400" : "bg-border-secondary"
+                  )}
+                />
+              )}
+            </li>
+          ))}
+        </ol>
+
+        {/* Desktop: full labels with checkmark nodes */}
+        <ol className="hidden lg-touch:flex lg-desktop:flex items-center justify-center gap-2">
+          {steps.map((step, i) => (
+            <li key={step.label} className="flex items-center gap-2">
+              {i < currentStep ? (
+                <Link
+                  href={step.href!}
+                  className="type-overline text-text-caption hover:text-text-body transition-colors duration-200"
+                >
+                  {step.label}
+                </Link>
+              ) : i === currentStep ? (
+                <span className="type-overline text-accent-500">{step.label}</span>
+              ) : (
+                <span className="type-overline text-text-caption">{step.label}</span>
+              )}
+              {i < steps.length - 1 && (
+                <span
+                  className={cn(
+                    "transition-colors",
+                    i < currentStep ? "text-brand-400" : "text-border-primary"
+                  )}
+                >
+                  →
+                </span>
+              )}
+            </li>
+          ))}
+        </ol>
       </nav>
 
-      <div className="grid gap-8 grid-cols-1 lg-touch:grid-cols-2 lg-desktop:grid-cols-2">
+      <div className="grid gap-8 grid-cols-1 items-start lg-touch:grid-cols-2 lg-desktop:grid-cols-2">
         <div className="min-w-0 space-y-4">
           <CheckoutSummary
             items={items}
@@ -194,14 +260,14 @@ export default async function Page() {
           <div className="flex items-center justify-between gap-4">
             <Link
               href="/checkout/shipping"
-              className="inline-flex items-center gap-1 type-caption text-text-caption hover:text-text-body transition-colors"
+              className="flex items-center gap-1 min-h-[44px] type-caption text-text-secondary hover:text-text-body transition-colors duration-200"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
               Back to shipping
             </Link>
             <Link
               href="/basket"
-              className="inline-flex items-center gap-1 type-caption text-text-caption hover:text-text-body transition-colors"
+              className="flex items-center gap-1 min-h-[44px] type-caption text-text-secondary hover:text-text-body transition-colors duration-200"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
               Edit basket

@@ -101,22 +101,21 @@ export default function AddressForm({ traceId, initialAddress }: AddressFormProp
   }
 
   return (
-    <div className="flex justify-center p-4">
-      <div className="w-full max-w-xl rounded bg-white p-6 shadow">
-        <h1 className="mb-6 text-2xl font-bold">Shipping Address</h1>
+    <div className="max-w-xl mx-auto w-full">
+      <h1 className="type-section-hed text-center mb-10">Shipping Address</h1>
 
-        {error && (
-          <div className="mb-4 rounded border border-red-200 bg-red-50 p-3">
-            <p className="text-sm text-red-700">{error}</p>
-          </div>
-        )}
+      {error && (
+        <div className="mb-4 rounded border border-error-500/30 bg-error-500/10 p-3">
+          <p className="text-sm text-error-500">{error}</p>
+        </div>
+      )}
 
-        <form action={handleSubmit} className="space-y-4">
-          <h2 className="text-lg font-semibold text-gray-900">Contact Information</h2>
+      <form action={handleSubmit} className="space-y-4">
+          <p className="section-header-anchor type-overline mb-6">Contact Information</p>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="mb-1 block text-sm font-medium text-gray-700">
+              <label className="type-caption mb-1.5 block">
                 First Name
               </label>
               <input
@@ -125,11 +124,11 @@ export default function AddressForm({ traceId, initialAddress }: AddressFormProp
                 value={form.firstName}
                 onChange={(e) => handleChange("firstName", e.target.value)}
                 required
-                className="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
+                className="input-field"
               />
             </div>
             <div>
-              <label className="mb-1 block text-sm font-medium text-gray-700">
+              <label className="type-caption mb-1.5 block">
                 Last Name
               </label>
               <input
@@ -138,13 +137,13 @@ export default function AddressForm({ traceId, initialAddress }: AddressFormProp
                 value={form.lastName}
                 onChange={(e) => handleChange("lastName", e.target.value)}
                 required
-                className="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
+                className="input-field"
               />
             </div>
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-gray-700">
+            <label className="type-caption mb-1.5 block">
               Phone Number
             </label>
             <input
@@ -153,16 +152,14 @@ export default function AddressForm({ traceId, initialAddress }: AddressFormProp
               value={form.phone}
               onChange={(e) => handleChange("phone", e.target.value)}
               required
-              className="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
+              className="input-field"
             />
           </div>
 
-          <hr className="border-gray-200" />
-
-          <h2 className="text-lg font-semibold text-gray-900">Shipping Address</h2>
+          <p className="section-header-anchor type-overline mb-6 mt-12">Shipping Address</p>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-gray-700">
+            <label className="type-caption mb-1.5 block">
               Country
             </label>
             <select
@@ -170,7 +167,7 @@ export default function AddressForm({ traceId, initialAddress }: AddressFormProp
               value={form.regionCode}
               onChange={(e) => handleChange("regionCode", e.target.value)}
               required
-              className="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
+              className="input-select w-full"
             >
               <option value="" disabled>Select country</option>
               {REGIONS.map((r) => (
@@ -180,7 +177,7 @@ export default function AddressForm({ traceId, initialAddress }: AddressFormProp
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-gray-700">
+            <label className="type-caption mb-1.5 block">
               City
             </label>
             <input
@@ -189,13 +186,13 @@ export default function AddressForm({ traceId, initialAddress }: AddressFormProp
               value={form.city}
               onChange={(e) => handleChange("city", e.target.value)}
               required
-              className="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
+              className="input-field"
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-4">
             <div>
-              <label className="mb-1 block text-sm font-medium text-gray-700">
+              <label className="type-caption mb-1.5 block">
                 Street
               </label>
               <input
@@ -204,11 +201,11 @@ export default function AddressForm({ traceId, initialAddress }: AddressFormProp
                 value={form.street}
                 onChange={(e) => handleChange("street", e.target.value)}
                 required
-                className="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
+                className="input-field"
               />
             </div>
             <div>
-              <label className="mb-1 block text-sm font-medium text-gray-700">
+              <label className="type-caption mb-1.5 block">
                 Number
               </label>
               <input
@@ -217,13 +214,13 @@ export default function AddressForm({ traceId, initialAddress }: AddressFormProp
                 value={form.streetNumber}
                 onChange={(e) => handleChange("streetNumber", e.target.value)}
                 required
-                className="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
+                className="input-field"
               />
             </div>
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-gray-700">
+            <label className="type-caption mb-1.5 block">
               Postal Code
             </label>
             <input
@@ -232,19 +229,18 @@ export default function AddressForm({ traceId, initialAddress }: AddressFormProp
               value={form.postalCode}
               onChange={(e) => handleChange("postalCode", e.target.value)}
               required
-              className="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
+              className="input-field"
             />
           </div>
 
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full rounded bg-black px-4 py-3 font-semibold text-white hover:bg-gray-800 disabled:cursor-not-allowed disabled:bg-gray-400"
+            className="btn-cart-large w-full mt-8"
           >
             Continue to Shipping
           </button>
         </form>
-      </div>
     </div>
   );
 }

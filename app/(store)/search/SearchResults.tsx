@@ -24,7 +24,7 @@ export async function SearchResults({ resultsPromise, query }: SearchResultsProp
         <span className="type-metadata text-secondary">{totalCount} products</span>
       </div>
       <ProductGrid
-        products={products}
+        products={products as any}
         className="grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg-desktop:grid-cols-4 lg-touch:grid-cols-3"
       />
       <SearchPagination totalCount={totalCount} />

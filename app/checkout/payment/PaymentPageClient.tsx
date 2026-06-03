@@ -87,19 +87,19 @@ export default function PaymentPageClient() {
 
   if (status === "error") {
     return (
-      <div className="rounded-lg border border-red-200 bg-red-50 p-6">
-        <h2 className="mb-4 text-lg font-semibold text-red-800">Payment Error</h2>
-        <p className="mb-6 text-red-600">{error}</p>
-        <div className="flex gap-4">
+      <div className="card-base">
+        <h2 className="type-section-hed mb-4">Payment Error</h2>
+        <p className="type-body text-text-secondary">{error}</p>
+        <div className="flex gap-4 mt-6">
           <button
             onClick={handleRetry}
-            className="rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white transition-colors hover:bg-blue-700"
+            className="btn-cart-large"
           >
             Try Again
           </button>
           <button
             onClick={handleGoBack}
-            className="rounded-lg border border-gray-300 px-4 py-2 font-semibold text-gray-700 transition-colors hover:bg-gray-100"
+            className="btn-secondary"
           >
             Go Back
           </button>

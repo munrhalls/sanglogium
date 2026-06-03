@@ -40,7 +40,7 @@ export default async function HomePage() {
       </Shelf>
 
       <Shelf fullBleed>
-        <Dacs dacsData={data.dacs} />
+        <Dacs dacsData={data.dacs as any} />
       </Shelf>
 
       <Shelf fullBleed>

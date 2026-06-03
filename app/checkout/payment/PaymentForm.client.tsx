@@ -28,6 +28,15 @@ interface PaymentFormProps {
   traceId: string;
 }
 
+function formatPLNShort(cents: number): string {
+  return (
+    (cents / 100).toLocaleString("pl-PL", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }) + " zł"
+  );
+}
+
 function PaymentFormInner({
   address,
   traceId,
@@ -136,61 +145,82 @@ function PaymentFormInner({
     setIsLoading(false);
   };
 
+  const payButtonLabel = isLoading
+    ? (
+      <span className="flex items-center justify-center gap-2">
+        <span className="h-4 w-4 animate-spin rounded-full border-2 border-brand-700 border-t-transparent" />
+        Processing…
+      </span>
+    )
+    : `Pay · ${formatPLNShort(grandTotal)}`;
+
   return (
-    <div className="card-base space-y-6">
-      <ExpressCheckoutElement
-        options={{
-          buttonHeight: 44,
-          buttonTheme: { applePay: 'black', googlePay: 'black' },
-          layout: { maxColumns: 2 },
-        }}
-        onConfirm={async () => {
-          if (!stripe || !elements) return;
-          await stripe.confirmPayment({
-            elements,
-            confirmParams: {
-              return_url: `${window.location.origin}/api/checkout/return`,
-            },
-          });
-        }}
-      />
-      <div className="border-t border-border-secondary pt-4">
-        <p className="mb-3 text-center type-caption text-text-caption">Or pay by card</p>
-        <PaymentElement options={{ fields: { billingDetails: { address: "never" } } }} />
-      </div>
-      {error && (
-        <p className="type-body text-error-500">{error}</p>
-      )}
-      {/* Security trust signal — positioned at peak anxiety point, just above Pay button */}
-      <div className="flex items-center justify-center gap-1.5 type-caption text-text-caption">
-        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-success-500">
-          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-        </svg>
-        Secure payment encrypted by Stripe
-      </div>
-      <button
-        onClick={handlePay}
-        disabled={isLoading || !stripe || !elements}
-        className="btn-cart-large w-full justify-center py-4"
-      >
-        {isLoading ? (
-          <span className="flex items-center justify-center gap-2">
-            <span className="h-4 w-4 animate-spin rounded-full border-2 border-brand-700 border-t-transparent" />
-            Processing…
-          </span>
-        ) : (
-          "Pay"
+    <>
+      <div className="card-base space-y-6 pb-28 lg-touch:pb-6 lg-desktop:pb-6">
+        <ExpressCheckoutElement
+          options={{
+            buttonHeight: 44,
+            buttonTheme: { applePay: 'black', googlePay: 'black' },
+            layout: { maxColumns: 2 },
+          }}
+          onConfirm={async () => {
+            if (!stripe || !elements) return;
+            await stripe.confirmPayment({
+              elements,
+              confirmParams: {
+                return_url: `${window.location.origin}/api/checkout/return`,
+              },
+            });
+          }}
+        />
+        <div className="border-t border-border-secondary pt-4">
+          <p className="mb-3 text-center type-caption text-text-caption">Or pay by card</p>
+          <PaymentElement options={{ fields: { billingDetails: { address: "never" } } }} />
+        </div>
+        {error && (
+          <div className="rounded border border-error-500/30 bg-error-500/10 px-3 py-2 mt-2">
+            <p className="type-caption text-error-500">{error}</p>
+          </div>
         )}
-      </button>
-      <div className="flex items-center justify-center gap-2 type-caption text-text-secondary pt-2">
-        <span className="font-medium">Visa</span>
-        <span>·</span>
-        <span className="font-medium">Mastercard</span>
-        <span>·</span>
-        <span className="font-medium">BLIK</span>
+        {/* Security trust signal — positioned at peak anxiety point, just above Pay button */}
+        <div className="flex items-center justify-center gap-1.5 type-caption text-text-caption">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-success-500">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          Secure payment encrypted by Stripe
+        </div>
+        {/* Form-card Pay button — hidden on mobile (sticky bar is primary CTA) */}
+        <button
+          onClick={handlePay}
+          disabled={isLoading || !stripe || !elements}
+          className="btn-cart-large w-full justify-center py-4 hidden lg-touch:block lg-desktop:block"
+        >
+          {payButtonLabel}
+        </button>
+        <div className="flex items-center justify-center gap-2 type-caption text-text-secondary pt-2">
+          <span className="font-medium">Visa</span>
+          <span>·</span>
+          <span className="font-medium">Mastercard</span>
+          <span>·</span>
+          <span className="font-medium">BLIK</span>
+        </div>
       </div>
-    </div>
+
+      {/* Mobile sticky Pay bar */}
+      <div
+        className="lg-touch:hidden lg-desktop:hidden fixed bottom-0 left-0 w-full z-50 bg-brand-700 border-t border-border-secondary px-4 py-3"
+        style={{ boxShadow: "0 -4px 16px rgba(0,0,0,0.3)" }}
+      >
+        <button
+          onClick={handlePay}
+          disabled={isLoading || !stripe || !elements}
+          className="btn-cart-large w-full justify-center py-4"
+        >
+          {payButtonLabel}
+        </button>
+      </div>
+    </>
   );
 }
 
@@ -220,8 +250,31 @@ export default function PaymentForm({ grandTotal, metadata, address, traceId }: 
     initPayment(metadata);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  if (error) return <p className="type-body text-error-500">Error: {error}</p>;
-  if (!clientSecret) return <p className="type-caption text-text-caption">Loading payment form…</p>;
+  if (error) return (
+    <div className="card-base">
+      <h2 className="type-section-hed mb-4">Payment Error</h2>
+      <p className="type-body text-text-secondary">{error}</p>
+      <div className="flex gap-4 mt-6">
+        <button onClick={() => window.location.reload()} className="btn-cart-large">
+          Try Again
+        </button>
+        <button onClick={() => window.location.href = "/checkout/shipping"} className="btn-secondary">
+          Go Back
+        </button>
+      </div>
+    </div>
+  );
+  if (!clientSecret) return (
+    <div className="card-base space-y-4">
+      <div className="h-11 rounded-sm bg-surface-elevated animate-pulse" />
+      <div className="h-px bg-border-secondary mt-4 mb-4" />
+      <div className="h-10 rounded-sm bg-surface-elevated animate-pulse mb-3" />
+      <div className="h-10 rounded-sm bg-surface-elevated animate-pulse mb-3" />
+      <div className="h-10 rounded-sm bg-surface-elevated animate-pulse mb-3" />
+      <div className="h-14 rounded-sm bg-surface-elevated animate-pulse mt-6" />
+      <p className="type-caption text-text-caption text-center mt-2">Preparing secure payment…</p>
+    </div>
+  );
 
   return (
     <div className="space-y-6">
