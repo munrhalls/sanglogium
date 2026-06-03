@@ -42,6 +42,14 @@ export interface Package {
   length: number; // cm
 }
 
+// Fallback for products missing parcel data in Sanity (audio equipment typical dimensions)
+const DEFAULT_PARCEL = {
+  weight: 500, // grams
+  width: 20, // cm
+  height: 15, // cm
+  length: 25, // cm
+};
+
 // Courier physical limits
 const MAX_WEIGHT_G = 25000; // 25kg max per package
 const MAX_VOLUME_CM3 = 99000; // 99,000 cm³ max per package
@@ -62,12 +70,12 @@ export function calculatePackages(
 
   for (const item of basketItems) {
     const product = productMap.get(item.productId);
-    if (!product || !product.parcel) {
-      console.warn(`[PARCEL CALC] Product ${item.productId} missing parcel data, skipping`);
-      continue;
+    const parcel = product?.parcel ?? DEFAULT_PARCEL;
+
+    if (!product?.parcel) {
+      console.warn(`[PARCEL CALC] Product ${item.productId} missing parcel data, using DEFAULT_PARCEL`);
     }
 
-    const { parcel } = product;
     totalWeight += parcel.weight * item.quantity;
     totalVolume += parcel.length * parcel.width * parcel.height * item.quantity;
     maxLength = Math.max(maxLength, parcel.length);
@@ -147,12 +155,12 @@ export function calculatePackagesFromReservation(
   let maxHeight = 0;
 
   for (const item of basketReservation) {
+    const parcel = item.parcel ?? DEFAULT_PARCEL;
+
     if (!item.parcel) {
-      console.warn(`[PARCEL CALC] Product ${item._id} missing parcel data, skipping`);
-      continue;
+      console.warn(`[PARCEL CALC] Product ${item._id} missing parcel data, using DEFAULT_PARCEL`);
     }
 
-    const { parcel } = item;
     totalWeight += parcel.weight * item.quantity;
     totalVolume += parcel.length * parcel.width * parcel.height * item.quantity;
     maxLength = Math.max(maxLength, parcel.length);

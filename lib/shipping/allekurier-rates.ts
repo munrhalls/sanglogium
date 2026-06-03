@@ -85,6 +85,28 @@ export async function fetchAlleKurierRates(
     return [];
   }
 
+  // Validate packages before calling external API
+  if (!input.packages || input.packages.length === 0) {
+    console.error('[ALLEKURIER] No packages provided — cannot fetch rates');
+    if (traceId) await logCheckoutEvent({ correlationId: traceId, slice: 'address-submit', event: 'allekurier_invalid_packages', data: { reason: 'empty' }, outcome: 'error' });
+    return [];
+  }
+
+  const invalidPkg = input.packages.find(
+    (p, i) =>
+      !p ||
+      typeof p.weight !== 'number' || p.weight <= 0 ||
+      typeof p.width !== 'number' || p.width <= 0 ||
+      typeof p.height !== 'number' || p.height <= 0 ||
+      typeof p.length !== 'number' || p.length <= 0
+  );
+
+  if (invalidPkg) {
+    console.error('[ALLEKURIER] Invalid package dimensions/weight detected');
+    if (traceId) await logCheckoutEvent({ correlationId: traceId, slice: 'address-submit', event: 'allekurier_invalid_packages', data: { reason: 'invalid_dimensions' }, outcome: 'error' });
+    return [];
+  }
+
   const ENDPOINT = 'https://allekurier.pl/api_v1/service_list';
   const TIMEOUT_MS = 15000;
 
