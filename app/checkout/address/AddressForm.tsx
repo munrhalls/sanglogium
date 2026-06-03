@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { saveAddress } from "@/app/actions/checkout";
 import Loader from "@/app/components/common/Loader";
+import CheckoutStepper from "../_components/CheckoutStepper";
 import type { Address } from "../checkout.types";
 
 const REGIONS = [
@@ -102,6 +103,7 @@ export default function AddressForm({ traceId, initialAddress }: AddressFormProp
 
   return (
     <div className="max-w-xl mx-auto w-full">
+      <CheckoutStepper currentStep={1} />
       <h1 className="type-section-hed text-center mb-10">Shipping Address</h1>
 
       {error && (

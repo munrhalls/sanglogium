@@ -1,7 +1,6 @@
 ﻿import "../globals.css";
 import { Montserrat } from "next/font/google";
-import Link from "next/link";
-import Image from "next/image";
+import BrandLogo from "@/app/components/layout/header/BrandLogo";
 import CheckoutProvider from "./CheckoutProvider.client";
 
 const montserrat = Montserrat({
@@ -21,15 +20,7 @@ export default function CheckoutLayout({
         <CheckoutProvider>
           {/* Minimal checkout header */}
           <header className="flex h-[var(--mobile-header-h)] shrink-0 items-center justify-center border-b border-white/5 bg-brand-900 lg:h-[var(--desktop-header-h)]">
-            <Link href="/" className="flex items-center gap-2">
-              <Image
-                src="/logo-orbit-white.svg"
-                alt="Sang Logium"
-                width={120}
-                height={28}
-                priority
-              />
-            </Link>
+            <BrandLogo />
           </header>
 
           <main className="flex-1 overflow-y-auto px-4 py-8">

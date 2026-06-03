@@ -23,30 +23,30 @@ export default function BasketSummary({ itemCount, subtotal, basketData, shippin
 
       <div className="space-y-3">
         <div className="flex justify-between items-baseline">
-          <div className="type-section-caption">Subtotal ({itemCount} item{itemCount !== 1 ? 's' : ''})</div>
+          <div className="type-section-caption text-text-secondary">Subtotal ({itemCount} item{itemCount !== 1 ? 's' : ''})</div>
           <Price value={subtotal} variant="summary" />
         </div>
 
         <div className="flex justify-between items-baseline">
-          <div className="type-section-caption">Shipping</div>
+          <div className="type-section-caption text-text-secondary">Shipping</div>
           {shippingCost !== null ? (
             <Price value={shippingCost} variant="summary" />
           ) : (
-            <span className="type-section-caption">Calculating...</span>
+            <span className="type-section-caption text-text-secondary">Calculating...</span>
           )}
         </div>
 
         <div className="flex justify-between items-baseline">
-          <div className="type-section-caption">Tax</div>
+          <div className="type-section-caption text-text-secondary">Tax</div>
           <Price value={0} variant="summary" />
         </div>
 
-        <div className="border-t border-border-primary pt-4 mt-1">
+        <div className="border-t border-border-primary pt-4 mt-1 mb-6">
           <div className="flex justify-between items-baseline">
             <div className="type-section-sub">Total</div>
             <Price value={total} variant="summary" className="type-section-sub tabular-nums text-brand-400" />
           </div>
-          <div className="type-section-caption mt-1">Including VAT</div>
+          <div className="type-section-caption text-text-secondary mt-1">Including VAT</div>
         </div>
       </div>
 
