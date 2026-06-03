@@ -1,0 +1,84 @@
+{
+  "timestamp": "2026-06-02T11:52:19.067Z",
+  "totalProducts": 168,
+  "alreadyCorrect": 158,
+  "missingParcel": {
+    "count": 0,
+    "products": []
+  },
+  "unmappedKey": {
+    "count": 10,
+    "products": [
+      {
+        "_id": "MHd9dKrYZDArdj3morESVD",
+        "name": "Test Product Beta - Limited Stock",
+        "catalogueLocationKeys": [
+          "test-category-beta"
+        ]
+      },
+      {
+        "_id": "MHd9dKrYZDArdj3morESpg",
+        "name": "Test Product Gamma - Out of Stock",
+        "catalogueLocationKeys": [
+          "test-category-gamma"
+        ]
+      },
+      {
+        "_id": "RGVW3d7PGC4nLrVfIqsK5H",
+        "name": "Test Product 1",
+        "catalogueLocationKeys": [
+          "test-location"
+        ]
+      },
+      {
+        "_id": "RGVW3d7PGC4nLrVfIqscHL",
+        "name": "Test Product 1",
+        "catalogueLocationKeys": [
+          "test-location"
+        ]
+      },
+      {
+        "_id": "YcMKSEyusPBTcaoe1xiP1b",
+        "name": "Test Product Alpha - Full Stock",
+        "catalogueLocationKeys": [
+          "test-category-alpha"
+        ]
+      },
+      {
+        "_id": "drafts.k27n1AQuIbSr5iozFz3irz",
+        "name": "Sennheiser HD 560S",
+        "catalogueLocationKeys": [
+          ""
+        ]
+      },
+      {
+        "_id": "test-item-1",
+        "name": "Test Product 1",
+        "catalogueLocationKeys": [
+          "test-location"
+        ]
+      },
+      {
+        "_id": "test-item-2",
+        "name": "Test Product 2",
+        "catalogueLocationKeys": [
+          "test-location"
+        ]
+      },
+      {
+        "_id": "test-product-1",
+        "name": "Test Product 1",
+        "catalogueLocationKeys": [
+          "featured"
+        ]
+      },
+      {
+        "_id": "test-product-2",
+        "name": "Test Product 2",
+        "catalogueLocationKeys": [
+          "featured"
+        ]
+      }
+    ]
+  }
+}
