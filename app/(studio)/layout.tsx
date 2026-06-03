@@ -1,6 +1,5 @@
 "use client";
 // import type { Metadata } from "next";
-// @ts-expect-error: Type declarations for CSS imports are not present in this project
 // import "@/app/globals.css";
 
 // export const metadata: Metadata = {

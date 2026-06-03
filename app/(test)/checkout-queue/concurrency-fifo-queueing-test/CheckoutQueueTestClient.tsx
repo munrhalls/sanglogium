@@ -438,7 +438,7 @@ export default function CheckoutQueueTestClient({ testProducts }: CheckoutQueueT
                         <span className="text-gray-500">Not fetched yet</span>
                       )}
                     </div>
-                    {cmsData && !hasError && (
+                    {!!cmsData && !hasError && (
                       <div className="text-xs mt-1 bg-slate-100 p-2 whitespace-pre-wrap">
                         {JSON.stringify(cmsData as Record<string, unknown>, null, 2)}
                       </div>
