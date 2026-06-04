@@ -1,11 +1,17 @@
 import Image from "next/image";
-import { PROMOTION_BY_NAME_QUERYResult } from "@/sanity.types";
+
+interface PromotionImageData {
+  src: string;
+  width: number;
+  height: number;
+  blurDataURL?: string;
+}
 
 export default function PromotionImage({
   imageData,
   alt,
 }: {
-  imageData: PROMOTION_BY_NAME_QUERYResult;
+  imageData: PromotionImageData;
   alt: string;
   fullscreen?: boolean;
 }) {

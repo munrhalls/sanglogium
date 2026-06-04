@@ -1,10 +1,21 @@
 // TODO rename folder to sanity_front
-import { ALL_CATEGORIES_QUERYResult } from "@/sanity.types";
 interface GroupItem {
   label: string | null;
   children: CategoryWithMetadata[];
 }
-type CategoryBase = ALL_CATEGORIES_QUERYResult[number];
+
+interface CategoryBase {
+  _id: string;
+  title: string;
+  slug?: { current: string };
+  metadata?: {
+    depth: number;
+    path: string;
+    group?: string;
+  };
+  groups?: string[] | GroupItem[];
+  [key: string]: any;
+}
 interface CategoryWithMetadata extends CategoryBase {
   metadata?: {
     depth: number;

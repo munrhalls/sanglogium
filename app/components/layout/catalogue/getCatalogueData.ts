@@ -32,7 +32,7 @@ function buildLegacyCatalogueItem(
   itemMap: Map<string, CatalogueItem>
 ): any {
   const children = allItems.filter(child =>
-    child.parent && child.parent._id === item._id
+    child.parent && child.parent._ref === item._id
   );
 
   const childrenArray = children.map(child => {

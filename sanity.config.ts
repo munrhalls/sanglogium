@@ -40,7 +40,7 @@ const sanityConfig = defineConfig({
           description: 'ID of the parent catalogue item'
         }
       ],
-      value: (params) => ({
+      value: (params: Record<string, string>) => ({
         parent: params.parentId ? {
           _type: 'reference',
           _ref: params.parentId

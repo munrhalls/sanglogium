@@ -1,12 +1,18 @@
 import Link from "next/link";
-import { HeroPayload } from "@/types"; // Defined in previous step
+
+interface SmartLinkPayload {
+  type: "product" | "sale" | "custom";
+  product?: { slug?: string };
+  sale?: { slug?: string };
+  url?: string;
+}
 
 export const SmartLink = ({
   link,
   className,
   children,
 }: {
-  link: HeroPayload["slides"][0]["link"];
+  link: SmartLinkPayload;
   className?: string;
   children: React.ReactNode;
 }) => {

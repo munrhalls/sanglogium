@@ -35,10 +35,10 @@ const getCategoryMetadataFn = async (key: string): Promise<CategoryMetadata | nu
   const parentId = findParentId(key, catalogueIndex.tree);
 
   return {
-    id: metadata.id || key,
+    id: (metadata as any).id || key,
     name: metadata.title,
     slug: metadata.slug || null,
-    type: metadata.type,
+    type: metadata.type as 'link' | 'header',
     parentId,
     breadcrumb,
   };

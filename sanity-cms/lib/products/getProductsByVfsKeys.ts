@@ -1,7 +1,7 @@
 import { sanityFetch } from '@/sanity-cms/lib/client';
 import { groq } from 'next-sanity';
 import { FilterBuilder } from './FilterBuilder';
-import { client } from './client';
+import { cache } from 'react';
 import type { Product as SanityProduct } from '@/sanity.types';
 
 // Pagination safety limit - prevents unbounded queries
@@ -11,14 +11,20 @@ const MAX_PRODUCTS_LIMIT = 100;
 // In test environments, we skip caching
 const withCache = <T extends (...args: any[]) => any>(fn: T): T => {
   try {
-    return cache(fn);
+    return cache(fn) as T;
   } catch {
     return fn;
   }
 };
 
-// Product type using generated Sanity types - brand is now reference (SC8 complete)
-export type Product = Pick<SanityProduct, '_id' | 'name' | 'price_data' | 'image' | 'catalogueLocationKeys' | 'brand'> & {
+// Product type matching actual GROQ query result (brand is dereferenced with ->)
+export type Product = {
+  _id: string;
+  name: string;
+  brand: { _id: string; name: string; slug?: { current: string } } | null;
+  price_data: { currency: string; unit_amount: number };
+  image: any;
+  catalogueLocationKeys: string[];
   slug: { current: string };
   stock: number;
   reservedStock: number;

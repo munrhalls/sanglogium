@@ -117,8 +117,9 @@ export function validateCatalogueIndex(data: unknown): asserts data is Catalogue
 export interface NavigationLink {
   label: string;
   url: string;
-  slug: string;
+  slug?: string;
 }
+
 
 export interface NavigationSection {
   title: string;
