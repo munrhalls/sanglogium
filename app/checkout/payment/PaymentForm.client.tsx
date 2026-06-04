@@ -57,7 +57,7 @@ function PaymentFormInner({
     console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
     console.log("✅ FIX #8  — Pay button weight:        btn-cart-large with py-4 rendered");
     console.log("✅ FIX #12 — Security badge:            positioned above Pay button");
-    console.log("✅ FIX #14 — BLIK divider:              'Or pay by card' text active");
+    console.log("✅ FIX #14 — BLIK divider:              'Or choose another payment method' text active");
     console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
   }, []);
 
@@ -161,7 +161,7 @@ function PaymentFormInner({
           options={{
             buttonHeight: 44,
             buttonTheme: { applePay: 'black', googlePay: 'black' },
-            layout: { maxColumns: 2 },
+            layout: { maxColumns: 4 },
           }}
           onConfirm={async () => {
             if (!stripe || !elements) return;
@@ -174,8 +174,8 @@ function PaymentFormInner({
           }}
         />
         <div className="border-t border-border-secondary pt-4">
-          <p className="mb-3 text-center type-caption text-text-caption">Or pay by card</p>
-          <PaymentElement options={{ fields: { billingDetails: { address: "never" } } }} />
+          <p className="mb-3 text-center type-caption text-text-caption">Or choose another payment method</p>
+          <PaymentElement options={{ paymentMethodOrder: ['blik', 'p24', 'card'], fields: { billingDetails: { address: "never" } } }} />
         </div>
         {error && (
           <div className="rounded border border-error-500/30 bg-error-500/10 px-3 py-2 mt-2">
