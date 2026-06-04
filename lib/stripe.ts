@@ -11,5 +11,7 @@ export const stripe = new Stripe(stripeSecretKey, {
 })
 
 export async function retrievePaymentIntent(paymentIntentId: string): Promise<Stripe.PaymentIntent> {
-  return stripe.paymentIntents.retrieve(paymentIntentId)
+  return stripe.paymentIntents.retrieve(paymentIntentId, {
+    expand: ['latest_charge'],
+  })
 }

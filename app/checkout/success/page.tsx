@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
+import Link from 'next/link'
 import { CheckCircle, Lock, WarningCircle, XCircle, Clock } from '@phosphor-icons/react/dist/ssr'
 import { getCheckoutSession } from '@/lib/session'
 import { retrievePaymentIntent } from '@/lib/stripe'
@@ -111,12 +112,40 @@ export default async function SuccessPage({
       currency: 'PLN',
     })
 
-    const paymentMethodHint =
-      pi.payment_method_types?.includes('blik')
-        ? 'BLIK'
-        : pi.latest_charge
-          ? 'card'
+    const paymentMethodHint = (() => {
+      const types = pi.payment_method_types ?? []
+      const type = types[0]
+      const charge =
+        typeof pi.latest_charge === 'object' && pi.latest_charge !== null
+          ? pi.latest_charge
           : null
+      const card = charge?.payment_method_details?.card
+
+      switch (type) {
+        case 'blik':
+          return 'BLIK'
+        case 'p24':
+          return 'Przelewy24'
+        case 'paypal':
+          return 'PayPal'
+        case 'klarna':
+          return 'Klarna'
+        case 'link':
+          return 'Link'
+        case 'card': {
+          const wallet = card?.wallet?.type
+          if (wallet === 'apple_pay') return 'Apple Pay'
+          if (wallet === 'google_pay') return 'Google Pay'
+          if (card?.brand && card?.last4) {
+            const brand = card.brand.charAt(0).toUpperCase() + card.brand.slice(1)
+            return `${brand} ····${card.last4}`
+          }
+          return 'Card'
+        }
+        default:
+          return type ?? null
+      }
+    })()
 
     return (
       <section aria-label="Order confirmation" className="flex flex-col gap-6">
@@ -168,7 +197,7 @@ export default async function SuccessPage({
             </div>
 
             <div className="flex flex-col gap-3">
-              <a href="/" className="btn-primary block text-center py-3">Continue shopping</a>
+              <Link href="/" className="btn-primary block text-center py-3">Continue shopping</Link>
             </div>
 
             <div className="card-base">

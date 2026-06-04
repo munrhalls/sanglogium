@@ -118,6 +118,14 @@ export async function createOrderFromPaymentIntent(pi: Stripe.PaymentIntent): Pr
     currency,
   }
 
+  // Step 7b: Extract payment method details from PI
+  const paymentMethodType = pi.payment_method_types?.[0] ?? 'unknown'
+  const charge =
+    typeof pi.latest_charge === 'object' && pi.latest_charge !== null
+      ? pi.latest_charge
+      : null
+  const cardDetails = charge?.payment_method_details?.card
+
   // Step 8: Generate order identifiers
   const year = new Date().getFullYear()
   const orderCount = await backendClient.fetch<number>(
@@ -146,6 +154,9 @@ export async function createOrderFromPaymentIntent(pi: Stripe.PaymentIntent): Pr
     },
     payment: {
       stripePaymentIntentId: paymentIntentId,
+      method: paymentMethodType,
+      ...(cardDetails?.brand ? { brand: cardDetails.brand } : {}),
+      ...(cardDetails?.last4 ? { last4: cardDetails.last4 } : {}),
     },
     ...(shippingMethod ? { shippingMethod } : {}),
   }
