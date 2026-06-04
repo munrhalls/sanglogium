@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
+// eslint-disable-next-line no-restricted-imports -- Types needed for TypeScript
 import '@testing-library/jest-dom';
 import PaymentForm from '@/app/(store)/checkout/payment/_components/PaymentForm';
 

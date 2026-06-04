@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
+// eslint-disable-next-line no-restricted-imports -- Types needed for TypeScript
 import '@testing-library/jest-dom';
 import CheckoutSummary from '@/app/checkout/payment/_components/CheckoutSummary';
 
