@@ -93,3 +93,4 @@
 {"id":"int-54d6175f","kind":"field_change","created_at":"2026-06-01T13:11:08.1865947Z","actor":"Munrhalls","issue_id":"sang-logium-4nd","extra":{"field":"status","new_value":"in_progress","old_value":"open"}}
 {"id":"int-288ef465","kind":"field_change","created_at":"2026-06-02T11:53:09.957779Z","actor":"Munrhalls","issue_id":"sang-logium-7sv","extra":{"field":"status","new_value":"closed","old_value":"open","reason":"Closed"}}
 {"id":"int-60547d47","kind":"field_change","created_at":"2026-06-03T17:39:46.521874Z","actor":"Munrhalls","issue_id":"sang-logium-fr1","extra":{"field":"status","new_value":"pinned","old_value":"open"}}
+{"id":"int-9ad41182","kind":"field_change","created_at":"2026-06-04T06:37:03.6726492Z","actor":"Munrhalls","issue_id":"sang-logium-ckw","extra":{"field":"status","new_value":"meta","old_value":"open"}}
