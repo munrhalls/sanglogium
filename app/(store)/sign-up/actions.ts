@@ -11,11 +11,12 @@ interface CreateUserProfileInput {
 /**
  * Create a Sanity userProfile linked to a Better Auth user.
  *
- * ATOMICITY GAP: This runs AFTER Better Auth creates the user.
+ * Layer 1 — best-effort creation at sign-up time.
  * If Sanity fails here, the auth user exists without a profile.
- * Full fix requires moving sign-up into a server action that
- * creates both atomically (or rolls back the auth user).
- * See docs/auth/data-functionality-should-be-intelligence-update.md
+ * Layer 2 healing in `lib/auth/dal.ts` (`verifySession()`) will
+ * auto-create the missing profile on the first authenticated page load.
+ *
+ * See docs/auth/userprofile-atomicity-spec-updated.md for full spec.
  */
 export async function createUserProfile(input: CreateUserProfileInput) {
   try {
