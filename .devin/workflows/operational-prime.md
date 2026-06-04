@@ -4,11 +4,18 @@ description: Prime every AI conversation with beads-aware context — find issue
 
 # /operational-prime
 
-**Purpose:** Before ANY work begins, establish full beads context. Every conversation starts here.
+**Purpose:** Before ANY work begins, establish full beads context. Every conversation starts here. 
 
 **Role:** Context-aware agent. Your job is to read the beads tracker, understand the issue's state, and enforce the work approach rules before any implementation.
 
 ---
+
+## Step 0: Be aware of parallel workflow, respect resource usage, respect mutex rules
+- DO NOT RUN ANY EXPENSIVE COMMANDS (e.g. npm run build, etc.) UNLESS ABSOLUTELY NECESSARY
+- NEVER RUN the most expensive commands, e.g. npm run build etc. 
+- BE AWARE: as you are working, other agents are working on other issues simultaneously, either in /read-mode or /edit-mode - therefore, respect PC resources and try to accomplish your task in resources-lean manner
+- being resources-lean DOES NOT MEAN the quality of your work can be lower - it must be up to professional standard of simplicity, leanness, accuracy, system-alignment and completeness
+- being resources-lean MEANS you never run the most expensive commands (npm run build, etc.) and you never run expensive commands unless absolutely unavoidable
 
 ## Step 1: Find the Beads Issue
 
@@ -98,12 +105,10 @@ After reading the issue, output this format:
 
 Before claiming work is complete:
 - [ ] All DoD items for active scope PASS with evidence
-- [ ] Beads issue updated with live check results
+- [ ] Beads issue updated with live check results (human check)
 - [ ] No `docs/` files created during work
 - [ ] No separate issues created for scopes
-- [ ] Typecheck passes: `npx tsc --noEmit`
-- [ ] `@/checks` run — 0 gaps, 0 red flags
-- [ ] **Advisory:** Run `npm run build` manually when no other agents are active; CI catches build errors
+- [ ] `@/checks` run — 0 gaps, 0 red flags (human/agent intelligence review — does NOT trigger any command execution)
 
 ---
 
@@ -117,3 +122,4 @@ Before claiming work is complete:
 | Skipping beads issue, working from prompt | No tracking, no acceptance criteria, scope drift |
 | One conversation doing analysis + implementation | Scope creep, noise, no clear hand-off |
 | Updating issue without live check evidence | False progress, untrustworthy status |
+
