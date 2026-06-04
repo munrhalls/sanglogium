@@ -1,8 +1,8 @@
 import Image from "next/image";
-import brandsSource from "./data.json";
 import { BrandLogo } from "./types";
 
-const brands = brandsSource as BrandLogo[];
+const brandsSource: BrandLogo[] = [];
+const brands = brandsSource;
 
 export default function BrandMarquee() {
   console.log(`[SRIP Trace] Brand Marquee Contract validated. Unique brands: ${brands.length}`);

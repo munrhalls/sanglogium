@@ -7,6 +7,7 @@ import {
   CarouselDots,
 } from '@/app/components/layout/carousel/CarouselControls';
 import AccessoryCard from "./AccessoryCard";
+import { AccessoryCategory, AccessoryItem } from "./types";
 
 interface CategorySectionProps {
   category: AccessoryCategory;

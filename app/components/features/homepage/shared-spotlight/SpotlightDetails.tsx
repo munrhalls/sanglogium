@@ -1,5 +1,12 @@
-import { SpotlightProduct } from "../_legacy_product-spotlight-1/types";
 import { cn } from "@/lib/utils/tailwind";
+
+interface SpotlightProduct {
+  brand: { name: string };
+  headline?: string;
+  subheadline?: string;
+  name: string;
+  description?: string | Array<{ children?: Array<{ text?: string }> }>;
+}
 
 interface SpotlightDetailsProps {
   data: SpotlightProduct;

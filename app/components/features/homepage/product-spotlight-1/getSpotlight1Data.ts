@@ -45,7 +45,7 @@ function processProductImages(product: Spotlight1Product): Spotlight1Product {
 }
 
 export const getSpotlight1Data = cache(async (): Promise<Spotlight1Data | null> => {
-  const data = await sanityFetch({ query: SPOTLIGHT1_QUERY });
+  const data = await sanityFetch({ query: SPOTLIGHT1_QUERY }) as Spotlight1Data | null;
 
   if (data && data.productRef) {
     data.productRef = processProductImages(data.productRef);
