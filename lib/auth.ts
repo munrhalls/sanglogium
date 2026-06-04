@@ -4,6 +4,36 @@ import { Kysely, SqliteDialect } from "kysely";
 import { LibsqlDialect } from "kysely-libsql";
 import Database from "better-sqlite3";
 import { nextCookies } from "better-auth/next-js";
+import { sendVerificationEmail, sendResetPasswordEmail } from "./email";
+
+function validateProductionConfig() {
+  if (process.env.NODE_ENV !== "production") return;
+
+  const databaseUrl = process.env.DATABASE_URL || "";
+
+  // Skip validation for local file-based databases (allowed for local production builds)
+  if (databaseUrl.startsWith("file:") || databaseUrl.startsWith("sqlite:")) {
+    return;
+  }
+
+  if (!databaseUrl.startsWith("libsql://") && !databaseUrl.startsWith("http")) {
+    throw new Error(
+      "[AUTH] Production DATABASE_URL must be a Turso libsql:// URL. " +
+        "Current value is not valid for Vercel serverless. " +
+        "Run: turso db create sang-logium-auth && turso db show sang-logium-auth --url " +
+        "Then set DATABASE_URL in Vercel Dashboard. " +
+        "See docs/auth/data-functionality-should-be-intelligence.md for full steps."
+    );
+  }
+
+  if (databaseUrl.startsWith("libsql://") && !process.env.TURSO_AUTH_TOKEN) {
+    throw new Error(
+      "[AUTH] TURSO_AUTH_TOKEN is required in production when using Turso. " +
+        "Generate one with: turso db tokens create sang-logium-auth " +
+        "Then set TURSO_AUTH_TOKEN in Vercel Dashboard."
+    );
+  }
+}
 
 function createDatabase() {
   const databaseUrl = process.env.DATABASE_URL || "file:./better-auth.db";
@@ -25,6 +55,7 @@ function createDatabase() {
   });
 }
 
+validateProductionConfig();
 const db = createDatabase();
 
 if (!process.env.BETTER_AUTH_SECRET) {
@@ -38,14 +69,29 @@ export const auth = betterAuth({
   secret: process.env.BETTER_AUTH_SECRET,
   baseUrl: process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_BASE_URL,
   trustedOrigins: [process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"].filter(Boolean),
+  session: {
+    expiresIn: 60 * 60 * 24 * 7,
+    updateAge: 60 * 60 * 24,
+    freshAge: 60 * 5,
+  },
   rateLimit: {
     window: 60,
     max: 10,
   },
+  emailVerification: {
+    sendVerificationEmail,
+    sendOnSignUp: true,
+    expiresIn: 60 * 60,
+  },
   emailAndPassword: {
     enabled: true,
-    requireEmailVerification: false,
+    requireEmailVerification: true,
+    minPasswordLength: 8,
+    maxPasswordLength: 128,
     autoSignIn: true,
+    sendResetPassword: sendResetPasswordEmail,
+    resetPasswordTokenExpiresIn: 60 * 60,
+    revokeSessionsOnPasswordReset: true,
   },
   socialProviders: {
     ...(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET
