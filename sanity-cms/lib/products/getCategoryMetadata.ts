@@ -2,11 +2,11 @@ import catalogueIndex from '@/data/catalogue-index.json';
 
 // React cache is only available in React Server Components
 // In test environments, we skip caching
-const withCache = (fn: Function): Function => {
+const withCache = <T extends (...args: any[]) => any>(fn: T): T => {
   try {
-    // Dynamic import to avoid breaking in non-React environments
+    // eslint-disable-next-line @typescript-eslint/no-require-imports -- Dynamic import to avoid breaking in non-React environments
     const { cache } = require('react');
-    return cache(fn);
+    return cache(fn) as T;
   } catch {
     return fn;
   }
