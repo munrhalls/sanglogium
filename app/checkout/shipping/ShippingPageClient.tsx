@@ -132,7 +132,7 @@ export default function ShippingPageClient({
                     key={option.rateId}
                     htmlFor={`shipping-${option.rateId}`}
                     className={cn(
-                      "card-base cursor-pointer",
+                      "card-base cursor-pointer flex items-center gap-4",
                       "transition-all duration-200 ease-out",
                       "focus-within:ring-2 focus-within:ring-brand-400 focus-within:ring-offset-2 focus-within:ring-offset-surface-page",
                       isSelected
@@ -151,33 +151,53 @@ export default function ShippingPageClient({
                       className="sr-only"
                     />
 
-                    {/* Custom radio indicator — 20px */}
+                    {/* Custom checkbox indicator — 20px, design-system aligned */}
                     <span
                       aria-hidden="true"
                       className={cn(
-                        "flex-shrink-0 w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors duration-200",
-                        isSelected ? "border-brand-400" : "border-border-primary"
+                        "flex-shrink-0 w-5 h-5 rounded-sm border-2 flex items-center justify-center transition-colors duration-200",
+                        isSelected
+                          ? "border-brand-400 bg-brand-400"
+                          : "border-border-primary bg-transparent"
                       )}
                     >
                       {isSelected && (
-                        <span className="w-2.5 h-2.5 rounded-full bg-brand-400" />
+                        <svg
+                          width="12"
+                          height="12"
+                          viewBox="0 0 12 12"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="text-brand-700"
+                        >
+                          <path
+                            d="M2.5 6L5 8.5L9.5 3.5"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
                       )}
                     </span>
 
-                    {/* Carrier + service name */}
-                    <div className="flex-1 min-w-0">
-                      <p className="type-card-title">{option.provider}</p>
-                      <p className="type-caption mt-1">
-                        {option.servicelevel.name}
-                      </p>
-                    </div>
+                    {/* Content area — single column with dedicated rows to prevent overlap */}
+                    <div className="flex-1 min-w-0 flex flex-col gap-1">
+                      {/* Row 1: Provider + Price */}
+                      <div className="flex items-start justify-between gap-2">
+                        <p className="type-card-title truncate">{option.provider}</p>
+                        <p className="type-price shrink-0 text-right whitespace-nowrap">
+                          {formatPolishPrice(option.amount)}
+                        </p>
+                      </div>
 
-                    {/* Price + delivery time — right-aligned, fixed min-width to prevent truncation */}
-                    <div className="text-right flex-shrink-0 min-w-[88px]">
-                      <p className="type-price">{formatPolishPrice(option.amount)}</p>
-                      <p className="type-metadata mt-0.5">
-                        {formatDeliveryEstimate(option.estimatedDays)}
-                      </p>
+                      {/* Row 2: Service + Delivery time */}
+                      <div className="flex items-start justify-between gap-2">
+                        <p className="type-caption line-clamp-2">{option.servicelevel.name}</p>
+                        <p className="type-metadata shrink-0 text-right whitespace-nowrap">
+                          {formatDeliveryEstimate(option.estimatedDays)}
+                        </p>
+                      </div>
                     </div>
                   </label>
                 );

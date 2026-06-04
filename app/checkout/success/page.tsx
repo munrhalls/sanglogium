@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
+import { CheckCircle, Lock, WarningCircle, XCircle, Clock } from '@phosphor-icons/react/dist/ssr'
 import { getCheckoutSession } from '@/lib/session'
 import { retrievePaymentIntent } from '@/lib/stripe'
 import OrderDetails from './OrderDetails'
@@ -9,6 +10,25 @@ interface SuccessPageSearchParams {
   payment_intent?: string
   status?: 'failed' | 'canceled' | 'processing'
   error?: 'verification_failed'
+}
+
+function OrderDetailsSkeleton() {
+  return (
+    <div className="card-base animate-pulse">
+      <div className="space-y-3">
+        <div className="h-4 w-36 rounded-sm bg-secondary-800/60" />
+        <div className="h-3 w-28 rounded-sm bg-secondary-800/60" />
+        <div className="h-px w-full bg-secondary-700 my-4" />
+        <div className="h-4 w-full rounded-sm bg-secondary-800/60" />
+        <div className="h-4 w-4/5 rounded-sm bg-secondary-800/60" />
+        <div className="h-px w-full bg-secondary-700 my-4" />
+        <div className="h-4 w-full rounded-sm bg-secondary-800/60" />
+        <div className="h-4 w-full rounded-sm bg-secondary-800/60" />
+        <div className="h-px w-full bg-secondary-700 my-2" />
+        <div className="h-5 w-full rounded-sm bg-secondary-800/60" />
+      </div>
+    </div>
+  )
 }
 
 export default async function SuccessPage({
@@ -31,21 +51,26 @@ export default async function SuccessPage({
   // Verification-failed path set by Route Handler catch
   if (error === 'verification_failed') {
     return (
-      <section role="alert" className="rounded border border-red-200 bg-red-50 p-6">
-        <h1 className="mb-2 text-xl font-bold">We couldn&apos;t verify your payment status right now</h1>
-        <p className="mb-4 text-gray-700">
-          Your card may have been charged. Please contact support with this reference:
-        </p>
-        <code className="mb-4 block rounded bg-gray-100 px-3 py-2 font-mono text-sm">{payment_intent}</code>
-        <div className="flex gap-4">
-          <a href="/basket" className="rounded bg-gray-900 px-4 py-2 text-sm text-white hover:bg-gray-700">
-            Return to basket
-          </a>
-          <a href="/support" className="rounded border border-gray-300 px-4 py-2 text-sm hover:bg-gray-50">
-            Contact support
-          </a>
-        </div>
-      </section>
+      <div className="max-w-xl mx-auto">
+        <section role="alert" className="card-base">
+          <div className="flex flex-col gap-4">
+            <div className="flex items-start gap-3">
+              <WarningCircle size={24} className="text-error-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
+              <h1 className="type-section-sub">We couldn&apos;t verify your payment status</h1>
+            </div>
+            <p className="type-body text-text-caption">
+              Your card may have been charged. Contact support with this reference:
+            </p>
+            <code className="block font-mono type-caption text-brand-400 bg-surface-elevated rounded-md px-3 py-2">
+              {payment_intent}
+            </code>
+            <div className="flex flex-wrap gap-3">
+              <a href="/basket" className="btn-primary px-6 py-2.5">Return to basket</a>
+              <a href="/support" className="btn-secondary px-6 py-2.5">Contact support</a>
+            </div>
+          </div>
+        </section>
+      </div>
     )
   }
 
@@ -56,21 +81,26 @@ export default async function SuccessPage({
   } catch {
     // Stripe API down — render recoverable error, same as verification_failed branch
     return (
-      <section role="alert" className="rounded border border-red-200 bg-red-50 p-6">
-        <h1 className="mb-2 text-xl font-bold">We couldn&apos;t verify your payment status right now</h1>
-        <p className="mb-4 text-gray-700">
-          Your card may have been charged. Please contact support with this reference:
-        </p>
-        <code className="mb-4 block rounded bg-gray-100 px-3 py-2 font-mono text-sm">{payment_intent}</code>
-        <div className="flex gap-4">
-          <a href="/basket" className="rounded bg-gray-900 px-4 py-2 text-sm text-white hover:bg-gray-700">
-            Return to basket
-          </a>
-          <a href="/support" className="rounded border border-gray-300 px-4 py-2 text-sm hover:bg-gray-50">
-            Contact support
-          </a>
-        </div>
-      </section>
+      <div className="max-w-xl mx-auto">
+        <section role="alert" className="card-base">
+          <div className="flex flex-col gap-4">
+            <div className="flex items-start gap-3">
+              <WarningCircle size={24} className="text-error-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
+              <h1 className="type-section-sub">We couldn&apos;t verify your payment status</h1>
+            </div>
+            <p className="type-body text-text-caption">
+              Your card may have been charged. Contact support with this reference:
+            </p>
+            <code className="block font-mono type-caption text-brand-400 bg-surface-elevated rounded-md px-3 py-2">
+              {payment_intent}
+            </code>
+            <div className="flex flex-wrap gap-3">
+              <a href="/basket" className="btn-primary px-6 py-2.5">Return to basket</a>
+              <a href="/support" className="btn-secondary px-6 py-2.5">Contact support</a>
+            </div>
+          </div>
+        </section>
+      </div>
     )
   }
 
@@ -89,41 +119,71 @@ export default async function SuccessPage({
           : null
 
     return (
-      <div>
-        <div className="mb-6 rounded bg-green-50 p-6">
-          <div className="mb-3 flex items-center gap-2">
-            <svg className="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <h1 className="text-2xl font-bold text-green-800">Payment confirmed</h1>
-          </div>
-          <p className="text-lg text-green-700">{amountPLN}</p>
-          {paymentMethodHint && (
-            <p className="mt-1 text-sm text-green-600">via {paymentMethodHint}</p>
-          )}
-          <div className="mt-3 flex items-center gap-2 text-xs text-gray-500">
-            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-            </svg>
-            <span>Secured by Stripe</span>
+      <section aria-label="Order confirmation" className="flex flex-col gap-6">
+        <div className="card-base">
+          <div className="flex flex-col gap-3">
+            <div className="flex items-center gap-3">
+              <CheckCircle size={28} className="text-success-500 flex-shrink-0" aria-hidden="true" />
+              <h1 className="type-section-hed">Payment confirmed</h1>
+            </div>
+            <p className="type-section-sub tabular-nums">{amountPLN}</p>
+            {paymentMethodHint && (
+              <p className="type-section-caption">via {paymentMethodHint}</p>
+            )}
+            <div className="flex items-center gap-1.5">
+              <Lock size={12} className="text-text-caption flex-shrink-0" aria-hidden="true" />
+              <span className="type-section-caption">Secured by Stripe</span>
+            </div>
           </div>
         </div>
-        <Suspense
-          fallback={<p className="text-gray-500">Fetching order details…</p>}
-        >
-          <OrderDetails paymentIntentId={payment_intent} fallbackTotal={pi.amount} />
-        </Suspense>
-        <div className="mt-6 rounded border border-gray-200 p-4 text-sm text-gray-600">
-          <h3 className="mb-1 font-semibold text-gray-800">Need help?</h3>
-          <p className="mb-2">If you have any questions about your order, contact our support team.</p>
-          <a
-            href="mailto:support@sanglogium.com?subject=Order%20Support%20Request"
-            className="inline-block rounded border border-gray-300 px-3 py-1.5 text-xs hover:bg-gray-50"
-          >
-            Email support
-          </a>
+
+        <div className="grid grid-cols-1 gap-6 lg-touch:grid-cols-[3fr_2fr] lg-desktop:grid-cols-[3fr_2fr]">
+          <div>
+            <Suspense fallback={<OrderDetailsSkeleton />}>
+              <OrderDetails paymentIntentId={payment_intent} fallbackTotal={pi.amount} />
+            </Suspense>
+          </div>
+          <div className="flex flex-col gap-4">
+            <div className="card-base">
+              <h3 className="type-overline mb-4">What happens next</h3>
+              <ol className="space-y-3">
+                <li className="flex items-center gap-3">
+                  <span className="flex-shrink-0 h-2.5 w-2.5 rounded-full bg-success-500" />
+                  <span className="type-body">Order confirmed</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="flex-shrink-0 h-2.5 w-2.5 rounded-full bg-secondary-700" />
+                  <span className="type-section-caption">Processing</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="flex-shrink-0 h-2.5 w-2.5 rounded-full bg-secondary-700" />
+                  <span className="type-section-caption">Shipped</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="flex-shrink-0 h-2.5 w-2.5 rounded-full bg-secondary-700" />
+                  <span className="type-section-caption">Delivered</span>
+                </li>
+              </ol>
+              <p className="type-section-caption mt-3">Tracking number will appear here once shipped.</p>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <a href="/" className="btn-primary block text-center py-3">Continue shopping</a>
+            </div>
+
+            <div className="card-base">
+              <h3 className="type-overline mb-2">Need help?</h3>
+              <p className="type-section-caption mb-3">If you have any questions about your order, contact our support team.</p>
+              <a
+                href="mailto:support@sanglogium.com?subject=Order%20Support%20Request"
+                className="btn-secondary inline-block px-4 py-2 text-sm"
+              >
+                Email support
+              </a>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
     )
   }
 
@@ -133,80 +193,91 @@ export default async function SuccessPage({
       (pi as { last_payment_error?: { message?: string } }).last_payment_error?.message ??
       'Payment was declined.'
     return (
-      <section role="alert" className="rounded border border-red-200 bg-red-50 p-6">
-        <h1 className="mb-2 text-xl font-bold">Payment was declined</h1>
-        <p className="mb-4 text-gray-700">{declineMessage}</p>
-        <div className="flex gap-4">
-          <a
-            href="/checkout/payment"
-            className="inline-block rounded bg-gray-900 px-4 py-2 text-sm text-white hover:bg-gray-700"
-          >
-            Try again
-          </a>
-          <a
-            href="/basket"
-            className="inline-block rounded border border-gray-300 px-4 py-2 text-sm hover:bg-gray-50"
-          >
-            Return to basket
-          </a>
-        </div>
-      </section>
+      <div className="max-w-xl mx-auto">
+        <section role="alert" className="card-base">
+          <div className="flex flex-col gap-4">
+            <div className="flex items-start gap-3">
+              <XCircle size={24} className="text-error-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
+              <h1 className="type-section-sub">Payment was declined</h1>
+            </div>
+            <p className="type-body text-text-caption">{declineMessage}</p>
+            <div className="flex flex-wrap gap-3">
+              <a href="/checkout/payment" className="btn-primary px-6 py-2.5">Try again</a>
+              <a href="/basket" className="btn-secondary px-6 py-2.5">Return to basket</a>
+            </div>
+          </div>
+        </section>
+      </div>
     )
   }
 
   // Canceled branch
   if (pi.status === 'canceled') {
     return (
-      <section role="alert" className="rounded border border-yellow-200 bg-yellow-50 p-6">
-        <h1 className="mb-2 text-xl font-bold">Payment was canceled</h1>
-        <div className="flex gap-4">
-          <a
-            href="/checkout/payment"
-            className="inline-block rounded bg-gray-900 px-4 py-2 text-sm text-white hover:bg-gray-700"
-          >
-            Try again
-          </a>
-          <a
-            href="/basket"
-            className="inline-block rounded border border-gray-300 px-4 py-2 text-sm hover:bg-gray-50"
-          >
-            Return to basket
-          </a>
-        </div>
-      </section>
+      <div className="max-w-xl mx-auto">
+        <section role="alert" className="card-base">
+          <div className="flex flex-col gap-4">
+            <div className="flex items-start gap-3">
+              <XCircle size={24} className="text-secondary-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
+              <h1 className="type-section-sub">Payment was canceled</h1>
+            </div>
+            <p className="type-body text-text-caption">You can try again or return to your basket.</p>
+            <div className="flex flex-wrap gap-3">
+              <a href="/checkout/payment" className="btn-primary px-6 py-2.5">Try again</a>
+              <a href="/basket" className="btn-secondary px-6 py-2.5">Return to basket</a>
+            </div>
+          </div>
+        </section>
+      </div>
     )
   }
 
   // Processing branch
   if (pi.status === 'processing') {
     return (
-      <section role="alert" className="rounded border border-blue-200 bg-blue-50 p-6">
-        <h1 className="mb-2 text-xl font-bold">Payment is processing</h1>
-        <p className="mb-2 text-gray-700">
-          Your payment is being processed by your bank. This usually takes a few minutes.
-        </p>
-        <p className="mb-4 text-gray-600">
-          We&apos;ll email a confirmation when settled.
-        </p>
-        <RefreshButton />
-        <div className="mt-4 text-xs text-gray-500">
-          <p>Stuck? Contact support with reference: <code className="rounded bg-gray-100 px-1 py-0.5 font-mono">{payment_intent}</code></p>
-        </div>
-      </section>
+      <div className="max-w-xl mx-auto">
+        <section role="alert" className="card-base">
+          <div className="flex flex-col gap-4">
+            <div className="flex items-start gap-3">
+              <Clock size={24} className="text-accent-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
+              <h1 className="type-section-sub">Payment is processing</h1>
+            </div>
+            <p className="type-body text-text-caption">
+              Your payment is being processed by your bank. This usually takes a few minutes.
+            </p>
+            <p className="type-body text-text-caption">
+              We&apos;ll email a confirmation once settled.
+            </p>
+            <code className="block font-mono type-caption text-brand-400 bg-surface-elevated rounded-md px-3 py-2">
+              {payment_intent}
+            </code>
+            <div className="flex flex-wrap gap-3">
+              <RefreshButton />
+            </div>
+          </div>
+        </section>
+      </div>
     )
   }
 
   // Unexpected status — shouldn't reach here (Route Handler handles it), but safety net
   return (
-    <section role="alert" className="rounded border border-gray-200 p-6">
-      <h1 className="mb-2 text-xl font-bold">Unexpected payment status</h1>
-      <p className="mb-4 text-gray-700">
-        Please contact support with this reference:
-      </p>
-      <code className="mb-4 block rounded bg-gray-100 px-3 py-2 font-mono text-sm">{payment_intent}</code>
-      <a href="/basket" className="rounded bg-gray-900 px-4 py-2 text-sm text-white hover:bg-gray-700">
-        Return to basket
-      </a>
-    </section>
+    <div className="max-w-xl mx-auto">
+      <section role="alert" className="card-base">
+        <div className="flex flex-col gap-4">
+          <div className="flex items-start gap-3">
+            <WarningCircle size={24} className="text-error-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
+            <h1 className="type-section-sub">Unexpected payment status</h1>
+          </div>
+          <p className="type-body text-text-caption">Contact support with this reference:</p>
+          <code className="block font-mono type-caption text-brand-400 bg-surface-elevated rounded-md px-3 py-2">
+            {payment_intent}
+          </code>
+          <div className="flex flex-wrap gap-3">
+            <a href="/basket" className="btn-primary px-6 py-2.5">Return to basket</a>
+          </div>
+        </div>
+      </section>
+    </div>
   )
 }
