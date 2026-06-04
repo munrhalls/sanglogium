@@ -1,8 +1,7 @@
 // Suppress Next.js Image warnings in development
 if (process.env.NODE_ENV === "development") {
   const originalWarn = console.warn;
-  const originalError = console.error;
-  
+
   console.warn = (...args) => {
     const message = args[0];
     if (
