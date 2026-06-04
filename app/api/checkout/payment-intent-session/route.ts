@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
 
     // Payment method strategy: automatic_payment_methods delegates method availability
     // to the Stripe Dashboard. For Polish market compliance, verify in Dashboard:
-    // Settings > Payment methods — BLIK, P24, Apple Pay, Google Pay, Link must be enabled.
+    // Settings > Payment methods — BLIK, P24, Apple Pay, Google Pay, Link, PayPal must be enabled.
     // Fallback (if Dashboard methods are unavailable): switch to explicit
     // payment_method_types: ['card', 'blik', 'p24'] on the create() calls below.
     // See beads issue sang-logium-oss — Task 9 for verification checklist.
