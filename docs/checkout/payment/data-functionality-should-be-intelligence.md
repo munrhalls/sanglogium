@@ -116,9 +116,9 @@ Per Stripe's Poland market guide (`stripe.com/resources/more/payments-in-poland`
 |--------|-------------|-------|
 | **BLIK** | Dev server (Stripe test mode) | 1. Ensure BLIK enabled in Dashboard test mode  <br>2. Checkout → select BLIK  <br>3. Enter `123456`  <br>4. Payment succeeds |
 | **P24** | Dev server (Stripe test mode) | 1. Ensure P24 enabled in Dashboard test mode  <br>2. Checkout → select P24  <br>3. Select any bank  <br>4. On redirect test page, click "succeed" |
-| **Klarna** | Dev server (Stripe test mode) | 1. Ensure Klarna enabled in Dashboard test mode  <br>2. Checkout → select Klarna  <br>3. Use Klarna **test buyer account** (create at Klarna test portal)  <br>4. Complete flow |
-| **Link** | Dev server (Stripe test mode) | 1. Ensure Link enabled in Dashboard test mode  <br>2. Checkout → enter email recognized by Link  <br>3. Enter OTP sent to email  <br>4. Use test card `4242 4242 4242 4242` |
-| **PayPal** | Dev server (Stripe test mode) | 1. Ensure PayPal enabled in Dashboard test mode  <br>2. Checkout → select PayPal  <br>3. Log in with **PayPal sandbox buyer account**  <br>4. Confirm payment |
+| **Klarna** | Dev server (Stripe test mode) | 1. Ensure Klarna enabled in Dashboard test mode  <br>2. Checkout → select Klarna  <br>3. Two-step auth: enter any 6-digit code (e.g. `123456`). Use `999999` to force fail  <br>4. Inside Klarna repayment flow: enter `4111 1111 1111 1111`, CVV `123`, exp any future date (alt: `4012 8888 8888 1881`)  <br>5. Payment succeeds |
+| **Link** | Dev server (Stripe test mode) | 1. Ensure Link enabled in Dashboard test mode  <br>2. Checkout → enter **any valid email address** (e.g. `test@example.com`)  <br>3. When prompted for OTP, enter **`000000`** (fixed sandbox passcode; no SMS/email sent)  <br>4. When prompted for card, enter `4242 4242 4242 4242`, any future date, any CVC  <br>5. Payment succeeds |
+| **PayPal** | Dev server (Stripe test mode) | 1. Ensure PayPal enabled in Dashboard test mode  <br>2. Checkout → select PayPal → click **Pay**  <br>3. **No PayPal Sandbox account required** for Payment Element listing  <br>4. Payment succeeds |
 | **Cards** | Dev server (Stripe test mode) | Use standard test card: `4242 4242 4242 4242`, any future date, any CVC |
 
 **Unified test approach:** All methods can be tested on `localhost:3000` with Stripe test keys (`sk_test_...`). No production environment needed.
@@ -145,6 +145,12 @@ Per Stripe's Poland market guide (`stripe.com/resources/more/payments-in-poland`
 5. **Legacy fallback comment**
    - `route.ts:50-51` references explicit `payment_method_types: ['card', 'blik', 'p24']`
    - P24 standalone guide is marked Legacy by Stripe; modern path is `automatic_payment_methods`
+
+6. **Orphaned Flow B artifacts**
+   - `app/(store)/checkout/payment/PaymentPageClient.tsx` reads `sessionStorage.basketReservationId`
+   - `app/(store)/checkout/payment/_components/*` requires `basketReservationId`
+   - These are part of a deprecated basket-reservation flow, not used by the current iron-session flow
+   - Safe to remove after confirming the iron-session checkout still works end-to-end
 
 ---
 
