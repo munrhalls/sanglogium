@@ -89,16 +89,12 @@ Meta issues are background concerns that don't follow the two-path structure:
 ### When to Create an Issue (Default Mode — 90% of work)
 
 Create a beads issue when:
-- You need to implement a feature or fix a bug
-- The root cause is known or the feature is well-specified
-- You expect 1-2 agent attempts to resolve it
+- Explicitly prompted to do so - and only then
+- Outside of that, no issue should EVER be created, when it's not being asked for
 
 **What the issue contains:**
 - Feature/bug name + expected behavior (1-2 sentences)
 - Files expected to change (optional)
-
-**What happens next:**
-Agent reads issue → implements → runs live check → updates issue with result.
 
 ### When to Use Safety Net Mode (10% of work)
 
@@ -112,6 +108,9 @@ Then run `@/system-and-root-cause-analyzer` on the existing issue.
 
 ### Enforcement — No Work Without Issue
 
+- Live check is simple and only done by human, unless explicitly asked for 
+- If live check by agent is 100% confidence easy/possible to perform by agent - inform about that opportunity 
+
 **Every agent MUST:**
 1. **Read the beads issue completely** before touching any code
 2. **Check `bd ready`** before creating a new issue — if an issue exists for this feature, update it
@@ -120,7 +119,7 @@ Then run `@/system-and-root-cause-analyzer` on the existing issue.
 **Violations:**
 - Working on a feature without reading its issue = **STOP.** Demand issue ID first.
 - Creating a new issue when one exists = **STOP.** Update existing issue instead.
-- Declaring "done" without updating the issue = **NOT done.** Live check evidence must be in the issue.
+- Declaring "done" without updating the issue = **NOT done.** Live check evidence must be in the issue. 
 
 ### Content Guard — Prevent Pre-Diagnosis
 
