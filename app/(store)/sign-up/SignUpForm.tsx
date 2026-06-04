@@ -54,24 +54,24 @@ export default function SignUpForm() {
   }, [state, router]);
 
   return (
-    <div className="mx-auto max-w-md p-6">
-      <h1 className="mb-6 text-2xl font-bold">Create Account</h1>
+    <div className="card-base w-full max-w-[440px]">
+      <h1 className="type-section-hed mb-6">Create Account</h1>
 
       {state?.error && (
-        <div className="mb-4 rounded border border-red-400 bg-red-100 p-3 text-red-700">
+        <div className="mb-4 rounded border border-error-500 bg-error-500/10 p-3 text-error-500 type-caption">
           {state.error}
         </div>
       )}
 
       {state?.success && (
-        <div className="mb-4 rounded border border-green-400 bg-green-100 p-3 text-green-700">
+        <div className="mb-4 rounded border border-success-500 bg-success-500/10 p-3 text-success-500 type-caption">
           Account created successfully! Redirecting...
         </div>
       )}
 
       <form action={formAction} className="space-y-4">
         <div>
-          <label htmlFor="name" className="mb-1 block text-sm font-medium">
+          <label htmlFor="name" className="type-caption text-text-caption mb-1 block">
             Name
           </label>
           <input
@@ -79,12 +79,12 @@ export default function SignUpForm() {
             name="name"
             type="text"
             required
-            className="w-full rounded border border-gray-300 p-2 text-black"
+            className="input-field"
           />
         </div>
 
         <div>
-          <label htmlFor="email" className="mb-1 block text-sm font-medium">
+          <label htmlFor="email" className="type-caption text-text-caption mb-1 block">
             Email
           </label>
           <input
@@ -93,12 +93,12 @@ export default function SignUpForm() {
             type="email"
             required
             defaultValue={emailFromUrl ?? ''}
-            className="w-full rounded border border-gray-300 p-2 text-black"
+            className="input-field"
           />
         </div>
 
         <div>
-          <label htmlFor="password" className="mb-1 block text-sm font-medium">
+          <label htmlFor="password" className="type-caption text-text-caption mb-1 block">
             Password
           </label>
           <input
@@ -107,22 +107,22 @@ export default function SignUpForm() {
             type="password"
             required
             minLength={8}
-            className="w-full rounded border border-gray-300 p-2 text-black"
+            className="input-field"
           />
         </div>
 
         <button
           type="submit"
           disabled={isPending}
-          className="w-full rounded bg-blue-600 p-2 font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+          className="btn-primary w-full py-3"
         >
           {isPending ? "Creating account..." : "Sign Up"}
         </button>
       </form>
 
-      <p className="mt-4 text-center text-sm">
+      <p className="mt-4 text-center type-body">
         Already have an account?{" "}
-        <Link href="/sign-in" className="text-blue-600 underline">
+        <Link href="/sign-in" className="text-text-accent underline hover:text-text-primary">
           Sign in
         </Link>
       </p>
