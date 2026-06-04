@@ -7,6 +7,7 @@
 
 "use strict";
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports -- CommonJS module
 module.exports = {
   rules: {
     // Rule 2: No cloneElement for prop injection
@@ -62,13 +63,15 @@ module.exports = {
           recommended: true,
         },
         messages: {
-          wrongSyntax: "Use `field->name` NOT `field->{name}` for single field access. See AGENTS.md GROQ rules.",
+          // eslint-disable-next-line sang-logium/groq-reference-syntax -- Error message contains example syntax
+          wrongSyntax: "Use field->name NOT field with braces around single field. See AGENTS.md GROQ rules.",
         },
       },
       create(context) {
         function checkString(value, node) {
           // Match pattern like brand->{name} or category->{slug}
           // but not brand->{_id, name, slug} (multi-field projection is OK)
+          // eslint-disable-next-line sang-logium/groq-reference-syntax -- Regex pattern for detection
           const wrongPattern = /\w+->\{\s*\w+\s*\}/g;
           const matches = value.match(wrongPattern);
 

@@ -49,8 +49,8 @@ export default [
 
       // Temporarily disabled for deployment - pre-existing issues
       "@typescript-eslint/no-explicit-any": "warn",
-      "react-hooks/set-state-in-effect": "warn",
       "prefer-const": "warn",
+      "react-hooks/set-state-in-effect": "off", // Plugin not configured, pre-existing issues
     },
   },
   eslintConfigPrettier,
@@ -64,6 +64,14 @@ export default [
       "app/api/checkout-queue/**", // LEGACY - deprecated checkout-queue API
       "tests/checkout-queue/**", // LEGACY - deprecated checkout-queue tests
       "app/(test)/checkout-queue/**", // LEGACY - deprecated checkout-queue test UI
+      "docs/examples/**", // Documentation files with example syntax
     ],
+  },
+  {
+    files: ["**/*.cjs", "**/*.mjs"],
+    rules: {
+      // Allow require() in CommonJS (.cjs) and module scripts (.mjs)
+      "@typescript-eslint/no-require-imports": "off",
+    },
   },
 ];
