@@ -96,3 +96,5 @@
 {"id":"int-9ad41182","kind":"field_change","created_at":"2026-06-04T06:37:03.6726492Z","actor":"Munrhalls","issue_id":"sang-logium-ckw","extra":{"field":"status","new_value":"meta","old_value":"open"}}
 {"id":"int-07c6bebc","kind":"field_change","created_at":"2026-06-04T12:48:52.6161355Z","actor":"Munrhalls","issue_id":"sang-logium-f35","extra":{"field":"status","new_value":"meta","old_value":"open"}}
 {"id":"int-c0881e95","kind":"field_change","created_at":"2026-06-04T17:28:01.6210269Z","actor":"Munrhalls","issue_id":"sang-logium-9t1","extra":{"field":"status","new_value":"closed","old_value":"open","reason":"Closed"}}
+{"id":"int-8c261f6a","kind":"field_change","created_at":"2026-06-04T18:45:11.2144454Z","actor":"Munrhalls","issue_id":"sang-logium-eus","extra":{"field":"status","new_value":"closed","old_value":"open","reason":"Closed"}}
+{"id":"int-df8dfd39","kind":"field_change","created_at":"2026-06-04T18:46:15.0634083Z","actor":"Munrhalls","issue_id":"sang-logium-egx","extra":{"field":"status","new_value":"closed","old_value":"open","reason":"Closed"}}
