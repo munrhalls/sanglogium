@@ -5,6 +5,7 @@ import { LibsqlDialect } from "kysely-libsql";
 import Database from "better-sqlite3";
 import { nextCookies } from "better-auth/next-js";
 import { sendVerificationEmail, sendResetPasswordEmail } from "./email";
+import { backendClient } from "@/sanity-cms/lib/backendClient";
 
 function validateProductionConfig() {
   if (process.env.NODE_ENV !== "production") return;
@@ -102,6 +103,40 @@ export const auth = betterAuth({
           },
         }
       : {}),
+  },
+  databaseHooks: {
+    user: {
+      create: {
+        after: async (user) => {
+          try {
+            const existing = await backendClient.fetch(
+              `*[_type == "userProfile" && authId == $authId][0]`,
+              { authId: user.id }
+            );
+            if (existing) return;
+
+            await backendClient.create({
+              _type: "userProfile",
+              authId: user.id,
+              email: user.email,
+              name: user.name || "",
+            });
+
+            console.log("[AUTH] HOOK: userProfile created via databaseHooks.", {
+              authId: user.id,
+              email: user.email,
+            });
+          } catch (error) {
+            console.error("[AUTH] HOOK FAILED: userProfile creation failed in databaseHooks.", {
+              authId: user.id,
+              email: user.email,
+              error: error instanceof Error ? error.message : String(error),
+            });
+            // Do NOT throw — hook failure must not crash the auth flow.
+          }
+        },
+      },
+    },
   },
   plugins: [nextCookies()],
 });
