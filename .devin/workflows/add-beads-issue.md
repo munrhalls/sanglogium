@@ -16,30 +16,34 @@ Run `bd types` to verify. Common types:
 
 ### What Goes in Beads Issues
 
-Each issue has **exactly three sections**:
+**Golden Rule:** A beads issue contains **ONLY canonical state**: scope, objective, DoD items, blockers, and live check evidence. All background intelligence (research, decisions, analysis, audits) is **linked** from the issue and lives in `docs/` or `research/`.
 
-#### 1. Critical Intelligence (optional)
-- Max 5 bullets of key context. If more → link to a `.md` file.
-- Links to research, architecture, or key files go here.
+Each issue contains **ONLY scope contracts** in this format:
 
-#### 2. SHOULD BE Scopes
-Ordered list. Each scope is one concrete, symptom-only behavior.
-- **Right:** "Payment page renders Stripe PaymentElement with client_secret from server"
-- **Wrong:** "Fix Server Component → Route Handler communication"
+```
+SCOPE N: [Feature Slice]
 
-#### 3. DoD Items Per Scope
-For each scope, a checklist of binary verifications.
-- Each item must be objectively pass/fail.
-- Mark with evidence: "PASS — screenshot of Stripe form, trace xyz"
+Objective: [One sentence — what this scope makes possible]
 
-- **Blockers** (if any)
+DoD items:
+- [ ] [Binary pass/fail check 1]
+- [ ] [Binary pass/fail check 2]
+
+Intelligence link: [path to .md file in docs/ or research/]
+```
+
+- **Blockers** (if any) — listed after the final scope
+- **Live check evidence** (pass/fail with trace) — in notes only
 - Nothing else
 
 ### What Does NOT Go in Beads Issues
-- Research findings → `research/` directory
-- Documentation → `docs/` directory
-- Notes or observations → appropriate doc files
+- Research findings → `research/` directory, link from issue
+- Documentation → `docs/` directory, link from issue
+- Notes or observations → appropriate doc files, link from issue
 - Theories or pre-formed diagnoses (see Content Quality below)
+- Gap analysis → `docs/` or `research/`, link from issue
+- Library decision manifestos → `docs/`, link from issue
+- Frame output that exceeds scope + DoD format → belongs in docs/
 
 ### Content Quality — Symptoms Only
 Issue descriptions MUST contain symptoms, never theories.
@@ -155,9 +159,9 @@ Never create an issue that tells an agent what to implement without evidence.
 ## Lifecycle Context
 
 This workflow creates the issue **container**. The issue becomes the canonical record of:
-- **Critical Intelligence** (key context, linked files)
-- **SHOULD BE Scopes** (what the feature should do, ordered)
-- **DoD Items** (pass/fail checks with evidence)
+- **Scope Contracts** (objective + DoD items + intelligence link, ordered)
+- **Blockers** (if any)
+- **Live check evidence** (pass/fail with trace, in notes)
 
 Agents read the issue before touching code. Agents update the issue before handing off. The issue is the hand-off artifact.
 
