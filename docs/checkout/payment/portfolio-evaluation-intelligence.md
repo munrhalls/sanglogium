@@ -136,7 +136,7 @@ GET /api/checkout/return?payment_intent=... 307 in 7090ms
 |---|-----|----------------|--------------|
 | 1 | **Console audit logs print in production** | `page.tsx:136-158` and `PaymentForm.client.tsx:55-62` dump 16 lines of "FIX #N" logs to the browser console on every page load. This looks unprofessional to any employer who opens DevTools. | Wrap in `process.env.NODE_ENV !== "production"` or remove entirely |
 | 2 | **Success page only recognizes BLIK and card** | If an employer tests P24 or Klarna, the success page shows no payment method hint. Looks like incomplete implementation. | `app/checkout/success/page.tsx:114-119` |
-| 3 | **Legacy Flow B artifacts still present** | `PaymentPageClient.tsx` and `_components/OrderSummary.tsx` / `PaymentForm.tsx` are orphaned code from a deprecated basket-reservation flow. If an employer greps the codebase, they find dead code. | Delete `app/checkout/payment/PaymentPageClient.tsx` and `app/checkout/payment/_components/OrderSummary.tsx`, `PaymentForm.tsx` after confirming they are unused |
+| 3 | **Legacy Flow B artifacts still present** | `PaymentPageClient.tsx` and `_components/OrderSummary.tsx` / `PaymentForm.tsx` are orphaned client code. Additionally, `app/api/checkout/payment-intent/route.ts` and `app/api/checkout/payment-intent/session/route.ts` are orphaned API routes from the same deprecated flow. If an employer greps the codebase, they find dead code. | Delete `PaymentPageClient.tsx`, `_components/OrderSummary.tsx`, `_components/PaymentForm.tsx`, `app/api/checkout/payment-intent/route.ts`, and `app/api/checkout/payment-intent/session/route.ts` after confirming the iron-session flow works end-to-end |
 
 ### 5.2 P1 — Would Be Nice
 
