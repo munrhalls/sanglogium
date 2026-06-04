@@ -8,16 +8,6 @@ import { Price } from '@/app/components/ui/Price';
 import { BasketControls } from "@/app/components/features/basket/BasketControls";
 import { centsToDisplay } from '@/lib/utils/price';
 
-export interface Product {
-  _id: string;
-  name: string;
-  brand: { _id: string; name: string; slug?: { current: string } } | null;
-  price_data: { currency: string; unit_amount: number };
-  stock?: number;
-  image: any;
-  slug: { current: string };
-}
-
 interface ProductCardProps {
   product: Product;
 }

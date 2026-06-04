@@ -37,7 +37,7 @@ export function ProductDetail({ product, relatedProducts = [] }: ProductDetailPr
                 <tr className="border-b border-border-secondary">
                   <th className="text-left py-3 px-4 type-caption uppercase text-secondary">Specification</th>
                   <th className="text-left py-3 px-4 type-caption uppercase text-secondary">Value</th>
-                  {product.specifications.some(s => s.information) && (
+                  {product.specifications?.some(s => s.information) && (
                     <th className="text-left py-3 px-4 type-caption uppercase text-secondary">Info</th>
                   )}
                 </tr>
@@ -47,7 +47,7 @@ export function ProductDetail({ product, relatedProducts = [] }: ProductDetailPr
                   <tr key={index} className={index % 2 === 0 ? 'bg-surface-card' : ''}>
                     <td className="py-3 px-4 type-body text-primary">{spec.title}</td>
                     <td className="py-3 px-4 type-body text-primary">{spec.value}</td>
-                    {product.specifications.some(s => s.information) && (
+                    {product.specifications?.some(s => s.information) && (
                       <td className="py-3 px-4 type-caption text-secondary">{spec.information || '-'}</td>
                     )}
                   </tr>

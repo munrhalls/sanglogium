@@ -1,15 +1,7 @@
 import React from 'react';
 import { cn } from "@/lib/utils/tailwind";
 import { ProductCard } from './ProductCard';
-
-interface Product {
-  _id: string;
-  name: string;
-  brand: { _id: string; name: string; slug?: { current: string } } | null;
-  price_data: { currency: string; unit_amount: number };
-  image: any;
-  slug: { current: string };
-}
+import type { Product } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
 
 interface ProductGridProps {
   products: Product[];
