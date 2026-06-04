@@ -160,7 +160,7 @@ export async function submitShippingAction(
       return {
         status: "ACCEPT",
         address: cleanAddress,
-        geocode: data.result?.geocode?.location,
+        geocode: data.result?.geocode,
         placeId: data.result?.geocode?.placeId,
       };
     }

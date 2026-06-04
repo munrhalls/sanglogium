@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCheckoutSession } from "@/lib/session";
+import { Address } from "@/app/checkout/checkout.types";
 
 const REAL_PRODUCT_ID = "3O1ZNp54LWQGln4uEAU7Vs";
 
 const VALID_BASKET = [{ productId: REAL_PRODUCT_ID, quantity: 1 }];
 
-const VALID_ADDRESS = {
+const VALID_ADDRESS: Address = {
+  firstName: "Jan",
+  lastName: "Kowalski",
+  phone: "+48 123 456 789",
   regionCode: "PL",
   postalCode: "00-001",
   street: "Marszałkowska",
