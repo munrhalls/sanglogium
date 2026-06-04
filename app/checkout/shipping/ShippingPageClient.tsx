@@ -132,7 +132,7 @@ export default function ShippingPageClient({
                     key={option.rateId}
                     htmlFor={`shipping-${option.rateId}`}
                     className={cn(
-                      "card-base cursor-pointer flex items-center gap-4",
+                      "card-base cursor-pointer flex items-start md:items-center gap-4",
                       "transition-all duration-200 ease-out",
                       "focus-within:ring-2 focus-within:ring-brand-400 focus-within:ring-offset-2 focus-within:ring-offset-surface-page",
                       isSelected
@@ -181,23 +181,23 @@ export default function ShippingPageClient({
                       )}
                     </span>
 
-                    {/* Content area — single column with dedicated rows to prevent overlap */}
-                    <div className="flex-1 min-w-0 flex flex-col gap-1">
+                    {/* Content area — three-row vertical stack for fail-safe mobile layout */}
+                    <div className="flex-1 min-w-0 flex flex-col gap-0.5">
                       {/* Row 1: Provider + Price */}
-                      <div className="flex items-start justify-between gap-2">
-                        <p className="type-card-title truncate">{option.provider}</p>
+                      <div className="flex items-baseline justify-between gap-2">
+                        <p className="type-card-title">{option.provider}</p>
                         <p className="type-price shrink-0 text-right whitespace-nowrap">
                           {formatPolishPrice(option.amount)}
                         </p>
                       </div>
 
-                      {/* Row 2: Service + Delivery time */}
-                      <div className="flex items-start justify-between gap-2">
-                        <p className="type-caption line-clamp-2">{option.servicelevel.name}</p>
-                        <p className="type-metadata shrink-0 text-right whitespace-nowrap">
-                          {formatDeliveryEstimate(option.estimatedDays)}
-                        </p>
-                      </div>
+                      {/* Row 2: Service description — full width */}
+                      <p className="type-caption">{option.servicelevel.name}</p>
+
+                      {/* Row 3: Delivery time — full width, left-aligned, muted */}
+                      <p className="type-caption text-text-secondary">
+                        {formatDeliveryEstimate(option.estimatedDays)}
+                      </p>
                     </div>
                   </label>
                 );
