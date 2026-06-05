@@ -68,16 +68,32 @@ if (!process.env.BETTER_AUTH_SECRET) {
 export const auth = betterAuth({
   database: kyselyAdapter(db, { type: "sqlite" }),
   secret: process.env.BETTER_AUTH_SECRET,
+  secrets: process.env.BETTER_AUTH_SECRETS
+    ? process.env.BETTER_AUTH_SECRETS.split(",").map((entry) => {
+        const [versionStr, value] = entry.split(":");
+        return { version: parseInt(versionStr, 10), value };
+      })
+    : undefined,
   baseUrl: process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_BASE_URL,
   trustedOrigins: [process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"].filter(Boolean),
   session: {
     expiresIn: 60 * 60 * 24 * 7,
     updateAge: 60 * 60 * 24,
     freshAge: 60 * 5,
+    cookieCache: {
+      enabled: true,
+      maxAge: 5 * 60,
+      strategy: "compact",
+    },
   },
   rateLimit: {
     window: 60,
     max: 10,
+    customRules: {
+      "/sign-in/email": { window: 15 * 60, max: 5 },
+      "/sign-up/email": { window: 60 * 60, max: 3 },
+      "/forget-password": { window: 60 * 60, max: 3 },
+    },
   },
   emailVerification: {
     sendVerificationEmail,
@@ -132,7 +148,18 @@ export const auth = betterAuth({
               email: user.email,
               error: error instanceof Error ? error.message : String(error),
             });
-            // Do NOT throw — hook failure must not crash the auth flow.
+            // CRITICAL: Better Auth `databaseHooks.user.create.after` runs AFTER
+            // the user is already persisted. True atomic rollback is impossible here.
+            // The user now exists in Better Auth without a linked userProfile.
+            //
+            // Mitigation (healing): `lib/auth/dal.ts` `ensureUserProfile()` auto-creates
+            // the missing profile on the first authenticated page load (Server Components
+            // via `verifySession()`). This acts as a deferred cleanup/flagging strategy.
+            //
+            // For full atomicity, a custom server action wrapping BOTH user creation
+            // AND profile creation in a transaction would be required — but that
+            // would bypass Better Auth's built-in endpoints and is out of scope.
+            // See docs/auth/userprofile-atomicity-spec-updated.md
           }
         },
       },

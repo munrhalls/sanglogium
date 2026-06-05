@@ -4,7 +4,6 @@ import { useActionState, useEffect } from "react";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
-import { createUserProfile } from "./actions";
 
 export default function SignUpForm() {
   const searchParams = useSearchParams();
@@ -25,21 +24,6 @@ export default function SignUpForm() {
 
       if (result.error) {
         return { error: result.error.message };
-      }
-
-      const user = result.data?.user;
-      if (!user?.id) {
-        return { error: "User created but no ID returned" };
-      }
-
-      const profileResult = await createUserProfile({
-        authId: user.id,
-        email,
-        name,
-      });
-
-      if (!profileResult.success) {
-        return { error: `Signed up but profile creation failed: ${profileResult.error}` };
       }
 
       return { success: true };

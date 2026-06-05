@@ -23,10 +23,12 @@ export async function sendVerificationEmail(data: {
   url: string;
   token: string;
 }): Promise<void> {
-  const { user, url } = data;
+  const { user, token } = data;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  const verificationUrl = `${baseUrl}/verify-email?token=${encodeURIComponent(token)}`;
 
   if (!resend) {
-    logDevEmail("Email Verification", user.email, url);
+    logDevEmail("Email Verification", user.email, verificationUrl);
     return;
   }
 
@@ -37,7 +39,7 @@ export async function sendVerificationEmail(data: {
     html: `
       <p>Hi ${user.name || "there"},</p>
       <p>Click the link below to verify your email address:</p>
-      <p><a href="${url}">${url}</a></p>
+      <p><a href="${verificationUrl}">${verificationUrl}</a></p>
       <p>This link expires in 1 hour.</p>
     `,
   });
@@ -48,10 +50,12 @@ export async function sendResetPasswordEmail(data: {
   url: string;
   token: string;
 }): Promise<void> {
-  const { user, url } = data;
+  const { user, token } = data;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  const resetUrl = `${baseUrl}/reset-password?token=${encodeURIComponent(token)}`;
 
   if (!resend) {
-    logDevEmail("Password Reset", user.email, url);
+    logDevEmail("Password Reset", user.email, resetUrl);
     return;
   }
 
@@ -62,7 +66,7 @@ export async function sendResetPasswordEmail(data: {
     html: `
       <p>Hi ${user.name || "there"},</p>
       <p>Click the link below to reset your password:</p>
-      <p><a href="${url}">${url}</a></p>
+      <p><a href="${resetUrl}">${resetUrl}</a></p>
       <p>This link expires in 1 hour.</p>
       <p>If you did not request this, you can safely ignore it.</p>
     `,
