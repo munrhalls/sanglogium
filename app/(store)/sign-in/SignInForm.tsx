@@ -85,6 +85,15 @@ export default function SignInForm() {
           />
         </div>
 
+        <div className="flex justify-end">
+          <Link
+            href="/forgot-password"
+            className="type-caption text-text-accent underline hover:text-text-primary"
+          >
+            Forgot password?
+          </Link>
+        </div>
+
         <button
           type="submit"
           disabled={isPending}
