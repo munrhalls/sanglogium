@@ -1,5 +1,6 @@
 import { verifySession } from "@/lib/auth/dal";
 import Link from "next/link";
+import AccountActionsClient from "./AccountActions.client";
 
 export default async function AccountPage() {
   const session = await verifySession();
@@ -13,6 +14,7 @@ export default async function AccountPage() {
           My Orders
         </Link>
       </nav>
+      <AccountActionsClient />
     </div>
   );
 }
