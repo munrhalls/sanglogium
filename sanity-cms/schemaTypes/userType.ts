@@ -26,6 +26,12 @@ export const userType = defineType({
       type: "string",
     }),
     defineField({
+      name: "stripeCustomerId",
+      title: "Stripe Customer ID",
+      type: "string",
+      description: "Set on first payment. Used to reuse Stripe customer across orders.",
+    }),
+    defineField({
       name: "addresses",
       title: "Addresses",
       type: "array",
