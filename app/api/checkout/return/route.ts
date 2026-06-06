@@ -18,6 +18,11 @@ export async function GET(request: Request) {
     redirect("/basket?error=missing_intent");
   }
 
+  if (session.paymentIntentId && session.paymentIntentId !== payment_intent) {
+    await logCheckoutEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_intent_mismatch', data: { sessionPaymentIntentId: session.paymentIntentId, urlPaymentIntent: payment_intent }, outcome: 'error' });
+    redirect("/basket?error=intent_mismatch");
+  }
+
   if (process.env.NODE_ENV !== "production") {
     console.log("[RETURN HANDLER] payment_intent extracted:", payment_intent);
     console.log(
@@ -34,6 +39,8 @@ export async function GET(request: Request) {
     }
   } catch (err) {
     await logCheckoutEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_pi_retrieve_failed', data: { paymentIntentId: payment_intent, error: err instanceof Error ? err.message : String(err) }, outcome: 'error' });
+    session.completedPaymentIntentId = payment_intent;
+    await session.save();
     redirect(
       `/checkout/success?payment_intent=${payment_intent}&error=verification_failed`
     );
