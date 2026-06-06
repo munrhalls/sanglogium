@@ -1,3 +1,10 @@
+// Integration test: Validates Google Address Validation API + PATCH endpoint.
+//
+// NOTE: This tests the PATCH endpoint and Sanity persistence in ISOLATION.
+// The production checkout flow does NOT use this PATCH path — address data is
+// stored in the iron-session cookie exclusively at this stage.
+// See: app/actions/checkout/index.ts → saveAddress() for production flow.
+
 import { describe, test, expect, beforeEach, afterEach } from 'vitest'
 import { createClient } from 'next-sanity'
 import { apiVersion, projectId, dataset } from '../../../sanity-cms/env'
@@ -19,7 +26,7 @@ const readClient = createClient({
   useCdn: false,
 })
 
-describe('Address Slice Integration', () => {
+describe('Address Slice Integration (isolated PATCH endpoint)', () => {
   let reservationId: string
 
   beforeEach(async () => {

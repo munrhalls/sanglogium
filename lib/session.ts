@@ -12,6 +12,13 @@ export interface CheckoutSession {
     street: string;
     streetNumber: string;
     city: string;
+    geocode?: {
+      location: {
+        latitude: number;
+        longitude: number;
+      };
+    };
+    placeId?: string;
   };
   email?: string;
   shippingCode?: string;

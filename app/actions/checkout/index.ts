@@ -77,7 +77,12 @@ export async function saveAddress(address: Address) {
   }
 
   // Save validated address to session, preserving contact info from the original input
-  session.address = { ...address, ...(validationResult.address || {}) };
+  session.address = {
+    ...address,
+    ...(validationResult.address || {}),
+    geocode: validationResult.geocode,
+    placeId: validationResult.placeId,
+  };
   console.log("[SAVE ADDRESS] About to save session.address:", session.address);
 
   // Cascade invalidation: Delete downstream shipping data
