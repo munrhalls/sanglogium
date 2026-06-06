@@ -1,5 +1,4 @@
-// Export all order-related functions and types
-export { createOrder, addOrder } from "./addOrder";
+// Export all order-related types
 export type {
   OrderItem,
   ShippingAddress,

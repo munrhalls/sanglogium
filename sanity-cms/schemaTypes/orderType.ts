@@ -336,7 +336,7 @@ export const orderType = defineType({
         ],
       },
       validation: (Rule) => Rule.required(),
-      initialValue: "pending_payment",
+      initialValue: "processing",
     }),
 
     // ============ TIMESTAMPS ============
