@@ -72,12 +72,29 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid total amount' }, { status: 400 })
     }
 
+    // Build a lean address for Stripe metadata. session.address carries the
+    // full Google Places enrichment (geocode, placeId, etc.) which is never
+    // used downstream and would exceed Stripe's 500-char metadata value limit.
+    const a = session.address
+    const leanAddress = a
+      ? {
+          firstName: a.firstName,
+          lastName: a.lastName,
+          phone: a.phone,
+          regionCode: a.regionCode,
+          postalCode: a.postalCode,
+          street: a.street,
+          streetNumber: a.streetNumber,
+          city: a.city,
+        }
+      : {}
+
     // Merge session data into metadata so the webhook can build the order
     // without depending on basketReservation documents
     const enrichedMetadata: Record<string, string> = {
       ...metadata,
       basket: JSON.stringify(session.basket ?? []),
-      address: JSON.stringify(session.address ?? {}),
+      address: JSON.stringify(leanAddress),
       shippingCode: session.shippingCode ?? '',
       shippingCost: String(session.shippingCost ?? ''),
       shippingMethodName: session.shippingMethodName ?? '',
