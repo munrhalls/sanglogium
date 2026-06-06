@@ -35,40 +35,35 @@ const NavbarActions = ({ isAuthenticated }: NavbarActionsProps) => {
             isAuthenticated ? <UserIcon size={24} /> : <SignInIcon size={24} />
           }
           label={isAuthenticated ? "Account" : "Sign In"}
+          href={isAuthenticated ? undefined : "/sign-in"}
         />
 
         {/* Dropdown Menu */}
-        <div
-          className={cn(
-            "invisible absolute right-0 top-full w-48 pt-2",
-            "opacity-0 transition-all duration-200",
-            "group-hover:visible group-hover:opacity-100"
-          )}
-        >
+        {isAuthenticated && (
           <div
             className={cn(
-              "flex flex-col rounded-none border py-1 shadow-lg",
-              "border-secondary-300 bg-secondary-100"
+              "invisible absolute right-0 top-full w-48 pt-2",
+              "opacity-0 transition-all duration-200",
+              "group-hover:visible group-hover:opacity-100"
             )}
           >
-            {isAuthenticated ? (
-              <>
-                <Link href="/account" className="block w-full">
-                  <DropdownItem label="My Account" />
-                </Link>
-                <Link href="/account/orders" className="block w-full">
-                  <DropdownItem label="Orders" />
-                </Link>
-                <div className={cn("my-1 h-px w-full bg-secondary-300")} />
-                <DropdownItem label="Sign Out" isDestructive onClick={handleSignOut} />
-              </>
-            ) : (
-              <Link href="/sign-in" className="block w-full">
-                <DropdownItem label="Sign In" />
+            <div
+              className={cn(
+                "flex flex-col rounded-none border py-1 shadow-lg",
+                "border-secondary-300 bg-secondary-100"
+              )}
+            >
+              <Link href="/account" className="block w-full">
+                <DropdownItem label="My Account" />
               </Link>
-            )}
+              <Link href="/account/orders" className="block w-full">
+                <DropdownItem label="Orders" />
+              </Link>
+              <div className={cn("my-1 h-px w-full bg-secondary-300")} />
+              <DropdownItem label="Sign Out" isDestructive onClick={handleSignOut} />
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
@@ -80,16 +75,17 @@ interface NavActionItemProps {
   icon: React.ReactNode;
   label: string;
   badgeCount?: number;
+  href?: string;
 }
 
-const NavActionItem = ({ icon, label, badgeCount }: NavActionItemProps) => {
-  return (
-    <button
-      className={cn(
-        "group/item flex h-10 w-fit flex-col items-center justify-center gap-1 rounded-none",
-        "transition-colors duration-200"
-      )}
-    >
+const NavActionItem = ({ icon, label, badgeCount, href }: NavActionItemProps) => {
+  const className = cn(
+    "group/item flex h-10 w-fit flex-col items-center justify-center gap-1 rounded-none",
+    "transition-colors duration-200"
+  );
+
+  const content = (
+    <>
       <div
         className={cn(
           "relative text-secondary-300",
@@ -119,8 +115,18 @@ const NavActionItem = ({ icon, label, badgeCount }: NavActionItemProps) => {
       >
         {label}
       </span>
-    </button>
+    </>
   );
+
+  if (href) {
+    return (
+      <Link href={href} className={className}>
+        {content}
+      </Link>
+    );
+  }
+
+  return <button className={className}>{content}</button>;
 };
 
 interface DropdownItemProps {
