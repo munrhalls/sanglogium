@@ -43,7 +43,7 @@ export interface Package {
 }
 
 // Fallback for products missing parcel data in Sanity (audio equipment typical dimensions)
-const DEFAULT_PARCEL = {
+export const DEFAULT_PARCEL = {
   weight: 500, // grams
   width: 20, // cm
   height: 15, // cm

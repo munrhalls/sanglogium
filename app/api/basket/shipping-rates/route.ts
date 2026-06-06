@@ -83,7 +83,7 @@ export async function POST(req: NextRequest) {
   // If only one parcel, use aggregated (for backward compatibility)
   const packages = numParcels === 1
     ? [{
-        width: maxLength,
+        width: maxWidth,
         height: maxHeight,
         length: maxLength,
         weight: totalWeight / 1000,
