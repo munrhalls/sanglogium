@@ -52,13 +52,15 @@ function PaymentFormInner({
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-    console.log("🔍 LIVE AUDIT CHECK — PaymentForm (Client)");
-    console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-    console.log("✅ FIX #8  — Pay button weight:        btn-cart-large with py-4 rendered");
-    console.log("✅ FIX #12 — Security badge:            positioned above Pay button");
-    console.log("✅ FIX #14 — BLIK divider:              'Or choose another payment method' text active");
-    console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+    if (process.env.NODE_ENV !== 'production') {
+      console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+      console.log("🔍 LIVE AUDIT CHECK — PaymentForm (Client)");
+      console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+      console.log("✅ FIX #8  — Pay button weight:        btn-cart-large with py-4 rendered");
+      console.log("✅ FIX #12 — Security badge:            positioned above Pay button");
+      console.log("✅ FIX #14 — BLIK divider:              'Or choose another payment method' text active");
+      console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+    }
   }, []);
 
   const handlePay = async () => {
@@ -66,7 +68,9 @@ function PaymentFormInner({
 
     setIsLoading(true);
     setError(null);
-    console.log("[PaymentForm] handlePay triggered — confirming payment…");
+    if (process.env.NODE_ENV !== 'production') {
+      console.log("[PaymentForm] handlePay triggered — confirming payment…");
+    }
 
     // Log payment submission start (frontend)
     await fetch('/api/trace', {
