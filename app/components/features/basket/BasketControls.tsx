@@ -9,6 +9,7 @@ interface BasketControlsProps {
   name?: string;
   isBasketPage: boolean;
   maxQuantity?: number;
+  displayQuantity?: number;
   addClassName?: string;
   removeClassName?: string;
   decrementClassName?: string;
@@ -22,6 +23,7 @@ export function BasketControls({
   name,
   isBasketPage,
   maxQuantity,
+  displayQuantity,
   addClassName,
   removeClassName,
   decrementClassName,
@@ -41,7 +43,8 @@ export function BasketControls({
 
   const basketItem = items.find((item: any) => item.productId === productId);
   const isInBasket = !!basketItem;
-  const quantity = basketItem?.quantity || 0;
+  const storeQuantity = basketItem?.quantity || 0;
+  const quantity = displayQuantity !== undefined ? displayQuantity : storeQuantity;
 
   const handleAdd = () => {
     addProduct(productId);

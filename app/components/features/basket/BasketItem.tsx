@@ -47,7 +47,7 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
 
         {/* Column 2 — Unit Price */}
         <div className="flex items-center justify-center">
-          <Price value={displayPrice} />
+          <Price value={displayPrice} currency="PLN" />
         </div>
 
         {/* Column 3 — Quantity */}
@@ -60,12 +60,13 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
             name={name}
             isBasketPage={true}
             maxQuantity={availableStock}
+            displayQuantity={quantity}
           />
         </div>
 
         {/* Column 4 — Line Total */}
         <div className="flex items-center justify-end">
-          <Price value={displayPrice * quantity} />
+          <Price value={displayPrice * quantity} currency="PLN" />
         </div>
       </div>
 
@@ -94,7 +95,7 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
               {name}
             </h3>
             <span className="type-metadata">
-              Unit: <Price value={displayPrice} />
+              Unit: <Price value={displayPrice} currency="PLN" />
             </span>
           </div>
         </div>
@@ -110,10 +111,11 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
               name={name}
               isBasketPage={true}
               maxQuantity={availableStock}
+              displayQuantity={quantity}
             />
           </div>
           <div className="type-price">
-            <Price value={displayPrice * quantity} />
+            <Price value={displayPrice * quantity} currency="PLN" />
           </div>
         </div>
       </div>

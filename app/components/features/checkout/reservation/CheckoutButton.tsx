@@ -8,6 +8,7 @@ export interface CheckoutButtonProps {
     productId: string;
     quantity: number;
     price_data: { currency: string; unit_amount: number };
+    availableStock?: number;
     parcel?: {
       length: number;
       width: number;
@@ -30,7 +31,8 @@ export function CheckoutButton({
   const [isProcessing, setIsProcessing] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const disabled = !basketData || basketData.length === 0 || isProcessing
+  const allOutOfStock = basketData?.every((item) => item.availableStock === 0) ?? false;
+  const disabled = !basketData || basketData.length === 0 || allOutOfStock || isProcessing
 
   const handleCheckout = async () => {
     if (!basketData || basketData.length === 0) {

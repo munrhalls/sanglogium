@@ -4,6 +4,7 @@ import { useMemo, useState, useEffect } from "react";
 import useSWR from "swr";
 import useBasketStore from "@/store/basketStore";
 import { detectCountry } from "@/lib/shipping/countryDetector";
+import { DEFAULT_PARCEL } from "@/lib/shipping/parcel-calculator";
 import BasketSkeleton from "./BasketSkeleton";
 import EmptyBasket from "./EmptyBasket";
 import BasketItem from "./BasketItem";
@@ -55,9 +56,6 @@ export default function BasketManager() {
   );
 
   const [shippingCost, setShippingCost] = useState<number | null>(null);
-  const [stockAdjustments, setStockAdjustments] = useState<Map<string, number>>(new Map());
-
-  const setQuantity = useBasketStore((state) => state.setQuantity);
 
   const currentProductIds = useMemo(
     () => basket.map((item) => item.productId),
@@ -99,9 +97,11 @@ export default function BasketManager() {
         const displayPrice = product.price_data.unit_amount / 100; // cents to dollars
         const availableStock = product.stock - product.reservedStock;
 
+        const cappedQuantity = Math.min(item.quantity, availableStock);
         return {
           productId: item.productId,
-          quantity: item.quantity,
+          quantity: cappedQuantity,
+          originalQuantity: item.quantity,
           name: product.name,
           displayPrice,
           image: product.image,
@@ -130,13 +130,13 @@ export default function BasketManager() {
       quantity: item.quantity,
       price_data: item.price_data,
       parcel: item.parcel,
+      availableStock: item.availableStock,
     }));
 
     const parcels = enrichedItems
-      .filter((item) => item.parcel)
       .flatMap((item) => {
-        // Add parcel multiple times based on quantity for accurate weight calculation
-        return Array(item.quantity).fill(item.parcel!);
+        const parcel = item.parcel ?? DEFAULT_PARCEL;
+        return Array(item.quantity).fill(parcel);
       });
 
     return {
@@ -146,19 +146,6 @@ export default function BasketManager() {
       parcelData: parcels,
     };
   }, [enrichedItems]);
-
-  // Auto-adjust quantities when CMS stock is lower than basket quantity
-  useEffect(() => {
-    enrichedItems.forEach((item) => {
-      if (item.quantity > item.availableStock && item.quantity !== item.availableStock) {
-        setStockAdjustments((prev) => {
-          if (prev.has(item.productId)) return prev;
-          return new Map(prev).set(item.productId, item.quantity);
-        });
-        setQuantity(item.productId, item.availableStock);
-      }
-    });
-  }, [enrichedItems, setQuantity]);
 
   // Fetch shipping rates
   useEffect(() => {
@@ -231,7 +218,7 @@ export default function BasketManager() {
               displayPrice={item.displayPrice}
               image={item.image}
               availableStock={item.availableStock}
-              originalQuantity={stockAdjustments.get(item.productId)}
+              originalQuantity={item.originalQuantity}
             />
           ))}
         </div>

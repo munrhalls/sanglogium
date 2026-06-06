@@ -1,5 +1,6 @@
 "use client";
 import { ArrowLeftIcon, ShoppingCartIcon } from "@phosphor-icons/react";
+import Link from "next/link";
 
 export default function EmptyBasket() {
   return (
@@ -10,13 +11,13 @@ export default function EmptyBasket() {
         Looks like you haven&apos;t added any products to your basket yet.
         Browse our collection to find something you&apos;ll love.
       </p>
-      <button
-        type="button"
+      <Link
+        href="/"
         className="btn-primary flex items-center gap-2 py-3 px-6"
       >
         <ArrowLeftIcon size={16} />
         Browse Headphones
-      </button>
+      </Link>
     </div>
   );
 }
