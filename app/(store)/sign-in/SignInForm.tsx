@@ -1,12 +1,18 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 
 export default function SignInForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const isVerified = searchParams.get("verified") === "true";
+
+  const [resendStatus, setResendStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [resendError, setResendError] = useState<string | null>(null);
+
   const [state, formAction, isPending] = useActionState(
     async (_prevState: unknown, formData: FormData) => {
       const email = formData.get("email") as string;
@@ -18,7 +24,16 @@ export default function SignInForm() {
       });
 
       if (result.error) {
-        return { error: result.error.message };
+        const code = (result.error as { code?: string }).code;
+        const isUnverified =
+          code === "EMAIL_NOT_VERIFIED" ||
+          result.error.message?.toLowerCase().includes("not verified") ||
+          result.error.message?.toLowerCase().includes("email verified");
+        return {
+          error: result.error.message,
+          emailNotVerified: isUnverified,
+          email: isUnverified ? email : undefined,
+        };
       }
 
       return { success: true };
@@ -32,6 +47,22 @@ export default function SignInForm() {
     }
   }, [state, router]);
 
+  async function handleResend() {
+    if (!state || !("email" in state) || !state.email) return;
+    setResendStatus("sending");
+    setResendError(null);
+    const result = await authClient.sendVerificationEmail({
+      email: state.email,
+      callbackURL: "/sign-in?verified=true",
+    });
+    if (result.error) {
+      setResendError(result.error.message ?? null);
+      setResendStatus("error");
+    } else {
+      setResendStatus("sent");
+    }
+  }
+
   async function handleGoogleSignIn() {
     await authClient.signIn.social({
       provider: "google",
@@ -43,9 +74,34 @@ export default function SignInForm() {
     <div className="card-base w-full max-w-[440px]">
       <h1 className="type-section-hed mb-6">Sign In</h1>
 
-      {state?.error && (
+      {isVerified && (
+        <div className="mb-4 rounded border border-success-500 bg-success-500/10 p-3 text-success-500 type-caption">
+          Email verified successfully. Please sign in to continue.
+        </div>
+      )}
+
+      {state && "error" in state && state.error && (
         <div className="mb-4 rounded border border-error-500 bg-error-500/10 p-3 text-error-500 type-caption">
           {state.error}
+          {state.emailNotVerified && (
+            <div className="mt-2">
+              {resendStatus === "sent" ? (
+                <span className="text-success-500">Verification email sent. Check your inbox.</span>
+              ) : (
+                <button
+                  type="button"
+                  onClick={handleResend}
+                  disabled={resendStatus === "sending" || isPending}
+                  className="underline hover:no-underline disabled:opacity-50"
+                >
+                  {resendStatus === "sending" ? "Sending..." : "Resend verification email"}
+                </button>
+              )}
+              {resendStatus === "error" && resendError && (
+                <span className="block mt-1">{resendError}</span>
+              )}
+            </div>
+          )}
         </div>
       )}
 

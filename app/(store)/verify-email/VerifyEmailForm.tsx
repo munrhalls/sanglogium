@@ -20,7 +20,8 @@ export default function VerifyEmailForm() {
     setStatus("redirecting");
     // Redirect to Better Auth's verification endpoint.
     // Better Auth validates the token server-side and redirects to baseURL on success.
-    window.location.href = `/api/auth/verify-email?token=${encodeURIComponent(token)}`;
+    const callbackURL = encodeURIComponent("/sign-in?verified=true");
+    window.location.href = `/api/auth/verify-email?token=${encodeURIComponent(token)}&callbackURL=${callbackURL}`;
   }, [token]);
 
   if (status === "error" || !token) {

@@ -1,13 +1,12 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
+import { useActionState } from "react";
 import Link from "next/link";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 
 export default function SignUpForm() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const emailFromUrl = searchParams.get("email");
 
   const [state, formAction, isPending] = useActionState(
@@ -26,16 +25,30 @@ export default function SignUpForm() {
         return { error: result.error.message };
       }
 
-      return { success: true };
+      return { success: true, email };
     },
     null
   );
 
-  useEffect(() => {
-    if (state?.success) {
-      router.push("/account");
-    }
-  }, [state, router]);
+  if (state?.success) {
+    return (
+      <div className="card-base w-full max-w-[440px] text-center">
+        <h1 className="type-section-hed mb-4">Check your email</h1>
+        <p className="type-body mb-2">
+          We sent a verification link to <strong>{state.email}</strong>.
+        </p>
+        <p className="type-body mb-4 text-text-secondary">
+          Click the link to activate your account. The link expires in 1 hour.
+        </p>
+        <p className="type-caption text-text-caption">
+          Already verified?{" "}
+          <Link href="/sign-in" className="text-text-accent underline hover:text-text-primary">
+            Sign in
+          </Link>
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="card-base w-full max-w-[440px]">
@@ -44,12 +57,6 @@ export default function SignUpForm() {
       {state?.error && (
         <div className="mb-4 rounded border border-error-500 bg-error-500/10 p-3 text-error-500 type-caption">
           {state.error}
-        </div>
-      )}
-
-      {state?.success && (
-        <div className="mb-4 rounded border border-success-500 bg-success-500/10 p-3 text-success-500 type-caption">
-          Account created successfully! Redirecting...
         </div>
       )}
 
