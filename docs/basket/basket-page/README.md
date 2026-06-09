@@ -67,15 +67,48 @@ sequenceDiagram
 
 ## Data Flow
 
-1. Page mounts and BasketManager reads from Zustand basket store
-2. High Water Mark pattern tracks product IDs (useState only adds, never subtracts)
-3. SWR fetches product data from `/api/basket/products` using dynamic key based on tracked IDs
-4. CMS returns product data (price, stock, reservedStock)
-5. Parser converts CMS data to display format (cents to dollars)
-6. Availability handler separates items into available/unavailable
-7. BasketManager renders items with live CMS data
-8. Quantity mutations update basket store (tracked IDs unchanged, no re-fetch)
-9. Adding items triggers render phase state update, SWR refetches with expanded ID list
+```mermaid
+flowchart TD
+    subgraph Mount["1. Page Mount"]
+        M1[Page mounts] --> M2[BasketManager reads Zustand store]
+        M2 --> M3["Has items?"]
+    end
+
+    M3 -- No --> E[EmptyBasket rendered]
+
+    subgraph Track["2. High Water Mark Tracking"]
+        M3 -- Yes --> T1[Build trackedIds from basket]
+        T1 --> T2["trackedIds = useState<br/>Only adds, never subtracts"]
+    end
+
+    subgraph Fetch["3-6. Data Fetch & Transform"]
+        T2 --> F1["SWR key: basket-products:{sortedIds}"]
+        F1 --> F2{"Cache hit?"}
+        F2 -- No --> F3["GET /api/basket/products"]
+        F3 --> F4[CMS query by IDs]
+        F4 --> F5["Return price, stock, reservedStock"]
+        F5 --> F6["Parser: cents -> zloty"]
+        F6 --> F7["Availability: available | unavailable"]
+        F2 -- Yes --> F7
+    end
+
+    subgraph Render["7. Render"]
+        F7 --> R1["BasketItem + BasketSummary<br/>with live CMS data"]
+    end
+
+    subgraph Mutate["8. Quantity / Remove"]
+        R1 --> U1["User changes qty or removes"]
+        U1 --> U2["Update Zustand store + localStorage"]
+        U2 --> U3["trackedIds unchanged"]
+        U3 --> U4["No re-fetch"]
+        U4 --> R1
+    end
+
+    subgraph Add["9. Add New Item"]
+        U5["User adds new product"] --> A1["Render phase: trackedIds expands"]
+        A1 --> A2["SWR key changes"]
+        A2 --> F3
+    end
 
 ## High Water Mark Pattern
 
