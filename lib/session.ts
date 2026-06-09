@@ -28,6 +28,7 @@ export interface CheckoutSession {
   shippingEstimatedDays?: number;
   paymentIntentId?: string;
   completedPaymentIntentId?: string;
+  lastPaymentIntentId?: string; // Set for any PI processed by return handler (not just succeeded)
   checkoutSessionId?: string; // Unified Trace ID for checkout flow logging
 }
 
