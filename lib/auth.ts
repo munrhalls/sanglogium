@@ -74,7 +74,7 @@ export const auth = betterAuth({
         return { version: parseInt(versionStr, 10), value };
       })
     : undefined,
-  baseUrl: process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_BASE_URL,
+  baseURL: process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_BASE_URL,
   trustedOrigins: [process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"].filter(Boolean),
   session: {
     expiresIn: 60 * 60 * 24 * 7,
