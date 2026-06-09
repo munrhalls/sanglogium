@@ -18,11 +18,14 @@ vi.mock('@/lib/dev/event-logger', () => ({
   logCheckoutEvent: vi.fn(),
 }))
 
-vi.mock('@/sanity-cms/lib/backendClient', () => ({
-  getBackendClient: vi.fn(() => ({
-    fetch: vi.fn(),
-  })),
-}))
+vi.mock('@/sanity-cms/lib/backendClient', () => {
+  const fetchMock = vi.fn()
+  return {
+    getBackendClient: vi.fn(() => ({
+      fetch: fetchMock,
+    })),
+  }
+})
 
 vi.mock('groq', () => ({
   default: vi.fn(() => 'mocked-query'),
@@ -73,8 +76,9 @@ describe('POST /api/checkout/payment-intent-session', () => {
         amount: 11000,
         currency: 'pln',
         metadata: expect.objectContaining({
-          basket: JSON.stringify([{ productId: 'prod-1', quantity: 2 }]),
+          basket: 'prod-1:2',
           checkoutSessionId: 'session-123',
+          vat: expect.any(String),
         }),
       }),
       expect.objectContaining({ idempotencyKey: 'session-123' })
@@ -207,7 +211,35 @@ describe('POST /api/checkout/payment-intent-session', () => {
     const response = await POST(request)
     const data = await response.json()
 
-    expect(stripe.paymentIntents.create).toHaveBeenCalled()
+    expect(stripe.paymentIntents.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        metadata: expect.objectContaining({
+          basket: 'prod-1:1',
+          vat: expect.any(String),
+        }),
+      }),
+      expect.anything()
+    )
     expect(data.clientSecret).toBe('pi_new_secret')
+  })
+
+  it('rejects when checkoutSessionId is missing (M-03)', async () => {
+    const mockSession = {
+      basket: [{ productId: 'prod-1', quantity: 1 }],
+      shippingCost: 1000,
+      checkoutSessionId: undefined,
+      save: vi.fn(),
+    }
+    ;(getCheckoutSession as any).mockResolvedValue(mockSession)
+
+    const mockProducts = [{ _id: 'prod-1', price_data: { unit_amount: 5000 } }]
+    ;(getBackendClient as any)().fetch.mockResolvedValue(mockProducts)
+
+    const request = createPostRequest({ grandTotal: 6000, metadata: {} })
+    const response = await POST(request)
+    const data = await response.json()
+
+    expect(response.status).toBe(400)
+    expect(data.error).toBe('Checkout session ID is missing')
   })
 })

@@ -90,4 +90,24 @@ describe('PaymentForm', () => {
     render(<PaymentForm {...defaultProps} grandTotal={5000} />);
     await waitFor(() => expect(screen.getByTestId('messaging-element')).toBeInTheDocument());
   });
+
+  it('retries on transient failure and succeeds on second attempt (H-04)', async () => {
+    mockFetch
+      .mockRejectedValueOnce(new Error('Network error'))
+      .mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve({ clientSecret: 'pi_retry_secret' }),
+      });
+    render(<PaymentForm {...defaultProps} />);
+    await waitFor(() => expect(screen.getByTestId('stripe-elements')).toBeInTheDocument());
+    expect(mockFetch).toHaveBeenCalledTimes(2);
+  });
+
+  it('shows error after all retry attempts exhausted (H-04)', async () => {
+    mockFetch.mockRejectedValue(new Error('Network error'));
+    render(<PaymentForm {...defaultProps} />);
+    // Retry delays: 500ms + 1000ms + 2000ms = 3500ms minimum
+    await waitFor(() => expect(screen.getByText('Failed to initialize payment.')).toBeInTheDocument(), { timeout: 5000 });
+    expect(mockFetch).toHaveBeenCalledTimes(3);
+  });
 });
