@@ -111,7 +111,7 @@
     "resend": "^6.12.4",
     "sanity": "^3.74.1",
     "sharp": "^0.33.5",
-    "stripe": "^19.1.0",
+    "stripe": "^22.2.0",
     "styled-components": "^6.3.12",
     "swr": "^2.4.1",
     "tailwind-merge": "^2.6.1",
