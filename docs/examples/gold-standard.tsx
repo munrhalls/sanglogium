@@ -119,7 +119,7 @@ export function AddToCartButton({ productId, stripePriceId }: AddToCartButtonPro
 // ==========================================
 // ✅ DO: GROQ queries in separate file (sanity/lib/queries.ts)
 // ✅ DO: Use Typegen types from Sanity
-// ✅ DO: Correct reference syntax: brand->name (NOT brand with braces around single field)
+// ✅ DO: Correct reference syntax: brand->{name} in projections, brand->name in filters
 // ❌ NEVER: Hardcode GROQ queries in components
 
 // CORRECT EXAMPLE (in sanity/lib/queries.ts):
@@ -128,6 +128,8 @@ export const productQuery = `
     _id,
     name,
     slug,
+    // Single-field projection: braces REQUIRED (brand->name fails in projections)
+    brand->{name},
     // Multi-field projection (braces are OK for multiple fields)
     brand->{_id, name, slug},
     pricePln,
@@ -138,7 +140,7 @@ export const productQuery = `
 
 // ❌ WRONG EXAMPLE (Don't do this):
 // eslint-disable-next-line sang-logium/groq-reference-syntax -- Documentation example showing wrong syntax
-// const query = `*[_type == "product"] { brand with braces around single field }` // <- Wrong! Use brand->name
+// const query = `*[_type == "product"] { brand->name }` // <- Wrong in projections! Use brand->{name}
 
 // ==========================================
 // 4. STYLING PATTERN (Tailwind)
