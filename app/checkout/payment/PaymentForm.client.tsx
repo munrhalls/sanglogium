@@ -13,6 +13,56 @@ import {
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
+// Brand-aligned Stripe appearance — matches the dark design system
+// Tokens sourced from tailwind.config.ts
+const stripeAppearance = {
+  theme: 'night' as const,
+  variables: {
+    colorPrimary: '#F6E3D5',       // brand-400 (interactive focus)
+    colorBackground: '#2E2E2D',    // surface.elevated (input bg)
+    colorText: '#FAEEE6',          // brand-200 (body text)
+    colorTextSecondary: '#9A9997', // secondary-500 (placeholders/labels)
+    colorDanger: '#EF4444',        // error-500
+    borderRadius: '3px',           // tailwind borderRadius.md
+    fontFamily: 'Montserrat, system-ui, sans-serif',
+    spacingUnit: '4px',
+  },
+  rules: {
+    '.Input': {
+      backgroundColor: '#2E2E2D',  // surface.elevated
+      border: '1px solid #4A4948', // border.secondary
+      color: '#FAEEE6',            // brand-200
+    },
+    '.Input:focus': {
+      border: '1px solid #F6E3D5', // brand-400
+      boxShadow: 'none',
+    },
+    '.Label': {
+      color: '#E5E4E2',            // secondary-300
+    },
+    '.Tab': {
+      backgroundColor: '#2E2E2D',
+      border: '1px solid #4A4948',
+      color: '#9A9997',
+    },
+    '.Tab:hover': {
+      color: '#FAEEE6',
+    },
+    '.Tab--selected': {
+      backgroundColor: '#2E2E2D',
+      border: '1px solid #F6E3D5',
+      color: '#FAEEE6',
+    },
+    '.TabIcon--selected': {
+      fill: '#F6E3D5',
+    },
+    '.Block': {
+      backgroundColor: '#1A1A19',  // surface.card
+      border: '1px solid #4A4948',
+    },
+  },
+};
+
 interface Address {
   regionCode: string;
   postalCode: string;
@@ -169,10 +219,21 @@ function PaymentFormInner({
           }}
           onConfirm={async () => {
             if (!stripe || !elements) return;
+            // H-03: Pass billing_details from session address, same as handlePay
+            const billing_details = {
+              address: {
+                line1: `${address.street} ${address.streetNumber}`,
+                postal_code: address.postalCode,
+                city: address.city,
+                state: address.regionCode,
+                country: "PL",
+              },
+            };
             await stripe.confirmPayment({
               elements,
               confirmParams: {
                 return_url: `${window.location.origin}/api/checkout/return`,
+                payment_method_data: { billing_details },
               },
             });
           }}
@@ -232,27 +293,41 @@ export default function PaymentForm({ grandTotal, metadata, address, traceId }: 
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  // H-04: Retry with exponential backoff before surfacing error to user
   const initPayment = useCallback(
     async (meta: Record<string, string>) => {
-      try {
-        const res = await fetch("/api/checkout/payment-intent-session", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ grandTotal, metadata: meta }),
-        });
-        const data = await res.json();
-        if (data.error) setError(data.error);
-        else setClientSecret(data.clientSecret);
-      } catch {
-        setError("Failed to initialize payment.");
+      const maxAttempts = 3;
+      const delays = [500, 1000, 2000];
+
+      for (let attempt = 0; attempt < maxAttempts; attempt++) {
+        try {
+          const res = await fetch("/api/checkout/payment-intent-session", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ grandTotal, metadata: meta }),
+          });
+          const data = await res.json();
+          if (data.error) {
+            setError(data.error);
+            return;
+          }
+          setClientSecret(data.clientSecret);
+          return;
+        } catch {
+          if (attempt < maxAttempts - 1) {
+            await new Promise((r) => setTimeout(r, delays[attempt]));
+          }
+        }
       }
+      setError("Failed to initialize payment.");
     },
     [grandTotal]
   );
 
+  // C-03: Include metadata and initPayment in deps to prevent stale closure on re-entry
   useEffect(() => {
     initPayment(metadata);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [initPayment, metadata]);
 
   if (error) return (
     <div className="card-base">
@@ -282,7 +357,7 @@ export default function PaymentForm({ grandTotal, metadata, address, traceId }: 
 
   return (
     <div className="space-y-6">
-      <Elements stripe={stripePromise} options={{ clientSecret, defaultValues: { billingDetails: { email: metadata.email } } } as any}>
+      <Elements stripe={stripePromise} options={{ clientSecret, appearance: stripeAppearance, defaultValues: { billingDetails: { email: metadata.email } } } as any}>
         {grandTotal >= 5000 && (
           <div className="mb-4">
             <PaymentMethodMessagingElement

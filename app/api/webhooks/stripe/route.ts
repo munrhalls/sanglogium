@@ -78,6 +78,10 @@ export async function POST(request: NextRequest) {
     const failureMessage = (pi as { last_payment_error?: { message?: string } }).last_payment_error?.message ?? 'unknown'
     await logCheckoutEvent({ correlationId: traceId, slice: 'webhook', event: 'webhook_payment_failed', data: { paymentIntentId: pi.id, failureMessage }, outcome: 'error' });
     console.error(`[WEBHOOK] payment_intent.payment_failed — PI: ${pi.id} — reason: ${failureMessage}`)
+  } else if (event.type === 'payment_intent.canceled') {
+    const pi = event.data.object as Stripe.PaymentIntent
+    await logCheckoutEvent({ correlationId: traceId, slice: 'webhook', event: 'webhook_payment_canceled', data: { paymentIntentId: pi.id }, outcome: 'error' });
+    console.error(`[WEBHOOK] payment_intent.canceled — PI: ${pi.id}`)
   }
 
   // Acknowledge all event types with 200 (Stripe expects 2xx for all events it delivers)

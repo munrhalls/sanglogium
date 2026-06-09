@@ -6,7 +6,8 @@ if (!stripeSecretKey) {
 }
 
 export const stripe = new Stripe(stripeSecretKey, {
-  apiVersion: '2025-10-29.clover',
+  // SDK types may lag behind API releases; runtime supports 2026-05-27.dahlia
+  apiVersion: '2026-05-27.dahlia' as any,
   typescript: true,
 })
 

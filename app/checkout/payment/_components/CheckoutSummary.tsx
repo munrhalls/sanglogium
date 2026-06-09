@@ -28,6 +28,7 @@ interface CheckoutSummaryProps {
   address?: Address;
   subtotal: number;
   grandTotal: number;
+  vatAmount: number;
 }
 
 function formatPLN(cents: number): string {
@@ -45,6 +46,7 @@ export default function CheckoutSummary({
   address,
   subtotal,
   grandTotal,
+  vatAmount,
 }: CheckoutSummaryProps) {
   const deliveryEstimate = shippingEstimatedDays
     ? `${shippingEstimatedDays} business days`
@@ -140,7 +142,7 @@ export default function CheckoutSummary({
       <div className="border-t border-border-secondary pt-2">
         <div className="flex items-center justify-between gap-4">
           <span className="min-w-0 flex-1 type-caption text-text-caption">VAT (included)</span>
-          <span className="type-caption text-text-caption shrink-0 tabular-nums">{formatPLN(0)}</span>
+          <span className="type-caption text-text-caption shrink-0 tabular-nums">{formatPLN(vatAmount)}</span>
         </div>
       </div>
 

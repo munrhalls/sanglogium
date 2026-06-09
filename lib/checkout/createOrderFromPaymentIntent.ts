@@ -1,6 +1,8 @@
 import { backendClient } from '@/sanity-cms/lib/backendClient'
 import { logCheckoutEvent } from '@/lib/dev/event-logger'
 import Stripe from 'stripe'
+import { randomUUID } from 'node:crypto'
+import { z } from 'zod'
 
 interface ProductDoc {
   _id: string
@@ -13,11 +15,137 @@ interface BasketItem {
   quantity: number
 }
 
-export async function createOrderFromPaymentIntent(pi: Stripe.PaymentIntent): Promise<void> {
-  const paymentIntentId = pi.id
-  const traceId = pi.metadata?.checkoutSessionId || 'unknown'
+interface OrderAddress {
+  firstName?: string
+  lastName?: string
+  regionCode: string
+  postalCode: string
+  street: string
+  streetNumber: string
+  city: string
+}
 
-  await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_create_start', data: { paymentIntentId }, outcome: 'success' });
+export interface OrderSessionData {
+  basket: BasketItem[]
+  address?: OrderAddress
+  shippingCode?: string
+  shippingCost?: number
+  shippingMethodName?: string
+  shippingCarrier?: string
+  shippingEstimatedDays?: number
+  email?: string
+  checkoutSessionId?: string
+}
+
+const STRIPE_METADATA_MAX_SAFE = 450
+
+function resolveOrderData(
+  pi: Stripe.PaymentIntent,
+  sessionData?: OrderSessionData
+): {
+  basket: BasketItem[]
+  address: OrderAddress
+  shippingCode: string
+  shippingCost: number
+  shippingMethodName: string
+  shippingCarrier: string
+  shippingEstimatedDays?: number
+  customerEmail: string
+  traceId: string
+} {
+  const traceId = sessionData?.checkoutSessionId ?? pi.metadata?.checkoutSessionId ?? 'unknown'
+
+  if (sessionData) {
+    if (!sessionData.basket || sessionData.basket.length === 0) {
+      throw new Error(`Empty basket in session data for PI ${pi.id}`)
+    }
+    if (!sessionData.address) {
+      throw new Error(`Missing address in session data for PI ${pi.id}`)
+    }
+    return {
+      basket: sessionData.basket,
+      address: sessionData.address,
+      shippingCode: sessionData.shippingCode ?? '',
+      shippingCost: sessionData.shippingCost ?? 0,
+      shippingMethodName: sessionData.shippingMethodName ?? '',
+      shippingCarrier: sessionData.shippingCarrier ?? '',
+      shippingEstimatedDays: sessionData.shippingEstimatedDays,
+      customerEmail: sessionData.email ?? pi.receipt_email ?? '',
+      traceId,
+    }
+  }
+
+  // Fallback to PI metadata (webhook path)
+  const rawBasket = pi.metadata?.basket
+  const rawAddress = pi.metadata?.address
+  const shippingCode = pi.metadata?.shippingCode ?? ''
+  const shippingCostStr = pi.metadata?.shippingCost ?? '0'
+  const shippingMethodName = pi.metadata?.shippingMethodName ?? ''
+  const shippingCarrier = pi.metadata?.shippingCarrier ?? ''
+  const shippingEstimatedDaysStr = pi.metadata?.shippingEstimatedDays ?? ''
+  const customerEmail = pi.metadata?.email || pi.receipt_email || ''
+
+  if (!rawBasket || !rawAddress) {
+    throw new Error(`Missing basket/address metadata for PI ${pi.id}`)
+  }
+
+  if (rawBasket.length > STRIPE_METADATA_MAX_SAFE || rawAddress.length > STRIPE_METADATA_MAX_SAFE) {
+    throw new Error(`Metadata value exceeds safe length limit for PI ${pi.id}`)
+  }
+
+  // C-02: Support both compact format (productId:quantity,...) and legacy JSON
+  let basket: BasketItem[]
+  let address: OrderAddress
+  try {
+    if (rawBasket.includes(':')) {
+      basket = rawBasket.split(',').map(s => {
+        const [productId, quantity] = s.split(':')
+        return { productId, quantity: parseInt(quantity, 10) }
+      })
+    } else {
+      basket = JSON.parse(rawBasket)
+    }
+    address = JSON.parse(rawAddress)
+  } catch {
+    throw new Error(`Failed to parse basket/address metadata for PI ${pi.id}`)
+  }
+
+  if (!Array.isArray(basket) || basket.length === 0) {
+    throw new Error(`Empty basket in metadata for PI ${pi.id}`)
+  }
+
+  return {
+    basket,
+    address,
+    shippingCode,
+    shippingCost: parseInt(shippingCostStr, 10) || 0,
+    shippingMethodName,
+    shippingCarrier,
+    shippingEstimatedDays: parseInt(shippingEstimatedDaysStr, 10) || undefined,
+    customerEmail,
+    traceId,
+  }
+}
+
+export async function createOrderFromPaymentIntent(
+  pi: Stripe.PaymentIntent,
+  sessionData?: OrderSessionData
+): Promise<void> {
+  const paymentIntentId = pi.id
+
+  const {
+    basket,
+    address,
+    shippingCode,
+    shippingCost,
+    shippingMethodName,
+    shippingCarrier,
+    shippingEstimatedDays,
+    customerEmail: rawCustomerEmail,
+    traceId,
+  } = resolveOrderData(pi, sessionData)
+
+  await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_create_start', data: { paymentIntentId, source: sessionData ? 'session' : 'metadata' }, outcome: 'success' });
 
   // Step 1: Idempotency — skip if order already exists for this PI
   const existing = await backendClient.fetch<{ _id: string } | null>(
@@ -32,37 +160,14 @@ export async function createOrderFromPaymentIntent(pi: Stripe.PaymentIntent): Pr
     return
   }
 
-  // Step 2: Read order data from PI metadata (enriched by payment-intent-session route)
-  const rawBasket = pi.metadata?.basket
-  const rawAddress = pi.metadata?.address
-  const shippingCode = pi.metadata?.shippingCode ?? ''
-  const shippingCostStr = pi.metadata?.shippingCost ?? '0'
-  const shippingMethodName = pi.metadata?.shippingMethodName ?? ''
-  const shippingCarrier = pi.metadata?.shippingCarrier ?? ''
-  const shippingEstimatedDaysStr = pi.metadata?.shippingEstimatedDays ?? ''
-  const customerEmail = pi.metadata?.email || pi.receipt_email || ''
+  await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_data_resolved', data: { paymentIntentId, itemCount: basket.length }, outcome: 'success' })
 
-  if (!rawBasket || !rawAddress) {
-    await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_missing_metadata', data: { paymentIntentId }, outcome: 'error' })
-    throw new Error(`Missing basket/address metadata for PI ${paymentIntentId}`)
+  // Step 2: Validate email
+  const emailValidation = z.string().email().safeParse(rawCustomerEmail)
+  const customerEmail = emailValidation.success ? rawCustomerEmail : ''
+  if (rawCustomerEmail && !emailValidation.success) {
+    await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_invalid_email', data: { paymentIntentId, email: rawCustomerEmail }, outcome: 'error' })
   }
-
-  let basket: BasketItem[]
-  let address: { firstName?: string; lastName?: string; regionCode: string; postalCode: string; street: string; streetNumber: string; city: string }
-  try {
-    basket = JSON.parse(rawBasket)
-    address = JSON.parse(rawAddress)
-  } catch {
-    await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_metadata_parse_error', data: { paymentIntentId }, outcome: 'error' })
-    throw new Error(`Failed to parse basket/address metadata for PI ${paymentIntentId}`)
-  }
-
-  if (!Array.isArray(basket) || basket.length === 0) {
-    await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_empty_basket', data: { paymentIntentId }, outcome: 'error' })
-    throw new Error(`Empty basket in metadata for PI ${paymentIntentId}`)
-  }
-
-  await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_metadata_parsed', data: { paymentIntentId, itemCount: basket.length }, outcome: 'success' })
 
   // Step 3: Fetch product names and prices from Sanity
   const productIds = basket.map((item) => item.productId)
@@ -86,12 +191,12 @@ export async function createOrderFromPaymentIntent(pi: Stripe.PaymentIntent): Pr
     }
   })
 
-  // Step 5: Build shippingMethod from metadata
+  // Step 5: Build shippingMethod
   const shippingMethod = shippingMethodName ? {
     name: shippingMethodName,
     carrier: shippingCarrier || shippingCode,
-    price: parseInt(shippingCostStr, 10) || 0,
-    estimatedDays: parseInt(shippingEstimatedDaysStr, 10) || undefined,
+    price: shippingCost,
+    estimatedDays: shippingEstimatedDays,
   } : undefined
 
   // Step 6: Map address → order shippingAddress shape
@@ -106,43 +211,43 @@ export async function createOrderFromPaymentIntent(pi: Stripe.PaymentIntent): Pr
 
   // Step 7: Compute pricing
   const subtotal = items.reduce((sum, item) => sum + item.subtotal, 0)
-  const shippingCost = parseInt(shippingCostStr, 10) || 0
   const total = pi.amount
   const currency = pi.currency.toUpperCase()
+
+  // H-02: Read VAT from metadata (computed by payment-intent-session route) or recalculate
+  const vatFromMetadata = pi.metadata?.vat ? parseInt(pi.metadata.vat, 10) : undefined
+  const tax = vatFromMetadata ?? (total - Math.round(total / 1.23))
 
   const pricing = {
     subtotal,
     shipping: shippingCost,
-    tax: 0,
+    tax,
     total,
     currency,
   }
 
-  // Step 7b: Extract payment method details from PI
-  const paymentMethodType = pi.payment_method_types?.[0] ?? 'unknown'
+  // Step 8: Extract payment method details from charge (reliable) instead of payment_method_types[0]
   const charge =
     typeof pi.latest_charge === 'object' && pi.latest_charge !== null
       ? pi.latest_charge
       : null
+  const paymentMethodType = charge?.payment_method_details?.type ?? 'unknown'
   const cardDetails = charge?.payment_method_details?.card
 
-  // Step 8: Generate order identifiers
+  // Step 9: Generate unique order identifiers
   const year = new Date().getFullYear()
-  const orderCount = await backendClient.fetch<number>(
-    `count(*[_type == "order" && dates.orderedAt >= $yearStart])`,
-    { yearStart: `${year}-01-01T00:00:00.000Z` }
-  )
-  const orderNumber = `ORD-${year}-${String(orderCount + 1).padStart(4, '0')}`
-  const orderId = `order_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`
+  // Use PI ID suffix to guarantee uniqueness without non-atomic counter (M-01)
+  const orderNumber = `ORD-${year}-${paymentIntentId.slice(-6).toUpperCase()}`
+  const orderId = `order_${randomUUID()}`
   const now = new Date().toISOString()
 
-  // Step 9: Create order document
+  // Step 10: Create order document
   const orderDoc = {
     _type: 'order' as const,
     orderNumber,
     orderId,
     paymentIntentId,
-    customerEmail: customerEmail || '',
+    customerEmail,
     isGuest: true,
     items,
     shippingAddress,
@@ -169,15 +274,46 @@ export async function createOrderFromPaymentIntent(pi: Stripe.PaymentIntent): Pr
     console.log(`[ORDER CREATE] Order ${orderNumber} created for PI ${paymentIntentId}`)
   }
 
-  // Step 9: Decrement stock
-  await Promise.all(
-    basket.map((item) =>
-      backendClient
-        .patch(item.productId)
-        .dec({ stock: item.quantity })
-        .commit()
-    )
+  // Step 11: Decrement stock with concurrency guard (C-03)
+  // Pre-check: verify sufficient stock before decrementing
+  const stockDocs = await backendClient.fetch<Array<{ _id: string; stock: number }>>(
+    `*[_type == "product" && _id in $ids]{ _id, stock }`,
+    { ids: basket.map((i) => i.productId) }
   )
+  const stockMap = new Map(stockDocs.map((d) => [d._id, d.stock]))
+
+  for (const item of basket) {
+    const currentStock = stockMap.get(item.productId) ?? 0
+    if (currentStock < item.quantity) {
+      await logCheckoutEvent({
+        correlationId: traceId,
+        slice: 'order-create',
+        event: 'order_stock_insufficient',
+        data: { productId: item.productId, currentStock, requested: item.quantity },
+        outcome: 'error',
+      })
+      // Continue without decrement — order flagged for manual review
+      continue
+    }
+    await backendClient.patch(item.productId).dec({ stock: item.quantity }).commit()
+  }
+
+  // Post-check: verify no negative stock after decrement
+  const postStockDocs = await backendClient.fetch<Array<{ _id: string; stock: number }>>(
+    `*[_type == "product" && _id in $ids]{ _id, stock }`,
+    { ids: basket.map((i) => i.productId) }
+  )
+  for (const doc of postStockDocs) {
+    if (doc.stock < 0) {
+      await logCheckoutEvent({
+        correlationId: traceId,
+        slice: 'order-create',
+        event: 'order_stock_negative',
+        data: { productId: doc._id, stock: doc.stock },
+        outcome: 'error',
+      })
+    }
+  }
 
   await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_stock_decremented', data: { itemCount: basket.length }, outcome: 'success' })
 

@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { CheckCircle, Lock, WarningCircle, XCircle, Clock } from '@phosphor-icons/react/dist/ssr'
 import { getCheckoutSession } from '@/lib/session'
 import { retrievePaymentIntent } from '@/lib/stripe'
+import { logCheckoutEvent } from '@/lib/dev/event-logger'
+import { fetchOrderByPaymentIntentId } from '@/sanity-cms/lib/orders/getOrderByPaymentIntentId'
 import OrderDetails from './OrderDetails'
 import { RefreshButton } from './RefreshButton'
 
@@ -45,12 +47,29 @@ export default async function SuccessPage({
   }
 
   const session = await getCheckoutSession()
-  if (session.completedPaymentIntentId !== payment_intent) {
-    redirect('/basket')
+  const traceId = session.checkoutSessionId || 'unknown'
+
+  await logCheckoutEvent({ correlationId: traceId, slice: 'success-page', event: 'success_page_enter', data: { paymentIntentId: payment_intent, hasCompletedClaim: session.completedPaymentIntentId === payment_intent, hasLastClaim: session.lastPaymentIntentId === payment_intent }, outcome: 'success' });
+
+  const hasSessionClaim =
+    session.completedPaymentIntentId === payment_intent ||
+    session.lastPaymentIntentId === payment_intent
+
+  // H-04: if session gate fails, check if a completed order exists in Sanity
+  let sanityOrderFallback = false
+  if (!hasSessionClaim) {
+    const order = await fetchOrderByPaymentIntentId(payment_intent)
+    if (!order) {
+      await logCheckoutEvent({ correlationId: traceId, slice: 'success-page', event: 'success_page_gate_denied', data: { paymentIntentId: payment_intent }, outcome: 'error' });
+      redirect('/basket')
+    }
+    sanityOrderFallback = true
+    await logCheckoutEvent({ correlationId: traceId, slice: 'success-page', event: 'success_page_gate_sanity_fallback', data: { paymentIntentId: payment_intent, orderNumber: order.orderNumber }, outcome: 'success' });
   }
 
   // Verification-failed path set by Route Handler catch
   if (error === 'verification_failed') {
+    await logCheckoutEvent({ correlationId: traceId, slice: 'success-page', event: 'success_page_verification_failed', data: { paymentIntentId: payment_intent }, outcome: 'error' });
     return (
       <div className="max-w-xl mx-auto">
         <section role="alert" className="card-base">
@@ -113,12 +132,12 @@ export default async function SuccessPage({
     })
 
     const paymentMethodHint = (() => {
-      const types = pi.payment_method_types ?? []
-      const type = types[0]
       const charge =
         typeof pi.latest_charge === 'object' && pi.latest_charge !== null
           ? pi.latest_charge
           : null
+      // M-02: use charge.payment_method_details.type instead of payment_method_types[0]
+      const type = charge?.payment_method_details?.type ?? 'unknown'
       const card = charge?.payment_method_details?.card
 
       switch (type) {
@@ -146,6 +165,8 @@ export default async function SuccessPage({
           return type ?? null
       }
     })()
+
+    await logCheckoutEvent({ correlationId: traceId, slice: 'success-page', event: 'success_page_succeeded', data: { paymentIntentId: payment_intent, amount: pi.amount, sanityFallback: sanityOrderFallback }, outcome: 'success' });
 
     return (
       <section aria-label="Order confirmation" className="flex flex-col gap-6">
@@ -215,6 +236,8 @@ export default async function SuccessPage({
       </section>
     )
   }
+
+  await logCheckoutEvent({ correlationId: traceId, slice: 'success-page', event: 'success_page_status', data: { paymentIntentId: payment_intent, status: pi.status }, outcome: 'error' });
 
   // Failed branch
   if (pi.status === 'requires_payment_method') {

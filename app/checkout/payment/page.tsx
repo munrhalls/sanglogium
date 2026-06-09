@@ -118,8 +118,9 @@ export default async function Page() {
 
   const subtotal = items.reduce((sum, item) => sum + item.lineTotal, 0);
   const grandTotal = Math.round(subtotal + (session.shippingCost as number));
+  const vatAmount = grandTotal - Math.round(grandTotal / 1.23);
 
-  await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_calculation', data: { subtotal, shippingCost: session.shippingCost, grandTotal }, outcome: 'success' });
+  await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_calculation', data: { subtotal, shippingCost: session.shippingCost, grandTotal, vatAmount }, outcome: 'success' });
 
   if (grandTotal < 1) {
     await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_invalid_total', data: { subtotal, shippingCost: session.shippingCost, grandTotal }, outcome: 'error' });
@@ -183,6 +184,7 @@ export default async function Page() {
             address={session.address}
             subtotal={subtotal}
             grandTotal={grandTotal}
+            vatAmount={vatAmount}
           />
           {/* Back navigation */}
           <div className="flex items-center justify-between gap-4">

@@ -89,11 +89,18 @@ export async function POST(request: NextRequest) {
         }
       : {}
 
+    // C-02: Compact basket representation to stay well under Stripe's 500-char metadata limit
+    // Format: productId:quantity,productId:quantity
+    const basketCompact = session.basket.map(i => `${i.productId}:${i.quantity}`).join(',')
+
+    // H-02: Calculate Polish standard VAT (23%) — gross pricing breakdown
+    const vatAmount = computedGrandTotal - Math.round(computedGrandTotal / 1.23)
+
     // Merge session data into metadata so the webhook can build the order
     // without depending on basketReservation documents
     const enrichedMetadata: Record<string, string> = {
       ...metadata,
-      basket: JSON.stringify(session.basket ?? []),
+      basket: basketCompact,
       address: JSON.stringify(leanAddress),
       shippingCode: session.shippingCode ?? '',
       shippingCost: String(session.shippingCost ?? ''),
@@ -102,11 +109,29 @@ export async function POST(request: NextRequest) {
       shippingEstimatedDays: String(session.shippingEstimatedDays ?? ''),
       email: session.email ?? '',
       checkoutSessionId: traceId,
+      vat: String(vatAmount),
+    }
+
+    // C-02 guard: Stripe metadata values have a 500-character limit
+    const oversizeKeys = Object.entries(enrichedMetadata)
+      .filter(([, v]) => v.length > 500)
+      .map(([k]) => k)
+    if (oversizeKeys.length > 0) {
+      await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_metadata_oversize', data: { keys: oversizeKeys }, outcome: 'error' })
+      return NextResponse.json(
+        { error: `Metadata values exceed Stripe 500-char limit for keys: ${oversizeKeys.join(', ')}` },
+        { status: 400 }
+      )
     }
 
     let result: { id: string; client_secret: string | null }
 
-    const idempotencyKey = session.checkoutSessionId || `fallback-${Date.now()}`
+    // M-03: Reject non-idempotent fallback; idempotency key must be stable
+    if (!session.checkoutSessionId) {
+      await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_missing_session_id', data: {}, outcome: 'error' })
+      return NextResponse.json({ error: 'Checkout session ID is missing' }, { status: 400 })
+    }
+    const idempotencyKey = session.checkoutSessionId
 
     if (session.paymentIntentId) {
       try {
@@ -131,6 +156,12 @@ export async function POST(request: NextRequest) {
         { error: 'Stripe did not return client_secret' },
         { status: 500 }
       )
+    }
+
+    // C-02: Cookie size pre-check before save (warn threshold ~3KB before 4KB hard limit)
+    const sessionJsonSize = Buffer.byteLength(JSON.stringify(session), 'utf8')
+    if (sessionJsonSize > 3000) {
+      await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_session_cookie_warn', data: { size: sessionJsonSize }, outcome: 'error' })
     }
 
     await session.save()
