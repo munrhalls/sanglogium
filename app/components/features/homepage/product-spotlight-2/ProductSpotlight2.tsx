@@ -62,7 +62,7 @@ export default async function ProductSpotlight2({ spotlightData }: ProductSpotli
                             </p>
                         </div>
                         <div className="mt-8 pt-4 flex justify-center relative z-10">
-                            <button className="btn-secondary group flex items-center gap-4 text-h4 uppercase">
+                            <button className="btn-secondary group flex items-center gap-4 text-h4 uppercase p-[3px] px-[6px]">
                                 <span>See More</span>
                             </button>
                         </div>
