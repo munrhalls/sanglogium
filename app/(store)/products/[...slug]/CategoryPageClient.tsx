@@ -6,6 +6,7 @@ import { SortDropdown } from '@/app/components/features/filters/SortDropdown';
 import { ActiveFilters } from '@/app/components/features/filters/ActiveFilters';
 import { MobileControlsBar } from '@/app/components/features/filters/MobileControlsBar';
 import { MobileFilterDrawer } from '@/app/components/features/filters/MobileFilterDrawer';
+import { useFilterPending } from '@/app/components/features/filters/useFilterNuqs';
 // Product type is passed through from server; ProductGrid has its own compatible local type
 
 interface FilterOption {
@@ -35,7 +36,7 @@ export function CategoryPageClient({
   categoryName,
 }: CategoryPageClientProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [isPending] = React.useTransition();
+  const isPending = useFilterPending();
   // Products are already filtered server-side via GROQ
   const productCount = products.length;
   const countLabel = productCount === 1 ? 'product' : 'products';

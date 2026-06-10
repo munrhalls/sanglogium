@@ -1,13 +1,32 @@
 "use client";
 
 import { useQueryState, parseAsArrayOf, parseAsString } from "nuqs";
-import { useRouter, usePathname } from "next/navigation";
-import { startTransition } from "react";
+import { useTransition, useEffect, useSyncExternalStore } from "react";
 import { displayToCents, centsToDisplay } from "@/lib/utils/price";
 
 export interface FilterState {
   field: string;
   value: string;
+}
+
+// Module-level shared pending state for cross-component isPending
+let pendingState = false;
+const subscribers = new Set<() => void>();
+
+function getPendingSnapshot() { return pendingState; }
+function subscribeToPending(callback: () => void) {
+  subscribers.add(callback);
+  return () => subscribers.delete(callback);
+}
+function setPendingState(value: boolean) {
+  if (pendingState !== value) {
+    pendingState = value;
+    subscribers.forEach(cb => cb());
+  }
+}
+
+export function useFilterPending() {
+  return useSyncExternalStore(subscribeToPending, getPendingSnapshot);
 }
 
 /**
@@ -27,11 +46,14 @@ function parseFilter(filterString: string): FilterState | null {
 
 /**
  * Hook for managing filter state in URL with nuqs
- * Uses router.refresh() to trigger server re-render with new filters
+ * nuqs shallow: false triggers server re-render automatically
  */
 export function useFilterNuqs() {
-  const router = useRouter();
-  const pathname = usePathname();
+  const [isPending, startTransition] = useTransition();
+
+  useEffect(() => {
+    setPendingState(isPending);
+  }, [isPending]);
 
   // Sort state: ?sort=price_data.unit_amount:asc
   const [sort, setSort] = useQueryState(
@@ -73,7 +95,7 @@ export function useFilterNuqs() {
 
   /**
    * Toggle a filter on/off
-   * Updates URL and triggers server re-render
+   * Updates URL and triggers server re-render via nuqs shallow: false
    */
   const toggleFilter = (field: string, value: string) => {
     startTransition(() => {
@@ -91,9 +113,6 @@ export function useFilterNuqs() {
           return currentFilters.filter((_, index) => index !== filterIndex);
         }
       });
-
-      // Trigger server re-render to fetch filtered products
-      router.refresh();
     });
   };
     /**
@@ -104,7 +123,6 @@ export function useFilterNuqs() {
       setPage(null);
       const filterKey = `${field}:${value}`;
       setFilters((prev) => (prev || []).filter((f) => f !== filterKey));
-      router.refresh();
     });
   };
 
@@ -115,7 +133,6 @@ export function useFilterNuqs() {
     startTransition(() => {
       setPage(null);
       setFilters([]);
-      router.refresh();
     });
   };
 
@@ -144,10 +161,10 @@ export function useFilterNuqs() {
     priceFilters.forEach(filter => {
       if (filter.value.startsWith('min:')) {
         const min = parseInt(filter.value.slice(4), 10);
-        if (!isNaN(min)) range.min = min;
+        if (!isNaN(min)) range.min = centsToDisplay(min);
       } else if (filter.value.startsWith('max:')) {
         const max = parseInt(filter.value.slice(4), 10);
-        if (!isNaN(max)) range.max = max;
+        if (!isNaN(max)) range.max = centsToDisplay(max);
       }
     });
 
@@ -183,7 +200,6 @@ export function useFilterNuqs() {
 
         return newFilters;
       });
-      router.refresh();
     });
   };
 
@@ -194,7 +210,6 @@ export function useFilterNuqs() {
     startTransition(() => {
       setPage(null);
       setFilters((prev) => (prev || []).filter(f => !f.startsWith('priceRange:')));
-      router.refresh();
     });
   };
 
@@ -227,7 +242,6 @@ export function useFilterNuqs() {
 
         return [...withoutStock, `stockMin:${value}`];
       });
-      router.refresh();
     });
   };
 
@@ -238,7 +252,6 @@ export function useFilterNuqs() {
     startTransition(() => {
       setPage(null);
       setFilters((prev) => (prev || []).filter(f => !f.startsWith('stockMin:')));
-      router.refresh();
     });
   };
 
@@ -263,7 +276,6 @@ export function useFilterNuqs() {
     startTransition(() => {
       setPage(null);
       setSort(value === "featured" ? null : value);
-      router.refresh();
     });
   };
 
@@ -286,5 +298,6 @@ export function useFilterNuqs() {
     isStockMinimumActive,
     sort: sort || "featured",
     handleSortChange,
+    isPending,
   };
 }

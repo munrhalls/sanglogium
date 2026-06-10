@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { ClockCounterClockwise } from '@phosphor-icons/react';
 
 interface PriceRangeSliderProps {
@@ -11,49 +11,92 @@ interface PriceRangeSliderProps {
   onClear: () => void;
 }
 
+const DEBOUNCE_MS = 300;
+
 export function PriceRangeSlider({ min, max, value, onChange, onClear }: PriceRangeSliderProps) {
+  // Local state for immediate visual feedback during drag
+  const [localValue, setLocalValue] = React.useState(value);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Sync local state when prop changes (e.g., from URL or parent)
+  useEffect(() => {
+    setLocalValue(value);
+  }, [value]);
+
+  // Cancel pending debounce on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
   // Detect and fix invalid URL-injected state (min > max)
   useEffect(() => {
     if (value.min !== undefined && value.max !== undefined && value.min > value.max) {
-      // Fix invalid state by clamping min to max-1
       onChange({ min: value.max - 1, max: value.max });
     }
   }, [value.min, value.max, onChange]);
 
-  // Clamp initial values to ensure min <= max
+  // Clamp values to ensure min <= max
   const clampedValue = React.useMemo(() => {
-    if (value.min !== undefined && value.max !== undefined && value.min > value.max) {
-      // If min > max, clamp min to max-1
-      return { ...value, min: value.max - 1 };
+    if (localValue.min !== undefined && localValue.max !== undefined && localValue.min > localValue.max) {
+      return { ...localValue, min: localValue.max - 1 };
     }
-    return value;
-  }, [value]);
+    return localValue;
+  }, [localValue]);
 
   const isActive = (clampedValue.min !== undefined && clampedValue.min !== min) || (clampedValue.max !== undefined && clampedValue.max !== max);
+
+  const scheduleCommit = useCallback((range: { min?: number; max?: number }) => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    timeoutRef.current = setTimeout(() => {
+      onChange(range);
+    }, DEBOUNCE_MS);
+  }, [onChange]);
 
   const handleMinSliderChange = useCallback((newMin: number) => {
     const currentMax = clampedValue.max ?? max;
     // If both values are at defaults, clear the filter instead of setting values
     if (newMin === min && currentMax === max) {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      setLocalValue({});
       onClear();
       return;
     }
     const validMin = Math.min(newMin, currentMax - 1);
-    onChange({ min: validMin, max: clampedValue.max });
-  }, [clampedValue.max, min, max, onChange, onClear]);
+    const next = { min: validMin, max: clampedValue.max };
+    setLocalValue(next);
+    scheduleCommit(next);
+  }, [clampedValue.max, min, max, scheduleCommit, onClear]);
 
   const handleMaxSliderChange = useCallback((newMax: number) => {
     const currentMin = clampedValue.min ?? min;
     // If both values are at defaults, clear the filter instead of setting values
     if (newMax === max && currentMin === min) {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      setLocalValue({});
       onClear();
       return;
     }
     const validMax = Math.max(newMax, currentMin + 1);
-    onChange({ min: clampedValue.min, max: validMax });
-  }, [clampedValue.min, min, max, onChange, onClear]);
+    const next = { min: clampedValue.min, max: validMax };
+    setLocalValue(next);
+    scheduleCommit(next);
+  }, [clampedValue.min, min, max, scheduleCommit, onClear]);
 
   const handleClear = useCallback(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    setLocalValue({});
     onClear();
   }, [onClear]);
 
@@ -120,8 +163,8 @@ export function PriceRangeSlider({ min, max, value, onChange, onClear }: PriceRa
               style={{
                 WebkitAppearance: 'none',
                 background: isActive
-                  ? `linear-gradient(to right, #D4AF37 0%, #D4AF37 ${((clampedValue.max ?? min) / max) * 100}%, #2E2E2D ${((clampedValue.max ?? min) / max) * 100}%, #2E2E2D 100%)`
-                  : `linear-gradient(to right, #6B7280 0%, #6B7280 ${((clampedValue.max ?? min) / max) * 100}%, #374151 ${((clampedValue.max ?? min) / max) * 100}%, #374151 100%)`
+                  ? `linear-gradient(to right, #D4AF37 0%, #D4AF37 ${((clampedValue.max ?? max) / max) * 100}%, #2E2E2D ${((clampedValue.max ?? max) / max) * 100}%, #2E2E2D 100%)`
+                  : `linear-gradient(to right, #6B7280 0%, #6B7280 ${((clampedValue.max ?? max) / max) * 100}%, #374151 ${((clampedValue.max ?? max) / max) * 100}%, #374151 100%)`
               }}
             />
           </div>
