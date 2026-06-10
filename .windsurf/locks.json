@@ -7,16 +7,8 @@
     "agentId": "cascade_pane_1",
     "timestamp": 1781093060979
   },
-  "app/components/features/basket/BasketItem.tsx": {
+  "lib/auth.ts": {
     "agentId": "cascade_pane_1",
-    "timestamp": 1781116839978
-  },
-  "app/components/features/basket/BasketManager.tsx": {
-    "agentId": "cascade_pane_1",
-    "timestamp": 1781117369790
-  },
-  "app/components/features/basket/BasketControls.tsx": {
-    "agentId": "cascade_pane_1",
-    "timestamp": 1781117025528
+    "timestamp": 1781117812892
   }
 }
