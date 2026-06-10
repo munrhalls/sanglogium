@@ -10,9 +10,10 @@ interface AutocompleteItemProps {
   isActive: boolean;
   index: number;
   showThumbnail?: boolean;
+  onClick?: () => void;
 }
 
-export function AutocompleteItem({ product, isActive, index, showThumbnail = true }: AutocompleteItemProps) {
+export function AutocompleteItem({ product, isActive, index, showThumbnail = true, onClick }: AutocompleteItemProps) {
   return (
     <li
       id={`autocomplete-item-${index}`}
@@ -27,6 +28,7 @@ export function AutocompleteItem({ product, isActive, index, showThumbnail = tru
         href={`/product/${product.slug.current}`}
         className="flex items-center gap-3 w-full"
         tabIndex={-1}
+        onClick={onClick}
       >
         {showThumbnail && product.image && (
           <div className="w-12 h-12 rounded-md bg-surface-productImage shrink-0 overflow-hidden flex items-center justify-center">

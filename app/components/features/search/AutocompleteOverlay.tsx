@@ -68,7 +68,7 @@ export function AutocompleteOverlay({
           <div className="px-3 pt-3 pb-1">
             <span className="type-overline text-accent-500">Products</span>
           </div>
-          <ul className="py-1" onClick={onItemClick}>
+          <ul className="py-1">
             {results.map((product, index) => (
               <AutocompleteItem
                 key={product._id}
@@ -76,6 +76,7 @@ export function AutocompleteOverlay({
                 isActive={index === activeIndex}
                 index={index}
                 showThumbnail={showThumbnails}
+                onClick={onItemClick}
               />
             ))}
           </ul>

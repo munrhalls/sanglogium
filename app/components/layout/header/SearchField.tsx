@@ -105,16 +105,17 @@ export default function SearchField() {
     };
   }, [query, closeOverlay]);
 
-  // Click outside to close
+  // Click outside to close (desktop only; mobile overlay is modal)
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
+      if (mobileExpanded) return;
       if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
         closeOverlay();
       }
     }
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [closeOverlay]);
+  }, [closeOverlay, mobileExpanded]);
 
   // Focus mobile input on expand
   useEffect(() => {

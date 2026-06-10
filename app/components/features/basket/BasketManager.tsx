@@ -136,7 +136,9 @@ export default function BasketManager() {
     const parcels = enrichedItems
       .flatMap((item) => {
         const parcel = item.parcel ?? DEFAULT_PARCEL;
-        return Array(item.quantity).fill(parcel);
+        const safeQty = Math.max(0, Number.isFinite(item.quantity) ? Math.floor(item.quantity) : 0);
+        if (safeQty === 0) return [];
+        return Array(safeQty).fill(parcel);
       });
 
     return {

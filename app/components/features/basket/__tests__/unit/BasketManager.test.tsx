@@ -149,4 +149,99 @@ describe('BasketManager', () => {
     expect(screen.queryByText('USB-C Hub')).not.toBeInTheDocument()
     expect(screen.getByTestId('basket-summary')).toHaveTextContent('2 items, $39.98')
   })
+
+  // --- REGRESSION: RangeError Invalid array length (BP-CRASH-1..3) ---
+
+  // BP-CRASH-1 [MISSING-STOCK]: CMS returns product with no stock/reservedStock → no crash
+  it('renders gracefully when product lacks stock and reservedStock fields', async () => {
+    useBasketStore.setState({
+      _hasHydrated: true,
+      items: [{ productId: 'prod-bad', quantity: 2 }],
+    })
+
+    mockFetchResponse({
+      success: true,
+      data: [
+        {
+          _id: 'prod-bad',
+          name: 'Bad Stock Product',
+          image: null,
+          // stock and reservedStock intentionally omitted
+          price_data: { unit_amount: 999, currency: 'usd' },
+        },
+      ],
+    })
+
+    render(<BasketManager />)
+
+    await waitFor(() => {
+      expect(screen.queryByLabelText('Loading basket')).not.toBeInTheDocument()
+    })
+
+    // Component must not crash → no error boundary message
+    expect(screen.queryByText(/Unable to load products/i)).not.toBeInTheDocument()
+    expect(document.body.textContent).not.toMatch(/Invalid array length/i)
+  })
+
+  // BP-CRASH-2 [RESERVED-EXCEEDS-STOCK]: reservedStock > stock → no crash, quantity capped safe
+  it('renders gracefully when reservedStock exceeds stock', async () => {
+    useBasketStore.setState({
+      _hasHydrated: true,
+      items: [{ productId: 'prod-over', quantity: 3 }],
+    })
+
+    mockFetchResponse({
+      success: true,
+      data: [
+        {
+          _id: 'prod-over',
+          name: 'Over-Reserved Product',
+          image: null,
+          stock: 5,
+          reservedStock: 10,
+          price_data: { unit_amount: 999, currency: 'usd' },
+        },
+      ],
+    })
+
+    render(<BasketManager />)
+
+    await waitFor(() => {
+      expect(screen.queryByLabelText('Loading basket')).not.toBeInTheDocument()
+    })
+
+    expect(screen.queryByText(/Unable to load products/i)).not.toBeInTheDocument()
+    expect(document.body.textContent).not.toMatch(/Invalid array length/i)
+  })
+
+  // BP-CRASH-3 [NEGATIVE-STOCK]: stock is negative → no crash
+  it('renders gracefully when stock is negative', async () => {
+    useBasketStore.setState({
+      _hasHydrated: true,
+      items: [{ productId: 'prod-neg', quantity: 1 }],
+    })
+
+    mockFetchResponse({
+      success: true,
+      data: [
+        {
+          _id: 'prod-neg',
+          name: 'Negative Stock Product',
+          image: null,
+          stock: -3,
+          reservedStock: 0,
+          price_data: { unit_amount: 999, currency: 'usd' },
+        },
+      ],
+    })
+
+    render(<BasketManager />)
+
+    await waitFor(() => {
+      expect(screen.queryByLabelText('Loading basket')).not.toBeInTheDocument()
+    })
+
+    expect(screen.queryByText(/Unable to load products/i)).not.toBeInTheDocument()
+    expect(document.body.textContent).not.toMatch(/Invalid array length/i)
+  })
 })
