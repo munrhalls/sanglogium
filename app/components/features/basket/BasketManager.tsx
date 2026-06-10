@@ -196,7 +196,7 @@ export default function BasketManager() {
       <div className="lg-touch:col-span-2 lg-desktop:col-span-2">
         <div className="card-base overflow-hidden">
           {/* Header */}
-          <div className="hidden border-b border-border-secondary px-6 py-3 lg-touch:grid lg-touch:grid-cols-[minmax(0,3fr)_minmax(0,1fr)_minmax(0,auto)_minmax(0,1fr)] lg-desktop:grid lg-desktop:grid-cols-[minmax(0,3fr)_minmax(0,1fr)_minmax(0,auto)_minmax(0,1fr)]">
+          <div className="hidden border-b border-border-secondary px-6 py-3 lg-touch:grid lg-touch:grid-cols-[minmax(0,1fr)_auto_auto_auto] lg-desktop:grid lg-desktop:grid-cols-[minmax(0,1fr)_auto_auto_auto]">
             <div className="type-overline">
               Product
             </div>

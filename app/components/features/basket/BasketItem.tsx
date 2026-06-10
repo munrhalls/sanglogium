@@ -21,7 +21,7 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
   return (
     <>
       {/* Desktop row */}
-      <div className="hidden lg-desktop:grid lg-touch:grid grid-cols-[minmax(0,3fr)_minmax(0,1fr)_minmax(0,auto)_minmax(0,1fr)] items-center px-6 py-5 gap-5 border-b border-border-secondary/60 hover:bg-surface-elevated transition-colors duration-150">
+      <div className="hidden lg-desktop:grid lg-touch:grid grid-cols-[minmax(0,1fr)_auto_auto_auto] items-center px-6 py-5 gap-5 border-b border-border-secondary/60 hover:bg-surface-elevated transition-colors duration-150">
         {/* Column 1 — Product */}
         <div className="flex flex-row items-center gap-4">
           <div className="h-20 w-20 flex-shrink-0 rounded-sm bg-surface-productImage overflow-hidden relative border border-border-secondary">
@@ -46,7 +46,7 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
         </div>
 
         {/* Column 2 — Unit Price */}
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center whitespace-nowrap">
           <Price value={displayPrice} currency="PLN" />
         </div>
 
@@ -65,7 +65,7 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
         </div>
 
         {/* Column 4 — Line Total */}
-        <div className="flex items-center justify-end">
+        <div className="flex items-center justify-end whitespace-nowrap">
           <Price value={displayPrice * quantity} currency="PLN" />
         </div>
       </div>
