@@ -14,9 +14,8 @@
 
 import 'dotenv/config';
 import { createClient as sanityCreateClient } from '@sanity/client';
-import { Kysely, SqliteDialect } from 'kysely';
+import { Kysely } from 'kysely';
 import { LibsqlDialect } from 'kysely-libsql';
-import Database from 'better-sqlite3';
 
 // ---------------------------------------------------------------------------
 // Configuration
@@ -64,21 +63,27 @@ const sanityClient = sanityCreateClient({
 // ---------------------------------------------------------------------------
 
 function createDatabase() {
-  const databaseUrl = process.env.DATABASE_URL || 'file:./better-auth.db';
+  const databaseUrl = process.env.DATABASE_URL;
 
-  if (databaseUrl.startsWith('libsql://') || databaseUrl.startsWith('http')) {
-    return new Kysely({
-      dialect: new LibsqlDialect({
-        url: databaseUrl,
-        authToken: process.env.TURSO_AUTH_TOKEN,
-      }),
-    });
+  if (!databaseUrl) {
+    console.error('[AUTH] CRITICAL: DATABASE_URL is not set. Set it to your Turso libsql:// URL.');
+    process.exit(1);
   }
 
-  const dbPath = databaseUrl.replace('file:', '').replace('sqlite:', '');
+  if (!databaseUrl.startsWith('libsql://') && !databaseUrl.startsWith('http')) {
+    console.error('[AUTH] CRITICAL: DATABASE_URL must be a Turso libsql:// URL.');
+    process.exit(1);
+  }
+
+  if (!process.env.TURSO_AUTH_TOKEN) {
+    console.error('[AUTH] CRITICAL: TURSO_AUTH_TOKEN is not set.');
+    process.exit(1);
+  }
+
   return new Kysely({
-    dialect: new SqliteDialect({
-      database: new Database(dbPath),
+    dialect: new LibsqlDialect({
+      url: databaseUrl,
+      authToken: process.env.TURSO_AUTH_TOKEN,
     }),
   });
 }

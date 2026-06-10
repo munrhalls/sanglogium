@@ -57,7 +57,7 @@ export const productType = defineType({
       name: "stock",
       title: "Stock",
       type: "number",
-      validation: (Rule) => Rule.min(0),
+      validation: (Rule) => Rule.required().min(0),
     }),
     defineField({
       name: "parcel",
@@ -116,7 +116,16 @@ export const productType = defineType({
       description: "Stock reserved by active checkout sessions",
       initialValue: 0,
       readOnly: false,
-      validation: (Rule) => Rule.min(0),
+      validation: (Rule) =>
+        Rule.required()
+          .min(0)
+          .custom((value, context) => {
+            const stock = (context.document as any)?.stock
+            if (typeof stock === 'number' && typeof value === 'number' && value > stock) {
+              return 'Reserved stock cannot exceed total stock'
+            }
+            return true
+          }),
     }),
     defineField({
       name: "sku",

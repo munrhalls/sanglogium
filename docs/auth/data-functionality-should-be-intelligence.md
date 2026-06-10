@@ -11,7 +11,7 @@
 
 ## Architecture
 
-**Dual database strategy:**
+**Dual database architecture:**
 - **Better Auth** owns identity (users, sessions, credentials)
 - **Sanity** owns user profiles (name, email, addresses, order history)
 - Link via `authId` field on `userProfile` document
@@ -22,10 +22,9 @@
 
 | Environment | Database | Adapter |
 |-------------|----------|---------|
-| Local dev   | SQLite (`better-auth.db`) | `better-sqlite3` via Kysely |
-| Production  | Turso (libSQL) | `kysely-libsql` |
+| All (dev, test, production) | Turso (libSQL) | `kysely-libsql` |
 
-`lib/auth.ts` auto-detects `DATABASE_URL` prefix: `libsql://` → Turso, otherwise SQLite.
+SQLite file (`better-auth.db`) is no longer supported. All environments must use Turso to ensure consistency and avoid ephemeral filesystem issues. `lib/auth.ts` validates `DATABASE_URL` and `TURSO_AUTH_TOKEN` at startup in all environments.
 
 ## Key Files
 
@@ -135,8 +134,8 @@ Run these checks on the production URL after deploy:
 
 ### Internal Safeguards Added
 
-`lib/auth.ts` now validates production configuration at startup:
-- If `NODE_ENV=production` and `DATABASE_URL` does not start with `libsql://` or `http` → **throws with clear error message**
-- If `DATABASE_URL` starts with `libsql://` but `TURSO_AUTH_TOKEN` is missing → **throws with clear error message**
-- Prevents silent SQLite fallback on Vercel serverless.
+`lib/auth.ts` validates database configuration at startup in **all environments**:
+- If `DATABASE_URL` does not start with `libsql://` or `http` → **throws with clear error message**
+- If `TURSO_AUTH_TOKEN` is missing → **throws with clear error message**
+- Prevents silent fallback or misconfiguration in any environment.
 
