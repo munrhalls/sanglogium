@@ -1,5 +1,6 @@
 import { backendClient } from '@/sanity-cms/lib/backendClient'
 import { logCheckoutEvent } from '@/lib/dev/event-logger'
+import { sendOrderConfirmationEmail } from '@/lib/email'
 import Stripe from 'stripe'
 import { randomUUID } from 'node:crypto'
 import { z } from 'zod'
@@ -35,6 +36,7 @@ export interface OrderSessionData {
   shippingEstimatedDays?: number
   email?: string
   checkoutSessionId?: string
+  userId?: string
 }
 
 const STRIPE_METADATA_MAX_SAFE = 450
@@ -52,6 +54,7 @@ function resolveOrderData(
   shippingEstimatedDays?: number
   customerEmail: string
   traceId: string
+  userId?: string
 } {
   const traceId = sessionData?.checkoutSessionId ?? pi.metadata?.checkoutSessionId ?? 'unknown'
 
@@ -72,6 +75,7 @@ function resolveOrderData(
       shippingEstimatedDays: sessionData.shippingEstimatedDays,
       customerEmail: sessionData.email ?? pi.receipt_email ?? '',
       traceId,
+      userId: sessionData.userId,
     }
   }
 
@@ -114,6 +118,8 @@ function resolveOrderData(
     throw new Error(`Empty basket in metadata for PI ${pi.id}`)
   }
 
+  const userId = pi.metadata?.userId || undefined
+
   return {
     basket,
     address,
@@ -124,6 +130,7 @@ function resolveOrderData(
     shippingEstimatedDays: parseInt(shippingEstimatedDaysStr, 10) || undefined,
     customerEmail,
     traceId,
+    userId,
   }
 }
 
@@ -143,6 +150,7 @@ export async function createOrderFromPaymentIntent(
     shippingEstimatedDays,
     customerEmail: rawCustomerEmail,
     traceId,
+    userId,
   } = resolveOrderData(pi, sessionData)
 
   await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_create_start', data: { paymentIntentId, source: sessionData ? 'session' : 'metadata' }, outcome: 'success' });
@@ -248,7 +256,7 @@ export async function createOrderFromPaymentIntent(
     orderId,
     paymentIntentId,
     customerEmail,
-    isGuest: true,
+    ...(userId ? { userId, isGuest: false } : { isGuest: true }),
     items,
     shippingAddress,
     pricing,
@@ -269,6 +277,18 @@ export async function createOrderFromPaymentIntent(
   await backendClient.create(orderDoc as Parameters<typeof backendClient.create>[0])
 
   await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_created', data: { orderNumber, orderId, paymentIntentId, itemCount: items.length }, outcome: 'success' })
+
+  try {
+    await sendOrderConfirmationEmail({
+      to: customerEmail,
+      orderNumber,
+      items,
+      total,
+      shippingAddress,
+    })
+  } catch {
+    // email failure is non-fatal — order already created
+  }
 
   if (process.env.NODE_ENV !== 'production') {
     console.log(`[ORDER CREATE] Order ${orderNumber} created for PI ${paymentIntentId}`)

@@ -1,4 +1,4 @@
-import { client } from "../client";
+import { backendClient } from "../backendClient";
 
 export interface OrderForSuccessPage {
   _id: string;
@@ -43,7 +43,7 @@ export interface OrderForSuccessPage {
 export async function fetchOrderByPaymentIntentId(
   paymentIntentId: string
 ): Promise<OrderForSuccessPage | null> {
-  return client.fetch<OrderForSuccessPage | null>(
+  return backendClient.fetch<OrderForSuccessPage | null>(
     `*[_type == "order" && paymentIntentId == $paymentIntentId][0]{
       _id,
       orderNumber,
