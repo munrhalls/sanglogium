@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   UserIcon,
@@ -9,7 +8,7 @@ import {
 } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils/tailwind";
 import { BasketButton } from "@/app/components/features/basket/BasketButton";
-import { authClient } from "@/lib/auth-client";
+import { signOut } from "@/app/hooks/useSignOut";
 
 interface NavbarActionsProps {
   isAuthenticated: boolean;
@@ -17,11 +16,8 @@ interface NavbarActionsProps {
 }
 
 const NavbarActions = ({ isAuthenticated }: NavbarActionsProps) => {
-  const router = useRouter();
-
   async function handleSignOut() {
-    await authClient.signOut();
-    router.push("/sign-in");
+    await signOut();
   }
 
   return (

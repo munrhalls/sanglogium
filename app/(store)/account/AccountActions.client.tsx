@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { authClient } from "@/lib/auth-client";
+import { signOut, signOutAllDevices } from "@/app/hooks/useSignOut";
 
 async function requireFreshSession(): Promise<boolean> {
   const session = await authClient.getSession();
@@ -49,24 +50,11 @@ export default function AccountActionsClient() {
   );
 
   async function handleSignOut() {
-    const result = await authClient.signOut();
-    if (result.error) {
-      alert(`Failed to sign out: ${result.error.message}`);
-    } else {
-      window.location.href = "/sign-in";
-    }
+    await signOut();
   }
 
   async function handleSignOutAllDevices() {
-    const fresh = await requireFreshSession();
-    if (!fresh) return;
-
-    const result = await authClient.revokeSessions();
-    if (result.error) {
-      alert(`Failed to sign out all devices: ${result.error.message}`);
-    } else {
-      window.location.href = "/sign-in";
-    }
+    await signOutAllDevices();
   }
 
   return (
