@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { ListIcon, XIcon, List as Menu, MagnifyingGlass as Search, ShoppingBag } from "@phosphor-icons/react";
+import { ListIcon, XIcon, List as Menu, MagnifyingGlass as Search, ShoppingBag, User as UserIcon, SignIn as SignInIcon, UserPlus } from "@phosphor-icons/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useDrawer } from "@/app/hooks/nuqs/useDrawer";
@@ -10,7 +10,11 @@ import useBasketStore, { selectTotalItemsCount, selectHasHydrated } from "@/stor
 
 
 
-function ActionButtons() {
+interface ActionButtonsProps {
+  isAuthenticated: boolean;
+}
+
+function ActionButtons({ isAuthenticated }: ActionButtonsProps) {
   const pathname = usePathname();
   const { isOpen, openDrawer, closeDrawer } = useDrawer();
   const basketCount = useBasketStore(selectTotalItemsCount);
@@ -57,7 +61,45 @@ function ActionButtons() {
         </span>
       </Link>
 
-      {/* <Authentication /> */}
+      {isAuthenticated ? (
+        <Link
+          href="/account"
+          className="flex cursor-pointer touch-manipulation flex-col items-center"
+          type="button"
+          style={{ isolation: "isolate" }}
+        >
+          <UserIcon className="h-5 w-5" />
+          <span className="sr-only mt-1 hidden text-xs text-cap sm:inline-block">
+            Account
+          </span>
+        </Link>
+      ) : (
+        <>
+          <Link
+            href="/sign-in"
+            className="flex cursor-pointer touch-manipulation flex-col items-center"
+            type="button"
+            style={{ isolation: "isolate" }}
+          >
+            <SignInIcon className="h-5 w-5" />
+            <span className="sr-only mt-1 hidden text-xs text-cap sm:inline-block">
+              Sign In
+            </span>
+          </Link>
+          <Link
+            href="/sign-up"
+            className="flex cursor-pointer touch-manipulation flex-col items-center"
+            type="button"
+            style={{ isolation: "isolate" }}
+          >
+            <UserPlus className="h-5 w-5" />
+            <span className="sr-only mt-1 hidden text-xs text-cap sm:inline-block">
+              Sign Up
+            </span>
+          </Link>
+        </>
+      )}
+
       <Link
         href="/basket"
         className="flex cursor-pointer touch-manipulation flex-col items-center relative"
@@ -79,7 +121,7 @@ function ActionButtons() {
   );
 }
 
-export default function ActionBar() {
+export default function ActionBar({ isAuthenticated }: ActionButtonsProps) {
   return (
     <div
       className={cn(
@@ -88,7 +130,7 @@ export default function ActionBar() {
         "lg-touch:hidden lg-desktop:hidden"
       )}
     >
-      <ActionButtons />
+      <ActionButtons isAuthenticated={isAuthenticated} />
     </div>
   );
 }
