@@ -3,6 +3,7 @@ import { getCheckoutSession } from "@/lib/session";
 import { retrievePaymentIntent } from "@/lib/stripe";
 import { logCheckoutEvent } from "@/lib/dev/event-logger";
 import { createOrderFromPaymentIntent, type OrderSessionData } from "@/lib/checkout/createOrderFromPaymentIntent";
+import { getSession } from "@/lib/auth/dal";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -10,6 +11,8 @@ export async function GET(request: Request) {
 
   const session = await getCheckoutSession();
   const traceId = session.checkoutSessionId || 'unknown';
+
+  const authSession = await getSession();
 
   await logCheckoutEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_start', data: { hasPaymentIntent: !!payment_intent }, outcome: 'success' });
 
@@ -70,6 +73,7 @@ export async function GET(request: Request) {
     shippingEstimatedDays: session.shippingEstimatedDays,
     email: session.email,
     checkoutSessionId: session.checkoutSessionId,
+    userId: authSession?.userId,
   } : null;
 
   // Step 2: partial-clear per canonical lifecycle table

@@ -5,6 +5,7 @@ import Link from "next/link";
 import {
   UserIcon,
   SignInIcon,
+  UserPlus,
 } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils/tailwind";
 import { BasketButton } from "@/app/components/features/basket/BasketButton";
@@ -20,7 +21,7 @@ const NavbarActions = ({ isAuthenticated }: NavbarActionsProps) => {
 
   async function handleSignOut() {
     await authClient.signOut();
-    router.refresh();
+    router.push("/sign-in");
   }
 
   return (
@@ -29,17 +30,14 @@ const NavbarActions = ({ isAuthenticated }: NavbarActionsProps) => {
       <BasketButton />
 
       {/* Account / Auth Group */}
-      <div className={cn("group relative")}>
-        <NavActionItem
-          icon={
-            isAuthenticated ? <UserIcon size={24} /> : <SignInIcon size={24} />
-          }
-          label={isAuthenticated ? "Account" : "Sign In"}
-          href={isAuthenticated ? undefined : "/sign-in"}
-        />
+      {isAuthenticated ? (
+        <div className={cn("group relative")}>
+          <NavActionItem
+            icon={<UserIcon size={24} />}
+            label="Account"
+          />
 
-        {/* Dropdown Menu */}
-        {isAuthenticated && (
+          {/* Dropdown Menu */}
           <div
             className={cn(
               "invisible absolute right-0 top-full w-48 pt-2",
@@ -63,8 +61,21 @@ const NavbarActions = ({ isAuthenticated }: NavbarActionsProps) => {
               <DropdownItem label="Sign Out" isDestructive onClick={handleSignOut} />
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      ) : (
+        <>
+          <NavActionItem
+            icon={<SignInIcon size={24} />}
+            label="Sign In"
+            href="/sign-in"
+          />
+          <NavActionItem
+            icon={<UserPlus size={24} />}
+            label="Sign Up"
+            href="/sign-up"
+          />
+        </>
+      )}
     </div>
   );
 };

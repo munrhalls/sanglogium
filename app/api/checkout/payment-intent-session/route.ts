@@ -3,6 +3,7 @@ import { getCheckoutSession } from '@/lib/session'
 import { stripe } from '@/lib/stripe'
 import { logCheckoutEvent } from '@/lib/dev/event-logger'
 import { getBackendClient } from '@/sanity-cms/lib/backendClient'
+import { getSession } from '@/lib/auth/dal'
 import groq from 'groq'
 
 export async function POST(request: NextRequest) {
@@ -98,6 +99,8 @@ export async function POST(request: NextRequest) {
 
     // Merge session data into metadata so the webhook can build the order
     // without depending on basketReservation documents
+    const authSession = await getSession()
+
     const enrichedMetadata: Record<string, string> = {
       ...metadata,
       basket: basketCompact,
@@ -110,6 +113,7 @@ export async function POST(request: NextRequest) {
       email: session.email ?? '',
       checkoutSessionId: traceId,
       vat: String(vatAmount),
+      userId: authSession?.userId ?? '',
     }
 
     // C-02 guard: Stripe metadata values have a 500-character limit

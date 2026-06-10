@@ -1,62 +1,51 @@
 import { betterAuth } from "better-auth";
 import { kyselyAdapter } from "@better-auth/kysely-adapter";
-import { Kysely, SqliteDialect } from "kysely";
+import { Kysely } from "kysely";
 import { LibsqlDialect } from "kysely-libsql";
-import Database from "better-sqlite3";
 import { nextCookies } from "better-auth/next-js";
 import { sendVerificationEmail, sendResetPasswordEmail } from "./email";
 import { backendClient } from "@/sanity-cms/lib/backendClient";
 
-function validateProductionConfig() {
-  if (process.env.NODE_ENV !== "production") return;
-
+function validateDatabaseConfig() {
   const databaseUrl = process.env.DATABASE_URL || "";
-
-  // Skip validation for local file-based databases (allowed for local production builds)
-  if (databaseUrl.startsWith("file:") || databaseUrl.startsWith("sqlite:")) {
-    return;
-  }
 
   if (!databaseUrl.startsWith("libsql://") && !databaseUrl.startsWith("http")) {
     throw new Error(
-      "[AUTH] Production DATABASE_URL must be a Turso libsql:// URL. " +
-        "Current value is not valid for Vercel serverless. " +
+      "[AUTH] DATABASE_URL must be a Turso libsql:// URL. " +
+        "Current value is not valid. " +
         "Run: turso db create sang-logium-auth && turso db show sang-logium-auth --url " +
-        "Then set DATABASE_URL in Vercel Dashboard. " +
-        "See docs/auth/data-functionality-should-be-intelligence.md for full steps."
+        "Then set DATABASE_URL and TURSO_AUTH_TOKEN in your environment."
     );
   }
 
-  if (databaseUrl.startsWith("libsql://") && !process.env.TURSO_AUTH_TOKEN) {
+  if (!process.env.TURSO_AUTH_TOKEN) {
     throw new Error(
-      "[AUTH] TURSO_AUTH_TOKEN is required in production when using Turso. " +
+      "[AUTH] TURSO_AUTH_TOKEN is required. " +
         "Generate one with: turso db tokens create sang-logium-auth " +
-        "Then set TURSO_AUTH_TOKEN in Vercel Dashboard."
+        "Then set TURSO_AUTH_TOKEN in your environment."
     );
   }
 }
 
 function createDatabase() {
-  const databaseUrl = process.env.DATABASE_URL || "file:./better-auth.db";
+  const databaseUrl = process.env.DATABASE_URL;
 
-  if (databaseUrl.startsWith("libsql://") || databaseUrl.startsWith("http")) {
-    return new Kysely({
-      dialect: new LibsqlDialect({
-        url: databaseUrl,
-        authToken: process.env.TURSO_AUTH_TOKEN,
-      }),
-    });
+  if (!databaseUrl) {
+    throw new Error(
+      "[AUTH] DATABASE_URL is not set. " +
+        "Set it to your Turso database URL (libsql://...)."
+    );
   }
 
-  const dbPath = databaseUrl.replace("file:", "").replace("sqlite:", "");
   return new Kysely({
-    dialect: new SqliteDialect({
-      database: new Database(dbPath),
+    dialect: new LibsqlDialect({
+      url: databaseUrl,
+      authToken: process.env.TURSO_AUTH_TOKEN,
     }),
   });
 }
 
-validateProductionConfig();
+validateDatabaseConfig();
 const db = createDatabase();
 
 if (!process.env.BETTER_AUTH_SECRET) {
