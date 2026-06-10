@@ -110,7 +110,7 @@ export default function BasketManager() {
           parcel: product.parcel,
         };
       })
-      .filter((item): item is NonNullable<typeof item> => item !== null)
+      .filter((item): item is NonNullable<typeof item> => item !== null && item.quantity > 0)
       .sort((a, b) => {
         const aAvailable = a.availableStock > 0;
         const bAvailable = b.availableStock > 0;
@@ -196,7 +196,7 @@ export default function BasketManager() {
       <div className="lg-touch:col-span-2 lg-desktop:col-span-2">
         <div className="card-base overflow-hidden">
           {/* Header */}
-          <div className="hidden border-b border-border-secondary px-6 py-3 lg-touch:grid lg-touch:grid-cols-[3fr_1fr_1fr_1fr] lg-desktop:grid lg-desktop:grid-cols-[3fr_1fr_1fr_1fr]">
+          <div className="hidden border-b border-border-secondary px-6 py-3 lg-touch:grid lg-touch:grid-cols-[minmax(0,3fr)_minmax(0,1fr)_minmax(0,auto)_minmax(0,1fr)] lg-desktop:grid lg-desktop:grid-cols-[minmax(0,3fr)_minmax(0,1fr)_minmax(0,auto)_minmax(0,1fr)]">
             <div className="type-overline">
               Product
             </div>

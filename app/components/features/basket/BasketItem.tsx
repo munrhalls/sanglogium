@@ -21,7 +21,7 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
   return (
     <>
       {/* Desktop row */}
-      <div className="hidden lg-desktop:grid lg-touch:grid grid-cols-[3fr_1fr_1fr_1fr] items-center px-6 py-5 gap-5 border-b border-border-secondary/60 hover:bg-surface-elevated transition-colors duration-150">
+      <div className="hidden lg-desktop:grid lg-touch:grid grid-cols-[minmax(0,3fr)_minmax(0,1fr)_minmax(0,auto)_minmax(0,1fr)] items-center px-6 py-5 gap-5 border-b border-border-secondary/60 hover:bg-surface-elevated transition-colors duration-150">
         {/* Column 1 — Product */}
         <div className="flex flex-row items-center gap-4">
           <div className="h-20 w-20 flex-shrink-0 rounded-sm bg-surface-productImage overflow-hidden relative border border-border-secondary">
@@ -40,7 +40,7 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
               </div>
             )}
           </div>
-          <h3 className="type-card-title line-clamp-2">
+          <h3 className="type-card-title line-clamp-2 min-w-0">
             {name}
           </h3>
         </div>

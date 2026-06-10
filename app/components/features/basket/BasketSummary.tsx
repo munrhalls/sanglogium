@@ -22,31 +22,33 @@ export default function BasketSummary({ itemCount, subtotal, basketData, shippin
       </h2>
 
       <div className="space-y-3">
-        <div className="flex justify-between items-baseline">
-          <div className="type-section-caption text-text-secondary">Subtotal ({itemCount} item{itemCount !== 1 ? 's' : ''})</div>
-          <Price value={subtotal} variant="summary" currency="PLN" />
+        <div className="flex justify-between items-baseline gap-4">
+          <div className="type-section-caption text-text-secondary whitespace-nowrap">Subtotal ({itemCount} item{itemCount !== 1 ? 's' : ''})</div>
+          <Price value={subtotal} variant="summary" currency="PLN" className="whitespace-nowrap" />
         </div>
 
-        <div className="flex justify-between items-baseline">
-          <div className="type-section-caption text-text-secondary">Shipping (estimated)</div>
+        <div className="flex justify-between items-baseline gap-4">
+          <div className="type-section-caption text-text-secondary whitespace-nowrap">Shipping (estimated)</div>
           {shippingCost !== null ? (
-            <Price value={shippingCost} variant="summary" currency="PLN" />
+            <Price value={shippingCost} variant="summary" currency="PLN" className="whitespace-nowrap" />
           ) : (
-            <span className="type-section-caption text-text-secondary">Calculating...</span>
+            <span className="type-section-caption text-text-secondary whitespace-nowrap">Calculating...</span>
           )}
         </div>
 
-        <div className="flex justify-between items-baseline">
-          <div className="type-section-caption text-text-secondary">Tax</div>
-          <Price value={0} variant="summary" currency="PLN" />
-        </div>
+        {0 > 0 && (
+          <div className="flex justify-between items-baseline gap-4">
+            <div className="type-section-caption text-text-secondary whitespace-nowrap">Tax</div>
+            <Price value={0} variant="summary" currency="PLN" className="whitespace-nowrap" />
+          </div>
+        )}
 
         <div className="border-t border-border-primary pt-4 mt-1 mb-6">
-          <div className="flex justify-between items-baseline">
-            <div className="type-section-sub">Total</div>
-            <Price value={total} variant="summary" currency="PLN" className="type-section-sub tabular-nums text-brand-400" />
+          <div className="flex justify-between items-baseline gap-4">
+            <div className="type-section-sub whitespace-nowrap">Total</div>
+            <Price value={total} variant="summary" currency="PLN" className="type-section-sub tabular-nums text-brand-400 whitespace-nowrap" />
           </div>
-          <div className="type-section-caption text-text-secondary mt-1">Including VAT</div>
+          <div className="type-section-caption text-text-secondary mt-1 mb-4">Including VAT</div>
         </div>
       </div>
 

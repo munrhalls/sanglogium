@@ -96,7 +96,7 @@ export function BasketControls({
         >
           −
         </button>
-        <span data-testid="quantity-display" className={quantityClassName || "h-10 w-10 flex items-center justify-center bg-surface-elevated border-y border-border-secondary type-card-title tabular-nums select-none"}>{quantity}</span>
+        <span data-testid="quantity-display" className={quantityClassName || "h-10 min-w-[2.5rem] w-auto px-2 flex items-center justify-center bg-surface-elevated border-y border-border-secondary type-card-title tabular-nums select-none"}>{quantity}</span>
         <button
           onClick={handleIncrement}
           data-testid={`increment-${productId}`}
