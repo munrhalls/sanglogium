@@ -8,6 +8,7 @@ import { logCheckoutEvent } from '@/lib/dev/event-logger'
 import { fetchOrderByPaymentIntentId } from '@/sanity-cms/lib/orders/getOrderByPaymentIntentId'
 import OrderDetails from './OrderDetails'
 import { RefreshButton } from './RefreshButton'
+import { SuccessAnalytics } from './SuccessAnalytics.client'
 
 interface SuccessPageSearchParams {
   payment_intent?: string
@@ -170,6 +171,7 @@ export default async function SuccessPage({
 
     return (
       <section aria-label="Order confirmation" className="flex flex-col gap-6">
+        <SuccessAnalytics transactionId={pi.id} value={pi.amount} />
         <div className="card-base">
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-3">
@@ -211,14 +213,15 @@ export default async function SuccessPage({
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="flex-shrink-0 h-2.5 w-2.5 rounded-full bg-secondary-700" />
-                  <span className="type-section-caption">Delivered</span>
+                  <span className="type-section-caption">Delivery</span>
                 </li>
               </ol>
-              <p className="type-section-caption mt-3">Tracking number will appear here once shipped.</p>
+              <p className="type-section-caption mt-3">Estimated delivery date shown in order details below. Tracking number will appear here once shipped.</p>
             </div>
 
             <div className="flex flex-col gap-3">
               <Link href="/" className="btn-primary block text-center py-3">Continue shopping</Link>
+              <Link href="/account/orders" className="btn-secondary block text-center py-3">View my orders</Link>
             </div>
 
             <div className="card-base">

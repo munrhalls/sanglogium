@@ -92,6 +92,25 @@ export default async function OrderDetails({ paymentIntentId, fallbackTotal }: P
             </span>
             <span className="type-price">{formatPLN(order.pricing.shipping)}</span>
           </div>
+          {order.shippingMethod?.estimatedDays && order.dates.orderedAt && (
+            <div className="flex justify-between items-baseline">
+              <span className="type-section-caption">
+                Estimated delivery
+              </span>
+              <span className="type-price text-brand-400">
+                {(() => {
+                  const orderedAt = new Date(order.dates.orderedAt)
+                  const days = order.shippingMethod!.estimatedDays!
+                  const from = new Date(orderedAt)
+                  from.setDate(from.getDate() + days)
+                  const to = new Date(orderedAt)
+                  to.setDate(to.getDate() + days + 1)
+                  const fmt = (d: Date) => d.toLocaleDateString('pl-PL', { month: 'long', day: 'numeric' })
+                  return `${fmt(from)}–${fmt(to)}`
+                })()}
+              </span>
+            </div>
+          )}
           {order.pricing.discount > 0 && (
             <div className="flex justify-between items-baseline">
               <span className="type-section-caption">Discount</span>
