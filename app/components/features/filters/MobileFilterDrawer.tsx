@@ -27,9 +27,7 @@ interface MobileFilterDrawerProps {
 }
 
 export function MobileFilterDrawer({ isOpen, onClose, filters, priceRange: priceRangeData, maxStock }: MobileFilterDrawerProps) {
-  const { isFilterActive, toggleFilter, getPriceRange, setPriceRange, clearPriceRange, getStockMinimum, setStockMinimum, clearStockMinimum } = useFilterNuqs();
-  const currentPriceRange = getPriceRange();
-  const currentStockMinimum = getStockMinimum();
+  const { isFilterActive, toggleFilter, priceRange, setPriceRange, clearPriceRange, stockMinimum, setStockMinimum, clearStockMinimum } = useFilterNuqs();
 
   // Convert cents to dollars for slider display
   const minPriceDollars = priceRangeData?.minPrice ? centsToDisplay(priceRangeData.minPrice) : 0;
@@ -129,14 +127,14 @@ export function MobileFilterDrawer({ isOpen, onClose, filters, priceRange: price
               <PriceRangeSlider
                 min={minPriceDollars}
                 max={maxPriceDollars}
-                value={currentPriceRange}
+                value={priceRange}
                 onChange={setPriceRange}
                 onClear={clearPriceRange}
               />
 
               <StockMinimumSlider
                 maxStock={maxStock ?? 100}
-                value={currentStockMinimum}
+                value={stockMinimum}
                 onChange={setStockMinimum}
                 onClear={clearStockMinimum}
               />

@@ -1,8 +1,10 @@
 "use client";
 
-import { useQueryState, parseAsArrayOf, parseAsString } from "nuqs";
-import { useTransition, useEffect, useSyncExternalStore } from "react";
+import { useQueryState, parseAsArrayOf, parseAsString, debounce } from "nuqs";
+import { useTransition, useEffect, useSyncExternalStore, useMemo } from "react";
 import { displayToCents, centsToDisplay } from "@/lib/utils/price";
+
+const PRICE_RANGE_URL_LIMITER = debounce(500);
 
 export interface FilterState {
   field: string;
@@ -152,9 +154,9 @@ export function useFilterNuqs() {
     .filter((f): f is FilterState => f !== null);
 
   /**
-   * Get price range from filters
+   * Memoized price range from filters (prevents reference instability)
    */
-  const getPriceRange = (): { min?: number; max?: number } => {
+  const priceRange = useMemo((): { min?: number; max?: number } => {
     const priceFilters = parsedFilters.filter(f => f.field === 'priceRange');
     const range: { min?: number; max?: number } = {};
 
@@ -169,7 +171,7 @@ export function useFilterNuqs() {
     });
 
     return range;
-  };
+  }, [parsedFilters]);
 
   /**
    * Set price range
@@ -199,7 +201,7 @@ export function useFilterNuqs() {
         }
 
         return newFilters;
-      });
+      }, { limitUrlUpdates: PRICE_RANGE_URL_LIMITER });
     });
   };
 
@@ -209,21 +211,21 @@ export function useFilterNuqs() {
   const clearPriceRange = () => {
     startTransition(() => {
       setPage(null);
-      setFilters((prev) => (prev || []).filter(f => !f.startsWith('priceRange:')));
+      setFilters((prev) => (prev || []).filter(f => !f.startsWith('priceRange:')), { limitUrlUpdates: PRICE_RANGE_URL_LIMITER });
     });
   };
 
   /**
-   * Get stock minimum from filters
+   * Memoized stock minimum from filters (prevents unnecessary re-renders)
    */
-  const getStockMinimum = (): number => {
+  const stockMinimum = useMemo((): number => {
     const stockFilters = parsedFilters.filter(f => f.field === 'stockMin');
 
     if (stockFilters.length === 0) return 0;
 
     const value = parseInt(stockFilters[0].value, 10);
     return isNaN(value) ? 0 : value;
-  };
+  }, [parsedFilters]);
 
   /**
    * Set stock minimum
@@ -288,11 +290,11 @@ export function useFilterNuqs() {
     isFilterActive,
     hasActiveFilters: (filters || []).length > 0,
     parsedFilters,
-    getPriceRange,
+    priceRange,
     setPriceRange,
     clearPriceRange,
     isPriceRangeActive,
-    getStockMinimum,
+    stockMinimum,
     setStockMinimum,
     clearStockMinimum,
     isStockMinimumActive,

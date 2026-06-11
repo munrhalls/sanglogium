@@ -25,9 +25,7 @@ interface FilterSidebarProps {
 }
 
 export function FilterSidebar({ filters, priceRange: priceRangeData, maxStock }: FilterSidebarProps) {
-  const { getPriceRange, setPriceRange, clearPriceRange, isFilterActive, toggleFilter, getStockMinimum, setStockMinimum, clearStockMinimum } = useFilterNuqs();
-  const currentPriceRange = getPriceRange();
-  const currentStockMinimum = getStockMinimum();
+  const { priceRange, setPriceRange, clearPriceRange, isFilterActive, toggleFilter, stockMinimum, setStockMinimum, clearStockMinimum } = useFilterNuqs();
 
   // Convert cents to dollars for slider display
   const minPriceDollars = priceRangeData?.minPrice ? centsToDisplay(priceRangeData.minPrice) : 0;
@@ -47,14 +45,14 @@ export function FilterSidebar({ filters, priceRange: priceRangeData, maxStock }:
           <PriceRangeSlider
             min={minPriceDollars}
             max={maxPriceDollars}
-            value={currentPriceRange}
+            value={priceRange}
             onChange={setPriceRange}
             onClear={clearPriceRange}
           />
 
           <StockMinimumSlider
             maxStock={maxStock ?? 100}
-            value={currentStockMinimum}
+            value={stockMinimum}
             onChange={setStockMinimum}
             onClear={clearStockMinimum}
           />
