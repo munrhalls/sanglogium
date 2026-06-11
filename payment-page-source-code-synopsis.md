@@ -1,6 +1,6 @@
 # Payment Page — Source Code Synopsis
 
-**Date:** 2026-06-09  
+**Date:** 2026-06-11  
 **Scope:** `/checkout/payment` and every file it touches in the active production flow.  
 **Method:** 100% code trace — every line in every active file read and summarized.
 
@@ -73,7 +73,7 @@
 
 ### Layer 2 — Presentation & Capture
 
-**`app/checkout/payment/PaymentForm.client.tsx`** (327 lines, `"use client"`)
+**`app/checkout/payment/PaymentForm.client.tsx`** (377 lines, `"use client"`)
 
 **Outer component (`PaymentForm`)**:
 - Props: `{ grandTotal, metadata, address, traceId }`
@@ -116,7 +116,7 @@
 
 ### Layer 3 — Mutation & Session Gateway
 
-**`app/api/checkout/payment-intent-session/route.ts`** (180 lines, `POST`)
+**`app/api/checkout/payment-intent-session/route.ts`** (184 lines, `POST`)
 
 1. **Body parse** — `{ grandTotal?: number, metadata?: Record<string, string> }`
 2. **Validation**:
@@ -224,13 +224,6 @@ User clicks Pay → stripe.confirmPayment()
 
 ---
 
-## 8. Changes Since 2026-06-08 Synopsis
+## 8. Changes Since 2026-06-09 Synopsis
 
-1. **VAT calculation is now live** — `page.tsx` computes `vatAmount = grandTotal - Math.round(grandTotal / 1.23)` and passes it to `CheckoutSummary`; route handler also includes `vat` in Stripe metadata.
-2. **Exponential backoff retry added** — `PaymentForm` retry logic (H-04): 3 attempts with delays `[500ms, 1000ms, 2000ms]`.
-3. **`useEffect` dependency fix** — `metadata` now included in `useEffect` deps (C-03) to prevent stale closure.
-4. **ExpressCheckoutElement billing details** — `onConfirm` now passes `billing_details` constructed from session address (H-03).
-5. **Stripe API version updated** — `lib/stripe.ts` bumped from `'2025-10-29.clover'` to `'2026-05-27.dahlia'`.
-6. **`lastPaymentIntentId` added to session** — `lib/session.ts` now tracks `lastPaymentIntentId`.
-7. **Test coverage expanded** — `payment-form.test.tsx` grew from 5 to 7 tests (added retry cases); integration tests cover missing session ID guard (M-03).
-8. **Cookie size guard added** — route handler warns if serialized session exceeds 3000 bytes before saving.
+No functional changes. Line counts increased slightly due to dev-only live audit `console.log` blocks (FIX #1–#16 verification) in `page.tsx` and `PaymentForm.client.tsx`. All behavior, guards, and data flows remain identical to the 2026-06-09 state.
