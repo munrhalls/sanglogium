@@ -17,20 +17,20 @@ export default function BasketSummary({ itemCount, subtotal, basketData, shippin
 
   return (
     <>
-      <h2 className="type-section-sub border-b border-border-primary pb-4 mb-6">
+      <h2 className="type-section-sub border-b border-border-primary pb-2 mb-3 lg-touch:pb-4 lg-touch:mb-6 lg-desktop:pb-4 lg-desktop:mb-6">
         Basket Summary
       </h2>
 
-      <div className="space-y-3">
+      <div className="space-y-2 lg-touch:space-y-3 lg-desktop:space-y-3">
         <div className="flex justify-between items-baseline gap-4">
           <div className="type-section-caption text-text-secondary whitespace-nowrap">Subtotal ({itemCount} item{itemCount !== 1 ? 's' : ''})</div>
-          <Price value={subtotal} variant="summary" currency="PLN" className="whitespace-nowrap" />
+          <Price value={subtotal} variant="summary" currency="PLN" className="whitespace-nowrap tabular-nums" />
         </div>
 
         <div className="flex justify-between items-baseline gap-4">
           <div className="type-section-caption text-text-secondary whitespace-nowrap">Shipping (estimated)</div>
           {shippingCost !== null ? (
-            <Price value={shippingCost} variant="summary" currency="PLN" className="whitespace-nowrap" />
+            <Price value={shippingCost} variant="summary" currency="PLN" className="whitespace-nowrap tabular-nums" />
           ) : (
             <span className="type-section-caption text-text-secondary whitespace-nowrap">Calculating...</span>
           )}
@@ -43,12 +43,14 @@ export default function BasketSummary({ itemCount, subtotal, basketData, shippin
           </div>
         )}
 
-        <div className="border-t border-border-primary pt-4 mt-1 mb-6">
+        <div className="border-t border-border-primary pt-3 mt-1 mb-3 lg-touch:pt-4 lg-touch:mb-6 lg-desktop:pt-4 lg-desktop:mb-6">
           <div className="flex justify-between items-baseline gap-4">
             <div className="type-section-sub whitespace-nowrap">Total</div>
-            <Price value={total} variant="summary" currency="PLN" className="type-section-sub tabular-nums text-brand-400 whitespace-nowrap" />
+            <span className="text-text-accent font-bold text-spotlight whitespace-nowrap">
+              <Price value={total} variant="summary" currency="PLN" className="tabular-nums" />
+            </span>
           </div>
-          <div className="type-section-caption text-text-secondary mt-1 mb-4">Including VAT</div>
+          <div className="type-section-caption text-text-secondary mt-1 mb-2 lg-touch:mb-4 lg-desktop:mb-4">Including VAT</div>
         </div>
       </div>
 
@@ -56,7 +58,7 @@ export default function BasketSummary({ itemCount, subtotal, basketData, shippin
 
       <Link
         href="/"
-        className="btn-secondary block text-center mt-3 py-3 w-full"
+        className="hidden lg-touch:block lg-desktop:block btn-secondary text-center mt-3 py-3 w-full"
       >
         <ArrowLeftIcon size={16} className="inline mr-2" />
         Continue Shopping

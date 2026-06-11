@@ -1,7 +1,6 @@
 "use client";
 
 import { useShallow } from 'zustand/shallow';
-import { TrashIcon } from "@phosphor-icons/react";
 import useBasketStore from "@/store/basketStore";
 
 interface BasketControlsProps {
@@ -92,17 +91,17 @@ export function BasketControls({
           data-testid={`decrement-${productId}`}
           type="button"
           disabled={isBasketPage && quantity <= 1}
-          className={decrementClassName || "h-10 w-10 flex items-center justify-center bg-surface-elevated border border-border-secondary rounded-l-sm border-r-0 text-text-secondary hover:border-border-primary hover:text-text-primary transition-colors duration-150 disabled:opacity-30 disabled:cursor-not-allowed"}
+          className={decrementClassName || "h-11 w-11 min-h-[44px] min-w-[44px] flex items-center justify-center bg-surface-elevated border border-border-secondary rounded-l-sm border-r-0 text-text-secondary hover:border-border-primary hover:text-text-primary transition-colors duration-150 disabled:opacity-30 disabled:cursor-not-allowed"}
         >
           −
         </button>
-        <span data-testid="quantity-display" className={quantityClassName || "h-10 w-10 flex items-center justify-center bg-surface-elevated border-y border-border-secondary type-card-title tabular-nums select-none"}>{quantity}</span>
+        <span data-testid="quantity-display" className={quantityClassName || "h-11 w-11 min-h-[44px] min-w-[44px] flex items-center justify-center bg-surface-elevated border-y border-border-secondary type-card-title tabular-nums select-none"}>{quantity}</span>
         <button
           onClick={handleIncrement}
           data-testid={`increment-${productId}`}
           type="button"
           disabled={maxQuantity !== undefined && quantity >= maxQuantity}
-          className={incrementClassName || "h-10 w-10 flex items-center justify-center bg-surface-elevated border border-border-secondary rounded-r-sm border-l-0 text-text-secondary hover:border-border-primary hover:text-text-primary transition-colors duration-150"}
+          className={incrementClassName || "h-11 w-11 min-h-[44px] min-w-[44px] flex items-center justify-center bg-surface-elevated border border-border-secondary rounded-r-sm border-l-0 text-text-secondary hover:border-border-primary hover:text-text-primary transition-colors duration-150"}
         >
           +
         </button>
@@ -112,10 +111,9 @@ export function BasketControls({
           onClick={handleRemove}
           data-testid={`remove-${productId}`}
           type="button"
-          aria-label={name ? `Remove ${name} from basket` : "Remove from basket"}
-          className={removeClassName || "ml-3 h-10 w-10 flex items-center justify-center text-text-caption hover:text-error-500 transition-colors duration-150 rounded-sm"}
+          className={removeClassName || "ml-3 text-text-caption hover:text-text-secondary transition-colors duration-150 text-small"}
         >
-          <TrashIcon size={18} />
+          Remove
         </button>
       )}
     </div>

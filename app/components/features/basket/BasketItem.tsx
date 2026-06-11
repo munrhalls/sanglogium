@@ -40,9 +40,9 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
               </div>
             )}
           </div>
-          <h3 className="type-card-title line-clamp-2 min-w-0">
-            {name}
-          </h3>
+          <div className="flex flex-col min-w-0 gap-1">
+            <h3 className="type-card-title line-clamp-2">{name}</h3>
+          </div>
         </div>
 
         {/* Column 2 — Unit Price */}
@@ -91,9 +91,7 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
             )}
           </div>
           <div className="flex flex-col gap-1 flex-1 min-w-0">
-            <h3 className="type-card-title line-clamp-2">
-              {name}
-            </h3>
+            <h3 className="type-card-title line-clamp-3">{name}</h3>
             <span className="type-metadata">
               Unit: <Price value={displayPrice} currency="PLN" />
             </span>
