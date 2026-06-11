@@ -192,42 +192,41 @@ export default function BasketManager() {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-8 lg-touch:grid-cols-3 lg-desktop:grid-cols-3">
-      <div className="lg-touch:col-span-2 lg-desktop:col-span-2">
-        <div className="card-base overflow-hidden">
-          {/* Header */}
-          <div className="hidden border-b border-border-secondary px-6 py-3 lg-touch:grid lg-touch:grid-cols-[minmax(0,1fr)_auto_auto_auto] lg-desktop:grid lg-desktop:grid-cols-[minmax(0,1fr)_auto_auto_auto]">
-            <div className="type-overline">
-              Product
-            </div>
-            <div className="type-overline text-center">
-              Price
-            </div>
-            <div className="type-overline text-center">
-              Quantity
-            </div>
-            <div className="type-overline text-right">
-              Total
-            </div>
+    <div className="grid grid-cols-1 gap-8 lg-touch:grid-cols-[65%_1fr] lg-desktop:grid-cols-[65%_1fr]">
+      <div className="card-base overflow-hidden pb-48 lg-touch:pb-0 lg-desktop:pb-0">
+        {/* Header */}
+        <div className="hidden border-b border-border-secondary px-6 py-3 lg-touch:grid lg-touch:grid-cols-[minmax(0,1fr)_auto_auto_auto] lg-desktop:grid lg-desktop:grid-cols-[minmax(0,1fr)_auto_auto_auto] items-center gap-5">
+          <div className="type-overline">
+            Product
           </div>
-
-          {enrichedItems.map((item) => (
-            <BasketItem
-              key={item.productId}
-              productId={item.productId}
-              name={item.name}
-              quantity={item.quantity}
-              displayPrice={item.displayPrice}
-              image={item.image}
-              availableStock={item.availableStock}
-              originalQuantity={item.originalQuantity}
-            />
-          ))}
+          <div className="type-overline text-center">
+            Price
+          </div>
+          <div className="type-overline text-center">
+            Quantity
+          </div>
+          <div className="type-overline text-right">
+            Total
+          </div>
         </div>
+
+        {enrichedItems.map((item) => (
+          <BasketItem
+            key={item.productId}
+            productId={item.productId}
+            name={item.name}
+            quantity={item.quantity}
+            displayPrice={item.displayPrice}
+            image={item.image}
+            availableStock={item.availableStock}
+            originalQuantity={item.originalQuantity}
+          />
+        ))}
       </div>
-      
-      <div className="lg-touch:col-span-1 lg-desktop:col-span-1">
-        <div className="card-product-dark sticky bottom-0 z-10 lg-touch:bottom-auto lg-touch:top-4 lg-desktop:bottom-auto lg-desktop:top-4">
+
+      {/* Desktop sticky summary */}
+      <div className="hidden lg-touch:block lg-desktop:block lg-touch:sticky lg-touch:top-4 lg-desktop:sticky lg-desktop:top-4 self-start">
+        <div className="card-product-dark shadow-cardDark">
           <BasketSummary
             itemCount={itemCount}
             subtotal={subtotal}
@@ -235,6 +234,16 @@ export default function BasketManager() {
             shippingCost={shippingCost}
           />
         </div>
+      </div>
+
+      {/* Mobile fixed bottom bar */}
+      <div className="lg-touch:hidden lg-desktop:hidden fixed bottom-0 left-0 w-full z-40 bg-surface-card border-t border-border-secondary px-4 py-4">
+        <BasketSummary
+          itemCount={itemCount}
+          subtotal={subtotal}
+          basketData={checkoutData}
+          shippingCost={shippingCost}
+        />
       </div>
     </div>
   );
