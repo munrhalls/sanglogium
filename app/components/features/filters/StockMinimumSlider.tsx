@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ClockCounterClockwise } from '@phosphor-icons/react';
 
 interface StockMinimumSliderProps {
@@ -11,32 +11,70 @@ interface StockMinimumSliderProps {
 }
 
 export function StockMinimumSlider({ maxStock, value, onChange, onClear }: StockMinimumSliderProps) {
-  // Detect and fix invalid state (negative values)
-  useEffect(() => {
-    if (value < 0) {
-      onChange(0);
-    }
-  }, [value, onChange]);
+  const [localValue, setLocalValue] = useState(value);
+  const isDragging = useRef(false);
 
   const isActive = value > 0;
+  const max = maxStock || 100;
 
-  const handleSliderChange = useCallback((newValue: number) => {
-    // If slider moved to 0, clear the filter instead of setting value
-    if (newValue === 0) {
+  useEffect(() => {
+    if (!isDragging.current) {
+      setLocalValue(value);
+    }
+  }, [value]);
+
+  const commitValue = useCallback((nextValue: number) => {
+    if (nextValue === 0) {
       onClear();
       return;
     }
-    onChange(newValue);
+    onChange(nextValue);
   }, [onChange, onClear]);
 
+  const handleChange = useCallback((newValue: number) => {
+    setLocalValue(newValue);
+    if (!isDragging.current) {
+      commitValue(newValue);
+    }
+  }, [commitValue]);
+
+  const handleDragStart = useCallback(() => {
+    isDragging.current = true;
+  }, []);
+
+  const handleDragEnd = useCallback(() => {
+    if (!isDragging.current) {
+      return;
+    }
+    isDragging.current = false;
+    commitValue(localValue);
+  }, [commitValue, localValue]);
+
+  useEffect(() => {
+    const handleWindowPointerUp = () => {
+      if (isDragging.current) {
+        handleDragEnd();
+      }
+    };
+
+    window.addEventListener('mouseup', handleWindowPointerUp);
+    window.addEventListener('touchend', handleWindowPointerUp);
+
+    return () => {
+      window.removeEventListener('mouseup', handleWindowPointerUp);
+      window.removeEventListener('touchend', handleWindowPointerUp);
+    };
+  }, [handleDragEnd]);
+
   const handleClear = useCallback(() => {
+    isDragging.current = false;
+    setLocalValue(0);
     onClear();
   }, [onClear]);
 
-  // Dynamic label based on value
   const getSliderLabel = () => {
-    if (value === 0) return "Any";
-    return `At least ${value} items`;
+    if (localValue === 0) return "Any";
+    return `At least ${localValue} items`;
   };
 
   return (
@@ -68,9 +106,13 @@ export function StockMinimumSlider({ maxStock, value, onChange, onClear }: Stock
           <input
             type="range"
             min={0}
-            max={maxStock || 100}
-            value={value}
-            onChange={(e) => handleSliderChange(parseInt(e.target.value, 10))}
+            max={max}
+            value={localValue}
+            onChange={(e) => handleChange(parseInt(e.target.value, 10))}
+            onMouseDown={handleDragStart}
+            onTouchStart={handleDragStart}
+            onMouseUp={handleDragEnd}
+            onTouchEnd={handleDragEnd}
             className={`w-full h-2 rounded-lg appearance-none cursor-pointer transition-opacity ${
               isActive ? 'bg-accent-500 accent-accent-500' : 'opacity-60 bg-surface-tertiary accent-surface-tertiary'
             }`}
@@ -78,8 +120,8 @@ export function StockMinimumSlider({ maxStock, value, onChange, onClear }: Stock
             style={{
               WebkitAppearance: 'none',
               background: isActive
-                ? `linear-gradient(to right, #D4AF37 0%, #D4AF37 ${(value / (maxStock || 100)) * 100}%, #2E2E2D ${(value / (maxStock || 100)) * 100}%, #2E2E2D 100%)`
-                : `linear-gradient(to right, #6B7280 0%, #6B7280 ${(value / (maxStock || 100)) * 100}%, #374151 ${(value / (maxStock || 100)) * 100}%, #374151 100%)`
+                ? `linear-gradient(to right, #D4AF37 0%, #D4AF37 ${(localValue / max) * 100}%, #2E2E2D ${(localValue / max) * 100}%, #2E2E2D 100%)`
+                : `linear-gradient(to right, #6B7280 0%, #6B7280 ${(localValue / max) * 100}%, #374151 ${(localValue / max) * 100}%, #374151 100%)`
             }}
           />
         </div>
