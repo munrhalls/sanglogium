@@ -10,5 +10,9 @@
   "lib/auth.ts": {
     "agentId": "cascade_pane_1",
     "timestamp": 1781117812892
+  },
+  "app/components/features/basket/BasketItem.tsx": {
+    "agentId": "cascade_pane_1",
+    "timestamp": 1781290136494
   }
 }
