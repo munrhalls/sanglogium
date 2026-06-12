@@ -61,17 +61,17 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
     .join(' ');
 
   return (
-    <div className="mx-auto max-w-content px-4 md:px-8 pb-12">
-      <div className="flex gap-8">
+    <div className="mx-auto w-full max-w-content px-4 md:px-8 pb-12">
+      <div className="grid grid-cols-1 lg-desktop:grid-cols-[240px_minmax(0,1fr)] lg-touch:grid-cols-[240px_minmax(0,1fr)] gap-8 items-stretch">
         {/* Sidebar - full height on left */}
-        <aside className="hidden lg-desktop:block lg-touch:block w-60 shrink-0 sticky top-[var(--desktop-header-h)] h-[calc(100vh-var(--desktop-header-h))] overflow-y-auto scrollbar-none pt-6">
+        <aside className="hidden lg-desktop:block lg-touch:block sticky top-[var(--desktop-header-h)] h-[calc(100vh-var(--desktop-header-h))] overflow-y-auto scrollbar-none pt-6">
           <Suspense fallback={<FilterSidebarSkeleton />}>
             <FilterSection filtersPromise={filtersPromise} />
           </Suspense>
         </aside>
 
         {/* Main content - header + products stacked */}
-        <main className="flex-1 min-w-0 pt-6">
+        <main className="min-w-0 w-full pt-6">
           {/* Header now in right column */}
           <div className="pb-4">
             <Breadcrumbs categoryParts={slug} />

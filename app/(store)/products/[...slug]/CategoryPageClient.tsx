@@ -52,7 +52,7 @@ export function CategoryPageClient({
         maxStock={maxStock}
       />
 
-      <div className="flex-1 min-w-0">
+      <div className="min-w-0">
         {/* Desktop: Sort + Result count */}
         <div className="hidden lg:flex lg:flex-row lg:items-center lg:justify-between gap-4 pb-4 mb-6 border-b border-border-secondary">
           <SortDropdown />
