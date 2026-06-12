@@ -58,7 +58,7 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
               <span className="type-metadata">{variant}</span>
             )}
             <span className="type-caption text-text-secondary tabular-nums">
-              {displayPrice.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} / unit
+              {displayPrice.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </span>
           </div>
         </div>
@@ -121,7 +121,7 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
               <span className="type-metadata">{variant}</span>
             )}
             <span className="type-caption text-text-secondary tabular-nums">
-              {displayPrice.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} / unit
+              {displayPrice.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </span>
           </div>
         </div>
