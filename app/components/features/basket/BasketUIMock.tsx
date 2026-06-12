@@ -86,15 +86,15 @@ function MockBasketSummary({ shippingCost }: { shippingCost: number | null }) {
       <h2 className="type-section-sub border-b border-border-primary pb-4 mb-6">Basket Summary</h2>
       <div className="space-y-3">
         <div className="flex justify-between items-baseline gap-4">
-          <span className="type-section-caption text-text-secondary whitespace-nowrap">Subtotal ({itemCount} items)</span>
+          <span className="type-caption whitespace-nowrap">Subtotal ({itemCount} items)</span>
           <Price value={subtotal} variant="summary" currency="PLN" className="whitespace-nowrap" />
         </div>
         <div className="flex justify-between items-baseline gap-4">
-          <span className="type-section-caption text-text-secondary whitespace-nowrap">Shipping (estimated)</span>
+          <span className="type-caption whitespace-nowrap">Shipping (estimated)</span>
           {shippingCost !== null ? (
             <Price value={shippingCost} variant="summary" currency="PLN" className="whitespace-nowrap" />
           ) : (
-            <span className="type-section-caption text-text-secondary whitespace-nowrap">Calculating...</span>
+            <span className="type-caption whitespace-nowrap">Calculating...</span>
           )}
         </div>
         <div className="border-t border-border-primary pt-4 mt-1 mb-6">
@@ -104,11 +104,13 @@ function MockBasketSummary({ shippingCost }: { shippingCost: number | null }) {
               <Price value={total} variant="summary" currency="PLN" />
             </span>
           </div>
-          <div className="type-section-caption text-text-secondary mt-1 mb-4">Including VAT</div>
+          <div className="type-caption mt-1 mb-4">Including VAT</div>
         </div>
       </div>
-      <button type="button" className="btn-primary w-full px-6 py-3">Checkout</button>
-      <button type="button" className="btn-secondary block text-center mt-3 py-3 w-full">Continue Shopping</button>
+      <div className="pb-24 lg-touch:pb-0 lg-desktop:pb-0">
+        <button type="button" className="btn-primary w-full px-6 py-3">Checkout</button>
+        <button type="button" className="btn-secondary block text-center mt-3 py-3 w-full">Continue Shopping</button>
+      </div>
     </>
   );
 }

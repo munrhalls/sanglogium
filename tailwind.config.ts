@@ -530,7 +530,7 @@ export default {
           "clamp(1.125rem, 1vw + 0.9rem, 1.75rem)",
           { lineHeight: "1.15", letterSpacing: "0.03em" },
         ],
-        spotlight: ["28px", { lineHeight: "32px", letterSpacing: "0.1em" }],
+        spotlight: ["24px", { lineHeight: "28px", letterSpacing: "0.1em" }],
       }),
       fontWeight: {
         light: "300",

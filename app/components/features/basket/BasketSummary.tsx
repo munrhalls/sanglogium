@@ -23,22 +23,22 @@ export default function BasketSummary({ itemCount, subtotal, basketData, shippin
 
       <div className="space-y-2 lg-touch:space-y-3 lg-desktop:space-y-3">
         <div className="flex justify-between items-baseline gap-4">
-          <div className="type-section-caption text-text-secondary whitespace-nowrap">Subtotal ({itemCount} item{itemCount !== 1 ? 's' : ''})</div>
+          <div className="type-caption whitespace-nowrap">Subtotal ({itemCount} item{itemCount !== 1 ? 's' : ''})</div>
           <Price value={subtotal} variant="summary" currency="PLN" className="whitespace-nowrap tabular-nums" />
         </div>
 
         <div className="flex justify-between items-baseline gap-4">
-          <div className="type-section-caption text-text-secondary whitespace-nowrap">Shipping (estimated)</div>
+          <div className="type-caption whitespace-nowrap">Shipping (estimated)</div>
           {shippingCost !== null ? (
             <Price value={shippingCost} variant="summary" currency="PLN" className="whitespace-nowrap tabular-nums" />
           ) : (
-            <span className="type-section-caption text-text-secondary whitespace-nowrap">Calculating...</span>
+            <span className="type-caption whitespace-nowrap">Calculating...</span>
           )}
         </div>
 
         {0 > 0 && (
           <div className="flex justify-between items-baseline gap-4">
-            <div className="type-section-caption text-text-secondary whitespace-nowrap">Tax</div>
+            <div className="type-caption whitespace-nowrap">Tax</div>
             <Price value={0} variant="summary" currency="PLN" className="whitespace-nowrap" />
           </div>
         )}
@@ -50,19 +50,21 @@ export default function BasketSummary({ itemCount, subtotal, basketData, shippin
               <Price value={total} variant="summary" currency="PLN" className="tabular-nums" />
             </span>
           </div>
-          <div className="type-section-caption text-text-secondary mt-1 mb-2 lg-touch:mb-4 lg-desktop:mb-4">Including VAT</div>
+          <div className="type-caption mt-1 mb-2 lg-touch:mb-4 lg-desktop:mb-4">Including VAT</div>
         </div>
       </div>
 
-      <CheckoutButton basketData={basketData} />
+      <div>
+        <CheckoutButton basketData={basketData} />
 
-      <Link
-        href="/"
-        className="hidden lg-touch:block lg-desktop:block btn-secondary text-center mt-3 py-3 w-full"
-      >
-        <ArrowLeftIcon size={16} className="inline mr-2" />
-        Continue Shopping
-      </Link>
+        <Link
+          href="/"
+          className="hidden lg-touch:block lg-desktop:block btn-secondary text-center mt-3 py-3 w-full"
+        >
+          <ArrowLeftIcon size={16} className="inline mr-2" />
+          Continue Shopping
+        </Link>
+      </div>
     </>
   );
 }
