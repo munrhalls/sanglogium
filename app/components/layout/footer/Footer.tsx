@@ -12,9 +12,8 @@ const ColTitle = function ({ title }: { title: string }) {
   return (
     <div
       className={cn(
-        "grid h-auto content-start justify-center",
-        "p-2",
-        "text-white-600 text-xl font-black"
+        "flex items-center gap-3",
+        "type-overline text-brand-400"
       )}
     >
       <h1>{title}</h1>
@@ -25,18 +24,17 @@ export default function Footer() {
   return (
     <footer
       className={cn(
-        "relative grid grid-rows-[auto_4rem_1fr]",
-        "bg-brand-800 text-brand-100",
-        "px-4 pt-8"
+        "w-full bg-brand-800 text-brand-100",
+        "border-t border-border-secondary"
       )}
     >
       {}
       <div
         className={cn(
-          "mx-auto grid w-full gap-6 py-8",
-          "justify-content-center",
-          "max-w-[600px]",
-          "md:max-w-[1400px] md:grid-cols-4"
+          "mx-auto w-full max-w-content px-4 md:px-8",
+          "py-12 md:py-16 lg:py-20",
+          "grid grid-cols-1 gap-8 lg:gap-12",
+          "md:grid-cols-4"
         )}
       >
         {/* TODO: Create pages for these links - commenting out to prevent 404s on production */}
@@ -76,9 +74,9 @@ export default function Footer() {
             </li>
           </ul>
         </div> */}
-        <div className={cn("grid content-start gap-4")}>
+        <div className={cn("flex flex-col gap-4", "md:col-span-1 md:row-start-1")}>
           <ColTitle title="ABOUT US" />
-          <ul className={cn("grid justify-center gap-2")}>
+          <ul className={cn("flex flex-col gap-2")}>
             {/* TODO: Create pages for these links */}
             {/* <li>
               <Link className={cn("text-xl")} href="/support/about-us">
@@ -99,15 +97,14 @@ export default function Footer() {
         </div>
         <div
           className={cn(
-            "grid justify-center gap-1",
-            "md:col-span-3 md:col-start-1 md:grid-rows-[4rem_1fr]"
+            "flex flex-col gap-4",
+            "md:col-span-3 md:col-start-1 md:row-start-2"
           )}
         >
           <ColTitle title="FIND US" />
           <ul
             className={cn(
-              "grid grid-cols-2 grid-rows-2 justify-center gap-12",
-              "md:grid-flow-col md:grid-rows-1"
+              "flex flex-wrap gap-6"
             )}
           >
             {/* <li>
@@ -129,8 +126,7 @@ export default function Footer() {
         </div>
         <div
           className={cn(
-            "grid content-start justify-center gap-4",
-            "md:justify-content-start",
+            "flex flex-col gap-4",
             "md:col-span-1 md:col-start-4",
             "md:row-span-2 md:row-start-1"
           )}
