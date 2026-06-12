@@ -1,8 +1,10 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { Price } from "@/app/components/ui/Price";
+import { Trash } from "@phosphor-icons/react";
+import { useShallow } from "zustand/shallow";
 import { BasketControls } from "./BasketControls";
+import useBasketStore from "@/store/basketStore";
 import { sanityImageLoader } from "@/lib/utils/sanityImageLoader";
 
 interface BasketItemProps {
@@ -13,17 +15,27 @@ interface BasketItemProps {
   image?: any
   availableStock: number
   originalQuantity?: number
+  variant?: string
 }
 
-export default function BasketItem({ productId, name, quantity, displayPrice, image, availableStock, originalQuantity }: BasketItemProps) {
+export default function BasketItem({ productId, name, quantity, displayPrice, image, availableStock, originalQuantity, variant }: BasketItemProps) {
+  const { removeProduct } = useBasketStore(
+    useShallow((state) => ({
+      removeProduct: state.removeProduct,
+    }))
+  );
   const assetRef = image?.asset?._ref || image?.asset?._id;
+
+  const handleRemove = () => {
+    removeProduct(productId);
+  };
 
   return (
     <>
       {/* Desktop row */}
-      <div className="hidden lg-desktop:grid lg-touch:grid grid-cols-[minmax(0,1fr)_auto_auto_auto] items-center px-6 py-5 gap-5 border-b border-border-secondary/60 hover:bg-surface-elevated transition-colors duration-150">
-        {/* Column 1 — Product */}
-        <div className="flex flex-row items-center gap-4">
+      <article className="hidden lg-desktop:grid lg-touch:grid grid-cols-[minmax(0,1fr)_auto_auto] items-start px-6 py-5 gap-[2rem] border-b border-border-secondary/60 hover:bg-surface-elevated transition-colors duration-150">
+        {/* Column 1 — item-identity */}
+        <div className="item-identity flex flex-row items-start gap-4">
           <div className="h-20 w-20 flex-shrink-0 rounded-sm bg-surface-productImage overflow-hidden relative border border-border-secondary">
             {assetRef ? (
               <Image
@@ -40,18 +52,19 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
               </div>
             )}
           </div>
-          <div className="flex flex-col min-w-0 gap-1">
-            <h3 className="type-card-title line-clamp-2">{name}</h3>
+          <div className="item-text-stack flex flex-col min-w-0 gap-1">
+            <h3 className="type-card-title line-clamp-4">{name}</h3>
+            {variant && (
+              <span className="type-metadata">{variant}</span>
+            )}
+            <span className="type-caption text-text-secondary tabular-nums">
+              {displayPrice.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} / unit
+            </span>
           </div>
         </div>
 
-        {/* Column 2 — Unit Price */}
-        <div className="flex items-center justify-center whitespace-nowrap">
-          <Price value={displayPrice} currency="PLN" />
-        </div>
-
-        {/* Column 3 — Quantity */}
-        <div className="flex items-center justify-center gap-2">
+        {/* Column 2 — quantity & total */}
+        <div className="flex flex-row items-center gap-8 justify-end mt-5">
           {originalQuantity && originalQuantity > quantity && (
             <span className="type-caption text-text-caption line-through">{originalQuantity}</span>
           )}
@@ -61,14 +74,26 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
             isBasketPage={true}
             maxQuantity={availableStock}
             displayQuantity={quantity}
+            showRemoveButton={false}
           />
+          <div className="w-24 text-right">
+            <span className="tabular-nums">{(displayPrice * quantity).toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+          </div>
         </div>
 
-        {/* Column 4 — Line Total */}
-        <div className="flex items-center justify-end whitespace-nowrap">
-          <Price value={displayPrice * quantity} currency="PLN" />
+        {/* Column 3 — item-actions */}
+        <div className="item-actions flex items-center justify-center mt-5">
+          <button
+            onClick={handleRemove}
+            data-testid={`remove-${productId}`}
+            aria-label={`Remove ${name} from basket`}
+            type="button"
+            className="text-text-secondary hover:text-red-500/80 transition-colors duration-200 p-2"
+          >
+            <Trash size={20} />
+          </button>
         </div>
-      </div>
+      </article>
 
       {/* Mobile row — two-zone layout */}
       <div className="lg-desktop:hidden lg-touch:hidden flex flex-col border-b border-border-secondary/60 px-4 hover:bg-surface-elevated transition-colors duration-150">
@@ -91,15 +116,18 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
             )}
           </div>
           <div className="flex flex-col gap-1 flex-1 min-w-0">
-            <h3 className="type-card-title line-clamp-3">{name}</h3>
-            <span className="type-metadata">
-              Unit: <Price value={displayPrice} currency="PLN" />
+            <h3 className="text-sm font-normal text-text-body leading-snug">{name}</h3>
+            {variant && (
+              <span className="type-metadata">{variant}</span>
+            )}
+            <span className="type-caption text-text-secondary tabular-nums">
+              {displayPrice.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} / unit
             </span>
           </div>
         </div>
 
         {/* Zone B — Controls strip */}
-        <div className="flex flex-row items-center justify-between py-3 border-t border-border-secondary/30">
+        <div className="flex flex-row items-center justify-between flex-wrap gap-4 pt-3 border-t border-border-secondary/30">
           <div className="flex items-center gap-2">
             {originalQuantity && originalQuantity > quantity && (
               <span className="type-caption text-text-caption line-through">{originalQuantity}</span>
@@ -110,10 +138,22 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
               isBasketPage={true}
               maxQuantity={availableStock}
               displayQuantity={quantity}
+              showRemoveButton={false}
             />
           </div>
-          <div className="type-price">
-            <Price value={displayPrice * quantity} currency="PLN" />
+          <div className="flex items-center gap-4">
+            <button
+              onClick={handleRemove}
+              data-testid={`remove-mobile-${productId}`}
+              aria-label={`Remove ${name} from basket`}
+              type="button"
+              className="text-text-secondary hover:text-red-500/80 transition-colors duration-200 p-2"
+            >
+              <Trash size={20} />
+            </button>
+            <span className="type-body font-bold tabular-nums">
+              {(displayPrice * quantity).toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            </span>
           </div>
         </div>
       </div>

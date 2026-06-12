@@ -15,6 +15,7 @@ interface BasketControlsProps {
   incrementClassName?: string;
   quantityClassName?: string;
   wrapperClassName?: string;
+  showRemoveButton?: boolean;
 }
 
 export function BasketControls({
@@ -29,6 +30,7 @@ export function BasketControls({
   incrementClassName,
   quantityClassName,
   wrapperClassName,
+  showRemoveButton,
 }: BasketControlsProps) {
   const { items, addProduct, removeProduct, incrementQuantity, decrementQuantity } = useBasketStore(
     useShallow((state) => ({
@@ -106,7 +108,7 @@ export function BasketControls({
           +
         </button>
       </div>
-      {isBasketPage && (
+      {isBasketPage && showRemoveButton !== false && (
         <button
           onClick={handleRemove}
           data-testid={`remove-${productId}`}
