@@ -19,7 +19,7 @@ export function Checkbox({ name, value, checked, onChange, label }: CheckboxProp
           name={name}
           value={value}
           checked={checked}
-          onChange={onChange}
+          onChange={(e) => { e.preventDefault(); onChange(); }}
           className="peer sr-only"
         />
         <div
