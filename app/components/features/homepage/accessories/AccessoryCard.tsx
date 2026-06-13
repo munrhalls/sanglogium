@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "@/lib/utils/tailwind";
 import Image from "next/image";
 import { sanityImageLoader } from "@/lib/utils/sanityImageLoader";
@@ -23,7 +25,8 @@ export default function AccessoryCard({
             {item.brand.name}
           </span>
           <Image
-            src={item.image?.asset?._id ? sanityImageLoader({ src: item.image?.asset?._id, width: 450, quality: 75 }) : ""}
+            src={item.image?.asset?._id ?? ""}
+            loader={sanityImageLoader}
             alt={item.name}
             width={450}
             height={450}

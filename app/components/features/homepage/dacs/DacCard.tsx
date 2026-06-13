@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "@/lib/utils/tailwind";
 import Image from "next/image";
 import { sanityImageLoader } from "@/lib/utils/sanityImageLoader";
@@ -22,7 +24,8 @@ export default function DacCard({ item, idx }: { item: any; idx: number }) {
             {brandName}
           </span>
           <Image
-            src={item.image?.asset?._id ? sanityImageLoader({ src: item.image?.asset?._id, width: 400, quality: 75 }) : ""}
+            src={item.image?.asset?._id ?? ""}
+            loader={sanityImageLoader}
             alt={productName}
             width={400}
             height={400}

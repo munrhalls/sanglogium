@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import { sanityImageLoader } from "@/lib/utils/sanityImageLoader";
@@ -11,7 +13,7 @@ interface ProductSpotlight3Props {
   spotlightData: Spotlight1Data | null;
 }
 
-export default async function ProductSpotlight3({ spotlightData }: ProductSpotlight3Props) {
+export default function ProductSpotlight3({ spotlightData }: ProductSpotlight3Props) {
   if (!spotlightData || !spotlightData.productRef) return null;
   const { productRef: product, promoTitle, promoSubtitle, promoText } = spotlightData;
 
@@ -25,7 +27,8 @@ export default async function ProductSpotlight3({ spotlightData }: ProductSpotli
                 {product.images?.map((image, idx) => (
                   <CarouselSlide key={`${product._id}-${idx}`} className="aspect-square w-full flex items-center justify-center pb-4 opacity-0 scale-95 transition-[opacity,transform] duration-500 ease-out data-[active=true]:opacity-100 data-[active=true]:scale-100">
                     <Image
-                      src={image?.asset?._id ? sanityImageLoader({ src: image?.asset?._id, width: 800, quality: 75 }) : ""}
+                      src={image?.asset?._id ?? ""}
+                      loader={sanityImageLoader}
                       alt={product.name}
                       width={800}
                       height={800}
