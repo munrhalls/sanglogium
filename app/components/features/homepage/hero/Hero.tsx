@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { sanityImageLoader } from "@/lib/utils/sanityImageLoader";
 import { cn } from "@/lib/utils/tailwind";
 import { HeroData, SanityImage } from "./types";
 
@@ -7,7 +6,7 @@ interface HeroProps {
   heroData: HeroData | null;
 }
 
-export default async function Hero({ heroData }: HeroProps) {
+export default function Hero({ heroData }: HeroProps) {
   if (!heroData?.backgroundImage || !heroData?.headline) {
     return null;
   }
@@ -23,19 +22,6 @@ export default async function Hero({ heroData }: HeroProps) {
   // Generate blur placeholder from Sanity LQIP
   const blurDataURL = mobileBackgroundImage.asset?.metadata?.lqip || undefined;
 
-  // Raw Sanity asset id for desktop srcset (built server-side via direct function call)
-  const desktopRef = heroData.backgroundImage.asset?._id;
-
-  // Responsive srcset for desktop source
-  const desktopSrcSet = [640, 750, 1080, 1200, 1920, 2048]
-    .map((w) => `${sanityImageLoader({ src: desktopRef, width: w, quality: 75 })} ${w}w`)
-    .join(", ");
-
-  // Raw Sanity asset id for mobile image (built server-side via direct function call)
-  const mobileRef = mobileBackgroundImage.asset?._id;
-
-  // Pre-compute mobile fallback URL — next/image default loader handles responsive srcset
-  const mobileImageUrl = mobileRef ? sanityImageLoader({ src: mobileRef, width: 828, quality: 75 }) : "";
 
   return (
     <section
@@ -45,25 +31,19 @@ export default async function Hero({ heroData }: HeroProps) {
       )}
     >
       <div className="absolute inset-0 z-0">
-        <picture>
-          <source
-            media="(min-width: 768px)"
-            srcSet={desktopSrcSet}
-          />
-          <Image
-            src={mobileImageUrl}
-            alt={heroData.backgroundImage.alt || "Hero Image"}
-            fill
-            priority
-            fetchPriority="high"
-            placeholder={blurDataURL ? "blur" : undefined}
-            blurDataURL={blurDataURL}
-            className="object-cover rounded-none"
-            sizes="100vw"
-            quality={75}
-            style={{ objectPosition: getPosition(mobileBackgroundImage) }}
-          />
-        </picture>
+        <Image
+          src={mobileBackgroundImage.asset?._id ?? ""}
+          alt={heroData.backgroundImage.alt || "Hero Image"}
+          fill
+          priority
+          fetchPriority="high"
+          placeholder={blurDataURL ? "blur" : undefined}
+          blurDataURL={blurDataURL}
+          className="object-cover rounded-none"
+          sizes="100vw"
+          quality={75}
+          style={{ objectPosition: getPosition(mobileBackgroundImage) }}
+        />
 
         <div
           className={cn(

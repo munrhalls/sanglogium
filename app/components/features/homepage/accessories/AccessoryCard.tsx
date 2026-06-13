@@ -1,8 +1,5 @@
-"use client";
-
 import { cn } from "@/lib/utils/tailwind";
 import Image from "next/image";
-import { sanityImageLoader } from "@/lib/utils/sanityImageLoader";
 import Link from "next/link";
 import type { AccessoryItem } from "./types";
 import { BasketControls } from "@/app/components/features/basket/BasketControls";
@@ -26,7 +23,6 @@ export default function AccessoryCard({
           </span>
           <Image
             src={item.image?.asset?._id ?? ""}
-            loader={sanityImageLoader}
             alt={item.name}
             width={450}
             height={450}

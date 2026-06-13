@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { sanityImageLoader } from "@/lib/utils/sanityImageLoader";
 import Link from "next/link";
 import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
 import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";
@@ -43,7 +42,7 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
           {product.brand.name}
         </span>
         <Image
-          src={product.image?.asset?._id ? sanityImageLoader({ src: product.image?.asset?._id, width: 450, quality: 75 }) : ""}
+          src={product.image?.asset?._id ?? ""}
           alt={product.name}
           width={450}
           height={450}
@@ -75,7 +74,7 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
   </article>
 );
 
-export default async function Featured({ featuredData }: FeaturedProps) {
+export default function Featured({ featuredData }: FeaturedProps) {
   if (!featuredData || featuredData?.length === 0) return null;
 
   return (

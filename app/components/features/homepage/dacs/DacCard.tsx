@@ -1,8 +1,5 @@
-"use client";
-
 import { cn } from "@/lib/utils/tailwind";
 import Image from "next/image";
-import { sanityImageLoader } from "@/lib/utils/sanityImageLoader";
 import Link from "next/link";
 import { BasketControls } from "@/app/components/features/basket/BasketControls";
 import { centsToDisplay } from "@/lib/utils/price";
@@ -25,7 +22,6 @@ export default function DacCard({ item, idx }: { item: any; idx: number }) {
           </span>
           <Image
             src={item.image?.asset?._id ?? ""}
-            loader={sanityImageLoader}
             alt={productName}
             width={400}
             height={400}

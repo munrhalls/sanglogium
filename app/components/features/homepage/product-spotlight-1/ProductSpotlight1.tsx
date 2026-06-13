@@ -1,8 +1,5 @@
-"use client";
-
 import React from "react";
 import Image from "next/image";
-import { sanityImageLoader } from "@/lib/utils/sanityImageLoader";
 import { Spotlight1Data } from "./getSpotlight1Data";
 import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
 import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";
@@ -13,7 +10,7 @@ interface ProductSpotlight1Props {
   spotlightData: Spotlight1Data | null;
 }
 
-export default function ProductSpotlight1({ spotlightData }: ProductSpotlight1Props) {
+export default async function ProductSpotlight1({ spotlightData }: ProductSpotlight1Props) {
     if (!spotlightData || !spotlightData.productRef) return null;
     const { productRef: product, promoTitle, promoSubtitle, promoText } = spotlightData;
 
@@ -31,7 +28,6 @@ export default function ProductSpotlight1({ spotlightData }: ProductSpotlight1Pr
                                     >
                                         <Image
                                             src={image?.asset?._id ?? ""}
-                                            loader={sanityImageLoader}
                                             alt={product.name}
                                             width={800}
                                             height={800}
