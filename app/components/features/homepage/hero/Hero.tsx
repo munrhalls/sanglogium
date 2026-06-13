@@ -6,7 +6,7 @@ interface HeroProps {
   heroData: HeroData | null;
 }
 
-export default function Hero({ heroData }: HeroProps) {
+export default async function Hero({ heroData }: HeroProps) {
   if (!heroData?.backgroundImage || !heroData?.headline) {
     return null;
   }

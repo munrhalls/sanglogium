@@ -74,7 +74,7 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
   </article>
 );
 
-export default function Featured({ featuredData }: FeaturedProps) {
+export default async function Featured({ featuredData }: FeaturedProps) {
   if (!featuredData || featuredData?.length === 0) return null;
 
   return (

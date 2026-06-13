@@ -10,7 +10,7 @@ interface NewestReleaseProps {
   newestReleaseData: Spotlight1Data | null;
 }
 
-export default function NewestRelease({ newestReleaseData }: NewestReleaseProps) {
+export default async function NewestRelease({ newestReleaseData }: NewestReleaseProps) {
   if (!newestReleaseData || !newestReleaseData.productRef) return null;
 
   const { productRef: product, promoTitle, promoSubtitle, promoText } = newestReleaseData;
