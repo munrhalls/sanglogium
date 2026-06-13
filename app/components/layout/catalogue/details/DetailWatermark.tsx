@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils/tailwind";
-import Image from "next/image";
 
 export default function DetailWatermark({ imageUrl }: { imageUrl: string }) {
   return (
@@ -19,18 +18,11 @@ export default function DetailWatermark({ imageUrl }: { imageUrl: string }) {
           "translate-x-1/4 translate-y-1/4 scale-[3]"
         )}
       >
-        <Image
+        <img
           src={imageUrl}
           alt=""
-          fill
-          className={cn("object-contain object-center rounded-none", "sm:object-bottom")}
-          priority
-          sizes="(max-width: 768px) 100vw, 100vw"
-          style={{
-            position: 'absolute',
-            height: '100%',
-            width: '100%'
-          }}
+          aria-hidden="true"
+          className={cn("absolute inset-0 h-full w-full object-contain object-center rounded-none", "sm:object-bottom")}
         />
       </div>
     </div>

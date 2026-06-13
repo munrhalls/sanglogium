@@ -102,3 +102,4 @@
 {"id":"int-959e680b","kind":"field_change","created_at":"2026-06-10T10:48:05.9075202Z","actor":"Munrhalls","issue_id":"sang-logium-2ti","extra":{"field":"priority","new_value":"1","old_value":"2"}}
 {"id":"int-5c1de771","kind":"field_change","created_at":"2026-06-10T11:30:23.5686561Z","actor":"Munrhalls","issue_id":"sang-logium-1xs","extra":{"field":"status","new_value":"in_progress","old_value":"open"}}
 {"id":"int-b2a223e6","kind":"field_change","created_at":"2026-06-10T16:54:37.9860268Z","actor":"Munrhalls","issue_id":"sang-logium-tjl","extra":{"field":"status","new_value":"closed","old_value":"in_progress","reason":"Closed"}}
+{"id":"int-b0c6ec12","kind":"field_change","created_at":"2026-06-13T16:37:48.2821964Z","actor":"Munrhalls","issue_id":"sang-logium-j4a","extra":{"field":"status","new_value":"closed","old_value":"open","reason":"Closed"}}
