@@ -26,6 +26,8 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ["@phosphor-icons/react"],
   },
   images: {
+    loader: "custom",
+    loaderFile: "./lib/utils/sanityImageLoader.ts",
     formats: ["image/avif", "image/webp"],
     remotePatterns: [{ protocol: "https", hostname: "cdn.sanity.io" }, { protocol: "https", hostname: "images.unsplash.com" }],
     qualities: [75, 90],
