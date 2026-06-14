@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "dev-no-turbo": "next dev",
     "webhook": "stripe listen --forward-to localhost:3000/api/webhook",
     "dev:stripe": "concurrently \"npm run dev\" \"npm run webhook\"",
