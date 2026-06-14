@@ -1,26 +1,47 @@
-// import {
-//   FaFacebook,
-//   FaInstagram,
-//   FaPinterest,
-//   FaTwitter,
-//   FaYoutube,
-// } from "react-icons/fa";
-import Link from "next/link";
 import { cn } from "@/lib/utils/tailwind";
 
-const ColTitle = function ({ title }: { title: string }) {
-  return (
-    <div
-      className={cn(
-        "flex items-center gap-3",
-        "type-overline text-brand-400"
-      )}
-    >
-      <h1>{title}</h1>
-    </div>
-  );
-};
+const SectionTitle = ({ title }: { title: string }) => (
+  <div className={cn("type-overline", "text-brand-400")}>{title}</div>
+);
+
+const PlaceholderItem = ({ children }: { children: React.ReactNode }) => (
+  <span className={cn("type-body", "cursor-default")}>{children}</span>
+);
+
+const SocialIconPlaceholder = ({ label }: { label: string }) => (
+  <div
+    className={cn(
+      "flex h-8 w-8 items-center justify-center rounded-full",
+      "bg-secondary-800 text-secondary-400",
+      "type-caption"
+    )}
+  >
+    {label}
+  </div>
+);
+
 export default function Footer() {
+  const brands = [
+    "Sennheiser",
+    "Sony",
+    "Bose",
+    "AKG",
+    "Audio-Technica",
+    "Beyerdynamic",
+    "DPA",
+    "Dynaudio",
+    "Focal",
+    "Genelec",
+    "JBL",
+    "Klipsch",
+    "Mackie",
+    "Pioneer",
+    "Presonus",
+    "Roland",
+    "Shure",
+    "Universal Audio",
+  ];
+
   return (
     <footer
       className={cn(
@@ -28,7 +49,6 @@ export default function Footer() {
         "border-t border-border-secondary"
       )}
     >
-      {}
       <div
         className={cn(
           "mx-auto w-full max-w-content px-4 md:px-8",
@@ -37,93 +57,88 @@ export default function Footer() {
           "md:grid-cols-4"
         )}
       >
-        {/* TODO: Create pages for these links - commenting out to prevent 404s on production */}
-        {/* <div className={cn("grid content-start gap-4")}>
-          <ColTitle title="PURCHASES" />
-          <ul className={cn("grid justify-center gap-2")}>
-            <li>
-              <Link className={cn("text-xl")} href="/purchases/order-status">
-                Order Status
-              </Link>
-            </li>
-            <li>
-              <Link className={cn("text-xl")} href="/purchases/shipping-policy">
-                Shipping Policy
-              </Link>
-            </li>
-            <li>
-              <Link className={cn("text-xl")} href="/purchases/returns">
-                Returns Policy
-              </Link>
-            </li>
-          </ul>
-        </div> */}
-        {/* TODO: Create pages for these links - commenting out to prevent 404s on production */}
-        {/* <div className={cn("grid content-start gap-4")}>
-          <ColTitle title="SUPPORT" />
-          <ul className={cn("grid justify-center gap-2")}>
-            <li>
-              <Link className={cn("text-xl")} href="/support/contact">
-                Contact Us
-              </Link>
-            </li>
-            <li>
-              <Link className={cn("text-xl")} href="/support/faq">
-                FAQ
-              </Link>
-            </li>
-          </ul>
-        </div> */}
-        <div className={cn("flex flex-col gap-4", "md:col-span-1 md:row-start-1")}>
-          <ColTitle title="ABOUT US" />
+        {/* PURCHASES */}
+        <div
+          className={cn("flex flex-col gap-4", "md:col-span-1 md:row-start-1")}
+        >
+          <SectionTitle title="PURCHASES" />
           <ul className={cn("flex flex-col gap-2")}>
-            {/* TODO: Create pages for these links */}
-            {/* <li>
-              <Link className={cn("text-xl")} href="/support/about-us">
-                About Us
-              </Link>
+            <li>
+              <PlaceholderItem>Order Status</PlaceholderItem>
             </li>
             <li>
-              <Link className={cn("text-xl")} href="/support/terms-of-service">
-                Terms of Service
-              </Link>
+              <PlaceholderItem>Shipping Policy</PlaceholderItem>
             </li>
             <li>
-              <Link className={cn("text-xl")} href="/support/privacy-policy">
-                Privacy Policy
-              </Link>
-            </li> */}
+              <PlaceholderItem>Returns Policy</PlaceholderItem>
+            </li>
           </ul>
         </div>
+
+        {/* SUPPORT */}
+        <div
+          className={cn("flex flex-col gap-4", "md:col-span-1 md:row-start-1")}
+        >
+          <SectionTitle title="SUPPORT" />
+          <ul className={cn("flex flex-col gap-2")}>
+            <li>
+              <PlaceholderItem>Contact Us</PlaceholderItem>
+            </li>
+            <li>
+              <PlaceholderItem>FAQ</PlaceholderItem>
+            </li>
+          </ul>
+        </div>
+
+        {/* ABOUT US */}
+        <div
+          className={cn(
+            "flex flex-col gap-4",
+            "md:col-span-1 md:row-start-1"
+          )}
+        >
+          <SectionTitle title="ABOUT US" />
+          <ul className={cn("flex flex-col gap-2")}>
+            <li>
+              <PlaceholderItem>About Us</PlaceholderItem>
+            </li>
+            <li>
+              <PlaceholderItem>Terms of Service</PlaceholderItem>
+            </li>
+            <li>
+              <PlaceholderItem>Privacy Policy</PlaceholderItem>
+            </li>
+          </ul>
+        </div>
+
+        {/* FIND US */}
         <div
           className={cn(
             "flex flex-col gap-4",
             "md:col-span-3 md:col-start-1 md:row-start-2"
           )}
         >
-          <ColTitle title="FIND US" />
-          <ul
-            className={cn(
-              "flex flex-wrap gap-6"
-            )}
-          >
-            {/* <li>
-              <FaTwitter size={32} />
+          <SectionTitle title="FIND US" />
+          <ul className={cn("flex flex-wrap gap-4")}>
+            <li>
+              <SocialIconPlaceholder label="X" />
             </li>
             <li>
-              <FaFacebook size={32} />
+              <SocialIconPlaceholder label="FB" />
             </li>
             <li>
-              <FaInstagram size={32} />
+              <SocialIconPlaceholder label="IG" />
             </li>
             <li>
-              <FaPinterest size={32} />
+              <SocialIconPlaceholder label="PI" />
             </li>
             <li>
-              <FaYoutube size={32} />
-            </li> */}
+              <SocialIconPlaceholder label="YT" />
+            </li>
           </ul>
         </div>
+
+        {/* BEST BRANDS */}
         <div
           className={cn(
             "flex flex-col gap-4",
@@ -131,40 +146,17 @@ export default function Footer() {
             "md:row-span-2 md:row-start-1"
           )}
         >
-          <ColTitle title="BEST BRANDS" />
-          {/* <ul className={cn("grid justify-center gap-2")}>
-            {[
-              { name: "Sennheiser" },
-              { name: "Sony" },
-              { name: "Bose" },
-              { name: "AKG" },
-              { name: "Audio-Technica" },
-              { name: "Beyerdynamic" },
-              { name: "DPA" },
-              { name: "Dynaudio" },
-              { name: "Focal" },
-              { name: "Genelec" },
-              { name: "JBL" },
-              { name: "Klipsch" },
-              { name: "Mackie" },
-              { name: "Pioneer" },
-              { name: "Presonus" },
-              { name: "Roland" },
-              { name: "Shure" },
-              { name: "Universal Audio" },
-            ].map((brand) => (
-              <li key={brand.name} className={cn("text-center")}>
-                <Link
-                  className={cn("grid place-content-center text-xl")}
-                  href={`/brand/${brand.name.toLowerCase().replace(" ", "-")}`}
-                >
-                  <span>{brand.name}</span>
-                </Link>
+          <SectionTitle title="BEST BRANDS" />
+          <ul className={cn("flex flex-col gap-2")}>
+            {brands.map((brand) => (
+              <li key={brand}>
+                <PlaceholderItem>{brand}</PlaceholderItem>
               </li>
             ))}
-          </ul> */}
+          </ul>
         </div>
       </div>
     </footer>
   );
 }
+
