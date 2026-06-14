@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { getImageProps } from 'next/image';
 import { cn } from "@/lib/utils/tailwind";
 import { HeroData, SanityImage } from "./types";
 
@@ -22,6 +22,34 @@ export default async function Hero({ heroData }: HeroProps) {
   // Generate blur placeholder from Sanity LQIP
   const blurDataURL = mobileBackgroundImage.asset?.metadata?.lqip || undefined;
 
+  const commonImageProps = {
+    fill: true,
+    priority: true,
+    fetchPriority: 'high' as const,
+    quality: 75,
+    sizes: '100vw',
+    placeholder: blurDataURL ? ("blur" as const) : ("empty" as const),
+    blurDataURL,
+  };
+
+  const {
+    props: { srcSet: desktopSrcSet },
+  } = getImageProps({
+    ...commonImageProps,
+    src: heroData.backgroundImage.asset?._id ?? "",
+    alt: heroData.backgroundImage.alt || "Hero Image",
+  });
+
+  const {
+    props: { srcSet: mobileSrcSet, ...rest },
+  } = getImageProps({
+    ...commonImageProps,
+    src: mobileBackgroundImage.asset?._id ?? "",
+    alt: mobileBackgroundImage.alt || heroData.backgroundImage.alt || "Hero Image",
+  });
+
+  const desktopPosition = getPosition(heroData.backgroundImage);
+  const mobilePosition = getPosition(mobileBackgroundImage);
 
   return (
     <section
@@ -31,19 +59,15 @@ export default async function Hero({ heroData }: HeroProps) {
       )}
     >
       <div className="absolute inset-0 z-0">
-        <Image
-          src={mobileBackgroundImage.asset?._id ?? ""}
-          alt={heroData.backgroundImage.alt || "Hero Image"}
-          fill
-          priority
-          fetchPriority="high"
-          placeholder={blurDataURL ? "blur" : undefined}
-          blurDataURL={blurDataURL}
-          className="object-cover rounded-none"
-          sizes="100vw"
-          quality={75}
-          style={{ objectPosition: getPosition(mobileBackgroundImage) }}
-        />
+        <picture>
+          <source media="(min-width: 768px)" srcSet={desktopSrcSet} />
+          <img
+            {...rest}
+            srcSet={mobileSrcSet}
+            className="object-cover rounded-none max-md:[object-position:var(--mobile-pos)] md:[object-position:var(--desktop-pos)]"
+            style={{ ...rest.style, '--desktop-pos': desktopPosition, '--mobile-pos': mobilePosition } as React.CSSProperties}
+          />
+        </picture>
 
         <div
           className={cn(
