@@ -119,10 +119,10 @@ export const productType = defineType({
       validation: (Rule) =>
         Rule.required()
           .min(0)
-          .custom((value, context) => {
+          .custom((reserved, context) => {
             const stock = (context.document as any)?.stock
-            if (typeof stock === 'number' && typeof value === 'number' && value > stock) {
-              return 'Reserved stock cannot exceed total stock'
+            if (typeof stock === 'number' && typeof reserved === 'number' && reserved > stock) {
+              return 'Reserved stock cannot exceed total stock.'
             }
             return true
           }),
