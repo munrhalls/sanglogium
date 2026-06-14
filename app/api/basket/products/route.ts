@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
     const products = rawProducts
       .map((product) => {
         const stock = sanitizeFiniteNonNegative(product.stock)
-        const reservedStock = sanitizeFiniteNonNegative(product.reservedStock)
+        const reservedStock = Math.min(sanitizeFiniteNonNegative(product.reservedStock), stock)
 
         if (stock !== product.stock || reservedStock !== product.reservedStock) {
           console.warn(
