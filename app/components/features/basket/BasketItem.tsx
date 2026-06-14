@@ -19,6 +19,7 @@ interface BasketItemProps {
 }
 
 export default function BasketItem({ productId, name, quantity, displayPrice, image, availableStock, originalQuantity, variant }: BasketItemProps) {
+  const isOutOfStock = availableStock === 0;
   const { removeProduct } = useBasketStore(
     useShallow((state) => ({
       removeProduct: state.removeProduct,
@@ -57,6 +58,9 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
             {variant && (
               <span className="type-metadata">{variant}</span>
             )}
+            {isOutOfStock && (
+              <span className="type-caption text-error-700 font-medium">Out of Stock</span>
+            )}
             <span className="type-caption text-text-secondary tabular-nums">
               {displayPrice.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </span>
@@ -68,14 +72,16 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
           {originalQuantity && originalQuantity > quantity && (
             <span className="type-caption text-text-caption line-through">{originalQuantity}</span>
           )}
-          <BasketControls
-            productId={productId}
-            name={name}
-            isBasketPage={true}
-            maxQuantity={availableStock}
-            displayQuantity={quantity}
-            showRemoveButton={false}
-          />
+          <fieldset disabled={isOutOfStock} className="border-0 p-0 m-0 min-w-0">
+            <BasketControls
+              productId={productId}
+              name={name}
+              isBasketPage={true}
+              maxQuantity={availableStock}
+              displayQuantity={quantity}
+              showRemoveButton={false}
+            />
+          </fieldset>
           <div className="w-24 text-right">
             <span className="tabular-nums">{(displayPrice * quantity).toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
           </div>
@@ -120,6 +126,9 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
             {variant && (
               <span className="type-metadata">{variant}</span>
             )}
+            {isOutOfStock && (
+              <span className="text-xs text-error-700 font-medium">Out of Stock</span>
+            )}
             <span className="type-caption text-text-secondary tabular-nums">
               {displayPrice.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </span>
@@ -132,14 +141,16 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
             {originalQuantity && originalQuantity > quantity && (
               <span className="type-caption text-text-caption line-through">{originalQuantity}</span>
             )}
-            <BasketControls
-              productId={productId}
-              name={name}
-              isBasketPage={true}
-              maxQuantity={availableStock}
-              displayQuantity={quantity}
-              showRemoveButton={false}
-            />
+            <fieldset disabled={isOutOfStock} className="border-0 p-0 m-0 min-w-0">
+              <BasketControls
+                productId={productId}
+                name={name}
+                isBasketPage={true}
+                maxQuantity={availableStock}
+                displayQuantity={quantity}
+                showRemoveButton={false}
+              />
+            </fieldset>
           </div>
           <div className="flex items-center gap-4">
             <button

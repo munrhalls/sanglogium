@@ -95,7 +95,7 @@ export default function BasketManager() {
         if (!product) return null;
 
         const displayPrice = product.price_data.unit_amount / 100; // cents to dollars
-        const availableStock = product.stock - product.reservedStock;
+        const availableStock = Math.max(0, product.stock - product.reservedStock);
 
         const cappedQuantity = Math.min(item.quantity, availableStock);
         return {
@@ -110,7 +110,7 @@ export default function BasketManager() {
           parcel: product.parcel,
         };
       })
-      .filter((item): item is NonNullable<typeof item> => item !== null && item.quantity > 0)
+      .filter((item): item is NonNullable<typeof item> => item !== null)
       .sort((a, b) => {
         const aAvailable = a.availableStock > 0;
         const bAvailable = b.availableStock > 0;
@@ -125,13 +125,15 @@ export default function BasketManager() {
       (sum, item) => sum + item.displayPrice * item.quantity,
       0
     );
-    const checkoutItems = enrichedItems.map((item) => ({
-      productId: item.productId,
-      quantity: item.quantity,
-      price_data: item.price_data,
-      parcel: item.parcel,
-      availableStock: item.availableStock,
-    }));
+    const checkoutItems = enrichedItems
+      .filter((item) => item.quantity > 0)
+      .map((item) => ({
+        productId: item.productId,
+        quantity: item.quantity,
+        price_data: item.price_data,
+        parcel: item.parcel,
+        availableStock: item.availableStock,
+      }));
 
     const parcels = enrichedItems
       .flatMap((item) => {

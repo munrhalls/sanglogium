@@ -17,7 +17,8 @@ export interface CheckoutButtonProps {
       distance_unit: string;
       mass_unit: string;
     };
-  }>
+  }>;
+  disabled?: boolean;
 }
 
 // Generate checkoutSessionId on client side
@@ -27,12 +28,13 @@ function generateCheckoutSessionId(): string {
 
 export function CheckoutButton({
   basketData,
+  disabled: propDisabled,
 }: CheckoutButtonProps) {
   const [isProcessing, setIsProcessing] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const allOutOfStock = basketData?.every((item) => item.availableStock === 0) ?? false;
-  const disabled = !basketData || basketData.length === 0 || allOutOfStock || isProcessing
+  const disabled = propDisabled || !basketData || basketData.length === 0 || allOutOfStock || isProcessing
 
   const handleCheckout = async () => {
     if (!basketData || basketData.length === 0) {

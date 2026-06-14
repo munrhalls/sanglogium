@@ -55,7 +55,7 @@ export default function BasketSummary({ itemCount, subtotal, basketData, shippin
       </div>
 
       <div>
-        <CheckoutButton basketData={basketData} />
+        <CheckoutButton basketData={basketData} disabled={itemCount === 0} />
 
         <Link
           href="/"
