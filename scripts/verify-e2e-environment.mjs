@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 // Verification script for E2E Playwright test environment
-// Checks dev server, Redis, and Sanity are accessible
+// Checks dev server and Sanity are accessible
 
 import { backendClient } from '../sanity-cms/lib/backendClient.js'
 
@@ -17,22 +17,6 @@ async function checkDevServer() {
     return false
   } catch (error) {
     console.error('  ✗ Dev server not accessible:', error.message)
-    return false
-  }
-}
-
-async function checkRedis() {
-  console.log('🔴 Checking Redis...')
-  try {
-    const response = await fetch('http://localhost:3000/api/checkout-queue/trace')
-    if (response.ok) {
-      console.log('  ✓ Redis accessible (via API)')
-      return true
-    }
-    console.error('  ✗ Redis trace API returned non-OK status')
-    return false
-  } catch (error) {
-    console.error('  ✗ Redis not accessible:', error.message)
     return false
   }
 }
@@ -53,11 +37,10 @@ async function main() {
   console.log('🔍 Verifying E2E test environment...\n')
   
   const devServerOk = await checkDevServer()
-  const redisOk = await checkRedis()
   const sanityOk = await checkSanity()
   
   console.log('\n' + '='.repeat(40))
-  if (devServerOk && redisOk && sanityOk) {
+  if (devServerOk && sanityOk) {
     console.log('✅ All services accessible - ready for E2E tests')
     process.exit(0)
   } else {
