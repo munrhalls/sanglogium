@@ -4,15 +4,14 @@ import React from "react";
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils/tailwind";
 import { useCarousel } from "./CarouselContext";
-import { CarouselIcon } from "./DotIcon";
 
 const BTN_BASE = cn(
-  "group relative flex h-8 w-8 items-center justify-center rounded-full",
-  "text-brand-700 transition-all duration-200",
-  "hover:text-brand-950 active:scale-110",
+  "group relative flex h-11 w-11 items-center justify-center rounded-full",
+  "bg-surface-elevated/80 border border-border-secondary backdrop-blur-sm",
+  "text-brand-100 transition-all duration-200",
+  "hover:bg-surface-card hover:text-brand-50 active:scale-110",
   "disabled:pointer-events-none disabled:opacity-40",
-  "outline-none focus-visible:ring-2 focus-visible:ring-brand-400/50",
-  "before:absolute before:-inset-2 before:content-['']"
+  "outline-none focus-visible:ring-2 focus-visible:ring-brand-400/50"
 );
 
 export function CarouselPrevious({ className, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
@@ -55,56 +54,52 @@ export function CarouselNext({ className, ...props }: React.ButtonHTMLAttributes
   );
 }
 
-export function CarouselDots({ className, color = "brand-400" }: { className?: string; color?: string }) {
+export function CarouselDots({ className }: { className?: string }) {
   const context = useCarousel();
   if (!context) return null;
 
-  const { itemsCount, activeIndex, goTo, visibleCount = 1 } = context;
-  const vCount = Number(visibleCount);
+  const { itemsCount, activeIndex, goTo } = context;
   const aIndex = Math.round(Number(activeIndex));
 
-  const colorClasses = color === "brand-700"
-    ? { text: "text-brand-700" }
-    : { text: "text-brand-400" };
+  // Windowing: show max 7 dots, centered on active index
+  const maxVisible = 7;
+  let start = 0;
+  let end = itemsCount;
+
+  if (itemsCount > maxVisible) {
+    const half = Math.floor(maxVisible / 2);
+    start = Math.max(0, aIndex - half);
+    end = Math.min(itemsCount, start + maxVisible);
+    if (end - start < maxVisible) {
+      start = end - maxVisible;
+    }
+  }
+
+  const visibleIndices = Array.from({ length: end - start }, (_, i) => start + i);
 
   return (
-    <div className={cn("flex justify-center gap-4 sm:gap-6", className)} role="tablist">
-      {Array.from({ length: itemsCount }).map((_, i) => {
-        const isAnchor = i === aIndex;
-        const isInView = !isAnchor && i >= aIndex && i < (aIndex + Math.ceil(vCount));
+    <div className={cn("flex justify-center items-center", className)} role="tablist">
+      {visibleIndices.map((i) => {
+        const isActive = i === aIndex;
 
         return (
           <button
             key={i}
             type="button"
             role="tab"
-            aria-selected={isAnchor}
+            aria-selected={isActive}
+            aria-label={`Go to slide ${i + 1}`}
             onClick={() => goTo(i)}
-            className="group relative flex cursor-pointer touch-manipulation items-center justify-center transition-transform active:scale-95 focus-visible:outline-none before:absolute before:-inset-2 before:content-['']"
+            className="mx-1 flex cursor-pointer touch-manipulation items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400/50"
           >
-            {isAnchor ? (
-              <CarouselIcon
-                className={cn(
-                  "h-2 w-2 sm:h-3 sm:w-3 rounded-full transition-all duration-500 opacity-100 scale-110",
-                  colorClasses.text
-                )}
-              />
-            ) : (
-              <svg
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className={cn(
-                  "h-2 w-2 sm:h-3 sm:w-3 transition-all duration-500 rounded-full",
-                  colorClasses.text,
-                  isInView ? "opacity-85 scale-100" : "opacity-60 lg-touch:opacity-45 lg-desktop:opacity-45"
-                )}
-              >
-                <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="2" />
-                <circle cx="8" cy="8" r="7" fill="#FEFCFB" className="opacity-0 group-hover:opacity-100 transition-opacity duration-250" />
-              </svg>
-            )}
-            <div className="absolute -inset-1 hidden rounded-full ring-2 ring-brand-400/50 group-focus-visible:block" />
+            <span
+              className={cn(
+                "block h-2 w-2 rounded-full transition-colors duration-300",
+                isActive
+                  ? "bg-brand-700"
+                  : "bg-secondary-300 hover:bg-secondary-500"
+              )}
+            />
           </button>
         );
       })}
