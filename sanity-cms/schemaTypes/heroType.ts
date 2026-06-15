@@ -24,6 +24,13 @@ export const heroType = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "ctaLink",
+      title: "Call to Action Link",
+      type: "string",
+      description: "URL the CTA button navigates to (e.g. /products/headphones)",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "backgroundImage",
       title: "Background Image",
       type: "image",

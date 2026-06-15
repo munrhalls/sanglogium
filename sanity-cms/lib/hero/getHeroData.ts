@@ -13,6 +13,7 @@ export const getHeroData = cache(async () => {
       headline,
       subheadline,
       ctaText,
+      ctaLink,
 
       backgroundImage {
         asset->{
