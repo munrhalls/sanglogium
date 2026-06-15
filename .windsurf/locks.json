@@ -10,5 +10,9 @@
   "lib/auth.ts": {
     "agentId": "cascade_pane_1",
     "timestamp": 1781117812892
+  },
+  "app/components/features/homepage/accessories/AccessoryCard.tsx": {
+    "agentId": "cascade_pane_1",
+    "timestamp": 1781521911778
   }
 }
