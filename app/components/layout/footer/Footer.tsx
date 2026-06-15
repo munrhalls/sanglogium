@@ -1,4 +1,18 @@
 import { cn } from "@/lib/utils/tailwind";
+import {
+  FaXTwitter,
+  FaFacebookF,
+  FaInstagram,
+  FaPinterestP,
+  FaYoutube,
+  FaCcVisa,
+  FaCcMastercard,
+  FaCcAmex,
+  FaCcPaypal,
+  FaCcApplePay,
+} from "react-icons/fa6";
+import Link from "next/link";
+import NewsletterSignup from "@/app/components/features/newsletter/NewsletterSignup.client";
 
 const SectionTitle = ({ title }: { title: string }) => (
   <div className={cn("type-overline", "text-brand-400")}>{title}</div>
@@ -8,15 +22,23 @@ const PlaceholderItem = ({ children }: { children: React.ReactNode }) => (
   <span className={cn("type-body", "cursor-default")}>{children}</span>
 );
 
-const SocialIconPlaceholder = ({ label }: { label: string }) => (
+const SocialIcon = ({
+  icon: Icon,
+  label,
+}: {
+  icon: React.ComponentType<{ className?: string }>;
+  label: string;
+}) => (
   <div
+    aria-label={`Follow us on ${label}`}
     className={cn(
       "flex h-8 w-8 items-center justify-center rounded-full",
       "bg-secondary-800 text-secondary-400",
-      "type-caption"
+      "type-caption",
+      "transition-opacity duration-200 hover:opacity-70"
     )}
   >
-    {label}
+    <Icon className="w-4 h-4" />
   </div>
 );
 
@@ -49,6 +71,25 @@ export default function Footer() {
         "border-t border-border-secondary"
       )}
     >
+      <section
+        className={cn(
+          "mx-auto w-full max-w-content px-4 md:px-8",
+          "pt-12 md:pt-16 lg:pt-20",
+          "flex items-center justify-between gap-8",
+          "pb-10 mb-10",
+          "border-b border-border-secondary"
+        )}
+      >
+        <div>
+          <p className="type-overline">New Arrivals. Exclusive Deals.</p>
+          <p className="type-caption text-text-caption mt-1">
+            Subscribe and get 10% off your first order.
+          </p>
+        </div>
+        <div className="max-w-[480px]">
+          <NewsletterSignup />
+        </div>
+      </section>
       <div
         className={cn(
           "mx-auto w-full max-w-content px-4 md:px-8",
@@ -71,6 +112,11 @@ export default function Footer() {
             </li>
             <li>
               <PlaceholderItem>Returns Policy</PlaceholderItem>
+            </li>
+            <li>
+              <Link href="/account" className={cn("type-body", "cursor-default")}>
+                My Account
+              </Link>
             </li>
           </ul>
         </div>
@@ -121,19 +167,19 @@ export default function Footer() {
           <SectionTitle title="FIND US" />
           <ul className={cn("flex flex-wrap gap-4")}>
             <li>
-              <SocialIconPlaceholder label="X" />
+              <SocialIcon icon={FaXTwitter} label="X" />
             </li>
             <li>
-              <SocialIconPlaceholder label="FB" />
+              <SocialIcon icon={FaFacebookF} label="Facebook" />
             </li>
             <li>
-              <SocialIconPlaceholder label="IG" />
+              <SocialIcon icon={FaInstagram} label="Instagram" />
             </li>
             <li>
-              <SocialIconPlaceholder label="PI" />
+              <SocialIcon icon={FaPinterestP} label="Pinterest" />
             </li>
             <li>
-              <SocialIconPlaceholder label="YT" />
+              <SocialIcon icon={FaYoutube} label="YouTube" />
             </li>
           </ul>
         </div>
@@ -147,13 +193,35 @@ export default function Footer() {
           )}
         >
           <SectionTitle title="BEST BRANDS" />
-          <ul className={cn("flex flex-col gap-2")}>
+          <ul className={cn("columns-2 gap-x-6 gap-y-2")}>
             {brands.map((brand) => (
-              <li key={brand}>
+              <li key={brand} className="break-inside-avoid">
                 <PlaceholderItem>{brand}</PlaceholderItem>
               </li>
             ))}
           </ul>
+        </div>
+      </div>
+      <div
+        className={cn(
+          "mx-auto w-full max-w-content px-4 md:px-8",
+          "flex flex-col sm:flex-row items-center justify-between gap-4",
+          "border-t border-border-secondary",
+          "py-6"
+        )}
+      >
+        <p className={cn("type-caption", "text-text-caption")}>
+          &copy; {new Date().getFullYear()} Sang Logium. All Rights Reserved.
+        </p>
+        <div className={cn("flex items-center gap-3")}>
+          <span className={cn("type-overline", "text-brand-400", "mr-1")}>
+            We Accept
+          </span>
+          <FaCcVisa className="h-7 w-auto text-secondary-400" aria-label="Visa" />
+          <FaCcMastercard className="h-7 w-auto text-secondary-400" aria-label="Mastercard" />
+          <FaCcAmex className="h-7 w-auto text-secondary-400" aria-label="American Express" />
+          <FaCcPaypal className="h-7 w-auto text-secondary-400" aria-label="PayPal" />
+          <FaCcApplePay className="h-7 w-auto text-secondary-400" aria-label="Apple Pay" />
         </div>
       </div>
     </footer>

@@ -7,9 +7,9 @@ import { useCarousel } from "./CarouselContext";
 
 const BTN_BASE = cn(
   "group relative flex h-11 w-11 items-center justify-center rounded-full",
-  "bg-surface-elevated/80 border border-border-secondary backdrop-blur-sm",
-  "text-brand-100 transition-all duration-200",
-  "hover:bg-surface-card hover:text-brand-50 active:scale-110",
+  "bg-secondary-100/80 border border-border-secondary backdrop-blur-sm",
+  "text-brand-900 transition-all duration-200",
+  "hover:bg-brand-200 hover:text-brand-700 active:scale-110",
   "disabled:pointer-events-none disabled:opacity-40",
   "outline-none focus-visible:ring-2 focus-visible:ring-brand-400/50"
 );
@@ -61,8 +61,8 @@ export function CarouselDots({ className }: { className?: string }) {
   const { itemsCount, activeIndex, goTo } = context;
   const aIndex = Math.round(Number(activeIndex));
 
-  // Windowing: show max 7 dots, centered on active index
-  const maxVisible = 7;
+  // Windowing: show max 5 dots, centered on active index
+  const maxVisible = 5;
   let start = 0;
   let end = itemsCount;
 
@@ -90,14 +90,14 @@ export function CarouselDots({ className }: { className?: string }) {
             aria-selected={isActive}
             aria-label={`Go to slide ${i + 1}`}
             onClick={() => goTo(i)}
-            className="mx-1 flex cursor-pointer touch-manipulation items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400/50"
+            className="mx-1 flex h-4 w-4 cursor-pointer touch-manipulation items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400/50"
           >
             <span
               className={cn(
                 "block h-2 w-2 rounded-full transition-colors duration-300",
                 isActive
                   ? "bg-brand-700"
-                  : "bg-secondary-300 hover:bg-secondary-500"
+                  : "bg-brand-400 hover:bg-brand-500"
               )}
             />
           </button>

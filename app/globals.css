@@ -149,3 +149,20 @@ input[type="range"]::-moz-range-thumb {
 .animate-fade-out {
   animation: fadeOut 3s forwards;
 }
+
+/* Section Header Anchor — decorative line prefix */
+.section-header-anchor {
+  position: relative;
+  padding-left: 1.25rem;
+}
+
+.section-header-anchor::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0.75rem;
+  height: 2px;
+  background-color: #D4AF37;
+}

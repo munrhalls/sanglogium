@@ -12,8 +12,8 @@ interface ShelfProps {
 export default function Shelf({ children, variant = "default", fullBleed = false, className, 'data-testid': dataTestId }: ShelfProps) {
 
   return (
-    <section className={cn("w-full py-20", className)} data-testid={dataTestId}>
-      <div className={cn("mx-auto px-4 md:px-8", fullBleed ? "w-full" : "max-w-content")}>
+    <section className={cn("w-full", className)} data-testid={dataTestId}>
+      <div className={cn("mx-auto px-6 lg:px-8", fullBleed ? "w-full" : "max-w-content")}>
         {children}
       </div>
     </section>
