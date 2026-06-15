@@ -17,8 +17,10 @@ export default async function Accessories({ accessoriesData }: AccessoriesProps)
         <div className="absolute bottom-[5%] right-[5%] w-[40%] h-[40%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-10" />
       </div>
       <div className="relative z-10">
-        <div className="mx-auto max-w-content space-y-12 py-12 md:py-16 lg:py-20">
-          <AccessoriesHeader />
+        <div className="mx-auto max-w-content space-y-12 py-16">
+          <div className="text-brand-700">
+            <AccessoriesHeader />
+          </div>
           {cables.length > 0 && (
             <CategorySection category={{ name: "Cables", filter: "" }} items={cables as any} />
           )}

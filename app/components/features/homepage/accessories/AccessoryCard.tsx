@@ -8,14 +8,16 @@ import { centsToDisplay } from "@/lib/utils/price";
 export default function AccessoryCard({
   item,
   idx,
+  categoryLabel,
 }: {
   item: AccessoryItem;
   idx: number;
+  categoryLabel?: string;
 }) {
   if (!item) return null;
 
   return (
-    <article className="card-product flex h-full flex-col gap-4 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-cardHover">
+    <article className="card-product-dark flex h-full flex-col gap-4">
       <Link href={`/product/${item.slug}`} className="block">
         <figure className="rounded-none relative mb-4 flex aspect-[4/3] w-full items-center justify-center overflow-hidden bg-surface-productImage p-6 md:px-4 md:pb-4 md:pt-12">
           <span className="absolute left-4 top-4 text-small font-bold uppercase tracking-editorial text-brand-900">
@@ -33,14 +35,13 @@ export default function AccessoryCard({
           />
         </figure>
 
-        <div className="flex flex-grow flex-col px-4 pb-4">
-          {/* ZONE 1: INFO - Height recalculated to 5.5rem (~88px) to fit Title + Price perfectly */}
-          <div className="mb-4 flex min-h-[5.5rem] flex-col">
-            <h3 className="type-body mb-2 line-clamp-2 font-medium">
+        <div className="flex flex-grow flex-col px-4 pb-4 pt-2">
+          <div className="flex min-h-[5.5rem] flex-col">
+            {categoryLabel && <p className="type-overline mb-1">{categoryLabel}</p>}
+            <h3 className="type-body line-clamp-2 font-medium">
               {item.name}
             </h3>
-
-            <p className="type-price">
+            <p className="type-price mt-2">
               ${centsToDisplay(item.price_data.unit_amount)}
             </p>
           </div>

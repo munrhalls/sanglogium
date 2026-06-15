@@ -35,10 +35,10 @@ const featuredBreakpointMap = {
 };
 
 export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
-  <article className="card-product flex h-full flex-col gap-4">
+  <article className="card-product-dark flex h-full flex-col gap-4">
     <Link href={`/product/${product.slug}`} className="block">
       <figure className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden bg-surface-productImage p-6">
-        <span className="absolute left-4 top-4 z-10 text-small font-bold uppercase tracking-editorial text-brand-900">
+        <span className="absolute left-4 top-4 z-10 type-caption text-brand-900">
           {product.brand.name}
         </span>
         <Image
@@ -52,19 +52,20 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
         />
       </figure>
 
-      <div className="flex flex-grow flex-col gap-3 px-4">
+      <div className="flex flex-grow flex-col px-4 pt-2">
+        <p className="type-overline mb-1">Headphones</p>
         <h3 className="type-body line-clamp-2 font-medium">{product.name}</h3>
+        <p className="type-price mt-2">
+          ${centsToDisplay(product.price_data.unit_amount)}
+        </p>
       </div>
     </Link>
 
-    <div className="mt-auto flex items-center justify-between px-4 pb-4 pt-2">
-      <p className="type-price">
-        ${centsToDisplay(product.price_data.unit_amount)}
-      </p>
+    <div className="mt-auto px-4 pb-4 pt-2">
       <BasketControls
         productId={product._id}
         isBasketPage={false}
-        addClassName="btn-cart"
+        addClassName="btn-cart w-full justify-center"
         wrapperClassName="flex items-center gap-1"
         decrementClassName="btn-secondary w-8 h-8 flex items-center justify-center"
         incrementClassName="btn-secondary w-8 h-8 flex items-center justify-center disabled:opacity-50"
@@ -88,32 +89,35 @@ export default async function Featured({ featuredData }: FeaturedProps) {
         <div className="absolute bottom-[2.5%] right-[2.5%] h-[30%] w-[30%] bg-fractal-ring bg-[length:100%] bg-no-repeat opacity-10" />
       </div>
       <div className="relative z-10">
-        <div className="mx-auto max-w-content py-12 md:py-16 lg:py-20">
+        <div className="mx-auto max-w-content py-16">
           <Carousel
             itemsCount={featuredData.length}
             breakpointMap={featuredBreakpointMap}
           >
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-[1fr_auto]">
-              <div className="flex flex-col gap-4 md:col-start-1 md:row-start-1">
-                <FeaturedHeader />
+            <div className="flex flex-col gap-6">
+              <FeaturedHeader />
+
+              <div className="relative">
+                <CarouselTrack className="mx-0 w-full items-stretch md:-mx-3">
+                  {featuredData.map((p, idx) => (
+                    <CarouselSlide
+                      key={p._id || idx}
+                      className="flex h-full flex-col px-3"
+                    >
+                      <FeaturedCard product={p} idx={idx} />
+                    </CarouselSlide>
+                  ))}
+                </CarouselTrack>
+
+                <div className="absolute left-0 top-1/2 z-10 -translate-y-1/2 md:-left-5">
+                  <CarouselPrevious />
+                </div>
+                <div className="absolute right-0 top-1/2 z-10 -translate-y-1/2 md:-right-5">
+                  <CarouselNext />
+                </div>
               </div>
 
-              <CarouselTrack className="mx-0 w-full items-stretch md:col-span-full md:row-start-2 md:-mx-3">
-                {featuredData.map((p, idx) => (
-                  <CarouselSlide
-                    key={p._id || idx}
-                    className="flex h-full flex-col px-3"
-                  >
-                    <FeaturedCard product={p} idx={idx} />
-                  </CarouselSlide>
-                ))}
-              </CarouselTrack>
-
-              <div className="flex items-center justify-center gap-4 md:col-start-2 md:row-start-1 md:flex-row md:gap-8 md:justify-self-end md:pr-16">
-                <CarouselPrevious className="border-none text-brand-400 shadow-none transition-colors hover:bg-transparent active:scale-110" />
-                <CarouselDots color="brand-400" />
-                <CarouselNext className="border-none text-brand-400 shadow-none transition-colors hover:bg-transparent active:scale-105" />
-              </div>
+              <CarouselDots className="mt-2" />
             </div>
           </Carousel>
         </div>

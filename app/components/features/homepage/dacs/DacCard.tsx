@@ -14,7 +14,7 @@ export default function DacCard({ item, idx }: { item: any; idx: number }) {
     : "Contact for Price";
 
   return (
-    <article className="card-product flex h-full flex-col gap-4 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-cardHover">
+    <article className="card-product-dark flex h-full flex-col gap-4">
       <Link href={`/product/${item.slug}`} className="block">
         <figure className="rounded-none relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden bg-surface-productImage p-6">
           <span className="absolute left-4 top-4 text-small font-bold uppercase tracking-editorial text-brand-900">
@@ -31,26 +31,25 @@ export default function DacCard({ item, idx }: { item: any; idx: number }) {
           />
         </figure>
 
-        <div className="flex min-h-[3rem] flex-col px-4 pb-2">
-          <p className="type-body line-clamp-2 font-medium transition-colors group-hover:text-brand-50">
+        <div className="flex min-h-[3rem] flex-col px-4 pb-2 pt-2">
+          <p className="type-overline mb-1">DAC & Amplifiers</p>
+          <p className="type-body line-clamp-2 font-medium">
             {productName}
           </p>
+          <p className="type-price mt-2">{price}</p>
         </div>
       </Link>
 
-      <div className="flex items-center px-4 pb-4">
-        <p className="type-price text-center text-cap">{price}</p>
-        <div className="ml-auto">
-          <BasketControls
-            productId={item._id}
-            isBasketPage={false}
-            addClassName="btn-cart"
-            wrapperClassName="flex items-center gap-1"
-            decrementClassName="btn-secondary w-8 h-8 flex items-center justify-center"
-            incrementClassName="btn-secondary w-8 h-8 flex items-center justify-center disabled:opacity-50"
-            quantityClassName="w-7 text-center type-body text-primary tabular-nums"
-          />
-        </div>
+      <div className="px-4 pb-4">
+        <BasketControls
+          productId={item._id}
+          isBasketPage={false}
+          addClassName="btn-cart w-full justify-center"
+          wrapperClassName="flex items-center gap-1"
+          decrementClassName="btn-secondary w-8 h-8 flex items-center justify-center"
+          incrementClassName="btn-secondary w-8 h-8 flex items-center justify-center disabled:opacity-50"
+          quantityClassName="w-7 text-center type-body text-primary tabular-nums"
+        />
       </div>
     </article>
   );

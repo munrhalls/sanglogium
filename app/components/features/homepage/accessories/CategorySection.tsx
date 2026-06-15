@@ -41,33 +41,32 @@ export default function CategorySection({ category, items }: CategorySectionProp
 
   return (
     <Carousel itemsCount={filteredItems.length} breakpointMap={accessoriesBreakpointMap}>
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4">
-        <div className="flex flex-col gap-4 md:col-start-1 md:row-start-1">
-          <h3 className="text-small text-cap font-bold uppercase">
-            <span className="section-header-anchor">{category.name}</span>
-          </h3>
+      <div className="flex flex-col gap-6">
+        <h3 className="type-caption text-brand-400 font-bold uppercase">
+          <span className="section-header-anchor">{category.name}</span>
+        </h3>
+
+        <div className="relative">
+          <CarouselTrack className="w-full mx-0 items-stretch md:-mx-3">
+            {filteredItems.map((item, idx) => (
+              <CarouselSlide
+                key={`${category.filter}-${item._id}`}
+                className="flex h-full flex-col px-3"
+              >
+                <AccessoryCard item={item} idx={idx} categoryLabel={category.name} />
+              </CarouselSlide>
+            ))}
+          </CarouselTrack>
+
+          <div className="absolute left-0 top-1/2 z-10 -translate-y-1/2 md:-left-5">
+            <CarouselPrevious />
+          </div>
+          <div className="absolute right-0 top-1/2 z-10 -translate-y-1/2 md:-right-5">
+            <CarouselNext />
+          </div>
         </div>
 
-        <CarouselTrack className="w-full relative mx-0 items-stretch md:-mx-3 md:col-span-full md:row-start-2">
-          {filteredItems.map((item, idx) => (
-            <CarouselSlide
-              key={`${category.filter}-${item._id}`}
-              className="flex h-full flex-col px-3"
-            >
-              <AccessoryCard item={item} idx={idx} />
-            </CarouselSlide>
-          ))}
-        </CarouselTrack>
-
-        <div className="flex items-center justify-center md:flex-row gap-4 md:gap-8 md:col-start-2 md:row-start-1 md:justify-self-end md:pr-16">
-          <CarouselPrevious
-            className="transition-colors border-none shadow-none hover:bg-transparent active:scale-110 text-brand-400"
-          />
-          <CarouselDots color="brand-400" />
-          <CarouselNext
-            className="transition-colors border-none shadow-none hover:bg-transparent active:scale-105 text-brand-400"
-          />
-        </div>
+        <CarouselDots className="mt-2" />
       </div>
     </Carousel>
   );
