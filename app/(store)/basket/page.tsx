@@ -5,7 +5,7 @@ import Shelf from "@/app/components/layout/general/Shelf";
 
 export default function BasketPage() {
   return (
-    <Shelf data-testid="basket-page">
+    <Shelf data-testid="basket-page" className="py-20">
       <div className="mt-12 mb-8 text-center lg:text-left">
         <h1 className="type-section-hed uppercase tracking-widest">
           Basket

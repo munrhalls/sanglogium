@@ -1,4 +1,5 @@
 import Hero from "@/app/components/features/homepage/hero/Hero";
+import TrustBar from "@/app/components/features/homepage/trust-bar/TrustBar";
 import ProductSpotlight2 from "@/app/components/features/homepage/product-spotlight-2/ProductSpotlight2";
 import ProductSpotlight3 from "@/app/components/features/homepage/product-spotlight-3/ProductSpotlight3";
 import IemsGallery from "@/app/components/features/homepage/iems-gallery/IemsGallery";
@@ -18,6 +19,7 @@ export default async function HomePage() {
   return (
     <div>
       <Hero heroData={data.hero} />
+      <TrustBar />
 
       <Shelf fullBleed>
         <Featured featuredData={data.featured} />
@@ -35,7 +37,7 @@ export default async function HomePage() {
         <IemsGallery iemsData={data.iemsGallery} />
       </Shelf>
 
-      <Shelf>
+      <Shelf fullBleed>
         <NewestRelease newestReleaseData={data.newestRelease} />
       </Shelf>
 
@@ -43,7 +45,7 @@ export default async function HomePage() {
         <Dacs dacsData={data.dacs as any} />
       </Shelf>
 
-      <Shelf fullBleed>
+      <Shelf fullBleed className="bg-brand-700">
         <Accessories accessoriesData={data.accessories} />
       </Shelf>
     </div>

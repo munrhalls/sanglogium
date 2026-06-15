@@ -1,6 +1,7 @@
 "use client";
 
 import { useShallow } from 'zustand/shallow';
+import { ShoppingCart } from "@phosphor-icons/react";
 import useBasketStore from "@/store/basketStore";
 
 interface BasketControlsProps {
@@ -80,6 +81,7 @@ export function BasketControls({
         type="button"
         className={addClassName || "btn-cart"}
       >
+        <ShoppingCart size={16} />
         Add
       </button>
     );
