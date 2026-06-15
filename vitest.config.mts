@@ -31,7 +31,6 @@ export default defineConfig(({ mode }) => {
         '**/node_modules/**',
         '**/dist/**',
         '**/.next/**',
-        'tests/checkout-queue/e2e/**',
       ],
     },
   };

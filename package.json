@@ -49,9 +49,7 @@
     "test:homepage:all": "npm run test:homepage:unit && npm run test:homepage:component && npm run test:homepage:e2e",
     "ts-check": "tsc --noEmit --pretty",
     "ts-check:watch": "tsc --noEmit --watch",
-    "analyze": "ANALYZE=true npm run build",
-    "logs:get": "node scripts/get-trace.mjs",
-    "logs:list": "node scripts/get-trace.mjs --list"
+    "analyze": "ANALYZE=true npm run build"
   },
   "dependencies": {
     "@better-auth/kysely-adapter": "1.6.11",
@@ -104,8 +102,10 @@
     "react-dom": "^19.2.6",
     "react-error-boundary": "^6.0.0",
     "react-hook-form": "^7.66.0",
+    "react-icons": "^5.6.0",
     "react-intersection-observer": "^9.14.1",
     "react-is": "^19.2.0",
+    "react-payment-icons": "^1.2.6",
     "resend": "^6.12.4",
     "sanity": "^3.74.1",
     "sharp": "^0.33.5",

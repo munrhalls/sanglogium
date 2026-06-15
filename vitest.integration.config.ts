@@ -32,7 +32,6 @@ export default defineConfig(({ mode }) => {
         'app/components/features/basket/__tests__/integration/**/*.test.ts',
         'tests/checkout/guest-checkout-inventory-reservation/integration/**/*.test.tsx',
         'tests/checkout/guest-checkout-inventory-reservation/integration/**/*.test.ts',
-        'tests/checkout-queue/integration/**/*.test.ts',
         'tests/checkout/integration/**/*.test.ts',
       ],
       exclude: [

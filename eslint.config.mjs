@@ -60,10 +60,6 @@ export default [
       "dist/**",
       "node_modules/**",
       "_archive/**",
-      "lib/queue/**", // LEGACY - deprecated checkout-queue system
-      "app/api/checkout-queue/**", // LEGACY - deprecated checkout-queue API
-      "tests/checkout-queue/**", // LEGACY - deprecated checkout-queue tests
-      "app/(test)/checkout-queue/**", // LEGACY - deprecated checkout-queue test UI
       "docs/examples/**", // Documentation files with example syntax
     ],
   },

@@ -59,7 +59,7 @@ const nextConfig: NextConfig = {
       },
       // 2. DYNAMIC APIs: No-Store Safety (Must come AFTER global)
       {
-        source: "/api/(checkout|checkout-queue|order|shipping|webhook)(.*)",
+        source: "/api/(checkout|order|shipping|webhook)(.*)",
         headers: [
           {
             key: "Cache-Control",
