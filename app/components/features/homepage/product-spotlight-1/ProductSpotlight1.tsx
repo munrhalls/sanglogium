@@ -15,10 +15,10 @@ export default async function ProductSpotlight1({ spotlightData }: ProductSpotli
     const { productRef: product, promoTitle, promoSubtitle, promoText } = spotlightData;
 
     return (
-        <article className="w-full relative overflow-hidden py-24 bg-brand-700">
+        <article className="w-full relative overflow-hidden border-t border-border-secondary py-24 bg-surface-page">
             <div className="max-w-content mx-auto relative z-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-20 items-stretch min-h-[400px] md:min-h-[500px]">
-                    <div className="w-full h-full bg-brand-300 rounded-none flex items-center justify-center relative overflow-hidden">
+                    <div className="w-full h-full bg-surface-productImage rounded-none flex items-center justify-center relative overflow-hidden border border-border-secondary">
                         <Carousel itemsCount={product.images?.length || 1} breakpointMap={{ lgDesktop: 1, mdPortrait: 1, mobilePortrait: 1 }} className="w-full h-full overflow-visible">
                             <CarouselTrack className="w-full h-full">
                                 {product.images?.map((image, idx) => (
@@ -50,25 +50,25 @@ export default async function ProductSpotlight1({ spotlightData }: ProductSpotli
                         </Carousel>
                     </div>
 
-                    <div className="w-full h-full bg-brand-800 rounded-none flex flex-col justify-center p-8 lg:p-12 relative overflow-hidden">
+                    <div className="w-full h-full bg-surface-subtle rounded-none flex flex-col justify-center p-8 lg:p-12 relative overflow-hidden border border-border-secondary shadow-cardDark">
                         <div aria-hidden="true" className="absolute inset-0 z-0 pointer-events-none">
                             <div className="absolute -top-[20%] -right-[20%] w-[140%] h-[140%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-5" />
                             <div className="absolute top-[10%] -left-[10%] w-[80%] h-[80%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-10" />
                             <div className="absolute bottom-[5%] right-[5%] w-[40%] h-[40%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-20" />
                         </div>
 
-                        <div className="flex flex-col gap-2 relative z-10">
-                            <span className="type-overline mb-1">{product.brand.name}</span>
+                        <div className="flex flex-col relative z-10">
+                            <span className="text-accent-500 uppercase text-sm tracking-widest mb-1 section-header-anchor">{product.brand.name}</span>
                             <div className="flex flex-col gap-2">
                                 <h2 className="type-section-hed">{promoTitle || product.name}</h2>
-                                <h3 className="text-h3">{promoSubtitle || product.name}</h3>
+                                <h3 className="text-h3 font-light text-text-subtitle">{promoSubtitle || product.name}</h3>
                             </div>
-                            <p className="type-body mt-6 max-w-prose text-pretty">
+                            <p className="type-body text-text-body mt-4 max-w-prose text-pretty">
                                 {promoText || "Unrivaled acoustic engineering and clarity."}
                             </p>
                         </div>
-                        <div className="mt-10 flex justify-center relative z-10">
-                            <button className="btn-secondary">
+                        <div className="mt-8 flex justify-center relative z-10">
+                            <button className="border border-brand-200 text-brand-100 uppercase transition-colors duration-200 hover:bg-brand-800 hover:text-brand-50 cursor-pointer px-6 py-3">
                                 See More
                             </button>
                         </div>

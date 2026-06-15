@@ -4,6 +4,7 @@ import { cache } from "react";
 export interface NewestReleaseProduct {
   _id: string;
   name: string;
+  slug: string;
   brand: {
     _id: string;
     name: string;
@@ -28,7 +29,7 @@ const NEWEST_RELEASE_QUERY = `*[_type == "homepageData"][0].newestReleaseData{
   promoSubtitle,
   promoText,
   productRef->{
-    _id, name, brand->{ _id, name, slug }, price_data,
+    _id, name, "slug": slug.current, brand->{ _id, name, slug }, price_data,
     image{asset->{_id, url}},
     gallery[]{asset->{_id, url}}
   }

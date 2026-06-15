@@ -25,4 +25,5 @@ export interface HeroData {
   readonly backgroundImage: SanityImage;
   readonly mobileBackgroundImage?: SanityImage;
   readonly ctaText?: string;
+  readonly ctaLink?: string;
 }

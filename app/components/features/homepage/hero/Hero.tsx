@@ -1,4 +1,5 @@
 import { getImageProps } from 'next/image';
+import Link from "next/link";
 import { cn } from "@/lib/utils/tailwind";
 import { HeroData, SanityImage } from "./types";
 
@@ -55,7 +56,8 @@ export default async function Hero({ heroData }: HeroProps) {
     <section
       className={cn("relative w-full overflow-hidden", "bg-black text-white",
         "h-[calc(100dvh-var(--mobile-header-h)-var(--mobile-menu-h))]",
-        "lg-desktop:h-[calc(100dvh-var(--desktop-header-h)-var(--desktop-catalogue-nav-h))]"
+        "lg-desktop:h-[calc(100dvh-var(--desktop-header-h)-var(--desktop-catalogue-nav-h))]",
+        "min-h-[80vh]"
       )}
     >
       <div className="absolute inset-0 z-0">
@@ -87,38 +89,30 @@ export default async function Hero({ heroData }: HeroProps) {
       >
         <div
           className={cn(
-            "flex max-w-xl flex-col items-start gap-4 md:gap-8",
+            "flex max-w-xl flex-col items-start gap-3 md:gap-5",
             "lg-touch:mb-44 lg-desktop:mb-64",
             "max-w-xl w-full",
             "landscape:max-w-full lg-touch:landscape:max-w-4xl lg-desktop:landscape:max-w-4xl",
           )}
         >
-          <div className="flex flex-col gap-4 md:gap-8">
-            <h1
-              className={cn(
-                "text-cap type-hero-headline uppercase"
-              )}
-            >
-              {heroData.headline}
-            </h1>
-            <p
-              className={cn(
-                "text-cap type-hero-sub",
-              )}
-            >
+          <div className="flex flex-col gap-2">
+            <p className="type-overline m-0 p-0 text-secondary-300">
               {heroData.subheadline}
             </p>
+            <h1 className="type-hero-headline">
+              {heroData.headline}
+            </h1>
           </div>
 
-          <button
+          <Link
+            href={heroData.ctaLink || "/products"}
             className={cn(
-              "btn-primary px-12 py-4 lg:py-6",
-              "text-cta-hero font-bold",
-              "mt-2 lg:mt-4"
+              "btn-primary px-10 py-4 lg:py-5",
+              "text-cta-hero font-bold"
             )}
           >
             {heroData.ctaText || "Explore"}
-          </button>
+          </Link>
         </div>
       </div>
     </section>
