@@ -15,7 +15,7 @@ export default function DacCard({ item, idx }: { item: any; idx: number }) {
 
   return (
     <article className="card-product-dark flex h-full flex-col gap-4">
-      <Link href={`/product/${item.slug}`} className="block">
+      <Link href={`/product/${item.slug}`} className="flex flex-grow flex-col">
         <figure className="rounded-none relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden bg-surface-productImage p-6">
           <span className="absolute left-4 top-4 text-small font-bold uppercase tracking-editorial text-brand-900">
             {brandName}
@@ -31,7 +31,7 @@ export default function DacCard({ item, idx }: { item: any; idx: number }) {
           />
         </figure>
 
-        <div className="flex min-h-[3rem] flex-col px-4 pb-2 pt-2">
+        <div className="flex flex-grow flex-col px-4 pb-2 pt-2">
           <p className="type-overline mb-1">DAC & Amplifiers</p>
           <p className="type-body line-clamp-2 font-medium">
             {productName}
@@ -40,7 +40,7 @@ export default function DacCard({ item, idx }: { item: any; idx: number }) {
         </div>
       </Link>
 
-      <div className="px-4 pb-4">
+      <div className="mt-auto px-4 pb-4">
         <BasketControls
           productId={item._id}
           isBasketPage={false}

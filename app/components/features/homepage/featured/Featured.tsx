@@ -36,7 +36,7 @@ const featuredBreakpointMap = {
 
 export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
   <article className="card-product-dark flex h-full flex-col gap-4">
-    <Link href={`/product/${product.slug}`} className="block">
+    <Link href={`/product/${product.slug}`} className="flex flex-grow flex-col">
       <figure className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden bg-surface-productImage p-6">
         <span className="absolute left-4 top-4 z-10 type-caption text-brand-900">
           {product.brand.name}
@@ -61,7 +61,7 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
       </div>
     </Link>
 
-    <div className="mt-auto px-4 pb-4 pt-2">
+    <div className="px-4 pb-4 pt-2">
       <BasketControls
         productId={product._id}
         isBasketPage={false}
