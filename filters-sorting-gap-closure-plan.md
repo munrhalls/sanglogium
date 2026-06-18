@@ -45,6 +45,16 @@ are test-first and need a clean, trusted harness.
 - **T0.3** — Define the test matrix skeleton (one describe-block per phase below), all `.todo`.
   - **DoD:** `npm test` (targeted path only) lists pending specs for every phase; zero run cost beyond the file.
 
+### T0.1 Inventory Result (captured 2026-06-18)
+- **Only existing filter/sort test:** `app/components/features/filters/__tests__/price-filtering.test.tsx`.
+- **Asserted behavior (price-util conversion only — NOT filter/sort logic):**
+  - `centsToDisplay(1999) === 19.99`, `centsToDisplay(9999) === 99.99`, `centsToDisplay(2000) === 20`
+  - `displayToCents(20) === 2000`, `displayToCents(100) === 10000`
+- **Assessment:** valid, passing, non-blocking (asserts `lib/utils/price.ts`, which the refactor does
+  not change). No tests assert gappy filter/sort behavior.
+- **Decision (user-directed):** DELETE the file; `price.ts` conversion will be re-covered by the new
+  harness fixtures (T0.2). No other stale filter/sort tests exist.
+
 **Phase 0 exit:** Clean, deterministic harness ready; no behavioral change to app.
 
 ---
