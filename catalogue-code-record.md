@@ -16298,7 +16298,7 @@ export default async function Hero({ heroData }: HeroProps) {
                 {heroData.headline}
               </h1>
               <p className="type-hero-sub m-0 p-0">
-                Hear the new difference.
+                Hear the difference.
               </p>
             </div>
 

@@ -47,7 +47,7 @@ export default function CategorySection({ category, items }: CategorySectionProp
         </h3>
 
         <div className="relative">
-          <CarouselTrack className="w-full mx-0 items-stretch md:-mx-3">
+          <CarouselTrack className="w-full mx-0 items-stretch md:-mx-3 md:w-[calc(100%+1.5rem)]">
             {filteredItems.map((item, idx) => (
               <CarouselSlide
                 key={`${category.filter}-${item._id}`}

@@ -98,11 +98,11 @@ export default async function Featured({ featuredData }: FeaturedProps) {
               <FeaturedHeader />
 
               <div className="relative">
-                <CarouselTrack className="mx-0 w-full items-stretch md:-mx-3">
+                <CarouselTrack className="mx-0 w-full items-stretch md:-mx-3 md:w-[calc(100%+1.5rem)]">
                   {featuredData.map((p, idx) => (
                     <CarouselSlide
                       key={p._id || idx}
-                      className="flex h-full flex-col px-3"
+                      className="flex flex-col px-3"
                     >
                       <FeaturedCard product={p} idx={idx} />
                     </CarouselSlide>

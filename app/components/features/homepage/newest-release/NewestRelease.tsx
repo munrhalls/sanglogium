@@ -20,7 +20,7 @@ export default async function NewestRelease({ newestReleaseData }: NewestRelease
         {/* Image column */}
         <div className="w-full lg:flex-hero min-h-[280px] lg:min-h-[560px] flex items-center justify-center p-4 md:p-8">
           {backgroundImage?.asset?._id && (
-            <div className="aspect-square w-full bg-surface-productImage rounded-lg flex items-center justify-center overflow-hidden p-8 lg:p-12">
+            <div className="aspect-square w-full bg-surface-productImage rounded-lg flex items-center justify-center overflow-hidden p-4 lg:p-6">
               <Image
                 src={backgroundImage.asset._id}
                 alt={product.name}
@@ -39,15 +39,16 @@ export default async function NewestRelease({ newestReleaseData }: NewestRelease
           <div className="mx-auto max-w-content w-full py-12 lg:py-24 px-4 md:px-8">
             <div className="max-w-2xl">
               <div className="flex flex-col gap-6">
-                <span className="type-overline text-accent-500">
-                  {product.brand.name}
-                </span>
+                <div className="flex flex-col gap-1">
+                  <span className="type-overline text-accent-500">New Release</span>
+                  <span className="type-section-caption">{product.brand.name}</span>
+                </div>
 
                 <div className="flex flex-col gap-2">
                   <h2 className="type-hero-headline text-brand-400">
                     {promoTitle || product.name}
                   </h2>
-                  <h3 className="type-hero-sub text-brand-400">
+                  <h3 className="type-hero-sub">
                     {promoSubtitle || product.name}
                   </h3>
                 </div>
@@ -68,11 +69,22 @@ export default async function NewestRelease({ newestReleaseData }: NewestRelease
                 </ul>
               </div>
 
+              {product.price_data?.unit_amount && (
+                <p className="type-price mt-6">
+                  {new Intl.NumberFormat("en-US", {
+                    style: "currency",
+                    currency: product.price_data.currency?.toUpperCase() ?? "USD",
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0,
+                  }).format(product.price_data.unit_amount / 100)}
+                </p>
+              )}
+
               <Link
-                href="/product/weiss-dac204-desktop-dac"
-                className="btn-ghost mt-6 inline-block"
+                href={`/product/${product.slug}`}
+                className="btn-cart-large mt-6"
               >
-                View DAC204 Details →
+                Shop Now
               </Link>
             </div>
           </div>

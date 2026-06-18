@@ -26,7 +26,7 @@ export default async function IemsGallery({ iemsData }: IemsGalleryProps) {
             <IemsGalleryHeader />
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
               {displayed.map((iem, idx) => (
-                <IemCard key={iem._id} product={iem as any} idx={idx} />
+                <IemCard key={iem._id} product={iem} idx={idx} />
               ))}
             </div>
             {iemsData.length > 6 && (

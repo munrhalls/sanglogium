@@ -29,7 +29,7 @@ export default async function DACs({ dacsData }: DacsProps) {
   if (!dacsData.length) return null;
 
   return (
-    <article className="w-full relative overflow-hidden bg-surface-elevated">
+    <article className="w-full relative overflow-hidden bg-surface-page">
       <div aria-hidden="true" className="absolute inset-0 z-0 pointer-events-none">
         <div className="absolute -top-[20%] -right-[20%] w-[140%] h-[140%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-5" />
         <div className="absolute top-[10%] -left-[10%] w-[80%] h-[80%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-10" />
@@ -45,7 +45,7 @@ export default async function DACs({ dacsData }: DacsProps) {
               <DacsHeader />
 
               <div className="relative">
-                <CarouselTrack className="w-full mx-0 items-stretch md:-mx-3">
+                <CarouselTrack className="w-full mx-0 items-stretch md:-mx-3 md:w-[calc(100%+1.5rem)]">
                   {dacsData.map((item, idx) => (
                     <CarouselSlide
                       key={item._id}

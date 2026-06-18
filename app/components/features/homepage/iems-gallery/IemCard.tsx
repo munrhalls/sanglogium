@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { IemProduct } from "./getIemProducts";
 import { BasketControls } from "@/app/components/features/basket/BasketControls";
+import { Price } from "@/app/components/ui/Price";
 import { centsToDisplay } from "@/lib/utils/price";
 
 export default function IemCard({
@@ -13,6 +14,12 @@ export default function IemCard({
   idx: number;
 }) {
   if (!product) return null;
+
+  const stockStatus = product.stock === 0
+    ? { text: 'Out of Stock', color: 'text-error-500' }
+    : product.stock <= 5
+    ? { text: `Only ${product.stock} left`, color: 'text-warning-500' }
+    : { text: 'In Stock', color: 'text-success-500' };
 
   return (
     <article className="card-product-dark flex h-full flex-col gap-4 p-0 xs:p-6">
@@ -31,22 +38,28 @@ export default function IemCard({
               {product.brand.name}
             </span>
           </div>
+          {product.stock > 0 && product.stock <= 5 && (
+            <div className="absolute right-2 top-2 xs:top-4">
+              <span className="rounded-sm bg-warning-500/20 px-1.5 py-0.5 text-[7px] font-medium uppercase tracking-editorial text-warning-500 xs:text-small">
+                Only {product.stock} left
+              </span>
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col px-4 xs:gap-1">
           <p className="type-overline mb-1">In-Ear Monitors</p>
           <h3 className="type-body line-clamp-2 font-medium">{product.name}</h3>
-          <p className="type-price mt-2">
-            ${centsToDisplay(product.price_data.unit_amount)}
-          </p>
+          <p className={`type-caption ${stockStatus.color}`}>{stockStatus.text}</p>
         </div>
       </Link>
 
-      <div className="px-4 pb-4">
+      <div className="flex items-center justify-between px-4 pb-4">
+        <Price value={centsToDisplay(product.price_data.unit_amount)} />
         <BasketControls
           productId={product._id}
           isBasketPage={false}
-          addClassName="btn-cart w-full justify-center"
+          addClassName="btn-cart"
           wrapperClassName="flex items-center gap-1"
           decrementClassName="btn-secondary w-8 h-8 flex items-center justify-center"
           incrementClassName="btn-secondary w-8 h-8 flex items-center justify-center disabled:opacity-50"
