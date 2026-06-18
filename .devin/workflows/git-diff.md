@@ -1,0 +1,1 @@
+Use Git to assemble complete list of code changes and only code changes. Make sure it's complete and do nothing else other than that. Make sure the final output is ephemeral but fit for single-click copy-paste. 
