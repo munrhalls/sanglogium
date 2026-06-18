@@ -20,7 +20,7 @@ const CatalogueNavbar = async ({ catalogueDataRaw }: CatalogueNavbarProps) => {
   return (
     <nav
       className={cn(
-        "hidden w-full shrink-0 items-center bg-brand-900 lg:flex lg-desktop:h-[var(--desktop-catalogue-nav-h)]"
+        "hidden w-full shrink-0 items-center bg-brand-900 lg:flex lg:h-[var(--desktop-catalogue-nav-h)]"
       )}
       aria-label="Catalogue Navigation"
     >
