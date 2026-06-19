@@ -4,6 +4,7 @@ import { resolveSlugToId, unrollDescendantKeys } from '@/data/catalogue';
 import { getProductsByVfsKeys } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
 import { getCategoryMetadata } from '@/sanity-cms/lib/products/getCategoryMetadata';
 import { getFiltersForCategoryPath } from '@/sanity-cms/lib/products/filter/getFiltersForCategoryPath';
+import { loadCategorySearchParams } from '@/lib/catalogue/searchParams';
 import { ShopHeader } from '@/app/components/features/products/ShopHeader';
 import { FilterSidebar } from '@/app/components/features/filters/FilterSidebar';
 import { CategoryPageClient } from './CategoryPageClient';
@@ -12,6 +13,7 @@ import { FilterSection } from './FilterSection';
 import { ProductGridSkeleton } from '@/app/components/skeletons/ProductGridSkeleton';
 import { FilterSidebarSkeleton } from '@/app/components/skeletons/FilterSidebarSkeleton';
 import Breadcrumbs from '@/app/components/ui/breadcrumbs/CategoryBreadcrumbs';
+import { isFacetedQuery, canonicalCategoryPath } from '@/lib/catalogue/seo';
 
 interface CategoryPageProps {
   params: Promise<{ slug: string[] }>;
@@ -28,12 +30,13 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
     notFound();
   }
 
-  // Parse URL params
-  const sort = typeof query.sort === 'string' ? query.sort : 'featured';
-  const rawFilters = Array.isArray(query.f) ? query.f : query.f ? [query.f] : [];
-
-  // Handle comma-separated filters: "brand:Hifiman,brand:Focal" -> ["brand:Hifiman", "brand:Focal"]
-  const filters = rawFilters.flatMap(f => f.split(','));
+  // Parse URL params via the shared, type-safe contract (single source of truth
+  // for client + server). Multiple `?f=` params are normalized to the
+  // comma-joined form the parser expects.
+  const { sort, f: filters, page } = loadCategorySearchParams({
+    ...query,
+    f: Array.isArray(query.f) ? query.f.join(',') : query.f,
+  });
 
   const descendantKeys = unrollDescendantKeys(nodeId);
 
@@ -41,7 +44,8 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   const productsPromise = getProductsByVfsKeys({
     keys: descendantKeys,
     sort,
-    filters
+    filters,
+    page
   });
   const metadataPromise = getCategoryMetadata(nodeId);
   const filtersPromise = getFiltersForCategoryPath(descendantKeys);
@@ -84,6 +88,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
               productsPromise={productsPromise}
               filtersPromise={filtersPromise}
               categoryName={metadata.name}
+              currentPage={page}
             />
           </Suspense>
         </main>
@@ -93,8 +98,9 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
 }
 
 // Generate metadata for SEO
-export async function generateMetadata({ params }: CategoryPageProps) {
+export async function generateMetadata({ params, searchParams }: CategoryPageProps) {
   const { slug } = await params;
+  const query = await searchParams;
   const leafSlug = slug[slug.length - 1];
   const nodeId = resolveSlugToId(leafSlug);
 
@@ -111,5 +117,7 @@ export async function generateMetadata({ params }: CategoryPageProps) {
   return {
     title: `${metadata.name} — Sang Logium`,
     description: `Browse ${metadata.name} headphones and audio equipment`,
+    alternates: { canonical: canonicalCategoryPath(slug) },
+    robots: isFacetedQuery(query) ? { index: false, follow: true } : undefined,
   };
 }

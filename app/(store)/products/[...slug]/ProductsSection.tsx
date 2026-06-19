@@ -1,21 +1,26 @@
 import React from 'react';
-import { ProductGrid } from '@/app/components/features/products';
 import { CategoryPageClient } from './CategoryPageClient';
-import type { Product } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
+import { DEFAULT_PER_PAGE } from '@/lib/catalogue/filterParams';
+import type { PaginatedProducts } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
 import type { FilterResult } from '@/sanity-cms/lib/products/filter/getFiltersForCategoryPath';
 
 interface ProductsSectionProps {
-  productsPromise: Promise<Product[]>;
+  productsPromise: Promise<PaginatedProducts>;
   filtersPromise: Promise<FilterResult>;
   categoryName: string;
+  currentPage: number;
 }
 
 export async function ProductsSection({
   productsPromise,
   filtersPromise,
-  categoryName
+  categoryName,
+  currentPage
 }: ProductsSectionProps) {
-  const [products, filterResult] = await Promise.all([productsPromise, filtersPromise]);
+  const [{ products, totalCount }, filterResult] = await Promise.all([
+    productsPromise,
+    filtersPromise
+  ]);
 
   return (
     <CategoryPageClient
@@ -23,6 +28,9 @@ export async function ProductsSection({
       priceRange={filterResult.priceRange}
       maxStock={filterResult.maxStock}
       products={products}
+      totalCount={totalCount}
+      currentPage={currentPage}
+      perPage={DEFAULT_PER_PAGE}
       categoryName={categoryName}
     />
   );
