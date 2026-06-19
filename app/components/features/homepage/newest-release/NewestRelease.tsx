@@ -20,15 +20,17 @@ export default async function NewestRelease({ newestReleaseData }: NewestRelease
         {/* Image column */}
         <div className="w-full lg:flex-hero min-h-[280px] lg:min-h-[560px] bg-surface-productImage flex items-center justify-center p-6 lg:p-8">
           {backgroundImage?.asset?._id && (
-            <Image
-              src={backgroundImage.asset._id}
-              alt={product.name}
-              width={1024}
-              height={1024}
-              priority
-              className="object-contain w-full h-auto"
-              sizes="(max-width: 1024px) 100vw, 42vw"
-            />
+            <div className="max-w-[400px] w-full mx-auto">
+              <Image
+                src={backgroundImage.asset._id}
+                alt={product.name}
+                width={1024}
+                height={1024}
+                priority
+                className="object-contain w-full h-auto"
+                sizes="(max-width: 1024px) 100vw, 42vw"
+              />
+            </div>
           )}
         </div>
 
@@ -64,9 +66,9 @@ export default async function NewestRelease({ newestReleaseData }: NewestRelease
 
                 <Link
                   href={`/product/${product.slug}`}
-                  className="btn-cart-large self-start"
+                  className="btn-ghost self-start"
                 >
-                  Shop Now
+                  View Product
                 </Link>
               </div>
             </div>

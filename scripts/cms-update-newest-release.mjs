@@ -1,7 +1,12 @@
 /**
- * Phase 2+3: Safe CMS Update — newestReleaseData within homepageData singleton
- * Target: _id = "pageData" (hardcoded, no dynamic input accepted)
+ * CMS Copy Update — newestReleaseData within homepageData singleton
+ * Target: _id = "homepageData" (hardcoded, no dynamic input accepted)
  * Mutates only: newestReleaseData.promoTitle, .promoSubtitle, .promoText
+ *
+ * Copy rationale:
+ *   promoTitle   → single factual claim at display-1 size; no dramatic fragments
+ *   promoSubtitle → two crisp facts; replaces verbose "Grammy-winning lineage" copy
+ *   promoText     → body field (not yet rendered); factual, no hyperbole
  */
 import { createClient } from "@sanity/client";
 import dotenv from "dotenv";
@@ -99,19 +104,19 @@ async function main() {
 
   await patchField(
     "newestReleaseData.promoTitle",
-    "Mastering-Grade Precision. Swiss Soul.",
+    "Mastering-Grade Precision.",
     "STEP 1: Headline (promoTitle)"
   );
 
   await patchField(
     "newestReleaseData.promoSubtitle",
-    "The Grammy-winning Weiss lineage, distilled into its most potent, focused desktop DAC yet.",
+    "Reference-grade conversion, engineered in Switzerland.",
     "STEP 2: Sub-headline (promoSubtitle)"
   );
 
   await patchField(
     "newestReleaseData.promoText",
-    "True transparency isn't just about what you hear—it's about what you finally stop missing. By stripping away screens and fluff, Weiss funnels every cent of its engineering into a singular goal: bit-perfect conversion.",
+    "Weiss Engineering has set the standard for professional mastering for decades. The DAC204 brings that same precision to the home environment — bit-perfect conversion, no compromise.",
     "STEP 3: Body Intro (promoText)"
   );
 
