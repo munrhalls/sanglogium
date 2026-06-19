@@ -1,10 +1,10 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Spotlight1Data } from "../product-spotlight-1/getSpotlight1Data";
+import { NewestReleaseData } from "@/app/lib/data/homepageBatch";
 
 interface NewestReleaseProps {
-  newestReleaseData: Spotlight1Data | null;
+  newestReleaseData: NewestReleaseData | null;
 }
 
 export default async function NewestRelease({ newestReleaseData }: NewestReleaseProps) {
