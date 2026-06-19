@@ -1,0 +1,5 @@
+{
+  "_comment": "Curation map for the displayPriority backfill (Phase 4 / T4.2). Keys are product slugs (stable, human-readable); values are integers where HIGHER appears earlier in the default 'Featured' listing. Copy this file to 'curated-display-priority.json' and edit it before running the backfill. Products NOT listed here keep their unset displayPriority, which the query coalesces to 0 — so the feature works correctly even with an empty map.",
+  "example-flagship-headphone-slug": 100,
+  "example-seasonal-promo-speaker-slug": 50
+}
