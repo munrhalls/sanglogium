@@ -116,6 +116,30 @@ describe("getProductsByVfsKeys", () => {
     });
   });
 
+  describe("mixed parent and leaf keys", () => {
+    it("constructs the GROQ filter without error for a mixed keys array", async () => {
+      const mixedKeys = [
+        "ugyeto8653n495dpf89nzoar", // parent (Headphones root)
+        "o7c6baiuobsr7ni2y2vf22sh", // leaf (Open-Back)
+      ];
+      await getProductsByVfsKeys({ keys: mixedKeys });
+
+      const query = productsQuery();
+      expect(query).toContain("count(catalogueLocationKeys[@ in $keys]) > 0");
+      expect(mockSanityFetch).toHaveBeenCalledWith(
+        expect.objectContaining({ params: { keys: mixedKeys } })
+      );
+    });
+
+    it("issues both a count query and a products query for mixed keys", async () => {
+      await getProductsByVfsKeys({
+        keys: ["ugyeto8653n495dpf89nzoar", "o7c6baiuobsr7ni2y2vf22sh"],
+      });
+      expect(mockSanityFetch).toHaveBeenCalledTimes(2);
+      expect(countQuery()).toContain("count(catalogueLocationKeys[@ in $keys]) > 0");
+    });
+  });
+
   describe("resilience", () => {
     it("returns an empty array when Sanity fails (B2)", async () => {
       const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});

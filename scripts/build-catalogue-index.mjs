@@ -193,6 +193,12 @@ async function buildCatalogueIndex() {
           slugToIdMap[urlString] = node._key;
         }
 
+        // Register header-with-slug nodes (root categories) for parent-category navigation
+        if (currentSlug && isHeader) {
+          slugToIdMap[currentSlug] = node._key;
+          slugToIdMap[urlString] = node._key;
+        }
+
         // Always add to slotMetadataMap - every node needs metadata
         slotMetadataMap[node._key] = {
           title: node.title,

@@ -1,6 +1,7 @@
 {
-  "generatedAt": "2026-06-18T17:31:01.355Z",
+  "generatedAt": "2026-06-19T12:30:27.236Z",
   "slugToIdMap": {
+    "headphones": "ugyeto8653n495dpf89nzoar",
     "open-back": "o7c6baiuobsr7ni2y2vf22sh",
     "headphones/open-back": "o7c6baiuobsr7ni2y2vf22sh",
     "closed-back": "yq3p9s798zszjkzm5btnebjh",
@@ -15,6 +16,7 @@
     "headphones/electrostatic": "icmc3j8qzjiffr9h6tw6kg74",
     "monitors-iems": "t2anvkkjfz9knqi85kozuaze",
     "headphones/monitors-iems": "t2anvkkjfz9knqi85kozuaze",
+    "audio-electronics": "ti2wufd15h51jxtq855ogbfa",
     "desktop-amps": "o6mz3kbs5xla8ixastppktsd",
     "audio-electronics/desktop-amps": "o6mz3kbs5xla8ixastppktsd",
     "portable-amps": "ipz8oe0elii0vm2voxsbgsw6",
@@ -31,6 +33,7 @@
     "audio-electronics/digital-players-daps": "o9igtdq1g5oqaahpa0zvq238",
     "network-streamers": "npwbgqg3v4t5qe95rg35wte0",
     "audio-electronics/network-streamers": "npwbgqg3v4t5qe95rg35wte0",
+    "accessories": "j9ozs17mc0b1nv2gqn2rvmg1",
     "headphone-cables": "vnrj2n32p172vcje1tt3s4ls",
     "accessories/headphone-cables": "vnrj2n32p172vcje1tt3s4ls",
     "interconnects": "ck7d2wm9xe6lujtdfq7biyh7",

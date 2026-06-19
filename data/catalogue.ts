@@ -170,6 +170,18 @@ export const getCatalogueForNavigation = (): NavigationItem[] => {
       });
     }
 
+    // Prepend "View All" section for parent-category navigation
+    if (rootItem.slug?.current) {
+      navigationItem.sections.unshift({
+        title: `All ${rootItem.title}`,
+        links: [{
+          label: `View All ${rootItem.title}`,
+          url: `/products/${rootItem.slug.current}`,
+          slug: rootItem.slug.current,
+        }],
+      });
+    }
+
     return navigationItem;
   });
 };
