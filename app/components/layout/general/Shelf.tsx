@@ -13,7 +13,7 @@ export default function Shelf({ children, variant = "default", fullBleed = false
 
   return (
     <section className={cn("w-full", className)} data-testid={dataTestId}>
-      <div className={cn("mx-auto px-6 lg:px-8", fullBleed ? "w-full" : "max-w-content")}>
+      <div className={cn("mx-auto", fullBleed ? "w-full" : "max-w-content px-6 lg:px-8")}>
         {children}
       </div>
     </section>

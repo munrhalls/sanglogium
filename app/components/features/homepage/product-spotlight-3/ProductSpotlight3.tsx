@@ -15,7 +15,7 @@ export default function ProductSpotlight3({ spotlightData }: ProductSpotlight3Pr
   const { productRef: product, promoTitle, promoSubtitle, promoText } = spotlightData;
 
   return (
-    <article className="w-full relative overflow-hidden border-t border-border-secondary py-24 bg-surface-page">
+    <article className="w-full relative overflow-hidden py-24 bg-surface-page">
       <div className="max-w-content mx-auto relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-20 items-stretch min-h-[400px] md:min-h-[500px]">
           <div className="w-full h-full bg-surface-productImage rounded-none flex items-center justify-center relative overflow-hidden border border-border-secondary">
