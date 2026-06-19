@@ -121,23 +121,25 @@ export class FilterBuilder {
    * Build price range filter clause (from sliders)
    */
   private static buildPriceRangeFilter(values: string[]): string {
-    const priceConditions = values.map(value => {
+    let min: number | null = null;
+    let max: number | null = null;
+    for (const value of values) {
       if (value.startsWith('min:')) {
-        const num = this.validateNumeric(value.split(':')[1] ?? '');
-        if (num === null) return null;
-        return `price_data.unit_amount >= ${num}`;
+        const n = this.validateNumeric(value.slice(4));
+        if (n !== null) min = n;
       } else if (value.startsWith('max:')) {
-        const num = this.validateNumeric(value.split(':')[1] ?? '');
-        if (num === null) return null;
-        return `price_data.unit_amount <= ${num}`;
+        const n = this.validateNumeric(value.slice(4));
+        if (n !== null) max = n;
       }
-      const num = this.validateNumeric(value);
-      if (num === null) return null;
-      return `price_data.unit_amount == ${num}`;
-    }).filter((c): c is string => c !== null);
-
-    if (priceConditions.length === 0) return '';
-    return `&& (${priceConditions.join(' && ')})`;
+    }
+    if (min !== null && max !== null && min > max) {
+      return '';
+    }
+    const conditions: string[] = [];
+    if (min !== null) conditions.push(`price_data.unit_amount >= ${min}`);
+    if (max !== null) conditions.push(`price_data.unit_amount <= ${max}`);
+    if (conditions.length === 0) return '';
+    return `&& (${conditions.join(' && ')})`;
   }
 
   /**
@@ -147,7 +149,7 @@ export class FilterBuilder {
     const stockConditions = values.map(value => {
       const num = this.validateNumeric(value);
       if (num === null) return null;
-      return `stock >= ${num}`;
+      return `(stock - reservedStock) >= ${num}`;
     }).filter((c): c is string => c !== null);
 
     if (stockConditions.length === 0) return '';

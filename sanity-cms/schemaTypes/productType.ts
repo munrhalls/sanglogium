@@ -157,6 +157,13 @@ export const productType = defineType({
       of: [{ type: "string" }],
       validation: (Rule) => Rule.required().min(1),
     }),
+    defineField({
+      name: "displayPriority",
+      title: "Display Priority (Featured)",
+      type: "number",
+      description:
+        'Higher values appear earlier in the default "Featured" listing. Leave unset to use the default (treated as 0). Ties break by newest first.',
+    }),
 
     defineField({
       name: "overviewFields",
