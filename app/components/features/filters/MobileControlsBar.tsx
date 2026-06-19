@@ -7,11 +7,13 @@ import { useFilterNuqs } from './useFilterNuqs';
 interface MobileControlsBarProps {
   productCount: number;
   onOpenFilters: () => void;
+  isOpen: boolean;
 }
 
 export function MobileControlsBar({
   productCount,
   onOpenFilters,
+  isOpen,
 }: MobileControlsBarProps) {
   const { activeFilterCount } = useFilterNuqs();
 
@@ -24,6 +26,8 @@ export function MobileControlsBar({
       <button
         type="button"
         onClick={onOpenFilters}
+        aria-expanded={isOpen}
+        aria-controls="mobile-filter-drawer"
         className="flex-1 flex items-center justify-center gap-2 px-4 py-3 btn-secondary"
       >
         <svg

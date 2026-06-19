@@ -45,37 +45,41 @@ export function MobileFilterDrawer({ isOpen, onClose, filters, priceRange: price
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
 
-  // Focus trap
+  // Focus trap — queries focusable nodes on every Tab keypress (dynamic content safe)
   useEffect(() => {
     if (!isOpen) return;
 
     const drawer = document.querySelector('[data-testid="mobile-filter-drawer"]') as HTMLElement;
     if (!drawer) return;
 
-    const focusableElements = drawer.querySelectorAll(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    );
-    const firstElement = focusableElements[0] as HTMLElement;
-    const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
+    const getFocusable = (): HTMLElement[] =>
+      Array.from(
+        drawer.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        )
+      );
+
+    // Focus first element when drawer opens
+    getFocusable()[0]?.focus();
 
     const handleTabKey = (e: KeyboardEvent) => {
       if (e.key !== 'Tab') return;
-
+      const els = getFocusable();
+      const first = els[0];
+      const last = els[els.length - 1];
       if (e.shiftKey) {
-        if (document.activeElement === firstElement) {
+        if (document.activeElement === first) {
           e.preventDefault();
-          lastElement?.focus();
+          last?.focus();
         }
       } else {
-        if (document.activeElement === lastElement) {
+        if (document.activeElement === last) {
           e.preventDefault();
-          firstElement?.focus();
+          first?.focus();
         }
       }
     };
 
-    // Focus first element when drawer opens
-    firstElement?.focus();
     drawer.addEventListener('keydown', handleTabKey);
     return () => drawer.removeEventListener('keydown', handleTabKey);
   }, [isOpen]);
@@ -94,6 +98,7 @@ export function MobileFilterDrawer({ isOpen, onClose, filters, priceRange: price
 
       {/* Bottom sheet drawer */}
       <aside
+        id="mobile-filter-drawer"
         data-testid="mobile-filter-drawer"
         className={`
           fixed bottom-0 left-0 right-0 z-50 max-h-[85vh]

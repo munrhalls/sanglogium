@@ -13,6 +13,7 @@ interface StockMinimumSliderProps {
 export function StockMinimumSlider({ maxStock, value, onChange, onClear }: StockMinimumSliderProps) {
   const [localValue, setLocalValue] = useState(value);
   const isDragging = useRef(false);
+  const isKeyboardRef = useRef(false);
 
   const isActive = value > 0;
   const max = maxStock || 100;
@@ -33,7 +34,7 @@ export function StockMinimumSlider({ maxStock, value, onChange, onClear }: Stock
 
   const handleChange = useCallback((newValue: number) => {
     setLocalValue(newValue);
-    if (!isDragging.current) {
+    if (!isDragging.current && !isKeyboardRef.current) {
       commitValue(newValue);
     }
   }, [commitValue]);
@@ -113,6 +114,17 @@ export function StockMinimumSlider({ maxStock, value, onChange, onClear }: Stock
             onTouchStart={handleDragStart}
             onMouseUp={handleDragEnd}
             onTouchEnd={handleDragEnd}
+            onKeyDown={(e) => {
+              if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(e.key)) {
+                isKeyboardRef.current = true;
+              }
+            }}
+            onKeyUp={() => {
+              if (isKeyboardRef.current) {
+                isKeyboardRef.current = false;
+                commitValue(localValue);
+              }
+            }}
             className={`w-full h-2 rounded-lg appearance-none cursor-pointer transition-opacity ${
               isActive ? 'bg-accent-500 accent-accent-500' : 'opacity-60 bg-surface-tertiary accent-surface-tertiary'
             }`}

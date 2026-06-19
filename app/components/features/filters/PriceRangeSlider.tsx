@@ -14,6 +14,7 @@ export function PriceRangeSlider({ min, max, value, onChange, onClear }: PriceRa
   const [localMin, setLocalMin] = useState(value.min ?? min);
   const [localMax, setLocalMax] = useState(value.max ?? max);
   const isDragging = useRef(false);
+  const isKeyboardRef = useRef(false);
 
   const isActive = (value.min !== undefined && value.min !== min) || (value.max !== undefined && value.max !== max);
 
@@ -49,7 +50,7 @@ export function PriceRangeSlider({ min, max, value, onChange, onClear }: PriceRa
     const validMin = Math.min(newMin, localMax - 1);
     setLocalMin(validMin);
 
-    if (!isDragging.current) {
+    if (!isDragging.current && !isKeyboardRef.current) {
       commitRange(validMin, localMax);
     }
   }, [localMax, commitRange]);
@@ -58,7 +59,7 @@ export function PriceRangeSlider({ min, max, value, onChange, onClear }: PriceRa
     const validMax = Math.max(newMax, localMin + 1);
     setLocalMax(validMax);
 
-    if (!isDragging.current) {
+    if (!isDragging.current && !isKeyboardRef.current) {
       commitRange(localMin, validMax);
     }
   }, [localMin, commitRange]);
@@ -135,6 +136,17 @@ export function PriceRangeSlider({ min, max, value, onChange, onClear }: PriceRa
             onTouchStart={handleDragStart}
             onMouseUp={handleDragEnd}
             onTouchEnd={handleDragEnd}
+            onKeyDown={(e) => {
+              if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(e.key)) {
+                isKeyboardRef.current = true;
+              }
+            }}
+            onKeyUp={() => {
+              if (isKeyboardRef.current) {
+                isKeyboardRef.current = false;
+                commitRange(localMin, localMax);
+              }
+            }}
             className={`w-full h-2 rounded-lg appearance-none cursor-pointer transition-opacity ${
               isActive ? 'bg-accent-500 accent-accent-500' : 'opacity-60 bg-surface-tertiary accent-surface-tertiary'
             }`}
@@ -163,6 +175,17 @@ export function PriceRangeSlider({ min, max, value, onChange, onClear }: PriceRa
             onTouchStart={handleDragStart}
             onMouseUp={handleDragEnd}
             onTouchEnd={handleDragEnd}
+            onKeyDown={(e) => {
+              if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(e.key)) {
+                isKeyboardRef.current = true;
+              }
+            }}
+            onKeyUp={() => {
+              if (isKeyboardRef.current) {
+                isKeyboardRef.current = false;
+                commitRange(localMin, localMax);
+              }
+            }}
             className={`w-full h-2 rounded-lg appearance-none cursor-pointer transition-opacity ${
               isActive ? 'bg-accent-500 accent-accent-500' : 'opacity-60 bg-surface-tertiary accent-surface-tertiary'
             }`}
