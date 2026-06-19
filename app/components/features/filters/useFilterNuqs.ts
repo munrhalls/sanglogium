@@ -1,10 +1,18 @@
 "use client";
 
-import { useQueryState, parseAsArrayOf, parseAsString, debounce } from "nuqs";
+import { useQueryState, debounce } from "nuqs";
 import { useTransition, useEffect, useSyncExternalStore, useMemo } from "react";
 import { displayToCents, centsToDisplay } from "@/lib/utils/price";
+import {
+  sortParser,
+  filtersParser,
+  pageParser,
+  parseFilterEntry,
+  countActiveFilters,
+} from "@/lib/catalogue/filterParams";
 
 const PRICE_RANGE_URL_LIMITER = debounce(500);
+const STOCK_RANGE_URL_LIMITER = debounce(500);
 
 export interface FilterState {
   field: string;
@@ -32,21 +40,6 @@ export function useFilterPending() {
 }
 
 /**
- * Parse filter string "field:value" into FilterState
- */
-function parseFilter(filterString: string): FilterState | null {
-  const separatorIndex = filterString.indexOf(":");
-  if (separatorIndex === -1) return null;
-
-  const field = filterString.slice(0, separatorIndex);
-  const value = filterString.slice(separatorIndex + 1);
-
-  if (!field || !value) return null;
-
-  return { field, value };
-}
-
-/**
  * Hook for managing filter state in URL with nuqs
  * nuqs shallow: false triggers server re-render automatically
  */
@@ -60,19 +53,17 @@ export function useFilterNuqs() {
   // Sort state: ?sort=price_data.unit_amount:asc
   const [sort, setSort] = useQueryState(
     "sort",
-    parseAsString
-      .withOptions({
-        shallow: false,
-        throttleMs: 50,
-        clearOnDefault: true,
-      })
-      .withDefault("featured")
+    sortParser.withOptions({
+      shallow: false,
+      throttleMs: 50,
+      clearOnDefault: true,
+    })
   );
 
   // Page state: ?page=2
   const [, setPage] = useQueryState(
     "page",
-    parseAsString.withOptions({
+    pageParser.withOptions({
       shallow: false,
       throttleMs: 50,
       clearOnDefault: true,
@@ -82,17 +73,14 @@ export function useFilterNuqs() {
   // Array of active filters: ?f=brand:sennheiser&f=type:open-back
   const [filters, setFilters] = useQueryState(
     "f",
-    parseAsArrayOf(parseAsString)
-      .withOptions({
-        // Deep: true = triggers server re-render (default)
-        // This allows server to re-fetch with new filters
-        shallow: false,
-        // Throttle URL updates to prevent browser rate-limiting
-        throttleMs: 50,
-        // Clear param when empty array (clean URLs)
-        clearOnDefault: true,
-      })
-      .withDefault([])
+    filtersParser.withOptions({
+      // shallow: false triggers a server re-render so the new filters re-query
+      shallow: false,
+      // Throttle URL updates to prevent browser rate-limiting
+      throttleMs: 50,
+      // Clear param when empty array (clean URLs)
+      clearOnDefault: true,
+    })
   );
 
   /**
@@ -150,7 +138,7 @@ export function useFilterNuqs() {
  * Get parsed filter states for client-side filtering
  */
   const parsedFilters: FilterState[] = (filters || [])
-    .map(parseFilter)
+    .map(parseFilterEntry)
     .filter((f): f is FilterState => f !== null);
 
   /**
@@ -243,7 +231,7 @@ export function useFilterNuqs() {
         }
 
         return [...withoutStock, `stockMin:${value}`];
-      });
+      }, { limitUrlUpdates: STOCK_RANGE_URL_LIMITER });
     });
   };
 
@@ -253,7 +241,7 @@ export function useFilterNuqs() {
   const clearStockMinimum = () => {
     startTransition(() => {
       setPage(null);
-      setFilters((prev) => (prev || []).filter(f => !f.startsWith('stockMin:')));
+      setFilters((prev) => (prev || []).filter(f => !f.startsWith('stockMin:')), { limitUrlUpdates: STOCK_RANGE_URL_LIMITER });
     });
   };
 
@@ -289,6 +277,7 @@ export function useFilterNuqs() {
     clearAllFilters,
     isFilterActive,
     hasActiveFilters: (filters || []).length > 0,
+    activeFilterCount: countActiveFilters(filters || []),
     parsedFilters,
     priceRange,
     setPriceRange,

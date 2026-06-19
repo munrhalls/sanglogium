@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useFilterNuqs } from './useFilterNuqs';
+import { SORT_OPTIONS } from '@/lib/catalogue/filterParams';
 
 export function SortDropdown() {
   const { sort, handleSortChange } = useFilterNuqs();
@@ -15,11 +16,11 @@ export function SortDropdown() {
         onChange={(e) => handleSortChange(e.target.value)}
         className="input-select"
       >
-        <option value="featured">Featured</option>
-        <option value="price_data.unit_amount:asc">Price: Low to High</option>
-        <option value="price_data.unit_amount:desc">Price: High to Low</option>
-        <option value="name:asc">Name: A-Z</option>
-        <option value="name:desc">Name: Z-A</option>
+        {SORT_OPTIONS.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
       </select>
     </div>
   );

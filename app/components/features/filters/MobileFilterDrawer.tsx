@@ -5,7 +5,7 @@ import { useFilterNuqs } from './useFilterNuqs';
 import { PriceRangeSlider } from './PriceRangeSlider';
 import { StockMinimumSlider } from './StockMinimumSlider';
 import { Checkbox } from '@/app/components/ui/Checkbox';
-import { centsToDisplay } from '@/lib/utils/price';
+import { resolvePriceBounds } from '@/lib/catalogue/priceBounds';
 
 interface FilterOption {
   value: string;
@@ -29,9 +29,7 @@ interface MobileFilterDrawerProps {
 export function MobileFilterDrawer({ isOpen, onClose, filters, priceRange: priceRangeData, maxStock }: MobileFilterDrawerProps) {
   const { isFilterActive, toggleFilter, priceRange, setPriceRange, clearPriceRange, stockMinimum, setStockMinimum, clearStockMinimum } = useFilterNuqs();
 
-  // Convert cents to dollars for slider display
-  const minPriceDollars = priceRangeData?.minPrice ? centsToDisplay(priceRangeData.minPrice) : 0;
-  const maxPriceDollars = priceRangeData?.maxPrice ? centsToDisplay(priceRangeData.maxPrice) : 10000;
+  const { min: minPriceDollars, max: maxPriceDollars } = resolvePriceBounds(priceRangeData);
 
   // Escape key handler
   useEffect(() => {

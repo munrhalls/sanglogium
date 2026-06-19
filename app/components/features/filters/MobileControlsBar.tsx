@@ -1,8 +1,8 @@
 "use client";
 
 import React from 'react';
-import { useSearchParams } from 'next/navigation';
 import { SortDropdown } from './SortDropdown';
+import { useFilterNuqs } from './useFilterNuqs';
 
 interface MobileControlsBarProps {
   productCount: number;
@@ -13,8 +13,7 @@ export function MobileControlsBar({
   productCount,
   onOpenFilters,
 }: MobileControlsBarProps) {
-  const searchParams = useSearchParams();
-  const activeFilterCount = searchParams.getAll('f').length;
+  const { activeFilterCount } = useFilterNuqs();
 
   return (
     <div
