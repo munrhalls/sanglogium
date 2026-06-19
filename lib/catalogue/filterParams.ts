@@ -3,13 +3,15 @@
 // Single source of truth for the category page's URL state (`sort`, `f`, `page`),
 // shared by the client hook (`useFilterNuqs`) and the server (`page.tsx`,
 // `getProductsByVfsKeys`). This module is ISOMORPHIC: it imports only from
-// `nuqs` (never `nuqs/server`) so it is safe in both client and server bundles.
+// `nuqs/server` so it is safe in both client and server bundles. Parser
+// utilities (createParser, parseAsString, parseAsInteger) are isomorphic in
+// nuqs/server — only the hooks (useQueryState) are client-only.
 //
 // Closes (Phase 1): A6 (shared sort config), B1 (sort allowlist — no raw GROQ
 // interpolation), B4 (comma-safe filter encoding), B12 (one parser everywhere).
 // Closes (Phase 4): A2 (deterministic, curatable "featured" order via T4.2).
 
-import { createParser, parseAsString, parseAsInteger } from "nuqs";
+import { createParser, parseAsString, parseAsInteger } from "nuqs/server";
 
 // ---------------------------------------------------------------------------
 // Sort contract
