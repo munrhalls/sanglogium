@@ -57,7 +57,7 @@ export function ImageGallery({ images, productName }: ImageGalleryProps) {
         {/* Main Image */}
         <button
           onClick={() => setIsZoomOpen(true)}
-          className="relative aspect-square bg-surface-productImage rounded-lg overflow-hidden w-full block cursor-zoom-in group"
+          className="relative aspect-square bg-surface-productImage rounded-lg overflow-hidden w-full max-w-[520px] mx-auto block cursor-zoom-in group"
           aria-label={`View ${productName} image ${selectedIndex + 1} in full size`}
         >
           <figure className="w-full h-full">
@@ -67,7 +67,7 @@ export function ImageGallery({ images, productName }: ImageGalleryProps) {
               alt={`${productName} - Image ${selectedIndex + 1}`}
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
+              className="object-contain transition-transform duration-300 group-hover:scale-105"
               priority={selectedIndex === 0}
             />
           </figure>
