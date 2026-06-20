@@ -52,6 +52,7 @@ export default async function Hero({ heroData }: HeroProps) {
 
   const desktopPosition = getPosition(heroData.backgroundImage);
   const mobilePosition = getPosition(mobileBackgroundImage);
+  const ctaLink = heroData.ctaLink || "/products/headphones";
 
   return (
     <section
@@ -106,7 +107,7 @@ export default async function Hero({ heroData }: HeroProps) {
             </div>
 
             <Link
-              href={heroData.ctaLink || "/products"}
+              href={ctaLink}
               className={cn(
                 "btn-primary px-10 py-4 lg:py-5",
                 "text-cta-hero font-bold"

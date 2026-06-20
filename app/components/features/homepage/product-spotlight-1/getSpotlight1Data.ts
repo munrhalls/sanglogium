@@ -3,6 +3,7 @@ import { cache } from "react";
 
 export interface Spotlight1Product {
   _id: string;
+  slug: string;
   name: string;
   brand: {
     _id: string;

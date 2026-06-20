@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Spotlight1Data } from "../product-spotlight-1/getSpotlight1Data";
 import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
 import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";
@@ -61,9 +62,9 @@ export default async function ProductSpotlight2({ spotlightData }: ProductSpotli
                             </p>
                         </div>
                         <div className="mt-8 flex justify-center relative z-10">
-                            <button className="border border-brand-200 text-brand-100 uppercase transition-colors duration-200 hover:bg-brand-800 hover:text-brand-50 cursor-pointer px-6 py-3">
+                            <Link href={`/product/${product.slug}`} className="border border-brand-200 text-brand-100 uppercase transition-colors duration-200 hover:bg-brand-800 hover:text-brand-50 cursor-pointer px-6 py-3">
                                 See More
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
