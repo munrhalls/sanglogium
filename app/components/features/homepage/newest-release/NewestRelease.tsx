@@ -2,6 +2,10 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { NewestReleaseData } from "@/app/lib/data/homepageBatch";
+import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
+import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";
+import { CarouselSlide } from "@/app/components/layout/carousel/CarouselSlide";
+import { CarouselPrevious, CarouselNext, CarouselDots } from "@/app/components/layout/carousel/CarouselControls";
 
 interface NewestReleaseProps {
   newestReleaseData: NewestReleaseData | null;
@@ -12,26 +16,39 @@ export default async function NewestRelease({ newestReleaseData }: NewestRelease
 
   const { productRef: product, promoTitle, promoSubtitle } = newestReleaseData;
 
-  const backgroundImage = product.image ?? product.gallery?.[0];
-
   return (
     <article className="w-full overflow-hidden">
       <div className="flex flex-col lg:flex-row lg:items-stretch min-h-[400px] lg:min-h-[560px]">
         {/* Image column */}
-        <div className="w-full lg:flex-hero min-h-[280px] lg:min-h-[560px] bg-surface-productImage flex items-center justify-center p-6 lg:p-8">
-          {backgroundImage?.asset?._id && (
-            <div className="max-w-[400px] w-full mx-auto">
-              <Image
-                src={backgroundImage.asset._id}
-                alt={product.name}
-                width={1024}
-                height={1024}
-                priority
-                className="object-contain w-full h-auto"
-                sizes="(max-width: 1024px) 100vw, 42vw"
-              />
+        <div className="w-full lg:flex-hero min-h-[280px] lg:min-h-[560px] bg-surface-productImage flex items-center justify-center relative overflow-hidden border border-border-secondary">
+          <Carousel itemsCount={product.images?.length || 1} breakpointMap={{ lgDesktop: 1, mdPortrait: 1, mobilePortrait: 1 }} className="w-full h-full overflow-visible">
+            <CarouselTrack className="w-full h-full">
+              {product.images?.map((image, idx) => (
+                <CarouselSlide
+                  key={`${product._id}-${idx}`}
+                  className="aspect-square w-full flex items-center justify-center pb-4 opacity-0 scale-95 transition-[opacity,transform] duration-500 ease-out data-[active=true]:opacity-100 data-[active=true]:scale-100"
+                >
+                  <Image
+                    src={image?.asset?._id ?? ""}
+                    alt={product.name}
+                    width={800}
+                    height={800}
+                    priority={idx === 0}
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="max-w-full max-h-[80%] w-auto h-auto object-contain mix-blend-multiply"
+                  />
+                </CarouselSlide>
+              ))}
+            </CarouselTrack>
+
+            <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-6">
+              <div className="flex gap-2">
+                <CarouselPrevious />
+                <CarouselNext />
+              </div>
+              <CarouselDots />
             </div>
-          )}
+          </Carousel>
         </div>
 
         {/* Text column */}

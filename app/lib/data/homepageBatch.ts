@@ -133,6 +133,7 @@ export interface NewestReleaseProduct {
   slug: string;
   image: { asset: { _id: string; url: string }; alt?: string };
   gallery: Array<{ asset: { _id: string; url: string }; alt?: string }>;
+  images?: Array<{ asset: { _id: string; url: string }; alt?: string }>;
 }
 
 export interface NewestReleaseData {
@@ -411,8 +412,20 @@ function processSpotlightData(data: SpotlightData | null): SpotlightData | null 
  * Note: NewestRelease uses gallery field directly, no merge needed for product shape.
  */
 function processNewestReleaseData(data: NewestReleaseData | null): NewestReleaseData | null {
-  // NewestReleaseData already has gallery in productRef, matches expected shape
-  return data;
+  if (!data || !data.productRef) return data;
+
+  const product = data.productRef;
+  if (!product.image) return data;
+
+  const images = [product.image];
+  if (product.gallery && product.gallery.length > 0) {
+    images.push(...product.gallery);
+  }
+
+  return {
+    ...data,
+    productRef: { ...product, images }
+  };
 }
 
 // ============================================================================
