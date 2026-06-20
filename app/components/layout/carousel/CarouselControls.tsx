@@ -58,28 +58,12 @@ export function CarouselDots({ className }: { className?: string }) {
   const context = useCarousel();
   if (!context) return null;
 
-  const { itemsCount, activeIndex, goTo } = context;
+  const { dotsCount, activeIndex, goTo } = context;
   const aIndex = Math.round(Number(activeIndex));
-
-  // Windowing: show max 5 dots, centered on active index
-  const maxVisible = 5;
-  let start = 0;
-  let end = itemsCount;
-
-  if (itemsCount > maxVisible) {
-    const half = Math.floor(maxVisible / 2);
-    start = Math.max(0, aIndex - half);
-    end = Math.min(itemsCount, start + maxVisible);
-    if (end - start < maxVisible) {
-      start = end - maxVisible;
-    }
-  }
-
-  const visibleIndices = Array.from({ length: end - start }, (_, i) => start + i);
 
   return (
     <div className={cn("flex justify-center items-center", className)} role="tablist">
-      {visibleIndices.map((i) => {
+      {Array.from({ length: dotsCount }).map((_, i) => {
         const isActive = i === aIndex;
 
         return (

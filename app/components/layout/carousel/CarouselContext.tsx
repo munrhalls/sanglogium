@@ -42,6 +42,7 @@ export function CarouselProvider({
   }, [breakpointMap]);
 
   const maxIndex = Math.max(0, itemsCount - visibleCount);
+  const dotsCount = maxIndex + 1;
   const canScrollPrevDerived = activeIndex > 0;
   const canScrollNextDerived = activeIndex < maxIndex;
 
@@ -86,8 +87,9 @@ export function CarouselProvider({
     activeIndex,
     itemsCount,
     visibleCount,
+    dotsCount,
     goTo,
-  }), [canScrollPrevDerived, canScrollNextDerived, activeIndex, itemsCount, scroll, visibleCount, goTo]);
+  }), [canScrollPrevDerived, canScrollNextDerived, activeIndex, itemsCount, scroll, visibleCount, dotsCount, goTo]);
 
   return (
     <CarouselContext.Provider value={value}>

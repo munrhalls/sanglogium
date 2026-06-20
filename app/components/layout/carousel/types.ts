@@ -24,6 +24,7 @@ export interface CarouselContextType {
   goTo: (index: number) => void;
   itemsCount: number;
   visibleCount: number;
+  dotsCount: number;
 }
 
 export interface CarouselProviderProps {
