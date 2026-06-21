@@ -22,6 +22,24 @@ const PlaceholderItem = ({ children }: { children: React.ReactNode }) => (
   <span className={cn("type-body", "cursor-default")}>{children}</span>
 );
 
+const FooterLink = ({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) => (
+  <Link
+    href={href}
+    className={cn(
+      "type-body",
+      "transition-opacity duration-200 hover:opacity-70"
+    )}
+  >
+    {children}
+  </Link>
+);
+
 const SocialIcon = ({
   icon: Icon,
   label,
@@ -108,10 +126,10 @@ export default function Footer() {
               <PlaceholderItem>Order Status</PlaceholderItem>
             </li>
             <li>
-              <PlaceholderItem>Shipping Policy</PlaceholderItem>
+              <FooterLink href="/shipping-policy">Shipping Policy</FooterLink>
             </li>
             <li>
-              <PlaceholderItem>Returns Policy</PlaceholderItem>
+              <FooterLink href="/returns-policy">Returns Policy</FooterLink>
             </li>
             <li>
               <Link href="/account" className={cn("type-body", "cursor-default")}>
@@ -128,10 +146,10 @@ export default function Footer() {
           <SectionTitle title="SUPPORT" />
           <ul className={cn("flex flex-col gap-2")}>
             <li>
-              <PlaceholderItem>Contact Us</PlaceholderItem>
+              <FooterLink href="/contact">Contact Us</FooterLink>
             </li>
             <li>
-              <PlaceholderItem>FAQ</PlaceholderItem>
+              <FooterLink href="/faq">FAQ</FooterLink>
             </li>
           </ul>
         </div>
@@ -146,13 +164,13 @@ export default function Footer() {
           <SectionTitle title="ABOUT US" />
           <ul className={cn("flex flex-col gap-2")}>
             <li>
-              <PlaceholderItem>About Us</PlaceholderItem>
+              <FooterLink href="/about-us">About Us</FooterLink>
             </li>
             <li>
-              <PlaceholderItem>Terms of Service</PlaceholderItem>
+              <FooterLink href="/terms-of-service">Terms of Service</FooterLink>
             </li>
             <li>
-              <PlaceholderItem>Privacy Policy</PlaceholderItem>
+              <FooterLink href="/privacy-policy">Privacy Policy</FooterLink>
             </li>
           </ul>
         </div>

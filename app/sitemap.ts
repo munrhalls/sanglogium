@@ -59,15 +59,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     const staticRoutes: SitemapEntry[] = [
       "", // Homepage
+      "/products", // All Products Page
       "/basket", // Cart Page
       "/checkout", // Checkout Page
       "/search", // Search Page
+      "/about-us", // About Us
+      "/contact", // Contact Us
+      "/faq", // FAQ
+      "/shipping-policy", // Shipping Policy
+      "/returns-policy", // Returns Policy
+      "/terms-of-service", // Terms of Service
+      "/privacy-policy", // Privacy Policy
     ].map((route) => ({
       url: `${SITE_URL}${route}`,
       lastModified: new Date(),
       changeFrequency:
-        route === "" ? ("daily" as ChangeFreq) : ("monthly" as ChangeFreq),
-      priority: route === "" ? 1.0 : 0.5,
+        route === "" || route === "/products"
+          ? ("daily" as ChangeFreq)
+          : ("monthly" as ChangeFreq),
+      priority:
+        route === ""
+          ? 1.0
+          : route === "/products"
+            ? 0.9
+            : 0.5,
     }));
 
     return [
