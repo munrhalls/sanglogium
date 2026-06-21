@@ -79,7 +79,7 @@ export default async function Featured({ featuredData }: FeaturedProps) {
   if (!featuredData || featuredData?.length === 0) return null;
 
   return (
-    <article className="relative w-full bg-brand-900">
+    <article className="relative w-full overflow-hidden bg-brand-900">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-0"

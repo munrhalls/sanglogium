@@ -32,7 +32,7 @@ export default async function IemsGallery({ iemsData }: IemsGalleryProps) {
             {iemsData.length > 6 && (
               <div className="flex justify-center pt-4">
                 <Link
-                  href="/products/iems"
+                  href="/products/headphones/monitors-iems"
                   className="btn-ghost text-sm"
                 >
                   View All In-Ear Monitors →

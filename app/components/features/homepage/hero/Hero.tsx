@@ -84,15 +84,14 @@ export default async function Hero({ heroData }: HeroProps) {
         <div
           className={cn(
             "relative z-10 h-full w-full",
-            "px-[clamp(1.5rem,5vw,5rem)] landscape:px-6",
-            "flex flex-col justify-center lg-touch:items-start lg-desktop:items-start",
-            "gap-6"
+            "px-[clamp(1.5rem,5vw,8rem)] max-lg:landscape:px-6",
+            "flex flex-col justify-center lg:justify-start lg-touch:items-start lg-desktop:items-start",
+            "gap-6 lg:pt-[22vh]"
           )}
         >
           <div
             className={cn(
               "flex max-w-xl flex-col items-start gap-3 md:gap-5",
-              "lg-touch:mb-44 lg-desktop:mb-64",
               "max-w-xl w-full",
               "landscape:max-w-full lg-touch:landscape:max-w-4xl lg-desktop:landscape:max-w-4xl",
             )}

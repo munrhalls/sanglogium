@@ -34,13 +34,13 @@ export default function IemCard({
             className="h-[70%] w-[70%] object-cover object-center transition-transform duration-300 group-hover:scale-105 xs:h-[60%] xs:w-[60%]"
           />
           <div className="absolute left-2 top-2 xs:top-4">
-            <span className="whitespace-nowrap text-[7px] font-bold uppercase tracking-editorial text-brand-900 xs:whitespace-normal xs:text-small">
+            <span className="text-small font-bold uppercase tracking-editorial text-brand-900">
               {product.brand.name}
             </span>
           </div>
           {product.stock > 0 && product.stock <= 5 && (
             <div className="absolute right-2 top-2 xs:top-4">
-              <span className="rounded-sm bg-warning-500/20 px-1.5 py-0.5 text-[7px] font-medium uppercase tracking-editorial text-warning-500 xs:text-small">
+              <span className="rounded-sm bg-warning-500/20 px-1.5 py-0.5 text-small font-medium uppercase tracking-editorial text-warning-500">
                 Only {product.stock} left
               </span>
             </div>
@@ -48,7 +48,6 @@ export default function IemCard({
         </div>
 
         <div className="flex flex-col px-4 xs:gap-1">
-          <p className="type-overline mb-1">In-Ear Monitors</p>
           <h3 className="type-body line-clamp-2 font-medium">{product.name}</h3>
           <p className={`type-caption ${stockStatus.color}`}>{stockStatus.text}</p>
         </div>

@@ -5,7 +5,7 @@ export default function IemsGalleryHeader() {
     <SectionHeader
       overline="In-Ear Monitors"
       title="IEMs"
-      href="/products/iems"
+      href="/products/headphones/monitors-iems"
     />
   );
 }
