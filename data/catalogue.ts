@@ -170,18 +170,28 @@ export const getCatalogueForNavigation = (): NavigationItem[] => {
       });
     }
 
-    // Prepend "View All" section for parent-category navigation
     if (rootItem.slug?.current) {
-      navigationItem.sections.unshift({
-        title: `All ${rootItem.title}`,
-        links: [{
-          label: `View All ${rootItem.title}`,
-          url: `/products/${rootItem.slug.current}`,
-          slug: rootItem.slug.current,
-        }],
-      });
+      navigationItem.sections = [
+        {
+          title: 'Overview',
+          links: [{
+            label: `View All ${rootItem.title}`,
+            url: `/products/${rootItem.slug.current}`,
+            slug: rootItem.slug.current,
+          }],
+        },
+        ...navigationItem.sections,
+      ];
     }
 
     return navigationItem;
   });
+};
+
+
+export const getAllLeafKeys = (): string[] => {
+  const data = catalogueIndex as unknown as CatalogueIndexData;
+  return Object.entries(data.slotMetadataMap)
+    .filter(([_, v]) => v.children.length === 0)
+    .map(([id]) => id);
 };

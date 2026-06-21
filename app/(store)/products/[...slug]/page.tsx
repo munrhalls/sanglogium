@@ -59,10 +59,10 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   }
 
   // Build category path for overline (e.g., "Audio Electronics")
-  const categoryPath = slug[0]
-    .split('-')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+  // Only show overline on nested paths — parent category pages don't need a redundant heading
+  const categoryPath = slug.length > 1
+    ? slug[0].split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+    : undefined;
 
   return (
     <div className="mx-auto w-full max-w-content px-4 md:px-8 pb-12">

@@ -8,8 +8,8 @@ interface SearchEmptyProps {
 
 const CATEGORY_SUGGESTIONS = [
   { label: 'Headphones', href: '/products/headphones' },
-  { label: 'IEMs', href: '/products/iems' },
-  { label: 'DACs & Amps', href: '/products/dacs-and-amps' },
+  { label: 'IEMs', href: '/products/headphones/monitors-iems' },
+  { label: 'Audio Electronics', href: '/products/audio-electronics' },
   { label: 'Accessories', href: '/products/accessories' },
 ];
 
