@@ -2,19 +2,39 @@
 
 import { useState } from "react";
 
+type Status = "idle" | "submitting" | "success" | "error";
+
 export default function NewsletterSignup() {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [status, setStatus] = useState<Status>("idle");
+  const [message, setMessage] = useState("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("submitting");
+    setMessage("");
 
-    // TODO: wire to newsletter API when available
-    setTimeout(() => {
+    try {
+      const res = await fetch("/api/newsletter/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        setStatus("error");
+        setMessage(data?.error ?? "Something went wrong. Please try again.");
+        return;
+      }
+
       setStatus("success");
       setEmail("");
-    }, 500);
+      setMessage("Thanks for subscribing!");
+    } catch {
+      setStatus("error");
+      setMessage("Network error. Please try again.");
+    }
   };
 
   return (
@@ -39,7 +59,12 @@ export default function NewsletterSignup() {
         </button>
       </div>
       {status === "success" && (
-        <p className="type-caption text-brand-400 mt-2">Thanks for subscribing!</p>
+        <p className="type-caption text-brand-400 mt-2">{message}</p>
+      )}
+      {status === "error" && (
+        <p className="type-caption text-red-400 mt-2" role="alert">
+          {message}
+        </p>
       )}
     </form>
   );
