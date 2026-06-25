@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-19T16:45:16.883Z",
+  "generatedAt": "2026-06-22T13:20:15.093Z",
   "slugToIdMap": {
     "headphones": "ugyeto8653n495dpf89nzoar",
     "open-back": "o7c6baiuobsr7ni2y2vf22sh",
@@ -23,16 +23,18 @@
     "audio-electronics/portable-amps": "ipz8oe0elii0vm2voxsbgsw6",
     "bluetooth-dac-amps": "2Q3Hkst6W23iaT5J8DYRdm",
     "audio-electronics/bluetooth-dac-amps": "2Q3Hkst6W23iaT5J8DYRdm",
+    "digital-sources": "lkuqr2n1gpeivrvxisnfs3ot",
+    "audio-electronics/digital-sources": "lkuqr2n1gpeivrvxisnfs3ot",
     "standalone-dacs": "mpni93r13d9yo2vn5moexlkp",
-    "audio-electronics/standalone-dacs": "mpni93r13d9yo2vn5moexlkp",
+    "audio-electronics/digital-sources/standalone-dacs": "mpni93r13d9yo2vn5moexlkp",
     "dac-amp-combos": "o37u0yjphzt3qu91ewnww2yj",
-    "audio-electronics/dac-amp-combos": "o37u0yjphzt3qu91ewnww2yj",
+    "audio-electronics/digital-sources/dac-amp-combos": "o37u0yjphzt3qu91ewnww2yj",
     "usb-c-dacs": "dW7bkxuW7lwltD3OAxQBo5",
-    "audio-electronics/usb-c-dacs": "dW7bkxuW7lwltD3OAxQBo5",
+    "audio-electronics/digital-sources/usb-c-dacs": "dW7bkxuW7lwltD3OAxQBo5",
     "digital-players-daps": "o9igtdq1g5oqaahpa0zvq238",
-    "audio-electronics/digital-players-daps": "o9igtdq1g5oqaahpa0zvq238",
+    "audio-electronics/digital-sources/digital-players-daps": "o9igtdq1g5oqaahpa0zvq238",
     "network-streamers": "npwbgqg3v4t5qe95rg35wte0",
-    "audio-electronics/network-streamers": "npwbgqg3v4t5qe95rg35wte0",
+    "audio-electronics/digital-sources/network-streamers": "npwbgqg3v4t5qe95rg35wte0",
     "accessories": "j9ozs17mc0b1nv2gqn2rvmg1",
     "headphone-cables": "vnrj2n32p172vcje1tt3s4ls",
     "accessories/headphone-cables": "vnrj2n32p172vcje1tt3s4ls",
@@ -288,7 +290,7 @@
     "lkuqr2n1gpeivrvxisnfs3ot": {
       "title": "Digital Sources",
       "url": "#",
-      "slug": "",
+      "slug": "digital-sources",
       "breadcrumbs": [],
       "children": [
         "mpni93r13d9yo2vn5moexlkp",
@@ -298,82 +300,82 @@
         "npwbgqg3v4t5qe95rg35wte0"
       ],
       "type": "header",
-      "path": "/audio-electronics",
+      "path": "/audio-electronics/digital-sources",
       "sortOrder": 0
     },
     "mpni93r13d9yo2vn5moexlkp": {
       "title": "Standalone DACs",
-      "url": "/shop/audio-electronics/standalone-dacs",
+      "url": "/shop/audio-electronics/digital-sources/standalone-dacs",
       "slug": "standalone-dacs",
       "breadcrumbs": [
         {
           "label": "Standalone DACs",
-          "url": "/shop/audio-electronics/standalone-dacs"
+          "url": "/shop/audio-electronics/digital-sources/standalone-dacs"
         }
       ],
       "children": [],
       "type": "link",
-      "path": "/audio-electronics/standalone-dacs",
+      "path": "/audio-electronics/digital-sources/standalone-dacs",
       "sortOrder": 0
     },
     "o37u0yjphzt3qu91ewnww2yj": {
       "title": "DAC/Amp Combos",
-      "url": "/shop/audio-electronics/dac-amp-combos",
+      "url": "/shop/audio-electronics/digital-sources/dac-amp-combos",
       "slug": "dac-amp-combos",
       "breadcrumbs": [
         {
           "label": "DAC/Amp Combos",
-          "url": "/shop/audio-electronics/dac-amp-combos"
+          "url": "/shop/audio-electronics/digital-sources/dac-amp-combos"
         }
       ],
       "children": [],
       "type": "link",
-      "path": "/audio-electronics/dac-amp-combos",
+      "path": "/audio-electronics/digital-sources/dac-amp-combos",
       "sortOrder": 0
     },
     "dW7bkxuW7lwltD3OAxQBo5": {
       "title": "USB-C/Dongle DACs",
-      "url": "/shop/audio-electronics/usb-c-dacs",
+      "url": "/shop/audio-electronics/digital-sources/usb-c-dacs",
       "slug": "usb-c-dacs",
       "breadcrumbs": [
         {
           "label": "USB-C/Dongle DACs",
-          "url": "/shop/audio-electronics/usb-c-dacs"
+          "url": "/shop/audio-electronics/digital-sources/usb-c-dacs"
         }
       ],
       "children": [],
       "type": "link",
-      "path": "/audio-electronics/usb-c-dacs",
+      "path": "/audio-electronics/digital-sources/usb-c-dacs",
       "sortOrder": 0
     },
     "o9igtdq1g5oqaahpa0zvq238": {
       "title": "Digital Players (DAPs)",
-      "url": "/shop/audio-electronics/digital-players-daps",
+      "url": "/shop/audio-electronics/digital-sources/digital-players-daps",
       "slug": "digital-players-daps",
       "breadcrumbs": [
         {
           "label": "Digital Players (DAPs)",
-          "url": "/shop/audio-electronics/digital-players-daps"
+          "url": "/shop/audio-electronics/digital-sources/digital-players-daps"
         }
       ],
       "children": [],
       "type": "link",
-      "path": "/audio-electronics/digital-players-daps",
+      "path": "/audio-electronics/digital-sources/digital-players-daps",
       "sortOrder": 0
     },
     "npwbgqg3v4t5qe95rg35wte0": {
       "title": "Network Streamers",
-      "url": "/shop/audio-electronics/network-streamers",
+      "url": "/shop/audio-electronics/digital-sources/network-streamers",
       "slug": "network-streamers",
       "breadcrumbs": [
         {
           "label": "Network Streamers",
-          "url": "/shop/audio-electronics/network-streamers"
+          "url": "/shop/audio-electronics/digital-sources/network-streamers"
         }
       ],
       "children": [],
       "type": "link",
-      "path": "/audio-electronics/network-streamers",
+      "path": "/audio-electronics/digital-sources/network-streamers",
       "sortOrder": 0
     },
     "j9ozs17mc0b1nv2gqn2rvmg1": {
@@ -730,6 +732,10 @@
           "_type": "catalogueItem",
           "title": "Digital Sources",
           "type": "header",
+          "slug": {
+            "_type": "slug",
+            "current": "digital-sources"
+          },
           "children": [
             {
               "id": "mpni93r13d9yo2vn5moexlkp",
