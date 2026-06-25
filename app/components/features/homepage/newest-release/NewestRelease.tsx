@@ -58,12 +58,12 @@ export default async function NewestRelease({ newestReleaseData }: NewestRelease
               <>
                 {/* Arrows: vertical center, left and right edges */}
                 <div className="absolute inset-y-0 left-0 right-0 flex items-center justify-between px-3 pointer-events-none">
-                  <CarouselPrevious className="pointer-events-auto rounded-sm border-border-primary bg-transparent text-secondary-300 hover:bg-transparent hover:text-brand-100" />
-                  <CarouselNext className="pointer-events-auto rounded-sm border-border-primary bg-transparent text-secondary-300 hover:bg-transparent hover:text-brand-100" />
+                  <CarouselPrevious iconStyle="chevron" className="pointer-events-auto rounded-sm border-border-primary bg-transparent text-secondary-300 hover:bg-transparent hover:text-brand-100" />
+                  <CarouselNext iconStyle="chevron" className="pointer-events-auto rounded-sm border-border-primary bg-transparent text-secondary-300 hover:bg-transparent hover:text-brand-100" />
                 </div>
                 {/* Dots: bottom center */}
                 <div className="absolute bottom-4 left-0 right-0 flex justify-center">
-                  <CarouselDots className="[&>button]:rounded-sm [&>button>span]:rounded-sm [&>button[aria-selected=true]>span]:bg-brand-200 [&>button[aria-selected=false]>span]:border [&>button[aria-selected=false]>span]:border-brand-400 [&>button[aria-selected=false]>span]:bg-transparent" />
+                  <CarouselDots className="[&>button[aria-selected=true]>span]:bg-brand-200 [&>button[aria-selected=false]>span]:border [&>button[aria-selected=false]>span]:border-brand-400 [&>button[aria-selected=false]>span]:bg-transparent" />
                 </div>
               </>
             )}

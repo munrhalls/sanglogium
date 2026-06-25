@@ -142,9 +142,9 @@ export default async function Featured({ featuredData }: FeaturedProps) {
               </div>
 
               <div className="flex items-center justify-center gap-3">
-                <CarouselPrevious className="max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent" />
+                <CarouselPrevious iconStyle="chevron" className="max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent" />
                 <CarouselDots />
-                <CarouselNext className="max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent" />
+                <CarouselNext iconStyle="chevron" className="max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent" />
               </div>
             </div>
           </Carousel>

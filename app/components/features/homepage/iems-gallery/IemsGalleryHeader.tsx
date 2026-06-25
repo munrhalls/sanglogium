@@ -1,11 +1,12 @@
 import SectionHeader from "../shared/SectionHeader";
 
-export default function IemsGalleryHeader() {
+export default function IemsGalleryHeader({ href }: { href?: string }) {
   return (
     <SectionHeader
       overline="In-Ear Monitors"
       title="IEMs"
-      className="mb-6 md:mb-10"
+      href={href}
+      className="mb-0"
     />
   );
 }

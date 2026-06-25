@@ -4,15 +4,15 @@ import React from "react";
 import {
   CaretLeftIcon,
   CaretRightIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
+  ArrowLeft,
+  ArrowRight,
 } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils/tailwind";
 import { useCarousel } from "./CarouselContext";
 
 const BTN_BASE = cn(
   "group relative flex h-11 w-11 items-center justify-center rounded-full",
-  "bg-transparent border border-border-secondary",
+  "bg-transparent",
   "text-brand-100 transition-all duration-200",
   "hover:bg-brand-100/10 hover:text-brand-50 active:scale-110",
   "disabled:pointer-events-none disabled:opacity-40",
@@ -28,7 +28,7 @@ export function CarouselPrevious({ className, iconStyle = "caret", ...props }: C
   if (!context) return null;
 
   const { scrollPrev, canScrollPrev } = context;
-  const Icon = iconStyle === "chevron" ? ChevronLeftIcon : CaretLeftIcon;
+  const Icon = iconStyle === "chevron" ? ArrowLeft : CaretLeftIcon;
 
   return (
     <button
@@ -53,7 +53,7 @@ export function CarouselNext({ className, iconStyle = "caret", ...props }: Carou
   if (!context) return null;
 
   const { scrollNext, canScrollNext } = context;
-  const Icon = iconStyle === "chevron" ? ChevronRightIcon : CaretRightIcon;
+  const Icon = iconStyle === "chevron" ? ArrowRight : CaretRightIcon;
 
   return (
     <button
@@ -118,11 +118,11 @@ export function CarouselDots({ className, variant = "default" }: CarouselDotsPro
             aria-selected={isActive}
             aria-label={`Go to slide ${i + 1}`}
             onClick={() => goTo(i)}
-            className="mx-1 flex h-4 w-4 cursor-pointer touch-manipulation items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400/50"
+            className="mx-1 flex h-4 w-4 cursor-pointer touch-manipulation items-center justify-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400/50"
           >
             <span
               className={cn(
-                "block h-2 w-2 rounded-full transition-colors duration-300",
+                "block h-2 w-2 rounded-sm transition-colors duration-300",
                 isActive ? dotColor.active : dotColor.inactive
               )}
             />

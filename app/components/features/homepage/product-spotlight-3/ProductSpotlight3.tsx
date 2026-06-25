@@ -85,7 +85,7 @@ export default function ProductSpotlight3({ spotlightData }: ProductSpotlight3Pr
 
                 <CarouselPrevious
                   iconStyle="chevron"
-                  className="max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent max-lg:text-brand-800 max-lg:focus-visible:ring-brand-800/50"
+                  className="text-brand-800 hover:bg-brand-800/10 hover:text-brand-700 focus-visible:ring-brand-800/50 max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent"
                 />
 
                 <div className="lg:hidden">
@@ -97,7 +97,7 @@ export default function ProductSpotlight3({ spotlightData }: ProductSpotlight3Pr
 
                 <CarouselNext
                   iconStyle="chevron"
-                  className="max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent max-lg:text-brand-800 max-lg:focus-visible:ring-brand-800/50"
+                  className="text-brand-800 hover:bg-brand-800/10 hover:text-brand-700 focus-visible:ring-brand-800/50 max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent"
                 />
 
               </div>

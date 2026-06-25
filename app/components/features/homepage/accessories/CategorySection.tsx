@@ -67,9 +67,9 @@ export default function CategorySection({ category, items }: CategorySectionProp
         </div>
 
         <div className="flex md:hidden w-full items-center justify-between mt-4 px-2">
-          <CarouselPrevious />
+          <CarouselPrevious iconStyle="chevron" />
           <CarouselDots />
-          <CarouselNext />
+          <CarouselNext iconStyle="chevron" />
         </div>
         <CarouselDots className="hidden md:flex mt-2 justify-center" />
       </div>

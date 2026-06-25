@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { sanityFetch } from "@/sanity-cms/lib/client";
 import { Carousel } from '@/app/components/layout/carousel/CarouselRoot';
 import { CarouselTrack } from '@/app/components/layout/carousel/CarouselTrack';
@@ -41,8 +42,14 @@ export default async function DACs({ dacsData }: DacsProps) {
             itemsCount={dacsData.length}
             breakpointMap={dacsBreakpointMap}
           >
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-4 md:gap-6">
               <DacsHeader />
+              <Link
+                href="/products/audio-electronics/digital-sources"
+                className="type-caption pl-9 text-brand-400 transition-colors hover:text-brand-100 md:pl-0"
+              >
+                View All <span aria-hidden="true">&rsaquo;</span>
+              </Link>
 
               <div className="relative">
                 <CarouselTrack className="w-full mx-0 items-stretch md:-mx-3 md:w-[calc(100%+1.5rem)]">
@@ -65,9 +72,9 @@ export default async function DACs({ dacsData }: DacsProps) {
               </div>
 
               <div className="flex md:hidden w-full items-center justify-between mt-4 px-2">
-                <CarouselPrevious />
+                <CarouselPrevious iconStyle="chevron" />
                 <CarouselDots />
-                <CarouselNext />
+                <CarouselNext iconStyle="chevron" />
               </div>
               <CarouselDots className="hidden md:flex mt-2 justify-center" />
             </div>
