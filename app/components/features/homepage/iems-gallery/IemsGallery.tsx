@@ -21,10 +21,10 @@ export default async function IemsGallery({ iemsData }: IemsGalleryProps) {
         <div className="absolute bottom-[10%] right-[10%] w-[30%] h-[30%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-10" />
       </div>
       <div className="relative z-10">
-        <div className="mx-auto max-w-content py-16">
+        <div className="mx-auto max-w-content px-6 py-16 lg:px-8">
           <div className="flex flex-col gap-8">
             <IemsGalleryHeader />
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-3 md:gap-6">
               {displayed.map((iem, idx) => (
                 <IemCard key={iem._id} product={iem} idx={idx} />
               ))}

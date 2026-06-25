@@ -1,6 +1,6 @@
 export default function TrustBar() {
   const items = [
-    "Free Global Shipping",
+    "Domestic Multi-Carrier Shipping",
     "2-Year Warranty",
     "Expert Support",
   ];

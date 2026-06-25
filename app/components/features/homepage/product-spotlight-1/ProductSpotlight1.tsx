@@ -16,10 +16,10 @@ export default async function ProductSpotlight1({ spotlightData }: ProductSpotli
     const { productRef: product, promoTitle, promoSubtitle, promoText } = spotlightData;
 
     return (
-        <article className="w-full relative overflow-hidden py-24 bg-surface-page">
+        <article className="w-full relative overflow-hidden py-12 md:py-24 bg-surface-page">
             <div className="max-w-content mx-auto relative z-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-20 items-stretch min-h-[400px] md:min-h-[500px]">
-                    <div className="w-full h-full bg-surface-productImage rounded-none flex items-center justify-center relative overflow-hidden border border-border-secondary">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-8 lg:gap-20 items-stretch min-h-[400px] md:min-h-[500px]">
+                    <div className="order-2 md:order-1 w-full h-full bg-surface-productImage rounded-none flex items-center justify-center relative overflow-hidden border border-border-secondary">
                         <Carousel itemsCount={product.images?.length || 1} breakpointMap={{ lgDesktop: 1, mdPortrait: 1, mobilePortrait: 1 }} className="w-full h-full overflow-visible">
                             <CarouselTrack className="w-full h-full">
                                 {product.images?.map((image, idx) => (
@@ -51,12 +51,23 @@ export default async function ProductSpotlight1({ spotlightData }: ProductSpotli
                         </Carousel>
                     </div>
 
-                    <div className="w-full h-full bg-surface-subtle rounded-none flex flex-col justify-center p-8 lg:p-12 relative overflow-hidden border border-border-secondary shadow-cardDark">
+                    <div className="order-1 md:order-2 w-full h-full bg-surface-subtle rounded-none flex flex-col justify-center p-8 lg:p-12 relative overflow-hidden border border-border-secondary shadow-cardDark">
                         <div aria-hidden="true" className="absolute inset-0 z-0 pointer-events-none">
-                            <div className="absolute -top-[20%] -right-[20%] w-[140%] h-[140%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-5" />
-                            <div className="absolute top-[10%] -left-[10%] w-[80%] h-[80%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-10" />
-                            <div className="absolute bottom-[5%] right-[5%] w-[40%] h-[40%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-20" />
+                            <div className="spotlight-whirl absolute inset-0 will-change-transform">
+                                <div className="spotlight-orbit-1 absolute -top-[20%] -right-[20%] w-[140%] h-[140%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-5 will-change-transform" />
+                                <div className="spotlight-orbit-2 absolute top-[10%] -left-[10%] w-[80%] h-[80%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-10 will-change-transform" />
+                                <div className="spotlight-orbit-3 absolute bottom-[5%] right-[5%] w-[40%] h-[40%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-20 will-change-transform" />
+                            </div>
                         </div>
+
+                        <div
+                            aria-hidden="true"
+                            className="pointer-events-none absolute inset-0 z-[5]"
+                            style={{
+                                background:
+                                    "radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.04) 100%)",
+                            }}
+                        />
 
                         <div className="flex flex-col relative z-10">
                             <span className="text-accent-500 uppercase text-sm tracking-widest mb-1 section-header-anchor">{product.brand.name}</span>

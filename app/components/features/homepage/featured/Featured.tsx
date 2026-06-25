@@ -37,7 +37,7 @@ const featuredBreakpointMap = {
 export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
   <article className="card-product-dark flex h-full flex-col gap-4">
     <Link href={`/product/${product.slug}`} className="flex flex-grow flex-col">
-      <figure className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden bg-surface-productImage p-6">
+      <figure className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-lg bg-surface-productImage p-6">
         <span className="absolute left-4 top-4 z-10 type-caption text-brand-900">
           {product.brand.name}
         </span>
@@ -49,6 +49,14 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
           priority={idx === 0}
           loading={idx === 0 ? "eager" : "lazy"}
           className="h-full w-full object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-110"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-[5] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.05)]"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.04) 100%)",
+          }}
         />
       </figure>
 
@@ -84,18 +92,40 @@ export default async function Featured({ featuredData }: FeaturedProps) {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-0"
       >
-        <div className="absolute -right-[10%] -top-[10%] h-[120%] w-[120%] bg-fractal-ring bg-[length:100%] bg-no-repeat opacity-5" />
-        <div className="absolute -left-[5%] top-[5%] h-[60%] w-[60%] bg-fractal-ring bg-[length:100%] bg-no-repeat opacity-10" />
-        <div className="absolute bottom-[2.5%] right-[2.5%] h-[30%] w-[30%] bg-fractal-ring bg-[length:100%] bg-no-repeat opacity-10" />
+        {/* Far plane — deepest, recessed back-plane (rendered first = painted behind).
+            Encompassing + smallest feature scale + dimmest opacity + slowest spin so it
+            reads as distant ambient texture and never competes with the foreground. */}
+        <div className="fractal-spin-far absolute inset-[-25%] will-change-transform">
+          <div className="fractal-depth-far h-full w-full bg-fractal-ring bg-center bg-no-repeat bg-[length:70%] opacity-[0.04] will-change-transform" />
+        </div>
+        {/* Layer 1 — large ring, CW 43s spin / 17s depth-pulse */}
+        <div className="fractal-spin-L1 absolute -right-[10%] -top-[10%] h-[120%] w-[120%] will-change-transform">
+          <div className="fractal-depth-L1 h-full w-full bg-fractal-ring bg-[length:100%] bg-no-repeat opacity-5 will-change-transform" />
+        </div>
+        {/* Layer 2 — medium ring, CCW 37s spin / 13s depth-pulse */}
+        <div className="fractal-spin-L2 absolute -left-[5%] top-[5%] h-[60%] w-[60%] will-change-transform">
+          <div className="fractal-depth-L2 h-full w-full bg-fractal-ring bg-[length:100%] bg-no-repeat opacity-10 will-change-transform" />
+        </div>
+        {/* Layer 3 — small ring, CW 31s spin (−7s phase) / 11s depth-pulse */}
+        <div className="fractal-spin-L3 absolute bottom-[2.5%] right-[2.5%] h-[30%] w-[30%] will-change-transform">
+          <div className="fractal-depth-L3 h-full w-full bg-fractal-ring bg-[length:100%] bg-no-repeat opacity-10 will-change-transform" />
+        </div>
       </div>
       <div className="relative z-10">
-        <div className="mx-auto max-w-content py-16">
+        <div className="mx-auto max-w-content px-6 py-10 md:py-16 lg:px-8">
           <Carousel
             itemsCount={featuredData.length}
             breakpointMap={featuredBreakpointMap}
           >
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-4 md:gap-6">
               <FeaturedHeader />
+
+              <Link
+                href="/products/headphones"
+                className="type-overline text-brand-400 transition-colors hover:text-brand-100"
+              >
+                View All <span aria-hidden="true">&rsaquo;</span>
+              </Link>
 
               <div className="relative">
                 <CarouselTrack className="mx-0 w-full items-stretch md:-mx-3 md:w-[calc(100%+1.5rem)]">
@@ -109,15 +139,13 @@ export default async function Featured({ featuredData }: FeaturedProps) {
                   ))}
                 </CarouselTrack>
 
-                <div className="absolute left-0 top-1/2 z-10 -translate-y-1/2 md:-left-5">
-                  <CarouselPrevious />
-                </div>
-                <div className="absolute right-0 top-1/2 z-10 -translate-y-1/2 md:-right-5">
-                  <CarouselNext />
-                </div>
               </div>
 
-              <CarouselDots className="mt-2" />
+              <div className="flex items-center justify-center gap-6">
+                <CarouselPrevious />
+                <CarouselDots />
+                <CarouselNext />
+              </div>
             </div>
           </Carousel>
         </div>

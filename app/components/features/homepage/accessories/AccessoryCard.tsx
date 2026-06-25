@@ -17,10 +17,10 @@ export default function AccessoryCard({
   if (!item) return null;
 
   return (
-    <article className="card-product-dark flex h-full flex-col gap-4">
+    <article className="card-product-dark flex h-full flex-col gap-3 p-2 xs:p-3 md:p-6">
       <Link href={`/product/${item.slug}`} className="block">
-        <figure className="rounded-none relative mb-4 flex aspect-[4/3] w-full items-center justify-center overflow-hidden bg-surface-productImage p-6 md:px-4 md:pb-4 md:pt-12">
-          <span className="absolute left-4 top-4 text-small font-bold uppercase tracking-editorial text-brand-900">
+        <figure className="relative mb-2 flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-lg bg-surface-productImage p-2 xs:p-3 md:px-4 md:pb-4 md:pt-12">
+          <span className="absolute left-2 top-2 xs:left-4 xs:top-4 text-small font-bold uppercase tracking-editorial text-brand-900">
             {item.brand.name}
           </span>
           <Image
@@ -35,9 +35,9 @@ export default function AccessoryCard({
           />
         </figure>
 
-        <div className="flex flex-grow flex-col px-4 pb-4 pt-2">
-          <div className="flex min-h-[5.5rem] flex-col">
-            {categoryLabel && <p className="type-overline mb-1">{categoryLabel}</p>}
+        <div className="flex flex-grow flex-col pb-1 pt-1 md:px-4 md:pb-4 md:pt-2">
+          <div className="flex flex-col">
+            {categoryLabel && <p className="hidden xs:block type-overline mb-1">{categoryLabel}</p>}
             <h3 className="type-body line-clamp-2 font-medium">
               {item.name}
             </h3>
@@ -48,7 +48,7 @@ export default function AccessoryCard({
         </div>
       </Link>
 
-      <div className="px-4 pb-4">
+      <div className="md:px-4 md:pb-4">
         <BasketControls
           productId={item._id}
           isBasketPage={false}

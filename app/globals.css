@@ -119,6 +119,84 @@ input[type="range"]::-moz-range-thumb {
   }
 }
 
+/* Fractal Ring — 3D-illusion animations (Featured section) */
+@keyframes fractal-cw {
+  to { transform: rotate(360deg); }
+}
+@keyframes fractal-ccw {
+  to { transform: rotate(-360deg); }
+}
+@keyframes fractal-depth {
+  0%, 100% { transform: scaleX(1); }
+  50%       { transform: scaleX(0.55); }
+}
+/* Gentler depth pulse for the distant far plane (less motion = reads as further back) */
+@keyframes fractal-depth-soft {
+  0%, 100% { transform: scaleX(1); }
+  50%       { transform: scaleX(0.82); }
+}
+
+/* Layer 1 — large ring, CW, 211s (cloud-like drift) */
+.fractal-spin-L1  { animation: fractal-cw    211s linear        infinite; }
+.fractal-depth-L1 { animation: fractal-depth  83s ease-in-out   infinite; }
+
+/* Layer 2 — medium ring, CCW, 181s (cloud-like drift) */
+.fractal-spin-L2  { animation: fractal-ccw   181s linear        infinite; }
+.fractal-depth-L2 { animation: fractal-depth  67s ease-in-out   infinite; }
+
+/* Layer 3 — small ring, CW, 151s (phase-shifted by -31s) */
+.fractal-spin-L3  { animation: fractal-cw    151s linear  -31s  infinite; }
+.fractal-depth-L3 { animation: fractal-depth  53s ease-in-out   infinite; }
+
+/* Far plane — deepest, recessed back-plane. CCW, 263s (slowest = most distant);
+   gentle 97s depth pulse. 263 & 97 are primes distinct from the layers above, so
+   the combined phase drifts for ~7 hours before repeating (organic, non-mechanical). */
+.fractal-spin-far  { animation: fractal-ccw        263s linear      infinite; }
+.fractal-depth-far { animation: fractal-depth-soft  97s ease-in-out infinite; }
+
+/* Product Spotlight — extremely slow galaxy / whirlwind (reuses fractal-cw / fractal-ccw).
+   .spotlight-whirl revolves the whole ring group around the shared center (galaxy orbit);
+   each ring then counter-drifts at a different prime-second rate so the layers shear past
+   one another (the subtle whirlwind tint). Inner ring is fastest, like galactic rotation. */
+.spotlight-whirl   { animation: fractal-cw  601s linear infinite; }
+.spotlight-orbit-1 { animation: fractal-ccw 467s linear infinite; }
+.spotlight-orbit-2 { animation: fractal-cw  389s linear infinite; }
+.spotlight-orbit-3 { animation: fractal-ccw 311s linear infinite; }
+/* Reduced-motion breathe keyframes — each pulses WITHIN its layer's true base
+   opacity so the rings stay whisper-faint (premium distant texture), never bright.
+   Base opacities: far 0.04 · L1 0.05 · L2/L3 0.10. */
+@keyframes fractal-breathe-far {
+  0%, 100% { opacity: 0.03; }
+  50%       { opacity: 0.05; }
+}
+@keyframes fractal-breathe-l1 {
+  0%, 100% { opacity: 0.04; }
+  50%       { opacity: 0.06; }
+}
+@keyframes fractal-breathe-mid {
+  0%, 100% { opacity: 0.08; }
+  50%       { opacity: 0.12; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fractal-spin-L1,
+  .fractal-spin-L2,
+  .fractal-spin-L3,
+  .fractal-spin-far,
+  .fractal-depth-L1,
+  .fractal-depth-L2,
+  .fractal-depth-L3,
+  .fractal-depth-far {
+    animation: none;
+    transform: none;
+  }
+
+  .fractal-depth-L1  { animation: fractal-breathe-l1  83s ease-in-out infinite; }
+  .fractal-depth-L2  { animation: fractal-breathe-mid 67s ease-in-out infinite; }
+  .fractal-depth-L3  { animation: fractal-breathe-mid 53s ease-in-out infinite; }
+  .fractal-depth-far { animation: fractal-breathe-far 97s ease-in-out infinite; }
+}
+
 /* 3. Animations */
 
 .group\/animation-settle * {

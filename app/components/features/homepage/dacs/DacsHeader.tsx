@@ -5,7 +5,7 @@ export default function DacsHeader() {
     <SectionHeader
       overline="DAC & Amplifiers"
       title="Digital Converters"
-      href="/products/dacs-and-amps"
+      href="/products/audio-electronics/digital-sources"
     />
   );
 }

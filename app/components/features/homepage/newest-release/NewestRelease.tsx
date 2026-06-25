@@ -24,10 +24,10 @@ export default async function NewestRelease({ newestReleaseData }: NewestRelease
 
   return (
     <article className="w-full overflow-hidden">
-      <div className="flex flex-col lg:flex-row lg:items-stretch min-h-[400px] lg:min-h-[560px]">
+      <div className="flex flex-col-reverse lg:flex-row lg:items-stretch min-h-[400px] lg:min-h-[560px]">
 
         {/* Image column */}
-        <div className="w-full lg:flex-hero min-h-[280px] lg:min-h-[560px] bg-surface-productImage relative overflow-hidden border border-border-secondary">
+        <div className="w-full lg:w-1/2 min-h-[280px] lg:min-h-[560px] bg-brand-700 relative overflow-hidden border border-border-secondary">
           <Carousel
             itemsCount={images.length || 1}
             breakpointMap={{ lgDesktop: 1, mdPortrait: 1, mobilePortrait: 1 }}
@@ -47,8 +47,8 @@ export default async function NewestRelease({ newestReleaseData }: NewestRelease
                     width={800}
                     height={800}
                     priority={idx === 0}
-                    sizes="(max-width: 1024px) 100vw, 42vw"
-                    className="max-w-full max-h-full w-auto h-auto object-contain mix-blend-multiply"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="max-w-full max-h-full w-auto h-auto object-contain"
                   />
                 </CarouselSlide>
               ))}
@@ -58,12 +58,12 @@ export default async function NewestRelease({ newestReleaseData }: NewestRelease
               <>
                 {/* Arrows: vertical center, left and right edges */}
                 <div className="absolute inset-y-0 left-0 right-0 flex items-center justify-between px-3 pointer-events-none">
-                  <CarouselPrevious className="pointer-events-auto" />
-                  <CarouselNext className="pointer-events-auto" />
+                  <CarouselPrevious className="pointer-events-auto rounded-sm border-border-primary bg-transparent text-secondary-300 hover:bg-transparent hover:text-brand-100" />
+                  <CarouselNext className="pointer-events-auto rounded-sm border-border-primary bg-transparent text-secondary-300 hover:bg-transparent hover:text-brand-100" />
                 </div>
                 {/* Dots: bottom center */}
                 <div className="absolute bottom-4 left-0 right-0 flex justify-center">
-                  <CarouselDots />
+                  <CarouselDots className="[&>button]:rounded-sm [&>button>span]:rounded-sm [&>button[aria-selected=true]>span]:bg-brand-200 [&>button[aria-selected=false]>span]:border [&>button[aria-selected=false]>span]:border-brand-400 [&>button[aria-selected=false]>span]:bg-transparent" />
                 </div>
               </>
             )}
@@ -71,29 +71,29 @@ export default async function NewestRelease({ newestReleaseData }: NewestRelease
         </div>
 
         {/* Text column */}
-        <div className="w-full lg:flex-details bg-brand-800 flex flex-col justify-center">
+        <div className="w-full lg:w-1/2 bg-brand-200 flex flex-col justify-center">
           <div className="w-full py-12 lg:py-24 px-8 lg:px-16">
             <div className="max-w-2xl">
               <div className="flex flex-col gap-8">
 
                 <div className="flex flex-col gap-2">
-                  <span className="type-overline text-accent-500">New Release</span>
-                  <span className="text-brand-200 text-sm font-semibold tracking-wide">
-                    {product.brand.name}
+                  <span className="type-overline text-accent-600">New Release</span>
+                  <span className="type-metadata text-accent-600">
+                    {product.brand.name} {product.name}
                   </span>
                 </div>
 
                 <div className="flex flex-col gap-4">
-                  <h2 className="type-hero-headline">
+                  <h2 className="type-hero-headline text-secondary-900">
                     {promoTitle || product.name}
                   </h2>
-                  <p className="type-hero-sub">
+                  <p className="type-hero-sub text-secondary-800">
                     {promoSubtitle || ""}
                   </p>
                 </div>
 
                 {product.price_data?.unit_amount != null && (
-                  <p className="type-price">
+                  <p className="type-price text-secondary-900">
                     {new Intl.NumberFormat("en-US", {
                       style: "currency",
                       currency: product.price_data.currency?.toUpperCase() ?? "USD",
@@ -105,7 +105,7 @@ export default async function NewestRelease({ newestReleaseData }: NewestRelease
 
                 <Link
                   href={`/product/${product.slug}`}
-                  className="border border-brand-200 text-brand-100 uppercase transition-colors duration-200 hover:bg-brand-800 hover:text-brand-50 cursor-pointer px-6 py-3 self-start"
+                  className="self-start px-8 py-3 uppercase tracking-editorial text-center border border-secondary-900 text-secondary-900 bg-transparent rounded-md transition-all duration-200 hover:bg-secondary-900 hover:text-brand-200"
                 >
                   View Product
                 </Link>

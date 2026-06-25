@@ -36,7 +36,7 @@ export default async function DACs({ dacsData }: DacsProps) {
         <div className="absolute bottom-[5%] right-[5%] w-[40%] h-[40%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-10" />
       </div>
       <div className="relative z-10">
-        <div className="mx-auto max-w-content py-16">
+        <div className="mx-auto max-w-content px-6 py-16 lg:px-8">
           <Carousel
             itemsCount={dacsData.length}
             breakpointMap={dacsBreakpointMap}
@@ -56,15 +56,20 @@ export default async function DACs({ dacsData }: DacsProps) {
                   ))}
                 </CarouselTrack>
 
-                <div className="absolute left-0 top-1/2 z-10 -translate-y-1/2 md:-left-5">
+                <div className="hidden md:block absolute left-0 top-1/2 z-10 -translate-y-1/2 md:-left-5">
                   <CarouselPrevious />
                 </div>
-                <div className="absolute right-0 top-1/2 z-10 -translate-y-1/2 md:-right-5">
+                <div className="hidden md:block absolute right-0 top-1/2 z-10 -translate-y-1/2 md:-right-5">
                   <CarouselNext />
                 </div>
               </div>
 
-              <CarouselDots className="mt-2" />
+              <div className="flex md:hidden w-full items-center justify-between mt-4 px-2">
+                <CarouselPrevious />
+                <CarouselDots />
+                <CarouselNext />
+              </div>
+              <CarouselDots className="hidden md:flex mt-2 justify-center" />
             </div>
           </Carousel>
         </div>

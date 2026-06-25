@@ -22,16 +22,16 @@ export default function IemCard({
     : { text: 'In Stock', color: 'text-success-500' };
 
   return (
-    <article className="card-product-dark flex h-full flex-col gap-4 p-0 xs:p-6">
+    <article className="card-product-dark flex h-full flex-col gap-4 p-3 xs:p-6">
       <Link href={`/product/${product.slug}`} className="block">
-        <div className="relative flex aspect-square w-full cursor-pointer items-center justify-center overflow-hidden rounded-t-lg bg-surface-productImage pb-0 pt-0 md:pt-12 xs:pb-4 xs:pt-8">
+        <div className="relative flex aspect-square w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-surface-productImage pb-0 pt-0 md:pt-12 xs:pb-4 xs:pt-8">
           <Image
             src={product.image?.asset?._id ?? ""}
             alt={product.name}
             width={375}
             height={375}
             loading="lazy"
-            className="h-[70%] w-[70%] object-cover object-center transition-transform duration-300 group-hover:scale-105 xs:h-[60%] xs:w-[60%]"
+            className="h-[70%] w-[70%] object-cover object-center mix-blend-multiply transition-transform duration-300 group-hover:scale-105 xs:h-[60%] xs:w-[60%]"
           />
           <div className="absolute left-2 top-2 xs:top-4">
             <span className="text-small font-bold uppercase tracking-editorial text-brand-900">
@@ -47,13 +47,13 @@ export default function IemCard({
           )}
         </div>
 
-        <div className="flex flex-col px-4 xs:gap-1">
+        <div className="flex flex-col xs:gap-1">
           <h3 className="type-body line-clamp-2 font-medium">{product.name}</h3>
           <p className={`type-caption ${stockStatus.color}`}>{stockStatus.text}</p>
         </div>
       </Link>
 
-      <div className="flex items-center justify-between px-4 pb-4">
+      <div className="flex flex-col gap-2 xs:flex-row xs:items-center xs:justify-between">
         <Price value={centsToDisplay(product.price_data.unit_amount)} />
         <BasketControls
           productId={product._id}

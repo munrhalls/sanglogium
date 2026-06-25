@@ -5,7 +5,6 @@ export default function FeaturedHeader() {
     <SectionHeader
       overline="Headphones Collection"
       title="Featured"
-      href="/products/headphones"
     />
   );
 }

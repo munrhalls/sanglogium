@@ -22,9 +22,9 @@ const accessoriesBreakpointMap = {
   smLandscape: 3,
   smPortrait: 2,
   xsLandscape: 2,
-  xsPortrait: 1,
+  xsPortrait: 2,
   mobileLandscape: 1,
-  mobilePortrait: 1
+  mobilePortrait: 2
 };
 
 export default function CategorySection({ category, items }: CategorySectionProps) {
@@ -58,15 +58,20 @@ export default function CategorySection({ category, items }: CategorySectionProp
             ))}
           </CarouselTrack>
 
-          <div className="absolute left-0 top-1/2 z-10 -translate-y-1/2 md:-left-5">
+          <div className="hidden md:block absolute left-0 top-1/2 z-10 -translate-y-1/2 md:-left-5">
             <CarouselPrevious />
           </div>
-          <div className="absolute right-0 top-1/2 z-10 -translate-y-1/2 md:-right-5">
+          <div className="hidden md:block absolute right-0 top-1/2 z-10 -translate-y-1/2 md:-right-5">
             <CarouselNext />
           </div>
         </div>
 
-        <CarouselDots className="mt-2" />
+        <div className="flex md:hidden w-full items-center justify-between mt-4 px-2">
+          <CarouselPrevious />
+          <CarouselDots />
+          <CarouselNext />
+        </div>
+        <CarouselDots className="hidden md:flex mt-2 justify-center" />
       </div>
     </Carousel>
   );

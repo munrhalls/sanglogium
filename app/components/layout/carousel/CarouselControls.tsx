@@ -7,9 +7,9 @@ import { useCarousel } from "./CarouselContext";
 
 const BTN_BASE = cn(
   "group relative flex h-11 w-11 items-center justify-center rounded-full",
-  "bg-secondary-100/80 border border-border-secondary backdrop-blur-sm",
-  "text-brand-900 transition-all duration-200",
-  "hover:bg-brand-200 hover:text-brand-700 active:scale-110",
+  "bg-transparent border border-border-secondary",
+  "text-brand-100 transition-all duration-200",
+  "hover:bg-brand-100/10 hover:text-brand-50 active:scale-110",
   "disabled:pointer-events-none disabled:opacity-40",
   "outline-none focus-visible:ring-2 focus-visible:ring-brand-400/50"
 );
@@ -51,6 +51,25 @@ export function CarouselNext({ className, ...props }: React.ButtonHTMLAttributes
     >
       <CaretRightIcon weight="bold" className="h-5 w-5 sm:h-6 sm:w-6" />
     </button>
+  );
+}
+
+export function CarouselIndicator({ className }: { className?: string }) {
+  const context = useCarousel();
+  if (!context) return null;
+
+  const { activeIndex, dotsCount } = context;
+  const current = Math.round(Number(activeIndex)) + 1;
+
+  return (
+    <span
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+      className={cn("type-metadata tabular-nums select-none", className)}
+    >
+      {current} / {dotsCount}
+    </span>
   );
 }
 

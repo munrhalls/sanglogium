@@ -16,7 +16,7 @@ export default function DacCard({ item, idx }: { item: any; idx: number }) {
   return (
     <article className="card-product-dark flex h-full flex-col gap-4">
       <Link href={`/product/${item.slug}`} className="flex flex-grow flex-col">
-        <figure className="rounded-none relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden bg-surface-productImage p-6">
+        <figure className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-lg bg-surface-productImage p-6">
           <span className="absolute left-4 top-4 text-small font-bold uppercase tracking-editorial text-brand-900">
             {brandName}
           </span>
