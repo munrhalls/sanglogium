@@ -38,7 +38,7 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
   <article className="card-product-dark flex h-full flex-col gap-4">
     <Link href={`/product/${product.slug}`} className="flex flex-grow flex-col">
       <figure className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-lg bg-surface-productImage p-6">
-        <span className="absolute left-4 top-4 z-10 type-caption text-brand-900">
+        <span className="absolute left-4 top-2 z-10 type-caption text-brand-900">
           {product.brand.name}
         </span>
         <Image
@@ -122,7 +122,7 @@ export default async function Featured({ featuredData }: FeaturedProps) {
 
               <Link
                 href="/products/headphones"
-                className="type-overline text-brand-400 transition-colors hover:text-brand-100"
+                className="type-caption pl-9 text-brand-400 transition-colors hover:text-brand-100 md:pl-0"
               >
                 View All <span aria-hidden="true">&rsaquo;</span>
               </Link>
@@ -141,10 +141,10 @@ export default async function Featured({ featuredData }: FeaturedProps) {
 
               </div>
 
-              <div className="flex items-center justify-center gap-6">
-                <CarouselPrevious />
+              <div className="flex items-center justify-center gap-3">
+                <CarouselPrevious className="max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent" />
                 <CarouselDots />
-                <CarouselNext />
+                <CarouselNext className="max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent" />
               </div>
             </div>
           </Carousel>

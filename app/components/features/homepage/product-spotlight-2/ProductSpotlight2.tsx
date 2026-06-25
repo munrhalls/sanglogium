@@ -36,12 +36,21 @@ export default async function ProductSpotlight2({ spotlightData }: ProductSpotli
                                     </CarouselSlide>
                                 ))}
                             </CarouselTrack>
-                            <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-6">
-                                <div className="flex gap-2">
-                                    <CarouselPrevious />
-                                    <CarouselNext />
+                            <div className="absolute bottom-4 left-0 right-0 flex items-center justify-center gap-3">
+                                <CarouselPrevious
+                                    iconStyle="chevron"
+                                    className="max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent max-lg:text-brand-800 max-lg:focus-visible:ring-brand-800/50"
+                                />
+                                <div className="lg:hidden">
+                                    <CarouselDots variant="dark" />
                                 </div>
-                                <CarouselDots />
+                                <div className="hidden lg:block">
+                                    <CarouselDots />
+                                </div>
+                                <CarouselNext
+                                    iconStyle="chevron"
+                                    className="max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent max-lg:text-brand-800 max-lg:focus-visible:ring-brand-800/50"
+                                />
                             </div>
                         </Carousel>
                     </div>
