@@ -1,7 +1,12 @@
 "use client";
 
 import React from "react";
-import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
+import {
+  CaretLeftIcon,
+  CaretRightIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from "@phosphor-icons/react";
 import { cn } from "@/lib/utils/tailwind";
 import { useCarousel } from "./CarouselContext";
 
@@ -14,11 +19,16 @@ const BTN_BASE = cn(
   "outline-none focus-visible:ring-2 focus-visible:ring-brand-400/50"
 );
 
-export function CarouselPrevious({ className, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+interface CarouselPreviousProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  iconStyle?: "caret" | "chevron";
+}
+
+export function CarouselPrevious({ className, iconStyle = "caret", ...props }: CarouselPreviousProps) {
   const context = useCarousel();
   if (!context) return null;
 
   const { scrollPrev, canScrollPrev } = context;
+  const Icon = iconStyle === "chevron" ? ChevronLeftIcon : CaretLeftIcon;
 
   return (
     <button
@@ -29,16 +39,21 @@ export function CarouselPrevious({ className, ...props }: React.ButtonHTMLAttrib
       className={cn(BTN_BASE, className)}
       {...props}
     >
-      <CaretLeftIcon weight="bold" className="h-5 w-5 sm:h-6 sm:w-6" />
+      <Icon weight="bold" className="h-5 w-5 sm:h-6 sm:w-6" />
     </button>
   );
 }
 
-export function CarouselNext({ className, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+interface CarouselNextProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  iconStyle?: "caret" | "chevron";
+}
+
+export function CarouselNext({ className, iconStyle = "caret", ...props }: CarouselNextProps) {
   const context = useCarousel();
   if (!context) return null;
 
   const { scrollNext, canScrollNext } = context;
+  const Icon = iconStyle === "chevron" ? ChevronRightIcon : CaretRightIcon;
 
   return (
     <button
@@ -49,7 +64,7 @@ export function CarouselNext({ className, ...props }: React.ButtonHTMLAttributes
       className={cn(BTN_BASE, className)}
       {...props}
     >
-      <CaretRightIcon weight="bold" className="h-5 w-5 sm:h-6 sm:w-6" />
+      <Icon weight="bold" className="h-5 w-5 sm:h-6 sm:w-6" />
     </button>
   );
 }
@@ -73,12 +88,22 @@ export function CarouselIndicator({ className }: { className?: string }) {
   );
 }
 
-export function CarouselDots({ className }: { className?: string }) {
+interface CarouselDotsProps {
+  className?: string;
+  variant?: "default" | "dark";
+}
+
+export function CarouselDots({ className, variant = "default" }: CarouselDotsProps) {
   const context = useCarousel();
   if (!context) return null;
 
   const { dotsCount, activeIndex, goTo } = context;
   const aIndex = Math.round(Number(activeIndex));
+
+  const dotColor =
+    variant === "dark"
+      ? { active: "bg-brand-800", inactive: "bg-secondary-600 hover:bg-secondary-700" }
+      : { active: "bg-brand-700", inactive: "bg-brand-400 hover:bg-brand-500" };
 
   return (
     <div className={cn("flex justify-center items-center", className)} role="tablist">
@@ -98,9 +123,7 @@ export function CarouselDots({ className }: { className?: string }) {
             <span
               className={cn(
                 "block h-2 w-2 rounded-full transition-colors duration-300",
-                isActive
-                  ? "bg-brand-700"
-                  : "bg-brand-400 hover:bg-brand-500"
+                isActive ? dotColor.active : dotColor.inactive
               )}
             />
           </button>
