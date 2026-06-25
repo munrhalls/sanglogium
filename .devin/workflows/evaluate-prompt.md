@@ -1,0 +1,1 @@
+Objective: assess the level of this prompt across all the most critical meaningful metrics that matter for any prompt and outcome being likely successful and highest possible expected value. 
