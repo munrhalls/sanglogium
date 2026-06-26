@@ -93,7 +93,7 @@ export default function Footer() {
         className={cn(
           "mx-auto w-full max-w-content px-4 md:px-8",
           "pt-12 md:pt-16 lg:pt-20",
-          "flex items-center justify-between gap-8",
+          "flex flex-col sm:flex-row items-center justify-between gap-8",
           "pb-10 mb-10",
           "border-b border-border-secondary"
         )}

@@ -39,12 +39,12 @@ export default function NewsletterSignup() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="flex gap-2">
+      <div className="flex flex-col sm:flex-row gap-2">
         <input
           type="email"
           placeholder="Your email address"
           aria-label="Email address"
-          className="input-base w-64"
+          className="input-base w-full"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -52,7 +52,7 @@ export default function NewsletterSignup() {
         />
         <button
           type="submit"
-          className="btn-primary px-6 py-2"
+          className="btn-primary px-6 py-3 sm:py-2"
           disabled={status === "submitting"}
         >
           {status === "submitting" ? "..." : "Subscribe"}
