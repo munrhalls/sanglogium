@@ -6,7 +6,6 @@ export default function IemsGalleryHeader({ href }: { href?: string }) {
       overline="In-Ear Monitors"
       title="IEMs"
       href={href}
-      className="mb-6 md:mb-0"
     />
   );
 }

@@ -5,7 +5,7 @@ export default function FeaturedHeader() {
     <SectionHeader
       overline="Headphones Collection"
       title="Featured"
-      className="mb-8 md:mb-10"
+      className="mb-6 md:mb-8"
     />
   );
 }

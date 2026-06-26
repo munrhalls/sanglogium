@@ -5,7 +5,7 @@ export default function DacsHeader() {
     <SectionHeader
       overline="DAC & Amplifiers"
       title="Digital Converters"
-      className="mb-6 md:mb-10"
+      className="mb-4 md:mb-6"
     />
   );
 }

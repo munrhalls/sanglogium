@@ -10,12 +10,10 @@ interface SectionHeaderProps {
 
 export default function SectionHeader({ overline, title, href, className }: SectionHeaderProps) {
   return (
-    <div className={cn("", className)}>
-      <div className="mb-6 md:mb-8">
-        <p className="type-overline mb-2">{overline}</p>
-        <div className="flex items-end justify-between gap-4">
-          <h2 className="section-header-anchor type-section-hed">{title}</h2>
-        </div>
+    <div className={cn("flex items-end justify-between gap-4", className)}>
+      <div className="mb-2 md:mb-4">
+        <p className="type-overline mb-2 md:mb-3">{overline}</p>
+        <h2 className="section-header-anchor type-section-hed">{title}</h2>
       </div>
       {href && (
         <Link
