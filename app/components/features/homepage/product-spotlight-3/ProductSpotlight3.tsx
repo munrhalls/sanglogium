@@ -90,10 +90,10 @@ export default function ProductSpotlight3({ spotlightData }: ProductSpotlight3Pr
                 />
 
                 <div className="lg:hidden">
-                  <CarouselDots variant="dark" />
+                  <CarouselDots truncate variant="dark" />
                 </div>
                 <div className="hidden lg:block">
-                  <CarouselDots variant="dark" />
+                  <CarouselDots truncate variant="dark" />
                 </div>
 
                 <CarouselNext

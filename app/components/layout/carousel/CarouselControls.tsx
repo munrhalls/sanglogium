@@ -101,14 +101,63 @@ export function CarouselIndicator({ className }: { className?: string }) {
 interface CarouselDotsProps {
   className?: string;
   variant?: "default" | "dark";
+  truncate?: boolean;
 }
 
-export function CarouselDots({ className, variant = "default" }: CarouselDotsProps) {
+export function CarouselDots({ className, variant = "default", truncate = false }: CarouselDotsProps) {
   const context = useCarousel();
   if (!context) return null;
 
   const { dotsCount, activeIndex, goTo } = context;
   const aIndex = Math.round(Number(activeIndex));
+
+  // ── Truncated (iOS) mode ──────────────────────────────────────────────────
+  const WINDOW = 5;
+  if (truncate && dotsCount > WINDOW) {
+    const windowStart = Math.max(0, Math.min(aIndex - 2, dotsCount - WINDOW));
+    const activePos = aIndex - windowStart; // 0..4
+
+    const inactiveColor = variant === "dark" ? "bg-secondary-600" : "bg-brand-400";
+
+    return (
+      <div
+        className={cn("flex justify-center items-center gap-1", className)}
+        role="tablist"
+      >
+        {Array.from({ length: WINDOW }).map((_, pos) => {
+          const realIndex = windowStart + pos;
+          const dist = Math.abs(pos - activePos);
+          const isActive = dist === 0;
+
+          const sizeClass = dist === 0 ? "w-2 h-2" : dist === 1 ? "w-1.5 h-1.5" : "w-1 h-1";
+          const opacityClass = dist === 0 ? "opacity-100" : dist === 1 ? "opacity-60" : "opacity-30";
+          const colorClass = isActive ? "bg-accent-500" : inactiveColor;
+
+          return (
+            <button
+              key={realIndex}
+              type="button"
+              role="tab"
+              aria-selected={isActive}
+              aria-label={`Go to slide ${realIndex + 1}`}
+              onClick={() => goTo(realIndex)}
+              className="flex h-4 w-4 cursor-pointer touch-manipulation items-center justify-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400/50"
+            >
+              <span
+                className={cn(
+                  "block rounded-sm transition-all duration-300",
+                  sizeClass,
+                  opacityClass,
+                  colorClass
+                )}
+              />
+            </button>
+          );
+        })}
+      </div>
+    );
+  }
+  // ── End truncated mode ────────────────────────────────────────────────────
 
   const dotColor =
     variant === "dark"

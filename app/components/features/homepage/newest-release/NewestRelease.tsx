@@ -63,7 +63,7 @@ export default async function NewestRelease({ newestReleaseData }: NewestRelease
                 </div>
                 {/* Dots: bottom center */}
                 <div className="absolute bottom-4 left-0 right-0 flex justify-center">
-                  <CarouselDots className="[&>button[aria-selected=true]>span]:bg-brand-200 [&>button[aria-selected=false]>span]:border [&>button[aria-selected=false]>span]:border-brand-400 [&>button[aria-selected=false]>span]:bg-transparent" />
+                  <CarouselDots truncate className="[&>button[aria-selected=true]>span]:bg-brand-200 [&>button[aria-selected=false]>span]:border [&>button[aria-selected=false]>span]:border-brand-400 [&>button[aria-selected=false]>span]:bg-transparent" />
                 </div>
               </>
             )}

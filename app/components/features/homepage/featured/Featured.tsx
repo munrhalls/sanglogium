@@ -74,7 +74,6 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => {
       </figure>
 
       <div className="flex flex-grow flex-col px-4 pt-2 mt-3">
-        <p className="type-overline mb-1">Headphones</p>
         <h3 className="text-small">{modelName}</h3>
         <p className="type-price mt-2">
           ${centsToDisplay(product.price_data.unit_amount)}
@@ -158,7 +157,7 @@ export default async function Featured({ featuredData }: FeaturedProps) {
 
               <div className="flex items-center justify-center gap-3">
                 <CarouselPrevious iconStyle="chevron" className="max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent max-lg:!text-brand-800" />
-                <CarouselDots />
+                <CarouselDots truncate />
                 <CarouselNext iconStyle="chevron" className="max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent max-lg:!text-brand-800" />
               </div>
             </div>

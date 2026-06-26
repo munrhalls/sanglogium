@@ -43,10 +43,10 @@ export default async function ProductSpotlight2({ spotlightData }: ProductSpotli
                                     className="absolute left-2 max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent"
                                 />
                                 <div className="lg:hidden">
-                                    <CarouselDots variant="dark" />
+                                    <CarouselDots truncate variant="dark" />
                                 </div>
                                 <div className="hidden lg:block">
-                                    <CarouselDots variant="dark" />
+                                    <CarouselDots truncate variant="dark" />
                                 </div>
                                 <CarouselNext
                                     iconStyle="chevron"
