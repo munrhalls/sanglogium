@@ -1,17 +1,12 @@
 "use client";
 
 import React from "react";
-import {
-  CaretLeftIcon,
-  CaretRightIcon,
-  ArrowLeft,
-  ArrowRight,
-} from "@phosphor-icons/react";
+import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils/tailwind";
 import { useCarousel } from "./CarouselContext";
 
 const BTN_BASE = cn(
-  "group relative flex h-11 w-11 items-center justify-center rounded-full",
+  "group relative flex items-center justify-center rounded-full p-2",
   "bg-transparent",
   "text-brand-100 transition-all duration-200",
   "hover:bg-brand-100/10 hover:text-brand-50 active:scale-110",
@@ -19,16 +14,30 @@ const BTN_BASE = cn(
   "outline-none focus-visible:ring-2 focus-visible:ring-brand-400/50"
 );
 
+const ARROW_VARIANT = {
+  default: {
+    text: "text-brand-100",
+    hoverText: "hover:text-brand-50",
+    ring: "focus-visible:ring-brand-400/50",
+  },
+  dark: {
+    text: "text-brand-800",
+    hoverText: "hover:text-brand-900",
+    ring: "focus-visible:ring-brand-800/50",
+  },
+};
+
 interface CarouselPreviousProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   iconStyle?: "caret" | "chevron";
+  variant?: "default" | "dark";
 }
 
-export function CarouselPrevious({ className, iconStyle = "caret", ...props }: CarouselPreviousProps) {
+export function CarouselPrevious({ className, iconStyle = "caret", variant = "default", ...props }: CarouselPreviousProps) {
   const context = useCarousel();
   if (!context) return null;
 
   const { scrollPrev, canScrollPrev } = context;
-  const Icon = iconStyle === "chevron" ? ArrowLeft : CaretLeftIcon;
+  const v = ARROW_VARIANT[variant];
 
   return (
     <button
@@ -36,24 +45,25 @@ export function CarouselPrevious({ className, iconStyle = "caret", ...props }: C
       onClick={scrollPrev}
       disabled={!canScrollPrev}
       aria-label="Previous slide"
-      className={cn(BTN_BASE, className)}
+      className={cn(BTN_BASE, v.text, v.hoverText, v.ring, className)}
       {...props}
     >
-      <Icon weight="bold" className="h-5 w-5 sm:h-6 sm:w-6" />
+      <CaretLeft size={24} weight="light" />
     </button>
   );
 }
 
 interface CarouselNextProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   iconStyle?: "caret" | "chevron";
+  variant?: "default" | "dark";
 }
 
-export function CarouselNext({ className, iconStyle = "caret", ...props }: CarouselNextProps) {
+export function CarouselNext({ className, iconStyle = "caret", variant = "default", ...props }: CarouselNextProps) {
   const context = useCarousel();
   if (!context) return null;
 
   const { scrollNext, canScrollNext } = context;
-  const Icon = iconStyle === "chevron" ? ArrowRight : CaretRightIcon;
+  const v = ARROW_VARIANT[variant];
 
   return (
     <button
@@ -61,10 +71,10 @@ export function CarouselNext({ className, iconStyle = "caret", ...props }: Carou
       onClick={scrollNext}
       disabled={!canScrollNext}
       aria-label="Next slide"
-      className={cn(BTN_BASE, className)}
+      className={cn(BTN_BASE, v.text, v.hoverText, v.ring, className)}
       {...props}
     >
-      <Icon weight="bold" className="h-5 w-5 sm:h-6 sm:w-6" />
+      <CaretRight size={24} weight="light" />
     </button>
   );
 }
@@ -118,7 +128,7 @@ export function CarouselDots({ className, variant = "default" }: CarouselDotsPro
             aria-selected={isActive}
             aria-label={`Go to slide ${i + 1}`}
             onClick={() => goTo(i)}
-            className="mx-1 flex h-4 w-4 cursor-pointer touch-manipulation items-center justify-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400/50"
+            className="mx-0.5 flex h-4 w-4 cursor-pointer touch-manipulation items-center justify-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400/50"
           >
             <span
               className={cn(
