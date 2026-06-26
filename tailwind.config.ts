@@ -528,6 +528,7 @@ export default {
         action: ["14px", { lineHeight: "21px", letterSpacing: "0.05em" }],
         actionLarge: ["clamp(1.125rem, 1.03vw + 0.883rem, 1.8125rem)", { lineHeight: "1.2", letterSpacing: "0.05em" }],
         small: ["12px", { lineHeight: "16px", letterSpacing: "0.05em" }],
+        tiny: ["10px", { lineHeight: "14px", letterSpacing: "0.05em" }],
         "cta-hero": [
           "clamp(1.125rem, 1vw + 0.9rem, 1.75rem)",
           { lineHeight: "1.15", letterSpacing: "0.03em" },
