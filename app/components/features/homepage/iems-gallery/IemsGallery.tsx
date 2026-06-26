@@ -22,7 +22,7 @@ export default async function IemsGallery({ iemsData }: IemsGalleryProps) {
       </div>
       <div className="relative z-10">
         <div className="mx-auto max-w-content px-6 py-16 lg:px-8">
-          <div className="flex flex-col gap-3 md:gap-5">
+          <div className="flex flex-col gap-6 md:gap-8">
             <IemsGalleryHeader href="/products/headphones/monitors-iems" />
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-3 md:gap-6">
               {displayed.map((iem, idx) => (
@@ -33,7 +33,7 @@ export default async function IemsGallery({ iemsData }: IemsGalleryProps) {
               <div className="flex justify-center pt-4">
                 <Link
                   href="/products/headphones/monitors-iems"
-                  className="btn-ghost text-sm"
+                  className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 border border-brand-400 hover:border-brand-100 text-brand-400 hover:text-brand-100 text-xs tracking-widest uppercase font-light whitespace-nowrap transition-colors duration-200 rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-100 sm:btn-ghost sm:w-auto sm:border-none sm:p-0 sm:text-sm sm:tracking-editorial"
                 >
                   View All In-Ear Monitors →
                 </Link>

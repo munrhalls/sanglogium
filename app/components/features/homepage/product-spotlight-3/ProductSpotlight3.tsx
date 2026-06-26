@@ -49,11 +49,11 @@ export default function ProductSpotlight3({ spotlightData }: ProductSpotlight3Pr
 
           <div className="order-2 md:order-1 w-full h-full bg-surface-productImage rounded-none flex items-center justify-center relative overflow-hidden border border-border-secondary">
 
-            <Carousel itemsCount={product.images?.length || 1} breakpointMap={{ lgDesktop: 1, mdPortrait: 1, mobilePortrait: 1 }} className="w-full h-full overflow-visible">
+            <Carousel itemsCount={Math.min(product.images?.length || 1, 9)} breakpointMap={{ lgDesktop: 1, mdPortrait: 1, mobilePortrait: 1 }} className="w-full h-full overflow-visible">
 
               <CarouselTrack className="w-full h-full">
 
-                {product.images?.map((image, idx) => (
+                {product.images?.slice(0, 9).map((image, idx) => (
 
                   <CarouselSlide key={`${product._id}-${idx}`} className="aspect-square w-full flex items-center justify-center pb-4 opacity-0 scale-95 transition-[opacity,transform] duration-500 ease-out data-[active=true]:opacity-100 data-[active=true]:scale-100">
 
@@ -81,23 +81,25 @@ export default function ProductSpotlight3({ spotlightData }: ProductSpotlight3Pr
 
               </CarouselTrack>
 
-              <div className="absolute bottom-4 left-0 right-0 flex items-center justify-center gap-3">
+              <div className="absolute bottom-4 left-0 right-0 flex items-center justify-center">
 
                 <CarouselPrevious
                   iconStyle="chevron"
-                  className="text-brand-800 hover:bg-brand-800/10 hover:text-brand-700 focus-visible:ring-brand-800/50 max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent"
+                  variant="dark"
+                  className="absolute left-2 max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent"
                 />
 
                 <div className="lg:hidden">
                   <CarouselDots variant="dark" />
                 </div>
                 <div className="hidden lg:block">
-                  <CarouselDots />
+                  <CarouselDots variant="dark" />
                 </div>
 
                 <CarouselNext
                   iconStyle="chevron"
-                  className="text-brand-800 hover:bg-brand-800/10 hover:text-brand-700 focus-visible:ring-brand-800/50 max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent"
+                  variant="dark"
+                  className="absolute right-2 max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent"
                 />
 
               </div>

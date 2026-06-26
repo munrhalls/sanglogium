@@ -32,7 +32,6 @@ export default function DacCard({ item, idx }: { item: any; idx: number }) {
         </figure>
 
         <div className="flex flex-grow flex-col px-4 pb-2 pt-2">
-          <p className="type-overline mb-1">DAC & Amplifiers</p>
           <p className="type-body line-clamp-2 font-medium">
             {productName}
           </p>

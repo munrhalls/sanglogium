@@ -10,19 +10,21 @@ interface SectionHeaderProps {
 
 export default function SectionHeader({ overline, title, href, className }: SectionHeaderProps) {
   return (
-    <div className={cn("mb-10", className)}>
-      <p className="type-overline mb-2">{overline}</p>
-      <div className="flex items-end justify-between gap-4">
-        <h2 className="section-header-anchor type-section-hed">{title}</h2>
-        {href && (
-          <Link
-            href={href}
-            className="type-overline whitespace-nowrap text-brand-400 transition-colors hover:text-brand-100"
-          >
-            View All <span aria-hidden="true">&rsaquo;</span>
-          </Link>
-        )}
+    <div className={cn("", className)}>
+      <div className="mb-6 md:mb-8">
+        <p className="type-overline mb-2">{overline}</p>
+        <div className="flex items-end justify-between gap-4">
+          <h2 className="section-header-anchor type-section-hed">{title}</h2>
+        </div>
       </div>
+      {href && (
+        <Link
+          href={href}
+          className="text-xs whitespace-nowrap text-brand-400 transition-colors hover:text-brand-100 tracking-widest uppercase font-light"
+        >
+          View All <span aria-hidden="true">&rsaquo;</span>
+        </Link>
+      )}
     </div>
   );
 }

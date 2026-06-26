@@ -34,13 +34,26 @@ const featuredBreakpointMap = {
   mobilePortrait: 1,
 };
 
-export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
-  <article className="card-product-dark flex h-full flex-col gap-4">
-    <Link href={`/product/${product.slug}`} className="flex flex-grow flex-col">
-      <figure className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-lg bg-surface-productImage p-6">
-        <span className="absolute left-4 top-2 z-10 type-caption text-brand-900">
-          {product.brand.name}
-        </span>
+const getModelName = (productName: string, brandName: string): string => {
+  // Escape special regex characters in brand name (handles spaces, ampersands, etc.)
+  const escapedBrand = brandName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // Case-insensitive regex to remove brand name from product name
+  const regex = new RegExp(`^${escapedBrand}\\s+`, 'i');
+  const modelName = productName.replace(regex, '').trim();
+  // Return model name, or full name if empty
+  return modelName || productName;
+};
+
+export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => {
+  const modelName = getModelName(product.name, product.brand.name);
+
+  return (
+    <article className="card-product-dark flex h-full flex-col gap-4">
+      <Link href={`/product/${product.slug}`} className="flex flex-grow flex-col">
+        <figure className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-lg bg-surface-productImage p-6">
+          <span className="absolute left-4 top-2 z-10 text-tiny xs:text-small tracking-tight text-brand-900">
+            {product.brand.name}
+          </span>
         <Image
           src={product.image?.asset?._id ?? ""}
           alt={product.name}
@@ -60,16 +73,16 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
         />
       </figure>
 
-      <div className="flex flex-grow flex-col px-4 pt-2">
+      <div className="flex flex-grow flex-col px-4 pt-2 mt-3">
         <p className="type-overline mb-1">Headphones</p>
-        <h3 className="type-body line-clamp-2 font-medium">{product.name}</h3>
+        <h3 className="text-small">{modelName}</h3>
         <p className="type-price mt-2">
           ${centsToDisplay(product.price_data.unit_amount)}
         </p>
       </div>
     </Link>
 
-    <div className="px-4 pb-4 pt-2">
+    <div className="px-4 pb-4 pt-2 mt-auto">
       <BasketControls
         productId={product._id}
         isBasketPage={false}
@@ -81,7 +94,9 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => (
       />
     </div>
   </article>
-);
+    );
+  };
+
 
 export default async function Featured({ featuredData }: FeaturedProps) {
   if (!featuredData || featuredData?.length === 0) return null;
@@ -117,12 +132,12 @@ export default async function Featured({ featuredData }: FeaturedProps) {
             itemsCount={featuredData.length}
             breakpointMap={featuredBreakpointMap}
           >
-            <div className="flex flex-col gap-4 md:gap-6">
+            <div className="flex flex-col gap-2 md:gap-3">
               <FeaturedHeader />
 
               <Link
                 href="/products/headphones"
-                className="type-caption pl-9 text-brand-400 transition-colors hover:text-brand-100 md:pl-0"
+                className="inline-flex items-center gap-1 self-end py-3.5 px-3 -ml-3 type-caption text-brand-400 transition-colors hover:text-brand-100 md:py-0 md:px-0 md:ml-0"
               >
                 View All <span aria-hidden="true">&rsaquo;</span>
               </Link>
@@ -142,9 +157,9 @@ export default async function Featured({ featuredData }: FeaturedProps) {
               </div>
 
               <div className="flex items-center justify-center gap-3">
-                <CarouselPrevious iconStyle="chevron" className="max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent" />
+                <CarouselPrevious iconStyle="chevron" className="max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent max-lg:!text-brand-800" />
                 <CarouselDots />
-                <CarouselNext iconStyle="chevron" className="max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent" />
+                <CarouselNext iconStyle="chevron" className="max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent max-lg:!text-brand-800" />
               </div>
             </div>
           </Carousel>

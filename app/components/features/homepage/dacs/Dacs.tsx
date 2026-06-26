@@ -46,7 +46,7 @@ export default async function DACs({ dacsData }: DacsProps) {
               <DacsHeader />
               <Link
                 href="/products/audio-electronics/digital-sources"
-                className="type-caption pl-9 text-brand-400 transition-colors hover:text-brand-100 md:pl-0"
+                className="inline-flex items-center gap-1 self-start py-3.5 px-3 -ml-3 type-caption text-brand-400 transition-colors hover:text-brand-100 md:py-0 md:px-0 md:ml-0"
               >
                 View All <span aria-hidden="true">&rsaquo;</span>
               </Link>
