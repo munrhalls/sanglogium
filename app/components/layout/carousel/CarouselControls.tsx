@@ -4,6 +4,7 @@ import React from "react";
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils/tailwind";
 import { useCarousel } from "./CarouselContext";
+import { CarouselIcon } from "./DotIcon";
 
 const BTN_BASE = cn(
   "group relative flex items-center justify-center rounded-full p-2",
@@ -111,17 +112,19 @@ export function CarouselDots({ className, variant = "default", truncate = false 
   const { dotsCount, activeIndex, goTo } = context;
   const aIndex = Math.round(Number(activeIndex));
 
+  // Color tokens per variant
+  const borderColor = variant === "dark" ? "border-brand-700" : "border-brand-400";
+  const orbitColor  = variant === "dark" ? "text-brand-700"   : "text-brand-400";
+
   // ── Truncated (iOS) mode ──────────────────────────────────────────────────
   const WINDOW = 5;
   if (truncate && dotsCount > WINDOW) {
     const windowStart = Math.max(0, Math.min(aIndex - 2, dotsCount - WINDOW));
     const activePos = aIndex - windowStart; // 0..4
 
-    const inactiveColor = variant === "dark" ? "bg-secondary-600" : "bg-brand-400";
-
     return (
       <div
-        className={cn("flex justify-center items-center gap-1", className)}
+        className={cn("flex justify-center items-center gap-1.5", className)}
         role="tablist"
       >
         {Array.from({ length: WINDOW }).map((_, pos) => {
@@ -129,9 +132,10 @@ export function CarouselDots({ className, variant = "default", truncate = false 
           const dist = Math.abs(pos - activePos);
           const isActive = dist === 0;
 
-          const sizeClass = dist === 0 ? "w-2 h-2" : dist === 1 ? "w-1.5 h-1.5" : "w-1 h-1";
+          // Size: active orbit 14px, adjacent 8px, edge 6px
+          const sizeClass = dist === 0 ? "h-3.5 w-3.5" : dist === 1 ? "h-2 w-2" : "h-1.5 w-1.5";
+          // Opacity: full / 60% / 30%
           const opacityClass = dist === 0 ? "opacity-100" : dist === 1 ? "opacity-60" : "opacity-30";
-          const colorClass = isActive ? "bg-accent-500" : inactiveColor;
 
           return (
             <button
@@ -141,16 +145,20 @@ export function CarouselDots({ className, variant = "default", truncate = false 
               aria-selected={isActive}
               aria-label={`Go to slide ${realIndex + 1}`}
               onClick={() => goTo(realIndex)}
-              className="flex h-4 w-4 cursor-pointer touch-manipulation items-center justify-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400/50"
+              className="flex h-4 w-4 cursor-pointer touch-manipulation items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400/50"
             >
-              <span
-                className={cn(
-                  "block rounded-sm transition-all duration-300",
-                  sizeClass,
-                  opacityClass,
-                  colorClass
-                )}
-              />
+              {isActive ? (
+                <CarouselIcon className={cn(sizeClass, opacityClass, orbitColor, "transition-all duration-300")} />
+              ) : (
+                <span
+                  className={cn(
+                    "block rounded-full border bg-transparent transition-all duration-300",
+                    sizeClass,
+                    opacityClass,
+                    borderColor
+                  )}
+                />
+              )}
             </button>
           );
         })}
@@ -159,13 +167,9 @@ export function CarouselDots({ className, variant = "default", truncate = false 
   }
   // ── End truncated mode ────────────────────────────────────────────────────
 
-  const dotColor =
-    variant === "dark"
-      ? { active: "bg-brand-800", inactive: "bg-secondary-600 hover:bg-secondary-700" }
-      : { active: "bg-brand-700", inactive: "bg-brand-400 hover:bg-brand-500" };
-
+  // ── Standard mode (dotsCount ≤ 5, or truncate=false) ─────────────────────
   return (
-    <div className={cn("flex justify-center items-center", className)} role="tablist">
+    <div className={cn("flex justify-center items-center gap-1.5", className)} role="tablist">
       {Array.from({ length: dotsCount }).map((_, i) => {
         const isActive = i === aIndex;
 
@@ -177,14 +181,18 @@ export function CarouselDots({ className, variant = "default", truncate = false 
             aria-selected={isActive}
             aria-label={`Go to slide ${i + 1}`}
             onClick={() => goTo(i)}
-            className="mx-0.5 flex h-4 w-4 cursor-pointer touch-manipulation items-center justify-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400/50"
+            className="flex h-4 w-4 cursor-pointer touch-manipulation items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400/50"
           >
-            <span
-              className={cn(
-                "block h-2 w-2 rounded-sm transition-colors duration-300",
-                isActive ? dotColor.active : dotColor.inactive
-              )}
-            />
+            {isActive ? (
+              <CarouselIcon className={cn("h-3.5 w-3.5 transition-all duration-300", orbitColor)} />
+            ) : (
+              <span
+                className={cn(
+                  "block h-2 w-2 rounded-full border bg-transparent transition-colors duration-300",
+                  borderColor
+                )}
+              />
+            )}
           </button>
         );
       })}
