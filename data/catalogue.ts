@@ -66,10 +66,6 @@ export const unrollDescendantKeys = (nodeId: string): string[] => {
   return Array.from(result);
 };
 
-export const buildGroqKeysParam = (keys: string[]): string[] => {
-  return keys;
-};
-
 // Runtime validation for VFS data integrity
 export function validateCatalogueIndex(data: unknown): asserts data is CatalogueIndexData {
   if (!data || typeof data !== 'object') {
