@@ -1,7 +1,16 @@
+import "../globals.css";
+import { Montserrat } from "next/font/google";
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-montserrat",
+});
+
 export default function SandboxLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
-      {children}
-    </>
+    <html lang="en" className={`${montserrat.variable} antialiased`}>
+      <body>{children}</body>
+    </html>
   );
 }
