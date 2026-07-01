@@ -335,6 +335,19 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
       "slug": slug.current,
       "imageUrl": image.asset->url,
       image { asset->{_id, url} }
+    },
+
+    // Accessories - storage section
+    "accessoriesStorage": accessoriesStorage[]->{
+      _id,
+      name,
+      brand->{ _id, name, slug },
+      price_data,
+      stock,
+      stripePriceId,
+      "slug": slug.current,
+      "imageUrl": image.asset->url,
+      image { asset->{_id, url} }
     }
   }
 `);
@@ -496,7 +509,8 @@ async function fetchHomepageSections(): Promise<{
     // Ensure accessories structure
     const accessories: AccessoryData = {
       cables: rawData.accessoriesCables ?? [],
-      earpads: rawData.accessoriesEarpads ?? []
+      earpads: rawData.accessoriesEarpads ?? [],
+      storage: rawData.accessoriesStorage ?? []
     };
 
     return {
@@ -520,7 +534,7 @@ async function fetchHomepageSections(): Promise<{
       iemsGallery: [],
       newestRelease: null,
       dacs: [],
-      accessories: { cables: [], earpads: [] }
+      accessories: { cables: [], earpads: [], storage: [] }
     };
   }
 }
@@ -559,7 +573,7 @@ export async function fetchHomepageDataBatched(): Promise<HomepageData> {
       iemsGallery: [],
       newestRelease: null,
       dacs: [],
-      accessories: { cables: [], earpads: [] }
+      accessories: { cables: [], earpads: [], storage: [] }
     };
   }
 }

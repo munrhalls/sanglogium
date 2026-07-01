@@ -19,20 +19,24 @@ export interface AccessoryProduct {
 export interface AccessoryData {
   cables: AccessoryProduct[];
   earpads: AccessoryProduct[];
+  storage: AccessoryProduct[];
 }
 
 const BASE = `*[_type == "homepageData"][0]`;
 
 const CABLES_Q = `${BASE}.accessoriesCables[]->{_id,name,brand->{ _id, name, slug },price_data,stock,"slug": slug.current,"imageUrl": image.asset->url,image{asset->{_id, url}}}`;
 const EARPADS_Q = `${BASE}.accessoriesEarpads[]->{_id,name,brand->{ _id, name, slug },price_data,stock,"slug": slug.current,"imageUrl": image.asset->url,image{asset->{_id, url}}}`;
+const STORAGE_Q = `${BASE}.accessoriesStorage[]->{_id,name,brand->{ _id, name, slug },price_data,stock,"slug": slug.current,"imageUrl": image.asset->url,image{asset->{_id, url}}}`;
 
 export const getAccessoryProducts = cache(async (): Promise<AccessoryData> => {
-  const [cables, earpads] = await Promise.all([
+  const [cables, earpads, storage] = await Promise.all([
     sanityFetch({ query: CABLES_Q }),
     sanityFetch({ query: EARPADS_Q }),
+    sanityFetch({ query: STORAGE_Q }),
   ]);
   return {
     cables: (cables as AccessoryProduct[]) ?? [],
     earpads: (earpads as AccessoryProduct[]) ?? [],
+    storage: (storage as AccessoryProduct[]) ?? [],
   };
 });

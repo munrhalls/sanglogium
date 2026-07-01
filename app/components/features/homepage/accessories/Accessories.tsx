@@ -7,7 +7,7 @@ interface AccessoriesProps {
 }
 
 export default async function Accessories({ accessoriesData }: AccessoriesProps) {
-  const { cables, earpads } = accessoriesData;
+  const { cables, earpads, storage } = accessoriesData;
 
   return (
     <article className="w-full relative overflow-hidden bg-brand-700">
@@ -26,6 +26,9 @@ export default async function Accessories({ accessoriesData }: AccessoriesProps)
           )}
           {earpads.length > 0 && (
             <CategorySection category={{ name: "Pads", filter: "" }} items={earpads as any} />
+          )}
+          {storage.length > 0 && (
+            <CategorySection category={{ name: "Storage", filter: "" }} items={storage as any} />
           )}
         </div>
       </div>

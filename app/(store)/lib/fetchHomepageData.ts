@@ -31,7 +31,7 @@ export async function fetchHomepageData(): Promise<HomepageData> {
       iemsGallery: [],
       newestRelease: null,
       dacs: [],
-      accessories: { cables: [], earpads: [] }
+      accessories: { cables: [], earpads: [], storage: [] }
     };
   }
 }
