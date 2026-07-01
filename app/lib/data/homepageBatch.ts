@@ -175,6 +175,7 @@ export interface AccessoryProduct {
 export interface AccessoryData {
   cables: AccessoryProduct[];
   earpads: AccessoryProduct[];
+  storage: AccessoryProduct[];
 }
 
 export interface HomepageData {
@@ -484,6 +485,7 @@ async function fetchHomepageSections(): Promise<{
       dacs?: DacProduct[];
       accessoriesCables?: AccessoryProduct[];
       accessoriesEarpads?: AccessoryProduct[];
+      accessoriesStorage?: AccessoryProduct[];
     }>({ query: HOMEPAGE_DATA_QUERY });
 
     if (!rawData) {
@@ -496,7 +498,7 @@ async function fetchHomepageSections(): Promise<{
         iemsGallery: [],
         newestRelease: null,
         dacs: [],
-        accessories: { cables: [], earpads: [] }
+        accessories: { cables: [], earpads: [], storage: [] }
       };
     }
 
