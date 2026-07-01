@@ -3,7 +3,7 @@
 Production e-commerce platform for high-end audio gear, built and maintained
 solo over 18+ months.
 
-🔗 Live: https://sang-logium.com
+🔗 Live: https://www.sanglogium.com
 
 ## Features
 
@@ -16,7 +16,27 @@ solo over 18+ months.
 
 ## Tech Stack
 
-Next.js 15 · React 19 · TypeScript · Sanity v3 · Stripe · Better Auth · Tailwind CSS
+**Framework & Language:** Next.js 15 (App Router) · React 19 · TypeScript
+
+**CMS & Data:** Sanity v3 · Turso (libsql — auth database)
+
+**Payments:** Stripe (Payment Intents, Embedded Elements)
+
+**Auth & Session:** Better Auth (Kysely adapter) · iron-session (encrypted checkout cookies)
+
+**Email:** Resend (newsletter, checkout & auth emails)
+
+**Shipping:** AlleKurier & Packlink (aggregated rate quoting)
+
+**State & Forms:** Zustand · React Hook Form · Zod
+
+**Infrastructure:** Upstash Redis (inventory reservation) · BullMQ (background jobs) · Sentry (error monitoring) · Pino (structured logging)
+
+**Address Validation:** Google Maps Address Validation API
+
+**Styling:** Tailwind CSS
+
+**Testing:** Playwright (E2E & component) · Vitest (unit & integration)
 
 ## Screenshots
 
