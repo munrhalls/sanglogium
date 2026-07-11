@@ -5,7 +5,11 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 
-export default function SignUpForm() {
+interface SignUpFormProps {
+  googleEnabled?: boolean;
+}
+
+export default function SignUpForm({ googleEnabled }: SignUpFormProps) {
   const searchParams = useSearchParams();
   const emailFromUrl = searchParams.get("email");
 
@@ -29,6 +33,13 @@ export default function SignUpForm() {
     },
     null
   );
+
+  async function handleGoogleSignUp() {
+    await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/account",
+    });
+  }
 
   if (state?.success) {
     return (
@@ -110,6 +121,24 @@ export default function SignUpForm() {
           {isPending ? "Creating account..." : "Sign Up"}
         </button>
       </form>
+
+      {googleEnabled && (
+        <>
+          <div className="my-4 flex items-center">
+            <div className="flex-1 border-t border-border-secondary" />
+            <span className="type-caption text-text-caption mx-4">or</span>
+            <div className="flex-1 border-t border-border-secondary" />
+          </div>
+
+          <button
+            type="button"
+            onClick={handleGoogleSignUp}
+            className="btn-secondary w-full py-3 flex items-center justify-center gap-2"
+          >
+            Sign up with Google
+          </button>
+        </>
+      )}
 
       <p className="mt-4 text-center type-body">
         Already have an account?{" "}
