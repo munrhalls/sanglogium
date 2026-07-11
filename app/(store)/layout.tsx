@@ -14,6 +14,8 @@ import DrawersManager from "@/app/components/layout/drawers/DrawersManager";
 import ActionBarServer from "@/app/components/layout/navigation/ActionBarServer";
 import CatalogueNavbar from "@/app/components/layout/catalogue/CatalogueNavbar";
 import { WebVitals } from "@/app/components/analytics/WebVitals";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import GoogleAnalytics from "@/app/components/analytics/GoogleAnalytics";
 import { getCatalogueForNavigation } from "@/data/catalogue";
 import { Suspense } from "react";
 
@@ -69,9 +71,11 @@ export default async function RootLayout({
                 <DrawersManager catalogueDataRaw={catalogueDataRaw} />
                 <ActionBarServer />
                 <WebVitals />
+                <SpeedInsights />
               </Suspense>
             </div>
           </NuqsAdapter>
+        <GoogleAnalytics />
       </body>
     </html>
   );

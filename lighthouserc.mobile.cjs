@@ -1,14 +1,14 @@
 const { defineConfig } = require('lighthouse');
 
 /**
- * Lighthouse CI Configuration
+ * Lighthouse CI Configuration - Mobile
  * 
  * Run locally with:
  *   npm install -g @lhci/cli
- *   lhci autorun
+ *   lhci autorun --config=lighthouserc.mobile.cjs
  * 
  * Run on CI:
- *   lhci autorun --config=lighthouserc.cjs
+ *   lhci autorun --config=lighthouserc.mobile.cjs
  */
 
 module.exports = {
@@ -33,8 +33,8 @@ module.exports = {
       
       // Settings for mobile testing (throttled)
       settings: {
-        preset: 'desktop', // Change to 'mobile' for mobile testing
-        formFactor: 'desktop',
+        preset: 'mobile', // Mobile preset
+        formFactor: 'mobile',
         throttling: {
           // Simulate slow 4G
           rttMs: 150,
@@ -42,9 +42,9 @@ module.exports = {
           cpuSlowdownMultiplier: 4,
         },
         screenEmulation: {
-          mobile: false,
-          width: 1350,
-          height: 940,
+          mobile: true,
+          width: 360,
+          height: 640,
           deviceScaleFactor: 1,
           disabled: false,
         },
@@ -72,9 +72,9 @@ module.exports = {
 
         // Resource budgets
         'total-byte-weight': ['error', { maxNumericValue: 2.5 * 1024 * 1024 }], // < 2.5MB
+        'unused-javascript': ['error', { maxNumericValue: 150 * 1024 }], // < 150KB unused
         'uses-long-cache-ttl': ['warn', { minScore: 0.8 }],
         'uses-responsive-images': ['warn', { minScore: 0.8 }],
-        'unused-javascript': ['error', { maxNumericValue: 150 * 1024 }], // < 150KB unused
       },
     },
 

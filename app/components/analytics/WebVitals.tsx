@@ -7,8 +7,8 @@ import {
   onINP,
   onLCP,
   onTTFB,
-  type Metric
-} from "web-vitals";
+  type MetricWithAttribution as Metric
+} from "web-vitals/attribution";
 
 /**
  * Web Vitals Real User Monitoring (RUM) Component
@@ -73,6 +73,7 @@ function sendToAnalytics(metric: Metric, name: string) {
     delta: metric.delta,
     id: metric.id,
     navigationType: metric.navigationType,
+    attribution: metric.attribution,
   });
 
   const blob = new Blob([payload], { type: "application/json" });
@@ -85,6 +86,14 @@ function sendToAnalytics(metric: Metric, name: string) {
       method: "POST",
       keepalive: true,
     }).catch(() => {});
+  }
+
+  if (typeof window !== "undefined" && typeof (window as any).gtag === "function") {
+    (window as any).gtag("event", "web_vitals", {
+      metric_name: name,
+      value: metric.value,
+      metric_rating: metric.rating,
+    });
   }
 }
 

@@ -34,6 +34,13 @@ jobs:
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
 
+      - name: Run Lighthouse CI Mobile
+        run: |
+          npm install -g @lhci/cli
+          lhci autorun --config=lighthouserc.mobile.cjs
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
       - name: Upload Lighthouse reports
         uses: actions/upload-artifact@v4
         if: always()
