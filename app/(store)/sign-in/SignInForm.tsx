@@ -5,7 +5,19 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 
-export default function SignInForm() {
+interface SignInFormProps {
+  googleEnabled?: boolean;
+}
+
+type SignInState =
+  | { success: true; twoFactorRequired?: false; twoFactorMethods?: undefined }
+  | { success: false; error: string; emailNotVerified?: boolean; email?: string; twoFactorRequired?: false; twoFactorMethods?: undefined }
+  | { success: false; twoFactorRequired: true; twoFactorMethods?: string[] }
+  | null;
+
+type VerifyState = { success: true } | { success: false; error: string } | null;
+
+export default function SignInForm({ googleEnabled }: SignInFormProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const isVerified = searchParams.get("verified") === "true";
@@ -13,8 +25,8 @@ export default function SignInForm() {
   const [resendStatus, setResendStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [resendError, setResendError] = useState<string | null>(null);
 
-  const [state, formAction, isPending] = useActionState(
-    async (_prevState: unknown, formData: FormData) => {
+  const [signInState, signInAction, signInPending] = useActionState<SignInState, FormData>(
+    async (_prevState, formData) => {
       const email = formData.get("email") as string;
       const password = formData.get("password") as string;
 
@@ -30,9 +42,19 @@ export default function SignInForm() {
           result.error.message?.toLowerCase().includes("not verified") ||
           result.error.message?.toLowerCase().includes("email verified");
         return {
-          error: result.error.message,
+          success: false,
+          error: result.error.message ?? "Sign in failed.",
           emailNotVerified: isUnverified,
           email: isUnverified ? email : undefined,
+        };
+      }
+
+      const twoFactorRedirect = (result.data as any)?.twoFactorRedirect;
+      if (twoFactorRedirect) {
+        return {
+          success: false,
+          twoFactorRequired: true,
+          twoFactorMethods: (result.data as any)?.twoFactorMethods,
         };
       }
 
@@ -41,19 +63,53 @@ export default function SignInForm() {
     null
   );
 
+  const [verifyState, verifyAction, verifyPending] = useActionState<VerifyState, FormData>(
+    async (_prevState, formData) => {
+      const code = formData.get("code") as string;
+      const trustDevice = formData.get("trustDevice") === "on";
+
+      const result = await (authClient as any).twoFactor.verifyTotp({
+        code,
+        trustDevice,
+      });
+
+      if (result.error) {
+        return { success: false, error: result.error.message ?? "Invalid code." };
+      }
+
+      return { success: true };
+    },
+    null
+  );
+
   useEffect(() => {
-    if (state?.success) {
-      router.push("/account");
+    if (signInState?.success || verifyState?.success) {
+      const returnTo = searchParams.get("returnTo");
+      const merge = searchParams.get("merge");
+
+      const destination =
+        merge === "1"
+          ? "/account?merge=1"
+          : returnTo && returnTo.startsWith("/")
+          ? returnTo
+          : "/account";
+
+      router.push(destination);
     }
-  }, [state, router]);
+  }, [signInState, verifyState, router, searchParams]);
 
   async function handleResend() {
-    if (!state || !("email" in state) || !state.email) return;
+    if (!signInState || !("email" in signInState) || !signInState.email) return;
     setResendStatus("sending");
     setResendError(null);
+    const merge = searchParams.get("merge");
+    const callbackURL =
+      merge === "1"
+        ? "/sign-in?verified=true&merge=1"
+        : "/sign-in?verified=true";
     const result = await authClient.sendVerificationEmail({
-      email: state.email,
-      callbackURL: "/sign-in?verified=true",
+      email: signInState.email,
+      callbackURL,
     });
     if (result.error) {
       setResendError(result.error.message ?? null);
@@ -80,10 +136,10 @@ export default function SignInForm() {
         </div>
       )}
 
-      {state && "error" in state && state.error && (
+      {signInState && "error" in signInState && signInState.error && (
         <div className="mb-4 rounded border border-error-500 bg-error-500/10 p-3 text-error-500 type-caption">
-          {state.error}
-          {state.emailNotVerified && (
+          {signInState.error}
+          {signInState.emailNotVerified && (
             <div className="mt-2">
               {resendStatus === "sent" ? (
                 <span className="text-success-500">Verification email sent. Check your inbox.</span>
@@ -91,7 +147,7 @@ export default function SignInForm() {
                 <button
                   type="button"
                   onClick={handleResend}
-                  disabled={resendStatus === "sending" || isPending}
+                  disabled={resendStatus === "sending" || signInPending}
                   className="underline hover:no-underline disabled:opacity-50"
                 >
                   {resendStatus === "sending" ? "Sending..." : "Resend verification email"}
@@ -105,7 +161,13 @@ export default function SignInForm() {
         </div>
       )}
 
-      {state?.success && (
+      {verifyState && "error" in verifyState && verifyState.error && (
+        <div className="mb-4 rounded border border-error-500 bg-error-500/10 p-3 text-error-500 type-caption">
+          {verifyState.error}
+        </div>
+      )}
+
+      {signInState?.success && (
         <div className="mb-4 rounded border border-success-500 bg-success-500/10 p-3 text-success-500 type-caption">
           Signed in successfully!{" "}
           <Link href="/account" className="underline hover:text-success-700">
@@ -114,66 +176,109 @@ export default function SignInForm() {
         </div>
       )}
 
-      <form action={formAction} className="space-y-4">
-        <div>
-          <label htmlFor="email" className="type-caption text-text-caption mb-1 block">
-            Email
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            required
-            className="input-field"
-          />
-        </div>
+      {signInState?.twoFactorRequired ? (
+        <form action={verifyAction} className="space-y-4">
+          <div>
+            <label htmlFor="code" className="type-caption text-text-caption mb-1 block">
+              Authenticator code
+            </label>
+            <input
+              id="code"
+              name="code"
+              type="text"
+              inputMode="numeric"
+              autoComplete="one-time-code"
+              required
+              maxLength={8}
+              placeholder="000000"
+              className="input-field"
+            />
+          </div>
 
-        <div>
-          <label htmlFor="password" className="type-caption text-text-caption mb-1 block">
-            Password
+          <label className="flex items-start gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              name="trustDevice"
+              value="on"
+              className="mt-1 h-5 w-5 rounded border-border-primary bg-surface-elevated text-brand-400 focus:ring-brand-400 focus:ring-offset-0"
+            />
+            <span className="type-body">Remember this device for 30 days</span>
           </label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            required
-            className="input-field"
-          />
-        </div>
 
-        <div className="flex justify-end">
-          <Link
-            href="/forgot-password"
-            className="type-caption text-text-accent underline hover:text-text-primary"
+          <button
+            type="submit"
+            disabled={verifyPending}
+            className="btn-primary w-full py-3"
           >
-            Forgot password?
-          </Link>
-        </div>
+            {verifyPending ? "Verifying..." : "Verify and sign in"}
+          </button>
+        </form>
+      ) : (
+        <form action={signInAction} className="space-y-4">
+          <div>
+            <label htmlFor="email" className="type-caption text-text-caption mb-1 block">
+              Email
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              className="input-field"
+            />
+          </div>
 
-        <button
-          type="submit"
-          disabled={isPending}
-          className="btn-primary w-full py-3"
-        >
-          {isPending ? "Signing in..." : "Sign In"}
-        </button>
-      </form>
+          <div>
+            <label htmlFor="password" className="type-caption text-text-caption mb-1 block">
+              Password
+            </label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              required
+              className="input-field"
+            />
+          </div>
 
-      <div className="my-4 flex items-center">
-        <div className="flex-1 border-t border-border-secondary" />
-        <span className="type-caption text-text-caption mx-4">or</span>
-        <div className="flex-1 border-t border-border-secondary" />
-      </div>
+          <div className="flex justify-end">
+            <Link
+              href="/forgot-password"
+              className="type-caption text-text-accent underline hover:text-text-primary"
+            >
+              Forgot password?
+            </Link>
+          </div>
 
-      <div className="space-y-2">
-        <button
-          type="button"
-          onClick={handleGoogleSignIn}
-          className="btn-secondary w-full py-3 flex items-center justify-center gap-2"
-        >
-          Sign in with Google
-        </button>
-      </div>
+          <button
+            type="submit"
+            disabled={signInPending}
+            className="btn-primary w-full py-3"
+          >
+            {signInPending ? "Signing in..." : "Sign In"}
+          </button>
+        </form>
+      )}
+
+      {googleEnabled && !signInState?.twoFactorRequired && (
+        <>
+          <div className="my-4 flex items-center">
+            <div className="flex-1 border-t border-border-secondary" />
+            <span className="type-caption text-text-caption mx-4">or</span>
+            <div className="flex-1 border-t border-border-secondary" />
+          </div>
+
+          <div className="space-y-2">
+            <button
+              type="button"
+              onClick={handleGoogleSignIn}
+              className="btn-secondary w-full py-3 flex items-center justify-center gap-2"
+            >
+              Sign in with Google
+            </button>
+          </div>
+        </>
+      )}
 
       <p className="mt-4 text-center type-body">
         Don&apos;t have an account?{" "}

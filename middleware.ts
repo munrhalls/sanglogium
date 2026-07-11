@@ -10,7 +10,9 @@ export default async function middleware(request: NextRequest) {
   if (pathname.startsWith("/account")) {
     const sessionToken = getSessionCookie(request);
     if (!sessionToken) {
-      return NextResponse.redirect(new URL("/sign-in", request.url));
+      const signInUrl = new URL("/sign-in", request.url);
+      signInUrl.searchParams.set("returnTo", pathname);
+      return NextResponse.redirect(signInUrl);
     }
   }
 
