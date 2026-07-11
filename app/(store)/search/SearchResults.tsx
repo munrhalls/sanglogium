@@ -3,6 +3,7 @@ import { SearchEmpty } from '@/app/components/features/search/SearchEmpty';
 import { SearchPagination } from '@/app/components/features/search/SearchPagination';
 import { ProductGrid } from '@/app/components/features/products/ProductGrid';
 import { SortDropdown } from '@/app/components/features/filters/SortDropdown';
+import { getWishlistProductIds } from '@/lib/wishlist';
 import type { SearchResult } from '@/sanity-cms/lib/products/searchProducts';
 
 interface SearchResultsProps {
@@ -12,6 +13,7 @@ interface SearchResultsProps {
 
 export async function SearchResults({ resultsPromise, query }: SearchResultsProps) {
   const { products, totalCount } = await resultsPromise;
+  const wishlistProductIds = await getWishlistProductIds();
 
   if (products.length === 0) {
     return <SearchEmpty query={query} />;
@@ -26,6 +28,7 @@ export async function SearchResults({ resultsPromise, query }: SearchResultsProp
       <ProductGrid
         products={products as any}
         className="grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg-desktop:grid-cols-4 lg-touch:grid-cols-3"
+        wishlistProductIds={wishlistProductIds}
       />
       <SearchPagination totalCount={totalCount} />
     </>

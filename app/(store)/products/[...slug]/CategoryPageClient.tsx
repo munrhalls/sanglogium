@@ -34,6 +34,7 @@ interface CategoryPageClientProps {
   currentPage: number;
   perPage: number;
   categoryName?: string;
+  wishlistProductIds?: string[];
 }
 
 export function CategoryPageClient({
@@ -45,6 +46,7 @@ export function CategoryPageClient({
   currentPage,
   perPage,
   categoryName,
+  wishlistProductIds,
 }: CategoryPageClientProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const isPending = useFilterPending();
@@ -132,7 +134,7 @@ export function CategoryPageClient({
         <ActiveFilters filterGroups={filters} />
 
         <div className={isPending ? 'opacity-60 transition-opacity pointer-events-none' : 'transition-opacity'}>
-          {totalCount === 0 ? <EmptyResults /> : <ProductGrid products={products} />}
+          {totalCount === 0 ? <EmptyResults /> : <ProductGrid products={products} wishlistProductIds={wishlistProductIds} />}
         </div>
 
         <Pagination currentPage={currentPage} totalPages={totalPages} />

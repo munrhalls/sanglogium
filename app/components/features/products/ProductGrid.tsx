@@ -6,9 +6,10 @@ import type { Product } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
 interface ProductGridProps {
   products: Product[];
   className?: string;
+  wishlistProductIds?: string[];
 }
 
-export function ProductGrid({ products, className }: ProductGridProps) {
+export function ProductGrid({ products, className, wishlistProductIds }: ProductGridProps) {
   if (products.length === 0) {
     return (
       <div className="py-12 px-4 text-center" role="status" data-testid="empty-products">
@@ -16,6 +17,8 @@ export function ProductGrid({ products, className }: ProductGridProps) {
       </div>
     );
   }
+
+  const wishlistSet = wishlistProductIds ? new Set(wishlistProductIds) : null;
 
   return (
     <div
@@ -27,7 +30,11 @@ export function ProductGrid({ products, className }: ProductGridProps) {
       )}
     >
       {products.map((product) => (
-        <ProductCard key={product._id} product={product} />
+        <ProductCard
+          key={product._id}
+          product={product}
+          isWishlisted={wishlistSet?.has(product._id) ?? false}
+        />
       ))}
     </div>
   );

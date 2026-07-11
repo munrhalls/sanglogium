@@ -1,6 +1,7 @@
 import React from 'react';
 import { CategoryPageClient } from './CategoryPageClient';
 import { DEFAULT_PER_PAGE } from '@/lib/catalogue/filterParams';
+import { getWishlistProductIds } from '@/lib/wishlist';
 import type { PaginatedProducts } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
 import type { FilterResult } from '@/sanity-cms/lib/products/filter/getFiltersForCategoryPath';
 
@@ -17,9 +18,10 @@ export async function ProductsSection({
   categoryName,
   currentPage
 }: ProductsSectionProps) {
-  const [{ products, totalCount }, filterResult] = await Promise.all([
+  const [{ products, totalCount }, filterResult, wishlistProductIds] = await Promise.all([
     productsPromise,
-    filtersPromise
+    filtersPromise,
+    getWishlistProductIds()
   ]);
 
   return (
@@ -32,6 +34,7 @@ export async function ProductsSection({
       currentPage={currentPage}
       perPage={DEFAULT_PER_PAGE}
       categoryName={categoryName}
+      wishlistProductIds={wishlistProductIds}
     />
   );
 }

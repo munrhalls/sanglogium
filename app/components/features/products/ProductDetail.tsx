@@ -7,9 +7,10 @@ import { RelatedProducts } from './RelatedProducts';
 interface ProductDetailProps {
   product: Product;
   relatedProducts?: RelatedProduct[];
+  isInWishlist?: boolean;
 }
 
-export function ProductDetail({ product, relatedProducts = [] }: ProductDetailProps) {
+export function ProductDetail({ product, relatedProducts = [], isInWishlist = false }: ProductDetailProps) {
   // Combine main image with gallery for the image gallery
   const allImages = product.image ? [product.image, ...(product.gallery || [])] : (product.gallery || []);
 
@@ -23,7 +24,7 @@ export function ProductDetail({ product, relatedProducts = [] }: ProductDetailPr
 
         {/* Product Info */}
         <div className="lg:w-1/2">
-          <ProductInfo product={product} />
+          <ProductInfo product={product} isInWishlist={isInWishlist} />
         </div>
       </div>
 

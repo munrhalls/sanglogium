@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getProductBySlug, getRelatedProducts } from '@/sanity-cms/lib/products';
 import { ProductDetail } from '@/app/components/features/products';
+import { getWishlistProductIds } from '@/lib/wishlist';
 import { generateOptimizedTitle, generateSEOTitle, generateMetaDescription } from '@/lib/utils/title-optimization';
 
 interface ProductPageProps {
@@ -22,6 +23,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
     product.catalogueLocationKeys || [],
     6
   );
+
+  const wishlistProductIds = await getWishlistProductIds();
+  const isInWishlist = wishlistProductIds.includes(product._id);
 
   return (
     <div className="container mx-auto px-4 py-6">
@@ -46,7 +50,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </ol>
       </nav>
 
-      <ProductDetail product={product} relatedProducts={relatedProducts} />
+      <ProductDetail product={product} relatedProducts={relatedProducts} isInWishlist={isInWishlist} />
     </div>
   );
 }

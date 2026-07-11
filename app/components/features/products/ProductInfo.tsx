@@ -8,8 +8,9 @@ import { ShoppingCartIcon, CheckIcon } from '@phosphor-icons/react/dist/ssr';
 import { QuantitySelector } from '@/app/components/ui/QuantitySelector';
 import { centsToDisplay } from '@/lib/utils/price';
 import { BasketControls } from "@/app/components/features/basket/BasketControls";
+import { WishlistButton } from "@/app/components/features/wishlist/WishlistButton";
 
-export function ProductInfo({ product }: { product: Product }) {
+export function ProductInfo({ product, isInWishlist = false }: { product: Product; isInWishlist?: boolean }) {
   const [preAddQty, setPreAddQty] = useState(1);
   const displayPrice = centsToDisplay(product.price_data.unit_amount);
 
@@ -32,25 +33,38 @@ export function ProductInfo({ product }: { product: Product }) {
 
       {product.overviewFields && product.overviewFields.length > 0 && (
         <div className="grid grid-cols-2 gap-4 py-4 border-y border-border-secondary">
-          {product.overviewFields.map((field) => (
-            <div key={field.title}>
-              <p className="type-caption uppercase text-secondary">{field.title}</p>
-              <p className="type-body text-primary">{field.value}</p>
-            </div>
-          ))}
+          {product.overviewFields.map((field) => {
+            const paragraphs = field.value.split('\n\n').filter(Boolean);
+            return (
+              <div key={field.title} className={field.title === 'Description' ? 'col-span-2' : ''}>
+                <p className="type-caption uppercase text-secondary">{field.title}</p>
+                <div className="space-y-3">
+                  {paragraphs.map((para, i) => (
+                    <p key={i} className="type-body text-primary">{para}</p>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
       )}
 
       <div className="pt-4 space-y-6 ">
-        <BasketControls
-          productId={product._id}
-          isBasketPage={false}
-          addClassName="btn-cart-large w-full flex justify-center"
-          wrapperClassName="flex items-center gap-4"
-          decrementClassName="btn-secondary w-8 h-8 flex items-center justify-center"
-          incrementClassName="btn-secondary w-8 h-8 flex items-center justify-center disabled:opacity-50"
-          quantityClassName="w-7 text-center type-body text-primary tabular-nums"
-        />
+        <div className="flex items-center gap-4">
+          <BasketControls
+            productId={product._id}
+            isBasketPage={false}
+            addClassName="btn-cart-large w-full flex justify-center"
+            wrapperClassName="flex items-center gap-4"
+            decrementClassName="btn-secondary w-8 h-8 flex items-center justify-center"
+            incrementClassName="btn-secondary w-8 h-8 flex items-center justify-center disabled:opacity-50"
+            quantityClassName="w-7 text-center type-body text-primary tabular-nums"
+          />
+          <WishlistButton
+            productId={product._id}
+            initiallyInWishlist={isInWishlist}
+          />
+        </div>
       </div>
     </div >
   );
