@@ -36,20 +36,25 @@ export default async function OrdersPage() {
           {orders.map((order) => (
             <li
               key={order.orderNumber}
-              className="border border-gray-200 p-4 rounded"
+              className="border border-gray-200 rounded"
             >
-              <div className="flex justify-between items-center">
-                <span className="font-semibold">{order.orderNumber}</span>
-                <span className="text-sm text-gray-500 capitalize">
-                  {order.status}
-                </span>
-              </div>
-              <div className="text-sm text-gray-600">
-                {new Date(order.dates.orderedAt).toLocaleDateString()}
-              </div>
-              <div className="text-sm font-medium">
-                {order.pricing.total / 100} {order.pricing.currency.toUpperCase()}
-              </div>
+              <Link
+                href={`/account/orders/${order.orderNumber}`}
+                className="block p-4 hover:bg-gray-50"
+              >
+                <div className="flex justify-between items-center">
+                  <span className="font-semibold">{order.orderNumber}</span>
+                  <span className="text-sm text-gray-500 capitalize">
+                    {order.status}
+                  </span>
+                </div>
+                <div className="text-sm text-gray-600">
+                  {new Date(order.dates.orderedAt).toLocaleDateString()}
+                </div>
+                <div className="text-sm font-medium">
+                  {order.pricing.total / 100} {order.pricing.currency.toUpperCase()}
+                </div>
+              </Link>
             </li>
           ))}
         </ul>

@@ -3,8 +3,14 @@ import { kyselyAdapter } from "@better-auth/kysely-adapter";
 import { Kysely } from "kysely";
 import { LibsqlDialect } from "kysely-libsql";
 import { nextCookies } from "better-auth/next-js";
-import { sendVerificationEmail, sendResetPasswordEmail } from "./email";
+import { twoFactor } from "better-auth/plugins";
+import {
+  sendVerificationEmail,
+  sendResetPasswordEmail,
+  sendDeleteAccountVerification,
+} from "./email";
 import { backendClient } from "@/sanity-cms/lib/backendClient";
+import { mergeGuestOrdersByEmail } from "./checkout/mergeGuestOrders";
 
 function validateDatabaseConfig() {
   const databaseUrl = process.env.DATABASE_URL || "";
@@ -109,8 +115,97 @@ export const auth = betterAuth({
         }
       : {}),
   },
+  user: {
+    deleteUser: {
+      enabled: true,
+      sendDeleteAccountVerification: async ({ user, url, token }) => {
+        await sendDeleteAccountVerification({ user, url, token });
+      },
+      beforeDelete: async (user) => {
+        const openStatuses = [
+          "pending_payment",
+          "processing",
+          "packed",
+          "shipped",
+          "out_for_delivery",
+        ];
+
+        const openOrders = await backendClient.fetch<{ _id: string }[]>(
+          `*[_type == "order" && userId == $userId && status in $openStatuses]{_id}`,
+          { userId: user.id, openStatuses }
+        );
+
+        if (openOrders && openOrders.length > 0) {
+          throw new Error(
+            "Cannot delete account with open orders. Please wait for all orders to be delivered or cancelled."
+          );
+        }
+      },
+      afterDelete: async (user) => {
+        // Hard-delete the user profile (no legally required retention).
+        try {
+          const profile = await backendClient.fetch<{ _id: string }>(
+            `*[_type == "userProfile" && authId == $authId][0]{_id}`,
+            { authId: user.id }
+          );
+
+          if (profile?._id) {
+            await backendClient.delete(profile._id);
+          }
+        } catch (error) {
+          console.error("[AUTH] afterDelete: failed to delete userProfile.", {
+            authId: user.id,
+            error: error instanceof Error ? error.message : String(error),
+          });
+        }
+
+        // Anonymize order history: remove userId but keep orders for accounting/tax.
+        try {
+          await backendClient
+            .patch({
+              query: `*[_type == "order" && userId == $userId]`,
+              params: { userId: user.id },
+            })
+            .unset(["userId"])
+            .set({ isGuest: true })
+            .commit();
+        } catch (error) {
+          console.error("[AUTH] afterDelete: failed to anonymize orders.", {
+            authId: user.id,
+            error: error instanceof Error ? error.message : String(error),
+          });
+        }
+      },
+    },
+  },
   databaseHooks: {
     user: {
+      update: {
+        after: async (user) => {
+          if (!user.emailVerified || !user.email) return;
+
+          try {
+            const { linked } = await mergeGuestOrdersByEmail(
+              user.id,
+              user.email
+            );
+
+            if (linked > 0) {
+              console.log("[AUTH] HOOK: merged guest orders for user.", {
+                authId: user.id,
+                email: user.email,
+                linked,
+              });
+            }
+          } catch (error) {
+            console.error("[AUTH] HOOK FAILED: guest order merge failed.", {
+              authId: user.id,
+              email: user.email,
+              error: error instanceof Error ? error.message : String(error),
+            });
+          }
+        },
+      },
       create: {
         after: async (user) => {
           try {
@@ -154,5 +249,13 @@ export const auth = betterAuth({
       },
     },
   },
-  plugins: [nextCookies()],
+  plugins: [
+    nextCookies(),
+    twoFactor({
+      issuer: "Sang Logium",
+      backupCodeOptions: {
+        storeBackupCodes: "encrypted",
+      },
+    }),
+  ],
 });

@@ -73,6 +73,36 @@ export async function sendResetPasswordEmail(data: {
   });
 }
 
+export async function sendDeleteAccountVerification(data: {
+  user: EmailUser;
+  url: string;
+  token: string;
+}): Promise<void> {
+  const { user, url, token } = data;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  const deleteUrl =
+    url || `${baseUrl}/api/auth/delete-user/callback?token=${encodeURIComponent(token)}`;
+
+  if (!resend) {
+    logDevEmail("Delete Account Verification", user.email, deleteUrl);
+    return;
+  }
+
+  await resend.emails.send({
+    from: resendFromEmail,
+    to: user.email,
+    subject: "Confirm account deletion — Sang Logium",
+    html: `
+      <p>Hi ${user.name || "there"},</p>
+      <p>You requested to delete your Sang Logium account. This action cannot be undone.</p>
+      <p>Click the link below to confirm and complete the deletion:</p>
+      <p><a href="${deleteUrl}">${deleteUrl}</a></p>
+      <p>This link expires in 1 hour.</p>
+      <p>If you did not request this, you can safely ignore it.</p>
+    `,
+  });
+}
+
 export async function sendOrderConfirmationEmail(data: {
   to: string
   orderNumber: string

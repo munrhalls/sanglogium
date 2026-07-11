@@ -26,6 +26,21 @@ export const userType = defineType({
       type: "string",
     }),
     defineField({
+      name: "marketingEmailsOptIn",
+      title: "Marketing Emails Opt-In",
+      type: "boolean",
+      initialValue: false,
+      description:
+        "Whether the user wants promotional/marketing emails. Transactional emails (verification, password reset, order updates) are unaffected.",
+    }),
+    defineField({
+      name: "wishlist",
+      title: "Wishlist",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "product" }] }],
+      description: "Products the user has saved for later. References current product documents.",
+    }),
+    defineField({
       name: "stripeCustomerId",
       title: "Stripe Customer ID",
       type: "string",
