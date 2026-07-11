@@ -66,7 +66,7 @@ export default function ShippingPageClient({
       );
     } catch (err) {
       // NEVER intercept Next.js redirect errors — let the framework handle navigation
-      if (err instanceof Error && err.message === "NEXT_REDIRECT") {
+      if (err instanceof Error && (err as any).digest === "NEXT_REDIRECT") {
         throw err;
       }
       setError(err instanceof Error ? err.message : "Nie udało się zapisać wyboru dostawy");

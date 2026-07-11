@@ -66,7 +66,7 @@ export default async function Page() {
   const allekurierPayload = {
     fromCountry: "PL",
     fromZip: senderZip,
-    toCountry: "PL",
+    toCountry: session.address.regionCode,
     toZip: session.address.postalCode,
     packages,
   };
