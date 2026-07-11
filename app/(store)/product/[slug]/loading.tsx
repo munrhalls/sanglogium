@@ -29,8 +29,6 @@ export default function ProductLoading() {
           <div className="h-10 w-3/4 bg-surface-elevated rounded animate-pulse" />
           {/* Price */}
           <div className="h-6 w-32 bg-surface-elevated rounded animate-pulse" />
-          {/* SKU */}
-          <div className="h-4 w-40 bg-surface-elevated rounded animate-pulse" />
           {/* Stock */}
           <div className="h-4 w-24 bg-surface-elevated rounded animate-pulse" />
 
