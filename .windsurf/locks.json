@@ -10,5 +10,9 @@
   "lib/auth.ts": {
     "agentId": "cascade_pane_1",
     "timestamp": 1781117812892
+  },
+  "tests/checkout/e2e/address-flow-regression.test.ts": {
+    "agentId": "cascade_pane_1",
+    "timestamp": 1783685854684
   }
 }
