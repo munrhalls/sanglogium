@@ -30,7 +30,7 @@ solo over 18+ months.
 
 **State & Forms:** Zustand · React Hook Form · Zod
 
-**Infrastructure:** Upstash Redis (inventory reservation) · BullMQ (background jobs) · Sentry (error monitoring) · Pino (structured logging)
+**Infrastructure:** Upstash Redis (inventory reservation) · BullMQ (background jobs) · Sentry (error monitoring & tracing) · Vercel Speed Insights (RUM) · Pino (structured logging)
 
 **Address Validation:** Google Maps Address Validation API
 
