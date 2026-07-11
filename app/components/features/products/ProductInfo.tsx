@@ -27,7 +27,6 @@ export function ProductInfo({ product }: { product: Product }) {
         <div className="flex items-center gap-4">
           <Price value={displayPrice} />
         </div>
-        <p className="type-caption text-secondary">SKU: {product.sku}</p>
         <p className={`type-caption ${stockStatus.color}`}>{stockStatus.text}</p>
       </div>
 
