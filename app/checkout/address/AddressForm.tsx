@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { unstable_rethrow } from "next/navigation";
 import { saveAddress } from "@/app/actions/checkout";
-import Loader from "@/app/components/common/Loader";
 import CheckoutStepper from "../_components/CheckoutStepper";
 import type { Address } from "../checkout.types";
 
@@ -49,6 +49,7 @@ export default function AddressForm({ traceId, initialAddress }: AddressFormProp
 
   const handleChange = (field: keyof typeof form, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
+    setError(null);
   };
 
   const handleSubmit = async (formData: FormData) => {
@@ -80,26 +81,19 @@ export default function AddressForm({ traceId, initialAddress }: AddressFormProp
     try {
       const result = await saveAddress(addressData);
       if (result && result.status === "FIX") {
-        setError("Address could not be verified. Please check your details and try again.");
-        setIsLoading(false);
+        setError(
+          result.errors?.message ??
+            "Address could not be verified. Please check your details and try again."
+        );
       }
     } catch (err) {
       // NEVER intercept Next.js redirect errors — let the framework handle navigation
-      if (err instanceof Error && err.message === "NEXT_REDIRECT") {
-        throw err;
-      }
+      unstable_rethrow(err);
       setError(err instanceof Error ? err.message : "Failed to save address");
+    } finally {
       setIsLoading(false);
     }
   };
-
-  if (isLoading) {
-    return (
-      <div className="flex min-h-[50vh] items-center justify-center">
-        <Loader message="Verifying address..." color="border-t-black" />
-      </div>
-    );
-  }
 
   return (
     <div className="max-w-xl mx-auto w-full">
@@ -240,7 +234,14 @@ export default function AddressForm({ traceId, initialAddress }: AddressFormProp
             disabled={isLoading}
             className="btn-cart-large w-full mt-8"
           >
-            Continue to Shipping
+            {isLoading ? (
+              <span className="inline-flex items-center gap-2">
+                <span className="inline-block w-4 h-4 rounded-full border-2 border-brand-700/40 border-t-brand-700 animate-spin" />
+                Verifying...
+              </span>
+            ) : (
+              "Continue to Shipping"
+            )}
           </button>
         </form>
     </div>
