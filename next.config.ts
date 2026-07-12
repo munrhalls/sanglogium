@@ -2,6 +2,10 @@ import type { NextConfig } from "next";
 
 import withBundleAnalyzer from "@next/bundle-analyzer";
 import { withSentryConfig } from "@sentry/nextjs";
+import { dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const projectRoot = dirname(fileURLToPath(import.meta.url));
 
 const nextConfig: NextConfig = {
   typescript: { ignoreBuildErrors: false },
@@ -22,7 +26,7 @@ const nextConfig: NextConfig = {
     },
   }),
   turbopack: {
-    root: __dirname,
+    root: projectRoot,
   },
   experimental: {
     optimizeCss: true,
