@@ -22,6 +22,18 @@ const PlaceholderItem = ({ children }: { children: React.ReactNode }) => (
   <span className={cn("type-body", "cursor-default")}>{children}</span>
 );
 
+const BrandLink = ({ brand }: { brand: string }) => (
+  <Link
+    href={`/products?f=brand:${encodeURIComponent(brand)}`}
+    className={cn(
+      "type-body",
+      "transition-opacity duration-200 hover:opacity-70"
+    )}
+  >
+    {brand}
+  </Link>
+);
+
 const FooterLink = ({
   href,
   children,
@@ -214,7 +226,7 @@ export default function Footer() {
           <ul className={cn("columns-2 gap-x-6 gap-y-2")}>
             {brands.map((brand) => (
               <li key={brand} className="break-inside-avoid">
-                <PlaceholderItem>{brand}</PlaceholderItem>
+                <BrandLink brand={brand} />
               </li>
             ))}
           </ul>
