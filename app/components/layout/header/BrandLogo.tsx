@@ -1,8 +1,13 @@
+import Link from "next/link";
 import { cn } from "@/lib/utils/tailwind";
 
 export default function BrandLogo() {
   return (
-    <div className={cn("flex items-center gap-[4px]")}>
+    <Link
+      href="/"
+      aria-label="Go to home page"
+      className={cn("flex items-center gap-[4px]")}
+    >
       {/* SANG */}
       <span
         className={cn("text-h5 font-bold tracking-normal", "text-brand-400")}
@@ -28,6 +33,6 @@ export default function BrandLogo() {
       >
         LOGIUM
       </span>
-    </div>
+    </Link>
   );
 }
