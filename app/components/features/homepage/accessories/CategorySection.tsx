@@ -58,20 +58,13 @@ export default function CategorySection({ category, items }: CategorySectionProp
             ))}
           </CarouselTrack>
 
-          <div className="hidden md:block absolute left-0 top-1/2 z-10 -translate-y-1/2 md:-left-5">
-            <CarouselPrevious />
-          </div>
-          <div className="hidden md:block absolute right-0 top-1/2 z-10 -translate-y-1/2 md:-right-5">
-            <CarouselNext />
-          </div>
         </div>
 
-        <div className="flex md:hidden w-full items-center justify-between mt-4 px-2">
-          <CarouselPrevious iconStyle="chevron" />
+        <div className="flex items-center justify-center gap-3">
+          <CarouselPrevious iconStyle="chevron" className="max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent max-lg:!text-brand-800" />
           <CarouselDots truncate />
-          <CarouselNext iconStyle="chevron" />
+          <CarouselNext iconStyle="chevron" className="max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent max-lg:!text-brand-800" />
         </div>
-        <CarouselDots truncate className="hidden md:flex mt-2 justify-center" />
       </div>
     </Carousel>
   );
