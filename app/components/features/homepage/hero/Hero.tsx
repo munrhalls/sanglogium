@@ -101,7 +101,7 @@ export default async function Hero({ heroData }: HeroProps) {
                 {heroData.headline}
               </h1>
               <p className="type-hero-sub m-0 p-0">
-                Hear the difference.
+                {heroData.subheadline || "Hear the difference."}
               </p>
             </div>
 
@@ -112,7 +112,7 @@ export default async function Hero({ heroData }: HeroProps) {
                 "text-cta-hero font-bold"
               )}
             >
-              {"DISCOVER"}
+              {heroData.ctaText || "DISCOVER"}
             </Link>
           </div>
         </div>

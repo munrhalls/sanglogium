@@ -1,14 +1,22 @@
 import AccessoriesHeader from "./AccessoriesHeader";
 import CategorySection from "./CategorySection";
-import { getAccessoryProducts } from "./getAccessoryProducts";
+import type { AccessoryData } from "@/sanity-cms/lib/homepage/getHomepageData";
 
 interface AccessoriesProps {
-  accessoriesData: Awaited<ReturnType<typeof getAccessoryProducts>>;
+  accessoriesData: AccessoryData;
 }
 
-export default async function Accessories({ accessoriesData }: AccessoriesProps) {
-  const { cables, earpads, storage } = accessoriesData;
+const CATEGORIES: { key: keyof AccessoriesProps["accessoriesData"]; name: string }[] = [
+  { key: "cables", name: "Cables" },
+  { key: "interconnects", name: "Interconnects" },
+  { key: "adapters", name: "Adapters" },
+  { key: "earpads", name: "Pads" },
+  { key: "eartips", name: "Eartips" },
+  { key: "careCleaning", name: "Care & Cleaning" },
+  { key: "storage", name: "Storage" },
+];
 
+export default async function Accessories({ accessoriesData }: AccessoriesProps) {
   return (
     <article className="w-full relative overflow-hidden bg-brand-700">
       <div aria-hidden="true" className="absolute inset-0 z-0 pointer-events-none">
@@ -21,15 +29,17 @@ export default async function Accessories({ accessoriesData }: AccessoriesProps)
           <div className="text-brand-700">
             <AccessoriesHeader />
           </div>
-          {cables.length > 0 && (
-            <CategorySection category={{ name: "Cables", filter: "" }} items={cables as any} />
-          )}
-          {earpads.length > 0 && (
-            <CategorySection category={{ name: "Pads", filter: "" }} items={earpads as any} />
-          )}
-          {storage.length > 0 && (
-            <CategorySection category={{ name: "Storage", filter: "" }} items={storage as any} />
-          )}
+          {CATEGORIES.map(({ key, name }) => {
+            const items = accessoriesData[key];
+            if (!items || items.length === 0) return null;
+            return (
+              <CategorySection
+                key={key}
+                category={{ name, filter: "" }}
+                items={items as any}
+              />
+            );
+          })}
         </div>
       </div>
     </article>

@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { NewestReleaseData } from "@/app/lib/data/homepageBatch";
+import { NewestReleaseData } from "@/sanity-cms/lib/homepage/getHomepageData";
 import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
 import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";
 import { CarouselSlide } from "@/app/components/layout/carousel/CarouselSlide";
@@ -24,10 +24,11 @@ export default async function NewestRelease({ newestReleaseData }: NewestRelease
 
   return (
     <article className="w-full overflow-hidden">
-      <div className="flex flex-col-reverse lg:flex-row lg:items-stretch min-h-[400px] lg:min-h-[560px]">
+      <div className="max-w-content mx-auto">
+        <div className="flex flex-col-reverse lg:flex-row lg:items-stretch min-h-[400px] lg:min-h-[440px]">
 
         {/* Image column */}
-        <div className="w-full lg:w-1/2 min-h-[280px] lg:min-h-[560px] bg-brand-700 relative overflow-hidden border border-border-secondary">
+        <div className="w-full lg:w-1/2 min-h-[280px] lg:min-h-[440px] bg-brand-700 relative overflow-hidden border border-border-secondary">
           <Carousel
             itemsCount={images.length || 1}
             breakpointMap={{ lgDesktop: 1, mdPortrait: 1, mobilePortrait: 1 }}
@@ -47,7 +48,7 @@ export default async function NewestRelease({ newestReleaseData }: NewestRelease
                     width={800}
                     height={800}
                     priority={idx === 0}
-                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    sizes="(max-width: 1024px) 100vw, (max-width: 1280px) 50vw, 640px"
                     className="max-w-full max-h-full w-auto h-auto object-contain"
                   />
                 </CarouselSlide>
@@ -72,7 +73,7 @@ export default async function NewestRelease({ newestReleaseData }: NewestRelease
 
         {/* Text column */}
         <div className="w-full lg:w-1/2 bg-brand-200 flex flex-col justify-center">
-          <div className="w-full py-12 lg:py-24 px-8 lg:px-16">
+          <div className="w-full py-12 lg:py-16 px-8 lg:px-12">
             <div className="max-w-2xl">
               <div className="flex flex-col gap-8">
 
@@ -84,10 +85,10 @@ export default async function NewestRelease({ newestReleaseData }: NewestRelease
                 </div>
 
                 <div className="flex flex-col gap-4">
-                  <h2 className="type-hero-headline text-secondary-900">
+                  <h2 className="type-section-hed text-secondary-900">
                     {promoTitle || product.name}
                   </h2>
-                  <p className="type-hero-sub text-secondary-800">
+                  <p className="type-section-sub text-secondary-800">
                     {promoSubtitle || ""}
                   </p>
                 </div>
@@ -115,6 +116,7 @@ export default async function NewestRelease({ newestReleaseData }: NewestRelease
           </div>
         </div>
 
+      </div>
       </div>
     </article>
   );

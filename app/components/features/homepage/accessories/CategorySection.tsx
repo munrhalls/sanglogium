@@ -58,12 +58,22 @@ export default function CategorySection({ category, items }: CategorySectionProp
             ))}
           </CarouselTrack>
 
+          <div className="pointer-events-none absolute inset-y-0 left-0 right-0 flex items-center justify-between px-1">
+            <CarouselPrevious
+              iconStyle="chevron"
+              variant="dark"
+              className="pointer-events-auto bg-brand-100/90 hover:bg-brand-200/90"
+            />
+            <CarouselNext
+              iconStyle="chevron"
+              variant="dark"
+              className="pointer-events-auto bg-brand-100/90 hover:bg-brand-200/90"
+            />
+          </div>
         </div>
 
-        <div className="flex items-center justify-center gap-3">
-          <CarouselPrevious iconStyle="chevron" className="max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent max-lg:!text-brand-800" />
+        <div className="flex justify-center pt-3">
           <CarouselDots truncate />
-          <CarouselNext iconStyle="chevron" className="max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent max-lg:!text-brand-800" />
         </div>
       </div>
     </Carousel>
