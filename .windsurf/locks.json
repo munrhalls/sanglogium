@@ -22,17 +22,5 @@
   "sanity.types.ts": {
     "agentId": "cascade_pane_1",
     "timestamp": 1785356883146
-  },
-  ".beads/issues.jsonl": {
-    "agentId": "devin_session_1",
-    "timestamp": 1785585384593
-  },
-  "C:\\webdev\\sang-logium\\app\\components\\layout\\carousel\\CarouselControls.tsx": {
-    "agentId": "cascade_pane_1",
-    "timestamp": 1785585670876
-  },
-  "C:\\webdev\\sang-logium\\app\\components\\features\\homepage\\featured\\Featured.tsx": {
-    "agentId": "cascade_pane_1",
-    "timestamp": 1785585676917
   }
 }
