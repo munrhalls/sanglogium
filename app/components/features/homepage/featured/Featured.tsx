@@ -141,7 +141,7 @@ export default async function Featured({ featuredData }: FeaturedProps) {
                 View All <span aria-hidden="true">&rsaquo;</span>
               </Link>
 
-              <div className="relative">
+              <div className="relative lg:px-12">
                 <CarouselTrack className="mx-0 w-full items-stretch md:-mx-3 md:w-[calc(100%+1.5rem)]">
                   {featuredData.map((p, idx) => (
                     <CarouselSlide
@@ -153,16 +153,16 @@ export default async function Featured({ featuredData }: FeaturedProps) {
                   ))}
                 </CarouselTrack>
 
-                <div className="pointer-events-none absolute inset-y-0 left-0 right-0 flex items-center justify-between px-1">
+                <div className="pointer-events-none absolute inset-y-0 left-0 right-0 flex items-center justify-between">
                   <CarouselPrevious
                     iconStyle="chevron"
-                    variant="dark"
-                    className="pointer-events-auto bg-brand-100/90 hover:bg-brand-200/90"
+                    size={36}
+                    className="pointer-events-auto bg-transparent text-brand-400 hover:bg-transparent hover:text-brand-100 max-lg:static max-lg:h-9 max-lg:w-9"
                   />
                   <CarouselNext
                     iconStyle="chevron"
-                    variant="dark"
-                    className="pointer-events-auto bg-brand-100/90 hover:bg-brand-200/90"
+                    size={36}
+                    className="pointer-events-auto bg-transparent text-brand-400 hover:bg-transparent hover:text-brand-100 max-lg:static max-lg:h-9 max-lg:w-9"
                   />
                 </div>
               </div>
