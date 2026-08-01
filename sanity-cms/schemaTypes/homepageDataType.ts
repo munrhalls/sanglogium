@@ -75,24 +75,6 @@ export const homepageDataType = defineType({
       type: "array",
       of: [{ type: "reference", to: [{ type: "product" }] }],
     }),
-    defineField({
-      name: "accessoriesCables",
-      title: "Accessories: Cables",
-      type: "array",
-      of: [{ type: "reference", to: [{ type: "product" }] }],
-    }),
-    defineField({
-      name: "accessoriesEarpads",
-      title: "Accessories: Earpads",
-      type: "array",
-      of: [{ type: "reference", to: [{ type: "product" }] }],
-    }),
-    defineField({
-      name: "accessoriesStorage",
-      title: "Accessories: Storage",
-      type: "array",
-      of: [{ type: "reference", to: [{ type: "product" }] }],
-    }),
   ],
   preview: {
     prepare() {

@@ -1,7 +1,7 @@
-import { fetchHomepageDataBatched, HomepageData } from "@/app/lib/data/homepageBatch";
+import { fetchHomepageDataBatched, HomepageData } from "@/sanity-cms/lib/homepage/getHomepageData";
 
 // Re-export the interface for backward compatibility
-export type { HomepageData } from "@/app/lib/data/homepageBatch";
+export type { HomepageData } from "@/sanity-cms/lib/homepage/getHomepageData";
 
 /**
  * Fetches all homepage data using batched queries.
@@ -10,7 +10,7 @@ export type { HomepageData } from "@/app/lib/data/homepageBatch";
  * Previously used Promise.all([9 separate fetchers]) = ~10 API calls.
  * Now delegates to fetchHomepageDataBatched() = 2 API calls (hero + batched homepageData).
  *
- * TTFB Impact: ~10.9s → <600ms
+ * TTFB Impact: ~10.9s -> <600ms
  */
 export async function fetchHomepageData(): Promise<HomepageData> {
   try {
@@ -31,7 +31,15 @@ export async function fetchHomepageData(): Promise<HomepageData> {
       iemsGallery: [],
       newestRelease: null,
       dacs: [],
-      accessories: { cables: [], earpads: [], storage: [] }
+      accessories: {
+        cables: [],
+        interconnects: [],
+        adapters: [],
+        earpads: [],
+        eartips: [],
+        careCleaning: [],
+        storage: []
+      }
     };
   }
 }
