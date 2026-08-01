@@ -1,6 +1,6 @@
 research
 what are the critical-only questions and answers needed
-only gather critical information from source-level deep checks
+only gather critical information from source-level deep checks to get the answers needed
 present answers
 simplest briefest clearest format possible
 plain english only
