@@ -1,5 +1,5 @@
 import { cache } from "react";
-import { fetchHomepageDataBatched, HomepageData } from "./homepageBatch";
+import { fetchHomepageDataBatched, HomepageData } from "@/sanity-cms/lib/homepage/getHomepageData";
 
 /**
  * Cached wrapper for homepage data fetching.
@@ -11,4 +11,4 @@ export const cachedFetchHomepageData = cache(async (): Promise<HomepageData> => 
 });
 
 // Re-export types for convenience
-export type { HomepageData } from "./homepageBatch";
+export type { HomepageData } from "@/sanity-cms/lib/homepage/getHomepageData";
