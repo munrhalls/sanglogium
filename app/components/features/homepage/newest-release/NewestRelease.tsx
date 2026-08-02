@@ -25,10 +25,10 @@ export default async function NewestRelease({ newestReleaseData }: NewestRelease
   return (
     <article className="w-full overflow-hidden">
       <div className="max-w-content mx-auto">
-        <div className="flex flex-col-reverse lg:flex-row lg:items-stretch min-h-[400px] lg:min-h-[300px] xl:min-h-[480px] gap-0">
+        <div className="flex flex-col-reverse lg:flex-row lg:items-stretch min-h-[400px] lg:min-h-[260px] xl:min-h-[360px] gap-0">
 
         {/* Image column */}
-        <div className="w-full lg:w-[30%] xl:w-1/2 min-h-[280px] lg:min-h-[300px] xl:min-h-[480px] lg:aspect-[4/3] xl:aspect-auto bg-brand-700 relative overflow-hidden border border-border-secondary">
+        <div className="w-full lg:w-[30%] xl:w-[42%] min-h-[280px] lg:min-h-[260px] xl:min-h-[360px] lg:aspect-[4/3] xl:aspect-auto bg-brand-700 relative overflow-hidden border border-border-secondary">
           <Carousel
             itemsCount={images.length || 1}
             breakpointMap={{ lgDesktop: 1, mdPortrait: 1, mobilePortrait: 1 }}
@@ -72,14 +72,14 @@ export default async function NewestRelease({ newestReleaseData }: NewestRelease
         </div>
 
         {/* Text column */}
-        <div className="w-full lg:w-[70%] xl:w-1/2 bg-brand-200 flex flex-col justify-center">
+        <div className="w-full lg:w-[70%] xl:w-[58%] bg-brand-200 flex flex-col justify-center">
           <div className="w-full py-12 lg:py-8 px-8 lg:px-10 xl:px-12">
             <div className="max-w-2xl">
               <div className="flex flex-col gap-8 lg:gap-4">
 
                 <div className="flex flex-col gap-2">
                   <span className="type-overline text-accent-600">New Release</span>
-                  <span className="type-metadata text-accent-600">
+                  <span className="type-caption text-accent-600">
                     {product.brand.name} {product.name}
                   </span>
                 </div>
@@ -88,7 +88,7 @@ export default async function NewestRelease({ newestReleaseData }: NewestRelease
                   <h2 className="type-section-hed text-secondary-900">
                     {promoTitle || product.name}
                   </h2>
-                  <p className="type-section-sub text-secondary-800">
+                  <p className="text-lg lg:text-xl font-medium leading-snug text-secondary-800">
                     {promoSubtitle || ""}
                   </p>
                 </div>

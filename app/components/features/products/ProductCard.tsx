@@ -49,17 +49,19 @@ export function ProductCard({ product, isWishlisted = false }: ProductCardProps)
         </div>
       </Link>
 
-      <div className="flex items-center justify-between gap-2 px-4 pb-4 flex-nowrap">
-        <Price value={displayPrice} className="type-price tabular-nums flex-shrink-0" />
-        <BasketControls
-          productId={product._id}
-          isBasketPage={false}
-          addClassName="btn-cart"
-          wrapperClassName="flex items-center gap-1 flex-shrink-0"
-          decrementClassName="btn-secondary w-8 h-8 flex items-center justify-center"
-          incrementClassName="btn-secondary w-8 h-8 flex items-center justify-center disabled:opacity-50"
-          quantityClassName="w-7 text-center type-body text-primary tabular-nums"
-        />
+      <div className="flex items-center gap-2 px-4 pb-4">
+        <Price value={displayPrice} />
+        <div className="ml-auto">
+          <BasketControls
+            productId={product._id}
+            isBasketPage={false}
+            addClassName="btn-cart"
+            wrapperClassName="flex items-center gap-1"
+            decrementClassName="btn-secondary w-8 h-8 flex items-center justify-center"
+            incrementClassName="btn-secondary w-8 h-8 flex items-center justify-center disabled:opacity-50"
+            quantityClassName="w-7 text-center type-body text-primary tabular-nums"
+          />
+        </div>
       </div>
     </article>
   );

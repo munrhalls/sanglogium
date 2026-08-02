@@ -11,7 +11,7 @@ interface IemsGalleryProps {
 export default async function IemsGallery({ iemsData }: IemsGalleryProps) {
   if (!iemsData.length) return null;
 
-  const displayed = iemsData.slice(0, 6);
+  const displayed = iemsData.slice(0, 16);
 
   return (
     <article className="w-full relative overflow-hidden border-y border-border-secondary bg-brand-900">
@@ -29,7 +29,7 @@ export default async function IemsGallery({ iemsData }: IemsGalleryProps) {
                 <IemCard key={iem._id} product={iem} idx={idx} />
               ))}
             </div>
-            {iemsData.length > 6 && (
+            {iemsData.length > 16 && (
               <div className="flex justify-center pt-4">
                 <Link
                   href="/products/headphones/monitors-iems"
