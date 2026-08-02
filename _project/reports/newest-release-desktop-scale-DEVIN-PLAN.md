@@ -56,19 +56,6 @@ layout.
   `px-8`) are not touched by any task below. Only `lg:`-prefixed classes and the new wrapper
   change.
 
-## File-Lock Protocol
-
-This repo runs multiple agents in parallel. Since every task below touches the same single
-file, claim it **once**, before Task 1, and release it **once**, after the Final Gate — do not
-release/reclaim between tasks (that would just add collision risk for no benefit on a
-single-file plan).
-
-```bash
-node scripts/mutex.cjs claim app/components/features/homepage/newest-release/NewestRelease.tsx <your-agent-id>
-```
-
-If it errors `[ERROR] ... locked by ...`, stop — do not edit the file. Report and wait.
-
 ## Circuit Breaker
 
 If any single verification step fails or hangs twice in a row, stop retrying it. Report exactly
@@ -257,18 +244,14 @@ product-name field instead.
 
 ## Final Gate — run once, after Task 4 (and Task 5 if done)
 
-1. Release the file lock:
-   ```bash
-   node scripts/mutex.cjs release app/components/features/homepage/newest-release/NewestRelease.tsx <your-agent-id>
-   ```
-2. If a dev server isn't already running, start one non-blocking (background process).
-3. Visually check the homepage at 375px, 768px, 1024px, 1280px, 1440px, 1920px. Confirm:
+1. If a dev server isn't already running, start one non-blocking (background process).
+2. Visually check the homepage at 375px, 768px, 1024px, 1280px, 1440px, 1920px. Confirm:
    - `NewestRelease` reads as a compact product feature, not a second hero, at 1280px+.
    - `Featured`, `IemsGallery`, `Dacs`, `Accessories` (the other `Shelf fullBleed` sections)
      look exactly as they did before this plan — spot check, since this plan never touches
      their shared code path.
    - Mobile/tablet `NewestRelease` layout (image-over-text, `flex-col-reverse`) is unchanged.
-4. Run once, in the background, logging to a file (do not pipe through `head`/`grep` and wait
+3. Run once, in the background, logging to a file (do not pipe through `head`/`grep` and wait
    on a blocking foreground call — see `sang-logium-direct-access` and
    `homepage-DEVIN-EXECUTION-PLAN.md` for why):
    ```bash
@@ -277,5 +260,5 @@ product-name field instead.
    ```
    Check both logs when done. Both should be clean (only this one file changed, and only
    Tailwind class strings + one conditional expression).
-5. Report: which tasks completed, whether Task 5 was done or skipped, lint/tsc results, and
+4. Report: which tasks completed, whether Task 5 was done or skipped, lint/tsc results, and
    screenshots or a description of the six breakpoints if a browser preview was available.

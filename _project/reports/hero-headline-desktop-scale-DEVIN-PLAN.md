@@ -54,17 +54,6 @@ color) or any other component.
 - Do not remove or reorder the existing `type-hero-headline` / `type-hero-sub` classes —
   the new classes are additive, appended alongside them.
 
-## File-Lock Protocol
-
-This repo runs multiple agents in parallel. Claim the file once, before Task 1, release it
-once, after the Final Gate.
-
-```bash
-node scripts/mutex.cjs claim app/components/features/homepage/hero/Hero.tsx <your-agent-id>
-```
-
-If it errors `[ERROR] ... locked by ...`, stop — do not edit the file. Report and wait.
-
 ## Circuit Breaker
 
 If any single verification step fails or hangs twice in a row, stop retrying it. Report
@@ -154,12 +143,8 @@ better — mobile/tablet must remain byte-for-byte the same classes as before Ta
 
 ## Final Gate — run once, after Task 2 (and Task 3 if done)
 
-1. Release the file lock:
-   ```bash
-   node scripts/mutex.cjs release app/components/features/homepage/hero/Hero.tsx <your-agent-id>
-   ```
-2. If a dev server isn't already running, start one non-blocking (background process).
-3. Visually check the homepage hero at these widths and confirm:
+1. If a dev server isn't already running, start one non-blocking (background process).
+2. Visually check the homepage hero at these widths and confirm:
    - **Desktop (must have changed, smoothly, no flat-oversized plateau):** 1024px, 1280px,
      1440px, 1536px, 1920px, 2560px, 3440px. Headline reads as a confident but restrained
      hero headline at every one of these — never spanning almost the full viewport width,
@@ -169,13 +154,13 @@ better — mobile/tablet must remain byte-for-byte the same classes as before Ta
    - The CTA button ("DISCOVER"/"EXPLORE") and its size are unchanged.
    - Text color, weight, and letter-spacing on both headline and subheadline look
      unchanged from before this plan (only size moved).
-4. Optional, background, non-blocking (skip if it would take more than a couple of
+3. Optional, background, non-blocking (skip if it would take more than a couple of
    minutes to start — this is a two-class-string change with no logic/type changes, so
    editor diagnostics from step 3's per-task loop are already sufficient signal):
    ```bash
    npm run lint > hero-typography-plan-lint.log 2>&1 &
    ```
-5. Report: which tasks completed, whether Task 3 was needed, and a description (or
+4. Report: which tasks completed, whether Task 3 was needed, and a description (or
    screenshots, if a browser preview was available) of the hero at the desktop and
    mobile/tablet widths listed above.
 
@@ -185,5 +170,5 @@ better — mobile/tablet must remain byte-for-byte the same classes as before Ta
 
 ```
 Task 1 (headline) → Task 2 (subheadline) → Task 3 (conditional tuning, only if needed) →
-  Final Gate (release lock, visual check across all listed widths, optional lint)
+  Final Gate (visual check across all listed widths, optional lint)
 ```

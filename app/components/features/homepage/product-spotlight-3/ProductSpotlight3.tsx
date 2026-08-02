@@ -45,7 +45,7 @@ export default function ProductSpotlight3({ spotlightData }: ProductSpotlight3Pr
 
       <div className="max-w-content mx-auto relative z-10">
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-8 lg:gap-20 items-stretch min-h-[400px] md:min-h-[500px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-8 lg:gap-20 items-stretch max-h-[350px] md:max-h-[420px]">
 
           <div className="order-2 md:order-1 w-full h-full bg-surface-productImage rounded-none flex items-center justify-center relative overflow-hidden border border-border-secondary">
 
@@ -55,7 +55,7 @@ export default function ProductSpotlight3({ spotlightData }: ProductSpotlight3Pr
 
                 {product.images?.slice(0, 9).map((image, idx) => (
 
-                  <CarouselSlide key={`${product._id}-${idx}`} className="aspect-square w-full flex items-center justify-center pb-4 opacity-0 scale-95 transition-[opacity,transform] duration-500 ease-out data-[active=true]:opacity-100 data-[active=true]:scale-100">
+                  <CarouselSlide key={`${product._id}-${idx}`} className="aspect-[4/3] w-full flex items-center justify-center pb-4 opacity-0 scale-95 transition-[opacity,transform] duration-500 ease-out data-[active=true]:opacity-100 data-[active=true]:scale-100">
 
                     <Image
 

@@ -67,40 +67,22 @@ move on only if the task explicitly allows a skip; otherwise wait for human inpu
 a third variation of the same stuck command — that pattern (small syntax tweak, retry, repeat) is
 the single biggest source of wasted time in prior runs of this plan.
 
-## File-Lock Protocol (this repo runs multiple agents in parallel)
-
-Before editing any file in a task below, claim it:
-```bash
-node scripts/mutex.cjs claim <filepath> <your-agent-id>
-```
-Use one consistent `<your-agent-id>` for this whole run. If the command exits non-zero (prints
-`[ERROR]`), the file is locked by another agent — **do not edit it**; move to a different task in
-the order and come back later. Release immediately after you finish editing that file:
-```bash
-node scripts/mutex.cjs release <filepath> <your-agent-id>
-```
-This is a single fast local command (reads/writes a small JSON file) — never a source of hangs,
-but skipping it risks a collision with another agent mid-task, which is a real source of the
-"stuck" failure mode this plan exists to prevent.
-
 ## Per-Task Loop (follow for every task below)
 
 1. Read the task fully before touching any file.
-2. Claim the file(s) you're about to edit (see File-Lock Protocol above).
-3. Make only the change described — resist fixing anything else you notice; file it as a
+2. Make only the change described — resist fixing anything else you notice; file it as a
    separate follow-up note instead (this plan is intentionally minimal-scope per task).
-4. Check the file(s) you touched via your editor/language-server diagnostics (already running,
+3. Check the file(s) you touched via your editor/language-server diagnostics (already running,
    incremental, free) or the already-running dev server's terminal output. **Do not shell out
    to a fresh whole-project `tsc --noEmit` or `npm run build` per task** — see
    `sang-logium-direct-access` skill: this is a forbidden expensive command whether run
    directly or written into a plan, and on a project this size it can hang for minutes with
    zero output, per incident on 2026-07-29.
-5. If a check surfaces a problem, fix within the scope of the current task only. If you can't,
+4. If a check surfaces a problem, fix within the scope of the current task only. If you can't,
    stop and report — don't move to the next task with a known-broken file. (Also respect the
    Circuit Breaker above — don't retry the same fix more than twice.)
-6. Release the file(s) you claimed in step 2.
-7. Mark the task done and move to the next one in order.
-8. **Exactly one** full `npm run build` + typecheck happens for this whole plan — see "Final
+5. Mark the task done and move to the next one in order.
+6. **Exactly one** full `npm run build` + typecheck happens for this whole plan — see "Final
    Gate" at the end, after Task 6. Not per-task, not per-file, not per-phase.
 
 ---

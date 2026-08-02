@@ -2,7 +2,6 @@
  * ESLint Plugin for Sang-Logium
  *
  * Custom rules to catch common AI agent mistakes.
- * See AGENTS.md for rule documentation.
  */
 
 "use strict";
@@ -20,7 +19,7 @@ module.exports = {
           recommended: true,
         },
         messages: {
-          noCloneElement: "Use React Context instead of cloneElement. See AGENTS.md Critical Anti-Patterns.",
+          noCloneElement: "Use React Context instead of cloneElement.",
         },
       },
       create(context) {
@@ -64,7 +63,7 @@ module.exports = {
         },
         messages: {
           // eslint-disable-next-line sang-logium/groq-reference-syntax -- Error message contains example syntax
-          wrongSyntax: "Use field->name NOT field with braces around single field. See AGENTS.md GROQ rules.",
+          wrongSyntax: "Use field->name NOT field with braces around single field.",
         },
       },
       create(context) {
@@ -116,7 +115,7 @@ module.exports = {
           recommended: true,
         },
         messages: {
-          noDirectSanity: "Use Server Components for Sanity queries. See AGENTS.md Architecture Constraints.",
+          noDirectSanity: "Use Server Components for Sanity queries.",
         },
       },
       create(context) {
@@ -178,7 +177,7 @@ module.exports = {
           recommended: true,
         },
         messages: {
-          addNullCheck: "Add null check: `const [filters = []] = useQueryState(...)` or `(filters || []).map()`. See AGENTS.md.",
+          addNullCheck: "Add null check: `const [filters = []] = useQueryState(...)` or `(filters || []).map()`.",
         },
       },
       create(context) {
@@ -246,7 +245,7 @@ module.exports = {
           recommended: false, // Advisory only
         },
         messages: {
-          considerServer: "Consider if this needs to be a Client Component. Server Components are default. See AGENTS.md Architecture Constraints.",
+          considerServer: "Consider if this needs to be a Client Component. Server Components are default.",
         },
       },
       create(context) {
@@ -313,7 +312,7 @@ module.exports = {
           recommended: true,
         },
         messages: {
-          mayBeCopying: "Ensure you're importing from source, not copying implementation. See AGENTS.md Testing Rules.",
+          mayBeCopying: "Ensure you're importing from source, not copying implementation. See tests/AGENTS.md Testing Rules.",
         },
       },
       create(context) {

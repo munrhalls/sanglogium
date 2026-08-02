@@ -50,7 +50,7 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => {
   return (
     <article className="card-product-dark flex h-full flex-col gap-4 lg-touch:gap-3 lg-touch:p-4">
       <Link href={`/product/${product.slug}`} className="flex flex-grow flex-col">
-        <figure className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-lg bg-surface-productImage p-6">
+        <figure className="relative flex aspect-[4/3] lg-touch:aspect-[3/2] w-full items-center justify-center overflow-hidden rounded-lg bg-surface-productImage p-6 lg-touch:p-4">
           <span className="absolute left-4 top-2 z-10 text-tiny xs:text-small tracking-tight text-brand-900">
             {product.brand.name}
           </span>
@@ -73,7 +73,7 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => {
         />
       </figure>
 
-      <div className="flex flex-grow flex-col px-4 pt-2 mt-3">
+      <div className="flex flex-grow flex-col px-4 pt-2 mt-3 lg-touch:px-2 lg-touch:pt-1">
         <h3 className="text-small">{modelName}</h3>
         <p className="type-price mt-2">
           ${centsToDisplay(product.price_data.unit_amount)}
@@ -126,13 +126,13 @@ export default async function Featured({ featuredData }: FeaturedProps) {
         </div>
       </div>
       <div className="relative z-10">
-        <div className="mx-auto max-w-content px-6 py-10 md:py-16 lg:px-8">
+        <div className="mx-auto max-w-content px-6 py-10 md:py-12 lg-touch:py-6 lg:px-8">
           <Carousel
             itemsCount={featuredData.length}
             breakpointMap={featuredBreakpointMap}
           >
             <div className="flex flex-col gap-2 md:gap-3">
-              <div className="w-full lg:max-w-[1040px] lg:px-20 lg-touch:max-w-[860px] lg-touch:px-14 lg:mx-auto flex flex-col md:flex-row md:items-end justify-between gap-2 md:gap-4">
+              <div className="w-full lg:max-w-[1200px] lg:px-20 lg-touch:max-w-[1000px] lg-touch:px-14 lg:mx-auto flex flex-col md:flex-row md:items-end justify-between gap-2 md:gap-4">
                 <FeaturedHeader />
                 <Link
                   href="/products/headphones"
@@ -142,7 +142,7 @@ export default async function Featured({ featuredData }: FeaturedProps) {
                 </Link>
               </div>
 
-              <div className="relative lg:px-20 lg:max-w-[1040px] lg-touch:px-14 lg-touch:max-w-[860px] lg:mx-auto">
+              <div className="relative lg:px-20 lg:max-w-[1200px] lg-touch:px-14 lg-touch:max-w-[1000px] lg:mx-auto">
                 <CarouselTrack className="mx-0 w-full items-stretch md:-mx-3 md:w-[calc(100%+1.5rem)]">
                   {featuredData.map((p, idx) => (
                     <CarouselSlide
@@ -154,7 +154,7 @@ export default async function Featured({ featuredData }: FeaturedProps) {
                   ))}
                 </CarouselTrack>
 
-                <div className="pointer-events-none absolute inset-y-0 left-0 right-0 flex items-center justify-between">
+                <div className="pointer-events-none absolute inset-y-0 left-0 right-0 hidden items-center justify-between lg:flex">
                   <CarouselPrevious
                     iconStyle="chevron"
                     size={48}
@@ -170,8 +170,20 @@ export default async function Featured({ featuredData }: FeaturedProps) {
                 </div>
               </div>
 
-              <div className="flex justify-center pt-3">
+              <div className="flex items-center justify-center gap-3 pt-3">
+                <CarouselPrevious
+                  iconStyle="chevron"
+                  size={14}
+                  weight="bold"
+                  className="pointer-events-auto h-4 w-4 bg-transparent p-0 text-brand-400 hover:bg-transparent hover:text-brand-100 lg:hidden"
+                />
                 <CarouselDots truncate />
+                <CarouselNext
+                  iconStyle="chevron"
+                  size={14}
+                  weight="bold"
+                  className="pointer-events-auto h-4 w-4 bg-transparent p-0 text-brand-400 hover:bg-transparent hover:text-brand-100 lg:hidden"
+                />
               </div>
             </div>
           </Carousel>

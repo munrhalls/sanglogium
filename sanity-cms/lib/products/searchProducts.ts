@@ -1,3 +1,5 @@
+'use server';
+
 import { sanityFetch } from '@/sanity-cms/lib/client';
 import groq from 'groq';
 

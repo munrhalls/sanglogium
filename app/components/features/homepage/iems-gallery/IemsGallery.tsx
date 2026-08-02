@@ -22,9 +22,9 @@ export default async function IemsGallery({ iemsData }: IemsGalleryProps) {
       </div>
       <div className="relative z-10">
         <div className="mx-auto max-w-content px-6 py-16 lg:px-8">
-          <div className="flex flex-col gap-4 md:gap-6">
+          <div className="flex flex-col gap-4 md:gap-6 lg:gap-3">
             <IemsGalleryHeader href="/products/headphones/monitors-iems" />
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-3 md:gap-6">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-4">
               {displayed.map((iem, idx) => (
                 <IemCard key={iem._id} product={iem} idx={idx} />
               ))}

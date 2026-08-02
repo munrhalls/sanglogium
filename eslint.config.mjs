@@ -21,15 +21,15 @@ export default [
           paths: [
             {
               name: "jest",
-              message: "Use Vitest instead. See AGENTS.md Testing Rules.",
+              message: "Use Vitest instead. See tests/AGENTS.md Testing Rules.",
             },
             {
               name: "@testing-library/jest-dom",
-              message: "Use Vitest matchers instead. See AGENTS.md Testing Rules.",
+              message: "Use Vitest matchers instead. See tests/AGENTS.md Testing Rules.",
             },
             {
               name: "@testing-library/jest-dom/extend-expect",
-              message: "Use Vitest matchers instead. See AGENTS.md Testing Rules.",
+              message: "Use Vitest matchers instead. See tests/AGENTS.md Testing Rules.",
             },
           ],
         },

@@ -29,16 +29,16 @@ export default function IemCard({
   const modelName = getModelName(product.name, product.brand.name);
 
   return (
-    <article className="card-product-dark flex h-full flex-col gap-4 !p-3 xs:!p-6">
+    <article className="card-product-dark flex h-full flex-col gap-3 !p-3 xs:!p-6 lg:!p-3">
       <Link href={`/product/${product.slug}`} className="block">
-        <div className="relative flex aspect-square w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-surface-productImage pt-6 pb-2 xs:pt-8 xs:pb-4 md:pt-12">
+        <div className="relative flex aspect-[4/3] w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-surface-productImage pt-6 pb-2 xs:pt-8 xs:pb-4 md:pt-12 lg:pt-2 lg:pb-0">
           <Image
             src={product.image?.asset?._id ?? ""}
             alt={product.name}
             width={375}
             height={375}
             loading="lazy"
-            className="h-[70%] w-[70%] object-cover object-center mix-blend-multiply transition-transform duration-300 group-hover:scale-105 xs:h-[60%] xs:w-[60%]"
+            className="h-[70%] w-[70%] object-contain object-center mix-blend-multiply transition-transform duration-300 group-hover:scale-105 xs:h-[60%] xs:w-[60%]"
           />
           <div className="absolute left-2 right-2 top-2 xs:top-3 hidden md:block">
             <span className="block truncate text-tiny font-bold uppercase tracking-tight text-brand-900 xs:text-small">
