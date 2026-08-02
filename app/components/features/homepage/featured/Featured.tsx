@@ -48,7 +48,7 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => {
   const modelName = getModelName(product.name, product.brand.name);
 
   return (
-    <article className="card-product-dark flex h-full flex-col gap-4">
+    <article className="card-product-dark flex h-full flex-col gap-4 lg-touch:gap-3 lg-touch:p-4">
       <Link href={`/product/${product.slug}`} className="flex flex-grow flex-col">
         <figure className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-lg bg-surface-productImage p-6">
           <span className="absolute left-4 top-2 z-10 text-tiny xs:text-small tracking-tight text-brand-900">
@@ -132,9 +132,8 @@ export default async function Featured({ featuredData }: FeaturedProps) {
             breakpointMap={featuredBreakpointMap}
           >
             <div className="flex flex-col gap-2 md:gap-3">
-              <FeaturedHeader />
-
-              <div className="w-full lg:max-w-[1040px] lg:px-20 lg:mx-auto flex flex-col">
+              <div className="w-full lg:max-w-[1040px] lg:px-20 lg-touch:max-w-[860px] lg-touch:px-14 lg:mx-auto flex flex-col md:flex-row md:items-end justify-between gap-2 md:gap-4">
+                <FeaturedHeader />
                 <Link
                   href="/products/headphones"
                   className="inline-flex items-center gap-1 self-end py-3.5 px-3 -ml-3 type-caption text-brand-400 transition-colors hover:text-brand-100 md:py-0 md:px-0 md:ml-0"
@@ -143,7 +142,7 @@ export default async function Featured({ featuredData }: FeaturedProps) {
                 </Link>
               </div>
 
-              <div className="relative lg:px-20 lg:max-w-[1040px] lg:mx-auto">
+              <div className="relative lg:px-20 lg:max-w-[1040px] lg-touch:px-14 lg-touch:max-w-[860px] lg:mx-auto">
                 <CarouselTrack className="mx-0 w-full items-stretch md:-mx-3 md:w-[calc(100%+1.5rem)]">
                   {featuredData.map((p, idx) => (
                     <CarouselSlide
