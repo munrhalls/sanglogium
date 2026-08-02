@@ -97,10 +97,10 @@ export default async function Hero({ heroData }: HeroProps) {
             )}
           >
             <div className="flex flex-col gap-2">
-              <h1 className="type-hero-headline">
+              <h1 className="type-hero-headline lg:text-[clamp(2.75rem,1.5vw_+_2rem,4.5rem)]">
                 {heroData.headline}
               </h1>
-              <p className="type-hero-sub m-0 p-0">
+              <p className="type-hero-sub m-0 p-0 lg:text-[clamp(1.125rem,0.4vw_+_1rem,1.5rem)]">
                 {heroData.subheadline || "Hear the difference."}
               </p>
             </div>
