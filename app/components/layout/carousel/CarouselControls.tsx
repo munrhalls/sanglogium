@@ -32,9 +32,10 @@ interface CarouselPreviousProps extends React.ButtonHTMLAttributes<HTMLButtonEle
   iconStyle?: "caret" | "chevron";
   variant?: "default" | "dark";
   size?: number;
+  weight?: "thin" | "light" | "regular" | "bold" | "fill" | "duotone";
 }
 
-export function CarouselPrevious({ className, iconStyle = "caret", variant = "default", size = 24, ...props }: CarouselPreviousProps) {
+export function CarouselPrevious({ className, iconStyle = "caret", variant = "default", size = 24, weight = "light", ...props }: CarouselPreviousProps) {
   const context = useCarousel();
   if (!context) return null;
 
@@ -50,7 +51,7 @@ export function CarouselPrevious({ className, iconStyle = "caret", variant = "de
       className={cn(BTN_BASE, v.text, v.hoverText, v.ring, className)}
       {...props}
     >
-      <CaretLeft size={size} weight="light" />
+      <CaretLeft size={size} weight={weight} />
     </button>
   );
 }
@@ -59,9 +60,10 @@ interface CarouselNextProps extends React.ButtonHTMLAttributes<HTMLButtonElement
   iconStyle?: "caret" | "chevron";
   variant?: "default" | "dark";
   size?: number;
+  weight?: "thin" | "light" | "regular" | "bold" | "fill" | "duotone";
 }
 
-export function CarouselNext({ className, iconStyle = "caret", variant = "default", size = 24, ...props }: CarouselNextProps) {
+export function CarouselNext({ className, iconStyle = "caret", variant = "default", size = 24, weight = "light", ...props }: CarouselNextProps) {
   const context = useCarousel();
   if (!context) return null;
 
@@ -77,7 +79,7 @@ export function CarouselNext({ className, iconStyle = "caret", variant = "defaul
       className={cn(BTN_BASE, v.text, v.hoverText, v.ring, className)}
       {...props}
     >
-      <CaretRight size={size} weight="light" />
+      <CaretRight size={size} weight={weight} />
     </button>
   );
 }

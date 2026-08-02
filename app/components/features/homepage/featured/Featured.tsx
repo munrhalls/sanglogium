@@ -134,14 +134,16 @@ export default async function Featured({ featuredData }: FeaturedProps) {
             <div className="flex flex-col gap-2 md:gap-3">
               <FeaturedHeader />
 
-              <Link
-                href="/products/headphones"
-                className="inline-flex items-center gap-1 self-end py-3.5 px-3 -ml-3 type-caption text-brand-400 transition-colors hover:text-brand-100 md:py-0 md:px-0 md:ml-0"
-              >
-                View All <span aria-hidden="true">&rsaquo;</span>
-              </Link>
+              <div className="w-full lg:max-w-[1040px] lg:px-20 lg:mx-auto flex flex-col">
+                <Link
+                  href="/products/headphones"
+                  className="inline-flex items-center gap-1 self-end py-3.5 px-3 -ml-3 type-caption text-brand-400 transition-colors hover:text-brand-100 md:py-0 md:px-0 md:ml-0"
+                >
+                  View All <span aria-hidden="true">&rsaquo;</span>
+                </Link>
+              </div>
 
-              <div className="relative lg:px-12">
+              <div className="relative lg:px-20 lg:max-w-[1040px] lg:mx-auto">
                 <CarouselTrack className="mx-0 w-full items-stretch md:-mx-3 md:w-[calc(100%+1.5rem)]">
                   {featuredData.map((p, idx) => (
                     <CarouselSlide
@@ -156,12 +158,14 @@ export default async function Featured({ featuredData }: FeaturedProps) {
                 <div className="pointer-events-none absolute inset-y-0 left-0 right-0 flex items-center justify-between">
                   <CarouselPrevious
                     iconStyle="chevron"
-                    size={36}
+                    size={48}
+                    weight="bold"
                     className="pointer-events-auto bg-transparent text-brand-400 hover:bg-transparent hover:text-brand-100 max-lg:static max-lg:h-9 max-lg:w-9"
                   />
                   <CarouselNext
                     iconStyle="chevron"
-                    size={36}
+                    size={48}
+                    weight="bold"
                     className="pointer-events-auto bg-transparent text-brand-400 hover:bg-transparent hover:text-brand-100 max-lg:static max-lg:h-9 max-lg:w-9"
                   />
                 </div>
