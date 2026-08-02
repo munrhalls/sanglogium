@@ -1,3 +1,0 @@
-- every day that I am not experiencing my goal-state, in the two domains i care about, is a day wasted
-- every day that I let something to crap on the above, to distract/divert me from it, to fight some stupid battle over someone's cesspool... is a day wasted
-- must defeat and shut out that bpd persona in a certain exact way: infinite streams of conviction, frame and just utterlly destroying and shattering that psycho's false crap to never be able to steal and ruin even 0.1% of any of my day, week or month or anything 
