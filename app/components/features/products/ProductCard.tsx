@@ -49,8 +49,8 @@ export function ProductCard({ product, isWishlisted = false }: ProductCardProps)
         </div>
       </Link>
 
-      <div className="flex items-center justify-between px-4 pb-4">
-        <Price value={displayPrice} />
+      <div className="flex items-center justify-between gap-2 px-4 pb-4 flex-nowrap">
+        <Price value={displayPrice} className="type-price tabular-nums flex-shrink-0" />
         <BasketControls
           productId={product._id}
           isBasketPage={false}

@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils/tailwind";
 
 export default function SpotlightMediaBox({ src, alt, className }: { src: string; alt: string; className?: string }) {
   return (
-    <div className={cn("relative w-full aspect-square lg:aspect-auto lg:h-feature-media flex items-center justify-center bg-secondary-300/10", className)}>
+    <div className={cn("relative w-full aspect-square lg:aspect-auto lg:h-[340px] xl:h-[450px] flex items-center justify-center bg-secondary-300/10", className)}>
       <Image
         src={src}
         alt={alt}
