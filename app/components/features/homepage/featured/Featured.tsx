@@ -48,10 +48,10 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => {
   const modelName = getModelName(product.name, product.brand.name);
 
   return (
-    <article className="card-product-dark flex h-full flex-col gap-4 lg-touch:gap-3 lg-touch:p-4">
-      <Link href={`/product/${product.slug}`} className="flex flex-grow flex-col">
-        <figure className="relative flex aspect-[4/3] lg-touch:aspect-[3/2] w-full items-center justify-center overflow-hidden rounded-lg bg-surface-productImage p-6 lg-touch:p-4">
-          <span className="absolute left-4 top-2 z-10 text-tiny xs:text-small tracking-tight text-brand-900">
+    <article className="card-product-dark flex h-full flex-col gap-3 lg-touch:gap-2 lg-touch:p-3 lg:grid lg:grid-cols-[1fr_auto] lg:items-center">
+      <Link href={`/product/${product.slug}`} className="flex flex-grow flex-col lg:contents">
+        <figure className="relative flex aspect-[5/3] lg-touch:aspect-[5/3] w-full items-center justify-center overflow-hidden rounded-lg bg-surface-productImage p-5 lg-touch:p-3 lg:col-span-2">
+          <span className="absolute left-4 top-2 z-10 text-tiny xs:text-xs tracking-tight text-brand-900">
             {product.brand.name}
           </span>
         <Image
@@ -73,19 +73,19 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => {
         />
       </figure>
 
-      <div className="flex flex-grow flex-col px-4 pt-2 mt-3 lg-touch:px-2 lg-touch:pt-1">
-        <h3 className="text-small">{modelName}</h3>
-        <p className="type-price mt-2">
+      <div className="flex flex-grow flex-col px-3 pt-1 mt-2 lg-touch:px-2 lg-touch:pt-0.5 lg:contents">
+        <h3 className="text-xs lg:col-span-2 lg:px-3">{modelName}</h3>
+        <p className="type-price mt-1 lg:mt-0 lg:px-3 lg:text-small">
           ${centsToDisplay(product.price_data.unit_amount)}
         </p>
       </div>
     </Link>
 
-    <div className="px-4 pb-4 pt-2 mt-auto">
+    <div className="px-3 pb-3 pt-1 mt-auto lg:m-0 lg:p-0 lg:pr-3">
       <BasketControls
         productId={product._id}
         isBasketPage={false}
-        addClassName="btn-cart w-full justify-center"
+        addClassName="btn-cart w-full justify-center lg:w-auto lg:gap-1 lg:px-2 lg:py-1 lg:text-small"
         wrapperClassName="flex items-center gap-1"
         decrementClassName="btn-secondary w-8 h-8 flex items-center justify-center"
         incrementClassName="btn-secondary w-8 h-8 flex items-center justify-center disabled:opacity-50"
@@ -126,7 +126,7 @@ export default async function Featured({ featuredData }: FeaturedProps) {
         </div>
       </div>
       <div className="relative z-10">
-        <div className="mx-auto max-w-content px-6 py-10 md:py-12 lg-touch:py-6 lg:px-8">
+        <div className="mx-auto max-w-content px-6 py-4 md:py-6 lg:py-3 lg-touch:py-2 lg:px-8">
           <Carousel
             itemsCount={featuredData.length}
             breakpointMap={featuredBreakpointMap}
@@ -136,7 +136,7 @@ export default async function Featured({ featuredData }: FeaturedProps) {
                 <FeaturedHeader />
                 <Link
                   href="/products/headphones"
-                  className="inline-flex items-center gap-1 self-end py-3.5 px-3 -ml-3 type-caption text-brand-400 transition-colors hover:text-brand-100 md:py-0 md:px-0 md:ml-0"
+                  className="inline-flex items-center gap-1 self-end py-3.5 px-3 -ml-3 type-caption text-brand-400 transition-colors hover:text-brand-100 md:py-0 md:px-0 md:ml-0 md:mb-4 lg:mb-2 uppercase"
                 >
                   View All <span aria-hidden="true">&rsaquo;</span>
                 </Link>
@@ -154,35 +154,21 @@ export default async function Featured({ featuredData }: FeaturedProps) {
                   ))}
                 </CarouselTrack>
 
-                <div className="pointer-events-none absolute inset-y-0 left-0 right-0 hidden items-center justify-between lg:flex">
-                  <CarouselPrevious
-                    iconStyle="chevron"
-                    size={48}
-                    weight="bold"
-                    className="pointer-events-auto bg-transparent text-brand-400 hover:bg-transparent hover:text-brand-100 max-lg:static max-lg:h-9 max-lg:w-9"
-                  />
-                  <CarouselNext
-                    iconStyle="chevron"
-                    size={48}
-                    weight="bold"
-                    className="pointer-events-auto bg-transparent text-brand-400 hover:bg-transparent hover:text-brand-100 max-lg:static max-lg:h-9 max-lg:w-9"
-                  />
-                </div>
               </div>
 
-              <div className="flex items-center justify-center gap-3 pt-3">
+              <div className="flex items-center justify-center gap-2 pt-3">
                 <CarouselPrevious
                   iconStyle="chevron"
-                  size={14}
+                  size={12}
                   weight="bold"
-                  className="pointer-events-auto h-4 w-4 bg-transparent p-0 text-brand-400 hover:bg-transparent hover:text-brand-100 lg:hidden"
+                  className="pointer-events-auto h-3 w-3 bg-transparent p-0 text-brand-400 hover:bg-transparent hover:text-brand-100"
                 />
                 <CarouselDots truncate />
                 <CarouselNext
                   iconStyle="chevron"
-                  size={14}
+                  size={12}
                   weight="bold"
-                  className="pointer-events-auto h-4 w-4 bg-transparent p-0 text-brand-400 hover:bg-transparent hover:text-brand-100 lg:hidden"
+                  className="pointer-events-auto h-3 w-3 bg-transparent p-0 text-brand-400 hover:bg-transparent hover:text-brand-100"
                 />
               </div>
             </div>

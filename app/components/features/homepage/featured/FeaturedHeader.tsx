@@ -3,8 +3,8 @@ import SectionHeader from "../shared/SectionHeader";
 export default function FeaturedHeader() {
   return (
     <SectionHeader
-      overline="Headphones Collection"
-      title="Featured"
+      overline="Handpicked Selection"
+      title="Best Sellers"
     />
   );
 }

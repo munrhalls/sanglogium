@@ -21,11 +21,11 @@ export default async function HomePage() {
       <Hero heroData={data.hero} />
       <TrustBar />
 
-      <Shelf fullBleed>
+      <Shelf fullBleed spacing="default">
         <Featured featuredData={data.featured} />
       </Shelf>
 
-      <Shelf>
+      <Shelf spacing="loose">
         <ProductSpotlight1 spotlightData={data.spotlight1} />
 
         <ProductSpotlight2 spotlightData={data.spotlight2} />
@@ -33,19 +33,19 @@ export default async function HomePage() {
         <ProductSpotlight3 spotlightData={data.spotlight3} />
       </Shelf>
 
-      <Shelf fullBleed>
+      <Shelf fullBleed spacing="loose">
         <IemsGallery iemsData={data.iemsGallery} />
       </Shelf>
 
-      <Shelf fullBleed>
+      <Shelf fullBleed spacing="tight">
         <NewestRelease newestReleaseData={data.newestRelease} />
       </Shelf>
 
-      <Shelf fullBleed>
+      <Shelf fullBleed spacing="default">
         <Dacs dacsData={data.dacs as any} />
       </Shelf>
 
-      <Shelf fullBleed className="bg-brand-700">
+      <Shelf fullBleed spacing="default" className="bg-brand-700">
         <Accessories accessoriesData={data.accessories} />
       </Shelf>
     </div>
