@@ -51,29 +51,28 @@ export default function CategorySection({ category, items }: CategorySectionProp
             {filteredItems.map((item, idx) => (
               <CarouselSlide
                 key={`${category.filter}-${item._id}`}
-                className="flex h-full flex-col px-3"
+                className="flex flex-col px-3"
               >
                 <AccessoryCard item={item} idx={idx} categoryLabel={category.name} />
               </CarouselSlide>
             ))}
           </CarouselTrack>
-
-          <div className="pointer-events-none absolute inset-y-0 left-0 right-0 flex items-center justify-between px-1">
-            <CarouselPrevious
-              iconStyle="chevron"
-              variant="dark"
-              className="pointer-events-auto bg-brand-100/90 hover:bg-brand-200/90"
-            />
-            <CarouselNext
-              iconStyle="chevron"
-              variant="dark"
-              className="pointer-events-auto bg-brand-100/90 hover:bg-brand-200/90"
-            />
-          </div>
         </div>
 
-        <div className="flex justify-center pt-3">
+        <div className="flex justify-center items-center gap-4 pt-3">
+          <CarouselPrevious
+            iconStyle="chevron"
+            size={24}
+            weight="bold"
+            className="pointer-events-auto bg-transparent text-brand-400 hover:bg-transparent hover:text-brand-100 h-9 w-9"
+          />
           <CarouselDots truncate />
+          <CarouselNext
+            iconStyle="chevron"
+            size={24}
+            weight="bold"
+            className="pointer-events-auto bg-transparent text-brand-400 hover:bg-transparent hover:text-brand-100 h-9 w-9"
+          />
         </div>
       </div>
     </Carousel>
