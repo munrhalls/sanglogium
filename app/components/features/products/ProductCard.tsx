@@ -29,9 +29,9 @@ export function ProductCard({ product, isWishlisted = false }: ProductCardProps)
       />
 
       <Link href={`/product/${product.slug.current}`} className="block">
-        <figure className="aspect-[4/3] relative flex w-full items-center justify-center overflow-hidden bg-surface-productImage p-6">
+        <figure className="aspect-[16/9] relative flex w-full items-center justify-center overflow-hidden bg-surface-productImage p-4">
           {product.brand?.name && (
-            <span className="absolute left-4 top-4 type-caption text-brand-900 z-10">
+            <span className="absolute left-3 top-3 type-caption text-brand-900 z-10">
               {product.brand.name}
             </span>
           )}
@@ -42,14 +42,14 @@ export function ProductCard({ product, isWishlisted = false }: ProductCardProps)
           />
         </figure>
 
-        <div className="flex flex-col flex-grow gap-3 p-4">
+        <div className="flex flex-col flex-grow gap-1 p-3">
           <h3 className="type-body font-medium line-clamp-2">
             {product.name}
           </h3>
         </div>
       </Link>
 
-      <div className="flex items-center gap-2 px-4 pb-4">
+      <div className="flex items-center gap-2 px-3 pb-3">
         <Price value={displayPrice} />
         <div className="ml-auto">
           <BasketControls
