@@ -6,13 +6,23 @@ interface ShelfProps {
   variant?: "default" | "platinum";
   fullBleed?: boolean;
   className?: string;
+  /** Simple Optimal Spacing System — vertical rhythm between homepage sections.
+   *  Ratio is ~1:2:3 (tight:default:loose) at every breakpoint. */
+  spacing?: "none" | "tight" | "default" | "loose";
   'data-testid'?: string;
 }
 
-export default function Shelf({ children, variant = "default", fullBleed = false, className, 'data-testid': dataTestId }: ShelfProps) {
+const SPACING = {
+  none: "",
+  tight: "py-4 md:py-6 lg:py-3 lg-touch:py-2",
+  default: "py-8 md:py-12 lg:py-6 lg-touch:py-4",
+  loose: "py-12 md:py-16 lg:py-10 lg-touch:py-6",
+} as const;
+
+export default function Shelf({ children, variant = "default", fullBleed = false, spacing = "default", className, 'data-testid': dataTestId }: ShelfProps) {
 
   return (
-    <section className={cn("w-full", className)} data-testid={dataTestId}>
+    <section className={cn("w-full", SPACING[spacing], className)} data-testid={dataTestId}>
       <div className={cn("mx-auto", fullBleed ? "w-full" : "max-w-content px-6 lg:px-8")}>
         {children}
       </div>

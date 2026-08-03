@@ -46,10 +46,10 @@ export default function NavbarManager({
               key={link.id}
               onClick={() => toggleId(link.id)}
               className={cn(
-                "group flex items-center gap-2 text-sm font-medium tracking-[0.2em] uppercase transition-all duration-300 rounded-none",
+                "group flex items-center gap-2 text-xs font-normal tracking-[0.08em] uppercase transition-all duration-300 rounded-none",
                 isActive
-                  ? "text-accent-500 font-semibold"
-                  : "text-brand-400 hover:text-brand-200"
+                  ? "text-accent-500 font-medium"
+                  : "text-secondary-500 hover:text-secondary-300"
               )}
             >
               <span>{link.label}</span>

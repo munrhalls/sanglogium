@@ -35,7 +35,7 @@ interface CarouselPreviousProps extends React.ButtonHTMLAttributes<HTMLButtonEle
   weight?: "thin" | "light" | "regular" | "bold" | "fill" | "duotone";
 }
 
-export function CarouselPrevious({ className, iconStyle = "caret", variant = "default", size = 24, weight = "light", ...props }: CarouselPreviousProps) {
+export function CarouselPrevious({ className, iconStyle = "caret", variant = "default", size = 24, weight = "bold", ...props }: CarouselPreviousProps) {
   const context = useCarousel();
   if (!context) return null;
 
@@ -63,7 +63,7 @@ interface CarouselNextProps extends React.ButtonHTMLAttributes<HTMLButtonElement
   weight?: "thin" | "light" | "regular" | "bold" | "fill" | "duotone";
 }
 
-export function CarouselNext({ className, iconStyle = "caret", variant = "default", size = 24, weight = "light", ...props }: CarouselNextProps) {
+export function CarouselNext({ className, iconStyle = "caret", variant = "default", size = 24, weight = "bold", ...props }: CarouselNextProps) {
   const context = useCarousel();
   if (!context) return null;
 
