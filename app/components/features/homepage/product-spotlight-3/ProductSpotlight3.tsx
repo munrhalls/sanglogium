@@ -45,9 +45,9 @@ export default function ProductSpotlight3({ spotlightData }: ProductSpotlight3Pr
 
       <div className="max-w-content mx-auto relative z-10">
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-8 lg:gap-20 items-stretch max-h-[350px] md:max-h-[420px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-8 lg:gap-20 items-stretch md:max-h-[420px]">
 
-          <div className="order-2 md:order-1 w-full h-full bg-surface-productImage rounded-none flex items-center justify-center relative overflow-hidden border border-border-secondary">
+          <div className="order-2 md:order-1 w-full h-full min-h-[320px] bg-surface-productImage rounded-none flex items-center justify-center relative overflow-hidden border border-border-secondary">
 
             <Carousel itemsCount={Math.min(product.images?.length || 1, 9)} breakpointMap={{ lgDesktop: 1, mdPortrait: 1, mobilePortrait: 1 }} className="w-full h-full overflow-visible">
 
@@ -55,7 +55,7 @@ export default function ProductSpotlight3({ spotlightData }: ProductSpotlight3Pr
 
                 {product.images?.slice(0, 9).map((image, idx) => (
 
-                  <CarouselSlide key={`${product._id}-${idx}`} className="aspect-[4/3] w-full flex items-center justify-center pb-4 opacity-0 scale-95 transition-[opacity,transform] duration-500 ease-out data-[active=true]:opacity-100 data-[active=true]:scale-100">
+                  <CarouselSlide key={`${product._id}-${idx}`} className="h-full w-full flex items-center justify-center pt-6 px-6 pb-16 lg:pt-10 lg:px-10 lg:pb-16 opacity-0 scale-95 transition-[opacity,transform] duration-500 ease-out data-[active=true]:opacity-100 data-[active=true]:scale-100">
 
                     <Image
 
@@ -71,7 +71,7 @@ export default function ProductSpotlight3({ spotlightData }: ProductSpotlight3Pr
 
                       sizes="(max-width: 1024px) 100vw, 50vw"
 
-                      className="max-w-full max-h-[80%] w-auto h-auto object-contain mix-blend-multiply"
+                      className="max-w-full max-h-full w-auto h-auto object-contain mix-blend-multiply"
 
                     />
 
@@ -81,25 +81,25 @@ export default function ProductSpotlight3({ spotlightData }: ProductSpotlight3Pr
 
               </CarouselTrack>
 
-              <div className="absolute bottom-4 left-0 right-0 flex items-center justify-center">
+              <div className="absolute bottom-4 left-0 right-0 flex items-center justify-center gap-2 pointer-events-none">
 
                 <CarouselPrevious
                   iconStyle="chevron"
                   variant="dark"
-                  className="absolute left-2 max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent"
+                  className="pointer-events-auto max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent"
                 />
 
-                <div className="lg:hidden">
+                <div className="lg:hidden pointer-events-auto">
                   <CarouselDots truncate variant="dark" />
                 </div>
-                <div className="hidden lg:block">
+                <div className="hidden lg:block pointer-events-auto">
                   <CarouselDots truncate variant="dark" />
                 </div>
 
                 <CarouselNext
                   iconStyle="chevron"
                   variant="dark"
-                  className="absolute right-2 max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent"
+                  className="pointer-events-auto max-lg:h-9 max-lg:w-9 max-lg:border-0 max-lg:rounded-none max-lg:bg-transparent max-lg:hover:bg-transparent"
                 />
 
               </div>
