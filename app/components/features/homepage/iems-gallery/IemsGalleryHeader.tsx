@@ -3,8 +3,8 @@ import SectionHeader from "../shared/SectionHeader";
 export default function IemsGalleryHeader({ href }: { href?: string }) {
   return (
     <SectionHeader
-      overline="In-Ear Monitors"
-      title="IEMs"
+      overline="Pro Audio Quality"
+      title="In-Ear Monitors"
       href={href}
     />
   );

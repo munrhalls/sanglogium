@@ -25,10 +25,10 @@ export default async function NewestRelease({ newestReleaseData }: NewestRelease
   return (
     <article className="w-full overflow-hidden">
       <div className="max-w-content mx-auto">
-        <div className="flex flex-col-reverse lg:flex-row lg:items-stretch min-h-[400px] lg:min-h-[260px] xl:min-h-[360px] gap-0">
+        <div className="flex flex-col-reverse lg:flex-row lg:items-stretch min-h-[400px] lg:min-h-[260px] xl:min-h-[360px] gap-0 border border-border-secondary">
 
         {/* Image column */}
-        <div className="w-full lg:w-[30%] xl:w-[42%] min-h-[280px] lg:min-h-[260px] xl:min-h-[360px] lg:aspect-[4/3] xl:aspect-auto bg-brand-700 relative overflow-hidden border border-border-secondary">
+        <div className="w-full lg:w-[30%] xl:w-[42%] min-h-[280px] lg:min-h-[260px] xl:min-h-[360px] lg:aspect-[4/3] xl:aspect-auto bg-brand-700 relative overflow-hidden">
           <Carousel
             itemsCount={images.length || 1}
             breakpointMap={{ lgDesktop: 1, mdPortrait: 1, mobilePortrait: 1 }}
@@ -57,14 +57,11 @@ export default async function NewestRelease({ newestReleaseData }: NewestRelease
 
             {hasMultiple && (
               <>
-                {/* Arrows: vertical center, left and right edges */}
-                <div className="absolute inset-y-0 left-0 right-0 flex items-center justify-between px-3 pointer-events-none">
+                {/* Dots and Arrows: bottom center, adjacent */}
+                <div className="absolute bottom-4 left-0 right-0 flex items-center justify-center gap-6 pointer-events-none">
                   <CarouselPrevious iconStyle="chevron" className="pointer-events-auto rounded-sm border-border-primary bg-transparent text-secondary-300 hover:bg-transparent hover:text-brand-100" />
-                  <CarouselNext iconStyle="chevron" className="pointer-events-auto rounded-sm border-border-primary bg-transparent text-secondary-300 hover:bg-transparent hover:text-brand-100" />
-                </div>
-                {/* Dots: bottom center */}
-                <div className="absolute bottom-4 left-0 right-0 flex justify-center">
                   <CarouselDots truncate />
+                  <CarouselNext iconStyle="chevron" className="pointer-events-auto rounded-sm border-border-primary bg-transparent text-secondary-300 hover:bg-transparent hover:text-brand-100" />
                 </div>
               </>
             )}
@@ -78,8 +75,8 @@ export default async function NewestRelease({ newestReleaseData }: NewestRelease
               <div className="flex flex-col gap-8 lg:gap-4">
 
                 <div className="flex flex-col gap-2">
-                  <span className="type-overline text-accent-600">New Release</span>
-                  <span className="type-caption text-accent-600">
+                  <span className="type-overline text-accent-800">New Release</span>
+                  <span className="type-caption text-accent-800">
                     {product.brand.name} {product.name}
                   </span>
                 </div>
@@ -106,7 +103,7 @@ export default async function NewestRelease({ newestReleaseData }: NewestRelease
 
                 <Link
                   href={`/product/${product.slug}`}
-                  className="self-start px-8 py-3 uppercase tracking-editorial text-center border border-secondary-900 text-secondary-900 bg-transparent rounded-md transition-all duration-200 hover:bg-secondary-900 hover:text-brand-200"
+                  className="self-start px-8 py-3 uppercase tracking-editorial text-center border border-accent-600 bg-accent-600 text-secondary-900 rounded-md transition-all duration-200 hover:bg-transparent hover:text-secondary-900"
                 >
                   View Product
                 </Link>
