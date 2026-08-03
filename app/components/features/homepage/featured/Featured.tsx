@@ -126,7 +126,7 @@ export default async function Featured({ featuredData }: FeaturedProps) {
         </div>
       </div>
       <div className="relative z-10">
-        <div className="mx-auto max-w-content px-6 py-4 md:py-6 lg:py-3 lg-touch:py-2 lg:px-8">
+        <div className="mx-auto max-w-content px-6 py-4 md:py-6 lg:py-3 lg-touch:py-3 lg:px-8">
           <Carousel
             itemsCount={featuredData.length}
             breakpointMap={featuredBreakpointMap}

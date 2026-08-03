@@ -14,9 +14,9 @@ interface ShelfProps {
 
 const SPACING = {
   none: "",
-  tight: "py-4 md:py-6 lg:py-3 lg-touch:py-2",
-  default: "py-8 md:py-12 lg:py-6 lg-touch:py-4",
-  loose: "py-12 md:py-16 lg:py-10 lg-touch:py-6",
+  tight: "py-4 md:py-6 lg:py-3 lg-touch:py-3",
+  default: "py-8 md:py-12 lg:py-6 lg-touch:py-6",
+  loose: "py-12 md:py-16 lg:py-10 lg-touch:py-10",
 } as const;
 
 export default function Shelf({ children, variant = "default", fullBleed = false, spacing = "default", className, 'data-testid': dataTestId }: ShelfProps) {
