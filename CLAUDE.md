@@ -26,6 +26,12 @@ _Last reviewed 2026-08-01 against the live repo. Stack/pattern-level only — fo
 
 **Workflow note:** this repo runs an AI-assisted pipeline — Claude does planning/task breakdown, Devin executes implementation (see `orchestration-plan.md`, `_project/devin-cloud-optimization-plan.md`).
 
+**UX reference docs — read before exploring, not after:**
+- Desktop layout looks cramped/short on vertical room → `docs/vertical-space-lg-touch.md` (the `lg-touch` breakpoint, the no-inheritance gotcha, the h-full-vs-aspect-ratio ownership gotcha, proven fixes) before touching spacing.
+- Touching homepage data fetching or section composition → `docs/homepage-structure.md` (which section owns what data/state) before re-deriving it.
+
+**Mandatory review gate:** any edit to a className touching height/sizing (`h-full`, `min-h-`, `max-h-`, `aspect-`) under `app/components/**` must be checked with the `sang-logium-review` skill against the diff before the task is considered done — run it even if not asked to "review." This is not optional and does not depend on remembering the lesson below; it's a mechanical grep-based check (Check C) precisely because reading the doc once was not sufficient to prevent a real regression on the product-spotlight components.
+
 ## Conventions & Patterns
 
 _Add your project-specific conventions here_
