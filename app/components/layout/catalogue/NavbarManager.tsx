@@ -2,7 +2,21 @@
 import React, { useState, createContext, useEffect } from "react";
 import { NavbarManagerProps } from "@/app/components/layout/carousel/types";
 import { cn } from "@/lib/utils/tailwind";
-import { CaretDownIcon } from "@phosphor-icons/react";
+import {
+  CaretDownIcon,
+  HeadphonesIcon,
+  WaveformIcon,
+  PlugsIcon,
+  SquaresFourIcon,
+} from "@phosphor-icons/react";
+
+function getCategoryIcon(label: string) {
+  const l = label.toLowerCase();
+  if (l.includes("headphone")) return HeadphonesIcon;
+  if (l.includes("audio") || l.includes("electronic")) return WaveformIcon;
+  if (l.includes("accessor")) return PlugsIcon;
+  return SquaresFourIcon;
+}
 
 // Context for providing closeMenu to nested components
 const NavContext = createContext<{ closeMenu: () => void }>({ closeMenu: () => {} });
@@ -41,24 +55,26 @@ export default function NavbarManager({
       <div className="flex justify-center gap-10 h-[var(--desktop-catalogue-nav-h)] items-center">
         {navLinks.map((link: { id: string; label: string }) => {
           const isActive = activeId === link.id;
+          const CategoryIcon = getCategoryIcon(link.label);
           return (
             <button
               key={link.id}
               onClick={() => toggleId(link.id)}
               className={cn(
-                "group flex items-center gap-2 text-xs font-normal tracking-[0.08em] uppercase transition-all duration-300 rounded-none",
+                "group flex items-center gap-2 text-xs font-medium tracking-[0.08em] uppercase transition-all duration-300 rounded-none",
                 isActive
-                  ? "text-accent-500 font-medium"
-                  : "text-secondary-500 hover:text-secondary-300"
+                  ? "text-brand-400"
+                  : "text-secondary-100 hover:text-secondary-50"
               )}
             >
+              <CategoryIcon size={14} weight="bold" />
               <span>{link.label}</span>
               <CaretDownIcon
                 size={16}
                 weight="bold"
                 className={cn(
                   "transition-transform duration-300 ease-in-out",
-                  isActive ? "rotate-180 text-accent-500" : "text-brand-500 group-hover:text-brand-300"
+                  isActive ? "rotate-180 text-brand-400" : "text-brand-500 group-hover:text-brand-300"
                 )}
               />
             </button>
