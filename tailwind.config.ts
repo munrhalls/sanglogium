@@ -134,6 +134,12 @@ const uiComponentsPlugin = plugin(function ({ addComponents, theme }) {
       borderRadius: theme("borderRadius.sm") as string,
       boxShadow: theme("boxShadow.button") as string,
       transition: "background-color 0.2s ease, box-shadow 0.2s ease",
+      "@media (max-width: 767px)": {
+        gap: theme("spacing.1") as string,
+        fontSize: theme("fontSize.tiny[0]") as string,
+        lineHeight: "1",
+        padding: `${theme("spacing.1")} ${theme("spacing.2")}`,
+      },
       "&:hover": {
         backgroundColor: theme("colors.brand.500") as string,
         boxShadow: theme("boxShadow.buttonHover") as string,
@@ -416,7 +422,7 @@ const uiComponentsPlugin = plugin(function ({ addComponents, theme }) {
       fontSize: theme("fontSize.small[0]") as string,
       lineHeight: theme("fontSize.small[1].lineHeight") as string,
       letterSpacing: theme("letterSpacing.editorial") as string,
-      fontWeight: theme("fontWeight.medium") as string,
+      fontWeight: theme("fontWeight.thin") as string,
       textTransform: "uppercase",
       color: theme("colors.text.overline") as string,
     },
@@ -536,6 +542,7 @@ export default {
         spotlight: ["24px", { lineHeight: "28px", letterSpacing: "0.1em" }],
       }),
       fontWeight: {
+        thin: "100",
         light: "300",
         regular: "400",
         medium: "500",
