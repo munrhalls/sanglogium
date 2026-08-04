@@ -21,15 +21,19 @@ export default async function HomePage() {
       <Hero heroData={data.hero} />
       <TrustBar />
 
-      <Shelf fullBleed spacing="default">
+      <Shelf fullBleed spacing="loose" className="pt-0 md:pt-0 lg:pt-0 lg-touch:pt-0">
         <Featured featuredData={data.featured} />
       </Shelf>
 
       <Shelf spacing="loose">
         <ProductSpotlight1 spotlightData={data.spotlight1} />
+      </Shelf>
 
+      <Shelf spacing="loose">
         <ProductSpotlight2 spotlightData={data.spotlight2} />
+      </Shelf>
 
+      <Shelf spacing="loose">
         <ProductSpotlight3 spotlightData={data.spotlight3} />
       </Shelf>
 

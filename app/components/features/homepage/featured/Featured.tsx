@@ -126,7 +126,7 @@ export default async function Featured({ featuredData }: FeaturedProps) {
         </div>
       </div>
       <div className="relative z-10">
-        <div className="mx-auto max-w-content px-6 py-4 md:py-6 lg:py-3 lg-touch:py-3 lg:px-8">
+        <div className="mx-auto max-w-content px-6 py-24 md:py-32 lg:py-20 lg-touch:py-20 lg:px-8">
           <Carousel
             itemsCount={featuredData.length}
             breakpointMap={featuredBreakpointMap}
@@ -154,6 +154,20 @@ export default async function Featured({ featuredData }: FeaturedProps) {
                   ))}
                 </CarouselTrack>
 
+                <div className="pointer-events-none absolute inset-y-0 left-0 right-0 hidden items-center justify-between lg:flex">
+                  <CarouselPrevious
+                    iconStyle="chevron"
+                    size={48}
+                    weight="bold"
+                    className="pointer-events-auto bg-transparent text-brand-400 hover:bg-transparent hover:text-brand-100 max-lg:static max-lg:h-9 max-lg:w-9"
+                  />
+                  <CarouselNext
+                    iconStyle="chevron"
+                    size={48}
+                    weight="bold"
+                    className="pointer-events-auto bg-transparent text-brand-400 hover:bg-transparent hover:text-brand-100 max-lg:static max-lg:h-9 max-lg:w-9"
+                  />
+                </div>
               </div>
 
               <div className="flex items-center justify-center gap-2 pt-3">
@@ -161,14 +175,14 @@ export default async function Featured({ featuredData }: FeaturedProps) {
                   iconStyle="chevron"
                   size={12}
                   weight="bold"
-                  className="pointer-events-auto h-3 w-3 bg-transparent p-0 text-brand-400 hover:bg-transparent hover:text-brand-100"
+                  className="pointer-events-auto h-3 w-3 bg-transparent p-0 text-brand-400 hover:bg-transparent hover:text-brand-100 lg:hidden"
                 />
                 <CarouselDots truncate />
                 <CarouselNext
                   iconStyle="chevron"
                   size={12}
                   weight="bold"
-                  className="pointer-events-auto h-3 w-3 bg-transparent p-0 text-brand-400 hover:bg-transparent hover:text-brand-100"
+                  className="pointer-events-auto h-3 w-3 bg-transparent p-0 text-brand-400 hover:bg-transparent hover:text-brand-100 lg:hidden"
                 />
               </div>
             </div>

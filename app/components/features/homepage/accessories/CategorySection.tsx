@@ -53,7 +53,7 @@ export default function CategorySection({ category, items }: CategorySectionProp
                 key={`${category.filter}-${item._id}`}
                 className="flex flex-col px-3"
               >
-                <AccessoryCard item={item} idx={idx} categoryLabel={category.name} />
+                <AccessoryCard item={item} idx={idx} />
               </CarouselSlide>
             ))}
           </CarouselTrack>

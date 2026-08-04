@@ -38,18 +38,18 @@ export function HeroQualityBar() {
     >
       {/* Desktop (lg+): all three items in a static row */}
       <div className="hidden lg-desktop:flex lg-touch:flex flex items-center justify-center gap-4 overflow-hidden">
-        <span className="type-overline text-[11px] text-secondary-300 normal-case font-regular tracking-signature whitespace-nowrap">Handcrafted</span>
-        <span className="type-overline text-[11px] text-secondary-300 normal-case font-regular tracking-signature opacity-50 whitespace-nowrap" aria-hidden="true">·</span>
-        <span className="type-overline text-[11px] text-secondary-300 normal-case font-regular tracking-signature whitespace-nowrap">Precision Engineered</span>
-        <span className="type-overline text-[11px] text-secondary-300 normal-case font-regular tracking-signature opacity-50 whitespace-nowrap" aria-hidden="true">·</span>
-        <span className="type-overline text-[11px] text-secondary-300 normal-case font-regular tracking-signature whitespace-nowrap">Absolute Purity</span>
+        <span className="type-overline text-[10px] text-secondary-100/80 normal-case font-regular tracking-[0.28em] whitespace-nowrap [text-shadow:0_1px_4px_rgba(0,0,0,0.9)]">Handcrafted</span>
+        <span className="type-overline text-[10px] text-secondary-100/80 normal-case font-regular tracking-[0.28em] opacity-50 whitespace-nowrap [text-shadow:0_1px_4px_rgba(0,0,0,0.9)]" aria-hidden="true">·</span>
+        <span className="type-overline text-[10px] text-secondary-100/80 normal-case font-regular tracking-[0.28em] whitespace-nowrap [text-shadow:0_1px_4px_rgba(0,0,0,0.9)]">Precision Engineered</span>
+        <span className="type-overline text-[10px] text-secondary-100/80 normal-case font-regular tracking-[0.28em] opacity-50 whitespace-nowrap [text-shadow:0_1px_4px_rgba(0,0,0,0.9)]" aria-hidden="true">·</span>
+        <span className="type-overline text-[10px] text-secondary-100/80 normal-case font-regular tracking-[0.28em] whitespace-nowrap [text-shadow:0_1px_4px_rgba(0,0,0,0.9)]">Absolute Purity</span>
       </div>
 
       {/* Mobile/tablet (<lg): single item with fade cycle */}
       <div className="lg:hidden flex items-center justify-center">
         <span
           className={cn(
-            "type-overline text-[11px] text-secondary-300 normal-case font-regular tracking-signature transition-opacity duration-300",
+            "type-overline text-[10px] text-secondary-100/80 normal-case font-regular tracking-[0.28em] transition-opacity duration-300 [text-shadow:0_1px_4px_rgba(0,0,0,0.9)]",
             fading ? "opacity-0" : "opacity-100"
           )}
         >

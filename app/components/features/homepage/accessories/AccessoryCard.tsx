@@ -19,11 +19,9 @@ function getModelName(productName: string, brandName: string): string {
 export default function AccessoryCard({
   item,
   idx,
-  categoryLabel,
 }: {
   item: AccessoryItem;
   idx: number;
-  categoryLabel?: string;
 }) {
   if (!item) return null;
 
@@ -32,7 +30,7 @@ export default function AccessoryCard({
   return (
     <article className="card-product-dark mx-auto flex h-full w-full max-w-[260px] flex-col gap-1 p-2 xs:p-3 md:p-4">
       <Link href={`/product/${item.slug}`} className="block">
-        <figure className="relative mb-2 flex aspect-[3/2] md:aspect-[2/1] w-full items-center justify-center overflow-hidden rounded-lg bg-surface-productImage p-2 xs:p-3 md:px-3 md:pb-3 md:pt-3">
+        <figure className="relative mb-2 flex aspect-[3/2] lg:aspect-[2/1] w-full items-center justify-center overflow-hidden rounded-lg bg-surface-productImage p-2 xs:p-3 md:px-3 md:pb-3 md:pt-3">
           <span className="absolute left-2 top-2 xs:left-4 xs:top-3 text-tiny font-normal uppercase tracking-tight text-brand-900 hidden md:block">
             {item.brand.name}
           </span>
@@ -50,7 +48,6 @@ export default function AccessoryCard({
 
         <div className="flex flex-grow flex-col pb-1 pt-1 md:px-3 md:pb-2 md:pt-1">
           <div className="flex flex-col mt-2">
-            {categoryLabel && <p className="hidden xs:block type-overline mb-1">{categoryLabel}</p>}
             <span className="block md:hidden text-tiny font-light uppercase tracking-tight text-accent-500 xs:text-small">
               {item.brand.name}
             </span>

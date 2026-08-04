@@ -49,7 +49,7 @@ export default async function DACs({ dacsData }: DacsProps) {
         </div>
       </div>
       <div className="relative z-10">
-        <div className="mx-auto max-w-content px-6 py-4 md:py-6 lg:py-3 lg-touch:py-3 lg:px-8">
+        <div className="mx-auto max-w-content px-6 py-16 md:py-24 lg:py-12 lg-touch:py-12 lg:px-8">
           <Carousel
             itemsCount={dacsData.length}
             breakpointMap={dacsBreakpointMap}
