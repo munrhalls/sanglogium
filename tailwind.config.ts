@@ -422,7 +422,7 @@ const uiComponentsPlugin = plugin(function ({ addComponents, theme }) {
       fontSize: theme("fontSize.small[0]") as string,
       lineHeight: theme("fontSize.small[1].lineHeight") as string,
       letterSpacing: theme("letterSpacing.editorial") as string,
-      fontWeight: theme("fontWeight.thin") as string,
+      fontWeight: theme("fontWeight.light") as string,
       textTransform: "uppercase",
       color: theme("colors.text.overline") as string,
     },
