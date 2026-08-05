@@ -14,7 +14,7 @@ export interface Product {
   gallery?: any[];
   slug: { current: string };
   description?: any;
-  overviewFields?: { title: string; value: string; information?: string }[];
+  overviewFields?: { _key?: string; title: string; value: string; information?: string }[];
   specifications?: { title: string; value: string; information?: string }[];
   catalogueLocationKeys: string[];
   parcel?: {
@@ -41,6 +41,7 @@ export const getProductBySlug = cache(async (slug: string): Promise<Product | nu
       },
       description,
       overviewFields[] {
+        _key,
         title,
         value,
         information

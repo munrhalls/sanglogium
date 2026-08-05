@@ -15,15 +15,15 @@ export function ProductDetail({ product, relatedProducts = [], isInWishlist = fa
   const allImages = product.image ? [product.image, ...(product.gallery || [])] : (product.gallery || []);
 
   return (
-    <div className="container mx-auto px-4 py-6">
-      <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+    <>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 lg:items-start">
         {/* Image Gallery */}
-        <div className="lg:w-1/2">
+        <div>
           <ImageGallery images={allImages} productName={product.name} />
         </div>
 
         {/* Product Info */}
-        <div className="lg:w-1/2">
+        <div>
           <ProductInfo product={product} isInWishlist={isInWishlist} />
         </div>
       </div>
@@ -64,6 +64,6 @@ export function ProductDetail({ product, relatedProducts = [], isInWishlist = fa
         products={relatedProducts}
         currentProductName={product.name}
       />
-    </div>
+    </>
   );
 }

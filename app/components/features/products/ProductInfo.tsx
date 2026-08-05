@@ -10,6 +10,27 @@ import { centsToDisplay } from '@/lib/utils/price';
 import { BasketControls } from "@/app/components/features/basket/BasketControls";
 import { WishlistButton } from "@/app/components/features/wishlist/WishlistButton";
 
+// Fields at or above this length are treated as narrative content (paragraphs,
+// e.g. Description/Sustainability/Battery Life copy) and demoted into the
+// collapsed "Full Details" section instead of the quick-scan grid. Heuristic,
+// not schema-derived — overviewFields titles are free text with no
+// classification field in the Sanity schema.
+const NARRATIVE_FIELD_MIN_LENGTH = 150;
+
+function OverviewField({ field }: { field: { _key?: string; title: string; value: string } }) {
+  const paragraphs = field.value.split('\n\n').filter(Boolean);
+  return (
+    <div>
+      <p className="type-caption uppercase text-secondary">{field.title}</p>
+      <div className="space-y-3">
+        {paragraphs.map((para, i) => (
+          <p key={i} className="type-body text-primary">{para}</p>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function ProductInfo({ product, isInWishlist = false }: { product: Product; isInWishlist?: boolean }) {
   const [preAddQty, setPreAddQty] = useState(1);
   const displayPrice = centsToDisplay(product.price_data.unit_amount);
@@ -20,36 +41,26 @@ export function ProductInfo({ product, isInWishlist = false }: { product: Produc
     return { text: 'In Stock', color: 'text-success-500' };
   };
   const stockStatus = getStockStatus();
+
+  const overviewFields = product.overviewFields || [];
+  const quickFields = overviewFields.filter((field) => field.value.length < NARRATIVE_FIELD_MIN_LENGTH);
+  const narrativeFields = overviewFields.filter((field) => field.value.length >= NARRATIVE_FIELD_MIN_LENGTH);
+
   return (
-    <div className="space-y-6" data-testid="product-info">
+    <div className="space-y-4 lg:space-y-5 lg-touch:space-y-3" data-testid="product-info">
       <div className="space-y-2">
         <p className="type-overline text-accent-500">{product.brand?.name || ''}</p>
-        <h1 className="type-section-hed text-headline">{product.name}</h1>
+        <h1 className="type-section-hed lg:text-h2 text-headline break-words">{product.name}</h1>
         <div className="flex items-center gap-4">
           <Price value={displayPrice} />
         </div>
         <p className={`type-caption ${stockStatus.color}`}>{stockStatus.text}</p>
       </div>
 
-      {product.overviewFields && product.overviewFields.length > 0 && (
-        <div className="grid grid-cols-2 gap-4 py-4 border-y border-border-secondary">
-          {product.overviewFields.map((field) => {
-            const paragraphs = field.value.split('\n\n').filter(Boolean);
-            return (
-              <div key={field.title} className={field.title === 'Description' ? 'col-span-2' : ''}>
-                <p className="type-caption uppercase text-secondary">{field.title}</p>
-                <div className="space-y-3">
-                  {paragraphs.map((para, i) => (
-                    <p key={i} className="type-body text-primary">{para}</p>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
-
-      <div className="pt-4 space-y-6 ">
+      {/* Buy box: placed directly after price/stock so it never depends on
+          overview-field content length (previously pushed down by variable-length
+          overview content; now first regardless of how much content follows). */}
+      <div className="pt-2 lg:pt-4 lg-touch:pt-2 space-y-2">
         <div className="flex items-center gap-4">
           <BasketControls
             productId={product._id}
@@ -65,7 +76,35 @@ export function ProductInfo({ product, isInWishlist = false }: { product: Produc
             initiallyInWishlist={isInWishlist}
           />
         </div>
+        <p className="type-caption text-secondary">
+          Domestic Multi-Carrier Shipping · 2-Year Warranty · Expert Support
+        </p>
       </div>
-    </div >
+
+      {overviewFields.length > 0 && (
+        <div className="space-y-4 py-4 lg-touch:py-2 lg:mt-2 border-y border-border-secondary">
+          {quickFields.length > 0 && (
+            <div className="grid grid-cols-2 gap-4">
+              {quickFields.map((field, index) => (
+                <OverviewField key={field._key ?? index} field={field} />
+              ))}
+            </div>
+          )}
+
+          {narrativeFields.length > 0 && (
+            <details>
+              <summary className="type-caption uppercase text-secondary cursor-pointer select-none">
+                Full Details
+              </summary>
+              <div className="mt-3 space-y-4">
+                {narrativeFields.map((field, index) => (
+                  <OverviewField key={field._key ?? index} field={field} />
+                ))}
+              </div>
+            </details>
+          )}
+        </div>
+      )}
+    </div>
   );
 }

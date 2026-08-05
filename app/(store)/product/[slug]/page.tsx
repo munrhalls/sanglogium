@@ -28,7 +28,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const isInWishlist = wishlistProductIds.includes(product._id);
 
   return (
-    <div className="container mx-auto px-4 py-6">
+    <div className="mx-auto w-full max-w-content px-4 md:px-8 py-6">
       {/* Breadcrumbs */}
       <nav aria-label="Breadcrumb" className="mb-6">
         <ol className="flex items-center gap-2">

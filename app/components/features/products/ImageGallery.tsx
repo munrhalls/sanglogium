@@ -57,7 +57,7 @@ export function ImageGallery({ images, productName }: ImageGalleryProps) {
         {/* Main Image */}
         <button
           onClick={() => setIsZoomOpen(true)}
-          className="relative aspect-square bg-surface-productImage rounded-lg overflow-hidden w-full max-w-[520px] mx-auto block cursor-zoom-in group"
+          className="relative aspect-square lg-touch:aspect-[4/3] bg-surface-productImage rounded-lg overflow-hidden w-full max-w-[520px] lg-touch:max-w-[380px] mx-auto block cursor-zoom-in group"
           aria-label={`View ${productName} image ${selectedIndex + 1} in full size`}
         >
           <figure className="w-full h-full">

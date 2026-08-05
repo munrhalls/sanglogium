@@ -1,6 +1,6 @@
 export default function ProductLoading() {
   return (
-    <div className="container mx-auto px-4 py-6">
+    <div className="mx-auto w-full max-w-content px-4 md:px-8 py-6">
       {/* Breadcrumb skeleton */}
       <div className="flex items-center gap-2 mb-6">
         <div className="h-4 w-12 bg-surface-elevated rounded animate-pulse" />
