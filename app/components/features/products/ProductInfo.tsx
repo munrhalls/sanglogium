@@ -10,14 +10,24 @@ import { centsToDisplay } from '@/lib/utils/price';
 import { BasketControls } from "@/app/components/features/basket/BasketControls";
 import { WishlistButton } from "@/app/components/features/wishlist/WishlistButton";
 
-// Fields at or above this length are treated as narrative content (paragraphs,
-// e.g. Description/Sustainability/Battery Life copy) and demoted into the
-// collapsed "Full Details" section instead of the quick-scan grid. Heuristic,
-// not schema-derived — overviewFields titles are free text with no
-// classification field in the Sanity schema.
-const NARRATIVE_FIELD_MIN_LENGTH = 150;
+// Fields at or above this word count are treated as narrative content (paragraphs,
+// e.g. Description/Sustainability/Battery Life copy) and demoted into the collapsed
+// "Full Details" section instead of the quick-scan grid. Word count, not character
+// count — verified against live catalog data that a 142-character/27-word sentence
+// ("Feel the incredible power of sound and bass with ULT WEAR. Press the ULT
+// button...") was slipping under a character-based threshold; word count separates
+// short facts ("Closed-Back", 7-11 word feature lines) from actual prose more
+// reliably. Heuristic, not schema-derived — overviewFields titles/values are free
+// text with no classification field in the Sanity schema.
+const NARRATIVE_FIELD_MIN_WORDS = 20;
 
-function OverviewField({ field }: { field: { _key?: string; title: string; value: string } }) {
+type OverviewFieldData = { _key?: string; title: string; value: string };
+
+function wordCount(value: string): number {
+  return value.trim().split(/\s+/).filter(Boolean).length;
+}
+
+function OverviewField({ field }: { field: OverviewFieldData }) {
   const paragraphs = field.value.split('\n\n').filter(Boolean);
   return (
     <div>
@@ -29,6 +39,24 @@ function OverviewField({ field }: { field: { _key?: string; title: string; value
       </div>
     </div>
   );
+}
+
+// Multiple catalog entries share the same literal title (e.g. many fields titled
+// just "Feature") — repeating that caption once per entry reads as broken/repetitive.
+// General rule, not hardcoded to any specific title: group fields by title, render
+// a single caption + bullet list for any title that repeats, keep the normal
+// label+value layout for titles that appear once.
+function groupFieldsByTitle(fields: OverviewFieldData[]): { title: string; fields: OverviewFieldData[] }[] {
+  const order: string[] = [];
+  const groups = new Map<string, OverviewFieldData[]>();
+  for (const field of fields) {
+    if (!groups.has(field.title)) {
+      order.push(field.title);
+      groups.set(field.title, []);
+    }
+    groups.get(field.title)!.push(field);
+  }
+  return order.map((title) => ({ title, fields: groups.get(title)! }));
 }
 
 export function ProductInfo({ product, isInWishlist = false }: { product: Product; isInWishlist?: boolean }) {
@@ -43,8 +71,9 @@ export function ProductInfo({ product, isInWishlist = false }: { product: Produc
   const stockStatus = getStockStatus();
 
   const overviewFields = product.overviewFields || [];
-  const quickFields = overviewFields.filter((field) => field.value.length < NARRATIVE_FIELD_MIN_LENGTH);
-  const narrativeFields = overviewFields.filter((field) => field.value.length >= NARRATIVE_FIELD_MIN_LENGTH);
+  const quickFields = overviewFields.filter((field) => wordCount(field.value) < NARRATIVE_FIELD_MIN_WORDS);
+  const narrativeFields = overviewFields.filter((field) => wordCount(field.value) >= NARRATIVE_FIELD_MIN_WORDS);
+  const quickGroups = groupFieldsByTitle(quickFields);
 
   return (
     <div className="space-y-4 lg:space-y-5 lg-touch:space-y-3" data-testid="product-info">
@@ -83,11 +112,26 @@ export function ProductInfo({ product, isInWishlist = false }: { product: Produc
 
       {overviewFields.length > 0 && (
         <div className="space-y-4 py-4 lg-touch:py-2 lg:mt-2 border-y border-border-secondary">
-          {quickFields.length > 0 && (
+          {quickGroups.map(({ title, fields }, groupIndex) =>
+            fields.length > 1 ? (
+              <div key={title || groupIndex}>
+                <p className="type-caption uppercase text-secondary">{title}</p>
+                <ul className="space-y-1.5 list-disc list-inside">
+                  {fields.map((field, i) => (
+                    <li key={field._key ?? i} className="type-body text-primary">{field.value}</li>
+                  ))}
+                </ul>
+              </div>
+            ) : null
+          )}
+
+          {quickGroups.some(({ fields }) => fields.length === 1) && (
             <div className="grid grid-cols-2 gap-4">
-              {quickFields.map((field, index) => (
-                <OverviewField key={field._key ?? index} field={field} />
-              ))}
+              {quickGroups
+                .filter(({ fields }) => fields.length === 1)
+                .map(({ fields }) => (
+                  <OverviewField key={fields[0]._key ?? fields[0].title} field={fields[0]} />
+                ))}
             </div>
           )}
 

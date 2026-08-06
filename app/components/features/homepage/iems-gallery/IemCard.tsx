@@ -38,7 +38,7 @@ export default function IemCard({
             width={375}
             height={375}
             loading="lazy"
-            className="h-[70%] w-[70%] object-cover object-center mix-blend-multiply transition-transform duration-300 group-hover:scale-105 xs:h-[60%] xs:w-[60%]"
+            className="h-[70%] w-[70%] object-contain object-center mix-blend-multiply transition-transform duration-300 group-hover:scale-105 xs:h-[60%] xs:w-[60%]"
           />
           <div className="absolute left-2 right-2 top-2 xs:top-3 hidden md:block">
             <span className="block truncate text-tiny font-bold uppercase tracking-tight text-brand-900 xs:text-small">
