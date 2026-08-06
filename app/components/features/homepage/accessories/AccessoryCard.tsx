@@ -42,7 +42,7 @@ export default function AccessoryCard({
             priority={idx === 0}
             loading={idx === 0 ? "eager" : "lazy"}
             sizes="(max-width: 768px) 50vw, 25vw"
-            className="h-auto max-h-[78%] w-auto max-w-[78%] transform object-contain object-[67%_59%] mix-blend-multiply transition-transform duration-700 group-hover:scale-110"
+            className="h-auto max-h-[78%] w-auto max-w-[78%] transform object-contain object-center mix-blend-multiply transition-transform duration-700 group-hover:scale-110"
           />
         </figure>
 
