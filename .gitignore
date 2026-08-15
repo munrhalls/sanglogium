@@ -101,6 +101,7 @@ oss_*.txt
 oss_*.json
 .beads/*.txt
 .beads/*.json
+!.beads/metadata.json
 .beads/uiux-frame-decompose-payment.md
 scripts/apply-migration.mjs
 scripts/experiment-*.mjs
