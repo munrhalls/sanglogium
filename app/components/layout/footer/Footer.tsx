@@ -112,7 +112,7 @@ export default function Footer() {
       >
         <div>
           <p className="type-overline">New Arrivals. Exclusive Deals.</p>
-          <p className="type-caption text-text-caption mt-1">
+          <p className="type-caption text-secondary-300 mt-1">
             Subscribe and get 10% off your first order.
           </p>
         </div>
@@ -240,18 +240,18 @@ export default function Footer() {
           "py-6"
         )}
       >
-        <p className={cn("type-caption", "text-text-caption")}>
+        <p className={cn("type-caption", "text-secondary-300")}>
           &copy; {new Date().getFullYear()} Sang Logium. All Rights Reserved.
         </p>
         <div className={cn("flex items-center gap-3")}>
           <span className={cn("type-overline", "text-brand-400", "mr-1")}>
             We Accept
           </span>
-          <FaCcVisa className="h-7 w-auto text-secondary-400" aria-label="Visa" />
-          <FaCcMastercard className="h-7 w-auto text-secondary-400" aria-label="Mastercard" />
-          <FaCcAmex className="h-7 w-auto text-secondary-400" aria-label="American Express" />
-          <FaCcPaypal className="h-7 w-auto text-secondary-400" aria-label="PayPal" />
-          <FaCcApplePay className="h-7 w-auto text-secondary-400" aria-label="Apple Pay" />
+          <FaCcVisa className="h-9 w-auto text-secondary-400" aria-label="Visa" />
+          <FaCcMastercard className="h-9 w-auto text-secondary-400" aria-label="Mastercard" />
+          <FaCcAmex className="h-9 w-auto text-secondary-400" aria-label="American Express" />
+          <FaCcPaypal className="h-9 w-auto text-secondary-400" aria-label="PayPal" />
+          <FaCcApplePay className="h-9 w-auto text-secondary-400" aria-label="Apple Pay" />
         </div>
       </div>
     </footer>
