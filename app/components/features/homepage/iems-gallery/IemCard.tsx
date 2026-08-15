@@ -1,4 +1,3 @@
-import { cn } from "@/lib/utils/tailwind";
 import Image from "next/image";
 import Link from "next/link";
 import { IemProduct } from "./getIemProducts";
