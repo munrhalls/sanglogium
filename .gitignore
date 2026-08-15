@@ -121,3 +121,6 @@ git_stats.txt
 
 # Photography audit output
 scripts/output/
+
+# Beads / Dolt files (added by bd init)
+.beads/proxieddb/
