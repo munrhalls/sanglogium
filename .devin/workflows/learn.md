@@ -183,5 +183,5 @@ Phase 4: Verify
 ---
 
 ## Related Files:
-- `_project/lessons/README.md` — Organization schema
-- `_project/lessons/INDEX.md` — Searchable index
+- `_project/lessons/README.md` — Organization schema (if it exists)
+- `_project/lessons/INDEX.md` — Searchable index (if it exists); otherwise update `.devin/memories/` and `.devin/research/` keywords

@@ -16,10 +16,11 @@ Before ANY planning or coding:
    - If issue exists: Read it completely (`bd show <id>`). Use existing framing.
    - If no issue exists: STOP. Create beads issue first via `@/add-beads-issue`.
 
-2. **Query `_project/lessons/INDEX.md`** for relevant keywords:
+2. **Query available lesson sources** for relevant keywords:
    - Technology stack (e.g., "sanity", "nextjs", "groq")
    - Component patterns (e.g., "server-components", "data-fetching")
    - Domain concepts (e.g., "vfs", "catalogue", "filters")
+   - If `_project/lessons/INDEX.md` exists, use it; otherwise search `.devin/memories/`, `.devin/research/`, and `_project/` for relevant write-ups.
 
 3. **Load lessons by severity:**
    - Critical severity: MUST read before proceeding

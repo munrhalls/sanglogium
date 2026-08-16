@@ -81,8 +81,7 @@ Structure the result as phases with chunked tasks:
 
 For the finished phase/task plan, check every task against:
 
-- The forbidden/expensive-command list in `sang-logium-direct-access` (no `npm run build`, lint, `ts-node`, full-folder greps, or agent spawning unless truly unavoidable — flag and justify any exception)
-- Live file locks in `.devin/locks.json` (no task should touch a file another agent currently holds)
+- The forbidden/expensive-command list in `CLAUDE.md` (no `npm run build`, lint, `ts-node`, full-folder greps, or agent spawning unless truly unavoidable — flag and justify any exception)
 - Obsolete or redundant steps left over from earlier phases
 - Anything that would block smooth one-by-one execution (missing access, an unresolved dependency, ill-conceived ordering)
 

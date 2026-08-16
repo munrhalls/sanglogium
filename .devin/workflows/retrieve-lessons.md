@@ -13,7 +13,7 @@
 │  BEFORE WORK: Load relevant lessons                      │
 ├─────────────────────────────────────────────────────────┤
 │  1. Identify themes based on work type                  │
-│  2. Query INDEX.md for relevant keywords                │
+│  2. Query available lessons for relevant keywords       │
 │  3. Load lessons into active context                    │
 │  4. Apply constraints to current task                   │
 └─────────────────────────────────────────────────────────┘
@@ -46,10 +46,12 @@
 
 ### Step 2: Keyword Search (30 seconds)
 
-**Query `_project/lessons/INDEX.md` for:**
+**Query available lesson sources for:**
 - Technology keywords ("sanity", "groq", "nextjs")
 - Pattern keywords ("component", "schema", "build")
 - Risk keywords from past failures
+
+If `_project/lessons/INDEX.md` exists, use it; otherwise search `.devin/memories/`, `.devin/research/`, and `_project/` for relevant write-ups.
 
 **Search strategy:**
 ```
@@ -238,7 +240,7 @@ Add to debug.md Phase 1:
 ```markdown
 ### 1.3 Load Past Failures in This Area
 
-**Query:** `_project/lessons/INDEX.md` for keywords matching:
+**Query:** available lesson sources for keywords matching:
 - Error message patterns
 - Technology stack
 - Component/file paths involved
@@ -323,4 +325,4 @@ Add to implement.md Phase 1:
 
 ---
 
-**Related:** [learn.md](../03-commands/learn.md) | [INDEX.md](../lessons/INDEX.md) | [sprint.md](sprint.md)
+**Related:** [learn.md](learn.md) | [sprint.md](sprint.md)
