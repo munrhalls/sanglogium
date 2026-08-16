@@ -82,7 +82,7 @@ export function BasketControls({
         className={addClassName || "btn-cart"}
       >
         <ShoppingCart size={16} />
-        Add
+        <span className="hidden xs:inline">Add to Cart</span>
       </button>
     );
   }
