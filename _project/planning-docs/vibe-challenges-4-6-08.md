@@ -111,7 +111,7 @@ High and progressive, narrowing each turn: site -> page type (home/PDP) -> 10-me
 
 ## Outcome Intent
 
-Build a reusable gaps-scan → gaps-close → checks meta-process for auditing/closing gaps in project skills/docs; first applied to a real gap (missing Check C in sang-logium-review), then extracted as standalone, project-agnostic skills.
+Build a reusable gaps-scan → gaps-close → checks meta-process for auditing/closing gaps in project skills/docs; first applied to a real gap (missing Check C in the height/sizing review gate), then extracted as standalone, project-agnostic skills.
 
 ## Decomposition Level
 
@@ -230,7 +230,7 @@ Product spotlight sections (1/2/3) render correctly and fit comfortably within a
 
 ## Decomposition Level
 
-Low at the start — first request bundled explore, plan, and act into one pass, and the first "execute" applied a fix directly without isolating the underlying height-ownership mechanism first. Decomposition rose only reactively, after each attempt visibly failed on screenshot evidence: understanding was eventually forced into its own gated step ahead of any edit, repeated three times before converging on the correct model (image height must be self-owned via `aspect-ratio`, not inherited via `h-full`/`min-h`/`max-h`). The prevention/institutionalization ask was itself decomposed late, into two separate levers — a doc-content fix (`vertical-space-lg-touch.md`) and a mechanically-enforced review gate (`sang-logium-review` Check C + mandatory-invocation line in `CLAUDE.md`) — rather than treated as one vague "write it down" step.
+Low at the start — first request bundled explore, plan, and act into one pass, and the first "execute" applied a fix directly without isolating the underlying height-ownership mechanism first. Decomposition rose only reactively, after each attempt visibly failed on screenshot evidence: understanding was eventually forced into its own gated step ahead of any edit, repeated three times before converging on the correct model (image height must be self-owned via `aspect-ratio`, not inherited via `h-full`/`min-h`/`max-h`). The prevention/institutionalization ask was itself decomposed late, into two separate levers — a doc-content fix (`vertical-space-lg-touch.md`) and a mechanically-enforced review gate (Check C + mandatory-invocation line in `CLAUDE.md`) — rather than treated as one vague "write it down" step.
 
 ---
 

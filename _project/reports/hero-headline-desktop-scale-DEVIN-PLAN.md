@@ -64,7 +64,7 @@ exactly what happened and wait for human input rather than trying a third variat
 1. Read the task fully before editing.
 2. Make only the change described in that task.
 3. Check editor/language-server diagnostics on `Hero.tsx` after the edit (no fresh
-   `tsc`/build per task — see `sang-logium-direct-access` skill).
+   `tsc`/build per task — see `CLAUDE.md` hard limits on expensive commands).
 4. If a dev server is already running, confirm the homepage hero still renders (no crash,
    no blank section, text still visible/legible).
 5. Mark the task done, move to the next one in order.

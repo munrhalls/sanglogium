@@ -51,7 +51,7 @@ Run the flaw-vs-taste test from `docs/design-system.md` before every change:
   that must hold on both screen heights needs both variants written explicitly. Read
   `docs/vertical-space-lg-touch.md` before writing either.
 - Any className edit touching height/sizing (`h-full`, `min-h-`, `max-h-`, `aspect-`) under
-  `app/components/**` must be checked with the `sang-logium-review` skill against the diff before
+  `app/components/**` must be reviewed against the diff for height/sizing consistency before
   that task is considered done (CLAUDE.md mandatory gate — mechanical, not optional).
 - No `npm install`, `npm run build`, `tsc`/type-check, lint, or dev-server boot as a per-task
   check. Use editor/language-server diagnostics on the touched file only. Real verification (if
@@ -196,10 +196,8 @@ permits, and only conditionally. Prefer Changes 1–2 alone if they resolve it.
 **DoD:** on `/product/xduoo-xd-05-bal-balanced-dac-amp` (or any product with no quick overview
 fields) at 1440×800 and 1440×960, the info column now shows up to 4 spec rows where it previously
 showed nothing, and the visual gap beside the image is materially smaller. No change to the image
-column, `ImageGallery.tsx`, or the grid split in `ProductDetail.tsx:19`. Run `sang-logium-review`
-against the diff before marking this task done (CLAUDE.md gate — this task's `.card-base`
-contingency in Change 3 is the kind of edit it exists to catch, even though it doesn't touch
-`h-full`/`aspect-*` directly).
+column, `ImageGallery.tsx`, or the grid split in `ProductDetail.tsx:19`. Review the diff for
+height/sizing consistency before marking this task done.
 
 ---
 
@@ -230,7 +228,7 @@ For each remaining route:
    only, smallest diff that closes the gap, no opportunistic scope creep.
 5. Do not implement redesign-tier findings. Append them to "Proposals" below with route, evidence
    (screenshot description + file:line), and why it fails the test at item 4 or 5.
-6. Run `sang-logium-review` on any height/sizing className diff per the architecture guardrails.
+6. Review any height/sizing className diff for consistency per the architecture guardrails.
 
 When the full route list has been walked, write one summary file,
 `_project/reports/design-system-pass-<date>.md`, listing: fixed (bug-tier, with file:line),
@@ -246,7 +244,7 @@ proposed-not-implemented (redesign-tier, needs a human decision), and confirmed-
   add a class — verify no new entry was added).
 - Confirm no file outside the ones named in Tasks 1–3 was touched, plus whatever Phase 2 touched
   per its own logged findings.
-- Run `sang-logium-review` once against the full combined diff.
+- Review the full combined diff once for height/sizing consistency.
 - If a dev server is already running, load the homepage, `/products`, and the xDuoo product page
   once each and confirm no crash/blank render. Do not start a dev server solely for this — check
   only if one is already up.

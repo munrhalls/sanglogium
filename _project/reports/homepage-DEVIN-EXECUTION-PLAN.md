@@ -21,7 +21,7 @@ attempt until this is fixed, because you can't tell what else is broken while th
 compile.
 
 **Do not run a whole-project `tsc --noEmit` / `npm run build` to check this.** See
-`sang-logium-direct-access` skill — full/whole-project compiles are forbidden as a routine
+`CLAUDE.md` hard limits on expensive commands — full/whole-project compiles are forbidden as a routine
 check, for direct execution *and* for steps written into a task plan. A file read answers this
 exact question for free.
 
@@ -74,10 +74,9 @@ the single biggest source of wasted time in prior runs of this plan.
    separate follow-up note instead (this plan is intentionally minimal-scope per task).
 3. Check the file(s) you touched via your editor/language-server diagnostics (already running,
    incremental, free) or the already-running dev server's terminal output. **Do not shell out
-   to a fresh whole-project `tsc --noEmit` or `npm run build` per task** — see
-   `sang-logium-direct-access` skill: this is a forbidden expensive command whether run
-   directly or written into a plan, and on a project this size it can hang for minutes with
-   zero output, per incident on 2026-07-29.
+   to a fresh whole-project `tsc --noEmit` or `npm run build` per task** — this is a
+   forbidden expensive command per `CLAUDE.md`, whether run directly or written into a plan,
+   and on a project this size it can hang for minutes with zero output, per incident on 2026-07-29.
 4. If a check surfaces a problem, fix within the scope of the current task only. If you can't,
    stop and report — don't move to the next task with a known-broken file. (Also respect the
    Circuit Breaker above — don't retry the same fix more than twice.)
@@ -207,8 +206,8 @@ There are 9 files to process. Do them **one at a time**, verifying after each, i
 5. **Verify after each file:** check editor/language-server diagnostics on the file you just
    touched, and on the components that import its type (already listed in the intelligence
    report). Do **not** run a fresh whole-project `tsc --noEmit` 9 times in a row — that's the
-   exact repeated-expensive-command pattern this project's `sang-logium-direct-access` skill
-   forbids. If a break shows up, it's isolated to the file you just touched — fix there before
+   exact repeated-expensive-command pattern this project forbids (see `CLAUDE.md`).
+   If a break shows up, it's isolated to the file you just touched — fix there before
    moving to the next file.
 
 Do not batch multiple files into one edit pass — this is explicitly a "one file, one commit-

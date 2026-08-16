@@ -42,7 +42,7 @@ was scoped out for two confirmed, code-level reasons. Don't rediscover these; tr
    height to a custom loader. Making Sanity crop actually change what renders would mean
    reworking how each of ~18 components requests image dimensions — a layout change, not a data
    patch, and exactly the class of edit (`h-`/`aspect-`/sizing) this repo's mandatory
-   `sang-logium-review` gate exists for, per the real regression on `ProductSpotlight1/2/3`
+   height/sizing review gate exists for, per the real regression on `ProductSpotlight1/2/3`
    documented in `docs/vertical-space-lg-touch.md`. Not something to do unattended, in bulk,
    across 18 files, in one overnight pass.
 2. **No product asset currently has `crop`/`hotspot` set at all** (confirmed empty across
@@ -58,7 +58,7 @@ render-pipeline rework above) is a deliberate follow-up task after a human looks
 
 ---
 
-## Hard limits (carried over from `CLAUDE.md` / `sang-logium-direct-access` — do not violate)
+## Hard limits (carried over from `CLAUDE.md` — do not violate)
 
 - No `npm install`. The script must run on what's already in `package.json` — `sharp` is already
   a dependency (confirmed), use it. Do not add a background-removal/ML dependency to hit this

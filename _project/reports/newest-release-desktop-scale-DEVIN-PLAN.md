@@ -67,7 +67,7 @@ what happened and wait for human input rather than trying a third variation.
 2. Make only the change described in that task — nothing else, even if you notice something
    else worth fixing (file a separate note instead).
 3. Check editor/language-server diagnostics on `NewestRelease.tsx` after the edit (no fresh
-   `tsc`/build per task — see `sang-logium-direct-access` skill, expensive whole-project
+   `tsc`/build per task — see `CLAUDE.md` hard limits on expensive commands; expensive whole-project
    commands are forbidden as a per-task check).
 4. If the dev server is already running, confirm the homepage still renders (no crash, no
    blank section).
@@ -252,7 +252,7 @@ product-name field instead.
      their shared code path.
    - Mobile/tablet `NewestRelease` layout (image-over-text, `flex-col-reverse`) is unchanged.
 3. Run once, in the background, logging to a file (do not pipe through `head`/`grep` and wait
-   on a blocking foreground call — see `sang-logium-direct-access` and
+   on a blocking foreground call — see `CLAUDE.md` and
    `homepage-DEVIN-EXECUTION-PLAN.md` for why):
    ```bash
    npm run lint > newest-release-plan-lint.log 2>&1 &
