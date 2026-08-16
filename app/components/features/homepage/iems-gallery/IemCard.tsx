@@ -40,30 +40,27 @@ export default function IemCard({ product, badge }: IemCardProps) {
             />
           )}
           <div className="absolute left-2 right-2 top-2">
-            <span className="block truncate text-tiny font-bold uppercase tracking-tight text-brand-900 xs:text-small">
+            <span className="block truncate text-small font-bold uppercase tracking-tight text-brand-900">
               {brandName}
             </span>
           </div>
         </div>
 
         <div className="flex flex-col gap-1 px-4 pt-3 md:px-8 md:pt-4">
-          <h3 className="text-body leading-snug">{productName}</h3>
+          <h3 className="text-body leading-snug line-clamp-2 break-words">{productName}</h3>
         </div>
       </Link>
 
       <div className="mt-auto flex flex-row items-center justify-between gap-3 pt-2 px-4 pb-6 md:px-8 md:pb-8">
         <Price
           value={centsToDisplay(product.price_data.unit_amount)}
-          className="type-price tabular-nums text-base leading-tight"
+          className="type-price tabular-nums text-base leading-tight min-w-0"
         />
         <BasketControls
           productId={product._id}
           isBasketPage={false}
           addClassName="btn-cart md:py-0.5"
-          wrapperClassName="flex items-center gap-1"
-          decrementClassName="btn-secondary w-8 h-8 flex items-center justify-center"
-          incrementClassName="btn-secondary w-8 h-8 flex items-center justify-center disabled:opacity-50"
-          quantityClassName="w-7 text-center type-body text-primary tabular-nums"
+          wrapperClassName="shrink-0"
         />
       </div>
     </article>
