@@ -36,7 +36,7 @@ export default function IemCard({ product, badge }: IemCardProps) {
           {badge && (
             <ProductBadge
               label={badge}
-              className="absolute right-2 top-8 z-10"
+              className="absolute right-0 top-0 z-10 md:right-2 md:top-8"
             />
           )}
           <div className="absolute left-2 right-2 top-2 hidden md:block">
