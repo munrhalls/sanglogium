@@ -8,7 +8,7 @@
 ## Executive Summary
 
 - **Problem:** Next.js 15 Server/Client Component boundary fragments logs across terminal and browser console with no unified view.
-- **Current State:** Backend Redis-based checkout logging works (`lib/dev/event-logger.ts`); frontend uses scattered `console.log` with no trace correlation.
+- **Current State:** Backend console-only checkout logging works (`lib/dev/event-logger.ts`); frontend uses scattered `console.log` with no trace correlation.
 - **Recommended Pattern:** Minimal frontend wrapper with traceId prefix → unified retrieval API. Avoid heavy log libraries (Pino/Winston) in browser.
 - **Immediate Actions:** (1) Add `lib/frontend-logger.ts` with traceId from cookie/session, (2) Add `app/api/logs/[traceId]/route.ts` for unified retrieval.
 
@@ -326,9 +326,7 @@ Logger.error('Payment processing failed', {
 ### For This Project (0 Friction Focus)
 
 #### Backend (Already Works)
-- Keep `lib/dev/event-logger.ts` (Redis-based with correlationId)
-- Keep `scripts/get-trace.mjs` for retrieval
-- Keep `scripts/clear-redis-logs.mjs` for cleanup
+- Keep `lib/dev/event-logger.ts` (console-only with correlationId)
 
 #### Frontend (Add Minimal Wrapper)
 ```typescript
@@ -513,10 +511,8 @@ export async function GET(
 ## Current System Assessment
 
 ### What Works
-- Backend checkout logging with Redis (event-logger.ts)
+- Backend checkout logging (event-logger.ts)
 - TraceId generation and correlation
-- Log retrieval scripts (get-trace.mjs)
-- Log cleanup scripts (clear-redis-logs.mjs)
 
 ### What's Missing
 - Frontend structured logging (currently scattered console.log)
@@ -532,7 +528,7 @@ export async function GET(
 | Use minimal frontend wrapper with traceId prefix | First principle: browser ≠ Node.js; existing Redis infrastructure; zero new dependencies | Create `lib/frontend-logger.ts` — `'use client'`, reads traceId from cookie/session, prefixes console.log |
 | Add unified retrieval API | Trace correlation requires single endpoint for both frontend and backend logs | Create `app/api/logs/[traceId]/route.ts` — reads Redis backend logs + any stored frontend logs |
 | Avoid OpenTelemetry for now | Overkill for single checkout flow; adds complexity without proportional value | Re-evaluate if project grows beyond checkout flow or needs production observability |
-| Keep existing Redis backend logging | Already works, verified, scripts exist | No change to `lib/dev/event-logger.ts`, `scripts/get-trace.mjs`, `scripts/clear-redis-logs.mjs` |
+| Keep existing console-only backend logging | Already works, verified | No change to `lib/dev/event-logger.ts` |
 
 ### Immediate Actions
 1. **Create `lib/frontend-logger.ts`** — `'use client'` wrapper with traceId prefix from iron-session cookie
@@ -554,7 +550,7 @@ export async function GET(
 | Server Component logs go to terminal, not browser | Next.js 15 docs + observed behavior | Documentation + runtime observation |
 | `browserToTerminal` is dev-only | Next.js 15 docs explicitly state | Documentation |
 | `sendBeacon` works for unload delivery | MDN docs + Google Analytics usage pattern | Documentation + industry precedent |
-| Backend Redis logging works end-to-end | `scripts/get-trace.mjs` successfully retrieves checkout traces | Manual test |
+| Backend checkout logging works end-to-end | `lib/dev/event-logger.ts` logs trace-prefixed output to console | Manual test |
 
 ### Falsification Attempts
 | Claim | Counter-Evidence | Verdict |
@@ -581,7 +577,7 @@ export async function GET(
 | Code Fundamentals | Medium-High | Verified against Next.js 15 docs, MDN, manual runtime observation; some items not tested with automated tests |
 | Best Practices | High | Strong consensus across Next.js docs, OpenTelemetry docs, Sentry blog, community sources; falsification attempts completed |
 | Common Solutions | High | All three options evaluated with tradeoffs, pain points, and explicit recommendations |
-| Current System Assessment | High | Direct observation of working `event-logger.ts`, `get-trace.mjs`, checkout traces in Redis |
+| Current System Assessment | High | Direct observation of working `event-logger.ts` and trace-prefixed console output |
 
 ---
 

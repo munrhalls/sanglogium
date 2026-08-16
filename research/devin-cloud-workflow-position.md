@@ -1,8 +1,8 @@
-> **Correction (friction-scan follow-up, see `_project/devin-cloud-optimization-plan.md`):** §5 Case C and §6 below originally recommended enabling Devin Review as an automatic "live check" layer. That recommendation is **retracted**. Devin Review only works on PRs/MRs, and enabling it would have required switching future Devin task delivery from a direct `git push` to a GitHub PR cycle — a recurring process tax on every future task, and a direct contradiction of this project's own zero-friction, local-first rule (see `sang-logium-direct-access` skill). Devin Review remains a true, free fact for public repos (§2.2) — it just isn't worth adopting here given the friction cost of the only way to trigger it. The rest of this document (cost model, free-option ranking, disqualification of Devin-as-auditor) still holds.
+> **Correction (friction-scan follow-up, see `_project/devin-cloud-optimization-plan.md`):** §5 Case C and §6 below originally recommended enabling Devin Review as an automatic "live check" layer. That recommendation is **retracted**. Devin Review only works on PRs/MRs, and enabling it would have required switching future Devin task delivery from a direct `git push` to a GitHub PR cycle — a recurring process tax on every future task, and a direct contradiction of this project's own zero-friction, local-first rule in `CLAUDE.md`. Devin Review remains a true, free fact for public repos (§2.2) — it just isn't worth adopting here given the friction cost of the only way to trigger it. The rest of this document (cost model, free-option ranking, disqualification of Devin-as-auditor) still holds.
 
 # Devin Cloud: Cost Reality and Its Position in the Claude+Devin+Human Workflow
 
-Scope: Devin Cloud only — its costs (Aug 2026) and where it belongs in the existing pipeline (`human → Claude Cowork → paragraph summary/approval → Devin executes → live check`). Sources are Devin's own docs (`docs.devin.ai`) plus real evidence already in this repo (`orchestration-plan.md`, `_project/devin-task-diagrams.md`, `docs/devin-beads-cleanup-tasks.md`).
+Scope: Devin Cloud only — its costs (Aug 2026) and where it belongs in the existing pipeline (`human → Claude Cowork → paragraph summary/approval → Devin executes → live check`). Sources are Devin's own docs (`docs.devin.ai`) plus real evidence already in this repo (`orchestration-plan.md`).
 
 ---
 
@@ -50,7 +50,7 @@ Your idea — repurpose Devin for intelligence-gathering, source-vs-source sync 
 
 - **Cost asymmetry.** Claude Cowork's audit work costs you nothing incremental (flat subscription); the same audit run through Devin cloud burns metered Pro quota for work that doesn't ship code. Spending metered capacity on judgment work when unmetered capacity already does it is the wrong trade.
 - **Context loss.** Devin cloud sessions are fire-and-forget — no shared memory with the conversation where you defined the goal. Your own pipeline requires a "1 paragraph summary for human verification" step precisely because Claude *has* that context and can compress it; Devin would have to be re-briefed from scratch each time, which is exactly the overhead your workflow is designed to avoid.
-- **The repo's own evidence disagrees with the idea.** `docs/devin-beads-cleanup-tasks.md` is the closest thing to an "audit" in this repo, and even there the audit (diffing issue `updated_at` against file mtimes, grepping for drift) was done by the intelligence layer *before* the file was handed to Devin — Devin's job in that file is Phase 3 execution (`bd delete ...`) plus Phase 5 sync, not the audit itself.
+- **The repo's own evidence disagrees with the idea.** No comparable audit file currently exists in this repo. Any prior audit work (diffing issue `updated_at` against file mtimes, grepping for drift) was done by the intelligence layer before handing execution to Devin — Devin's job was the execution phase, not the audit itself.
 
 **Partially validated, in a narrower free form:** the two zero-cost tools from §2 — DeepWiki's codebase Q&A and Devin Review's bug/security scanner — genuinely are "intelligence gathering / source code checks" run by Devin's infrastructure. The difference from your original idea is that they should stay in their free, narrow, always-on form (documentation lookup, PR-level bug/security scan) rather than becoming a paid, general-purpose "run a full audit" Devin cloud session. Use them as a supplement to Claude's intelligence-scan phase, not a replacement for it.
 
@@ -84,4 +84,4 @@ The only real action item is `_project/devin-cloud-optimization-plan.md`: trigge
 - [Devin Review](https://docs.devin.ai/work-with-devin/devin-review)
 - [DeepWiki](https://docs.devin.ai/work-with-devin/deepwiki)
 - [deepwiki.com/munrhalls/sang-logium](https://deepwiki.com/munrhalls/sang-logium) (confirmed live/public)
-- In-repo: `orchestration-plan.md`, `_project/devin-task-diagrams.md`, `docs/devin-beads-cleanup-tasks.md`
+- In-repo: `orchestration-plan.md`
