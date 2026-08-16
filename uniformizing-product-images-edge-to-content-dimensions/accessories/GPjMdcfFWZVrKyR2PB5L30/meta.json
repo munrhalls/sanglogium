@@ -1,0 +1,15 @@
+{
+  "_id": "GPjMdcfFWZVrKyR2PB5L30",
+  "name": "Salad Halo Headphone Stand",
+  "section": "accessories",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/b1617c3a8d18a54a6181f26efb6fd746522168e8-480x480.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 11.6,
+    "T": 10.1,
+    "R": 11.6,
+    "B": 10
+  },
+  "newAssetId": "image-d349149e37b1719729dfd587db00ce457f6234f8-1024x1024-png"
+}

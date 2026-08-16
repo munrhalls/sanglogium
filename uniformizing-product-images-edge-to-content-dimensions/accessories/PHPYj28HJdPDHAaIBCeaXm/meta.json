@@ -1,0 +1,15 @@
+{
+  "_id": "PHPYj28HJdPDHAaIBCeaXm",
+  "name": "Replacement Earpads for AKG K371 Headphones",
+  "section": "accessories",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/95de83432d18b1651f52dd585f25fd26b25066f2-1600x1600.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 10.1,
+    "T": 24.8,
+    "R": 10,
+    "B": 24.8
+  },
+  "newAssetId": "image-d51ac1b09e0d00c1eeaf81a40c9b1fa08bb3c502-1024x1024-png"
+}

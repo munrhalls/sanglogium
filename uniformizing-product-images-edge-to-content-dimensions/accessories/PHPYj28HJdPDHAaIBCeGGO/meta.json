@@ -1,0 +1,15 @@
+{
+  "_id": "PHPYj28HJdPDHAaIBCeGGO",
+  "name": "Replacement Earpads for Bose Quiet Comfort Noise Cancelling Headphones",
+  "section": "accessories",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/1e81217d13f0192788915e90bb12c3b98135d964-1042x1155.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 12,
+    "T": 10.1,
+    "R": 12,
+    "B": 10
+  },
+  "newAssetId": "image-08fb16590ed55721e9831fa87b301e78285a73d1-1024x1024-png"
+}

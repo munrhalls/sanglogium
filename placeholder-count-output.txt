@@ -1,0 +1,81 @@
+﻿=== Unique image asset IDs: 63 ===
+
+=== Images reused across MULTIPLE products (placeholders) ===
+
+Asset: 2c516bcf517ab27994476b1732b758ce82d6ef5e
+  Used by 30 products:
+    - Meze Manta Headphone Stand
+    - Galaxy Buds Pro 3 & 4 Memory Foam Ear Tips - WC TipZ Galaxy
+    - Dekoni Audio ETZ-TWS Premium Memory Foam Isolation Earphone Tips True Wireless
+    - Dekoni Audio ETZ-GEMINI Premium Memory Foam Isolation Earphone Tips Gemini 3mm
+    - Dekoni Audio ETZ-MERCURY Premium Memory Foam Isolation Earphone Tips Mercury 4.9mm
+    - WC FreeZe - Hybrid Cooling Gel Infused Gaming Earpads
+    - Corsair Virtuoso Earpads - WC FreeZe Cooling Gel
+    - Astro A50 Gen 4, Gen 5 and A50X Earpads - WC FreeZe Cooling Gel
+    - Upgraded Beats Solo 4 Earpads - WC PadZ Solo 4
+    - Beats Studio Earpads
+    - ATH M50X Earpads - Velour Hybrid
+    - Ear Pads For Sony WH1000XM3 Over-Ear Headphones
+    - Replacement earpads for Sony MDR-RF985R & More
+    - Replacement Ear Pads For Bose QC3
+    - ATH M50X Earpads
+    - Upgraded Sony XM5 Replacement Ear Pads
+    - Replacement Earpads For Bose QC15 Headphones
+    - Beats Studio Earpads - WC FreeZe Cooling Gel
+    - Bose QuietComfort Ultra Gen 1 & Gen 2 Cooling Gel Earpads - WC FreeZe QC Ultra
+    - Arctis Nova Pro Wireless, Nova Elite & Nova Pro Omni Earpads - WC FreeZe Cooling Gel
+    - HyperX Cloud FPS Gaming Earpads - WC StealthZ Cloud
+    - Upgraded Corsair Virtuoso Ear pads
+    - Bose NC 700 Cooling Gel Earpads - WC FreeZe
+    - Beats Solo Earpads
+    - Earpads For Sony WH900N
+    - Bose QC45 Replacement Ear Pads
+    - Bose QC35 Cooling Gel Earpads - WC FreeZe
+    - Bose QC35 Replacement Ear Pads
+    - RO75 Compact Keyboard
+    - ErgoDox 76 "Hot Dox" V2 Mechanical Keyboard
+
+Asset: f0967595ea47471834026aad39eebc95835a98d5
+  Used by 2 products:
+    - Dekoni Audio Ensemble 1/4" 52" Braided Cable with 3.5mm Headphone Connectors
+    - Dekoni Audio Ensemble 1/4" 64" Braided Cable with 3.5mm Headphone Connectors
+
+Asset: f93c39a6d5aff42243132330a6bd3b3c872808e7
+  Used by 2 products:
+    - Dekoni Audio Ensemble 4.4mm 64" Nylon Wrapped Cable with HD600 Headphone Connectors
+    - Dekoni Audio Ensemble 4.4mm 52" Nylon Wrapped Cable with HD600 Headphone Connectors
+
+Asset: 300214e31aada8cea6a1d427fb3636e3dc29fd6b
+  Used by 2 products:
+    - Dekoni Audio Ensemble 64" 4.4 + Mini XLR Blue Nylon Woven Jacket
+    - Dekoni Audio Ensemble 4.4mm 52" Nylon Wrapped Cable with 4-pin Mini XLR Headphone Connectors
+
+Asset: 5b87ea37d62532c4836314ad6d7d69cb7fa1db77
+  Used by 2 products:
+    - Dekoni Audio Ensemble 1/4" 64" Braided Cable with HD600 Headphone Connectors
+    - Dekoni Audio Ensemble 1/4" 52" Braided Cable with HD600 Headphone Connectors
+
+Asset: a4271c78bed647539bd4c0bc5f61d8b41546e350
+  Used by 2 products:
+    - Dekoni Audio Ensemble 4.4mm 64" Braided Cable with HD600 Headphone Connectors
+    - Dekoni Audio Ensemble 4.4mm 52" Braided Cable with HD600 Headphone Connectors
+
+Asset: ac631e18f58da501fea488485d52e3534144ca09
+  Used by 2 products:
+    - Dekoni Audio Ensemble 1/4" 52" Nylon Wrapped Cable with HD600 Headphone Connectors
+    - Dekoni Audio Ensemble 1/4" 64" Nylon Wrapped Cable with HD600 Headphone Connectors
+
+Asset: 48ab2ac6fa2ab1dc96a45f25a4387d03b95892c7
+  Used by 2 products:
+    - Dekoni Audio Ensemble 4.4mm 64" Braided Cable with 3.5mm Headphone Connectors
+    - Dekoni Audio Ensemble 4.4mm 52" Braided Cable with 3.5mm Headphone Connectors
+
+Asset: d7b39f5a6862c9636d5ce2545ce02d0e393de31d
+  Used by 2 products:
+    - Dekoni Audio Ensemble 4.4mm 52" Braided Cable with 4-pin Mini XLR Headphone Connectors
+    - Dekoni Audio Ensemble 4.4mm 64" Braided Cable with 4-pin Mini XLR Headphone Connectors
+
+
+=== Images used by exactly 1 product (unique/OK): 54 ===
+
+Total products using a shared/placeholder image: 46 of 100

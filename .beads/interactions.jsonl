@@ -1,0 +1,2 @@
+{"id":"int-40f784c0a4e456b0fb6042f3209fde65","kind":"field_change","created_at":"2026-08-16T04:32:26.2334014Z","actor":"Munrhalls","issue_id":"sang-logium-2de","extra":{"field":"status","new_value":"closed","old_value":"open","reason":"Fixed and verified: all 15 botched headphone images replaced in Sanity."}}
+{"id":"int-c1bb4ff4fc74f7d635f3141588fbeb64","kind":"field_change","created_at":"2026-08-16T04:47:18.9646458Z","actor":"Munrhalls","issue_id":"sang-logium-2de","extra":{"field":"status","new_value":"open","old_value":"closed"}}

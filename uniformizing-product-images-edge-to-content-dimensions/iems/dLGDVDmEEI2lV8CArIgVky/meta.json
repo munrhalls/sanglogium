@@ -1,0 +1,15 @@
+{
+  "_id": "dLGDVDmEEI2lV8CArIgVky",
+  "name": "Sony WFL910 Linkbuds Truly Wireless Earbuds (Black)",
+  "section": "iems",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/5d48a3b722b4329cd3d01db6cd90d617c6479f84-1200x1200.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 12.8,
+    "T": 10.1,
+    "R": 12.7,
+    "B": 10
+  },
+  "newAssetId": "image-e44f9bf979b5f62a5aba5321ef2ce829195cbb7a-1024x1024-png"
+}

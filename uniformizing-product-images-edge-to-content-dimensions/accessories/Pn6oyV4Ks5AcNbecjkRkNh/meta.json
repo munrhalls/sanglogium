@@ -1,0 +1,15 @@
+{
+  "_id": "Pn6oyV4Ks5AcNbecjkRkNh",
+  "name": "Replacement Earpads for Dan Clark Audio Aeon 2 - Elite Sheepskin",
+  "section": "accessories",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/b447981f2038e81ec51954d1973478e54bece20d-1600x1103.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 10.1,
+    "T": 32.7,
+    "R": 10,
+    "B": 32.7
+  },
+  "newAssetId": "image-a8e8211498b8ac1d334fbf1d8cfed47a74f0b7fe-1024x1024-png"
+}

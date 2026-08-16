@@ -1,0 +1,15 @@
+{
+  "_id": "DZc43yHr6ydfgE7zB3zTLq",
+  "name": "Silicone Case for Samsung Galaxy Buds3 Pro",
+  "section": "accessories",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/0fd025970f29ffed8cd3a8d379b4b0cb793b47ed-1080x1080.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 10.1,
+    "T": 27.1,
+    "R": 10,
+    "B": 27.1
+  },
+  "newAssetId": "image-28ae0c1bd7cfeb3eb0d050151c1af38bb41f522b-1024x1024-png"
+}

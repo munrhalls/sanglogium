@@ -1,0 +1,15 @@
+{
+  "_id": "MrEMtYwMtrFDGWmRnQS8gt",
+  "name": "Focal Bathys Replacement Ear Pads (Pair)",
+  "section": "accessories",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/ac97436634e1c958cc1c60fc80a0077e53dfe12d-1024x1024.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 24.9,
+    "T": 10.1,
+    "R": 24.9,
+    "B": 10
+  },
+  "newAssetId": "image-7a625d58a9dd985dc9ebdcac46a6729bb1e1c768-1024x1024-png"
+}

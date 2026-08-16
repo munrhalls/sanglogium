@@ -1,0 +1,15 @@
+{
+  "_id": "PHPYj28HJdPDHAaIBCejqw",
+  "name": "Replacement Earpads for Audeze Maxwell 2 Gaming Headphone",
+  "section": "accessories",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/25681abd6f7a87b16de884b0a8c19faccbc61996-1011x1011.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 10.1,
+    "T": 17.8,
+    "R": 10,
+    "B": 17.8
+  },
+  "newAssetId": "image-59c0e170d0c203aaf483b37f85f9e83fa1fc2c4d-1024x1024-png"
+}

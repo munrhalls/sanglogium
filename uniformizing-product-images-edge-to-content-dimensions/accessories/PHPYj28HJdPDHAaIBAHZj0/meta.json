@@ -1,0 +1,15 @@
+{
+  "_id": "PHPYj28HJdPDHAaIBAHZj0",
+  "name": "Etched Headphone Cable for Sennheiser HD 600 Series",
+  "section": "accessories",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/cc4f95911eea1e5d40ca2539df0d4b8c1b4e064a-1024x1024.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 10.1,
+    "T": 16,
+    "R": 10,
+    "B": 16
+  },
+  "newAssetId": "image-13a1150b75a853a70a499813d83a779b24dfed80-1024x1024-png"
+}

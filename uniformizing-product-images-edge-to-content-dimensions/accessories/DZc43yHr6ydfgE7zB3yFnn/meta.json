@@ -1,0 +1,15 @@
+{
+  "_id": "DZc43yHr6ydfgE7zB3yFnn",
+  "name": "Dekoni Audio EPZ-FOCAL-STELLIA Replacement Ear Pads for Focal Headphones",
+  "section": "accessories",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/046a109e1b87e272e510a48da5665241d4ef0efd-1156x1156.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 10.1,
+    "T": 13.6,
+    "R": 10,
+    "B": 13.5
+  },
+  "newAssetId": "image-1596b2a7f53a67d1f2784206faa8fb04b5616fdb-1024x1024-png"
+}

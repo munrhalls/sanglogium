@@ -1,0 +1,15 @@
+{
+  "_id": "MrEMtYwMtrFDGWmRnGS7NA",
+  "name": "Campfire Audio Flight | Curated Eartip Pack",
+  "section": "accessories",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/504b806c24e8209b255b689a84f7e141a76cd9f0-1360x1360.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 10.1,
+    "T": 20.8,
+    "R": 10,
+    "B": 20.7
+  },
+  "newAssetId": "image-d07675110e5a7ad7a989f19f4c21ad336d5fc032-1024x1024-png"
+}

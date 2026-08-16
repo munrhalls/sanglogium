@@ -1,0 +1,15 @@
+{
+  "_id": "moXlkADK7m1DHgGwWwzkms",
+  "name": "JBL Tour Pro 2 True Wireless In-Ear Headphones",
+  "section": "iems",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/bf1ee316f3bcd53640c3fa77d37b14c3f3b4d4f1-1024x1024.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 10.1,
+    "T": 25,
+    "R": 10,
+    "B": 25
+  },
+  "newAssetId": "image-47d6812b9bb1486b4644ba31dcb96922d098384c-1024x1024-png"
+}

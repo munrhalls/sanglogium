@@ -1,0 +1,15 @@
+{
+  "_id": "PHPYj28HJdPDHAaIBCeREc",
+  "name": "Replacement Earpads for Sony WH1000Xm5 Headphones",
+  "section": "accessories",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/98bf727e8ce397e58c05cc0045289574ef5256f4-1360x1360.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 10.1,
+    "T": 18.8,
+    "R": 10,
+    "B": 18.8
+  },
+  "newAssetId": "image-7c20a48129718ace51c4787bbf9bfb2e4a0ece4f-1024x1024-png"
+}

@@ -1,0 +1,1748 @@
+[
+  {
+    "productId": "0IQ2UjkdXJma4iOcjnwqbl",
+    "name": "AudioQuest DragonTail Carbon USB A to C Adapter",
+    "oldAssetId": "image-ecdd97f93806a94ee2ce0accb0fd48073183b408-1024x1024-png",
+    "newAssetId": "image-ef2e403091240557e54b8daeb7c104b5a95fca0f-1024x1024-png"
+  },
+  {
+    "productId": "0IQ2UjkdXJma4iOcjnwrjp",
+    "name": "SVS SoundPath Tri-Band Wireless Receiver for SoundPath Wireless Audio Adapter",
+    "oldAssetId": "image-3afac1b50601fa5d6241b55df0034374cc77f242-1024x1024-png",
+    "newAssetId": "image-7aee5d4d16347cb787107f23772db6bd05b93712-1024x1024-png"
+  },
+  {
+    "productId": "GjMaRFaHMVTsBoyxtAJ8Hy",
+    "name": "SVS SoundPath Wireless Audio Adapter",
+    "oldAssetId": "image-8eb151b6207d4f061fb53595eb8d614ebb48a419-1024x1024-png",
+    "newAssetId": "image-bdd91d18f2f5a03fe0ccf4d11e21be6a8b353d69-1024x1024-png"
+  },
+  {
+    "productId": "GjMaRFaHMVTsBoyxtAJAGI",
+    "name": "AudioQuest M22F-HRD RCA Male to 2 RCA Female Adaptor",
+    "oldAssetId": "image-265eaa029f486a54f5a1b636c4635ac6a4217f4c-1024x1024-png",
+    "newAssetId": "image-d4405faa3fc07cc2faae1ff1884204618cfb9fbd-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnG6oGG",
+    "name": "AudioQuest DragonTail | USB Smartphone Adaptor",
+    "oldAssetId": "image-0fad8b788890fa3982b525bdd624deb940a8ec0d-1024x1024-png",
+    "newAssetId": "image-8e6c41158ea7a7c8ac1eb26f88cadd3b8882ea4d-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnG9Baw",
+    "name": "Cayin PH-32X | 2.5mm to 3.5mm Adapter",
+    "oldAssetId": "image-b80a94b31059b34ce6ba5702a51112a3e3175864-1024x1024-png",
+    "newAssetId": "image-7d10cd94c650f6cffedbabde5e90ab3ab9c68f19-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnGGjYE",
+    "name": "ddHiFi DJ30SE Headphone Adapter | 4.4mm M to 3.5mm F",
+    "oldAssetId": "image-09ea929af68855ce976d9f8d0f3dffe80ec247ed-1024x1024-png",
+    "newAssetId": "image-23d719926b51f020c5fd0a60fa721202be0b2a67-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnGKKBJ",
+    "name": "ddHiFi DJ44AG Balanced Headphone Adapter | 2.5mm F to 4.4mm M",
+    "oldAssetId": "image-9a48d3d1fe0ba2ac4d74054c359b8f0ac64a1346-1024x1024-png",
+    "newAssetId": "image-917dccc0115d53497d0444804926bd60f90a6239-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnGOCvl",
+    "name": "ddHiFi DJ44MOJO Ground Pin Adapter | 4.4mm Adapter",
+    "oldAssetId": "image-b52ead0aae9d06eb144c9eee0638d49574dea7e1-1024x1024-png",
+    "newAssetId": "image-39acc43abcd088e189b81022ef9fae7bb312c217-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnGPkI2",
+    "name": "Audeze Std LCD Series Cable | Mini-XLR to 4-pin XLR w/ 6.3mm Adapter",
+    "oldAssetId": "image-c9fe13c2c72403f2c28952273ee9c1630cadeb10-1024x1024-png",
+    "newAssetId": "image-9443a359b967bde30448ec747886cfeccc77d146-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIB69jT4",
+    "name": "ddHiFi DJ35L L-Shaped Adapter | 3.5mm F to 3.5mm M",
+    "oldAssetId": "image-ebaab5eab28b52786440402845acdeca83640520-1024x1024-png",
+    "newAssetId": "image-656e7d7b593a2c96f52b56f014dad2df87956874-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIB6AeOS",
+    "name": "ddHiFi DJ44 Mark II Headphone Adapter | 4.4mm F to 2.5/3.5 M",
+    "oldAssetId": "image-614aa4f6ecd989729a9b830f64b8d6a8de220f0b-1024x1024-png",
+    "newAssetId": "image-da2c08cf5437fded6dac728c953d34b100064e39-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIB6CYWu",
+    "name": "ddHiFi DJ44L L-Shaped Adapter | 4.4mm F to 4.4mm M",
+    "oldAssetId": "image-cb02e3b46faeaf4391e12320813644ff96c4632e-1024x1024-png",
+    "newAssetId": "image-18a62c977da0999768758978b25e61a933d0008d-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjamOn3",
+    "name": "Cayin PH-35X | 4.4mm to 3.5mm Adapter",
+    "oldAssetId": "image-87a51db46ce2a77f358da0648621a1b1a08465ed-1024x1024-png",
+    "newAssetId": "image-fcff0e9b83d8a3659818c2f1816c4de53b4e72cc-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjap4tM",
+    "name": "Cayin PH-4X | 2.5mm to 4.4mm Adapter",
+    "oldAssetId": "image-901264afaf2cf2d220a8cb6c282732858c4ea738-1024x1024-png",
+    "newAssetId": "image-ade234457bf33fb85f63e78b6c201d4b2b87e816-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjatqB5",
+    "name": "ddHiFi DJ44Gold Headphone Adapter | 4.4mm F to 3.5mm M",
+    "oldAssetId": "image-36e641404a88bfe95bb9f27f0b104c0966e78d79-1024x1024-png",
+    "newAssetId": "image-8d6ec6cee8c1b28d9812a57dbcc66ca6fa4826d5-1024x1024-png"
+  },
+  {
+    "productId": "Y7l1IhzX2fnyiano58Gmxj",
+    "name": "AudioQuest Cinnamon USB to Micro Audio Cable - 2.46 ft. (.75m)",
+    "oldAssetId": "image-e779e47dec7c1e4fe7a45887c48aa005f3503b78-1024x1024-png",
+    "newAssetId": "image-6ccf77c673b3682d6f9b7a75f28f543cf2ebccae-1024x1024-png"
+  },
+  {
+    "productId": "Y7l1IhzX2fnyiano58GsCK",
+    "name": "AudioQuest Forest USB to Micro High Definition Digital Audio Cable - 1.5M",
+    "oldAssetId": "image-d12c6a3e490d7f422adac31847c324ace81152db-1024x1024-png",
+    "newAssetId": "image-b0a198369f5ebb7c87490f454081325e7b41a44b-1024x1024-png"
+  },
+  {
+    "productId": "moXlkADK7m1DHgGwWxMnjQ",
+    "name": "AudioQuest DragonTail USB Extender and Adapter",
+    "oldAssetId": "image-49cd013f67785a29c8fc0416bec0cddd52ac0466-1024x1024-png",
+    "newAssetId": "image-918d29d2fa4d0bc70c40ce2aaf9319ed479099ed-1024x1024-png"
+  },
+  {
+    "productId": "3O1ZNp54LWQGln4uEAU7Vs",
+    "name": "Meze Audio 99 Series 2.5mm or 4.4mm Replacement Cable",
+    "oldAssetId": "image-47e489a38b0ed21efd99ce7afad0a16b04b6a9ef-1024x1024-png",
+    "newAssetId": "image-8c5ac10bbc5099058cc3cca45e3dec11747b8fe9-1024x1024-png"
+  },
+  {
+    "productId": "3O1ZNp54LWQGln4uEAUGAa",
+    "name": "64 Audio Premium Pearl Cable (3.5mm)",
+    "oldAssetId": "image-2cf785a303980ffe2351508cdb8b0ebb332e4d38-1024x1024-png",
+    "newAssetId": "image-147fdd8cebeb5fa00097d21254dccee1028359ee-1024x1024-png"
+  },
+  {
+    "productId": "3O1ZNp54LWQGln4uEAUGRi",
+    "name": "Meze Audio OFC Mini 4-Pin XLR Replacement Cable",
+    "oldAssetId": "image-3bea663093e9f310f7af98ecbaf3342b67803f40-1024x1024-png",
+    "newAssetId": "image-9b226edf6df41fe717ccf1ab81248faa036c7986-1024x1024-png"
+  },
+  {
+    "productId": "3O1ZNp54LWQGln4uEAUIek",
+    "name": "Aune Audio AR3",
+    "oldAssetId": "image-2652e10088743878122f82d8a712dca2e0906668-1024x1024-png",
+    "newAssetId": "image-0fdccaadbd62fa81bc2baf7bcacf59f8ae4173d6-1024x1024-png"
+  },
+  {
+    "productId": "A5Y8wEwAn6Fo0zYQ5BM7Yv",
+    "name": "Meze Audio Mono 3.5mm to Balanced 4.4mm Silver-Plated Headphone Cable - 3.9ft.",
+    "oldAssetId": "image-59814d37ec44906f978c372612861f6adc577a72-1024x1024-png",
+    "newAssetId": "image-76a40c429e15eda3d91e4c198e05c6c1172439ea-1024x1024-png"
+  },
+  {
+    "productId": "DraufLIOgnzQlqrObMwKGy",
+    "name": "Dekoni Audio Ensemble 4.4mm 64\" Braided Cable with 3.5mm Headphone Connectors",
+    "oldAssetId": "image-413bc29fe3e302f1e7257342f337b28d7a014466-1024x1024-png",
+    "newAssetId": "image-48ab2ac6fa2ab1dc96a45f25a4387d03b95892c7-1024x1024-png"
+  },
+  {
+    "productId": "E5AJbuTajbv7O6i4rY3WSR",
+    "name": "HEDDphone Balanced 4-Pin XLR Cable",
+    "oldAssetId": "image-82290d5b1f98262a47b54e65eae4ebab6896e4b0-1024x1024-png",
+    "newAssetId": "image-0d790c17701ae57e120006a75335a1dd596e8d1a-1024x1024-png"
+  },
+  {
+    "productId": "FVx8zpBk46ZESxpKNI3WOv",
+    "name": "Meze Audio MMCX to 3.5mm Silver-Plated Headphone Cable - 3.9 ft.",
+    "oldAssetId": "image-8f0f73fa5f8e6b3155b08e1ddec0ef1772a7f33d-1024x1024-png",
+    "newAssetId": "image-58fcb885080893a2f93d7faaa48a500998cd75a2-1024x1024-png"
+  },
+  {
+    "productId": "GPjMdcfFWZVrKyR2PB7nEI",
+    "name": "Cables for Rock Lobster IEM",
+    "oldAssetId": "image-bb5ae3991ee2ca29f419570886c96210a508495a-1024x1024-png",
+    "newAssetId": "image-921c815d0dab2175a2e6c48067cfcd56addcd57d-1024x1024-png"
+  },
+  {
+    "productId": "GPjMdcfFWZVrKyR2PB7o7q",
+    "name": "Magia Modular Cable Kit",
+    "oldAssetId": "image-09239fcfa527a575614117529acbde8fb9b06e73-1024x1024-png",
+    "newAssetId": "image-8f5f54972c980e2e89a07bf07183cc577ca8d874-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnH5lm0",
+    "name": "Eletech Aristotle | Copper IEM Upgrade Cable",
+    "oldAssetId": "image-cc98d15cab25ddc1ec6508eb584e1c1ed2a24863-1024x1024-png",
+    "newAssetId": "image-f72bbd82b19143d7bc883aa93dcf98843e21420c-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnKeGom",
+    "name": "Polk Audio RC80I 2 Way In Ceiling Speakers - 4 Pack (White)",
+    "oldAssetId": "image-66a2c109af24603ed404d41f3470432517997fd8-1024x1024-png",
+    "newAssetId": "image-d4a75d721b7cc94da6470f77bd8f32422f03f0a6-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnRM6g2",
+    "name": "Dekoni Audio Ensemble Presplit PCUHD Twisted Cable with 6.35mm Unbalanced Connector (52\")",
+    "oldAssetId": "image-658aa65ec7063040a24ecb1b60e88027daa5b5f9-1024x1024-png",
+    "newAssetId": "image-9cc2a654285d7c4c081f46ad5c9ce46522f376b5-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnRMEGN",
+    "name": "Dekoni Audio Ensemble 4.4mm 52\" Braided Cable with HD600 Headphone Connectors",
+    "oldAssetId": "image-6715746357c6f16cfca21cfbd149009164ca97f6-1024x1024-png",
+    "newAssetId": "image-a4271c78bed647539bd4c0bc5f61d8b41546e350-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnRMrRo",
+    "name": "Dekoni Audio Ensemble 1/4\" 64\" Nylon Wrapped Cable with HD600 Headphone Connectors",
+    "oldAssetId": "image-9a4aefeddd17c385167066d233d8076b6a36db15-1024x1024-png",
+    "newAssetId": "image-ac631e18f58da501fea488485d52e3534144ca09-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnRNW0l",
+    "name": "Dekoni Audio Ensemble 4-Pin XLR 64\" Braided Cable Cable with 3.5mm Headphone Connectors",
+    "oldAssetId": "image-31e6da894b46d662ec0adbaa91aa7cdc0f41792b-1024x1024-png",
+    "newAssetId": "image-64a4942e76cb370ad36fbe235f5e161bed3d4c7a-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnROEm9",
+    "name": "Dekoni Audio Ensemble 4.4mm 64\" Braided Cable with HD600 Headphone Connectors",
+    "oldAssetId": "image-6715746357c6f16cfca21cfbd149009164ca97f6-1024x1024-png",
+    "newAssetId": "image-a4271c78bed647539bd4c0bc5f61d8b41546e350-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnROOcQ",
+    "name": "Dekoni Audio Ensemble 1/8\" 64\" Nylon Jacket Cable with 4-pin Mini XLR Headphone Connectors",
+    "oldAssetId": "image-468793acc63f627146fa72dd7a87503da01afccc-1024x1024-png",
+    "newAssetId": "image-56df1bb8a61352e46f8035fd5f3dd65455494339-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnROj7V",
+    "name": "Dekoni Audio Ensemble 1/4\" 64\" Nylon Jacket Cable with ATHM Headphone Connector",
+    "oldAssetId": "image-c5043fa929edfe0232cdfe6e0bd79b6fb2276b5b-1024x1024-png",
+    "newAssetId": "image-fe12906c3cfa057143c0611ec8526b8683ed9d58-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnROsH1",
+    "name": "Dekoni Audio Ensemble 1/4\" 64\" Braided Cable with Single 3pin XLR Headphone Connector",
+    "oldAssetId": "image-458f587805c57570ca5c55103ca618302b78e4f7-1024x1024-png",
+    "newAssetId": "image-98856dc1884b321256cc2b5c7e1f5da1aafc07c8-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnRPAdw",
+    "name": "Dekoni Audio Ensemble 4-Pin XLR 64\" Braided Cable Cable with HD600 Headphone Connectors",
+    "oldAssetId": "image-c4fd59c86accf774e79f4e523ec9a7df8640faad-1024x1024-png",
+    "newAssetId": "image-4728c6710fac06ef8bfd1141f4b29533b44f34fb-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnRPD5X",
+    "name": "Dekoni Audio Ensemble 4.4mm 64\" Nylon Wrapped Cable with HD600 Headphone Connectors",
+    "oldAssetId": "image-96f7eb4732c25bfb2a834489b05eb8f804719b72-1024x1024-png",
+    "newAssetId": "image-f93c39a6d5aff42243132330a6bd3b3c872808e7-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIB6cQtu",
+    "name": "ALO audio Reference 8 | Mini to Mini Cable",
+    "oldAssetId": "image-0a4aaa5639d0ae6dbb4a76c96514d7439ed0d120-1024x1024-png",
+    "newAssetId": "image-ce83676be2e90fe77811400a38e3fef917f1979b-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIB6cRSG",
+    "name": "Dan Clark Audio DUMMER Cable | Headphone Cable for AEON and ETHER",
+    "oldAssetId": "image-366cde71e10bf22bf1c751ff07cd8b2dd6ca5fb1-1024x1024-png",
+    "newAssetId": "image-cee808a0b2f65db7afda38bce3f9e073e29751df-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIB6cRiI",
+    "name": "Dan Clark Audio VIVO | Super Premium Headphone Cable",
+    "oldAssetId": "image-1c4ea97e3e5d3829f307a8af3d20c302cfac3db6-1024x1024-png",
+    "newAssetId": "image-341168dbfe7ad027f5a468e45bce3a0b17bd6fe3-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIB6cVoW",
+    "name": "Dekoni Audio Balanced 4.4mm Cable for Sennheiser HD600 | Replacement Headphone Cable",
+    "oldAssetId": "image-671f8e22c7356197ad2eba9721a1dbefab5f19b4-1024x1024-png",
+    "newAssetId": "image-2198b4052d55cf80e163d0bf456074594ab00d5a-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIB6cZHo",
+    "name": "Eletech Azrael | Copper Upgrade Cable for IEMs",
+    "oldAssetId": "image-0a9b82089c234453a6c89b902babd176996f1d32-1024x1024-png",
+    "newAssetId": "image-b36ba0e2b0b1e9e2bd0e2cdf14b7901a896dc8ed-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIBAHVcm",
+    "name": "Etched Headphone Cable",
+    "oldAssetId": "image-e49489aa593b52f2eefd70de96923eb1750b403f-1024x1024-png",
+    "newAssetId": "image-f35fd7689ad30d49b8b4328f48d8e7b1c4ea2f89-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIBAHZj0",
+    "name": "Etched Headphone Cable for Sennheiser HD 600 Series",
+    "oldAssetId": "image-13a1150b75a853a70a499813d83a779b24dfed80-1024x1024-png",
+    "newAssetId": "image-b4e9643b107176761d873a4322986e13accf4eb8-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIBAHiIM",
+    "name": "Meze Audio 99 Series Silver Replacement cable (2.5mm, 3.5mm or 4.4mm)",
+    "oldAssetId": "image-46d34781e41359e05f6109c7016485a8cb926a08-1024x1024-png",
+    "newAssetId": "image-93855b8bb367b836b3bb935c1cc15f00ad12e208-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIBCiFsQ",
+    "name": "Dekoni Audio Ensemble 4.4mm 52\" Braided Cable with 3.5mm Headphone Connectors",
+    "oldAssetId": "image-413bc29fe3e302f1e7257342f337b28d7a014466-1024x1024-png",
+    "newAssetId": "image-48ab2ac6fa2ab1dc96a45f25a4387d03b95892c7-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIBCiKGy",
+    "name": "Dekoni Audio Ensemble 4.4mm 52\" Nylon Wrapped Cable with HD600 Headphone Connectors",
+    "oldAssetId": "image-96f7eb4732c25bfb2a834489b05eb8f804719b72-1024x1024-png",
+    "newAssetId": "image-f93c39a6d5aff42243132330a6bd3b3c872808e7-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIBCiXro",
+    "name": "Dekoni Audio Ensemble 1/8\" 64\" Nylon Jacket Cable with HD600 Headphone Connectors",
+    "oldAssetId": "image-718a2cb3d15350694784bed7584248c1713c6cf5-1024x1024-png",
+    "newAssetId": "image-b36ac5692b1f6a51735fb725b0c6c3afac0309ed-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIBCioiC",
+    "name": "Dekoni Audio Ensemble 1/4\" 64\" Braided Cable with 3.5mm Headphone Connectors",
+    "oldAssetId": "image-eaa8c89ac98e426ba1ad53b1c699d05fdfe760da-1024x1024-png",
+    "newAssetId": "image-f0967595ea47471834026aad39eebc95835a98d5-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIBCiv48",
+    "name": "Dekoni Audio Ensemble 1/4\" 52\" Braided Cable with HD600 Headphone Connectors",
+    "oldAssetId": "image-462d5034bf6e788cecfdd9e6fcdce6e8e9dd6a33-1024x1024-png",
+    "newAssetId": "image-5b87ea37d62532c4836314ad6d7d69cb7fa1db77-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIBCjTtu",
+    "name": "Dekoni Audio Ensemble 1/4\" 64\" PCUHD Cable with 4-pin Mini XLR Headphone Connectors",
+    "oldAssetId": "image-ba1d62a0ca6cf0dec1393e337d88bd295dbdd9be-1024x1024-png",
+    "newAssetId": "image-60453ea5088f1917914ca0ca53b9f779fd24534d-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIBCjeeO",
+    "name": "Dekoni Audio Ensemble 4-Pin XLR 52\" PCUHD Cable with 2 Pin Utopia Lemo Headphone Connectors",
+    "oldAssetId": "image-860faf357637aade38f3fec9193386dd66b11643-1024x1024-png",
+    "newAssetId": "image-a41450d4fbeb3e897e3286b274a02357ba57a5b2-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIBCk0IW",
+    "name": "Dekoni Audio Ensemble 4.4mm 52\" Nylon Wrapped Cable with 4-pin Mini XLR Headphone Connectors",
+    "oldAssetId": "image-742d1e9d71a7771963cef53bee981a6b3049767a-1024x1024-png",
+    "newAssetId": "image-300214e31aada8cea6a1d427fb3636e3dc29fd6b-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIBCk4Vc",
+    "name": "Dekoni Audio Ensemble 1/4\" 64\" Braided Cable with HD600 Headphone Connectors",
+    "oldAssetId": "image-462d5034bf6e788cecfdd9e6fcdce6e8e9dd6a33-1024x1024-png",
+    "newAssetId": "image-5b87ea37d62532c4836314ad6d7d69cb7fa1db77-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIBCk6T0",
+    "name": "Dekoni Audio Ensemble 64\" 4.4 + Mini XLR Blue Nylon Woven Jacket",
+    "oldAssetId": "image-742d1e9d71a7771963cef53bee981a6b3049767a-1024x1024-png",
+    "newAssetId": "image-300214e31aada8cea6a1d427fb3636e3dc29fd6b-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIBCk9ZO",
+    "name": "Dekoni Audio Ensemble 1/8\" 64\" Nylon Jacket Cable with ATHM Headphone Connector",
+    "oldAssetId": "image-396b17c1b98f3a889d39182df2180233807cb691-1024x1024-png",
+    "newAssetId": "image-301c27f83e75e6a997973fdb8e11048d1ec4e071-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjbXRKV",
+    "name": "Audeze Premium Braided Upgrade Cable | 6.3 or XLR for LCD Series",
+    "oldAssetId": "image-49003a3828b3b14b289b229b9cd1d3b899b32b3a-1024x1024-png",
+    "newAssetId": "image-d299f94e345ceaa72c4f62efb9558b161ceacd54-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjbXY7s",
+    "name": "Dekoni Audio Balanced XLR Cable for Sennheiser HD800 | Replacement Headphone Cable",
+    "oldAssetId": "image-635d234ddeea0bb5917c9d44d92976bd0b5400c8-1024x1024-png",
+    "newAssetId": "image-63c5e1bf2b1c5c0809ef300638646450fbdd7e77-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjbXdBN",
+    "name": "Eletech Cassiel | Silver-Plated Copper Upgrade Cable for IEMs",
+    "oldAssetId": "image-8f4443298ad066d81713a317a5731b35e60571eb-1024x1024-png",
+    "newAssetId": "image-31213c48265b0ac4262d3fdc592cea8c52362804-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjbXdtC",
+    "name": "Eletech Elegy to Lucia | Limited Flagship IEM Cable",
+    "oldAssetId": "image-bdab6975cebdf35456b0a010871df3a684e01724-1024x1024-png",
+    "newAssetId": "image-29e11961765854fdfe0a7fbdaebc3cff887e4d6f-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjbXftv",
+    "name": "Eletech Euclid | Silver IEM Upgrade Cable",
+    "oldAssetId": "image-b696550fe15896fb3ac8cbaf3049bcccce871c5f-1024x1024-png",
+    "newAssetId": "image-f977a88c0456d5bfb2dc45fd3572509e3df56bde-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjh3egq",
+    "name": "HEDD Audio GTC HEDDphone TWO Cable",
+    "oldAssetId": "image-ff1c5990a491b6b480fe5db1e96ab7460c4f16bc-1024x1024-png",
+    "newAssetId": "image-0d869f8dfd7617cb2f09f22515cad66d94d9f1f4-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjh3ghZ",
+    "name": "Crystal Cable DUET for Focal Utopia",
+    "oldAssetId": "image-57f17489dfcbf5da5cf682c26d94610d191ea3b8-1024x1024-png",
+    "newAssetId": "image-7519ed23c32953d7bb7a7fa62240575622c61e71-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjkWvRG",
+    "name": "Dekoni Audio Ensemble 4.4mm 64\" Braided Cable with 4-pin Mini XLR Headphone Connectors",
+    "oldAssetId": "image-61f13d8979380d0517d7b9c8937c2eac7635bd5d-1024x1024-png",
+    "newAssetId": "image-d7b39f5a6862c9636d5ce2545ce02d0e393de31d-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjkXHP8",
+    "name": "Dekoni Audio Ensemble Post-Split Nylon Wrapped Cable with Single 3-pin Mini XLR",
+    "oldAssetId": "image-1b6b5e84af6232e83046d1c3aeff098d07e3aaa3-1024x1024-png",
+    "newAssetId": "image-16823c27bc50807f8bca70bb5168b2c92eb5e889-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjkXZj9",
+    "name": "Dekoni Audio Ensemble 1/8\" 64\" Braided Cable with HD600 Headphone Connectors",
+    "oldAssetId": "image-bf30bcae65540753a5eeeea39dbd181d48b47d67-1024x1024-png",
+    "newAssetId": "image-5bb78daac725c4730d096fc5bb2e003b22cdb20e-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjkXxA2",
+    "name": "Dekoni Audio Ensemble 4.4mm 52\" Braided Cable with 4-pin Mini XLR Headphone Connectors",
+    "oldAssetId": "image-61f13d8979380d0517d7b9c8937c2eac7635bd5d-1024x1024-png",
+    "newAssetId": "image-d7b39f5a6862c9636d5ce2545ce02d0e393de31d-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjkYFoH",
+    "name": "Dekoni Audio Ensemble 1/8\" 64\" Braided Cable with 3.5mm Headphone Connectors",
+    "oldAssetId": "image-f296ec579f6b170dfd500374cf3bfa6465015987-1024x1024-png",
+    "newAssetId": "image-51887960159667b536bd111ddec6034e38cb26f5-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjkYRpG",
+    "name": "Dekoni Audio Ensemble 4.4mm 64\" Nylon Wrapped Cable with 3.5mm Headphone Connectors",
+    "oldAssetId": "image-01552d3c7d3b37a8782a2af46f04e7c63ade3f4c-1024x1024-png",
+    "newAssetId": "image-6cc642c9764ccf9275ec4ad4007ef6731bf5e341-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjkYeAT",
+    "name": "Dekoni Audio Ensemble 4-Pin XLR 52\" PCUHD Cable with 4-pin Mini XLR Headphone Connectors",
+    "oldAssetId": "image-51950fc270cf6d9ea992be413bae4930691a9345-1024x1024-png",
+    "newAssetId": "image-60fd5de21559a211eddc613350e35bfb278e6f26-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjkZ08L",
+    "name": "Dekoni Audio Ensemble 1/4\" 52\" Nylon Wrapped Cable with HD600 Headphone Connectors",
+    "oldAssetId": "image-9a4aefeddd17c385167066d233d8076b6a36db15-1024x1024-png",
+    "newAssetId": "image-ac631e18f58da501fea488485d52e3534144ca09-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjkZ5FD",
+    "name": "Dekoni Audio Ensemble 1/4\" 52\" Nylon Wrapped Cable with 3.5mm Headphone Connectors",
+    "oldAssetId": "image-2db69a5282b590b0de09ec2d04460c281e9b6d56-1024x1024-png",
+    "newAssetId": "image-2b70cef44a5bb0e2b6b3430aaf1346b9116e4cef-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjkZ7Mg",
+    "name": "Dekoni Audio Ensemble 1/4\" 52\" Braided Cable with 4-pin Mini XLR Headphone Connectors",
+    "oldAssetId": "image-4f2ad88895743776b56a26431ed500c16f0a78fc-1024x1024-png",
+    "newAssetId": "image-2a2a04432875a529b6ed50c8b78dd550710deb13-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjkZv3k",
+    "name": "Dekoni Audio Ensemble 1/8\" 64\" Nylon Jacket Cable with 3.5mm Headphone Connectors",
+    "oldAssetId": "image-7b055820784a116f5bf6a61b764e559dc79809f4-1024x1024-png",
+    "newAssetId": "image-c772af24a395385a05f88083f9383bfca204e0f9-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjkZxOh",
+    "name": "Dekoni Audio Ensemble 1/4\" 52\" Braided Cable with 3.5mm Headphone Connectors",
+    "oldAssetId": "image-eaa8c89ac98e426ba1ad53b1c699d05fdfe760da-1024x1024-png",
+    "newAssetId": "image-f0967595ea47471834026aad39eebc95835a98d5-1024x1024-png"
+  },
+  {
+    "productId": "ULy5F1v4tquhHAic3WSREZ",
+    "name": "Meze Audio Mono 3.5mm to 2.5mm Balanced Headphone Cable - 4.9 ft.",
+    "oldAssetId": "image-6dd29455f834818feba18cdc6c5a07d699cec770-1024x1024-png",
+    "newAssetId": "image-3815f77323cb10248973c858a249d7d2fd2f2f4c-1024x1024-png"
+  },
+  {
+    "productId": "ULy5F1v4tquhHAic3WSShK",
+    "name": "Meze Audio Mono 3.5mm 99 Series Gold Standard Cable - 9.94 ft.",
+    "oldAssetId": "image-021f37c5d21d1bea06f1df5ddb7f56c1404e1e7e-1024x1024-png",
+    "newAssetId": "image-c99b5d426d98c4f6c46ded45d42d4189a02946fb-1024x1024-png"
+  },
+  {
+    "productId": "Y7l1IhzX2fnyiano58H1hn",
+    "name": "Meze Audio Mono 3.5mm to 2.5mm Balanced Headphone Cable - 4.9 ft.",
+    "oldAssetId": "image-d1f402c291d3984538055699c42682e1fb69dcd6-1024x1024-png",
+    "newAssetId": "image-55e4390ff6ba9b07d816ce39e41868c9393caf45-1024x1024-png"
+  },
+  {
+    "productId": "Y7l1IhzX2fnyiano58H5OJ",
+    "name": "Meze Audio Mono 3.5mm to 4.4mm Balanced Silver-Plated Cable - 4.2 ft.",
+    "oldAssetId": "image-411df82def444d7997e33839537e8767c9d86283-1024x1024-png",
+    "newAssetId": "image-1edcf46c23417d8a016e9678168136e1059579db-1024x1024-png"
+  },
+  {
+    "productId": "moXlkADK7m1DHgGwWxMkkd",
+    "name": "Moondrop Free DSP USB-C IEM Cable",
+    "oldAssetId": "image-43bf91c78447c49c2b88606bd7e966fa4cc6802f-1024x1024-png",
+    "newAssetId": "image-1956d81e40bbe4a36b8903519ae02e1ef4ca569a-1024x1024-png"
+  },
+  {
+    "productId": "moXlkADK7m1DHgGwWxMmzS",
+    "name": "Meze Audio Copper PCUHD 4-Pin Mini-XLR Replacement Cable",
+    "oldAssetId": "image-f78821acdf6c0c49a67d87571c523c13fba7e39c-1024x1024-png",
+    "newAssetId": "image-6cda62744de690e607e3f4dc262e76b95de5cb91-1024x1024-png"
+  },
+  {
+    "productId": "0IQ2UjkdXJma4iOcjodsEt",
+    "name": "Dekoni Audio Headphone Cleaning Kit with Cleaning Spray and Cloth",
+    "oldAssetId": "image-dd0a165d4ca16cf190de869be674eb77ac571773-1024x1024-png",
+    "newAssetId": "image-44493f05585b54844ea1ff5a1034357898ada15d-1024x1024-png"
+  },
+  {
+    "productId": "GPjMdcfFWZVrKyR2PB4Lju",
+    "name": "Earbud Cleaning Kit",
+    "oldAssetId": "image-2bcb8bc3de31c739fa903e30e676917ed25385ad-1024x1024-png",
+    "newAssetId": "image-549e963357171fbdd8f4c2f2f84d3daba63c62db-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnGiczn",
+    "name": "Earpiece moisture wicks",
+    "oldAssetId": "image-121a2ac3cc02f1e3c767898cb322320117eb2662-1024x1024-png",
+    "newAssetId": "image-44ed63321fde6dd9527a231c48ba9ecb92c9319e-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnGr5kn",
+    "name": "Microfiber Cleaning Cloth 3-Pack",
+    "oldAssetId": "image-35cb3d2fe335d8db5ed41f0a39d96659c6013329-1024x1024-png",
+    "newAssetId": "image-0e2b3b1cb1b3df446c6e018608406e47876c83fd-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnGr6Ft",
+    "name": "IEM Cleaning Tool 5-Pack",
+    "oldAssetId": "image-22112d1cf6490dfd944d23e43190b553dda59607-1024x1024-png",
+    "newAssetId": "image-7c8c169de4c55e421adcfb50735d3f43dcc207a8-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnGr7Rk",
+    "name": "Steel Needle",
+    "oldAssetId": "image-6775464aba94662a4fb81a97989e57dfcbb17ae5-1024x1024-png",
+    "newAssetId": "image-321d546b55fb17292fa6e0cd6526caea426127a7-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnGr80j",
+    "name": "Large Dehumidifier",
+    "oldAssetId": "image-30ebe1ecd111b54ecc92ed597a994f0597db74ea-1024x1024-png",
+    "newAssetId": "image-b986fa5d7a0554435305411fca5b65a389959cb6-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnGr9GT",
+    "name": "VAC Pro Needle Kit",
+    "oldAssetId": "image-3899c9d8d43597d3c9807b98c63e83ecf5891d34-1024x1024-png",
+    "newAssetId": "image-1576f0e879814ee429f12b69d60c5408b16cabc9-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnGrApe",
+    "name": "VAC Pro Filter and O-Ring Kit",
+    "oldAssetId": "image-231f28020d86bdbd331b758c4993b889c534dc49-1024x1024-png",
+    "newAssetId": "image-973355b49edd863b9792b073537c1e205e928a78-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIB6P7bo",
+    "name": "Audio wipes - small",
+    "oldAssetId": "image-3a16f399ec0f74274605c960ee9724f20bb8b5f7-1024x1024-png",
+    "newAssetId": "image-29988b8a52da6f614caae06c4e9d6bea194f9e87-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIB6P8QC",
+    "name": "Jodi-Vac (Pro) IEM vacuum",
+    "oldAssetId": "image-90fe4a2448a365083b05c6e07c6692e6017c85e0-1024x1024-png",
+    "newAssetId": "image-d9c60a23cbd824ea17bc3a831a6685c76da2cb68-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIB6P9CI",
+    "name": "Earpiece Soft Wrap by Comply",
+    "oldAssetId": "image-e544c7517d81c5e3d2513afefcd5026411f4e4d7-1024x1024-png",
+    "newAssetId": "image-bfc82c0dbb40155b6c7d7834c6b449e271acaaa3-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIB6UFNA",
+    "name": "Plastic Needle",
+    "oldAssetId": "image-c238a0c72fb4e93a51815cb4861e94a8c6c27e0e-1024x1024-png",
+    "newAssetId": "image-a8ec7c6e8071d673e4eea34c7135bf574b4e5f67-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjbDXfF",
+    "name": "Earpiece Cleaning Tool",
+    "oldAssetId": "image-c8e958c161e54c1304ae071a3c6b0b67c045a4e9-1024x1024-png",
+    "newAssetId": "image-6993d7aaaa6ac2856d9fffa2c84306ed41a25541-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjbDai1",
+    "name": "Dry-Aid desiccant",
+    "oldAssetId": "image-6ee1f4863400be8ee448210e1c90f239f69daecd-1024x1024-png",
+    "newAssetId": "image-0a02617f0f21ab37919dfb0de1e30ade3cfb83b9-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjbDc7f",
+    "name": "Jodi-Vac (Consumer) IEM vacuum",
+    "oldAssetId": "image-f758ef6f9a9ab25e49893d1829cb2542b7b9976a-1024x1024-png",
+    "newAssetId": "image-41804b239784156b15082c39db684e4b5f1f4fbd-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjbKjAx",
+    "name": "Small Dehumidifier 3-Pack",
+    "oldAssetId": "image-0404eae18ed62db4ceb1724d4ebfe07cd7d1fd9f-1024x1024-png",
+    "newAssetId": "image-4041e5f0eafd242195fd51788e4a0cef7f0d47bf-1024x1024-png"
+  },
+  {
+    "productId": "fisKNZUL2oYuqkoQMV1aTj",
+    "name": "Premium Headphone & Earbud Cleaning Wipes – Anti-Static & Alcohol-Free",
+    "oldAssetId": "image-9065fb454de6389329efc7e45da2d780538ae33a-1024x1024-png",
+    "newAssetId": "image-2d9dacdfb4977072d7294c1f2bf6d2281d2d88dd-1024x1024-png"
+  },
+  {
+    "productId": "0IQ2UjkdXJma4iOcjobwvF",
+    "name": "Ear Pads for Audeze LCD Series Headphones - Fits variants of LCD-2, LCD-3, LCD-4, LCD-X",
+    "oldAssetId": "image-1aa2e4673f7ee6b1b4506d8dfc4ede2b386c51ce-1024x1024-png",
+    "newAssetId": "image-8cee6408b71c1b2115e9ca630c0674fdce6d7f81-1024x1024-png"
+  },
+  {
+    "productId": "0IQ2UjkdXJma4iOcjocCJs",
+    "name": "Replacement Earpads for Focal Headphones - Stellia, Radiante, Utopia, Clear, ClearMG, Celestee",
+    "oldAssetId": "image-2ebca7c6ceaaffae8b157e83a7d35a7719b77396-1024x1024-png",
+    "newAssetId": "image-0dbea2bd8af7cffaffebc508779d42ffa5e9f354-1024x1024-png"
+  },
+  {
+    "productId": "3ue0Qq0vhQXjVDzPYWpU1M",
+    "name": "Dekoni Audio Elite Sheepskin Ear Pads for Audeze LCD Series",
+    "oldAssetId": "image-1068db8356e3a98b68867dc8973d19ce6e3cb49e-1024x1024-png",
+    "newAssetId": "image-703d4c236dcada00079ecaa07cf22738421d2417-1024x1024-png"
+  },
+  {
+    "productId": "DZc43yHr6ydfgE7zB3xGkY",
+    "name": "Dekoni Audio EPZ-HD800-ELVL Replacement Ear Pads for Sennheiser HD800 and HD800S Elite Velour",
+    "oldAssetId": "image-ab3dd2262507aa064c94d6e0b523876c33e7c196-1024x1024-png",
+    "newAssetId": "image-20127fbb0ac3eec19d2ca88ffb8357f94638e8a8-1024x1024-png"
+  },
+  {
+    "productId": "DZc43yHr6ydfgE7zB3xQZo",
+    "name": "Apos x Community Rock Lobster IEMs",
+    "oldAssetId": "image-d4a57f33b0c2cfcc5d5b1b3c1288cab949203b85-1024x1024-png",
+    "newAssetId": "image-40fef8a664844bc5b1d7c7450beac5056510e59c-1024x1024-png"
+  },
+  {
+    "productId": "DZc43yHr6ydfgE7zB3xWAf",
+    "name": "ErgoDox 76 \"Hot Dox\" V2 Mechanical Keyboard",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "DZc43yHr6ydfgE7zB3xXvF",
+    "name": "Apos x Bob Ross Panoramic Scenic Keycaps",
+    "oldAssetId": "image-b71c1042b0942229c99689d58b31ccb4fcd44171-1024x1024-png",
+    "newAssetId": "image-12bac0e997d8452294f3ef8cee9ae2ebb575e38a-1024x1024-png"
+  },
+  {
+    "productId": "DZc43yHr6ydfgE7zB3xYMO",
+    "name": "Linus Tech Tips Keycaps",
+    "oldAssetId": "image-2d7e7d33ef7bd62be8064bae87502ac278b4eef7-1024x1024-png",
+    "newAssetId": "image-80c5b1f7a9e1c870143aab642adc3a271dca6192-1024x1024-png"
+  },
+  {
+    "productId": "DZc43yHr6ydfgE7zB3xyL0",
+    "name": "Bose QC35 Replacement Ear Pads",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "DZc43yHr6ydfgE7zB3y0Zk",
+    "name": "Bose QC35 Cooling Gel Earpads - WC FreeZe",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "DZc43yHr6ydfgE7zB3y3Fd",
+    "name": "Earpads For Sony WH900N",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "DZc43yHr6ydfgE7zB3yCRg",
+    "name": "Dekoni Audio EPZ-DT78990-ELVL Replacement Ear Pads for Beyerdynamic DT and AKG K Series Elite Velour",
+    "oldAssetId": "image-a5f61287b51fe13878a6a38653c183fd844fa946-1024x1024-png",
+    "newAssetId": "image-d33702dd1aae1e30717fa757c6774c21c8c62c54-1024x1024-png"
+  },
+  {
+    "productId": "DZc43yHr6ydfgE7zB3yFnn",
+    "name": "Dekoni Audio EPZ-FOCAL-STELLIA Replacement Ear Pads for Focal Headphones",
+    "oldAssetId": "image-1596b2a7f53a67d1f2784206faa8fb04b5616fdb-1024x1024-png",
+    "newAssetId": "image-a50af58533a4d72d270b1c5960a5f8ed63429216-1024x1024-png"
+  },
+  {
+    "productId": "DZc43yHr6ydfgE7zB3ycZL",
+    "name": "Bose QuietComfort Ultra Gen 1 & Gen 2 Cooling Gel Earpads - WC FreeZe QC Ultra",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "DZc43yHr6ydfgE7zB3yg1U",
+    "name": "Beats Studio Earpads - WC FreeZe Cooling Gel",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "DZc43yHr6ydfgE7zB3ylNG",
+    "name": "Replacement Ear Pads For Bose QC3",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "DZc43yHr6ydfgE7zB3yu8A",
+    "name": "ATH M50X Earpads - Velour Hybrid",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "DZc43yHr6ydfgE7zB3yvCW",
+    "name": "Beats Studio Earpads",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "DZc43yHr6ydfgE7zB3yz2n",
+    "name": "Corsair Virtuoso Earpads - WC FreeZe Cooling Gel",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "GPjMdcfFWZVrKyR2PB2gcY",
+    "name": "Apos x Community Druid R2R DAC",
+    "oldAssetId": "image-92f3d20137b13d453d365ab350270b1a8f511846-1024x1024-png",
+    "newAssetId": "image-58445f5e827a16ac475bfa405eb7bbe9c1ba7645-1024x1024-png"
+  },
+  {
+    "productId": "GPjMdcfFWZVrKyR2PB2jje",
+    "name": "SJY Horizon Closed Carbon Planar Magnetic Headphones",
+    "oldAssetId": "image-cb66b08204fbcc7645e9338c2cd669c9b4bb2338-1024x1024-png",
+    "newAssetId": "image-58facee6000ca14749ba819c35e75cfd007d4802-1024x1024-png"
+  },
+  {
+    "productId": "GPjMdcfFWZVrKyR2PB2mFi",
+    "name": "Apos x Z Reviews Magia Cable",
+    "oldAssetId": "image-374d4e67e5ac4cac02bcf09439a1deb7735430bc-1024x1024-png",
+    "newAssetId": "image-1c1999440fc46d572445ab72f38966cb9d93527b-1024x1024-png"
+  },
+  {
+    "productId": "GPjMdcfFWZVrKyR2PB2ogU",
+    "name": "Bob Ross Deskmat",
+    "oldAssetId": "image-d2776592d7bfcf1be796b137e9615529cf8a2661-1024x1024-png",
+    "newAssetId": "image-cc9b367290b3dd1e3ba927e3c6c49d18896d1774-1024x1024-png"
+  },
+  {
+    "productId": "GPjMdcfFWZVrKyR2PB2rna",
+    "name": "RO75 Compact Keyboard",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "GPjMdcfFWZVrKyR2PB3Hrm",
+    "name": "Dekoni Audio EPZ-HD600-HYB Replacement Ear Pads for Sennheiser HD600 Series Headphones Elite Hybrid",
+    "oldAssetId": "image-456a6906a0bc44407e6ae91ef122db0734bcca10-1024x1024-png",
+    "newAssetId": "image-6c081b71343280cb80b72f0f2e45b9fdf1d2c623-1024x1024-png"
+  },
+  {
+    "productId": "GPjMdcfFWZVrKyR2PB3KgM",
+    "name": "Dekoni Audio EPZ-FOCAL-SK Replacement Ear Pads for Focal Headphones Elite Sheepskin",
+    "oldAssetId": "image-66e3a092fe6e0f9acaf684553fbf30ac885392cf-1024x1024-png",
+    "newAssetId": "image-3dc392f4216045c4c3f07ac3c79472c93b30f30f-1024x1024-png"
+  },
+  {
+    "productId": "GPjMdcfFWZVrKyR2PB3PiU",
+    "name": "Bose NC 700 Cooling Gel Earpads - WC FreeZe",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "GPjMdcfFWZVrKyR2PB3TVu",
+    "name": "Arctis Nova Pro Wireless, Nova Elite & Nova Pro Omni Earpads - WC FreeZe Cooling Gel",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "GPjMdcfFWZVrKyR2PB3Z94",
+    "name": "Replacement Earpads For Bose QC15 Headphones",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "GPjMdcfFWZVrKyR2PB3egw",
+    "name": "Replacement earpads for Sony MDR-RF985R & More",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "GPjMdcfFWZVrKyR2PB3qlW",
+    "name": "Upgraded Beats Solo 4 Earpads - WC PadZ Solo 4",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "GPjMdcfFWZVrKyR2PB3sdu",
+    "name": "Astro A50 Gen 4, Gen 5 and A50X Earpads - WC FreeZe Cooling Gel",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "GPjMdcfFWZVrKyR2PB3t70",
+    "name": "WC FreeZe - Hybrid Cooling Gel Infused Gaming Earpads",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "GjMaRFaHMVTsBoyxtAbOBS",
+    "name": "Replacement Earpads for Sennheiser HD600 / HD650 / HD6XX / HD58X / HD660S and More",
+    "oldAssetId": "image-bd5c771e7a439ff06c98b5ea0bc30625f89c53a1-1024x1024-png",
+    "newAssetId": "image-21351a213871f4b4b376091222caa5e5e457b98f-1024x1024-png"
+  },
+  {
+    "productId": "GjMaRFaHMVTsBoyxtAbaVy",
+    "name": "Replacement Earpads for Sennheiser HD800 Series Headphones",
+    "oldAssetId": "image-3f3541c765658a793aa0d14c61bb77d57dcf7016-1024x1024-png",
+    "newAssetId": "image-977676d71e7da22a2b50b14159797409cf933b0c-1024x1024-png"
+  },
+  {
+    "productId": "GjMaRFaHMVTsBoyxtAbg96",
+    "name": "Replacement Earpads for Sennheiser HD598/599, HD620S, PC37X, PC38X Headphones",
+    "oldAssetId": "image-b2ec18d3d22bd38fb198546eb42b872acb5ff68c-1024x1024-png",
+    "newAssetId": "image-a7f09c868ff3b46f91b18dc4dadeb2737f253cb3-1024x1024-png"
+  },
+  {
+    "productId": "GjMaRFaHMVTsBoyxtAbjW4",
+    "name": "Replacement Earpads for Philips Fidelio X2 Headphones",
+    "oldAssetId": "image-24dfc2967ed672f3eb4519a2277b1e5a06174ff6-1024x1024-png",
+    "newAssetId": "image-bcb47c1cf22a38a3e9c883d6a294b1c8ae1156e9-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnQS1rC",
+    "name": "Focal Clear Ear Pads (Pair)",
+    "oldAssetId": "image-29fb5a63a4801853ca35e054590ec559a28dd430-1024x1024-png",
+    "newAssetId": "image-1816df8637b95de459c062683abe2812c5f9535d-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnQS8gt",
+    "name": "Focal Bathys Replacement Ear Pads (Pair)",
+    "oldAssetId": "image-7a625d58a9dd985dc9ebdcac46a6729bb1e1c768-1024x1024-png",
+    "newAssetId": "image-8c5eaa472a931268f8f45a7db5691c72c8da6178-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnQSU8H",
+    "name": "Dekoni Audio Elite Sheepskin Earpads For Hifiman Headphones",
+    "oldAssetId": "image-164c2356538bd3810f88e24806ef501c574ba917-1024x1024-png",
+    "newAssetId": "image-178fd1aa81ee922df04c2964cbfda7a2e49a969d-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnQSWCY",
+    "name": "Dekoni Audio Replacement Earpads for Focal Bathys, Bathys MG, Hadenys, Azurys, Lensys",
+    "oldAssetId": "image-391497a8c85a8c58162eb86a257f36246a03e99f-1024x1024-png",
+    "newAssetId": "image-3650884477e8a12fd389c2c866b0afc6fd10aeb2-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnQSZ1T",
+    "name": "Dekoni Audio Elite Fenestrated Sheepskin Replacement Earpads for Sennheiser HD600 Headphones (Pair)",
+    "oldAssetId": "image-c92e68d2e83b4ded9b00d7416087f72163cbab3d-1024x1024-png",
+    "newAssetId": "image-803817fd8efccaf6bf35623c31d2934addd8ef5b-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnRF4hA",
+    "name": "Replacement Earpads for Fostex TH and Denon AH, and X00 Series Headphones",
+    "oldAssetId": "image-75ada772e9daaf2892b33beba0d3fad89a78651f-1024x1024-png",
+    "newAssetId": "image-c63ce7c67ac1ea62619378000661e64f42c0e81e-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnRFJcI",
+    "name": "Replacement Earpads for Sony WH1000Xm3 Headphones",
+    "oldAssetId": "image-c86b30da68d58c313697eb5cd9c23357cc1f064a-1024x1024-png",
+    "newAssetId": "image-fd2b5cd259a70c35fbc78b888436626818c75038-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnRG143",
+    "name": "Replacement Earpads for Sennheiser Momentum 4 Headphones",
+    "oldAssetId": "image-e3bf99d16acad6a7a4dade90163897e9fc2ae690-1024x1024-png",
+    "newAssetId": "image-5cd91c10cce4091b3c09c6d0bc5afba0595b7a3d-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnRGU5m",
+    "name": "Replacement Earpads for Beyerdynamic DT700/900 Pro X Headphones",
+    "oldAssetId": "image-ca4b11b81c13d8dadf8c47c8685afc133f50fa4c-1024x1024-png",
+    "newAssetId": "image-7e80c406fde633d721a249b3700f96d49ed972d2-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIBCBx40",
+    "name": "Focal Elex Ear Pads (Pair)",
+    "oldAssetId": "image-8d28b80c21e232d310a9ea8044f391e1cb1ff478-1024x1024-png",
+    "newAssetId": "image-6eb76b3489c07528d16d2d5e2d1b4f60522fc866-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIBCC8aa",
+    "name": "Dekoni Audio Elite Sheepskin Ear Pads for Focal",
+    "oldAssetId": "image-9484b92bf00a5372555fe94da24a2a7787ee2d69-1024x1024-png",
+    "newAssetId": "image-848b8ddb2fc211ae8e606aa03cb068fa6209891f-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIBCdwl6",
+    "name": "Replacement Adhesive Rings for Dekoni Audio LCD Series Earpads - One Pair",
+    "oldAssetId": "image-1994a03c0417c3c92b0a44903a497eeef368b258-1024x1024-png",
+    "newAssetId": "image-fa05ea206f32a3804d490d16ff9d45f780fdf450-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIBCeGGO",
+    "name": "Replacement Earpads for Bose Quiet Comfort Noise Cancelling Headphones",
+    "oldAssetId": "image-08fb16590ed55721e9831fa87b301e78285a73d1-1024x1024-png",
+    "newAssetId": "image-f311d8a82da077281ea39202313749d5777353e8-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIBCeJDc",
+    "name": "Earpads for AKG K601, K701, and More",
+    "oldAssetId": "image-e204aaa4ebfd918da2ce344b392a5e40bc0bb713-1024x1024-png",
+    "newAssetId": "image-560ce29fec9e7c9bf80d5ad20ad11a5ad848607a-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIBCeREc",
+    "name": "Replacement Earpads for Sony WH1000Xm5 Headphones",
+    "oldAssetId": "image-7c20a48129718ace51c4787bbf9bfb2e4a0ece4f-1024x1024-png",
+    "newAssetId": "image-b1be2e9788632c0039ec84a636e47066f309379f-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIBCeUBq",
+    "name": "Earpads for Sony WH1000XM4 ANC Headphones",
+    "oldAssetId": "image-d116223fb74eb835d6c2fc39c5ef51c623cfe990-1024x1024-png",
+    "newAssetId": "image-b594b4f09361c93ca04b9ec37e8e3c3d5550ed62-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIBCeaXm",
+    "name": "Replacement Earpads for AKG K371 Headphones",
+    "oldAssetId": "image-d51ac1b09e0d00c1eeaf81a40c9b1fa08bb3c502-1024x1024-png",
+    "newAssetId": "image-55f704faced02a612148076df292a44aedc8f9af-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIBCedwU",
+    "name": "Replacement Earpads for Sony WH1000Xm6 Headphones",
+    "oldAssetId": "image-b036d2593c61f4cb15e1aee5e77919b0c9df9ba7-1024x1024-png",
+    "newAssetId": "image-e92af97e0fa10413e42d7058c29e2c97c2f59259-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIBCejqw",
+    "name": "Replacement Earpads for Audeze Maxwell 2 Gaming Headphone",
+    "oldAssetId": "image-59c0e170d0c203aaf483b37f85f9e83fa1fc2c4d-1024x1024-png",
+    "newAssetId": "image-2ab8500a306b0250ef5a2e3902da757c3f161e6a-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjjl5G7",
+    "name": "Focal Utopia Ear Pad",
+    "oldAssetId": "image-fd8b0e1b22047c867bf8ea489cb4c10028eeeabf-1024x1024-png",
+    "newAssetId": "image-11c87813759fd48afe3b12d9c3f3543c98d23707-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjjlPGd",
+    "name": "Dan Clark Audio AEON 2 Perforated Ear Pads",
+    "oldAssetId": "image-5530222c55132558c85a4323524e371fe36a12a8-1024x1024-png",
+    "newAssetId": "image-d30d3f90c6e0f10c2a44b4c164ae325067f49e70-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjjlRHM",
+    "name": "Meze Audio Empyrean Vegan Leather Ear Pads",
+    "oldAssetId": "image-e328d2798b28f5248ac266a252891efd92b57010-1024x1024-png",
+    "newAssetId": "image-b3b7ca831f5d222aed7ac38be1386807972f7fc0-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjkRXld",
+    "name": "Replacement Earpads for the Fostex T20RP, T40RP, T50RP Series Headphones",
+    "oldAssetId": "image-2c092d02c824fc2986b32c8c66154db66aa756d5-1024x1024-png",
+    "newAssetId": "image-671c80e9e7cadb7018de271f8d9b3cb6447ec2b0-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjkRkNh",
+    "name": "Replacement Earpads for Dan Clark Audio Aeon 2 - Elite Sheepskin",
+    "oldAssetId": "image-a8e8211498b8ac1d334fbf1d8cfed47a74f0b7fe-1024x1024-png",
+    "newAssetId": "image-530fa591431b5425aceeebe743f83465963a243d-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjkS947",
+    "name": "Dekoni Audio Memory Foam Upgrade Ear Pads for Sony Z1R Headphones Elite Sheepskin",
+    "oldAssetId": "image-e4be632b0eea22200dac51d89a09195590e94664-1024x1024-png",
+    "newAssetId": "image-34128d72d00f6e243ad79c39187524e02ce79dde-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjkSCNk",
+    "name": "Replacement Earpads for Audio Technica ATH-AD Series Open Back Audiophile Headphones - Elite Velour",
+    "oldAssetId": "image-aa31f706da9bf7e6109f52ba1a61e7a769257e9a-1024x1024-png",
+    "newAssetId": "image-026ade28a04267ddb73c0c9f2245cae6d171241d-1024x1024-png"
+  },
+  {
+    "productId": "fisKNZUL2oYuqkoQMUyJYb",
+    "name": "Universal Fit 100mm Replacement Earpads (Fits Beyerdynamic, AKG & More)",
+    "oldAssetId": "image-4406082736b1563f9488f08838eec3989daecb92-1024x1024-png",
+    "newAssetId": "image-e75f7baf0d338eef01b0007dd10bfa12ac6b7843-1024x1024-png"
+  },
+  {
+    "productId": "fisKNZUL2oYuqkoQMUyQ9x",
+    "name": "Replacement Earpads for HiFiMan HE Series Headphones and More",
+    "oldAssetId": "image-777d42ec9201f072d51e540d96beabed214cb07c-1024x1024-png",
+    "newAssetId": "image-c2af8448d78b705f7518d1a9530ee4efccfdc170-1024x1024-png"
+  },
+  {
+    "productId": "fisKNZUL2oYuqkoQMUyapt",
+    "name": "Replacement Earpads for HiFiMan Arya",
+    "oldAssetId": "image-deb89afdc7a0fa06db7531a41052dd7b6ce65a62-1024x1024-png",
+    "newAssetId": "image-bcb9c6fad3f646b5367a1f70bb9967532042b5ff-1024x1024-png"
+  },
+  {
+    "productId": "fisKNZUL2oYuqkoQMUz9XB",
+    "name": "Replacement Earpads for Grado Headphones",
+    "oldAssetId": "image-ab235ab71a7978c10044dd877103ff0808eb08d3-1024x1024-png",
+    "newAssetId": "image-2096faa0ca05d93080acc4e496c80acd10bfafb1-1024x1024-png"
+  },
+  {
+    "productId": "fisKNZUL2oYuqkoQMUzDT3",
+    "name": "Replacement Earpads for Audeze Maxwell Gaming Headphone",
+    "oldAssetId": "image-9354c0749b1a3bae670928b04263bfb25f4706fa-1024x1024-png",
+    "newAssetId": "image-5e9966336ed3b025d40b46305c9e335f260d1dd6-1024x1024-png"
+  },
+  {
+    "productId": "h2HZXAdWspjApNB9KwbQYY",
+    "name": "Standard Size Oval Replacement Earpads for Studio Monitor Headphones and Communication Headsets - Audio Technica, Sony, and More",
+    "oldAssetId": "image-a76db578c7cae4c365ea3c0bf79eac3f0ac5258c-1024x1024-png",
+    "newAssetId": "image-cd403c973da26df95ce656e382a61175d63d3dc1-1024x1024-png"
+  },
+  {
+    "productId": "prod-0b357ab1-22a",
+    "name": "Dekoni Audio Choice Leather Earpads for Hifiman Sundara",
+    "oldAssetId": "image-2d6c000ed8f041a4ae1391682cd410c129c68ad2-1024x1024-png",
+    "newAssetId": "image-9fbb5fa1f41a2f8500619b02ae2c41bf3aa99668-1024x1024-png"
+  },
+  {
+    "productId": "prod-4b6fb239-96a",
+    "name": "Focal Clear Mg Replacement Ear Pads",
+    "oldAssetId": "image-2d6c000ed8f041a4ae1391682cd410c129c68ad2-1024x1024-png",
+    "newAssetId": "image-9fbb5fa1f41a2f8500619b02ae2c41bf3aa99668-1024x1024-png"
+  },
+  {
+    "productId": "prod-5d5e5ef2-61e",
+    "name": "Dekoni Audio Elite Fenestrated Sheepskin Pads for Sennheiser HD6XX",
+    "oldAssetId": "image-2d6c000ed8f041a4ae1391682cd410c129c68ad2-1024x1024-png",
+    "newAssetId": "image-9fbb5fa1f41a2f8500619b02ae2c41bf3aa99668-1024x1024-png"
+  },
+  {
+    "productId": "xMEqvkRBbdrlJXyFG8b45F",
+    "name": "Dekoni Audio EPZ-ARYA-FNSK Replacement Ear Pads for HiFiMan Arya Headphones Elite Fenestrated Sheepskin",
+    "oldAssetId": "image-4ede27451d9e42e5683803c9fbd83c83db57c2c9-1024x1024-png",
+    "newAssetId": "image-f1bff03b1eb2f462431a1e2ad9aad4a9cfd47433-1024x1024-png"
+  },
+  {
+    "productId": "xMEqvkRBbdrlJXyFG8b7UD",
+    "name": "Dekoni Audio EPZ-HD600-FNSK Replacement Ear Pads for Sennheiser HD600 Series Headphones Elite Fenestrated Sheepskin",
+    "oldAssetId": "image-b8780142610d22267302b2ae206b3d07d0df1083-1024x1024-png",
+    "newAssetId": "image-bedfc6293a9221ec2cef788ce96a8b416d517e42-1024x1024-png"
+  },
+  {
+    "productId": "xMEqvkRBbdrlJXyFG8bEZj",
+    "name": "Apos x Community Gremlin Tube Amp",
+    "oldAssetId": "image-70b0dc25cc40901a10bb3a9546b19476f1765b3b-1024x1024-png",
+    "newAssetId": "image-71434f94b0e5369d0eff4b4d55f940848a5b1ebd-1024x1024-png"
+  },
+  {
+    "productId": "xMEqvkRBbdrlJXyFG8bJ71",
+    "name": "Apos x Geshelli Merlin AKM Desktop DAC",
+    "oldAssetId": "image-528d83bcef406707747423ffe617515e6961ec0d-1024x1024-png",
+    "newAssetId": "image-ccfce63a53c8f29fc38bf33770a4efcafd0635ab-1024x1024-png"
+  },
+  {
+    "productId": "xMEqvkRBbdrlJXyFG8bwF9",
+    "name": "Focal Utopia Ear Pads",
+    "oldAssetId": "image-9cc0e0a8d38a3a4d3c60462dd907f56f23e34fd4-1024x1024-png",
+    "newAssetId": "image-bbacf90156168337e4a2fa24ff94682710d24f4c-1024x1024-png"
+  },
+  {
+    "productId": "xMEqvkRBbdrlJXyFG8c4h3",
+    "name": "Apos x Audio-Technica Refine Pads",
+    "oldAssetId": "image-c5b525683a0e0667863ecf8a96ede916dea550d5-1024x1024-png",
+    "newAssetId": "image-ca463a7695c2c762cd4ac7110ab8319a21f908a0-1024x1024-png"
+  },
+  {
+    "productId": "xMEqvkRBbdrlJXyFG8cA8b",
+    "name": "Bose QC45 Replacement Ear Pads",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "xMEqvkRBbdrlJXyFG8cCZn",
+    "name": "Beats Solo Earpads",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "xMEqvkRBbdrlJXyFG8cWMv",
+    "name": "Upgraded Corsair Virtuoso Ear pads",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "xMEqvkRBbdrlJXyFG8cdgV",
+    "name": "HyperX Cloud FPS Gaming Earpads - WC StealthZ Cloud",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "xMEqvkRBbdrlJXyFG8cpQL",
+    "name": "Upgraded Sony XM5 Replacement Ear Pads",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "xMEqvkRBbdrlJXyFG8cqYf",
+    "name": "ATH M50X Earpads",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "xMEqvkRBbdrlJXyFG8cxoj",
+    "name": "Ear Pads For Sony WH1000XM3 Over-Ear Headphones",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "0IQ2UjkdXJma4iOcjodDq5",
+    "name": "Memory Foam Isolation Earphone Tips Black 4.9mm Mercury",
+    "oldAssetId": "image-e0a1e5030ae05a42ebc9bbdb8eed0f5ab741282c-1024x1024-png",
+    "newAssetId": "image-0212ce1f1f03b67f5ac4c55ee7e8234b41e2bcee-1024x1024-png"
+  },
+  {
+    "productId": "0IQ2UjkdXJma4iOcjodeA0",
+    "name": "Memory Foam Isolation Earphone Tips Black - Samsung Galaxy Buds2 Pro",
+    "oldAssetId": "image-4fade517045174e48417994d278026bed8e32e04-1024x1024-png",
+    "newAssetId": "image-52f1f954d9ef6330506902a289d7f6bfa376fd02-1024x1024-png"
+  },
+  {
+    "productId": "DZc43yHr6ydfgE7zB3zLuN",
+    "name": "Dekoni Audio ETZ-MERCURY Premium Memory Foam Isolation Earphone Tips Mercury 4.9mm",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "DZc43yHr6ydfgE7zB3zNex",
+    "name": "Dekoni Audio ETZ-TWS Premium Memory Foam Isolation Earphone Tips True Wireless",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "FfAIr0MG25AzkX2gQHNAYN",
+    "name": "Memory Foam Isolation Earphone Tips Black - Gemini 3mm",
+    "oldAssetId": "image-a5bbd89753d1c13b79fb60dfad66a24d8ee5a950-1024x1024-png",
+    "newAssetId": "image-0978e008ee58e4e85c73e8050ab841752c3cbfd9-1024x1024-png"
+  },
+  {
+    "productId": "GPjMdcfFWZVrKyR2PB494I",
+    "name": "Find Tips for your Device",
+    "oldAssetId": "image-d850d9bcf1ef5cbba6657256d4ba68001fd0e90a-1024x1024-png",
+    "newAssetId": "image-a03afe28c38f760c2c4450fa43d2614007699d78-1024x1024-png"
+  },
+  {
+    "productId": "GPjMdcfFWZVrKyR2PB4Jgw",
+    "name": "Galaxy Buds Pro 3 & 4 Memory Foam Ear Tips - WC TipZ Galaxy",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "GjMaRFaHMVTsBoyxtAc2eL",
+    "name": "Memory Foam Earphone Tips for the Apple Airpods Pro 3",
+    "oldAssetId": "image-c5360f4eace2b10988cb14a4deb2fcd4afa9f5b5-1024x1024-png",
+    "newAssetId": "image-059f4f2d495a6e275c92f93777a0e7660aca89da-1024x1024-png"
+  },
+  {
+    "productId": "GjMaRFaHMVTsBoyxtAc5GA",
+    "name": "Premium Memory Foam Isolation Earphone Tips Black - True Wireless",
+    "oldAssetId": "image-7aacceac23f1afb6fc982be904cd62c5de0196e0-1024x1024-png",
+    "newAssetId": "image-48e769565e40c9856b6989bcafcc1727bcf01303-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnGS7NA",
+    "name": "Campfire Audio Flight | Curated Eartip Pack",
+    "oldAssetId": "image-d07675110e5a7ad7a989f19f4c21ad336d5fc032-1024x1024-png",
+    "newAssetId": "image-fefe22835f103dec439e262035d2efbf6fe596ab-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnGSBlG",
+    "name": "Campfire Audio Marshmallows Isolating Foam Eartips | Replacement Eartips",
+    "oldAssetId": "image-18562e80e716072b6969e851dad0e67d1e97f3ad-1024x1024-png",
+    "newAssetId": "image-88f2cd9cd8af8a58a8a42ba3c2069ab10d53fd8f-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnGSzbV",
+    "name": "Eletech Baroque TWS | Luxury HiFi Eartips for TWS",
+    "oldAssetId": "image-f232b73e5aeca07656d9a93df8ca8b68ddba2288-1024x1024-png",
+    "newAssetId": "image-b55277fdb59a410403bade7f88e8805290e50a31-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnGT3k3",
+    "name": "Eletech Baroque | Luxury HiFi Eartips for IEMs",
+    "oldAssetId": "image-39aa7fea995c68069b447f428a547dcc81b7abda-1024x1024-png",
+    "newAssetId": "image-3b6ff2296a2a5baf13a83b851f5c82f758292508-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnGT5JE",
+    "name": "Final Audio FUSION-G | Triple Hybrid Structure Ear Tips",
+    "oldAssetId": "image-0e84b38f803059d2ade1056ec05e25ff00ad6991-1024x1024-png",
+    "newAssetId": "image-8d3f7e5f31d9fdbbcc69e36113bd26dac2d15ae6-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnGTPsC",
+    "name": "SpinFit CP155 | Premium Eartips (2 Pairs)",
+    "oldAssetId": "image-baee70940f4edd4cb3e722be3b12f291f8352639-1024x1024-png",
+    "newAssetId": "image-221c2996ba0e8f637ac8146ec171e50c33023ef7-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnGTr95",
+    "name": "SpinFit CP800 | Premium Eartips (2 Pairs)",
+    "oldAssetId": "image-5e85a42ef3472a5f066483fc9fe9ab569c335f2a-1024x1024-png",
+    "newAssetId": "image-be16f71720b1ffb431f3e6461b69d467379ed690-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnQSjcO",
+    "name": "Dekoni Audio The Mercury Premium Memory Foam Isolation Earphone Tips, Black, 4.9mm, 3-Pack",
+    "oldAssetId": "image-02b44d1ffc606fcb8eea01673e2002a79d9261a2-1024x1024-png",
+    "newAssetId": "image-39132b1fab0c896787a8acee95b0f97238cbc0c0-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIB6Fxyi",
+    "name": "Campfire Audio Silicone Eartips | Replacement Eartips",
+    "oldAssetId": "image-a8713fb04d73664e6155574623b2a074e1af73c5-1024x1024-png",
+    "newAssetId": "image-9d72d65daac18b68e5da2b795e39fc582bb56190-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIB6GKjY",
+    "name": "Eletech Baroque AirPods Pro | Luxury HiFi Eartips for IEMs",
+    "oldAssetId": "image-a23cd44ab2ce43a24065dae3e94337aa876a0234-1024x1024-png",
+    "newAssetId": "image-6f685b95a7247e11cdf1c29b24dfc127e1860fd0-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIB6Gc3i",
+    "name": "SpinFit AuraFine | Premium Silicone Eartips for AirPods Pro 3",
+    "oldAssetId": "image-b49016cf3a0df0821e9399ddac2b9f23efefdddd-1024x1024-png",
+    "newAssetId": "image-c55d4176e6232025c40422fb1639215a96fc4e00-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIB6GkTu",
+    "name": "SpinFit CP145 | Premium Eartips (2 Pairs)",
+    "oldAssetId": "image-457092d442090a416a1134fb8531f6df53a65b1b-1024x1024-png",
+    "newAssetId": "image-6696eb21ed4b8b8cc8226350cd81bdb5fe90d25b-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIB6GtX2",
+    "name": "SpinFit OMNI | Premium Universal Silicone Eartips",
+    "oldAssetId": "image-b1b573128620f2b20de28f7b792540f4c0bb3572-1024x1024-png",
+    "newAssetId": "image-9a3af8303c4a961095aafa0332e09d43762e8947-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIB6GvLG",
+    "name": "SpinFit SuperFine | Premium Silicone Eartips for AirPods Pro",
+    "oldAssetId": "image-6ed62eada0de7871681de8025c351405549fada8-1024x1024-png",
+    "newAssetId": "image-d4718e81b72dac4a5c5ad27fbb9e9a9799239150-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIB6Gyt8",
+    "name": "SpinFit W1 | Premium Silicone Eartips",
+    "oldAssetId": "image-309fbf6eb60fc54348abe192b7a3316a7951c518-1024x1024-png",
+    "newAssetId": "image-906b133ace798ed5a1f75c2a63d03b7b12052912-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIB8e38u",
+    "name": "Comply T100 Foam Ear Tips",
+    "oldAssetId": "image-a587302720ed014eecb76257fb9266a4915cbeba-1024x1024-png",
+    "newAssetId": "image-e44f703eaa43a8e3d700ceeec87cad8a96c799b0-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjb0hIg",
+    "name": "Final Audio Type E | Silicone Ear Tips",
+    "oldAssetId": "image-05b4778989d59c204e24ec9c0a811b4ce313c04d-1024x1024-png",
+    "newAssetId": "image-89acbfa51363592a88188a7de150dc7d05cbc1d2-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjb0rnH",
+    "name": "SpinFit CP1025 | Premium Eartips for TWS/AirPods",
+    "oldAssetId": "image-0157414aaabcc524653b22c60ba716807c26b52e-1024x1024-png",
+    "newAssetId": "image-d801e481d1b552ace8c146885e77302d8d9c9608-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjb0zLq",
+    "name": "SpinFit CP240 | Premium Double Flange Eartips (1 Pair)",
+    "oldAssetId": "image-7c466156f20faa4bfc7988f0d37660e3d42f56c4-1024x1024-png",
+    "newAssetId": "image-d76d0c3c0d6221709d67c165f486f9b652bfd208-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjb12LF",
+    "name": "SpinFit NEO | Premium Silicone Eartips",
+    "oldAssetId": "image-54dd7c38685f944ad0065987338dbb87a297d043-1024x1024-png",
+    "newAssetId": "image-5853da46ec25a343717fcb2b05b00a926e9352ec-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjb1MSV",
+    "name": "Symbio W Eartips | Hybrid Silcone/Foam Eartips",
+    "oldAssetId": "image-7c67495987dfb926e108614ad455aec3f08ff20e-1024x1024-png",
+    "newAssetId": "image-52a71d55982c627c6b6d16f3a126f82673686e85-1024x1024-png"
+  },
+  {
+    "productId": "fisKNZUL2oYuqkoQMUzrVJ",
+    "name": "Memory Foam Earphone Tips for the Apple Airpods Pro & Airpods Pro 2",
+    "oldAssetId": "image-2b89610a410793d366b786d1be4a7ce92f437c82-1024x1024-png",
+    "newAssetId": "image-f2d2714afe14d6e2c9b36abc8db92cbb32b077be-1024x1024-png"
+  },
+  {
+    "productId": "fisKNZUL2oYuqkoQMV1Bkp",
+    "name": "Memory Foam IEM Tips Black - Samsung Galaxy Buds Pro",
+    "oldAssetId": "image-6b2a32eb899d5d8e0e4a2dcf46ea3fe5a58bdb06-1024x1024-png",
+    "newAssetId": "image-e89b07d4df7730ada2db7c13b2c7b2b5874a7fca-1024x1024-png"
+  },
+  {
+    "productId": "hrPfqTtkIIoluttvs2PJ0R",
+    "name": "Eletech Baroque Stage | Luxury HiFi Eartips for IEMs",
+    "oldAssetId": "image-bdebb91c0f904e7d83657360b071b8e4e460748e-1024x1024-png",
+    "newAssetId": "image-4c4221b335670c3dd520333950a5ba5b7e170dad-1024x1024-png"
+  },
+  {
+    "productId": "xMEqvkRBbdrlJXyFG8djHj",
+    "name": "Dekoni Audio ETZ-GEMINI Premium Memory Foam Isolation Earphone Tips Gemini 3mm",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "GqkAHteRmu9rQ6VLnVwePp",
+    "name": "SVS SoundPath RCA Audio Interconnect Cable for Subwoofers - 16.4 ft. (5m)",
+    "oldAssetId": "image-5ebfd434e191d7a3920935f76c26ce0064ebbbd7-1024x1024-png",
+    "newAssetId": "image-e15f03c006f1612dce992be2062455e3817e3263-1024x1024-png"
+  },
+  {
+    "productId": "GqkAHteRmu9rQ6VLnVx2E1",
+    "name": "AudioQuest Sydney RCA-to-RCA Interconnect Cable - 3 meters",
+    "oldAssetId": "image-385bece5278296e250673d210e26d76fdab852e5-1024x1024-png",
+    "newAssetId": "image-46d899c83eeaeca8db9f9bed6ce68f0ea360d8ad-1024x1024-png"
+  },
+  {
+    "productId": "GqkAHteRmu9rQ6VLnVxWsP",
+    "name": "AudioQuest Yosemite Audio Interconnect RCA to RCA - 3.28\" (1m)",
+    "oldAssetId": "image-149a54f3e019fd76321e880b0593f52b007eadb9-1024x1024-png",
+    "newAssetId": "image-64754d846c5833045536e0d3275d5506865ef4a9-1024x1024-png"
+  },
+  {
+    "productId": "GqkAHteRmu9rQ6VLnVxhPf",
+    "name": "AudioQuest Tower RCA Male to RCA Male Cable (3.28 ft.)",
+    "oldAssetId": "image-a28af90c3cd20907b923e1dad2529fdc5585b53e-1024x1024-png",
+    "newAssetId": "image-804139648c905cc2fe4f3ac3a22eea11fbf43766-1024x1024-png"
+  },
+  {
+    "productId": "GqkAHteRmu9rQ6VLnVyNtu",
+    "name": "AudioQuest Red River XLR to XLR Analog Audio Interconnect Cable - 9.84' (3m) - Single-Pack",
+    "oldAssetId": "image-7bba51610d7b1255f24b5165cf8b6fcf4cd52369-1024x1024-png",
+    "newAssetId": "image-0612d6c7889ca3735aaa5f96d01b38f0133de106-1024x1024-png"
+  },
+  {
+    "productId": "GqkAHteRmu9rQ6VLnVyiuB",
+    "name": "AudioQuest Red River XLR to XLR Analog Audio Interconnect Cables - 9.84' (3m) - 2-Pack",
+    "oldAssetId": "image-7bba51610d7b1255f24b5165cf8b6fcf4cd52369-1024x1024-png",
+    "newAssetId": "image-0612d6c7889ca3735aaa5f96d01b38f0133de106-1024x1024-png"
+  },
+  {
+    "productId": "GqkAHteRmu9rQ6VLnVzWzH",
+    "name": "AudioQuest Chicago RCA Male to RCA Male Cable - 1.64 ft. (0.5m) - 2-Pack",
+    "oldAssetId": "image-d753361602890bc60785312e8fae9adece719cd6-1024x1024-png",
+    "newAssetId": "image-078ec65acf17e2f0d5db46cda5c224c168b62b00-1024x1024-png"
+  },
+  {
+    "productId": "GqkAHteRmu9rQ6VLnW1fa9",
+    "name": "Bose S1 Pro+ Portable Bluetooth Wireless PA System",
+    "oldAssetId": "image-23cb8a0fb2d512b52f773267bcea0251208a60d1-1024x1024-png",
+    "newAssetId": "image-07d95a7422ac7da2bb97b4014d249a807794186e-1024x1024-png"
+  },
+  {
+    "productId": "GqkAHteRmu9rQ6VLnW2Roi",
+    "name": "SVS SoundPath RCA Audio Interconnect Cable for Subwoofers - 3.28 ft. (1m)",
+    "oldAssetId": "image-5ebfd434e191d7a3920935f76c26ce0064ebbbd7-1024x1024-png",
+    "newAssetId": "image-e15f03c006f1612dce992be2062455e3817e3263-1024x1024-png"
+  },
+  {
+    "productId": "GqkAHteRmu9rQ6VLnW2nMv",
+    "name": "SVS SoundPath RCA Audio Interconnect Cable for Subwoofers - 39.36 ft. (12m)",
+    "oldAssetId": "image-5ebfd434e191d7a3920935f76c26ce0064ebbbd7-1024x1024-png",
+    "newAssetId": "image-e15f03c006f1612dce992be2062455e3817e3263-1024x1024-png"
+  },
+  {
+    "productId": "GqkAHteRmu9rQ6VLnW35yj",
+    "name": "AudioQuest Greyhound RCA Low-Frequency Subwoofer Audio Interconnect - Each (39.37 ft.)",
+    "oldAssetId": "image-428b6e9f7edaf982df52d5d5ee1b112e9abe0659-1024x1024-png",
+    "newAssetId": "image-0ddededba1fe280374654e3c9667de23fd51077a-1024x1024-png"
+  },
+  {
+    "productId": "Y7l1IhzX2fnyiano58Giz2",
+    "name": "JL Audio 2-Channel Core RCA Male to RCA Male Cables - 6 ft. (1.82m) - 2-Pack",
+    "oldAssetId": "image-c26c34ef8a65db094e3fcd460944f63216021827-1024x1024-png",
+    "newAssetId": "image-80d717442752ddc78dacee66d6dfda69062d5c2c-1024x1024-png"
+  },
+  {
+    "productId": "apzyFbFDTajEZntmxsotCD",
+    "name": "AudioQuest Chicago RCA Analog Audio Interconnect Cable - Pair (6.56 ft.)",
+    "oldAssetId": "image-a1287ab31d2457cb04b26fd20409c2ab1299b9b2-1024x1024-png",
+    "newAssetId": "image-7689a90df4d5a34cc5995fb15992e33e77d269d6-1024x1024-png"
+  },
+  {
+    "productId": "apzyFbFDTajEZntmxspOvR",
+    "name": "AudioQuest Evergreen 1m (3.28 ft) RCA Male to RCA Male Cable - Pair",
+    "oldAssetId": "image-b9e13d966154f69d311981647da2801632bef590-1024x1024-png",
+    "newAssetId": "image-c8dffb052031d1146609e4666c987218243897ed-1024x1024-png"
+  },
+  {
+    "productId": "apzyFbFDTajEZntmxspjB2",
+    "name": "AudioQuest Red River XLR to XLR Analog Audio Interconnect Cable - 1.64' (0.5m) - 2-Pack",
+    "oldAssetId": "image-7bba51610d7b1255f24b5165cf8b6fcf4cd52369-1024x1024-png",
+    "newAssetId": "image-0612d6c7889ca3735aaa5f96d01b38f0133de106-1024x1024-png"
+  },
+  {
+    "productId": "apzyFbFDTajEZntmxspxTm",
+    "name": "AudioQuest Red River XLR to XLR Analog Audio Interconnect Cables - 2.46' (0.75m) - 2-Pack",
+    "oldAssetId": "image-7bba51610d7b1255f24b5165cf8b6fcf4cd52369-1024x1024-png",
+    "newAssetId": "image-0612d6c7889ca3735aaa5f96d01b38f0133de106-1024x1024-png"
+  },
+  {
+    "productId": "apzyFbFDTajEZntmxsqSfT",
+    "name": "AudioQuest Chicago RCA Analog Audio Interconnect Cable - Pair (3.28 ft.)",
+    "oldAssetId": "image-a1287ab31d2457cb04b26fd20409c2ab1299b9b2-1024x1024-png",
+    "newAssetId": "image-7689a90df4d5a34cc5995fb15992e33e77d269d6-1024x1024-png"
+  },
+  {
+    "productId": "apzyFbFDTajEZntmxsqhzY",
+    "name": "AudioQuest Chicago RCA Male to RCA Male Cable - Pair (4.92 ft.)",
+    "oldAssetId": "image-dba7e7f13ec039950a53e337f823d2ed6b2d468b-1024x1024-png",
+    "newAssetId": "image-f5ff1b5293dd958f72edea29432c421926585233-1024x1024-png"
+  },
+  {
+    "productId": "apzyFbFDTajEZntmxssHP5",
+    "name": "Polk Audio RC85i 2 Way In Wall Speakers - 4 Pack (White)",
+    "oldAssetId": "image-a7b5dabd04d890c7664113fe69bbec35c7034a8d-1024x1024-png",
+    "newAssetId": "image-92305696c1e466b20f2508cfd0f36b90f400df15-1024x1024-png"
+  },
+  {
+    "productId": "apzyFbFDTajEZntmxssRcT",
+    "name": "Yamaha NS-IC800 140 Watt 8 Inch 2 Way In Ceiling Speakers - Pair (White)",
+    "oldAssetId": "image-97b644ca40aaa9ba6e8a6523339eca1c5a95daf4-1024x1024-png",
+    "newAssetId": "image-41d2cac080e67567dc4da11e98c6af636de0e9c2-1024x1024-png"
+  },
+  {
+    "productId": "apzyFbFDTajEZntmxstdpq",
+    "name": "SVS SoundPath RCA Audio Interconnect Cable for Subwoofers - 49.2 ft. (15m)",
+    "oldAssetId": "image-5ebfd434e191d7a3920935f76c26ce0064ebbbd7-1024x1024-png",
+    "newAssetId": "image-e15f03c006f1612dce992be2062455e3817e3263-1024x1024-png"
+  },
+  {
+    "productId": "apzyFbFDTajEZntmxsuJqB",
+    "name": "SVS SoundPath RCA Audio Interconnect Cable for Subwoofers - 6.56 ft. (2m)",
+    "oldAssetId": "image-5ebfd434e191d7a3920935f76c26ce0064ebbbd7-1024x1024-png",
+    "newAssetId": "image-e15f03c006f1612dce992be2062455e3817e3263-1024x1024-png"
+  },
+  {
+    "productId": "mhejwYdgiH5W70wqaK7ngk",
+    "name": "AudioQuest Pearl USB-A to USB-B Cable - 4.92ft. (1.5m)",
+    "oldAssetId": "image-ef48e028f28db7dea83828298b9a5bc4859bd283-1024x1024-png",
+    "newAssetId": "image-1074e9ee4c4f1f6acfe4e76dc359ed611173bb06-1024x1024-png"
+  },
+  {
+    "productId": "x2LkzHeaGqoEz8JhogYAsA",
+    "name": "AudioQuest Black Beauty RCA Interconnect Cable - 4.92' (1.5m)",
+    "oldAssetId": "image-bd43ecfc1c32ab5608b4830c15c049ba45205ffb-1024x1024-png",
+    "newAssetId": "image-546bd3d85a27bd42dd0fb3ed1b41976cfa117082-1024x1024-png"
+  },
+  {
+    "productId": "x2LkzHeaGqoEz8JhogYPz8",
+    "name": "AudioQuest Sydney 2m RCA to RCA Analog Audio Interconnect Cable",
+    "oldAssetId": "image-385bece5278296e250673d210e26d76fdab852e5-1024x1024-png",
+    "newAssetId": "image-46d899c83eeaeca8db9f9bed6ce68f0ea360d8ad-1024x1024-png"
+  },
+  {
+    "productId": "x2LkzHeaGqoEz8JhogZLeA",
+    "name": "AudioQuest Yukon RCA to RCA Cable - Pair (1.64 ft.)",
+    "oldAssetId": "image-1bc4085010f4d5b15ee4eabe77fe16f5156b5c30-1024x1024-png",
+    "newAssetId": "image-74b115558f3027ec209b0d7ad229d63d55c9357e-1024x1024-png"
+  },
+  {
+    "productId": "x2LkzHeaGqoEz8JhogaDCU",
+    "name": "AudioQuest Golden Gate RCA to RCA Analog Interconnect Cable - 0.6 meters",
+    "oldAssetId": "image-d5413cf82267053aa873c7e9a8925161f35a6295-1024x1024-png",
+    "newAssetId": "image-59d5abe0789022f2021026b259ccfaab058d264d-1024x1024-png"
+  },
+  {
+    "productId": "x2LkzHeaGqoEz8JhogaPNW",
+    "name": "AudioQuest Sydney 3.5mm to 3.5mm Analog Audio Interconnect Cable - 4.92ft. (1.5m)",
+    "oldAssetId": "image-415b1b9a2aec929e6eef985de3df060e879760fc-1024x1024-png",
+    "newAssetId": "image-38717fd33fa3fcae78676b0a640c99fa7234e37f-1024x1024-png"
+  },
+  {
+    "productId": "x2LkzHeaGqoEz8JhogaWUi",
+    "name": "AudioQuest Sydney 3.5mm Mini to RCA Audio Cable (1.97 ft.)",
+    "oldAssetId": "image-061fd2cd1d97a4686295ddf91edf7ae53260ecbe-1024x1024-png",
+    "newAssetId": "image-0c10b4162c1a3b97ed88cf7c9bf79aa44fcdd43b-1024x1024-png"
+  },
+  {
+    "productId": "x2LkzHeaGqoEz8Jhogc6j0",
+    "name": "JBL Wireless Two Microphone System with Dual-Channel Receiver",
+    "oldAssetId": "image-91e12cd1fdbba388dcd05230cc4c067a04f296c1-1024x1024-png",
+    "newAssetId": "image-0d4b72475fc4ee012655e0a3cfa1c862985ce3f0-1024x1024-png"
+  },
+  {
+    "productId": "x2LkzHeaGqoEz8Jhogdmti",
+    "name": "McIntosh MQ112 Environmental Equalizer",
+    "oldAssetId": "image-d65d28015df004114d47c9de3915cc92c893a3c6-1024x1024-png",
+    "newAssetId": "image-c6714dfb63459a4e5cc958b9c7788e0234d7f4fc-1024x1024-png"
+  },
+  {
+    "productId": "x2LkzHeaGqoEz8Jhogegs8",
+    "name": "SVS SoundPath RCA Audio Interconnect Cable for Subwoofers - 26.24 ft. (8m)",
+    "oldAssetId": "image-5ebfd434e191d7a3920935f76c26ce0064ebbbd7-1024x1024-png",
+    "newAssetId": "image-e15f03c006f1612dce992be2062455e3817e3263-1024x1024-png"
+  },
+  {
+    "productId": "C0JSb66CHOxy1G14ni5ga1",
+    "name": "Kanto Headphone Stand",
+    "oldAssetId": "image-c63b94b0b4519e91c8a65d8811b222eab6c91084-1024x1024-png",
+    "newAssetId": "image-e6563733b0aac4ab33a81f2e31cd57a378327bc6-1024x1024-png"
+  },
+  {
+    "productId": "DZc43yHr6ydfgE7zB3zTLq",
+    "name": "Silicone Case for Samsung Galaxy Buds3 Pro",
+    "oldAssetId": "image-28ae0c1bd7cfeb3eb0d050151c1af38bb41f522b-1024x1024-png",
+    "newAssetId": "image-38ae1c3533d8ff0725fc5b233a0704215ce8b7b1-1024x1024-png"
+  },
+  {
+    "productId": "GPjMdcfFWZVrKyR2PB5Jys",
+    "name": "Meze Manta Headphone Stand",
+    "oldAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png",
+    "newAssetId": "image-2c516bcf517ab27994476b1732b758ce82d6ef5e-1024x1024-png"
+  },
+  {
+    "productId": "GPjMdcfFWZVrKyR2PB5L30",
+    "name": "Salad Halo Headphone Stand",
+    "oldAssetId": "image-d349149e37b1719729dfd587db00ce457f6234f8-1024x1024-png",
+    "newAssetId": "image-5041b0a5e63046e01633dd008275b4b1095ac0ed-1024x1024-png"
+  },
+  {
+    "productId": "GjMaRFaHMVTsBoyxtAJBKY",
+    "name": "Kanto H3 Universal Desktop Headphone Stand with Adapter Holder",
+    "oldAssetId": "image-bbaff9b79debb45afe28068ef2b9c252b3a1963d-1024x1024-png",
+    "newAssetId": "image-64f8babe9d4d1f889605f8677c1ea96633ed8d4c-1024x1024-png"
+  },
+  {
+    "productId": "GjMaRFaHMVTsBoyxtAJDT4",
+    "name": "Sanus Headphone Stand for Sonos Ace (Black)",
+    "oldAssetId": "image-9b0d23a107e89c0086bb468db1fe0d4212647ec9-1024x1024-png",
+    "newAssetId": "image-c7a81e2d76c21ce58ddda9a2607c6a635ac55cc0-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnGU178",
+    "name": "ddHiFi CZ180 Portable Case | HiFi Storage Case",
+    "oldAssetId": "image-d7d7052678f79107058fead34a534b6bc4bdb8f9-1024x1024-png",
+    "newAssetId": "image-7a3b54784b2fc3718284bde52cfcb0f6896c2959-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnQqrtq",
+    "name": "Astell&Kern A&ultima SP3000T Case | Leather Case",
+    "oldAssetId": "image-c0cb3f390dce71c6e899c0123dc47f8ab97d76e8-1024x1024-png",
+    "newAssetId": "image-e19d85bfe2e7e05cf261963d7cf5f2f1b67f4a97-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnQqu20",
+    "name": "Astell&Kern KANN CUBE | Leather Case",
+    "oldAssetId": "image-dad32e233d77d88334fb75f52dd4c12d216b43c4-1024x1024-png",
+    "newAssetId": "image-e660f46721057361195e91f73b8e66ab773b2953-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnQqv2C",
+    "name": "Astell&Kern PD20 Case | Premium Leather Case",
+    "oldAssetId": "image-1e02f0235e2825fcf0c9a01d9a589c069496e62c-1024x1024-png",
+    "newAssetId": "image-85c50c568b2af054614cf625b7c536d60b53efd1-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnQr68D",
+    "name": "Audma Brioso Case | Black Leather Case for Brioso",
+    "oldAssetId": "image-da3600cf20795c3f51a99dffba82a4bd1fb133c6-1024x1024-png",
+    "newAssetId": "image-a412c268f66242f571182fc48b04e3122f8e3820-1024x1024-png"
+  },
+  {
+    "productId": "MrEMtYwMtrFDGWmRnQrHuz",
+    "name": "Campfire Audio Compact Leather Case | IEM Case",
+    "oldAssetId": "image-9a558bad9545d963bd86838373ceb0aefe2b8695-1024x1024-png",
+    "newAssetId": "image-8372f824c5995ebcb788fba907aece85ffd3e67c-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIB6FFOI",
+    "name": "Dekoni Audio Omega Headphone Stand | Headphone Stand",
+    "oldAssetId": "image-1e04040b3019a7afb2f2582fa907f17fd0db4a4d-1024x1024-png",
+    "newAssetId": "image-082b082506c49c5eebe9fe3bb2ca2c91dd6b996f-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIB6FSgo",
+    "name": "ddHiFi HS270W Wood Headphone Stand | Headphone Stand",
+    "oldAssetId": "image-9c4c3127903b31b0ad0c996fea604256fd3e2d1b-1024x1024-png",
+    "newAssetId": "image-2ddc510edc6e63872bac70c1377b5a851b043d20-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIB6HHQs",
+    "name": "iFi iTraveller | Multipurpose Travel Case for DACs",
+    "oldAssetId": "image-310ed5495cfe6da580adeb860866ef26a0dde41c-1024x1024-png",
+    "newAssetId": "image-41017672a1fb4485dc498aab50ba3a0bd6c2df66-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIBCQ5Rc",
+    "name": "Astell&Kern A&ultima SP3000M Case | Leather Case",
+    "oldAssetId": "image-5fa80ba0a157a16767d9f4e51784ec1e85fe95e9-1024x1024-png",
+    "newAssetId": "image-e7d52db9637b54e1f506e8ed42307c84ba8719bc-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIBCQ9Og",
+    "name": "Astell&Kern Collector's Atelier Case | Leather Storage Box",
+    "oldAssetId": "image-f4ccfdd337b2af03fa1b4302ffcfc2b76ef1f6bb-1024x1024-png",
+    "newAssetId": "image-d449a0ddcaaa9d047358a463aace6273580e1d61-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIBCQJvQ",
+    "name": "Austrian Audio The Composer Travel Case | Hard Case",
+    "oldAssetId": "image-827e05cdb36616b1bab224076f086676356d8bc4-1024x1024-png",
+    "newAssetId": "image-92b05146f85e7aab84900fef71980c6d2a9f09db-1024x1024-png"
+  },
+  {
+    "productId": "PHPYj28HJdPDHAaIBCQgkq",
+    "name": "Cayin N3Ultra Case | Protective Leather DAP Case",
+    "oldAssetId": "image-bdc53b8b02929b7ac3647007ee66093042eb6dfe-1024x1024-png",
+    "newAssetId": "image-32b9e1fbcb6f23fb317b1926cb22ec03491a0436-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjayoLj",
+    "name": "Meze Audio Manta Headphone Stand | Headphone Stand",
+    "oldAssetId": "image-0f909d6a23f8c995de4ccdeeba081f3e3b4608dd-1024x1024-png",
+    "newAssetId": "image-f0d124b67738f2d7a9ec40022515590b854bcb3d-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjb1QJq",
+    "name": "ddHiFi CZ300 Portable Case | Large-Capacity Storage Bag",
+    "oldAssetId": "image-664cde00f2b221f6a9b506045d63cec21f171ca4-1024x1024-png",
+    "newAssetId": "image-4c4ccc26c48591b6cdf7e5f9a773d7e78e957b92-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjgs488",
+    "name": "Meze Audio Manta Headphone Stand",
+    "oldAssetId": "image-9747fa9f1eefd91feef327cf30dc4e194f798653-1024x1024-png",
+    "newAssetId": "image-18f6c2e83180779911482a5527aefc97491ac7fb-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjjlbsh",
+    "name": "Dekoni Audio Savior v2 | Universal Headphone Carrying Case",
+    "oldAssetId": "image-97297a811be9205a9be7027cb2e41870367ccbcf-1024x1024-png",
+    "newAssetId": "image-aace1484356691e1d9c84c25238fd310d3fdad39-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjk66Sq",
+    "name": "Astell&Kern A&norma SR35 Case | Protective Case",
+    "oldAssetId": "image-831e7ee3c7f2652aba8cca3c0f5fc3117e0ac7dd-1024x1024-png",
+    "newAssetId": "image-39e1a6db964a05fdaaf65ca369ec313ad1b05d07-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjk6Pve",
+    "name": "Astell&Kern SP4000T Case | Premium Leather Case",
+    "oldAssetId": "image-1c181255f6a13801f07d9fe8cbd6b5b2b9490d95-1024x1024-png",
+    "newAssetId": "image-79451a42526f55ed7abccce9e1a1b1942f479656-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjk6mXy",
+    "name": "Campfire Audio IEM Case | IEM Case",
+    "oldAssetId": "image-6a0ab2ee6c19c8698b0924d3aef625b0fdc3b2ed-1024x1024-png",
+    "newAssetId": "image-50d63fb58b0e3b12e12c1a0a510f06d7d062b0c1-1024x1024-png"
+  },
+  {
+    "productId": "Pn6oyV4Ks5AcNbecjk6xTX",
+    "name": "Cayin CP6 Case | Leather Case for CP6",
+    "oldAssetId": "image-934d3cc9a0a66ff09aeb0e004818409e9766d99f-1024x1024-png",
+    "newAssetId": "image-def78dc1dd33264058caa2c2af2409fa1389bd80-1024x1024-png"
+  },
+  {
+    "productId": "ULy5F1v4tquhHAic3WFNzN",
+    "name": "AudioQuest Perch Headphone Stand",
+    "oldAssetId": "image-17593c8448ef67c08038caa678f31801f92b23dc-1024x1024-png",
+    "newAssetId": "image-811620556f077dfffe6f7a8a8aac900422ff2eb5-1024x1024-png"
+  },
+  {
+    "productId": "Y7l1IhzX2fnyiano57b1dx",
+    "name": "Ruark Audio TV Mount for R810 High Fidelity Radiogram",
+    "oldAssetId": "image-3f8b7d4e717b972d2131157e9b3a1c9dfb79826e-1024x1024-png",
+    "newAssetId": "image-41c5319aadeb87a2ad9b583ef1be43ec561e70d1-1024x1024-png"
+  },
+  {
+    "productId": "fisKNZUL2oYuqkoQMTzLCp",
+    "name": "Sanus Headphone Stand for Sonos Ace (White)",
+    "oldAssetId": "image-99005d7766e708cd699918dd3453d3842e90ecaf-1024x1024-png",
+    "newAssetId": "image-d46c84b9bf8e1217e42ab7b3def649f7a5e532c8-1024x1024-png"
+  },
+  {
+    "productId": "fisKNZUL2oYuqkoQMV1sFV",
+    "name": "Dekoni Audio Headphone Savior - Universal Headphone Carrying Case",
+    "oldAssetId": "image-41c7013494fda215e734d000586e17664759e173-1024x1024-png",
+    "newAssetId": "image-9cecd6da6157e8a76cac51950feffafeed005d17-1024x1024-png"
+  },
+  {
+    "productId": "fisKNZUL2oYuqkoQMV23hL",
+    "name": "Dekoni Audio x SKB Headphone Hero Heavy Duty Travel Case",
+    "oldAssetId": "image-6702fe24490f75150a6689ac94829eb5f1443150-1024x1024-png",
+    "newAssetId": "image-76c60d993f960fe5cfbe908b3ade660cc81cfc57-1024x1024-png"
+  },
+  {
+    "productId": "moXlkADK7m1DHgGwWxMiAf",
+    "name": "Focal Headphone Stand",
+    "oldAssetId": "image-dc9942390bea00713b0b3cccc2a763f5645b870c-1024x1024-png",
+    "newAssetId": "image-04a1f2899494cdfc4e0c64a4ee1cdb19bb65fb96-1024x1024-png"
+  },
+  {
+    "productId": "prod-4717de40-092",
+    "name": "Dekoni Audio Protective Headphone Travel Pouch",
+    "oldAssetId": "image-2d6c000ed8f041a4ae1391682cd410c129c68ad2-1024x1024-png",
+    "newAssetId": "image-9fbb5fa1f41a2f8500619b02ae2c41bf3aa99668-1024x1024-png"
+  },
+  {
+    "productId": "prod-8eb74938-75b",
+    "name": "Focal Mahogany Headphone Stand",
+    "oldAssetId": "image-dc9942390bea00713b0b3cccc2a763f5645b870c-1024x1024-png",
+    "newAssetId": "image-04a1f2899494cdfc4e0c64a4ee1cdb19bb65fb96-1024x1024-png"
+  },
+  {
+    "productId": "prod-b276cb99-682",
+    "name": "Audio-Technica Aluminum Headphone Stand",
+    "oldAssetId": "image-dc9942390bea00713b0b3cccc2a763f5645b870c-1024x1024-png",
+    "newAssetId": "image-04a1f2899494cdfc4e0c64a4ee1cdb19bb65fb96-1024x1024-png"
+  },
+  {
+    "productId": "xMEqvkRBbdrlJXyFG8duy3",
+    "name": "Apos x SATCHELZ Leather Clamshell IEM Carry Case",
+    "oldAssetId": "image-1af58d7a067e963b681e9a2aead7804cb4917865-1024x1024-png",
+    "newAssetId": "image-3f5aed88bf5b8cfd9acbdb9d413cda9841879e13-1024x1024-png"
+  }
+]

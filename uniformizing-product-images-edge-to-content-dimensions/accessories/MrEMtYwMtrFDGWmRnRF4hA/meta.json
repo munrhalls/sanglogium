@@ -1,0 +1,15 @@
+{
+  "_id": "MrEMtYwMtrFDGWmRnRF4hA",
+  "name": "Replacement Earpads for Fostex TH and Denon AH, and X00 Series Headphones",
+  "section": "accessories",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/54914c8defbdd6fe3e8e597fde666906e8c96e2f-1600x1600.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 10.1,
+    "T": 15.8,
+    "R": 10,
+    "B": 15.7
+  },
+  "newAssetId": "image-75ada772e9daaf2892b33beba0d3fad89a78651f-1024x1024-png"
+}

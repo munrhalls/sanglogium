@@ -1,0 +1,15 @@
+{
+  "_id": "MrEMtYwMtrFDGWmRnH5lm0",
+  "name": "Eletech Aristotle | Copper IEM Upgrade Cable",
+  "section": "accessories",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/a8a99eb5f260578fa7dc449c6e467606db1d1ef4-1600x1600.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 30.2,
+    "T": 10.1,
+    "R": 30.2,
+    "B": 10
+  },
+  "newAssetId": "image-cc98d15cab25ddc1ec6508eb584e1c1ed2a24863-1024x1024-png"
+}

@@ -135,17 +135,17 @@ export default function ProductSpotlight3({ spotlightData }: ProductSpotlight3Pr
 
             <div className="flex flex-col relative z-10">
 
-              <span className="text-accent-500 uppercase text-sm tracking-widest mb-1 section-header-anchor">{product.brand.name}</span>
+              <span className="type-overline mb-1 section-header-anchor">{product.brand.name}</span>
 
               <div className="flex flex-col gap-2 lg-touch:gap-1">
 
-                <h2 className="type-section-hed lg-touch:text-h3">{promoTitle || product.name}</h2>
+                <h2 className="type-section-hed lg-touch:text-h3 lg-touch:tracking-[-0.01em] text-balance">{promoTitle || product.name}</h2>
 
-                <h3 className="text-h3 font-light text-text-subtitle lg-touch:text-h4">{promoSubtitle || product.name}</h3>
+                <h3 className="text-h3 font-light text-text-subtitle lg-touch:text-h4 lg-touch:tracking-[0.05em] text-balance">{promoSubtitle || product.name}</h3>
 
               </div>
 
-              <p className="type-body text-text-body mt-4 lg-touch:mt-2 lg-touch:text-action max-w-prose text-pretty">
+              <p className="type-body text-text-body mt-4 lg-touch:mt-2 lg-touch:text-action lg-touch:tracking-normal max-w-prose text-pretty line-clamp-3 lg:line-clamp-none">
 
                 {promoText || "Unrivaled acoustic engineering and clarity."}
 
@@ -153,9 +153,9 @@ export default function ProductSpotlight3({ spotlightData }: ProductSpotlight3Pr
 
             </div>
 
-            <div className="mt-8 lg-touch:mt-4 flex justify-center relative z-10">
+            <div className="mt-8 lg-touch:mt-4 flex justify-start relative z-10">
 
-              <Link href={`/product/${product.slug}`} className="border border-brand-200 text-brand-100 uppercase transition-colors duration-200 hover:bg-brand-800 hover:text-brand-50 cursor-pointer px-6 py-3">
+              <Link href={`/product/${product.slug}`} className="btn-secondary text-action uppercase inline-flex items-center px-6 py-3">
 
                 See More
 

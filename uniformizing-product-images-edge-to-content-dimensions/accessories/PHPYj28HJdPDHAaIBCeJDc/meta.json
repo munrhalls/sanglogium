@@ -1,0 +1,15 @@
+{
+  "_id": "PHPYj28HJdPDHAaIBCeJDc",
+  "name": "Earpads for AKG K601, K701, and More",
+  "section": "accessories",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/9dd003e2fa0b94c138ddeaf5f7c9de1779a42259-1600x1600.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 10.1,
+    "T": 16.4,
+    "R": 10,
+    "B": 16.3
+  },
+  "newAssetId": "image-e204aaa4ebfd918da2ce344b392a5e40bc0bb713-1024x1024-png"
+}

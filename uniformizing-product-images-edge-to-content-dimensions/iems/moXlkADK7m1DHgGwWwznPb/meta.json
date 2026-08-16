@@ -1,0 +1,15 @@
+{
+  "_id": "moXlkADK7m1DHgGwWwznPb",
+  "name": "Bowers & Wilkins Pi7 S2 Wireless In-Ear Headphones",
+  "section": "iems",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/46f8b6207fba0b187ca47cb0a8343fe33501e16a-1024x1024.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 10.1,
+    "T": 12.2,
+    "R": 10,
+    "B": 12.1
+  },
+  "newAssetId": "image-b8d7246c25d81dfd6939af91b30f4487e808a237-1024x1024-png"
+}

@@ -1,0 +1,15 @@
+{
+  "_id": "C0JSb66CHOxy1G14ni5ga1",
+  "name": "Kanto Headphone Stand",
+  "section": "accessories",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/e32e185e60c381abde1bbc40324c095fac564edb-1024x1024.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 33.6,
+    "T": 10.1,
+    "R": 33.5,
+    "B": 10
+  },
+  "newAssetId": "image-c63b94b0b4519e91c8a65d8811b222eab6c91084-1024x1024-png"
+}

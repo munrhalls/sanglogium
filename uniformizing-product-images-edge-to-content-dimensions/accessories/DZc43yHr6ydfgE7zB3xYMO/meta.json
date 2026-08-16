@@ -1,0 +1,15 @@
+{
+  "_id": "DZc43yHr6ydfgE7zB3xYMO",
+  "name": "Linus Tech Tips Keycaps",
+  "section": "accessories",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/eec34dfb7de3203c10dbe6f1be2a3f21a6a8800a-480x360.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 10.1,
+    "T": 32,
+    "R": 10,
+    "B": 31.9
+  },
+  "newAssetId": "image-2d7e7d33ef7bd62be8064bae87502ac278b4eef7-1024x1024-png"
+}

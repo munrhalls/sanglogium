@@ -1,0 +1,15 @@
+{
+  "_id": "Pn6oyV4Ks5AcNbecjbDXfF",
+  "name": "Earpiece Cleaning Tool",
+  "section": "accessories",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/8f268059341da193fa09bce8c8072b64fb9e8ba7-1600x1600.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 10.1,
+    "T": 45.4,
+    "R": 10,
+    "B": 45.3
+  },
+  "newAssetId": "image-c8e958c161e54c1304ae071a3c6b0b67c045a4e9-1024x1024-png"
+}

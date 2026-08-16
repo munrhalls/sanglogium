@@ -1,0 +1,217 @@
+{
+  "category": "headphones",
+  "total": 186,
+  "botchedCount": 15,
+  "botched": [
+    {
+      "name": "Meze Audio Empyrean II Open Back Headphones",
+      "slug": "meze-audio-empyrean-ii-open-back-headphones",
+      "imageAssetRef": "image-c4f4425f0953affea308dfd5dfa78b225112bca2-60x45-png",
+      "originalFilename": "es-lab-ex-1a-electrostatic-headphones-apos-certified.png",
+      "dimensions": {
+        "width": 60,
+        "height": 45
+      },
+      "reasons": [
+        "tiny-image",
+        "duplicate-asset"
+      ]
+    },
+    {
+      "name": "Sennheiser Momentum 5 Wireless Over-Ear ANC Headphones",
+      "slug": "sennheiser-momentum-5-wireless-over-ear-anc-headphones",
+      "imageAssetRef": "image-c4f4425f0953affea308dfd5dfa78b225112bca2-60x45-png",
+      "originalFilename": "es-lab-ex-1a-electrostatic-headphones-apos-certified.png",
+      "dimensions": {
+        "width": 60,
+        "height": 45
+      },
+      "reasons": [
+        "tiny-image",
+        "duplicate-asset"
+      ]
+    },
+    {
+      "name": "Audio-Technica ATH-W2022 Closed-Back Dynamic Wooden Headphones",
+      "slug": "audio-technica-ath-w2022-closed-back-dynamic-wooden-headphones",
+      "imageAssetRef": "image-c4f4425f0953affea308dfd5dfa78b225112bca2-60x45-png",
+      "originalFilename": "es-lab-ex-1a-electrostatic-headphones-apos-certified.png",
+      "dimensions": {
+        "width": 60,
+        "height": 45
+      },
+      "reasons": [
+        "tiny-image",
+        "duplicate-asset"
+      ]
+    },
+    {
+      "name": "HIFIMAN Arya Organic Planar Magnetic Headphones",
+      "slug": "hifiman-arya-organic-planar-magnetic-headphones",
+      "imageAssetRef": "image-c4f4425f0953affea308dfd5dfa78b225112bca2-60x45-png",
+      "originalFilename": "es-lab-ex-1a-electrostatic-headphones-apos-certified.png",
+      "dimensions": {
+        "width": 60,
+        "height": 45
+      },
+      "reasons": [
+        "tiny-image",
+        "duplicate-asset"
+      ]
+    },
+    {
+      "name": "HIFIMAN Ananda Nano Planar Magnetic Headphone",
+      "slug": "hifiman-ananda-nano-planar-magnetic-headphone",
+      "imageAssetRef": "image-c4f4425f0953affea308dfd5dfa78b225112bca2-60x45-png",
+      "originalFilename": "es-lab-ex-1a-electrostatic-headphones-apos-certified.png",
+      "dimensions": {
+        "width": 60,
+        "height": 45
+      },
+      "reasons": [
+        "tiny-image",
+        "duplicate-asset"
+      ]
+    },
+    {
+      "name": "Audeze LCD-5 Planar Magnetic Headphone",
+      "slug": "audeze-lcd-5-planar-magnetic-headphone",
+      "imageAssetRef": "image-c4f4425f0953affea308dfd5dfa78b225112bca2-60x45-png",
+      "originalFilename": "es-lab-ex-1a-electrostatic-headphones-apos-certified.png",
+      "dimensions": {
+        "width": 60,
+        "height": 45
+      },
+      "reasons": [
+        "tiny-image",
+        "duplicate-asset"
+      ]
+    },
+    {
+      "name": "ES Lab EX-1a Electrostatic Headphones (Apos Certified)",
+      "slug": "es-lab-ex-1a-electrostatic-headphones-apos-certified",
+      "imageAssetRef": "image-c4f4425f0953affea308dfd5dfa78b225112bca2-60x45-png",
+      "originalFilename": "es-lab-ex-1a-electrostatic-headphones-apos-certified.png",
+      "dimensions": {
+        "width": 60,
+        "height": 45
+      },
+      "reasons": [
+        "tiny-image",
+        "duplicate-asset"
+      ]
+    },
+    {
+      "name": "Audeze LCD-2 Open Back Headphone",
+      "slug": "audeze-lcd-2-open-back-headphone",
+      "imageAssetRef": "image-c4f4425f0953affea308dfd5dfa78b225112bca2-60x45-png",
+      "originalFilename": "es-lab-ex-1a-electrostatic-headphones-apos-certified.png",
+      "dimensions": {
+        "width": 60,
+        "height": 45
+      },
+      "reasons": [
+        "tiny-image",
+        "duplicate-asset"
+      ]
+    },
+    {
+      "name": "Audeze LCD-2 Classic (Apos Certified)",
+      "slug": "audeze-lcd-2-classic-apos-certified",
+      "imageAssetRef": "image-c4f4425f0953affea308dfd5dfa78b225112bca2-60x45-png",
+      "originalFilename": "es-lab-ex-1a-electrostatic-headphones-apos-certified.png",
+      "dimensions": {
+        "width": 60,
+        "height": 45
+      },
+      "reasons": [
+        "tiny-image",
+        "duplicate-asset"
+      ]
+    },
+    {
+      "name": "Focal Stellia Closed-Back Headphones",
+      "slug": "focal-stellia-closed-back-headphones",
+      "imageAssetRef": "image-c4f4425f0953affea308dfd5dfa78b225112bca2-60x45-png",
+      "originalFilename": "es-lab-ex-1a-electrostatic-headphones-apos-certified.png",
+      "dimensions": {
+        "width": 60,
+        "height": 45
+      },
+      "reasons": [
+        "tiny-image",
+        "duplicate-asset"
+      ]
+    },
+    {
+      "name": "Audio-Technica NARUKAMI ATH-AWKG Audiophile Closed-back Dynamic Wooden Headphones",
+      "slug": "audio-technica-narukami-ath-awkg-audiophile-closed-back-dynamic-wooden-headphones",
+      "imageAssetRef": "image-c4f4425f0953affea308dfd5dfa78b225112bca2-60x45-png",
+      "originalFilename": "es-lab-ex-1a-electrostatic-headphones-apos-certified.png",
+      "dimensions": {
+        "width": 60,
+        "height": 45
+      },
+      "reasons": [
+        "tiny-image",
+        "duplicate-asset"
+      ]
+    },
+    {
+      "name": "Noble FoKus Apollo ANC Over-Ear Headphones (Apos Certified)",
+      "slug": "noble-fokus-apollo-anc-over-ear-headphones-apos-certified",
+      "imageAssetRef": "image-c4f4425f0953affea308dfd5dfa78b225112bca2-60x45-png",
+      "originalFilename": "es-lab-ex-1a-electrostatic-headphones-apos-certified.png",
+      "dimensions": {
+        "width": 60,
+        "height": 45
+      },
+      "reasons": [
+        "tiny-image",
+        "duplicate-asset"
+      ]
+    },
+    {
+      "name": "Kinera Freya In-Ear Monitor (IEM) Earphone",
+      "slug": "kinera-freya-in-ear-monitor-iem-earphone",
+      "imageAssetRef": "image-c4f4425f0953affea308dfd5dfa78b225112bca2-60x45-png",
+      "originalFilename": "es-lab-ex-1a-electrostatic-headphones-apos-certified.png",
+      "dimensions": {
+        "width": 60,
+        "height": 45
+      },
+      "reasons": [
+        "tiny-image",
+        "duplicate-asset"
+      ]
+    },
+    {
+      "name": "Audeze LCD-5s Planar Magnetic Headphone",
+      "slug": "audeze-lcd-5s-planar-magnetic-headphone",
+      "imageAssetRef": "image-c4f4425f0953affea308dfd5dfa78b225112bca2-60x45-png",
+      "originalFilename": "es-lab-ex-1a-electrostatic-headphones-apos-certified.png",
+      "dimensions": {
+        "width": 60,
+        "height": 45
+      },
+      "reasons": [
+        "tiny-image",
+        "duplicate-asset"
+      ]
+    },
+    {
+      "name": "ES Lab ES-2a 90mm Electrostatic Headphones",
+      "slug": "es-lab-es-2a-90mm-electrostatic-headphones",
+      "imageAssetRef": "image-c4f4425f0953affea308dfd5dfa78b225112bca2-60x45-png",
+      "originalFilename": "es-lab-ex-1a-electrostatic-headphones-apos-certified.png",
+      "dimensions": {
+        "width": 60,
+        "height": 45
+      },
+      "reasons": [
+        "tiny-image",
+        "duplicate-asset"
+      ]
+    }
+  ]
+}

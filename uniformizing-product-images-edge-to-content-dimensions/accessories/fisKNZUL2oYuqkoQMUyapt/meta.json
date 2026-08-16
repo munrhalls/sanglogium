@@ -1,0 +1,15 @@
+{
+  "_id": "fisKNZUL2oYuqkoQMUyapt",
+  "name": "Replacement Earpads for HiFiMan Arya",
+  "section": "accessories",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/80077cec805b16f325fb6870288773600d2015b8-1600x1600.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 10.1,
+    "T": 27.9,
+    "R": 10,
+    "B": 27.9
+  },
+  "newAssetId": "image-deb89afdc7a0fa06db7531a41052dd7b6ce65a62-1024x1024-png"
+}

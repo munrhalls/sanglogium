@@ -1,0 +1,15 @@
+{
+  "_id": "GPjMdcfFWZVrKyR2PB2ogU",
+  "name": "Bob Ross Deskmat",
+  "section": "accessories",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/9eb7d82fd7c22fd93143818f0472fbf7cbb3ec07-480x360.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 10.1,
+    "T": 24.8,
+    "R": 10,
+    "B": 24.8
+  },
+  "newAssetId": "image-d2776592d7bfcf1be796b137e9615529cf8a2661-1024x1024-png"
+}

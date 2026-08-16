@@ -1,0 +1,15 @@
+{
+  "_id": "Y7l1IhzX2fnyiano571oLJ",
+  "name": "Bowers & Wilkins Pi8 In-Ear Bluetooth True Wireless Earbuds (Jade Green)",
+  "section": "iems",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/938dd4258e8b677adbf80599e825e93af1631392-1200x1200.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 10.1,
+    "T": 19.1,
+    "R": 10,
+    "B": 19.1
+  },
+  "newAssetId": "image-f007eebc92cbbf0c765fe73da562173bf6d8f9f5-1024x1024-png"
+}

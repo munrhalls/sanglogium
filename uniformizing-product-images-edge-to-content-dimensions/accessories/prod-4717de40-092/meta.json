@@ -1,0 +1,15 @@
+{
+  "_id": "prod-4717de40-092",
+  "name": "Dekoni Audio Protective Headphone Travel Pouch",
+  "section": "accessories",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/a42e81ba45f542a912971369d910eb1018c6d257-1024x1024.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 19.2,
+    "T": 10.1,
+    "R": 19.1,
+    "B": 10
+  },
+  "newAssetId": "image-2d6c000ed8f041a4ae1391682cd410c129c68ad2-1024x1024-png"
+}

@@ -1,0 +1,183 @@
+{
+  "pageInfo": {
+    "title": "Accessories — Sang Logium",
+    "url": "http://localhost:3000/products/accessories",
+    "productLinkCount": 25
+  },
+  "products": [
+    {
+      "href": "/products/headphones",
+      "imgSrc": "",
+      "alt": "",
+      "name": "View All Headphones"
+    },
+    {
+      "href": "/products/headphones/open-back",
+      "imgSrc": "",
+      "alt": "",
+      "name": "Open-Back"
+    },
+    {
+      "href": "/products/headphones/closed-back",
+      "imgSrc": "",
+      "alt": "",
+      "name": "Closed-Back"
+    },
+    {
+      "href": "/products/headphones/semi-open",
+      "imgSrc": "",
+      "alt": "",
+      "name": "Semi-Open"
+    },
+    {
+      "href": "/products/headphones/planar-magnetic",
+      "imgSrc": "",
+      "alt": "",
+      "name": "Planar Magnetic"
+    },
+    {
+      "href": "/products/headphones/dynamic",
+      "imgSrc": "",
+      "alt": "",
+      "name": "Dynamic"
+    },
+    {
+      "href": "/products/headphones/electrostatic",
+      "imgSrc": "",
+      "alt": "",
+      "name": "Electrostatic"
+    },
+    {
+      "href": "/products/headphones/monitors-iems",
+      "imgSrc": "",
+      "alt": "",
+      "name": "Universal IEMs"
+    },
+    {
+      "href": "/products/audio-electronics",
+      "imgSrc": "",
+      "alt": "",
+      "name": "View All Audio Electronics"
+    },
+    {
+      "href": "/products/audio-electronics/desktop-amps",
+      "imgSrc": "",
+      "alt": "",
+      "name": "Desktop Amps"
+    },
+    {
+      "href": "/products/audio-electronics/portable-amps",
+      "imgSrc": "",
+      "alt": "",
+      "name": "Portable Amps"
+    },
+    {
+      "href": "/products/audio-electronics/bluetooth-dac-amps",
+      "imgSrc": "",
+      "alt": "",
+      "name": "Bluetooth DAC/Amps"
+    },
+    {
+      "href": "/products/audio-electronics/standalone-dacs",
+      "imgSrc": "",
+      "alt": "",
+      "name": "Standalone DACs"
+    },
+    {
+      "href": "/products/audio-electronics/dac-amp-combos",
+      "imgSrc": "",
+      "alt": "",
+      "name": "DAC/Amp Combos"
+    },
+    {
+      "href": "/products/audio-electronics/usb-c-dacs",
+      "imgSrc": "",
+      "alt": "",
+      "name": "USB-C/Dongle DACs"
+    },
+    {
+      "href": "/products/audio-electronics/digital-players-daps",
+      "imgSrc": "",
+      "alt": "",
+      "name": "Digital Players (DAPs)"
+    },
+    {
+      "href": "/products/audio-electronics/network-streamers",
+      "imgSrc": "",
+      "alt": "",
+      "name": "Network Streamers"
+    },
+    {
+      "href": "/products/accessories",
+      "imgSrc": "",
+      "alt": "",
+      "name": "View All Accessories"
+    },
+    {
+      "href": "/products/accessories/headphone-cables",
+      "imgSrc": "",
+      "alt": "",
+      "name": "Headphone Cables"
+    },
+    {
+      "href": "/products/accessories/interconnects",
+      "imgSrc": "",
+      "alt": "",
+      "name": "Interconnects"
+    },
+    {
+      "href": "/products/accessories/adapters",
+      "imgSrc": "",
+      "alt": "",
+      "name": "Adapters"
+    },
+    {
+      "href": "/products/accessories/earpads",
+      "imgSrc": "",
+      "alt": "",
+      "name": "Earpads"
+    },
+    {
+      "href": "/products/accessories/eartips",
+      "imgSrc": "",
+      "alt": "",
+      "name": "Eartips"
+    },
+    {
+      "href": "/products/accessories/care-cleaning",
+      "imgSrc": "",
+      "alt": "",
+      "name": "Care & Cleaning"
+    },
+    {
+      "href": "/products/accessories/headphone-stands",
+      "imgSrc": "",
+      "alt": "",
+      "name": "Headphone Stands"
+    },
+    {
+      "href": "/products/accessories/carrying-cases",
+      "imgSrc": "",
+      "alt": "",
+      "name": "Carrying Cases"
+    },
+    {
+      "href": "/products/accessories?page=2",
+      "imgSrc": "",
+      "alt": "",
+      "name": "Go to page 2"
+    },
+    {
+      "href": "/products/accessories?page=3",
+      "imgSrc": "",
+      "alt": "",
+      "name": "Go to page 3"
+    },
+    {
+      "href": "/products/accessories?search=true",
+      "imgSrc": "",
+      "alt": "",
+      "name": "Search"
+    }
+  ]
+}

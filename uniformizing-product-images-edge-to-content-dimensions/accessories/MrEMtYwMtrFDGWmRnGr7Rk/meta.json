@@ -1,0 +1,15 @@
+{
+  "_id": "MrEMtYwMtrFDGWmRnGr7Rk",
+  "name": "Steel Needle",
+  "section": "accessories",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/37475427c1c3e760b34ef863399d8bbf169c7300-985x800.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 39.4,
+    "T": 10.1,
+    "R": 39.4,
+    "B": 10
+  },
+  "newAssetId": "image-6775464aba94662a4fb81a97989e57dfcbb17ae5-1024x1024-png"
+}

@@ -1,0 +1,15 @@
+{
+  "_id": "GjMaRFaHMVTsBoyxtAbaVy",
+  "name": "Replacement Earpads for Sennheiser HD800 Series Headphones",
+  "section": "accessories",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/bd58d81fbfacd5673d68c6f463f16c6fe87204cd-1360x1360.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 10.1,
+    "T": 16.7,
+    "R": 10,
+    "B": 16.6
+  },
+  "newAssetId": "image-3f3541c765658a793aa0d14c61bb77d57dcf7016-1024x1024-png"
+}

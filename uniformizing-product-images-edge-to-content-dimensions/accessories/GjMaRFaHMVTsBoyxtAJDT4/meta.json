@@ -1,0 +1,15 @@
+{
+  "_id": "GjMaRFaHMVTsBoyxtAJDT4",
+  "name": "Sanus Headphone Stand for Sonos Ace (Black)",
+  "section": "accessories",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/31a0e5da553372d6a52d32bd5f378862c6de1370-1200x1200.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 28.5,
+    "T": 10.1,
+    "R": 28.4,
+    "B": 10
+  },
+  "newAssetId": "image-9b0d23a107e89c0086bb468db1fe0d4212647ec9-1024x1024-png"
+}

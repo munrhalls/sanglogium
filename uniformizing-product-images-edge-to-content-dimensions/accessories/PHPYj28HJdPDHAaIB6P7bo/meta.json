@@ -1,0 +1,15 @@
+{
+  "_id": "PHPYj28HJdPDHAaIB6P7bo",
+  "name": "Audio wipes - small",
+  "section": "accessories",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/c1fd24a588821c956dbfd347c010e3393cbefc70-600x600.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 22.5,
+    "T": 10.1,
+    "R": 22.4,
+    "B": 10
+  },
+  "newAssetId": "image-3a16f399ec0f74274605c960ee9724f20bb8b5f7-1024x1024-png"
+}

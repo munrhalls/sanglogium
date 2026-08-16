@@ -1,0 +1,15 @@
+{
+  "_id": "Pn6oyV4Ks5AcNbecjjl5G7",
+  "name": "Focal Utopia Ear Pad",
+  "section": "accessories",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/b05e87f68bf4ba98a1b63b63b4897db536b86bbe-1024x1024.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 10.1,
+    "T": 25.6,
+    "R": 10,
+    "B": 25.6
+  },
+  "newAssetId": "image-fd8b0e1b22047c867bf8ea489cb4c10028eeeabf-1024x1024-png"
+}

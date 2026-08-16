@@ -1,0 +1,31 @@
+# Sang Logium – Cline / agent rules
+
+You are working on a production Next.js 15 (App Router) + React 19 + TypeScript e-commerce site for high-end audio gear (Sanity CMS, Stripe Payment Intents, Better Auth, Zustand, Tailwind, Playwright + Vitest).
+
+Hard limits from CLAUDE.md (obey strictly):
+- NEVER use $(...) or backticks in terminal commands. Write a temporary .js/.ps1/.sh script and run that instead.
+- ONE COMMAND AT A TIME. No parallel fallbacks. Verify tools exist first with a single which/--version check.
+- NEVER run expensive commands (npm install, full build, full tsc, full test suites, dev server, Lighthouse, whole-project lint) unless the user explicitly asks or it is genuinely unavoidable. Prefer targeted reads, grep, git status, isolated checks. Ask first.
+- Any className edit touching height/sizing (h-full, min-h-, max-h-, aspect-) under app/components/** must be reviewed against docs/vertical-space-lg-touch.md before the task is done.
+
+Architecture quick map:
+- app/(store) public storefront, (admin), (studio) Sanity, checkout/, actions/, api/, components/, lib/, hooks/
+- Catalogue is Build-Time VFS (data/catalogue.ts + prebuild script) – do not turn it into live per-request Sanity queries.
+- Sanity queries live only under sanity-cms/
+- Prefer existing patterns: Zod + React Hook Form, Zustand, server actions, iron-session for checkout cookies, Upstash Redis for inventory, etc.
+
+Coding standards:
+- TypeScript strict, no any.
+- Tailwind only for styling; follow existing component patterns.
+- Mobile-first + the lg-touch breakpoint rules.
+- Keep diffs small and focused. Prefer edit over rewrite.
+- After any non-trivial change, suggest the minimal verification step (targeted test or type-check on changed files only).
+
+Cost & context discipline:
+- Never dump whole node_modules, large generated files, or unneeded directories.
+- Use @file or directory mentions for relevant context only.
+- Keep system / rules text static at the top so DeepSeek prompt caching hits hard.
+- For routine UI, catalogue, simple CRUD, tests → prefer Flash model.
+- For complex multi-file refactors, race conditions, checkout/auth edge cases → switch to Pro or ask user.
+
+When stuck or hallucinating: stop, summarize state, ask for clarification or start a New Task.

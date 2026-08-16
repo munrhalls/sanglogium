@@ -1,0 +1,15 @@
+{
+  "_id": "DZc43yHr6ydfgE7zB3ylNG",
+  "name": "Replacement Ear Pads For Bose QC3",
+  "section": "accessories",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/c4f4425f0953affea308dfd5dfa78b225112bca2-60x45.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 10.1,
+    "T": 22.6,
+    "R": 10,
+    "B": 22.6
+  },
+  "newAssetId": "image-c123fa05bfa6e5afbbc1dda9a0c0daf7c2b1e32d-1024x1024-png"
+}

@@ -1,0 +1,15 @@
+{
+  "_id": "MrEMtYwMtrFDGWmRnGr80j",
+  "name": "Large Dehumidifier",
+  "section": "accessories",
+  "originalUrl": "https://cdn.sanity.io/images/2tdmkpky/production/6a35a6fb3b86a02bfe1834d92b559f8731de2cb1-985x800.png",
+  "status": "patched",
+  "mode": "alpha",
+  "marginPct": {
+    "L": 10.1,
+    "T": 10.2,
+    "R": 10,
+    "B": 10.2
+  },
+  "newAssetId": "image-30ebe1ecd111b54ecc92ed597a994f0597db74ea-1024x1024-png"
+}
