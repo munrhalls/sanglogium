@@ -125,7 +125,7 @@ const uiComponentsPlugin = plugin(function ({ addComponents, theme }) {
       display: "inline-flex",
       alignItems: "center",
       gap: theme("spacing.2") as string,
-      backgroundColor: theme("colors.brand.400") as string,
+      backgroundColor: theme("colors.accent.500") as string,
       color: theme("colors.brand.700") as string,
       fontWeight: theme("fontWeight.bold") as string,
       fontSize: theme("fontSize.action[0]") as string,
@@ -141,15 +141,15 @@ const uiComponentsPlugin = plugin(function ({ addComponents, theme }) {
         padding: `${theme("spacing.1")} ${theme("spacing.2")}`,
       },
       "&:hover": {
-        backgroundColor: theme("colors.brand.500") as string,
+        backgroundColor: theme("colors.accent.600") as string,
         boxShadow: theme("boxShadow.buttonHover") as string,
       },
       "&:focus-visible": {
-        outline: `2px solid ${theme("colors.brand.500")}`,
+        outline: `2px solid ${theme("colors.accent.600")}`,
         outlineOffset: "2px",
       },
       "&:active": {
-        backgroundColor: theme("colors.brand.500") as string,
+        backgroundColor: theme("colors.accent.600") as string,
       },
       "&:disabled": {
         opacity: "0.4",
@@ -162,7 +162,7 @@ const uiComponentsPlugin = plugin(function ({ addComponents, theme }) {
       MozOsxFontSmoothing: "grayscale",
       alignItems: "center",
       gap: theme("spacing.4") as string,
-      backgroundColor: theme("colors.brand.400") as string,
+      backgroundColor: theme("colors.accent.500") as string,
       color: theme("colors.brand.700") as string,
       fontWeight: theme("fontWeight.bold") as string,
       fontSize: theme("fontSize.actionLarge[0]") as string,
@@ -172,15 +172,15 @@ const uiComponentsPlugin = plugin(function ({ addComponents, theme }) {
       boxShadow: theme("boxShadow.button") as string,
       transition: "background-color 0.2s ease, box-shadow 0.2s ease",
       "&:hover": {
-        backgroundColor: theme("colors.brand.500") as string,
+        backgroundColor: theme("colors.accent.600") as string,
         boxShadow: theme("boxShadow.buttonHover") as string,
       },
       "&:focus-visible": {
-        outline: `2px solid ${theme("colors.brand.500")}`,
+        outline: `2px solid ${theme("colors.accent.600")}`,
         outlineOffset: "2px",
       },
       "&:active": {
-        backgroundColor: theme("colors.brand.500") as string,
+        backgroundColor: theme("colors.accent.600") as string,
       },
       "&:disabled": {
         opacity: "0.4",
@@ -439,6 +439,21 @@ const uiComponentsPlugin = plugin(function ({ addComponents, theme }) {
       letterSpacing: theme("fontSize.small[1].letterSpacing") as string,
       fontWeight: theme("fontWeight.regular") as string,
       color: theme("colors.text.body") as string,
+    },
+    ".product-badge": {
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontSize: theme("fontSize.tiny[0]") as string,
+      lineHeight: theme("fontSize.tiny[1].lineHeight") as string,
+      fontWeight: theme("fontWeight.light") as string,
+      letterSpacing: theme("letterSpacing.editorial") as string,
+      textTransform: "uppercase",
+      whiteSpace: "nowrap",
+      padding: `${theme("spacing.0.5")} ${theme("spacing.2")}`,
+      borderRadius: theme("borderRadius.sm") as string,
+      backgroundColor: theme("colors.brand.900") as string,
+      color: theme("colors.brand.50") as string,
     },
     ".section-header-anchor": {
       display: "flex",

@@ -3,6 +3,10 @@ import TrustBar from "@/app/components/features/homepage/trust-bar/TrustBar";
 import ProductSpotlight2 from "@/app/components/features/homepage/product-spotlight-2/ProductSpotlight2";
 import ProductSpotlight3 from "@/app/components/features/homepage/product-spotlight-3/ProductSpotlight3";
 import IemsGallery from "@/app/components/features/homepage/iems-gallery/IemsGallery";
+import {
+  getIemProductsBySlugs,
+  HOME_12,
+} from "@/app/components/features/homepage/iems-gallery/getIemProducts";
 import NewestRelease from "@/app/components/features/homepage/newest-release/NewestRelease";
 import Dacs from "@/app/components/features/homepage/dacs/Dacs";
 import Accessories from "@/app/components/features/homepage/accessories/Accessories";
@@ -15,6 +19,7 @@ export const revalidate = 3600;
 
 export default async function HomePage() {
   const data = await fetchHomepageData();
+  const iemsData = await getIemProductsBySlugs(HOME_12);
 
   return (
     <div>
@@ -38,7 +43,7 @@ export default async function HomePage() {
       </Shelf>
 
       <Shelf fullBleed spacing="loose">
-        <IemsGallery iemsData={data.iemsGallery} />
+        <IemsGallery iemsData={iemsData} />
       </Shelf>
 
       <Shelf fullBleed spacing="tight">
