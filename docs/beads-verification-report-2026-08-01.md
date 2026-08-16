@@ -28,4 +28,4 @@
 
 No new whole-issue deletions — all 6 describe real, still-relevant scope, not spam. The earlier 14-issue delete list is unchanged.
 
-Three issues need their stale note blocks corrected (`mwk`, `1xs`, `w92`) — `bd` has no "delete part of a note" command, so the mechanism is `bd update --notes` with a cleaned version, not `bd delete`. One issue (`4nd`) is a candidate to close as complete. Both are detailed with exact commands in `docs/devin-beads-cleanup-tasks.md`, Phase 6.
+Three issues need their stale note blocks corrected (`mwk`, `1xs`, `w92`) — `bd` has no "delete part of a note" command, so the mechanism is `bd update --notes` with a cleaned version, not `bd delete`. One issue (`4nd`) is a candidate to close as complete. Both require `bd update --notes` with cleaned versions (for stale notes) or `bd close` (for the completed issue); exact commands are not documented in a separate file.

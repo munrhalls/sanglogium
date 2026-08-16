@@ -21,7 +21,7 @@ Every sized element picks one height model: it **owns** its height (`aspect-*`, 
 
 Real instance: `ProductSpotlight1/2/3` carousel slides moved from `aspect-[4/3]` to `h-full` in the same diff that dropped the parent grid's own `max-h-[350px]` mobile constraint (`d8bb31ac`) — the slide had nothing left to inherit from on mobile. Fixed by keeping the constraint on the sized ancestor and letting `h-full` chain down to it cleanly.
 
-This is why `sang-logium-review` runs it as a mechanical check (Check C) on any `app/components/**` diff touching these utilities — reading this once was not enough to prevent the regression above.
+This is why any `app/components/**` diff touching these utilities must be reviewed as a mechanical check (Check C) — reading this once was not enough to prevent the regression above.
 
 ## Proven techniques already in this codebase (in order of how often they're used)
 
