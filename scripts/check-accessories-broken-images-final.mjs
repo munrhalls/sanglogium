@@ -67,9 +67,9 @@ console.log(`Extracted ${products.length} product cards`);
 // Detect the box-pattern placeholder image by pixel analysis in the browser.
 // Loads the reference placeholder image and every unique product image,
 // draws them small on a canvas, and compares signatures.
-const knownPlaceholderAbsUrl = products.find((p) =>
-  new URL(p.imgSrc, PAGE_URL).href.includes(KNOWN_PLACEHOLDER_ASSET),
-)?.imgSrc
+const knownPlaceholderAbsUrl = products
+  .find((p) => new URL(p.imgSrc, PAGE_URL).href.includes(KNOWN_PLACEHOLDER_ASSET))
+  ?.imgSrc
   ? new URL(
       products.find((p) => p.imgSrc.includes(KNOWN_PLACEHOLDER_ASSET)).imgSrc,
       PAGE_URL,
@@ -102,8 +102,7 @@ const analysis = await page.evaluate(
               let rowSum = 0;
               for (let x = 0; x < size; x++) {
                 const i = (y * size + x) * 4;
-                const lum =
-                  0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+                const lum = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
                 rowSum += lum;
               }
               rows.push(rowSum / size);
@@ -112,8 +111,7 @@ const analysis = await page.evaluate(
               let colSum = 0;
               for (let y = 0; y < size; y++) {
                 const i = (y * size + x) * 4;
-                const lum =
-                  0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+                const lum = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
                 colSum += lum;
               }
               cols.push(colSum / size);
@@ -123,10 +121,8 @@ const analysis = await page.evaluate(
             const mean = rows.reduce((a, b) => a + b, 0) / size;
             let rowEnergy = 0;
             let colEnergy = 0;
-            for (let y = 1; y < size; y++)
-              rowEnergy += Math.abs(rows[y] - rows[y - 1]);
-            for (let x = 1; x < size; x++)
-              colEnergy += Math.abs(cols[x] - cols[x - 1]);
+            for (let y = 1; y < size; y++) rowEnergy += Math.abs(rows[y] - rows[y - 1]);
+            for (let x = 1; x < size; x++) colEnergy += Math.abs(cols[x] - cols[x - 1]);
 
             // Count distinct horizontal bands (box pattern → many sharp bands)
             let bandCount = 0;
@@ -177,64 +173,3 @@ const analysis = await page.evaluate(
 
       // Broken if it IS the known placeholder asset, or if pixel signature
       // matches the placeholder pattern (high band count = box grid)
-      const isKnownAsset = abs.includes(
-        "2c516bcf517ab27994476b1732b758ce82d6ef5e",
-      );
-      const looksLikePlaceholder =
-        sig && ref && sig.bandCount > 20 && ref.bandCount > 20;
-
-      const isBroken = isKnownAsset || looksLikePlaceholder;
-      results.push({
-        ...product,
-        imageUrl: abs,
-        refBandCount: ref?.bandCount ?? null,
-        myBandCount: sig?.bandCount ?? null,
-        isBroken,
-        reason: isKnownAsset
-          ? "SHARED_PLACEHOLDER_ASSET"
-          : looksLikePlaceholder
-            ? "BOX_PATTERN_PIXEL_MATCH"
-            : "OK",
-      });
-    }
-
-    return { results, refBandCount: ref?.bandCount ?? null };
-  },
-  { products, knownPlaceholderAbsUrl },
-);
-
-// Build final broken list
-const broken = analysis.results.filter((r) => r.isBroken);
-console.log(`\n=== BROKEN PRODUCTS: ${broken.length} ===`);
-for (const b of broken) {
-  console.log(`  BROKEN: "${b.name}" | ${b.href} | ${b.reason}`);
-}
-
-const brokenProducts = broken.map((p) => ({
-  name: p.name,
-  slug: p.href,
-  alt: p.alt,
-  imageUrl: p.imageUrl,
-  reason: p.reason,
-}));
-
-fs.writeFileSync(OUTPUT_FILE, JSON.stringify(brokenProducts, null, 2), "utf8");
-console.log(
-  `\nSaved ${brokenProducts.length} broken products to ${OUTPUT_FILE}`,
-);
-
-// Save full analysis
-fs.writeFileSync(
-  "accessories-image-analysis.json",
-  JSON.stringify(
-    {
-      referenceBandCount: analysis.refBandCount,
-      products: analysis.results,
-    },
-    null,
-    2,
-  ),
-  "utf8",
-);
-
-await browser.close();

@@ -1,0 +1,284 @@
+
+========== VIEWPORT desktop-1440 (1440x900) ==========
+
+--- Spotlight [Meze] ---
+BOX 568x413 pad(T48px/B48px/L48px) innerOverflow=true
+  grid: [{"cls":"order-2 md:order-1 w-full","w":568,"h":413,"aspect":"1.38"},{"cls":"order-1 md:order-2 w-full","w":568,"h":413,"aspect":"1.38"}]
+  overline  fs=12px lh=16px ls=3.12px weight=300 color=rgb(212, 175, 55) tt=uppercase w=470px h=16px lines=1 clamp=none top=49 bottomOffset=-348 overflow=false
+  h2        fs=50.96px lh=61.152px ls=-0.5096px weight=600 color=rgb(246, 227, 213) tt=none w=470px h=61px lines=1 clamp=none top=69 bottomOffset=-283 overflow=false
+  h3        fs=28.96px lh=34.752px ls=1.448px weight=300 color=rgb(229, 228, 226) tt=none w=470px h=35px lines=1 clamp=none top=138 bottomOffset=-240 overflow=false
+  p         fs=16px lh=24px ls=normal weight=400 color=rgb(250, 238, 230) tt=none w=470px h=96px lines=4 clamp=none top=189 bottomOffset=-128 overflow=false
+  cta       text="See More" fs=14px ls=0.7px weight=400 tt=uppercase color=rgb(253, 249, 247) bg=rgba(0, 0, 0, 0) border=rgb(250, 238, 230) size=131x47 top=317 bottom=-49
+  overline contrast vs #0D0F0F = NaN:1
+  h2 contrast vs #0D0F0F = NaN:1
+  h3 contrast vs #0D0F0F = NaN:1
+  p contrast vs #0D0F0F = NaN:1
+  cta text contrast vs #0D0F0F = NaN:1
+
+--- Spotlight [Dan Clark Audio] ---
+BOX 568x413 pad(T48px/B48px/L48px) innerOverflow=true
+  grid: [{"cls":"order-2 w-full aspect-square","w":568,"h":413,"aspect":"1.38"},{"cls":"order-1 w-full h-full","w":568,"h":413,"aspect":"1.38"}]
+  overline  fs=12px lh=16px ls=3.12px weight=300 color=rgb(212, 175, 55) tt=uppercase w=470px h=16px lines=1 clamp=none top=49 bottomOffset=-348 overflow=false
+  h2        fs=50.96px lh=61.152px ls=-0.5096px weight=600 color=rgb(246, 227, 213) tt=none w=470px h=61px lines=1 clamp=none top=69 bottomOffset=-283 overflow=false
+  h3        fs=28.96px lh=34.752px ls=1.448px weight=300 color=rgb(229, 228, 226) tt=none w=470px h=35px lines=1 clamp=none top=138 bottomOffset=-240 overflow=false
+  p         fs=16px lh=24px ls=normal weight=400 color=rgb(250, 238, 230) tt=none w=470px h=96px lines=4 clamp=none top=189 bottomOffset=-128 overflow=false
+  cta       text="See More" fs=14px ls=0.7px weight=400 tt=uppercase color=rgb(253, 249, 247) bg=rgba(0, 0, 0, 0) border=rgb(250, 238, 230) size=131x47 top=317 bottom=-49
+  overline contrast vs #0D0F0F = NaN:1
+  h2 contrast vs #0D0F0F = NaN:1
+  h3 contrast vs #0D0F0F = NaN:1
+  p contrast vs #0D0F0F = NaN:1
+  cta text contrast vs #0D0F0F = NaN:1
+
+--- Spotlight [Focal] ---
+BOX 568x413 pad(T48px/B48px/L48px) innerOverflow=true
+  grid: [{"cls":"order-2 md:order-1 w-full","w":568,"h":413,"aspect":"1.38"},{"cls":"order-1 md:order-2 w-full","w":568,"h":413,"aspect":"1.38"}]
+  overline  fs=12px lh=16px ls=3.12px weight=300 color=rgb(212, 175, 55) tt=uppercase w=470px h=16px lines=1 clamp=none top=49 bottomOffset=-348 overflow=false
+  h2        fs=50.96px lh=61.152px ls=-0.5096px weight=600 color=rgb(246, 227, 213) tt=none w=470px h=61px lines=1 clamp=none top=69 bottomOffset=-283 overflow=false
+  h3        fs=28.96px lh=34.752px ls=1.448px weight=300 color=rgb(229, 228, 226) tt=none w=470px h=35px lines=1 clamp=none top=138 bottomOffset=-240 overflow=false
+  p         fs=16px lh=24px ls=normal weight=400 color=rgb(250, 238, 230) tt=none w=470px h=96px lines=4 clamp=none top=189 bottomOffset=-128 overflow=false
+  cta       text="See More" fs=14px ls=0.7px weight=400 tt=uppercase color=rgb(253, 249, 247) bg=rgba(0, 0, 0, 0) border=rgb(250, 238, 230) size=131x47 top=317 bottom=-49
+  overline contrast vs #0D0F0F = NaN:1
+  h2 contrast vs #0D0F0F = NaN:1
+  h3 contrast vs #0D0F0F = NaN:1
+  p contrast vs #0D0F0F = NaN:1
+  cta text contrast vs #0D0F0F = NaN:1
+
+DONE
+
+========== VIEWPORT tablet-834 (834x1112) ==========
+
+--- Spotlight [Meze] ---
+BOX 377x378 pad(T32px/B32px/L32px) innerOverflow=true
+  grid: [{"cls":"order-2 md:order-1 w-full","w":377,"h":378,"aspect":"1.00"},{"cls":"order-1 md:order-2 w-full","w":377,"h":378,"aspect":"1.00"}]
+  overline  fs=12px lh=16px ls=3.12px weight=300 color=rgb(212, 175, 55) tt=uppercase w=311px h=16px lines=1 clamp=none top=33 bottomOffset=-329 overflow=false
+  h2        fs=37.325px lh=44.79px ls=-0.37325px weight=600 color=rgb(246, 227, 213) tt=none w=311px h=90px lines=2 clamp=none top=53 bottomOffset=-235 overflow=false
+  h3        fs=22.7182px lh=27.2618px ls=1.13591px weight=300 color=rgb(229, 228, 226) tt=none w=311px h=27px lines=1 clamp=none top=151 bottomOffset=-200 overflow=false
+  p         fs=16px lh=24px ls=normal weight=400 color=rgb(250, 238, 230) tt=none w=311px h=72px lines=3 clamp=3 top=194 bottomOffset=-112 overflow=true
+  cta       text="See More" fs=14px ls=0.7px weight=400 tt=uppercase color=rgb(253, 249, 247) bg=rgba(0, 0, 0, 0) border=rgb(250, 238, 230) size=131x47 top=298 bottom=-33
+  overline contrast vs #0D0F0F = 9.14:1
+  h2 contrast vs #0D0F0F = 15.44:1
+  h3 contrast vs #0D0F0F = 15.13:1
+  p contrast vs #0D0F0F = 16.88:1
+  cta text contrast vs #0D0F0F = 18.37:1
+
+--- Spotlight [Dan Clark Audio] ---
+BOX 377x333 pad(T32px/B32px/L32px) innerOverflow=true
+  grid: [{"cls":"order-2 w-full aspect-square","w":377,"h":333,"aspect":"1.13"},{"cls":"order-1 w-full h-full","w":377,"h":333,"aspect":"1.13"}]
+  overline  fs=12px lh=16px ls=3.12px weight=300 color=rgb(212, 175, 55) tt=uppercase w=311px h=16px lines=1 clamp=none top=33 bottomOffset=-284 overflow=false
+  h2        fs=37.325px lh=44.79px ls=-0.37325px weight=600 color=rgb(246, 227, 213) tt=none w=311px h=45px lines=1 clamp=none top=53 bottomOffset=-235 overflow=false
+  h3        fs=22.7182px lh=27.2618px ls=1.13591px weight=300 color=rgb(229, 228, 226) tt=none w=311px h=27px lines=1 clamp=none top=106 bottomOffset=-200 overflow=false
+  p         fs=16px lh=24px ls=normal weight=400 color=rgb(250, 238, 230) tt=none w=311px h=72px lines=3 clamp=3 top=149 bottomOffset=-112 overflow=true
+  cta       text="See More" fs=14px ls=0.7px weight=400 tt=uppercase color=rgb(253, 249, 247) bg=rgba(0, 0, 0, 0) border=rgb(250, 238, 230) size=131x47 top=253 bottom=-33
+  overline contrast vs #0D0F0F = 9.14:1
+  h2 contrast vs #0D0F0F = 15.44:1
+  h3 contrast vs #0D0F0F = 15.13:1
+  p contrast vs #0D0F0F = 16.88:1
+  cta text contrast vs #0D0F0F = 18.37:1
+
+--- Spotlight [Focal] ---
+BOX 377x333 pad(T32px/B32px/L32px) innerOverflow=true
+  grid: [{"cls":"order-2 md:order-1 w-full","w":377,"h":333,"aspect":"1.13"},{"cls":"order-1 md:order-2 w-full","w":377,"h":333,"aspect":"1.13"}]
+  overline  fs=12px lh=16px ls=3.12px weight=300 color=rgb(212, 175, 55) tt=uppercase w=311px h=16px lines=1 clamp=none top=33 bottomOffset=-284 overflow=false
+  h2        fs=37.325px lh=44.79px ls=-0.37325px weight=600 color=rgb(246, 227, 213) tt=none w=311px h=45px lines=1 clamp=none top=53 bottomOffset=-235 overflow=false
+  h3        fs=22.7182px lh=27.2618px ls=1.13591px weight=300 color=rgb(229, 228, 226) tt=none w=311px h=27px lines=1 clamp=none top=106 bottomOffset=-200 overflow=false
+  p         fs=16px lh=24px ls=normal weight=400 color=rgb(250, 238, 230) tt=none w=311px h=72px lines=3 clamp=3 top=149 bottomOffset=-112 overflow=true
+  cta       text="See More" fs=14px ls=0.7px weight=400 tt=uppercase color=rgb(253, 249, 247) bg=rgba(0, 0, 0, 0) border=rgb(250, 238, 230) size=131x47 top=253 bottom=-33
+  overline contrast vs #0D0F0F = 9.14:1
+  h2 contrast vs #0D0F0F = 15.44:1
+  h3 contrast vs #0D0F0F = 15.13:1
+  p contrast vs #0D0F0F = 16.88:1
+  cta text contrast vs #0D0F0F = 18.37:1
+
+DONE
+
+========== VIEWPORT mobile-390 (390x844) ==========
+
+--- Spotlight [Meze] ---
+BOX 342x316 pad(T32px/B32px/L32px) innerOverflow=true
+  grid: [{"cls":"order-2 md:order-1 w-full","w":342,"h":342,"aspect":"1.00"},{"cls":"order-1 md:order-2 w-full","w":342,"h":316,"aspect":"1.08"}]
+  overline  fs=12px lh=16px ls=3.12px weight=300 color=rgb(212, 175, 55) tt=uppercase w=276px h=16px lines=1 clamp=none top=33 bottomOffset=-267 overflow=false
+  h2        fs=27.335px lh=32.802px ls=-0.27335px weight=600 color=rgb(246, 227, 213) tt=none w=276px h=33px lines=1 clamp=none top=53 bottomOffset=-230 overflow=false
+  h3        fs=18.145px lh=21.774px ls=0.90725px weight=300 color=rgb(229, 228, 226) tt=none w=276px h=22px lines=1 clamp=none top=94 bottomOffset=-200 overflow=false
+  p         fs=16px lh=24px ls=normal weight=400 color=rgb(250, 238, 230) tt=none w=276px h=72px lines=3 clamp=3 top=132 bottomOffset=-112 overflow=true
+  cta       text="See More" fs=14px ls=0.7px weight=400 tt=uppercase color=rgb(253, 249, 247) bg=rgba(0, 0, 0, 0) border=rgb(250, 238, 230) size=131x47 top=236 bottom=-33
+  overline contrast vs #0D0F0F = 9.14:1
+  h2 contrast vs #0D0F0F = 15.44:1
+  h3 contrast vs #0D0F0F = 15.13:1
+  p contrast vs #0D0F0F = 16.88:1
+  cta text contrast vs #0D0F0F = 18.37:1
+
+--- Spotlight [Dan Clark Audio] ---
+BOX 342x316 pad(T32px/B32px/L32px) innerOverflow=true
+  grid: [{"cls":"order-2 w-full aspect-square","w":342,"h":342,"aspect":"1.00"},{"cls":"order-1 w-full h-full","w":342,"h":316,"aspect":"1.08"}]
+  overline  fs=12px lh=16px ls=3.12px weight=300 color=rgb(212, 175, 55) tt=uppercase w=276px h=16px lines=1 clamp=none top=33 bottomOffset=-267 overflow=false
+  h2        fs=27.335px lh=32.802px ls=-0.27335px weight=600 color=rgb(246, 227, 213) tt=none w=276px h=33px lines=1 clamp=none top=53 bottomOffset=-230 overflow=false
+  h3        fs=18.145px lh=21.774px ls=0.90725px weight=300 color=rgb(229, 228, 226) tt=none w=276px h=22px lines=1 clamp=none top=94 bottomOffset=-200 overflow=false
+  p         fs=16px lh=24px ls=normal weight=400 color=rgb(250, 238, 230) tt=none w=276px h=72px lines=3 clamp=3 top=132 bottomOffset=-112 overflow=true
+  cta       text="See More" fs=14px ls=0.7px weight=400 tt=uppercase color=rgb(253, 249, 247) bg=rgba(0, 0, 0, 0) border=rgb(250, 238, 230) size=131x47 top=236 bottom=-33
+  overline contrast vs #0D0F0F = 9.14:1
+  h2 contrast vs #0D0F0F = 15.44:1
+  h3 contrast vs #0D0F0F = 15.13:1
+  p contrast vs #0D0F0F = 16.88:1
+  cta text contrast vs #0D0F0F = 18.37:1
+
+--- Spotlight [Focal] ---
+BOX 342x316 pad(T32px/B32px/L32px) innerOverflow=true
+  grid: [{"cls":"order-2 md:order-1 w-full","w":342,"h":342,"aspect":"1.00"},{"cls":"order-1 md:order-2 w-full","w":342,"h":316,"aspect":"1.08"}]
+  overline  fs=12px lh=16px ls=3.12px weight=300 color=rgb(212, 175, 55) tt=uppercase w=276px h=16px lines=1 clamp=none top=33 bottomOffset=-267 overflow=false
+  h2        fs=27.335px lh=32.802px ls=-0.27335px weight=600 color=rgb(246, 227, 213) tt=none w=276px h=33px lines=1 clamp=none top=53 bottomOffset=-230 overflow=false
+  h3        fs=18.145px lh=21.774px ls=0.90725px weight=300 color=rgb(229, 228, 226) tt=none w=276px h=22px lines=1 clamp=none top=94 bottomOffset=-200 overflow=false
+  p         fs=16px lh=24px ls=normal weight=400 color=rgb(250, 238, 230) tt=none w=276px h=72px lines=3 clamp=3 top=132 bottomOffset=-112 overflow=true
+  cta       text="See More" fs=14px ls=0.7px weight=400 tt=uppercase color=rgb(253, 249, 247) bg=rgba(0, 0, 0, 0) border=rgb(250, 238, 230) size=131x47 top=236 bottom=-33
+  overline contrast vs #0D0F0F = 9.14:1
+  h2 contrast vs #0D0F0F = 15.44:1
+  h3 contrast vs #0D0F0F = 15.13:1
+  p contrast vs #0D0F0F = 16.88:1
+  cta text contrast vs #0D0F0F = 18.37:1
+
+DONE
+
+========== VIEWPORT lg-touch-1366 (1366x768) ==========
+
+--- Spotlight [Meze] ---
+BOX 568x320 pad(T24px/B24px/L24px) innerOverflow=true
+  grid: [{"cls":"order-2 md:order-1 w-full","w":568,"h":320,"aspect":"1.78"},{"cls":"order-1 md:order-2 w-full","w":568,"h":320,"aspect":"1.78"}]
+  overline  fs=12px lh=16px ls=3.12px weight=300 color=rgb(212, 175, 55) tt=uppercase w=518px h=16px lines=1 clamp=none top=51 bottomOffset=-253 overflow=false
+  h2        fs=28.1978px lh=33.8374px ls=-0.281978px weight=600 color=rgb(246, 227, 213) tt=none w=518px h=34px lines=1 clamp=none top=71 bottomOffset=-215 overflow=false
+  h3        fs=21.5376px lh=25.8451px ls=1.07688px weight=300 color=rgb(229, 228, 226) tt=none w=518px h=26px lines=1 clamp=none top=109 bottomOffset=-185 overflow=false
+  p         fs=14px lh=21px ls=normal weight=400 color=rgb(250, 238, 230) tt=none w=518px h=63px lines=3 clamp=none top=143 bottomOffset=-114 overflow=false
+  cta       text="See More" fs=14px ls=0.7px weight=400 tt=uppercase color=rgb(253, 249, 247) bg=rgba(0, 0, 0, 0) border=rgb(250, 238, 230) size=131x47 top=222 bottom=-51
+  overline contrast vs #0D0F0F = 9.14:1
+  h2 contrast vs #0D0F0F = 15.44:1
+  h3 contrast vs #0D0F0F = 15.13:1
+  p contrast vs #0D0F0F = 16.88:1
+  cta text contrast vs #0D0F0F = 18.37:1
+
+--- Spotlight [Dan Clark Audio] ---
+BOX 568x320 pad(T24px/B24px/L24px) innerOverflow=true
+  grid: [{"cls":"order-2 w-full aspect-square","w":568,"h":320,"aspect":"1.78"},{"cls":"order-1 w-full h-full","w":568,"h":320,"aspect":"1.78"}]
+  overline  fs=12px lh=16px ls=3.12px weight=300 color=rgb(212, 175, 55) tt=uppercase w=518px h=16px lines=1 clamp=none top=51 bottomOffset=-253 overflow=false
+  h2        fs=28.1978px lh=33.8374px ls=-0.281978px weight=600 color=rgb(246, 227, 213) tt=none w=518px h=34px lines=1 clamp=none top=71 bottomOffset=-215 overflow=false
+  h3        fs=21.5376px lh=25.8451px ls=1.07688px weight=300 color=rgb(229, 228, 226) tt=none w=518px h=26px lines=1 clamp=none top=109 bottomOffset=-185 overflow=false
+  p         fs=14px lh=21px ls=normal weight=400 color=rgb(250, 238, 230) tt=none w=518px h=63px lines=3 clamp=none top=143 bottomOffset=-114 overflow=false
+  cta       text="See More" fs=14px ls=0.7px weight=400 tt=uppercase color=rgb(253, 249, 247) bg=rgba(0, 0, 0, 0) border=rgb(250, 238, 230) size=131x47 top=222 bottom=-51
+  overline contrast vs #0D0F0F = 9.14:1
+  h2 contrast vs #0D0F0F = 15.44:1
+  h3 contrast vs #0D0F0F = 15.13:1
+  p contrast vs #0D0F0F = 16.88:1
+  cta text contrast vs #0D0F0F = 18.37:1
+
+--- Spotlight [Focal] ---
+BOX 568x320 pad(T24px/B24px/L24px) innerOverflow=true
+  grid: [{"cls":"order-2 md:order-1 w-full","w":568,"h":320,"aspect":"1.78"},{"cls":"order-1 md:order-2 w-full","w":568,"h":320,"aspect":"1.78"}]
+  overline  fs=12px lh=16px ls=3.12px weight=300 color=rgb(212, 175, 55) tt=uppercase w=518px h=16px lines=1 clamp=none top=51 bottomOffset=-253 overflow=false
+  h2        fs=28.1978px lh=33.8374px ls=-0.281978px weight=600 color=rgb(246, 227, 213) tt=none w=518px h=34px lines=1 clamp=none top=71 bottomOffset=-215 overflow=false
+  h3        fs=21.5376px lh=25.8451px ls=1.07688px weight=300 color=rgb(229, 228, 226) tt=none w=518px h=26px lines=1 clamp=none top=109 bottomOffset=-185 overflow=false
+  p         fs=14px lh=21px ls=normal weight=400 color=rgb(250, 238, 230) tt=none w=518px h=63px lines=3 clamp=none top=143 bottomOffset=-114 overflow=false
+  cta       text="See More" fs=14px ls=0.7px weight=400 tt=uppercase color=rgb(253, 249, 247) bg=rgba(0, 0, 0, 0) border=rgb(250, 238, 230) size=131x47 top=222 bottom=-51
+  overline contrast vs #0D0F0F = 9.14:1
+  h2 contrast vs #0D0F0F = 15.44:1
+  h3 contrast vs #0D0F0F = 15.13:1
+  p contrast vs #0D0F0F = 16.88:1
+  cta text contrast vs #0D0F0F = 18.37:1
+
+DONE
+
+========== VIEWPORT narrow-320 (320x700) ==========
+
+--- Spotlight [Meze] ---
+BOX 272x369 pad(T32px/B32px/L32px) innerOverflow=true
+  grid: [{"cls":"order-2 md:order-1 w-full","w":272,"h":272,"aspect":"1.00"},{"cls":"order-1 md:order-2 w-full","w":272,"h":369,"aspect":"0.74"}]
+  overline  fs=12px lh=16px ls=3.12px weight=300 color=rgb(212, 175, 55) tt=uppercase w=206px h=16px lines=1 clamp=none top=33 bottomOffset=-320 overflow=false
+  h2        fs=27px lh=32.4px ls=-0.27px weight=600 color=rgb(246, 227, 213) tt=none w=206px h=65px lines=2 clamp=none top=53 bottomOffset=-251 overflow=false
+  h3        fs=18px lh=21.6px ls=0.9px weight=300 color=rgb(229, 228, 226) tt=none w=206px h=43px lines=2 clamp=none top=126 bottomOffset=-200 overflow=false
+  p         fs=16px lh=24px ls=normal weight=400 color=rgb(250, 238, 230) tt=none w=206px h=72px lines=3 clamp=3 top=185 bottomOffset=-112 overflow=true
+  cta       text="See More" fs=14px ls=0.7px weight=400 tt=uppercase color=rgb(253, 249, 247) bg=rgba(0, 0, 0, 0) border=rgb(250, 238, 230) size=131x47 top=289 bottom=-33
+  overline contrast vs #0D0F0F = 9.14:1
+  h2 contrast vs #0D0F0F = 15.44:1
+  h3 contrast vs #0D0F0F = 15.13:1
+  p contrast vs #0D0F0F = 16.88:1
+  cta text contrast vs #0D0F0F = 18.37:1
+
+--- Spotlight [Dan Clark Audio] ---
+BOX 272x315 pad(T32px/B32px/L32px) innerOverflow=true
+  grid: [{"cls":"order-2 w-full aspect-square","w":272,"h":272,"aspect":"1.00"},{"cls":"order-1 w-full h-full","w":272,"h":315,"aspect":"0.86"}]
+  overline  fs=12px lh=16px ls=3.12px weight=300 color=rgb(212, 175, 55) tt=uppercase w=206px h=16px lines=1 clamp=none top=33 bottomOffset=-266 overflow=false
+  h2        fs=27px lh=32.4px ls=-0.27px weight=600 color=rgb(246, 227, 213) tt=none w=206px h=32px lines=1 clamp=none top=53 bottomOffset=-230 overflow=false
+  h3        fs=18px lh=21.6px ls=0.9px weight=300 color=rgb(229, 228, 226) tt=none w=206px h=22px lines=1 clamp=none top=93 bottomOffset=-200 overflow=false
+  p         fs=16px lh=24px ls=normal weight=400 color=rgb(250, 238, 230) tt=none w=206px h=72px lines=3 clamp=3 top=131 bottomOffset=-112 overflow=true
+  cta       text="See More" fs=14px ls=0.7px weight=400 tt=uppercase color=rgb(253, 249, 247) bg=rgba(0, 0, 0, 0) border=rgb(250, 238, 230) size=131x47 top=235 bottom=-33
+  overline contrast vs #0D0F0F = 9.14:1
+  h2 contrast vs #0D0F0F = 15.44:1
+  h3 contrast vs #0D0F0F = 15.13:1
+  p contrast vs #0D0F0F = 16.88:1
+  cta text contrast vs #0D0F0F = 18.37:1
+
+--- Spotlight [Focal] ---
+BOX 272x315 pad(T32px/B32px/L32px) innerOverflow=true
+  grid: [{"cls":"order-2 md:order-1 w-full","w":272,"h":272,"aspect":"1.00"},{"cls":"order-1 md:order-2 w-full","w":272,"h":315,"aspect":"0.86"}]
+  overline  fs=12px lh=16px ls=3.12px weight=300 color=rgb(212, 175, 55) tt=uppercase w=206px h=16px lines=1 clamp=none top=33 bottomOffset=-266 overflow=false
+  h2        fs=27px lh=32.4px ls=-0.27px weight=600 color=rgb(246, 227, 213) tt=none w=206px h=32px lines=1 clamp=none top=53 bottomOffset=-230 overflow=false
+  h3        fs=18px lh=21.6px ls=0.9px weight=300 color=rgb(229, 228, 226) tt=none w=206px h=22px lines=1 clamp=none top=93 bottomOffset=-200 overflow=false
+  p         fs=16px lh=24px ls=normal weight=400 color=rgb(250, 238, 230) tt=none w=206px h=72px lines=3 clamp=3 top=131 bottomOffset=-112 overflow=true
+  cta       text="See More" fs=14px ls=0.7px weight=400 tt=uppercase color=rgb(253, 249, 247) bg=rgba(0, 0, 0, 0) border=rgb(250, 238, 230) size=131x47 top=235 bottom=-33
+  overline contrast vs #0D0F0F = 9.14:1
+  h2 contrast vs #0D0F0F = 15.44:1
+  h3 contrast vs #0D0F0F = 15.13:1
+  p contrast vs #0D0F0F = 16.88:1
+  cta text contrast vs #0D0F0F = 18.37:1
+
+DONE
+
+========== VIEWPORT wide-1920 (1920x1080) ==========
+
+--- Spotlight [Meze] ---
+BOX 568x413 pad(T48px/B48px/L48px) innerOverflow=true
+  grid: [{"cls":"order-2 md:order-1 w-full","w":568,"h":413,"aspect":"1.38"},{"cls":"order-1 md:order-2 w-full","w":568,"h":413,"aspect":"1.38"}]
+  overline  fs=12px lh=16px ls=3.12px weight=300 color=rgb(212, 175, 55) tt=uppercase w=470px h=16px lines=1 clamp=none top=49 bottomOffset=-348 overflow=false
+  h2        fs=51px lh=61.2px ls=-0.51px weight=600 color=rgb(246, 227, 213) tt=none w=470px h=61px lines=1 clamp=none top=69 bottomOffset=-283 overflow=false
+  h3        fs=29px lh=34.8px ls=1.45px weight=300 color=rgb(229, 228, 226) tt=none w=470px h=35px lines=1 clamp=none top=138 bottomOffset=-240 overflow=false
+  p         fs=16px lh=24px ls=normal weight=400 color=rgb(250, 238, 230) tt=none w=470px h=96px lines=4 clamp=none top=189 bottomOffset=-128 overflow=false
+  cta       text="See More" fs=14px ls=0.7px weight=400 tt=uppercase color=rgb(253, 249, 247) bg=rgba(0, 0, 0, 0) border=rgb(250, 238, 230) size=131x47 top=317 bottom=-49
+  overline contrast vs #0D0F0F = 9.14:1
+  h2 contrast vs #0D0F0F = 15.44:1
+  h3 contrast vs #0D0F0F = 15.13:1
+  p contrast vs #0D0F0F = 16.88:1
+  cta text contrast vs #0D0F0F = 18.37:1
+
+--- Spotlight [Dan Clark Audio] ---
+BOX 568x413 pad(T48px/B48px/L48px) innerOverflow=true
+  grid: [{"cls":"order-2 w-full aspect-square","w":568,"h":413,"aspect":"1.38"},{"cls":"order-1 w-full h-full","w":568,"h":413,"aspect":"1.38"}]
+  overline  fs=12px lh=16px ls=3.12px weight=300 color=rgb(212, 175, 55) tt=uppercase w=470px h=16px lines=1 clamp=none top=49 bottomOffset=-348 overflow=false
+  h2        fs=51px lh=61.2px ls=-0.51px weight=600 color=rgb(246, 227, 213) tt=none w=470px h=61px lines=1 clamp=none top=69 bottomOffset=-283 overflow=false
+  h3        fs=29px lh=34.8px ls=1.45px weight=300 color=rgb(229, 228, 226) tt=none w=470px h=35px lines=1 clamp=none top=138 bottomOffset=-240 overflow=false
+  p         fs=16px lh=24px ls=normal weight=400 color=rgb(250, 238, 230) tt=none w=470px h=96px lines=4 clamp=none top=189 bottomOffset=-128 overflow=false
+  cta       text="See More" fs=14px ls=0.7px weight=400 tt=uppercase color=rgb(253, 249, 247) bg=rgba(0, 0, 0, 0) border=rgb(250, 238, 230) size=131x47 top=317 bottom=-49
+  overline contrast vs #0D0F0F = 9.14:1
+  h2 contrast vs #0D0F0F = 15.44:1
+  h3 contrast vs #0D0F0F = 15.13:1
+  p contrast vs #0D0F0F = 16.88:1
+  cta text contrast vs #0D0F0F = 18.37:1
+
+--- Spotlight [Focal] ---
+BOX 568x413 pad(T48px/B48px/L48px) innerOverflow=true
+  grid: [{"cls":"order-2 md:order-1 w-full","w":568,"h":413,"aspect":"1.38"},{"cls":"order-1 md:order-2 w-full","w":568,"h":413,"aspect":"1.38"}]
+  overline  fs=12px lh=16px ls=3.12px weight=300 color=rgb(212, 175, 55) tt=uppercase w=470px h=16px lines=1 clamp=none top=49 bottomOffset=-348 overflow=false
+  h2        fs=51px lh=61.2px ls=-0.51px weight=600 color=rgb(246, 227, 213) tt=none w=470px h=61px lines=1 clamp=none top=69 bottomOffset=-283 overflow=false
+  h3        fs=29px lh=34.8px ls=1.45px weight=300 color=rgb(229, 228, 226) tt=none w=470px h=35px lines=1 clamp=none top=138 bottomOffset=-240 overflow=false
+  p         fs=16px lh=24px ls=normal weight=400 color=rgb(250, 238, 230) tt=none w=470px h=96px lines=4 clamp=none top=189 bottomOffset=-128 overflow=false
+  cta       text="See More" fs=14px ls=0.7px weight=400 tt=uppercase color=rgb(253, 249, 247) bg=rgba(0, 0, 0, 0) border=rgb(250, 238, 230) size=131x47 top=317 bottom=-49
+  overline contrast vs #0D0F0F = 9.14:1
+  h2 contrast vs #0D0F0F = 15.44:1
+  h3 contrast vs #0D0F0F = 15.13:1
+  p contrast vs #0D0F0F = 16.88:1
+  cta text contrast vs #0D0F0F = 18.37:1
+
+DONE
+
+========== VIEWPORT tablet-834 (834x1112) ==========
+
+========== VIEWPORT mobile-390 (390x844) ==========
+
+========== VIEWPORT lg-touch-1366 (1366x768) ==========
+
+========== VIEWPORT tablet-834 (834x1112) ==========

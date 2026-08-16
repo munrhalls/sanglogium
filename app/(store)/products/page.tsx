@@ -24,7 +24,7 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
   const allKeys = getAllLeafKeys();
 
   const productsPromise = getProductsByVfsKeys({ keys: allKeys, sort, filters, page });
-  const filtersPromise = getFiltersForCategoryPath(allKeys);
+  const filtersPromise = getFiltersForCategoryPath(allKeys, filters);
 
   return (
     <div className="mx-auto w-full max-w-content px-4 md:px-8 pb-12">

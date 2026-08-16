@@ -1,0 +1,53 @@
+
+> sang-logium@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.5.15
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.15:3000
+   - Environments: .env.local, .env
+   - Experiments (use with caution):
+     ✓ inlineCss
+     ✓ optimizeCss
+     · clientTraceMetadata
+     · ...
+
+ ✓ Starting...
+ ○ Compiling /instrumentation ...
+ ✓ Compiled /instrumentation in 13.6s (2341 modules)
+ ✓ Ready in 45.7s
+ ○ Compiling /middleware ...
+ ✓ Compiled /middleware in 2.4s (1993 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 36.6s (9424 modules)
+✅ Catalogue index validation passed
+✅ Catalogue index validation passed
+✅ Catalogue index validation passed
+✅ Catalogue index validation passed
+✅ Catalogue index validation passed
+Homepage Data Fetch (Batched): 3.117s
+ ✓ Compiled in 18.2s (3400 modules)
+✅ Catalogue index validation passed
+Homepage Data Fetch (Batched): 3.096s
+ GET / 200 in 9779ms
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 673ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 701ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 41ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ ○ Compiling /api/analytics/vitals ...
+ ✓ Compiled /api/analytics/vitals in 5.8s (9427 modules)
+✅ Catalogue index validation passed
+Homepage Data Fetch (Batched): 645.871ms
+ GET / 200 in 6976ms
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 466ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 479ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 31ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+{"event":"web_vital","name":"FCP","value":960,"rating":"good","navigationType":"navigate"}
+ POST /api/analytics/vitals 200 in 66ms
+{"event":"web_vital","name":"TTFB","value":745.1999999992549,"rating":"good","navigationType":"navigate"}
+ POST /api/analytics/vitals 200 in 83ms

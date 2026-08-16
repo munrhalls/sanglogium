@@ -5,7 +5,7 @@
 //   T2.3 (A5) distinct brands derived without fetching every product.
 //
 // The Promise.all order is:
-//   [cmsFilters, minPrice, maxPrice, maxStock, count, brands]
+//   [cmsFilters, minPrice, maxPrice, maxStock, count, facetData]
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
@@ -55,26 +55,29 @@ describe("getFiltersForCategoryPath", () => {
       await promise;
     });
 
-    it("derives distinct brands via a server-side unique query (T2.3)", async () => {
+    it("derives distinct brands and per-option counts from the facet-data query", async () => {
       mockSanityFetch
         .mockResolvedValueOnce(null) // cmsFilters
         .mockResolvedValueOnce({ price_data: { unit_amount: 29900 } }) // minPrice
         .mockResolvedValueOnce({ price_data: { unit_amount: 399900 } }) // maxPrice
         .mockResolvedValueOnce({ stock: 20 }) // maxStock
         .mockResolvedValueOnce(5) // count
-        .mockResolvedValueOnce(["Sennheiser", "Focal"]); // distinct brands
+        .mockResolvedValueOnce([
+          { brandName: "Focal", overviewFields: [], specifications: [] },
+          { brandName: "Sennheiser", overviewFields: [], specifications: [] },
+        ]); // facetData
 
       const result = await getFiltersForCategoryPath(["k"]);
 
-      const brandsQuery = mockSanityFetch.mock.calls[5][0].query;
-      expect(brandsQuery).toContain("array::unique");
+      const facetDataQuery = mockSanityFetch.mock.calls[5][0].query;
+      expect(facetDataQuery).not.toContain("array::unique");
 
       expect(result.priceRange).toEqual({ minPrice: 29900, maxPrice: 399900 });
       expect(result.maxStock).toBe(20);
       const brandGroup = result.filters.find((f) => f.field === "brand");
       expect(brandGroup?.options).toEqual([
-        { value: "Focal", label: "Focal" },
-        { value: "Sennheiser", label: "Sennheiser" },
+        { value: "Focal", label: "Focal", count: 1 },
+        { value: "Sennheiser", label: "Sennheiser", count: 1 },
       ]);
     });
 
@@ -85,7 +88,7 @@ describe("getFiltersForCategoryPath", () => {
         .mockResolvedValueOnce(null) // maxPrice
         .mockResolvedValueOnce(null) // maxStock
         .mockResolvedValueOnce(0) // count
-        .mockResolvedValueOnce([]); // brands
+        .mockResolvedValueOnce([]); // facetData
 
       const result = await getFiltersForCategoryPath(["k"]);
       expect(result.filters).toEqual([]);
@@ -104,7 +107,7 @@ describe("getFiltersForCategoryPath", () => {
         .mockResolvedValueOnce(null) // maxPrice
         .mockResolvedValueOnce(null) // maxStock
         .mockResolvedValueOnce(3) // count
-        .mockResolvedValueOnce(["Sennheiser"]); // distinct brands (no Sony)
+        .mockResolvedValueOnce([{ brandName: "Sennheiser", overviewFields: [], specifications: [] }]); // facetData (no Sony)
 
       const result = await getFiltersForCategoryPath(["k"]);
 

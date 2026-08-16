@@ -52,7 +52,7 @@ export default async function Hero({ heroData }: HeroProps) {
 
   const desktopPosition = getPosition(heroData.backgroundImage);
   const mobilePosition = getPosition(mobileBackgroundImage);
-  const ctaLink = heroData.ctaLink || "/products/headphones";
+  const ctaLink = heroData.ctaLink || "/products";
 
   return (
     <section
@@ -97,11 +97,11 @@ export default async function Hero({ heroData }: HeroProps) {
             )}
           >
             <div className="flex flex-col gap-2">
-              <h1 className="type-hero-headline lg:text-[clamp(2.75rem,1.5vw_+_2rem,4.5rem)]">
+              <h1 className="type-hero-headline uppercase lg:text-[clamp(2.75rem,1.5vw_+_2rem,4.5rem)]">
                 {heroData.headline}
               </h1>
-              <p className="type-hero-sub m-0 p-0 lg:text-[clamp(1.125rem,0.4vw_+_1rem,1.5rem)]">
-                {heroData.subheadline || "Hear the difference."}
+              <p className="type-hero-sub m-0 p-0 font-light lg:text-[clamp(1.125rem,0.4vw_+_1rem,1.5rem)]">
+                {heroData.subheadline || "Curated by audio engineers"}
               </p>
             </div>
 
@@ -109,10 +109,10 @@ export default async function Hero({ heroData }: HeroProps) {
               href={ctaLink}
               className={cn(
                 "btn-primary px-10 py-4 lg:py-5",
-                "text-cta-hero font-bold"
+                "text-cta-hero font-bold uppercase"
               )}
             >
-              {heroData.ctaText || "DISCOVER"}
+              {heroData.ctaText || "Shop the Collection"}
             </Link>
           </div>
         </div>

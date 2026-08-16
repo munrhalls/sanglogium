@@ -1,0 +1,342 @@
+
+> sang-logium@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.5.15
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.15:3000
+   - Environments: .env.local, .env
+   - Experiments (use with caution):
+     ✓ inlineCss
+     ✓ optimizeCss
+     · clientTraceMetadata
+     · ...
+
+ ✓ Starting...
+ ○ Compiling /instrumentation ...
+ ✓ Compiled /instrumentation in 28s (2341 modules)
+ ✓ Ready in 91.5s
+ ○ Compiling /middleware ...
+ ✓ Compiled /middleware in 3.9s (1993 modules)
+ ○ Compiling / ...
+ ✓ Compiled /products/[...slug] in 124.4s (16998 modules)
+✅ Catalogue index validation passed
+✅ Catalogue index validation passed
+✅ Catalogue index validation passed
+✅ Catalogue index validation passed
+Homepage Data Fetch (Batched): 5.666s
+✅ Catalogue index validation passed
+✅ Catalogue index validation passed
+ GET /products/audio-electronics 200 in 149986ms
+Homepage Data Fetch (Batched): 44.558s
+ GET / 200 in 61793ms
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 758ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 766ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 46ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+✅ Catalogue index validation passed
+ GET /products/audio-electronics 200 in 8502ms
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=count%28*.. 200 in 475ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 503ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 542ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 550ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 560ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=array%3A%.. 200 in 561ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=count%28*.. 200 in 604ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 1056ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ POST http://localhost:3000/__nextjs_original-stack.. 200 in 1073ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ ○ Compiling /api/analytics/vitals ...
+ ✓ Compiled / in 34.4s (17007 modules)
+✅ Catalogue index validation passed
+Homepage Data Fetch (Batched): 2.665s
+ GET / 200 in 52782ms
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 2243ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 2250ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 64ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+✅ Catalogue index validation passed
+Homepage Data Fetch (Batched): 1.179s
+ GET / 200 in 30212ms
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 806ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 855ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 66ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+✅ Catalogue index validation passed
+Homepage Data Fetch (Batched): 1.275s
+✅ Catalogue index validation passed
+Homepage Data Fetch (Batched): 2.716s
+ GET / 200 in 27981ms
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 755ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 844ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 70ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ GET / 200 in 22566ms
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 700ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 712ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 44ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+✅ Catalogue index validation passed
+Homepage Data Fetch (Batched): 1.325s
+✅ Catalogue index validation passed
+ GET /products/audio-electronics 200 in 9200ms
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 580ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=array%3A%.. 200 in 597ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 668ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 723ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 744ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=count%28*.. 200 in 880ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=count%28*.. 200 in 984ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 1011ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ POST http://localhost:3000/__nextjs_original-stack.. 200 in 2766ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+{"event":"web_vital","name":"FCP","value":2548,"rating":"needs-improvement","navigationType":"navigate"}
+ POST /api/analytics/vitals 200 in 439ms
+{"event":"web_vital","name":"TTFB","value":1819.3000000002794,"rating":"poor","navigationType":"navigate"}
+ POST /api/analytics/vitals 200 in 602ms
+ GET /api/auth/get-session 200 in 376ms
+ GET / 200 in 32996ms
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 850ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 885ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 64ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+{"event":"web_vital","name":"FCP","value":1672,"rating":"good","navigationType":"navigate"}
+ POST /api/analytics/vitals 200 in 303ms
+{"event":"web_vital","name":"TTFB","value":1333.8000000002794,"rating":"needs-improvement","navigationType":"navigate"}
+ POST /api/analytics/vitals 200 in 309ms
+✅ Catalogue index validation passed
+Homepage Data Fetch (Batched): 1.440s
+ GET / 200 in 24688ms
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 763ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 788ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 67ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+{"event":"web_vital","name":"FCP","value":1408,"rating":"good","navigationType":"navigate"}
+ POST /api/analytics/vitals 200 in 254ms
+✅ Catalogue index validation passed
+Homepage Data Fetch (Batched): 1.388s
+ GET / 200 in 22297ms
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 877ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 884ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 37ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+{"event":"web_vital","name":"FCP","value":1380,"rating":"good","navigationType":"navigate"}
+ POST /api/analytics/vitals 200 in 331ms
+✅ Catalogue index validation passed
+Homepage Data Fetch (Batched): 1.415s
+✅ Catalogue index validation passed
+ GET /products/audio-electronics 200 in 10747ms
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 3033ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 3063ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 3059ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 3099ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=count%28*.. 200 in 3103ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 3228ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=count%28*.. 200 in 3291ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=array%3A%.. 200 in 3351ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ POST http://localhost:3000/__nextjs_original-stack.. 200 in 897ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+{"event":"web_vital","name":"FCP","value":6576,"rating":"poor","navigationType":"navigate"}
+ POST /api/analytics/vitals 200 in 467ms
+{"event":"web_vital","name":"TTFB","value":3221.7999999998137,"rating":"poor","navigationType":"navigate"}
+ POST /api/analytics/vitals 200 in 665ms
+ GET /api/auth/get-session 200 in 562ms
+ GET / 200 in 43230ms
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 932ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 952ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 39ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+{"event":"web_vital","name":"FCP","value":1624,"rating":"good","navigationType":"navigate"}
+ POST /api/analytics/vitals 200 in 675ms
+✅ Catalogue index validation passed
+Homepage Data Fetch (Batched): 1.543s
+ GET / 200 in 27865ms
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 914ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 954ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 149ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+{"event":"web_vital","name":"FCP","value":1628,"rating":"good","navigationType":"navigate"}
+ POST /api/analytics/vitals 200 in 329ms
+✅ Catalogue index validation passed
+Homepage Data Fetch (Batched): 1.465s
+ GET / 200 in 26304ms
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 948ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 953ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 80ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+{"event":"web_vital","name":"FCP","value":1456,"rating":"good","navigationType":"navigate"}
+ POST /api/analytics/vitals 200 in 266ms
+✅ Catalogue index validation passed
+Homepage Data Fetch (Batched): 1.338s
+ GET / 200 in 21174ms
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 863ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 881ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 47ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+{"event":"web_vital","name":"FCP","value":1652,"rating":"good","navigationType":"navigate"}
+ POST /api/analytics/vitals 200 in 188ms
+{"event":"web_vital","name":"TTFB","value":1273.1999999997206,"rating":"needs-improvement","navigationType":"navigate"}
+ POST /api/analytics/vitals 200 in 295ms
+✅ Catalogue index validation passed
+ GET /products/audio-electronics 200 in 4724ms
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 409ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 439ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=count%28*.. 200 in 456ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=count%28*.. 200 in 440ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=array%3A%.. 200 in 451ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 555ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 576ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 598ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ POST http://localhost:3000/__nextjs_original-stack.. 200 in 644ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+{"event":"web_vital","name":"FCP","value":1920,"rating":"needs-improvement","navigationType":"navigate"}
+ POST /api/analytics/vitals 200 in 267ms
+{"event":"web_vital","name":"TTFB","value":1282.1000000000931,"rating":"needs-improvement","navigationType":"navigate"}
+ POST /api/analytics/vitals 200 in 257ms
+ GET /api/auth/get-session 200 in 859ms
+✅ Catalogue index validation passed
+ GET /products/audio-electronics 200 in 8007ms
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 1214ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=count%28*.. 200 in 1243ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 1246ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 1275ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 1288ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 1321ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=count%28*.. 200 in 1566ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=array%3A%.. 200 in 1579ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ POST http://localhost:3000/__nextjs_original-stack.. 200 in 885ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+{"event":"web_vital","name":"FCP","value":4040,"rating":"poor","navigationType":"navigate"}
+ POST /api/analytics/vitals 200 in 295ms
+{"event":"web_vital","name":"TTFB","value":2407.8000000002794,"rating":"poor","navigationType":"navigate"}
+ POST /api/analytics/vitals 200 in 169ms
+ GET /api/auth/get-session 200 in 1084ms
+✅ Catalogue index validation passed
+Homepage Data Fetch (Batched): 3.047s
+ GET / 200 in 17226ms
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 2763ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 2712ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 83ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+✅ Catalogue index validation passed
+Homepage Data Fetch (Batched): 1.237s
+ GET / 200 in 15764ms
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 996ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 1047ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 77ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+✅ Catalogue index validation passed
+Homepage Data Fetch (Batched): 855.481ms
+ GET / 200 in 15503ms
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 632ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 642ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 55ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+✅ Catalogue index validation passed
+Homepage Data Fetch (Batched): 1.728s
+ GET / 200 in 22172ms
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 1067ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 1096ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 72ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+{"event":"web_vital","name":"FCP","value":1872,"rating":"needs-improvement","navigationType":"navigate"}
+ POST /api/analytics/vitals 200 in 256ms
+ POST /api/analytics/vitals 200 in 186ms
+✅ Catalogue index validation passed
+Homepage Data Fetch (Batched): 1.127s
+ GET / 200 in 11724ms
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 762ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 770ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 77ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ ✓ Compiled in 20.4s (16999 modules)
+✅ Catalogue index validation passed
+Homepage Data Fetch (Batched): 2.092s
+ GET / 200 in 29883ms
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 1639ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=%0A++*%5B.. 200 in 1968ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ │ GET https://2tdmkpky.apicdn.../v2024-11-26/data/query/..?query=*%5B_type.. 200 in 64ms (cache skip)
+ │ │ Cache skipped reason: (auto no cache)
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 13.8s (17005 modules)
+ GET / 404 in 14756ms
+ ○ Compiling /api/analytics/vitals ...
+ ✓ Compiled /api/analytics/vitals in 26.9s (10570 modules)
+{"event":"web_vital","name":"CLS","value":0.0011224924611766436,"rating":"good","navigationType":"reload"}
+ POST /api/analytics/vitals 200 in 29818ms

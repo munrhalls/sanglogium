@@ -10,6 +10,7 @@ import { resolvePriceBounds } from '@/lib/catalogue/priceBounds';
 interface FilterOption {
   value: string;
   label: string;
+  count?: number;
 }
 
 interface FilterGroup {
@@ -100,18 +101,21 @@ export function MobileFilterDrawer({ isOpen, onClose, filters, priceRange: price
       <aside
         id="mobile-filter-drawer"
         data-testid="mobile-filter-drawer"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="mobile-filter-drawer-title"
+        inert={!isOpen}
         className={`
           fixed bottom-0 left-0 right-0 z-50 max-h-[85vh]
           transform transition-transform duration-300 ease-out
           lg:hidden
           ${isOpen ? 'translate-y-0' : 'translate-y-full'}
         `}
-        aria-label="Filter options"
       >
         <div className="flex flex-col h-full bg-surface-card rounded-t-lg">
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-border-secondary">
-            <h2 className="type-overline">
+            <h2 id="mobile-filter-drawer-title" className="type-overline">
               Filters
             </h2>
             <button
@@ -159,6 +163,8 @@ export function MobileFilterDrawer({ isOpen, onClose, filters, priceRange: price
                           checked={isChecked}
                           onChange={() => toggleFilter(group.field, option.value)}
                           label={option.label}
+                          count={option.count}
+                          disabled={!isChecked && (option.count ?? 0) === 0}
                         />
                       );
                     })}
@@ -172,7 +178,14 @@ export function MobileFilterDrawer({ isOpen, onClose, filters, priceRange: price
           <div className="sticky bottom-0 p-4 border-t border-border-secondary bg-surface-card">
             <button
               type="button"
-              onClick={onClose}
+              onClick={() => {
+                onClose();
+                requestAnimationFrame(() => {
+                  document
+                    .querySelector<HTMLElement>('[data-testid="product-grid"]')
+                    ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+              }}
               className="w-full btn-primary"
             >
               Show Results

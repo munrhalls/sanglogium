@@ -25,7 +25,7 @@ export default async function Accessories({ accessoriesData }: AccessoriesProps)
         <div className="absolute bottom-[5%] right-[5%] w-[40%] h-[40%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-10" />
       </div>
       <div className="relative z-10">
-        <div className="mx-auto max-w-content space-y-12 px-6 py-16 md:py-24 lg:py-12 lg-touch:py-12 lg:px-8">
+        <div className="mx-auto max-w-content space-y-10 px-4 py-12 md:space-y-12 md:px-8 md:py-24 lg:py-12 lg-touch:py-12 lg:px-8">
           <div className="text-brand-700">
             <AccessoriesHeader />
           </div>

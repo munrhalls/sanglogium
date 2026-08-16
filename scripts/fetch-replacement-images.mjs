@@ -6,9 +6,12 @@
 import fs from "fs/promises";
 import path from "path";
 
-const BROKEN_LIST = JSON.parse(
-  await fs.readFile("broken-accessories-main-images.json", "utf8"),
-);
+// CLI args (optional): <brokenListFile> <outputMappingFile>
+// Defaults keep the original accessories behavior.
+const BROKEN_LIST_FILE = process.argv[2] || "broken-accessories-main-images.json";
+const OUTPUT_MAPPING_FILE = process.argv[3] || "scripts/replacement-images-result.json";
+
+const BROKEN_LIST = JSON.parse(await fs.readFile(BROKEN_LIST_FILE, "utf8"));
 
 const STORES = [
   { name: "apos.audio", base: "https://apos.audio" },
@@ -21,6 +24,19 @@ const HANDLE_OVERRIDES = {
   "meze-manta-headphone-stand": "apos-certified-meze-manta-headphone-stand",
   "ro75-compact-keyboard": "apos-certified-ro75-compact-keyboard",
 };
+
+// Candidate handles to try, in order: explicit override, raw handle, handle
+// minus "-apos-certified" suffix, and handle with "apos-certified-" prefix.
+function handleCandidates(baseHandle) {
+  const cands = [];
+  if (HANDLE_OVERRIDES[baseHandle]) cands.push(HANDLE_OVERRIDES[baseHandle]);
+  cands.push(baseHandle);
+  if (baseHandle.endsWith("-apos-certified")) {
+    cands.push(baseHandle.slice(0, -"-apos-certified".length));
+  }
+  cands.push("apos-certified-" + baseHandle);
+  return [...new Set(cands)];
+}
 
 const UA =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36";
@@ -48,23 +64,26 @@ function extFromUrl(url) {
 const results = [];
 for (const product of BROKEN_LIST) {
   const baseHandle = product.slug.replace("/product/", "");
-  const handle = HANDLE_OVERRIDES[baseHandle] ?? baseHandle;
+  const candidates = handleCandidates(baseHandle);
   console.log(`\n=== ${product.name} ===`);
 
   let found = null;
   let foundStore = null;
   for (const store of STORES) {
-    try {
-      const p = await getShopifyProduct(store, handle);
-      if (p && p.image && p.image.src) {
-        found = p.image.src;
-        foundStore = store.name;
-        break;
+    for (const handle of candidates) {
+      try {
+        const p = await getShopifyProduct(store, handle);
+        if (p && p.image && p.image.src) {
+          found = p.image.src;
+          foundStore = store.name;
+          break;
+        }
+      } catch {
+        // try next candidate
       }
-    } catch {
-      // try next store
+      await new Promise((r) => setTimeout(r, 300));
     }
-    await new Promise((r) => setTimeout(r, 400));
+    if (found) break;
   }
 
   if (!found) {
@@ -109,10 +128,10 @@ for (const product of BROKEN_LIST) {
 }
 
 await fs.writeFile(
-  "scripts/replacement-images-result.json",
+  OUTPUT_MAPPING_FILE,
   JSON.stringify(results, null, 2),
 );
 const okCount = results.filter((r) => r.status === "OK").length;
 console.log(
-  `\n\nDone: ${okCount}/${results.length} images saved. Mapping: scripts/replacement-images-result.json`,
+  `\n\nDone: ${okCount}/${results.length} images saved. Mapping: ${OUTPUT_MAPPING_FILE}`,
 );

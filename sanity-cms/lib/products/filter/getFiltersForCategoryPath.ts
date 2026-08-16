@@ -1,6 +1,7 @@
 import { sanityFetch } from '@/sanity-cms/lib/client';
 import groq from 'groq';
 import { cache } from 'react';
+import { FilterBuilder } from '@/sanity-cms/lib/products/FilterBuilder';
 
 // React cache for Server Components
 const withCache = <T extends (...args: any[]) => any>(fn: T): T => {
@@ -14,6 +15,8 @@ const withCache = <T extends (...args: any[]) => any>(fn: T): T => {
 export interface FilterOption {
   value: string;
   label: string;
+  /** Result count for this option within the current (active-filtered) category set. */
+  count?: number;
 }
 
 export interface FilterGroup {
@@ -31,7 +34,39 @@ export interface FilterResult {
   maxStock: number | null;
 }
 
-const getFiltersForCategoryPathFn = async (catalogueKeys: string[]): Promise<FilterResult> => {
+/** Compact per-product facet data used to derive option counts and brand lists. */
+interface FacetDataProduct {
+  brandName: string | null;
+  overviewFields: Array<{ title: string | null; value: string | null }> | null;
+  specifications: Array<{ title: string | null; value: string | null }> | null;
+}
+
+/**
+ * Count products matching each `field:value` pair (per-product deduped).
+ * Brand keys are lowercased to match FilterBuilder's case-insensitive brand clause.
+ */
+function computeFilterCounts(products: FacetDataProduct[] | null): Map<string, number> {
+  const counts = new Map<string, number>();
+  for (const product of products ?? []) {
+    const seen = new Set<string>();
+    const add = (field: string | null, value: string | null) => {
+      if (!field || !value) return;
+      const key = `${field}:${value}`;
+      if (seen.has(key)) return;
+      seen.add(key);
+      counts.set(key, (counts.get(key) ?? 0) + 1);
+    };
+    if (product.brandName) add('brand', product.brandName.toLowerCase());
+    for (const f of product.overviewFields ?? []) add(f.title, f.value);
+    for (const f of product.specifications ?? []) add(f.title, f.value);
+  }
+  return counts;
+}
+
+const getFiltersForCategoryPathFn = async (
+  catalogueKeys: string[],
+  activeFilters: string[] = []
+): Promise<FilterResult> => {
   const EMPTY_RESULT: FilterResult = {
     filters: [],
     priceRange: { minPrice: null, maxPrice: null },
@@ -43,12 +78,14 @@ const getFiltersForCategoryPathFn = async (catalogueKeys: string[]): Promise<Fil
   }
 
   const params = { keys: catalogueKeys };
+  // Restrict the facet-count query to the currently active filters (adaptive refinement).
+  const filterClause = FilterBuilder.buildClause(activeFilters);
 
   try {
-    // Run every independent query concurrently (A5). Brand options are derived
-    // from a server-side distinct query and a cheap count, so we never fetch
-    // every product document just to extract unique brands.
-    const [cmsFilters, minPriceQuery, maxPriceQuery, maxStockQuery, productCount, brandNames] =
+    // Run every independent query concurrently (A5). Brand options and per-option
+    // counts are derived from a single compact facet-data fetch (only brand and
+    // specification fields are projected, bounded by product count).
+    const [cmsFilters, minPriceQuery, maxPriceQuery, maxStockQuery, productCount, facetData] =
       await Promise.all([
         sanityFetch<{
           filterItems: Array<{
@@ -100,8 +137,12 @@ const getFiltersForCategoryPathFn = async (catalogueKeys: string[]): Promise<Fil
           query: groq`count(*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0])`,
           params
         }),
-        sanityFetch<string[]>({
-          query: groq`array::unique(*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0 && defined(brand)].brand->name)`,
+        sanityFetch<FacetDataProduct[]>({
+          query: groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0 ${filterClause}] {
+            "brandName": brand->name,
+            overviewFields[] { title, value },
+            specifications[] { title, value }
+          }`,
           params
         })
       ]);
@@ -116,13 +157,27 @@ const getFiltersForCategoryPathFn = async (catalogueKeys: string[]): Promise<Fil
       return { filters: [], priceRange, maxStock };
     }
 
-    // Distinct brands derived server-side (bounded by brand count, not products)
-    const brandSet = new Set<string>(
-      (brandNames || []).filter((name): name is string => Boolean(name))
-    );
+    // Adaptive per-option counts (and distinct brands) derived from the filtered set.
+    const counts = computeFilterCounts(facetData);
+
+    const brandSet = new Set<string>();
+    for (const product of facetData ?? []) {
+      if (product.brandName) brandSet.add(product.brandName);
+    }
     const brandSetLower = new Set<string>(
       Array.from(brandSet).map(name => name.toLowerCase())
     );
+
+    // Attach counts to options. Brand keys are lowercased to match the
+    // case-insensitive brand clause in FilterBuilder.
+    const withCounts = (field: string, options: FilterOption[]): FilterOption[] =>
+      options.map(opt => ({
+        ...opt,
+        count:
+          field === 'brand'
+            ? counts.get(`brand:${opt.value.toLowerCase()}`) ?? 0
+            : counts.get(`${field}:${opt.value}`) ?? 0,
+      }));
 
     // Build filter groups
     const filters: FilterGroup[] = [];
@@ -135,20 +190,22 @@ const getFiltersForCategoryPathFn = async (catalogueKeys: string[]): Promise<Fil
             .filter(opt => opt && opt.length > 0)
             .map(opt => ({ value: opt, label: opt }));
           if (options.length > 0) {
+            const field = item.field || item.name;
             filters.push({
-              field: item.field || item.name,
+              field,
               label: item.name,
-              options
+              options: withCounts(field, options)
             });
           }
         } else if (item.type === 'boolean') {
+          const field = item.field || item.name;
           filters.push({
-            field: item.field || item.name,
+            field,
             label: item.name,
-            options: [
+            options: withCounts(field, [
               { value: 'true', label: 'Yes' },
               { value: 'false', label: 'No' }
-            ]
+            ])
           });
         }
         // Range filters are handled by PriceRangeSlider / StockMinimumSlider UI
@@ -175,9 +232,9 @@ const getFiltersForCategoryPathFn = async (catalogueKeys: string[]): Promise<Fil
         // Replace any existing brand filter from CMS with intersected version
         const brandIndex = filters.findIndex(f => f.field.toLowerCase() === 'brand');
         if (brandIndex >= 0) {
-          filters[brandIndex] = { field: 'brand', label: cmsBrandItem!.name, options: validBrands };
+          filters[brandIndex] = { field: 'brand', label: cmsBrandItem!.name, options: withCounts('brand', validBrands) };
         } else {
-          filters.push({ field: 'brand', label: cmsBrandItem!.name, options: validBrands });
+          filters.push({ field: 'brand', label: cmsBrandItem!.name, options: withCounts('brand', validBrands) });
         }
       }
     } else if (brandSet.size > 0) {
@@ -185,7 +242,7 @@ const getFiltersForCategoryPathFn = async (catalogueKeys: string[]): Promise<Fil
       filters.push({
         field: 'brand',
         label: 'Brand',
-        options: Array.from(brandSet).sort().map(brand => ({ value: brand, label: brand }))
+        options: withCounts('brand', Array.from(brandSet).sort().map(brand => ({ value: brand, label: brand })))
       });
     }
 

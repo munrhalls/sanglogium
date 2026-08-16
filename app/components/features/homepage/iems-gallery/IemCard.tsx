@@ -24,7 +24,7 @@ export default function IemCard({ product, badge }: IemCardProps) {
   return (
     <article className="card-product-dark group flex h-full flex-col overflow-hidden !p-0 rounded-[0.4rem]">
       <Link href={`/product/${product.slug}`} className="block">
-        <div className="relative aspect-square w-full cursor-pointer overflow-hidden rounded-t-[0.4rem] bg-surface-productImage p-0">
+        <div className="relative aspect-square w-full cursor-pointer overflow-hidden rounded-t-[0.4rem] bg-surface-productImage p-0 max-sm:aspect-[3/2]">
           <Image
             src={product.image?.asset?._id ?? ""}
             alt={product.name}
@@ -39,28 +39,32 @@ export default function IemCard({ product, badge }: IemCardProps) {
               className="absolute right-2 top-8 z-10"
             />
           )}
-          <div className="absolute left-2 right-2 top-2">
+          <div className="absolute left-2 right-2 top-2 hidden md:block">
             <span className="block truncate text-small font-bold uppercase tracking-tight text-brand-900">
               {brandName}
             </span>
           </div>
         </div>
 
-        <div className="flex flex-col gap-1 px-4 pt-3 md:px-8 md:pt-4">
-          <h3 className="text-body leading-snug line-clamp-2 break-words">{productName}</h3>
+        <div className="flex flex-col gap-1 px-3 pt-3 md:px-8 md:pt-4">
+          <span className="block truncate text-tiny font-bold uppercase tracking-tight text-text-caption md:hidden">
+            {brandName}
+          </span>
+          <h3 className="text-small leading-snug line-clamp-4 break-words md:text-body">{productName}</h3>
         </div>
       </Link>
 
-      <div className="mt-auto flex flex-row items-center justify-between gap-3 pt-2 px-4 pb-6 md:px-8 md:pb-8">
+      <div className="mt-auto flex flex-col gap-2 px-3 pt-2 pb-5 md:flex-row md:items-center md:justify-between md:gap-3 md:px-8 md:pb-8">
         <Price
           value={centsToDisplay(product.price_data.unit_amount)}
-          className="type-price tabular-nums text-base leading-tight min-w-0"
+          className="type-price tabular-nums text-small leading-tight min-w-0 md:text-base"
         />
         <BasketControls
           productId={product._id}
           isBasketPage={false}
-          addClassName="btn-cart md:py-0.5"
-          wrapperClassName="shrink-0"
+          addClassName="btn-cart w-full min-h-[32px] md:w-auto md:min-h-0 md:py-0.5"
+          label="To cart"
+          wrapperClassName="w-full md:w-auto md:shrink-0"
         />
       </div>
     </article>

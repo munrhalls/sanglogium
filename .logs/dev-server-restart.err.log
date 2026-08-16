@@ -1,0 +1,11 @@
+[@sentry/nextjs] ACTION REQUIRED: To instrument navigations, the Sentry SDK requires you to export an `onRouterTransitionStart` hook from your `instrumentation-client.(js|ts)` file. You can do so by adding `export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;` to the file.
+[@sentry/nextjs] ACTION REQUIRED: To instrument navigations, the Sentry SDK requires you to export an `onRouterTransitionStart` hook from your `instrumentation-client.(js|ts)` file. You can do so by adding `export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;` to the file.
+(node:15644) Warning: Label 'Homepage Data Fetch (Batched)' already exists for console.time()
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:15644) Warning: Label 'Homepage Data Fetch (Batched)' already exists for console.time()
+(node:15644) Warning: Label 'Homepage Data Fetch (Batched)' already exists for console.time()
+(node:15644) Warning: Label 'Homepage Data Fetch (Batched)' already exists for console.time()
+(node:15644) Warning: No such label 'Homepage Data Fetch (Batched)' for console.timeEnd()
+(node:15644) Warning: No such label 'Homepage Data Fetch (Batched)' for console.timeEnd()
+(node:15644) Warning: No such label 'Homepage Data Fetch (Batched)' for console.timeEnd()
+(node:15644) Warning: No such label 'Homepage Data Fetch (Batched)' for console.timeEnd()

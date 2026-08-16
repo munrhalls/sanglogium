@@ -56,7 +56,7 @@ async function run() {
       return {
         box: `${Math.round(boxR.width)}x${Math.round(boxR.height)}`,
         pad: getComputedStyle(box).paddingTop,
-        overline: get("span"),
+        overline: get("span.type-overline"),
         hed: get("h2"),
         sub: get("h3"),
         body: get("p"),

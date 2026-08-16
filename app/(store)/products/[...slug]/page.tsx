@@ -48,7 +48,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
     page
   });
   const metadataPromise = getCategoryMetadata(nodeId);
-  const filtersPromise = getFiltersForCategoryPath(descendantKeys);
+  const filtersPromise = getFiltersForCategoryPath(descendantKeys, filters);
 
   // Await metadata for immediate render (lightweight)
   const metadata = await metadataPromise;

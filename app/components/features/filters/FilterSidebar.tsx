@@ -10,6 +10,7 @@ import { resolvePriceBounds } from '@/lib/catalogue/priceBounds';
 interface FilterOption {
   value: string;
   label: string;
+  count?: number;
 }
 
 interface FilterGroup {
@@ -72,6 +73,8 @@ export function FilterSidebar({ filters, priceRange: priceRangeData, maxStock }:
                       checked={isChecked}
                       onChange={() => toggleFilter(group.field, option.value)}
                       label={option.label}
+                      count={option.count}
+                      disabled={!isChecked && (option.count ?? 0) === 0}
                     />
                   );
                 })}

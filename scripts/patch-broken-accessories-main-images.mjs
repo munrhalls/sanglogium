@@ -48,8 +48,11 @@ const client = createClient({
 });
 
 const BASE_DIR = "fixing-botched-product-images";
-const BROKEN_LIST_FILE = "broken-accessories-main-images.json";
-const OUTPUT_MAPPING_FILE = "scripts/replacement-images-patched-result.json";
+// CLI args (optional): <brokenListFile> <outputMappingFile>
+// Defaults keep the original accessories behavior.
+const BROKEN_LIST_FILE = process.argv[2] || "broken-accessories-main-images.json";
+const OUTPUT_MAPPING_FILE =
+  process.argv[3] || "scripts/replacement-images-patched-result.json";
 
 const DRY_RUN = process.argv.includes("--dry-run");
 if (DRY_RUN) {

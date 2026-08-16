@@ -28,6 +28,7 @@ export function MobileControlsBar({
         onClick={onOpenFilters}
         aria-expanded={isOpen}
         aria-controls="mobile-filter-drawer"
+        data-testid="open-filters-button"
         className="flex-1 flex items-center justify-center gap-2 px-4 py-3 btn-secondary"
       >
         <svg

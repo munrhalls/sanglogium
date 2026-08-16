@@ -11,6 +11,7 @@ interface BasketControlsProps {
   maxQuantity?: number;
   displayQuantity?: number;
   addClassName?: string;
+  label?: string;
   removeClassName?: string;
   decrementClassName?: string;
   incrementClassName?: string;
@@ -26,6 +27,7 @@ export function BasketControls({
   maxQuantity,
   displayQuantity,
   addClassName,
+  label = "Add to Cart",
   removeClassName,
   decrementClassName,
   incrementClassName,
@@ -82,7 +84,7 @@ export function BasketControls({
         className={addClassName || "btn-cart"}
       >
         <ShoppingCart size={16} />
-        <span className="hidden xs:inline">Add to Cart</span>
+        <span>{label}</span>
       </button>
     );
   }

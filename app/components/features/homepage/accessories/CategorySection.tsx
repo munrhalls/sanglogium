@@ -51,7 +51,7 @@ export default function CategorySection({ category, items }: CategorySectionProp
             {filteredItems.map((item, idx) => (
               <CarouselSlide
                 key={`${category.filter}-${item._id}`}
-                className="flex flex-col px-3"
+                className="flex flex-col px-2 md:px-3"
               >
                 <AccessoryCard item={item} idx={idx} />
               </CarouselSlide>

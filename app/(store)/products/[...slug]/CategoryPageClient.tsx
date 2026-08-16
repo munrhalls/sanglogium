@@ -17,6 +17,7 @@ import { totalPagesFor } from '@/lib/catalogue/pagination';
 interface FilterOption {
   value: string;
   label: string;
+  count?: number;
 }
 
 interface FilterGroup {
@@ -49,7 +50,43 @@ export function CategoryPageClient({
   wishlistProductIds,
 }: CategoryPageClientProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const drawerOpenRef = useRef(false);
   const isPending = useFilterPending();
+
+  const openDrawer = () => {
+    if (drawerOpenRef.current) return;
+    drawerOpenRef.current = true;
+    window.history.pushState({ filterDrawer: true }, '');
+    setIsDrawerOpen(true);
+  };
+
+  const closeDrawer = () => {
+    if (!drawerOpenRef.current) return;
+    drawerOpenRef.current = false;
+    setIsDrawerOpen(false);
+    window.history.back();
+    requestAnimationFrame(() => {
+      document
+        .querySelector<HTMLElement>('[data-testid="open-filters-button"]')
+        ?.focus();
+    });
+  };
+
+  // Browser back closes the drawer (an entry is pushed on open).
+  useEffect(() => {
+    const onPopState = () => {
+      if (!drawerOpenRef.current) return;
+      drawerOpenRef.current = false;
+      setIsDrawerOpen(false);
+      requestAnimationFrame(() => {
+        document
+          .querySelector<HTMLElement>('[data-testid="open-filters-button"]')
+          ?.focus();
+      });
+    };
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, []);
 
   const {
     filters: activeUrlFilters,
@@ -106,7 +143,7 @@ export function CategoryPageClient({
       {/* Mobile drawer */}
       <MobileFilterDrawer
         isOpen={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)}
+        onClose={closeDrawer}
         filters={filters}
         priceRange={priceRange}
         maxStock={maxStock}
@@ -125,7 +162,7 @@ export function CategoryPageClient({
         <div className="lg:hidden">
           <MobileControlsBar
             productCount={totalCount}
-            onOpenFilters={() => setIsDrawerOpen(true)}
+            onOpenFilters={openDrawer}
             isOpen={isDrawerOpen}
           />
         </div>

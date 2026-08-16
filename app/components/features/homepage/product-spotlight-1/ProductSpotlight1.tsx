@@ -83,10 +83,10 @@ export default async function ProductSpotlight1({ spotlightData }: ProductSpotli
                         <div className="flex flex-col relative z-10">
                             <span className="type-overline mb-1 section-header-anchor">{product.brand.name}</span>
                             <div className="flex flex-col gap-2 lg-touch:gap-1">
-                                <h2 className="type-section-hed lg-touch:text-h3 lg-touch:tracking-[-0.01em] text-balance">{promoTitle || product.name}</h2>
-                                <h3 className="text-h3 font-light text-text-subtitle lg-touch:text-h4 lg-touch:tracking-[0.05em] text-balance">{promoSubtitle || product.name}</h3>
+                                <h2 className="type-section-hed md:max-lg:text-h3 md:max-lg:tracking-[-0.01em] lg-touch:text-h3 lg-touch:tracking-[-0.01em] text-balance">{promoTitle || product.name}</h2>
+                                <h3 className="text-h3 font-light text-text-subtitle tracking-[0.02em] md:max-lg:text-h4 md:max-lg:tracking-[0.02em] lg-touch:text-h4 lg-touch:tracking-[0.02em] text-balance">{promoSubtitle || product.name}</h3>
                             </div>
-                            <p className="type-body text-text-body mt-4 lg-touch:mt-2 lg-touch:text-action lg-touch:tracking-normal max-w-prose text-pretty line-clamp-3 lg:line-clamp-none">
+                            <p className="type-body text-text-body mt-4 lg-touch:mt-2 max-w-prose text-pretty">
                                 {promoText || "Unrivaled acoustic engineering and clarity."}
                             </p>
                         </div>

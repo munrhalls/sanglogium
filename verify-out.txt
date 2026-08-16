@@ -1,0 +1,122 @@
+
+===== mobile-390 (load 25777ms)
+[Meze] box=342x412 fits=false
+   overline fs=12px ls=3.12px w=300 lines=1 clamp=none top=33 h=16 ovf=false "Meze"
+   h2       fs=27.335px ls=-0.27335px w=600 lines=1 clamp=none top=53 h=33 ovf=false "The Kinetic Edge"
+   h3       fs=18.145px ls=0.3629px w=300 lines=1 clamp=none top=94 h=22 ovf=false "Precision Performance"
+   p        fs=16px ls=normal w=400 lines=7 clamp=none top=132 h=168 ovf=false "Engineered for those who demand absolute contr"
+   cta      size=131x47 top=332 bottom=-33
+[Dan Clark Audio] box=342x412 fits=false
+   overline fs=12px ls=3.12px w=300 lines=1 clamp=none top=33 h=16 ovf=false "Dan Clark Audio"
+   h2       fs=27.335px ls=-0.27335px w=600 lines=1 clamp=none top=53 h=33 ovf=false "Carbon Flow"
+   h3       fs=18.145px ls=0.3629px w=300 lines=1 clamp=none top=94 h=22 ovf=false "Lightweight Mastery"
+   p        fs=16px ls=normal w=400 lines=7 clamp=none top=132 h=168 ovf=false "A testament to minimalist design and maximum i"
+   cta      size=131x47 top=332 bottom=-33
+[Focal] box=342x412 fits=false
+   overline fs=12px ls=3.12px w=300 lines=1 clamp=none top=33 h=16 ovf=false "Focal"
+   h2       fs=27.335px ls=-0.27335px w=600 lines=1 clamp=none top=53 h=33 ovf=false "Zenith Core"
+   h3       fs=18.145px ls=0.3629px w=300 lines=1 clamp=none top=94 h=22 ovf=false "Infinite Endurance"
+   p        fs=16px ls=normal w=400 lines=7 clamp=none top=132 h=168 ovf=false "Redefining the standard for longevity. Featuri"
+   cta      size=131x47 top=332 bottom=-33
+
+===== narrow-320 (load 23314ms)
+[Meze] box=272x513 fits=false
+   overline fs=12px ls=3.12px w=300 lines=1 clamp=none top=33 h=16 ovf=false "Meze"
+   h2       fs=27px ls=-0.27px w=600 lines=2 clamp=none top=53 h=65 ovf=false "The Kinetic Edge"
+   h3       fs=18px ls=0.36px w=300 lines=2 clamp=none top=126 h=43 ovf=false "Precision Performance"
+   p        fs=16px ls=normal w=400 lines=9 clamp=none top=185 h=216 ovf=false "Engineered for those who demand absolute contr"
+   cta      size=131x47 top=433 bottom=-33
+[Dan Clark Audio] box=272x483 fits=false
+   overline fs=12px ls=3.12px w=300 lines=1 clamp=none top=33 h=16 ovf=false "Dan Clark Audio"
+   h2       fs=27px ls=-0.27px w=600 lines=1 clamp=none top=53 h=32 ovf=false "Carbon Flow"
+   h3       fs=18px ls=0.36px w=300 lines=1 clamp=none top=93 h=22 ovf=false "Lightweight Mastery"
+   p        fs=16px ls=normal w=400 lines=10 clamp=none top=131 h=240 ovf=false "A testament to minimalist design and maximum i"
+   cta      size=131x47 top=403 bottom=-33
+[Focal] box=272x459 fits=false
+   overline fs=12px ls=3.12px w=300 lines=1 clamp=none top=33 h=16 ovf=false "Focal"
+   h2       fs=27px ls=-0.27px w=600 lines=1 clamp=none top=53 h=32 ovf=false "Zenith Core"
+   h3       fs=18px ls=0.36px w=300 lines=1 clamp=none top=93 h=22 ovf=false "Infinite Endurance"
+   p        fs=16px ls=normal w=400 lines=9 clamp=none top=131 h=216 ovf=false "Redefining the standard for longevity. Featuri"
+   cta      size=131x47 top=379 bottom=-33
+
+===== tablet-834 (load 44545ms)
+[Meze] box=377x450 fits=false
+   overline fs=12px ls=3.12px w=300 lines=1 clamp=none top=33 h=16 ovf=false "Meze"
+   h2       fs=37.325px ls=-0.37325px w=600 lines=2 clamp=none top=53 h=90 ovf=false "The Kinetic Edge"
+   h3       fs=22.7182px ls=0.454364px w=300 lines=1 clamp=none top=151 h=27 ovf=false "Precision Performance"
+   p        fs=16px ls=normal w=400 lines=6 clamp=none top=194 h=144 ovf=false "Engineered for those who demand absolute contr"
+   cta      size=131x47 top=370 bottom=-33
+[Dan Clark Audio] box=377x429 fits=false
+   overline fs=12px ls=3.12px w=300 lines=1 clamp=none top=33 h=16 ovf=false "Dan Clark Audio"
+   h2       fs=37.325px ls=-0.37325px w=600 lines=1 clamp=none top=53 h=45 ovf=false "Carbon Flow"
+   h3       fs=22.7182px ls=0.454364px w=300 lines=1 clamp=none top=106 h=27 ovf=false "Lightweight Mastery"
+   p        fs=16px ls=normal w=400 lines=7 clamp=none top=149 h=168 ovf=false "A testament to minimalist design and maximum i"
+   cta      size=131x47 top=349 bottom=-33
+[Focal] box=377x405 fits=false
+   overline fs=12px ls=3.12px w=300 lines=1 clamp=none top=33 h=16 ovf=false "Focal"
+   h2       fs=37.325px ls=-0.37325px w=600 lines=1 clamp=none top=53 h=45 ovf=false "Zenith Core"
+   h3       fs=22.7182px ls=0.454364px w=300 lines=1 clamp=none top=106 h=27 ovf=false "Infinite Endurance"
+   p        fs=16px ls=normal w=400 lines=6 clamp=none top=149 h=144 ovf=false "Redefining the standard for longevity. Featuri"
+   cta      size=131x47 top=325 bottom=-33
+
+===== lg-touch-1366 (load 29194ms)
+[Meze] box=568x320 fits=false
+   overline fs=12px ls=3.12px w=300 lines=1 clamp=none top=34 h=16 ovf=false "Meze"
+   h2       fs=28.1978px ls=-0.281978px w=600 lines=1 clamp=none top=54 h=34 ovf=false "The Kinetic Edge"
+   h3       fs=21.5376px ls=0.430752px w=300 lines=1 clamp=none top=92 h=26 ovf=false "Precision Performance"
+   p        fs=16px ls=normal w=400 lines=4 clamp=none top=126 h=96 ovf=false "Engineered for those who demand absolute contr"
+   cta      size=131x47 top=238 bottom=-34
+[Dan Clark Audio] box=568x320 fits=false
+   overline fs=12px ls=3.12px w=300 lines=1 clamp=none top=34 h=16 ovf=false "Dan Clark Audio"
+   h2       fs=28.1978px ls=-0.281978px w=600 lines=1 clamp=none top=54 h=34 ovf=false "Carbon Flow"
+   h3       fs=21.5376px ls=0.430752px w=300 lines=1 clamp=none top=92 h=26 ovf=false "Lightweight Mastery"
+   p        fs=16px ls=normal w=400 lines=4 clamp=none top=126 h=96 ovf=false "A testament to minimalist design and maximum i"
+   cta      size=131x47 top=238 bottom=-34
+[Focal] box=568x320 fits=false
+   overline fs=12px ls=3.12px w=300 lines=1 clamp=none top=34 h=16 ovf=false "Focal"
+   h2       fs=28.1978px ls=-0.281978px w=600 lines=1 clamp=none top=54 h=34 ovf=false "Zenith Core"
+   h3       fs=21.5376px ls=0.430752px w=300 lines=1 clamp=none top=92 h=26 ovf=false "Infinite Endurance"
+   p        fs=16px ls=normal w=400 lines=4 clamp=none top=126 h=96 ovf=false "Redefining the standard for longevity. Featuri"
+   cta      size=131x47 top=238 bottom=-34
+
+===== desktop-1440 (load 27497ms)
+[Meze] box=568x413 fits=false
+   overline fs=12px ls=3.12px w=300 lines=1 clamp=none top=49 h=16 ovf=false "Meze"
+   h2       fs=50.96px ls=-0.5096px w=600 lines=1 clamp=none top=69 h=61 ovf=false "The Kinetic Edge"
+   h3       fs=28.96px ls=0.5792px w=300 lines=1 clamp=none top=138 h=35 ovf=false "Precision Performance"
+   p        fs=16px ls=normal w=400 lines=4 clamp=none top=189 h=96 ovf=false "Engineered for those who demand absolute contr"
+   cta      size=131x47 top=317 bottom=-49
+[Dan Clark Audio] box=568x413 fits=false
+   overline fs=12px ls=3.12px w=300 lines=1 clamp=none top=49 h=16 ovf=false "Dan Clark Audio"
+   h2       fs=50.96px ls=-0.5096px w=600 lines=1 clamp=none top=69 h=61 ovf=false "Carbon Flow"
+   h3       fs=28.96px ls=0.5792px w=300 lines=1 clamp=none top=138 h=35 ovf=false "Lightweight Mastery"
+   p        fs=16px ls=normal w=400 lines=4 clamp=none top=189 h=96 ovf=false "A testament to minimalist design and maximum i"
+   cta      size=131x47 top=317 bottom=-49
+[Focal] box=568x413 fits=false
+   overline fs=12px ls=3.12px w=300 lines=1 clamp=none top=49 h=16 ovf=false "Focal"
+   h2       fs=50.96px ls=-0.5096px w=600 lines=1 clamp=none top=69 h=61 ovf=false "Zenith Core"
+   h3       fs=28.96px ls=0.5792px w=300 lines=1 clamp=none top=138 h=35 ovf=false "Infinite Endurance"
+   p        fs=16px ls=normal w=400 lines=4 clamp=none top=189 h=96 ovf=false "Redefining the standard for longevity. Featuri"
+   cta      size=131x47 top=317 bottom=-49
+
+===== wide-1920 (load 22471ms)
+[Meze] box=568x413 fits=false
+   overline fs=12px ls=3.12px w=300 lines=1 clamp=none top=49 h=16 ovf=false "Meze"
+   h2       fs=51px ls=-0.51px w=600 lines=1 clamp=none top=69 h=61 ovf=false "The Kinetic Edge"
+   h3       fs=29px ls=0.58px w=300 lines=1 clamp=none top=138 h=35 ovf=false "Precision Performance"
+   p        fs=16px ls=normal w=400 lines=4 clamp=none top=189 h=96 ovf=false "Engineered for those who demand absolute contr"
+   cta      size=131x47 top=317 bottom=-49
+[Dan Clark Audio] box=568x413 fits=false
+   overline fs=12px ls=3.12px w=300 lines=1 clamp=none top=49 h=16 ovf=false "Dan Clark Audio"
+   h2       fs=51px ls=-0.51px w=600 lines=1 clamp=none top=69 h=61 ovf=false "Carbon Flow"
+   h3       fs=29px ls=0.58px w=300 lines=1 clamp=none top=138 h=35 ovf=false "Lightweight Mastery"
+   p        fs=16px ls=normal w=400 lines=4 clamp=none top=189 h=96 ovf=false "A testament to minimalist design and maximum i"
+   cta      size=131x47 top=317 bottom=-49
+[Focal] box=568x413 fits=false
+   overline fs=12px ls=3.12px w=300 lines=1 clamp=none top=49 h=16 ovf=false "Focal"
+   h2       fs=51px ls=-0.51px w=600 lines=1 clamp=none top=69 h=61 ovf=false "Zenith Core"
+   h3       fs=29px ls=0.58px w=300 lines=1 clamp=none top=138 h=35 ovf=false "Infinite Endurance"
+   p        fs=16px ls=normal w=400 lines=4 clamp=none top=189 h=96 ovf=false "Redefining the standard for longevity. Featuri"
+   cta      size=131x47 top=317 bottom=-49
+
+VERIFY_DONE
