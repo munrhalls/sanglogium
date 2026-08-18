@@ -37,7 +37,6 @@ the instant the file changes (no page reload).
 | Move columns | `bd update <id> --status in_progress` · `--status blocked` · `--status done` |
 | Add progress note | `bd note <id> "…"` or `bd update <id> --append-notes "…"` |
 | Close it | `bd close <id>` |
-| Refresh the board | `bd export -o .beads/issues.jsonl` (after every write) |
 
 Statuses in use: `open` → `in_progress` → `closed` (`blocked` only for stuck cards). That's
 all that's needed — every card moves exactly once. Board columns come from the real status
