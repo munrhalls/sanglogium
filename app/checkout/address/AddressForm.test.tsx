@@ -130,4 +130,53 @@ describe('AddressForm', () => {
     expect(screen.queryByText('Failed to save address')).not.toBeInTheDocument();
     consoleErrorSpy.mockRestore();
   });
+
+  it('offers Poland only in the country dropdown', () => {
+    render(<AddressForm traceId="test-trace" />);
+
+    const select = document.querySelector(
+      'select[name="regionCode"]'
+    ) as HTMLSelectElement;
+    const optionValues = Array.from(select.options).map((o) => o.value);
+
+    expect(optionValues).toEqual(['', 'PL']);
+    expect(screen.getByRole('option', { name: 'Poland' })).toBeInTheDocument();
+    expect(
+      screen.queryByRole('option', { name: 'United Kingdom' })
+    ).not.toBeInTheDocument();
+  });
+
+  it('shows the escape-hatch button on a FIX error and resubmits with skipValidation', async () => {
+    const user = userEvent.setup();
+    vi.mocked(saveAddress).mockResolvedValue({
+      status: 'FIX',
+      errors: { message: 'Apartment number is required.' },
+    });
+
+    await fillAndSubmit(user);
+
+    await waitFor(() => {
+      expect(screen.getByText('Apartment number is required.')).toBeInTheDocument();
+    });
+
+    const escapeButton = screen.getByRole('button', {
+      name: 'Continue with entered address',
+    });
+    expect(escapeButton).toBeInTheDocument();
+
+    await user.click(escapeButton);
+
+    await waitFor(() => {
+      expect(saveAddress).toHaveBeenCalledTimes(2);
+    });
+    expect(saveAddress).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        firstName: 'Jan',
+        lastName: 'Kowalski',
+        regionCode: 'PL',
+        city: 'Wrocław',
+      }),
+      { skipValidation: true }
+    );
+  });
 });

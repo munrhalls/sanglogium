@@ -52,9 +52,18 @@ export interface GoogleValidationResponse {
 const ALLOWED_GRANULARITY = new Set(["PREMISE", "SUB_PREMISE"]);
 
 // Countries the checkout address form actually offers (see REGIONS in
-// app/checkout/address/AddressForm.tsx). A Google-normalized regionCode
-// outside this set must never be persisted to the session.
-const SUPPORTED_REGION_CODES = new Set(["PL"]);
+// app/checkout/address/AddressForm.tsx) plus the GB code the region gate
+// accepts when it matches the normalized input (UK alias -> GB). A
+// Google-normalized regionCode outside this set must never be persisted.
+const SUPPORTED_REGION_CODES = new Set(["PL", "GB"]);
+
+// Normalize region-code aliases on both sides of the validation round-trip.
+// The customer-facing code may be "UK" but Google's ISO 3166-1 alpha-2 code
+// is "GB" — input and output must agree on "GB" before comparison/persistence.
+const normalizeRegionCode = (code?: string | null): string | undefined => {
+  if (!code) return undefined;
+  return code === "UK" ? "GB" : code;
+};
 
 const formatCleanAddress = (
   googleAddress: GoogleAddress,
@@ -80,7 +89,9 @@ const formatCleanAddress = (
       input.streetNumber,
     city: get("locality") || get("postal_town") || input.city,
     postalCode: get("postal_code") || input.postalCode,
-    regionCode: googleAddress.postalAddress?.regionCode || normalizedRegion,
+    regionCode:
+      normalizeRegionCode(googleAddress.postalAddress?.regionCode) ??
+      normalizedRegion,
   };
 };
 
@@ -98,8 +109,22 @@ function isAcceptedAddress(verdict: GoogleValidationVerdict): boolean {
 }
 
 export async function submitShippingAction(
-  input: Address
+  input: Address,
+  opts?: { skipValidation?: boolean }
 ): Promise<ServerResponse> {
+  const normalizedInput =
+    normalizeRegionCode(input.regionCode) ?? input.regionCode;
+
+  // Human escape hatch: accept the address exactly as the customer entered it,
+  // bypassing Google validation. Prevents a valid submission from dead-ending
+  // on a strict Google verdict.
+  if (opts?.skipValidation) {
+    return {
+      status: "ACCEPT",
+      address: { ...input, regionCode: normalizedInput },
+    };
+  }
+
   const apiKey = process.env.GOOGLE_MAPS_API_KEY;
 
   if (!apiKey) {
@@ -110,7 +135,6 @@ export async function submitShippingAction(
   }
 
   const url = `https://addressvalidation.googleapis.com/v1:validateAddress?key=${apiKey}`;
-  const regionCode = input.regionCode === "UK" ? "GB" : input.regionCode;
 
   const addressLine = [input.street, input.streetNumber]
     .filter(Boolean)
@@ -120,7 +144,7 @@ export async function submitShippingAction(
 
   const payload: RequestBody = {
     address: {
-      regionCode: regionCode,
+      regionCode: normalizedInput,
       postalCode: input.postalCode,
       locality: input.city,
       addressLines: [addressLine],
@@ -160,7 +184,28 @@ export async function submitShippingAction(
     const googleAddress = data.result?.address;
 
     if (verdict && googleAddress && isAcceptedAddress(verdict)) {
-      const cleanAddress = formatCleanAddress(googleAddress, input, regionCode);
+      const googleCode = normalizeRegionCode(
+        googleAddress.postalAddress?.regionCode
+      );
+
+      // Region gate: if Google resolved a country that contradicts the one the
+      // customer selected, this is a genuinely different country — reject it
+      // rather than silently switching the destination.
+      if (googleCode && googleCode !== normalizedInput) {
+        return {
+          status: "FIX",
+          errors: {
+            message:
+              "This address is in a country we do not currently ship to (Poland). Please verify your country and address.",
+          },
+        };
+      }
+
+      const cleanAddress = formatCleanAddress(
+        googleAddress,
+        input,
+        googleCode ?? normalizedInput
+      );
 
       // Never persist a normalized country the checkout form cannot represent.
       if (!SUPPORTED_REGION_CODES.has(cleanAddress.regionCode)) {
@@ -168,7 +213,7 @@ export async function submitShippingAction(
           status: "FIX",
           errors: {
             message:
-              "This address is in a country we do not currently ship to (Poland or United Kingdom). Please verify your country and address.",
+              "This address is in a country we do not currently ship to (Poland). Please verify your country and address.",
           },
         };
       }

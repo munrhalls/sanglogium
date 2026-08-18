@@ -28,6 +28,9 @@ export default function AddressForm({ traceId, initialAddress }: AddressFormProp
   });
 
   const isDirty = useRef(false);
+  // Set by the "Continue with entered address" escape-hatch button before it
+  // submits, so the next handleSubmit call bypasses Google validation.
+  const skipValidationRef = useRef(false);
 
   // Hydrate form from session address when user returns via Back button.
   // regionCode is sanitized against REGIONS so a stale/legacy session address
@@ -55,9 +58,17 @@ export default function AddressForm({ traceId, initialAddress }: AddressFormProp
     setError(null);
   };
 
-  const handleSubmit = async (formData: FormData) => {
+  const handleSubmit = async (formData: FormData, skip = false) => {
     setIsLoading(true);
     setError(null);
+
+    // The escape-hatch button resubmits with skip=true so a valid address can
+    // never dead-end on a strict Google validation verdict.
+    const skipValidation =
+      skip ||
+      skipValidationRef.current ||
+      formData.get("submitMode") === "skipValidation";
+    skipValidationRef.current = false;
 
     const addressData = {
       firstName: formData.get("firstName") as string,
@@ -82,7 +93,7 @@ export default function AddressForm({ traceId, initialAddress }: AddressFormProp
     }).catch(() => {});
 
     try {
-      const result = await saveAddress(addressData);
+      const result = await saveAddress(addressData, { skipValidation });
       if (result && result.status === "FIX") {
         setError(
           result.errors?.message ??
@@ -246,6 +257,20 @@ export default function AddressForm({ traceId, initialAddress }: AddressFormProp
               "Continue to Shipping"
             )}
           </button>
+
+          {error && !isLoading && (
+            <button
+              type="submit"
+              name="submitMode"
+              value="skipValidation"
+              onClick={() => {
+                skipValidationRef.current = true;
+              }}
+              className="btn-secondary w-full mt-3 py-3"
+            >
+              Continue with entered address
+            </button>
+          )}
         </form>
     </div>
   );

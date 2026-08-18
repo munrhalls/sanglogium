@@ -30,7 +30,10 @@ export async function initCheckoutSession(items: Array<{ productId: string; quan
   redirect("/checkout/address");
 }
 
-export async function saveAddress(address: Address) {
+export async function saveAddress(
+  address: Address,
+  opts?: { skipValidation?: boolean }
+) {
   const session = await getCheckoutSession();
 
   // Guard: Ensure basket exists
@@ -52,7 +55,7 @@ export async function saveAddress(address: Address) {
   });
 
   // Call Google Address Validation
-  const validationResult = await submitShippingAction(address);
+  const validationResult = await submitShippingAction(address, opts);
   console.log("[SAVE ADDRESS] validationResult.status:", validationResult.status);
   console.log("[SAVE ADDRESS] validationResult.address:", validationResult.address);
 
