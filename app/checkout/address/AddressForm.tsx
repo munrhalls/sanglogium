@@ -6,10 +6,7 @@ import { saveAddress } from "@/app/actions/checkout";
 import CheckoutStepper from "../_components/CheckoutStepper";
 import type { Address } from "../checkout.types";
 
-const REGIONS = [
-  { code: "PL", label: "Poland" },
-  { code: "GB", label: "United Kingdom" },
-] as const;
+const REGIONS = [{ code: "PL", label: "Poland" }] as const;
 
 interface AddressFormProps {
   traceId: string;

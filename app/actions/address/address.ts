@@ -54,7 +54,7 @@ const ALLOWED_GRANULARITY = new Set(["PREMISE", "SUB_PREMISE"]);
 // Countries the checkout address form actually offers (see REGIONS in
 // app/checkout/address/AddressForm.tsx). A Google-normalized regionCode
 // outside this set must never be persisted to the session.
-const SUPPORTED_REGION_CODES = new Set(["PL", "GB"]);
+const SUPPORTED_REGION_CODES = new Set(["PL"]);
 
 const formatCleanAddress = (
   googleAddress: GoogleAddress,
