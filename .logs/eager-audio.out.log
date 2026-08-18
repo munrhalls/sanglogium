@@ -1,7 +1,0 @@
-forced eager on 100 images
-re-requested 100 images
-{
-  "total": 100,
-  "loaded": 100,
-  "failed": 0
-}

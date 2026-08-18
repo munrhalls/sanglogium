@@ -1,7 +1,0 @@
-page.goto: Timeout 45000ms exceeded.
-Call log:
-[2m  - navigating to "http://localhost:3000/", waiting until "domcontentloaded"[22m
-
-    at run (C:\webdev\sang-logium\temp-verify-fix.cjs:20:14) {
-  name: 'TimeoutError'
-}

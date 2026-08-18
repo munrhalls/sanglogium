@@ -1,4 +1,0 @@
-
-> sang-logium@0.1.0 ts-check
-> tsc --noEmit --pretty
-

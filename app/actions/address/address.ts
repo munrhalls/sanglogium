@@ -51,6 +51,11 @@ export interface GoogleValidationResponse {
 
 const ALLOWED_GRANULARITY = new Set(["PREMISE", "SUB_PREMISE"]);
 
+// Countries the checkout address form actually offers (see REGIONS in
+// app/checkout/address/AddressForm.tsx). A Google-normalized regionCode
+// outside this set must never be persisted to the session.
+const SUPPORTED_REGION_CODES = new Set(["PL", "GB"]);
+
 const formatCleanAddress = (
   googleAddress: GoogleAddress,
   input: Address,
@@ -156,6 +161,17 @@ export async function submitShippingAction(
 
     if (verdict && googleAddress && isAcceptedAddress(verdict)) {
       const cleanAddress = formatCleanAddress(googleAddress, input, regionCode);
+
+      // Never persist a normalized country the checkout form cannot represent.
+      if (!SUPPORTED_REGION_CODES.has(cleanAddress.regionCode)) {
+        return {
+          status: "FIX",
+          errors: {
+            message:
+              "This address is in a country we do not currently ship to (Poland or United Kingdom). Please verify your country and address.",
+          },
+        };
+      }
 
       return {
         status: "ACCEPT",

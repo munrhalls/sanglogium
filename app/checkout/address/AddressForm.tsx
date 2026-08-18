@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { unstable_rethrow } from "next/navigation";
 import { saveAddress } from "@/app/actions/checkout";
 import CheckoutStepper from "../_components/CheckoutStepper";
@@ -30,24 +30,30 @@ export default function AddressForm({ traceId, initialAddress }: AddressFormProp
     city: "",
   });
 
-  // Hydrate form from session address when user returns via Back button
+  const isDirty = useRef(false);
+
+  // Hydrate form from session address when user returns via Back button.
+  // regionCode is sanitized against REGIONS so a stale/legacy session address
+  // can never leave the country select in an unmatched (broken) state, and the
+  // dirty-guard prevents re-hydration from clobbering edits in the current visit.
   useEffect(() => {
-    console.log("[AddressForm] initialAddress from session:", initialAddress);
-    if (initialAddress) {
-      setForm({
-        firstName: initialAddress.firstName || "",
-        lastName: initialAddress.lastName || "",
-        phone: initialAddress.phone || "",
-        regionCode: initialAddress.regionCode || "",
-        postalCode: initialAddress.postalCode || "",
-        street: initialAddress.street || "",
-        streetNumber: initialAddress.streetNumber || "",
-        city: initialAddress.city || "",
-      });
-    }
+    if (!initialAddress || isDirty.current) return;
+    setForm({
+      firstName: initialAddress.firstName || "",
+      lastName: initialAddress.lastName || "",
+      phone: initialAddress.phone || "",
+      regionCode: REGIONS.some((r) => r.code === initialAddress.regionCode)
+        ? initialAddress.regionCode
+        : "",
+      postalCode: initialAddress.postalCode || "",
+      street: initialAddress.street || "",
+      streetNumber: initialAddress.streetNumber || "",
+      city: initialAddress.city || "",
+    });
   }, [initialAddress]);
 
   const handleChange = (field: keyof typeof form, value: string) => {
+    isDirty.current = true;
     setForm((prev) => ({ ...prev, [field]: value }));
     setError(null);
   };

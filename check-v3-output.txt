@@ -1,9 +1,0 @@
-﻿Navigating to http://localhost:3000/products/accessories...
-
-Checked 100 product cards
-
-=== BROKEN PRODUCTS: 0 ===
-
-=== OK PRODUCTS: 100 ===
-
-Saved to broken-accessories-main-images.json

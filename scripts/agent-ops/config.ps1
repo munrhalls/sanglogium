@@ -35,4 +35,9 @@ $BloatProcesses = @(
     'Discord','RiotClientServices','vgtray','Loom','Gyazo','GyStation','PicPick','picpick',
     'OneDrive','AdobeCollabSync','KeePass','ssn','HpseuHostLauncher','com.docker.backend',
     'com.docker.build','Docker Desktop','Docker Desktop Backend'
+    # HP telemetry/utility pack (myHP + System Event Utility + printers) -- not needed for dev.
+    'DesktopExtension','HPCommRecovery','HPPrintScanDoctorService','HPMediaNetwork',
+    'HPSystemEventUtilityBackground','HPSystemEventUtilityHost',
+    # Windows Widgets + Phone Link -- idle UI surfaces, not needed for agent sessions.
+    'WidgetBoard','WidgetService','PhoneExperienceHost'
 )

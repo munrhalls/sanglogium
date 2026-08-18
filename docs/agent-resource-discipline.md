@@ -96,8 +96,7 @@ You don't need 4 agents on this laptop. Split the work:
 | **Headless CLI (zero UI)** | `cline --json "task"` / `git diff \| cline "review"` | Scripts, CI, one-shot reviews |
 | **Scheduled agents** | `cline schedule create "PR summary" --cron "0 9 * * 1-5" --prompt "…" --workspace <repo>` | Daily/weekly recurring work, runs without a terminal (hub) |
 | **Agent Teams (coordinator + specialists)** | `cline --team-name <name> "task"` (state in `~/.cline/data/teams/<name>/`, resume anytime) | Complex multi-step features |
-| **Kanban (many agents, cloud-friendly)** | `npx kanban` — per-card git worktrees, auto-commit, dependency chains | Parallel batch work |
-| **Kanban on a cloud box** | Tailscale + `kanban --host 0.0.0.0`, or SSH tunnel, or Docker | Heavy parallel runs off this laptop |
+| **Kanban (beads tracker, in-repo)** | `bd` — this repo's tracker; see `docs/kanban-cline-cli-guide.md` | Batch work + visibility |
 | **Subagents (read-only, parallel)** | enabled by default — ask "use subagents to explore X" | Codebase research without heavy context |
 | **Checkpoints** | on by default; shadow git repo per tool call | Safety net for auto-approve; disable if huge repo slows Cline |
 
