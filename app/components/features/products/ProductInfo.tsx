@@ -94,11 +94,7 @@ export function ProductInfo({ product, isInWishlist = false }: { product: Produc
           <BasketControls
             productId={product._id}
             isBasketPage={false}
-            addClassName="btn-cart-large w-full flex justify-center"
             wrapperClassName="flex items-center gap-4"
-            decrementClassName="btn-secondary w-8 h-8 flex items-center justify-center"
-            incrementClassName="btn-secondary w-8 h-8 flex items-center justify-center disabled:opacity-50"
-            quantityClassName="w-7 text-center type-body text-primary tabular-nums"
           />
           <WishlistButton
             productId={product._id}

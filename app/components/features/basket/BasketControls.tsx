@@ -10,14 +10,11 @@ interface BasketControlsProps {
   isBasketPage: boolean;
   maxQuantity?: number;
   displayQuantity?: number;
-  addClassName?: string;
   label?: string;
   removeClassName?: string;
-  decrementClassName?: string;
-  incrementClassName?: string;
-  quantityClassName?: string;
   wrapperClassName?: string;
   showRemoveButton?: boolean;
+  size?: "sm" | "md";
 }
 
 export function BasketControls({
@@ -26,14 +23,11 @@ export function BasketControls({
   isBasketPage,
   maxQuantity,
   displayQuantity,
-  addClassName,
   label = "Add to Cart",
   removeClassName,
-  decrementClassName,
-  incrementClassName,
-  quantityClassName,
   wrapperClassName,
   showRemoveButton,
+  size = "md",
 }: BasketControlsProps) {
   const { items, addProduct, removeProduct, incrementQuantity, decrementQuantity } = useBasketStore(
     useShallow((state) => ({
@@ -81,7 +75,7 @@ export function BasketControls({
         onClick={handleAdd}
         data-testid={`add-to-basket-${productId}`}
         type="button"
-        className={addClassName || "btn-cart"}
+        className="btn-cart"
       >
         <ShoppingCart size={16} />
         <span>{label}</span>
@@ -97,17 +91,17 @@ export function BasketControls({
           data-testid={`decrement-${productId}`}
           type="button"
           disabled={isBasketPage && quantity <= 1}
-          className={decrementClassName || "h-11 w-11 min-h-[44px] min-w-[44px] flex items-center justify-center bg-surface-elevated border border-border-secondary rounded-l-sm border-r-0 text-text-secondary hover:border-border-primary hover:text-text-primary transition-colors duration-150 disabled:opacity-30 disabled:cursor-not-allowed"}
+          className={`btn-stepper rounded-l-sm border-r-0${size === "sm" ? " btn-stepper-sm" : ""}`}
         >
           −
         </button>
-        <span data-testid="quantity-display" className={quantityClassName || "h-11 w-11 min-h-[44px] min-w-[44px] flex items-center justify-center bg-surface-elevated border-y border-border-secondary type-card-title tabular-nums select-none"}>{quantity}</span>
+        <span data-testid="quantity-display" className={`btn-stepper border-r-0 border-l-0${size === "sm" ? " btn-stepper-sm" : ""}`}>{quantity}</span>
         <button
           onClick={handleIncrement}
           data-testid={`increment-${productId}`}
           type="button"
           disabled={maxQuantity !== undefined && quantity >= maxQuantity}
-          className={incrementClassName || "h-11 w-11 min-h-[44px] min-w-[44px] flex items-center justify-center bg-surface-elevated border border-border-secondary rounded-r-sm border-l-0 text-text-secondary hover:border-border-primary hover:text-text-primary transition-colors duration-150"}
+          className={`btn-stepper border-l-0 rounded-r-sm${size === "sm" ? " btn-stepper-sm" : ""}`}
         >
           +
         </button>

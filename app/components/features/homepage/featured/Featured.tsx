@@ -85,11 +85,7 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => {
       <BasketControls
         productId={product._id}
         isBasketPage={false}
-        addClassName="btn-cart w-full justify-center lg:w-auto lg:gap-1 lg:px-2 lg:py-1 lg:text-small"
         wrapperClassName="flex items-center gap-1"
-        decrementClassName="btn-secondary w-8 h-8 flex items-center justify-center"
-        incrementClassName="btn-secondary w-8 h-8 flex items-center justify-center disabled:opacity-50"
-        quantityClassName="w-7 text-center type-body text-primary tabular-nums"
       />
     </div>
   </article>

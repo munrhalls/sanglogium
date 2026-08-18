@@ -62,9 +62,9 @@ export default function IemCard({ product, badge }: IemCardProps) {
         <BasketControls
           productId={product._id}
           isBasketPage={false}
-          addClassName="btn-cart w-full min-h-[32px] md:w-auto md:min-h-0 md:py-0.5"
           label="To cart"
           wrapperClassName="w-full md:w-auto md:shrink-0"
+          size="sm"
         />
       </div>
     </article>

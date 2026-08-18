@@ -187,6 +187,37 @@ const uiComponentsPlugin = plugin(function ({ addComponents, theme }) {
         cursor: "not-allowed",
       },
     },
+    ".btn-stepper": {
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      width: theme("spacing.11") as string,
+      height: theme("spacing.11") as string,
+      minWidth: theme("spacing.11") as string,
+      minHeight: theme("spacing.11") as string,
+      backgroundColor: theme("colors.surface.elevated") as string,
+      border: `1px solid ${theme("colors.border.secondary")}`,
+      color: theme("colors.text.secondary") as string,
+      transition: "background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease",
+      "&:hover": {
+        borderColor: theme("colors.border.primary") as string,
+        color: theme("colors.text.primary") as string,
+      },
+      "&:focus-visible": {
+        outline: `2px solid ${theme("colors.accent.600")}`,
+        outlineOffset: "2px",
+      },
+      "&:disabled": {
+        opacity: "0.3",
+        cursor: "not-allowed",
+      },
+    },
+    ".btn-stepper-sm": {
+      width: theme("spacing.9") as string,
+      height: theme("spacing.9") as string,
+      minWidth: theme("spacing.9") as string,
+      minHeight: theme("spacing.9") as string,
+    },
     ".btn-in-basket-large": {
       display: "inline-flex antialiased",
       alignItems: "center",
