@@ -176,7 +176,7 @@ export function CategoryPageClient({
         <ActiveFilters filterGroups={filters} />
 
         <div className={isPending ? 'opacity-60 transition-opacity pointer-events-none' : 'transition-opacity'}>
-          {totalCount === 0 ? (
+          {totalCount === 0 || products.length === 0 ? (
             <EmptyResults />
           ) : (
             <>
