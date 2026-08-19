@@ -35,7 +35,7 @@ export function SearchEmpty({ query }: SearchEmptyProps) {
               </Link>
             ))}
           </div>
-          <Link href="/products/headphones" className="btn-ghost">
+          <Link href="/products" className="btn-ghost">
             Browse all products &rarr;
           </Link>
         </>

@@ -14,7 +14,10 @@ vi.mock("@/sanity-cms/lib/client", () => ({
 }));
 
 import { sanityFetch } from "@/sanity-cms/lib/client";
-import { getFiltersForCategoryPath } from "@/sanity-cms/lib/products/filter/getFiltersForCategoryPath";
+import {
+  getFiltersForCategoryPath,
+  getValidFilterFields,
+} from "@/sanity-cms/lib/products/filter/getFiltersForCategoryPath";
 
 const mockSanityFetch = sanityFetch as ReturnType<typeof vi.fn>;
 
@@ -135,6 +138,47 @@ describe("getFiltersForCategoryPath", () => {
       expect(brandGroup?.options).toHaveLength(1);
       expect(brandGroup?.options[0].value).toBe("sennheiser");
       expect(brandGroup?.options.find((o: { value: string }) => o.value === "Sony")).toBeUndefined();
+    });
+  });
+
+  describe("getValidFilterFields (G3)", () => {
+    it("always includes the built-in slider fields and brand, without querying, when there are no keys", async () => {
+      const valid = await getValidFilterFields([]);
+      expect(valid.has("priceRange")).toBe(true);
+      expect(valid.has("stockMin")).toBe(true);
+      expect(valid.has("brand")).toBe(true);
+      expect(mockSanityFetch).not.toHaveBeenCalled();
+    });
+
+    it("includes CMS-declared filter fields from the categoryFilters doc (falling back to name)", async () => {
+      mockSanityFetch.mockResolvedValueOnce({
+        filterItems: [
+          { field: "brand", name: "Brand" },
+          { field: "driverType", name: "Driver Type" },
+          { field: null, name: "Impedance" },
+        ],
+      });
+
+      const valid = await getValidFilterFields(["k"]);
+      expect(valid.has("brand")).toBe(true);
+      expect(valid.has("driverType")).toBe(true);
+      expect(valid.has("Impedance")).toBe(true); // falls back to name when field is absent
+      expect(valid.has("priceRange")).toBe(true);
+      expect(valid.has("stockMin")).toBe(true);
+    });
+
+    it("keeps the built-in + brand fields when the doc is missing or Sanity fails", async () => {
+      mockSanityFetch.mockResolvedValueOnce(null);
+      const valid = await getValidFilterFields(["k"]);
+      expect(valid.has("priceRange")).toBe(true);
+      expect(valid.has("stockMin")).toBe(true);
+      expect(valid.has("brand")).toBe(true);
+
+      mockSanityFetch.mockReset();
+      mockSanityFetch.mockRejectedValueOnce(new Error("boom"));
+      const validOnError = await getValidFilterFields(["k"]);
+      expect(validOnError.has("priceRange")).toBe(true);
+      expect(validOnError.has("brand")).toBe(true);
     });
   });
 

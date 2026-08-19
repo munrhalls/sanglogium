@@ -1,41 +1,38 @@
 // # Execution Specs: Search Feature — Pagination Component
 
 // ## Selected Slice
-// - Slice: SearchPagination.tsx — client-side pagination controls
-// - Reason: Core UX for search results navigation; URL param manipulation
+// - Slice: SearchPagination.tsx — client-side pagination controls (real <Link> hrefs)
+// - Reason: Core UX for search results navigation; URL param preservation (G8)
 
 import { describe, it, expect, vi, afterEach } from 'vitest'
-import { render, screen, fireEvent, cleanup } from '@testing-library/react'
+import { render, screen, cleanup } from '@testing-library/react'
 import '@testing-library/jest-dom/vitest'
 import { SearchPagination } from '@/app/components/features/search/SearchPagination'
 
 // Mock next/navigation
-const mockPush = vi.fn()
 const mockSearchParams = new URLSearchParams()
 
 vi.mock('next/navigation', () => ({
-  useRouter: () => ({ push: mockPush }),
+  usePathname: () => '/search',
   useSearchParams: () => mockSearchParams,
 }))
 
-describe('SearchPagination', () => {
-  const originalPathname = window.location.pathname
+// Mock next/link to render a plain <a> in jsdom (Next-only props are dropped)
+vi.mock('next/link', () => ({
+  default: ({ children, href, 'aria-label': ariaLabel }: any) => (
+    <a href={href} aria-label={ariaLabel}>{children}</a>
+  ),
+}))
 
+describe('SearchPagination', () => {
   beforeEach(() => {
-    Object.defineProperty(window, 'location', {
-      writable: true,
-      value: { ...window.location, pathname: '/search' },
-    })
+    mockSearchParams.delete('page')
+    mockSearchParams.delete('q')
+    mockSearchParams.delete('sort')
   })
 
   afterEach(() => {
     cleanup()
-    mockPush.mockClear()
-    mockSearchParams.delete('page')
-    Object.defineProperty(window, 'location', {
-      writable: true,
-      value: { ...window.location, pathname: originalPathname },
-    })
   })
 
   describe('when total fits on one page', () => {
@@ -56,62 +53,51 @@ describe('SearchPagination', () => {
   })
 
   describe('when multiple pages exist', () => {
-    it('renders page info and navigation buttons', () => {
+    it('renders page info and navigation links', () => {
       render(<SearchPagination totalCount={50} perPage={24} />)
 
       expect(screen.getByText(/Showing 1–24 of 50/)).toBeInTheDocument()
       expect(screen.getByText(/Page 1 of 3/)).toBeInTheDocument()
-      expect(screen.getByRole('button', { name: /Previous/i })).toBeInTheDocument()
-      expect(screen.getByRole('button', { name: /Next/i })).toBeInTheDocument()
+      expect(screen.getByRole('link', { name: /Next page/i })).toBeInTheDocument()
     })
 
-    it('disables Previous on first page', () => {
+    it('renders Previous as a disabled span on the first page', () => {
       render(<SearchPagination totalCount={50} perPage={24} />)
 
-      const prevBtn = screen.getByRole('button', { name: /Previous/i })
-      expect(prevBtn).toBeDisabled()
+      expect(screen.queryByRole('link', { name: /Previous page/i })).not.toBeInTheDocument()
+      expect(screen.getByText('Previous')).toBeInTheDocument()
     })
 
     it('enables Previous when not on first page', () => {
       mockSearchParams.set('page', '2')
       render(<SearchPagination totalCount={50} perPage={24} />)
 
-      const prevBtn = screen.getByRole('button', { name: /Previous/i })
-      expect(prevBtn).not.toBeDisabled()
+      expect(screen.getByRole('link', { name: /Previous page/i })).toBeInTheDocument()
     })
 
     it('disables Next on last page', () => {
       mockSearchParams.set('page', '3')
       render(<SearchPagination totalCount={50} perPage={24} />)
 
-      const nextBtn = screen.getByRole('button', { name: /Next/i })
-      expect(nextBtn).toBeDisabled()
+      expect(screen.queryByRole('link', { name: /Next page/i })).not.toBeInTheDocument()
+      expect(screen.getByText('Next')).toBeInTheDocument()
     })
 
-    it('navigates to next page on Next click', () => {
-      render(<SearchPagination totalCount={50} perPage={24} />)
-
-      fireEvent.click(screen.getByRole('button', { name: /Next/i }))
-      expect(mockPush).toHaveBeenCalledWith('/search?page=2', { scroll: false })
-    })
-
-    it('navigates to previous page on Previous click', () => {
-      mockSearchParams.set('page', '2')
-      render(<SearchPagination totalCount={50} perPage={24} />)
-
-      fireEvent.click(screen.getByRole('button', { name: /Previous/i }))
-      expect(mockPush).toHaveBeenCalledWith('/search', { scroll: false })
-    })
-
-    it('preserves existing query params when navigating', () => {
+    it('links to the next page preserving query params', () => {
       mockSearchParams.set('q', 'sennheiser')
       render(<SearchPagination totalCount={50} perPage={24} />)
 
-      fireEvent.click(screen.getByRole('button', { name: /Next/i }))
-      expect(mockPush).toHaveBeenCalledWith(
-        expect.stringContaining('q=sennheiser'),
-        { scroll: false }
-      )
+      const next = screen.getByRole('link', { name: /Next page/i })
+      expect(next).toHaveAttribute('href', '/search?q=sennheiser&page=2')
+    })
+
+    it('links to the previous page and drops page=1', () => {
+      mockSearchParams.set('q', 'sennheiser')
+      mockSearchParams.set('page', '2')
+      render(<SearchPagination totalCount={50} perPage={24} />)
+
+      const prev = screen.getByRole('link', { name: /Previous page/i })
+      expect(prev).toHaveAttribute('href', '/search?q=sennheiser')
     })
 
     it('shows correct range for middle page', () => {
@@ -135,14 +121,15 @@ describe('SearchPagination', () => {
       expect(screen.getByRole('navigation')).toHaveAttribute('aria-label', 'Search results pagination')
     })
 
-    it('has aria-label on Previous button', () => {
+    it('has aria-label on Previous link', () => {
+      mockSearchParams.set('page', '2')
       render(<SearchPagination totalCount={50} perPage={24} />)
-      expect(screen.getByRole('button', { name: /Previous page/ })).toBeInTheDocument()
+      expect(screen.getByRole('link', { name: /Previous page/ })).toBeInTheDocument()
     })
 
-    it('has aria-label on Next button', () => {
+    it('has aria-label on Next link', () => {
       render(<SearchPagination totalCount={50} perPage={24} />)
-      expect(screen.getByRole('button', { name: /Next page/ })).toBeInTheDocument()
+      expect(screen.getByRole('link', { name: /Next page/ })).toBeInTheDocument()
     })
 
     it('has aria-live on page indicator', () => {

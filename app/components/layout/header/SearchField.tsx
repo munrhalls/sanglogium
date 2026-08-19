@@ -24,6 +24,7 @@ export default function SearchField() {
   const [autocompleteError, setAutocompleteError] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const mobileInputRef = useRef<HTMLInputElement>(null);
+  const mobileTriggerRef = useRef<HTMLButtonElement>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const abortRef = useRef<AbortController | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -59,6 +60,9 @@ export default function SearchField() {
     setMobileExpanded(false);
     setQuery('');
     closeOverlay();
+    // Restore focus to the trigger (G7) so keyboard/screen-reader users keep
+    // their context when the mobile search overlay closes.
+    mobileTriggerRef.current?.focus();
   }, [closeOverlay]);
 
   const handleOverlayItemClick = useCallback(() => {
@@ -124,6 +128,20 @@ export default function SearchField() {
     }
   }, [mobileExpanded]);
 
+  // Escape closes the mobile search overlay (dialog semantics, G7).
+  useEffect(() => {
+    if (!mobileExpanded) return;
+
+    function handleEscape(e: KeyboardEvent) {
+      if (e.key === 'Escape') {
+        handleMobileClose();
+      }
+    }
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [mobileExpanded, handleMobileClose]);
+
   // Keyboard navigation
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (!isOverlayOpen) return;
@@ -161,6 +179,7 @@ export default function SearchField() {
     <>
       {/* Mobile: icon-only trigger (visible below sm) */}
       <button
+        ref={mobileTriggerRef}
         type="button"
         onClick={handleMobileOpen}
         className="sm:hidden flex items-center justify-center w-9 h-9 text-secondary-500 hover:text-primary transition-colors"
@@ -171,7 +190,12 @@ export default function SearchField() {
 
       {/* Mobile: expanded full-width search overlay */}
       {mobileExpanded && (
-        <div className="sm:hidden fixed inset-0 z-[60] bg-brand-900 flex flex-col">
+        <div
+          className="sm:hidden fixed inset-0 z-[60] bg-brand-900 flex flex-col"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Search products"
+        >
           <div className="flex items-center gap-2 h-[var(--mobile-header-h)] px-4">
             <button
               type="button"

@@ -25,8 +25,67 @@ interface FilterSidebarProps {
   maxStock?: number | null;
 }
 
+interface CollapsibleFilterGroupProps {
+  group: FilterGroup;
+  isFilterActive: (field: string, value: string) => boolean;
+  toggleFilter: (field: string, value: string) => void;
+}
+
+/**
+ * A single filter facet rendered as an accessible disclosure (G6): the group
+ * label is a toggle button (aria-expanded, keyboard-operable via native button)
+ * that collapses long CMS option lists. Defaults to expanded so existing
+ * behavior is preserved; the Checkbox rendering is unchanged.
+ */
+export function CollapsibleFilterGroup({ group, isFilterActive, toggleFilter }: CollapsibleFilterGroupProps) {
+  const [isOpen, setIsOpen] = React.useState(true);
+  const panelId = `filter-group-${group.field}`;
+
+  return (
+    <div className="space-y-3">
+      <h4 className="type-overline text-accent-500 section-header-anchor">
+        <button
+          type="button"
+          onClick={() => setIsOpen((open) => !open)}
+          aria-expanded={isOpen}
+          aria-controls={panelId}
+          className="flex w-full items-center justify-between gap-2 text-left text-current hover:text-primary transition-colors"
+        >
+          <span>{group.label}</span>
+          <span aria-hidden="true" className="text-caption">
+            {isOpen ? '−' : '+'}
+          </span>
+        </button>
+      </h4>
+      <div
+        id={panelId}
+        role="group"
+        aria-label={group.label}
+        className="space-y-2"
+        hidden={!isOpen}
+      >
+        {group.options.map((option) => {
+          const isChecked = isFilterActive(group.field, option.value);
+          return (
+            <Checkbox
+              key={option.value}
+              name={group.field}
+              value={option.value}
+              checked={isChecked}
+              onChange={() => toggleFilter(group.field, option.value)}
+              label={option.label}
+              count={option.count}
+              disabled={!isChecked && (option.count ?? 0) === 0}
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 export function FilterSidebar({ filters, priceRange: priceRangeData, maxStock }: FilterSidebarProps) {
-  const { priceRange, setPriceRange, clearPriceRange, isFilterActive, toggleFilter, stockMinimum, setStockMinimum, clearStockMinimum } = useFilterNuqs();
+  const { priceRange, setPriceRange, clearPriceRange, isFilterActive, toggleFilter, stockMinimum, setStockMinimum, clearStockMinimum, activeFilterCount, clearAllFilters } = useFilterNuqs();
 
   const { min: minPriceDollars, max: maxPriceDollars } = resolvePriceBounds(priceRangeData);
 
@@ -41,6 +100,26 @@ export function FilterSidebar({ filters, priceRange: priceRangeData, maxStock }:
         </h3>
 
         <form className="space-y-6">
+          {/* Active-filter summary above the first control so desktop shoppers see
+              the applied state where they act (G5). Content-column chips remain. */}
+          {activeFilterCount > 0 && (
+            <div
+              data-testid="sidebar-active-summary"
+              className="flex items-center justify-between gap-2"
+            >
+              <p className="type-caption text-secondary">
+                {activeFilterCount} {activeFilterCount === 1 ? 'filter' : 'filters'} applied
+              </p>
+              <button
+                type="button"
+                onClick={clearAllFilters}
+                className="type-caption text-accent-500 underline hover:text-brand-100 transition-colors cursor-pointer"
+              >
+                Clear all
+              </button>
+            </div>
+          )}
+
           <PriceRangeSlider
             min={minPriceDollars}
             max={maxPriceDollars}
@@ -57,29 +136,12 @@ export function FilterSidebar({ filters, priceRange: priceRangeData, maxStock }:
           />
 
           {filters.map((group) => (
-            <fieldset key={group.field} className="space-y-3">
-              <legend className="type-overline text-accent-500 section-header-anchor">
-                {group.label}
-              </legend>
-
-              <div className="space-y-2">
-                {group.options.map((option) => {
-                  const isChecked = isFilterActive(group.field, option.value);
-                  return (
-                    <Checkbox
-                      key={option.value}
-                      name={group.field}
-                      value={option.value}
-                      checked={isChecked}
-                      onChange={() => toggleFilter(group.field, option.value)}
-                      label={option.label}
-                      count={option.count}
-                      disabled={!isChecked && (option.count ?? 0) === 0}
-                    />
-                  );
-                })}
-              </div>
-            </fieldset>
+            <CollapsibleFilterGroup
+              key={group.field}
+              group={group}
+              isFilterActive={isFilterActive}
+              toggleFilter={toggleFilter}
+            />
           ))}
         </form>
       </div>

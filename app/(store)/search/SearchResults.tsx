@@ -22,11 +22,11 @@ export async function SearchResults({ resultsPromise, query }: SearchResultsProp
   return (
     <>
       <div className="flex items-center justify-between border-b border-border-secondary pb-4 mb-6">
-        <SortDropdown />
+        <SortDropdown searchMode />
         <span className="type-metadata text-secondary">{totalCount} products</span>
       </div>
       <ProductGrid
-        products={products as any}
+        products={products}
         className="grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg-desktop:grid-cols-4 lg-touch:grid-cols-3"
         wishlistProductIds={wishlistProductIds}
       />

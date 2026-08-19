@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { useFilterNuqs } from './useFilterNuqs';
 import { PriceRangeSlider } from './PriceRangeSlider';
 import { StockMinimumSlider } from './StockMinimumSlider';
-import { Checkbox } from '@/app/components/ui/Checkbox';
+import { CollapsibleFilterGroup } from './FilterSidebar';
 import { resolvePriceBounds } from '@/lib/catalogue/priceBounds';
 
 interface FilterOption {
@@ -147,49 +147,14 @@ export function MobileFilterDrawer({ isOpen, onClose, filters, priceRange: price
               />
 
               {filters.map((group) => (
-                <fieldset key={group.field} className="space-y-3">
-                  <legend className="type-overline text-accent-500 section-header-anchor">
-                    {group.label}
-                  </legend>
-
-                  <div className="space-y-2">
-                    {group.options.map((option) => {
-                      const isChecked = isFilterActive(group.field, option.value);
-                      return (
-                        <Checkbox
-                          key={option.value}
-                          name={group.field}
-                          value={option.value}
-                          checked={isChecked}
-                          onChange={() => toggleFilter(group.field, option.value)}
-                          label={option.label}
-                          count={option.count}
-                          disabled={!isChecked && (option.count ?? 0) === 0}
-                        />
-                      );
-                    })}
-                  </div>
-                </fieldset>
+                <CollapsibleFilterGroup
+                  key={group.field}
+                  group={group}
+                  isFilterActive={isFilterActive}
+                  toggleFilter={toggleFilter}
+                />
               ))}
             </form>
-          </div>
-
-          {/* Sticky Footer */}
-          <div className="sticky bottom-0 p-4 border-t border-border-secondary bg-surface-card">
-            <button
-              type="button"
-              onClick={() => {
-                onClose();
-                requestAnimationFrame(() => {
-                  document
-                    .querySelector<HTMLElement>('[data-testid="product-grid"]')
-                    ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                });
-              }}
-              className="w-full btn-primary"
-            >
-              Show Results
-            </button>
           </div>
         </div>
       </aside>

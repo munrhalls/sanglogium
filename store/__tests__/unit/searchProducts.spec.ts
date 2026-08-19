@@ -131,6 +131,7 @@ describe('searchProductsFull', () => {
           availableStock: 10,
           slug: { current: 'hd-650' },
           image: null,
+          catalogueLocationKeys: [],
         },
       ]
       mockSanityFetch.mockResolvedValueOnce(1) // count
@@ -142,44 +143,55 @@ describe('searchProductsFull', () => {
       expect(result.totalCount).toBe(1)
     })
 
-    it('applies default sort (name asc) when no sort param', async () => {
+    it('applies the relevance default order when no sort param', async () => {
       mockSanityFetch.mockResolvedValueOnce(0)
       mockSanityFetch.mockResolvedValueOnce([])
 
       await searchProductsFull('test')
 
       const productCall = mockSanityFetch.mock.calls[1][0]
-      expect(productCall.query).toContain('name asc')
+      expect(productCall.query).toContain('| order(score desc, name asc)')
     })
 
-    it('applies valid sort param', async () => {
+    it('applies a valid explicit sort WITHOUT the score prefix', async () => {
       mockSanityFetch.mockResolvedValueOnce(0)
       mockSanityFetch.mockResolvedValueOnce([])
 
-      await searchProductsFull('test', 'unit_amount:desc')
+      await searchProductsFull('test', 'price_data.unit_amount:desc')
 
       const productCall = mockSanityFetch.mock.calls[1][0]
-      expect(productCall.query).toContain('unit_amount desc')
+      expect(productCall.query).toContain('| order(price_data.unit_amount desc)')
+      expect(productCall.query).not.toContain('score desc')
     })
 
-    it('falls back to default sort for invalid sort field', async () => {
+    it('applies the relevance default for the legacy "featured" value', async () => {
+      mockSanityFetch.mockResolvedValueOnce(0)
+      mockSanityFetch.mockResolvedValueOnce([])
+
+      await searchProductsFull('test', 'featured')
+
+      const productCall = mockSanityFetch.mock.calls[1][0]
+      expect(productCall.query).toContain('| order(score desc, name asc)')
+    })
+
+    it('falls back to the relevance default for an invalid sort field', async () => {
       mockSanityFetch.mockResolvedValueOnce(0)
       mockSanityFetch.mockResolvedValueOnce([])
 
       await searchProductsFull('test', 'invalid_field:asc')
 
       const productCall = mockSanityFetch.mock.calls[1][0]
-      expect(productCall.query).toContain('name asc')
+      expect(productCall.query).toContain('| order(score desc, name asc)')
     })
 
-    it('falls back to default sort for invalid sort direction', async () => {
+    it('falls back to the relevance default for an invalid sort direction', async () => {
       mockSanityFetch.mockResolvedValueOnce(0)
       mockSanityFetch.mockResolvedValueOnce([])
 
       await searchProductsFull('test', 'name:invalid')
 
       const productCall = mockSanityFetch.mock.calls[1][0]
-      expect(productCall.query).toContain('name asc')
+      expect(productCall.query).toContain('| order(score desc, name asc)')
     })
   })
 
@@ -214,18 +226,45 @@ describe('searchProductsFull', () => {
       expect(productCall.query).toContain('[20...30]')
     })
 
-    it('handles invalid page by defaulting to page 1', async () => {
+    it('floors an invalid page to page 1', async () => {
       mockSanityFetch.mockResolvedValueOnce(100)
       mockSanityFetch.mockResolvedValueOnce([])
 
-      // The page param is validated in page.tsx, not in searchProductsFull
-      // searchProductsFull accepts any number and calculates offset
       await searchProductsFull('test', undefined, -1)
 
       const productCall = mockSanityFetch.mock.calls[1][0]
-      // offset = (-1 - 1) * 24 = -48, which would be [(-48)...(-24)]
-      // This is an edge case; validation happens upstream in page.tsx
-      expect(productCall.query).toMatch(/\[-?\d+\.\.\.-?\d+\]/)
+      expect(productCall.query).toContain('[0...24]')
+    })
+
+    it('clamps an out-of-range page to the last page', async () => {
+      const lastPageProducts: SearchProduct[] = [
+        {
+          _id: '7',
+          name: 'HD 660S',
+          brand: null,
+          price_data: { currency: 'USD', unit_amount: 44900 },
+          stock: 5,
+          reservedStock: 0,
+          availableStock: 5,
+          slug: { current: 'hd-660s' },
+          image: null,
+          catalogueLocationKeys: [],
+        },
+      ]
+
+      // totalCount = 30 → totalPages = ceil(30/24) = 2. Requesting page 99 must
+      // return the page-2 window instead of an empty array (G2).
+      mockSanityFetch.mockResolvedValueOnce(30) // count
+      mockSanityFetch.mockResolvedValueOnce([]) // requested (empty) window
+      mockSanityFetch.mockResolvedValueOnce(lastPageProducts) // clamped window
+
+      const result = await searchProductsFull('test', undefined, 99)
+
+      expect(result.totalCount).toBe(30)
+      expect(result.products).toEqual(lastPageProducts)
+
+      const clampedCall = mockSanityFetch.mock.calls[2][0]
+      expect(clampedCall.query).toContain('[24...48]')
     })
   })
 })

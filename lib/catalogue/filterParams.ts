@@ -94,6 +94,59 @@ export function buildOrderClause(value: string | null | undefined): string {
 }
 
 // ---------------------------------------------------------------------------
+// Search sort contract (G1: one allowlist for UI + server, relevance default)
+// ---------------------------------------------------------------------------
+
+/** Default sort for the `/search` results page: relevance (score) first. */
+export const SEARCH_SORT_DEFAULT = "relevance";
+
+/**
+ * The complete, allow-listed set of sort options for `/search`. `relevance` is
+ * the default order (score desc, name asc); every other option is an explicit
+ * user order with NO score prefix, so a chosen sort is the actual order of the
+ * page window (G1).
+ */
+export const SEARCH_SORT_OPTIONS: readonly SortOption[] = [
+  { value: "relevance", label: "Relevance", order: "score desc, name asc" },
+  {
+    value: "price_data.unit_amount:asc",
+    label: "Price: Low to High",
+    order: "price_data.unit_amount asc",
+  },
+  {
+    value: "price_data.unit_amount:desc",
+    label: "Price: High to Low",
+    order: "price_data.unit_amount desc",
+  },
+  { value: "name:asc", label: "Name: A-Z", order: "name asc" },
+  { value: "name:desc", label: "Name: Z-A", order: "name desc" },
+] as const;
+
+const SEARCH_SORT_BY_VALUE: ReadonlyMap<string, SortOption> = new Map(
+  SEARCH_SORT_OPTIONS.map((opt) => [opt.value, opt])
+);
+
+/**
+ * Resolve a (possibly hostile) URL sort value to a SAFE, allow-listed option
+ * for the search page. Unknown or crafted values fall back to the relevance
+ * default — raw input is never returned, so GROQ-order injection is impossible.
+ */
+export function resolveSearchSort(value: string | null | undefined): SortOption {
+  return (
+    (value && SEARCH_SORT_BY_VALUE.get(value)) ||
+    SEARCH_SORT_BY_VALUE.get(SEARCH_SORT_DEFAULT)!
+  );
+}
+
+/** Build the GROQ `order(...)` literal for `/search` from the allowlist. */
+export function buildSearchOrderClause(value: string | null | undefined): string {
+  return `| order(${resolveSearchSort(value).order})`;
+}
+
+/** nuqs parser for `?sort=` on the search page (default = relevance). */
+export const searchSortParser = parseAsString.withDefault(SEARCH_SORT_DEFAULT);
+
+// ---------------------------------------------------------------------------
 // Filter (`f`) contract
 // ---------------------------------------------------------------------------
 

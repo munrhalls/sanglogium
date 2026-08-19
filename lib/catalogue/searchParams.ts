@@ -7,8 +7,13 @@
 // Closes (Phase 1): A3 (type-safe server adapter instead of ad-hoc parsing),
 // B12 (server reuses the exact same parsers as the client).
 
-import { createLoader } from "nuqs/server";
-import { sortParser, filtersParser, pageParser } from "./filterParams";
+import { createLoader, parseAsString } from "nuqs/server";
+import {
+  sortParser,
+  filtersParser,
+  pageParser,
+  searchSortParser,
+} from "./filterParams";
 
 /**
  * Parse a category page's search params into `{ sort, f, page }`.
@@ -19,3 +24,21 @@ export const loadCategorySearchParams = createLoader({
   f: filtersParser,
   page: pageParser,
 });
+
+/**
+ * Search page's `?q=` parser (any string; empty default keeps bare `/search`
+ * URLs clean).
+ */
+export const searchQParser = parseAsString.withDefault("");
+
+/**
+ * Parse the search page's search params into `{ q, sort, page }` using the
+ * SAME parsers the client consumes (nuqs `searchSortParser`, shared `pageParser`)
+ * — one trusted parse, no client↔server drift (G3).
+ */
+export const loadSearchSearchParams = createLoader({
+  q: searchQParser,
+  sort: searchSortParser,
+  page: pageParser,
+});
+

@@ -3,8 +3,9 @@ import { notFound } from 'next/navigation';
 import { resolveSlugToId, unrollDescendantKeys } from '@/data/catalogue';
 import { getProductsByVfsKeys } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
 import { getCategoryMetadata } from '@/sanity-cms/lib/products/getCategoryMetadata';
-import { getFiltersForCategoryPath } from '@/sanity-cms/lib/products/filter/getFiltersForCategoryPath';
+import { getFiltersForCategoryPath, getValidFilterFields } from '@/sanity-cms/lib/products/filter/getFiltersForCategoryPath';
 import { loadCategorySearchParams } from '@/lib/catalogue/searchParams';
+import { stripUnknownFilters } from '@/lib/catalogue/filterUtils';
 import { ShopHeader } from '@/app/components/features/products/ShopHeader';
 import { FilterSidebar } from '@/app/components/features/filters/FilterSidebar';
 import { CategoryPageClient } from './CategoryPageClient';
@@ -40,15 +41,20 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
 
   const descendantKeys = unrollDescendantKeys(nodeId);
 
+  // Strip stale/unknown `?f=` fields BEFORE querying (G3) so SSR never flashes
+  // an empty grid for shared/crawled URLs; the client effect stays as a backstop.
+  const validFields = await getValidFilterFields(descendantKeys);
+  const cleanedFilters = stripUnknownFilters(filters, validFields);
+
   // Create promises for streaming (don't await here)
   const productsPromise = getProductsByVfsKeys({
     keys: descendantKeys,
     sort,
-    filters,
+    filters: cleanedFilters,
     page
   });
   const metadataPromise = getCategoryMetadata(nodeId);
-  const filtersPromise = getFiltersForCategoryPath(descendantKeys, filters);
+  const filtersPromise = getFiltersForCategoryPath(descendantKeys, cleanedFilters);
 
   // Await metadata for immediate render (lightweight)
   const metadata = await metadataPromise;

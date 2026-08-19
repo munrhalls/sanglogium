@@ -63,6 +63,47 @@ function computeFilterCounts(products: FacetDataProduct[] | null): Map<string, n
   return counts;
 }
 
+const getValidFilterFieldsFn = async (catalogueKeys: string[]): Promise<Set<string>> => {
+  // Built-in slider fields are always valid (mirrors BUILT_IN_FILTER_FIELDS in
+  // lib/catalogue/filterUtils.ts), and brand is always valid because the facet
+  // layer derives a brand group even without a CMS brand filter item.
+  const valid = new Set(['priceRange', 'stockMin', 'brand']);
+
+  if (!catalogueKeys.length) return valid;
+
+  try {
+    const doc = await sanityFetch<{
+      filterItems: Array<{ field: string | null; name: string | null }>;
+    } | null>({
+      query: groq`*[_type == "categoryFilters" && categoryKey in $keys][0] {
+        "filterItems": filters.filterItems[] {
+          field,
+          name
+        }
+      }`,
+      params: { keys: catalogueKeys }
+    });
+
+    for (const item of doc?.filterItems ?? []) {
+      const field = item?.field || item?.name;
+      if (field) valid.add(field);
+    }
+    return valid;
+  } catch (error) {
+    console.error(`[getValidFilterFields] Failed for ${catalogueKeys.length} keys:`, error);
+    return valid;
+  }
+};
+
+/**
+ * Cached set of valid filter field names for a category path: the fields
+ * declared in the category's categoryFilters doc, plus `brand` and the
+ * always-valid built-in slider fields (`priceRange`, `stockMin`). Server pages
+ * use this to strip stale/unknown `?f=` fields BEFORE querying (G3), so SSR
+ * never flashes an empty grid for shared/crawled URLs.
+ */
+export const getValidFilterFields = withCache(getValidFilterFieldsFn);
+
 const getFiltersForCategoryPathFn = async (
   catalogueKeys: string[],
   activeFilters: string[] = []

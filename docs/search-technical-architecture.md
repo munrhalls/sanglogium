@@ -1,4 +1,4 @@
-# Sang Logium — Search: Tech Stack & System Architecture
+﻿# Sang Logium — Search: Tech Stack & System Architecture
 
 *2026-08-19. Read-only bus-stop trace of the site-wide search feature (`/search`) and the
 platform it runs on. Every claim was verified against source files and installed packages
@@ -102,6 +102,31 @@ Header (all store pages)
 - Filter clause (`searchProducts.ts:94-100`) mirrors the autocomplete clause. Count and
   window are fetched concurrently (`Promise.all`, lines 104-128); the window select adds
   `stock`, `reservedStock`, `availableStock` (line 116) and orders
+  `order(score desc, ${orderClause})` (line 125) before slicing `[offset...offset+perPage]`.
+- Failure path: `catch` logs and returns `{ products: [], totalCount: 0 }` (lines 131-134).
+- UI (`app/(store)/search/SearchResults.tsx:14-35`): `wishlistProductIds` resolved on the
+  server (`lib/wishlist.ts:4-14`), empty → `SearchEmpty`; else header row with
+  `SortDropdown` (line 25) + `{totalCount} products` (line 26), `ProductGrid` (line 28,
+  `products as any`), `SearchPagination` (line 33).
+
+### R4 — Sort contract divergence (the load-bearing defect)
+- **Client contract:** `lib/catalogue/filterParams.ts:57-71` `SORT_OPTIONS` — values
+  `featured`, `price_data.unit_amount:asc`, `price_data.unit_amount:desc`, `name:asc`,
+  `name:desc`. `SortDropdown.tsx:19-23` renders these; `useFilterNuqs.handleSortChange`
+  (`useFilterNuqs.ts:265-270`) writes `?sort=<value>` (clearing it for `featured`) via nuqs
+  `shallow:false` (lines 54-61).
+- **Server contract:** `searchProducts.ts:87-92` — `['name','unit_amount']` with
+  `split(':')` (so `price_data.unit_amount:asc` parses to `field='price_data'`,
+  `dir='unit_amount'` → fallback).
+- Result: on `/search`, **only `name:asc` / `name:desc` survive**; price sorts and
+  `featured` all collapse to `name asc`. The dropdown's default label "Featured" (nuqs
+  default `sortParser.withDefault(SORT_DEFAULT)`, `filterParams.ts:184`) lies: the server
+  default is `name asc` (`searchProducts.ts:86`).
+- Even a surviving sort is **still secondary**: `order(score desc, <sort>)`
+  (`searchProducts.ts:125`) puts the relevance score first, so user-chosen ordering only
+  applies within equal-score buckets. (The category page avoids both problems by consuming
+  `buildOrderClause`/`resolveSort` — `getProductsByVfsKeys.ts:68` — from the *same*
+  `filterParams.ts` allowlist.)
 
 ### R5 — Pagination
 - `SearchPagination.tsx:11-72` (client): reads `page` from `useSearchParams` (line 15),
@@ -142,30 +167,3 @@ Header (all store pages)
 | Empty-state link | "Clear all filters" | "Browse all products" → `/products/headphones` (wrong target) |
 | SEO | noindex on faceted/sorted/paginated | no robots handling at all |
 | Sort order | allowlisted literal GROQ `order` | `order(score desc, <user sort>)` — score hijacks |
-
-  `order(score desc, ${orderClause})` (line 125) before slicing `[offset...offset+perPage]`.
-- Failure path: `catch` logs and returns `{ products: [], totalCount: 0 }` (lines 131-134).
-- UI (`app/(store)/search/SearchResults.tsx:14-35`): `wishlistProductIds` resolved on the
-  server (`lib/wishlist.ts:4-14`), empty → `SearchEmpty`; else header row with
-  `SortDropdown` (line 25) + `{totalCount} products` (line 26), `ProductGrid` (line 28,
-  `products as any`), `SearchPagination` (line 33).
-
-### R4 — Sort contract divergence (the load-bearing defect)
-- **Client contract:** `lib/catalogue/filterParams.ts:57-71` `SORT_OPTIONS` — values
-  `featured`, `price_data.unit_amount:asc`, `price_data.unit_amount:desc`, `name:asc`,
-  `name:desc`. `SortDropdown.tsx:19-23` renders these; `useFilterNuqs.handleSortChange`
-  (`useFilterNuqs.ts:265-270`) writes `?sort=<value>` (clearing it for `featured`) via nuqs
-  `shallow:false` (lines 54-61).
-- **Server contract:** `searchProducts.ts:87-92` — `['name','unit_amount']` with
-  `split(':')` (so `price_data.unit_amount:asc` parses to `field='price_data'`,
-  `dir='unit_amount'` → fallback).
-- Result: on `/search`, **only `name:asc` / `name:desc` survive**; price sorts and
-  `featured` all collapse to `name asc`. The dropdown's default label "Featured" (nuqs
-  default `sortParser.withDefault(SORT_DEFAULT)`, `filterParams.ts:184`) lies: the server
-  default is `name asc` (`searchProducts.ts:86`).
-- Even a surviving sort is **still secondary**: `order(score desc, <sort>)`
-  (`searchProducts.ts:125`) puts the relevance score first, so user-chosen ordering only
-  applies within equal-score buckets. (The category page avoids both problems by consuming
-  `buildOrderClause`/`resolveSort` — `getProductsByVfsKeys.ts:68` — from the *same*
-  `filterParams.ts` allowlist.)
-

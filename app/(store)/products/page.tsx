@@ -1,8 +1,9 @@
 import React, { Suspense } from 'react';
 import { getAllLeafKeys } from '@/data/catalogue';
 import { getProductsByVfsKeys } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
-import { getFiltersForCategoryPath } from '@/sanity-cms/lib/products/filter/getFiltersForCategoryPath';
+import { getFiltersForCategoryPath, getValidFilterFields } from '@/sanity-cms/lib/products/filter/getFiltersForCategoryPath';
 import { loadCategorySearchParams } from '@/lib/catalogue/searchParams';
+import { stripUnknownFilters } from '@/lib/catalogue/filterUtils';
 import { ShopHeader } from '@/app/components/features/products/ShopHeader';
 import { FilterSection } from './[...slug]/FilterSection';
 import { ProductsSection } from './[...slug]/ProductsSection';
@@ -23,8 +24,13 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
 
   const allKeys = getAllLeafKeys();
 
-  const productsPromise = getProductsByVfsKeys({ keys: allKeys, sort, filters, page });
-  const filtersPromise = getFiltersForCategoryPath(allKeys, filters);
+  // Strip stale/unknown `?f=` fields BEFORE querying (G3) so SSR never flashes
+  // an empty grid for shared/crawled URLs; the client effect stays as a backstop.
+  const validFields = await getValidFilterFields(allKeys);
+  const cleanedFilters = stripUnknownFilters(filters, validFields);
+
+  const productsPromise = getProductsByVfsKeys({ keys: allKeys, sort, filters: cleanedFilters, page });
+  const filtersPromise = getFiltersForCategoryPath(allKeys, cleanedFilters);
 
   return (
     <div className="mx-auto w-full max-w-content px-4 md:px-8 pb-12">
