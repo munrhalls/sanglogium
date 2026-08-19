@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { SortDropdown } from './SortDropdown';
-import { useFilterNuqs } from './useFilterNuqs';
+import { useFilterNuqs, useFilterPending } from './useFilterNuqs';
 
 interface MobileControlsBarProps {
   productCount: number;
@@ -16,6 +16,7 @@ export function MobileControlsBar({
   isOpen,
 }: MobileControlsBarProps) {
   const { activeFilterCount } = useFilterNuqs();
+  const isPending = useFilterPending();
 
   return (
     <div
@@ -61,6 +62,16 @@ export function MobileControlsBar({
       <div className="flex-1">
         <SortDropdown />
       </div>
+
+      {/* Mobile product count with pending cue (mirrors the desktop count row) */}
+      <span
+        className="type-caption text-secondary-500 shrink-0"
+        data-testid="mobile-product-count"
+        aria-live="polite"
+      >
+        {productCount} {productCount === 1 ? 'product' : 'products'}
+        {isPending && ' (Loading...)'}
+      </span>
     </div>
   );
 }

@@ -194,7 +194,7 @@ export function CategoryPageClient({
           )}
         </div>
 
-        <Pagination currentPage={effectivePage} totalPages={totalPages} />
+        <Pagination currentPage={effectivePage} totalPages={totalPages} totalCount={totalCount} perPage={perPage} />
       </div>
     </>
   );

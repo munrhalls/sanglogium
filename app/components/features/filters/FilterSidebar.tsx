@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { useFilterNuqs } from './useFilterNuqs';
+import { useFilterNuqs, useFilterPending } from './useFilterNuqs';
 import { PriceRangeSlider } from './PriceRangeSlider';
 import { StockMinimumSlider } from './StockMinimumSlider';
 import { Checkbox } from '@/app/components/ui/Checkbox';
@@ -86,6 +86,7 @@ export function CollapsibleFilterGroup({ group, isFilterActive, toggleFilter }: 
 
 export function FilterSidebar({ filters, priceRange: priceRangeData, maxStock }: FilterSidebarProps) {
   const { priceRange, setPriceRange, clearPriceRange, isFilterActive, toggleFilter, stockMinimum, setStockMinimum, clearStockMinimum, activeFilterCount, clearAllFilters } = useFilterNuqs();
+  const isPending = useFilterPending();
 
   const { min: minPriceDollars, max: maxPriceDollars } = resolvePriceBounds(priceRangeData);
 
@@ -94,7 +95,7 @@ export function FilterSidebar({ filters, priceRange: priceRangeData, maxStock }:
       data-testid="filter-sidebar"
       className="w-full"
     >
-      <div className="bg-surface-elevated border border-border-secondary rounded-sm p-6 space-y-6">
+      <div className={`bg-surface-elevated border border-border-secondary rounded-sm p-6 space-y-6 ${isPending ? 'opacity-60 transition-opacity pointer-events-none' : 'transition-opacity'}`}>
         <h3 className="type-overline text-accent-500">
           Filters
         </h3>

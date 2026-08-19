@@ -4,6 +4,11 @@ import { fetchHomepageData } from "../lib/fetchHomepageData";
 import fs from "fs/promises";
 import path from "path";
 
+// Dev-only preview page: reads a LOCAL, git-ignored image-normalization map at
+// request time. Never prerender it (the map file is not part of the deployment),
+// and degrade gracefully when the map is absent.
+export const dynamic = "force-dynamic";
+
 function slugifyFilename(name: string): string {
   return name
     .toLowerCase()
@@ -50,9 +55,17 @@ function remapImage<T extends { _id: string; name: string; image?: { asset?: { _
 export default async function NormalizeAccessoriesSectionPage() {
   const data = await fetchHomepageData();
 
-  const mapPath = path.join(process.cwd(), "normalize-accessories-images", "flagged-map.json");
-  const mapData: FlaggedMapEntry[] = JSON.parse(await fs.readFile(mapPath, "utf-8"));
-  const flaggedById = new Map(mapData.map((entry) => [entry._id, entry.flaggedFilename]));
+  // The local map is optional: when missing (e.g. on CI/Vercel, where the
+  // directory is not committed), render with the original Sanity images instead
+  // of failing the build or 500ing at runtime.
+  let flaggedById = new Map<string, string>();
+  try {
+    const mapPath = path.join(process.cwd(), "normalize-accessories-images", "flagged-map.json");
+    const mapData: FlaggedMapEntry[] = JSON.parse(await fs.readFile(mapPath, "utf-8"));
+    flaggedById = new Map(mapData.map((entry) => [entry._id, entry.flaggedFilename]));
+  } catch {
+    flaggedById = new Map<string, string>();
+  }
 
   const remap = (item: any) => remapImage(item, flaggedById);
 

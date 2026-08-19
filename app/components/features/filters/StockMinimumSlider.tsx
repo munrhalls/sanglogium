@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { ClockCounterClockwise } from '@phosphor-icons/react';
 
 interface StockMinimumSliderProps {
@@ -14,6 +14,9 @@ export function StockMinimumSlider({ maxStock, value, onChange, onClear }: Stock
   const [localValue, setLocalValue] = useState(value);
   const isDragging = useRef(false);
   const isKeyboardRef = useRef(false);
+  // Unique id (renders in both the sidebar and the mobile drawer) to bind the
+  // label to the input (G9).
+  const inputId = useId();
 
   const isActive = value > 0;
   const max = maxStock || 100;
@@ -101,10 +104,11 @@ export function StockMinimumSlider({ maxStock, value, onChange, onClear }: Stock
       <div className="space-y-4">
         <div className="space-y-2">
           <div className="flex justify-between items-center">
-            <label className="type-caption text-secondary-500">Minimum Stock</label>
+            <label htmlFor={inputId} className="type-caption text-secondary-500">Minimum Stock</label>
             <span className="type-caption text-secondary-500">{getSliderLabel()}</span>
           </div>
           <input
+            id={inputId}
             type="range"
             min={0}
             max={max}

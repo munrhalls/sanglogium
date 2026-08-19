@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { ClockCounterClockwise } from '@phosphor-icons/react';
 
 interface PriceRangeSliderProps {
@@ -15,6 +15,10 @@ export function PriceRangeSlider({ min, max, value, onChange, onClear }: PriceRa
   const [localMax, setLocalMax] = useState(value.max ?? max);
   const isDragging = useRef(false);
   const isKeyboardRef = useRef(false);
+  // Unique ids (the slider renders in both the sidebar and the mobile drawer,
+  // so static ids would collide); used to bind each label to its input (G9).
+  const minInputId = useId();
+  const maxInputId = useId();
 
   const isActive = (value.min !== undefined && value.min !== min) || (value.max !== undefined && value.max !== max);
 
@@ -123,10 +127,11 @@ export function PriceRangeSlider({ min, max, value, onChange, onClear }: PriceRa
       <div className="space-y-4">
         <div className="space-y-2">
           <div className="flex justify-between items-center">
-            <label className="type-caption text-secondary-500">Min</label>
+            <label htmlFor={minInputId} className="type-caption text-secondary-500">Min</label>
             <span className="type-caption text-secondary-500">${localMin}</span>
           </div>
           <input
+            id={minInputId}
             type="range"
             min={min}
             max={max}
@@ -162,10 +167,11 @@ export function PriceRangeSlider({ min, max, value, onChange, onClear }: PriceRa
 
         <div className="space-y-2">
           <div className="flex justify-between items-center">
-            <label className="type-caption text-secondary-500">Max</label>
+            <label htmlFor={maxInputId} className="type-caption text-secondary-500">Max</label>
             <span className="type-caption text-secondary-500">${localMax}</span>
           </div>
           <input
+            id={maxInputId}
             type="range"
             min={min}
             max={max}
