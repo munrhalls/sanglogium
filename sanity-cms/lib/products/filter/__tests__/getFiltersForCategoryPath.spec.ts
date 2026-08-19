@@ -95,6 +95,26 @@ describe("getFiltersForCategoryPath", () => {
     });
   });
 
+  describe("adaptive bounds (G1)", () => {
+    it("applies the active-filter clause to min-price, max-price and max-stock queries", async () => {
+      mockSanityFetch
+        .mockResolvedValueOnce(null) // cmsFilters
+        .mockResolvedValueOnce({ price_data: { unit_amount: 100 } }) // minPrice
+        .mockResolvedValueOnce({ price_data: { unit_amount: 200 } }) // maxPrice
+        .mockResolvedValueOnce({ stock: 5 }) // maxStock
+        .mockResolvedValueOnce(1) // count
+        .mockResolvedValueOnce([]); // facetData
+
+      await getFiltersForCategoryPath(["k"], ["brand:Focal"]);
+
+      const clause = 'lower(brand->name) == lower("Focal")';
+      // min-price (index 1), max-price (index 2), max-stock (index 3)
+      expect(mockSanityFetch.mock.calls[1][0].query).toContain(clause);
+      expect(mockSanityFetch.mock.calls[2][0].query).toContain(clause);
+      expect(mockSanityFetch.mock.calls[3][0].query).toContain(clause);
+    });
+  });
+
   describe("brand casing (B9 / T5.5)", () => {
     it("intersects CMS brand options case-insensitively, filtering out non-matching brands", async () => {
       mockSanityFetch

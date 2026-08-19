@@ -1,0 +1,70 @@
+# Master Execution Prompt — Sang Logium Catalogue Filters (G1–G18)
+
+*2026-08-19. Copy-paste this prompt into an agent session to execute the catalogue-filters
+improvement program issue by issue, in priority order. Companion to
+`docs/catalogue-filters-professional-audit-gaps.md` (per-gap evidence) and
+`docs/catalogue-filters-technical-architecture.md` (system trace R1–R12).*
+
+---
+
+## Mission
+
+Execute the catalogue-filters program in `C:\webdev\sang-logium`: 18 gap issues (G1–G18),
+one at a time, in the priority order below. Do not parallelize, do not skip, do not touch
+unrelated issues. The master issue (`sang-logium-bsr`) is coordination-only — no work.
+
+## Ground rules (apply to every issue)
+
+1. Read `AGENTS.md` first — resource discipline: one shared dev server (port 3000), one
+   shared CDP browser, build lock for heavy ops, never kill Wispr Flow, targeted tests only.
+2. `bd show <id>` before working — the description is the contract: verified `ROOT CAUSE`
+   (file:line), pinned `SCOPE` (exact files), `FIX`, `DoD`, `GUARDRAILS`. Do not re-derive,
+   do not expand scope.
+3. System context — do NOT redesign: Next.js 15 App Router + React 19 + nuqs 2.8.9 + Sanity
+   GROQ. Filters are 100% server-side: URL (`?sort/?f/?page`) → nuqs `shallow:false` →
+   `router.replace` → RSC re-render → GROQ. Sort is an ALLOWLIST
+   (`lib/catalogue/filterParams.ts` `SORT_OPTIONS`); GROQ clauses are built ONLY by
+   `sanity-cms/lib/products/FilterBuilder.ts`. Never interpolate raw URL input.
+4. Never link beads issues (no `--deps`/`--parent`/`--waits-for`).
+5. Verification = the issue's own DoD (targeted `npx vitest run <spec>` / manual checks).
+   No full build or full test suites unless the DoD explicitly requires them.
+
+## Execution order (one at a time, top to bottom)
+
+- **P1:** `sang-logium-f54` (G1) → `sang-logium-r09` (G2) → `sang-logium-5q3` (G3)
+- **P2:** `sang-logium-9vg` (G4) → `sang-logium-mpq` (G5) → `sang-logium-xl2` (G6) →
+  `sang-logium-71i` (G7) → `sang-logium-eav` (G8) → `sang-logium-rb1` (G9) →
+  `sang-logium-k4c` (G10)
+- **P3:** `sang-logium-dh7` (G11) → `sang-logium-3sl` (G12) → `sang-logium-opz` (G13) →
+  `sang-logium-8qq` (G14) → `sang-logium-sn6` (G15) → `sang-logium-e4h` (G16) →
+  `sang-logium-yk7` (G17) → `sang-logium-28t` (G18)
+
+## Per-issue protocol (follow exactly)
+
+1. `bd show <id>` — read PRIORITY / ROOT CAUSE / SCOPE / FIX / DoD / GUARDRAILS.
+2. `bd update <id> --claim`, then `bd update <id> --status in_progress`.
+3. Implement the FIX touching ONLY the files in SCOPE. Keep the change minimal and follow
+   the codebase's existing patterns. Read each referenced file once; don't re-read others.
+4. Run the DoD checks from the issue. If a check fails, fix within SCOPE and re-run until
+   green. If genuinely blocked (external dependency, unresolvable ambiguity): leave the
+   issue open, `bd comment <id> "blocked: <reason>"`, `bd update <id> --status blocked`,
+   then continue to the next issue.
+5. On green: `bd note <id> "Implemented: <1-2 line summary>; DoD verified: <commands>."`
+   then `bd update <id> --status done`.
+6. Before the next issue: confirm no leftover scratch files, no running watchers/browsers.
+7. Repeat until all 18 are done.
+
+## Stop conditions
+
+- Stop after `sang-logium-28t` (G18) is done. Do not pick up other open board issues
+  (`sang-logium-2de`, `sang-logium-fz0` are unrelated — leave them alone).
+- The master issue `sang-logium-bsr` stays open (coordination only) unless told otherwise.
+- If a change might violate an issue's GUARDRAILS or the system context above, stop and ask.
+  Do not guess.
+- Do not commit, push, or run `bd dolt push` unless explicitly asked.
+
+## Definition of done (whole program)
+
+- All 18 gap issues closed (`done`) with notes; each DoD verified.
+- Targeted specs green; `npx tsc --noEmit` clean for the touched areas.
+- No changes outside each issue's SCOPE files; no bead links created.

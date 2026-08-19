@@ -116,19 +116,19 @@ const getFiltersForCategoryPathFn = async (
           params
         }),
         sanityFetch<{ price_data: { unit_amount: number } | null }>({
-          query: groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0 && defined(price_data)] | order(price_data.unit_amount asc)[0] {
+          query: groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0 && defined(price_data) ${filterClause}] | order(price_data.unit_amount asc)[0] {
             price_data
           }`,
           params
         }),
         sanityFetch<{ price_data: { unit_amount: number } | null }>({
-          query: groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0 && defined(price_data)] | order(price_data.unit_amount desc)[0] {
+          query: groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0 && defined(price_data) ${filterClause}] | order(price_data.unit_amount desc)[0] {
             price_data
           }`,
           params
         }),
         sanityFetch<{ stock: number | null }>({
-          query: groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0 && defined(stock)] | order(stock desc)[0] {
+          query: groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0 && defined(stock) ${filterClause}] | order(stock desc)[0] {
             stock
           }`,
           params

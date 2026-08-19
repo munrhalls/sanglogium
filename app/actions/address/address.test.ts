@@ -195,19 +195,4 @@ describe("submitShippingAction — FROZEN Google path (ADDRESS_VERIFY_MODE=googl
     expect(result.errors?.message).toContain("Invalid address format");
   });
 
-  it("uses Poczta Polska PNA instead of Google when configured (PL)", async () => {
-    vi.stubEnv("PNA_POCZTA_TOKEN", "test-token");
-    mockFetch.mockResolvedValue({
-      ok: true,
-      json: async () => ({
-        codes: ["54-129"],
-        addresses: ["Balonowa Wrocław"],
-      }),
-    });
-
-    const result = await submitShippingAction(baseInput);
-
-    expect(result.status).toBe("ACCEPT");
-    expect(String(mockFetch.mock.calls[0][0])).toContain("pna.poczta-polska.pl");
-  });
 });

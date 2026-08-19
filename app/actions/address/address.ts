@@ -1,6 +1,5 @@
 "use server";
 import { Address, ServerResponse } from "@/app/checkout/checkout.types";
-import { validatePolishAddressWithPna } from "@/lib/address/pna-validator";
 import { verifyPolishAddress } from "@/lib/address/teryt-validator";
 
 interface RequestBody {
@@ -168,38 +167,27 @@ export async function submitShippingAction(
     return acceptAsEntered();
   }
 
-  // ACTIVE verifier: TERYT (default). The Google/PNA path below is FROZEN —
-  // reachable only by explicitly opting back in with ADDRESS_VERIFY_MODE=google.
+  // ACTIVE verifier: TERYT (official GUS registry, free). Runs for all PL
+  // submissions; the store ships within Poland only, so other regions are
+  // simply accepted as entered (region-gated).
   const verifyMode = process.env.ADDRESS_VERIFY_MODE ?? "teryt";
   if (verifyMode !== "google") {
     if (normalizedInput === "PL") {
       return validateWithTeryt(input, normalizedInput);
     }
-    // The store ships within Poland only; keep non-PL submissions region-gated.
     return acceptAsEntered();
   }
 
-  // PNA (Poczta Polska) — free, no-card preferred validator for Polish
-  // addresses. Runs first when configured; if it cannot verify, fall through
-  // to Google, which itself degrades to accept-as-entered when unavailable.
-  if (normalizedInput === "PL" && process.env.PNA_POCZTA_TOKEN) {
-    const pna = await validatePolishAddressWithPna(input);
-    if (!pna.degraded) {
-      if (pna.valid) {
-        console.log("[PNA] ACCEPT — Polish address verified via Poczta Polska.");
-        return acceptAsEntered();
-      }
-      return {
-        status: "FIX",
-        errors: {
-          message:
-            "We could not match this address to the Polish postal registry. Please verify your postal code and city.",
-        },
-      };
-    }
-    console.warn(`[PNA] Degraded (${pna.reason}) — falling back to Google.`);
-  }
-
+  // ==========================================================================
+  // FROZEN — Google Address Validation API (legacy path).
+  //
+  // NOT in active use. Kept solely so it can be re-enabled for a future
+  // multi-country launch by setting ADDRESS_VERIFY_MODE=google. Do not treat
+  // this code as live; it is dead unless that env flag is set. It costs money
+  // per call and was replaced by the free TERYT verifier (see
+  // lib/address/teryt-validator.ts). A missing API key degrades to
+  // accept-as-entered (region-gated) rather than blocking checkout.
+  // ==========================================================================
   const apiKey = process.env.GOOGLE_ADDRESS_VALIDATION_API_KEY;
 
   // No key configured → treat as "validation unavailable" and degrade
