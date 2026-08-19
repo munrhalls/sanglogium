@@ -137,6 +137,11 @@ export function CategoryPageClient({
   const productCount = totalCount;
   const countLabel = productCount === 1 ? 'product' : 'products';
   const totalPages = totalPagesFor(totalCount, perPage);
+  // The server clamps an out-of-range ?page= to the last page (G2). Mirror that
+  // here so the pagination bar highlights the effective page and the copy stays
+  // distinct from the zero-results state.
+  const isPageOutOfRange = totalPages > 0 && currentPage > totalPages;
+  const effectivePage = totalPages > 0 ? Math.min(Math.max(currentPage, 1), totalPages) : currentPage;
 
   return (
     <>
@@ -171,10 +176,25 @@ export function CategoryPageClient({
         <ActiveFilters filterGroups={filters} />
 
         <div className={isPending ? 'opacity-60 transition-opacity pointer-events-none' : 'transition-opacity'}>
-          {totalCount === 0 ? <EmptyResults /> : <ProductGrid products={products} wishlistProductIds={wishlistProductIds} />}
+          {totalCount === 0 ? (
+            <EmptyResults />
+          ) : (
+            <>
+              {isPageOutOfRange && (
+                <div
+                  role="status"
+                  data-testid="page-out-of-range"
+                  className="mb-4 rounded-md border border-warning-500/40 bg-warning-500/10 px-4 py-3 type-body text-warning-500"
+                >
+                  The page you requested is out of range. Showing the last page of results.
+                </div>
+              )}
+              <ProductGrid products={products} wishlistProductIds={wishlistProductIds} />
+            </>
+          )}
         </div>
 
-        <Pagination currentPage={currentPage} totalPages={totalPages} />
+        <Pagination currentPage={effectivePage} totalPages={totalPages} />
       </div>
     </>
   );

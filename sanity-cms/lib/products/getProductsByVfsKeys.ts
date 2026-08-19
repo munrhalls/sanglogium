@@ -56,11 +56,11 @@ const getProductsByVfsKeysFn = async ({
     return { products: [], totalCount: 0 };
   }
 
-  // Cap the page size at MAX_PRODUCTS_LIMIT and compute the window offsets.
+  // Cap the page size at MAX_PRODUCTS_LIMIT. The requested page is floored at 1
+  // here and clamped to totalPages after the count resolves (G2), so an
+  // out-of-range ?page= renders the last page instead of an empty window.
   const effectivePerPage = Math.min(Math.max(1, Math.floor(perPage) || 1), MAX_PRODUCTS_LIMIT);
   const safePage = Math.max(1, Math.floor(page) || 1);
-  const offset = (safePage - 1) * effectivePerPage;
-  const end = offset + effectivePerPage;
 
   // Build sort clause from the allow-listed contract. Unknown or crafted sort
   // values fall back to the default (no order clause), so raw input can never
@@ -70,8 +70,22 @@ const getProductsByVfsKeysFn = async ({
   // Build filter clause using FilterBuilder
   const filterClause = FilterBuilder.buildClause(filters);
 
-  // Sort is applied BEFORE the slice, so the page window reflects the global order.
-  const productsQuery = groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0 ${filterClause}] ${orderClause} [${offset}...${end}] {
+  // Total count across the full filtered set (not the page window) — A1.
+  const countQuery = groq`count(*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0 ${filterClause}])`;
+
+  try {
+    const totalCount = (await sanityFetch<number>({ query: countQuery, params: { keys } })) ?? 0;
+
+    // Clamp the page to totalPages so an out-of-range ?page= renders the last
+    // page instead of a misleading empty window. totalCount stays the full
+    // filtered total (A1). When nothing matches, no clamp applies (zero results).
+    const totalPages = Math.ceil(totalCount / effectivePerPage);
+    const effectivePage = totalPages > 0 ? Math.min(safePage, totalPages) : safePage;
+    const offset = (effectivePage - 1) * effectivePerPage;
+    const end = offset + effectivePerPage;
+
+    // Sort is applied BEFORE the slice, so the page window reflects the global order.
+    const productsQuery = groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0 ${filterClause}] ${orderClause} [${offset}...${end}] {
       _id,
       name,
       brand->{
@@ -94,15 +108,8 @@ const getProductsByVfsKeysFn = async ({
       catalogueLocationKeys
     }`;
 
-  // Total count across the full filtered set (not the page window) — A1.
-  const countQuery = groq`count(*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0 ${filterClause}])`;
-
-  try {
-    const [totalCount, products] = await Promise.all([
-      sanityFetch<number>({ query: countQuery, params: { keys } }),
-      sanityFetch<Product[]>({ query: productsQuery, params: { keys } })
-    ]);
-    return { products: products ?? [], totalCount: totalCount ?? 0 };
+    const products = await sanityFetch<Product[]>({ query: productsQuery, params: { keys } });
+    return { products: products ?? [], totalCount };
   } catch (error) {
     console.error(`[getProductsByVfsKeys] Failed for ${keys.length} keys, sort "${sort}", page ${page}:`, error);
     return { products: [], totalCount: 0 };

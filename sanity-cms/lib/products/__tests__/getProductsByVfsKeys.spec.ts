@@ -114,6 +114,38 @@ describe("getProductsByVfsKeys", () => {
       expect(result.totalCount).toBe(42);
       expect(result.products).toEqual([{ _id: "p1" }]);
     });
+
+    it("clamps an out-of-range page to the last page window (G2)", async () => {
+      mockSanityFetch
+        .mockResolvedValueOnce(250) // count → 3 pages at 100/page
+        .mockResolvedValueOnce([{ _id: "p1" }]); // products
+      await getProductsByVfsKeys({ keys: ["k"], page: 99 });
+      expect(productsQuery()).toContain("[200...300]");
+    });
+
+    it("clamps to the single last page when the set fits one page", async () => {
+      mockSanityFetch
+        .mockResolvedValueOnce(42) // count → 1 page
+        .mockResolvedValueOnce([{ _id: "p1" }]);
+      await getProductsByVfsKeys({ keys: ["k"], page: 5 });
+      expect(productsQuery()).toContain("[0...100]");
+    });
+
+    it("keeps an in-range page unchanged", async () => {
+      mockSanityFetch
+        .mockResolvedValueOnce(250) // count → 3 pages
+        .mockResolvedValueOnce([{ _id: "p1" }]);
+      await getProductsByVfsKeys({ keys: ["k"], page: 3 });
+      expect(productsQuery()).toContain("[200...300]");
+    });
+
+    it("does not clamp when there are zero matching products (zero-results)", async () => {
+      mockSanityFetch
+        .mockResolvedValueOnce(0) // count
+        .mockResolvedValueOnce([]); // products
+      await getProductsByVfsKeys({ keys: ["k"], page: 5 });
+      expect(productsQuery()).toContain("[400...500]");
+    });
   });
 
   describe("mixed parent and leaf keys", () => {
