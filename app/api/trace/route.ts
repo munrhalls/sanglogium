@@ -14,6 +14,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'step is required' }, { status: 400 });
     }
 
+    // Unconditional console log — guaranteed visibility in the server terminal
+    // regardless of LOG_LEVEL (event-logger is gated and swallows 'log' by default).
+    console.log(`[TRACE] ${step} (${traceId})`, JSON.stringify(data || {}));
+
     await logCheckoutEvent({
       correlationId: traceId,
       slice: 'payment-submit',

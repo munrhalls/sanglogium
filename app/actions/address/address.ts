@@ -1,5 +1,7 @@
 "use server";
 import { Address, ServerResponse } from "@/app/checkout/checkout.types";
+import { validatePolishAddressWithPna } from "@/lib/address/pna-validator";
+import { verifyPolishAddress } from "@/lib/address/teryt-validator";
 
 interface RequestBody {
   address: {
@@ -68,13 +70,13 @@ const normalizeRegionCode = (code?: string | null): string | undefined => {
 const formatCleanAddress = (
   googleAddress: GoogleAddress,
   input: Address,
-  normalizedRegion: string
+  normalizedRegion: string,
 ): Address => {
   const components = new Map(
     googleAddress.addressComponents.map((c) => [
       c.componentType,
       c.componentName.text,
-    ])
+    ]),
   );
 
   const get = (type: string) => components.get(type);
@@ -108,33 +110,109 @@ function isAcceptedAddress(verdict: GoogleValidationVerdict): boolean {
   );
 }
 
+// ACTIVE verifier — GUS TERYT (official registry, free, no key). The Google
+// path is FROZEN and only reachable via ADDRESS_VERIFY_MODE=google (see below).
+async function validateWithTeryt(
+  input: Address,
+  normalizedRegion: string,
+): Promise<ServerResponse> {
+  const t = await verifyPolishAddress({
+    street: input.street,
+    streetNumber: input.streetNumber,
+    postalCode: input.postalCode,
+    city: input.city,
+  });
+
+  // GUS down → never block checkout; accept as entered (region-gated).
+  if (t.degraded) {
+    console.warn(`[TERYT] Degraded (${t.reason}) — accepting address as entered.`);
+    return { status: "ACCEPT", address: { ...input, regionCode: normalizedRegion } };
+  }
+
+  if (!t.valid) {
+    console.warn(`[TERYT] Rejected — ${t.reason}`);
+    return {
+      status: "FIX",
+      errors: {
+        message:
+          "We could not match this address to the official Polish address registry (TERYT). Please verify your street, city and postal code.",
+      },
+    };
+  }
+
+  console.log(`[TERYT] ACCEPT — ${t.streetName ?? input.street}, ${input.city}`);
+  return { status: "ACCEPT", address: { ...input, regionCode: normalizedRegion } };
+}
+
 export async function submitShippingAction(
   input: Address,
-  opts?: { skipValidation?: boolean }
+  opts?: { skipValidation?: boolean },
 ): Promise<ServerResponse> {
   const normalizedInput =
     normalizeRegionCode(input.regionCode) ?? input.regionCode;
+
+  // Accept the address exactly as entered (region normalized). Used by the
+  // human escape hatch and by graceful degradation when Google is unavailable
+  // (e.g. closed billing account) so checkout can never dead-end on Google.
+  const acceptAsEntered = (): ServerResponse => {
+    return {
+      status: "ACCEPT",
+      address: { ...input, regionCode: normalizedInput },
+    };
+  };
 
   // Human escape hatch: accept the address exactly as the customer entered it,
   // bypassing Google validation. Prevents a valid submission from dead-ending
   // on a strict Google verdict.
   if (opts?.skipValidation) {
-    return {
-      status: "ACCEPT",
-      address: { ...input, regionCode: normalizedInput },
-    };
+    return acceptAsEntered();
   }
 
-  const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+  // ACTIVE verifier: TERYT (default). The Google/PNA path below is FROZEN —
+  // reachable only by explicitly opting back in with ADDRESS_VERIFY_MODE=google.
+  const verifyMode = process.env.ADDRESS_VERIFY_MODE ?? "teryt";
+  if (verifyMode !== "google") {
+    if (normalizedInput === "PL") {
+      return validateWithTeryt(input, normalizedInput);
+    }
+    // The store ships within Poland only; keep non-PL submissions region-gated.
+    return acceptAsEntered();
+  }
 
+  // PNA (Poczta Polska) — free, no-card preferred validator for Polish
+  // addresses. Runs first when configured; if it cannot verify, fall through
+  // to Google, which itself degrades to accept-as-entered when unavailable.
+  if (normalizedInput === "PL" && process.env.PNA_POCZTA_TOKEN) {
+    const pna = await validatePolishAddressWithPna(input);
+    if (!pna.degraded) {
+      if (pna.valid) {
+        console.log("[PNA] ACCEPT — Polish address verified via Poczta Polska.");
+        return acceptAsEntered();
+      }
+      return {
+        status: "FIX",
+        errors: {
+          message:
+            "We could not match this address to the Polish postal registry. Please verify your postal code and city.",
+        },
+      };
+    }
+    console.warn(`[PNA] Degraded (${pna.reason}) — falling back to Google.`);
+  }
+
+  const apiKey = process.env.GOOGLE_ADDRESS_VALIDATION_API_KEY;
+
+  // No key configured → treat as "validation unavailable" and degrade
+  // gracefully instead of blocking checkout.
   if (!apiKey) {
-    return {
-      status: "FIX",
-      errors: { message: "Internal configuration error." },
-    };
+    console.warn(
+      "[GOOGLE VALIDATION] No GOOGLE_ADDRESS_VALIDATION_API_KEY configured — accepting address as entered (region-gated)."
+    );
+    return acceptAsEntered();
   }
 
   const url = `https://addressvalidation.googleapis.com/v1:validateAddress?key=${apiKey}`;
+  console.log(url, "GOOGLE API");
 
   const addressLine = [input.street, input.streetNumber]
     .filter(Boolean)
@@ -158,25 +236,32 @@ export async function submitShippingAction(
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
+    console.log(
+      "////////////////////////  Google Address Validation Response Status:",
+      response.status,
+    );
 
     if (!response.ok) {
       const errorBody = await response.text();
       console.error(
         `Address validation failed: ${response.status} ${response.statusText}`,
-        errorBody
+        errorBody,
       );
 
-      const message =
-        response.status === 400
-          ? "Invalid address format. Please check your input."
-          : response.status === 401
-            ? "Address validation service authentication error."
-            : "Address validation service temporarily unavailable.";
+      // 400: Google parsed the payload and rejected the address format — keep strict.
+      if (response.status === 400) {
+        return {
+          status: "FIX",
+          errors: { message: "Invalid address format. Please check your input." },
+        };
+      }
 
-      return {
-        status: "FIX",
-        errors: { message },
-      };
+      // 401/403/429/5xx: Google-side unavailability (closed billing account, bad
+      // key, outage). Degrade gracefully — never block checkout on Google.
+      console.warn(
+        `[GOOGLE VALIDATION] Google unavailable (${response.status}) — accepting address as entered (region-gated).`
+      );
+      return acceptAsEntered();
     }
 
     const data = (await response.json()) as GoogleValidationResponse;
@@ -185,7 +270,7 @@ export async function submitShippingAction(
 
     if (verdict && googleAddress && isAcceptedAddress(verdict)) {
       const googleCode = normalizeRegionCode(
-        googleAddress.postalAddress?.regionCode
+        googleAddress.postalAddress?.regionCode,
       );
 
       // Region gate: if Google resolved a country that contradicts the one the
@@ -204,7 +289,7 @@ export async function submitShippingAction(
       const cleanAddress = formatCleanAddress(
         googleAddress,
         input,
-        googleCode ?? normalizedInput
+        googleCode ?? normalizedInput,
       );
 
       // Never persist a normalized country the checkout form cannot represent.
@@ -232,12 +317,9 @@ export async function submitShippingAction(
     };
   } catch (err) {
     console.error("Address Validation Error:", err);
-    return {
-      status: "FIX",
-      errors: {
-        message:
-          "Address validation service temporarily unavailable. Please return later.",
-      },
-    };
+    console.warn(
+      "[GOOGLE VALIDATION] Network error — accepting address as entered (region-gated)."
+    );
+    return acceptAsEntered();
   }
 }
