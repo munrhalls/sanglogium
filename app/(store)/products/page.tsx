@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { getAllLeafKeys } from '@/data/catalogue';
-import { getProductsByVfsKeys } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
+import { getProductsCount, PER_PAGE, ROW_SIZE } from '@/sanity-cms/lib/products/getProductsSlice';
 import { getFiltersForCategoryPath, getValidFilterFields } from '@/sanity-cms/lib/products/filter/getFiltersForCategoryPath';
 import { loadCategorySearchParams } from '@/lib/catalogue/searchParams';
 import { stripUnknownFilters } from '@/lib/catalogue/filterUtils';
@@ -8,7 +8,9 @@ import { ShopHeader } from '@/app/components/features/products/ShopHeader';
 import { FilterSection } from './[...slug]/FilterSection';
 import { ProductsSection } from './[...slug]/ProductsSection';
 import { FilterSidebarSkeleton } from '@/app/components/skeletons/FilterSidebarSkeleton';
-import { ProductGridSkeleton } from '@/app/components/skeletons/ProductGridSkeleton';
+import { EmptyResults } from '@/app/components/features/products/EmptyResults';
+import { Pagination } from '@/app/components/features/products/Pagination';
+import { StreamedProductGrid } from './[...slug]/StreamedProductGrid';
 import { isFacetedQuery } from '@/lib/catalogue/seo';
 
 interface AllProductsPageProps {
@@ -29,8 +31,14 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
   const validFields = await getValidFilterFields(allKeys);
   const cleanedFilters = stripUnknownFilters(filters, validFields);
 
-  const productsPromise = getProductsByVfsKeys({ keys: allKeys, sort, filters: cleanedFilters, page });
   const filtersPromise = getFiltersForCategoryPath(allKeys, cleanedFilters);
+  const totalCount = await getProductsCount({ keys: allKeys, filters: cleanedFilters });
+  const totalPages = totalCount > 0 ? Math.ceil(totalCount / PER_PAGE) : 0;
+  const effectivePage = totalPages > 0 ? Math.min(Math.max(page, 1), totalPages) : page;
+  const isPageOutOfRange = totalPages > 0 && page > totalPages;
+  const pageStart = (effectivePage - 1) * PER_PAGE;
+  const rowCount = totalCount === 0 ? 0 : Math.ceil(Math.min(PER_PAGE, totalCount - pageStart) / ROW_SIZE);
+  const filterKey = [sort, cleanedFilters.join(','), effectivePage].join('|');
 
   return (
     <div className="mx-auto w-full max-w-content px-4 md:px-8 pb-12">
@@ -44,14 +52,42 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
           <div className="pb-4">
             <ShopHeader title="All Products" />
           </div>
-          <Suspense fallback={<ProductGridSkeleton />}>
+          <Suspense fallback={null}>
             <ProductsSection
-              productsPromise={productsPromise}
               filtersPromise={filtersPromise}
+              totalCount={totalCount}
               categoryName="All Products"
-              currentPage={page}
             />
           </Suspense>
+          {totalCount === 0 ? (
+            <EmptyResults />
+          ) : (
+            <>
+              {isPageOutOfRange && (
+                <div
+                  role="status"
+                  data-testid="page-out-of-range"
+                  className="mb-4 rounded-md border border-warning-500/40 bg-warning-500/10 px-4 py-3 type-body text-warning-500"
+                >
+                  The page you requested is out of range. Showing the last page of results.
+                </div>
+              )}
+              <StreamedProductGrid
+                keys={allKeys}
+                sort={sort}
+                filters={cleanedFilters}
+                pageStart={pageStart}
+                rowCount={rowCount}
+                filterKey={filterKey}
+              />
+            </>
+          )}
+          <Pagination
+            currentPage={effectivePage}
+            totalPages={totalPages}
+            totalCount={totalCount}
+            perPage={PER_PAGE}
+          />
         </main>
       </div>
     </div>
@@ -63,6 +99,7 @@ export async function generateMetadata({ searchParams }: AllProductsPageProps) {
   return {
     title: 'All Products — Sang Logium',
     description: 'Browse the full Sang Logium catalogue of headphones, audio electronics, and accessories',
+    alternates: { canonical: '/products' },
     robots: isFacetedQuery(query) ? { index: false, follow: true } : undefined,
   };
 }

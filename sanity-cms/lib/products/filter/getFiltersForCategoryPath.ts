@@ -220,6 +220,10 @@ const getFiltersForCategoryPathFn = async (
             : counts.get(`${field}:${opt.value}`) ?? 0,
       }));
 
+    // Brand facets are ordered by result count (desc), ties alphabetical (G14).
+    const byCountDescThenAlpha = (a: FilterOption, b: FilterOption): number =>
+      (b.count ?? 0) - (a.count ?? 0) || a.value.localeCompare(b.value);
+
     // Build filter groups
     const filters: FilterGroup[] = [];
 
@@ -266,16 +270,15 @@ const getFiltersForCategoryPathFn = async (
       );
       const validBrands = (cmsBrandItem?.options || [])
         .filter(brand => brandSetLower.has(brand.toLowerCase()))
-        .sort()
         .map(brand => ({ value: brand, label: brand }));
 
       if (validBrands.length > 0) {
         // Replace any existing brand filter from CMS with intersected version
         const brandIndex = filters.findIndex(f => f.field.toLowerCase() === 'brand');
         if (brandIndex >= 0) {
-          filters[brandIndex] = { field: 'brand', label: cmsBrandItem!.name, options: withCounts('brand', validBrands) };
+          filters[brandIndex] = { field: 'brand', label: cmsBrandItem!.name, options: withCounts('brand', validBrands).sort(byCountDescThenAlpha) };
         } else {
-          filters.push({ field: 'brand', label: cmsBrandItem!.name, options: withCounts('brand', validBrands) });
+          filters.push({ field: 'brand', label: cmsBrandItem!.name, options: withCounts('brand', validBrands).sort(byCountDescThenAlpha) });
         }
       }
     } else if (brandSet.size > 0) {
@@ -283,7 +286,7 @@ const getFiltersForCategoryPathFn = async (
       filters.push({
         field: 'brand',
         label: 'Brand',
-        options: withCounts('brand', Array.from(brandSet).sort().map(brand => ({ value: brand, label: brand })))
+        options: withCounts('brand', Array.from(brandSet).map(brand => ({ value: brand, label: brand }))).sort(byCountDescThenAlpha)
       });
     }
 

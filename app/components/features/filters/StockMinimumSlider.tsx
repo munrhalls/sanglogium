@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useId, useState } from 'react';
 import { ClockCounterClockwise } from '@phosphor-icons/react';
+import { useRangeSlider } from './useRangeSlider';
 
 interface StockMinimumSliderProps {
   maxStock: number;
@@ -12,20 +13,12 @@ interface StockMinimumSliderProps {
 
 export function StockMinimumSlider({ maxStock, value, onChange, onClear }: StockMinimumSliderProps) {
   const [localValue, setLocalValue] = useState(value);
-  const isDragging = useRef(false);
-  const isKeyboardRef = useRef(false);
   // Unique id (renders in both the sidebar and the mobile drawer) to bind the
   // label to the input (G9).
   const inputId = useId();
 
   const isActive = value > 0;
   const max = maxStock || 100;
-
-  useEffect(() => {
-    if (!isDragging.current) {
-      setLocalValue(value);
-    }
-  }, [value]);
 
   const commitValue = useCallback((nextValue: number) => {
     if (nextValue === 0) {
@@ -35,6 +28,17 @@ export function StockMinimumSlider({ maxStock, value, onChange, onClear }: Stock
     onChange(nextValue);
   }, [onChange, onClear]);
 
+  // Shared drag/keyboard/commit lifecycle (G12).
+  const { isDragging, isKeyboardRef, beginDrag, endDrag, handleKeyDown, handleKeyUp, cancelDrag } = useRangeSlider({
+    onCommit: () => commitValue(localValue),
+  });
+
+  useEffect(() => {
+    if (!isDragging.current) {
+      setLocalValue(value);
+    }
+  }, [value]);
+
   const handleChange = useCallback((newValue: number) => {
     setLocalValue(newValue);
     if (!isDragging.current && !isKeyboardRef.current) {
@@ -42,39 +46,11 @@ export function StockMinimumSlider({ maxStock, value, onChange, onClear }: Stock
     }
   }, [commitValue]);
 
-  const handleDragStart = useCallback(() => {
-    isDragging.current = true;
-  }, []);
-
-  const handleDragEnd = useCallback(() => {
-    if (!isDragging.current) {
-      return;
-    }
-    isDragging.current = false;
-    commitValue(localValue);
-  }, [commitValue, localValue]);
-
-  useEffect(() => {
-    const handleWindowPointerUp = () => {
-      if (isDragging.current) {
-        handleDragEnd();
-      }
-    };
-
-    window.addEventListener('mouseup', handleWindowPointerUp);
-    window.addEventListener('touchend', handleWindowPointerUp);
-
-    return () => {
-      window.removeEventListener('mouseup', handleWindowPointerUp);
-      window.removeEventListener('touchend', handleWindowPointerUp);
-    };
-  }, [handleDragEnd]);
-
   const handleClear = useCallback(() => {
-    isDragging.current = false;
+    cancelDrag();
     setLocalValue(0);
     onClear();
-  }, [onClear]);
+  }, [cancelDrag, onClear]);
 
   const getSliderLabel = () => {
     if (localValue === 0) return "Any";
@@ -114,21 +90,12 @@ export function StockMinimumSlider({ maxStock, value, onChange, onClear }: Stock
             max={max}
             value={localValue}
             onChange={(e) => handleChange(parseInt(e.target.value, 10))}
-            onMouseDown={handleDragStart}
-            onTouchStart={handleDragStart}
-            onMouseUp={handleDragEnd}
-            onTouchEnd={handleDragEnd}
-            onKeyDown={(e) => {
-              if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(e.key)) {
-                isKeyboardRef.current = true;
-              }
-            }}
-            onKeyUp={() => {
-              if (isKeyboardRef.current) {
-                isKeyboardRef.current = false;
-                commitValue(localValue);
-              }
-            }}
+            onMouseDown={beginDrag}
+            onTouchStart={beginDrag}
+            onMouseUp={endDrag}
+            onTouchEnd={endDrag}
+            onKeyDown={handleKeyDown}
+            onKeyUp={handleKeyUp}
             className={`w-full h-2 rounded-lg appearance-none cursor-pointer transition-opacity ${
               isActive ? 'bg-accent-500 accent-accent-500' : 'opacity-60 bg-surface-tertiary accent-surface-tertiary'
             }`}

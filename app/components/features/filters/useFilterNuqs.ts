@@ -36,7 +36,7 @@ function setPendingState(value: boolean) {
 }
 
 export function useFilterPending() {
-  return useSyncExternalStore(subscribeToPending, getPendingSnapshot);
+  return useSyncExternalStore(subscribeToPending, getPendingSnapshot, () => false);
 }
 
 /**
@@ -131,6 +131,13 @@ export function useFilterNuqs() {
    */
   const isFilterActive = (field: string, value: string): boolean => {
     const filterKey = `${field}:${value}`;
+    if (field === 'brand') {
+      // FilterBuilder's brand clause compares lowercased values, so a hand-crafted
+      // ?f=brand:sennheiser must highlight the 'Sennheiser' checkbox too (G16).
+      // All other fields stay exact-match.
+      const filterKeyLower = filterKey.toLowerCase();
+      return (filters || []).some(f => f.toLowerCase() === filterKeyLower);
+    }
     return (filters || []).includes(filterKey);
   };
 

@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useId, useState } from 'react';
 import { ClockCounterClockwise } from '@phosphor-icons/react';
+import { useRangeSlider } from './useRangeSlider';
 
 interface PriceRangeSliderProps {
   min: number;
@@ -13,21 +14,12 @@ interface PriceRangeSliderProps {
 export function PriceRangeSlider({ min, max, value, onChange, onClear }: PriceRangeSliderProps) {
   const [localMin, setLocalMin] = useState(value.min ?? min);
   const [localMax, setLocalMax] = useState(value.max ?? max);
-  const isDragging = useRef(false);
-  const isKeyboardRef = useRef(false);
   // Unique ids (the slider renders in both the sidebar and the mobile drawer,
   // so static ids would collide); used to bind each label to its input (G9).
   const minInputId = useId();
   const maxInputId = useId();
 
   const isActive = (value.min !== undefined && value.min !== min) || (value.max !== undefined && value.max !== max);
-
-  useEffect(() => {
-    if (!isDragging.current) {
-      setLocalMin(value.min ?? min);
-      setLocalMax(value.max ?? max);
-    }
-  }, [value.min, value.max, min, max]);
 
   const commitRange = useCallback((nextMin: number, nextMax: number) => {
     const shouldClear = nextMin === min && nextMax === max;
@@ -50,6 +42,19 @@ export function PriceRangeSlider({ min, max, value, onChange, onClear }: PriceRa
     onChange(nextRange);
   }, [min, max, onChange, onClear]);
 
+  // Shared drag/keyboard/commit lifecycle (G12); both handles share one drag
+  // so a drag-end commits the whole range.
+  const { isDragging, isKeyboardRef, beginDrag, endDrag, handleKeyDown, handleKeyUp, cancelDrag } = useRangeSlider({
+    onCommit: () => commitRange(localMin, localMax),
+  });
+
+  useEffect(() => {
+    if (!isDragging.current) {
+      setLocalMin(value.min ?? min);
+      setLocalMax(value.max ?? max);
+    }
+  }, [value.min, value.max, min, max]);
+
   const handleMinChange = useCallback((newMin: number) => {
     const validMin = Math.min(newMin, localMax - 1);
     setLocalMin(validMin);
@@ -68,41 +73,12 @@ export function PriceRangeSlider({ min, max, value, onChange, onClear }: PriceRa
     }
   }, [localMin, commitRange]);
 
-  const handleDragStart = useCallback(() => {
-    isDragging.current = true;
-  }, []);
-
-  const handleDragEnd = useCallback(() => {
-    if (!isDragging.current) {
-      return;
-    }
-
-    isDragging.current = false;
-    commitRange(localMin, localMax);
-  }, [commitRange, localMin, localMax]);
-
-  useEffect(() => {
-    const handleWindowPointerUp = () => {
-      if (isDragging.current) {
-        handleDragEnd();
-      }
-    };
-
-    window.addEventListener('mouseup', handleWindowPointerUp);
-    window.addEventListener('touchend', handleWindowPointerUp);
-
-    return () => {
-      window.removeEventListener('mouseup', handleWindowPointerUp);
-      window.removeEventListener('touchend', handleWindowPointerUp);
-    };
-  }, [handleDragEnd]);
-
   const handleClear = useCallback(() => {
-    isDragging.current = false;
+    cancelDrag();
     setLocalMin(min);
     setLocalMax(max);
     onClear();
-  }, [min, max, onClear]);
+  }, [cancelDrag, min, max, onClear]);
 
   return (
     <fieldset className="space-y-3">
@@ -137,21 +113,12 @@ export function PriceRangeSlider({ min, max, value, onChange, onClear }: PriceRa
             max={max}
             value={localMin}
             onChange={(e) => handleMinChange(parseInt(e.target.value, 10))}
-            onMouseDown={handleDragStart}
-            onTouchStart={handleDragStart}
-            onMouseUp={handleDragEnd}
-            onTouchEnd={handleDragEnd}
-            onKeyDown={(e) => {
-              if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(e.key)) {
-                isKeyboardRef.current = true;
-              }
-            }}
-            onKeyUp={() => {
-              if (isKeyboardRef.current) {
-                isKeyboardRef.current = false;
-                commitRange(localMin, localMax);
-              }
-            }}
+            onMouseDown={beginDrag}
+            onTouchStart={beginDrag}
+            onMouseUp={endDrag}
+            onTouchEnd={endDrag}
+            onKeyDown={handleKeyDown}
+            onKeyUp={handleKeyUp}
             className={`w-full h-2 rounded-lg appearance-none cursor-pointer transition-opacity ${
               isActive ? 'bg-accent-500 accent-accent-500' : 'opacity-60 bg-surface-tertiary accent-surface-tertiary'
             }`}
@@ -177,21 +144,12 @@ export function PriceRangeSlider({ min, max, value, onChange, onClear }: PriceRa
             max={max}
             value={localMax}
             onChange={(e) => handleMaxChange(parseInt(e.target.value, 10))}
-            onMouseDown={handleDragStart}
-            onTouchStart={handleDragStart}
-            onMouseUp={handleDragEnd}
-            onTouchEnd={handleDragEnd}
-            onKeyDown={(e) => {
-              if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(e.key)) {
-                isKeyboardRef.current = true;
-              }
-            }}
-            onKeyUp={() => {
-              if (isKeyboardRef.current) {
-                isKeyboardRef.current = false;
-                commitRange(localMin, localMax);
-              }
-            }}
+            onMouseDown={beginDrag}
+            onTouchStart={beginDrag}
+            onMouseUp={endDrag}
+            onTouchEnd={endDrag}
+            onKeyDown={handleKeyDown}
+            onKeyUp={handleKeyUp}
             className={`w-full h-2 rounded-lg appearance-none cursor-pointer transition-opacity ${
               isActive ? 'bg-accent-500 accent-accent-500' : 'opacity-60 bg-surface-tertiary accent-surface-tertiary'
             }`}

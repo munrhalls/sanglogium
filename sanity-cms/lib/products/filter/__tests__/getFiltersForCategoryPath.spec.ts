@@ -182,6 +182,53 @@ describe("getFiltersForCategoryPath", () => {
     });
   });
 
+  describe("brand count ordering (G14)", () => {
+    it("orders derived brand options by count desc, ties alphabetical", async () => {
+      mockSanityFetch
+        .mockResolvedValueOnce(null) // cmsFilters
+        .mockResolvedValueOnce({ price_data: { unit_amount: 100 } }) // minPrice
+        .mockResolvedValueOnce({ price_data: { unit_amount: 200 } }) // maxPrice
+        .mockResolvedValueOnce({ stock: 5 }) // maxStock
+        .mockResolvedValueOnce(4) // count
+        .mockResolvedValueOnce([
+          { brandName: "Focal", overviewFields: [], specifications: [] },
+          { brandName: "Focal", overviewFields: [], specifications: [] },
+          { brandName: "Sennheiser", overviewFields: [], specifications: [] },
+          { brandName: "Sony", overviewFields: [], specifications: [] },
+        ]); // facetData
+
+      const result = await getFiltersForCategoryPath(["k"]);
+      const brandGroup = result.filters.find((f) => f.field === "brand");
+      expect(brandGroup?.options.map((o) => o.value)).toEqual(["Focal", "Sennheiser", "Sony"]);
+      // Focal (count 2) first; Sennheiser and Sony tie at 1 → alphabetical.
+      expect(brandGroup?.options.map((o) => o.count)).toEqual([2, 1, 1]);
+    });
+
+    it("orders CMS-intersected brand options by count desc, ties alphabetical", async () => {
+      mockSanityFetch
+        .mockResolvedValueOnce({
+          filterItems: [
+            { name: "Brand", type: "checkbox", field: "brand", options: ["Zebra", "Focal", "Alpha"], defaultValue: null, min: null, max: null, isMinOnly: false, step: 1 },
+          ],
+        }) // cmsFilters
+        .mockResolvedValueOnce(null) // minPrice
+        .mockResolvedValueOnce(null) // maxPrice
+        .mockResolvedValueOnce(null) // maxStock
+        .mockResolvedValueOnce(4) // count
+        .mockResolvedValueOnce([
+          { brandName: "Focal", overviewFields: [], specifications: [] },
+          { brandName: "Focal", overviewFields: [], specifications: [] },
+          { brandName: "Zebra", overviewFields: [], specifications: [] },
+          { brandName: "Alpha", overviewFields: [], specifications: [] },
+        ]); // facetData
+
+      const result = await getFiltersForCategoryPath(["k"]);
+      const brandGroup = result.filters.find((f) => f.field === "brand");
+      expect(brandGroup?.options.map((o) => o.value)).toEqual(["Focal", "Alpha", "Zebra"]);
+      // Focal (count 2) first; Alpha and Zebra tie at 1 → alphabetical.
+    });
+  });
+
   describe("resilience", () => {
     it("returns a safe empty result when Sanity fails (B2)", async () => {
       const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
