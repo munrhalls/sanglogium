@@ -34,33 +34,31 @@ export interface FilterResult {
   maxStock: number | null;
 }
 
-/** Compact per-product facet data used to derive option counts and brand lists. */
-interface FacetDataProduct {
-  brandName: string | null;
-  overviewFields: Array<{ title: string | null; value: string | null }> | null;
-  specifications: Array<{ title: string | null; value: string | null }> | null;
+/**
+ * A bounded (field, value) candidate to count. The candidate list is built
+ * from brand names (small, distinct) and CMS-declared option lists (curated,
+ * finite) — NEVER from scanning every matching product's
+ * overviewFields/specifications, which is what made this scale with
+ * catalogue size instead of with the number of filter options.
+ */
+interface CountCandidate {
+  field: string;
+  value: string;
 }
 
-/**
- * Count products matching each `field:value` pair (per-product deduped).
- * Brand keys are lowercased to match FilterBuilder's case-insensitive brand clause.
- */
-function computeFilterCounts(products: FacetDataProduct[] | null): Map<string, number> {
-  const counts = new Map<string, number>();
-  for (const product of products ?? []) {
-    const seen = new Set<string>();
-    const add = (field: string | null, value: string | null) => {
-      if (!field || !value) return;
-      const key = `${field}:${value}`;
-      if (seen.has(key)) return;
-      seen.add(key);
-      counts.set(key, (counts.get(key) ?? 0) + 1);
-    };
-    if (product.brandName) add('brand', product.brandName.toLowerCase());
-    for (const f of product.overviewFields ?? []) add(f.title, f.value);
-    for (const f of product.specifications ?? []) add(f.title, f.value);
+async function countOption(
+  keys: string[],
+  baseFilterClause: string,
+  candidate: CountCandidate
+): Promise<number> {
+  const optionClause = FilterBuilder.buildClause([`${candidate.field}:${candidate.value}`]);
+  const query = groq`count(*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0 ${baseFilterClause} ${optionClause}])`;
+  try {
+    return (await sanityFetch<number>({ query, params: { keys } })) ?? 0;
+  } catch (error) {
+    console.error(`[getFiltersForCategoryPath] count() failed for ${candidate.field}:${candidate.value}:`, error);
+    return 0;
   }
-  return counts;
 }
 
 const getValidFilterFieldsFn = async (catalogueKeys: string[]): Promise<Set<string>> => {
@@ -123,10 +121,11 @@ const getFiltersForCategoryPathFn = async (
   const filterClause = FilterBuilder.buildClause(activeFilters);
 
   try {
-    // Run every independent query concurrently (A5). Brand options and per-option
-    // counts are derived from a single compact facet-data fetch (only brand and
-    // specification fields are projected, bounded by product count).
-    const [cmsFilters, minPriceQuery, maxPriceQuery, maxStockQuery, productCount, facetData] =
+    // Run every independent query concurrently (A5). brandNames is a tiny
+    // distinct-value projection, NOT a full-array fetch per product —
+    // per-option counts come from targeted count() calls below, run in
+    // parallel, bounded by the number of filter options (not catalogue size).
+    const [cmsFilters, minPriceQuery, maxPriceQuery, maxStockQuery, productCount, brandNames] =
       await Promise.all([
         sanityFetch<{
           filterItems: Array<{
@@ -178,12 +177,8 @@ const getFiltersForCategoryPathFn = async (
           query: groq`count(*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0])`,
           params
         }),
-        sanityFetch<FacetDataProduct[]>({
-          query: groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0 ${filterClause}] {
-            "brandName": brand->name,
-            overviewFields[] { title, value },
-            specifications[] { title, value }
-          }`,
+        sanityFetch<string[]>({
+          query: groq`array::unique(*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0 ${filterClause} && defined(brand)].brand->name)`,
           params
         })
       ]);
@@ -198,15 +193,37 @@ const getFiltersForCategoryPathFn = async (
       return { filters: [], priceRange, maxStock };
     }
 
-    // Adaptive per-option counts (and distinct brands) derived from the filtered set.
-    const counts = computeFilterCounts(facetData);
-
-    const brandSet = new Set<string>();
-    for (const product of facetData ?? []) {
-      if (product.brandName) brandSet.add(product.brandName);
-    }
+    const brandSet = new Set<string>(brandNames ?? []);
     const brandSetLower = new Set<string>(
       Array.from(brandSet).map(name => name.toLowerCase())
+    );
+
+    // Bounded candidate list: one entry per brand + one per CMS-declared
+    // option value. Scales with curated filter options, never with the
+    // number of products in the category.
+    const candidates: CountCandidate[] = [];
+    for (const brand of brandSet) candidates.push({ field: 'brand', value: brand });
+    for (const item of cmsFilters?.filterItems ?? []) {
+      const field = item.field || item.name;
+      if (item.type === 'checkbox' || item.type === 'radio' || item.type === 'multiselect') {
+        for (const opt of item.options ?? []) {
+          if (opt) candidates.push({ field, value: opt });
+        }
+      } else if (item.type === 'boolean') {
+        candidates.push({ field, value: 'true' });
+        candidates.push({ field, value: 'false' });
+      }
+    }
+
+    const counts = new Map<string, number>();
+    await Promise.all(
+      candidates.map(async (candidate) => {
+        const count = await countOption(catalogueKeys, filterClause, candidate);
+        const key = candidate.field === 'brand'
+          ? `brand:${candidate.value.toLowerCase()}`
+          : `${candidate.field}:${candidate.value}`;
+        counts.set(key, count);
+      })
     );
 
     // Attach counts to options. Brand keys are lowercased to match the

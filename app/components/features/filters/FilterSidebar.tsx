@@ -95,7 +95,7 @@ export function FilterSidebar({ filters, priceRange: priceRangeData, maxStock }:
       data-testid="filter-sidebar"
       className="w-full"
     >
-      <div className={`bg-surface-elevated border border-border-secondary rounded-sm p-6 space-y-6 ${isPending ? 'opacity-60 transition-opacity pointer-events-none' : 'transition-opacity'}`}>
+      <div className={`bg-surface-elevated border border-border-secondary rounded-sm p-6 space-y-6 transition-opacity ${isPending ? 'opacity-60' : ''}`}>
         <h3 className="type-overline text-accent-500">
           Filters
         </h3>

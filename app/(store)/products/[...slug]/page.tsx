@@ -12,6 +12,7 @@ import { Pagination } from '@/app/components/features/products/Pagination';
 import { ProductsSection } from './ProductsSection';
 import { FilterSection } from './FilterSection';
 import { StreamedProductGrid } from './StreamedProductGrid';
+import { SortAndCountBar } from './SortAndCountBar';
 import { FilterSidebarSkeleton } from '@/app/components/skeletons/FilterSidebarSkeleton';
 import Breadcrumbs from '@/app/components/ui/breadcrumbs/CategoryBreadcrumbs';
 import { isFacetedQuery, canonicalCategoryPath } from '@/lib/catalogue/seo';
@@ -38,16 +39,22 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
 
   const descendantKeys = unrollDescendantKeys(nodeId);
 
-  const validFields = await getValidFilterFields(descendantKeys);
-  const cleanedFilters = stripUnknownFilters(filters, validFields);
+  // D1 fix: getValidFilterFields and getCategoryMetadata are independent of
+  // each other (metadata only needs nodeId) — run them concurrently instead
+  // of one after another. getProductsCount genuinely depends on
+  // cleanedFilters (which needs validFields), so it starts right after this,
+  // not before it — that dependency is real and cannot be parallelized away.
+  const [validFields, metadata] = await Promise.all([
+    getValidFilterFields(descendantKeys),
+    getCategoryMetadata(nodeId),
+  ]);
 
-  const filtersPromise = getFiltersForCategoryPath(descendantKeys, cleanedFilters);
-
-  const metadata = await getCategoryMetadata(nodeId);
   if (!metadata) {
     notFound();
   }
 
+  const cleanedFilters = stripUnknownFilters(filters, validFields);
+  const filtersPromise = getFiltersForCategoryPath(descendantKeys, cleanedFilters);
   const totalCount = await getProductsCount({ keys: descendantKeys, filters: cleanedFilters });
   const totalPages = totalCount > 0 ? Math.ceil(totalCount / PER_PAGE) : 0;
   const effectivePage = totalPages > 0 ? Math.min(Math.max(page, 1), totalPages) : page;
@@ -75,10 +82,12 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
             <ShopHeader title={metadata.name} overline={categoryPath} />
           </div>
 
+          {/* D3 fix: rendered directly — never gated behind filtersPromise. */}
+          <SortAndCountBar totalCount={totalCount} />
+
           <Suspense fallback={null}>
             <ProductsSection
               filtersPromise={filtersPromise}
-              totalCount={totalCount}
               categoryName={metadata.name}
             />
           </Suspense>

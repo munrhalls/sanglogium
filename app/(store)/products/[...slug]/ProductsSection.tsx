@@ -4,13 +4,11 @@ import type { FilterResult } from '@/sanity-cms/lib/products/filter/getFiltersFo
 
 interface ProductsSectionProps {
   filtersPromise: Promise<FilterResult>;
-  totalCount: number;
   categoryName: string;
 }
 
 export async function ProductsSection({
   filtersPromise,
-  totalCount,
   categoryName,
 }: ProductsSectionProps) {
   const filterResult = await filtersPromise;
@@ -20,7 +18,6 @@ export async function ProductsSection({
       filters={filterResult.filters}
       priceRange={filterResult.priceRange}
       maxStock={filterResult.maxStock}
-      totalCount={totalCount}
       categoryName={categoryName}
     />
   );
