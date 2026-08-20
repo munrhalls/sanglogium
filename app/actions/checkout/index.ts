@@ -11,7 +11,7 @@ export async function initCheckoutSession(items: Array<{ productId: string; quan
 
   // Use provided checkoutSessionId or generate new one (fallback)
   const finalCheckoutSessionId = checkoutSessionId || generateCheckoutSessionId();
-  
+
   session.checkoutSessionId = finalCheckoutSessionId;
 
   // Save items directly to the secure iron-session cookie

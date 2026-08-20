@@ -92,17 +92,6 @@ export default function AddressForm({
       initialAddressInSession: initialAddress,
     });
 
-    // Fire-and-forget trace logging — never block submission on trace failure
-    fetch("/api/trace", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        traceId,
-        step: "address_form_submit",
-        data: addressData,
-      }),
-    }).catch(() => {});
-
     try {
       const result = await saveAddress(addressData, { skipValidation });
       console.log("[ADDRESS FORM] saveAddress resolved", result);

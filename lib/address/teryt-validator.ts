@@ -96,6 +96,30 @@ const normalize = (s: string): string =>
     .replace(/\s+/g, " ")
     .trim();
 
+// Known Polish street-type prefixes (spelled out and abbreviated). Stripped
+// from both the user's input and TERYT's canonical name before the name
+// cross-check, so a spelled-out prefix on input (e.g. "Plac") never
+// mismatches TERYT's abbreviated form (e.g. "pl.") and causes a
+// false rejection of a genuinely real address.
+const STREET_PREFIXES = [
+  "ulica", "ul",
+  "aleja", "al",
+  "plac", "pl",
+  "osiedle", "os",
+  "rondo",
+  "bulwar", "bulw",
+  "wybrzeze", "wyb",
+  "skwer",
+];
+
+const stripStreetPrefix = (s: string): string => {
+  const tokens = normalize(s).split(" ").filter(Boolean);
+  if (tokens.length > 1 && STREET_PREFIXES.includes(tokens[0])) {
+    return tokens.slice(1).join(" ");
+  }
+  return tokens.join(" ");
+};
+
 export async function verifyPolishAddress(
   input: TerytVerifyInput,
 ): Promise<TerytVerifyResult> {
@@ -153,9 +177,14 @@ export async function verifyPolishAddress(
     }
 
     // Cross-check the returned official name against the entered street to
-    // block any symbol-mismatch false positive.
-    const tokens = normalize(street).split(" ").filter(Boolean);
-    if (tokens.length > 0 && !tokens.every((t) => normalize(streetName).includes(t))) {
+    // block any symbol-mismatch false positive. Street-type prefixes (ul.,
+    // al., pl., ...) are stripped from both sides first so a spelled-out
+    // prefix on input (e.g. "Plac") never mismatches TERYT's abbreviated
+    // form (e.g. "pl.") on output.
+    const inputCore = stripStreetPrefix(street);
+    const officialCore = stripStreetPrefix(streetName);
+    const tokens = inputCore.split(" ").filter(Boolean);
+    if (tokens.length > 0 && !tokens.every((t) => officialCore.includes(t))) {
       return { valid: false, degraded: false, reason: `street name mismatch: ${streetName}` };
     }
 
