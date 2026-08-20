@@ -1,0 +1,23 @@
+%% SHOULD-BE happy path for the address slice (professional-level target).
+%% Only the vital gates are shown: session guard, hydrate, submit, validate, persist, advance.
+flowchart TD
+    U[User arrives at /checkout/address] --> GUARD{"session.basket<br/>non-empty?"}
+    GUARD -->|"No"| RB["Redirect -> /basket<br/>(cannot address an empty order)"]
+    GUARD -->|"Yes"| HYDRATE["Hydrate form from session.address<br/>if returning via Back"]
+
+    HYDRATE --> FILL["User fills: name, phone,<br/>country (PL), city, street,<br/>house number, postal code"]
+    FILL --> SUBMIT["Submit -> saveAddress (Server Action)"]
+
+    SUBMIT --> VERIFY["Verify against authoritative PL registry:<br/>city + street + house number + postal code<br/>all cross-checked together"]
+
+    VERIFY --> OK{"Real, complete<br/>PL address?"}
+    OK -->|"Yes"| PERSIST["Persist normalized address to session<br/>Invalidate any stale downstream shipping selection"]
+    PERSIST --> NEXT["Redirect -> /checkout/shipping"]
+    OK -->|"No"| SEE_EDGE["-> see edge-cases.mermaid"]
+
+    classDef client fill:#2b2b2b,stroke:#f5c518,color:#fff
+    classDef server fill:#1a3a2a,stroke:#4caf50,color:#fff
+    classDef gate fill:#3a1a1a,stroke:#e57373,color:#fff
+    class U,FILL client
+    class HYDRATE,SUBMIT,VERIFY,PERSIST,NEXT server
+    class GUARD,OK gate

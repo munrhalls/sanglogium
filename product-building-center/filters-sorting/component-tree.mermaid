@@ -1,0 +1,47 @@
+
+%% Verified blueprint (2026-08-20). GROQ slice [a..b] is EXCLUSIVE -> b-a items.
+%% ROW_SIZE=8 (stream chunk). PER_PAGE=24 (3 chunks, divisible by 4-col grid).
+%% Pagination: ?page lives in the SAME URL contract; the page window is what streams.
+%% Out-of-range ?page clamps to the last page + shows a notice (G2).
+flowchart TD
+    U[User] -->|"clicks a filter, sort, or page control"| FP["Controls: Filters / Sort / Pagination (Client, nuqs)<br/>useQueryStates({ sort, f, page }, {<br/>shallow:false, history:'replace', clearOnDefault:true,<br/>limitUrlUpdates:'throttle' (ranges: 'debounce') })<br/>ONLY job: write the URL"]
+
+    FP -->|"router.replace(?brand=hifiman&sort=price_asc&page=2)"| RT[Next.js App Router]
+    RT -->|"soft navigation: re-renders the RSC tree<br/>with new searchParams"| PAGE["page.tsx (Server Component, dynamic)"]
+
+    PAGE -->|"parse shared contract:<br/>sort = SORT_OPTIONS allowlist<br/>groqFilter = FilterBuilder (never raw input)<br/>page = pageParser<br/>filterKey = stableSerialize(searchParams)<br/>totalCount = count(*) (fast, parallel)"| GRID["ProductGrid (Server Component)<br/>replaces the old 'Client Wrapper'"]
+
+    PAGE -->|"totalPages = ceil(totalCount / PER_PAGE)<br/>effectivePage = clamp(page, 1, totalPages)"| PAG["Pagination bar (Client)<br/>real Link hrefs: keep sort+f, mutate only page"]
+
+    GRID -->|"totalCount === 0"| EMPTY["EmptyResults (client: 'clear all filters' CTA)"]
+    GRID -->|"pageStart = (effectivePage - 1) * PER_PAGE<br/>pageEnd = min(pageStart + PER_PAGE, totalCount)<br/>rows = ceil((pageEnd - pageStart) / 8)"| SB1["Suspense key=filterKey+':0'<br/>fallback=RowSkeleton"]
+    GRID --> SB2["Suspense key=filterKey+':1'<br/>fallback=RowSkeleton"]
+    GRID --> SB3["Suspense key=filterKey+':2'<br/>fallback=RowSkeleton"]
+    GRID --> SBN["... Suspense key=filterKey+':n'<br/>fallback=RowSkeleton"]
+
+    SB1 --> ROW1["ProductRow (async Server Component)<br/>GROQ slice [pageStart+0 .. +8]"]
+    SB2 --> ROW2["ProductRow (async Server Component)<br/>GROQ slice [pageStart+8 .. +16]"]
+    SB3 --> ROW3["ProductRow (async Server Component)<br/>GROQ slice [pageStart+16 .. +24]"]
+    SBN --> ROWN["ProductRow (async Server Component)<br/>GROQ slice [pageStart+n*8 .. +n*8+8]"]
+
+    ROW1 --> SANITY[("Sanity GROQ: order(sortLiteral)<br/>slice offset..offset+8 (exclusive)")]
+    ROW2 --> SANITY
+    ROW3 --> SANITY
+    ROWN --> SANITY
+
+    ROW1 -->|"resolves, streams independently"| OUT["Browser: row renders as its RSC chunk arrives"]
+    ROW2 -->|"resolves, no wait on ROW1"| OUT
+    ROW3 -->|"resolves, no wait on ROW1"| OUT
+    ROWN -->|"resolves, no wait on others"| OUT
+
+    classDef client fill:#2b2b2b,stroke:#f5c518,color:#fff
+    classDef server fill:#1a3a2a,stroke:#4caf50,color:#fff
+    classDef data fill:#3a1a1a,stroke:#e57373,color:#fff
+    class FP client
+    class PAG client
+    class EMPTY client
+    class PAGE server
+    class GRID server
+    class SB1,SB2,SB3,SBN server
+    class ROW1,ROW2,ROW3,ROWN server
+    class SANITY data

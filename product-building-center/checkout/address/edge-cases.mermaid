@@ -1,0 +1,33 @@
+%% SHOULD-BE edge-case handling for the address slice (professional-level target).
+%% Only the most critical off-path scenarios. Rule: checkout must NEVER dead-end.
+flowchart TD
+    SUB["User submits address"] --> BASKET{"basket still<br/>present in session?"}
+    BASKET -->|"No (expired/cleared mid-fill)"| RB["Redirect -> /basket"]
+    BASKET -->|"Yes"| CALL["Call registry verification"]
+
+    CALL --> UP{"Registry service<br/>reachable?"}
+    UP -->|"No (timeout/5xx/network error)"| DEGRADE["Degrade gracefully:<br/>ACCEPT as entered<br/>(never block checkout on a 3rd-party outage)"]
+    DEGRADE --> PERSIST
+
+    UP -->|"Yes"| MATCH{"City + street + house number<br/>+ postal code all resolve<br/>to one real address?"}
+    MATCH -->|"Yes"| PERSIST["Persist + advance to shipping"]
+    MATCH -->|"No, genuinely invalid"| FIX["Show precise inline error<br/>(what field, why rejected)"]
+    FIX --> RETRY{"User edits and<br/>resubmits?"}
+    RETRY -->|"Yes"| CALL
+    RETRY -->|"No, insists address is correct"| ESCAPE["Escape hatch:<br/>'Continue with entered address'<br/>bypasses strict validation, ACCEPTs as-is"]
+    ESCAPE --> PERSIST
+
+    CALL --> THROW{"Unexpected exception<br/>during submit?"}
+    THROW -->|"Next.js redirect signal"| RETHROW["Must rethrow untouched<br/>so framework can navigate"]
+    THROW -->|"Genuine error"| GENERIC["Show generic recoverable error,<br/>re-enable submit button"]
+
+    BACKNAV["User returns via Back button<br/>mid-visit with unsaved edits"] --> DIRTY{"Has user already<br/>typed in this visit?"}
+    DIRTY -->|"Yes"| KEEP["Keep in-progress edits,<br/>do not clobber with session data"]
+    DIRTY -->|"No"| REHYDRATE["Re-hydrate from session.address"]
+
+    classDef ok fill:#1a3a2a,stroke:#4caf50,color:#fff
+    classDef bad fill:#3a1a1a,stroke:#e57373,color:#fff
+    classDef gate fill:#2b2b2b,stroke:#f5c518,color:#fff
+    class PERSIST,DEGRADE,ESCAPE,KEEP,REHYDRATE,RETHROW ok
+    class RB,FIX,GENERIC bad
+    class BASKET,UP,MATCH,RETRY,THROW,DIRTY gate

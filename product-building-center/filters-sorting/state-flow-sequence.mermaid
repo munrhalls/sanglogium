@@ -1,0 +1,64 @@
+%%{init: {
+  "theme": "neutral",
+  "themeVariables": {
+    "fontSize": "15px",
+    "textColor": "#000000",
+    "actorTextColor": "#ffffff",
+    "actorBkg": "#0f172a",
+    "actorBorder": "#000000",
+    "actorLineColor": "#334155",
+    "signalColor": "#000000",
+    "signalTextColor": "#000000",
+    "labelBoxBkgColor": "#e2e8f0",
+    "labelBoxBorderColor": "#64748b",
+    "labelTextColor": "#000000",
+    "noteBkgColor": "#fef3c7",
+    "noteTextColor": "#000000",
+    "noteBorderColor": "#d97706"
+  }
+}}%%
+sequenceDiagram
+    actor User
+    participant FP as Controls:<br/>Filters / Sort / Page
+    participant Router as Next.js<br/>App Router
+    participant Page as page.tsx<br/>(Server Comp)
+    participant Grid as ProductGrid<br/>(Server Comp)
+    participant Susp as Suspense<br/>boundaries
+    participant Row as ProductRow<br/>(async Server)
+    participant Sanity as Sanity<br/>(GROQ)
+    participant Browser as Browser<br/>(React DOM)
+
+    User->>FP: click filter, sort, or page control
+    FP->>FP: setQueryStates(newValues, {<br/>shallow: false, history: 'replace',<br/>limitUrlUpdates: 'throttle',<br/>clearOnDefault: true })
+    FP->>Router: router.replace(new URL with searchParams)
+    Router->>Page: soft navigation: re-render RSC tree
+    Page->>Page: parse shared contract:<br/>sort allowlist + groqFilter<br/>filterKey = stableSerialize(searchParams)
+    Page->>Page: totalCount = count(*),<br/>totalPages = ceil(totalCount/PER_PAGE),<br/>effectivePage = clamp(page, 1, totalPages)
+    Page->>Grid: render(groqFilter, filterKey,<br/>effectivePage, totalCount)
+    Page->>FP: render pagination links
+    Grid->>Susp: mount ceil(PER_PAGE/8)<br/>Suspense boundaries
+    Susp-->>Browser: stream skeleton fallbacks immediately
+
+    par Row 0
+        Susp->>Row: render ProductRow(offset=pageStart+0, limit=8)
+        Row->>Sanity: *[groqFilter] | order(sortLiteral)<br/>[pageStart+0 .. pageStart+8]
+        Sanity-->>Row: up to 8 products
+        Row-->>Susp: resolved JSX
+        Susp-->>Browser: stream RSC chunk,<br/>replace skeleton row 0
+    and Row 1
+        Susp->>Row: render ProductRow(offset=pageStart+8, limit=8)
+        Row->>Sanity: *[groqFilter] | order(sortLiteral)<br/>[pageStart+8 .. pageStart+16]
+        Sanity-->>Row: up to 8 products
+        Row-->>Susp: resolved JSX
+        Susp-->>Browser: stream RSC chunk,<br/>replace skeleton row 1
+    and Row N
+        Susp->>Row: render ProductRow(offset=pageStart+n*8, limit=8)
+        Row->>Sanity: *[groqFilter] | order(sortLiteral)<br/>[pageStart+n*8 .. pageStart+n*8+8]
+        Sanity-->>Row: up to 8 products
+        Row-->>Susp: resolved JSX
+        Susp-->>Browser: stream RSC chunk,<br/>replace skeleton row n
+    end
+
+    Note over FP,Browser: Pagination links are real anchor hrefs (crawlable) keeping sort+f,<br/>mutating only page, clearOnDefault drops ?page=1.
+
+    Browser->>Browser: React reconciles chunks as they arrive<br/>(single HTTP stream, no client fetch, no SSE)

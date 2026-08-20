@@ -1,0 +1,32 @@
+%% SHOULD-BE single responsibility map for the address slice.
+%% Each box names ONE job. If a real file does two of these jobs, that is a gap.
+flowchart LR
+    subgraph L1["Layer 1 · Routing & Guard"]
+        A["page.tsx<br/>Job: block empty-basket entry,<br/>pass initial address to UI.<br/>Nothing else."]
+    end
+
+    subgraph L2["Layer 2 · Presentation & Capture"]
+        B["AddressForm.tsx<br/>Job: render fields, track dirty state,<br/>call saveAddress, show its result.<br/>No logging/telemetry side-channel."]
+        C["CheckoutStepper.tsx<br/>Job: render step indicator only."]
+    end
+
+    subgraph L3["Layer 3 · Mutation & Session Gateway"]
+        D["saveAddress()<br/>Job: guard, invoke validator,<br/>write session.address,<br/>cascade-invalidate shipping, redirect."]
+    end
+
+    subgraph L4["Layer 4 · Validation Service"]
+        E["submitShippingAction()<br/>Job: pick ONE active verifier<br/>and return ACCEPT/FIX.<br/>No dead/frozen code paths inline."]
+        F["verifyPolishAddress()<br/>Job: call GUS TERYT,<br/>verify city+street+number+postal<br/>as one unit, return a verdict."]
+    end
+
+    subgraph L5["Cross-cutting (owned elsewhere, only consumed here)"]
+        G["logCheckoutEvent()<br/>Job: structured event logging<br/>with correct slice/event names.<br/>Called once per event, not duplicated."]
+        H["getCheckoutSession()<br/>Job: read/write the encrypted cookie.<br/>No business logic."]
+    end
+
+    A --> B --> D --> E --> F
+    D --> H
+    D --> G
+
+    classDef clean fill:#1a3a2a,stroke:#4caf50,color:#fff
+    class A,B,C,D,E,F,G,H clean

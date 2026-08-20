@@ -1,0 +1,39 @@
+%% SHOULD-BE component tree for the address slice, frontend + backend.
+%% One arrow = one call direction. No node should do a job outside its label.
+flowchart TD
+    U[User] --> PAGE
+
+    subgraph FRONTEND["Frontend"]
+        direction TB
+        PAGE["page.tsx (Server Component)<br/>ONLY: guard + SSR hydrate"]
+        FORM["AddressForm (Client Component)<br/>ONLY: form state + submit orchestration"]
+        STEPPER["CheckoutStepper (shared UI)<br/>ONLY: step indicator"]
+        PAGE --> FORM
+        FORM --> STEPPER
+    end
+
+    FORM -->|"saveAddress(address, opts)"| GATEWAY
+
+    subgraph BACKEND["Backend (Server Actions + Data Access)"]
+        direction TB
+        GATEWAY["saveAddress (Server Action)<br/>ONLY: session guard, persist, cascade-invalidate, redirect"]
+        VALIDATOR["submitShippingAction (Validator Dispatch)<br/>ONLY: choose + call one active verifier"]
+        TERYT_CLIENT["verifyPolishAddress (Registry Client)<br/>ONLY: SOAP call + result normalization"]
+        SESSION[("Session Store<br/>encrypted iron-session cookie")]
+
+        GATEWAY --> VALIDATOR
+        VALIDATOR --> TERYT_CLIENT
+        GATEWAY <--> SESSION
+    end
+
+    TERYT_CLIENT -->|"SOAP over HTTPS"| GUS[("External: GUS TERYT registry")]
+
+    GATEWAY -->|"redirect"| SHIPPING["/checkout/shipping"]
+    GATEWAY -->|"redirect (guard)"| BASKET["/basket"]
+
+    classDef client fill:#2b2b2b,stroke:#f5c518,color:#fff
+    classDef server fill:#1a3a2a,stroke:#4caf50,color:#fff
+    classDef data fill:#3a1a1a,stroke:#e57373,color:#fff
+    class PAGE,FORM,STEPPER client
+    class GATEWAY,VALIDATOR,TERYT_CLIENT server
+    class SESSION,GUS data
