@@ -1,9 +1,9 @@
 import { sanityFetch } from '@/sanity-cms/lib/client';
 import { groq } from 'next-sanity';
-import { FilterBuilder } from './FilterBuilder';
-import { buildOrderClause, DEFAULT_PER_PAGE } from '@/lib/catalogue/filterParams';
 import { cache } from 'react';
 import type { Product as SanityProduct } from '@/sanity.types';
+
+const DEFAULT_PER_PAGE = 24;
 
 // Pagination safety limit - prevents unbounded queries
 const MAX_PRODUCTS_LIMIT = 100;
@@ -62,16 +62,8 @@ const getProductsByVfsKeysFn = async ({
   const effectivePerPage = Math.min(Math.max(1, Math.floor(perPage) || 1), MAX_PRODUCTS_LIMIT);
   const safePage = Math.max(1, Math.floor(page) || 1);
 
-  // Build sort clause from the allow-listed contract. Unknown or crafted sort
-  // values fall back to the default (no order clause), so raw input can never
-  // be interpolated into GROQ (B1).
-  const orderClause = buildOrderClause(sort);
-
-  // Build filter clause using FilterBuilder
-  const filterClause = FilterBuilder.buildClause(filters);
-
-  // Total count across the full filtered set (not the page window) — A1.
-  const countQuery = groq`count(*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0 ${filterClause}])`;
+  // Total count across the full product set (not the page window) — A1.
+  const countQuery = groq`count(*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0])`;
 
   try {
     const totalCount = (await sanityFetch<number>({ query: countQuery, params: { keys } })) ?? 0;
@@ -84,8 +76,7 @@ const getProductsByVfsKeysFn = async ({
     const offset = (effectivePage - 1) * effectivePerPage;
     const end = offset + effectivePerPage;
 
-    // Sort is applied BEFORE the slice, so the page window reflects the global order.
-    const productsQuery = groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0 ${filterClause}] ${orderClause} [${offset}...${end}] {
+    const productsQuery = groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0] [${offset}...${end}] {
       _id,
       name,
       brand->{

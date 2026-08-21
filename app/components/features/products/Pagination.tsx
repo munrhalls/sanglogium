@@ -4,7 +4,6 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { getPageList } from '@/lib/catalogue/pagination';
-import { DEFAULT_PER_PAGE } from '@/lib/catalogue/filterParams';
 
 interface PaginationProps {
   currentPage: number;
@@ -20,7 +19,7 @@ interface PaginationProps {
  * product window updates without client state. Also shows a positional
  * 'Showing X–Y of Z' line matching the search surface (G7).
  */
-export function Pagination({ currentPage, totalPages, totalCount, perPage = DEFAULT_PER_PAGE }: PaginationProps) {
+export function Pagination({ currentPage, totalPages, totalCount, perPage = 24 }: PaginationProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 

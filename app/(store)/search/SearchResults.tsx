@@ -2,7 +2,6 @@ import React from 'react';
 import { SearchEmpty } from '@/app/components/features/search/SearchEmpty';
 import { SearchPagination } from '@/app/components/features/search/SearchPagination';
 import { ProductGrid } from '@/app/components/features/products/ProductGrid';
-import { SortDropdown } from '@/app/components/features/filters/SortDropdown';
 import { getWishlistProductIds } from '@/lib/wishlist';
 import type { SearchResult } from '@/sanity-cms/lib/products/searchProducts';
 
@@ -21,8 +20,7 @@ export async function SearchResults({ resultsPromise, query }: SearchResultsProp
 
   return (
     <>
-      <div className="flex items-center justify-between border-b border-border-secondary pb-4 mb-6">
-        <SortDropdown searchMode />
+      <div className="border-b border-border-secondary pb-4 mb-6">
         <span className="type-metadata text-secondary">{totalCount} products</span>
       </div>
       <ProductGrid

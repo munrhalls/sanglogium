@@ -2,7 +2,6 @@
 
 import { sanityFetch } from '@/sanity-cms/lib/client';
 import groq from 'groq';
-import { buildSearchOrderClause } from '@/lib/catalogue/filterParams';
 
 const MAX_AUTOCOMPLETE = 6;
 const MIN_QUERY_LENGTH = 2;
@@ -83,9 +82,7 @@ export async function searchProductsFull(
 
   const searchTerm = `${query.trim()}*`;
 
-  // Allow-listed order clause (relevance default; explicit sorts carry NO score
-  // prefix so a chosen sort is the real order) — G1.
-  const orderClause = buildSearchOrderClause(sort);
+  // Sorting has been archived; results use default relevance order.
 
   // Floor the requested page; out-of-range pages are clamped to totalPages after
   // the count resolves so the user never sees a false empty state — G2.
@@ -117,7 +114,7 @@ export async function searchProductsFull(
         brand->name match $query => 15,
         10
       )
-    } ${orderClause} [${offset}...${end}]`;
+    } [${offset}...${end}]`;
 
   try {
     // Fetch total count and the requested window in parallel (common case).

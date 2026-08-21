@@ -2,7 +2,6 @@ import React, { Suspense } from 'react';
 import { SearchHeader } from '@/app/components/features/search/SearchHeader';
 import { searchProductsFull } from '@/sanity-cms/lib/products/searchProducts';
 import { ProductGridSkeleton } from '@/app/components/skeletons/ProductGridSkeleton';
-import { loadSearchSearchParams } from '@/lib/catalogue/searchParams';
 import { isFacetedQuery } from '@/lib/catalogue/seo';
 import { SearchResults } from './SearchResults';
 
@@ -12,16 +11,12 @@ interface SearchPageProps {
 
 export default async function SearchPage({ searchParams }: SearchPageProps) {
   const query = await searchParams;
+  const qValue = Array.isArray(query.q) ? query.q[0] : query.q;
+  const q = typeof qValue === 'string' ? qValue : '';
+  const pageValue = Array.isArray(query.page) ? query.page[0] : query.page;
+  const page = typeof pageValue === 'string' ? Number(pageValue) : 1;
 
-  // One trusted parse shared with the client contract (G3): q/sort/page go
-  // through the same nuqs parsers the dropdown and pagination consume.
-  const { q, sort, page } = loadSearchSearchParams({
-    q: Array.isArray(query.q) ? query.q[0] : query.q,
-    sort: Array.isArray(query.sort) ? query.sort[0] : query.sort,
-    page: Array.isArray(query.page) ? query.page[0] : query.page,
-  });
-
-  const resultsPromise = searchProductsFull(q, sort, page);
+  const resultsPromise = searchProductsFull(q, undefined, page);
 
   return (
     <div className="mx-auto max-w-content px-4 md:px-8 pt-6 pb-12">
