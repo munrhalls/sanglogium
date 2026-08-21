@@ -1,64 +1,55 @@
-"use client";
-
 import React from 'react';
 
 interface CheckboxProps {
-  name: string;
-  value: string;
-  checked: boolean;
-  onChange: () => void;
+  /** Visible label text for the option. */
   label: string;
+  /** Optional trailing result count, pushed to the far right. */
   count?: number;
+  /** Static demo only — uncontrolled, so clicking still toggles visually. */
+  defaultChecked?: boolean;
+  /** Zero-count, unselected options render dimmed and non-interactive. */
   disabled?: boolean;
 }
 
-export function Checkbox({ name, value, checked, onChange, label, count, disabled }: CheckboxProps) {
+/**
+ * The only checkbox in the app. Lives outside the filters folder because it is a
+ * generic ui primitive, but it exists for filters and carries the filter state
+ * palette: gold when active, primary border when idle, gold focus ring.
+ */
+export function Checkbox({ label, count, defaultChecked, disabled }: CheckboxProps) {
   return (
-    <label className={`flex items-center gap-3 ${disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer group'}`}>
-      <div className="relative flex items-center">
-        <input
-          type="checkbox"
-          name={name}
-          value={value}
-          checked={checked}
-          onChange={() => onChange()}
-          disabled={disabled}
-          className="peer sr-only"
-        />
-        <div
-          className={`
-            w-4 h-4 border rounded-sm transition-all duration-150
-            peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-brand-500
-            ${checked
-              ? 'bg-accent-500 border-accent-500'
-              : 'border-border-primary bg-transparent group-hover:border-accent-500'
-            }
-          `}
+    <label
+      className={`group flex items-center gap-3 ${
+        disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
+      }`}
+    >
+      <input
+        type="checkbox"
+        defaultChecked={defaultChecked}
+        disabled={disabled}
+        className="peer sr-only"
+      />
+      <span
+        aria-hidden
+        className="flex h-4 w-4 shrink-0 items-center justify-center rounded-sm border border-border-primary bg-transparent text-transparent transition-colors group-hover:border-accent-500 peer-checked:border-accent-500 peer-checked:bg-accent-500 peer-checked:text-brand-700 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent-500"
+      >
+        <svg
+          viewBox="0 0 16 16"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="h-3 w-3"
         >
-          {checked && (
-            <svg
-              className="w-4 h-4 text-brand-900"
-              viewBox="0 0 16 16"
-              fill="none"
-            >
-              <path
-                d="M3 8L6.5 11.5L13 5"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          )}
-        </div>
-      </div>
-      <span className="type-body text-body group-hover:text-primary transition-colors">
+          <path d="M3.5 8.5l3 3 6-6" />
+        </svg>
+      </span>
+      <span className="type-body text-text-secondary transition-colors group-hover:text-text-primary">
         {label}
       </span>
       {count !== undefined && (
-        <span className="ml-auto type-caption text-secondary-500" aria-label={`${count} ${count === 1 ? 'product' : 'products'}`}>
-          {count}
-        </span>
+        <span className="ml-auto type-caption text-text-caption">{count}</span>
       )}
     </label>
   );
