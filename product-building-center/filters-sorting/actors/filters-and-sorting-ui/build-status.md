@@ -35,3 +35,16 @@ Yes — agent self-verified (see bullet 4 note above on the DOM-based verificati
 ## Rule for keeping this file honest
 
 Update this file immediately after each bullet's deletion test passes — not before, not from memory, not by inference. A bullet is only "done" here once both the human glance and the deletion test are actually confirmed, matching srp-tracer-bullets-building-guide.md's stop/deletion-test rules. Verify file existence by listing the files, never by recalling that a prompt was sent.
+
+## Post-reset rebuild progress — started 2026-08-22
+
+This section supersedes the pre-reset bullet list above. After the 2026-08-22 code reset, bullets are being rebuilt from scratch, one at a time.
+
+1. Sidebar shell — **done** (2026-08-22). Files on disk, verified by listing:
+   - `app/components/features/filters/FilterSidebar.tsx` (card shell only: sticky, `pt-6`, hidden below 1024px via `lg-touch`/`lg-desktop`, `bg-surface-elevated` + `border-border-secondary` + `rounded-md` + `p-6` + `gap-6`, single `type-overline` "Filters" label, no children/state/hooks).
+   - `app/(store)/products/[...slug]/page.tsx`: 4 added lines only, no existing line modified — the import, the 240px two-column grid wrapper `<div>` (the one line the style guide assigns to this scope), `<FilterSidebar />`, and the wrapper's closing `</div>`.
+   Human glance-confirmed live on `/products/headphones`.
+   Deletion test run and passed: `FilterSidebar.tsx` moved out and `page.tsx` reverted to HEAD, page still returned HTTP 200 with zero error markers, all 99 `product-card` occurrences, breadcrumbs, and pagination rendered unchanged; only the sidebar itself disappeared (`filter-sidebar` and `240px` both dropped to 0 matches). Only diff outside the sidebar was RSC Flight chunk-ID renumbering, not a visual change. Both files restored afterward and the page re-verified at HTTP 200 with the sidebar back.
+2. Checkbox filter group — not started.
+3. Price + stock sliders — not started.
+4. Sort dropdown + count row — not started.

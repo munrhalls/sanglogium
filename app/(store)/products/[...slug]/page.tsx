@@ -8,6 +8,8 @@ import { EmptyResults } from '@/app/components/features/products/EmptyResults';
 import { Pagination } from '@/app/components/features/products/Pagination';
 import { StreamedProductGrid } from './StreamedProductGrid';
 import Breadcrumbs from '@/app/components/ui/breadcrumbs/CategoryBreadcrumbs';
+import { FilterSidebar } from '@/app/components/features/filters/FilterSidebar';
+import { SortAndCountBar } from './SortAndCountBar';
 import { isFacetedQuery, canonicalCategoryPath } from '@/lib/catalogue/seo';
 
 interface CategoryPageProps {
@@ -49,11 +51,15 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
 
   return (
     <div className="mx-auto w-full max-w-content px-4 md:px-8 pb-12">
+      <div className="grid grid-cols-1 lg-desktop:grid-cols-[240px_minmax(0,1fr)] lg-touch:grid-cols-[240px_minmax(0,1fr)] gap-8">
+      <FilterSidebar />
       <main className="min-w-0 w-full pt-6">
         <div className="pb-4">
           <Breadcrumbs categoryParts={slug} />
           <ShopHeader title={metadata.name} overline={categoryPath} />
         </div>
+
+        <SortAndCountBar />
 
         {totalCount === 0 ? (
           <EmptyResults />
@@ -86,6 +92,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
           perPage={PER_PAGE}
         />
       </main>
+      </div>
     </div>
   );
 }

@@ -28,7 +28,7 @@ export function Checkbox({ name, value, checked, onChange, label, count, disable
         <div
           className={`
             w-4 h-4 border rounded-sm transition-all duration-150
-            peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-brand-500
+            peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent-500
             ${checked
               ? 'bg-accent-500 border-accent-500'
               : 'border-border-primary bg-transparent group-hover:border-accent-500'
@@ -37,7 +37,7 @@ export function Checkbox({ name, value, checked, onChange, label, count, disable
         >
           {checked && (
             <svg
-              className="w-4 h-4 text-brand-900"
+              className="w-4 h-4 text-brand-700"
               viewBox="0 0 16 16"
               fill="none"
             >
@@ -52,11 +52,11 @@ export function Checkbox({ name, value, checked, onChange, label, count, disable
           )}
         </div>
       </div>
-      <span className="type-body text-body group-hover:text-primary transition-colors">
+      <span className="type-body group-hover:text-text-primary transition-colors">
         {label}
       </span>
       {count !== undefined && (
-        <span className="ml-auto type-caption text-secondary-500" aria-label={`${count} ${count === 1 ? 'product' : 'products'}`}>
+        <span className="ml-auto type-caption text-text-caption" aria-label={`${count} ${count === 1 ? 'product' : 'products'}`}>
           {count}
         </span>
       )}

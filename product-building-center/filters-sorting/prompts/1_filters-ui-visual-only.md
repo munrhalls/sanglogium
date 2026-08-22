@@ -6,7 +6,8 @@ Reply with:
 2. The deletion test, in your own words.
 3. Confirmation that during bullet execution you will not run tsc, lint, build, tests, or restart the dev server — the only verification is a human glance at the running page.
 Stop after this and wait for me.
-Phase 1 — Bullet 1: Sidebar shell
+
+filters-sidebar-shell — bullet 1
 
 Build ONLY bullet 1 from the file-to-bullet map in srp-tracer-bullets-building-guide.md: the sidebar shell.
 File: app/components/features/filters/FilterSidebar.tsx — empty card, no children, styled per style-guide-components-tree.md.
@@ -17,7 +18,8 @@ When done, give me a one-paragraph SRP report: which files you touched, confirm 
 Then stop. Do not proceed further. I will check localhost:3000/products/headphones and reply.
 The sidebar shell looked correct — run the deletion test now. Remove exactly FilterSidebar.tsx and the one grid line you added in page.tsx (e.g. git stash -u or manual revert), tell me what, if anything, changes elsewhere on the live page or site, then restore the files.
 Report the result in one paragraph, then stop and wait for me.
-Phase 2 — Bullet 2: Checkbox filter group
+
+filters-checkbox-group — bullet 2
 
 Build ONLY bullet 2 from the file-to-bullet map: the checkbox filter group.
 Files: app/components/ui/Checkbox.tsx + a CollapsibleFilterGroup inside FilterSidebar.tsx.
@@ -28,7 +30,8 @@ When done, give me a one-paragraph SRP report: which files you touched, confirm 
 Then stop. I will check the live page and reply.
 Checkboxes looked correct — run the deletion test. Remove exactly Checkbox.tsx and the CollapsibleFilterGroup addition to FilterSidebar.tsx, tell me what, if anything, changes elsewhere, then restore.
 Report in one paragraph, then stop and wait for me.
-Phase 3 — Bullet 3: Price + stock sliders
+
+filters-sliders — bullet 3
 
 Build ONLY bullet 3 from the file-to-bullet map: price + stock sliders.
 Files: app/components/features/filters/PriceRangeSlider.tsx, StockMinimumSlider.tsx.
@@ -39,7 +42,8 @@ When done, give me a one-paragraph SRP report: which files you touched, confirm 
 Then stop. I will check the live page and reply.
 Sliders looked correct — run the deletion test. Remove exactly PriceRangeSlider.tsx and StockMinimumSlider.tsx, tell me what, if anything, changes elsewhere, then restore.
 Report in one paragraph, then stop and wait for me.
-Phase 4 — Bullet 4: Sort dropdown + count row
+
+filters-sort-bar — bullet 4
 
 Build ONLY bullet 4 from the file-to-bullet map: sort dropdown + count row.
 Files: app/components/features/filters/SortDropdown.tsx, app/(store)/products/[...slug]/SortAndCountBar.tsx.
