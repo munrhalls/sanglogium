@@ -2,6 +2,10 @@
 
 Read this FIRST in any new chat session before reading anything else in this folder. It's the current source of truth for what's actually done vs. what's still narrative/plan.
 
+## Correction — 2026-08-22 — CODE RESET, IGNORE "done" STATUS BELOW
+
+Everything below this line describes a build that has since been reset. On 2026-08-22 all application source code for this actor was deleted and restored to its pre-build state (commit `1f3962a4`) after a live check showed the built feature didn't actually work — see `product-building-center/HANDOFF.md` for the full explanation. `FilterSidebar.tsx`, `Checkbox.tsx` changes, `PriceRangeSlider.tsx`, `StockMinimumSlider.tsx`, `SortDropdown.tsx`, and `SortAndCountBar.tsx` do NOT exist on disk anymore. Treat every bullet below as **not started**. The plan (file-to-bullet map, style guide, scope rules) below is still valid and unchanged — only the code was wiped, per an explicit decision to keep this folder's planning docs intact while resetting the source.
+
 ## Bullet progress (file-to-bullet map in srp-tracer-bullets-building-guide.md)
 
 1. Sidebar shell (FilterSidebar.tsx + 240px grid line in page.tsx) — **done**. Human-confirmed live, deletion test passed.
