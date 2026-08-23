@@ -121,7 +121,7 @@ The codebase already has strong performance foundations. **Do not regress these:
 - `next/font` with Montserrat, `display: 'swap'`, `subsets: ['latin']`
 - `next/image` with custom Sanity CDN loader, AVIF/WebP formats
 - `minimumCacheTTL: 31536000` for images
-- `optimizeCss: true`, `inlineCss: true`
+- `inlineCss: true` (native, stream-aware CSS inlining — do not re-enable `optimizeCss`/critters: it post-processes the fully-rendered HTML for critical-CSS extraction, which forces Next to buffer the whole SSR/RSC response and defeats the per-row `Suspense` streaming in `StreamedProductGrid`. Confirmed via HAR: with it on, all product images across every row fired within a 2ms window instead of streaming in per row.)
 - `optimizePackageImports` for Clerk and Phosphor
 - Preconnect to `cdn.sanity.io` in layout `<head>`
 - `poweredByHeader: false`, `compress: true`
@@ -137,7 +137,7 @@ The codebase already has strong performance foundations. **Do not regress these:
 - Stripe loaded at module scope (not in component)
 - `hoverOnlyWhenSupported: true` in Tailwind config
 - `sharp` installed for image optimization
-- `critters` installed for critical CSS inlining
+- `critters` package remains installed but is unused (was wired via `optimizeCss`, now off — see note above)
 
 ---
 

@@ -13,9 +13,11 @@ interface StreamedProductGridProps {
   filterKey: string;
 }
 
-export async function StreamedProductGrid({ keys, sort, filters, pageStart, rowCount, filterKey }: StreamedProductGridProps) {
-  const wishlistProductIds = await getWishlistProductIds();
-  const wishlistSet = new Set(wishlistProductIds);
+export function StreamedProductGrid({ keys, sort, filters, pageStart, rowCount, filterKey }: StreamedProductGridProps) {
+  // Started, not awaited: awaiting here would gate every row's <Suspense> mount
+  // on the wishlist lookup. Each row awaits this promise alongside its own slice
+  // fetch, so the wishlist resolves in parallel instead of ahead of the grid.
+  const wishlistPromise = getWishlistProductIds().then((ids) => new Set(ids));
 
   return (
     <div className="flex flex-col gap-8">
@@ -27,7 +29,7 @@ export async function StreamedProductGrid({ keys, sort, filters, pageStart, rowC
             filters={filters}
             offset={pageStart + i * ROW_SIZE}
             limit={ROW_SIZE}
-            wishlistSet={wishlistSet}
+            wishlistPromise={wishlistPromise}
           />
         </Suspense>
       ))}

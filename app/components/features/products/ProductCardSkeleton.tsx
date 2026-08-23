@@ -9,11 +9,11 @@ export function ProductCardSkeleton() {
       {/* Image placeholder */}
       <div
         data-testid="skeleton-image"
-        className="aspect-[4/3] bg-secondary-800 animate-pulse"
+        className="aspect-[16/9] bg-surface-productImage animate-pulse"
       />
 
       {/* Content area matching ProductCard structure */}
-      <div className="flex flex-col gap-3 p-4">
+      <div className="flex flex-col gap-3 p-3">
         {/* Title placeholder */}
         <div
           data-testid="skeleton-title"

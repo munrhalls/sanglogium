@@ -29,7 +29,14 @@ const nextConfig: NextConfig = {
     root: projectRoot,
   },
   experimental: {
-    optimizeCss: true,
+    // optimizeCss (critters) post-processes the FULLY rendered HTML document to
+    // compute critical CSS, which forces Next to buffer the entire SSR/RSC
+    // response before sending any bytes — this collapses every per-row Suspense
+    // boundary in StreamedProductGrid into one final flush instead of letting
+    // rows stream to the client as they resolve. inlineCss (Next's native,
+    // stream-aware CSS inlining) covers the same "avoid a render-blocking CSS
+    // request" goal without buffering, so it stays on.
+    optimizeCss: false,
     inlineCss: true,
     optimizePackageImports: ["@phosphor-icons/react"],
   },

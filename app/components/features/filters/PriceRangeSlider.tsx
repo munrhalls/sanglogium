@@ -1,12 +1,12 @@
 "use client";
 
-import React from 'react';
+import React from "react";
 import {
   filterSectionHeaderRow,
   filterSectionHeaderLabel,
   filterStateActive,
   filterStateInactive,
-} from './FilterSidebar';
+} from "./FilterSidebar";
 
 /**
  * Price range slider — and the owner of the shared slider pattern.
@@ -20,10 +20,10 @@ import {
  * Tracer bullet 3: hardcoded values, no state, no URL access.
  */
 
-const TRACK_ACTIVE_FILL = '#D4AF37'; // accent-500
-const TRACK_ACTIVE_REST = '#2E2E2D'; // secondary-800
-const TRACK_INACTIVE_FILL = '#9A9997'; // secondary-500
-const TRACK_INACTIVE_REST = '#4A4948'; // secondary-700
+const TRACK_ACTIVE_FILL = "#D4AF37"; // accent-500
+const TRACK_ACTIVE_REST = "#2E2E2D"; // secondary-800
+const TRACK_INACTIVE_FILL = "#9A9997"; // secondary-500
+const TRACK_INACTIVE_REST = "#4A4948"; // secondary-700
 
 function ResetIcon() {
   return (
@@ -39,13 +39,19 @@ function ResetIcon() {
   );
 }
 
-export function ResetButton({ active, label }: { active: boolean; label: string }) {
+export function ResetButton({
+  active,
+  label,
+}: {
+  active: boolean;
+  label: string;
+}) {
   return (
     <button
       type="button"
       aria-label={label}
       disabled={!active}
-      className={`flex h-6 w-6 items-center justify-center rounded-full transition-colors ${
+      className={`rounded-full flex h-6 w-6 items-center justify-center transition-colors ${
         active
           ? `${filterStateActive} hover:bg-accent-500/10`
           : `${filterStateInactive} cursor-not-allowed`
@@ -112,19 +118,7 @@ export function FilterSliderRow({
         style={{
           background: `linear-gradient(to right, ${fill} 0%, ${fill} ${percent}%, ${rest} ${percent}%, ${rest} 100%)`,
         }}
-        className={`
-          h-2 w-full cursor-pointer appearance-none rounded-full
-          ${active ? '' : 'opacity-60'}
-          focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500
-          [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4
-          [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full
-          [&::-webkit-slider-thumb]:border [&::-webkit-slider-thumb]:border-border-secondary
-          [&::-webkit-slider-thumb]:bg-brand-400 [&::-webkit-slider-thumb]:cursor-grab
-          [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4
-          [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:rounded-full
-          [&::-moz-range-thumb]:border [&::-moz-range-thumb]:border-border-secondary
-          [&::-moz-range-thumb]:bg-brand-400 [&::-moz-range-thumb]:cursor-grab
-        `}
+        className={`rounded-full h-2 w-full cursor-pointer appearance-none ${active ? "" : "opacity-60"} [&::-webkit-slider-thumb]:rounded-full [&::-moz-range-thumb]:rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:cursor-grab [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:border [&::-moz-range-thumb]:border-border-secondary [&::-moz-range-thumb]:bg-brand-400 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:cursor-grab [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:border [&::-webkit-slider-thumb]:border-border-secondary [&::-webkit-slider-thumb]:bg-brand-400`}
       />
     </div>
   );

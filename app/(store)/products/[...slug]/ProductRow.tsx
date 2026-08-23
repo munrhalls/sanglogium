@@ -8,11 +8,14 @@ interface ProductRowProps {
   filters: string[];
   offset: number;
   limit: number;
-  wishlistSet: Set<string>;
+  wishlistPromise: Promise<Set<string>>;
 }
 
-export async function ProductRow({ keys, sort, filters, offset, limit, wishlistSet }: ProductRowProps) {
-  const products = await getProductsSlice({ keys, sort, filters, offset, limit });
+export async function ProductRow({ keys, sort, filters, offset, limit, wishlistPromise }: ProductRowProps) {
+  const [products, wishlistSet] = await Promise.all([
+    getProductsSlice({ keys, sort, filters, offset, limit }),
+    wishlistPromise,
+  ]);
 
   if (products.length === 0) return null;
 

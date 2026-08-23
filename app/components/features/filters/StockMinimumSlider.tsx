@@ -1,7 +1,7 @@
 "use client";
 
-import React from 'react';
-import { FilterSliderSection, FilterSliderRow } from './PriceRangeSlider';
+import React from "react";
+import { FilterSliderSection, FilterSliderRow } from "./PriceRangeSlider";
 
 /**
  * Stock minimum slider.

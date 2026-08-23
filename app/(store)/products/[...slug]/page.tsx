@@ -10,7 +10,9 @@ import { StreamedProductGrid } from './StreamedProductGrid';
 import Breadcrumbs from '@/app/components/ui/breadcrumbs/CategoryBreadcrumbs';
 import { FilterSidebar } from '@/app/components/features/filters/FilterSidebar';
 import { SortAndCountBar } from './SortAndCountBar';
+import { ProductGridURLSync } from './ProductGridURLSync';
 import { isFacetedQuery, canonicalCategoryPath } from '@/lib/catalogue/seo';
+import { resolveSort, parseFilterParam } from '@/lib/catalogue/sortParams';
 
 interface CategoryPageProps {
   params: Promise<{ slug: string[] }>;
@@ -29,15 +31,24 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
 
   const pageValue = Array.isArray(query.page) ? query.page[0] : query.page;
   const page = typeof pageValue === 'string' ? Number(pageValue) : 1;
+  const sortValue = Array.isArray(query.sort) ? query.sort[0] : query.sort;
+  const sort = resolveSort(sortValue).value;
+  const filters = parseFilterParam(query.f);
   const descendantKeys = unrollDescendantKeys(nodeId);
 
-  const metadata = await getCategoryMetadata(nodeId);
+  // Neither call depends on the other's result — both need only nodeId /
+  // descendantKeys, already resolved above — so they run concurrently rather
+  // than stacking their latency in front of the shell. In the rare not-found
+  // path the count result is simply discarded.
+  const [metadata, totalCount] = await Promise.all([
+    getCategoryMetadata(nodeId),
+    getProductsCount({ keys: descendantKeys }),
+  ]);
 
   if (!metadata) {
     notFound();
   }
 
-  const totalCount = await getProductsCount({ keys: descendantKeys });
   const totalPages = totalCount > 0 ? Math.ceil(totalCount / PER_PAGE) : 0;
   const effectivePage = totalPages > 0 ? Math.min(Math.max(page, 1), totalPages) : Math.max(1, page);
   const isPageOutOfRange = totalPages > 0 && page > totalPages;
@@ -60,6 +71,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
         </div>
 
         <SortAndCountBar />
+        <ProductGridURLSync />
 
         {totalCount === 0 ? (
           <EmptyResults />
@@ -76,8 +88,8 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
             )}
             <StreamedProductGrid
               keys={descendantKeys}
-              sort=""
-              filters={[]}
+              sort={sort}
+              filters={filters}
               pageStart={pageStart}
               rowCount={rowCount}
               filterKey={filterKey}

@@ -1,25 +1,26 @@
-"use client";
-
-import React from 'react';
-import Link from 'next/link';
-import { ProductImage } from './ProductImage';
-import type { Product } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
-import { Price } from '@/app/components/ui/Price';
+import React from "react";
+import Link from "next/link";
+import { ProductImage } from "./ProductImage";
+import type { ProductCardData } from "@/sanity-cms/lib/products/getProductsSlice";
+import { Price } from "@/app/components/ui/Price";
 import { BasketControls } from "@/app/components/features/basket/BasketControls";
 import { WishlistButton } from "@/app/components/features/wishlist/WishlistButton";
-import { centsToDisplay } from '@/lib/utils/price';
+import { centsToDisplay } from "@/lib/utils/price";
 
 interface ProductCardProps {
-  product: Product;
+  product: ProductCardData;
   isWishlisted?: boolean;
 }
 
-export function ProductCard({ product, isWishlisted = false }: ProductCardProps) {
+export function ProductCard({
+  product,
+  isWishlisted = false,
+}: ProductCardProps) {
   const displayPrice = centsToDisplay(product.price_data.unit_amount);
 
   return (
     <article
-      className="card-product-dark group relative flex h-full flex-col col-span-1"
+      className="group card-product-dark relative col-span-1 flex h-full flex-col duration-300 animate-in fade-in"
       data-testid="product-card"
     >
       <WishlistButton
@@ -29,9 +30,9 @@ export function ProductCard({ product, isWishlisted = false }: ProductCardProps)
       />
 
       <Link href={`/product/${product.slug.current}`} className="block">
-        <figure className="aspect-[16/9] relative flex w-full items-center justify-center overflow-hidden bg-surface-productImage p-4">
+        <figure className="relative flex aspect-[16/9] w-full items-center justify-center overflow-hidden bg-surface-productImage p-4">
           {product.brand?.name && (
-            <span className="absolute left-3 top-3 type-caption text-brand-900 z-10">
+            <span className="type-caption absolute left-3 top-3 z-10 text-brand-900">
               {product.brand.name}
             </span>
           )}
@@ -42,10 +43,8 @@ export function ProductCard({ product, isWishlisted = false }: ProductCardProps)
           />
         </figure>
 
-        <div className="flex flex-col flex-grow gap-1 p-3">
-          <h3 className="type-body font-medium line-clamp-2">
-            {product.name}
-          </h3>
+        <div className="flex flex-grow flex-col gap-1 p-3">
+          <h3 className="type-body line-clamp-2 font-medium">{product.name}</h3>
         </div>
       </Link>
 
@@ -62,4 +61,3 @@ export function ProductCard({ product, isWishlisted = false }: ProductCardProps)
     </article>
   );
 }
-

@@ -1,3 +1,17 @@
+Phase 0 — Orientation (comprehension check, no code)
+
+Read, in full, before writing any code:
+1. product-building-center/filters-sorting/north-star-story.md — specifically Chapters 6-8 (Filters & Sorting's URL-only contract, the Product Grid's job, and the deletion-test proof in both directions).
+2. product-building-center/filters-sorting/actors/product-grid-streaming/build-status.md — the actual current state, not the plan (a fresh session must never assume progress from the guide's file map alone).
+3. product-building-center/filters-sorting/actors/product-grid-streaming/srp-tracer-bullets-building-guide.md — the three bullets this actor covers.
+4. product-building-center/filters-sorting/actors/product-grid-streaming/README.md — this actor's one job and what it must never do.
+
+Reply with:
+1. This actor's one job, in one sentence, and the one thing it must never do (assume anything about how the URL got its value, or import from the filters UI actor).
+2. The deletion test for this actor, in your own words (give it any URL directly, with no Filters & Sorting UI present — must still stream correct, matching results).
+3. Confirmation that you will not run tsc, lint, build, tests, or restart the dev server for bullets 1 and 2 — verification there is a direct fetch/DOM/network check against the running dev server, with concrete before/after evidence shown in your report. For bullet 3 only (debounce/cancel), confirm you understand this is real race-condition logic and needs an actual smoke test in a live browser tab (rapid URL changes, confirm only the latest lands) — still no tsc/lint/build/tests.
+Stop after this and wait for me.
+
 grid-query-wiring — bullet 1
 
 Build ONLY bullet 1 from the file-to-bullet map in actors/product-grid-streaming/srp-tracer-bullets-building-guide.md: real sort/filter query wiring.
