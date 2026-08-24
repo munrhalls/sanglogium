@@ -12,6 +12,10 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "."),
+        // Next.js resolves "server-only" via a built-in shim; Vitest has no
+        // such shim and the package isn't an installed dependency. See
+        // vitest.setup.server-only-stub.ts for why this is needed.
+        "server-only": path.resolve(__dirname, "./vitest.setup.server-only-stub.ts"),
       },
     },
     test: {

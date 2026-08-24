@@ -1,12 +1,14 @@
 import React from 'react';
-import { ProductCardSkeleton } from '@/app/components/features/products';
+import { ProductCardReveal } from '@/app/components/features/products/ProductCardReveal';
+import { ROW_SIZE } from '@/sanity-cms/lib/products/getProductsSlice';
 
+/** Route-level Suspense fallback, before ProductRow's data fetch has even started. */
 export function ProductRowSkeleton() {
   return (
-    <div className="grid gap-8 grid-cols-1 xs:grid-cols-2 lg-desktop:grid-cols-3 lg-touch:grid-cols-2">
-      {Array.from({ length: 8 }).map((_, i) => (
-        <ProductCardSkeleton key={i} />
+    <>
+      {Array.from({ length: ROW_SIZE }).map((_, i) => (
+        <ProductCardReveal key={i} />
       ))}
-    </div>
+    </>
   );
 }

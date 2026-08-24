@@ -53,7 +53,12 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   const effectivePage = totalPages > 0 ? Math.min(Math.max(page, 1), totalPages) : Math.max(1, page);
   const isPageOutOfRange = totalPages > 0 && page > totalPages;
   const pageStart = (effectivePage - 1) * PER_PAGE;
-  const rowCount = totalCount === 0 ? 0 : Math.ceil(Math.min(PER_PAGE, totalCount - pageStart) / ROW_SIZE);
+  // Always reserve the full page's row count, even on a partial last page —
+  // this must match loading.tsx's fixed skeleton count exactly, or the grid
+  // shrinks the instant real data replaces the fallback. ProductRow pads any
+  // short/empty chunk with invisible placeholders to keep every row's height
+  // constant regardless of how many real products land in it.
+  const rowCount = totalCount === 0 ? 0 : Math.ceil(PER_PAGE / ROW_SIZE);
   const filterKey = String(effectivePage);
 
   const categoryPath = slug.length > 1

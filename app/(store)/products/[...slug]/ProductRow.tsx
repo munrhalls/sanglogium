@@ -1,5 +1,5 @@
 import React from 'react';
-import { ProductCard } from '@/app/components/features/products';
+import { ProductCardRow } from '@/app/components/features/products';
 import { getProductsSlice } from '@/sanity-cms/lib/products/getProductsSlice';
 
 interface ProductRowProps {
@@ -9,21 +9,35 @@ interface ProductRowProps {
   offset: number;
   limit: number;
   wishlistPromise: Promise<Set<string>>;
+  /** Floor on how soon this row is allowed to resolve, so later rows never
+   * reveal in the same instant as earlier ones even when Sanity answers
+   * every row's fetch in the same tight window (fast/local network). A no-op
+   * whenever the real fetch already takes longer than this. */
+  minDelayMs?: number;
 }
 
-export async function ProductRow({ keys, sort, filters, offset, limit, wishlistPromise }: ProductRowProps) {
+function withMinDelay<T>(promise: Promise<T>, ms: number): Promise<T> {
+  if (ms <= 0) return promise;
+  return Promise.all([promise, new Promise((resolve) => setTimeout(resolve, ms))]).then(([value]) => value);
+}
+
+export async function ProductRow({ keys, sort, filters, offset, limit, wishlistPromise, minDelayMs = 0 }: ProductRowProps) {
   const [products, wishlistSet] = await Promise.all([
-    getProductsSlice({ keys, sort, filters, offset, limit }),
+    withMinDelay(getProductsSlice({ keys, sort, filters, offset, limit }), minDelayMs),
     wishlistPromise,
   ]);
 
-  if (products.length === 0) return null;
-
+  // Rendered count must always equal `limit` — a slice from the end of a
+  // catalogue (or beyond it) can return fewer than `limit` products, which
+  // would otherwise leave this row shorter than its ProductRowSkeleton
+  // fallback (fewer wrapped sub-rows in the same grid-cols-3 grid). Padding
+  // with invisible placeholders keeps the row's height identical to the
+  // skeleton no matter how many real products landed in it.
   return (
-    <div className="grid gap-8 grid-cols-1 xs:grid-cols-2 lg-desktop:grid-cols-3 lg-touch:grid-cols-2">
-      {products.map((product) => (
-        <ProductCard key={product._id} product={product} isWishlisted={wishlistSet.has(product._id)} />
-      ))}
-    </div>
+    <ProductCardRow
+      products={products}
+      wishlistedIds={Array.from(wishlistSet)}
+      padCount={limit - products.length}
+    />
   );
 }

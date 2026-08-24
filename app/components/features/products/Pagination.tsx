@@ -19,12 +19,47 @@ interface PaginationProps {
  * product window updates without client state. Also shows a positional
  * 'Showing X–Y of Z' line matching the search surface (G7).
  */
+export const PAGINATION_WRAPPER_CLASSES = 'mt-8 flex flex-col items-center gap-3';
+export const PAGINATION_CAPTION_CLASSES = 'type-caption text-secondary-500';
+export const PAGINATION_BUTTON_ROW_CLASSES = 'h-10';
+
+export function PaginationSkeleton() {
+  return (
+    <nav
+      aria-label="Pagination"
+      aria-hidden="true"
+      data-testid="pagination-skeleton"
+      className={PAGINATION_WRAPPER_CLASSES}
+    >
+      <span className={`${PAGINATION_CAPTION_CLASSES} bg-secondary-800 rounded w-40 animate-pulse inline-block`}>
+        &nbsp;
+      </span>
+      <div className={`${PAGINATION_BUTTON_ROW_CLASSES} animate-pulse`} />
+    </nav>
+  );
+}
+
 export function Pagination({ currentPage, totalPages, totalCount, perPage = 24 }: PaginationProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  const startItemFallback = totalCount === 0 ? 0 : (currentPage - 1) * perPage + 1;
+  const endItemFallback = Math.min(currentPage * perPage, totalCount);
+
   if (totalPages <= 1) {
-    return null;
+    return (
+      <nav
+        aria-label="Pagination"
+        aria-hidden="true"
+        data-testid="pagination"
+        className={PAGINATION_WRAPPER_CLASSES}
+      >
+        <span className={PAGINATION_CAPTION_CLASSES} aria-live="polite">
+          Showing {startItemFallback}–{endItemFallback} of {totalCount}
+        </span>
+        <div className={PAGINATION_BUTTON_ROW_CLASSES} />
+      </nav>
+    );
   }
 
   const hrefFor = (page: number): string => {
