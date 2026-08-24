@@ -13,10 +13,8 @@ interface ProductCardRevealProps {
   /** Omitted entirely = pure skeleton (route-level Suspense fallback, before any data exists). */
   product?: ProductCardData;
   isWishlisted?: boolean;
-  /** Whether this card is allowed to show real content yet. Ignored when `product` is omitted. */
-  ready?: boolean;
-  /** Fired once this card's own image has resolved (or failed). Used to gate the whole row. */
-  onImageLoad?: () => void;
+  /** Give this card's image a fetch head start (first visible row only). */
+  priority?: boolean;
 }
 
 const shimmer = "animate-pulse rounded bg-secondary-800";
@@ -28,14 +26,19 @@ const shimmer = "animate-pulse rounded bg-secondary-800";
  * two hand-maintained components (a skeleton file + a real-card file) can
  * silently drift a few pixels apart with nothing to catch it. One tree
  * can't drift from itself.
+ *
+ * Text renders as soon as `product` exists — it never waits on the image.
+ * The image carries its own low-quality blur placeholder (via Sanity's
+ * `metadata.lqip`) and fades in independently once loaded; nothing gates
+ * on it. See product-grid-streaming-ux-bugs memory for why the row-level
+ * all-or-nothing gate this replaced was the wrong mechanism.
  */
 export function ProductCardReveal({
   product,
   isWishlisted = false,
-  ready = false,
-  onImageLoad,
+  priority = false,
 }: ProductCardRevealProps) {
-  const showReal = ready && !!product;
+  const showReal = !!product;
   const displayPrice = product ? centsToDisplay(product.price_data.unit_amount) : "";
 
   const media = (
@@ -52,7 +55,7 @@ export function ProductCardReveal({
           image={product.image}
           alt={product.name}
           className={`group-hover:scale-110 transition-opacity duration-300 ${showReal ? "opacity-100" : "opacity-0"}`}
-          onLoad={onImageLoad}
+          priority={priority}
         />
       )}
       {!showReal && (

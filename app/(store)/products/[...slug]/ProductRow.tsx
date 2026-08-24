@@ -14,6 +14,8 @@ interface ProductRowProps {
    * every row's fetch in the same tight window (fast/local network). A no-op
    * whenever the real fetch already takes longer than this. */
   minDelayMs?: number;
+  /** Give this row's images a fetch head start (first visible row only). */
+  priority?: boolean;
 }
 
 function withMinDelay<T>(promise: Promise<T>, ms: number): Promise<T> {
@@ -21,7 +23,7 @@ function withMinDelay<T>(promise: Promise<T>, ms: number): Promise<T> {
   return Promise.all([promise, new Promise((resolve) => setTimeout(resolve, ms))]).then(([value]) => value);
 }
 
-export async function ProductRow({ keys, sort, filters, offset, limit, wishlistPromise, minDelayMs = 0 }: ProductRowProps) {
+export async function ProductRow({ keys, sort, filters, offset, limit, wishlistPromise, minDelayMs = 0, priority = false }: ProductRowProps) {
   const [products, wishlistSet] = await Promise.all([
     withMinDelay(getProductsSlice({ keys, sort, filters, offset, limit }), minDelayMs),
     wishlistPromise,
@@ -38,6 +40,7 @@ export async function ProductRow({ keys, sort, filters, offset, limit, wishlistP
       products={products}
       wishlistedIds={Array.from(wishlistSet)}
       padCount={limit - products.length}
+      priority={priority}
     />
   );
 }

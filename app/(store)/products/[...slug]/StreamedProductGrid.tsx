@@ -48,6 +48,7 @@ export function StreamedProductGrid({ keys, sort, filters, pageStart, rowCount, 
             limit={ROW_SIZE}
             wishlistPromise={wishlistPromise}
             minDelayMs={i * ROW_STAGGER_MS}
+            priority={i === 0}
           />
         </Suspense>
       ))}

@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useCallback, useMemo, useState } from "react";
+import React from "react";
 import { ProductCardReveal } from "./ProductCardReveal";
 import type { ProductCardData } from "@/sanity-cms/lib/products/getProductsSlice";
 
@@ -9,22 +7,18 @@ interface ProductCardRowProps {
   wishlistedIds: string[];
   /** Invisible placeholders to keep this row's height equal to its Suspense fallback. */
   padCount: number;
+  /** Give this row's images a fetch head start (first visible row only). */
+  priority?: boolean;
 }
 
 /**
- * Gates the reveal on the whole row, not on each card's own image. Cards
- * report their own load via onImageLoad; only once every card in the row
- * has reported does `ready` flip, so the row swaps skeleton -> real in one
- * paint instead of resettling once per card as images trickle in.
+ * Each card shows its real content as soon as its own product data exists —
+ * text is never withheld, and each image fades in independently from its
+ * own blur placeholder. See ProductCardReveal for why this replaced the
+ * previous row-level all-or-nothing gate.
  */
-export function ProductCardRow({ products, wishlistedIds, padCount }: ProductCardRowProps) {
-  const [loadedCount, setLoadedCount] = useState(0);
-  const wishlistSet = useMemo(() => new Set(wishlistedIds), [wishlistedIds]);
-  const ready = products.length > 0 && loadedCount >= products.length;
-
-  const handleImageLoad = useCallback(() => {
-    setLoadedCount((count) => count + 1);
-  }, []);
+export function ProductCardRow({ products, wishlistedIds, padCount, priority = false }: ProductCardRowProps) {
+  const wishlistSet = new Set(wishlistedIds);
 
   return (
     <>
@@ -33,8 +27,7 @@ export function ProductCardRow({ products, wishlistedIds, padCount }: ProductCar
           key={product._id}
           product={product}
           isWishlisted={wishlistSet.has(product._id)}
-          ready={ready}
-          onImageLoad={handleImageLoad}
+          priority={priority}
         />
       ))}
       {Array.from({ length: padCount }).map((_, i) => (

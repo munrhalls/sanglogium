@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import { sanityImageLoader } from '@/lib/utils/sanityImageLoader';
 
@@ -9,18 +9,12 @@ interface ProductImageProps {
   alt: string;
   className?: string;
   priority?: boolean;
-  /** Fired once the photo is ready to be shown (or when there is nothing to load). */
-  onLoad?: () => void;
 }
 
-export function ProductImage({ image, alt, className, priority = false, onLoad }: ProductImageProps) {
+export function ProductImage({ image, alt, className, priority = false }: ProductImageProps) {
   // Get the asset reference - Sanity can use either _ref or _id
   const assetRef = image?.asset?._ref || image?.asset?._id;
-
-  // No asset to fetch: there is nothing to wait for, so report ready immediately.
-  useEffect(() => {
-    if (!assetRef) onLoad?.();
-  }, [assetRef, onLoad]);
+  const lqip: string | null = image?.asset?.metadata?.lqip ?? null;
 
   if (!assetRef) {
     return (
@@ -40,9 +34,8 @@ export function ProductImage({ image, alt, className, priority = false, onLoad }
         sizes="(max-width: 768px) 50vw, 25vw"
         className="object-contain mix-blend-multiply transition-transform duration-700"
         priority={priority}
-        onLoad={onLoad}
-        // A failed image must not leave the card stuck in its skeleton forever.
-        onError={onLoad}
+        placeholder={lqip ? "blur" : "empty"}
+        blurDataURL={lqip ?? undefined}
       />
     </div>
   );

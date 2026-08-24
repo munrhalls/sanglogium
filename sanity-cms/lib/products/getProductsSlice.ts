@@ -65,7 +65,8 @@ export async function getProductsSlice({ keys, sort = 'featured', filters = [], 
     price_data,
     image {
       asset {
-        _ref
+        _ref,
+        metadata { lqip }
       }
     },
     slug {

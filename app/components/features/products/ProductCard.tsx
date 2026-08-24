@@ -7,13 +7,10 @@ interface ProductCardProps {
   isWishlisted?: boolean;
 }
 
-/**
- * Non-streamed usage (e.g. ProductGrid): the product is already fully
- * loaded server-side, so there's no row to gate on — show it immediately.
- */
+/** Non-streamed usage (e.g. ProductGrid): product data is already resolved server-side. */
 export function ProductCard({
   product,
   isWishlisted = false,
 }: ProductCardProps) {
-  return <ProductCardReveal product={product} isWishlisted={isWishlisted} ready />;
+  return <ProductCardReveal product={product} isWishlisted={isWishlisted} />;
 }
