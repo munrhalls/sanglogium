@@ -1,6 +1,6 @@
 import { Suspense } from "react";
+import Image from "next/image";
 import { sanityFetch } from "@/sanity-cms/lib/client";
-import { ProductImage } from "@/app/components/features/products/ProductImage";
 
 const ROW_SIZE = 10;
 
@@ -46,12 +46,24 @@ async function ProductRow({
   return (
     <div className="grid grid-cols-5 sm:grid-cols-10 gap-2">
       {products.map((product) => {
+        const assetId = product.image?.asset?._id ?? null;
+        const lqip = product.image?.asset?.metadata?.lqip ?? null;
         const price = product.price_data ? (product.price_data.unit_amount / 100).toFixed(2) : null;
 
         return (
           <div key={product._id} className="flex flex-col gap-2">
-            <div className="aspect-square w-full overflow-hidden rounded bg-white">
-              <ProductImage image={product.image} alt={product.name} priority={priority} />
+            <div className="relative aspect-square w-full overflow-hidden rounded bg-neutral-100">
+              {assetId && (
+                <Image
+                  src={assetId}
+                  alt={product.name}
+                  fill
+                  sizes="(max-width: 768px) 50vw, 20vw"
+                  className="object-cover"
+                  priority={priority}
+                  {...(lqip ? { placeholder: "blur" as const, blurDataURL: lqip } : {})}
+                />
+              )}
             </div>
             <p className="text-sm">{product.name}</p>
             {price && <p className="text-sm text-neutral-500">${price}</p>}
