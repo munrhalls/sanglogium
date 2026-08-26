@@ -1,7 +1,5 @@
 export { ProductGrid } from './ProductGrid';
 export { ProductCard } from './ProductCard';
-export { ProductCardReveal } from './ProductCardReveal';
-export { ProductCardRow } from './ProductCardRow';
 export { ProductImage } from './ProductImage';
 export { ShopHeader } from './ShopHeader';
 export { ProductDetail } from './ProductDetail';

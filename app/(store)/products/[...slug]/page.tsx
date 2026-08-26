@@ -1,18 +1,15 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { notFound } from 'next/navigation';
 import { resolveSlugToId, unrollDescendantKeys } from '@/data/catalogue';
 import { getCategoryMetadata } from '@/sanity-cms/lib/products/getCategoryMetadata';
-import { getProductsCount, PER_PAGE, ROW_SIZE } from '@/sanity-cms/lib/products/getProductsSlice';
+import { getProductsByVfsKeys } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
+import { getWishlistProductIds } from '@/lib/wishlist';
 import { ShopHeader } from '@/app/components/features/products/ShopHeader';
 import { EmptyResults } from '@/app/components/features/products/EmptyResults';
 import { Pagination } from '@/app/components/features/products/Pagination';
-import { StreamedProductGrid } from './StreamedProductGrid';
+import { ProductGrid } from '@/app/components/features/products/ProductGrid';
 import Breadcrumbs from '@/app/components/ui/breadcrumbs/CategoryBreadcrumbs';
-import { FilterSidebar } from '@/app/components/features/filters/FilterSidebar';
-import { SortAndCountBar } from './SortAndCountBar';
-import { ProductGridURLSync } from './ProductGridURLSync';
 import { isFacetedQuery, canonicalCategoryPath } from '@/lib/catalogue/seo';
-import { resolveSort, parseFilterParam } from '@/lib/catalogue/sortParams';
 
 interface CategoryPageProps {
   params: Promise<{ slug: string[] }>;
@@ -31,35 +28,17 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
 
   const pageValue = Array.isArray(query.page) ? query.page[0] : query.page;
   const page = typeof pageValue === 'string' ? Number(pageValue) : 1;
-  const sortValue = Array.isArray(query.sort) ? query.sort[0] : query.sort;
-  const sort = resolveSort(sortValue).value;
-  const filters = parseFilterParam(query.f);
   const descendantKeys = unrollDescendantKeys(nodeId);
 
-  // Neither call depends on the other's result — both need only nodeId /
-  // descendantKeys, already resolved above — so they run concurrently rather
-  // than stacking their latency in front of the shell. In the rare not-found
-  // path the count result is simply discarded.
-  const [metadata, totalCount] = await Promise.all([
+  const [metadata, { products, totalCount }, wishlistProductIds] = await Promise.all([
     getCategoryMetadata(nodeId),
-    getProductsCount({ keys: descendantKeys }),
+    getProductsByVfsKeys({ keys: descendantKeys, page }),
+    getWishlistProductIds(),
   ]);
 
   if (!metadata) {
     notFound();
   }
-
-  const totalPages = totalCount > 0 ? Math.ceil(totalCount / PER_PAGE) : 0;
-  const effectivePage = totalPages > 0 ? Math.min(Math.max(page, 1), totalPages) : Math.max(1, page);
-  const isPageOutOfRange = totalPages > 0 && page > totalPages;
-  const pageStart = (effectivePage - 1) * PER_PAGE;
-  // Always reserve the full page's row count, even on a partial last page —
-  // this must match loading.tsx's fixed skeleton count exactly, or the grid
-  // shrinks the instant real data replaces the fallback. ProductRow pads any
-  // short/empty chunk with invisible placeholders to keep every row's height
-  // constant regardless of how many real products land in it.
-  const rowCount = totalCount === 0 ? 0 : Math.ceil(PER_PAGE / ROW_SIZE);
-  const filterKey = String(effectivePage);
 
   const categoryPath = slug.length > 1
     ? slug[0].split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
@@ -67,49 +46,22 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
 
   return (
     <div className="mx-auto w-full max-w-content px-4 md:px-8 pb-12">
-      <div className="grid grid-cols-1 lg-desktop:grid-cols-[240px_minmax(0,1fr)] lg-touch:grid-cols-[240px_minmax(0,1fr)] gap-8">
-      <FilterSidebar />
-      <main className="min-w-0 w-full pt-6">
-        <div className="pb-4">
-          <Breadcrumbs categoryParts={slug} />
-          <ShopHeader title={metadata.name} overline={categoryPath} />
-        </div>
+      <Breadcrumbs categoryParts={slug} />
+      <ShopHeader title={metadata.name} overline={categoryPath} />
 
-        <SortAndCountBar />
-        <ProductGridURLSync />
-
-        {totalCount === 0 ? (
-          <EmptyResults />
-        ) : (
-          <>
-            {isPageOutOfRange && (
-              <div
-                role="status"
-                data-testid="page-out-of-range"
-                className="mb-4 rounded-md border border-warning-500/40 bg-warning-500/10 px-4 py-3 type-body text-warning-500"
-              >
-                The page you requested is out of range. Showing the last page of results.
-              </div>
-            )}
-            <StreamedProductGrid
-              keys={descendantKeys}
-              sort={sort}
-              filters={filters}
-              pageStart={pageStart}
-              rowCount={rowCount}
-              filterKey={filterKey}
-            />
-          </>
-        )}
-
-        <Pagination
-          currentPage={effectivePage}
-          totalPages={totalPages}
-          totalCount={totalCount}
-          perPage={PER_PAGE}
-        />
-      </main>
-      </div>
+      {totalCount === 0 ? (
+        <EmptyResults />
+      ) : (
+        <>
+          <ProductGrid products={products} wishlistProductIds={wishlistProductIds} />
+          <Pagination
+            currentPage={page}
+            totalPages={Math.ceil(totalCount / 24)}
+            totalCount={totalCount}
+            perPage={24}
+          />
+        </>
+      )}
     </div>
   );
 }
