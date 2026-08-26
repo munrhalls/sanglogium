@@ -2,14 +2,16 @@ import React from 'react';
 import { notFound } from 'next/navigation';
 import { resolveSlugToId, unrollDescendantKeys } from '@/data/catalogue';
 import { getCategoryMetadata } from '@/sanity-cms/lib/products/getCategoryMetadata';
-import { getProductsByVfsKeys } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
+import { getProductsCount, getProductsChunk } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
 import { getWishlistProductIds } from '@/lib/wishlist';
 import { ShopHeader } from '@/app/components/features/products/ShopHeader';
 import { EmptyResults } from '@/app/components/features/products/EmptyResults';
 import { Pagination } from '@/app/components/features/products/Pagination';
-import { ProductGrid } from '@/app/components/features/products/ProductGrid';
+import { ChunkedProductGrid, CHUNK_SIZE } from '@/app/components/features/products/ChunkedProductGrid';
 import Breadcrumbs from '@/app/components/ui/breadcrumbs/CategoryBreadcrumbs';
 import { isFacetedQuery, canonicalCategoryPath } from '@/lib/catalogue/seo';
+
+const PER_PAGE = 24;
 
 interface CategoryPageProps {
   params: Promise<{ slug: string[] }>;
@@ -30,9 +32,9 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   const page = typeof pageValue === 'string' ? Number(pageValue) : 1;
   const descendantKeys = unrollDescendantKeys(nodeId);
 
-  const [metadata, { products, totalCount }, wishlistProductIds] = await Promise.all([
+  const [metadata, totalCount, wishlistProductIds] = await Promise.all([
     getCategoryMetadata(nodeId),
-    getProductsByVfsKeys({ keys: descendantKeys, page }),
+    getProductsCount({ keys: descendantKeys }),
     getWishlistProductIds(),
   ]);
 
@@ -44,6 +46,18 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
     ? slug[0].split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
     : undefined;
 
+  const totalPages = Math.ceil(totalCount / PER_PAGE);
+  const effectivePage = totalPages > 0 ? Math.min(Math.max(1, page || 1), totalPages) : Math.max(1, page || 1);
+  const pageStart = (effectivePage - 1) * PER_PAGE;
+
+  // Fire one chunk fetch per CHUNK_SIZE slice of the page, in parallel and
+  // unawaited — each is streamed in independently via ChunkedProductGrid's
+  // own Suspense boundaries.
+  const chunkPromises = Array.from(
+    { length: Math.ceil(PER_PAGE / CHUNK_SIZE) },
+    (_, i) => getProductsChunk({ keys: descendantKeys, offset: pageStart + i * CHUNK_SIZE, limit: CHUNK_SIZE }),
+  );
+
   return (
     <div className="mx-auto w-full max-w-content px-4 md:px-8 pb-12">
       <Breadcrumbs categoryParts={slug} />
@@ -53,12 +67,12 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
         <EmptyResults />
       ) : (
         <>
-          <ProductGrid products={products} wishlistProductIds={wishlistProductIds} />
+          <ChunkedProductGrid chunkPromises={chunkPromises} wishlistProductIds={wishlistProductIds} />
           <Pagination
-            currentPage={page}
-            totalPages={Math.ceil(totalCount / 24)}
+            currentPage={effectivePage}
+            totalPages={totalPages}
             totalCount={totalCount}
-            perPage={24}
+            perPage={PER_PAGE}
           />
         </>
       )}

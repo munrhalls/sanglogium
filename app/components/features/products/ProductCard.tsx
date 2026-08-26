@@ -12,11 +12,13 @@ import { centsToDisplay } from "@/lib/utils/price";
 interface ProductCardProps {
   product: Product;
   isWishlisted?: boolean;
+  priority?: boolean;
 }
 
 export function ProductCard({
   product,
   isWishlisted = false,
+  priority = false,
 }: ProductCardProps) {
   const displayPrice = centsToDisplay(product.price_data.unit_amount);
 
@@ -43,6 +45,7 @@ export function ProductCard({
               image={product.image}
               alt={product.name}
               className="group-hover:scale-110 transition-opacity duration-300 opacity-100"
+              priority={priority}
             />
           </figure>
           <div className="flex flex-grow flex-col gap-1 p-3">

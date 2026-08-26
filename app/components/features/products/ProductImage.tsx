@@ -14,6 +14,7 @@ interface ProductImageProps {
 export function ProductImage({ image, alt, className, priority = false }: ProductImageProps) {
   // Get the asset reference - Sanity can use either _ref or _id
   const assetRef = image?.asset?._ref || image?.asset?._id;
+  const lqip: string | null = image?.asset?.metadata?.lqip ?? null;
 
   if (!assetRef) {
     return (
@@ -33,6 +34,7 @@ export function ProductImage({ image, alt, className, priority = false }: Produc
         sizes="(max-width: 768px) 50vw, 25vw"
         className="object-contain mix-blend-multiply transition-transform duration-700"
         priority={priority}
+        {...(lqip ? { placeholder: 'blur' as const, blurDataURL: lqip } : {})}
       />
     </div>
   );

@@ -1,4 +1,6 @@
 export { ProductGrid } from './ProductGrid';
+export { ChunkedProductGrid, CHUNK_SIZE } from './ChunkedProductGrid';
+export { ProductChunk } from './ProductChunk';
 export { ProductCard } from './ProductCard';
 export { ProductImage } from './ProductImage';
 export { ShopHeader } from './ShopHeader';

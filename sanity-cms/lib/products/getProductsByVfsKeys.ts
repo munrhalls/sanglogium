@@ -32,6 +32,78 @@ export type Product = {
   availableStock: number;
 };
 
+const PRODUCT_PROJECTION = groq`{
+  _id,
+  name,
+  brand->{
+    _id,
+    name,
+    slug
+  },
+  price_data,
+  stock,
+  reservedStock,
+  "availableStock": stock - reservedStock,
+  image {
+    asset-> {
+      _id,
+      metadata { lqip }
+    }
+  },
+  slug {
+    current
+  },
+  catalogueLocationKeys
+}`;
+
+export interface GetProductsCountOptions {
+  keys: string[];
+}
+
+// Count-only fetch, used to size pagination without fetching any product rows.
+const getProductsCountFn = async ({ keys }: GetProductsCountOptions): Promise<number> => {
+  if (!keys.length) return 0;
+
+  const countQuery = groq`count(*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0])`;
+
+  try {
+    return (await sanityFetch<number>({ query: countQuery, params: { keys } })) ?? 0;
+  } catch (error) {
+    console.error(`[getProductsCount] Failed for ${keys.length} keys:`, error);
+    return 0;
+  }
+};
+
+export const getProductsCount = withCache(getProductsCountFn) as (
+  options: GetProductsCountOptions
+) => Promise<number>;
+
+export interface GetProductsChunkOptions {
+  keys: string[];
+  offset: number;
+  limit: number;
+}
+
+// Fetches one arbitrary offset/limit slice of products, for parallel per-chunk streaming.
+const getProductsChunkFn = async ({ keys, offset, limit }: GetProductsChunkOptions): Promise<Product[]> => {
+  if (!keys.length || limit <= 0) return [];
+
+  const end = offset + limit;
+  const chunkQuery = groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0] [${offset}...${end}] ${PRODUCT_PROJECTION}`;
+
+  try {
+    const products = await sanityFetch<Product[]>({ query: chunkQuery, params: { keys } });
+    return products ?? [];
+  } catch (error) {
+    console.error(`[getProductsChunk] Failed for ${keys.length} keys, offset ${offset}, limit ${limit}:`, error);
+    return [];
+  }
+};
+
+export const getProductsChunk = withCache(getProductsChunkFn) as (
+  options: GetProductsChunkOptions
+) => Promise<Product[]>;
+
 export interface GetProductsOptions {
   keys: string[];
   sort?: string;

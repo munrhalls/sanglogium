@@ -1,12 +1,14 @@
 import React from 'react';
 import { getAllLeafKeys } from '@/data/catalogue';
-import { getProductsByVfsKeys } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
+import { getProductsCount, getProductsChunk } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
 import { getWishlistProductIds } from '@/lib/wishlist';
 import { ShopHeader } from '@/app/components/features/products/ShopHeader';
 import { EmptyResults } from '@/app/components/features/products/EmptyResults';
 import { Pagination } from '@/app/components/features/products/Pagination';
-import { ProductGrid } from '@/app/components/features/products/ProductGrid';
+import { ChunkedProductGrid, CHUNK_SIZE } from '@/app/components/features/products/ChunkedProductGrid';
 import { isFacetedQuery } from '@/lib/catalogue/seo';
+
+const PER_PAGE = 24;
 
 interface AllProductsPageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -18,10 +20,19 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
   const page = typeof pageValue === 'string' ? Number(pageValue) : 1;
   const allKeys = getAllLeafKeys();
 
-  const [{ products, totalCount }, wishlistProductIds] = await Promise.all([
-    getProductsByVfsKeys({ keys: allKeys, page }),
+  const [totalCount, wishlistProductIds] = await Promise.all([
+    getProductsCount({ keys: allKeys }),
     getWishlistProductIds(),
   ]);
+
+  const totalPages = Math.ceil(totalCount / PER_PAGE);
+  const effectivePage = totalPages > 0 ? Math.min(Math.max(1, page || 1), totalPages) : Math.max(1, page || 1);
+  const pageStart = (effectivePage - 1) * PER_PAGE;
+
+  const chunkPromises = Array.from(
+    { length: Math.ceil(PER_PAGE / CHUNK_SIZE) },
+    (_, i) => getProductsChunk({ keys: allKeys, offset: pageStart + i * CHUNK_SIZE, limit: CHUNK_SIZE }),
+  );
 
   return (
     <div className="mx-auto w-full max-w-content px-4 md:px-8 pb-12">
@@ -31,12 +42,12 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
         <EmptyResults />
       ) : (
         <>
-          <ProductGrid products={products} wishlistProductIds={wishlistProductIds} />
+          <ChunkedProductGrid chunkPromises={chunkPromises} wishlistProductIds={wishlistProductIds} />
           <Pagination
-            currentPage={page}
-            totalPages={Math.ceil(totalCount / 24)}
+            currentPage={effectivePage}
+            totalPages={totalPages}
             totalCount={totalCount}
-            perPage={24}
+            perPage={PER_PAGE}
           />
         </>
       )}
