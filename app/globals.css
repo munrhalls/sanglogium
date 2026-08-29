@@ -228,6 +228,31 @@ input[type="range"]::-moz-range-thumb {
   animation: fadeOut 3s forwards;
 }
 
+/* Streaming POC — calm blur-to-sharp image arrival (issue sang-logium-7ao).
+   CSS-only: the real image eases in over an always-visible LQIP underlay when
+   its element first paints. `both` holds the resolved state; if animations are
+   unavailable the image simply shows at full opacity (never a blank tile). */
+@keyframes spoc-image-in {
+  from {
+    opacity: 0;
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+.spoc-image-in {
+  animation: spoc-image-in 320ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spoc-image-in {
+    animation: none;
+  }
+}
+
 /* Section Header Anchor — decorative line prefix */
 .section-header-anchor {
   position: relative;
