@@ -10,6 +10,24 @@ Never run expensive or heavy commands (`npm install`, `npm run build`, `npm run 
 
 CRITICAL — ONE COMMAND AT A TIME, NO PARALLEL FALLBACKS: Never launch a "real" command and a fallback/duplicate command in parallel. Run one command, wait for its result, then decide the next step. If you are unsure whether a CLI is installed, verify first with a single `which` / `Get-Command` / `--version` / `--help` check — do not launch a fallback alongside the main command. Preemptive parallel fallbacks waste time, create race conditions, and force the user to cancel redundant work.
 
+## Response Formatting
+
+Every answer to the user — and every subagent report — must be presented in **balanced chunks** that the human visual system can parse quickly. Never a wall of text.
+
+- **Block size:** 1–3 sentences per block, with a blank line between blocks.
+- **Bullets:** use a bulleted list when presenting 3+ parallel items; otherwise use prose blocks, not bullets.
+- **Headings:** only when the answer spans 2+ distinct topics.
+- **"One paragraph" means volume, not format.** Keep it to roughly paragraph length, but still split it into sentence-level dashed or blank-line-separated lines.
+- **Floor — do not over-chunk:** a 1–2 sentence answer stays as one plain block. Balanced, not shredded.
+
+When spawning a subagent, tell it to format its report per this section.
+
+## Lessons store
+
+`_project/LESSONS.md` — concrete traps that already cost real time on this repo.
+Worth a look before non-trivial work in an area it may cover. Add to it **only** when a
+mistake cost >15 min or a wrong turn and you can write a specific trigger. Keep it lean.
+
 ## Build & Test
 
 _Add your build and test commands here_

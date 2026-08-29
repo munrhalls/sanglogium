@@ -234,7 +234,9 @@ input[type="range"]::-moz-range-thumb {
    unavailable the image simply shows at full opacity (never a blank tile). */
 @keyframes spoc-image-in {
   from {
-    opacity: 0;
+    /* Starts partly visible so the fade eases the sharp image in over
+       next/image's own blur placeholder without washing the placeholder out. */
+    opacity: 0.35;
     filter: blur(8px);
   }
   to {

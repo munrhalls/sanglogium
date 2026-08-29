@@ -54,23 +54,15 @@ async function ProductRow({
           <div key={product._id} className="flex flex-col gap-2">
             <div className="relative aspect-square w-full overflow-hidden rounded bg-neutral-100">
               {assetId && (
-                <>
-                  {lqip && (
-                    <div
-                      aria-hidden
-                      className="absolute inset-0 bg-cover bg-center"
-                      style={{ backgroundImage: `url(${lqip})` }}
-                    />
-                  )}
-                  <Image
-                    src={assetId}
-                    alt={product.name}
-                    fill
-                    sizes="(max-width: 768px) 50vw, 20vw"
-                    className="object-cover spoc-image-in"
-                    priority={priority}
-                  />
-                </>
+                <Image
+                  src={assetId}
+                  alt={product.name}
+                  fill
+                  sizes="(max-width: 768px) 50vw, 20vw"
+                  className="object-cover spoc-image-in"
+                  priority={priority}
+                  {...(lqip ? { placeholder: "blur" as const, blurDataURL: lqip } : {})}
+                />
               )}
             </div>
             <p className="text-sm">{product.name}</p>
