@@ -1,8 +1,31 @@
 import { Suspense } from "react";
-import { RevealImage } from "./RevealImage";
+import Image from "next/image";
 import { sanityFetch } from "@/sanity-cms/lib/client";
 
 const ROW_SIZE = 10;
+
+/* Plain text in the server output — not a React component, so it cannot
+   hydrate, cannot throw, and cannot collapse the row-by-row streaming.
+   It does what the isolated harness did: once a tile has real pixels
+   (load event, or already-complete by the time we look), wait two frames,
+   then add `-done` so the CSS blur→sharp transition runs. Rows arrive after
+   this script, hence the MutationObserver. */
+const REVEAL_SCRIPT = `(function(){
+var SEL='img.spoc-reveal';
+function done(img){requestAnimationFrame(function(){requestAnimationFrame(function(){img.classList.add('spoc-reveal-done');});});}
+function arm(img){
+if(img.getAttribute('data-spoc-armed'))return;
+img.setAttribute('data-spoc-armed','1');
+if(img.complete&&img.naturalWidth>0){done(img);return;}
+img.addEventListener('load',function(){done(img);},{once:true});
+img.addEventListener('error',function(){done(img);},{once:true});
+}
+function scan(){var l=document.querySelectorAll(SEL);for(var i=0;i<l.length;i++)arm(l[i]);}
+scan();
+try{new MutationObserver(scan).observe(document.documentElement,{childList:true,subtree:true});}catch(e){}
+document.addEventListener('DOMContentLoaded',scan);
+window.addEventListener('load',scan);
+})();`;
 
 interface ChunkProduct {
   _id: string;
@@ -61,12 +84,12 @@ async function ProductRow({
           <div key={product._id} className="flex flex-col gap-2">
             <div className="rounded relative aspect-square w-full overflow-hidden bg-neutral-100">
               {assetId && (
-                <RevealImage
+                <Image
                   src={assetId}
                   alt={product.name}
                   fill
                   sizes="(max-width: 768px) 50vw, 20vw"
-                  className="object-cover"
+                  className="object-cover spoc-reveal"
                   priority={priority}
                   {...(lqip
                     ? { placeholder: "blur" as const, blurDataURL: lqip }
@@ -90,6 +113,8 @@ export default function StreamingPocPage() {
 
   return (
     <div className="space-y-8 p-6">
+      <script dangerouslySetInnerHTML={{ __html: REVEAL_SCRIPT }} />
+
       <h1 className="text-xl font-bold">Streaming POC</h1>
 
       <Suspense fallback={<RowSkeleton />}>
