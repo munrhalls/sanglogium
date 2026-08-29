@@ -33,6 +33,7 @@ export function ProductImage({ image, alt, className, priority = false }: Produc
         fill
         sizes="(max-width: 768px) 50vw, 25vw"
         className="object-contain mix-blend-multiply transition-transform duration-700"
+        objectFit="contain"
         priority={priority}
         {...(lqip ? { placeholder: 'blur' as const, blurDataURL: lqip } : {})}
       />
