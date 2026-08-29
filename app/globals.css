@@ -228,30 +228,27 @@ input[type="range"]::-moz-range-thumb {
   animation: fadeOut 3s forwards;
 }
 
-/* Streaming POC — calm blur-to-sharp image arrival (issue sang-logium-7ao).
-   CSS-only: the real image eases in over an always-visible LQIP underlay when
-   its element first paints. `both` holds the resolved state; if animations are
-   unavailable the image simply shows at full opacity (never a blank tile). */
-@keyframes spoc-image-in {
-  from {
-    /* Starts partly visible so the fade eases the sharp image in over
-       next/image's own blur placeholder without washing the placeholder out. */
-    opacity: 0.35;
-    filter: blur(8px);
-  }
-  to {
-    opacity: 1;
-    filter: blur(0);
-  }
+/* Streaming POC — calm blur-to-sharp image arrival (issue sang-logium-7j8).
+   `.spoc-reveal` is in the SSR HTML, so the real bitmap is already blurred the
+   first frame the browser paints it — that native paint is the pop this removes.
+   RevealImage adds `-done` on load and the transition eases it sharp. Blur, not
+   opacity: the LQIP placeholder is a background-image on the same <img>, so
+   opacity: 0 would blank the tile; without JS it stays blurry but visible. */
+.spoc-reveal {
+  filter: blur(12px);
+  transition: filter 340ms ease-out;
 }
 
-.spoc-image-in {
-  animation: spoc-image-in 320ms ease-out both;
+.spoc-reveal-done {
+  filter: blur(0);
 }
 
+/* Reduced motion still gets the blur — a blur-to-sharp resolve is not motion,
+   and `filter: none` here killed the effect outright on any machine with the
+   preference on. Just shorten the ease. */
 @media (prefers-reduced-motion: reduce) {
-  .spoc-image-in {
-    animation: none;
+  .spoc-reveal {
+    transition: filter 150ms ease-out;
   }
 }
 

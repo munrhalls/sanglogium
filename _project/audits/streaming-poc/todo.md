@@ -48,3 +48,16 @@ class added in `onLoad`. Blast radius = one new file + one import swap in
   (was `0`) so the fade eases the sharp image in without washing out the placeholder.
   Verified: 0 underlay divs, smooth blur placeholders present, grid/container classes
   unchanged, no console errors, progressive top-to-bottom load intact.
+
+## Later
+
+- **Generalize before the next attempt — this is a TYPE of problem, not a one-off.**
+  A small temporal-UX piece that must land in order/harmony with the streaming
+  gradual-reveal UX already solved. Study proven progressive-image-reveal solutions
+  (Everlane / B&O lazysizes class-toggle, the plaiceholder pattern, how the Next
+  team itself frames the open request), extract the *principle* not the snippet,
+  then stress-test that understanding against this exact stack — RSC streaming +
+  `next/image` painting the real bitmap natively on `load` before any JS, on a dev
+  server where every image beats hydration. Four attempts (7ao, script island,
+  RevealImage v1, RevealImage v2) have failed the same way: a load-time class
+  toggle with no model of why the reference version works.

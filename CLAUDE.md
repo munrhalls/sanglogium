@@ -22,6 +22,18 @@ Every answer to the user — and every subagent report — must be presented in 
 
 When spawning a subagent, tell it to format its report per this section.
 
+## Debugging method
+
+**Ephemeral isolated harness first.** When a question is "does this CSS / browser / timing
+primitive itself behave this way?" (a transition firing, a media-query guard, `onload`
+vs. hydration order, a layout quirk), do NOT investigate it inside the running app where
+framework timing confounds every reading. Write a throwaway single-file `.html` — no
+build, no deps — that reproduces only the mechanism, log `performance.now()` events, open
+it in the real browser, read the answer. Minutes to build, clean yes/no, runs on the
+actual test machine. Keep it next to the relevant audit/issue notes, delete it when the
+issue closes. See `_project/LESSONS.md` L05 (and L04 for its counterpart: don't watch
+timing bugs happen via browser automation).
+
 ## Lessons store
 
 `_project/LESSONS.md` — concrete traps that already cost real time on this repo.

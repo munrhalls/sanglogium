@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import Image from "next/image";
+import { RevealImage } from "./RevealImage";
 import { sanityFetch } from "@/sanity-cms/lib/client";
 
 const ROW_SIZE = 10;
@@ -9,7 +9,9 @@ interface ChunkProduct {
   name: string;
   slug: { current: string } | null;
   price_data: { unit_amount: number } | null;
-  image: { asset: { _id: string; metadata: { lqip: string | null } | null } | null } | null;
+  image: {
+    asset: { _id: string; metadata: { lqip: string | null } | null } | null;
+  } | null;
 }
 
 function fetchProductsChunk(offset: number, limit: number) {
@@ -26,9 +28,12 @@ function fetchProductsChunk(offset: number, limit: number) {
 
 function RowSkeleton() {
   return (
-    <div className="grid grid-cols-5 sm:grid-cols-10 gap-2">
+    <div className="grid grid-cols-5 gap-2 sm:grid-cols-10">
       {Array.from({ length: ROW_SIZE }).map((_, i) => (
-        <div key={i} className="aspect-square w-full rounded bg-neutral-200 animate-pulse" />
+        <div
+          key={i}
+          className="rounded aspect-square w-full animate-pulse bg-neutral-200"
+        />
       ))}
     </div>
   );
@@ -44,24 +49,28 @@ async function ProductRow({
   const products = await promise;
 
   return (
-    <div className="grid grid-cols-5 sm:grid-cols-10 gap-2">
+    <div className="grid grid-cols-5 gap-2 sm:grid-cols-10">
       {products.map((product) => {
         const assetId = product.image?.asset?._id ?? null;
         const lqip = product.image?.asset?.metadata?.lqip ?? null;
-        const price = product.price_data ? (product.price_data.unit_amount / 100).toFixed(2) : null;
+        const price = product.price_data
+          ? (product.price_data.unit_amount / 100).toFixed(2)
+          : null;
 
         return (
           <div key={product._id} className="flex flex-col gap-2">
-            <div className="relative aspect-square w-full overflow-hidden rounded bg-neutral-100">
+            <div className="rounded relative aspect-square w-full overflow-hidden bg-neutral-100">
               {assetId && (
-                <Image
+                <RevealImage
                   src={assetId}
                   alt={product.name}
                   fill
                   sizes="(max-width: 768px) 50vw, 20vw"
-                  className="object-cover spoc-image-in"
+                  className="object-cover"
                   priority={priority}
-                  {...(lqip ? { placeholder: "blur" as const, blurDataURL: lqip } : {})}
+                  {...(lqip
+                    ? { placeholder: "blur" as const, blurDataURL: lqip }
+                    : {})}
                 />
               )}
             </div>
@@ -80,7 +89,7 @@ export default function StreamingPocPage() {
   const row3Promise = fetchProductsChunk(ROW_SIZE * 2, ROW_SIZE);
 
   return (
-    <div className="p-6 space-y-8">
+    <div className="space-y-8 p-6">
       <h1 className="text-xl font-bold">Streaming POC</h1>
 
       <Suspense fallback={<RowSkeleton />}>

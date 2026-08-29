@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import Link from "next/link";
 import { ProductImage } from "./ProductImage";
@@ -44,7 +42,7 @@ export function ProductCard({
             <ProductImage
               image={product.image}
               alt={product.name}
-              className="group-hover:scale-110 transition-opacity duration-300 opacity-100"
+              className="opacity-100 transition-opacity duration-300 group-hover:scale-110"
               priority={priority}
             />
           </figure>

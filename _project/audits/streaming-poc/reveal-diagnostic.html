@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>blur reveal diagnostic</title>
+<style>
+  body { font-family: system-ui, sans-serif; margin: 2rem; background: #111; color: #eee; line-height: 1.4; }
+  h1 { font-size: 1.15rem; }
+  h2 { margin: 2rem 0 .4rem; font-size: .95rem; color: #9cf; }
+  .row { display: flex; gap: 1.25rem; flex-wrap: wrap; align-items: flex-start; }
+  .cell { width: 240px; font-size: .8rem; }
+  .box, .cell img { width: 240px; height: 160px; object-fit: cover; display: block; background: #333; border-radius: 8px; }
+
+  /* ---- THE MECHANISM UNDER TEST ---- */
+  .blur        { filter: blur(14px); transition: filter 600ms ease-out; }
+  .blur.done   { filter: blur(0); }
+
+  .fade        { opacity: 0; transition: opacity 600ms ease-out; }
+  .fade.done   { opacity: 1; }
+
+  /* same as .blur, but with the reduce-motion guard we have been shipping */
+  .guarded      { filter: blur(14px); transition: filter 600ms ease-out; }
+  .guarded.done { filter: blur(0); }
+  @media (prefers-reduced-motion: reduce) {
+    .guarded, .guarded.done { filter: none; transition: none; }
+  }
+
+  button { margin-top: .5rem; padding: .4rem .8rem; cursor: pointer; }
+  #rm { font-size: 1.1rem; padding: .6rem .8rem; border-radius: 6px; display: inline-block; }
+  pre { background: #000; padding: 1rem; border-radius: 8px; max-height: 240px; overflow: auto; font-size: 12px; white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<h1>Blur&rarr;sharp reveal &mdash; isolated diagnostic (plain HTML, no Next, no build)</h1>
+<div id="rm">checking&hellip;</div>
+
+<h2>Test A &mdash; does a CSS transition fire on a class flip? (click each button, watch the box)</h2>
+<div class="row">
+  <div class="cell">
+    <div class="box blur" id="a1"></div>
+    filter blur, unguarded
+    <button onclick="flip('a1')">flip .done</button>
+  </div>
+  <div class="cell">
+    <div class="box fade" id="a2"></div>
+    opacity fade, unguarded
+    <button onclick="flip('a2')">flip .done</button>
+  </div>
+  <div class="cell">
+    <div class="box guarded" id="a3"></div>
+    filter blur + the reduce-motion guard we ship
+    <button onclick="flip('a3')">flip .done</button>
+  </div>
+</div>
+
+<h2>Test B &mdash; end to end: real Sanity image, class flipped in its onload (cache-busted each run)</h2>
+<div class="row">
+  <div class="cell"><img class="blur" id="b1" alt="" />unguarded</div>
+  <div class="cell"><img class="guarded" id="b2" alt="" />guarded</div>
+</div>
+<button onclick="loadB()">load / reload images</button>
+
+<h2>Event log</h2>
+<pre id="log"></pre>
+
+<script>
+  var logEl = document.getElementById('log');
+  function log(m){ logEl.textContent += '[' + (performance.now()/1000).toFixed(2) + 's] ' + m + '\n'; }
+
+  var rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var rmEl = document.getElementById('rm');
+  rmEl.textContent = 'prefers-reduced-motion: reduce  ->  ' + (rm ? 'TRUE  (your machine)' : 'false');
+  rmEl.style.background = rm ? '#733' : '#264';
+  log('loaded. reduce-motion = ' + rm);
+
+  function watch(el, label){
+    el.addEventListener('transitionstart', function(){ log(label + ': transitionstart  -- REAL animation running'); }, { once: true });
+    el.addEventListener('transitionend',   function(){ log(label + ': transitionend'); }, { once: true });
+  }
+
+  function flip(id){
+    var el = document.getElementById(id);
+    var before = getComputedStyle(el).filter + ' / opacity ' + getComputedStyle(el).opacity;
+    watch(el, id);
+    el.classList.add('done');
+    requestAnimationFrame(function(){
+      var after = getComputedStyle(el).filter + ' / opacity ' + getComputedStyle(el).opacity;
+      log(id + ': ' + before + '  ->  ' + after);
+      log(id + ': if no "transitionstart" line appears, the transition was skipped/blocked (snap = pop).');
+    });
+  }
+
+  var SRC = 'https://cdn.sanity.io/images/2tdmkpky/production/73c0949b8e7f7e88fc133e299bd233b79ef0f400-1200x900.png?w=600&q=75&auto=format';
+  function loadB(){
+    ['b1','b2'].forEach(function(id){
+      var img = document.getElementById(id);
+      img.classList.remove('done');
+      watch(img, id);
+      img.onload = function(){
+        log(id + ': onload, complete=' + img.complete);
+        requestAnimationFrame(function(){ requestAnimationFrame(function(){
+          img.classList.add('done');
+          log(id + ': added .done');
+        }); });
+      };
+      img.src = SRC + '&cb=' + Date.now();
+    });
+  }
+  loadB();
+</script>
+</body>
+</html>
