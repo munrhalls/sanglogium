@@ -35,7 +35,7 @@ export function ProductCard({
         />
 
         <Link href={`/product/${product.slug.current}`} className="block">
-          <figure className="relative flex aspect-[16/9] w-full items-center justify-center overflow-hidden bg-surface-productImage p-4">
+          <figure className="relative flex aspect-[16/9] w-full items-center justify-center overflow-hidden bg-surface-productImage">
             {product.brand?.name && (
               <span className="type-caption absolute left-3 top-3 z-10 text-brand-900">
                 {product.brand.name}
