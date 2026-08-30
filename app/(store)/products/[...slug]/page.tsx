@@ -8,6 +8,8 @@ import { ShopHeader } from '@/app/components/features/products/ShopHeader';
 import { EmptyResults } from '@/app/components/features/products/EmptyResults';
 import { Pagination } from '@/app/components/features/products/Pagination';
 import { ChunkedProductGrid, CHUNK_SIZE } from '@/app/components/features/products/ChunkedProductGrid';
+import { FilterSidebar } from '@/app/components/features/filters/FilterSidebar';
+import { SortBar } from '@/app/components/features/filters/SortBar';
 import Breadcrumbs from '@/app/components/ui/breadcrumbs/CategoryBreadcrumbs';
 import { isFacetedQuery, canonicalCategoryPath } from '@/lib/catalogue/seo';
 
@@ -66,15 +68,19 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
       {totalCount === 0 ? (
         <EmptyResults />
       ) : (
-        <>
-          <ChunkedProductGrid chunkPromises={chunkPromises} wishlistProductIds={wishlistProductIds} />
-          <Pagination
-            currentPage={effectivePage}
-            totalPages={totalPages}
-            totalCount={totalCount}
-            perPage={PER_PAGE}
-          />
-        </>
+        <div className="flex flex-col lg-touch:flex-row lg-desktop:flex-row gap-8">
+          <FilterSidebar />
+          <div className="min-w-0 flex-1">
+            <SortBar totalCount={totalCount} />
+            <ChunkedProductGrid chunkPromises={chunkPromises} wishlistProductIds={wishlistProductIds} />
+            <Pagination
+              currentPage={effectivePage}
+              totalPages={totalPages}
+              totalCount={totalCount}
+              perPage={PER_PAGE}
+            />
+          </div>
+        </div>
       )}
     </div>
   );
