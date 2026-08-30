@@ -1,0 +1,141 @@
+// F1 — the single shared URL-param contract for catalogue filters & sorting.
+//
+// This module is the ONE source of truth for every filter/sort query-param key,
+// its value type, its default, and its parse/serialize rules. F2–F6 (the visible
+// controls) and V1/V2 (the surfaces) import their parsers from here so the URL
+// vocabulary can never drift between producers and consumers.
+//
+// HEADLESS: no JSX, no data access. It does not know about the product grid,
+// product data, result counts, or streaming. The Product Grid observes URL
+// changes independently via lib/catalogue/urlChangeEvents.ts (`locationchange`);
+// the controls never call the grid.
+//
+// This is a deliberate fresh design for the client-only display-sync needs of the
+// F-layer. The deleted lib/catalogue/{filterParams,sortParams,searchParams}.ts
+// encoded the OLD removed server-driven system (compound `?f=brand:x` syntax, a
+// server-side sort allowlist, `shallow:false` + `router.replace` to force an RSC
+// refetch) — do NOT revive their schema or routing model.
+//
+// ─────────────────────────────────────────────────────────────────────────────
+// CONTRACT
+// ─────────────────────────────────────────────────────────────────────────────
+//
+// Param keys (chosen to never clash with params already parsed on the catalogue
+// routes: `page` on /products and /products/[...slug], `q` on /search, `drawer`
+// globally):
+//
+//   sort      — string, one of SORT_OPTIONS values. Default "featured".
+//   minPrice  — integer, DOLLARS (not cents). Absent = no lower bound.
+//   maxPrice  — integer, DOLLARS (not cents). Absent = no upper bound.
+//   inStock   — boolean. Default false ("show everything").
+//   brand     — array of brand slugs, comma-separated. Default [] (no filter).
+//   category  — array of category keys, comma-separated. Default [] (no filter).
+//               `brand` and `category` are the two checkbox facet groups F5
+//               ships; any further facet group follows the same array-of-string
+//               shape with its own key.
+//
+// Clean-URL rule: a param sitting at its default NEVER appears in the URL. Every
+// parser sets an explicit default and relies on nuqs `clearOnDefault` (on by
+// default in v2) — `sort=featured`, `inStock=false`, `brand=` (empty) and
+// `category=` (empty) all serialize to the key being absent. `minPrice` /
+// `maxPrice` have no "default value": absent simply means unbounded, so a null
+// write removes them. This keeps faceted URLs clean and keeps
+// lib/catalogue/seo.ts `isFacetedQuery` honest (it keys off `page`, which this
+// layer leaves alone except via the page-reset helper below).
+//
+// Price unit: the URL carries whole DOLLARS. Product `price_data.unit_amount` is
+// cents and the slider UI works in dollars (lib/catalogue/priceBounds.ts,
+// lib/utils/price.ts). F3 converts at the edges; the URL never carries cents.
+//
+// History mode: discrete controls (sort, inStock, brand, category) use
+// `history: "push"` so a single change is individually reversible with the
+// browser Back button (and re-applied with Forward). The price range is a
+// continuous drag — F3 owns its debounce and should write with
+// `history: "replace"` so a drag does not flood the history stack. Both use
+// `shallow: true`: this layer is client-only display sync and must NOT trigger a
+// server round-trip.
+//
+// Param preservation: consumers write through nuqs, which MERGES into the
+// existing query string — unrelated params (`?q=` from search, `?page=` from
+// pagination) are always left untouched.
+//
+// Page reset: a filter/sort change invalidates the current page number. Consumers
+// call `pageResetOnFilterChange` (see below) alongside their own setter so
+// changing any filter/sort sends the user back to page 1.
+
+import {
+  parseAsArrayOf,
+  parseAsBoolean,
+  parseAsInteger,
+  parseAsString,
+  parseAsStringLiteral,
+} from "nuqs";
+import { createLoader, createSerializer } from "nuqs/server";
+
+/** Fixed sort allowlist. `value` goes in the URL; `label` is for the controls. */
+export const SORT_OPTIONS = [
+  { value: "featured", label: "Featured" },
+  { value: "price-asc", label: "Price: Low to High" },
+  { value: "price-desc", label: "Price: High to Low" },
+  { value: "newest", label: "Newest" },
+] as const;
+
+export type SortValue = (typeof SORT_OPTIONS)[number]["value"];
+
+export const SORT_DEFAULT: SortValue = "featured";
+
+const SORT_VALUES = SORT_OPTIONS.map((o) => o.value) as unknown as SortValue[];
+
+/**
+ * The parser map — the single source of truth. Imported by both the server
+ * `loadFilterSort` loader and every client control, so a deep link and the
+ * control that reads it can never disagree.
+ */
+export const filterSortParsers = {
+  // Junk / unknown values fall through to the default (parseAsStringLiteral
+  // returns null for anything off the list; `.withDefault` then supplies
+  // "featured"). Never written back.
+  sort: parseAsStringLiteral(SORT_VALUES).withDefault(SORT_DEFAULT),
+
+  // Dollars, integer. No default: absent = unbounded. Non-numeric → null.
+  minPrice: parseAsInteger,
+  maxPrice: parseAsInteger,
+
+  // Junk → false (parseAsBoolean only matches "true"/"false").
+  inStock: parseAsBoolean.withDefault(false),
+
+  // Comma-separated slugs, stable insertion order. Empty → key absent.
+  brand: parseAsArrayOf(parseAsString).withDefault([]),
+  category: parseAsArrayOf(parseAsString).withDefault([]),
+};
+
+/** Every key this contract owns — useful for "clear all" and chip enumeration. */
+export const FILTER_SORT_KEYS = Object.keys(filterSortParsers) as Array<
+  keyof typeof filterSortParsers
+>;
+
+/**
+ * Shared nuqs options for the discrete controls (sort, inStock, brand,
+ * category). F3's price control overrides `history` to "replace".
+ */
+export const FILTER_SORT_URL_OPTIONS = {
+  history: "push",
+  shallow: true,
+  scroll: false,
+} as const;
+
+/** The pagination param a filter/sort change must reset. */
+export const PAGE_PARAM_KEY = "page";
+
+/**
+ * Server loader: parse the catalogue filter/sort state out of a Next.js
+ * `searchParams` object (or a URLSearchParams / query string). Matches
+ * `filterSortParsers` exactly, so SSR and the first client render agree.
+ */
+export const loadFilterSort = createLoader(filterSortParsers);
+
+/**
+ * Serialize a (partial) filter/sort state back to a query string, honouring the
+ * clean-URL rule. Pass a base URL/searchParams to merge into an existing query.
+ */
+export const serializeFilterSort = createSerializer(filterSortParsers);

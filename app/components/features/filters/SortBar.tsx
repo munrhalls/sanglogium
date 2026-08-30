@@ -15,7 +15,10 @@ export function SortBar({ totalCount }: { totalCount: number }) {
       <span className="type-caption text-text-caption">
         {totalCount} {totalCount === 1 ? 'product' : 'products'}
       </span>
-      <SortDropdown />
+      {/* Sort lives in the mobile controls row below lg; here only on desktop. */}
+      <div className="hidden lg-touch:block lg-desktop:block">
+        <SortDropdown />
+      </div>
     </div>
   );
 }

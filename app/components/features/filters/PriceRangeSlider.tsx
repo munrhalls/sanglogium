@@ -1,12 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   filterSectionHeaderRow,
   filterSectionHeaderLabel,
   filterStateActive,
   filterStateInactive,
 } from "./FilterSidebar";
+import { useFilterParam } from "@/app/hooks/nuqs/useFilterSort";
+import { DEFAULT_PRICE_CEILING } from "@/lib/catalogue/priceBounds";
 
 /**
  * Price range slider — and the owner of the shared slider pattern.
@@ -17,7 +19,12 @@ import {
  * draggable handles. Other filter sliders import these rather than restating
  * any of it.
  *
- * Static surface only: bounds are hardcoded, state is cosmetic, no URL access.
+ * F3: `PriceRangeSlider` (bottom of the file) is the URL-wired control. Its
+ * only job is (a) on interaction, write the correct value to F1's
+ * `minPrice` / `maxPrice` params (whole dollars, debounced, `history:"replace"`);
+ * (b) on any URL change — first load, deep link, Back/Forward — render its
+ * handles to match. It never queries product data or result counts; the
+ * slider's `min` / `max` bounds arrive as props from page composition.
  */
 
 const TRACK_ACTIVE_FILL = "#D4AF37"; // accent-500
@@ -152,36 +159,122 @@ export function DualRangeSlider({
   );
 }
 
-const PRICE_MIN = 0;
-const PRICE_MAX = 2000;
-const PRICE_SELECTED_MIN = 250;
-const PRICE_SELECTED_MAX = 1200;
+/** ms to wait after the last drag tick before the resting value hits the URL. */
+const PRICE_WRITE_DEBOUNCE_MS = 300;
 
-export function PriceRangeSlider() {
-  const [minValue, setMinValue] = useState(PRICE_SELECTED_MIN);
-  const [maxValue, setMaxValue] = useState(PRICE_SELECTED_MAX);
+/**
+ * Coerce a raw URL value to a usable handle position: null / non-numeric →
+ * `fallback` (the handle rests at its bound); out-of-range → clamped to
+ * `[min, max]` so a hand-edited URL can never throw or push a handle off-track.
+ */
+function clampToBounds(
+  value: number | null,
+  min: number,
+  max: number,
+  fallback: number,
+): number {
+  if (value == null || Number.isNaN(value)) return fallback;
+  return Math.max(min, Math.min(max, value));
+}
 
-  const atDefaults = minValue === PRICE_MIN && maxValue === PRICE_MAX;
+export function PriceRangeSlider({
+  min = 0,
+  max = DEFAULT_PRICE_CEILING,
+}: {
+  /** Slider bounds in whole dollars — supplied by page composition (F1's
+   *  `resolvePriceBounds` at the call site), never computed here. */
+  min?: number;
+  max?: number;
+} = {}) {
+  // history:"replace" — a drag is one continuous gesture, not N Back-stack
+  // entries. Unit is whole dollars, matching F1's URL contract.
+  const [minPrice, setMinPrice] = useFilterParam("minPrice", { history: "replace" });
+  const [maxPrice, setMaxPrice] = useFilterParam("maxPrice", { history: "replace" });
+
+  // URL → handle positions. Clamp to bounds, and enforce min ≤ max on read so a
+  // crossed / swapped URL still renders sanely.
+  const urlMin = clampToBounds(minPrice, min, max, min);
+  const urlMax = clampToBounds(maxPrice, min, max, max);
+  const displayMin = Math.min(urlMin, urlMax);
+  const displayMax = Math.max(urlMin, urlMax);
+
+  // Local mirror so the handles track the pointer instantly; the URL catches up
+  // on a trailing debounce.
+  const [localMin, setLocalMin] = useState(displayMin);
+  const [localMax, setLocalMax] = useState(displayMax);
+
+  // Re-sync whenever the URL changes from outside this component — first load,
+  // deep link, Back/Forward, Clear all.
+  useEffect(() => {
+    setLocalMin(displayMin);
+    setLocalMax(displayMax);
+  }, [displayMin, displayMax]);
+
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const clearTimer = useCallback(() => {
+    if (timer.current) {
+      clearTimeout(timer.current);
+      timer.current = null;
+    }
+  }, []);
+  useEffect(() => clearTimer, [clearTimer]);
+
+  // Last-write-wins: each drag tick reschedules the write, so only the resting
+  // value lands in the address bar. A handle sitting on its bound clears its
+  // param (clean-URL rule).
+  const commit = useCallback(
+    (nextMin: number, nextMax: number) => {
+      clearTimer();
+      timer.current = setTimeout(() => {
+        setMinPrice(nextMin <= min ? null : nextMin);
+        setMaxPrice(nextMax >= max ? null : nextMax);
+      }, PRICE_WRITE_DEBOUNCE_MS);
+    },
+    [clearTimer, setMinPrice, setMaxPrice, min, max],
+  );
+
+  const handleMin = useCallback(
+    (value: number) => {
+      const next = Math.min(value, localMax);
+      setLocalMin(next);
+      commit(next, localMax);
+    },
+    [commit, localMax],
+  );
+
+  const handleMax = useCallback(
+    (value: number) => {
+      const next = Math.max(value, localMin);
+      setLocalMax(next);
+      commit(localMin, next);
+    },
+    [commit, localMin],
+  );
+
+  const active = minPrice != null || maxPrice != null;
 
   return (
     <FilterSliderSection
       label="Price"
-      active={!atDefaults}
+      active={active}
       resetLabel="Reset price filter"
       onReset={() => {
-        setMinValue(PRICE_MIN);
-        setMaxValue(PRICE_MAX);
+        clearTimer();
+        setLocalMin(min);
+        setLocalMax(max);
+        setMinPrice(null);
+        setMaxPrice(null);
       }}
     >
       <DualRangeSlider
-        min={PRICE_MIN}
-        max={PRICE_MAX}
-        minValue={minValue}
-        maxValue={maxValue}
-        minLabel={`$${minValue}`}
-        maxLabel={`$${maxValue}`}
-        onChangeMin={setMinValue}
-        onChangeMax={setMaxValue}
+        min={min}
+        max={max}
+        minValue={localMin}
+        maxValue={localMax}
+        minLabel={`$${localMin}`}
+        maxLabel={`$${localMax}`}
+        onChangeMin={handleMin}
+        onChangeMax={handleMax}
       />
     </FilterSliderSection>
   );

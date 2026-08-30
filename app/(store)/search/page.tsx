@@ -19,7 +19,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   const resultsPromise = searchProductsFull(q, undefined, page);
 
   return (
-    <div className="mx-auto max-w-content px-4 md:px-8 pt-6 pb-12">
+    <div className="mx-auto max-w-catalogue px-4 md:px-8 pt-6 pb-12">
       <SearchHeader query={q} />
       <Suspense fallback={<ProductGridSkeleton />}>
         <SearchResults resultsPromise={resultsPromise} query={q} />

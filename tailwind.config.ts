@@ -608,6 +608,16 @@ export default {
       },
       maxWidth: {
         content: "1280px",
+        // Product-listing + search wrappers only — a touch wider than `content`
+        // so wide screens can reach 4 (sidebar pages) / 5 (search) card columns.
+        // Deliberately conservative; see issue sang-logium-dbu risk A9.
+        catalogue: "1536px",
+      },
+      gridTemplateColumns: {
+        // Product grid: fit as many ~15rem cards as the grid's OWN box allows
+        // (viewport - sidebar - gutter), never the raw viewport. auto-fill (not
+        // auto-fit) so a short last row is not stretched. See gridLayout.ts.
+        products: "repeat(auto-fill, minmax(15rem, 1fr))",
       },
       boxShadow: {
         card: '0 4px 20px rgba(0, 0, 0, 0.03)',

@@ -1,26 +1,25 @@
 import React from 'react';
+import { productGridClass } from '@/app/components/features/products/gridLayout';
 
+// Sized and laid out to match the loaded ProductGrid exactly (same shared grid
+// class, same aspect-[4/3] image box + text block as ProductCard) so the
+// initial paint doesn't shift when results arrive.
 export function ProductGridSkeleton() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" data-testid="product-grid-skeleton">
+    <div className={productGridClass} data-testid="product-grid-skeleton">
       {Array.from({ length: 6 }).map((_, i) => (
-        <div 
-          key={i} 
-          className="card-product-dark h-full flex flex-col animate-pulse"
+        <div
+          key={i}
+          className="card-product-dark h-full min-w-0 flex flex-col animate-pulse"
         >
-          {/* Image placeholder */}
-          <div className="aspect-[4/3] bg-surface-elevated" />
-          
-          {/* Content placeholder */}
-          <div className="flex flex-col flex-grow p-4 gap-3">
-            {/* Brand placeholder */}
-            <div className="h-4 w-20 bg-surface-elevated rounded" />
-            
-            {/* Name placeholder */}
-            <div className="h-5 w-full bg-surface-elevated rounded" />
-            
-            {/* Price placeholder */}
-            <div className="h-4 w-24 bg-surface-elevated rounded mt-auto" />
+          <div className="aspect-[4/3] w-full bg-surface-elevated" />
+
+          <div className="flex flex-col flex-grow gap-1 p-3">
+            <div className="h-10 w-full bg-surface-elevated rounded" />
+          </div>
+
+          <div className="flex items-center gap-2 px-3 pb-3">
+            <div className="h-4 w-16 bg-surface-elevated rounded" />
           </div>
         </div>
       ))}

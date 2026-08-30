@@ -45,6 +45,21 @@ mistake cost >15 min or a wrong turn and you can write a specific trigger. Keep 
 measure before you build (L09), repo artifacts are evidence not authority (L10),
 never fake an arrival/reveal animation the real event should drive (L11).
 
+## Issue Risk Protocol
+
+`_project/ISSUE-RISK-PROTOCOL.md` — the pre-flight before implementing any beads issue.
+When the human says **"run the risk protocol"**, **"risk-assess `<issue>`"**, or **"risk
+protocol"**, they mean exactly that document: produce a two-part assessment (A: outcome
+risks — scope creep, boundary crossing, hallucination, mix-ups, false positives, quality
+drop; B: execution risks — the lean-path mandate) and append it to the issue's beads NOTES.
+
+**Part B is a standing rule for every implementation task on this repo, protocol invoked or
+not:** edit source only, hand the live check to the human on `localhost:3000`. No
+`next build`, no `tsc`/ts-check, no project lint, no test runs, no agent-run dev server, no
+browser automation for verification, no `npm install` unless the issue calls for it, no
+git (no branch/commit/push), minimal diff. If a "no" genuinely blocks the task, stop and
+say so in one line — don't work around it.
+
 ## Build & Test
 
 _Add your build and test commands here_

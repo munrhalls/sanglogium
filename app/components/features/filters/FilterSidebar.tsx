@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Checkbox } from '@/app/components/ui/Checkbox';
+import { useFilterParam } from '@/app/hooks/nuqs/useFilterSort';
 import { PriceRangeSlider } from './PriceRangeSlider';
 
 /**
@@ -21,12 +22,12 @@ export const filterStateActive = 'text-text-accent';
 export const filterStateInactive = 'text-text-caption opacity-50';
 
 /**
- * Desktop filter sidebar shell — static visual surface only.
+ * Desktop filter sidebar shell.
  *
- * All options, counts and price bounds are hardcoded placeholders. Local
- * useState here is cosmetic (collapse/expand, ticked look) so the static page
- * can be glance-checked. Nothing here reads or writes the URL, fetches data,
- * or touches the product grid.
+ * Option lists and counts are hardcoded placeholders standing in for props that
+ * page composition will supply. The checkbox facet groups and `InStockOnlyCheckbox`
+ * read/write their F1 URL params (via `useFilterParam`); local useState is only
+ * cosmetic (collapse/expand). Nothing here fetches data or touches the product grid.
  */
 
 const BRAND_OPTIONS = [
@@ -37,33 +38,76 @@ const BRAND_OPTIONS = [
   { value: 'hifiman', label: 'HiFiMan', count: 0 },
 ];
 
-const CONNECTIVITY_OPTIONS = [
-  { value: 'wired', label: 'Wired', count: 41 },
-  { value: 'wireless', label: 'Wireless', count: 27 },
-  { value: 'bluetooth', label: 'Bluetooth', count: 19 },
+const CATEGORY_OPTIONS = [
+  { value: 'over-ear', label: 'Over-ear', count: 41 },
+  { value: 'on-ear', label: 'On-ear', count: 27 },
+  { value: 'in-ear', label: 'In-ear', count: 19 },
 ];
 
 interface FilterOption {
   value: string;
   label: string;
-  count: number;
+  count?: number;
 }
 
-interface CollapsibleFilterGroupProps {
-  name: string;
+const toLabelMap = (options: FilterOption[]): Record<string, string> =>
+  Object.fromEntries(options.map((o) => [o.value, o.label]));
+
+/**
+ * value -> label maps for the checkbox facets, shared with F6's chip row so the
+ * chip label and the sidebar checkbox label can never drift. Same placeholder
+ * lists; page composition will eventually supply both from one source.
+ */
+export const BRAND_LABELS = toLabelMap(BRAND_OPTIONS);
+export const CATEGORY_LABELS = toLabelMap(CATEGORY_OPTIONS);
+
+/** The F1 array-param keys that map to a checkbox facet group. */
+type FacetParamKey = 'brand' | 'category';
+
+interface CheckboxFilterGroupProps {
+  /** F1 array param this group reads & writes. Also the checkbox `name`. */
+  paramKey: FacetParamKey;
   label: string;
   options: FilterOption[];
-  defaultSelected?: string[];
 }
 
-function CollapsibleFilterGroup({ name, label, options, defaultSelected = [] }: CollapsibleFilterGroupProps) {
+/**
+ * F5 — one reusable checkbox facet group, bound to a single F1 array param.
+ *
+ * SRP: (a) on tick, write the group's value set to its F1 param via nuqs;
+ * (b) on any URL change (first load, deep link, Back/Forward), render its own
+ * ticked state to match the param. It never imports, queries, or reacts to the
+ * product grid, product data, result counts, or streaming — `options` and their
+ * `count`s are props supplied by page composition.
+ *
+ * The param key, array delimiter, history mode, shallow flag and page-reset all
+ * come from F1 via `useFilterParam`; there is zero bespoke URL-string handling
+ * here. Canonical value order is the order `options` are declared in, so the URL
+ * is stable regardless of click order. Unknown or duplicate values present in
+ * the URL are ignored for display and dropped on the next write ("normalise on
+ * next change").
+ */
+function CheckboxFilterGroup({ paramKey, label, options }: CheckboxFilterGroupProps) {
   const [expanded, setExpanded] = useState(true);
-  const [selected, setSelected] = useState<string[]>(defaultSelected);
+  const [selected, setSelected] = useFilterParam(paramKey);
 
-  const toggle = (value: string) =>
-    setSelected((current) =>
-      current.includes(value) ? current.filter((v) => v !== value) : [...current, value]
+  const order = new Map(options.map((option, index) => [option.value, index]));
+  const selectedSet = new Set(selected);
+
+  const canonicalize = (values: string[]) =>
+    Array.from(new Set(values.filter((value) => order.has(value)))).sort(
+      (a, b) => (order.get(a) ?? 0) - (order.get(b) ?? 0),
     );
+
+  const toggle = (value: string) => {
+    const next = selectedSet.has(value)
+      ? canonicalize(selected).filter((v) => v !== value)
+      : canonicalize([...selected, value]);
+    // An empty set serializes to the key being absent (F1 clean-URL rule).
+    setSelected(next);
+  };
+
+  const name = paramKey;
 
   return (
     <div className="flex flex-col gap-3">
@@ -93,8 +137,8 @@ function CollapsibleFilterGroup({ name, label, options, defaultSelected = [] }: 
               value={option.value}
               label={option.label}
               count={option.count}
-              checked={selected.includes(option.value)}
-              disabled={option.count === 0 && !selected.includes(option.value)}
+              checked={selectedSet.has(option.value)}
+              disabled={option.count === 0 && !selectedSet.has(option.value)}
               onChange={() => toggle(option.value)}
             />
           ))}
@@ -104,17 +148,41 @@ function CollapsibleFilterGroup({ name, label, options, defaultSelected = [] }: 
   );
 }
 
+/**
+ * F4 — the only responsibility here: on tick, write the F1 `inStock` boolean to
+ * the URL; on any URL change (deep link, Back/Forward), render to match it.
+ * Knows nothing about the grid, product data, counts, or streaming. The param
+ * key/value, default, junk handling, history mode and page-reset all come from
+ * F1 via `useFilterParam` — no bespoke URL handling here.
+ */
 function InStockOnlyCheckbox() {
-  const [checked, setChecked] = useState(false);
+  const [inStock, setInStock] = useFilterParam('inStock');
 
   return (
     <Checkbox
       name="in-stock"
       value="in-stock"
       label="In stock only"
-      checked={checked}
-      onChange={() => setChecked((current) => !current)}
+      checked={inStock}
+      onChange={() => setInStock(!inStock)}
     />
+  );
+}
+
+/**
+ * The stack of filter controls, with no wrapper chrome of its own. Shared
+ * verbatim between the desktop sidebar and the mobile filter drawer so both
+ * surfaces stay identical. Returned as a fragment so callers own the layout
+ * container (and the desktop markup below is unchanged).
+ */
+export function FilterControls() {
+  return (
+    <>
+      <PriceRangeSlider />
+      <InStockOnlyCheckbox />
+      <CheckboxFilterGroup paramKey="brand" label="Brand" options={BRAND_OPTIONS} />
+      <CheckboxFilterGroup paramKey="category" label="Category" options={CATEGORY_OPTIONS} />
+    </>
   );
 }
 
@@ -127,19 +195,7 @@ export function FilterSidebar() {
     >
       <div className="flex flex-col gap-6 rounded-md border border-border-secondary bg-surface-elevated p-6">
         <span className="type-overline">Filters</span>
-        <PriceRangeSlider />
-        <InStockOnlyCheckbox />
-        <CollapsibleFilterGroup
-          name="brand"
-          label="Brand"
-          options={BRAND_OPTIONS}
-          defaultSelected={['sennheiser']}
-        />
-        <CollapsibleFilterGroup
-          name="connectivity"
-          label="Connectivity"
-          options={CONNECTIVITY_OPTIONS}
-        />
+        <FilterControls />
       </div>
     </aside>
   );

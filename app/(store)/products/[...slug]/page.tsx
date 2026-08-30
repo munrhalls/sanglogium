@@ -8,8 +8,10 @@ import { ShopHeader } from '@/app/components/features/products/ShopHeader';
 import { EmptyResults } from '@/app/components/features/products/EmptyResults';
 import { Pagination } from '@/app/components/features/products/Pagination';
 import { ChunkedProductGrid, CHUNK_SIZE } from '@/app/components/features/products/ChunkedProductGrid';
-import { FilterSidebar } from '@/app/components/features/filters/FilterSidebar';
+import { FilterSidebar, BRAND_LABELS, CATEGORY_LABELS } from '@/app/components/features/filters/FilterSidebar';
 import { SortBar } from '@/app/components/features/filters/SortBar';
+import { MobileFilterBar } from '@/app/components/features/filters/MobileFilterBar';
+import { ActiveFilterChips } from '@/app/components/features/filters/ActiveFilterChips';
 import Breadcrumbs from '@/app/components/ui/breadcrumbs/CategoryBreadcrumbs';
 import { isFacetedQuery, canonicalCategoryPath } from '@/lib/catalogue/seo';
 
@@ -61,7 +63,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   );
 
   return (
-    <div className="mx-auto w-full max-w-content px-4 md:px-8 pb-12">
+    <div className="mx-auto w-full max-w-catalogue px-4 md:px-8 pb-12">
       <Breadcrumbs categoryParts={slug} />
       <ShopHeader title={metadata.name} overline={categoryPath} />
 
@@ -71,6 +73,8 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
         <div className="flex flex-col lg-touch:flex-row lg-desktop:flex-row gap-8">
           <FilterSidebar />
           <div className="min-w-0 flex-1">
+            <MobileFilterBar />
+            <ActiveFilterChips brandLabels={BRAND_LABELS} categoryLabels={CATEGORY_LABELS} />
             <SortBar totalCount={totalCount} />
             <ChunkedProductGrid chunkPromises={chunkPromises} wishlistProductIds={wishlistProductIds} />
             <Pagination

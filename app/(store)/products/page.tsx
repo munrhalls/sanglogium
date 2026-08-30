@@ -6,8 +6,10 @@ import { ShopHeader } from '@/app/components/features/products/ShopHeader';
 import { EmptyResults } from '@/app/components/features/products/EmptyResults';
 import { Pagination } from '@/app/components/features/products/Pagination';
 import { ChunkedProductGrid, CHUNK_SIZE } from '@/app/components/features/products/ChunkedProductGrid';
-import { FilterSidebar } from '@/app/components/features/filters/FilterSidebar';
+import { FilterSidebar, BRAND_LABELS, CATEGORY_LABELS } from '@/app/components/features/filters/FilterSidebar';
 import { SortBar } from '@/app/components/features/filters/SortBar';
+import { MobileFilterBar } from '@/app/components/features/filters/MobileFilterBar';
+import { ActiveFilterChips } from '@/app/components/features/filters/ActiveFilterChips';
 import { isFacetedQuery } from '@/lib/catalogue/seo';
 
 const PER_PAGE = 24;
@@ -37,7 +39,7 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
   );
 
   return (
-    <div className="mx-auto w-full max-w-content px-4 md:px-8 pb-12">
+    <div className="mx-auto w-full max-w-catalogue px-4 md:px-8 pb-12">
       <ShopHeader title="All Products" />
 
       {totalCount === 0 ? (
@@ -46,6 +48,8 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
         <div className="flex flex-col lg-touch:flex-row lg-desktop:flex-row gap-8">
           <FilterSidebar />
           <div className="min-w-0 flex-1">
+            <MobileFilterBar />
+            <ActiveFilterChips brandLabels={BRAND_LABELS} categoryLabels={CATEGORY_LABELS} />
             <SortBar totalCount={totalCount} />
             <ChunkedProductGrid chunkPromises={chunkPromises} wishlistProductIds={wishlistProductIds} />
             <Pagination
