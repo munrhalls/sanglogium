@@ -13,15 +13,15 @@ export function ProductChunkSkeleton({ count }: ProductChunkSkeletonProps) {
       {Array.from({ length: count }).map((_, i) => (
         <div
           key={i}
-          className="card-product-dark h-full min-w-0 flex flex-col animate-pulse"
+          className="card-product-dark h-full min-w-0 flex flex-col overflow-hidden !p-0 animate-pulse"
           data-testid="product-chunk-skeleton"
         >
           <div className="aspect-[4/3] w-full bg-surface-elevated" />
           <div className="flex flex-col flex-grow gap-1 p-3">
-            <div className="h-10 w-full bg-surface-elevated rounded" />
+            <div className="h-9 w-full bg-surface-elevated rounded" />
           </div>
           <div className="flex items-center gap-2 px-3 pb-3">
-            <div className="h-4 w-16 bg-surface-elevated rounded" />
+            <div className="h-3.5 w-16 bg-surface-elevated rounded" />
           </div>
         </div>
       ))}

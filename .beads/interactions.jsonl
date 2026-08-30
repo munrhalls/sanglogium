@@ -50,3 +50,5 @@
 {"id":"int-4593213fbbfdd4c5088fef3b4e33d974","kind":"field_change","created_at":"2026-08-30T13:54:35.216657Z","actor":"Munrhalls","issue_id":"sang-logium-3a9","extra":{"field":"status","new_value":"in_progress","old_value":"open"}}
 {"id":"int-390809455d7e48346af10d51edce415f","kind":"field_change","created_at":"2026-08-30T13:54:58.2910507Z","actor":"Munrhalls","issue_id":"sang-logium-66l","extra":{"field":"status","new_value":"in_progress","old_value":"open"}}
 {"id":"int-4180bada10951947927bdff1f5f6525c","kind":"field_change","created_at":"2026-08-30T13:56:05.2751705Z","actor":"Munrhalls","issue_id":"sang-logium-u0o","extra":{"field":"status","new_value":"in_progress","old_value":"open"}}
+{"id":"int-56e40ed1bedead8678dd27fcc8ea7a7e","kind":"field_change","created_at":"2026-08-30T15:14:23.739748Z","actor":"Munrhalls","issue_id":"sang-logium-28t","extra":{"field":"status","new_value":"in_progress","old_value":"open"}}
+{"id":"int-2d43d0586aca7c0069a92199fceb5a9d","kind":"field_change","created_at":"2026-08-30T15:45:37.9493595Z","actor":"Munrhalls","issue_id":"sang-logium-6cm","extra":{"field":"status","new_value":"in_progress","old_value":"open"}}

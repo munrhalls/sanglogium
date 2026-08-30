@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import { Checkbox } from '@/app/components/ui/Checkbox';
-import { useFilterParam } from '@/app/hooks/nuqs/useFilterSort';
+import { useFilterParam, useFilterSortPending } from '@/app/hooks/nuqs/useFilterSort';
+import { cn } from '@/lib/utils/tailwind';
 import { PriceRangeSlider } from './PriceRangeSlider';
 
 /**
@@ -89,10 +90,18 @@ interface CheckboxFilterGroupProps {
  */
 function CheckboxFilterGroup({ paramKey, label, options }: CheckboxFilterGroupProps) {
   const [expanded, setExpanded] = useState(true);
-  const [selected, setSelected] = useFilterParam(paramKey);
+  const [selected, setSelected] = useFilterParam(paramKey) as unknown as [string[], (v: string[] | ((prev: string[]) => string[])) => void];
 
   const order = new Map(options.map((option, index) => [option.value, index]));
-  const selectedSet = new Set(selected);
+  const selectedArray = selected ?? [];
+
+  // For brand field, use case-insensitive comparison; for all others, use exact match
+  const isFilterActive = (value: string): boolean => {
+    if (paramKey === 'brand') {
+      return selectedArray.some((s) => s.toLowerCase() === value.toLowerCase());
+    }
+    return selectedArray.includes(value);
+  };
 
   const canonicalize = (values: string[]) =>
     Array.from(new Set(values.filter((value) => order.has(value)))).sort(
@@ -100,11 +109,19 @@ function CheckboxFilterGroup({ paramKey, label, options }: CheckboxFilterGroupPr
     );
 
   const toggle = (value: string) => {
-    const next = selectedSet.has(value)
-      ? canonicalize(selected).filter((v) => v !== value)
-      : canonicalize([...selected, value]);
-    // An empty set serializes to the key being absent (F1 clean-URL rule).
-    setSelected(next);
+    // Functional updater, not `[...selectedArray, value]`: `selected` is stale
+    // between renders, so two fast clicks would otherwise drop the first.
+    setSelected((prev) => {
+      const prevArray = prev ?? [];
+      const active =
+        paramKey === 'brand'
+          ? prevArray.some((s) => s.toLowerCase() === value.toLowerCase())
+          : prevArray.includes(value);
+      // An empty set serializes to the key being absent (F1 clean-URL rule).
+      return active
+        ? canonicalize(prevArray).filter((v) => v.toLowerCase() !== value.toLowerCase())
+        : canonicalize([...prevArray, value]);
+    });
   };
 
   const name = paramKey;
@@ -137,8 +154,8 @@ function CheckboxFilterGroup({ paramKey, label, options }: CheckboxFilterGroupPr
               value={option.value}
               label={option.label}
               count={option.count}
-              checked={selectedSet.has(option.value)}
-              disabled={option.count === 0 && !selectedSet.has(option.value)}
+              checked={isFilterActive(option.value)}
+              disabled={option.count === 0 && !isFilterActive(option.value)}
               onChange={() => toggle(option.value)}
             />
           ))}
@@ -156,7 +173,7 @@ function CheckboxFilterGroup({ paramKey, label, options }: CheckboxFilterGroupPr
  * F1 via `useFilterParam` — no bespoke URL handling here.
  */
 function InStockOnlyCheckbox() {
-  const [inStock, setInStock] = useFilterParam('inStock');
+  const [inStock, setInStock] = useFilterParam('inStock') as unknown as [boolean, (v: boolean | ((prev: boolean) => boolean)) => void];
 
   return (
     <Checkbox
@@ -164,7 +181,7 @@ function InStockOnlyCheckbox() {
       value="in-stock"
       label="In stock only"
       checked={inStock}
-      onChange={() => setInStock(!inStock)}
+      onChange={() => setInStock((prev) => !prev)}
     />
   );
 }
@@ -187,13 +204,23 @@ export function FilterControls() {
 }
 
 export function FilterSidebar() {
+  const isPending = useFilterSortPending();
+
   return (
     <aside
       data-testid="filter-sidebar"
       aria-label="Filters"
       className="hidden lg-touch:block lg-desktop:block w-64 shrink-0 self-start sticky top-0 pt-6 max-h-screen overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
     >
-      <div className="flex flex-col gap-6 rounded-md border border-border-secondary bg-surface-elevated p-6">
+      <div
+        className={cn(
+          "flex flex-col gap-6 rounded-md border border-border-secondary bg-surface-elevated p-6",
+          "transition-opacity",
+          // Mirror the grid's pending cue: dim + block interaction while a
+          // filter/sort URL update is in flight (G8).
+          isPending && "opacity-60 pointer-events-none",
+        )}
+      >
         <span className="type-overline">Filters</span>
         <FilterControls />
       </div>

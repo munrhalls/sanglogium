@@ -75,7 +75,7 @@ export function ActiveFilterChips({
     chips.push({
       key: `brand:${slug}`,
       label: brandLabels[slug] ?? slug,
-      onRemove: () => setBrand(brand.filter((v) => v !== slug)),
+      onRemove: () => setBrand((prev) => (prev ?? []).filter((v) => v !== slug)),
     });
   });
 
@@ -83,7 +83,7 @@ export function ActiveFilterChips({
     chips.push({
       key: `category:${catKey}`,
       label: categoryLabels[catKey] ?? catKey,
-      onRemove: () => setCategory(category.filter((v) => v !== catKey)),
+      onRemove: () => setCategory((prev) => (prev ?? []).filter((v) => v !== catKey)),
     });
   });
 

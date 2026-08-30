@@ -156,6 +156,35 @@ const uiComponentsPlugin = plugin(function ({ addComponents, theme }) {
         cursor: "not-allowed",
       },
     },
+    ".btn-product-add": {
+      display: "inline-flex",
+      alignItems: "center",
+      gap: "6px",
+      backgroundColor: theme("colors.accent.500") as string,
+      color: theme("colors.brand.700") as string,
+      fontWeight: theme("fontWeight.semibold") as string,
+      fontSize: "12px",
+      lineHeight: "1",
+      padding: "7px 10px",
+      borderRadius: theme("borderRadius.sm") as string,
+      boxShadow: theme("boxShadow.button") as string,
+      transition: "background-color 0.2s ease, box-shadow 0.2s ease",
+      "&:hover": {
+        backgroundColor: theme("colors.accent.600") as string,
+        boxShadow: theme("boxShadow.buttonHover") as string,
+      },
+      "&:focus-visible": {
+        outline: `2px solid ${theme("colors.accent.600")}`,
+        outlineOffset: "2px",
+      },
+      "&:active": {
+        backgroundColor: theme("colors.accent.600") as string,
+      },
+      "&:disabled": {
+        opacity: "0.4",
+        cursor: "not-allowed",
+      },
+    },
     ".btn-cart-large": {
       display: "inline-flex",
       WebkitFontSmoothing: "antialiased",
@@ -435,6 +464,29 @@ const uiComponentsPlugin = plugin(function ({ addComponents, theme }) {
       fontWeight: theme("fontWeight.semibold") as string,
       color: theme("colors.text.body") as string,
     },
+    ".type-product-brand": {
+      fontSize: "10px",
+      lineHeight: "14px",
+      letterSpacing: "0.08em",
+      textTransform: "uppercase",
+      fontWeight: theme("fontWeight.medium") as string,
+      color: theme("colors.text.caption") as string,
+    },
+    ".type-product-title": {
+      fontSize: "13px",
+      lineHeight: "1.4",
+      letterSpacing: "0em",
+      fontWeight: theme("fontWeight.medium") as string,
+      color: theme("colors.text.body") as string,
+    },
+    ".type-product-price": {
+      fontSize: "14px",
+      lineHeight: "1.4",
+      letterSpacing: "0em",
+      fontWeight: theme("fontWeight.semibold") as string,
+      fontVariantNumeric: "tabular-nums",
+      color: theme("colors.text.priceTag") as string,
+    },
     ".type-metadata": {
       fontSize: theme("fontSize.h4[0]") as string,
       lineHeight: theme("fontSize.h4[1].lineHeight") as string,
@@ -614,10 +666,10 @@ export default {
         catalogue: "1536px",
       },
       gridTemplateColumns: {
-        // Product grid: fit as many ~15rem cards as the grid's OWN box allows
+        // Product grid: fit as many ~13.5rem cards as the grid's OWN box allows
         // (viewport - sidebar - gutter), never the raw viewport. auto-fill (not
         // auto-fit) so a short last row is not stretched. See gridLayout.ts.
-        products: "repeat(auto-fill, minmax(15rem, 1fr))",
+        products: "repeat(auto-fill, minmax(13.5rem, 1fr))",
       },
       boxShadow: {
         card: '0 4px 20px rgba(0, 0, 0, 0.03)',

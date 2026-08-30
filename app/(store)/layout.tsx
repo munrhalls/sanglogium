@@ -18,6 +18,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import GoogleAnalytics from "@/app/components/analytics/GoogleAnalytics";
 import { getCatalogueForNavigation } from "@/data/catalogue";
 import { Suspense } from "react";
+import { FilterSortPendingProvider } from "@/app/hooks/nuqs/useFilterSort";
 
 export { metadata };
 
@@ -63,7 +64,9 @@ export default async function RootLayout({
                   "shadow-[0_0_100px_rgba(0,0,0,0.5)]"
                 )}
               >
-                {children}
+                <FilterSortPendingProvider>
+                  {children}
+                </FilterSortPendingProvider>
                 <Footer />
               </main>
 

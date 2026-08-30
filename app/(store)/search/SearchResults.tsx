@@ -23,10 +23,12 @@ export async function SearchResults({ resultsPromise, query }: SearchResultsProp
       <div className="border-b border-border-secondary pb-4 mb-6">
         <span className="type-metadata text-secondary">{totalCount} products</span>
       </div>
-      {/* No sidebar here, so the shared auto-fill grid gets the full
-          max-w-catalogue width and lands at ~4 columns at 1280px, 5 on wide. */}
+      {/* No sidebar to eat width here, so cap the grid itself at max-w-content
+          (1280px) — without it, auto-fill would run to 6-7 columns on wide
+          screens. Lands at ~4 cols around 1280px, ~5 on wide. */}
       <ProductGrid
         products={products}
+        className="max-w-content"
         wishlistProductIds={wishlistProductIds}
       />
       <SearchPagination totalCount={totalCount} />

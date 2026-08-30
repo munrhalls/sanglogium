@@ -111,8 +111,14 @@ export function useFilterParam<K extends FilterKey>(
     }),
   );
 
+  // Accept nuqs's full setter arg — an absolute value OR a functional updater
+  // `(prev) => next`. Array facets (brand/category) MUST use the updater form:
+  // two checkbox clicks in the same frame both close over the same stale
+  // `value`, so passing `[...value, slug]` twice drops the first slug. The
+  // updater runs against nuqs's synchronously-maintained internal state, so
+  // rapid multi-toggle composes correctly. See spike sang-logium-28t.
   const setValue = useCallback(
-    (next: typeof value) => {
+    (next: Parameters<typeof setValueRaw>[0]) => {
       startTransition(() => {
         setValueRaw(next);
         resetPage();

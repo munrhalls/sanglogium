@@ -12,6 +12,7 @@ interface BasketControlsProps {
   displayQuantity?: number;
   label?: string;
   removeClassName?: string;
+  addClassName?: string;
   wrapperClassName?: string;
   showRemoveButton?: boolean;
   size?: "sm" | "md";
@@ -25,6 +26,7 @@ export function BasketControls({
   displayQuantity,
   label = "Add to Cart",
   removeClassName,
+  addClassName,
   wrapperClassName,
   showRemoveButton,
   size = "md",
@@ -75,9 +77,9 @@ export function BasketControls({
         onClick={handleAdd}
         data-testid={`add-to-basket-${productId}`}
         type="button"
-        className="btn-cart"
+        className={addClassName || "btn-cart"}
       >
-        <ShoppingCart size={16} />
+        <ShoppingCart size={addClassName ? 14 : 16} />
         <span>{label}</span>
       </button>
     );

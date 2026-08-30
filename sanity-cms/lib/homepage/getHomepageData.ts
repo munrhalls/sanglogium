@@ -630,7 +630,7 @@ async function fetchHomepageSections(): Promise<{
  * Returns data in exact shape expected by HomepageData interface.
  */
 export async function fetchHomepageDataBatched(): Promise<HomepageData> {
-  console.time("Homepage Data Fetch (Batched)");
+  const startTime = performance.now();
 
   try {
     // Parallel fetch of hero (separate doc type) and homepage sections (single batched query)
@@ -639,7 +639,8 @@ export async function fetchHomepageDataBatched(): Promise<HomepageData> {
       fetchHomepageSections()
     ]);
 
-    console.timeEnd("Homepage Data Fetch (Batched)");
+    const duration = performance.now() - startTime;
+    console.log(`[Homepage Data Fetch (Batched)] Completed in ${duration.toFixed(2)}ms`);
 
     return {
       hero,
@@ -647,7 +648,8 @@ export async function fetchHomepageDataBatched(): Promise<HomepageData> {
     };
   } catch (error) {
     console.error("[homepageBatch] Error in batched fetch:", error);
-    console.timeEnd("Homepage Data Fetch (Batched)");
+    const duration = performance.now() - startTime;
+    console.log(`[Homepage Data Fetch (Batched)] Failed after ${duration.toFixed(2)}ms`);
 
     // Return empty data structure to prevent page crashes
     return {
