@@ -2,8 +2,7 @@
 
 import React, { useState } from 'react';
 import { Checkbox } from '@/app/components/ui/Checkbox';
-import { useFilterParam, useFilterSortPending } from '@/app/hooks/nuqs/useFilterSort';
-import { cn } from '@/lib/utils/tailwind';
+import { useFilterParam } from '@/app/hooks/nuqs/useFilterSort';
 import { PriceRangeSlider } from './PriceRangeSlider';
 
 /**
@@ -204,23 +203,15 @@ export function FilterControls() {
 }
 
 export function FilterSidebar() {
-  const isPending = useFilterSortPending();
-
   return (
     <aside
       data-testid="filter-sidebar"
       aria-label="Filters"
       className="hidden lg-touch:block lg-desktop:block w-64 shrink-0 self-start sticky top-0 pt-6 max-h-screen overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
     >
-      <div
-        className={cn(
-          "flex flex-col gap-6 rounded-md border border-border-secondary bg-surface-elevated p-6",
-          "transition-opacity",
-          // Mirror the grid's pending cue: dim + block interaction while a
-          // filter/sort URL update is in flight (G8).
-          isPending && "opacity-60 pointer-events-none",
-        )}
-      >
+      {/* Visually static and always interactive: a control writes the URL and
+          reflects the URL, never waiting on a fetch / transition in flight. */}
+      <div className="flex flex-col gap-6 rounded-md border border-border-secondary bg-surface-elevated p-6">
         <span className="type-overline">Filters</span>
         <FilterControls />
       </div>

@@ -38,12 +38,12 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   const page = typeof pageValue === 'string' ? Number(pageValue) : 1;
   const descendantKeys = unrollDescendantKeys(nodeId);
 
-  const { sort } = loadFilterSort(query);
-  const { orderClause, whereClause, params } = buildProductQuery({ sort });
+  const { sort, minPrice, maxPrice, inStock } = loadFilterSort(query);
+  const { orderClause, whereClause, params: queryParams } = buildProductQuery({ sort, minPrice, maxPrice, inStock });
 
   const [metadata, totalCount, wishlistProductIds] = await Promise.all([
     getCategoryMetadata(nodeId),
-    getProductsCount({ keys: descendantKeys, whereClause, params }),
+    getProductsCount({ keys: descendantKeys, whereClause, params: queryParams }),
     getWishlistProductIds(),
   ]);
 
@@ -64,7 +64,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   // own Suspense boundaries.
   const chunkPromises = Array.from(
     { length: Math.ceil(PER_PAGE / CHUNK_SIZE) },
-    (_, i) => getProductsChunk({ keys: descendantKeys, offset: pageStart + i * CHUNK_SIZE, limit: CHUNK_SIZE, orderClause, whereClause, params }),
+    (_, i) => getProductsChunk({ keys: descendantKeys, offset: pageStart + i * CHUNK_SIZE, limit: CHUNK_SIZE, orderClause, whereClause, params: queryParams }),
   );
 
   return (

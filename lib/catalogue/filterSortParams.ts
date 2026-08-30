@@ -54,7 +54,7 @@
 // `history: "replace"` so a drag does not flood the history stack. Both use
 // `shallow: false` (S1 — sang-logium-ytc): a filter/sort change must notify the
 // server so the catalogue RSC re-renders the product grid. The write is wrapped
-// in the FilterSort React transition, so the navigation does not trip
+// in a React transition, so the navigation does not trip
 // `loading.tsx` and the filter sidebar stays mounted.
 //
 // Param preservation: consumers write through nuqs, which MERGES into the
@@ -65,14 +65,20 @@
 // call `pageResetOnFilterChange` (see below) alongside their own setter so
 // changing any filter/sort sends the user back to page 1.
 
+// Import parsers + loader/serializer from `nuqs/server`: this module is consumed
+// by both the catalogue RSC pages (via `loadFilterSort`) and the client controls
+// (via `filterSortParsers`). `nuqs/server` re-exports every parser and carries no
+// "use client" boundary, so the shared parser map is safe on both sides. The
+// client hooks (`useQueryState` etc.) still come from `nuqs` in useFilterSort.tsx.
 import {
+  createLoader,
+  createSerializer,
   parseAsArrayOf,
   parseAsBoolean,
   parseAsInteger,
   parseAsString,
   parseAsStringLiteral,
-} from "nuqs";
-import { createLoader, createSerializer } from "nuqs/server";
+} from "nuqs/server";
 
 /** Fixed sort allowlist. `value` goes in the URL; `label` is for the controls. */
 export const SORT_OPTIONS = [
@@ -122,9 +128,9 @@ export const FILTER_SORT_KEYS = Object.keys(filterSortParsers) as Array<
  *
  * `shallow: false` (S1 — sang-logium-ytc): a filter/sort write notifies the
  * server so the catalogue RSC re-renders the grid with the new order/predicate.
- * The write stays wrapped in the FilterSort transition (see useFilterSort.tsx),
+ * The write stays wrapped in a React transition (see useFilterSort.tsx),
  * so this is a transition-driven navigation: `loading.tsx` does NOT fire, the
- * sidebar stays mounted, the grid dims via `useFilterSortPending()`.
+ * sidebar stays mounted, the grid refetches quietly in the background.
  */
 export const FILTER_SORT_URL_OPTIONS = {
   history: "push",

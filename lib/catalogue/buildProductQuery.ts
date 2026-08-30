@@ -8,17 +8,19 @@
 // the Server Component — no client module imports it, so there is exactly one
 // query translation in the app (risk A2).
 //
-// SCOPE (S1): the SORT branch only. `whereClause` is always empty here.
-//   • S2 fills the price + in-stock predicates.
+// SCOPE: the SORT branch (S1) + the PRICE / IN-STOCK where-predicates (S2).
 //   • S3 fills the brand predicate.
-// Each sibling appends to `parts` / `params` below at its marked TODO. Adding a
-// predicate in this slice is out of scope — stop and flag (risk A1).
+// S3 appends to `parts` / `params` below at its marked TODO. Adding a brand
+// predicate here is out of scope — stop and flag (risk A1/A4).
 
 import { SORT_DEFAULT, type SortValue } from './filterSortParams';
 
 export interface ProductQueryState {
   sort: SortValue;
-  // S2: minPrice?: number | null;  maxPrice?: number | null;  inStock?: boolean;
+  // S2: price range in whole DOLLARS (the F1 URL contract) + in-stock flag.
+  minPrice?: number | null;
+  maxPrice?: number | null;
+  inStock?: boolean;
   // S3: brand?: string[];
 }
 
@@ -47,7 +49,21 @@ export function buildProductQuery(state: ProductQueryState): ProductQuery {
   const parts: string[] = [];
   const params: Record<string, unknown> = {};
 
-  // S2: push price / in-stock predicates here, add their params.
+  // S2 — price range + in-stock. Dollars → cents (x100) at this edge only;
+  // bounds are inclusive; a missing bound omits that side. `minPrice` /
+  // `maxPrice` come straight from the F1 URL contract (null when absent/junk).
+  if (state.minPrice != null) {
+    parts.push('price_data.unit_amount >= $minCents');
+    params.minCents = state.minPrice * 100;
+  }
+  if (state.maxPrice != null) {
+    parts.push('price_data.unit_amount <= $maxCents');
+    params.maxCents = state.maxPrice * 100;
+  }
+  if (state.inStock) {
+    parts.push('stock - reservedStock > 0');
+  }
+
   // S3: push the brand predicate here, add its param.
 
   const whereClause = parts.length ? ` && ${parts.join(' && ')}` : '';

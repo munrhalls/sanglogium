@@ -26,8 +26,8 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
   const page = typeof pageValue === 'string' ? Number(pageValue) : 1;
   const allKeys = getAllLeafKeys();
 
-  const { sort } = loadFilterSort(query);
-  const { orderClause, whereClause, params } = buildProductQuery({ sort });
+  const { sort, minPrice, maxPrice, inStock } = loadFilterSort(query);
+  const { orderClause, whereClause, params } = buildProductQuery({ sort, minPrice, maxPrice, inStock });
 
   const [totalCount, wishlistProductIds] = await Promise.all([
     getProductsCount({ keys: allKeys, whereClause, params }),

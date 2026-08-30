@@ -9,62 +9,19 @@
 //                            options + automatic page reset baked in.
 //   • usePageReset         — clear `?page=` (a filter/sort change resets to p.1).
 //   • useClearAllFilters   — F6's "Clear all": drop every contract param at once.
-//   • FilterSortPendingProvider / useFilterSortPending — the shared "URL
-//     transition in flight" affordance. nuqs 2.8 has no built-in pending flag,
-//     so the contract owns one: writes are wrapped in a React transition and
-//     V1/V2 read `useFilterSortPending()` to dim / spin the surface.
+//
+// Every URL write runs inside React.startTransition — the catalogue navigation
+// does not trip `loading.tsx` and the old grid stays visible while the RSC
+// re-renders. The control surface never reads a pending / in-flight signal
+// (sang-logium-aks): controls write the URL and reflect the URL, nothing more.
 
-import {
-  createContext,
-  startTransition as reactStartTransition,
-  useCallback,
-  useContext,
-  useTransition,
-  type ReactNode,
-  type TransitionStartFunction,
-} from "react";
+import { startTransition, useCallback } from "react";
 import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
 import {
   FILTER_SORT_URL_OPTIONS,
   PAGE_PARAM_KEY,
   filterSortParsers,
 } from "@/lib/catalogue/filterSortParams";
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Shared pending affordance
-// ─────────────────────────────────────────────────────────────────────────────
-
-type PendingContextValue = {
-  isPending: boolean;
-  startTransition: TransitionStartFunction;
-};
-
-// Default: no provider → writes still work (plain React.startTransition), the
-// surface just never reports "pending".
-const FilterSortPendingContext = createContext<PendingContextValue>({
-  isPending: false,
-  startTransition: reactStartTransition,
-});
-
-/**
- * Mount once around the catalogue filter/sort surface (V1/V2). Every control
- * write routed through `useFilterParam` / `useClearAllFilters` is wrapped in
- * this transition, so `useFilterSortPending()` anywhere inside reflects whether
- * a URL update is settling.
- */
-export function FilterSortPendingProvider({ children }: { children: ReactNode }) {
-  const [isPending, startTransition] = useTransition();
-  return (
-    <FilterSortPendingContext.Provider value={{ isPending, startTransition }}>
-      {children}
-    </FilterSortPendingContext.Provider>
-  );
-}
-
-/** True while a filter/sort URL update is in flight. Renders the pending UI. */
-export function useFilterSortPending(): boolean {
-  return useContext(FilterSortPendingContext).isPending;
-}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Param read/write
@@ -99,7 +56,6 @@ export function useFilterParam<K extends FilterKey>(
   key: K,
   optionOverrides?: { history?: "push" | "replace" },
 ) {
-  const { startTransition } = useContext(FilterSortPendingContext);
   const resetPage = usePageReset();
 
   const [value, setValueRaw] = useQueryState(
@@ -136,7 +92,6 @@ export function useFilterParam<K extends FilterKey>(
  * because nuqs merges rather than replaces the query.
  */
 export function useClearAllFilters() {
-  const { startTransition } = useContext(FilterSortPendingContext);
   const [, setAll] = useQueryStates(filterSortParsers, FILTER_SORT_URL_OPTIONS);
   const resetPage = usePageReset();
 
