@@ -366,6 +366,43 @@ post-reveal cleanup.
 
 ---
 
+## Attempt J — nav + history-restore resilience on the real grid (sang-logium-3kd)
+
+Umbrella issue over p0g/7j8: prove the ported mechanism survives Back/Forward,
+soft nav, every grid route, and a warm Next cache. No new reveal mechanism —
+wiring only.
+
+- **Route coverage** is structural: `/products` and `/products/[...slug]` both
+  render the grid solely through `ChunkedProductGrid`, which owns the reveal
+  script. Any category slug gets the identical path — nothing per-route to port.
+- **Soft nav from a non-grid first page** (e.g. home → `/products`): React does
+  not execute an inline `<script dangerouslySetInnerHTML>` inserted during client
+  render, so the capture-phase `load` listener would never install. New
+  `ImageRevealClient` (`"use client"`, renders `null`, next to `<ImageRevealScript>`
+  in `ChunkedProductGrid`) injects `REVEAL_SCRIPT` as a real `<script>` node on
+  mount **only when `window.__slImageReveal` is still falsy** — the inline copy's
+  own guard makes it a no-op otherwise, and a hard grid load is left entirely to
+  the inline script (7j8's eased first-view reveal untouched).
+- **Back / Forward** (bfcache or RSC router cache replays a painted tree, no
+  `load` re-fires): `pageshow`/`persisted` re-runs the scan. Script's `scan()` /
+  `reveal()` gained an `instant` flag → sets `data-instant` + `data-shown`
+  together; `reveal.module.css` `.reveal[data-instant]{transition:none}` so
+  already-painted images resolve sharp with no fake ease (L11). First-view eased
+  path unchanged (MutationObserver/DOMContentLoaded/load callers now wrapped so
+  their event/record args can't leak in as a truthy `instant`).
+- **Warm cache**: cached chunks render already-complete; the persistent
+  MutationObserver from the inline script catches them (eased). No code path
+  asserts AC4 — warm-cache verdict is the human's.
+- `isOpaque` LQIP gate confirmed live: `getProductsByVfsKeys.ts` L50 selects
+  `metadata { lqip, isOpaque }`; `ProductImage.tsx` gates the underlay on it.
+
+Files: `ImageRevealScript.tsx` (export + `instant` flag + `window.__slImageRevealScan`),
+`ImageRevealClient.tsx` (new), `reveal.module.css` (`.reveal[data-instant]`),
+`ChunkedProductGrid.tsx` (render `<ImageRevealClient>`). No deps/config. POC
+untouched. Pending: human runs AC1–AC4 on :3000.
+
+---
+
 ## Isolated harness
 
 `_project/audits/streaming-poc/reveal-diagnostic.html` (committed in `efa1b32d`).

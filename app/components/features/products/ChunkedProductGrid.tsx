@@ -4,6 +4,7 @@ import { ProductChunk } from "./ProductChunk";
 import { ProductChunkSkeleton } from "@/app/components/skeletons/ProductChunkSkeleton";
 import { productGridClass } from "./gridLayout";
 import { ImageRevealScript } from "./ImageRevealScript";
+import { ImageRevealClient } from "./ImageRevealClient";
 import type { Product } from "@/sanity-cms/lib/products/getProductsByVfsKeys";
 
 export const CHUNK_SIZE = 6;
@@ -26,6 +27,7 @@ export function ChunkedProductGrid({
   return (
     <>
       <ImageRevealScript />
+      <ImageRevealClient />
       <div
         data-testid="product-grid"
         className={cn(productGridClass, className)}

@@ -28,6 +28,15 @@
   filter: blur(0);
 }
 
+/* Restore path (soft-nav remount, bfcache / RSC-cache Back-Forward): the bytes
+   are already painted, so there is no real blur→sharp event to ease — easing it
+   would be a fake animation (AI_LESSONS L11). ImageRevealClient sets
+   `data-instant` alongside `data-shown` for those, so they land sharp with no
+   transition. */
+.reveal[data-instant] {
+  transition: none;
+}
+
 /* LQIP blur-up placeholder — a sibling layer behind the <img>, framed with
    `contain` so the blurred preview sits in exactly the same rectangle the
    real `object-contain` photo will land in (no reframe, no halo). No blend

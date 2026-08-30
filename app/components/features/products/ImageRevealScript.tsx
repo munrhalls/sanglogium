@@ -19,24 +19,28 @@ import React from "react";
  * "use client", it cannot throw or suspend in SSR, so it cannot collapse the
  * per-chunk <Suspense> streaming (L02). The `window` guard makes it safe to
  * render from more than one grid on a page. */
-const REVEAL_SCRIPT = `
+export const REVEAL_SCRIPT = `
 (function(){
   if (window.__slImageReveal) return;
   window.__slImageReveal = 1;
-  function reveal(t){
+  function reveal(t, instant){
     if(!t || t.tagName!=='IMG' || !t.hasAttribute('data-reveal') || t.hasAttribute('data-shown')) return;
+    if(instant){ t.setAttribute('data-instant',''); t.setAttribute('data-shown',''); return; }
     requestAnimationFrame(function(){
       requestAnimationFrame(function(){ t.setAttribute('data-shown',''); });
     });
   }
   document.addEventListener('load', function(e){ reveal(e.target); }, true);
-  function scan(){
+  function scan(instant){
     var imgs = document.querySelectorAll('img[data-reveal]:not([data-shown])'), i;
-    for(i=0;i<imgs.length;i++){ if(imgs[i].complete && imgs[i].naturalWidth>0) reveal(imgs[i]); }
+    for(i=0;i<imgs.length;i++){ if(imgs[i].complete && imgs[i].naturalWidth>0) reveal(imgs[i], instant); }
   }
-  new MutationObserver(scan).observe(document.documentElement,{childList:true,subtree:true});
-  document.addEventListener('DOMContentLoaded', scan);
-  window.addEventListener('load', scan);
+  // Exposed so the client companion (ImageRevealClient) can re-scan on soft
+  // navigation and bf/RSC-cache restore without re-deriving the logic.
+  window.__slImageRevealScan = scan;
+  new MutationObserver(function(){ scan(); }).observe(document.documentElement,{childList:true,subtree:true});
+  document.addEventListener('DOMContentLoaded', function(){ scan(); });
+  window.addEventListener('load', function(){ scan(); });
 })();
 `;
 
