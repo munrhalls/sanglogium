@@ -22,49 +22,44 @@ export default function IemCard({ product, badge }: IemCardProps) {
     (brandWords.length > 1 ? brandWords.slice(0, -1).join(" ") : productName);
 
   return (
-    <article className="card-product-dark group flex h-full flex-col overflow-hidden !p-0 rounded-[0.4rem]">
+    <article className="card-product-dark group flex h-full min-w-0 flex-col overflow-hidden !p-0">
       <Link href={`/product/${product.slug}`} className="block">
-        <div className="relative aspect-square w-full cursor-pointer overflow-hidden rounded-t-[0.4rem] bg-surface-productImage p-0 max-sm:aspect-[3/2]">
-          <Image
-            src={product.image?.asset?._id ?? ""}
-            alt={product.name}
-            fill
-            sizes="(max-width: 768px) 50vw, 25vw"
-            loading="lazy"
-            className="object-cover object-center mix-blend-multiply transition-transform duration-300 group-hover:scale-105"
-          />
-          {badge && (
-            <ProductBadge
-              label={badge}
-              className="absolute right-0 top-0 z-10 md:right-2 md:top-8"
-            />
-          )}
-          <div className="absolute left-2 right-2 top-2 hidden md:block">
-            <span className="block truncate text-small font-bold uppercase tracking-tight text-brand-900">
+        <figure className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden bg-surface-productImage lg-touch:aspect-[16/9]">
+          {brandName && (
+            <span className="type-product-brand absolute left-3 top-3 z-10 text-brand-900">
               {brandName}
             </span>
-          </div>
-        </div>
+          )}
+          {badge && (
+            <ProductBadge label={badge} className="absolute right-3 top-3 z-10" />
+          )}
+          <Image
+            src={product.image?.asset?._id ?? ""}
+            alt={productName}
+            width={400}
+            height={400}
+            loading="lazy"
+            sizes="(max-width: 768px) 50vw, 25vw"
+            className="h-full w-full object-contain mix-blend-multiply transition-transform duration-300 group-hover:scale-105"
+          />
+        </figure>
 
-        <div className="flex flex-col gap-1 px-3 pt-3 md:px-8 md:pt-4">
-          <span className="block truncate text-tiny font-bold uppercase tracking-tight text-text-caption md:hidden">
-            {brandName}
-          </span>
-          <h3 className="text-small leading-snug line-clamp-4 break-words md:text-body">{productName}</h3>
+        <div className="flex min-w-0 flex-col gap-1 p-3">
+          <h3 className="type-product-title line-clamp-2 min-h-9">{productName}</h3>
         </div>
       </Link>
 
-      <div className="mt-auto flex flex-col gap-2 px-3 pt-2 pb-5 md:flex-row md:items-center md:justify-between md:gap-3 md:px-8 md:pb-8">
+      <div className="mt-auto flex items-center justify-between gap-2 px-3 pb-3">
         <Price
           value={centsToDisplay(product.price_data.unit_amount)}
-          className="type-price tabular-nums text-small leading-tight min-w-0 md:text-base"
+          className="type-product-price tabular-nums"
         />
         <BasketControls
           productId={product._id}
           isBasketPage={false}
           label="To cart"
-          wrapperClassName="w-full md:w-auto md:shrink-0"
-          size="sm"
+          addClassName="btn-product-add"
+          wrapperClassName="flex items-center gap-1"
         />
       </div>
     </article>

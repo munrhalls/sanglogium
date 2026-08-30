@@ -21,10 +21,10 @@ export default function IemsGallery({ iemsData }: IemsGalleryProps) {
         <div className="absolute bottom-[10%] right-[10%] w-[30%] h-[30%] bg-fractal-ring bg-no-repeat bg-[length:100%] opacity-10" />
       </div>
       <div className="relative z-10">
-        <div className="mx-auto max-w-content px-4 py-12 md:px-8 md:py-32 lg:py-20 lg-touch:py-20">
-          <div className="flex flex-col gap-4 md:gap-6 lg:gap-3">
+        <div className="mx-auto max-w-content px-4 py-12 md:px-8 md:py-20 lg-desktop:py-24 lg-touch:py-16">
+          <div className="flex flex-col gap-6 md:gap-8 lg-desktop:gap-10 lg-touch:gap-6">
             <IemsGalleryHeader href="/products/headphones/monitors-iems" />
-            <div className="grid grid-cols-2 gap-x-2 gap-y-5 md:grid-cols-4 md:gap-x-8 md:gap-y-12">
+            <div className="grid grid-cols-2 gap-x-3 gap-y-6 md:grid-cols-3 md:gap-x-5 md:gap-y-8 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-10">
               {displayed.map((iem, idx) => (
                 <IemCard
                   key={iem._id}

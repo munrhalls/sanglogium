@@ -23,7 +23,7 @@ const accessoriesBreakpointMap = {
   smPortrait: 2,
   xsLandscape: 2,
   xsPortrait: 2,
-  mobileLandscape: 1,
+  mobileLandscape: 2,
   mobilePortrait: 2
 };
 
@@ -41,7 +41,7 @@ export default function CategorySection({ category, items }: CategorySectionProp
 
   return (
     <Carousel itemsCount={filteredItems.length} breakpointMap={accessoriesBreakpointMap}>
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-6 lg-desktop:gap-6 lg-touch:gap-4">
         <h3 className="type-caption text-brand-400 font-bold uppercase">
           <span className="section-header-anchor">{category.name}</span>
         </h3>
@@ -59,19 +59,19 @@ export default function CategorySection({ category, items }: CategorySectionProp
           </CarouselTrack>
         </div>
 
-        <div className="flex justify-center items-center gap-4 pt-3">
+        <div className="flex justify-center items-center gap-4">
           <CarouselPrevious
             iconStyle="chevron"
             size={24}
             weight="bold"
-            className="pointer-events-auto bg-transparent text-brand-400 hover:bg-transparent hover:text-brand-100 h-9 w-9"
+            className="pointer-events-auto bg-transparent text-brand-400 hover:bg-transparent hover:text-brand-100 h-11 w-11"
           />
           <CarouselDots truncate />
           <CarouselNext
             iconStyle="chevron"
             size={24}
             weight="bold"
-            className="pointer-events-auto bg-transparent text-brand-400 hover:bg-transparent hover:text-brand-100 h-9 w-9"
+            className="pointer-events-auto bg-transparent text-brand-400 hover:bg-transparent hover:text-brand-100 h-11 w-11"
           />
         </div>
       </div>
