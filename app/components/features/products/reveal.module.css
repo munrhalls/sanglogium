@@ -1,0 +1,53 @@
+/* Product-grid image reveal — ported from app/(test)/streaming-poc
+   (issue sang-logium-7j8). The <img> ships blurred in the static SSR HTML and
+   un-blurs on its own byte arrival; the trigger is an inline capture-phase
+   `load` listener (ImageRevealScript), never React — so it fires per image,
+   before hydration, and cannot batch into one wall (AI_LESSONS L07). No
+   `placeholder="blur"` on <Image>, so next/image never re-renders the <img>
+   and never clobbers the `data-shown` attribute (L03/L07). `opacity` is left
+   at 1 — only `filter` animates — so each image paints the frame its bytes
+   arrive and chunk streaming stays intact (L06). */
+
+/* Wrapper — a :has() hook so the reveal state on the <img> can hide the
+   sibling placeholder in pure CSS. */
+.wrap:has(img[data-shown]) .lqip {
+  opacity: 0;
+}
+
+/* Real <img>. `.reveal` is a static rule = present from the first SSR byte.
+   Rendered AFTER .lqip in the DOM so it paints on top with no z-index (the
+   brand label's own z-10 still sits above it). */
+.reveal {
+  filter: blur(8px);
+  transition: filter 350ms ease-out;
+}
+
+/* Flipped by a plain attribute the inline script sets on `load` — not a React
+   class, so nothing reconciles it and there is no hydration mismatch. */
+.reveal[data-shown] {
+  filter: blur(0);
+}
+
+/* LQIP blur-up placeholder — a sibling layer behind the <img>, framed with
+   `contain` so the blurred preview sits in exactly the same rectangle the
+   real `object-contain` photo will land in (no reframe, no halo). No blend
+   mode of its own. */
+.lqip {
+  position: absolute;
+  inset: 0;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(8px);
+  transition: opacity 350ms ease-out;
+}
+
+/* Reduced motion keeps the blur resolve (it is a crossfade, not vestibular
+   motion — snapping it to `none` made the reveal invisible on machines with
+   the preference on, L03). Just shorten it. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .lqip {
+    transition-duration: 200ms;
+  }
+}

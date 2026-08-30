@@ -1,41 +1,47 @@
 import { Suspense } from "react";
 import Image from "next/image";
 import { sanityFetch } from "@/sanity-cms/lib/client";
+import type { ChunkProduct } from "./types";
+import styles from "./reveal.module.css";
 
-const ROW_SIZE = 10;
+/* streaming-poc — blur→sharp image reveal driven by an inline script that runs
+ * in the streamed shell, BEFORE any row <img> is parsed and with zero dependency
+ * on React hydration.
+ *
+ * Why the earlier attempts walled: the reveal trigger (React onLoad / a ref
+ * callback) only becomes live after hydration. On the dev server hydration is
+ * ~15s; every image is `complete` by then, so all 30 flipped in the one
+ * hydration pass = synchronized un-blur.
+ *
+ * This script attaches a capture-phase `load` listener on `document` (load does
+ * not bubble but IS delivered in the capture phase). Every image's load is
+ * caught the instant its bytes arrive — staggered, ~5s spread on 3G. Double
+ * requestAnimationFrame guarantees one painted blurred frame before the flip,
+ * so the blur eases (not snaps). `data-shown` is a plain attribute React never
+ * renders, so nothing reconciles it away and there is no hydration warning.
+ * The page is 100% server components — no "use client" in the tile path. */
+const REVEAL_SCRIPT = `
+(function(){
+  function reveal(t){
+    if(!t || t.tagName!=='IMG' || !t.hasAttribute('data-reveal') || t.hasAttribute('data-shown')) return;
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){ t.setAttribute('data-shown',''); });
+    });
+  }
+  document.addEventListener('load', function(e){ reveal(e.target); }, true);
+  function scan(){
+    var imgs = document.querySelectorAll('img[data-reveal]:not([data-shown])'), i;
+    for(i=0;i<imgs.length;i++){ if(imgs[i].complete && imgs[i].naturalWidth>0) reveal(imgs[i]); }
+  }
+  new MutationObserver(scan).observe(document.documentElement,{childList:true,subtree:true});
+  document.addEventListener('DOMContentLoaded', scan);
+  window.addEventListener('load', scan);
+})();
+`;
 
-/* Plain text in the server output — not a React component, so it cannot
-   hydrate, cannot throw, and cannot collapse the row-by-row streaming.
-   It does what the isolated harness did: once a tile has real pixels
-   (load event, or already-complete by the time we look), wait two frames,
-   then add `-done` so the CSS blur→sharp transition runs. Rows arrive after
-   this script, hence the MutationObserver. */
-const REVEAL_SCRIPT = `(function(){
-var SEL='img.spoc-reveal';
-function done(img){requestAnimationFrame(function(){requestAnimationFrame(function(){img.classList.add('spoc-reveal-done');});});}
-function arm(img){
-if(img.getAttribute('data-spoc-armed'))return;
-img.setAttribute('data-spoc-armed','1');
-if(img.complete&&img.naturalWidth>0){done(img);return;}
-img.addEventListener('load',function(){done(img);},{once:true});
-img.addEventListener('error',function(){done(img);},{once:true});
-}
-function scan(){var l=document.querySelectorAll(SEL);for(var i=0;i<l.length;i++)arm(l[i]);}
-scan();
-try{new MutationObserver(scan).observe(document.documentElement,{childList:true,subtree:true});}catch(e){}
-document.addEventListener('DOMContentLoaded',scan);
-window.addEventListener('load',scan);
-})();`;
-
-interface ChunkProduct {
-  _id: string;
-  name: string;
-  slug: { current: string } | null;
-  price_data: { unit_amount: number } | null;
-  image: {
-    asset: { _id: string; metadata: { lqip: string | null } | null } | null;
-  } | null;
-}
+const ROW_SIZE = 5;
+const ROW_COUNT = 6;
+const PRIORITY_ROWS = 2;
 
 function fetchProductsChunk(offset: number, limit: number) {
   return sanityFetch<ChunkProduct[]>({
@@ -44,7 +50,7 @@ function fetchProductsChunk(offset: number, limit: number) {
       name,
       slug{current},
       price_data,
-      image{ asset->{_id, metadata{lqip}} }
+      image{ asset->{_id, metadata{lqip, isOpaque}} }
     }`,
   });
 }
@@ -75,25 +81,30 @@ async function ProductRow({
     <div className="grid grid-cols-5 gap-2 sm:grid-cols-10">
       {products.map((product) => {
         const assetId = product.image?.asset?._id ?? null;
-        const lqip = product.image?.asset?.metadata?.lqip ?? null;
+        const meta = product.image?.asset?.metadata ?? null;
+        // Only use the LQIP blur as the underlay for opaque images. A transparent
+        // PNG would let the blur bleed through its transparent regions, so those
+        // get a plain bg-neutral-100 instead. No cleanup script needed.
+        const lqip = meta?.isOpaque === false ? null : (meta?.lqip ?? null);
         const price = product.price_data
           ? (product.price_data.unit_amount / 100).toFixed(2)
           : null;
 
         return (
           <div key={product._id} className="flex flex-col gap-2">
-            <div className="rounded relative aspect-square w-full overflow-hidden bg-neutral-100">
+            <div
+              className={`relative aspect-square w-full overflow-hidden rounded bg-neutral-100 ${styles.tile}`}
+              style={lqip ? { backgroundImage: `url("${lqip}")` } : undefined}
+            >
               {assetId && (
                 <Image
                   src={assetId}
                   alt={product.name}
                   fill
                   sizes="(max-width: 768px) 50vw, 20vw"
-                  className="object-cover spoc-reveal"
+                  className={`object-cover ${styles.reveal}`}
                   priority={priority}
-                  {...(lqip
-                    ? { placeholder: "blur" as const, blurDataURL: lqip }
-                    : {})}
+                  data-reveal=""
                 />
               )}
             </div>
@@ -107,27 +118,20 @@ async function ProductRow({
 }
 
 export default function StreamingPocPage() {
-  const row1Promise = fetchProductsChunk(0, ROW_SIZE);
-  const row2Promise = fetchProductsChunk(ROW_SIZE, ROW_SIZE);
-  const row3Promise = fetchProductsChunk(ROW_SIZE * 2, ROW_SIZE);
+  const rows = Array.from({ length: ROW_COUNT }, (_, i) => ({
+    promise: fetchProductsChunk(i * ROW_SIZE, ROW_SIZE),
+    priority: i < PRIORITY_ROWS,
+  }));
 
   return (
     <div className="space-y-8 p-6">
       <script dangerouslySetInnerHTML={{ __html: REVEAL_SCRIPT }} />
-
       <h1 className="text-xl font-bold">Streaming POC</h1>
-
-      <Suspense fallback={<RowSkeleton />}>
-        <ProductRow promise={row1Promise} priority />
-      </Suspense>
-
-      <Suspense fallback={<RowSkeleton />}>
-        <ProductRow promise={row2Promise} priority={false} />
-      </Suspense>
-
-      <Suspense fallback={<RowSkeleton />}>
-        <ProductRow promise={row3Promise} priority={false} />
-      </Suspense>
+      {rows.map((row, i) => (
+        <Suspense key={i} fallback={<RowSkeleton />}>
+          <ProductRow promise={row.promise} priority={row.priority} />
+        </Suspense>
+      ))}
     </div>
   );
 }

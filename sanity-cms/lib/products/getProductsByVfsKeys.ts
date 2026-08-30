@@ -47,7 +47,7 @@ const PRODUCT_PROJECTION = groq`{
   image {
     asset-> {
       _id,
-      metadata { lqip }
+      metadata { lqip, isOpaque }
     }
   },
   slug {

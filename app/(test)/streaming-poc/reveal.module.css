@@ -1,0 +1,29 @@
+/* streaming-poc-3 — per-image reveal driven by the RAW <img> load event.
+   Isolated from the real .spoc-* globals. */
+
+.tile {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Ships blurred in the SSR HTML (this rule is static), opacity untouched so the
+   image paints the frame its bytes arrive. */
+.reveal {
+  filter: blur(8px);
+  transition: filter 350ms ease-out;
+}
+
+/* Flipped by a data attribute set imperatively in the raw `load` handler —
+   NOT a React class. No re-render, no batching, no next/image onLoad /
+   img.decode() in the path. React never reconciles an unknown data-* attr, so
+   no hydration mismatch. Each image un-blurs on its own byte arrival. */
+.reveal[data-shown] {
+  filter: blur(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    transition-duration: 200ms;
+  }
+}

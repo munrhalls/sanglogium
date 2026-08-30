@@ -1,6 +1,7 @@
 import React from "react";
 import { cn } from "@/lib/utils/tailwind";
 import { ProductCard } from "./ProductCard";
+import { ImageRevealScript } from "./ImageRevealScript";
 import type { Product } from "@/sanity-cms/lib/products/getProductsByVfsKeys";
 
 interface ProductGridProps {
@@ -31,21 +32,24 @@ export function ProductGrid({
   const wishlistSet = wishlistProductIds ? new Set(wishlistProductIds) : null;
 
   return (
-    <div
-      data-testid="product-grid"
-      className={cn(
-        "grid gap-8",
-        "grid-cols-1 xs:grid-cols-2 lg-touch:grid-cols-2 lg-desktop:grid-cols-3",
-        className,
-      )}
-    >
-      {products.map((product) => (
-        <ProductCard
-          key={product._id}
-          product={product}
-          isWishlisted={wishlistSet?.has(product._id) ?? false}
-        />
-      ))}
-    </div>
+    <>
+      <ImageRevealScript />
+      <div
+        data-testid="product-grid"
+        className={cn(
+          "grid gap-8",
+          "grid-cols-1 xs:grid-cols-2 lg-touch:grid-cols-2 lg-desktop:grid-cols-3",
+          className,
+        )}
+      >
+        {products.map((product) => (
+          <ProductCard
+            key={product._id}
+            product={product}
+            isWishlisted={wishlistSet?.has(product._id) ?? false}
+          />
+        ))}
+      </div>
+    </>
   );
 }

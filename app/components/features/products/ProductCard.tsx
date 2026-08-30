@@ -42,7 +42,6 @@ export function ProductCard({
             <ProductImage
               image={product.image}
               alt={product.name}
-              className="opacity-100 transition-opacity duration-300 group-hover:scale-110"
               priority={priority}
             />
           </figure>

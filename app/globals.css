@@ -228,45 +228,6 @@ input[type="range"]::-moz-range-thumb {
   animation: fadeOut 3s forwards;
 }
 
-/* Streaming POC — calm blur-to-sharp image arrival (issue sang-logium-7j8).
-   `.spoc-reveal` is in the SSR HTML, so the real bitmap is already blurred the
-   first frame the browser paints it — that native paint is the pop this removes.
-   An inline script on the POC page adds `-done` two frames after the pixels
-   arrive and the transition eases it sharp. Blur, not
-   opacity: the LQIP placeholder is a background-image on the same <img>, so
-   opacity: 0 would blank the tile; without JS it stays blurry but visible. */
-.spoc-reveal {
-  filter: blur(12px);
-  transition: filter 340ms ease-out;
-}
-
-.spoc-reveal-done {
-  filter: blur(0);
-}
-
-/* Safety net: if the inline reveal script never runs (blocked, error, no JS),
-   every tile still eases sharp on its own. The keyframe has no `from`, so it
-   starts from whatever the element's own filter is at 2s — blur(0) when the
-   script already finished (a no-op), blur(12px) when it never ran. */
-@keyframes spocRevealFailsafe {
-  to {
-    filter: blur(0);
-  }
-}
-
-.spoc-reveal {
-  animation: spocRevealFailsafe 340ms ease-out 2s forwards;
-}
-
-/* Reduced motion still gets the blur — a blur-to-sharp resolve is not motion,
-   and `filter: none` here killed the effect outright on any machine with the
-   preference on. Just shorten the ease. */
-@media (prefers-reduced-motion: reduce) {
-  .spoc-reveal {
-    transition: filter 150ms ease-out;
-  }
-}
-
 /* Section Header Anchor — decorative line prefix */
 .section-header-anchor {
   position: relative;

@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { sanityImageLoader } from "@/lib/utils/sanityImageLoader";
+import styles from "./reveal.module.css";
 
 interface ProductImageProps {
   image: any;
@@ -18,6 +18,11 @@ export function ProductImage({
   // Get the asset reference - Sanity can use either _ref or _id
   const assetRef = image?.asset?._ref || image?.asset?._id;
   const lqip: string | null = image?.asset?.metadata?.lqip ?? null;
+  const isOpaque: boolean | null = image?.asset?.metadata?.isOpaque ?? null;
+  // Blur-up placeholder only for opaque photos — a transparent PNG would let
+  // the blurred LQIP bleed through its transparent regions, so those fall back
+  // to the flat surface colour (streaming-poc parity).
+  const showLqip = lqip !== null && isOpaque !== false;
 
   if (!assetRef) {
     return (
@@ -32,19 +37,24 @@ export function ProductImage({
 
   return (
     <div
-      className={`relative h-full w-full ${className || ""}`}
+      className={`relative h-full w-full ${styles.wrap} ${className || ""}`}
       data-testid="product-image"
     >
+      {showLqip && (
+        <div
+          aria-hidden
+          className={styles.lqip}
+          style={{ backgroundImage: `url("${lqip}")` }}
+        />
+      )}
       <Image
         src={assetRef}
-        loader={sanityImageLoader}
         alt={alt}
         fill
         sizes="(max-width: 768px) 50vw, 25vw"
-        className="object-contain mix-blend-multiply transition-transform duration-700"
-        objectFit="contain"
+        className={`object-contain mix-blend-multiply ${styles.reveal}`}
         priority={priority}
-        {...(lqip ? { placeholder: "blur" as const, blurDataURL: lqip } : {})}
+        data-reveal=""
       />
     </div>
   );

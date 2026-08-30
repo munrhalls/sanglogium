@@ -82,7 +82,7 @@ New `app/(test)/streaming-poc/RevealImage.tsx` (committed form):
 - `.spoc-reveal-done { filter: blur(0) }`
 - `@media (prefers-reduced-motion: reduce) { .spoc-reveal { transition: filter 150ms ease-out } }`
 
-`LESSONS.md` L03 (same commit) states: "an `img.complete`-at-hydration check was the
+`AI_LESSONS.md` L03 (same commit) states: "an `img.complete`-at-hydration check was the
 bug in v1 + v2". The committed `RevealImage.tsx` contains no `img.complete` check;
 v1's code is not in git history.
 
@@ -116,6 +116,253 @@ v1's code is not in git history.
 - reduced-motion block unchanged (overrides `transition` only)
 
 Reported outcome this session: "It doesn't work."
+
+**Diagnosis (this session, from installed source).** `next/image` re-renders its own
+`<img>` when the bitmap loads — `image-component.js` `handleLoading` → `setBlurComplete(true)`
+→ React reconciles `className` on the `<img>` back to its VDOM value
+(`object-cover spoc-reveal`), **dropping any class added from outside React**. So the
+script island, the `MutationObserver`, and Attempt D's inline script all lose the race:
+their `-done` class is clobbered by next/image's own load re-render. External JS cannot
+win. Separately, `spocRevealFailsafe` clears the blur at a fixed `2s` regardless of
+whether the bitmap arrived → re-introduces a load-independent pop.
+
+---
+
+## Attempt E — client leaf, React owns the class (working tree, uncommitted)
+
+Acts on the diagnosis above: the `-done` class must be React state on the same element,
+so next/image's load re-render *carries* it instead of clobbering it.
+
+- New `app/(test)/streaming-poc/RevealImage.tsx` — `"use client"` leaf, imports only
+  `react` + `next/image`, renders synchronously (no suspend/throw path → L02 safe).
+  `useState(false)`; `className` appends `spoc-reveal` always, `spoc-reveal-done` when
+  revealed; `onLoad` → `requestAnimationFrame` ×2 → `setRevealed(true)`. No `img.complete`
+  branch (that was the v1/v2 bug; `onLoad` fires for cached images too).
+- `page.tsx` — inline script + `REVEAL_SCRIPT` removed; `import Image from "next/image"`
+  → `import { RevealImage }`; `<Image>` → `<RevealImage>`; `className` back to
+  `"object-cover"` (RevealImage owns `spoc-reveal`). `placeholder="blur"` kept.
+  `ProductRow` / `<Suspense>` / fetch code byte-identical.
+- `app/globals.css` — `spocRevealFailsafe` keyframe + its `.spoc-reveal { animation }`
+  block deleted. `.spoc-reveal` → `blur(14px)` / `transition: filter 450ms`. Reduced-motion
+  block kept, shortened to `180ms` (still blurs, never `filter: none`).
+
+vs v2: identical shape + the double `requestAnimationFrame` (forces one painted blurred
+frame before the flip — the "from" state v2 never painted) − the `img.complete` check.
+
+Outcome: pending human sign-off on a real foregrounded tab under Slow-4G (per L01/L04,
+not verified via the preview pane or browser automation). Reported "it doesn't work" —
+the blurred-frame window between next/image's blur-drop and the `-done` flip was too
+thin to perceive, and next/image removes its own blur floor at that same instant.
+
+---
+
+## Attempt F — persistent LQIP underlay + load-gated opacity/blur crossfade
+
+Combines the two halves no prior attempt had together: the persistent manual LQIP
+underlay from Attempt A + the load-gated foreground transition from C–E.
+`placeholder="blur"` dropped entirely.
+
+### F.1 — client leaf (RevealImage) — REVEAL WORKS, but regressed streaming
+
+- `page.tsx` — per tile, when `lqip` present, a sibling `<div aria-hidden
+  className="spoc-lqip" style={{ backgroundImage: url(lqip) }} />` before `<RevealImage>`.
+  `<RevealImage>` client leaf, `useState`, `onLoad` → rAF×2 → `setRevealed`.
+- `app/globals.css` — new `.spoc-lqip` (absolute inset-0, `background-size: cover`,
+  `filter: blur(10px)`, `transform: scale(1.1)`). `.spoc-reveal` →
+  `opacity: 0; filter: blur(8px); transition: opacity+filter 450ms`. `-done` →
+  `opacity: 1; filter: blur(0)`. Reduced-motion → 320ms.
+
+Outcome: the blur→sharp reveal itself is correct (user: "7j8 is actually solved").
+BUT reintroducing a `"use client"` component in every tile regressed the
+sang-logium-7ao streaming UX — 30 client leaves ship + hydrate in one React pass, so
+on a slow link the rows reveal together as one wall instead of arriving as fast small
+chunks. Hard constraint now recorded on sang-logium-7j8.
+
+### F.2 — inline script, no client component (working tree, uncommitted) — HARMONIZED
+
+Same `.spoc-lqip` underlay + same CSS as F.1. Difference: the `-done` trigger moves
+back off React.
+
+- `page.tsx` — `RevealImage` deleted; plain server `<Image className="object-cover
+  spoc-reveal">` (no `placeholder`/`blurDataURL`). Attempt D's `REVEAL_SCRIPT`
+  restored (inline `<script>`, first child of the page — no hydration, cannot collapse
+  per-row `<Suspense>` streaming). `.spoc-lqip` sibling div kept.
+- `globals.css` — unchanged from F.1 (comment updated: `-done` now from the script).
+- `RevealImage.tsx` — deleted.
+
+Why the script wins this time (D's blocker is gone): next/image calls
+`setBlurComplete()` — and re-renders its `<img>`, reconciling `className` from the
+VDOM and wiping an externally-added `-done` — **only when `placeholder !== 'empty'`**
+(`node_modules/next/dist/client/image-component.js` `handleLoading`). D still had
+`placeholder="blur"`, so its script lost the race. F.2 passes no placeholder, so
+next/image does no load-time state change and the script's class sticks. The blurred
+preview that `placeholder="blur"` used to provide is now the `.spoc-lqip` layer.
+
+Outcome (live check, dev :3000): reveal works, streaming UX intact — meets the hard
+constraint. Two follow-up hassles surfaced, fixed in F.3.
+
+### F.3 — hydration + cleanup (superseded by G)
+
+Two defects in F.2, both from the script mutating the DOM before React hydrates row 1
+(cached / priority images are already `complete`):
+
+1. **Hydration console error** — `classList.add('spoc-reveal-done')` changed the
+   React-controlled `className`; at hydration React saw `object-cover spoc-reveal` in
+   its VDOM vs `... spoc-reveal-done` in the DOM → "tree hydrated but some attributes
+   … didn't match … won't be patched up". Fix: the reveal is now a **`data-spoc-done`
+   attribute**, not a class. React only reconciles attributes it rendered itself, so
+   an extra `data-*` is ignored — the same reason the script's pre-existing
+   `data-spoc-armed` never warned. `globals.css`: `.spoc-reveal-done` →
+   `.spoc-reveal[data-spoc-done]`.
+2. **`.spoc-lqip` underlay lingered** in the final DOM behind every tile — 30 inert
+   `filter: blur` + `transform: scale` composite layers. Fix: `done()` now
+   `p.remove()`s the underlay sibling 700ms after reveal (after the 450ms transition,
+   long after that Suspense boundary hydrated; ProductRow is a server component that
+   never re-renders client side, so nothing reconciles against it).
+
+No `suppressHydrationWarning` needed. `<Image>` unchanged from F.2
+(`className="object-cover spoc-reveal"`, no placeholder).
+
+Outcome: works, but the mechanism (inline `<script dangerouslySetInnerHTML>` +
+`MutationObserver` on `documentElement` + attribute-mutating framework-owned DOM +
+`setTimeout` node removal) is not something a production team ships.
+
+---
+
+## Attempt G — small "use client" wrapper, blur-only reveal (working tree, uncommitted) — CURRENT
+
+The industry-standard next/image reveal (Vercel commerce does the same): a small
+`"use client"` leaf, `onLoad` → `setState` → class, state seeded from
+`ref.current?.complete`. F.1 tried this and regressed the sang-logium-7ao streaming;
+G keeps the pattern but removes the regression by fixing *what* the reveal animates.
+
+- `RevealImage.tsx` — `"use client"`, `useState(false)`. `ref` callback:
+  `if (img?.complete) setLoaded(true)` (an image done before this leaf hydrates —
+  priority / warm cache — reveals at once). `onLoad` → `setLoaded(true)`. Renders the
+  `.spoc-lqip` sibling while `!loaded` and unmounts it on load (one commit — exactly
+  what next/image's own `placeholder="blur"` does). `className` appends `spoc-reveal`
+  always, `spoc-reveal-done` when loaded. Takes `lqip` as a prop.
+- `page.tsx` — `REVEAL_SCRIPT` + `<script>` deleted; `import Image` → `import
+  { RevealImage }`; `<Image>` → `<RevealImage … lqip={lqip} />`. `ProductRow` /
+  `<Suspense>` / fetch unchanged.
+- `globals.css` — `.spoc-reveal` is **blur only, no `opacity`**:
+  `filter: blur(8px)` → `.spoc-reveal-done { filter: blur(0) }`, `transition:
+  filter 450ms` (320ms reduced-motion). `.spoc-lqip` unchanged.
+
+Why F.1 regressed and G does not: F.1's `.spoc-reveal` was `opacity: 0` until the
+client state flipped, so on a slow link every image stayed invisible until its leaf
+hydrated, and the hydration pass flipped them in a burst = one wall, later. G's image
+is `opacity: 1` always and only *blurred* pre-reveal, so it paints the frame its
+bytes arrive — hydration-independent — and products still stream in as fast small
+chunks. Hydration only decides when the blur eases off (and a synchronised un-blur is
+7ao criterion 3, "uniform motion, no stagger", not a defect).
+
+No hydration mismatch: `useState(false)` renders identically on both sides; the class
+change is a normal post-hydration update, not a hydration-time DOM diff. No
+`suppressHydrationWarning`, no `data-*` attribute hack, no script.
+
+Outcome: pending human sign-off on :3000 — reveal visible, console clean, rows 1/2/3
+still flush independently under throttling.
+
+---
+
+## Attempt H — `/streaming-poc-3`: per-row client component, blur-only (new page, alongside G)
+
+Separate page (`app/(test)/streaming-poc-3/`), left next to G for side-by-side sign-off.
+Streaming shape per audit Gap 2: **6 `<Suspense>` rows of 5** (was 3×10), async server
+`ProductRow`, **first 2 rows `priority`**, rows 3-6 `priority={false}` (→ `loading="lazy"`,
+downloads start on scroll — this is what staggers the lower rows).
+
+Changes vs Attempt G:
+
+- One `"use client"` component **per row** (`RevealRow`), not one per tile. G ships 30
+  client leaves; H ships 3. `RevealRow` holds a `Set<productId>` of loaded ids in
+  `useState`; each local `Tile` gets `revealed` as a plain prop and React toggles the
+  blur-clear class. No imperative DOM, no `data-*` attribute, no reliance on next/image's
+  no-placeholder re-render behaviour — React owns the className.
+- LQIP is the tile container's `background-image` (CSS `background-size: cover`), not a
+  sibling `<div>`. No node to unmount (G) and no persistent scaled-blur layer (F.1 /
+  poc-2). Nothing to clean up.
+- `.reveal` is `filter: blur(8px); transition: filter 350ms ease-out` in a CSS **module**
+  (`reveal.module.css`, isolated like poc-2). `opacity` untouched. `.done { filter:
+  blur(0) }` added by React state. 350ms is inside the 300–400ms benchmark band
+  (audit §2); G used 450ms.
+- Reveal triggers: `onLoad` + `onError` + a `ref` callback checking `img.complete &&
+  naturalWidth > 0`, all calling one idempotent `reveal(id)`. No `img.complete` *fork*
+  (that was the v1/v2 bug — L03); it is an additive trigger. `onError` replaces poc-2's
+  6s failsafe animation (a load-independent reveal — the D/E flaw).
+- No `placeholder="blur"` on `<Image>` (L03). Verified in installed source
+  (`node_modules/next/dist/client/image-component.js` L49): with no placeholder,
+  `handleLoading` never calls `setBlurComplete` → next/image does no load-time re-render
+  → a React-owned className is safe regardless. It still replays `onLoad` for
+  already-complete images (L52), so the `ref`/`complete` check is belt-and-suspenders.
+
+Why H does not regress 7ao streaming: identical to G's reasoning — the `<img>` is
+`opacity: 1` and ships blurred from the static stylesheet, so it paints on byte-arrival
+with no JS on the path; rows still flush chunk by chunk. Per-row vs per-tile does not
+change when any image loads or when its blur clears (each tile's `onLoad` still fires
+independently), so reveals stay as independent as the load events. Fewer hydration
+units, same guarantee.
+
+The blur→sharp cascade is data-driven — each `<img>` reveals on its own `load`. It is
+visible only when byte arrivals are spread over time (DevTools Slow 4G, or lazy rows on
+scroll). On localhost / warm cache all bytes land in one frame, React batches the
+`setRevealed` calls, and every in-view tile reveals in the same commit. That is correct
+(audit §2); a guaranteed cascade on any connection would need an artificial per-tile
+`transition-delay`, which 7ao criterion 3 ruled out.
+
+Outcome: pending human sign-off on :3000 — under DevTools Slow 4G, confirm the 6 rows
+flush independently (blurred images visible immediately, not one late wall), lower rows
+start loading on scroll, and each image visibly eases blur→sharp on its own load.
+
+---
+
+## Attempt I — inline-script reveal, capture-phase `load` delegation — SHIPPED
+
+The per-row / per-tile React approaches (H, G, F.1) all walled the same way, and
+Resource Timing finally showed why. `performance.getEntriesByType('resource')` on
+`/streaming-poc-3` under 3G: **native `load` events are staggered across ~5s**
+(`nativeLoad` spread ≈ 4980ms, tracking `bytesDone` to the millisecond). The
+reveal still collapsed to one frame. So the transport was never the problem — the
+byte cascade is real and visible (it is the "enhanced blur" phase: real image
+painted, still `blur(8px)`, arriving tile by tile).
+
+The collapse: every React trigger (`onLoad`, or a `ref` callback checking
+`img.complete`) only goes live **after hydration**. On the dev server hydration
+is ~15s (Exp 2); by then every image is `complete`, so the `img.complete` branch
+fires for all 30 in the single hydration pass → one batched commit → synchronised
+un-blur. `next/image`'s own `onLoad` (routed through `img.decode()`) has the same
+end result. Hydration-gated == batched, regardless of the component shape.
+
+Fix — take the trigger off React entirely:
+
+- `page.tsx` — a `<script dangerouslySetInnerHTML>` as the first child of the
+  page. It runs in the streamed shell, **before any row `<img>` is parsed and
+  before hydration**. It adds one capture-phase `load` listener on `document`
+  (`load` does not bubble but IS delivered capture-phase), plus a
+  `MutationObserver`/`scan` for images already `complete`. On fire → double
+  `requestAnimationFrame` (one painted blurred frame) → `img.setAttribute
+  ('data-shown','')`.
+- `reveal.module.css` — `.reveal { filter: blur(8px); transition: filter 350ms }`,
+  `.reveal[data-shown] { filter: blur(0) }`. Attribute selector, not a class:
+  React never renders `data-shown`, so no reconcile, no hydration warning.
+- Page is 100% server components. `RevealRow.tsx` unused (left in place).
+- Transparent-PNG bleed: the LQIP underlay (container `background-image`) shows
+  through transparent regions of the loaded image. Fixed server-side — query
+  `metadata.isOpaque`, and only set the LQIP background when `isOpaque !== false`;
+  transparent products get plain `bg-neutral-100`. No cleanup script, no
+  `setTimeout` node/style removal.
+
+Outcome: confirmed working on the dev server under 3G — LQIP fill → real image
+eases blur→sharp on its own `load`, staggered across the whole download window,
+no final wall. Streaming (6 Suspense rows of 5) intact.
+
+Why it beats the earlier script attempts (D, F.2, F.3): no `placeholder="blur"`
+(so `next/image` never re-renders the `<img>` and never clobbers the attribute —
+verified `image-component.js` L49), attribute not class (no hydration warning,
+the F.3 fix), LQIP is a plain container background (nothing to remove, unlike
+F.3's `.spoc-lqip` node), and `isOpaque` handles transparency without any
+post-reveal cleanup.
 
 ---
 
@@ -187,10 +434,10 @@ Suspense streaming).
 
 - `next` 15.5.15 (`package.json`), `react` 19.2.6 (`audit.md`).
 - Dev machine reports `prefers-reduced-motion: reduce` = TRUE
-  (`reveal-diagnostic.html` output line; `LESSONS.md` L03).
-- `LESSONS.md` L01: in-app preview pane forces `prefers-reduced-motion: reduce` and
+  (`reveal-diagnostic.html` output line; `AI_LESSONS.md` L03).
+- `AI_LESSONS.md` L01: in-app preview pane forces `prefers-reduced-motion: reduce` and
   lags `img.complete` / network readouts.
-- `LESSONS.md` L04: prior browser-automation debugging of this bug produced a wrong
+- `AI_LESSONS.md` L04: prior browser-automation debugging of this bug produced a wrong
   "page never hydrates" reading from a backgrounded tab.
 
 ---
@@ -203,7 +450,7 @@ Suspense streaming).
 - `_project/audits/streaming-poc/audit.md` — pre-7ao audit + external benchmark
 - `_project/audits/streaming-poc/todo.md` — attempt notes, whiteboards
 - `_project/audits/streaming-poc/reveal-diagnostic.html` — isolated harness
-- `_project/LESSONS.md` — L01–L05
+- `_project/AI_LESSONS.md` — L01–L08
 
 ## Commits
 

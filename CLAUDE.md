@@ -31,14 +31,19 @@ framework timing confounds every reading. Write a throwaway single-file `.html` 
 build, no deps — that reproduces only the mechanism, log `performance.now()` events, open
 it in the real browser, read the answer. Minutes to build, clean yes/no, runs on the
 actual test machine. Keep it next to the relevant audit/issue notes, delete it when the
-issue closes. See `_project/LESSONS.md` L05 (and L04 for its counterpart: don't watch
+issue closes. See `_project/AI_LESSONS.md` L05 (and L04 for its counterpart: don't watch
 timing bugs happen via browser automation).
 
 ## Lessons store
 
-`_project/LESSONS.md` — concrete traps that already cost real time on this repo.
+`_project/AI_LESSONS.md` — concrete traps that already cost real time on this repo.
 Worth a look before non-trivial work in an area it may cover. Add to it **only** when a
 mistake cost >15 min or a wrong turn and you can write a specific trigger. Keep it lean.
+(`_project/HUMAN_LESSONS.md` is the human-facing counterpart.)
+
+**L09–L11 are cross-cutting, not area-specific — read them before any debugging task:**
+measure before you build (L09), repo artifacts are evidence not authority (L10),
+never fake an arrival/reveal animation the real event should drive (L11).
 
 ## Build & Test
 
