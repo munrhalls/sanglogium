@@ -105,6 +105,7 @@ async function ProductRow({
                   className={`object-cover ${styles.reveal}`}
                   priority={priority}
                   data-reveal=""
+                  suppressHydrationWarning
                 />
               )}
             </div>

@@ -48,47 +48,41 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => {
   const modelName = getModelName(product.name, product.brand.name);
 
   return (
-    <article className="card-product-dark flex h-full flex-col gap-3 lg-touch:gap-2 lg-touch:p-3 lg:grid lg:grid-cols-[1fr_auto] lg:items-center">
-      <Link href={`/product/${product.slug}`} className="flex flex-grow flex-col lg:contents">
-        <figure className="relative flex aspect-[5/3] lg-touch:aspect-[5/3] w-full items-center justify-center overflow-hidden rounded-lg bg-surface-productImage p-5 lg-touch:p-3 lg:col-span-2">
-          <span className="absolute left-4 top-2 z-10 text-tiny xs:text-xs tracking-tight text-brand-900">
+    <article className="group card-product-dark flex h-full min-w-0 flex-col overflow-hidden !p-0">
+      <Link href={`/product/${product.slug}`} className="flex flex-grow flex-col">
+        <figure className="relative flex aspect-[5/3] w-full items-center justify-center overflow-hidden bg-surface-productImage">
+          <span className="type-product-brand absolute left-3 top-3 z-10 text-brand-900">
             {product.brand.name}
           </span>
-        <Image
-          src={product.image?.asset?._id ?? ""}
-          alt={product.name}
-          width={450}
-          height={450}
-          priority={idx === 0}
-          loading={idx === 0 ? "eager" : "lazy"}
-          className="h-full w-full object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-110"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 z-[5] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.05)]"
-          style={{
-            background:
-              "radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.04) 100%)",
-          }}
-        />
-      </figure>
+          <Image
+            src={product.image?.asset?._id ?? ""}
+            alt={product.name}
+            width={450}
+            height={450}
+            priority={idx === 0}
+            loading={idx === 0 ? "eager" : "lazy"}
+            className="h-full w-full object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-110"
+          />
+        </figure>
 
-      <div className="flex flex-grow flex-col px-3 pt-1 mt-2 lg-touch:px-2 lg-touch:pt-0.5 lg:contents">
-        <h3 className="text-xs lg:col-span-2 lg:px-3">{modelName}</h3>
-        <p className="type-price mt-1 lg:mt-0 lg:px-3 lg:text-small">
+        <div className="flex min-w-0 flex-grow flex-col gap-1 p-3">
+          <h3 className="type-product-title line-clamp-2 min-h-[2.5em]">{modelName}</h3>
+        </div>
+      </Link>
+
+      <div className="flex items-center justify-between gap-2 px-3 pb-3">
+        <p className="type-product-price tabular-nums">
           ${centsToDisplay(product.price_data.unit_amount)}
         </p>
+        <BasketControls
+          productId={product._id}
+          isBasketPage={false}
+          label="Add"
+          addClassName="btn-product-add"
+          wrapperClassName="flex items-center gap-1"
+        />
       </div>
-    </Link>
-
-    <div className="px-3 pb-3 pt-1 mt-auto lg:m-0 lg:p-0 lg:pr-3">
-      <BasketControls
-        productId={product._id}
-        isBasketPage={false}
-        wrapperClassName="flex items-center gap-1"
-      />
-    </div>
-  </article>
+    </article>
     );
   };
 

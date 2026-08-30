@@ -34,7 +34,7 @@ the instant the file changes (no page reload).
 | See open work | `bd ready` / `bd list` |
 | Read a card | `bd show <id>` |
 | Claim + start it | `bd update <id> --claim` (assignee + `in_progress` in one step) |
-| Move columns | `bd update <id> --status in_progress` · `--status blocked` · `--status done` |
+| Move columns | `bd update <id> --status in_progress` · `--status blocked` · `bd close <id>` |
 | Add progress note | `bd note <id> "…"` or `bd update <id> --append-notes "…"` |
 | Close it | `bd close <id>` |
 
@@ -60,7 +60,7 @@ watch it happen on the board in real time.
 4. bd update <id> --claim        # agent takes the card (card moves to in_progress)
 5. …do the work…
 6. bd update <id> --append-notes "what was done + evidence"
-7. bd update <id> --status done  # card lands in done on the board
+7. bd close <id> --reason "…"    # card moves to closed on the board
 8. bd export -o .beads/issues.jsonl
 ```
 

@@ -11,6 +11,8 @@ import { SortBar } from '@/app/components/features/filters/SortBar';
 import { MobileFilterBar } from '@/app/components/features/filters/MobileFilterBar';
 import { ActiveFilterChips } from '@/app/components/features/filters/ActiveFilterChips';
 import { isFacetedQuery } from '@/lib/catalogue/seo';
+import { loadFilterSort } from '@/lib/catalogue/filterSortParams';
+import { buildProductQuery } from '@/lib/catalogue/buildProductQuery';
 
 const PER_PAGE = 24;
 
@@ -24,8 +26,11 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
   const page = typeof pageValue === 'string' ? Number(pageValue) : 1;
   const allKeys = getAllLeafKeys();
 
+  const { sort } = loadFilterSort(query);
+  const { orderClause, whereClause, params } = buildProductQuery({ sort });
+
   const [totalCount, wishlistProductIds] = await Promise.all([
-    getProductsCount({ keys: allKeys }),
+    getProductsCount({ keys: allKeys, whereClause, params }),
     getWishlistProductIds(),
   ]);
 
@@ -35,7 +40,7 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
 
   const chunkPromises = Array.from(
     { length: Math.ceil(PER_PAGE / CHUNK_SIZE) },
-    (_, i) => getProductsChunk({ keys: allKeys, offset: pageStart + i * CHUNK_SIZE, limit: CHUNK_SIZE }),
+    (_, i) => getProductsChunk({ keys: allKeys, offset: pageStart + i * CHUNK_SIZE, limit: CHUNK_SIZE, orderClause, whereClause, params }),
   );
 
   return (

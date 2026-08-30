@@ -2,6 +2,29 @@
 
 Every agent working in this repo MUST follow these rules. They exist so multiple agents can work on one 16 GB laptop without it lagging. **Wispr Flow (voice input) is mandatory -- never kill or disable it.**
 
+## Issue tracker = beads (`bd` CLI)
+
+Issues are tracked in **beads**. IDs look like `sang-logium-69m`. The `.beads/` folder is a
+Dolt DB plus a generated `issues.jsonl` export -- **never grep, read, or edit files inside
+`.beads/`**; use the `bd` CLI for everything.
+
+- `bd show <id>` -- read an issue   ·   `bd ready` -- list open unblocked issues
+- `bd update <id> --claim` -- take it   ·   `bd note <id> "…"` -- add an evidence note
+- `bd close <id>` -- finish (there is no "done" status; `open -> in_progress -> closed`)
+- After any `bd` write: `bd export -o .beads/issues.jsonl`, commit it with the code change
+
+To implement an issue end-to-end, follow `.cline/skills/implement-beads-issue/SKILL.md`
+(or `/implement-beads-issue <id>` in Cline).
+
+**Titles are MANDATORY-structured** -- see `_project/beads-naming-convention.md`. The ID is a
+random handle; the title carries readability. Epic = `EPIC Filters Sorting`; child of an epic
+= `[Filters] Price min/max <-> URL`; standalone = `Search: clamp out-of-range ?page=`. Never
+put a raw ID in a title. Reference an issue as `` `sang-logium-agq` -- EPIC Filters Sorting ``
+(ID + title), never the bare ID.
+
+For **Cline**, `.clinerules` + this file are the authoritative rule set. Do not pull in
+`CLAUDE.md`, `.devin/`, or `.windsurf/` unless a task points to a specific file in them.
+
 ## Non-negotiable
 
 1. **One shared dev server** at `http://localhost:3000`. NEVER run `npm run dev` yourself if port 3000 is already listening. Check first: `Test-NetConnection localhost -Port 3000`. If none, ask the human or use `scripts/agent-ops/services.ps1`.

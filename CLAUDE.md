@@ -60,6 +60,19 @@ browser automation for verification, no `npm install` unless the issue calls for
 git (no branch/commit/push), minimal diff. If a "no" genuinely blocks the task, stop and
 say so in one line — don't work around it.
 
+## Beads issue naming
+
+**MANDATORY — read `_project/beads-naming-convention.md` before any `bd create` or title edit.**
+The beads ID (`sang-logium-agq`) is a random handle and stays that way; the **title** carries
+all human readability and MUST be structured:
+
+- Epic: `EPIC Filters Sorting` (the literal word `EPIC` + 2–4 Title-Case area words).
+- Child of an epic: `[Filters] Price min/max <-> URL` (bracket tag = epic keyword, then the slice).
+- Standalone: `Search: clamp out-of-range ?page=` (`Area:` prefix, then the slice).
+- Describe the outcome, not the file. ≤ 60 chars. Never put a raw ID or `sang-logium-` in a title.
+
+Always reference an issue as `` `sang-logium-agq` — EPIC Filters Sorting `` (ID + title), never the bare ID.
+
 ## Build & Test
 
 _Add your build and test commands here_

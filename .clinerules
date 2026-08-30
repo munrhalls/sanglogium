@@ -2,7 +2,33 @@
 
 You are working on a production Next.js 15 (App Router) + React 19 + TypeScript e-commerce site for high-end audio gear (Sanity CMS, Stripe Payment Intents, Better Auth, Zustand, Tailwind, Playwright + Vitest).
 
-Hard limits from CLAUDE.md (obey strictly):
+**This file and `AGENTS.md` are the complete rule set for Cline.** Do not read or apply
+`CLAUDE.md`, `.devin/`, or `.windsurf/` unless a task explicitly points you to a specific
+file in them. They target other agents and will only add conflicting instructions.
+
+## Issue tracker = beads (`bd` CLI)
+
+Work is tracked in **beads**, driven from the terminal with `bd`. Issue IDs look like
+`sang-logium-69m`. The `.beads/` folder is a Dolt DB + generated export — to READ, CLAIM,
+UPDATE or CLOSE an issue, NEVER grep/read/edit files inside `.beads/`; always go through `bd`.
+(Fast issue *creation* via a direct `issues.jsonl` append is the one sanctioned exception —
+see `.devin/rules/fast-beads-issue-creation.md`.)
+
+**Titles are mandatory-structured** — see `_project/beads-naming-convention.md`. Epic =
+`EPIC Filters Sorting`; child = `[Filters] Price min/max <-> URL`; standalone =
+`Search: clamp out-of-range ?page=`. Never a raw ID in a title. Reference an issue as
+`` `sang-logium-agq` — EPIC Filters Sorting `` (ID + title), never the bare ID.
+
+- `bd show <id>` — read an issue (its GOAL + "Current status:" is the full spec)
+- `bd ready` — list open, unblocked issues
+- `bd update <id> --claim` — take an issue (sets assignee + `in_progress`)
+- `bd note <id> "…"` — append a progress/evidence note
+- `bd close <id>` — finish it (no "done" status exists; lifecycle is `open → in_progress → closed`)
+- After any `bd` write: `bd export -o .beads/issues.jsonl` and commit that file with your code
+
+To implement an issue end-to-end, invoke the `/implement-beads-issue <id>` skill.
+
+Hard limits (obey strictly):
 - NEVER use $(...) or backticks in terminal commands. Write a temporary .js/.ps1/.sh script and run that instead.
 - ONE COMMAND AT A TIME. No parallel fallbacks. Verify tools exist first with a single which/--version check.
 - NEVER run expensive commands (npm install, full build, full tsc, full test suites, dev server, Lighthouse, whole-project lint) unless the user explicitly asks or it is genuinely unavoidable. Prefer targeted reads, grep, git status, isolated checks. Ask first.
@@ -19,10 +45,11 @@ Coding standards:
 - Tailwind only for styling; follow existing component patterns.
 - Mobile-first + the lg-touch breakpoint rules.
 - Keep diffs small and focused. Prefer edit over rewrite.
-- After any non-trivial change, suggest the minimal verification step (targeted test or type-check on changed files only).
+- After any non-trivial change, tell the human the one minimal check to run on localhost:3000. Do NOT run tsc, tests, or lint yourself.
 
 Cost & context discipline:
 - Never dump whole node_modules, large generated files, or unneeded directories.
+- Ignore the root `*-master-execution-prompt.txt` / `.md` files unless a task names one — they are human copy-paste sources, not agent rules.
 - Use @file or directory mentions for relevant context only.
 - Keep system / rules text static at the top so DeepSeek prompt caching hits hard.
 - For routine UI, catalogue, simple CRUD, tests → prefer Flash model.

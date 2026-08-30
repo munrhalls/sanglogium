@@ -14,6 +14,8 @@ import { MobileFilterBar } from '@/app/components/features/filters/MobileFilterB
 import { ActiveFilterChips } from '@/app/components/features/filters/ActiveFilterChips';
 import Breadcrumbs from '@/app/components/ui/breadcrumbs/CategoryBreadcrumbs';
 import { isFacetedQuery, canonicalCategoryPath } from '@/lib/catalogue/seo';
+import { loadFilterSort } from '@/lib/catalogue/filterSortParams';
+import { buildProductQuery } from '@/lib/catalogue/buildProductQuery';
 
 const PER_PAGE = 24;
 
@@ -36,9 +38,12 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   const page = typeof pageValue === 'string' ? Number(pageValue) : 1;
   const descendantKeys = unrollDescendantKeys(nodeId);
 
+  const { sort } = loadFilterSort(query);
+  const { orderClause, whereClause, params } = buildProductQuery({ sort });
+
   const [metadata, totalCount, wishlistProductIds] = await Promise.all([
     getCategoryMetadata(nodeId),
-    getProductsCount({ keys: descendantKeys }),
+    getProductsCount({ keys: descendantKeys, whereClause, params }),
     getWishlistProductIds(),
   ]);
 
@@ -59,7 +64,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   // own Suspense boundaries.
   const chunkPromises = Array.from(
     { length: Math.ceil(PER_PAGE / CHUNK_SIZE) },
-    (_, i) => getProductsChunk({ keys: descendantKeys, offset: pageStart + i * CHUNK_SIZE, limit: CHUNK_SIZE }),
+    (_, i) => getProductsChunk({ keys: descendantKeys, offset: pageStart + i * CHUNK_SIZE, limit: CHUNK_SIZE, orderClause, whereClause, params }),
   );
 
   return (

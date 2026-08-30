@@ -52,8 +52,10 @@
 // browser Back button (and re-applied with Forward). The price range is a
 // continuous drag — F3 owns its debounce and should write with
 // `history: "replace"` so a drag does not flood the history stack. Both use
-// `shallow: true`: this layer is client-only display sync and must NOT trigger a
-// server round-trip.
+// `shallow: false` (S1 — sang-logium-ytc): a filter/sort change must notify the
+// server so the catalogue RSC re-renders the product grid. The write is wrapped
+// in the FilterSort React transition, so the navigation does not trip
+// `loading.tsx` and the filter sidebar stays mounted.
 //
 // Param preservation: consumers write through nuqs, which MERGES into the
 // existing query string — unrelated params (`?q=` from search, `?page=` from
@@ -117,10 +119,16 @@ export const FILTER_SORT_KEYS = Object.keys(filterSortParsers) as Array<
 /**
  * Shared nuqs options for the discrete controls (sort, inStock, brand,
  * category). F3's price control overrides `history` to "replace".
+ *
+ * `shallow: false` (S1 — sang-logium-ytc): a filter/sort write notifies the
+ * server so the catalogue RSC re-renders the grid with the new order/predicate.
+ * The write stays wrapped in the FilterSort transition (see useFilterSort.tsx),
+ * so this is a transition-driven navigation: `loading.tsx` does NOT fire, the
+ * sidebar stays mounted, the grid dims via `useFilterSortPending()`.
  */
 export const FILTER_SORT_URL_OPTIONS = {
   history: "push",
-  shallow: true,
+  shallow: false,
   scroll: false,
 } as const;
 

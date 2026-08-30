@@ -52,7 +52,7 @@ The master issue (`sang-logium-abo`) is coordination-only — no work.
    issue open, `bd comment <id> "blocked: <reason>"`, `bd update <id> --status blocked`,
    then continue to the next issue.
 5. On green: `bd note <id> "Implemented: <1-2 line summary>; DoD verified: <commands>."`
-   then `bd update <id> --status done`.
+   then `bd close <id> --reason "<1-2 line summary>"`  (there is no "done" status).
 6. Before the next issue: confirm no leftover scratch files, no running watchers/browsers.
 7. Repeat until all 9 are done. G1 and G3 touch related files — implement G1 first, then
    land G3 on top; if G1 changes `searchProducts.ts` sort resolution, G3 consumes it via the

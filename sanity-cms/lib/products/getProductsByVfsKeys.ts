@@ -58,16 +58,20 @@ const PRODUCT_PROJECTION = groq`{
 
 export interface GetProductsCountOptions {
   keys: string[];
+  // S1 (buildProductQuery): extra `&&`-prefixed predicate + its named params.
+  // Empty by default so unfiltered callers are unaffected.
+  whereClause?: string;
+  params?: Record<string, unknown>;
 }
 
 // Count-only fetch, used to size pagination without fetching any product rows.
-const getProductsCountFn = async ({ keys }: GetProductsCountOptions): Promise<number> => {
+const getProductsCountFn = async ({ keys, whereClause = '', params = {} }: GetProductsCountOptions): Promise<number> => {
   if (!keys.length) return 0;
 
-  const countQuery = groq`count(*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0])`;
+  const countQuery = groq`count(*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0${whereClause}])`;
 
   try {
-    return (await sanityFetch<number>({ query: countQuery, params: { keys } })) ?? 0;
+    return (await sanityFetch<number>({ query: countQuery, params: { keys, ...params } })) ?? 0;
   } catch (error) {
     console.error(`[getProductsCount] Failed for ${keys.length} keys:`, error);
     return 0;
@@ -82,17 +86,25 @@ export interface GetProductsChunkOptions {
   keys: string[];
   offset: number;
   limit: number;
+  // S1 (buildProductQuery): `| order(...)` (pipe included), an extra
+  // `&&`-prefixed predicate, and the named params both reference. All empty by
+  // default — the raw slice order is Sanity's default when no orderClause is
+  // given, matching prior behaviour.
+  orderClause?: string;
+  whereClause?: string;
+  params?: Record<string, unknown>;
 }
 
 // Fetches one arbitrary offset/limit slice of products, for parallel per-chunk streaming.
-const getProductsChunkFn = async ({ keys, offset, limit }: GetProductsChunkOptions): Promise<Product[]> => {
+const getProductsChunkFn = async ({ keys, offset, limit, orderClause = '', whereClause = '', params = {} }: GetProductsChunkOptions): Promise<Product[]> => {
   if (!keys.length || limit <= 0) return [];
 
   const end = offset + limit;
-  const chunkQuery = groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0] [${offset}...${end}] ${PRODUCT_PROJECTION}`;
+  const order = orderClause ? ` ${orderClause}` : '';
+  const chunkQuery = groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0${whereClause}]${order} [${offset}...${end}] ${PRODUCT_PROJECTION}`;
 
   try {
-    const products = await sanityFetch<Product[]>({ query: chunkQuery, params: { keys } });
+    const products = await sanityFetch<Product[]>({ query: chunkQuery, params: { keys, ...params } });
     return products ?? [];
   } catch (error) {
     console.error(`[getProductsChunk] Failed for ${keys.length} keys, offset ${offset}, limit ${limit}:`, error);

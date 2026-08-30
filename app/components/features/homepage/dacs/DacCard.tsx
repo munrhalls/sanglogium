@@ -1,4 +1,3 @@
-import { cn } from "@/lib/utils/tailwind";
 import Image from "next/image";
 import Link from "next/link";
 import { BasketControls } from "@/app/components/features/basket/BasketControls";
@@ -14,10 +13,10 @@ export default function DacCard({ item, idx }: { item: any; idx: number }) {
     : "Contact for Price";
 
   return (
-    <article className="card-product-dark flex h-full flex-col gap-4 lg-touch:gap-3 lg-touch:p-4 lg:grid lg:grid-cols-[1fr_auto] lg:items-center">
-      <Link href={`/product/${item.slug}`} className="flex flex-grow flex-col lg:contents">
-        <figure className="relative flex aspect-[4/3] lg:aspect-[3/2] lg-touch:aspect-[16/9] w-full items-center justify-center overflow-hidden rounded-lg bg-surface-productImage p-6 lg-touch:p-4 lg:col-span-2">
-          <span className="absolute left-4 top-2 z-10 text-tiny xs:text-small tracking-tight text-brand-900">
+    <article className="group card-product-dark flex h-full min-w-0 flex-col overflow-hidden !p-0">
+      <Link href={`/product/${item.slug}`} className="flex flex-grow flex-col">
+        <figure className="relative flex aspect-[4/3] lg:aspect-[3/2] lg-touch:aspect-[16/9] w-full items-center justify-center overflow-hidden bg-surface-productImage">
+          <span className="type-product-brand absolute left-3 top-3 z-10 text-brand-900">
             {brandName}
           </span>
           <Image
@@ -30,28 +29,20 @@ export default function DacCard({ item, idx }: { item: any; idx: number }) {
             sizes="(max-width: 768px) 50vw, 25vw"
             className="h-full w-full object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-110"
           />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 z-[5] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.05)]"
-            style={{
-              background:
-                "radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.04) 100%)",
-            }}
-          />
         </figure>
 
-        <div className="flex flex-grow flex-col px-4 pt-2 mt-3 lg-touch:px-2 lg-touch:pt-1 lg:contents">
-          <h3 className="text-small line-clamp-2 lg:col-span-2 lg:px-4">
-            {productName}
-          </h3>
-          <p className="type-price mt-2 lg:mt-0 lg:px-4 lg:text-action">{price}</p>
+        <div className="flex min-w-0 flex-grow flex-col gap-1 p-3">
+          <h3 className="type-product-title line-clamp-2 min-h-[2.5em]">{productName}</h3>
         </div>
       </Link>
 
-      <div className="px-4 pb-4 pt-2 mt-auto lg:m-0 lg:p-0 lg:pr-4">
+      <div className="flex items-center justify-between gap-2 px-3 pb-3">
+        <p className="type-product-price tabular-nums">{price}</p>
         <BasketControls
           productId={item._id}
           isBasketPage={false}
+          label="Add"
+          addClassName="btn-product-add"
           wrapperClassName="flex items-center gap-1"
         />
       </div>

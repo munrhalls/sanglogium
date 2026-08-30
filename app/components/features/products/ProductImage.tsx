@@ -55,6 +55,7 @@ export function ProductImage({
         className={`object-contain mix-blend-multiply ${styles.reveal}`}
         priority={priority}
         data-reveal=""
+        suppressHydrationWarning
       />
     </div>
   );

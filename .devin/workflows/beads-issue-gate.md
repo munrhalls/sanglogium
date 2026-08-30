@@ -66,7 +66,7 @@ If the answer is **no** to any of these, rewrite with a number, token, file:line
 
 Every `.beads` issue must contain these sections, in this order:
 
-1. **Title** — one line, specific, includes the affected file or component.
+1. **Title** — MUST follow `_project/beads-naming-convention.md`: epic = `EPIC Filters Sorting`; child of an epic = `[Filters] Price min/max <-> URL`; standalone = `Search: clamp out-of-range ?page=`. Outcome-focused, ≤ 60 chars, no raw ID / `sang-logium-` string. This is a hard gate — a non-conforming title fails check #1.
 2. **Problem** — evidence-based description of the single defect with verified file:line pointers.
 3. **Value** — one sentence naming the specific, falsifiable impact (metric, standard, or user outcome).
 4. **Scope** — exactly what files and lines will be changed, with the target tokens/values. Surface any non-obvious defaults, breakpoint values, or component behaviors the agent needs to know.
