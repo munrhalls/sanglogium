@@ -21,5 +21,9 @@
 // min-content width inflates the track and you get too few, too-wide columns.
 //
 // See issue sang-logium-dbu.
+// Gutter is mobile-first additive, matching the column pattern above: a small
+// `gap-3` (12px) at base so the channel stays proportional to a ~130px 2-up
+// card, restored to `gap-6` (24px) from `sm:` up. `sm:` is safe here for the
+// same cascade reason the columns are (nothing later matches `sm:`).
 export const productGridClass =
-  "grid gap-6 grid-cols-2 sm:grid-cols-products";
+  "grid gap-3 sm:gap-6 grid-cols-2 sm:grid-cols-products";

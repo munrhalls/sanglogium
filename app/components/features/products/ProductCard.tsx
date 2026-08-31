@@ -20,6 +20,16 @@ export function ProductCard({
 }: ProductCardProps) {
   const displayPrice = centsToDisplay(product.price_data.unit_amount);
 
+  // When the brand eyebrow is shown, drop a leading brand token from the VISIBLE
+  // title if it exactly (case-insensitive) matches the brand name — the full
+  // name still lives in the image alt and the link aria-label.
+  const brandName = product.brand?.name?.trim();
+  const visibleTitle =
+    brandName &&
+    product.name.toLowerCase().startsWith(`${brandName.toLowerCase()} `)
+      ? product.name.slice(brandName.length).trimStart()
+      : product.name;
+
   return (
     <div className="relative h-full min-w-0">
       <article
@@ -29,10 +39,15 @@ export function ProductCard({
         <WishlistButton
           productId={product._id}
           initiallyInWishlist={isWishlisted}
-          className="absolute right-3 top-3 z-20"
+          variant="quiet"
+          className="absolute right-1 top-1 z-20"
         />
 
-        <Link href={`/product/${product.slug.current}`} className="block">
+        <Link
+          href={`/product/${product.slug.current}`}
+          className="block"
+          aria-label={product.name}
+        >
           <figure className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden bg-surface-productImage">
             <ProductImage
               image={product.image}
@@ -46,8 +61,8 @@ export function ProductCard({
                 {product.brand.name}
               </span>
             )}
-            <h3 className="type-product-title line-clamp-2 min-h-[2.5em]">
-              {product.name}
+            <h3 className="type-product-title line-clamp-2 min-h-9">
+              {visibleTitle}
             </h3>
           </div>
         </Link>
