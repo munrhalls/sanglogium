@@ -34,11 +34,6 @@ export function ProductCard({
 
         <Link href={`/product/${product.slug.current}`} className="block">
           <figure className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden bg-surface-productImage">
-            {product.brand?.name && (
-              <span className="type-product-brand absolute left-3 top-3 z-10 text-brand-900">
-                {product.brand.name}
-              </span>
-            )}
             <ProductImage
               image={product.image}
               alt={product.name}
@@ -46,6 +41,11 @@ export function ProductCard({
             />
           </figure>
           <div className="flex min-w-0 flex-grow flex-col gap-1 p-3">
+            {product.brand?.name && (
+              <span className="type-product-brand">
+                {product.brand.name}
+              </span>
+            )}
             <h3 className="type-product-title line-clamp-2 min-h-[2.5em]">
               {product.name}
             </h3>

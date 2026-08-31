@@ -25,11 +25,6 @@ export default function IemCard({ product, badge }: IemCardProps) {
     <article className="card-product-dark group flex h-full min-w-0 flex-col overflow-hidden !p-0">
       <Link href={`/product/${product.slug}`} className="block">
         <figure className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden bg-surface-productImage lg-touch:aspect-[16/9]">
-          {brandName && (
-            <span className="type-product-brand absolute left-3 top-3 z-10 text-brand-900">
-              {brandName}
-            </span>
-          )}
           {badge && (
             <ProductBadge label={badge} className="absolute right-3 top-3 z-10" />
           )}
@@ -45,7 +40,10 @@ export default function IemCard({ product, badge }: IemCardProps) {
         </figure>
 
         <div className="flex min-w-0 flex-col gap-1 p-3">
-          <h3 className="type-product-title line-clamp-2 min-h-9">{productName}</h3>
+          {brandName && (
+            <span className="type-product-brand">{brandName}</span>
+          )}
+          <h3 className="type-product-title line-clamp-3">{productName}</h3>
         </div>
       </Link>
 
@@ -57,8 +55,9 @@ export default function IemCard({ product, badge }: IemCardProps) {
         <BasketControls
           productId={product._id}
           isBasketPage={false}
+          size="sm"
           label="To cart"
-          addClassName="btn-product-add"
+          addClassName="btn-cart whitespace-nowrap"
           wrapperClassName="flex items-center gap-1"
         />
       </div>
