@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Drawer } from "vaul";
 import { FilterControls } from "./FilterSidebar";
-import { SortDropdown } from "./SortDropdown";
+import { MobileSortButton } from "./MobileSortButton";
 
 /**
  * Mobile / tablet-portrait controls row shown in place of the desktop filter
@@ -48,7 +48,7 @@ export function MobileFilterBar() {
         <Drawer.Trigger asChild>
           <button
             type="button"
-            className="type-body inline-flex min-h-11 items-center gap-2 rounded-sm border border-border-secondary bg-surface-elevated px-4 py-2 text-text-body transition-colors hover:border-accent-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500"
+            className="type-body inline-flex min-h-11 shrink-0 items-center gap-2 rounded-sm border border-border-secondary bg-surface-elevated px-4 py-2 text-text-body transition-colors hover:border-accent-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500"
           >
             <FunnelIcon />
             Filters
@@ -85,7 +85,7 @@ export function MobileFilterBar() {
         </Drawer.Portal>
       </Drawer.Root>
 
-      <SortDropdown />
+      <MobileSortButton />
     </div>
   );
 }
