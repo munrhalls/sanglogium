@@ -29,15 +29,13 @@
 //   maxPrice  — integer, DOLLARS (not cents). Absent = no upper bound.
 //   inStock   — boolean. Default false ("show everything").
 //   brand     — array of brand slugs, comma-separated. Default [] (no filter).
-//   category  — array of category keys, comma-separated. Default [] (no filter).
-//               `brand` and `category` are the two checkbox facet groups F5
-//               ships; any further facet group follows the same array-of-string
-//               shape with its own key.
+//               `brand` is the checkbox facet group F5 ships; any further facet
+//               group follows the same array-of-string shape with its own key.
 //
 // Clean-URL rule: a param sitting at its default NEVER appears in the URL. Every
 // parser sets an explicit default and relies on nuqs `clearOnDefault` (on by
-// default in v2) — `sort=featured`, `inStock=false`, `brand=` (empty) and
-// `category=` (empty) all serialize to the key being absent. `minPrice` /
+// default in v2) — `sort=featured`, `inStock=false` and `brand=` (empty) all
+// serialize to the key being absent. `minPrice` /
 // `maxPrice` have no "default value": absent simply means unbounded, so a null
 // write removes them. This keeps faceted URLs clean and keeps
 // lib/catalogue/seo.ts `isFacetedQuery` honest (it keys off `page`, which this
@@ -47,7 +45,7 @@
 // cents and the slider UI works in dollars (lib/catalogue/priceBounds.ts,
 // lib/utils/price.ts). F3 converts at the edges; the URL never carries cents.
 //
-// History mode: discrete controls (sort, inStock, brand, category) use
+// History mode: discrete controls (sort, inStock, brand) use
 // `history: "push"` so a single change is individually reversible with the
 // browser Back button (and re-applied with Forward). The price range is a
 // continuous drag — F3 owns its debounce and should write with
@@ -114,7 +112,6 @@ export const filterSortParsers = {
 
   // Comma-separated slugs, stable insertion order. Empty → key absent.
   brand: parseAsArrayOf(parseAsString).withDefault([]),
-  category: parseAsArrayOf(parseAsString).withDefault([]),
 };
 
 /** Every key this contract owns — useful for "clear all" and chip enumeration. */
@@ -123,8 +120,8 @@ export const FILTER_SORT_KEYS = Object.keys(filterSortParsers) as Array<
 >;
 
 /**
- * Shared nuqs options for the discrete controls (sort, inStock, brand,
- * category). F3's price control overrides `history` to "replace".
+ * Shared nuqs options for the discrete controls (sort, inStock, brand).
+ * F3's price control overrides `history` to "replace".
  *
  * `shallow: false` (S1 — sang-logium-ytc): a filter/sort write notifies the
  * server so the catalogue RSC re-renders the grid with the new order/predicate.

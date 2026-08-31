@@ -8,13 +8,13 @@ import { ShopHeader } from '@/app/components/features/products/ShopHeader';
 import { EmptyResults } from '@/app/components/features/products/EmptyResults';
 import { Pagination } from '@/app/components/features/products/Pagination';
 import { ChunkedProductGrid, CHUNK_SIZE } from '@/app/components/features/products/ChunkedProductGrid';
-import { FilterSidebar, BRAND_LABELS, CATEGORY_LABELS } from '@/app/components/features/filters/FilterSidebar';
+import { FilterSidebar, BRAND_LABELS } from '@/app/components/features/filters/FilterSidebar';
 import { SortBar } from '@/app/components/features/filters/SortBar';
 import { MobileFilterBar } from '@/app/components/features/filters/MobileFilterBar';
 import { ActiveFilterChips } from '@/app/components/features/filters/ActiveFilterChips';
 import Breadcrumbs from '@/app/components/ui/breadcrumbs/CategoryBreadcrumbs';
 import { isFacetedQuery, canonicalCategoryPath } from '@/lib/catalogue/seo';
-import { loadFilterSort } from '@/lib/catalogue/filterSortParams';
+import { loadFilterSort, SORT_DEFAULT } from '@/lib/catalogue/filterSortParams';
 import { buildProductQuery } from '@/lib/catalogue/buildProductQuery';
 
 const PER_PAGE = 24;
@@ -38,8 +38,14 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   const page = typeof pageValue === 'string' ? Number(pageValue) : 1;
   const descendantKeys = unrollDescendantKeys(nodeId);
 
-  const { sort, minPrice, maxPrice, inStock } = loadFilterSort(query);
-  const { orderClause, whereClause, params: queryParams } = buildProductQuery({ sort, minPrice, maxPrice, inStock });
+  const { sort, minPrice, maxPrice, inStock, brand } = loadFilterSort(query);
+  const { orderClause, whereClause, params: queryParams } = buildProductQuery({ sort, minPrice, maxPrice, inStock, brand });
+  const filtersActive =
+    sort !== SORT_DEFAULT ||
+    minPrice != null ||
+    maxPrice != null ||
+    inStock ||
+    brand.length > 0;
 
   const [metadata, totalCount, wishlistProductIds] = await Promise.all([
     getCategoryMetadata(nodeId),
@@ -73,13 +79,13 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
       <ShopHeader title={metadata.name} overline={categoryPath} />
 
       {totalCount === 0 ? (
-        <EmptyResults />
+        <EmptyResults filtersActive={filtersActive} />
       ) : (
         <div className="flex flex-col lg-touch:flex-row lg-desktop:flex-row gap-8">
           <FilterSidebar />
           <div className="min-w-0 flex-1">
             <MobileFilterBar />
-            <ActiveFilterChips brandLabels={BRAND_LABELS} categoryLabels={CATEGORY_LABELS} />
+            <ActiveFilterChips brandLabels={BRAND_LABELS} />
             <SortBar totalCount={totalCount} />
             <ChunkedProductGrid chunkPromises={chunkPromises} wishlistProductIds={wishlistProductIds} />
             <Pagination

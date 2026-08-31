@@ -38,12 +38,6 @@ const BRAND_OPTIONS = [
   { value: 'hifiman', label: 'HiFiMan', count: 0 },
 ];
 
-const CATEGORY_OPTIONS = [
-  { value: 'over-ear', label: 'Over-ear', count: 41 },
-  { value: 'on-ear', label: 'On-ear', count: 27 },
-  { value: 'in-ear', label: 'In-ear', count: 19 },
-];
-
 interface FilterOption {
   value: string;
   label: string;
@@ -59,10 +53,9 @@ const toLabelMap = (options: FilterOption[]): Record<string, string> =>
  * lists; page composition will eventually supply both from one source.
  */
 export const BRAND_LABELS = toLabelMap(BRAND_OPTIONS);
-export const CATEGORY_LABELS = toLabelMap(CATEGORY_OPTIONS);
 
 /** The F1 array-param keys that map to a checkbox facet group. */
-type FacetParamKey = 'brand' | 'category';
+type FacetParamKey = 'brand';
 
 interface CheckboxFilterGroupProps {
   /** F1 array param this group reads & writes. Also the checkbox `name`. */
@@ -197,7 +190,6 @@ export function FilterControls() {
       <PriceRangeSlider />
       <InStockOnlyCheckbox />
       <CheckboxFilterGroup paramKey="brand" label="Brand" options={BRAND_OPTIONS} />
-      <CheckboxFilterGroup paramKey="category" label="Category" options={CATEGORY_OPTIONS} />
     </>
   );
 }

@@ -21,7 +21,8 @@ export interface ProductQueryState {
   minPrice?: number | null;
   maxPrice?: number | null;
   inStock?: boolean;
-  // S3: brand?: string[];
+  // S3: comma-separated brand slugs from the F1 URL contract. Empty = no filter.
+  brand?: string[];
 }
 
 export interface ProductQuery {
@@ -64,7 +65,18 @@ export function buildProductQuery(state: ProductQueryState): ProductQuery {
     parts.push('stock - reservedStock > 0');
   }
 
-  // S3: push the brand predicate here, add its param.
+  // S3 — brand facet. `brand` is a reference on productType.ts, so it must be
+  // dereferenced with `->` (mirrors PRODUCT_PROJECTION's `brand->{ ... slug }`).
+  // Slugs are lowercased on both sides so a URL "Sennheiser" matches a stored
+  // "sennheiser". An empty set omits the clause entirely (no filter, not `in []`);
+  // unknown slugs simply match nothing.
+  const brandSlugs = (state.brand ?? [])
+    .map((s) => s.trim().toLowerCase())
+    .filter(Boolean);
+  if (brandSlugs.length) {
+    parts.push('lower(brand->slug.current) in $brands');
+    params.brands = brandSlugs;
+  }
 
   const whereClause = parts.length ? ` && ${parts.join(' && ')}` : '';
 

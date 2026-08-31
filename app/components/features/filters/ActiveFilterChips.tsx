@@ -26,9 +26,9 @@ import {
  * (`lib/catalogue/filterSortParams.ts` + `useFilterSort`) — nothing about the URL
  * vocabulary is restated here, so it stays in lockstep with F2–F5.
  *
- * Human-readable labels come from the same option lists F5 receives as props
- * (`brandLabels` / `categoryLabels`). A value with no matching label falls back
- * to the raw slug — never a blank chip.
+ * Human-readable labels come from the same option list F5 receives as a prop
+ * (`brandLabels`). A value with no matching label falls back to the raw slug —
+ * never a blank chip.
  */
 
 type LabelMap = Record<string, string>;
@@ -36,8 +36,6 @@ type LabelMap = Record<string, string>;
 interface ActiveFilterChipsProps {
   /** brand slug -> label, from F5's brand option list. */
   brandLabels?: LabelMap;
-  /** category key -> label, from F5's category option list. */
-  categoryLabels?: LabelMap;
 }
 
 interface Chip {
@@ -53,12 +51,10 @@ const sortLabel = (value: string) =>
 
 export function ActiveFilterChips({
   brandLabels = {},
-  categoryLabels = {},
 }: ActiveFilterChipsProps) {
   const [sort, setSort] = useFilterParam("sort");
   const [inStock, setInStock] = useFilterParam("inStock");
   const [brand, setBrand] = useFilterParam("brand");
-  const [category, setCategory] = useFilterParam("category");
   const [{ minPrice, maxPrice }, setPrice] = useQueryStates(
     {
       minPrice: filterSortParsers.minPrice,
@@ -76,14 +72,6 @@ export function ActiveFilterChips({
       key: `brand:${slug}`,
       label: brandLabels[slug] ?? slug,
       onRemove: () => setBrand((prev) => (prev ?? []).filter((v) => v !== slug)),
-    });
-  });
-
-  category.forEach((catKey) => {
-    chips.push({
-      key: `category:${catKey}`,
-      label: categoryLabels[catKey] ?? catKey,
-      onRemove: () => setCategory((prev) => (prev ?? []).filter((v) => v !== catKey)),
     });
   });
 
