@@ -193,8 +193,14 @@ export default function SearchField() {
           The trigger lives in the bottom action bar (ActionBar); it opens this
           overlay via the shared `search` URL param (useSearchOverlay). */}
       {mobileExpanded && (
+        // The container owns the dark surface and paints it edge-to-edge down to
+        // the bottom of the viewport, using the same token as the zero-query
+        // panel (bg-surface-elevated). Any area the panel's flex child does not
+        // cover — below the list, or the empty space while the autocomplete
+        // dropdown is open — then reads as one continuous surface, never a black
+        // band against the near-black bg-brand-900 it used before.
         <div
-          className="sm:hidden fixed inset-0 z-[60] bg-brand-900 flex flex-col"
+          className="sm:hidden fixed inset-0 z-[60] bg-surface-elevated flex flex-col"
           role="dialog"
           aria-modal="true"
           aria-label="Search products"
