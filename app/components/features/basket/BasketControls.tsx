@@ -16,6 +16,13 @@ interface BasketControlsProps {
   wrapperClassName?: string;
   showRemoveButton?: boolean;
   size?: "sm" | "md";
+  /**
+   * Stretch the post-click stepper to fill its container, with each cell
+   * sharing the width equally. Used on narrow card footers (product grid,
+   * homepage cards) so the − N + control is bounded by the card and never
+   * overflows past its edges.
+   */
+  fullWidth?: boolean;
 }
 
 export function BasketControls({
@@ -30,7 +37,11 @@ export function BasketControls({
   wrapperClassName,
   showRemoveButton,
   size = "md",
+  fullWidth = false,
 }: BasketControlsProps) {
+  const stepperCellClass = `btn-stepper${size === "sm" ? " btn-stepper-sm" : ""}${
+    fullWidth ? " flex-1" : ""
+  }`;
   const { items, addProduct, removeProduct, incrementQuantity, decrementQuantity } = useBasketStore(
     useShallow((state) => ({
       items: state.items,
@@ -86,24 +97,24 @@ export function BasketControls({
   }
 
   return (
-    <div className={`flex items-center ${wrapperClassName || ""}`}>
-      <div className="flex items-center">
+    <div className={`flex items-center ${fullWidth ? "w-full" : ""} ${wrapperClassName || ""}`}>
+      <div className={`flex items-center ${fullWidth ? "w-full" : ""}`}>
         <button
           onClick={handleDecrement}
           data-testid={`decrement-${productId}`}
           type="button"
           disabled={isBasketPage && quantity <= 1}
-          className={`btn-stepper rounded-l-sm border-r-0${size === "sm" ? " btn-stepper-sm" : ""}`}
+          className={`${stepperCellClass} rounded-l-sm border-r-0`}
         >
           −
         </button>
-        <span data-testid="quantity-display" className={`btn-stepper border-r-0 border-l-0${size === "sm" ? " btn-stepper-sm" : ""}`}>{quantity}</span>
+        <span data-testid="quantity-display" className={`${stepperCellClass} border-r-0 border-l-0`}>{quantity}</span>
         <button
           onClick={handleIncrement}
           data-testid={`increment-${productId}`}
           type="button"
           disabled={maxQuantity !== undefined && quantity >= maxQuantity}
-          className={`btn-stepper border-l-0 rounded-r-sm${size === "sm" ? " btn-stepper-sm" : ""}`}
+          className={`${stepperCellClass} border-l-0 rounded-r-sm`}
         >
           +
         </button>

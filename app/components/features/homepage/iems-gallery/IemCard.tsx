@@ -47,19 +47,21 @@ export default function IemCard({ product, badge }: IemCardProps) {
         </div>
       </Link>
 
-      <div className="mt-auto flex items-center justify-between gap-2 px-3 pb-3">
+      <div className="mt-auto flex flex-col items-stretch gap-2 px-3 pb-3 sm:flex-row sm:items-center sm:justify-between">
         <Price
           value={centsToDisplay(product.price_data.unit_amount)}
           className="type-product-price tabular-nums"
         />
-        <BasketControls
-          productId={product._id}
-          isBasketPage={false}
-          size="sm"
-          label="To cart"
-          addClassName="btn-cart whitespace-nowrap"
-          wrapperClassName="flex items-center gap-1"
-        />
+        <div className="w-full sm:ml-auto sm:w-auto">
+          <BasketControls
+            productId={product._id}
+            isBasketPage={false}
+            size="sm"
+            label="To cart"
+            addClassName="btn-cart whitespace-nowrap"
+            wrapperClassName="flex items-center gap-1"
+          />
+        </div>
       </div>
     </article>
   );
