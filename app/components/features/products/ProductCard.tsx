@@ -61,19 +61,21 @@ export function ProductCard({
                 {product.brand.name}
               </span>
             )}
-            <h3 className="type-product-title line-clamp-2 min-h-9">
+            <h3 className="type-product-title line-clamp-3 min-h-[3.9em] sm:line-clamp-2 sm:min-h-9">
               {visibleTitle}
             </h3>
           </div>
         </Link>
 
-        <div className="flex items-center gap-2 px-3 pb-3">
+        <div className="flex flex-col items-stretch gap-2 px-3 pb-3 sm:flex-row sm:items-center">
           <Price value={displayPrice} className="type-product-price tabular-nums" />
-          <div className="ml-auto">
+          <div className="flex min-h-9 w-full items-center sm:ml-auto sm:min-h-0 sm:w-auto">
             <BasketControls
               productId={product._id}
               isBasketPage={false}
               label="Add"
+              size="sm"
+              fullWidth
               addClassName="btn-product-add"
               wrapperClassName="flex items-center gap-1"
             />
