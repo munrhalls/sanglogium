@@ -3,8 +3,8 @@
 import React from "react";
 import { ListIcon, XIcon, List as Menu, MagnifyingGlass as Search, ShoppingBag, User as UserIcon, SignIn as SignInIcon, UserPlus } from "@phosphor-icons/react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useDrawer } from "@/app/hooks/nuqs/useDrawer";
+import { useSearchOverlay } from "@/app/hooks/nuqs/useSearchOverlay";
 import { cn } from "@/lib/utils/tailwind";
 import useBasketStore, { selectTotalItemsCount, selectHasHydrated } from "@/store/basketStore";
 
@@ -15,8 +15,8 @@ interface ActionButtonsProps {
 }
 
 function ActionButtons({ isAuthenticated }: ActionButtonsProps) {
-  const pathname = usePathname();
   const { isOpen, openDrawer, closeDrawer } = useDrawer();
+  const { isSearchOpen, openSearch, closeSearch } = useSearchOverlay();
   const basketCount = useBasketStore(selectTotalItemsCount);
   const hasHydrated = useBasketStore(selectHasHydrated);
 
@@ -49,17 +49,23 @@ function ActionButtons({ isAuthenticated }: ActionButtonsProps) {
         </span>
       </button>
 
-      <Link
-        href={`${pathname}?search=true`}
-        className="flex cursor-pointer touch-manipulation flex-col items-center"
+      <button
+        id="mobile-search-trigger"
+        onClick={() => (isSearchOpen ? closeSearch() : openSearch())}
+        className="flex sm:hidden cursor-pointer touch-manipulation flex-col items-center"
         type="button"
         style={{ isolation: "isolate" }}
+        aria-label={isSearchOpen ? "Close search" : "Open search"}
       >
-        <Search className="h-5 w-5" />
+        {isSearchOpen ? (
+          <XIcon className="h-5 w-5" />
+        ) : (
+          <Search className="h-5 w-5" />
+        )}
         <span className="sr-only mt-1 hidden text-xs text-cap sm:inline-block">
           Search
         </span>
-      </Link>
+      </button>
 
       {isAuthenticated ? (
         <Link
