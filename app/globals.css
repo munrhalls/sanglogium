@@ -73,33 +73,16 @@ button {
   scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
 }
 
-/* Price Range Slider Styles */
-input[type="range"] {
+/* Price range slider: WebKit needs the -webkit- prefixed appearance reset for
+   the thumb to accept custom size / border-radius. Tailwind's `appearance-none`
+   emits only the unprefixed property, and an arbitrary `[-webkit-appearance:none]`
+   variant on the `::-webkit-slider-thumb` pseudo does not reliably compile in
+   Tailwind v3 — so this one declaration lives here. All other thumb/track
+   styling stays in PriceRangeSlider.tsx. */
+.price-range-input::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  background: transparent;
-  cursor: pointer;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  background: #D4AF37;
-  border-radius: 50%;
-  cursor: pointer;
-  border: 2px solid #D4AF37;
-  margin-top: -6px;
-}
-
-input[type="range"]::-moz-range-thumb {
-  width: 16px;
-  height: 16px;
-  background: #D4AF37;
-  border-radius: 50%;
-  cursor: pointer;
-  border: 2px solid #D4AF37;
+  border-radius: 9999px;
 }
 
 @layer utilities {

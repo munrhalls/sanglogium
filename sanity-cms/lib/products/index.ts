@@ -3,6 +3,8 @@ export { getCategoryMetadata } from './getCategoryMetadata';
 export { getProductBySlug } from './getProductBySlug';
 export { getRelatedProducts } from './getRelatedProducts';
 export { getBasketProducts } from './getBasketProducts';
+export { getBrandFacets, brandLabelMap } from './getBrandFacets';
+export type { BrandFacet } from './getBrandFacets';
 export type { Product } from './getProductsByVfsKeys';
 export type { CategoryMetadata } from './getCategoryMetadata';
 export type { Product as ProductDetail } from './getProductBySlug';

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Drawer } from "vaul";
 import { FilterControls } from "./FilterSidebar";
 import { MobileSortButton } from "./MobileSortButton";
+import type { BrandFacet } from "@/sanity-cms/lib/products/getBrandFacets";
 
 /**
  * Mobile / tablet-portrait controls row shown in place of the desktop filter
@@ -36,7 +37,7 @@ function FunnelIcon() {
   );
 }
 
-export function MobileFilterBar() {
+export function MobileFilterBar({ brands }: { brands: BrandFacet[] }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -79,7 +80,7 @@ export function MobileFilterBar() {
               </Drawer.Close>
             </div>
             <div className="flex min-h-0 flex-col gap-6 overflow-y-auto px-6 pb-8">
-              <FilterControls />
+              <FilterControls brands={brands} />
             </div>
           </Drawer.Content>
         </Drawer.Portal>

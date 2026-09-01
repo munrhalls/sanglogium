@@ -20,6 +20,7 @@ import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
 import {
   FILTER_SORT_URL_OPTIONS,
   PAGE_PARAM_KEY,
+  type SortValue,
   filterSortParsers,
 } from "@/lib/catalogue/filterSortParams";
 
@@ -43,6 +44,24 @@ export function usePageReset() {
 
 type FilterKey = keyof typeof filterSortParsers;
 
+type FilterParamValueMap = {
+  sort: SortValue;
+  minPrice: number | null;
+  maxPrice: number | null;
+  inStock: boolean;
+  brand: string[];
+};
+
+type FilterParamReturn<K extends FilterKey> = [
+  FilterParamValueMap[K],
+  (
+    next:
+      | FilterParamValueMap[K]
+      | null
+      | ((old: FilterParamValueMap[K]) => FilterParamValueMap[K] | null),
+  ) => void,
+];
+
 /**
  * Read/write a single contract param (`sort`, `minPrice`, `brand`, …) with the
  * shared URL options applied and the page reset wired in. F2–F6 use this so the
@@ -55,7 +74,7 @@ type FilterKey = keyof typeof filterSortParsers;
 export function useFilterParam<K extends FilterKey>(
   key: K,
   optionOverrides?: { history?: "push" | "replace" },
-) {
+): FilterParamReturn<K> {
   const resetPage = usePageReset();
 
   const [value, setValueRaw] = useQueryState(
@@ -65,7 +84,7 @@ export function useFilterParam<K extends FilterKey>(
       ...optionOverrides,
       startTransition,
     }),
-  );
+  ) as unknown as [any, any];
 
   // Accept nuqs's full setter arg — an absolute value OR a functional updater
   // `(prev) => next`. Array facets (brand/category) MUST use the updater form:
@@ -83,7 +102,7 @@ export function useFilterParam<K extends FilterKey>(
     [setValueRaw, resetPage, startTransition],
   );
 
-  return [value, setValue] as const;
+  return [value, setValue] as unknown as FilterParamReturn<K>;
 }
 
 /**

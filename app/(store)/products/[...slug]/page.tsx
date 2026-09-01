@@ -3,12 +3,13 @@ import { notFound } from 'next/navigation';
 import { resolveSlugToId, unrollDescendantKeys } from '@/data/catalogue';
 import { getCategoryMetadata } from '@/sanity-cms/lib/products/getCategoryMetadata';
 import { getProductsCount, getProductsChunk } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
+import { getBrandFacets, brandLabelMap } from '@/sanity-cms/lib/products/getBrandFacets';
 import { getWishlistProductIds } from '@/lib/wishlist';
 import { ShopHeader } from '@/app/components/features/products/ShopHeader';
 import { EmptyResults } from '@/app/components/features/products/EmptyResults';
 import { Pagination } from '@/app/components/features/products/Pagination';
 import { ChunkedProductGrid, CHUNK_SIZE } from '@/app/components/features/products/ChunkedProductGrid';
-import { FilterSidebar, BRAND_LABELS } from '@/app/components/features/filters/FilterSidebar';
+import { FilterSidebar } from '@/app/components/features/filters/FilterSidebar';
 import { SortBar } from '@/app/components/features/filters/SortBar';
 import { MobileFilterBar } from '@/app/components/features/filters/MobileFilterBar';
 import { ActiveFilterChips } from '@/app/components/features/filters/ActiveFilterChips';
@@ -40,6 +41,9 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
 
   const { sort, minPrice, maxPrice, inStock, brand } = loadFilterSort(query);
   const { orderClause, whereClause, params: queryParams } = buildProductQuery({ sort, minPrice, maxPrice, inStock, brand });
+  // Brand-excluded where clause: the brand facet is disjunctive — price / in-stock
+  // narrow it, the brand selection itself does not.
+  const { whereClause: brandFacetWhere, params: brandFacetParams } = buildProductQuery({ sort, minPrice, maxPrice, inStock });
   const filtersActive =
     sort !== SORT_DEFAULT ||
     minPrice != null ||
@@ -47,11 +51,13 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
     inStock ||
     brand.length > 0;
 
-  const [metadata, totalCount, wishlistProductIds] = await Promise.all([
+  const [metadata, totalCount, brandFacets, wishlistProductIds] = await Promise.all([
     getCategoryMetadata(nodeId),
     getProductsCount({ keys: descendantKeys, whereClause, params: queryParams }),
+    getBrandFacets({ keys: descendantKeys, whereClause: brandFacetWhere, params: brandFacetParams, selectedSlugs: brand }),
     getWishlistProductIds(),
   ]);
+  const brandLabels = brandLabelMap(brandFacets);
 
   if (!metadata) {
     notFound();
@@ -82,10 +88,10 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
         <EmptyResults filtersActive={filtersActive} />
       ) : (
         <div className="flex flex-col lg-touch:flex-row lg-desktop:flex-row gap-8">
-          <FilterSidebar />
+          <FilterSidebar brands={brandFacets} />
           <div className="min-w-0 flex-1">
-            <MobileFilterBar />
-            <ActiveFilterChips brandLabels={BRAND_LABELS} />
+            <MobileFilterBar brands={brandFacets} />
+            <ActiveFilterChips brandLabels={brandLabels} />
             <SortBar totalCount={totalCount} />
             <ChunkedProductGrid chunkPromises={chunkPromises} wishlistProductIds={wishlistProductIds} />
             <Pagination

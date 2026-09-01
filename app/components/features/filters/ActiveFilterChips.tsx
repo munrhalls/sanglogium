@@ -67,7 +67,7 @@ export function ActiveFilterChips({
 
   const chips: Chip[] = [];
 
-  brand.forEach((slug) => {
+  brand?.forEach((slug) => {
     chips.push({
       key: `brand:${slug}`,
       label: brandLabels[slug] ?? slug,

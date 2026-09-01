@@ -1,12 +1,13 @@
 import React from 'react';
 import { getAllLeafKeys } from '@/data/catalogue';
 import { getProductsCount, getProductsChunk } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
+import { getBrandFacets, brandLabelMap } from '@/sanity-cms/lib/products/getBrandFacets';
 import { getWishlistProductIds } from '@/lib/wishlist';
 import { ShopHeader } from '@/app/components/features/products/ShopHeader';
 import { EmptyResults } from '@/app/components/features/products/EmptyResults';
 import { Pagination } from '@/app/components/features/products/Pagination';
 import { ChunkedProductGrid, CHUNK_SIZE } from '@/app/components/features/products/ChunkedProductGrid';
-import { FilterSidebar, BRAND_LABELS } from '@/app/components/features/filters/FilterSidebar';
+import { FilterSidebar } from '@/app/components/features/filters/FilterSidebar';
 import { SortBar } from '@/app/components/features/filters/SortBar';
 import { MobileFilterBar } from '@/app/components/features/filters/MobileFilterBar';
 import { ActiveFilterChips } from '@/app/components/features/filters/ActiveFilterChips';
@@ -28,6 +29,9 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
 
   const { sort, minPrice, maxPrice, inStock, brand } = loadFilterSort(query);
   const { orderClause, whereClause, params } = buildProductQuery({ sort, minPrice, maxPrice, inStock, brand });
+  // Brand-excluded where clause: the brand facet is disjunctive — price / in-stock
+  // narrow it, the brand selection itself does not.
+  const { whereClause: brandFacetWhere, params: brandFacetParams } = buildProductQuery({ sort, minPrice, maxPrice, inStock });
   const filtersActive =
     sort !== SORT_DEFAULT ||
     minPrice != null ||
@@ -35,10 +39,12 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
     inStock ||
     brand.length > 0;
 
-  const [totalCount, wishlistProductIds] = await Promise.all([
+  const [totalCount, brandFacets, wishlistProductIds] = await Promise.all([
     getProductsCount({ keys: allKeys, whereClause, params }),
+    getBrandFacets({ keys: allKeys, whereClause: brandFacetWhere, params: brandFacetParams, selectedSlugs: brand }),
     getWishlistProductIds(),
   ]);
+  const brandLabels = brandLabelMap(brandFacets);
 
   const totalPages = Math.ceil(totalCount / PER_PAGE);
   const effectivePage = totalPages > 0 ? Math.min(Math.max(1, page || 1), totalPages) : Math.max(1, page || 1);
@@ -57,10 +63,10 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
         <EmptyResults filtersActive={filtersActive} />
       ) : (
         <div className="flex flex-col lg-touch:flex-row lg-desktop:flex-row gap-8">
-          <FilterSidebar />
+          <FilterSidebar brands={brandFacets} />
           <div className="min-w-0 flex-1">
-            <MobileFilterBar />
-            <ActiveFilterChips brandLabels={BRAND_LABELS} />
+            <MobileFilterBar brands={brandFacets} />
+            <ActiveFilterChips brandLabels={brandLabels} />
             <SortBar totalCount={totalCount} />
             <ChunkedProductGrid chunkPromises={chunkPromises} wishlistProductIds={wishlistProductIds} />
             <Pagination

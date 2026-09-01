@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Checkbox } from '@/app/components/ui/Checkbox';
 import { useFilterParam } from '@/app/hooks/nuqs/useFilterSort';
 import { PriceRangeSlider } from './PriceRangeSlider';
+import type { BrandFacet } from '@/sanity-cms/lib/products/getBrandFacets';
 
 /**
  * Shared filter-section pattern.
@@ -24,35 +25,18 @@ export const filterStateInactive = 'text-text-caption opacity-50';
 /**
  * Desktop filter sidebar shell.
  *
- * Option lists and counts are hardcoded placeholders standing in for props that
- * page composition will supply. The checkbox facet groups and `InStockOnlyCheckbox`
+ * The brand option list + counts are supplied by page composition (the RSC)
+ * as the `brands` prop — a disjunctive facet fetched from Sanity keyed on the
+ * route's VFS key set. The checkbox facet groups and `InStockOnlyCheckbox`
  * read/write their F1 URL params (via `useFilterParam`); local useState is only
  * cosmetic (collapse/expand). Nothing here fetches data or touches the product grid.
  */
-
-const BRAND_OPTIONS = [
-  { value: 'sennheiser', label: 'Sennheiser', count: 24 },
-  { value: 'audio-technica', label: 'Audio-Technica', count: 18 },
-  { value: 'beyerdynamic', label: 'Beyerdynamic', count: 11 },
-  { value: 'focal', label: 'Focal', count: 6 },
-  { value: 'hifiman', label: 'HiFiMan', count: 0 },
-];
 
 interface FilterOption {
   value: string;
   label: string;
   count?: number;
 }
-
-const toLabelMap = (options: FilterOption[]): Record<string, string> =>
-  Object.fromEntries(options.map((o) => [o.value, o.label]));
-
-/**
- * value -> label maps for the checkbox facets, shared with F6's chip row so the
- * chip label and the sidebar checkbox label can never drift. Same placeholder
- * lists; page composition will eventually supply both from one source.
- */
-export const BRAND_LABELS = toLabelMap(BRAND_OPTIONS);
 
 /** The F1 array-param keys that map to a checkbox facet group. */
 type FacetParamKey = 'brand';
@@ -184,17 +168,18 @@ function InStockOnlyCheckbox() {
  * surfaces stay identical. Returned as a fragment so callers own the layout
  * container (and the desktop markup below is unchanged).
  */
-export function FilterControls() {
+export function FilterControls({ brands }: { brands: BrandFacet[] }) {
+  const brandOptions = brands.map((b) => ({ value: b.slug, label: b.label, count: b.count }));
   return (
     <>
       <PriceRangeSlider />
       <InStockOnlyCheckbox />
-      <CheckboxFilterGroup paramKey="brand" label="Brand" options={BRAND_OPTIONS} />
+      <CheckboxFilterGroup paramKey="brand" label="Brand" options={brandOptions} />
     </>
   );
 }
 
-export function FilterSidebar() {
+export function FilterSidebar({ brands }: { brands: BrandFacet[] }) {
   return (
     <aside
       data-testid="filter-sidebar"
@@ -205,7 +190,7 @@ export function FilterSidebar() {
           reflects the URL, never waiting on a fetch / transition in flight. */}
       <div className="flex flex-col gap-6 rounded-md border border-border-secondary bg-surface-elevated p-6">
         <span className="type-overline">Filters</span>
-        <FilterControls />
+        <FilterControls brands={brands} />
       </div>
     </aside>
   );
