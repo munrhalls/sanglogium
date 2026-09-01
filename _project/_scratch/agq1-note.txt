@@ -1,0 +1,9 @@
+IMPLEMENTATION (2026-09-01): PriceRangeSlider.tsx THUMB_CLASSES.
+Approach: input box is exactly thumb-height (h-3 / 12px) and centred on the
+track line (top-1/2 -translate-y-1/2); runnable-track h-full. Both engines then
+centre the 12px thumb on the equally-tall track -> disc centre-y on the track
+centreline, no per-engine margin-top hack (mt-1.5 removed). Horizontal: track
+div inset left-1.5/right-1.5 (6px = half thumb) so thumb centres reach exactly
+the track ends. Harness: _project/_scratch/slider-center-harness.html (8x zoom,
+1px red centreline ruler). Needs human verification in real Chrome + Firefox
+per AT#3, then delete harness.
