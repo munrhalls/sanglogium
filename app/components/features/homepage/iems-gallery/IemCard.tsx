@@ -52,11 +52,12 @@ export default function IemCard({ product, badge }: IemCardProps) {
           value={centsToDisplay(product.price_data.unit_amount)}
           className="type-product-price tabular-nums"
         />
-        <div className="w-full sm:ml-auto sm:w-auto">
+        <div className="flex min-h-9 w-full items-center sm:ml-auto sm:min-h-0 sm:w-auto">
           <BasketControls
             productId={product._id}
             isBasketPage={false}
             size="sm"
+            fullWidth
             label="To cart"
             addClassName="btn-cart whitespace-nowrap"
             wrapperClassName="flex items-center gap-1"
