@@ -5,6 +5,7 @@ import { Checkbox } from '@/app/components/ui/Checkbox';
 import { useFilterParam } from '@/app/hooks/nuqs/useFilterSort';
 import { PriceRangeSlider } from './PriceRangeSlider';
 import type { BrandFacet } from '@/sanity-cms/lib/products/getBrandFacets';
+import type { PriceBounds } from '@/lib/catalogue/priceBounds';
 
 /**
  * Shared filter-section pattern.
@@ -168,18 +169,18 @@ function InStockOnlyCheckbox() {
  * surfaces stay identical. Returned as a fragment so callers own the layout
  * container (and the desktop markup below is unchanged).
  */
-export function FilterControls({ brands }: { brands: BrandFacet[] }) {
+export function FilterControls({ brands, priceBounds }: { brands: BrandFacet[]; priceBounds: PriceBounds }) {
   const brandOptions = brands.map((b) => ({ value: b.slug, label: b.label, count: b.count }));
   return (
     <>
-      <PriceRangeSlider />
+      <PriceRangeSlider min={priceBounds.min} max={priceBounds.max} />
       <InStockOnlyCheckbox />
       <CheckboxFilterGroup paramKey="brand" label="Brand" options={brandOptions} />
     </>
   );
 }
 
-export function FilterSidebar({ brands }: { brands: BrandFacet[] }) {
+export function FilterSidebar({ brands, priceBounds }: { brands: BrandFacet[]; priceBounds: PriceBounds }) {
   return (
     <aside
       data-testid="filter-sidebar"
@@ -190,7 +191,7 @@ export function FilterSidebar({ brands }: { brands: BrandFacet[] }) {
           reflects the URL, never waiting on a fetch / transition in flight. */}
       <div className="flex flex-col gap-6 rounded-md border border-border-secondary bg-surface-elevated p-6">
         <span className="type-overline">Filters</span>
-        <FilterControls brands={brands} />
+        <FilterControls brands={brands} priceBounds={priceBounds} />
       </div>
     </aside>
   );

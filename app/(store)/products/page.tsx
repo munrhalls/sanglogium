@@ -2,6 +2,8 @@ import React from 'react';
 import { getAllLeafKeys } from '@/data/catalogue';
 import { getProductsCount, getProductsChunk } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
 import { getBrandFacets, brandLabelMap } from '@/sanity-cms/lib/products/getBrandFacets';
+import { getCategoryPriceRange } from '@/sanity-cms/lib/products/getCategoryPriceRange';
+import { resolvePriceBounds } from '@/lib/catalogue/priceBounds';
 import { getWishlistProductIds } from '@/lib/wishlist';
 import { ShopHeader } from '@/app/components/features/products/ShopHeader';
 import { EmptyResults } from '@/app/components/features/products/EmptyResults';
@@ -39,12 +41,16 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
     inStock ||
     brand.length > 0;
 
-  const [totalCount, brandFacets, wishlistProductIds] = await Promise.all([
+  const [totalCount, brandFacets, priceRange, wishlistProductIds] = await Promise.all([
     getProductsCount({ keys: allKeys, whereClause, params }),
     getBrandFacets({ keys: allKeys, whereClause: brandFacetWhere, params: brandFacetParams, selectedSlugs: brand }),
+    // FULL category price span — not narrowed by active filters, so the max
+    // handle can always be dragged back up past the current selection.
+    getCategoryPriceRange({ keys: allKeys }),
     getWishlistProductIds(),
   ]);
   const brandLabels = brandLabelMap(brandFacets);
+  const priceBounds = resolvePriceBounds(priceRange);
 
   const totalPages = Math.ceil(totalCount / PER_PAGE);
   const effectivePage = totalPages > 0 ? Math.min(Math.max(1, page || 1), totalPages) : Math.max(1, page || 1);
@@ -63,9 +69,9 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
         <EmptyResults filtersActive={filtersActive} />
       ) : (
         <div className="flex flex-col lg-touch:flex-row lg-desktop:flex-row gap-8">
-          <FilterSidebar brands={brandFacets} />
+          <FilterSidebar brands={brandFacets} priceBounds={priceBounds} />
           <div className="min-w-0 flex-1">
-            <MobileFilterBar brands={brandFacets} />
+            <MobileFilterBar brands={brandFacets} priceBounds={priceBounds} />
             <ActiveFilterChips brandLabels={brandLabels} />
             <SortBar totalCount={totalCount} />
             <ChunkedProductGrid chunkPromises={chunkPromises} wishlistProductIds={wishlistProductIds} />

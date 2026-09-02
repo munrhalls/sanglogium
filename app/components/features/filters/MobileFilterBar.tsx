@@ -5,6 +5,7 @@ import { Drawer } from "vaul";
 import { FilterControls } from "./FilterSidebar";
 import { MobileSortButton } from "./MobileSortButton";
 import type { BrandFacet } from "@/sanity-cms/lib/products/getBrandFacets";
+import type { PriceBounds } from "@/lib/catalogue/priceBounds";
 
 /**
  * Mobile / tablet-portrait controls row shown in place of the desktop filter
@@ -37,7 +38,7 @@ function FunnelIcon() {
   );
 }
 
-export function MobileFilterBar({ brands }: { brands: BrandFacet[] }) {
+export function MobileFilterBar({ brands, priceBounds }: { brands: BrandFacet[]; priceBounds: PriceBounds }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -80,7 +81,7 @@ export function MobileFilterBar({ brands }: { brands: BrandFacet[] }) {
               </Drawer.Close>
             </div>
             <div className="flex min-h-0 flex-col gap-6 overflow-y-auto px-6 pb-8">
-              <FilterControls brands={brands} />
+              <FilterControls brands={brands} priceBounds={priceBounds} />
             </div>
           </Drawer.Content>
         </Drawer.Portal>
