@@ -12,7 +12,10 @@ unless the user asks. If a "no" genuinely blocks the task, stop and say so in on
 
 ## 1. Read the spec (never touch `.beads/` files directly)
 
-- `bd show <id>` — the GOAL paragraph + the `Current status:` block ARE the full spec.
+- `bd show <id>` — the GOAL + the `Current status:` block ARE the full spec. The GOAL is
+  a list of end-user UX acceptance tests (`When I <interaction>, then <observable outcome>`)
+  to run by hand in a browser on `localhost:3000` — not a task description. Implement until
+  every line passes; that is the definition of done.
 - Read the RELATED issues it names with `bd show` too, for shared tokens / prior work.
 - Read `.clinerules` and `AGENTS.md` if not already loaded (stack, architecture, resource rules).
 

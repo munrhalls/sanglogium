@@ -22,6 +22,14 @@ random handle; the title carries readability. Epic = `EPIC Filters Sorting`; chi
 put a raw ID in a title. Reference an issue as `` `sang-logium-agq` -- EPIC Filters Sorting ``
 (ID + title), never the bare ID.
 
+**Issue goal format is MANDATORY, not opt-in.** Every issue's goal is written as end-user
+UX acceptance tests -- a list of `When I <interaction>, then <observable outcome>` lines a
+human runs in a browser on `localhost:3000` -- plus a `CURRENT STATUS:` line. No prose
+problem/task descriptions, no `file:line`, no tokens, no implementation detail in the goal.
+Never store a bug-report paragraph verbatim as the goal; translate it to when/then lines.
+(If `.devin/workflows/beads-issue-gate.md`'s heavier anatomy is cited, it conflicts with
+this -- this rule wins; flag it to the human.)
+
 For **Cline**, `.clinerules` + this file are the authoritative rule set. Do not pull in
 `CLAUDE.md`, `.devin/`, or `.windsurf/` unless a task points to a specific file in them.
 

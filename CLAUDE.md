@@ -34,6 +34,12 @@ actual test machine. Keep it next to the relevant audit/issue notes, delete it w
 issue closes. See `_project/AI_LESSONS.md` L05 (and L04 for its counterpart: don't watch
 timing bugs happen via browser automation).
 
+## Inspecting the live UI
+
+Default to text: page text, DOM, computed styles, ARIA, console, current URL. Take
+screenshots only when visual rendering itself is the question (spacing, overlap, layout
+regressions, mobile bands). Screenshots cost far more than text snapshots.
+
 ## Lessons store
 
 `_project/AI_LESSONS.md` — concrete traps that already cost real time on this repo.
@@ -72,6 +78,40 @@ all human readability and MUST be structured:
 - Describe the outcome, not the file. ≤ 60 chars. Never put a raw ID or `sang-logium-` in a title.
 
 Always reference an issue as `` `sang-logium-agq` — EPIC Filters Sorting `` (ID + title), never the bare ID.
+
+## Beads issue goal format — MANDATORY, NOT OPT-IN
+
+Every beads issue's goal is expressed as **end-user UX acceptance tests**, never a prose
+problem/task description. This is the default for every issue — the human must never have
+to ask for it.
+
+The body contains exactly:
+
+1. **ACCEPTANCE TESTS** — a list of `When I <interaction>, then <observable outcome>`
+   lines, each one something a human can do and see in a browser on the dev server at
+   `localhost:3000`. No file paths, no `file:line`, no class/token names, no "set X to Y",
+   no framework or implementation detail — purely what the end user experiences. Every
+   line is the human's words verbatim or a direct when/then translation of their stated
+   goal. Zero agent-invented speculation.
+2. **CURRENT STATUS:** — one plain factual line ("not started" if unspecified).
+
+For epic children the human may also have co-designed `SINGLE RESPONSIBILITY:`, a
+`RISK ASSESSMENT` block (Outcome risks + Execution risks, each with a `Mitigation:`),
+`Expected footprint`, `OUT OF SCOPE`, `SEQUENCE` — still no speculation.
+
+Never store the human's problem statement verbatim as the goal — a bug-report paragraph
+("the price ceiling is $0–$1000 but products run to $5,995") is NOT an acceptance test;
+translate it to `When I…, then…` lines first. Never add prose descriptions, "next steps",
+process notes, or `file:line` pointers to the goal.
+
+These tests imply the execution model: the implementing agent edits source only, then
+hands the `localhost:3000` live check to the human (Issue Risk Protocol Part B).
+
+After creating: show the issue, give the human `bd show <id>`, then stop.
+
+> Note: `.devin/workflows/beads-issue-gate.md` historically demanded verified `file:line`,
+> exact tokens, and automated (Playwright) verification. That contradicts this model. This
+> section wins; flag the conflict to the human rather than following the gate's anatomy.
 
 ## Build & Test
 

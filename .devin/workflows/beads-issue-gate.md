@@ -4,6 +4,19 @@ description: Pre-create quality gate for .beads issues to keep every issue >8/10
 
 # /beads-issue-gate
 
+> **SUPERSEDED IN PART (2026-09).** The issue **goal/body format** is now fixed by
+> `CLAUDE.md` → "## Beads issue goal format" and the lean-protocol memory: the goal is a
+> list of end-user UX **acceptance tests** — `When I <interaction>, then <observable
+> outcome>` lines a human runs in a browser on `localhost:3000` — plus a `CURRENT STATUS:`
+> line, and nothing else. That model **wins** wherever this file demands a prose problem
+> statement, verified `file:line` pointers, exact `tailwind.config.ts` tokens in the body,
+> a `## Scope`/`## Related files` file list, or automated (Playwright/Vitest/Lighthouse)
+> verification. Do **not** apply checks #2, #4, #7, #8, or the "Required Issue Anatomy"
+> section as written. The parts still in force: one atomic problem (#1), specific
+> falsifiable user impact (#3), out-of-scope names temptations (#5), acceptance is a
+> question-free boolean contract (#6), no duplicate (#9), session-bounded ≤3 steps (#10).
+> If the two genuinely can't be reconciled for a specific issue, flag it to the human.
+
 **Run this before creating or editing any `.beads` issue.**
 
 ## Purpose

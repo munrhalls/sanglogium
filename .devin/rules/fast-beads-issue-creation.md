@@ -18,10 +18,23 @@ Adding a new beads issue is a single append to `.beads/issues.jsonl`. It must fi
 Epic = `EPIC Filters Sorting`. Child of an epic = `[Filters] Price min/max <-> URL`.
 Standalone = `Search: clamp out-of-range ?page=`. Never a raw ID or `sang-logium-` in a title.
 
+## The `description` is end-user UX acceptance tests — MANDATORY, not opt-in
+
+The `description` field is NOT a prose problem statement. It is:
+
+- `ACCEPTANCE TESTS` — a list of `When I <interaction>, then <observable outcome>` lines,
+  each runnable by a human in a browser on `localhost:3000`. No `file:line`, no tokens, no
+  implementation detail. Each line is the human's words verbatim or a direct when/then
+  translation of their stated goal — no invented speculation.
+- `CURRENT STATUS:` — one plain factual line.
+
+Never paste the human's bug-report paragraph verbatim as the description. Translate first.
+This overrides the heavier anatomy in `.devin/workflows/beads-issue-gate.md`.
+
 ## Allowed minimal line
 
 ```
-{"_type":"issue","id":"sang-logium-XXX","title":"[Filters] Price min/max <-> URL","description":"...","status":"open","priority":1,"issue_type":"task","owner":"antarcticdepths71@gmail.com","created_at":"...","created_by":"Munrhalls","updated_at":"...","dependency_count":0,"dependent_count":0,"comment_count":0}
+{"_type":"issue","id":"sang-logium-XXX","title":"[Filters] Price min/max <-> URL","description":"ACCEPTANCE TESTS\n- When I ..., then ...\n\nCURRENT STATUS: not started","status":"open","priority":1,"issue_type":"task","owner":"antarcticdepths71@gmail.com","created_at":"...","created_by":"Munrhalls","updated_at":"...","dependency_count":0,"dependent_count":0,"comment_count":0}
 ```
 
 ## Time bound
