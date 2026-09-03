@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils/tailwind';
 import { ProductImage } from '@/app/components/features/products/ProductImage';
 import type { AutocompleteProduct } from '@/sanity-cms/lib/products/searchProducts';
-import { centsToDisplay } from '@/lib/utils/price';
+import { formatPrice } from '@/lib/utils/price';
 
 interface AutocompleteItemProps {
   product: AutocompleteProduct;
@@ -42,7 +42,7 @@ export function AutocompleteItem({ product, isActive, index, showThumbnail = tru
         <div className="flex flex-col min-w-0">
           <span className="type-body text-primary truncate">{product.name}</span>
           <span className="type-caption text-secondary">
-            {product.brand?.name && `${product.brand.name} · `}${centsToDisplay(product.price_data.unit_amount).toLocaleString()}
+            {product.brand?.name && `${product.brand.name} · `}{formatPrice(product.price_data.unit_amount)}
           </span>
         </div>
       </Link>

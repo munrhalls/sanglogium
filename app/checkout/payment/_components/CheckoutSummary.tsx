@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { formatPrice } from "@/lib/utils/price";
 
 interface CheckoutItem {
   productId: string;
@@ -29,13 +30,6 @@ interface CheckoutSummaryProps {
   subtotal: number;
   grandTotal: number;
   vatAmount: number;
-}
-
-function formatPLN(cents: number): string {
-  return (cents / 100).toLocaleString("pl-PL", {
-    style: "currency",
-    currency: "PLN",
-  });
 }
 
 export default function CheckoutSummary({
@@ -112,7 +106,7 @@ export default function CheckoutSummary({
                     {item.name || "Product"} <span className="text-text-secondary">× {item.quantity}</span>
                   </span>
                 </div>
-                <span className="type-price shrink-0 tabular-nums min-w-[72px] text-right">{formatPLN(item.lineTotal)}</span>
+                <span className="type-price shrink-0 tabular-nums min-w-[72px] text-right">{formatPrice(item.lineTotal)}</span>
               </div>
             </div>
           </div>
@@ -122,7 +116,7 @@ export default function CheckoutSummary({
       <div className="border-t border-border-secondary pt-2">
         <div className="flex items-center justify-between gap-4 type-body">
           <span className="min-w-0 flex-1 text-text-secondary">Subtotal</span>
-          <span className="type-price shrink-0 tabular-nums">{formatPLN(subtotal)}</span>
+          <span className="type-price shrink-0 tabular-nums">{formatPrice(subtotal)}</span>
         </div>
       </div>
 
@@ -134,7 +128,7 @@ export default function CheckoutSummary({
               <span className="block type-caption text-text-caption mt-0.5">{deliveryEstimate}</span>
             )}
           </span>
-          <span className="type-price shrink-0 tabular-nums">{formatPLN(shippingCost)}</span>
+          <span className="type-price shrink-0 tabular-nums">{formatPrice(shippingCost)}</span>
         </div>
       </div>
 
@@ -142,14 +136,14 @@ export default function CheckoutSummary({
       <div className="border-t border-border-secondary pt-2">
         <div className="flex items-center justify-between gap-4">
           <span className="min-w-0 flex-1 type-caption text-text-caption">VAT (included)</span>
-          <span className="type-caption text-text-caption shrink-0 tabular-nums">{formatPLN(vatAmount)}</span>
+          <span className="type-caption text-text-caption shrink-0 tabular-nums">{formatPrice(vatAmount)}</span>
         </div>
       </div>
 
       <div className="border-t border-border-secondary pt-2">
         <div className="flex items-center justify-between gap-4 type-section-sub">
           <span className="min-w-0 flex-1">Total</span>
-          <span className="shrink-0 tabular-nums text-brand-400">{formatPLN(grandTotal)}</span>
+          <span className="shrink-0 tabular-nums text-brand-400">{formatPrice(grandTotal)}</span>
         </div>
       </div>
     </div>

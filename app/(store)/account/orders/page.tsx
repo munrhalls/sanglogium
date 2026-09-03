@@ -1,6 +1,7 @@
 import { verifySession } from "@/lib/auth/dal";
 import { backendClient } from "@/sanity-cms/lib/backendClient";
 import Link from "next/link";
+import { formatPrice } from "@/lib/utils/price";
 
 interface OrderDoc {
   orderNumber: string;
@@ -52,7 +53,7 @@ export default async function OrdersPage() {
                   {new Date(order.dates.orderedAt).toLocaleDateString()}
                 </div>
                 <div className="text-sm font-medium">
-                  {order.pricing.total / 100} {order.pricing.currency.toUpperCase()}
+                  {formatPrice(order.pricing.total)}
                 </div>
               </Link>
             </li>

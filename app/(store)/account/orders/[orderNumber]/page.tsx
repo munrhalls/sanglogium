@@ -3,18 +3,14 @@ import { backendClient } from "@/sanity-cms/lib/backendClient";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Order } from "@/sanity.types";
+import { formatPrice } from "@/lib/utils/price";
 
 interface OrderDetailPageProps {
   params: Promise<{ orderNumber: string }>;
 }
 
-function formatCurrency(amount: number | undefined, currency: string | undefined) {
-  const safeAmount = (amount || 0) / 100;
-  const safeCurrency = (currency || "PLN").toUpperCase();
-  return safeAmount.toLocaleString("pl-PL", {
-    style: "currency",
-    currency: safeCurrency,
-  });
+function formatCurrency(amount: number | undefined, _currency?: string | undefined) {
+  return formatPrice(amount || 0);
 }
 
 function formatDate(date: string | undefined) {

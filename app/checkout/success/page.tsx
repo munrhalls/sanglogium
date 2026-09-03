@@ -9,6 +9,7 @@ import { fetchOrderByPaymentIntentId } from '@/sanity-cms/lib/orders/getOrderByP
 import OrderDetails from './OrderDetails'
 import { RefreshButton } from './RefreshButton'
 import { SuccessAnalytics } from './SuccessAnalytics.client'
+import { formatPrice } from '@/lib/utils/price'
 
 interface SuccessPageSearchParams {
   payment_intent?: string
@@ -127,10 +128,7 @@ export default async function SuccessPage({
 
   // Succeeded branch
   if (pi.status === 'succeeded') {
-    const amountPLN = (pi.amount / 100).toLocaleString('pl-PL', {
-      style: 'currency',
-      currency: 'PLN',
-    })
+    const amountPLN = formatPrice(pi.amount)
 
     const paymentMethodHint = (() => {
       const charge =

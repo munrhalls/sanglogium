@@ -9,6 +9,7 @@ import {
 } from "./FilterSidebar";
 import { useFilterParam } from "@/app/hooks/nuqs/useFilterSort";
 import { DEFAULT_PRICE_CEILING } from "@/lib/catalogue/priceBounds";
+import { formatPriceMajor } from "@/lib/utils/price";
 
 /**
  * Price range slider — and the owner of the shared slider pattern.
@@ -282,8 +283,8 @@ export function PriceRangeSlider({
         max={max}
         minValue={localMin}
         maxValue={localMax}
-        minLabel={`$${localMin}`}
-        maxLabel={`$${localMax}`}
+        minLabel={formatPriceMajor(localMin)}
+        maxLabel={formatPriceMajor(localMax)}
         onChangeMin={handleMin}
         onChangeMax={handleMax}
       />

@@ -2,7 +2,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { saveShippingAction } from "@/app/actions/checkout";
-import { formatPolishPrice, formatDeliveryEstimate } from "@/lib/utils/formatting";
+import { formatDeliveryEstimate } from "@/lib/utils/formatting";
+import { formatPriceMajor } from "@/lib/utils/price";
 import { cn } from "@/lib/utils/tailwind";
 import CheckoutStepper from "../_components/CheckoutStepper";
 
@@ -187,7 +188,7 @@ export default function ShippingPageClient({
                       <div className="flex items-baseline justify-between gap-2">
                         <p className="type-card-title">{option.provider}</p>
                         <p className="type-price shrink-0 text-right whitespace-nowrap">
-                          {formatPolishPrice(option.amount)}
+                          {formatPriceMajor(option.amount)}
                         </p>
                       </div>
 
@@ -214,7 +215,7 @@ export default function ShippingPageClient({
                   </span>
                 </div>
                 <span className="type-price flex-shrink-0">
-                  {formatPolishPrice(selectedOption.amount)}
+                  {formatPriceMajor(selectedOption.amount)}
                 </span>
               </div>
             )}

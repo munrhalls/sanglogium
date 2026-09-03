@@ -2,24 +2,18 @@ import { fetchOrderByPaymentIntentId } from '@/sanity-cms/lib/orders/getOrderByP
 import Link from 'next/link'
 import { Hourglass } from '@phosphor-icons/react/dist/ssr'
 import { RefreshButton } from './RefreshButton'
+import { formatPrice } from '@/lib/utils/price'
 
 interface Props {
   paymentIntentId: string
   fallbackTotal: number
 }
 
-function formatPLN(cents: number): string {
-  return (cents / 100).toLocaleString('pl-PL', {
-    style: 'currency',
-    currency: 'PLN',
-  })
-}
-
 export default async function OrderDetails({ paymentIntentId, fallbackTotal }: Props) {
   const order = await fetchOrderByPaymentIntentId(paymentIntentId)
 
   if (!order) {
-    const fallbackPLN = formatPLN(fallbackTotal)
+    const fallbackPLN = formatPrice(fallbackTotal)
     return (
       <div className="card-base text-center">
         <div className="flex flex-col items-center gap-4 py-4">
@@ -58,8 +52,8 @@ export default async function OrderDetails({ paymentIntentId, fallbackTotal }: P
           <h3 className="type-overline border-b border-border-secondary pb-2 mb-3">Items</h3>
           <ul className="space-y-3">
             {order.items.map((item, i) => {
-              const unitPLN = formatPLN(item.price)
-              const linePLN = formatPLN(item.subtotal)
+              const unitPLN = formatPrice(item.price)
+              const linePLN = formatPrice(item.subtotal)
               return (
                 <li key={i} className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
@@ -79,7 +73,7 @@ export default async function OrderDetails({ paymentIntentId, fallbackTotal }: P
         <div className="space-y-1.5 border-t border-border-secondary pt-4 mt-4">
           <div className="flex justify-between items-baseline">
             <span className="type-section-caption">Subtotal</span>
-            <span className="type-price">{formatPLN(order.pricing.subtotal)}</span>
+            <span className="type-price">{formatPrice(order.pricing.subtotal)}</span>
           </div>
           <div className="flex justify-between items-baseline">
             <span className="type-section-caption">
@@ -90,7 +84,7 @@ export default async function OrderDetails({ paymentIntentId, fallbackTotal }: P
                 </span>
               )}
             </span>
-            <span className="type-price">{formatPLN(order.pricing.shipping)}</span>
+            <span className="type-price">{formatPrice(order.pricing.shipping)}</span>
           </div>
           {order.shippingMethod?.estimatedDays && order.dates.orderedAt && (
             <div className="flex justify-between items-baseline">
@@ -114,18 +108,18 @@ export default async function OrderDetails({ paymentIntentId, fallbackTotal }: P
           {order.pricing.discount > 0 && (
             <div className="flex justify-between items-baseline">
               <span className="type-section-caption">Discount</span>
-              <span className="type-price text-success-500">-{formatPLN(order.pricing.discount)}</span>
+              <span className="type-price text-success-500">-{formatPrice(order.pricing.discount)}</span>
             </div>
           )}
           {order.pricing.tax > 0 && (
             <div className="flex justify-between items-baseline">
               <span className="type-section-caption">Tax</span>
-              <span className="type-price">{formatPLN(order.pricing.tax)}</span>
+              <span className="type-price">{formatPrice(order.pricing.tax)}</span>
             </div>
           )}
           <div className="flex justify-between items-baseline border-t border-border-primary pt-3 mt-2">
             <span className="type-section-sub">Total</span>
-            <span className="type-section-sub tabular-nums text-brand-400">{formatPLN(order.pricing.total)}</span>
+            <span className="type-section-sub tabular-nums text-brand-400">{formatPrice(order.pricing.total)}</span>
           </div>
         </div>
 

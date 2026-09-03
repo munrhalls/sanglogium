@@ -2,13 +2,6 @@ export function firstLetterToUpperCase(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export function formatPolishPrice(amount: number): string {
-  return new Intl.NumberFormat('pl-PL', {
-    style: 'currency',
-    currency: 'PLN',
-  }).format(amount);
-}
-
 export function formatDeliveryEstimate(days: number): string {
   if (days === 1) {
     return '1 dzień roboczy';

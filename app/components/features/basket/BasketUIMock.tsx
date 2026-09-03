@@ -40,7 +40,7 @@ function MockBasketItem({ item }: { item: MockItem }) {
             <span className="text-text-caption hover:text-text-secondary transition-colors duration-150 cursor-pointer text-small mt-1">Remove</span>
           </div>
         </div>
-        <div className="flex items-center justify-center whitespace-nowrap"><Price value={item.displayPrice} currency="PLN" /></div>
+        <div className="flex items-center justify-center whitespace-nowrap"><Price value={item.displayPrice} /></div>
         <div className="flex items-center justify-center">
           <div className="flex items-center">
             <button type="button" className="h-11 w-11 min-h-[44px] min-w-[44px] flex items-center justify-center bg-surface-elevated border border-border-secondary rounded-l-sm border-r-0 text-text-secondary hover:border-border-primary hover:text-text-primary transition-colors duration-150" aria-label="Decrease quantity">−</button>
@@ -48,7 +48,7 @@ function MockBasketItem({ item }: { item: MockItem }) {
             <button type="button" className="h-11 w-11 min-h-[44px] min-w-[44px] flex items-center justify-center bg-surface-elevated border border-border-secondary rounded-r-sm border-l-0 text-text-secondary hover:border-border-primary hover:text-text-primary transition-colors duration-150" aria-label="Increase quantity">+</button>
           </div>
         </div>
-        <div className="flex items-center justify-end whitespace-nowrap"><Price value={lineTotal} currency="PLN" /></div>
+        <div className="flex items-center justify-end whitespace-nowrap"><Price value={lineTotal} /></div>
       </div>
 
       {/* Mobile */}
@@ -58,7 +58,7 @@ function MockBasketItem({ item }: { item: MockItem }) {
           <div className="flex flex-col gap-1 flex-1 min-w-0">
             <h3 className="type-card-title line-clamp-2">{item.name}</h3>
             {item.variantLabel && <span className="text-text-secondary text-small">{item.variantLabel}</span>}
-            <span className="type-metadata">Unit: <Price value={item.displayPrice} currency="PLN" /></span>
+            <span className="type-metadata">Unit: <Price value={item.displayPrice} /></span>
             <span className="text-text-caption hover:text-text-secondary transition-colors duration-150 cursor-pointer text-small mt-0.5">Remove</span>
           </div>
         </div>
@@ -70,7 +70,7 @@ function MockBasketItem({ item }: { item: MockItem }) {
               <button type="button" className="h-11 w-11 min-h-[44px] min-w-[44px] flex items-center justify-center bg-surface-elevated border border-border-secondary rounded-r-sm border-l-0 text-text-secondary hover:border-border-primary hover:text-text-primary transition-colors duration-150" aria-label="Increase quantity">+</button>
             </div>
           </div>
-          <div className="type-price"><Price value={lineTotal} currency="PLN" /></div>
+          <div className="type-price"><Price value={lineTotal} /></div>
         </div>
       </div>
     </>
@@ -87,12 +87,12 @@ function MockBasketSummary({ shippingCost }: { shippingCost: number | null }) {
       <div className="space-y-3">
         <div className="flex justify-between items-baseline gap-4">
           <span className="type-caption whitespace-nowrap">Subtotal ({itemCount} items)</span>
-          <Price value={subtotal} variant="summary" currency="PLN" className="whitespace-nowrap" />
+          <Price value={subtotal} className="whitespace-nowrap" />
         </div>
         <div className="flex justify-between items-baseline gap-4">
           <span className="type-caption whitespace-nowrap">Shipping (estimated)</span>
           {shippingCost !== null ? (
-            <Price value={shippingCost} variant="summary" currency="PLN" className="whitespace-nowrap" />
+            <Price value={shippingCost} className="whitespace-nowrap" />
           ) : (
             <span className="type-caption whitespace-nowrap">Calculating...</span>
           )}
@@ -101,7 +101,7 @@ function MockBasketSummary({ shippingCost }: { shippingCost: number | null }) {
           <div className="flex justify-between items-baseline gap-4">
             <span className="type-section-sub whitespace-nowrap">Total</span>
             <span className="text-text-accent font-bold text-spotlight tabular-nums whitespace-nowrap">
-              <Price value={total} variant="summary" currency="PLN" />
+              <Price value={total} />
             </span>
           </div>
           <div className="type-caption mt-1 mb-4">Including VAT</div>

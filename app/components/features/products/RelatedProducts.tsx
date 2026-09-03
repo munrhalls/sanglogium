@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { sanityImageLoader } from '@/lib/utils/sanityImageLoader';
-import { centsToDisplay } from '@/lib/utils/price';
+import { formatPrice } from '@/lib/utils/price';
 
 interface RelatedProduct {
   _id: string;
@@ -86,7 +86,7 @@ export function RelatedProducts({ products, currentProductName }: RelatedProduct
                 {product.brand && (
                   <p className="type-metadata">{product.brand.name}</p>
                 )}
-                <p className="type-price">${centsToDisplay(product.price_data.unit_amount).toFixed(2)}</p>
+                <p className="type-price">{formatPrice(product.price_data.unit_amount)}</p>
               </div>
             </Link>
           </article>

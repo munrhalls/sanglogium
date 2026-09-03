@@ -6,6 +6,7 @@ import { useShallow } from "zustand/shallow";
 import { BasketControls } from "./BasketControls";
 import useBasketStore from "@/store/basketStore";
 import { sanityImageLoader } from "@/lib/utils/sanityImageLoader";
+import { formatPriceMajor } from "@/lib/utils/price";
 
 interface BasketItemProps {
   productId: string
@@ -62,7 +63,7 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
               <span className="type-caption text-error-700 font-medium">Out of Stock</span>
             )}
             <span className="type-caption text-text-secondary tabular-nums">
-              {displayPrice.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              {formatPriceMajor(displayPrice)}
             </span>
           </div>
         </div>
@@ -83,7 +84,7 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
             />
           </fieldset>
           <div className="w-24 text-right">
-            <span className="tabular-nums">{(displayPrice * quantity).toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+            <span className="tabular-nums">{formatPriceMajor(displayPrice * quantity)}</span>
           </div>
         </div>
 
@@ -130,7 +131,7 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
               <span className="text-xs text-error-700 font-medium">Out of Stock</span>
             )}
             <span className="type-caption text-text-secondary tabular-nums">
-              {displayPrice.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              {formatPriceMajor(displayPrice)}
             </span>
           </div>
         </div>
@@ -163,7 +164,7 @@ export default function BasketItem({ productId, name, quantity, displayPrice, im
               <Trash size={20} />
             </button>
             <span className="type-body font-bold tabular-nums">
-              {(displayPrice * quantity).toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              {formatPriceMajor(displayPrice * quantity)}
             </span>
           </div>
         </div>

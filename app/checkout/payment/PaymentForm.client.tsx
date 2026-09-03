@@ -11,6 +11,8 @@ import {
   PaymentMethodMessagingElement,
 } from "@stripe/react-stripe-js";
 
+import { formatPrice } from "@/lib/utils/price";
+
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 // Brand-aligned Stripe appearance — matches the dark design system
@@ -76,15 +78,6 @@ interface PaymentFormProps {
   metadata: Record<string, string>;
   address: Address;
   traceId: string;
-}
-
-function formatPLNShort(cents: number): string {
-  return (
-    (cents / 100).toLocaleString("pl-PL", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }) + " zł"
-  );
 }
 
 function PaymentFormInner({
@@ -206,7 +199,7 @@ function PaymentFormInner({
         Processing…
       </span>
     )
-    : `Pay · ${formatPLNShort(grandTotal)}`;
+    : `Pay · ${formatPrice(grandTotal)}`;
 
   return (
     <>

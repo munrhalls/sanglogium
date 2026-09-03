@@ -24,13 +24,13 @@ export default function BasketSummary({ itemCount, subtotal, basketData, shippin
       <div className="space-y-2 lg-touch:space-y-3 lg-desktop:space-y-3">
         <div className="flex justify-between items-baseline gap-4">
           <div className="type-caption whitespace-nowrap">Subtotal ({itemCount} item{itemCount !== 1 ? 's' : ''})</div>
-          <Price value={subtotal} variant="summary" currency="PLN" className="whitespace-nowrap tabular-nums" />
+          <Price value={subtotal} className="whitespace-nowrap tabular-nums" />
         </div>
 
         <div className="flex justify-between items-baseline gap-4">
           <div className="type-caption whitespace-nowrap">Shipping (estimated)</div>
           {shippingCost !== null ? (
-            <Price value={shippingCost} variant="summary" currency="PLN" className="whitespace-nowrap tabular-nums" />
+            <Price value={shippingCost} className="whitespace-nowrap tabular-nums" />
           ) : (
             <span className="type-caption whitespace-nowrap">Calculating...</span>
           )}
@@ -39,7 +39,7 @@ export default function BasketSummary({ itemCount, subtotal, basketData, shippin
         {0 > 0 && (
           <div className="flex justify-between items-baseline gap-4">
             <div className="type-caption whitespace-nowrap">Tax</div>
-            <Price value={0} variant="summary" currency="PLN" className="whitespace-nowrap" />
+            <Price value={0} className="whitespace-nowrap" />
           </div>
         )}
 
@@ -47,7 +47,7 @@ export default function BasketSummary({ itemCount, subtotal, basketData, shippin
           <div className="flex justify-between items-baseline gap-4">
             <div className="type-section-sub whitespace-nowrap">Total</div>
             <span className="text-text-accent font-bold text-spotlight whitespace-nowrap">
-              <Price value={total} variant="summary" currency="PLN" className="tabular-nums" />
+              <Price value={total} className="tabular-nums" />
             </span>
           </div>
           <div className="type-caption mt-1 mb-2 lg-touch:mb-4 lg-desktop:mb-4">Including VAT</div>

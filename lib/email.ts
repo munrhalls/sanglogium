@@ -1,4 +1,5 @@
 import { Resend } from "resend";
+import { formatPrice } from "@/lib/utils/price";
 
 interface EmailUser {
   id: string;
@@ -123,7 +124,7 @@ export async function sendOrderConfirmationEmail(data: {
         `<tr>
           <td style="padding:8px 0;border-bottom:1px solid #e5e7eb;">${item.name}</td>
           <td style="padding:8px 0;border-bottom:1px solid #e5e7eb;text-align:center;">${item.quantity}</td>
-          <td style="padding:8px 0;border-bottom:1px solid #e5e7eb;text-align:right;">${(item.subtotal / 100).toLocaleString('pl-PL', { style: 'currency', currency: 'PLN' })}</td>
+          <td style="padding:8px 0;border-bottom:1px solid #e5e7eb;text-align:right;">${formatPrice(item.subtotal)}</td>
         </tr>`
     )
     .join('')
@@ -147,7 +148,7 @@ export async function sendOrderConfirmationEmail(data: {
           <tbody>${itemsHtml}</tbody>
         </table>
         <p style="margin-top:16px;font-size:16px;">
-          <strong>Total:</strong> ${(total / 100).toLocaleString('pl-PL', { style: 'currency', currency: 'PLN' })}
+          <strong>Total:</strong> ${formatPrice(total)}
         </p>
         <div style="margin-top:24px;padding:16px;background:#f9fafb;border-radius:8px;">
           <p style="margin:0 0 8px;font-weight:bold;">Shipping to:</p>

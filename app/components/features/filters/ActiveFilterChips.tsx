@@ -13,6 +13,7 @@ import {
   useClearAllFilters,
   usePageReset,
 } from "@/app/hooks/nuqs/useFilterSort";
+import { formatPriceMajor } from "@/lib/utils/price";
 
 /**
  * F6 — the active-filter chip row + "Clear all".
@@ -44,7 +45,7 @@ interface Chip {
   onRemove: () => void;
 }
 
-const formatPrice = (dollars: number) => `$${dollars.toLocaleString("en-US")}`;
+const formatPrice = (dollars: number) => formatPriceMajor(dollars);
 
 const sortLabel = (value: string) =>
   SORT_OPTIONS.find((o) => o.value === value)?.label ?? value;
