@@ -1,0 +1,557 @@
+{
+  "takenAt": "2026-09-03T06:26:26.835Z",
+  "merges": [
+    {
+      "group": "Burson",
+      "loser": {
+        "_id": "PHPYj28HJdPDHAaIBAHG4Y",
+        "name": "Burson",
+        "slug": null
+      },
+      "winner": {
+        "_id": "36mAUM2eoaDVgeREyE2BSJ",
+        "name": "Burson Audio",
+        "slug": "burson-audio"
+      },
+      "winnerPcBefore": 15,
+      "targetPc": 16,
+      "productsOnLoser": [
+        {
+          "_id": "PHPYj28HJdPDHAaIBAHGKa",
+          "name": "Burson Audio Playmate 2"
+        }
+      ],
+      "inboundRefsToLoser": [
+        {
+          "_id": "PHPYj28HJdPDHAaIBAHGKa",
+          "_type": "product"
+        }
+      ]
+    },
+    {
+      "group": "Chord",
+      "loser": {
+        "_id": "MrEMtYwMtrFDGWmRnN6pZB",
+        "name": "Chord",
+        "slug": null
+      },
+      "winner": {
+        "_id": "36mAUM2eoaDVgeREyE2BsF",
+        "name": "Chord Electronics",
+        "slug": "chord-electronics"
+      },
+      "winnerPcBefore": 8,
+      "targetPc": 11,
+      "productsOnLoser": [
+        {
+          "_id": "MrEMtYwMtrFDGWmRnN74UJ",
+          "name": "Chord Electronics Hugo 2 Portable DAC & Headphone Amplifier"
+        },
+        {
+          "_id": "MrEMtYwMtrFDGWmRnN7qVp",
+          "name": "Chord Electronics 2go"
+        },
+        {
+          "_id": "Pn6oyV4Ks5AcNbecjgsEF8",
+          "name": "Chord Electronics Mojo 2 Portable DAC and Headphone Amplifier (4.4mm)"
+        }
+      ],
+      "inboundRefsToLoser": [
+        {
+          "_id": "MrEMtYwMtrFDGWmRnN74UJ",
+          "_type": "product"
+        },
+        {
+          "_id": "MrEMtYwMtrFDGWmRnN7qVp",
+          "_type": "product"
+        },
+        {
+          "_id": "Pn6oyV4Ks5AcNbecjgsEF8",
+          "_type": "product"
+        }
+      ]
+    },
+    {
+      "group": "Ferrum",
+      "loser": {
+        "_id": "Pn6oyV4Ks5AcNbecjguCZo",
+        "name": "Ferrum",
+        "slug": null
+      },
+      "winner": {
+        "_id": "36mAUM2eoaDVgeREyE2Fts",
+        "name": "Ferrum Audio",
+        "slug": "ferrum-audio"
+      },
+      "winnerPcBefore": 3,
+      "targetPc": 4,
+      "productsOnLoser": [
+        {
+          "_id": "Pn6oyV4Ks5AcNbecjguCqf",
+          "name": "Ferrum WANDLA 2.0 DAC"
+        }
+      ],
+      "inboundRefsToLoser": [
+        {
+          "_id": "Pn6oyV4Ks5AcNbecjguCqf",
+          "_type": "product"
+        }
+      ]
+    },
+    {
+      "group": "Hifiman",
+      "loser": {
+        "_id": "DZc43yHr6ydfgE7zB41lLv",
+        "name": "HiFiMan",
+        "slug": null
+      },
+      "winner": {
+        "_id": "36mAUM2eoaDVgeREyE2ACV",
+        "name": "Hifiman",
+        "slug": "hifiman"
+      },
+      "winnerPcBefore": 18,
+      "targetPc": 27,
+      "productsOnLoser": [
+        {
+          "_id": "DZc43yHr6ydfgE7zB41lXz",
+          "name": "HIFIMAN EF600 Desktop R2R DAC/Amp"
+        },
+        {
+          "_id": "DZc43yHr6ydfgE7zB45bQr",
+          "name": "HIFIMAN Arya Organic Planar Magnetic Headphones"
+        },
+        {
+          "_id": "DZc43yHr6ydfgE7zB45e9l",
+          "name": "HIFIMAN Ananda Nano Planar Magnetic Headphone"
+        },
+        {
+          "_id": "DZc43yHr6ydfgE7zB45fiH",
+          "name": "HIFIMAN Edition XV Planar Magnetic Headphones"
+        },
+        {
+          "_id": "GPjMdcfFWZVrKyR2PB9Zdy",
+          "name": "HIFIMAN Edition XS Planar Magnetic Headphone (Apos Certified)"
+        },
+        {
+          "_id": "xMEqvkRBbdrlJXyFG8kExX",
+          "name": "HIFIMAN Sundara Planar Magnetic Headphones"
+        },
+        {
+          "_id": "xMEqvkRBbdrlJXyFG8kHLD",
+          "name": "HIFIMAN Edition XS Planar Magnetic Headphone"
+        },
+        {
+          "_id": "xMEqvkRBbdrlJXyFG8kOlp",
+          "name": "HIFIMAN Arya Planar Magnetic Headphone - Stealth Magnet Version"
+        },
+        {
+          "_id": "xMEqvkRBbdrlJXyFG8kR2T",
+          "name": "HIFIMAN Ananda Stealth Planar Magnetic Headphone"
+        }
+      ],
+      "inboundRefsToLoser": [
+        {
+          "_id": "DZc43yHr6ydfgE7zB41lXz",
+          "_type": "product"
+        },
+        {
+          "_id": "DZc43yHr6ydfgE7zB45bQr",
+          "_type": "product"
+        },
+        {
+          "_id": "DZc43yHr6ydfgE7zB45e9l",
+          "_type": "product"
+        },
+        {
+          "_id": "DZc43yHr6ydfgE7zB45fiH",
+          "_type": "product"
+        },
+        {
+          "_id": "GPjMdcfFWZVrKyR2PB9Zdy",
+          "_type": "product"
+        },
+        {
+          "_id": "xMEqvkRBbdrlJXyFG8kExX",
+          "_type": "product"
+        },
+        {
+          "_id": "xMEqvkRBbdrlJXyFG8kHLD",
+          "_type": "product"
+        },
+        {
+          "_id": "xMEqvkRBbdrlJXyFG8kOlp",
+          "_type": "product"
+        },
+        {
+          "_id": "xMEqvkRBbdrlJXyFG8kR2T",
+          "_type": "product"
+        }
+      ]
+    },
+    {
+      "group": "iFi",
+      "loser": {
+        "_id": "PHPYj28HJdPDHAaIBACuBS",
+        "name": "iFi",
+        "slug": null
+      },
+      "winner": {
+        "_id": "36mAUM2eoaDVgeREyE24YN",
+        "name": "iFi Audio",
+        "slug": "ifi-audio"
+      },
+      "winnerPcBefore": 36,
+      "targetPc": 47,
+      "productsOnLoser": [
+        {
+          "_id": "DZc43yHr6ydfgE7zB3znRV",
+          "name": "iFi Audio Go Pod Max Portable IEM Bluetooth DAC/AMP (Unit Only)"
+        },
+        {
+          "_id": "DZc43yHr6ydfgE7zB46CG4",
+          "name": "iFi GO bar Kensei"
+        },
+        {
+          "_id": "GPjMdcfFWZVrKyR2PB5NeM",
+          "name": "iFi NEO Stream"
+        },
+        {
+          "_id": "MrEMtYwMtrFDGWmRnN7WCP",
+          "name": "iFi Audio Hip DAC 3 Portable DAC/Amp"
+        },
+        {
+          "_id": "MrEMtYwMtrFDGWmRnN8QYu",
+          "name": "iFi Audio Pro iDSD Signature DAC/Amp & Streamer"
+        },
+        {
+          "_id": "PHPYj28HJdPDHAaIBACuKc",
+          "name": "iFi Audio GO Blu Portable Bluetooth DAC/Amp"
+        },
+        {
+          "_id": "Pn6oyV4Ks5AcNbecjgsvqe",
+          "name": "iFi Audio GO Bar Portable USB DAC & Headphone Amplifier"
+        },
+        {
+          "_id": "xMEqvkRBbdrlJXyFG8eD0B",
+          "name": "iFi ZEN Blue 3 Bluetooth Desktop DAC"
+        },
+        {
+          "_id": "xMEqvkRBbdrlJXyFG8eFfR",
+          "name": "iFi GO blu Air Portable Hi-Res Bluetooth DAC & Headphone Amp"
+        },
+        {
+          "_id": "xMEqvkRBbdrlJXyFG8huOv",
+          "name": "iFi Zen CAN 3"
+        },
+        {
+          "_id": "xMEqvkRBbdrlJXyFG8lEY3",
+          "name": "iFi Hip-DAC 3"
+        }
+      ],
+      "inboundRefsToLoser": [
+        {
+          "_id": "DZc43yHr6ydfgE7zB3znRV",
+          "_type": "product"
+        },
+        {
+          "_id": "DZc43yHr6ydfgE7zB46CG4",
+          "_type": "product"
+        },
+        {
+          "_id": "GPjMdcfFWZVrKyR2PB5NeM",
+          "_type": "product"
+        },
+        {
+          "_id": "MrEMtYwMtrFDGWmRnN7WCP",
+          "_type": "product"
+        },
+        {
+          "_id": "MrEMtYwMtrFDGWmRnN8QYu",
+          "_type": "product"
+        },
+        {
+          "_id": "PHPYj28HJdPDHAaIBACuKc",
+          "_type": "product"
+        },
+        {
+          "_id": "Pn6oyV4Ks5AcNbecjgsvqe",
+          "_type": "product"
+        },
+        {
+          "_id": "xMEqvkRBbdrlJXyFG8eD0B",
+          "_type": "product"
+        },
+        {
+          "_id": "xMEqvkRBbdrlJXyFG8eFfR",
+          "_type": "product"
+        },
+        {
+          "_id": "xMEqvkRBbdrlJXyFG8huOv",
+          "_type": "product"
+        },
+        {
+          "_id": "xMEqvkRBbdrlJXyFG8lEY3",
+          "_type": "product"
+        }
+      ]
+    },
+    {
+      "group": "Meze",
+      "loser": {
+        "_id": "DgvVxT5yo9RmuR6IbOw7mx",
+        "name": "Meze",
+        "slug": "meze"
+      },
+      "winner": {
+        "_id": "SRbPduY0SDJBJIcsBHIrdC",
+        "name": "Meze Audio",
+        "slug": "meze-audio"
+      },
+      "winnerPcBefore": 26,
+      "targetPc": 41,
+      "productsOnLoser": [
+        {
+          "_id": "3O1ZNp54LWQGln4uEAU7Vs",
+          "name": "Meze Audio 99 Series 2.5mm or 4.4mm Replacement Cable"
+        },
+        {
+          "_id": "3O1ZNp54LWQGln4uEAUGRi",
+          "name": "Meze Audio OFC Mini 4-Pin XLR Replacement Cable"
+        },
+        {
+          "_id": "MrEMtYwMtrFDGWmRnQU1gD",
+          "name": "Meze Audio 99 Classics V2 Headphones"
+        },
+        {
+          "_id": "PHPYj28HJdPDHAaIBAHiIM",
+          "name": "Meze Audio 99 Series Silver Replacement cable (2.5mm, 3.5mm or 4.4mm)"
+        },
+        {
+          "_id": "PHPYj28HJdPDHAaIBAJqcI",
+          "name": "Meze Audio 109 PRO Headphones"
+        },
+        {
+          "_id": "PHPYj28HJdPDHAaIBCD0NI",
+          "name": "Meze Audio 99 Classics Headphones"
+        },
+        {
+          "_id": "PHPYj28HJdPDHAaIBCDAX8",
+          "name": "Meze Audio Strada Headphones"
+        },
+        {
+          "_id": "PHPYj28HJdPDHAaIBCEe6q",
+          "name": "Meze Audio Alba In-Ear Headphones"
+        },
+        {
+          "_id": "Pn6oyV4Ks5AcNbecjgs488",
+          "name": "Meze Audio Manta Headphone Stand"
+        },
+        {
+          "_id": "Pn6oyV4Ks5AcNbecjjlRHM",
+          "name": "Meze Audio Empyrean Vegan Leather Ear Pads"
+        },
+        {
+          "_id": "k27n1AQuIbSr5iozFz7KdY",
+          "name": "Meze Audio LIRIC II Headphones - Open Box"
+        },
+        {
+          "_id": "k27n1AQuIbSr5iozG37Y6n",
+          "name": "Meze Audio Silver PCUHD 4-Pin Mini-XLR Replacement Cable"
+        },
+        {
+          "_id": "moXlkADK7m1DHgGwWtblBG",
+          "name": "Meze Audio LIRIC II Headphones"
+        },
+        {
+          "_id": "moXlkADK7m1DHgGwWxMmzS",
+          "name": "Meze Audio Copper PCUHD 4-Pin Mini-XLR Replacement Cable"
+        },
+        {
+          "_id": "n10eAegrGspodtsQvneRgi",
+          "name": "Meze 99 Classics Headphones - Open Box"
+        }
+      ],
+      "inboundRefsToLoser": [
+        {
+          "_id": "3O1ZNp54LWQGln4uEAU7Vs",
+          "_type": "product"
+        },
+        {
+          "_id": "3O1ZNp54LWQGln4uEAUGRi",
+          "_type": "product"
+        },
+        {
+          "_id": "MrEMtYwMtrFDGWmRnQU1gD",
+          "_type": "product"
+        },
+        {
+          "_id": "PHPYj28HJdPDHAaIBAHiIM",
+          "_type": "product"
+        },
+        {
+          "_id": "PHPYj28HJdPDHAaIBAJqcI",
+          "_type": "product"
+        },
+        {
+          "_id": "PHPYj28HJdPDHAaIBCD0NI",
+          "_type": "product"
+        },
+        {
+          "_id": "PHPYj28HJdPDHAaIBCDAX8",
+          "_type": "product"
+        },
+        {
+          "_id": "PHPYj28HJdPDHAaIBCEe6q",
+          "_type": "product"
+        },
+        {
+          "_id": "Pn6oyV4Ks5AcNbecjgs488",
+          "_type": "product"
+        },
+        {
+          "_id": "Pn6oyV4Ks5AcNbecjjlRHM",
+          "_type": "product"
+        },
+        {
+          "_id": "k27n1AQuIbSr5iozFz7KdY",
+          "_type": "product"
+        },
+        {
+          "_id": "k27n1AQuIbSr5iozG37Y6n",
+          "_type": "product"
+        },
+        {
+          "_id": "moXlkADK7m1DHgGwWtblBG",
+          "_type": "product"
+        },
+        {
+          "_id": "moXlkADK7m1DHgGwWxMmzS",
+          "_type": "product"
+        },
+        {
+          "_id": "n10eAegrGspodtsQvneRgi",
+          "_type": "product"
+        }
+      ]
+    },
+    {
+      "group": "Kanto",
+      "loser": {
+        "_id": "DgvVxT5yo9RmuR6IbOwJCf",
+        "name": "Kanto Living",
+        "slug": "kanto-living"
+      },
+      "winner": {
+        "_id": "SRbPduY0SDJBJIcsBHIrUk",
+        "name": "Kanto",
+        "slug": "kanto"
+      },
+      "winnerPcBefore": 24,
+      "targetPc": 27,
+      "productsOnLoser": [
+        {
+          "_id": "C0JSb66CHOxy1G14ni5ga1",
+          "name": "Kanto Headphone Stand"
+        },
+        {
+          "_id": "k27n1AQuIbSr5iozG37Xq4",
+          "name": "Kanto S2 Desktop Speaker Stands"
+        },
+        {
+          "_id": "k27n1AQuIbSr5iozG37bo2",
+          "name": "Kanto S6 Desktop Speaker Stands"
+        }
+      ],
+      "inboundRefsToLoser": [
+        {
+          "_id": "C0JSb66CHOxy1G14ni5ga1",
+          "_type": "product"
+        },
+        {
+          "_id": "k27n1AQuIbSr5iozG37Xq4",
+          "_type": "product"
+        },
+        {
+          "_id": "k27n1AQuIbSr5iozG37bo2",
+          "_type": "product"
+        }
+      ]
+    }
+  ],
+  "deletes": [
+    {
+      "doc": {
+        "_id": "BmsCJrVMwh5L4y3NztGLbH",
+        "name": "Test Brand",
+        "slug": "test-brand"
+      },
+      "inboundRefs": []
+    },
+    {
+      "doc": {
+        "_id": "RGVW3d7PGC4nLrVfIqsISd",
+        "name": "Test Brand",
+        "slug": "test-brand"
+      },
+      "inboundRefs": []
+    },
+    {
+      "doc": {
+        "_id": "RGVW3d7PGC4nLrVfIqsJg7",
+        "name": "Test Brand",
+        "slug": "test-brand"
+      },
+      "inboundRefs": []
+    },
+    {
+      "doc": {
+        "_id": "test-brand",
+        "name": "Test Brand",
+        "slug": "test-brand"
+      },
+      "inboundRefs": []
+    },
+    {
+      "doc": {
+        "_id": "MHd9dKrYZDArdj3morESFI",
+        "name": "Test Brand Alpha",
+        "slug": "test-brand-alpha"
+      },
+      "inboundRefs": []
+    },
+    {
+      "doc": {
+        "_id": "YcMKSEyusPBTcaoe1xiOw7",
+        "name": "Test Brand Beta",
+        "slug": "test-brand-beta"
+      },
+      "inboundRefs": []
+    },
+    {
+      "doc": {
+        "_id": "36mAUM2eoaDVgeREyE280L",
+        "name": "Sony Mobile",
+        "slug": "sony-mobile"
+      },
+      "inboundRefs": []
+    },
+    {
+      "doc": {
+        "_id": "DgvVxT5yo9RmuR6IbOwBTz",
+        "name": "The Last Factory",
+        "slug": "the-last-factory"
+      },
+      "inboundRefs": []
+    }
+  ],
+  "rename": {
+    "doc": {
+      "_id": "36mAUM2eoaDVgeREyE2ACV",
+      "name": "Hifiman",
+      "slug": "hifiman"
+    },
+    "from": "Hifiman",
+    "to": "HiFiMan"
+  }
+}
