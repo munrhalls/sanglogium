@@ -4,7 +4,7 @@ Reference doc for `sang-logium-g8q.1` — [Brand] Inventory + cleanup plan
 Parent epic: `sang-logium-g8q` — EPIC Brand Data Integrity
 Blocks: `sang-logium-g8q.2` (give every maker a slug) · `sang-logium-g8q.3` (merge duplicates, drop dead docs)
 
-**Status:** g8q.1 CLOSED. §6 rulings all RESOLVED 2026-09-02 → g8q.2 is unblocked and ready; g8q.3 runs after g8q.2.
+**Status:** g8q.1 CLOSED · §6 rulings RESOLVED 2026-09-02 · g8q.2 (slug adds) EXECUTED 2026-09-03 (§4) · **g8q.3 (7 merges + 8 deletes + Hifiman→HiFiMan rename) EXECUTED 2026-09-03 — see §9.** Post-run production: 128 brand docs, every one with a unique slug, 0 slugless, 0 duplicate slug strings, 0 dangling product→brand refs, 1035 products (unchanged).
 
 **Snapshot:** production dataset, read-only, 2026-09-02 ~09:50 UTC.
 Every `_id` and count below is pasted verbatim from GROQ query output against
@@ -220,6 +220,11 @@ Child 3 redirect: `/brand/kanto-living` → `/brand/kanto`.
 
 ## 4. SLUG MAP
 
+**✅ EXECUTED 2026-09-03 (g8q.2)** — all 42 patched to production in 5 batches
+(txns `fKmNdXQ7…`, `AuQCNv5x…ErJ`, `AuQCNv5x…Fg2`, `XWX1g76A…riP`, `XWX1g76A…sFJ`).
+After: brand docs with slug 96 → **138**; without slug 47 → **5** (exactly the merge-losers
+below); only duplicate slug string is `test-brand` ×4 (g8q.3 deletes those). No collisions introduced.
+
 42 standalone slugless docs that survive as their own brand (the 5 slugless
 merge-losers above — Burson, Chord, Ferrum, HiFiMan, iFi — are **not** here; they are
 deleted by the MERGE MAP).
@@ -365,10 +370,46 @@ All of the above deref **live** via `brand->` — after a merge (products repoin
 ## 8. Execution notes for children 2 & 3
 
 - All 6 §6 rulings are **RESOLVED** (2026-09-02). Every mutation is now spelled out with a real `_id`; nothing is left to agent judgement at write time.
-- **Child 2 (slugs) — unblocked, ready to start.** 42 `patch().set({ 'slug': { _type: 'slug', current: '<value>' } })` straight from §4 SLUG MAP (final, unchanged by the rulings). Additive only — no merges, deletes, or ref changes; no dependency on child 3. Re-verify each slug's uniqueness against live data at write time (read-only CDN, see appendix); abort the batch on any collision.
+- **Child 2 (slugs) — ✅ DONE 2026-09-03.** 42 slug adds applied to production (see §4). Verified: 5 slugless docs remain, all merge-losers; no new slug collisions. g8q.2 closed.
 - **Child 3 (merge + delete) — run after child 2.** Serialize with `sang-logium-3a9`. For each of the 7 MERGE MAP groups (Burson, Chord, Ferrum, Hifiman, iFi, Meze, Kanto): repoint every `*[_type=="product" && brand._ref == "<loser>"]` to the winner `_ref`, assert loser inbound-ref count == 0 AND winner pc == target pc, then delete the loser. Then delete the 8 §5 DELETE LIST docs. Then set winner name `Hifiman` → `HiFiMan` (ruling #5). Then add redirects: `/brand/kanto-living`→`/brand/kanto`, `/brand/meze`→`/brand/meze-audio`, `/brand/sony-mobile`→`/brand/sony`, `/brand/the-last-factory`→ home.
 - `data/current-mappings.json` regen is **not required** — it is imported by zero runtime code (see §7). Skip it.
 - Re-run the §1 totals query after each child and diff against this snapshot.
+
+---
+
+## 9. Execution record — g8q.3 (2026-09-03)
+
+Script: `scripts/temp-brand-merge-g8q3.mjs` (modes: `snapshot` / `dry-run` / `execute` / `verify`).
+Token: `SANITY_STUDIO_READ_WRITE`, `useCdn:false`, `perspective:raw`. Pre-run snapshot:
+`_project/reports/brand-merge-g8q3-snapshot.json` (every affected doc + every product ref that moved).
+
+**Merges** — 43 product `brand._ref` repoints, then each loser deleted after asserting
+loser inbound-ref count == 0 AND winner published pc == target:
+
+| Group | Loser deleted | Winner | Products moved | Winner pc after |
+|---|---|---|---:|---:|
+| Burson | `PHPYj28HJdPDHAaIBAHG4Y` | `36mAUM2eoaDVgeREyE2BSJ` | 1 | 16 ✓ |
+| Chord | `MrEMtYwMtrFDGWmRnN6pZB` | `36mAUM2eoaDVgeREyE2BsF` | 3 | 11 ✓ |
+| Ferrum | `Pn6oyV4Ks5AcNbecjguCZo` | `36mAUM2eoaDVgeREyE2Fts` | 1 | 4 ✓ |
+| Hifiman | `DZc43yHr6ydfgE7zB41lLv` | `36mAUM2eoaDVgeREyE2ACV` | 9 | 27 ✓ |
+| iFi | `PHPYj28HJdPDHAaIBACuBS` | `36mAUM2eoaDVgeREyE24YN` | 11 | 47 ✓ |
+| Meze | `DgvVxT5yo9RmuR6IbOw7mx` | `SRbPduY0SDJBJIcsBHIrdC` | 15 | 41 ✓ |
+| Kanto | `DgvVxT5yo9RmuR6IbOwJCf` | `SRbPduY0SDJBJIcsBHIrUk` | 3 | 27 ✓ |
+
+**Deletes** — 8 docs, each confirmed 0 inbound refs immediately before deletion:
+`BmsCJrVMwh5L4y3NztGLbH`, `RGVW3d7PGC4nLrVfIqsISd`, `RGVW3d7PGC4nLrVfIqsJg7`, `test-brand`,
+`MHd9dKrYZDArdj3morESFI`, `YcMKSEyusPBTcaoe1xiOw7`, `36mAUM2eoaDVgeREyE280L` (Sony Mobile),
+`DgvVxT5yo9RmuR6IbOwBTz` (The Last Factory).
+
+**Rename** — `36mAUM2eoaDVgeREyE2ACV` name `Hifiman` → `HiFiMan` (slug unchanged, `hifiman`).
+
+**Redirects** — added to `next.config.ts` `redirects()`: `/brand/kanto-living` → `/brand/kanto`,
+`/brand/meze` → `/brand/meze-audio`, `/brand/sony-mobile` → `/brand/sony`,
+`/brand/the-last-factory` → `/`.
+
+**Post-run verification (read-only CDN):** brand docs 143 → **128**; withSlug 138 → **128**;
+slugless **0**; duplicate slug strings **0**; dangling product→brand refs **0**; products **1035**
+(unchanged). `data/current-mappings.json` regen not required (imported by zero runtime code, §7).
 
 ---
 
