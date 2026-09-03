@@ -3,7 +3,7 @@ node_modules/
 test-results/
 playwright-report/
 blob-report/
-data/
+# data/ (lifted for u8w.2 matrix work)
 .sanity/
 dist/
 build/
@@ -20,7 +20,7 @@ build/
 *.pyd
 *.dll
 # Heavy Sanity backups (multi-MB JSON blobs)
-sanity/backups/
+# sanity/backups/ (lifted for u8w.2 matrix work)
 # Image pipeline artifacts
 scripts/image-pipeline/venv/
 scripts/image-pipeline/models/
