@@ -20,7 +20,7 @@ export function SuccessAnalytics({ transactionId, value }: Props) {
     gtag("event", "purchase", {
       transaction_id: transactionId,
       value: value / 100,
-      currency: "PLN",
+      currency: "USD",
       items: [],
     });
   }, []);

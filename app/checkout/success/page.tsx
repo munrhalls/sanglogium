@@ -128,7 +128,7 @@ export default async function SuccessPage({
 
   // Succeeded branch
   if (pi.status === 'succeeded') {
-    const amountPLN = formatPrice(pi.amount)
+    const amountFormatted = formatPrice(pi.amount)
 
     const paymentMethodHint = (() => {
       const charge =
@@ -176,7 +176,7 @@ export default async function SuccessPage({
               <CheckCircle size={28} className="text-success-500 flex-shrink-0" aria-hidden="true" />
               <h1 className="type-section-hed">Payment confirmed</h1>
             </div>
-            <p className="type-section-sub tabular-nums">{amountPLN}</p>
+            <p className="type-section-sub tabular-nums">{amountFormatted}</p>
             {paymentMethodHint && (
               <p className="type-section-caption">via {paymentMethodHint}</p>
             )}

@@ -13,13 +13,13 @@ export default async function OrderDetails({ paymentIntentId, fallbackTotal }: P
   const order = await fetchOrderByPaymentIntentId(paymentIntentId)
 
   if (!order) {
-    const fallbackPLN = formatPrice(fallbackTotal)
+    const fallbackFormatted = formatPrice(fallbackTotal)
     return (
       <div className="card-base text-center">
         <div className="flex flex-col items-center gap-4 py-4">
           <Hourglass size={32} className="text-accent-500" aria-hidden="true" />
           <p className="type-section-sub">Generating your order receipt…</p>
-          <p className="type-body text-text-caption">Amount charged: {fallbackPLN}</p>
+          <p className="type-body text-text-caption">Amount charged: {fallbackFormatted}</p>
           <RefreshButton />
         </div>
       </div>
@@ -52,18 +52,18 @@ export default async function OrderDetails({ paymentIntentId, fallbackTotal }: P
           <h3 className="type-overline border-b border-border-secondary pb-2 mb-3">Items</h3>
           <ul className="space-y-3">
             {order.items.map((item, i) => {
-              const unitPLN = formatPrice(item.price)
-              const linePLN = formatPrice(item.subtotal)
+              const unitFormatted = formatPrice(item.price)
+              const lineFormatted = formatPrice(item.subtotal)
               return (
                 <li key={i} className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
                     <p className="type-card-title line-clamp-2">{item.name}</p>
                     <p className="type-section-caption">
                       × {item.quantity}
-                      <span className="ml-1">({unitPLN} each)</span>
+                      <span className="ml-1">({unitFormatted} each)</span>
                     </p>
                   </div>
-                  <span className="type-price flex-shrink-0">{linePLN}</span>
+                  <span className="type-price flex-shrink-0">{lineFormatted}</span>
                 </li>
               )
             })}
