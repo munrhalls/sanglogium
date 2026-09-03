@@ -5,7 +5,7 @@ import '@testing-library/jest-dom';
 import CheckoutSummary from '@/app/checkout/payment/_components/CheckoutSummary';
 
 describe('CheckoutSummary', () => {
-  it('renders itemized basket with PLN formatting', () => {
+  it('renders itemized basket with currency formatting', () => {
     // Arrange
     const items = [
       { productId: 'prod1', name: 'Product A', quantity: 2, unitPrice: 1999, lineTotal: 3998 },
