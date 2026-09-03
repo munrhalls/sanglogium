@@ -1,0 +1,260 @@
+{
+  "generatedAt": "2026-09-03T10:27:14.805Z",
+  "sourceFiles": [
+    "acquired-values.json",
+    "product-facet-applicability-matrix.json",
+    "unresolved-queue.json"
+  ],
+  "totalProducts": 708,
+  "totalApplicable": 6599,
+  "totalNa": 8977,
+  "totalWithValue": 3098,
+  "totalUnresolved": 3501,
+  "pctFilled": 47,
+  "pctUnresolved": 53,
+  "closedVocabViolations": 0,
+  "byFacet": [
+    {
+      "facet": "Price",
+      "field": "filterAttributes.price",
+      "type": "range",
+      "applicable": 708,
+      "withValue": 708,
+      "unresolved": 0,
+      "na": 0,
+      "pctFilled": 100,
+      "pctUnresolved": 0
+    },
+    {
+      "facet": "Brand",
+      "field": "filterAttributes.brand",
+      "type": "multi",
+      "applicable": 708,
+      "withValue": 708,
+      "unresolved": 0,
+      "na": 0,
+      "pctFilled": 100,
+      "pctUnresolved": 0
+    },
+    {
+      "facet": "Availability",
+      "field": "filterAttributes.inStock",
+      "type": "boolean",
+      "applicable": 708,
+      "withValue": 708,
+      "unresolved": 0,
+      "na": 0,
+      "pctFilled": 100,
+      "pctUnresolved": 0
+    },
+    {
+      "facet": "Category",
+      "field": "filterAttributes.category",
+      "type": "multi",
+      "applicable": 708,
+      "withValue": 708,
+      "unresolved": 0,
+      "na": 0,
+      "pctFilled": 100,
+      "pctUnresolved": 0
+    },
+    {
+      "facet": "Wearing style",
+      "field": "filterAttributes.wearingStyle",
+      "type": "enum",
+      "applicable": 186,
+      "withValue": 39,
+      "unresolved": 147,
+      "na": 522,
+      "pctFilled": 21,
+      "pctUnresolved": 79
+    },
+    {
+      "facet": "Back design",
+      "field": "filterAttributes.backDesign",
+      "type": "enum",
+      "applicable": 134,
+      "withValue": 31,
+      "unresolved": 103,
+      "na": 574,
+      "pctFilled": 23,
+      "pctUnresolved": 77
+    },
+    {
+      "facet": "Driver type",
+      "field": "filterAttributes.driverType",
+      "type": "enum",
+      "applicable": 186,
+      "withValue": 52,
+      "unresolved": 134,
+      "na": 522,
+      "pctFilled": 28,
+      "pctUnresolved": 72
+    },
+    {
+      "facet": "Connectivity",
+      "field": "filterAttributes.connectivity",
+      "type": "enum",
+      "applicable": 186,
+      "withValue": 39,
+      "unresolved": 147,
+      "na": 522,
+      "pctFilled": 21,
+      "pctUnresolved": 79
+    },
+    {
+      "facet": "Connector / plug",
+      "field": "filterAttributes.connector",
+      "type": "multi",
+      "applicable": 186,
+      "withValue": 8,
+      "unresolved": 178,
+      "na": 522,
+      "pctFilled": 4,
+      "pctUnresolved": 96
+    },
+    {
+      "facet": "Microphone",
+      "field": "filterAttributes.microphone",
+      "type": "boolean",
+      "applicable": 186,
+      "withValue": 0,
+      "unresolved": 186,
+      "na": 522,
+      "pctFilled": 0,
+      "pctUnresolved": 100
+    },
+    {
+      "facet": "Noise cancelling",
+      "field": "filterAttributes.noiseCancelling",
+      "type": "boolean",
+      "applicable": 186,
+      "withValue": 0,
+      "unresolved": 186,
+      "na": 522,
+      "pctFilled": 0,
+      "pctUnresolved": 100
+    },
+    {
+      "facet": "Requires amplifier",
+      "field": "filterAttributes.requiresAmplifier",
+      "type": "boolean",
+      "applicable": 186,
+      "withValue": 12,
+      "unresolved": 174,
+      "na": 522,
+      "pctFilled": 6,
+      "pctUnresolved": 94
+    },
+    {
+      "facet": "Device type",
+      "field": "filterAttributes.deviceType",
+      "type": "enum",
+      "applicable": 234,
+      "withValue": 1,
+      "unresolved": 233,
+      "na": 474,
+      "pctFilled": 0,
+      "pctUnresolved": 100
+    },
+    {
+      "facet": "Form factor",
+      "field": "filterAttributes.formFactor",
+      "type": "enum",
+      "applicable": 234,
+      "withValue": 11,
+      "unresolved": 223,
+      "na": 474,
+      "pctFilled": 5,
+      "pctUnresolved": 95
+    },
+    {
+      "facet": "Amplification",
+      "field": "filterAttributes.amplification",
+      "type": "enum",
+      "applicable": 234,
+      "withValue": 36,
+      "unresolved": 198,
+      "na": 474,
+      "pctFilled": 15,
+      "pctUnresolved": 85
+    },
+    {
+      "facet": "DAC included",
+      "field": "filterAttributes.dacIncluded",
+      "type": "boolean",
+      "applicable": 234,
+      "withValue": 0,
+      "unresolved": 234,
+      "na": 474,
+      "pctFilled": 0,
+      "pctUnresolved": 100
+    },
+    {
+      "facet": "Balanced output",
+      "field": "filterAttributes.balancedOutput",
+      "type": "boolean",
+      "applicable": 234,
+      "withValue": 0,
+      "unresolved": 234,
+      "na": 474,
+      "pctFilled": 0,
+      "pctUnresolved": 100
+    },
+    {
+      "facet": "Inputs",
+      "field": "filterAttributes.inputs",
+      "type": "multi",
+      "applicable": 234,
+      "withValue": 23,
+      "unresolved": 211,
+      "na": 474,
+      "pctFilled": 10,
+      "pctUnresolved": 90
+    },
+    {
+      "facet": "Outputs",
+      "field": "filterAttributes.outputs",
+      "type": "multi",
+      "applicable": 234,
+      "withValue": 14,
+      "unresolved": 220,
+      "na": 474,
+      "pctFilled": 6,
+      "pctUnresolved": 94
+    },
+    {
+      "facet": "Accessory type",
+      "field": "filterAttributes.accessoryType",
+      "type": "enum",
+      "applicable": 288,
+      "withValue": 0,
+      "unresolved": 288,
+      "na": 420,
+      "pctFilled": 0,
+      "pctUnresolved": 100
+    },
+    {
+      "facet": "Connector / termination",
+      "field": "filterAttributes.connectorTermination",
+      "type": "multi",
+      "applicable": 117,
+      "withValue": 0,
+      "unresolved": 117,
+      "na": 591,
+      "pctFilled": 0,
+      "pctUnresolved": 100
+    },
+    {
+      "facet": "Compatibility",
+      "field": "filterAttributes.compatibility",
+      "type": "multi",
+      "applicable": 288,
+      "withValue": 0,
+      "unresolved": 288,
+      "na": 420,
+      "pctFilled": 0,
+      "pctUnresolved": 100
+    }
+  ]
+}

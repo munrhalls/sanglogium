@@ -1,0 +1,12 @@
+{
+  "_schema": "Add resolutions to the 'resolutions' array, then run node _project/filters/apply-resolutions.cjs. Only entries that currently exist in unresolved-queue.json will be applied.",
+  "_example": {
+    "_id": "product-sanity-id",
+    "facet": "Wearing style",
+    "value": "over-ear",
+    "sourceUrl": "https://sanglogium.com/products/product-slug",
+    "sourcePhrase": "Over-ear, open-back",
+    "humanSet": false
+  },
+  "resolutions": []
+}

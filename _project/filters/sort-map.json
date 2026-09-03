@@ -1,0 +1,37 @@
+[
+  {
+    "sort": "Featured",
+    "urlValue": "featured",
+    "backingField": "sortAttributes.featuredPriority",
+    "direction": "desc",
+    "tieBreak": "sortAttributes.popularity desc, _createdAt desc"
+  },
+  {
+    "sort": "Best selling",
+    "urlValue": "best-selling",
+    "backingField": "sortAttributes.popularity",
+    "direction": "desc",
+    "tieBreak": "_createdAt desc"
+  },
+  {
+    "sort": "Price: Low to High",
+    "urlValue": "price-asc",
+    "backingField": "price_data.unit_amount",
+    "direction": "asc",
+    "tieBreak": "_createdAt desc"
+  },
+  {
+    "sort": "Price: High to Low",
+    "urlValue": "price-desc",
+    "backingField": "price_data.unit_amount",
+    "direction": "desc",
+    "tieBreak": "_createdAt desc"
+  },
+  {
+    "sort": "Newest",
+    "urlValue": "newest",
+    "backingField": "_createdAt",
+    "direction": "desc",
+    "tieBreak": "_id desc"
+  }
+]

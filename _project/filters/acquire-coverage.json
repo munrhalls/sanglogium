@@ -1,0 +1,983 @@
+{
+  "generatedAt": "2026-09-03T10:04:26.955Z",
+  "totalBrands": 98,
+  "totalProducts": 708,
+  "totalFilled": 3098,
+  "totalUnresolved": 3501,
+  "brandOrder": [
+    "Dekoni Audio",
+    "iFi Audio",
+    "Meze Audio",
+    "AudioQuest",
+    "HiFiMan",
+    "Wicked Cushions",
+    "Sennheiser",
+    "Focal",
+    "Astell&Kern",
+    "Topping",
+    "FiiO",
+    "Burson Audio",
+    "Audeze",
+    "64 Audio",
+    "Moondrop",
+    "XDuoo",
+    "Chord Electronics",
+    "ddHiFi",
+    "Spinfit",
+    "Sony",
+    "Aune Audio",
+    "Cayin",
+    "Eletech",
+    "Dan Clark Audio",
+    "SVS",
+    "Audio-Technica",
+    "Bowers & Wilkins",
+    "Sensaphonics",
+    "Eversolo",
+    "Denon",
+    "Gustard",
+    "Matrix Audio",
+    "Yulong",
+    "Questyle",
+    "Bose",
+    "Campfire Audio",
+    "EarMen",
+    "Woo Audio",
+    "Comply",
+    "HEDD Audio",
+    "Final Audio",
+    "T+A",
+    "TRUTHEAR",
+    "Ferrum Audio",
+    "HiFi Rose",
+    "Enleum",
+    "Feliks Audio",
+    "SPL",
+    "CrinEar",
+    "SMSL",
+    "Ladder",
+    "Singxer",
+    "Apos",
+    "ES Lab",
+    "JBL",
+    "Cambridge Audio",
+    "Warwick Acoustics",
+    "Soundcore",
+    "McIntosh",
+    "Noble Audio",
+    "Kanto",
+    "VMV",
+    "Fosi Audio",
+    "Sanus",
+    "Polk Audio",
+    "Bluesound",
+    "Thieaudio",
+    "Dunu",
+    "Austrian Audio",
+    "Listenmore",
+    "Symphonium Audio",
+    "Marantz",
+    "Violectric",
+    "Kinera",
+    "HarmonicDyne",
+    "Salad",
+    "Zähl",
+    "Naim",
+    "Hisenior Audio",
+    "Audma",
+    "Auris Audio",
+    "ALO audio",
+    "Luxman",
+    "Symbio",
+    "RME",
+    "Crystal Cables",
+    "Softears",
+    "Ruark Audio",
+    "JL Audio",
+    "Yamaha",
+    "Lake People",
+    "Nimbus",
+    "Mark Levinson",
+    "headphones.com",
+    "Weiss",
+    "Benchmark Media Systems",
+    "SJY Audio",
+    "Orchard Audio"
+  ],
+  "brandBatches": {
+    "Dekoni Audio": {
+      "brand": "Dekoni Audio",
+      "catalogueShare": 107,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.920Z",
+      "filled": 428,
+      "unresolved": 250
+    },
+    "iFi Audio": {
+      "brand": "iFi Audio",
+      "catalogueShare": 33,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.924Z",
+      "filled": 144,
+      "unresolved": 214
+    },
+    "Meze Audio": {
+      "brand": "Meze Audio",
+      "catalogueShare": 30,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.925Z",
+      "filled": 138,
+      "unresolved": 146
+    },
+    "AudioQuest": {
+      "brand": "AudioQuest",
+      "catalogueShare": 29,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.925Z",
+      "filled": 119,
+      "unresolved": 91
+    },
+    "HiFiMan": {
+      "brand": "HiFiMan",
+      "catalogueShare": 25,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.928Z",
+      "filled": 118,
+      "unresolved": 177
+    },
+    "Wicked Cushions": {
+      "brand": "Wicked Cushions",
+      "catalogueShare": 24,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.929Z",
+      "filled": 96,
+      "unresolved": 48
+    },
+    "Sennheiser": {
+      "brand": "Sennheiser",
+      "catalogueShare": 24,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.932Z",
+      "filled": 131,
+      "unresolved": 150
+    },
+    "Focal": {
+      "brand": "Focal",
+      "catalogueShare": 22,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.934Z",
+      "filled": 108,
+      "unresolved": 120
+    },
+    "Astell&Kern": {
+      "brand": "Astell&Kern",
+      "catalogueShare": 20,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.935Z",
+      "filled": 80,
+      "unresolved": 105
+    },
+    "Topping": {
+      "brand": "Topping",
+      "catalogueShare": 18,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.935Z",
+      "filled": 79,
+      "unresolved": 119
+    },
+    "FiiO": {
+      "brand": "FiiO",
+      "catalogueShare": 16,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.936Z",
+      "filled": 73,
+      "unresolved": 105
+    },
+    "Burson Audio": {
+      "brand": "Burson Audio",
+      "catalogueShare": 16,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.937Z",
+      "filled": 74,
+      "unresolved": 102
+    },
+    "Audeze": {
+      "brand": "Audeze",
+      "catalogueShare": 15,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.938Z",
+      "filled": 76,
+      "unresolved": 94
+    },
+    "64 Audio": {
+      "brand": "64 Audio",
+      "catalogueShare": 12,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.938Z",
+      "filled": 48,
+      "unresolved": 40
+    },
+    "Moondrop": {
+      "brand": "Moondrop",
+      "catalogueShare": 12,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.939Z",
+      "filled": 55,
+      "unresolved": 74
+    },
+    "XDuoo": {
+      "brand": "XDuoo",
+      "catalogueShare": 11,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.939Z",
+      "filled": 46,
+      "unresolved": 75
+    },
+    "Chord Electronics": {
+      "brand": "Chord Electronics",
+      "catalogueShare": 11,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.941Z",
+      "filled": 50,
+      "unresolved": 71
+    },
+    "ddHiFi": {
+      "brand": "ddHiFi",
+      "catalogueShare": 10,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.941Z",
+      "filled": 40,
+      "unresolved": 27
+    },
+    "Spinfit": {
+      "brand": "Spinfit",
+      "catalogueShare": 10,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.942Z",
+      "filled": 40,
+      "unresolved": 20
+    },
+    "Sony": {
+      "brand": "Sony",
+      "catalogueShare": 10,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.943Z",
+      "filled": 51,
+      "unresolved": 63
+    },
+    "Aune Audio": {
+      "brand": "Aune Audio",
+      "catalogueShare": 9,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.943Z",
+      "filled": 38,
+      "unresolved": 60
+    },
+    "Cayin": {
+      "brand": "Cayin",
+      "catalogueShare": 9,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.944Z",
+      "filled": 37,
+      "unresolved": 40
+    },
+    "Eletech": {
+      "brand": "Eletech",
+      "catalogueShare": 9,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.944Z",
+      "filled": 36,
+      "unresolved": 23
+    },
+    "Dan Clark Audio": {
+      "brand": "Dan Clark Audio",
+      "catalogueShare": 9,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.944Z",
+      "filled": 56,
+      "unresolved": 36
+    },
+    "SVS": {
+      "brand": "SVS",
+      "catalogueShare": 8,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.944Z",
+      "filled": 32,
+      "unresolved": 24
+    },
+    "Audio-Technica": {
+      "brand": "Audio-Technica",
+      "catalogueShare": 8,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.945Z",
+      "filled": 33,
+      "unresolved": 57
+    },
+    "Bowers & Wilkins": {
+      "brand": "Bowers & Wilkins",
+      "catalogueShare": 8,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.945Z",
+      "filled": 41,
+      "unresolved": 49
+    },
+    "Sensaphonics": {
+      "brand": "Sensaphonics",
+      "catalogueShare": 7,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.945Z",
+      "filled": 28,
+      "unresolved": 14
+    },
+    "Eversolo": {
+      "brand": "Eversolo",
+      "catalogueShare": 7,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.946Z",
+      "filled": 29,
+      "unresolved": 48
+    },
+    "Denon": {
+      "brand": "Denon",
+      "catalogueShare": 7,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.946Z",
+      "filled": 41,
+      "unresolved": 39
+    },
+    "Gustard": {
+      "brand": "Gustard",
+      "catalogueShare": 6,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.947Z",
+      "filled": 24,
+      "unresolved": 42
+    },
+    "Matrix Audio": {
+      "brand": "Matrix Audio",
+      "catalogueShare": 6,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.947Z",
+      "filled": 24,
+      "unresolved": 42
+    },
+    "Yulong": {
+      "brand": "Yulong",
+      "catalogueShare": 6,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.947Z",
+      "filled": 24,
+      "unresolved": 42
+    },
+    "Questyle": {
+      "brand": "Questyle",
+      "catalogueShare": 6,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.948Z",
+      "filled": 28,
+      "unresolved": 38
+    },
+    "Bose": {
+      "brand": "Bose",
+      "catalogueShare": 5,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.948Z",
+      "filled": 20,
+      "unresolved": 31
+    },
+    "Campfire Audio": {
+      "brand": "Campfire Audio",
+      "catalogueShare": 5,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.948Z",
+      "filled": 20,
+      "unresolved": 10
+    },
+    "EarMen": {
+      "brand": "EarMen",
+      "catalogueShare": 5,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.948Z",
+      "filled": 20,
+      "unresolved": 35
+    },
+    "Woo Audio": {
+      "brand": "Woo Audio",
+      "catalogueShare": 5,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.948Z",
+      "filled": 23,
+      "unresolved": 32
+    },
+    "Comply": {
+      "brand": "Comply",
+      "catalogueShare": 4,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.949Z",
+      "filled": 16,
+      "unresolved": 8
+    },
+    "HEDD Audio": {
+      "brand": "HEDD Audio",
+      "catalogueShare": 4,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.949Z",
+      "filled": 16,
+      "unresolved": 22
+    },
+    "Final Audio": {
+      "brand": "Final Audio",
+      "catalogueShare": 4,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.949Z",
+      "filled": 18,
+      "unresolved": 18
+    },
+    "T+A": {
+      "brand": "T+A",
+      "catalogueShare": 4,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.949Z",
+      "filled": 16,
+      "unresolved": 32
+    },
+    "TRUTHEAR": {
+      "brand": "TRUTHEAR",
+      "catalogueShare": 4,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.949Z",
+      "filled": 16,
+      "unresolved": 28
+    },
+    "Ferrum Audio": {
+      "brand": "Ferrum Audio",
+      "catalogueShare": 4,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.949Z",
+      "filled": 18,
+      "unresolved": 26
+    },
+    "HiFi Rose": {
+      "brand": "HiFi Rose",
+      "catalogueShare": 4,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.950Z",
+      "filled": 17,
+      "unresolved": 27
+    },
+    "Enleum": {
+      "brand": "Enleum",
+      "catalogueShare": 4,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.950Z",
+      "filled": 20,
+      "unresolved": 24
+    },
+    "Feliks Audio": {
+      "brand": "Feliks Audio",
+      "catalogueShare": 4,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.950Z",
+      "filled": 16,
+      "unresolved": 28
+    },
+    "SPL": {
+      "brand": "SPL",
+      "catalogueShare": 4,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.950Z",
+      "filled": 20,
+      "unresolved": 24
+    },
+    "CrinEar": {
+      "brand": "CrinEar",
+      "catalogueShare": 3,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.951Z",
+      "filled": 14,
+      "unresolved": 19
+    },
+    "SMSL": {
+      "brand": "SMSL",
+      "catalogueShare": 3,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.951Z",
+      "filled": 13,
+      "unresolved": 20
+    },
+    "Ladder": {
+      "brand": "Ladder",
+      "catalogueShare": 3,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.951Z",
+      "filled": 14,
+      "unresolved": 19
+    },
+    "Singxer": {
+      "brand": "Singxer",
+      "catalogueShare": 3,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.951Z",
+      "filled": 13,
+      "unresolved": 20
+    },
+    "Apos": {
+      "brand": "Apos",
+      "catalogueShare": 3,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.951Z",
+      "filled": 12,
+      "unresolved": 8
+    },
+    "ES Lab": {
+      "brand": "ES Lab",
+      "catalogueShare": 3,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.951Z",
+      "filled": 12,
+      "unresolved": 24
+    },
+    "JBL": {
+      "brand": "JBL",
+      "catalogueShare": 3,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.952Z",
+      "filled": 15,
+      "unresolved": 16
+    },
+    "Cambridge Audio": {
+      "brand": "Cambridge Audio",
+      "catalogueShare": 3,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.952Z",
+      "filled": 13,
+      "unresolved": 20
+    },
+    "Warwick Acoustics": {
+      "brand": "Warwick Acoustics",
+      "catalogueShare": 3,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.952Z",
+      "filled": 12,
+      "unresolved": 24
+    },
+    "Soundcore": {
+      "brand": "Soundcore",
+      "catalogueShare": 3,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.952Z",
+      "filled": 12,
+      "unresolved": 24
+    },
+    "McIntosh": {
+      "brand": "McIntosh",
+      "catalogueShare": 3,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.952Z",
+      "filled": 12,
+      "unresolved": 17
+    },
+    "Noble Audio": {
+      "brand": "Noble Audio",
+      "catalogueShare": 3,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.952Z",
+      "filled": 16,
+      "unresolved": 20
+    },
+    "Kanto": {
+      "brand": "Kanto",
+      "catalogueShare": 2,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.952Z",
+      "filled": 8,
+      "unresolved": 4
+    },
+    "VMV": {
+      "brand": "VMV",
+      "catalogueShare": 2,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.953Z",
+      "filled": 9,
+      "unresolved": 13
+    },
+    "Fosi Audio": {
+      "brand": "Fosi Audio",
+      "catalogueShare": 2,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.953Z",
+      "filled": 8,
+      "unresolved": 14
+    },
+    "Sanus": {
+      "brand": "Sanus",
+      "catalogueShare": 2,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.953Z",
+      "filled": 8,
+      "unresolved": 4
+    },
+    "Polk Audio": {
+      "brand": "Polk Audio",
+      "catalogueShare": 2,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.953Z",
+      "filled": 8,
+      "unresolved": 6
+    },
+    "Bluesound": {
+      "brand": "Bluesound",
+      "catalogueShare": 2,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.953Z",
+      "filled": 8,
+      "unresolved": 14
+    },
+    "Thieaudio": {
+      "brand": "Thieaudio",
+      "catalogueShare": 2,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.953Z",
+      "filled": 8,
+      "unresolved": 14
+    },
+    "Dunu": {
+      "brand": "Dunu",
+      "catalogueShare": 2,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.953Z",
+      "filled": 8,
+      "unresolved": 14
+    },
+    "Austrian Audio": {
+      "brand": "Austrian Audio",
+      "catalogueShare": 2,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.953Z",
+      "filled": 8,
+      "unresolved": 10
+    },
+    "Listenmore": {
+      "brand": "Listenmore",
+      "catalogueShare": 2,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.953Z",
+      "filled": 8,
+      "unresolved": 6
+    },
+    "Symphonium Audio": {
+      "brand": "Symphonium Audio",
+      "catalogueShare": 2,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.953Z",
+      "filled": 8,
+      "unresolved": 14
+    },
+    "Marantz": {
+      "brand": "Marantz",
+      "catalogueShare": 2,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.954Z",
+      "filled": 8,
+      "unresolved": 14
+    },
+    "Violectric": {
+      "brand": "Violectric",
+      "catalogueShare": 2,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.954Z",
+      "filled": 11,
+      "unresolved": 11
+    },
+    "Kinera": {
+      "brand": "Kinera",
+      "catalogueShare": 2,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.954Z",
+      "filled": 8,
+      "unresolved": 14
+    },
+    "HarmonicDyne": {
+      "brand": "HarmonicDyne",
+      "catalogueShare": 1,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.954Z",
+      "filled": 4,
+      "unresolved": 8
+    },
+    "Salad": {
+      "brand": "Salad",
+      "catalogueShare": 1,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.954Z",
+      "filled": 4,
+      "unresolved": 2
+    },
+    "Zähl": {
+      "brand": "Zähl",
+      "catalogueShare": 1,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.954Z",
+      "filled": 4,
+      "unresolved": 7
+    },
+    "Naim": {
+      "brand": "Naim",
+      "catalogueShare": 1,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.954Z",
+      "filled": 4,
+      "unresolved": 7
+    },
+    "Hisenior Audio": {
+      "brand": "Hisenior Audio",
+      "catalogueShare": 1,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.954Z",
+      "filled": 4,
+      "unresolved": 7
+    },
+    "Audma": {
+      "brand": "Audma",
+      "catalogueShare": 1,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.954Z",
+      "filled": 4,
+      "unresolved": 2
+    },
+    "Auris Audio": {
+      "brand": "Auris Audio",
+      "catalogueShare": 1,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.954Z",
+      "filled": 4,
+      "unresolved": 7
+    },
+    "ALO audio": {
+      "brand": "ALO audio",
+      "catalogueShare": 1,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.954Z",
+      "filled": 4,
+      "unresolved": 3
+    },
+    "Luxman": {
+      "brand": "Luxman",
+      "catalogueShare": 1,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.954Z",
+      "filled": 4,
+      "unresolved": 7
+    },
+    "Symbio": {
+      "brand": "Symbio",
+      "catalogueShare": 1,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.954Z",
+      "filled": 4,
+      "unresolved": 2
+    },
+    "RME": {
+      "brand": "RME",
+      "catalogueShare": 1,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.954Z",
+      "filled": 4,
+      "unresolved": 7
+    },
+    "Crystal Cables": {
+      "brand": "Crystal Cables",
+      "catalogueShare": 1,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.954Z",
+      "filled": 4,
+      "unresolved": 3
+    },
+    "Softears": {
+      "brand": "Softears",
+      "catalogueShare": 1,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.954Z",
+      "filled": 4,
+      "unresolved": 7
+    },
+    "Ruark Audio": {
+      "brand": "Ruark Audio",
+      "catalogueShare": 1,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.954Z",
+      "filled": 4,
+      "unresolved": 2
+    },
+    "JL Audio": {
+      "brand": "JL Audio",
+      "catalogueShare": 1,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.954Z",
+      "filled": 4,
+      "unresolved": 3
+    },
+    "Yamaha": {
+      "brand": "Yamaha",
+      "catalogueShare": 1,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.954Z",
+      "filled": 4,
+      "unresolved": 3
+    },
+    "Lake People": {
+      "brand": "Lake People",
+      "catalogueShare": 1,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.954Z",
+      "filled": 5,
+      "unresolved": 6
+    },
+    "Nimbus": {
+      "brand": "Nimbus",
+      "catalogueShare": 1,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.955Z",
+      "filled": 5,
+      "unresolved": 6
+    },
+    "Mark Levinson": {
+      "brand": "Mark Levinson",
+      "catalogueShare": 1,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.955Z",
+      "filled": 7,
+      "unresolved": 5
+    },
+    "headphones.com": {
+      "brand": "headphones.com",
+      "catalogueShare": 1,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.955Z",
+      "filled": 4,
+      "unresolved": 7
+    },
+    "Weiss": {
+      "brand": "Weiss",
+      "catalogueShare": 1,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.955Z",
+      "filled": 4,
+      "unresolved": 7
+    },
+    "Benchmark Media Systems": {
+      "brand": "Benchmark Media Systems",
+      "catalogueShare": 1,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.955Z",
+      "filled": 5,
+      "unresolved": 6
+    },
+    "SJY Audio": {
+      "brand": "SJY Audio",
+      "catalogueShare": 1,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.955Z",
+      "filled": 5,
+      "unresolved": 7
+    },
+    "Orchard Audio": {
+      "brand": "Orchard Audio",
+      "catalogueShare": 1,
+      "status": "closed",
+      "closedAt": "2026-09-03T10:04:26.955Z",
+      "filled": 4,
+      "unresolved": 7
+    }
+  },
+  "perFacet": {
+    "Price": {
+      "filled": 708,
+      "unresolved": 0
+    },
+    "Brand": {
+      "filled": 708,
+      "unresolved": 0
+    },
+    "Availability": {
+      "filled": 708,
+      "unresolved": 0
+    },
+    "Category": {
+      "filled": 708,
+      "unresolved": 0
+    },
+    "Wearing style": {
+      "filled": 39,
+      "unresolved": 147
+    },
+    "Back design": {
+      "filled": 31,
+      "unresolved": 103
+    },
+    "Driver type": {
+      "filled": 52,
+      "unresolved": 134
+    },
+    "Connectivity": {
+      "filled": 39,
+      "unresolved": 147
+    },
+    "Connector / plug": {
+      "filled": 8,
+      "unresolved": 178
+    },
+    "Microphone": {
+      "filled": 0,
+      "unresolved": 186
+    },
+    "Noise cancelling": {
+      "filled": 0,
+      "unresolved": 186
+    },
+    "Requires amplifier": {
+      "filled": 12,
+      "unresolved": 174
+    },
+    "Device type": {
+      "filled": 1,
+      "unresolved": 233
+    },
+    "Form factor": {
+      "filled": 11,
+      "unresolved": 223
+    },
+    "Amplification": {
+      "filled": 36,
+      "unresolved": 198
+    },
+    "DAC included": {
+      "filled": 0,
+      "unresolved": 234
+    },
+    "Balanced output": {
+      "filled": 0,
+      "unresolved": 234
+    },
+    "Inputs": {
+      "filled": 23,
+      "unresolved": 211
+    },
+    "Outputs": {
+      "filled": 14,
+      "unresolved": 220
+    },
+    "Accessory type": {
+      "filled": 0,
+      "unresolved": 288
+    },
+    "Connector / termination": {
+      "filled": 0,
+      "unresolved": 117
+    },
+    "Compatibility": {
+      "filled": 0,
+      "unresolved": 288
+    }
+  }
+}
