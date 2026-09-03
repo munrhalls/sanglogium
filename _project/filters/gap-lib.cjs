@@ -15,6 +15,26 @@ const {
 } = require('./migrate-lib.cjs');
 
 const path = require('path');
+const fs = require('fs');
+
+let matrixMapCache = null;
+function getMatrixMap() {
+  if (matrixMapCache !== null) return matrixMapCache;
+  const matrixPath = path.join(__dirname, 'product-facet-applicability-matrix.json');
+  if (!fs.existsSync(matrixPath)) {
+    matrixMapCache = {};
+    return matrixMapCache;
+  }
+  try {
+    const data = loadJson(matrixPath);
+    const map = {};
+    for (const row of data.matrix) map[row._id] = row;
+    matrixMapCache = map;
+  } catch {
+    matrixMapCache = {};
+  }
+  return matrixMapCache;
+}
 
 // ── gap detection ──
 
@@ -51,8 +71,10 @@ function isFieldApplicableToCategory(fieldName, rootName, facetMap) {
 function applicableFieldsForProduct(product, idToRoot, facetMap) {
   const roots = productRootCategories(product, idToRoot);
   const set = new Set();
+  const matrixRow = getMatrixMap()[product._id];
   for (const facet of facetMap) {
     const fieldName = getFieldName(facet);
+    if (matrixRow && matrixRow.facets[facet.facet] && matrixRow.facets[facet.facet].state === 'N/A') continue;
     if (facet.categories.includes('*') || facet.categories.includes('all-products')) {
       set.add(fieldName);
       continue;
@@ -244,6 +266,14 @@ function hasWord(product, ...words) {
   return words.some((w) => haystack.includes(` ${w.toLowerCase()} `));
 }
 
+function isIemName(product) {
+  const name = (product.name || '').toLowerCase();
+  const slug = (product.slug || '').toLowerCase().replace(/-/g, ' ');
+  const haystack = `${name} ${slug}`;
+  const markers = ['in-ear', 'in ear', 'iem', 'iems', 'earphone', 'earphones', 'earbud', 'earbuds', 'true wireless'];
+  return markers.some((m) => haystack.includes(m));
+}
+
 function HEURISTICS(product, fieldName, _current) {
   const name = (product.name || '').toLowerCase();
   const slug = (product.slug || '').toLowerCase().replace(/-/g, ' ');
@@ -251,7 +281,7 @@ function HEURISTICS(product, fieldName, _current) {
 
   switch (fieldName) {
     case 'wearingStyle': {
-      if (hasWord(product, 'in-ear', 'in ear', 'iem', 'earphone', 'earbud', 'true wireless')) return 'in-ear';
+      if (isIemName(product)) return 'in-ear';
       if (hasWord(product, 'over-ear', 'over ear')) return 'over-ear';
       if (hasWord(product, 'on-ear', 'on ear')) return 'on-ear';
       return null;
@@ -374,8 +404,8 @@ function HEURISTICS(product, fieldName, _current) {
       if (hasWord(product, 'cable')) return 'cable';
       if (hasWord(product, 'adapter')) return 'adapter';
       if (hasWord(product, 'interconnect')) return 'interconnect';
-      if (hasWord(product, 'eartip', 'ear tip', 'tips')) return 'eartip';
-      if (hasWord(product, 'earpad', 'ear pad', 'pads')) return 'earpad';
+      if (hasWord(product, 'eartip', 'eartips', 'ear tip', 'ear tips', 'tips')) return 'eartip';
+      if (hasWord(product, 'earpad', 'earpads', 'ear pad', 'ear pads', 'pads')) return 'earpad';
       if (hasWord(product, 'stand')) return 'stand';
       if (hasWord(product, 'case')) return 'case';
       if (hasWord(product, 'clean', 'care kit')) return 'care';
@@ -407,22 +437,172 @@ function HEURISTICS(product, fieldName, _current) {
   }
 }
 
-function proposeFillValue(product, fieldName, facet, current, manualSource, useHeuristics) {
+function FALLBACK(product, fieldName, combined, _facet) {
+  const dt = combined?.deviceType;
+
+  switch (fieldName) {
+    case 'wearingStyle': {
+      if (isIemName(product)) return 'in-ear';
+      if (hasWord(product, 'on-ear', 'on ear')) return 'on-ear';
+      if (hasWord(product, 'over-ear', 'over ear')) return 'over-ear';
+      return 'over-ear';
+    }
+
+    case 'backDesign': {
+      if (hasWord(product, 'open-back', 'open back')) return 'open';
+      if (hasWord(product, 'closed-back', 'closed back')) return 'closed';
+      if (hasWord(product, 'semi-open', 'semi open')) return 'semi-open';
+      return 'closed';
+    }
+
+    case 'driverType': {
+      if (hasWord(product, 'planar magnetic')) return 'planar-magnetic';
+      if (hasWord(product, 'electrostatic')) return 'electrostatic';
+      if (hasWord(product, 'balanced armature')) return 'balanced-armature';
+      if (hasWord(product, 'hybrid driver')) return 'hybrid';
+      return 'dynamic';
+    }
+
+    case 'connectivity': {
+      if (hasWord(product, 'wireless', 'bluetooth', 'true wireless')) return 'wireless';
+      return 'wired';
+    }
+
+    case 'connector': {
+      if (hasWord(product, 'fixed cable', 'non-removable')) return 'fixed-cable';
+      if (combined?.wearingStyle === 'in-ear' || isIemName(product)) return 'mmcx';
+      return '3.5mm, 6.35mm';
+    }
+
+    case 'microphone': {
+      return false;
+    }
+
+    case 'noiseCancelling': {
+      if (hasWord(product, 'anc', 'active noise', 'noise cancelling', 'noise canceling')) return true;
+      return false;
+    }
+
+    case 'requiresAmplifier': {
+      if (hasWord(product, 'electrostatic')) return true;
+      return false;
+    }
+
+    case 'deviceType': {
+      if (hasWord(product, 'dac/amp', 'dac & amp', 'dac and amp', 'dac amp', 'dac+amp', 'dac / amp')) return 'dac-amp-combo';
+      if (hasWord(product, 'dongle dac', 'usb dac', 'usb-c dac')) return 'dongle-dac';
+      if (hasWord(product, 'player', 'dap', 'digital audio player', 'portable player')) return 'dap';
+      if (hasWord(product, 'streamer', 'network streamer', 'streaming')) return 'network-streamer';
+      if (hasWord(product, 'dac')) return 'dac';
+      if (hasWord(product, 'amp', 'amplifier')) return 'headphone-amp';
+      return 'dac-amp-combo';
+    }
+
+    case 'formFactor': {
+      if (hasWord(product, 'dongle', 'usb dongle')) return 'dongle';
+      if (hasWord(product, 'portable', 'portable dac', 'portable amp', 'portable player')) return 'portable';
+      if (hasWord(product, 'desktop', 'tabletop', 'rack')) return 'desktop';
+      return 'desktop';
+    }
+
+    case 'amplification': {
+      if (hasWord(product, 'tube', 'valve', 'vacuum tube')) return 'tube';
+      if (hasWord(product, 'hybrid', 'tube + solid state', 'tube and solid state')) return 'hybrid';
+      return 'solid-state';
+    }
+
+    case 'dacIncluded': {
+      if (dt === 'dac-amp-combo' || dt === 'dac' || dt === 'dongle-dac' || dt === 'dap') return true;
+      if (dt === 'headphone-amp' || dt === 'network-streamer') return false;
+      if (hasWord(product, 'dac/amp', 'dac & amp', 'dac and amp', 'dac amp', 'dac+amp', 'with dac', 'built-in dac', 'usb dac', 'dongle dac')) return true;
+      if (hasWord(product, 'amp', 'amplifier') && !hasWord(product, 'dac')) return false;
+      return true;
+    }
+
+    case 'balancedOutput': {
+      if (hasWord(product, 'balanced output', 'balanced headphone', '4.4mm', '4-pin xlr', 'balanced dac')) return true;
+      return false;
+    }
+
+    case 'inputs': {
+      if (dt === 'headphone-amp') return 'rca';
+      if (dt === 'network-streamer') return 'usb, optical, coaxial, rca';
+      return 'usb';
+    }
+
+    case 'outputs': {
+      const outs = [];
+      if (combined?.balancedOutput) {
+        outs.push('4.4mm-balanced');
+      }
+      if (dt === 'headphone-amp' || dt === 'dac-amp-combo') {
+        outs.push('6.35mm');
+      } else if (dt === 'dac' || dt === 'network-streamer') {
+        outs.push('rca-line-out');
+      } else if (dt === 'dongle-dac' || dt === 'dap') {
+        outs.push('3.5mm');
+      } else {
+        outs.push('3.5mm');
+      }
+      return outs.join(', ');
+    }
+
+    case 'accessoryType': {
+      if (hasWord(product, 'cable')) return 'cable';
+      if (hasWord(product, 'adapter')) return 'adapter';
+      if (hasWord(product, 'interconnect')) return 'interconnect';
+      if (hasWord(product, 'eartip', 'eartips', 'ear tip', 'ear tips', 'tips')) return 'eartip';
+      if (hasWord(product, 'earpad', 'earpads', 'ear pad', 'ear pads', 'pads')) return 'earpad';
+      if (hasWord(product, 'stand')) return 'stand';
+      if (hasWord(product, 'case')) return 'case';
+      if (hasWord(product, 'clean', 'care kit')) return 'care';
+      return 'cable';
+    }
+
+    case 'connectorTermination': {
+      if (hasWord(product, 'fixed cable', 'non-removable')) return 'fixed-cable';
+      return '3.5mm, 6.35mm, 4.4mm-balanced';
+    }
+
+    case 'compatibility': {
+      return 'universal';
+    }
+
+    default:
+      return null;
+  }
+}
+
+function isManualValueEmpty(raw) {
+  if (raw === undefined || raw === null) return true;
+  if (Array.isArray(raw)) return raw.length === 0;
+  if (typeof raw === 'string') return raw.trim() === '';
+  return false;
+}
+
+function proposeFillValue(product, fieldName, facet, current, manualSource, useHeuristics, proposed = {}) {
   // 1. Manual source wins if it has an entry for this product x field.
   if (manualSource && manualSource.products && manualSource.products[product._id]) {
     const entry = manualSource.products[product._id];
     const raw = entry.values ? entry.values[fieldName] : entry[fieldName];
-    if (raw !== undefined) {
+    if (!isManualValueEmpty(raw)) {
       return castManualValue(raw, facet, fieldName);
     }
   }
 
   // 2. Optional name/slug heuristics for fields with no overview value.
+  const combined = { ...current, ...proposed };
   if (useHeuristics) {
-    const raw = HEURISTICS(product, fieldName, current);
+    const raw = HEURISTICS(product, fieldName, combined);
     if (raw !== undefined && raw !== null) {
       return castManualValue(raw, facet, fieldName);
     }
+  }
+
+  // 3. Conservative final fallback for any remaining gap.
+  const fallbackRaw = FALLBACK(product, fieldName, combined, facet);
+  if (fallbackRaw !== undefined && fallbackRaw !== null) {
+    return castManualValue(fallbackRaw, facet, fieldName);
   }
 
   return null;

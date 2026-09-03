@@ -116,7 +116,7 @@ async function main() {
         if (getGroupForField(fieldName) !== groupFilter) continue;
       }
 
-      const result = proposeFillValue(product, fieldName, facet, current, manualSource, useHeuristics);
+      const result = proposeFillValue(product, fieldName, facet, current, manualSource, useHeuristics, proposed);
       if (!result || !result.isMapped) {
         if (result && result.unmapped && result.unmapped.length > 0) skippedUnmapped++;
         continue;
