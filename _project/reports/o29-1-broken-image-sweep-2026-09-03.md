@@ -1,5 +1,15 @@
 # o29.1 — Broken product-image sweep (verified)
 
+> **EPIC o29 COMPLETE 2026-09-03.** The 15 broken products resolved: **11 promoted**
+> a real gallery photo to main (verified on :3000); **4 deleted** — Cayin HA-2A,
+> Cayin HA-3A, Cayin N6iii, Yulong Aquila III (galleries were marketing-slides only,
+> nothing to promote; human decision; run via `sang-logium-data/_o29-delete.ts`).
+> The 60×45 placeholder asset `c4f4425f…` was deleted (0 references remained).
+> Gustard R30 gallery also trimmed 8→4 (dropped spec-sheet graphics).
+> Re-run sweep: **0 tiny/placeholder, 0 missing**. Audio Electronics count 238→234.
+> Still open: `sang-logium-86r` (7 mis-assigned photos), section D (25 empty galleries → `2de`).
+
+
 **Issue:** `sang-logium-o29.1` — [Images] Sweep catalogue for broken product images
 **Run:** 2026-09-03 · dataset `production` (`2tdmkpky`) · 1038 products
 **Tool:** `sang-logium-data/find-bad-images.ts` (regenerated `bad-images-report.json`)
