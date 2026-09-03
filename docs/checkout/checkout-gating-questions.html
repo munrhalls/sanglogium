@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checkout Gating Questions</title>
+<style>
+  :root{
+    --bg:#12140f; --panel:#1b1e17; --panel2:#232720; --ink:#e8e6dd; --dim:#a7a89c;
+    --line:#33372c; --accent:#c9a227; --accent2:#7fb069;
+    --sec:#6ea8fe;
+    --security:#e06c75; --robustness:#7fb069; --visual:#6ea8fe; --trust:#c9a227;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+  a{color:var(--accent)}
+  .wrap{display:grid;grid-template-columns:260px 1fr;max-width:1400px;margin:0 auto;}
+  nav{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;
+    padding:24px 18px;border-right:1px solid var(--line);background:var(--panel);}
+  nav h1{font-size:15px;letter-spacing:.04em;text-transform:uppercase;color:var(--accent);margin:0 0 4px}
+  nav .sub{font-size:12px;color:var(--dim);margin-bottom:18px}
+  nav ol{list-style:none;padding:0;margin:0;counter-reset:s}
+  nav li{margin:2px 0}
+  nav a{display:block;padding:7px 10px;border-radius:6px;text-decoration:none;color:var(--ink);font-size:13.5px}
+  nav a:hover{background:var(--panel2)}
+  nav a.slice{font-weight:600}
+  nav a .n{color:var(--dim);margin-right:7px;font-variant-numeric:tabular-nums}
+  main{padding:40px 48px 120px;max-width:900px}
+  header.page{margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--line)}
+  header.page h1{font-size:30px;margin:0 0 10px;line-height:1.2}
+  header.page p{color:var(--dim);margin:6px 0;font-size:14.5px}
+  section.slice{margin:56px 0 0}
+  section.slice > h2{font-size:22px;margin:0 0 6px;padding-top:12px}
+  section.slice > .boundary{color:var(--dim);font-size:14px;background:var(--panel);
+    border-left:3px solid var(--line);padding:10px 14px;border-radius:0 6px 6px 0;margin:12px 0 8px}
+  .group{margin:34px 0 0}
+  .group h3{font-size:15px;letter-spacing:.03em;text-transform:uppercase;color:var(--accent2);
+    margin:0 0 14px;padding-bottom:6px;border-bottom:1px dashed var(--line)}
+  .q{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:18px 20px;margin:14px 0;}
+  .q .id{font-size:12px;font-weight:700;letter-spacing:.05em;color:var(--accent);text-transform:uppercase}
+  .q .claim{font-size:16.5px;font-weight:650;margin:5px 0 10px;line-height:1.35}
+  .q .text{margin:0 0 12px}
+  .q .meta{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--dim);
+    border-top:1px solid var(--line);padding-top:10px}
+  .q .meta .ev{flex:1 1 100%}
+  .tags{display:inline-flex;gap:6px;flex-wrap:wrap}
+  .tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;
+    padding:2px 7px;border-radius:99px;border:1px solid currentColor}
+  .tag.security{color:var(--security)} .tag.robustness{color:var(--robustness)}
+  .tag.visual{color:var(--visual)} .tag.trust{color:var(--trust)}
+  .rubric{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:8px 20px;margin:18px 0}
+  .rubric details{padding:10px 0}
+  .rubric summary{cursor:pointer;font-weight:600}
+  .rubric table{width:100%;border-collapse:collapse;margin-top:12px;font-size:14px}
+  .rubric td{border-top:1px solid var(--line);padding:8px 10px;vertical-align:top}
+  .rubric td:first-child{font-weight:700;color:var(--accent);white-space:nowrap;width:1%}
+  .rubric td:nth-child(2){font-weight:600;white-space:nowrap;width:1%}
+  @media(max-width:860px){
+    .wrap{grid-template-columns:1fr}
+    nav{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line)}
+    main{padding:28px 20px 80px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav>
+  <h1>Gating Questions</h1>
+  <div class="sub">Checkout — 6 clusters · one-sitting read</div>
+  <ol id="toc"></ol>
+</nav>
+<main>
+  <header class="page">
+    <h1>Checkout Gating Questions</h1>
+    <p>Every question is a <strong>binary</strong> check on the running checkout at <code>localhost:3000</code>. If every question in a cluster honestly answers <strong>yes</strong>, no customer and no store owner has a legitimate complaint about that slice.</p>
+    <p>Each question names its <strong>evidence</strong> — exactly how you settle it yes or no. Dimension tags: <span class="tags"><span class="tag security">security</span><span class="tag robustness">robustness</span><span class="tag visual">visual</span><span class="tag trust">trust</span></span></p>
+    <p style="font-size:13px">Source: <code>_project/checkout-gating-questions/</code> · rubric &amp; slice map in <code>00-rubric-and-slice-map.md</code></p>
+    <div class="rubric">
+      <details>
+        <summary>The rubric — every question passes all six</summary>
+        <table>
+          <tr><td>R1</td><td>Binary</td><td>Fails if the honest answer is a scale, a "mostly", or "depends".</td></tr>
+          <tr><td>R2</td><td>Evidence-named</td><td>Fails if it doesn't state how you'd settle it — a live action, a reproduced attack that fails, a visual comparison, a state/dashboard inspection.</td></tr>
+          <tr><td>R3</td><td>Behavioral</td><td>Fails if it asks whether a file/function/token exists, rather than what the user or owner can observe.</td></tr>
+          <tr><td>R4</td><td>Non-leaky</td><td>Fails if you can picture answering "yes" while a specific person is still, concretely, worse off in that slice.</td></tr>
+          <tr><td>R5</td><td>Lean</td><td>Fails if deleting it doesn't weaken the "irrefutably professional" conclusion.</td></tr>
+          <tr><td>R6</td><td>Policy-neutral</td><td>Fails if it assumes a business rule (a price, a quantity cap, a required field) the store owner never stated.</td></tr>
+        </table>
+      </details>
+    </div>
+  </header>
+  <div id="content"></div>
+</main>
+</div>
+
+<script>
+const DATA = [
+ {id:"S1", key:"s1", title:"Entry + Address",
+  boundary:"From the “Checkout” click on the basket page → until a validated (or escape-hatched) address is stored and I'm redirected to shipping. Not the basket page's own correctness; not shipping internals; not the shared shell.",
+  groups:[
+   {name:"A. Basket contents can't be inflated, forged, or slipped past stock", qs:[
+    {id:"A1", claim:"A planted price never changes what I pay", dim:["security"],
+     text:"When I intercept the “Checkout” request and add or alter a price / currency / unit-amount field on a line, is the amount I'm eventually asked to pay still the real catalogue price of exactly what was in my basket?",
+     ev:"DevTools → intercept the checkout button's request, inject \"unit_amount\": 1, proceed to the payment page, read the total; cross-check the PaymentIntent amount in the Stripe dashboard."},
+    {id:"A2", claim:"A tampered quantity can't produce an insane charge or order", dim:["security","robustness"],
+     text:"When I put a negative, zero, or absurdly large quantity on a line in the “Checkout” request, am I stopped before payment with a clear message — rather than that quantity travelling silently into the amount charged and the final order row?",
+     ev:"Intercept the request, set quantity to -3, then 0, then 999999; proceed; inspect the address step, the payment total, and the order row in Sanity Studio."},
+    {id:"A3", claim:"Duplicated or injected lines don't reach my order", dim:["security"],
+     text:"When I duplicate a basket line or add a product id that was never in my basket to the “Checkout” request, do the payment total and the final order still reflect only the items and quantities I actually had?",
+     ev:"Intercept the request, duplicate a line and append a foreign product id, complete checkout, compare the order row to the basket I started from."},
+    {id:"A4", claim:"An out-of-stock item can't be forced onto the address step", dim:["security","robustness"],
+     text:"When I start checkout with an item that is out of stock — via a stale tab, a double-submit, or an edited request — am I sent back to the basket rather than allowed onto the address step?",
+     ev:"Open the basket with an in-stock item, let another tab sell it out (or edit the request), click Checkout, observe where I land."},
+    {id:"A5", claim:"I can see what I'm buying before I enter personal data", dim:["trust"],
+     text:"Before I commit my name, phone and address, can I see the items and quantities I'm about to pay for — on the address step or one click away — so I'm not entering personal data blind?",
+     ev:"Reach the address step, look for an order summary or a way back to review without losing the form."},
+   ]},
+   {name:"B. Address validation gives honest verdicts and never dead-ends", qs:[
+    {id:"B1", claim:"A genuine Polish address is accepted on the first try", dim:["robustness","trust"],
+     text:"When I enter a real, deliverable Polish address correctly, is it accepted and I move to the shipping step without needing the “Continue with entered address” fallback?",
+     ev:"Type a known-good Warsaw address (street, number, city, postal code) on :3000 and submit once."},
+    {id:"B2", claim:"Every rejection says specifically what to check", dim:["trust","robustness"],
+     text:"When my address is rejected, do I get a specific message naming what to correct (street / city / postal code) rather than a bare “error”, and is a way to proceed always offered?",
+     ev:"Submit an address with a real city but a nonexistent street; read the message and check that “Continue with entered address” appears."},
+    {id:"B3", claim:"“Please fix” and “please confirm” are not the same message — and both let me through", dim:["robustness","trust"],
+     text:"If the checker returns a “correct this” verdict versus a “confirm this looks right” verdict, do I see a clearly different message for each, and in both cases can I always continue — rather than the button silently re-enabling with nothing shown?",
+     ev:"Drive a FIX verdict and (if reachable) a CONFIRM verdict; after each, check whether a message and a forward action are present."},
+    {id:"B4", claim:"A slow or unreachable checker doesn't strand me", dim:["robustness","trust"],
+     text:"When the address check is slow, hanging, or down, can I still complete the address step within a reasonable wait and with a clear explanation — rather than the “Verifying…” button spinning forever?",
+     ev:"In DevTools, first block the checker's host, then separately throttle it to hang; submit a valid address each time and wait."},
+    {id:"B5", claim:"The escape hatch carries a bad address visibly, not silently", dim:["robustness","security"],
+     text:"When I use “Continue with entered address” with obviously wrong data, does checkout still behave (no later crash) and is that address shown back to me on the shipping and payment steps so I can still catch and fix it?",
+     ev:"Escape-hatch a deliberately broken address, continue, and read the address shown on the shipping and payment screens."},
+   ]},
+   {name:"C. What I type into address fields is handled safely", qs:[
+    {id:"C1", claim:"Markup in an address field is inert everywhere it's later shown", dim:["security"],
+     text:"When I put HTML or a script snippet into any name / street / city field, does it display as plain text — with nothing executing — everywhere it later appears: shipping, payment, order confirmation, the order list, and the confirmation email?",
+     ev:"Submit \"<img src=x onerror=alert(1)>\" as the street, then walk every later surface and view source."},
+    {id:"C2", claim:"Whitespace-only required fields are rejected", dim:["robustness"],
+     text:"When I fill a required field with only spaces, am I stopped with a specific message — rather than the blank value being saved and later showing as an empty name or street on my order?",
+     ev:"Enter \"   \" in first name and in street, submit, then (if it passes) check the order row."},
+    {id:"C3", claim:"A malformed Polish postal code is caught at the form", dim:["robustness"],
+     text:"When I enter a postal code that isn't in NN-NNN form, am I told specifically that the postal code is wrong (not a generic address failure)?",
+     ev:"Enter \"1234\" / \"00 000\" / \"abcde\" as the postal code and submit."},
+    {id:"C4", claim:"Empty required fields are blocked at the form with the field indicated", dim:["robustness"],
+     text:"When I leave any required field empty, is submission blocked and the missing field pointed out, before any network request?",
+     ev:"Clear each field in turn and try to submit."},
+   ]},
+   {name:"D. Double-submit and the Back button behave", qs:[
+    {id:"D1", claim:"Double-click or a slow connection lands me on exactly one address screen", dim:["robustness"],
+     text:"When I double-click “Checkout”, or click it on a slow connection, do I land on exactly one address screen — no duplicate start, no stuck spinner, no second navigation?",
+     ev:"Throttle the network, double-click Checkout, watch navigation and the button state."},
+    {id:"D2", claim:"Back from shipping keeps everything I typed, including un-saved edits", dim:["robustness","trust"],
+     text:"When I press Back from the shipping step, is the address form still filled with what I typed — including edits I made but had not successfully saved — not blanked and not reverted to an older address?",
+     ev:"On the address step, change the city, trigger a rejection so the save doesn't complete, then navigate forward and Back; check the field values."},
+   ]},
+   {name:"E. Changing my address invalidates stale downstream choices", qs:[
+    {id:"E1", claim:"Editing the address clears a shipping option already chosen", dim:["security","robustness"],
+     text:"When I go back and change my address after a shipping option was already selected, is the old shipping method and price cleared, so I cannot pay against a rate quoted for a different address?",
+     ev:"Pick a shipping option, return to the address step, change the city, resubmit; inspect the shipping and payment screens for the old rate."},
+   ]},
+   {name:"F. Visual polish", qs:[
+    {id:"F1", claim:"Address form at 375 / 768 / 1440", dim:["visual"],
+     text:"At each of 375, 768 and 1440 px, does the address form render with no overlap, no clipped labels, no horizontal page scroll, and the paired fields (first/last name, street/number) reflow to a single column on mobile?",
+     ev:"Resize the address step at the three widths."},
+    {id:"F2", claim:"Error banner and “Verifying…” state are unbroken", dim:["visual"],
+     text:"Do the rejection banner and the loading (“Verifying…”) button state each render cleanly at 375 / 768 / 1440 with no layout jump and no awkward button resize?",
+     ev:"Force a rejection and watch a submit at each width."},
+    {id:"F3", claim:"The escape-hatch button is visibly secondary", dim:["visual","trust"],
+     text:"Is “Continue with entered address” clearly secondary to the primary “Continue to Shipping” button — lighter weight / colour, not competing for the eye?",
+     ev:"Trigger a rejection so both buttons show, compare them at each width."},
+    {id:"F4", claim:"The step indicator shows the right step", dim:["visual"],
+     text:"On the address step, does the progress indicator mark Address as the current step, Basket as done, and Shipping / Payment as pending?",
+     ev:"Read the stepper on the address step."},
+   ]},
+   {name:"G. UX clarity & trust", qs:[
+    {id:"G1", claim:"“Poland only” is clear before I fill the whole form", dim:["trust"],
+     text:"Is it obvious, before I complete the form, that the store only ships within Poland — rather than something I discover only when I open the country list and find one option?",
+     ev:"Land on the address step fresh and look for a stated shipping-region limit above the form."},
+    {id:"G2", claim:"The reason a phone number is required is stated", dim:["trust"],
+     text:"Is it stated, near the phone field, why a phone number is required (e.g. courier contact) — rather than an unexplained mandatory personal detail?",
+     ev:"Read the address step around the phone field."},
+    {id:"G3", claim:"The escape hatch reads as a safe fallback, not “give up”", dim:["trust"],
+     text:"Does “Continue with entered address” read as a safe option for a correct address the checker didn't recognise — not as “proceed at your own risk” or “give up on validation”?",
+     ev:"Trigger a rejection and read the escape-hatch button and any surrounding copy."},
+   ]},
+  ]},
+
+ {id:"S2", key:"s2", title:"Shipping",
+  boundary:"From /checkout/shipping load with an address present → until a delivery option and its price are stored and I'm redirected to payment. Not address validation; not the payment total; not the order write; not the shared shell.",
+  groups:[
+   {name:"A. The delivery price I pick is the price I pay — and can't be forged", qs:[
+    {id:"A1", claim:"Tampering a shown option's price doesn't change what I'm charged", dim:["security"],
+     text:"When I intercept the request that saves my chosen delivery option and lower its price (e.g. to 0.01), is the amount I am actually charged still the real carrier price for that option?",
+     ev:"DevTools → intercept the “Przejdź do płatności” request, set the price to 1 (cent), continue, read the payment-page total, then read the PaymentIntent amount in the Stripe dashboard."},
+    {id:"A2", claim:"I can't pay against an option that was never quoted to me", dim:["security"],
+     text:"When I submit a delivery option and price that AlleKurier never offered me on this visit — a made-up option id, or a cheaper quote copied from an earlier visit for a different basket or address — is it rejected before it can become my total?",
+     ev:"Intercept the save request, replace the option id and price with values from an earlier session (or invented), continue, and check whether the payment step accepts it or shows an error."},
+    {id:"A3", claim:"The price on the option equals the amount added to my total, to the cent, in one currency", dim:["security","trust","robustness"],
+     text:"Does the price shown on a delivery option match — same number, same currency symbol, no rounding — the delivery line and the grand total on the payment step and on the final receipt?",
+     ev:"Note the price on the option I pick, then read the delivery line and grand total on the payment page and the confirmation."},
+   ]},
+   {name:"B. Carrier failures never dead-end me", qs:[
+    {id:"B1", claim:"Carrier down or unreachable shows a clear message and a working retry", dim:["robustness","trust"],
+     text:"When the carrier service is unreachable, when I return to this step, do I get a clear message and a retry that actually re-requests options — not the bare “no options available” text with no way forward, no infinite spinner, and no stack trace?",
+     ev:"In DevTools block requests to allekurier.pl, load /checkout/shipping, then unblock and use whatever retry is offered."},
+    {id:"B2", claim:"A slow carrier shows progress, not a frozen page", dim:["robustness"],
+     text:"When the carrier is slow to respond (up to the ~15 s cutoff), do I see a loading state and then either options or a message — rather than a page that looks frozen or blank while it waits?",
+     ev:"In DevTools throttle responses from allekurier.pl to ~10 s, load /checkout/shipping, watch the page."},
+    {id:"B3", claim:"A partial or malformed carrier response never renders a broken row", dim:["robustness"],
+     text:"When the carrier returns an incomplete or malformed list, is every option I see complete and usable — a real name, a real price, a real delivery time — with no row showing “undefined”, a blank, or “$0”?",
+     ev:"In DevTools, rewrite the allekurier.pl response to drop the price / name / days from one entry, reload, inspect the rendered rows."},
+    {id:"B4", claim:"“No options for this address” is distinguishable from “something went wrong”", dim:["robustness","trust"],
+     text:"When there really are no couriers for my postcode, versus when the lookup failed, do I see two different messages — so I know whether to fix my address, wait and retry, or contact the store?",
+     ev:"Compare the screen for a valid remote postcode with genuinely no service against the screen when the carrier call is blocked."},
+   ]},
+   {name:"C. Parcel sizing failures degrade gracefully", qs:[
+    {id:"C1", claim:"A basket whose parcel size can't be worked out gives a clear state, not a crash", dim:["robustness"],
+     text:"When the delivery size for my basket cannot be computed, do I get a clear message and a way forward — rather than a crash, an error page, or a silent empty list with no reason given?",
+     ev:"Put in the basket a product with missing/zero dimensions (or all such products), reach /checkout/shipping, observe."},
+    {id:"C2", claim:"A very large or very heavy basket produces sane options or a clear message", dim:["robustness"],
+     text:"When my basket is large or heavy enough to need splitting across parcels, do I still get delivery options whose prices look sane, or an explicit “contact us for a quote” message — never an empty list with no explanation or nonsensical prices?",
+     ev:"Add ~60 kg of items to the basket, reach /checkout/shipping, check the options and their prices against a manual carrier quote."},
+   ]},
+   {name:"D. Address and options stay consistent", qs:[
+    {id:"D1", claim:"Options are always priced for the address currently on file", dim:["security","robustness"],
+     text:"When I change my delivery address after seeing options, are the options and prices shown afterwards for the new address — not the ones quoted for the old one?",
+     ev:"View options for a Warsaw address, go back and change the address to a remote postcode, return to shipping, compare the option prices."},
+    {id:"D2", claim:"An escape-hatched or unusual address still gets options or a clear message", dim:["robustness"],
+     text:"When I reached this step with an address the checker did not fully recognise (via the “continue with entered address” fallback upstream), do I still get either usable options or a clear message — not a blank dead-end?",
+     ev:"Upstream, use the address escape hatch with a real-but-unusual address, continue to shipping, observe."},
+   ]},
+   {name:"E. Transitions in and out", qs:[
+    {id:"E1", claim:"Arriving without the prerequisites sends me to the right step, not a broken page", dim:["robustness"],
+     text:"When I open /checkout/shipping directly with no address or an empty basket, am I taken to the address step or the basket — cleanly, with no flash of a broken shipping page?",
+     ev:"Clear the checkout cookie (or the address only) and navigate straight to /checkout/shipping."},
+    {id:"E2", claim:"The option I picked is exactly what the payment step shows", dim:["trust","robustness"],
+     text:"After I choose an option and continue, does the payment step show that same carrier, service level, price and delivery estimate — not a different label, a blank, or a changed number?",
+     ev:"Note the carrier / service / price / days I selected, then read the delivery section on the payment page."},
+    {id:"E3", claim:"Double-click or a slow connection lands me on payment once, with one selection saved", dim:["robustness"],
+     text:"When I double-click “continue” or click it on a slow connection, do I end up on the payment step once, with a single delivery selection stored — no stuck “Przetwarzanie…” button, no double navigation?",
+     ev:"Throttle the network, double-click the continue button, watch navigation and the button state, then check the payment step's delivery line."},
+   ]},
+   {name:"F. Visual polish", qs:[
+    {id:"F1", claim:"The option list and its selected state are clean at 375 / 768 / 1440", dim:["visual"],
+     text:"At each of 375, 768 and 1440 px, does the option list render with no overlap, no clipped text, no horizontal page scroll, prices aligned and never truncated, and a clear visual difference between the selected and unselected rows?",
+     ev:"Load /checkout/shipping with options at the three widths, select a row at each."},
+    {id:"F2", claim:"The empty state and the error banner are unbroken at every width", dim:["visual"],
+     text:"Do the “no options” empty state and the red error banner (with its retry button) each render cleanly at 375 / 768 / 1440 — no overflow, no layout jump, the button fully tappable?",
+     ev:"Force the empty state (block the carrier) and the error state (break parcel sizing) at each width."},
+    {id:"F3", claim:"The mobile continue button is always reachable and never hides an option", dim:["visual"],
+     text:"On a 375 px viewport, is the sticky “Przejdź do płatności” button always visible and tappable, without covering the last option in the list when scrolled to the bottom?",
+     ev:"On mobile width, scroll the option list to the end and check the last row against the sticky button."},
+    {id:"F4", claim:"The step indicator shows the right step", dim:["visual"],
+     text:"On the shipping step, does the progress indicator mark Shipping as current and Basket and Address as done?",
+     ev:"Read the stepper on /checkout/shipping."},
+   ]},
+   {name:"G. UX clarity & trust", qs:[
+    {id:"G1", claim:"The switch to Polish here reads as deliberate, not a half-translation", dim:["trust"],
+     text:"Coming from an English address step to a Polish shipping step, does the store read as a deliberate bilingual store — or as an unfinished translation where one screen was localized and the next was not?",
+     ev:"Walk address → shipping → payment and note the language of the headings, buttons and helper text on each."},
+    {id:"G2", claim:"Delivery estimates read as honest, and a missing one degrades gracefully", dim:["trust"],
+     text:"Is each delivery time clearly attributed to the carrier and shown as a real range/number — and when the carrier gives no usable estimate, do I see “estimate unavailable” rather than a fabricated “1 day” or the word “undefined”?",
+     ev:"Read the estimate on each option; then, in DevTools, blank the days field in the carrier response and reload."},
+    {id:"G3", claim:"The estimate's Polish wording is grammatically correct", dim:["trust","visual"],
+     text:"For options with a 5-or-more-day estimate, is the wording grammatically correct Polish — not a form a native speaker would read as machine-generated?",
+     ev:"Find or force an option with an estimate of 5+ days and read the label."},
+    {id:"G4", claim:"I can tell the carrier apart from the service level", dim:["trust"],
+     text:"On each option, can I tell which text is the courier company and which is the service level (e.g. “next day”, “economy”) — rather than two labels with no stated relationship?",
+     ev:"Read a multi-option list and check whether carrier vs service is distinguishable at a glance."},
+   ]},
+  ]},
+
+ {id:"S3", key:"s3", title:"Payment page + intent",
+  boundary:"From /checkout/payment load with a basket, address and stored delivery cost → until clicking Pay hands me to the bank / wallet and on to the return URL. Not the delivery option list; not the order write, stock or receipt email; not the confirmation screen.",
+  groups:[
+   {name:"A. The amount charged is the real price of my basket — and I can't move it", qs:[
+    {id:"A1", claim:"Editing the total, a product id, or a quantity in what my browser sends doesn't change the charge", dim:["security"],
+     text:"When I intercept the requests the payment step sends and lower the total, swap a product id, or raise a quantity, is the amount actually charged still the correct live catalogue price for exactly what was really in my basket?",
+     ev:"DevTools → intercept the payment-init request (and, separately, tamper the checkout cookie), set the total to 1, swap an id, bump a quantity; complete payment with a test card; read the charged amount in the Stripe dashboard."},
+    {id:"A2", claim:"A price that changed after I started checkout doesn't underpay the store or ambush me", dim:["security","trust"],
+     text:"When a product's catalogue price changed after I reached checkout, am I charged the current price — not a stale lower one — or clearly told the price changed before I pay?",
+     ev:"Reach /checkout/payment, then change that product's price in Sanity Studio (up, then down), reload the payment step, compare the total and look for any “price changed” notice; confirm the charged amount in the Stripe dashboard."},
+    {id:"A3", claim:"The Pay button, the summary total, the wallet/card sheet, and the charge are the same money", dim:["security","trust","visual"],
+     text:"Do the summary total, the amount on the “Pay” button, the amount shown inside the card / Apple Pay / Google Pay sheet, and the amount finally charged all show the same figure in the same currency — no “$” on the page while the wallet and the receipt say another currency?",
+     ev:"Read the summary total and Pay button, open the Apple/Google Pay sheet and the card element, then read the PaymentIntent amount and currency in the Stripe dashboard."},
+   ]},
+   {name:"B. Setup and catalogue hiccups never dead-end me", qs:[
+    {id:"B1", claim:"When payment setup fails after its automatic retries, I get a clear error and a working retry", dim:["robustness","trust"],
+     text:"When the payment step cannot be prepared even after it quietly retries in the background, do I see a clear error and a button that actually re-attempts — rather than an endless “Preparing secure payment…”, a blank panel, or a stack trace?",
+     ev:"In DevTools block the payment-init request, load /checkout/payment, wait through the retries, then unblock and use the retry offered."},
+    {id:"B2", claim:"When the catalogue is briefly unavailable as I reach payment, I get a recoverable state, not a crash page", dim:["robustness"],
+     text:"When the product catalogue is momentarily unreachable as the payment step loads, do I land on a clear “try again in a moment” state with my basket intact — not a generic error page or a dead end?",
+     ev:"In DevTools block the catalogue host, navigate to /checkout/payment, observe; then unblock and retry."},
+    {id:"B3", claim:"A product deleted or unpriced mid-checkout gives a clear message, not a crash or a wrong charge", dim:["robustness","security"],
+     text:"When an item in my basket is deleted from the catalogue, or loses its price, between the delivery step and the payment step, do I get a clear message telling me what to fix — rather than an error page, or a charge that silently drops or misprices that item?",
+     ev:"Reach /checkout/shipping, then in Sanity Studio unpublish one basket product (and separately clear its price), continue to /checkout/payment, observe the screen and, if it proceeds, the charged amount."},
+   ]},
+   {name:"C. My payment can't be hijacked, and my card is never over-exposed", qs:[
+    {id:"C1", claim:"Someone else can't complete, or be charged for, the payment I started", dim:["security"],
+     text:"When I take my payment-step link, or the return link with my payment reference, into a different browser or someone else's session, is it refused — never a state where that payment can be completed, charged, or shown to that other person as their order?",
+     ev:"Copy /checkout/payment and the …/api/checkout/return?payment_intent=… URL into a fresh private window with no checkout cookie; separately put another person's payment reference on your own success URL; observe."},
+    {id:"C2", claim:"No full card number is ever shown back to me, stored where I can read it, or left on the page", dim:["security","trust"],
+     text:"After I pay by card, is the card shown only as brand + last four everywhere it appears — the payment step, the order summary, the confirmation screen, the stored order, the receipt email — with the full number nowhere visible or saved?",
+     ev:"Pay with a Stripe test card, then inspect the payment page DOM, the confirmation screen, the order document in Sanity Studio, and the receipt email."},
+   ]},
+   {name:"D. Tax, delivery cost and quantity limits are consistent and disclosed", qs:[
+    {id:"D1", claim:"The tax shown at payment equals the tax on the confirmation and the order", dim:["trust","security"],
+     text:"Does the tax figure on the payment summary match — same number, same currency — the tax shown on the confirmation screen, in the stored order, and on the receipt email?",
+     ev:"Note the VAT line on /checkout/payment, complete the order, then read the tax on the confirmation screen, the order in Sanity Studio, and the email."},
+    {id:"D2", claim:"A zero delivery cost is handled cleanly", dim:["robustness"],
+     text:"When the stored delivery cost is zero, does the payment step show delivery as free and charge the correct total — rather than rejecting it, blanking the line, or mis-adding it?",
+     ev:"With a zero delivery cost in the session (or a free option if one is ever offered upstream), load /checkout/payment and read the delivery line and total."},
+    {id:"D3", claim:"If the store caps how many of one item I can buy, I hit that limit in the basket with a stated reason", dim:["robustness","trust"],
+     text:"If there is a maximum quantity per item, do I reach it in the basket with a clear stated reason — rather than passing address and delivery and then being bounced back from the payment step, or seeing an unexplained “excessive quantity” message?",
+     ev:"Put 11 of one item in the basket, walk to the payment step, observe where I am stopped and what I am told."},
+   ]},
+   {name:"E. Transitions in and out", qs:[
+    {id:"E1", claim:"Arriving without the prerequisites sends me to the right earlier step, not a broken payment page", dim:["robustness"],
+     text:"When I open /checkout/payment directly with an empty basket, no address, or no delivery option chosen, am I taken cleanly to the basket or the matching earlier step — with no flash of a broken payment page and no error screen?",
+     ev:"Clear the checkout cookie (then, separately, just the address, then just the delivery cost) and navigate straight to /checkout/payment."},
+    {id:"E2", claim:"The summary shows exactly the items, delivery option and address I chose", dim:["trust","robustness"],
+     text:"Does the order summary on the payment step show the same items, quantities, delivery method, delivery price and shipping address I selected on the previous steps — no missing line, no changed number, no blank, no wrong name?",
+     ev:"Note the basket, the delivery option and the address entered, then read every line of the summary on /checkout/payment."},
+    {id:"E3", claim:"Clicking Pay hands me off once — no double charge, no stuck button", dim:["robustness","security"],
+     text:"When I double-click Pay, or click it on a slow connection, am I handed to the bank / wallet exactly once, with the button showing progress and never a second attempt or a permanently stuck “Processing…”?",
+     ev:"Throttle the network, double-click the Pay button (desktop and the mobile bar), watch the button state and the number of confirmations in the Stripe dashboard."},
+    {id:"E4", claim:"A declined card or an abandoned wallet payment leaves me on the step, details intact, able to retry", dim:["robustness","trust"],
+     text:"When my card is declined, or I cancel out of the Apple / Google Pay sheet, do I stay on the payment step with a clear reason and my basket, address and other entries intact — able to try another card or method immediately?",
+     ev:"Pay with a Stripe “declined” test card; separately open the wallet sheet and dismiss it; observe the page, the error text, and whether Pay works again."},
+   ]},
+   {name:"F. Visual polish", qs:[
+    {id:"F1", claim:"The summary and payment fields lay out cleanly at 375 / 768 / 1440", dim:["visual"],
+     text:"At each of 375, 768 and 1440 px, do the order summary and the payment fields render with no overlap, no clipped text, no horizontal page scroll, prices aligned and never truncated, and the two columns reflowing to one on mobile?",
+     ev:"Load /checkout/payment at the three widths with a multi-line basket."},
+    {id:"F2", claim:"The payment fields' dark styling matches the rest of the site", dim:["visual","trust"],
+     text:"Do the card / BLIK / Przelewy24 fields and the wallet buttons use the same dark background, text colour, border and focus treatment as the rest of the checkout — not a light-theme Stripe block dropped into a dark page?",
+     ev:"Compare the Stripe fields side by side with the summary card and the address step at each width."},
+    {id:"F3", claim:"The mobile “Pay” bar is always reachable and doesn't hide content", dim:["visual"],
+     text:"On a 375 px viewport, is the sticky “Pay” bar always visible and tappable, without covering the last payment field, the security line, or the card-brand row when scrolled to the bottom?",
+     ev:"On mobile width, scroll the payment column to the end and check the bottom content against the sticky bar."},
+    {id:"F4", claim:"Error, loading and instalment-message states look finished", dim:["visual"],
+     text:"Do the “preparing payment” skeleton, the “Payment Error” card, the inline error banner, the “Processing…” button and the instalment / pay-later message each render as designed elements — aligned, on-palette, no layout jump, no raw text — at 375 / 768 / 1440?",
+     ev:"Force each state (block the init call, decline a card, and drive the total above the instalment threshold) at the three widths."},
+    {id:"F5", claim:"The step indicator shows the right step", dim:["visual"],
+     text:"On the payment step, does the progress indicator mark Payment as current and Basket, Address and Shipping as done?",
+     ev:"Read the stepper on /checkout/payment."},
+   ]},
+   {name:"G. UX clarity & trust", qs:[
+    {id:"G1", claim:"It's clear billing comes from the delivery address — and a gift/company buyer can still get a correct invoice", dim:["trust"],
+     text:"Is it stated on the payment step that the billing address is taken from the delivery address with no way to change it — and if I am buying a gift or buying for a company, can I still get an invoice with the right billing details, or am I silently forced to bill to the delivery address?",
+     ev:"Read the payment step for any billing-address note or field; complete an order shipped to an address that isn't mine and check the billing details on the confirmation, the order and the receipt."},
+    {id:"G2", claim:"Every security claim on the step is literally true", dim:["trust"],
+     text:"Are the padlock line, the “encrypted by Stripe” wording and the card-brand logos all literally accurate for what actually happens on this step — no overclaim, no badge for a guarantee the store doesn't provide?",
+     ev:"Read every trust/security element on /checkout/payment and check each against the real payment behaviour."},
+    {id:"G3", claim:"Instalment / pay-later messaging is accurate and only shows when it genuinely applies", dim:["trust"],
+     text:"When the pay-later message appears, does it state a real, correct offer for the actual order amount and currency — and does it stay hidden when no such option genuinely applies — rather than a misleading teaser?",
+     ev:"View the payment step with a total just below and just above the instalment threshold; read the message and check its amount, currency and terms against what is actually offered at the Stripe step."},
+   ]},
+  ]},
+
+ {id:"S4", key:"s4", title:"Settlement, order & stock",
+  boundary:"From the moment the payment provider tells the store a payment happened (browser return + server-to-server webhook) → until an order for that payment exists in the order list exactly once and stock has been decremented or the shortfall flagged. The watcher is the store owner: the order list (Sanity Studio), stock numbers, the Stripe dashboard, the confirmation email, the event log.",
+  groups:[
+   {name:"A. Only a real, fully-successful payment ever creates an order", qs:[
+    {id:"A1", claim:"A forged “payment succeeded” message leaves no order and no stock change", dim:["security"],
+     text:"When a hand-made “payment succeeded” notification is sent to the store for a basket that was never paid for, does the store still end up with no new order in the order list and no change to any product's stock?",
+     ev:"With the Stripe CLI (or curl), POST a hand-crafted payment_intent.succeeded to the store's notification URL for a made-up or unpaid payment; then check the admin order list and the stock numbers of the products named in it."},
+    {id:"A2", claim:"A payment that did not fully succeed never becomes an order", dim:["security","robustness"],
+     text:"When a payment ends in any state other than fully paid — declined after 3-D Secure, cancelled on the provider's page, or still “processing” and later failed — does the store end with no order and no stock movement for it?",
+     ev:"Drive a test payment to a declined / cancelled / processing-then-failed outcome, return to the site, then check the order list and stock for that basket."},
+    {id:"A3", claim:"Only the real payer can cause the store to fulfil their payment", dim:["security"],
+     text:"When someone who is not the shopper replays the browser return, or points it at a payment id that isn't theirs, is an order still only ever created for a payment that genuinely completed and genuinely belongs to that checkout — never for an arbitrary payment id fed into the URL?",
+     ev:"Complete a real test payment, then re-open the return URL with a different (valid, someone else's) payment id and with a random one; check whether any order or stock change results."},
+   ]},
+   {name:"B. Exactly one order per payment — never zero, never two", qs:[
+    {id:"B1", claim:"Both settlement paths firing together still produce exactly one order", dim:["robustness","security"],
+     text:"When the browser return and the provider's server-to-server message for the same payment arrive at the same moment, does the order list show exactly one order for that payment — not two?",
+     ev:"Complete a real test payment while replaying the provider notification for it via the Stripe CLI within the same second; count the orders in the admin list for that payment id."},
+    {id:"B2", claim:"Refreshing or re-opening the post-payment page never creates a second order or a second charge", dim:["robustness","security","trust"],
+     text:"When I reload the page I land on after paying, hit back and forward to it, or re-open its URL later, does the order list still hold one order for that payment and the provider dashboard still show one charge?",
+     ev:"After a successful test payment, reload /checkout/success several times and re-navigate to it; check the order count and the charge count in Stripe."},
+    {id:"B3", claim:"A payment that is “processing” first and succeeds later still ends as one order", dim:["robustness"],
+     text:"When a payment is pending at the moment the shopper returns and only succeeds minutes later, does the store end with exactly one order for it — not zero (because the return happened too early) and not two?",
+     ev:"Use a test payment method that resolves asynchronously; return to the site while it is still processing, wait for it to succeed, then check the order list."},
+    {id:"B4", claim:"If the order can't be written at settlement, it still appears once when the store recovers", dim:["robustness"],
+     text:"When the store's order storage is unreachable at the instant a payment succeeds, does the order reliably appear once after storage recovers — never staying missing while the customer's card was charged, never landing twice?",
+     ev:"Block the store's CMS write host during a real test payment, complete it, then restore the host and wait for provider retries; check the order list."},
+    {id:"B5", claim:"Two different payments can never show the same order number", dim:["robustness","trust"],
+     text:"Can two different completed payments ever be given the same human-facing order number — so two customers, or a customer and support, see one reference pointing at two orders?",
+     ev:"Inspect the order-number format and, across a batch of test orders in the same year, confirm each payment's visible order number is unique and maps back to exactly one payment."},
+   ]},
+   {name:"C. Stock is never silently wrong", qs:[
+    {id:"C1", claim:"A real order decrements each item's stock exactly once", dim:["robustness"],
+     text:"After a successful order for, say, 2 units of a product that had 10 in stock, does the stock read exactly 8 once both settlement paths have run — not 6 (counted twice) and not 10 (never counted)?",
+     ev:"Note a product's stock, buy a known quantity of it, let the browser return and the provider notification both complete, re-read the stock."},
+    {id:"C2", claim:"Racing orders for the last unit never leave the store silently oversold", dim:["robustness","security"],
+     text:"When two orders complete at nearly the same time for the last unit in stock, does the store avoid selling both silently — either by holding one back, or by leaving the oversell visible to the owner (a flag, a status, a review queue), not just a line in a log file?",
+     ev:"Set a product's stock to 1, drive two test payments for it to complete together, then read the final stock and inspect both orders in the admin list."},
+    {id:"C3", claim:"An order that couldn't take its stock is flagged where the owner looks", dim:["robustness","trust"],
+     text:"When an order is placed for more units than exist, does that order stand out in the admin order list as needing attention — rather than looking identical to a normally-fulfilled order with the only trace buried in the event log?",
+     ev:"Set a product's stock below the quantity ordered, complete the payment, then look at that order in the order list for any shortfall marker."},
+    {id:"C4", claim:"Stock never goes negative unnoticed", dim:["robustness"],
+     text:"After any settlement, is every product's stock either zero-or-positive, or — if it did go negative — surfaced to the owner as an alert or an order flag, not only as a log entry nobody watches?",
+     ev:"Force a negative-stock situation (concurrent orders, or an order exceeding stock), then check the product record and whether anything in the admin signals it."},
+   ]},
+   {name:"D. The recorded order matches the money actually taken", qs:[
+    {id:"D1", claim:"The order total equals the amount the provider actually captured", dim:["security","trust"],
+     text:"Does the total recorded on the order — and shown to the owner in the order list — match, to the cent and in the same currency, the amount the payment provider actually captured for that payment?",
+     ev:"Complete a test payment, then compare the order's recorded total / currency with the captured amount in the Stripe dashboard."},
+    {id:"D2", claim:"A price change mid-checkout can't make the order's line items disagree with the charge", dim:["robustness","trust"],
+     text:"When a product's price changes between the shopper reaching payment and the payment completing, does the finished order still show line items and a subtotal that add up to what was actually charged — rather than a total that no longer matches its own breakdown?",
+     ev:"Reach the payment step, change that product's price in the admin, complete the payment, then check the order's line items, subtotal, shipping and total against the captured amount."},
+    {id:"D3", claim:"The order shows the delivery method and price the shopper chose", dim:["trust","robustness"],
+     text:"Does the finished order record the same carrier, service level and delivery price the shopper selected at the shipping step — not a blank, a different label, or a changed number?",
+     ev:"Note the delivery option chosen during checkout, then read the shipping section of the resulting order in the admin."},
+   ]},
+   {name:"E. A charged customer always leaves with an order and a findable reference", qs:[
+    {id:"E1", claim:"A customer who was charged is never dumped back at the basket with an error", dim:["trust","robustness"],
+     text:"When a payment succeeds but the store hits trouble creating the order during the browser return, does the shopper still land on a “payment received” confirmation (with the order following shortly) — never back on the basket with an error and nothing to show for their money?",
+     ev:"Make the synchronous order write fail (block the CMS host) during a successful test payment and watch where the browser ends up and what it says."},
+    {id:"E2", claim:"Every payment outcome this path can produce has a matching confirmation screen", dim:["trust","robustness"],
+     text:"For each state a payment can end in — succeeded, declined, cancelled, processing, verification failed — does the shopper reach a screen that correctly describes that state, with no combination falling through to a raw error or a “confirmed” screen for a payment that didn't succeed?",
+     ev:"Drive a test payment to each outcome and read the screen it lands on."},
+    {id:"E3", claim:"The reference shown to the customer is enough for support to find the payment", dim:["trust"],
+     text:"Using only the reference numbers shown on the final screen and in the confirmation email, can the owner locate that exact payment in the provider dashboard and that exact order in the admin — without guessing?",
+     ev:"Complete a test order, then try to find its payment in Stripe and its order in Studio using only what the customer was shown."},
+    {id:"E4", claim:"A failed confirmation email never loses the order", dim:["robustness"],
+     text:"When the confirmation email can't be sent — bad address, mail service down, or no mail service configured — is the order still created, complete, and visible in the admin?",
+     ev:"Break email delivery (unset the mail key or block the mail host), complete a test payment, then check the order list."},
+   ]},
+   {name:"F. The order holds only what it needs, and reaches the customer", qs:[
+    {id:"F1", claim:"No order, log, or email carries more customer or card data than the order needs", dim:["security","trust"],
+     text:"When I read a completed order in the admin, its confirmation email, and the checkout event log, does none of them contain a full card number, a security code, or more of the customer's personal data than the delivery and contact details the order actually needs? (Card brand and last four are expected; a full number is not.)",
+     ev:"Complete a test order and read the order document in Studio, the received email, and the event log for that checkout."},
+    {id:"F2", claim:"The order carries the email the customer actually used, and a missing one is visible", dim:["trust","robustness"],
+     text:"Does the finished order record the email address the customer entered for their payment receipt — and when no email is captured at all, is that gap visible to the owner rather than a silent blank on the order?",
+     ev:"Complete a guest checkout, then check the order's customer email in the admin and whether a confirmation email arrived; then complete one where no email is provided and see what the order shows."},
+    {id:"F3", claim:"The confirmation email's contents match the order", dim:["trust"],
+     text:"Does the confirmation email show the same order number, the same line items and quantities, the same total, and the same delivery address as the order recorded in the admin?",
+     ev:"Complete a test order and compare the email line by line with the order in Studio."},
+   ]},
+   {name:"G. A guest's order reaches their account", qs:[
+    {id:"G1", claim:"A guest who later signs up with the same email sees the order in their account", dim:["trust"],
+     text:"When I check out as a guest and afterwards create and verify an account with the same email address, does that order appear in my account's order history?",
+     ev:"Complete a guest checkout with email X, then register and verify an account with email X, then open the account order history."},
+    {id:"G2", claim:"A guest whose order can't be auto-linked is told how to claim it, not left guessing", dim:["trust"],
+     text:"When a guest's later signup uses a different email (or the guest order was saved with no email), the order does not link automatically — is the customer told what to do (e.g. “use the same email at checkout and signup”, or a support route) — rather than the order simply never appearing and no explanation given?",
+     ev:"Check out as a guest with email X, sign up with email Y, and look for any guidance about missing guest orders in the account area or order-confirmation copy."},
+   ]},
+  ]},
+
+ {id:"S5", key:"s5", title:"Confirmation",
+  boundary:"From /checkout/success load with a payment_intent param → until the user leaves. Every status branch's rendering, the access gate, the analytics event. Not the settlement / order-write / stock path; not the cross-cutting shell, stepper or headers.",
+  groups:[
+   {name:"A. Access gate & confidentiality", qs:[
+    {id:"A1", claim:"Another customer's confirmation via their PI id", dim:["security"],
+     text:"Given a payment_intent id for someone else's order (Stripe ids leak — a forwarded link, a Referer header, a shared screen, a log line), when I open /checkout/success?payment_intent=<that id> while signed out or signed in as a different account, am I sent to /basket instead of shown that order?",
+     ev:"Copy a real completed-order PI id from one browser profile, paste the success URL in a fresh profile with no checkout cookie."},
+    {id:"A2", claim:"What the fallback path exposes", dim:["security"],
+     text:"On that same non-owner view, does OrderDetails withhold the other person's name, street address, e-mail and purchased items — i.e. is nothing beyond a generic acknowledgement rendered?",
+     ev:"Same repro as A1, read the order-details card and page source."},
+    {id:"A3", claim:"Query-param tampering can fake a failure", dim:["robustness","security"],
+     text:"When I take my own genuine confirmed order and append &error=verification_failed (or another hand-picked param) to the URL, does the page still show my real confirmation — rather than switching to the “your card may have been charged” screen on attacker-controlled input?",
+     ev:"Open my own succeeded success URL, then reload it with &error=verification_failed added by hand."},
+    {id:"A4", claim:"No card data beyond brand + last4", dim:["security","trust"],
+     text:"Is the succeeded screen (rendered HTML and page source) free of any card detail beyond brand + last-4 / wallet name — no PAN, expiry, CVC, or raw payment_method / customer id?",
+     ev:"View-source and DOM dump of the succeeded page."},
+   ]},
+   {name:"B. “Confirmed” means paid, and the amount is true", qs:[
+    {id:"B1", claim:"“Payment confirmed” never shown for a non-succeeded PI", dim:["trust","security"],
+     text:"Does /checkout/success ever render “Payment confirmed” with an amount for a payment_intent whose live Stripe status is canceled, processing, requires_payment_method or anything other than succeeded?",
+     ev:"Open the success URL for a canceled PI, a processing PI and a declined PI that I own."},
+    {id:"B2", claim:"Charged but shown a failure page", dim:["trust","robustness"],
+     text:"If Stripe reports the PI as succeeded but the return handler's catch fired (so the URL carries error=verification_failed), does the screen still make clear the payment likely went through and give a copyable reference and a working way to confirm — rather than reading as an outright failure?",
+     ev:"Force the return handler's PI-retrieve to throw once (block the Stripe host during the return hop), then land on /checkout/success."},
+    {id:"B3", claim:"Card amount vs order-details total", dim:["trust"],
+     text:"For one order, do the amount in the green confirmation card and the “Total” in the order-details card show the same figure (or is any difference explicitly explained)?",
+     ev:"Read both numbers on one succeeded page."},
+    {id:"B4", claim:"Amount comes from Stripe's captured record", dim:["trust","security"],
+     text:"Is the confirmed amount the value Stripe actually captured for the PI, not a session- or client-supplied figure?",
+     ev:"Compare the displayed amount to the PI amount in the Stripe dashboard for the same order."},
+    {id:"B5", claim:"Charged, but the order document is never written", dim:["robustness","trust"],
+     text:"If the payment succeeds and both order-creation paths (return handler + webhook) fail permanently, does the page still confirm the payment, show the amount, and show a support reference — rather than sitting forever on “Generating your order receipt…”?",
+     ev:"Block the Sanity order write, complete a test payment, wait on the success page."},
+    {id:"B6", claim:"Order row exists but PI is not succeeded", dim:["robustness","trust"],
+     text:"If a Sanity order document exists for a PI whose Stripe status is not succeeded (stale write, manual row), does the page refuse to present it as a completed purchase?",
+     ev:"Point the success URL at a PI that has an order row but a canceled Stripe status."},
+   ]},
+   {name:"C. Every branch reachable, correct, recoverable", qs:[
+    {id:"C1", claim:"Each status has an intentional screen", dim:["robustness","visual"],
+     text:"Does every status I can actually arrive with — succeeded, declined, canceled, processing, verification-failed, Stripe-unreachable — render a distinct, deliberate screen with no raw stack trace, no blank page, and no infinite spinner?",
+     ev:"Drive each case with Stripe test payment methods / by blocking the Stripe host, land on the success page each time."},
+    {id:"C2", claim:"processing → Refresh → confirmed", dim:["robustness"],
+     text:"On the processing screen, when I press Refresh after the bank settles, does the page move to the confirmed screen without a manual full reload and without a dead end?",
+     ev:"Pay with a delayed-settlement test method, click Refresh on the processing screen."},
+    {id:"C3", claim:"“Try again” after a decline keeps the basket", dim:["robustness","trust"],
+     text:"On the declined screen, does “Try again” return me to a working payment page with my basket and address still present — not an emptied basket?",
+     ev:"Decline a test card, click Try again, inspect the payment page."},
+    {id:"C4", claim:"Back button after a confirmed order", dim:["robustness"],
+     text:"After a confirmed order, pressing the browser Back button once shows a coherent screen (basket, or a “checkout already complete” notice) — not a broken payment page and not a re-submitted charge?",
+     ev:"Complete a payment, press Back once on the success page."},
+    {id:"C5", claim:"Reloading the confirmed page is idempotent", dim:["robustness"],
+     text:"Reloading or re-opening the confirmed success page repeatedly keeps showing the same one order, with no duplicate order, no error screen, and no second charge?",
+     ev:"Reload the succeeded page five times, check Sanity for duplicate order docs."},
+    {id:"C6", claim:"Order written late by the webhook", dim:["robustness","visual"],
+     text:"When the order row is not yet written at first paint, does the “Generating your order receipt…” state carry a working Refresh affordance and resolve to the real order on the next refresh once the webhook lands, within a reasonable wait?",
+     ev:"Open the success page immediately after payment (before the webhook), then refresh."},
+   ]},
+   {name:"D. Analytics integrity", qs:[
+    {id:"D1", claim:"purchase event fires exactly once", dim:["robustness","trust"],
+     text:"Does the GA purchase event fire once per completed order and not again on a page reload or a router.refresh() of the success page?",
+     ev:"GA DebugView / network tab — reload the succeeded page and count purchase hits for the same transaction_id."},
+    {id:"D2", claim:"purchase event carries the real basket and value", dim:["trust"],
+     text:"Does the purchase payload include the order's line items and the correct PLN value, so the owner's revenue and product reports are accurate — rather than items: []?",
+     ev:"Inspect the purchase event payload in GA DebugView."},
+    {id:"D3", claim:"Nothing but id + amount leaves in the analytics payload", dim:["security"],
+     text:"Is the outbound purchase request (and the Referer header on it) free of customer PII — no e-mail, name or address, and the payment_intent id present only as the intended transaction_id?",
+     ev:"DevTools network tab on the succeeded page, inspect the gtag request URL, body and Referer."},
+   ]},
+   {name:"E. Visual polish", qs:[
+    {id:"E1", claim:"Confirmed screen at 375 / 768 / 1440", dim:["visual"],
+     text:"At each of 375, 768 and 1440 px, does the confirmed screen — success card, then the order-details / “what happens next” area — render with no overlap, no clipped text, no horizontal page scroll, and collapse to a single column on mobile?",
+     ev:"Resize the succeeded page at the three widths."},
+    {id:"E2", claim:"Failure branches share one layout", dim:["visual"],
+     text:"Do the declined, canceled, processing, verification-failed, Stripe-down and unexpected screens all use the same card, width and spacing, and each stay within one readable column at 375 px?",
+     ev:"View each branch at 375 px."},
+    {id:"E3", claim:"Icon and colour match meaning", dim:["visual","trust"],
+     text:"On every branch, do the icon and colour match the state — success green, hard error red, canceled neutral, processing “in progress” — with no green check on any screen that is not a confirmation?",
+     ev:"Eyeball each branch."},
+    {id:"E4", claim:"Skeleton matches the real order card", dim:["visual"],
+     text:"Is the order-details loading skeleton the same shape and footprint as the resolved order card, so the confirmed screen does not visibly jump when the order loads?",
+     ev:"Throttle the network, watch the skeleton→content swap."},
+   ]},
+   {name:"F. Copy honesty & reaching a human", qs:[
+    {id:"F1", claim:"“Confirmation sent to” is only shown when a mail was sent", dim:["trust"],
+     text:"Does “Confirmation sent to: <email>” appear only when an order-confirmation e-mail was actually dispatched to that address?",
+     ev:"Complete a guest checkout, check whether the shown address receives an e-mail."},
+    {id:"F2", claim:"“What happens next” promises only what the store delivers", dim:["trust"],
+     text:"Does the “what happens next” copy promise only things that actually happen — no “tracking number will appear here” if there is no tracking, no delivery-date range that is not real?",
+     ev:"Read the copy against what the order system actually produces."},
+    {id:"F3", claim:"Every failure branch has a link to a human that resolves", dim:["trust"],
+     text:"On each non-succeeded branch, is there a “contact support” affordance whose link resolves to a real page (not a 404)? (Failure branches currently link to /support, which 404s.)",
+     ev:"Click every support / contact link on every failure branch."},
+    {id:"F4", claim:"Support destination is consistent across the slice", dim:["trust"],
+     text:"Do the confirmed screen's “Need help?” and every failure branch point the customer to the same support destination, rather than a mailto: in one place and a broken /support in another?",
+     ev:"Compare the help affordance across all branches."},
+    {id:"F5", claim:"The “card may have been charged” screens are not a dead end", dim:["trust","robustness"],
+     text:"On the verification-failed and Stripe-unreachable screens, can I both copy the payment reference and reach support, so I am not stranded with a possible charge and no next step?",
+     ev:"Open the verification-failed screen, try to act on every affordance it offers."},
+    {id:"F6", claim:"Confirmed vs processing state the opposite thing about my next action", dim:["trust"],
+     text:"Does the confirmed screen say, in plain language, that nothing further is required from me, while the processing screen clearly says the payment is not yet settled?",
+     ev:"Read both screens."},
+   ]},
+  ]},
+
+ {id:"S6", key:"s6", title:"Flow + cross-cutting",
+  boundary:"The seams, not the screens — every adjacent transition, the shared shell / stepper / error screen, checkout state as one object, the guest-vs-account journey, the happy path end to end. Not any single screen's internal correctness.",
+  groups:[
+   {name:"A. I can't jump ahead by URL, or re-drive a finished checkout", qs:[
+    {id:"A1", claim:"Typing a later step's URL with an empty or partial checkout never reaches a pay screen", dim:["security","robustness"],
+     text:"When I open /checkout/shipping, /checkout/payment or /checkout/success by typing the address directly — with nothing in checkout, or with only a basket, or with a basket and address but no delivery chosen — am I always taken to the earliest step I have not completed, and never shown a payment form or a confirmation screen?",
+     ev:"Clear the checkout cookie, then visit each of the three URLs in turn; repeat after completing only the address, then only address + shipping."},
+    {id:"A2", claim:"Walking back through checkout URLs after a completed order can't create a second order or charge", dim:["security","robustness"],
+     text:"After I complete a payment, when I navigate back to /checkout/payment, /checkout/shipping or /checkout/address by URL or the browser Back button, do I get a coherent screen (a fresh checkout, my basket, or a “this checkout is finished” notice) with no second Stripe charge and no duplicate order?",
+     ev:"Complete a test payment, then hand-type each earlier checkout URL and press Back repeatedly; check the Stripe dashboard for extra PaymentIntents and Sanity Studio for duplicate order docs."},
+    {id:"A3", claim:"A quantity limit that will block me is enforced before I spend time on address and shipping", dim:["robustness","trust"],
+     text:"If there is an upper limit on how many of one item I can buy, do I hit it in the basket with a stated reason — rather than passing address entry and delivery selection and only then being bounced back to the basket?",
+     ev:"Put 25 of one item in the basket, go through address and shipping, and see at which point I am stopped and what it tells me. (Policy-neutral: asks whether the limit is disclosed and applied early, not whether “10” is right.)"},
+   ]},
+   {name:"B. One person's checkout never leaks into another's", qs:[
+    {id:"B1", claim:"Two customers checking out at the same time never see each other's data", dim:["security"],
+     text:"When two people run checkout simultaneously, does each only ever see their own basket, name, address and delivery choice — never the other person's, on any step or after a refresh?",
+     ev:"Start checkout as two different people in two separate browsers (or one normal + one private window), advance both to the payment step, refresh each, compare what each shows."},
+    {id:"B2", claim:"A new customer on a shared device does not inherit the previous person's checkout", dim:["security","trust"],
+     text:"On a device where someone already went partway through checkout, when the next person starts a new checkout, do they get a clean flow — their own basket, an empty address form — rather than the previous person's address, basket or step?",
+     ev:"Fill the address step, abandon, then from the basket start checkout again as if a different customer; check the address form and basket contents."},
+   ]},
+   {name:"C. Hand-edited or foreign checkout state is ignored, not trusted", qs:[
+    {id:"C1", claim:"Editing the checkout cookie to change the price or the items changes nothing I'm charged or sent", dim:["security"],
+     text:"When I hand-edit my checkout cookie to lower a price, raise a quantity, add an item, or swap a product id, does the next screen — and the amount finally charged and the final order — reflect only the real catalogue goods and prices for what I legitimately put in my basket?",
+     ev:"Edit the checkout cookie value in DevTools, reload the payment step, read the total, complete payment, compare the Stripe amount and the Sanity order row to the basket I started with — run this against the deployed site, not only localhost."},
+    {id:"C2", claim:"A corrupted or foreign checkout cookie fails safe, not into a broken or trusting state", dim:["security","robustness"],
+     text:"When my checkout cookie is truncated, scrambled, or replaced with one made elsewhere, am I sent cleanly back to the start of checkout (or the basket) — rather than shown a stack trace, a blank page, or a checkout that proceeds on the planted contents?",
+     ev:"In DevTools replace the checkout cookie with a random string and with a base64 blob from another environment, then load each checkout step."},
+   ]},
+   {name:"D. Session expiry and abandon-and-return explain themselves", qs:[
+    {id:"D1", claim:"When my checkout expires mid-flow I get an explanation, not a silent dump", dim:["robustness","trust"],
+     text:"When my checkout has expired (I left it more than an hour), and I then act on the page I was on — submit the address, click through to payment, or reload the payment step — do I get a screen that says my checkout session expired and what to do, rather than being dropped without a word onto the basket or the address form?",
+     ev:"Reach the shipping step, then the payment step; delete the checkout cookie (simulating expiry) or wait out the hour; interact with the page and observe where I land and what it says."},
+    {id:"D2", claim:"Abandon and come back an hour later gives a clear state, not a half-filled ruin", dim:["robustness","trust"],
+     text:"When I abandon checkout and return after the session has lapsed, do I get either a clean fresh checkout or a clear “your previous checkout expired, start again” message — never a page that is half-populated, stuck, or erroring from stale fragments?",
+     ev:"Complete address + shipping, close the tab, return after expiry via the basket “Checkout” button and via the /checkout/payment URL."},
+    {id:"D3", claim:"Coming back within the hour resumes where I left off with my data", dim:["robustness","trust"],
+     text:"When I return to checkout before the session expires, am I put back on the step I reached with my basket, address and delivery choice still filled in — without redoing earlier steps?",
+     ev:"Reach the payment step, close the tab, reopen /checkout/payment (and the basket “Checkout” button) a few minutes later."},
+   ]},
+   {name:"E. A large basket does not silently break checkout", qs:[
+    {id:"E1", claim:"A basket big enough to strain checkout storage keeps all its items or says so", dim:["robustness"],
+     text:"When I check out with a large basket (many distinct products, high quantities), do all the items I had carry through every step and onto the order — or, if that is too much for checkout to carry, am I told clearly — with nothing silently dropped and no step suddenly erroring?",
+     ev:"Add 30–40 distinct products to the basket, start checkout, and at each step compare the item list / count against the basket; complete the order and check the order row."},
+   ]},
+   {name:"F. Back, forward, refresh and re-entry keep my place and my data", qs:[
+    {id:"F1", claim:"Back and forward across every adjacent step pair preserves what I entered", dim:["robustness","trust"],
+     text:"For each adjacent pair — address↔shipping, shipping↔payment — when I go forward then Back (and forward again), is everything I entered still there: the address fields, the selected delivery option, and the basket?",
+     ev:"Walk the whole flow, then at each step use the browser Back and Forward buttons and check every field and selection."},
+    {id:"F2", claim:"Refreshing any step keeps me on it with my data intact", dim:["robustness"],
+     text:"When I press reload on the address, shipping or payment step, do I stay on that same step with my entered data still present — not bounced to an earlier step and not shown an empty form?",
+     ev:"Reload each of the three steps after filling it."},
+    {id:"F3", claim:"Changing the basket in another tab never leaves me paying an amount I did not see and approve", dim:["robustness","security"],
+     text:"When I have checkout open on the payment step and I change my basket in another tab (or on my phone), is the amount I am asked to confirm always one that matches what this checkout screen shows me — never a figure that reflects neither the old basket nor the new one?",
+     ev:"Reach the payment step, in a second tab add/remove an item and change a quantity, return to the payment tab, reload, and compare the shown total, the Stripe PaymentIntent amount, and both basket states."},
+   ]},
+   {name:"G. The redirect web and the step indicator behave", qs:[
+    {id:"G1", claim:"Guard redirects never loop", dim:["robustness"],
+     text:"Is there any checkout state — a present address but empty basket, a stored delivery choice but no address, a cleared cookie — that makes the browser bounce between two checkout URLs or report “too many redirects” instead of settling on one screen?",
+     ev:"Construct each partial state by editing the cookie, then load /checkout/shipping and /checkout/payment and watch the address bar."},
+    {id:"G2", claim:"The step indicator always matches the screen I'm on, and tells me how far I am — on mobile too", dim:["trust","visual"],
+     text:"On every checkout screen, does the progress indicator mark the step I am actually on, show which steps are done and which remain, and stay readable at 375 px — rather than showing icons with no labels, marking the wrong step, or disappearing entirely on some screens?",
+     ev:"Walk address → shipping → payment → success at 375 px and at 1440 px, reading the indicator on each; note the success screen has no indicator and mobile hides the step names."},
+    {id:"G3", claim:"Changing my address after choosing delivery sends me back through delivery, not straight to payment on a stale rate", dim:["security","robustness"],
+     text:"When I go back and re-save my address after a delivery option was already chosen, does checkout route me through the shipping step again to re-pick — never letting me reach payment with a delivery price quoted for the earlier address?",
+     ev:"Pick a delivery option, return to the address step, re-submit a different city, then try to reach /checkout/payment directly; check which step I land on and what delivery price shows."},
+   ]},
+   {name:"H. The four steps look like one checkout", qs:[
+    {id:"H1", claim:"Header, background, stepper, cards and buttons are identical across address, shipping and payment", dim:["visual"],
+     text:"At 375, 768 and 1440 px, do the address, shipping and payment steps share the same header, background, progress indicator position, card style, primary button style and page width — with no step that looks like it came from a different design?",
+     ev:"Screenshot all three steps at each width and compare side by side."},
+    {id:"H2", claim:"The checkout error screen looks like the rest of checkout", dim:["visual","trust"],
+     text:"When a checkout step fails and the error screen appears, is it styled like the surrounding checkout — same dark theme, same typography, same button treatment, readable contrast — rather than a plain light-theme page that looks unfinished?",
+     ev:"Force a step to throw (e.g. edit the cookie basket to reference an unknown product id, load /checkout/payment) and compare the error screen to the normal steps."},
+    {id:"H3", claim:"Typography and spacing are consistent screen to screen at every breakpoint", dim:["visual"],
+     text:"Walking the whole flow at 375, 768 and 1440 px, are heading sizes, body text, field spacing and vertical rhythm consistent from screen to screen — no step with noticeably tighter, looser, or differently-sized text?",
+     ev:"Walk address → shipping → payment → success at each width, watching headings and spacing."},
+   ]},
+   {name:"I. The bilingual store reads as deliberate", qs:[
+    {id:"I1", claim:"The English/Polish mix reads as an intentional bilingual store, not a half-done translation", dim:["trust","visual"],
+     text:"Walking basket → address (English) → shipping (Polish) → payment → success (English), does the language mix read as a deliberate choice a real bilingual store made — rather than one screen that somebody forgot to translate?",
+     ev:"Walk the full flow and note the language of every heading, button, helper line and error message."},
+    {id:"I2", claim:"The page's declared language matches what is actually on screen", dim:["trust"],
+     text:"On the Polish shipping step, does the browser (and a screen reader, and the “translate this page?” prompt) treat the page as the language it is actually written in — rather than announcing or offering to translate it as English?",
+     ev:"Load /checkout/shipping in Chrome and watch for the translate prompt; run VoiceOver / NVDA on it and hear which language it reads."},
+    {id:"I3", claim:"The amount is shown in one currency across every step, and it is the currency I'm charged in", dim:["trust","security"],
+     text:"Do the delivery price, the payment-step total, the amount on the Stripe sheet, and the confirmation figure all use the same currency and symbol — and is that the currency my card is actually charged in?",
+     ev:"Note the currency symbol on the shipping option, the payment total, the Stripe payment sheet, and the success screen; check the charged currency in the Stripe dashboard."},
+   ]},
+   {name:"J. The guest journey is honoured end to end", qs:[
+    {id:"J1", claim:"Guest checkout is clearly offered — I'm never forced to create an account to pay", dim:["trust"],
+     text:"From the basket through to payment, can I complete the purchase without creating an account, with the guest option visible and not buried under a sign-in wall?",
+     ev:"Sign out, start checkout, and go through to the payment step looking for any forced-registration gate."},
+    {id:"J2", claim:"A guest order shows up in my account after I sign up with that email", dim:["trust"],
+     text:"When I place an order as a guest and later create an account (or verify my email) using the same address I checked out with, does that order appear in my account's order history?",
+     ev:"Complete a guest order with a given email, then register that email, verify it, and open the account orders page."},
+    {id:"J3", claim:"A guest can find their order again without an account", dim:["trust"],
+     text:"After a guest order, am I given something — an order number plus a lookup, or a confirmation email with the details — that lets me check that order later without signing in?",
+     ev:"Complete a guest order and look at the confirmation screen and email for a way back to the order."},
+   ]},
+  ]},
+];
+
+const toc = document.getElementById('toc');
+const content = document.getElementById('content');
+let total = 0;
+
+DATA.forEach(slice => {
+  const li = document.createElement('li');
+  li.innerHTML = `<a class="slice" href="#${slice.key}"><span class="n">${slice.id}</span>${slice.title}</a>`;
+  toc.appendChild(li);
+
+  const sec = document.createElement('section');
+  sec.className = 'slice';
+  sec.id = slice.key;
+  let count = slice.groups.reduce((n,g)=>n+g.qs.length,0);
+  total += count;
+  sec.innerHTML = `<h2>${slice.id} · ${slice.title} <span style="color:var(--dim);font-weight:400;font-size:15px">— ${count} questions</span></h2>
+    <div class="boundary">${slice.boundary}</div>`;
+  slice.groups.forEach(g => {
+    const gd = document.createElement('div');
+    gd.className = 'group';
+    gd.innerHTML = `<h3>${g.name}</h3>`;
+    g.qs.forEach(q => {
+      const tags = q.dim.map(d=>`<span class="tag ${d}">${d}</span>`).join('');
+      const el = document.createElement('div');
+      el.className = 'q';
+      el.innerHTML = `
+        <div class="id">${slice.id} · ${q.id}</div>
+        <div class="claim">${q.claim}</div>
+        <div class="text">${q.text}</div>
+        <div class="meta">
+          <span class="tags">${tags}</span>
+          <span class="ev"><strong>Evidence:</strong> ${q.ev}</span>
+        </div>`;
+      gd.appendChild(el);
+    });
+    sec.appendChild(gd);
+  });
+  content.appendChild(sec);
+});
+
+document.querySelector('header.page p').insertAdjacentHTML('afterend',
+  `<p><strong>${total} questions</strong> across ${DATA.length} clusters.</p>`);
+</script>
+</body>
+</html>

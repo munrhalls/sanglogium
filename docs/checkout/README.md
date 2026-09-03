@@ -6,6 +6,7 @@
 |---|---|
 | [`CHECKOUT-SYNOPSIS.md`](./CHECKOUT-SYNOPSIS.md) | **Source truth.** Full system trace — session, guards, all pages, external services, diagrams. 100% accurate to current source code. Start here. |
 | [`ADR-002-checkout-inventory-concurrency.md`](./ADR-002-checkout-inventory-concurrency.md) | Architecture decision record for the tiered inventory concurrency strategy (OCC vs. soft reservation). |
+| [`checkout-gating-questions.html`](./checkout-gating-questions.html) | Standalone readable browser of the checkout gating questions — 6 clusters, every question with its dimension tags and evidence line. Open the file directly. Content mirrors `_project/checkout-gating-questions/`. |
 | [`basket-page/`](./basket-page/) | UX/visual intelligence for the basket page. |
 | [`global/`](./global/) | Global UX intelligence applying across all checkout steps. |
 | [`payment/`](./payment/) | UX, data-functionality, implementation, and portfolio-evaluation intelligence for the payment page. |

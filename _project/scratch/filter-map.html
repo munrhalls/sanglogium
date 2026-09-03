@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sang Logium — Filter & Sort Map (draft)</title>
+<style>
+  :root{
+    --bg:#0f1113; --panel:#181b1e; --panel2:#1f2327; --ink:#e9e6df;
+    --muted:#9aa0a6; --gold:#c8a862; --line:#2c3136; --chip:#242a2f;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding:32px}
+  h1{font-size:18px;font-weight:600;margin:0 0 4px}
+  .sub{color:var(--muted);margin:0 0 24px;font-size:13px}
+  .sorts{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:14px 18px;margin-bottom:24px}
+  .sorts h2{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);
+    margin:0 0 10px;font-weight:600}
+  .sortrow{display:flex;flex-wrap:wrap;gap:8px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .card h2{margin:0;padding:12px 16px;font-size:13px;font-weight:600;background:var(--panel2);
+    border-bottom:1px solid var(--line)}
+  .card h2 span{display:block;font-size:11px;color:var(--muted);font-weight:400;margin-top:2px}
+  .card ul{list-style:none;margin:0;padding:10px 16px 14px}
+  .card li{padding:7px 0;border-bottom:1px dashed var(--line)}
+  .card li:last-child{border-bottom:0}
+  .fname{font-weight:600}
+  .opts{color:var(--muted);font-size:12.5px;margin-top:2px}
+  .chip{display:inline-block;background:var(--chip);border:1px solid var(--line);
+    border-radius:999px;padding:2px 9px;font-size:12px;color:var(--ink)}
+  .uni h2{color:var(--gold)}
+  .note{grid-column:1/-1;color:var(--muted);font-size:12.5px;background:var(--panel);
+    border:1px dashed var(--line);border-radius:10px;padding:12px 16px;margin-top:4px}
+  .tier2{margin-top:20px;background:var(--panel);border:1px solid var(--line);
+    border-radius:10px;padding:14px 18px}
+  .tier2 h2{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+    margin:0 0 8px;font-weight:600}
+  .foot{color:var(--muted);font-size:12px;margin-top:24px}
+</style>
+</head>
+<body>
+  <h1>Sang Logium — Filter &amp; Sort Map <span style="color:var(--muted);font-weight:400">(draft, lean-complete baseline)</span></h1>
+  <p class="sub">Throwaway reference. Sorts are identical on every listing page. Universal filters sit on every page; attribute filters are per-location.</p>
+
+  <div class="sorts">
+    <h2>Sort by — every listing page</h2>
+    <div class="sortrow">
+      <span class="chip">Featured &nbsp;·&nbsp; default</span>
+      <span class="chip">Best selling</span>
+      <span class="chip">Price: Low to High</span>
+      <span class="chip">Price: High to Low</span>
+      <span class="chip">Newest</span>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <div class="card uni">
+      <h2>Universal <span>on every listing page</span></h2>
+      <ul>
+        <li><div class="fname">Price</div><div class="opts">min / max range across full catalogue spread</div></li>
+        <li><div class="fname">Brand</div><div class="opts">multi-select</div></li>
+        <li><div class="fname">Availability</div><div class="opts">in stock only</div></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>/products <span>all products, mixed</span></h2>
+      <ul>
+        <li><div class="fname">Universal set</div><div class="opts">price · brand · availability</div></li>
+        <li><div class="fname">Category</div><div class="opts">Headphones · Audio Electronics · Accessories (+ sub-types)</div></li>
+        <li><div class="opts">no attribute filters here — they only make sense inside a category</div></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Headphones <span>parent + all headphone sub-pages</span></h2>
+      <ul>
+        <li><div class="fname">Wearing style</div><div class="opts">Over-ear · On-ear · In-ear (IEM)</div></li>
+        <li><div class="fname">Back design</div><div class="opts">Open · Closed · Semi-open &nbsp;<em>(hidden for IEMs)</em></div></li>
+        <li><div class="fname">Driver type</div><div class="opts">Dynamic · Planar magnetic · Electrostatic · Balanced armature · Hybrid</div></li>
+        <li><div class="fname">Connectivity</div><div class="opts">Wired · Wireless (Bluetooth)</div></li>
+        <li><div class="fname">Connector / plug</div><div class="opts">3.5mm · 6.35mm · 4.4mm balanced · 4-pin XLR · 2.5mm · USB-C &nbsp;|&nbsp; headphone-side: MMCX · 2-pin · Fixed cable</div></li>
+        <li><div class="fname">Microphone</div><div class="opts">yes / no</div></li>
+        <li><div class="fname">Noise cancelling</div><div class="opts">yes / no</div></li>
+        <li><div class="fname">Requires amplifier</div><div class="opts">yes / no</div></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Audio Electronics <span>amps + digital sources</span></h2>
+      <ul>
+        <li><div class="fname">Device type</div><div class="opts">Headphone amp · DAC · DAC-amp combo · Dongle DAC · DAP · Network streamer</div></li>
+        <li><div class="fname">Form factor</div><div class="opts">Desktop · Portable · Dongle</div></li>
+        <li><div class="fname">Amplification</div><div class="opts">Solid-state · Tube · Hybrid</div></li>
+        <li><div class="fname">DAC included</div><div class="opts">yes / no</div></li>
+        <li><div class="fname">Balanced output</div><div class="opts">yes / no</div></li>
+        <li><div class="fname">Inputs</div><div class="opts">USB · Optical · Coaxial · RCA · Bluetooth</div></li>
+        <li><div class="fname">Outputs</div><div class="opts">6.35mm · 4.4mm · 4-pin XLR · RCA line-out</div></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Accessories <span>parent + all accessory sub-pages</span></h2>
+      <ul>
+        <li><div class="fname">Accessory type</div><div class="opts">Cable · Adapter · Interconnect · Eartip · Earpad · Stand · Case · Care</div></li>
+        <li><div class="fname">Connector / termination</div><div class="opts">both ends — same connector vocabulary as headphones</div></li>
+        <li><div class="fname">Compatibility</div><div class="opts">fits which headphone brand / model</div></li>
+      </ul>
+    </div>
+
+    <div class="note">
+      <strong>Per-subcategory behaviour:</strong> a facet with only one value in the current result set hides itself
+      (e.g. Back design on the IEM page, Amplification on the Network Streamers page). The lists above are the full
+      vocabulary; each sub-page shows the relevant subset.
+    </div>
+
+  </div>
+
+  <div class="tier2">
+    <h2>Deferred — tier 2, above the floor, revisit after baseline ships</h2>
+    <div class="sortrow">
+      <span class="chip">Headphone impedance value</span>
+      <span class="chip">Amp power output</span>
+      <span class="chip">Cable length</span>
+      <span class="chip">Eartip material &amp; size</span>
+      <span class="chip">Earpad material</span>
+      <span class="chip">Condition (B-stock)</span>
+      <span class="chip">Rating / reviews</span>
+    </div>
+  </div>
+
+  <p class="foot">Current store today: Price · Brand · In-stock &nbsp;|&nbsp; Featured / Price ↑ / Price ↓ / Newest.
+  Everything else above is the gap. Next step: check each facet against the Sanity product schema.</p>
+</body>
+</html>
