@@ -52,6 +52,17 @@ const nextConfig: NextConfig = {
   },
   poweredByHeader: false,
   compress: true,
+  // Brand-doc cleanup (sang-logium-g8q.3): old /brand/<slug> URLs whose docs were
+  // merged away or deleted. The brand route is an unlinked stub with no sitemap
+  // entry, so these only catch stale external inbound links.
+  redirects: async () => {
+    return [
+      { source: "/brand/kanto-living", destination: "/brand/kanto", permanent: true },
+      { source: "/brand/meze", destination: "/brand/meze-audio", permanent: true },
+      { source: "/brand/sony-mobile", destination: "/brand/sony", permanent: true },
+      { source: "/brand/the-last-factory", destination: "/", permanent: true },
+    ];
+  },
   headers: async () => {
     return [
       // 1. GLOBAL: Security & 5-minute CDN Cache
