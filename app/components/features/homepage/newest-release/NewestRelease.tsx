@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { NewestReleaseData } from "@/sanity-cms/lib/homepage/getHomepageData";
+import { formatPrice } from "@/lib/utils/price";
 import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
 import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";
 import { CarouselSlide } from "@/app/components/layout/carousel/CarouselSlide";
@@ -92,12 +93,7 @@ export default async function NewestRelease({ newestReleaseData }: NewestRelease
 
                 {product.price_data?.unit_amount != null && (
                   <p className="type-price text-secondary-900">
-                    {new Intl.NumberFormat("en-US", {
-                      style: "currency",
-                      currency: product.price_data.currency?.toUpperCase() ?? "USD",
-                      minimumFractionDigits: 0,
-                      maximumFractionDigits: 0,
-                    }).format(product.price_data.unit_amount / 100)}
+                    {formatPrice(product.price_data.unit_amount)}
                   </p>
                 )}
 

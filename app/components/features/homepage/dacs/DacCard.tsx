@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BasketControls } from "@/app/components/features/basket/BasketControls";
-import { centsToDisplay } from "@/lib/utils/price";
+import { formatPrice } from "@/lib/utils/price";
 
 export default function DacCard({ item, idx }: { item: any; idx: number }) {
   if (!item) return null;
@@ -9,7 +9,7 @@ export default function DacCard({ item, idx }: { item: any; idx: number }) {
   const productName = item.name || "Unknown Product";
   const brandName = item.brand?.name || "Generic";
   const price = item.price_data
-    ? `$${centsToDisplay(item.price_data.unit_amount)}`
+    ? formatPrice(item.price_data.unit_amount)
     : "Contact for Price";
 
   return (

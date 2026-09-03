@@ -1,4 +1,5 @@
 import { ShoppingCartIcon } from "@phosphor-icons/react/dist/ssr";
+import { formatPriceMajor } from "@/lib/utils/price";
 
 export default function CardDetails({
   name,
@@ -15,7 +16,7 @@ export default function CardDetails({
   price: number;
   description?: string;
 }) {
-  const formattedPrice = price?.toLocaleString("en-US") ?? "";
+  const formattedPrice = formatPriceMajor(price ?? 0);
 
   return (
     <div className="flex flex-1 flex-col bg-brand-900">
@@ -38,7 +39,7 @@ export default function CardDetails({
         <div className="flex flex-col">
           <span className="text-[10px] uppercase tracking-widest text-secondary-500">Price</span>
           <span className="text-body font-bold tabular-nums text-brand-50">
-            ${formattedPrice}
+            {formattedPrice}
           </span>
         </div>
 

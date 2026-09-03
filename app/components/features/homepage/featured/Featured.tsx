@@ -11,7 +11,7 @@ import {
 import FeaturedHeader from "./FeaturedHeader";
 import { FeaturedProduct } from "./getFeaturedProducts";
 import { BasketControls } from "@/app/components/features/basket/BasketControls";
-import { centsToDisplay } from "@/lib/utils/price";
+import { formatPrice } from "@/lib/utils/price";
 
 interface FeaturedProps {
   featuredData: FeaturedProduct[];
@@ -72,7 +72,7 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => {
 
       <div className="flex items-center justify-between gap-2 px-3 pb-3">
         <p className="type-product-price tabular-nums">
-          ${centsToDisplay(product.price_data.unit_amount)}
+          {formatPrice(product.price_data.unit_amount)}
         </p>
         <BasketControls
           productId={product._id}
