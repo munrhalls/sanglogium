@@ -1,0 +1,7 @@
+ACCEPTANCE TESTS
+- When I open /products and look at the Category filter options, then every option label is shown in normal human-readable case (e.g. "Accessories"), never a lowercase slug (e.g. "accessories").
+- When I open /products/[...slug] for any category and look at any filter group's options, then every option label is shown in normal human-readable case, never a raw slug format (e.g. no hyphens-as-spacing, no all-lowercase-slug rendering).
+- When I compare filter option labels across different filter groups (category, brand, and any other facet) on the same page, then all labels follow the same consistent capitalization/formatting convention.
+- When I select a filter and see it reflected as an active filter chip, then the chip text also matches the same human-readable formatting as the option list, not the raw slug.
+
+CURRENT STATUS: not started

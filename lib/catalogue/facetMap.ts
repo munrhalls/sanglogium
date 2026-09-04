@@ -54,7 +54,7 @@ export const FILTER_FACETS: FilterFacet[] = [
     urlParam: 'brand',
   },
   {
-    facet: 'Availability',
+    facet: 'In stock only',
     field: 'filterAttributes.inStock',
     type: 'boolean',
     valueVocab: ['true', 'false'],
@@ -205,14 +205,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     categories: ['accessories'],
     urlParam: 'connectorTermination',
   },
-  {
-    facet: 'Compatibility',
-    field: 'filterAttributes.compatibility',
-    type: 'multi',
-    valueVocab: ['<compatible-model>'],
-    categories: ['accessories'],
-    urlParam: 'compatibility',
-  },
 ];
 
 export const SORT_OPTIONS = [
@@ -252,6 +244,23 @@ export const SORT_OPTIONS = [
     tieBreak: '_id desc',
   },
 ] as const;
+
+/** Canonical category keys used by `FilterFacet.categories` (besides `"*"`). */
+export type FacetCategory =
+  | 'headphones'
+  | 'audio-electronics'
+  | 'accessories'
+  | 'all-products';
+
+/**
+ * The facets that apply to a given catalogue category: the universal ones
+ * (`categories: ["*"]`) plus any whose `categories` list names this category.
+ * An unrecognised category still gets the universal facets.
+ */
+export const facetsForCategory = (category: string): FilterFacet[] =>
+  FILTER_FACETS.filter(
+    (f) => f.categories.includes('*') || f.categories.includes(category),
+  );
 
 export const FILTER_FACET_BY_PARAM = new Map(FILTER_FACETS.map((f) => [f.urlParam, f]));
 

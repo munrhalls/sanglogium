@@ -9,13 +9,14 @@ import {
   FILTER_SORT_URL_OPTIONS,
   type SortValue,
 } from "@/lib/catalogue/filterSortParams";
-import { FILTER_FACETS } from "@/lib/catalogue/facetMap";
+import { FILTER_FACETS, isPlaceholderVocab } from "@/lib/catalogue/facetMap";
 import {
   useFilterParam,
   useClearAllFilters,
   usePageReset,
 } from "@/app/hooks/nuqs/useFilterSort";
 import { formatPriceMajor } from "@/lib/utils/price";
+import { humanizeFacetValue } from "@/lib/catalogue/humanizeFacetValue";
 
 /**
  * F6 — the active-filter chip row + "Clear all".
@@ -87,10 +88,21 @@ export function ActiveFilterChips({
 
   const chips: Chip[] = [];
 
-  brand?.forEach((slug) => {
+  // Unknown URL values (e.g. ?brand=notabrand, ?driverType=banana) are inert on
+  // the server (see lib/catalogue/sanitizeFilterState.ts); mirror that here so
+  // no chip is rendered for a value that filters nothing. brand is data-derived
+  // — its known set is the brandLabels map the page passes in (skip the check
+  // when that map is empty, e.g. a facet fetch failure). (jw8.3)
+  const knownBrands = Object.keys(brandLabels);
+  const isKnownBrand = (slug: string) =>
+    knownBrands.length === 0 ||
+    Boolean(brandLabels[slug]) ||
+    Boolean(brandLabels[slug.toLowerCase()]);
+
+  brand?.filter(isKnownBrand).forEach((slug) => {
     chips.push({
       key: `brand:${slug}`,
-      label: brandLabels[slug] ?? slug,
+      label: brandLabels[slug] ?? humanizeFacetValue(slug),
       onRemove: () => setBrand((prev) => (prev ?? []).filter((v) => v !== slug)),
     });
   });
@@ -155,12 +167,17 @@ export function ActiveFilterChips({
       continue;
     }
 
+    const closedVocab = isPlaceholderVocab(facet.valueVocab)
+      ? null
+      : new Set(facet.valueVocab.map((v) => v.toLowerCase()));
+
     const selected = Array.isArray(rawValue) ? rawValue : [];
     for (const value of selected) {
       const slug = String(value);
+      if (closedVocab && !closedVocab.has(slug.toLowerCase())) continue;
       chips.push({
         key: `${facet.urlParam}:${slug}`,
-        label: facet.urlParam === 'compatibility' ? slug : brandLabels[slug] ?? slug,
+        label: brandLabels[slug] ?? humanizeFacetValue(slug),
         onRemove: () =>
           (setRawValue as (v: string[] | ((prev: string[]) => string[])) => void)((prev: string[]) =>
             prev.filter((v) => v !== slug)

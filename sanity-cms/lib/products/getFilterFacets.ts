@@ -6,6 +6,7 @@ import {
   type FilterFacet,
   isPlaceholderVocab,
 } from '@/lib/catalogue/facetMap';
+import { humanizeFacetValue } from '@/lib/catalogue/humanizeFacetValue';
 import type { ProductQueryState } from '@/lib/catalogue/buildProductQuery';
 
 const withCache = <T extends (...args: any[]) => any>(fn: T): T => {
@@ -124,8 +125,7 @@ function productMatchesState(
 
 function labelForValue(facet: FilterFacet, value: string): string {
   if (facet.urlParam === 'brand' && !value) return 'Unknown';
-  // Minimal niceties: "4.4mm-balanced" stays as-is, "over-ear" stays as-is.
-  return value;
+  return humanizeFacetValue(value);
 }
 
 function distinctBrandSlugs(products: RawProduct[]): string[] {
@@ -226,7 +226,7 @@ const getFilterFacetsFn = async ({
       if (!optionValues.some((v) => v.toLowerCase() === lower)) {
         options.push({
           value: s,
-          label: brandLabels[lower] ?? s,
+          label: brandLabels[lower] ?? humanizeFacetValue(s),
           count: baseProducts.filter((p) =>
             valuesForFacet(p, facet).some((v) => v === lower),
           ).length,

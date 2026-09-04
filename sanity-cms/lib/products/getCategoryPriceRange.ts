@@ -29,13 +29,19 @@ export interface GetCategoryPriceRangeOptions {
  * query, no product rows, `withCache` wrapper, try/catch → safe null range.
  * `price_data.unit_amount` is cents; converting to display dollars is
  * `resolvePriceBounds`'s job (`centsToDisplay`) — this helper never divides by 100.
+ *
+ * `prices` is the bare list of unit amounts (numbers only, no documents) so
+ * `resolvePriceBounds` can tell a far top-end outlier from a genuinely wide
+ * category and compress the slider scale accordingly. It stays a projection of
+ * the same one query — no extra round trip, no product rows.
  */
 const getCategoryPriceRangeFn = async ({ keys }: GetCategoryPriceRangeOptions): Promise<PriceRangeData> => {
-  if (!keys.length) return { minPrice: null, maxPrice: null };
+  if (!keys.length) return { minPrice: null, maxPrice: null, prices: [] };
 
   const query = groq`{
     "minPrice": math::min(*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0].price_data.unit_amount),
-    "maxPrice": math::max(*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0].price_data.unit_amount)
+    "maxPrice": math::max(*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0].price_data.unit_amount),
+    "prices": *[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0].price_data.unit_amount
   }`;
 
   try {
@@ -43,10 +49,11 @@ const getCategoryPriceRangeFn = async ({ keys }: GetCategoryPriceRangeOptions): 
     return {
       minPrice: result?.minPrice ?? null,
       maxPrice: result?.maxPrice ?? null,
+      prices: (result?.prices ?? []).filter((price): price is number => typeof price === 'number'),
     };
   } catch (error) {
     console.error(`[getCategoryPriceRange] Failed for ${keys.length} keys:`, error);
-    return { minPrice: null, maxPrice: null };
+    return { minPrice: null, maxPrice: null, prices: [] };
   }
 };
 

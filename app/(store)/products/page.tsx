@@ -17,6 +17,7 @@ import { isFacetedQuery } from '@/lib/catalogue/seo';
 import { loadFilterSort, SORT_DEFAULT } from '@/lib/catalogue/filterSortParams';
 import { buildProductQuery } from '@/lib/catalogue/buildProductQuery';
 import type { ProductQueryState } from '@/lib/catalogue/buildProductQuery';
+import { sanitizeFilterState } from '@/lib/catalogue/sanitizeFilterState';
 
 export const dynamic = 'force-dynamic';
 
@@ -32,7 +33,25 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
   const page = typeof pageValue === 'string' ? Number(pageValue) : 1;
   const allKeys = getAllLeafKeys();
 
-  const state = loadFilterSort(query) as ProductQueryState;
+  // Drop URL filter values that match nothing valid for this route (e.g.
+  // ?brand=notabrand, ?driverType=banana) so a junk deep link is inert instead
+  // of a dead-end empty page. Closed-vocab facets are vetted purely up front;
+  // brand is data-derived, so it is vetted below against the brand slugs the
+  // facet computation finds on this route. (jw8.3)
+  const preState = sanitizeFilterState(
+    loadFilterSort(query) as ProductQueryState,
+  );
+
+  const [allFacets, priceRange, wishlistProductIds] = await Promise.all([
+    getFilterFacets({ keys: allKeys, state: preState }),
+    // FULL category price span — not narrowed by active filters, so the max
+    // handle can always be dragged back up past the current selection.
+    getCategoryPriceRange({ keys: allKeys }),
+    getWishlistProductIds(),
+  ]);
+  const brandLabels = allFacets.brandLabels;
+
+  const state = sanitizeFilterState(preState, { brand: Object.keys(brandLabels) });
   const { orderClause, whereClause, params } = buildProductQuery(state);
   const filtersActive = Object.entries(state).some(([key, value]) => {
     if (key === 'sort') return value !== SORT_DEFAULT;
@@ -42,15 +61,7 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
     return false;
   });
 
-  const [totalCount, allFacets, priceRange, wishlistProductIds] = await Promise.all([
-    getProductsCount({ keys: allKeys, whereClause, params }),
-    getFilterFacets({ keys: allKeys, state }),
-    // FULL category price span — not narrowed by active filters, so the max
-    // handle can always be dragged back up past the current selection.
-    getCategoryPriceRange({ keys: allKeys }),
-    getWishlistProductIds(),
-  ]);
-  const brandLabels = allFacets.brandLabels;
+  const totalCount = await getProductsCount({ keys: allKeys, whereClause, params });
   const priceBounds = resolvePriceBounds(priceRange);
 
   const totalPages = Math.ceil(totalCount / PER_PAGE);
@@ -70,9 +81,9 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
         <EmptyResults filtersActive={filtersActive} />
       ) : (
         <div className="flex flex-col lg-touch:flex-row lg-desktop:flex-row gap-8">
-          <FilterSidebar facets={allFacets} priceBounds={priceBounds} />
+          <FilterSidebar facets={allFacets} priceBounds={priceBounds} category="all-products" />
           <div className="min-w-0 flex-1">
-            <MobileFilterBar facets={allFacets} priceBounds={priceBounds} />
+            <MobileFilterBar facets={allFacets} priceBounds={priceBounds} category="all-products" />
             <ActiveFilterChips brandLabels={brandLabels} />
             <SortBar totalCount={totalCount} />
             <ChunkedProductGrid chunkPromises={chunkPromises} wishlistProductIds={wishlistProductIds} />

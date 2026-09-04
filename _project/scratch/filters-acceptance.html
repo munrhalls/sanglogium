@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Filters &amp; Sorting — Acceptance Tests</title>
+<style>
+  :root{
+    --bg:#f4f1ea;
+    --card:#fffdf8;
+    --ink:#23201b;
+    --muted:#6b6459;
+    --rule:#e0dacd;
+    --when:#7a3b12;
+    --epic:#1f3b34;
+    --epic-bg:#eef2ee;
+    --accent:#b5502a;
+  }
+  *{box-sizing:border-box}
+  html{font-size:17px}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:820px;margin:0 auto;padding:4rem 1.5rem 6rem}
+
+  header.page{margin-bottom:3.5rem}
+  header.page h1{
+    font-size:2rem;
+    line-height:1.15;
+    margin:0 0 .5rem;
+    letter-spacing:-.01em;
+  }
+  header.page p{
+    margin:0;
+    color:var(--muted);
+    font-size:1rem;
+    max-width:58ch;
+  }
+
+  section.epic{margin:0 0 3rem}
+
+  .epic-head{
+    background:var(--epic-bg);
+    border-left:4px solid var(--epic);
+    padding:1rem 1.25rem;
+    border-radius:3px;
+    margin-bottom:1.75rem;
+  }
+  .epic-head .kicker{
+    font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:.72rem;
+    letter-spacing:.13em;
+    text-transform:uppercase;
+    color:var(--epic);
+    display:block;
+    margin-bottom:.15rem;
+  }
+  .epic-head h2{
+    font-size:1.4rem;
+    margin:0 0 .1rem;
+    color:var(--epic);
+  }
+  .epic-head .id{
+    font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:.8rem;
+    color:var(--muted);
+  }
+
+  article.issue{
+    background:var(--card);
+    border:1px solid var(--rule);
+    border-radius:5px;
+    padding:1.5rem 1.6rem 1.35rem;
+    margin-bottom:1.1rem;
+  }
+  article.issue.done{opacity:.62}
+
+  .issue-head{
+    display:flex;
+    align-items:baseline;
+    gap:.6rem;
+    flex-wrap:wrap;
+    margin-bottom:1rem;
+    padding-bottom:.85rem;
+    border-bottom:1px solid var(--rule);
+  }
+  .issue-head h3{
+    font-size:1.16rem;
+    margin:0;
+    flex:1 1 60%;
+    line-height:1.3;
+  }
+  .issue-head .id{
+    font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:.76rem;
+    color:var(--muted);
+    white-space:nowrap;
+  }
+  .badge{
+    font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:.63rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    padding:.16rem .5rem;
+    border-radius:999px;
+    white-space:nowrap;
+  }
+  .badge.open{background:#f6e7d9;color:#8a3c14}
+  .badge.done{background:#e2ebe0;color:#3c5a3c}
+
+  ol.at{
+    list-style:none;
+    margin:0;
+    padding:0;
+    counter-reset:at;
+  }
+  ol.at li{
+    counter-increment:at;
+    position:relative;
+    padding:.55rem 0 .55rem 2.2rem;
+    border-bottom:1px dotted var(--rule);
+  }
+  ol.at li:last-child{border-bottom:0;padding-bottom:0}
+  ol.at li::before{
+    content:counter(at);
+    position:absolute;
+    left:0;
+    top:.62rem;
+    font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:.72rem;
+    color:var(--accent);
+    background:#f6e7d9;
+    width:1.5rem;
+    height:1.5rem;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .when{color:var(--when);font-weight:600}
+  .then{color:var(--ink)}
+  .then::before{content:"then ";color:var(--muted);font-style:italic}
+
+  footer.page{
+    margin-top:4rem;
+    padding-top:1.25rem;
+    border-top:1px solid var(--rule);
+    color:var(--muted);
+    font-size:.85rem;
+    font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="page">
+  <h1>Filters &amp; Sorting — Acceptance Tests</h1>
+  <p>Title + acceptance list per issue across the two active epics. Every line is a check a human can run in a browser on <code>localhost:3000</code> or from the CLI. Faded cards are already closed.</p>
+</header>
+
+<!-- ============ EPIC 1 ============ -->
+<section class="epic">
+  <div class="epic-head">
+    <span class="kicker">Epic · 5 of 9 complete</span>
+    <h2>EPIC Filter Attribute Sourcing</h2>
+    <span class="id">sang-logium-u8w</span>
+  </div>
+
+  <article class="issue">
+    <div class="issue-head">
+      <h3>Produce the filter data</h3>
+      <span class="badge open">epic goal</span>
+      <span class="id">u8w</span>
+    </div>
+    <ol class="at">
+      <li><span class="when">When I open the coverage report after a brand batch closes,</span> <span class="then">every catalogue-visible product of that brand shows a value (or an explicit N/A) for every facet in its category, and every non-N/A value cites a source URL.</span></li>
+      <li><span class="when">When I spot-check any 20 sourced values against the manufacturer's own spec page,</span> <span class="then">all 20 match and none is a guessed or inferred value.</span></li>
+      <li><span class="when">When I check the handoff dataset,</span> <span class="then">every value is one of the closed-vocabulary options for that facet — zero free-text, zero invented enums.</span></li>
+      <li><span class="when">When I review the could-not-source queue,</span> <span class="then">every unresolved facet/product pair is listed explicitly for human decision and nothing in that queue was filled with a placeholder guess.</span></li>
+      <li><span class="when">When sang-logium-ylz L4 consumes the handoff dataset,</span> <span class="then">it is a plain import with no further research required.</span></li>
+    </ol>
+  </article>
+
+  <article class="issue">
+    <div class="issue-head">
+      <h3>Normalize dataset to filterAttributes shape</h3>
+      <span class="badge open">open</span>
+      <span class="id">u8w.6</span>
+    </div>
+    <ol class="at">
+      <li><span class="when">When I open the normalized file,</span> <span class="then">every key is a real filterAttributes field name from productType.ts and every value is an allowed option string for that field.</span></li>
+      <li><span class="when">When I run the closed-vocab check,</span> <span class="then">it prints "closed-vocab violations: 0" — no value outside the schema enum, no free text.</span></li>
+      <li><span class="when">When I compare against the handoff dataset,</span> <span class="then">every product/facet pair is preserved or explicitly dropped as N/A, with a reconciliation count.</span></li>
+      <li><span class="when">When a facet in the canonical map has no matching schema field,</span> <span class="then">it is listed as a blocker rather than silently dropped.</span></li>
+    </ol>
+  </article>
+
+  <article class="issue">
+    <div class="issue-head">
+      <h3>Dry-run migration into Sanity</h3>
+      <span class="badge open">open</span>
+      <span class="id">u8w.7</span>
+    </div>
+    <ol class="at">
+      <li><span class="when">When I run the migration script with --dry-run,</span> <span class="then">it prints, per product, the exact filterAttributes patch it would apply and a summary of adds / changes / no-ops.</span></li>
+      <li><span class="when">When I check the dry-run against a fresh export,</span> <span class="then">that export is saved as the named rollback snapshot before any real run.</span></li>
+      <li><span class="when">When the dry-run touches any field,</span> <span class="then">it is only filterAttributes — overviewFields, specifications, description and every other block are shown untouched.</span></li>
+      <li><span class="when">When the dry-run reports products in the dataset that are not in the current dataset export,</span> <span class="then">those are listed for reconciliation, not written.</span></li>
+    </ol>
+  </article>
+
+  <article class="issue">
+    <div class="issue-head">
+      <h3>Apply migration to the dataset</h3>
+      <span class="badge open">open</span>
+      <span class="id">u8w.8</span>
+    </div>
+    <ol class="at">
+      <li><span class="when">When the migration completes,</span> <span class="then">the run log matches the approved dry-run summary (same add / change / no-op counts).</span></li>
+      <li><span class="when">When I open any migrated product in Sanity Studio,</span> <span class="then">its filterAttributes group is populated for every facet applicable to its category and empty for N/A facets.</span></li>
+      <li><span class="when">When I re-run the migration,</span> <span class="then">it is idempotent — the second run is all no-ops.</span></li>
+      <li><span class="when">When something fails mid-run,</span> <span class="then">the rollback snapshot from D6 restores the prior state.</span></li>
+    </ol>
+  </article>
+
+  <article class="issue">
+    <div class="issue-head">
+      <h3>CMS readiness roll-up</h3>
+      <span class="badge open">open</span>
+      <span class="id">u8w.9</span>
+    </div>
+    <ol class="at">
+      <li><span class="when">When I run the readiness check after the migration,</span> <span class="then">it prints: every catalogue-visible product on localhost:3000/products has filterAttributes populated for every facet applicable to its category.</span></li>
+      <li><span class="when">When the check runs,</span> <span class="then">it prints "closed-vocab violations: 0" and "consistency violations: 0" (e.g. no in-ear product carrying a Back design value, no accessory carrying Driver type).</span></li>
+      <li><span class="when">When I reconcile counts,</span> <span class="then">the migrated product count matches the live /products count with no unexplained drift.</span></li>
+      <li><span class="when">When any product still has an unresolved facet,</span> <span class="then">it appears on a short remaining-gaps list that traces back to the D3 human queue — and nothing on that list is a guess.</span></li>
+      <li><span class="when">When sang-logium-ylz.6 (L5) wires filters to filterAttributes,</span> <span class="then">no further data work is required from this epic.</span></li>
+    </ol>
+  </article>
+</section>
+
+<!-- ============ EPIC 2 ============ -->
+<section class="epic">
+  <div class="epic-head">
+    <span class="kicker">Epic · 5 of 7 complete</span>
+    <h2>EPIC Filter Sort Data</h2>
+    <span class="id">sang-logium-ylz</span>
+  </div>
+
+  <article class="issue">
+    <div class="issue-head">
+      <h3>Give every product typed filter + sort groups</h3>
+      <span class="badge open">epic goal</span>
+      <span class="id">ylz</span>
+    </div>
+    <ol class="at">
+      <li><span class="when">When I run the roll-up check after every child layer closes,</span> <span class="then">it prints: every facet AND every sort in the canonical map is wired to its backing field, every catalogue-visible product has filterAttributes populated for every applicable facet and a featuredPriority value, "closed-vocab violations: 0", "consistency violations: 0".</span></li>
+      <li><span class="when">When I inspect productType.ts,</span> <span class="then">overviewFields, specifications and description are byte-unchanged and filterAttributes + sortAttributes are purely additive.</span></li>
+      <li><span class="when">When I use the filters and the sort control on any category page on :3000,</span> <span class="then">narrowing and reordering reflect the dedicated groups (and price_data / _createdAt for the price and date sorts) and no filter or sort path reads a free-text field.</span></li>
+    </ol>
+  </article>
+
+  <article class="issue">
+    <div class="issue-head">
+      <h3>L5 — Wire filters + sort to the new groups</h3>
+      <span class="badge open">open</span>
+      <span class="id">ylz.6</span>
+    </div>
+    <ol class="at">
+      <li><span class="when">When I open localhost:3000/products/headphones and tick a facet (e.g. Driver type → Planar Magnetic),</span> <span class="then">only matching products remain and the URL carries the facet's param; two facets give their intersection and the count updates; reloading the URL renders the same set (SSR honours it).</span></li>
+      <li><span class="when">When I pick each sort option,</span> <span class="then">order changes per sort-map.json: Featured → sortAttributes.featuredPriority (tie-break newest), Price → price_data.unit_amount, Newest → _createdAt, Best selling → sortAttributes.popularity (order stable even while popularity is still all-null).</span></li>
+      <li><span class="when">When I run node _project/filters/check-wiring.cjs,</span> <span class="then">it prints each facet → URL param → filterAttributes field and each sort → URL value → backing field, matching the maps, and "unwired facets: 0, sorts wired: 5/5".</span></li>
+      <li><span class="when">When I grep the filter/sort control + catalogue query source,</span> <span class="then">no path references overviewFields / specifications / description ("free-text filter/sort reads: 0").</span></li>
+    </ol>
+  </article>
+
+  <article class="issue">
+    <div class="issue-head">
+      <h3>L6 — End-to-end verification</h3>
+      <span class="badge open">open</span>
+      <span class="id">ylz.7</span>
+    </div>
+    <ol class="at">
+      <li><span class="when">When I run node _project/filters/verify-all.cjs,</span> <span class="then">it prints one table: every facet AND every sort wired to its backing field, every catalogue-visible product populated for its category with a featuredPriority value, "closed-vocab violations: 0", "consistency violations: 0", "free-text filter/sort reads: 0".</span></li>
+      <li><span class="when">When I feed verify-all a deliberately broken product (bad enum value),</span> <span class="then">it fails loudly and names the product — proving the checks are real, not stubs.</span></li>
+      <li><span class="when">When I visit each category page on :3000,</span> <span class="then">the facets shown match the drafted map for that category (single-value facets hidden), and the sort control shows all 5 options with Featured as default.</span></li>
+      <li><span class="when">When I filter to a combination with no matches,</span> <span class="then">I get a clean empty state (not an error, not the full list); and "Clear all" resets every facet + the page number and returns the full catalogue in Featured order.</span></li>
+    </ol>
+  </article>
+</section>
+
+<footer class="page">
+  throwaway · _project/scratch/filters-acceptance.html · generated 2026-09-03
+</footer>
+
+</div>
+</body>
+</html>

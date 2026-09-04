@@ -20,6 +20,7 @@ import { isFacetedQuery, canonicalCategoryPath } from '@/lib/catalogue/seo';
 import { loadFilterSort, SORT_DEFAULT, FILTER_SORT_KEYS } from '@/lib/catalogue/filterSortParams';
 import { buildProductQuery } from '@/lib/catalogue/buildProductQuery';
 import type { ProductQueryState } from '@/lib/catalogue/buildProductQuery';
+import { sanitizeFilterState } from '@/lib/catalogue/sanitizeFilterState';
 
 export const dynamic = 'force-dynamic';
 
@@ -34,6 +35,10 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   const { slug } = await params;
   const query = await searchParams;
   const leafSlug = slug[slug.length - 1];
+  // The top-level catalogue category (e.g. "headphones", "audio-electronics",
+  // "accessories") gates which facet groups the sidebar shows. Subcategories
+  // inherit their parent's facet set because slug[0] is unchanged.
+  const category = slug[0];
   const nodeId = resolveSlugToId(leafSlug);
 
   if (!nodeId) {
@@ -44,7 +49,27 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   const page = typeof pageValue === 'string' ? Number(pageValue) : 1;
   const descendantKeys = unrollDescendantKeys(nodeId);
 
-  const state = loadFilterSort(query) as ProductQueryState;
+  // Drop URL filter values that match nothing valid for this route (e.g.
+  // ?brand=notabrand, ?driverType=banana) so a junk deep link is inert instead
+  // of a dead-end empty page. Closed-vocab facets are vetted purely up front;
+  // brand is data-derived, so it is vetted below against the brand slugs the
+  // facet computation finds on this route. (jw8.3)
+  const preState = sanitizeFilterState(
+    loadFilterSort(query) as ProductQueryState,
+  );
+
+  const [metadata, facets, priceRange, wishlistProductIds] = await Promise.all([
+    getCategoryMetadata(nodeId),
+    getFilterFacets({ keys: descendantKeys, state: preState }),
+    // FULL category price span — not narrowed by active filters, so the max
+    // handle can always be dragged back up past the current selection.
+    getCategoryPriceRange({ keys: descendantKeys }),
+    getWishlistProductIds(),
+  ]);
+
+  const state = sanitizeFilterState(preState, {
+    brand: Object.keys(facets.brandLabels),
+  });
   const { orderClause, whereClause, params: queryParams } = buildProductQuery(state);
 
   const filtersActive = FILTER_SORT_KEYS.some((key) => {
@@ -55,15 +80,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
     return value === true;
   });
 
-  const [metadata, totalCount, facets, priceRange, wishlistProductIds] = await Promise.all([
-    getCategoryMetadata(nodeId),
-    getProductsCount({ keys: descendantKeys, whereClause, params: queryParams }),
-    getFilterFacets({ keys: descendantKeys, state }),
-    // FULL category price span — not narrowed by active filters, so the max
-    // handle can always be dragged back up past the current selection.
-    getCategoryPriceRange({ keys: descendantKeys }),
-    getWishlistProductIds(),
-  ]);
+  const totalCount = await getProductsCount({ keys: descendantKeys, whereClause, params: queryParams });
   const priceBounds = resolvePriceBounds(priceRange);
 
   if (!metadata) {
@@ -95,9 +112,9 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
         <EmptyResults filtersActive={filtersActive} />
       ) : (
         <div className="flex flex-col lg-touch:flex-row lg-desktop:flex-row gap-8">
-          <FilterSidebar facets={facets} priceBounds={priceBounds} />
+          <FilterSidebar facets={facets} priceBounds={priceBounds} category={category} />
           <div className="min-w-0 flex-1">
-            <MobileFilterBar facets={facets} priceBounds={priceBounds} />
+            <MobileFilterBar facets={facets} priceBounds={priceBounds} category={category} />
             <ActiveFilterChips brandLabels={facets.brandLabels} />
             <SortBar totalCount={totalCount} />
             <ChunkedProductGrid chunkPromises={chunkPromises} wishlistProductIds={wishlistProductIds} />

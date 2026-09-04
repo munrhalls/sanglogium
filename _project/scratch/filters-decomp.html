@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Filters &amp; Sorting — Decomposition Draft</title>
+<style>
+  :root{
+    --bg:#f4f2ee; --surface:#fbfaf7; --surface-2:#f0ede7;
+    --ink:#1f1d1a; --ink-soft:#514c44; --ink-faint:#8a8378;
+    --line:#e0dcd3; --line-strong:#cfc9bd;
+    --accent:#7a5c2e; --accent-soft:#efe6d6;
+    --red:#8f3b32; --red-soft:#f3e0dc;
+    --amber:#8a6414; --amber-soft:#f5e9cf;
+    --green:#3f6b45; --green-soft:#dfeadd;
+    --blue:#3a5a7a; --blue-soft:#dde7ef;
+    --radius:10px;
+    --maxw:940px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#171614; --surface:#201e1a; --surface-2:#2a2823;
+      --ink:#ece7de; --ink-soft:#c0b9ac; --ink-faint:#8b8479;
+      --line:#332f29; --line-strong:#443f37;
+      --accent:#cda568; --accent-soft:#3a3120;
+      --red:#e0897f; --red-soft:#3d2823;
+      --amber:#d8ad5e; --amber-soft:#3a2f1a;
+      --green:#8fc294; --green-soft:#22301f;
+      --blue:#8fb4d6; --blue-soft:#1f2c38;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#171614; --surface:#201e1a; --surface-2:#2a2823;
+    --ink:#ece7de; --ink-soft:#c0b9ac; --ink-faint:#8b8479;
+    --line:#332f29; --line-strong:#443f37;
+    --accent:#cda568; --accent-soft:#3a3120;
+    --red:#e0897f; --red-soft:#3d2823;
+    --amber:#d8ad5e; --amber-soft:#3a2f1a;
+    --green:#8fc294; --green-soft:#22301f;
+    --blue:#8fb4d6; --blue-soft:#1f2c38;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.62 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:56px 24px 120px}
+
+  header.page{margin-bottom:44px}
+  .kicker{
+    font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--accent); font-weight:600; margin:0 0 10px;
+  }
+  h1{font-size:30px; line-height:1.2; margin:0 0 14px; letter-spacing:-.01em}
+  .lede{font-size:17px; color:var(--ink-soft); margin:0; max-width:62ch}
+  .meta{margin-top:16px; font-size:13px; color:var(--ink-faint)}
+
+  h2{
+    font-size:13px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--ink-faint); font-weight:700;
+    margin:52px 0 18px; padding-bottom:8px; border-bottom:1px solid var(--line);
+  }
+  h3{font-size:19px; margin:36px 0 12px; letter-spacing:-.01em}
+
+  p{margin:0 0 14px}
+  .section-intro{color:var(--ink-soft); max-width:64ch}
+
+  .principle{
+    background:var(--accent-soft); border:1px solid var(--line-strong);
+    border-radius:var(--radius); padding:18px 20px; margin:8px 0 8px;
+  }
+  .principle p{margin:0; color:var(--ink)}
+  .principle strong{color:var(--accent)}
+
+  /* issue cards */
+  .cards{display:flex; flex-direction:column; gap:14px; margin-top:8px}
+  .card{
+    background:var(--surface); border:1px solid var(--line);
+    border-left:3px solid var(--line-strong);
+    border-radius:var(--radius); padding:16px 18px;
+  }
+  .card.sev-confirmed{border-left-color:var(--red)}
+  .card.sev-check{border-left-color:var(--amber)}
+  .card.sev-research{border-left-color:var(--blue)}
+  .card.sev-good{border-left-color:var(--green)}
+
+  .card-head{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:6px}
+  .pid{
+    font:600 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    background:var(--surface-2); border:1px solid var(--line);
+    padding:4px 7px; border-radius:6px; color:var(--ink-soft); letter-spacing:.02em;
+  }
+  .card-title{font-weight:650; font-size:15.5px}
+  .tag{
+    font-size:11px; letter-spacing:.06em; text-transform:uppercase; font-weight:700;
+    padding:3px 7px; border-radius:999px; white-space:nowrap;
+  }
+  .tag.confirmed{background:var(--red-soft); color:var(--red)}
+  .tag.check{background:var(--amber-soft); color:var(--amber)}
+  .tag.research{background:var(--blue-soft); color:var(--blue)}
+  .tag.good{background:var(--green-soft); color:var(--green)}
+
+  .loc{font-size:12.5px; color:var(--ink-faint); margin-bottom:10px}
+  .loc code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:12px}
+
+  .rows{display:grid; grid-template-columns:92px 1fr; gap:4px 14px; font-size:14px}
+  .rows dt{color:var(--ink-faint); font-size:12px; text-transform:uppercase; letter-spacing:.05em; padding-top:2px}
+  .rows dd{margin:0; color:var(--ink-soft)}
+  .rows dd + dt{margin-top:6px}
+
+  code.q{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:12.5px; background:var(--surface-2); padding:1px 5px; border-radius:4px;
+    border:1px solid var(--line);
+  }
+
+  /* decomposition */
+  .epic{
+    background:var(--surface); border:1px solid var(--line-strong);
+    border-radius:var(--radius); padding:20px 22px; margin:16px 0;
+  }
+  .epic-name{
+    font:600 13px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    color:var(--accent); letter-spacing:.03em; margin-bottom:4px;
+  }
+  .epic h4{margin:0 0 4px; font-size:18px}
+  .epic .goal{color:var(--ink-soft); font-size:14.5px; margin-bottom:16px}
+
+  ol.slices{list-style:none; counter-reset:s; margin:0; padding:0; display:flex; flex-direction:column; gap:10px}
+  ol.slices li{
+    counter-increment:s; position:relative; padding:12px 14px 12px 46px;
+    background:var(--surface-2); border:1px solid var(--line); border-radius:8px;
+  }
+  ol.slices li::before{
+    content:counter(s); position:absolute; left:12px; top:12px;
+    width:24px; height:24px; border-radius:999px;
+    background:var(--accent); color:var(--bg);
+    font:700 13px/24px ui-monospace,monospace; text-align:center;
+  }
+  .slice-t{font-weight:650; font-size:14.5px}
+  .slice-when{font-size:13px; color:var(--ink-soft); margin-top:3px}
+  .slice-covers{font-size:12px; color:var(--ink-faint); margin-top:5px}
+  .slice-covers b{color:var(--accent); font-weight:600}
+  li.anchor{border-color:var(--accent); border-width:1.5px}
+  .anchor-badge{
+    display:inline-block; font-size:10px; letter-spacing:.08em; text-transform:uppercase;
+    font-weight:700; color:var(--accent); background:var(--accent-soft);
+    padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:1px;
+  }
+
+  table{border-collapse:collapse; width:100%; font-size:13.5px; margin:10px 0 4px}
+  th,td{text-align:left; padding:9px 10px; border-bottom:1px solid var(--line); vertical-align:top}
+  th{font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-faint); font-weight:700}
+  td code{font-family:ui-monospace,monospace; font-size:12px}
+  .rec{background:var(--green-soft); border:1px solid var(--green); border-radius:var(--radius); padding:16px 18px; margin-top:12px}
+  .rec strong{color:var(--green)}
+
+  .alt{border:1px solid var(--line); border-radius:8px; padding:12px 14px; margin:8px 0; background:var(--surface)}
+  .alt.win{border-color:var(--green); border-width:1.5px}
+  .alt h4{margin:0 0 4px; font-size:14.5px}
+  .alt p{margin:0; font-size:13px; color:var(--ink-soft)}
+  .rank{font:700 11px/1 ui-monospace,monospace; color:var(--accent); letter-spacing:.05em}
+
+  .legend{display:flex; gap:14px; flex-wrap:wrap; font-size:12px; color:var(--ink-faint); margin:6px 0 0}
+  .legend span{display:inline-flex; align-items:center; gap:6px}
+  .dot{width:10px; height:10px; border-radius:3px; display:inline-block}
+  .dot.r{background:var(--red)} .dot.a{background:var(--amber)}
+  .dot.b{background:var(--blue)} .dot.g{background:var(--green)}
+
+  .toc{
+    position:sticky; top:0; z-index:5; margin:-56px -24px 40px; padding:12px 24px;
+    background:color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter:blur(8px); border-bottom:1px solid var(--line);
+    font-size:12.5px; display:flex; gap:16px; flex-wrap:wrap;
+  }
+  .toc a{color:var(--ink-soft); text-decoration:none}
+  .toc a:hover{color:var(--accent)}
+
+  .note{font-size:13px; color:var(--ink-faint); font-style:italic; margin-top:8px}
+</style>
+</head>
+<body>
+<nav class="toc">
+  <a href="#target">Target</a>
+  <a href="#principle">Principle</a>
+  <a href="#problems">Problems (16)</a>
+  <a href="#alts">Alternatives</a>
+  <a href="#reco">Recommended plan</a>
+  <a href="#map">Problem → slice map</a>
+</nav>
+
+<div class="wrap">
+
+<header class="page">
+  <p class="kicker">Draft · not yet beads issues</p>
+  <h1>Filters &amp; Sorting — bring to professional level, all locations</h1>
+  <p class="lede">
+    One focus only: the filter sidebar and the sort control, everywhere they appear —
+    <code class="q">/products</code>, <code class="q">/products/headphones</code>,
+    <code class="q">/products/accessories</code>, <code class="q">/products/audio-electronics</code>
+    and subcategories. Happy path <em>and</em> edge cases. Success is measured by a human
+    doing a live check in a browser on <code class="q">localhost:3000</code> — nothing else.
+  </p>
+  <p class="meta">Swept 2026-09-04 · 16 problems collected · source: <code class="q">_project/filters/DECOMP-DRAFT.md</code></p>
+</header>
+
+<section id="target">
+  <h2>The problem we are solving</h2>
+  <p class="section-intro">
+    Filters and sorting today are uneven. Some things work; several edges break; quality
+    varies by location. Before writing beads issues we want the leanest decomposition that
+    actually reaches a professional-grade experience — no bloated issues, no scaffolding
+    that doesn't move what the end user sees, no solving an invented version of the problem.
+  </p>
+</section>
+
+<section id="principle">
+  <h2>Guiding principle</h2>
+  <div class="principle">
+    <p>
+      Filters operate on the <strong>full inventory in the CMS</strong> for the current
+      query context (category + any other active filters) — never on the products currently
+      loaded in the viewport. When a user narrows price or picks a brand they expect to be
+      looking at everything in inventory that matches, not a shrunk slice of what was on
+      screen. Every bound, count and result is the true CMS representation for that context.
+    </p>
+  </div>
+</section>
+
+<section id="problems">
+  <h2>Problems collected (16)</h2>
+  <p class="section-intro">Grouped by theme. Each card: where it shows, what the user sees, why it's a problem, the professional expectation.</p>
+  <div class="legend">
+    <span><i class="dot r"></i> confirmed live</span>
+    <span><i class="dot a"></i> needs a clean human check</span>
+    <span><i class="dot b"></i> research prerequisite</span>
+    <span><i class="dot g"></i> already works — recorded so we don't re-investigate</span>
+  </div>
+
+  <h3>Theme A — Wrong filters in the wrong place (dissonance)</h3>
+  <div class="cards">
+
+    <article class="card sev-confirmed">
+      <div class="card-head"><span class="pid">P5</span><span class="card-title">Every category page shows the full union of all facet groups</span><span class="tag confirmed">confirmed</span></div>
+      <div class="loc">All category pages · sidebar</div>
+      <dl class="rows">
+        <dt>Sees</dt><dd>~15 facet groups regardless of relevance. Audio-electronics page still shows Wearing style, Back design, Driver type, Noise cancelling… every option "0 products". Accessories page shows Device type, Amplification, Inputs, Outputs + all headphone facets — all "0 products".</dd>
+        <dt>Why</dt><dd>The user scrolls a wall of filters that cannot do anything.</dd>
+        <dt>Expected</dt><dd>A category page shows only the facets that apply to that category.</dd>
+      </dl>
+    </article>
+
+    <article class="card sev-confirmed">
+      <div class="card-head"><span class="pid">P7</span><span class="card-title">"Category" facet is meaningless on a category page</span><span class="tag confirmed">confirmed</span></div>
+      <div class="loc">Every category page</div>
+      <dl class="rows">
+        <dt>Sees</dt><dd>On <code class="q">/products/headphones</code> the Category filter lists headphones (186), accessories (0), audio-electronics (0). You are already in headphones; the siblings are permanently 0.</dd>
+        <dt>Expected</dt><dd>No Category facet on a page that already <em>is</em> a category (or it navigates rather than filters).</dd>
+      </dl>
+    </article>
+
+    <article class="card sev-confirmed">
+      <div class="card-head"><span class="pid">P8</span><span class="card-title">"Compatibility" facet is unusable garbage data</span><span class="tag confirmed">confirmed</span></div>
+      <div class="loc"><code class="q">/products/accessories</code>, <code class="q">/products</code></div>
+      <dl class="rows">
+        <dt>Sees</dt><dd>Hundreds of raw model strings, lowercase, almost all "1 product", many malformed: <code class="q">ah-d9200 sony: mdr-z7m2</code>, <code class="q">liric hedd audio: heddphone two denon: ah-d5200</code>, run-on spec dumps, entries with an empty checkbox label.</dd>
+        <dt>Why</dt><dd>Not a usable filter in any form; actively makes the sidebar look broken.</dd>
+        <dt>Expected</dt><dd>Either a clean, curated compatibility facet or the facet is removed until its data is fixed at source.</dd>
+      </dl>
+    </article>
+
+    <article class="card sev-confirmed">
+      <div class="card-head"><span class="pid">P6</span><span class="card-title">Zero-result options and groups are still displayed</span><span class="tag confirmed">confirmed</span></div>
+      <div class="loc">All pages · inside otherwise-relevant groups</div>
+      <dl class="rows">
+        <dt>Sees</dt><dd>e.g. headphones → Connector/plug shows 2.5mm, usb-c, fixed-cable, 4-pin-xlr all at "0 products".</dd>
+        <dt>Expected</dt><dd>Options that would return nothing are hidden or disabled — standard faceted-search behaviour.</dd>
+      </dl>
+    </article>
+
+    <article class="card sev-confirmed">
+      <div class="card-head"><span class="pid">P9</span><span class="card-title"><code class="q">/products</code> sidebar is an unusable mega-stack</span><span class="tag confirmed">confirmed</span></div>
+      <div class="loc"><code class="q">/products</code> (all products)</div>
+      <dl class="rows">
+        <dt>Sees</dt><dd>~15 facet groups + ~99 brands + the garbage Compatibility list, all expanded and stacked. Enormous scroll before reaching most filters or the grid.</dd>
+        <dt>Note</dt><dd>Largely dissolves once P4, P5 and P8 land — likely <em>not</em> its own issue.</dd>
+      </dl>
+    </article>
+  </div>
+
+  <h3>Theme B — Bloat &amp; hard to use</h3>
+  <div class="cards">
+    <article class="card sev-research">
+      <div class="card-head"><span class="pid">P4-PRE</span><span class="card-title">Research: e-commerce standards for high-count facets</span><span class="tag research">prerequisite</span></div>
+      <div class="loc">Findings doc in <code class="q">_project/filters/</code> · blocks P4</div>
+      <dl class="rows">
+        <dt>Produce</dt><dd>Initial visible count; progressive "show more" vs. scroll box vs. modal; when to add a search-within-facet box; option sort order (alphabetical vs. by count); collapse behaviour; what happens to a selected-but-hidden option; mobile vs. desktop.</dd>
+        <dt>Output</dt><dd>A reference P4's acceptance tests are written against. No code.</dd>
+      </dl>
+    </article>
+
+    <article class="card sev-confirmed">
+      <div class="card-head"><span class="pid">P4</span><span class="card-title">Long brand list dominates the whole sidebar</span><span class="tag confirmed">confirmed</span></div>
+      <div class="loc">Brand section · worst on <code class="q">/products</code></div>
+      <dl class="rows">
+        <dt>Sees</dt><dd>~40 brands on headphones, ~40 on accessories, ~50 on audio-electronics, ~99 on <code class="q">/products</code> — one uninterrupted list that pushes every other filter off screen.</dd>
+        <dt>Expected</dt><dd>Small initial set (~7), a "show more / +N" progressive toggle, collapse back, all brands still reachable. Exact pattern per P4-PRE.</dd>
+      </dl>
+    </article>
+
+    <article class="card sev-confirmed">
+      <div class="card-head"><span class="pid">P3</span><span class="card-title">"Price" heading rendered twice</span><span class="tag confirmed">confirmed</span></div>
+      <div class="loc">Every page · sidebar price section</div>
+      <dl class="rows">
+        <dt>Sees</dt><dd>The section title "Price" appears twice in a row.</dd>
+        <dt>Expected</dt><dd>One heading. Small self-contained fix.</dd>
+      </dl>
+    </article>
+  </div>
+
+  <h3>Theme C — Price range fidelity</h3>
+  <div class="cards">
+    <article class="card sev-confirmed">
+      <div class="card-head"><span class="pid">P1</span><span class="card-title">One $38k outlier distorts the price slider</span><span class="tag confirmed">confirmed</span></div>
+      <div class="loc">Price slider · headphones &amp; <code class="q">/products</code></div>
+      <dl class="rows">
+        <dt>Sees</dt><dd>Slider spans $49.99–$38,000 because a single product costs $38k. The realistic buying range is squashed into a sliver at the low end; dragging is imprecise.</dd>
+        <dt>Why</dt><dd>A lone outlier makes the common range unusable. If the top product were ~$8k there'd be no problem — so this is outlier distortion, not the max value itself.</dd>
+        <dt>Expected</dt><dd>The scale reflects where products actually are; extreme outliers don't wreck resolution for the 99% case, and the outlier is still reachable.</dd>
+      </dl>
+    </article>
+
+    <article class="card sev-check">
+      <div class="card-head"><span class="pid">P2</span><span class="card-title">Does the price range track the current category?</span><span class="tag check">re-check</span></div>
+      <div class="loc">Price slider · category pages</div>
+      <dl class="rows">
+        <dt>Original</dt><dd>Reported that <code class="q">/headphones</code> keeps the global max instead of the category max.</dd>
+        <dt>Sweep</dt><dd>Bounds <em>do</em> differ per page: headphones $38,000, accessories $6,499, audio-electronics $13,995 — so per-category recompute already happens. Each still stretches to that category's single priciest item (= P1, per context).</dd>
+        <dt>Action</dt><dd>Re-check with the human whether the original symptom is still real, or whether P2 collapses into P1.</dd>
+      </dl>
+    </article>
+
+    <article class="card sev-confirmed">
+      <div class="card-head"><span class="pid">P10</span><span class="card-title">Per-page bounds still include that page's outlier</span><span class="tag confirmed">confirmed</span></div>
+      <div class="loc">Price slider · all category pages</div>
+      <dl class="rows">
+        <dt>Sees</dt><dd>headphones $49.99–$38,000 · accessories →$6,499 · audio-electronics $19.99–$13,995. Each bound is dragged to the single most-expensive item in that context.</dd>
+        <dt>Expected</dt><dd>Same fix as P1, applied per query context.</dd>
+      </dl>
+    </article>
+  </div>
+
+  <h3>Theme D — Sorting &amp; edge paths</h3>
+  <div class="cards">
+    <article class="card sev-confirmed">
+      <div class="card-head"><span class="pid">P11</span><span class="card-title">Unknown filter values are accepted, not dropped</span><span class="tag confirmed">confirmed</span></div>
+      <div class="loc">URL param handling · all pages</div>
+      <dl class="rows">
+        <dt>Sees</dt><dd><code class="q">?brand=notabrand</code> renders a chip literally labelled "notabrand"; a lone bad value gives a dead-end "No products match" page with no hint the value is bogus.</dd>
+        <dt>Expected</dt><dd>Silently drop unknown facet slugs and their chips — <code class="q">sort</code> already does exactly this (junk → Featured).</dd>
+      </dl>
+    </article>
+
+    <article class="card sev-check">
+      <div class="card-head"><span class="pid">P12</span><span class="card-title">Sort change may briefly show a half-sorted grid</span><span class="tag check">needs check</span></div>
+      <div class="loc">Sort control · category route</div>
+      <dl class="rows">
+        <dt>Sees</dt><dd>Deep-linked <code class="q">price-desc</code>/<code class="q">price-asc</code> settle correctly, but a mid-transition snapshot showed two concatenated sorted runs ($4.9k→$3.5k, then $38k→$2k).</dd>
+        <dt>Action</dt><dd>Human: change Sort on <code class="q">/products/headphones</code> and watch — does the grid flash a mixed order before settling? May be a mid-stream artifact, not a bug.</dd>
+      </dl>
+    </article>
+
+    <article class="card sev-confirmed">
+      <div class="card-head"><span class="pid">P13</span><span class="card-title">Out-of-range <code class="q">?page=</code> clamps content but not URL or pager</span><span class="tag confirmed">confirmed</span></div>
+      <div class="loc">Pagination · all listing pages</div>
+      <dl class="rows">
+        <dt>Sees</dt><dd><code class="q">?page=999</code> → correct "Showing 169–186 of 186", but the URL stays <code class="q">?page=999</code> and the pager shows a broken current-page state (no active page).</dd>
+        <dt>Expected</dt><dd>Redirect / clamp the URL to the real last page.</dd>
+      </dl>
+    </article>
+
+    <article class="card sev-confirmed">
+      <div class="card-head"><span class="pid">P14</span><span class="card-title">Two "clear" labels + unhelpful empty state</span><span class="tag confirmed">confirmed</span></div>
+      <div class="loc">Empty-results screen vs. chips bar</div>
+      <dl class="rows">
+        <dt>Sees</dt><dd>Empty screen says "Clear filters"; the chips bar says "Clear all" — same action, two labels. Empty state gives no hint which filter is too narrow.</dd>
+        <dt>Expected</dt><dd>One label, and a nudge toward the constraining filter.</dd>
+      </dl>
+    </article>
+
+    <article class="card sev-check">
+      <div class="card-head"><span class="pid">P15</span><span class="card-title">Sort persistence on multi-page result sets unverified</span><span class="tag check">needs check</span></div>
+      <div class="loc">Sort × filter × pagination</div>
+      <dl class="rows">
+        <dt>Known</dt><dd>Single-page result sets keep sort when a filter changes.</dd>
+        <dt>Unverified</dt><dd>Multi-page result sets, and the page-reset-to-1 interaction on a filter change.</dd>
+      </dl>
+    </article>
+
+    <article class="card sev-check">
+      <div class="card-head"><span class="pid">P16</span><span class="card-title">Mobile filter/sort experience unverified</span><span class="tag check">needs check</span></div>
+      <div class="loc">Mobile viewport · <code class="q">Filters</code> + <code class="q">Sort</code> buttons</div>
+      <dl class="rows">
+        <dt>Known</dt><dd>Filters and Sort are separate buttons in a mobile bar.</dd>
+        <dt>Unverified</dt><dd>Same facet set, same chip behaviour, same empty state, sort parity with desktop. Needs a real mobile-viewport pass.</dd>
+      </dl>
+    </article>
+  </div>
+
+  <h3 style="color:var(--green)">Already works — recorded, do not file</h3>
+  <div class="card sev-good">
+    <div class="loc" style="margin:0">
+      Clean-URL rule · active-filter chips · "Clear all" · accurate result counts ·
+      empty-results screen exists · page content clamps on high <code class="q">?page</code> ·
+      junk <code class="q">?sort=</code> falls back to Featured silently ·
+      <code class="q">/products?sort=price-desc</code> orders correctly ·
+      deep-linked sort reflects in the control.
+    </div>
+  </div>
+</section>
+
+<section id="alts">
+  <h2>Five ways to decompose — ranked</h2>
+
+  <div class="alt win">
+    <div class="rank">▲ PICK</div>
+    <h4>E — Thin vertical slices, each one observable win, sequenced</h4>
+    <p>One issue = one visible change with a minimal diff. Merges independently, verifiable alone on :3000, banks value if we stop early. The single shared risk — slices disagreeing on the facet-applicability foundation — is killed by making Slice&nbsp;1 the anchor that decides it once.</p>
+  </div>
+  <div class="alt">
+    <div class="rank">#2</div>
+    <h4>B — By mechanism: three coherent epics (Facet Relevance / Price Fidelity / Sidebar Polish)</h4>
+    <p>Each epic is one mental model, one code path, minimal rework, strong UX line. Risk: the Facet Relevance epic is chunky enough that an implementing agent could over-reach. We borrow its epic framing for E.</p>
+  </div>
+  <div class="alt">
+    <div class="rank">#3</div>
+    <h4>D — Two-phase: data-model epic, then experience epic</h4>
+    <p>Cleanly separates "is the data right" from "is the presentation right" — genuinely different verification modes. Risk: phase&nbsp;1 has a thin standalone user-visible outcome, which strains the acceptance-test-as-goal rule.</p>
+  </div>
+  <div class="alt">
+    <div class="rank">✗</div>
+    <h4>A — One issue per problem, one flat epic</h4>
+    <p>Cheap to write, but P5/P6/P7/P8 share one root, so four agents touch that path four times. P9 is a phantom. A checklist, not an outcome.</p>
+  </div>
+  <div class="alt">
+    <div class="rank">✗</div>
+    <h4>C — By location (one epic per page)</h4>
+    <p>Matches the "each location" phrasing but the facet-relevance and price fixes recur in all four epics — worst duplication and mix-up risk.</p>
+  </div>
+</section>
+
+<section id="reco">
+  <h2>Recommended plan — E, organised under two thin epics</h2>
+  <p class="section-intro">
+    Run E's slices. Group them under two small epics for legibility. <strong>Slice&nbsp;1 is
+    a hard sequencing anchor</strong> — it makes the "which facets apply to which category"
+    decision once, so slices 2–4 don't fight over it.
+  </p>
+  <div class="rec">
+    <strong>Why this mitigates the most risk toward the actual UX target:</strong>
+    every issue <em>is</em> a live acceptance test (direct line to :3000, not deferred to an
+    epic) · scope creep is structurally bounded (one visible change, minimal diff) ·
+    accept/reject on a single outcome, not a bundle · rework risk contained to one explicit
+    first decision · value banked incrementally — stop after Slice&nbsp;4 and the sidebar is
+    already far more professional.
+  </div>
+
+  <div class="epic">
+    <div class="epic-name">EPIC Filters Facet Relevance</div>
+    <h4>Only filters that can do something, ever appear</h4>
+    <p class="goal">The facet groups and options shown at any location are exactly what that category's CMS inventory supports.</p>
+    <ol class="slices">
+      <li class="anchor">
+        <div class="slice-t">Category page shows only applicable facet groups <span class="anchor-badge">anchor</span></div>
+        <div class="slice-when">When I open <code class="q">/products/audio-electronics</code>, then I see only facets that apply to audio electronics — no Wearing style, no Back design, no Driver type.</div>
+        <div class="slice-covers">covers <b>P5</b> · establishes the per-category facet-applicability source used by slices 2–4</div>
+      </li>
+      <li>
+        <div class="slice-t">No zero-count options inside a group</div>
+        <div class="slice-when">When I view any filter group, then every option listed would return at least one product.</div>
+        <div class="slice-covers">covers <b>P6</b></div>
+      </li>
+      <li>
+        <div class="slice-t">Drop the redundant Category facet on category pages</div>
+        <div class="slice-when">When I'm on <code class="q">/products/headphones</code>, then there is no "Category" filter offering headphones / accessories / audio-electronics.</div>
+        <div class="slice-covers">covers <b>P7</b></div>
+      </li>
+      <li>
+        <div class="slice-t">Neutralise the Compatibility facet until its data is clean</div>
+        <div class="slice-when">When I open the filter sidebar anywhere, then I do not see a Compatibility facet full of malformed model strings.</div>
+        <div class="slice-covers">covers <b>P8</b> · <b>P9</b> falls out once this + Slice 1 + P4 land</div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="epic">
+    <div class="epic-name">EPIC Filters Price And Polish</div>
+    <h4>The sidebar reads as finished, and price is precise</h4>
+    <p class="goal">Price scale reflects the real distribution for the current context; the sidebar is compact and consistent; sorting and edge paths behave.</p>
+    <ol class="slices">
+      <li>
+        <div class="slice-t">Brand list: initial set + progressive "show more"</div>
+        <div class="slice-when">When I open a page with many brands, then I see a short list (~7) with a "show more" control, and the sidebar's other filters stay visible.</div>
+        <div class="slice-covers">covers <b>P4</b> · blocked by <b>P4-PRE</b> (research)</div>
+      </li>
+      <li>
+        <div class="slice-t">Price scale absorbs outliers</div>
+        <div class="slice-when">When I drag the price slider on <code class="q">/products/headphones</code>, then the range I care about is usable and the $38k outlier no longer squashes it — and that product is still reachable.</div>
+        <div class="slice-covers">covers <b>P1</b> + <b>P10</b> · re-check <b>P2</b> with the human first</div>
+      </li>
+      <li>
+        <div class="slice-t">One "Price" heading</div>
+        <div class="slice-when">When I look at the price section, then the word "Price" appears once.</div>
+        <div class="slice-covers">covers <b>P3</b></div>
+      </li>
+      <li>
+        <div class="slice-t">Unknown filter values are dropped</div>
+        <div class="slice-when">When I load a URL with a bogus <code class="q">?brand=</code> value, then it is ignored, no phantom chip appears, and I see the unfiltered results.</div>
+        <div class="slice-covers">covers <b>P11</b></div>
+      </li>
+      <li>
+        <div class="slice-t">Out-of-range page corrects the URL</div>
+        <div class="slice-when">When I load <code class="q">?page=999</code>, then I land on the real last page and the URL and pager say so.</div>
+        <div class="slice-covers">covers <b>P13</b></div>
+      </li>
+      <li>
+        <div class="slice-t">One clear-all label + a useful empty state</div>
+        <div class="slice-when">When my filters match nothing, then the reset control has the same label as the chips bar and the screen points me at what to loosen.</div>
+        <div class="slice-covers">covers <b>P14</b></div>
+      </li>
+    </ol>
+    <p class="note">
+      P12, P15, P16 are <em>check-first</em> — resolve them with a live human pass before
+      deciding whether each becomes a slice here or is dropped. If P12 or P16 turn up a real
+      defect, add a slice; otherwise close as "verified fine".
+    </p>
+  </div>
+</section>
+
+<section id="map">
+  <h2>Problem → slice map</h2>
+  <table>
+    <thead><tr><th>Problem</th><th>Lands in</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td><code>P1</code> price outlier distortion</td><td>Price &amp; Polish · Slice 2</td><td>confirmed</td></tr>
+      <tr><td><code>P2</code> range vs. category</td><td>re-check → likely folds into P1</td><td>re-check</td></tr>
+      <tr><td><code>P3</code> double "Price" heading</td><td>Price &amp; Polish · Slice 3</td><td>confirmed</td></tr>
+      <tr><td><code>P4</code> brand list overflow</td><td>Price &amp; Polish · Slice 1</td><td>confirmed</td></tr>
+      <tr><td><code>P4-PRE</code> research</td><td>standalone prerequisite · blocks P4</td><td>prerequisite</td></tr>
+      <tr><td><code>P5</code> all facet groups everywhere</td><td>Facet Relevance · Slice 1 (anchor)</td><td>confirmed</td></tr>
+      <tr><td><code>P6</code> zero-count options</td><td>Facet Relevance · Slice 2</td><td>confirmed</td></tr>
+      <tr><td><code>P7</code> redundant Category facet</td><td>Facet Relevance · Slice 3</td><td>confirmed</td></tr>
+      <tr><td><code>P8</code> garbage Compatibility facet</td><td>Facet Relevance · Slice 4</td><td>confirmed</td></tr>
+      <tr><td><code>P9</code> <code>/products</code> mega-stack</td><td>falls out of P4 + P5 + P8 — no own issue</td><td>derived</td></tr>
+      <tr><td><code>P10</code> per-page outlier in bounds</td><td>Price &amp; Polish · Slice 2 (with P1)</td><td>confirmed</td></tr>
+      <tr><td><code>P11</code> junk filter values accepted</td><td>Price &amp; Polish · Slice 4</td><td>confirmed</td></tr>
+      <tr><td><code>P12</code> sort flashes mixed order</td><td>check-first → slice only if real</td><td>needs check</td></tr>
+      <tr><td><code>P13</code> out-of-range page URL</td><td>Price &amp; Polish · Slice 5</td><td>confirmed</td></tr>
+      <tr><td><code>P14</code> clear label + empty state</td><td>Price &amp; Polish · Slice 6</td><td>confirmed</td></tr>
+      <tr><td><code>P15</code> multi-page sort persistence</td><td>check-first → slice only if real</td><td>needs check</td></tr>
+      <tr><td><code>P16</code> mobile parity</td><td>check-first → slice only if real</td><td>needs check</td></tr>
+    </tbody>
+  </table>
+  <p class="note">
+    Net: <strong>2 thin epics</strong>, <strong>10 slices</strong>, <strong>1 research
+    prerequisite</strong>, <strong>3 check-first items</strong>, 1 problem derived away.
+    Nothing here is written as a beads issue yet — this is the proposal to react to.
+  </p>
+</section>
+
+</div>
+</body>
+</html>

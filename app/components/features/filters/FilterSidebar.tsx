@@ -4,7 +4,8 @@ import React, { useState } from 'react';
 import { Checkbox } from '@/app/components/ui/Checkbox';
 import { useFilterParam } from '@/app/hooks/nuqs/useFilterSort';
 import { PriceRangeSlider } from './PriceRangeSlider';
-import { FILTER_FACETS, type FilterFacet } from '@/lib/catalogue/facetMap';
+import { facetsForCategory } from '@/lib/catalogue/facetMap';
+import { ProgressiveFilterOptionList } from './ProgressiveFilterOptionList';
 import type { CatalogueFacets } from '@/sanity-cms/lib/products/getFilterFacets';
 import type { PriceBounds } from '@/lib/catalogue/priceBounds';
 
@@ -49,9 +50,16 @@ interface CheckboxFilterGroupProps {
   /** Section heading. */
   label: string;
   options: FilterOption[];
+  /**
+   * When true, the option list uses progressive disclosure (initial short set +
+   * "Show more", plus a search box past ~20 options) per
+   * `_project/filters/brand-facet-pattern.md`. Scoped to high-count facets like
+   * Brand; the default false keeps every other group rendering in full.
+   */
+  progressive?: boolean;
 }
 
-function CheckboxFilterGroup({ paramKey, label, options }: CheckboxFilterGroupProps) {
+function CheckboxFilterGroup({ paramKey, label, options, progressive = false }: CheckboxFilterGroupProps) {
   const [expanded, setExpanded] = useState(true);
   const [selected, setSelected] = useFilterParam(paramKey) as unknown as [string[], (v: string[] | ((prev: string[]) => string[])) => void];
 
@@ -96,20 +104,30 @@ function CheckboxFilterGroup({ paramKey, label, options }: CheckboxFilterGroupPr
       </button>
 
       {expanded && (
-        <div className="flex flex-col gap-2">
-          {options.map((option) => (
-            <Checkbox
-              key={option.value}
-              name={paramKey}
-              value={option.value}
-              label={option.label}
-              count={option.count}
-              checked={isFilterActive(option.value)}
-              disabled={option.count === 0 && !isFilterActive(option.value)}
-              onChange={() => toggle(option.value)}
-            />
-          ))}
-        </div>
+        progressive ? (
+          <ProgressiveFilterOptionList
+            paramKey={paramKey}
+            label={label}
+            options={options}
+            isFilterActive={isFilterActive}
+            toggle={toggle}
+          />
+        ) : (
+          <div className="flex flex-col gap-2">
+            {options.map((option) => (
+              <Checkbox
+                key={option.value}
+                name={paramKey}
+                value={option.value}
+                label={option.label}
+                count={option.count}
+                checked={isFilterActive(option.value)}
+                disabled={option.count === 0 && !isFilterActive(option.value)}
+                onChange={() => toggle(option.value)}
+              />
+            ))}
+          </div>
+        )
       )}
     </div>
   );
@@ -138,15 +156,18 @@ function BooleanFilter({ paramKey, label, count }: BooleanFilterProps) {
   );
 }
 
-/** Header for the price section. */
+/**
+ * Price section. `PriceRangeSlider` is a `FilterSliderSection` and already
+ * renders its own "Price" header row with the reset button — this wrapper must
+ * not add a second one.
+ */
 function PriceSection({ priceBounds }: { priceBounds: PriceBounds }) {
   return (
-    <div className="flex flex-col gap-3">
-      <div className={filterSectionHeaderRow}>
-        <span className={filterSectionHeaderLabel}>Price</span>
-      </div>
-      <PriceRangeSlider min={priceBounds.min} max={priceBounds.max} />
-    </div>
+    <PriceRangeSlider
+      min={priceBounds.min}
+      max={priceBounds.max}
+      premium={priceBounds.premium}
+    />
   );
 }
 
@@ -156,12 +177,12 @@ function PriceSection({ priceBounds }: { priceBounds: PriceBounds }) {
  * surfaces stay identical. Returned as a fragment so callers own the layout
  * container.
  */
-export function FilterControls({ facets, priceBounds }: { facets: CatalogueFacets; priceBounds: PriceBounds }) {
+export function FilterControls({ facets, priceBounds, category }: { facets: CatalogueFacets; priceBounds: PriceBounds; category: string }) {
   return (
     <>
       <PriceSection priceBounds={priceBounds} />
 
-      {FILTER_FACETS.map((facet) => {
+      {facetsForCategory(category).map((facet) => {
         if (facet.urlParam === 'price') return null;
 
         if (facet.type === 'boolean') {
@@ -182,6 +203,7 @@ export function FilterControls({ facets, priceBounds }: { facets: CatalogueFacet
             paramKey={facet.urlParam}
             label={facet.facet}
             options={options}
+            progressive={facet.urlParam === 'brand'}
           />
         );
       })}
@@ -189,7 +211,7 @@ export function FilterControls({ facets, priceBounds }: { facets: CatalogueFacet
   );
 }
 
-export function FilterSidebar({ facets, priceBounds }: { facets: CatalogueFacets; priceBounds: PriceBounds }) {
+export function FilterSidebar({ facets, priceBounds, category }: { facets: CatalogueFacets; priceBounds: PriceBounds; category: string }) {
   return (
     <aside
       data-testid="filter-sidebar"
@@ -200,7 +222,7 @@ export function FilterSidebar({ facets, priceBounds }: { facets: CatalogueFacets
           reflects the URL, never waiting on a fetch / transition in flight. */}
       <div className="flex flex-col gap-6 rounded-md border border-border-secondary bg-surface-elevated p-6">
         <span className="type-overline">Filters</span>
-        <FilterControls facets={facets} priceBounds={priceBounds} />
+        <FilterControls facets={facets} priceBounds={priceBounds} category={category} />
       </div>
     </aside>
   );

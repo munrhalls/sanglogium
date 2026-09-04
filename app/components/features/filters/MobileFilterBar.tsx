@@ -38,7 +38,7 @@ function FunnelIcon() {
   );
 }
 
-export function MobileFilterBar({ facets, priceBounds }: { facets: CatalogueFacets; priceBounds: PriceBounds }) {
+export function MobileFilterBar({ facets, priceBounds, category }: { facets: CatalogueFacets; priceBounds: PriceBounds; category: string }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -81,7 +81,7 @@ export function MobileFilterBar({ facets, priceBounds }: { facets: CatalogueFace
               </Drawer.Close>
             </div>
             <div className="flex min-h-0 flex-col gap-6 overflow-y-auto px-6 pb-8">
-              <FilterControls facets={facets} priceBounds={priceBounds} />
+              <FilterControls facets={facets} priceBounds={priceBounds} category={category} />
             </div>
           </Drawer.Content>
         </Drawer.Portal>

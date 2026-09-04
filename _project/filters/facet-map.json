@@ -16,7 +16,7 @@
     "urlParam": "brand"
   },
   {
-    "facet": "Availability",
+    "facet": "In stock only",
     "field": "filterAttributes.inStock",
     "type": "boolean",
     "valueVocab": ["true", "false"],

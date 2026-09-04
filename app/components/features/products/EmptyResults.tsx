@@ -25,13 +25,20 @@ export function EmptyResults({ filtersActive = false }: EmptyResultsProps) {
       </p>
 
       {filtersActive && (
-        <button
-          type="button"
-          onClick={clearAll}
-          className="type-caption rounded-full border border-border-secondary px-4 py-1.5 text-text-body underline-offset-2 transition-colors hover:text-text-primary hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500"
-        >
-          Clear filters
-        </button>
+        <>
+          <p className="type-caption text-secondary">
+            Try widening the price range or removing a brand.
+          </p>
+
+          <button
+            type="button"
+            onClick={clearAll}
+            /* label kept verbatim in sync with ActiveFilterChips.tsx chip-bar control */
+            className="type-caption rounded-full border border-border-secondary px-4 py-1.5 text-text-body underline-offset-2 transition-colors hover:text-text-primary hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500"
+          >
+            Clear all
+          </button>
+        </>
       )}
     </div>
   );
