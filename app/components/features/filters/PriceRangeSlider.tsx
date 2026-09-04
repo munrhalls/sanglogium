@@ -8,7 +8,11 @@ import {
   filterStateInactive,
 } from "./FilterSidebar";
 import { useFilterParam } from "@/app/hooks/nuqs/useFilterSort";
-import { DEFAULT_PRICE_CEILING, PREMIUM_TIERS } from "@/lib/catalogue/priceBounds";
+import {
+  DEFAULT_PRICE_CEILING,
+  PREMIUM_TIERS,
+  PREMIUM_TIER_MIN,
+} from "@/lib/catalogue/priceBounds";
 import { formatPriceMajor } from "@/lib/utils/price";
 
 /**
@@ -324,10 +328,14 @@ export function PriceRangeSlider({
   const [minPrice, setMinPrice] = useFilterParam("minPrice", { history: "replace" });
   const [maxPrice, setMaxPrice] = useFilterParam("maxPrice", { history: "replace" });
 
+  const activeTier = resolveActiveTier(maxPrice, max, premium);
+
   // URL → handle positions. Clamp to bounds, and enforce min ≤ max on read so a
-  // crossed / swapped URL still renders sanely.
+  // crossed / swapped URL still renders sanely. With a premium tier active the
+  // ceiling is the tier, not the (below-cap) `maxPrice` value — the slider's own
+  // max handle is frozen at its bound, so treat `max` as the top for ordering.
   const urlMin = clampToBounds(minPrice, min, max, min);
-  const urlMax = clampToBounds(maxPrice, min, max, max);
+  const urlMax = activeTier != null ? max : clampToBounds(maxPrice, min, max, max);
   const displayMin = Math.min(urlMin, urlMax);
   const displayMax = Math.max(urlMin, urlMax);
 
@@ -352,7 +360,31 @@ export function PriceRangeSlider({
   }, []);
   useEffect(() => clearTimer, [clearTimer]);
 
-  const activeTier = resolveActiveTier(maxPrice, max, premium);
+  // The premium floor, kept inside the category's own bounds.
+  const premiumFloor = Math.min(Math.max(PREMIUM_TIER_MIN, min), max);
+
+  // The minimum to restore when the premium tier is cleared. `undefined` means
+  // "nothing to restore" — either no tier is active, or the shopper has since
+  // dragged the min handle themselves and now owns it.
+  const restoreMinRef = useRef<number | null | undefined>(undefined);
+
+  // Snap the minimum up to the premium floor once per activation — on tick
+  // (below) or, here, when a tier arrives via deep link / Back-Forward. The ref
+  // gate keeps this a one-time snap, never a live floor: once snapped the
+  // shopper can still drag the minimum anywhere, even below the floor.
+  const tierSnappedRef = useRef(false);
+  useEffect(() => {
+    if (activeTier == null) {
+      tierSnappedRef.current = false;
+      return;
+    }
+    if (tierSnappedRef.current) return;
+    tierSnappedRef.current = true;
+    if (minPrice == null || minPrice < premiumFloor) {
+      restoreMinRef.current = minPrice;
+      setMinPrice(premiumFloor);
+    }
+  }, [activeTier, minPrice, premiumFloor, setMinPrice]);
 
   // Last-write-wins: each drag tick reschedules the write, so only the resting
   // value lands in the address bar. The min and max handles write independently
@@ -387,6 +419,9 @@ export function PriceRangeSlider({
       const next = Math.min(value, localMax);
       setLocalMin(next);
       commitMin(next);
+      // The shopper is now driving the minimum — drop any remembered pre-tier
+      // value so clearing the tier leaves their choice in place.
+      restoreMinRef.current = undefined;
     },
     [commitMin, localMax],
   );
@@ -409,6 +444,9 @@ export function PriceRangeSlider({
       resetLabel="Reset price filter"
       onReset={() => {
         clearTimer();
+        // `tierSnappedRef` is reset by the effect once `activeTier` clears —
+        // doing it here would race the pending `maxPrice` write and re-snap.
+        restoreMinRef.current = undefined;
         setLocalMin(min);
         setLocalMax(max);
         setMinPrice(null);
@@ -432,6 +470,16 @@ export function PriceRangeSlider({
           activeTier={activeTier}
           onPick={(value) => {
             clearTimer();
+            if (activeTier == null) {
+              // Entering premium mode from the normal slider: remember the
+              // current minimum, then snap it up to the premium floor.
+              restoreMinRef.current = minPrice;
+              tierSnappedRef.current = true;
+              if (minPrice == null || minPrice < premiumFloor) {
+                setMinPrice(premiumFloor);
+              }
+            }
+            // Tier → tier switch leaves the minimum untouched.
             setMaxPrice(value);
           }}
           onClear={() => {
@@ -439,6 +487,14 @@ export function PriceRangeSlider({
             // Hand the ceiling back to the slider's max handle, which rests at
             // the sub-$10k cap — so the result set updates immediately.
             setMaxPrice(max);
+            // Restore the minimum that was in force before the tier, unless the
+            // shopper has since taken it over (ref cleared by handleMin).
+            if (restoreMinRef.current !== undefined) {
+              setMinPrice(restoreMinRef.current);
+              restoreMinRef.current = undefined;
+            }
+            // `tierSnappedRef` clears in the effect when `activeTier` goes null;
+            // clearing it here would race the pending `maxPrice` write.
           }}
         />
       )}

@@ -20,6 +20,13 @@ export const NORMAL_PRICE_CEILING = 10_000;
  */
 export const PREMIUM_TIERS = [20_000, 30_000, 40_000] as const;
 
+/**
+ * When a premium tier is selected, the price minimum snaps up to this floor
+ * (dollars) — a shopper reaching for $20k+ gear is not also looking at $50
+ * cables. Clearing the tier restores whatever minimum was in force before.
+ */
+export const PREMIUM_TIER_MIN = 4_000;
+
 export interface PriceRangeData {
   minPrice: number | null; // cents
   maxPrice: number | null; // cents
