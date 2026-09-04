@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Drawer } from "vaul";
 import { FilterControls } from "./FilterSidebar";
 import { MobileSortButton } from "./MobileSortButton";
-import type { BrandFacet } from "@/sanity-cms/lib/products/getBrandFacets";
+import type { CatalogueFacets } from "@/sanity-cms/lib/products/getFilterFacets";
 import type { PriceBounds } from "@/lib/catalogue/priceBounds";
 
 /**
@@ -38,7 +38,7 @@ function FunnelIcon() {
   );
 }
 
-export function MobileFilterBar({ brands, priceBounds }: { brands: BrandFacet[]; priceBounds: PriceBounds }) {
+export function MobileFilterBar({ facets, priceBounds }: { facets: CatalogueFacets; priceBounds: PriceBounds }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -81,7 +81,7 @@ export function MobileFilterBar({ brands, priceBounds }: { brands: BrandFacet[];
               </Drawer.Close>
             </div>
             <div className="flex min-h-0 flex-col gap-6 overflow-y-auto px-6 pb-8">
-              <FilterControls brands={brands} priceBounds={priceBounds} />
+              <FilterControls facets={facets} priceBounds={priceBounds} />
             </div>
           </Drawer.Content>
         </Drawer.Portal>

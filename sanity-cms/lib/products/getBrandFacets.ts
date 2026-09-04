@@ -60,7 +60,7 @@ const getBrandFacetsFn = async ({
   const query = groq`*[_type == "brand" && defined(slug.current)]{
     "slug": slug.current,
     "label": name,
-    "count": count(*[_type == "product" && references(^._id) && count(catalogueLocationKeys[@ in $keys]) > 0${whereClause}])
+    "count": count(*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0${whereClause} && ^.slug.current in filterAttributes.brand])
   }`;
 
   const selected = new Set(selectedSlugs.map((s) => s.toLowerCase()));

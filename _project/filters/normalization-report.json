@@ -1,0 +1,102 @@
+{
+  "generatedAt": "2026-09-03T10:50:31.565Z",
+  "handoffProducts": 708,
+  "handoffValues": 3098,
+  "normalizedProducts": 0,
+  "normalizedValues": 3098,
+  "droppedValues": 0,
+  "violations": [],
+  "blockers": [],
+  "perFacet": {
+    "Price": {
+      "handoff": 708,
+      "normalized": 708,
+      "dropped": 0,
+      "violations": 0
+    },
+    "Brand": {
+      "handoff": 708,
+      "normalized": 708,
+      "dropped": 0,
+      "violations": 0
+    },
+    "Availability": {
+      "handoff": 708,
+      "normalized": 708,
+      "dropped": 0,
+      "violations": 0
+    },
+    "Category": {
+      "handoff": 708,
+      "normalized": 708,
+      "dropped": 0,
+      "violations": 0
+    },
+    "Inputs": {
+      "handoff": 23,
+      "normalized": 23,
+      "dropped": 0,
+      "violations": 0
+    },
+    "Form factor": {
+      "handoff": 11,
+      "normalized": 11,
+      "dropped": 0,
+      "violations": 0
+    },
+    "Amplification": {
+      "handoff": 36,
+      "normalized": 36,
+      "dropped": 0,
+      "violations": 0
+    },
+    "Outputs": {
+      "handoff": 14,
+      "normalized": 14,
+      "dropped": 0,
+      "violations": 0
+    },
+    "Driver type": {
+      "handoff": 52,
+      "normalized": 52,
+      "dropped": 0,
+      "violations": 0
+    },
+    "Wearing style": {
+      "handoff": 39,
+      "normalized": 39,
+      "dropped": 0,
+      "violations": 0
+    },
+    "Back design": {
+      "handoff": 31,
+      "normalized": 31,
+      "dropped": 0,
+      "violations": 0
+    },
+    "Connectivity": {
+      "handoff": 39,
+      "normalized": 39,
+      "dropped": 0,
+      "violations": 0
+    },
+    "Requires amplifier": {
+      "handoff": 12,
+      "normalized": 12,
+      "dropped": 0,
+      "violations": 0
+    },
+    "Connector / plug": {
+      "handoff": 8,
+      "normalized": 8,
+      "dropped": 0,
+      "violations": 0
+    },
+    "Device type": {
+      "handoff": 1,
+      "normalized": 1,
+      "dropped": 0,
+      "violations": 0
+    }
+  }
+}

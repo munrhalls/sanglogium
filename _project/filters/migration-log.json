@@ -1,0 +1,2892 @@
+{
+  "mode": "apply",
+  "generatedAt": "2026-09-03T10:51:09.840Z",
+  "source": "_project\\filters\\normalized-dataset.json",
+  "rollbackSnapshot": "_project\\filters\\rollback-snapshot.json",
+  "totalInDataset": 708,
+  "totalInExport": 1031,
+  "matched": 708,
+  "missing": 0,
+  "affected": 708,
+  "untouched": 0,
+  "addTotal": 0,
+  "changeTotal": 0,
+  "noOpTotal": 3098,
+  "removeTotal": 2953,
+  "addCount": {},
+  "changeCount": {},
+  "noOpCount": {
+    "price": 708,
+    "brand": 708,
+    "inStock": 708,
+    "category": 708,
+    "inputs": 23,
+    "formFactor": 11,
+    "amplification": 36,
+    "outputs": 14,
+    "driverType": 52,
+    "wearingStyle": 39,
+    "backDesign": 31,
+    "connectivity": 39,
+    "requiresAmplifier": 12,
+    "connector": 8,
+    "deviceType": 1
+  },
+  "removeCount": {
+    "accessoryType": 288,
+    "compatibility": 288,
+    "connectorTermination": 117,
+    "amplification": 180,
+    "balancedOutput": 226,
+    "outputs": 219,
+    "dacIncluded": 138,
+    "deviceType": 35,
+    "formFactor": 139,
+    "inputs": 201,
+    "connectivity": 119,
+    "connector": 178,
+    "microphone": 185,
+    "noiseCancelling": 169,
+    "requiresAmplifier": 170,
+    "wearingStyle": 102,
+    "driverType": 115,
+    "backDesign": 84
+  },
+  "missingProducts": [],
+  "affectedProducts": [
+    {
+      "_id": "0IQ2UjkdXJma4iOcjobwvF",
+      "name": "Ear Pads for Audeze LCD Series Headphones - Fits variants of LCD-2, LCD-3, LCD-4, LCD-X"
+    },
+    {
+      "_id": "0IQ2UjkdXJma4iOcjocCJs",
+      "name": "Replacement Earpads for Focal Headphones - Stellia, Radiante, Utopia, Clear, ClearMG, Celestee"
+    },
+    {
+      "_id": "0IQ2UjkdXJma4iOcjodDq5",
+      "name": "Memory Foam Isolation Earphone Tips Black 4.9mm Mercury"
+    },
+    {
+      "_id": "0IQ2UjkdXJma4iOcjodeA0",
+      "name": "Memory Foam Isolation Earphone Tips Black - Samsung Galaxy Buds2 Pro"
+    },
+    {
+      "_id": "0IQ2UjkdXJma4iOcjodsEt",
+      "name": "Dekoni Audio Headphone Cleaning Kit with Cleaning Spray and Cloth"
+    },
+    {
+      "_id": "3ue0Qq0vhQXjVDzPYWpU1M",
+      "name": "Dekoni Audio Elite Sheepskin Ear Pads for Audeze LCD Series"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB3xGkY",
+      "name": "Dekoni Audio EPZ-HD800-ELVL Replacement Ear Pads for Sennheiser HD800 and HD800S Elite Velour"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB3xQZo",
+      "name": "Apos x Community Rock Lobster IEMs"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB3xWAf",
+      "name": "ErgoDox 76 \"Hot Dox\" V2 Mechanical Keyboard"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB3xXvF",
+      "name": "Apos x Bob Ross Panoramic Scenic Keycaps"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB3xYMO",
+      "name": "Linus Tech Tips Keycaps"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB3yCRg",
+      "name": "Dekoni Audio EPZ-DT78990-ELVL Replacement Ear Pads for Beyerdynamic DT and AKG K Series Elite Velour"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB3yFnn",
+      "name": "Dekoni Audio EPZ-FOCAL-STELLIA Replacement Ear Pads for Focal Headphones"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB3zLuN",
+      "name": "Dekoni Audio ETZ-MERCURY Premium Memory Foam Isolation Earphone Tips Mercury 4.9mm"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB3zNex",
+      "name": "Dekoni Audio ETZ-TWS Premium Memory Foam Isolation Earphone Tips True Wireless"
+    },
+    {
+      "_id": "DraufLIOgnzQlqrObMwKGy",
+      "name": "Dekoni Audio Ensemble 4.4mm 64\" Braided Cable with 3.5mm Headphone Connectors"
+    },
+    {
+      "_id": "FfAIr0MG25AzkX2gQHNAYN",
+      "name": "Memory Foam Isolation Earphone Tips Black - Gemini 3mm"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB2gcY",
+      "name": "Apos x Community Druid R2R DAC"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB2jje",
+      "name": "SJY Horizon Closed Carbon Planar Magnetic Headphones"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB2mFi",
+      "name": "Apos x Z Reviews Magia Cable"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB2ogU",
+      "name": "Bob Ross Deskmat"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB2rna",
+      "name": "RO75 Compact Keyboard"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB3Hrm",
+      "name": "Dekoni Audio EPZ-HD600-HYB Replacement Ear Pads for Sennheiser HD600 Series Headphones Elite Hybrid"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB3KgM",
+      "name": "Dekoni Audio EPZ-FOCAL-SK Replacement Ear Pads for Focal Headphones Elite Sheepskin"
+    },
+    {
+      "_id": "GjMaRFaHMVTsBoyxtAbOBS",
+      "name": "Replacement Earpads for Sennheiser HD600 / HD650 / HD6XX / HD58X / HD660S and More"
+    },
+    {
+      "_id": "GjMaRFaHMVTsBoyxtAbaVy",
+      "name": "Replacement Earpads for Sennheiser HD800 Series Headphones"
+    },
+    {
+      "_id": "GjMaRFaHMVTsBoyxtAbg96",
+      "name": "Replacement Earpads for Sennheiser HD598/599, HD620S, PC37X, PC38X Headphones"
+    },
+    {
+      "_id": "GjMaRFaHMVTsBoyxtAbjW4",
+      "name": "Replacement Earpads for Philips Fidelio X2 Headphones"
+    },
+    {
+      "_id": "GjMaRFaHMVTsBoyxtAc2eL",
+      "name": "Memory Foam Earphone Tips for the Apple Airpods Pro 3"
+    },
+    {
+      "_id": "GjMaRFaHMVTsBoyxtAc5GA",
+      "name": "Premium Memory Foam Isolation Earphone Tips Black - True Wireless"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnQSU8H",
+      "name": "Dekoni Audio Elite Sheepskin Earpads For Hifiman Headphones"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnQSWCY",
+      "name": "Dekoni Audio Replacement Earpads for Focal Bathys, Bathys MG, Hadenys, Azurys, Lensys"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnQSZ1T",
+      "name": "Dekoni Audio Elite Fenestrated Sheepskin Replacement Earpads for Sennheiser HD600 Headphones (Pair)"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnQSjcO",
+      "name": "Dekoni Audio The Mercury Premium Memory Foam Isolation Earphone Tips, Black, 4.9mm, 3-Pack"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnRF4hA",
+      "name": "Replacement Earpads for Fostex TH and Denon AH, and X00 Series Headphones"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnRFJcI",
+      "name": "Replacement Earpads for Sony WH1000Xm3 Headphones"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnRG143",
+      "name": "Replacement Earpads for Sennheiser Momentum 4 Headphones"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnRGU5m",
+      "name": "Replacement Earpads for Beyerdynamic DT700/900 Pro X Headphones"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnRM6g2",
+      "name": "Dekoni Audio Ensemble Presplit PCUHD Twisted Cable with 6.35mm Unbalanced Connector (52\")"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnRMEGN",
+      "name": "Dekoni Audio Ensemble 4.4mm 52\" Braided Cable with HD600 Headphone Connectors"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnRMrRo",
+      "name": "Dekoni Audio Ensemble 1/4\" 64\" Nylon Wrapped Cable with HD600 Headphone Connectors"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnRNW0l",
+      "name": "Dekoni Audio Ensemble 4-Pin XLR 64\" Braided Cable Cable with 3.5mm Headphone Connectors"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnROEm9",
+      "name": "Dekoni Audio Ensemble 4.4mm 64\" Braided Cable with HD600 Headphone Connectors"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnROOcQ",
+      "name": "Dekoni Audio Ensemble 1/8\" 64\" Nylon Jacket Cable with 4-pin Mini XLR Headphone Connectors"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnROj7V",
+      "name": "Dekoni Audio Ensemble 1/4\" 64\" Nylon Jacket Cable with ATHM Headphone Connector"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnROsH1",
+      "name": "Dekoni Audio Ensemble 1/4\" 64\" Braided Cable with Single 3pin XLR Headphone Connector"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnRPAdw",
+      "name": "Dekoni Audio Ensemble 4-Pin XLR 64\" Braided Cable Cable with HD600 Headphone Connectors"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnRPD5X",
+      "name": "Dekoni Audio Ensemble 4.4mm 64\" Nylon Wrapped Cable with HD600 Headphone Connectors"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIB6FFOI",
+      "name": "Dekoni Audio Omega Headphone Stand | Headphone Stand"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIB6cVoW",
+      "name": "Dekoni Audio Balanced 4.4mm Cable for Sennheiser HD600 | Replacement Headphone Cable"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCC8aa",
+      "name": "Dekoni Audio Elite Sheepskin Ear Pads for Focal"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCdwl6",
+      "name": "Replacement Adhesive Rings for Dekoni Audio LCD Series Earpads - One Pair"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCeGGO",
+      "name": "Replacement Earpads for Bose Quiet Comfort Noise Cancelling Headphones"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCeJDc",
+      "name": "Earpads for AKG K601, K701, and More"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCeREc",
+      "name": "Replacement Earpads for Sony WH1000Xm5 Headphones"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCeUBq",
+      "name": "Earpads for Sony WH1000XM4 ANC Headphones"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCeaXm",
+      "name": "Replacement Earpads for AKG K371 Headphones"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCedwU",
+      "name": "Replacement Earpads for Sony WH1000Xm6 Headphones"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCejqw",
+      "name": "Replacement Earpads for Audeze Maxwell 2 Gaming Headphone"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCiFsQ",
+      "name": "Dekoni Audio Ensemble 4.4mm 52\" Braided Cable with 3.5mm Headphone Connectors"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCiKGy",
+      "name": "Dekoni Audio Ensemble 4.4mm 52\" Nylon Wrapped Cable with HD600 Headphone Connectors"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCiXro",
+      "name": "Dekoni Audio Ensemble 1/8\" 64\" Nylon Jacket Cable with HD600 Headphone Connectors"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCioiC",
+      "name": "Dekoni Audio Ensemble 1/4\" 64\" Braided Cable with 3.5mm Headphone Connectors"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCiv48",
+      "name": "Dekoni Audio Ensemble 1/4\" 52\" Braided Cable with HD600 Headphone Connectors"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCjTtu",
+      "name": "Dekoni Audio Ensemble 1/4\" 64\" PCUHD Cable with 4-pin Mini XLR Headphone Connectors"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCjeeO",
+      "name": "Dekoni Audio Ensemble 4-Pin XLR 52\" PCUHD Cable with 2 Pin Utopia Lemo Headphone Connectors"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCk0IW",
+      "name": "Dekoni Audio Ensemble 4.4mm 52\" Nylon Wrapped Cable with 4-pin Mini XLR Headphone Connectors"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCk4Vc",
+      "name": "Dekoni Audio Ensemble 1/4\" 64\" Braided Cable with HD600 Headphone Connectors"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCk6T0",
+      "name": "Dekoni Audio Ensemble 64\" 4.4 + Mini XLR Blue Nylon Woven Jacket"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCk9ZO",
+      "name": "Dekoni Audio Ensemble 1/8\" 64\" Nylon Jacket Cable with ATHM Headphone Connector"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjbXY7s",
+      "name": "Dekoni Audio Balanced XLR Cable for Sennheiser HD800 | Replacement Headphone Cable"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjjlbsh",
+      "name": "Dekoni Audio Savior v2 | Universal Headphone Carrying Case"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkRXld",
+      "name": "Replacement Earpads for the Fostex T20RP, T40RP, T50RP Series Headphones"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkRkNh",
+      "name": "Replacement Earpads for Dan Clark Audio Aeon 2 - Elite Sheepskin"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkS947",
+      "name": "Dekoni Audio Memory Foam Upgrade Ear Pads for Sony Z1R Headphones Elite Sheepskin"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkSCNk",
+      "name": "Replacement Earpads for Audio Technica ATH-AD Series Open Back Audiophile Headphones - Elite Velour"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkWvRG",
+      "name": "Dekoni Audio Ensemble 4.4mm 64\" Braided Cable with 4-pin Mini XLR Headphone Connectors"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkXHP8",
+      "name": "Dekoni Audio Ensemble Post-Split Nylon Wrapped Cable with Single 3-pin Mini XLR"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkXZj9",
+      "name": "Dekoni Audio Ensemble 1/8\" 64\" Braided Cable with HD600 Headphone Connectors"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkXxA2",
+      "name": "Dekoni Audio Ensemble 4.4mm 52\" Braided Cable with 4-pin Mini XLR Headphone Connectors"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkYFoH",
+      "name": "Dekoni Audio Ensemble 1/8\" 64\" Braided Cable with 3.5mm Headphone Connectors"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkYRpG",
+      "name": "Dekoni Audio Ensemble 4.4mm 64\" Nylon Wrapped Cable with 3.5mm Headphone Connectors"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkYeAT",
+      "name": "Dekoni Audio Ensemble 4-Pin XLR 52\" PCUHD Cable with 4-pin Mini XLR Headphone Connectors"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkZ08L",
+      "name": "Dekoni Audio Ensemble 1/4\" 52\" Nylon Wrapped Cable with HD600 Headphone Connectors"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkZ5FD",
+      "name": "Dekoni Audio Ensemble 1/4\" 52\" Nylon Wrapped Cable with 3.5mm Headphone Connectors"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkZ7Mg",
+      "name": "Dekoni Audio Ensemble 1/4\" 52\" Braided Cable with 4-pin Mini XLR Headphone Connectors"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkZv3k",
+      "name": "Dekoni Audio Ensemble 1/8\" 64\" Nylon Jacket Cable with 3.5mm Headphone Connectors"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkZxOh",
+      "name": "Dekoni Audio Ensemble 1/4\" 52\" Braided Cable with 3.5mm Headphone Connectors"
+    },
+    {
+      "_id": "fisKNZUL2oYuqkoQMUyJYb",
+      "name": "Universal Fit 100mm Replacement Earpads (Fits Beyerdynamic, AKG & More)"
+    },
+    {
+      "_id": "fisKNZUL2oYuqkoQMUyQ9x",
+      "name": "Replacement Earpads for HiFiMan HE Series Headphones and More"
+    },
+    {
+      "_id": "fisKNZUL2oYuqkoQMUyapt",
+      "name": "Replacement Earpads for HiFiMan Arya"
+    },
+    {
+      "_id": "fisKNZUL2oYuqkoQMUz9XB",
+      "name": "Replacement Earpads for Grado Headphones"
+    },
+    {
+      "_id": "fisKNZUL2oYuqkoQMUzDT3",
+      "name": "Replacement Earpads for Audeze Maxwell Gaming Headphone"
+    },
+    {
+      "_id": "fisKNZUL2oYuqkoQMUzrVJ",
+      "name": "Memory Foam Earphone Tips for the Apple Airpods Pro & Airpods Pro 2"
+    },
+    {
+      "_id": "fisKNZUL2oYuqkoQMV1Bkp",
+      "name": "Memory Foam IEM Tips Black - Samsung Galaxy Buds Pro"
+    },
+    {
+      "_id": "fisKNZUL2oYuqkoQMV1aTj",
+      "name": "Premium Headphone & Earbud Cleaning Wipes – Anti-Static & Alcohol-Free"
+    },
+    {
+      "_id": "fisKNZUL2oYuqkoQMV1sFV",
+      "name": "Dekoni Audio Headphone Savior - Universal Headphone Carrying Case"
+    },
+    {
+      "_id": "fisKNZUL2oYuqkoQMV23hL",
+      "name": "Dekoni Audio x SKB Headphone Hero Heavy Duty Travel Case"
+    },
+    {
+      "_id": "h2HZXAdWspjApNB9KwbQYY",
+      "name": "Standard Size Oval Replacement Earpads for Studio Monitor Headphones and Communication Headsets - Audio Technica, Sony, and More"
+    },
+    {
+      "_id": "prod-0b357ab1-22a",
+      "name": "Dekoni Audio Choice Leather Earpads for Hifiman Sundara"
+    },
+    {
+      "_id": "prod-4717de40-092",
+      "name": "Dekoni Audio Protective Headphone Travel Pouch"
+    },
+    {
+      "_id": "prod-5d5e5ef2-61e",
+      "name": "Dekoni Audio Elite Fenestrated Sheepskin Pads for Sennheiser HD6XX"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8b45F",
+      "name": "Dekoni Audio EPZ-ARYA-FNSK Replacement Ear Pads for HiFiMan Arya Headphones Elite Fenestrated Sheepskin"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8b7UD",
+      "name": "Dekoni Audio EPZ-HD600-FNSK Replacement Ear Pads for Sennheiser HD600 Series Headphones Elite Fenestrated Sheepskin"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8bEZj",
+      "name": "Apos x Community Gremlin Tube Amp"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8bJ71",
+      "name": "Apos x Geshelli Merlin AKM Desktop DAC"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8djHj",
+      "name": "Dekoni Audio ETZ-GEMINI Premium Memory Foam Isolation Earphone Tips Gemini 3mm"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB3znRV",
+      "name": "iFi Audio Go Pod Max Portable IEM Bluetooth DAC/AMP (Unit Only)"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB46CG4",
+      "name": "iFi GO bar Kensei"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB5NeM",
+      "name": "iFi NEO Stream"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnN7WCP",
+      "name": "iFi Audio Hip DAC 3 Portable DAC/Amp"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnN8QYu",
+      "name": "iFi Audio Pro iDSD Signature DAC/Amp & Streamer"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnRJcsz",
+      "name": "iFi Audio iCAN Phantom Headphone Amplifier and Energizer"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIB6HHQs",
+      "name": "iFi iTraveller | Multipurpose Travel Case for DACs"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBACuKc",
+      "name": "iFi Audio GO Blu Portable Bluetooth DAC/Amp"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCgFZU",
+      "name": "iFi Audio iDSD NEO"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCgrcW",
+      "name": "iFi Audio iCAN Phantom Headphone Amplifier and Energizer - Open Box"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjgsvqe",
+      "name": "iFi Audio GO Bar Portable USB DAC & Headphone Amplifier"
+    },
+    {
+      "_id": "Y7l1IhzX2fnyiano4ipzcN",
+      "name": "iFi Audio iDSD Valkyrie Portable Amp & DAC"
+    },
+    {
+      "_id": "Y7l1IhzX2fnyiano4iq6jp",
+      "name": "iFi Audio Zen Can 3 Analog Headphone Amplifier"
+    },
+    {
+      "_id": "Y7l1IhzX2fnyiano4jO6bg",
+      "name": "iFi Audio hip-dac 3 Portable USB DAC & Amplifier"
+    },
+    {
+      "_id": "Y7l1IhzX2fnyiano4jOIfY",
+      "name": "iFi Audio Zen DAC 3 Balanced Headphone Amp & DAC"
+    },
+    {
+      "_id": "ZuUKzmkqDyQwdcwhxl77C3",
+      "name": "iFi Audio Hip-dac2 Portable USB DAC and Headphone Amp with Soft Protective Case"
+    },
+    {
+      "_id": "ZuUKzmkqDyQwdcwhxl7Puy",
+      "name": "iFi Audio iCan Phantom Analog Headphone Amplifier"
+    },
+    {
+      "_id": "ZuUKzmkqDyQwdcwhxlJlJu",
+      "name": "iFi Audio GO bar Kensei Portable Hi-Res USB DAC and Preamp"
+    },
+    {
+      "_id": "dLGDVDmEEI2lV8CArAcaQ0",
+      "name": "iFi Audio Go blu Portable Bluetooth DAC/Headphone Amp"
+    },
+    {
+      "_id": "dLGDVDmEEI2lV8CArAcay4",
+      "name": "iFi Audio GO Link Max Portable Amp & DAC"
+    },
+    {
+      "_id": "dLGDVDmEEI2lV8CArAcd7E",
+      "name": "iFi Audio Hip-dac2 Portable USB DAC and Headphone Amp"
+    },
+    {
+      "_id": "dLGDVDmEEI2lV8CArAcfBk",
+      "name": "iFi Audio NEO iDSD Desktop USB DAC/Headphone Amp with Bluetooth"
+    },
+    {
+      "_id": "dLGDVDmEEI2lV8CArAcpNU",
+      "name": "iFi Audio ZEN Air CAN High-Power Analogue Headphone Amplifier"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozG1vD4O",
+      "name": "iFi Audio Diablo-X DAC and Headphone Amplifier"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozG1vDSz",
+      "name": "iFi Audio xDSD Gryphon Portable Bluetooth DAC & Headphone Amplifier"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozG2ixn6",
+      "name": "iFi Audio Zen Stream"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozG2iztx",
+      "name": "iFi Audio Zen Stream - Open Box"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWwET3O",
+      "name": "iFi Audio Pro iCAN Signature Headphone Amplifier"
+    },
+    {
+      "_id": "n10eAegrGspodtsQvy4D2G",
+      "name": "iFi Audio Uno"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8eD0B",
+      "name": "iFi ZEN Blue 3 Bluetooth Desktop DAC"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8eFfR",
+      "name": "iFi GO blu Air Portable Hi-Res Bluetooth DAC & Headphone Amp"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8huOv",
+      "name": "iFi Zen CAN 3"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8lEY3",
+      "name": "iFi Hip-DAC 3"
+    },
+    {
+      "_id": "3O1ZNp54LWQGln4uEAU7Vs",
+      "name": "Meze Audio 99 Series 2.5mm or 4.4mm Replacement Cable"
+    },
+    {
+      "_id": "3O1ZNp54LWQGln4uEAUGRi",
+      "name": "Meze Audio OFC Mini 4-Pin XLR Replacement Cable"
+    },
+    {
+      "_id": "A5Y8wEwAn6Fo0zYQ5BM7Yv",
+      "name": "Meze Audio Mono 3.5mm to Balanced 4.4mm Silver-Plated Headphone Cable - 3.9ft."
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB3zuIm",
+      "name": "Meze Audio 109 PRO Dynamic Open-Back Headphone"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB4098h",
+      "name": "Meze Audio Empyrean II Open Back Headphones"
+    },
+    {
+      "_id": "FVx8zpBk46ZESxpKNI3WOv",
+      "name": "Meze Audio MMCX to 3.5mm Silver-Plated Headphone Cable - 3.9 ft."
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB4pYs",
+      "name": "Meze Audio 109 PRO Dynamic Open-Back Headphone (Apos Certified)"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB4zFK",
+      "name": "Meze 105 AER Open-Back Headphones"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB5Jys",
+      "name": "Meze Manta Headphone Stand"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB7tsw",
+      "name": "Meze Audio 99 Classics Closed Back Headphones 2nd Gen"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB95RC",
+      "name": "Meze Audio Alba IEMs"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnQU1gD",
+      "name": "Meze Audio 99 Classics V2 Headphones"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBAHiIM",
+      "name": "Meze Audio 99 Series Silver Replacement cable (2.5mm, 3.5mm or 4.4mm)"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBAJqcI",
+      "name": "Meze Audio 109 PRO Headphones"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCD0NI",
+      "name": "Meze Audio 99 Classics Headphones"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCDAX8",
+      "name": "Meze Audio Strada Headphones"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCEe6q",
+      "name": "Meze Audio Alba In-Ear Headphones"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjayoLj",
+      "name": "Meze Audio Manta Headphone Stand | Headphone Stand"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjgs488",
+      "name": "Meze Audio Manta Headphone Stand"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjjlRHM",
+      "name": "Meze Audio Empyrean Vegan Leather Ear Pads"
+    },
+    {
+      "_id": "ULy5F1v4tquhHAic3WSREZ",
+      "name": "Meze Audio Mono 3.5mm to 2.5mm Balanced Headphone Cable - 4.9 ft."
+    },
+    {
+      "_id": "ULy5F1v4tquhHAic3WSShK",
+      "name": "Meze Audio Mono 3.5mm 99 Series Gold Standard Cable - 9.94 ft."
+    },
+    {
+      "_id": "Y7l1IhzX2fnyiano58H1hn",
+      "name": "Meze Audio Mono 3.5mm to 2.5mm Balanced Headphone Cable - 4.9 ft."
+    },
+    {
+      "_id": "Y7l1IhzX2fnyiano58H5OJ",
+      "name": "Meze Audio Mono 3.5mm to 4.4mm Balanced Silver-Plated Cable - 4.2 ft."
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozFz7KdY",
+      "name": "Meze Audio LIRIC II Headphones - Open Box"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWtblBG",
+      "name": "Meze Audio LIRIC II Headphones"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWxMmzS",
+      "name": "Meze Audio Copper PCUHD 4-Pin Mini-XLR Replacement Cable"
+    },
+    {
+      "_id": "n10eAegrGspodtsQvneRgi",
+      "name": "Meze 99 Classics Headphones - Open Box"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8ekB7",
+      "name": "Meze 105 Silva Open-Back Headphones"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8ki6p",
+      "name": "Meze POET Planar Magnetic Headphones"
+    },
+    {
+      "_id": "0IQ2UjkdXJma4iOcjnwqbl",
+      "name": "AudioQuest DragonTail Carbon USB A to C Adapter"
+    },
+    {
+      "_id": "GjMaRFaHMVTsBoyxtAJAGI",
+      "name": "AudioQuest M22F-HRD RCA Male to 2 RCA Female Adaptor"
+    },
+    {
+      "_id": "GqkAHteRmu9rQ6VLnVx2E1",
+      "name": "AudioQuest Sydney RCA-to-RCA Interconnect Cable - 3 meters"
+    },
+    {
+      "_id": "GqkAHteRmu9rQ6VLnVxWsP",
+      "name": "AudioQuest Yosemite Audio Interconnect RCA to RCA - 3.28\" (1m)"
+    },
+    {
+      "_id": "GqkAHteRmu9rQ6VLnVxhPf",
+      "name": "AudioQuest Tower RCA Male to RCA Male Cable (3.28 ft.)"
+    },
+    {
+      "_id": "GqkAHteRmu9rQ6VLnVyNtu",
+      "name": "AudioQuest Red River XLR to XLR Analog Audio Interconnect Cable - 9.84' (3m) - Single-Pack"
+    },
+    {
+      "_id": "GqkAHteRmu9rQ6VLnVyiuB",
+      "name": "AudioQuest Red River XLR to XLR Analog Audio Interconnect Cables - 9.84' (3m) - 2-Pack"
+    },
+    {
+      "_id": "GqkAHteRmu9rQ6VLnVzWzH",
+      "name": "AudioQuest Chicago RCA Male to RCA Male Cable - 1.64 ft. (0.5m) - 2-Pack"
+    },
+    {
+      "_id": "GqkAHteRmu9rQ6VLnW35yj",
+      "name": "AudioQuest Greyhound RCA Low-Frequency Subwoofer Audio Interconnect - Each (39.37 ft.)"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnG6oGG",
+      "name": "AudioQuest DragonTail | USB Smartphone Adaptor"
+    },
+    {
+      "_id": "ULy5F1v4tquhHAic3WFNzN",
+      "name": "AudioQuest Perch Headphone Stand"
+    },
+    {
+      "_id": "Y7l1IhzX2fnyiano58Gmxj",
+      "name": "AudioQuest Cinnamon USB to Micro Audio Cable - 2.46 ft. (.75m)"
+    },
+    {
+      "_id": "Y7l1IhzX2fnyiano58GsCK",
+      "name": "AudioQuest Forest USB to Micro High Definition Digital Audio Cable - 1.5M"
+    },
+    {
+      "_id": "apzyFbFDTajEZntmxsotCD",
+      "name": "AudioQuest Chicago RCA Analog Audio Interconnect Cable - Pair (6.56 ft.)"
+    },
+    {
+      "_id": "apzyFbFDTajEZntmxspOvR",
+      "name": "AudioQuest Evergreen 1m (3.28 ft) RCA Male to RCA Male Cable - Pair"
+    },
+    {
+      "_id": "apzyFbFDTajEZntmxspjB2",
+      "name": "AudioQuest Red River XLR to XLR Analog Audio Interconnect Cable - 1.64' (0.5m) - 2-Pack"
+    },
+    {
+      "_id": "apzyFbFDTajEZntmxspxTm",
+      "name": "AudioQuest Red River XLR to XLR Analog Audio Interconnect Cables - 2.46' (0.75m) - 2-Pack"
+    },
+    {
+      "_id": "apzyFbFDTajEZntmxsqSfT",
+      "name": "AudioQuest Chicago RCA Analog Audio Interconnect Cable - Pair (3.28 ft.)"
+    },
+    {
+      "_id": "apzyFbFDTajEZntmxsqhzY",
+      "name": "AudioQuest Chicago RCA Male to RCA Male Cable - Pair (4.92 ft.)"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozG1vKge",
+      "name": "AudioQuest Jitterbug FMJ"
+    },
+    {
+      "_id": "mhejwYdgiH5W70wqaK7ngk",
+      "name": "AudioQuest Pearl USB-A to USB-B Cable - 4.92ft. (1.5m)"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWwEgQe",
+      "name": "AudioQuest Dragonfly Cobalt USB DAC/Amp"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWxMnjQ",
+      "name": "AudioQuest DragonTail USB Extender and Adapter"
+    },
+    {
+      "_id": "x2LkzHeaGqoEz8JhogYAsA",
+      "name": "AudioQuest Black Beauty RCA Interconnect Cable - 4.92' (1.5m)"
+    },
+    {
+      "_id": "x2LkzHeaGqoEz8JhogYPz8",
+      "name": "AudioQuest Sydney 2m RCA to RCA Analog Audio Interconnect Cable"
+    },
+    {
+      "_id": "x2LkzHeaGqoEz8JhogZLeA",
+      "name": "AudioQuest Yukon RCA to RCA Cable - Pair (1.64 ft.)"
+    },
+    {
+      "_id": "x2LkzHeaGqoEz8JhogaDCU",
+      "name": "AudioQuest Golden Gate RCA to RCA Analog Interconnect Cable - 0.6 meters"
+    },
+    {
+      "_id": "x2LkzHeaGqoEz8JhogaPNW",
+      "name": "AudioQuest Sydney 3.5mm to 3.5mm Analog Audio Interconnect Cable - 4.92ft. (1.5m)"
+    },
+    {
+      "_id": "x2LkzHeaGqoEz8JhogaWUi",
+      "name": "AudioQuest Sydney 3.5mm Mini to RCA Audio Cable (1.97 ft.)"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB41lXz",
+      "name": "HIFIMAN EF600 Desktop R2R DAC/Amp"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB45bQr",
+      "name": "HIFIMAN Arya Organic Planar Magnetic Headphones"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB45e9l",
+      "name": "HIFIMAN Ananda Nano Planar Magnetic Headphone"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB45fiH",
+      "name": "HIFIMAN Edition XV Planar Magnetic Headphones"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB9Zdy",
+      "name": "HIFIMAN Edition XS Planar Magnetic Headphone (Apos Certified)"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnN51PA",
+      "name": "Hifiman HE1000 Stealth Headphones - Stealth Magnet Edition"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnQULEz",
+      "name": "Hifiman Sundara Closed-Back Headphones"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnRIFQs",
+      "name": "Hifiman EF499 Desktop DAC and Headphone Amplifier"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnRIIom",
+      "name": "Hifiman EF600 Headphone Amplifier and DAC"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBADCQs",
+      "name": "Hifiman Sundara Headphones | 2020 Edition"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBADGUo",
+      "name": "Hifiman Arya Headphones | Stealth Magnets Edition"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBADN6m",
+      "name": "Hifiman Ananda Planar Magnetic  Headphones - Stealth Magnets"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjgq7ah",
+      "name": "Hifiman Edition XS Headphones"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjgqHro",
+      "name": "Hifiman HE400se Entry-Level Headphones"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjgqXuF",
+      "name": "Hifiman Arya Organic Headphones"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjgqaFC",
+      "name": "Hifiman HE1000se Headphones"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkV2A5",
+      "name": "Hifiman Prelude Headphone Amplifier"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozFz7KCz",
+      "name": "HiFiMAN Audivina Closed-Back Headphones"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWtXu6V",
+      "name": "Hifiman Arya Headphones | Stealth Magnets Edition"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWwESUS",
+      "name": "Hifiman EF400 Headphone Amplifier and DAC"
+    },
+    {
+      "_id": "n10eAegrGspodtsQw136D2",
+      "name": "Hifiman Ananda BT Wireless Headphones - 2024 Edition"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8kExX",
+      "name": "HIFIMAN Sundara Planar Magnetic Headphones"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8kHLD",
+      "name": "HIFIMAN Edition XS Planar Magnetic Headphone"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8kOlp",
+      "name": "HIFIMAN Arya Planar Magnetic Headphone - Stealth Magnet Version"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8kR2T",
+      "name": "HIFIMAN Ananda Stealth Planar Magnetic Headphone"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB3xyL0",
+      "name": "Bose QC35 Replacement Ear Pads"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB3y0Zk",
+      "name": "Bose QC35 Cooling Gel Earpads - WC FreeZe"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB3y3Fd",
+      "name": "Earpads For Sony WH900N"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB3ycZL",
+      "name": "Bose QuietComfort Ultra Gen 1 & Gen 2 Cooling Gel Earpads - WC FreeZe QC Ultra"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB3yg1U",
+      "name": "Beats Studio Earpads - WC FreeZe Cooling Gel"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB3ylNG",
+      "name": "Replacement Ear Pads For Bose QC3"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB3yu8A",
+      "name": "ATH M50X Earpads - Velour Hybrid"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB3yvCW",
+      "name": "Beats Studio Earpads"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB3yz2n",
+      "name": "Corsair Virtuoso Earpads - WC FreeZe Cooling Gel"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB3PiU",
+      "name": "Bose NC 700 Cooling Gel Earpads - WC FreeZe"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB3TVu",
+      "name": "Arctis Nova Pro Wireless, Nova Elite & Nova Pro Omni Earpads - WC FreeZe Cooling Gel"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB3Z94",
+      "name": "Replacement Earpads For Bose QC15 Headphones"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB3egw",
+      "name": "Replacement earpads for Sony MDR-RF985R & More"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB3qlW",
+      "name": "Upgraded Beats Solo 4 Earpads - WC PadZ Solo 4"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB3sdu",
+      "name": "Astro A50 Gen 4, Gen 5 and A50X Earpads - WC FreeZe Cooling Gel"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB3t70",
+      "name": "WC FreeZe - Hybrid Cooling Gel Infused Gaming Earpads"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB4Jgw",
+      "name": "Galaxy Buds Pro 3 & 4 Memory Foam Ear Tips - WC TipZ Galaxy"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8cA8b",
+      "name": "Bose QC45 Replacement Ear Pads"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8cCZn",
+      "name": "Beats Solo Earpads"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8cWMv",
+      "name": "Upgraded Corsair Virtuoso Ear pads"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8cdgV",
+      "name": "HyperX Cloud FPS Gaming Earpads - WC StealthZ Cloud"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8cpQL",
+      "name": "Upgraded Sony XM5 Replacement Ear Pads"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8cqYf",
+      "name": "ATH M50X Earpads"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8cxoj",
+      "name": "Ear Pads For Sony WH1000XM3 Over-Ear Headphones"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB43tcm",
+      "name": "Sennheiser Momentum 5 Wireless Over-Ear ANC Headphones"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB57uI",
+      "name": "Sennheiser HD 800S Dynamic Open-back Headphones"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB7yn8",
+      "name": "Sennheiser HDB 630 Bluetooth ANC Headphones"
+    },
+    {
+      "_id": "IVp0Ya0qCxU3IKB1jVguzD",
+      "name": "Sennheiser HD 660S2 Headphones"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnQTeER",
+      "name": "Sennheiser RS 175 Headphones"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnQWhwn",
+      "name": "Sennheiser IE 600 In-Ear Headphones"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCEl18",
+      "name": "Sennheiser IE 200 In-Ear Headphones"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjgrju8",
+      "name": "Sennheiser HD 600 Headphones"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjgrpEU",
+      "name": "Sennheiser HD 650 Headphones"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjjpRo3",
+      "name": "Sennheiser IE 900 In-Ear Headphones"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjjpYAS",
+      "name": "Sennheiser MOMENTUM True Wireless 4"
+    },
+    {
+      "_id": "ZuUKzmkqDyQwdcwhxl96BU",
+      "name": "Sennheiser Accentum True Wireless Noise-Cancelling Earbuds (Black)"
+    },
+    {
+      "_id": "ZuUKzmkqDyQwdcwhxwQHiY",
+      "name": "Sennheiser Momentum Sport True Wireless Earbuds with Adaptive Noise Cancellation (Black)"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozFz7EE4",
+      "name": "Sennheiser HD 560S"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozFz7GSn",
+      "name": "Sennheiser HD 620S Headphones"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozG2ivGf",
+      "name": "Sennheiser HD 450BT Headphones"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWtbklW",
+      "name": "Sennheiser HD 820 Headphones"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWwzgHO",
+      "name": "Sennheiser AMBEO Max Soundbar"
+    },
+    {
+      "_id": "n10eAegrGspodtsQvneN6x",
+      "name": "Sennheiser HD 569 Headphones"
+    },
+    {
+      "_id": "n10eAegrGspodtsQvneQzx",
+      "name": "Sennheiser HD 820 - Open Box"
+    },
+    {
+      "_id": "n10eAegrGspodtsQvy3xAp",
+      "name": "Sennheiser HDV 820 Headphone Amplifier"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8erD7",
+      "name": "Sennheiser HD 600 Open-back Reference Headphones"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8euj7",
+      "name": "Sennheiser HD 660S2 Dynamic Open-back Headphones"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8l0p9",
+      "name": "Sennheiser HD 560S Open-back Reference Headphones"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB43uqB",
+      "name": "Focal Celestee Headphones"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnQS1rC",
+      "name": "Focal Clear Ear Pads (Pair)"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnQS8gt",
+      "name": "Focal Bathys Replacement Ear Pads (Pair)"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnQT5sJ",
+      "name": "Focal Radiance Headphones | Limited Edition"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnQT9Nz",
+      "name": "Focal Azurys"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnQTHiy",
+      "name": "Focal Bathys MG Wireless Headphones"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBADqsm",
+      "name": "Utopia 2022"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCBx40",
+      "name": "Focal Elex Ear Pads (Pair)"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCCSLu",
+      "name": "Focal Bathys"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCCaW4",
+      "name": "Focal Stellia Headphones"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjgql0e",
+      "name": "Focal Hadenys"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjjl5G7",
+      "name": "Focal Utopia Ear Pad"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozFz7E1H",
+      "name": "Focal Radiance Headphones | Limited Edition"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozFz7EsP",
+      "name": "Focal Clear Mg Headphones"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozFz7FSo",
+      "name": "Focal Celestee High-End Headphones"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozFz7IlS",
+      "name": "Focal Azurys - Open Box"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWtUHWs",
+      "name": "Utopia"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWtX5bB",
+      "name": "Focal Bathys Headphones - Open Box"
+    },
+    {
+      "_id": "prod-4b6fb239-96a",
+      "name": "Focal Clear Mg Replacement Ear Pads"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8bwF9",
+      "name": "Focal Utopia Ear Pads"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8f1l7",
+      "name": "Focal Utopia (2022) Open-Back Headphones"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8igwj",
+      "name": "Focal Stellia Closed-Back Headphones"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnNGIa4",
+      "name": "Astell&Kern PA10 Headphone Amplifier"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnNK74C",
+      "name": "Astell&Kern PD20 | Digital Audio Player"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnNKGX9",
+      "name": "Astell&Kern A&Ultima SP4000 | Digital Audio Player"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnQqrtq",
+      "name": "Astell&Kern A&ultima SP3000T Case | Leather Case"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnQqu20",
+      "name": "Astell&Kern KANN CUBE | Leather Case"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnQqv2C",
+      "name": "Astell&Kern PD20 Case | Premium Leather Case"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnTCCwU",
+      "name": "Astell&Kern AK HB1 | Portable Wired/Wireless Bluetooth DAC/Amp"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnTE4cB",
+      "name": "Astell&Kern HC5 | Portable DAC and Amp"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBANGzM",
+      "name": "Astell&Kern A&ultima SP3000M | Digital Audio Player"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBANTBA",
+      "name": "Astell&Kern A&norma SR35 | Digital Audio Player"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBANaSM",
+      "name": "Astell&Kern Acro CA1000T | Transportable Digital Audio Player"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCQ5Rc",
+      "name": "Astell&Kern A&ultima SP3000M Case | Leather Case"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCQ9Og",
+      "name": "Astell&Kern Collector's Atelier Case | Leather Storage Box"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBDs64e",
+      "name": "Astell&Kern HC3 | Portable DAC and Amp"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBDs9x8",
+      "name": "Astell&Kern AK HC4 | Portable DAC and Amp"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjh3y6H",
+      "name": "Astell&Kern A&ultima SP4000T | Vacuum Tube Digital Audio Player"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjh4ExH",
+      "name": "Astell&Kern PD10 | Digital Audio Player"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjh4PL8",
+      "name": "Astell&Kern A&ultima SP3000T | Vacuum Tube Digital Audio Player"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjk66Sq",
+      "name": "Astell&Kern A&norma SR35 Case | Protective Case"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjk6Pve",
+      "name": "Astell&Kern SP4000T Case | Premium Leather Case"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB42mdu",
+      "name": "TOPPING A70 Pro Fully Balanced Headphone Amplifier"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB42o6O",
+      "name": "TOPPING L50 Headphone Amp"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB4QYo",
+      "name": "TOPPING DX3 Pro+ Bluetooth DAC/Amp"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB71sA",
+      "name": "TOPPING A90 Discrete Headphone Amp"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnN8f2p",
+      "name": "Topping E50 Desktop Digital to Analog Convertor (DAC)"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnN8n4N",
+      "name": "Topping D50 III DAC"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnN9RG0",
+      "name": "Topping DX9 DAC, Headphone Amplifier and Pre-Amp"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBAGWYs",
+      "name": "Topping D70 Pro DAC"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBAGqx8",
+      "name": "Topping DX3 Pro+ Desktop DAC & Headphone Amplifier"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozG1vTDy",
+      "name": "Topping G5"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozG1vToN",
+      "name": "Topping DX9 DAC, Headphone Amplifier and Pre-Amp"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWwEdEz",
+      "name": "Topping L50 Desktop Headphone Amplifier - Open Box"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWwEgal",
+      "name": "Topping DX3 Pro+ Desktop DAC & Headphone Amplifier"
+    },
+    {
+      "_id": "n10eAegrGspodtsQvy3fgK",
+      "name": "Topping L30 II"
+    },
+    {
+      "_id": "n10eAegrGspodtsQvy4P4a",
+      "name": "Topping A50 III Headphone Amplifier"
+    },
+    {
+      "_id": "n10eAegrGspodtsQvy4Z6W",
+      "name": "Topping A70 Pro Headphone Amplifier"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8fdhP",
+      "name": "TOPPING D10s DAC (Digital-to-Analog Converter)"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8ffSP",
+      "name": "TOPPING E70 VELVET AK4499EX Desktop DAC (Digital-to-Analog-Convertor)"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB3zokw",
+      "name": "FiiO BTR17 Bluetooth USB DAC/Amp"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB40v3a",
+      "name": "FiiO K7 Balanced Headphone DAC/Amp"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB41PVg",
+      "name": "FiiO K11 R2R Balanced Desktop DAC/Amp"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB41Wo6",
+      "name": "FiiO K13 R2R Desktop DAC/Amp"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB41fx8",
+      "name": "FiiO K17 Desktop DAC/Amp"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB9DqI",
+      "name": "FiiO M21 Portable High-Res Lossless Music Player"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnKwOVD",
+      "name": "FiiO M15S Portable Music Player"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnN3Yzy",
+      "name": "FiiO BTR11 Portable DAC and Headphone Amp"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBAMKFk",
+      "name": "FiiO R7 DAC and Headphone Amp"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjexfWP",
+      "name": "FiiO M17 Portable Music Player"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjgp8X6",
+      "name": "FiiO BTR17 Bluetooth DAC And Headphone Amp"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjgpOZX",
+      "name": "FiiO BTR7 Portable DAC and Headphone Amp"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjmCFMg",
+      "name": "FiiO FT1 Pro Headphones"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWtbjv7",
+      "name": "FiiO FT1 Headphones"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8gRUZ",
+      "name": "FiiO K13 R2R Desktop DAC/Amp (Apos Certified)"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8l4SB",
+      "name": "FiiO KA11 Dongle DAC/Headphone Amplifier"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB43FOR",
+      "name": "Burson SOLOIST STELLAR 8W XLR Class-A Headphone / Pre Amp"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB6zec",
+      "name": "Burson Playmate 3 Class-A Headphone Amp/ Pre-Amp/ DAC"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBAHGKa",
+      "name": "Burson Audio Playmate 2"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCfbSC",
+      "name": "Burson Audio Composer 3X Performance DAC - Open Box"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkT8mA",
+      "name": "Burson Audio Conductor 3x Grand Tourer Desktop DAC & Amp"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkTAjW",
+      "name": "Burson Audio Conductor 3x Performance - Open Box"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkTEhb",
+      "name": "Burson Audio Timekeeper 3i Reference Integrated Amp & DAC"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkTGp4",
+      "name": "Burson Audio Conductor 3 GT"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozG1vJMz",
+      "name": "Burson Audio Funk Amplifier - Open Box"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozG1vOH0",
+      "name": "Burson Audio Soloist 3x Grand Tourer"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozG1vPcd",
+      "name": "Burson Audio Composer 3X Performance DAC"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozG1vSJt",
+      "name": "Burson Soloist 3X Performance"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWwESiF",
+      "name": "Burson Conductor 3 Reference"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWwEdNG",
+      "name": "Burson Audio Conductor 3x Grand Tourer Desktop DAC & Amp"
+    },
+    {
+      "_id": "n10eAegrGspodtsQvy4Rpc",
+      "name": "Burson Audio Soloist Voyager"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8i3hZ",
+      "name": "Burson Soloist Voyager Flagship Class-A Headphone Amplifier"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB460aC",
+      "name": "Audeze CRBN2 Electrostatic Headphones (Case Included)"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB54HS",
+      "name": "Audeze LCD-X Open Back Headphone"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB55De",
+      "name": "Audeze LCD-5 Planar Magnetic Headphone"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnGPkI2",
+      "name": "Audeze Std LCD Series Cable | Mini-XLR to 4-pin XLR w/ 6.3mm Adapter"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBAJiLG",
+      "name": "Audeze LCD-2 Classic Headphones"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCCjUc",
+      "name": "Audeze LCD-XC Headphones | 2024 Creator's Edition"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjbXRKV",
+      "name": "Audeze Premium Braided Upgrade Cable | 6.3 or XLR for LCD Series"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjgysXB",
+      "name": "Audeze LCD-X Headphones | 2024 Creator's Edition"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjgz0Fr",
+      "name": "Audeze MM-100 Headphones"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozFz7FkW",
+      "name": "Audeze LCD-XC Headphones | 2021 Creator's Edition with Economy Travel Case - Open Box"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWtWl8T",
+      "name": "Audeze Maxwell Wireless Headphones"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWtbizC",
+      "name": "Audeze LCD-X Headphones | 2024 Creator's Edition"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8elsb",
+      "name": "Audeze LCD-2 Open Back Headphone"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8enyh",
+      "name": "Audeze LCD-2 Classic (Apos Certified)"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8kl09",
+      "name": "Audeze LCD-5s Planar Magnetic Headphone"
+    },
+    {
+      "_id": "3O1ZNp54LWQGln4uEAUGAa",
+      "name": "64 Audio Premium Pearl Cable (3.5mm)"
+    },
+    {
+      "_id": "Agdc7UdudmikAzJtKWUVPW",
+      "name": "64 Audio U4s In-Ear Headphones"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnGr5kn",
+      "name": "Microfiber Cleaning Cloth 3-Pack"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnGr6Ft",
+      "name": "IEM Cleaning Tool 5-Pack"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnGr7Rk",
+      "name": "Steel Needle"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnGr80j",
+      "name": "Large Dehumidifier"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnGr9GT",
+      "name": "VAC Pro Needle Kit"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnGrApe",
+      "name": "VAC Pro Filter and O-Ring Kit"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnQW6KX",
+      "name": "64 Audio U12t In-Ear Headphones"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIB6UFNA",
+      "name": "Plastic Needle"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjbKjAx",
+      "name": "Small Dehumidifier 3-Pack"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjjohGV",
+      "name": "64 Audio Nio In-Ear Headphones"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB44oFY",
+      "name": "Moondrop Variations Tribrid IEM"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB44sHt",
+      "name": "Moondrop Blessing 3 In-Ear Monitor (IEM) Hybrid Earphones"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB8uW2",
+      "name": "Moondrop Aria 2 IEMs"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB8xPu",
+      "name": "Moondrop Starfield II In-Ear Monitor (IEM)"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB8yx8",
+      "name": "Moondrop Rays Gaming IEMs"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB90Ze",
+      "name": "Moondrop May Dynamic Driver + Planar Magnetic Driver IEM (In-Ear Monitor)"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnNGOLg",
+      "name": "Moondrop Dawn Pro Portable DAC and Headphone Amp"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnTEgIK",
+      "name": "Moondrop Dark Saber In-Ear Headphones"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWxMkkd",
+      "name": "Moondrop Free DSP USB-C IEM Cable"
+    },
+    {
+      "_id": "n10eAegrGspodtsQw13THU",
+      "name": "Moondrop Alice True Wireless In-Ear Headphones"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8jrTr",
+      "name": "Moondrop Kadenz Flagship 10mm IEMs"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8l6fJ",
+      "name": "Moondrop Dawn Pro 2 Dual Portable DAC/Amp"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB41oi2",
+      "name": "xDuoo DM-01 Desktop DAC/Amp"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB42uia",
+      "name": "xDuoo TA-20 Plus Balanced Tube Headphone Amplifier"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB42wTA",
+      "name": "xDuoo MT-604 Balanced Tube Headphone Amplifier"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB46Kfr",
+      "name": "xDuoo XD-05 BAL Balanced DAC/Amp"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB6DOw",
+      "name": "xDuoo XD05 Pro (XD05Pro) Hard Nucleus Modular DAC/Amp"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB6EDC",
+      "name": "xDuoo TA-10R Tube DAC/Amp"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB76mM",
+      "name": "xDuoo TA-22 DAC/Tube Amp"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB7D0Y",
+      "name": "xDuoo TA-66 OTL Tube Amplifier"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB7GdO",
+      "name": "xDuoo TA-32 High-performance DAC &amp; Balanced Tube Class-A Headphone Amplifier"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8gbWv",
+      "name": "xDuoo XA-10 DAC/Headphone Amp"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8hoYl",
+      "name": "xDuoo TA-30 Tube Headphone Amp"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnN74UJ",
+      "name": "Chord Electronics Hugo 2 Portable DAC & Headphone Amplifier"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnN7qVp",
+      "name": "Chord Electronics 2go"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCgaYO",
+      "name": "Chord Electronics Anni"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCghLo",
+      "name": "Chord Electronics Alto Headphone Amplifier"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjgsEF8",
+      "name": "Chord Electronics Mojo 2 Portable DAC and Headphone Amplifier (4.4mm)"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkTTlM",
+      "name": "Chord Electronics Hugo TT2 - Open Box"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozG1vMai",
+      "name": "Chord Electronics Qutest"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWwEfPD",
+      "name": "Chord Electronics Hugo TT2"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWwzejm",
+      "name": "Chord Electronics Poly V3"
+    },
+    {
+      "_id": "n10eAegrGspodtsQvy4Nwc",
+      "name": "Chord Electronics Hugo 2 Portable DAC & Headphone Amplifier"
+    },
+    {
+      "_id": "n10eAegrGspodtsQvy4UmJ",
+      "name": "Chord Electronics Mojo 2 Portable DAC and Headphone Amplifier"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnGGjYE",
+      "name": "ddHiFi DJ30SE Headphone Adapter | 4.4mm M to 3.5mm F"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnGKKBJ",
+      "name": "ddHiFi DJ44AG Balanced Headphone Adapter | 2.5mm F to 4.4mm M"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnGOCvl",
+      "name": "ddHiFi DJ44MOJO Ground Pin Adapter | 4.4mm Adapter"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnGU178",
+      "name": "ddHiFi CZ180 Portable Case | HiFi Storage Case"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIB69jT4",
+      "name": "ddHiFi DJ35L L-Shaped Adapter | 3.5mm F to 3.5mm M"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIB6AeOS",
+      "name": "ddHiFi DJ44 Mark II Headphone Adapter | 4.4mm F to 2.5/3.5 M"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIB6CYWu",
+      "name": "ddHiFi DJ44L L-Shaped Adapter | 4.4mm F to 4.4mm M"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIB6FSgo",
+      "name": "ddHiFi HS270W Wood Headphone Stand | Headphone Stand"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjatqB5",
+      "name": "ddHiFi DJ44Gold Headphone Adapter | 4.4mm F to 3.5mm M"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjb1QJq",
+      "name": "ddHiFi CZ300 Portable Case | Large-Capacity Storage Bag"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnGTPsC",
+      "name": "SpinFit CP155 | Premium Eartips (2 Pairs)"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnGTr95",
+      "name": "SpinFit CP800 | Premium Eartips (2 Pairs)"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIB6Gc3i",
+      "name": "SpinFit AuraFine | Premium Silicone Eartips for AirPods Pro 3"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIB6GkTu",
+      "name": "SpinFit CP145 | Premium Eartips (2 Pairs)"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIB6GtX2",
+      "name": "SpinFit OMNI | Premium Universal Silicone Eartips"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIB6GvLG",
+      "name": "SpinFit SuperFine | Premium Silicone Eartips for AirPods Pro"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIB6Gyt8",
+      "name": "SpinFit W1 | Premium Silicone Eartips"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjb0rnH",
+      "name": "SpinFit CP1025 | Premium Eartips for TWS/AirPods"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjb0zLq",
+      "name": "SpinFit CP240 | Premium Double Flange Eartips (1 Pair)"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjb12LF",
+      "name": "SpinFit NEO | Premium Silicone Eartips"
+    },
+    {
+      "_id": "ZuUKzmkqDyQwdcwhxl99sR",
+      "name": "Sony WF-1000XM5 Wireless Noise Cancelling In-Ear Headphone Bundle with gSport Hardshell Case (Black)"
+    },
+    {
+      "_id": "ZuUKzmkqDyQwdcwhxl9BBF",
+      "name": "Sony WH-1000XM5 Wireless Over-Ear Noise Canceling Headphones (Pink)"
+    },
+    {
+      "_id": "ZuUKzmkqDyQwdcwhxwQLK7",
+      "name": "Sony Linkbuds Fit Truly Wireless Noise Cancelling Earbuds (White)"
+    },
+    {
+      "_id": "ZuUKzmkqDyQwdcwhxwQPfT",
+      "name": "Sony WF-1000XM5 Wireless Noise Cancelling In-Ear Headphone Bundle with gSport Hardshell Case (Silver)"
+    },
+    {
+      "_id": "dLGDVDmEEI2lV8CArIgSA0",
+      "name": "Sony WF-G700N INZONE Buds Truly Wireless Noise Cancelling Earbud Bundle with gSport Case (Black)"
+    },
+    {
+      "_id": "dLGDVDmEEI2lV8CArIgVky",
+      "name": "Sony WFL910 Linkbuds Truly Wireless Earbuds (Black)"
+    },
+    {
+      "_id": "dLGDVDmEEI2lV8CArIgbTY",
+      "name": "Sony WHCH720N/B Hybrid Wired & Wireless Bluetooth Noise Canceling Headphones"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozG2itJe",
+      "name": "Sony LinkBuds Truly Wireless Earbuds"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWtblsT",
+      "name": "Sony WH-1000XM5 Wireless Headphones"
+    },
+    {
+      "_id": "n10eAegrGspodtsQw12meG",
+      "name": "Sony WF-1000XM5 Wireless In-Ear Headphones"
+    },
+    {
+      "_id": "3O1ZNp54LWQGln4uEAUIek",
+      "name": "Aune Audio AR3"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnRGpuU",
+      "name": "Aune Audio BX2 Magnum Portable Headphone Amplifier"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnRGtU3",
+      "name": "Aune Audio YUKI Portable DAC and Headphone Amplifier"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnRKRM6",
+      "name": "Aune Audio N7 Headphone Amplifier"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnTCSk2",
+      "name": "Aune AR9000 Headphones"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnTCj6Z",
+      "name": "Aune AR5000 MK2 Headphones"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBChQCG",
+      "name": "Aune Audio A17 Headphone Amplifier"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBChWTc",
+      "name": "Aune Audio S17 Pro EVO Headphone Amplifier"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjmBwzI",
+      "name": "Aune Audio AR5000 Headphones"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB45LQY",
+      "name": "Cayin N3Ultra Triple Timbre Digital Audio Player"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PBA7rO",
+      "name": "Cayin RU9 Vacuum Tube Portable DAC/Amp"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PBA93S",
+      "name": "Cayin RU3 Portable USB DAC/Amp"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnG9Baw",
+      "name": "Cayin PH-32X | 2.5mm to 3.5mm Adapter"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCQgkq",
+      "name": "Cayin N3Ultra Case | Protective Leather DAP Case"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjamOn3",
+      "name": "Cayin PH-35X | 4.4mm to 3.5mm Adapter"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjap4tM",
+      "name": "Cayin PH-4X | 2.5mm to 4.4mm Adapter"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjk6xTX",
+      "name": "Cayin CP6 Case | Leather Case for CP6"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8lIgj",
+      "name": "Cayin RU7 1-Bit Resistor Network Portable DAC"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnGSzbV",
+      "name": "Eletech Baroque TWS | Luxury HiFi Eartips for TWS"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnGT3k3",
+      "name": "Eletech Baroque | Luxury HiFi Eartips for IEMs"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnH5lm0",
+      "name": "Eletech Aristotle | Copper IEM Upgrade Cable"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIB6GKjY",
+      "name": "Eletech Baroque AirPods Pro | Luxury HiFi Eartips for IEMs"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIB6cZHo",
+      "name": "Eletech Azrael | Copper Upgrade Cable for IEMs"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjbXdBN",
+      "name": "Eletech Cassiel | Silver-Plated Copper Upgrade Cable for IEMs"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjbXdtC",
+      "name": "Eletech Elegy to Lucia | Limited Flagship IEM Cable"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjbXftv",
+      "name": "Eletech Euclid | Silver IEM Upgrade Cable"
+    },
+    {
+      "_id": "hrPfqTtkIIoluttvs2PJ0R",
+      "name": "Eletech Baroque Stage | Luxury HiFi Eartips for IEMs"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIB6cRSG",
+      "name": "Dan Clark Audio DUMMER Cable | Headphone Cable for AEON and ETHER"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIB6cRiI",
+      "name": "Dan Clark Audio VIVO | Super Premium Headphone Cable"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCDRC4",
+      "name": "Dan Clark Audio E3 Headphones"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBDrDFo",
+      "name": "Dan Clark Audio NOIRE XO Headphones"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjjlPGd",
+      "name": "Dan Clark Audio AEON 2 Perforated Ear Pads"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozFz7Fdd",
+      "name": "Dan Clark Audio AEON 2 Noire Headphones"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozFz7HA5",
+      "name": "Dan Clark Audio Stealth Headphones"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWtbkq7",
+      "name": "Dan Clark Audio E3 Headphones - Open Box"
+    },
+    {
+      "_id": "n10eAegrGspodtsQvneQBQ",
+      "name": "Dan Clark Audio NOIRE X Headphones"
+    },
+    {
+      "_id": "0IQ2UjkdXJma4iOcjnwrjp",
+      "name": "SVS SoundPath Tri-Band Wireless Receiver for SoundPath Wireless Audio Adapter"
+    },
+    {
+      "_id": "GjMaRFaHMVTsBoyxtAJ8Hy",
+      "name": "SVS SoundPath Wireless Audio Adapter"
+    },
+    {
+      "_id": "GqkAHteRmu9rQ6VLnVwePp",
+      "name": "SVS SoundPath RCA Audio Interconnect Cable for Subwoofers - 16.4 ft. (5m)"
+    },
+    {
+      "_id": "GqkAHteRmu9rQ6VLnW2Roi",
+      "name": "SVS SoundPath RCA Audio Interconnect Cable for Subwoofers - 3.28 ft. (1m)"
+    },
+    {
+      "_id": "GqkAHteRmu9rQ6VLnW2nMv",
+      "name": "SVS SoundPath RCA Audio Interconnect Cable for Subwoofers - 39.36 ft. (12m)"
+    },
+    {
+      "_id": "apzyFbFDTajEZntmxstdpq",
+      "name": "SVS SoundPath RCA Audio Interconnect Cable for Subwoofers - 49.2 ft. (15m)"
+    },
+    {
+      "_id": "apzyFbFDTajEZntmxsuJqB",
+      "name": "SVS SoundPath RCA Audio Interconnect Cable for Subwoofers - 6.56 ft. (2m)"
+    },
+    {
+      "_id": "x2LkzHeaGqoEz8Jhogegs8",
+      "name": "SVS SoundPath RCA Audio Interconnect Cable for Subwoofers - 26.24 ft. (8m)"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB40XMj",
+      "name": "Apos x Audio-Technica ATH-R70x Refine Headphone"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB441ML",
+      "name": "Audio-Technica ATH-W2022 Closed-Back Dynamic Wooden Headphones"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB5Gjq",
+      "name": "Audio-Technica ATH-ADX7000 Headphones"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB83hK",
+      "name": "Audio-Technica ATH-M50x Wired Professional Monitor Headphones"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8c4h3",
+      "name": "Apos x Audio-Technica Refine Pads"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8inkf",
+      "name": "Audio-Technica ATH-MSR7b Headphone"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8iyTD",
+      "name": "Audio-Technica ATH-M40x Professional Studio Monitor Headphones"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8j1Bz",
+      "name": "Audio-Technica NARUKAMI ATH-AWKG Audiophile Closed-back Dynamic Wooden Headphones"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnQV78j",
+      "name": "Bowers & Wilkins PX8 Wireless ANC Headphones"
+    },
+    {
+      "_id": "dLGDVDmEEI2lV8CArIgBZs",
+      "name": "Bowers & Wilkins Pi6 In-Ear Bluetooth Wireless Earbuds (Forest Green)"
+    },
+    {
+      "_id": "dLGDVDmEEI2lV8CArIgBmG",
+      "name": "Bowers & Wilkins Pi6 In-Ear Bluetooth Wireless Earbuds (Glacier Blue)"
+    },
+    {
+      "_id": "dLGDVDmEEI2lV8CArIgC3I",
+      "name": "Bowers & Wilkins Pi6 In-Ear Bluetooth Wireless Earbuds (Storm Grey)"
+    },
+    {
+      "_id": "dLGDVDmEEI2lV8CArIgKzc",
+      "name": "Bowers & Wilkins Pi8 In-Ear Bluetooth True Wireless Earbuds (Midnight Blue)"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozG2j7uo",
+      "name": "Bowers & Wilkins PI7 True Wireless Noise Cancelling In-Ear Headphones"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozG2jAqp",
+      "name": "Bowers & Wilkins PI5 True Wireless Earbuds"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWwznPb",
+      "name": "Bowers & Wilkins Pi7 S2 Wireless In-Ear Headphones"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnGiczn",
+      "name": "Earpiece moisture wicks"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIB6P7bo",
+      "name": "Audio wipes - small"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIB6P8QC",
+      "name": "Jodi-Vac (Pro) IEM vacuum"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIB6P9CI",
+      "name": "Earpiece Soft Wrap by Comply"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjbDXfF",
+      "name": "Earpiece Cleaning Tool"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjbDai1",
+      "name": "Dry-Aid desiccant"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjbDc7f",
+      "name": "Jodi-Vac (Consumer) IEM vacuum"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnN82fv",
+      "name": "Eversolo DMP-A8 All-In-One Streamer, DAC, Preamp"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnN8E5N",
+      "name": "Eversolo DMP-A6 Master Edition Streamer and DAC"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjgtLZ7",
+      "name": "Eversolo DMP-A6 Streamer and DAC Gen 2"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkThBz",
+      "name": "Eversolo DAC-Z8 Desktop DAC and Amp"
+    },
+    {
+      "_id": "ZuUKzmkqDyQwdcwhxlJjyP",
+      "name": "Eversolo DMP-A8 Network Streamer with Built-In DAC"
+    },
+    {
+      "_id": "n10eAegrGspodtsQw12tbj",
+      "name": "Eversolo DMP-A8 All-In-One Streamer, DAC Amp, Preamp"
+    },
+    {
+      "_id": "n10eAegrGspodtsQw134Ce",
+      "name": "Eversolo DMP-A6 Streamer and DAC"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnRH2Ru",
+      "name": "Denon DNP-2000NE Streaming Music Player and Preamplifier - Open Box"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBDsCuM",
+      "name": "Denon AH-D9200 Headphones"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBDsKN0",
+      "name": "Denon PerL True Wireless In-Ear Headphones"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkSVqY",
+      "name": "Denon DNP-2000NE Streaming Music Player and Preamplifier"
+    },
+    {
+      "_id": "ZuUKzmkqDyQwdcwhxlIcNL",
+      "name": "Denon DCD-1700NE CD/SACD Player with Advanced AL32 Processing Plus (Black)"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWtbmis",
+      "name": "Denon AHD9200 Headphones"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWtbnF3",
+      "name": "Denon AH-D7200 Headphones"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB40gAe",
+      "name": "GUSTARD R30 Fully-Discrete R2R Network Streaming DAC (Apos Certified)"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB4112Z",
+      "name": "GUSTARD DAC-R26II Network Streaming R2R DAC"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8fHrh",
+      "name": "GUSTARD R30 Fully-Discrete R2R Network Streaming DAC"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8fIQr",
+      "name": "GUSTARD X30 4xES9039SPRO Streamer Digital to Analog Convertor (DAC)"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8fkYr",
+      "name": "GUSTARD X26 III Dual ES9039SPRO Digital to Analog Convertor (DAC)"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8fsmh",
+      "name": "GUSTARD DAC-R26II Network Streaming R2R DAC (Apos Certified)"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB40rkU",
+      "name": "Matrix Audio MS-1 Flagship Music Streamer"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB7h5O",
+      "name": "Matrix TS-1 All-in-One Streamer/ Pre-Amplifier/ Headphone Amplifier"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozG1vJ1L",
+      "name": "Matrix Audio Element i Network Streamer, DAC/Amp"
+    },
+    {
+      "_id": "n10eAegrGspodtsQvy3lt9",
+      "name": "Matrix Audio X-Sabre 3 Desktop DAC"
+    },
+    {
+      "_id": "n10eAegrGspodtsQw13Qpt",
+      "name": "Matrix Audio Element X - Open Box"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8fa0r",
+      "name": "Matrix NT-1 Network Transport"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB42MQD",
+      "name": "YULONG DAART Aurora Desktop DAC/Pre-amp/ Headphone Amp"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB5Tcg",
+      "name": "YULONG DAART Asura Music Streamer & Desktop DAC & Headphone Amplifier"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB6how",
+      "name": "Yulong Canary II DAC/Amp"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB7cLm",
+      "name": "YULONG DAART A39 Desktop R2R Pre-Amp & Headphone Amplifier"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8fV4x",
+      "name": "YULONG DAART D39 ESS9039PRO Music Streamer & Desktop DAC"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8gx1X",
+      "name": "Yulong Aquila II DAC/Amp"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnN7D4q",
+      "name": "Questyle M15i USB Portable DAC & Headphone Amplifier"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCgRj0",
+      "name": "Questyle CMA 18 Master DAC and Headphone Amp"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCgUJK",
+      "name": "Questyle CMA Twelve Desktop DAC & Amp"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjgsda0",
+      "name": "Questyle M12i Portable USB DAC & Headphone Amp"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozG1vTNo",
+      "name": "Questyle M12i Portable USB DAC & Headphone Amp"
+    },
+    {
+      "_id": "n10eAegrGspodtsQvy3jJm",
+      "name": "Questyle CMA Fifteen Desktop DAC and Headphone Amplifier"
+    },
+    {
+      "_id": "GqkAHteRmu9rQ6VLnW1fa9",
+      "name": "Bose S1 Pro+ Portable Bluetooth Wireless PA System"
+    },
+    {
+      "_id": "Y7l1IhzX2fnyiano4irsdl",
+      "name": "Bose QuietComfort Wireless Noise Cancelling Ultra Earbuds - 2024 (Lunar Blue)"
+    },
+    {
+      "_id": "ZuUKzmkqDyQwdcwhxl8p4E",
+      "name": "Bose Ultra Open Bluetooth Earbuds with Spatial Audio & Water Resistance (Moonstone Blue)"
+    },
+    {
+      "_id": "ZuUKzmkqDyQwdcwhxl8saP",
+      "name": "Bose QuietComfort Ultra Wireless Noise Cancelling Earbuds (Black)"
+    },
+    {
+      "_id": "dLGDVDmEEI2lV8CArAdTYq",
+      "name": "Bose Ultra Open Bluetooth Earbuds with Spatial Audio & Water Resistance (White Smoke)"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnGS7NA",
+      "name": "Campfire Audio Flight | Curated Eartip Pack"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnGSBlG",
+      "name": "Campfire Audio Marshmallows Isolating Foam Eartips | Replacement Eartips"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnQrHuz",
+      "name": "Campfire Audio Compact Leather Case | IEM Case"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIB6Fxyi",
+      "name": "Campfire Audio Silicone Eartips | Replacement Eartips"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjk6mXy",
+      "name": "Campfire Audio IEM Case | IEM Case"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnNFt41",
+      "name": "EarMen Angel Portable DAC and Headphone Amplifier"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkU57D",
+      "name": "EarMen ST-Amp Fully Balanced DAC and Headphone Amplifier"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkUefp",
+      "name": "EarMen Ch-Amp Headphone Amplifier - Open Box"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozG1vI8F",
+      "name": "EarMen Colibri Portable DAC and Headphone Amplifier"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWwETNc",
+      "name": "EarMen Tradutto Desktop DAC"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnRL7UE",
+      "name": "Woo Audio WA7 Fireflies 3rd Gen Headphone Tube Amplifier"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnRLHGc",
+      "name": "Woo Audio WA6 Desktop Tube Headphone Amplifier"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBAKFRO",
+      "name": "Woo Audio Tube Mini Portable DAC and Tube Amp"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBChpSq",
+      "name": "Woo Audio WA23 LUNA"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozG1vIfh",
+      "name": "Woo Audio WA8 Eclipse Portable Vacuum Tube Headphone Amp & DAC"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB3zTLq",
+      "name": "Silicone Case for Samsung Galaxy Buds3 Pro"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB494I",
+      "name": "Find Tips for your Device"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB4Lju",
+      "name": "Earbud Cleaning Kit"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIB8e38u",
+      "name": "Comply T100 Foam Ear Tips"
+    },
+    {
+      "_id": "E5AJbuTajbv7O6i4rY3WSR",
+      "name": "HEDDphone Balanced 4-Pin XLR Cable"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBAK0fG",
+      "name": "HEDD Audio HEDDPhone® Two"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjgzEw1",
+      "name": "HEDD Audio HEDDphone D1 Headphones"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjh3egq",
+      "name": "HEDD Audio GTC HEDDphone TWO Cable"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnGT5JE",
+      "name": "Final Audio FUSION-G | Triple Hybrid Structure Ear Tips"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjb0hIg",
+      "name": "Final Audio Type E | Silicone Ear Tips"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjmCnfl",
+      "name": "Final Audio D7000 Headphones"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWx071u",
+      "name": "Final Audio ZE8000 True Wireless In-Ear Headphones"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnQUmde",
+      "name": "T+A Solitaire T"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnTDpsi",
+      "name": "T+A Solitaire P-SE Headphones - Open Box"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBDrefE",
+      "name": "T+A Solitaire P-SE Headphones"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjmCuqj",
+      "name": "T+A Solitaire P Headphones"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnQWwrv",
+      "name": "TRUTHEAR x Crinacle ZERO:Red In-Ear Headphones"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnQX1VZ",
+      "name": "TRUTHEAR x Crinacle ZERO In-Ear Headphones"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCEzHC",
+      "name": "TRUTHEAR HEXA In-Ear Headphones"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjjppVn",
+      "name": "TRUTHEAR NOVA In-Ear Headphones"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnRKsJY",
+      "name": "Ferrum Oor Desktop Headphone Amplifier"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjguCqf",
+      "name": "Ferrum WANDLA 2.0 DAC"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkTlXf",
+      "name": "Ferrum WANDLA HP DAC and Headphone Amplifier"
+    },
+    {
+      "_id": "n10eAegrGspodtsQvy4b6u",
+      "name": "Ferrum WANDLA DAC - GoldenSound Edition"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBAL1Lw",
+      "name": "HiFi Rose RS520 Network Streamer & Integrated Amplifier"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjh1b8Y",
+      "name": "HiFi Rose RS150B Reference HiFi Network Streamer"
+    },
+    {
+      "_id": "ZuUKzmkqDyQwdcwhxlJkHG",
+      "name": "HiFi Rose RD160 DAC (Silver)"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozG2j6zk",
+      "name": "HiFi Rose RS250A Network Streamer"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBChGhe",
+      "name": "Enleum Amp-23r Desktop Headphone & Speaker Amplifier"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkVKDF",
+      "name": "Enleum HPA-23rm Headphone Amplifier"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkVOLR",
+      "name": "Enleum Amp 23-RMH Headphone Amplifier"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozG1vPuL",
+      "name": "Enleum Amp-23r Desktop Headphone & Speaker Amplifier - Open Box"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjh34kd",
+      "name": "Feliks Audio Echo Classic"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjh3AqB",
+      "name": "Feliks Audio Envy Flagship Desktop Headphone Tube Amplifier"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozG1vExT",
+      "name": "Feliks Audio Echo MK II"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWwEeK6",
+      "name": "Feliks Audio Envy Flagship Desktop Headphone Tube Amplifier - Open Box"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozG1vTYd",
+      "name": "SPL Phonitor XE Desktop Headphone Amplifier with Optional DAC"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWwEdoq",
+      "name": "SPL Phonitor One D"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWwEenW",
+      "name": "SPL Phonitor One"
+    },
+    {
+      "_id": "n10eAegrGspodtsQvy4cvd",
+      "name": "SPL Phonitor X Desktop Headphone Amplifier with Optional DAC"
+    },
+    {
+      "_id": "Agdc7UdudmikAzJtKWUOut",
+      "name": "CrinEar Reference In-Ear Headphones"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCE9om",
+      "name": "CrinEar Daybreak In-Ear Headphones"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjh0awA",
+      "name": "CrinEar Protocol Max"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB41Jlm",
+      "name": "SMSL VMV D3 Advanced R-2R DAC (Digital-to-Analog Converter)"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWwEaXf",
+      "name": "SMSL SU-6 Desktop DAC"
+    },
+    {
+      "_id": "n10eAegrGspodtsQvy3cvI",
+      "name": "SMSL SU-X Desktop DAC"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB5pis",
+      "name": "LADDER Czerny R2R Desktop DAC"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB6IuA",
+      "name": "LADDER Chopin Desktop R2R Pre-amplifier"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8fuQf",
+      "name": "LADDER Schumann Desktop DAC"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB7LN0",
+      "name": "Singxer SA-2 Fully-balanced Headphone Amplifier"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozG1vG7I",
+      "name": "Singxer SA1 V2 Headphone Amplifier"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8hyzj",
+      "name": "Singxer SA-2 Fully-balanced Headphone Amplifier (Apos Certified)"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB7nEI",
+      "name": "Cables for Rock Lobster IEM"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB7o7q",
+      "name": "Magia Modular Cable Kit"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8duy3",
+      "name": "Apos x SATCHELZ Leather Clamshell IEM Carry Case"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB9jN4",
+      "name": "ES Lab EX-1a Electrostatic Headphones (Apos Certified)"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8kmvh",
+      "name": "ES Lab ES-2a 90mm Electrostatic Headphones"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8ko41",
+      "name": "ES Lab EX-1a Electrostatic Headphones"
+    },
+    {
+      "_id": "IysVzF92P1Ckj0vYj2qiBH",
+      "name": "JBL Live 670NC Wireless On-Ear Adaptive Noise Cancelling Headphones (White)"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWwzkms",
+      "name": "JBL Tour Pro 2 True Wireless In-Ear Headphones"
+    },
+    {
+      "_id": "x2LkzHeaGqoEz8Jhogc6j0",
+      "name": "JBL Wireless Two Microphone System with Dual-Channel Receiver"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnRHed9",
+      "name": "Cambridge Audio DacMagic 200M - Open Box"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkStf2",
+      "name": "Cambridge Audio DacMagic 200M"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjkSwUK",
+      "name": "Cambridge Audio DacMagic 100"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnTDDVo",
+      "name": "Warwick Acoustics Bravura Headphones"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnTDN2e",
+      "name": "Aperio - GoldenSound Edition"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBDrPvO",
+      "name": "Warwick Acoustics Bravura Headphones - Open Box"
+    },
+    {
+      "_id": "ZuUKzmkqDyQwdcwhxl9CGa",
+      "name": "Soundcore Aerofit 2 Wireless Open-Ear Headphones (Black)"
+    },
+    {
+      "_id": "ZuUKzmkqDyQwdcwhxl9DU0",
+      "name": "Soundcore Aerofit 2 Wireless Open-Ear Headphones (Green)"
+    },
+    {
+      "_id": "dLGDVDmEEI2lV8CArIgbyW",
+      "name": "Soundcore Q20i Wireless Headphones (White)"
+    },
+    {
+      "_id": "ZuUKzmkqDyQwdcwhxlJpXB",
+      "name": "McIntosh DS200 Streaming DAC"
+    },
+    {
+      "_id": "dLGDVDmEEI2lV8CArAcgSi",
+      "name": "McIntosh MHA200 2-Channel Vacuum Tube Headphone Amplifier"
+    },
+    {
+      "_id": "x2LkzHeaGqoEz8Jhogdmti",
+      "name": "McIntosh MQ112 Environmental Equalizer"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWwzwUF",
+      "name": "Noble Audio FoKus Apollo Wireless Headphones"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8j4QP",
+      "name": "Noble FoKus Apollo ANC Over-Ear Headphones"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8j8S3",
+      "name": "Noble FoKus Apollo ANC Over-Ear Headphones (Apos Certified)"
+    },
+    {
+      "_id": "C0JSb66CHOxy1G14ni5ga1",
+      "name": "Kanto Headphone Stand"
+    },
+    {
+      "_id": "GjMaRFaHMVTsBoyxtAJBKY",
+      "name": "Kanto H3 Universal Desktop Headphone Stand with Adapter Holder"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB41H2s",
+      "name": "VMV D2R MKII Desktop DAC (Digital-to-Analog Converter)"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB41seL",
+      "name": "VMV P2 MKII Desktop Headphone Amplifier"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB6tb0",
+      "name": "Fosi Audio Q4 Mini Stereo Gaming DAC & Headphone Amplifier Audio"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB6xuA",
+      "name": "Fosi Audio K5 Pro Gaming DAC/ Headphone Amplifier"
+    },
+    {
+      "_id": "GjMaRFaHMVTsBoyxtAJDT4",
+      "name": "Sanus Headphone Stand for Sonos Ace (Black)"
+    },
+    {
+      "_id": "fisKNZUL2oYuqkoQMTzLCp",
+      "name": "Sanus Headphone Stand for Sonos Ace (White)"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnKeGom",
+      "name": "Polk Audio RC80I 2 Way In Ceiling Speakers - 4 Pack (White)"
+    },
+    {
+      "_id": "apzyFbFDTajEZntmxssHP5",
+      "name": "Polk Audio RC85i 2 Way In Wall Speakers - 4 Pack (White)"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnNHjjW",
+      "name": "Bluesound Powernode Edge Streamer and Amplifier"
+    },
+    {
+      "_id": "n10eAegrGspodtsQw13RKz",
+      "name": "Bluesound Node Wireless Music Streamer"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnQWKR8",
+      "name": "Thieaudio Monarch MKIII In-Ear Headphones"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCEZtk",
+      "name": "Thieaudio Hype 4 In-Ear Headphones"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnQXHgR",
+      "name": "Dunu Mirai In-Ear Headphones"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjjpxmB",
+      "name": "Dunu Studio SA6 MK2 In-Ear Headphones"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnTDSQw",
+      "name": "Austrian Audio The Composer Headphones"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCQJvQ",
+      "name": "Austrian Audio The Composer Travel Case | Hard Case"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBAHVcm",
+      "name": "Etched Headphone Cable"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBAHZj0",
+      "name": "Etched Headphone Cable for Sennheiser HD 600 Series"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBCF9jM",
+      "name": "Symphonium Audio Titan In-Ear Headphones"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjjqHIM",
+      "name": "Symphonium Audio Crimson In-Ear Headphones"
+    },
+    {
+      "_id": "ZuUKzmkqDyQwdcwhxlIfVH",
+      "name": "Marantz CD 60 CD Player (Silver Gold)"
+    },
+    {
+      "_id": "ZuUKzmkqDyQwdcwhxlIflR",
+      "name": "Marantz SACD10 CD Player (Black)"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozG1vF9H",
+      "name": "Violectric V590 Desktop Headphone DAC/Amp"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWwEZTT",
+      "name": "Violectric Chronos Portable USB DAC/Amp"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8jtEr",
+      "name": "Kinera Freya In-Ear Monitor (IEM) Earphone"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8jv3N",
+      "name": "Kinera NANNA In-Ear Monitor (IEM) Earphone"
+    },
+    {
+      "_id": "DZc43yHr6ydfgE7zB462xz",
+      "name": "HarmonicDyne x Z Reviews Eris 50mm Dynamic Driver Headphones"
+    },
+    {
+      "_id": "GPjMdcfFWZVrKyR2PB5L30",
+      "name": "Salad Halo Headphone Stand"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnNA955",
+      "name": "Zähl HM1 Reference Desktop Headphone Amplifier"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnNIk7B",
+      "name": "Naim Uniti Atom Amplifier Headphone Edition"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnQVOZL",
+      "name": "Hisenior Audio Mega5-EST In-Ear Headphones"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnQr68D",
+      "name": "Audma Brioso Case | Black Leather Case for Brioso"
+    },
+    {
+      "_id": "MrEMtYwMtrFDGWmRnRJqYN",
+      "name": "Auris Audio Euterpe"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIB6cQtu",
+      "name": "ALO audio Reference 8 | Mini to Mini Cable"
+    },
+    {
+      "_id": "PHPYj28HJdPDHAaIBChaz2",
+      "name": "Luxman P-100 Centennial Headphone Amplifier"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjb1MSV",
+      "name": "Symbio W Eartips | Hybrid Silcone/Foam Eartips"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjguegb",
+      "name": "RME ADI-2 DAC FS Desktop DAC & Headphone Amp"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjh3ghZ",
+      "name": "Crystal Cable DUET for Focal Utopia"
+    },
+    {
+      "_id": "Pn6oyV4Ks5AcNbecjmDlGL",
+      "name": "Softears Volume S In-Ear Headphones"
+    },
+    {
+      "_id": "Y7l1IhzX2fnyiano57b1dx",
+      "name": "Ruark Audio TV Mount for R810 High Fidelity Radiogram"
+    },
+    {
+      "_id": "Y7l1IhzX2fnyiano58Giz2",
+      "name": "JL Audio 2-Channel Core RCA Male to RCA Male Cables - 6 ft. (1.82m) - 2-Pack"
+    },
+    {
+      "_id": "apzyFbFDTajEZntmxssRcT",
+      "name": "Yamaha NS-IC800 140 Watt 8 Inch 2 Way In Ceiling Speakers - Pair (White)"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozG1vKTr",
+      "name": "Lake People G111 Desktop Headphone Amplifier"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozG1vNxK",
+      "name": "Niimbus US 5 Desktop Headphone Amplifier"
+    },
+    {
+      "_id": "k27n1AQuIbSr5iozG2iyZJ",
+      "name": "Mark Levinson № 5909 Active Noise Cancellation Headphones"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWwETaU",
+      "name": "LeeLoo Desktop Tube Headphone Amplifier"
+    },
+    {
+      "_id": "moXlkADK7m1DHgGwWwEUpi",
+      "name": "DAC204 Desktop DAC"
+    },
+    {
+      "_id": "n10eAegrGspodtsQvy4Df8",
+      "name": "Benchmark HPA4 Desktop Headphone Amplifier (SILVER)"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8eR7h",
+      "name": "SJY Zeph Open-Back Planar Magnetic Headphones"
+    },
+    {
+      "_id": "xMEqvkRBbdrlJXyFG8i9Jf",
+      "name": "Orchard Audio Valencia Balanced Headphone Power Amp"
+    }
+  ],
+  "committedPatches": 708,
+  "committedDocuments": 708
+}

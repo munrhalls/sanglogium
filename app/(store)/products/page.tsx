@@ -1,7 +1,7 @@
 import React from 'react';
 import { getAllLeafKeys } from '@/data/catalogue';
 import { getProductsCount, getProductsChunk } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
-import { getBrandFacets, brandLabelMap } from '@/sanity-cms/lib/products/getBrandFacets';
+import { getFilterFacets } from '@/sanity-cms/lib/products/getFilterFacets';
 import { getCategoryPriceRange } from '@/sanity-cms/lib/products/getCategoryPriceRange';
 import { resolvePriceBounds } from '@/lib/catalogue/priceBounds';
 import { getWishlistProductIds } from '@/lib/wishlist';
@@ -16,6 +16,9 @@ import { ActiveFilterChips } from '@/app/components/features/filters/ActiveFilte
 import { isFacetedQuery } from '@/lib/catalogue/seo';
 import { loadFilterSort, SORT_DEFAULT } from '@/lib/catalogue/filterSortParams';
 import { buildProductQuery } from '@/lib/catalogue/buildProductQuery';
+import type { ProductQueryState } from '@/lib/catalogue/buildProductQuery';
+
+export const dynamic = 'force-dynamic';
 
 const PER_PAGE = 24;
 
@@ -29,27 +32,25 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
   const page = typeof pageValue === 'string' ? Number(pageValue) : 1;
   const allKeys = getAllLeafKeys();
 
-  const { sort, minPrice, maxPrice, inStock, brand } = loadFilterSort(query);
-  const { orderClause, whereClause, params } = buildProductQuery({ sort, minPrice, maxPrice, inStock, brand });
-  // Brand-excluded where clause: the brand facet is disjunctive — price / in-stock
-  // narrow it, the brand selection itself does not.
-  const { whereClause: brandFacetWhere, params: brandFacetParams } = buildProductQuery({ sort, minPrice, maxPrice, inStock });
-  const filtersActive =
-    sort !== SORT_DEFAULT ||
-    minPrice != null ||
-    maxPrice != null ||
-    inStock ||
-    brand.length > 0;
+  const state = loadFilterSort(query) as ProductQueryState;
+  const { orderClause, whereClause, params } = buildProductQuery(state);
+  const filtersActive = Object.entries(state).some(([key, value]) => {
+    if (key === 'sort') return value !== SORT_DEFAULT;
+    if (key === 'minPrice' || key === 'maxPrice') return value != null;
+    if (typeof value === 'boolean') return value;
+    if (Array.isArray(value)) return value.length > 0;
+    return false;
+  });
 
-  const [totalCount, brandFacets, priceRange, wishlistProductIds] = await Promise.all([
+  const [totalCount, allFacets, priceRange, wishlistProductIds] = await Promise.all([
     getProductsCount({ keys: allKeys, whereClause, params }),
-    getBrandFacets({ keys: allKeys, whereClause: brandFacetWhere, params: brandFacetParams, selectedSlugs: brand }),
+    getFilterFacets({ keys: allKeys, state }),
     // FULL category price span — not narrowed by active filters, so the max
     // handle can always be dragged back up past the current selection.
     getCategoryPriceRange({ keys: allKeys }),
     getWishlistProductIds(),
   ]);
-  const brandLabels = brandLabelMap(brandFacets);
+  const brandLabels = allFacets.brandLabels;
   const priceBounds = resolvePriceBounds(priceRange);
 
   const totalPages = Math.ceil(totalCount / PER_PAGE);
@@ -69,9 +70,9 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
         <EmptyResults filtersActive={filtersActive} />
       ) : (
         <div className="flex flex-col lg-touch:flex-row lg-desktop:flex-row gap-8">
-          <FilterSidebar brands={brandFacets} priceBounds={priceBounds} />
+          <FilterSidebar facets={allFacets} priceBounds={priceBounds} />
           <div className="min-w-0 flex-1">
-            <MobileFilterBar brands={brandFacets} priceBounds={priceBounds} />
+            <MobileFilterBar facets={allFacets} priceBounds={priceBounds} />
             <ActiveFilterChips brandLabels={brandLabels} />
             <SortBar totalCount={totalCount} />
             <ChunkedProductGrid chunkPromises={chunkPromises} wishlistProductIds={wishlistProductIds} />

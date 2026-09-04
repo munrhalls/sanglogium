@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { resolveSlugToId, unrollDescendantKeys } from '@/data/catalogue';
 import { getCategoryMetadata } from '@/sanity-cms/lib/products/getCategoryMetadata';
 import { getProductsCount, getProductsChunk } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
-import { getBrandFacets, brandLabelMap } from '@/sanity-cms/lib/products/getBrandFacets';
+import { getFilterFacets } from '@/sanity-cms/lib/products/getFilterFacets';
 import { getCategoryPriceRange } from '@/sanity-cms/lib/products/getCategoryPriceRange';
 import { resolvePriceBounds } from '@/lib/catalogue/priceBounds';
 import { getWishlistProductIds } from '@/lib/wishlist';
@@ -17,8 +17,11 @@ import { MobileFilterBar } from '@/app/components/features/filters/MobileFilterB
 import { ActiveFilterChips } from '@/app/components/features/filters/ActiveFilterChips';
 import Breadcrumbs from '@/app/components/ui/breadcrumbs/CategoryBreadcrumbs';
 import { isFacetedQuery, canonicalCategoryPath } from '@/lib/catalogue/seo';
-import { loadFilterSort, SORT_DEFAULT } from '@/lib/catalogue/filterSortParams';
+import { loadFilterSort, SORT_DEFAULT, FILTER_SORT_KEYS } from '@/lib/catalogue/filterSortParams';
 import { buildProductQuery } from '@/lib/catalogue/buildProductQuery';
+import type { ProductQueryState } from '@/lib/catalogue/buildProductQuery';
+
+export const dynamic = 'force-dynamic';
 
 const PER_PAGE = 24;
 
@@ -41,28 +44,26 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   const page = typeof pageValue === 'string' ? Number(pageValue) : 1;
   const descendantKeys = unrollDescendantKeys(nodeId);
 
-  const { sort, minPrice, maxPrice, inStock, brand } = loadFilterSort(query);
-  const { orderClause, whereClause, params: queryParams } = buildProductQuery({ sort, minPrice, maxPrice, inStock, brand });
-  // Brand-excluded where clause: the brand facet is disjunctive — price / in-stock
-  // narrow it, the brand selection itself does not.
-  const { whereClause: brandFacetWhere, params: brandFacetParams } = buildProductQuery({ sort, minPrice, maxPrice, inStock });
-  const filtersActive =
-    sort !== SORT_DEFAULT ||
-    minPrice != null ||
-    maxPrice != null ||
-    inStock ||
-    brand.length > 0;
+  const state = loadFilterSort(query) as ProductQueryState;
+  const { orderClause, whereClause, params: queryParams } = buildProductQuery(state);
 
-  const [metadata, totalCount, brandFacets, priceRange, wishlistProductIds] = await Promise.all([
+  const filtersActive = FILTER_SORT_KEYS.some((key) => {
+    if (key === 'sort') return state.sort !== SORT_DEFAULT;
+    if (key === 'minPrice' || key === 'maxPrice') return state[key] != null;
+    const value = state[key];
+    if (Array.isArray(value)) return value.length > 0;
+    return value === true;
+  });
+
+  const [metadata, totalCount, facets, priceRange, wishlistProductIds] = await Promise.all([
     getCategoryMetadata(nodeId),
     getProductsCount({ keys: descendantKeys, whereClause, params: queryParams }),
-    getBrandFacets({ keys: descendantKeys, whereClause: brandFacetWhere, params: brandFacetParams, selectedSlugs: brand }),
+    getFilterFacets({ keys: descendantKeys, state }),
     // FULL category price span — not narrowed by active filters, so the max
     // handle can always be dragged back up past the current selection.
     getCategoryPriceRange({ keys: descendantKeys }),
     getWishlistProductIds(),
   ]);
-  const brandLabels = brandLabelMap(brandFacets);
   const priceBounds = resolvePriceBounds(priceRange);
 
   if (!metadata) {
@@ -94,10 +95,10 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
         <EmptyResults filtersActive={filtersActive} />
       ) : (
         <div className="flex flex-col lg-touch:flex-row lg-desktop:flex-row gap-8">
-          <FilterSidebar brands={brandFacets} priceBounds={priceBounds} />
+          <FilterSidebar facets={facets} priceBounds={priceBounds} />
           <div className="min-w-0 flex-1">
-            <MobileFilterBar brands={brandFacets} priceBounds={priceBounds} />
-            <ActiveFilterChips brandLabels={brandLabels} />
+            <MobileFilterBar facets={facets} priceBounds={priceBounds} />
+            <ActiveFilterChips brandLabels={facets.brandLabels} />
             <SortBar totalCount={totalCount} />
             <ChunkedProductGrid chunkPromises={chunkPromises} wishlistProductIds={wishlistProductIds} />
             <Pagination

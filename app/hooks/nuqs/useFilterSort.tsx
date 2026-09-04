@@ -42,26 +42,6 @@ export function usePageReset() {
   return useCallback(() => setPage(null), [setPage]);
 }
 
-type FilterKey = keyof typeof filterSortParsers;
-
-type FilterParamValueMap = {
-  sort: SortValue;
-  minPrice: number | null;
-  maxPrice: number | null;
-  inStock: boolean;
-  brand: string[];
-};
-
-type FilterParamReturn<K extends FilterKey> = [
-  FilterParamValueMap[K],
-  (
-    next:
-      | FilterParamValueMap[K]
-      | null
-      | ((old: FilterParamValueMap[K]) => FilterParamValueMap[K] | null),
-  ) => void,
-];
-
 /**
  * Read/write a single contract param (`sort`, `minPrice`, `brand`, …) with the
  * shared URL options applied and the page reset wired in. F2–F6 use this so the
@@ -70,16 +50,20 @@ type FilterParamReturn<K extends FilterKey> = [
  *
  * `optionOverrides` lets F3's price control switch to `history: "replace"` for
  * its debounced drag writes.
+ *
+ * Returns `any` because the set of filter facets is driven by the dynamic
+ * facet-map; consumers (F2–F6) cast to their concrete parser types.
  */
-export function useFilterParam<K extends FilterKey>(
-  key: K,
+export function useFilterParam(
+  key: string,
   optionOverrides?: { history?: "push" | "replace" },
-): FilterParamReturn<K> {
+): [any, any] {
   const resetPage = usePageReset();
 
+  const parser = (filterSortParsers as Record<string, any>)[key];
   const [value, setValueRaw] = useQueryState(
     key,
-    filterSortParsers[key].withOptions({
+    parser.withOptions({
       ...FILTER_SORT_URL_OPTIONS,
       ...optionOverrides,
       startTransition,
@@ -102,7 +86,7 @@ export function useFilterParam<K extends FilterKey>(
     [setValueRaw, resetPage, startTransition],
   );
 
-  return [value, setValue] as unknown as FilterParamReturn<K>;
+  return [value, setValue] as [any, any];
 }
 
 /**

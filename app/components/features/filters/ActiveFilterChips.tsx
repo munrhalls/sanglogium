@@ -7,7 +7,9 @@ import {
   SORT_DEFAULT,
   filterSortParsers,
   FILTER_SORT_URL_OPTIONS,
+  type SortValue,
 } from "@/lib/catalogue/filterSortParams";
+import { FILTER_FACETS } from "@/lib/catalogue/facetMap";
 import {
   useFilterParam,
   useClearAllFilters,
@@ -53,9 +55,18 @@ const sortLabel = (value: string) =>
 export function ActiveFilterChips({
   brandLabels = {},
 }: ActiveFilterChipsProps) {
-  const [sort, setSort] = useFilterParam("sort");
-  const [inStock, setInStock] = useFilterParam("inStock");
-  const [brand, setBrand] = useFilterParam("brand");
+  const [sort, setSort] = useFilterParam("sort") as unknown as [
+    SortValue,
+    (v: SortValue | ((prev: SortValue) => SortValue)) => void,
+  ];
+  const [inStock, setInStock] = useFilterParam("inStock") as unknown as [
+    boolean,
+    (v: boolean | ((prev: boolean) => boolean)) => void,
+  ];
+  const [brand, setBrand] = useFilterParam("brand") as unknown as [
+    string[],
+    (v: string[] | ((prev: string[]) => string[])) => void,
+  ];
   const [{ minPrice, maxPrice }, setPrice] = useQueryStates(
     {
       minPrice: filterSortParsers.minPrice,
@@ -65,6 +76,14 @@ export function ActiveFilterChips({
   );
   const resetPage = usePageReset();
   const clearAll = useClearAllFilters();
+
+  // Stable hook-order access to the remaining filterAttributes facet params.
+  type FacetSetter = [unknown, (next: unknown | ((prev: unknown) => unknown)) => void];
+  const facetSetters = new Map<string, FacetSetter>();
+  for (const facet of FILTER_FACETS) {
+    if (facet.urlParam === 'price' || facet.urlParam === 'brand' || facet.urlParam === 'inStock') continue;
+    facetSetters.set(facet.urlParam, useFilterParam(facet.urlParam) as unknown as FacetSetter);
+  }
 
   const chips: Chip[] = [];
 
@@ -109,6 +128,45 @@ export function ActiveFilterChips({
       label: `Sort: ${sortLabel(sort)}`,
       onRemove: () => setSort(SORT_DEFAULT),
     });
+  }
+
+  // Render chips for the remaining filterAttributes facets.
+  for (const facet of FILTER_FACETS) {
+    if (
+      facet.urlParam === 'price' ||
+      facet.urlParam === 'brand' ||
+      facet.urlParam === 'inStock'
+    ) {
+      continue;
+    }
+
+    const setterTuple = facetSetters.get(facet.urlParam);
+    if (!setterTuple) continue;
+    const [rawValue, setRawValue] = setterTuple;
+
+    if (facet.type === 'boolean') {
+      if (rawValue === true) {
+        chips.push({
+          key: facet.urlParam,
+          label: facet.facet,
+          onRemove: () => (setRawValue as (v: boolean) => void)(false),
+        });
+      }
+      continue;
+    }
+
+    const selected = Array.isArray(rawValue) ? rawValue : [];
+    for (const value of selected) {
+      const slug = String(value);
+      chips.push({
+        key: `${facet.urlParam}:${slug}`,
+        label: facet.urlParam === 'compatibility' ? slug : brandLabels[slug] ?? slug,
+        onRemove: () =>
+          (setRawValue as (v: string[] | ((prev: string[]) => string[])) => void)((prev: string[]) =>
+            prev.filter((v) => v !== slug)
+          ),
+      });
+    }
   }
 
   if (chips.length === 0) return null;

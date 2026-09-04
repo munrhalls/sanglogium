@@ -4,7 +4,8 @@ import React, { useState } from 'react';
 import { Checkbox } from '@/app/components/ui/Checkbox';
 import { useFilterParam } from '@/app/hooks/nuqs/useFilterSort';
 import { PriceRangeSlider } from './PriceRangeSlider';
-import type { BrandFacet } from '@/sanity-cms/lib/products/getBrandFacets';
+import { FILTER_FACETS, type FilterFacet } from '@/lib/catalogue/facetMap';
+import type { CatalogueFacets } from '@/sanity-cms/lib/products/getFilterFacets';
 import type { PriceBounds } from '@/lib/catalogue/priceBounds';
 
 /**
@@ -26,11 +27,11 @@ export const filterStateInactive = 'text-text-caption opacity-50';
 /**
  * Desktop filter sidebar shell.
  *
- * The brand option list + counts are supplied by page composition (the RSC)
- * as the `brands` prop — a disjunctive facet fetched from Sanity keyed on the
- * route's VFS key set. The checkbox facet groups and `InStockOnlyCheckbox`
- * read/write their F1 URL params (via `useFilterParam`); local useState is only
- * cosmetic (collapse/expand). Nothing here fetches data or touches the product grid.
+ * Facet option lists + counts are supplied by page composition (the RSC) as the
+ * `facets` prop — disjunctive facets fetched from Sanity keyed on the route's
+ * VFS key set. The controls read/write their F1 URL params (via `useFilterParam`);
+ * local useState is only cosmetic (collapse/expand). Nothing here fetches data or
+ * touches the product grid.
  */
 
 interface FilterOption {
@@ -39,32 +40,17 @@ interface FilterOption {
   count?: number;
 }
 
-/** The F1 array-param keys that map to a checkbox facet group. */
-type FacetParamKey = 'brand';
+/** Any F1 param key that maps to a checkbox group. */
+type FacetParamKey = string;
 
 interface CheckboxFilterGroupProps {
-  /** F1 array param this group reads & writes. Also the checkbox `name`. */
+  /** F1 array param this group reads & writes. */
   paramKey: FacetParamKey;
+  /** Section heading. */
   label: string;
   options: FilterOption[];
 }
 
-/**
- * F5 — one reusable checkbox facet group, bound to a single F1 array param.
- *
- * SRP: (a) on tick, write the group's value set to its F1 param via nuqs;
- * (b) on any URL change (first load, deep link, Back/Forward), render its own
- * ticked state to match the param. It never imports, queries, or reacts to the
- * product grid, product data, result counts, or streaming — `options` and their
- * `count`s are props supplied by page composition.
- *
- * The param key, array delimiter, history mode, shallow flag and page-reset all
- * come from F1 via `useFilterParam`; there is zero bespoke URL-string handling
- * here. Canonical value order is the order `options` are declared in, so the URL
- * is stable regardless of click order. Unknown or duplicate values present in
- * the URL are ignored for display and dropped on the next write ("normalise on
- * next change").
- */
 function CheckboxFilterGroup({ paramKey, label, options }: CheckboxFilterGroupProps) {
   const [expanded, setExpanded] = useState(true);
   const [selected, setSelected] = useFilterParam(paramKey) as unknown as [string[], (v: string[] | ((prev: string[]) => string[])) => void];
@@ -72,13 +58,8 @@ function CheckboxFilterGroup({ paramKey, label, options }: CheckboxFilterGroupPr
   const order = new Map(options.map((option, index) => [option.value, index]));
   const selectedArray = selected ?? [];
 
-  // For brand field, use case-insensitive comparison; for all others, use exact match
-  const isFilterActive = (value: string): boolean => {
-    if (paramKey === 'brand') {
-      return selectedArray.some((s) => s.toLowerCase() === value.toLowerCase());
-    }
-    return selectedArray.includes(value);
-  };
+  const isFilterActive = (value: string): boolean =>
+    selectedArray.some((s) => s.toLowerCase() === value.toLowerCase());
 
   const canonicalize = (values: string[]) =>
     Array.from(new Set(values.filter((value) => order.has(value)))).sort(
@@ -86,22 +67,14 @@ function CheckboxFilterGroup({ paramKey, label, options }: CheckboxFilterGroupPr
     );
 
   const toggle = (value: string) => {
-    // Functional updater, not `[...selectedArray, value]`: `selected` is stale
-    // between renders, so two fast clicks would otherwise drop the first.
     setSelected((prev) => {
       const prevArray = prev ?? [];
-      const active =
-        paramKey === 'brand'
-          ? prevArray.some((s) => s.toLowerCase() === value.toLowerCase())
-          : prevArray.includes(value);
-      // An empty set serializes to the key being absent (F1 clean-URL rule).
+      const active = prevArray.some((s) => s.toLowerCase() === value.toLowerCase());
       return active
         ? canonicalize(prevArray).filter((v) => v.toLowerCase() !== value.toLowerCase())
         : canonicalize([...prevArray, value]);
     });
   };
-
-  const name = paramKey;
 
   return (
     <div className="flex flex-col gap-3">
@@ -127,7 +100,7 @@ function CheckboxFilterGroup({ paramKey, label, options }: CheckboxFilterGroupPr
           {options.map((option) => (
             <Checkbox
               key={option.value}
-              name={name}
+              name={paramKey}
               value={option.value}
               label={option.label}
               count={option.count}
@@ -142,24 +115,38 @@ function CheckboxFilterGroup({ paramKey, label, options }: CheckboxFilterGroupPr
   );
 }
 
-/**
- * F4 — the only responsibility here: on tick, write the F1 `inStock` boolean to
- * the URL; on any URL change (deep link, Back/Forward), render to match it.
- * Knows nothing about the grid, product data, counts, or streaming. The param
- * key/value, default, junk handling, history mode and page-reset all come from
- * F1 via `useFilterParam` — no bespoke URL handling here.
- */
-function InStockOnlyCheckbox() {
-  const [inStock, setInStock] = useFilterParam('inStock') as unknown as [boolean, (v: boolean | ((prev: boolean) => boolean)) => void];
+interface BooleanFilterProps {
+  /** F1 boolean param this control reads & writes. */
+  paramKey: FacetParamKey;
+  label: string;
+  count?: number;
+}
+
+function BooleanFilter({ paramKey, label, count }: BooleanFilterProps) {
+  const [active, setActive] = useFilterParam(paramKey) as unknown as [boolean, (v: boolean | ((prev: boolean) => boolean)) => void];
 
   return (
     <Checkbox
-      name="in-stock"
-      value="in-stock"
-      label="In stock only"
-      checked={inStock}
-      onChange={() => setInStock((prev) => !prev)}
+      name={paramKey}
+      value={paramKey}
+      label={label}
+      count={count}
+      checked={active}
+      disabled={count === 0 && !active}
+      onChange={() => setActive((prev) => !prev)}
     />
+  );
+}
+
+/** Header for the price section. */
+function PriceSection({ priceBounds }: { priceBounds: PriceBounds }) {
+  return (
+    <div className="flex flex-col gap-3">
+      <div className={filterSectionHeaderRow}>
+        <span className={filterSectionHeaderLabel}>Price</span>
+      </div>
+      <PriceRangeSlider min={priceBounds.min} max={priceBounds.max} />
+    </div>
   );
 }
 
@@ -167,20 +154,42 @@ function InStockOnlyCheckbox() {
  * The stack of filter controls, with no wrapper chrome of its own. Shared
  * verbatim between the desktop sidebar and the mobile filter drawer so both
  * surfaces stay identical. Returned as a fragment so callers own the layout
- * container (and the desktop markup below is unchanged).
+ * container.
  */
-export function FilterControls({ brands, priceBounds }: { brands: BrandFacet[]; priceBounds: PriceBounds }) {
-  const brandOptions = brands.map((b) => ({ value: b.slug, label: b.label, count: b.count }));
+export function FilterControls({ facets, priceBounds }: { facets: CatalogueFacets; priceBounds: PriceBounds }) {
   return (
     <>
-      <PriceRangeSlider min={priceBounds.min} max={priceBounds.max} />
-      <InStockOnlyCheckbox />
-      <CheckboxFilterGroup paramKey="brand" label="Brand" options={brandOptions} />
+      <PriceSection priceBounds={priceBounds} />
+
+      {FILTER_FACETS.map((facet) => {
+        if (facet.urlParam === 'price') return null;
+
+        if (facet.type === 'boolean') {
+          return (
+            <BooleanFilter
+              key={facet.urlParam}
+              paramKey={facet.urlParam}
+              label={facet.facet}
+              count={facets.booleans[facet.urlParam]}
+            />
+          );
+        }
+
+        const options = facets.groups[facet.urlParam] ?? [];
+        return (
+          <CheckboxFilterGroup
+            key={facet.urlParam}
+            paramKey={facet.urlParam}
+            label={facet.facet}
+            options={options}
+          />
+        );
+      })}
     </>
   );
 }
 
-export function FilterSidebar({ brands, priceBounds }: { brands: BrandFacet[]; priceBounds: PriceBounds }) {
+export function FilterSidebar({ facets, priceBounds }: { facets: CatalogueFacets; priceBounds: PriceBounds }) {
   return (
     <aside
       data-testid="filter-sidebar"
@@ -191,7 +200,7 @@ export function FilterSidebar({ brands, priceBounds }: { brands: BrandFacet[]; p
           reflects the URL, never waiting on a fetch / transition in flight. */}
       <div className="flex flex-col gap-6 rounded-md border border-border-secondary bg-surface-elevated p-6">
         <span className="type-overline">Filters</span>
-        <FilterControls brands={brands} priceBounds={priceBounds} />
+        <FilterControls facets={facets} priceBounds={priceBounds} />
       </div>
     </aside>
   );

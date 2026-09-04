@@ -78,19 +78,47 @@ import {
   parseAsStringLiteral,
 } from "nuqs/server";
 
-/** Fixed sort allowlist. `value` goes in the URL; `label` is for the controls. */
-export const SORT_OPTIONS = [
-  { value: "featured", label: "Featured" },
-  { value: "price-asc", label: "Price: Low to High" },
-  { value: "price-desc", label: "Price: High to Low" },
-  { value: "newest", label: "Newest" },
-] as const;
+// Canonical facet/sort definitions from _project/filters/facet-map.json and
+// sort-map.json, mirrored here so the app and the URL contract share one shape.
+import {
+  FILTER_FACETS,
+  SORT_OPTIONS as SORT_MAP,
+  type FilterFacet,
+  isPlaceholderVocab,
+} from "./facetMap";
 
-export type SortValue = (typeof SORT_OPTIONS)[number]["value"];
+// Fixed sort allowlist. `value` goes in the URL; `label` is for the controls.
+// SortValue is derived directly from the canonical sort-map tuple so only the
+// URL values declared in facetMap.ts are valid.
+export type SortValue = (typeof SORT_MAP)[number]["urlValue"];
 
 export const SORT_DEFAULT: SortValue = "featured";
 
-const SORT_VALUES = SORT_OPTIONS.map((o) => o.value) as unknown as SortValue[];
+const SORT_VALUES = SORT_MAP.map((o) => o.urlValue) as SortValue[];
+
+export const SORT_OPTIONS: { value: SortValue; label: string }[] = SORT_MAP.map(
+  (o) => ({
+    value: o.urlValue,
+    label: o.sort,
+  })
+);
+
+function parserForFacet(facet: FilterFacet) {
+  if (facet.type === "boolean") {
+    return parseAsBoolean.withDefault(false);
+  }
+  // Enum and multi-select facets are both stored as arrays of strings in the
+  // URL. The GROQ layer (buildProductQuery) treats enum as an OR-over-values
+  // predicate and multi as an overlap/count predicate.
+  return parseAsArrayOf(parseAsString).withDefault([]);
+}
+
+// Build one parser per non-price filter facet, keyed by its urlParam.
+const facetParsers: Record<string, ReturnType<typeof parserForFacet>> = {};
+for (const facet of FILTER_FACETS) {
+  if (facet.urlParam === "price") continue; // price is minPrice / maxPrice
+  facetParsers[facet.urlParam] = parserForFacet(facet);
+}
 
 /**
  * The parser map — the single source of truth. Imported by both the server
@@ -107,11 +135,7 @@ export const filterSortParsers = {
   minPrice: parseAsInteger,
   maxPrice: parseAsInteger,
 
-  // Junk → false (parseAsBoolean only matches "true"/"false").
-  inStock: parseAsBoolean.withDefault(false),
-
-  // Comma-separated slugs, stable insertion order. Empty → key absent.
-  brand: parseAsArrayOf(parseAsString).withDefault([]),
+  ...facetParsers,
 };
 
 /** Every key this contract owns — useful for "clear all" and chip enumeration. */
