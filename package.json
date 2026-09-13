@@ -42,7 +42,7 @@
     "test:homepage:sections": "npx playwright test tests/e2e/homepage/sections.spec.ts",
     "ts-check": "tsc --noEmit --pretty",
     "ts-check:watch": "tsc --noEmit --watch",
-        "analyze": "ANALYZE=true npm run build",
+    "analyze": "ANALYZE=true npm run build",
     "commit": "powershell -ExecutionPolicy Bypass -File .\\scripts\\commit.ps1"
   },
   "dependencies": {
@@ -152,7 +152,7 @@
     "prettier-plugin-tailwindcss": "^0.6.14",
     "type-coverage": "^2.29.7",
     "typescript-eslint": "^8.57.1",
-    "vercel": "^58.4.4",
+    "vercel": "^59.16.0",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^4.1.5"
   }
