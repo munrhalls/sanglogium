@@ -1,6 +1,8 @@
 'use client';
 
 import React from 'react';
+import type { IconType } from 'react-icons';
+import { FaTag, FaHeadphones, FaWaveSquare, FaLayerGroup, FaBluetooth, FaMicrochip } from 'react-icons/fa6';
 import { FACET_GROUPS, facetsForGroup, type FacetDef, type FacetGroupId } from '../lib/facetConfig';
 import { useClearAllFilters } from '../lib/useFilterParam';
 import type { FacetOptionCount } from '../lib/filterProducts';
@@ -8,26 +10,28 @@ import { CheckboxGroup, BooleanToggle, RangeControl, PriceControl, RatingControl
 
 /**
  * Desktop filter sidebar shell — the two-region layout the acceptance tests
- * ask for: a narrow rail of tiles (one per should-be.md group) on the left,
- * the actual controls on the right. Rail tile and panel section for the same
- * group are literally the two cells of one CSS Grid row (`grid-cols-[3rem_1fr]`,
- * default `align-items: stretch`), so a tile automatically spans exactly its
- * group's content height with zero JS measurement — no ResizeObserver, no
- * height-sync effect, nothing that can race or jitter (the AI_LESSONS L04/L05
- * preference for a structural fix over a live-measured one applies here too,
- * even though this isn't the image-reveal mechanism).
- *
- * Rail + panel share the sidebar's own scroll container (the same
- * sticky + max-h-screen + overflow-y-auto pattern production's FilterSidebar
- * uses for independent-from-the-grid scrolling), so a tile click's
- * `scrollIntoView` moves both together — reads as "the panel scrolls to that
- * group" because the panel is what's wide enough to see move.
+ * ask for: a compact rail of tiles (one per should-be.md group) on the left,
+ * the actual controls on the right. The rail is intentionally NOT height-
+ * matched to the panel: it's a short, fixed-width table of contents that
+ * always fits the sidebar's own visible height, while the panel underneath it
+ * scrolls independently (its own `overflow-y-auto`) — that's what keeps a
+ * 6-tile rail short even when a group's controls run long. A tile click's
+ * `scrollIntoView` targets the panel only; the rail never moves.
  *
  * Facet option counts / price bounds / brand labels arrive as props from page
  * composition (the RSC) — this component never fetches data or touches the
  * product grid. Every control reads/writes its own URL param via
  * useFilterParam; nothing here is optimistic about a fetch in flight.
  */
+
+const GROUP_ICONS: Record<FacetGroupId, IconType> = {
+  commercial: FaTag,
+  type: FaHeadphones,
+  sound: FaWaveSquare,
+  material: FaLayerGroup,
+  wireless: FaBluetooth,
+  technical: FaMicrochip,
+};
 
 interface FilterSidebarProps {
   checkboxCounts: Record<string, FacetOptionCount[]>;
@@ -41,17 +45,17 @@ function scrollToGroup(groupId: FacetGroupId) {
 }
 
 function RailTile({ id, label }: { id: FacetGroupId; label: string }) {
+  const Icon = GROUP_ICONS[id];
   return (
     <button
       type="button"
       onClick={() => scrollToGroup(id)}
       aria-label={`Jump to ${label} filters`}
+      title={`Jump to ${label} filters`}
       data-testid={`poc-rail-tile-${id}`}
-      className="flex items-center justify-center border-b border-r border-border-secondary bg-surface-elevated py-4 transition-colors last:border-b-0 hover:bg-accent-500/10 focus-visible:outline focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-accent-500"
+      className="flex items-center justify-center rounded-md py-3.5 transition-colors hover:bg-accent-500/10 focus-visible:outline focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-accent-500"
     >
-      <span className="type-overline whitespace-nowrap text-text-caption [writing-mode:vertical-rl] rotate-180">
-        {label}
-      </span>
+      <Icon className="h-[1.125rem] w-[1.125rem] shrink-0 text-text-caption" aria-hidden="true" />
     </button>
   );
 }
@@ -111,10 +115,10 @@ export function FilterSidebar({ checkboxCounts, booleanCounts, brandLabels, pric
     <aside
       data-testid="poc-filter-sidebar"
       aria-label="Filters"
-      className="hidden w-96 shrink-0 self-start sticky top-0 pt-6 max-h-screen overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden lg-touch:block lg-desktop:block"
+      className="hidden w-96 shrink-0 self-start sticky top-0 pt-6 max-h-screen lg-touch:flex lg-desktop:flex flex-col"
     >
-      <div className="flex flex-col overflow-hidden rounded-md border border-border-secondary bg-surface-elevated">
-        <div className="flex items-center justify-between gap-2 p-6 pb-4">
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-md border border-border-secondary bg-surface-elevated">
+        <div className="flex shrink-0 items-center justify-between gap-2 p-6 pb-4">
           <span className="type-overline">Filters</span>
           <button
             type="button"
@@ -125,11 +129,19 @@ export function FilterSidebar({ checkboxCounts, booleanCounts, brandLabels, pric
           </button>
         </div>
 
-        <div className="grid grid-cols-[3rem_1fr]">
-          {FACET_GROUPS.map((group) => (
-            <React.Fragment key={group.id}>
-              <RailTile id={group.id} label={group.label} />
-              <PanelSection id={group.id} label={group.label} note={group.note}>
+        <div className="flex min-h-0 flex-1">
+          <nav
+            aria-label="Jump to a filter section"
+            className="flex w-14 shrink-0 flex-col gap-0.5 overflow-y-auto border-r border-border-secondary p-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {FACET_GROUPS.map((group) => (
+              <RailTile key={group.id} id={group.id} label={group.label} />
+            ))}
+          </nav>
+
+          <div className="flex-1 overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+            {FACET_GROUPS.map((group) => (
+              <PanelSection key={group.id} id={group.id} label={group.label} note={group.note}>
                 {group.id === 'commercial' && <PriceControl min={priceBounds.min} max={priceBounds.max} />}
                 {group.id === 'commercial' && <RatingControl />}
                 {group.id === 'wireless' && (
@@ -139,8 +151,8 @@ export function FilterSidebar({ checkboxCounts, booleanCounts, brandLabels, pric
                 )}
                 {facetsForGroup(group.id).map((facet) => renderFacet(facet, checkboxCounts, booleanCounts, brandLabels))}
               </PanelSection>
-            </React.Fragment>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </aside>
