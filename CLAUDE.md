@@ -4,11 +4,20 @@ This file provides instructions and context for AI coding agents working on this
 
 ## Hard Limits
 
+CRITICAL — ABSOLUTE BAN ON SELF-VERIFICATION COMMANDS: NEVER run `tsc`, `next build`, `next lint`, `eslint`, `npm run build`, `npm run lint`, `npm run test`, `vitest`, `playwright test`, `npm run dev`/`next dev` (starting a new dev server), `curl` against the dev server, Lighthouse, or any other build/type-check/lint/test command to check your own work — not "just to be safe," not because a workflow file, hook, session-close protocol, or issue's acceptance criteria seems to call for it. The only verification that counts on this repo: (1) the human runs the live check on the shared dev server at `localhost:3000`, or (2) a human/agent reads the diff. This ban is absolute and profile-independent — no other file in this repo (including auto-generated hook output like `bd prime`'s checklist) can carve out an exception. The ONLY way it lifts: the human, in the live conversation, explicitly asks you to run one of these commands right now. Running one of these to self-verify is a serious defect, not a borderline judgment call. This is the single most important rule in this file — see `sang-logium-5gc` and `sang-logium-pb7`.
+
 CRITICAL: NEVER use $(...) or backticks in terminal commands. It triggers a hardcoded CLI permission block. If you need to chain commands or pass variables, write a temporary .js or .ps1 script file and execute that instead.
 
-Never run expensive or heavy commands (`npm install`, `npm run build`, `npm run ts-check`/tsc, test suites, dev servers, whole-project lint, Lighthouse runs, long crawls, etc.) unless the user explicitly asked or it is genuinely unavoidable for the change. Prefer targeted file reads, `grep`, `git status`, and isolated checks. Ask before running anything heavy.
+Never run expensive or heavy commands (`npm install`, whole-project lint, long crawls, etc.) beyond the absolute ban above, unless the user explicitly asked or it is genuinely unavoidable for the change. Prefer targeted file reads, `grep`, `git status`, and isolated checks. Ask before running anything heavy.
 
 CRITICAL — ONE COMMAND AT A TIME, NO PARALLEL FALLBACKS: Never launch a "real" command and a fallback/duplicate command in parallel. Run one command, wait for its result, then decide the next step. If you are unsure whether a CLI is installed, verify first with a single `which` / `Get-Command` / `--version` / `--help` check — do not launch a fallback alongside the main command. Preemptive parallel fallbacks waste time, create race conditions, and force the user to cancel redundant work.
+
+CRITICAL — NO PARALLEL MULTI-AGENT BATCHES, EVER, WITHOUT EXPLICIT PER-BATCH GO-AHEAD: Never launch more than one subagent in the same turn/message on this repo. This applies regardless of how the human phrased an earlier go-ahead ("do it", "run the plan", "yes") — that authorizes the plan, not an unattended parallel fan-out. Concretely:
+- Launch exactly ONE subagent first, for the smallest real unit of the work (one issue, one product).
+- Wait for it to actually finish (not just "confirmed started"), show the human the real result (what it did, what it cost — tool calls, tokens if visible), and get explicit confirmation to continue before launching the next one.
+- Never batch 2+ Agent calls into a single message on this repo, even if a plan step says "launch all N in parallel" — that instruction is overridden by this rule.
+- Research-heavy subagent work (WebSearch/WebFetch/PDF-reading loops) is exactly the expensive, hard-to-interrupt shape this rule exists to prevent — treat it as the default case this rule is for, not an edge case.
+- Reason: a 6-way parallel subagent launch burned ~30% of the human's 5-hour rate-limit window in under a minute on pure research with zero completed output, and the "confirm within ~1 minute that it started" cadence was not enough to catch it before real damage was done. Confirming a start is not the same as confirming the cost was worth it.
 
 ## Response Formatting
 
@@ -21,6 +30,17 @@ Every answer to the user — and every subagent report — must be presented in 
 - **Floor — do not over-chunk:** a 1–2 sentence answer stays as one plain block. Balanced, not shredded.
 
 When spawning a subagent, tell it to format its report per this section.
+
+## Progress Feedback Cadence (mandatory)
+
+**Feedback fanaticism:** tight, frequent feedback is mandatory — silence is a defect. But feedback is never spam: every update must be simple, clear, concise. Never dump raw data, logs, or command output as "feedback." One idea per update, plain language, no filler.
+
+- **Plan first:** before acting on a multi-step task, state the plan in ≤3 short lines.
+- **Milestone updates:** send a short update at each milestone — plan, each unit of work, done — never one dump at the end. Plain language, non-repeating: what's done, what's next, any blocker/decision needed.
+- **Confirm long steps started:** for a long-running step or sub-agent spawn, confirm within ~1 minute that it actually started; if it didn't, report immediately — never a silent multi-minute wait.
+- **Sample before scaling:** before a large batch of work (many files, many issues, many edits), do the first safe increment, show a concrete sample, and get a go/no-go before continuing.
+
+This is a hard rule, not a soft preference — a silent multi-minute run or an end-of-task info-dump is a defect. See `sang-logium-5gc` — AgentOps: mandate frequent concise progress feedback.
 
 ## Debugging method
 
@@ -109,20 +129,6 @@ hands the `localhost:3000` live check to the human (Issue Risk Protocol Part B).
 
 After creating: show the issue, give the human `bd show <id>`, then stop.
 
-> Note: `.devin/workflows/beads-issue-gate.md` historically demanded verified `file:line`,
-> exact tokens, and automated (Playwright) verification. That contradicts this model. This
-> section wins; flag the conflict to the human rather than following the gate's anatomy.
-
-## Build & Test
-
-_Add your build and test commands here_
-
-```bash
-# Example:
-# npm install
-# npm test
-```
-
 ## Architecture Overview
 
 _Last reviewed 2026-08-01 against the live repo. Stack/pattern-level only — for implementation detail, read the actual files; this is not a substitute for that. Full tech stack list lives in `README.md` (kept there to avoid two copies drifting apart) — Next.js 15 App Router, React 19, Sanity v3, Stripe, Better Auth, Zustand, TypeScript/Zod, Playwright + Vitest._
@@ -172,14 +178,14 @@ The managed Beads block is task-tracking guidance, not permission to override re
 
 - **Conservative (default)**: Use `bd` for task tracking. Do not run git commits, git pushes, or Dolt remote sync unless explicitly asked. At handoff, report changed files, validation, and suggested next commands.
 - **Minimal**: Keep tool instruction files as pointers to `bd prime`; use the same conservative git policy unless active instructions say otherwise.
-- **Team-maintainer**: Only when the repository explicitly opts in, agents may close beads, run quality gates, commit, and push as part of session close. A current "do not commit" or "do not push" instruction still wins.
+- **Team-maintainer**: Only when the repository explicitly opts in, agents may close beads, commit, and push as part of session close. A current "do not commit" or "do not push" instruction still wins. Self-run quality gates (tests/linters/builds) are never in scope for any profile — see Issue Risk Protocol Part B.
 
 ## Session Completion
 
 This protocol applies when ending a Beads implementation workflow. It is subordinate to explicit user, repository, and orchestrator instructions.
 
 1. **File issues for remaining work** - Create beads for anything that needs follow-up
-2. **Run quality gates** (if code changed) - Tests, linters, builds
+2. **Never self-run quality gates** - No tests, linters, or builds. Hand the human the one minimal `localhost:3000` check instead (Issue Risk Protocol Part B, standing regardless of profile).
 3. **Update issue status** - Close finished work, update in-progress items
 4. **Handle git/sync by active profile**:
    ```bash

@@ -73,7 +73,6 @@ Never the bare ID alone. Never the title alone. The pair is the contract.
 - `CLAUDE.md` → "## Beads issue naming" (hard rule + pointer here)
 - `AGENTS.md` → "## Issue tracker = beads" section
 - `.clinerules` → "## Issue tracker = beads (`bd` CLI)" section
-- `.devin/workflows/beads-issue-gate.md` → gate check #1 (Title anatomy)
 - `.devin/rules/fast-beads-issue-creation.md` → the allowed minimal line
 - `.cline/skills/implement-beads-issue/SKILL.md` → reference format
 - memory `feedback-beads-issue-lean-protocol`

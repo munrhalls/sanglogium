@@ -278,7 +278,7 @@ export const productType = defineType({
           title: "Acoustic design",
           type: "array",
           of: [{ type: "string", options: { list: ["open-back", "closed-back", "semi-open"] } }],
-          description: "Renamed from backDesign 2026-09-13; see acousticDesignMigration note.",
+          description: "Renamed from backDesign 2026-09-13; see docs/filters-sort/headphones-filterattributes-migration.md.",
           categories: ["headphones"],
         },
         {
@@ -378,7 +378,7 @@ export const productType = defineType({
               },
             },
           ],
-          description: "Renamed from connector 2026-09-13; vocabulary widened (kept usb-c/mmcx/2-pin/fixed-cable from the old list, added 2.5mm-balanced + 6.35mm per schema-headphones.md) rather than narrowed, to avoid silently dropping any value the old field already allowed.",
+          description: "Renamed from connector 2026-09-13; only 2.5mm is renamed to 2.5mm-balanced, every other value carried over 1:1 (see docs/filters-sort/headphones-filterattributes-migration.md).",
           categories: ["headphones"],
         },
         {
@@ -425,7 +425,7 @@ export const productType = defineType({
           title: "Active noise cancelling (ANC)",
           type: "string",
           options: { list: ["anc", "passive", "none"] },
-          description: "Replaces the old boolean noiseCancelling 2026-09-13; see ancMigration note.",
+          description: "Replaces the old boolean noiseCancelling 2026-09-13; see docs/filters-sort/headphones-filterattributes-migration.md.",
           categories: ["headphones"],
         },
         {

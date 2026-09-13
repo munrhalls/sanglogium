@@ -29,7 +29,6 @@ The `description` field is NOT a prose problem statement. It is:
 - `CURRENT STATUS:` — one plain factual line.
 
 Never paste the human's bug-report paragraph verbatim as the description. Translate first.
-This overrides the heavier anatomy in `.devin/workflows/beads-issue-gate.md`.
 
 ## Allowed minimal line
 
