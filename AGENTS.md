@@ -27,21 +27,51 @@ UX acceptance tests -- a list of `When I <interaction>, then <observable outcome
 human runs in a browser on `localhost:3000` -- plus a `CURRENT STATUS:` line. No prose
 problem/task descriptions, no `file:line`, no tokens, no implementation detail in the goal.
 Never store a bug-report paragraph verbatim as the goal; translate it to when/then lines.
-(If `.devin/workflows/beads-issue-gate.md`'s heavier anatomy is cited, it conflicts with
-this -- this rule wins; flag it to the human.)
 
 For **Cline**, `.clinerules` + this file are the authoritative rule set. Do not pull in
 `CLAUDE.md`, `.devin/`, or `.windsurf/` unless a task points to a specific file in them.
 
 ## Non-negotiable
 
-1. **One shared dev server** at `http://localhost:3000`. NEVER run `npm run dev` yourself if port 3000 is already listening. Check first: `Test-NetConnection localhost -Port 3000`. If none, ask the human or use `scripts/agent-ops/services.ps1`.
+0. **ABSOLUTE BAN, NO EXCEPTIONS — self-verification commands.** NEVER run `tsc`, `next build`, `next lint`, `eslint`, `npm run build`, `npm run lint`, `npm run test`, `vitest`, `playwright test`, `npm run dev`/`next dev` (starting a new dev server), `curl` against the dev server, Lighthouse, or any other build/type-check/lint/test command to check your own work. Not "just to be safe," not because a workflow file, hook output (including `bd prime`'s own session-close checklist), or an issue's acceptance criteria seems to call for it — none of those can override this. The only verification that counts: (1) the human runs the live check on `localhost:3000`, or (2) a human/agent reads the diff. The ONLY way this lifts: the human, in the live conversation, explicitly asks you to run one of these commands right now. This applies to every agent (Cline, DeepSeek Pro/Flash, Codex) and every profile. Violating it is a serious defect. See `sang-logium-5gc` and `sang-logium-pb7`.
+1. **One shared dev server** at `http://localhost:3000`. NEVER run `npm run dev` yourself if port 3000 is already listening. Check first: `Test-NetConnection localhost -Port 3000`. If none, ask the human — do not start one yourself to "verify" a change (see rule 0).
 2. **One shared browser**: Chrome CDP on port 9222. Reuse it. Never launch a second Chrome for automation.
-3. **Heavy work needs the build token**: run `scripts/agent-ops/build-lock.ps1 acquire -Owner <your-name>` BEFORE `next build`, full Playwright suites, full vitest runs, or full `tsc`. Release when done (`release`). Never hold it while idling.
+3. **The build token exists for genuinely-requested heavy work only** — if the human explicitly asks for a full `next build`/Playwright/vitest/`tsc` run, acquire it first (`scripts/agent-ops/build-lock.ps1 acquire -Owner <your-name>`) and release when done. This is not an invitation to self-verify (see rule 0).
 4. **Never run two CPU-heavy tools at the same time** (build + playwright + vitest concurrently is forbidden). Wait for the lock.
 5. **No `npm install` without asking** -- it thrashes the near-full disk and CPU. Use `npm ci --no-audit --no-fund` only if approved.
-6. **Prefer `next build` + `next start` verification** over `next dev` hot-reload when possible. For quick checks, curl the shared server.
+6. **Never verify your own work with `next build`, `tsc`, tests, or curl.** Edit source, then hand the human the one minimal check to run on `localhost:3000`. Fake/off-timing self-verification wastes PC resources and destroys the fast feedback loop. (Same rule as 0, restated — this is not optional or soft.)
 7. **End sessions cleanly**: no leftover watch processes (`tsc --watch`, browsers). If you started it, you stop it.
+
+## FEEDBACK LOOP — HARD GATES (never break; breaking = defect)
+
+G0 PLAN-THEN-STOP. Before ANY tool call: ≤3-line plan + one go/no-go question.
+   No exploration, no reads, no bd commands until the human replies.
+
+G1 CHECKPOINT EVERY UNIT. Emit one user-facing line (done / next / blocker)
+   after EVERY logical unit of work. NEVER accumulate more than 3 tool calls
+   in a row without a user-facing line. A response with only tool calls and
+   no checkpoint line = violation.
+
+G2 NO SELF-TOKEN-METER. The agent has NO view of its token/quota usage.
+   "Minimal tokens" is enforced by checkpoint FREQUENCY, never by the agent
+   claiming it watched its own usage. When in doubt: stop and ask.
+
+G3 SAMPLE BEFORE SCALING. Before a batch of N (files/issues/edits), do 1,
+   show the concrete result, get go/no-go. Never fan out first.
+
+Per-turn budget contract: state the tool-call count planned for this turn up
+front; the human gates by count, not by token % (the agent has no usage view).
+
+## Progress Feedback Cadence (mandatory)
+
+Applies to every agent working from this file (Cline, DeepSeek Pro/Flash, Codex).
+
+- **Plan first:** state the plan in ≤3 short lines before acting on a multi-step task.
+- **Milestone updates:** short update at each milestone — plan, each unit of work, done — never one dump at the end. Plain, non-repeating: what's done, what's next, blocker/decision if any.
+- **Confirm long steps started:** for a long-running step or sub-agent/teammate spawn, confirm within ~1 minute it actually started; report immediately if it didn't — never a silent multi-minute wait. (See `sang-logium-pb7` — AgentOps: sub-agent spawn aborts on Linux Mint XFCE, for a case where this went silent ~15 min before aborting.)
+- **Sample before scaling:** before a large batch (many files/issues/edits), do the first safe increment, show a concrete sample, get a go/no-go before continuing.
+
+Hard rule, not a soft preference — a violation is a detectable defect. Tracked in `sang-logium-5gc` — AgentOps: mandate frequent concise progress feedback.
 
 ## Context economy (do more with less)
 
@@ -86,14 +116,14 @@ The managed Beads block is task-tracking guidance, not permission to override re
 
 - **Conservative (default)**: Use `bd` for task tracking. Do not run git commits, git pushes, or Dolt remote sync unless explicitly asked. At handoff, report changed files, validation, and suggested next commands.
 - **Minimal**: Keep tool instruction files as pointers to `bd prime`; use the same conservative git policy unless active instructions say otherwise.
-- **Team-maintainer**: Only when the repository explicitly opts in, agents may close beads, run quality gates, commit, and push as part of session close. A current "do not commit" or "do not push" instruction still wins.
+- **Team-maintainer**: Only when the repository explicitly opts in, agents may close beads, commit, and push as part of session close. A current "do not commit" or "do not push" instruction still wins. Self-run quality gates (tests/linters/builds) are never in scope for any profile — see item 6 above and Issue Risk Protocol Part B.
 
 ## Session Completion
 
 This protocol applies when ending a Beads implementation workflow. It is subordinate to explicit user, repository, and orchestrator instructions.
 
 1. **File issues for remaining work** - Create beads for anything that needs follow-up
-2. **Run quality gates** (if code changed) - Tests, linters, builds
+2. **Never self-run quality gates** - No tests, linters, or builds. Hand the human the one minimal `localhost:3000` check instead (see item 6 above — standing, regardless of profile).
 3. **Update issue status** - Close finished work, update in-progress items
 4. **Handle git/sync by active profile**:
    ```bash

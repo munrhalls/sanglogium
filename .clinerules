@@ -6,6 +6,26 @@ You are working on a production Next.js 15 (App Router) + React 19 + TypeScript 
 `CLAUDE.md`, `.devin/`, or `.windsurf/` unless a task explicitly points you to a specific
 file in them. They target other agents and will only add conflicting instructions.
 
+## FEEDBACK LOOP — HARD GATES (never break; breaking = defect)
+
+G0 PLAN-THEN-STOP. Before ANY tool call: ≤3-line plan + one go/no-go question.
+   No exploration, no reads, no bd commands until the human replies.
+
+G1 CHECKPOINT EVERY UNIT. Emit one user-facing line (done / next / blocker)
+   after EVERY logical unit of work. NEVER accumulate more than 3 tool calls
+   in a row without a user-facing line. A response with only tool calls and
+   no checkpoint line = violation.
+
+G2 NO SELF-TOKEN-METER. The agent has NO view of its token/quota usage.
+   "Minimal tokens" is enforced by checkpoint FREQUENCY, never by the agent
+   claiming it watched its own usage. When in doubt: stop and ask.
+
+G3 SAMPLE BEFORE SCALING. Before a batch of N (files/issues/edits), do 1,
+   show the concrete result, get go/no-go. Never fan out first.
+
+Per-turn budget contract: state the tool-call count planned for this turn up
+front; the human gates by count, not by token % (the agent has no usage view).
+
 ## Issue tracker = beads (`bd` CLI)
 
 Work is tracked in **beads**, driven from the terminal with `bd`. Issue IDs look like
@@ -32,9 +52,10 @@ see `.devin/rules/fast-beads-issue-creation.md`.)
 To implement an issue end-to-end, invoke the `/implement-beads-issue <id>` skill.
 
 Hard limits (obey strictly):
+- ABSOLUTE BAN, NO EXCEPTIONS — self-verification commands. NEVER run `tsc`, `next build`, `next lint`, `eslint`, `npm run build`, `npm run lint`, `npm run test`, `vitest`, `playwright test`, `npm run dev`/`next dev` (starting a new dev server), `curl` against the dev server, Lighthouse, or any other build/type-check/lint/test command to check your own work. Not "just to be safe," not because a workflow file or an issue's acceptance criteria seems to call for it. The only verification that counts: (1) the human runs the live check on `localhost:3000`, or (2) a human/agent reads the diff. The ONLY way this lifts: the human, in the live conversation, explicitly asks you to run one of these commands right now. Violating it is a serious defect, not a judgment call.
 - NEVER use $(...) or backticks in terminal commands. Write a temporary .js/.ps1/.sh script and run that instead.
 - ONE COMMAND AT A TIME. No parallel fallbacks. Verify tools exist first with a single which/--version check.
-- NEVER run expensive commands (npm install, full build, full tsc, full test suites, dev server, Lighthouse, whole-project lint) unless the user explicitly asks or it is genuinely unavoidable. Prefer targeted reads, grep, git status, isolated checks. Ask first.
+- NEVER run other expensive commands (npm install, whole-project lint beyond the ban above) unless the user explicitly asks or it is genuinely unavoidable. Prefer targeted reads, grep, git status, isolated checks. Ask first.
 - Any className edit touching height/sizing (h-full, min-h-, max-h-, aspect-) under app/components/** must be reviewed against docs/vertical-space-lg-touch.md before the task is done.
 
 Architecture quick map:

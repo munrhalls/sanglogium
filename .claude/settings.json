@@ -10,6 +10,17 @@
         ],
         "matcher": ""
       }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "bash .claude/hooks/feedback-gate.sh",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      }
     ]
   },
   "permissions": {
