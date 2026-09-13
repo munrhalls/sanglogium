@@ -15,8 +15,11 @@ import { CheckboxGroup, BooleanToggle, RangeControl, PriceControl, RatingControl
  * matched to the panel: it's a short, fixed-width table of contents that
  * always fits the sidebar's own visible height, while the panel underneath it
  * scrolls independently (its own `overflow-y-auto`) — that's what keeps a
- * 6-tile rail short even when a group's controls run long. A tile click's
- * `scrollIntoView` targets the panel only; the rail never moves.
+ * 6-tile rail short even when a group's controls run long. A tile click
+ * scrolls that panel container directly (see `scrollToGroup`) rather than
+ * calling `scrollIntoView`, and both the rail and the panel set
+ * `overscroll-y-contain` — together that's what keeps this sidebar's
+ * scrolling fully sealed off from the product grid's own page-level scroll.
  *
  * Facet option counts / price bounds / brand labels arrive as props from page
  * composition (the RSC) — this component never fetches data or touches the
@@ -40,8 +43,20 @@ interface FilterSidebarProps {
   priceBounds: { min: number; max: number };
 }
 
+const PANEL_SCROLL_ID = 'poc-filter-panel-scroll';
+
+// Deliberately not `element.scrollIntoView()`: the target sits inside two
+// nested scrollable ancestors (this panel, and the page-level `<main>` from
+// headphones/layout.tsx), and `scrollIntoView` walks up EVERY scrollable
+// ancestor to satisfy visibility — which nudges the product grid's scroll
+// position too. Scrolling the panel container directly, by exact pixel
+// offset, touches only this one element and nothing above it.
 function scrollToGroup(groupId: FacetGroupId) {
-  document.getElementById(`poc-group-${groupId}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const container = document.getElementById(PANEL_SCROLL_ID);
+  const target = document.getElementById(`poc-group-${groupId}`);
+  if (!container || !target) return;
+  const offset = target.getBoundingClientRect().top - container.getBoundingClientRect().top;
+  container.scrollBy({ top: offset - 16, behavior: 'smooth' });
 }
 
 function RailTile({ id, label }: { id: FacetGroupId; label: string }) {
@@ -75,7 +90,7 @@ function PanelSection({
     <div
       id={`poc-group-${id}`}
       data-testid={`poc-panel-${id}`}
-      className="flex scroll-mt-6 flex-col gap-6 border-b border-border-secondary p-6 last:border-b-0"
+      className="flex flex-col gap-6 border-b border-border-secondary p-6 last:border-b-0"
     >
       <div className="flex flex-col gap-1">
         <span className="type-overline">{label}</span>
@@ -132,14 +147,17 @@ export function FilterSidebar({ checkboxCounts, booleanCounts, brandLabels, pric
         <div className="flex min-h-0 flex-1">
           <nav
             aria-label="Jump to a filter section"
-            className="flex w-14 shrink-0 flex-col gap-0.5 overflow-y-auto border-r border-border-secondary p-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+            className="flex w-14 shrink-0 flex-col gap-0.5 overflow-y-auto overscroll-y-contain border-r border-border-secondary p-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
           >
             {FACET_GROUPS.map((group) => (
               <RailTile key={group.id} id={group.id} label={group.label} />
             ))}
           </nav>
 
-          <div className="flex-1 overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+          <div
+            id={PANEL_SCROLL_ID}
+            className="flex-1 overflow-y-auto overscroll-y-contain [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+          >
             {FACET_GROUPS.map((group) => (
               <PanelSection key={group.id} id={group.id} label={group.label} note={group.note}>
                 {group.id === 'commercial' && <PriceControl min={priceBounds.min} max={priceBounds.max} />}
