@@ -1,4 +1,12 @@
 I’ll invoke the matching skill and then read the bead issue.Plan:
 1. Find the accessories sourcing schema and the product’s slug/name.
 2. Fetch JL Audio manufacturer sources and extract real cited specs.
-3. Write the .md under `data/accessories/jl-audio/` and close the issue.
+3. Write the .md under `data/accessories/jl-audio/` and close the issue.Done.
+
+- Closed `sang-logium-zdb.3.23` with reason `1 products sourced and filed.`
+- Wrote `data/accessories/jl-audio/jl-audio-2-channel-core-rca-male-to-rca-male-cables-6-ft-1-82m-2-pack.md` for product `Y7l1IhzX2fnyiano58Giz2`.
+- Sourced from an authorized JL Audio dealer (Online Car Stereo) and a major retailer (World Wide Stereo); no manufacturer product page or manual was found for `XD-CLRAIC2-6`.
+- Recorded explicit `null` for `balancedUnbalanced` because no source explicitly states balanced/unbalanced, and noted the 1.82 m vs. 1.83 m length conflict.
+- Ran `bd export -o .beads/issues.jsonl` to sync the beads export.
+
+Git status now shows the new `data/accessories/jl-audio/` file and the `.beads` export files as changed. I did not commit or push. No other beads issue or brand was modified.

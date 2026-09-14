@@ -1,1 +1,20 @@
-Proceeding. Plan: read the issue, follow its protocols, source each product, write the markdown files, close the issue.
+Proceeding. Plan: read the issue, follow its protocols, source each product, write the markdown files, close the issue.Done. Sourced and filed 1 Aune Audio product and closed the issue.
+
+What I did:
+- Read `sang-logium-zdb.3.9` (1 product in scope: `3O1ZNp54LWQGln4uEAUIek`).
+- Resolved the product via Sanity backup: `Aune Audio AR3`, slug `aune-audio-ar3`, `/accessories/audio-cables`.
+- Fetched the official Aune Store product page (`aune-store.com`) and extracted cited specs.
+- Wrote `data/accessories/aune-audio/aune-audio-ar3.md` with one `.md` file per product and all `should-be-accessories.md` fields as real values or explicit `null`.
+- Ran `bd close sang-logium-zdb.3.9 --reason "1 product sourced and filed."` and `bd export -o .beads/issues.jsonl`.
+- Did not touch any other beads issue or brand.
+
+Key values sourced from `https://www.aune-store.com/en/aune-ar3-balanced-headphone-cable_110519_1241/`:
+- `accessoryType: cables-interconnects`
+- `compatibleProductType: [headphone]`
+- `connectorTermination: [4.4mm, 3.5mm]`
+- `lengthM: 1.5`
+- `balancedUnbalanced: balanced`
+- `cableFunction: null` — source calls it a "Balanced Headphone Cable", not in current vocabulary.
+- `conductorMaterial: null` — source states "6N OCC copper", not in current `copper-ofc` / `silver` / `silver-plated-copper` vocabulary.
+
+Git status: the only new output of mine is `data/accessories/aune-audio/aune-audio-ar3.md`; `.beads/issues.jsonl` and `.beads/interactions.jsonl` were updated by `bd`. No commit or push was made — let me know if you want me to commit.

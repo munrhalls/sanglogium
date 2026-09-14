@@ -1,0 +1,11 @@
+Done.
+
+- Sourced the 1 Audma product from manufacturer + major-retailer listings.
+- Wrote `data/accessories/audma/audma-brioso-case-black-leather-case-for-brioso.md` with real, cited values and explicit nulls.
+- Closed `sang-logium-zdb.3.8` with reason `1 products sourced and filed.`
+- Committed the new product file and `.beads/issues.jsonl` export.
+
+Notes:
+- No dedicated Audma case page exists; the Brioso PHPA1 manual also does not mention the leather case. The only available source was Bloom Audio, so most values are sourced from there and mapped to schema vocabulary.
+- The workspace still has unrelated modified/untracked files (other agents’ logs, partially-staged brand outputs, Sanity backups) — I left those untouched.
+- Did not run build/test/lint per repo rules.

@@ -1,0 +1,7 @@
+Done.
+
+- 14 `.md` files written to `data/accessories/meze-audio/`.
+- `sang-logium-zdb.3.27` closed with reason `"14 products sourced and filed."`
+- `bd export -o .beads/issues.jsonl` run to sync the tracker.
+
+Unverifiable products (`FVx8zpBk46ZESxpKNI3WOv` at $79 and `moXlkADK7m1DHgGwWxMmzS` at $40) were filed with explicit `null` values and conflict notes rather than invented data.

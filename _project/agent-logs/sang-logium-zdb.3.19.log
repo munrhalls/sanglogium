@@ -7,4 +7,13 @@ Plan:
 - `MrEMtYwMtrFDGWmRnGT5JE` → **Final Audio FUSION-G | Triple Hybrid Structure Ear Tips** ($26.99)
 - `Pn6oyV4Ks5AcNbecjb0hIg` → **Final Audio Type E | Silicone Ear Tips** ($13.99)
 
-I need the accessories schema and sourcing protocol before I fetch the manufacturer pages.Good — `should-be-accessories.md` exists now. I still need the exact accessories schema/field list so I source the right fields with the right vocab.
+I need the accessories schema and sourcing protocol before I fetch the manufacturer pages.Good — `should-be-accessories.md` exists now. I still need the exact accessories schema/field list so I source the right fields with the right vocab.Done.
+
+- Filed 2 product `.md` files in `data/accessories/final-audio/`:
+  - `final-audio-fusion-g-triple-hybrid-structure-ear-tips.md`
+  - `final-audio-type-e-silicone-ear-tips.md`
+- Sourced from manufacturer pages (`final-inc.com`) and cited the schema/protocol docs.
+- Closed `sang-logium-zdb.3.19` with reason: **2 products sourced and filed.**
+- Exported beads to `.beads/issues.jsonl`.
+
+No other beads issue or brand was touched.

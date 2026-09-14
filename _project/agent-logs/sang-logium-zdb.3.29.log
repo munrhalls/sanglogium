@@ -1,0 +1,9 @@
+Done.
+
+- Sourced the 2 Polk Audio products from the manufacturer product pages + the shared RC60i/RC80i/RC85i owner’s manual PDF.
+- Wrote `data/accessories/polk-audio/polk-audio-rc80i-2-way-in-ceiling-speakers-4-pack-white.md` and `data/accessories/polk-audio/polk-audio-rc85i-2-way-in-wall-speakers-4-pack-white.md`.
+- The products are in-ceiling/in-wall loudspeakers, so every accessories `filterAttributes` field is honestly `null` with a cited manufacturer source and a conflict note for the legacy CMS `cable`/`connectorTermination` values.
+- Closed `sang-logium-zdb.3.29` with reason “2 products sourced and filed.”
+- Targeted `git status` shows `?? data/accessories/polk-audio/` and `M .beads/issues.jsonl` (from the close).
+
+No commit, push, or other beads issue touched.

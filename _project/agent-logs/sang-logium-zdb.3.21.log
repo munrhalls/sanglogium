@@ -1,1 +1,7 @@
-Plan: 1) run `bd show sang-logium-zdb.3.21` to read the issue, 2) follow its protocols to source each product and write one `.md` per product to the stated path, 3) `bd close` with the product count. Going now.
+Plan: 1) run `bd show sang-logium-zdb.3.21` to read the issue, 2) follow its protocols to source each product and write one `.md` per product to the stated path, 3) `bd close` with the product count. Going now.Done.
+
+- Wrote `data/accessories/hedd-audio/heddphone-balanced-4-pin-xlr-cable.md`
+- Wrote `data/accessories/hedd-audio/hedd-audio-gtc-heddphone-two-cable.md`
+- Closed `sang-logium-zdb.3.21` with reason `"2 products sourced and filed."`
+
+Both files cite real manufacturer (hedd.audio) and audited-retailer sources, record explicit `null` for fields not confirmed, and include conflict/caution notes for the GTC braid/core-count wording and the unconfirmed headphone-side connector / Long variant length. No other beads issues or brands were touched.

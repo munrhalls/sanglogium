@@ -1,0 +1,30 @@
+I’ll finish the ddHiFi accessory sourcing in one pass:
+
+- Read the remaining cached manufacturer pages and fetch the 2–3 retailer pages still needed for `compatibleProductType` evidence.
+- Generate all 10 `data/accessories/ddhifi/*.md` files with a single Node script.
+- Verify count, run `git status`, and `bd close sang-logium-zdb.3.39`.I have the issue details and the 10 manufacturer caches. Manufacturer pages already give `accessoryType`, `adapterFunction`, and often `compatibleProductType`, but a few adapters (DJ30SE, DJ35L, DJ44L, DJ44MOJO) and the two cases need a single corroborating retailer quote for `compatibleProductType`.
+
+I’ll now write one generation script that fetches those six retailer pages, verifies the exact quote, and writes all 10 `.md` files in one pass.Done. `sang-logium-zdb.3.39` is closed with reason `10 products sourced and filed.`
+
+Created files (10):
+- `data/accessories/ddhifi/ddhifi-cz180-portable-hifi-storage-case.md`
+- `data/accessories/ddhifi/ddhifi-cz300-portable-large-capacity-storage-bag.md`
+- `data/accessories/ddhifi/ddhifi-dj30se-4-4mm-male-to-3-5mm-female-single-ended-adapter.md`
+- `data/accessories/ddhifi/ddhifi-dj35ag-dj44ag-2-5mm-female-gold-version-adapter.md`
+- `data/accessories/ddhifi/ddhifi-dj35l-3-5mm-l-shaped-adapter.md`
+- `data/accessories/ddhifi/ddhifi-dj44b-dj44c-mark-ii.md`
+- `data/accessories/ddhifi/ddhifi-dj44gold-4-4mm-female-to-3-5mm-male-adapter-black-gold-edition.md`
+- `data/accessories/ddhifi/ddhifi-dj44l-4-4mm-female-to-4-4mm-male-l-shaped-adapter.md`
+- `data/accessories/ddhifi/ddhifi-dj44mojo-4-4mm-ground-pin-adapter.md`
+- `data/accessories/ddhifi/ddhifi-hs270w-wooden-headphone-stand.md`
+
+Each file has `spec_fields` with real, cited values or explicit `null`, manufacturer + retailer source URLs, and verification notes. Conflicts/cautions are noted for combined-variant pages and price differences.
+
+`git status --short data/accessories/ddhifi .beads/issues.jsonl .beads/interactions.jsonl`:
+```
+ M .beads/interactions.jsonl
+ M .beads/issues.jsonl
+?? data/accessories/ddhifi/
+```
+
+No other beads issue or brand was modified. Per repo rules, I did not run tests, builds, lint, or dev servers. I also did not commit or push.

@@ -1,0 +1,15 @@
+Done. Closed `sang-logium-zdb.3.26` and filed the one McIntosh product.
+
+What I did:
+- Ran `bd show sang-logium-zdb.3.26` and followed its sourcing/execution protocol.
+- Sourced the McIntosh MQ112 Environmental Equalizer from the manufacturer product page, product-sheet PDF, owner’s manual PDF, and Music Direct (audited retailer).
+- Wrote one `.md` file: `data/accessories/mcintosh/mcintosh-mq112-environmental-equalizer.md` with frontmatter `spec_fields`, source URLs, verification notes, and conflict/caution notes.
+- Recorded real values where available and `null` where the accessories taxonomy has no applicable value (the product is an audio-electronics equalizer, not a true accessory, so `accessoryType` is `null` and all domain-gated fields are `null`).
+- Verified one file was written, then ran `bd close sang-logium-zdb.3.26 --reason "1 products sourced and filed."` and `bd export -o .beads/issues.jsonl`.
+
+Files changed:
+- `data/accessories/mcintosh/mcintosh-mq112-environmental-equalizer.md` (new)
+- `.beads/interactions.jsonl` (updated by `bd close`)
+- `.beads/issues.jsonl` (updated by `bd export`)
+
+Git status confirms the new accessory file under `data/accessories/mcintosh/` and the usual pre-existing untracked/modified noise elsewhere. I did not run any build/type-check/lint/test commands (per repo rules) and did not commit or push.

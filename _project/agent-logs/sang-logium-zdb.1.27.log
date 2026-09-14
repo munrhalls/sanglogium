@@ -1,0 +1,19 @@
+Done. `sang-logium-zdb.1.27` is closed and 3 Noble Audio products are filed.
+
+Files written:
+- [noble-audio-fokus-apollo-wireless-headphones.md](file:///home/jan/work/sanglogium/data/headphones/noble-audio/noble-audio-fokus-apollo-wireless-headphones.md)
+- [noble-fokus-apollo-anc-over-ear-headphones.md](file:///home/jan/work/sanglogium/data/headphones/noble-audio/noble-fokus-apollo-anc-over-ear-headphones.md)
+- [noble-fokus-apollo-anc-over-ear-headphones-apos-certified.md](file:///home/jan/work/sanglogium/data/headphones/noble-audio/noble-fokus-apollo-anc-over-ear-headphones-apos-certified.md)
+
+Key sourcing notes:
+- The official Noble launch press release provided `freqResponseHz: 10–40kHz`; the live product page is silent on this, so the press release is the only same-tier source with a value.
+- `impedanceOhms` and `sensitivityDbMw` remain `null` after checking the manufacturer page, extracted user manual, press release, Apos, Audio46, and measurement sources.
+- `aptX HD` is a real sourced codec but missing from the `productType.ts` enum; it is recorded as-is in `bluetoothCodecs`.
+- The Apos Certified variant is flagged as an open-box condition; condition is an I-tier store field and is not in the `spec_fields` block.
+
+No other beads issue or brand was touched. The changes and `.beads/issues.jsonl` are uncommitted. If you want them committed now:
+
+```bash
+git add data/headphones/noble-audio/ .beads/issues.jsonl
+git commit -m "Source and file Noble Audio FoKus Apollo headphone data"
+```

@@ -1,0 +1,20 @@
+Done. Sourced 1 Bose product and closed `sang-logium-zdb.3.11`.
+
+What changed:
+- Created `data/accessories/bose/bose-s1-pro-portable-bluetooth-wireless-pa-system.md`
+- Product: `Bose S1 Pro+ Portable Bluetooth Wireless PA System` (Sanity `GqkAHteRmu9rQ6VLnW1fa9`)
+- Manufacturer source: Bose official product page, which identifies it as a portable PA/speaker system, not an accessory
+- All `should-be-accessories.md` `filterAttributes` recorded as explicit `null` with cited source URL; legacy Sanity values (`accessoryType: "cable"`, `connectorTermination`, `compatibility`) flagged as unsupported and nulled
+
+Closed:
+- `bd close sang-logium-zdb.3.11 --reason "1 products sourced and filed."`
+- `bd export -o .beads/issues.jsonl` to keep the passive export in sync
+
+Git status (targeted):
+```
+ M .beads/interactions.jsonl
+ M .beads/issues.jsonl
+?? data/accessories/bose/
+```
+
+Per conservative profile, I have not committed or pushed. If you want me to stage + commit, say the word.

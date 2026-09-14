@@ -1,0 +1,32 @@
+Done. Closed `sang-logium-zdb.1.30` and filed 3 real, cited product files under `data/headphones/soundcore/`.
+
+**Files created**
+- `data/headphones/soundcore/soundcore-aerofit-2-wireless-headphones-black.md`
+- `data/headphones/soundcore/soundcore-aerofit-2-wireless-open-ear-headphones-green.md`
+- `data/headphones/soundcore/soundcore-q20i-wireless-headphones-white.md`
+
+**Sources used**
+- Soundcore product pages for marketing/feature facts (`a3874-aerofit-2-open-earbuds`, `q20i-a3004z31`, `uk/products/q20i-a3004g11`)
+- Manufacturer user-guide PDFs for hard specs (`cdn.cs.1worldsync.com` for AeroFit 2; `device.report` mirror of the Q20i A3004 guide)
+- Crinacle/ASR/RTINGS checked for sound signature — no dedicated entries found, recorded as `null`
+
+**Notable sourcing calls**
+- AeroFit 2: open-ear form factor mapped to `acousticDesign: semi-open`; `wearingStyle` left empty because the closed vocabulary has no open-ear option; `ipxRating` mapped from source `IP55` → `IPX5`.
+- Q20i: recorded a same-tier manual conflict on `freqResponseHz` (20-20 kHz vs 20-40 kHz) and selected 20-40 kHz because the live product page advertises Hi-Res certification and the support-article snippet mirrors the 40 kHz figure.
+
+**Issue / git status**
+```
+✓ bd close sang-logium-zdb.1.30 --reason "3 products sourced and filed."
+✓ bd export -o .beads/issues.jsonl
+ M .beads/issues.jsonl
+?? data/headphones/soundcore/
+```
+
+Per the conservative git profile, I have not committed. If you want to commit, the proposed commands are:
+
+```bash
+git add data/headphones/soundcore/ .beads/issues.jsonl
+git commit -m "Sourcing: file real, cited Soundcore headphone data (3 products)"
+```
+
+No other beads issues or brands were touched.

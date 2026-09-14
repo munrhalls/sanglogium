@@ -1,0 +1,3 @@
+Plan: show the bead, extract the product list and target directory, then source real cited data and write one .md per product, finally close the bead.
+
+I'll start by loading the beads skill and reading the issue in parallel since they're independent.

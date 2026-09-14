@@ -1,0 +1,6 @@
+Plan:
+1. Show the issue to get the product list and protocols.
+2. Source real, cited data for each product and write one .md file per product under the path it specifies.
+3. Close the issue with the actual product count.
+
+Go/no-go: you said “go, no stop”, so I’m proceeding.Issue loaded. It points to 3 Apos accessories products under `data/accessories/apos/`. I’m now checking for the field/protocol doc and the authoritative product names.Found the field list and protocol docs. `data/accessories/apos/` does not exist yet, so I’ll create it. Next I’m reading the field schema, sourcing protocol, and a sample output file to match the format.

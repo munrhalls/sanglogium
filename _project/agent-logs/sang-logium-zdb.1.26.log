@@ -1,0 +1,15 @@
+Done. Sourced all 9 Moondrop products from manufacturer pages (and one Audio46 audited-retailer page for Kadenz cable termination), wrote one `.md` per product under `data/headphones/moondrop/`, and closed the issue.
+
+- Files created: 9 in `data/headphones/moondrop/`
+- `bd close sang-logium-zdb.1.26 --reason "9 products sourced and filed."` — closed
+- `bd export -o .beads/issues.jsonl` — exported
+- `git status` (targeted) shows new `data/headphones/moondrop/` and modified `.beads/issues.jsonl`
+
+I did not commit or push — conservative profile. If you want to commit:
+
+```bash
+git add data/headphones/moondrop .beads/issues.jsonl
+git commit -m "..."
+```
+
+No other beads issues or brands were touched.

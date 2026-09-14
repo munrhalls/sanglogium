@@ -1,1 +1,10 @@
-I’ll show the issue, then read its protocols, source each product, write the files, and close the bead.I have the issue. Next I’ll fetch the JSON product list, locate the accessories field schema, and build the slug/name/source map.
+I’ll show the issue, then read its protocols, source each product, write the files, and close the bead.I have the issue. Next I’ll fetch the JSON product list, locate the accessories field schema, and build the slug/name/source map.I found the manufacturer pages for all four products. Now I’ll write the four `.md` files under `data/accessories/comply/` with cited frontmatter and verification notes.Done. Closed `sang-logium-zdb.3.14` with reason "4 products sourced and filed."
+
+Wrote 4 cited product files under `data/accessories/comply/`:
+
+- `silicone-case-for-samsung-galaxy-buds3-pro.md`
+- `find-tips-for-your-device.md` (sourced to the AirPods Pro 3 ear tips page; CMS name conflict noted)
+- `earbud-cleaning-kit.md`
+- `comply-t100-foam-ear-tips.md` (sourced to 100 Core Series; 3DME conflict noted)
+
+`git status --short data/accessories/comply/` shows the new directory untracked.

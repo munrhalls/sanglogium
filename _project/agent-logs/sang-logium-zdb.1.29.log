@@ -1,0 +1,13 @@
+Done.
+
+- Sourced `Softears Volume S In-Ear Headphones` (`Pn6oyV4Ks5AcNbecjmDlGL`) from the audited retailer (headphones.com) plus a review source for cable length.
+- Filed one product markdown at [softears-volume-s-in-ear-headphones.md](file:///home/jan/work/sanglogium/data/headphones/softears/softears-volume-s-in-ear-headphones.md).
+- Closed `sang-logium-zdb.1.29` with reason "1 products sourced and filed."
+
+Key sourcing callouts:
+- The manufacturer page at `softears.net/volume-s/` rendered only navigation/footer text; no extractable spec text was obtained, so the audited-retailer page became the highest-tier spec source.
+- `sensitivityDbMw` is recorded as `null` because the source only publishes dB/Vrms, not dB/mW, per the no-conversion rule.
+- `impedanceOhms` records the low-impedance mode (9.8Ω); the high-impedance mode (31.2Ω) is noted in the conflict/caution section.
+- `soundSignature` is `null` because Crinacle/ASR/Rtings have no measured frequency-response entry for this model.
+
+Changed files: `data/headphones/softears/softears-volume-s-in-ear-headphones.md` and `.beads/issues.jsonl` (exported). No other brands or beads issues touched. No commit run per conservative profile.

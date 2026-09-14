@@ -1,0 +1,22 @@
+Done. `sang-logium-zdb.3.20` is closed with reason "6 products sourced and filed."
+
+What I did:
+- Queried Sanity once for the 6 product IDs to get authoritative names/slugs.
+- Searched Focal manufacturer pages (focal.com, focalnaimaudio.com) — no dedicated accessory product pages exist for these ear pads, so I used the audited headphone retailers listed in `sourcing-protocol-headphones.md`: Headphones.com and Moon Audio.
+- Fetched one source page per product and extracted real compatibility quotes.
+- Wrote one `.md` file per product under `data/accessories/focal/` with `spec_fields`, source URLs, and cited verification notes.
+
+Files created:
+- `data/accessories/focal/focal-clear-ear-pads-pair.md`
+- `data/accessories/focal/focal-bathys-replacement-ear-pads-pair.md`
+- `data/accessories/focal/focal-elex-ear-pads-pair.md`
+- `data/accessories/focal/focal-utopia-ear-pad.md`
+- `data/accessories/focal/focal-clear-mg-replacement-ear-pads.md`
+- `data/accessories/focal/focal-utopia-ear-pads.md`
+
+Relevant git status:
+- `M  .beads/interactions.jsonl`
+- `M  .beads/issues.jsonl`
+- `?? data/accessories/focal/`
+
+No other beads or brands were touched. I did not run tests, builds, or dev servers, and did not commit/push per the conservative handoff profile.

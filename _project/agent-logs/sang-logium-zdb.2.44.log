@@ -1,0 +1,7 @@
+Plan:
+
+1. Read `sang-logium-zdb.2.44` to get the product list, target path, and sourcing rules.
+2. For each product, search the web for real, cited data and write one `.md` file under the specified path.
+3. Close the issue with the count.
+
+You already said “go, no stop,” so I’m proceeding.

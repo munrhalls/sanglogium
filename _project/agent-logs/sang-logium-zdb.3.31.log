@@ -1,1 +1,7 @@
-Plan: read the issue, follow its sourcing/execution protocols, gather cited product data, write the .md files, then close the issue.
+Plan: read the issue, follow its sourcing/execution protocols, gather cited product data, write the .md files, then close the issue.The SVS accessory batch is complete.
+
+- Issue `sang-logium-zdb.3.31` is closed.
+- 8 product files are written under `data/accessories/svs/`, each with cited YAML frontmatter and explicit nulls for unsupported fields.
+- No other beads issues or brands were touched.
+
+What would you like me to source next?

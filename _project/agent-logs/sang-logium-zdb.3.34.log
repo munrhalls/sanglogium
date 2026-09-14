@@ -1,1 +1,22 @@
-No accessories-specific protocol doc exists yet; reading the shared sourcing standard and locating product names/Sanity config to map the 7 IDs.
+No accessories-specific protocol doc exists yet; reading the shared sourcing standard and locating product names/Sanity config to map the 7 IDs.Done.
+
+7 Sensaphonics product .md files written under `data/accessories/sensaphonics/`, sourced from the manufacturer product pages on sensaphonics.com. Each file has real, cited values for `accessoryType` and `compatibleProductType` plus explicit nulls and source URLs for the remaining filter fields, matching the headphones .md pattern.
+
+Files created:
+- `earpiece-moisture-wicks.md`
+- `audio-wipes-small.md`
+- `jodi-vac-pro-iem-vacuum.md`
+- `jodi-vac-consumer-iem-vacuum.md`
+- `earpiece-soft-wrap-by-comply.md`
+- `earpiece-cleaning-tool.md`
+- `dry-aid-desiccant.md`
+
+`bd close sang-logium-zdb.3.34 --reason "7 products sourced and filed."` completed. I also ran `bd export -o .beads/issues.jsonl` and `git status --short` per project handoff rules.
+
+Git status shows:
+- `M .beads/issues.jsonl`
+- `?? data/accessories/sensaphonics/`
+
+One caveat: the accessories `filterAttributes` schema's `cleaningProductType` / `formatCompatibility` / `partType` vocabularies are record-care / replacement-part oriented and do not yet include IEM maintenance items (wicks, wipes, desiccant, vacuum, soft wrap, cleaning tool). I recorded those fields as `null` with the actual source phrase and the conflict noted in each file, as the sourcing protocol requires. I did not create or touch any other beads issue.
+
+To verify: open any file in `data/accessories/sensaphonics/` and confirm the frontmatter has `accessoryType`, `compatibleProductType`, and `source_urls` populated, and that `bd show sang-logium-zdb.3.34` now reports `closed`.

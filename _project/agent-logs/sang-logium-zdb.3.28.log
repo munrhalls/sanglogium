@@ -1,0 +1,20 @@
+Done. `sang-logium-zdb.3.28` is closed with reason **“1 products sourced and filed.”**
+
+What I did:
+- Sourced the 1 Moondrop product: **Moondrop Free DSP USB-C IEM Cable** (`moXlkADK7m1DHgGwWxMkkd`).
+- Wrote one file to the path the issue specified: `data/accessories/moondrop/moondrop-free-dsp-usb-c-iem-cable.md`.
+- Filed real, cited data for every `filterAttributes` field, with explicit `null` values and conflict notes for fields the current schema cannot house or where sources conflict (e.g., `connectorTermination`, `cableFunction`, `balancedUnbalanced`, `lengthM`).
+
+Sources used and cited:
+- Moondrop manufacturer page: `https://moondroplab.com/en/products/freedsp`
+- Linsoul: `https://www.linsoul.com/products/moondrop-free-dsp-usb-c-earphone-cable`
+- HeadphoneZone India: `https://www.headphonezone.in/products/moondrop-freedsp`
+- hifigo: `https://hifigo.com/products/moondrop-freedsp`
+- Android Brick review: `https://www.androidbrick.com/moondrop-free-dsp-review/`
+- headphones.com review/measurements: `https://headphones.com/blogs/reviews/moondrop-free-dsp-review-measurements`
+
+Git status (relevant):
+- New untracked: `data/accessories/moondrop/`
+- Modified by `bd close`: `.beads/issues.jsonl`, `.beads/interactions.jsonl`
+
+No other beads issue or brand was touched. I did not commit or push per the conservative profile.

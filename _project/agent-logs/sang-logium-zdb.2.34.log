@@ -1,0 +1,4 @@
+Plan:
+1. Read issue `sang-logium-zdb.2.34` to get the product list, target path, and protocols.
+2. Source real, cited data for each product and write one `.md` file per product.
+3. Close the issue with the count-based reason.

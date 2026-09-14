@@ -1,0 +1,16 @@
+Done.
+
+- Sourced 4 T+A products from manufacturer pages + manuals, plus a Tier 3 null check for soundSignature.
+- Wrote 4 .md files to `data/headphones/t-a/`:
+  - `t-a-solitaire-t.md`
+  - `t-a-solitaire-p-se-headphones.md`
+  - `t-a-solitaire-p-se-headphones-open-box.md`
+  - `t-a-solitaire-p-headphones.md`
+- Closed `sang-logium-zdb.1.32` with reason "4 products sourced and filed."
+- Exported beads state to `.beads/issues.jsonl`.
+
+Git status:
+- Modified: `.beads/issues.jsonl`
+- Untracked: `data/headphones/t-a/`
+
+No commit/push per conservative profile. If you want to commit, the changed files are ready.

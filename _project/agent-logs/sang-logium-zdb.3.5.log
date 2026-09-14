@@ -1,0 +1,5 @@
+Plan for this turn:
+1. `bd show sang-logium-zdb.3.5` to read the issue protocols.
+2. Inspect the target directory and any existing files.
+3. Source real data and write one `.md` per product listed.
+4. `bd close` with the product count.

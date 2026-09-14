@@ -1,0 +1,19 @@
+Done. `sang-logium-zdb.3.25` — [Sourcing] Accessories: Listenmore is closed.
+
+**Files created**
+- `data/accessories/listenmore/etched-headphone-cable.md`
+- `data/accessories/listenmore/etched-headphone-cable-for-sennheiser-hd-600-series.md`
+
+**What was sourced**
+- Manufacturer/brand page: `https://headphones.com/products/etched-headphone-cable` and the Sennheiser variant.
+- Both files now contain all 29 `should-be-accessories.md` fields in frontmatter with real, cited values or explicit `null`s.
+- `.beads/issues.jsonl` was exported after the close.
+
+**Conflicts / cautions recorded (not silently resolved)**
+- The live product offers `6.35mm` and `4-Pin XLR` terminations; the current `TerminationType` vocabulary does not include `6.35mm`, and `4-Pin XLR` is more specific than the enum’s generic `xlr`.
+- Sanity currently stores `connectorTermination: ["3.5mm", "6.35mm", "4.4mm-balanced"]`; the manufacturer source supports 3.5mm, 6.35mm, and 4-Pin XLR (not 4.4mm).
+- Generic cable: older specs table says `3m` only and `Blue or Silver`, while the live variant selector shows `1.25m/3m` and four colors.
+- The compatibility lists are preserved in the notes, but the `compatibility` filter field is domain-gated to `replacement-parts` per `should-be-accessories.md`, so the filter value is `null` for these `cables-interconnects` products.
+
+**Next step for you**
+- The two new `.md` files and the exported `.beads/issues.jsonl` are untracked/modified and ready to stage/commit if you want.

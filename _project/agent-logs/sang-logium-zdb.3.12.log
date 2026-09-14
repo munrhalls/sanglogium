@@ -1,0 +1,21 @@
+All 5 Campfire Audio .md files have been written under `data/accessories/campfire-audio/`. Now verifying the file count, closing the issue, exporting beads, and checking git status.Done.
+
+- Sourced 5 Campfire Audio products from their manufacturer pages.
+- Wrote 5 `.md` files to `data/accessories/campfire-audio/`.
+- Closed `sang-logium-zdb.3.12` with reason: `5 products sourced and filed.`
+- Exported beads: `.beads/issues.jsonl` and `.beads/interactions.jsonl` updated.
+
+Targeted git status:
+```
+ M .beads/interactions.jsonl
+ M .beads/issues.jsonl
+?? data/accessories/campfire-audio/
+```
+
+One conflict recorded: the `Seaqual Yarn IEM Case` page currently shows `$29.00` with a `Sale • Save $20.00` badge (compare-at `$49.00`), while the issue's Sanity-sourced price is `$49.00`. `dealsDiscount` is left `null` because the stable facet value format is not defined in the schema; the conflict is noted in the file for the later patch phase.
+
+Proposed next step (not run under the conservative profile):
+```bash
+git add data/accessories/campfire-audio .beads/issues.jsonl .beads/interactions.jsonl
+git commit -m "Source and file Campfire Audio accessories data (sang-logium-zdb.3.12)"
+```

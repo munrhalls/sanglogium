@@ -1,0 +1,18 @@
+Done. `sang-logium-zdb.3.30` is closed.
+
+- **1 product sourced and filed** for Ruark Audio: `Y7l1IhzX2fnyiano57b1dx` — Ruark Audio R810 AV Mount.
+- File: `data/accessories/ruark-audio/ruark-audio-r810-tv-mount-with-adjustable-av-shelf-for-r810-high-fidelity-radiogram.md`
+- Primary sources used:
+  - Ruark R810 product page (AV Mount description)
+  - Ruark `R810-R7 AV Mount Specifications` PDF (20240715.1) — compatibility, finish, VESA, weight capacity, dimensions
+  - Ruark `R7 AV Mount` PDF (older, used for conflict comparison)
+  - Synergy Audio product page (retailer construction description)
+
+Key sourced values:
+- `accessoryType`: `stands-isolation`
+- `furnitureType`: `equipment-rack-shelf`
+- `material`: `metal` (glass shelf noted as unrepresentable in current schema)
+- `adjustableHeight`: `true`
+- `weightCapacityKg`: `25`
+
+No other beads issue or brand was touched. The `.beads/issues.jsonl` export was updated to reflect the close. `git status` shows the new file and the updated `.beads/issues.jsonl` as the only changes from this task; other modified/untracked files in the tree are pre-existing.

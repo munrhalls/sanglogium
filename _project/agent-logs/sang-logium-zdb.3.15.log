@@ -1,0 +1,5 @@
+Closed `sang-logium-zdb.3.15` with reason "1 products sourced and filed."
+
+- Wrote `data/accessories/crystal-cables/crystal-cable-duet-for-focal-utopia.md` with real, cited data for the 1 Crystal Cables product in scope.
+- Sourced from `crystalcable.com/duet-series/`, `headphones.com/products/crystal-cable-duet-for-focal-utopia`, and `anquan-av.gr/cables/portable-duet-iem-configuration-crc-00104`.
+- `git status` shows the new untracked `data/accessories/crystal-cables/` directory and `.beads/issues.jsonl` updates from `bd export`. No other issues or brands were touched; no commit/push made.

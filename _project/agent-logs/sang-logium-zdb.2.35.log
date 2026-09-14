@@ -1,0 +1,6 @@
+Plan:  
+1. Pull the issue with `bd show` and the beads skill.  
+2. Follow its EXECUTION and SOURCING protocols to research each product and write one `.md` per product.  
+3. Close with `bd close` and export `issues.jsonl`.  
+
+Tool-call budget this turn: 2 calls.

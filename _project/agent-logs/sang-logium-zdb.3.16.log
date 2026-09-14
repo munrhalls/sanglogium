@@ -1,3 +1,12 @@
 Plan: invoke the beads skill, then `bd show` the issue to read its sourcing/execution protocols.
 
-Tool calls this turn: 2. Proceeding per your "go, no stop".Next: get authoritative product list as JSON, locate the accessory field schema, and find existing product data in the repo.
+Tool calls this turn: 2. Proceeding per your "go, no stop".Next: get authoritative product list as JSON, locate the accessory field schema, and find existing product data in the repo.Found `docs/filters-sort/should-be-accessories.md` exists. Next: read the field schema, an existing accessory output file, and the accessory dataset fetch script.Mapped the 3 Dan Clark Audio products. Now I’ll search the manufacturer site for each product page.Done. `sang-logium-zdb.3.16` is closed and all 3 Dan Clark Audio products are filed.
+
+Created files:
+- [dan-clark-audio-dummer-cable-headphone-cable-for-aeon-and-ether.md](file:///home/jan/work/sanglogium/data/accessories/dan-clark-audio/dan-clark-audio-dummer-cable-headphone-cable-for-aeon-and-ether.md)
+- [dan-clark-audio-vivo-super-premium-headphone-cable.md](file:///home/jan/work/sanglogium/data/accessories/dan-clark-audio/dan-clark-audio-vivo-super-premium-headphone-cable.md)
+- [dan-clark-audio-aeon-2-perforated-ear-pads.md](file:///home/jan/work/sanglogium/data/accessories/dan-clark-audio/dan-clark-audio-aeon-2-perforated-ear-pads.md)
+
+Sourcing followed the issue's protocol: manufacturer pages on `danclarkaudio.com` were fetched first (via `curl` after the site's bot block), with `Audio Sanctuary` and `Apos` used as Tier-2 cross-checks. Real cited data is in each frontmatter; conflicts are recorded in the `## Conflict / Caution Notes` sections — notably the 1/4" (6.35 mm) termination and the missing `headphone-cable` value in the `cableFunction` vocabulary.
+
+I also ran `bd export -o .beads/issues.jsonl`. `git status` now shows the 3 new files and `.beads/issues.jsonl` updated, plus pre-existing untracked files from other work. No commit, no push, no other beads issue or brand touched, and no self-verification build/test commands run.

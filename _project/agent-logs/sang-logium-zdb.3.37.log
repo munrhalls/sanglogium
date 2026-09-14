@@ -1,1 +1,13 @@
-Proceeding: I'll read the beads issue, source real product data with citations, write one markdown file per product in the specified directory, then close the issue.Found the issue: 24 Wicked Cushions products, target directory `data/accessories/wicked-cushions/`. Next I need the product names and the accessories field list.
+Proceeding: I'll read the beads issue, source real product data with citations, write one markdown file per product in the specified directory, then close the issue.Found the issue: 24 Wicked Cushions products, target directory `data/accessories/wicked-cushions/`. Next I need the product names and the accessories field list.Done — `sang-logium-zdb.3.37` is closed with reason `24 products sourced and filed.`
+
+What happened:
+- Sourced all 24 Wicked Cushions products from `wickedcushions.com` product pages (`.json` endpoints).
+- Wrote 24 `.md` files under `data/accessories/wicked-cushions/`, one per product, with frontmatter `spec_fields` covering every `should-be-accessories.md` field (real values or explicit `null`) and verification notes citing the manufacturer page.
+- Used the store price/availability from the existing `acquired-values.csv` for I-tier fields.
+- Exported beads state and ran targeted `git status`.
+
+Relevant git status:
+- `data/accessories/wicked-cushions/` — new, untracked
+- `.beads/issues.jsonl`, `.beads/interactions.jsonl` — modified by `bd export`
+
+No commit/push made (conservative default).

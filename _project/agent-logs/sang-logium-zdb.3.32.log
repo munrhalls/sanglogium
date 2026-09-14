@@ -1,1 +1,9 @@
-I’ll pull the issue first, then follow its protocols exactly: source real data, write one `.md` per product, and close the bead.
+I’ll pull the issue first, then follow its protocols exactly: source real data, write one `.md` per product, and close the bead.Done.
+
+- Sourced `Salad Halo Headphone Stand` from manufacturer page (`salad.design/audio/halo`) and Apos listing.
+- Wrote `data/accessories/salad/salad-halo-headphone-stand.md` with cited fields, explicit nulls, and a recorded source conflict (Alder base vs. Sapele mahogany base in manufacturer copy).
+- Verified 1 .md file matches the issue's 1 product.
+- Closed `sang-logium-zdb.3.32` with reason: `1 products sourced and filed.`
+- Exported beads: `.beads/issues.jsonl` updated.
+
+Working-tree note: the product .md file is already present at HEAD from a prior commit; my write matched it, so the only uncommitted change is the beads export. Conservative handoff — not committing/pushing.

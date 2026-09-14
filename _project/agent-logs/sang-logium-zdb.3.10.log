@@ -1,0 +1,7 @@
+Done. I sourced and filed 1 Austrian Audio product:
+
+- [austrian-audio-the-composer-travel-case-hard-case.md](file:///home/jan/work/sanglogium/data/accessories/austrian-audio/austrian-audio-the-composer-travel-case-hard-case.md)
+
+Closed `sang-logium-zdb.3.10` with reason: **1 products sourced and filed.**
+
+Sources used: the Austrian Audio manufacturer product page and The Composer headphone page. `accessoryType` is `cases-storage-transport` with `compatibleProductType: ["headphone"]`; all domain-gated fields are explicitly `null` with cited reasoning.

@@ -1,3 +1,13 @@
 Plan: (1) read the beads issue, (2) execute its sourcing/execution protocols to write product files, (3) close it with the count. Since you said "go," I'll proceed.
 
-Invoking relevant skills and checking the issue now.
+Invoking relevant skills and checking the issue now.Done.
+
+- Sourced the 1 JBL product from the manufacturer page and linked spec sheet.
+- Wrote the product file to `data/accessories/jbl/jbl-wireless-two-microphone-system-with-dual-channel-receiver.md`.
+- Notable honest null: the product is a wireless UHF two-microphone system and does not map to any of the nine categories in `should-be-accessories.md`, so `accessoryCategory` is recorded as `null` rather than forced into the wrong category. `compatibleProductType` is `"speaker"` based on the source text.
+- Closed `sang-logium-zdb.3.22` with reason `1 products sourced and filed.`
+- Exported `.beads/issues.jsonl` and committed the new data file plus the beads export (local commit, no push).
+
+[jbl-wireless-two-microphone-system-with-dual-channel-receiver.md](file:///home/jan/work/sanglogium/data/accessories/jbl/jbl-wireless-two-microphone-system-with-dual-channel-receiver.md)
+
+The remaining working-tree noise (`_project/agent-logs`, `sanity-cms/backups`, other `data/accessories/` directories) is from other sessions and was not staged.

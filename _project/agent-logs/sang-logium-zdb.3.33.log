@@ -1,0 +1,9 @@
+Done. Sourced and filed the 2 Sanus products from `sang-logium-zdb.3.33` and closed the issue.
+
+- **Products**: Sanus Headphone Stand for Sonos Ace — Black (`GjMaRFaHMVTsBoyxtAJDT4`) and White (`fisKNZUL2oYuqkoQMTzLCp`)
+- **Files written**:
+  - `data/accessories/sanus/sanus-headphone-stand-for-sonos-ace-black.md`
+  - `data/accessories/sanus/sanus-headphone-stand-for-sonos-ace-white.md`
+- **Sources cited**: Sanus product page, Sanus PDF spec sheet, rAVe press release
+- **Beads**: closed with `bd close sang-logium-zdb.3.33 --reason "2 products sourced and filed."` and ran `bd export -o .beads/issues.jsonl`
+- **Git**: committed the new files and `.beads/issues.jsonl` as `0ae615c8 — Source and file real, cited data for Sanus WSHSH1 headphone stands`. Did not push (conservative profile). Branch is ahead of `origin/main` by 17 commits.
