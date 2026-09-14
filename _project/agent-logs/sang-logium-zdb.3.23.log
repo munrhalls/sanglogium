@@ -1,0 +1,4 @@
+I’ll invoke the matching skill and then read the bead issue.Plan:
+1. Find the accessories sourcing schema and the product’s slug/name.
+2. Fetch JL Audio manufacturer sources and extract real cited specs.
+3. Write the .md under `data/accessories/jl-audio/` and close the issue.

@@ -1,0 +1,20 @@
+I’ll start by invoking the `beads` skill and pulling the issue details in parallel.Done. `sang-logium-zdb.3.40` is closed and the product file is filed.
+
+Created:
+- `data/accessories/ifi-audio/ifi-itraveller-multipurpose-travel-case-for-dacs.md`
+
+Sourced fields for `iFi iTraveller | Multipurpose Travel Case for DACs` from the iFi Audio product page:
+- `accessoryType`: `cases-storage-transport`
+- `compatibleProductType`: `["amplifier-source", "headphone", "universal-any"]`
+- Commercial and domain-gated fields set to explicit `null` with cited reasons
+
+Cited sources:
+- `https://ifi-audio.com/products/itraveller`
+- `https://sanglogium.com/products/ifi-itraveller-multipurpose-travel-case-for-dacs`
+
+Verification:
+- 1 file written under `data/accessories/ifi-audio/`
+- `bd close sang-logium-zdb.3.40 --reason "1 products sourced and filed."` succeeded
+- `git status` shows `data/accessories/` as new plus `.beads/issues.jsonl` updated
+
+No other beads issue or brand was touched; no commit or push was made per conservative profile.

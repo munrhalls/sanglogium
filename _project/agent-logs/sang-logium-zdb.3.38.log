@@ -1,0 +1,19 @@
+**Plan:**  
+1. Read `bd show sang-logium-zdb.3.38` to get the product list and path.  
+2. Source real, cited data for each product and write one `.md` file per product in the issue-specified directory.  
+3. Close the issue with `bd close sang-logium-zdb.3.38 --reason "<N> products sourced and filed."`  
+
+You said go, so I’m proceeding.Done.
+
+- Sourced `apzyFbFDTajEZntmxssRcT` (Yamaha NS-IC800 in-ceiling speakers) from the manufacturer product and specs pages.
+- Wrote 1 product file: [yamaha-ns-ic800-140-watt-8-inch-2-way-in-ceiling-speakers-pair-white.md](file:///home/jan/work/sanglogium/data/accessories/yamaha/yamaha-ns-ic800-140-watt-8-inch-2-way-in-ceiling-speakers-pair-white.md)
+- Closed `sang-logium-zdb.3.38` with reason `1 products sourced and filed.`
+- Exported beads and verified 1 `.md` file in `data/accessories/yamaha/`.
+
+Note: the manufacturer identifies this product as an in-ceiling speaker, not an accessory, so all `filterAttributes` accessory-specific fields are explicitly recorded as `null` with cited manufacturer URLs. The current legacy `connectorTermination` values were not confirmed and are flagged for a later re-categorization pass.
+
+Changed files (not committed):
+- `data/accessories/yamaha/yamaha-ns-ic800-...md` (new)
+- `.beads/issues.jsonl`, `.beads/interactions.jsonl` (updated by `bd close`/`bd export`)
+
+If you want me to commit/push, say the word.

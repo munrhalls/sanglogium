@@ -1,0 +1,10 @@
+I’ll read the issue, then source and file the products exactly as specified.
+
+Plan:
+1. `bd show sang-logium-zdb.3.19` to get the protocols and product list.
+2. For each product, perform real, cited sourcing and write one `.md` in the issue’s target directory.
+3. `bd close sang-logium-zdb.3.19` with the actual product count.Got the issue. 2 Final Audio accessories, names currently `null`. I need the authoritative product names and the accessories sourcing schema before I start web sourcing.The JSON plus the export reveal both products:
+- `MrEMtYwMtrFDGWmRnGT5JE` → **Final Audio FUSION-G | Triple Hybrid Structure Ear Tips** ($26.99)
+- `Pn6oyV4Ks5AcNbecjb0hIg` → **Final Audio Type E | Silicone Ear Tips** ($13.99)
+
+I need the accessories schema and sourcing protocol before I fetch the manufacturer pages.Good — `should-be-accessories.md` exists now. I still need the exact accessories schema/field list so I source the right fields with the right vocab.

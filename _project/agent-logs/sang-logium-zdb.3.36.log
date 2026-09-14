@@ -1,0 +1,22 @@
+Closed `sang-logium-zdb.3.36` — 1 product sourced and filed.
+
+Filed:
+
+- `data/accessories/symbio/symbio-w-eartips-hybrid-silcone-foam-eartips.md`
+
+Sources used:
+
+- `https://symbiow.com/termek/symbio-w-3-pairs-optional-sizes/`
+- `https://symbiow.com/termek/symbio-w-2-pairs-optional-sizes/`
+- `https://symbiow.com/manual/`
+
+Key values:
+
+- `accessoryType`: `replacement-parts`
+- `compatibleProductType`: `["headphone"]`
+- `partType`: `ear-tips`
+- `compatibility`: `null` (manufacturer only gives a generic 4.5mm–6mm IEM-nozzle fit range, no exact model/brand)
+- `awards`: `[]`
+- All other domain-gated fields: `null`
+
+No other beads issue or brand was touched. `bd export` updated `.beads/issues.jsonl` to reflect the close. Git status shows only `data/accessories/` untracked and `.beads/issues.jsonl` modified.

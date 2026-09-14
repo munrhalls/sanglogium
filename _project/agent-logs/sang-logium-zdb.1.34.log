@@ -1,0 +1,31 @@
+I’ll load the beads skill and pull the issue details in parallel.Done.
+
+**Files written**
+- `data/headphones/thieaudio/thieaudio-monarch-mkiii-in-ear-headphones.md`
+- `data/headphones/thieaudio/thieaudio-hype-4-in-ear-headphones.md`
+
+**Beads**
+- `sang-logium-zdb.1.34` closed with reason: **"2 products sourced and filed."**
+- Exported `.beads/issues.jsonl` to keep the JSONL in sync with Dolt.
+
+**Sources used**
+- Thieaudio manufacturer pages
+- Headphones.com (audited retailer)
+- Audio46 (audited retailer, for Hype 4 driver/spec confirmation)
+- Crinacle rankings checked for `soundSignature` — no dedicated MKIII or Hype 4 entry, recorded `null`
+
+**Notes**
+- Monarch MKIII `driverConfigDetail` is the exact manufacturer spec line; the Sonion EST count is not explicitly given, so the string is recorded verbatim and the bucket set to `tribrid` based on the presence of EST/BA/DD types (caution note included).
+- Hype 4 `cableLengthM` is `null` because no Tier 1/Tier 2 source checked states a length.
+- No self-verification build/type-check/test commands were run per repo rules; the two files are the product deliverable.
+
+**Git status (relevant to this task)**
+- Modified: `.beads/interactions.jsonl`, `.beads/issues.jsonl`
+- New dir: `data/headphones/thieaudio/`
+- Many other untracked/modified files already existed in the working tree before this task; I did not touch them.
+
+No commit or push was made (conservative profile). If you want to commit/push, the suggested files are:
+- `.beads/interactions.jsonl`
+- `.beads/issues.jsonl`
+- `data/headphones/thieaudio/thieaudio-hype-4-in-ear-headphones.md`
+- `data/headphones/thieaudio/thieaudio-monarch-mkiii-in-ear-headphones.md`

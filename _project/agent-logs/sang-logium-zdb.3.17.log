@@ -1,0 +1,6 @@
+Plan:
+1. Show issue `sang-logium-zdb.3.17` and extract its execution/sourcing instructions.
+2. Source real cited data for every product listed and write one `.md` per product under the issue’s target path.
+3. Close the issue with the product count.
+
+Let me pull the issue and the beads skill guidance.Issue loaded. 107 Dekoni Audio products, output path `data/accessories/dekoni-audio/`. Next I need the authoritative JSON product list and the field schema before fetching.

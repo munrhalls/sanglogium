@@ -1,0 +1,10 @@
+Done.
+
+- `sang-logium-zdb.1.31` closed as "2 products sourced and filed."
+- Wrote 2 files under `data/headphones/symphonium-audio/`:
+  - `symphonium-audio-titan-in-ear-headphones.md`
+  - `symphonium-audio-crimson-in-ear-headphones.md`
+- Sourced from manufacturer pages (`https://www.symphoniumaudio.com/products/titan`, `/crimson`). All fields are real, cited, or explicit `null` (e.g. `soundSignature` is `null` because Crinacle/ASR/Rtings have no dedicated Titan/Crimson entry).
+- `bd export -o .beads/issues.jsonl` run to sync the JSONL export.
+
+Git status shows my `data/headphones/symphonium-audio/` files and updated `.beads/issues.jsonl` / `.beads/interactions.jsonl` as uncommitted changes. I did not commit or push, per the conservative active profile. If you want me to commit, say so.
