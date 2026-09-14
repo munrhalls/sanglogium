@@ -27,8 +27,7 @@ spec_fields:
   cleaningProductType: null
   formatCompatibility: null
   partType: null
-  compatibility: 
-    - "Apos x Community Rock Lobster IEMs"
+  compatibility: null
   adapterFunction: null
   treatmentType: null
   mounting: null
@@ -43,7 +42,6 @@ data_status: "COMPLETE"
 ## Verification Notes
 
 - **condition**: `new` — product listing has a single condition / no condition options.
-- **compatibility**: ["Apos x Community Rock Lobster IEMs"] — compatible models extracted from the manufacturer product page and product title.
 - **customerRating**: `null` — no visible customer rating or aggregate score on the cited source page.
 - **dealsDiscount**: `null` — no discount or deal terms visible on the cited source page.
 - **newArrival**: `null` — release/new-arrival status not stated on the cited source page.

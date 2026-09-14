@@ -29,7 +29,12 @@ spec_fields:
   formatCompatibility: null
   partType: "ear-pads-cushions"
   compatibility: 
-    - "Dekoni Audio EPZ-ARYA-FNSK Replacement Ear Pads for HiFiMan Arya Headphones Elite Fenestrated Sheepskin"
+    - "HiFiMan Arya"
+    - "HiFiMan Arya Stealth Magnet"
+    - "HiFiMan Ananda"
+    - "HiFiMan Edition X V2"
+    - "HiFiMan HE1000 V2/SE"
+    - "HiFiMan Jade II electrostatic"
   adapterFunction: null
   treatmentType: null
   mounting: null
@@ -47,7 +52,7 @@ data_status: "COMPLETE"
 - **accessoryType**: `replacement-parts` — product name / page identifies this as a replacement-parts item.
 - **compatibleProductType**: ["headphone"] — intended for use with headphone.
 - **partType**: `ear-pads-cushions` — product name identifies this as a ear-pads-cushions replacement part.
-- **compatibility**: ["Dekoni Audio EPZ-ARYA-FNSK Replacement Ear Pads for HiFiMan Arya Headphones Elite Fenestrated Sheepskin"] — compatible models extracted from the manufacturer product page and product title.
+- **compatibility**: ["HiFiMan Arya","HiFiMan Arya Stealth Magnet","HiFiMan Ananda","HiFiMan Edition X V2","HiFiMan HE1000 V2/SE","HiFiMan Jade II electrostatic"] — compatible models extracted from the manufacturer product page and product title.
 - **customerRating**: `null` — no visible customer rating or aggregate score on the cited source page.
 - **dealsDiscount**: `null` — no discount or deal terms visible on the cited source page.
 - **newArrival**: `null` — release/new-arrival status not stated on the cited source page.

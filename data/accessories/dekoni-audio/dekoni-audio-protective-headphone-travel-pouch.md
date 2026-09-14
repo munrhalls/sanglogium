@@ -33,7 +33,7 @@ spec_fields:
   mounting: null
 
 source_urls: 
-  - "https://aposaudio.com/products/dekoni-audio-protective-headphone-travel-pouch"
+  - "https://dekoniaudio.com/products/dekoni-audio-protective-headphone-travel-pouch"
 verified_at: "2026-09-14"
 data_status: "COMPLETE"
 

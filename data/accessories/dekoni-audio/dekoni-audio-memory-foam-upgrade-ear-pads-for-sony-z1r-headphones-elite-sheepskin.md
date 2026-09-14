@@ -29,7 +29,7 @@ spec_fields:
   formatCompatibility: null
   partType: "ear-pads-cushions"
   compatibility: 
-    - "Dekoni Audio Memory Foam Upgrade Ear Pads for Sony Z1R Dekoni Audio Memory Foam Upgrade Ear Pads for Sony Z1R Headphones Elite Sheepskin"
+    - "Sony Z1R Sony MDR"
   adapterFunction: null
   treatmentType: null
   mounting: null
@@ -47,7 +47,7 @@ data_status: "COMPLETE"
 - **accessoryType**: `replacement-parts` — product name / page identifies this as a replacement-parts item.
 - **compatibleProductType**: ["headphone"] — intended for use with headphone.
 - **partType**: `ear-pads-cushions` — product name identifies this as a ear-pads-cushions replacement part.
-- **compatibility**: ["Dekoni Audio Memory Foam Upgrade Ear Pads for Sony Z1R Dekoni Audio Memory Foam Upgrade Ear Pads for Sony Z1R Headphones Elite Sheepskin"] — compatible models extracted from the manufacturer product page and product title.
+- **compatibility**: ["Sony Z1R Sony MDR"] — compatible models extracted from the manufacturer product page and product title.
 - **customerRating**: `null` — no visible customer rating or aggregate score on the cited source page.
 - **dealsDiscount**: `null` — no discount or deal terms visible on the cited source page.
 - **newArrival**: `null` — release/new-arrival status not stated on the cited source page.

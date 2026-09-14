@@ -1,0 +1,11 @@
+Done.
+
+Closed `sang-logium-zdb.2.46` with reason `1 products sourced and filed.`
+
+Sourced the one Zähl product (`MrEMtYwMtrFDGWmRnNA955`) and filed it at:
+
+`data/audio-electronics/zahl/z-hl-hm1-reference-desktop-headphone-amplifier.md`
+
+Key result: the HM1 is a headphone/mixing amplifier, so it falls outside the current `audio-electronics` `deviceType` taxonomy and is correctly recorded as `null` for `deviceType`; all domain-gated fields are `null`. Sourced non-null values with citations: `deviceConnectivity: wired`, `rackMountable19: false`, `countryOfManufacture: Germany`, `awards: ["Reviewer's Choice"]` from Headphones.com.
+
+No builds, tests, or lints were self-run per the repo’s absolute ban. Git status shows the new file plus `.beads/` export changes; nothing was committed or pushed.

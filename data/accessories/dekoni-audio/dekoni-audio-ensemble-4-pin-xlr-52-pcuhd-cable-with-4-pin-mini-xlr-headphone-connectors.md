@@ -17,7 +17,7 @@ spec_fields:
   connectorTermination: 
     - "xlr"
     - "4-pin-mini-xlr"
-  lengthM: null
+  lengthM: 1.32
   conductorMaterial: "copper-ofc"
   balancedUnbalanced: "balanced"
   furnitureType: null
@@ -48,6 +48,7 @@ data_status: "COMPLETE"
 - **accessoryType**: `cables-interconnects` — product name / page identifies this as a cables-interconnects item.
 - **compatibleProductType**: ["headphone"] — intended for use with headphone.
 - **connectorTermination**: ["xlr","4-pin-mini-xlr"] — connector type(s) stated in the product title / description.
+- **lengthM**: `1.32` — length in meters converted from the stated dimension in the product title.
 - **conductorMaterial**: `copper-ofc` — conductor material stated in the product title or page description.
 - **balancedUnbalanced**: `balanced` — product title / description describes the cable as balanced.
 - **customerRating**: `null` — no visible customer rating or aggregate score on the cited source page.

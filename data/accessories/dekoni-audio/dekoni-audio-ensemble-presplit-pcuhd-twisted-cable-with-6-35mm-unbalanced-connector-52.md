@@ -14,8 +14,9 @@ spec_fields:
   compatibleProductType: 
     - "headphone"
   cableFunction: null
-  connectorTermination: null
-  lengthM: null
+  connectorTermination: 
+    - "6.35mm"
+  lengthM: 1.32
   conductorMaterial: "copper-ofc"
   balancedUnbalanced: "unbalanced"
   furnitureType: null
@@ -45,6 +46,8 @@ data_status: "COMPLETE"
 - **condition**: `new` — product listing has a single condition / no condition options.
 - **accessoryType**: `cables-interconnects` — product name / page identifies this as a cables-interconnects item.
 - **compatibleProductType**: ["headphone"] — intended for use with headphone.
+- **connectorTermination**: ["6.35mm"] — connector type(s) stated in the product title / description.
+- **lengthM**: `1.32` — length in meters converted from the stated dimension in the product title.
 - **conductorMaterial**: `copper-ofc` — conductor material stated in the product title or page description.
 - **balancedUnbalanced**: `unbalanced` — product title / description describes the cable as unbalanced.
 - **customerRating**: `null` — no visible customer rating or aggregate score on the cited source page.

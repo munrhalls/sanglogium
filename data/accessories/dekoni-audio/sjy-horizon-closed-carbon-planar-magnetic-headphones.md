@@ -27,8 +27,7 @@ spec_fields:
   cleaningProductType: null
   formatCompatibility: null
   partType: null
-  compatibility: 
-    - "SJY Horizon Closed Carbon Planar Magnetic SJY Horizon Closed Carbon Planar Magnetic Headphones"
+  compatibility: null
   adapterFunction: null
   treatmentType: null
   mounting: null
@@ -43,7 +42,6 @@ data_status: "COMPLETE"
 ## Verification Notes
 
 - **condition**: `new` — product listing has a single condition / no condition options.
-- **compatibility**: ["SJY Horizon Closed Carbon Planar Magnetic SJY Horizon Closed Carbon Planar Magnetic Headphones"] — compatible models extracted from the manufacturer product page and product title.
 - **balancedUnbalanced**: `balanced` — product title / description describes the cable as balanced.
 - **customerRating**: `null` — no visible customer rating or aggregate score on the cited source page.
 - **dealsDiscount**: `null` — no discount or deal terms visible on the cited source page.

@@ -29,9 +29,9 @@ spec_fields:
   formatCompatibility: null
   partType: "ear-pads-cushions"
   compatibility: 
-    - "Replacement Earpads for the Fostex T20RP"
-    - "T40RP"
-    - "T50RP Series Headphones"
+    - "Fostex T20RP"
+    - "Fostex T40RP"
+    - "Fostex T50RP"
   adapterFunction: null
   treatmentType: null
   mounting: null
@@ -49,7 +49,7 @@ data_status: "COMPLETE"
 - **accessoryType**: `replacement-parts` — product name / page identifies this as a replacement-parts item.
 - **compatibleProductType**: ["headphone"] — intended for use with headphone.
 - **partType**: `ear-pads-cushions` — product name identifies this as a ear-pads-cushions replacement part.
-- **compatibility**: ["Replacement Earpads for the Fostex T20RP","T40RP","T50RP Series Headphones"] — compatible models extracted from the manufacturer product page and product title.
+- **compatibility**: ["Fostex T20RP","Fostex T40RP","Fostex T50RP"] — compatible models extracted from the manufacturer product page and product title.
 - **customerRating**: `null` — no visible customer rating or aggregate score on the cited source page.
 - **dealsDiscount**: `null` — no discount or deal terms visible on the cited source page.
 - **newArrival**: `null` — release/new-arrival status not stated on the cited source page.

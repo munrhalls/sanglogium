@@ -1,0 +1,15 @@
+Done.
+
+- Sourced `moXlkADK7m1DHgGwWwEUpi` — Weiss DAC204 Desktop DAC.
+- Wrote one product file: `data/audio-electronics/weiss/weiss-dac204-desktop-dac.md`.
+- Closed `sang-logium-zdb.2.42` with reason `1 products sourced and filed.`
+- Exported beads: `.beads/issues.jsonl` updated.
+
+Relevant git changes:
+
+```
+ M .beads/issues.jsonl
+?? data/audio-electronics/weiss/weiss-dac204-desktop-dac.md
+```
+
+No other beads issues or brands were touched. I left commits off per the conservative profile.

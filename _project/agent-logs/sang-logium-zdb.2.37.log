@@ -1,3 +1,19 @@
 Plan: show the bead, extract the product list and target directory, then source real cited data and write one .md per product, finally close the bead.
 
-I'll start by loading the beads skill and reading the issue in parallel since they're independent.
+I'll start by loading the beads skill and reading the issue in parallel since they're independent.Sourcing is complete for the one Sennheiser HDV 820. Writing the product file now.Done.
+
+- Sourced the one Sennheiser product in `sang-logium-zdb.2.37` and wrote `data/audio-electronics/sennheiser/sennheiser-hdv-820-headphone-amplifier.md` with real, cited values from the Sennheiser product page, instruction manual, and Sennheiser spec sheet.
+- Closed the bead: `bd close sang-logium-zdb.2.37 --reason "1 product sourced and filed."`
+- Exported beads: `.beads/issues.jsonl` updated.
+- `git status` shows:
+  - `M .beads/issues.jsonl`
+  - `?? data/audio-electronics/sennheiser/`
+
+Per the conservative profile, I did not commit or push. Suggested next step if you want it on git:
+
+```bash
+git add .beads/issues.jsonl data/audio-electronics/sennheiser/
+git commit -m "sang-logium-zdb.2.37: source Sennheiser HDV 820"
+```
+
+Caveat: `deviceType` is recorded as `null` because the manufacturer calls the product a “Digital headphone amplifier,” which is not in the current `deviceType` vocabulary. I left it honest rather than mapping to a loosely similar category.

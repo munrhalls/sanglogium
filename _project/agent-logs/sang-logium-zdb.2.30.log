@@ -1,0 +1,13 @@
+Closed `sang-logium-zdb.2.30` and filed the one Naim product.
+
+- Wrote [naim-uniti-atom-amplifier-headphone-edition.md](file:///home/jan/work/sanglogium/data/audio-electronics/naim/naim-uniti-atom-amplifier-headphone-edition.md)
+- Sourced from the official Naim product page and the official product-sheet PDF (`dam.focal-naim.com`), plus a Headphones.com listing for cross-check.
+- `bd close` succeeded; `bd export -o .beads/issues.jsonl` re-synced the generated issue export.
+
+Git status shows:
+```
+ M .beads/issues.jsonl
+?? data/audio-electronics/naim/
+```
+
+No tests/builds run, per the repo’s self-verification ban. The file is ready for your review; if you want it committed or pushed, say the word.

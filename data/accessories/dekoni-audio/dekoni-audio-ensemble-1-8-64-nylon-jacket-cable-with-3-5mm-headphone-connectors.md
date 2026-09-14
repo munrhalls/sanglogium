@@ -14,8 +14,9 @@ spec_fields:
   compatibleProductType: 
     - "headphone"
   cableFunction: null
-  connectorTermination: null
-  lengthM: null
+  connectorTermination: 
+    - "3.5mm"
+  lengthM: 0.2
   conductorMaterial: null
   balancedUnbalanced: null
   furnitureType: null
@@ -45,6 +46,8 @@ data_status: "COMPLETE"
 - **condition**: `new` — product listing has a single condition / no condition options.
 - **accessoryType**: `cables-interconnects` — product name / page identifies this as a cables-interconnects item.
 - **compatibleProductType**: ["headphone"] — intended for use with headphone.
+- **connectorTermination**: ["3.5mm"] — connector type(s) stated in the product title / description.
+- **lengthM**: `0.2` — length in meters converted from the stated dimension in the product title.
 - **customerRating**: `null` — no visible customer rating or aggregate score on the cited source page.
 - **dealsDiscount**: `null` — no discount or deal terms visible on the cited source page.
 - **newArrival**: `null` — release/new-arrival status not stated on the cited source page.

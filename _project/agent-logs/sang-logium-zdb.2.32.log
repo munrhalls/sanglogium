@@ -1,0 +1,19 @@
+Done. I sourced the one Orchard Audio product and closed the bead.
+
+- **File written:** `data/audio-electronics/orchard-audio/orchard-audio-valencia-balanced-headphone-power-amp.md`
+- **Issue closed:** `bd close sang-logium-zdb.2.32 --reason "1 products sourced and filed."`
+- **Beads export:** `bd export -o .beads/issues.jsonl` (162 issues exported)
+- **Relevant git status:**
+  - `M .beads/interactions.jsonl`
+  - `M .beads/issues.jsonl`
+  - `?? data/audio-electronics/`
+
+Notes on the sourcing:
+
+- Product: **Orchard Audio Valencia Balanced Headphone Power Amp** (`xMEqvkRBbdrlJXyFG8i9Jf`), price `199995` cents ($1,999.95).
+- Sources used: Orchard Audio product page, Orchard Audio spec/test page, Apos product listing, Orchard Audio About page.
+- All `filterAttributes` fields for the `audio-electronics` slice are populated with real, cited values or explicit `null`. Two fields are deliberately `null` with conflict/caution notes:
+  - `amplification` — the source states “Class AB,” but the current schema enum has no `class-ab` value.
+  - `countryOfManufacture` — the About page says only “handcrafted in North America,” which is a region, not a country.
+
+I did not commit, push, or run `dolt push`; the active profile is conservative. If you want any of those next, just say so.

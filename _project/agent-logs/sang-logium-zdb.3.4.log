@@ -1,3 +1,34 @@
 I’ll read the bead and the beads skill, then source each product, write the files, and close the issue.I have the issue: 7 Astell&Kern accessory products, all names currently `null`, to be filed under `data/accessories/astell-kern/`.
 
-Next I’ll (1) check for an accessories sourcing-protocol/field-list doc, (2) find the canonical names/specs for these 7 Sanity IDs, and (3) write the per-product `.md` files.The 7 products are almost certainly the 7 Astell&Kern cases with images already under `public/`. I’m reading the accessories field spec, the dataset mapping, and a sample existing product file.I have the field spec and a sample product file. Now I need the canonical name/slug mapping for the 7 Astell&Kern IDs and the schema field definitions.I found all 7 Astell&Kern records in `products-export.json`. I’m extracting their names/slugs/prices and reading the schema field mapping.I have manufacturer pages for 6 products and a major-retailer page for KANN CUBE. I noticed a few source conflicts (wrong model names in spec tables, mismatched prices). I’m creating the output directory and writing the 7 `.md` files now.
+Next I’ll (1) check for an accessories sourcing-protocol/field-list doc, (2) find the canonical names/specs for these 7 Sanity IDs, and (3) write the per-product `.md` files.The 7 products are almost certainly the 7 Astell&Kern cases with images already under `public/`. I’m reading the accessories field spec, the dataset mapping, and a sample existing product file.I have the field spec and a sample product file. Now I need the canonical name/slug mapping for the 7 Astell&Kern IDs and the schema field definitions.I found all 7 Astell&Kern records in `products-export.json`. I’m extracting their names/slugs/prices and reading the schema field mapping.I have manufacturer pages for 6 products and a major-retailer page for KANN CUBE. I noticed a few source conflicts (wrong model names in spec tables, mismatched prices). I’m creating the output directory and writing the 7 `.md` files now.All 7 Astell&Kern accessory products are now sourced and filed.
+
+Created:
+- `data/accessories/astell-kern/astell-kern-a-ultima-sp3000t-case-leather-case.md`
+- `data/accessories/astell-kern/astell-kern-a-ultima-sp3000m-case-leather-case.md`
+- `data/accessories/astell-kern/astell-kern-kann-cube-leather-case.md`
+- `data/accessories/astell-kern/astell-kern-pd20-case-premium-leather-case.md`
+- `data/accessories/astell-kern/astell-kern-a-norma-sr35-case-protective-case.md`
+- `data/accessories/astell-kern/astell-kern-sp4000t-case-premium-leather-case.md`
+- `data/accessories/astell-kern/astell-kern-collector-s-atelier-case-leather-storage-box.md`
+
+Sourcing:
+- `astellnkern.co.uk` product pages for 6 cases (manufacturer store).
+- Moon Audio for `KANN CUBE` (no manufacturer product page found; price/rating conflict with Bloom Audio recorded).
+
+Conflict notes recorded:
+- SP3000M page’s spec table incorrectly lists “SP3000T Leather Case”.
+- PD20 page’s spec table incorrectly lists “PD10 Leather Case / Black / Burgundy”.
+- KANN CUBE same-currency price conflict: Moon Audio `$179.00` vs. Bloom Audio `$79.00` vs. issue price `$79.00`.
+
+Bead status:
+- `bd close sang-logium-zdb.3.4 --reason "7 products sourced and filed."` succeeded.
+- `bd export -o .beads/issues.jsonl` updated.
+
+Relevant git status:
+```
+ M .beads/interactions.jsonl
+ M .beads/issues.jsonl
+?? data/accessories/astell-kern/
+```
+
+No other beads issues or brands were touched. I did not commit or push; if you want that, the staged files would be `data/accessories/astell-kern/` and the `.beads/*.jsonl` updates.

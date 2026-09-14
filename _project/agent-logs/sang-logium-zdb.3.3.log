@@ -3,4 +3,23 @@ Plan:
 2. Source real, cited data for each product and write one .md file per product under the path it specifies.
 3. Close the issue with the actual product count.
 
-Go/no-go: you said “go, no stop”, so I’m proceeding.Issue loaded. It points to 3 Apos accessories products under `data/accessories/apos/`. I’m now checking for the field/protocol doc and the authoritative product names.Found the field list and protocol docs. `data/accessories/apos/` does not exist yet, so I’ll create it. Next I’m reading the field schema, sourcing protocol, and a sample output file to match the format.
+Go/no-go: you said “go, no stop”, so I’m proceeding.Issue loaded. It points to 3 Apos accessories products under `data/accessories/apos/`. I’m now checking for the field/protocol doc and the authoritative product names.Found the field list and protocol docs. `data/accessories/apos/` does not exist yet, so I’ll create it. Next I’m reading the field schema, sourcing protocol, and a sample output file to match the format.Found and fetched all three Apos manufacturer pages. I’m now creating `data/accessories/apos/` and writing the first two product files.Closed `sang-logium-zdb.3.3` with reason "3 products sourced and filed."
+
+**Files written:**
+- `data/accessories/apos/cables-for-rock-lobster-iem.md`
+- `data/accessories/apos/magia-modular-cable-kit.md`
+- `data/accessories/apos/apos-x-satchelz-leather-clamshell-iem-carry-case.md`
+
+**Sourcing:**
+- All values come from the live Apos manufacturer product pages, with explicit citations and nulls where the source does not confirm a field.
+- The `connectorTermination` for the two cables records only the source-side terminations present in the schema enum; the IEM-side / headphone-side pins are noted but not recorded.
+- `magia-modular-cable-kit` uses the Sanity slug while the live page URL is `.../apos-x-z-reviews-magia-modular-cable-kit` — noted in the file's conflict section.
+
+**Issue status:**
+- `sang-logium-zdb.3.3` is now `closed`.
+- Ran `bd export -o .beads/issues.jsonl` (162 issues exported).
+
+**Git status:**
+- `data/accessories/apos/` is untracked.
+- `.beads/issues.jsonl` is modified.
+- No commit or push made (conservative profile).

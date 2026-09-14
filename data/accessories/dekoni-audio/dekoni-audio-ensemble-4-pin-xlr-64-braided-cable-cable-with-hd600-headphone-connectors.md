@@ -16,7 +16,7 @@ spec_fields:
   cableFunction: null
   connectorTermination: 
     - "xlr"
-  lengthM: null
+  lengthM: 1.63
   conductorMaterial: null
   balancedUnbalanced: "balanced"
   furnitureType: null
@@ -47,6 +47,7 @@ data_status: "COMPLETE"
 - **accessoryType**: `cables-interconnects` — product name / page identifies this as a cables-interconnects item.
 - **compatibleProductType**: ["headphone"] — intended for use with headphone.
 - **connectorTermination**: ["xlr"] — connector type(s) stated in the product title / description.
+- **lengthM**: `1.63` — length in meters converted from the stated dimension in the product title.
 - **balancedUnbalanced**: `balanced` — product title / description describes the cable as balanced.
 - **customerRating**: `null` — no visible customer rating or aggregate score on the cited source page.
 - **dealsDiscount**: `null` — no discount or deal terms visible on the cited source page.

@@ -1,1 +1,14 @@
-I'll start by invoking the relevant skill and showing the issue.
+I'll start by invoking the relevant skill and showing the issue.Closed `sang-logium-zdb.1.24` with reason "2 products sourced and filed."
+
+Files created:
+- `data/headphones/kinera/kinera-freya-in-ear-monitor-iem-earphone.md`
+- `data/headphones/kinera/kinera-nanna-in-ear-monitor-iem-earphone.md`
+
+Sourcing highlights:
+- **Freya** (`xMEqvkRBbdrlJXyFG8jtEr`, $249.99): original 1.0 no longer on manufacturer site; used Apos (audited, CMS price match), 2020 HiFiGo launch article, Aoshida specs, MajorHiFi review, Kinera brand story, Crinacle graph check. `soundSignature` null.
+- **NANNA** (`xMEqvkRBbdrlJXyFG8jv3N`, $899.99): manufacturer `/products/nanna` + `Nanna.pdf` (OCR-read visually), Apos (price match), Crinacle pre-2023 ranking list (`Mild V-shape`), Kinera brand story. Notes the current manufacturer page lists $949.00 (likely Pro/refresh) while the CMS/Apos price is $899.99, with core specs consistent.
+
+`git status --short data/headphones/kinera/` shows:
+```
+?? data/headphones/kinera/
+```

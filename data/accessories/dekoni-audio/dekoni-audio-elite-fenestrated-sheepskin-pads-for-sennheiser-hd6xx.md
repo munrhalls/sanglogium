@@ -29,7 +29,7 @@ spec_fields:
   formatCompatibility: null
   partType: null
   compatibility: 
-    - "Dekoni Audio Elite Fenestrated Sheepskin Pads for Sennheiser Dekoni Audio Elite Fenestrated Sheepskin Pads for Sennheiser HD6XX"
+    - "Sennheiser HD6XX"
   adapterFunction: null
   treatmentType: null
   mounting: null
@@ -46,7 +46,7 @@ data_status: "COMPLETE"
 - **condition**: `new` — product listing has a single condition / no condition options.
 - **accessoryType**: `replacement-parts` — product name / page identifies this as a replacement-parts item.
 - **compatibleProductType**: ["headphone"] — intended for use with headphone.
-- **compatibility**: ["Dekoni Audio Elite Fenestrated Sheepskin Pads for Sennheiser Dekoni Audio Elite Fenestrated Sheepskin Pads for Sennheiser HD6XX"] — compatible models extracted from the manufacturer product page and product title.
+- **compatibility**: ["Sennheiser HD6XX"] — compatible models extracted from the manufacturer product page and product title.
 - **customerRating**: `null` — no visible customer rating or aggregate score on the cited source page.
 - **dealsDiscount**: `null` — no discount or deal terms visible on the cited source page.
 - **newArrival**: `null` — release/new-arrival status not stated on the cited source page.

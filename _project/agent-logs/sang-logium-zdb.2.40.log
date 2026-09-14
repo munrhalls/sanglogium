@@ -1,0 +1,9 @@
+Done. `sang-logium-zdb.2.40` is closed with the reason `2 products sourced and filed.`
+
+What changed:
+- `data/audio-electronics/vmv/vmv-d2r-mkii-desktop-dac-digital-to-analog-converter.md`
+- `data/audio-electronics/vmv/vmv-p2-mkii-desktop-headphone-amplifier.md`
+
+Both files include real, cited manufacturer specs from SMSL/VMV official pages and manuals, with nulls or caution notes for anything not explicitly stated or not in the current schema.
+
+No other beads issues, brands, or CMS data were touched, and no build/lint/test commands were run.

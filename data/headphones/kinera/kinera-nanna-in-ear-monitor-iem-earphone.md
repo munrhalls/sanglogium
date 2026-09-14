@@ -13,7 +13,7 @@ spec_fields:
   fitType: universal
   connectivity: wired
   portable: true
-  soundSignature: Mild V-shape
+  soundSignature: "V-Shaped"
   impedanceOhms: 60
   sensitivityDbMw: 110
   freqResponseHz:
@@ -30,9 +30,7 @@ spec_fields:
   ipxRating: null
   bluetoothCodecs: null
   anc: passive
-  batteryLifeHours:
-    ancOff: null
-    ancOn: null
+  batteryLifeHours: null
   driverType:
   - dynamic
   - balanced-armature
@@ -59,9 +57,9 @@ data_status: COMPLETE
 - **fitType** (marketing-fact): universal — universal-fit IEM with bundled eartips; Apos lists multiple eartip sets — https://apos.audio/products/kinera-nanna-in-ear-monitor-iem-earphone
 - **connectivity** (marketing-fact): wired — no Bluetooth or wireless electronics; Apos lists only wired terminations — https://apos.audio/products/kinera-nanna-in-ear-monitor-iem-earphone
 - **portable** (marketing-fact): true — in-ear monitor form factor with included carrying case and eartips for portable use — https://apos.audio/products/kinera-nanna-in-ear-monitor-iem-earphone
-- **soundSignature** (editorial): Mild V-shape — Crinacle pre-2023 IEM ranking list entry for 'Kinera Nanna' at $900 with signature 'Mild V-shape' — https://crinacle.com/rankings/iems/pre2023/
+- **soundSignature** (editorial): "V-Shaped" — Crinacle pre-2023 IEM ranking list entry for 'Kinera Nanna' at $900 with signature 'Mild V-shape'; mapped to the schema's 'V-Shaped' label — https://crinacle.com/rankings/iems/pre2023/
 - **impedanceOhms** (hard-spec): 60Ω — Apos specs: 'Impedance: 60 ohms'; cross-checked with manufacturer Nanna.pdf spec table 'Impedance: 60 oHm' — https://apos.audio/products/kinera-nanna-in-ear-monitor-iem-earphone
-- **sensitivityDbMw** (hard-spec): 110dB/mW — Apos: 'Sensitivity: 110dB/mW'; cross-checked with Nanna.pdf spec table 'Sensitivity: 110 db' — https://apos.audio/products/kinera-nanna-in-ear-monitor-iem-earphone
+- **sensitivityDbMw** (hard-spec): 110dB/mW — Apos: 'Sensitivity: 110dB/mW'; cross-checked with Nanna.pdf 'Sensitivity: 110 db' — https://apos.audio/products/kinera-nanna-in-ear-monitor-iem-earphone
 - **freqResponseHz** (hard-spec): 5Hz-50kHz — Apos: 'Frequency Response Range: 5Hz - 50kHz'; cross-checked with Nanna.pdf 'Frequency Range: 5 Hz - 50 kHz' — https://apos.audio/products/kinera-nanna-in-ear-monitor-iem-earphone
 - **microphone** (marketing-fact): false — no microphone or call-support feature mentioned on Apos or in Nanna.pdf — https://apos.audio/products/kinera-nanna-in-ear-monitor-iem-earphone
 - **cableTermination** (marketing-fact): 3.5mm, 2.5mm-balanced, 4.4mm-balanced — Apos specs: 'Connector: 3.5mm/2.5mm/4.4mm'; manufacturer Nanna.pdf spec table lists 'Plug Type: 4.4 mm' and the cable section states 'Adapter: 4.4mm with 2.5mm & 3.5mm', confirming 4.4mm direct plus 2.5/3.5mm adapters — https://apos.audio/products/kinera-nanna-in-ear-monitor-iem-earphone
@@ -74,7 +72,8 @@ data_status: COMPLETE
 - **batteryLifeHours** (marketing-fact): null — wired-only IEM; no battery — https://apos.audio/products/kinera-nanna-in-ear-monitor-iem-earphone
 - **driverType** (hard-spec): dynamic, balanced-armature, electrostatic — Apos: '2 Sonion Electrostatic Drivers, 1 Sonion Full Frequency Balanced Armature Driver, 1 Custom 7mm Dynamic Driver'; Nanna.pdf: 'Driver Combination: 2 Electrostatic + 1 DD + 1 BA' — https://apos.audio/products/kinera-nanna-in-ear-monitor-iem-earphone
 - **awards** (marketing-fact): 'Best Universal IEMs - headfonia.com 2020' — Kinera brand story: '2020 Kinera Nanna 1.0 awarded "Best Universal IEMs" at headfonia.com' — https://kineraaudio.com/pages/brand-story
-- **requiresAmplifier** (derived): true — derived from 60Ω impedance and 110dB/mW sensitivity; the higher impedance and review commentary (e.g., Headfonics 'does require additional power to drive properly') indicate amplification is beneficial — https://apos.audio/products/kinera-nanna-in-ear-monitor-iem-earphone
+- **requiresAmplifier** (derived): true — derived from 60Ω impedance and 110dB/mW sensitivity; review commentary (e.g., Headfonics 'does require additional power to drive properly') indicates amplification is beneficial — https://apos.audio/products/kinera-nanna-in-ear-monitor-iem-earphone
 - **driverConfigBucket** (hard-spec): tribrid — 1 dynamic + 1 balanced armature + 2 electrostatic drivers per earphone (Nanna.pdf: 'Driver Combination: 2 Electrostatic + 1 DD + 1 BA') — https://kineraaudio.com/cdn/shop/files/Nanna.pdf
 - **driverConfigDetail** (derived): 1DD+1BA+2EST — derived from Apos/Nanna.pdf driver configuration — https://apos.audio/products/kinera-nanna-in-ear-monitor-iem-earphone
-- *Source status note:* The kineraaudio.com /products/nanna page currently lists $949.00 (likely the 'Pro' refresh with upgraded cable/accessories), while Apos lists the same 'Kinera NANNA In-Ear Monitor (IEM) Earphone' at $899.99, matching the CMS price. The core electrical and driver specs are consistent across both pages and the Nanna.pdf manual. Sourcing uses Apos as the price-matching, audited-retailer primary for M-tier cable/connector details, with the manufacturer page/PDF as the H-tier primary. — https://apos.audio/products/kinera-nanna-in-ear-monitor-iem-earphone
+
+*Source status note:* The kineraaudio.com /products/nanna page currently lists $949.00 (likely the 'Pro' refresh with upgraded cable/accessories), while Apos lists the same 'Kinera NANNA In-Ear Monitor (IEM) Earphone' at $899.99, matching the CMS price. The core electrical and driver specs are consistent across the manufacturer page, Nanna.pdf, and Apos. Sourcing uses Apos as the price-matching, audited-retailer primary for M-tier cable/connector details, with the manufacturer page/PDF as the H-tier primary. — https://apos.audio/products/kinera-nanna-in-ear-monitor-iem-earphone
