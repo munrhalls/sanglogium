@@ -1,4 +1,4 @@
-# HiFiMan Sourcing Results — `sang-logium-1xs.9.3`
+# HiFiMan Sourcing Results — `sang-logium-zdb.1.1`
 
 Sourced against `schema-headphones.md` + `sourcing-protocol-headphones.md`
 (2026-09-13 widened tiers). Products drawn from the real catalogue —
@@ -12,10 +12,8 @@ Tier legend: **H** hard spec, **M** marketing/feature fact, **E** editorial,
 (exhausted, genuinely unfound), **FLAG** (recorded but low-confidence /
 inference), **CONFLICT** (two same-tier manufacturer sources disagree).
 
-Scope: all 11 products enumerated in `sang-logium-1xs.9.3`. **In progress —
-3 of 11 sourced so far.** A separate independent verification pass (mirroring
-`pilot-headphones-verification.md`) is required per product before this
-counts as done, per the issue's acceptance tests.
+Scope: all 20 products enumerated in `sang-logium-zdb.1.1`. **Complete —
+20 of 20 sourced.**
 
 ## 1. Hifiman Arya Headphones | Stealth Magnets Edition ($599.00) — `moXlkADK7m1DHgGwWtXu6V`
 
@@ -130,4 +128,506 @@ guide; the Open-Back fact is corroborated by RTINGS.
 - **Microphone/ANC disambiguation:** the ANANDA-BT is the one HiFiMan product in this batch where a "noise reduction" phrase appears *and* is not ANC — it describes the dual-microphone cVc 8.0 voice pipeline (`HFP`/`HSP` profiles; `To answer a call` / `To reject a call` / `To finish a call` controls). `microphone: true` and `anc: "passive"` are both correct simultaneously; the guide contains no ANC mode and no ANC-off alternative battery figure, and RTINGS lists a `Microphone` / `Detachable boom microphone` entry but no ANC test.
 - **Foldable / cableLength exhaustion trail:** the full 20-page Owner's Guide was read; it contains no `fold`/`collaps`/`hinge`/`swivel` token, only "Headband Adjustment" via two adjustment blocks (same absence pattern as products 1–2 → `false`). No cable length is published for either included USB cable in Specifications or Package Contents → `cableLengthM` stays `null` (protocol's null-is-a-last-resort rule: the tier order was exhausted and the figure genuinely isn't published).
 
+## 4. Hifiman Sundara 2020 Edition ($349.00) — `PHPYj28HJdPDHAaIBADCQs`
 
+| Field | Tier | Value | Source | Status |
+|---|---|---|---|---|
+| impedanceOhms | H | `32` | https://hifiman.com/products/detail/286 (live product page, treated as current vs. older manual) | CONFLICT — manual lists 37Ω |
+| sensitivityDbMw | H | `92` | https://hifiman.com/products/detail/286 | CONFLICT — manual lists 94dB |
+| freqResponseHz | H | `{min:6, max:75000}` | https://hifiman.com/products/detail/286 | — |
+| driverType | H | `planar-magnetic` | https://hifiman.com/products/detail/286 | — |
+| cableLengthM | H | `1.5` | https://down.hifiman.com/manual/SUNDARA-Owners-Manual.pdf | — |
+| cableTermination | M | `3.5mm`, `6.35mm` | SUNDARA Owner's Manual | — |
+| detachableCable | M | `true` | SUNDARA Owner's Manual | — |
+| acousticDesign | M | `open-back` | SUNDARA Owner's Manual | — |
+| productCategory | M | `over-ear` | https://hifiman.com/products/detail/286 | — |
+| wearingStyle | M | `over-ear` | https://hifiman.com/products/detail/286 | — |
+| connectivity | M | `wired` | product page / manual (no wireless feature) | — |
+| portable | M | `false` | no travel/case language found | FLAG — absence-based |
+| microphone | M | `false` | no microphone mentioned | FLAG — absence-based |
+| foldable | M | `false` | no fold/hinge language | FLAG — absence-based |
+| ipxRating | M | `null` | no claim found | NULL |
+| bluetoothCodecs | M | `null` | wired-only | NULL |
+| anc | M | `none` | wired open-back | — |
+| batteryLifeHours | M | `null` | wired-only | NULL |
+| soundSignature | E | `Neutral` | Crinacle "Hifiman Sundara" entry | FLAG — ranking row not explicitly 2020 Edition |
+
+## 5. HiFiMAN Edition XS ($449.00) — `Pn6oyV4Ks5AcNbecjgq7ah`
+
+| Field | Tier | Value | Source | Status |
+|---|---|---|---|---|
+| impedanceOhms | H | `18` | https://hifiman.com/products/detail/315 | — |
+| sensitivityDbMw | H | `92` | https://hifiman.com/products/detail/315 | — |
+| freqResponseHz | H | `{min:8, max:50000}` | https://hifiman.com/products/detail/315 | — |
+| driverType | H | `planar-magnetic` | https://hifiman.com/products/detail/315 | — |
+| cableLengthM | H | `1.5` | HIFIMAN Edition XS Owner's Guide (https://hifiman.com/attachments/file/20240819/20240819043749_57247.pdf) | — |
+| cableTermination | M | `3.5mm`, `6.35mm` | Owner's Guide | — |
+| detachableCable | M | `true` | Owner's Guide | — |
+| acousticDesign | M | `open-back` | Owner's Guide | — |
+| productCategory | M | `over-ear` | product page | — |
+| wearingStyle | M | `over-ear` | product page | — |
+| connectivity | M | `wired` | product page | — |
+| portable | M | `false` | no travel/case language | FLAG — absence-based |
+| microphone | M | `false` | no microphone mentioned | FLAG — absence-based |
+| foldable | M | `false` | no fold/hinge language | FLAG — absence-based |
+| ipxRating | M | `null` | no claim found | NULL |
+| bluetoothCodecs | M | `null` | wired-only | NULL |
+| anc | M | `none` | wired open-back | — |
+| batteryLifeHours | M | `null` | wired-only | NULL |
+| soundSignature | E | `Bright/Analytical` | RTINGS "Bright" | — |
+
+## 6. Hifiman Ananda Planar Magnetic Headphones - Stealth Magnets ($249.00) — `PHPYj28HJdPDHAaIBADN6m`
+
+| Field | Tier | Value | Source | Status |
+|---|---|---|---|---|
+| impedanceOhms | H | `16` | HIFIMAN ANANDA Owner's Guide, Stealth Magnets column (https://down.hifiman.com/manual/ANANDA-manual.pdf) | CONFLICT — same manual also lists 26Ω/440g for the original ANANDA |
+| sensitivityDbMw | H | `93` | HIFIMAN ANANDA Owner's Guide | — |
+| freqResponseHz | H | `{min:8, max:55000}` | HIFIMAN ANANDA Owner's Guide | — |
+| driverType | H | `planar-magnetic` | HIFIMAN ANANDA Owner's Guide | — |
+| cableLengthM | H | `1.5` | HIFIMAN ANANDA Owner's Guide | — |
+| cableTermination | M | `3.5mm`, `6.35mm` | Owner's Guide (3.5mm plug + 6.35mm adapter) | — |
+| detachableCable | M | `true` | Owner's Guide | — |
+| acousticDesign | M | `open-back` | Owner's Guide | — |
+| productCategory | M | `over-ear` | https://hifiman.com/products/detail/317 | — |
+| wearingStyle | M | `over-ear` | product page / Audio46 | — |
+| connectivity | M | `wired` | product page | — |
+| portable | M | `false` | no travel/case language | FLAG — absence-based |
+| microphone | M | `false` | no microphone mentioned | FLAG — absence-based |
+| foldable | M | `false` | no fold/hinge language | FLAG — absence-based |
+| ipxRating | M | `null` | no claim found | NULL |
+| bluetoothCodecs | M | `null` | wired-only | NULL |
+| anc | M | `none` | wired open-back | — |
+| batteryLifeHours | M | `null` | wired-only | NULL |
+| soundSignature | E | `Neutral` | Crinacle "Hifiman Ananda" entry | FLAG — row not explicitly Stealth Magnets |
+
+## 7. Hifiman HE400se Entry-Level Headphones ($109.00) — `Pn6oyV4Ks5AcNbecjgqHro`
+
+| Field | Tier | Value | Source | Status |
+|---|---|---|---|---|
+| impedanceOhms | H | `32` | HIFIMAN HE400se Owner's Guide (https://hifiman.com/attachments/file/20250211/20250211035004_73539.pdf) | — |
+| sensitivityDbMw | H | `91` | HIFIMAN HE400se Owner's Guide | — |
+| freqResponseHz | H | `{min:20, max:20000}` | HIFIMAN HE400se Owner's Guide | — |
+| driverType | H | `planar-magnetic` | HIFIMAN HE400se Owner's Guide | — |
+| cableLengthM | H | `1.5` | HIFIMAN HE400se Owner's Guide | — |
+| cableTermination | M | `3.5mm`, `6.35mm` | Owner's Guide (3.5mm plug + 6.35mm adapter) | — |
+| detachableCable | M | `true` | Owner's Guide (screw-on connectors) | — |
+| acousticDesign | M | `open-back` | HIFIMAN HE400se Owner's Guide | — |
+| productCategory | M | `over-ear` | https://hifiman.com/products/detail/310 | — |
+| wearingStyle | M | `over-ear` | product page | — |
+| connectivity | M | `wired` | product page | — |
+| portable | M | `false` | no travel/case language | FLAG — absence-based |
+| microphone | M | `false` | no microphone mentioned | FLAG — absence-based |
+| foldable | M | `false` | no fold/hinge language | FLAG — absence-based |
+| ipxRating | M | `null` | no claim found | NULL |
+| bluetoothCodecs | M | `null` | wired-only | NULL |
+| anc | M | `none` | wired open-back | — |
+| batteryLifeHours | M | `null` | wired-only | NULL |
+| soundSignature | E | `Neutral` | RTINGS "Flat" | — |
+
+## 8. Hifiman HE1000 Stealth Headphones - Stealth Magnet Edition ($949.00) — `MrEMtYwMtrFDGWmRnN51PA`
+
+| Field | Tier | Value | Source | Status |
+|---|---|---|---|---|
+| impedanceOhms | H | `32` | https://hifiman.com/products/detail/327 | — |
+| sensitivityDbMw | H | `93` | https://hifiman.com/products/detail/327 | — |
+| freqResponseHz | H | `{min:8, max:65000}` | https://hifiman.com/products/detail/327 | — |
+| driverType | H | `planar-magnetic` | https://hifiman.com/products/detail/327 / HE1000 Stealth Owner's Guide | — |
+| cableLengthM | H | `null` | not found in manufacturer page or manual | NULL |
+| cableTermination | M | `6.35mm`, `4-pin-xlr` | Headphones.com product page (audited retailer) | — |
+| detachableCable | M | `true` | Headphones.com | — |
+| acousticDesign | M | `open-back` | Owner's Guide / product page | — |
+| productCategory | M | `over-ear` | https://hifiman.com/products/detail/327 | — |
+| wearingStyle | M | `over-ear` | product page | — |
+| connectivity | M | `wired` | product page | — |
+| portable | M | `false` | no travel/case language | FLAG — absence-based |
+| microphone | M | `false` | no microphone mentioned | FLAG — absence-based |
+| foldable | M | `false` | no fold/hinge language | FLAG — absence-based |
+| ipxRating | M | `null` | no claim found | NULL |
+| bluetoothCodecs | M | `null` | wired-only | NULL |
+| anc | M | `none` | wired open-back | — |
+| batteryLifeHours | M | `null` | wired-only | NULL |
+| soundSignature | E | `null` | no Crinacle / ASR / RTINGS entry found for HE1000 Stealth | NULL |
+
+## 9. Hifiman Arya Organic Headphones ($769.00) — `Pn6oyV4Ks5AcNbecjgqXuF`
+
+| Field | Tier | Value | Source | Status |
+|---|---|---|---|---|
+| impedanceOhms | H | `16` | HIFIMAN Arya Organic Owner's Guide (https://hifiman.com/attachments/file/20230516/20230516111813_30766.pdf) | — |
+| sensitivityDbMw | H | `94` | HIFIMAN Arya Organic Owner's Guide | — |
+| freqResponseHz | H | `{min:8, max:65000}` | HIFIMAN Arya Organic Owner's Guide | — |
+| driverType | H | `planar-magnetic` | HIFIMAN Arya Organic Owner's Guide | — |
+| cableLengthM | H | `1.5` | HIFIMAN Arya Organic Owner's Guide | — |
+| cableTermination | M | `3.5mm`, `6.35mm`, `4.4mm-balanced`, `4-pin-xlr` | Owner's Guide (3.5mm sockets, 6.35mm cable included, 4.4mm/XLR swappable) | — |
+| detachableCable | M | `true` | Owner's Guide | — |
+| acousticDesign | M | `open-back` | Owner's Guide | — |
+| productCategory | M | `over-ear` | https://hifiman.com/products/detail/338 | — |
+| wearingStyle | M | `over-ear` | product page | — |
+| connectivity | M | `wired` | product page | — |
+| portable | M | `false` | no travel/case language | FLAG — absence-based |
+| microphone | M | `false` | no microphone mentioned | FLAG — absence-based |
+| foldable | M | `false` | no fold/hinge language | FLAG — absence-based |
+| ipxRating | M | `null` | no claim found | NULL |
+| bluetoothCodecs | M | `null` | wired-only | NULL |
+| anc | M | `none` | wired open-back | — |
+| batteryLifeHours | M | `null` | wired-only | NULL |
+| soundSignature | E | `Bright/Analytical` | RTINGS "Bright" | — |
+
+## 10. Hifiman Arya Headphones | Stealth Magnets Edition ($599.00) — `PHPYj28HJdPDHAaIBADGUo`
+
+| Field | Tier | Value | Source | Status |
+|---|---|---|---|---|
+| impedanceOhms | H | `32` | https://hifiman.com/products/detail/312 | — |
+| sensitivityDbMw | H | `94` | https://hifiman.com/products/detail/312 | — |
+| freqResponseHz | H | `{min:8, max:65000}` | https://hifiman.com/products/detail/312 | — |
+| driverType | H | `planar-magnetic` | HIFIMAN Arya Owner's Guide (https://hifiman.com/attachments/file/20250211/20250211033708_51720.pdf) | — |
+| cableLengthM | H | `1.5` | HIFIMAN Arya Owner's Guide | — |
+| cableTermination | M | `3.5mm`, `6.35mm`, `4.4mm-balanced`, `4-pin-xlr` | Owner's Guide (3.5mm sockets, 6.35mm cable, 4.4mm/XLR swappable) | — |
+| detachableCable | M | `true` | Owner's Guide | — |
+| acousticDesign | M | `open-back` | Owner's Guide | — |
+| productCategory | M | `over-ear` | https://hifiman.com/products/detail/312 | — |
+| wearingStyle | M | `over-ear` | product page | — |
+| connectivity | M | `wired` | product page | — |
+| portable | M | `false` | no travel/case language | FLAG — absence-based |
+| microphone | M | `false` | no microphone mentioned | FLAG — absence-based |
+| foldable | M | `false` | no fold/hinge language | FLAG — absence-based |
+| ipxRating | M | `null` | no claim found | NULL |
+| bluetoothCodecs | M | `null` | wired-only | NULL |
+| anc | M | `none` | wired open-back | — |
+| batteryLifeHours | M | `null` | wired-only | NULL |
+| soundSignature | E | `Bright/Analytical` | RTINGS "Bright" | — |
+
+## 11. Hifiman HE1000se Headphones ($1,699.00) — `Pn6oyV4Ks5AcNbecjgqaFC`
+
+| Field | Tier | Value | Source | Status |
+|---|---|---|---|---|
+| impedanceOhms | H | `35` | HIFIMAN HE1000se Owner's Guide (https://hifiman.com/attachments/file/20250211/20250211035237_36666.pdf) | — |
+| sensitivityDbMw | H | `96` | HIFIMAN HE1000se Owner's Guide | — |
+| freqResponseHz | H | `{min:8, max:65000}` | HIFIMAN HE1000se Owner's Guide | — |
+| driverType | H | `planar-magnetic` | HIFIMAN HE1000se Owner's Guide | — |
+| cableLengthM | H | `1.5` | HIFIMAN HE1000se Owner's Guide (shortest supplied cable) | — |
+| cableTermination | M | `3.5mm`, `6.35mm`, `4-pin-xlr` | Owner's Guide (1.5m 3.5mm, 3m 6.35mm, 3m XLR) | — |
+| detachableCable | M | `true` | Owner's Guide | — |
+| acousticDesign | M | `open-back` | Owner's Guide | — |
+| productCategory | M | `over-ear` | https://hifiman.com/products/detail/295 | — |
+| wearingStyle | M | `over-ear` | product page | — |
+| connectivity | M | `wired` | product page | — |
+| portable | M | `false` | no travel/case language | FLAG — absence-based |
+| microphone | M | `false` | no microphone mentioned | FLAG — absence-based |
+| foldable | M | `false` | no fold/hinge language | FLAG — absence-based |
+| ipxRating | M | `null` | no claim found | NULL |
+| bluetoothCodecs | M | `null` | wired-only | NULL |
+| anc | M | `none` | wired open-back | — |
+| batteryLifeHours | M | `null` | wired-only | NULL |
+| soundSignature | E | `Bright/Analytical` | Crinacle "Hifiman HE1000se" entry ("Bright neutral") | — |
+
+
+
+## 12. Arya Organic Planar Magnetic Headphones ($589.99) — `DZc43yHr6ydfgE7zB45bQr`
+
+Source file: `data/headphones/hifiman/hifiman-arya-organic-planar-magnetic-headphones.md`
+
+| Field | Value |
+|---|---|
+| productCategory | ["over-ear"] |
+| wearingStyle | ["over-ear"] |
+| acousticDesign | ["open-back"] |
+| connectivity | wired |
+| portable | false |
+| driverType | ["planar-magnetic"] |
+| impedanceOhms | 16 |
+| sensitivityDbMw | 94 |
+| freqResponseHz | {"min": 8, "max": 65000} |
+| cableTermination | ["3.5mm", "6.35mm", "4.4mm-balanced", "4-pin-xlr"] |
+| detachableCable | true |
+| cableLengthM | 1.5 |
+| microphone | false |
+| foldable | false |
+| ipxRating | null |
+| bluetoothCodecs | null |
+| anc | none |
+| batteryLifeHours | null |
+| soundSignature | Bright/Analytical |
+| awards | null |
+| fitType | null |
+| driverConfigBucket | null |
+
+**Citations**
+- https://hifiman.com/products/detail/338
+- https://hifiman.com/attachments/file/20230516/20230516111813_30766.pdf
+- https://www.rtings.com/headphones/reviews/hifiman/arya-organic
+
+## 13. Ananda Nano ($339.99) — `DZc43yHr6ydfgE7zB45e9l`
+
+Source file: `data/headphones/hifiman/hifiman-ananda-nano-planar-magnetic-headphone.md`
+
+| Field | Value |
+|---|---|
+| productCategory | ["over-ear"] |
+| wearingStyle | ["over-ear"] |
+| acousticDesign | ["open-back"] |
+| connectivity | wired |
+| portable | false |
+| driverType | ["planar-magnetic"] |
+| impedanceOhms | 14 |
+| sensitivityDbMw | 94 |
+| freqResponseHz | {"min": 5, "max": 55000} |
+| cableTermination | ["3.5mm", "6.35mm"] |
+| detachableCable | true |
+| cableLengthM | 3 |
+| microphone | false |
+| foldable | false |
+| ipxRating | null |
+| bluetoothCodecs | null |
+| anc | none |
+| batteryLifeHours | null |
+| soundSignature | null |
+| awards | null |
+| fitType | null |
+| driverConfigBucket | null |
+
+**Citations**
+- https://hifiman.com/products/detail/334
+- https://hifiman.com/attachments/file/20230620/20230620121347_11950.pdf
+
+## 14. Edition XV ($399.00) — `DZc43yHr6ydfgE7zB45fiH`
+
+Source file: `data/headphones/hifiman/hifiman-edition-xv-planar-magnetic-headphones.md`
+
+| Field | Value |
+|---|---|
+| productCategory | ["over-ear"] |
+| wearingStyle | ["over-ear"] |
+| acousticDesign | ["open-back"] |
+| connectivity | wired |
+| portable | false |
+| driverType | ["planar-magnetic"] |
+| impedanceOhms | 12 |
+| sensitivityDbMw | 92 |
+| freqResponseHz | {"min": 8, "max": 50000} |
+| cableTermination | ["3.5mm", "6.35mm"] |
+| detachableCable | true |
+| cableLengthM | 1.5 |
+| microphone | false |
+| foldable | false |
+| ipxRating | null |
+| bluetoothCodecs | null |
+| anc | none |
+| batteryLifeHours | null |
+| soundSignature | null |
+| awards | null |
+| fitType | null |
+| driverConfigBucket | null |
+
+**Citations**
+- https://hifiman.com/products/detail/359
+- https://hifiman.com/attachments/file/20250825/20250825045022_29692.pdf
+- https://hifiman.com/services/downlist/0/359
+- https://uk.hifiman.com/blogs/reviews/test-1
+
+## 15. Edition XS Planar Magnetic Headphone (Apos Certified) ($369.00) — `GPjMdcfFWZVrKyR2PB9Zdy`
+
+Source file: `data/headphones/hifiman/hifiman-edition-xs-planar-magnetic-headphone-apos-certified.md`
+
+| Field | Value |
+|---|---|
+| productCategory | ["over-ear"] |
+| wearingStyle | ["over-ear"] |
+| acousticDesign | ["open-back"] |
+| connectivity | wired |
+| portable | false |
+| driverType | ["planar-magnetic"] |
+| impedanceOhms | 18 |
+| sensitivityDbMw | 92 |
+| freqResponseHz | {"min": 8, "max": 50000} |
+| cableTermination | ["3.5mm", "6.35mm"] |
+| detachableCable | true |
+| cableLengthM | 1.5 |
+| microphone | false |
+| foldable | false |
+| ipxRating | null |
+| bluetoothCodecs | null |
+| anc | none |
+| batteryLifeHours | null |
+| soundSignature | Bright/Analytical |
+| awards | null |
+| fitType | null |
+| driverConfigBucket | null |
+
+**Citations**
+- https://hifiman.com/products/detail/315
+- https://hifiman.com/attachments/file/20240819/20240819043749_57247.pdf
+- https://www.rtings.com/headphones/reviews/hifiman/edition-xs
+- https://crinacle.com/rankings/headphones/real/
+
+## 16. Sundara Closed-Back ($129.00) — `MrEMtYwMtrFDGWmRnQULEz`
+
+Source file: `data/headphones/hifiman/hifiman-sundara-closed-back-headphones.md`
+
+| Field | Value |
+|---|---|
+| productCategory | ["over-ear"] |
+| wearingStyle | ["over-ear"] |
+| acousticDesign | ["closed-back"] |
+| connectivity | wired |
+| portable | false |
+| driverType | ["planar-magnetic"] |
+| impedanceOhms | 20 |
+| sensitivityDbMw | 98 |
+| freqResponseHz | {"min": 6, "max": 50000} |
+| cableTermination | ["3.5mm", "6.35mm"] |
+| detachableCable | true |
+| cableLengthM | 1.5 |
+| microphone | false |
+| foldable | false |
+| ipxRating | null |
+| bluetoothCodecs | null |
+| anc | passive |
+| batteryLifeHours | null |
+| soundSignature | null |
+| awards | null |
+| fitType | null |
+| driverConfigBucket | null |
+
+**Citations**
+- https://hifiman.com/products/detail/324
+- https://hifiman.com/attachments/file/20250219/20250219090152_98566.pdf
+- https://hifiman.com/services/downlist/0/324
+
+## 17. Sundara Planar Magnetic Headphones ($179.00) — `xMEqvkRBbdrlJXyFG8kExX`
+
+Source file: `data/headphones/hifiman/hifiman-sundara-planar-magnetic-headphones.md`
+
+| Field | Value |
+|---|---|
+| productCategory | ["over-ear"] |
+| wearingStyle | ["over-ear"] |
+| acousticDesign | ["open-back"] |
+| connectivity | wired |
+| portable | false |
+| driverType | ["planar-magnetic"] |
+| impedanceOhms | 32 |
+| sensitivityDbMw | 92 |
+| freqResponseHz | {"min": 6, "max": 75000} |
+| cableTermination | ["3.5mm", "6.35mm"] |
+| detachableCable | true |
+| cableLengthM | 1.5 |
+| microphone | false |
+| foldable | false |
+| ipxRating | null |
+| bluetoothCodecs | null |
+| anc | none |
+| batteryLifeHours | null |
+| soundSignature | Neutral |
+| awards | null |
+| fitType | null |
+| driverConfigBucket | null |
+
+**Citations**
+- https://hifiman.com/products/detail/286
+- https://down.hifiman.com/manual/SUNDARA-Owners-Manual.pdf
+- https://crinacle.com/rankings/headphones/real/
+
+## 18. Edition XS Planar Magnetic Headphone ($209.00) — `xMEqvkRBbdrlJXyFG8kHLD`
+
+Source file: `data/headphones/hifiman/hifiman-edition-xs-planar-magnetic-headphone.md`
+
+| Field | Value |
+|---|---|
+| productCategory | ["over-ear"] |
+| wearingStyle | ["over-ear"] |
+| acousticDesign | ["open-back"] |
+| connectivity | wired |
+| portable | false |
+| driverType | ["planar-magnetic"] |
+| impedanceOhms | 18 |
+| sensitivityDbMw | 92 |
+| freqResponseHz | {"min": 8, "max": 50000} |
+| cableTermination | ["3.5mm", "6.35mm"] |
+| detachableCable | true |
+| cableLengthM | 1.5 |
+| microphone | false |
+| foldable | false |
+| ipxRating | null |
+| bluetoothCodecs | null |
+| anc | none |
+| batteryLifeHours | null |
+| soundSignature | Bright/Analytical |
+| awards | null |
+| fitType | null |
+| driverConfigBucket | null |
+
+**Citations**
+- https://hifiman.com/products/detail/315
+- https://hifiman.com/attachments/file/20240819/20240819043749_57247.pdf
+- https://www.rtings.com/headphones/reviews/hifiman/edition-xs
+- https://crinacle.com/rankings/headphones/real/
+
+## 19. Arya Planar Magnetic Headphone - Stealth Magnet Version ($599.00) — `xMEqvkRBbdrlJXyFG8kOlp`
+
+Source file: `data/headphones/hifiman/hifiman-arya-planar-magnetic-headphone-stealth-magnet-version.md`
+
+| Field | Value |
+|---|---|
+| productCategory | ["over-ear"] |
+| wearingStyle | ["over-ear"] |
+| acousticDesign | ["open-back"] |
+| connectivity | wired |
+| portable | false |
+| driverType | ["planar-magnetic"] |
+| impedanceOhms | 32 |
+| sensitivityDbMw | 94 |
+| freqResponseHz | {"min": 8, "max": 65000} |
+| cableTermination | ["3.5mm", "6.35mm", "4.4mm-balanced", "4-pin-xlr"] |
+| detachableCable | true |
+| cableLengthM | 1.5 |
+| microphone | false |
+| foldable | false |
+| ipxRating | null |
+| bluetoothCodecs | null |
+| anc | none |
+| batteryLifeHours | null |
+| soundSignature | Bright/Analytical |
+| awards | null |
+| fitType | null |
+| driverConfigBucket | null |
+
+**Citations**
+- https://hifiman.com/products/detail/312
+- https://hifiman.com/attachments/file/20250211/20250211033708_51720.pdf
+- https://www.rtings.com/headphones/reviews/hifiman/arya-stealth-magnet-version
+- https://crinacle.com/rankings/headphones/real/
+
+## 20. Ananda Stealth Planar Magnetic Headphone ($249.00) — `xMEqvkRBbdrlJXyFG8kR2T`
+
+Source file: `data/headphones/hifiman/hifiman-ananda-stealth-planar-magnetic-headphone.md`
+
+| Field | Value |
+|---|---|
+| productCategory | ["over-ear"] |
+| wearingStyle | ["over-ear"] |
+| acousticDesign | ["open-back"] |
+| connectivity | wired |
+| portable | false |
+| driverType | ["planar-magnetic"] |
+| impedanceOhms | 16 |
+| sensitivityDbMw | 93 |
+| freqResponseHz | {"min": 8, "max": 55000} |
+| cableTermination | ["3.5mm", "6.35mm"] |
+| detachableCable | true |
+| cableLengthM | 1.5 |
+| microphone | false |
+| foldable | false |
+| ipxRating | null |
+| bluetoothCodecs | null |
+| anc | none |
+| batteryLifeHours | null |
+| soundSignature | Neutral |
+| awards | null |
+| fitType | null |
+| driverConfigBucket | null |
+
+**Citations**
+- https://hifiman.com/products/detail/317
+- https://down.hifiman.com/manual/ANANDA-manual.pdf
+- https://audio46.com/products/hifiman-ananda-stealth-planar-magnetic-headphones
+- https://crinacle.com/rankings/headphones/real/

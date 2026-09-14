@@ -1,34 +1,32 @@
 ---
-description: Execute the git commit workflow with strict containment and autonomous execution. Run commit protocol phases: orient, classify, stage precisely, commit with taxonomy tag, push to origin main.
+allowed-tools: Bash(git add:*), Bash(git reset:*), Bash(git status:*), Bash(git commit:*), Bash(git log:*), Bash(git rev-parse:*), Bash(git branch:*), Bash(git -C:*)
+description: One git commit under a hard token budget; keeps the DoD taxonomy (bounded, single-shot)
 ---
 
-# /commit
+## Cost contract (read once)
+- **Budget: <=2 tool calls and 300 output tokens for the whole command.** One shot, then stop.
+- **Forbidden:** reading files (including `.devin/workflows/*`), full-patch `git diff`,
+  `git diff --cached`, `git show`, per-file diffs, listing dirs, token accounting.
+- The bounded facts below are the *whole* picture. Do not re-run or expand them.
 
-Run the commit protocol from `.devin/workflows/commit.md` (strict containment, autonomous execution).
+## Bounded facts (already computed)
+- Root: !`git rev-parse --show-toplevel 2>/dev/null || echo NOT_A_REPO`
+- Branch: !`git branch --show-current 2>/dev/null`
+- Tracked (cap 20): !`git status --porcelain=v1 --untracked-files=no 2>/dev/null | head -20`
+- Untracked count: !`git status --porcelain=v1 --untracked-files=all 2>/dev/null | grep -c '^??'`
+- Change stat (cap 25, excludes untracked): !`git diff --stat HEAD 2>/dev/null | tail -25`
+- Recent style: !`git log --oneline -5 --no-decorate 2>/dev/null`
 
-## Phase 1 — Orient (MANDATORY FIRST)
-Run `git status`, `git diff`, and `git diff --cached` (stat). Map the working tree: staged additions/deletions, unstaged modifications, untracked files. Group them into logical atomic units based on recent work.
-
-## Phase 2 — Strict Constraints & Forbidden Actions
-1. **NO FILE DELETION** — never run `rm`, `git rm`, `del`, etc. If files are already deleted in the working dir (shown by `git status` as "deleted"), stage those deletions with `git add <file>` to record the change. The ban is on *deletion commands*, not on staging pre-existing deletions.
-2. **NO BLANKET STAGING** — never use `git add .`, `git add -A`, or `git commit -a`. Stage files individually and precisely.
-3. **NO CUSTOM ALIASES** — do not use `git ac`.
-
-## Phase 3 — Taxonomy & Formatting
-Pick **exactly one** category per commit unit:
-- **A** — Forward progress: closes a DoD item on a required component
-- **B** — Critical bug fix: resolves a CRITICAL bug blocking a DoD item
-- **C** — Refactor: changes code structure without new functionality
-- **D** — Configuration: build setup, `.todo` tracking, folder structure, skills/registry
-- **E** — Polish: improvements to already-DoD-complete components
-
-Commit message template (tied to DoD):
-`Difficulty: <1-13> - <A|B|C|D|E>, <Category> (<scope/filenames>): <action> → DoD:<SprintName>-<item>`
-
-Fallback (no DoD impact): `... → DoD:0 <infrastructure/deferred/etc>`
-
-## Phase 4 — Output & AUTONOMOUS EXECUTION
-For each atomic unit, output the planned commands in a PowerShell block, then **immediately execute**:
-`git add <specific/file1> <specific/file2>; git commit -m 'Difficulty: <Fib> - <TaxonomyType>, <Category> (<scope>): <action> → DoD:<SprintName-item or 0>'; git push origin main`
-
-Follow `AGENTS.md` resource discipline (shared server/browser, build lock for heavy work, never kill Wispr Flow, one shared dev server on :3000). End each session cleanly — no leftover watch processes.
+## Task
+1. If Root is `NOT_A_REPO`, reply `not a git repo: <cwd>` and stop. Never search other dirs/repos.
+2. Write **one** subject in the existing style; if recent commits use the taxonomy, keep it:
+   `Difficulty: <1-13> - <A|B|C|D|E>, <Category> (<scope>): <action> -> DoD:<SprintName-item>`
+   (**A** progress, **B** critical fix, **C** refactor, **D** config, **E** polish;
+   fallback `-> DoD:0 <infra/deferred>`). Use the stat counts above — do not read the code.
+3. Make **exactly one** tool call (chained = one turn), substituting root + subject. No deletion
+   commands, no per-file staging, no push, and never stage generated dumps (`backups/`, `*.db`,
+   build/dataset output) even if `.gitignore` misses them:
+   ```
+   git -C <root> add -A && git -C <root> reset -q -- '*backups*' '*.db' '*.db-wal' '*.db-shm' && git -C <root> commit -q -m "<subject>" && git -C <root> log -1 --format='%h %s'
+   ```
+4. Reply with **only** that `%h %s` line. No summary, no diff dump, no commentary.

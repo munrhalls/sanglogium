@@ -148,6 +148,26 @@ Reuses the shared `sourcing` array (already `categories: ["headphones",
 too. No new citation shape needed, per `sang-logium-1xs.12`'s generalized
 protocol, same as accessories.
 
+## Completeness check (post-edit verification, all 38 items accounted for)
+
+Confirmed against the committed schema, not assumed:
+
+| Items | Resolution |
+|---|---|
+| 1, 2, 6 (Brand, Price, Availability) | Out of `filterAttributes` scope, same as accessories/headphones |
+| 3, 4, 5, 7, 8 (Customer Rating, Awards, Condition, Deals, New Arrivals) | Reused fields, `categories` extended |
+| 9 (Product Category) | `deviceType`, repurposed |
+| 10 (Connectivity) | `deviceConnectivity`, new |
+| 11 (Amplifier Type) | Merged into `deviceType` — no separate field, by design |
+| 12–19 (Amplification group) | `amplification`, `powerOutputPerChannelW`, `channelCount`, `inputs`, `outputs`, `phonoStageBuiltIn`, `trigger12v`, `remoteControlIncluded` |
+| 20–26 (Digital Source group) | `maxSampleRateBitDepth`, `dsdSupport`, `hiResCertification`, `dacChipsetFamily`, `streamingPlatformSupport`, `networkConnection`; item 26 merged into `inputs` |
+| 27–32 (Turntables group) | `driveType`, `turntableOperation`, `speedsSupported`, `phonoPreampBuiltIn`, `cartridgeIncluded`, `usbDigitalOutput` |
+| 33–35 (Connectivity & Wireless) | `bluetoothCodecs` (reused), `voiceAssistant`, `multiroomSupport` |
+| 36–38 (Physical & Install) | `finishColor`, `rackMountable19`, `countryOfManufacture` |
+
+All 33 fields confirmed present in the committed schema by direct grep, not inferred
+from the edit history.
+
 ## Known limitations, flagged not solved
 
 - **`bluetoothCodecs` is not domain-gated.** It's shared across headphones
