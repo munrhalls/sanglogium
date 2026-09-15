@@ -26,6 +26,10 @@ export const FACET_GROUPS: FacetGroup[] = [
     label: '',
   },
   {
+    id: 'type',
+    label: 'Type',
+  },
+  {
     id: 'sound',
     label: 'Sound Properties',
   },
@@ -90,11 +94,13 @@ export const FACETS: FacetDef[] = [
   // ── Commercial ──────────────────────────────────────────────────────────
   { id: 'brand', group: 'commercial', label: 'Brand', itemNo: 1, status: 'C', control: 'checkbox', field: 'brand', options: 'derived' },
   // Awards / Recognition removed from the headphones sidebar per UX cleanup.
-  { id: 'condition', group: 'commercial', label: 'Condition', itemNo: 5, status: 'C', control: 'checkbox', field: 'condition', options: opts([['new', 'New'], ['open-box', 'Open-Box'], ['b-stock', 'Certified / Sealed B-Stock'], ['refurbished', 'Refurbished']]) },
-  // In-stock filtering is now surfaced only inside the Availability group.
-  { id: 'deals', group: 'commercial', label: 'Discount', itemNo: 7, status: 'C', control: 'checkbox', field: 'deals', options: opts([['on-sale', 'On Sale'], ['clearance', 'Clearance']]) },
-  { id: 'availability', group: 'commercial', label: 'Availability', itemNo: 9, status: 'C', control: 'checkbox', field: 'availability', options: opts([['in-stock', 'In Stock'], ['preorder', 'Preorder']]) },
-  { id: 'newArrival', group: 'commercial', label: 'New Arrivals', itemNo: 8, status: 'C', control: 'boolean', field: 'isNewArrival' },
+  // Condition (5), Discount (7), and New Arrivals (8) removed (sang-logium-3rv.5):
+  // productType.ts scopes `condition`, `dealsDiscount`, and `newArrival` to
+  // categories: ["accessories", "audio-electronics"] only -- headphones has no
+  // such field at all, so these could never carry a real count. Same class of
+  // bug as the case-sensitivity fix, just unfixable because there is no real
+  // data behind it for this category.
+  { id: 'inStock', group: 'commercial', label: 'In Stock Only', itemNo: 6, status: 'C', control: 'boolean', field: 'inStockOnly' },
 
   // ── Type ─────────────────────────────────────────────────────────────────
   // No closed options.list in the schema either -- derive from real data,
