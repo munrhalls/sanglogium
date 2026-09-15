@@ -62,6 +62,8 @@ export interface FilterSortState {
   minPrice: number | null;
   maxPrice: number | null;
   minRating: number | null;
+  productCategory?: string[];
+  connectivity?: string[];
   [key: string]: unknown;
 }
 

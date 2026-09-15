@@ -1,0 +1,23 @@
+{
+  "productId": "PHPYj28HJdPDHAaIBCEe6q",
+  "before": {
+    "anc": "passive",
+    "brand": [
+      "meze-audio"
+    ],
+    "cableTermination": [
+      "mmcx"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "price": 15900,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-14T21:55:11.647Z"
+}

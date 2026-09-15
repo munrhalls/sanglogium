@@ -1,0 +1,168 @@
+{
+  "_id": "dLGDVDmEEI2lV8CArIgVky",
+  "name": "Sony WFL910 Linkbuds Truly Wireless Earbuds (Black)",
+  "before": {
+    "acousticDesign": [
+      "semi-open"
+    ],
+    "anc": "none",
+    "batteryLifeHours": {
+      "ancOff": 8,
+      "ancOn": null
+    },
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "LC3"
+    ],
+    "brand": [
+      "sony"
+    ],
+    "cableTermination": [
+      "usb-c"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "true-wireless",
+    "connector": [
+      "mmcx"
+    ],
+    "detachableCable": false,
+    "driverType": [
+      "dynamic"
+    ],
+    "fitType": "universal",
+    "foldable": false,
+    "freqResponseHz": {
+      "max": 20000,
+      "min": 20
+    },
+    "inStock": true,
+    "ipxRating": "none",
+    "microphone": true,
+    "noiseCancelling": false,
+    "portable": true,
+    "price": 17800,
+    "requiresAmplifier": false,
+    "soundSignature": null,
+    "sourcing": [
+      {
+        "field": "wearingStyle",
+        "quote": "Mass : Approx. 5.1 g x 2 (0.18 oz x 2) (Headset (including fitting supporters))",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2964/v1/en/contents/TP1001300700.html"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "Wireless Stereo Headset LinkBuds Open / Model: YY2964 — the ring driver leaves the ear canal open by design; no sealed closed-back enclosure is described",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2964/v1/en/contents/TP1001300700.html"
+      },
+      {
+        "field": "fitType",
+        "quote": "Mass : Approx. 5.1 g x 2 (Headset (including fitting supporters)) / Included items — interchangeable universal-fit supporters; no custom/CIEM mould is offered",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2964/v1/en/contents/TP1001300700.html"
+      },
+      {
+        "field": "connectivity",
+        "quote": "Communication system : Bluetooth Specification version 5.3",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2964/v1/en/contents/TP1001300700.html"
+      },
+      {
+        "field": "portable",
+        "quote": "Charging time : Approx. 1.5 hours (Headset) Approx. 2.5 hours (Charging case)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2964/v1/en/contents/TP1001300700.html"
+      },
+      {
+        "field": "driverType",
+        "quote": "Single dynamic ring driver; no balanced-armature, planar-magnetic, electrostatic or AMT driver is stated or implied anywhere in the help guide",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2964/v1/en/contents/TP1001300700.html"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "Transmission range (A2DP) : 20 Hz - 20 000 Hz (Sampling frequency 44.1 kHz)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://helpguide.sony.net/mdr/2964/v1/en/contents/TP1001300700.html"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "Power source : DC 5 V (Using a commercially available USB AC Adaptor) — the only wired interface is the USB Type-C charging port; no analogue headphone input exists",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2964/v1/en/contents/TP1001300700.html"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "Using built-in lithium-ion batteries (Product Operation Power: DC 3.85 V) — true-wireless earbud with no detachable audio cable; only the charge cable detaches",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2964/v1/en/contents/TP1001300700.html"
+      },
+      {
+        "field": "microphone",
+        "quote": "Compatible Bluetooth profiles 2) : A2DP / AVRCP / HFP / HSP TMAP / CSIP / MCP / VCP / CCP — HFP plus the Making a call / Receiving a call sections evidence built-in microphones",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2964/v1/en/contents/TP1001300700.html"
+      },
+      {
+        "field": "foldable",
+        "quote": "(no folding hinge or fold step appears anywhere in the help guide — an earbud stores in the charging case rather than folding; boolean feature-absence rule applied)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2964/v1/en/contents/TP1001300700.html"
+      },
+      {
+        "field": "ipxRating",
+        "quote": "Do not splash water forcibly into the sound output parts, air holes, or microphone parts of the headset units. / Do not place the headset in water or use it in a humid place such as a bathroom.",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2964/v1/en/contents/TP1001300258.html"
+      },
+      {
+        "field": "bluetoothCodecs",
+        "quote": "Supported Codec 3) : SBC AAC LC3",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://helpguide.sony.net/mdr/2964/v1/en/contents/TP1001300700.html"
+      },
+      {
+        "field": "anc",
+        "quote": "Available operating time ... Music playback time (AAC): Max. 8 hours — no noise canceling function or Ambient Sound Mode row exists for this model, and no NC/AMB button is described",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2964/v1/en/contents/TP1001298908.html"
+      },
+      {
+        "field": "batteryLifeHours",
+        "quote": "Music playback time (AAC): Max. 8 hours / Music playback time (SBC): Max. 8 hours / Music playback time (LC3): Max. 8 hours",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2964/v1/en/contents/TP1001298908.html"
+      },
+      {
+        "field": "soundSignature",
+        "quote": "(null — Crinacle has no LinkBuds Open / WF-L910 entry in its IEM or headphone ranking lists, and RTINGS publishes no LinkBuds Open review with a Sound Signature verdict; no Tier-3 source measures it, so the protocol says null rather than inferring from marketing copy)",
+        "sourcedAt": "2026-09-13",
+        "tier": "editorial",
+        "url": "https://helpguide.sony.net/mdr/2964/v1/en/contents/TP1001300700.html"
+      }
+    ],
+    "wearingStyle": [
+      "in-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-13T18:11:39.864Z"
+}

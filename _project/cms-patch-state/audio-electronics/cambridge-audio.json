@@ -1,0 +1,28 @@
+{
+  "issueId": "sang-logium-zdb.2.8",
+  "slice": "audio-electronics",
+  "brand": "Cambridge Audio",
+  "patchedAt": "2026-09-14T10:47:15.641Z",
+  "ok": 3,
+  "fail": 0,
+  "results": [
+    {
+      "file": "cambridge-audio-dacmagic-100.md",
+      "productId": "Pn6oyV4Ks5AcNbecjkSwUK",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwM5j"
+    },
+    {
+      "file": "cambridge-audio-dacmagic-200m-open-box.md",
+      "productId": "MrEMtYwMtrFDGWmRnRHed9",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwMCk"
+    },
+    {
+      "file": "cambridge-audio-dacmagic-200m.md",
+      "productId": "Pn6oyV4Ks5AcNbecjkStf2",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOs2n"
+    }
+  ]
+}

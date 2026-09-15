@@ -1,0 +1,28 @@
+{
+  "issueId": "sang-logium-zdb.2.12",
+  "slice": "audio-electronics",
+  "brand": "Denon",
+  "patchedAt": "2026-09-14T10:47:06.500Z",
+  "ok": 3,
+  "fail": 0,
+  "results": [
+    {
+      "file": "denon-dcd-1700ne-cd-sacd-player-with-advanced-al32-processing-plus-black.md",
+      "productId": "ZuUKzmkqDyQwdcwhxlIcNL",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOqfb"
+    },
+    {
+      "file": "denon-dnp-2000ne-streaming-music-player-and-preamplifier-open-box.md",
+      "productId": "MrEMtYwMtrFDGWmRnRH2Ru",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwLdf"
+    },
+    {
+      "file": "denon-dnp-2000ne-streaming-music-player-and-preamplifier.md",
+      "productId": "Pn6oyV4Ks5AcNbecjkSVqY",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwLn1"
+    }
+  ]
+}

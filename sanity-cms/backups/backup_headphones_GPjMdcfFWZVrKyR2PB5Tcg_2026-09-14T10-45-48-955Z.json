@@ -1,0 +1,25 @@
+{
+  "productId": "GPjMdcfFWZVrKyR2PB5Tcg",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "yulong"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 129900
+  },
+  "backedUpAt": "2026-09-14T10:45:48.955Z"
+}

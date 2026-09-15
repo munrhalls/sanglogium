@@ -1,0 +1,24 @@
+{
+  "_id": "GPjMdcfFWZVrKyR2PB8uW2",
+  "name": "Moondrop Aria 2 IEMs",
+  "before": {
+    "brand": [
+      "moondrop"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "mmcx"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 9999,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-13T18:07:33.802Z"
+}

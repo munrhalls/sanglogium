@@ -9,30 +9,30 @@ spec_fields:
     - "iem"
   wearingStyle:
     - "in-ear"
-  acousticDesign:null
-  fitType:"universal"
-  connectivity:"wired"
-  portable:true
-  soundSignature:"V-Shaped"
-  microphone:false
-  detachableCable:true
-  cableLengthM:1.2
-  foldable:false
-  ipxRating:null
-  bluetoothCodecs:null
-  anc:"passive"
-  batteryLifeHours:null
-  awards:null
-  requiresAmplifier:false
+  acousticDesign: null
+  fitType: "universal"
+  connectivity: "wired"
+  portable: true
+  soundSignature: "V-Shaped"
+  microphone: false
+  detachableCable: true
+  cableLengthM: 1.2
+  foldable: false
+  ipxRating: null
+  bluetoothCodecs: null
+  anc: "passive"
+  batteryLifeHours: null
+  awards: null
+  requiresAmplifier: false
   cableTermination:
     - "3.5mm"
   driverType:
     - "dynamic"
     - "balanced-armature"
-  driverConfigBucket:"hybrid"
-  driverConfigDetail:"1DD+4BA"
-  impedanceOhms:14.8
-  sensitivityDbMw:123
+  driverConfigBucket: "hybrid"
+  driverConfigDetail: "1DD+4BA"
+  impedanceOhms: 14.8
+  sensitivityDbMw: 123
   freqResponseHz:
     min: 8
     max: 40000
@@ -65,15 +65,10 @@ data_status: COMPLETE
 - **batteryLifeHours** (marketing-fact): null — wired-only; no battery — https://truthear.com/products/nova
 - **awards** (marketing-fact): null — no named awards or editor choice badges found — https://truthear.com/products/nova
 - **requiresAmplifier** (derived): false — derived from 14.8Ω impedance and 123dB/Vrms sensitivity — https://truthear.com/products/nova
-- **cableTermination** (hard-spec): 
-    - "3.5mm" — Moonstar: "Plug: 3.5mm Single Ended"; The Headphone List: "cable... terminated in 3.5mm" — https://moonstarreviews.net/truthear-nova-review/
-- **driverType** (hard-spec): 
-    - "dynamic"
-    - "balanced-armature" — manufacturer: "1DD + 4BA" product configuration and package list; TechPowerUp: 10mm DD + composite dual BA for mids + custom dual BA for highs — https://truthear.com/products/nova
+- **cableTermination** (hard-spec): ["3.5mm"] — Moonstar: "Plug: 3.5mm Single Ended"; The Headphone List: "cable... terminated in 3.5mm" — https://moonstarreviews.net/truthear-nova-review/
+- **driverType** (hard-spec): ["dynamic", "balanced-armature"] — manufacturer: "1DD + 4BA" product configuration and package list; TechPowerUp: 10mm DD + composite dual BA for mids + custom dual BA for highs — https://truthear.com/products/nova
 - **driverConfigBucket** (hard-spec): "hybrid" — 1DD+4BA hybrid driver configuration — https://truthear.com/products/nova
 - **driverConfigDetail** (derived): "1DD+4BA" — derived from "1DD + 4BA" configuration — https://truthear.com/products/nova
 - **impedanceOhms** (hard-spec): 14.8 — manufacturer product page does not list impedance; TechPowerUp and Moonstar both list 14.8Ω±15% (@1KHz) as measured spec — https://www.techpowerup.com/review/truthear-nova-in-ear-monitors/
 - **sensitivityDbMw** (hard-spec): 123 — manufacturer spec: "123dB/Vrms @1KHz" (recorded numerically; source uses dB/Vrms) — https://truthear.com/products/nova
-- **freqResponseHz** (hard-spec): 
-    min: 8
-    max: 40000 — manufacturer: "8-40kHz (IEC61094, Free Field)" — https://truthear.com/products/nova
+- **freqResponseHz** (hard-spec): {min: 8, max: 40000} — manufacturer: "8-40kHz (IEC61094, Free Field)" — https://truthear.com/products/nova

@@ -1,0 +1,25 @@
+{
+  "productId": "xMEqvkRBbdrlJXyFG8i3hZ",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "burson-audio"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": false,
+    "deviceType": "headphone-amp",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "rca"
+    ],
+    "outputs": [
+      "6.35mm"
+    ],
+    "price": 349900
+  },
+  "backedUpAt": "2026-09-14T11:11:20.902Z"
+}

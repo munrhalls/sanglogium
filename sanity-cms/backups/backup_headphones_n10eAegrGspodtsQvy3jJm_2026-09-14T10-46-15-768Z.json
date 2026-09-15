@@ -1,0 +1,25 @@
+{
+  "productId": "n10eAegrGspodtsQvy3jJm",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "questyle"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 199500
+  },
+  "backedUpAt": "2026-09-14T10:46:15.768Z"
+}

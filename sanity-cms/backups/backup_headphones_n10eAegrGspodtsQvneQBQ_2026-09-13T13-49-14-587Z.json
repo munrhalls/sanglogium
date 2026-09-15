@@ -1,0 +1,25 @@
+{
+  "productId": "n10eAegrGspodtsQvneQBQ",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "dan-clark-audio"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "planar-magnetic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 99999,
+    "requiresAmplifier": true,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T13:49:14.588Z"
+}

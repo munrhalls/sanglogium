@@ -1,0 +1,25 @@
+{
+  "productId": "GPjMdcfFWZVrKyR2PBA93S",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "cayin"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac-amp-combo",
+    "formFactor": "portable",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 9900
+  },
+  "backedUpAt": "2026-09-14T10:47:08.885Z"
+}

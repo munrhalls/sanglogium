@@ -1,0 +1,26 @@
+{
+  "productId": "n10eAegrGspodtsQw13THU",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "anc": "passive",
+    "brand": [
+      "moondrop"
+    ],
+    "cableTermination": [
+      "mmcx"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wireless",
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "price": 18999,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-14T10:44:20.582Z"
+}

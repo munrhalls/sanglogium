@@ -1,0 +1,34 @@
+{
+  "issueId": "sang-logium-zdb.2.17",
+  "slice": "audio-electronics",
+  "brand": "Ferrum Audio",
+  "patchedAt": "2026-09-14T10:51:39.413Z",
+  "ok": 4,
+  "fail": 0,
+  "results": [
+    {
+      "file": "ferrum-oor-desktop-headphone-amplifier.md",
+      "productId": "MrEMtYwMtrFDGWmRnRKsJY",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQOr9"
+    },
+    {
+      "file": "ferrum-wandla-2-0-dac.md",
+      "productId": "Pn6oyV4Ks5AcNbecjguCqf",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435Cxbnfp"
+    },
+    {
+      "file": "ferrum-wandla-dac---goldensound-edition.md",
+      "productId": "n10eAegrGspodtsQvy4b6u",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435Cxbnje"
+    },
+    {
+      "file": "ferrum-wandla-hp-dac-and-headphone-amplifier.md",
+      "productId": "Pn6oyV4Ks5AcNbecjkTlXf",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQPI3"
+    }
+  ]
+}

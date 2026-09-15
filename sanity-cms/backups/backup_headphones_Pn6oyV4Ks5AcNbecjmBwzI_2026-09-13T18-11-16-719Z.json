@@ -1,0 +1,26 @@
+{
+  "_id": "Pn6oyV4Ks5AcNbecjmBwzI",
+  "name": "Aune Audio AR5000 Headphones",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "aune-audio"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 29900,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T18:11:16.719Z"
+}

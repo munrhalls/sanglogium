@@ -1,0 +1,26 @@
+Done.
+
+- Sourced and filed 5 HiFiMan product records under `data/audio-electronics/hifiman/`:
+  - `hifiman-ef400-headphone-amplifier-and-dac.md`
+  - `hifiman-ef499-desktop-dac-and-headphone-amplifier.md`
+  - `hifiman-ef600-desktop-r2r-dac-amp.md`
+  - `hifiman-ef600-headphone-amplifier-and-dac.md`
+  - `hifiman-prelude-headphone-amplifier.md`
+
+- Verified:
+  - 5 files in the target directory
+  - YAML front matter parses cleanly
+  - Targeted `git status` only shows the new `hifiman/` directory and the `.beads/issues.jsonl` update from the close
+
+- Closed the issue:
+  ```bash
+  bd close sang-logium-zdb.2.22 --reason "5 products sourced and filed."
+  ```
+  Confirmed status: `closed`
+
+- Exported Beads state:
+  ```bash
+  bd export -o .beads/issues.jsonl
+  ```
+
+No other issues or brands were touched, and no CMS/build/lint/test commands were run.

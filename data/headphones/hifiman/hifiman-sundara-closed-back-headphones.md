@@ -1,46 +1,46 @@
 ---
-product_id: "MrEMtYwMtrFDGWmRnQULEz"
-product_slug: "hifiman-sundara-closed-back-headphones"
-brand: "HiFiMan"
-name: "Sundara Closed-Back"
-slice: "headphones"
+product_id: MrEMtYwMtrFDGWmRnQULEz
+product_slug: hifiman-sundara-closed-back-headphones
+brand: HiFiMan
+name: Hifiman Sundara Closed-Back Headphones
+slice: headphones
 spec_fields:
   productCategory:
-    - "over-ear"
+  - over-ear
   wearingStyle:
-    - "over-ear"
+  - over-ear
   acousticDesign:
-    - "closed-back"
-  connectivity: "wired"
+  - closed-back
+  connectivity: wired
   portable: false
   driverType:
-    - "planar-magnetic"
+  - planar-magnetic
   impedanceOhms: 20
   sensitivityDbMw: 98
   freqResponseHz:
     min: 6
     max: 50000
   cableTermination:
-    - "3.5mm"
-    - "6.35mm"
+  - 3.5mm
+  - 6.35mm
   detachableCable: true
   cableLengthM: 1.5
   microphone: false
   foldable: false
   ipxRating: null
   bluetoothCodecs: null
-  anc: "passive"
+  anc: passive
   batteryLifeHours: null
   soundSignature: null
   awards: null
   fitType: null
   driverConfigBucket: null
 source_urls:
-  - "https://hifiman.com/products/detail/324"
-  - "https://hifiman.com/attachments/file/20250219/20250219090152_98566.pdf"
-  - "https://hifiman.com/services/downlist/0/324"
-verified_at: "2026-09-14"
-data_status: "COMPLETE"
+- https://hifiman.com/products/detail/324
+- https://hifiman.com/attachments/file/20250219/20250219090152_98566.pdf
+- https://hifiman.com/services/downlist/0/324
+verified_at: '2026-09-14'
+data_status: COMPLETE
 ---
 
 ## Verification Notes

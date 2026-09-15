@@ -1,0 +1,50 @@
+---
+product_id: Pn6oyV4Ks5AcNbecjjpRo3
+product_slug: sennheiser-ie-900-in-ear-headphones
+brand: Sennheiser
+name: Sennheiser IE 900 In-Ear Headphones
+slice: headphones
+spec_fields:
+  productCategory:
+  - iem
+  wearingStyle:
+  - in-ear
+  connectivity: wired
+  portable: true
+  driverType:
+  - dynamic
+  impedanceOhms: 16
+  sensitivityDbMw: 123
+  freqResponseHz:
+    min: 5
+    max: 48000
+  cableTermination:
+  - 3.5mm
+  - 2.5mm-balanced
+  - 4.4mm-balanced
+  - mmcx
+  detachableCable: true
+  cableLengthM: 1.25
+  microphone: false
+  foldable: false
+source_urls:
+- https://us.sennheiser-hearing.com/products/ie-900
+verified_at: '2026-09-14'
+data_status: COMPLETE
+---
+
+## Verification Notes
+- **wearingStyle** (marketing-fact): In-ear, closed — https://us.sennheiser-hearing.com/products/ie-900
+- **productCategory** (marketing-fact): In-ear, closed — https://us.sennheiser-hearing.com/products/ie-900
+- **connectivity** (marketing-fact): audio cable / adapter described — https://us.sennheiser-hearing.com/products/ie-900
+- **driverType** (hard-spec): dynamic, Extra Wide Band (XWB) — https://us.sennheiser-hearing.com/products/ie-900
+- **impedanceOhms** (hard-spec): 16 Ω — https://us.sennheiser-hearing.com/products/ie-900
+- **sensitivityDbMw** (hard-spec): 123 dB (1 kHz, 1 Vrms) — https://us.sennheiser-hearing.com/products/ie-900
+- **freqResponseHz** (hard-spec): 5 Hz - 48,000 Hz — https://us.sennheiser-hearing.com/products/ie-900
+- **cableLengthM** (hard-spec): 1.25 m — https://us.sennheiser-hearing.com/products/ie-900
+- **cableTermination** (marketing-fact): Balanced para-aramid reinforced cable with 2.5mm connector — https://us.sennheiser-hearing.com/products/ie-900
+- **detachableCable** (marketing-fact): Balanced para-aramid reinforced cable with 2.5mm connector — https://us.sennheiser-hearing.com/products/ie-900
+- **microphone** (marketing-fact): no microphone / mic system mentioned on product page — https://us.sennheiser-hearing.com/products/ie-900
+- **foldable** (marketing-fact): no foldable / fold-flat design mentioned — https://us.sennheiser-hearing.com/products/ie-900
+- **portable** (marketing-fact): Premium carry case — https://us.sennheiser-hearing.com/products/ie-900
+- **soundSignature** (editorial): no Tier 3 (Crinacle / Audio Science Review / RTINGS) source entry found — null

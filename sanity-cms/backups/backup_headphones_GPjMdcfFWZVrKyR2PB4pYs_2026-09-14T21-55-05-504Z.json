@@ -1,0 +1,27 @@
+{
+  "productId": "GPjMdcfFWZVrKyR2PB4pYs",
+  "before": {
+    "acousticDesign": [
+      "open-back"
+    ],
+    "anc": "none",
+    "brand": [
+      "meze-audio"
+    ],
+    "cableTermination": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "price": 59900,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-14T21:55:05.504Z"
+}

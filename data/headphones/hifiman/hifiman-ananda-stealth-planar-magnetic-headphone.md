@@ -1,47 +1,47 @@
 ---
-product_id: "xMEqvkRBbdrlJXyFG8kR2T"
-product_slug: "hifiman-ananda-stealth-planar-magnetic-headphone"
-brand: "HiFiMan"
-name: "Ananda Stealth Planar Magnetic Headphone"
-slice: "headphones"
+product_id: xMEqvkRBbdrlJXyFG8kR2T
+product_slug: hifiman-ananda-stealth-planar-magnetic-headphone
+brand: HiFiMan
+name: HIFIMAN Ananda Stealth Planar Magnetic Headphone
+slice: headphones
 spec_fields:
   productCategory:
-    - "over-ear"
+  - over-ear
   wearingStyle:
-    - "over-ear"
+  - over-ear
   acousticDesign:
-    - "open-back"
-  connectivity: "wired"
+  - open-back
+  connectivity: wired
   portable: false
   driverType:
-    - "planar-magnetic"
+  - planar-magnetic
   impedanceOhms: 16
   sensitivityDbMw: 93
   freqResponseHz:
     min: 8
     max: 55000
   cableTermination:
-    - "3.5mm"
-    - "6.35mm"
+  - 3.5mm
+  - 6.35mm
   detachableCable: true
   cableLengthM: 1.5
   microphone: false
   foldable: false
   ipxRating: null
   bluetoothCodecs: null
-  anc: "none"
+  anc: none
   batteryLifeHours: null
-  soundSignature: "Neutral"
+  soundSignature: Neutral
   awards: null
   fitType: null
   driverConfigBucket: null
 source_urls:
-  - "https://hifiman.com/products/detail/317"
-  - "https://down.hifiman.com/manual/ANANDA-manual.pdf"
-  - "https://audio46.com/products/hifiman-ananda-stealth-planar-magnetic-headphones"
-  - "https://crinacle.com/rankings/headphones/real/"
-verified_at: "2026-09-14"
-data_status: "COMPLETE"
+- https://hifiman.com/products/detail/317
+- https://down.hifiman.com/manual/ANANDA-manual.pdf
+- https://audio46.com/products/hifiman-ananda-stealth-planar-magnetic-headphones
+- https://crinacle.com/rankings/headphones/real/
+verified_at: '2026-09-14'
+data_status: COMPLETE
 ---
 
 ## Verification Notes

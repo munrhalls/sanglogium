@@ -7,4 +7,22 @@ I’ll run `bd show` to read the issue, then follow its protocols: source real d
 - `k27n1AQuIbSr5iozG1vTNo` — Questyle M12i Portable USB DAC & Headphone Amp ($149, used/open-box variant)
 - `n10eAegrGspodtsQvy3jJm` — Questyle CMA Fifteen Desktop DAC and Headphone Amplifier ($1995)
 
-Next I’ll fetch the official Questyle product pages and an audited retailer for each, then write the .md files.
+Next I’ll fetch the official Questyle product pages and an audited retailer for each, then write the .md files.Done. `sang-logium-zdb.2.33` is closed as **"6 products sourced and filed."**
+
+Six real, cited product files are now under `data/audio-electronics/questyle/`:
+
+- `questyle-m15i-usb-portable-dac-headphone-amplifier.md`
+- `questyle-m12i-portable-usb-dac-headphone-amp.md`
+- `questyle-m12i-portable-usb-dac-&-headphone-amp.md`
+- `questyle-cma-twelve-desktop-dac-amp.md`
+- `questyle-cma-fifteen-desktop-dac-and-headphone-amplifier.md`
+- `questyle-cma-18-master-dac-and-headphone-amp.md`
+
+Each file uses the exact Sanity `product_id` and `product_slug`, includes `spec_fields` with real values or explicit `null`s per `sanity-cms/schemaTypes/productType.ts`, and cites its source URLs with tiered verification notes and conflict/caution notes.
+
+Targeted `git status` shows only the expected footprint:
+
+- modified `.beads/interactions.jsonl` and `.beads/issues.jsonl` (from `bd close` + `bd export`)
+- new `data/audio-electronics/questyle/` directory
+
+No other beads issues or brands were touched, no CMS data was modified, and no build/lint/test/dev-server commands were run per repo rules.

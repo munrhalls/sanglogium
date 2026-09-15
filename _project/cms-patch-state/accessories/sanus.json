@@ -1,0 +1,22 @@
+{
+  "issueId": "sang-logium-zdb.3.33",
+  "slice": "accessories",
+  "brand": "Sanus",
+  "patchedAt": "2026-09-14T10:48:14.812Z",
+  "ok": 2,
+  "fail": 0,
+  "results": [
+    {
+      "file": "sanus-headphone-stand-for-sonos-ace-black.md",
+      "productId": "GjMaRFaHMVTsBoyxtAJDT4",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwcx8"
+    },
+    {
+      "file": "sanus-headphone-stand-for-sonos-ace-white.md",
+      "productId": "fisKNZUL2oYuqkoQMTzLCp",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwd49"
+    }
+  ]
+}

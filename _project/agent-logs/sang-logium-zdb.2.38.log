@@ -1,1 +1,19 @@
-Plan: load the beads skill, run `bd show sang-logium-zdb.2.38`, then follow the issue's execution and sourcing protocols to research each product and write the requested .md files, then close the issue. Going now.Found issue `sang-logium-zdb.2.38`: 3 Singxer products to source, output path `data/audio-electronics/singxer/`. Need to confirm the field schema and grab product names before fetching sources.
+Plan: load the beads skill, run `bd show sang-logium-zdb.2.38`, then follow the issue's execution and sourcing protocols to research each product and write the requested .md files, then close the issue. Going now.Found issue `sang-logium-zdb.2.38`: 3 Singxer products to source, output path `data/audio-electronics/singxer/`. Need to confirm the field schema and grab product names before fetching sources.Done. Three Singxer product files written under `data/audio-electronics/singxer/` and `sang-logium-zdb.2.38` is closed with the reason `3 products sourced and filed.`
+
+Targeted `git status` confirms only these changes:
+- `?? data/audio-electronics/singxer/` — 3 new `.md` files
+- ` M .beads/issues.jsonl` — passive export after `bd close`
+
+Files:
+- `data/audio-electronics/singxer/singxer-sa-2-fully-balanced-headphone-amplifier.md`
+- `data/audio-electronics/singxer/singxer-sa1-v2-headphone-amplifier.md`
+- `data/audio-electronics/singxer/singxer-sa-2-fully-balanced-headphone-amplifier-apos-certified.md`
+
+Notes / conflicts documented in each file:
+- `deviceType` set to `preamplifier` because the source explicitly calls the units headphone amps/preamps and `headphone-amp` is not a valid should-be audio-electronics value.
+- `countryOfManufacture` left `null` because no source states “Made in …” (only the manufacturer address in China).
+- SA-1 V2 `finishColor` is `["Black"]` from the Apos product page; SA-2 variants have no citable color.
+- SA-1 V2 `powerOutputPerChannelW` uses the manufacturer table (10W @ 16Ω); the Apos 32Ω figure conflicts and is recorded.
+- Certified variant `condition` is `open-box`; the issue price of $126.00 is noted as likely the “Save $126.00” amount, not the Apos sale price.
+
+No other beads issues or brands were touched. Per conservative profile, I did not commit or push; the working tree is ready for you to review and commit.

@@ -1,0 +1,25 @@
+{
+  "productId": "moXlkADK7m1DHgGwWwETNc",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "earmen"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 39900
+  },
+  "backedUpAt": "2026-09-14T10:54:14.979Z"
+}

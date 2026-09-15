@@ -1,0 +1,28 @@
+{
+  "issueId": "sang-logium-zdb.2.38",
+  "slice": "audio-electronics",
+  "brand": "Singxer",
+  "patchedAt": "2026-09-14T10:46:08.196Z",
+  "ok": 3,
+  "fail": 0,
+  "results": [
+    {
+      "file": "singxer-sa-2-fully-balanced-headphone-amplifier-apos-certified.md",
+      "productId": "xMEqvkRBbdrlJXyFG8hyzj",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwHZ5"
+    },
+    {
+      "file": "singxer-sa-2-fully-balanced-headphone-amplifier.md",
+      "productId": "GPjMdcfFWZVrKyR2PB7LN0",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwHg6"
+    },
+    {
+      "file": "singxer-sa1-v2-headphone-amplifier.md",
+      "productId": "k27n1AQuIbSr5iozG1vG7I",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOiUv"
+    }
+  ]
+}

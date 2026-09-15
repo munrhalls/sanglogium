@@ -1,0 +1,26 @@
+{
+  "_id": "PHPYj28HJdPDHAaIBCCjUc",
+  "name": "Audeze LCD-XC Headphones | 2024 Creator's Edition",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "audeze"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "planar-magnetic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 129900,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T18:10:42.951Z"
+}

@@ -1,0 +1,34 @@
+{
+  "issueId": "sang-logium-zdb.2.14",
+  "slice": "audio-electronics",
+  "brand": "Enleum",
+  "patchedAt": "2026-09-14T10:47:02.873Z",
+  "ok": 4,
+  "fail": 0,
+  "results": [
+    {
+      "file": "enleum-amp-23-rmh-headphone-amplifier.md",
+      "productId": "Pn6oyV4Ks5AcNbecjkVOLR",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbZXB"
+    },
+    {
+      "file": "enleum-amp-23r-desktop-headphone-and-speaker-amplifier-open-box.md",
+      "productId": "k27n1AQuIbSr5iozG1vPuL",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwLKx"
+    },
+    {
+      "file": "enleum-amp-23r-desktop-headphone-speaker-amplifier.md",
+      "productId": "PHPYj28HJdPDHAaIBChGhe",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbZdY"
+    },
+    {
+      "file": "enleum-hpa-23rm-headphone-amplifier.md",
+      "productId": "Pn6oyV4Ks5AcNbecjkVKDF",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbZhN"
+    }
+  ]
+}

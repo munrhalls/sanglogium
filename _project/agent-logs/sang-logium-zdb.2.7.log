@@ -1,0 +1,20 @@
+Done.
+
+- `data/audio-electronics/burson-audio/` now contains exactly 16 product `.md` files, one per Burson Audio product from `sang-logium-zdb.2.7`.
+- Each file has `product_id`, `product_slug`, `price`, `source_urls`, `verified_at`, `data_status: COMPLETE`, and a `spec_fields` block covering all 37 fields from `docs/filters-sort/should-be-audio-electronics.md`.
+- Values are either source-backed with a cited URL/quote in the `## Verification Notes`, or explicitly `null` with a `## Fields recorded as null` list.
+- `## Conflict / Caution Notes` record taxonomy/price/inStock/source-typography caveats, including retailer `OutOfStock`/`BackOrder` vs CMS stock and duplicate Conductor 3x Grand Tourer slugs.
+- `sang-logium-zdb.2.7` is closed: `16 products sourced and filed.`
+
+Validation performed:
+- File count = 16.
+- Product IDs match the 16 IDs from `bd show sang-logium-zdb.2.7`.
+- All 16 YAML frontmatter documents parse cleanly.
+- All 37 expected `spec_fields` keys are present in every file.
+- Only `data/audio-electronics/burson-audio/` is new/untracked; `.beads/issues.jsonl` and `.beads/interactions.jsonl` reflect the closed issue. No commit or push was done per the conservative handoff rules.
+
+Suggested next commands (run them manually if you want to persist):
+```
+git add data/audio-electronics/burson-audio .beads
+git status
+```

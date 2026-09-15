@@ -29,8 +29,17 @@ spec_fields:
   formatCompatibility: null
   partType: "ear-pads-cushions"
   compatibility: 
-    - "HD 58X"
-    - "HD 600"
+    - "Sennheiser Specifications"
+    - "Sennheiser Approx."
+    - "Sennheiser 107 × 84 × 28 mm"
+    - "Sennheiser internal ~65 × 44 mm"
+    - "Sennheiser Compatible"
+    - "Sennheiser HD 58X"
+    - "Sennheiser HD 600"
+    - "Sennheiser HD-650"
+    - "Sennheiser HD-660"
+    - "Sennheiser 660S"
+    - "Sennheiser HD-6XX"
   adapterFunction: null
   treatmentType: null
   mounting: null
@@ -48,7 +57,7 @@ data_status: "COMPLETE"
 - **accessoryType**: `replacement-parts` — product name / page identifies this as a replacement-parts item.
 - **compatibleProductType**: ["headphone"] — intended for use with headphone.
 - **partType**: `ear-pads-cushions` — product name identifies this as a ear-pads-cushions replacement part.
-- **compatibility**: ["HD 58X","HD 600"] — compatible models extracted from the manufacturer product page and product title.
+- **compatibility**: ["Sennheiser Specifications","Sennheiser Approx.","Sennheiser 107 × 84 × 28 mm","Sennheiser internal ~65 × 44 mm","Sennheiser Compatible","Sennheiser HD 58X","Sennheiser HD 600","Sennheiser HD-650","Sennheiser HD-660","Sennheiser 660S","Sennheiser HD-6XX"] — compatible models extracted from the manufacturer product page and product title.
 - **customerRating**: `null` — no visible customer rating or aggregate score on the cited source page.
 - **dealsDiscount**: `null` — no discount or deal terms visible on the cited source page.
 - **newArrival**: `null` — release/new-arrival status not stated on the cited source page.

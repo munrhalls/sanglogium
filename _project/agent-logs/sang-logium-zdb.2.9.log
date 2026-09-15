@@ -1,0 +1,18 @@
+Plan: (1) read the beads skill, (2) show the issue to get its protocols and product list, (3) source each product and write one .md per product, (4) close the issue.
+
+Going now.Done.
+
+- 4 product files written to `data/audio-electronics/cayin/`:
+  - `cayin-n3ultra-triple-timbre-digital-audio-player.md`
+  - `cayin-ru9-vacuum-tube-portable-dac-amp.md`
+  - `cayin-ru3-portable-usb-dac-amp.md`
+  - `cayin-ru7-1-bit-resistor-network-portable-dac.md`
+
+- `sang-logium-zdb.2.9` is closed with reason `4 products sourced and filed.`
+- `.beads/issues.jsonl` exported.
+
+Key handling:
+- N3Ultra is a DAP, which the current `audio-electronics` schema excludes, so `deviceType` is `null` with a category-gap note.
+- RU9 has a manufacturer-manual vs. retailer conflict on PCM/DSD support (`384kHz/DSD256` vs. `768kHz/DSD512`), recorded as `null` with explicit conflict notes.
+- Country of manufacture is `null` where only brand/manufacturer-level statements were found, not product-specific “made in” claims.
+- No other beads issues or brands were touched. No commit or push was made.

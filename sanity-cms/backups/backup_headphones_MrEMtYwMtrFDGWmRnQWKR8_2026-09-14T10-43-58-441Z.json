@@ -1,0 +1,23 @@
+{
+  "productId": "MrEMtYwMtrFDGWmRnQWKR8",
+  "before": {
+    "anc": "passive",
+    "brand": [
+      "thieaudio"
+    ],
+    "cableTermination": [
+      "mmcx"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "price": 99900,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-14T10:43:58.441Z"
+}

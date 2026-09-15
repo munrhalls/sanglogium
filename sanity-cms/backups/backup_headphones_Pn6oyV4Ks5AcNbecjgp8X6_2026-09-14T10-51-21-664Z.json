@@ -1,0 +1,25 @@
+{
+  "productId": "Pn6oyV4Ks5AcNbecjgp8X6",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "fiio"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "bluetooth"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 19999
+  },
+  "backedUpAt": "2026-09-14T10:51:21.664Z"
+}

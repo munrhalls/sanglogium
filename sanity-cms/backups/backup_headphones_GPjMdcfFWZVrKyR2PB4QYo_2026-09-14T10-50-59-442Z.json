@@ -1,0 +1,25 @@
+{
+  "productId": "GPjMdcfFWZVrKyR2PB4QYo",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "topping"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac-amp-combo",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "bluetooth"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 19900
+  },
+  "backedUpAt": "2026-09-14T10:50:59.442Z"
+}

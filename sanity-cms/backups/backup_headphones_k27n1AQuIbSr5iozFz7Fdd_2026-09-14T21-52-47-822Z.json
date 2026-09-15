@@ -1,0 +1,159 @@
+{
+  "productId": "k27n1AQuIbSr5iozFz7Fdd",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "anc": "passive",
+    "awards": [
+      "NYT Wirecutter — best-sounding closed headphone under $2,000"
+    ],
+    "brand": [
+      "dan-clark-audio"
+    ],
+    "cableLengthM": 2,
+    "cableTermination": [
+      "3.5mm",
+      "6.35mm",
+      "4-pin-xlr",
+      "4.4mm-balanced",
+      "2.5mm-balanced"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "detachableCable": true,
+    "driverType": [
+      "planar-magnetic"
+    ],
+    "foldable": true,
+    "impedanceOhms": 13,
+    "inStock": true,
+    "ipxRating": "none",
+    "microphone": false,
+    "portable": true,
+    "price": 89999,
+    "requiresAmplifier": true,
+    "sensitivityDbMw": 90,
+    "soundSignature": "V-Shaped",
+    "sourcing": [
+      {
+        "field": "impedanceOhms",
+        "quote": "Impedance 13ohms",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://danclarkaudio.com/aeon-2-noir.html"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "Sensitivity ~90 dB/mW",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://danclarkaudio.com/aeon-2-noir.html"
+      },
+      {
+        "field": "driverType",
+        "quote": "Driver: 62mm x 34mm single-ended planar magnetic",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://danclarkaudio.com/aeon-2-noir.html"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "\"Choose Your Cable\" dropdown base no-upcharge option: 1/4\"-3.5mm 2m DUMMER",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://danclarkaudio.com/aeon-2-noir.html"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "ÆON 2 Noire is the latest edition of our award-winning ÆON 2 Closed headphone",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/aeon-2-noir.html"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "ÆON 2 Noire is the latest edition of our award-winning ÆON 2 Closed headphone",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/aeon-2-noir.html"
+      },
+      {
+        "field": "connectivity",
+        "quote": "ÆON 2 Noire headphone / Carrying case / 1/4\" with 3.5mm OR 4-Pin XLR Cable (no wireless or Bluetooth feature stated anywhere on the page)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/aeon-2-noir.html"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "\"Choose Your Cable\" options: 1/4\"-3.5mm, 4-pin XLR, 4.4mm, 2.5mm, 3.5mm",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/aeon-2-noir.html"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "All Dan Clark Audio planar-magnetic products use Hirose-style connectors. To attach your cable hold the male connector by the boot and rotate it into the female receptacle on the headphone until you feel it click into place.",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/pub/docs/2022/ÆON-2-QUICK-GUIDE.pdf"
+      },
+      {
+        "field": "portable",
+        "quote": "ÆON 2's unique and patented folding gimbal design allows it to pack into a truly compact case that can fit into nearly anything",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/aeon-2-noir.html"
+      },
+      {
+        "field": "foldable",
+        "quote": "ÆON 2's unique and patented folding gimbal design allows it to pack into a truly compact case",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/aeon-2-noir.html"
+      },
+      {
+        "field": "microphone",
+        "quote": "(no microphone mentioned across the manufacturer product page and quick guide; boolean feature-absence rule applied)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/aeon-2-noir.html"
+      },
+      {
+        "field": "ipxRating",
+        "quote": "(no IP/water-resistance claim found; no ingress-protection statement anywhere on the manufacturer page)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/aeon-2-noir.html"
+      },
+      {
+        "field": "anc",
+        "quote": "closed-back design offering isolation; no electronic active noise cancelling feature stated",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/aeon-2-noir.html"
+      },
+      {
+        "field": "awards",
+        "quote": "the New York Times Wirecutter called ÆON 2 Closed the best-sounding closed headphone under $2,000",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/aeon-2-noir.html"
+      },
+      {
+        "field": "soundSignature",
+        "quote": "\"DCA Aeon 2 Noire\" — Warm V-shape / \"Arguably the best tuned DCA headphone with a slightly thick midrange and least offensive treble.\" (Tone Grade B-). Mapped to the schema's V-Shaped member; the schema list has no \"Warm V-shape\" value.",
+        "sourcedAt": "2026-09-13",
+        "tier": "editorial",
+        "url": "https://crinacle.com/rankings/headphones/"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-14T21:52:47.822Z"
+}

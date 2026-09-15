@@ -1,0 +1,192 @@
+{
+  "_id": "PHPYj28HJdPDHAaIBAK0fG",
+  "name": "HEDD Audio HEDDPhone® Two",
+  "before": {
+    "acousticDesign": [
+      "open-back"
+    ],
+    "anc": "none",
+    "awards": null,
+    "backDesign": "closed",
+    "batteryLifeHours": {
+      "ancOff": null,
+      "ancOn": null
+    },
+    "bluetoothCodecs": null,
+    "brand": [
+      "hedd-audio"
+    ],
+    "cableLengthM": 2.2,
+    "cableTermination": [
+      "3.5mm",
+      "6.35mm",
+      "4.4mm-balanced",
+      "4-pin-xlr"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "detachableCable": true,
+    "driverConfigBucket": null,
+    "driverConfigDetail": null,
+    "driverType": [
+      "amt"
+    ],
+    "fitType": null,
+    "foldable": false,
+    "freqResponseHz": {
+      "max": 40000,
+      "min": 10
+    },
+    "impedanceOhms": 41,
+    "inStock": true,
+    "ipxRating": null,
+    "microphone": false,
+    "noiseCancelling": false,
+    "portable": false,
+    "price": 199900,
+    "productCategory": [
+      "over-ear"
+    ],
+    "requiresAmplifier": false,
+    "sensitivityDbMw": 89,
+    "soundSignature": null,
+    "sourcing": [
+      {
+        "field": "acousticDesign",
+        "quote": "Design | Open-back over-ear headphone",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hedd.audio/products/heddphone-two"
+      },
+      {
+        "field": "productCategory",
+        "quote": "Design | Open-back over-ear headphone",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hedd.audio/products/heddphone-two"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "HEDD_HP2_GT_Manual.pdf — Headphone Type | passive, open, circumaural (over-ear)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hedd.audio/products/heddphone-two"
+      },
+      {
+        "field": "connectivity",
+        "quote": "Includes 2.2m headphone cable with 6.35mm termination; 2.2m balanced cable with 4.4mm termination; 3-pin audio adapter – 6.35mm to 3.5mm; 4-pin audio adapter – balanced 4.4mm to XLR (no Bluetooth, wireless, or ANC language anywhere on the page or in the manual)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hedd.audio/products/heddphone-two"
+      },
+      {
+        "field": "driverType",
+        "quote": "Drivers | Air Motion Transformer with VVT technology and Kapton polyimide diaphragm",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://hedd.audio/products/heddphone-two"
+      },
+      {
+        "field": "impedanceOhms",
+        "quote": "Impedance | 41 Ω flat (manual table agrees: Impedance | 41 Ω flat)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://hedd.audio/products/heddphone-two"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "Maximum SPL | 89 dB SPL at 1 mW (CONFLICT: HEDD_HP2_GT_Manual.pdf spec table reads \"Sensitivity | 89 dB SPL at 1W\" — value agrees, reference power does not)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://hedd.audio/products/heddphone-two"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "Frequency Range | 10 Hz - 40 kHz (features section: \"VVT allows reproduction of frequencies from 10 to 40kHz\"; manual table agrees)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://hedd.audio/products/heddphone-two"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "Includes 2.2m headphone cable with 6.35mm termination; 2.2m balanced cable with 4.4mm termination",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://hedd.audio/products/heddphone-two"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "Includes 2.2m headphone cable with 6.35mm termination; 2.2m balanced cable with 4.4mm termination; 3-pin audio adapter – 6.35mm to 3.5mm; 4-pin audio adapter – balanced 4.4mm to XLR (the page's \"Inputs | 3.5mm jack\" row is the adapter plug, not the cup connector)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hedd.audio/products/heddphone-two"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "manual troubleshooting table: \"The cable can easily be replaced\" / \"the cable is not properly connected (pushed all the way in)\" — user-serviceable detachable cables shipped as a pair",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hedd.audio/products/heddphone-two"
+      },
+      {
+        "field": "portable",
+        "quote": "open-back over-ear, Weight | 550g, no folding position described; travel case is for storage, not travel-first — absence-based FLAG",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hedd.audio/products/heddphone-two"
+      },
+      {
+        "field": "microphone",
+        "quote": "(no microphone, mic, boom, or inline-remote language anywhere on the product page or in the manual — boolean feature-absence rule)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hedd.audio/products/heddphone-two"
+      },
+      {
+        "field": "foldable",
+        "quote": "(no folding hinge or folded position described anywhere on the page or in the manual; the HEDDband adjusts height, width and curvature but the headphone does not fold — boolean feature-absence rule)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hedd.audio/products/heddphone-two"
+      },
+      {
+        "field": "anc",
+        "quote": "(derived from the already-cited acousticDesign: open-back + connectivity: wired — passive acoustic design only, no ANC electronics)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hedd.audio/products/heddphone-two"
+      },
+      {
+        "field": "batteryLifeHours",
+        "quote": "(no battery anywhere on the page or in the manual — wired-only passive headphone, so ancOff and ancOn are both null)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hedd.audio/products/heddphone-two"
+      },
+      {
+        "field": "awards",
+        "quote": "(no award, badge, or named recognition claimed for the TWO anywhere on the manufacturer page — the 5-year warranty is not an award)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hedd.audio/products/heddphone-two"
+      },
+      {
+        "field": "soundSignature",
+        "quote": "(exhausted NULL — Crinacle's only HEDD entry is the original HEDDphone ONE (Warm neutral, Tone A, Technical A+, AMT); the TWO has no Crinacle row, no Crinacle individual post, no ASR lab review, no Rtings review. Not inferred from HEDD's \"vivid, lifelike\" marketing copy)",
+        "sourcedAt": "2026-09-13",
+        "tier": "editorial",
+        "url": "https://crinacle.com/rankings/headphones/"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-13T18:10:39.793Z"
+}

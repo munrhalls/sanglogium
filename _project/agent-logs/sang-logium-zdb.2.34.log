@@ -1,4 +1,18 @@
 Plan:
 1. Read issue `sang-logium-zdb.2.34` to get the product list, target path, and protocols.
 2. Source real, cited data for each product and write one `.md` file per product.
-3. Close the issue with the count-based reason.
+3. Close the issue with the count-based reason.Done.
+
+- `sang-logium-zdb.2.34` is now `closed` with reason `1 products sourced and filed.`
+- Sourced product: `RME ADI-2 DAC FS Desktop DAC & Headphone Amp`
+- Output file: [rme-adi-2-dac-fs-desktop-dac-headphone-amp.md](file:///home/jan/work/sanglogium/data/audio-electronics/rme/rme-adi-2-dac-fs-desktop-dac-headphone-amp.md)
+- Sources used: RME product page, RME `adi2dac_e.pdf` manual, Headphones.com, Found Sound, Igloo Audio, SoundStage! Hi-Fi, and BL2.it.
+- `bd export -o .beads/issues.jsonl` was run; only `.beads/issues.jsonl` shows a diff (24 insertions / 24 deletions). The product `.md` file already matches HEAD, so no additional diff.
+- Per the conservative active profile, no `git commit`/`push` or self-run quality gates (`next build`, `tsc`, etc.) were performed.
+
+Suggested next commands if you want to commit/sync:
+
+```bash
+git add .beads/issues.jsonl data/audio-electronics/rme/rme-adi-2-dac-fs-desktop-dac-headphone-amp.md
+git commit -m "sourcing: RME ADI-2 DAC FS (sang-logium-zdb.2.34)"
+```

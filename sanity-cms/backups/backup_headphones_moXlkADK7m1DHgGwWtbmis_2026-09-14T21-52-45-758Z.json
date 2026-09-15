@@ -1,0 +1,165 @@
+{
+  "productId": "moXlkADK7m1DHgGwWtbmis",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "anc": "passive",
+    "awards": null,
+    "batteryLifeHours": null,
+    "bluetoothCodecs": null,
+    "brand": [
+      "denon"
+    ],
+    "cableLengthM": 3,
+    "cableTermination": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "detachableCable": true,
+    "driverConfigBucket": null,
+    "driverType": [
+      "dynamic"
+    ],
+    "fitType": null,
+    "foldable": false,
+    "freqResponseHz": {
+      "max": 56000,
+      "min": 5
+    },
+    "impedanceOhms": 24,
+    "inStock": true,
+    "ipxRating": null,
+    "microphone": false,
+    "portable": true,
+    "price": 159900,
+    "productCategory": [
+      "over-ear"
+    ],
+    "requiresAmplifier": true,
+    "sensitivityDbMw": 105,
+    "soundSignature": "Mid-Forward",
+    "sourcing": [
+      {
+        "field": "wearingStyle",
+        "quote": "Flagship over-ear headphones / Driver Diameter 50 mm / Wired Over-Ear Headphones",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.denon.com/en-us/product/over-ear-headphones/ah-d9200/137241.html"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "Closed-Back (Audio46 product tag block; no manufacturer statement of open/closed exists on the Denon page, info sheet, or owner's manual)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://audio46.com/products/denon-ah-d9200-premium-over-ear-headphones"
+      },
+      {
+        "field": "productCategory",
+        "quote": "AH-D9200 Flagship Hi-Fi Headphones — product type: Wired Over-Ear Headphones",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.denon.com/en-us/product/over-ear-headphones/ah-d9200/137241.html"
+      },
+      {
+        "field": "connectivity",
+        "quote": "Battery Life: Wired; no Bluetooth / wireless section present",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.denon.com/en-us/product/over-ear-headphones/ah-d9200/137241.html"
+      },
+      {
+        "field": "portable",
+        "quote": "A 1.3m audio cable with 3.5mm plug — Enjoy your headphones with portable music players",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "ah-d9200-info-sheet-en.pdf (Denon info sheet)"
+      },
+      {
+        "field": "impedanceOhms",
+        "quote": "Input impedance: 24 Ω/ohms",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "ah-d9200-owners-manual-global.pdf (Denon owner's manual, specifications)"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "Sensitivity: 105 dB/mW",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "ah-d9200-owners-manual-global.pdf (Denon owner's manual, specifications)"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "Playback frequency: 5 – 56,000 Hz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "ah-d9200-owners-manual-global.pdf (Denon owner's manual, specifications)"
+      },
+      {
+        "field": "driverType",
+        "quote": "Type: Dynamic type / Drive units: Ø 50 mm (live page's \"Driver Type: Nanofiber FreeEdge\" is the diaphragm technology name, not a driver principle)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "ah-d9200-owners-manual-global.pdf (Denon owner's manual, specifications)"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "Cable length: 3.0 m × 1, 1.3 m × 1",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "ah-d9200-owners-manual-global.pdf (Denon owner's manual, specifications)"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "Plug (3.0 m cable): Ø 6.3 mm (Player) – Ø 3.5 mm x 2 (Headphone); Plug (1.3 m cable): Ø 3.5 mm (Player) – Ø 3.5 mm x 2 (Headphone), Ø 6.3 mm Adapter",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "ah-d9200-owners-manual-global.pdf (Denon owner's manual, specifications)"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "The detachable cables and luxury case for storage ensure the AH-D9200 headphones provide superior sound and comfort for years to come.",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.denon.com/en-us/product/over-ear-headphones/ah-d9200/137241.html"
+      },
+      {
+        "field": "microphone",
+        "quote": "(no microphone mentioned on the manufacturer page, info-sheet PDF, or owner's manual; boolean feature-absence rule applied)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.denon.com/en-us/product/over-ear-headphones/ah-d9200/137241.html"
+      },
+      {
+        "field": "foldable",
+        "quote": "(no folding/hinge claim on the manufacturer page, info-sheet PDF, or owner's manual; boolean feature-absence rule applied)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.denon.com/en-us/product/over-ear-headphones/ah-d9200/137241.html"
+      },
+      {
+        "field": "anc",
+        "quote": "Noise Canceling Type: None (derived from the already-cited no-ANC statement + closed-back sealed wood housing — passive isolation only)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.denon.com/en-us/product/over-ear-headphones/ah-d9200/137241.html"
+      },
+      {
+        "field": "soundSignature",
+        "quote": "Mid-centric — Generally weird and wonky tuning that can also get rather harsh at times. (Tone Grade C, Technical Grade D+)",
+        "sourcedAt": "2026-09-13",
+        "tier": "editorial",
+        "url": "https://crinacle.com/rankings/headphones/"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-14T21:52:45.758Z"
+}

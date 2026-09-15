@@ -1,0 +1,76 @@
+{
+  "issueId": "sang-logium-zdb.1.2",
+  "slice": "headphones",
+  "brand": "Sony",
+  "patchedAt": "2026-09-14T21:50:29.524Z",
+  "ok": 11,
+  "fail": 0,
+  "results": [
+    {
+      "file": "inzone-buds-wf-g700n.md",
+      "productId": "dLGDVDmEEI2lV8CArIgSA0",
+      "ok": true,
+      "rev": "DE7q4q517EcCNrf7ORGVPc"
+    },
+    {
+      "file": "linkbuds-fit.md",
+      "productId": "ZuUKzmkqDyQwdcwhxwQLK7",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbovdlq"
+    },
+    {
+      "file": "linkbuds-open-wf-l910-drafts.md",
+      "productId": "drafts.dLGDVDmEEI2lV8CArIgVky",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbove1y"
+    },
+    {
+      "file": "linkbuds-open-wf-l910.md",
+      "productId": "dLGDVDmEEI2lV8CArIgVky",
+      "ok": true,
+      "rev": "DE7q4q517EcCNrf7ORGW0v"
+    },
+    {
+      "file": "linkbuds-wf-l900.md",
+      "productId": "k27n1AQuIbSr5iozG2itJe",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUcNS7z"
+    },
+    {
+      "file": "wf-1000xm5-bundle-black.md",
+      "productId": "ZuUKzmkqDyQwdcwhxl99sR",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUcNSIp"
+    },
+    {
+      "file": "wf-1000xm5-bundle-silver.md",
+      "productId": "ZuUKzmkqDyQwdcwhxwQPfT",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBboveLK"
+    },
+    {
+      "file": "wf-1000xm5.md",
+      "productId": "n10eAegrGspodtsQw12meG",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBboveV0"
+    },
+    {
+      "file": "wh-1000xm5-pink.md",
+      "productId": "ZuUKzmkqDyQwdcwhxl9BBF",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUcNSpL"
+    },
+    {
+      "file": "wh-1000xm5.md",
+      "productId": "moXlkADK7m1DHgGwWtblsT",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBboveeg"
+    },
+    {
+      "file": "wh-ch720n.md",
+      "productId": "dLGDVDmEEI2lV8CArIgbTY",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBboveoM"
+    }
+  ]
+}

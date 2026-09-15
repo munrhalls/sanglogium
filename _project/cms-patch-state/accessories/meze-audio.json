@@ -1,0 +1,94 @@
+{
+  "issueId": "sang-logium-zdb.3.27",
+  "slice": "accessories",
+  "brand": "Meze Audio",
+  "patchedAt": "2026-09-14T10:48:46.822Z",
+  "ok": 14,
+  "fail": 0,
+  "results": [
+    {
+      "file": "meze-audio-99-series-2-5mm-or-4-4mm-replacement-cable.md",
+      "productId": "3O1ZNp54LWQGln4uEAU7Vs",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcweEe"
+    },
+    {
+      "file": "meze-audio-99-series-silver-replacement-cable-2-5mm-3-5mm-or-4-4mm.md",
+      "productId": "PHPYj28HJdPDHAaIBAHiIM",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcweO0"
+    },
+    {
+      "file": "meze-audio-copper-pcuhd-4-pin-mini-xlr-replacement-cable.md",
+      "productId": "moXlkADK7m1DHgGwWxMmzS",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcweXM"
+    },
+    {
+      "file": "meze-audio-empyrean-vegan-leather-ear-pads.md",
+      "productId": "Pn6oyV4Ks5AcNbecjjlRHM",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03ePlVv"
+    },
+    {
+      "file": "meze-audio-manta-headphone-stand-2.md",
+      "productId": "Pn6oyV4Ks5AcNbecjgs488",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwf46"
+    },
+    {
+      "file": "meze-audio-manta-headphone-stand-headphone-stand.md",
+      "productId": "Pn6oyV4Ks5AcNbecjayoLj",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwfFn"
+    },
+    {
+      "file": "meze-audio-mmcx-to-3-5mm-silver-plated-headphone-cable-3-9-ft.md",
+      "productId": "FVx8zpBk46ZESxpKNI3WOv",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwfRU"
+    },
+    {
+      "file": "meze-audio-mono-3-5mm-99-series-gold-standard-cable-9-94-ft.md",
+      "productId": "ULy5F1v4tquhHAic3WSShK",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03ePmNj"
+    },
+    {
+      "file": "meze-audio-mono-3-5mm-to-2-5mm-balanced-headphone-cable-4-9-ft-2.md",
+      "productId": "Y7l1IhzX2fnyiano58H1hn",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwfdB"
+    },
+    {
+      "file": "meze-audio-mono-3-5mm-to-2-5mm-balanced-headphone-cable-4-9-ft.md",
+      "productId": "ULy5F1v4tquhHAic3WSREZ",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwfkC"
+    },
+    {
+      "file": "meze-audio-mono-3-5mm-to-4-4mm-balanced-silver-plated-cable-4-2-ft.md",
+      "productId": "Y7l1IhzX2fnyiano58H5OJ",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03ePnK1"
+    },
+    {
+      "file": "meze-audio-mono-3-5mm-to-balanced-4-4mm-silver-plated-headphone-cable-3-9ft.md",
+      "productId": "A5Y8wEwAn6Fo0zYQ5BM7Yv",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbePA"
+    },
+    {
+      "file": "meze-audio-ofc-mini-4-pin-xlr-replacement-cable.md",
+      "productId": "3O1ZNp54LWQGln4uEAUGRi",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbeUG"
+    },
+    {
+      "file": "meze-manta-headphone-stand.md",
+      "productId": "GPjMdcfFWZVrKyR2PB5Jys",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwgEb"
+    }
+  ]
+}

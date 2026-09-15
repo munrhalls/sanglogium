@@ -1,0 +1,25 @@
+{
+  "productId": "Pn6oyV4Ks5AcNbecjh34kd",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "feliks-audio"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac-amp-combo",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 94900
+  },
+  "backedUpAt": "2026-09-14T10:46:53.501Z"
+}

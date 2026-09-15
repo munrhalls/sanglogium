@@ -1,0 +1,34 @@
+{
+  "issueId": "sang-logium-zdb.2.21",
+  "slice": "audio-electronics",
+  "brand": "HiFi Rose",
+  "patchedAt": "2026-09-14T10:51:20.578Z",
+  "ok": 4,
+  "fail": 0,
+  "results": [
+    {
+      "file": "hifi-rose-rd160-network-streamer-dac-silver.md",
+      "productId": "ZuUKzmkqDyQwdcwhxlJkHG",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwwUa"
+    },
+    {
+      "file": "hifi-rose-rs150b-reference-hifi-network-streamer.md",
+      "productId": "Pn6oyV4Ks5AcNbecjh1b8Y",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwwbb"
+    },
+    {
+      "file": "hifi-rose-rs250a-network-streamer.md",
+      "productId": "k27n1AQuIbSr5iozG2j6zk",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwwkx"
+    },
+    {
+      "file": "hifi-rose-rs520-network-streamer-integrated-amplifier.md",
+      "productId": "PHPYj28HJdPDHAaIBAL1Lw",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435Cxbn13"
+    }
+  ]
+}

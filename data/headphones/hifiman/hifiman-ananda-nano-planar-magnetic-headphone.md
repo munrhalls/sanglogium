@@ -1,45 +1,45 @@
 ---
-product_id: "DZc43yHr6ydfgE7zB45e9l"
-product_slug: "hifiman-ananda-nano-planar-magnetic-headphone"
-brand: "HiFiMan"
-name: "Ananda Nano"
-slice: "headphones"
+product_id: DZc43yHr6ydfgE7zB45e9l
+product_slug: hifiman-ananda-nano-planar-magnetic-headphone
+brand: HiFiMan
+name: HIFIMAN Ananda Nano Planar Magnetic Headphone
+slice: headphones
 spec_fields:
   productCategory:
-    - "over-ear"
+  - over-ear
   wearingStyle:
-    - "over-ear"
+  - over-ear
   acousticDesign:
-    - "open-back"
-  connectivity: "wired"
+  - open-back
+  connectivity: wired
   portable: false
   driverType:
-    - "planar-magnetic"
+  - planar-magnetic
   impedanceOhms: 14
   sensitivityDbMw: 94
   freqResponseHz:
     min: 5
     max: 55000
   cableTermination:
-    - "3.5mm"
-    - "6.35mm"
+  - 3.5mm
+  - 6.35mm
   detachableCable: true
   cableLengthM: 3
   microphone: false
   foldable: false
   ipxRating: null
   bluetoothCodecs: null
-  anc: "none"
+  anc: none
   batteryLifeHours: null
   soundSignature: null
   awards: null
   fitType: null
   driverConfigBucket: null
 source_urls:
-  - "https://hifiman.com/products/detail/334"
-  - "https://hifiman.com/attachments/file/20230620/20230620121347_11950.pdf"
-verified_at: "2026-09-14"
-data_status: "COMPLETE"
+- https://hifiman.com/products/detail/334
+- https://hifiman.com/attachments/file/20230620/20230620121347_11950.pdf
+verified_at: '2026-09-14'
+data_status: COMPLETE
 ---
 
 ## Verification Notes

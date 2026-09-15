@@ -1,0 +1,25 @@
+{
+  "productId": "dLGDVDmEEI2lV8CArAcgSi",
+  "before": {
+    "amplification": "tube",
+    "balancedOutput": false,
+    "brand": [
+      "mcintosh"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": false,
+    "deviceType": "headphone-amp",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 250000
+  },
+  "backedUpAt": "2026-09-14T10:46:28.611Z"
+}

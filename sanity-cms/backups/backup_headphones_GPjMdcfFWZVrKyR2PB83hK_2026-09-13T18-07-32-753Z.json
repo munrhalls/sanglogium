@@ -1,0 +1,25 @@
+{
+  "_id": "GPjMdcfFWZVrKyR2PB83hK",
+  "name": "Audio-Technica ATH-M50x Wired Professional Monitor Headphones",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "audio-technica"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 15900,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T18:07:32.753Z"
+}

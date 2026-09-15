@@ -1,0 +1,150 @@
+{
+  "_id": "n10eAegrGspodtsQvneN6x",
+  "name": "Sennheiser HD 569 Headphones",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "backDesign": "closed",
+    "brand": [
+      "sennheiser"
+    ],
+    "cableLengthM": 1.2,
+    "cableTermination": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "detachableCable": true,
+    "driverType": [
+      "dynamic"
+    ],
+    "foldable": false,
+    "freqResponseHz": {
+      "max": 28000,
+      "min": 10
+    },
+    "impedanceOhms": 23,
+    "inStock": true,
+    "microphone": true,
+    "noiseCancelling": false,
+    "portable": false,
+    "price": 14995,
+    "productCategory": [
+      "over-ear"
+    ],
+    "requiresAmplifier": false,
+    "sensitivityDbMw": 115,
+    "sourcing": [
+      {
+        "field": "productCategory",
+        "quote": "Ear coupling: Over-Ear",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://sennheiser-hearing.com/p/hd-569/"
+      },
+      {
+        "field": "impedanceOhms",
+        "quote": "Impedance: 23 Ω",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://sennheiser-hearing.com/p/hd-569/"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "Sound pressure level (SPL): 115 dB (1kHz, 1Vrms)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://sennheiser-hearing.com/p/hd-569/"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "Frequency response (speaker): 10 to 28,000 Hz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://sennheiser-hearing.com/p/hd-569/"
+      },
+      {
+        "field": "driverType",
+        "quote": "Transducer principle dynamic",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.headphonecheck.com/test/sennheiser-hd-569/"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "Cable length: 1: 3m 2: 1.2m",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://sennheiser-hearing.com/p/hd-569/"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "Ear coupling: Over-Ear",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://sennheiser-hearing.com/p/hd-569/"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "Acoustic principle: closed",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://sennheiser-hearing.com/p/hd-569/"
+      },
+      {
+        "field": "connectivity",
+        "quote": "two detachable analogue cables supplied; no Bluetooth radio stated",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://sennheiser-hearing.com/p/hd-569/"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "Adapter: 1:6.3mm 2:3.5mm detachable",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://sennheiser-hearing.com/p/hd-569/"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "comes with two detachable cables: a 10′ cable with 6.3-mm straight plug for home use, and a 4′ cable with a 3.5-mm straight plug and 1-button remote plus microphone",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://sennheiser-hearing.com/p/hd-569/"
+      },
+      {
+        "field": "portable",
+        "quote": "300 g closed-back over-ear headset; no folding design or transport claim stated",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://sennheiser-hearing.com/p/hd-569/"
+      },
+      {
+        "field": "microphone",
+        "quote": "1-button remote plus microphone that lets you manage calls / Microphone pick-up pattern: Omni-directional",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://sennheiser-hearing.com/p/hd-569/"
+      },
+      {
+        "field": "foldable",
+        "quote": "(no folding claim on the manufacturer page or headphones.com; boolean feature-absence rule applied)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://sennheiser-hearing.com/p/hd-569/"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-13T18:12:19.442Z"
+}

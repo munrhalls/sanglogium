@@ -1,0 +1,25 @@
+{
+  "productId": "Pn6oyV4Ks5AcNbecjkVOLR",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "enleum"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": false,
+    "deviceType": "headphone-amp",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "rca"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 350000
+  },
+  "backedUpAt": "2026-09-14T10:46:58.671Z"
+}

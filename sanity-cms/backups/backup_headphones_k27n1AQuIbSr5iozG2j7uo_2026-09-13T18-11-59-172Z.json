@@ -1,0 +1,24 @@
+{
+  "_id": "k27n1AQuIbSr5iozG2j7uo",
+  "name": "Bowers & Wilkins PI7 True Wireless Noise Cancelling In-Ear Headphones",
+  "before": {
+    "brand": [
+      "bowers-wilkins"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wireless",
+    "connector": [
+      "mmcx"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": true,
+    "price": 39900,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-13T18:11:59.172Z"
+}

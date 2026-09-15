@@ -1,1 +1,10 @@
-I’ll show the bead, read its protocols, source the listed products, write one markdown file per product in the specified directory, then close the issue with the count.
+I’ll show the bead, read its protocols, source the listed products, write one markdown file per product in the specified directory, then close the issue with the count.Done. I sourced `Lake People G111 Desktop Headphone Amplifier` (`k27n1AQuIbSr5iozG1vKTr`) from the manufacturer page, manual, TechGuide PDF, and Power Holdings listings, then wrote:
+
+`data/audio-electronics/lake-people/lake-people-g111-desktop-headphone-amplifier.md`
+
+Key calls:
+- `deviceType: null` — the manufacturer calls it a headphone amplifier, which is outside the current `should-be-audio-electronics.md` `deviceType` vocabulary.
+- `price: 54995` — from an archived Power Holdings page for the original G111; the current MKII listing is $599.95, recorded as a conflict.
+- `countryOfManufacture: Germany`, `finishColor: [Black]`, `rackMountable19: false`, `deviceConnectivity: wired`, etc.
+
+I ran `bd close sang-logium-zdb.2.24 --reason "1 products sourced and filed."`, exported `.beads/issues.jsonl`, and committed the new file + beads export. I did not touch any other bead issue or brand.

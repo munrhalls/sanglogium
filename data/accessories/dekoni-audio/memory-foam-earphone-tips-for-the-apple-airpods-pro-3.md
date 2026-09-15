@@ -28,7 +28,8 @@ spec_fields:
   cleaningProductType: null
   formatCompatibility: null
   partType: "ear-tips"
-  compatibility: null
+  compatibility: 
+    - "Apple Airpods Pro 3"
   adapterFunction: null
   treatmentType: null
   mounting: null
@@ -46,6 +47,7 @@ data_status: "COMPLETE"
 - **accessoryType**: `replacement-parts` — product name / page identifies this as a replacement-parts item.
 - **compatibleProductType**: ["headphone"] — intended for use with headphone.
 - **partType**: `ear-tips` — product name identifies this as a ear-tips replacement part.
+- **compatibility**: ["Apple Airpods Pro 3"] — compatible models extracted from the manufacturer product page and product title.
 - **customerRating**: `null` — no visible customer rating or aggregate score on the cited source page.
 - **dealsDiscount**: `null` — no discount or deal terms visible on the cited source page.
 - **newArrival**: `null` — release/new-arrival status not stated on the cited source page.

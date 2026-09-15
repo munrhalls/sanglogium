@@ -1,0 +1,25 @@
+{
+  "productId": "xMEqvkRBbdrlJXyFG8fHrh",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "gustard"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 359999
+  },
+  "backedUpAt": "2026-09-14T10:46:48.287Z"
+}

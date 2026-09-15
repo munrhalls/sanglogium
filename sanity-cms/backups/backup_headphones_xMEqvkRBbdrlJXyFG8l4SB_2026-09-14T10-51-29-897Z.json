@@ -1,0 +1,25 @@
+{
+  "productId": "xMEqvkRBbdrlJXyFG8l4SB",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "fiio"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dongle-dac",
+    "formFactor": "dongle",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 3299
+  },
+  "backedUpAt": "2026-09-14T10:51:29.897Z"
+}

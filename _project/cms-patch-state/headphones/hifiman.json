@@ -1,0 +1,130 @@
+{
+  "issueId": "sang-logium-zdb.1.1",
+  "slice": "headphones",
+  "brand": "HiFiMan",
+  "patchedAt": "2026-09-14T10:45:41.234Z",
+  "ok": 20,
+  "fail": 0,
+  "results": [
+    {
+      "file": "hifiman-ananda-bt.md",
+      "productId": "n10eAegrGspodtsQw136D2",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwBgF"
+    },
+    {
+      "file": "hifiman-ananda-nano-planar-magnetic-headphone.md",
+      "productId": "DZc43yHr6ydfgE7zB45e9l",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwBuH"
+    },
+    {
+      "file": "hifiman-ananda-planar-magnetic-headphones-stealth-magnets.md",
+      "productId": "PHPYj28HJdPDHAaIBADN6m",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwC3d"
+    },
+    {
+      "file": "hifiman-ananda-stealth-planar-magnetic-headphone.md",
+      "productId": "xMEqvkRBbdrlJXyFG8kR2T",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOYIh"
+    },
+    {
+      "file": "hifiman-arya-headphones-stealth-magnets-edition.md",
+      "productId": "PHPYj28HJdPDHAaIBADGUo",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbUrw"
+    },
+    {
+      "file": "hifiman-arya-organic-headphones.md",
+      "productId": "Pn6oyV4Ks5AcNbecjgqXuF",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbVB3"
+    },
+    {
+      "file": "hifiman-arya-organic-planar-magnetic-headphones.md",
+      "productId": "DZc43yHr6ydfgE7zB45bQr",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwCVh"
+    },
+    {
+      "file": "hifiman-arya-planar-magnetic-headphone-stealth-magnet-version.md",
+      "productId": "xMEqvkRBbdrlJXyFG8kOlp",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbVUA"
+    },
+    {
+      "file": "hifiman-arya-stealth.md",
+      "productId": "moXlkADK7m1DHgGwWtXu6V",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwCm4"
+    },
+    {
+      "file": "hifiman-audivina.md",
+      "productId": "k27n1AQuIbSr5iozFz7KCz",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOZNx"
+    },
+    {
+      "file": "hifiman-edition-xs-headphones.md",
+      "productId": "Pn6oyV4Ks5AcNbecjgq7ah",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOZft"
+    },
+    {
+      "file": "hifiman-edition-xs-planar-magnetic-headphone-apos-certified.md",
+      "productId": "GPjMdcfFWZVrKyR2PB9Zdy",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOa2J"
+    },
+    {
+      "file": "hifiman-edition-xs-planar-magnetic-headphone.md",
+      "productId": "xMEqvkRBbdrlJXyFG8kHLD",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOaOj"
+    },
+    {
+      "file": "hifiman-edition-xv-planar-magnetic-headphones.md",
+      "productId": "DZc43yHr6ydfgE7zB45fiH",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbVwC"
+    },
+    {
+      "file": "hifiman-he1000-stealth-headphones-stealth-magnet-edition.md",
+      "productId": "MrEMtYwMtrFDGWmRnN51PA",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOayb"
+    },
+    {
+      "file": "hifiman-he1000se-headphones.md",
+      "productId": "Pn6oyV4Ks5AcNbecjgqaFC",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eObcx"
+    },
+    {
+      "file": "hifiman-he400se-entry-level-headphones.md",
+      "productId": "Pn6oyV4Ks5AcNbecjgqHro",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwDnD"
+    },
+    {
+      "file": "hifiman-sundara-closed-back-headphones.md",
+      "productId": "MrEMtYwMtrFDGWmRnQULEz",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbW6O"
+    },
+    {
+      "file": "hifiman-sundara-headphones-2020-edition.md",
+      "productId": "PHPYj28HJdPDHAaIBADCQs",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbWCl"
+    },
+    {
+      "file": "hifiman-sundara-planar-magnetic-headphones.md",
+      "productId": "xMEqvkRBbdrlJXyFG8kExX",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbWGa"
+    }
+  ]
+}

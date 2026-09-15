@@ -34,10 +34,9 @@ spec_fields:
   treatmentType: null
   mounting: null
 
-source_urls: 
-  - "https://dekoniaudio.com/products/dekoni-audio-choice-leather-earpads-for-hifiman-sundara"
+source_urls: []
 verified_at: "2026-09-14"
-data_status: "COMPLETE"
+data_status: "PARTIAL"
 
 ---
 
@@ -56,4 +55,4 @@ data_status: "COMPLETE"
 
 ## Conflict / Caution Notes
 
-- No conflicting same-tier sources were encountered for this product. Values reflect the cited manufacturer/retailer page only.
+- No public manufacturer/retailer product page was found for this item. Values reflect the Sanity product export (the authoritative issue source) and are recorded as available; unconfirmed accessory-specific fields are left as explicit nulls.

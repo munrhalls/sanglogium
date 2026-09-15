@@ -1,0 +1,28 @@
+{
+  "issueId": "sang-logium-zdb.2.23",
+  "slice": "audio-electronics",
+  "brand": "Ladder",
+  "patchedAt": "2026-09-14T10:46:45.154Z",
+  "ok": 3,
+  "fail": 0,
+  "results": [
+    {
+      "file": "ladder-chopin-desktop-r2r-pre-amplifier.md",
+      "productId": "GPjMdcfFWZVrKyR2PB6IuA",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbYux"
+    },
+    {
+      "file": "ladder-czerny-r2r-desktop-dac.md",
+      "productId": "GPjMdcfFWZVrKyR2PB5pis",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbYym"
+    },
+    {
+      "file": "ladder-schumann-desktop-dac.md",
+      "productId": "xMEqvkRBbdrlJXyFG8fuQf",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwK5m"
+    }
+  ]
+}

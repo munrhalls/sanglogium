@@ -1,0 +1,24 @@
+{
+  "_id": "PHPYj28HJdPDHAaIBCEe6q",
+  "name": "Meze Audio Alba In-Ear Headphones",
+  "before": {
+    "brand": [
+      "meze-audio"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "mmcx"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 15900,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-13T18:10:49.551Z"
+}

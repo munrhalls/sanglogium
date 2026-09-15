@@ -1,0 +1,8 @@
+Done. 8 new Focal product files are now in `data/headphones/focal/`, and `sang-logium-zdb.1.3` is closed.
+
+- 8 new `.md` files sourced from Focal product pages, manuals/spec sheets, and Crinacle’s real ranking list
+- `data/headphones/focal/` now contains 16 files total (8 prior + 8 new)
+- `bd close sang-logium-zdb.1.3 --reason "8 products sourced and filed."` succeeded
+- `.beads/issues.jsonl` exported to reflect the close
+
+No other beads issues or brands were touched; no commits or pushes made.

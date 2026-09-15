@@ -1,0 +1,26 @@
+{
+  "productId": "MrEMtYwMtrFDGWmRnRKsJY",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "ferrum-audio"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": false,
+    "deviceType": "headphone-amp",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "rca"
+    ],
+    "outputs": [
+      "4-pin-xlr",
+      "6.35mm"
+    ],
+    "price": 227500
+  },
+  "backedUpAt": "2026-09-14T10:51:35.399Z"
+}

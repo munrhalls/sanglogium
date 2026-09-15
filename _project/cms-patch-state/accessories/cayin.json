@@ -1,0 +1,40 @@
+{
+  "issueId": "sang-logium-zdb.3.13",
+  "slice": "accessories",
+  "brand": "Cayin",
+  "patchedAt": "2026-09-14T10:49:32.042Z",
+  "ok": 5,
+  "fail": 0,
+  "results": [
+    {
+      "file": "cayin-cp6-case-leather-case-for-cp6.md",
+      "productId": "Pn6oyV4Ks5AcNbecjk6xTX",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435Cxbgs4"
+    },
+    {
+      "file": "cayin-n3ultra-case-protective-leather-dap-case.md",
+      "productId": "PHPYj28HJdPDHAaIBCQgkq",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03ePuct"
+    },
+    {
+      "file": "cayin-ph-32x-2-5mm-to-3-5mm-adapter.md",
+      "productId": "MrEMtYwMtrFDGWmRnG9Baw",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwkEV"
+    },
+    {
+      "file": "cayin-ph-35x-4-4mm-to-3-5mm-adapter.md",
+      "productId": "Pn6oyV4Ks5AcNbecjamOn3",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03ePuqL"
+    },
+    {
+      "file": "cayin-ph-4x-2-5mm-to-4-4mm-adapter.md",
+      "productId": "Pn6oyV4Ks5AcNbecjap4tM",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03ePv3n"
+    }
+  ]
+}

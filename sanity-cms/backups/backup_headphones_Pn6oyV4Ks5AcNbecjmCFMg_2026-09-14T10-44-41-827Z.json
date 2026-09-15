@@ -1,0 +1,27 @@
+{
+  "productId": "Pn6oyV4Ks5AcNbecjmCFMg",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "anc": "passive",
+    "brand": [
+      "fiio"
+    ],
+    "cableTermination": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "price": 19999,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-14T10:44:41.827Z"
+}

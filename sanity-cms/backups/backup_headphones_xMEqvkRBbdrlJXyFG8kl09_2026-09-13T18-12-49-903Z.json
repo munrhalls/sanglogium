@@ -1,0 +1,26 @@
+{
+  "_id": "xMEqvkRBbdrlJXyFG8kl09",
+  "name": "Audeze LCD-5s Planar Magnetic Headphone",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "audeze"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "planar-magnetic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 14999,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T18:12:49.904Z"
+}

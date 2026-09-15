@@ -1,0 +1,24 @@
+{
+  "productId": "Pn6oyV4Ks5AcNbecjgrju8",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "sennheiser"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 49995,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T13:46:52.786Z"
+}

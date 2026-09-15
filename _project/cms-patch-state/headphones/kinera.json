@@ -1,0 +1,22 @@
+{
+  "issueId": "sang-logium-zdb.1.24",
+  "slice": "headphones",
+  "brand": "Kinera",
+  "patchedAt": "2026-09-14T10:44:33.043Z",
+  "ok": 2,
+  "fail": 0,
+  "results": [
+    {
+      "file": "kinera-freya-in-ear-monitor-iem-earphone.md",
+      "productId": "xMEqvkRBbdrlJXyFG8jtEr",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbQl6"
+    },
+    {
+      "file": "kinera-nanna-in-ear-monitor-iem-earphone.md",
+      "productId": "xMEqvkRBbdrlJXyFG8jv3N",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eNo9z"
+    }
+  ]
+}

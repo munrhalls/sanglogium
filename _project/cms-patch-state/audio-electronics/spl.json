@@ -1,0 +1,34 @@
+{
+  "issueId": "sang-logium-zdb.2.36",
+  "slice": "audio-electronics",
+  "brand": "SPL",
+  "patchedAt": "2026-09-14T10:46:13.668Z",
+  "ok": 4,
+  "fail": 0,
+  "results": [
+    {
+      "file": "spl-phonitor-one-d.md",
+      "productId": "moXlkADK7m1DHgGwWwEdoq",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbXo9"
+    },
+    {
+      "file": "spl-phonitor-one.md",
+      "productId": "moXlkADK7m1DHgGwWwEenW",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOj0J"
+    },
+    {
+      "file": "spl-phonitor-x-desktop-headphone-amplifier-with-optional-dac.md",
+      "productId": "n10eAegrGspodtsQvy4cvd",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOjMj"
+    },
+    {
+      "file": "spl-phonitor-xe-desktop-headphone-amplifier-with-optional-dac.md",
+      "productId": "k27n1AQuIbSr5iozG1vTYd",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOjj9"
+    }
+  ]
+}

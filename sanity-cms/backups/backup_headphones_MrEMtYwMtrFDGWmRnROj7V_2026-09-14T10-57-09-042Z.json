@@ -1,0 +1,23 @@
+{
+  "productId": "MrEMtYwMtrFDGWmRnROj7V",
+  "before": {
+    "accessoryType": "cable",
+    "brand": [
+      "dekoni-audio"
+    ],
+    "category": [
+      "accessories"
+    ],
+    "compatibility": [
+      "universal"
+    ],
+    "connectorTermination": [
+      "3.5mm",
+      "6.35mm",
+      "4.4mm-balanced"
+    ],
+    "inStock": true,
+    "price": 7999
+  },
+  "backedUpAt": "2026-09-14T10:57:09.042Z"
+}

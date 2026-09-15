@@ -1,46 +1,46 @@
 ---
-product_id: "MrEMtYwMtrFDGWmRnN51PA"
-product_slug: "hifiman-he1000-stealth-headphones-stealth-magnet-edition"
-brand: "HiFiMan"
-name: "HE1000 Stealth"
-slice: "headphones"
+product_id: MrEMtYwMtrFDGWmRnN51PA
+product_slug: hifiman-he1000-stealth-headphones-stealth-magnet-edition
+brand: HiFiMan
+name: Hifiman HE1000 Stealth Headphones - Stealth Magnet Edition
+slice: headphones
 spec_fields:
   productCategory:
-    - "over-ear"
+  - over-ear
   wearingStyle:
-    - "over-ear"
+  - over-ear
   acousticDesign:
-    - "open-back"
-  connectivity: "wired"
+  - open-back
+  connectivity: wired
   portable: false
   driverType:
-    - "planar-magnetic"
+  - planar-magnetic
   impedanceOhms: 32
   sensitivityDbMw: 93
   freqResponseHz:
     min: 8
     max: 65000
   cableTermination:
-    - "6.35mm"
-    - "4-pin-xlr"
+  - 6.35mm
+  - 4-pin-xlr
   detachableCable: true
   cableLengthM: null
   microphone: false
   foldable: false
   ipxRating: null
   bluetoothCodecs: null
-  anc: "none"
+  anc: none
   batteryLifeHours: null
   soundSignature: null
   awards: null
   fitType: null
   driverConfigBucket: null
 source_urls:
-  - "https://hifiman.com/products/detail/327"
-  - "https://hifiman.com/attachments/file/20250211/20250211035358_67980.pdf"
-  - "https://headphones.com/products/hifiman-he1000-v2-headphones"
-verified_at: "2026-09-14"
-data_status: "COMPLETE"
+- https://hifiman.com/products/detail/327
+- https://hifiman.com/attachments/file/20250211/20250211035358_67980.pdf
+- https://headphones.com/products/hifiman-he1000-v2-headphones
+verified_at: '2026-09-14'
+data_status: COMPLETE
 ---
 
 ## Verification Notes

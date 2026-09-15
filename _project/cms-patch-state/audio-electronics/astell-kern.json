@@ -1,0 +1,88 @@
+{
+  "issueId": "sang-logium-zdb.2.1",
+  "slice": "audio-electronics",
+  "brand": "Astell&Kern",
+  "patchedAt": "2026-09-14T10:52:03.480Z",
+  "ok": 13,
+  "fail": 0,
+  "results": [
+    {
+      "file": "astell-kern-a-norma-sr35-digital-audio-player.md",
+      "productId": "PHPYj28HJdPDHAaIBANTBA",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQQWH"
+    },
+    {
+      "file": "astell-kern-a-ultima-sp3000m-digital-audio-player.md",
+      "productId": "PHPYj28HJdPDHAaIBANGzM",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwzHe"
+    },
+    {
+      "file": "astell-kern-a-ultima-sp3000t-vacuum-tube-digital-audio-player.md",
+      "productId": "Pn6oyV4Ks5AcNbecjh4PL8",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQQjj"
+    },
+    {
+      "file": "astell-kern-a-ultima-sp4000-digital-audio-player.md",
+      "productId": "MrEMtYwMtrFDGWmRnNKGX9",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwzR0"
+    },
+    {
+      "file": "astell-kern-a-ultima-sp4000t-vacuum-tube-digital-audio-player.md",
+      "productId": "Pn6oyV4Ks5AcNbecjh3y6H",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwzf2"
+    },
+    {
+      "file": "astell-kern-acro-ca1000t-transportable-digital-audio-player.md",
+      "productId": "PHPYj28HJdPDHAaIBANaSM",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQR1f"
+    },
+    {
+      "file": "astell-kern-ak-hb1-portable-wired-wireless-bluetooth-dac-amp.md",
+      "productId": "MrEMtYwMtrFDGWmRnTCCwU",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwzoO"
+    },
+    {
+      "file": "astell-kern-ak-hc4-portable-dac-and-amp.md",
+      "productId": "PHPYj28HJdPDHAaIBDs9x8",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQRg1"
+    },
+    {
+      "file": "astell-kern-hc3-portable-dac-and-amp.md",
+      "productId": "PHPYj28HJdPDHAaIBDs64e",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQS2R"
+    },
+    {
+      "file": "astell-kern-hc5-portable-dac-and-amp.md",
+      "productId": "MrEMtYwMtrFDGWmRnTE4cB",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQSKN"
+    },
+    {
+      "file": "astell-kern-pa10-headphone-amplifier.md",
+      "productId": "MrEMtYwMtrFDGWmRnNGIa4",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcx0GS"
+    },
+    {
+      "file": "astell-kern-pd10-digital-audio-player.md",
+      "productId": "Pn6oyV4Ks5AcNbecjh4ExH",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQScJ"
+    },
+    {
+      "file": "astell-kern-pd20-digital-audio-player.md",
+      "productId": "MrEMtYwMtrFDGWmRnNK74C",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435Cxbonu"
+    }
+  ]
+}

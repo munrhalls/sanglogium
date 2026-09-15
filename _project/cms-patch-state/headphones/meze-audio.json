@@ -1,0 +1,106 @@
+{
+  "issueId": "sang-logium-zdb.1.6",
+  "slice": "headphones",
+  "brand": "Meze Audio",
+  "patchedAt": "2026-09-14T21:55:17.745Z",
+  "ok": 16,
+  "fail": 0,
+  "results": [
+    {
+      "file": "meze-105-aer-open-back-headphones.md",
+      "productId": "GPjMdcfFWZVrKyR2PB4zFK",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbovy3u"
+    },
+    {
+      "file": "meze-105-silva-open-back-headphones.md",
+      "productId": "xMEqvkRBbdrlJXyFG8ekB7",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUcNn6d"
+    },
+    {
+      "file": "meze-109-pro.md",
+      "productId": "PHPYj28HJdPDHAaIBAJqcI",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbovydO"
+    },
+    {
+      "file": "meze-99-classics-open-box.md",
+      "productId": "n10eAegrGspodtsQvneRgi",
+      "ok": true,
+      "rev": "DE7q4q517EcCNrf7ORGrXf"
+    },
+    {
+      "file": "meze-audio-109-pro-dynamic-open-back-headphone-apos-certified.md",
+      "productId": "GPjMdcfFWZVrKyR2PB4pYs",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbovzCs"
+    },
+    {
+      "file": "meze-audio-109-pro-dynamic-open-back-headphone.md",
+      "productId": "DZc43yHr6ydfgE7zB3zuIm",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUcNo2R"
+    },
+    {
+      "file": "meze-audio-99-classics-closed-back-headphones-2nd-gen.md",
+      "productId": "GPjMdcfFWZVrKyR2PB7tsw",
+      "ok": true,
+      "rev": "DE7q4q517EcCNrf7ORGrk6"
+    },
+    {
+      "file": "meze-audio-99-classics-headphones.md",
+      "productId": "PHPYj28HJdPDHAaIBCD0NI",
+      "ok": true,
+      "rev": "DE7q4q517EcCNrf7ORGrwX"
+    },
+    {
+      "file": "meze-audio-99-classics-v2-headphones.md",
+      "productId": "MrEMtYwMtrFDGWmRnQU1gD",
+      "ok": true,
+      "rev": "DE7q4q517EcCNrf7ORGsHG"
+    },
+    {
+      "file": "meze-audio-alba-iems.md",
+      "productId": "GPjMdcfFWZVrKyR2PB95RC",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUcNoVL"
+    },
+    {
+      "file": "meze-audio-alba-in-ear-headphones.md",
+      "productId": "PHPYj28HJdPDHAaIBCEe6q",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbovzcg"
+    },
+    {
+      "file": "meze-audio-empyrean-ii-open-back-headphones.md",
+      "productId": "DZc43yHr6ydfgE7zB4098h",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUcNp1r"
+    },
+    {
+      "file": "meze-audio-strada-headphones.md",
+      "productId": "PHPYj28HJdPDHAaIBCDAX8",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbovzpa"
+    },
+    {
+      "file": "meze-liric-ii-open-box.md",
+      "productId": "k27n1AQuIbSr5iozFz7KdY",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbow0CA"
+    },
+    {
+      "file": "meze-liric-ii.md",
+      "productId": "moXlkADK7m1DHgGwWtblBG",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUcNpJv"
+    },
+    {
+      "file": "meze-poet-planar-magnetic-headphones.md",
+      "productId": "xMEqvkRBbdrlJXyFG8ki6p",
+      "ok": true,
+      "rev": "DE7q4q517EcCNrf7ORGswi"
+    }
+  ]
+}

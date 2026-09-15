@@ -1,0 +1,26 @@
+{
+  "_id": "IysVzF92P1Ckj0vYj2qiBH",
+  "name": "JBL Live 670NC Wireless On-Ear Adaptive Noise Cancelling Headphones (White)",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "jbl"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wireless",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": true,
+    "price": 8995,
+    "requiresAmplifier": false,
+    "wearingStyle": "on-ear"
+  },
+  "backedUpAt": "2026-09-13T18:07:50.234Z"
+}

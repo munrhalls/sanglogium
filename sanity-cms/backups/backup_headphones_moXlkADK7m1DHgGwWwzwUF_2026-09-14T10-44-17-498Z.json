@@ -1,0 +1,194 @@
+{
+  "productId": "moXlkADK7m1DHgGwWwzwUF",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "anc": "anc",
+    "awards": [
+      "Ecoustics Editor's Award — Best of 2025"
+    ],
+    "batteryLifeHours": {
+      "ancOff": 80,
+      "ancOn": 60
+    },
+    "bluetoothCodecs": [
+      "LDAC",
+      "AAC",
+      "aptX",
+      "aptX HD",
+      "SBC"
+    ],
+    "brand": [
+      "noble-audio"
+    ],
+    "cableLengthM": null,
+    "cableTermination": [
+      "3.5mm",
+      "6.35mm",
+      "usb-c",
+      "4.4mm-balanced"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "hybrid",
+    "detachableCable": true,
+    "driverType": [
+      "dynamic",
+      "planar-magnetic"
+    ],
+    "foldable": false,
+    "freqResponseHz": null,
+    "impedanceOhms": null,
+    "inStock": true,
+    "microphone": true,
+    "portable": true,
+    "price": 64900,
+    "productCategory": [
+      "over-ear"
+    ],
+    "requiresAmplifier": false,
+    "sensitivityDbMw": null,
+    "soundSignature": null,
+    "sourcing": [
+      {
+        "field": "connectivity",
+        "quote": "The world's first 1x40mm dynamic driver + 14.5mm planar magnetic hybrid driver speaker arrangement ... Can be played with an included 3.5mm auxiliary cable (Bluetooth 5.3 wireless playback also supported)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://nobleaudio.com/products/fokus-apollo"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "The FoKus Apollo is Noble's first forey into the world of over-ear headphones.",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://nobleaudio.com/products/fokus-apollo"
+      },
+      {
+        "field": "productCategory",
+        "quote": "That changed with the Fokus Apollo—Noble's first swing at the over-ear category and, conveniently, the industry's first hybrid wireless headphone combining a dynamic driver with a planar driver.",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.ecoustics.com/reviews/noble-fokus-apollo/"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "(no open/vented design described anywhere on the manufacturer page, the user manual, or any audited retailer; circumaural closed cups. Conflict resolved by recency per the amended rule — the live Sanity legacy value backDesign:'closed' agrees. An open-back would be marketed as such, as Noble does for its wired Osprey/Sceptre lines.)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://nobleaudio.com/products/fokus-apollo"
+      },
+      {
+        "field": "driverType",
+        "quote": "The world's first 1x40mm dynamic driver + 14.5mm planar magnetic hybrid driver speaker arrangement",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://nobleaudio.com/products/fokus-apollo"
+      },
+      {
+        "field": "portable",
+        "quote": "Accessories include an EVA carrying case, 3.5mm auxiliary cable, USB-C cable, two prong airline adapter, 1/4\" adapter for headphone amps, a 3.5mm to 4.4mm adapter, and a detachable boom mic (Bluetooth-first, self-powered, 80h battery, bagged for transport)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://nobleaudio.com/products/fokus-apollo"
+      },
+      {
+        "field": "awards",
+        "quote": "Winner of Ecoustic's editor award for best of 2025. (cited from the manufacturer page, which links this review as the award source)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.ecoustics.com/reviews/noble-fokus-apollo/"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "Accessories include an EVA carrying case, 3.5mm auxiliary cable, USB-C cable, two prong airline adapter, 1/4\" adapter for headphone amps, a 3.5mm to 4.4mm adapter, and a detachable boom mic (corroborated by ecoustics: \"Noble packs in a 3.5mm aux cable, a USB Type-C charge/connect cable, an airline adapter, a 6.35mm adapter, a 3.5mm to 4.4mm balanced adapter, and even a detachable boom mic.\")",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://nobleaudio.com/products/fokus-apollo"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "Accessories include an EVA carrying case, 3.5mm auxiliary cable, USB-C cable ... and a removable boom mic (every cable ships as a separate, swappable accessory rather than a captive lead)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://nobleaudio.com/products/fokus-apollo"
+      },
+      {
+        "field": "microphone",
+        "quote": "Integrated ADI chip combined with 3 microphones per side providing hybrid ANC ... Removable boom mic ... Excellent call quality with or without the supplied boom mic attached (corroborated by headphones.com spec block: \"Number of Microphones: 6 / Detachable Boom Mic: Included, with mute switch\")",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://nobleaudio.com/products/fokus-apollo"
+      },
+      {
+        "field": "foldable",
+        "quote": "these headphones don't fold flat, and Noble skipped hinges at the gimbals, so you're getting full-size cans in full-size form. (no fold/collapse/hinge language anywhere on the manufacturer page or in the user manual — boolean feature-absence rule)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.ecoustics.com/reviews/noble-fokus-apollo/"
+      },
+      {
+        "field": "bluetoothCodecs",
+        "quote": "supported codecs include LDAC, AAC, aptX, aptX HD, SBC; QCC3084 chip (headphones.com's spec block lists the shorter set \"LDAC, AAC, aptX, aptX HD\" — same-tier conflict resolved by recency/completeness in favour of the manufacturer's live page, which additionally names SBC. NOTE \"aptX HD\" is a real sourced value missing from productType.ts's bluetoothCodecs enum — recorded, flagged, not force-fit.)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://nobleaudio.com/products/fokus-apollo"
+      },
+      {
+        "field": "anc",
+        "quote": "Integrated ADI chip combined with 3 microphones per side providing hybrid ANC with a reduction depth of up to -35db ... Superior transparency mode (headphones.com: \"Active Noise Cancellation: -20dB to -35dB reduction\")",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://nobleaudio.com/products/fokus-apollo"
+      },
+      {
+        "field": "batteryLifeHours",
+        "quote": "80 hours of play time without ANC / 60 hours of play time with ANC (headphones.com: \"Battery Life (No ANC): Up to 80 hours (50% volume)\" / \"Battery Life (With ANC): Up to 60 hours (50% volume)\")",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://nobleaudio.com/products/fokus-apollo"
+      },
+      {
+        "field": "impedanceOhms",
+        "quote": "(no impedance value published in the widened tier order: manufacturer page, EN/CN/JA-KO user manual PDFs [extracted with pdftotext, no spec table at all], the 2024-09-04 launch press release, headphones.com/Bloom/Moon Audio/Audio46, or tech press — NULL, genuinely unfound, not a guessed default)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://nobleaudio.com/products/fokus-apollo"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "(no sensitivity value published in the widened tier order — same exhaustion trail as impedanceOhms; expected for a self-powered Bluetooth ANC headphone whose amp is internal — NULL, genuinely unfound)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://nobleaudio.com/products/fokus-apollo"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "(no frequency response range published in the widened tier order — same exhaustion trail as impedanceOhms — NULL, genuinely unfound)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://nobleaudio.com/products/fokus-apollo"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "(three cables ship — 3.5mm aux, USB-C, and a 3.5mm-to-4.4mm balanced adapter — and no length is stated for any of them on the manufacturer page, in the manual, or at any audited retailer — NULL, genuinely unfound)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://nobleaudio.com/products/fokus-apollo"
+      },
+      {
+        "field": "soundSignature",
+        "quote": "(no Crinacle ranking entry — direct string count on the fetched 1,037,190-byte page: Noble 0, Fokus 0, FoKus 0, Apollo 0; no Crinacle review post; crinacle.com/graphs/headphones/noble-fokus-apollo/ returns HTTP 404; no ASR measurement thread; an RTINGS review exists at /headphones/reviews/noble/fokus-apollo but is JS-gated and unreadable — NULL rather than inferred from manufacturer marketing prose, which the protocol forbids as an E-tier source)",
+        "sourcedAt": "2026-09-13",
+        "tier": "editorial",
+        "url": "https://crinacle.com/rankings/headphones/"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-14T10:44:17.498Z"
+}

@@ -1,0 +1,25 @@
+{
+  "productId": "MrEMtYwMtrFDGWmRnRGtU3",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "aune-audio"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 16900
+  },
+  "backedUpAt": "2026-09-14T10:54:33.624Z"
+}

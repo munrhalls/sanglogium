@@ -1,0 +1,24 @@
+{
+  "_id": "MrEMtYwMtrFDGWmRnQWwrv",
+  "name": "TRUTHEAR x Crinacle ZERO:Red In-Ear Headphones",
+  "before": {
+    "brand": [
+      "truthear"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "mmcx"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 5499,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-13T18:08:07.106Z"
+}

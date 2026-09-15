@@ -1,0 +1,188 @@
+{
+  "_id": "moXlkADK7m1DHgGwWtX5bB",
+  "name": "Focal Bathys Headphones - Open Box",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "anc": "anc",
+    "awards": null,
+    "backDesign": "closed",
+    "batteryLifeHours": {
+      "ancOff": 35,
+      "ancOn": 30
+    },
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX",
+      "aptX Adaptive"
+    ],
+    "brand": [
+      "focal"
+    ],
+    "cableLengthM": 1.2,
+    "cableTermination": [
+      "3.5mm",
+      "usb-c"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wireless",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "detachableCable": true,
+    "driverConfigBucket": null,
+    "driverConfigDetail": null,
+    "driverType": [
+      "dynamic"
+    ],
+    "fitType": null,
+    "foldable": false,
+    "freqResponseHz": {
+      "max": 22100,
+      "min": 15
+    },
+    "impedanceOhms": null,
+    "inStock": false,
+    "ipxRating": null,
+    "microphone": true,
+    "noiseCancelling": false,
+    "portable": true,
+    "price": 55900,
+    "productCategory": [
+      "over-ear"
+    ],
+    "requiresAmplifier": false,
+    "sensitivityDbMw": null,
+    "soundSignature": null,
+    "sourcing": [
+      {
+        "field": "freqResponseHz",
+        "quote": "Frequency response (+/- 3dB) : 15 Hz - 22 kHz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.focal.com/products/bathys"
+      },
+      {
+        "field": "driverType",
+        "quote": "Loudspeakers : 15/8\" (40mm) Aluminium/Magnesium ‘M’-shaped dome",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.focal.com/products/bathys"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "Cables and connectors 1.2m mini-jack / 1.2m USB Type-C®",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://dam.focal-naim.com/m/27830ac90e411d8/original/Notice_Bathys-pdf.pdf"
+      },
+      {
+        "field": "productCategory",
+        "quote": "Product type : Bluetooth closed headphones with active noise reduction",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/bathys"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "Type Closed-back headphones, active, noise cancelling",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://dam.focal-naim.com/m/27830ac90e411d8/original/Notice_Bathys-pdf.pdf"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "Bathys — circum-aural Bluetooth closed headphones (carrying case 24x21x7cm)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/bathys"
+      },
+      {
+        "field": "connectivity",
+        "quote": "Bluetooth® 5.1 Multipoint + Bluetooth Codec : AAC, aptX™, aptX™ Adaptive, SBC (wireless primary; jack and USB-DAC fallbacks also supplied)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/bathys"
+      },
+      {
+        "field": "portable",
+        "quote": "With its wireless and active noise cancelling (ANC) technologies, Bathys is the perfect travel companion",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/bathys"
+      },
+      {
+        "field": "microphone",
+        "quote": "Microphones : 8.0000",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/bathys"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "Connector : Jack 3.5 mm, USB-C",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/bathys"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "To use the headphones with the jack mode, you must use the jack cable supplied in the pack. Connect the cable to the jack input on the right-hand earcup",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://dam.focal-naim.com/m/27830ac90e411d8/original/Notice_Bathys-pdf.pdf"
+      },
+      {
+        "field": "foldable",
+        "quote": "(hard carrying case described; no folding/collapsing hinge anywhere — boolean feature-absence rule)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://dam.focal-naim.com/m/27830ac90e411d8/original/Notice_Bathys-pdf.pdf"
+      },
+      {
+        "field": "bluetoothCodecs",
+        "quote": "Bluetooth Codec : AAC, aptX™, aptX™ Adaptive, SBC",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/bathys"
+      },
+      {
+        "field": "anc",
+        "quote": "Active noise cancelling : Yes (Silent, Soft or Transparent mode)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/bathys"
+      },
+      {
+        "field": "batteryLifeHours",
+        "quote": "Battery Autonomy : 30h in Bluetooth 35h with mini Jack connection 42h in USB-DAC mode",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/bathys"
+      },
+      {
+        "field": "impedanceOhms",
+        "quote": "(entire Sound - Acoustics / Sound - Electronics block read in full: no impedance line; confirmed absent from the manual spec table too — exhausted NULL)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.focal.com/products/bathys"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "(entire Sound - Acoustics / Sound - Electronics block read in full: no sensitivity line; confirmed absent from the manual spec table too — exhausted NULL)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.focal.com/products/bathys"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-13T18:12:03.530Z"
+}

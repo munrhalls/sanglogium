@@ -1,0 +1,25 @@
+{
+  "productId": "k27n1AQuIbSr5iozG1vNxK",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "nimbus"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": false,
+    "deviceType": "headphone-amp",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 599900
+  },
+  "backedUpAt": "2026-09-14T10:46:23.024Z"
+}

@@ -1,0 +1,16 @@
+{
+  "issueId": "sang-logium-zdb.3.8",
+  "slice": "accessories",
+  "brand": "Audma",
+  "patchedAt": "2026-09-14T10:49:42.563Z",
+  "ok": 1,
+  "fail": 0,
+  "results": [
+    {
+      "file": "audma-brioso-case-black-leather-case-for-brioso.md",
+      "productId": "MrEMtYwMtrFDGWmRnQr68D",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03ePwI1"
+    }
+  ]
+}

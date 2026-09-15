@@ -1,0 +1,132 @@
+{
+  "productId": "k27n1AQuIbSr5iozFz7EE4",
+  "before": {
+    "acousticDesign": [
+      "open-back"
+    ],
+    "backDesign": "open",
+    "brand": [
+      "sennheiser"
+    ],
+    "cableLengthM": 1.8,
+    "cableTermination": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "detachableCable": true,
+    "driverType": [
+      "dynamic"
+    ],
+    "foldable": false,
+    "freqResponseHz": {
+      "max": 38000,
+      "min": 6
+    },
+    "impedanceOhms": 120,
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 17995,
+    "requiresAmplifier": true,
+    "sensitivityDbMw": 110,
+    "soundSignature": "Neutral",
+    "sourcing": [
+      {
+        "field": "impedanceOhms",
+        "quote": "The 120 ohm transducer is all-new...",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://us.sennheiser-hearing.com/products/hd-560s"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "Sound pressure level (SPL): 110 dB (1kHz, 1 Vrms)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://us.sennheiser-hearing.com/products/hd-560s"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "Frequency response: 6 Hz - 38,000 Hz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://us.sennheiser-hearing.com/products/hd-560s"
+      },
+      {
+        "field": "driverType",
+        "quote": "Transducer principle: dynamic, open",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://us.sennheiser-hearing.com/products/hd-560s"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "Wearing style: Over-Ear",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/hd-560s"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "Transducer principle: dynamic, open",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/hd-560s"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "3.5 / 6.3 mm straight",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/hd-560s"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "The detachable 1,8 meter cable provides the perfect amount of freedom...",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/hd-560s"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "The detachable 1,8 meter cable provides the perfect amount of freedom...",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/hd-560s"
+      },
+      {
+        "field": "microphone",
+        "quote": "(no mention across product page, press release, or headphones.com; boolean feature-absence rule applied)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/hd-560s"
+      },
+      {
+        "field": "foldable",
+        "quote": "(no mention across product page, press release, or headphones.com; boolean feature-absence rule applied)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/hd-560s"
+      },
+      {
+        "field": "soundSignature",
+        "quote": "simply 'neutral' ... bright-neutral ... Tone Grade A+",
+        "sourcedAt": "2026-09-13",
+        "tier": "editorial",
+        "url": "https://crinacle.com/2020/11/06/sennheiser-hd560s-review-the-evolved-500/"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-13T13:51:00.190Z"
+}

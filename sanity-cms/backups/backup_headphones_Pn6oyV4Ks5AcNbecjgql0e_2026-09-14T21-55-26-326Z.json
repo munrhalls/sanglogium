@@ -1,0 +1,176 @@
+{
+  "productId": "Pn6oyV4Ks5AcNbecjgql0e",
+  "before": {
+    "acousticDesign": [
+      "open-back"
+    ],
+    "anc": "none",
+    "awards": null,
+    "batteryLifeHours": {
+      "ancOff": null,
+      "ancOn": null
+    },
+    "bluetoothCodecs": null,
+    "brand": [
+      "focal"
+    ],
+    "cableLengthM": 1.8,
+    "cableTermination": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "detachableCable": true,
+    "driverConfigBucket": null,
+    "driverConfigDetail": null,
+    "driverType": [
+      "dynamic"
+    ],
+    "fitType": null,
+    "foldable": false,
+    "freqResponseHz": {
+      "max": 22000,
+      "min": 25
+    },
+    "impedanceOhms": 26,
+    "inStock": true,
+    "ipxRating": null,
+    "microphone": false,
+    "portable": false,
+    "price": 64900,
+    "productCategory": [
+      "over-ear"
+    ],
+    "requiresAmplifier": false,
+    "sensitivityDbMw": 100,
+    "soundSignature": null,
+    "sourcing": [
+      {
+        "field": "impedanceOhms",
+        "quote": "Impedance : 26 Ω",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.focal.com/products/hadenys"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "Sensitivity 100dB SPL / 1mW @ 1kHz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://dam.focal-naim.com/m/29118ef5ebb678ea/original/Notice_Hadenys_Web-pdf.pdf"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "Frequency response (+/- 3dB) : 25 Hz - 22 kHz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.focal.com/products/hadenys"
+      },
+      {
+        "field": "driverType",
+        "quote": "Loudspeakers : 15/8'' (40mm) Aluminium/ Magnesium ‘M’-shaped dome",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.focal.com/products/hadenys"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "Cable provided 6ft (1.8m) mini-jack cable, 1/4'' (6.3mm) jack adapter",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://dam.focal-naim.com/m/29118ef5ebb678ea/original/Notice_Hadenys_Web-pdf.pdf"
+      },
+      {
+        "field": "productCategory",
+        "quote": "Product type : Open-back headphones",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/hadenys"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "Type Circum-aural open-back Headphones wired",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://dam.focal-naim.com/m/29118ef5ebb678ea/original/Notice_Hadenys_Web-pdf.pdf"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "Hadenys Open-back headphones for the home",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/hadenys"
+      },
+      {
+        "field": "connectivity",
+        "quote": "Type Circum-aural open-back Headphones wired",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://dam.focal-naim.com/m/29118ef5ebb678ea/original/Notice_Hadenys_Web-pdf.pdf"
+      },
+      {
+        "field": "portable",
+        "quote": "Open-back headphones for the home (lightness is framed as long-listening comfort, not travel; no portability language — absence-based FLAG)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/hadenys"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "Connector : Jack 3.5 mm, Jack 6.35 mm — Cables provided : • 1X 6ft (1.8m)Jack 1/8\" (3,5mm) • 1 x adapter 1/4\" (6.35mm)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/hadenys"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "(cable connects to the left earcup connector and is removable for case stowage — detachable per supplied-cable design)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://dam.focal-naim.com/m/29118ef5ebb678ea/original/Notice_Hadenys_Web-pdf.pdf"
+      },
+      {
+        "field": "microphone",
+        "quote": "(no microphone language anywhere on the page or manual — boolean feature-absence rule)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://dam.focal-naim.com/m/29118ef5ebb678ea/original/Notice_Hadenys_Web-pdf.pdf"
+      },
+      {
+        "field": "foldable",
+        "quote": "transport en faisant pivoter les écouteurs vers l'intérieur (earcup rotation for transit only; no folding hinge — absence-based FLAG)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://dam.focal-naim.com/m/29118ef5ebb678ea/original/Notice_Hadenys_Web-pdf.pdf"
+      },
+      {
+        "field": "anc",
+        "quote": "(derived from already-cited acousticDesign: open-back + connectivity: wired — no electronics present, so no ANC)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/hadenys"
+      },
+      {
+        "field": "soundSignature",
+        "quote": "(exhausted NULL — no \"Hadenys\" row in Crinacle's rankings list, no Crinacle individual review post, no ASR/Rtings measurement; never inferred from Focal marketing copy)",
+        "sourcedAt": "2026-09-13",
+        "tier": "editorial",
+        "url": "https://crinacle.com/rankings/headphones/"
+      },
+      {
+        "field": "batteryLifeHours",
+        "quote": "(no battery anywhere on the page or manual — wired-only passive headphone, so both ancOn and ancOff are null)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/hadenys"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-14T21:55:26.326Z"
+}

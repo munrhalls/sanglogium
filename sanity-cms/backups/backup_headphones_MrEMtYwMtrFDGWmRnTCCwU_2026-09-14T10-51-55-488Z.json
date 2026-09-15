@@ -1,0 +1,25 @@
+{
+  "productId": "MrEMtYwMtrFDGWmRnTCCwU",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "astell-and-kern"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac-amp-combo",
+    "formFactor": "portable",
+    "inStock": true,
+    "inputs": [
+      "bluetooth"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 22900
+  },
+  "backedUpAt": "2026-09-14T10:51:55.488Z"
+}

@@ -1,0 +1,88 @@
+{
+  "issueId": "sang-logium-zdb.1.4",
+  "slice": "headphones",
+  "brand": "Audeze",
+  "patchedAt": "2026-09-14T21:57:55.323Z",
+  "ok": 13,
+  "fail": 0,
+  "results": [
+    {
+      "file": "audeze-crbn2-electrostatic-headphones-case-included.md",
+      "productId": "DZc43yHr6ydfgE7zB460aC",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUcO02h"
+    },
+    {
+      "file": "audeze-lcd-2-classic-apos-certified.md",
+      "productId": "xMEqvkRBbdrlJXyFG8enyh",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbow6UU"
+    },
+    {
+      "file": "audeze-lcd-2-classic.md",
+      "productId": "PHPYj28HJdPDHAaIBAJiLG",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbow6eA"
+    },
+    {
+      "file": "audeze-lcd-2-open-back-headphone.md",
+      "productId": "xMEqvkRBbdrlJXyFG8elsb",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbow6nq"
+    },
+    {
+      "file": "audeze-lcd-5-planar-magnetic-headphone.md",
+      "productId": "GPjMdcfFWZVrKyR2PB55De",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbow6xW"
+    },
+    {
+      "file": "audeze-lcd-5s-planar-magnetic-headphone.md",
+      "productId": "xMEqvkRBbdrlJXyFG8kl09",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUcO0Kl"
+    },
+    {
+      "file": "audeze-lcd-x-2024-creators-edition-a.md",
+      "productId": "moXlkADK7m1DHgGwWtbizC",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUcO0ZD"
+    },
+    {
+      "file": "audeze-lcd-x-2024-creators-edition-b.md",
+      "productId": "Pn6oyV4Ks5AcNbecjgysXB",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbow77C"
+    },
+    {
+      "file": "audeze-lcd-x-open-back-headphone.md",
+      "productId": "GPjMdcfFWZVrKyR2PB54HS",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUcO0k3"
+    },
+    {
+      "file": "audeze-lcd-xc-2021-creators-edition-open-box.md",
+      "productId": "k27n1AQuIbSr5iozFz7FkW",
+      "ok": true,
+      "rev": "DE7q4q517EcCNrf7ORH5Rr"
+    },
+    {
+      "file": "audeze-lcd-xc-headphones-2024-creator-s-edition.md",
+      "productId": "PHPYj28HJdPDHAaIBCCjUc",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUcO0ut"
+    },
+    {
+      "file": "audeze-maxwell.md",
+      "productId": "moXlkADK7m1DHgGwWtWl8T",
+      "ok": true,
+      "rev": "DE7q4q517EcCNrf7ORH5eI"
+    },
+    {
+      "file": "audeze-mm-100.md",
+      "productId": "Pn6oyV4Ks5AcNbecjgz0Fr",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUcO15j"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+Done. I sourced the 13 Astell&Kern products and filed one `.md` per product under `data/audio-electronics/astell-kern/`.
+
+What changed:
+- 13 new product files:
+  - `astell-kern-pa10-headphone-amplifier.md`
+  - `astell-kern-pd20-digital-audio-player.md`
+  - `astell-kern-a-ultima-sp4000-digital-audio-player.md`
+  - `astell-kern-ak-hb1-portable-wired-wireless-bluetooth-dac-amp.md`
+  - `astell-kern-hc5-portable-dac-and-amp.md`
+  - `astell-kern-a-ultima-sp3000m-digital-audio-player.md`
+  - `astell-kern-a-norma-sr35-digital-audio-player.md`
+  - `astell-kern-acro-ca1000t-transportable-digital-audio-player.md`
+  - `astell-kern-hc3-portable-dac-and-amp.md`
+  - `astell-kern-ak-hc4-portable-dac-and-amp.md`
+  - `astell-kern-a-ultima-sp4000t-vacuum-tube-digital-audio-player.md`
+  - `astell-kern-pd10-digital-audio-player.md`
+  - `astell-kern-a-ultima-sp3000t-vacuum-tube-digital-audio-player.md`
+- Closed the bead: `bd close sang-logium-zdb.2.1 --reason "13 products sourced and filed."`
+- Ran `bd export -o .beads/issues.jsonl`
+
+Targeted `git status`:
+```
+ M .beads/interactions.jsonl
+ M .beads/issues.jsonl
+?? data/audio-electronics/astell-kern/
+```
+
+Notes on the data:
+- Every field is either a real, cited value from the Astell&Kern UK product page or an explicit `null` with a note.
+- DAPs and the PA10 headphone amplifier fall outside the current `deviceType` enum, so `deviceType` is `null` and the schema-domain-gated amplifier/receiver fields are `null` with category-gap notes.
+- The DAC/amp products (HB1, HC3, HC4, HC5) are filed under `deviceType: dac` with their real PCM/DSD/DAC specs.
+- DAPs with Wi-Fi had their digital-source group values recorded (PCM/DSD, MQA where stated, Wi-Fi, Bluetooth codecs) because `should-be-audio-electronics.md` makes those fields applicable via `deviceConnectivity: wired+wireless`.
+- `streamingPlatformSupport` only records explicitly named platforms: `roon-ready` for SR35 and CA1000T; `mqa` is recorded under `hiResCertification` where the source stated it.
+
+No other brand or bead issue was touched. I did not run any build, lint, test, or dev-server commands. The unrelated files showing in the full `git status` were not modified by this pass; the working scope is isolated to the new `data/audio-electronics/astell-kern/` files and the `.beads` export.

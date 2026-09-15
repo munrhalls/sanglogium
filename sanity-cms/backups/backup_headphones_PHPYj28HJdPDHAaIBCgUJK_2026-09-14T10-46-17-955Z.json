@@ -1,0 +1,26 @@
+{
+  "productId": "PHPYj28HJdPDHAaIBCgUJK",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "questyle"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac-amp-combo",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "6.35mm",
+      "4.4mm"
+    ],
+    "price": 109500
+  },
+  "backedUpAt": "2026-09-14T10:46:17.955Z"
+}

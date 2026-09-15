@@ -33,7 +33,7 @@ spec_fields:
   mounting: null
 
 source_urls: 
-  - "https://aposaudio.com/products/ro75-compact-keyboard"
+  - "https://apos.audio/products/r075"
 verified_at: "2026-09-14"
 data_status: "COMPLETE"
 

@@ -1,0 +1,16 @@
+{
+  "issueId": "sang-logium-zdb.1.14",
+  "slice": "headphones",
+  "brand": "Austrian Audio",
+  "patchedAt": "2026-09-14T10:45:01.207Z",
+  "ok": 1,
+  "fail": 0,
+  "results": [
+    {
+      "file": "austrian-audio-the-composer-headphones.md",
+      "productId": "MrEMtYwMtrFDGWmRnTDSQw",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbT1G"
+    }
+  ]
+}

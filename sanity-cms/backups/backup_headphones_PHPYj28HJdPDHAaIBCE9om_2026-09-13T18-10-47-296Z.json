@@ -1,0 +1,25 @@
+{
+  "_id": "PHPYj28HJdPDHAaIBCE9om",
+  "name": "CrinEar Daybreak In-Ear Headphones",
+  "before": {
+    "brand": [
+      "crinear"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "4.4mm-balanced"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 16999,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-13T18:10:47.296Z"
+}

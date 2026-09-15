@@ -1,0 +1,16 @@
+{
+  "issueId": "sang-logium-zdb.1.22",
+  "slice": "headphones",
+  "brand": "Hisenior Audio",
+  "patchedAt": "2026-09-14T10:44:36.162Z",
+  "ok": 1,
+  "fail": 0,
+  "results": [
+    {
+      "file": "hisenior-audio-mega5-est-in-ear-headphones.md",
+      "productId": "MrEMtYwMtrFDGWmRnQVOZL",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcw26D"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "productId": "MrEMtYwMtrFDGWmRnQT9Nz",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "anc": "passive",
+    "brand": [
+      "focal"
+    ],
+    "cableTermination": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "price": 49900,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-14T21:55:17.810Z"
+}

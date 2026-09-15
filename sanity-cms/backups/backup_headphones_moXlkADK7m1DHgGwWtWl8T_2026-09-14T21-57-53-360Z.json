@@ -1,0 +1,169 @@
+{
+  "productId": "moXlkADK7m1DHgGwWtWl8T",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "anc": "none",
+    "awards": [
+      "PC Gamer — \"Editor's Pick Award\"",
+      "GamesRadar — \"Editor's Choice Award\""
+    ],
+    "batteryLifeHours": {
+      "ancOff": 80,
+      "ancOn": null
+    },
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "LDAC",
+      "LC3"
+    ],
+    "brand": [
+      "audeze"
+    ],
+    "cableTermination": [
+      "3.5mm"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wireless",
+    "detachableCable": true,
+    "driverType": [
+      "planar-magnetic"
+    ],
+    "foldable": false,
+    "freqResponseHz": {
+      "max": 50000,
+      "min": 10
+    },
+    "inStock": true,
+    "microphone": true,
+    "portable": true,
+    "price": 29900,
+    "productCategory": [
+      "over-ear"
+    ],
+    "requiresAmplifier": false,
+    "soundSignature": "Warm",
+    "sourcing": [
+      {
+        "field": "awards",
+        "quote": "\"The perfect union of audiophile drivers and wireless gaming headset\" — PC Gamer, Editor's Pick Award / \"The next brilliant step for a legendary line of audiophile gaming headsets\" — GamesRadar, Editor's Choice Award",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/maxwell"
+      },
+      {
+        "field": "productCategory",
+        "quote": "Style Over-ear (circumaural), closed-back",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/maxwell"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "Style Over-ear (circumaural), closed-back",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/maxwell"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "Style Over-ear (circumaural), closed-back",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/maxwell"
+      },
+      {
+        "field": "connectivity",
+        "quote": "Wireless Ultra-low-latency Bluetooth: 5.3 Supports: Multipoint, LE Audio, LC3, LC3plus, LDAC, AAC, SBC / Wired - Digital USB-C with dual-audio endpoints and game-chat mix / Wired - Analog 3.5mm TRRS active",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/maxwell"
+      },
+      {
+        "field": "portable",
+        "quote": "Battery type Lithium-polymer, 1800mAh (full-size wireless gaming headset with detachable boom mic and a travel-oriented accessory set: USB Dongle / USB-C to C / AUX cable / USB-A to C adapter)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/maxwell"
+      },
+      {
+        "field": "soundSignature",
+        "quote": "Their frequency response doesn't fluctuate much from their warm sound profile either, with most notable deviations resulting from mismatches between the L/R drivers.",
+        "sourcedAt": "2026-09-13",
+        "tier": "editorial",
+        "url": "https://www.rtings.com/headphones/reviews/audeze/maxwell-wireless"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "Frequency response 10Hz - 50kHz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.audeze.com/products/maxwell"
+      },
+      {
+        "field": "microphone",
+        "quote": "Microphones Boom Microphone Detachable, Hypercardioid Beamforming Physical and AI noise reduction, Internal mic for chat",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/maxwell"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "Wired - Analog 3.5mm TRRS active / AUX Input 3.5mm analog",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/maxwell"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "Boom Microphone Detachable, Hypercardioid Beamforming / \"Boom Mic Port — Remove to use internal mics\"",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/maxwell"
+      },
+      {
+        "field": "foldable",
+        "quote": "(no folding/collapsing hinge described or pictured anywhere in the user guide's function guide or head-strap section — boolean feature-absence rule)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/pages/maxwell-user-guide"
+      },
+      {
+        "field": "bluetoothCodecs",
+        "quote": "Supports: Multipoint, LE Audio, LC3, LC3plus, LDAC, AAC, SBC",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/maxwell"
+      },
+      {
+        "field": "anc",
+        "quote": "While they lack noise cancelling, they can block out some mid-range noise, like ambient chatter, and a lot of high-pitched noise, like the hum of A/C fans.",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.rtings.com/headphones/reviews/audeze/maxwell-wireless"
+      },
+      {
+        "field": "batteryLifeHours",
+        "quote": "Battery life Over 80 hrs wireless playback @ 80dBA (single undifferentiated figure recorded in ancOff, since the product has no ANC at all)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/maxwell"
+      },
+      {
+        "field": "driverType",
+        "quote": "Transducer type Planar Magnetic / Diaphragm type Ultra-Thin Uniforce™",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.audeze.com/products/maxwell"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-14T21:57:53.360Z"
+}

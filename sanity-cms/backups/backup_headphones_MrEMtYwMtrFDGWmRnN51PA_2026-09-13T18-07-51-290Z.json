@@ -1,0 +1,26 @@
+{
+  "_id": "MrEMtYwMtrFDGWmRnN51PA",
+  "name": "Hifiman HE1000 Stealth Headphones - Stealth Magnet Edition",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "hifiman"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "planar-magnetic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 94900,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T18:07:51.290Z"
+}

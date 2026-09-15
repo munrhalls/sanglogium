@@ -1,0 +1,16 @@
+{
+  "issueId": "sang-logium-zdb.1.21",
+  "slice": "headphones",
+  "brand": "HarmonicDyne",
+  "patchedAt": "2026-09-14T10:44:37.645Z",
+  "ok": 1,
+  "fail": 0,
+  "results": [
+    {
+      "file": "harmonicdyne-x-z-reviews-eris-50mm-dynamic-driver-headphones.md",
+      "productId": "DZc43yHr6ydfgE7zB462xz",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eNpOD"
+    }
+  ]
+}

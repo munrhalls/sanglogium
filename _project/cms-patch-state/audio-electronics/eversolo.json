@@ -1,0 +1,52 @@
+{
+  "issueId": "sang-logium-zdb.2.15",
+  "slice": "audio-electronics",
+  "brand": "Eversolo",
+  "patchedAt": "2026-09-14T10:51:46.931Z",
+  "ok": 7,
+  "fail": 0,
+  "results": [
+    {
+      "file": "eversolo-dac-z8-desktop-dac-and-amp.md",
+      "productId": "Pn6oyV4Ks5AcNbecjkThBz",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwyUX"
+    },
+    {
+      "file": "eversolo-dmp-a6-master-edition-streamer-and-dac.md",
+      "productId": "MrEMtYwMtrFDGWmRnN8E5N",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQPZz"
+    },
+    {
+      "file": "eversolo-dmp-a6-streamer-and-dac-gen-2.md",
+      "productId": "Pn6oyV4Ks5AcNbecjgtLZ7",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQPrv"
+    },
+    {
+      "file": "eversolo-dmp-a6-streamer-and-dac.md",
+      "productId": "n10eAegrGspodtsQw134Ce",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwydt"
+    },
+    {
+      "file": "eversolo-dmp-a8-all-in-one-streamer-dac-amp-preamp.md",
+      "productId": "n10eAegrGspodtsQw12tbj",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435Cxbo0D"
+    },
+    {
+      "file": "eversolo-dmp-a8-all-in-one-streamer-dac-preamp.md",
+      "productId": "MrEMtYwMtrFDGWmRnN82fv",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435Cxbo5J"
+    },
+    {
+      "file": "eversolo-dmp-a8-network-streamer-with-built-in-dac.md",
+      "productId": "ZuUKzmkqDyQwdcwhxlJjyP",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwyku"
+    }
+  ]
+}

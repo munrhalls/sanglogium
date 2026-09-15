@@ -1,0 +1,25 @@
+{
+  "productId": "k27n1AQuIbSr5iozFz7IlS",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "focal"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 43900,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T13:46:36.009Z"
+}

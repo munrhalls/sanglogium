@@ -1,0 +1,23 @@
+{
+  "productId": "Pn6oyV4Ks5AcNbecjjqHIM",
+  "before": {
+    "anc": "passive",
+    "brand": [
+      "symphonium-audio"
+    ],
+    "cableTermination": [
+      "mmcx"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "price": 149900,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-14T10:44:04.656Z"
+}

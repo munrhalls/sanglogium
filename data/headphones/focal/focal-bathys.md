@@ -1,38 +1,38 @@
 ---
-product_id: "moXlkADK7m1DHgGwWtX5bB"
-product_slug: "focal-bathys"
-brand: "Focal"
-name: "Bathys"
-slice: "headphones"
+product_id: PHPYj28HJdPDHAaIBCCSLu
+product_slug: focal-bathys
+brand: Focal
+name: Focal Bathys
+slice: headphones
 spec_fields:
   productCategory:
-    - "over-ear"
+  - over-ear
   wearingStyle:
-    - "over-ear"
+  - over-ear
   acousticDesign:
-    - "closed-back"
+  - closed-back
   fitType: null
-  connectivity: "wireless"
+  connectivity: wireless
   portable: true
   microphone: true
   cableTermination:
-    - "3.5mm"
-    - "usb-c"
+  - 3.5mm
+  - usb-c
   detachableCable: true
   cableLengthM: 1.2
   foldable: false
   ipxRating: null
   bluetoothCodecs:
-    - "SBC"
-    - "AAC"
-    - "aptX"
-    - "aptX Adaptive"
-  anc: "anc"
+  - SBC
+  - AAC
+  - aptX
+  - aptX Adaptive
+  anc: anc
   batteryLifeHours:
     ancOff: 35
     ancOn: 30
   driverType:
-    - "dynamic"
+  - dynamic
   impedanceOhms: null
   sensitivityDbMw: null
   freqResponseHz:
@@ -43,10 +43,11 @@ spec_fields:
   driverConfigDetail: null
   soundSignature: null
 source_urls:
-  - "https://www.focal.com/products/bathys"
-  - "https://dam.focal-naim.com/m/27830ac90e411d8/original/Notice_Bathys-pdf.pdf"
-verified_at: "2026-09-13"
-data_status: "COMPLETE"
+- https://www.focal.com/products/bathys
+- https://dam.focal-naim.com/m/27830ac90e411d8/original/Notice_Bathys-pdf.pdf
+- https://crinacle.com/rankings/headphones/real/
+verified_at: '2026-09-14'
+data_status: COMPLETE
 ---
 
 ## Verification Notes
@@ -67,3 +68,4 @@ data_status: "COMPLETE"
 - **batteryLifeHours** (marketing-fact): Battery Autonomy : 30h in Bluetooth 35h with mini Jack connection 42h in USB-DAC mode — https://www.focal.com/products/bathys
 - **impedanceOhms** (hard-spec): (entire Sound - Acoustics / Sound - Electronics block read in full: no impedance line; confirmed absent from the manual spec table too — exhausted NULL) — https://www.focal.com/products/bathys
 - **sensitivityDbMw** (hard-spec): (entire Sound - Acoustics / Sound - Electronics block read in full: no sensitivity line; confirmed absent from the manual spec table too — exhausted NULL) — https://www.focal.com/products/bathys
+- **soundSignature** (editorial): (exhausted NULL — no "Bathys" row in Crinacle's real rankings list, no Crinacle individual review post, no ASR/Rtings measurement; never inferred from Focal marketing copy) — https://crinacle.com/rankings/headphones/real/

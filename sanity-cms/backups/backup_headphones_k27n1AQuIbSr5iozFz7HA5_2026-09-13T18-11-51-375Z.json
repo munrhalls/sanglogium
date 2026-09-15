@@ -1,0 +1,156 @@
+{
+  "_id": "k27n1AQuIbSr5iozFz7HA5",
+  "name": "Dan Clark Audio Stealth Headphones",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "anc": "passive",
+    "backDesign": "closed",
+    "brand": [
+      "dan-clark-audio"
+    ],
+    "cableLengthM": 2,
+    "cableTermination": [
+      "3.5mm",
+      "6.35mm",
+      "4-pin-xlr",
+      "4.4mm-balanced",
+      "2.5mm-balanced"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "detachableCable": true,
+    "driverType": [
+      "planar-magnetic"
+    ],
+    "foldable": true,
+    "impedanceOhms": 23,
+    "inStock": true,
+    "ipxRating": "none",
+    "microphone": false,
+    "noiseCancelling": false,
+    "portable": true,
+    "price": 399999,
+    "requiresAmplifier": true,
+    "sensitivityDbMw": 90,
+    "soundSignature": "Neutral",
+    "sourcing": [
+      {
+        "field": "impedanceOhms",
+        "quote": "Impedance 23ohms",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "http://danclarkaudio.com/headphones/stealth-2.html"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "Sensitivity ~90 dB/mW",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "http://danclarkaudio.com/headphones/stealth-2.html"
+      },
+      {
+        "field": "driverType",
+        "quote": "Driver: 76mm x 51mm single-ended planar magnetic",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "http://danclarkaudio.com/headphones/stealth-2.html"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "\"Choose Your Cable\" dropdown base option: 2m 1/4\" VIVO",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "http://danclarkaudio.com/headphones/stealth-2.html"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "STEALTH is Dan Clark Audio's closed flagship headphone, and its striking matte black and red design offers a teaser of its stunningly smooth, rich and spacious sound.",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "http://danclarkaudio.com/headphones/stealth-2.html"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "STEALTH is a closed-back headphone that delivers great isolation",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "http://danclarkaudio.com/headphones/stealth-2.html"
+      },
+      {
+        "field": "connectivity",
+        "quote": "In The Box: Stealth Headphone / Carrying Case / Certificate of authenticity / Manual / VIVO cable (no wireless or Bluetooth feature stated anywhere on the page)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "http://danclarkaudio.com/headphones/stealth-2.html"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "\"Choose Your Cable\" options: 1/4\", XLR (4-pin), 4.4mm, 2.5mm, 3.5mm",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "http://danclarkaudio.com/headphones/stealth-2.html"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "All Dan Clark Audio planar-magnetic products use push-pull self-latching connectors. To attach your cable hold the male connector by the boot and rotate it into the female receptacle on the headphone until you feel it click into place. To release the cable, pull down on the top of the connector's metal jacket.",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/docs/2022/STEALTH-QUICKGUIDE.pdf"
+      },
+      {
+        "field": "portable",
+        "quote": "Travel friendly - Packs Small!",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "http://danclarkaudio.com/headphones/stealth-2.html"
+      },
+      {
+        "field": "foldable",
+        "quote": "Folding gimbals allow Stealth to be packed in a compact case for safe and easy transport",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "http://danclarkaudio.com/headphones/stealth-2.html"
+      },
+      {
+        "field": "microphone",
+        "quote": "(no microphone mentioned across the manufacturer product page and quick guide; boolean feature-absence rule applied)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "http://danclarkaudio.com/headphones/stealth-2.html"
+      },
+      {
+        "field": "ipxRating",
+        "quote": "(no IP/water-resistance claim found; no ingress-protection statement anywhere on the manufacturer page)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "http://danclarkaudio.com/headphones/stealth-2.html"
+      },
+      {
+        "field": "anc",
+        "quote": "closed-back headphone that delivers great isolation; no electronic active noise cancelling feature stated",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "http://danclarkaudio.com/headphones/stealth-2.html"
+      },
+      {
+        "field": "soundSignature",
+        "quote": "the highest compliance to their target curve of any headphone they have ever tested / an incredibly clean, dynamic sound with absolute correctness in tonality... no need to apply any EQ",
+        "sourcedAt": "2026-09-13",
+        "tier": "editorial",
+        "url": "https://www.audiosciencereview.com/forum/index.php?threads/dan-clark-stealth-review-state-of-the-art-headphone.25920/"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-13T18:11:51.375Z"
+}

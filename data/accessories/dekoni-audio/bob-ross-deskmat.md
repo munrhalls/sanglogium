@@ -33,7 +33,7 @@ spec_fields:
   mounting: null
 
 source_urls: 
-  - "https://aposaudio.com/products/bob-ross-deskmat"
+  - "https://apos.audio/products/bob-ross-deskmat"
 verified_at: "2026-09-14"
 data_status: "COMPLETE"
 

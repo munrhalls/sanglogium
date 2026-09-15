@@ -1,0 +1,22 @@
+{
+  "issueId": "sang-logium-zdb.3.29",
+  "slice": "accessories",
+  "brand": "Polk Audio",
+  "patchedAt": "2026-09-14T10:48:29.479Z",
+  "ok": 2,
+  "fail": 0,
+  "results": [
+    {
+      "file": "polk-audio-rc80i-2-way-in-ceiling-speakers-4-pack-white.md",
+      "productId": "MrEMtYwMtrFDGWmRnKeGom",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03ePl9V"
+    },
+    {
+      "file": "polk-audio-rc85i-2-way-in-wall-speakers-4-pack-white.md",
+      "productId": "apzyFbFDTajEZntmxssHP5",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435Cxbd8A"
+    }
+  ]
+}

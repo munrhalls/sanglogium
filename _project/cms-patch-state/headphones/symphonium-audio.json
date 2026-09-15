@@ -1,0 +1,22 @@
+{
+  "issueId": "sang-logium-zdb.1.31",
+  "slice": "headphones",
+  "brand": "Symphonium Audio",
+  "patchedAt": "2026-09-14T10:44:07.134Z",
+  "ok": 2,
+  "fail": 0,
+  "results": [
+    {
+      "file": "symphonium-audio-crimson-in-ear-headphones.md",
+      "productId": "Pn6oyV4Ks5AcNbecjjqHIM",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbPCG"
+    },
+    {
+      "file": "symphonium-audio-titan-in-ear-headphones.md",
+      "productId": "PHPYj28HJdPDHAaIBCF9jM",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eNkXn"
+    }
+  ]
+}

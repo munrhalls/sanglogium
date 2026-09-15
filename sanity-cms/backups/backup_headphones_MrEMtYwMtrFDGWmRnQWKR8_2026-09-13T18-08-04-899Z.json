@@ -1,0 +1,24 @@
+{
+  "_id": "MrEMtYwMtrFDGWmRnQWKR8",
+  "name": "Thieaudio Monarch MKIII In-Ear Headphones",
+  "before": {
+    "brand": [
+      "thieaudio"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "mmcx"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 99900,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-13T18:08:04.899Z"
+}

@@ -1,0 +1,22 @@
+{
+  "issueId": "sang-logium-zdb.3.25",
+  "slice": "accessories",
+  "brand": "Listenmore",
+  "patchedAt": "2026-09-14T10:48:50.450Z",
+  "ok": 2,
+  "fail": 0,
+  "results": [
+    {
+      "file": "etched-headphone-cable-for-sennheiser-hd-600-series.md",
+      "productId": "PHPYj28HJdPDHAaIBAHZj0",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03ePoTl"
+    },
+    {
+      "file": "etched-headphone-cable.md",
+      "productId": "PHPYj28HJdPDHAaIBAHVcm",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwgbz"
+    }
+  ]
+}

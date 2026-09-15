@@ -1,0 +1,27 @@
+{
+  "productId": "DZc43yHr6ydfgE7zB46Kfr",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": true,
+    "brand": [
+      "xduoo"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac-amp-combo",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 42900
+  },
+  "backedUpAt": "2026-09-14T10:50:49.114Z"
+}

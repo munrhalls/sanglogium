@@ -1,0 +1,46 @@
+{
+  "issueId": "sang-logium-zdb.3.20",
+  "slice": "accessories",
+  "brand": "Focal",
+  "patchedAt": "2026-09-14T10:49:04.049Z",
+  "ok": 6,
+  "fail": 0,
+  "results": [
+    {
+      "file": "focal-bathys-replacement-ear-pads-pair.md",
+      "productId": "MrEMtYwMtrFDGWmRnQS8gt",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbfVy"
+    },
+    {
+      "file": "focal-clear-ear-pads-pair.md",
+      "productId": "MrEMtYwMtrFDGWmRnQS1rC",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03ePqnF"
+    },
+    {
+      "file": "focal-clear-mg-replacement-ear-pads.md",
+      "productId": "prod-4b6fb239-96a",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwhTm"
+    },
+    {
+      "file": "focal-elex-ear-pads-pair.md",
+      "productId": "PHPYj28HJdPDHAaIBCBx40",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwhd8"
+    },
+    {
+      "file": "focal-utopia-ear-pad.md",
+      "productId": "Pn6oyV4Ks5AcNbecjjl5G7",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435Cxbfii"
+    },
+    {
+      "file": "focal-utopia-ear-pads.md",
+      "productId": "xMEqvkRBbdrlJXyFG8bwF9",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03ePrN7"
+    }
+  ]
+}

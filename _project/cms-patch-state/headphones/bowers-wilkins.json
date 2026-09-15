@@ -1,0 +1,58 @@
+{
+  "issueId": "sang-logium-zdb.1.15",
+  "slice": "headphones",
+  "brand": "Bowers & Wilkins",
+  "patchedAt": "2026-09-14T10:45:00.179Z",
+  "ok": 8,
+  "fail": 0,
+  "results": [
+    {
+      "file": "bowers-&-wilkins-pi5-true-wireless-earbuds.md",
+      "productId": "k27n1AQuIbSr5iozG2jAqp",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcw3im"
+    },
+    {
+      "file": "bowers-&-wilkins-pi7-s2-wireless-in-ear-headphones.md",
+      "productId": "moXlkADK7m1DHgGwWwznPb",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcw50I"
+    },
+    {
+      "file": "bowers-&-wilkins-pi7-true-wireless-noise-cancelling-in-ear-headphones.md",
+      "productId": "k27n1AQuIbSr5iozG2j7uo",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbRo5"
+    },
+    {
+      "file": "bowers-wilkins-pi6-in-ear-bluetooth-wireless-earbuds-forest-green.md",
+      "productId": "dLGDVDmEEI2lV8CArIgBZs",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOLD7"
+    },
+    {
+      "file": "bowers-wilkins-pi6-in-ear-bluetooth-wireless-earbuds-glacier-blue.md",
+      "productId": "dLGDVDmEEI2lV8CArIgBmG",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcw7z3"
+    },
+    {
+      "file": "bowers-wilkins-pi6-in-ear-bluetooth-wireless-earbuds-storm-grey.md",
+      "productId": "dLGDVDmEEI2lV8CArIgC3I",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbSly"
+    },
+    {
+      "file": "bowers-wilkins-pi8-in-ear-bluetooth-true-wireless-earbuds-midnight-blue.md",
+      "productId": "dLGDVDmEEI2lV8CArIgKzc",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOMVp"
+    },
+    {
+      "file": "bowers-wilkins-px8-wireless-anc-headphones.md",
+      "productId": "MrEMtYwMtrFDGWmRnQV78j",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbSr4"
+    }
+  ]
+}

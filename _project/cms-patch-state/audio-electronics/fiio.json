@@ -1,0 +1,94 @@
+{
+  "issueId": "sang-logium-zdb.2.18",
+  "slice": "audio-electronics",
+  "brand": "FiiO",
+  "patchedAt": "2026-09-14T10:51:35.337Z",
+  "ok": 14,
+  "fail": 0,
+  "results": [
+    {
+      "file": "fiio-btr11-portable-dac-and-headphone-amp.md",
+      "productId": "MrEMtYwMtrFDGWmRnN3Yzy",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwwuJ"
+    },
+    {
+      "file": "fiio-btr17-bluetooth-dac-and-headphone-amp.md",
+      "productId": "Pn6oyV4Ks5AcNbecjgp8X6",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwx1K"
+    },
+    {
+      "file": "fiio-btr17-bluetooth-usb-dac-amp.md",
+      "productId": "DZc43yHr6ydfgE7zB3zokw",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435Cxbn69"
+    },
+    {
+      "file": "fiio-btr7-portable-dac-and-headphone-amp.md",
+      "productId": "Pn6oyV4Ks5AcNbecjgpOZX",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435Cxbn9y"
+    },
+    {
+      "file": "fiio-k11-r2r-balanced-desktop-dac-amp.md",
+      "productId": "DZc43yHr6ydfgE7zB41PVg",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbnIt"
+    },
+    {
+      "file": "fiio-k13-r2r-desktop-dac-amp-apos-certified.md",
+      "productId": "xMEqvkRBbdrlJXyFG8gRUZ",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQMu5"
+    },
+    {
+      "file": "fiio-k13-r2r-desktop-dac-amp.md",
+      "productId": "DZc43yHr6ydfgE7zB41Wo6",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbnUM"
+    },
+    {
+      "file": "fiio-k17-desktop-dac-amp.md",
+      "productId": "DZc43yHr6ydfgE7zB41fx8",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQNC1"
+    },
+    {
+      "file": "fiio-k7-balanced-headphone-dac-amp.md",
+      "productId": "DZc43yHr6ydfgE7zB40v3a",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwxm6"
+    },
+    {
+      "file": "fiio-ka11-dongle-dac-headphone-amplifier.md",
+      "productId": "xMEqvkRBbdrlJXyFG8l4SB",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwxt7"
+    },
+    {
+      "file": "fiio-m15s-portable-music-player.md",
+      "productId": "MrEMtYwMtrFDGWmRnKwOVD",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQNur"
+    },
+    {
+      "file": "fiio-m17-portable-music-player.md",
+      "productId": "Pn6oyV4Ks5AcNbecjexfWP",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQOCn"
+    },
+    {
+      "file": "fiio-m21-portable-high-res-lossless-music-player.md",
+      "productId": "GPjMdcfFWZVrKyR2PB9DqI",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQOQF"
+    },
+    {
+      "file": "fiio-r7-dac-and-headphone-amp.md",
+      "productId": "PHPYj28HJdPDHAaIBAMKFk",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbnYB"
+    }
+  ]
+}

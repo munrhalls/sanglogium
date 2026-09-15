@@ -1,0 +1,23 @@
+{
+  "productId": "3O1ZNp54LWQGln4uEAUIek",
+  "before": {
+    "accessoryType": "cable",
+    "brand": [
+      "aune-audio"
+    ],
+    "category": [
+      "accessories"
+    ],
+    "compatibility": [
+      "universal"
+    ],
+    "connectorTermination": [
+      "3.5mm",
+      "6.35mm",
+      "4.4mm-balanced"
+    ],
+    "inStock": true,
+    "price": 4500
+  },
+  "backedUpAt": "2026-09-14T10:49:40.222Z"
+}

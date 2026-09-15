@@ -1,0 +1,25 @@
+{
+  "_id": "drafts.dLGDVDmEEI2lV8CArIgVky",
+  "name": "Sony WFL910 Linkbuds Truly Wireless Earbuds (Black)",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "sony"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wireless",
+    "connector": [
+      "mmcx"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 17800,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-13T18:11:42.819Z"
+}

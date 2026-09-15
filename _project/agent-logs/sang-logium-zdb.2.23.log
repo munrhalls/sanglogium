@@ -1,1 +1,13 @@
-Plan: run `bd show` to read the issue and its protocols, then source each product, write the `.md` files, and close with the count. Proceeding as instructed.Issue loaded: 3 Ladder products, output path `data/audio-electronics/ladder/`. I’ll fetch the authoritative `--json` product list and locate the `audio-electronics` sourcing protocol / field-list doc now.The field-list doc exists at `docs/filters-sort/should-be-audio-electronics.md`. I’ll read that and find the Sanity client / catalogue wiring so I can resolve the three product IDs to names and source pages.
+Plan: run `bd show` to read the issue and its protocols, then source each product, write the `.md` files, and close with the count. Proceeding as instructed.Issue loaded: 3 Ladder products, output path `data/audio-electronics/ladder/`. I’ll fetch the authoritative `--json` product list and locate the `audio-electronics` sourcing protocol / field-list doc now.The field-list doc exists at `docs/filters-sort/should-be-audio-electronics.md`. I’ll read that and find the Sanity client / catalogue wiring so I can resolve the three product IDs to names and source pages.Done. I closed `sang-logium-zdb.2.23` with the reason `3 products sourced and filed.`
+
+Files created:
+- `data/audio-electronics/ladder/ladder-czerny-r2r-desktop-dac.md`
+- `data/audio-electronics/ladder/ladder-chopin-desktop-r2r-pre-amplifier.md`
+- `data/audio-electronics/ladder/ladder-schumann-desktop-dac.md`
+
+Sourcing summary:
+- Czerny and Chopin values were sourced from the Apos product pages.
+- Schumann used Apos for identity/inputs/dimensions, Newegg for the missing DSD/PCM/DAC-architecture specs, and Headfonics was cited as an editorial cross-check in the file's conflict/caution notes.
+- Every field is either a cited value or an explicit `null` with a reason; no invented data.
+
+Git status for this slice shows only the new `data/audio-electronics/ladder/` directory as untracked. `.beads/issues.jsonl` and `.beads/interactions.jsonl` were updated by `bd close`; other modified files in `git status` are pre-existing and were not touched. No commit or push was made per the conservative profile.

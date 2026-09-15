@@ -1,0 +1,25 @@
+{
+  "productId": "n10eAegrGspodtsQw13RKz",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "bluesound"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 34900
+  },
+  "backedUpAt": "2026-09-14T10:47:15.705Z"
+}

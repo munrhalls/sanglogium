@@ -1,0 +1,40 @@
+{
+  "issueId": "sang-logium-zdb.2.3",
+  "slice": "audio-electronics",
+  "brand": "Aune Audio",
+  "patchedAt": "2026-09-14T10:54:34.598Z",
+  "ok": 5,
+  "fail": 0,
+  "results": [
+    {
+      "file": "aune-audio-a17-headphone-amplifier.md",
+      "productId": "PHPYj28HJdPDHAaIBChQCG",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbtYF"
+    },
+    {
+      "file": "aune-audio-bx2-magnum-portable-headphone-amplifier.md",
+      "productId": "MrEMtYwMtrFDGWmRnRGpuU",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcx8wM"
+    },
+    {
+      "file": "aune-audio-n7-headphone-amplifier.md",
+      "productId": "MrEMtYwMtrFDGWmRnRKRM6",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbthA"
+    },
+    {
+      "file": "aune-audio-s17-pro-evo-headphone-amplifier.md",
+      "productId": "PHPYj28HJdPDHAaIBChWTc",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbtmG"
+    },
+    {
+      "file": "aune-audio-yuki-portable-dac-and-headphone-amplifier.md",
+      "productId": "MrEMtYwMtrFDGWmRnRGtU3",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcx9OQ"
+    }
+  ]
+}

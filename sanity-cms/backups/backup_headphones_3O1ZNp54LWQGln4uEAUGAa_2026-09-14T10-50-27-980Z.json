@@ -1,0 +1,23 @@
+{
+  "productId": "3O1ZNp54LWQGln4uEAUGAa",
+  "before": {
+    "accessoryType": "cable",
+    "brand": [
+      "64-audio"
+    ],
+    "category": [
+      "accessories"
+    ],
+    "compatibility": [
+      "universal"
+    ],
+    "connectorTermination": [
+      "3.5mm",
+      "6.35mm",
+      "4.4mm-balanced"
+    ],
+    "inStock": false,
+    "price": 11500
+  },
+  "backedUpAt": "2026-09-14T10:50:27.980Z"
+}

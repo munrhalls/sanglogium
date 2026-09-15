@@ -1,47 +1,47 @@
 ---
-product_id: "DZc43yHr6ydfgE7zB45fiH"
-product_slug: "hifiman-edition-xv-planar-magnetic-headphones"
-brand: "HiFiMan"
-name: "Edition XV"
-slice: "headphones"
+product_id: DZc43yHr6ydfgE7zB45fiH
+product_slug: hifiman-edition-xv-planar-magnetic-headphones
+brand: HiFiMan
+name: HIFIMAN Edition XV Planar Magnetic Headphones
+slice: headphones
 spec_fields:
   productCategory:
-    - "over-ear"
+  - over-ear
   wearingStyle:
-    - "over-ear"
+  - over-ear
   acousticDesign:
-    - "open-back"
-  connectivity: "wired"
+  - open-back
+  connectivity: wired
   portable: false
   driverType:
-    - "planar-magnetic"
+  - planar-magnetic
   impedanceOhms: 12
   sensitivityDbMw: 92
   freqResponseHz:
     min: 8
     max: 50000
   cableTermination:
-    - "3.5mm"
-    - "6.35mm"
+  - 3.5mm
+  - 6.35mm
   detachableCable: true
   cableLengthM: 1.5
   microphone: false
   foldable: false
   ipxRating: null
   bluetoothCodecs: null
-  anc: "none"
+  anc: none
   batteryLifeHours: null
   soundSignature: null
   awards: null
   fitType: null
   driverConfigBucket: null
 source_urls:
-  - "https://hifiman.com/products/detail/359"
-  - "https://hifiman.com/attachments/file/20250825/20250825045022_29692.pdf"
-  - "https://hifiman.com/services/downlist/0/359"
-  - "https://uk.hifiman.com/blogs/reviews/test-1"
-verified_at: "2026-09-14"
-data_status: "COMPLETE"
+- https://hifiman.com/products/detail/359
+- https://hifiman.com/attachments/file/20250825/20250825045022_29692.pdf
+- https://hifiman.com/services/downlist/0/359
+- https://uk.hifiman.com/blogs/reviews/test-1
+verified_at: '2026-09-14'
+data_status: COMPLETE
 ---
 
 ## Verification Notes

@@ -1,0 +1,46 @@
+{
+  "issueId": "sang-logium-zdb.2.33",
+  "slice": "audio-electronics",
+  "brand": "Questyle",
+  "patchedAt": "2026-09-14T10:46:21.903Z",
+  "ok": 6,
+  "fail": 0,
+  "results": [
+    {
+      "file": "questyle-cma-18-master-dac-and-headphone-amp.md",
+      "productId": "PHPYj28HJdPDHAaIBCgRj0",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbXyL"
+    },
+    {
+      "file": "questyle-cma-fifteen-desktop-dac-and-headphone-amplifier.md",
+      "productId": "n10eAegrGspodtsQvy3jJm",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwI19"
+    },
+    {
+      "file": "questyle-cma-twelve-desktop-dac-amp.md",
+      "productId": "PHPYj28HJdPDHAaIBCgUJK",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwICq"
+    },
+    {
+      "file": "questyle-m12i-portable-usb-dac-&-headphone-amp.md",
+      "productId": "k27n1AQuIbSr5iozG1vTNo",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwIMC"
+    },
+    {
+      "file": "questyle-m12i-portable-usb-dac-headphone-amp.md",
+      "productId": "Pn6oyV4Ks5AcNbecjgsda0",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbY4i"
+    },
+    {
+      "file": "questyle-m15i-usb-portable-dac-headphone-amplifier.md",
+      "productId": "MrEMtYwMtrFDGWmRnN7D4q",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbYEu"
+    }
+  ]
+}

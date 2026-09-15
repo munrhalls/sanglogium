@@ -1,0 +1,27 @@
+{
+  "productId": "ZuUKzmkqDyQwdcwhxl9DU0",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "anc": "passive",
+    "brand": [
+      "soundcore"
+    ],
+    "cableTermination": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wireless",
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "price": 9999,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-14T10:44:12.866Z"
+}

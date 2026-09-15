@@ -1,0 +1,23 @@
+{
+  "productId": "Pn6oyV4Ks5AcNbecjh3ghZ",
+  "before": {
+    "accessoryType": "cable",
+    "brand": [
+      "crystal-cables"
+    ],
+    "category": [
+      "accessories"
+    ],
+    "compatibility": [
+      "universal"
+    ],
+    "connectorTermination": [
+      "3.5mm",
+      "6.35mm",
+      "4.4mm-balanced"
+    ],
+    "inStock": true,
+    "price": 199900
+  },
+  "backedUpAt": "2026-09-14T10:49:19.857Z"
+}

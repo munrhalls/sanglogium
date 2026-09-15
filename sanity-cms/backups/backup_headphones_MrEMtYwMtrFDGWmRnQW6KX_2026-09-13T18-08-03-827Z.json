@@ -1,0 +1,24 @@
+{
+  "_id": "MrEMtYwMtrFDGWmRnQW6KX",
+  "name": "64 Audio U12t In-Ear Headphones",
+  "before": {
+    "brand": [
+      "64-audio"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "mmcx"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 199900,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-13T18:08:03.828Z"
+}

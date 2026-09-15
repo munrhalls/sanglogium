@@ -1,0 +1,16 @@
+{
+  "issueId": "sang-logium-zdb.2.47",
+  "slice": "audio-electronics",
+  "brand": "headphones.com",
+  "patchedAt": "2026-09-14T10:45:43.779Z",
+  "ok": 1,
+  "fail": 0,
+  "results": [
+    {
+      "file": "leeloo-desktop-tube-headphone-amplifier.md",
+      "productId": "moXlkADK7m1DHgGwWwETaU",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwFE5"
+    }
+  ]
+}

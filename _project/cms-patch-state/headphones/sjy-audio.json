@@ -1,0 +1,16 @@
+{
+  "issueId": "sang-logium-zdb.1.28",
+  "slice": "headphones",
+  "brand": "SJY Audio",
+  "patchedAt": "2026-09-14T10:44:17.418Z",
+  "ok": 1,
+  "fail": 0,
+  "results": [
+    {
+      "file": "sjy-zeph-open-back-planar-magnetic-headphones.md",
+      "productId": "xMEqvkRBbdrlJXyFG8eR7h",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcvzUq"
+    }
+  ]
+}

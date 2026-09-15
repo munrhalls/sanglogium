@@ -1,0 +1,23 @@
+{
+  "productId": "Pn6oyV4Ks5AcNbecjjpxmB",
+  "before": {
+    "anc": "passive",
+    "brand": [
+      "dunu"
+    ],
+    "cableTermination": [
+      "mmcx"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "price": 57999,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-14T10:44:47.873Z"
+}

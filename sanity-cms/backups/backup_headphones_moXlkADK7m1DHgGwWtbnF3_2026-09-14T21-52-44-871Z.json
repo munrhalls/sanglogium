@@ -1,0 +1,165 @@
+{
+  "productId": "moXlkADK7m1DHgGwWtbnF3",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "anc": "passive",
+    "awards": null,
+    "batteryLifeHours": null,
+    "bluetoothCodecs": null,
+    "brand": [
+      "denon"
+    ],
+    "cableLengthM": 3,
+    "cableTermination": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "detachableCable": true,
+    "driverConfigBucket": null,
+    "driverType": [
+      "dynamic"
+    ],
+    "fitType": null,
+    "foldable": false,
+    "freqResponseHz": {
+      "max": 55000,
+      "min": 5
+    },
+    "impedanceOhms": 25,
+    "inStock": true,
+    "ipxRating": null,
+    "microphone": false,
+    "portable": true,
+    "price": 99900,
+    "productCategory": [
+      "over-ear"
+    ],
+    "requiresAmplifier": true,
+    "sensitivityDbMw": 105,
+    "soundSignature": "Mid-Forward",
+    "sourcing": [
+      {
+        "field": "wearingStyle",
+        "quote": "Type: Over-Ear",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.denon.com/en-us/product/over-ear-headphones/ah-d7200/137175.html"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "Closed-Back (Audio46 product tag block; no manufacturer statement of open/closed exists on the Denon page, info sheet, or owner's manual)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://audio46.com/products/denon-ah-d7200-reference-over-ear-headphones"
+      },
+      {
+        "field": "productCategory",
+        "quote": "AH-D7200 Reference Hi-Fi Headphones — spec line: Type: Over-Ear",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.denon.com/en-us/product/over-ear-headphones/ah-d7200/137175.html"
+      },
+      {
+        "field": "connectivity",
+        "quote": "Active NC: No / Bluetooth: No — analog detachable cable only",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.denon.com/en-us/product/over-ear-headphones/ah-d7200/137175.html"
+      },
+      {
+        "field": "portable",
+        "quote": "(FLAG — inferred: Denon makes no portable/desktop claim for this model; recorded true on the same over-ear + detachable-cable basis as the sibling AH-D9200, which does cite a portable-playback cable)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.denon.com/en-us/product/over-ear-headphones/ah-d7200/137175.html"
+      },
+      {
+        "field": "impedanceOhms",
+        "quote": "Input impedance: 25 Ω/ohms",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "ah-d7200-owners-manual-global.pdf (Denon owner's manual, specifications)"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "Sensitivity: 105 dB/mW",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "ah-d7200-owners-manual-global.pdf (Denon owner's manual, specifications)"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "Playback frequency: 5 – 55,000 Hz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "ah-d7200-owners-manual-global.pdf (Denon owner's manual, specifications)"
+      },
+      {
+        "field": "driverType",
+        "quote": "Driver type: Dynamic (Nano-fibre/paper diaphragm + Free Edge)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "ah-d7200-info-sheet-en.pdf (Denon info sheet)"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "Detachable Cable: 3.0m 7N Purity Cable",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "ah-d7200-info-sheet-en.pdf (Denon info sheet)"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "Plug: 6.3 mm (Player), 3.5 mm x2 (headphones)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "ah-d7200-info-sheet-en.pdf (Denon info sheet)"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "A detachable 7N-purity copper cable, made in Japan to Denon's exacting specification, ensure the best possible signal transmission.",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.denon.com/en-us/product/over-ear-headphones/ah-d7200/137175.html"
+      },
+      {
+        "field": "foldable",
+        "quote": "Folding Mechanism: No (explicit manufacturer statement, not a feature-absence inference)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.denon.com/en-us/product/over-ear-headphones/ah-d7200/137175.html"
+      },
+      {
+        "field": "microphone",
+        "quote": "(no microphone mentioned on the manufacturer page, info-sheet PDF, or owner's manual; boolean feature-absence rule applied)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.denon.com/en-us/product/over-ear-headphones/ah-d7200/137175.html"
+      },
+      {
+        "field": "anc",
+        "quote": "Active NC: No (derived from the already-cited no-ANC statement + closed walnut housing — passive isolation only)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.denon.com/en-us/product/over-ear-headphones/ah-d7200/137175.html"
+      },
+      {
+        "field": "soundSignature",
+        "quote": "Mid-centric — Generally weird and wonky tuning that can also get rather harsh at times. (Tone Grade C, Technical Grade D+)",
+        "sourcedAt": "2026-09-13",
+        "tier": "editorial",
+        "url": "https://crinacle.com/rankings/headphones/"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-14T21:52:44.871Z"
+}

@@ -1,0 +1,25 @@
+{
+  "productId": "DZc43yHr6ydfgE7zB3zokw",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "fiio"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac-amp-combo",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "bluetooth"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 21999
+  },
+  "backedUpAt": "2026-09-14T10:51:22.678Z"
+}

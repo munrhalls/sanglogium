@@ -1,0 +1,22 @@
+{
+  "issueId": "sang-logium-zdb.2.2",
+  "slice": "audio-electronics",
+  "brand": "AudioQuest",
+  "patchedAt": "2026-09-14T10:51:49.074Z",
+  "ok": 2,
+  "fail": 0,
+  "results": [
+    {
+      "file": "audioquest-dragonfly-cobalt-usb-dac-amp.md",
+      "productId": "moXlkADK7m1DHgGwWwEgQe",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwyuG"
+    },
+    {
+      "file": "audioquest-jitterbug-fmj.md",
+      "productId": "k27n1AQuIbSr5iozG1vKge",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwz3c"
+    }
+  ]
+}

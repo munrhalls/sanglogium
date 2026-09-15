@@ -29,7 +29,16 @@ spec_fields:
   formatCompatibility: null
   partType: "ear-pads-cushions"
   compatibility: 
-    - "Sundara"
+    - "HiFiMan seamless compatibility with HE400"
+    - "HiFiMan HE400i"
+    - "HiFiMan HE400SE"
+    - "HiFiMan HE4XX"
+    - "HiFiMan HE500"
+    - "HiFiMan HE560"
+    - "HiFiMan HE6"
+    - "HiFiMan Sundara"
+    - "HiFiMan HE5"
+    - "HiFiMan HE"
   adapterFunction: null
   treatmentType: null
   mounting: null
@@ -47,7 +56,7 @@ data_status: "COMPLETE"
 - **accessoryType**: `replacement-parts` — product name / page identifies this as a replacement-parts item.
 - **compatibleProductType**: ["headphone"] — intended for use with headphone.
 - **partType**: `ear-pads-cushions` — product name identifies this as a ear-pads-cushions replacement part.
-- **compatibility**: ["Sundara"] — compatible models extracted from the manufacturer product page and product title.
+- **compatibility**: ["HiFiMan seamless compatibility with HE400","HiFiMan HE400i","HiFiMan HE400SE","HiFiMan HE4XX","HiFiMan HE500","HiFiMan HE560","HiFiMan HE6","HiFiMan Sundara","HiFiMan HE5","HiFiMan HE"] — compatible models extracted from the manufacturer product page and product title.
 - **customerRating**: `null` — no visible customer rating or aggregate score on the cited source page.
 - **dealsDiscount**: `null` — no discount or deal terms visible on the cited source page.
 - **newArrival**: `null` — release/new-arrival status not stated on the cited source page.

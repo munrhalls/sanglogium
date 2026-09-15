@@ -1,0 +1,23 @@
+{
+  "productId": "PHPYj28HJdPDHAaIBAHZj0",
+  "before": {
+    "accessoryType": "cable",
+    "brand": [
+      "listenmore"
+    ],
+    "category": [
+      "accessories"
+    ],
+    "compatibility": [
+      "Sennheiser dual-pin (HD 600 Series compatible)"
+    ],
+    "connectorTermination": [
+      "3.5mm",
+      "6.35mm",
+      "4.4mm-balanced"
+    ],
+    "inStock": true,
+    "price": 6999
+  },
+  "backedUpAt": "2026-09-14T10:48:47.955Z"
+}

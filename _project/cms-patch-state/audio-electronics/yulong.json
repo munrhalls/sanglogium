@@ -1,0 +1,46 @@
+{
+  "issueId": "sang-logium-zdb.2.45",
+  "slice": "audio-electronics",
+  "brand": "Yulong",
+  "patchedAt": "2026-09-14T10:45:52.677Z",
+  "ok": 6,
+  "fail": 0,
+  "results": [
+    {
+      "file": "yulong-aquila-ii-dac-amp.md",
+      "productId": "xMEqvkRBbdrlJXyFG8gx1X",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOcLn"
+    },
+    {
+      "file": "yulong-canary-ii-dac-amp.md",
+      "productId": "GPjMdcfFWZVrKyR2PB6how",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwFS7"
+    },
+    {
+      "file": "yulong-daart-a39-desktop-r2r-pre-amp-headphone-amplifier.md",
+      "productId": "GPjMdcfFWZVrKyR2PB7cLm",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbWTK"
+    },
+    {
+      "file": "yulong-daart-asura-music-streamer-desktop-dac-headphone-amplifier.md",
+      "productId": "GPjMdcfFWZVrKyR2PB5Tcg",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOd09"
+    },
+    {
+      "file": "yulong-daart-aurora-desktop-dac-pre-amp-headphone-amp.md",
+      "productId": "DZc43yHr6ydfgE7zB42MQD",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwFkp"
+    },
+    {
+      "file": "yulong-daart-d39-ess9039pro-music-streamer-desktop-dac.md",
+      "productId": "xMEqvkRBbdrlJXyFG8fV4x",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwFyr"
+    }
+  ]
+}

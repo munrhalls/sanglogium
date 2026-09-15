@@ -1,0 +1,25 @@
+{
+  "productId": "MrEMtYwMtrFDGWmRnNGIa4",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "astell-and-kern"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": false,
+    "deviceType": "headphone-amp",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 49900
+  },
+  "backedUpAt": "2026-09-14T10:51:59.414Z"
+}

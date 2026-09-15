@@ -1,0 +1,10 @@
+Filing is complete.
+
+- Wrote 6 Matrix Audio product records under `data/audio-electronics/matrix-audio/`, one per issue product.
+- Closed `sang-logium-zdb.2.27` with the reason "6 products sourced and filed."
+- Each record has full frontmatter, real sourced values or explicit `null`s, manufacturer source URLs, verification notes, and conflict/caution notes.
+- The unresolved `$3999` product was mapped to `Matrix Audio NT-1 Network Transport` from `_project/filters/gap-fill-source.json` and its matching price.
+- Verified `find data/audio-electronics/matrix-audio -name '*.md' | wc -l` returns 6, then ran `bd export -o .beads/issues.jsonl`.
+- Git status shows the new `data/audio-electronics/matrix-audio/` directory and the expected `.beads/issues.jsonl` update; no other brand/issue was touched, and no commit/push was made.
+
+A few caution notes are embedded: several Matrix streamers/DACs have extra features (phono preamps, trigger/remote, line/headphone/subwoofer outputs) that fall outside the current schema's amplifier-gated fields, so they're recorded as `null` with explanation rather than force-fitting `deviceType`.

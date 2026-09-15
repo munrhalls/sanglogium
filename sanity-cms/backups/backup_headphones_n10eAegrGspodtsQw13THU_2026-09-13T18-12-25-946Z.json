@@ -1,0 +1,25 @@
+{
+  "_id": "n10eAegrGspodtsQw13THU",
+  "name": "Moondrop Alice True Wireless In-Ear Headphones",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "moondrop"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wireless",
+    "connector": [
+      "mmcx"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 18999,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-13T18:12:25.946Z"
+}

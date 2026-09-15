@@ -1,0 +1,25 @@
+{
+  "productId": "n10eAegrGspodtsQvy3fgK",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "topping"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac-amp-combo",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 13100
+  },
+  "backedUpAt": "2026-09-14T10:51:07.891Z"
+}

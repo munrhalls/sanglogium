@@ -1,0 +1,154 @@
+{
+  "issueId": "sang-logium-zdb.3.37",
+  "slice": "accessories",
+  "brand": "Wicked Cushions",
+  "patchedAt": "2026-09-14T10:48:02.772Z",
+  "ok": 24,
+  "fail": 0,
+  "results": [
+    {
+      "file": "arctis-nova-pro-wireless-nova-elite-nova-pro-omni-earpads-wc-freeze-cooling-gel.md",
+      "productId": "GPjMdcfFWZVrKyR2PB3TVu",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwNiI"
+    },
+    {
+      "file": "astro-a50-gen-4-gen-5-and-a50x-earpads-wc-freeze-cooling-gel.md",
+      "productId": "GPjMdcfFWZVrKyR2PB3sdu",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbabR"
+    },
+    {
+      "file": "ath-m50x-earpads-velour-hybrid.md",
+      "productId": "DZc43yHr6ydfgE7zB3yu8A",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbagX"
+    },
+    {
+      "file": "ath-m50x-earpads.md",
+      "productId": "xMEqvkRBbdrlJXyFG8cqYf",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03ePemv"
+    },
+    {
+      "file": "beats-solo-earpads.md",
+      "productId": "xMEqvkRBbdrlJXyFG8cCZn",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwO10"
+    },
+    {
+      "file": "beats-studio-earpads-wc-freeze-cooling-gel.md",
+      "productId": "DZc43yHr6ydfgE7zB3yg1U",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwOCh"
+    },
+    {
+      "file": "beats-studio-earpads.md",
+      "productId": "DZc43yHr6ydfgE7zB3yvCW",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwOJi"
+    },
+    {
+      "file": "bose-nc-700-cooling-gel-earpads-wc-freeze.md",
+      "productId": "GPjMdcfFWZVrKyR2PB3PiU",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwOQj"
+    },
+    {
+      "file": "bose-qc35-cooling-gel-earpads-wc-freeze.md",
+      "productId": "DZc43yHr6ydfgE7zB3y0Zk",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435Cxbb7I"
+    },
+    {
+      "file": "bose-qc35-replacement-ear-pads.md",
+      "productId": "DZc43yHr6ydfgE7zB3xyL0",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwOXk"
+    },
+    {
+      "file": "bose-qc45-replacement-ear-pads.md",
+      "productId": "xMEqvkRBbdrlJXyFG8cA8b",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03ePfVl"
+    },
+    {
+      "file": "bose-quietcomfort-ultra-gen-1-gen-2-cooling-gel-earpads-wc-freeze-qc-ultra.md",
+      "productId": "DZc43yHr6ydfgE7zB3ycZL",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbbEw"
+    },
+    {
+      "file": "corsair-virtuoso-earpads-wc-freeze-cooling-gel.md",
+      "productId": "DZc43yHr6ydfgE7zB3yz2n",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbbIl"
+    },
+    {
+      "file": "ear-pads-for-sony-wh1000xm3-over-ear-headphones.md",
+      "productId": "xMEqvkRBbdrlJXyFG8cxoj",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwOzo"
+    },
+    {
+      "file": "earpads-for-sony-wh900n.md",
+      "productId": "DZc43yHr6ydfgE7zB3y3Fd",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwP9A"
+    },
+    {
+      "file": "galaxy-buds-pro-3-4-memory-foam-ear-tips-wc-tipz-galaxy.md",
+      "productId": "GPjMdcfFWZVrKyR2PB4Jgw",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbbSx"
+    },
+    {
+      "file": "hyperx-cloud-fps-gaming-earpads-wc-stealthz-cloud.md",
+      "productId": "xMEqvkRBbdrlJXyFG8cdgV",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03ePgjz"
+    },
+    {
+      "file": "replacement-ear-pads-for-bose-qc3.md",
+      "productId": "DZc43yHr6ydfgE7zB3ylNG",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwPRs"
+    },
+    {
+      "file": "replacement-earpads-for-bose-qc15-headphones.md",
+      "productId": "GPjMdcfFWZVrKyR2PB3Z94",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03ePh1v"
+    },
+    {
+      "file": "replacement-earpads-for-sony-mdr-rf985r-more.md",
+      "productId": "GPjMdcfFWZVrKyR2PB3egw",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbbZK"
+    },
+    {
+      "file": "upgraded-beats-solo-4-earpads-wc-padz-solo-4.md",
+      "productId": "GPjMdcfFWZVrKyR2PB3qlW",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03ePhOL"
+    },
+    {
+      "file": "upgraded-corsair-virtuoso-ear-pads.md",
+      "productId": "xMEqvkRBbdrlJXyFG8cWMv",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwQ0x"
+    },
+    {
+      "file": "upgraded-sony-xm5-replacement-ear-pads.md",
+      "productId": "xMEqvkRBbdrlJXyFG8cpQL",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03ePhbn"
+    },
+    {
+      "file": "wc-freeze-hybrid-cooling-gel-infused-gaming-earpads.md",
+      "productId": "GPjMdcfFWZVrKyR2PB3t70",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03ePhpF"
+    }
+  ]
+}

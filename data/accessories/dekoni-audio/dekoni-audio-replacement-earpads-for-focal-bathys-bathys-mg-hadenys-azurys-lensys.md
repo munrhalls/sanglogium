@@ -29,10 +29,11 @@ spec_fields:
   formatCompatibility: null
   partType: "ear-pads-cushions"
   compatibility: 
-    - "Focal Bathys"
-    - "Focal Bathys MG"
+    - "Focal a perfect on Focal Bathys"
     - "Focal Hadenys"
     - "Focal Azurys"
+    - "Focal Bathys"
+    - "Focal Bathys MG"
     - "Focal Lensys"
   adapterFunction: null
   treatmentType: null
@@ -51,7 +52,7 @@ data_status: "COMPLETE"
 - **accessoryType**: `replacement-parts` — product name / page identifies this as a replacement-parts item.
 - **compatibleProductType**: ["headphone"] — intended for use with headphone.
 - **partType**: `ear-pads-cushions` — product name identifies this as a ear-pads-cushions replacement part.
-- **compatibility**: ["Focal Bathys","Focal Bathys MG","Focal Hadenys","Focal Azurys","Focal Lensys"] — compatible models extracted from the manufacturer product page and product title.
+- **compatibility**: ["Focal a perfect on Focal Bathys","Focal Hadenys","Focal Azurys","Focal Bathys","Focal Bathys MG","Focal Lensys"] — compatible models extracted from the manufacturer product page and product title.
 - **customerRating**: `null` — no visible customer rating or aggregate score on the cited source page.
 - **dealsDiscount**: `null` — no discount or deal terms visible on the cited source page.
 - **newArrival**: `null` — release/new-arrival status not stated on the cited source page.

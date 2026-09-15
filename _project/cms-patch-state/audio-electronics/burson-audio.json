@@ -1,0 +1,106 @@
+{
+  "issueId": "sang-logium-zdb.2.7",
+  "slice": "audio-electronics",
+  "brand": "Burson Audio",
+  "patchedAt": "2026-09-14T11:11:21.867Z",
+  "ok": 16,
+  "fail": 0,
+  "results": [
+    {
+      "file": "burson-audio-composer-3x-performance-dac-open-box.md",
+      "productId": "PHPYj28HJdPDHAaIBCfbSC",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUauOV5"
+    },
+    {
+      "file": "burson-audio-composer-3x-performance-dac.md",
+      "productId": "k27n1AQuIbSr5iozG1vPcd",
+      "ok": true,
+      "rev": "DE7q4q517EcCNrf7OPaylP"
+    },
+    {
+      "file": "burson-audio-conductor-3-gt.md",
+      "productId": "Pn6oyV4Ks5AcNbecjkTGp4",
+      "ok": true,
+      "rev": "DE7q4q517EcCNrf7OPb0Mt"
+    },
+    {
+      "file": "burson-audio-conductor-3x-grand-tourer-desktop-dac-&-amp.md",
+      "productId": "moXlkADK7m1DHgGwWwEdNG",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbnbbP0"
+    },
+    {
+      "file": "burson-audio-conductor-3x-grand-tourer-desktop-dac-amp.md",
+      "productId": "Pn6oyV4Ks5AcNbecjkT8mA",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbnbbf8"
+    },
+    {
+      "file": "burson-audio-conductor-3x-performance-open-box.md",
+      "productId": "Pn6oyV4Ks5AcNbecjkTAjW",
+      "ok": true,
+      "rev": "DE7q4q517EcCNrf7OPb1Ad"
+    },
+    {
+      "file": "burson-audio-funk-amplifier---open-box.md",
+      "productId": "k27n1AQuIbSr5iozG1vJMz",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbnbc4w"
+    },
+    {
+      "file": "burson-audio-playmate-2.md",
+      "productId": "PHPYj28HJdPDHAaIBAHGKa",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbnbcHq"
+    },
+    {
+      "file": "burson-audio-soloist-3x-grand-tourer.md",
+      "productId": "k27n1AQuIbSr5iozG1vOH0",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbnbcXy"
+    },
+    {
+      "file": "burson-audio-soloist-voyager.md",
+      "productId": "n10eAegrGspodtsQvy4Rpc",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbnbcks"
+    },
+    {
+      "file": "burson-audio-timekeeper-3i-reference-integrated-amp-dac.md",
+      "productId": "Pn6oyV4Ks5AcNbecjkTEhb",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUauPCR"
+    },
+    {
+      "file": "burson-conductor-3-reference.md",
+      "productId": "moXlkADK7m1DHgGwWwESiF",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUauPUV"
+    },
+    {
+      "file": "burson-playmate-3-class-a-headphone-amp-pre-amp-dac.md",
+      "productId": "GPjMdcfFWZVrKyR2PB6zec",
+      "ok": true,
+      "rev": "DE7q4q517EcCNrf7OPb1uE"
+    },
+    {
+      "file": "burson-soloist-3x-performance.md",
+      "productId": "k27n1AQuIbSr5iozG1vSJt",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUauQJ5"
+    },
+    {
+      "file": "burson-soloist-stellar-8w-xlr-class-a-headphone-pre-amp.md",
+      "productId": "DZc43yHr6ydfgE7zB43FOR",
+      "ok": true,
+      "rev": "DE7q4q517EcCNrf7OPb2m7"
+    },
+    {
+      "file": "burson-soloist-voyager-flagship-class-a-headphone-amplifier.md",
+      "productId": "xMEqvkRBbdrlJXyFG8i3hZ",
+      "ok": true,
+      "rev": "DE7q4q517EcCNrf7OPb3JH"
+    }
+  ]
+}

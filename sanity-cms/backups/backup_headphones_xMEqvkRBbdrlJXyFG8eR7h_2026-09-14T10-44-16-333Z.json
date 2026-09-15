@@ -1,0 +1,26 @@
+{
+  "productId": "xMEqvkRBbdrlJXyFG8eR7h",
+  "before": {
+    "acousticDesign": [
+      "open-back"
+    ],
+    "anc": "none",
+    "brand": [
+      "sjy-audio"
+    ],
+    "cableTermination": [
+      "3.5mm"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "driverType": "planar-magnetic",
+    "inStock": true,
+    "microphone": false,
+    "price": 99900,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-14T10:44:16.333Z"
+}

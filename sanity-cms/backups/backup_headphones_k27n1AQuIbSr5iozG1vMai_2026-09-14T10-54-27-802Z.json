@@ -1,0 +1,25 @@
+{
+  "productId": "k27n1AQuIbSr5iozG1vMai",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "chord-electronics"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac-amp-combo",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 159500
+  },
+  "backedUpAt": "2026-09-14T10:54:27.802Z"
+}

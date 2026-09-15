@@ -1,0 +1,70 @@
+{
+  "issueId": "sang-logium-zdb.3.39",
+  "slice": "accessories",
+  "brand": "ddHiFi",
+  "patchedAt": "2026-09-14T10:47:34.006Z",
+  "ok": 10,
+  "fail": 0,
+  "results": [
+    {
+      "file": "ddhifi-cz180-portable-hifi-storage-case.md",
+      "productId": "MrEMtYwMtrFDGWmRnGU178",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOsh9"
+    },
+    {
+      "file": "ddhifi-cz300-portable-large-capacity-storage-bag.md",
+      "productId": "Pn6oyV4Ks5AcNbecjb1QJq",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwMoA"
+    },
+    {
+      "file": "ddhifi-dj30se-4-4mm-male-to-3-5mm-female-single-ended-adapter.md",
+      "productId": "MrEMtYwMtrFDGWmRnGGjYE",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbaIK"
+    },
+    {
+      "file": "ddhifi-dj35ag-dj44ag-2-5mm-female-gold-version-adapter.md",
+      "productId": "MrEMtYwMtrFDGWmRnGKKBJ",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbaNQ"
+    },
+    {
+      "file": "ddhifi-dj35l-3-5mm-l-shaped-adapter.md",
+      "productId": "PHPYj28HJdPDHAaIB69jT4",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOtCX"
+    },
+    {
+      "file": "ddhifi-dj44b-dj44c-mark-ii.md",
+      "productId": "PHPYj28HJdPDHAaIB6AeOS",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOtvN"
+    },
+    {
+      "file": "ddhifi-dj44gold-4-4mm-female-to-3-5mm-male-adapter-black-gold-edition.md",
+      "productId": "Pn6oyV4Ks5AcNbecjatqB5",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbaV4"
+    },
+    {
+      "file": "ddhifi-dj44l-4-4mm-female-to-4-4mm-male-l-shaped-adapter.md",
+      "productId": "PHPYj28HJdPDHAaIB6CYWu",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwN6s"
+    },
+    {
+      "file": "ddhifi-dj44mojo-4-4mm-ground-pin-adapter.md",
+      "productId": "MrEMtYwMtrFDGWmRnGOCvl",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwNGE"
+    },
+    {
+      "file": "ddhifi-hs270w-wooden-headphone-stand.md",
+      "productId": "PHPYj28HJdPDHAaIB6FSgo",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOuVF"
+    }
+  ]
+}

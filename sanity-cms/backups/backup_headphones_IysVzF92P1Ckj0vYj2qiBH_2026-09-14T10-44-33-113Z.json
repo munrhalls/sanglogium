@@ -1,0 +1,27 @@
+{
+  "productId": "IysVzF92P1Ckj0vYj2qiBH",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "anc": "anc",
+    "brand": [
+      "jbl"
+    ],
+    "cableTermination": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wireless",
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "price": 8995,
+    "requiresAmplifier": false,
+    "wearingStyle": "on-ear"
+  },
+  "backedUpAt": "2026-09-14T10:44:33.113Z"
+}

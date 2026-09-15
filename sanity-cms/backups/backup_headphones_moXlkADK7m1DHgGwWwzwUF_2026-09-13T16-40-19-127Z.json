@@ -1,0 +1,25 @@
+{
+  "productId": "moXlkADK7m1DHgGwWwzwUF",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "noble-audio"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wireless",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "planar-magnetic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 64900,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T16:40:19.127Z"
+}

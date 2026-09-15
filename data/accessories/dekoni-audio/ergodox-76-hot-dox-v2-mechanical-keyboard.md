@@ -33,7 +33,7 @@ spec_fields:
   mounting: null
 
 source_urls: 
-  - "https://aposaudio.com/products/ergodox-76-hot-dox-v2-mechanical-keyboard"
+  - "https://apos.audio/products/ergodox-76-hot-dox-v2-mechanical-keyboard"
 verified_at: "2026-09-14"
 data_status: "COMPLETE"
 

@@ -1,0 +1,27 @@
+{
+  "productId": "xMEqvkRBbdrlJXyFG8elsb",
+  "before": {
+    "acousticDesign": [
+      "open-back"
+    ],
+    "anc": "none",
+    "brand": [
+      "audeze"
+    ],
+    "cableTermination": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "price": 14999,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-14T21:57:44.713Z"
+}

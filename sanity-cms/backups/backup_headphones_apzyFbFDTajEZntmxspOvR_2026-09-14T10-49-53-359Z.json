@@ -1,0 +1,23 @@
+{
+  "productId": "apzyFbFDTajEZntmxspOvR",
+  "before": {
+    "accessoryType": "cable",
+    "brand": [
+      "audioquest"
+    ],
+    "category": [
+      "accessories"
+    ],
+    "compatibility": [
+      "Evergreen"
+    ],
+    "connectorTermination": [
+      "3.5mm",
+      "6.35mm",
+      "4.4mm-balanced"
+    ],
+    "inStock": true,
+    "price": 19990
+  },
+  "backedUpAt": "2026-09-14T10:49:53.359Z"
+}

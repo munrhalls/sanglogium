@@ -1,46 +1,46 @@
 ---
-product_id: "Pn6oyV4Ks5AcNbecjjohGV"
-product_slug: "64-audio-nio-in-ear-headphones"
-brand: "64 Audio"
-name: "Nio In-Ear Headphones"
-slice: "headphones"
+product_id: Pn6oyV4Ks5AcNbecjjohGV
+product_slug: 64-audio-nio-in-ear-headphones
+brand: 64 Audio
+name: 64 Audio Nio In-Ear Headphones
+slice: headphones
 spec_fields:
   productCategory:
-    - "iem"
+  - iem
   wearingStyle:
-    - "in-ear"
+  - in-ear
   acousticDesign: null
-  fitType: "universal"
-  connectivity: "wired"
+  fitType: universal
+  connectivity: wired
   portable: true
   driverType:
-    - "balanced-armature"
-    - "dynamic"
+  - balanced-armature
+  - dynamic
   impedanceOhms: 6
   sensitivityDbMw: 105
   freqResponseHz:
     min: 10
     max: 20000
   cableTermination:
-    - "3.5mm"
+  - 3.5mm
   detachableCable: true
   cableLengthM: 1.22
   microphone: false
   foldable: false
   ipxRating: null
   bluetoothCodecs: null
-  anc: "passive"
+  anc: passive
   batteryLifeHours: null
   soundSignature: null
   awards: null
-  driverConfigBucket: "hybrid"
-  driverConfigDetail: "1DD+8BA"
+  driverConfigBucket: hybrid
+  driverConfigDetail: 1DD+8BA
 source_urls:
-  - "https://www.64audio.com/products/nio"
-  - "https://audio46.com/collections/64-audio/products/64-audio-nio-universal-fit-iem"
-  - "https://crinacle.com/rankings/iems/"
-verified_at: "2026-09-14"
-data_status: "COMPLETE"
+- https://www.64audio.com/products/nio
+- https://audio46.com/collections/64-audio/products/64-audio-nio-universal-fit-iem
+- https://crinacle.com/rankings/iems/
+verified_at: '2026-09-14'
+data_status: COMPLETE
 ---
 
 ## Verification Notes

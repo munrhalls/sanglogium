@@ -1,0 +1,12 @@
+Done.
+
+- Filed the one remaining Sony product, `drafts.dLGDVDmEEI2lV8CArIgVky` — a Sanity draft of the same LinkBuds Open (WF-L910) model — as `data/headphones/sony/linkbuds-open-wf-l910-drafts.md` so it does not collide with the existing `linkbuds-open-wf-l910.md`. [linkbuds-open-wf-l910-drafts.md](file:///home/jan/work/sanglogium/data/headphones/sony/linkbuds-open-wf-l910-drafts.md)
+- Verified `data/headphones/sony/` now contains 11 `.md` files, one per product in the issue.
+- Closed `sang-logium-zdb.1.2` with reason: `11 products sourced and filed.`
+- Exported the beads state to `.beads/issues.jsonl`.
+
+Relevant git changes:
+- `?? data/headphones/sony/linkbuds-open-wf-l910-drafts.md`
+- ` M .beads/issues.jsonl`
+
+The repo has a large number of pre-existing uncommitted changes; I did not stage or commit anything beyond the work above. If you want it committed: `git add data/headphones/sony/linkbuds-open-wf-l910-drafts.md .beads/issues.jsonl`.

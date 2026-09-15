@@ -1,0 +1,46 @@
+{
+  "issueId": "sang-logium-zdb.2.27",
+  "slice": "audio-electronics",
+  "brand": "Matrix Audio",
+  "patchedAt": "2026-09-14T10:46:39.858Z",
+  "ok": 6,
+  "fail": 0,
+  "results": [
+    {
+      "file": "matrix-audio-element-i-network-streamer-dac-amp.md",
+      "productId": "k27n1AQuIbSr5iozG1vJ1L",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbYd7"
+    },
+    {
+      "file": "matrix-audio-element-x-open-box.md",
+      "productId": "n10eAegrGspodtsQw13Qpt",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwJS1"
+    },
+    {
+      "file": "matrix-audio-ms-1-flagship-music-streamer.md",
+      "productId": "DZc43yHr6ydfgE7zB40rkU",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOmG5"
+    },
+    {
+      "file": "matrix-audio-nt-1-network-transport.md",
+      "productId": "xMEqvkRBbdrlJXyFG8fa0r",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbYgw"
+    },
+    {
+      "file": "matrix-audio-ts-1-all-in-one-streamer-pre-amplifier-headphone-amplifier.md",
+      "productId": "GPjMdcfFWZVrKyR2PB7h5O",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOmTX"
+    },
+    {
+      "file": "matrix-audio-x-sabre-3-desktop-dac.md",
+      "productId": "n10eAegrGspodtsQvy3lt9",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwJkj"
+    }
+  ]
+}

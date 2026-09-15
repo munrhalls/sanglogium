@@ -1,0 +1,25 @@
+{
+  "productId": "DZc43yHr6ydfgE7zB41seL",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "vmv"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": false,
+    "deviceType": "headphone-amp",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "rca"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 116000
+  },
+  "backedUpAt": "2026-09-14T10:46:03.574Z"
+}

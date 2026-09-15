@@ -1,0 +1,76 @@
+{
+  "issueId": "sang-logium-zdb.2.10",
+  "slice": "audio-electronics",
+  "brand": "Chord Electronics",
+  "patchedAt": "2026-09-14T10:54:29.080Z",
+  "ok": 11,
+  "fail": 0,
+  "results": [
+    {
+      "file": "chord-electronics-2go.md",
+      "productId": "MrEMtYwMtrFDGWmRnN7qVp",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQl3h"
+    },
+    {
+      "file": "chord-electronics-alto-headphone-amplifier.md",
+      "productId": "PHPYj28HJdPDHAaIBCghLo",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435Cxbt8l"
+    },
+    {
+      "file": "chord-electronics-anni.md",
+      "productId": "PHPYj28HJdPDHAaIBCgaYO",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbtCa"
+    },
+    {
+      "file": "chord-electronics-hugo-2-portable-dac-&-headphone-amplifier.md",
+      "productId": "n10eAegrGspodtsQvy4Nwc",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQlZ5"
+    },
+    {
+      "file": "chord-electronics-hugo-2-portable-dac-headphone-amplifier.md",
+      "productId": "MrEMtYwMtrFDGWmRnN74UJ",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbtGP"
+    },
+    {
+      "file": "chord-electronics-hugo-tt2-open-box.md",
+      "productId": "Pn6oyV4Ks5AcNbecjkTTlM",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcx8Dv"
+    },
+    {
+      "file": "chord-electronics-hugo-tt2.md",
+      "productId": "moXlkADK7m1DHgGwWwEfPD",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbtO3"
+    },
+    {
+      "file": "chord-electronics-mojo-2-portable-dac-and-headphone-amplifier-4-4mm.md",
+      "productId": "Pn6oyV4Ks5AcNbecjgsEF8",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcx8Rx"
+    },
+    {
+      "file": "chord-electronics-mojo-2-portable-dac-and-headphone-amplifier.md",
+      "productId": "n10eAegrGspodtsQvy4UmJ",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQlvV"
+    },
+    {
+      "file": "chord-electronics-poly-v3.md",
+      "productId": "moXlkADK7m1DHgGwWwzejm",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQmDR"
+    },
+    {
+      "file": "chord-electronics-qutest.md",
+      "productId": "k27n1AQuIbSr5iozG1vMai",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbtUQ"
+    }
+  ]
+}

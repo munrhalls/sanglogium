@@ -1,47 +1,47 @@
 ---
-product_id: "Pn6oyV4Ks5AcNbecjgqaFC"
-product_slug: "hifiman-he1000se-headphones"
-brand: "HiFiMan"
-name: "HE1000se"
-slice: "headphones"
+product_id: Pn6oyV4Ks5AcNbecjgqaFC
+product_slug: hifiman-he1000se-headphones
+brand: HiFiMan
+name: Hifiman HE1000se Headphones
+slice: headphones
 spec_fields:
   productCategory:
-    - "over-ear"
+  - over-ear
   wearingStyle:
-    - "over-ear"
+  - over-ear
   acousticDesign:
-    - "open-back"
-  connectivity: "wired"
+  - open-back
+  connectivity: wired
   portable: false
   driverType:
-    - "planar-magnetic"
+  - planar-magnetic
   impedanceOhms: 35
   sensitivityDbMw: 96
   freqResponseHz:
     min: 8
     max: 65000
   cableTermination:
-    - "3.5mm"
-    - "6.35mm"
-    - "4-pin-xlr"
+  - 3.5mm
+  - 6.35mm
+  - 4-pin-xlr
   detachableCable: true
   cableLengthM: 1.5
   microphone: false
   foldable: false
   ipxRating: null
   bluetoothCodecs: null
-  anc: "none"
+  anc: none
   batteryLifeHours: null
-  soundSignature: "Bright/Analytical"
+  soundSignature: Bright/Analytical
   awards: null
   fitType: null
   driverConfigBucket: null
 source_urls:
-  - "https://hifiman.com/products/detail/295"
-  - "https://hifiman.com/attachments/file/20250211/20250211035237_36666.pdf"
-  - "https://crinacle.com/rankings/headphones/real/"
-verified_at: "2026-09-14"
-data_status: "COMPLETE"
+- https://hifiman.com/products/detail/295
+- https://hifiman.com/attachments/file/20250211/20250211035237_36666.pdf
+- https://crinacle.com/rankings/headphones/real/
+verified_at: '2026-09-14'
+data_status: COMPLETE
 ---
 
 ## Verification Notes

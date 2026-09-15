@@ -1,0 +1,28 @@
+{
+  "productId": "Pn6oyV4Ks5AcNbecjkTGp4",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "burson-audio"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac-amp-combo",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "rca",
+      "usb",
+      "optical",
+      "bluetooth"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 179900
+  },
+  "backedUpAt": "2026-09-14T11:11:06.518Z"
+}

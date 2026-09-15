@@ -1,0 +1,25 @@
+{
+  "productId": "moXlkADK7m1DHgGwWwEUpi",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "weiss"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 349500
+  },
+  "backedUpAt": "2026-09-14T10:45:58.570Z"
+}

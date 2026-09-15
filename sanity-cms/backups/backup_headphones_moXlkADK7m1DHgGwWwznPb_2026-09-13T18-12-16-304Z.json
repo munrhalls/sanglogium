@@ -1,0 +1,25 @@
+{
+  "_id": "moXlkADK7m1DHgGwWwznPb",
+  "name": "Bowers & Wilkins Pi7 S2 Wireless In-Ear Headphones",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "bowers-wilkins"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wireless",
+    "connector": [
+      "mmcx"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 29900,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-13T18:12:16.305Z"
+}

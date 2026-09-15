@@ -1,0 +1,214 @@
+{
+  "_id": "moXlkADK7m1DHgGwWx071u",
+  "name": "Final Audio ZE8000 True Wireless In-Ear Headphones",
+  "before": {
+    "acousticDesign": null,
+    "anc": "anc",
+    "awards": null,
+    "backDesign": "closed",
+    "batteryLifeHours": {
+      "ancOff": 5,
+      "ancOn": 5
+    },
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX",
+      "aptX Adaptive"
+    ],
+    "brand": [
+      "final-audio"
+    ],
+    "cableLengthM": null,
+    "cableTermination": null,
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "true-wireless",
+    "connector": [
+      "mmcx"
+    ],
+    "detachableCable": null,
+    "driverConfigBucket": "single-dynamic",
+    "driverConfigDetail": "1DD",
+    "driverType": [
+      "dynamic"
+    ],
+    "fitType": "universal",
+    "foldable": null,
+    "freqResponseHz": null,
+    "impedanceOhms": null,
+    "inStock": true,
+    "ipxRating": "IPX4",
+    "microphone": true,
+    "noiseCancelling": false,
+    "portable": true,
+    "price": 34900,
+    "productCategory": [
+      "true-wireless"
+    ],
+    "requiresAmplifier": false,
+    "sensitivityDbMw": null,
+    "soundSignature": null,
+    "sourcing": [
+      {
+        "field": "driverType",
+        "quote": "超高精度＆超低歪ドライバー「f-CORE for 8K SOUND」搭載 ... 完全ワイヤレスイヤホンでは異例の直径13mm相当の大口径振動板",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://audio46.com/products/final-audio-ze8000-true-wireless-earphones"
+      },
+      {
+        "field": "driverConfigBucket",
+        "quote": "超高精度＆超低歪ドライバー「f-CORE for 8K SOUND」搭載 ... 完全ワイヤレスイヤホンでは異例の直径13mm相当の大口径振動板",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://audio46.com/products/final-audio-ze8000-true-wireless-earphones"
+      },
+      {
+        "field": "bluetoothCodecs",
+        "quote": "対応コーデック SBC, AAC, Qualcomm® aptX ™, aptX ™ Adaptive",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://final-inc.com/products/ze8000-jp"
+      },
+      {
+        "field": "ipxRating",
+        "quote": "防水性能 IPX4",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://final-inc.com/products/ze8000-jp"
+      },
+      {
+        "field": "batteryLifeHours",
+        "quote": "連続音楽再生時間 Up to 5 hours / Case included: Up to 15 hours * Fast charge: 45 minutes music playback in 5 minutes",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://final-inc.com/products/ze8000-jp"
+      },
+      {
+        "field": "connectivity",
+        "quote": "通信方式 Bluetooth® 5.2",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://final-inc.com/products/ze8000-jp"
+      },
+      {
+        "field": "anc",
+        "quote": "ノイズキャンセリング／外音取り込みの4つのモード切り替え",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://final-inc.com/products/ze8000-jp"
+      },
+      {
+        "field": "microphone",
+        "quote": "ビームフォーミング機能搭載 高性能マイクを２機、距離を離して配置することにより、口元へのビームフォーミングを可能にしています",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://audio46.com/products/final-audio-ze8000-true-wireless-earphones"
+      },
+      {
+        "field": "productCategory",
+        "quote": "PRODUCTS ワイヤレスイヤホン ZE series — ZE8000 (完全ワイヤレスイヤホン)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://final-inc.com/products/ze8000-jp"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "Final Audio ZE8000 True Wireless Earphones — category: In-Ear Headphones",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://audio46.com/products/final-audio-ze8000-true-wireless-earphones"
+      },
+      {
+        "field": "portable",
+        "quote": "IPX4 Water Resistance Rating for sport and active lifestyles ... Up to 15 hours with charging case",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://audio46.com/products/final-audio-ze8000-true-wireless-earphones"
+      },
+      {
+        "field": "fitType",
+        "quote": "付属品：充電ケース / ZE8000専用イヤーピース SS/S/M/L/LLサイズ / USBタイプC 充電用ケーブル / アコースティック治具 / ダストフィルター",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://final-inc.com/products/ze8000-jp"
+      },
+      {
+        "field": "impedanceOhms",
+        "quote": "(entire manufacturer Specs block read in full — only 5 lines: Bluetooth 5.2 / codecs / playtime / charge time / IPX4. No impedance line; confirmed absent from the owner's manual too — exhausted NULL)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://final-inc.com/products/ze8000-jp"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "(entire manufacturer Specs block read in full — no sensitivity line; confirmed absent from the owner's manual too — exhausted NULL)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://final-inc.com/products/ze8000-jp"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "(entire manufacturer Specs block read in full — no frequency-response line; confirmed absent from the owner's manual too — exhausted NULL)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://final-inc.com/products/ze8000-jp"
+      },
+      {
+        "field": "soundSignature",
+        "quote": "(exhausted Tier 3: no Crinacle rankings/graph/individual review post, no ASR measurement, no Rtings review for ZE8000 — all three audited via sitemap + on-site search on 2026-09-13; the protocol defines no Tier-3 fallback, so NULL rather than inferred from marketing copy)",
+        "sourcedAt": "2026-09-13",
+        "tier": "editorial",
+        "url": "https://docs/filters-sort/sourcing-protocol-headphones.md"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "(field vocab is over-ear-oriented (open-back/closed-back/semi-open); not applicable to a true-wireless in-ear — left null rather than guessed)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://docs/filters-sort/schema-headphones.md"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "(true-wireless only — no cable supplied and none accepted; field not applicable)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://final-inc.com/products/ze8000-jp"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "(true-wireless only — no cable supplied; field not applicable)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://final-inc.com/products/ze8000-jp"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "(true-wireless — schema marks cableLengthM null when not applicable, e.g. true-wireless)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://docs/filters-sort/schema-headphones.md"
+      },
+      {
+        "field": "foldable",
+        "quote": "(no folding/collapsing mechanism — not applicable to an earbud; boolean feature-absence rule)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://final-inc.com/products/ze8000-jp"
+      },
+      {
+        "field": "awards",
+        "quote": "(no award or recognition citation found for this SKU — exhausted NULL)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://final-inc.com/products/ze8000-jp"
+      }
+    ],
+    "wearingStyle": [
+      "in-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-13T18:12:18.406Z"
+}

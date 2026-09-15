@@ -1,45 +1,45 @@
 ---
-product_id: "Pn6oyV4Ks5AcNbecjjpxmB"
-product_slug: "dunu-studio-sa6-mk2-in-ear-headphones"
-brand: "Dunu"
-name: "Studio SA6 MK2 In-Ear Headphones"
-slice: "headphones"
+product_id: Pn6oyV4Ks5AcNbecjjpxmB
+product_slug: dunu-studio-sa6-mk2-in-ear-headphones
+brand: Dunu
+name: Dunu Studio SA6 MK2 In-Ear Headphones
+slice: headphones
 spec_fields:
   productCategory:
-    - "iem"
+  - iem
   wearingStyle:
-    - "in-ear"
+  - in-ear
   acousticDesign: null
-  fitType: "universal"
-  connectivity: "wired"
+  fitType: universal
+  connectivity: wired
   portable: true
   driverType:
-    - "balanced-armature"
+  - balanced-armature
   impedanceOhms: 24
   sensitivityDbMw: 114
   freqResponseHz:
     min: 5
     max: 40000
   cableTermination:
-    - "3.5mm"
-    - "4.4mm-balanced"
+  - 3.5mm
+  - 4.4mm-balanced
   detachableCable: true
   cableLengthM: 1.2
   microphone: false
   foldable: false
   ipxRating: null
   bluetoothCodecs: null
-  anc: "passive"
+  anc: passive
   batteryLifeHours: null
   soundSignature: null
   awards: null
-  driverConfigBucket: "multi-ba"
-  driverConfigDetail: "6BA"
+  driverConfigBucket: multi-ba
+  driverConfigDetail: 6BA
 source_urls:
-  - "https://www.dunu-topsound.com/product-page/sa6-mkii"
-  - "https://headphones.com/products/dunu-sa6-mk2-in-ear-headphones"
-verified_at: "2026-09-14"
-data_status: "COMPLETE"
+- https://www.dunu-topsound.com/product-page/sa6-mkii
+- https://headphones.com/products/dunu-sa6-mk2-in-ear-headphones
+verified_at: '2026-09-14'
+data_status: COMPLETE
 ---
 
 ## Verification Notes

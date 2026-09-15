@@ -1,0 +1,25 @@
+{
+  "productId": "A5Y8wEwAn6Fo0zYQ5BM7Yv",
+  "before": {
+    "accessoryType": "cable",
+    "brand": [
+      "meze-audio"
+    ],
+    "category": [
+      "accessories"
+    ],
+    "compatibility": [
+      "99 NEO",
+      "99 CLASSICS",
+      "109 PRO",
+      "LIRIC"
+    ],
+    "connectorTermination": [
+      "3.5mm",
+      "4.4mm-balanced"
+    ],
+    "inStock": true,
+    "price": 12900
+  },
+  "backedUpAt": "2026-09-14T10:48:43.729Z"
+}

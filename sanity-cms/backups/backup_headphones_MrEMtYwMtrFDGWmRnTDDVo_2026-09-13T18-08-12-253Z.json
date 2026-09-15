@@ -1,0 +1,26 @@
+{
+  "_id": "MrEMtYwMtrFDGWmRnTDDVo",
+  "name": "Warwick Acoustics Bravura Headphones",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "warwick-acoustics"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 239500,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T18:08:12.253Z"
+}

@@ -1,0 +1,25 @@
+{
+  "productId": "ZuUKzmkqDyQwdcwhxlJpXB",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "mcintosh"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "inStock": false,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 700000
+  },
+  "backedUpAt": "2026-09-14T10:46:27.238Z"
+}

@@ -1,0 +1,24 @@
+{
+  "_id": "Pn6oyV4Ks5AcNbecjjpYAS",
+  "name": "Sennheiser MOMENTUM True Wireless 4",
+  "before": {
+    "brand": [
+      "sennheiser"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wireless",
+    "connector": [
+      "mmcx"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 34995,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-13T18:11:12.357Z"
+}

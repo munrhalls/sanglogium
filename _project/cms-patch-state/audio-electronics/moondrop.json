@@ -1,0 +1,22 @@
+{
+  "issueId": "sang-logium-zdb.2.29",
+  "slice": "audio-electronics",
+  "brand": "Moondrop",
+  "patchedAt": "2026-09-14T10:46:27.174Z",
+  "ok": 2,
+  "fail": 0,
+  "results": [
+    {
+      "file": "moondrop-dawn-pro-2-dual-portable-dac-amp.md",
+      "productId": "xMEqvkRBbdrlJXyFG8l6fJ",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOkxN"
+    },
+    {
+      "file": "moondrop-dawn-pro-portable-dac-and-headphone-amp.md",
+      "productId": "MrEMtYwMtrFDGWmRnNGOLg",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbYVT"
+    }
+  ]
+}

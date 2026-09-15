@@ -1,0 +1,25 @@
+{
+  "productId": "PHPYj28HJdPDHAaIBANGzM",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "astell-and-kern"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dap",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 227000
+  },
+  "backedUpAt": "2026-09-14T10:51:50.154Z"
+}

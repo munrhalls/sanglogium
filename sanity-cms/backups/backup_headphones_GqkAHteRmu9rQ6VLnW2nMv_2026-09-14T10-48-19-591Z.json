@@ -1,0 +1,23 @@
+{
+  "productId": "GqkAHteRmu9rQ6VLnW2nMv",
+  "before": {
+    "accessoryType": "cable",
+    "brand": [
+      "svs"
+    ],
+    "category": [
+      "accessories"
+    ],
+    "compatibility": [
+      "universal"
+    ],
+    "connectorTermination": [
+      "3.5mm",
+      "6.35mm",
+      "4.4mm-balanced"
+    ],
+    "inStock": true,
+    "price": 6900
+  },
+  "backedUpAt": "2026-09-14T10:48:19.591Z"
+}

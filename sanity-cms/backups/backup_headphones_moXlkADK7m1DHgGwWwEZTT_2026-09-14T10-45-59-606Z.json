@@ -1,0 +1,25 @@
+{
+  "productId": "moXlkADK7m1DHgGwWwEZTT",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "violectric"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac-amp-combo",
+    "formFactor": "portable",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 24900
+  },
+  "backedUpAt": "2026-09-14T10:45:59.606Z"
+}

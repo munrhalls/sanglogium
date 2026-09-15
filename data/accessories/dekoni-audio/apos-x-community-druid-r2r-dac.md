@@ -16,7 +16,7 @@ spec_fields:
   connectorTermination: null
   lengthM: null
   conductorMaterial: null
-  balancedUnbalanced: "balanced"
+  balancedUnbalanced: null
   furnitureType: null
   material: null
   adjustableHeight: null
@@ -33,7 +33,7 @@ spec_fields:
   mounting: null
 
 source_urls: 
-  - "https://aposaudio.com/products/apos-x-community-druid-r2r-dac"
+  - "https://apos.audio/products/apos-x-community-druid-r2r-dac"
 verified_at: "2026-09-14"
 data_status: "COMPLETE"
 
@@ -42,7 +42,6 @@ data_status: "COMPLETE"
 ## Verification Notes
 
 - **condition**: `new` — product listing has a single condition / no condition options.
-- **balancedUnbalanced**: `balanced` — product title / description describes the cable as balanced.
 - **customerRating**: `null` — no visible customer rating or aggregate score on the cited source page.
 - **dealsDiscount**: `null` — no discount or deal terms visible on the cited source page.
 - **newArrival**: `null` — release/new-arrival status not stated on the cited source page.

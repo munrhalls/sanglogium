@@ -1,0 +1,14 @@
+I’ll invoke the beads skill, then `bd show` the issue and follow its protocols.Done. `sang-logium-zdb.1.8` is closed with reason **"4 products sourced and filed."**
+
+What changed:
+- Added `data/headphones/denon/denon-ah-d9200-headphones.md` for `PHPYj28HJdPDHAaIBDsCuM`
+- Added `data/headphones/denon/denon-perl-true-wireless-in-ear-headphones.md` for `PHPYj28HJdPDHAaIBDsKN0`
+- `data/headphones/denon/` now contains 4 files total, matching the issue's product count
+- `.beads/issues.jsonl` exported/updated to reflect the closed status
+
+Sourcing summary:
+- AH-D9200: Denon product page, info sheet PDF, owner’s manual PDF, Audio46 tag block, Crinacle rankings
+- PerL: Denon product page, PerL info sheet PDF, owner’s manual PDF
+- Every field is either a cited real value or an explicit `null`; the PerL CMS 20–40 kHz frequency line is noted but not used because the manufacturer info sheet and product page agree on 20 Hz–20 kHz
+
+No other beads issue or brand was modified. No build/test/lint commands were run per repo rules.

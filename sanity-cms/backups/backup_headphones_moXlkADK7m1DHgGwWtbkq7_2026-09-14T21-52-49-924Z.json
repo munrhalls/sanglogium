@@ -1,0 +1,133 @@
+{
+  "productId": "moXlkADK7m1DHgGwWtbkq7",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "anc": "passive",
+    "brand": [
+      "dan-clark-audio"
+    ],
+    "cableLengthM": 2,
+    "cableTermination": [
+      "3.5mm",
+      "6.35mm",
+      "4-pin-xlr",
+      "4.4mm-balanced",
+      "2.5mm-balanced"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "detachableCable": true,
+    "driverType": [
+      "planar-magnetic"
+    ],
+    "foldable": true,
+    "impedanceOhms": 27,
+    "inStock": true,
+    "microphone": false,
+    "portable": true,
+    "price": 169999,
+    "requiresAmplifier": true,
+    "sensitivityDbMw": 90,
+    "sourcing": [
+      {
+        "field": "impedanceOhms",
+        "quote": "Impedance 27ohms",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://danclarkaudio.com/e3.html"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "Sensitivity ~90 dB/mW",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://danclarkaudio.com/e3.html"
+      },
+      {
+        "field": "driverType",
+        "quote": "all-new 5th generation driver and our pioneering Acoustic Metamaterial Tuning System, or AMTS (Dan Clark Audio planar-magnetic line)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://danclarkaudio.com/e3.html"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "\"Choose Your Cable\" dropdown base no-upcharge option: 2m 1/4\" VIVO",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://danclarkaudio.com/e3.html"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "E3 is our midrange closed-back headphone (circumaural, DCA signature self-adjusting headband)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/e3.html"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "E3 is Dan Clark Audio's revolutionary new closed-back headphone",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/e3.html"
+      },
+      {
+        "field": "connectivity",
+        "quote": "\"Choose Your Cable\" analog options only: 1/4\", XLR, 4.4mm, 2.5mm, 3.5mm (no wireless or Bluetooth feature stated anywhere on the page)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/e3.html"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "\"Choose Your Cable\" options: 1/4\", XLR (4-pin), 4.4mm, 2.5mm, 3.5mm",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/e3.html"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "\"Choose Your Cable\" dropdown offering interchangeable 1/4\", XLR, 4.4mm, 2.5mm and 3.5mm cables (DCA's push-pull self-latching inline connector system across its planar-magnetic line)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/e3.html"
+      },
+      {
+        "field": "portable",
+        "quote": "Travel friendly Packs Small! / convenient and stylish folding gimbals that make E3 a conveniently compact travel headphone",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/e3.html"
+      },
+      {
+        "field": "foldable",
+        "quote": "convenient and stylish folding gimbals that make E3 a conveniently compact travel headphone",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/e3.html"
+      },
+      {
+        "field": "microphone",
+        "quote": "(no microphone mentioned anywhere on the manufacturer page; boolean feature-absence rule applied)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/e3.html"
+      },
+      {
+        "field": "anc",
+        "quote": "closed-back headphone design offering isolation; no electronic active noise cancelling feature stated",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/e3.html"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-14T21:52:49.924Z"
+}

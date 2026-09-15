@@ -1,0 +1,27 @@
+{
+  "productId": "DZc43yHr6ydfgE7zB460aC",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "anc": "passive",
+    "brand": [
+      "audeze"
+    ],
+    "cableTermination": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "driverType": "electrostatic",
+    "inStock": true,
+    "microphone": false,
+    "price": 599500,
+    "requiresAmplifier": true,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-14T21:57:41.194Z"
+}

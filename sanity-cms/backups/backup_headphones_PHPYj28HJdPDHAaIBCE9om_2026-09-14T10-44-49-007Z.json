@@ -1,0 +1,24 @@
+{
+  "productId": "PHPYj28HJdPDHAaIBCE9om",
+  "before": {
+    "anc": "passive",
+    "brand": [
+      "crinear"
+    ],
+    "cableTermination": [
+      "3.5mm",
+      "4.4mm-balanced"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "price": 16999,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-14T10:44:49.007Z"
+}

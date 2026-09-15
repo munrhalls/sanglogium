@@ -1,0 +1,24 @@
+{
+  "_id": "dLGDVDmEEI2lV8CArIgBZs",
+  "name": "Bowers & Wilkins Pi6 In-Ear Bluetooth Wireless Earbuds (Forest Green)",
+  "before": {
+    "brand": [
+      "bowers-wilkins"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wireless",
+    "connector": [
+      "mmcx"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 24900,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-13T18:11:34.424Z"
+}

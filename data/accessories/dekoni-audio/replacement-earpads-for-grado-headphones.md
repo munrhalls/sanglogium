@@ -29,7 +29,17 @@ spec_fields:
   formatCompatibility: null
   partType: "ear-pads-cushions"
   compatibility: 
-    - "Grado"
+    - "Grado GS"
+    - "Grado PS"
+    - "Grado RS including GS1000"
+    - "Grado GS2000"
+    - "Grado GS3000"
+    - "Grado PS1000"
+    - "Grado PS2000"
+    - "Grado PS500"
+    - "Grado RS1"
+    - "Grado RS2"
+    - "Grado SR125"
   adapterFunction: null
   treatmentType: null
   mounting: null
@@ -47,7 +57,7 @@ data_status: "COMPLETE"
 - **accessoryType**: `replacement-parts` — product name / page identifies this as a replacement-parts item.
 - **compatibleProductType**: ["headphone"] — intended for use with headphone.
 - **partType**: `ear-pads-cushions` — product name identifies this as a ear-pads-cushions replacement part.
-- **compatibility**: ["Grado"] — compatible models extracted from the manufacturer product page and product title.
+- **compatibility**: ["Grado GS","Grado PS","Grado RS including GS1000","Grado GS2000","Grado GS3000","Grado PS1000","Grado PS2000","Grado PS500","Grado RS1","Grado RS2","Grado SR125"] — compatible models extracted from the manufacturer product page and product title.
 - **customerRating**: `null` — no visible customer rating or aggregate score on the cited source page.
 - **dealsDiscount**: `null` — no discount or deal terms visible on the cited source page.
 - **newArrival**: `null` — release/new-arrival status not stated on the cited source page.

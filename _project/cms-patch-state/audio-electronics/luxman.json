@@ -1,0 +1,16 @@
+{
+  "issueId": "sang-logium-zdb.2.25",
+  "slice": "audio-electronics",
+  "brand": "Luxman",
+  "patchedAt": "2026-09-14T10:46:41.083Z",
+  "ok": 1,
+  "fail": 0,
+  "results": [
+    {
+      "file": "luxman-p-100-centennial-headphone-amplifier.md",
+      "productId": "PHPYj28HJdPDHAaIBChaz2",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwJrk"
+    }
+  ]
+}

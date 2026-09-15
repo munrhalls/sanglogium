@@ -1,0 +1,25 @@
+{
+  "productId": "xMEqvkRBbdrlJXyFG8fa0r",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "matrix-audio"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac-amp-combo",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 399900
+  },
+  "backedUpAt": "2026-09-14T10:46:36.093Z"
+}

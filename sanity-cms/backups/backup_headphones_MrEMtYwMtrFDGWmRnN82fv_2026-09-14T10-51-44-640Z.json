@@ -1,0 +1,25 @@
+{
+  "productId": "MrEMtYwMtrFDGWmRnN82fv",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "eversolo"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 198000
+  },
+  "backedUpAt": "2026-09-14T10:51:44.640Z"
+}

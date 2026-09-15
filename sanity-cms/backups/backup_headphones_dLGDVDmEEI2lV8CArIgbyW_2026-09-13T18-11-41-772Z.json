@@ -1,0 +1,26 @@
+{
+  "_id": "dLGDVDmEEI2lV8CArIgbyW",
+  "name": "Soundcore Q20i Wireless Headphones (White)",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "soundcore"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wireless",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 77000,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T18:11:41.772Z"
+}

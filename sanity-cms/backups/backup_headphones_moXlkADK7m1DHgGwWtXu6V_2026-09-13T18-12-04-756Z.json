@@ -1,0 +1,161 @@
+{
+  "_id": "moXlkADK7m1DHgGwWtXu6V",
+  "name": "Hifiman Arya Headphones | Stealth Magnets Edition",
+  "before": {
+    "acousticDesign": [
+      "open-back"
+    ],
+    "backDesign": "open",
+    "brand": [
+      "hifiman"
+    ],
+    "cableLengthM": 1.5,
+    "cableTermination": [
+      "3.5mm",
+      "6.35mm",
+      "4.4mm-balanced",
+      "4-pin-xlr",
+      "2.5mm-balanced"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "detachableCable": true,
+    "driverType": [
+      "planar-magnetic"
+    ],
+    "foldable": false,
+    "freqResponseHz": {
+      "max": 65000,
+      "min": 8
+    },
+    "impedanceOhms": 32,
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "portable": false,
+    "price": 59900,
+    "productCategory": [
+      "over-ear"
+    ],
+    "requiresAmplifier": true,
+    "sensitivityDbMw": 94,
+    "soundSignature": "Bright/Analytical",
+    "sourcing": [
+      {
+        "field": "impedanceOhms",
+        "quote": "Impedance: 32 Ω",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://hifiman.com/attachments/file/20250211/20250211033708_51720.pdf"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "Sensitivity: 94 dB",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://hifiman.com/attachments/file/20250211/20250211033708_51720.pdf"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "Frequency response: 8 Hz-65 kHz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://hifiman.com/attachments/file/20250211/20250211033708_51720.pdf"
+      },
+      {
+        "field": "driverType",
+        "quote": "HIFIMAN utilizes an 'Open Back' design... (planar magnetic construction per manual + retailer facets)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://hifiman.com/attachments/file/20250211/20250211033708_51720.pdf"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "(1) 1.5m headphone cable (6.35mm)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://hifiman.com/attachments/file/20250211/20250211033708_51720.pdf"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "HIFIMAN utilizes an 'Open Back' design for best possible sound",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hifiman.com/attachments/file/20250211/20250211033708_51720.pdf"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "The Arya package includes a 6.35mm connector cable... if you require a 4.4mm or XLR cable one can easily be swapped over... The Arya itself has 3.5mm sockets",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hifiman.com/attachments/file/20250211/20250211033708_51720.pdf"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "The cable is user-replaceable and has channel orientation for left and right",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hifiman.com/attachments/file/20250211/20250211033708_51720.pdf"
+      },
+      {
+        "field": "productCategory",
+        "quote": "Cup Style: Open-Back",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://headphones.com/products/hifiman-arya-headphones-stealth-magnets-edition"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "Wearing Style: Over-ear",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://headphones.com/products/hifiman-arya-headphones-stealth-magnets-edition"
+      },
+      {
+        "field": "connectivity",
+        "quote": "Connectivity: Wired",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://headphones.com/products/hifiman-arya-headphones-stealth-magnets-edition"
+      },
+      {
+        "field": "portable",
+        "quote": "Amp Required: Yes (full-size open-back; no case/travel language anywhere — absence-based FLAG)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://headphones.com/products/hifiman-arya-headphones-stealth-magnets-edition"
+      },
+      {
+        "field": "microphone",
+        "quote": "(no microphone language in full 16-page owner's guide, headphones.com, or Bloom Audio — boolean feature-absence rule)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hifiman.com/attachments/file/20250211/20250211033708_51720.pdf"
+      },
+      {
+        "field": "foldable",
+        "quote": "(only headband-height adjustment and ear-cup swivel described; no folding mechanism — absence-based FLAG)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hifiman.com/attachments/file/20250211/20250211033708_51720.pdf"
+      },
+      {
+        "field": "soundSignature",
+        "quote": "High resolution planar that may be a little peaky in the treble for some. (Tone Grade A+, Technical S-)",
+        "sourcedAt": "2026-09-13",
+        "tier": "editorial",
+        "url": "https://crinacle.com/rankings/headphones/"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-13T18:12:04.756Z"
+}

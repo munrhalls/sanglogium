@@ -1,0 +1,25 @@
+{
+  "productId": "GPjMdcfFWZVrKyR2PB6EDC",
+  "before": {
+    "amplification": "tube",
+    "balancedOutput": false,
+    "brand": [
+      "xduoo"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac-amp-combo",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 31900
+  },
+  "backedUpAt": "2026-09-14T10:50:41.571Z"
+}

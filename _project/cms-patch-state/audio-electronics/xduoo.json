@@ -1,0 +1,76 @@
+{
+  "issueId": "sang-logium-zdb.2.44",
+  "slice": "audio-electronics",
+  "brand": "XDuoo",
+  "patchedAt": "2026-09-14T10:50:51.089Z",
+  "ok": 11,
+  "fail": 0,
+  "results": [
+    {
+      "file": "xduoo-dm-01-desktop-dac-amp.md",
+      "productId": "DZc43yHr6ydfgE7zB41oi2",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435Cxbkto"
+    },
+    {
+      "file": "xduoo-mt-604-balanced-tube-headphone-amplifier.md",
+      "productId": "DZc43yHr6ydfgE7zB42wTA",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwspj"
+    },
+    {
+      "file": "xduoo-ta-10r-tube-dac-amp.md",
+      "productId": "GPjMdcfFWZVrKyR2PB6EDC",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435Cxbkyu"
+    },
+    {
+      "file": "xduoo-ta-20-plus-balanced-tube-headphone-amplifier.md",
+      "productId": "DZc43yHr6ydfgE7zB42uia",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwt8R"
+    },
+    {
+      "file": "xduoo-ta-22-dac-tube-amp.md",
+      "productId": "GPjMdcfFWZVrKyR2PB76mM",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQG6b"
+    },
+    {
+      "file": "xduoo-ta-30.md",
+      "productId": "xMEqvkRBbdrlJXyFG8hoYl",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwtMT"
+    },
+    {
+      "file": "xduoo-ta-32-high-performance-dac-amp-balanced-tube-class-a-headphone-amplifier.md",
+      "productId": "GPjMdcfFWZVrKyR2PB7GdO",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxblGk"
+    },
+    {
+      "file": "xduoo-ta-66-otl-tube-amplifier.md",
+      "productId": "GPjMdcfFWZVrKyR2PB7D0Y",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQGXV"
+    },
+    {
+      "file": "xduoo-xa-10-dac-headphone-amp.md",
+      "productId": "xMEqvkRBbdrlJXyFG8gbWv",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxblOO"
+    },
+    {
+      "file": "xduoo-xd-05-bal-balanced-dac-amp.md",
+      "productId": "DZc43yHr6ydfgE7zB46Kfr",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwtjr"
+    },
+    {
+      "file": "xduoo-xd05-pro-xd05pro-hard-nucleus-modular-dac-amp.md",
+      "productId": "GPjMdcfFWZVrKyR2PB6DOw",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxblZr"
+    }
+  ]
+}

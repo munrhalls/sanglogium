@@ -1,0 +1,23 @@
+{
+  "productId": "GPjMdcfFWZVrKyR2PB3Hrm",
+  "before": {
+    "accessoryType": "earpad",
+    "brand": [
+      "dekoni-audio"
+    ],
+    "category": [
+      "accessories"
+    ],
+    "compatibility": [
+      "HD 58X",
+      "HD 600",
+      "650",
+      "660",
+      "660S",
+      "6XX"
+    ],
+    "inStock": true,
+    "price": 7999
+  },
+  "backedUpAt": "2026-09-14T10:57:43.917Z"
+}

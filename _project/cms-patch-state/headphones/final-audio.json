@@ -1,0 +1,22 @@
+{
+  "issueId": "sang-logium-zdb.1.9",
+  "slice": "headphones",
+  "brand": "Final Audio",
+  "patchedAt": "2026-09-14T21:50:35.806Z",
+  "ok": 2,
+  "fail": 0,
+  "results": [
+    {
+      "file": "final-audio-d7000-headphones.md",
+      "productId": "Pn6oyV4Ks5AcNbecjmCnfl",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUcNTPT"
+    },
+    {
+      "file": "final-ze8000.md",
+      "productId": "moXlkADK7m1DHgGwWx071u",
+      "ok": true,
+      "rev": "DE7q4q517EcCNrf7ORGWgN"
+    }
+  ]
+}

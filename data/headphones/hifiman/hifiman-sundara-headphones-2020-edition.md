@@ -1,46 +1,46 @@
 ---
-product_id: "PHPYj28HJdPDHAaIBADCQs"
-product_slug: "hifiman-sundara-headphones-2020-edition"
-brand: "HiFiMan"
-name: "Sundara"
-slice: "headphones"
+product_id: PHPYj28HJdPDHAaIBADCQs
+product_slug: hifiman-sundara-headphones-2020-edition
+brand: HiFiMan
+name: Hifiman Sundara Headphones | 2020 Edition
+slice: headphones
 spec_fields:
   productCategory:
-    - "over-ear"
+  - over-ear
   wearingStyle:
-    - "over-ear"
+  - over-ear
   acousticDesign:
-    - "open-back"
-  connectivity: "wired"
+  - open-back
+  connectivity: wired
   portable: false
   driverType:
-    - "planar-magnetic"
+  - planar-magnetic
   impedanceOhms: 32
   sensitivityDbMw: 92
   freqResponseHz:
     min: 6
     max: 75000
   cableTermination:
-    - "3.5mm"
-    - "6.35mm"
+  - 3.5mm
+  - 6.35mm
   detachableCable: true
   cableLengthM: 1.5
   microphone: false
   foldable: false
   ipxRating: null
   bluetoothCodecs: null
-  anc: "none"
+  anc: none
   batteryLifeHours: null
-  soundSignature: "Neutral"
+  soundSignature: Neutral
   awards: null
   fitType: null
   driverConfigBucket: null
 source_urls:
-  - "https://hifiman.com/products/detail/286"
-  - "https://down.hifiman.com/manual/SUNDARA-Owners-Manual.pdf"
-  - "https://crinacle.com/rankings/headphones/real/"
-verified_at: "2026-09-14"
-data_status: "COMPLETE"
+- https://hifiman.com/products/detail/286
+- https://down.hifiman.com/manual/SUNDARA-Owners-Manual.pdf
+- https://crinacle.com/rankings/headphones/real/
+verified_at: '2026-09-14'
+data_status: COMPLETE
 ---
 
 ## Verification Notes

@@ -1,47 +1,47 @@
 ---
-product_id: "PHPYj28HJdPDHAaIBCE9om"
-product_slug: "crinear-daybreak-in-ear-headphones"
-brand: "CrinEar"
-name: "Daybreak In-Ear Headphones"
-slice: "headphones"
+product_id: PHPYj28HJdPDHAaIBCE9om
+product_slug: crinear-daybreak-in-ear-headphones
+brand: CrinEar
+name: CrinEar Daybreak In-Ear Headphones
+slice: headphones
 spec_fields:
   productCategory:
-    - "iem"
+  - iem
   wearingStyle:
-    - "in-ear"
+  - in-ear
   acousticDesign: null
-  fitType: "universal"
-  connectivity: "wired"
+  fitType: universal
+  connectivity: wired
   portable: true
   driverType:
-    - "dynamic"
-    - "balanced-armature"
-    - "planar-magnetic"
+  - dynamic
+  - balanced-armature
+  - planar-magnetic
   impedanceOhms: 20
   sensitivityDbMw: 105
   freqResponseHz:
     min: 2
     max: 40000
   cableTermination:
-    - "3.5mm"
-    - "4.4mm-balanced"
+  - 3.5mm
+  - 4.4mm-balanced
   detachableCable: true
   cableLengthM: null
   microphone: false
   foldable: false
   ipxRating: null
   bluetoothCodecs: null
-  anc: "passive"
+  anc: passive
   batteryLifeHours: null
-  soundSignature: "neutral"
+  soundSignature: neutral
   awards: null
-  driverConfigBucket: "tribrid"
-  driverConfigDetail: "1DD+2BA+2MPT"
+  driverConfigBucket: tribrid
+  driverConfigDetail: 1DD+2BA+2MPT
 source_urls:
-  - "https://crinear.com/daybreak"
-  - "https://www.rtings.com/headphones/reviews/crinear/daybreak"
-verified_at: "2026-09-14"
-data_status: "COMPLETE"
+- https://crinear.com/daybreak
+- https://www.rtings.com/headphones/reviews/crinear/daybreak
+verified_at: '2026-09-14'
+data_status: COMPLETE
 ---
 
 ## Verification Notes

@@ -1,0 +1,16 @@
+{
+  "issueId": "sang-logium-zdb.3.10",
+  "slice": "accessories",
+  "brand": "Austrian Audio",
+  "patchedAt": "2026-09-14T10:49:40.158Z",
+  "ok": 1,
+  "fail": 0,
+  "results": [
+    {
+      "file": "austrian-audio-the-composer-travel-case-hard-case.md",
+      "productId": "PHPYj28HJdPDHAaIBCQJvQ",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwl3x"
+    }
+  ]
+}

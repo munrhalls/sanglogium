@@ -1,0 +1,17 @@
+All 27 AudioQuest products are sourced and filed under `data/accessories/audioquest/` — one `.md` record per scoped ID, with real, cited manufacturer data from AudioQuest product pages, explicit `null`s where evidence is missing, and conflict/caution notes for the two catalogue-name mismatches (`GjMa...` and `0IQ2...`).
+
+[audioquest](file:///home/jan/work/sanglogium/data/accessories/audioquest)
+
+The issue is closed:
+
+```text
+bd close sang-logium-zdb.3.7 --reason "27 products sourced and filed."
+```
+
+Targeted git status shows only the new audioquest directory:
+
+```text
+?? data/accessories/audioquest/
+```
+
+I also ran `bd export -o .beads/issues.jsonl` to keep the generated export in sync with the Dolt DB. No other beads issues or brands were touched, and no build/lint/test commands were run.

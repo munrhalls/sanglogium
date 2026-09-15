@@ -1,46 +1,46 @@
 ---
-product_id: "MrEMtYwMtrFDGWmRnQXHgR"
-product_slug: "dunu-mirai-in-ear-headphones"
-brand: "Dunu"
-name: "Mirai In-Ear Headphones"
-slice: "headphones"
+product_id: MrEMtYwMtrFDGWmRnQXHgR
+product_slug: dunu-mirai-in-ear-headphones
+brand: Dunu
+name: Dunu Mirai In-Ear Headphones
+slice: headphones
 spec_fields:
   productCategory:
-    - "iem"
+  - iem
   wearingStyle:
-    - "in-ear"
+  - in-ear
   acousticDesign: null
-  fitType: "universal"
-  connectivity: "wired"
+  fitType: universal
+  connectivity: wired
   portable: true
   driverType:
-    - "balanced-armature"
-    - "dynamic"
+  - balanced-armature
+  - dynamic
   impedanceOhms: 25
   sensitivityDbMw: 111
   freqResponseHz:
     min: 5
     max: 40000
   cableTermination:
-    - "3.5mm"
-    - "2.5mm-balanced"
-    - "4.4mm-balanced"
+  - 3.5mm
+  - 2.5mm-balanced
+  - 4.4mm-balanced
   detachableCable: true
   cableLengthM: 1.2
   microphone: false
   foldable: false
   ipxRating: null
   bluetoothCodecs: null
-  anc: "passive"
+  anc: passive
   batteryLifeHours: null
   soundSignature: null
   awards: null
-  driverConfigBucket: "hybrid"
-  driverConfigDetail: "1DD+6BA"
+  driverConfigBucket: hybrid
+  driverConfigDetail: 1DD+6BA
 source_urls:
-  - "https://headphones.com/products/dunu-mirai-in-ear-headphones"
-verified_at: "2026-09-14"
-data_status: "COMPLETE"
+- https://headphones.com/products/dunu-mirai-in-ear-headphones
+verified_at: '2026-09-14'
+data_status: COMPLETE
 ---
 
 ## Verification Notes

@@ -1,0 +1,26 @@
+{
+  "_id": "xMEqvkRBbdrlJXyFG8euj7",
+  "name": "Sennheiser HD 660S2 Dynamic Open-back Headphones",
+  "before": {
+    "backDesign": "open",
+    "brand": [
+      "sennheiser"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 47995,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T18:12:32.067Z"
+}

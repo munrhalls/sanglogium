@@ -1,0 +1,23 @@
+{
+  "productId": "MrEMtYwMtrFDGWmRnTEgIK",
+  "before": {
+    "anc": "passive",
+    "brand": [
+      "moondrop"
+    ],
+    "cableTermination": [
+      "mmcx"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "price": 79900,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-14T10:44:23.702Z"
+}

@@ -9,30 +9,30 @@ spec_fields:
     - "iem"
   wearingStyle:
     - "in-ear"
-  acousticDesign:null
-  fitType:"universal"
-  connectivity:"wired"
-  portable:true
-  soundSignature:"Neutral"
-  microphone:false
-  detachableCable:true
-  cableLengthM:1.2
-  foldable:false
-  ipxRating:null
-  bluetoothCodecs:null
-  anc:"passive"
-  batteryLifeHours:null
-  awards:null
-  requiresAmplifier:false
+  acousticDesign: null
+  fitType: "universal"
+  connectivity: "wired"
+  portable: true
+  soundSignature: "Neutral"
+  microphone: false
+  detachableCable: true
+  cableLengthM: 1.2
+  foldable: false
+  ipxRating: null
+  bluetoothCodecs: null
+  anc: "passive"
+  batteryLifeHours: null
+  awards: null
+  requiresAmplifier: false
   cableTermination:
     - "3.5mm"
   driverType:
     - "dynamic"
     - "balanced-armature"
-  driverConfigBucket:"hybrid"
-  driverConfigDetail:"1DD+3BA"
-  impedanceOhms:20.5
-  sensitivityDbMw:120
+  driverConfigBucket: "hybrid"
+  driverConfigDetail: "1DD+3BA"
+  impedanceOhms: 20.5
+  sensitivityDbMw: 120
   freqResponseHz:
     min: 8
     max: 40000
@@ -64,15 +64,10 @@ data_status: COMPLETE
 - **batteryLifeHours** (marketing-fact): null — wired-only; no battery — https://truthear.com/products/hexa
 - **awards** (marketing-fact): null — no named awards or editor choice badges found — https://truthear.com/products/hexa
 - **requiresAmplifier** (derived): false — derived from 20.5Ω impedance and 120dB/Vrms sensitivity — https://truthear.com/products/hexa
-- **cableTermination** (hard-spec): 
-    - "3.5mm" — TechPowerUp: "3.5 mm TRS plug to source"; Kinemoss: "angled 3.5 mm connector" — https://www.techpowerup.com/review/truthear-hexa-in-ear-monitors/
-- **driverType** (hard-spec): 
-    - "dynamic"
-    - "balanced-armature" — manufacturer: "1DD+3BA Hybrid Drivers" (one dynamic + three balanced armature) — https://truthear.com/products/hexa
+- **cableTermination** (hard-spec): ["3.5mm"] — TechPowerUp: "3.5 mm TRS plug to source"; Kinemoss: "angled 3.5 mm connector" — https://www.techpowerup.com/review/truthear-hexa-in-ear-monitors/
+- **driverType** (hard-spec): ["dynamic", "balanced-armature"] — manufacturer: "1DD+3BA Hybrid Drivers" (one dynamic + three balanced armature) — https://truthear.com/products/hexa
 - **driverConfigBucket** (hard-spec): "hybrid" — 1DD+3BA hybrid driver configuration — https://truthear.com/products/hexa
 - **driverConfigDetail** (derived): "1DD+3BA" — derived from "1DD+3BA Hybrid Drivers" configuration — https://truthear.com/products/hexa
 - **impedanceOhms** (hard-spec): 20.5 — manufacturer spec: "20.5Ω±15% (@1KHz)" — https://truthear.com/products/hexa
 - **sensitivityDbMw** (hard-spec): 120 — manufacturer spec: "120dB/Vrms (@1KHz)" (recorded numerically; source uses dB/Vrms) — https://truthear.com/products/hexa
-- **freqResponseHz** (hard-spec): 
-    min: 8
-    max: 40000 — manufacturer: "8-40kHz (IEC61094, Free Field)" — https://truthear.com/products/hexa
+- **freqResponseHz** (hard-spec): {min: 8, max: 40000} — manufacturer: "8-40kHz (IEC61094, Free Field)" — https://truthear.com/products/hexa

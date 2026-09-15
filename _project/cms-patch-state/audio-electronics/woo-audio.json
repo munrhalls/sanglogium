@@ -1,0 +1,40 @@
+{
+  "issueId": "sang-logium-zdb.2.43",
+  "slice": "audio-electronics",
+  "brand": "Woo Audio",
+  "patchedAt": "2026-09-14T10:45:58.504Z",
+  "ok": 5,
+  "fail": 0,
+  "results": [
+    {
+      "file": "woo-audio-tube-mini-portable-dac-and-tube-amp.md",
+      "productId": "PHPYj28HJdPDHAaIBAKFRO",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwGCt"
+    },
+    {
+      "file": "woo-audio-wa23-luna.md",
+      "productId": "PHPYj28HJdPDHAaIBChpSq",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOfkX"
+    },
+    {
+      "file": "woo-audio-wa6-desktop-tube-headphone-amplifier.md",
+      "productId": "MrEMtYwMtrFDGWmRnRLHGc",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbWg4"
+    },
+    {
+      "file": "woo-audio-wa7-fireflies-3rd-gen-headphone-tube-amplifier.md",
+      "productId": "MrEMtYwMtrFDGWmRnRL7UE",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwGQv"
+    },
+    {
+      "file": "woo-audio-wa8-eclipse-portable-vacuum-tube-headphone-amp-&-dac.md",
+      "productId": "k27n1AQuIbSr5iozG1vIfh",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwGXw"
+    }
+  ]
+}

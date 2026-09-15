@@ -1,0 +1,140 @@
+{
+  "_id": "n10eAegrGspodtsQvneQBQ",
+  "name": "Dan Clark Audio NOIRE X Headphones",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "anc": "passive",
+    "backDesign": "closed",
+    "brand": [
+      "dan-clark-audio"
+    ],
+    "cableLengthM": 2,
+    "cableTermination": [
+      "3.5mm",
+      "6.35mm",
+      "4-pin-xlr",
+      "4.4mm-balanced",
+      "2.5mm-balanced"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "detachableCable": true,
+    "driverType": [
+      "planar-magnetic"
+    ],
+    "foldable": false,
+    "impedanceOhms": 13,
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "portable": true,
+    "price": 99999,
+    "requiresAmplifier": true,
+    "sensitivityDbMw": 90,
+    "sourcing": [
+      {
+        "field": "impedanceOhms",
+        "quote": "Impedance 13ohms",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://danclarkaudio.com/noirex.html"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "Sensitivity ~90 dB/mW",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://danclarkaudio.com/noirex.html"
+      },
+      {
+        "field": "driverType",
+        "quote": "NOIRE X is designed around an updated and improved AEON audio driver (Dan Clark Audio planar-magnetic line, V-Planar)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://danclarkaudio.com/noirex.html"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "\"Choose Your Cable\" dropdown base no-upcharge option: 1/4\"-3.5mm 2m DUMMER",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://danclarkaudio.com/noirex.html"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "Self-Tensioning Headband / Our self-tensioning headband reduces listening fatigue by distributing pressure evenly across your head (circumaural over-ear)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/noirex.html"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "NOIRE X™ updates our iconic AEON 2 NOIRE by integrating DCA's state-of-the-art Acoustic Metamaterial Tuning System™ (AMTS™) with an improved driver (AEON 2 NOIRE is DCA's closed model, explicitly named as the product this updates)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/noirex.html"
+      },
+      {
+        "field": "connectivity",
+        "quote": "\"Choose Your Cable\" analog options only: 1/4\"-3.5mm, 4-pin XLR, 4.4mm, 2.5mm, 3.5mm (no wireless or Bluetooth feature stated anywhere on the page)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/noirex.html"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "offers a comprehensive range of cable terminations at the base price, including combo 1/4\" and 3.5mm tips, 4-pin XLR, and 4.4mm",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/noirex.html"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "it's easy to upgrade to our ultra-premium VIVO cables, which are available in multiple length and termination options",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/noirex.html"
+      },
+      {
+        "field": "portable",
+        "quote": "Travel friendly Packs Small!",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/noirex.html"
+      },
+      {
+        "field": "microphone",
+        "quote": "(no microphone mentioned anywhere on the manufacturer page; boolean feature-absence rule applied)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/noirex.html"
+      },
+      {
+        "field": "foldable",
+        "quote": "(no folding-hinge or folding-gimbal language anywhere on the page — unlike Noire/Stealth/E3, which all state folding gimbals; boolean feature-absence rule applied)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/noirex.html"
+      },
+      {
+        "field": "anc",
+        "quote": "closed-back design offering isolation; no electronic active noise cancelling feature stated",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://danclarkaudio.com/noirex.html"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-13T18:12:20.471Z"
+}

@@ -1,0 +1,24 @@
+Done. Four Feliks Audio product files are now in `data/audio-electronics/feliks-audio/`.
+
+Files written:
+
+- `feliks-audio-echo-classic.md`
+- `feliks-audio-echo-mk-ii.md`
+- `feliks-audio-envy-flagship-desktop-headphone-tube-amplifier.md`
+- `feliks-audio-envy-flagship-desktop-headphone-tube-amplifier---open-box.md`
+
+I closed the bead with the requested reason:
+
+`bd close sang-logium-zdb.2.16 --reason "4 products sourced and filed."` ✓
+
+What I recorded explicitly:
+
+- `deviceType: null` for all four, because the current audio-electronics Product Category list has no “headphone amplifier” value.
+- Echo MKII power-output conflict: 350mW vs. 380mW across same-tier sources.
+- Echo MKII in-stock conflict: one retailer lists “Out of stock,” another “Item in Stock.”
+- Echo Classic finish conflict: walnut vs. oak vs. unspecified wood across sources.
+- Envy open-box condition, price, and sold-out status sourced from its own listing; technical specs from the standard Envy manufacturer/retailer pages.
+
+`git status` shows the new `data/audio-electronics/feliks-audio/` directory as untracked, and `.beads/issues.jsonl` updated from the close. I ran `bd export -o .beads/issues.jsonl` to keep the bead export in sync.
+
+No other beads issue or brand was touched. No commit, push, CMS write, build, lint, or test was run.

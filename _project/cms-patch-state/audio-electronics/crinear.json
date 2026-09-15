@@ -1,0 +1,16 @@
+{
+  "issueId": "sang-logium-zdb.2.11",
+  "slice": "audio-electronics",
+  "brand": "CrinEar",
+  "patchedAt": "2026-09-14T10:47:07.763Z",
+  "ok": 1,
+  "fail": 0,
+  "results": [
+    {
+      "file": "crinear-protocol-max.md",
+      "productId": "Pn6oyV4Ks5AcNbecjh0awA",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbZnk"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "_id": "GPjMdcfFWZVrKyR2PB9jN4",
+  "name": "ES Lab EX-1a Electrostatic Headphones (Apos Certified)",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "es-lab"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "electrostatic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 21001,
+    "requiresAmplifier": true,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T18:07:48.135Z"
+}

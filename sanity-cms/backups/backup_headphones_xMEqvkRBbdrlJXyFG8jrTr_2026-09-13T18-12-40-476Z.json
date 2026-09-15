@@ -1,0 +1,24 @@
+{
+  "_id": "xMEqvkRBbdrlJXyFG8jrTr",
+  "name": "Moondrop Kadenz Flagship 10mm IEMs",
+  "before": {
+    "brand": [
+      "moondrop"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "mmcx"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 21999,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-13T18:12:40.476Z"
+}

@@ -4,4 +4,26 @@
 2. Fetch and parse the official TRUTHEAR product pages plus the needed Tier 3 measurement/review sources to lock down all fields and sound signatures.
 3. Write one Markdown file per product under `data/headphones/truthear/` and close the issue with `bd close`.
 
-I’ll proceed on your earlier “go, no stop” and report after each logical unit. First batch: 3 tool calls — `bd show` + a single Python fetch/parse script for all four official pages. I already confirmed `requests` is available.`bd show` confirmed 4 products. Next: I’ll build the id→name/slug map and fetch all four official pages in one pass. Next batch: 2 calls (write script, run it).Checkpoint: id→slug map and all four raw official HTMLs are cached. The spec tables are in the HTML; I’ll parse them in one pass. Next 2 calls: write the parser, run it.
+I’ll proceed on your earlier “go, no stop” and report after each logical unit. First batch: 3 tool calls — `bd show` + a single Python fetch/parse script for all four official pages. I already confirmed `requests` is available.`bd show` confirmed 4 products. Next: I’ll build the id→name/slug map and fetch all four official pages in one pass. Next batch: 2 calls (write script, run it).Checkpoint: id→slug map and all four raw official HTMLs are cached. The spec tables are in the HTML; I’ll parse them in one pass. Next 2 calls: write the parser, run it.Done. Four TRUTHEAR product files are filed under `data/headphones/truthear/` and `sang-logium-zdb.1.33` is closed.
+
+**Files written (4):**
+- `truthear-x-crinacle-zero-red-in-ear-headphones.md`
+- `truthear-x-crinacle-zero-in-ear-headphones.md`
+- `truthear-hexa-in-ear-headphones.md`
+- `truthear-nova-in-ear-headphones.md`
+
+**Issue status:**
+- `bd close sang-logium-zdb.1.33 --reason="4 products sourced and filed."` succeeded.
+- `bd show` confirms status `closed` with the exact close reason.
+
+**Key sourcing notes:**
+- Hard specs came from TRUTHEAR product pages; NOVA impedance was missing there, so it was filled from TechPowerUp/Moonstar measured specs with a citation.
+- `soundSignature`: ZERO = V-Shaped (Headphones.com review, “mildly V-shaped”), RED = Neutral (IEF Neutral 2023 tuning per Boizoff/Headphones.com), HEXA = Neutral (Crinacle ranking), NOVA = V-Shaped (Headphones.com review; “Harman target” claim from other reviews noted as a conflict).
+- `portable`: follows the explicit `Portability` metafield from headphones.com product pages — `false` for original ZERO (which explicitly says “Not Portable”) and `true` for the other three.
+- `cableTermination` and `cableLengthM` are backed by TechPowerUp, SoundGuys, Kinemoss, and Moonstar reviews.
+- No invented values; unknowns like `ipxRating`, `bluetoothCodecs`, and `batteryLifeHours` are `null` with source-checked notes.
+
+**Targeted `git status`:**
+- Modified: the four `data/headphones/truthear/*.md` files.
+- Modified: `.beads/interactions.jsonl` and `.beads/issues.jsonl` from `bd close` and `bd export`.
+- No other brands touched. No commit or push run, per your instructions.

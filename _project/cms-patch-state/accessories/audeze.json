@@ -1,0 +1,22 @@
+{
+  "issueId": "sang-logium-zdb.3.5",
+  "slice": "accessories",
+  "brand": "Audeze",
+  "patchedAt": "2026-09-14T10:50:16.049Z",
+  "ok": 2,
+  "fail": 0,
+  "results": [
+    {
+      "file": "audeze-premium-braided-upgrade-cable-6-3-or-xlr-for-lcd-series.md",
+      "productId": "Pn6oyV4Ks5AcNbecjbXRKV",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbjfM"
+    },
+    {
+      "file": "audeze-std-lcd-series-cable-mini-xlr-to-4-pin-xlr-w-6-3mm-adapter.md",
+      "productId": "MrEMtYwMtrFDGWmRnGPkI2",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbjkS"
+    }
+  ]
+}

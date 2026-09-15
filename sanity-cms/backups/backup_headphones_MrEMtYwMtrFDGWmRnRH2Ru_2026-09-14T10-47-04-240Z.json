@@ -1,0 +1,25 @@
+{
+  "productId": "MrEMtYwMtrFDGWmRnRH2Ru",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "denon"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dap",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "optical"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 99900
+  },
+  "backedUpAt": "2026-09-14T10:47:04.240Z"
+}

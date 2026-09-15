@@ -1,0 +1,52 @@
+{
+  "issueId": "sang-logium-zdb.1.12",
+  "slice": "headphones",
+  "brand": "Audio-Technica",
+  "patchedAt": "2026-09-14T10:45:11.562Z",
+  "ok": 7,
+  "fail": 0,
+  "results": [
+    {
+      "file": "apos-x-audio-technica-ath-r70x-refine-headphone.md",
+      "productId": "DZc43yHr6ydfgE7zB40XMj",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbTMv"
+    },
+    {
+      "file": "audio-technica-ath-adx7000-headphones.md",
+      "productId": "GPjMdcfFWZVrKyR2PB5Gjq",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOOXN"
+    },
+    {
+      "file": "audio-technica-ath-m40x-professional-studio-monitor-headphones.md",
+      "productId": "xMEqvkRBbdrlJXyFG8iyTD",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOOyH"
+    },
+    {
+      "file": "audio-technica-ath-m50x-wired-professional-monitor-headphones.md",
+      "productId": "GPjMdcfFWZVrKyR2PB83hK",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbTYO"
+    },
+    {
+      "file": "audio-technica-ath-msr7b-headphone.md",
+      "productId": "xMEqvkRBbdrlJXyFG8inkf",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOPh7"
+    },
+    {
+      "file": "audio-technica-ath-w2022-closed-back-dynamic-wooden-headphones.md",
+      "productId": "DZc43yHr6ydfgE7zB441ML",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbTl8"
+    },
+    {
+      "file": "audio-technica-narukami-ath-awkg-audiophile-closed-back-dynamic-wooden-headphones.md",
+      "productId": "xMEqvkRBbdrlJXyFG8j1Bz",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbTsm"
+    }
+  ]
+}

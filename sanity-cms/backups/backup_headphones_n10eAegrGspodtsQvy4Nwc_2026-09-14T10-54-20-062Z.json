@@ -1,0 +1,25 @@
+{
+  "productId": "n10eAegrGspodtsQvy4Nwc",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "chord-electronics"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 250000
+  },
+  "backedUpAt": "2026-09-14T10:54:20.062Z"
+}

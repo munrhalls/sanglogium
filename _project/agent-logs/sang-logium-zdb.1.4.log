@@ -1,0 +1,26 @@
+Plan:
+1. Show bead and read its execution/sourcing protocol.
+2. Source real cited data for each product and write one .md per product.
+3. Close the bead with the product count.
+
+This turn: 2 calls (beads skill + `bd show`). Proceeding since you said go.Read bead: 7 Audeze products still need .md files. Next I need the schema, the product-id→name map, and the existing filed examples. This turn: 3 calls (JSON bead view, list audeze files, find catalogue map).The 6 already-filed Audeze products show the slug style. I now need the schema, the catalogue ID→name map for the remaining 7, and one example file. This turn: 3 calls (grep catalogue for Audeze, find headphones schema docs, read one filed example).`data/catalogue.ts` does not contain Audeze; the live catalog is elsewhere. I have one filed example; now I need the schema and the Audeze source/verification docs to map IDs. This turn: 3 reads (should-be schema, prior audeze sourced, audeze verification).I have the schema and the 6 already-filed Audeze products. The catalogue VFS is stale for this brand, so I need the ID→name map for the remaining 7. This turn: 3 calls (grep the 7 IDs in the repo, find migration/backups, list sanity-cms for Audeze).The IDs appear in Sanity backup files and filter-migration artifacts. I can use the backups for product names/slugs only, then source every field fresh from the manufacturer. This turn: read one backup to see its shape.One backup confirms the ID→name pattern. I’ll read the other 6 backup names/slugs next, then begin the web sourcing pass. This turn: list all backup files, then read a first batch.I found the backup filenames from the prior grep. I’ll read them for product names and price confirmation, then move to the web. This turn: first 3 remaining-product backups.The names in these backups don’t all match their prices (e.g. an "LCD-5" at $149.99), so they’re not trustworthy. I’ll pull the authoritative product names from the Sanity export. This turn: grep the live export for the 3 suspicious IDs.The export has live slugs. I need complete product objects for these 3 IDs and the remaining 3. This turn: 3 reads from `products-export.json` around the known line numbers.I now have 3 of the 7 products’ names/slugs from the live export. The xMEqvk IDs are not in that export; I’ll read their backups and look for DZc43’s slug. This turn: 4 searches/reads.The remaining 3 have backup names; I’ll confirm their slugs from the handoff dataset and get DZc43’s full product object. This turn: 2 targeted reads/searches.I have all 4 export-confirmed products. For the 3 xMEqvk IDs I’ll search the unresolved queue for their slugs and names.I have all 7 product slugs now. Next I need the schema definitions, then I’ll start a targeted manufacturer fetch pass for each product. This turn: read schema and sourcing protocol docs.I have all 7 slugs and names. I’ll start the manufacturer fetch pass; first I need the canonical Audeze URLs for CRBN2 and LCD-5s since those handles are uncertain.Canonical URLs confirmed for CRBN2 and LCD-5s. I’ll now fetch the manufacturer product pages for all 7. Starting with a 3-product batch.`webfetch` is returning full-page nav text, not clean spec tables. I’ll switch to a raw HTML fetch + parse pass to extract the specification tables. First, search the cached `lcd-x` text for the spec table.The spec tables are in the cached text. I’ll extract the spec blocks for the 3 already-fetched pages, then fetch the remaining 4.Good — the cached text has the spec tables. I’ll fetch the remaining product pages (lcd-2, lcd-2-classic, lcd-5s).Done.
+
+- Sourced and filed the 7 remaining Audeze products in `data/headphones/audeze/`.
+- Total files now 13, matching the issue scope.
+- Closed `sang-logium-zdb.1.4` with reason `13 products sourced and filed.`
+- Ran `bd export -o .beads/issues.jsonl` to sync the beads export.
+
+New files:
+- `audeze-crbn2-electrostatic-headphones-case-included.md`
+- `audeze-lcd-x-open-back-headphone.md`
+- `audeze-lcd-5-planar-magnetic-headphone.md`
+- `audeze-lcd-xc-headphones-2024-creator-s-edition.md`
+- `audeze-lcd-2-open-back-headphone.md`
+- `audeze-lcd-2-classic-apos-certified.md`
+- `audeze-lcd-5s-planar-magnetic-headphone.md`
+
+Git status:
+- 7 untracked files under `data/headphones/audeze/`
+- ` .beads/issues.jsonl` modified
+
+No build/test/lint commands were run. Files are uncommitted; if you want them committed/pushed, say the word and I can stage + commit.

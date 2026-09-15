@@ -1,0 +1,26 @@
+{
+  "productId": "drafts.dLGDVDmEEI2lV8CArIgVky",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "anc": "passive",
+    "brand": [
+      "sony"
+    ],
+    "cableTermination": [
+      "mmcx"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wireless",
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "price": 17800,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-14T21:50:20.390Z"
+}

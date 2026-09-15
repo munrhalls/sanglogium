@@ -1,0 +1,27 @@
+{
+  "productId": "xMEqvkRBbdrlJXyFG8ko41",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "anc": "passive",
+    "brand": [
+      "es-lab"
+    ],
+    "cableTermination": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "driverType": "electrostatic",
+    "inStock": true,
+    "microphone": false,
+    "price": 105000,
+    "requiresAmplifier": true,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-14T10:44:45.568Z"
+}

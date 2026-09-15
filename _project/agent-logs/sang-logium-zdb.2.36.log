@@ -1,0 +1,19 @@
+Done. `sang-logium-zdb.2.36` is closed and the 4 SPL products are filed.
+
+**What changed:**
+- Wrote 4 product `.md` files under `data/audio-electronics/spl/`:
+  - `spl-phonitor-x.md`
+  - `spl-phonitor-xe.md`
+  - `spl-phonitor-one.md`
+  - `spl-phonitor-one-d.md`
+- Closed `sang-logium-zdb.2.36` with reason `4 products sourced and filed.`
+- Ran `bd export -o .beads/issues.jsonl` to sync the bead export.
+
+**Sourcing notes:**
+- All values are cited to the SPL manufacturer product pages.
+- `deviceType` is recorded as `null` for every product: the source describes them as headphone amplifiers (and for X / One D also as preamplifier / standalone DAC), but the current `audio-electronics` `deviceType` enum does not include a headphone-amplifier category, so `null` is the honest value.
+- One D has the `EC PAM 2021` award badge on its page, recorded as a named award.
+- `trigger12v` is `true` only for Phonitor X (AMP CTL / 12V trigger language found); `false` for the others.
+- Power output, DAC specs, inputs/outputs, etc. are taken directly from the manufacturer spec tables.
+
+**Git status:** `data/audio-electronics/spl/` is now untracked with the 4 new files; `.beads/issues.jsonl` is modified. No commit or push performed. There are many unrelated modified/untracked files already in the working tree from prior work.

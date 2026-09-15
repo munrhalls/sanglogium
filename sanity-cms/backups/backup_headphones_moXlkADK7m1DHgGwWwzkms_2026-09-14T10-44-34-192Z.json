@@ -1,0 +1,26 @@
+{
+  "productId": "moXlkADK7m1DHgGwWwzkms",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "anc": "passive",
+    "brand": [
+      "jbl"
+    ],
+    "cableTermination": [
+      "mmcx"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wireless",
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "price": 24995,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-14T10:44:34.192Z"
+}

@@ -1,34 +1,34 @@
 ---
-product_id: "Pn6oyV4Ks5AcNbecjgql0e"
-product_slug: "focal-hadenys"
-brand: "Focal"
-name: "Hadenys"
-slice: "headphones"
+product_id: Pn6oyV4Ks5AcNbecjgql0e
+product_slug: focal-hadenys
+brand: Focal
+name: Focal Hadenys
+slice: headphones
 spec_fields:
   productCategory:
-    - "over-ear"
+  - over-ear
   wearingStyle:
-    - "over-ear"
+  - over-ear
   acousticDesign:
-    - "open-back"
+  - open-back
   fitType: null
-  connectivity: "wired"
+  connectivity: wired
   portable: false
   microphone: false
   cableTermination:
-    - "3.5mm"
-    - "6.35mm"
+  - 3.5mm
+  - 6.35mm
   detachableCable: true
   cableLengthM: 1.8
   foldable: false
   ipxRating: null
   bluetoothCodecs: null
-  anc: "none"
+  anc: none
   batteryLifeHours:
     ancOff: null
     ancOn: null
   driverType:
-    - "dynamic"
+  - dynamic
   impedanceOhms: 26
   sensitivityDbMw: 100
   freqResponseHz:
@@ -39,11 +39,11 @@ spec_fields:
   driverConfigDetail: null
   soundSignature: null
 source_urls:
-  - "https://www.focal.com/products/hadenys"
-  - "https://dam.focal-naim.com/m/29118ef5ebb678ea/original/Notice_Hadenys_Web-pdf.pdf"
-  - "https://crinacle.com/rankings/headphones/"
-verified_at: "2026-09-13"
-data_status: "COMPLETE"
+- https://www.focal.com/products/hadenys
+- https://dam.focal-naim.com/m/29118ef5ebb678ea/original/Notice_Hadenys_Web-pdf.pdf
+- https://crinacle.com/rankings/headphones/
+verified_at: '2026-09-13'
+data_status: COMPLETE
 ---
 
 ## Verification Notes

@@ -1,0 +1,24 @@
+{
+  "_id": "MrEMtYwMtrFDGWmRnQVOZL",
+  "name": "Hisenior Audio Mega5-EST In-Ear Headphones",
+  "before": {
+    "brand": [
+      "hisenior-audio"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "mmcx"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 54900,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-13T18:08:02.590Z"
+}

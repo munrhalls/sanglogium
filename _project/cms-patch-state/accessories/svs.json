@@ -1,0 +1,58 @@
+{
+  "issueId": "sang-logium-zdb.3.31",
+  "slice": "accessories",
+  "brand": "SVS",
+  "patchedAt": "2026-09-14T10:48:25.849Z",
+  "ok": 8,
+  "fail": 0,
+  "results": [
+    {
+      "file": "svs-soundpath-rca-audio-interconnect-cable-for-subwoofers-16-4-ft-5m.md",
+      "productId": "GqkAHteRmu9rQ6VLnVwePp",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwdBA"
+    },
+    {
+      "file": "svs-soundpath-rca-audio-interconnect-cable-for-subwoofers-26-24-ft-8m.md",
+      "productId": "x2LkzHeaGqoEz8Jhogegs8",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03ePjUN"
+    },
+    {
+      "file": "svs-soundpath-rca-audio-interconnect-cable-for-subwoofers-3-28-ft-1m.md",
+      "productId": "GqkAHteRmu9rQ6VLnW2Roi",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbcQq"
+    },
+    {
+      "file": "svs-soundpath-rca-audio-interconnect-cable-for-subwoofers-39-36-ft-12m.md",
+      "productId": "GqkAHteRmu9rQ6VLnW2nMv",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwdRX"
+    },
+    {
+      "file": "svs-soundpath-rca-audio-interconnect-cable-for-subwoofers-49-2-ft-15m.md",
+      "productId": "apzyFbFDTajEZntmxstdpq",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwdYY"
+    },
+    {
+      "file": "svs-soundpath-rca-audio-interconnect-cable-for-subwoofers-6-56-ft-2m.md",
+      "productId": "apzyFbFDTajEZntmxsuJqB",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbccJ"
+    },
+    {
+      "file": "svs-soundpath-tri-band-wireless-receiver-for-soundpath-wireless-audio-adapter.md",
+      "productId": "0IQ2UjkdXJma4iOcjnwrjp",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03ePkDD"
+    },
+    {
+      "file": "svs-soundpath-wireless-audio-adapter.md",
+      "productId": "GjMaRFaHMVTsBoyxtAJ8Hy",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbcmV"
+    }
+  ]
+}

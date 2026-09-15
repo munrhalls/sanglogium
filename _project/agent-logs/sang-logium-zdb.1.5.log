@@ -1,0 +1,8 @@
+Done. Sourced and filed 2 remaining Dan Clark Audio products:
+
+- `data/headphones/dan-clark-audio/dca-e3-2.md` — PHPYj28HJdPDHAaIBCDRC4 (E3)
+- `data/headphones/dan-clark-audio/dca-noire-xo.md` — PHPYj28HJdPDHAaIBDrDFo (NOIRE XO)
+
+Both files cite the live manufacturer pages (`danclarkaudio.com/e3-2.html`, `danclarkaudio.com/noire-xo-1.html`) and Audio46 for the wearing-style claim, with explicit nulls for `soundSignature` and `awards` where no Tier-3 source was found.
+
+Git status shows 2 untracked files in `data/headphones/dan-clark-audio/`. The bead `sang-logium-zdb.1.5` is closed with reason "2 products sourced and filed."

@@ -1,0 +1,10 @@
+Done. Two McIntosh products sourced and filed under `data/audio-electronics/mcintosh/`:
+
+- `mcintosh-ds200-streaming-dac.md`
+- `mcintosh-mha200-2-channel-vacuum-tube-headphone-amplifier.md`
+
+Both have YAML frontmatter with `spec_fields`, `source_urls`, and `verified_at`, plus a `## Verification Notes` section with per-field tier, quote, and URL citations. The `sang-logium-zdb.2.28` issue is closed with reason "2 products sourced and filed." and `.beads/issues.jsonl` was exported.
+
+Targeted status:
+- `?? data/audio-electronics/mcintosh/`
+- ` M .beads/issues.jsonl`

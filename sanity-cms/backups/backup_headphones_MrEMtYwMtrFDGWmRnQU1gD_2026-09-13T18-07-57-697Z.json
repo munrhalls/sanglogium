@@ -1,0 +1,26 @@
+{
+  "_id": "MrEMtYwMtrFDGWmRnQU1gD",
+  "name": "Meze Audio 99 Classics V2 Headphones",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "meze-audio"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 34900,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T18:07:57.697Z"
+}

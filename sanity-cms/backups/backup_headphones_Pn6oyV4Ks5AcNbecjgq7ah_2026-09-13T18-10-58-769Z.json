@@ -1,0 +1,26 @@
+{
+  "_id": "Pn6oyV4Ks5AcNbecjgq7ah",
+  "name": "Hifiman Edition XS Headphones",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "hifiman"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 20900,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T18:10:58.770Z"
+}

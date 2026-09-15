@@ -1,0 +1,25 @@
+{
+  "productId": "n10eAegrGspodtsQvy3xAp",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "sennheiser"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": false,
+    "deviceType": "headphone-amp",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 249500
+  },
+  "backedUpAt": "2026-09-14T10:46:08.264Z"
+}

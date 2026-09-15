@@ -1,0 +1,23 @@
+{
+  "productId": "Pn6oyV4Ks5AcNbecjbXftv",
+  "before": {
+    "accessoryType": "cable",
+    "brand": [
+      "eletech"
+    ],
+    "category": [
+      "accessories"
+    ],
+    "compatibility": [
+      "universal"
+    ],
+    "connectorTermination": [
+      "3.5mm",
+      "6.35mm",
+      "4.4mm-balanced"
+    ],
+    "inStock": true,
+    "price": 102900
+  },
+  "backedUpAt": "2026-09-14T10:49:15.321Z"
+}

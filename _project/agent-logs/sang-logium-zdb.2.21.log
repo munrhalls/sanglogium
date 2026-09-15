@@ -1,0 +1,23 @@
+Done.
+
+- Sourced all four HiFi Rose products from manufacturer product pages, manuals/brochures, and the live Sanity record.
+- Wrote one `.md` per product under `data/audio-electronics/hifi-rose/`:
+  - `hifi-rose-rs520-network-streamer-integrated-amplifier.md`
+  - `hifi-rose-rs150b-reference-hifi-network-streamer.md`
+  - `hifi-rose-rd160-network-streamer-dac-silver.md`
+  - `hifi-rose-rs250a-network-streamer.md`
+- All 38 schema fields are present as either a cited value or an explicit `null`.
+- Recorded the same-tier conflicts explicitly in each file:
+  - RS520 power: 250 W (manufacturer) vs 200 W (legacy Sanity overview).
+  - RS520 phono-stage ambiguity in the multi-product manual.
+  - RS150B / RS520 / RD160 live Sanity price differs from the distributor product page.
+  - RS150B / RS250A / RS520 live Sanity in-stock differs from product page "Out of Stock".
+  - `deviceType` mapping where products span streamer/DAC/amp categories.
+- Closed the beads issue:
+  - `sang-logium-zdb.2.21` is now `CLOSED` with reason "4 products sourced and filed."
+- `bd export -o .beads/issues.jsonl` was run after the close.
+- `git status --short data/audio-electronics/hifi-rose .beads/issues.jsonl` shows:
+  - `?? data/audio-electronics/hifi-rose/`
+  - `M .beads/issues.jsonl`
+
+No other beads issue or brand was touched; no commit, push, or CMS write was performed.

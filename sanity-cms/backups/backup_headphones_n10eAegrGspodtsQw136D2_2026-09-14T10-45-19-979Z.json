@@ -1,0 +1,162 @@
+{
+  "productId": "n10eAegrGspodtsQw136D2",
+  "before": {
+    "acousticDesign": [
+      "open-back"
+    ],
+    "anc": "passive",
+    "batteryLifeHours": {
+      "ancOff": 10,
+      "ancOn": null
+    },
+    "brand": [
+      "hifiman"
+    ],
+    "cableLengthM": null,
+    "cableTermination": [
+      "usb-c"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "hybrid",
+    "detachableCable": false,
+    "driverType": [
+      "planar-magnetic"
+    ],
+    "foldable": false,
+    "freqResponseHz": {
+      "max": 55000,
+      "min": 8
+    },
+    "impedanceOhms": 25,
+    "inStock": true,
+    "microphone": true,
+    "portable": true,
+    "price": 79900,
+    "productCategory": [
+      "over-ear"
+    ],
+    "requiresAmplifier": false,
+    "sensitivityDbMw": 103,
+    "soundSignature": "Neutral",
+    "sourcing": [
+      {
+        "field": "impedanceOhms",
+        "quote": "Impedance: 25Ω",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://hifiman.com/attachments/file/20250211/20250211033309_95943.pdf"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "Sensitivity: 103dB",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://hifiman.com/attachments/file/20250211/20250211033309_95943.pdf"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "Frequency Response: 8Hz-55kHz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://hifiman.com/attachments/file/20250211/20250211033309_95943.pdf"
+      },
+      {
+        "field": "driverType",
+        "quote": "Acoustically Invisible Stealth Magnets / NEO Supernano Diaphragm (planar magnetic per manual: \"Planar headphones benefit from break-in to achieve optimum performance\")",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://hifiman.com/attachments/file/20250211/20250211033309_95943.pdf"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "Package Contents: ANANDA-BT Headphone / Ear Pads (installed) x1 pair / Headphone Travel Bag x1 / USB C to USB A cable x1 / USB C to USB C cable x1",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://hifiman.com/attachments/file/20250211/20250211033309_95943.pdf"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "These open-back headphones are designed to allow background noise to enter the ear cups to help make audio sound more immersive, but unfortunately, it also means they have poor noise isolation and leakage performance.",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.rtings.com/headphones/reviews/hifiman/ananda-bt"
+      },
+      {
+        "field": "connectivity",
+        "quote": "ANANDA-BT not only supports Bluetooth playback but also can be directly connected to a device via a USB cable for music playback. / Bluetooth / USB Mode Easy Switching",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hifiman.com/attachments/file/20250211/20250211033309_95943.pdf"
+      },
+      {
+        "field": "microphone",
+        "quote": "ANANDA-BT is designed to transmit crystal-clear voice quality when making calls. Adopting the most advanced dual-microphone cVc 8.0 noise reduction technology, it provides crystal-clear voice capture, noise echo cancellation... (corroborated by RTINGS: \"they also have a detachable boom microphone\")",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hifiman.com/attachments/file/20250211/20250211033309_95943.pdf"
+      },
+      {
+        "field": "anc",
+        "quote": "(derived — no active noise cancelling for music playback described anywhere in the guide; the only \"noise reduction\" language is the dual-microphone cVc 8.0 call path. Open-back design provides passive, leaky isolation only)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hifiman.com/attachments/file/20250211/20250211033309_95943.pdf"
+      },
+      {
+        "field": "portable",
+        "quote": "Please note that if the headphone is connected to devices such as mobile phones or other portable players that don't include a power supply, it may need a charge more quickly... + Headphone Travel Bag x1 (Bluetooth-first, self-powered, bagged for transport)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hifiman.com/attachments/file/20250211/20250211033309_95943.pdf"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "(Package Contents list only fixed USB A / USB C charge-and-play cables; no swappable headphone cable or socket system described anywhere in the guide — the connector is a fixed USB-C jack)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hifiman.com/attachments/file/20250211/20250211033309_95943.pdf"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "(no cable length given for either the USB C to USB A or USB C to USB C cable in the guide's Package Contents or Specifications — NULL, genuinely unfound)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hifiman.com/attachments/file/20250211/20250211033309_95943.pdf"
+      },
+      {
+        "field": "foldable",
+        "quote": "(no fold/collapse/hinge/swivel language anywhere in the owner's guide; only Headband Adjustment via two adjustment blocks — boolean feature-absence rule)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hifiman.com/attachments/file/20250211/20250211033309_95943.pdf"
+      },
+      {
+        "field": "productCategory",
+        "quote": "(full-size circumaural over-ear; RTINGS classifies the ANANDA-BT under the over-ear headphone review template as the wireless version of the wired Hifiman Ananda)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.rtings.com/headphones/reviews/hifiman/ananda-bt"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "The HiFiMan ANANDA-BT Wireless are the Bluetooth version of the HiFiMan Ananda. (over-ear/circumaural, hybrid headband design)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.rtings.com/headphones/reviews/hifiman/ananda-bt"
+      },
+      {
+        "field": "soundSignature",
+        "quote": "One of the best tuned headphones available, only limited by its raw resolving ability. (entry \"Hifiman Ananda\", $700, Neutral, Tone Grade S-, Technical Grade B, ★ value rating)",
+        "sourcedAt": "2026-09-13",
+        "tier": "editorial",
+        "url": "https://crinacle.com/rankings/headphones/"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-14T10:45:19.979Z"
+}

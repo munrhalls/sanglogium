@@ -33,7 +33,7 @@ spec_fields:
   mounting: null
 
 source_urls: 
-  - "https://aposaudio.com/products/linus-tech-tips-keycaps"
+  - "https://apos.audio/products/linus-tech-tips-keycaps"
 verified_at: "2026-09-14"
 data_status: "COMPLETE"
 

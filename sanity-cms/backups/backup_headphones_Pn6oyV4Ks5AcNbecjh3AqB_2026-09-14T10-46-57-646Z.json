@@ -1,0 +1,25 @@
+{
+  "productId": "Pn6oyV4Ks5AcNbecjh3AqB",
+  "before": {
+    "amplification": "tube",
+    "balancedOutput": false,
+    "brand": [
+      "feliks-audio"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": false,
+    "deviceType": "headphone-amp",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 889900
+  },
+  "backedUpAt": "2026-09-14T10:46:57.646Z"
+}

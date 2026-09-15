@@ -1,0 +1,15 @@
+`sang-logium-zdb.2.19` is closed, `.beads/issues.jsonl` exported, and the 2 products are filed under `data/audio-electronics/fosi-audio/`:
+
+- [fosi-audio-q4-mini-stereo-gaming-dac-headphone-amplifier-audio.md](file:///home/jan/work/sanglogium/data/audio-electronics/fosi-audio/fosi-audio-q4-mini-stereo-gaming-dac-headphone-amplifier-audio.md)
+- [fosi-audio-k5-pro-gaming-dac-headphone-amplifier.md](file:///home/jan/work/sanglogium/data/audio-electronics/fosi-audio/fosi-audio-k5-pro-gaming-dac-headphone-amplifier.md)
+
+`git status --short` shows:
+
+```
+ M .beads/issues.jsonl
+?? data/audio-electronics/fosi-audio/
+```
+
+No commits or pushes made.
+
+One conflict to flag: the issue lists the Q4 at $59.99, but the live Fosi Audio product page lists it at $69.99. I recorded the live page price and documented the conflict in the file. Both products are DAC/headphone-amp combos, so they are filed under `deviceType: "dac"` with several amplifier-gated fields set to `null`, following the existing Violectric/VMV pattern.

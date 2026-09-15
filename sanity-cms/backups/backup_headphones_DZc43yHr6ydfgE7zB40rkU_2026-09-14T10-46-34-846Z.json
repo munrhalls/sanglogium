@@ -1,0 +1,25 @@
+{
+  "productId": "DZc43yHr6ydfgE7zB40rkU",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "matrix-audio"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 999900
+  },
+  "backedUpAt": "2026-09-14T10:46:34.846Z"
+}

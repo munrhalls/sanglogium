@@ -1,0 +1,28 @@
+{
+  "issueId": "sang-logium-zdb.1.18",
+  "slice": "headphones",
+  "brand": "ES Lab",
+  "patchedAt": "2026-09-14T10:44:46.547Z",
+  "ok": 3,
+  "fail": 0,
+  "results": [
+    {
+      "file": "es-lab-es-2a-90mm-electrostatic-headphones.md",
+      "productId": "xMEqvkRBbdrlJXyFG8kmvh",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbRD8"
+    },
+    {
+      "file": "es-lab-ex-1a-electrostatic-headphones-apos-certified.md",
+      "productId": "GPjMdcfFWZVrKyR2PB9jN4",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eNrCJ"
+    },
+    {
+      "file": "es-lab-ex-1a-electrostatic-headphones.md",
+      "productId": "xMEqvkRBbdrlJXyFG8ko41",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbRNK"
+    }
+  ]
+}

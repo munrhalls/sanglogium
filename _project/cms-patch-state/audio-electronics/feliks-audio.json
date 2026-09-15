@@ -1,0 +1,34 @@
+{
+  "issueId": "sang-logium-zdb.2.16",
+  "slice": "audio-electronics",
+  "brand": "Feliks Audio",
+  "patchedAt": "2026-09-14T10:46:58.605Z",
+  "ok": 4,
+  "fail": 0,
+  "results": [
+    {
+      "file": "feliks-audio-echo-classic.md",
+      "productId": "Pn6oyV4Ks5AcNbecjh34kd",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwKzu"
+    },
+    {
+      "file": "feliks-audio-echo-mk-ii.md",
+      "productId": "k27n1AQuIbSr5iozG1vExT",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbZKR"
+    },
+    {
+      "file": "feliks-audio-envy-flagship-desktop-headphone-tube-amplifier---open-box.md",
+      "productId": "moXlkADK7m1DHgGwWwEeK6",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOp4x"
+    },
+    {
+      "file": "feliks-audio-envy-flagship-desktop-headphone-tube-amplifier.md",
+      "productId": "Pn6oyV4Ks5AcNbecjh3AqB",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwLDw"
+    }
+  ]
+}

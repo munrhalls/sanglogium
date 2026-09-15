@@ -1,0 +1,149 @@
+{
+  "_id": "PHPYj28HJdPDHAaIBAJqcI",
+  "name": "Meze Audio 109 PRO Headphones",
+  "before": {
+    "acousticDesign": [
+      "open-back"
+    ],
+    "backDesign": "closed",
+    "brand": [
+      "meze-audio"
+    ],
+    "cableLengthM": 1.5,
+    "cableTermination": [
+      "3.5mm"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "detachableCable": true,
+    "driverType": [
+      "dynamic"
+    ],
+    "foldable": false,
+    "freqResponseHz": {
+      "max": 30000,
+      "min": 5
+    },
+    "impedanceOhms": 40,
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "portable": false,
+    "price": 79900,
+    "productCategory": [
+      "over-ear"
+    ],
+    "requiresAmplifier": false,
+    "sensitivityDbMw": 112,
+    "sourcing": [
+      {
+        "field": "driverType",
+        "quote": "Driver Type | Dynamic",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://mezeaudio.com/products/109-pro"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "Meze Audio 109 PRO - High-Fidelity Premium Open-Back Dynamic Driver Headphones",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://mezeaudio.com/products/109-pro"
+      },
+      {
+        "field": "impedanceOhms",
+        "quote": "Impedance | 40 Ω",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://mezeaudio.com/products/109-pro"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "Sensitivity | 112 dB SPL/mW at 1 kHz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://mezeaudio.com/products/109-pro"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "Frequency Range | 5 Hz - 30 kHz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://mezeaudio.com/products/109-pro"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "WHAT COMES WITH YOUR HEADPHONES | 1.5 m & 3m soft TPE cable, with 3.5 mm jack | PU leather pouch | 6.3 mm gold-plated jack adapter | Hard EVA carrying pouch",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://mezeaudio.com/products/109-pro"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "Input Connector | dual 3.5 mm TS Jack",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://mezeaudio.com/products/109-pro"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "1.5 m & 3m soft TPE cable, with 3.5 mm jack",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://mezeaudio.com/products/109-pro"
+      },
+      {
+        "field": "foldable",
+        "quote": "No folding/hinge/collapse language anywhere on the manufacturer page — boolean feature-absence rule reads silence as false",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://mezeaudio.com/products/109-pro"
+      },
+      {
+        "field": "microphone",
+        "quote": "No microphone mentioned on the manufacturer page, manual or press release — boolean feature-absence rule reads silence as false",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://mezeaudio.com/products/109-pro"
+      },
+      {
+        "field": "portable",
+        "quote": "Weight | 375 g (13 oz.) — no transport case supplied, only a cable pouch",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://mezeaudio.com/products/109-pro"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "Ear Coupling: Circumaural / over-ear",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://mezeaudio.com/products/109-pro"
+      },
+      {
+        "field": "productCategory",
+        "quote": "109 PRO | Open-Back Dynamic Headphones",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://mezeaudio.com/products/109-pro"
+      },
+      {
+        "field": "connectivity",
+        "quote": "Meze Audio 109 PRO Headphones — no wireless/Bluetooth/battery mention on any manufacturer or audited-retailer source",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://bloomaudio.com/products/meze-109-pro"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-13T18:10:38.757Z"
+}

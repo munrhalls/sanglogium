@@ -1,0 +1,25 @@
+{
+  "productId": "moXlkADK7m1DHgGwWwEdEz",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "topping"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": false,
+    "deviceType": "headphone-amp",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 19900
+  },
+  "backedUpAt": "2026-09-14T10:51:08.919Z"
+}

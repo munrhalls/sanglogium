@@ -1,0 +1,25 @@
+{
+  "productId": "moXlkADK7m1DHgGwWtbmis",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "denon"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 159900,
+    "requiresAmplifier": true,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T13:53:20.420Z"
+}

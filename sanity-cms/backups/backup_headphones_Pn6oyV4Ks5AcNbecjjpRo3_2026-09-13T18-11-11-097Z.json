@@ -1,0 +1,24 @@
+{
+  "_id": "Pn6oyV4Ks5AcNbecjjpRo3",
+  "name": "Sennheiser IE 900 In-Ear Headphones",
+  "before": {
+    "brand": [
+      "sennheiser"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "mmcx"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 169996,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-13T18:11:11.097Z"
+}

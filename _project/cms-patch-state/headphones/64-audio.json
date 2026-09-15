@@ -1,0 +1,28 @@
+{
+  "issueId": "sang-logium-zdb.1.11",
+  "slice": "headphones",
+  "brand": "64 Audio",
+  "patchedAt": "2026-09-14T10:45:15.266Z",
+  "ok": 3,
+  "fail": 0,
+  "results": [
+    {
+      "file": "64-audio-nio-in-ear-headphones.md",
+      "productId": "Pn6oyV4Ks5AcNbecjjohGV",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOQzp"
+    },
+    {
+      "file": "64-audio-u12t-in-ear-headphones.md",
+      "productId": "MrEMtYwMtrFDGWmRnQW6KX",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eORZh"
+    },
+    {
+      "file": "64-audio-u4s-in-ear-headphones.md",
+      "productId": "Agdc7UdudmikAzJtKWUVPW",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwB09"
+    }
+  ]
+}

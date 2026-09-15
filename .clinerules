@@ -80,3 +80,7 @@ Cost & context discipline:
 - For complex multi-file refactors, race conditions, checkout/auth edge cases → switch to Pro or ask user.
 
 When stuck or hallucinating: stop, summarize state, ask for clarification or start a New Task.
+
+## Clickable file links
+
+When outputting a file or directory path, always print it as a `file://` URI (e.g. `file:///home/jan/file.json`) for one-click terminal opening.

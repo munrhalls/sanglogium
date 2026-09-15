@@ -1,37 +1,37 @@
 ---
-product_id: "PHPYj28HJdPDHAaIBAK0fG"
-product_slug: "hedd-audio-heddphone-two"
-brand: "HEDD Audio"
-name: "HEDDphone TWO"
-slice: "headphones"
+product_id: PHPYj28HJdPDHAaIBAK0fG
+product_slug: hedd-audio-heddphone-two
+brand: HEDD Audio
+name: HEDD Audio HEDDPhone® Two
+slice: headphones
 spec_fields:
   productCategory:
-    - "over-ear"
+  - over-ear
   wearingStyle:
-    - "over-ear"
+  - over-ear
   acousticDesign:
-    - "open-back"
+  - open-back
   fitType: null
-  connectivity: "wired"
+  connectivity: wired
   portable: false
   soundSignature: null
   microphone: false
   cableTermination:
-    - "3.5mm"
-    - "6.35mm"
-    - "4.4mm-balanced"
-    - "4-pin-xlr"
+  - 3.5mm
+  - 6.35mm
+  - 4.4mm-balanced
+  - 4-pin-xlr
   detachableCable: true
   cableLengthM: 2.2
   foldable: false
   ipxRating: null
   bluetoothCodecs: null
-  anc: "none"
+  anc: none
   batteryLifeHours:
     ancOff: null
     ancOn: null
   driverType:
-    - "amt"
+  - amt
   impedanceOhms: 41
   sensitivityDbMw: 89
   freqResponseHz:
@@ -41,11 +41,11 @@ spec_fields:
   driverConfigBucket: null
   driverConfigDetail: null
 source_urls:
-  - "https://hedd.audio/products/heddphone-two"
-  - "https://hedd.audio/cdn/shop/files/HEDD_HP2_GT_Manual.pdf?v=2681826527024110035"
-  - "https://crinacle.com/rankings/headphones/"
-verified_at: "2026-09-14"
-data_status: "COMPLETE"
+- https://hedd.audio/products/heddphone-two
+- https://hedd.audio/cdn/shop/files/HEDD_HP2_GT_Manual.pdf?v=2681826527024110035
+- https://crinacle.com/rankings/headphones/
+verified_at: '2026-09-14'
+data_status: COMPLETE
 ---
 
 ## Verification Notes

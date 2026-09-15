@@ -1,0 +1,16 @@
+{
+  "issueId": "sang-logium-zdb.3.32",
+  "slice": "accessories",
+  "brand": "Salad",
+  "patchedAt": "2026-09-14T10:48:16.241Z",
+  "ok": 1,
+  "fail": 0,
+  "results": [
+    {
+      "file": "salad-halo-headphone-stand.md",
+      "productId": "GPjMdcfFWZVrKyR2PB5L30",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03ePjGv"
+    }
+  ]
+}

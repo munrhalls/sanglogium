@@ -1,0 +1,26 @@
+{
+  "_id": "DZc43yHr6ydfgE7zB460aC",
+  "name": "Audeze CRBN2 Electrostatic Headphones (Case Included)",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "audeze"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "electrostatic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 599500,
+    "requiresAmplifier": true,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T18:07:22.451Z"
+}

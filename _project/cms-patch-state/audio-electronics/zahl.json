@@ -1,0 +1,16 @@
+{
+  "issueId": "sang-logium-zdb.2.46",
+  "slice": "audio-electronics",
+  "brand": "Zähl",
+  "patchedAt": "2026-09-14T10:45:44.993Z",
+  "ok": 1,
+  "fail": 0,
+  "results": [
+    {
+      "file": "z-hl-hm1-reference-desktop-headphone-amplifier.md",
+      "productId": "MrEMtYwMtrFDGWmRnNA955",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbWMx"
+    }
+  ]
+}

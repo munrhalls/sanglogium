@@ -1,0 +1,26 @@
+{
+  "_id": "DZc43yHr6ydfgE7zB441ML",
+  "name": "Audio-Technica ATH-W2022 Closed-Back Dynamic Wooden Headphones",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "audio-technica"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 10999,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T18:07:15.848Z"
+}

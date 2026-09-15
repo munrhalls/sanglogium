@@ -1,0 +1,16 @@
+{
+  "issueId": "sang-logium-zdb.3.26",
+  "slice": "accessories",
+  "brand": "McIntosh",
+  "patchedAt": "2026-09-14T10:48:47.887Z",
+  "ok": 1,
+  "fail": 0,
+  "results": [
+    {
+      "file": "mcintosh-mq112-environmental-equalizer.md",
+      "productId": "x2LkzHeaGqoEz8Jhogdmti",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwgNx"
+    }
+  ]
+}

@@ -2,4 +2,14 @@ Plan for this turn:
 1. `bd show sang-logium-zdb.3.5` to read the issue protocols.
 2. Inspect the target directory and any existing files.
 3. Source real data and write one `.md` per product listed.
-4. `bd close` with the product count.
+4. `bd close` with the product count.Done.
+
+- `sang-logium-zdb.3.5` closed as `2 products sourced and filed.`
+- Two `.md` files written under `data/accessories/audeze/`:
+  - `audeze-std-lcd-series-cable-mini-xlr-to-4-pin-xlr-w-6-3mm-adapter.md`
+  - `audeze-premium-braided-upgrade-cable-6-3-or-xlr-for-lcd-series.md`
+- Sourced from the Audeze manufacturer product pages; every `should-be-accessories.md` field is either a real, cited value or an explicit `null`.
+- Noted conflicts: standard cable’s `$90.00` Sanity price vs. `$175.00` manufacturer page; `6.35mm` / `4-pin-mini-xlr` connector values fall outside the current controlled vocabulary; premium cable has unconfirmed silver-plated variants.
+- `bd export -o .beads/issues.jsonl` run; committed to `main` (`5c6ce836`); did not push.
+
+Live check: inspect `data/accessories/audeze/` and `bd show sang-logium-zdb.3.5`.

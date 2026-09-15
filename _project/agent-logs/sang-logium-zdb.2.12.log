@@ -1,0 +1,22 @@
+I’ll read the issue, source real cited data for each product, write the .md files under the path it specifies, then close the bead.Done. `sang-logium-zdb.2.12` is closed with reason `3 products sourced and filed.`
+
+Created the 3 Denon product records under `data/audio-electronics/denon/`:
+
+- `denon-dnp-2000ne-streaming-music-player-and-preamplifier.md`
+- `denon-dnp-2000ne-streaming-music-player-and-preamplifier-open-box.md`
+- `denon-dcd-1700ne-cd-sacd-player-with-advanced-al32-processing-plus-black.md`
+
+Key sourcing decisions:
+
+- DNP-2000NE: `deviceType: network-streamer`, ESS Sabre ES9018K2M DAC, `maxSampleRateBitDepth: 384kHz/32bit`, `dsdSupport: dsd256-plus`, `streamingPlatformSupport: [airplay2, spotify-connect, tidal-connect, roon-ready]`, `bluetoothCodecs: [sbc]`, `voiceAssistant: [alexa, google-assistant]`.
+- DCD-1700NE: `deviceType: cd-player-transport`, no inputs, `maxSampleRateBitDepth: 192kHz/24bit`, `dsdSupport: dsd128`, `dacChipsetFamily: null` because Denon lists a TI/Burr-Brown PCM1795 outside the schema enum.
+- Conflicts recorded: DCD store price (`$1,499` from Sanity) vs. Denon direct (`$1,699`); the open-box DNP condition/price come from the live Sanity record; manufacturer sources used for all hardware specs.
+
+Git status for the affected files:
+
+```
+ M .beads/issues.jsonl
+?? data/audio-electronics/denon/
+```
+
+No other beads issues or brands were touched. I did not commit or push — ready for your review.

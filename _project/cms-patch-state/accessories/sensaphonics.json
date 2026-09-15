@@ -1,0 +1,52 @@
+{
+  "issueId": "sang-logium-zdb.3.34",
+  "slice": "accessories",
+  "brand": "Sensaphonics",
+  "patchedAt": "2026-09-14T10:48:12.367Z",
+  "ok": 7,
+  "fail": 0,
+  "results": [
+    {
+      "file": "audio-wipes-small.md",
+      "productId": "PHPYj28HJdPDHAaIB6P7bo",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbbsR"
+    },
+    {
+      "file": "dry-aid-desiccant.md",
+      "productId": "Pn6oyV4Ks5AcNbecjbDai1",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwcJN"
+    },
+    {
+      "file": "earpiece-cleaning-tool.md",
+      "productId": "Pn6oyV4Ks5AcNbecjbDXfF",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435Cxbc6S"
+    },
+    {
+      "file": "earpiece-moisture-wicks.md",
+      "productId": "MrEMtYwMtrFDGWmRnGiczn",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbcCp"
+    },
+    {
+      "file": "earpiece-soft-wrap-by-comply.md",
+      "productId": "PHPYj28HJdPDHAaIB6P9CI",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwcc5"
+    },
+    {
+      "file": "jodi-vac-consumer-iem-vacuum.md",
+      "productId": "Pn6oyV4Ks5AcNbecjbDc7f",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwcj6"
+    },
+    {
+      "file": "jodi-vac-pro-iem-vacuum.md",
+      "productId": "PHPYj28HJdPDHAaIB6P8QC",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwcq7"
+    }
+  ]
+}

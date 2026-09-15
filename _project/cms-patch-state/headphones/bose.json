@@ -1,0 +1,34 @@
+{
+  "issueId": "sang-logium-zdb.1.7",
+  "slice": "headphones",
+  "brand": "Bose",
+  "patchedAt": "2026-09-14T10:45:19.897Z",
+  "ok": 4,
+  "fail": 0,
+  "results": [
+    {
+      "file": "bose-quietcomfort-ultra-earbuds-black.md",
+      "productId": "ZuUKzmkqDyQwdcwhxl8saP",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbUDA"
+    },
+    {
+      "file": "bose-quietcomfort-ultra-earbuds-lunar-blue.md",
+      "productId": "Y7l1IhzX2fnyiano4irsdl",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwBGW"
+    },
+    {
+      "file": "bose-ultra-open-earbuds-moonstone-blue.md",
+      "productId": "ZuUKzmkqDyQwdcwhxl8p4E",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbUNM"
+    },
+    {
+      "file": "bose-ultra-open-earbuds-white-smoke.md",
+      "productId": "dLGDVDmEEI2lV8CArAdTYq",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbURB"
+    }
+  ]
+}

@@ -1,0 +1,172 @@
+{
+  "productId": "PHPYj28HJdPDHAaIBAJiLG",
+  "before": {
+    "acousticDesign": [
+      "open-back"
+    ],
+    "anc": "none",
+    "awards": [
+      "The Switch Master — \"Editor's Choice award\""
+    ],
+    "batteryLifeHours": {
+      "ancOff": null,
+      "ancOn": null
+    },
+    "brand": [
+      "audeze"
+    ],
+    "cableTermination": [
+      "4-pin-xlr",
+      "6.35mm"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "detachableCable": true,
+    "driverType": [
+      "planar-magnetic"
+    ],
+    "foldable": false,
+    "freqResponseHz": {
+      "max": 50000,
+      "min": 10
+    },
+    "impedanceOhms": 70,
+    "inStock": true,
+    "microphone": false,
+    "portable": false,
+    "price": 79900,
+    "productCategory": [
+      "over-ear"
+    ],
+    "requiresAmplifier": false,
+    "sensitivityDbMw": 101,
+    "soundSignature": "Warm",
+    "sourcing": [
+      {
+        "field": "awards",
+        "quote": "\"Editor's Choice award. It's one of the best models that Audeze have ever made...for under a grand, nothing sounds as good.\" - The Switch Master",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/lcd-2-classic"
+      },
+      {
+        "field": "productCategory",
+        "quote": "Style Over-ear, open-back",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/lcd-2-classic"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "Style Over-ear, open-back",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/lcd-2-classic"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "Style Over-ear, open-back / \"LCD-2 Specifications Style: Open-back circumaural\" (LCD User Guide)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/lcd-2-classic"
+      },
+      {
+        "field": "connectivity",
+        "quote": "(analog cable only; no wireless mode anywhere in the specification table)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/lcd-2-classic"
+      },
+      {
+        "field": "portable",
+        "quote": "Weight 544g / Recommended power level >250mW — full-size open-back headphone; no portability or desktop-use statement from the manufacturer (absence-based FLAG)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/lcd-2-classic"
+      },
+      {
+        "field": "soundSignature",
+        "quote": "\"Warm\" / \"Classic Audeze combo of solid resolution with a confusing lack of upper midrange.\" (entry \"Audeze LCD-2 Classic\", $800, Tone Grade C, Technical Grade A)",
+        "sourcedAt": "2026-09-13",
+        "tier": "editorial",
+        "url": "https://crinacle.com/rankings/headphones/"
+      },
+      {
+        "field": "impedanceOhms",
+        "quote": "Impedance 70 ohms / \"LCD-2 Specifications ... Impedance: 70 ohms\" (LCD User Guide — same-tier agreement)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.audeze.com/products/lcd-2-classic"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "Sensitivity 101 dB/1mW (at Drum Reference Point) / \"Efficiency: 101dB / 1mW*\" (LCD User Guide — same-tier agreement)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.audeze.com/products/lcd-2-classic"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "Frequency response 10Hz - 50kHz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.audeze.com/products/lcd-2-classic"
+      },
+      {
+        "field": "microphone",
+        "quote": "(no microphone in the LCD-2 specification block, the package-contents list, or the manufacturer product page/spec table; boolean feature-absence rule)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://cdn.shopify.com/s/files/1/3013/1908/files/LCD_UserGuide_FULL_WEB_160222.pdf"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "Includes: LCD-2 Classic Headphone | Standard LCD Travel Case | 4-pin XLR Cable | 4-pin XLR to 1/4\" TRS adapter cable | 1/4\" to 3.5mm adapter | Warranty Card and Certificate of Authenticity",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/lcd-2-classic"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "Look for the (L) and (R) indicators on the cable ends and match them to the headphone's (L) and (R) inputs ... To remove the connector press down on the small black (L) and red (R) button and gently remove the connector",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://cdn.shopify.com/s/files/1/3013/1908/files/LCD_UserGuide_FULL_WEB_160222.pdf"
+      },
+      {
+        "field": "foldable",
+        "quote": "(no folding/collapsing hinge in the structure or comfort sections, and none in the manufacturer spec table; boolean feature-absence rule)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://cdn.shopify.com/s/files/1/3013/1908/files/LCD_UserGuide_FULL_WEB_160222.pdf"
+      },
+      {
+        "field": "anc",
+        "quote": "Style Over-ear, open-back / (no noise-cancelling feature listed; wired-only — derived from the already-cited acousticDesign + connectivity)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/lcd-2-classic"
+      },
+      {
+        "field": "batteryLifeHours",
+        "quote": "(no battery anywhere on the page or manual — wired-only passive headphone, so both ancOn and ancOff are null)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/lcd-2-classic"
+      },
+      {
+        "field": "driverType",
+        "quote": "Transducer type Planar Magnetic / Magnetic structure Proprietary magnet array / Transducer size 106 mm / (LCD User Guide: \"advanced planar magnetics\")",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.audeze.com/products/lcd-2-classic"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-14T21:57:43.721Z"
+}

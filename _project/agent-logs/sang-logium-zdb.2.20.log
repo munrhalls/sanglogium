@@ -1,1 +1,20 @@
-I can see this is a data-sourcing task with a clear plan. I have the issue, the field list, and an example `.md`. Next I need the actual product names and slugs for the 6 Gustard Sanity IDs so I can build the source-page map and start fetching.I found the manufacturer manual PDFs on Gustard's official site. I’ll download and extract them now, then move on to writing the product files.
+I can see this is a data-sourcing task with a clear plan. I have the issue, the field list, and an example `.md`. Next I need the actual product names and slugs for the 6 Gustard Sanity IDs so I can build the source-page map and start fetching.I found the manufacturer manual PDFs on Gustard's official site. I’ll download and extract them now, then move on to writing the product files.The first script pass produced YAML, but the nested `price` block was under-indented. I fixed the YAML serializer and will re-run to regenerate the files.Done. `sang-logium-zdb.2.20` is closed with reason **"6 products sourced and filed."**
+
+What landed:
+
+- [gustard-r30-fully-discrete-r2r-network-streaming-dac.md](file:///home/jan/work/sanglogium/data/audio-electronics/gustard/gustard-r30-fully-discrete-r2r-network-streaming-dac.md)
+- [gustard-r30-fully-discrete-r2r-network-streaming-dac-apos-certified.md](file:///home/jan/work/sanglogium/data/audio-electronics/gustard/gustard-r30-fully-discrete-r2r-network-streaming-dac-apos-certified.md)
+- [gustard-dac-r26ii-network-streaming-r2r-dac.md](file:///home/jan/work/sanglogium/data/audio-electronics/gustard/gustard-dac-r26ii-network-streaming-r2r-dac.md)
+- [gustard-dac-r26ii-network-streaming-r2r-dac-apos-certified.md](file:///home/jan/work/sanglogium/data/audio-electronics/gustard/gustard-dac-r26ii-network-streaming-r2r-dac-apos-certified.md)
+- [gustard-x26-iii-dual-es9039spro-digital-to-analog-convertor-dac.md](file:///home/jan/work/sanglogium/data/audio-electronics/gustard/gustard-x26-iii-dual-es9039spro-digital-to-analog-convertor-dac.md)
+- [gustard-x30-4xes9039spro-streamer-digital-to-analog-convertor-dac.md](file:///home/jan/work/sanglogium/data/audio-electronics/gustard/gustard-x30-4xes9039spro-streamer-digital-to-analog-convertor-dac.md)
+
+All 6 files have valid YAML frontmatter, real cited source URLs, and explicit `null`s where a field could not be confirmed. No other brand or beads issue was touched.
+
+Git:
+
+- Created commit `eaaee776` with the 6 product files plus the `.beads/interactions.jsonl` and `.beads/issues.jsonl` export.
+- Did not push.
+- Targeted `git status -- data/audio-electronics/gustard` is now clean.
+
+Caveat: the post-commit `.beads/interactions.jsonl` and `.beads/issues.jsonl` are showing fresh churn from the `bd show` / `bd prime` calls I ran for verification. I did not commit that churn because it touches entries for other issues, which you asked me not to touch. If you want a clean `.beads` export, run `bd export -o .beads/issues.jsonl` and commit it separately.

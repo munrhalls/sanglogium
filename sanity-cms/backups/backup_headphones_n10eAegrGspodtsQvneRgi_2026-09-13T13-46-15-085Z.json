@@ -1,0 +1,25 @@
+{
+  "productId": "n10eAegrGspodtsQvneRgi",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "meze-audio"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 27900,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T13:46:15.085Z"
+}

@@ -1,0 +1,25 @@
+{
+  "productId": "MrEMtYwMtrFDGWmRnKwOVD",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "fiio"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dap",
+    "formFactor": "portable",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 99999
+  },
+  "backedUpAt": "2026-09-14T10:51:31.031Z"
+}

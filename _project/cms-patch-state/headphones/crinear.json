@@ -1,0 +1,22 @@
+{
+  "issueId": "sang-logium-zdb.1.16",
+  "slice": "headphones",
+  "brand": "CrinEar",
+  "patchedAt": "2026-09-14T10:44:51.419Z",
+  "ok": 2,
+  "fail": 0,
+  "results": [
+    {
+      "file": "crinear-daybreak-in-ear-headphones.md",
+      "productId": "PHPYj28HJdPDHAaIBCE9om",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcw3Gi"
+    },
+    {
+      "file": "crinear-reference-in-ear-headphones.md",
+      "productId": "Agdc7UdudmikAzJtKWUOut",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcw3Uk"
+    }
+  ]
+}

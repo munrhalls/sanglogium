@@ -1,0 +1,24 @@
+{
+  "_id": "MrEMtYwMtrFDGWmRnQXHgR",
+  "name": "Dunu Mirai In-Ear Headphones",
+  "before": {
+    "brand": [
+      "dunu"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "mmcx"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 94900,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-13T18:08:09.136Z"
+}

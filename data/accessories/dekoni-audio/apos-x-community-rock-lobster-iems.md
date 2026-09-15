@@ -33,7 +33,7 @@ spec_fields:
   mounting: null
 
 source_urls: 
-  - "https://aposaudio.com/products/apos-x-community-rock-lobster-iems"
+  - "https://apos.audio/products/apos-x-community-rock-lobster-iems"
 verified_at: "2026-09-14"
 data_status: "COMPLETE"
 

@@ -1,0 +1,25 @@
+{
+  "productId": "ZuUKzmkqDyQwdcwhxlJkHG",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "hifi-rose"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "inStock": false,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 529500
+  },
+  "backedUpAt": "2026-09-14T10:51:16.174Z"
+}

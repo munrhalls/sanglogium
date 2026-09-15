@@ -1,0 +1,16 @@
+{
+  "issueId": "sang-logium-zdb.3.40",
+  "slice": "accessories",
+  "brand": "iFi Audio",
+  "patchedAt": "2026-09-14T10:47:22.812Z",
+  "ok": 1,
+  "fail": 0,
+  "results": [
+    {
+      "file": "ifi-itraveller-multipurpose-travel-case-for-dacs.md",
+      "productId": "PHPYj28HJdPDHAaIB6HHQs",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbaBx"
+    }
+  ]
+}

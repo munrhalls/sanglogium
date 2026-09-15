@@ -1,0 +1,23 @@
+{
+  "productId": "PHPYj28HJdPDHAaIBCEzHC",
+  "before": {
+    "anc": "passive",
+    "brand": [
+      "truthear"
+    ],
+    "cableTermination": [
+      "mmcx"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "price": 7999,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-14T10:43:59.795Z"
+}

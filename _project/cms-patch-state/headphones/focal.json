@@ -1,0 +1,106 @@
+{
+  "issueId": "sang-logium-zdb.1.3",
+  "slice": "headphones",
+  "brand": "Focal",
+  "patchedAt": "2026-09-14T21:55:34.529Z",
+  "ok": 16,
+  "fail": 0,
+  "results": [
+    {
+      "file": "focal-azurys-qt9nz.md",
+      "productId": "MrEMtYwMtrFDGWmRnQT9Nz",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUcNpbz"
+    },
+    {
+      "file": "focal-azurys.md",
+      "productId": "k27n1AQuIbSr5iozFz7IlS",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUcNpqR"
+    },
+    {
+      "file": "focal-bathys-ccslu.md",
+      "productId": "PHPYj28HJdPDHAaIBCCSLu",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbow0P4"
+    },
+    {
+      "file": "focal-bathys-mg-wireless-headphones.md",
+      "productId": "MrEMtYwMtrFDGWmRnQTHiy",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUcNq8V"
+    },
+    {
+      "file": "focal-bathys.md",
+      "productId": "moXlkADK7m1DHgGwWtX5bB",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbow0Yk"
+    },
+    {
+      "file": "focal-celestee-headphones.md",
+      "productId": "DZc43yHr6ydfgE7zB43uqB",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUcNqJL"
+    },
+    {
+      "file": "focal-celestee.md",
+      "productId": "k27n1AQuIbSr5iozFz7FSo",
+      "ok": true,
+      "rev": "DE7q4q517EcCNrf7ORGtY1"
+    },
+    {
+      "file": "focal-clear-mg.md",
+      "productId": "k27n1AQuIbSr5iozFz7EsP",
+      "ok": true,
+      "rev": "DE7q4q517EcCNrf7ORGtkS"
+    },
+    {
+      "file": "focal-hadenys.md",
+      "productId": "Pn6oyV4Ks5AcNbecjgql0e",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUcNqUB"
+    },
+    {
+      "file": "focal-radiance-headphones-limited-edition.md",
+      "productId": "MrEMtYwMtrFDGWmRnQT5sJ",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUcNqf1"
+    },
+    {
+      "file": "focal-radiance.md",
+      "productId": "k27n1AQuIbSr5iozFz7E1H",
+      "ok": true,
+      "rev": "DE7q4q517EcCNrf7ORGtwt"
+    },
+    {
+      "file": "focal-stellia-closed-back-headphones.md",
+      "productId": "xMEqvkRBbdrlJXyFG8igwj",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbow150"
+    },
+    {
+      "file": "focal-stellia-headphones.md",
+      "productId": "PHPYj28HJdPDHAaIBCCaW4",
+      "ok": true,
+      "rev": "DE7q4q517EcCNrf7ORGuDT"
+    },
+    {
+      "file": "focal-utopia-2022-open-back-headphones.md",
+      "productId": "xMEqvkRBbdrlJXyFG8f1l7",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUcNqpr"
+    },
+    {
+      "file": "focal-utopia-2022.md",
+      "productId": "PHPYj28HJdPDHAaIBADqsm",
+      "ok": true,
+      "rev": "DE7q4q517EcCNrf7ORGuU3"
+    },
+    {
+      "file": "focal-utopia.md",
+      "productId": "moXlkADK7m1DHgGwWtUHWs",
+      "ok": true,
+      "rev": "DE7q4q517EcCNrf7ORGugU"
+    }
+  ]
+}

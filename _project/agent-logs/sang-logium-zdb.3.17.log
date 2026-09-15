@@ -3,4 +3,13 @@ Plan:
 2. Source real cited data for every product listed and write one `.md` per product under the issue’s target path.
 3. Close the issue with the product count.
 
-Let me pull the issue and the beads skill guidance.Issue loaded. 107 Dekoni Audio products, output path `data/accessories/dekoni-audio/`. Next I need the authoritative JSON product list and the field schema before fetching.
+Let me pull the issue and the beads skill guidance.Issue loaded. 107 Dekoni Audio products, output path `data/accessories/dekoni-audio/`. Next I need the authoritative JSON product list and the field schema before fetching.Done. `sang-logium-zdb.3.17` is closed with the reason `107 products sourced and filed.`
+
+What I verified before closing:
+- 107 `.md` files in `data/accessories/dekoni-audio/` — one per issue product ID, no missing or extra IDs.
+- Every file has the required top-level frontmatter keys and all 27 `spec_fields` keys.
+- All 11 Apos co-branded products now cite verified `https://apos.audio/products/...` URLs (the previous broken/inferred URLs were fixed).
+- The two Dekoni products with no public manufacturer/retailer page (`Choice Leather Earpads for Hifiman Sundara` and `Protective Headphone Travel Pouch`) honestly have `source_urls: []`, `data_status: PARTIAL`, and a conflict/caution note explaining the gap.
+- Git changes are limited to `data/accessories/dekoni-audio/` and the `.beads/issues.jsonl` export from `bd export`. No other brand directory or issue was touched.
+
+I also ran `bd export -o .beads/issues.jsonl` so the closed status is reflected in the export. I did not commit or push — let me know if you want me to stage and commit.

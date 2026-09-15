@@ -1,0 +1,26 @@
+{
+  "_id": "PHPYj28HJdPDHAaIBDsCuM",
+  "name": "Denon AH-D9200 Headphones",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "denon"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 179900,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T18:10:56.662Z"
+}

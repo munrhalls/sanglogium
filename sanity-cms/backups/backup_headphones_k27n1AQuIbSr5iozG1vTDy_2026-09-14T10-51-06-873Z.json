@@ -1,0 +1,25 @@
+{
+  "productId": "k27n1AQuIbSr5iozG1vTDy",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "topping"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac-amp-combo",
+    "formFactor": "portable",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 29900
+  },
+  "backedUpAt": "2026-09-14T10:51:06.873Z"
+}

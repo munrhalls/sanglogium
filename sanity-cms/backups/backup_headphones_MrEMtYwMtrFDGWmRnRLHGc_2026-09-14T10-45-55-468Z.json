@@ -1,0 +1,25 @@
+{
+  "productId": "MrEMtYwMtrFDGWmRnRLHGc",
+  "before": {
+    "amplification": "tube",
+    "balancedOutput": false,
+    "brand": [
+      "woo-audio"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": false,
+    "deviceType": "headphone-amp",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 89900
+  },
+  "backedUpAt": "2026-09-14T10:45:55.468Z"
+}

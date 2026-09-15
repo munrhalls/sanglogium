@@ -1,0 +1,16 @@
+{
+  "issueId": "sang-logium-zdb.3.38",
+  "slice": "accessories",
+  "brand": "Yamaha",
+  "patchedAt": "2026-09-14T10:47:35.050Z",
+  "ok": 1,
+  "fail": 0,
+  "results": [
+    {
+      "file": "yamaha-ns-ic800-140-watt-8-inch-2-way-in-ceiling-speakers-pair-white.md",
+      "productId": "apzyFbFDTajEZntmxssRcT",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwNYw"
+    }
+  ]
+}

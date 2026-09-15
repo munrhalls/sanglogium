@@ -1,0 +1,25 @@
+{
+  "productId": "DZc43yHr6ydfgE7zB42wTA",
+  "before": {
+    "amplification": "tube",
+    "balancedOutput": false,
+    "brand": [
+      "xduoo"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": false,
+    "deviceType": "headphone-amp",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 16900
+  },
+  "backedUpAt": "2026-09-14T10:50:40.524Z"
+}

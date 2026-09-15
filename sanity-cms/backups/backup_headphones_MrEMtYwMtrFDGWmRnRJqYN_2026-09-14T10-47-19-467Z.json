@@ -1,0 +1,25 @@
+{
+  "productId": "MrEMtYwMtrFDGWmRnRJqYN",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "auris-audio"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac-amp-combo",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 169900
+  },
+  "backedUpAt": "2026-09-14T10:47:19.467Z"
+}

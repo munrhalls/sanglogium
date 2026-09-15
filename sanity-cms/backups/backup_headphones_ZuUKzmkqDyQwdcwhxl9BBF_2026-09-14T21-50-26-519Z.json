@@ -1,0 +1,163 @@
+{
+  "productId": "ZuUKzmkqDyQwdcwhxl9BBF",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "anc": "anc",
+    "batteryLifeHours": {
+      "ancOff": 40,
+      "ancOn": 30
+    },
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "LDAC"
+    ],
+    "brand": [
+      "sony"
+    ],
+    "cableLengthM": 1.2,
+    "cableTermination": [
+      "3.5mm"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wireless",
+    "detachableCable": true,
+    "driverType": [
+      "dynamic"
+    ],
+    "foldable": false,
+    "freqResponseHz": {
+      "max": 40000,
+      "min": 4
+    },
+    "inStock": true,
+    "ipxRating": "none",
+    "microphone": true,
+    "portable": true,
+    "price": 39800,
+    "requiresAmplifier": false,
+    "soundSignature": "Warm",
+    "sourcing": [
+      {
+        "field": "wearingStyle",
+        "quote": "Wireless Noise Canceling Stereo Headset ... Headphone cable (approx. 1.2 m (47.25 in.)) (1)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/wh1000xm5/v1/en/contents/TP1000534515.html"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "Wireless Noise Canceling Stereo Headset — closed circumaural noise-cancelling over-ear; no open-back or semi-open variant, and no open vent, is described anywhere in the help guide",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/wh1000xm5/v1/en/contents/TP1000534515.html"
+      },
+      {
+        "field": "connectivity",
+        "quote": "you can use the headset as noise canceling headphones while the headset is connected to a device via the supplied headphone cable",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/wh1000xm5/v1/en/contents/TP1000534744.html"
+      },
+      {
+        "field": "portable",
+        "quote": "Carrying case ( WH-1000XM5 only) (1)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/wh1000xm5/v1/en/contents/TP1000534515.html"
+      },
+      {
+        "field": "driverType",
+        "quote": "Model : YY2954 — single dynamic driver; no balanced-armature, planar-magnetic, electrostatic or AMT driver is stated or implied anywhere in the help guide or specification PDF",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/wh1000xm5/v1/en/print.pdf"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "4 Hz - 40,000 Hz (JEITA) — the specification PDF's A2DP transmission range rows",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://helpguide.sony.net/mdr/wh1000xm5/v1/en/print.pdf"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "Headphone cable (approx. 1.2 m (47.25 in.)) (1)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/wh1000xm5/v1/en/contents/TP1000534515.html"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "The headset turns off automatically if you disconnect the supplied headphone cable from the headset while it is turned on.",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/wh1000xm5/v1/en/contents/TP1000534744.html"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "Headphone cable (approx. 1.2 m (47.25 in.)) (1)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://helpguide.sony.net/mdr/wh1000xm5/v1/en/contents/TP1000534515.html"
+      },
+      {
+        "field": "microphone",
+        "quote": "When an incoming call arrives, a ring tone is heard via the headset. Answer the call using your smartphone or mobile phone, and talk using the microphone of the phone. You can hear the caller's voice from the headset.",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/wh1000xm5/v1/en/contents/TP1000534744.html"
+      },
+      {
+        "field": "foldable",
+        "quote": "(no folding hinge, folded position, or fold step appears anywhere in the help guide's Parts and controls or Setting the headset in the carrying case sections — the flat-folding swivel of the XM3/XM4 is absent on the XM5; boolean feature-absence rule applied)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/wh1000xm5/v1/en/contents/TP1000534705.html"
+      },
+      {
+        "field": "ipxRating",
+        "quote": "The headset is not waterproof. If the headset is charged while it is wet with rain or sweat, etc., this can result in burnout or malfunction.",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/wh1000xm5/v1/en/index.html"
+      },
+      {
+        "field": "bluetoothCodecs",
+        "quote": "Codec ... LDAC ™ ... AAC ... SBC",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://helpguide.sony.net/mdr/wh1000xm5/v1/en/contents/TP1000534508.html"
+      },
+      {
+        "field": "anc",
+        "quote": "Noise canceling function: ON Max. 30 hours",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/wh1000xm5/v1/en/contents/TP1000534508.html"
+      },
+      {
+        "field": "batteryLifeHours",
+        "quote": "AAC Noise canceling function: ON Max. 30 hours / AAC OFF Max. 40 hours",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/wh1000xm5/v1/en/contents/TP1000534508.html"
+      },
+      {
+        "field": "soundSignature",
+        "quote": "Sound Signature = Warm; Bass Amount = Very Emphasized (6 dB); Treble Amount = Slightly Emphasized (1 dB)",
+        "sourcedAt": "2026-09-13",
+        "tier": "editorial",
+        "url": "https://www.rtings.com/headphones/reviews/sony/wh-1000xm5-wireless"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-14T21:50:26.519Z"
+}

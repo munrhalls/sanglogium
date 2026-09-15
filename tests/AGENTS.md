@@ -47,4 +47,8 @@ it('action description in present tense', () => {
 ## Integration Test Layer Trust
 - Integration tests trust unit tests for data layer behavior
 - Integration tests verify: state renders, user action dispatches correct function with expected params
-- Never mix integration assertions with unit test assertions
+- Never mix integration assertions with unit test assertions.
+
+## Clickable file links
+
+When outputting a file or directory path, always print it as a `file://` URI (e.g. `file:///home/jan/file.json`) for one-click terminal opening.

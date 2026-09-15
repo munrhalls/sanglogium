@@ -1,0 +1,25 @@
+{
+  "_id": "xMEqvkRBbdrlJXyFG8erD7",
+  "name": "Sennheiser HD 600 Open-back Reference Headphones",
+  "before": {
+    "backDesign": "open",
+    "brand": [
+      "sennheiser"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 34995,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T18:12:31.030Z"
+}

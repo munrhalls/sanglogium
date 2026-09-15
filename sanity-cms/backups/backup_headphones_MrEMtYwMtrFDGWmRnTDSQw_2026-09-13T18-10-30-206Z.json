@@ -1,0 +1,26 @@
+{
+  "_id": "MrEMtYwMtrFDGWmRnTDSQw",
+  "name": "Austrian Audio The Composer Headphones",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "austrian-audio"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 319900,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T18:10:30.211Z"
+}

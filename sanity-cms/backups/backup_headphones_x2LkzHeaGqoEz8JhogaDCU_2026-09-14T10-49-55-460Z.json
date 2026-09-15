@@ -1,0 +1,23 @@
+{
+  "productId": "x2LkzHeaGqoEz8JhogaDCU",
+  "before": {
+    "accessoryType": "cable",
+    "brand": [
+      "audioquest"
+    ],
+    "category": [
+      "accessories"
+    ],
+    "compatibility": [
+      "universal"
+    ],
+    "connectorTermination": [
+      "3.5mm",
+      "6.35mm",
+      "4.4mm-balanced"
+    ],
+    "inStock": true,
+    "price": 13795
+  },
+  "backedUpAt": "2026-09-14T10:49:55.460Z"
+}

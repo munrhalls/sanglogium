@@ -9,29 +9,29 @@ spec_fields:
     - "iem"
   wearingStyle:
     - "in-ear"
-  acousticDesign:null
-  fitType:"universal"
-  connectivity:"wired"
-  portable:true
-  soundSignature:"Neutral"
-  microphone:false
-  detachableCable:true
-  cableLengthM:1.2
-  foldable:false
-  ipxRating:null
-  bluetoothCodecs:null
-  anc:"passive"
-  batteryLifeHours:null
-  awards:null
-  requiresAmplifier:false
+  acousticDesign: null
+  fitType: "universal"
+  connectivity: "wired"
+  portable: true
+  soundSignature: "Neutral"
+  microphone: false
+  detachableCable: true
+  cableLengthM: 1.2
+  foldable: false
+  ipxRating: null
+  bluetoothCodecs: null
+  anc: "passive"
+  batteryLifeHours: null
+  awards: null
+  requiresAmplifier: false
   cableTermination:
     - "3.5mm"
   driverType:
     - "dynamic"
-  driverConfigBucket:"single-dynamic"
-  driverConfigDetail:"2DD"
-  impedanceOhms:17.5
-  sensitivityDbMw:117.5
+  driverConfigBucket: "single-dynamic"
+  driverConfigDetail: "2DD"
+  impedanceOhms: 17.5
+  sensitivityDbMw: 117.5
   freqResponseHz:
     min: 20
     max: 40500
@@ -64,14 +64,10 @@ data_status: COMPLETE
 - **batteryLifeHours** (marketing-fact): null — wired-only; no battery — https://truthear.com/products/zero-red
 - **awards** (marketing-fact): null — no named awards or editor choice badges found on manufacturer page or searched reviews — https://truthear.com/products/zero-red
 - **requiresAmplifier** (derived): false — derived from 17.5Ω impedance and 117.5dB/Vrms sensitivity — https://truthear.com/products/zero-red
-- **cableTermination** (hard-spec): 
-    - "3.5mm" — TechPowerUp: "3.5 mm TRS plug to source"; SoundGuys: "3.5mm TRS plug" — https://www.techpowerup.com/review/truthear-x-crinacle-zero-red-in-ear-monitors/
-- **driverType** (hard-spec): 
-    - "dynamic" — manufacturer: "10mm + 7.8mm Dynamic Driver" dual dynamic drivers — https://truthear.com/products/zero-red
+- **cableTermination** (hard-spec): ["3.5mm"] — TechPowerUp: "3.5 mm TRS plug to source"; SoundGuys: "3.5mm TRS plug" — https://www.techpowerup.com/review/truthear-x-crinacle-zero-red-in-ear-monitors/
+- **driverType** (hard-spec): ["dynamic"] — manufacturer: "10mm + 7.8mm Dynamic Driver" dual dynamic drivers — https://truthear.com/products/zero-red
 - **driverConfigBucket** (hard-spec): "single-dynamic" — all dynamic driver arrangement; two dynamic drivers — https://truthear.com/products/zero-red
 - **driverConfigDetail** (derived): "2DD" — derived from "10mm + 7.8mm Dynamic Driver" configuration — https://truthear.com/products/zero-red
 - **impedanceOhms** (hard-spec): 17.5 — manufacturer spec: "17.5Ω±15% @1KHz" — https://truthear.com/products/zero-red
 - **sensitivityDbMw** (hard-spec): 117.5 — manufacturer spec: "117.5dB/Vrms @1KHz" (recorded numerically; source uses dB/Vrms) — https://truthear.com/products/zero-red
-- **freqResponseHz** (hard-spec): 
-    min: 20
-    max: 40500 — manufacturer: "Frequency Response Range: 20-40.5kHz (IEC61094, Free Field)"; TechPowerUp lists 12Hz-40.5kHz (free field) but manufacturer 20Hz is used as primary — https://truthear.com/products/zero-red
+- **freqResponseHz** (hard-spec): {min: 20, max: 40500} — manufacturer: "Frequency Response Range: 20-40.5kHz (IEC61094, Free Field)"; TechPowerUp lists 12Hz-40.5kHz (free field) but manufacturer 20Hz is used as primary — https://truthear.com/products/zero-red

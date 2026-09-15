@@ -1,0 +1,23 @@
+{
+  "productId": "xMEqvkRBbdrlJXyFG8jtEr",
+  "before": {
+    "anc": "passive",
+    "brand": [
+      "kinera"
+    ],
+    "cableTermination": [
+      "mmcx"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "price": 24999,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-14T10:44:31.012Z"
+}

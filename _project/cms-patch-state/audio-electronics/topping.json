@@ -1,0 +1,118 @@
+{
+  "issueId": "sang-logium-zdb.2.39",
+  "slice": "audio-electronics",
+  "brand": "Topping",
+  "patchedAt": "2026-09-14T10:51:10.885Z",
+  "ok": 18,
+  "fail": 0,
+  "results": [
+    {
+      "file": "topping-a50-iii-headphone-amplifier.md",
+      "productId": "n10eAegrGspodtsQvy4P4a",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQHBr"
+    },
+    {
+      "file": "topping-a70-pro-fully-balanced-headphone-amplifier.md",
+      "productId": "DZc43yHr6ydfgE7zB42mdu",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwu4u"
+    },
+    {
+      "file": "topping-a70-pro-headphone-amplifier.md",
+      "productId": "n10eAegrGspodtsQvy4Z6W",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxblgE"
+    },
+    {
+      "file": "topping-a90-discrete-headphone-amp.md",
+      "productId": "GPjMdcfFWZVrKyR2PB71sA",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwuBv"
+    },
+    {
+      "file": "topping-d10s-dac-digital-to-analog-converter.md",
+      "productId": "xMEqvkRBbdrlJXyFG8fdhP",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQHhF"
+    },
+    {
+      "file": "topping-d50-iii-dac.md",
+      "productId": "MrEMtYwMtrFDGWmRnN8n4N",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435Cxblmb"
+    },
+    {
+      "file": "topping-d70-pro-dac.md",
+      "productId": "PHPYj28HJdPDHAaIBAGWYs",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435Cxblrh"
+    },
+    {
+      "file": "topping-dx3-pro+-desktop-dac-&-headphone-amplifier.md",
+      "productId": "moXlkADK7m1DHgGwWwEgal",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxblvW"
+    },
+    {
+      "file": "topping-dx3-pro-bluetooth-dac-amp.md",
+      "productId": "GPjMdcfFWZVrKyR2PB4QYo",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwuLH"
+    },
+    {
+      "file": "topping-dx3-pro-desktop-dac-headphone-amplifier.md",
+      "productId": "PHPYj28HJdPDHAaIBAGqx8",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQIZ3"
+    },
+    {
+      "file": "topping-dx9-dac,-headphone-amplifier-and-pre-amp.md",
+      "productId": "k27n1AQuIbSr5iozG1vToN",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQJin"
+    },
+    {
+      "file": "topping-dx9-dac-headphone-amplifier-and-pre-amp.md",
+      "productId": "MrEMtYwMtrFDGWmRnN9RG0",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwvTR"
+    },
+    {
+      "file": "topping-e50-desktop-digital-to-analog-convertor-dac.md",
+      "productId": "MrEMtYwMtrFDGWmRnN8f2p",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbmXk"
+    },
+    {
+      "file": "topping-e70-velvet-ak4499ex-desktop-dac-digital-to-analog-convertor.md",
+      "productId": "xMEqvkRBbdrlJXyFG8ffSP",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwvcn"
+    },
+    {
+      "file": "topping-g5.md",
+      "productId": "k27n1AQuIbSr5iozG1vTDy",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435Cxbmcq"
+    },
+    {
+      "file": "topping-l30-ii.md",
+      "productId": "n10eAegrGspodtsQvy3fgK",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwvoU"
+    },
+    {
+      "file": "topping-l50-desktop-headphone-amplifier---open-box.md",
+      "productId": "moXlkADK7m1DHgGwWwEdEz",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbmkU"
+    },
+    {
+      "file": "topping-l50-headphone-amp.md",
+      "productId": "DZc43yHr6ydfgE7zB42o6O",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwvxq"
+    }
+  ]
+}

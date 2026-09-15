@@ -1,0 +1,25 @@
+{
+  "productId": "ZuUKzmkqDyQwdcwhxl9BBF",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "sony"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wireless",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": true,
+    "price": 39800,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T13:37:57.970Z"
+}

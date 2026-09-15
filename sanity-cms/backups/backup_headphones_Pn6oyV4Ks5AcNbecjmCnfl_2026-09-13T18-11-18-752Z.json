@@ -1,0 +1,26 @@
+{
+  "_id": "Pn6oyV4Ks5AcNbecjmCnfl",
+  "name": "Final Audio D7000 Headphones",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "final-audio"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 349900,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T18:11:18.752Z"
+}

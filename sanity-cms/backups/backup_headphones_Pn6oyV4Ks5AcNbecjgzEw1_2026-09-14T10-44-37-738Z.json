@@ -1,0 +1,183 @@
+{
+  "productId": "Pn6oyV4Ks5AcNbecjgzEw1",
+  "before": {
+    "acousticDesign": [
+      "open-back"
+    ],
+    "anc": "none",
+    "awards": null,
+    "batteryLifeHours": {
+      "ancOff": null,
+      "ancOn": null
+    },
+    "bluetoothCodecs": null,
+    "brand": [
+      "hedd-audio"
+    ],
+    "cableLengthM": 2,
+    "cableTermination": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "detachableCable": true,
+    "driverConfigBucket": null,
+    "driverConfigDetail": null,
+    "driverType": [
+      "dynamic"
+    ],
+    "fitType": null,
+    "foldable": false,
+    "freqResponseHz": {
+      "max": 40000,
+      "min": 5
+    },
+    "impedanceOhms": 32,
+    "inStock": true,
+    "ipxRating": null,
+    "microphone": false,
+    "portable": false,
+    "price": 79900,
+    "productCategory": [
+      "over-ear"
+    ],
+    "requiresAmplifier": false,
+    "sensitivityDbMw": 100,
+    "soundSignature": null,
+    "sourcing": [
+      {
+        "field": "acousticDesign",
+        "quote": "Design | Open-back over-ear headphone",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hedd.audio/products/heddphone-d1"
+      },
+      {
+        "field": "productCategory",
+        "quote": "Design | Open-back over-ear headphone",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hedd.audio/products/heddphone-d1"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "Open-back circumaural design delivers natural openness and spacious soundstage",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hedd.audio/products/heddphone-d1"
+      },
+      {
+        "field": "connectivity",
+        "quote": "Includes dual 3.5 mm mono connectors; 6.35 mm adapter; and 1 premium textile-covered detachable cable (no Bluetooth, wireless, or ANC language anywhere on the page)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hedd.audio/products/heddphone-d1"
+      },
+      {
+        "field": "driverType",
+        "quote": "Drivers | Dynamic with a Thin-ply Carbon Diaphragm",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://hedd.audio/products/heddphone-d1"
+      },
+      {
+        "field": "impedanceOhms",
+        "quote": "Impedance | 32 Ω",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://hedd.audio/products/heddphone-d1"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "With 32 Ω impedance and 100 dB sensitivity, the D1 performs consistently across sources from portable players to dedicated amplifiers. (Spec table basis: \"Maximum SPL | 100dB at 1mW\")",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://hedd.audio/products/heddphone-d1"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "Frequency Range | 5 Hz - 40 kHz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://hedd.audio/products/heddphone-d1"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "Cable | TRS 3.5mm textile-covered premium cable; 2m long; 6.35mm adapter.",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://hedd.audio/products/heddphone-d1"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "Includes dual 3.5 mm mono connectors; 6.35 mm adapter; and 1 premium textile-covered detachable cable (spec table: Cable \"TRS 3.5mm ... 6.35mm adapter\", Inputs \"2 x 3.5mm\")",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hedd.audio/products/heddphone-d1"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "Includes dual 3.5 mm mono connectors; 6.35 mm adapter; and 1 premium textile-covered detachable cable",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hedd.audio/products/heddphone-d1"
+      },
+      {
+        "field": "portable",
+        "quote": "Open-back over-ear headphone ... Custom carry case (full-size open-back, no folding position described; the case is for storage, not travel-first — absence-based FLAG)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hedd.audio/products/heddphone-d1"
+      },
+      {
+        "field": "microphone",
+        "quote": "(no microphone, mic, boom, or inline-remote language anywhere on the product page — boolean feature-absence rule)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hedd.audio/products/heddphone-d1"
+      },
+      {
+        "field": "foldable",
+        "quote": "(no folding hinge or folded position described anywhere on the page; the full-size open-back build does not fold — boolean feature-absence rule)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hedd.audio/products/heddphone-d1"
+      },
+      {
+        "field": "anc",
+        "quote": "(derived from the already-cited acousticDesign: open-back + connectivity: wired — passive acoustic design only, no ANC electronics)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hedd.audio/products/heddphone-d1"
+      },
+      {
+        "field": "batteryLifeHours",
+        "quote": "(no battery anywhere on the page — wired-only passive headphone, so ancOff and ancOn are both null)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hedd.audio/products/heddphone-d1"
+      },
+      {
+        "field": "awards",
+        "quote": "(no award, badge, or named recognition claimed for the D1 anywhere on the manufacturer page — boolean feature-absence rule)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hedd.audio/products/heddphone-d1"
+      },
+      {
+        "field": "soundSignature",
+        "quote": "(exhausted NULL — Crinacle's rankings list carries only the original \"HEDDphone\" (Warm neutral, Tone A, Technical A+, AMT); no D1 row and no Crinacle individual D1 post; no ASR lab review of the D1; no Rtings review. The D1 page's own FR graph is credited to headphones.com, which is not a protocol-sanctioned measurement source, so no label could be derived)",
+        "sourcedAt": "2026-09-13",
+        "tier": "editorial",
+        "url": "https://crinacle.com/rankings/headphones/"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-14T10:44:37.738Z"
+}

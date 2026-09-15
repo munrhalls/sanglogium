@@ -1,0 +1,26 @@
+{
+  "_id": "moXlkADK7m1DHgGwWwzgHO",
+  "name": "Sennheiser AMBEO Max Soundbar",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "sennheiser"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 199995,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T18:12:14.192Z"
+}

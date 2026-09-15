@@ -1,0 +1,22 @@
+{
+  "issueId": "sang-logium-zdb.1.23",
+  "slice": "headphones",
+  "brand": "JBL",
+  "patchedAt": "2026-09-14T10:44:35.111Z",
+  "ok": 2,
+  "fail": 0,
+  "results": [
+    {
+      "file": "jbl-live-670nc-wireless-on-ear-adaptive-noise-cancelling-headphones-white.md",
+      "productId": "IysVzF92P1Ckj0vYj2qiBH",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eNojr"
+    },
+    {
+      "file": "jbl-tour-pro-2-true-wireless-in-ear-headphones.md",
+      "productId": "moXlkADK7m1DHgGwWwzkms",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eNp6H"
+    }
+  ]
+}

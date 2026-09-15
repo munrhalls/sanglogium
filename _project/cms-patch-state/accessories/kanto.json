@@ -1,0 +1,22 @@
+{
+  "issueId": "sang-logium-zdb.3.24",
+  "slice": "accessories",
+  "brand": "Kanto",
+  "patchedAt": "2026-09-14T10:48:52.758Z",
+  "ok": 2,
+  "fail": 0,
+  "results": [
+    {
+      "file": "kanto-h3-universal-desktop-headphone-stand-with-adapter-holder.md",
+      "productId": "GjMaRFaHMVTsBoyxtAJBKY",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwgq1"
+    },
+    {
+      "file": "kanto-headphone-stand.md",
+      "productId": "C0JSb66CHOxy1G14ni5ga1",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwgzN"
+    }
+  ]
+}

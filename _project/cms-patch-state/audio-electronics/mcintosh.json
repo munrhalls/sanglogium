@@ -1,0 +1,22 @@
+{
+  "issueId": "sang-logium-zdb.2.28",
+  "slice": "audio-electronics",
+  "brand": "McIntosh",
+  "patchedAt": "2026-09-14T10:46:29.710Z",
+  "ok": 2,
+  "fail": 0,
+  "results": [
+    {
+      "file": "mcintosh-ds200-streaming-dac.md",
+      "productId": "ZuUKzmkqDyQwdcwhxlJpXB",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOlJn"
+    },
+    {
+      "file": "mcintosh-mha200-2-channel-vacuum-tube-headphone-amplifier.md",
+      "productId": "dLGDVDmEEI2lV8CArAcgSi",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwJDz"
+    }
+  ]
+}

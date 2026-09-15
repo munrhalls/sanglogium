@@ -1,0 +1,24 @@
+{
+  "_id": "DZc43yHr6ydfgE7zB44oFY",
+  "name": "Moondrop Variations Tribrid IEM",
+  "before": {
+    "brand": [
+      "moondrop"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "mmcx"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 59900,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-13T18:07:17.246Z"
+}

@@ -1,0 +1,46 @@
+{
+  "issueId": "sang-logium-zdb.1.5",
+  "slice": "headphones",
+  "brand": "Dan Clark Audio",
+  "patchedAt": "2026-09-14T21:52:54.270Z",
+  "ok": 6,
+  "fail": 0,
+  "results": [
+    {
+      "file": "dca-aeon-2-noire.md",
+      "productId": "k27n1AQuIbSr5iozFz7Fdd",
+      "ok": true,
+      "rev": "DE7q4q517EcCNrf7ORGgua"
+    },
+    {
+      "file": "dca-e3-2.md",
+      "productId": "PHPYj28HJdPDHAaIBCDRC4",
+      "ok": true,
+      "rev": "DE7q4q517EcCNrf7ORGh71"
+    },
+    {
+      "file": "dca-e3.md",
+      "productId": "moXlkADK7m1DHgGwWtbkq7",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUcNbHD"
+    },
+    {
+      "file": "dca-noire-x.md",
+      "productId": "n10eAegrGspodtsQvneQBQ",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUcNbVf"
+    },
+    {
+      "file": "dca-noire-xo.md",
+      "productId": "PHPYj28HJdPDHAaIBDrDFo",
+      "ok": true,
+      "rev": "DE7q4q517EcCNrf7ORGhJS"
+    },
+    {
+      "file": "dca-stealth.md",
+      "productId": "k27n1AQuIbSr5iozFz7HA5",
+      "ok": true,
+      "rev": "DE7q4q517EcCNrf7ORGhVt"
+    }
+  ]
+}

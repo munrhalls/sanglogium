@@ -1,0 +1,26 @@
+{
+  "_id": "xMEqvkRBbdrlJXyFG8l0p9",
+  "name": "Sennheiser HD 560S Open-back Reference Headphones",
+  "before": {
+    "backDesign": "open",
+    "brand": [
+      "sennheiser"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 19995,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T18:12:53.109Z"
+}

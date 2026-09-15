@@ -1,48 +1,48 @@
 ---
-product_id: "DZc43yHr6ydfgE7zB45bQr"
-product_slug: "hifiman-arya-organic-planar-magnetic-headphones"
-brand: "HiFiMan"
-name: "Arya Organic Planar Magnetic Headphones"
-slice: "headphones"
+product_id: DZc43yHr6ydfgE7zB45bQr
+product_slug: hifiman-arya-organic-planar-magnetic-headphones
+brand: HiFiMan
+name: HIFIMAN Arya Organic Planar Magnetic Headphones
+slice: headphones
 spec_fields:
   productCategory:
-    - "over-ear"
+  - over-ear
   wearingStyle:
-    - "over-ear"
+  - over-ear
   acousticDesign:
-    - "open-back"
-  connectivity: "wired"
+  - open-back
+  connectivity: wired
   portable: false
   driverType:
-    - "planar-magnetic"
+  - planar-magnetic
   impedanceOhms: 16
   sensitivityDbMw: 94
   freqResponseHz:
     min: 8
     max: 65000
   cableTermination:
-    - "3.5mm"
-    - "6.35mm"
-    - "4.4mm-balanced"
-    - "4-pin-xlr"
+  - 3.5mm
+  - 6.35mm
+  - 4.4mm-balanced
+  - 4-pin-xlr
   detachableCable: true
   cableLengthM: 1.5
   microphone: false
   foldable: false
   ipxRating: null
   bluetoothCodecs: null
-  anc: "none"
+  anc: none
   batteryLifeHours: null
-  soundSignature: "Bright/Analytical"
+  soundSignature: Bright/Analytical
   awards: null
   fitType: null
   driverConfigBucket: null
 source_urls:
-  - "https://hifiman.com/products/detail/338"
-  - "https://hifiman.com/attachments/file/20230516/20230516111813_30766.pdf"
-  - "https://www.rtings.com/headphones/reviews/hifiman/arya-organic"
-verified_at: "2026-09-14"
-data_status: "COMPLETE"
+- https://hifiman.com/products/detail/338
+- https://hifiman.com/attachments/file/20230516/20230516111813_30766.pdf
+- https://www.rtings.com/headphones/reviews/hifiman/arya-organic
+verified_at: '2026-09-14'
+data_status: COMPLETE
 ---
 
 ## Verification Notes

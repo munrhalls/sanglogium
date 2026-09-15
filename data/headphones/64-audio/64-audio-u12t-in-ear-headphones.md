@@ -1,46 +1,46 @@
 ---
-product_id: "MrEMtYwMtrFDGWmRnQW6KX"
-product_slug: "64-audio-u12t-in-ear-headphones"
-brand: "64 Audio"
-name: "U12t In-Ear Headphones"
-slice: "headphones"
+product_id: MrEMtYwMtrFDGWmRnQW6KX
+product_slug: 64-audio-u12t-in-ear-headphones
+brand: 64 Audio
+name: 64 Audio U12t In-Ear Headphones
+slice: headphones
 spec_fields:
   productCategory:
-    - "iem"
+  - iem
   wearingStyle:
-    - "in-ear"
+  - in-ear
   acousticDesign: null
-  fitType: "universal"
-  connectivity: "wired"
+  fitType: universal
+  connectivity: wired
   portable: true
   driverType:
-    - "balanced-armature"
+  - balanced-armature
   impedanceOhms: 12.6
   sensitivityDbMw: 108
   freqResponseHz:
     min: 10
     max: 20000
   cableTermination:
-    - "3.5mm"
-    - "4.4mm-balanced"
+  - 3.5mm
+  - 4.4mm-balanced
   detachableCable: true
   cableLengthM: null
   microphone: false
   foldable: false
   ipxRating: null
   bluetoothCodecs: null
-  anc: "passive"
+  anc: passive
   batteryLifeHours: null
-  soundSignature: "Neutral"
+  soundSignature: Neutral
   awards: null
-  driverConfigBucket: "multi-ba"
-  driverConfigDetail: "12BA"
+  driverConfigBucket: multi-ba
+  driverConfigDetail: 12BA
 source_urls:
-  - "https://www.64audio.com/products/u12t"
-  - "https://audio46.com/products/64-audio-u12t-universal-in-ear-monitor-2nd-gen"
-  - "https://crinacle.com/rankings/iems/"
-verified_at: "2026-09-14"
-data_status: "COMPLETE"
+- https://www.64audio.com/products/u12t
+- https://audio46.com/products/64-audio-u12t-universal-in-ear-monitor-2nd-gen
+- https://crinacle.com/rankings/iems/
+verified_at: '2026-09-14'
+data_status: COMPLETE
 ---
 
 ## Verification Notes

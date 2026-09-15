@@ -1,0 +1,24 @@
+{
+  "_id": "PHPYj28HJdPDHAaIBCEZtk",
+  "name": "Thieaudio Hype 4 In-Ear Headphones",
+  "before": {
+    "brand": [
+      "thieaudio"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "mmcx"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 39900,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-13T18:10:48.543Z"
+}

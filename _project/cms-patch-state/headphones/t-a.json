@@ -1,0 +1,34 @@
+{
+  "issueId": "sang-logium-zdb.1.32",
+  "slice": "headphones",
+  "brand": "T+A",
+  "patchedAt": "2026-09-14T10:44:11.742Z",
+  "ok": 4,
+  "fail": 0,
+  "results": [
+    {
+      "file": "t-a-solitaire-p-headphones.md",
+      "productId": "Pn6oyV4Ks5AcNbecjmCuqj",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eNkpj"
+    },
+    {
+      "file": "t-a-solitaire-p-se-headphones-open-box.md",
+      "productId": "MrEMtYwMtrFDGWmRnTDpsi",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcvy3y"
+    },
+    {
+      "file": "t-a-solitaire-p-se-headphones.md",
+      "productId": "PHPYj28HJdPDHAaIBDrefE",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbPMS"
+    },
+    {
+      "file": "t-a-solitaire-t.md",
+      "productId": "MrEMtYwMtrFDGWmRnQUmde",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcvyP1"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+---
+product_id: "MrEMtYwMtrFDGWmRnTDSQw"
+product_slug: "austrian-audio-the-composer-headphones"
+brand: "Austrian Audio"
+name: "Austrian Audio The Composer Headphones"
+slice: "headphones"
+spec_fields:
+  productCategory:
+    - "over-ear"
+  wearingStyle:
+    - "over-ear"
+  acousticDesign:
+    - "open-back"
+  fitType: null
+  connectivity: "wired"
+  portable: false
+  soundSignature: null
+  impedanceOhms: 22
+  sensitivityDbMw: 112
+  freqResponseHz:
+    min: 5
+    max: 44000
+  microphone: false
+  cableTermination:
+    - "3.5mm"
+    - "4.4mm-balanced"
+    - "4-pin-xlr"
+    - "6.35mm"
+  detachableCable: true
+  cableLengthM: 3
+  foldable: true
+  ipxRating: null
+  bluetoothCodecs: null
+  anc: "none"
+  batteryLifeHours:
+    ancOff: null
+    ancOn: null
+  driverType:
+    - "dynamic"
+  driverConfigBucket: null
+  driverConfigDetail: null
+  awards:
+    - "EISA High-End Headphones 2024-2025"
+source_urls:
+  - "https://austrian.audio/product/thecomposer/"
+  - "https://austrian.audio/download/the-composer-spec-sheet/thecomposer_specsheet_eng/?attachment_id=13449&download_file=1"
+  - "https://www.soundstagehifi.com/index.php/eisa/2024-2025-awards/2024-2025-hi-fi/1883-austrian-audio-the-composer"
+  - "https://crinacle.com/rankings/headphones/"
+verified_at: "2026-09-14"
+data_status: "COMPLETE"
+---
+
+## Verification Notes
+- **productCategory** (marketing-fact): Construction: Over ear, open back — https://austrian.audio/download/the-composer-spec-sheet/thecomposer_specsheet_eng/?attachment_id=13449&download_file=1
+- **wearingStyle** (marketing-fact): Construction: Over ear, open back — https://austrian.audio/download/the-composer-spec-sheet/thecomposer_specsheet_eng/?attachment_id=13449&download_file=1
+- **acousticDesign** (marketing-fact): Construction: Over ear, open back — https://austrian.audio/download/the-composer-spec-sheet/thecomposer_specsheet_eng/?attachment_id=13449&download_file=1
+- **fitType** (marketing-fact): over-ear headphone; IEM fit type does not apply — https://austrian.audio/product/thecomposer/
+- **connectivity** (marketing-fact): 3x Detachable Cable: 1x balanced 4pin XLR 3 m, 1x balanced 4.4 mm Pentacon 1.4 m, 1x 3.5 mm jack 3 m including 6.3 mm adapter — https://austrian.audio/product/thecomposer/
+- **portable** (marketing-fact): reference listening headphone; no portable/travel use-case claim on product page or spec sheet (desktop/Hi-Fi positioning) — https://austrian.audio/product/thecomposer/
+- **soundSignature** (editorial): not listed on Crinacle rankings/graph database, ASR, or RTINGS; recorded null per Tier 3 protocol — https://crinacle.com/rankings/headphones/
+- **impedanceOhms** (hard-spec): Impedance: 22 Ω — https://austrian.audio/download/the-composer-spec-sheet/thecomposer_specsheet_eng/?attachment_id=13449&download_file=1
+- **sensitivityDbMw** (hard-spec): Sensitivity: 112 dBspl/V — https://austrian.audio/download/the-composer-spec-sheet/thecomposer_specsheet_eng/?attachment_id=13449&download_file=1
+- **freqResponseHz** (hard-spec): Frequency range: 5 Hz – 44 kHz — https://austrian.audio/download/the-composer-spec-sheet/thecomposer_specsheet_eng/?attachment_id=13449&download_file=1
+- **microphone** (marketing-fact): no microphone/call support mentioned anywhere on product page or spec sheet (boolean feature-absence rule applied) — https://austrian.audio/product/thecomposer/
+
+- **cableTermination** (marketing-fact): Detachable cables with Banana Jack (included): 3m with 3.5 mm Jack Plug (TRS) / 3m with XLR 4pin / 1.4m with 4.4 mm Pentaconn style; Adapter included: 3.5 mm to 6.3 mm — https://austrian.audio/download/the-composer-spec-sheet/thecomposer_specsheet_eng/?attachment_id=13449&download_file=1
+- **detachableCable** (marketing-fact): 3x Detachable Cable; Nonproprietary banana jack connector on headphone — https://austrian.audio/product/thecomposer/
+- **cableLengthM** (hard-spec): 3m with 3.5 mm Jack Plug (TRS) / 3m with XLR 4pin (a 1.4m 4.4 mm Pentaconn cable is also included) — https://austrian.audio/download/the-composer-spec-sheet/thecomposer_specsheet_eng/?attachment_id=13449&download_file=1
+- **foldable** (marketing-fact): Folds flat for easy storage — https://austrian.audio/download/the-composer-spec-sheet/thecomposer_specsheet_eng/?attachment_id=13449&download_file=1
+- **ipxRating** (marketing-fact): no water/sweat resistance or IPX rating mentioned anywhere on product page, spec sheet, or manual (genuinely not applicable to reference open-back desktop headphone) — https://austrian.audio/product/thecomposer/
+- **bluetoothCodecs** (marketing-fact): wired-only headphone; no Bluetooth or codec support — https://austrian.audio/product/thecomposer/
+- **anc** (marketing-fact): open-back, wired, passive headphone; no active noise cancelling electronics described — https://austrian.audio/product/thecomposer/
+- **batteryLifeHours** (marketing-fact): wired-only headphone; no battery — https://austrian.audio/product/thecomposer/
+- **driverType** (hard-spec): Proprietary 49mm High-Excursion Driver with ring magnet system and DLC membrane; Driver size: 49 mm — https://austrian.audio/download/the-composer-spec-sheet/thecomposer_specsheet_eng/?attachment_id=13449&download_file=1
+- **driverConfigBucket** (marketing-fact): not an IEM; field does not apply to over-ear headphones — https://austrian.audio/product/thecomposer/
+- **driverConfigDetail** (marketing-fact): not an IEM; field does not apply to over-ear headphones — https://austrian.audio/product/thecomposer/
+- **awards** (marketing-fact): EISA HIGH-END HEADPHONES 2024-2025 — https://www.soundstagehifi.com/index.php/eisa/2024-2025-awards/2024-2025-hi-fi/1883-austrian-audio-the-composer

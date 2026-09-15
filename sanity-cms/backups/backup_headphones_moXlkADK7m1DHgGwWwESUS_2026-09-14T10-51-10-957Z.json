@@ -1,0 +1,25 @@
+{
+  "productId": "moXlkADK7m1DHgGwWwESUS",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "hifiman"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 39900
+  },
+  "backedUpAt": "2026-09-14T10:51:10.957Z"
+}

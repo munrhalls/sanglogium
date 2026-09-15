@@ -1,0 +1,25 @@
+{
+  "_id": "xMEqvkRBbdrlJXyFG8eR7h",
+  "name": "SJY Zeph Open-Back Planar Magnetic Headphones",
+  "before": {
+    "backDesign": "open",
+    "brand": [
+      "sjy-audio"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm"
+    ],
+    "driverType": "planar-magnetic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 99900,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T18:12:26.961Z"
+}

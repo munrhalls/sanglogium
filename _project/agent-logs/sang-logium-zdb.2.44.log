@@ -4,4 +4,34 @@ Plan:
 2. For each product, search the web for real, cited data and write one `.md` file under the specified path.
 3. Close the issue with the count.
 
-You already said “go, no stop,” so I’m proceeding.
+You already said “go, no stop,” so I’m proceeding.Done. All 11 XDuoo product files are filed, the bead is closed, and the export is written.
+
+**What changed**
+- Wrote 11 `.md` product files under `data/audio-electronics/xduoo/`:
+  - `xduoo-dm-01-desktop-dac-amp.md`
+  - `xduoo-ta-20-plus-balanced-tube-headphone-amplifier.md`
+  - `xduoo-mt-604-balanced-tube-headphone-amplifier.md`
+  - `xduoo-xd-05-bal-balanced-dac-amp.md`
+  - `xduoo-xd05-pro-xd05pro-hard-nucleus-modular-dac-amp.md`
+  - `xduoo-ta-10r-tube-dac-amp.md`
+  - `xduoo-ta-22-dac-tube-amp.md`
+  - `xduoo-ta-32-high-performance-dac-amp-balanced-tube-class-a-headphone-amplifier.md`
+  - `xduoo-xa-10-dac-headphone-amp.md`
+  - `xduoo-ta-30.md`
+  - `xduoo-ta-66-otl-tube-amplifier.md`
+- Verified file count = 11.
+- Closed `sang-logium-zdb.2.44` with `11 products sourced and filed.`
+- Exported beads: `bd export -o .beads/issues.jsonl`
+
+**Validation / sample**
+- Inspected a representative sample: [xduoo-ta-32-high-performance-dac-amp-balanced-tube-class-a-headphone-amplifier.md](file:///home/jan/work/sanglogium/data/audio-electronics/xduoo/xduoo-ta-32-high-performance-dac-amp-balanced-tube-class-a-headphone-amplifier.md) and the headphone-amp edge case [xduoo-ta-66-otl-tube-amplifier.md](file:///home/jan/work/sanglogium/data/audio-electronics/xduoo/xduoo-ta-66-otl-tube-amplifier.md).
+- Targeted `git status --short data/audio-electronics/xduoo .beads/issues.jsonl .beads/interactions.jsonl` shows:
+  - `?? data/audio-electronics/xduoo/`
+  - `M .beads/interactions.jsonl`
+  - `M .beads/issues.jsonl`
+
+**Notes / limitations recorded in the files**
+- Pure headphone amplifiers (`TA-20 Plus`, `MT-604`, `TA-66`) use `deviceType: null` because the current `audio-electronics` enum does not include `headphone-amplifier`; source-backed analog specs are preserved in the conflict/caution notes for the later schema/CMS patch phase.
+- `TA-32` `dacChipsetFamily` is `null` because the stock ROHM BD34301EKV is not in the current enum.
+- Bluetooth/input conflicts for `XD-05 BAL`, `XD05 Pro`, and `XA-10` are recorded explicitly rather than silently resolved.
+- No other beads issues or brands were touched; no build/test/lint commands were run.

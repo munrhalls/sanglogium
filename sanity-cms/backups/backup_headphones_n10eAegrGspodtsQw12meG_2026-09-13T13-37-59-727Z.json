@@ -1,0 +1,24 @@
+{
+  "productId": "n10eAegrGspodtsQw12meG",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "sony"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wireless",
+    "connector": [
+      "mmcx"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 29999,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-13T13:37:59.728Z"
+}

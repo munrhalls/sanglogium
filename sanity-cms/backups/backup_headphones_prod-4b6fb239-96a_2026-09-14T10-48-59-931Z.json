@@ -1,0 +1,18 @@
+{
+  "productId": "prod-4b6fb239-96a",
+  "before": {
+    "accessoryType": "earpad",
+    "brand": [
+      "focal"
+    ],
+    "category": [
+      "accessories"
+    ],
+    "compatibility": [
+      "universal"
+    ],
+    "inStock": true,
+    "price": 7900
+  },
+  "backedUpAt": "2026-09-14T10:48:59.931Z"
+}

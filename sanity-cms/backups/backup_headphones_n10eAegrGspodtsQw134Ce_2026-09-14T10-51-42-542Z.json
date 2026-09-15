@@ -1,0 +1,25 @@
+{
+  "productId": "n10eAegrGspodtsQw134Ce",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "eversolo"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 76900
+  },
+  "backedUpAt": "2026-09-14T10:51:42.542Z"
+}

@@ -1,0 +1,25 @@
+{
+  "productId": "PHPYj28HJdPDHAaIBChWTc",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "aune-audio"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": false,
+    "deviceType": "headphone-amp",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 79900
+  },
+  "backedUpAt": "2026-09-14T10:54:32.575Z"
+}

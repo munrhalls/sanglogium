@@ -1,0 +1,16 @@
+{
+  "issueId": "sang-logium-zdb.3.15",
+  "slice": "accessories",
+  "brand": "Crystal Cables",
+  "patchedAt": "2026-09-14T10:49:20.812Z",
+  "ok": 1,
+  "fail": 0,
+  "results": [
+    {
+      "file": "crystal-cable-duet-for-focal-utopia.md",
+      "productId": "Pn6oyV4Ks5AcNbecjh3ghZ",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03ePtl5"
+    }
+  ]
+}

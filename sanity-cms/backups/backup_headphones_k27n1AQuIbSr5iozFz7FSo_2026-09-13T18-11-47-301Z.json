@@ -1,0 +1,183 @@
+{
+  "_id": "k27n1AQuIbSr5iozFz7FSo",
+  "name": "Focal Celestee High-End Headphones",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "anc": "none",
+    "awards": null,
+    "backDesign": "closed",
+    "batteryLifeHours": {
+      "ancOff": null,
+      "ancOn": null
+    },
+    "bluetoothCodecs": null,
+    "brand": [
+      "focal"
+    ],
+    "cableLengthM": 1.2,
+    "cableTermination": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "detachableCable": true,
+    "driverConfigBucket": null,
+    "driverConfigDetail": null,
+    "driverType": [
+      "dynamic"
+    ],
+    "fitType": null,
+    "foldable": false,
+    "freqResponseHz": {
+      "max": 23000,
+      "min": 5
+    },
+    "impedanceOhms": 35,
+    "inStock": true,
+    "ipxRating": null,
+    "microphone": false,
+    "noiseCancelling": false,
+    "portable": true,
+    "price": 69900,
+    "productCategory": [
+      "over-ear"
+    ],
+    "requiresAmplifier": false,
+    "sensitivityDbMw": 105,
+    "soundSignature": "Neutral",
+    "sourcing": [
+      {
+        "field": "impedanceOhms",
+        "quote": "Impedance : 35 Ω",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.focal.com/products/celestee"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "Sensitivity 105dB SPL / 1mW @ 1kHz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://dam.focal-naim.com/m/57e89b6c50955937/original/User_Manual_CELESTEE_85x200_CODO1665_web-pdf.pdf"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "Frequency response (+/- 3dB) : 5 Hz – 23 kHz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.focal.com/products/celestee"
+      },
+      {
+        "field": "driverType",
+        "quote": "Loudspeakers : 15/8\" (40mm) Aluminium/Magnesium ‘M’-shaped dome",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.focal.com/products/celestee"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "Cables provided : • 1 x 4ft (1.2m) Jack 1/8\" (3.5mm) cable • 1 Jack adapter,1/8\" (3.5mm) female – 1/4\" (6.35mm) male",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.focal.com/products/celestee"
+      },
+      {
+        "field": "productCategory",
+        "quote": "Product type : Closed-back headphones",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/celestee"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "Type Circum-aural closed-back headphones",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://dam.focal-naim.com/m/57e89b6c50955937/original/User_Manual_CELESTEE_85x200_CODO1665_web-pdf.pdf"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "Celestee - Closed hi-fi headphones",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/celestee"
+      },
+      {
+        "field": "connectivity",
+        "quote": "(detachable analog mini-jack cable only; no Bluetooth, ANC, or electronics anywhere on the page or manual)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/celestee"
+      },
+      {
+        "field": "portable",
+        "quote": "Celestee comes with a carrying case in the headphones' colors, and a cable suitable for both home and portable use",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/celestee"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "Cable provided • 1 x 4ft OFC 24 AWG cable with 1/8\" TRS Jack connector • 1 x Jack adapter, 1/8\" female – 1/4\" male",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://dam.focal-naim.com/m/57e89b6c50955937/original/User_Manual_CELESTEE_85x200_CODO1665_web-pdf.pdf"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "you simply have to disconnect the cable and store it in the case",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://dam.focal-naim.com/m/57e89b6c50955937/original/User_Manual_CELESTEE_85x200_CODO1665_web-pdf.pdf"
+      },
+      {
+        "field": "microphone",
+        "quote": "(no microphone language anywhere on the page or manual — boolean feature-absence rule)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://dam.focal-naim.com/m/57e89b6c50955937/original/User_Manual_CELESTEE_85x200_CODO1665_web-pdf.pdf"
+      },
+      {
+        "field": "foldable",
+        "quote": "(hard carrying case described; no folding hinge anywhere — absence-based FLAG)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://dam.focal-naim.com/m/57e89b6c50955937/original/User_Manual_CELESTEE_85x200_CODO1665_web-pdf.pdf"
+      },
+      {
+        "field": "anc",
+        "quote": "(derived from already-cited acousticDesign: closed-back + connectivity: wired — the page markets \"added isolation\", not ANC; no electronics)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/celestee"
+      },
+      {
+        "field": "soundSignature",
+        "quote": "Neutral with bass boost — Thin and uneven mids with narrow, congested staging. (Tone Grade B-, Technical Grade C)",
+        "sourcedAt": "2026-09-13",
+        "tier": "editorial",
+        "url": "https://crinacle.com/rankings/headphones/"
+      },
+      {
+        "field": "batteryLifeHours",
+        "quote": "(no battery anywhere on the page or manual — wired-only passive headphone, so both ancOn and ancOff are null)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/celestee"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-13T18:11:47.301Z"
+}

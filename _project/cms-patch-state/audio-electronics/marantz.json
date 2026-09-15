@@ -1,0 +1,22 @@
+{
+  "issueId": "sang-logium-zdb.2.26",
+  "slice": "audio-electronics",
+  "brand": "Marantz",
+  "patchedAt": "2026-09-14T10:46:32.406Z",
+  "ok": 2,
+  "fail": 0,
+  "results": [
+    {
+      "file": "marantz-cd-60-cd-player-silver-gold.md",
+      "productId": "ZuUKzmkqDyQwdcwhxlIfVH",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwJL0"
+    },
+    {
+      "file": "marantz-sacd10-cd-player-black.md",
+      "productId": "ZuUKzmkqDyQwdcwhxlIflR",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOm2d"
+    }
+  ]
+}

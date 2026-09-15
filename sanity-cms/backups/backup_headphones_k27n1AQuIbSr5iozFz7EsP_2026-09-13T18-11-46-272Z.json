@@ -1,0 +1,184 @@
+{
+  "_id": "k27n1AQuIbSr5iozFz7EsP",
+  "name": "Focal Clear Mg Headphones",
+  "before": {
+    "acousticDesign": [
+      "open-back"
+    ],
+    "anc": "none",
+    "awards": null,
+    "backDesign": "open",
+    "batteryLifeHours": {
+      "ancOff": null,
+      "ancOn": null
+    },
+    "bluetoothCodecs": null,
+    "brand": [
+      "focal"
+    ],
+    "cableLengthM": 1.2,
+    "cableTermination": [
+      "3.5mm",
+      "6.35mm",
+      "4-pin-xlr"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "detachableCable": true,
+    "driverConfigBucket": null,
+    "driverConfigDetail": null,
+    "driverType": [
+      "dynamic"
+    ],
+    "fitType": null,
+    "foldable": false,
+    "freqResponseHz": {
+      "max": 23000,
+      "min": 5
+    },
+    "impedanceOhms": 55,
+    "inStock": true,
+    "ipxRating": null,
+    "microphone": false,
+    "noiseCancelling": false,
+    "portable": false,
+    "price": 149900,
+    "productCategory": [
+      "over-ear"
+    ],
+    "requiresAmplifier": false,
+    "sensitivityDbMw": 104,
+    "soundSignature": "Warm",
+    "sourcing": [
+      {
+        "field": "soundSignature",
+        "quote": "The Clear Mg is definitely warmer and possesses less upper mids than the original. (Overall Grade B, Tone Grade B, Technical grade A-; rankings list entry reads \"Warm neutral — Lacks upper mids and resolution compared to its predecessor.\")",
+        "sourcedAt": "2026-09-13",
+        "tier": "editorial",
+        "url": "https://crinacle.com/2021/03/22/crinnotes-focal-clear-mg-quick-review-padgate/"
+      },
+      {
+        "field": "impedanceOhms",
+        "quote": "Impedance : 55 Ω",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.focal.com/products/clear-mg"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "Sensitivity 104dB SPL / 1mW @ 1kHz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://dam.focal-naim.com/m/15443cc8eacda39e/original/UserManual_ClearMG_85x200_web-pdf.pdf"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "Frequency response (+/- 3dB) : 5 Hz – 23 kHz (live page kept over manual's \"5Hz–28kHz\" per the manufacturer self-contradiction rule)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.focal.com/products/clear-mg"
+      },
+      {
+        "field": "driverType",
+        "quote": "Loudspeakers : 15/8\" (40mm) Magnesium ‘M’-shaped dome",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.focal.com/products/clear-mg"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "Cable provided • 3m balanced cable (XLR 4-pin) • 1,2m unbalanced cable (1/8\" TRS Jack) • 1/8\" Jack to 1/4\" stereo Jack adapter",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://dam.focal-naim.com/m/15443cc8eacda39e/original/UserManual_ClearMG_85x200_web-pdf.pdf"
+      },
+      {
+        "field": "productCategory",
+        "quote": "Product type : Open-back headphones",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/clear-mg"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "Type Circum-aural open-back headphones",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://dam.focal-naim.com/m/15443cc8eacda39e/original/UserManual_ClearMG_85x200_web-pdf.pdf"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "Clear MG - Open-back hi-fi headphones for the home",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/clear-mg"
+      },
+      {
+        "field": "connectivity",
+        "quote": "(supplied cables are 3.5mm TRS and 4-pin XLR; no Bluetooth, ANC, or electronics anywhere on the page or manual)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/clear-mg"
+      },
+      {
+        "field": "portable",
+        "quote": "Open-back hi-fi headphones for the home (no portability or travel language — absence-based FLAG)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/clear-mg"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "Cables provided : • 1 x 4ft (1.2m) Jack 1/8\" cable • 1 x 10ft (3m) 4-pin XLR cable • 1 Jack adapter,1/8\" (3.5mm) female – 1/4\" (6.35mm) male",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/clear-mg"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "you simply have to disconnect the cable and store it in the case",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://dam.focal-naim.com/m/15443cc8eacda39e/original/UserManual_ClearMG_85x200_web-pdf.pdf"
+      },
+      {
+        "field": "microphone",
+        "quote": "(no microphone language anywhere on the page or manual — boolean feature-absence rule)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://dam.focal-naim.com/m/15443cc8eacda39e/original/UserManual_ClearMG_85x200_web-pdf.pdf"
+      },
+      {
+        "field": "foldable",
+        "quote": "(hard carrying case described; no folding hinge anywhere — absence-based FLAG)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://dam.focal-naim.com/m/15443cc8eacda39e/original/UserManual_ClearMG_85x200_web-pdf.pdf"
+      },
+      {
+        "field": "anc",
+        "quote": "(derived from already-cited acousticDesign: open-back + connectivity: wired — no electronics present, so no ANC)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/clear-mg"
+      },
+      {
+        "field": "batteryLifeHours",
+        "quote": "(no battery anywhere on the page or manual — wired-only passive headphone, so both ancOn and ancOff are null)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/clear-mg"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-13T18:11:46.272Z"
+}

@@ -1,0 +1,22 @@
+{
+  "issueId": "sang-logium-zdb.2.6",
+  "slice": "audio-electronics",
+  "brand": "Bluesound",
+  "patchedAt": "2026-09-14T10:47:17.679Z",
+  "ok": 2,
+  "fail": 0,
+  "results": [
+    {
+      "file": "bluesound-node-wireless-music-streamer.md",
+      "productId": "n10eAegrGspodtsQw13RKz",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwMJl"
+    },
+    {
+      "file": "bluesound-powernode-edge-streamer-and-amplifier.md",
+      "productId": "MrEMtYwMtrFDGWmRnNHjjW",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwMQm"
+    }
+  ]
+}

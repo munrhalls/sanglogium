@@ -1,0 +1,40 @@
+{
+  "issueId": "sang-logium-zdb.3.12",
+  "slice": "accessories",
+  "brand": "Campfire Audio",
+  "patchedAt": "2026-09-14T10:49:37.618Z",
+  "ok": 5,
+  "fail": 0,
+  "results": [
+    {
+      "file": "campfire-audio-compact-leather-case-iem-case.md",
+      "productId": "MrEMtYwMtrFDGWmRnQrHuz",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwkNr"
+    },
+    {
+      "file": "campfire-audio-flight-curated-eartip-pack.md",
+      "productId": "MrEMtYwMtrFDGWmRnGS7NA",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435Cxbgvt"
+    },
+    {
+      "file": "campfire-audio-iem-case-iem-case.md",
+      "productId": "Pn6oyV4Ks5AcNbecjk6mXy",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435Cxbgzi"
+    },
+    {
+      "file": "campfire-audio-marshmallows-isolating-foam-eartips-replacement-eartips.md",
+      "productId": "MrEMtYwMtrFDGWmRnGSBlG",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwkiu"
+    },
+    {
+      "file": "campfire-audio-silicone-eartips-replacement-eartips.md",
+      "productId": "PHPYj28HJdPDHAaIB6Fxyi",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435Cxbh3X"
+    }
+  ]
+}

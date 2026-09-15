@@ -1,0 +1,177 @@
+{
+  "_id": "Pn6oyV4Ks5AcNbecjgz0Fr",
+  "name": "Audeze MM-100 Headphones",
+  "before": {
+    "acousticDesign": [
+      "open-back"
+    ],
+    "anc": "none",
+    "backDesign": "closed",
+    "batteryLifeHours": {
+      "ancOff": null,
+      "ancOn": null
+    },
+    "brand": [
+      "audeze"
+    ],
+    "cableLengthM": 2.5,
+    "cableTermination": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "detachableCable": true,
+    "driverType": [
+      "planar-magnetic"
+    ],
+    "foldable": false,
+    "freqResponseHz": {
+      "max": 25000,
+      "min": 20
+    },
+    "impedanceOhms": 18,
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "portable": true,
+    "price": 39900,
+    "productCategory": [
+      "over-ear"
+    ],
+    "requiresAmplifier": false,
+    "sensitivityDbMw": 98,
+    "soundSignature": "Neutral",
+    "sourcing": [
+      {
+        "field": "productCategory",
+        "quote": "Style Over-ear, open-back",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/mm-100"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "Style Over-ear, open-back",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/mm-100"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "Style Over-ear, open-back",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/mm-100"
+      },
+      {
+        "field": "connectivity",
+        "quote": "(analog cable only; no wireless mode anywhere in the specification table)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/mm-100"
+      },
+      {
+        "field": "portable",
+        "quote": "Cable 2.5m (8.2ft) Single ended 3.5mm TRS to 1/4\" TRS / Includes: ... Soft Storage Bag ... / Versatile: High efficiency drivers, works well with wide variety of equipment",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/mm-100"
+      },
+      {
+        "field": "soundSignature",
+        "quote": "Their frequency response mostly follows their flat sound profile, with a few major peaks and dips. The sound profile is relatively well-aligned with our target in the bass and mid-range, though the treble response is notably recessed",
+        "sourcedAt": "2026-09-13",
+        "tier": "editorial",
+        "url": "https://www.rtings.com/headphones/reviews/audeze/mm-100"
+      },
+      {
+        "field": "impedanceOhms",
+        "quote": "Impedance 18 ohms",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.audeze.com/products/mm-100"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "Sensitivity 98 dB/1mW (at Drum Reference Point)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.audeze.com/products/mm-100"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "Frequency response 20Hz - 25kHz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.audeze.com/products/mm-100"
+      },
+      {
+        "field": "microphone",
+        "quote": "(no microphone in the specification block, the included-items list, or the page's feature copy; boolean feature-absence rule)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/mm-100"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "Cable 2.5m (8.2ft) Single ended 3.5mm TRS to 1/4\" TRS / Includes: ... 1/4\" to 3.5mm adapter",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/mm-100"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "Includes: MM-100 Headphone | Braided Headphone Cable | Soft Storage Bag | Certificate of Authenticity and Warranty Cards | 1/4\" to 3.5mm adapter (cable listed as a discrete item; no captive-cable language on the page — FLAG: MM-100 quick-start guide PDF not opened this pass)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/mm-100"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "Cable 2.5m (8.2ft) Single ended 3.5mm TRS to 1/4\" TRS",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.audeze.com/products/mm-100"
+      },
+      {
+        "field": "foldable",
+        "quote": "(magnesium yokes and spring-steel headband described; no folding/collapsing hinge anywhere in the specification block or structure copy — boolean feature-absence rule)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/mm-100"
+      },
+      {
+        "field": "anc",
+        "quote": "Style Over-ear, open-back / (no noise-cancelling feature listed; wired-only — derived from the already-cited acousticDesign + connectivity)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/mm-100"
+      },
+      {
+        "field": "batteryLifeHours",
+        "quote": "(no battery anywhere on the page or manual — wired-only passive headphone, so both ancOn and ancOff are null)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/mm-100"
+      },
+      {
+        "field": "driverType",
+        "quote": "Transducer type Planar Magnetic / Magnetic structure Fluxor™ magnet array / Diaphragm type Ultra-Thin Uniforce™ / Transducer size 90 mm",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.audeze.com/products/mm-100"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-13T18:11:07.296Z"
+}

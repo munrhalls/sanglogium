@@ -1,0 +1,48 @@
+{
+  "productId": "PHPYj28HJdPDHAaIBAHVcm",
+  "before": {
+    "accessoryType": "cable",
+    "brand": [
+      "listenmore"
+    ],
+    "category": [
+      "accessories"
+    ],
+    "compatibility": [
+      "Focal: Elear",
+      "Elex",
+      "Clear",
+      "Elegia",
+      "Celestee",
+      "Radiance",
+      "Clear Mg",
+      "Stellia\n            Hifiman: HE400se",
+      "Sundara",
+      "Sundara Closed",
+      "Edition XS",
+      "Ananda",
+      "Ananda Stealth",
+      "Arya",
+      "Arya Stealth",
+      "Arya Organic",
+      "Audivina",
+      "HE1000 Stealth",
+      "HE1000SE",
+      "Susvara\n            Meze Audio: 99 Classics",
+      "109 Pro",
+      "109 Pro Primal",
+      "LIRIC\n            HEDD Audio: HEDDphone TWO\n            Denon: AH-D5200",
+      "AH-D7200",
+      "AH-D9200\n            Sony: MDR-Z7M2",
+      "MDR-Z1R"
+    ],
+    "connectorTermination": [
+      "3.5mm",
+      "6.35mm",
+      "4.4mm-balanced"
+    ],
+    "inStock": true,
+    "price": 6999
+  },
+  "backedUpAt": "2026-09-14T10:48:49.473Z"
+}

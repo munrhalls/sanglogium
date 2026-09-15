@@ -1,0 +1,34 @@
+{
+  "issueId": "sang-logium-zdb.1.33",
+  "slice": "headphones",
+  "brand": "TRUTHEAR",
+  "patchedAt": "2026-09-14T10:44:04.520Z",
+  "ok": 4,
+  "fail": 0,
+  "results": [
+    {
+      "file": "truthear-hexa-in-ear-headphones.md",
+      "productId": "PHPYj28HJdPDHAaIBCEzHC",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcvxga"
+    },
+    {
+      "file": "truthear-nova-in-ear-headphones.md",
+      "productId": "Pn6oyV4Ks5AcNbecjjppVn",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbP5t"
+    },
+    {
+      "file": "truthear-x-crinacle-zero-in-ear-headphones.md",
+      "productId": "MrEMtYwMtrFDGWmRnQX1VZ",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eNk6t"
+    },
+    {
+      "file": "truthear-x-crinacle-zero-red-in-ear-headphones.md",
+      "productId": "MrEMtYwMtrFDGWmRnQWwrv",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eNkKL"
+    }
+  ]
+}

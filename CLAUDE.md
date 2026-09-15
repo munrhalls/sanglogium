@@ -151,6 +151,8 @@ _Last reviewed 2026-08-01 against the live repo. Stack/pattern-level only — fo
 
 ## Conventions & Patterns
 
+- When outputting a file or directory path, always print it as a `file://` URI (e.g. `file:///home/jan/file.json`) for one-click terminal opening.
+
 _Add your project-specific conventions here_
 
 

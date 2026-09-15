@@ -1,0 +1,127 @@
+{
+  "productId": "moXlkADK7m1DHgGwWtblBG",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "brand": [
+      "meze-audio"
+    ],
+    "cableLengthM": 1.3,
+    "cableTermination": [
+      "4.4mm-balanced",
+      "3.5mm"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "detachableCable": true,
+    "driverType": [
+      "planar-magnetic"
+    ],
+    "freqResponseHz": {
+      "max": 92000,
+      "min": 4
+    },
+    "impedanceOhms": 61,
+    "inStock": true,
+    "microphone": false,
+    "price": 200000,
+    "productCategory": [
+      "over-ear"
+    ],
+    "requiresAmplifier": false,
+    "sensitivityDbMw": 100,
+    "sourcing": [
+      {
+        "field": "driverType",
+        "quote": "Driver Type: Rinaro Isodynamic Hybrid Array® MZ4",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://mezeaudio.com/products/liric"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "Operating Principle: Closed-back",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://mezeaudio.com/products/liric"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "Ear Coupling: Circumaural",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://mezeaudio.com/products/liric"
+      },
+      {
+        "field": "impedanceOhms",
+        "quote": "Impedance: 61 Ω",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://mezeaudio.com/products/liric"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "Sensitivity: 100 dB SPL/mW at 1 kHz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://mezeaudio.com/products/liric"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "Frequency Range: 4 Hz - 92 kHz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://mezeaudio.com/products/liric"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "WHAT COMES WITH YOUR HEADPHONES: 1.3 m braided Furukawa PCUHD copper cable with 4.4 mm jack and 3 m soft TPE cable with 3.5 mm jack",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://mezeaudio.com/products/liric"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "Input Connector: Dual 3.5 mm TS Jack",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://mezeaudio.com/products/liric"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "1.3 m braided Furukawa PCUHD copper cable with 4.4 mm jack",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://mezeaudio.com/products/liric"
+      },
+      {
+        "field": "productCategory",
+        "quote": "Meze Audio LIRIC II — closed-back hybrid array planar magnetic headphones",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://mezeaudio.com/products/liric"
+      },
+      {
+        "field": "connectivity",
+        "quote": "WIRED HEADPHONE / Closed-Back / over-ear / planar magnetic",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://audio46.com/products/meze-liric-ii-closed-back-hybrid-array-planar-magnetic-headphones"
+      },
+      {
+        "field": "microphone",
+        "quote": "No microphone mentioned on the manufacturer page, manual or press release — boolean feature-absence rule reads silence as false",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://mezeaudio.com/products/liric"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-14T21:55:15.710Z"
+}

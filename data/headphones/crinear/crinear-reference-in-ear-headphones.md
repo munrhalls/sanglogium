@@ -1,46 +1,46 @@
 ---
-product_id: "Agdc7UdudmikAzJtKWUOut"
-product_slug: "crinear-reference-in-ear-headphones"
-brand: "CrinEar"
-name: "Reference In-Ear Headphones"
-slice: "headphones"
+product_id: Agdc7UdudmikAzJtKWUOut
+product_slug: crinear-reference-in-ear-headphones
+brand: CrinEar
+name: CrinEar Reference In-Ear Headphones
+slice: headphones
 spec_fields:
   productCategory:
-    - "iem"
+  - iem
   wearingStyle:
-    - "in-ear"
+  - in-ear
   acousticDesign: null
-  fitType: "universal"
-  connectivity: "wired"
+  fitType: universal
+  connectivity: wired
   portable: true
   driverType:
-    - "dynamic"
-    - "balanced-armature"
+  - dynamic
+  - balanced-armature
   impedanceOhms: 16
   sensitivityDbMw: 104
   freqResponseHz:
     min: 2
     max: 44000
   cableTermination:
-    - "3.5mm"
-    - "4.4mm-balanced"
+  - 3.5mm
+  - 4.4mm-balanced
   detachableCable: true
   cableLengthM: null
   microphone: false
   foldable: false
   ipxRating: null
   bluetoothCodecs: null
-  anc: "passive"
+  anc: passive
   batteryLifeHours: null
-  soundSignature: "warm"
+  soundSignature: warm
   awards: null
-  driverConfigBucket: "hybrid"
-  driverConfigDetail: "2DD+3BA"
+  driverConfigBucket: hybrid
+  driverConfigDetail: 2DD+3BA
 source_urls:
-  - "https://crinear.com/reference"
-  - "https://www.rtings.com/headphones/reviews/crinear/reference"
-verified_at: "2026-09-14"
-data_status: "COMPLETE"
+- https://crinear.com/reference
+- https://www.rtings.com/headphones/reviews/crinear/reference
+verified_at: '2026-09-14'
+data_status: COMPLETE
 ---
 
 ## Verification Notes

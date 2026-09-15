@@ -1,0 +1,26 @@
+{
+  "_id": "moXlkADK7m1DHgGwWtbjv7",
+  "name": "FiiO FT1 Headphones",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "fiio"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 14999,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T18:12:06.873Z"
+}

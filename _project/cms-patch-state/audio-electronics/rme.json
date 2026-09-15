@@ -1,0 +1,16 @@
+{
+  "issueId": "sang-logium-zdb.2.34",
+  "slice": "audio-electronics",
+  "brand": "RME",
+  "patchedAt": "2026-09-14T10:46:14.687Z",
+  "ok": 1,
+  "fail": 0,
+  "results": [
+    {
+      "file": "rme-adi-2-dac-fs-desktop-dac-headphone-amp.md",
+      "productId": "Pn6oyV4Ks5AcNbecjguegb",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOk5Z"
+    }
+  ]
+}

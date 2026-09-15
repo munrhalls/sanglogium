@@ -1,0 +1,18 @@
+{
+  "productId": "prod-5d5e5ef2-61e",
+  "before": {
+    "accessoryType": "earpad",
+    "brand": [
+      "dekoni-audio"
+    ],
+    "category": [
+      "accessories"
+    ],
+    "compatibility": [
+      "universal"
+    ],
+    "inStock": true,
+    "price": 6500
+  },
+  "backedUpAt": "2026-09-14T10:56:54.254Z"
+}

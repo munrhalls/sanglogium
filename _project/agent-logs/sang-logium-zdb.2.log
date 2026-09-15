@@ -1,0 +1,6 @@
+Plan:
+1. Read `sang-logium-zdb.2` via `bd show`.
+2. Source each product and write one `.md` file per product under the issue’s stated path.
+3. Close the issue with the product count.
+
+Going now.I’ve read `sang-logium-zdb.2`. It’s an epic; the human said “do not touch any other beads issue or brand,” which I’ll respect. I’ll pull the JSON view next, since the issue’s own EXECUTION PROTOCOL names that as the authoritative product list source.`sang-logium-zdb.2` is an epic with 48 brand-level child issues, not a leaf issue; its JSON/JSONL has no product list. Sourcing products requires a brand-level leaf issue or a product list. Did you mean a specific child issue (e.g., the two `in_progress` ones: `sang-logium-zdb.2.35` SMSL, `sang-logium-zdb.2.48` iFi Audio) or the full 234-product epic?

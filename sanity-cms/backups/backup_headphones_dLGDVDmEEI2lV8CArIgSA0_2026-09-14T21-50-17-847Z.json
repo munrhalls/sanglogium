@@ -1,0 +1,161 @@
+{
+  "productId": "dLGDVDmEEI2lV8CArIgSA0",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "anc": "anc",
+    "batteryLifeHours": {
+      "ancOff": 24,
+      "ancOn": 18
+    },
+    "bluetoothCodecs": [
+      "LC3"
+    ],
+    "brand": [
+      "sony"
+    ],
+    "cableTermination": [
+      "usb-c"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "true-wireless",
+    "detachableCable": false,
+    "driverType": [
+      "dynamic"
+    ],
+    "fitType": "universal",
+    "foldable": false,
+    "freqResponseHz": {
+      "max": 20000,
+      "min": 20
+    },
+    "inStock": true,
+    "ipxRating": "none",
+    "microphone": true,
+    "portable": true,
+    "price": 19800,
+    "requiresAmplifier": false,
+    "soundSignature": "Warm",
+    "sourcing": [
+      {
+        "field": "wearingStyle",
+        "quote": "Mass : Approx. 6.5 g x 2 (0.23 oz x 2) (Headset (including earbud tips (M))) (white, black)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2977/v1/en/contents/TP1001273102.html"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "Wireless Noise Canceling Gaming Headset INZONE Buds — sealed in-ear noise-cancelling earbud; no open-back/semi-open variant or vent is described anywhere in the help guide",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2977/v1/en/contents/TP1001273102.html"
+      },
+      {
+        "field": "fitType",
+        "quote": "Mass : Approx. 6.5 g x 2 (Headset (including earbud tips (M))) / Replacing the earbud tips — interchangeable universal-fit tips; no custom/CIEM mould is offered",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2977/v1/en/contents/TP1001273102.html"
+      },
+      {
+        "field": "connectivity",
+        "quote": "Communication system : Bluetooth Specification version 5.3",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2977/v1/en/contents/TP1001273102.html"
+      },
+      {
+        "field": "portable",
+        "quote": "Approx. 50 g (1.77 oz) (Charging case) (white, black) / Approx. 2.9 g (0.11 oz) (USB Transceiver) (black)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2977/v1/en/contents/TP1001273102.html"
+      },
+      {
+        "field": "driverType",
+        "quote": "Single dynamic driver; no balanced-armature, planar-magnetic, electrostatic or AMT driver is stated or implied anywhere in the help guide",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2977/v1/en/contents/TP1001273102.html"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "Transmission range : 20 Hz - 20 000 Hz (Sampling frequency 48 kHz)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://helpguide.sony.net/mdr/2977/v1/en/contents/TP1001273102.html"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "Power source : DC 5 V (Using a commercially available USB AC Adaptor) / USB transceiver storage compartment / USB Type-C port — the only wired interface is USB Type-C; no analogue headphone input exists",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2977/v1/en/contents/TP1001273102.html"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "Using built-in lithium-ion batteries (Product Operation Power: DC 3.85 V) — true-wireless earbud with no detachable audio cable; only the charge cable detaches",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2977/v1/en/contents/TP1001273102.html"
+      },
+      {
+        "field": "microphone",
+        "quote": "Microphones (left, right) — Picks up the sound of your voice (when you are talking on the phone or using voice chat) and noise",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2977/v1/en/contents/TP1001273041.html"
+      },
+      {
+        "field": "foldable",
+        "quote": "(no folding hinge or fold step appears anywhere in the help guide — an earbud stores in the charging case rather than folding; boolean feature-absence rule applied)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2977/v1/en/contents/TP1001273102.html"
+      },
+      {
+        "field": "ipxRating",
+        "quote": "Do not splash water forcibly into the sound output parts, air holes, or microphone parts of the headset units. / Do not place the headset in water or use it in a humid place such as a bathroom.",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2977/v1/en/contents/TP1001273074.html"
+      },
+      {
+        "field": "bluetoothCodecs",
+        "quote": "Supported Codec 4) : LC3",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://helpguide.sony.net/mdr/2977/v1/en/contents/TP1001273102.html"
+      },
+      {
+        "field": "anc",
+        "quote": "LC3 Noise canceling function: ON Max. 18 hours",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2977/v1/en/contents/TP1001273047.html"
+      },
+      {
+        "field": "batteryLifeHours",
+        "quote": "LC3 Noise canceling function: ON Max. 18 hours / LC3 OFF Max. 24 hours",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2977/v1/en/contents/TP1001273047.html"
+      },
+      {
+        "field": "soundSignature",
+        "quote": "Sound Signature = Warm; Bass Amount = Slightly Emphasized (2 dB); Treble Amount = Balanced (0 dB)",
+        "sourcedAt": "2026-09-13",
+        "tier": "editorial",
+        "url": "https://www.rtings.com/headphones/reviews/sony/inzone-buds-truly-wireless"
+      }
+    ],
+    "wearingStyle": [
+      "in-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-14T21:50:17.847Z"
+}

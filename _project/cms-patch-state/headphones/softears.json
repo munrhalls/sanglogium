@@ -1,0 +1,16 @@
+{
+  "issueId": "sang-logium-zdb.1.29",
+  "slice": "headphones",
+  "brand": "Softears",
+  "patchedAt": "2026-09-14T10:44:16.258Z",
+  "ok": 1,
+  "fail": 0,
+  "results": [
+    {
+      "file": "softears-volume-s-in-ear-headphones.md",
+      "productId": "Pn6oyV4Ks5AcNbecjmDlGL",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcvzGo"
+    }
+  ]
+}

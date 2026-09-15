@@ -1,0 +1,23 @@
+{
+  "productId": "Y7l1IhzX2fnyiano58Giz2",
+  "before": {
+    "accessoryType": "cable",
+    "brand": [
+      "jl-audio"
+    ],
+    "category": [
+      "accessories"
+    ],
+    "compatibility": [
+      "universal"
+    ],
+    "connectorTermination": [
+      "3.5mm",
+      "6.35mm",
+      "4.4mm-balanced"
+    ],
+    "inStock": false,
+    "price": 6000
+  },
+  "backedUpAt": "2026-09-14T10:48:52.821Z"
+}

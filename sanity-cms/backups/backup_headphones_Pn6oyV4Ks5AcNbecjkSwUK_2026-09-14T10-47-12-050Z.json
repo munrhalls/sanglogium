@@ -1,0 +1,28 @@
+{
+  "productId": "Pn6oyV4Ks5AcNbecjkSwUK",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "cambridge-audio"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac-amp-combo",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "rca"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 14900
+  },
+  "backedUpAt": "2026-09-14T10:47:12.050Z"
+}

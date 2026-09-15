@@ -1,0 +1,25 @@
+{
+  "productId": "DZc43yHr6ydfgE7zB42MQD",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "yulong"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 52000
+  },
+  "backedUpAt": "2026-09-14T10:45:50.206Z"
+}

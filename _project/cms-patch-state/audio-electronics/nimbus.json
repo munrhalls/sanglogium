@@ -1,0 +1,16 @@
+{
+  "issueId": "sang-logium-zdb.2.31",
+  "slice": "audio-electronics",
+  "brand": "Nimbus",
+  "patchedAt": "2026-09-14T10:46:23.999Z",
+  "ok": 1,
+  "fail": 0,
+  "results": [
+    {
+      "file": "niimbus-us-5-desktop-headphone-amplifier.md",
+      "productId": "k27n1AQuIbSr5iozG1vNxK",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbYRe"
+    }
+  ]
+}

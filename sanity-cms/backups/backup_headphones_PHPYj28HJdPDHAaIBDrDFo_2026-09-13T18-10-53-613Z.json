@@ -1,0 +1,26 @@
+{
+  "_id": "PHPYj28HJdPDHAaIBDrDFo",
+  "name": "Dan Clark Audio NOIRE XO Headphones",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "dan-clark-audio"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 129900,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T18:10:53.613Z"
+}

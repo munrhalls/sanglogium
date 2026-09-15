@@ -1,0 +1,25 @@
+{
+  "productId": "PHPYj28HJdPDHAaIBCghLo",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "chord-electronics"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": false,
+    "deviceType": "headphone-amp",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 432000
+  },
+  "backedUpAt": "2026-09-14T10:54:17.677Z"
+}

@@ -1,0 +1,23 @@
+{
+  "productId": "dLGDVDmEEI2lV8CArAdTYq",
+  "before": {
+    "brand": [
+      "bose"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wireless",
+    "connector": [
+      "mmcx"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 29900,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-13T13:44:39.010Z"
+}

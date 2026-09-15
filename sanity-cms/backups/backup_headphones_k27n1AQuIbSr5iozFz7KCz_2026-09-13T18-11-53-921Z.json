@@ -1,0 +1,159 @@
+{
+  "_id": "k27n1AQuIbSr5iozFz7KCz",
+  "name": "HiFiMAN Audivina Closed-Back Headphones",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "anc": "passive",
+    "backDesign": "closed",
+    "brand": [
+      "hifiman"
+    ],
+    "cableLengthM": 1.5,
+    "cableTermination": [
+      "3.5mm",
+      "6.35mm",
+      "4-pin-xlr"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "detachableCable": true,
+    "driverType": [
+      "planar-magnetic"
+    ],
+    "foldable": false,
+    "freqResponseHz": {
+      "max": 55000,
+      "min": 5
+    },
+    "impedanceOhms": 20,
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "portable": true,
+    "price": 69900,
+    "productCategory": [
+      "over-ear"
+    ],
+    "requiresAmplifier": true,
+    "sensitivityDbMw": 97,
+    "sourcing": [
+      {
+        "field": "impedanceOhms",
+        "quote": "Impedance: 20Ω",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://hifiman.com/attachments/file/20230510/20230510094538_17805.pdf"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "Sensitivity: 97dB",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://hifiman.com/attachments/file/20230510/20230510094538_17805.pdf"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "Frequency Response: 5Hz-55kHz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://hifiman.com/attachments/file/20230510/20230510094538_17805.pdf"
+      },
+      {
+        "field": "driverType",
+        "quote": "NEO Supernano Diaphragm (planar magnetic per manual)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://hifiman.com/attachments/file/20230510/20230510094538_17805.pdf"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "3.5mm single-end 1.5m cable x1, 6.35mm single-ended 3m cable x1, XLR balanced 3m cable x1",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://hifiman.com/attachments/file/20230510/20230510094538_17805.pdf"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "3.5mm single-end 1.5m cable x1, 6.35mm single-ended 3m cable x1, XLR balanced 3m cable x1",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hifiman.com/attachments/file/20230510/20230510094538_17805.pdf"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "Closed-back badge + Acoustic Structure Specialized for Closed-back Design",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hifiman.com/attachments/file/20230510/20230510094538_17805.pdf"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "The highly reliable socket ensures the contact resistance remains extremely low while having no effect on the signal path (swappable-cable system)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hifiman.com/attachments/file/20230510/20230510094538_17805.pdf"
+      },
+      {
+        "field": "portable",
+        "quote": "Inbox companions include 3.5mm single-end cable, XLR balanced cable and 6.35mm single-end cable, which are suitable for most portable audio devices, mobile phones, PCs... + Headphone Travel Bag x1",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hifiman.com/attachments/file/20230510/20230510094538_17805.pdf"
+      },
+      {
+        "field": "productCategory",
+        "quote": "Cup Style: Closed-Back",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://headphones.com/products/hifiman-audivina-closed-back-headphones"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "Wearing Style: Over-ear",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://headphones.com/products/hifiman-audivina-closed-back-headphones"
+      },
+      {
+        "field": "connectivity",
+        "quote": "Connectivity: Wired",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://headphones.com/products/hifiman-audivina-closed-back-headphones"
+      },
+      {
+        "field": "anc",
+        "quote": "(derived — sealed closed-back cup provides passive isolation; no ANC electronics, wired-only)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://headphones.com/products/hifiman-audivina-closed-back-headphones"
+      },
+      {
+        "field": "microphone",
+        "quote": "(no microphone language in full 22-page owner's guide or retailer pages — boolean feature-absence rule)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hifiman.com/attachments/file/20230510/20230510094538_17805.pdf"
+      },
+      {
+        "field": "foldable",
+        "quote": "(only headband-height adjustment described/pictured; Travel Bag is package contents, not a folding claim — absence-based FLAG)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://hifiman.com/attachments/file/20230510/20230510094538_17805.pdf"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-13T18:11:53.921Z"
+}

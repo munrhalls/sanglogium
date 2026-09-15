@@ -1,0 +1,34 @@
+{
+  "issueId": "sang-logium-zdb.2.9",
+  "slice": "audio-electronics",
+  "brand": "Cayin",
+  "patchedAt": "2026-09-14T10:47:11.986Z",
+  "ok": 4,
+  "fail": 0,
+  "results": [
+    {
+      "file": "cayin-n3ultra-triple-timbre-digital-audio-player.md",
+      "productId": "DZc43yHr6ydfgE7zB45LQY",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbZrZ"
+    },
+    {
+      "file": "cayin-ru3-portable-usb-dac-amp.md",
+      "productId": "GPjMdcfFWZVrKyR2PBA93S",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwLyi"
+    },
+    {
+      "file": "cayin-ru7-1-bit-resistor-network-portable-dac.md",
+      "productId": "xMEqvkRBbdrlJXyFG8lIgj",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOrbt"
+    },
+    {
+      "file": "cayin-ru9-vacuum-tube-portable-dac-amp.md",
+      "productId": "GPjMdcfFWZVrKyR2PBA7rO",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbZxw"
+    }
+  ]
+}

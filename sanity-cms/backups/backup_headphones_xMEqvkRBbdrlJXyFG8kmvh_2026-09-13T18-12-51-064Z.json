@@ -1,0 +1,26 @@
+{
+  "_id": "xMEqvkRBbdrlJXyFG8kmvh",
+  "name": "ES Lab ES-2a 90mm Electrostatic Headphones",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "es-lab"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "electrostatic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 200000,
+    "requiresAmplifier": true,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T18:12:51.068Z"
+}

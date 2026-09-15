@@ -1,0 +1,185 @@
+{
+  "productId": "ZuUKzmkqDyQwdcwhxl8saP",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "anc": "anc",
+    "awards": [],
+    "batteryLifeHours": {
+      "ancOff": 6,
+      "ancOn": 6
+    },
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX Adaptive"
+    ],
+    "brand": [
+      "bose"
+    ],
+    "cableLengthM": null,
+    "cableTermination": [],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "true-wireless",
+    "detachableCable": false,
+    "driverConfigBucket": "single-dynamic",
+    "driverConfigDetail": "1 × dynamic (per earbud)",
+    "driverType": [
+      "dynamic"
+    ],
+    "fitType": "universal",
+    "foldable": false,
+    "inStock": true,
+    "ipxRating": "IPX4",
+    "microphone": true,
+    "portable": true,
+    "price": 27900,
+    "productCategory": [
+      "true-wireless"
+    ],
+    "requiresAmplifier": false,
+    "soundSignature": "Warm",
+    "sourcing": [
+      {
+        "field": "productCategory",
+        "quote": "the product sits in Bose's own \"Earbuds\" line with Bluetooth-only connectivity and no wired audio mode documented; matches should-be-headphones.md item 10's True Wireless vocabulary",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.bose.com/p/earbuds/bose-quietcomfort-ultra-earbuds/QCUE-HEADPHONEIN.html"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "In-ear",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.bose.com/p/earbuds/bose-quietcomfort-ultra-earbuds/QCUE-HEADPHONEIN.html"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "QuietComfort Ultra Earbuds use both passive and active noise reduction technologies to achieve our best in-ear noise cancellation",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.bose.com/p/earbuds/bose-quietcomfort-ultra-earbuds/QCUE-HEADPHONEIN.html"
+      },
+      {
+        "field": "fitType",
+        "quote": "Nine combinations of eartips & stability bands",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.bose.com/p/earbuds/bose-quietcomfort-ultra-earbuds/QCUE-HEADPHONEIN.html"
+      },
+      {
+        "field": "connectivity",
+        "quote": "Bose QuietComfort Ultra Earbuds are the ultimate wireless noise cancelling earbud experience.",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.bose.com/p/earbuds/bose-quietcomfort-ultra-earbuds/QCUE-HEADPHONEIN.html"
+      },
+      {
+        "field": "portable",
+        "quote": "the case holds up to 3 additional full charges",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.bose.com/p/earbuds/bose-quietcomfort-ultra-earbuds/QCUE-HEADPHONEIN.html"
+      },
+      {
+        "field": "soundSignature",
+        "quote": "Sound Signature = Warm; Bass Amount = Emphasized (4 dB); Treble Amount = Balanced (0 dB)",
+        "sourcedAt": "2026-09-13",
+        "tier": "editorial",
+        "url": "https://www.rtings.com/headphones/reviews/bose/quietcomfort-ultra-earbuds-truly-wireless"
+      },
+      {
+        "field": "microphone",
+        "quote": "Yes. Bose QuietComfort Ultra Earbuds have an adaptive microphone system that allows you to use them during calls when connected to any smartphone.",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.bose.com/p/earbuds/bose-quietcomfort-ultra-earbuds/QCUE-HEADPHONEIN.html"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "true-wireless earbuds — no headphone cable or termination connector is supplied, listed, or referenced anywhere on the product page or in the box contents",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.bose.com/p/earbuds/bose-quietcomfort-ultra-earbuds/QCUE-HEADPHONEIN.html"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "true-wireless earbuds — there is no headphone cable to detach (boolean feature-absence rule applied)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.bose.com/p/earbuds/bose-quietcomfort-ultra-earbuds/QCUE-HEADPHONEIN.html"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "true-wireless earbuds — no audio cable ships with the product; genuinely not applicable, not a sourcing gap",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.bose.com/p/earbuds/bose-quietcomfort-ultra-earbuds/QCUE-HEADPHONEIN.html"
+      },
+      {
+        "field": "foldable",
+        "quote": "in-ear true-wireless earbuds with no folding hinge, folded position, or fold step described anywhere on the product page or FAQ (boolean feature-absence rule applied)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.bose.com/p/earbuds/bose-quietcomfort-ultra-earbuds/QCUE-HEADPHONEIN.html"
+      },
+      {
+        "field": "ipxRating",
+        "quote": "Yes. The Bose QuietComfort Ultra Earbuds have passed IPX4 testing, which means they are protected against sweat and splashing water from any angle.",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.bose.com/p/earbuds/bose-quietcomfort-ultra-earbuds/QCUE-HEADPHONEIN.html"
+      },
+      {
+        "field": "bluetoothCodecs",
+        "quote": "Other new features include Snapdragon Sound certification, using hi-res audio and low latency codec, Qualcomm aptX Adaptive, and Google Fast Pair.",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.bose.com/p/earbuds/bose-quietcomfort-ultra-earbuds/QCUE-HEADPHONEIN.html"
+      },
+      {
+        "field": "anc",
+        "quote": "QuietComfort Ultra Earbuds use both passive and active noise reduction technologies to achieve our best in-ear noise cancellation.",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.bose.com/p/earbuds/bose-quietcomfort-ultra-earbuds/QCUE-HEADPHONEIN.html"
+      },
+      {
+        "field": "batteryLifeHours",
+        "quote": "to playback loudness of 75dB, 3-band EQ set, to zero in Quiet Mode (full noise cancellation). With Immersive Audio off, playback time was up to 6 hours before battery depletion. With Immersive Audio on, playback time was up to 4 hours before battery depletion.",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.bose.com/p/earbuds/bose-quietcomfort-ultra-earbuds/QCUE-HEADPHONEIN.html"
+      },
+      {
+        "field": "driverType",
+        "quote": "single dynamic driver per earbud; no balanced-armature, planar-magnetic, electrostatic or AMT driver is stated or implied anywhere on the product page",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.bose.com/p/earbuds/bose-quietcomfort-ultra-earbuds/QCUE-HEADPHONEIN.html"
+      },
+      {
+        "field": "driverConfigBucket",
+        "quote": "single dynamic driver per earbud",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.bose.com/p/earbuds/bose-quietcomfort-ultra-earbuds/QCUE-HEADPHONEIN.html"
+      },
+      {
+        "field": "awards",
+        "quote": "no award, Editors' Choice badge, or named recognition is claimed for this SKU anywhere on the product page (boolean feature-absence rule applied)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.bose.com/p/earbuds/bose-quietcomfort-ultra-earbuds/QCUE-HEADPHONEIN.html"
+      }
+    ],
+    "wearingStyle": [
+      "in-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-14T10:45:15.340Z"
+}

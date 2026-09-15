@@ -1,0 +1,3 @@
+First 32 files are generated but have false positives from the page-mega-menu text.  
+I’m now doing a second pass that uses only the product’s own spec table + body text, drops the menu-driven matches, and applies domain gating so DAC/amp values don’t leak into amplifier-only fields.  
+Expected next step: rewrite the generator and regenerate the 32 files.

@@ -1,0 +1,26 @@
+{
+  "_id": "xMEqvkRBbdrlJXyFG8j4QP",
+  "name": "Noble FoKus Apollo ANC Over-Ear Headphones",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "noble-audio"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": true,
+    "price": 64900,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T18:12:38.464Z"
+}

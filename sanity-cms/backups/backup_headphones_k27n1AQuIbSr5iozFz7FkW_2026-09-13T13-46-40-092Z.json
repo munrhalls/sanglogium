@@ -1,0 +1,25 @@
+{
+  "productId": "k27n1AQuIbSr5iozFz7FkW",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "audeze"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "planar-magnetic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 99900,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T13:46:40.093Z"
+}

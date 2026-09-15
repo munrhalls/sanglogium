@@ -1,0 +1,16 @@
+{
+  "issueId": "sang-logium-zdb.2.24",
+  "slice": "audio-electronics",
+  "brand": "Lake People",
+  "patchedAt": "2026-09-14T10:46:42.103Z",
+  "ok": 1,
+  "fail": 0,
+  "results": [
+    {
+      "file": "lake-people-g111-desktop-headphone-amplifier.md",
+      "productId": "k27n1AQuIbSr5iozG1vKTr",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOmuR"
+    }
+  ]
+}

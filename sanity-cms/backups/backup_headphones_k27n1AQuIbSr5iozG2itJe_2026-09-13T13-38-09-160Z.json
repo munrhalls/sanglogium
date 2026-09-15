@@ -1,0 +1,23 @@
+{
+  "productId": "k27n1AQuIbSr5iozG2itJe",
+  "before": {
+    "brand": [
+      "sony"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wireless",
+    "connector": [
+      "mmcx"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 12999,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-13T13:38:09.161Z"
+}

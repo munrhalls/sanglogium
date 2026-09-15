@@ -1,0 +1,26 @@
+{
+  "_id": "DZc43yHr6ydfgE7zB462xz",
+  "name": "HarmonicDyne x Z Reviews Eris 50mm Dynamic Driver Headphones",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "harmonicdyne"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 25900,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T18:07:23.492Z"
+}

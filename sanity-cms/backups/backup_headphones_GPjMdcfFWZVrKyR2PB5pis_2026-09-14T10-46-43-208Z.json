@@ -1,0 +1,26 @@
+{
+  "productId": "GPjMdcfFWZVrKyR2PB5pis",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "ladder"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm",
+      "rca-line-out"
+    ],
+    "price": 82900
+  },
+  "backedUpAt": "2026-09-14T10:46:43.208Z"
+}

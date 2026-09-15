@@ -1,0 +1,25 @@
+{
+  "productId": "DZc43yHr6ydfgE7zB41H2s",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "vmv"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 116000
+  },
+  "backedUpAt": "2026-09-14T10:46:02.201Z"
+}

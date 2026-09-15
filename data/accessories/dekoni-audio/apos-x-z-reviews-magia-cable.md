@@ -34,7 +34,7 @@ spec_fields:
   mounting: null
 
 source_urls: 
-  - "https://aposaudio.com/products/apos-x-z-reviews-magia-cable"
+  - "https://apos.audio/products/apos-z-reviews-magia-cable"
 verified_at: "2026-09-14"
 data_status: "COMPLETE"
 

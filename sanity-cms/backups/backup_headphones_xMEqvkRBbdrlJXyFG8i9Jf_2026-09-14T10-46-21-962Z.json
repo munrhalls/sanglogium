@@ -1,0 +1,25 @@
+{
+  "productId": "xMEqvkRBbdrlJXyFG8i9Jf",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": true,
+    "brand": [
+      "orchard-audio"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": false,
+    "deviceType": "headphone-amp",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 199995
+  },
+  "backedUpAt": "2026-09-14T10:46:21.962Z"
+}

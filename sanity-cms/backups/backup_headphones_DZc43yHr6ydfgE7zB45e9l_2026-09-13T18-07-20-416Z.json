@@ -1,0 +1,26 @@
+{
+  "_id": "DZc43yHr6ydfgE7zB45e9l",
+  "name": "HIFIMAN Ananda Nano Planar Magnetic Headphone",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "hifiman"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "planar-magnetic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 33999,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T18:07:20.416Z"
+}

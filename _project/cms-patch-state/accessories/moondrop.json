@@ -1,0 +1,16 @@
+{
+  "issueId": "sang-logium-zdb.3.28",
+  "slice": "accessories",
+  "brand": "Moondrop",
+  "patchedAt": "2026-09-14T10:48:30.559Z",
+  "ok": 1,
+  "fail": 0,
+  "results": [
+    {
+      "file": "moondrop-free-dsp-usb-c-iem-cable.md",
+      "productId": "moXlkADK7m1DHgGwWxMkkd",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwe2x"
+    }
+  ]
+}

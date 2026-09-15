@@ -1,0 +1,16 @@
+{
+  "issueId": "sang-logium-zdb.3.22",
+  "slice": "accessories",
+  "brand": "JBL",
+  "patchedAt": "2026-09-14T10:48:55.289Z",
+  "ok": 1,
+  "fail": 0,
+  "results": [
+    {
+      "file": "jbl-wireless-two-microphone-system-with-dual-channel-receiver.md",
+      "productId": "x2LkzHeaGqoEz8Jhogc6j0",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbfS9"
+    }
+  ]
+}

@@ -1,0 +1,172 @@
+{
+  "issueId": "sang-logium-zdb.3.7",
+  "slice": "accessories",
+  "brand": "AudioQuest",
+  "patchedAt": "2026-09-14T10:50:12.363Z",
+  "ok": 27,
+  "fail": 0,
+  "results": [
+    {
+      "file": "audioquest-black-beauty-rca-interconnect-cable-4-92-1-5m.md",
+      "productId": "x2LkzHeaGqoEz8JhogYAsA",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbhGH"
+    },
+    {
+      "file": "audioquest-chicago-rca-analog-audio-interconnect-cable-pair-3-28-ft.md",
+      "productId": "apzyFbFDTajEZntmxsqSfT",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwlKK"
+    },
+    {
+      "file": "audioquest-chicago-rca-analog-audio-interconnect-cable-pair-6-56-ft.md",
+      "productId": "apzyFbFDTajEZntmxsotCD",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03ePwrt"
+    },
+    {
+      "file": "audioquest-chicago-rca-male-to-rca-male-cable-1-64-ft-0-5m-2-pack.md",
+      "productId": "GqkAHteRmu9rQ6VLnVzWzH",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03ePx5L"
+    },
+    {
+      "file": "audioquest-chicago-rca-male-to-rca-male-cable-pair-4-92-ft.md",
+      "productId": "apzyFbFDTajEZntmxsqhzY",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwlah"
+    },
+    {
+      "file": "audioquest-cinnamon-usb-to-micro-audio-cable-2-46-ft-75m.md",
+      "productId": "Y7l1IhzX2fnyiano58Gmxj",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03ePzcH"
+    },
+    {
+      "file": "audioquest-dragontail-carbon-usb-a-to-c-adapter.md",
+      "productId": "0IQ2UjkdXJma4iOcjnwqbl",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbhNv"
+    },
+    {
+      "file": "audioquest-dragontail-usb-extender-and-adapter.md",
+      "productId": "moXlkADK7m1DHgGwWxMnjQ",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbhRk"
+    },
+    {
+      "file": "audioquest-dragontail-usb-smartphone-adaptor.md",
+      "productId": "MrEMtYwMtrFDGWmRnG6oGG",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwloj"
+    },
+    {
+      "file": "audioquest-evergreen-1m-3-28-ft-rca-male-to-rca-male-cable-pair.md",
+      "productId": "apzyFbFDTajEZntmxspOvR",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbiAL"
+    },
+    {
+      "file": "audioquest-forest-usb-to-micro-high-definition-digital-audio-cable-1-5m.md",
+      "productId": "Y7l1IhzX2fnyiano58GsCK",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbiGi"
+    },
+    {
+      "file": "audioquest-golden-gate-rca-to-rca-analog-interconnect-cable-0-6-meters.md",
+      "productId": "x2LkzHeaGqoEz8JhogaDCU",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQ4kd"
+    },
+    {
+      "file": "audioquest-greyhound-rca-low-frequency-subwoofer-audio-interconnect-each-39-37-ft.md",
+      "productId": "GqkAHteRmu9rQ6VLnW35yj",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQ4y5"
+    },
+    {
+      "file": "audioquest-m22f-hrd-rca-male-to-2-rca-female-adaptor.md",
+      "productId": "GjMaRFaHMVTsBoyxtAJAGI",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbiOM"
+    },
+    {
+      "file": "audioquest-pearl-usb-a-to-usb-b-cable-4-92ft-1-5m.md",
+      "productId": "mhejwYdgiH5W70wqaK7ngk",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbiUj"
+    },
+    {
+      "file": "audioquest-perch-headphone-stand.md",
+      "productId": "ULy5F1v4tquhHAic3WFNzN",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbiZp"
+    },
+    {
+      "file": "audioquest-red-river-xlr-to-xlr-analog-audio-interconnect-cable-1-64-0-5m-2-pack.md",
+      "productId": "apzyFbFDTajEZntmxspjB2",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQ7V1"
+    },
+    {
+      "file": "audioquest-red-river-xlr-to-xlr-analog-audio-interconnect-cable-9-84-3m-single-pack.md",
+      "productId": "GqkAHteRmu9rQ6VLnVyNtu",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQ7vv"
+    },
+    {
+      "file": "audioquest-red-river-xlr-to-xlr-analog-audio-interconnect-cables-2-46-0-75m-2-pack.md",
+      "productId": "apzyFbFDTajEZntmxspxTm",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwp6C"
+    },
+    {
+      "file": "audioquest-red-river-xlr-to-xlr-analog-audio-interconnect-cables-9-84-3m-2-pack.md",
+      "productId": "GqkAHteRmu9rQ6VLnVyiuB",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQ8Dr"
+    },
+    {
+      "file": "audioquest-sydney-2m-rca-to-rca-analog-audio-interconnect-cable.md",
+      "productId": "x2LkzHeaGqoEz8JhogYPz8",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435Cxbiwl"
+    },
+    {
+      "file": "audioquest-sydney-3-5mm-mini-to-rca-audio-cable-1-97-ft.md",
+      "productId": "x2LkzHeaGqoEz8JhogaWUi",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbjC3"
+    },
+    {
+      "file": "audioquest-sydney-3-5mm-to-3-5mm-analog-audio-interconnect-cable-4-92ft-1-5m.md",
+      "productId": "x2LkzHeaGqoEz8JhogaPNW",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbjKy"
+    },
+    {
+      "file": "audioquest-sydney-rca-to-rca-interconnect-cable-3-meters.md",
+      "productId": "GqkAHteRmu9rQ6VLnVx2E1",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwq7L"
+    },
+    {
+      "file": "audioquest-tower-rca-male-to-rca-male-cable-3-28-ft.md",
+      "productId": "GqkAHteRmu9rQ6VLnVxhPf",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwqGh"
+    },
+    {
+      "file": "audioquest-yosemite-audio-interconnect-rca-to-rca-3-28-1m.md",
+      "productId": "GqkAHteRmu9rQ6VLnVxWsP",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbjSc"
+    },
+    {
+      "file": "audioquest-yukon-rca-to-rca-cable-pair-1-64-ft.md",
+      "productId": "x2LkzHeaGqoEz8JhogZLeA",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbjWR"
+    }
+  ]
+}

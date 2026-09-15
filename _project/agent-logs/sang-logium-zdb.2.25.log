@@ -1,0 +1,20 @@
+Done. `sang-logium-zdb.2.25` is closed.
+
+What I did:
+- Sourced the 1 Luxman product (`PHPYj28HJdPDHAaIBChaz2` — Luxman P-100 Centennial Headphone Amplifier, $13,995.00).
+- Fetched the manufacturer product pages (English and Japanese) and the manufacturer owner's manual PDF.
+- Wrote one `.md` file: `data/audio-electronics/luxman/luxman-p-100-centennial-headphone-amplifier.md`.
+- Recorded real, cited values or explicit `null` for every audio-electronics filter field, including the `deviceType` vocabulary gap and the English/Japanese finish-description conflict.
+- Exported beads and closed the issue: `bd close sang-logium-zdb.2.25 --reason "1 products sourced and filed."`
+
+Key source citations:
+- `https://www.luxman.com/product/detail.php?id=52`
+- `https://www.luxman.co.jp/product/p-100-centennial`
+- `https://www.luxman.co.jp/asset/manual/P-100_AG00238G26A_20240930.pdf`
+- `https://sanglogium.com/products/luxman-p-100-centennial-headphone-amplifier`
+
+Changed files (not committed, per conservative handoff):
+- `data/audio-electronics/luxman/luxman-p-100-centennial-headphone-amplifier.md` (new)
+- `.beads/issues.jsonl` (updated export)
+
+If you want the commit / push, just say the word.

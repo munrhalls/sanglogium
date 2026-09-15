@@ -1,0 +1,8 @@
+Done. Sourced real, cited data for both Bluesound products and wrote one file per product:
+
+- `data/audio-electronics/bluesound/bluesound-powernode-edge-streamer-and-amplifier.md`
+- `data/audio-electronics/bluesound/bluesound-node-wireless-music-streamer.md`
+
+Closed `sang-logium-zdb.2.6` with reason "2 products sourced and filed." Re-exported `.beads/issues.jsonl`.
+
+No other beads issues or brands were touched. Git status now shows the new `data/audio-electronics/bluesound/` directory and the updated `.beads/issues.jsonl`; everything else is pre-existing. Ready for you to review and commit if you want.

@@ -1,0 +1,24 @@
+{
+  "_id": "Agdc7UdudmikAzJtKWUVPW",
+  "name": "64 Audio U4s In-Ear Headphones",
+  "before": {
+    "brand": [
+      "64-audio"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "mmcx"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 109900,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-13T18:07:08.810Z"
+}

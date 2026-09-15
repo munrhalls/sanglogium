@@ -1,0 +1,14 @@
+Plan: show the bead, read its protocols and product list, source real cited data, write the .md files, then close the issue.Pulling the bead’s JSON and checking for an existing audio-electronics sourcing/field-list doc.Found the audio-electronics schema and a sibling product .md as a template. The should-be doc is referenced but may not exist as a separate file yet; the schema/example gives the field vocabulary to use.
+
+Next: locate the live product names for the two AudioQuest IDs so I can fetch manufacturer pages.Done. Two AudioQuest products sourced and filed:
+
+- `data/audio-electronics/audioquest/audioquest-jitterbug-fmj.md`
+- `data/audio-electronics/audioquest/audioquest-dragonfly-cobalt-usb-dac-amp.md`
+
+Values came from the AudioQuest manufacturer pages (`/products/jitterbug` and `/products/dragonfly-cobalt`) and the Sanity record for stock. Fields that could not be honestly confirmed are explicit `null` with notes.
+
+`sang-logium-zdb.2.2` is closed with reason: **2 products sourced and filed.**
+
+Targeted git status:
+- `M .beads/issues.jsonl`
+- `?? data/audio-electronics/audioquest/`

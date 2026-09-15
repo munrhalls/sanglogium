@@ -1,0 +1,157 @@
+{
+  "_id": "n10eAegrGspodtsQvneRgi",
+  "name": "Meze 99 Classics Headphones - Open Box",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "backDesign": "closed",
+    "brand": [
+      "meze-audio"
+    ],
+    "cableLengthM": 3,
+    "cableTermination": [
+      "3.5mm"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "detachableCable": true,
+    "driverType": [
+      "dynamic"
+    ],
+    "foldable": true,
+    "freqResponseHz": {
+      "max": 25000,
+      "min": 15
+    },
+    "impedanceOhms": 32,
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "portable": true,
+    "price": 27900,
+    "productCategory": [
+      "over-ear"
+    ],
+    "requiresAmplifier": false,
+    "sensitivityDbMw": 103,
+    "soundSignature": "Basshead",
+    "sourcing": [
+      {
+        "field": "driverType",
+        "quote": "Driver Type | Dynamic",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://mezeaudio.com/products/99-classics-v2-gold"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "99 Classics Walnut Gold Closed Back Dynamic Headphones 2015 Available",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://en.wikipedia.org/wiki/Meze_Audio"
+      },
+      {
+        "field": "impedanceOhms",
+        "quote": "Legacy 1st-generation Meze 99 Classics manufacturer-published spec: 32 Ω (recorded per the manufacturer-source note in docs/filters-sort/meze-audio-sourced.md; the live page's 16 Ω is the 2nd Gen, a different SKU)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://en.wikipedia.org/wiki/Meze_Audio"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "Legacy 1st-generation Meze 99 Classics manufacturer-published spec: 103 dB SPL/mW at 1 kHz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://en.wikipedia.org/wiki/Meze_Audio"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "Frequency Response | 15 Hz - 25 kHz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://mezeaudio.com/products/99-classics-v2-gold"
+      },
+      {
+        "field": "soundSignature",
+        "quote": "Meze 99 Classics 310 Bassy Just excessive bass that unfortunately screws with the tonality of the mids. C- B- Dynamic Closed Circumaural",
+        "sourcedAt": "2026-09-13",
+        "tier": "editorial",
+        "url": "https://crinacle.com/rankings/headphones/"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "Input Connector | Dual 3.5 mm TS Jack",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://mezeaudio.com/products/99-classics-v2-gold"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "DUAL MONO 3.5 MM 99 SERIES GOLD STANDARD CABLE",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://mezeaudio.com/products/99-series-standard-cables"
+      },
+      {
+        "field": "portable",
+        "quote": "WHAT COMES WITH YOUR HEADPHONES | ... | Hard EVA carrying pouch",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://mezeaudio.com/products/99-classics-v2-gold"
+      },
+      {
+        "field": "foldable",
+        "quote": "Hard EVA carrying pouch — the sprung-steel headband folds flat to fit it",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://mezeaudio.com/products/99-classics-v2-gold"
+      },
+      {
+        "field": "microphone",
+        "quote": "No microphone mentioned for this SKU on any manufacturer source; the mic variant is a separate product, 99 Classics Headset — boolean feature-absence rule reads silence as false",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://en.wikipedia.org/wiki/Meze_Audio"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "closed-back over-ear (Circumaural)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://bloomaudio.com/products/meze-99-classics-2.js"
+      },
+      {
+        "field": "productCategory",
+        "quote": "Meze 99 Classics 2nd Gen | Closed-Back Dynamic Headphones",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://bloomaudio.com/products/meze-99-classics-2.js"
+      },
+      {
+        "field": "connectivity",
+        "quote": "No wireless/Bluetooth/battery mention on any manufacturer or audited-retailer source for this SKU",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://bloomaudio.com/products/meze-99-classics-2.js"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "Includes dual-twisted Kevlar-wrapped OFC cable (3 m dual-mono, 1st gen)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://bloomaudio.com/products/meze-99-classics-2.js"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-13T18:12:22.581Z"
+}

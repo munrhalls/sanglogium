@@ -17,7 +17,7 @@ spec_fields:
   connectorTermination: null
   lengthM: null
   conductorMaterial: null
-  balancedUnbalanced: "balanced"
+  balancedUnbalanced: null
   furnitureType: null
   material: null
   adjustableHeight: null
@@ -29,7 +29,13 @@ spec_fields:
   formatCompatibility: null
   partType: "ear-pads-cushions"
   compatibility: 
-    - "Focal listeners who want to fine"
+    - "FOCAL Foam"
+    - "FOCAL ~102 mm diameter × 24 mm depth"
+    - "FOCAL ~62 × 48 mm"
+    - "FOCAL Weight"
+    - "FOCAL ~6.4 oz"
+    - "FOCAL Price"
+    - "FOCAL US $99.99"
   adapterFunction: null
   treatmentType: null
   mounting: null
@@ -47,8 +53,7 @@ data_status: "COMPLETE"
 - **accessoryType**: `replacement-parts` — product name / page identifies this as a replacement-parts item.
 - **compatibleProductType**: ["headphone"] — intended for use with headphone.
 - **partType**: `ear-pads-cushions` — product name identifies this as a ear-pads-cushions replacement part.
-- **compatibility**: ["Focal listeners who want to fine"] — compatible models extracted from the manufacturer product page and product title.
-- **balancedUnbalanced**: `balanced` — product title / description describes the cable as balanced.
+- **compatibility**: ["FOCAL Foam","FOCAL ~102 mm diameter × 24 mm depth","FOCAL ~62 × 48 mm","FOCAL Weight","FOCAL ~6.4 oz","FOCAL Price","FOCAL US $99.99"] — compatible models extracted from the manufacturer product page and product title.
 - **customerRating**: `null` — no visible customer rating or aggregate score on the cited source page.
 - **dealsDiscount**: `null` — no discount or deal terms visible on the cited source page.
 - **newArrival**: `null` — release/new-arrival status not stated on the cited source page.

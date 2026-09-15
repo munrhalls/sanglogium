@@ -1,47 +1,47 @@
 ---
-product_id: "Pn6oyV4Ks5AcNbecjgq7ah"
-product_slug: "hifiman-edition-xs-headphones"
-brand: "HiFiMan"
-name: "Edition XS"
-slice: "headphones"
+product_id: Pn6oyV4Ks5AcNbecjgq7ah
+product_slug: hifiman-edition-xs-headphones
+brand: HiFiMan
+name: Hifiman Edition XS Headphones
+slice: headphones
 spec_fields:
   productCategory:
-    - "over-ear"
+  - over-ear
   wearingStyle:
-    - "over-ear"
+  - over-ear
   acousticDesign:
-    - "open-back"
-  connectivity: "wired"
+  - open-back
+  connectivity: wired
   portable: false
   driverType:
-    - "planar-magnetic"
+  - planar-magnetic
   impedanceOhms: 18
   sensitivityDbMw: 92
   freqResponseHz:
     min: 8
     max: 50000
   cableTermination:
-    - "3.5mm"
-    - "6.35mm"
+  - 3.5mm
+  - 6.35mm
   detachableCable: true
   cableLengthM: 1.5
   microphone: false
   foldable: false
   ipxRating: null
   bluetoothCodecs: null
-  anc: "none"
+  anc: none
   batteryLifeHours: null
-  soundSignature: "Bright/Analytical"
+  soundSignature: Bright/Analytical
   awards: null
   fitType: null
   driverConfigBucket: null
 source_urls:
-  - "https://hifiman.com/products/detail/315"
-  - "https://hifiman.com/attachments/file/20240819/20240819043749_57247.pdf"
-  - "https://www.rtings.com/headphones/reviews/hifiman/edition-xs"
-  - "https://crinacle.com/rankings/headphones/real/"
-verified_at: "2026-09-14"
-data_status: "COMPLETE"
+- https://hifiman.com/products/detail/315
+- https://hifiman.com/attachments/file/20240819/20240819043749_57247.pdf
+- https://www.rtings.com/headphones/reviews/hifiman/edition-xs
+- https://crinacle.com/rankings/headphones/real/
+verified_at: '2026-09-14'
+data_status: COMPLETE
 ---
 
 ## Verification Notes

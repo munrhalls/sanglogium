@@ -1,0 +1,16 @@
+{
+  "issueId": "sang-logium-zdb.1.25",
+  "slice": "headphones",
+  "brand": "Mark Levinson",
+  "patchedAt": "2026-09-14T10:44:30.947Z",
+  "ok": 1,
+  "fail": 0,
+  "results": [
+    {
+      "file": "mark-levinson-№-5909-active-noise-cancellation-headphones.md",
+      "productId": "k27n1AQuIbSr5iozG2iyZJ",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbQdS"
+    }
+  ]
+}

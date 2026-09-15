@@ -1,0 +1,25 @@
+{
+  "productId": "MrEMtYwMtrFDGWmRnNGOLg",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "moondrop"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 3999
+  },
+  "backedUpAt": "2026-09-14T10:46:26.193Z"
+}

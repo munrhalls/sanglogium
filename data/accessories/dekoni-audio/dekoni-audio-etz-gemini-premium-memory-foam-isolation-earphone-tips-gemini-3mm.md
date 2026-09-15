@@ -28,7 +28,11 @@ spec_fields:
   cleaningProductType: null
   formatCompatibility: null
   partType: "ear-tips"
-  compatibility: null
+  compatibility: 
+    - "11.2 mm (S) / 13 mm (M) / 14 mm"
+    - "Pack size"
+    - "3 pairs"
+    - "Klipsch"
   adapterFunction: null
   treatmentType: null
   mounting: null
@@ -46,6 +50,7 @@ data_status: "COMPLETE"
 - **accessoryType**: `replacement-parts` — product name / page identifies this as a replacement-parts item.
 - **compatibleProductType**: ["headphone"] — intended for use with headphone.
 - **partType**: `ear-tips` — product name identifies this as a ear-tips replacement part.
+- **compatibility**: ["11.2 mm (S) / 13 mm (M) / 14 mm","Pack size","3 pairs","Klipsch"] — compatible models extracted from the manufacturer product page and product title.
 - **customerRating**: `null` — no visible customer rating or aggregate score on the cited source page.
 - **dealsDiscount**: `null` — no discount or deal terms visible on the cited source page.
 - **newArrival**: `null` — release/new-arrival status not stated on the cited source page.

@@ -1,0 +1,25 @@
+{
+  "productId": "n10eAegrGspodtsQvy4Df8",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "benchmark-media-systems"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": false,
+    "deviceType": "headphone-amp",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 349900
+  },
+  "backedUpAt": "2026-09-14T10:47:17.743Z"
+}

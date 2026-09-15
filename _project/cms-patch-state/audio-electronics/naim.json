@@ -1,0 +1,16 @@
+{
+  "issueId": "sang-logium-zdb.2.30",
+  "slice": "audio-electronics",
+  "brand": "Naim",
+  "patchedAt": "2026-09-14T10:46:25.062Z",
+  "ok": 1,
+  "fail": 0,
+  "results": [
+    {
+      "file": "naim-uniti-atom-amplifier-headphone-edition.md",
+      "productId": "MrEMtYwMtrFDGWmRnNIk7B",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwITD"
+    }
+  ]
+}

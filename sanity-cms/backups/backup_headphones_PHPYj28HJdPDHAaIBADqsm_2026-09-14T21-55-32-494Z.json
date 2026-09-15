@@ -1,0 +1,177 @@
+{
+  "productId": "PHPYj28HJdPDHAaIBADqsm",
+  "before": {
+    "acousticDesign": [
+      "open-back"
+    ],
+    "anc": "none",
+    "awards": null,
+    "batteryLifeHours": {
+      "ancOff": null,
+      "ancOn": null
+    },
+    "bluetoothCodecs": null,
+    "brand": [
+      "focal"
+    ],
+    "cableLengthM": 1.5,
+    "cableTermination": [
+      "3.5mm",
+      "6.35mm",
+      "4-pin-xlr"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "detachableCable": true,
+    "driverConfigBucket": null,
+    "driverConfigDetail": null,
+    "driverType": [
+      "dynamic"
+    ],
+    "fitType": null,
+    "foldable": false,
+    "freqResponseHz": {
+      "max": 23000,
+      "min": 5
+    },
+    "impedanceOhms": 80,
+    "inStock": true,
+    "ipxRating": null,
+    "microphone": false,
+    "portable": false,
+    "price": 499900,
+    "productCategory": [
+      "over-ear"
+    ],
+    "requiresAmplifier": false,
+    "sensitivityDbMw": 104,
+    "soundSignature": "Neutral",
+    "sourcing": [
+      {
+        "field": "impedanceOhms",
+        "quote": "Impedance : 80 Ω",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.focal.com/products/utopia"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "Frequency response (+/- 3dB) : 5 Hz – 23 kHz (live page kept over manual's \"5Hz - 50kHz\" per the manufacturer self-contradiction rule)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.focal.com/products/utopia"
+      },
+      {
+        "field": "driverType",
+        "quote": "Loudspeakers : 15/8\" (40mm) pure Beryllium ‘M’-shaped dome",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.focal.com/products/utopia"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "Cables provided : • 1 x 5ft (1.5m) Jack 1/8\" (3.5mm) cable with Lemo® connectors • 1 x 10ft (3m) 4-pin XLR cable with Lemo® connectors",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.focal.com/products/utopia"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "Sensitivity 104dB SPL / 1mW @ 1kHz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://dam.focal-naim.com/m/75168348b21e34b6/original/UserManual_Utopia_74x200_Web-pdf.pdf"
+      },
+      {
+        "field": "productCategory",
+        "quote": "Product type : Open-back headphones",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/utopia"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "Circum-aural open-back headphones",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/utopia"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "Reference open-back hi-fi headphones",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/utopia"
+      },
+      {
+        "field": "connectivity",
+        "quote": "Cables provided (LEMO® 3.5mm / 4-pin XLR) — no Bluetooth, ANC, or electronics anywhere on the page",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/utopia"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "1 x 5ft (1.5m) Jack 1/8\" (3.5mm) cable • 1 x 10ft (3m) 4-pin XLR cable • 1 x Jack adapter, 1/8\" (3.5mm) point socket – 1/4\" (6.35mm) point plug",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/utopia"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "To disconnect the cable from the headphones, hold the ends of the cable by the \"grip\" (fig.2) to unlock the",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://dam.focal-naim.com/m/75168348b21e34b6/original/UserManual_Utopia_74x200_Web-pdf.pdf"
+      },
+      {
+        "field": "portable",
+        "quote": "(no portability or travel language anywhere on page or in manual — absence-based FLAG; reference open-back home headphone)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/utopia"
+      },
+      {
+        "field": "microphone",
+        "quote": "(no microphone language anywhere in page or manual — boolean feature-absence rule)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://dam.focal-naim.com/m/75168348b21e34b6/original/UserManual_Utopia_74x200_Web-pdf.pdf"
+      },
+      {
+        "field": "foldable",
+        "quote": "(only headband/yoke adjustment and a hard carrying case described; no folding hinge — absence-based FLAG)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://dam.focal-naim.com/m/75168348b21e34b6/original/UserManual_Utopia_74x200_Web-pdf.pdf"
+      },
+      {
+        "field": "anc",
+        "quote": "(derived: no electronics anywhere on the page — supplied cables are LEMO® 3.5mm and 4-pin XLR, no Bluetooth/ANC)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/utopia"
+      },
+      {
+        "field": "batteryLifeHours",
+        "quote": "(no battery anywhere on the page or manual — wired-only passive headphone, so both ancOn and ancOff are null)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.focal.com/products/utopia"
+      },
+      {
+        "field": "soundSignature",
+        "quote": "Neutral — Solid tuning with close to top-tier resolution. An inoffensive all-rounder that lives up to its reputation. (Tone Grade S-, Technical Grade S-)",
+        "sourcedAt": "2026-09-13",
+        "tier": "editorial",
+        "url": "https://crinacle.com/rankings/headphones/"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-14T21:55:32.494Z"
+}

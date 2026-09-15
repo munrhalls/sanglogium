@@ -1,0 +1,25 @@
+{
+  "productId": "MrEMtYwMtrFDGWmRnNHjjW",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "bluesound"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": false,
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 54900
+  },
+  "backedUpAt": "2026-09-14T10:47:16.718Z"
+}

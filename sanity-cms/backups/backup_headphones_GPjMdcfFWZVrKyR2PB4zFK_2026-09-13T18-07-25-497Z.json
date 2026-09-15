@@ -1,0 +1,26 @@
+{
+  "_id": "GPjMdcfFWZVrKyR2PB4zFK",
+  "name": "Meze 105 AER Open-Back Headphones",
+  "before": {
+    "backDesign": "open",
+    "brand": [
+      "meze-audio"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 39900,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T18:07:25.497Z"
+}

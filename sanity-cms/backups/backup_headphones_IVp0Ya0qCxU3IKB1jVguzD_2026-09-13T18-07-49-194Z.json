@@ -1,0 +1,151 @@
+{
+  "_id": "IVp0Ya0qCxU3IKB1jVguzD",
+  "name": "Sennheiser HD 660S2 Headphones",
+  "before": {
+    "acousticDesign": [
+      "open-back"
+    ],
+    "backDesign": "closed",
+    "brand": [
+      "sennheiser"
+    ],
+    "cableLengthM": 1.8,
+    "cableTermination": [
+      "3.5mm",
+      "6.35mm",
+      "4.4mm-balanced"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "detachableCable": true,
+    "driverType": [
+      "dynamic"
+    ],
+    "foldable": false,
+    "freqResponseHz": {
+      "max": 41500,
+      "min": 8
+    },
+    "impedanceOhms": 300,
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "portable": false,
+    "price": 67995,
+    "productCategory": [
+      "over-ear"
+    ],
+    "requiresAmplifier": false,
+    "sensitivityDbMw": 104,
+    "sourcing": [
+      {
+        "field": "productCategory",
+        "quote": "Ear coupling: Over-Ear",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/hd-660s2"
+      },
+      {
+        "field": "impedanceOhms",
+        "quote": "Impedance: 300 Ω",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://us.sennheiser-hearing.com/products/hd-660s2"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "Sound pressure level (SPL): 104 dB (1 kHz, 1 Vrms)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://us.sennheiser-hearing.com/products/hd-660s2"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "Frequency response: 8 – 41,500 Hz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://us.sennheiser-hearing.com/products/hd-660s2"
+      },
+      {
+        "field": "driverType",
+        "quote": "Transducer principle: dynamic, open",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://us.sennheiser-hearing.com/products/hd-660s2"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "Cable length: 1.8m",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://us.sennheiser-hearing.com/products/hd-660s2"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "Ear coupling: Over-Ear",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/hd-660s2"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "Transducer principle: dynamic, open",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/hd-660s2"
+      },
+      {
+        "field": "connectivity",
+        "quote": "Connector: 6.3 mm (1⁄4 inch) jack plug, 4.4 mm balanced plug",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/hd-660s2"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "Connector: 6.3 mm (1⁄4 inch) jack plug, 4.4 mm balanced plug / Adapter: 6.3 mm (1⁄4 inch) to 3.5 mm",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/hd-660s2"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "detachable cable listed among supplied accessories",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/hd-660s2"
+      },
+      {
+        "field": "portable",
+        "quote": "open-back reference over-ear; no transport or folding design stated",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/hd-660s2"
+      },
+      {
+        "field": "microphone",
+        "quote": "(no mention across product page and headphones.com; boolean feature-absence rule applied)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/hd-660s2"
+      },
+      {
+        "field": "foldable",
+        "quote": "(no mention across product page and headphones.com; boolean feature-absence rule applied)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/hd-660s2"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-13T18:07:49.194Z"
+}

@@ -1,0 +1,25 @@
+{
+  "productId": "k27n1AQuIbSr5iozFz7KCz",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "hifiman"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "planar-magnetic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 69900,
+    "requiresAmplifier": true,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T12:41:10.689Z"
+}

@@ -1,1 +1,21 @@
-Plan: read the issue, source each product, write the .md files, then close. Since you said "go, no stop," I’ll proceed without go/no-go gates.Found the field list and sourcing docs. The `data/audio-electronics/nimbus/` directory does not exist yet; I’ll create it.
+Plan: read the issue, source each product, write the .md files, then close. Since you said "go, no stop," I’ll proceed without go/no-go gates.Found the field list and sourcing docs. The `data/audio-electronics/nimbus/` directory does not exist yet; I’ll create it.Done. I sourced the one Nimbus product and filed it under the path the issue specified.
+
+- Product: `Niimbus US 5 Desktop Headphone Amplifier`
+- File written: `data/audio-electronics/nimbus/niimbus-us-5-desktop-headphone-amplifier.md`
+- Issue closed: `sang-logium-zdb.2.31 — 1 products sourced and filed.`
+- `bd export -o .beads/issues.jsonl` updated the passive export.
+
+No other beads issue or brand was touched.
+
+Targeted `git status` now shows:
+```
+ M .beads/issues.jsonl
+?? data/audio-electronics/nimbus/
+```
+
+I did not commit or push — conservative profile says report status and wait for authority. If you want the commit, the proposed commands are:
+
+```bash
+git add .beads/issues.jsonl data/audio-electronics/nimbus/
+git commit -m "sang-logium-zdb.2.31: source and file Nimbus US 5 audio-electronics data"
+```

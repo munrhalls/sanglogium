@@ -1,0 +1,64 @@
+{
+  "issueId": "sang-logium-zdb.1.26",
+  "slice": "headphones",
+  "brand": "Moondrop",
+  "patchedAt": "2026-09-14T10:44:29.891Z",
+  "ok": 9,
+  "fail": 0,
+  "results": [
+    {
+      "file": "moondrop-alice-true-wireless-in-ear-headphones.md",
+      "productId": "n10eAegrGspodtsQw13THU",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eNmdp"
+    },
+    {
+      "file": "moondrop-aria-2-iems.md",
+      "productId": "GPjMdcfFWZVrKyR2PB8uW2",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcw08b"
+    },
+    {
+      "file": "moondrop-blessing-3-in-ear-monitor-iem-hybrid-earphones.md",
+      "productId": "DZc43yHr6ydfgE7zB44sHt",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eNn0F"
+    },
+    {
+      "file": "moondrop-dark-saber-in-ear-headphones.md",
+      "productId": "MrEMtYwMtrFDGWmRnTEgIK",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcw0RJ"
+    },
+    {
+      "file": "moondrop-kadenz-flagship-10mm-iems.md",
+      "productId": "xMEqvkRBbdrlJXyFG8jrTr",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcw0fL"
+    },
+    {
+      "file": "moondrop-may-dynamic-driver-planar-magnetic-driver-iem-in-ear-monitor.md",
+      "productId": "GPjMdcfFWZVrKyR2PB90Ze",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbQHn"
+    },
+    {
+      "file": "moondrop-rays-gaming-iems.md",
+      "productId": "GPjMdcfFWZVrKyR2PB8yx8",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbQOA"
+    },
+    {
+      "file": "moondrop-starfield-ii-in-ear-monitor-iem.md",
+      "productId": "GPjMdcfFWZVrKyR2PB8xPu",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcw1C5"
+    },
+    {
+      "file": "moondrop-variations-tribrid-iem.md",
+      "productId": "DZc43yHr6ydfgE7zB44oFY",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcw1Nm"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "productId": "xMEqvkRBbdrlJXyFG8hyzj",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": true,
+    "brand": [
+      "singxer"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": false,
+    "deviceType": "headphone-amp",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 12600
+  },
+  "backedUpAt": "2026-09-14T10:46:04.879Z"
+}

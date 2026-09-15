@@ -1,0 +1,23 @@
+{
+  "productId": "Agdc7UdudmikAzJtKWUVPW",
+  "before": {
+    "anc": "passive",
+    "brand": [
+      "64-audio"
+    ],
+    "cableTermination": [
+      "mmcx"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "price": 109900,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-14T10:45:14.196Z"
+}

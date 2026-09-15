@@ -1,0 +1,176 @@
+{
+  "productId": "k27n1AQuIbSr5iozFz7E1H",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "anc": "none",
+    "awards": null,
+    "batteryLifeHours": {
+      "ancOff": null,
+      "ancOn": null
+    },
+    "bluetoothCodecs": null,
+    "brand": [
+      "focal"
+    ],
+    "cableLengthM": 1.2,
+    "cableTermination": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "detachableCable": true,
+    "driverConfigBucket": null,
+    "driverConfigDetail": null,
+    "driverType": [
+      "dynamic"
+    ],
+    "fitType": null,
+    "foldable": false,
+    "freqResponseHz": {
+      "max": 23000,
+      "min": 5
+    },
+    "impedanceOhms": 35,
+    "inStock": true,
+    "ipxRating": null,
+    "microphone": false,
+    "portable": true,
+    "price": 89000,
+    "productCategory": [
+      "over-ear"
+    ],
+    "requiresAmplifier": false,
+    "sensitivityDbMw": 105,
+    "soundSignature": "Neutral",
+    "sourcing": [
+      {
+        "field": "impedanceOhms",
+        "quote": "Impedance 35 Ohms",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://web.archive.org/web/20211207080622if_/https://www.focal.com/sites/www.focal.fr/files/shared/catalog/document/fp_radiance_en_0.pdf"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "Sensitivity 105dB SPL / 1mW @ 1 kHz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://web.archive.org/web/20211207080622if_/https://www.focal.com/sites/www.focal.fr/files/shared/catalog/document/fp_radiance_en_0.pdf"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "Frequency response 5Hz – 23kHz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://web.archive.org/web/20211207080622if_/https://www.focal.com/sites/www.focal.fr/files/shared/catalog/document/fp_radiance_en_0.pdf"
+      },
+      {
+        "field": "driverType",
+        "quote": "Speaker driver 15/8\" Aluminium/Magnesium \"M\" shape dome",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://web.archive.org/web/20211207080622if_/https://www.focal.com/sites/www.focal.fr/files/shared/catalog/document/fp_radiance_en_0.pdf"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "Cables supplied • 1 x 4ft. (1.2m) OFC 24 AWG cable with 1/8\" (3.5mm) unbalanced TRS jack connector",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://web.archive.org/web/20211207080622if_/https://www.focal.com/sites/www.focal.fr/files/shared/catalog/document/fp_radiance_en_0.pdf"
+      },
+      {
+        "field": "productCategory",
+        "quote": "Type Circum-aural closed-back headphones",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://web.archive.org/web/20211207080622if_/https://www.focal.com/sites/www.focal.fr/files/shared/catalog/document/fp_radiance_en_0.pdf"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "Type Circum-aural closed-back headphones",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://web.archive.org/web/20211207080622if_/https://www.focal.com/sites/www.focal.fr/files/shared/catalog/document/fp_radiance_en_0.pdf"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "The Radiance headphones, under licence of Bentley Motors, complement the range of Focal closed-back headphones",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://web.archive.org/web/20211207080622if_/https://www.focal.com/sites/www.focal.fr/files/shared/catalog/document/fp_radiance_en_0.pdf"
+      },
+      {
+        "field": "connectivity",
+        "quote": "(only a detachable analog mini-jack cable supplied; no Bluetooth, ANC, or electronics anywhere on the sheet or manual)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://web.archive.org/web/20211207080622if_/https://www.focal.com/sites/www.focal.fr/files/shared/catalog/document/fp_radiance_en_0.pdf"
+      },
+      {
+        "field": "portable",
+        "quote": "For use at home and on the move",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://web.archive.org/web/20211207080622if_/https://www.focal.com/sites/www.focal.fr/files/shared/catalog/document/fp_radiance_en_0.pdf"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "1 x 4ft. (1.2m) OFC 24 AWG cable with 1/8\" (3.5mm) unbalanced TRS jack connector • 1 x jack adapter, 1/8\" (3.5mm) point socket – 1/4\" (6.35mm) point plug",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://web.archive.org/web/20211207080622if_/https://www.focal.com/sites/www.focal.fr/files/shared/catalog/document/fp_radiance_en_0.pdf"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "you simply have to disconnect the cable and store it in the case",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://web.archive.org/web/20211207080517if_/https://www.focal.com/sites/www.focal.fr/files/shared/catalog/document/usermanual_radiance_85x200_web.pdf"
+      },
+      {
+        "field": "microphone",
+        "quote": "(no microphone language anywhere on the product sheet or user manual — boolean feature-absence rule)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://web.archive.org/web/20211207080622if_/https://www.focal.com/sites/www.focal.fr/files/shared/catalog/document/fp_radiance_en_0.pdf"
+      },
+      {
+        "field": "foldable",
+        "quote": "(hard-shell carry case in the headphone colours provided; no folding hinge described — absence-based FLAG)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://web.archive.org/web/20211207080622if_/https://www.focal.com/sites/www.focal.fr/files/shared/catalog/document/fp_radiance_en_0.pdf"
+      },
+      {
+        "field": "anc",
+        "quote": "(derived from already-cited acousticDesign: closed-back + connectivity: wired — passive isolation only, no ANC electronics)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://web.archive.org/web/20211207080622if_/https://www.focal.com/sites/www.focal.fr/files/shared/catalog/document/fp_radiance_en_0.pdf"
+      },
+      {
+        "field": "soundSignature",
+        "quote": "Harman neutral — Probably the best of the closed-back Focals. Some tuning refinements over the Stellia, though technically limited. (Tone Grade B+, Technical Grade B)",
+        "sourcedAt": "2026-09-13",
+        "tier": "editorial",
+        "url": "https://crinacle.com/rankings/headphones/"
+      },
+      {
+        "field": "batteryLifeHours",
+        "quote": "(no battery anywhere on the sheet or manual — wired-only passive headphone, so both ancOn and ancOff are null)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://web.archive.org/web/20211207080622if_/https://www.focal.com/sites/www.focal.fr/files/shared/catalog/document/fp_radiance_en_0.pdf"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-14T21:55:28.350Z"
+}

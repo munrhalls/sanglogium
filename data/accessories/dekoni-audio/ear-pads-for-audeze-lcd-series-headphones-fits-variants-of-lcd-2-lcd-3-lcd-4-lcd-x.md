@@ -29,7 +29,12 @@ spec_fields:
   formatCompatibility: null
   partType: "ear-pads-cushions"
   compatibility: 
-    - "Designed specifically for Audeze LCD"
+    - "Audeze LCD-2"
+    - "Audeze LCD-3"
+    - "Audeze LCD-4"
+    - "Audeze LCD-4Z"
+    - "Audeze LCD-MX4"
+    - "Audeze LCD-X"
   adapterFunction: null
   treatmentType: null
   mounting: null
@@ -47,7 +52,7 @@ data_status: "COMPLETE"
 - **accessoryType**: `replacement-parts` — product name / page identifies this as a replacement-parts item.
 - **compatibleProductType**: ["headphone"] — intended for use with headphone.
 - **partType**: `ear-pads-cushions` — product name identifies this as a ear-pads-cushions replacement part.
-- **compatibility**: ["Designed specifically for Audeze LCD"] — compatible models extracted from the manufacturer product page and product title.
+- **compatibility**: ["Audeze LCD-2","Audeze LCD-3","Audeze LCD-4","Audeze LCD-4Z","Audeze LCD-MX4","Audeze LCD-X"] — compatible models extracted from the manufacturer product page and product title.
 - **customerRating**: `null` — no visible customer rating or aggregate score on the cited source page.
 - **dealsDiscount**: `null` — no discount or deal terms visible on the cited source page.
 - **newArrival**: `null` — release/new-arrival status not stated on the cited source page.

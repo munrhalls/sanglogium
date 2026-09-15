@@ -1,0 +1,24 @@
+{
+  "_id": "GPjMdcfFWZVrKyR2PB8yx8",
+  "name": "Moondrop Rays Gaming IEMs",
+  "before": {
+    "brand": [
+      "moondrop"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "2-pin"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 9999,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-13T18:07:35.914Z"
+}

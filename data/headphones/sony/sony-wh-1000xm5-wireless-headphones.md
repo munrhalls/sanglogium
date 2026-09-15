@@ -1,0 +1,63 @@
+---
+product_id: moXlkADK7m1DHgGwWtblsT
+product_slug: sony-wh-1000xm5-wireless-headphones
+brand: Sony
+name: Sony WH-1000XM5 Wireless Headphones
+slice: headphones
+spec_fields:
+  wearingStyle:
+  - over-ear
+  acousticDesign:
+  - closed-back
+  connectivity: wireless
+  portable: true
+  driverType:
+  - dynamic
+  freqResponseHz:
+    min: 4
+    max: 40000
+  cableTermination:
+  - 3.5mm
+  detachableCable: true
+  cableLengthM: 1.2
+  microphone: true
+  foldable: false
+  ipxRating: none
+  bluetoothCodecs:
+  - SBC
+  - AAC
+  - LDAC
+  anc: anc
+  batteryLifeHours:
+    ancOn: 30
+    ancOff: 40
+  soundSignature: Warm
+source_urls:
+- https://helpguide.sony.net/mdr/wh1000xm5/v1/en/contents/TP1000534515.html
+- https://helpguide.sony.net/mdr/wh1000xm5/v1/en/contents/TP1000534744.html
+- https://helpguide.sony.net/mdr/wh1000xm5/v1/en/print.pdf
+- https://helpguide.sony.net/mdr/wh1000xm5/v1/en/contents/TP1000534705.html
+- https://helpguide.sony.net/mdr/wh1000xm5/v1/en/index.html
+- https://helpguide.sony.net/mdr/wh1000xm5/v1/en/contents/TP1000534508.html
+- https://www.rtings.com/headphones/reviews/sony/wh-1000xm5-wireless
+verified_at: '2026-09-13'
+data_status: COMPLETE
+---
+
+## Verification Notes
+- **wearingStyle** (marketing-fact): Wireless Noise Canceling Stereo Headset ... Headphone cable (approx. 1.2 m (47.25 in.)) (1) — https://helpguide.sony.net/mdr/wh1000xm5/v1/en/contents/TP1000534515.html
+- **acousticDesign** (marketing-fact): Wireless Noise Canceling Stereo Headset — closed circumaural noise-cancelling over-ear; no open-back or semi-open variant, and no open vent, is described anywhere in the help guide — https://helpguide.sony.net/mdr/wh1000xm5/v1/en/contents/TP1000534515.html
+- **connectivity** (marketing-fact): you can use the headset as noise canceling headphones while the headset is connected to a device via the supplied headphone cable — https://helpguide.sony.net/mdr/wh1000xm5/v1/en/contents/TP1000534744.html
+- **portable** (marketing-fact): Carrying case ( WH-1000XM5 only) (1) — https://helpguide.sony.net/mdr/wh1000xm5/v1/en/contents/TP1000534515.html
+- **driverType** (marketing-fact): Model : YY2954 — single dynamic driver; no balanced-armature, planar-magnetic, electrostatic or AMT driver is stated or implied anywhere in the help guide or specification PDF — https://helpguide.sony.net/mdr/wh1000xm5/v1/en/print.pdf
+- **freqResponseHz** (hard-spec): 4 Hz - 40,000 Hz (JEITA) — the specification PDF's A2DP transmission range rows — https://helpguide.sony.net/mdr/wh1000xm5/v1/en/print.pdf
+- **cableTermination** (marketing-fact): Headphone cable (approx. 1.2 m (47.25 in.)) (1) — https://helpguide.sony.net/mdr/wh1000xm5/v1/en/contents/TP1000534515.html
+- **detachableCable** (marketing-fact): The headset turns off automatically if you disconnect the supplied headphone cable from the headset while it is turned on. — https://helpguide.sony.net/mdr/wh1000xm5/v1/en/contents/TP1000534744.html
+- **cableLengthM** (hard-spec): Headphone cable (approx. 1.2 m (47.25 in.)) (1) — https://helpguide.sony.net/mdr/wh1000xm5/v1/en/contents/TP1000534515.html
+- **microphone** (marketing-fact): When an incoming call arrives, a ring tone is heard via the headset. Answer the call using your smartphone or mobile phone, and talk using the microphone of the phone. You can hear the caller's voice from the headset. — https://helpguide.sony.net/mdr/wh1000xm5/v1/en/contents/TP1000534744.html
+- **foldable** (marketing-fact): (no folding hinge, folded position, or fold step appears anywhere in the help guide's Parts and controls or Setting the headset in the carrying case sections — the flat-folding swivel of the XM3/XM4 is absent on the XM5; boolean feature-absence rule applied) — https://helpguide.sony.net/mdr/wh1000xm5/v1/en/contents/TP1000534705.html
+- **ipxRating** (marketing-fact): The headset is not waterproof. If the headset is charged while it is wet with rain or sweat, etc., this can result in burnout or malfunction. — https://helpguide.sony.net/mdr/wh1000xm5/v1/en/index.html
+- **bluetoothCodecs** (hard-spec): Codec ... LDAC ™ ... AAC ... SBC — https://helpguide.sony.net/mdr/wh1000xm5/v1/en/contents/TP1000534508.html
+- **anc** (marketing-fact): Noise canceling function: ON Max. 30 hours — https://helpguide.sony.net/mdr/wh1000xm5/v1/en/contents/TP1000534508.html
+- **batteryLifeHours** (marketing-fact): AAC Noise canceling function: ON Max. 30 hours / AAC OFF Max. 40 hours — https://helpguide.sony.net/mdr/wh1000xm5/v1/en/contents/TP1000534508.html
+- **soundSignature** (editorial): Sound Signature = Warm; Bass Amount = Very Emphasized (6 dB); Treble Amount = Slightly Emphasized (1 dB) — https://www.rtings.com/headphones/reviews/sony/wh-1000xm5-wireless

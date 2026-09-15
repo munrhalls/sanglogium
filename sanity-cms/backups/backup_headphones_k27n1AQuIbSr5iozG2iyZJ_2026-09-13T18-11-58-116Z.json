@@ -1,0 +1,190 @@
+{
+  "_id": "k27n1AQuIbSr5iozG2iyZJ",
+  "name": "Mark Levinson № 5909 Active Noise Cancellation Headphones",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "anc": "anc",
+    "backDesign": "closed",
+    "batteryLifeHours": {
+      "ancOff": 34,
+      "ancOn": 30
+    },
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX Adaptive",
+      "LDAC"
+    ],
+    "brand": [
+      "mark-levinson"
+    ],
+    "cableLengthM": 4,
+    "cableTermination": [
+      "3.5mm",
+      "usb-c"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "hybrid",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "detachableCable": true,
+    "driverType": [
+      "dynamic"
+    ],
+    "foldable": false,
+    "freqResponseHz": {
+      "max": 40000,
+      "min": 10
+    },
+    "impedanceOhms": 32,
+    "inStock": true,
+    "ipxRating": "none",
+    "microphone": true,
+    "noiseCancelling": true,
+    "portable": true,
+    "price": 99900,
+    "productCategory": [
+      "over-ear"
+    ],
+    "requiresAmplifier": false,
+    "sensitivityDbMw": 97,
+    "sourcing": [
+      {
+        "field": "productCategory",
+        "quote": "№ 5909 | HIGH-RESOLUTION WIRELESS HEADPHONES WITH ACTIVE NOISE CANCELLATION",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://web.archive.org/web/20230331215112/https://www.marklevinson.com/products/headphones/NO5909-.html?dwvar_NO5909-_color=Black-AM-Current"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "Premium leather headband and replaceable leather ear cushions",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://web.archive.org/web/20230331215112/https://www.marklevinson.com/products/headphones/NO5909-.html?dwvar_NO5909-_color=Black-AM-Current"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "Cup style: Closed-Back",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://headphones.com/products/mark-levinson-5909-active-noise-cancellation-headphones"
+      },
+      {
+        "field": "connectivity",
+        "quote": "Bluetooth 5.1 with LDAC, AAC and aptX™ Adaptive technologies / 1 x 1.25 m USB-C to 3.5 mm audio cable",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://web.archive.org/web/20230331215112/https://www.marklevinson.com/products/headphones/NO5909-.html?dwvar_NO5909-_color=Black-AM-Current"
+      },
+      {
+        "field": "portable",
+        "quote": "Designed For Travel — A hard-shell carrying case discretely stores a complete assortment of cables and accessories",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://web.archive.org/web/20230331215112/https://www.marklevinson.com/products/headphones/NO5909-.html?dwvar_NO5909-_color=Black-AM-Current"
+      },
+      {
+        "field": "driverType",
+        "quote": "Expertly tuned 40 mm Beryllium coated drivers acoustically optimized to the HARMAN Curve",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://web.archive.org/web/20230331215112/https://www.marklevinson.com/products/headphones/NO5909-.html?dwvar_NO5909-_color=Black-AM-Current"
+      },
+      {
+        "field": "impedanceOhms",
+        "quote": "Impedance: 32 ohm",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://cdn.shopify.com/s/files/1/1791/0383/files/SC04510_NA_Mark_Levinson_No5909_Spec_Sheet_v2_HR.pdf?v=1652392823"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "Sensitivity: 97dB SPL @1kHz/1mW",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://cdn.shopify.com/s/files/1/1791/0383/files/SC04510_NA_Mark_Levinson_No5909_Spec_Sheet_v2_HR.pdf?v=1652392823"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "Frequency response (Passive): 10Hz – 40kHz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://cdn.shopify.com/s/files/1/1791/0383/files/SC04510_NA_Mark_Levinson_No5909_Spec_Sheet_v2_HR.pdf?v=1652392823"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "Cables (audio): 4 m USB-C to 3.5 mm audio cable / 1.25 m USB-C to 3.5 mm audio cable / Adapters: 3.5 mm to 6.3 mm audio adaptor",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://web.archive.org/web/20230331215112/https://www.marklevinson.com/products/headphones/NO5909-.html?dwvar_NO5909-_color=Black-AM-Current"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "Plug the USB-C connection end into the USB-C input on the Right ear cup. [Choose] the appropriate length (1.25m or 4m) proprietary audio cable",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://cdn.shopify.com/s/files/1/1791/0383/files/ML_No5909_Owners_Manual_Rev1_220202.pdf?v=1652392823"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "Cables (audio): 4 m USB-C to 3.5 mm audio cable / 1.25 m USB-C to 3.5 mm audio cable",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://web.archive.org/web/20230331215112/https://www.marklevinson.com/products/headphones/NO5909-.html?dwvar_NO5909-_color=Black-AM-Current"
+      },
+      {
+        "field": "microphone",
+        "quote": "Four-microphone voice array with Smart Wind Adaption",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://web.archive.org/web/20230331215112/https://www.marklevinson.com/products/headphones/NO5909-.html?dwvar_NO5909-_color=Black-AM-Current"
+      },
+      {
+        "field": "foldable",
+        "quote": "(no folding/hinge/collapse claim across the manufacturer PDP, Owner's Manual and Spec Sheet; boolean feature-absence rule applied — the manual's only adjustment language is 'Adjust to find optimal fit' and 'Rotates for comfort around neck')",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://cdn.shopify.com/s/files/1/1791/0383/files/ML_No5909_Owners_Manual_Rev1_220202.pdf?v=1652392823"
+      },
+      {
+        "field": "ipxRating",
+        "quote": "(no IPX/water-resistance rating anywhere in the Spec Sheet's full specification list or the PDP feature list)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://cdn.shopify.com/s/files/1/1791/0383/files/SC04510_NA_Mark_Levinson_No5909_Spec_Sheet_v2_HR.pdf?v=1652392823"
+      },
+      {
+        "field": "bluetoothCodecs",
+        "quote": "connectivity via Bluetooth 5.1 with LDAC, AAC, and aptX™ Adaptive",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://cdn.shopify.com/s/files/1/1791/0383/files/ML_No5909_Owners_Manual_Rev1_220202.pdf?v=1652392823"
+      },
+      {
+        "field": "anc",
+        "quote": "Adaptive Active Noise Cancellation (ANC) with three modes",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://web.archive.org/web/20230331215112/https://www.marklevinson.com/products/headphones/NO5909-.html?dwvar_NO5909-_color=Black-AM-Current"
+      },
+      {
+        "field": "batteryLifeHours",
+        "quote": "Music playtime with BT on: 34 hrs / Music playtime with BT & ANC on: 30 hrs",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://cdn.shopify.com/s/files/1/1791/0383/files/SC04510_NA_Mark_Levinson_No5909_Spec_Sheet_v2_HR.pdf?v=1652392823"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-13T18:11:58.116Z"
+}

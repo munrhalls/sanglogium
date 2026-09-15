@@ -1,0 +1,25 @@
+{
+  "productId": "PHPYj28HJdPDHAaIBDs64e",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "astell-and-kern"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac-amp-combo",
+    "formFactor": "portable",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 24900
+  },
+  "backedUpAt": "2026-09-14T10:51:57.302Z"
+}

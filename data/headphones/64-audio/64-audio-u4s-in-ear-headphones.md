@@ -1,46 +1,46 @@
 ---
-product_id: "Agdc7UdudmikAzJtKWUVPW"
-product_slug: "64-audio-u4s-in-ear-headphones"
-brand: "64 Audio"
-name: "U4s In-Ear Headphones"
-slice: "headphones"
+product_id: Agdc7UdudmikAzJtKWUVPW
+product_slug: 64-audio-u4s-in-ear-headphones
+brand: 64 Audio
+name: 64 Audio U4s In-Ear Headphones
+slice: headphones
 spec_fields:
   productCategory:
-    - "iem"
+  - iem
   wearingStyle:
-    - "in-ear"
+  - in-ear
   acousticDesign: null
-  fitType: "universal"
-  connectivity: "wired"
+  fitType: universal
+  connectivity: wired
   portable: true
   driverType:
-    - "balanced-armature"
-    - "dynamic"
+  - balanced-armature
+  - dynamic
   impedanceOhms: 11
   sensitivityDbMw: 107
   freqResponseHz:
     min: 10
     max: 20000
   cableTermination:
-    - "3.5mm"
+  - 3.5mm
   detachableCable: true
   cableLengthM: null
   microphone: false
   foldable: false
   ipxRating: null
   bluetoothCodecs: null
-  anc: "passive"
+  anc: passive
   batteryLifeHours: null
   soundSignature: null
   awards: null
-  driverConfigBucket: "hybrid"
-  driverConfigDetail: "1DD+3BA"
+  driverConfigBucket: hybrid
+  driverConfigDetail: 1DD+3BA
 source_urls:
-  - "https://www.64audio.com/products/u4s"
-  - "https://audio46.com/products/64-audio-u4s-universal-in-ear-monitor"
-  - "https://headphones.com/blogs/buying-guides/the-best-in-ear-monitors-iems-to-start-2025"
-verified_at: "2026-09-14"
-data_status: "COMPLETE"
+- https://www.64audio.com/products/u4s
+- https://audio46.com/products/64-audio-u4s-universal-in-ear-monitor
+- https://headphones.com/blogs/buying-guides/the-best-in-ear-monitors-iems-to-start-2025
+verified_at: '2026-09-14'
+data_status: COMPLETE
 ---
 
 ## Verification Notes

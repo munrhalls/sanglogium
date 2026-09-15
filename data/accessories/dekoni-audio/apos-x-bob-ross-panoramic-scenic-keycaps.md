@@ -33,7 +33,7 @@ spec_fields:
   mounting: null
 
 source_urls: 
-  - "https://aposaudio.com/products/apos-x-bob-ross-panoramic-scenic-keycaps"
+  - "https://apos.audio/products/bob-ross-scenic-keycaps"
 verified_at: "2026-09-14"
 data_status: "COMPLETE"
 

@@ -1,0 +1,25 @@
+{
+  "productId": "DZc43yHr6ydfgE7zB45LQY",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "cayin"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dap",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 52900
+  },
+  "backedUpAt": "2026-09-14T10:47:07.849Z"
+}

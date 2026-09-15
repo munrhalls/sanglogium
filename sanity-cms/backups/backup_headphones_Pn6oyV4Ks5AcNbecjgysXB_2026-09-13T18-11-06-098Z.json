@@ -1,0 +1,177 @@
+{
+  "_id": "Pn6oyV4Ks5AcNbecjgysXB",
+  "name": "Audeze LCD-X Headphones | 2024 Creator's Edition",
+  "before": {
+    "acousticDesign": [
+      "open-back"
+    ],
+    "anc": "none",
+    "backDesign": "closed",
+    "batteryLifeHours": {
+      "ancOff": null,
+      "ancOn": null
+    },
+    "brand": [
+      "audeze"
+    ],
+    "cableLengthM": 1.9,
+    "cableTermination": [
+      "4-pin-xlr",
+      "6.35mm"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "detachableCable": true,
+    "driverType": [
+      "planar-magnetic"
+    ],
+    "foldable": false,
+    "freqResponseHz": {
+      "max": 50000,
+      "min": 10
+    },
+    "impedanceOhms": 20,
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "portable": false,
+    "price": 119900,
+    "productCategory": [
+      "over-ear"
+    ],
+    "requiresAmplifier": false,
+    "sensitivityDbMw": 103,
+    "soundSignature": "Warm",
+    "sourcing": [
+      {
+        "field": "productCategory",
+        "quote": "Style Over-ear, open-back",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/lcd-x"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "Style Over-ear, open-back",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/lcd-x"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "Style Over-ear, open-back",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/lcd-x"
+      },
+      {
+        "field": "connectivity",
+        "quote": "(analog cable only; no wireless mode anywhere in the specification table)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/lcd-x"
+      },
+      {
+        "field": "portable",
+        "quote": "Weight 612g / Recommended power level >250mW / Cable 1.9m (6.2ft) length 4-pin XLR — full-size open-back studio headphone, no case/travel language (absence-based FLAG)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/lcd-x"
+      },
+      {
+        "field": "soundSignature",
+        "quote": "\"Warm neutral\" / \"Tonally, a massive improvement over the previous version(s) though with the usual pitfalls of the Audeze house sound.\" (entry \"Audeze LCD-X (2021)\", Tone Grade C, Technical Grade A+)",
+        "sourcedAt": "2026-09-13",
+        "tier": "editorial",
+        "url": "https://crinacle.com/rankings/headphones/"
+      },
+      {
+        "field": "impedanceOhms",
+        "quote": "Impedance 20 ohms",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.audeze.com/products/lcd-x"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "Sensitivity 103 dB/1mW (at Drum Reference Point)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.audeze.com/products/lcd-x"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "Frequency response 10Hz - 50kHz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.audeze.com/products/lcd-x"
+      },
+      {
+        "field": "microphone",
+        "quote": "(no microphone in the LCD-X specification block, the package-contents list — \"Single-ended cable (1/4in connector)\" / \"Balanced cable (4-pin XLR connector)**\" / \"1/4in to 1/8in mini-adapter\" — or the manufacturer product page/spec table; boolean feature-absence rule)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://cdn.shopify.com/s/files/1/3013/1908/files/LCD_UserGuide_FULL_WEB_160222.pdf"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "Cable 1.9m (6.2ft) length 4-pin XLR with Single ended 1/4\" (6.3mm) adapter",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/lcd-x"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "Look for the (L) and (R) indicators on the cable ends and match them to the headphone's (L) and (R) inputs ... To remove the connector press down on the small black (L) and red (R) button and gently remove the connector",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://cdn.shopify.com/s/files/1/3013/1908/files/LCD_UserGuide_FULL_WEB_160222.pdf"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "Cable 1.9m (6.2ft) length 4-pin XLR with Single ended 1/4\" (6.3mm) adapter",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.audeze.com/products/lcd-x"
+      },
+      {
+        "field": "foldable",
+        "quote": "(only headband-block adjustment described; no folding/collapsing hinge anywhere in the structure or comfort sections — boolean feature-absence rule)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://cdn.shopify.com/s/files/1/3013/1908/files/LCD_UserGuide_FULL_WEB_160222.pdf"
+      },
+      {
+        "field": "anc",
+        "quote": "Style Over-ear, open-back / (no noise-cancelling feature listed; wired-only — derived from the already-cited acousticDesign + connectivity)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/lcd-x"
+      },
+      {
+        "field": "batteryLifeHours",
+        "quote": "(no battery anywhere on the page or manual — wired-only passive headphone, so both ancOn and ancOff are null)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://www.audeze.com/products/lcd-x"
+      },
+      {
+        "field": "driverType",
+        "quote": "Transducer type Planar Magnetic / Diaphragm type Ultra-Thin Uniforce™ / Transducer size 106 mm",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://www.audeze.com/products/lcd-x"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-13T18:11:06.098Z"
+}

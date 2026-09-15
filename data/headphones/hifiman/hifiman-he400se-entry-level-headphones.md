@@ -1,47 +1,47 @@
 ---
-product_id: "Pn6oyV4Ks5AcNbecjgqHro"
-product_slug: "hifiman-he400se-entry-level-headphones"
-brand: "HiFiMan"
-name: "HE400se"
-slice: "headphones"
+product_id: Pn6oyV4Ks5AcNbecjgqHro
+product_slug: hifiman-he400se-entry-level-headphones
+brand: HiFiMan
+name: Hifiman HE400se Entry-Level Headphones
+slice: headphones
 spec_fields:
   productCategory:
-    - "over-ear"
+  - over-ear
   wearingStyle:
-    - "over-ear"
+  - over-ear
   acousticDesign:
-    - "open-back"
-  connectivity: "wired"
+  - open-back
+  connectivity: wired
   portable: false
   driverType:
-    - "planar-magnetic"
+  - planar-magnetic
   impedanceOhms: 32
   sensitivityDbMw: 91
   freqResponseHz:
     min: 20
     max: 20000
   cableTermination:
-    - "3.5mm"
-    - "6.35mm"
+  - 3.5mm
+  - 6.35mm
   detachableCable: true
   cableLengthM: 1.5
   microphone: false
   foldable: false
   ipxRating: null
   bluetoothCodecs: null
-  anc: "none"
+  anc: none
   batteryLifeHours: null
-  soundSignature: "Neutral"
+  soundSignature: Neutral
   awards: null
   fitType: null
   driverConfigBucket: null
 source_urls:
-  - "https://hifiman.com/products/detail/310"
-  - "https://hifiman.com/attachments/file/20250211/20250211035004_73539.pdf"
-  - "https://www.rtings.com/headphones/reviews/hifiman/he400se"
-  - "https://crinacle.com/rankings/headphones/real/"
-verified_at: "2026-09-14"
-data_status: "COMPLETE"
+- https://hifiman.com/products/detail/310
+- https://hifiman.com/attachments/file/20250211/20250211035004_73539.pdf
+- https://www.rtings.com/headphones/reviews/hifiman/he400se
+- https://crinacle.com/rankings/headphones/real/
+verified_at: '2026-09-14'
+data_status: COMPLETE
 ---
 
 ## Verification Notes

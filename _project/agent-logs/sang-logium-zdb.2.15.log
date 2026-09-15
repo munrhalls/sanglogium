@@ -1,0 +1,28 @@
+Following the issue's execution and sourcing protocols. I’ll show `sang-logium-zdb.2.15`, gather cited product data, write one markdown per product, then close it. Starting now.Done. Wrote 7 Eversolo product files under `data/audio-electronics/eversolo/` and closed `sang-logium-zdb.2.15`.
+
+Files created:
+- `eversolo-dmp-a8-all-in-one-streamer-dac-preamp.md`
+- `eversolo-dmp-a8-network-streamer-with-built-in-dac.md`
+- `eversolo-dmp-a8-all-in-one-streamer-dac-amp-preamp.md`
+- `eversolo-dmp-a6-master-edition-streamer-and-dac.md`
+- `eversolo-dmp-a6-streamer-and-dac-gen-2.md`
+- `eversolo-dmp-a6-streamer-and-dac.md`
+- `eversolo-dac-z8-desktop-dac-and-amp.md`
+
+Each file includes YAML frontmatter with all `spec_fields`, cited `source_urls`, `verified_at`, `data_status`, plus verification and conflict notes.
+
+Sourcing highlights:
+- DMP-A8 family: `https://eversolo.eu/dmp-a8/` + official DMP-A8 user manual.
+- DMP-A6 Gen 2: `https://eversolo.eu/dmp-a6-gen-2/`.
+- DMP-A6 Master Edition: `https://eversolo.eu/dmp-a6-master-edition/` (live page is Gen 2; noted).
+- DMP-A6 base: `https://music.eversolo.com/dmp/instruction/EVERSOLO-DMP-A6-User-Manual-v1.0.pdf`.
+- DAC-Z8: `https://eversolo.eu/dac-z8/` + official DAC-Z8 user manual.
+
+Recorded conflicts include DMP-A8 MQA (not found in current EU spec/manual vs. catalogue claim), DMP-A6 Master op-amp (OPA1642 vs. OPA1612), and Bluetooth codec discrepancies between EU spec tables and user manuals where applicable.
+
+Targeted git status:
+```text
+?? data/audio-electronics/eversolo/
+```
+
+No other beads issues or brands were touched. `bd close sang-logium-zdb.2.15` returned success.

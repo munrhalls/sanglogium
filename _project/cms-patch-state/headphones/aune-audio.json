@@ -1,0 +1,28 @@
+{
+  "issueId": "sang-logium-zdb.1.13",
+  "slice": "headphones",
+  "brand": "Aune Audio",
+  "patchedAt": "2026-09-14T10:45:04.252Z",
+  "ok": 3,
+  "fail": 0,
+  "results": [
+    {
+      "file": "aune-ar5000-mk2-headphones.md",
+      "productId": "MrEMtYwMtrFDGWmRnTCj6Z",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcw9Iu"
+    },
+    {
+      "file": "aune-ar9000-headphones.md",
+      "productId": "MrEMtYwMtrFDGWmRnTCSk2",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eONfZ"
+    },
+    {
+      "file": "aune-audio-ar5000-headphones.md",
+      "productId": "Pn6oyV4Ks5AcNbecjmBwzI",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcw9Pv"
+    }
+  ]
+}

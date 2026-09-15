@@ -1,0 +1,16 @@
+{
+  "issueId": "sang-logium-zdb.3.23",
+  "slice": "accessories",
+  "brand": "JL Audio",
+  "patchedAt": "2026-09-14T10:48:54.012Z",
+  "ok": 1,
+  "fail": 0,
+  "results": [
+    {
+      "file": "jl-audio-2-channel-core-rca-male-to-rca-male-cables-6-ft-1-82m-2-pack.md",
+      "productId": "Y7l1IhzX2fnyiano58Giz2",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwh8j"
+    }
+  ]
+}

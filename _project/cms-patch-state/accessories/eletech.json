@@ -1,0 +1,64 @@
+{
+  "issueId": "sang-logium-zdb.3.18",
+  "slice": "accessories",
+  "brand": "Eletech",
+  "patchedAt": "2026-09-14T10:49:16.299Z",
+  "ok": 9,
+  "fail": 0,
+  "results": [
+    {
+      "file": "eletech-aristotle-copper-iem-upgrade-cable.md",
+      "productId": "MrEMtYwMtrFDGWmRnH5lm0",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03ePsEv"
+    },
+    {
+      "file": "eletech-azrael-copper-upgrade-cable-for-iems.md",
+      "productId": "PHPYj28HJdPDHAaIB6cZHo",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03ePsbL"
+    },
+    {
+      "file": "eletech-baroque-airpods-pro-luxury-hifi-eartips-for-iems.md",
+      "productId": "PHPYj28HJdPDHAaIB6GKjY",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbfuB"
+    },
+    {
+      "file": "eletech-baroque-luxury-hifi-eartips-for-iems.md",
+      "productId": "MrEMtYwMtrFDGWmRnGT3k3",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwiQF"
+    },
+    {
+      "file": "eletech-baroque-stage-luxury-hifi-eartips-for-iems.md",
+      "productId": "hrPfqTtkIIoluttvs2PJ0R",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwiXG"
+    },
+    {
+      "file": "eletech-baroque-tws-luxury-hifi-eartips-for-tws.md",
+      "productId": "MrEMtYwMtrFDGWmRnGSzbV",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwilI"
+    },
+    {
+      "file": "eletech-cassiel-silver-plated-copper-upgrade-cable-for-iems.md",
+      "productId": "Pn6oyV4Ks5AcNbecjbXdBN",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435Cxbg5e"
+    },
+    {
+      "file": "eletech-elegy-to-lucia-limited-flagship-iem-cable.md",
+      "productId": "Pn6oyV4Ks5AcNbecjbXdtC",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwiue"
+    },
+    {
+      "file": "eletech-euclid-silver-iem-upgrade-cable.md",
+      "productId": "Pn6oyV4Ks5AcNbecjbXftv",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbgFq"
+    }
+  ]
+}

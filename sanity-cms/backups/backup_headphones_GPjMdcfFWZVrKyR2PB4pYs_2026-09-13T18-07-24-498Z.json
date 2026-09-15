@@ -1,0 +1,26 @@
+{
+  "_id": "GPjMdcfFWZVrKyR2PB4pYs",
+  "name": "Meze Audio 109 PRO Dynamic Open-Back Headphone (Apos Certified)",
+  "before": {
+    "backDesign": "open",
+    "brand": [
+      "meze-audio"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 59900,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T18:07:24.498Z"
+}

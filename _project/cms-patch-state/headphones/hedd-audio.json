@@ -1,0 +1,22 @@
+{
+  "issueId": "sang-logium-zdb.1.20",
+  "slice": "headphones",
+  "brand": "HEDD Audio",
+  "patchedAt": "2026-09-14T10:44:39.968Z",
+  "ok": 2,
+  "fail": 0,
+  "results": [
+    {
+      "file": "hedd-audio-heddphone-d1.md",
+      "productId": "Pn6oyV4Ks5AcNbecjgzEw1",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eNpbf"
+    },
+    {
+      "file": "hedd-audio-heddphone-two.md",
+      "productId": "PHPYj28HJdPDHAaIBAK0fG",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcw2Tb"
+    }
+  ]
+}

@@ -1,0 +1,164 @@
+{
+  "productId": "ZuUKzmkqDyQwdcwhxl99sR",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "anc": "anc",
+    "batteryLifeHours": {
+      "ancOff": 12,
+      "ancOn": 8
+    },
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "LDAC",
+      "LC3"
+    ],
+    "brand": [
+      "sony"
+    ],
+    "cableTermination": [
+      "usb-c"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "true-wireless",
+    "detachableCable": false,
+    "driverType": [
+      "dynamic"
+    ],
+    "fitType": "universal",
+    "foldable": false,
+    "freqResponseHz": {
+      "max": 40000,
+      "min": 20
+    },
+    "inStock": true,
+    "ipxRating": "IPX4",
+    "microphone": true,
+    "portable": true,
+    "price": 29800,
+    "requiresAmplifier": false,
+    "soundSignature": "Warm",
+    "sourcing": [
+      {
+        "field": "wearingStyle",
+        "quote": "Mass : Approx. 5.9 g x 2 (0.21 oz x 2) (Headset (including earbud tips (M)))",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2963/v1/en/contents/TP1000783926.html"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "Wireless Noise Canceling Stereo Headset WF-1000XM5 — sealed in-ear noise-cancelling earbud; no open-back/semi-open variant or vent is described anywhere in the help guide",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2963/v1/en/contents/TP1000783926.html"
+      },
+      {
+        "field": "fitType",
+        "quote": "Mass : Approx. 5.9 g x 2 (Headset (including earbud tips (M))) — removable earbud tips in S/M/L/SS/LL sizes, i.e. a universal-fit IEM; no custom/CIEM mould is offered",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2963/v1/en/contents/TP1000783926.html"
+      },
+      {
+        "field": "connectivity",
+        "quote": "Communication system : Bluetooth Specification version 5.3",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2963/v1/en/contents/TP1000783926.html"
+      },
+      {
+        "field": "portable",
+        "quote": "Charging time : Approx. 1.5 hours (Headset) Approx. 2 hours (Charging case)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2963/v1/en/contents/TP1000783926.html"
+      },
+      {
+        "field": "driverType",
+        "quote": "Model: YY2963 — single dynamic driver; no balanced-armature, planar-magnetic, electrostatic or AMT driver is stated or implied anywhere in the help guide",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2963/v1/en/contents/TP1000783926.html"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "Transmission range (A2DP) : 20 Hz - 20 000 Hz (Sampling frequency 44.1 kHz) 20 Hz - 40 000 Hz (Sampling frequency LDAC 96 kHz, 990 kbps)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://helpguide.sony.net/mdr/2963/v1/en/contents/TP1000783926.html"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "DC 5 V: When charged using USB / Charging time : Approx. 1.5 hours (Headset) — the only wired interface is the USB Type-C charging port; no analogue headphone input exists",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2963/v1/en/contents/TP1000783926.html"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "Power source : DC 3.85 V: Built-in lithium-ion rechargeable battery — true-wireless earbud with no detachable audio cable; only the charge cable detaches",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2963/v1/en/contents/TP1000783926.html"
+      },
+      {
+        "field": "microphone",
+        "quote": "Making a call / Receiving a call / Functions for a phone call — microphones (left, right) are listed under Location and function of parts and the HFP profile is supported",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2963/v1/en/contents/TP1000783926.html"
+      },
+      {
+        "field": "foldable",
+        "quote": "(no folding hinge or fold step appears anywhere in the help guide — an earbud stores in the charging case rather than folding; boolean feature-absence rule applied)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2963/v1/en/contents/TP1000783926.html"
+      },
+      {
+        "field": "ipxRating",
+        "quote": "Do not splash water forcibly into the sound output parts, air holes, or microphone parts of the headset units. / Do not place the headset in water or use it in a humid place such as a bathroom.",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2963/v1/en/contents/TP1000783366.html"
+      },
+      {
+        "field": "bluetoothCodecs",
+        "quote": "Supported Codec : SBC AAC LDAC LC3",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://helpguide.sony.net/mdr/2963/v1/en/contents/TP1000783926.html"
+      },
+      {
+        "field": "anc",
+        "quote": "AAC Noise canceling function: ON Max. 8 hours",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2963/v1/en/contents/TP1000781965.html"
+      },
+      {
+        "field": "batteryLifeHours",
+        "quote": "AAC Noise canceling function: ON Max. 8 hours / AAC OFF Max. 12 hours",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://helpguide.sony.net/mdr/2963/v1/en/contents/TP1000781965.html"
+      },
+      {
+        "field": "soundSignature",
+        "quote": "Sound Signature = Warm; Bass Amount = Emphasized (4 dB); Treble Amount = Balanced (-1 dB); \"Their frequency response deviates minimally from their warm sound profile.\"",
+        "sourcedAt": "2026-09-13",
+        "tier": "editorial",
+        "url": "https://www.rtings.com/headphones/reviews/sony/wf-1000xm5-truly-wireless"
+      }
+    ],
+    "wearingStyle": [
+      "in-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-14T21:50:23.434Z"
+}

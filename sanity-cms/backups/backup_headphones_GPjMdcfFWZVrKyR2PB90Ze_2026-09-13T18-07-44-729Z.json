@@ -1,0 +1,24 @@
+{
+  "_id": "GPjMdcfFWZVrKyR2PB90Ze",
+  "name": "Moondrop May Dynamic Driver + Planar Magnetic Driver IEM (In-Ear Monitor)",
+  "before": {
+    "brand": [
+      "moondrop"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "mmcx"
+    ],
+    "driverType": "planar-magnetic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 7499,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-13T18:07:44.729Z"
+}

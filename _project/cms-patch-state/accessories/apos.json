@@ -1,0 +1,28 @@
+{
+  "issueId": "sang-logium-zdb.3.3",
+  "slice": "accessories",
+  "brand": "Apos",
+  "patchedAt": "2026-09-14T10:50:26.866Z",
+  "ok": 3,
+  "fail": 0,
+  "results": [
+    {
+      "file": "apos-x-satchelz-leather-clamshell-iem-carry-case.md",
+      "productId": "xMEqvkRBbdrlJXyFG8duy3",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eQBh5"
+    },
+    {
+      "file": "cables-for-rock-lobster-iem.md",
+      "productId": "GPjMdcfFWZVrKyR2PB7nEI",
+      "ok": true,
+      "rev": "7P2D00ai8KUgrZgiFcwr3o"
+    },
+    {
+      "file": "magia-modular-cable-kit.md",
+      "productId": "GPjMdcfFWZVrKyR2PB7o7q",
+      "ok": true,
+      "rev": "Ch755lAE5GLsZ435CxbkDl"
+    }
+  ]
+}

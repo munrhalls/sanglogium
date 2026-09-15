@@ -1,0 +1,22 @@
+{
+  "issueId": "sang-logium-zdb.2.19",
+  "slice": "audio-electronics",
+  "brand": "Fosi Audio",
+  "patchedAt": "2026-09-14T10:46:53.419Z",
+  "ok": 2,
+  "fail": 0,
+  "results": [
+    {
+      "file": "fosi-audio-k5-pro-gaming-dac-headphone-amplifier.md",
+      "productId": "GPjMdcfFWZVrKyR2PB6xuA",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOoQb"
+    },
+    {
+      "file": "fosi-audio-q4-mini-stereo-gaming-dac-headphone-amplifier-audio.md",
+      "productId": "GPjMdcfFWZVrKyR2PB6tb0",
+      "ok": true,
+      "rev": "MzerujO1CrL1dzm03eOoiX"
+    }
+  ]
+}

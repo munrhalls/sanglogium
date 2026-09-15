@@ -1,0 +1,25 @@
+{
+  "_id": "moXlkADK7m1DHgGwWwzkms",
+  "name": "JBL Tour Pro 2 True Wireless In-Ear Headphones",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "jbl"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wireless",
+    "connector": [
+      "mmcx"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 24995,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-13T18:12:15.241Z"
+}

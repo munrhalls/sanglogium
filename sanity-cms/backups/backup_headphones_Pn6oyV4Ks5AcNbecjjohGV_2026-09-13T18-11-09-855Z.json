@@ -1,0 +1,24 @@
+{
+  "_id": "Pn6oyV4Ks5AcNbecjjohGV",
+  "name": "64 Audio Nio In-Ear Headphones",
+  "before": {
+    "brand": [
+      "64-audio"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "connector": [
+      "mmcx"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "noiseCancelling": false,
+    "price": 169900,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-13T18:11:09.856Z"
+}

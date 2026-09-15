@@ -1,0 +1,25 @@
+{
+  "productId": "dLGDVDmEEI2lV8CArIgbTY",
+  "before": {
+    "backDesign": "closed",
+    "brand": [
+      "sony"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wireless",
+    "connector": [
+      "3.5mm",
+      "6.35mm"
+    ],
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": true,
+    "noiseCancelling": true,
+    "price": 9800,
+    "requiresAmplifier": false,
+    "wearingStyle": "over-ear"
+  },
+  "backedUpAt": "2026-09-13T13:38:18.389Z"
+}
