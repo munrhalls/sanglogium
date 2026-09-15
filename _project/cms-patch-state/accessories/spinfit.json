@@ -1,0 +1,70 @@
+{
+  "issueId": "sang-logium-zdb.3.35",
+  "slice": "accessories",
+  "brand": "Spinfit",
+  "patchedAt": "2026-09-15T08:27:11.467Z",
+  "ok": 10,
+  "fail": 0,
+  "results": [
+    {
+      "file": "spinfit-aurafine-premium-silicone-eartips-for-airpods-pro-3.md",
+      "productId": "PHPYj28HJdPDHAaIB6Gc3i",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbrDxEg"
+    },
+    {
+      "file": "spinfit-cp1025-premium-eartips-for-tws-airpods.md",
+      "productId": "Pn6oyV4Ks5AcNbecjb0rnH",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbrDxY2"
+    },
+    {
+      "file": "spinfit-cp145-premium-eartips-2-pairs.md",
+      "productId": "PHPYj28HJdPDHAaIB6GkTu",
+      "ok": true,
+      "rev": "NkN8nnIwsmPRUCwKdMN1Rr"
+    },
+    {
+      "file": "spinfit-cp155-premium-eartips-2-pairs.md",
+      "productId": "MrEMtYwMtrFDGWmRnGTPsC",
+      "ok": true,
+      "rev": "NkN8nnIwsmPRUCwKdMN1Zj"
+    },
+    {
+      "file": "spinfit-cp240-premium-double-flange-eartips-1-pair.md",
+      "productId": "Pn6oyV4Ks5AcNbecjb0zLq",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUf1fEN"
+    },
+    {
+      "file": "spinfit-cp800-premium-eartips-2-pairs.md",
+      "productId": "MrEMtYwMtrFDGWmRnGTr95",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUf1fWR"
+    },
+    {
+      "file": "spinfit-neo-premium-silicone-eartips.md",
+      "productId": "Pn6oyV4Ks5AcNbecjb12LF",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbrDy4I"
+    },
+    {
+      "file": "spinfit-omni-premium-universal-silicone-eartips.md",
+      "productId": "PHPYj28HJdPDHAaIB6GtX2",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUf1hYt"
+    },
+    {
+      "file": "spinfit-superfine-premium-silicone-eartips-for-airpods-pro.md",
+      "productId": "PHPYj28HJdPDHAaIB6GvLG",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUf1hnL"
+    },
+    {
+      "file": "spinfit-w1-premium-silicone-eartips.md",
+      "productId": "PHPYj28HJdPDHAaIB6Gyt8",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUf1i1n"
+    }
+  ]
+}

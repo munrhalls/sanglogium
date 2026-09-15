@@ -1,0 +1,28 @@
+{
+  "issueId": "sang-logium-zdb.1.35",
+  "slice": "headphones",
+  "brand": "Warwick Acoustics",
+  "patchedAt": "2026-09-15T08:25:57.405Z",
+  "ok": 3,
+  "fail": 0,
+  "results": [
+    {
+      "file": "aperio-goldensound-edition.md",
+      "productId": "MrEMtYwMtrFDGWmRnTDN2e",
+      "ok": true,
+      "rev": "NkN8nnIwsmPRUCwKdMMxWq"
+    },
+    {
+      "file": "warwick-acoustics-bravura-headphones-open-box.md",
+      "productId": "PHPYj28HJdPDHAaIBDrPvO",
+      "ok": true,
+      "rev": "NkN8nnIwsmPRUCwKdMMxam"
+    },
+    {
+      "file": "warwick-acoustics-bravura-headphones.md",
+      "productId": "MrEMtYwMtrFDGWmRnTDDVo",
+      "ok": true,
+      "rev": "NkN8nnIwsmPRUCwKdMMxgg"
+    }
+  ]
+}

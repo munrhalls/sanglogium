@@ -1,0 +1,202 @@
+{
+  "issueId": "sang-logium-zdb.2.48",
+  "slice": "audio-electronics",
+  "brand": "iFi Audio",
+  "patchedAt": "2026-09-15T08:26:58.710Z",
+  "ok": 32,
+  "fail": 0,
+  "results": [
+    {
+      "file": "ifi-audio-diablo-x-dac-and-headphone-amplifier.md",
+      "productId": "k27n1AQuIbSr5iozG1vD4O",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUf1YIR"
+    },
+    {
+      "file": "ifi-audio-go-bar-kensei-portable-hi-res-usb-dac-and-preamp.md",
+      "productId": "ZuUKzmkqDyQwdcwhxlJlJu",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUf1Ye7"
+    },
+    {
+      "file": "ifi-audio-go-bar-portable-usb-dac-headphone-amplifier.md",
+      "productId": "Pn6oyV4Ks5AcNbecjgsvqe",
+      "ok": true,
+      "rev": "NkN8nnIwsmPRUCwKdMMzOw"
+    },
+    {
+      "file": "ifi-audio-go-blu-portable-bluetooth-dac-amp.md",
+      "productId": "PHPYj28HJdPDHAaIBACuKc",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUf1ZAd"
+    },
+    {
+      "file": "ifi-audio-go-blu-portable-bluetooth-dac-headphone-amp.md",
+      "productId": "dLGDVDmEEI2lV8CArAcaQ0",
+      "ok": true,
+      "rev": "NkN8nnIwsmPRUCwKdMMzWo"
+    },
+    {
+      "file": "ifi-audio-go-link-max-portable-amp-dac.md",
+      "productId": "dLGDVDmEEI2lV8CArAcay4",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUf1ZP5"
+    },
+    {
+      "file": "ifi-audio-go-pod-max-portable-iem-bluetooth-dac-amp-unit-only.md",
+      "productId": "DZc43yHr6ydfgE7zB3znRV",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbrDs5K"
+    },
+    {
+      "file": "ifi-audio-hip-dac-3-portable-dac-amp.md",
+      "productId": "MrEMtYwMtrFDGWmRnN7WCP",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbrDsOg"
+    },
+    {
+      "file": "ifi-audio-hip-dac-3-portable-usb-dac-amplifier.md",
+      "productId": "Y7l1IhzX2fnyiano4jO6bg",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbrDslG"
+    },
+    {
+      "file": "ifi-audio-hip-dac2-portable-usb-dac-and-headphone-amp-with-soft-protective-case.md",
+      "productId": "ZuUKzmkqDyQwdcwhxl77C3",
+      "ok": true,
+      "rev": "NkN8nnIwsmPRUCwKdMMzrT"
+    },
+    {
+      "file": "ifi-audio-hip-dac2-portable-usb-dac-and-headphone-amp.md",
+      "productId": "dLGDVDmEEI2lV8CArAcd7E",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbrDt7q"
+    },
+    {
+      "file": "ifi-audio-ican-phantom-analog-headphone-amplifier.md",
+      "productId": "ZuUKzmkqDyQwdcwhxl7Puy",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbrDtKk"
+    },
+    {
+      "file": "ifi-audio-ican-phantom-headphone-amplifier-and-energizer-open-box.md",
+      "productId": "PHPYj28HJdPDHAaIBCgrcW",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUf1ayd"
+    },
+    {
+      "file": "ifi-audio-ican-phantom-headphone-amplifier-and-energizer.md",
+      "productId": "MrEMtYwMtrFDGWmRnRJcsz",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUf1bD5"
+    },
+    {
+      "file": "ifi-audio-idsd-neo.md",
+      "productId": "PHPYj28HJdPDHAaIBCgFZU",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbrDte6"
+    },
+    {
+      "file": "ifi-audio-idsd-valkyrie-portable-amp-dac.md",
+      "productId": "Y7l1IhzX2fnyiano4ipzcN",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbrDtuE"
+    },
+    {
+      "file": "ifi-audio-neo-idsd-desktop-usb-dac-headphone-amp-with-bluetooth.md",
+      "productId": "dLGDVDmEEI2lV8CArAcfBk",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUf1bfz"
+    },
+    {
+      "file": "ifi-audio-pro-ican-signature-headphone-amplifier.md",
+      "productId": "moXlkADK7m1DHgGwWwET3O",
+      "ok": true,
+      "rev": "NkN8nnIwsmPRUCwKdMN0Ly"
+    },
+    {
+      "file": "ifi-audio-pro-idsd-signature-dac-amp-streamer.md",
+      "productId": "MrEMtYwMtrFDGWmRnN8QYu",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUf1cG7"
+    },
+    {
+      "file": "ifi-audio-uno.md",
+      "productId": "n10eAegrGspodtsQvy4D2G",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbrDvG6"
+    },
+    {
+      "file": "ifi-audio-xdsd-gryphon-portable-bluetooth-dac-&-headphone-amplifier.md",
+      "productId": "k27n1AQuIbSr5iozG1vDSz",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbrDvPm"
+    },
+    {
+      "file": "ifi-audio-zen-air-can-high-power-analogue-headphone-amplifier.md",
+      "productId": "dLGDVDmEEI2lV8CArAcpNU",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUf1cmd"
+    },
+    {
+      "file": "ifi-audio-zen-can-3-analog-headphone-amplifier.md",
+      "productId": "Y7l1IhzX2fnyiano4iq6jp",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbrDvfu"
+    },
+    {
+      "file": "ifi-audio-zen-dac-3-balanced-headphone-amp-dac.md",
+      "productId": "Y7l1IhzX2fnyiano4jOIfY",
+      "ok": true,
+      "rev": "NkN8nnIwsmPRUCwKdMN0Wn"
+    },
+    {
+      "file": "ifi-audio-zen-stream---open-box.md",
+      "productId": "k27n1AQuIbSr5iozG2iztx",
+      "ok": true,
+      "rev": "NkN8nnIwsmPRUCwKdMN0Zk"
+    },
+    {
+      "file": "ifi-audio-zen-stream.md",
+      "productId": "k27n1AQuIbSr5iozG2ixn6",
+      "ok": true,
+      "rev": "NkN8nnIwsmPRUCwKdMN0ch"
+    },
+    {
+      "file": "ifi-go-bar-kensei.md",
+      "productId": "DZc43yHr6ydfgE7zB46CG4",
+      "ok": true,
+      "rev": "NkN8nnIwsmPRUCwKdMN0ib"
+    },
+    {
+      "file": "ifi-go-blu-air-portable-hi-res-bluetooth-dac-headphone-amp.md",
+      "productId": "xMEqvkRBbdrlJXyFG8eFfR",
+      "ok": true,
+      "rev": "NkN8nnIwsmPRUCwKdMN0nW"
+    },
+    {
+      "file": "ifi-hip-dac-3.md",
+      "productId": "xMEqvkRBbdrlJXyFG8lEY3",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbrDwYk"
+    },
+    {
+      "file": "ifi-neo-stream.md",
+      "productId": "GPjMdcfFWZVrKyR2PB5NeM",
+      "ok": true,
+      "rev": "NkN8nnIwsmPRUCwKdMN0zK"
+    },
+    {
+      "file": "ifi-zen-blue-3-bluetooth-desktop-dac.md",
+      "productId": "xMEqvkRBbdrlJXyFG8eD0B",
+      "ok": true,
+      "rev": "NkN8nnIwsmPRUCwKdMN15E"
+    },
+    {
+      "file": "ifi-zen-can-3.md",
+      "productId": "xMEqvkRBbdrlJXyFG8huOv",
+      "ok": true,
+      "rev": "NkN8nnIwsmPRUCwKdMN19A"
+    }
+  ]
+}

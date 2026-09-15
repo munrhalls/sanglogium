@@ -1,0 +1,148 @@
+{
+  "issueId": "sang-logium-zdb.1.10",
+  "slice": "headphones",
+  "brand": "Sennheiser",
+  "patchedAt": "2026-09-15T08:26:23.063Z",
+  "ok": 23,
+  "fail": 0,
+  "results": [
+    {
+      "file": "sennheiser-accentum-true-wireless-noise-cancelling-earbuds-black.md",
+      "productId": "ZuUKzmkqDyQwdcwhxl96BU",
+      "ok": true,
+      "rev": "NkN8nnIwsmPRUCwKdMMxkc"
+    },
+    {
+      "file": "sennheiser-ambeo-max-soundbar.md",
+      "productId": "moXlkADK7m1DHgGwWwzgHO",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbrDlNC"
+    },
+    {
+      "file": "sennheiser-hd-450bt-headphones.md",
+      "productId": "k27n1AQuIbSr5iozG2ivGf",
+      "ok": true,
+      "rev": "NkN8nnIwsmPRUCwKdMMxpX"
+    },
+    {
+      "file": "sennheiser-hd-560s-open-back-reference-headphones.md",
+      "productId": "xMEqvkRBbdrlJXyFG8l0p9",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUf1UKl"
+    },
+    {
+      "file": "sennheiser-hd-560s.md",
+      "productId": "k27n1AQuIbSr5iozFz7EE4",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbrDnLm"
+    },
+    {
+      "file": "sennheiser-hd-569-headphones.md",
+      "productId": "n10eAegrGspodtsQvneN6x",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUf1UyV"
+    },
+    {
+      "file": "sennheiser-hd-600-headphones.md",
+      "productId": "Pn6oyV4Ks5AcNbecjgrju8",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbrDnbu"
+    },
+    {
+      "file": "sennheiser-hd-600-open-back-reference-headphones.md",
+      "productId": "xMEqvkRBbdrlJXyFG8erD7",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbrDnvG"
+    },
+    {
+      "file": "sennheiser-hd-620s-headphones.md",
+      "productId": "k27n1AQuIbSr5iozFz7GSn",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUf1VV1"
+    },
+    {
+      "file": "sennheiser-hd-650-headphones.md",
+      "productId": "Pn6oyV4Ks5AcNbecjgrpEU",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUf1VuJ"
+    },
+    {
+      "file": "sennheiser-hd-660s2-dynamic-open-back-headphones.md",
+      "productId": "xMEqvkRBbdrlJXyFG8euj7",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUf1WQp"
+    },
+    {
+      "file": "sennheiser-hd-660s2-headphones.md",
+      "productId": "IVp0Ya0qCxU3IKB1jVguzD",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbrDoXy"
+    },
+    {
+      "file": "sennheiser-hd-800s-dynamic-open-back-headphones.md",
+      "productId": "GPjMdcfFWZVrKyR2PB57uI",
+      "ok": true,
+      "rev": "NkN8nnIwsmPRUCwKdMMyfg"
+    },
+    {
+      "file": "sennheiser-hd-820---open-box.md",
+      "productId": "n10eAegrGspodtsQvneQzx",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUf1Wtj"
+    },
+    {
+      "file": "sennheiser-hd-820-headphones.md",
+      "productId": "moXlkADK7m1DHgGwWtbklW",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbrDp10"
+    },
+    {
+      "file": "sennheiser-hdb-630-bluetooth-anc-headphones.md",
+      "productId": "GPjMdcfFWZVrKyR2PB7yn8",
+      "ok": true,
+      "rev": "NkN8nnIwsmPRUCwKdMMynY"
+    },
+    {
+      "file": "sennheiser-ie-200-in-ear-headphones.md",
+      "productId": "PHPYj28HJdPDHAaIBCEl18",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbrDpKM"
+    },
+    {
+      "file": "sennheiser-ie-600-in-ear-headphones.md",
+      "productId": "MrEMtYwMtrFDGWmRnQWhwn",
+      "ok": true,
+      "rev": "NkN8nnIwsmPRUCwKdMMyqV"
+    },
+    {
+      "file": "sennheiser-ie-900-in-ear-headphones.md",
+      "productId": "Pn6oyV4Ks5AcNbecjjpRo3",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUf1XMd"
+    },
+    {
+      "file": "sennheiser-momentum-5-wireless-over-ear-anc-headphones.md",
+      "productId": "DZc43yHr6ydfgE7zB43tcm",
+      "ok": true,
+      "rev": "NkN8nnIwsmPRUCwKdMMyxO"
+    },
+    {
+      "file": "sennheiser-momentum-sport-true-wireless-earbuds-with-adaptive-noise-cancellation-black.md",
+      "productId": "ZuUKzmkqDyQwdcwhxwQHiY",
+      "ok": true,
+      "rev": "meSxs4Qz3A09YiBBbrDqTK"
+    },
+    {
+      "file": "sennheiser-momentum-true-wireless-4.md",
+      "productId": "Pn6oyV4Ks5AcNbecjjpYAS",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUf1XiJ"
+    },
+    {
+      "file": "sennheiser-rs-175-headphones.md",
+      "productId": "MrEMtYwMtrFDGWmRnQTeER",
+      "ok": true,
+      "rev": "zDJarnvq2QjrVWJbUf1Xt9"
+    }
+  ]
+}
