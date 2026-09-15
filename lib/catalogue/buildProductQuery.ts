@@ -84,12 +84,16 @@ function addMultiOrEnumPredicate(parts: string[], params: Record<string, unknown
   const field = facet.field;
   const paramName = `${fieldName(facet)}Param`;
 
+  // sang-logium-3rv.5 -- URL values are lower-cased by selectedValues() and
+  // Sanity product data is canonical mixed case (e.g. 'SBC', 'aptX HD',
+  // 'V-Shaped', 'IPX4'). Compare with lower() on the product side so the
+  // two vocabularies can diverge in case without silently zeroing matches.
   if (facet.type === 'multi' || isPlaceholderVocab(facet.valueVocab)) {
     // Multi-select / array field: any overlap with the selected values.
-    parts.push(`count(${field}[@ in $${paramName}]) > 0`);
+    parts.push(`count(coalesce(${field}, [])[lower(@) in $${paramName}]) > 0`);
   } else {
     // Enum / string field: each product holds one value, so OR is `in`.
-    parts.push(`${field} in $${paramName}`);
+    parts.push(`coalesce(lower(${field}), '') in $${paramName}`);
   }
   params[paramName] = values;
 }
@@ -129,6 +133,25 @@ export function buildProductQuery(state: ProductQueryState): ProductQuery {
       const active = state[facet.urlParam as keyof ProductQueryState];
       if (active === true) {
         parts.push(`${facet.field} == true`);
+      }
+      continue;
+    }
+
+    // sang-logium-3rv.5 -- additive: mirrors the minPrice/maxPrice predicates
+    // above (S2), generalized to any range-type facet instead of only price.
+    // Does not touch the price branch above it.
+    if (facet.type === 'range') {
+      const minVal = state[`${facet.urlParam}Min` as keyof ProductQueryState];
+      const maxVal = state[`${facet.urlParam}Max` as keyof ProductQueryState];
+      if (typeof minVal === 'number') {
+        const paramName = `${facet.urlParam}MinParam`;
+        parts.push(`${facet.field} >= $${paramName}`);
+        params[paramName] = minVal;
+      }
+      if (typeof maxVal === 'number') {
+        const paramName = `${facet.urlParam}MaxParam`;
+        parts.push(`${facet.field} <= $${paramName}`);
+        params[paramName] = maxVal;
       }
       continue;
     }

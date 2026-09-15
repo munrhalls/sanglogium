@@ -1,12 +1,24 @@
 'use client';
 
 import React from 'react';
+import { usePathname } from 'next/navigation';
 import type { IconType } from 'react-icons';
 import { FaTag, FaHeadphones, FaWaveSquare, FaLayerGroup, FaBluetooth, FaMicrochip } from 'react-icons/fa6';
 import { FACET_GROUPS, facetsForGroup, type FacetDef, type FacetGroupId } from '@/app/(test)/poc/filter-sort/headphones/lib/facetConfig';
 import { useClearAllFilters } from '@/app/(test)/poc/filter-sort/headphones/lib/useFilterParam';
 import type { FacetOptionCount } from '@/app/(test)/poc/filter-sort/headphones/lib/filterProducts';
+import type { RangeBounds } from '@/sanity-cms/lib/products/getFilterFacets';
 import { CheckboxGroup, BooleanToggle, RangeControl, PriceControl, RatingControl } from './FilterControls';
+
+// Re-export the shared header/style constants so sibling filter modules can
+// import them from a stable barrel instead of the component they decorate.
+export {
+  filterSectionHeaderRow,
+  filterSectionHeaderLabel,
+  filterSectionHeaderAction,
+  filterStateActive,
+  filterStateInactive,
+} from './FilterControls';
 
 /**
  * Desktop filter sidebar shell — the two-region layout the acceptance tests
@@ -41,6 +53,11 @@ interface FilterSidebarProps {
   booleanCounts: Record<string, number>;
   brandLabels: Record<string, string>;
   priceBounds: { min: number; max: number };
+  /** Optional: app/(store)/products/page.tsx (all-products) does not compute
+   *  per-category range bounds and omits this prop entirely -- RangeControl
+   *  falls back to facetConfig.ts's hardcoded min/max in that case, same as
+   *  before sang-logium-3rv.5. */
+  rangeBounds?: Record<string, RangeBounds>;
 }
 
 const PANEL_SCROLL_ID = 'poc-filter-panel-scroll';
@@ -61,12 +78,13 @@ function scrollToGroup(groupId: FacetGroupId) {
 
 function RailTile({ id, label }: { id: FacetGroupId; label: string }) {
   const Icon = GROUP_ICONS[id];
+  const title = label || id;
   return (
     <button
       type="button"
       onClick={() => scrollToGroup(id)}
-      aria-label={`Jump to ${label} filters`}
-      title={`Jump to ${label} filters`}
+      aria-label={`Jump to ${title} filters`}
+      title={`Jump to ${title} filters`}
       data-testid={`poc-rail-tile-${id}`}
       className="flex items-center justify-center rounded-md py-3.5 transition-colors hover:bg-accent-500/10 focus-visible:outline focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-accent-500"
     >
@@ -83,7 +101,7 @@ function PanelSection({
 }: {
   id: FacetGroupId;
   label: string;
-  note: string;
+  note?: string;
   children: React.ReactNode;
 }) {
   return (
@@ -92,10 +110,12 @@ function PanelSection({
       data-testid={`poc-panel-${id}`}
       className="flex flex-col gap-6 border-b border-border-secondary p-6 last:border-b-0"
     >
-      <div className="flex flex-col gap-1">
-        <span className="type-overline">{label}</span>
-        <p className="type-caption text-text-caption">{note}</p>
-      </div>
+      {(label || note) && (
+        <div className="flex flex-col gap-1">
+          {label && <span className="type-overline">{label}</span>}
+          {note && <p className="type-caption text-text-caption">{note}</p>}
+        </div>
+      )}
       {children}
     </div>
   );
@@ -106,6 +126,7 @@ function renderFacet(
   checkboxCounts: Record<string, FacetOptionCount[]>,
   booleanCounts: Record<string, number>,
   brandLabels: Record<string, string>,
+  rangeBounds: Record<string, RangeBounds>,
 ) {
   if (facet.control === 'checkbox') {
     return (
@@ -120,11 +141,13 @@ function renderFacet(
   if (facet.control === 'boolean') {
     return <BooleanToggle key={facet.id} facet={facet} count={booleanCounts[facet.id]} />;
   }
-  return <RangeControl key={facet.id} facet={facet} />;
+  return <RangeControl key={facet.id} facet={facet} bounds={rangeBounds[facet.id]} />;
 }
 
-export function FilterSidebar({ checkboxCounts, booleanCounts, brandLabels, priceBounds }: FilterSidebarProps) {
+export function FilterSidebar({ checkboxCounts, booleanCounts, brandLabels, priceBounds, rangeBounds = {} }: FilterSidebarProps) {
   const clearAll = useClearAllFilters();
+  const pathname = usePathname();
+  const hideCustomerRating = pathname === '/products/headphones';
 
   return (
     <aside
@@ -161,13 +184,8 @@ export function FilterSidebar({ checkboxCounts, booleanCounts, brandLabels, pric
             {FACET_GROUPS.map((group) => (
               <PanelSection key={group.id} id={group.id} label={group.label} note={group.note}>
                 {group.id === 'commercial' && <PriceControl min={priceBounds.min} max={priceBounds.max} />}
-                {group.id === 'commercial' && <RatingControl />}
-                {group.id === 'wireless' && (
-                  <p className="type-caption text-text-caption">
-                    These apply to wireless headphones — a wired-only pick simply won&rsquo;t match once one is set.
-                  </p>
-                )}
-                {facetsForGroup(group.id).map((facet) => renderFacet(facet, checkboxCounts, booleanCounts, brandLabels))}
+                {group.id === 'commercial' && !hideCustomerRating && <RatingControl />}
+                {facetsForGroup(group.id).map((facet) => renderFacet(facet, checkboxCounts, booleanCounts, brandLabels, rangeBounds))}
               </PanelSection>
             ))}
           </div>

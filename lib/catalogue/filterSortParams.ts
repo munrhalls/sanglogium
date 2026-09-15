@@ -73,6 +73,7 @@ import {
   createSerializer,
   parseAsArrayOf,
   parseAsBoolean,
+  parseAsFloat,
   parseAsInteger,
   parseAsString,
   parseAsStringLiteral,
@@ -113,10 +114,20 @@ function parserForFacet(facet: FilterFacet) {
   return parseAsArrayOf(parseAsString).withDefault([]);
 }
 
-// Build one parser per non-price filter facet, keyed by its urlParam.
-const facetParsers: Record<string, ReturnType<typeof parserForFacet>> = {};
+// Build parsers for every non-price filter facet, keyed by its urlParam.
+// Range facets (excluding price, handled as the bespoke minPrice/maxPrice
+// pair above) get two float parsers each -- `${urlParam}Min`/`${urlParam}Max`
+// -- mirroring the minPrice/maxPrice shape: no default, absent means
+// unbounded. sang-logium-3rv.5 (additive: the boolean/enum/multi branch below
+// is unchanged from before this facet type existed).
+const facetParsers: Record<string, any> = {};
 for (const facet of FILTER_FACETS) {
   if (facet.urlParam === "price") continue; // price is minPrice / maxPrice
+  if (facet.type === "range") {
+    facetParsers[`${facet.urlParam}Min`] = parseAsFloat;
+    facetParsers[`${facet.urlParam}Max`] = parseAsFloat;
+    continue;
+  }
   facetParsers[facet.urlParam] = parserForFacet(facet);
 }
 

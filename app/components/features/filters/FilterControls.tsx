@@ -3,7 +3,16 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Checkbox } from '@/app/components/ui/Checkbox';
 import { ProgressiveFilterOptionList } from '@/app/components/features/filters/ProgressiveFilterOptionList';
-import { FilterSliderSection, DualRangeSlider, ResetButton } from '@/app/components/features/filters/PriceRangeSlider';
+import {
+  FilterSliderSection,
+  DualRangeSlider,
+  ResetButton,
+  filterSectionHeaderRow,
+  filterSectionHeaderLabel,
+  filterSectionHeaderAction,
+  filterStateActive,
+  filterStateInactive,
+} from '@/app/components/features/filters/PriceRangeSlider';
 import { humanizeFacetValue } from '@/lib/catalogue/humanizeFacetValue';
 import { formatPriceMajor } from '@/lib/utils/price';
 import { useFilterParam } from '@/app/(test)/poc/filter-sort/headphones/lib/useFilterParam';
@@ -11,19 +20,10 @@ import type { CheckboxFacet, BooleanFacet, RangeFacet } from '@/app/(test)/poc/f
 import type { FacetOptionCount } from '@/app/(test)/poc/filter-sort/headphones/lib/filterProducts';
 
 /**
- * Shared filter-section header primitives — same visual contract as
- * app/components/features/filters/FilterSidebar.tsx's exported constants,
- * copied rather than imported so this POC has zero import coupling to the
- * production filter components (ProgressiveFilterOptionList is the one
- * exception: it takes its options/toggle callbacks as plain props and only
- * imports 2 string constants from production FilterSidebar internally, so
- * reusing it verbatim carries no data/hook coupling).
+ * Re-export the shared filter-section header primitives defined in
+ * PriceRangeSlider.tsx so FilterSidebar.tsx can expose them in one place.
  */
-export const filterSectionHeaderRow = 'flex w-full items-center justify-between gap-2';
-export const filterSectionHeaderLabel = 'type-overline transition-colors';
-export const filterSectionHeaderAction = 'type-caption transition-colors';
-export const filterStateActive = 'text-text-accent';
-export const filterStateInactive = 'text-text-caption opacity-50';
+export { filterSectionHeaderRow, filterSectionHeaderLabel, filterSectionHeaderAction, filterStateActive, filterStateInactive };
 
 type SetArray = (next: string[] | ((prev: string[]) => string[])) => void;
 
@@ -40,7 +40,13 @@ export function CheckboxGroup({
   const [selected, setSelected] = useFilterParam(facet.id) as [string[], SetArray];
   const selectedArray = selected ?? [];
 
-  const countFor = (value: string) => counts.find((c) => c.value === value)?.count ?? 0;
+  // facet.options (this POC's hand-typed slugs) and counts[].value
+  // (facetMap.ts's independently hand-typed valueVocab) are two separately
+  // authored vocabularies for the same concept and routinely differ only in
+  // case/format (e.g. 'sbc' vs 'SBC', 'ipx4' vs 'IPX4') — compare
+  // case-insensitively so that drift doesn't silently zero out a real count.
+  const countFor = (value: string) =>
+    counts.find((c) => c.value.toLowerCase() === value.toLowerCase())?.count ?? 0;
   const labelFor = (value: string) => brandLabels?.[value] ?? humanizeFacetValue(value);
 
   const staticOptions = facet.options === 'derived' ? null : facet.options;
@@ -129,7 +135,21 @@ function formatRangeValue(value: number, unit: string): string {
 
 const RANGE_WRITE_DEBOUNCE_MS = 300;
 
-export function RangeControl({ facet }: { facet: RangeFacet }) {
+export function RangeControl({
+  facet,
+  bounds,
+}: {
+  facet: RangeFacet;
+  /** Real category span from getFilterFacets; falls back to facet's
+   *  hardcoded min/max (sang-logium-3rv.5) when a bound is missing --
+   *  e.g. zero matching products, or a route this prop was not threaded to
+   *  yet -- same "always have a usable slider" fallback PriceControl gets
+   *  from resolvePriceBounds' DEFAULT_PRICE_CEILING. */
+  bounds?: { min: number | null; max: number | null };
+}) {
+  const boundsMin = bounds?.min ?? facet.min;
+  const boundsMax = bounds?.max ?? facet.max;
+
   const [minParam, setMinParam] = useFilterParam(`${facet.id}Min`, { history: 'replace' }) as [
     number | null,
     (v: number | null) => void,
@@ -139,8 +159,8 @@ export function RangeControl({ facet }: { facet: RangeFacet }) {
     (v: number | null) => void,
   ];
 
-  const urlMin = minParam ?? facet.min;
-  const urlMax = maxParam ?? facet.max;
+  const urlMin = minParam ?? boundsMin;
+  const urlMax = maxParam ?? boundsMax;
 
   const [localMin, setLocalMin] = useState(urlMin);
   const [localMax, setLocalMax] = useState(urlMax);
@@ -162,16 +182,16 @@ export function RangeControl({ facet }: { facet: RangeFacet }) {
   const commitMin = useCallback(
     (next: number) => {
       clearTimer();
-      timer.current = setTimeout(() => setMinParam(next <= facet.min ? null : next), RANGE_WRITE_DEBOUNCE_MS);
+      timer.current = setTimeout(() => setMinParam(next <= boundsMin ? null : next), RANGE_WRITE_DEBOUNCE_MS);
     },
-    [clearTimer, setMinParam, facet.min],
+    [clearTimer, setMinParam, boundsMin],
   );
   const commitMax = useCallback(
     (next: number) => {
       clearTimer();
-      timer.current = setTimeout(() => setMaxParam(next >= facet.max ? null : next), RANGE_WRITE_DEBOUNCE_MS);
+      timer.current = setTimeout(() => setMaxParam(next >= boundsMax ? null : next), RANGE_WRITE_DEBOUNCE_MS);
     },
-    [clearTimer, setMaxParam, facet.max],
+    [clearTimer, setMaxParam, boundsMax],
   );
 
   const active = minParam != null || maxParam != null;
@@ -183,15 +203,15 @@ export function RangeControl({ facet }: { facet: RangeFacet }) {
       resetLabel={`Reset ${facet.label} filter`}
       onReset={() => {
         clearTimer();
-        setLocalMin(facet.min);
-        setLocalMax(facet.max);
+        setLocalMin(boundsMin);
+        setLocalMax(boundsMax);
         setMinParam(null);
         setMaxParam(null);
       }}
     >
       <DualRangeSlider
-        min={facet.min}
-        max={facet.max}
+        min={boundsMin}
+        max={boundsMax}
         minValue={localMin}
         maxValue={localMax}
         minLabel={formatRangeValue(localMin, facet.unit)}

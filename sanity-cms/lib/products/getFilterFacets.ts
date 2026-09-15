@@ -26,6 +26,13 @@ export interface FacetOption {
 export type FacetGroups = Record<string, FacetOption[]>;
 export type BooleanFacetCounts = Record<string, number>;
 
+/** Full category span (unnarrowed by active filters) for a range facet, in
+ *  its raw field unit -- mirrors getCategoryPriceRange's price treatment. */
+export interface RangeBounds {
+  min: number | null;
+  max: number | null;
+}
+
 export interface CatalogueFacets {
   /** Map of urlParam -> checkbox options (multi / enum / brand). */
   groups: FacetGroups;
@@ -33,6 +40,8 @@ export interface CatalogueFacets {
   booleans: BooleanFacetCounts;
   /** Map of brand slug -> label for the brand facet. */
   brandLabels: Record<string, string>;
+  /** Map of urlParam -> real min/max for range facets (sang-logium-3rv.5). */
+  ranges: Record<string, RangeBounds>;
 }
 
 export interface GetFilterFacetsOptions {
@@ -76,6 +85,23 @@ function valuesForFacet(p: RawProduct, facet: FilterFacet): string[] {
   return [String(raw).toLowerCase()];
 }
 
+/**
+ * Numeric value for a range facet, following its (possibly nested) `field`
+ * path -- e.g. 'freqResponseHz.min' or 'batteryLifeHours.ancOff' -- unlike
+ * `valuesForFacet` above, which only reads a top-level filterAttributes key.
+ */
+function numericValueForRangeFacet(p: RawProduct, facet: FilterFacet): number | null {
+  const path = facet.field.replace('filterAttributes.', '').split('.');
+  let cur: unknown = p.filterAttributes;
+  for (const key of path) {
+    if (cur == null || typeof cur !== 'object') return null;
+    cur = (cur as Record<string, unknown>)[key];
+  }
+  if (cur == null) return null;
+  const num = Number(cur);
+  return Number.isFinite(num) ? num : null;
+}
+
 function productMatchesState(
   p: RawProduct,
   state: ProductQueryState,
@@ -104,6 +130,20 @@ function productMatchesState(
         const ok = valuesForFacet(p, facet).some((v) => v === 'true');
         if (!ok) return false;
       }
+      continue;
+    }
+
+    // sang-logium-3rv.5 -- additive: an active range-facet selection must
+    // narrow every OTHER facet's disjunctive count too, same as price/inStock
+    // already do above. Mirrors buildProductQuery.ts's GROQ range predicate,
+    // in-memory.
+    if (facet.type === 'range') {
+      const minVal = state[`${facet.urlParam}Min` as keyof ProductQueryState];
+      const maxVal = state[`${facet.urlParam}Max` as keyof ProductQueryState];
+      if (typeof minVal !== 'number' && typeof maxVal !== 'number') continue;
+      const num = numericValueForRangeFacet(p, facet);
+      if (typeof minVal === 'number' && (num == null || num < minVal)) return false;
+      if (typeof maxVal === 'number' && (num == null || num > maxVal)) return false;
       continue;
     }
 
@@ -153,7 +193,7 @@ const getFilterFacetsFn = async ({
   keys,
   state,
 }: GetFilterFacetsOptions): Promise<CatalogueFacets> => {
-  if (!keys.length) return { groups: {}, booleans: {}, brandLabels: {} };
+  if (!keys.length) return { groups: {}, booleans: {}, brandLabels: {}, ranges: {} };
 
   const query = groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0] | order(_id asc) [0...1000] {
     _id,
@@ -169,7 +209,7 @@ const getFilterFacetsFn = async ({
     products = (await sanityFetch<RawProduct[]>({ query, params: { keys } })) ?? [];
   } catch (error) {
     console.error(`[getFilterFacets] Failed for ${keys.length} keys:`, error);
-    return { groups: {}, booleans: {}, brandLabels: {} };
+    return { groups: {}, booleans: {}, brandLabels: {}, ranges: {} };
   }
 
   const groups: FacetGroups = {};
@@ -178,6 +218,9 @@ const getFilterFacetsFn = async ({
 
   for (const facet of FILTER_FACETS) {
     if (facet.urlParam === 'price') continue;
+    // Range facets get their own bounds computation below, not checkbox
+    // options built from their ['min','max'] valueVocab placeholder.
+    if (facet.type === 'range') continue;
 
     const baseProducts = products.filter((p) => productMatchesState(p, state, facet.urlParam));
 
@@ -241,7 +284,23 @@ const getFilterFacetsFn = async ({
     groups[facet.urlParam] = options;
   }
 
-  return { groups, booleans, brandLabels };
+  // Range facet bounds: FULL category span, unnarrowed by active filters --
+  // same "max handle can always drag back up" reasoning as
+  // getCategoryPriceRange, reusing the one product fetch already above
+  // instead of a second query. sang-logium-3rv.5.
+  const ranges: Record<string, RangeBounds> = {};
+  for (const facet of FILTER_FACETS) {
+    if (facet.type !== 'range' || facet.urlParam === 'price') continue;
+    const values = products
+      .map((p) => numericValueForRangeFacet(p, facet))
+      .filter((v): v is number => v != null);
+    ranges[facet.urlParam] = {
+      min: values.length ? Math.min(...values) : null,
+      max: values.length ? Math.max(...values) : null,
+    };
+  }
+
+  return { groups, booleans, brandLabels, ranges };
 };
 
 export const getFilterFacets = withCache(getFilterFacetsFn) as (

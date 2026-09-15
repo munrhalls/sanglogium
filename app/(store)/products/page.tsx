@@ -56,6 +56,8 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
     if (key === 'sort') return value !== SORT_DEFAULT;
     if (key === 'minPrice' || key === 'maxPrice') return value != null;
     if (typeof value === 'boolean') return value;
+    // Range-facet Min/Max keys parse to a number or null (sang-logium-3rv.5).
+    if (typeof value === 'number') return true;
     if (Array.isArray(value)) return value.length > 0;
     return false;
   });

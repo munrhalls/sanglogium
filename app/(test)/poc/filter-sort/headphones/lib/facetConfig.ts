@@ -16,40 +16,30 @@ export type FacetGroupId = 'commercial' | 'type' | 'sound' | 'material' | 'wirel
 export interface FacetGroup {
   id: FacetGroupId;
   label: string;
-  note: string;
+  note?: string;
 }
 
 // Order + copy straight from docs/filters-sort/should-be.md's group headers.
 export const FACET_GROUPS: FacetGroup[] = [
   {
     id: 'commercial',
-    label: 'Commercial',
-    note: 'Not about the product — about whether, and how, to buy it.',
-  },
-  {
-    id: 'type',
-    label: 'Type',
-    note: "External, experiential identity — how a shopper would describe what kind of headphone this is, independent of how it's built inside or how it sounds.",
+    label: '',
   },
   {
     id: 'sound',
     label: 'Sound Properties',
-    note: "Everything that's a fact about how it sounds — perceptual tuning and the measured acoustics that predict it, together.",
   },
   {
     id: 'material',
     label: 'Material Factors',
-    note: 'Internal, but tangible — physical construction and hardware-presence facts.',
   },
   {
     id: 'wireless',
     label: 'Wireless',
-    note: 'Domain-gated — exists only once Connectivity is Wireless.',
   },
   {
     id: 'technical',
     label: 'Technical Specs',
-    note: 'Internal and categorical — engineering architecture.',
   },
 ];
 
@@ -99,15 +89,17 @@ const opts = (pairs: [string, string][]): Option[] => pairs.map(([value, label])
 export const FACETS: FacetDef[] = [
   // ── Commercial ──────────────────────────────────────────────────────────
   { id: 'brand', group: 'commercial', label: 'Brand', itemNo: 1, status: 'C', control: 'checkbox', field: 'brand', options: 'derived' },
-  { id: 'awards', group: 'commercial', label: 'Awards / Recognition', itemNo: 4, status: 'R', control: 'checkbox', field: 'awards', options: opts([['award-winner', 'Award Winner'], ['editors-choice', "Editor's Choice"]]) },
-  { id: 'condition', group: 'commercial', label: 'Condition / Stock Type', itemNo: 5, status: 'C', control: 'checkbox', field: 'condition', options: opts([['new', 'New'], ['open-box', 'Open-Box'], ['b-stock', 'Certified / Sealed B-Stock'], ['demo', 'Demo Unit'], ['used', 'Used / Trade-In'], ['refurbished', 'Refurbished']]) },
-  { id: 'inStockOnly', group: 'commercial', label: 'In Stock Only', itemNo: 6, status: 'C', control: 'boolean', field: 'inStockOnly' },
-  { id: 'deals', group: 'commercial', label: 'Deals / Discount', itemNo: 7, status: 'C', control: 'checkbox', field: 'deals', options: opts([['on-sale', 'On Sale'], ['clearance', 'Clearance']]) },
+  // Awards / Recognition removed from the headphones sidebar per UX cleanup.
+  { id: 'condition', group: 'commercial', label: 'Condition', itemNo: 5, status: 'C', control: 'checkbox', field: 'condition', options: opts([['new', 'New'], ['open-box', 'Open-Box'], ['b-stock', 'Certified / Sealed B-Stock'], ['refurbished', 'Refurbished']]) },
+  // In-stock filtering is now surfaced only inside the Availability group.
+  { id: 'deals', group: 'commercial', label: 'Discount', itemNo: 7, status: 'C', control: 'checkbox', field: 'deals', options: opts([['on-sale', 'On Sale'], ['clearance', 'Clearance']]) },
+  { id: 'availability', group: 'commercial', label: 'Availability', itemNo: 9, status: 'C', control: 'checkbox', field: 'availability', options: opts([['in-stock', 'In Stock'], ['preorder', 'Preorder']]) },
   { id: 'newArrival', group: 'commercial', label: 'New Arrivals', itemNo: 8, status: 'C', control: 'boolean', field: 'isNewArrival' },
-  { id: 'availability', group: 'commercial', label: 'Preorder / Interest Check Status', itemNo: 9, status: 'C', control: 'checkbox', field: 'availability', options: opts([['in-stock', 'In Stock'], ['preorder', 'Preorder'], ['interest-check', 'Interest Check / Group Buy']]) },
 
   // ── Type ─────────────────────────────────────────────────────────────────
-  { id: 'productCategory', group: 'type', label: 'Product Category / Type', itemNo: 10, status: 'C', control: 'checkbox', field: 'productCategory', options: opts([['over-ear', 'Over-Ear'], ['iem', 'In-Ear Monitor'], ['on-ear', 'On-Ear'], ['true-wireless', 'True Wireless']]) },
+  // No closed options.list in the schema either -- derive from real data,
+  // same treatment as brand and awards (sang-logium-3rv.5).
+  { id: 'productCategory', group: 'type', label: 'Product Category / Type', itemNo: 10, status: 'C', control: 'checkbox', field: 'productCategory', options: 'derived' },
   { id: 'wearingStyle', group: 'type', label: 'Wearing Style / Form Factor', itemNo: 11, status: 'C', control: 'checkbox', field: 'wearingStyle', options: opts([['over-ear', 'Over-Ear'], ['on-ear', 'On-Ear'], ['in-ear', 'In-Ear']]) },
   { id: 'acousticDesign', group: 'type', label: 'Acoustic Design', itemNo: 12, status: 'C', control: 'checkbox', field: 'acousticDesign', options: opts([['open-back', 'Open-Back'], ['closed-back', 'Closed-Back'], ['semi-open', 'Semi-Open / Hybrid']]) },
   { id: 'fitType', group: 'type', label: 'Fit Type (IEM)', itemNo: 13, status: 'R', control: 'checkbox', field: 'fitType', options: opts([['universal', 'Universal Fit'], ['custom', 'Custom Fit (CIEM)']]) },
@@ -115,32 +107,52 @@ export const FACETS: FacetDef[] = [
   { id: 'portable', group: 'type', label: 'Portable', itemNo: 15, status: 'C', control: 'boolean', field: 'portable' },
 
   // ── Sound Properties ────────────────────────────────────────────────────
-  { id: 'soundSignature', group: 'sound', label: 'Sound Signature / Tonal Preference', itemNo: 16, status: 'R', control: 'checkbox', field: 'soundSignature', options: opts([['neutral', 'Neutral / Reference'], ['warm', 'Warm'], ['bright', 'Bright / Analytical'], ['dark', 'Dark'], ['v-shaped', 'V-Shaped'], ['basshead', 'Basshead'], ['mid-forward', 'Mid-Forward'], ['harman-like', 'Harman-Target-Like']]) },
+  // Values are the exact strings from sanity-cms/schemaTypes/productType.ts's
+  // soundSignature options.list (sang-logium-3rv.5) -- they must match
+  // lib/catalogue/facetMap.ts's valueVocab exactly (case included), not this
+  // POC's own synthetic-dataset SoundSignature type in ./types.ts, which uses
+  // different lowercase slugs for its own unrelated mock-data filtering.
+  { id: 'soundSignature', group: 'sound', label: 'Signature', itemNo: 16, status: 'R', control: 'checkbox', field: 'soundSignature', options: opts([['Neutral', 'Neutral / Reference'], ['Warm', 'Warm'], ['Bright/Analytical', 'Bright / Analytical'], ['Dark', 'Dark'], ['V-Shaped', 'V-Shaped'], ['Basshead', 'Bass'], ['Mid-Forward', 'Mid-Forward']]) },
   { id: 'impedance', group: 'sound', label: 'Impedance', itemNo: 17, status: 'R', control: 'range', field: 'impedanceOhms', min: 8, max: 600, step: 1, unit: 'Ω' },
   { id: 'sensitivity', group: 'sound', label: 'Sensitivity', itemNo: 18, status: 'R', control: 'range', field: 'sensitivityDbMw', min: 85, max: 125, step: 1, unit: 'dB/mW' },
   // Simplification of "frequency response range" (a per-product min–max pair) to
   // its single most-compared dimension, bass extension — see the enrichment
   // script for the full rationale (also flagged in should-be.md's own evidence
   // notes: printed FR min/max is a weak spec next to a measured graph).
-  { id: 'bassExtension', group: 'sound', label: 'Frequency Response — Bass Extension', itemNo: 19, status: 'R', control: 'range', field: 'bassExtensionHz', min: 5, max: 60, step: 1, unit: 'Hz' },
+  { id: 'bassExtension', group: 'sound', label: 'Frequency Response', itemNo: 19, status: 'R', control: 'range', field: 'bassExtensionHz', min: 5, max: 60, step: 1, unit: 'Hz' },
   { id: 'requiresAmplifier', group: 'sound', label: 'Requires Amplifier', itemNo: 20, status: 'C', control: 'boolean', field: 'requiresAmplifier' },
 
   // ── Material Factors ────────────────────────────────────────────────────
-  { id: 'microphone', group: 'material', label: 'Microphone / Call Support', itemNo: 21, status: 'C', control: 'boolean', field: 'microphone' },
-  { id: 'cableTermination', group: 'material', label: 'Cable / Termination Connector', itemNo: 22, status: 'C', control: 'checkbox', field: 'cableTermination', options: opts([['3.5mm', '3.5mm SE'], ['2.5mm-balanced', '2.5mm Balanced'], ['4.4mm-balanced', '4.4mm Balanced'], ['4-pin-xlr', '4-Pin XLR'], ['6.35mm', '6.35mm (1/4")']]) },
-  { id: 'detachableCable', group: 'material', label: 'Detachable / Upgradeable Cable', itemNo: 23, status: 'C', control: 'boolean', field: 'detachableCable' },
+  { id: 'microphone', group: 'material', label: 'Microphone', itemNo: 21, status: 'C', control: 'boolean', field: 'microphone' },
+  // Real schema options.list (productType.ts:385) has 9 entries; 4 were
+  // missing, so real products with those terminations had no selectable
+  // checkbox (sang-logium-3rv.5).
+  { id: 'cableTermination', group: 'material', label: 'Cable', itemNo: 22, status: 'C', control: 'checkbox', field: 'cableTermination', options: opts([['3.5mm', '3.5mm SE'], ['2.5mm-balanced', '2.5mm Balanced'], ['4.4mm-balanced', '4.4mm Balanced'], ['4-pin-xlr', '4-Pin XLR'], ['6.35mm', '6.35mm (1/4 inch)'], ['usb-c', 'USB-C'], ['mmcx', 'MMCX'], ['2-pin', '2-Pin'], ['fixed-cable', 'Fixed Cable']]) },
+  { id: 'detachableCable', group: 'material', label: 'Detachable Cable', itemNo: 23, status: 'C', control: 'boolean', field: 'detachableCable' },
   { id: 'cableLength', group: 'material', label: 'Cable Length', itemNo: 24, status: 'R', control: 'range', field: 'cableLengthM', min: 0.5, max: 3.5, step: 0.1, unit: 'm' },
   { id: 'foldable', group: 'material', label: 'Foldable', itemNo: 25, status: 'C', control: 'boolean', field: 'foldable' },
-  { id: 'ipx', group: 'material', label: 'Water / Sweat Resistance (IPX)', itemNo: 26, status: 'R', control: 'checkbox', field: 'ipxRating', options: opts([['none', 'None'], ['ipx4', 'IPX4'], ['ipx5', 'IPX5'], ['ipx7', 'IPX7'], ['ip67', 'IP67']]) },
+  // Real schema options.list is none/IPX2/IPX4/IPX5/IPX7/IPX8 (productType.ts:407)
+  // -- was missing IPX2, lowercased IPX4/5/7, and had a phantom 'ip67' that
+  // does not exist in the schema at all (sang-logium-3rv.5).
+  { id: 'ipx', group: 'material', label: 'Water Resistance (IPX)', itemNo: 26, status: 'R', control: 'checkbox', field: 'ipxRating', options: opts([['none', 'None'], ['IPX2', 'IPX2'], ['IPX4', 'IPX4'], ['IPX5', 'IPX5'], ['IPX7', 'IPX7'], ['IPX8', 'IPX8']]) },
 
   // ── Wireless (domain-gated on connectivity !== 'wired') ────────────────
-  { id: 'codec', group: 'wireless', label: 'Bluetooth Codec', itemNo: 27, status: 'C', control: 'checkbox', field: 'bluetoothCodecs', options: opts([['sbc', 'SBC'], ['aac', 'AAC'], ['aptx', 'aptX'], ['aptx-hd', 'aptX HD'], ['aptx-adaptive', 'aptX Adaptive'], ['ldac', 'LDAC'], ['lc3', 'LC3']]) },
-  { id: 'anc', group: 'wireless', label: 'Active Noise Cancelling', itemNo: 28, status: 'C', control: 'checkbox', field: 'anc', options: opts([['anc', 'ANC'], ['passive', 'Passive Isolation Only'], ['none', 'None / Open']]) },
+  // Real schema options.list (productType.ts:418) was missing 'aptX LL' and
+  // used space-separated 'aptX HD'/'aptX Adaptive', not hyphenated -- both
+  // silently zeroed those two out even after the countFor case-fix
+  // (sang-logium-3rv.5).
+  { id: 'codec', group: 'wireless', label: 'Bluetooth Codec', itemNo: 27, status: 'C', control: 'checkbox', field: 'bluetoothCodecs', options: opts([['SBC', 'SBC'], ['AAC', 'AAC'], ['aptX', 'aptX'], ['aptX HD', 'aptX HD'], ['aptX Adaptive', 'aptX Adaptive'], ['aptX LL', 'aptX LL'], ['LDAC', 'LDAC'], ['LC3', 'LC3']]) },
+  { id: 'anc', group: 'wireless', label: 'Noise Cancelling', itemNo: 28, status: 'C', control: 'checkbox', field: 'anc', options: opts([['anc', 'Active Noise Cancelling'], ['passive', 'Passive Isolation Only'], ['none', 'None / Open']]) },
   { id: 'batteryLife', group: 'wireless', label: 'Battery Life', itemNo: 29, status: 'R', control: 'range', field: 'batteryLifeHours', min: 0, max: 70, step: 1, unit: 'hrs' },
 
   // ── Technical Specs ─────────────────────────────────────────────────────
   { id: 'driverType', group: 'technical', label: 'Driver Type', itemNo: 30, status: 'C', control: 'checkbox', field: 'driverType', options: opts([['dynamic', 'Dynamic'], ['planar-magnetic', 'Planar Magnetic'], ['electrostatic', 'Electrostatic'], ['balanced-armature', 'Balanced Armature'], ['amt', 'AMT / Ribbon'], ['bone-conduction', 'Bone Conduction'], ['electret', 'Electret'], ['hybrid', 'Hybrid']]) },
-  { id: 'driverConfig', group: 'technical', label: 'Driver Configuration / Count', itemNo: 31, status: 'R', control: 'checkbox', field: 'driverConfigBucket', options: opts([['single-dynamic', 'Single Dynamic'], ['single-ba', 'Single BA'], ['multi-ba', 'Multi-BA'], ['hybrid-config', 'Hybrid'], ['tribrid', 'Tribrid']]) },
+  // Real schema options.list is single-dynamic/single-ba/multi-ba/
+  // hybrid-config/planar/other (productType.ts:472) -- 'tribrid' does not
+  // exist in the schema at all and could never match; 'planar'/'other' were
+  // missing entirely, so those products had no checkbox to select at all
+  // (sang-logium-3rv.5).
+  { id: 'driverConfig', group: 'technical', label: 'Driver Configuration', itemNo: 31, status: 'R', control: 'checkbox', field: 'driverConfigBucket', options: opts([['single-dynamic', 'Single Dynamic'], ['single-ba', 'Single BA'], ['multi-ba', 'Multi-BA'], ['hybrid-config', 'Hybrid'], ['planar', 'Planar'], ['other', 'Other']]) },
 ];
 
 export const facetsForGroup = (group: FacetGroupId): FacetDef[] => FACETS.filter((f) => f.group === group);

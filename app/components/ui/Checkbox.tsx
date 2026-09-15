@@ -56,8 +56,8 @@ export function Checkbox({ name, value, checked, onChange, label, count, disable
         {label}
       </span>
       {count !== undefined && (
-        <span className="ml-auto type-caption text-text-caption" aria-label={`${count} ${count === 1 ? 'product' : 'products'}`}>
-          {count}
+        <span className="ml-auto type-caption text-text-caption tabular-nums" aria-label={`${count} ${count === 1 ? 'product' : 'products'}`}>
+          ({count})
         </span>
       )}
     </label>

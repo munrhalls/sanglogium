@@ -29,6 +29,8 @@ const ACRONYMS = new Set([
   'hd',
   'led',
   'anc',
+  'iem',
+  'ciem',
 ]);
 
 const capitalize = (word: string): string =>

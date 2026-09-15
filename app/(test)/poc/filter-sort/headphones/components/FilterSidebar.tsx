@@ -162,11 +162,6 @@ export function FilterSidebar({ checkboxCounts, booleanCounts, brandLabels, pric
               <PanelSection key={group.id} id={group.id} label={group.label} note={group.note}>
                 {group.id === 'commercial' && <PriceControl min={priceBounds.min} max={priceBounds.max} />}
                 {group.id === 'commercial' && <RatingControl />}
-                {group.id === 'wireless' && (
-                  <p className="type-caption text-text-caption">
-                    These apply to wireless headphones — a wired-only pick simply won&rsquo;t match once one is set.
-                  </p>
-                )}
                 {facetsForGroup(group.id).map((facet) => renderFacet(facet, checkboxCounts, booleanCounts, brandLabels))}
               </PanelSection>
             ))}

@@ -1,12 +1,6 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import {
-  filterSectionHeaderRow,
-  filterSectionHeaderLabel,
-  filterStateActive,
-  filterStateInactive,
-} from "./FilterSidebar";
 import { useFilterParam } from "@/app/hooks/nuqs/useFilterSort";
 import {
   DEFAULT_PRICE_CEILING,
@@ -14,6 +8,17 @@ import {
   PREMIUM_TIER_MIN,
 } from "@/lib/catalogue/priceBounds";
 import { formatPriceMajor } from "@/lib/utils/price";
+
+/**
+ * Shared filter-section header primitives. Defined here (the bottom of the
+ * production filter component chain) so FilterControls.tsx can import them
+ * without creating a circular dependency through FilterSidebar.tsx's re-export.
+ */
+export const filterSectionHeaderRow = 'flex w-full items-center justify-between gap-2';
+export const filterSectionHeaderLabel = 'type-overline transition-colors';
+export const filterSectionHeaderAction = 'type-caption transition-colors';
+export const filterStateActive = 'text-text-accent';
+export const filterStateInactive = 'text-text-caption opacity-50';
 
 /**
  * Price range slider — and the owner of the shared slider pattern.

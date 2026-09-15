@@ -71,6 +71,9 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
     if (key === 'sort') return state.sort !== SORT_DEFAULT;
     if (key === 'minPrice' || key === 'maxPrice') return state[key] != null;
     const value = state[key];
+    // Range-facet Min/Max keys parse to a number or null (sang-logium-3rv.5),
+    // same shape as minPrice/maxPrice above.
+    if (typeof value === 'number') return true;
     if (Array.isArray(value)) return value.length > 0;
     return value === true;
   });
@@ -112,6 +115,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
             booleanCounts={facets.booleans}
             brandLabels={facets.brandLabels}
             priceBounds={{ min: priceBounds.min, max: priceBounds.max }}
+            rangeBounds={facets.ranges}
           />
           <div className="min-w-0 flex-1">
             <ActiveFilterChips brandLabels={facets.brandLabels} />

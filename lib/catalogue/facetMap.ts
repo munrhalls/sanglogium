@@ -89,7 +89,10 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Driver type',
     field: 'filterAttributes.driverType',
     type: 'enum',
-    valueVocab: ['dynamic', 'planar-magnetic', 'electrostatic', 'balanced-armature', 'hybrid'],
+    // Was missing 3 of the schema's 8 real options (sanity-cms/schemaTypes/
+    // productType.ts:452) -- amt/bone-conduction/electret silently never got
+    // counted, regardless of real product data.
+    valueVocab: ['dynamic', 'planar-magnetic', 'electrostatic', 'balanced-armature', 'hybrid', 'amt', 'bone-conduction', 'electret'],
     categories: ['headphones'],
     urlParam: 'driverType',
   },
@@ -97,7 +100,9 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Connectivity',
     field: 'filterAttributes.connectivity',
     type: 'enum',
-    valueVocab: ['wired', 'wireless'],
+    // Was missing 2 of the schema's 4 real options (sanity-cms/schemaTypes/
+    // productType.ts:296) -- true-wireless/hybrid silently never got counted.
+    valueVocab: ['wired', 'wireless', 'true-wireless', 'hybrid'],
     categories: ['headphones'],
     urlParam: 'connectivity',
   },
@@ -140,16 +145,7 @@ export const FILTER_FACETS: FilterFacet[] = [
   // match the `id` keys in app/(test)/poc/filter-sort/headphones/lib/facetConfig.ts —
   // that's the key production's copied-in FilterSidebar/FilterControls use to
   // look up checkboxCounts/booleanCounts, independent of the Sanity field name.
-  {
-    facet: 'Awards / recognition',
-    field: 'filterAttributes.awards',
-    type: 'multi',
-    // No closed options.list in the schema (free-text array) — derive the
-    // real values present in the data, same treatment as brand.
-    valueVocab: ['<award>'],
-    categories: ['headphones'],
-    urlParam: 'awards',
-  },
+  // Awards / recognition facet removed from the headphones sidebar per UX cleanup.
   {
     facet: 'Product category',
     field: 'filterAttributes.productCategory',
@@ -179,7 +175,7 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Sound signature',
     field: 'filterAttributes.soundSignature',
     type: 'enum',
-    valueVocab: ['Neutral', 'Warm', 'Bright/Analytical', 'Dark', 'V-Shaped', 'Basshead', 'Mid-Forward', 'Harman-target-like'],
+    valueVocab: ['Neutral', 'Warm', 'Bright/Analytical', 'Dark', 'V-Shaped', 'Basshead', 'Mid-Forward'],
     categories: ['headphones'],
     urlParam: 'soundSignature',
   },
@@ -222,6 +218,66 @@ export const FILTER_FACETS: FilterFacet[] = [
     valueVocab: ['single-dynamic', 'single-ba', 'multi-ba', 'hybrid-config', 'planar', 'other'],
     categories: ['headphones'],
     urlParam: 'driverConfig',
+  },
+  // sang-logium-3rv.5 -- these 5 were declared in the POC's facetConfig.ts
+  // (RangeFacet) but never added here, so RangeControl rendered a slider with
+  // zero data or query dependency: hardcoded min/max, no filtering effect at
+  // all. urlParam matches the `id` keys in facetConfig.ts, same convention as
+  // every other headphones facet added in sang-logium-3rv.4, because that's
+  // the key RangeControl's useFilterParam(`${facet.id}Min/Max`) already
+  // writes to (it was live, just never read anywhere downstream).
+  {
+    facet: 'Impedance',
+    field: 'filterAttributes.impedanceOhms',
+    type: 'range',
+    valueVocab: ['min', 'max'],
+    categories: ['headphones'],
+    urlParam: 'impedance',
+  },
+  {
+    facet: 'Sensitivity',
+    field: 'filterAttributes.sensitivityDbMw',
+    type: 'range',
+    valueVocab: ['min', 'max'],
+    categories: ['headphones'],
+    urlParam: 'sensitivity',
+  },
+  {
+    facet: 'Frequency response -- bass extension',
+    // freqResponseHz is a {min,max} object (sanity-cms/schemaTypes/
+    // productType.ts:337); there is no stored bassExtensionHz field --
+    // docs/filters-sort/schema-headphones.md:51 documents bass extension as
+    // "MAY be derived from freqResponseHz.min at render time". Lower min =
+    // deeper bass extension, so this filters on the low end of the pair.
+    field: 'filterAttributes.freqResponseHz.min',
+    type: 'range',
+    valueVocab: ['min', 'max'],
+    categories: ['headphones'],
+    urlParam: 'bassExtension',
+  },
+  {
+    facet: 'Cable length',
+    field: 'filterAttributes.cableLengthM',
+    type: 'range',
+    valueVocab: ['min', 'max'],
+    categories: ['headphones'],
+    urlParam: 'cableLength',
+  },
+  {
+    facet: 'Battery life',
+    // batteryLifeHours is {ancOff, ancOn}, both nullable (productType.ts:434).
+    // should-be.md wants both shown separately where available; for the single
+    // range-filter value this facet backs, ancOff (the headline, ANC-off
+    // figure manufacturers usually quote) is the simplification -- same
+    // one-field-of-a-pair treatment as bass extension above. A product with
+    // only ancOn populated will not match this filter; that is a known
+    // narrowing, not a bug, flagged for follow-up if it proves wrong in
+    // practice.
+    field: 'filterAttributes.batteryLifeHours.ancOff',
+    type: 'range',
+    valueVocab: ['min', 'max'],
+    categories: ['headphones'],
+    urlParam: 'batteryLife',
   },
   {
     facet: 'Device type',
