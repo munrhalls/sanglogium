@@ -133,6 +133,96 @@ export const FILTER_FACETS: FilterFacet[] = [
     categories: ['headphones'],
     urlParam: 'requiresAmplifier',
   },
+  // sang-logium-3rv.4 — the following headphones facets were already sourced
+  // in filterAttributes but missing from FILTER_FACETS, so getFilterFacets
+  // never computed their counts and the sidebar showed them greyed out even
+  // though the underlying product data exists. urlParam values below must
+  // match the `id` keys in app/(test)/poc/filter-sort/headphones/lib/facetConfig.ts —
+  // that's the key production's copied-in FilterSidebar/FilterControls use to
+  // look up checkboxCounts/booleanCounts, independent of the Sanity field name.
+  {
+    facet: 'Awards / recognition',
+    field: 'filterAttributes.awards',
+    type: 'multi',
+    // No closed options.list in the schema (free-text array) — derive the
+    // real values present in the data, same treatment as brand.
+    valueVocab: ['<award>'],
+    categories: ['headphones'],
+    urlParam: 'awards',
+  },
+  {
+    facet: 'Product category',
+    field: 'filterAttributes.productCategory',
+    type: 'multi',
+    // No closed options.list in the schema either — derive from data.
+    valueVocab: ['<product-category>'],
+    categories: ['headphones'],
+    urlParam: 'productCategory',
+  },
+  {
+    facet: 'Fit type',
+    field: 'filterAttributes.fitType',
+    type: 'enum',
+    valueVocab: ['universal', 'custom'],
+    categories: ['headphones'],
+    urlParam: 'fitType',
+  },
+  {
+    facet: 'Portable',
+    field: 'filterAttributes.portable',
+    type: 'boolean',
+    valueVocab: ['true', 'false'],
+    categories: ['headphones'],
+    urlParam: 'portable',
+  },
+  {
+    facet: 'Sound signature',
+    field: 'filterAttributes.soundSignature',
+    type: 'enum',
+    valueVocab: ['Neutral', 'Warm', 'Bright/Analytical', 'Dark', 'V-Shaped', 'Basshead', 'Mid-Forward', 'Harman-target-like'],
+    categories: ['headphones'],
+    urlParam: 'soundSignature',
+  },
+  {
+    facet: 'Detachable cable',
+    field: 'filterAttributes.detachableCable',
+    type: 'boolean',
+    valueVocab: ['true', 'false'],
+    categories: ['headphones'],
+    urlParam: 'detachableCable',
+  },
+  {
+    facet: 'Foldable',
+    field: 'filterAttributes.foldable',
+    type: 'boolean',
+    valueVocab: ['true', 'false'],
+    categories: ['headphones'],
+    urlParam: 'foldable',
+  },
+  {
+    facet: 'Water / sweat resistance',
+    field: 'filterAttributes.ipxRating',
+    type: 'enum',
+    valueVocab: ['none', 'IPX2', 'IPX4', 'IPX5', 'IPX7', 'IPX8'],
+    categories: ['headphones'],
+    urlParam: 'ipx',
+  },
+  {
+    facet: 'Bluetooth codec',
+    field: 'filterAttributes.bluetoothCodecs',
+    type: 'multi',
+    valueVocab: ['SBC', 'AAC', 'aptX', 'aptX HD', 'aptX Adaptive', 'aptX LL', 'LDAC', 'LC3'],
+    categories: ['headphones'],
+    urlParam: 'codec',
+  },
+  {
+    facet: 'Driver configuration',
+    field: 'filterAttributes.driverConfigBucket',
+    type: 'enum',
+    valueVocab: ['single-dynamic', 'single-ba', 'multi-ba', 'hybrid-config', 'planar', 'other'],
+    categories: ['headphones'],
+    urlParam: 'driverConfig',
+  },
   {
     facet: 'Device type',
     field: 'filterAttributes.deviceType',

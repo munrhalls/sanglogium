@@ -6,29 +6,33 @@ name: Sennheiser IE 600 In-Ear Headphones
 slice: headphones
 spec_fields:
   productCategory:
-  - iem
+    - iem
   wearingStyle:
-  - in-ear
+    - in-ear
   acousticDesign:
-  - closed-back
+    - closed-back
   connectivity: wired
   portable: true
   driverType:
-  - dynamic
+    - dynamic
   impedanceOhms: 18
   sensitivityDbMw: 118
   cableTermination:
-  - 3.5mm
-  - 4.4mm-balanced
-  - mmcx
+    - 3.5mm
+    - 4.4mm-balanced
+    - mmcx
   detachableCable: true
   microphone: false
   foldable: false
+  freqResponseHz:
+    min: 4
+    max: 46500
 source_urls:
-- https://us.sennheiser-hearing.com/products/ie-600
-verified_at: '2026-09-14'
+  - https://us.sennheiser-hearing.com/products/ie-600
+verified_at: '2026-09-15'
 data_status: COMPLETE
 ---
+
 
 ## Verification Notes
 - **wearingStyle** (marketing-fact): ear canal — https://us.sennheiser-hearing.com/products/ie-600
@@ -43,4 +47,5 @@ data_status: COMPLETE
 - **microphone** (marketing-fact): no microphone / mic system mentioned on product page — https://us.sennheiser-hearing.com/products/ie-600
 - **foldable** (marketing-fact): no foldable / fold-flat design mentioned — https://us.sennheiser-hearing.com/products/ie-600
 - **portable** (marketing-fact): Premium carry case with metal serial no. plate — https://us.sennheiser-hearing.com/products/ie-600
+- **freqResponseHz** (hard-spec): 4 – 46,500 Hz — https://us.sennheiser-hearing.com/products/ie-600
 - **soundSignature** (editorial): no Tier 3 (Crinacle / Audio Science Review / RTINGS) source entry found — null

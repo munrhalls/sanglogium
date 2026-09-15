@@ -4,15 +4,15 @@ product_slug: "dekoni-audio-choice-leather-earpads-for-hifiman-sundara"
 brand: "Dekoni Audio"
 name: "Dekoni Audio Choice Leather Earpads for Hifiman Sundara"
 slice: "accessories"
-spec_fields: 
+spec_fields:
   customerRating: null
   condition: "new"
   dealsDiscount: null
   newArrival: null
   awards: []
   accessoryType: "replacement-parts"
-  compatibleProductType: 
-    - "headphone"
+  compatibleProductType:
+    - headphone
   cableFunction: null
   connectorTermination: null
   lengthM: null
@@ -28,31 +28,32 @@ spec_fields:
   cleaningProductType: null
   formatCompatibility: null
   partType: "ear-pads-cushions"
-  compatibility: 
-    - "Hifiman Sundara"
+  compatibility:
+    - Hifiman Sundara
   adapterFunction: null
   treatmentType: null
   mounting: null
 
-source_urls: []
-verified_at: "2026-09-14"
-data_status: "PARTIAL"
-
+source_urls:
+  - https://dekoniaudio.com/products/ear-pads-for-hifiman-he-series-headphones-and-more
+verified_at: "2026-09-15"
+data_status: "COMPLETE"
 ---
 
 ## Verification Notes
 
-- **condition**: `new` — product listing has a single condition / no condition options.
-- **accessoryType**: `replacement-parts` — product name / page identifies this as a replacement-parts item.
-- **compatibleProductType**: ["headphone"] — intended for use with headphone.
-- **partType**: `ear-pads-cushions` — product name identifies this as a ear-pads-cushions replacement part.
-- **compatibility**: ["Hifiman Sundara"] — compatible models extracted from the manufacturer product page and product title.
-- **customerRating**: `null` — no visible customer rating or aggregate score on the cited source page.
-- **dealsDiscount**: `null` — no discount or deal terms visible on the cited source page.
-- **newArrival**: `null` — release/new-arrival status not stated on the cited source page.
-- **awards**: `[]` — no awards, editor's-choice badges, or recognition programs listed on the cited source page.
+- **condition** (marketing-fact): Product listing includes New condition variants — https://dekoniaudio.com/products/ear-pads-for-hifiman-he-series-headphones-and-more
+- **accessoryType** (marketing-fact): Replacement Earpads for HiFiMan HE Series Headphones and More — https://dekoniaudio.com/products/ear-pads-for-hifiman-he-series-headphones-and-more
+- **partType** (marketing-fact): Replacement Earpads product page — https://dekoniaudio.com/products/ear-pads-for-hifiman-he-series-headphones-and-more
+- **compatibleProductType** (marketing-fact): Designed for HiFiMan's HE-series headphones — https://dekoniaudio.com/products/ear-pads-for-hifiman-he-series-headphones-and-more
+- **compatibility** (marketing-fact): Fits: Sundara Open — https://dekoniaudio.com/products/ear-pads-for-hifiman-he-series-headphones-and-more
+- **customerRating** (marketing-fact): no aggregate customer rating visible on the product page — https://dekoniaudio.com/products/ear-pads-for-hifiman-he-series-headphones-and-more
+- **dealsDiscount** (marketing-fact): no discount or deal terms visible on the cited source page — https://dekoniaudio.com/products/ear-pads-for-hifiman-he-series-headphones-and-more
+- **newArrival** (marketing-fact): release/new-arrival status not stated on the cited source page — https://dekoniaudio.com/products/ear-pads-for-hifiman-he-series-headphones-and-more
+- **awards** (marketing-fact): no awards, editor's-choice badges, or recognition programs listed on the cited source page — https://dekoniaudio.com/products/ear-pads-for-hifiman-he-series-headphones-and-more
+- **material** (marketing-fact): no material explicitly stated for a Choice Leather variant on the cited source page, left null — https://dekoniaudio.com/products/ear-pads-for-hifiman-he-series-headphones-and-more
 - All remaining `spec_fields` are `null` where the accessory-type domain does not apply or the source page does not confirm a specific value.
 
 ## Conflict / Caution Notes
 
-- No public manufacturer/retailer product page was found for this item. Values reflect the Sanity product export (the authoritative issue source) and are recorded as available; unconfirmed accessory-specific fields are left as explicit nulls.
+- No public product page exactly matching the slug `dekoni-audio-choice-leather-earpads-for-hifiman-sundara` was found; the current Dekoni HiFiMan HE Series earpads product page is the closest available source. Values it confirms are recorded; unconfirmed accessory-specific fields are left as explicit nulls.

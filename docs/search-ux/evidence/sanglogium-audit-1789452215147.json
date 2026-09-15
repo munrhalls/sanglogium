@@ -1,0 +1,602 @@
+{
+  "mobile": {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "homeSearchInfo": {
+      "hasDesktopInput": false,
+      "hasMobileTrigger": true,
+      "desktopPlaceholder": "Search products...",
+      "pageTitle": "Sang Logium Audio Shop"
+    },
+    "autocomplete": {
+      "query": "HD 800",
+      "hasOverlay": true,
+      "suggestions": [
+        "Sennheiser HD 800S Dynamic Open-back HeadphonesSennheiser · $1,799.95",
+        "Astell&Kern A&norma SR35 | Digital Audio PlayerAstell&Kern · $659",
+        "Aune AR9000 HeadphonesAune Audio · $1,399",
+        "Aune Audio A17 Headphone AmplifierAune Audio · $2,399",
+        "Aune Audio S17 Pro EVO Headphone AmplifierAune Audio · $799",
+        "Dekoni Audio EPZ-HD800-ELVL Replacement Ear Pads for Sennheiser HD800 and HD800S Elite VelourDekoni Audio · $59.99",
+        "Sennheiser HD 800S Dynamic Open-back HeadphonesSennheiser · $1,799.95",
+        "Astell&Kern A&norma SR35 | Digital Audio PlayerAstell&Kern · $659",
+        "Aune AR9000 HeadphonesAune Audio · $1,399",
+        "Aune Audio A17 Headphone AmplifierAune Audio · $2,399",
+        "Aune Audio S17 Pro EVO Headphone AmplifierAune Audio · $799",
+        "Dekoni Audio EPZ-HD800-ELVL Replacement Ear Pads for Sennheiser HD800 and HD800S Elite VelourDekoni Audio · $59.99"
+      ],
+      "viewAllText": "View all results for ‘HD 800’ →",
+      "emptyMessage": null
+    },
+    "queryResults": [
+      {
+        "type": "exact",
+        "q": "Sennheiser HD 800S",
+        "url": "http://localhost:3000/search?q=Sennheiser%20HD%20800S",
+        "title": "Sennheiser HD 800S — Search Results | Sang Logium",
+        "isEmpty": false,
+        "count": 3,
+        "productNames": [
+          "EPZ-HD800-ELVL Replacement Ear Pads for Sennheiser HD800 and HD800S Elite Velour",
+          "HD 800S Dynamic Open-back Headphones",
+          "109 PRO Headphones"
+        ],
+        "noResultsCopy": null,
+        "categorySuggestions": [],
+        "hasFilterUI": false
+      },
+      {
+        "type": "exact-typo",
+        "q": "hd800s",
+        "url": "http://localhost:3000/search?q=hd800s",
+        "title": "hd800s — Search Results | Sang Logium",
+        "isEmpty": false,
+        "count": 4,
+        "productNames": [
+          "EPZ-HD800-ELVL Replacement Ear Pads for Sennheiser HD800 and HD800S Elite Velour",
+          "Replacement Earpads for Sennheiser HD800 Series Headphones",
+          "Arya Headphones | Stealth Magnets Edition",
+          "Balanced XLR Cable for Sennheiser HD800 | Replacement Headphone Cable"
+        ],
+        "noResultsCopy": null,
+        "categorySuggestions": [],
+        "hasFilterUI": false
+      },
+      {
+        "type": "product-type",
+        "q": "headphones",
+        "url": "http://localhost:3000/search?q=headphones",
+        "title": "headphones — Search Results | Sang Logium",
+        "isEmpty": false,
+        "count": 368,
+        "productNames": [
+          "Ear Pads for Audeze LCD Series Headphones - Fits variants of LCD-2, LCD-3, LCD-4, LCD-X",
+          "Replacement Earpads for Focal Headphones - Stellia, Radiante, Utopia, Clear, ClearMG, Celestee",
+          "Headphone Cleaning Kit with Cleaning Spray and Cloth",
+          "Reference In-Ear Headphones",
+          "U4s In-Ear Headphones",
+          "Headphone Stand",
+          "EPZ-HD800-ELVL Replacement Ear Pads for Sennheiser HD800 and HD800S Elite Velour",
+          "Bose QC35 Replacement Ear Pads"
+        ],
+        "noResultsCopy": null,
+        "categorySuggestions": [],
+        "hasFilterUI": false
+      },
+      {
+        "type": "feature",
+        "q": "closed-back headphones",
+        "url": "http://localhost:3000/search?q=closed-back%20headphones",
+        "title": "closed-back headphones — Search Results | Sang Logium",
+        "isEmpty": false,
+        "count": 27,
+        "productNames": [
+          "Celestee Headphones",
+          "ATH-W2022 Closed-Back Dynamic Wooden Headphones",
+          "x Z Reviews Eris 50mm Dynamic Driver Headphones",
+          "SJY Horizon Closed Carbon Planar Magnetic Headphones",
+          "99 Classics Closed Back Headphones 2nd Gen",
+          "HDB 630 Bluetooth ANC Headphones",
+          "ATH-M50x Wired Professional Monitor Headphones",
+          "Radiance Headphones | Limited Edition"
+        ],
+        "noResultsCopy": null,
+        "categorySuggestions": [],
+        "hasFilterUI": false
+      },
+      {
+        "type": "use-case",
+        "q": "headphones for running",
+        "url": "http://localhost:3000/search?q=headphones%20for%20running",
+        "title": "headphones for running — Search Results | Sang Logium",
+        "isEmpty": false,
+        "count": 13,
+        "productNames": [
+          "DM-01 Desktop DAC/Amp",
+          "SA-2 Fully-balanced Headphone Amplifier",
+          "Matrix TS-1 All-in-One Streamer/ Pre-Amplifier/ Headphone Amplifier",
+          "M21 Portable High-Res Lossless Music Player",
+          "PA10 Headphone Amplifier",
+          "BX2 Magnum Portable Headphone Amplifier",
+          "YUKI Portable DAC and Headphone Amplifier",
+          "GO Blu Portable Bluetooth DAC/Amp"
+        ],
+        "noResultsCopy": null,
+        "categorySuggestions": [],
+        "hasFilterUI": false
+      },
+      {
+        "type": "abbreviation",
+        "q": "IEM",
+        "url": "http://localhost:3000/search?q=IEM",
+        "title": "IEM — Search Results | Sang Logium",
+        "isEmpty": false,
+        "count": 111,
+        "productNames": [
+          "Reference In-Ear Headphones",
+          "U4s In-Ear Headphones",
+          "Apos x Community Rock Lobster IEMs",
+          "ETZ-MERCURY Premium Memory Foam Isolation Earphone Tips Mercury 4.9mm",
+          "Go Pod Max Portable IEM Bluetooth DAC/AMP (Unit Only)",
+          "K13 R2R Desktop DAC/Amp",
+          "DM-01 Desktop DAC/Amp",
+          "P2 MKII Desktop Headphone Amplifier"
+        ],
+        "noResultsCopy": null,
+        "categorySuggestions": [],
+        "hasFilterUI": false
+      },
+      {
+        "type": "compatibility",
+        "q": "headphones for iPhone 15",
+        "url": "http://localhost:3000/search?q=headphones%20for%20iPhone%2015",
+        "title": "headphones for iPhone 15 — Search Results | Sang Logium",
+        "isEmpty": false,
+        "count": 2,
+        "productNames": [
+          "iFi GO bar Kensei",
+          "GO bar Kensei Portable Hi-Res USB DAC and Preamp"
+        ],
+        "noResultsCopy": null,
+        "categorySuggestions": [],
+        "hasFilterUI": false
+      },
+      {
+        "type": "symptom",
+        "q": "headphones with more bass",
+        "url": "http://localhost:3000/search?q=headphones%20with%20more%20bass",
+        "title": "headphones with more bass — Search Results | Sang Logium",
+        "isEmpty": false,
+        "count": 40,
+        "productNames": [
+          "Replacement Earpads for Focal Headphones - Stellia, Radiante, Utopia, Clear, ClearMG, Celestee",
+          "Reference In-Ear Headphones",
+          "EPZ-HD800-ELVL Replacement Ear Pads for Sennheiser HD800 and HD800S Elite Velour",
+          "EPZ-FOCAL-STELLIA Replacement Ear Pads for Focal Headphones",
+          "Apos x Audio-Technica ATH-R70x Refine Headphone",
+          "x Z Reviews Eris 50mm Dynamic Driver Headphones",
+          "iFi GO bar Kensei",
+          "Meze 105 AER Open-Back Headphones"
+        ],
+        "noResultsCopy": null,
+        "categorySuggestions": [],
+        "hasFilterUI": false
+      },
+      {
+        "type": "non-product",
+        "q": "return policy",
+        "url": "http://localhost:3000/search?q=return%20policy",
+        "title": "return policy — Search Results | Sang Logium",
+        "isEmpty": true,
+        "count": null,
+        "productNames": [],
+        "noResultsCopy": "We couldn’t find any products matching “return policy”",
+        "categorySuggestions": [
+          "Headphones",
+          "IEMs",
+          "Audio Electronics",
+          "Accessories"
+        ],
+        "hasFilterUI": false
+      }
+    ]
+  },
+  "tablet": {
+    "viewport": {
+      "width": 820,
+      "height": 1180
+    },
+    "homeSearchInfo": {
+      "hasDesktopInput": true,
+      "hasMobileTrigger": false,
+      "desktopPlaceholder": "Search products...",
+      "pageTitle": "Sang Logium Audio Shop"
+    },
+    "autocomplete": {
+      "query": "HD 800",
+      "hasOverlay": true,
+      "suggestions": [
+        "Sennheiser HD 800S Dynamic Open-back HeadphonesSennheiser · $1,799.95",
+        "Astell&Kern A&norma SR35 | Digital Audio PlayerAstell&Kern · $659",
+        "Aune AR9000 HeadphonesAune Audio · $1,399",
+        "Aune Audio A17 Headphone AmplifierAune Audio · $2,399",
+        "Aune Audio S17 Pro EVO Headphone AmplifierAune Audio · $799",
+        "Dekoni Audio EPZ-HD800-ELVL Replacement Ear Pads for Sennheiser HD800 and HD800S Elite VelourDekoni Audio · $59.99"
+      ],
+      "viewAllText": "View all results for ‘HD 800’ →",
+      "emptyMessage": null
+    },
+    "queryResults": [
+      {
+        "type": "exact",
+        "q": "Sennheiser HD 800S",
+        "url": "http://localhost:3000/search?q=Sennheiser%20HD%20800S",
+        "title": "Sennheiser HD 800S — Search Results | Sang Logium",
+        "isEmpty": false,
+        "count": 3,
+        "productNames": [
+          "EPZ-HD800-ELVL Replacement Ear Pads for Sennheiser HD800 and HD800S Elite Velour",
+          "HD 800S Dynamic Open-back Headphones",
+          "109 PRO Headphones"
+        ],
+        "noResultsCopy": null,
+        "categorySuggestions": [],
+        "hasFilterUI": false
+      },
+      {
+        "type": "exact-typo",
+        "q": "hd800s",
+        "url": "http://localhost:3000/search?q=hd800s",
+        "title": "hd800s — Search Results | Sang Logium",
+        "isEmpty": false,
+        "count": 4,
+        "productNames": [
+          "EPZ-HD800-ELVL Replacement Ear Pads for Sennheiser HD800 and HD800S Elite Velour",
+          "Replacement Earpads for Sennheiser HD800 Series Headphones",
+          "Arya Headphones | Stealth Magnets Edition",
+          "Balanced XLR Cable for Sennheiser HD800 | Replacement Headphone Cable"
+        ],
+        "noResultsCopy": null,
+        "categorySuggestions": [],
+        "hasFilterUI": false
+      },
+      {
+        "type": "product-type",
+        "q": "headphones",
+        "url": "http://localhost:3000/search?q=headphones",
+        "title": "headphones — Search Results | Sang Logium",
+        "isEmpty": false,
+        "count": 368,
+        "productNames": [
+          "Ear Pads for Audeze LCD Series Headphones - Fits variants of LCD-2, LCD-3, LCD-4, LCD-X",
+          "Replacement Earpads for Focal Headphones - Stellia, Radiante, Utopia, Clear, ClearMG, Celestee",
+          "Headphone Cleaning Kit with Cleaning Spray and Cloth",
+          "Reference In-Ear Headphones",
+          "U4s In-Ear Headphones",
+          "Headphone Stand",
+          "EPZ-HD800-ELVL Replacement Ear Pads for Sennheiser HD800 and HD800S Elite Velour",
+          "Bose QC35 Replacement Ear Pads"
+        ],
+        "noResultsCopy": null,
+        "categorySuggestions": [],
+        "hasFilterUI": false
+      },
+      {
+        "type": "feature",
+        "q": "closed-back headphones",
+        "url": "http://localhost:3000/search?q=closed-back%20headphones",
+        "title": "closed-back headphones — Search Results | Sang Logium",
+        "isEmpty": false,
+        "count": 27,
+        "productNames": [
+          "Celestee Headphones",
+          "ATH-W2022 Closed-Back Dynamic Wooden Headphones",
+          "x Z Reviews Eris 50mm Dynamic Driver Headphones",
+          "SJY Horizon Closed Carbon Planar Magnetic Headphones",
+          "99 Classics Closed Back Headphones 2nd Gen",
+          "HDB 630 Bluetooth ANC Headphones",
+          "ATH-M50x Wired Professional Monitor Headphones",
+          "Radiance Headphones | Limited Edition"
+        ],
+        "noResultsCopy": null,
+        "categorySuggestions": [],
+        "hasFilterUI": false
+      },
+      {
+        "type": "use-case",
+        "q": "headphones for running",
+        "url": "http://localhost:3000/search?q=headphones%20for%20running",
+        "title": "headphones for running — Search Results | Sang Logium",
+        "isEmpty": false,
+        "count": 13,
+        "productNames": [
+          "DM-01 Desktop DAC/Amp",
+          "SA-2 Fully-balanced Headphone Amplifier",
+          "Matrix TS-1 All-in-One Streamer/ Pre-Amplifier/ Headphone Amplifier",
+          "M21 Portable High-Res Lossless Music Player",
+          "PA10 Headphone Amplifier",
+          "BX2 Magnum Portable Headphone Amplifier",
+          "YUKI Portable DAC and Headphone Amplifier",
+          "GO Blu Portable Bluetooth DAC/Amp"
+        ],
+        "noResultsCopy": null,
+        "categorySuggestions": [],
+        "hasFilterUI": false
+      },
+      {
+        "type": "abbreviation",
+        "q": "IEM",
+        "url": "http://localhost:3000/search?q=IEM",
+        "title": "IEM — Search Results | Sang Logium",
+        "isEmpty": false,
+        "count": 111,
+        "productNames": [
+          "Reference In-Ear Headphones",
+          "U4s In-Ear Headphones",
+          "Apos x Community Rock Lobster IEMs",
+          "ETZ-MERCURY Premium Memory Foam Isolation Earphone Tips Mercury 4.9mm",
+          "Go Pod Max Portable IEM Bluetooth DAC/AMP (Unit Only)",
+          "K13 R2R Desktop DAC/Amp",
+          "DM-01 Desktop DAC/Amp",
+          "P2 MKII Desktop Headphone Amplifier"
+        ],
+        "noResultsCopy": null,
+        "categorySuggestions": [],
+        "hasFilterUI": false
+      },
+      {
+        "type": "compatibility",
+        "q": "headphones for iPhone 15",
+        "url": "http://localhost:3000/search?q=headphones%20for%20iPhone%2015",
+        "title": "headphones for iPhone 15 — Search Results | Sang Logium",
+        "isEmpty": false,
+        "count": 2,
+        "productNames": [
+          "iFi GO bar Kensei",
+          "GO bar Kensei Portable Hi-Res USB DAC and Preamp"
+        ],
+        "noResultsCopy": null,
+        "categorySuggestions": [],
+        "hasFilterUI": false
+      },
+      {
+        "type": "symptom",
+        "q": "headphones with more bass",
+        "url": "http://localhost:3000/search?q=headphones%20with%20more%20bass",
+        "title": "headphones with more bass — Search Results | Sang Logium",
+        "isEmpty": false,
+        "count": 40,
+        "productNames": [
+          "Replacement Earpads for Focal Headphones - Stellia, Radiante, Utopia, Clear, ClearMG, Celestee",
+          "Reference In-Ear Headphones",
+          "EPZ-HD800-ELVL Replacement Ear Pads for Sennheiser HD800 and HD800S Elite Velour",
+          "EPZ-FOCAL-STELLIA Replacement Ear Pads for Focal Headphones",
+          "Apos x Audio-Technica ATH-R70x Refine Headphone",
+          "x Z Reviews Eris 50mm Dynamic Driver Headphones",
+          "iFi GO bar Kensei",
+          "Meze 105 AER Open-Back Headphones"
+        ],
+        "noResultsCopy": null,
+        "categorySuggestions": [],
+        "hasFilterUI": false
+      },
+      {
+        "type": "non-product",
+        "q": "return policy",
+        "url": "http://localhost:3000/search?q=return%20policy",
+        "title": "return policy — Search Results | Sang Logium",
+        "isEmpty": true,
+        "count": null,
+        "productNames": [],
+        "noResultsCopy": "We couldn’t find any products matching “return policy”",
+        "categorySuggestions": [
+          "Headphones",
+          "IEMs",
+          "Audio Electronics",
+          "Accessories"
+        ],
+        "hasFilterUI": false
+      }
+    ]
+  },
+  "desktop": {
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "homeSearchInfo": {
+      "hasDesktopInput": true,
+      "hasMobileTrigger": false,
+      "desktopPlaceholder": "Search products...",
+      "pageTitle": "Sang Logium Audio Shop"
+    },
+    "autocomplete": {
+      "query": "HD 800",
+      "hasOverlay": true,
+      "suggestions": [
+        "Sennheiser HD 800S Dynamic Open-back HeadphonesSennheiser · $1,799.95",
+        "Astell&Kern A&norma SR35 | Digital Audio PlayerAstell&Kern · $659",
+        "Aune AR9000 HeadphonesAune Audio · $1,399",
+        "Aune Audio A17 Headphone AmplifierAune Audio · $2,399",
+        "Aune Audio S17 Pro EVO Headphone AmplifierAune Audio · $799",
+        "Dekoni Audio EPZ-HD800-ELVL Replacement Ear Pads for Sennheiser HD800 and HD800S Elite VelourDekoni Audio · $59.99"
+      ],
+      "viewAllText": "View all results for ‘HD 800’ →",
+      "emptyMessage": null
+    },
+    "queryResults": [
+      {
+        "type": "exact",
+        "q": "Sennheiser HD 800S",
+        "url": "http://localhost:3000/search?q=Sennheiser%20HD%20800S",
+        "title": "Sennheiser HD 800S — Search Results | Sang Logium",
+        "isEmpty": false,
+        "count": 3,
+        "productNames": [
+          "EPZ-HD800-ELVL Replacement Ear Pads for Sennheiser HD800 and HD800S Elite Velour",
+          "HD 800S Dynamic Open-back Headphones",
+          "109 PRO Headphones"
+        ],
+        "noResultsCopy": null,
+        "categorySuggestions": [],
+        "hasFilterUI": false
+      },
+      {
+        "type": "exact-typo",
+        "q": "hd800s",
+        "url": "http://localhost:3000/search?q=hd800s",
+        "title": "hd800s — Search Results | Sang Logium",
+        "isEmpty": false,
+        "count": 4,
+        "productNames": [
+          "EPZ-HD800-ELVL Replacement Ear Pads for Sennheiser HD800 and HD800S Elite Velour",
+          "Replacement Earpads for Sennheiser HD800 Series Headphones",
+          "Arya Headphones | Stealth Magnets Edition",
+          "Balanced XLR Cable for Sennheiser HD800 | Replacement Headphone Cable"
+        ],
+        "noResultsCopy": null,
+        "categorySuggestions": [],
+        "hasFilterUI": false
+      },
+      {
+        "type": "product-type",
+        "q": "headphones",
+        "url": "http://localhost:3000/search?q=headphones",
+        "title": "headphones — Search Results | Sang Logium",
+        "isEmpty": false,
+        "count": 368,
+        "productNames": [
+          "Ear Pads for Audeze LCD Series Headphones - Fits variants of LCD-2, LCD-3, LCD-4, LCD-X",
+          "Replacement Earpads for Focal Headphones - Stellia, Radiante, Utopia, Clear, ClearMG, Celestee",
+          "Headphone Cleaning Kit with Cleaning Spray and Cloth",
+          "Reference In-Ear Headphones",
+          "U4s In-Ear Headphones",
+          "Headphone Stand",
+          "EPZ-HD800-ELVL Replacement Ear Pads for Sennheiser HD800 and HD800S Elite Velour",
+          "Bose QC35 Replacement Ear Pads"
+        ],
+        "noResultsCopy": null,
+        "categorySuggestions": [],
+        "hasFilterUI": false
+      },
+      {
+        "type": "feature",
+        "q": "closed-back headphones",
+        "url": "http://localhost:3000/search?q=closed-back%20headphones",
+        "title": "closed-back headphones — Search Results | Sang Logium",
+        "isEmpty": false,
+        "count": 27,
+        "productNames": [
+          "Celestee Headphones",
+          "ATH-W2022 Closed-Back Dynamic Wooden Headphones",
+          "x Z Reviews Eris 50mm Dynamic Driver Headphones",
+          "SJY Horizon Closed Carbon Planar Magnetic Headphones",
+          "99 Classics Closed Back Headphones 2nd Gen",
+          "HDB 630 Bluetooth ANC Headphones",
+          "ATH-M50x Wired Professional Monitor Headphones",
+          "Radiance Headphones | Limited Edition"
+        ],
+        "noResultsCopy": null,
+        "categorySuggestions": [],
+        "hasFilterUI": false
+      },
+      {
+        "type": "use-case",
+        "q": "headphones for running",
+        "url": "http://localhost:3000/search?q=headphones%20for%20running",
+        "title": "headphones for running — Search Results | Sang Logium",
+        "isEmpty": false,
+        "count": 13,
+        "productNames": [
+          "DM-01 Desktop DAC/Amp",
+          "SA-2 Fully-balanced Headphone Amplifier",
+          "Matrix TS-1 All-in-One Streamer/ Pre-Amplifier/ Headphone Amplifier",
+          "M21 Portable High-Res Lossless Music Player",
+          "PA10 Headphone Amplifier",
+          "BX2 Magnum Portable Headphone Amplifier",
+          "YUKI Portable DAC and Headphone Amplifier",
+          "GO Blu Portable Bluetooth DAC/Amp"
+        ],
+        "noResultsCopy": null,
+        "categorySuggestions": [],
+        "hasFilterUI": false
+      },
+      {
+        "type": "abbreviation",
+        "q": "IEM",
+        "url": "http://localhost:3000/search?q=IEM",
+        "title": "IEM — Search Results | Sang Logium",
+        "isEmpty": false,
+        "count": 111,
+        "productNames": [
+          "Reference In-Ear Headphones",
+          "U4s In-Ear Headphones",
+          "Apos x Community Rock Lobster IEMs",
+          "ETZ-MERCURY Premium Memory Foam Isolation Earphone Tips Mercury 4.9mm",
+          "Go Pod Max Portable IEM Bluetooth DAC/AMP (Unit Only)",
+          "K13 R2R Desktop DAC/Amp",
+          "DM-01 Desktop DAC/Amp",
+          "P2 MKII Desktop Headphone Amplifier"
+        ],
+        "noResultsCopy": null,
+        "categorySuggestions": [],
+        "hasFilterUI": false
+      },
+      {
+        "type": "compatibility",
+        "q": "headphones for iPhone 15",
+        "url": "http://localhost:3000/search?q=headphones%20for%20iPhone%2015",
+        "title": "headphones for iPhone 15 — Search Results | Sang Logium",
+        "isEmpty": false,
+        "count": 2,
+        "productNames": [
+          "iFi GO bar Kensei",
+          "GO bar Kensei Portable Hi-Res USB DAC and Preamp"
+        ],
+        "noResultsCopy": null,
+        "categorySuggestions": [],
+        "hasFilterUI": false
+      },
+      {
+        "type": "symptom",
+        "q": "headphones with more bass",
+        "url": "http://localhost:3000/search?q=headphones%20with%20more%20bass",
+        "title": "headphones with more bass — Search Results | Sang Logium",
+        "isEmpty": false,
+        "count": 40,
+        "productNames": [
+          "Replacement Earpads for Focal Headphones - Stellia, Radiante, Utopia, Clear, ClearMG, Celestee",
+          "Reference In-Ear Headphones",
+          "EPZ-HD800-ELVL Replacement Ear Pads for Sennheiser HD800 and HD800S Elite Velour",
+          "EPZ-FOCAL-STELLIA Replacement Ear Pads for Focal Headphones",
+          "Apos x Audio-Technica ATH-R70x Refine Headphone",
+          "x Z Reviews Eris 50mm Dynamic Driver Headphones",
+          "iFi GO bar Kensei",
+          "Meze 105 AER Open-Back Headphones"
+        ],
+        "noResultsCopy": null,
+        "categorySuggestions": [],
+        "hasFilterUI": false
+      },
+      {
+        "type": "non-product",
+        "q": "return policy",
+        "url": "http://localhost:3000/search?q=return%20policy",
+        "title": "return policy — Search Results | Sang Logium",
+        "isEmpty": true,
+        "count": null,
+        "productNames": [],
+        "noResultsCopy": "We couldn’t find any products matching “return policy”",
+        "categorySuggestions": [
+          "Headphones",
+          "IEMs",
+          "Audio Electronics",
+          "Accessories"
+        ],
+        "hasFilterUI": false
+      }
+    ]
+  }
+}

@@ -6,13 +6,13 @@ name: Sennheiser MOMENTUM True Wireless 4
 slice: headphones
 spec_fields:
   productCategory:
-  - true-wireless
+    - true-wireless
   wearingStyle:
-  - in-ear
+    - in-ear
   connectivity: true-wireless
   portable: true
   driverType:
-  - dynamic
+    - dynamic
   detachableCable: false
   microphone: true
   foldable: false
@@ -20,10 +20,11 @@ spec_fields:
   batteryLifeHours:
     ancOff: 7.5
 source_urls:
-- https://us.sennheiser-hearing.com/products/momentum-true-wireless-4
+  - https://us.sennheiser-hearing.com/products/momentum-true-wireless-4
 verified_at: '2026-09-14'
 data_status: COMPLETE
 ---
+
 
 ## Verification Notes
 - **wearingStyle** (marketing-fact): ear coupling / wearing style described — https://us.sennheiser-hearing.com/products/momentum-true-wireless-4

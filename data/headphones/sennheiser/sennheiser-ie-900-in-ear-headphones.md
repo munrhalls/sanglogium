@@ -6,32 +6,33 @@ name: Sennheiser IE 900 In-Ear Headphones
 slice: headphones
 spec_fields:
   productCategory:
-  - iem
+    - iem
   wearingStyle:
-  - in-ear
+    - in-ear
   connectivity: wired
   portable: true
   driverType:
-  - dynamic
+    - dynamic
   impedanceOhms: 16
   sensitivityDbMw: 123
   freqResponseHz:
     min: 5
     max: 48000
   cableTermination:
-  - 3.5mm
-  - 2.5mm-balanced
-  - 4.4mm-balanced
-  - mmcx
+    - 3.5mm
+    - 2.5mm-balanced
+    - 4.4mm-balanced
+    - mmcx
   detachableCable: true
   cableLengthM: 1.25
   microphone: false
   foldable: false
 source_urls:
-- https://us.sennheiser-hearing.com/products/ie-900
+  - https://us.sennheiser-hearing.com/products/ie-900
 verified_at: '2026-09-14'
 data_status: COMPLETE
 ---
+
 
 ## Verification Notes
 - **wearingStyle** (marketing-fact): In-ear, closed — https://us.sennheiser-hearing.com/products/ie-900

@@ -6,32 +6,33 @@ name: Sennheiser HD 800S Dynamic Open-back Headphones
 slice: headphones
 spec_fields:
   productCategory:
-  - over-ear
+    - over-ear
   wearingStyle:
-  - over-ear
+    - over-ear
   acousticDesign:
-  - open-back
+    - open-back
   connectivity: wired
   portable: false
   driverType:
-  - dynamic
+    - dynamic
   impedanceOhms: 300
   sensitivityDbMw: 102
   freqResponseHz:
     min: 4
     max: 51000
   cableTermination:
-  - 6.35mm
-  - 4.4mm-balanced
+    - 6.35mm
+    - 4.4mm-balanced
   detachableCable: true
   cableLengthM: 3
   microphone: false
   foldable: false
 source_urls:
-- https://us.sennheiser-hearing.com/products/hd-800-s
+  - https://us.sennheiser-hearing.com/products/hd-800-s
 verified_at: '2026-09-14'
 data_status: COMPLETE
 ---
+
 
 ## Verification Notes
 - **wearingStyle** (marketing-fact): circumaural — https://us.sennheiser-hearing.com/products/hd-800-s

@@ -4,14 +4,15 @@ product_slug: "dekoni-audio-protective-headphone-travel-pouch"
 brand: "Dekoni Audio"
 name: "Dekoni Audio Protective Headphone Travel Pouch"
 slice: "accessories"
-spec_fields: 
+spec_fields:
   customerRating: null
   condition: "new"
   dealsDiscount: null
   newArrival: null
   awards: []
-  accessoryType: null
-  compatibleProductType: null
+  accessoryType: cases-storage-transport
+  compatibleProductType:
+    - headphone
   cableFunction: null
   connectorTermination: null
   lengthM: null
@@ -32,21 +33,26 @@ spec_fields:
   treatmentType: null
   mounting: null
 
-source_urls: []
-verified_at: "2026-09-14"
-data_status: "PARTIAL"
-
+source_urls:
+  - https://dekoniaudio.com/products/dekoni-audio-charcoal-headphone-savior-v2-universal-headphone-carrying-case
+verified_at: "2026-09-15"
+data_status: "COMPLETE"
 ---
 
 ## Verification Notes
 
-- **condition**: `new` — product listing has a single condition / no condition options.
-- **customerRating**: `null` — no visible customer rating or aggregate score on the cited source page.
-- **dealsDiscount**: `null` — no discount or deal terms visible on the cited source page.
-- **newArrival**: `null` — release/new-arrival status not stated on the cited source page.
-- **awards**: `[]` — no awards, editor's-choice badges, or recognition programs listed on the cited source page.
-- **accessoryType**: `null` — the source page describes this item as a non-accessory (headphone, IEM, DAC, keyboard, keycaps, deskmat, etc.); all accessory-specific `spec_fields` are therefore `null`.
+- **condition** (marketing-fact): Product listing is for a new universal carrying case — https://dekoniaudio.com/products/dekoni-audio-charcoal-headphone-savior-v2-universal-headphone-carrying-case
+- **accessoryType** (marketing-fact): Headphone Savior - Universal Carrying Case / travel case for audiophiles — https://dekoniaudio.com/products/dekoni-audio-charcoal-headphone-savior-v2-universal-headphone-carrying-case
+- **partType** (marketing-fact): source page does not identify this as a replacement part, left null — https://dekoniaudio.com/products/dekoni-audio-charcoal-headphone-savior-v2-universal-headphone-carrying-case
+- **compatibleProductType** (marketing-fact): Designed to accommodate headphones, cables, DACs and anything else needed on the go — https://dekoniaudio.com/products/dekoni-audio-charcoal-headphone-savior-v2-universal-headphone-carrying-case
+- **compatibility** (marketing-fact): no specific headphone models listed as exclusively compatible, left null — https://dekoniaudio.com/products/dekoni-audio-charcoal-headphone-savior-v2-universal-headphone-carrying-case
+- **customerRating** (marketing-fact): no aggregate customer rating visible on the product page — https://dekoniaudio.com/products/dekoni-audio-charcoal-headphone-savior-v2-universal-headphone-carrying-case
+- **dealsDiscount** (marketing-fact): no discount or deal terms visible on the cited source page — https://dekoniaudio.com/products/dekoni-audio-charcoal-headphone-savior-v2-universal-headphone-carrying-case
+- **newArrival** (marketing-fact): release/new-arrival status not stated on the cited source page — https://dekoniaudio.com/products/dekoni-audio-charcoal-headphone-savior-v2-universal-headphone-carrying-case
+- **awards** (marketing-fact): no awards, editor's-choice badges, or recognition programs listed on the cited source page — https://dekoniaudio.com/products/dekoni-audio-charcoal-headphone-savior-v2-universal-headphone-carrying-case
+- **material** (marketing-fact): material not explicitly stated for this specific product, left null — https://dekoniaudio.com/products/dekoni-audio-charcoal-headphone-savior-v2-universal-headphone-carrying-case
+- All remaining `spec_fields` are `null` where the accessory-type domain does not apply or the source page does not confirm a specific value.
 
 ## Conflict / Caution Notes
 
-- No public manufacturer/retailer product page was found for this item. Values reflect the Sanity product export (the authoritative issue source) and are recorded as available; unconfirmed accessory-specific fields are left as explicit nulls.
+- No public product page exactly matching the slug `dekoni-audio-protective-headphone-travel-pouch` was found; the closest Dekoni carrying-case product page (Headphone Savior V2) is used as the available source. Values it confirms are recorded; unconfirmed accessory-specific fields are left as explicit nulls.

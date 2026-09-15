@@ -6,27 +6,31 @@ name: Sennheiser IE 200 In-Ear Headphones
 slice: headphones
 spec_fields:
   productCategory:
-  - iem
+    - iem
   wearingStyle:
-  - in-ear
+    - in-ear
   connectivity: wired
   portable: true
   driverType:
-  - dynamic
+    - dynamic
   impedanceOhms: 16
   sensitivityDbMw: 119
   cableTermination:
-  - 3.5mm
-  - mmcx
+    - 3.5mm
+    - mmcx
   detachableCable: true
   cableLengthM: 1.2
   microphone: false
   foldable: false
+  freqResponseHz:
+    min: 6
+    max: 20000
 source_urls:
-- https://us.sennheiser-hearing.com/products/ie-200
-verified_at: '2026-09-14'
+  - https://us.sennheiser-hearing.com/products/ie-200
+verified_at: '2026-09-15'
 data_status: COMPLETE
 ---
+
 
 ## Verification Notes
 - **wearingStyle** (marketing-fact): Ear canal — https://us.sennheiser-hearing.com/products/ie-200
@@ -41,4 +45,5 @@ data_status: COMPLETE
 - **microphone** (marketing-fact): no microphone / mic system mentioned on product page — https://us.sennheiser-hearing.com/products/ie-200
 - **foldable** (marketing-fact): no foldable / fold-flat design mentioned — https://us.sennheiser-hearing.com/products/ie-200
 - **portable** (marketing-fact): portable / on-the-go use described — https://us.sennheiser-hearing.com/products/ie-200
+- **freqResponseHz** (hard-spec): 6 - 20,000Hz — https://us.sennheiser-hearing.com/products/ie-200
 - **soundSignature** (editorial): no Tier 3 (Crinacle / Audio Science Review / RTINGS) source entry found — null

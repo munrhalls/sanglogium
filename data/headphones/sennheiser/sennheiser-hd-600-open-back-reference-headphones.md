@@ -6,32 +6,33 @@ name: Sennheiser HD 600 Open-back Reference Headphones
 slice: headphones
 spec_fields:
   productCategory:
-  - over-ear
+    - over-ear
   wearingStyle:
-  - over-ear
+    - over-ear
   acousticDesign:
-  - open-back
+    - open-back
   connectivity: wired
   portable: false
   driverType:
-  - dynamic
+    - dynamic
   impedanceOhms: 300
   sensitivityDbMw: 97
   freqResponseHz:
     min: 12
     max: 40500
   cableTermination:
-  - 3.5mm
-  - 6.35mm
+    - 3.5mm
+    - 6.35mm
   detachableCable: true
   cableLengthM: 3
   microphone: false
   foldable: false
 source_urls:
-- https://us.sennheiser-hearing.com/products/hd-600
+  - https://us.sennheiser-hearing.com/products/hd-600
 verified_at: '2026-09-14'
 data_status: COMPLETE
 ---
+
 
 ## Verification Notes
 - **wearingStyle** (marketing-fact): circumaural — https://us.sennheiser-hearing.com/products/hd-600

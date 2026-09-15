@@ -6,39 +6,42 @@ name: Sennheiser HDB 630 Bluetooth ANC Headphones
 slice: headphones
 spec_fields:
   productCategory:
-  - over-ear
+    - over-ear
   wearingStyle:
-  - over-ear
+    - over-ear
   acousticDesign:
-  - closed-back
+    - closed-back
   connectivity: hybrid
   portable: true
   driverType:
-  - dynamic
+    - dynamic
   impedanceOhms: 480
   sensitivityDbMw: 105
   freqResponseHz:
     min: 6
     max: 40000
   cableTermination:
-  - 3.5mm
-  - usb-c
+    - 3.5mm
+    - usb-c
   detachableCable: true
   cableLengthM: 1.2
   microphone: false
   foldable: false
   anc: anc
   batteryLifeHours:
-    ancOff: 7
+    ancOff: 60
   bluetoothCodecs:
-  - SBC
-  - AAC
-  - aptX
+    - "SBC"
+    - "AAC"
+    - "aptX"
+    - "aptX HD"
+    - "aptX Adaptive"
 source_urls:
-- https://us.sennheiser-hearing.com/products/hdb-630
-verified_at: '2026-09-14'
+  - https://us.sennheiser-hearing.com/products/hdb-630
+verified_at: '2026-09-15'
 data_status: COMPLETE
 ---
+
 
 ## Verification Notes
 - **wearingStyle** (marketing-fact): Over-ear — https://us.sennheiser-hearing.com/products/hdb-630
@@ -57,5 +60,5 @@ data_status: COMPLETE
 - **portable** (marketing-fact): Carrying case — https://us.sennheiser-hearing.com/products/hdb-630
 - **anc** (marketing-fact): Active Noise Cancellation mentioned — https://us.sennheiser-hearing.com/products/hdb-630
 - **bluetoothCodecs** (marketing-fact): aptX™ Adaptive™, aptX™ HD, aptX™, AAC, SBC — https://us.sennheiser-hearing.com/products/hdb-630
-- **batteryLifeHours** (marketing-fact): up to 7 hours of playtime, ideal for when you’re on the move — https://us.sennheiser-hearing.com/products/hdb-630
+- **batteryLifeHours** (marketing-fact): class-leading 60-hour battery keeps you going through long trips or work weeks — https://us.sennheiser-hearing.com/products/hdb-630
 - **soundSignature** (editorial): no Tier 3 (Crinacle / Audio Science Review / RTINGS) source entry found — null

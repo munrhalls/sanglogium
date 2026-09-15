@@ -6,23 +6,28 @@ name: Sennheiser RS 175 Headphones
 slice: headphones
 spec_fields:
   productCategory:
-  - over-ear
+    - over-ear
   wearingStyle:
-  - over-ear
+    - over-ear
   acousticDesign:
-  - closed-back
+    - closed-back
   connectivity: wireless
   portable: false
   driverType:
-  - dynamic
+    - dynamic
   detachableCable: false
   microphone: false
   foldable: false
+  sensitivityDbMw: 114
+  freqResponseHz:
+    min: 17
+    max: 22000
 source_urls:
-- https://us.sennheiser-hearing.com/products/rs-175
-verified_at: '2026-09-14'
+  - https://us.sennheiser-hearing.com/products/rs-175
+verified_at: '2026-09-15'
 data_status: COMPLETE
 ---
+
 
 ## Verification Notes
 - **wearingStyle** (marketing-fact): ear coupling / wearing style described — https://us.sennheiser-hearing.com/products/rs-175
@@ -34,4 +39,6 @@ data_status: COMPLETE
 - **microphone** (marketing-fact): no microphone / mic system mentioned on product page — https://us.sennheiser-hearing.com/products/rs-175
 - **foldable** (marketing-fact): no foldable / fold-flat design mentioned — https://us.sennheiser-hearing.com/products/rs-175
 - **portable** (marketing-fact): no portable / travel case or on-the-go language on product page — https://us.sennheiser-hearing.com/products/rs-175
+- **sensitivityDbMw** (hard-spec): 114 dB at 1kHz, 3 percentage THD — https://us.sennheiser-hearing.com/products/rs-175
+- **freqResponseHz** (hard-spec): 17 - 22,000 Hz — https://us.sennheiser-hearing.com/products/rs-175
 - **soundSignature** (editorial): no Tier 3 (Crinacle / Audio Science Review / RTINGS) source entry found — null

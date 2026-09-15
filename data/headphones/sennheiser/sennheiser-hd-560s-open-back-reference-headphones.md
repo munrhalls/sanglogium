@@ -6,31 +6,32 @@ name: Sennheiser HD 560S Open-back Reference Headphones
 slice: headphones
 spec_fields:
   productCategory:
-  - over-ear
+    - over-ear
   wearingStyle:
-  - over-ear
+    - over-ear
   acousticDesign:
-  - open-back
+    - open-back
   connectivity: wired
   portable: false
   driverType:
-  - dynamic
+    - dynamic
   sensitivityDbMw: 110
   freqResponseHz:
     min: 6
     max: 38000
   cableTermination:
-  - 3.5mm
-  - 6.35mm
+    - 3.5mm
+    - 6.35mm
   detachableCable: true
   cableLengthM: 1.8
   microphone: false
   foldable: false
 source_urls:
-- https://us.sennheiser-hearing.com/products/hd-560s
+  - https://us.sennheiser-hearing.com/products/hd-560s
 verified_at: '2026-09-14'
 data_status: COMPLETE
 ---
+
 
 ## Verification Notes
 - **wearingStyle** (marketing-fact): Over-Ear — https://us.sennheiser-hearing.com/products/hd-560s

@@ -11,7 +11,6 @@ import { Pagination } from '@/app/components/features/products/Pagination';
 import { ChunkedProductGrid, CHUNK_SIZE } from '@/app/components/features/products/ChunkedProductGrid';
 import { FilterSidebar } from '@/app/components/features/filters/FilterSidebar';
 import { SortBar } from '@/app/components/features/filters/SortBar';
-import { MobileFilterBar } from '@/app/components/features/filters/MobileFilterBar';
 import { ActiveFilterChips } from '@/app/components/features/filters/ActiveFilterChips';
 import { isFacetedQuery } from '@/lib/catalogue/seo';
 import { loadFilterSort, SORT_DEFAULT } from '@/lib/catalogue/filterSortParams';
@@ -81,9 +80,13 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
         <EmptyResults filtersActive={filtersActive} />
       ) : (
         <div className="flex flex-col lg-touch:flex-row lg-desktop:flex-row gap-8">
-          <FilterSidebar facets={allFacets} priceBounds={priceBounds} category="all-products" />
+          <FilterSidebar
+            checkboxCounts={allFacets.groups}
+            booleanCounts={allFacets.booleans}
+            brandLabels={brandLabels}
+            priceBounds={{ min: priceBounds.min, max: priceBounds.max }}
+          />
           <div className="min-w-0 flex-1">
-            <MobileFilterBar facets={allFacets} priceBounds={priceBounds} category="all-products" />
             <ActiveFilterChips brandLabels={brandLabels} />
             <SortBar totalCount={totalCount} />
             <ChunkedProductGrid chunkPromises={chunkPromises} wishlistProductIds={wishlistProductIds} />

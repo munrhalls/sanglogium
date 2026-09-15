@@ -6,30 +6,34 @@ name: Sennheiser HD 660S2 Dynamic Open-back Headphones
 slice: headphones
 spec_fields:
   productCategory:
-  - over-ear
+    - over-ear
   wearingStyle:
-  - over-ear
+    - over-ear
   acousticDesign:
-  - open-back
+    - open-back
   connectivity: wired
   portable: false
   driverType:
-  - dynamic
+    - dynamic
   impedanceOhms: 300
   sensitivityDbMw: 104
   cableTermination:
-  - 3.5mm
-  - 6.35mm
-  - 4.4mm-balanced
+    - 3.5mm
+    - 6.35mm
+    - 4.4mm-balanced
   detachableCable: true
   cableLengthM: 1.8
   microphone: false
   foldable: false
+  freqResponseHz:
+    min: 8
+    max: 41500
 source_urls:
-- https://us.sennheiser-hearing.com/products/hd-660s2
-verified_at: '2026-09-14'
+  - https://us.sennheiser-hearing.com/products/hd-660s2
+verified_at: '2026-09-15'
 data_status: COMPLETE
 ---
+
 
 ## Verification Notes
 - **wearingStyle** (marketing-fact): Over-Ear — https://us.sennheiser-hearing.com/products/hd-660s2
@@ -45,4 +49,5 @@ data_status: COMPLETE
 - **microphone** (marketing-fact): no microphone / mic system mentioned on product page — https://us.sennheiser-hearing.com/products/hd-660s2
 - **foldable** (marketing-fact): no foldable / fold-flat design mentioned — https://us.sennheiser-hearing.com/products/hd-660s2
 - **portable** (marketing-fact): no portable / travel case or on-the-go language on product page — https://us.sennheiser-hearing.com/products/hd-660s2
+- **freqResponseHz** (hard-spec): 8 – 41,500 Hz — https://us.sennheiser-hearing.com/products/hd-660s2
 - **soundSignature** (editorial): no Tier 3 (Crinacle / Audio Science Review / RTINGS) source entry found — null

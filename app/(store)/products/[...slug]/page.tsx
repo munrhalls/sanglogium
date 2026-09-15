@@ -13,7 +13,6 @@ import { Pagination } from '@/app/components/features/products/Pagination';
 import { ChunkedProductGrid, CHUNK_SIZE } from '@/app/components/features/products/ChunkedProductGrid';
 import { FilterSidebar } from '@/app/components/features/filters/FilterSidebar';
 import { SortBar } from '@/app/components/features/filters/SortBar';
-import { MobileFilterBar } from '@/app/components/features/filters/MobileFilterBar';
 import { ActiveFilterChips } from '@/app/components/features/filters/ActiveFilterChips';
 import Breadcrumbs from '@/app/components/ui/breadcrumbs/CategoryBreadcrumbs';
 import { isFacetedQuery, canonicalCategoryPath } from '@/lib/catalogue/seo';
@@ -35,10 +34,6 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   const { slug } = await params;
   const query = await searchParams;
   const leafSlug = slug[slug.length - 1];
-  // The top-level catalogue category (e.g. "headphones", "audio-electronics",
-  // "accessories") gates which facet groups the sidebar shows. Subcategories
-  // inherit their parent's facet set because slug[0] is unchanged.
-  const category = slug[0];
   const nodeId = resolveSlugToId(leafSlug);
 
   if (!nodeId) {
@@ -112,9 +107,13 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
         <EmptyResults filtersActive={filtersActive} />
       ) : (
         <div className="flex flex-col lg-touch:flex-row lg-desktop:flex-row gap-8">
-          <FilterSidebar facets={facets} priceBounds={priceBounds} category={category} />
+          <FilterSidebar
+            checkboxCounts={facets.groups}
+            booleanCounts={facets.booleans}
+            brandLabels={facets.brandLabels}
+            priceBounds={{ min: priceBounds.min, max: priceBounds.max }}
+          />
           <div className="min-w-0 flex-1">
-            <MobileFilterBar facets={facets} priceBounds={priceBounds} category={category} />
             <ActiveFilterChips brandLabels={facets.brandLabels} />
             <SortBar totalCount={totalCount} />
             <ChunkedProductGrid chunkPromises={chunkPromises} wishlistProductIds={wishlistProductIds} />

@@ -1,228 +1,177 @@
-"use client";
+'use client';
 
-import React, { useState } from 'react';
-import { Checkbox } from '@/app/components/ui/Checkbox';
-import { useFilterParam } from '@/app/hooks/nuqs/useFilterSort';
-import { PriceRangeSlider } from './PriceRangeSlider';
-import { facetsForCategory } from '@/lib/catalogue/facetMap';
-import { ProgressiveFilterOptionList } from './ProgressiveFilterOptionList';
-import type { CatalogueFacets } from '@/sanity-cms/lib/products/getFilterFacets';
-import type { PriceBounds } from '@/lib/catalogue/priceBounds';
-
-/**
- * Shared filter-section pattern.
- *
- * These are the section-header primitives every filter control shares — the
- * collapsible checkbox groups below and PriceRangeSlider. Controls import
- * these rather than restyling their own gold overline label, header row, or
- * active/inactive state colours.
- */
-export const filterSectionHeaderRow = 'flex w-full items-center justify-between gap-2';
-export const filterSectionHeaderLabel = 'type-overline transition-colors';
-export const filterSectionHeaderAction = 'type-caption transition-colors';
-
-/** Active = gold and interactive. Inactive = grey, dimmed, reads as "off". */
-export const filterStateActive = 'text-text-accent';
-export const filterStateInactive = 'text-text-caption opacity-50';
+import React from 'react';
+import type { IconType } from 'react-icons';
+import { FaTag, FaHeadphones, FaWaveSquare, FaLayerGroup, FaBluetooth, FaMicrochip } from 'react-icons/fa6';
+import { FACET_GROUPS, facetsForGroup, type FacetDef, type FacetGroupId } from '@/app/(test)/poc/filter-sort/headphones/lib/facetConfig';
+import { useClearAllFilters } from '@/app/(test)/poc/filter-sort/headphones/lib/useFilterParam';
+import type { FacetOptionCount } from '@/app/(test)/poc/filter-sort/headphones/lib/filterProducts';
+import { CheckboxGroup, BooleanToggle, RangeControl, PriceControl, RatingControl } from './FilterControls';
 
 /**
- * Desktop filter sidebar shell.
+ * Desktop filter sidebar shell — the two-region layout the acceptance tests
+ * ask for: a compact rail of tiles (one per should-be.md group) on the left,
+ * the actual controls on the right. The rail is intentionally NOT height-
+ * matched to the panel: it's a short, fixed-width table of contents that
+ * always fits the sidebar's own visible height, while the panel underneath it
+ * scrolls independently (its own `overflow-y-auto`) — that's what keeps a
+ * 6-tile rail short even when a group's controls run long. A tile click
+ * scrolls that panel container directly (see `scrollToGroup`) rather than
+ * calling `scrollIntoView`, and both the rail and the panel set
+ * `overscroll-y-contain` — together that's what keeps this sidebar's
+ * scrolling fully sealed off from the product grid's own page-level scroll.
  *
- * Facet option lists + counts are supplied by page composition (the RSC) as the
- * `facets` prop — disjunctive facets fetched from Sanity keyed on the route's
- * VFS key set. The controls read/write their F1 URL params (via `useFilterParam`);
- * local useState is only cosmetic (collapse/expand). Nothing here fetches data or
- * touches the product grid.
+ * Facet option counts / price bounds / brand labels arrive as props from page
+ * composition (the RSC) — this component never fetches data or touches the
+ * product grid. Every control reads/writes its own URL param via
+ * useFilterParam; nothing here is optimistic about a fetch in flight.
  */
 
-interface FilterOption {
-  value: string;
-  label: string;
-  count?: number;
+const GROUP_ICONS: Record<FacetGroupId, IconType> = {
+  commercial: FaTag,
+  type: FaHeadphones,
+  sound: FaWaveSquare,
+  material: FaLayerGroup,
+  wireless: FaBluetooth,
+  technical: FaMicrochip,
+};
+
+interface FilterSidebarProps {
+  checkboxCounts: Record<string, FacetOptionCount[]>;
+  booleanCounts: Record<string, number>;
+  brandLabels: Record<string, string>;
+  priceBounds: { min: number; max: number };
 }
 
-/** Any F1 param key that maps to a checkbox group. */
-type FacetParamKey = string;
+const PANEL_SCROLL_ID = 'poc-filter-panel-scroll';
 
-interface CheckboxFilterGroupProps {
-  /** F1 array param this group reads & writes. */
-  paramKey: FacetParamKey;
-  /** Section heading. */
-  label: string;
-  options: FilterOption[];
-  /**
-   * When true, the option list uses progressive disclosure (initial short set +
-   * "Show more", plus a search box past ~20 options) per
-   * `_project/filters/brand-facet-pattern.md`. Scoped to high-count facets like
-   * Brand; the default false keeps every other group rendering in full.
-   */
-  progressive?: boolean;
+// Deliberately not `element.scrollIntoView()`: the target sits inside two
+// nested scrollable ancestors (this panel, and the page-level `<main>` from
+// headphones/layout.tsx), and `scrollIntoView` walks up EVERY scrollable
+// ancestor to satisfy visibility — which nudges the product grid's scroll
+// position too. Scrolling the panel container directly, by exact pixel
+// offset, touches only this one element and nothing above it.
+function scrollToGroup(groupId: FacetGroupId) {
+  const container = document.getElementById(PANEL_SCROLL_ID);
+  const target = document.getElementById(`poc-group-${groupId}`);
+  if (!container || !target) return;
+  const offset = target.getBoundingClientRect().top - container.getBoundingClientRect().top;
+  container.scrollBy({ top: offset - 16, behavior: 'smooth' });
 }
 
-function CheckboxFilterGroup({ paramKey, label, options, progressive = false }: CheckboxFilterGroupProps) {
-  const [expanded, setExpanded] = useState(true);
-  const [selected, setSelected] = useFilterParam(paramKey) as unknown as [string[], (v: string[] | ((prev: string[]) => string[])) => void];
-
-  const order = new Map(options.map((option, index) => [option.value, index]));
-  const selectedArray = selected ?? [];
-
-  const isFilterActive = (value: string): boolean =>
-    selectedArray.some((s) => s.toLowerCase() === value.toLowerCase());
-
-  const canonicalize = (values: string[]) =>
-    Array.from(new Set(values.filter((value) => order.has(value)))).sort(
-      (a, b) => (order.get(a) ?? 0) - (order.get(b) ?? 0),
-    );
-
-  const toggle = (value: string) => {
-    setSelected((prev) => {
-      const prevArray = prev ?? [];
-      const active = prevArray.some((s) => s.toLowerCase() === value.toLowerCase());
-      return active
-        ? canonicalize(prevArray).filter((v) => v.toLowerCase() !== value.toLowerCase())
-        : canonicalize([...prevArray, value]);
-    });
-  };
-
+function RailTile({ id, label }: { id: FacetGroupId; label: string }) {
+  const Icon = GROUP_ICONS[id];
   return (
-    <div className="flex flex-col gap-3">
-      <button
-        type="button"
-        onClick={() => setExpanded((open) => !open)}
-        aria-expanded={expanded}
-        className={`${filterSectionHeaderRow} group/header`}
-      >
-        <span className={`${filterSectionHeaderLabel} group-hover/header:text-text-primary`}>
-          {label}
-        </span>
-        <span
-          aria-hidden="true"
-          className={`${filterSectionHeaderAction} ${filterStateActive} group-hover/header:text-text-primary`}
-        >
-          {expanded ? '−' : '+'}
-        </span>
-      </button>
+    <button
+      type="button"
+      onClick={() => scrollToGroup(id)}
+      aria-label={`Jump to ${label} filters`}
+      title={`Jump to ${label} filters`}
+      data-testid={`poc-rail-tile-${id}`}
+      className="flex items-center justify-center rounded-md py-3.5 transition-colors hover:bg-accent-500/10 focus-visible:outline focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-accent-500"
+    >
+      <Icon className="h-[1.125rem] w-[1.125rem] shrink-0 text-text-caption" aria-hidden="true" />
+    </button>
+  );
+}
 
-      {expanded && (
-        progressive ? (
-          <ProgressiveFilterOptionList
-            paramKey={paramKey}
-            label={label}
-            options={options}
-            isFilterActive={isFilterActive}
-            toggle={toggle}
-          />
-        ) : (
-          <div className="flex flex-col gap-2">
-            {options.map((option) => (
-              <Checkbox
-                key={option.value}
-                name={paramKey}
-                value={option.value}
-                label={option.label}
-                count={option.count}
-                checked={isFilterActive(option.value)}
-                disabled={option.count === 0 && !isFilterActive(option.value)}
-                onChange={() => toggle(option.value)}
-              />
-            ))}
-          </div>
-        )
-      )}
+function PanelSection({
+  id,
+  label,
+  note,
+  children,
+}: {
+  id: FacetGroupId;
+  label: string;
+  note: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div
+      id={`poc-group-${id}`}
+      data-testid={`poc-panel-${id}`}
+      className="flex flex-col gap-6 border-b border-border-secondary p-6 last:border-b-0"
+    >
+      <div className="flex flex-col gap-1">
+        <span className="type-overline">{label}</span>
+        <p className="type-caption text-text-caption">{note}</p>
+      </div>
+      {children}
     </div>
   );
 }
 
-interface BooleanFilterProps {
-  /** F1 boolean param this control reads & writes. */
-  paramKey: FacetParamKey;
-  label: string;
-  count?: number;
+function renderFacet(
+  facet: FacetDef,
+  checkboxCounts: Record<string, FacetOptionCount[]>,
+  booleanCounts: Record<string, number>,
+  brandLabels: Record<string, string>,
+) {
+  if (facet.control === 'checkbox') {
+    return (
+      <CheckboxGroup
+        key={facet.id}
+        facet={facet}
+        counts={checkboxCounts[facet.id] ?? []}
+        brandLabels={facet.id === 'brand' ? brandLabels : undefined}
+      />
+    );
+  }
+  if (facet.control === 'boolean') {
+    return <BooleanToggle key={facet.id} facet={facet} count={booleanCounts[facet.id]} />;
+  }
+  return <RangeControl key={facet.id} facet={facet} />;
 }
 
-function BooleanFilter({ paramKey, label, count }: BooleanFilterProps) {
-  const [active, setActive] = useFilterParam(paramKey) as unknown as [boolean, (v: boolean | ((prev: boolean) => boolean)) => void];
+export function FilterSidebar({ checkboxCounts, booleanCounts, brandLabels, priceBounds }: FilterSidebarProps) {
+  const clearAll = useClearAllFilters();
 
-  return (
-    <Checkbox
-      name={paramKey}
-      value={paramKey}
-      label={label}
-      count={count}
-      checked={active}
-      disabled={count === 0 && !active}
-      onChange={() => setActive((prev) => !prev)}
-    />
-  );
-}
-
-/**
- * Price section. `PriceRangeSlider` is a `FilterSliderSection` and already
- * renders its own "Price" header row with the reset button — this wrapper must
- * not add a second one.
- */
-function PriceSection({ priceBounds }: { priceBounds: PriceBounds }) {
-  return (
-    <PriceRangeSlider
-      min={priceBounds.min}
-      max={priceBounds.max}
-      premium={priceBounds.premium}
-    />
-  );
-}
-
-/**
- * The stack of filter controls, with no wrapper chrome of its own. Shared
- * verbatim between the desktop sidebar and the mobile filter drawer so both
- * surfaces stay identical. Returned as a fragment so callers own the layout
- * container.
- */
-export function FilterControls({ facets, priceBounds, category }: { facets: CatalogueFacets; priceBounds: PriceBounds; category: string }) {
-  return (
-    <>
-      <PriceSection priceBounds={priceBounds} />
-
-      {facetsForCategory(category).map((facet) => {
-        if (facet.urlParam === 'price') return null;
-
-        if (facet.type === 'boolean') {
-          return (
-            <BooleanFilter
-              key={facet.urlParam}
-              paramKey={facet.urlParam}
-              label={facet.facet}
-              count={facets.booleans[facet.urlParam]}
-            />
-          );
-        }
-
-        const options = facets.groups[facet.urlParam] ?? [];
-        return (
-          <CheckboxFilterGroup
-            key={facet.urlParam}
-            paramKey={facet.urlParam}
-            label={facet.facet}
-            options={options}
-            progressive={facet.urlParam === 'brand'}
-          />
-        );
-      })}
-    </>
-  );
-}
-
-export function FilterSidebar({ facets, priceBounds, category }: { facets: CatalogueFacets; priceBounds: PriceBounds; category: string }) {
   return (
     <aside
-      data-testid="filter-sidebar"
+      data-testid="poc-filter-sidebar"
       aria-label="Filters"
-      className="hidden lg-touch:block lg-desktop:block w-64 shrink-0 self-start sticky top-0 pt-6 max-h-screen overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+      className="hidden w-96 shrink-0 self-start sticky top-0 pt-6 max-h-screen lg-touch:flex lg-desktop:flex flex-col"
     >
-      {/* Visually static and always interactive: a control writes the URL and
-          reflects the URL, never waiting on a fetch / transition in flight. */}
-      <div className="flex flex-col gap-6 rounded-md border border-border-secondary bg-surface-elevated p-6">
-        <span className="type-overline">Filters</span>
-        <FilterControls facets={facets} priceBounds={priceBounds} category={category} />
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-md border border-border-secondary bg-surface-elevated">
+        <div className="flex shrink-0 items-center justify-between gap-2 p-6 pb-4">
+          <span className="type-overline">Filters</span>
+          <button
+            type="button"
+            onClick={clearAll}
+            className="type-caption text-text-caption underline-offset-2 transition-colors hover:text-text-primary hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500"
+          >
+            Clear all
+          </button>
+        </div>
+
+        <div className="flex min-h-0 flex-1">
+          <nav
+            aria-label="Jump to a filter section"
+            className="flex w-14 shrink-0 flex-col gap-0.5 overflow-y-auto overscroll-y-contain border-r border-border-secondary p-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {FACET_GROUPS.map((group) => (
+              <RailTile key={group.id} id={group.id} label={group.label} />
+            ))}
+          </nav>
+
+          <div
+            id={PANEL_SCROLL_ID}
+            className="flex-1 overflow-y-auto overscroll-y-contain [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {FACET_GROUPS.map((group) => (
+              <PanelSection key={group.id} id={group.id} label={group.label} note={group.note}>
+                {group.id === 'commercial' && <PriceControl min={priceBounds.min} max={priceBounds.max} />}
+                {group.id === 'commercial' && <RatingControl />}
+                {group.id === 'wireless' && (
+                  <p className="type-caption text-text-caption">
+                    These apply to wireless headphones — a wired-only pick simply won&rsquo;t match once one is set.
+                  </p>
+                )}
+                {facetsForGroup(group.id).map((facet) => renderFacet(facet, checkboxCounts, booleanCounts, brandLabels))}
+              </PanelSection>
+            ))}
+          </div>
+        </div>
       </div>
     </aside>
   );

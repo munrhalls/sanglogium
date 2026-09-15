@@ -6,24 +6,24 @@ name: Sennheiser Momentum 5 Wireless Over-Ear ANC Headphones
 slice: headphones
 spec_fields:
   productCategory:
-  - over-ear
+    - over-ear
   wearingStyle:
-  - over-ear
+    - over-ear
   acousticDesign:
-  - closed-back
+    - closed-back
   connectivity: hybrid
   portable: true
   driverType:
-  - dynamic
+    - dynamic
   impedanceOhms: 520
   sensitivityDbMw: 108
   freqResponseHz:
     min: 6
     max: 40000
   cableTermination:
-  - 3.5mm
-  - 2.5mm
-  - usb-c
+    - 3.5mm
+    - 2.5mm
+    - usb-c
   detachableCable: true
   microphone: true
   foldable: true
@@ -31,17 +31,19 @@ spec_fields:
   batteryLifeHours:
     ancOn: 57
   bluetoothCodecs:
-  - SBC
-  - AAC
-  - aptX
-  - aptX Adaptive
-  - aptX lossless
-  - Snapdragon Sound
+    - "SBC"
+    - "AAC"
+    - "aptX"
+    - "aptX HD"
+    - "aptX Adaptive"
+    - "aptX lossless"
+    - "Snapdragon Sound"
 source_urls:
-- https://us.sennheiser-hearing.com/products/momentum-5-wireless
-verified_at: '2026-09-14'
+  - https://us.sennheiser-hearing.com/products/momentum-5-wireless
+verified_at: '2026-09-15'
 data_status: COMPLETE
 ---
+
 
 ## Verification Notes
 - **wearingStyle** (marketing-fact): Around-the-ear, circum-aural — https://us.sennheiser-hearing.com/products/momentum-5-wireless
