@@ -41,6 +41,10 @@ export interface AnyFacetDef {
   unit?: string;
   min?: number;
   max?: number;
+  /** Optional sub-section heading FilterSidebar renders above this facet's
+   *  control, for grouping a few facets under one label inside a shared
+   *  FACET_GROUP (e.g. "Cable Properties" above Detachable Cable + Foldable). */
+  subheading?: string;
 }
 
 export interface FacetGroupDef {

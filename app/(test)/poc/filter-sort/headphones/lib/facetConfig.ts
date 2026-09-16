@@ -27,7 +27,7 @@ export const FACET_GROUPS: FacetGroup[] = [
   },
   {
     id: 'type',
-    label: 'Type',
+    label: '',
   },
   {
     id: 'sound',
@@ -57,6 +57,9 @@ interface FacetBase {
   /** should-be.md item number — traceability back to the should-be list. */
   itemNo: number;
   status: 'C' | 'R';
+  /** Optional sub-section heading rendered above this facet in the panel, for
+   *  grouping a few facets under one label without a new top-level FACET_GROUP. */
+  subheading?: string;
 }
 
 export interface CheckboxFacet extends FacetBase {
@@ -105,9 +108,8 @@ export const FACETS: FacetDef[] = [
   // ── Type ─────────────────────────────────────────────────────────────────
   // No closed options.list in the schema either -- derive from real data,
   // same treatment as brand and awards (sang-logium-3rv.5).
-  { id: 'productCategory', group: 'type', label: 'Product Category / Type', itemNo: 10, status: 'C', control: 'checkbox', field: 'productCategory', options: opts([['over-ear', 'Over Ear'], ['iem', 'In-Ear'], ['true-wireless', 'True Wireless'], ['on-ear', 'On Ear']]) },
+  { id: 'productCategory', group: 'type', label: 'Type', itemNo: 10, status: 'C', control: 'checkbox', field: 'productCategory', options: opts([['over-ear', 'Over Ear'], ['iem', 'In-Ear'], ['true-wireless', 'Wireless'], ['on-ear', 'On Ear']]) },
   { id: 'acousticDesign', group: 'type', label: 'Acoustic Design', itemNo: 12, status: 'C', control: 'checkbox', field: 'acousticDesign', options: opts([['open-back', 'Open-Back'], ['closed-back', 'Closed-Back'], ['semi-open', 'Semi-Open / Hybrid']]) },
-  { id: 'fitType', group: 'type', label: 'Fit Type (IEM)', itemNo: 13, status: 'R', control: 'checkbox', field: 'fitType', options: opts([['universal', 'Universal Fit'], ['custom', 'Custom Fit (CIEM)']]) },
   { id: 'connectivity', group: 'type', label: 'Connectivity', itemNo: 14, status: 'C', control: 'checkbox', field: 'connectivity', options: opts([['wired', 'Wired'], ['wireless', 'Wireless (Bluetooth)'], ['true-wireless', 'True Wireless'], ['hybrid', 'Wired + Wireless Hybrid']]) },
   { id: 'portable', group: 'type', label: 'Portable', itemNo: 15, status: 'C', control: 'boolean', field: 'portable' },
 
@@ -128,21 +130,21 @@ export const FACETS: FacetDef[] = [
   // script for the full rationale (also flagged in should-be.md's own evidence
   // notes: printed FR min/max is a weak spec next to a measured graph).
   { id: 'bassExtension', group: 'sound', label: 'Frequency Response', itemNo: 19, status: 'R', control: 'range', field: 'bassExtensionHz', min: 5, max: 60, step: 1, unit: 'Hz' },
-  { id: 'requiresAmplifier', group: 'sound', label: 'Requires Amplifier', itemNo: 20, status: 'C', control: 'boolean', field: 'requiresAmplifier' },
 
   // ── Material Factors ────────────────────────────────────────────────────
   { id: 'microphone', group: 'material', label: 'Microphone', itemNo: 21, status: 'C', control: 'boolean', field: 'microphone' },
   // Real schema options.list (productType.ts:385) has 9 entries; 4 were
   // missing, so real products with those terminations had no selectable
   // checkbox (sang-logium-3rv.5).
-  { id: 'cableTermination', group: 'material', label: 'Cable', itemNo: 22, status: 'C', control: 'checkbox', field: 'cableTermination', options: opts([['3.5mm', '3.5mm SE'], ['2.5mm-balanced', '2.5mm Balanced'], ['4.4mm-balanced', '4.4mm Balanced'], ['4-pin-xlr', '4-Pin XLR'], ['6.35mm', '6.35mm (1/4 inch)'], ['usb-c', 'USB-C'], ['mmcx', 'MMCX'], ['2-pin', '2-Pin'], ['fixed-cable', 'Fixed Cable']]) },
-  { id: 'detachableCable', group: 'material', label: 'Detachable Cable', itemNo: 23, status: 'C', control: 'boolean', field: 'detachableCable' },
-  { id: 'cableLength', group: 'material', label: 'Cable Length', itemNo: 24, status: 'R', control: 'range', field: 'cableLengthM', min: 0.5, max: 3.5, step: 0.1, unit: 'm' },
+  { id: 'cableTermination', group: 'material', label: 'Cable Type', itemNo: 22, status: 'C', control: 'checkbox', field: 'cableTermination', options: opts([['3.5mm', '3.5mm SE'], ['2.5mm-balanced', '2.5mm Balanced'], ['4.4mm-balanced', '4.4mm Balanced'], ['4-pin-xlr', '4-Pin XLR'], ['6.35mm', '6.35mm (1/4 inch)'], ['usb-c', 'USB-C'], ['mmcx', 'MMCX'], ['2-pin', '2-Pin'], ['fixed-cable', 'Fixed Cable']]) },
+  { id: 'detachableCable', group: 'material', label: 'Detachable Cable', itemNo: 23, status: 'C', control: 'boolean', field: 'detachableCable', subheading: 'Cable Properties' },
   { id: 'foldable', group: 'material', label: 'Foldable', itemNo: 25, status: 'C', control: 'boolean', field: 'foldable' },
+  { id: 'cableLength', group: 'material', label: 'Cable Length', itemNo: 24, status: 'R', control: 'range', field: 'cableLengthM', min: 0.5, max: 3.5, step: 0.1, unit: 'm' },
   // Real schema options.list is none/IPX2/IPX4/IPX5/IPX7/IPX8 (productType.ts:407)
   // -- was missing IPX2, lowercased IPX4/5/7, and had a phantom 'ip67' that
   // does not exist in the schema at all (sang-logium-3rv.5).
   { id: 'ipx', group: 'material', label: 'Water Resistance (IPX)', itemNo: 26, status: 'R', control: 'checkbox', field: 'ipxRating', options: opts([['none', 'None'], ['IPX2', 'IPX2'], ['IPX4', 'IPX4'], ['IPX5', 'IPX5'], ['IPX7', 'IPX7'], ['IPX8', 'IPX8']]) },
+  { id: 'requiresAmplifier', group: 'material', label: 'Requires Amplifier', itemNo: 20, status: 'C', control: 'boolean', field: 'requiresAmplifier' },
 
   // ── Wireless (domain-gated on connectivity !== 'wired') ────────────────
   // Real schema options.list (productType.ts:418) was missing 'aptX LL' and

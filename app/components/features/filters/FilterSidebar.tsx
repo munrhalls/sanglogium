@@ -137,21 +137,32 @@ function renderFacet(
   brandLabels: Record<string, string>,
   rangeBounds: Record<string, RangeBounds>,
 ) {
+  let control: React.ReactNode;
   if (facet.control === 'checkbox') {
-    return (
+    control = (
       <CheckboxGroup
-        key={facet.id}
         category={category}
         facet={facet}
         counts={checkboxCounts[facet.id] ?? []}
         brandLabels={facet.id === 'brand' ? brandLabels : undefined}
       />
     );
+  } else if (facet.control === 'boolean') {
+    control = <BooleanToggle category={category} facet={facet} count={booleanCounts[facet.id]} />;
+  } else {
+    control = <RangeControl category={category} facet={facet} bounds={rangeBounds[facet.id]} />;
   }
-  if (facet.control === 'boolean') {
-    return <BooleanToggle key={facet.id} category={category} facet={facet} count={booleanCounts[facet.id]} />;
+
+  if (!facet.subheading) {
+    return <React.Fragment key={facet.id}>{control}</React.Fragment>;
   }
-  return <RangeControl key={facet.id} category={category} facet={facet} bounds={rangeBounds[facet.id]} />;
+
+  return (
+    <div key={facet.id} className="flex flex-col gap-3">
+      <span className="type-overline">{facet.subheading}</span>
+      {control}
+    </div>
+  );
 }
 
 export function FilterSidebar({
