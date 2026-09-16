@@ -6,9 +6,9 @@ import { ProgressiveFilterOptionList } from '@/app/components/features/filters/P
 import { FilterSliderSection, DualRangeSlider, ResetButton } from '@/app/components/features/filters/PriceRangeSlider';
 import { humanizeFacetValue } from '@/lib/catalogue/humanizeFacetValue';
 import { formatPriceMajor } from '@/lib/utils/price';
-import { useFilterParam } from '../lib/useFilterParam';
-import type { CheckboxFacet, BooleanFacet, RangeFacet } from '../lib/facetConfig';
-import type { FacetOptionCount } from '../lib/filterProducts';
+import { useFilterParam } from '@/lib/filter-sort/headphones/useFilterParam';
+import type { CheckboxFacet, BooleanFacet, RangeFacet } from '@/lib/filter-sort/headphones/facetConfig';
+import type { FacetOptionCount } from '@/lib/filter-sort/headphones/filterProducts';
 
 /**
  * Shared filter-section header primitives — same visual contract as

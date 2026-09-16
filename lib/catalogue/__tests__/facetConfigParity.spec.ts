@@ -8,7 +8,7 @@
 
 import { describe, it, expect } from "vitest";
 import { FILTER_FACETS, isPlaceholderVocab, type FilterFacet } from "@/lib/catalogue/facetMap";
-import { FACETS as headphonesFacets } from "@/app/(test)/poc/filter-sort/headphones/lib/facetConfig";
+import { FACETS as headphonesFacets } from "@/lib/filter-sort/headphones/facetConfig";
 import { FACETS as audioElectronicsFacets } from "@/app/(test)/poc/filter-sort/audio-electronics/lib/facetConfig";
 import { FACETS as accessoriesFacets } from "@/app/(test)/poc/filter-sort/accessories/lib/facetConfig";
 

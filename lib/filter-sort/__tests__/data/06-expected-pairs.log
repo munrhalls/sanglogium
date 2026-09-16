@@ -1,0 +1,13 @@
+Computed 10 representative pair expected sets (one per facet-shape combination).
+  bool+bool: microphone=true & foldable=true -> 4 products
+  bool+enum: microphone=true & connectivity="wired" -> 4 products
+  bool+multi: microphone=true & driverType="dynamic" -> 48 products
+  bool+range: microphone=true & priceCentsResolved={"min":43900} -> 12 products
+  enum+enum: connectivity="wired" & anc="none" -> 70 products
+  enum+multi: connectivity="wired" & driverType="dynamic" -> 81 products
+  enum+range: connectivity="wired" & priceCentsResolved={"min":43900} -> 82 products
+  multi+multi: driverType="dynamic" & wearingStyle="over-ear" -> 69 products
+  multi+range: driverType="dynamic" & priceCentsResolved={"min":43900} -> 53 products
+  range+range: priceCentsResolved={"min":43900} & impedanceOhms={"min":32} -> 45 products
+
+Wrote lib/filter-sort/__tests__/data/expected-pairs.json

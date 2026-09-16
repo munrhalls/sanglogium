@@ -1,0 +1,27 @@
+Computed 24 boundary expected sets across 6 range facets.
+  priceCentsResolved:min-inclusive-at-smallest: {"priceCentsResolved":{"min":4999}} -> 186 products
+  priceCentsResolved:min-excludes-smallest: {"priceCentsResolved":{"min":5499}} -> 185 products
+  priceCentsResolved:max-inclusive-at-largest: {"priceCentsResolved":{"max":3800000}} -> 186 products
+  priceCentsResolved:max-excludes-largest: {"priceCentsResolved":{"max":829000}} -> 185 products
+  impedanceOhms:min-inclusive-at-smallest: {"impedanceOhms":{"min":3}} -> 142 products
+  impedanceOhms:min-excludes-smallest: {"impedanceOhms":{"min":6}} -> 141 products
+  impedanceOhms:max-inclusive-at-largest: {"impedanceOhms":{"max":520}} -> 142 products
+  impedanceOhms:max-excludes-largest: {"impedanceOhms":{"max":490}} -> 141 products
+  sensitivityDbMw:min-inclusive-at-smallest: {"sensitivityDbMw":{"min":89}} -> 135 products
+  sensitivityDbMw:min-excludes-smallest: {"sensitivityDbMw":{"min":90}} -> 132 products
+  sensitivityDbMw:max-inclusive-at-largest: {"sensitivityDbMw":{"max":128}} -> 135 products
+  sensitivityDbMw:max-excludes-largest: {"sensitivityDbMw":{"max":123}} -> 134 products
+  freqResponseHzMin:min-inclusive-at-smallest: {"freqResponseHzMin":{"min":2}} -> 161 products
+  freqResponseHzMin:min-excludes-smallest: {"freqResponseHzMin":{"min":4}} -> 159 products
+  freqResponseHzMin:max-inclusive-at-largest: {"freqResponseHzMin":{"max":25}} -> 161 products
+  freqResponseHzMin:max-excludes-largest: {"freqResponseHzMin":{"max":20}} -> 160 products
+  cableLengthM:min-inclusive-at-smallest: {"cableLengthM":{"min":0.2}} -> 124 products
+  cableLengthM:min-excludes-smallest: {"cableLengthM":{"min":1.2}} -> 123 products
+  cableLengthM:max-inclusive-at-largest: {"cableLengthM":{"max":4}} -> 124 products
+  cableLengthM:max-excludes-largest: {"cableLengthM":{"max":3}} -> 123 products
+  batteryLifeHoursAncOff:min-inclusive-at-smallest: {"batteryLifeHoursAncOff":{"min":5}} -> 37 products
+  batteryLifeHoursAncOff:min-excludes-smallest: {"batteryLifeHoursAncOff":{"min":5.5}} -> 35 products
+  batteryLifeHoursAncOff:max-inclusive-at-largest: {"batteryLifeHoursAncOff":{"max":80}} -> 37 products
+  batteryLifeHoursAncOff:max-excludes-largest: {"batteryLifeHoursAncOff":{"max":65}} -> 33 products
+
+Wrote lib/filter-sort/__tests__/data/expected-boundaries.json

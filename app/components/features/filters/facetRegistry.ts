@@ -1,11 +1,13 @@
 'use client';
 
-// Category-aware selector over the three per-category POC facet modules
-// (headphones / audio-electronics / accessories). Before sang-logium-3rv.6,
-// FilterSidebar/FilterControls/ActiveFilterChips imported headphones' module
-// unconditionally, so /products/audio-electronics and /products/accessories
-// silently rendered headphones' groups and facets -- this file is the single
-// place that picks the right one per route.
+// Category-aware selector over the per-category facet modules: headphones'
+// canonical module now lives at lib/filter-sort/headphones/ (promoted out of
+// app/(test)/poc), while audio-electronics and accessories still read from
+// their POC modules pending the same promotion by analogy. Before
+// sang-logium-3rv.6, FilterSidebar/FilterControls/ActiveFilterChips imported
+// headphones' module unconditionally, so /products/audio-electronics and
+// /products/accessories silently rendered headphones' groups and facets --
+// this file is the single place that picks the right one per route.
 //
 // The three modules are structurally identical (same FacetDef/FacetGroup
 // shape, same useFilterParam/useClearAllFilters contract) but each has its
@@ -13,10 +15,10 @@
 // intentionally loose (AnyFacetDef / any) rather than importing one
 // category's concrete types as if they applied to all three.
 
-import * as headphones from '@/app/(test)/poc/filter-sort/headphones/lib/facetConfig';
+import * as headphones from '@/lib/filter-sort/headphones/facetConfig';
 import * as audioElectronics from '@/app/(test)/poc/filter-sort/audio-electronics/lib/facetConfig';
 import * as accessories from '@/app/(test)/poc/filter-sort/accessories/lib/facetConfig';
-import { useFilterParam as useHeadphonesFilterParam, useClearAllFilters as useHeadphonesClearAll } from '@/app/(test)/poc/filter-sort/headphones/lib/useFilterParam';
+import { useFilterParam as useHeadphonesFilterParam, useClearAllFilters as useHeadphonesClearAll } from '@/lib/filter-sort/headphones/useFilterParam';
 import { useFilterParam as useAudioElectronicsFilterParam, useClearAllFilters as useAudioElectronicsClearAll } from '@/app/(test)/poc/filter-sort/audio-electronics/lib/useFilterParam';
 import { useFilterParam as useAccessoriesFilterParam, useClearAllFilters as useAccessoriesClearAll } from '@/app/(test)/poc/filter-sort/accessories/lib/useFilterParam';
 // Re-exported below for existing client-side importers -- the canonical

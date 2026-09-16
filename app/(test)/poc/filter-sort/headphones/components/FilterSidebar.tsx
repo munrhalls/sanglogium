@@ -3,9 +3,9 @@
 import React from 'react';
 import type { IconType } from 'react-icons';
 import { FaTag, FaHeadphones, FaWaveSquare, FaLayerGroup, FaBluetooth, FaMicrochip } from 'react-icons/fa6';
-import { FACET_GROUPS, facetsForGroup, type FacetDef, type FacetGroupId } from '../lib/facetConfig';
-import { useClearAllFilters } from '../lib/useFilterParam';
-import type { FacetOptionCount } from '../lib/filterProducts';
+import { FACET_GROUPS, facetsForGroup, type FacetDef, type FacetGroupId } from '@/lib/filter-sort/headphones/facetConfig';
+import { useClearAllFilters } from '@/lib/filter-sort/headphones/useFilterParam';
+import type { FacetOptionCount } from '@/lib/filter-sort/headphones/filterProducts';
 import { CheckboxGroup, BooleanToggle, RangeControl, PriceControl, RatingControl } from './FilterControls';
 
 /**

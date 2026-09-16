@@ -6,15 +6,15 @@ import { resolvePriceBounds } from '@/lib/catalogue/priceBounds';
 import { FilterSidebar } from './components/FilterSidebar';
 import { SortBar } from './components/SortBar';
 import { ActiveFilterChips } from './components/ActiveFilterChips';
-import { loadFilterSort, type FilterSortState } from './lib/filterSortParams';
+import { loadFilterSort, type FilterSortState } from '@/lib/filter-sort/headphones/filterSortParams';
 import {
   filterProducts,
   sortProducts,
   computeFacetCounts,
   computeBooleanCounts,
   derivedBrandLabels,
-} from './lib/filterProducts';
-import type { HeadphoneProduct } from './lib/types';
+} from '@/lib/filter-sort/headphones/filterProducts';
+import type { HeadphoneProduct } from '@/lib/filter-sort/headphones/types';
 import rawDataset from './dataset.json';
 
 export const dynamic = 'force-dynamic';

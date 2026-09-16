@@ -149,7 +149,7 @@ export const FILTER_FACETS: FilterFacet[] = [
   // in filterAttributes but missing from FILTER_FACETS, so getFilterFacets
   // never computed their counts and the sidebar showed them greyed out even
   // though the underlying product data exists. urlParam values below must
-  // match the `id` keys in app/(test)/poc/filter-sort/headphones/lib/facetConfig.ts —
+  // match the `id` keys in lib/filter-sort/headphones/facetConfig.ts —
   // that's the key production's copied-in FilterSidebar/FilterControls use to
   // look up checkboxCounts/booleanCounts, independent of the Sanity field name.
   // Awards / recognition facet removed from the headphones sidebar per UX cleanup.

@@ -1,0 +1,1510 @@
+[
+  {
+    "caseId": "inStockResolved=true",
+    "filterState": {
+      "inStockResolved": true
+    },
+    "expectedCount": 185,
+    "actualCount": 185,
+    "result": "PASS"
+  },
+  {
+    "caseId": "portable=true",
+    "filterState": {
+      "portable": true
+    },
+    "expectedCount": 107,
+    "actualCount": 107,
+    "result": "PASS"
+  },
+  {
+    "caseId": "requiresAmplifier=true",
+    "filterState": {
+      "requiresAmplifier": true
+    },
+    "expectedCount": 19,
+    "actualCount": 19,
+    "result": "PASS"
+  },
+  {
+    "caseId": "microphone=true",
+    "filterState": {
+      "microphone": true
+    },
+    "expectedCount": 50,
+    "actualCount": 50,
+    "result": "PASS"
+  },
+  {
+    "caseId": "detachableCable=true",
+    "filterState": {
+      "detachableCable": true
+    },
+    "expectedCount": 151,
+    "actualCount": 151,
+    "result": "PASS"
+  },
+  {
+    "caseId": "foldable=true",
+    "filterState": {
+      "foldable": true
+    },
+    "expectedCount": 13,
+    "actualCount": 13,
+    "result": "PASS"
+  },
+  {
+    "caseId": "fitType=universal",
+    "filterState": {
+      "fitType": "universal"
+    },
+    "expectedCount": 52,
+    "actualCount": 52,
+    "result": "PASS"
+  },
+  {
+    "caseId": "connectivity=wired",
+    "filterState": {
+      "connectivity": "wired"
+    },
+    "expectedCount": 138,
+    "actualCount": 138,
+    "result": "PASS"
+  },
+  {
+    "caseId": "connectivity=hybrid",
+    "filterState": {
+      "connectivity": "hybrid"
+    },
+    "expectedCount": 11,
+    "actualCount": 11,
+    "result": "PASS"
+  },
+  {
+    "caseId": "connectivity=wireless",
+    "filterState": {
+      "connectivity": "wireless"
+    },
+    "expectedCount": 9,
+    "actualCount": 9,
+    "result": "PASS"
+  },
+  {
+    "caseId": "connectivity=true-wireless",
+    "filterState": {
+      "connectivity": "true-wireless"
+    },
+    "expectedCount": 28,
+    "actualCount": 28,
+    "result": "PASS"
+  },
+  {
+    "caseId": "soundSignature=warm",
+    "filterState": {
+      "soundSignature": "warm"
+    },
+    "expectedCount": 19,
+    "actualCount": 19,
+    "result": "PASS"
+  },
+  {
+    "caseId": "soundSignature=Neutral with bass boost",
+    "filterState": {
+      "soundSignature": "Neutral with bass boost"
+    },
+    "expectedCount": 3,
+    "actualCount": 3,
+    "result": "PASS"
+  },
+  {
+    "caseId": "soundSignature=Bright/Analytical",
+    "filterState": {
+      "soundSignature": "Bright/Analytical"
+    },
+    "expectedCount": 11,
+    "actualCount": 11,
+    "result": "PASS"
+  },
+  {
+    "caseId": "soundSignature=Neutral",
+    "filterState": {
+      "soundSignature": "Neutral"
+    },
+    "expectedCount": 23,
+    "actualCount": 23,
+    "result": "PASS"
+  },
+  {
+    "caseId": "soundSignature=Boosted Bass",
+    "filterState": {
+      "soundSignature": "Boosted Bass"
+    },
+    "expectedCount": 1,
+    "actualCount": 1,
+    "result": "PASS"
+  },
+  {
+    "caseId": "soundSignature=Harman neutral",
+    "filterState": {
+      "soundSignature": "Harman neutral"
+    },
+    "expectedCount": 1,
+    "actualCount": 1,
+    "result": "PASS"
+  },
+  {
+    "caseId": "soundSignature=V-Shaped",
+    "filterState": {
+      "soundSignature": "V-Shaped"
+    },
+    "expectedCount": 6,
+    "actualCount": 6,
+    "result": "PASS"
+  },
+  {
+    "caseId": "soundSignature=Warm",
+    "filterState": {
+      "soundSignature": "Warm"
+    },
+    "expectedCount": 19,
+    "actualCount": 19,
+    "result": "PASS"
+  },
+  {
+    "caseId": "soundSignature=Basshead",
+    "filterState": {
+      "soundSignature": "Basshead"
+    },
+    "expectedCount": 2,
+    "actualCount": 2,
+    "result": "PASS"
+  },
+  {
+    "caseId": "soundSignature=neutral",
+    "filterState": {
+      "soundSignature": "neutral"
+    },
+    "expectedCount": 23,
+    "actualCount": 23,
+    "result": "PASS"
+  },
+  {
+    "caseId": "soundSignature=Mid-Forward",
+    "filterState": {
+      "soundSignature": "Mid-Forward"
+    },
+    "expectedCount": 3,
+    "actualCount": 3,
+    "result": "PASS"
+  },
+  {
+    "caseId": "ipxRating=none",
+    "filterState": {
+      "ipxRating": "none"
+    },
+    "expectedCount": 17,
+    "actualCount": 17,
+    "result": "PASS"
+  },
+  {
+    "caseId": "ipxRating=IPX4",
+    "filterState": {
+      "ipxRating": "IPX4"
+    },
+    "expectedCount": 10,
+    "actualCount": 10,
+    "result": "PASS"
+  },
+  {
+    "caseId": "ipxRating=IPX5",
+    "filterState": {
+      "ipxRating": "IPX5"
+    },
+    "expectedCount": 3,
+    "actualCount": 3,
+    "result": "PASS"
+  },
+  {
+    "caseId": "ipxRating=IP54",
+    "filterState": {
+      "ipxRating": "IP54"
+    },
+    "expectedCount": 7,
+    "actualCount": 7,
+    "result": "PASS"
+  },
+  {
+    "caseId": "anc=passive",
+    "filterState": {
+      "anc": "passive"
+    },
+    "expectedCount": 59,
+    "actualCount": 59,
+    "result": "PASS"
+  },
+  {
+    "caseId": "anc=none",
+    "filterState": {
+      "anc": "none"
+    },
+    "expectedCount": 78,
+    "actualCount": 78,
+    "result": "PASS"
+  },
+  {
+    "caseId": "anc=anc",
+    "filterState": {
+      "anc": "anc"
+    },
+    "expectedCount": 37,
+    "actualCount": 37,
+    "result": "PASS"
+  },
+  {
+    "caseId": "driverConfigBucket=hybrid",
+    "filterState": {
+      "driverConfigBucket": "hybrid"
+    },
+    "expectedCount": 12,
+    "actualCount": 12,
+    "result": "PASS"
+  },
+  {
+    "caseId": "driverConfigBucket=hybrid-config",
+    "filterState": {
+      "driverConfigBucket": "hybrid-config"
+    },
+    "expectedCount": 5,
+    "actualCount": 5,
+    "result": "PASS"
+  },
+  {
+    "caseId": "driverConfigBucket=single-dynamic",
+    "filterState": {
+      "driverConfigBucket": "single-dynamic"
+    },
+    "expectedCount": 21,
+    "actualCount": 21,
+    "result": "PASS"
+  },
+  {
+    "caseId": "driverConfigBucket=tribrid",
+    "filterState": {
+      "driverConfigBucket": "tribrid"
+    },
+    "expectedCount": 4,
+    "actualCount": 4,
+    "result": "PASS"
+  },
+  {
+    "caseId": "driverConfigBucket=multi-ba",
+    "filterState": {
+      "driverConfigBucket": "multi-ba"
+    },
+    "expectedCount": 3,
+    "actualCount": 3,
+    "result": "PASS"
+  },
+  {
+    "caseId": "driverConfigBucket=other",
+    "filterState": {
+      "driverConfigBucket": "other"
+    },
+    "expectedCount": 2,
+    "actualCount": 2,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=crinear",
+    "filterState": {
+      "brand": "crinear"
+    },
+    "expectedCount": 2,
+    "actualCount": 2,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=64-audio",
+    "filterState": {
+      "brand": "64-audio"
+    },
+    "expectedCount": 3,
+    "actualCount": 3,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=meze-audio",
+    "filterState": {
+      "brand": "meze-audio"
+    },
+    "expectedCount": 16,
+    "actualCount": 16,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=audio-technica",
+    "filterState": {
+      "brand": "audio-technica"
+    },
+    "expectedCount": 7,
+    "actualCount": 7,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=sennheiser",
+    "filterState": {
+      "brand": "sennheiser"
+    },
+    "expectedCount": 22,
+    "actualCount": 22,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=focal",
+    "filterState": {
+      "brand": "focal"
+    },
+    "expectedCount": 16,
+    "actualCount": 16,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=moondrop",
+    "filterState": {
+      "brand": "moondrop"
+    },
+    "expectedCount": 9,
+    "actualCount": 9,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=hifiman",
+    "filterState": {
+      "brand": "hifiman"
+    },
+    "expectedCount": 20,
+    "actualCount": 20,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=audeze",
+    "filterState": {
+      "brand": "audeze"
+    },
+    "expectedCount": 13,
+    "actualCount": 13,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=harmonicdyne",
+    "filterState": {
+      "brand": "harmonicdyne"
+    },
+    "expectedCount": 1,
+    "actualCount": 1,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=es-lab",
+    "filterState": {
+      "brand": "es-lab"
+    },
+    "expectedCount": 3,
+    "actualCount": 3,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=jbl",
+    "filterState": {
+      "brand": "jbl"
+    },
+    "expectedCount": 2,
+    "actualCount": 2,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=t-plus-a",
+    "filterState": {
+      "brand": "t-plus-a"
+    },
+    "expectedCount": 4,
+    "actualCount": 4,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=bowers-wilkins",
+    "filterState": {
+      "brand": "bowers-wilkins"
+    },
+    "expectedCount": 8,
+    "actualCount": 8,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=hisenior-audio",
+    "filterState": {
+      "brand": "hisenior-audio"
+    },
+    "expectedCount": 1,
+    "actualCount": 1,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=thieaudio",
+    "filterState": {
+      "brand": "thieaudio"
+    },
+    "expectedCount": 2,
+    "actualCount": 2,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=truthear",
+    "filterState": {
+      "brand": "truthear"
+    },
+    "expectedCount": 4,
+    "actualCount": 4,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=dunu",
+    "filterState": {
+      "brand": "dunu"
+    },
+    "expectedCount": 2,
+    "actualCount": 2,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=aune-audio",
+    "filterState": {
+      "brand": "aune-audio"
+    },
+    "expectedCount": 3,
+    "actualCount": 3,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=warwick-acoustics",
+    "filterState": {
+      "brand": "warwick-acoustics"
+    },
+    "expectedCount": 3,
+    "actualCount": 3,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=austrian-audio",
+    "filterState": {
+      "brand": "austrian-audio"
+    },
+    "expectedCount": 1,
+    "actualCount": 1,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=hedd-audio",
+    "filterState": {
+      "brand": "hedd-audio"
+    },
+    "expectedCount": 2,
+    "actualCount": 2,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=dan-clark-audio",
+    "filterState": {
+      "brand": "dan-clark-audio"
+    },
+    "expectedCount": 6,
+    "actualCount": 6,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=symphonium-audio",
+    "filterState": {
+      "brand": "symphonium-audio"
+    },
+    "expectedCount": 2,
+    "actualCount": 2,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=denon",
+    "filterState": {
+      "brand": "denon"
+    },
+    "expectedCount": 4,
+    "actualCount": 4,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=fiio",
+    "filterState": {
+      "brand": "fiio"
+    },
+    "expectedCount": 2,
+    "actualCount": 2,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=final-audio",
+    "filterState": {
+      "brand": "final-audio"
+    },
+    "expectedCount": 2,
+    "actualCount": 2,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=softears",
+    "filterState": {
+      "brand": "softears"
+    },
+    "expectedCount": 1,
+    "actualCount": 1,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=bose",
+    "filterState": {
+      "brand": "bose"
+    },
+    "expectedCount": 4,
+    "actualCount": 4,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=sony",
+    "filterState": {
+      "brand": "sony"
+    },
+    "expectedCount": 11,
+    "actualCount": 11,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=soundcore",
+    "filterState": {
+      "brand": "soundcore"
+    },
+    "expectedCount": 3,
+    "actualCount": 3,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=mark-levinson",
+    "filterState": {
+      "brand": "mark-levinson"
+    },
+    "expectedCount": 1,
+    "actualCount": 1,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=noble-audio",
+    "filterState": {
+      "brand": "noble-audio"
+    },
+    "expectedCount": 3,
+    "actualCount": 3,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=sjy-audio",
+    "filterState": {
+      "brand": "sjy-audio"
+    },
+    "expectedCount": 1,
+    "actualCount": 1,
+    "result": "PASS"
+  },
+  {
+    "caseId": "brand=kinera",
+    "filterState": {
+      "brand": "kinera"
+    },
+    "expectedCount": 2,
+    "actualCount": 2,
+    "result": "PASS"
+  },
+  {
+    "caseId": "awards=Stereo 4/2024 Testsieger",
+    "filterState": {
+      "awards": "Stereo 4/2024 Testsieger"
+    },
+    "expectedCount": 1,
+    "actualCount": 1,
+    "result": "PASS"
+  },
+  {
+    "caseId": "awards=EISA High-End Headphones 2024-2025",
+    "filterState": {
+      "awards": "EISA High-End Headphones 2024-2025"
+    },
+    "expectedCount": 1,
+    "actualCount": 1,
+    "result": "PASS"
+  },
+  {
+    "caseId": "awards=Hi-Fi Plus Headphone of the Year 2021",
+    "filterState": {
+      "awards": "Hi-Fi Plus Headphone of the Year 2021"
+    },
+    "expectedCount": 2,
+    "actualCount": 2,
+    "result": "PASS"
+  },
+  {
+    "caseId": "awards=The Switch Master — \"Editor's Choice award\"",
+    "filterState": {
+      "awards": "The Switch Master — \"Editor's Choice award\""
+    },
+    "expectedCount": 1,
+    "actualCount": 1,
+    "result": "PASS"
+  },
+  {
+    "caseId": "awards=iF Design Award 2025",
+    "filterState": {
+      "awards": "iF Design Award 2025"
+    },
+    "expectedCount": 1,
+    "actualCount": 1,
+    "result": "PASS"
+  },
+  {
+    "caseId": "awards=Red Dot Design Award 2025",
+    "filterState": {
+      "awards": "Red Dot Design Award 2025"
+    },
+    "expectedCount": 1,
+    "actualCount": 1,
+    "result": "PASS"
+  },
+  {
+    "caseId": "awards=NYT Wirecutter — best-sounding closed headphone under $2,000",
+    "filterState": {
+      "awards": "NYT Wirecutter — best-sounding closed headphone under $2,000"
+    },
+    "expectedCount": 1,
+    "actualCount": 1,
+    "result": "PASS"
+  },
+  {
+    "caseId": "awards=PC Gamer — \"Editor's Pick Award\"",
+    "filterState": {
+      "awards": "PC Gamer — \"Editor's Pick Award\""
+    },
+    "expectedCount": 1,
+    "actualCount": 1,
+    "result": "PASS"
+  },
+  {
+    "caseId": "awards=GamesRadar — \"Editor's Choice Award\"",
+    "filterState": {
+      "awards": "GamesRadar — \"Editor's Choice Award\""
+    },
+    "expectedCount": 1,
+    "actualCount": 1,
+    "result": "PASS"
+  },
+  {
+    "caseId": "awards=Ecoustics Editor's Award — Best of 2025",
+    "filterState": {
+      "awards": "Ecoustics Editor's Award — Best of 2025"
+    },
+    "expectedCount": 3,
+    "actualCount": 3,
+    "result": "PASS"
+  },
+  {
+    "caseId": "awards=The Verge — \"Editor's Choice award. It's one of the best models that Audeze have ever made...for under a grand, nothing sounds as good.\"",
+    "filterState": {
+      "awards": "The Verge — \"Editor's Choice award. It's one of the best models that Audeze have ever made...for under a grand, nothing sounds as good.\""
+    },
+    "expectedCount": 1,
+    "actualCount": 1,
+    "result": "PASS"
+  },
+  {
+    "caseId": "awards=Recommendation Award - Top Hifi Headlines 2020",
+    "filterState": {
+      "awards": "Recommendation Award - Top Hifi Headlines 2020"
+    },
+    "expectedCount": 1,
+    "actualCount": 1,
+    "result": "PASS"
+  },
+  {
+    "caseId": "awards=Japan VGP 2021 Award",
+    "filterState": {
+      "awards": "Japan VGP 2021 Award"
+    },
+    "expectedCount": 1,
+    "actualCount": 1,
+    "result": "PASS"
+  },
+  {
+    "caseId": "awards=Best Universal IEMs - headfonia.com 2020",
+    "filterState": {
+      "awards": "Best Universal IEMs - headfonia.com 2020"
+    },
+    "expectedCount": 1,
+    "actualCount": 1,
+    "result": "PASS"
+  },
+  {
+    "caseId": "awards=Recommended Buy Award 2026 from headfonia.com",
+    "filterState": {
+      "awards": "Recommended Buy Award 2026 from headfonia.com"
+    },
+    "expectedCount": 1,
+    "actualCount": 1,
+    "result": "PASS"
+  },
+  {
+    "caseId": "productCategory=iem",
+    "filterState": {
+      "productCategory": "iem"
+    },
+    "expectedCount": 32,
+    "actualCount": 32,
+    "result": "PASS"
+  },
+  {
+    "caseId": "productCategory=over-ear",
+    "filterState": {
+      "productCategory": "over-ear"
+    },
+    "expectedCount": 115,
+    "actualCount": 115,
+    "result": "PASS"
+  },
+  {
+    "caseId": "productCategory=on-ear",
+    "filterState": {
+      "productCategory": "on-ear"
+    },
+    "expectedCount": 1,
+    "actualCount": 1,
+    "result": "PASS"
+  },
+  {
+    "caseId": "productCategory=true-wireless",
+    "filterState": {
+      "productCategory": "true-wireless"
+    },
+    "expectedCount": 20,
+    "actualCount": 20,
+    "result": "PASS"
+  },
+  {
+    "caseId": "wearingStyle=in-ear",
+    "filterState": {
+      "wearingStyle": "in-ear"
+    },
+    "expectedCount": 58,
+    "actualCount": 58,
+    "result": "PASS"
+  },
+  {
+    "caseId": "wearingStyle=over-ear",
+    "filterState": {
+      "wearingStyle": "over-ear"
+    },
+    "expectedCount": 124,
+    "actualCount": 124,
+    "result": "PASS"
+  },
+  {
+    "caseId": "wearingStyle=on-ear",
+    "filterState": {
+      "wearingStyle": "on-ear"
+    },
+    "expectedCount": 1,
+    "actualCount": 1,
+    "result": "PASS"
+  },
+  {
+    "caseId": "acousticDesign=open-back",
+    "filterState": {
+      "acousticDesign": "open-back"
+    },
+    "expectedCount": 68,
+    "actualCount": 68,
+    "result": "PASS"
+  },
+  {
+    "caseId": "acousticDesign=closed-back",
+    "filterState": {
+      "acousticDesign": "closed-back"
+    },
+    "expectedCount": 65,
+    "actualCount": 65,
+    "result": "PASS"
+  },
+  {
+    "caseId": "acousticDesign=semi-open",
+    "filterState": {
+      "acousticDesign": "semi-open"
+    },
+    "expectedCount": 10,
+    "actualCount": 10,
+    "result": "PASS"
+  },
+  {
+    "caseId": "cableTermination=3.5mm",
+    "filterState": {
+      "cableTermination": "3.5mm"
+    },
+    "expectedCount": 122,
+    "actualCount": 122,
+    "result": "PASS"
+  },
+  {
+    "caseId": "cableTermination=4.4mm-balanced",
+    "filterState": {
+      "cableTermination": "4.4mm-balanced"
+    },
+    "expectedCount": 51,
+    "actualCount": 51,
+    "result": "PASS"
+  },
+  {
+    "caseId": "cableTermination=6.35mm",
+    "filterState": {
+      "cableTermination": "6.35mm"
+    },
+    "expectedCount": 84,
+    "actualCount": 84,
+    "result": "PASS"
+  },
+  {
+    "caseId": "cableTermination=2.5mm",
+    "filterState": {
+      "cableTermination": "2.5mm"
+    },
+    "expectedCount": 1,
+    "actualCount": 1,
+    "result": "PASS"
+  },
+  {
+    "caseId": "cableTermination=usb-c",
+    "filterState": {
+      "cableTermination": "usb-c"
+    },
+    "expectedCount": 22,
+    "actualCount": 22,
+    "result": "PASS"
+  },
+  {
+    "caseId": "cableTermination=4-pin-xlr",
+    "filterState": {
+      "cableTermination": "4-pin-xlr"
+    },
+    "expectedCount": 40,
+    "actualCount": 40,
+    "result": "PASS"
+  },
+  {
+    "caseId": "cableTermination=2.5mm-balanced",
+    "filterState": {
+      "cableTermination": "2.5mm-balanced"
+    },
+    "expectedCount": 11,
+    "actualCount": 11,
+    "result": "PASS"
+  },
+  {
+    "caseId": "cableTermination=mmcx",
+    "filterState": {
+      "cableTermination": "mmcx"
+    },
+    "expectedCount": 4,
+    "actualCount": 4,
+    "result": "PASS"
+  },
+  {
+    "caseId": "bluetoothCodecs=SBC",
+    "filterState": {
+      "bluetoothCodecs": "SBC"
+    },
+    "expectedCount": 41,
+    "actualCount": 41,
+    "result": "PASS"
+  },
+  {
+    "caseId": "bluetoothCodecs=AAC",
+    "filterState": {
+      "bluetoothCodecs": "AAC"
+    },
+    "expectedCount": 41,
+    "actualCount": 41,
+    "result": "PASS"
+  },
+  {
+    "caseId": "bluetoothCodecs=aptX",
+    "filterState": {
+      "bluetoothCodecs": "aptX"
+    },
+    "expectedCount": 16,
+    "actualCount": 16,
+    "result": "PASS"
+  },
+  {
+    "caseId": "bluetoothCodecs=aptX HD",
+    "filterState": {
+      "bluetoothCodecs": "aptX HD"
+    },
+    "expectedCount": 9,
+    "actualCount": 9,
+    "result": "PASS"
+  },
+  {
+    "caseId": "bluetoothCodecs=aptX Adaptive",
+    "filterState": {
+      "bluetoothCodecs": "aptX Adaptive"
+    },
+    "expectedCount": 17,
+    "actualCount": 17,
+    "result": "PASS"
+  },
+  {
+    "caseId": "bluetoothCodecs=aptX lossless",
+    "filterState": {
+      "bluetoothCodecs": "aptX lossless"
+    },
+    "expectedCount": 2,
+    "actualCount": 2,
+    "result": "PASS"
+  },
+  {
+    "caseId": "bluetoothCodecs=Snapdragon Sound",
+    "filterState": {
+      "bluetoothCodecs": "Snapdragon Sound"
+    },
+    "expectedCount": 1,
+    "actualCount": 1,
+    "result": "PASS"
+  },
+  {
+    "caseId": "bluetoothCodecs=LC3",
+    "filterState": {
+      "bluetoothCodecs": "LC3"
+    },
+    "expectedCount": 9,
+    "actualCount": 9,
+    "result": "PASS"
+  },
+  {
+    "caseId": "bluetoothCodecs=LDAC",
+    "filterState": {
+      "bluetoothCodecs": "LDAC"
+    },
+    "expectedCount": 14,
+    "actualCount": 14,
+    "result": "PASS"
+  },
+  {
+    "caseId": "bluetoothCodecs=aptX Classic",
+    "filterState": {
+      "bluetoothCodecs": "aptX Classic"
+    },
+    "expectedCount": 6,
+    "actualCount": 6,
+    "result": "PASS"
+  },
+  {
+    "caseId": "bluetoothCodecs=aptX Lossless",
+    "filterState": {
+      "bluetoothCodecs": "aptX Lossless"
+    },
+    "expectedCount": 2,
+    "actualCount": 2,
+    "result": "PASS"
+  },
+  {
+    "caseId": "bluetoothCodecs=aptX LL",
+    "filterState": {
+      "bluetoothCodecs": "aptX LL"
+    },
+    "expectedCount": 1,
+    "actualCount": 1,
+    "result": "PASS"
+  },
+  {
+    "caseId": "bluetoothCodecs=aptX Low Latency",
+    "filterState": {
+      "bluetoothCodecs": "aptX Low Latency"
+    },
+    "expectedCount": 1,
+    "actualCount": 1,
+    "result": "PASS"
+  },
+  {
+    "caseId": "bluetoothCodecs=sbc",
+    "filterState": {
+      "bluetoothCodecs": "sbc"
+    },
+    "expectedCount": 41,
+    "actualCount": 41,
+    "result": "PASS"
+  },
+  {
+    "caseId": "bluetoothCodecs=aac",
+    "filterState": {
+      "bluetoothCodecs": "aac"
+    },
+    "expectedCount": 41,
+    "actualCount": 41,
+    "result": "PASS"
+  },
+  {
+    "caseId": "bluetoothCodecs=aptx",
+    "filterState": {
+      "bluetoothCodecs": "aptx"
+    },
+    "expectedCount": 16,
+    "actualCount": 16,
+    "result": "PASS"
+  },
+  {
+    "caseId": "bluetoothCodecs=aptx-hd",
+    "filterState": {
+      "bluetoothCodecs": "aptx-hd"
+    },
+    "expectedCount": 1,
+    "actualCount": 1,
+    "result": "PASS"
+  },
+  {
+    "caseId": "bluetoothCodecs=ldac",
+    "filterState": {
+      "bluetoothCodecs": "ldac"
+    },
+    "expectedCount": 14,
+    "actualCount": 14,
+    "result": "PASS"
+  },
+  {
+    "caseId": "driverType=dynamic",
+    "filterState": {
+      "driverType": "dynamic"
+    },
+    "expectedCount": 127,
+    "actualCount": 127,
+    "result": "PASS"
+  },
+  {
+    "caseId": "driverType=balanced-armature",
+    "filterState": {
+      "driverType": "balanced-armature"
+    },
+    "expectedCount": 22,
+    "actualCount": 22,
+    "result": "PASS"
+  },
+  {
+    "caseId": "driverType=planar-magnetic",
+    "filterState": {
+      "driverType": "planar-magnetic"
+    },
+    "expectedCount": 54,
+    "actualCount": 54,
+    "result": "PASS"
+  },
+  {
+    "caseId": "driverType=electrostatic",
+    "filterState": {
+      "driverType": "electrostatic"
+    },
+    "expectedCount": 11,
+    "actualCount": 11,
+    "result": "PASS"
+  },
+  {
+    "caseId": "driverType=amt",
+    "filterState": {
+      "driverType": "amt"
+    },
+    "expectedCount": 1,
+    "actualCount": 1,
+    "result": "PASS"
+  },
+  {
+    "caseId": "priceCentsResolved:min-inclusive-at-smallest",
+    "filterState": {
+      "priceCentsResolved": {
+        "min": 4999
+      }
+    },
+    "expectedCount": 186,
+    "actualCount": 186,
+    "result": "PASS"
+  },
+  {
+    "caseId": "priceCentsResolved:min-excludes-smallest",
+    "filterState": {
+      "priceCentsResolved": {
+        "min": 5499
+      }
+    },
+    "expectedCount": 185,
+    "actualCount": 185,
+    "result": "PASS"
+  },
+  {
+    "caseId": "priceCentsResolved:max-inclusive-at-largest",
+    "filterState": {
+      "priceCentsResolved": {
+        "max": 3800000
+      }
+    },
+    "expectedCount": 186,
+    "actualCount": 186,
+    "result": "PASS"
+  },
+  {
+    "caseId": "priceCentsResolved:max-excludes-largest",
+    "filterState": {
+      "priceCentsResolved": {
+        "max": 829000
+      }
+    },
+    "expectedCount": 185,
+    "actualCount": 185,
+    "result": "PASS"
+  },
+  {
+    "caseId": "impedanceOhms:min-inclusive-at-smallest",
+    "filterState": {
+      "impedanceOhms": {
+        "min": 3
+      }
+    },
+    "expectedCount": 142,
+    "actualCount": 142,
+    "result": "PASS"
+  },
+  {
+    "caseId": "impedanceOhms:min-excludes-smallest",
+    "filterState": {
+      "impedanceOhms": {
+        "min": 6
+      }
+    },
+    "expectedCount": 141,
+    "actualCount": 141,
+    "result": "PASS"
+  },
+  {
+    "caseId": "impedanceOhms:max-inclusive-at-largest",
+    "filterState": {
+      "impedanceOhms": {
+        "max": 520
+      }
+    },
+    "expectedCount": 142,
+    "actualCount": 142,
+    "result": "PASS"
+  },
+  {
+    "caseId": "impedanceOhms:max-excludes-largest",
+    "filterState": {
+      "impedanceOhms": {
+        "max": 490
+      }
+    },
+    "expectedCount": 141,
+    "actualCount": 141,
+    "result": "PASS"
+  },
+  {
+    "caseId": "sensitivityDbMw:min-inclusive-at-smallest",
+    "filterState": {
+      "sensitivityDbMw": {
+        "min": 89
+      }
+    },
+    "expectedCount": 135,
+    "actualCount": 135,
+    "result": "PASS"
+  },
+  {
+    "caseId": "sensitivityDbMw:min-excludes-smallest",
+    "filterState": {
+      "sensitivityDbMw": {
+        "min": 90
+      }
+    },
+    "expectedCount": 132,
+    "actualCount": 132,
+    "result": "PASS"
+  },
+  {
+    "caseId": "sensitivityDbMw:max-inclusive-at-largest",
+    "filterState": {
+      "sensitivityDbMw": {
+        "max": 128
+      }
+    },
+    "expectedCount": 135,
+    "actualCount": 135,
+    "result": "PASS"
+  },
+  {
+    "caseId": "sensitivityDbMw:max-excludes-largest",
+    "filterState": {
+      "sensitivityDbMw": {
+        "max": 123
+      }
+    },
+    "expectedCount": 134,
+    "actualCount": 134,
+    "result": "PASS"
+  },
+  {
+    "caseId": "freqResponseHzMin:min-inclusive-at-smallest",
+    "filterState": {
+      "freqResponseHzMin": {
+        "min": 2
+      }
+    },
+    "expectedCount": 161,
+    "actualCount": 161,
+    "result": "PASS"
+  },
+  {
+    "caseId": "freqResponseHzMin:min-excludes-smallest",
+    "filterState": {
+      "freqResponseHzMin": {
+        "min": 4
+      }
+    },
+    "expectedCount": 159,
+    "actualCount": 159,
+    "result": "PASS"
+  },
+  {
+    "caseId": "freqResponseHzMin:max-inclusive-at-largest",
+    "filterState": {
+      "freqResponseHzMin": {
+        "max": 25
+      }
+    },
+    "expectedCount": 161,
+    "actualCount": 161,
+    "result": "PASS"
+  },
+  {
+    "caseId": "freqResponseHzMin:max-excludes-largest",
+    "filterState": {
+      "freqResponseHzMin": {
+        "max": 20
+      }
+    },
+    "expectedCount": 160,
+    "actualCount": 160,
+    "result": "PASS"
+  },
+  {
+    "caseId": "cableLengthM:min-inclusive-at-smallest",
+    "filterState": {
+      "cableLengthM": {
+        "min": 0.2
+      }
+    },
+    "expectedCount": 124,
+    "actualCount": 124,
+    "result": "PASS"
+  },
+  {
+    "caseId": "cableLengthM:min-excludes-smallest",
+    "filterState": {
+      "cableLengthM": {
+        "min": 1.2
+      }
+    },
+    "expectedCount": 123,
+    "actualCount": 123,
+    "result": "PASS"
+  },
+  {
+    "caseId": "cableLengthM:max-inclusive-at-largest",
+    "filterState": {
+      "cableLengthM": {
+        "max": 4
+      }
+    },
+    "expectedCount": 124,
+    "actualCount": 124,
+    "result": "PASS"
+  },
+  {
+    "caseId": "cableLengthM:max-excludes-largest",
+    "filterState": {
+      "cableLengthM": {
+        "max": 3
+      }
+    },
+    "expectedCount": 123,
+    "actualCount": 123,
+    "result": "PASS"
+  },
+  {
+    "caseId": "batteryLifeHoursAncOff:min-inclusive-at-smallest",
+    "filterState": {
+      "batteryLifeHoursAncOff": {
+        "min": 5
+      }
+    },
+    "expectedCount": 37,
+    "actualCount": 37,
+    "result": "PASS"
+  },
+  {
+    "caseId": "batteryLifeHoursAncOff:min-excludes-smallest",
+    "filterState": {
+      "batteryLifeHoursAncOff": {
+        "min": 5.5
+      }
+    },
+    "expectedCount": 35,
+    "actualCount": 35,
+    "result": "PASS"
+  },
+  {
+    "caseId": "batteryLifeHoursAncOff:max-inclusive-at-largest",
+    "filterState": {
+      "batteryLifeHoursAncOff": {
+        "max": 80
+      }
+    },
+    "expectedCount": 37,
+    "actualCount": 37,
+    "result": "PASS"
+  },
+  {
+    "caseId": "batteryLifeHoursAncOff:max-excludes-largest",
+    "filterState": {
+      "batteryLifeHoursAncOff": {
+        "max": 65
+      }
+    },
+    "expectedCount": 33,
+    "actualCount": 33,
+    "result": "PASS"
+  },
+  {
+    "caseId": "bool+bool: microphone=true & foldable=true",
+    "filterState": {
+      "microphone": true,
+      "foldable": true
+    },
+    "expectedCount": 4,
+    "actualCount": 4,
+    "result": "PASS"
+  },
+  {
+    "caseId": "bool+enum: microphone=true & connectivity=\"wired\"",
+    "filterState": {
+      "microphone": true,
+      "connectivity": "wired"
+    },
+    "expectedCount": 4,
+    "actualCount": 4,
+    "result": "PASS"
+  },
+  {
+    "caseId": "bool+multi: microphone=true & driverType=\"dynamic\"",
+    "filterState": {
+      "microphone": true,
+      "driverType": "dynamic"
+    },
+    "expectedCount": 48,
+    "actualCount": 48,
+    "result": "PASS"
+  },
+  {
+    "caseId": "bool+range: microphone=true & priceCentsResolved={\"min\":43900}",
+    "filterState": {
+      "microphone": true,
+      "priceCentsResolved": {
+        "min": 43900
+      }
+    },
+    "expectedCount": 12,
+    "actualCount": 12,
+    "result": "PASS"
+  },
+  {
+    "caseId": "enum+enum: connectivity=\"wired\" & anc=\"none\"",
+    "filterState": {
+      "connectivity": "wired",
+      "anc": "none"
+    },
+    "expectedCount": 70,
+    "actualCount": 70,
+    "result": "PASS"
+  },
+  {
+    "caseId": "enum+multi: connectivity=\"wired\" & driverType=\"dynamic\"",
+    "filterState": {
+      "connectivity": "wired",
+      "driverType": "dynamic"
+    },
+    "expectedCount": 81,
+    "actualCount": 81,
+    "result": "PASS"
+  },
+  {
+    "caseId": "enum+range: connectivity=\"wired\" & priceCentsResolved={\"min\":43900}",
+    "filterState": {
+      "connectivity": "wired",
+      "priceCentsResolved": {
+        "min": 43900
+      }
+    },
+    "expectedCount": 82,
+    "actualCount": 82,
+    "result": "PASS"
+  },
+  {
+    "caseId": "multi+multi: driverType=\"dynamic\" & wearingStyle=\"over-ear\"",
+    "filterState": {
+      "driverType": "dynamic",
+      "wearingStyle": "over-ear"
+    },
+    "expectedCount": 69,
+    "actualCount": 69,
+    "result": "PASS"
+  },
+  {
+    "caseId": "multi+range: driverType=\"dynamic\" & priceCentsResolved={\"min\":43900}",
+    "filterState": {
+      "driverType": "dynamic",
+      "priceCentsResolved": {
+        "min": 43900
+      }
+    },
+    "expectedCount": 53,
+    "actualCount": 53,
+    "result": "PASS"
+  },
+  {
+    "caseId": "range+range: priceCentsResolved={\"min\":43900} & impedanceOhms={\"min\":32}",
+    "filterState": {
+      "priceCentsResolved": {
+        "min": 43900
+      },
+      "impedanceOhms": {
+        "min": 32
+      }
+    },
+    "expectedCount": 45,
+    "actualCount": 45,
+    "result": "PASS"
+  }
+]

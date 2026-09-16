@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { FACETS, SORT_DEFAULT, SORT_OPTIONS } from '../lib/facetConfig';
-import { useFilterParam, useClearAllFilters } from '../lib/useFilterParam';
+import { FACETS, SORT_DEFAULT, SORT_OPTIONS } from '@/lib/filter-sort/headphones/facetConfig';
+import { useFilterParam, useClearAllFilters } from '@/lib/filter-sort/headphones/useFilterParam';
 import { humanizeFacetValue } from '@/lib/catalogue/humanizeFacetValue';
 import { formatPriceMajor } from '@/lib/utils/price';
 

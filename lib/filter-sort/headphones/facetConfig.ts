@@ -111,7 +111,6 @@ export const FACETS: FacetDef[] = [
   { id: 'productCategory', group: 'type', label: 'Type', itemNo: 10, status: 'C', control: 'checkbox', field: 'productCategory', options: opts([['over-ear', 'Over Ear'], ['iem', 'In-Ear'], ['true-wireless', 'Wireless'], ['on-ear', 'On Ear']]) },
   { id: 'acousticDesign', group: 'type', label: 'Acoustic Design', itemNo: 12, status: 'C', control: 'checkbox', field: 'acousticDesign', options: opts([['open-back', 'Open-Back'], ['closed-back', 'Closed-Back'], ['semi-open', 'Semi-Open / Hybrid']]) },
   { id: 'connectivity', group: 'type', label: 'Connectivity', itemNo: 14, status: 'C', control: 'checkbox', field: 'connectivity', options: opts([['wired', 'Wired'], ['wireless', 'Wireless (Bluetooth)'], ['true-wireless', 'True Wireless'], ['hybrid', 'Wired + Wireless Hybrid']]) },
-  { id: 'portable', group: 'type', label: 'Portable', itemNo: 15, status: 'C', control: 'boolean', field: 'portable' },
 
   // ── Sound Properties ────────────────────────────────────────────────────
   // Values are the exact strings from sanity-cms/schemaTypes/productType.ts's
@@ -145,6 +144,7 @@ export const FACETS: FacetDef[] = [
   // does not exist in the schema at all (sang-logium-3rv.5).
   { id: 'ipx', group: 'material', label: 'Water Resistance (IPX)', itemNo: 26, status: 'R', control: 'checkbox', field: 'ipxRating', options: opts([['none', 'None'], ['IPX2', 'IPX2'], ['IPX4', 'IPX4'], ['IPX5', 'IPX5'], ['IPX7', 'IPX7'], ['IPX8', 'IPX8']]) },
   { id: 'requiresAmplifier', group: 'material', label: 'Requires Amplifier', itemNo: 20, status: 'C', control: 'boolean', field: 'requiresAmplifier' },
+  { id: 'portable', group: 'material', label: 'Portable', itemNo: 15, status: 'C', control: 'boolean', field: 'portable' },
 
   // ── Wireless (domain-gated on connectivity !== 'wired') ────────────────
   // Real schema options.list (productType.ts:418) was missing 'aptX LL' and

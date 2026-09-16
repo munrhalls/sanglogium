@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { SORT_OPTIONS } from '../lib/facetConfig';
-import { useFilterParam } from '../lib/useFilterParam';
+import { SORT_OPTIONS } from '@/lib/filter-sort/headphones/facetConfig';
+import { useFilterParam } from '@/lib/filter-sort/headphones/useFilterParam';
 
 /**
  * POC-local mirror of app/components/features/filters/SortDropdown.tsx.
