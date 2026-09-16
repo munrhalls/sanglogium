@@ -22,10 +22,9 @@ export interface BaseProduct {
   _createdAt: string;
 }
 
-export type Condition = 'new' | 'open-box' | 'b-stock' | 'demo' | 'used' | 'refurbished';
+export type Condition = 'new' | 'open-box' | 'refurbished';
 export type AwardTag = 'award-winner' | 'editors-choice';
-export type AvailabilityStatus = 'in-stock' | 'preorder' | 'interest-check';
-export type DealTag = 'on-sale' | 'clearance';
+export type DealTag = 'none' | 'sale' | 'clearance';
 
 // should-be-accessories.md item 9 — gates every domain-specific group below.
 export type AccessoryCategory =
@@ -33,26 +32,54 @@ export type AccessoryCategory =
   | 'stands-isolation'
   | 'racks-furniture'
   | 'power'
-  | 'cases-storage'
+  | 'cases-storage-transport'
   | 'cleaning-maintenance'
   | 'replacement-parts'
   | 'adapters-converters'
   | 'room-acoustic-treatment';
 
-export type CompatibleProductType = 'headphone' | 'speaker' | 'turntable' | 'amplifier-source' | 'universal';
+export type CompatibleProductType = 'headphone' | 'speaker' | 'turntable' | 'amplifier-source' | 'universal-any';
 
 // Cables & Interconnects (items 11-15) — domain-gated on accessoryCategory === 'cables-interconnects'.
-export type CableFunction = 'interconnect-rca-xlr' | 'speaker-cable' | 'digital' | 'power-mains' | 'phono';
-export type TerminationType = 'rca' | 'xlr' | 'banana-plug' | 'spade' | 'bnc' | '3.5mm' | '2.5mm' | '4.4mm' | 'mini-to-rca';
+export type CableFunction =
+  | 'interconnect-rca-xlr'
+  | 'speaker-cable'
+  | 'digital-usb-coaxial-optical-aes-ebu-ethernet'
+  | 'power-mains'
+  | 'phono';
+
+export type TerminationType =
+  | 'rca'
+  | 'xlr'
+  | 'banana-plug'
+  | 'spade'
+  | 'bnc'
+  | '3.5mm'
+  | '2.5mm'
+  | '4.4mm'
+  | 'mini-to-rca';
+
 export type ConductorMaterial = 'copper-ofc' | 'silver' | 'silver-plated-copper';
 
 // Stands, Isolation & Furniture (items 16-19) — domain-gated on 'stands-isolation' | 'racks-furniture'.
-export type FurnitureType = 'speaker-stand' | 'equipment-rack-shelf' | 'isolation-platform-feet-pucks' | 'turntable-wall-shelf' | 'wall-mount';
+export type FurnitureType =
+  | 'speaker-stand'
+  | 'equipment-rack-shelf'
+  | 'isolation-platform-feet-pucks'
+  | 'turntable-wall-shelf'
+  | 'wall-mount';
+
 export type FurnitureMaterial = 'wood' | 'metal' | 'acrylic' | 'composite-mdf';
 
 // Power (items 20-22) — domain-gated on accessoryCategory === 'power'.
-export type PowerProductType = 'conditioner' | 'surge-protector' | 'power-distributor' | 'battery-ups-backup' | 'power-cable';
-export type PowerConnectorType = 'nema-5-15' | 'iec-c13' | 'iec-c15' | '20-amp';
+export type PowerProductType =
+  | 'conditioner'
+  | 'surge-protector'
+  | 'power-distributor'
+  | 'battery-ups-backup'
+  | 'power-cable';
+
+export type PowerConnectorType = 'nema-5-15' | 'iec-c13-c15' | '20-amp';
 
 // Cleaning & Maintenance (items 23-24) — domain-gated on accessoryCategory === 'cleaning-maintenance'.
 export type CleaningProductType =
@@ -63,13 +90,27 @@ export type CleaningProductType =
   | 'anti-static-gun'
   | 'demagnetizer'
   | 'screen-lens-cloth';
+
 export type FormatCompatibility = 'vinyl' | 'cd' | 'stylus-cartridge' | 'optical-lens';
 
 // Replacement Parts (items 25-26) — domain-gated on accessoryCategory === 'replacement-parts'.
-export type PartType = 'ear-pads-cushions' | 'ear-tips' | 'phono-cartridge-stylus' | 'drive-belt' | 'remote-control' | 'dust-cover' | 'fuses' | 'vacuum-tubes-valves';
+export type PartType =
+  | 'ear-pads-cushions'
+  | 'ear-tips'
+  | 'phono-cartridge-stylus'
+  | 'drive-belt'
+  | 'remote-control'
+  | 'dust-cover'
+  | 'fuses'
+  | 'vacuum-tubes-valves';
 
 // Adapters & Converters (item 27) — domain-gated on accessoryCategory === 'adapters-converters'.
-export type AdapterFunction = 'bluetooth-transmitter-receiver' | 'impedance-attenuator-adapter' | 'connector-adapter' | 'standalone-phono-preamp' | 'usb-dac-dongle';
+export type AdapterFunction =
+  | 'bluetooth-transmitter-receiver'
+  | 'headphone-impedance-attenuator-adapter'
+  | 'connector-adapter'
+  | 'standalone-phono-preamp'
+  | 'usb-dac-dongle';
 
 // Room Acoustic Treatment (items 28-29) — domain-gated on accessoryCategory === 'room-acoustic-treatment'.
 export type TreatmentType = 'acoustic-panel' | 'bass-trap' | 'diffuser' | 'isolation-pad';
@@ -85,7 +126,6 @@ export interface AccessoryEnrichment {
   deals: DealTag[];
   discountPercent: number | null;
   isNewArrival: boolean;
-  availability: AvailabilityStatus;
 
   // Type (items 9-10)
   accessoryCategory: AccessoryCategory;
@@ -96,7 +136,7 @@ export interface AccessoryEnrichment {
   terminationType: TerminationType | null;
   lengthM: number | null;
   conductorMaterial: ConductorMaterial | null;
-  balanced: boolean | null;
+  balancedUnbalanced: 'balanced' | 'unbalanced' | null;
 
   furnitureType: FurnitureType | null;
   material: FurnitureMaterial | null;

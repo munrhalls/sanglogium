@@ -16,6 +16,7 @@
 import {
   SORT_DEFAULT,
   SORT_OPTIONS,
+  FILTER_SORT_KEYS,
   type SortValue,
 } from './filterSortParams';
 import { FILTER_FACETS, type FilterFacet, isPlaceholderVocab } from './facetMap';
@@ -163,4 +164,25 @@ export function buildProductQuery(state: ProductQueryState): ProductQuery {
   const whereClause = parts.length ? ` && ${parts.join(' && ')}` : '';
 
   return { orderClause, whereClause, params };
+}
+
+/**
+ * Whether any filter or non-default sort is currently active — drives the
+ * EmptyResults "no results because of your filters" vs. "no products in this
+ * category at all" messaging. Single source of truth (sang-logium-3rv.12
+ * follow-up): app/(store)/products/page.tsx and app/(store)/products/
+ * [...slug]/page.tsx each independently hand-wrote an equivalent check
+ * before, and sang-logium-3rv.5 already had to fix the same bug in both
+ * copies separately once — the same drift risk this file's header comment
+ * already calls out (S1, risk A2) for the query itself.
+ */
+export function isFiltersActive(state: ProductQueryState): boolean {
+  return FILTER_SORT_KEYS.some((key) => {
+    if (key === 'sort') return state.sort !== SORT_DEFAULT;
+    if (key === 'minPrice' || key === 'maxPrice') return state[key] != null;
+    const value = state[key];
+    if (typeof value === 'number') return true;
+    if (Array.isArray(value)) return value.length > 0;
+    return value === true;
+  });
 }

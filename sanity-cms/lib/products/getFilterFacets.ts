@@ -51,7 +51,11 @@ export interface GetFilterFacetsOptions {
   state: ProductQueryState;
 }
 
-interface RawProduct {
+// Exported (sang-logium-3rv.12): previously module-private. Made directly
+// testable so the in-memory matching engine has its own correctness coverage
+// -- see sanity-cms/lib/products/__tests__/getFilterFacets.spec.ts. Purely
+// additive visibility change, no behaviour change.
+export interface RawProduct {
   _id: string;
   filterAttributes?: Record<string, unknown>;
   brandRef?: { name: string; slug: string } | null;
@@ -60,7 +64,7 @@ interface RawProduct {
   reservedStock?: number;
 }
 
-function getPriceCents(p: RawProduct): number | null {
+export function getPriceCents(p: RawProduct): number | null {
   if (p.filterAttributes?.price != null) {
     return Number(p.filterAttributes.price);
   }
@@ -68,7 +72,7 @@ function getPriceCents(p: RawProduct): number | null {
   return null;
 }
 
-function isInStock(p: RawProduct): boolean {
+export function isInStock(p: RawProduct): boolean {
   if (p.filterAttributes?.inStock != null) {
     return Boolean(p.filterAttributes.inStock);
   }
@@ -77,7 +81,7 @@ function isInStock(p: RawProduct): boolean {
   return stock - reserved > 0;
 }
 
-function valuesForFacet(p: RawProduct, facet: FilterFacet): string[] {
+export function valuesForFacet(p: RawProduct, facet: FilterFacet): string[] {
   const field = facet.field.replace('filterAttributes.', '');
   const raw = p.filterAttributes?.[field];
   if (raw === undefined || raw === null) return [];
@@ -90,7 +94,7 @@ function valuesForFacet(p: RawProduct, facet: FilterFacet): string[] {
  * path -- e.g. 'freqResponseHz.min' or 'batteryLifeHours.ancOff' -- unlike
  * `valuesForFacet` above, which only reads a top-level filterAttributes key.
  */
-function numericValueForRangeFacet(p: RawProduct, facet: FilterFacet): number | null {
+export function numericValueForRangeFacet(p: RawProduct, facet: FilterFacet): number | null {
   const path = facet.field.replace('filterAttributes.', '').split('.');
   let cur: unknown = p.filterAttributes;
   for (const key of path) {
@@ -102,7 +106,7 @@ function numericValueForRangeFacet(p: RawProduct, facet: FilterFacet): number | 
   return Number.isFinite(num) ? num : null;
 }
 
-function productMatchesState(
+export function productMatchesState(
   p: RawProduct,
   state: ProductQueryState,
   excludeParam?: string,
@@ -121,6 +125,7 @@ function productMatchesState(
 
   for (const facet of FILTER_FACETS) {
     if (facet.urlParam === 'price') continue;
+    if (facet.urlParam === 'inStock') continue;
     if (facet.urlParam === excludeParam) continue;
 
     const paramValue = state[facet.urlParam as keyof ProductQueryState];
@@ -225,8 +230,13 @@ const getFilterFacetsFn = async ({
     const baseProducts = products.filter((p) => productMatchesState(p, state, facet.urlParam));
 
     if (facet.type === 'boolean') {
-      booleans[facet.urlParam] = baseProducts.filter((p) =>
-        valuesForFacet(p, facet).some((v) => v === 'true'),
+      // In-stock is special: it must mirror buildProductQuery's coalesce of
+      // filterAttributes.inStock and the legacy stock arithmetic. Counting only
+      // products with an explicit `filterAttributes.inStock == true` would show
+      // zero until every product is migrated (sang-logium-3rv.7).
+      booleans[facet.urlParam] = baseProducts.filter(
+        facet.urlParam === 'inStock' ? isInStock : (p) =>
+          valuesForFacet(p, facet).some((v) => v === 'true'),
       ).length;
       continue;
     }

@@ -21257,3 +21257,2447 @@
    = driverType: unchanged (["planar-magnetic"])
    💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_Pn6oyV4Ks5AcNbecjgz0Fr_2026-09-14T21-57-54-369Z.json
    ✅ patched. rev: zDJarnvq2QjrVWJbUcO15j
+
+🎧 PATCH (WRITE) — Warwick Acoustics Aperio - GoldenSound Edition (MrEMtYwMtrFDGWmRnTDN2e)
+
+   Field diff (filterAttributes.*):
+   ~ productCategory: null -> ["over-ear"]
+   ~ wearingStyle: "over-ear" -> ["over-ear"]
+   ~ acousticDesign: ["closed-back"] -> ["open-back"]
+   = connectivity: unchanged ("wired")
+   ~ portable: null -> false
+   = microphone: unchanged (false)
+   ~ cableTermination: ["3.5mm","6.35mm"] -> null
+   ~ detachableCable: null -> true
+   = cableLengthM: unchanged (null)
+   ~ foldable: null -> false
+   = ipxRating: unchanged (null)
+   = bluetoothCodecs: unchanged (null)
+   ~ anc: "passive" -> "none"
+   ~ batteryLifeHours: null -> {"ancOff":null,"ancOn":null}
+   ~ driverType: "dynamic" -> ["electrostatic"]
+   = impedanceOhms: unchanged (null)
+   = sensitivityDbMw: unchanged (null)
+   = freqResponseHz: unchanged (null)
+   = awards: unchanged (null)
+   = soundSignature: unchanged (null)
+   = driverConfigBucket: unchanged (null)
+   ~ driverConfigDetail: null -> "HPEL (High-Precision Electrostatic Laminate) single-ended transducer"
+   = fitType: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_MrEMtYwMtrFDGWmRnTDN2e_2026-09-15T08-25-53-322Z.json
+   ✅ patched. rev: NkN8nnIwsmPRUCwKdMMxWq
+
+🎧 PATCH (WRITE) — Warwick Acoustics Warwick Acoustics Bravura Headphones - Open Box (PHPYj28HJdPDHAaIBDrPvO)
+
+   Field diff (filterAttributes.*):
+   ~ productCategory: null -> ["over-ear"]
+   ~ wearingStyle: "over-ear" -> ["over-ear"]
+   ~ acousticDesign: ["closed-back"] -> ["open-back"]
+   = connectivity: unchanged ("wired")
+   ~ portable: null -> false
+   = microphone: unchanged (false)
+   ~ cableTermination: ["3.5mm","6.35mm"] -> null
+   ~ detachableCable: null -> true
+   = cableLengthM: unchanged (null)
+   ~ foldable: null -> false
+   = ipxRating: unchanged (null)
+   = bluetoothCodecs: unchanged (null)
+   ~ anc: "passive" -> "none"
+   ~ batteryLifeHours: null -> {"ancOff":null,"ancOn":null}
+   ~ driverType: "dynamic" -> ["electrostatic"]
+   = impedanceOhms: unchanged (null)
+   = sensitivityDbMw: unchanged (null)
+   = freqResponseHz: unchanged (null)
+   = awards: unchanged (null)
+   = soundSignature: unchanged (null)
+   = driverConfigBucket: unchanged (null)
+   ~ driverConfigDetail: null -> "HPEL (High-Precision Electrostatic Laminate) single-ended transducer"
+   = fitType: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_PHPYj28HJdPDHAaIBDrPvO_2026-09-15T08-25-54-917Z.json
+   ✅ patched. rev: NkN8nnIwsmPRUCwKdMMxam
+
+🎧 PATCH (WRITE) — Warwick Acoustics Warwick Acoustics Bravura Headphones (MrEMtYwMtrFDGWmRnTDDVo)
+
+   Field diff (filterAttributes.*):
+   ~ productCategory: null -> ["over-ear"]
+   ~ wearingStyle: "over-ear" -> ["over-ear"]
+   ~ acousticDesign: ["closed-back"] -> ["open-back"]
+   = connectivity: unchanged ("wired")
+   ~ portable: null -> false
+   = microphone: unchanged (false)
+   ~ cableTermination: ["3.5mm","6.35mm"] -> null
+   ~ detachableCable: null -> true
+   = cableLengthM: unchanged (null)
+   ~ foldable: null -> false
+   = ipxRating: unchanged (null)
+   = bluetoothCodecs: unchanged (null)
+   ~ anc: "passive" -> "none"
+   ~ batteryLifeHours: null -> {"ancOff":null,"ancOn":null}
+   ~ driverType: "dynamic" -> ["electrostatic"]
+   = impedanceOhms: unchanged (null)
+   = sensitivityDbMw: unchanged (null)
+   = freqResponseHz: unchanged (null)
+   = awards: unchanged (null)
+   = soundSignature: unchanged (null)
+   = driverConfigBucket: unchanged (null)
+   ~ driverConfigDetail: null -> "HPEL (High-Precision Electrostatic Laminate) single-ended transducer"
+   = fitType: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_MrEMtYwMtrFDGWmRnTDDVo_2026-09-15T08-25-56-150Z.json
+   ✅ patched. rev: NkN8nnIwsmPRUCwKdMMxgg
+
+🎧 PATCH (WRITE) — Sennheiser Sennheiser Accentum True Wireless Noise-Cancelling Earbuds (Black) (ZuUKzmkqDyQwdcwhxl96BU)
+
+   Field diff (filterAttributes.*):
+   = productCategory: unchanged (["true-wireless"])
+   = wearingStyle: unchanged (["in-ear"])
+   = acousticDesign: unchanged (["closed-back"])
+   = fitType: unchanged ("universal")
+   = connectivity: unchanged ("true-wireless")
+   = portable: unchanged (true)
+   = driverType: unchanged (["dynamic"])
+   = sensitivityDbMw: unchanged (107)
+   ~ freqResponseHz: {"max":21000,"min":5} -> {"min":5,"max":21000}
+   = detachableCable: unchanged (false)
+   = microphone: unchanged (true)
+   = foldable: unchanged (false)
+   = anc: unchanged ("anc")
+   = bluetoothCodecs: unchanged (["SBC","AAC","aptX","LC3"])
+   = batteryLifeHours: unchanged ({"ancOff":8,"ancOn":6})
+   = ipxRating: unchanged ("IPX4")
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_ZuUKzmkqDyQwdcwhxl96BU_2026-09-15T08-25-57-489Z.json
+   ✅ patched. rev: NkN8nnIwsmPRUCwKdMMxkc
+
+🎧 PATCH (WRITE) — Sennheiser Sennheiser AMBEO Max Soundbar (moXlkADK7m1DHgGwWwzgHO)
+
+   Field diff (filterAttributes.*):
+   ~ portable: null -> false
+   ~ freqResponseHz: null -> {"min":30,"max":20000}
+   ~ detachableCable: null -> false
+   = microphone: unchanged (false)
+   ~ foldable: null -> false
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_moXlkADK7m1DHgGwWwzgHO_2026-09-15T08-25-58-729Z.json
+   ✅ patched. rev: meSxs4Qz3A09YiBBbrDlNC
+
+🎧 PATCH (WRITE) — Sennheiser Sennheiser HD 450BT Headphones (k27n1AQuIbSr5iozG2ivGf)
+
+   Field diff (filterAttributes.*):
+   = productCategory: unchanged (["over-ear"])
+   = wearingStyle: unchanged (["over-ear"])
+   = acousticDesign: unchanged (["closed-back"])
+   = connectivity: unchanged ("wireless")
+   = portable: unchanged (true)
+   = driverType: unchanged (["dynamic"])
+   = sensitivityDbMw: unchanged (108)
+   ~ freqResponseHz: {"max":22000,"min":18} -> {"min":18,"max":22000}
+   = cableTermination: unchanged (["3.5mm"])
+   = detachableCable: unchanged (false)
+   = cableLengthM: unchanged (1.5)
+   = microphone: unchanged (true)
+   = foldable: unchanged (true)
+   = anc: unchanged ("anc")
+   = bluetoothCodecs: unchanged (["aptX","aptX LL","AAC","SBC"])
+   ~ batteryLifeHours: {"ancOff":30,"ancOn":30} -> {"ancOn":30,"ancOff":30}
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_k27n1AQuIbSr5iozG2ivGf_2026-09-15T08-26-00-041Z.json
+   ✅ patched. rev: NkN8nnIwsmPRUCwKdMMxpX
+
+🎧 PATCH (WRITE) — Sennheiser Sennheiser HD 560S Open-back Reference Headphones (xMEqvkRBbdrlJXyFG8l0p9)
+
+   Field diff (filterAttributes.*):
+   ~ productCategory: null -> ["over-ear"]
+   ~ wearingStyle: "over-ear" -> ["over-ear"]
+   = acousticDesign: unchanged (["open-back"])
+   = connectivity: unchanged ("wired")
+   ~ portable: null -> false
+   ~ driverType: "dynamic" -> ["dynamic"]
+   ~ sensitivityDbMw: null -> 110
+   ~ freqResponseHz: null -> {"min":6,"max":38000}
+   = cableTermination: unchanged (["3.5mm","6.35mm"])
+   ~ detachableCable: null -> true
+   ~ cableLengthM: null -> 1.8
+   = microphone: unchanged (false)
+   ~ foldable: null -> false
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_xMEqvkRBbdrlJXyFG8l0p9_2026-09-15T08-26-01-242Z.json
+   ✅ patched. rev: zDJarnvq2QjrVWJbUf1UKl
+
+🎧 PATCH (WRITE) — Sennheiser Sennheiser HD 560S (k27n1AQuIbSr5iozFz7EE4)
+
+   Field diff (filterAttributes.*):
+   = productCategory: unchanged (["over-ear"])
+   = wearingStyle: unchanged (["over-ear"])
+   = acousticDesign: unchanged (["open-back"])
+   = connectivity: unchanged ("wired")
+   = driverType: unchanged (["dynamic"])
+   = impedanceOhms: unchanged (120)
+   = sensitivityDbMw: unchanged (110)
+   ~ freqResponseHz: {"max":38000,"min":6} -> {"min":6,"max":38000}
+   = cableTermination: unchanged (["3.5mm","6.35mm"])
+   = detachableCable: unchanged (true)
+   = cableLengthM: unchanged (1.8)
+   = microphone: unchanged (false)
+   = foldable: unchanged (false)
+   = soundSignature: unchanged ("Neutral")
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_k27n1AQuIbSr5iozFz7EE4_2026-09-15T08-26-02-377Z.json
+   ✅ patched. rev: meSxs4Qz3A09YiBBbrDnLm
+
+🎧 PATCH (WRITE) — Sennheiser Sennheiser HD 569 Headphones (n10eAegrGspodtsQvneN6x)
+
+   Field diff (filterAttributes.*):
+   = productCategory: unchanged (["over-ear"])
+   = wearingStyle: unchanged (["over-ear"])
+   = acousticDesign: unchanged (["closed-back"])
+   = connectivity: unchanged ("wired")
+   = portable: unchanged (false)
+   = driverType: unchanged (["dynamic"])
+   = impedanceOhms: unchanged (23)
+   = sensitivityDbMw: unchanged (115)
+   ~ freqResponseHz: {"max":28000,"min":10} -> {"min":10,"max":28000}
+   = cableTermination: unchanged (["3.5mm","6.35mm"])
+   = detachableCable: unchanged (true)
+   = cableLengthM: unchanged (1.2)
+   = microphone: unchanged (true)
+   = foldable: unchanged (false)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_n10eAegrGspodtsQvneN6x_2026-09-15T08-26-03-731Z.json
+   ✅ patched. rev: zDJarnvq2QjrVWJbUf1UyV
+
+🎧 PATCH (WRITE) — Sennheiser Sennheiser HD 600 Headphones (Pn6oyV4Ks5AcNbecjgrju8)
+
+   Field diff (filterAttributes.*):
+   = productCategory: unchanged (["over-ear"])
+   = wearingStyle: unchanged (["over-ear"])
+   = acousticDesign: unchanged (["open-back"])
+   = connectivity: unchanged ("wired")
+   = portable: unchanged (false)
+   = driverType: unchanged (["dynamic"])
+   = impedanceOhms: unchanged (300)
+   = sensitivityDbMw: unchanged (97)
+   ~ freqResponseHz: {"max":40500,"min":12} -> {"min":12,"max":40500}
+   = cableTermination: unchanged (["3.5mm","6.35mm"])
+   = detachableCable: unchanged (true)
+   = cableLengthM: unchanged (3)
+   = microphone: unchanged (false)
+   = foldable: unchanged (false)
+   = soundSignature: unchanged ("Neutral")
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_Pn6oyV4Ks5AcNbecjgrju8_2026-09-15T08-26-04-975Z.json
+   ✅ patched. rev: meSxs4Qz3A09YiBBbrDnbu
+
+🎧 PATCH (WRITE) — Sennheiser Sennheiser HD 600 Open-back Reference Headphones (xMEqvkRBbdrlJXyFG8erD7)
+
+   Field diff (filterAttributes.*):
+   ~ productCategory: null -> ["over-ear"]
+   ~ wearingStyle: "over-ear" -> ["over-ear"]
+   = acousticDesign: unchanged (["open-back"])
+   = connectivity: unchanged ("wired")
+   ~ portable: null -> false
+   ~ driverType: "dynamic" -> ["dynamic"]
+   ~ impedanceOhms: null -> 300
+   ~ sensitivityDbMw: null -> 97
+   ~ freqResponseHz: null -> {"min":12,"max":40500}
+   ~ cableTermination: ["3.5mm"] -> ["3.5mm","6.35mm"]
+   ~ detachableCable: null -> true
+   ~ cableLengthM: null -> 3
+   = microphone: unchanged (false)
+   ~ foldable: null -> false
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_xMEqvkRBbdrlJXyFG8erD7_2026-09-15T08-26-06-384Z.json
+   ✅ patched. rev: meSxs4Qz3A09YiBBbrDnvG
+
+🎧 PATCH (WRITE) — Sennheiser Sennheiser HD 620S Headphones (k27n1AQuIbSr5iozFz7GSn)
+
+   Field diff (filterAttributes.*):
+   = productCategory: unchanged (["over-ear"])
+   = wearingStyle: unchanged (["over-ear"])
+   = acousticDesign: unchanged (["closed-back"])
+   = connectivity: unchanged ("wired")
+   = portable: unchanged (false)
+   = driverType: unchanged (["dynamic"])
+   = impedanceOhms: unchanged (150)
+   = sensitivityDbMw: unchanged (110)
+   ~ freqResponseHz: {"max":30000,"min":6} -> {"min":6,"max":30000}
+   = cableTermination: unchanged (["3.5mm","6.35mm"])
+   = detachableCable: unchanged (true)
+   = cableLengthM: unchanged (1.8)
+   = microphone: unchanged (false)
+   = foldable: unchanged (false)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_k27n1AQuIbSr5iozFz7GSn_2026-09-15T08-26-07-456Z.json
+   ✅ patched. rev: zDJarnvq2QjrVWJbUf1VV1
+
+🎧 PATCH (WRITE) — Sennheiser Sennheiser HD 650 Headphones (Pn6oyV4Ks5AcNbecjgrpEU)
+
+   Field diff (filterAttributes.*):
+   = productCategory: unchanged (["over-ear"])
+   = wearingStyle: unchanged (["over-ear"])
+   = acousticDesign: unchanged (["open-back"])
+   = connectivity: unchanged ("wired")
+   = portable: unchanged (false)
+   = driverType: unchanged (["dynamic"])
+   = impedanceOhms: unchanged (300)
+   = sensitivityDbMw: unchanged (103)
+   ~ freqResponseHz: {"max":41000,"min":10} -> {"min":10,"max":41000}
+   = cableTermination: unchanged (["3.5mm","6.35mm"])
+   = detachableCable: unchanged (true)
+   = cableLengthM: unchanged (3)
+   = microphone: unchanged (false)
+   = foldable: unchanged (false)
+   = soundSignature: unchanged ("Warm")
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_Pn6oyV4Ks5AcNbecjgrpEU_2026-09-15T08-26-08-475Z.json
+   ✅ patched. rev: zDJarnvq2QjrVWJbUf1VuJ
+
+🎧 PATCH (WRITE) — Sennheiser Sennheiser HD 660S2 Dynamic Open-back Headphones (xMEqvkRBbdrlJXyFG8euj7)
+
+   Field diff (filterAttributes.*):
+   ~ productCategory: null -> ["over-ear"]
+   ~ wearingStyle: "over-ear" -> ["over-ear"]
+   = acousticDesign: unchanged (["open-back"])
+   = connectivity: unchanged ("wired")
+   ~ portable: null -> false
+   ~ driverType: "dynamic" -> ["dynamic"]
+   ~ impedanceOhms: null -> 300
+   ~ sensitivityDbMw: null -> 104
+   ~ cableTermination: ["3.5mm","6.35mm"] -> ["3.5mm","6.35mm","4.4mm-balanced"]
+   ~ detachableCable: null -> true
+   ~ cableLengthM: null -> 1.8
+   = microphone: unchanged (false)
+   ~ foldable: null -> false
+   ~ freqResponseHz: null -> {"min":8,"max":41500}
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_xMEqvkRBbdrlJXyFG8euj7_2026-09-15T08-26-09-493Z.json
+   ✅ patched. rev: zDJarnvq2QjrVWJbUf1WQp
+
+🎧 PATCH (WRITE) — Sennheiser Sennheiser HD 660S2 Headphones (IVp0Ya0qCxU3IKB1jVguzD)
+
+   Field diff (filterAttributes.*):
+   = productCategory: unchanged (["over-ear"])
+   = wearingStyle: unchanged (["over-ear"])
+   = acousticDesign: unchanged (["open-back"])
+   = connectivity: unchanged ("wired")
+   = portable: unchanged (false)
+   = driverType: unchanged (["dynamic"])
+   = impedanceOhms: unchanged (300)
+   = sensitivityDbMw: unchanged (104)
+   ~ freqResponseHz: {"max":41500,"min":8} -> {"min":8,"max":41500}
+   = cableTermination: unchanged (["3.5mm","6.35mm","4.4mm-balanced"])
+   = detachableCable: unchanged (true)
+   = cableLengthM: unchanged (1.8)
+   = microphone: unchanged (false)
+   = foldable: unchanged (false)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_IVp0Ya0qCxU3IKB1jVguzD_2026-09-15T08-26-10-505Z.json
+   ✅ patched. rev: meSxs4Qz3A09YiBBbrDoXy
+
+🎧 PATCH (WRITE) — Sennheiser Sennheiser HD 800S Dynamic Open-back Headphones (GPjMdcfFWZVrKyR2PB57uI)
+
+   Field diff (filterAttributes.*):
+   ~ productCategory: null -> ["over-ear"]
+   ~ wearingStyle: "over-ear" -> ["over-ear"]
+   = acousticDesign: unchanged (["open-back"])
+   = connectivity: unchanged ("wired")
+   ~ portable: null -> false
+   ~ driverType: "dynamic" -> ["dynamic"]
+   ~ impedanceOhms: null -> 300
+   ~ sensitivityDbMw: null -> 102
+   ~ freqResponseHz: null -> {"min":4,"max":51000}
+   ~ cableTermination: ["3.5mm","6.35mm"] -> ["6.35mm","4.4mm-balanced"]
+   ~ detachableCable: null -> true
+   ~ cableLengthM: null -> 3
+   = microphone: unchanged (false)
+   ~ foldable: null -> false
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_GPjMdcfFWZVrKyR2PB57uI_2026-09-15T08-26-11-532Z.json
+   ✅ patched. rev: NkN8nnIwsmPRUCwKdMMyfg
+
+🎧 PATCH (WRITE) — Sennheiser Sennheiser HD 820 - Open Box (n10eAegrGspodtsQvneQzx)
+
+   Field diff (filterAttributes.*):
+   = productCategory: unchanged (["over-ear"])
+   = wearingStyle: unchanged (["over-ear"])
+   = acousticDesign: unchanged (["closed-back"])
+   = connectivity: unchanged ("wired")
+   = portable: unchanged (false)
+   = driverType: unchanged (["dynamic"])
+   = impedanceOhms: unchanged (300)
+   = sensitivityDbMw: unchanged (103)
+   ~ freqResponseHz: {"max":48000,"min":6} -> {"min":6,"max":48000}
+   = cableTermination: unchanged (["6.35mm","4-pin-xlr","4.4mm-balanced"])
+   = detachableCable: unchanged (true)
+   = cableLengthM: unchanged (3)
+   = microphone: unchanged (false)
+   = foldable: unchanged (false)
+   = soundSignature: unchanged ("V-Shaped")
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_n10eAegrGspodtsQvneQzx_2026-09-15T08-26-12-555Z.json
+   ✅ patched. rev: zDJarnvq2QjrVWJbUf1Wtj
+
+🎧 PATCH (WRITE) — Sennheiser Sennheiser HD 820 Headphones (moXlkADK7m1DHgGwWtbklW)
+
+   Field diff (filterAttributes.*):
+   = productCategory: unchanged (["over-ear"])
+   = wearingStyle: unchanged (["over-ear"])
+   = acousticDesign: unchanged (["closed-back"])
+   = connectivity: unchanged ("wired")
+   = portable: unchanged (false)
+   = driverType: unchanged (["dynamic"])
+   = impedanceOhms: unchanged (300)
+   = sensitivityDbMw: unchanged (103)
+   ~ freqResponseHz: {"max":48000,"min":6} -> {"min":6,"max":48000}
+   = cableTermination: unchanged (["6.35mm","4-pin-xlr","4.4mm-balanced"])
+   = detachableCable: unchanged (true)
+   = cableLengthM: unchanged (3)
+   = microphone: unchanged (false)
+   = foldable: unchanged (false)
+   = soundSignature: unchanged ("V-Shaped")
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_moXlkADK7m1DHgGwWtbklW_2026-09-15T08-26-13-629Z.json
+   ✅ patched. rev: meSxs4Qz3A09YiBBbrDp10
+
+🎧 PATCH (WRITE) — Sennheiser Sennheiser HDB 630 Bluetooth ANC Headphones (GPjMdcfFWZVrKyR2PB7yn8)
+
+   Field diff (filterAttributes.*):
+   ~ productCategory: null -> ["over-ear"]
+   ~ wearingStyle: "over-ear" -> ["over-ear"]
+   = acousticDesign: unchanged (["closed-back"])
+   ~ connectivity: "wireless" -> "hybrid"
+   ~ portable: null -> true
+   ~ driverType: "dynamic" -> ["dynamic"]
+   ~ impedanceOhms: null -> 480
+   ~ sensitivityDbMw: null -> 105
+   ~ freqResponseHz: null -> {"min":6,"max":40000}
+   ~ cableTermination: ["3.5mm","6.35mm"] -> ["3.5mm","usb-c"]
+   ~ detachableCable: null -> true
+   ~ cableLengthM: null -> 1.2
+   = microphone: unchanged (false)
+   ~ foldable: null -> false
+   = anc: unchanged ("anc")
+   ~ batteryLifeHours: null -> {"ancOff":60}
+   ~ bluetoothCodecs: null -> ["SBC","AAC","aptX","aptX HD","aptX Adaptive"]
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_GPjMdcfFWZVrKyR2PB7yn8_2026-09-15T08-26-14-686Z.json
+   ✅ patched. rev: NkN8nnIwsmPRUCwKdMMynY
+
+🎧 PATCH (WRITE) — Sennheiser Sennheiser IE 200 In-Ear Headphones (PHPYj28HJdPDHAaIBCEl18)
+
+   Field diff (filterAttributes.*):
+   ~ productCategory: null -> ["iem"]
+   ~ wearingStyle: "in-ear" -> ["in-ear"]
+   = connectivity: unchanged ("wired")
+   ~ portable: null -> true
+   ~ driverType: "dynamic" -> ["dynamic"]
+   ~ impedanceOhms: null -> 16
+   ~ sensitivityDbMw: null -> 119
+   ~ cableTermination: ["mmcx"] -> ["3.5mm","mmcx"]
+   ~ detachableCable: null -> true
+   ~ cableLengthM: null -> 1.2
+   = microphone: unchanged (false)
+   ~ foldable: null -> false
+   ~ freqResponseHz: null -> {"min":6,"max":20000}
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_PHPYj28HJdPDHAaIBCEl18_2026-09-15T08-26-15-705Z.json
+   ✅ patched. rev: meSxs4Qz3A09YiBBbrDpKM
+
+🎧 PATCH (WRITE) — Sennheiser Sennheiser IE 600 In-Ear Headphones (MrEMtYwMtrFDGWmRnQWhwn)
+
+   Field diff (filterAttributes.*):
+   ~ productCategory: null -> ["iem"]
+   ~ wearingStyle: "in-ear" -> ["in-ear"]
+   ~ acousticDesign: null -> ["closed-back"]
+   = connectivity: unchanged ("wired")
+   ~ portable: null -> true
+   ~ driverType: "dynamic" -> ["dynamic"]
+   ~ impedanceOhms: null -> 18
+   ~ sensitivityDbMw: null -> 118
+   ~ cableTermination: ["mmcx"] -> ["3.5mm","4.4mm-balanced","mmcx"]
+   ~ detachableCable: null -> true
+   = microphone: unchanged (false)
+   ~ foldable: null -> false
+   ~ freqResponseHz: null -> {"min":4,"max":46500}
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_MrEMtYwMtrFDGWmRnQWhwn_2026-09-15T08-26-17-021Z.json
+   ✅ patched. rev: NkN8nnIwsmPRUCwKdMMyqV
+
+🎧 PATCH (WRITE) — Sennheiser Sennheiser IE 900 In-Ear Headphones (Pn6oyV4Ks5AcNbecjjpRo3)
+
+   Field diff (filterAttributes.*):
+   ~ productCategory: null -> ["iem"]
+   ~ wearingStyle: "in-ear" -> ["in-ear"]
+   = connectivity: unchanged ("wired")
+   ~ portable: null -> true
+   ~ driverType: "dynamic" -> ["dynamic"]
+   ~ impedanceOhms: null -> 16
+   ~ sensitivityDbMw: null -> 123
+   ~ freqResponseHz: null -> {"min":5,"max":48000}
+   ~ cableTermination: ["mmcx"] -> ["3.5mm","2.5mm-balanced","4.4mm-balanced","mmcx"]
+   ~ detachableCable: null -> true
+   ~ cableLengthM: null -> 1.25
+   = microphone: unchanged (false)
+   ~ foldable: null -> false
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_Pn6oyV4Ks5AcNbecjjpRo3_2026-09-15T08-26-18-034Z.json
+   ✅ patched. rev: zDJarnvq2QjrVWJbUf1XMd
+
+🎧 PATCH (WRITE) — Sennheiser Sennheiser Momentum 5 Wireless Over-Ear ANC Headphones (DZc43yHr6ydfgE7zB43tcm)
+
+   Field diff (filterAttributes.*):
+   ~ productCategory: null -> ["over-ear"]
+   ~ wearingStyle: "over-ear" -> ["over-ear"]
+   = acousticDesign: unchanged (["closed-back"])
+   ~ connectivity: "wireless" -> "hybrid"
+   ~ portable: null -> true
+   ~ driverType: "dynamic" -> ["dynamic"]
+   ~ impedanceOhms: null -> 520
+   ~ sensitivityDbMw: null -> 108
+   ~ freqResponseHz: null -> {"min":6,"max":40000}
+   ~ cableTermination: ["3.5mm","6.35mm"] -> ["3.5mm","2.5mm","usb-c"]
+   ~ detachableCable: null -> true
+   ~ microphone: false -> true
+   ~ foldable: null -> true
+   = anc: unchanged ("anc")
+   ~ batteryLifeHours: null -> {"ancOn":57}
+   ~ bluetoothCodecs: null -> ["SBC","AAC","aptX","aptX HD","aptX Adaptive","aptX lossless","Snapdragon Sound"]
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_DZc43yHr6ydfgE7zB43tcm_2026-09-15T08-26-19-063Z.json
+   ✅ patched. rev: NkN8nnIwsmPRUCwKdMMyxO
+
+🎧 PATCH (WRITE) — Sennheiser Sennheiser Momentum Sport True Wireless Earbuds with Adaptive Noise Cancellation (Black) (ZuUKzmkqDyQwdcwhxwQHiY)
+
+   Field diff (filterAttributes.*):
+   = productCategory: unchanged (["true-wireless"])
+   = wearingStyle: unchanged (["in-ear"])
+   = acousticDesign: unchanged (["semi-open"])
+   = fitType: unchanged ("universal")
+   = connectivity: unchanged ("true-wireless")
+   = portable: unchanged (true)
+   = driverType: unchanged (["dynamic"])
+   = detachableCable: unchanged (false)
+   = microphone: unchanged (true)
+   = foldable: unchanged (false)
+   = anc: unchanged ("anc")
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_ZuUKzmkqDyQwdcwhxwQHiY_2026-09-15T08-26-20-066Z.json
+   ✅ patched. rev: meSxs4Qz3A09YiBBbrDqTK
+
+🎧 PATCH (WRITE) — Sennheiser Sennheiser MOMENTUM True Wireless 4 (Pn6oyV4Ks5AcNbecjjpYAS)
+
+   Field diff (filterAttributes.*):
+   ~ productCategory: null -> ["true-wireless"]
+   ~ wearingStyle: "in-ear" -> ["in-ear"]
+   ~ connectivity: "wireless" -> "true-wireless"
+   ~ portable: null -> true
+   ~ driverType: "dynamic" -> ["dynamic"]
+   ~ detachableCable: null -> false
+   ~ microphone: false -> true
+   ~ foldable: null -> false
+   ~ anc: "passive" -> "anc"
+   ~ batteryLifeHours: null -> {"ancOff":7.5}
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_Pn6oyV4Ks5AcNbecjjpYAS_2026-09-15T08-26-21-099Z.json
+   ✅ patched. rev: zDJarnvq2QjrVWJbUf1XiJ
+
+🎧 PATCH (WRITE) — Sennheiser Sennheiser RS 175 Headphones (MrEMtYwMtrFDGWmRnQTeER)
+
+   Field diff (filterAttributes.*):
+   ~ productCategory: null -> ["over-ear"]
+   ~ wearingStyle: "over-ear" -> ["over-ear"]
+   = acousticDesign: unchanged (["closed-back"])
+   ~ connectivity: "wired" -> "wireless"
+   ~ portable: null -> false
+   ~ driverType: "dynamic" -> ["dynamic"]
+   ~ detachableCable: null -> false
+   = microphone: unchanged (false)
+   ~ foldable: null -> false
+   ~ sensitivityDbMw: null -> 114
+   ~ freqResponseHz: null -> {"min":17,"max":22000}
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_MrEMtYwMtrFDGWmRnQTeER_2026-09-15T08-26-22-115Z.json
+   ✅ patched. rev: zDJarnvq2QjrVWJbUf1Xt9
+
+🎧 PATCH (WRITE) — iFi Audio iFi Audio Diablo-X DAC and Headphone Amplifier (k27n1AQuIbSr5iozG1vD4O)
+
+   Field diff (filterAttributes.*):
+   = deviceType: unchanged ("dac")
+   ~ deviceConnectivity: null -> "wired-wireless"
+   = formFactor: unchanged ("portable")
+   ~ amplification: "solid-state" -> null
+   = dacIncluded: unchanged (true)
+   ~ balancedOutput: false -> true
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["usb"] -> ["usb","optical","coaxial","bluetooth","xlr-balanced","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack","speaker-terminals"]
+   ~ maxSampleRateBitDepth: null -> "DSD 512"
+   ~ dsdSupport: null -> "dsd256-plus"
+   ~ hiResCertification: null -> ["mqa","hi-res-audio"]
+   = dacChipsetFamily: unchanged (null)
+   ~ streamingPlatformSupport: null -> ["roon-ready"]
+   = networkConnection: unchanged (null)
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   ~ bluetoothCodecs: null -> ["SBC","AAC","aptX Adaptive","aptX","LDAC"]
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_k27n1AQuIbSr5iozG1vD4O_2026-09-15T08-26-24-192Z.json
+   ✅ patched. rev: zDJarnvq2QjrVWJbUf1YIR
+
+🎧 PATCH (WRITE) — iFi Audio iFi Audio GO bar Kensei Portable Hi-Res USB DAC and Preamp (ZuUKzmkqDyQwdcwhxlJlJu)
+
+   Field diff (filterAttributes.*):
+   ~ deviceType: "dongle-dac" -> "dac"
+   ~ deviceConnectivity: null -> "wired"
+   = formFactor: unchanged ("portable")
+   ~ amplification: "solid-state" -> null
+   = dacIncluded: unchanged (true)
+   ~ balancedOutput: false -> true
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["usb"] -> ["usb","bluetooth","xlr-balanced","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack"]
+   ~ maxSampleRateBitDepth: null -> "PCM 44.1/48/88.2/96/176.4/192/352.8/384KHZ; DXD 352.8/384KHZ; DSD 2.8/3.1/5.6/6.1/11.3/12.3MHZ"
+   = dsdSupport: unchanged (null)
+   ~ hiResCertification: null -> ["mqa"]
+   ~ dacChipsetFamily: null -> ["cirrus-logic"]
+   ~ streamingPlatformSupport: null -> ["roon-ready"]
+   = networkConnection: unchanged (null)
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   = bluetoothCodecs: unchanged (null)
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_ZuUKzmkqDyQwdcwhxlJlJu_2026-09-15T08-26-25-145Z.json
+   ✅ patched. rev: zDJarnvq2QjrVWJbUf1Ye7
+
+🎧 PATCH (WRITE) — iFi Audio iFi Audio GO Bar Portable USB DAC & Headphone Amplifier (Pn6oyV4Ks5AcNbecjgsvqe)
+
+   Field diff (filterAttributes.*):
+   ~ deviceType: "dongle-dac" -> "dac"
+   ~ deviceConnectivity: null -> "wired"
+   = formFactor: unchanged ("portable")
+   ~ amplification: "solid-state" -> null
+   = dacIncluded: unchanged (true)
+   ~ balancedOutput: false -> true
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["usb"] -> ["usb","bluetooth","xlr-balanced","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack"]
+   ~ maxSampleRateBitDepth: null -> "DXD 352.8/384KHZ; DSD 2"
+   = dsdSupport: unchanged (null)
+   ~ hiResCertification: null -> ["mqa","hi-res-audio"]
+   ~ dacChipsetFamily: null -> ["cirrus-logic"]
+   ~ streamingPlatformSupport: null -> ["roon-ready"]
+   = networkConnection: unchanged (null)
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   = bluetoothCodecs: unchanged (null)
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_Pn6oyV4Ks5AcNbecjgsvqe_2026-09-15T08-26-26-225Z.json
+   ✅ patched. rev: NkN8nnIwsmPRUCwKdMMzOw
+
+🎧 PATCH (WRITE) — iFi Audio iFi Audio GO Blu Portable Bluetooth DAC/Amp (PHPYj28HJdPDHAaIBACuKc)
+
+   Field diff (filterAttributes.*):
+   ~ deviceType: "dac-amp-combo" -> "dac"
+   ~ deviceConnectivity: null -> "wired-wireless"
+   = formFactor: unchanged ("portable")
+   ~ amplification: "solid-state" -> null
+   = dacIncluded: unchanged (true)
+   ~ balancedOutput: false -> true
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["bluetooth"] -> ["usb","bluetooth","xlr-balanced","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack","speaker-terminals"]
+   = maxSampleRateBitDepth: unchanged (null)
+   = dsdSupport: unchanged (null)
+   ~ hiResCertification: null -> ["hi-res-audio"]
+   = dacChipsetFamily: unchanged (null)
+   ~ streamingPlatformSupport: null -> ["airplay2","roon-ready"]
+   = networkConnection: unchanged (null)
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   ~ bluetoothCodecs: null -> ["SBC","AAC","aptX Adaptive","aptX HD","aptX LL","aptX","LDAC"]
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_PHPYj28HJdPDHAaIBACuKc_2026-09-15T08-26-27-278Z.json
+   ✅ patched. rev: zDJarnvq2QjrVWJbUf1ZAd
+
+🎧 PATCH (WRITE) — iFi Audio iFi Audio Go blu Portable Bluetooth DAC/Headphone Amp (dLGDVDmEEI2lV8CArAcaQ0)
+
+   Field diff (filterAttributes.*):
+   = deviceType: unchanged ("dac")
+   ~ deviceConnectivity: null -> "wired-wireless"
+   = formFactor: unchanged ("portable")
+   ~ amplification: "solid-state" -> null
+   = dacIncluded: unchanged (true)
+   ~ balancedOutput: false -> true
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["bluetooth"] -> ["usb","bluetooth","xlr-balanced","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack","speaker-terminals"]
+   = maxSampleRateBitDepth: unchanged (null)
+   = dsdSupport: unchanged (null)
+   ~ hiResCertification: null -> ["hi-res-audio"]
+   = dacChipsetFamily: unchanged (null)
+   ~ streamingPlatformSupport: null -> ["airplay2","roon-ready"]
+   = networkConnection: unchanged (null)
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   ~ bluetoothCodecs: null -> ["SBC","AAC","aptX Adaptive","aptX HD","aptX LL","aptX","LDAC"]
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_dLGDVDmEEI2lV8CArAcaQ0_2026-09-15T08-26-28-292Z.json
+   ✅ patched. rev: NkN8nnIwsmPRUCwKdMMzWo
+
+🎧 PATCH (WRITE) — iFi Audio iFi Audio GO Link Max Portable Amp & DAC (dLGDVDmEEI2lV8CArAcay4)
+
+   Field diff (filterAttributes.*):
+   = deviceType: unchanged ("dac")
+   ~ deviceConnectivity: null -> "wired"
+   ~ formFactor: "portable" -> "dongle"
+   ~ amplification: "solid-state" -> null
+   = dacIncluded: unchanged (true)
+   ~ balancedOutput: false -> true
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["usb"] -> ["usb","bluetooth","xlr-balanced","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack","speaker-terminals"]
+   ~ maxSampleRateBitDepth: null -> "DSD 256"
+   ~ dsdSupport: null -> "dsd256-plus"
+   ~ hiResCertification: null -> ["hi-res-audio"]
+   ~ dacChipsetFamily: null -> ["ess-sabre"]
+   ~ streamingPlatformSupport: null -> ["roon-ready"]
+   = networkConnection: unchanged (null)
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   = bluetoothCodecs: unchanged (null)
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_dLGDVDmEEI2lV8CArAcay4_2026-09-15T08-26-29-319Z.json
+   ✅ patched. rev: zDJarnvq2QjrVWJbUf1ZP5
+
+🎧 PATCH (WRITE) — iFi Audio iFi Audio Go Pod Max Portable IEM Bluetooth DAC/AMP (Unit Only) (DZc43yHr6ydfgE7zB3znRV)
+
+   Field diff (filterAttributes.*):
+   ~ deviceType: "dac-amp-combo" -> "dac"
+   ~ deviceConnectivity: null -> "bluetooth"
+   = formFactor: unchanged ("portable")
+   ~ amplification: "solid-state" -> null
+   = dacIncluded: unchanged (true)
+   ~ balancedOutput: false -> true
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["bluetooth"] -> ["usb","bluetooth","xlr-balanced","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack"]
+   = maxSampleRateBitDepth: unchanged (null)
+   = dsdSupport: unchanged (null)
+   = hiResCertification: unchanged (null)
+   = dacChipsetFamily: unchanged (null)
+   ~ streamingPlatformSupport: null -> ["roon-ready"]
+   = networkConnection: unchanged (null)
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   ~ bluetoothCodecs: null -> ["SBC","AAC","aptX Adaptive","aptX HD","aptX","LDAC"]
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_DZc43yHr6ydfgE7zB3znRV_2026-09-15T08-26-30-384Z.json
+   ✅ patched. rev: meSxs4Qz3A09YiBBbrDs5K
+
+🎧 PATCH (WRITE) — iFi Audio iFi Audio Hip DAC 3 Portable DAC/Amp (MrEMtYwMtrFDGWmRnN7WCP)
+
+   Field diff (filterAttributes.*):
+   ~ deviceType: "dac-amp-combo" -> "dac"
+   ~ deviceConnectivity: null -> "wired"
+   = formFactor: unchanged ("portable")
+   ~ amplification: "solid-state" -> null
+   = dacIncluded: unchanged (true)
+   ~ balancedOutput: false -> true
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["usb"] -> ["usb","bluetooth","xlr-balanced","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack","speaker-terminals"]
+   ~ maxSampleRateBitDepth: null -> "PCM 384KHZ; DSD 256"
+   ~ dsdSupport: null -> "dsd256-plus"
+   ~ hiResCertification: null -> ["mqa","hi-res-audio"]
+   = dacChipsetFamily: unchanged (null)
+   ~ streamingPlatformSupport: null -> ["tidal-connect","roon-ready"]
+   = networkConnection: unchanged (null)
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   = bluetoothCodecs: unchanged (null)
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_MrEMtYwMtrFDGWmRnN7WCP_2026-09-15T08-26-31-433Z.json
+   ✅ patched. rev: meSxs4Qz3A09YiBBbrDsOg
+
+🎧 PATCH (WRITE) — iFi Audio iFi Audio hip-dac 3 Portable USB DAC & Amplifier (Y7l1IhzX2fnyiano4jO6bg)
+
+   Field diff (filterAttributes.*):
+   ~ deviceType: "dongle-dac" -> "dac"
+   ~ deviceConnectivity: null -> "wired"
+   = formFactor: unchanged ("portable")
+   ~ amplification: "solid-state" -> null
+   = dacIncluded: unchanged (true)
+   ~ balancedOutput: false -> true
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["usb"] -> ["usb","bluetooth","xlr-balanced","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack","speaker-terminals"]
+   ~ maxSampleRateBitDepth: null -> "PCM 384KHZ; DSD 256"
+   ~ dsdSupport: null -> "dsd256-plus"
+   ~ hiResCertification: null -> ["mqa","hi-res-audio"]
+   = dacChipsetFamily: unchanged (null)
+   ~ streamingPlatformSupport: null -> ["tidal-connect","roon-ready"]
+   = networkConnection: unchanged (null)
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   = bluetoothCodecs: unchanged (null)
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_Y7l1IhzX2fnyiano4jO6bg_2026-09-15T08-26-32-493Z.json
+   ✅ patched. rev: meSxs4Qz3A09YiBBbrDslG
+
+🎧 PATCH (WRITE) — iFi Audio iFi Audio Hip-dac2 Portable USB DAC and Headphone Amp with Soft Protective Case (ZuUKzmkqDyQwdcwhxl77C3)
+
+   Field diff (filterAttributes.*):
+   ~ deviceType: "dongle-dac" -> "dac"
+   ~ deviceConnectivity: null -> "wired"
+   = formFactor: unchanged ("portable")
+   ~ amplification: "solid-state" -> null
+   = dacIncluded: unchanged (true)
+   ~ balancedOutput: false -> true
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["usb"] -> ["usb","bluetooth","xlr-balanced","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack","speaker-terminals"]
+   ~ maxSampleRateBitDepth: null -> "PCM 384KHZ; DSD 256"
+   ~ dsdSupport: null -> "dsd256-plus"
+   ~ hiResCertification: null -> ["mqa","hi-res-audio"]
+   = dacChipsetFamily: unchanged (null)
+   ~ streamingPlatformSupport: null -> ["tidal-connect","roon-ready"]
+   = networkConnection: unchanged (null)
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   = bluetoothCodecs: unchanged (null)
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_ZuUKzmkqDyQwdcwhxl77C3_2026-09-15T08-26-33-782Z.json
+   ✅ patched. rev: NkN8nnIwsmPRUCwKdMMzrT
+
+🎧 PATCH (WRITE) — iFi Audio iFi Audio Hip-dac2 Portable USB DAC and Headphone Amp (dLGDVDmEEI2lV8CArAcd7E)
+
+   Field diff (filterAttributes.*):
+   ~ deviceType: "dongle-dac" -> "dac"
+   ~ deviceConnectivity: null -> "wired"
+   = formFactor: unchanged ("portable")
+   ~ amplification: "solid-state" -> null
+   = dacIncluded: unchanged (true)
+   ~ balancedOutput: false -> true
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["usb"] -> ["usb","bluetooth","xlr-balanced","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack","speaker-terminals"]
+   ~ maxSampleRateBitDepth: null -> "PCM 384KHZ; DSD 256"
+   ~ dsdSupport: null -> "dsd256-plus"
+   ~ hiResCertification: null -> ["mqa","hi-res-audio"]
+   = dacChipsetFamily: unchanged (null)
+   ~ streamingPlatformSupport: null -> ["tidal-connect","roon-ready"]
+   = networkConnection: unchanged (null)
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   = bluetoothCodecs: unchanged (null)
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_dLGDVDmEEI2lV8CArAcd7E_2026-09-15T08-26-34-916Z.json
+   ✅ patched. rev: meSxs4Qz3A09YiBBbrDt7q
+
+🎧 PATCH (WRITE) — iFi Audio iFi Audio iCan Phantom Analog Headphone Amplifier (ZuUKzmkqDyQwdcwhxl7Puy)
+
+   Field diff (filterAttributes.*):
+   ~ deviceType: "headphone-amp" -> null
+   ~ deviceConnectivity: null -> "wired"
+   = formFactor: unchanged ("desktop")
+   ~ amplification: "solid-state" -> null
+   = dacIncluded: unchanged (false)
+   ~ balancedOutput: false -> true
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["usb"] -> ["usb","rca","bluetooth","xlr-balanced","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack","pre-out-rca"]
+   = maxSampleRateBitDepth: unchanged (null)
+   = dsdSupport: unchanged (null)
+   = hiResCertification: unchanged (null)
+   = dacChipsetFamily: unchanged (null)
+   ~ streamingPlatformSupport: null -> ["roon-ready"]
+   = networkConnection: unchanged (null)
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   = bluetoothCodecs: unchanged (null)
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_ZuUKzmkqDyQwdcwhxl7Puy_2026-09-15T08-26-35-945Z.json
+   ✅ patched. rev: meSxs4Qz3A09YiBBbrDtKk
+
+🎧 PATCH (WRITE) — iFi Audio iFi Audio iCAN Phantom Headphone Amplifier and Energizer - Open Box (PHPYj28HJdPDHAaIBCgrcW)
+
+   Field diff (filterAttributes.*):
+   ~ deviceType: "headphone-amp" -> null
+   ~ deviceConnectivity: null -> "wired"
+   = formFactor: unchanged ("desktop")
+   ~ amplification: "solid-state" -> null
+   = dacIncluded: unchanged (false)
+   ~ balancedOutput: false -> true
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["usb"] -> ["usb","rca","bluetooth","xlr-balanced","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack","pre-out-rca"]
+   = maxSampleRateBitDepth: unchanged (null)
+   = dsdSupport: unchanged (null)
+   = hiResCertification: unchanged (null)
+   = dacChipsetFamily: unchanged (null)
+   ~ streamingPlatformSupport: null -> ["roon-ready"]
+   = networkConnection: unchanged (null)
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   = bluetoothCodecs: unchanged (null)
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_PHPYj28HJdPDHAaIBCgrcW_2026-09-15T08-26-36-993Z.json
+   ✅ patched. rev: zDJarnvq2QjrVWJbUf1ayd
+
+🎧 PATCH (WRITE) — iFi Audio iFi Audio iCAN Phantom Headphone Amplifier and Energizer (MrEMtYwMtrFDGWmRnRJcsz)
+
+   Field diff (filterAttributes.*):
+   ~ deviceType: "headphone-amp" -> null
+   ~ deviceConnectivity: null -> "wired"
+   = formFactor: unchanged ("desktop")
+   ~ amplification: "solid-state" -> null
+   = dacIncluded: unchanged (false)
+   ~ balancedOutput: false -> true
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["usb"] -> ["usb","rca","bluetooth","xlr-balanced","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack","pre-out-rca"]
+   = maxSampleRateBitDepth: unchanged (null)
+   = dsdSupport: unchanged (null)
+   = hiResCertification: unchanged (null)
+   = dacChipsetFamily: unchanged (null)
+   ~ streamingPlatformSupport: null -> ["roon-ready"]
+   = networkConnection: unchanged (null)
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   = bluetoothCodecs: unchanged (null)
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_MrEMtYwMtrFDGWmRnRJcsz_2026-09-15T08-26-37-986Z.json
+   ✅ patched. rev: zDJarnvq2QjrVWJbUf1bD5
+
+🎧 PATCH (WRITE) — iFi Audio iFi Audio iDSD NEO (PHPYj28HJdPDHAaIBCgFZU)
+
+   Field diff (filterAttributes.*):
+   ~ deviceType: "dac-amp-combo" -> "dac"
+   ~ deviceConnectivity: null -> "wired-wireless"
+   = formFactor: unchanged ("desktop")
+   ~ amplification: "solid-state" -> null
+   = dacIncluded: unchanged (true)
+   ~ balancedOutput: false -> true
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["usb"] -> ["usb","optical","coaxial","rca","bluetooth","xlr-balanced","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack","pre-out-rca","speaker-terminals"]
+   = maxSampleRateBitDepth: unchanged (null)
+   = dsdSupport: unchanged (null)
+   ~ hiResCertification: null -> ["hi-res-audio"]
+   = dacChipsetFamily: unchanged (null)
+   ~ streamingPlatformSupport: null -> ["roon-ready"]
+   = networkConnection: unchanged (null)
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   ~ bluetoothCodecs: null -> ["SBC","AAC","aptX Adaptive","aptX","LDAC"]
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_PHPYj28HJdPDHAaIBCgFZU_2026-09-15T08-26-39-002Z.json
+   ✅ patched. rev: meSxs4Qz3A09YiBBbrDte6
+
+🎧 PATCH (WRITE) — iFi Audio iFi Audio iDSD Valkyrie Portable Amp & DAC (Y7l1IhzX2fnyiano4ipzcN)
+
+   Field diff (filterAttributes.*):
+   = deviceType: unchanged ("dac")
+   ~ deviceConnectivity: null -> "wired-wireless"
+   = formFactor: unchanged ("portable")
+   ~ amplification: "solid-state" -> null
+   = dacIncluded: unchanged (true)
+   ~ balancedOutput: false -> true
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["usb"] -> ["usb","optical","coaxial","rca","bluetooth","xlr-balanced","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack","pre-out-rca"]
+   ~ maxSampleRateBitDepth: null -> "PCM 768KHZ; DSD 512"
+   ~ dsdSupport: null -> "dsd256-plus"
+   ~ hiResCertification: null -> ["hi-res-audio"]
+   = dacChipsetFamily: unchanged (null)
+   ~ streamingPlatformSupport: null -> ["roon-ready"]
+   = networkConnection: unchanged (null)
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   ~ bluetoothCodecs: null -> ["SBC","AAC","aptX Adaptive","aptX","LDAC"]
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_Y7l1IhzX2fnyiano4ipzcN_2026-09-15T08-26-40-030Z.json
+   ✅ patched. rev: meSxs4Qz3A09YiBBbrDtuE
+
+🎧 PATCH (WRITE) — iFi Audio iFi Audio NEO iDSD Desktop USB DAC/Headphone Amp with Bluetooth (dLGDVDmEEI2lV8CArAcfBk)
+
+   Field diff (filterAttributes.*):
+   ~ deviceType: "dongle-dac" -> "dac"
+   ~ deviceConnectivity: null -> "wired-wireless"
+   = formFactor: unchanged ("desktop")
+   ~ amplification: "solid-state" -> null
+   = dacIncluded: unchanged (true)
+   ~ balancedOutput: false -> true
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["bluetooth"] -> ["usb","optical","coaxial","rca","bluetooth","xlr-balanced","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack","pre-out-rca","speaker-terminals"]
+   = maxSampleRateBitDepth: unchanged (null)
+   = dsdSupport: unchanged (null)
+   ~ hiResCertification: null -> ["hi-res-audio"]
+   = dacChipsetFamily: unchanged (null)
+   ~ streamingPlatformSupport: null -> ["roon-ready"]
+   = networkConnection: unchanged (null)
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   ~ bluetoothCodecs: null -> ["SBC","AAC","aptX Adaptive","aptX","LDAC"]
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_dLGDVDmEEI2lV8CArAcfBk_2026-09-15T08-26-41-064Z.json
+   ✅ patched. rev: zDJarnvq2QjrVWJbUf1bfz
+
+🎧 PATCH (WRITE) — iFi Audio iFi Audio Pro iCAN Signature Headphone Amplifier (moXlkADK7m1DHgGwWwET3O)
+
+   Field diff (filterAttributes.*):
+   ~ deviceType: "headphone-amp" -> "preamplifier"
+   ~ deviceConnectivity: null -> "wired"
+   = formFactor: unchanged ("desktop")
+   = amplification: unchanged ("hybrid")
+   = dacIncluded: unchanged (false)
+   ~ balancedOutput: false -> true
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   ~ remoteControlIncluded: null -> true
+   ~ inputs: ["usb"] -> ["usb","rca","bluetooth","xlr-balanced","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack","pre-out-rca","speaker-terminals"]
+   = maxSampleRateBitDepth: unchanged (null)
+   = dsdSupport: unchanged (null)
+   ~ hiResCertification: null -> ["hi-res-audio"]
+   = dacChipsetFamily: unchanged (null)
+   ~ streamingPlatformSupport: null -> ["roon-ready"]
+   = networkConnection: unchanged (null)
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   = bluetoothCodecs: unchanged (null)
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_moXlkADK7m1DHgGwWwET3O_2026-09-15T08-26-42-072Z.json
+   ✅ patched. rev: NkN8nnIwsmPRUCwKdMN0Ly
+
+🎧 PATCH (WRITE) — iFi Audio iFi Audio Pro iDSD Signature DAC/Amp & Streamer (MrEMtYwMtrFDGWmRnN8QYu)
+
+   Field diff (filterAttributes.*):
+   ~ deviceType: "dac-amp-combo" -> "dac"
+   ~ deviceConnectivity: null -> "wired-wireless"
+   = formFactor: unchanged ("desktop")
+   ~ amplification: "solid-state" -> null
+   = dacIncluded: unchanged (true)
+   ~ balancedOutput: false -> true
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["usb","coaxial","optical"] -> ["usb","optical","coaxial","rca","bluetooth","xlr-balanced","ethernet-lan","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack","pre-out-rca","speaker-terminals"]
+   ~ maxSampleRateBitDepth: null -> "PCM 768KHZ; DSD 49.152MHZ; MQA 352.8KHZ"
+   ~ dsdSupport: null -> "dsd256-plus"
+   ~ hiResCertification: null -> ["mqa"]
+   = dacChipsetFamily: unchanged (null)
+   ~ streamingPlatformSupport: null -> ["airplay2","spotify-connect","tidal-connect","roon-ready","dlna"]
+   ~ networkConnection: null -> ["wifi","ethernet"]
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   = bluetoothCodecs: unchanged (null)
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_MrEMtYwMtrFDGWmRnN8QYu_2026-09-15T08-26-43-077Z.json
+   ✅ patched. rev: zDJarnvq2QjrVWJbUf1cG7
+
+🎧 PATCH (WRITE) — iFi Audio iFi Audio Uno (n10eAegrGspodtsQvy4D2G)
+
+   Field diff (filterAttributes.*):
+   ~ deviceType: "dac-amp-combo" -> "dac"
+   ~ deviceConnectivity: null -> "wired"
+   ~ formFactor: "desktop" -> "portable"
+   ~ amplification: "solid-state" -> null
+   = dacIncluded: unchanged (true)
+   ~ balancedOutput: false -> true
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["usb"] -> ["usb","rca","bluetooth","xlr-balanced","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack","pre-out-rca","speaker-terminals"]
+   ~ maxSampleRateBitDepth: null -> "PCM 384KHZ; DXD 384KHZ; DSD 256 /11.3MHZ"
+   = dsdSupport: unchanged (null)
+   ~ hiResCertification: null -> ["mqa","hi-res-audio"]
+   ~ dacChipsetFamily: null -> ["ess-sabre"]
+   ~ streamingPlatformSupport: null -> ["tidal-connect","roon-ready"]
+   = networkConnection: unchanged (null)
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   = bluetoothCodecs: unchanged (null)
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_n10eAegrGspodtsQvy4D2G_2026-09-15T08-26-44-953Z.json
+   ✅ patched. rev: meSxs4Qz3A09YiBBbrDvG6
+
+🎧 PATCH (WRITE) — iFi Audio iFi Audio xDSD Gryphon Portable Bluetooth DAC & Headphone Amplifier (k27n1AQuIbSr5iozG1vDSz)
+
+   Field diff (filterAttributes.*):
+   = deviceType: unchanged ("dac")
+   ~ deviceConnectivity: null -> "wired-wireless"
+   = formFactor: unchanged ("portable")
+   ~ amplification: "solid-state" -> null
+   = dacIncluded: unchanged (true)
+   ~ balancedOutput: false -> true
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["bluetooth"] -> ["usb","optical","coaxial","bluetooth","xlr-balanced","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack","speaker-terminals"]
+   ~ maxSampleRateBitDepth: null -> "PCM 768/705.6/384/352.8/192/176.4/ 96/88.2/48/44.1KHZ; DXD 768/705.6/384/352.8KHZ; DSD 512"
+   ~ dsdSupport: null -> "dsd256-plus"
+   ~ hiResCertification: null -> ["mqa","hi-res-audio"]
+   = dacChipsetFamily: unchanged (null)
+   ~ streamingPlatformSupport: null -> ["roon-ready"]
+   = networkConnection: unchanged (null)
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   ~ bluetoothCodecs: null -> ["SBC","AAC","aptX Adaptive","aptX HD","aptX LL","aptX","LDAC"]
+   ~ voiceAssistant: null -> ["alexa"]
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_k27n1AQuIbSr5iozG1vDSz_2026-09-15T08-26-46-149Z.json
+   ✅ patched. rev: meSxs4Qz3A09YiBBbrDvPm
+
+🎧 PATCH (WRITE) — iFi Audio iFi Audio ZEN Air CAN High-Power Analogue Headphone Amplifier (dLGDVDmEEI2lV8CArAcpNU)
+
+   Field diff (filterAttributes.*):
+   ~ deviceType: "headphone-amp" -> null
+   ~ deviceConnectivity: null -> "wired"
+   = formFactor: unchanged ("desktop")
+   ~ amplification: "solid-state" -> null
+   = dacIncluded: unchanged (false)
+   ~ balancedOutput: false -> true
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["usb"] -> ["usb","rca","bluetooth","xlr-balanced","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack","pre-out-rca","speaker-terminals"]
+   = maxSampleRateBitDepth: unchanged (null)
+   = dsdSupport: unchanged (null)
+   = hiResCertification: unchanged (null)
+   = dacChipsetFamily: unchanged (null)
+   ~ streamingPlatformSupport: null -> ["roon-ready"]
+   = networkConnection: unchanged (null)
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   = bluetoothCodecs: unchanged (null)
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_dLGDVDmEEI2lV8CArAcpNU_2026-09-15T08-26-47-233Z.json
+   ✅ patched. rev: zDJarnvq2QjrVWJbUf1cmd
+
+🎧 PATCH (WRITE) — iFi Audio iFi Audio Zen Can 3 Analog Headphone Amplifier (Y7l1IhzX2fnyiano4iq6jp)
+
+   Field diff (filterAttributes.*):
+   ~ deviceType: "headphone-amp" -> null
+   ~ deviceConnectivity: null -> "wired"
+   = formFactor: unchanged ("desktop")
+   ~ amplification: "solid-state" -> null
+   = dacIncluded: unchanged (false)
+   ~ balancedOutput: false -> true
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["usb"] -> ["usb","rca","bluetooth","xlr-balanced","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack","pre-out-rca","speaker-terminals"]
+   = maxSampleRateBitDepth: unchanged (null)
+   = dsdSupport: unchanged (null)
+   = hiResCertification: unchanged (null)
+   = dacChipsetFamily: unchanged (null)
+   ~ streamingPlatformSupport: null -> ["roon-ready"]
+   = networkConnection: unchanged (null)
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   = bluetoothCodecs: unchanged (null)
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_Y7l1IhzX2fnyiano4iq6jp_2026-09-15T08-26-48-269Z.json
+   ✅ patched. rev: meSxs4Qz3A09YiBBbrDvfu
+
+🎧 PATCH (WRITE) — iFi Audio iFi Audio Zen DAC 3 Balanced Headphone Amp & DAC (Y7l1IhzX2fnyiano4jOIfY)
+
+   Field diff (filterAttributes.*):
+   = deviceType: unchanged ("dac")
+   ~ deviceConnectivity: null -> "wired"
+   = formFactor: unchanged ("desktop")
+   ~ amplification: "solid-state" -> null
+   = dacIncluded: unchanged (true)
+   = balancedOutput: unchanged (true)
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["usb"] -> ["usb","rca","bluetooth","xlr-balanced","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack","pre-out-rca","speaker-terminals"]
+   ~ maxSampleRateBitDepth: null -> "PCM (768/705.6/384/352.8/192/176.4/96/88.2/48/44.1kHz) DSD (512/256/128/64) DXD (768/705.6/384/352.8kHz) MQA (Decoder)"
+   = dsdSupport: unchanged (null)
+   ~ hiResCertification: null -> ["mqa","hi-res-audio"]
+   = dacChipsetFamily: unchanged (null)
+   ~ streamingPlatformSupport: null -> ["roon-ready"]
+   = networkConnection: unchanged (null)
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   = bluetoothCodecs: unchanged (null)
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_Y7l1IhzX2fnyiano4jOIfY_2026-09-15T08-26-49-343Z.json
+   ✅ patched. rev: NkN8nnIwsmPRUCwKdMN0Wn
+
+🎧 PATCH (WRITE) — iFi Audio iFi Audio Zen Stream - Open Box (k27n1AQuIbSr5iozG2iztx)
+
+   Field diff (filterAttributes.*):
+   ~ deviceType: "dac-amp-combo" -> "network-streamer"
+   ~ deviceConnectivity: null -> "wifi-networked"
+   = formFactor: unchanged ("desktop")
+   ~ amplification: "solid-state" -> null
+   ~ dacIncluded: true -> false
+   = balancedOutput: unchanged (false)
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["usb"] -> ["usb","coaxial","bluetooth","xlr-balanced","ethernet-lan","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack","speaker-terminals"]
+   ~ maxSampleRateBitDepth: null -> "DSD 256"
+   ~ dsdSupport: null -> "dsd256-plus"
+   ~ hiResCertification: null -> ["hi-res-audio"]
+   = dacChipsetFamily: unchanged (null)
+   ~ streamingPlatformSupport: null -> ["airplay2","spotify-connect","tidal-connect","roon-ready","dlna"]
+   ~ networkConnection: null -> ["wifi","ethernet"]
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   = bluetoothCodecs: unchanged (null)
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_k27n1AQuIbSr5iozG2iztx_2026-09-15T08-26-50-629Z.json
+   ✅ patched. rev: NkN8nnIwsmPRUCwKdMN0Zk
+
+🎧 PATCH (WRITE) — iFi Audio iFi Audio Zen Stream (k27n1AQuIbSr5iozG2ixn6)
+
+   Field diff (filterAttributes.*):
+   ~ deviceType: "dac-amp-combo" -> "network-streamer"
+   ~ deviceConnectivity: null -> "wifi-networked"
+   = formFactor: unchanged ("desktop")
+   ~ amplification: "solid-state" -> null
+   ~ dacIncluded: true -> false
+   = balancedOutput: unchanged (false)
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["usb"] -> ["usb","coaxial","bluetooth","xlr-balanced","ethernet-lan","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack","speaker-terminals"]
+   ~ maxSampleRateBitDepth: null -> "DSD 256"
+   ~ dsdSupport: null -> "dsd256-plus"
+   ~ hiResCertification: null -> ["hi-res-audio"]
+   = dacChipsetFamily: unchanged (null)
+   ~ streamingPlatformSupport: null -> ["airplay2","spotify-connect","tidal-connect","roon-ready","dlna"]
+   ~ networkConnection: null -> ["wifi","ethernet"]
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   = bluetoothCodecs: unchanged (null)
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_k27n1AQuIbSr5iozG2ixn6_2026-09-15T08-26-51-637Z.json
+   ✅ patched. rev: NkN8nnIwsmPRUCwKdMN0ch
+
+🎧 PATCH (WRITE) — iFi Audio iFi GO bar Kensei (DZc43yHr6ydfgE7zB46CG4)
+
+   Field diff (filterAttributes.*):
+   ~ deviceType: "dac-amp-combo" -> "dac"
+   ~ deviceConnectivity: null -> "wired"
+   ~ formFactor: "desktop" -> "portable"
+   ~ amplification: "solid-state" -> null
+   = dacIncluded: unchanged (true)
+   ~ balancedOutput: false -> true
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["usb"] -> ["usb","bluetooth","xlr-balanced","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack"]
+   ~ maxSampleRateBitDepth: null -> "PCM 44.1/48/88.2/96/176.4/192/352.8/384KHZ; DXD 352.8/384KHZ; DSD 2.8/3.1/5.6/6.1/11.3/12.3MHZ"
+   = dsdSupport: unchanged (null)
+   ~ hiResCertification: null -> ["mqa"]
+   ~ dacChipsetFamily: null -> ["cirrus-logic"]
+   ~ streamingPlatformSupport: null -> ["roon-ready"]
+   = networkConnection: unchanged (null)
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   = bluetoothCodecs: unchanged (null)
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_DZc43yHr6ydfgE7zB46CG4_2026-09-15T08-26-52-657Z.json
+   ✅ patched. rev: NkN8nnIwsmPRUCwKdMN0ib
+
+🎧 PATCH (WRITE) — iFi Audio iFi GO blu Air Portable Hi-Res Bluetooth DAC & Headphone Amp (xMEqvkRBbdrlJXyFG8eFfR)
+
+   Field diff (filterAttributes.*):
+   = deviceType: unchanged ("dac")
+   ~ deviceConnectivity: null -> "bluetooth"
+   = formFactor: unchanged ("portable")
+   ~ amplification: "solid-state" -> null
+   = dacIncluded: unchanged (true)
+   ~ balancedOutput: false -> true
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["bluetooth"] -> ["usb","bluetooth","xlr-balanced","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack"]
+   = maxSampleRateBitDepth: unchanged (null)
+   = dsdSupport: unchanged (null)
+   ~ hiResCertification: null -> ["hi-res-audio"]
+   = dacChipsetFamily: unchanged (null)
+   ~ streamingPlatformSupport: null -> ["roon-ready"]
+   = networkConnection: unchanged (null)
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   ~ bluetoothCodecs: null -> ["SBC","AAC","aptX Adaptive","aptX HD","aptX","LDAC"]
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_xMEqvkRBbdrlJXyFG8eFfR_2026-09-15T08-26-53-685Z.json
+   ✅ patched. rev: NkN8nnIwsmPRUCwKdMN0nW
+
+🎧 PATCH (WRITE) — iFi Audio iFi Hip-DAC 3 (xMEqvkRBbdrlJXyFG8lEY3)
+
+   Field diff (filterAttributes.*):
+   = deviceType: unchanged ("dac")
+   ~ deviceConnectivity: null -> "wired"
+   ~ formFactor: "desktop" -> "portable"
+   ~ amplification: "solid-state" -> null
+   = dacIncluded: unchanged (true)
+   ~ balancedOutput: false -> true
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["usb"] -> ["usb","bluetooth","xlr-balanced","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack","speaker-terminals"]
+   ~ maxSampleRateBitDepth: null -> "PCM 384KHZ; DSD 256"
+   ~ dsdSupport: null -> "dsd256-plus"
+   ~ hiResCertification: null -> ["mqa","hi-res-audio"]
+   = dacChipsetFamily: unchanged (null)
+   ~ streamingPlatformSupport: null -> ["tidal-connect","roon-ready"]
+   = networkConnection: unchanged (null)
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   = bluetoothCodecs: unchanged (null)
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_xMEqvkRBbdrlJXyFG8lEY3_2026-09-15T08-26-54-691Z.json
+   ✅ patched. rev: meSxs4Qz3A09YiBBbrDwYk
+
+🎧 PATCH (WRITE) — iFi Audio iFi NEO Stream (GPjMdcfFWZVrKyR2PB5NeM)
+
+   Field diff (filterAttributes.*):
+   ~ deviceType: "dac-amp-combo" -> "network-streamer"
+   ~ deviceConnectivity: null -> "wifi-networked"
+   = formFactor: unchanged ("desktop")
+   ~ amplification: "solid-state" -> null
+   = dacIncluded: unchanged (true)
+   ~ balancedOutput: false -> true
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["usb"] -> ["usb","optical","coaxial","rca","bluetooth","xlr-balanced","aes-ebu","i2s-iis","ethernet-lan","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack","pre-out-rca","speaker-terminals"]
+   ~ maxSampleRateBitDepth: null -> "DSD 512"
+   ~ dsdSupport: null -> "dsd256-plus"
+   ~ hiResCertification: null -> ["hi-res-audio"]
+   = dacChipsetFamily: unchanged (null)
+   ~ streamingPlatformSupport: null -> ["airplay2","spotify-connect","tidal-connect","roon-ready","dlna"]
+   ~ networkConnection: null -> ["wifi","ethernet"]
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   = bluetoothCodecs: unchanged (null)
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_GPjMdcfFWZVrKyR2PB5NeM_2026-09-15T08-26-55-725Z.json
+   ✅ patched. rev: NkN8nnIwsmPRUCwKdMN0zK
+
+🎧 PATCH (WRITE) — iFi Audio iFi ZEN Blue 3 Bluetooth Desktop DAC (xMEqvkRBbdrlJXyFG8eD0B)
+
+   Field diff (filterAttributes.*):
+   = deviceType: unchanged ("dac")
+   ~ deviceConnectivity: null -> "bluetooth"
+   = formFactor: unchanged ("desktop")
+   ~ amplification: "solid-state" -> null
+   = dacIncluded: unchanged (true)
+   ~ balancedOutput: false -> true
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["optical","coaxial","rca"] -> ["usb","optical","coaxial","rca","bluetooth","xlr-balanced","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack","pre-out-rca","speaker-terminals"]
+   ~ maxSampleRateBitDepth: null -> "RX Mode: 96kHz/24Bit TX Mode: 96kHz/24Bit DAC Mode: 96kHz/24Bit (USB), 192kHz/24Bit (Optical/Coaxial)"
+   ~ dsdSupport: null -> "none"
+   ~ hiResCertification: null -> ["hi-res-audio"]
+   = dacChipsetFamily: unchanged (null)
+   ~ streamingPlatformSupport: null -> ["roon-ready"]
+   = networkConnection: unchanged (null)
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   ~ bluetoothCodecs: null -> ["SBC","AAC","aptX Adaptive","aptX","LDAC"]
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_xMEqvkRBbdrlJXyFG8eD0B_2026-09-15T08-26-56-829Z.json
+   ✅ patched. rev: NkN8nnIwsmPRUCwKdMN15E
+
+🎧 PATCH (WRITE) — iFi Audio iFi Zen CAN 3 (xMEqvkRBbdrlJXyFG8huOv)
+
+   Field diff (filterAttributes.*):
+   ~ deviceType: "dac-amp-combo" -> null
+   ~ deviceConnectivity: null -> "wired"
+   = formFactor: unchanged ("desktop")
+   ~ amplification: "solid-state" -> null
+   ~ dacIncluded: true -> false
+   ~ balancedOutput: false -> true
+   = powerOutputPerChannelW: unchanged (null)
+   = channelCount: unchanged (null)
+   = phonoStageBuiltIn: unchanged (null)
+   = trigger12v: unchanged (null)
+   = remoteControlIncluded: unchanged (null)
+   ~ inputs: ["usb"] -> ["usb","rca","bluetooth","xlr-balanced","phono-mm-mc"]
+   ~ outputs: ["4.4mm"] -> ["headphone-jack","headphone-jack","pre-out-rca","speaker-terminals"]
+   = maxSampleRateBitDepth: unchanged (null)
+   = dsdSupport: unchanged (null)
+   = hiResCertification: unchanged (null)
+   = dacChipsetFamily: unchanged (null)
+   ~ streamingPlatformSupport: null -> ["roon-ready"]
+   = networkConnection: unchanged (null)
+   = driveType: unchanged (null)
+   = turntableOperation: unchanged (null)
+   = speedsSupported: unchanged (null)
+   = phonoPreampBuiltIn: unchanged (null)
+   = cartridgeIncluded: unchanged (null)
+   = usbDigitalOutput: unchanged (null)
+   = bluetoothCodecs: unchanged (null)
+   = voiceAssistant: unchanged (null)
+   = multiroomSupport: unchanged (null)
+   ~ finishColor: null -> ["blue"]
+   = rackMountable19: unchanged (null)
+   = countryOfManufacture: unchanged (null)
+   = awards: unchanged (null)
+   = customerRating: unchanged (null)
+   = condition: unchanged (null)
+   = dealsDiscount: unchanged (null)
+   = newArrival: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_xMEqvkRBbdrlJXyFG8huOv_2026-09-15T08-26-57-756Z.json
+   ✅ patched. rev: NkN8nnIwsmPRUCwKdMN19A
+
+🎧 PATCH (WRITE) — Spinfit SpinFit AuraFine | Premium Silicone Eartips for AirPods Pro 3 (PHPYj28HJdPDHAaIB6Gc3i)
+
+   Field diff (filterAttributes.*):
+   = category: unchanged (["accessories"])
+   = brand: unchanged (["spinfit"])
+   = price: unchanged (1899)
+   = inStock: unchanged (true)
+   = condition: unchanged (null)
+   ~ dealsDiscount: null -> "none"
+   = newArrival: unchanged (null)
+   = customerRating: unchanged (null)
+   = awards: unchanged (null)
+   ~ accessoryType: "eartip" -> "replacement-parts"
+   ~ compatibleProductType: null -> ["headphone"]
+   ~ partType: null -> "ear-tips"
+   ~ compatibility: ["universal"] -> ["Designed for use with Apple AirPod Pros 3 (not compatible with 1 & 2)"]
+   = cableFunction: unchanged (null)
+   = connectorTermination: unchanged (null)
+   = lengthM: unchanged (null)
+   = conductorMaterial: unchanged (null)
+   = balancedUnbalanced: unchanged (null)
+   = furnitureType: unchanged (null)
+   = material: unchanged (null)
+   = adjustableHeight: unchanged (null)
+   = weightCapacityKg: unchanged (null)
+   = powerProductType: unchanged (null)
+   = outletCount: unchanged (null)
+   = powerConnectorType: unchanged (null)
+   = cleaningProductType: unchanged (null)
+   = formatCompatibility: unchanged (null)
+   = adapterFunction: unchanged (null)
+   = treatmentType: unchanged (null)
+   = mounting: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_PHPYj28HJdPDHAaIB6Gc3i_2026-09-15T08-26-59-796Z.json
+   ✅ patched. rev: meSxs4Qz3A09YiBBbrDxEg
+
+🎧 PATCH (WRITE) — Spinfit SpinFit CP1025 | Premium Eartips for TWS/AirPods (Pn6oyV4Ks5AcNbecjb0rnH)
+
+   Field diff (filterAttributes.*):
+   = category: unchanged (["accessories"])
+   = brand: unchanged (["spinfit"])
+   = price: unchanged (1349)
+   = inStock: unchanged (true)
+   = condition: unchanged (null)
+   ~ dealsDiscount: null -> "none"
+   = newArrival: unchanged (null)
+   = customerRating: unchanged (null)
+   = awards: unchanged (null)
+   ~ accessoryType: "eartip" -> "replacement-parts"
+   ~ compatibleProductType: null -> ["headphone"]
+   ~ partType: null -> "ear-tips"
+   ~ compatibility: ["universal"] -> ["Jabra 75t","Google Pixel",".","AirPods Pro","Galaxy Buds.","designed to fit many TWS earphones and can be purchased with an adapter for use with Samsung Galaxy Buds -OR- can be purchased as individual eartips compatible with SpinFit's SuperFine AirPods Pro adapters"]
+   = cableFunction: unchanged (null)
+   = connectorTermination: unchanged (null)
+   = lengthM: unchanged (null)
+   = conductorMaterial: unchanged (null)
+   = balancedUnbalanced: unchanged (null)
+   = furnitureType: unchanged (null)
+   = material: unchanged (null)
+   = adjustableHeight: unchanged (null)
+   = weightCapacityKg: unchanged (null)
+   = powerProductType: unchanged (null)
+   = outletCount: unchanged (null)
+   = powerConnectorType: unchanged (null)
+   = cleaningProductType: unchanged (null)
+   = formatCompatibility: unchanged (null)
+   = adapterFunction: unchanged (null)
+   = treatmentType: unchanged (null)
+   = mounting: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_Pn6oyV4Ks5AcNbecjb0rnH_2026-09-15T08-27-00-842Z.json
+   ✅ patched. rev: meSxs4Qz3A09YiBBbrDxY2
+
+🎧 PATCH (WRITE) — Spinfit SpinFit CP145 | Premium Eartips (2 Pairs) (PHPYj28HJdPDHAaIB6GkTu)
+
+   Field diff (filterAttributes.*):
+   = category: unchanged (["accessories"])
+   = brand: unchanged (["spinfit"])
+   = price: unchanged (1099)
+   = inStock: unchanged (true)
+   = condition: unchanged (null)
+   ~ dealsDiscount: null -> "none"
+   = newArrival: unchanged (null)
+   = customerRating: unchanged (null)
+   = awards: unchanged (null)
+   ~ accessoryType: "eartip" -> "replacement-parts"
+   ~ compatibleProductType: null -> ["headphone"]
+   ~ partType: null -> "ear-tips"
+   ~ compatibility: ["universal"] -> ["Empire Ears","Noble","Campfire","compatible with a large range of IEMs but is preferable for those that have a medium to large sized nozzle"]
+   = cableFunction: unchanged (null)
+   = connectorTermination: unchanged (null)
+   = lengthM: unchanged (null)
+   = conductorMaterial: unchanged (null)
+   = balancedUnbalanced: unchanged (null)
+   = furnitureType: unchanged (null)
+   = material: unchanged (null)
+   = adjustableHeight: unchanged (null)
+   = weightCapacityKg: unchanged (null)
+   = powerProductType: unchanged (null)
+   = outletCount: unchanged (null)
+   = powerConnectorType: unchanged (null)
+   = cleaningProductType: unchanged (null)
+   = formatCompatibility: unchanged (null)
+   = adapterFunction: unchanged (null)
+   = treatmentType: unchanged (null)
+   = mounting: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_PHPYj28HJdPDHAaIB6GkTu_2026-09-15T08-27-01-882Z.json
+   ✅ patched. rev: NkN8nnIwsmPRUCwKdMN1Rr
+
+🎧 PATCH (WRITE) — Spinfit SpinFit CP155 | Premium Eartips (2 Pairs) (MrEMtYwMtrFDGWmRnGTPsC)
+
+   Field diff (filterAttributes.*):
+   = category: unchanged (["accessories"])
+   = brand: unchanged (["spinfit"])
+   = price: unchanged (1099)
+   = inStock: unchanged (true)
+   = condition: unchanged (null)
+   ~ dealsDiscount: null -> "none"
+   = newArrival: unchanged (null)
+   = customerRating: unchanged (null)
+   = awards: unchanged (null)
+   ~ accessoryType: "eartip" -> "replacement-parts"
+   ~ compatibleProductType: null -> ["headphone"]
+   ~ partType: null -> "ear-tips"
+   ~ compatibility: ["universal"] -> ["Noble","Campfire","Meze","Audeze iSINE/LCD-i","compatible with IEMs with a large nozzle"]
+   = cableFunction: unchanged (null)
+   = connectorTermination: unchanged (null)
+   = lengthM: unchanged (null)
+   = conductorMaterial: unchanged (null)
+   = balancedUnbalanced: unchanged (null)
+   = furnitureType: unchanged (null)
+   = material: unchanged (null)
+   = adjustableHeight: unchanged (null)
+   = weightCapacityKg: unchanged (null)
+   = powerProductType: unchanged (null)
+   = outletCount: unchanged (null)
+   = powerConnectorType: unchanged (null)
+   = cleaningProductType: unchanged (null)
+   = formatCompatibility: unchanged (null)
+   = adapterFunction: unchanged (null)
+   = treatmentType: unchanged (null)
+   = mounting: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_MrEMtYwMtrFDGWmRnGTPsC_2026-09-15T08-27-02-943Z.json
+   ✅ patched. rev: NkN8nnIwsmPRUCwKdMN1Zj
+
+🎧 PATCH (WRITE) — Spinfit SpinFit CP240 | Premium Double Flange Eartips (1 Pair) (Pn6oyV4Ks5AcNbecjb0zLq)
+
+   Field diff (filterAttributes.*):
+   = category: unchanged (["accessories"])
+   = brand: unchanged (["spinfit"])
+   = price: unchanged (1099)
+   = inStock: unchanged (true)
+   = condition: unchanged (null)
+   ~ dealsDiscount: null -> "none"
+   = newArrival: unchanged (null)
+   = customerRating: unchanged (null)
+   = awards: unchanged (null)
+   ~ accessoryType: "eartip" -> "replacement-parts"
+   ~ compatibleProductType: null -> ["headphone"]
+   ~ partType: null -> "ear-tips"
+   ~ compatibility: ["universal"] -> ["virtually any IEM","accommodate a wide range of IEM nozzle sizes"]
+   = cableFunction: unchanged (null)
+   = connectorTermination: unchanged (null)
+   = lengthM: unchanged (null)
+   = conductorMaterial: unchanged (null)
+   = balancedUnbalanced: unchanged (null)
+   = furnitureType: unchanged (null)
+   = material: unchanged (null)
+   = adjustableHeight: unchanged (null)
+   = weightCapacityKg: unchanged (null)
+   = powerProductType: unchanged (null)
+   = outletCount: unchanged (null)
+   = powerConnectorType: unchanged (null)
+   = cleaningProductType: unchanged (null)
+   = formatCompatibility: unchanged (null)
+   = adapterFunction: unchanged (null)
+   = treatmentType: unchanged (null)
+   = mounting: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_Pn6oyV4Ks5AcNbecjb0zLq_2026-09-15T08-27-04-037Z.json
+   ✅ patched. rev: zDJarnvq2QjrVWJbUf1fEN
+
+🎧 PATCH (WRITE) — Spinfit SpinFit CP800 | Premium Eartips (2 Pairs) (MrEMtYwMtrFDGWmRnGTr95)
+
+   Field diff (filterAttributes.*):
+   = category: unchanged (["accessories"])
+   = brand: unchanged (["spinfit"])
+   = price: unchanged (1099)
+   = inStock: unchanged (true)
+   = condition: unchanged (null)
+   ~ dealsDiscount: null -> "none"
+   = newArrival: unchanged (null)
+   = customerRating: unchanged (null)
+   = awards: unchanged (null)
+   ~ accessoryType: "eartip" -> "replacement-parts"
+   ~ compatibleProductType: null -> ["headphone"]
+   ~ partType: null -> "ear-tips"
+   ~ compatibility: ["universal"] -> ["brands like Shure","Etymotic with very narrow nozzles","compatible with IEMs with small nozzles"]
+   = cableFunction: unchanged (null)
+   = connectorTermination: unchanged (null)
+   = lengthM: unchanged (null)
+   = conductorMaterial: unchanged (null)
+   = balancedUnbalanced: unchanged (null)
+   = furnitureType: unchanged (null)
+   = material: unchanged (null)
+   = adjustableHeight: unchanged (null)
+   = weightCapacityKg: unchanged (null)
+   = powerProductType: unchanged (null)
+   = outletCount: unchanged (null)
+   = powerConnectorType: unchanged (null)
+   = cleaningProductType: unchanged (null)
+   = formatCompatibility: unchanged (null)
+   = adapterFunction: unchanged (null)
+   = treatmentType: unchanged (null)
+   = mounting: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_MrEMtYwMtrFDGWmRnGTr95_2026-09-15T08-27-05-324Z.json
+   ✅ patched. rev: zDJarnvq2QjrVWJbUf1fWR
+
+🎧 PATCH (WRITE) — Spinfit SpinFit NEO | Premium Silicone Eartips (Pn6oyV4Ks5AcNbecjb12LF)
+
+   Field diff (filterAttributes.*):
+   = category: unchanged (["accessories"])
+   = brand: unchanged (["spinfit"])
+   = price: unchanged (1199)
+   = inStock: unchanged (true)
+   = condition: unchanged (null)
+   ~ dealsDiscount: null -> "none"
+   = newArrival: unchanged (null)
+   = customerRating: unchanged (null)
+   = awards: unchanged (null)
+   ~ accessoryType: "eartip" -> "replacement-parts"
+   ~ compatibleProductType: null -> ["headphone"]
+   ~ partType: null -> "ear-tips"
+   ~ compatibility: ["universal"] -> ["Compatible with most standard and slim nozzle earphones"]
+   = cableFunction: unchanged (null)
+   = connectorTermination: unchanged (null)
+   = lengthM: unchanged (null)
+   = conductorMaterial: unchanged (null)
+   = balancedUnbalanced: unchanged (null)
+   = furnitureType: unchanged (null)
+   = material: unchanged (null)
+   = adjustableHeight: unchanged (null)
+   = weightCapacityKg: unchanged (null)
+   = powerProductType: unchanged (null)
+   = outletCount: unchanged (null)
+   = powerConnectorType: unchanged (null)
+   = cleaningProductType: unchanged (null)
+   = formatCompatibility: unchanged (null)
+   = adapterFunction: unchanged (null)
+   = treatmentType: unchanged (null)
+   = mounting: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_Pn6oyV4Ks5AcNbecjb12LF_2026-09-15T08-27-06-473Z.json
+   ✅ patched. rev: meSxs4Qz3A09YiBBbrDy4I
+
+🎧 PATCH (WRITE) — Spinfit SpinFit OMNI | Premium Universal Silicone Eartips (PHPYj28HJdPDHAaIB6GtX2)
+
+   Field diff (filterAttributes.*):
+   = category: unchanged (["accessories"])
+   = brand: unchanged (["spinfit"])
+   = price: unchanged (1299)
+   = inStock: unchanged (true)
+   = condition: unchanged (null)
+   ~ dealsDiscount: null -> "none"
+   = newArrival: unchanged (null)
+   = customerRating: unchanged (null)
+   = awards: unchanged (null)
+   ~ accessoryType: "eartip" -> "replacement-parts"
+   ~ compatibleProductType: null -> ["headphone"]
+   ~ partType: null -> "ear-tips"
+   ~ compatibility: ["universal"] -> ["many TWS including Sony","Sennheiser","Beats","Compatible with most TWS earbuds and IEMs with nozzle diameter from 4-5.5mm"]
+   = cableFunction: unchanged (null)
+   = connectorTermination: unchanged (null)
+   = lengthM: unchanged (null)
+   = conductorMaterial: unchanged (null)
+   = balancedUnbalanced: unchanged (null)
+   = furnitureType: unchanged (null)
+   = material: unchanged (null)
+   = adjustableHeight: unchanged (null)
+   = weightCapacityKg: unchanged (null)
+   = powerProductType: unchanged (null)
+   = outletCount: unchanged (null)
+   = powerConnectorType: unchanged (null)
+   = cleaningProductType: unchanged (null)
+   = formatCompatibility: unchanged (null)
+   = adapterFunction: unchanged (null)
+   = treatmentType: unchanged (null)
+   = mounting: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_PHPYj28HJdPDHAaIB6GtX2_2026-09-15T08-27-07-798Z.json
+   ✅ patched. rev: zDJarnvq2QjrVWJbUf1hYt
+
+🎧 PATCH (WRITE) — Spinfit SpinFit SuperFine | Premium Silicone Eartips for AirPods Pro (PHPYj28HJdPDHAaIB6GvLG)
+
+   Field diff (filterAttributes.*):
+   = category: unchanged (["accessories"])
+   = brand: unchanged (["spinfit"])
+   = price: unchanged (1649)
+   = inStock: unchanged (true)
+   = condition: unchanged (null)
+   ~ dealsDiscount: null -> "none"
+   = newArrival: unchanged (null)
+   = customerRating: unchanged (null)
+   = awards: unchanged (null)
+   ~ accessoryType: "eartip" -> "replacement-parts"
+   ~ compatibleProductType: null -> ["headphone"]
+   ~ partType: null -> "ear-tips"
+   ~ compatibility: ["universal"] -> ["exclusively for AirPods Pro Gen 1 & 2"]
+   = cableFunction: unchanged (null)
+   = connectorTermination: unchanged (null)
+   = lengthM: unchanged (null)
+   = conductorMaterial: unchanged (null)
+   = balancedUnbalanced: unchanged (null)
+   = furnitureType: unchanged (null)
+   = material: unchanged (null)
+   = adjustableHeight: unchanged (null)
+   = weightCapacityKg: unchanged (null)
+   = powerProductType: unchanged (null)
+   = outletCount: unchanged (null)
+   = powerConnectorType: unchanged (null)
+   = cleaningProductType: unchanged (null)
+   = formatCompatibility: unchanged (null)
+   = adapterFunction: unchanged (null)
+   = treatmentType: unchanged (null)
+   = mounting: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_PHPYj28HJdPDHAaIB6GvLG_2026-09-15T08-27-08-937Z.json
+   ✅ patched. rev: zDJarnvq2QjrVWJbUf1hnL
+
+🎧 PATCH (WRITE) — Spinfit SpinFit W1 | Premium Silicone Eartips (PHPYj28HJdPDHAaIB6Gyt8)
+
+   Field diff (filterAttributes.*):
+   = category: unchanged (["accessories"])
+   = brand: unchanged (["spinfit"])
+   = price: unchanged (1199)
+   = inStock: unchanged (true)
+   = condition: unchanged (null)
+   ~ dealsDiscount: null -> "none"
+   = newArrival: unchanged (null)
+   = customerRating: unchanged (null)
+   = awards: unchanged (null)
+   ~ accessoryType: "eartip" -> "replacement-parts"
+   ~ compatibleProductType: null -> ["headphone"]
+   ~ partType: null -> "ear-tips"
+   ~ compatibility: ["universal"] -> ["Empire Ears","Noble","Campfire","suitable for IEM bores with a diameter of 5-6mm"]
+   = cableFunction: unchanged (null)
+   = connectorTermination: unchanged (null)
+   = lengthM: unchanged (null)
+   = conductorMaterial: unchanged (null)
+   = balancedUnbalanced: unchanged (null)
+   = furnitureType: unchanged (null)
+   = material: unchanged (null)
+   = adjustableHeight: unchanged (null)
+   = weightCapacityKg: unchanged (null)
+   = powerProductType: unchanged (null)
+   = outletCount: unchanged (null)
+   = powerConnectorType: unchanged (null)
+   = cleaningProductType: unchanged (null)
+   = formatCompatibility: unchanged (null)
+   = adapterFunction: unchanged (null)
+   = treatmentType: unchanged (null)
+   = mounting: unchanged (null)
+   💾 backed up prior filterAttributes -> /home/jan/work/sanglogium/sanity-cms/backups/backup_headphones_PHPYj28HJdPDHAaIB6Gyt8_2026-09-15T08-27-10-302Z.json
+   ✅ patched. rev: zDJarnvq2QjrVWJbUf1i1n
+To https://github.com/munrhalls/sanglogium.git
+   fd2c7ef2..f80e2686  main -> main
+<claude-code-hint v="1" type="plugin" value="vercel@claude-plugins-official" />
+Vercel CLI 59.16.0 (Node.js 22.23.2)
+Deploying sanglogium
+Uploading [--------------------] (0.0B/52.7MB)
+Uploading [=====---------------] (13.2MB/52.7MB)
+Uploading [==========----------] (26.4MB/52.7MB)
+Uploading [===============-----] (39.5MB/52.7MB)
+Uploading [====================] (52.7MB/52.7MB)
+  Inspect         https://vercel.com/munrhalls-projects/sanglogium/Amc1UoDQTgAaaF4yYD4uUMh2wiTH
+  Production      https://sanglogium-7et4fpiwn-munrhalls-projects.vercel.app
+Building…
+Building…
+Running build in Washington, D.C., USA (East) – iad1
+Build machine configuration: 2 cores, 8 GB
+Retrieving list of deployment files...
+Downloading 3876 deployment files...
+Restored build cache from previous deployment (Cm2nHtkvq9X4LtRjcW2q4THuk6vc)
+Warning: "vercel" found in project dependencies and will be ignored.
+Running "vercel build"
+Vercel CLI 59.17.0
+Running "install" command: `npm install --legacy-peer-deps`...
+up to date, audited 1529 packages in 33s
+226 packages are looking for funding
+run `npm fund` for details
+43 vulnerabilities (2 low, 17 moderate, 21 high, 3 critical)
+To address issues that do not require attention, run:
+npm audit fix
+To address all issues (including breaking changes), run:
+npm audit fix --force
+Run `npm audit` for details.
+npm warn allow-scripts 5 packages have install scripts not yet covered by allowScripts:
+npm warn allow-scripts   @sentry/cli@2.58.6 (postinstall: node ./scripts/install.js)
+npm warn allow-scripts   esbuild@0.25.6 (postinstall: node install.js)
+npm warn allow-scripts   sharp@0.34.5 (install: node install/check.js || npm run build)
+npm warn allow-scripts   protobufjs@7.5.5 (postinstall: node scripts/postinstall)
+npm warn allow-scripts   sharp@0.33.5 (install: node install/check)
+npm warn allow-scripts
+npm warn allow-scripts Run `npm approve-scripts --allow-scripts-pending` to review, or `npm approve-scripts <pkg>` to allow.
+Detected Next.js version: 15.5.15
+Running "npm run build"
+> sang-logium@0.1.0 prebuild
+> node scripts/build-catalogue-index.mjs
+🏗️  Building Catalogue Virtual File System...
+📊 VFS Validation Results:
+Total nodes: 34
+Leaf nodes: 23
+Header nodes: 11
+Referenced IDs: 31
+✅ VALIDATION PASSED - All referenced IDs exist in slotMetadataMap
+🔍 Validating product catalogueLocationKeys...
+✅ All 1027 production products have valid catalogueLocationKeys
+(Filtered out 1 test products from validation)
+✅ Index Built! Mapped 34 categories.
+📂 Saved to: src/data/catalogue-index.json
+> sang-logium@0.1.0 build
+> npm run prebuild && next build
+> sang-logium@0.1.0 prebuild
+> node scripts/build-catalogue-index.mjs
+🏗️  Building Catalogue Virtual File System...
+📊 VFS Validation Results:
+Total nodes: 34
+Leaf nodes: 23
+Header nodes: 11
+Referenced IDs: 31
+✅ VALIDATION PASSED - All referenced IDs exist in slotMetadataMap
+🔍 Validating product catalogueLocationKeys...
+✅ All 1027 production products have valid catalogueLocationKeys
+(Filtered out 1 test products from validation)
+✅ Index Built! Mapped 34 categories.
+📂 Saved to: src/data/catalogue-index.json
+⚠ Found lockfile missing swc dependencies, run next locally to automatically patch
+[@sentry/nextjs] ACTION REQUIRED: To instrument navigations, the Sentry SDK requires you to export an `onRouterTransitionStart` hook from your `instrumentation-client.(js|ts)` file. You can do so by adding `export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;` to the file.
+▲ Next.js 15.5.15
+- Experiments (use with caution):
+✓ inlineCss
+· clientTraceMetadata
+· optimizePackageImports
+Creating an optimized production build ...
+[@sentry/nextjs - Node.js] Info: Sending telemetry data on issues and performance to Sentry. To disable telemetry, set `options.telemetry` to `false`.
+[@sentry/nextjs - Node.js] Warning: No auth token provided. Will not create release. Please set the `authToken` option. You can find information on how to generate a Sentry auth token here: https://docs.sentry.io/api/auth/
+[@sentry/nextjs - Node.js] Warning: No auth token provided. Will not upload source maps. Please set the `authToken` option. You can find information on how to generate a Sentry auth token here: https://docs.sentry.io/api/auth/
+[@sentry/nextjs - Edge] Info: Sending telemetry data on issues and performance to Sentry. To disable telemetry, set `options.telemetry` to `false`.
+[@sentry/nextjs - Edge] Warning: No auth token provided. Will not create release. Please set the `authToken` option. You can find information on how to generate a Sentry auth token here: https://docs.sentry.io/api/auth/
+[@sentry/nextjs - Edge] Warning: No auth token provided. Will not upload source maps. Please set the `authToken` option. You can find information on how to generate a Sentry auth token here: https://docs.sentry.io/api/auth/
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (132kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (139kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+[@sentry/nextjs - Client] Info: Sending telemetry data on issues and performance to Sentry. To disable telemetry, set `options.telemetry` to `false`.
+[@sentry/nextjs - Client] Warning: No auth token provided. Will not create release. Please set the `authToken` option. You can find information on how to generate a Sentry auth token here: https://docs.sentry.io/api/auth/
+[@sentry/nextjs - Client] Warning: No auth token provided. Will not upload source maps. Please set the `authToken` option. You can find information on how to generate a Sentry auth token here: https://docs.sentry.io/api/auth/
+⚠ Compiled with warnings in 100s
+./app/components/features/filters/PriceRangeSlider.tsx
+Attempted import error: 'filterStateActive' is not exported from './FilterSidebar' (imported as 'filterStateActive').
+Import trace for requested module:
+./app/components/features/filters/PriceRangeSlider.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterControls.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterSidebar.tsx
+./app/components/features/filters/PriceRangeSlider.tsx
+Attempted import error: 'filterStateInactive' is not exported from './FilterSidebar' (imported as 'filterStateInactive').
+Import trace for requested module:
+./app/components/features/filters/PriceRangeSlider.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterControls.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterSidebar.tsx
+./app/components/features/filters/PriceRangeSlider.tsx
+Attempted import error: 'filterSectionHeaderRow' is not exported from './FilterSidebar' (imported as 'filterSectionHeaderRow').
+Import trace for requested module:
+./app/components/features/filters/PriceRangeSlider.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterControls.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterSidebar.tsx
+./app/components/features/filters/PriceRangeSlider.tsx
+Attempted import error: 'filterSectionHeaderLabel' is not exported from './FilterSidebar' (imported as 'filterSectionHeaderLabel').
+Import trace for requested module:
+./app/components/features/filters/PriceRangeSlider.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterControls.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterSidebar.tsx
+./app/components/features/filters/ProgressiveFilterOptionList.tsx
+Attempted import error: 'filterSectionHeaderAction' is not exported from './FilterSidebar' (imported as 'filterSectionHeaderAction').
+Import trace for requested module:
+./app/components/features/filters/ProgressiveFilterOptionList.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterControls.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterSidebar.tsx
+./app/components/features/filters/ProgressiveFilterOptionList.tsx
+Attempted import error: 'filterStateActive' is not exported from './FilterSidebar' (imported as 'filterStateActive').
+Import trace for requested module:
+./app/components/features/filters/ProgressiveFilterOptionList.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterControls.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterSidebar.tsx
+./app/components/features/filters/ProgressiveFilterOptionList.tsx
+Attempted import error: 'filterSectionHeaderAction' is not exported from './FilterSidebar' (imported as 'filterSectionHeaderAction').
+Import trace for requested module:
+./app/components/features/filters/ProgressiveFilterOptionList.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterControls.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterSidebar.tsx
+./app/components/features/filters/ProgressiveFilterOptionList.tsx
+Attempted import error: 'filterStateActive' is not exported from './FilterSidebar' (imported as 'filterStateActive').
+Import trace for requested module:
+./app/components/features/filters/ProgressiveFilterOptionList.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterControls.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterSidebar.tsx
+./app/components/features/filters/PriceRangeSlider.tsx
+Attempted import error: 'filterStateActive' is not exported from './FilterSidebar' (imported as 'filterStateActive').
+Import trace for requested module:
+./app/components/features/filters/PriceRangeSlider.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterControls.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterSidebar.tsx
+./app/components/features/filters/PriceRangeSlider.tsx
+Attempted import error: 'filterStateInactive' is not exported from './FilterSidebar' (imported as 'filterStateInactive').
+Import trace for requested module:
+./app/components/features/filters/PriceRangeSlider.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterControls.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterSidebar.tsx
+./app/components/features/filters/PriceRangeSlider.tsx
+Attempted import error: 'filterSectionHeaderRow' is not exported from './FilterSidebar' (imported as 'filterSectionHeaderRow').
+Import trace for requested module:
+./app/components/features/filters/PriceRangeSlider.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterControls.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterSidebar.tsx
+./app/components/features/filters/PriceRangeSlider.tsx
+Attempted import error: 'filterSectionHeaderLabel' is not exported from './FilterSidebar' (imported as 'filterSectionHeaderLabel').
+Import trace for requested module:
+./app/components/features/filters/PriceRangeSlider.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterControls.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterSidebar.tsx
+./app/components/features/filters/ProgressiveFilterOptionList.tsx
+Attempted import error: 'filterSectionHeaderAction' is not exported from './FilterSidebar' (imported as 'filterSectionHeaderAction').
+Import trace for requested module:
+./app/components/features/filters/ProgressiveFilterOptionList.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterControls.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterSidebar.tsx
+./app/components/features/filters/ProgressiveFilterOptionList.tsx
+Attempted import error: 'filterStateActive' is not exported from './FilterSidebar' (imported as 'filterStateActive').
+Import trace for requested module:
+./app/components/features/filters/ProgressiveFilterOptionList.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterControls.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterSidebar.tsx
+./app/components/features/filters/ProgressiveFilterOptionList.tsx
+Attempted import error: 'filterSectionHeaderAction' is not exported from './FilterSidebar' (imported as 'filterSectionHeaderAction').
+Import trace for requested module:
+./app/components/features/filters/ProgressiveFilterOptionList.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterControls.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterSidebar.tsx
+./app/components/features/filters/ProgressiveFilterOptionList.tsx
+Attempted import error: 'filterStateActive' is not exported from './FilterSidebar' (imported as 'filterStateActive').
+Import trace for requested module:
+./app/components/features/filters/ProgressiveFilterOptionList.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterControls.tsx
+./app/(test)/poc/filter-sort/audio-electronics/components/FilterSidebar.tsx
+Skipping linting
+Checking validity of types ...
+Failed to compile.
+./app/components/features/filters/PriceRangeSlider.tsx:5:3
+Type error: Module '"./FilterSidebar"' has no exported member 'filterSectionHeaderRow'.
+3 | import React, { useCallback, useEffect, useRef, useState } from "react";
+4 | import {
+> 5 |   filterSectionHeaderRow,
+|   ^
+6 |   filterSectionHeaderLabel,
+7 |   filterStateActive,
+8 |   filterStateInactive,
+Next.js build worker exited with code: 1 and signal: null
+Error: Command "npm run build" exited with 1
+Error: Command "npm run build" exited with 1

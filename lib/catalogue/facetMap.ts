@@ -72,7 +72,12 @@ export const FILTER_FACETS: FilterFacet[] = [
   {
     facet: 'Wearing style',
     field: 'filterAttributes.wearingStyle',
-    type: 'enum',
+    // Schema field is an array (productType.ts) despite being single-select in
+    // practice -- 'enum' here made buildProductQuery.ts emit a scalar
+    // `lower(field) in [...]` predicate against an array field, which silently
+    // failed to match any correctly-typed product and only matched legacy
+    // un-migrated docs storing a raw string (sang-logium bug hunt 2026-09-15).
+    type: 'multi',
     valueVocab: ['over-ear', 'on-ear', 'in-ear'],
     categories: ['headphones'],
     urlParam: 'wearingStyle',
@@ -80,7 +85,8 @@ export const FILTER_FACETS: FilterFacet[] = [
   {
     facet: 'Back design',
     field: 'filterAttributes.acousticDesign',
-    type: 'enum',
+    // Array field in schema, same enum/array mismatch as wearingStyle above.
+    type: 'multi',
     valueVocab: ['open-back', 'closed-back', 'semi-open'],
     categories: ['headphones'],
     urlParam: 'acousticDesign',
@@ -88,7 +94,8 @@ export const FILTER_FACETS: FilterFacet[] = [
   {
     facet: 'Driver type',
     field: 'filterAttributes.driverType',
-    type: 'enum',
+    // Array field in schema, same enum/array mismatch as wearingStyle above.
+    type: 'multi',
     // Was missing 3 of the schema's 8 real options (sanity-cms/schemaTypes/
     // productType.ts:452) -- amt/bone-conduction/electret silently never got
     // counted, regardless of real product data.
@@ -175,7 +182,10 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Sound signature',
     field: 'filterAttributes.soundSignature',
     type: 'enum',
-    valueVocab: ['Neutral', 'Warm', 'Bright/Analytical', 'Dark', 'V-Shaped', 'Basshead', 'Mid-Forward'],
+    // sang-logium-3rv.9 -- schema options.list (productType.ts) has 8 values;
+    // 'Harman-target-like' was missing here, so a product carrying it could
+    // never be counted or filtered to. Added to match the schema exactly.
+    valueVocab: ['Neutral', 'Warm', 'Bright/Analytical', 'Dark', 'V-Shaped', 'Basshead', 'Mid-Forward', 'Harman-target-like'],
     categories: ['headphones'],
     urlParam: 'soundSignature',
   },
@@ -335,6 +345,10 @@ export const FILTER_FACETS: FilterFacet[] = [
     categories: ['audio-electronics'],
     urlParam: 'outputs',
   },
+  // sang-logium-3rv.6 -- condition/deals/newArrival/awards are shared with
+  // the accessories slice (same schema field, same closed vocabulary). The
+  // canonical entries live in the accessories block below, so they are tagged
+  // with both categories there rather than duplicated here.
   {
     facet: 'Accessory type',
     field: 'filterAttributes.accessoryType',
@@ -350,6 +364,185 @@ export const FILTER_FACETS: FilterFacet[] = [
     valueVocab: ['rca', 'xlr', 'banana-plug', 'spade', 'bnc', '3.5mm', '2.5mm', '4.4mm', 'mini-to-rca'],
     categories: ['accessories'],
     urlParam: 'connectorTermination',
+  },
+  // sang-logium-3rv.7 — accessories commercial + domain facets vocabulary/parity cleanup.
+  // Closed vocabularies below match sanity-cms/schemaTypes/productType.ts
+  // options.list values for each field.
+  {
+    facet: 'Awards / recognition',
+    field: 'filterAttributes.awards',
+    type: 'multi',
+    valueVocab: ['<award-slug>'],
+    categories: ['headphones', 'accessories', 'audio-electronics'],
+    urlParam: 'awards',
+  },
+  {
+    facet: 'Condition',
+    field: 'filterAttributes.condition',
+    type: 'enum',
+    valueVocab: ['new', 'open-box', 'refurbished'],
+    categories: ['accessories', 'audio-electronics'],
+    urlParam: 'condition',
+  },
+  {
+    facet: 'Discount',
+    field: 'filterAttributes.dealsDiscount',
+    type: 'enum',
+    valueVocab: ['none', 'sale', 'clearance'],
+    categories: ['accessories', 'audio-electronics'],
+    urlParam: 'deals',
+  },
+  {
+    facet: 'New arrivals',
+    field: 'filterAttributes.newArrival',
+    type: 'boolean',
+    valueVocab: ['true', 'false'],
+    categories: ['accessories', 'audio-electronics'],
+    urlParam: 'newArrival',
+  },
+  {
+    facet: 'Compatible product type',
+    field: 'filterAttributes.compatibleProductType',
+    type: 'multi',
+    valueVocab: ['headphone', 'speaker', 'turntable', 'amplifier-source', 'universal-any'],
+    categories: ['accessories'],
+    urlParam: 'compatibleProductType',
+  },
+  {
+    facet: 'Cable function',
+    field: 'filterAttributes.cableFunction',
+    type: 'multi',
+    valueVocab: ['interconnect-rca-xlr', 'speaker-cable', 'digital-usb-coaxial-optical-aes-ebu-ethernet', 'power-mains', 'phono'],
+    categories: ['accessories'],
+    urlParam: 'cableFunction',
+  },
+  {
+    facet: 'Length',
+    field: 'filterAttributes.lengthM',
+    type: 'range',
+    valueVocab: ['min', 'max'],
+    categories: ['accessories'],
+    urlParam: 'length',
+  },
+  {
+    facet: 'Conductor material',
+    field: 'filterAttributes.conductorMaterial',
+    type: 'multi',
+    valueVocab: ['copper-ofc', 'silver', 'silver-plated-copper'],
+    categories: ['accessories'],
+    urlParam: 'conductorMaterial',
+  },
+  {
+    facet: 'Balanced / unbalanced',
+    field: 'filterAttributes.balancedUnbalanced',
+    type: 'enum',
+    valueVocab: ['balanced', 'unbalanced'],
+    categories: ['accessories'],
+    urlParam: 'balanced',
+  },
+  {
+    facet: 'Furniture type',
+    field: 'filterAttributes.furnitureType',
+    type: 'multi',
+    valueVocab: ['speaker-stand', 'equipment-rack-shelf', 'isolation-platform-feet-pucks', 'turntable-wall-shelf', 'wall-mount'],
+    categories: ['accessories'],
+    urlParam: 'furnitureType',
+  },
+  {
+    facet: 'Material',
+    field: 'filterAttributes.material',
+    type: 'multi',
+    valueVocab: ['wood', 'metal', 'acrylic', 'composite-mdf'],
+    categories: ['accessories'],
+    urlParam: 'material',
+  },
+  {
+    facet: 'Adjustable height',
+    field: 'filterAttributes.adjustableHeight',
+    type: 'boolean',
+    valueVocab: ['true', 'false'],
+    categories: ['accessories'],
+    urlParam: 'adjustableHeight',
+  },
+  {
+    facet: 'Weight / load capacity',
+    field: 'filterAttributes.weightCapacityKg',
+    type: 'range',
+    valueVocab: ['min', 'max'],
+    categories: ['accessories'],
+    urlParam: 'weightCapacity',
+  },
+  {
+    facet: 'Power product type',
+    field: 'filterAttributes.powerProductType',
+    type: 'enum',
+    valueVocab: ['conditioner', 'surge-protector', 'power-distributor', 'battery-ups-backup', 'power-cable'],
+    categories: ['accessories'],
+    urlParam: 'powerProductType',
+  },
+  {
+    facet: 'Outlet count',
+    field: 'filterAttributes.outletCount',
+    type: 'range',
+    valueVocab: ['min', 'max'],
+    categories: ['accessories'],
+    urlParam: 'outletCount',
+  },
+  {
+    facet: 'Power connector type',
+    field: 'filterAttributes.powerConnectorType',
+    type: 'multi',
+    valueVocab: ['nema-5-15', 'iec-c13-c15', '20-amp'],
+    categories: ['accessories'],
+    urlParam: 'powerConnectorType',
+  },
+  {
+    facet: 'Cleaning product type',
+    field: 'filterAttributes.cleaningProductType',
+    type: 'enum',
+    valueVocab: ['record-cleaning-fluid', 'record-cleaning-machine', 'stylus-brush-cleaner', 'carbon-fiber-brush', 'anti-static-gun', 'demagnetizer', 'screen-lens-cloth'],
+    categories: ['accessories'],
+    urlParam: 'cleaningProductType',
+  },
+  {
+    facet: 'Format compatibility',
+    field: 'filterAttributes.formatCompatibility',
+    type: 'multi',
+    valueVocab: ['vinyl', 'cd', 'stylus-cartridge', 'optical-lens'],
+    categories: ['accessories'],
+    urlParam: 'formatCompatibility',
+  },
+  {
+    facet: 'Part type',
+    field: 'filterAttributes.partType',
+    type: 'enum',
+    valueVocab: ['ear-pads-cushions', 'ear-tips', 'phono-cartridge-stylus', 'drive-belt', 'remote-control', 'dust-cover', 'fuses', 'vacuum-tubes-valves'],
+    categories: ['accessories'],
+    urlParam: 'partType',
+  },
+  {
+    facet: 'Adapter function',
+    field: 'filterAttributes.adapterFunction',
+    type: 'multi',
+    valueVocab: ['bluetooth-transmitter-receiver', 'headphone-impedance-attenuator-adapter', 'connector-adapter', 'standalone-phono-preamp', 'usb-dac-dongle'],
+    categories: ['accessories'],
+    urlParam: 'adapterFunction',
+  },
+  {
+    facet: 'Treatment type',
+    field: 'filterAttributes.treatmentType',
+    type: 'multi',
+    valueVocab: ['acoustic-panel', 'bass-trap', 'diffuser', 'isolation-pad'],
+    categories: ['accessories'],
+    urlParam: 'treatmentType',
+  },
+  {
+    facet: 'Mounting',
+    field: 'filterAttributes.mounting',
+    type: 'multi',
+    valueVocab: ['wall', 'ceiling', 'freestanding'],
+    categories: ['accessories'],
+    urlParam: 'mounting',
   },
 ];
 

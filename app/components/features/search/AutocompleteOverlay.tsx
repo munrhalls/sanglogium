@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils/tailwind';
 import { AutocompleteItem } from './AutocompleteItem';
+import { CATEGORY_SUGGESTIONS } from './SearchEmpty';
 import type { AutocompleteProduct } from '@/sanity-cms/lib/products/searchProducts';
 
 interface AutocompleteOverlayProps {
@@ -59,9 +60,31 @@ export function AutocompleteOverlay({
         </ul>
       ) : results.length === 0 ? (
         <div className="p-4">
-          <p className="type-body text-secondary">
+          <p className="type-body text-secondary mb-4">
             No products match &lsquo;{query}&rsquo;
           </p>
+          <div className="section-header-anchor mb-2">
+            <span className="type-overline text-accent-500">Try Instead</span>
+          </div>
+          <div className="flex flex-wrap gap-2 mb-4">
+            {CATEGORY_SUGGESTIONS.map((cat) => (
+              <Link
+                key={cat.href}
+                href={cat.href}
+                onClick={onItemClick}
+                className="btn-secondary type-caption"
+              >
+                {cat.label}
+              </Link>
+            ))}
+          </div>
+          <Link
+            href="/products"
+            onClick={onItemClick}
+            className="type-caption text-brand-400 hover:underline"
+          >
+            Browse all products &rarr;
+          </Link>
         </div>
       ) : (
         <>

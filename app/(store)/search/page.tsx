@@ -1,8 +1,10 @@
 import React, { Suspense } from 'react';
+import { redirect } from 'next/navigation';
 import { SearchHeader } from '@/app/components/features/search/SearchHeader';
 import { searchProductsFull } from '@/sanity-cms/lib/products/searchProducts';
 import { ProductGridSkeleton } from '@/app/components/skeletons/ProductGridSkeleton';
 import { isFacetedQuery } from '@/lib/catalogue/seo';
+import { detectSearchRedirect } from '@/lib/catalogue/detectSearchRedirect';
 import { SearchResults } from './SearchResults';
 
 interface SearchPageProps {
@@ -13,6 +15,12 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   const query = await searchParams;
   const qValue = Array.isArray(query.q) ? query.q[0] : query.q;
   const q = typeof qValue === 'string' ? qValue : '';
+
+  const redirectUrl = detectSearchRedirect(q);
+  if (redirectUrl) {
+    redirect(redirectUrl);
+  }
+
   const pageValue = Array.isArray(query.page) ? query.page[0] : query.page;
   const page = typeof pageValue === 'string' ? Number(pageValue) : 1;
 

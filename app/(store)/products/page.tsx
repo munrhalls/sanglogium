@@ -13,8 +13,8 @@ import { FilterSidebar } from '@/app/components/features/filters/FilterSidebar';
 import { SortBar } from '@/app/components/features/filters/SortBar';
 import { ActiveFilterChips } from '@/app/components/features/filters/ActiveFilterChips';
 import { isFacetedQuery } from '@/lib/catalogue/seo';
-import { loadFilterSort, SORT_DEFAULT } from '@/lib/catalogue/filterSortParams';
-import { buildProductQuery } from '@/lib/catalogue/buildProductQuery';
+import { loadFilterSort } from '@/lib/catalogue/filterSortParams';
+import { buildProductQuery, isFiltersActive } from '@/lib/catalogue/buildProductQuery';
 import type { ProductQueryState } from '@/lib/catalogue/buildProductQuery';
 import { sanitizeFilterState } from '@/lib/catalogue/sanitizeFilterState';
 
@@ -52,15 +52,7 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
 
   const state = sanitizeFilterState(preState, { brand: Object.keys(brandLabels) });
   const { orderClause, whereClause, params } = buildProductQuery(state);
-  const filtersActive = Object.entries(state).some(([key, value]) => {
-    if (key === 'sort') return value !== SORT_DEFAULT;
-    if (key === 'minPrice' || key === 'maxPrice') return value != null;
-    if (typeof value === 'boolean') return value;
-    // Range-facet Min/Max keys parse to a number or null (sang-logium-3rv.5).
-    if (typeof value === 'number') return true;
-    if (Array.isArray(value)) return value.length > 0;
-    return false;
-  });
+  const filtersActive = isFiltersActive(state);
 
   const totalCount = await getProductsCount({ keys: allKeys, whereClause, params });
   const priceBounds = resolvePriceBounds(priceRange);

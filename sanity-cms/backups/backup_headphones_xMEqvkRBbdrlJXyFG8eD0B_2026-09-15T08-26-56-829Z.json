@@ -1,0 +1,27 @@
+{
+  "productId": "xMEqvkRBbdrlJXyFG8eD0B",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "ifi-audio"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "optical",
+      "coaxial",
+      "rca"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 29900
+  },
+  "backedUpAt": "2026-09-15T08:26:56.829Z"
+}

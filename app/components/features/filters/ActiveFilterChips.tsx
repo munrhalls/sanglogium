@@ -1,8 +1,7 @@
 'use client';
 
 import React from 'react';
-import { FACETS, SORT_DEFAULT, SORT_OPTIONS } from '@/app/(test)/poc/filter-sort/headphones/lib/facetConfig';
-import { useFilterParam, useClearAllFilters } from '@/app/(test)/poc/filter-sort/headphones/lib/useFilterParam';
+import { getFacetModule, type Category } from './facetRegistry';
 import { humanizeFacetValue } from '@/lib/catalogue/humanizeFacetValue';
 import { formatPriceMajor } from '@/lib/utils/price';
 
@@ -12,10 +11,18 @@ import { formatPriceMajor } from '@/lib/utils/price';
  * value and, on interaction, writes the corrected value back through the
  * shared hook. Never imports or reacts to the product grid, product data,
  * result counts or streaming.
+ *
+ * Category-aware since sang-logium-3rv.6: `category` picks which per-category
+ * facet module (facetRegistry.ts) supplies FACETS and useFilterParam, so a
+ * chip's URL param always matches the sidebar control that set it.
  */
 
 interface ActiveFilterChipsProps {
   brandLabels?: Record<string, string>;
+  /** Optional: app/(store)/products/page.tsx (all-products) omits this and
+   *  gets headphones' contract, unchanged from pre-sang-logium-3rv.6
+   *  behavior there (same default FilterSidebar uses). */
+  category?: Category;
 }
 
 interface Chip {
@@ -24,10 +31,12 @@ interface Chip {
   onRemove: () => void;
 }
 
-const sortLabel = (value: string) => SORT_OPTIONS.find((o) => o.value === value)?.label ?? value;
 const formatRangeChipValue = (value: number, unit: string) => (unit === 'm' ? `${value.toFixed(1)}m` : `${Math.round(value)} ${unit}`);
 
-export function ActiveFilterChips({ brandLabels = {} }: ActiveFilterChipsProps) {
+export function ActiveFilterChips({ brandLabels = {}, category = 'headphones' }: ActiveFilterChipsProps) {
+  const { FACETS, SORT_DEFAULT, SORT_OPTIONS, useFilterParam, useClearAllFilters } = getFacetModule(category);
+  const sortLabel = (value: string) => SORT_OPTIONS.find((o) => o.value === value)?.label ?? value;
+
   const [sort, setSort] = useFilterParam('sort') as [string, (v: string) => void];
   const [minPrice, setMinPrice] = useFilterParam('minPrice') as [number | null, (v: number | null) => void];
   const [maxPrice, setMaxPrice] = useFilterParam('maxPrice') as [number | null, (v: number | null) => void];
@@ -36,9 +45,9 @@ export function ActiveFilterChips({ brandLabels = {} }: ActiveFilterChipsProps) 
 
   // Stable hook-order access to every generic facet param (and, for range
   // facets, their Min/Max pair) — FACETS is a static, compile-time-constant
-  // array, so this loop calling a fixed sequence of hooks is safe every
-  // render (same pattern production's own ActiveFilterChips.tsx uses over
-  // FILTER_FACETS).
+  // array for a given category, so this loop calling a fixed sequence of
+  // hooks is safe every render (same pattern production's own
+  // ActiveFilterChips.tsx uses over FILTER_FACETS).
   type ArraySetter = [string[], (next: string[] | ((prev: string[]) => string[])) => void];
   type BoolSetter = [boolean, (next: boolean) => void];
   type NumSetter = [number | null, (next: number | null) => void];
@@ -94,10 +103,11 @@ export function ActiveFilterChips({ brandLabels = {} }: ActiveFilterChipsProps) 
     if (facet.control === 'range') {
       const [[minVal, setMinVal], [maxVal, setMaxVal]] = rangeSetters.get(facet.id)!;
       if (minVal == null && maxVal == null) continue;
+      const unit = facet.unit ?? '';
       let label: string;
-      if (minVal != null && maxVal != null) label = `${facet.label}: ${formatRangeChipValue(minVal, facet.unit)} – ${formatRangeChipValue(maxVal, facet.unit)}`;
-      else if (minVal != null) label = `${facet.label}: ${formatRangeChipValue(minVal, facet.unit)}+`;
-      else label = `${facet.label}: up to ${formatRangeChipValue(maxVal as number, facet.unit)}`;
+      if (minVal != null && maxVal != null) label = `${facet.label}: ${formatRangeChipValue(minVal, unit)} – ${formatRangeChipValue(maxVal, unit)}`;
+      else if (minVal != null) label = `${facet.label}: ${formatRangeChipValue(minVal, unit)}+`;
+      else label = `${facet.label}: up to ${formatRangeChipValue(maxVal as number, unit)}`;
       chips.push({
         key: facet.id,
         label,

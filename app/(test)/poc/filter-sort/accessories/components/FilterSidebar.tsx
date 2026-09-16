@@ -86,7 +86,7 @@ function PanelSection({
 }: {
   id: FacetGroupId;
   label: string;
-  note: string;
+  note?: string;
   children: React.ReactNode;
 }) {
   return (
@@ -95,10 +95,12 @@ function PanelSection({
       data-testid={`poc-panel-${id}`}
       className="flex flex-col gap-6 border-b border-border-secondary p-6 last:border-b-0"
     >
-      <div className="flex flex-col gap-1">
-        <span className="type-overline">{label}</span>
-        <p className="type-caption text-text-caption">{note}</p>
-      </div>
+      {(label || note) && (
+        <div className="flex flex-col gap-1">
+          {label && <span className="type-overline">{label}</span>}
+          {note && <p className="type-caption text-text-caption">{note}</p>}
+        </div>
+      )}
       {children}
     </div>
   );

@@ -4,9 +4,7 @@ import React from 'react';
 import { usePathname } from 'next/navigation';
 import type { IconType } from 'react-icons';
 import { FaTag, FaHeadphones, FaWaveSquare, FaLayerGroup, FaBluetooth, FaMicrochip } from 'react-icons/fa6';
-import { FACET_GROUPS, facetsForGroup, type FacetDef, type FacetGroupId } from '@/app/(test)/poc/filter-sort/headphones/lib/facetConfig';
-import { useClearAllFilters } from '@/app/(test)/poc/filter-sort/headphones/lib/useFilterParam';
-import type { FacetOptionCount } from '@/app/(test)/poc/filter-sort/headphones/lib/filterProducts';
+import { getFacetModule, resolveGroupIcon, type Category, type AnyFacetDef, type FacetOptionCount } from './facetRegistry';
 import type { RangeBounds } from '@/sanity-cms/lib/products/getFilterFacets';
 import { CheckboxGroup, BooleanToggle, RangeControl, PriceControl, RatingControl } from './FilterControls';
 
@@ -37,9 +35,15 @@ export {
  * composition (the RSC) — this component never fetches data or touches the
  * product grid. Every control reads/writes its own URL param via
  * useFilterParam; nothing here is optimistic about a fetch in flight.
+ *
+ * Category-aware since sang-logium-3rv.6: `category` picks which of the three
+ * per-category facet modules (facetRegistry.ts) drives groups/facets/URL
+ * params. Bespoke rail icons only exist for headphones today -- the other two
+ * categories get a neutral fallback icon per group (resolveGroupIcon), a
+ * content decision tracked separately, not a wiring gap.
  */
 
-const GROUP_ICONS: Record<FacetGroupId, IconType> = {
+const HEADPHONES_GROUP_ICONS: Record<string, IconType> = {
   commercial: FaTag,
   type: FaHeadphones,
   sound: FaWaveSquare,
@@ -47,6 +51,7 @@ const GROUP_ICONS: Record<FacetGroupId, IconType> = {
   wireless: FaBluetooth,
   technical: FaMicrochip,
 };
+const FALLBACK_GROUP_ICON: IconType = FaLayerGroup;
 
 interface FilterSidebarProps {
   checkboxCounts: Record<string, FacetOptionCount[]>;
@@ -58,6 +63,10 @@ interface FilterSidebarProps {
    *  falls back to facetConfig.ts's hardcoded min/max in that case, same as
    *  before sang-logium-3rv.5. */
   rangeBounds?: Record<string, RangeBounds>;
+  /** Optional: app/(store)/products/page.tsx (all-products) spans every
+   *  category and has no single facet module to pick -- defaults to
+   *  headphones', unchanged from pre-sang-logium-3rv.6 behavior there. */
+  category?: Category;
 }
 
 const PANEL_SCROLL_ID = 'poc-filter-panel-scroll';
@@ -68,7 +77,7 @@ const PANEL_SCROLL_ID = 'poc-filter-panel-scroll';
 // ancestor to satisfy visibility — which nudges the product grid's scroll
 // position too. Scrolling the panel container directly, by exact pixel
 // offset, touches only this one element and nothing above it.
-function scrollToGroup(groupId: FacetGroupId) {
+function scrollToGroup(groupId: string) {
   const container = document.getElementById(PANEL_SCROLL_ID);
   const target = document.getElementById(`poc-group-${groupId}`);
   if (!container || !target) return;
@@ -76,8 +85,7 @@ function scrollToGroup(groupId: FacetGroupId) {
   container.scrollBy({ top: offset - 16, behavior: 'smooth' });
 }
 
-function RailTile({ id, label }: { id: FacetGroupId; label: string }) {
-  const Icon = GROUP_ICONS[id];
+function RailTile({ id, label, icon: Icon }: { id: string; label: string; icon: IconType }) {
   const title = label || id;
   return (
     <button
@@ -99,7 +107,7 @@ function PanelSection({
   note,
   children,
 }: {
-  id: FacetGroupId;
+  id: string;
   label: string;
   note?: string;
   children: React.ReactNode;
@@ -122,7 +130,8 @@ function PanelSection({
 }
 
 function renderFacet(
-  facet: FacetDef,
+  facet: AnyFacetDef,
+  category: Category,
   checkboxCounts: Record<string, FacetOptionCount[]>,
   booleanCounts: Record<string, number>,
   brandLabels: Record<string, string>,
@@ -132,6 +141,7 @@ function renderFacet(
     return (
       <CheckboxGroup
         key={facet.id}
+        category={category}
         facet={facet}
         counts={checkboxCounts[facet.id] ?? []}
         brandLabels={facet.id === 'brand' ? brandLabels : undefined}
@@ -139,12 +149,20 @@ function renderFacet(
     );
   }
   if (facet.control === 'boolean') {
-    return <BooleanToggle key={facet.id} facet={facet} count={booleanCounts[facet.id]} />;
+    return <BooleanToggle key={facet.id} category={category} facet={facet} count={booleanCounts[facet.id]} />;
   }
-  return <RangeControl key={facet.id} facet={facet} bounds={rangeBounds[facet.id]} />;
+  return <RangeControl key={facet.id} category={category} facet={facet} bounds={rangeBounds[facet.id]} />;
 }
 
-export function FilterSidebar({ checkboxCounts, booleanCounts, brandLabels, priceBounds, rangeBounds = {} }: FilterSidebarProps) {
+export function FilterSidebar({
+  checkboxCounts,
+  booleanCounts,
+  brandLabels,
+  priceBounds,
+  rangeBounds = {},
+  category = 'headphones',
+}: FilterSidebarProps) {
+  const { FACET_GROUPS, facetsForGroup, useClearAllFilters } = getFacetModule(category);
   const clearAll = useClearAllFilters();
   const pathname = usePathname();
   const hideCustomerRating = pathname === '/products/headphones';
@@ -173,19 +191,24 @@ export function FilterSidebar({ checkboxCounts, booleanCounts, brandLabels, pric
             className="flex w-14 shrink-0 flex-col gap-0.5 overflow-y-auto overscroll-y-contain border-r border-border-secondary p-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
           >
             {FACET_GROUPS.map((group) => (
-              <RailTile key={group.id} id={group.id} label={group.label} />
+              <RailTile
+                key={group.id}
+                id={group.id}
+                label={group.label}
+                icon={resolveGroupIcon(category, group.id, HEADPHONES_GROUP_ICONS, FALLBACK_GROUP_ICON)}
+              />
             ))}
           </nav>
 
           <div
             id={PANEL_SCROLL_ID}
-            className="flex-1 overflow-y-auto overscroll-y-contain [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+            className="flex-1 overflow-y-auto overscroll-y-contain [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden pb-6"
           >
             {FACET_GROUPS.map((group) => (
               <PanelSection key={group.id} id={group.id} label={group.label} note={group.note}>
-                {group.id === 'commercial' && <PriceControl min={priceBounds.min} max={priceBounds.max} />}
-                {group.id === 'commercial' && !hideCustomerRating && <RatingControl />}
-                {facetsForGroup(group.id).map((facet) => renderFacet(facet, checkboxCounts, booleanCounts, brandLabels, rangeBounds))}
+                {group.id === 'commercial' && <PriceControl category={category} min={priceBounds.min} max={priceBounds.max} />}
+                {group.id === 'commercial' && !hideCustomerRating && <RatingControl category={category} />}
+                {facetsForGroup(group.id).map((facet) => renderFacet(facet, category, checkboxCounts, booleanCounts, brandLabels, rangeBounds))}
               </PanelSection>
             ))}
           </div>

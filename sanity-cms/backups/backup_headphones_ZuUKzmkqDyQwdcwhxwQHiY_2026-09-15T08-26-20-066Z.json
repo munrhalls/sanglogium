@@ -1,0 +1,120 @@
+{
+  "productId": "ZuUKzmkqDyQwdcwhxwQHiY",
+  "before": {
+    "acousticDesign": [
+      "semi-open"
+    ],
+    "anc": "anc",
+    "brand": [
+      "sennheiser"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "true-wireless",
+    "detachableCable": false,
+    "driverType": [
+      "dynamic"
+    ],
+    "fitType": "universal",
+    "foldable": false,
+    "inStock": true,
+    "microphone": true,
+    "portable": true,
+    "price": 19995,
+    "productCategory": [
+      "true-wireless"
+    ],
+    "requiresAmplifier": false,
+    "sourcing": [
+      {
+        "field": "productCategory",
+        "quote": "wearing-style--true-wireless (manufacturer product metadata)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/momentum-sport"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "wearing-style--in-ear (manufacturer product metadata)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/momentum-sport"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "Semi-open design for greater comfort – Acoustic relief channel allows airflow to improve wearing comfort, reduce body-borne noise and improve natural awareness",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/momentum-sport"
+      },
+      {
+        "field": "fitType",
+        "quote": "Secure, multi-sports fit - Interchangeable ear fins and ear tips allow for a secure custom fit with lasting comfort over long-wearing sessions",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/momentum-sport"
+      },
+      {
+        "field": "connectivity",
+        "quote": "Sport´s ecosystem connectivity: Compatible via Bluetooth with leading sports watches, apps, and fitness equipment",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/momentum-sport"
+      },
+      {
+        "field": "portable",
+        "quote": "MOMENTUM Sport earbuds / Charging case / USB-C charging cable / Finger lanyard for easy & secure carrying on the go",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/momentum-sport"
+      },
+      {
+        "field": "driverType",
+        "quote": "(manufacturer metadata: true-wireless in-ear sports earbuds, Sennheiser TrueResponse dynamic driver class)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/momentum-sport"
+      },
+      {
+        "field": "microphone",
+        "quote": "Transparency Mode – Hear your surroundings with a sports-optimized shielded mic system to cut wind noise when on the move",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/momentum-sport"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "(no audio cable supplied or supported; only a USB-C charging cable is included)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/momentum-sport"
+      },
+      {
+        "field": "foldable",
+        "quote": "(no folding hinge exists on earbuds; boolean feature-absence rule applied)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/momentum-sport"
+      },
+      {
+        "field": "anc",
+        "quote": "Adaptive ANC – Stay in the zone without distractions even in noisy gyms or busy outdoor spaces",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/momentum-sport"
+      },
+      {
+        "field": "ipxRating",
+        "quote": "Exceptional IP55 resistance rating combines with a unique acoustic design to shut out moisture without compromising sound quality",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/momentum-sport"
+      }
+    ],
+    "wearingStyle": [
+      "in-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-15T08:26:20.066Z"
+}

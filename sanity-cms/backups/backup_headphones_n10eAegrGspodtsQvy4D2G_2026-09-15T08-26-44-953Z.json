@@ -1,0 +1,25 @@
+{
+  "productId": "n10eAegrGspodtsQvy4D2G",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "ifi-audio"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac-amp-combo",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 7900
+  },
+  "backedUpAt": "2026-09-15T08:26:44.954Z"
+}

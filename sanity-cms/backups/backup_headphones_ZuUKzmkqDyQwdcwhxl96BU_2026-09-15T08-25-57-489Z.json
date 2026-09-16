@@ -1,0 +1,171 @@
+{
+  "productId": "ZuUKzmkqDyQwdcwhxl96BU",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "anc": "anc",
+    "batteryLifeHours": {
+      "ancOff": 8,
+      "ancOn": 6
+    },
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX",
+      "LC3"
+    ],
+    "brand": [
+      "sennheiser"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "true-wireless",
+    "detachableCable": false,
+    "driverType": [
+      "dynamic"
+    ],
+    "fitType": "universal",
+    "foldable": false,
+    "freqResponseHz": {
+      "max": 21000,
+      "min": 5
+    },
+    "inStock": true,
+    "ipxRating": "IPX4",
+    "microphone": true,
+    "portable": true,
+    "price": 14995,
+    "productCategory": [
+      "true-wireless"
+    ],
+    "requiresAmplifier": false,
+    "sensitivityDbMw": 107,
+    "sourcing": [
+      {
+        "field": "productCategory",
+        "quote": "Wearing style: True wireless stereo earphones",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/accentum-true-wireless"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "Speaker sensitivity: 107 dB SPL (1 kHz / 1 mW)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://us.sennheiser-hearing.com/products/accentum-true-wireless"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "Speaker frequency range: 5 Hz to 21 kHz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://us.sennheiser-hearing.com/products/accentum-true-wireless"
+      },
+      {
+        "field": "driverType",
+        "quote": "Speaker type/size: TrueResponse™ dynamic, 7mm diameter",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://us.sennheiser-hearing.com/products/accentum-true-wireless"
+      },
+      {
+        "field": "impedanceOhms",
+        "quote": "Speaker impedance: Not applicable (active BT headphones)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://us.sennheiser-hearing.com/products/accentum-true-wireless"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "Ear Coupling: Ear canal",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/accentum-true-wireless"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "Speaker principle: Dynamic",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/accentum-true-wireless"
+      },
+      {
+        "field": "fitType",
+        "quote": "Choose from various ear tip options to find the perfect fit",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/accentum-true-wireless"
+      },
+      {
+        "field": "connectivity",
+        "quote": "Connectivity: Bluetooth 5.3 compliant, class 1, 10 mW (max) Bluetooth Classic supported",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/accentum-true-wireless"
+      },
+      {
+        "field": "portable",
+        "quote": "On-the-go portability: Pocket size charging case",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/accentum-true-wireless"
+      },
+      {
+        "field": "microphone",
+        "quote": "Mic principle: MEMS / Mic pick-up pattern: 2 mics per earbud, beamforming for noise reduction",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/accentum-true-wireless"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "(no cable supplied or supported; true-wireless earbuds)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/accentum-true-wireless"
+      },
+      {
+        "field": "foldable",
+        "quote": "(no folding hinge exists on earbuds; boolean feature-absence rule applied)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/accentum-true-wireless"
+      },
+      {
+        "field": "anc",
+        "quote": "Active Noise Cancellation: Hybrid ANC",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/accentum-true-wireless"
+      },
+      {
+        "field": "bluetoothCodecs",
+        "quote": "Supported codecs: SBC, AAC, aptX™, LC3",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/accentum-true-wireless"
+      },
+      {
+        "field": "batteryLifeHours",
+        "quote": "Up to 8 hrs music playtime with earbuds (ANC off); Up to 6 hrs music playtime with earbuds (ANC on)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/accentum-true-wireless"
+      },
+      {
+        "field": "ipxRating",
+        "quote": "Weather resistance: IP54, splash resistant (earbuds only)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/accentum-true-wireless"
+      }
+    ],
+    "wearingStyle": [
+      "in-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-15T08:25:57.489Z"
+}

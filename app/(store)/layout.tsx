@@ -37,6 +37,7 @@ export default async function RootLayout({
         <link rel="dns-prefetch" href="https://cdn.sanity.io" />
       </head>
       <body
+        suppressHydrationWarning
         className={cn(
           "flex h-dvh w-full flex-col overflow-hidden",
           "bg-brand-800 font-sans text-brand-100",

@@ -19,6 +19,16 @@ export default function SearchField() {
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get('q') || '';
   const [query, setQuery] = useState(initialQuery);
+  const [isUserTyping, setIsUserTyping] = useState(false);
+
+  // Sync the typed query with the URL when it changes externally (back/forward,
+  // direct navigation, or arriving on a shared results link). Do not treat this as
+  // user typing — the overlay should not open on page load.
+  useEffect(() => {
+    setQuery(initialQuery);
+    setIsUserTyping(false);
+  }, [initialQuery]);
+
   const { isSearchOpen: mobileExpanded, closeSearch } = useSearchOverlay();
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
   const [autocompleteResults, setAutocompleteResults] = useState<AutocompleteProduct[]>([]);
@@ -42,7 +52,10 @@ export default function SearchField() {
     e.preventDefault();
     const trimmed = query.trim();
     if (trimmed.length < MIN_QUERY_LENGTH) return;
+    setIsUserTyping(false);
     addRecentSearch(trimmed);
+    inputRef.current?.blur();
+    mobileInputRef.current?.blur();
     closeOverlay();
     // See runSearchTerm: the results URL has no `search` param, so the overlay
     // closes itself. Calling the nuqs setter here races the push and swallows it.
@@ -53,7 +66,10 @@ export default function SearchField() {
   const runSearchTerm = useCallback((term: string) => {
     const trimmed = term.trim();
     if (trimmed.length < MIN_QUERY_LENGTH) return;
+    setIsUserTyping(false);
     addRecentSearch(trimmed);
+    inputRef.current?.blur();
+    mobileInputRef.current?.blur();
     closeOverlay();
     // Navigate straight to the results route. That URL carries no `search`
     // param, so the overlay (driven by that param) closes on its own — calling
@@ -63,12 +79,14 @@ export default function SearchField() {
 
   const handleClear = useCallback(() => {
     setQuery('');
+    setIsUserTyping(true);
     closeOverlay();
     inputRef.current?.focus();
     mobileInputRef.current?.focus();
   }, [closeOverlay]);
 
   const handleMobileClose = useCallback(() => {
+    setIsUserTyping(false);
     closeSearch();
     setQuery('');
     closeOverlay();
@@ -78,16 +96,19 @@ export default function SearchField() {
   }, [closeOverlay, closeSearch]);
 
   const handleOverlayItemClick = useCallback(() => {
+    setIsUserTyping(false);
     closeOverlay();
     closeSearch();
   }, [closeOverlay, closeSearch]);
 
-  // Debounced autocomplete fetch
+  // Debounced autocomplete fetch. Only runs while the user is actively typing or
+  // has focused the search field; it must not auto-open when the field is merely
+  // pre-filled from the URL (e.g. on the /search?q=... results page).
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
     if (abortRef.current) abortRef.current.abort();
 
-    if (query.trim().length < MIN_QUERY_LENGTH) {
+    if (!isUserTyping || query.trim().length < MIN_QUERY_LENGTH) {
       closeOverlay();
       return;
     }
@@ -119,13 +140,14 @@ export default function SearchField() {
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
-  }, [query, closeOverlay]);
+  }, [query, isUserTyping, closeOverlay]);
 
   // Click outside to close (desktop only; mobile overlay is modal)
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (mobileExpanded) return;
       if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setIsUserTyping(false);
         closeOverlay();
       }
     }
@@ -173,6 +195,9 @@ export default function SearchField() {
         if (activeIndex >= 0 && autocompleteResults[activeIndex]) {
           e.preventDefault();
           const product = autocompleteResults[activeIndex];
+          setIsUserTyping(false);
+          inputRef.current?.blur();
+          mobileInputRef.current?.blur();
           closeOverlay();
           closeSearch();
           router.push(`/product/${product.slug.current}`);
@@ -180,6 +205,7 @@ export default function SearchField() {
         break;
       case 'Escape':
         e.preventDefault();
+        setIsUserTyping(false);
         closeOverlay();
         break;
     }
@@ -235,13 +261,13 @@ export default function SearchField() {
                 <input
                   ref={mobileInputRef}
                   type="text"
-                  placeholder="Search products..."
+                  placeholder="Search headphones, IEMs, DACs..."
                   aria-label="Search products"
                   aria-expanded={showOverlay}
                   aria-controls="autocomplete-listbox"
                   aria-activedescendant={activeIndex >= 0 ? `autocomplete-item-${activeIndex}` : undefined}
                   value={query}
-                  onChange={(e) => setQuery(e.target.value)}
+                  onChange={(e) => { setQuery(e.target.value); setIsUserTyping(true); }}
                   onKeyDown={handleKeyDown}
                   maxLength={500}
                   className={cn(
@@ -268,14 +294,14 @@ export default function SearchField() {
                   query={query}
                   activeIndex={activeIndex}
                   isLoading={isLoading}
-                  showThumbnails={false}
+                  showThumbnails={true}
                   onItemClick={handleOverlayItemClick}
                   error={autocompleteError}
                 />
               )}
             </form>
           </div>
-          {query.trim().length < MIN_QUERY_LENGTH && (
+          {(query.trim().length < MIN_QUERY_LENGTH || !isUserTyping) && (
             // Full-bleed, full-height on mobile: this wrapper owns the surface and
             // runs edge-to-edge down to the bottom of the overlay. The zero-query
             // panel's own card chrome (inset margin, border, radius, shadow) is
@@ -320,17 +346,17 @@ export default function SearchField() {
             <input
               ref={inputRef}
               type="text"
-              placeholder="Search products..."
+              placeholder="Search headphones, IEMs, DACs..."
               aria-label="Search products"
               aria-expanded={showOverlay}
               aria-controls="autocomplete-listbox"
               aria-activedescendant={activeIndex >= 0 ? `autocomplete-item-${activeIndex}` : undefined}
               value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={(e) => { setQuery(e.target.value); setIsUserTyping(true); }}
               onKeyDown={handleKeyDown}
               onFocus={() => {
-                if (query.trim().length >= MIN_QUERY_LENGTH && autocompleteResults.length > 0) {
-                  setIsOverlayOpen(true);
+                if (query.trim().length >= MIN_QUERY_LENGTH) {
+                  setIsUserTyping(true);
                 }
               }}
               maxLength={500}

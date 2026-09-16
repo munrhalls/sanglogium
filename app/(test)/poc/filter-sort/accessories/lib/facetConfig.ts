@@ -25,59 +25,24 @@ export type FacetGroupId =
 export interface FacetGroup {
   id: FacetGroupId;
   label: string;
-  note: string;
+  note?: string;
 }
 
 // Order + copy straight from docs/filters-sort/should-be-accessories.md's
 // group headers ("Group order: Commercial -> Type -> Cables & Interconnects ->
 // Stands, Isolation & Furniture -> Power -> Cleaning & Maintenance ->
 // Replacement Parts -> Adapters & Converters -> Room Acoustic Treatment").
+// No explanatory subtitles are rendered by default (sang-logium-3rv.7).
 export const FACET_GROUPS: FacetGroup[] = [
-  {
-    id: 'commercial',
-    label: 'Commercial',
-    note: 'Not about the product — about whether, and how, to buy it.',
-  },
-  {
-    id: 'type',
-    label: 'Type',
-    note: 'External identity — what kind of accessory this is, and what it’s for. Gates every group below.',
-  },
-  {
-    id: 'cables',
-    label: 'Cables & Interconnects',
-    note: 'Domain-gated — exists only once Accessory Category is Cables & Interconnects.',
-  },
-  {
-    id: 'furniture',
-    label: 'Stands, Isolation & Furniture',
-    note: 'Domain-gated — exists only once Accessory Category is Stands & Isolation or Racks & Furniture.',
-  },
-  {
-    id: 'power',
-    label: 'Power',
-    note: 'Domain-gated — exists only once Accessory Category is Power.',
-  },
-  {
-    id: 'cleaning',
-    label: 'Cleaning & Maintenance',
-    note: 'Domain-gated — exists only once Accessory Category is Cleaning & Maintenance.',
-  },
-  {
-    id: 'replacementParts',
-    label: 'Replacement Parts',
-    note: 'Domain-gated — exists only once Accessory Category is Replacement Parts.',
-  },
-  {
-    id: 'adapters',
-    label: 'Adapters & Converters',
-    note: 'Domain-gated — exists only once Accessory Category is Adapters & Converters.',
-  },
-  {
-    id: 'roomAcoustic',
-    label: 'Room Acoustic Treatment',
-    note: 'Domain-gated — exists only once Accessory Category is Room Acoustic Treatment.',
-  },
+  { id: 'commercial', label: 'Commercial' },
+  { id: 'type', label: 'Type' },
+  { id: 'cables', label: 'Cables & Interconnects' },
+  { id: 'furniture', label: 'Stands, Isolation & Furniture' },
+  { id: 'power', label: 'Power' },
+  { id: 'cleaning', label: 'Cleaning & Maintenance' },
+  { id: 'replacementParts', label: 'Replacement Parts' },
+  { id: 'adapters', label: 'Adapters & Converters' },
+  { id: 'roomAcoustic', label: 'Room Acoustic Treatment' },
 ];
 
 export type Option = { value: string; label: string };
@@ -126,20 +91,24 @@ const opts = (pairs: [string, string][]): Option[] => pairs.map(([value, label])
 export const FACETS: FacetDef[] = [
   // ── Commercial ──────────────────────────────────────────────────────────
   { id: 'brand', group: 'commercial', label: 'Brand', itemNo: 1, status: 'C', control: 'checkbox', field: 'brand', options: 'derived' },
-  { id: 'awards', group: 'commercial', label: 'Awards / Recognition', itemNo: 4, status: 'R', control: 'checkbox', field: 'awards', options: opts([['award-winner', 'Award Winner'], ['editors-choice', "Editor's Choice"]]) },
-  { id: 'condition', group: 'commercial', label: 'Condition / Stock Type', itemNo: 5, status: 'C', control: 'checkbox', field: 'condition', options: opts([['new', 'New'], ['open-box', 'Open-Box'], ['b-stock', 'Certified / Sealed B-Stock'], ['demo', 'Demo Unit'], ['used', 'Used / Trade-In'], ['refurbished', 'Refurbished']]) },
-  { id: 'inStockOnly', group: 'commercial', label: 'In Stock Only', itemNo: 6, status: 'C', control: 'boolean', field: 'inStockOnly' },
-  { id: 'deals', group: 'commercial', label: 'Deals / Discount', itemNo: 7, status: 'C', control: 'checkbox', field: 'deals', options: opts([['on-sale', 'On Sale'], ['clearance', 'Clearance']]) },
+  // Awards has no closed options.list in the Sanity schema — derive from data.
+  { id: 'awards', group: 'commercial', label: 'Awards / Recognition', itemNo: 4, status: 'R', control: 'checkbox', field: 'awards', options: 'derived' },
+  // Condition matches the closed options.list in productType.ts (new / open-box / refurbished).
+  { id: 'condition', group: 'commercial', label: 'Condition', itemNo: 5, status: 'C', control: 'checkbox', field: 'condition', options: opts([['new', 'New'], ['open-box', 'Open-Box'], ['refurbished', 'Refurbished']]) },
+  // In-Stock is now a single Availability control under Commercial (not a standalone "In Stock Only" toggle).
+  { id: 'inStock', group: 'commercial', label: 'Availability', itemNo: 6, status: 'C', control: 'boolean', field: 'inStockOnly' },
+  // Deals uses the schema's dealsDiscount closed list.
+  { id: 'deals', group: 'commercial', label: 'Discount', itemNo: 7, status: 'C', control: 'checkbox', field: 'deals', options: opts([['none', 'No Discount'], ['sale', 'On Sale'], ['clearance', 'Clearance']]) },
   { id: 'newArrival', group: 'commercial', label: 'New Arrivals', itemNo: 8, status: 'C', control: 'boolean', field: 'isNewArrival' },
-  { id: 'availability', group: 'commercial', label: 'Availability / In Stock', itemNo: 6, status: 'C', control: 'checkbox', field: 'availability', options: opts([['in-stock', 'In Stock'], ['preorder', 'Preorder'], ['interest-check', 'Interest Check / Group Buy']]) },
 
   // ── Type ─────────────────────────────────────────────────────────────────
-  { id: 'accessoryCategory', group: 'type', label: 'Accessory Category', itemNo: 9, status: 'C', control: 'checkbox', field: 'accessoryCategory', options: opts([
+  // Accessory Category urlParam is 'accessoryType' to match lib/catalogue/facetMap.ts.
+  { id: 'accessoryType', group: 'type', label: 'Accessory Category', itemNo: 9, status: 'C', control: 'checkbox', field: 'accessoryCategory', options: opts([
     ['cables-interconnects', 'Cables & Interconnects'],
     ['stands-isolation', 'Stands & Isolation'],
     ['racks-furniture', 'Racks & Furniture'],
     ['power', 'Power'],
-    ['cases-storage', 'Cases & Storage/Transport'],
+    ['cases-storage-transport', 'Cases & Storage/Transport'],
     ['cleaning-maintenance', 'Cleaning & Maintenance'],
     ['replacement-parts', 'Replacement Parts'],
     ['adapters-converters', 'Adapters & Converters'],
@@ -150,18 +119,19 @@ export const FACETS: FacetDef[] = [
     ['speaker', 'Speaker'],
     ['turntable', 'Turntable'],
     ['amplifier-source', 'Amplifier/Source'],
-    ['universal', 'Universal/Any'],
+    ['universal-any', 'Universal/Any'],
   ]) },
 
   // ── Cables & Interconnects (domain-gated on accessoryCategory === 'cables-interconnects') ──
   { id: 'cableFunction', group: 'cables', label: 'Cable Function', itemNo: 11, status: 'R', control: 'checkbox', field: 'cableFunction', options: opts([
     ['interconnect-rca-xlr', 'Interconnect (RCA/XLR)'],
     ['speaker-cable', 'Speaker Cable'],
-    ['digital', 'Digital (USB/Coaxial/Optical/AES-EBU/Ethernet)'],
+    ['digital-usb-coaxial-optical-aes-ebu-ethernet', 'Digital (USB/Coaxial/Optical/AES-EBU/Ethernet)'],
     ['power-mains', 'Power/Mains'],
     ['phono', 'Phono'],
   ]) },
-  { id: 'terminationType', group: 'cables', label: 'Termination / Connector Type', itemNo: 12, status: 'C', control: 'checkbox', field: 'terminationType', options: opts([
+  // Connector / termination urlParam is 'connectorTermination' to match lib/catalogue/facetMap.ts.
+  { id: 'connectorTermination', group: 'cables', label: 'Termination / Connector Type', itemNo: 12, status: 'C', control: 'checkbox', field: 'terminationType', options: opts([
     ['rca', 'RCA'], ['xlr', 'XLR'], ['banana-plug', 'Banana Plug'], ['spade', 'Spade'], ['bnc', 'BNC'],
     ['3.5mm', '3.5mm'], ['2.5mm', '2.5mm'], ['4.4mm', '4.4mm'], ['mini-to-rca', 'Mini-to-RCA'],
   ]) },
@@ -169,7 +139,8 @@ export const FACETS: FacetDef[] = [
   { id: 'conductorMaterial', group: 'cables', label: 'Conductor Material', itemNo: 14, status: 'R', control: 'checkbox', field: 'conductorMaterial', options: opts([
     ['copper-ofc', 'Copper/OFC'], ['silver', 'Silver'], ['silver-plated-copper', 'Silver-Plated Copper'],
   ]) },
-  { id: 'balanced', group: 'cables', label: 'Balanced / Unbalanced', itemNo: 15, status: 'C', control: 'boolean', field: 'balanced' },
+  // Balanced is a string enum in the Sanity schema, not a boolean.
+  { id: 'balanced', group: 'cables', label: 'Balanced / Unbalanced', itemNo: 15, status: 'C', control: 'checkbox', field: 'balancedUnbalanced', options: opts([['balanced', 'Balanced'], ['unbalanced', 'Unbalanced']]) },
 
   // ── Stands, Isolation & Furniture (domain-gated on 'stands-isolation' | 'racks-furniture') ──
   { id: 'furnitureType', group: 'furniture', label: 'Furniture Type', itemNo: 16, status: 'C', control: 'checkbox', field: 'furnitureType', options: opts([
@@ -179,7 +150,7 @@ export const FACETS: FacetDef[] = [
     ['turntable-wall-shelf', 'Turntable Wall Shelf'],
     ['wall-mount', 'Wall Mount'],
   ]) },
-  { id: 'furnitureMaterial', group: 'furniture', label: 'Material', itemNo: 17, status: 'R', control: 'checkbox', field: 'material', options: opts([
+  { id: 'material', group: 'furniture', label: 'Material', itemNo: 17, status: 'R', control: 'checkbox', field: 'material', options: opts([
     ['wood', 'Wood'], ['metal', 'Metal'], ['acrylic', 'Acrylic'], ['composite-mdf', 'Composite/MDF'],
   ]) },
   { id: 'adjustableHeight', group: 'furniture', label: 'Adjustable Height', itemNo: 18, status: 'R', control: 'boolean', field: 'adjustableHeight' },
@@ -192,7 +163,7 @@ export const FACETS: FacetDef[] = [
   ]) },
   { id: 'outletCount', group: 'power', label: 'Outlet Count', itemNo: 21, status: 'R', control: 'range', field: 'outletCount', min: 1, max: 12, step: 1, unit: '' },
   { id: 'powerConnectorType', group: 'power', label: 'Connector / Plug Type', itemNo: 22, status: 'C', control: 'checkbox', field: 'connectorType', options: opts([
-    ['nema-5-15', 'NEMA 5-15'], ['iec-c13', 'IEC C13'], ['iec-c15', 'IEC C15'], ['20-amp', '20-Amp'],
+    ['nema-5-15', 'NEMA 5-15'], ['iec-c13-c15', 'IEC C13/C15'], ['20-amp', '20-Amp'],
   ]) },
 
   // ── Cleaning & Maintenance (domain-gated on accessoryCategory === 'cleaning-maintenance') ──
@@ -228,7 +199,7 @@ export const FACETS: FacetDef[] = [
   // ── Adapters & Converters (domain-gated on accessoryCategory === 'adapters-converters') ──
   { id: 'adapterFunction', group: 'adapters', label: 'Adapter Function', itemNo: 27, status: 'R', control: 'checkbox', field: 'adapterFunction', options: opts([
     ['bluetooth-transmitter-receiver', 'Bluetooth Transmitter/Receiver'],
-    ['impedance-attenuator-adapter', 'Headphone Impedance/Attenuator Adapter'],
+    ['headphone-impedance-attenuator-adapter', 'Headphone Impedance/Attenuator Adapter'],
     ['connector-adapter', 'Connector Adapter (3.5mm↔6.35mm, RCA↔XLR)'],
     ['standalone-phono-preamp', 'Standalone Phono Preamp'],
     ['usb-dac-dongle', 'USB DAC Dongle'],

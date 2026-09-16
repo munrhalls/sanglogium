@@ -105,8 +105,7 @@ export const FACETS: FacetDef[] = [
   // ── Type ─────────────────────────────────────────────────────────────────
   // No closed options.list in the schema either -- derive from real data,
   // same treatment as brand and awards (sang-logium-3rv.5).
-  { id: 'productCategory', group: 'type', label: 'Product Category / Type', itemNo: 10, status: 'C', control: 'checkbox', field: 'productCategory', options: 'derived' },
-  { id: 'wearingStyle', group: 'type', label: 'Wearing Style / Form Factor', itemNo: 11, status: 'C', control: 'checkbox', field: 'wearingStyle', options: opts([['over-ear', 'Over-Ear'], ['on-ear', 'On-Ear'], ['in-ear', 'In-Ear']]) },
+  { id: 'productCategory', group: 'type', label: 'Product Category / Type', itemNo: 10, status: 'C', control: 'checkbox', field: 'productCategory', options: opts([['over-ear', 'Over Ear'], ['iem', 'In-Ear'], ['true-wireless', 'True Wireless'], ['on-ear', 'On Ear']]) },
   { id: 'acousticDesign', group: 'type', label: 'Acoustic Design', itemNo: 12, status: 'C', control: 'checkbox', field: 'acousticDesign', options: opts([['open-back', 'Open-Back'], ['closed-back', 'Closed-Back'], ['semi-open', 'Semi-Open / Hybrid']]) },
   { id: 'fitType', group: 'type', label: 'Fit Type (IEM)', itemNo: 13, status: 'R', control: 'checkbox', field: 'fitType', options: opts([['universal', 'Universal Fit'], ['custom', 'Custom Fit (CIEM)']]) },
   { id: 'connectivity', group: 'type', label: 'Connectivity', itemNo: 14, status: 'C', control: 'checkbox', field: 'connectivity', options: opts([['wired', 'Wired'], ['wireless', 'Wireless (Bluetooth)'], ['true-wireless', 'True Wireless'], ['hybrid', 'Wired + Wireless Hybrid']]) },
@@ -118,7 +117,10 @@ export const FACETS: FacetDef[] = [
   // lib/catalogue/facetMap.ts's valueVocab exactly (case included), not this
   // POC's own synthetic-dataset SoundSignature type in ./types.ts, which uses
   // different lowercase slugs for its own unrelated mock-data filtering.
-  { id: 'soundSignature', group: 'sound', label: 'Signature', itemNo: 16, status: 'R', control: 'checkbox', field: 'soundSignature', options: opts([['Neutral', 'Neutral / Reference'], ['Warm', 'Warm'], ['Bright/Analytical', 'Bright / Analytical'], ['Dark', 'Dark'], ['V-Shaped', 'V-Shaped'], ['Basshead', 'Bass'], ['Mid-Forward', 'Mid-Forward']]) },
+  // sang-logium-3rv.9 -- schema options.list (productType.ts) has 8 values;
+  // 'Harman-target-like' was missing here, so a product carrying it could
+  // never be selected or counted. Added to match the schema exactly.
+  { id: 'soundSignature', group: 'sound', label: 'Signature', itemNo: 16, status: 'R', control: 'checkbox', field: 'soundSignature', options: opts([['Neutral', 'Neutral / Reference'], ['Warm', 'Warm'], ['Bright/Analytical', 'Bright / Analytical'], ['Dark', 'Dark'], ['V-Shaped', 'V-Shaped'], ['Basshead', 'Bass'], ['Mid-Forward', 'Mid-Forward'], ['Harman-target-like', 'Harman Target-Like']]) },
   { id: 'impedance', group: 'sound', label: 'Impedance', itemNo: 17, status: 'R', control: 'range', field: 'impedanceOhms', min: 8, max: 600, step: 1, unit: 'Ω' },
   { id: 'sensitivity', group: 'sound', label: 'Sensitivity', itemNo: 18, status: 'R', control: 'range', field: 'sensitivityDbMw', min: 85, max: 125, step: 1, unit: 'dB/mW' },
   // Simplification of "frequency response range" (a per-product min–max pair) to

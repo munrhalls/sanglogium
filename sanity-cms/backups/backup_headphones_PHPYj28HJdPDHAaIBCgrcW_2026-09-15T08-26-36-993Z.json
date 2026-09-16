@@ -1,0 +1,25 @@
+{
+  "productId": "PHPYj28HJdPDHAaIBCgrcW",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "ifi-audio"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": false,
+    "deviceType": "headphone-amp",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 289900
+  },
+  "backedUpAt": "2026-09-15T08:26:36.993Z"
+}

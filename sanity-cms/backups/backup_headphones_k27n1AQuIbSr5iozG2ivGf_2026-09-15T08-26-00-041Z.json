@@ -1,0 +1,166 @@
+{
+  "productId": "k27n1AQuIbSr5iozG2ivGf",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "anc": "anc",
+    "batteryLifeHours": {
+      "ancOff": 30,
+      "ancOn": 30
+    },
+    "bluetoothCodecs": [
+      "aptX",
+      "aptX LL",
+      "AAC",
+      "SBC"
+    ],
+    "brand": [
+      "sennheiser"
+    ],
+    "cableLengthM": 1.5,
+    "cableTermination": [
+      "3.5mm"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wireless",
+    "detachableCable": false,
+    "driverType": [
+      "dynamic"
+    ],
+    "foldable": true,
+    "freqResponseHz": {
+      "max": 22000,
+      "min": 18
+    },
+    "inStock": true,
+    "microphone": true,
+    "portable": true,
+    "price": 19995,
+    "productCategory": [
+      "over-ear"
+    ],
+    "requiresAmplifier": false,
+    "sensitivityDbMw": 108,
+    "sourcing": [
+      {
+        "field": "productCategory",
+        "quote": "Ear coupling: Around ear (over-ear form factor)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://sennheiser-hearing.com/p/hd-450bt/"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "Sound pressure level (SPL): 108 dB (1 kHz, 0 dBFS)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://sennheiser-hearing.com/p/hd-450bt/"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "Frequency response (speaker): 18 Hz to 22,000 Hz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://sennheiser-hearing.com/p/hd-450bt/"
+      },
+      {
+        "field": "driverType",
+        "quote": "Transducer principle: dynamic",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://sennheiser-hearing.com/p/hd-450bt/"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "Cable length: 1.5m",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://sennheiser-hearing.com/p/hd-450bt/"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "Ear coupling: Around ear / Wearing style: Around-ear",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://sennheiser-hearing.com/p/hd-450bt/"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "closed, noise-isolating over-ear design",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://sennheiser-hearing.com/p/hd-450bt/"
+      },
+      {
+        "field": "connectivity",
+        "quote": "Bluetooth profiles: AVRCP, A2DP, HFP, HSP / Adapter: 3.5mm, angled",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://sennheiser-hearing.com/p/hd-450bt/"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "Adapter: 3.5mm, angled",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://sennheiser-hearing.com/p/hd-450bt/"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "(supplied analogue cable is fixed, not user-detachable; no detachable-cable claim on the manufacturer page)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://sennheiser-hearing.com/p/hd-450bt/"
+      },
+      {
+        "field": "portable",
+        "quote": "marketed for travel/commute; foldable design with supplied carry case",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://sennheiser-hearing.com/p/hd-450bt/"
+      },
+      {
+        "field": "microphone",
+        "quote": "Microphone pick-up pattern: Dual Beamforming / Frequency response (microphone): 80 Hz to 6,000 Hz",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://sennheiser-hearing.com/p/hd-450bt/"
+      },
+      {
+        "field": "foldable",
+        "quote": "Foldable design / supplied carry case",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://sennheiser-hearing.com/p/hd-450bt/"
+      },
+      {
+        "field": "anc",
+        "quote": "Active Noise Cancellation: True",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://sennheiser-hearing.com/p/hd-450bt/"
+      },
+      {
+        "field": "bluetoothCodecs",
+        "quote": "Bluetooth Audio Codec: AptX™, AptX™ Low Latency, AAC, SBC",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://sennheiser-hearing.com/p/hd-450bt/"
+      },
+      {
+        "field": "batteryLifeHours",
+        "quote": "Operating time: 30 hrs",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://sennheiser-hearing.com/p/hd-450bt/"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-15T08:26:00.041Z"
+}

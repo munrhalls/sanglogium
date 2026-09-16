@@ -1,0 +1,23 @@
+{
+  "productId": "MrEMtYwMtrFDGWmRnQWhwn",
+  "before": {
+    "anc": "passive",
+    "brand": [
+      "sennheiser"
+    ],
+    "cableTermination": [
+      "mmcx"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "driverType": "dynamic",
+    "inStock": true,
+    "microphone": false,
+    "price": 89995,
+    "requiresAmplifier": false,
+    "wearingStyle": "in-ear"
+  },
+  "backedUpAt": "2026-09-15T08:26:17.021Z"
+}

@@ -6,7 +6,7 @@ interface SearchEmptyProps {
   query: string;
 }
 
-const CATEGORY_SUGGESTIONS = [
+export const CATEGORY_SUGGESTIONS = [
   { label: 'Headphones', href: '/products/headphones' },
   { label: 'IEMs', href: '/products/headphones/monitors-iems' },
   { label: 'Audio Electronics', href: '/products/audio-electronics' },

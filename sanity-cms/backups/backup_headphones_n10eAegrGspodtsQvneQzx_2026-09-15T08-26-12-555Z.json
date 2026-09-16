@@ -1,0 +1,152 @@
+{
+  "productId": "n10eAegrGspodtsQvneQzx",
+  "before": {
+    "acousticDesign": [
+      "closed-back"
+    ],
+    "brand": [
+      "sennheiser"
+    ],
+    "cableLengthM": 3,
+    "cableTermination": [
+      "6.35mm",
+      "4-pin-xlr",
+      "4.4mm-balanced"
+    ],
+    "category": [
+      "headphones"
+    ],
+    "connectivity": "wired",
+    "detachableCable": true,
+    "driverType": [
+      "dynamic"
+    ],
+    "foldable": false,
+    "freqResponseHz": {
+      "max": 48000,
+      "min": 6
+    },
+    "impedanceOhms": 300,
+    "inStock": true,
+    "microphone": false,
+    "portable": false,
+    "price": 154995,
+    "productCategory": [
+      "over-ear"
+    ],
+    "requiresAmplifier": true,
+    "sensitivityDbMw": 103,
+    "soundSignature": "V-Shaped",
+    "sourcing": [
+      {
+        "field": "productCategory",
+        "quote": "Ear coupling: circumaural (over-ear form factor)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/hd-820"
+      },
+      {
+        "field": "impedanceOhms",
+        "quote": "Impedance: 300 Ω",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://us.sennheiser-hearing.com/products/hd-820"
+      },
+      {
+        "field": "sensitivityDbMw",
+        "quote": "Sound pressure level (SPL): 103 dB (1 V)",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://us.sennheiser-hearing.com/products/hd-820"
+      },
+      {
+        "field": "freqResponseHz",
+        "quote": "Frequency response (speaker): 6 Hz - 48,000 Hz",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://us.sennheiser-hearing.com/products/hd-820"
+      },
+      {
+        "field": "driverType",
+        "quote": "Transducer principle (headphones): dynamic, closed",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://us.sennheiser-hearing.com/products/hd-820"
+      },
+      {
+        "field": "cableLengthM",
+        "quote": "Cable length: 3 m",
+        "sourcedAt": "2026-09-13",
+        "tier": "hard-spec",
+        "url": "https://us.sennheiser-hearing.com/products/hd-820"
+      },
+      {
+        "field": "wearingStyle",
+        "quote": "Ear coupling: circumaural",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/hd-820"
+      },
+      {
+        "field": "acousticDesign",
+        "quote": "Transducer principle (headphones): dynamic, closed",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/hd-820"
+      },
+      {
+        "field": "connectivity",
+        "quote": "Adapter: XLR-4, balanced, 4-pin Stereo jack plug: 1/4” (6.35 mm), unbalanced, 3-pin 4.4 mm, balanced, 5-pin",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/hd-820"
+      },
+      {
+        "field": "cableTermination",
+        "quote": "Adapter: XLR-4, balanced, 4-pin Stereo jack plug: 1/4” (6.35 mm), unbalanced, 3-pin 4.4 mm, balanced, 5-pin",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/hd-820"
+      },
+      {
+        "field": "detachableCable",
+        "quote": "detachable cable listed among supplied accessories",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/hd-820"
+      },
+      {
+        "field": "portable",
+        "quote": "360 g closed-back flagship marketed for home/desktop listening",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/hd-820"
+      },
+      {
+        "field": "microphone",
+        "quote": "(no mention across product page and headphones.com; boolean feature-absence rule applied)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/hd-820"
+      },
+      {
+        "field": "foldable",
+        "quote": "(no mention across product page and headphones.com; boolean feature-absence rule applied)",
+        "sourcedAt": "2026-09-13",
+        "tier": "marketing-fact",
+        "url": "https://us.sennheiser-hearing.com/products/hd-820"
+      },
+      {
+        "field": "soundSignature",
+        "quote": "V-shaped (Tone Grade E)",
+        "sourcedAt": "2026-09-13",
+        "tier": "editorial",
+        "url": "https://crinacle.com/rankings/headphones/"
+      }
+    ],
+    "wearingStyle": [
+      "over-ear"
+    ]
+  },
+  "backedUpAt": "2026-09-15T08:26:12.555Z"
+}

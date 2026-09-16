@@ -14,10 +14,11 @@ import { ChunkedProductGrid, CHUNK_SIZE } from '@/app/components/features/produc
 import { FilterSidebar } from '@/app/components/features/filters/FilterSidebar';
 import { SortBar } from '@/app/components/features/filters/SortBar';
 import { ActiveFilterChips } from '@/app/components/features/filters/ActiveFilterChips';
+import { isCategory, type Category } from '@/app/components/features/filters/category';
 import Breadcrumbs from '@/app/components/ui/breadcrumbs/CategoryBreadcrumbs';
 import { isFacetedQuery, canonicalCategoryPath } from '@/lib/catalogue/seo';
-import { loadFilterSort, SORT_DEFAULT, FILTER_SORT_KEYS } from '@/lib/catalogue/filterSortParams';
-import { buildProductQuery } from '@/lib/catalogue/buildProductQuery';
+import { loadFilterSort } from '@/lib/catalogue/filterSortParams';
+import { buildProductQuery, isFiltersActive } from '@/lib/catalogue/buildProductQuery';
 import type { ProductQueryState } from '@/lib/catalogue/buildProductQuery';
 import { sanitizeFilterState } from '@/lib/catalogue/sanitizeFilterState';
 
@@ -39,6 +40,15 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   if (!nodeId) {
     notFound();
   }
+
+  // slug[0] is always the top-level category (headphones/audio-electronics/
+  // accessories), including for nested category pages -- picks which of the
+  // three per-category facet modules drives the sidebar (sang-logium-3rv.6).
+  // isCategory's type guard only narrows a plain variable, not an indexed
+  // expression like slug[0] directly -- bind it first or the ternary widens
+  // back to `string` and fails FilterSidebarProps.category's `Category` type.
+  const rawCategory = slug[0];
+  const category: Category = isCategory(rawCategory) ? rawCategory : 'headphones';
 
   const pageValue = Array.isArray(query.page) ? query.page[0] : query.page;
   const page = typeof pageValue === 'string' ? Number(pageValue) : 1;
@@ -67,16 +77,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   });
   const { orderClause, whereClause, params: queryParams } = buildProductQuery(state);
 
-  const filtersActive = FILTER_SORT_KEYS.some((key) => {
-    if (key === 'sort') return state.sort !== SORT_DEFAULT;
-    if (key === 'minPrice' || key === 'maxPrice') return state[key] != null;
-    const value = state[key];
-    // Range-facet Min/Max keys parse to a number or null (sang-logium-3rv.5),
-    // same shape as minPrice/maxPrice above.
-    if (typeof value === 'number') return true;
-    if (Array.isArray(value)) return value.length > 0;
-    return value === true;
-  });
+  const filtersActive = isFiltersActive(state);
 
   const totalCount = await getProductsCount({ keys: descendantKeys, whereClause, params: queryParams });
   const priceBounds = resolvePriceBounds(priceRange);
@@ -111,6 +112,8 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
       ) : (
         <div className="flex flex-col lg-touch:flex-row lg-desktop:flex-row gap-8">
           <FilterSidebar
+            key={category}
+            category={category}
             checkboxCounts={facets.groups}
             booleanCounts={facets.booleans}
             brandLabels={facets.brandLabels}
@@ -118,8 +121,8 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
             rangeBounds={facets.ranges}
           />
           <div className="min-w-0 flex-1">
-            <ActiveFilterChips brandLabels={facets.brandLabels} />
-            <SortBar totalCount={totalCount} />
+            <ActiveFilterChips key={category} category={category} brandLabels={facets.brandLabels} />
+            <SortBar totalCount={totalCount} category={category} />
             <ChunkedProductGrid chunkPromises={chunkPromises} wishlistProductIds={wishlistProductIds} />
             <Pagination
               currentPage={effectivePage}

@@ -1,0 +1,25 @@
+{
+  "productId": "Y7l1IhzX2fnyiano4ipzcN",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "ifi-audio"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "inStock": false,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 169900
+  },
+  "backedUpAt": "2026-09-15T08:26:40.030Z"
+}

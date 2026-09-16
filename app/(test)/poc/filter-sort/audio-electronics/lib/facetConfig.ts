@@ -19,46 +19,21 @@ export type FacetGroupId = 'commercial' | 'type' | 'amplification' | 'digital' |
 export interface FacetGroup {
   id: FacetGroupId;
   label: string;
-  note: string;
+  /** Optional short explanatory subtitle; omit unless the taxonomy explicitly calls for one. */
+  note?: string;
 }
 
 // Order + copy straight from docs/filters-sort/should-be-audio-electronics.md's group headers.
+// Notes are intentionally omitted — the group label and icons are sufficient, and the
+// taxonomy only requires explanatory subtext for domain-gated groups in the POC layout.
 export const FACET_GROUPS: FacetGroup[] = [
-  {
-    id: 'commercial',
-    label: 'Commercial',
-    note: 'Not about the product — about whether, and how, to buy it.',
-  },
-  {
-    id: 'type',
-    label: 'Type',
-    note: "External identity — what kind of component this is, independent of its internal engineering. Gates every group below.",
-  },
-  {
-    id: 'amplification',
-    label: 'Amplification',
-    note: 'Domain-gated — exists only once Product Category is an amplifier, receiver, or preamplifier.',
-  },
-  {
-    id: 'digital',
-    label: 'Digital Source & Streaming',
-    note: 'Domain-gated — exists only once Product Category is DAC, Network Streamer, or CD Player, or Connectivity is Wi-Fi/Networked.',
-  },
-  {
-    id: 'turntable',
-    label: 'Turntables & Vinyl',
-    note: 'Domain-gated — exists only once Product Category is Turntable.',
-  },
-  {
-    id: 'wireless',
-    label: 'Connectivity & Wireless',
-    note: 'Domain-gated — exists only once Connectivity is Bluetooth, Wi-Fi/Networked, or Wired+Wireless.',
-  },
-  {
-    id: 'physical',
-    label: 'Physical & Install Factors',
-    note: 'Internal but tangible — how the piece sits in a room.',
-  },
+  { id: 'commercial', label: '' },
+  { id: 'type', label: 'Type' },
+  { id: 'amplification', label: 'Amplification' },
+  { id: 'digital', label: 'Digital Source & Streaming' },
+  { id: 'turntable', label: 'Turntables & Vinyl' },
+  { id: 'wireless', label: 'Connectivity & Wireless' },
+  { id: 'physical', label: 'Physical & Install Factors' },
 ];
 
 export type Option = { value: string; label: string };
@@ -139,11 +114,13 @@ export function visibleGroups(state: FilterSortState): FacetGroupId[] {
 export const FACETS: FacetDef[] = [
   // ── Commercial ──────────────────────────────────────────────────────────
   { id: 'brand', group: 'commercial', label: 'Brand', itemNo: 1, status: 'C', control: 'checkbox', field: 'brand', options: 'derived' },
-  { id: 'awards', group: 'commercial', label: 'Awards / Recognition', itemNo: 4, status: 'R', control: 'checkbox', field: 'awards', options: opts([['award-winner', 'Award Winner'], ['editors-choice', "Editor's Choice"]]) },
-  { id: 'condition', group: 'commercial', label: 'Condition / Stock Type', itemNo: 5, status: 'C', control: 'checkbox', field: 'condition', options: opts([['new', 'New'], ['open-box', 'Open-Box'], ['b-stock', 'Blemished / B-Stock'], ['demo', 'Demo / Ex-Display'], ['used', 'Used / Trade-In'], ['refurbished', 'Refurbished']]) },
+  // Awards has no closed options.list in the schema -- derive from real data.
+  { id: 'awards', group: 'commercial', label: 'Awards / Recognition', itemNo: 4, status: 'R', control: 'checkbox', field: 'awards', options: 'derived' },
+  // Condition options reduced to the values that actually exist in the audio-electronics schema.
+  { id: 'condition', group: 'commercial', label: 'Condition', itemNo: 5, status: 'C', control: 'checkbox', field: 'condition', options: opts([['new', 'New'], ['open-box', 'Open-Box'], ['refurbished', 'Refurbished']]) },
   { id: 'availability', group: 'commercial', label: 'Availability', itemNo: 6, status: 'C', control: 'checkbox', field: 'availability', options: opts([['in-stock', 'In Stock'], ['preorder', 'Preorder'], ['special-order', 'Special / Custom Order']]) },
-  { id: 'inStockOnly', group: 'commercial', label: 'In Stock Only', itemNo: 6, status: 'C', control: 'boolean', field: 'inStockOnly' },
-  { id: 'deals', group: 'commercial', label: 'Deals / Discount', itemNo: 7, status: 'C', control: 'checkbox', field: 'deals', options: opts([['on-sale', 'On Sale'], ['clearance', 'Clearance / Closeout']]) },
+  // In Stock Only is intentionally NOT a separate boolean -- In Stock lives inside Availability.
+  { id: 'deals', group: 'commercial', label: 'Discount', itemNo: 7, status: 'C', control: 'checkbox', field: 'deals', options: opts([['none', 'None'], ['sale', 'On Sale'], ['clearance', 'Clearance / Closeout']]) },
   { id: 'newArrival', group: 'commercial', label: 'New Arrivals', itemNo: 8, status: 'C', control: 'boolean', field: 'isNewArrival' },
 
   // ── Type ─────────────────────────────────────────────────────────────────

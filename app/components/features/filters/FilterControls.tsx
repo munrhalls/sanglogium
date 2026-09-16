@@ -15,9 +15,7 @@ import {
 } from '@/app/components/features/filters/PriceRangeSlider';
 import { humanizeFacetValue } from '@/lib/catalogue/humanizeFacetValue';
 import { formatPriceMajor } from '@/lib/utils/price';
-import { useFilterParam } from '@/app/(test)/poc/filter-sort/headphones/lib/useFilterParam';
-import type { CheckboxFacet, BooleanFacet, RangeFacet } from '@/app/(test)/poc/filter-sort/headphones/lib/facetConfig';
-import type { FacetOptionCount } from '@/app/(test)/poc/filter-sort/headphones/lib/filterProducts';
+import { getFacetModule, type Category, type AnyFacetDef, type FacetOptionCount } from './facetRegistry';
 
 /**
  * Re-export the shared filter-section header primitives defined in
@@ -27,15 +25,25 @@ export { filterSectionHeaderRow, filterSectionHeaderLabel, filterSectionHeaderAc
 
 type SetArray = (next: string[] | ((prev: string[]) => string[])) => void;
 
+// Every control below takes `category` and resolves its own useFilterParam
+// through facetRegistry.ts's per-category module (sang-logium-3rv.6) --
+// before that, every one of these imported headphones' useFilterParam
+// directly, so /products/audio-electronics and /products/accessories wrote
+// their filter state through headphones' URL-param contract instead of
+// their own.
+
 export function CheckboxGroup({
+  category,
   facet,
   counts,
   brandLabels,
 }: {
-  facet: CheckboxFacet;
+  category: Category;
+  facet: AnyFacetDef;
   counts: FacetOptionCount[];
   brandLabels?: Record<string, string>;
 }) {
+  const { useFilterParam } = getFacetModule(category);
   const [expanded, setExpanded] = useState(true);
   const [selected, setSelected] = useFilterParam(facet.id) as [string[], SetArray];
   const selectedArray = selected ?? [];
@@ -112,7 +120,8 @@ export function CheckboxGroup({
   );
 }
 
-export function BooleanToggle({ facet, count }: { facet: BooleanFacet; count?: number }) {
+export function BooleanToggle({ category, facet, count }: { category: Category; facet: AnyFacetDef; count?: number }) {
+  const { useFilterParam } = getFacetModule(category);
   const [active, setActive] = useFilterParam(facet.id) as [boolean, (v: boolean | ((prev: boolean) => boolean)) => void];
 
   return (
@@ -136,10 +145,12 @@ function formatRangeValue(value: number, unit: string): string {
 const RANGE_WRITE_DEBOUNCE_MS = 300;
 
 export function RangeControl({
+  category,
   facet,
   bounds,
 }: {
-  facet: RangeFacet;
+  category: Category;
+  facet: AnyFacetDef;
   /** Real category span from getFilterFacets; falls back to facet's
    *  hardcoded min/max (sang-logium-3rv.5) when a bound is missing --
    *  e.g. zero matching products, or a route this prop was not threaded to
@@ -147,8 +158,9 @@ export function RangeControl({
    *  from resolvePriceBounds' DEFAULT_PRICE_CEILING. */
   bounds?: { min: number | null; max: number | null };
 }) {
-  const boundsMin = bounds?.min ?? facet.min;
-  const boundsMax = bounds?.max ?? facet.max;
+  const { useFilterParam } = getFacetModule(category);
+  const boundsMin = bounds?.min ?? facet.min ?? 0;
+  const boundsMax = bounds?.max ?? facet.max ?? 0;
 
   const [minParam, setMinParam] = useFilterParam(`${facet.id}Min`, { history: 'replace' }) as [
     number | null,
@@ -214,8 +226,8 @@ export function RangeControl({
         max={boundsMax}
         minValue={localMin}
         maxValue={localMax}
-        minLabel={formatRangeValue(localMin, facet.unit)}
-        maxLabel={formatRangeValue(localMax, facet.unit)}
+        minLabel={formatRangeValue(localMin, facet.unit ?? '')}
+        maxLabel={formatRangeValue(localMax, facet.unit ?? '')}
         onChangeMin={(value) => {
           const next = Math.min(value, localMax);
           setLocalMin(next);
@@ -233,7 +245,8 @@ export function RangeControl({
 
 const RATING_TIERS = [4, 3] as const;
 
-export function PriceControl({ min, max }: { min: number; max: number }) {
+export function PriceControl({ category, min, max }: { category: Category; min: number; max: number }) {
+  const { useFilterParam } = getFacetModule(category);
   const [minParam, setMinParam] = useFilterParam('minPrice', { history: 'replace' }) as [
     number | null,
     (v: number | null) => void,
@@ -298,7 +311,8 @@ export function PriceControl({ min, max }: { min: number; max: number }) {
   );
 }
 
-export function RatingControl() {
+export function RatingControl({ category }: { category: Category }) {
+  const { useFilterParam } = getFacetModule(category);
   const [minRating, setMinRating] = useFilterParam('minRating') as [number | null, (v: number | null) => void];
 
   return (

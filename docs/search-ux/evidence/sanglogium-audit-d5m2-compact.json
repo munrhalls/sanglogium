@@ -1,0 +1,326 @@
+[
+  {
+    "breakpoint": "desktop",
+    "queryType": "Exact",
+    "query": "HD 800S",
+    "url": "http://localhost:3000/search?q=HD%20800S",
+    "resultCountText": "3 products",
+    "productCount": 3,
+    "noResults": "",
+    "topProduct": {
+      "brand": "Dekoni Audio",
+      "title": "EPZ-HD800-ELVL Replacement Ear Pads for Sennheiser HD800 and HD800S Elite Velour",
+      "price": "$59.99"
+    }
+  },
+  {
+    "breakpoint": "desktop",
+    "queryType": "Product type",
+    "query": "headphones",
+    "url": "http://localhost:3000/search?q=headphones",
+    "resultCountText": "368 products",
+    "productCount": 24,
+    "noResults": "",
+    "topProduct": {
+      "brand": "Dekoni Audio",
+      "title": "Ear Pads for Audeze LCD Series Headphones - Fits variants of LCD-2, LCD-3, LCD-4, LCD-X",
+      "price": "$17.49"
+    }
+  },
+  {
+    "breakpoint": "desktop",
+    "queryType": "Feature",
+    "query": "closed-back headphones",
+    "url": "http://localhost:3000/search?q=closed-back%20headphones",
+    "resultCountText": "27 products",
+    "productCount": 24,
+    "noResults": "",
+    "topProduct": {
+      "brand": "Focal",
+      "title": "Celestee Headphones",
+      "price": "$999"
+    }
+  },
+  {
+    "breakpoint": "desktop",
+    "queryType": "Use case",
+    "query": "headphones for running",
+    "url": "http://localhost:3000/search?q=headphones%20for%20running",
+    "resultCountText": "13 products",
+    "productCount": 13,
+    "noResults": "",
+    "topProduct": {
+      "brand": "Astell&Kern",
+      "title": "PA10 Headphone Amplifier",
+      "price": "$499"
+    }
+  },
+  {
+    "breakpoint": "desktop",
+    "queryType": "Abbreviation/symbol",
+    "query": "IEM",
+    "url": "http://localhost:3000/search?q=IEM",
+    "resultCountText": "111 products",
+    "productCount": 24,
+    "noResults": "",
+    "topProduct": {
+      "brand": "64 Audio",
+      "title": "IEM Cleaning Tool 5-Pack",
+      "price": "$14.99"
+    }
+  },
+  {
+    "breakpoint": "desktop",
+    "queryType": "Compatibility",
+    "query": "headphones for iPhone 15",
+    "url": "http://localhost:3000/search?q=headphones%20for%20iPhone%2015",
+    "resultCountText": "2 products",
+    "productCount": 2,
+    "noResults": "",
+    "topProduct": {
+      "brand": "iFi Audio",
+      "title": "GO bar Kensei Portable Hi-Res USB DAC and Preamp",
+      "price": "$449"
+    }
+  },
+  {
+    "breakpoint": "desktop",
+    "queryType": "Symptom",
+    "query": "headphones with more bass",
+    "url": "http://localhost:3000/search?q=headphones%20with%20more%20bass",
+    "resultCountText": "40 products",
+    "productCount": 24,
+    "noResults": "",
+    "topProduct": {
+      "brand": "64 Audio",
+      "title": "U12t In-Ear Headphones",
+      "price": "$1,999"
+    }
+  },
+  {
+    "breakpoint": "desktop",
+    "queryType": "Non-product",
+    "query": "return policy",
+    "url": "http://localhost:3000/search?q=return%20policy",
+    "resultCountText": "",
+    "productCount": 0,
+    "noResults": "No products found",
+    "topProduct": null
+  },
+  {
+    "breakpoint": "mobile",
+    "queryType": "Exact",
+    "query": "HD 800S",
+    "url": "http://localhost:3000/search?q=HD%20800S",
+    "resultCountText": "3 products",
+    "productCount": 3,
+    "noResults": "",
+    "topProduct": {
+      "brand": "Dekoni Audio",
+      "title": "EPZ-HD800-ELVL Replacement Ear Pads for Sennheiser HD800 and HD800S Elite Velour",
+      "price": "$59.99"
+    }
+  },
+  {
+    "breakpoint": "mobile",
+    "queryType": "Product type",
+    "query": "headphones",
+    "url": "http://localhost:3000/search?q=headphones",
+    "resultCountText": "368 products",
+    "productCount": 24,
+    "noResults": "",
+    "topProduct": {
+      "brand": "Dekoni Audio",
+      "title": "Ear Pads for Audeze LCD Series Headphones - Fits variants of LCD-2, LCD-3, LCD-4, LCD-X",
+      "price": "$17.49"
+    }
+  },
+  {
+    "breakpoint": "mobile",
+    "queryType": "Feature",
+    "query": "closed-back headphones",
+    "url": "http://localhost:3000/search?q=closed-back%20headphones",
+    "resultCountText": "27 products",
+    "productCount": 24,
+    "noResults": "",
+    "topProduct": {
+      "brand": "Focal",
+      "title": "Celestee Headphones",
+      "price": "$999"
+    }
+  },
+  {
+    "breakpoint": "mobile",
+    "queryType": "Use case",
+    "query": "headphones for running",
+    "url": "http://localhost:3000/search?q=headphones%20for%20running",
+    "resultCountText": "13 products",
+    "productCount": 13,
+    "noResults": "",
+    "topProduct": {
+      "brand": "XDuoo",
+      "title": "DM-01 Desktop DAC/Amp",
+      "price": "$279"
+    }
+  },
+  {
+    "breakpoint": "mobile",
+    "queryType": "Abbreviation/symbol",
+    "query": "IEM",
+    "url": "http://localhost:3000/search?q=IEM",
+    "resultCountText": "111 products",
+    "productCount": 24,
+    "noResults": "",
+    "topProduct": {
+      "brand": "CrinEar",
+      "title": "Reference In-Ear Headphones",
+      "price": "$349.99"
+    }
+  },
+  {
+    "breakpoint": "mobile",
+    "queryType": "Compatibility",
+    "query": "headphones for iPhone 15",
+    "url": "http://localhost:3000/search?q=headphones%20for%20iPhone%2015",
+    "resultCountText": "2 products",
+    "productCount": 2,
+    "noResults": "",
+    "topProduct": {
+      "brand": "iFi Audio",
+      "title": "iFi GO bar Kensei",
+      "price": "$449"
+    }
+  },
+  {
+    "breakpoint": "mobile",
+    "queryType": "Symptom",
+    "query": "headphones with more bass",
+    "url": "http://localhost:3000/search?q=headphones%20with%20more%20bass",
+    "resultCountText": "40 products",
+    "productCount": 24,
+    "noResults": "",
+    "topProduct": {
+      "brand": "Dekoni Audio",
+      "title": "Replacement Earpads for Focal Headphones - Stellia, Radiante, Utopia, Clear, ClearMG, Celestee",
+      "price": "$62.99"
+    }
+  },
+  {
+    "breakpoint": "mobile",
+    "queryType": "Non-product",
+    "query": "return policy",
+    "url": "http://localhost:3000/search?q=return%20policy",
+    "resultCountText": "",
+    "productCount": 0,
+    "noResults": "No products found",
+    "topProduct": null
+  },
+  {
+    "breakpoint": "tablet",
+    "queryType": "Exact",
+    "query": "HD 800S",
+    "url": "http://localhost:3000/search?q=HD%20800S",
+    "resultCountText": "3 products",
+    "productCount": 3,
+    "noResults": "",
+    "topProduct": {
+      "brand": "Dekoni Audio",
+      "title": "EPZ-HD800-ELVL Replacement Ear Pads for Sennheiser HD800 and HD800S Elite Velour",
+      "price": "$59.99"
+    }
+  },
+  {
+    "breakpoint": "tablet",
+    "queryType": "Product type",
+    "query": "headphones",
+    "url": "http://localhost:3000/search?q=headphones",
+    "resultCountText": "368 products",
+    "productCount": 24,
+    "noResults": "",
+    "topProduct": {
+      "brand": "Dekoni Audio",
+      "title": "Ear Pads for Audeze LCD Series Headphones - Fits variants of LCD-2, LCD-3, LCD-4, LCD-X",
+      "price": "$17.49"
+    }
+  },
+  {
+    "breakpoint": "tablet",
+    "queryType": "Feature",
+    "query": "closed-back headphones",
+    "url": "http://localhost:3000/search?q=closed-back%20headphones",
+    "resultCountText": "27 products",
+    "productCount": 24,
+    "noResults": "",
+    "topProduct": {
+      "brand": "Focal",
+      "title": "Celestee Headphones",
+      "price": "$999"
+    }
+  },
+  {
+    "breakpoint": "tablet",
+    "queryType": "Use case",
+    "query": "headphones for running",
+    "url": "http://localhost:3000/search?q=headphones%20for%20running",
+    "resultCountText": "13 products",
+    "productCount": 13,
+    "noResults": "",
+    "topProduct": {
+      "brand": "XDuoo",
+      "title": "DM-01 Desktop DAC/Amp",
+      "price": "$279"
+    }
+  },
+  {
+    "breakpoint": "tablet",
+    "queryType": "Abbreviation/symbol",
+    "query": "IEM",
+    "url": "http://localhost:3000/search?q=IEM",
+    "resultCountText": "111 products",
+    "productCount": 24,
+    "noResults": "",
+    "topProduct": {
+      "brand": "CrinEar",
+      "title": "Reference In-Ear Headphones",
+      "price": "$349.99"
+    }
+  },
+  {
+    "breakpoint": "tablet",
+    "queryType": "Compatibility",
+    "query": "headphones for iPhone 15",
+    "url": "http://localhost:3000/search?q=headphones%20for%20iPhone%2015",
+    "resultCountText": "2 products",
+    "productCount": 2,
+    "noResults": "",
+    "topProduct": {
+      "brand": "iFi Audio",
+      "title": "iFi GO bar Kensei",
+      "price": "$449"
+    }
+  },
+  {
+    "breakpoint": "tablet",
+    "queryType": "Symptom",
+    "query": "headphones with more bass",
+    "url": "http://localhost:3000/search?q=headphones%20with%20more%20bass",
+    "resultCountText": "40 products",
+    "productCount": 24,
+    "noResults": "",
+    "topProduct": {
+      "brand": "Dekoni Audio",
+      "title": "Replacement Earpads for Focal Headphones - Stellia, Radiante, Utopia, Clear, ClearMG, Celestee",
+      "price": "$62.99"
+    }
+  },
+  {
+    "breakpoint": "tablet",
+    "queryType": "Non-product",
+    "query": "return policy",
+    "url": "http://localhost:3000/search?q=return%20policy",
+    "resultCountText": "",
+    "productCount": 0,
+    "noResults": "No products found",
+    "topProduct": null
+  }
+]

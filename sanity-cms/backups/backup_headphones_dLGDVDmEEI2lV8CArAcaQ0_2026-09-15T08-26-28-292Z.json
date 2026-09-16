@@ -1,0 +1,25 @@
+{
+  "productId": "dLGDVDmEEI2lV8CArAcaQ0",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "ifi-audio"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "inStock": true,
+    "inputs": [
+      "bluetooth"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 19900
+  },
+  "backedUpAt": "2026-09-15T08:26:28.292Z"
+}

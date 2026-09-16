@@ -1,0 +1,27 @@
+{
+  "productId": "MrEMtYwMtrFDGWmRnN8QYu",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "ifi-audio"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac-amp-combo",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb",
+      "coaxial",
+      "optical"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 324900
+  },
+  "backedUpAt": "2026-09-15T08:26:43.077Z"
+}

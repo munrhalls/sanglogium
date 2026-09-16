@@ -1,0 +1,25 @@
+{
+  "productId": "Y7l1IhzX2fnyiano4jOIfY",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": true,
+    "brand": [
+      "ifi-audio"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "inStock": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 22900
+  },
+  "backedUpAt": "2026-09-15T08:26:49.343Z"
+}

@@ -1,0 +1,25 @@
+{
+  "productId": "dLGDVDmEEI2lV8CArAcd7E",
+  "before": {
+    "amplification": "solid-state",
+    "balancedOutput": false,
+    "brand": [
+      "ifi-audio"
+    ],
+    "category": [
+      "audio-electronics"
+    ],
+    "dacIncluded": true,
+    "deviceType": "dongle-dac",
+    "formFactor": "portable",
+    "inStock": false,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "price": 18900
+  },
+  "backedUpAt": "2026-09-15T08:26:34.916Z"
+}

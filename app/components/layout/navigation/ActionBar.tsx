@@ -58,9 +58,9 @@ function ActionButtons({ isAuthenticated }: ActionButtonsProps) {
         aria-label={isSearchOpen ? "Close search" : "Open search"}
       >
         {isSearchOpen ? (
-          <XIcon className="h-5 w-5" />
+          <XIcon className="h-6 w-6" />
         ) : (
-          <Search className="h-5 w-5" />
+          <Search className="h-6 w-6" />
         )}
         <span className="sr-only mt-1 hidden text-xs text-cap sm:inline-block">
           Search
