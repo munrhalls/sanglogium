@@ -182,7 +182,7 @@ export function FilterSidebar({
     <aside
       data-testid="poc-filter-sidebar"
       aria-label="Filters"
-      className="hidden w-96 shrink-0 self-start sticky top-0 pt-6 max-h-screen lg-touch:flex lg-desktop:flex flex-col"
+      className="hidden w-96 shrink-0 self-start sticky top-0 pt-6 pb-6 h-[calc(100dvh-var(--desktop-header-h)-var(--desktop-catalogue-nav-h))] lg-touch:flex lg-desktop:flex flex-col"
     >
       <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-md border border-border-secondary bg-surface-elevated">
         <div className="flex shrink-0 items-center justify-between gap-2 p-6 pb-4">

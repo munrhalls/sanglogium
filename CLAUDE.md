@@ -42,7 +42,7 @@ When spawning a subagent, tell it to format its report per this section.
 - **Plan first:** before acting on a multi-step task, state the plan in ≤3 short lines.
 - **Milestone updates:** send a short update at each milestone — plan, each unit of work, done — never one dump at the end. Plain language, non-repeating: what's done, what's next, any blocker/decision needed.
 - **Confirm long steps started:** for a long-running step or sub-agent spawn, confirm within ~1 minute that it actually started; if it didn't, report immediately — never a silent multi-minute wait.
-- **Sample before scaling:** before a large batch of work (many files, many issues, many edits), do the first safe increment, show a concrete sample, and get a go/no-go before continuing.
+- **Sample before scaling:** before a large batch of work (many files, many issues, many edits), do the first safe increment, show a concrete sample, confirm it is correct, then continue.
 
 This is a hard rule, not a soft preference — a silent multi-minute run or an end-of-task info-dump is a defect. See `sang-logium-5gc` — AgentOps: mandate frequent concise progress feedback.
 

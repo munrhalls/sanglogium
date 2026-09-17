@@ -93,7 +93,7 @@ export function ProgressiveFilterOptionList({
           onChange={(event) => setQuery(event.target.value)}
           placeholder={`Search ${label.toLowerCase()}`}
           aria-label={`Search ${label} options`}
-          className="rounded-sm border border-border-primary bg-transparent px-2 py-1 type-caption text-text-primary placeholder:text-text-caption focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500"
+          className="rounded-sm border border-border-secondary bg-transparent px-2 py-1 type-caption text-text-primary placeholder:text-text-caption focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500"
         />
       )}
 
