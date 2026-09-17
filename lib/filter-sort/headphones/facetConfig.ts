@@ -122,13 +122,13 @@ export const FACETS: FacetDef[] = [
   // 'Harman-target-like' was missing here, so a product carrying it could
   // never be selected or counted. Added to match the schema exactly.
   { id: 'soundSignature', group: 'sound', label: 'Signature', itemNo: 16, status: 'R', control: 'checkbox', field: 'soundSignature', options: opts([['Neutral', 'Neutral / Reference'], ['Warm', 'Warm'], ['Bright/Analytical', 'Bright / Analytical'], ['Dark', 'Dark'], ['V-Shaped', 'V-Shaped'], ['Basshead', 'Bass'], ['Mid-Forward', 'Mid-Forward'], ['Harman-target-like', 'Harman Target-Like']]) },
-  { id: 'impedance', group: 'sound', label: 'Impedance', itemNo: 17, status: 'R', control: 'range', field: 'impedanceOhms', min: 8, max: 600, step: 1, unit: 'Ω' },
-  { id: 'sensitivity', group: 'sound', label: 'Sensitivity', itemNo: 18, status: 'R', control: 'range', field: 'sensitivityDbMw', min: 85, max: 125, step: 1, unit: 'dB/mW' },
+  { id: 'impedance', group: 'sound', label: 'Impedance', itemNo: 17, status: 'R', control: 'range', field: 'impedanceOhms', min: 3, max: 520, step: 1, unit: 'Ω' },
+  { id: 'sensitivity', group: 'sound', label: 'Sensitivity', itemNo: 18, status: 'R', control: 'range', field: 'sensitivityDbMw', min: 89, max: 128, step: 1, unit: 'dB/mW' },
   // Simplification of "frequency response range" (a per-product min–max pair) to
   // its single most-compared dimension, bass extension — see the enrichment
   // script for the full rationale (also flagged in should-be.md's own evidence
   // notes: printed FR min/max is a weak spec next to a measured graph).
-  { id: 'bassExtension', group: 'sound', label: 'Frequency Response', itemNo: 19, status: 'R', control: 'range', field: 'bassExtensionHz', min: 5, max: 60, step: 1, unit: 'Hz' },
+  { id: 'bassExtension', group: 'sound', label: 'Frequency Response', itemNo: 19, status: 'R', control: 'range', field: 'bassExtensionHz', min: 2, max: 25, step: 1, unit: 'Hz' },
 
   // ── Material Factors ────────────────────────────────────────────────────
   { id: 'microphone', group: 'material', label: 'Microphone', itemNo: 21, status: 'C', control: 'boolean', field: 'microphone' },
@@ -138,7 +138,7 @@ export const FACETS: FacetDef[] = [
   { id: 'cableTermination', group: 'material', label: 'Cable Type', itemNo: 22, status: 'C', control: 'checkbox', field: 'cableTermination', options: opts([['3.5mm', '3.5mm SE'], ['2.5mm-balanced', '2.5mm Balanced'], ['4.4mm-balanced', '4.4mm Balanced'], ['4-pin-xlr', '4-Pin XLR'], ['6.35mm', '6.35mm (1/4 inch)'], ['usb-c', 'USB-C'], ['mmcx', 'MMCX'], ['2-pin', '2-Pin'], ['fixed-cable', 'Fixed Cable']]) },
   { id: 'detachableCable', group: 'material', label: 'Detachable Cable', itemNo: 23, status: 'C', control: 'boolean', field: 'detachableCable', subheading: 'Cable Properties' },
   { id: 'foldable', group: 'material', label: 'Foldable', itemNo: 25, status: 'C', control: 'boolean', field: 'foldable' },
-  { id: 'cableLength', group: 'material', label: 'Cable Length', itemNo: 24, status: 'R', control: 'range', field: 'cableLengthM', min: 0.5, max: 3.5, step: 0.1, unit: 'm' },
+  { id: 'cableLength', group: 'material', label: 'Cable Length', itemNo: 24, status: 'R', control: 'range', field: 'cableLengthM', min: 0.2, max: 4.0, step: 0.1, unit: 'm' },
   // Real schema options.list is none/IPX2/IPX4/IPX5/IPX7/IPX8 (productType.ts:407)
   // -- was missing IPX2, lowercased IPX4/5/7, and had a phantom 'ip67' that
   // does not exist in the schema at all (sang-logium-3rv.5).
