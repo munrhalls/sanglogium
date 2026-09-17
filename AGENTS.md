@@ -44,8 +44,9 @@ For **Cline**, `.clinerules` + this file are the authoritative rule set. Do not 
 
 ## FEEDBACK LOOP — HARD GATES (never break; breaking = defect)
 
-G0 PLAN-THEN-STOP. Before ANY tool call: ≤3-line plan + one go/no-go question.
-   No exploration, no reads, no bd commands until the human replies.
+G0 PLAN. Before any multi-step or ambiguous task, state the plan in ≤3 short lines,
+   then proceed. Direct, unambiguous commands (e.g. "commit") are executed
+   immediately without a go/no-go question.
 
 G1 CHECKPOINT EVERY UNIT. Emit one user-facing line (done / next / blocker)
    after EVERY logical unit of work. NEVER accumulate more than 3 tool calls
@@ -57,7 +58,7 @@ G2 NO SELF-TOKEN-METER. The agent has NO view of its token/quota usage.
    claiming it watched its own usage. When in doubt: stop and ask.
 
 G3 SAMPLE BEFORE SCALING. Before a batch of N (files/issues/edits), do 1,
-   show the concrete result, get go/no-go. Never fan out first.
+   show the concrete result, confirm it is correct, then continue. Never fan out first.
 
 Per-turn budget contract: state the tool-call count planned for this turn up
 front; the human gates by count, not by token % (the agent has no usage view).
@@ -69,7 +70,7 @@ Applies to every agent working from this file (Cline, DeepSeek Pro/Flash, Codex)
 - **Plan first:** state the plan in ≤3 short lines before acting on a multi-step task.
 - **Milestone updates:** short update at each milestone — plan, each unit of work, done — never one dump at the end. Plain, non-repeating: what's done, what's next, blocker/decision if any.
 - **Confirm long steps started:** for a long-running step or sub-agent/teammate spawn, confirm within ~1 minute it actually started; report immediately if it didn't — never a silent multi-minute wait. (See `sang-logium-pb7` — AgentOps: sub-agent spawn aborts on Linux Mint XFCE, for a case where this went silent ~15 min before aborting.)
-- **Sample before scaling:** before a large batch (many files/issues/edits), do the first safe increment, show a concrete sample, get a go/no-go before continuing.
+- **Sample before scaling:** before a large batch of work (many files, many issues, many edits), do the first safe increment, show a concrete sample, confirm it is correct, then continue.
 
 Hard rule, not a soft preference — a violation is a detectable defect. Tracked in `sang-logium-5gc` — AgentOps: mandate frequent concise progress feedback.
 
