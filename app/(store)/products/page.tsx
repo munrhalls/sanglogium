@@ -70,29 +70,31 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
     <div className="mx-auto w-full max-w-catalogue px-4 md:px-8 pb-12">
       <ShopHeader title="All Products" />
 
-      {totalCount === 0 ? (
-        <EmptyResults filtersActive={filtersActive} />
-      ) : (
-        <div className="flex flex-col lg-touch:flex-row lg-desktop:flex-row gap-8">
-          <FilterSidebar
-            checkboxCounts={allFacets.groups}
-            booleanCounts={allFacets.booleans}
-            brandLabels={brandLabels}
-            priceBounds={{ min: priceBounds.min, max: priceBounds.max }}
-          />
-          <div className="min-w-0 flex-1">
-            <ActiveFilterChips brandLabels={brandLabels} />
-            <SortBar totalCount={totalCount} />
-            <ChunkedProductGrid chunkPromises={chunkPromises} wishlistProductIds={wishlistProductIds} />
-            <Pagination
-              currentPage={effectivePage}
-              totalPages={totalPages}
-              totalCount={totalCount}
-              perPage={PER_PAGE}
-            />
-          </div>
+      <div className="flex flex-col lg-touch:flex-row lg-desktop:flex-row gap-8">
+        <FilterSidebar
+          checkboxCounts={allFacets.groups}
+          booleanCounts={allFacets.booleans}
+          brandLabels={brandLabels}
+          priceBounds={{ min: priceBounds.min, max: priceBounds.max }}
+        />
+        <div className="min-w-0 flex-1">
+          <ActiveFilterChips brandLabels={brandLabels} />
+          <SortBar totalCount={totalCount} />
+          {totalCount === 0 ? (
+            <EmptyResults filtersActive={filtersActive} />
+          ) : (
+            <>
+              <ChunkedProductGrid chunkPromises={chunkPromises} wishlistProductIds={wishlistProductIds} />
+              <Pagination
+                currentPage={effectivePage}
+                totalPages={totalPages}
+                totalCount={totalCount}
+                perPage={PER_PAGE}
+              />
+            </>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }

@@ -94,21 +94,9 @@ PageLayout
 
 | File | Risk | Mitigation |
 |------|------|------------|
-| `ProductCard.tsx` | Homepage cards share component | Verify homepage unchanged |
 | `tailwind.config.ts` | Token additions | Add only, never modify existing |
 
 ---
-
-## 6. Verification Commands
-
-```bash
-# Lightweight pre-sprint regression (typecheck only)
-npx tsc --noEmit
-
-# Component verification (run when no concurrent agents)
-npx playwright test --grep "[Feature]"
-```
-```
 
 ## Constraint Rules
 - **NO** prose descriptions without spatial maps

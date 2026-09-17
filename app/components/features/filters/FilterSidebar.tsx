@@ -213,7 +213,7 @@ export function FilterSidebar({
 
           <div
             id={PANEL_SCROLL_ID}
-            className="flex-1 overflow-y-auto overscroll-y-contain [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden pb-6"
+            className="flex-1 overflow-y-auto overscroll-y-contain [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden pb-12"
           >
             {FACET_GROUPS.map((group) => (
               <PanelSection key={group.id} id={group.id} label={group.label} note={group.note}>

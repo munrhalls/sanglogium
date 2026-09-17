@@ -9,6 +9,10 @@ function parseFlag(prefix, fallback) {
   return found ? found.slice(prefix.length) : fallback;
 }
 
+function hasFlag(name) {
+  return args.includes(name);
+}
+
 const positional = args.filter(a => !a.startsWith('--'));
 const url = positional[0] || 'http://localhost:3000/products/headphones';
 const outDir = positional[1] || '/tmp/scroll-captures';
@@ -16,6 +20,8 @@ const selector = parseFlag('--selector=', '');
 const hint = parseFlag('--hint=', 'left');
 const viewport = parseFlag('--viewport=', '1440x900');
 const wait = Number(parseFlag('--wait=', '120'));
+const prefix = parseFlag('--prefix=', 'scroll');
+const openSelect = hasFlag('--open-select');
 const [vw, vh] = viewport.split('x').map(Number);
 
 if (!['left', 'right', 'body', 'largest'].includes(hint)) {
@@ -43,7 +49,7 @@ try {
   await fs.mkdir(outDir, { recursive: true });
 
   console.log(`Navigating to ${url}`);
-  await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 });
+  await page.goto(url, { waitUntil: 'load', timeout: 60000 });
 
   let el;
   if (selector) {
@@ -91,6 +97,18 @@ try {
     if (!el) throw new Error(`No scrollable target found with hint=${hint}. Try --selector.`);
   }
 
+  if (openSelect) {
+    const isSelect = await el.evaluate(e => e.tagName === 'SELECT');
+    if (isSelect) {
+      await el.evaluate(e => {
+        e.size = e.options.length;
+        e.style.height = 'auto';
+        e.style.maxHeight = 'none';
+      });
+      await page.waitForTimeout(100);
+    }
+  }
+
   const isRoot = await el.evaluate(e => e === document.documentElement);
   const info = await el.evaluate((e, rootFlag) => {
     const rect = e.getBoundingClientRect();
@@ -132,12 +150,12 @@ try {
   for (let i = 0; i < positions.length; i++) {
     const p = positions[i];
     if (info.isRoot) {
-      await page.evaluate(pos => {
-        window.scrollTo({ top: pos, behavior: 'auto' });
+      await page.evaluate(scrollPos => {
+        window.scrollTo({ top: scrollPos, behavior: 'auto' });
         document.documentElement.style.scrollBehavior = 'auto';
       }, p);
       await page.waitForTimeout(wait);
-      const file = path.join(outDir, `scroll-${String(i + 1).padStart(3, '0')}.png`);
+      const file = path.join(outDir, `${prefix}-${String(i + 1).padStart(3, '0')}.png`);
       await page.screenshot({ path: file });
       paths.push(file);
     } else {
@@ -146,7 +164,7 @@ try {
         element.scrollTop = scrollPos;
       }, p);
       await page.waitForTimeout(wait);
-      const file = path.join(outDir, `scroll-${String(i + 1).padStart(3, '0')}.png`);
+      const file = path.join(outDir, `${prefix}-${String(i + 1).padStart(3, '0')}.png`);
       await el.screenshot({ path: file });
       paths.push(file);
     }

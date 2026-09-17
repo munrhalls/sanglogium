@@ -79,7 +79,7 @@ function PanelSection({
 }: {
   id: FacetGroupId;
   label: string;
-  note: string;
+  note?: string;
   children: React.ReactNode;
 }) {
   return (

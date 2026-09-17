@@ -107,32 +107,34 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
       <Breadcrumbs categoryParts={slug} />
       <ShopHeader title={metadata.name} overline={categoryPath} />
 
-      {totalCount === 0 ? (
-        <EmptyResults filtersActive={filtersActive} />
-      ) : (
-        <div className="flex flex-col lg-touch:flex-row lg-desktop:flex-row gap-8">
-          <FilterSidebar
-            key={category}
-            category={category}
-            checkboxCounts={facets.groups}
-            booleanCounts={facets.booleans}
-            brandLabels={facets.brandLabels}
-            priceBounds={{ min: priceBounds.min, max: priceBounds.max }}
-            rangeBounds={facets.ranges}
-          />
-          <div className="min-w-0 flex-1">
-            <ActiveFilterChips key={category} category={category} brandLabels={facets.brandLabels} />
-            <SortBar totalCount={totalCount} category={category} />
-            <ChunkedProductGrid chunkPromises={chunkPromises} wishlistProductIds={wishlistProductIds} />
-            <Pagination
-              currentPage={effectivePage}
-              totalPages={totalPages}
-              totalCount={totalCount}
-              perPage={PER_PAGE}
-            />
-          </div>
+      <div className="flex flex-col lg-touch:flex-row lg-desktop:flex-row gap-8">
+        <FilterSidebar
+          key={category}
+          category={category}
+          checkboxCounts={facets.groups}
+          booleanCounts={facets.booleans}
+          brandLabels={facets.brandLabels}
+          priceBounds={{ min: priceBounds.min, max: priceBounds.max }}
+          rangeBounds={facets.ranges}
+        />
+        <div className="min-w-0 flex-1">
+          <ActiveFilterChips key={category} category={category} brandLabels={facets.brandLabels} />
+          <SortBar totalCount={totalCount} category={category} />
+          {totalCount === 0 ? (
+            <EmptyResults filtersActive={filtersActive} />
+          ) : (
+            <>
+              <ChunkedProductGrid chunkPromises={chunkPromises} wishlistProductIds={wishlistProductIds} />
+              <Pagination
+                currentPage={effectivePage}
+                totalPages={totalPages}
+                totalCount={totalCount}
+                perPage={PER_PAGE}
+              />
+            </>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }

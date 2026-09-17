@@ -39,6 +39,14 @@ const nextConfig: NextConfig = {
     optimizeCss: false,
     inlineCss: true,
     optimizePackageImports: ["@phosphor-icons/react"],
+    // Category pages are `dynamic = 'force-dynamic'`, and the default dynamic
+    // staleTime is 0 -- so browser Back/Forward never hits the client Router
+    // Cache, always re-triggers loading.tsx's short skeleton, and the page's
+    // scroll position collapses toward the top before the full-height grid
+    // streams back in. 30s lets Back/Forward within a session reuse the
+    // already-rendered (correct-height) page instead, at no real freshness
+    // cost for product listings.
+    staleTimes: { dynamic: 30 },
   },
   images: {
     loader: "custom",
