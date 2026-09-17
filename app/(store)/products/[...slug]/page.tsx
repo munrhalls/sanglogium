@@ -116,6 +116,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
           brandLabels={facets.brandLabels}
           priceBounds={{ min: priceBounds.min, max: priceBounds.max }}
           rangeBounds={facets.ranges}
+          isDefaultState={facets.isDefaultState}
         />
         <div className="min-w-0 flex-1">
           <ActiveFilterChips key={category} category={category} brandLabels={facets.brandLabels} />

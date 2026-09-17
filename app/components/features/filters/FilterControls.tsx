@@ -37,11 +37,13 @@ export function CheckboxGroup({
   facet,
   counts,
   brandLabels,
+  isDefaultState = false,
 }: {
   category: Category;
   facet: AnyFacetDef;
   counts: FacetOptionCount[];
   brandLabels?: Record<string, string>;
+  isDefaultState?: boolean;
 }) {
   const { useFilterParam } = getFacetModule(category);
   const [expanded, setExpanded] = useState(true);
@@ -65,6 +67,10 @@ export function CheckboxGroup({
   }));
 
   const isFilterActive = (value: string) => selectedArray.some((s) => s.toLowerCase() === value.toLowerCase());
+
+  const visibleOptions = isDefaultState
+    ? options.filter((option) => option.count > 0 || isFilterActive(option.value))
+    : options;
 
   const toggle = (value: string) => {
     setSelected((prev) => {
@@ -96,13 +102,13 @@ export function CheckboxGroup({
           <ProgressiveFilterOptionList
             paramKey={facet.id}
             label={facet.label}
-            options={options}
+            options={visibleOptions}
             isFilterActive={isFilterActive}
             toggle={toggle}
           />
         ) : (
           <div className="flex flex-col gap-2">
-            {options.map((option) => (
+            {visibleOptions.map((option) => (
               <Checkbox
                 key={option.value}
                 name={facet.id}
@@ -120,9 +126,23 @@ export function CheckboxGroup({
   );
 }
 
-export function BooleanToggle({ category, facet, count }: { category: Category; facet: AnyFacetDef; count?: number }) {
+export function BooleanToggle({
+  category,
+  facet,
+  count,
+  isDefaultState = false,
+}: {
+  category: Category;
+  facet: AnyFacetDef;
+  count?: number;
+  isDefaultState?: boolean;
+}) {
   const { useFilterParam } = getFacetModule(category);
   const [active, setActive] = useFilterParam(facet.id) as [boolean, (v: boolean | ((prev: boolean) => boolean)) => void];
+
+  if (isDefaultState && count === 0 && !active) {
+    return null;
+  }
 
   return (
     <Checkbox

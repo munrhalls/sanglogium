@@ -42,6 +42,8 @@ export interface CatalogueFacets {
   brandLabels: Record<string, string>;
   /** Map of urlParam -> real min/max for range facets (sang-logium-3rv.5). */
   ranges: Record<string, RangeBounds>;
+  /** Whether no catalogue filters are currently active (sort is ignored). */
+  isDefaultState: boolean;
 }
 
 export interface GetFilterFacetsOptions {
@@ -194,11 +196,36 @@ function brandLabelMap(products: RawProduct[]): Record<string, string> {
   return map;
 }
 
+function isDefaultFilterState(state: ProductQueryState): boolean {
+  if (state.minPrice != null || state.maxPrice != null) return false;
+
+  for (const facet of FILTER_FACETS) {
+    if (facet.urlParam === 'price') continue;
+
+    if (facet.type === 'range') {
+      if (state[`${facet.urlParam}Min` as keyof ProductQueryState] != null) return false;
+      if (state[`${facet.urlParam}Max` as keyof ProductQueryState] != null) return false;
+      continue;
+    }
+
+    if (facet.type === 'boolean') {
+      if (state[facet.urlParam as keyof ProductQueryState] === true) return false;
+      continue;
+    }
+
+    const value = state[facet.urlParam as keyof ProductQueryState];
+    if (Array.isArray(value) && value.length > 0) return false;
+    if (typeof value === 'string' && value) return false;
+  }
+
+  return true;
+}
+
 const getFilterFacetsFn = async ({
   keys,
   state,
 }: GetFilterFacetsOptions): Promise<CatalogueFacets> => {
-  if (!keys.length) return { groups: {}, booleans: {}, brandLabels: {}, ranges: {} };
+  if (!keys.length) return { groups: {}, booleans: {}, brandLabels: {}, ranges: {}, isDefaultState: isDefaultFilterState(state) };
 
   const query = groq`*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0] | order(_id asc) [0...1000] {
     _id,
@@ -310,7 +337,7 @@ const getFilterFacetsFn = async ({
     };
   }
 
-  return { groups, booleans, brandLabels, ranges };
+  return { groups, booleans, brandLabels, ranges, isDefaultState: isDefaultFilterState(state) };
 };
 
 export const getFilterFacets = withCache(getFilterFacetsFn) as (

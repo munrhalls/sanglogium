@@ -76,6 +76,7 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
           booleanCounts={allFacets.booleans}
           brandLabels={brandLabels}
           priceBounds={{ min: priceBounds.min, max: priceBounds.max }}
+          isDefaultState={allFacets.isDefaultState}
         />
         <div className="min-w-0 flex-1">
           <ActiveFilterChips brandLabels={brandLabels} />

@@ -67,6 +67,9 @@ interface FilterSidebarProps {
    *  category and has no single facet module to pick -- defaults to
    *  headphones', unchanged from pre-sang-logium-3rv.6 behavior there. */
   category?: Category;
+  /** True when no catalogue filters are active (sort is ignored). Hides
+   *  zero-match checkbox/boolean options on first load. */
+  isDefaultState?: boolean;
 }
 
 const PANEL_SCROLL_ID = 'poc-filter-panel-scroll';
@@ -136,6 +139,7 @@ function renderFacet(
   booleanCounts: Record<string, number>,
   brandLabels: Record<string, string>,
   rangeBounds: Record<string, RangeBounds>,
+  isDefaultState: boolean,
 ) {
   let control: React.ReactNode;
   if (facet.control === 'checkbox') {
@@ -145,10 +149,11 @@ function renderFacet(
         facet={facet}
         counts={checkboxCounts[facet.id] ?? []}
         brandLabels={facet.id === 'brand' ? brandLabels : undefined}
+        isDefaultState={isDefaultState}
       />
     );
   } else if (facet.control === 'boolean') {
-    control = <BooleanToggle category={category} facet={facet} count={booleanCounts[facet.id]} />;
+    control = <BooleanToggle category={category} facet={facet} count={booleanCounts[facet.id]} isDefaultState={isDefaultState} />;
   } else {
     control = <RangeControl category={category} facet={facet} bounds={rangeBounds[facet.id]} />;
   }
@@ -172,6 +177,7 @@ export function FilterSidebar({
   priceBounds,
   rangeBounds = {},
   category = 'headphones',
+  isDefaultState = false,
 }: FilterSidebarProps) {
   const { FACET_GROUPS, facetsForGroup, useClearAllFilters } = getFacetModule(category);
   const clearAll = useClearAllFilters();
@@ -219,7 +225,7 @@ export function FilterSidebar({
               <PanelSection key={group.id} id={group.id} label={group.label} note={group.note}>
                 {group.id === 'commercial' && <PriceControl category={category} min={priceBounds.min} max={priceBounds.max} />}
                 {group.id === 'commercial' && !hideCustomerRating && <RatingControl category={category} />}
-                {facetsForGroup(group.id).map((facet) => renderFacet(facet, category, checkboxCounts, booleanCounts, brandLabels, rangeBounds))}
+                {facetsForGroup(group.id).map((facet) => renderFacet(facet, category, checkboxCounts, booleanCounts, brandLabels, rangeBounds, isDefaultState))}
               </PanelSection>
             ))}
           </div>
