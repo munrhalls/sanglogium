@@ -91,15 +91,8 @@ const opts = (pairs: [string, string][]): Option[] => pairs.map(([value, label])
 export const FACETS: FacetDef[] = [
   // ── Commercial ──────────────────────────────────────────────────────────
   { id: 'brand', group: 'commercial', label: 'Brand', itemNo: 1, status: 'C', control: 'checkbox', field: 'brand', options: 'derived' },
-  // Awards has no closed options.list in the Sanity schema — derive from data.
-  { id: 'awards', group: 'commercial', label: 'Awards / Recognition', itemNo: 4, status: 'R', control: 'checkbox', field: 'awards', options: 'derived' },
-  // Condition matches the closed options.list in productType.ts (new / open-box / refurbished).
-  { id: 'condition', group: 'commercial', label: 'Condition', itemNo: 5, status: 'C', control: 'checkbox', field: 'condition', options: opts([['new', 'New'], ['open-box', 'Open-Box'], ['refurbished', 'Refurbished']]) },
   // In-Stock is now a single Availability control under Commercial (not a standalone "In Stock Only" toggle).
   { id: 'inStock', group: 'commercial', label: 'Availability', itemNo: 6, status: 'C', control: 'boolean', field: 'inStockOnly' },
-  // Deals uses the schema's dealsDiscount closed list.
-  { id: 'deals', group: 'commercial', label: 'Discount', itemNo: 7, status: 'C', control: 'checkbox', field: 'deals', options: opts([['none', 'No Discount'], ['sale', 'On Sale'], ['clearance', 'Clearance']]) },
-  { id: 'newArrival', group: 'commercial', label: 'New Arrivals', itemNo: 8, status: 'C', control: 'boolean', field: 'isNewArrival' },
 
   // ── Type ─────────────────────────────────────────────────────────────────
   // Accessory Category urlParam is 'accessoryType' to match lib/catalogue/facetMap.ts.
@@ -219,46 +212,45 @@ export const facetsForGroup = (group: FacetGroupId): FacetDef[] => FACETS.filter
 export const FACET_BY_ID = new Map(FACETS.map((f) => [f.id, f]));
 
 // ─────────────────────────────────────────────────────────────────────────
-// Sort — should-be-accessories.md's observed baseline (7) + approved
-// additions (2) = 9. Never default to Alphabetical (should-be-accessories.md
-// explicit caution).
+// Sort — canonical newest/price/alpha/date options are data-supported. The
+// remaining options (featured, most-relevant, best-selling, rating-desc,
+// discount-desc) are retained for parity with should-be-accessories.md but are
+// not data-supported for the current catalogue. Never default to Alphabetical
+// (should-be-accessories.md explicit caution).
 //
 // Static value/label pairs only, same shape as production's SORT_OPTIONS in
 // lib/catalogue/facetMap.ts — this is what the URL parser's allowlist and the
 // (headless, product-data-blind) SortDropdown both consume. The comparator for
-// each value — including the weighted-rating math a plain label can't carry —
-// lives server-side in lib/filterProducts.ts, never imported by a client
-// component. Keeping the two separate is what lets SortDropdown stay a pure
-// URL <-> display control with zero product-data dependency, matching F2.
+// each value lives server-side in lib/catalogue/buildProductQuery.ts.
 // ─────────────────────────────────────────────────────────────────────────
 
 export const SORT_VALUES = [
+  'newest',
+  'price-asc',
+  'price-desc',
+  'alpha-asc',
+  'alpha-desc',
+  'date-old',
   'featured',
   'most-relevant',
   'best-selling',
-  'alpha-asc',
-  'alpha-desc',
-  'price-asc',
-  'price-desc',
-  'date-old',
-  'date-new',
   'rating-desc',
   'discount-desc',
 ] as const;
 
 export type SortValue = (typeof SORT_VALUES)[number];
-export const SORT_DEFAULT: SortValue = 'featured';
+export const SORT_DEFAULT: SortValue = 'newest';
 
 const SORT_LABELS: Record<SortValue, string> = {
+  newest: 'Newest',
+  'price-asc': 'Price, Low to High',
+  'price-desc': 'Price, High to Low',
+  'alpha-asc': 'Alphabetically, A-Z',
+  'alpha-desc': 'Alphabetically, Z-A',
+  'date-old': 'Date, Old to New',
   featured: 'Featured',
   'most-relevant': 'Most Relevant',
   'best-selling': 'Best Selling',
-  'alpha-asc': 'Alphabetically, A-Z',
-  'alpha-desc': 'Alphabetically, Z-A',
-  'price-asc': 'Price, Low to High',
-  'price-desc': 'Price, High to Low',
-  'date-old': 'Date, Old to New',
-  'date-new': 'Date, New to Old',
   'rating-desc': 'Customer Rating, High to Low',
   'discount-desc': '% Discount, Biggest First',
 };

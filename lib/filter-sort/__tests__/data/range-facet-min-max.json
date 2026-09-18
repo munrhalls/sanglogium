@@ -1,0 +1,82 @@
+[
+  {
+    "id": "impedance",
+    "label": "Impedance",
+    "field": "impedanceOhms",
+    "unit": "Ω",
+    "min": {
+      "value": 3,
+      "product": {
+        "_id": "PHPYj28HJdPDHAaIBCF9jM",
+        "name": "Symphonium Audio Titan In-Ear Headphones"
+      }
+    },
+    "max": {
+      "value": 520,
+      "product": {
+        "_id": "DZc43yHr6ydfgE7zB43tcm",
+        "name": "Sennheiser Momentum 5 Wireless Over-Ear ANC Headphones"
+      }
+    }
+  },
+  {
+    "id": "sensitivity",
+    "label": "Sensitivity",
+    "field": "sensitivityDbMw",
+    "unit": "dB/mW",
+    "min": {
+      "value": 89,
+      "product": {
+        "_id": "PHPYj28HJdPDHAaIBAK0fG",
+        "name": "HEDD Audio HEDDPhone® Two"
+      }
+    },
+    "max": {
+      "value": 128,
+      "product": {
+        "_id": "MrEMtYwMtrFDGWmRnTEgIK",
+        "name": "Moondrop Dark Saber In-Ear Headphones"
+      }
+    }
+  },
+  {
+    "id": "bassExtension",
+    "label": "Frequency Response",
+    "field": "freqResponseHz.min",
+    "unit": "Hz",
+    "min": {
+      "value": 2,
+      "product": {
+        "_id": "Agdc7UdudmikAzJtKWUOut",
+        "name": "CrinEar Reference In-Ear Headphones"
+      }
+    },
+    "max": {
+      "value": 25,
+      "product": {
+        "_id": "Pn6oyV4Ks5AcNbecjgql0e",
+        "name": "Focal Hadenys"
+      }
+    }
+  },
+  {
+    "id": "cableLength",
+    "label": "Cable Length",
+    "field": "cableLengthM",
+    "unit": "m",
+    "min": {
+      "value": 0.2,
+      "product": {
+        "_id": "IysVzF92P1Ckj0vYj2qiBH",
+        "name": "JBL Live 670NC Wireless On-Ear Adaptive Noise Cancelling Headphones (White)"
+      }
+    },
+    "max": {
+      "value": 4,
+      "product": {
+        "_id": "k27n1AQuIbSr5iozG2iyZJ",
+        "name": "Mark Levinson № 5909 Active Noise Cancellation Headphones"
+      }
+    }
+  }
+]

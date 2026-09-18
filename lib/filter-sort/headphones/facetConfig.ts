@@ -170,46 +170,40 @@ export const facetsForGroup = (group: FacetGroupId): FacetDef[] => FACETS.filter
 export const FACET_BY_ID = new Map(FACETS.map((f) => [f.id, f]));
 
 // ─────────────────────────────────────────────────────────────────────────
-// Sort — should-be.md's observed baseline (9) + approved additions (2) = 11.
+// Sort — only options that can be made meaningful from the current headphones
+// product data. The 11-option baseline from should-be.md includes five options
+// that are not data-supported for this category (featured, most-relevant,
+// best-selling, rating-desc, discount-desc) plus a duplicate newest/date-new.
+// Those are kept out of this route's dropdown until their backing fields are
+// populated. The comparator for each value lives server-side in
+// lib/catalogue/buildProductQuery.ts.
 //
 // Static value/label pairs only, same shape as production's SORT_OPTIONS in
 // lib/catalogue/facetMap.ts — this is what the URL parser's allowlist and the
-// (headless, product-data-blind) SortDropdown both consume. The comparator for
-// each value — including the weighted-rating math a plain label can't carry —
-// lives server-side in lib/filterProducts.ts, never imported by a client
-// component. Keeping the two separate is what lets SortDropdown stay a pure
-// URL <-> display control with zero product-data dependency, matching F2.
+// (headless, product-data-blind) SortDropdown both consume. Keeping the two
+// separate is what lets SortDropdown stay a pure URL <-> display control with
+// zero product-data dependency, matching F2.
 // ─────────────────────────────────────────────────────────────────────────
 
 export const SORT_VALUES = [
-  'featured',
-  'most-relevant',
-  'best-selling',
-  'alpha-asc',
-  'alpha-desc',
+  'newest',
   'price-asc',
   'price-desc',
+  'alpha-asc',
+  'alpha-desc',
   'date-old',
-  'date-new',
-  'rating-desc',
-  'discount-desc',
 ] as const;
 
 export type SortValue = (typeof SORT_VALUES)[number];
-export const SORT_DEFAULT: SortValue = 'featured';
+export const SORT_DEFAULT: SortValue = 'newest';
 
 const SORT_LABELS: Record<SortValue, string> = {
-  featured: 'Featured',
-  'most-relevant': 'Most Relevant',
-  'best-selling': 'Best Selling',
-  'alpha-asc': 'Alphabetically, A-Z',
-  'alpha-desc': 'Alphabetically, Z-A',
+  newest: 'Newest',
   'price-asc': 'Price, Low to High',
   'price-desc': 'Price, High to Low',
+  'alpha-asc': 'Alphabetically, A-Z',
+  'alpha-desc': 'Alphabetically, Z-A',
   'date-old': 'Date, Old to New',
-  'date-new': 'Date, New to Old',
-  'rating-desc': 'Customer Rating, High to Low',
-  'discount-desc': '% Discount, Biggest First',
 };
 
 export const SORT_OPTIONS: Option[] = SORT_VALUES.map((value) => ({ value, label: SORT_LABELS[value] }));

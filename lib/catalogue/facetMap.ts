@@ -582,6 +582,27 @@ export const SORT_OPTIONS = [
     direction: 'desc',
     tieBreak: '_id desc',
   },
+  {
+    sort: 'Alphabetically, A-Z',
+    urlValue: 'alpha-asc',
+    backingField: 'name',
+    direction: 'asc',
+    tieBreak: '_id asc',
+  },
+  {
+    sort: 'Alphabetically, Z-A',
+    urlValue: 'alpha-desc',
+    backingField: 'name',
+    direction: 'desc',
+    tieBreak: '_id desc',
+  },
+  {
+    sort: 'Date, Old to New',
+    urlValue: 'date-old',
+    backingField: '_createdAt',
+    direction: 'asc',
+    tieBreak: '_id asc',
+  },
 ] as const;
 
 /** Canonical category keys used by `FilterFacet.categories` (besides `"*"`). */

@@ -1,1 +1,0 @@
-- answer in simplest possible, clearest possible, briefest possible manner

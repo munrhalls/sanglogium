@@ -1,7 +1,0 @@
-{
-  "database": "dolt",
-  "backend": "dolt",
-  "dolt_mode": "embedded",
-  "dolt_database": "sang_logium",
-  "project_id": "04c3ff7e-7adf-433c-9446-ea297e99ba6d"
-}

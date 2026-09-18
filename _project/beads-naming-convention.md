@@ -3,6 +3,13 @@
 **Status: MANDATORY.** Every agent that runs `bd create` or edits an issue title MUST
 follow this. A non-conforming title is a defect — fix it with `bd update <id> --title "..."`.
 
+**Update 2026-09-18 — Epic/Child structure retired.** Under the current campaign
+methodology (`_project/00-MOST-IMPORTANT-lean-tracer-bullet-methodology.md`, Part 1.3c),
+exactly one beads issue exists per milestone — no epics, no child issues, no hierarchy.
+Sections 1 and 2 below describe the old pattern, kept only because closed historical
+issues still use it — do not create new epics or children. Every new issue uses the
+**Standalone** format in section 3, one per milestone.
+
 ## The problem this solves
 
 The beads **ID** (`sang-logium-agq`, `sang-logium-dqf`, …) is a random handle. It is not
@@ -75,4 +82,8 @@ Never the bare ID alone. Never the title alone. The pair is the contract.
 - `.clinerules` → "## Issue tracker = beads (`bd` CLI)" section
 - `.devin/rules/fast-beads-issue-creation.md` → the allowed minimal line
 - `.cline/skills/implement-beads-issue/SKILL.md` → reference format
-- memory `feedback-beads-issue-lean-protocol`
+
+(Not yet re-audited for the Epic/Child retirement above — each still describes the
+old hierarchy unless separately checked and updated. The memory this list used to
+cite, `feedback-beads-issue-lean-protocol`, no longer exists as of 2026-09-18 —
+removed here rather than left dangling.)

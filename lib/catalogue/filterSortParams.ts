@@ -24,7 +24,7 @@
 // routes: `page` on /products and /products/[...slug], `q` on /search, `drawer`
 // globally):
 //
-//   sort      — string, one of SORT_OPTIONS values. Default "featured".
+//   sort      — string, one of SORT_OPTIONS values. Default "newest".
 //   minPrice  — integer, DOLLARS (not cents). Absent = no lower bound.
 //   maxPrice  — integer, DOLLARS (not cents). Absent = no upper bound.
 //   inStock   — boolean. Default false ("show everything").
@@ -93,7 +93,7 @@ import {
 // URL values declared in facetMap.ts are valid.
 export type SortValue = (typeof SORT_MAP)[number]["urlValue"];
 
-export const SORT_DEFAULT: SortValue = "featured";
+export const SORT_DEFAULT: SortValue = "newest";
 
 const SORT_VALUES = SORT_MAP.map((o) => o.urlValue) as SortValue[];
 

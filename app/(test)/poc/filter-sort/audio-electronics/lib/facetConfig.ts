@@ -114,14 +114,8 @@ export function visibleGroups(state: FilterSortState): FacetGroupId[] {
 export const FACETS: FacetDef[] = [
   // ── Commercial ──────────────────────────────────────────────────────────
   { id: 'brand', group: 'commercial', label: 'Brand', itemNo: 1, status: 'C', control: 'checkbox', field: 'brand', options: 'derived' },
-  // Awards has no closed options.list in the schema -- derive from real data.
-  { id: 'awards', group: 'commercial', label: 'Awards / Recognition', itemNo: 4, status: 'R', control: 'checkbox', field: 'awards', options: 'derived' },
-  // Condition options reduced to the values that actually exist in the audio-electronics schema.
-  { id: 'condition', group: 'commercial', label: 'Condition', itemNo: 5, status: 'C', control: 'checkbox', field: 'condition', options: opts([['new', 'New'], ['open-box', 'Open-Box'], ['refurbished', 'Refurbished']]) },
   { id: 'availability', group: 'commercial', label: 'Availability', itemNo: 6, status: 'C', control: 'checkbox', field: 'availability', options: opts([['in-stock', 'In Stock'], ['preorder', 'Preorder'], ['special-order', 'Special / Custom Order']]) },
   // In Stock Only is intentionally NOT a separate boolean -- In Stock lives inside Availability.
-  { id: 'deals', group: 'commercial', label: 'Discount', itemNo: 7, status: 'C', control: 'checkbox', field: 'deals', options: opts([['none', 'None'], ['sale', 'On Sale'], ['clearance', 'Clearance / Closeout']]) },
-  { id: 'newArrival', group: 'commercial', label: 'New Arrivals', itemNo: 8, status: 'C', control: 'boolean', field: 'isNewArrival' },
 
   // ── Type ─────────────────────────────────────────────────────────────────
   { id: 'productCategory', group: 'type', label: 'Product Category', itemNo: 9, status: 'C', control: 'checkbox', field: 'productCategory', options: opts([
@@ -180,37 +174,39 @@ export const facetsForGroup = (group: FacetGroupId): FacetDef[] => FACETS.filter
 export const FACET_BY_ID = new Map(FACETS.map((f) => [f.id, f]));
 
 // ─────────────────────────────────────────────────────────────────────────
-// Sort — should-be-audio-electronics.md's observed baseline (9) + approved
-// additions (2) = 11, identical set to the headphones POC.
+// Sort — canonical newest/price/alpha/date options are data-supported. The
+// remaining options (featured, most-relevant, best-selling, rating-desc,
+// discount-desc) are retained for parity with should-be-audio-electronics.md
+// but are not data-supported for the current catalogue.
 // ─────────────────────────────────────────────────────────────────────────
 
 export const SORT_VALUES = [
+  'newest',
+  'price-asc',
+  'price-desc',
+  'alpha-asc',
+  'alpha-desc',
+  'date-old',
   'featured',
   'most-relevant',
   'best-selling',
-  'alpha-asc',
-  'alpha-desc',
-  'price-asc',
-  'price-desc',
-  'date-old',
-  'date-new',
   'rating-desc',
   'discount-desc',
 ] as const;
 
 export type SortValue = (typeof SORT_VALUES)[number];
-export const SORT_DEFAULT: SortValue = 'featured';
+export const SORT_DEFAULT: SortValue = 'newest';
 
 const SORT_LABELS: Record<SortValue, string> = {
+  newest: 'Newest',
+  'price-asc': 'Price, Low to High',
+  'price-desc': 'Price, High to Low',
+  'alpha-asc': 'Alphabetically, A-Z',
+  'alpha-desc': 'Alphabetically, Z-A',
+  'date-old': 'Date, Old to New',
   featured: 'Featured',
   'most-relevant': 'Most Relevant',
   'best-selling': 'Best Selling',
-  'alpha-asc': 'Alphabetically, A-Z',
-  'alpha-desc': 'Alphabetically, Z-A',
-  'price-asc': 'Price, Low to High',
-  'price-desc': 'Price, High to Low',
-  'date-old': 'Date, Old to New',
-  'date-new': 'Date, New to Old',
   'rating-desc': 'Customer Rating, High to Low',
   'discount-desc': '% Discount, Biggest First',
 };

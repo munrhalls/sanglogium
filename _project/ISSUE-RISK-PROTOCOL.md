@@ -8,8 +8,9 @@
 
 **When:** before any agent (this chat, CLI, cloud, or Devin) starts implementing a beads
 issue. It is the pre-flight, not the build. The build method is
-`_project/00-MOST-IMPORTANT-lean-tracer-bullet-methodology.md`; its step 5 "Lean Execution
-Guard Rail" is the same rule as Part B below.
+`_project/00-MOST-IMPORTANT-lean-tracer-bullet-methodology.md` (Part 1: campaign structure,
+Part 2: milestone execution); its "no build/lint/test/tsc as self-verification" rule
+(Part 2) is the same rule as Part B below.
 
 ---
 

@@ -61,6 +61,12 @@ const ORDER_BY_SORT: Record<SortValue, string> = Object.fromEntries(
         return [o.value, '| order(price_data.unit_amount desc, _createdAt desc)'];
       case 'newest':
         return [o.value, '| order(_createdAt desc, _id desc)'];
+      case 'alpha-asc':
+        return [o.value, '| order(lower(name) asc, _id asc)'];
+      case 'alpha-desc':
+        return [o.value, '| order(lower(name) desc, _id desc)'];
+      case 'date-old':
+        return [o.value, '| order(_createdAt asc, _id asc)'];
       default:
         return [o.value, '| order(_createdAt desc, _id desc)'];
     }

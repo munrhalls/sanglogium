@@ -7,7 +7,7 @@
 //    strings, boolean -> boolean withDefault(false))
 //  - clean-URL: a param at its default never appears in the URL (nuqs
 //    clearOnDefault)
-//  - `sort` -> string literal from SORT_VALUES, default "featured"
+//  - `sort` -> string literal from SORT_VALUES, default "newest"
 //  - `minPrice`/`maxPrice`, `minRating`, and one min/max pair per range facet
 //    -> floats, no default (absent = unbounded)
 //  - HEADLESS: no JSX, no data access.

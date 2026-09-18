@@ -44,4 +44,17 @@ source — wired in via facetRegistry.ts despite the "poc" path).
      deletion bar is UX judgment, not data availability — see project memory
      `audio-electronics-filter-deletion-criteria`.
 
-CURRENT STATUS: not started (analysis only; no code changed).
+CURRENT STATUS: done. Implemented directly (user-authorized exception to the
+architect-only/Devin-executes rule) on both /products/audio-electronics and
+/products/accessories:
+- `app/components/features/filters/FilterSidebar.tsx` — removed the
+  `hideCustomerRating`/`usePathname` hack and the `<RatingControl>` render
+  call entirely, so Customer Rating no longer renders for any category
+  (headphones already hid it; this makes audio-electronics and accessories
+  match).
+- `app/(test)/poc/filter-sort/audio-electronics/lib/facetConfig.ts` — removed
+  the `awards`, `condition`, `deals`, `newArrival` facet entries.
+- `app/(test)/poc/filter-sort/accessories/lib/facetConfig.ts` — removed the
+  same four facet entries.
+Uncommitted — working tree only, no build/lint/test run, no git action taken.
+Live check on localhost:3000 still needed on both category pages.
