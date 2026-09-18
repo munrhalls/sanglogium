@@ -43,7 +43,7 @@
     "ts-check": "tsc --noEmit --pretty",
     "ts-check:watch": "tsc --noEmit --watch",
     "analyze": "ANALYZE=true npm run build",
-    "commit": "powershell -ExecutionPolicy Bypass -File .\\scripts\\commit.ps1"
+    "commit": "bash scripts/commit.sh"
   },
   "dependencies": {
     "@better-auth/kysely-adapter": "1.6.11",
