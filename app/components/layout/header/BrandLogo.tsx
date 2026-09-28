@@ -6,7 +6,7 @@ export default function BrandLogo() {
     <Link
       href="/"
       aria-label="Go to home page"
-      className={cn("flex items-center gap-[4px]")}
+      className={cn("flex min-h-11 shrink-0 items-center gap-[4px]")}
     >
       {/* SANG */}
       <span

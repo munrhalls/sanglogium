@@ -39,15 +39,17 @@ export function SearchPagination({ totalCount, perPage = 24 }: SearchPaginationP
   const startItem = (currentPage - 1) * perPage + 1;
   const endItem = Math.min(currentPage * perPage, totalCount);
 
-  const activeItem =
-    'px-3 py-2 rounded-md border border-border-secondary type-caption text-primary transition-colors hover:bg-surface-elevated';
-  const disabledItem =
-    'px-3 py-2 rounded-md border border-border-secondary type-caption text-secondary-400 cursor-not-allowed';
+  // 44px-tall targets; on phones the two buttons share the row equally so each
+  // is a wide, thumb-friendly target instead of a small chip.
+  const item =
+    'inline-flex min-h-11 flex-1 items-center justify-center rounded-md border border-border-secondary px-4 type-body sm:flex-none';
+  const activeItem = `${item} text-primary transition-colors hover:bg-surface-elevated active:bg-surface-elevated`;
+  const disabledItem = `${item} text-secondary-400 cursor-not-allowed`;
 
   return (
     <nav
       aria-label="Search results pagination"
-      className="flex items-center justify-between border-t border-border-secondary pt-6 mt-8"
+      className="mt-8 flex flex-col gap-3 border-t border-border-secondary pt-6 sm:flex-row sm:items-center sm:justify-between"
     >
       <span className="type-caption text-secondary-500">
         Showing {startItem}–{endItem} of {totalCount}
@@ -70,7 +72,7 @@ export function SearchPagination({ totalCount, perPage = 24 }: SearchPaginationP
           </span>
         )}
 
-        <span className="type-caption text-secondary-500 px-2" aria-live="polite">
+        <span className="type-caption shrink-0 px-2 text-secondary-500" aria-live="polite">
           Page {currentPage} of {totalPages}
         </span>
 
