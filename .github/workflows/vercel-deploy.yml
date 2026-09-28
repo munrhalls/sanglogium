@@ -1,0 +1,53 @@
+name: Deploy to Vercel (Production)
+
+# Runs on GitHub's own runners, not in any sandboxed dev session -- this
+# exists specifically because Vercel's own Git auto-deploy is not enabled
+# on this repo, and Claude's cloud dev sessions have no network path to
+# api.vercel.com (org egress policy). Pushing to main is what triggers a
+# real production deploy; there is no other automatic trigger.
+#
+# Required repo secrets (Settings -> Secrets and variables -> Actions):
+#   VERCEL_TOKEN      - vercel.com/account/tokens
+#   VERCEL_ORG_ID     - Vercel Project Settings -> General -> "Team ID" /
+#                        org id (also `vercel project ls` locally)
+#   VERCEL_PROJECT_ID - Vercel Project Settings -> General -> "Project ID"
+# All three are required for `vercel pull`/`vercel deploy` to run
+# non-interactively without a checked-in .vercel/project.json.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel environment
+        run: vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Build
+        run: vercel build --prod --token="$VERCEL_TOKEN"
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Deploy (prebuilt)
+        run: vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
