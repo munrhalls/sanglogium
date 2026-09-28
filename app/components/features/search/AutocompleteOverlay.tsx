@@ -39,8 +39,14 @@ export function AutocompleteOverlay({
   return (
     <div
       className={cn(
-        "absolute top-full left-0 w-full mt-2 z-50",
-        "bg-surface-elevated border border-border-secondary rounded-lg shadow-cardDark",
+        // Mobile: full-bleed edge-to-edge under the fixed header bar, matching
+        // the zero-query panel's own full-bleed treatment (standard mobile
+        // search-suggestion pattern) rather than tracking the narrow input box
+        // next to the back button. Desktop keeps the original contained,
+        // rounded dropdown anchored under the input.
+        "fixed left-0 right-0 top-[var(--mobile-header-h)] z-50 border-t border-border-secondary",
+        "sm:absolute sm:top-full sm:left-0 sm:right-auto sm:w-full sm:mt-2 sm:rounded-lg sm:border",
+        "bg-surface-elevated border-border-secondary shadow-cardDark",
         "opacity-100 translate-y-0 transition-all duration-200"
       )}
       role="listbox"
