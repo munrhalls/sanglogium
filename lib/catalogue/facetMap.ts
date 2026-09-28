@@ -309,7 +309,10 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Amplification',
     field: 'filterAttributes.amplification',
     type: 'enum',
-    valueVocab: ['solid-state', 'tube', 'hybrid'],
+    // sang-logium-ttn: was missing 'class-d', which productType.ts's own
+    // options.list declares -- no live product could ever be filtered to
+    // by that value.
+    valueVocab: ['solid-state', 'tube', 'hybrid', 'class-d'],
     categories: ['audio-electronics'],
     urlParam: 'amplification',
   },
@@ -333,7 +336,11 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Inputs',
     field: 'filterAttributes.inputs',
     type: 'multi',
-    valueVocab: ['usb', 'optical', 'coaxial', 'rca', 'bluetooth'],
+    // sang-logium-ttn: was missing 6 of 11 values productType.ts's own
+    // options.list declares (xlr-balanced, phono-mm-mc, hdmi-earc,
+    // ethernet-lan, i2s-iis, aes-ebu) -- real products carry these but no
+    // checkbox ever existed to filter by them.
+    valueVocab: ['usb', 'optical', 'coaxial', 'rca', 'bluetooth', 'xlr-balanced', 'phono-mm-mc', 'hdmi-earc', 'ethernet-lan', 'i2s-iis', 'aes-ebu'],
     categories: ['audio-electronics'],
     urlParam: 'inputs',
   },
