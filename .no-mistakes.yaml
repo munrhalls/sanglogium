@@ -1,0 +1,43 @@
+product_surface:
+  - path: app/(store)
+    kind: web-ui
+    drives: Customer storefront - browsing, search, product detail, basket, checkout.
+  - path: app/(admin)
+    kind: web-ui
+    drives: Internal admin panel.
+  - path: app/(studio)
+    kind: web-ui
+    drives: Sanity Studio - CMS content authoring.
+  - path: app/api
+    kind: api
+    drives: Route handlers consumed by the storefront and webhooks (Stripe, etc.).
+  - path: app/actions
+    kind: api
+    drives: Server actions - basket, checkout, wishlist mutations invoked from the storefront UI.
+
+test:
+  instructions: |
+    This repo bans agents from self-running build/lint/test/dev-server commands
+    during normal work (see AGENTS.md / CLAUDE.md) - the no-mistakes evidence
+    step is the one sanctioned place tests actually run.
+
+    For a PR that only touches test files under store/__tests__/**, sanity-cms/lib/**
+    tests, or lib/catalogue/** tests (no files under app/(store), app/(admin),
+    app/(studio), app/api, or app/actions): run `npm test` for real and confirm
+    it passes. No live browser click-through is required - no UI or API surface
+    changed.
+
+    For a PR that touches app/(store): start the dev server, open the changed
+    page(s) in a real browser, and drive the actual customer journey affected
+    (e.g. type a query into search, follow it to /search, page through results,
+    open a product). For app/(admin) or app/(studio): same, against that
+    surface's own pages. For app/api or app/actions: exercise the changed
+    route/action for real (a real request/invocation), not a source-code read.
+
+commands:
+  test: npm test
+
+ignore_patterns:
+  - node_modules/**
+  - .next/**
+  - sanity-cms/**/*.types.ts
