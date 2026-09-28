@@ -8,6 +8,7 @@ import {
   sendVerificationEmail,
   sendResetPasswordEmail,
   sendDeleteAccountVerification,
+  sendChangeEmailVerification,
 } from "./email";
 import { backendClient } from "@/sanity-cms/lib/backendClient";
 import { mergeGuestOrdersByEmail } from "./checkout/mergeGuestOrders";
@@ -116,6 +117,12 @@ export const auth = betterAuth({
       : {}),
   },
   user: {
+    changeEmail: {
+      enabled: true,
+      sendChangeEmailVerification: async ({ user, newEmail, url, token }) => {
+        await sendChangeEmailVerification({ user, newEmail, url, token });
+      },
+    },
     deleteUser: {
       enabled: true,
       sendDeleteAccountVerification: async ({ user, url, token }) => {
@@ -182,6 +189,24 @@ export const auth = betterAuth({
     user: {
       update: {
         after: async (user) => {
+          try {
+            const profile = await backendClient.fetch<{ _id: string }>(
+              `*[_type == "userProfile" && authId == $authId][0]{_id}`,
+              { authId: user.id }
+            );
+            if (profile?._id) {
+              await backendClient
+                .patch(profile._id)
+                .set({ email: user.email, name: user.name || "" })
+                .commit();
+            }
+          } catch (error) {
+            console.error("[AUTH] HOOK FAILED: userProfile sync on update.", {
+              authId: user.id,
+              error: error instanceof Error ? error.message : String(error),
+            });
+          }
+
           if (!user.emailVerified || !user.email) return;
 
           try {

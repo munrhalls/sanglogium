@@ -24,25 +24,37 @@ async function requireFreshSession(): Promise<boolean> {
 
 export default function AccountActionsClient({
   name,
+  email,
   shouldClearMergeFlag = false,
+  showEmailChangedBanner = false,
   marketingEmailsOptIn = false,
   twoFactorEnabled = false,
 }: {
   name: string;
+  email: string;
   shouldClearMergeFlag?: boolean;
+  showEmailChangedBanner?: boolean;
   marketingEmailsOptIn?: boolean;
   twoFactorEnabled?: boolean;
 }) {
   useEffect(() => {
     if (typeof window === "undefined") return;
-    if (!shouldClearMergeFlag) return;
+    if (!shouldClearMergeFlag && !showEmailChangedBanner) return;
 
     const url = new URL(window.location.href);
+    let changed = false;
     if (url.searchParams.get("merge") === "1") {
       url.searchParams.delete("merge");
+      changed = true;
+    }
+    if (url.searchParams.get("emailChanged") === "true") {
+      url.searchParams.delete("emailChanged");
+      changed = true;
+    }
+    if (changed) {
       window.history.replaceState({}, "", url.pathname + url.search);
     }
-  }, [shouldClearMergeFlag]);
+  }, [shouldClearMergeFlag, showEmailChangedBanner]);
 
   const [changeState, changeAction, changePending] = useActionState(
     async (_prevState: unknown, formData: FormData) => {
@@ -76,6 +88,28 @@ export default function AccountActionsClient({
     async (_prevState: unknown, formData: FormData) => updateName(formData),
     null
   );
+  const [emailState, emailAction, emailPending] = useActionState(
+    async (_prevState: unknown, formData: FormData) => {
+      const fresh = await requireFreshSession();
+      if (!fresh) return { error: "Redirecting to sign in..." };
+
+      const newEmail = (formData.get("newEmail") as string)?.trim();
+      if (!newEmail) return { error: "Email cannot be empty." };
+
+      const result = await authClient.changeEmail({
+        newEmail,
+        callbackURL: "/account?emailChanged=true",
+      });
+
+      if (result.error) {
+        return { error: result.error.message };
+      }
+
+      return { success: true };
+    },
+    null
+  );
+
   const [preferenceState, preferenceAction, preferencePending] = useActionState(
     async (_prevState: unknown, formData: FormData) => updatePreferences(formData),
     null
@@ -229,6 +263,53 @@ export default function AccountActionsClient({
             className="btn-primary w-full py-3"
           >
             {namePending ? "Saving..." : "Update Name"}
+          </button>
+        </form>
+      </section>
+
+      <section>
+        <h2 className="type-section-hed mb-4">Email Address</h2>
+
+        {showEmailChangedBanner && (
+          <div className="mb-4 rounded border border-success-500 bg-success-500/10 p-3 text-success-500 type-caption">
+            Your email address has been updated.
+          </div>
+        )}
+
+        {emailState?.error && (
+          <div className="mb-4 rounded border border-error-500 bg-error-500/10 p-3 text-error-500 type-caption">
+            {emailState.error}
+          </div>
+        )}
+
+        {emailState?.success && (
+          <div className="mb-4 rounded border border-success-500 bg-success-500/10 p-3 text-success-500 type-caption">
+            Check your new inbox to confirm the change. Your email won&apos;t update until you click the confirmation link.
+          </div>
+        )}
+
+        <p className="type-body text-text-caption mb-4">Current: {email}</p>
+
+        <form action={emailAction} className="space-y-4 max-w-[440px]">
+          <div>
+            <label htmlFor="newEmail" className="type-caption text-text-caption mb-1 block">
+              New Email
+            </label>
+            <input
+              id="newEmail"
+              name="newEmail"
+              type="email"
+              required
+              className="input-field"
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={emailPending}
+            className="btn-primary w-full py-3"
+          >
+            {emailPending ? "Requesting..." : "Change Email"}
           </button>
         </form>
       </section>
