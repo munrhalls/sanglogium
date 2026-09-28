@@ -20,8 +20,10 @@ export function AutocompleteItem({ product, isActive, index, showThumbnail = tru
       role="option"
       aria-selected={isActive}
       className={cn(
-        "p-3 flex items-center gap-3 rounded-md transition-colors duration-150 cursor-pointer",
-        isActive ? "bg-surface-card border-l-2 border-brand-400" : "hover:bg-surface-card"
+        "p-3 flex items-center gap-3 rounded-md transition-all duration-150 cursor-pointer",
+        isActive
+          ? "bg-surface-card border-l-2 border-brand-400 shadow-cardDark"
+          : "hover:bg-surface-card hover:shadow-cardDark"
       )}
     >
       <Link
@@ -31,7 +33,7 @@ export function AutocompleteItem({ product, isActive, index, showThumbnail = tru
         onClick={onClick}
       >
         {showThumbnail && product.image && (
-          <div className="w-12 h-12 rounded-md bg-surface-productImage shrink-0 overflow-hidden flex items-center justify-center">
+          <div className="w-12 h-12 rounded-md bg-surface-productImage shrink-0 overflow-hidden flex items-center justify-center ring-1 ring-border-secondary/50">
             <ProductImage
               image={product.image}
               alt={product.name}

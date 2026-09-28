@@ -18,7 +18,7 @@ interface AutocompleteOverlayProps {
 function AutocompleteSkeletonItem() {
   return (
     <li className="p-3 flex items-center gap-3">
-      <div className="w-12 h-12 rounded-md bg-secondary-800 animate-pulse shrink-0 hidden md:block" />
+      <div className="w-12 h-12 rounded-md bg-secondary-800 animate-pulse shrink-0" />
       <div className="flex flex-col gap-1.5 flex-1">
         <div className="h-4 bg-secondary-800 animate-pulse rounded w-3/4" />
         <div className="h-3 bg-secondary-800 animate-pulse rounded w-1/2" />

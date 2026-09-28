@@ -16,7 +16,9 @@ export const CATEGORY_SUGGESTIONS = [
 export function SearchEmpty({ query }: SearchEmptyProps) {
   return (
     <div className="flex flex-col items-center text-center py-16">
-      <MagnifyingGlass size={48} className="text-secondary-500 mb-6" />
+      <span className="flex items-center justify-center w-24 h-24 rounded-full bg-surface-card ring-1 ring-border-secondary/50 mb-6">
+        <MagnifyingGlass size={40} className="text-secondary-500" />
+      </span>
       <h3 className="type-h3 text-primary mb-2">No products found</h3>
       <p className="type-body text-secondary mb-8">
         {query

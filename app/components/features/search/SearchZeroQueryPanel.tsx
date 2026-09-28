@@ -70,7 +70,9 @@ export function SearchZeroQueryPanel({ onSelect }: SearchZeroQueryPanelProps) {
             {recent.map((term) => (
               <li key={term}>
                 <button type="button" className={rowClass} onClick={() => onSelect(term)}>
-                  <Clock size={16} className="shrink-0 text-secondary-600" />
+                  <span className="flex items-center justify-center w-7 h-7 rounded-full bg-secondary-800/60 shrink-0">
+                    <Clock size={14} className="text-secondary-600" />
+                  </span>
                   <span className="truncate">{term}</span>
                 </button>
               </li>
@@ -87,7 +89,9 @@ export function SearchZeroQueryPanel({ onSelect }: SearchZeroQueryPanelProps) {
           {POPULAR_SEARCHES.map((term) => (
             <li key={term}>
               <button type="button" className={rowClass} onClick={() => onSelect(term)}>
-                <MagnifyingGlass size={16} className="shrink-0 text-secondary-600" />
+                <span className="flex items-center justify-center w-7 h-7 rounded-full bg-secondary-800/60 shrink-0">
+                  <MagnifyingGlass size={14} className="text-secondary-600" />
+                </span>
                 <span className="truncate">{term}</span>
               </button>
             </li>
