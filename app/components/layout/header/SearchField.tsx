@@ -98,8 +98,13 @@ export default function SearchField() {
   const handleOverlayItemClick = useCallback(() => {
     setIsUserTyping(false);
     closeOverlay();
-    closeSearch();
-  }, [closeOverlay, closeSearch]);
+    // Every caller of this handler is a real navigation (product, "view all
+    // results", category, or "browse all"). Don't call the nuqs `search`
+    // setter here — same race as handleSubmit/runSearchTerm: it pushes its
+    // own history entry that can swallow the link's own navigation. The
+    // destination URL carries no `search` param, so the mobile overlay
+    // closes itself once that navigation lands.
+  }, [closeOverlay]);
 
   // Debounced autocomplete fetch. Only runs while the user is actively typing or
   // has focused the search field; it must not auto-open when the field is merely
