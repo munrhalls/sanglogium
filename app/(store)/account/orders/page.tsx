@@ -1,29 +1,12 @@
 import { verifySession } from "@/lib/auth/dal";
-import { backendClient } from "@/sanity-cms/lib/backendClient";
+import { getUserOrders } from "@/sanity-cms/lib/orders/getUserOrders";
 import Link from "next/link";
 import { formatPrice } from "@/lib/utils/price";
-
-interface OrderDoc {
-  orderNumber: string;
-  status: string;
-  pricing: {
-    total: number;
-    currency: string;
-  };
-  dates: {
-    orderedAt: string;
-  };
-}
 
 export default async function OrdersPage() {
   const session = await verifySession();
 
-  const orders = await backendClient.fetch<OrderDoc[]>(
-    `*[_type == "order" && userId == $userId] | order(dates.orderedAt desc) {
-      orderNumber, status, pricing, dates
-    }`,
-    { userId: session.userId }
-  );
+  const orders = await getUserOrders(session.userId);
 
   return (
     <div className="p-6">

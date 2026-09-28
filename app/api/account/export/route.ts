@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getSession } from "@/lib/auth/dal";
-import { backendClient } from "@/sanity-cms/lib/backendClient";
+import { getFullUserProfile } from "@/sanity-cms/lib/account/getFullUserProfile";
+import { getAllUserOrdersFull } from "@/sanity-cms/lib/orders/getAllUserOrdersFull";
 
 export async function GET() {
   const session = await getSession();
@@ -11,14 +12,8 @@ export async function GET() {
   const userId = session.userId;
 
   const [profile, orders] = await Promise.all([
-    backendClient.fetch<Record<string, unknown> | null>(
-      `*[_type == "userProfile" && authId == $authId][0]`,
-      { authId: userId }
-    ),
-    backendClient.fetch<Record<string, unknown>[]>(
-      `*[_type == "order" && userId == $userId]`,
-      { userId }
-    ),
+    getFullUserProfile(userId),
+    getAllUserOrdersFull(userId),
   ]);
 
   const exportData = {

@@ -1,5 +1,5 @@
 import { verifySession } from "@/lib/auth/dal";
-import { backendClient } from "@/sanity-cms/lib/backendClient";
+import { getUserOrderByNumber } from "@/sanity-cms/lib/orders/getUserOrderByNumber";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Order } from "@/sanity.types";
@@ -46,13 +46,7 @@ export default async function OrderDetailPage({ params }: OrderDetailPageProps) 
   const { orderNumber } = await params;
   const session = await verifySession();
 
-  const order = await backendClient.fetch<Order>(
-    `*[_type == "order" && orderNumber == $orderNumber && userId == $userId][0]{
-      orderNumber, status, items, shippingAddress, billingAddress,
-      shippingMethod, pricing, dates, payment, metadata
-    }`,
-    { orderNumber, userId: session.userId }
-  );
+  const order = await getUserOrderByNumber(orderNumber, session.userId);
 
   if (!order) {
     notFound();
