@@ -21,12 +21,18 @@ let hyphenFragment: string
 
 beforeAll(async () => {
   const filter = groq`_type == "product" && defined(catalogueLocationKeys) && count(catalogueLocationKeys) > 0`
-  const [withSku, hyphenated] = await Promise.all([
+  // GROQ `match "*-*"` cannot express "name contains a hyphen": the match operator
+  // tokenizes the pattern on the hyphen, so it degenerates to matching nearly every
+  // product regardless of hyphens. Pull a bounded sample of real names instead and
+  // extract a hyphenated fragment JS-side.
+  const [withSku, names] = await Promise.all([
     client.fetch(groq`*[${filter} && defined(sku) && defined(brand)][0]{ name, sku, "brandName": brand->name }`),
-    client.fetch(groq`*[${filter} && name match "*-*"][0]{ name }`),
+    client.fetch(groq`*[${filter}]{ name }[0...500]`),
   ])
   exactFixture = withSku
-  hyphenFragment = hyphenated?.name?.match(/[A-Za-z0-9]+-[A-Za-z0-9]+/)?.[0]
+  hyphenFragment = names
+    ?.map((p: { name?: string }) => p.name?.match(/[A-Za-z0-9]+-[A-Za-z0-9]+/)?.[0])
+    ?.find(Boolean)
 }, TIMEOUT)
 
 describe('search: critical-journey robustness (real catalogue, no mocks)', () => {
