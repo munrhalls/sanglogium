@@ -45,14 +45,14 @@ export function SearchPagination({ totalCount, perPage = 24 }: SearchPaginationP
 
   const baseItem =
     'inline-flex h-10 min-w-10 items-center justify-center rounded-md px-3 type-metadata transition-colors';
-  const inactive = 'border border-border-secondary text-secondary hover:bg-surface-elevated';
+  const inactive = 'border border-border-secondary text-secondary hover:bg-secondary-100';
   const active = 'bg-secondary-900 text-white';
   const disabled = 'border border-border-secondary text-secondary-400 cursor-not-allowed';
 
   return (
     <nav
       aria-label="Search results pagination"
-      className="mt-8 pt-6 border-t border-border-secondary flex flex-col items-center gap-3"
+      className="mt-8 flex flex-col items-center gap-3"
     >
       <span className="type-caption text-secondary-500" aria-live="polite">
         Showing {startItem}–{endItem} of {totalCount}

@@ -53,11 +53,16 @@ export function AutocompleteOverlay({
           </p>
         </div>
       ) : isLoading ? (
-        <ul className="py-2">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <AutocompleteSkeletonItem key={i} />
-          ))}
-        </ul>
+        <>
+          <div className="px-3 pt-3 pb-1">
+            <span className="type-overline text-accent-500">Products</span>
+          </div>
+          <ul className="py-1">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <AutocompleteSkeletonItem key={i} />
+            ))}
+          </ul>
+        </>
       ) : results.length === 0 ? (
         <div className="p-4">
           <p className="type-body text-secondary mb-4">

@@ -20,9 +20,9 @@ export function AutocompleteItem({ product, isActive, index, showThumbnail = tru
       role="option"
       aria-selected={isActive}
       className={cn(
-        "p-3 flex items-center gap-3 rounded-md transition-all duration-150 cursor-pointer",
+        "p-3 flex items-center gap-3 rounded-md border-l-2 border-transparent transition-all duration-150 cursor-pointer",
         isActive
-          ? "bg-surface-card border-l-2 border-brand-400 shadow-cardDark"
+          ? "bg-surface-card border-brand-400 shadow-cardDark"
           : "hover:bg-surface-card hover:shadow-cardDark"
       )}
     >
