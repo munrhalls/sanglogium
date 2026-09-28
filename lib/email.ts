@@ -74,6 +74,33 @@ export async function sendResetPasswordEmail(data: {
   });
 }
 
+export async function sendChangeEmailVerification(data: {
+  user: EmailUser;
+  newEmail: string;
+  url: string;
+  token: string;
+}): Promise<void> {
+  const { user, newEmail, url } = data;
+
+  if (!resend) {
+    logDevEmail("Change Email Confirmation", newEmail, url);
+    return;
+  }
+
+  await resend.emails.send({
+    from: resendFromEmail,
+    to: newEmail,
+    subject: "Confirm your new email — Sang Logium",
+    html: `
+      <p>Hi ${user.name || "there"},</p>
+      <p>Click the link below to confirm this is your new email address for Sang Logium:</p>
+      <p><a href="${url}">${url}</a></p>
+      <p>Your email will not change until you confirm it. This link expires in 1 hour.</p>
+      <p>If you did not request this, you can safely ignore it.</p>
+    `,
+  });
+}
+
 export async function sendDeleteAccountVerification(data: {
   user: EmailUser;
   url: string;

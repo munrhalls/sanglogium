@@ -4,13 +4,14 @@ import Link from "next/link";
 import AccountActionsClient from "./AccountActions.client";
 
 interface AccountPageProps {
-  searchParams?: Promise<{ merge?: string }>;
+  searchParams?: Promise<{ merge?: string; emailChanged?: string }>;
 }
 
 export default async function AccountPage({ searchParams }: AccountPageProps) {
   const session = await verifySession();
-  const { merge } = (await searchParams) ?? {};
+  const { merge, emailChanged } = (await searchParams) ?? {};
   const showMergeBanner = merge === "1";
+  const showEmailChangedBanner = emailChanged === "true";
 
   const profile = await backendClient.fetch<{ _id?: string; marketingEmailsOptIn?: boolean }>(
     `*[_type == "userProfile" && authId == $authId][0]{ _id, marketingEmailsOptIn }`,
@@ -60,7 +61,9 @@ export default async function AccountPage({ searchParams }: AccountPageProps) {
       </nav>
       <AccountActionsClient
         name={session.user.name || ""}
+        email={session.user.email}
         shouldClearMergeFlag={showMergeBanner}
+        showEmailChangedBanner={showEmailChangedBanner}
         marketingEmailsOptIn={profile?.marketingEmailsOptIn ?? false}
         twoFactorEnabled={session.user.twoFactorEnabled as boolean | undefined}
       />
