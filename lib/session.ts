@@ -32,10 +32,21 @@ export interface CheckoutSession {
   checkoutSessionId?: string; // Unified Trace ID for checkout flow logging
 }
 
+// Fail closed: the cookie carries trusted checkout values (e.g. shippingCost), so a
+// missing secret must stop checkout rather than fall back to a guessable password.
+// Read lazily so `next build` does not need the secret at import time.
+function getSessionSecret(): string {
+  const secret = process.env.SESSION_SECRET;
+  if (!secret) {
+    throw new Error("SESSION_SECRET is not set");
+  }
+  return secret;
+}
+
 export async function getCheckoutSession() {
   const cookieStore = await cookies();
   return getIronSession<CheckoutSession>(cookieStore, {
-    password: process.env.SESSION_SECRET || "fallback-secret-change-in-production",
+    password: getSessionSecret(),
     cookieName: "checkout_session",
     cookieOptions: {
       secure: process.env.NODE_ENV === "production",
