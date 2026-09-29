@@ -30,7 +30,7 @@
       "headphone-jack"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 59900,
@@ -65,7 +65,7 @@
       "headphone-jack"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 21999,
@@ -135,7 +135,7 @@
     ],
     "outputs": null,
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 999900,
@@ -174,7 +174,7 @@
       "pre-out-rca"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 21999,
@@ -206,7 +206,7 @@
       "pre-out"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 164999,
@@ -243,7 +243,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 116000,
@@ -279,7 +279,7 @@
       "4.4mm"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 349999,
@@ -317,7 +317,7 @@
       "pre-out-rca"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 17599,
@@ -357,7 +357,7 @@
       "pre-out-xlr"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 31999,
@@ -400,7 +400,7 @@
       "pre-out-xlr"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 98999,
@@ -469,7 +469,7 @@
     ],
     "outputs": null,
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 27900,
@@ -506,7 +506,7 @@
       "pre-out-xlr"
     ],
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 116000,
@@ -541,7 +541,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 52000,
@@ -562,7 +562,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": null,
     "dacIncluded": false,
@@ -570,7 +570,7 @@
     "inputs": null,
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 49900,
@@ -591,7 +591,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": null,
     "dacIncluded": false,
@@ -599,7 +599,7 @@
     "inputs": null,
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 16900,
@@ -620,7 +620,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": null,
     "dacIncluded": false,
@@ -628,7 +628,7 @@
     "inputs": null,
     "outputs": null,
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 49900,
@@ -649,7 +649,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": null,
     "dacIncluded": false,
@@ -657,7 +657,7 @@
     "inputs": null,
     "outputs": null,
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 16900,
@@ -678,7 +678,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": "solid-state",
     "dacIncluded": false,
@@ -708,7 +708,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "digital-audio-player",
     "formFactor": "portable",
     "amplification": null,
     "dacIncluded": true,
@@ -754,7 +754,7 @@
       "headphone-jack"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 44900,
@@ -790,7 +790,7 @@
     ],
     "outputs": null,
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 42900,
@@ -824,7 +824,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 19900,
@@ -870,7 +870,7 @@
       "speaker-terminals"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 129900,
@@ -905,7 +905,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 129900,
@@ -940,7 +940,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 82900,
@@ -976,7 +976,7 @@
     ],
     "outputs": null,
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 79900,
@@ -1011,7 +1011,7 @@
     ],
     "outputs": null,
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 31900,
@@ -1047,7 +1047,7 @@
       "pre-out-rca"
     ],
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 154500,
@@ -1082,7 +1082,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 23200,
@@ -1207,7 +1207,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": null,
     "dacIncluded": false,
@@ -1215,7 +1215,7 @@
     "inputs": null,
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 59900,
@@ -1250,7 +1250,7 @@
     ],
     "outputs": null,
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 48900,
@@ -1271,7 +1271,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": null,
     "dacIncluded": false,
@@ -1279,7 +1279,7 @@
     "inputs": null,
     "outputs": null,
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 24900,
@@ -1316,7 +1316,7 @@
     ],
     "outputs": null,
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 99900,
@@ -1352,7 +1352,7 @@
       "pre-out-xlr"
     ],
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 62900,
@@ -1388,7 +1388,7 @@
       "headphone-jack"
     ],
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 109900,
@@ -1423,7 +1423,7 @@
     ],
     "outputs": null,
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 249900,
@@ -1445,7 +1445,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "digital-audio-player",
     "formFactor": "portable",
     "amplification": null,
     "dacIncluded": true,
@@ -1456,7 +1456,7 @@
     ],
     "outputs": null,
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 39999,
@@ -1544,7 +1544,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "digital-audio-player",
     "formFactor": "portable",
     "amplification": null,
     "dacIncluded": true,
@@ -1556,7 +1556,7 @@
     ],
     "outputs": null,
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 99999,
@@ -1589,7 +1589,7 @@
       "headphone-jack"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 1999,
@@ -1625,7 +1625,7 @@
     "awards": [
       "What Hi-Fi? Best DAC"
     ],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 259500,
@@ -1656,7 +1656,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 24900,
@@ -1694,7 +1694,7 @@
       "speaker-terminals"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 19900,
@@ -1727,7 +1727,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 150000,
@@ -1766,7 +1766,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 198000,
@@ -1803,7 +1803,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 129900,
@@ -1847,7 +1847,7 @@
       "speaker-terminals"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 324900,
@@ -1881,7 +1881,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 22800,
@@ -1916,7 +1916,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 22900,
@@ -1953,7 +1953,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 129900,
@@ -1974,7 +1974,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": null,
     "dacIncluded": false,
@@ -1984,7 +1984,7 @@
     "awards": [
       "Reviewer's Choice"
     ],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 1099900,
@@ -2017,7 +2017,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 39900,
@@ -2038,7 +2038,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "portable",
     "amplification": null,
     "dacIncluded": false,
@@ -2046,7 +2046,7 @@
     "inputs": null,
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 49900,
@@ -2077,7 +2077,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 3999,
@@ -2117,7 +2117,7 @@
       "subwoofer-out"
     ],
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 54900,
@@ -2139,7 +2139,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "integrated-amplifier",
     "formFactor": "desktop",
     "amplification": null,
     "dacIncluded": false,
@@ -2147,7 +2147,7 @@
     "inputs": null,
     "outputs": null,
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 379900,
@@ -2169,7 +2169,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "digital-audio-player",
     "formFactor": "portable",
     "amplification": null,
     "dacIncluded": true,
@@ -2177,7 +2177,7 @@
     "inputs": null,
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 177300,
@@ -2199,7 +2199,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "digital-audio-player",
     "formFactor": "portable",
     "amplification": null,
     "dacIncluded": true,
@@ -2207,7 +2207,7 @@
     "inputs": null,
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 348200,
@@ -2228,7 +2228,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "portable",
     "amplification": "hybrid",
     "dacIncluded": false,
@@ -2436,7 +2436,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": null,
     "dacIncluded": false,
@@ -2454,7 +2454,7 @@
       "pre-out-rca"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 374900,
@@ -2509,7 +2509,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": "solid-state",
     "dacIncluded": false,
@@ -2545,7 +2545,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": null,
     "dacIncluded": false,
@@ -2590,7 +2590,7 @@
       "headphone-jack"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 139900,
@@ -2611,7 +2611,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": "tube",
     "dacIncluded": false,
@@ -2623,7 +2623,7 @@
       "headphone-jack"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 89900,
@@ -2655,7 +2655,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 22900,
@@ -2686,7 +2686,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 44000,
@@ -2724,7 +2724,7 @@
       "speaker-terminals"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 19900,
@@ -2760,7 +2760,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 61500,
@@ -2795,7 +2795,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 19900,
@@ -2860,7 +2860,7 @@
       "headphone-jack"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 44900,
@@ -2901,7 +2901,7 @@
     "awards": [
       "The Absolute Sound Buyer's Guide Pick 2024"
     ],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 369500,
@@ -2943,7 +2943,7 @@
       "pre-out-xlr"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 54999,
@@ -2965,7 +2965,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "digital-audio-player",
     "formFactor": "portable",
     "amplification": null,
     "dacIncluded": true,
@@ -2973,7 +2973,7 @@
     "inputs": null,
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 227000,
@@ -2995,7 +2995,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "digital-audio-player",
     "formFactor": "portable",
     "amplification": null,
     "dacIncluded": true,
@@ -3003,7 +3003,7 @@
     "inputs": null,
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 65900,
@@ -3025,7 +3025,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "digital-audio-player",
     "formFactor": "desktop",
     "amplification": null,
     "dacIncluded": true,
@@ -3033,7 +3033,7 @@
     "inputs": null,
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 129900,
@@ -3109,7 +3109,7 @@
       "speaker-terminals"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 64900,
@@ -3145,7 +3145,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 299900,
@@ -3180,7 +3180,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 109500,
@@ -3214,7 +3214,7 @@
       "speaker-terminals"
     ],
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 197500,
@@ -3249,7 +3249,7 @@
       "speaker-terminals"
     ],
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 432000,
@@ -3270,7 +3270,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": null,
     "dacIncluded": false,
@@ -3288,7 +3288,7 @@
       "pre-out-rca"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "open-box",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 289900,
@@ -3346,7 +3346,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": "solid-state",
     "dacIncluded": false,
@@ -3382,7 +3382,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": "solid-state",
     "dacIncluded": false,
@@ -3418,7 +3418,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": null,
     "dacIncluded": false,
@@ -3426,7 +3426,7 @@
     "inputs": null,
     "outputs": null,
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 1399500,
@@ -3461,7 +3461,7 @@
       "headphone-jack"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 899900,
@@ -3492,7 +3492,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 24900,
@@ -3523,7 +3523,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 23900,
@@ -3545,7 +3545,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "digital-audio-player",
     "formFactor": "portable",
     "amplification": null,
     "dacIncluded": true,
@@ -3557,7 +3557,7 @@
     ],
     "outputs": null,
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 179999,
@@ -3592,7 +3592,7 @@
       "headphone-jack"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 19999,
@@ -3627,7 +3627,7 @@
       "headphone-jack"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 15999,
@@ -3663,7 +3663,7 @@
       "What Hi-Fi? Best DAC",
       "What Hi-Fi? Product of the Year"
     ],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 65000,
@@ -3694,7 +3694,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 14900,
@@ -3731,7 +3731,7 @@
       "headphone-jack"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 27900,
@@ -3768,7 +3768,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 85900,
@@ -3847,7 +3847,7 @@
       "Reviewers' Choice - SoundStage! Hi-Fi",
       "Recommended Reference Component - SoundStage! Hi-Fi"
     ],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 129900,
@@ -3878,7 +3878,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 8999,
@@ -3924,7 +3924,7 @@
       "Highly Commended",
       "Five Stars — Recommended"
     ],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 499500,
@@ -3945,7 +3945,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": "tube",
     "dacIncluded": false,
@@ -3979,14 +3979,14 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": "tube",
     "dacIncluded": false,
     "balancedOutput": true,
     "inputs": [
       "rca",
-      "xlr"
+      "xlr-balanced"
     ],
     "outputs": [
       "headphone-jack",
@@ -4015,7 +4015,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "digital-audio-player",
     "formFactor": "portable",
     "amplification": null,
     "dacIncluded": true,
@@ -4023,7 +4023,7 @@
     "inputs": null,
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 362000,
@@ -4045,7 +4045,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "digital-audio-player",
     "formFactor": "portable",
     "amplification": null,
     "dacIncluded": true,
@@ -4053,7 +4053,7 @@
     "inputs": null,
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 241000,
@@ -4075,7 +4075,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "digital-audio-player",
     "formFactor": "portable",
     "amplification": null,
     "dacIncluded": true,
@@ -4083,7 +4083,7 @@
     "inputs": null,
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 329900,
@@ -4402,7 +4402,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 74900,
@@ -4474,7 +4474,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 19900,
@@ -4530,7 +4530,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": null,
     "dacIncluded": false,
@@ -4559,7 +4559,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "portable",
     "amplification": "solid-state",
     "dacIncluded": false,
@@ -4595,7 +4595,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "portable",
     "amplification": "solid-state",
     "dacIncluded": false,
@@ -4650,7 +4650,7 @@
       "pre-out-rca"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 169900,
@@ -4670,7 +4670,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": null,
     "dacIncluded": false,
@@ -4689,7 +4689,7 @@
       "speaker-terminals"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 22900,
@@ -4726,7 +4726,7 @@
       "speaker-terminals"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 19900,
@@ -4765,7 +4765,7 @@
       "speaker-terminals"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 22900,
@@ -4802,7 +4802,7 @@
       "speaker-terminals"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 21800,
@@ -4822,7 +4822,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": null,
     "dacIncluded": false,
@@ -4840,7 +4840,7 @@
       "pre-out-rca"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 374900,
@@ -4898,7 +4898,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 99900,
@@ -4932,7 +4932,7 @@
     "awards": [
       "iF Design Award"
     ],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 1200000,
@@ -4969,7 +4969,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 198000,
@@ -5006,7 +5006,7 @@
       "pre-out-xlr"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 529500,
@@ -5042,7 +5042,7 @@
       "headphone-jack"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 44900,
@@ -5079,7 +5079,7 @@
     "awards": [
       "Hi-Fi+ Highly Commended Award"
     ],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 700000,
@@ -5116,7 +5116,7 @@
       "speaker-terminals"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 19900,
@@ -5153,7 +5153,7 @@
       "speaker-terminals"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 7900,
@@ -5190,7 +5190,7 @@
       "speaker-terminals"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 18900,
@@ -5231,7 +5231,7 @@
       "speaker-terminals"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 79900,
@@ -5269,7 +5269,7 @@
       "HiFi+ Award Winner 2021",
       "Audiograde Recommended Badge"
     ],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 250000,
@@ -5289,7 +5289,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": null,
     "dacIncluded": false,
@@ -5308,7 +5308,7 @@
       "speaker-terminals"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 9900,
@@ -5347,7 +5347,7 @@
       "speaker-terminals"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 74900,
@@ -5387,7 +5387,7 @@
       "speaker-terminals"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 59900,
@@ -5407,7 +5407,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": "tube",
     "dacIncluded": false,
@@ -5490,7 +5490,7 @@
       "pre-out-xlr"
     ],
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 59900,
@@ -5520,7 +5520,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 19900,
@@ -5553,7 +5553,7 @@
       "headphone-jack"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 189900,
@@ -5586,7 +5586,7 @@
     ],
     "outputs": null,
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 79900,
@@ -5641,7 +5641,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": null,
     "dacIncluded": false,
@@ -5711,7 +5711,7 @@
     "awards": [
       "What Hi-Fi? Best DAC"
     ],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 159500,
@@ -5766,7 +5766,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": "solid-state",
     "dacIncluded": false,
@@ -5869,7 +5869,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": "solid-state",
     "dacIncluded": false,
@@ -5909,7 +5909,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 29900,
@@ -5939,7 +5939,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 14900,
@@ -5959,7 +5959,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": null,
     "dacIncluded": true,
@@ -5976,7 +5976,7 @@
       "headphone-jack"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 204900,
@@ -6011,7 +6011,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 129900,
@@ -6050,7 +6050,7 @@
       "speaker-terminals"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 39900,
@@ -6089,7 +6089,7 @@
       "speaker-terminals"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "open-box",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 29900,
@@ -6125,7 +6125,7 @@
       "headphone-jack"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 269500,
@@ -6227,7 +6227,7 @@
       "speaker-terminals"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 224900,
@@ -6260,7 +6260,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 39900,
@@ -6280,7 +6280,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": "tube",
     "dacIncluded": false,
@@ -6291,7 +6291,7 @@
       "speaker-terminals"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": "sale",
     "newArrival": null,
     "priceCentsResolved": 159900,
@@ -6326,7 +6326,7 @@
       "Stereophile Class A+ Recommended Component",
       "Stereophile Digital Product of the Year Runner Up 2025"
     ],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 349500,
@@ -6388,7 +6388,7 @@
       "4.4mm"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 16999,
@@ -6408,7 +6408,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": null,
     "dacIncluded": false,
@@ -6416,7 +6416,7 @@
     "inputs": null,
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "open-box",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 19900,
@@ -6467,7 +6467,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": "solid-state",
     "dacIncluded": true,
@@ -6483,7 +6483,7 @@
     "awards": [
       "EC PAM 2021"
     ],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 79900,
@@ -6503,14 +6503,14 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": "tube",
     "dacIncluded": false,
     "balancedOutput": true,
     "inputs": [
       "rca",
-      "xlr"
+      "xlr-balanced"
     ],
     "outputs": [
       "headphone-jack",
@@ -6537,7 +6537,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": "solid-state",
     "dacIncluded": true,
@@ -6550,7 +6550,7 @@
       "headphone-jack"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 49900,
@@ -6582,7 +6582,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 529500,
@@ -6645,7 +6645,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 19900,
@@ -6677,7 +6677,7 @@
     "awards": [
       "Gramophone Product of the Month"
     ],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 65000,
@@ -6709,7 +6709,7 @@
       "4.4mm"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 99900,
@@ -6737,7 +6737,7 @@
     "inputs": null,
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 13100,
@@ -6771,7 +6771,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 199500,
@@ -6804,7 +6804,7 @@
     ],
     "outputs": null,
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 299900,
@@ -6824,7 +6824,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": null,
     "dacIncluded": true,
@@ -6841,7 +6841,7 @@
       "headphone-jack"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 249500,
@@ -6880,7 +6880,7 @@
       "speaker-terminals"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 7900,
@@ -6900,7 +6900,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": null,
     "dacIncluded": false,
@@ -6960,7 +6960,7 @@
     "awards": [
       "What Hi-Fi? Best DAC"
     ],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 250000,
@@ -6980,7 +6980,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": null,
     "dacIncluded": false,
@@ -6988,7 +6988,7 @@
     "inputs": null,
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 19900,
@@ -7008,7 +7008,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": "solid-state",
     "dacIncluded": false,
@@ -7061,7 +7061,7 @@
     "awards": [
       "What Hi-Fi? Product of the Year"
     ],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 65000,
@@ -7081,7 +7081,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": null,
     "dacIncluded": false,
@@ -7089,7 +7089,7 @@
     "inputs": null,
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 43900,
@@ -7145,7 +7145,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": null,
     "dacIncluded": true,
@@ -7163,7 +7163,7 @@
       "headphone-jack"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 224900,
@@ -7201,7 +7201,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 198000,
@@ -7235,7 +7235,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 76900,
@@ -7303,7 +7303,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 34900,
@@ -7345,7 +7345,7 @@
       "speaker-terminals"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 29900,
@@ -7382,7 +7382,7 @@
       "headphone-jack"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 12900,
@@ -7414,7 +7414,7 @@
       "pre-out"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 359999,
@@ -7446,7 +7446,7 @@
       "pre-out"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 299999,
@@ -7482,7 +7482,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 93900,
@@ -7512,7 +7512,7 @@
     "inputs": null,
     "outputs": null,
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 399900,
@@ -7546,7 +7546,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 10900,
@@ -7581,7 +7581,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 34900,
@@ -7613,7 +7613,7 @@
       "pre-out"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 159999,
@@ -7681,7 +7681,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 139900,
@@ -7721,7 +7721,7 @@
       "pre-out-xlr"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 23900,
@@ -7756,7 +7756,7 @@
     ],
     "outputs": null,
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 47900,
@@ -7791,7 +7791,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 64000,
@@ -7826,7 +7826,7 @@
     ],
     "outputs": null,
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 70900,
@@ -7866,7 +7866,7 @@
       "speaker-terminals"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 22900,
@@ -7923,7 +7923,7 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
     "amplification": "solid-state",
     "dacIncluded": false,
@@ -8010,7 +8010,7 @@
       "headphone-jack"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 3299,
@@ -8042,7 +8042,7 @@
     ],
     "outputs": null,
     "awards": [],
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 5999,
@@ -8081,7 +8081,7 @@
       "speaker-terminals"
     ],
     "awards": null,
-    "condition": null,
+    "condition": "new",
     "dealsDiscount": null,
     "newArrival": null,
     "priceCentsResolved": 19900,
