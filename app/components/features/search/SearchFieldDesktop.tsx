@@ -94,10 +94,19 @@ export function SearchFieldDesktop({ search, sheetOpen }: SearchFieldDesktopProp
       onBlur={handleBlur}
       className="relative hidden min-w-0 flex-1 sm:mx-auto sm:block sm:max-w-md md:max-w-lg lg:max-w-xl"
     >
-      <form onSubmit={handleSubmit} role="search" aria-label="Search products">
+      <form
+        onSubmit={handleSubmit}
+        onClick={(e) => {
+          // The form's 4px strips above/below the bar are part of the hit area.
+          if (e.target === e.currentTarget) inputRef.current?.focus();
+        }}
+        role="search"
+        aria-label="Search products"
+        className="flex h-11 w-full items-center"
+      >
         <div
           className={cn(
-            "group flex h-11 items-center rounded-md pl-4",
+            "group flex h-9 w-full items-center rounded-md pl-4 lg:h-11",
             "bg-secondary-300 shadow-sm transition-all duration-300 ease-out",
             "hover:bg-secondary-100 focus-within:bg-brand-400 focus-within:shadow-md"
           )}
@@ -137,7 +146,7 @@ export function SearchFieldDesktop({ search, sheetOpen }: SearchFieldDesktopProp
                 setIsOpen(true);
                 inputRef.current?.focus();
               }}
-              className="flex h-full w-11 shrink-0 items-center justify-center text-secondary-700 transition-colors hover:text-brand-700"
+              className="-my-1 flex h-11 w-11 shrink-0 items-center justify-center text-secondary-700 transition-colors hover:text-brand-700 lg:my-0"
               aria-label="Clear search"
             >
               <X size={14} weight="bold" aria-hidden="true" />
