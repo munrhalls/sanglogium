@@ -8,7 +8,6 @@ import {
   sendVerificationEmail,
   sendResetPasswordEmail,
   sendDeleteAccountVerification,
-  sendChangeEmailVerification,
 } from "./email";
 import { backendClient } from "@/sanity-cms/lib/backendClient";
 import { mergeGuestOrdersByEmail } from "./checkout/mergeGuestOrders";
@@ -119,9 +118,6 @@ export const auth = betterAuth({
   user: {
     changeEmail: {
       enabled: true,
-      sendChangeEmailVerification: async ({ user, newEmail, url, token }) => {
-        await sendChangeEmailVerification({ user, newEmail, url, token });
-      },
     },
     deleteUser: {
       enabled: true,
