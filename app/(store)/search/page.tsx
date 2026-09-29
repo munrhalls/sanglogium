@@ -30,7 +30,9 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   const resultsPromise = searchProductsFull(q, sort, page);
 
   return (
-    <div className="mx-auto max-w-catalogue px-4 md:px-8 pt-6 pb-12">
+    // w-full: <main> is a flex column, so a bare mx-auto child shrinks to its
+    // content's max-content width (the auto-fill grid then overflows past sm).
+    <div className="mx-auto w-full max-w-catalogue px-4 md:px-8 pt-4 sm:pt-6 pb-12">
       <SearchHeader query={q} />
       <Suspense fallback={<ProductGridSkeleton />}>
         <SearchResults resultsPromise={resultsPromise} query={q} />

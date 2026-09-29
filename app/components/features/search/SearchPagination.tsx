@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
+import { getPageList } from '@/lib/catalogue/pagination';
 
 interface SearchPaginationProps {
   totalCount: number;
@@ -11,8 +12,8 @@ interface SearchPaginationProps {
 
 /**
  * Real `<Link href>` pagination for search results (G8): crawlable, preserves
- * every query param (q, sort), supports middle-click/open-in-new-tab, and uses
- * the default Link scroll behavior so page changes return to the top.
+ * every query param (q, sort), supports middle-click/open-in-new-tab, and keeps
+ * the default Link scroll behavior, so a page change returns to the top.
  */
 export function SearchPagination({ totalCount, perPage = 24 }: SearchPaginationProps) {
   const pathname = usePathname();
@@ -38,16 +39,27 @@ export function SearchPagination({ totalCount, perPage = 24 }: SearchPaginationP
 
   const startItem = (currentPage - 1) * perPage + 1;
   const endItem = Math.min(currentPage * perPage, totalCount);
+  const pages = getPageList(currentPage, totalPages);
 
-  const itemBase =
-    'px-3 py-2 rounded-md border border-border-secondary type-caption transition-colors min-h-[44px] flex-1 sm:flex-none flex items-center justify-center text-center';
-  const activeItem = `${itemBase} text-primary hover:bg-surface-elevated`;
-  const disabledItem = `${itemBase} text-secondary-400 cursor-not-allowed`;
+  // 44px-tall targets; on phones the two buttons share the row equally so each
+  // is a wide, thumb-friendly target instead of a small chip.
+  const item =
+    'inline-flex min-h-11 flex-1 items-center justify-center rounded-md border border-border-secondary px-4 type-body sm:flex-none';
+  const activeItem = `${item} text-primary transition-colors hover:bg-surface-elevated active:bg-surface-elevated`;
+  const disabledItem = `${item} text-secondary-400 cursor-not-allowed`;
+  // Numbered pills (matches app/components/features/products/Pagination.tsx)
+  // only from sm up, where there's room for them next to Prev/Next. A phone-
+  // width strip of number pills is a worse tap target than the existing wide
+  // Prev/Next pair, so phones keep the plain "Page X of Y" caption instead.
+  const numberBase =
+    'hidden min-h-11 min-w-11 items-center justify-center rounded-md px-3 type-body transition-colors sm:inline-flex';
+  const numberInactive = `${numberBase} border border-border-secondary text-secondary hover:bg-surface-elevated`;
+  const numberActive = `${numberBase} bg-secondary-900 text-white`;
 
   return (
     <nav
       aria-label="Search results pagination"
-      className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-t border-border-secondary pt-6 mt-8"
+      className="mt-8 flex flex-col gap-3 border-t border-border-secondary pt-6 sm:flex-row sm:items-center sm:justify-between"
     >
       <span className="type-caption text-secondary-500">
         Showing {startItem}–{endItem} of {totalCount}
@@ -69,8 +81,29 @@ export function SearchPagination({ totalCount, perPage = 24 }: SearchPaginationP
           </span>
         )}
 
-        <span className="type-caption text-secondary-500 px-2 whitespace-nowrap" aria-live="polite">
+        <span className="type-caption shrink-0 px-2 text-secondary-500 sm:hidden" aria-live="polite">
           Page {currentPage} of {totalPages}
+        </span>
+        <span className="hidden items-center gap-2 sm:flex">
+          {pages.map((page, index) =>
+            page === 'ellipsis' ? (
+              <span
+                key={`ellipsis-${index}`}
+                aria-hidden="true"
+                className="inline-flex min-w-11 items-center justify-center type-body text-secondary-400"
+              >
+                &hellip;
+              </span>
+            ) : page === currentPage ? (
+              <span key={page} aria-current="page" className={numberActive}>
+                {page}
+              </span>
+            ) : (
+              <Link key={page} href={hrefFor(page)} aria-label={`Go to page ${page}`} className={numberInactive}>
+                {page}
+              </Link>
+            )
+          )}
         </span>
 
         {currentPage < totalPages ? (

@@ -120,7 +120,19 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
         />
         <div className="min-w-0 flex-1">
           <ActiveFilterChips key={category} category={category} brandLabels={facets.brandLabels} />
-          <SortBar totalCount={totalCount} category={category} />
+          <SortBar
+            key={category}
+            totalCount={totalCount}
+            category={category}
+            mobileFilterProps={{
+              checkboxCounts: facets.groups,
+              booleanCounts: facets.booleans,
+              brandLabels: facets.brandLabels,
+              priceBounds: { min: priceBounds.min, max: priceBounds.max },
+              rangeBounds: facets.ranges,
+              isDefaultState: facets.isDefaultState,
+            }}
+          />
           {totalCount === 0 ? (
             <EmptyResults filtersActive={filtersActive} />
           ) : (

@@ -80,7 +80,16 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
         />
         <div className="min-w-0 flex-1">
           <ActiveFilterChips brandLabels={brandLabels} />
-          <SortBar totalCount={totalCount} />
+          <SortBar
+            totalCount={totalCount}
+            mobileFilterProps={{
+              checkboxCounts: allFacets.groups,
+              booleanCounts: allFacets.booleans,
+              brandLabels,
+              priceBounds: { min: priceBounds.min, max: priceBounds.max },
+              isDefaultState: allFacets.isDefaultState,
+            }}
+          />
           {totalCount === 0 ? (
             <EmptyResults filtersActive={filtersActive} />
           ) : (

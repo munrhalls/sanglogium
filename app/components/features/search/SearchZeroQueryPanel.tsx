@@ -1,90 +1,88 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
-import { MagnifyingGlass, Clock, X } from '@phosphor-icons/react';
-import { cn } from '@/lib/utils/tailwind';
-import { getRecentSearches, clearRecentSearches, removeRecentSearch } from './recentSearches';
+import React, { useEffect, useState } from "react";
+import type { MouseEvent } from "react";
+import Link from "next/link";
+import { Clock, MagnifyingGlass, X } from "@phosphor-icons/react";
+import { cn } from "@/lib/utils/tailwind";
+import { clearRecentSearches, getRecentSearches, removeRecentSearch } from "./recentSearches";
+import { CATEGORY_SUGGESTIONS, POPULAR_SEARCHES, isPlainLeftClick } from "./searchLinks";
 
 /**
- * Zero-query state for the mobile search overlay (sang-logium-85y).
- * Shows recent searches (localStorage, up to 6) above a fixed Popular list.
- * Tapping a row calls onSelect with the term — the parent reuses its existing
- * router.push('/search?q=...') path. No fetch, no new search behaviour here.
+ * Zero-query state, shown by both search surfaces before the shopper has typed
+ * two characters: recent searches (removable one by one), direct category
+ * shortcuts, and popular search terms. Purely presentational: it fetches
+ * nothing and delegates every action to the parent.
  */
 
-const POPULAR_SEARCHES = [
-  'Headphones',
-  'IEMs',
-  'DACs & Amps',
-  'Cables',
-  'Accessories',
-  'Sennheiser',
-  'FiiO',
-] as const;
-
 interface SearchZeroQueryPanelProps {
-  onSelect: (term: string) => void;
+  onSearchTerm: (term: string) => void;
+  onNavigate: (href: string) => void;
 }
 
+const heading = "type-overline text-accent-500";
 const rowClass = cn(
-  'flex items-center gap-3 w-full min-h-[44px] px-3 py-2',
-  'text-left type-body text-primary',
-  'hover:bg-surface-card active:bg-surface-card transition-colors duration-150 rounded-md'
+  "flex min-h-12 w-full min-w-0 items-center gap-3 px-3 py-2 text-left",
+  "type-body text-primary transition-colors duration-150",
+  "hover:bg-surface-card active:bg-surface-card"
+);
+const chipClass = cn(
+  "inline-flex min-h-11 items-center rounded-md border border-border-secondary px-4",
+  "type-body text-primary transition-colors duration-150",
+  "hover:bg-surface-card active:bg-surface-card"
 );
 
-export function SearchZeroQueryPanel({ onSelect }: SearchZeroQueryPanelProps) {
+export function SearchZeroQueryPanel({ onSearchTerm, onNavigate }: SearchZeroQueryPanelProps) {
   const [recent, setRecent] = useState<string[]>([]);
 
   useEffect(() => {
     setRecent(getRecentSearches());
   }, []);
 
-  const handleClear = () => {
-    clearRecentSearches();
-    setRecent([]);
-  };
-
-  const handleRemove = (term: string) => {
-    removeRecentSearch(term);
-    setRecent(getRecentSearches());
-  };
+  const handleLinkClick =
+    (href: string) => (e: MouseEvent<HTMLAnchorElement>) => {
+      if (!isPlainLeftClick(e)) return;
+      e.preventDefault();
+      onNavigate(href);
+    };
 
   return (
-    <div
-      className={cn(
-        'w-full mt-2',
-        'bg-surface-elevated border border-border-secondary rounded-lg shadow-cardDark',
-        'overflow-y-auto'
-      )}
-    >
+    <div className="pb-4">
       {recent.length > 0 && (
-        <section className="py-1">
-          <div className="flex items-center justify-between px-3 pt-3 pb-1">
-            <span className="type-overline text-accent-500">Recent</span>
+        <section aria-labelledby="search-recent-heading" className="pt-2">
+          <div className="flex items-center justify-between pl-3">
+            <h2 id="search-recent-heading" className={heading}>
+              Recent
+            </h2>
             <button
               type="button"
-              onClick={handleClear}
-              className="flex items-center gap-1 type-caption text-secondary hover:text-primary transition-colors min-h-[44px] -my-2 px-1"
-              aria-label="Clear recent searches"
+              onClick={() => {
+                clearRecentSearches();
+                setRecent([]);
+              }}
+              className="type-caption min-h-11 px-3 text-secondary transition-colors hover:text-primary"
             >
-              <X size={12} />
-              Clear
+              Clear all
             </button>
           </div>
           <ul>
             {recent.map((term) => (
               <li key={term} className="flex items-center">
-                <button type="button" className={cn(rowClass, 'flex-1 min-w-0')} onClick={() => onSelect(term)}>
-                  <Clock size={16} className="shrink-0 text-secondary-600" />
+                <button
+                  type="button"
+                  className={cn(rowClass, "flex-1")}
+                  onClick={() => onSearchTerm(term)}
+                >
+                  <Clock size={18} className="shrink-0 text-secondary-500" aria-hidden="true" />
                   <span className="truncate">{term}</span>
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleRemove(term)}
-                  className="flex items-center justify-center w-11 h-11 shrink-0 text-secondary-500 hover:text-primary transition-colors"
-                  aria-label={`Remove ${term}`}
+                  aria-label={`Remove ${term} from recent searches`}
+                  onClick={() => setRecent(removeRecentSearch(term))}
+                  className="flex h-12 w-12 shrink-0 items-center justify-center text-secondary-500 transition-colors hover:text-primary"
                 >
-                  <X size={14} />
+                  <X size={16} aria-hidden="true" />
                 </button>
               </li>
             ))}
@@ -92,16 +90,39 @@ export function SearchZeroQueryPanel({ onSelect }: SearchZeroQueryPanelProps) {
         </section>
       )}
 
-      <section className={cn('py-1', recent.length > 0 && 'border-t border-border-secondary')}>
-        <div className="px-3 pt-3 pb-1">
-          <span className="type-overline text-accent-500">Popular</span>
-        </div>
-        <ul className="pb-2">
+      <section aria-labelledby="search-browse-heading" className="px-3 pt-4">
+        <h2 id="search-browse-heading" className={cn(heading, "mb-2")}>
+          Browse
+        </h2>
+        <ul className="flex flex-wrap gap-2">
+          {CATEGORY_SUGGESTIONS.map((category) => (
+            <li key={category.href}>
+              <Link
+                href={category.href}
+                onClick={handleLinkClick(category.href)}
+                className={chipClass}
+              >
+                {category.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section aria-labelledby="search-popular-heading" className="px-3 pt-5">
+        <h2 id="search-popular-heading" className={cn(heading, "mb-2")}>
+          Popular searches
+        </h2>
+        <ul className="flex flex-wrap gap-2">
           {POPULAR_SEARCHES.map((term) => (
             <li key={term}>
-              <button type="button" className={rowClass} onClick={() => onSelect(term)}>
-                <MagnifyingGlass size={16} className="shrink-0 text-secondary-600" />
-                <span className="truncate">{term}</span>
+              <button type="button" onClick={() => onSearchTerm(term)} className={chipClass}>
+                <MagnifyingGlass
+                  size={16}
+                  className="mr-2 shrink-0 text-secondary-500"
+                  aria-hidden="true"
+                />
+                {term}
               </button>
             </li>
           ))}

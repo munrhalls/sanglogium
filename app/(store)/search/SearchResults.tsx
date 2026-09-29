@@ -21,7 +21,7 @@ export async function SearchResults({ resultsPromise, query }: SearchResultsProp
 
   return (
     <>
-      <div className="flex items-center justify-between border-b border-border-secondary pb-4 mb-6">
+      <div className="flex items-center justify-between border-b border-border-secondary pb-3 mb-4 sm:pb-4 sm:mb-6">
         <span className="type-metadata text-secondary">
           {totalCount} {totalCount === 1 ? 'product' : 'products'}
         </span>

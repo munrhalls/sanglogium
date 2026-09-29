@@ -72,6 +72,85 @@ interface FilterSidebarProps {
   isDefaultState?: boolean;
 }
 
+interface FilterPanelBodyProps extends FilterSidebarProps {
+  /** DOM id of the scrollable panel container this instance's rail tiles
+   *  scroll. Must be unique across every simultaneously-mounted instance
+   *  (see scrollToGroup above). */
+  panelScrollId: string;
+  /** Prefix applied to each group's DOM id, for the same reason. */
+  groupIdPrefix: string;
+}
+
+/**
+ * The rail + scrollable-panel card, extracted so both the desktop <aside>
+ * (below) and the mobile bottom-sheet (MobileFilterSheet.tsx) can render
+ * identical filter controls without duplicating the group-rendering logic.
+ * Callers own the outer layout (sticky sidebar vs. drawer sheet) and must
+ * pass unique panelScrollId/groupIdPrefix values.
+ */
+export function FilterPanelBody({
+  checkboxCounts,
+  booleanCounts,
+  brandLabels,
+  priceBounds,
+  rangeBounds = {},
+  category = 'headphones',
+  isDefaultState = false,
+  panelScrollId,
+  groupIdPrefix,
+}: FilterPanelBodyProps) {
+  const { FACET_GROUPS, facetsForGroup, useClearAllFilters } = getFacetModule(category);
+  const clearAll = useClearAllFilters();
+  const pathname = usePathname();
+  const hideCustomerRating = pathname === '/products/headphones';
+  const handleRailSelect = (groupId: string) => scrollToGroup(groupId, panelScrollId, groupIdPrefix);
+
+  return (
+    <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-md border border-border-secondary bg-surface-elevated">
+      <div className="flex shrink-0 items-center justify-between gap-2 p-6 pb-4">
+        <span className="type-overline">Filters</span>
+        <button
+          type="button"
+          onClick={clearAll}
+          className="type-caption text-text-caption underline-offset-2 transition-colors hover:text-text-primary hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500"
+        >
+          Clear all
+        </button>
+      </div>
+
+      <div className="flex min-h-0 flex-1">
+        <nav
+          aria-label="Jump to a filter section"
+          className="flex w-14 shrink-0 flex-col gap-0.5 overflow-y-auto overscroll-y-contain border-r border-border-secondary p-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {FACET_GROUPS.map((group) => (
+            <RailTile
+              key={group.id}
+              id={group.id}
+              label={group.label}
+              icon={resolveGroupIcon(category, group.id, HEADPHONES_GROUP_ICONS, FALLBACK_GROUP_ICON)}
+              onSelect={handleRailSelect}
+            />
+          ))}
+        </nav>
+
+        <div
+          id={panelScrollId}
+          className="flex-1 overflow-y-auto overscroll-y-contain [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden pb-12"
+        >
+          {FACET_GROUPS.map((group) => (
+            <PanelSection key={group.id} id={group.id} idPrefix={groupIdPrefix} label={group.label} note={group.note}>
+              {group.id === 'commercial' && <PriceControl category={category} min={priceBounds.min} max={priceBounds.max} />}
+              {group.id === 'commercial' && !hideCustomerRating && <RatingControl category={category} />}
+              {facetsForGroup(group.id).map((facet) => renderFacet(facet, category, checkboxCounts, booleanCounts, brandLabels, rangeBounds, isDefaultState))}
+            </PanelSection>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const PANEL_SCROLL_ID = 'poc-filter-panel-scroll';
 
 // Deliberately not `element.scrollIntoView()`: the target sits inside two
@@ -80,20 +159,37 @@ const PANEL_SCROLL_ID = 'poc-filter-panel-scroll';
 // ancestor to satisfy visibility — which nudges the product grid's scroll
 // position too. Scrolling the panel container directly, by exact pixel
 // offset, touches only this one element and nothing above it.
-function scrollToGroup(groupId: string) {
-  const container = document.getElementById(PANEL_SCROLL_ID);
-  const target = document.getElementById(`poc-group-${groupId}`);
+//
+// `panelScrollId`/`groupIdPrefix` are parameterized (not hardcoded) because
+// the mobile bottom-sheet (MobileFilterSheet.tsx) renders this same panel
+// body in its own DOM subtree while the desktop <aside> below stays mounted
+// (just CSS-hidden, not removed) -- two elements sharing one id would make
+// getElementById resolve to whichever comes first in document order,
+// silently scrolling the wrong (possibly invisible) container.
+function scrollToGroup(groupId: string, panelScrollId: string, groupIdPrefix: string) {
+  const container = document.getElementById(panelScrollId);
+  const target = document.getElementById(`${groupIdPrefix}${groupId}`);
   if (!container || !target) return;
   const offset = target.getBoundingClientRect().top - container.getBoundingClientRect().top;
   container.scrollBy({ top: offset - 16, behavior: 'smooth' });
 }
 
-function RailTile({ id, label, icon: Icon }: { id: string; label: string; icon: IconType }) {
+function RailTile({
+  id,
+  label,
+  icon: Icon,
+  onSelect,
+}: {
+  id: string;
+  label: string;
+  icon: IconType;
+  onSelect: (id: string) => void;
+}) {
   const title = label || id;
   return (
     <button
       type="button"
-      onClick={() => scrollToGroup(id)}
+      onClick={() => onSelect(id)}
       aria-label={`Jump to ${title} filters`}
       title={`Jump to ${title} filters`}
       data-testid={`poc-rail-tile-${id}`}
@@ -106,18 +202,20 @@ function RailTile({ id, label, icon: Icon }: { id: string; label: string; icon: 
 
 function PanelSection({
   id,
+  idPrefix,
   label,
   note,
   children,
 }: {
   id: string;
+  idPrefix: string;
   label: string;
   note?: string;
   children: React.ReactNode;
 }) {
   return (
     <div
-      id={`poc-group-${id}`}
+      id={`${idPrefix}${id}`}
       data-testid={`poc-panel-${id}`}
       className="flex flex-col gap-6 border-b border-border-secondary p-6 last:border-b-0"
     >
@@ -170,67 +268,14 @@ function renderFacet(
   );
 }
 
-export function FilterSidebar({
-  checkboxCounts,
-  booleanCounts,
-  brandLabels,
-  priceBounds,
-  rangeBounds = {},
-  category = 'headphones',
-  isDefaultState = false,
-}: FilterSidebarProps) {
-  const { FACET_GROUPS, facetsForGroup, useClearAllFilters } = getFacetModule(category);
-  const clearAll = useClearAllFilters();
-  const pathname = usePathname();
-  const hideCustomerRating = pathname === '/products/headphones';
-
+export function FilterSidebar(props: FilterSidebarProps) {
   return (
     <aside
       data-testid="poc-filter-sidebar"
       aria-label="Filters"
       className="hidden w-96 shrink-0 self-start sticky top-0 pt-6 pb-6 h-[calc(100dvh-var(--desktop-header-h)-var(--desktop-catalogue-nav-h))] lg-touch:flex lg-desktop:flex flex-col"
     >
-      <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-md border border-border-secondary bg-surface-elevated">
-        <div className="flex shrink-0 items-center justify-between gap-2 p-6 pb-4">
-          <span className="type-overline">Filters</span>
-          <button
-            type="button"
-            onClick={clearAll}
-            className="type-caption text-text-caption underline-offset-2 transition-colors hover:text-text-primary hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500"
-          >
-            Clear all
-          </button>
-        </div>
-
-        <div className="flex min-h-0 flex-1">
-          <nav
-            aria-label="Jump to a filter section"
-            className="flex w-14 shrink-0 flex-col gap-0.5 overflow-y-auto overscroll-y-contain border-r border-border-secondary p-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
-          >
-            {FACET_GROUPS.map((group) => (
-              <RailTile
-                key={group.id}
-                id={group.id}
-                label={group.label}
-                icon={resolveGroupIcon(category, group.id, HEADPHONES_GROUP_ICONS, FALLBACK_GROUP_ICON)}
-              />
-            ))}
-          </nav>
-
-          <div
-            id={PANEL_SCROLL_ID}
-            className="flex-1 overflow-y-auto overscroll-y-contain [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden pb-12"
-          >
-            {FACET_GROUPS.map((group) => (
-              <PanelSection key={group.id} id={group.id} label={group.label} note={group.note}>
-                {group.id === 'commercial' && <PriceControl category={category} min={priceBounds.min} max={priceBounds.max} />}
-                {group.id === 'commercial' && !hideCustomerRating && <RatingControl category={category} />}
-                {facetsForGroup(group.id).map((facet) => renderFacet(facet, category, checkboxCounts, booleanCounts, brandLabels, rangeBounds, isDefaultState))}
-              </PanelSection>
-            ))}
-          </div>
-        </div>
-      </div>
+      <FilterPanelBody {...props} panelScrollId={PANEL_SCROLL_ID} groupIdPrefix="poc-group-" />
     </aside>
   );
 }
