@@ -1,9 +1,9 @@
 'use client';
 
-// Category-aware selector over the per-category facet modules: headphones'
-// canonical module now lives at lib/filter-sort/headphones/ (promoted out of
-// app/(test)/poc), while audio-electronics and accessories still read from
-// their POC modules pending the same promotion by analogy. Before
+// Category-aware selector over the per-category facet modules: headphones
+// has its own module under lib/filter-sort/headphones/, while
+// audio-electronics and accessories have minimal modules under
+// lib/filter-sort/<slice>/ and use the production URL hook. Before
 // sang-logium-3rv.6, FilterSidebar/FilterControls/ActiveFilterChips imported
 // headphones' module unconditionally, so /products/audio-electronics and
 // /products/accessories silently rendered headphones' groups and facets --
@@ -16,11 +16,10 @@
 // category's concrete types as if they applied to all three.
 
 import * as headphones from '@/lib/filter-sort/headphones/facetConfig';
-import * as audioElectronics from '@/app/(test)/poc/filter-sort/audio-electronics/lib/facetConfig';
-import * as accessories from '@/app/(test)/poc/filter-sort/accessories/lib/facetConfig';
+import * as audioElectronics from '@/lib/filter-sort/audio-electronics/facetConfig';
+import * as accessories from '@/lib/filter-sort/accessories/facetConfig';
 import { useFilterParam as useHeadphonesFilterParam, useClearAllFilters as useHeadphonesClearAll } from '@/lib/filter-sort/headphones/useFilterParam';
-import { useFilterParam as useAudioElectronicsFilterParam, useClearAllFilters as useAudioElectronicsClearAll } from '@/app/(test)/poc/filter-sort/audio-electronics/lib/useFilterParam';
-import { useFilterParam as useAccessoriesFilterParam, useClearAllFilters as useAccessoriesClearAll } from '@/app/(test)/poc/filter-sort/accessories/lib/useFilterParam';
+import { useFilterParam as useCatalogueFilterParam, useClearAllFilters as useCatalogueClearAll } from '@/app/hooks/nuqs/useFilterSort';
 // Re-exported below for existing client-side importers -- the canonical
 // definitions live in ./category.ts (a non-'use client' module) so Server
 // Components can use them without crossing the client boundary.
@@ -81,8 +80,8 @@ const MODULES: Record<Category, FacetModule> = {
     facetsForGroup: audioElectronics.facetsForGroup as FacetModule['facetsForGroup'],
     SORT_OPTIONS: audioElectronics.SORT_OPTIONS,
     SORT_DEFAULT: audioElectronics.SORT_DEFAULT,
-    useFilterParam: useAudioElectronicsFilterParam,
-    useClearAllFilters: useAudioElectronicsClearAll,
+    useFilterParam: useCatalogueFilterParam,
+    useClearAllFilters: useCatalogueClearAll,
   },
   accessories: {
     FACETS: accessories.FACETS,
@@ -90,8 +89,8 @@ const MODULES: Record<Category, FacetModule> = {
     facetsForGroup: accessories.facetsForGroup as FacetModule['facetsForGroup'],
     SORT_OPTIONS: accessories.SORT_OPTIONS,
     SORT_DEFAULT: accessories.SORT_DEFAULT,
-    useFilterParam: useAccessoriesFilterParam,
-    useClearAllFilters: useAccessoriesClearAll,
+    useFilterParam: useCatalogueFilterParam,
+    useClearAllFilters: useCatalogueClearAll,
   },
 };
 
