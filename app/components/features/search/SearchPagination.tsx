@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
+import { getPageList } from '@/lib/catalogue/pagination';
 
 interface SearchPaginationProps {
   totalCount: number;
@@ -38,6 +39,7 @@ export function SearchPagination({ totalCount, perPage = 24 }: SearchPaginationP
 
   const startItem = (currentPage - 1) * perPage + 1;
   const endItem = Math.min(currentPage * perPage, totalCount);
+  const pages = getPageList(currentPage, totalPages);
 
   // 44px-tall targets; on phones the two buttons share the row equally so each
   // is a wide, thumb-friendly target instead of a small chip.
@@ -45,6 +47,14 @@ export function SearchPagination({ totalCount, perPage = 24 }: SearchPaginationP
     'inline-flex min-h-11 flex-1 items-center justify-center rounded-md border border-border-secondary px-4 type-body sm:flex-none';
   const activeItem = `${item} text-primary transition-colors hover:bg-surface-elevated active:bg-surface-elevated`;
   const disabledItem = `${item} text-secondary-400 cursor-not-allowed`;
+  // Numbered pills (matches app/components/features/products/Pagination.tsx)
+  // only from sm up, where there's room for them next to Prev/Next. A phone-
+  // width strip of number pills is a worse tap target than the existing wide
+  // Prev/Next pair, so phones keep the plain "Page X of Y" caption instead.
+  const numberBase =
+    'hidden min-h-11 min-w-11 items-center justify-center rounded-md px-3 type-body transition-colors sm:inline-flex';
+  const numberInactive = `${numberBase} border border-border-secondary text-secondary hover:bg-surface-elevated`;
+  const numberActive = `${numberBase} bg-secondary-900 text-white`;
 
   return (
     <nav
@@ -72,8 +82,29 @@ export function SearchPagination({ totalCount, perPage = 24 }: SearchPaginationP
           </span>
         )}
 
-        <span className="type-caption shrink-0 px-2 text-secondary-500" aria-live="polite">
+        <span className="type-caption shrink-0 px-2 text-secondary-500 sm:hidden" aria-live="polite">
           Page {currentPage} of {totalPages}
+        </span>
+        <span className="hidden items-center gap-2 sm:flex">
+          {pages.map((page, index) =>
+            page === 'ellipsis' ? (
+              <span
+                key={`ellipsis-${index}`}
+                aria-hidden="true"
+                className="inline-flex min-w-11 items-center justify-center type-body text-secondary-400"
+              >
+                &hellip;
+              </span>
+            ) : page === currentPage ? (
+              <span key={page} aria-current="page" className={numberActive}>
+                {page}
+              </span>
+            ) : (
+              <Link key={page} href={hrefFor(page)} scroll={false} aria-label={`Go to page ${page}`} className={numberInactive}>
+                {page}
+              </Link>
+            )
+          )}
         </span>
 
         {currentPage < totalPages ? (
