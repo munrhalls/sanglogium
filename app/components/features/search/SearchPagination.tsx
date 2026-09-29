@@ -59,7 +59,7 @@ export function SearchPagination({ totalCount, perPage = 24 }: SearchPaginationP
   return (
     <nav
       aria-label="Search results pagination"
-      className="mt-8 flex flex-col gap-3 border-t border-border-secondary pt-6 sm:flex-row sm:items-center sm:justify-between"
+      className="mt-8 flex flex-col gap-3 border-t border-border-secondary pt-6 sm:items-center lg:flex-row lg:justify-between"
     >
       <span className="type-caption text-secondary-500">
         Showing {startItem}–{endItem} of {totalCount}

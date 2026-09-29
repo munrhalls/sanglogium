@@ -12,8 +12,8 @@ interface SearchHeaderProps {
  */
 export function SearchHeader({ query }: SearchHeaderProps) {
   return (
-    <div className="mb-4 sm:mb-6">
-      <nav aria-label="Breadcrumb" className="mb-6 hidden sm:block">
+    <div className="mb-4 sm:mb-6 lg-touch:mb-4">
+      <nav aria-label="Breadcrumb" className="mb-6 hidden sm:block lg-touch:mb-3">
         <ol className="flex items-center gap-2">
           <li>
             <Link
@@ -38,7 +38,7 @@ export function SearchHeader({ query }: SearchHeaderProps) {
       <div className="section-header-anchor">
         <p className="type-overline text-accent-500">Search Results</p>
       </div>
-      <h1 className="type-section-hed mt-1 break-words uppercase text-h3 sm:mt-2 sm:text-h1">
+      <h1 className="type-section-hed mt-1 break-words uppercase text-h3 sm:mt-2 sm:text-h1 lg-touch:mt-1 lg-touch:text-h2">
         {query ? `“${query.toUpperCase()}”` : 'Search'}
       </h1>
     </div>
