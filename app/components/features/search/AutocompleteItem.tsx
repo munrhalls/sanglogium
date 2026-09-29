@@ -11,12 +11,13 @@ interface AutocompleteItemProps {
   index: number;
   showThumbnail?: boolean;
   onClick?: () => void;
+  listboxId?: string;
 }
 
-export function AutocompleteItem({ product, isActive, index, showThumbnail = true, onClick }: AutocompleteItemProps) {
+export function AutocompleteItem({ product, isActive, index, showThumbnail = true, onClick, listboxId = 'autocomplete-listbox' }: AutocompleteItemProps) {
   return (
     <li
-      id={`autocomplete-item-${index}`}
+      id={`${listboxId}-item-${index}`}
       role="option"
       aria-selected={isActive}
       className={cn(

@@ -88,12 +88,12 @@ export default function SearchField() {
   const handleMobileClose = useCallback(() => {
     setIsUserTyping(false);
     closeSearch();
-    setQuery('');
+    setQuery(initialQuery);
     closeOverlay();
     // Restore focus to the bottom-nav search trigger (G7) so keyboard/screen-reader
     // users keep their context when the mobile search overlay closes.
     document.getElementById('mobile-search-trigger')?.focus();
-  }, [closeOverlay, closeSearch]);
+  }, [closeOverlay, closeSearch, initialQuery]);
 
   const handleOverlayItemClick = useCallback(() => {
     setIsUserTyping(false);
@@ -155,11 +155,22 @@ export default function SearchField() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [closeOverlay, mobileExpanded]);
 
-  // Focus mobile input on expand
+  // Focus mobile input on expand; select() so a prefilled query is one tap to replace
   useEffect(() => {
     if (mobileExpanded && mobileInputRef.current) {
       mobileInputRef.current.focus();
+      mobileInputRef.current.select();
     }
+  }, [mobileExpanded]);
+
+  // Lock body scroll while the mobile overlay is open
+  useEffect(() => {
+    if (!mobileExpanded) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = previous;
+    };
   }, [mobileExpanded]);
 
   // Escape closes the mobile search overlay (dialog semantics, G7).
@@ -235,7 +246,7 @@ export default function SearchField() {
             <button
               type="button"
               onClick={handleMobileClose}
-              className="flex items-center justify-center w-9 h-9 text-secondary-500 hover:text-primary transition-colors"
+              className="flex items-center justify-center w-11 h-11 text-secondary-500 hover:text-primary transition-colors"
               aria-label="Close search"
             >
               <ArrowLeft size={20} />
@@ -248,7 +259,7 @@ export default function SearchField() {
             >
               <div
                 className={cn(
-                  "flex items-center gap-3 px-3 h-9 w-full",
+                  "flex items-center gap-3 px-3 h-11 w-full",
                   "bg-secondary-300 transition-all duration-300",
                   "focus-within:bg-brand-400 focus-within:shadow-md"
                 )}
@@ -260,12 +271,21 @@ export default function SearchField() {
                 />
                 <input
                   ref={mobileInputRef}
-                  type="text"
+                  type="search"
+                  inputMode="search"
+                  enterKeyHint="search"
+                  autoComplete="off"
+                  autoCorrect="off"
+                  autoCapitalize="off"
+                  spellCheck={false}
+                  role="combobox"
+                  aria-autocomplete="list"
+                  aria-haspopup="listbox"
                   placeholder="Search headphones, IEMs, DACs..."
                   aria-label="Search products"
                   aria-expanded={showOverlay}
-                  aria-controls="autocomplete-listbox"
-                  aria-activedescendant={activeIndex >= 0 ? `autocomplete-item-${activeIndex}` : undefined}
+                  aria-controls="autocomplete-listbox-mobile"
+                  aria-activedescendant={activeIndex >= 0 ? `autocomplete-listbox-mobile-item-${activeIndex}` : undefined}
                   value={query}
                   onChange={(e) => { setQuery(e.target.value); setIsUserTyping(true); }}
                   onKeyDown={handleKeyDown}
@@ -273,6 +293,7 @@ export default function SearchField() {
                   className={cn(
                     "w-full border-none bg-transparent outline-none",
                     "text-body text-brand-700 transition-colors duration-300",
+                    "[&::-webkit-search-cancel-button]:hidden",
                     "selection:bg-brand-700 selection:text-brand-400",
                     "placeholder:text-secondary-600 focus:placeholder:text-brand-800"
                   )}
@@ -281,10 +302,10 @@ export default function SearchField() {
                   <button
                     type="button"
                     onClick={handleClear}
-                    className="shrink-0 text-secondary-500 hover:text-primary transition-colors"
+                    className="shrink-0 -mr-2 flex items-center justify-center w-11 h-11 text-secondary-500 hover:text-primary transition-colors"
                     aria-label="Clear search"
                   >
-                    <X size={14} />
+                    <X size={16} />
                   </button>
                 )}
               </div>
@@ -297,6 +318,7 @@ export default function SearchField() {
                   showThumbnails={true}
                   onItemClick={handleOverlayItemClick}
                   error={autocompleteError}
+                  listboxId="autocomplete-listbox-mobile"
                 />
               )}
             </form>
@@ -308,7 +330,7 @@ export default function SearchField() {
             // flattened here so there is no floating card and no black dead space.
             <div
               className={cn(
-                "flex-1 min-h-0 overflow-y-auto bg-surface-elevated",
+                "flex-1 min-h-0 overflow-y-auto overscroll-contain bg-surface-elevated",
                 "[&>div]:mt-0 [&>div]:border-0 [&>div]:rounded-none [&>div]:shadow-none [&>div]:bg-transparent"
               )}
             >
@@ -350,7 +372,7 @@ export default function SearchField() {
               aria-label="Search products"
               aria-expanded={showOverlay}
               aria-controls="autocomplete-listbox"
-              aria-activedescendant={activeIndex >= 0 ? `autocomplete-item-${activeIndex}` : undefined}
+              aria-activedescendant={activeIndex >= 0 ? `autocomplete-listbox-item-${activeIndex}` : undefined}
               value={query}
               onChange={(e) => { setQuery(e.target.value); setIsUserTyping(true); }}
               onKeyDown={handleKeyDown}

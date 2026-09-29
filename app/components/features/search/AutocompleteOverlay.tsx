@@ -13,6 +13,7 @@ interface AutocompleteOverlayProps {
   showThumbnails?: boolean;
   onItemClick?: () => void;
   error?: boolean;
+  listboxId?: string;
 }
 
 function AutocompleteSkeletonItem() {
@@ -35,6 +36,7 @@ export function AutocompleteOverlay({
   showThumbnails = true,
   onItemClick,
   error = false,
+  listboxId = 'autocomplete-listbox',
 }: AutocompleteOverlayProps) {
   return (
     <div
@@ -44,7 +46,7 @@ export function AutocompleteOverlay({
         "opacity-100 translate-y-0 transition-all duration-200"
       )}
       role="listbox"
-      id="autocomplete-listbox"
+      id={listboxId}
     >
       {error ? (
         <div className="p-4">
@@ -100,6 +102,7 @@ export function AutocompleteOverlay({
                 index={index}
                 showThumbnail={showThumbnails}
                 onClick={onItemClick}
+                listboxId={listboxId}
               />
             ))}
           </ul>
