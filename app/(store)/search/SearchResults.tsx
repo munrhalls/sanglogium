@@ -1,6 +1,7 @@
 import React from 'react';
 import { SearchEmpty } from '@/app/components/features/search/SearchEmpty';
 import { SearchPagination } from '@/app/components/features/search/SearchPagination';
+import { SearchSort } from '@/app/components/features/search/SearchSort';
 import { ProductGrid } from '@/app/components/features/products/ProductGrid';
 import { getWishlistProductIds } from '@/lib/wishlist';
 import type { SearchResult } from '@/sanity-cms/lib/products/searchProducts';
@@ -24,6 +25,7 @@ export async function SearchResults({ resultsPromise, query }: SearchResultsProp
         <span className="type-metadata text-secondary">
           {totalCount} {totalCount === 1 ? 'product' : 'products'}
         </span>
+        <SearchSort />
       </div>
       {/* No sidebar to eat width here, so cap the grid itself at max-w-content
           (1280px) — without it, auto-fill would run to 6-7 columns on wide

@@ -11,8 +11,8 @@ interface SearchPaginationProps {
 
 /**
  * Real `<Link href>` pagination for search results (G8): crawlable, preserves
- * every query param (q, sort), supports middle-click/open-in-new-tab, and keeps
- * the previous scroll:false behavior via the Link `scroll` option.
+ * every query param (q, sort), supports middle-click/open-in-new-tab, and uses
+ * the default Link scroll behavior so page changes return to the top.
  */
 export function SearchPagination({ totalCount, perPage = 24 }: SearchPaginationProps) {
   const pathname = usePathname();
@@ -39,15 +39,15 @@ export function SearchPagination({ totalCount, perPage = 24 }: SearchPaginationP
   const startItem = (currentPage - 1) * perPage + 1;
   const endItem = Math.min(currentPage * perPage, totalCount);
 
-  const activeItem =
-    'px-3 py-2 rounded-md border border-border-secondary type-caption text-primary transition-colors hover:bg-surface-elevated';
-  const disabledItem =
-    'px-3 py-2 rounded-md border border-border-secondary type-caption text-secondary-400 cursor-not-allowed';
+  const itemBase =
+    'px-3 py-2 rounded-md border border-border-secondary type-caption transition-colors min-h-[44px] flex-1 sm:flex-none flex items-center justify-center text-center';
+  const activeItem = `${itemBase} text-primary hover:bg-surface-elevated`;
+  const disabledItem = `${itemBase} text-secondary-400 cursor-not-allowed`;
 
   return (
     <nav
       aria-label="Search results pagination"
-      className="flex items-center justify-between border-t border-border-secondary pt-6 mt-8"
+      className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-t border-border-secondary pt-6 mt-8"
     >
       <span className="type-caption text-secondary-500">
         Showing {startItem}–{endItem} of {totalCount}
@@ -58,7 +58,6 @@ export function SearchPagination({ totalCount, perPage = 24 }: SearchPaginationP
           <Link
             href={hrefFor(currentPage - 1)}
             rel="prev"
-            scroll={false}
             aria-label="Previous page"
             className={activeItem}
           >
@@ -70,7 +69,7 @@ export function SearchPagination({ totalCount, perPage = 24 }: SearchPaginationP
           </span>
         )}
 
-        <span className="type-caption text-secondary-500 px-2" aria-live="polite">
+        <span className="type-caption text-secondary-500 px-2 whitespace-nowrap" aria-live="polite">
           Page {currentPage} of {totalPages}
         </span>
 
@@ -78,7 +77,6 @@ export function SearchPagination({ totalCount, perPage = 24 }: SearchPaginationP
           <Link
             href={hrefFor(currentPage + 1)}
             rel="next"
-            scroll={false}
             aria-label="Next page"
             className={activeItem}
           >

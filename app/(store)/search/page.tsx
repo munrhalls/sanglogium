@@ -24,7 +24,10 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   const pageValue = Array.isArray(query.page) ? query.page[0] : query.page;
   const page = typeof pageValue === 'string' ? Number(pageValue) : 1;
 
-  const resultsPromise = searchProductsFull(q, undefined, page);
+  const sortValue = Array.isArray(query.sort) ? query.sort[0] : query.sort;
+  const sort = typeof sortValue === 'string' ? sortValue : undefined;
+
+  const resultsPromise = searchProductsFull(q, sort, page);
 
   return (
     <div className="mx-auto max-w-catalogue px-4 md:px-8 pt-6 pb-12">
