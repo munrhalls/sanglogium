@@ -227,3 +227,21 @@ button {
   height: 2px;
   background-color: #D4AF37;
 }
+
+/* Search sheet enter — fade + 8px settle on open (transform/opacity only;
+   the sheet's top/height are driven by visualViewport). Applied via
+   motion-safe: so reduced-motion users get none. */
+@keyframes search-sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-search-sheet-in {
+  animation: search-sheet-in 180ms ease-out both;
+}
