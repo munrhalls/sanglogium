@@ -1,41 +1,12 @@
 import { verifySession } from "@/lib/auth/dal";
-import { backendClient } from "@/sanity-cms/lib/backendClient";
+import { getWishlistProducts } from "@/sanity-cms/lib/account/getWishlistProducts";
 import Link from "next/link";
 import { ProductGrid } from "@/app/components/features/products/ProductGrid";
-import type { Product } from "@/sanity-cms/lib/products/getProductsByVfsKeys";
 
 export default async function WishlistPage() {
   const session = await verifySession();
 
-  const result = await backendClient.fetch<{ products: Product[] | null } | null>(
-    `*[_type == "userProfile" && authId == $authId][0]{
-      "products": wishlist[]->{
-        _id,
-        name,
-        brand->{
-          _id,
-          name,
-          slug { current }
-        },
-        price_data,
-        stock,
-        reservedStock,
-        "availableStock": stock - reservedStock,
-        image {
-          asset {
-            _ref
-          }
-        },
-        slug {
-          current
-        },
-        catalogueLocationKeys
-      }
-    }`,
-    { authId: session.userId }
-  );
-
-  const products = result?.products?.filter(Boolean) ?? [];
+  const products = await getWishlistProducts(session.userId);
   const productIds = products.map((product) => product._id);
 
   return (

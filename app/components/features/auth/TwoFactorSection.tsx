@@ -42,7 +42,7 @@ export function TwoFactorSection({ twoFactorEnabled }: TwoFactorSectionProps) {
     if (!password) return;
 
     startTransition(async () => {
-      const result = await (authClient as any).twoFactor.enable({
+      const result = await authClient.twoFactor.enable({
         password,
         issuer: "Sang Logium",
       });
@@ -62,7 +62,7 @@ export function TwoFactorSection({ twoFactorEnabled }: TwoFactorSectionProps) {
     if (!code) return;
 
     startTransition(async () => {
-      const result = await (authClient as any).twoFactor.verifyTotp({
+      const result = await authClient.twoFactor.verifyTotp({
         code,
       });
       if (result.error) {
@@ -82,7 +82,7 @@ export function TwoFactorSection({ twoFactorEnabled }: TwoFactorSectionProps) {
     if (!disablePassword) return;
 
     startDisableTransition(async () => {
-      const result = await (authClient as any).twoFactor.disable({
+      const result = await authClient.twoFactor.disable({
         password: disablePassword,
       });
       if (result.error) {

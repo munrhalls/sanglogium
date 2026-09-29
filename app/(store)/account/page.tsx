@@ -1,5 +1,6 @@
 import { verifySession } from "@/lib/auth/dal";
-import { backendClient } from "@/sanity-cms/lib/backendClient";
+import { getAccountSummary } from "@/sanity-cms/lib/account/getAccountSummary";
+import { countMergedGuestOrders } from "@/sanity-cms/lib/account/countMergedGuestOrders";
 import Link from "next/link";
 import AccountActionsClient from "./AccountActions.client";
 
@@ -13,10 +14,7 @@ export default async function AccountPage({ searchParams }: AccountPageProps) {
   const showMergeBanner = merge === "1";
   const showEmailChangedBanner = emailChanged === "true";
 
-  const profile = await backendClient.fetch<{ _id?: string; marketingEmailsOptIn?: boolean }>(
-    `*[_type == "userProfile" && authId == $authId][0]{ _id, marketingEmailsOptIn }`,
-    { authId: session.userId }
-  );
+  const profile = await getAccountSummary(session.userId);
 
   let mergeCount = 0;
 
@@ -25,16 +23,11 @@ export default async function AccountPage({ searchParams }: AccountPageProps) {
       ? new Date(session.user.createdAt).toISOString()
       : new Date().toISOString();
 
-    const mergedOrders = await backendClient.fetch<Array<{ _id: string }>>(
-      `*[_type == "order" && userId == $userId && customerEmail == $email && isGuest == false && dates.orderedAt < $userCreatedAt]{_id}`,
-      {
-        userId: session.userId,
-        email: session.user.email,
-        userCreatedAt,
-      }
-    );
-
-    mergeCount = mergedOrders?.length ?? 0;
+    mergeCount = await countMergedGuestOrders({
+      userId: session.userId,
+      email: session.user.email,
+      userCreatedAt,
+    });
   }
 
   return (

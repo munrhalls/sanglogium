@@ -1,24 +1,12 @@
 import { verifySession } from "@/lib/auth/dal";
-import { backendClient } from "@/sanity-cms/lib/backendClient";
+import { getUserAddresses } from "@/sanity-cms/lib/account/getUserAddresses";
 import Link from "next/link";
-import type { Address } from "@/app/checkout/checkout.types";
 import AddressesClient from "./AddressesClient";
-
-type SavedAddress = Address & { _key: string };
 
 export default async function AddressesPage() {
   const session = await verifySession();
 
-  const profile = await backendClient.fetch<{
-    _id: string;
-    addresses?: SavedAddress[];
-  }>(
-    `*[_type == "userProfile" && authId == $authId][0]{
-      _id,
-      addresses
-    }`,
-    { authId: session.userId }
-  );
+  const profile = await getUserAddresses(session.userId);
 
   const addresses = profile?.addresses ?? [];
 
