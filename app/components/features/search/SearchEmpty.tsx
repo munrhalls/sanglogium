@@ -19,7 +19,7 @@ export function SearchEmpty({ query }: SearchEmptyProps) {
   const hasQuery = query.length > 0;
 
   return (
-    <div className="flex flex-col items-center py-10 text-center sm:py-16">
+    <div className="flex flex-col items-center py-10 text-center sm:py-16 lg-touch:py-8">
       <MagnifyingGlass size={40} className="mb-4 text-secondary-500" aria-hidden="true" />
       <h2 className="type-h3 mb-2 text-primary">
         {hasQuery ? 'No products found' : 'What are you looking for?'}
