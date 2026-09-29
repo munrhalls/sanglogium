@@ -36,10 +36,8 @@ feature — use this for the next one too.
      enough that passing one but being wrong later would be embarrassing, not a
      rubber stamp. A milestone-wide **deletion test** (Part 2, step 5) is one valid
      proof type.
-   - **3c. Create exactly one beads issue** for this milestone — the only point in
-     the whole campaign a beads issue gets created. One milestone, one issue, never
-     more, never less. (This issue is now the single source of milestone status —
-     no separate status file.)
+   - **3c. Milestone status lives in `_project/<feature>/plan.md`** — the single
+     source of milestone status. No separate status file, no tracker.
    - **3d. Handoff.** Task tree + proofs go to a separate execution window/agent,
      which builds the entire milestone end-to-end per Part 2. This planning window
      does not write implementation code.
@@ -101,5 +99,3 @@ idle time) and unnecessary — the human's real check happens once, at the end, 
 - Skipping the continuous SRP self-check because nothing's forcing a stop for it —
   the whole point of removing the pause is that the check still has to happen, just
   without blocking.
-- More than one beads issue per milestone (Part 1.3c) — administrative cost stops
-  being worth it past exactly one.

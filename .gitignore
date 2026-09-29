@@ -79,10 +79,6 @@ logs/
 # Lighthouse CI artifacts
 .lighthouseci/
 
-# Beads / Dolt files (added by bd init)
-.dolt/
-*.db
-.beads-credential-key
 
 # Repomix output
 repomix-output.xml
@@ -99,10 +95,6 @@ temp-stripe-test.mjs
 cookie_jar.txt
 oss_*.txt
 oss_*.json
-.beads/*.txt
-.beads/*.json
-!.beads/metadata.json
-.beads/uiux-frame-decompose-payment.md
 scripts/apply-migration.mjs
 scripts/experiment-*.mjs
 scripts/temp-*.mjs
@@ -123,5 +115,3 @@ git_stats.txt
 # Photography audit output
 scripts/output/
 
-# Beads / Dolt files (added by bd init)
-.beads/proxieddb/

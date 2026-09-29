@@ -27,7 +27,6 @@ The user's objective (feature, bug fix, refactor, investigation, or task).
 
 ### Phase 1 — Gather intelligence
 
-- Read the active beads issue if one exists (`bd show <id>`).
 - Read relevant source files, docs, and previous lessons.
 - Ask only critical questions if information is missing.
 - State your assumptions explicitly.
@@ -102,6 +101,6 @@ Stop after this summary and wait for user approval before any agent executes the
 ## Critical Rules
 
 - Default output is the one-paragraph summary only.
-- Do not produce files, code, or beads issue updates.
+- Do not produce files or code.
 - If the objective is ambiguous, stop and ask the user before planning.
 - If anything becomes unsafe, complicated, or unprofessional, stop and ask.
