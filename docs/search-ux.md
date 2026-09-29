@@ -21,6 +21,8 @@ One controller, three surfaces:
 - **Combobox semantics.** The input is `role="combobox"` with `aria-activedescendant`. Options are real `<a href>` elements (`role="option"`) in one `role="listbox"`, so middle-click and "open in new tab" work. `aria-controls` is only set while the listbox exists. Options are reached with the arrow keys, not Tab.
 - **One input element per surface, never two visible.** Ids come from `useId`; the desktop field is `display:none` below `sm`, and the popup does not render while the sheet is open.
 - **Tap targets.** Every control on phones is at least 44px. The input fills its 44px row (`h-full`) so the whole row focuses it.
+- **Tablet field.** On tablets (`sm`–`lg`) the header field is a 36px bar inside a 44px hit area (same pattern as the phone trigger: the form's own padding focuses the input, and the clear button keeps a 44px hit area). From `lg` the bar is 44px in the 64px header.
+- **Popup sizing.** The desktop/tablet popup is exactly as wide as its field (no min-width). While the on-screen keyboard is open (`useVisualViewportBox().keyboardOpen`), its max height is derived from the visual viewport so the sticky "See all results" row stays above the keyboard; without a keyboard it uses the plain `dvh` cap.
 - **Mobile input attributes.** `type="search"`, `inputMode="search"`, `enterKeyHint="search"`, autocorrect/autocapitalize/spellcheck off (model names such as "HD800S" must not be "fixed"), font-size 16px (no iOS zoom on focus).
 
 ## Behaviour summary
@@ -32,4 +34,4 @@ One controller, three surfaces:
 
 ## Checking it
 
-Dev-server checks that matter after a change: open the sheet at 390px and 320px wide with the keyboard up, press the browser Back button from the sheet, and Tab through the popup on desktop. The visual-viewport behaviour can be simulated by overriding `window.visualViewport` in an init script; real-device confirmation on iOS Safari and Android Chrome is still worth a minute.
+Dev-server checks that matter after a change: open the sheet at 390px and 320px wide with the keyboard up, press the browser Back button from the sheet, and Tab through the popup on desktop. The visual-viewport behaviour can be simulated by overriding `window.visualViewport` in an init script; real-device confirmation on iOS Safari and Android Chrome is still worth a minute. On tablet widths (640, 744, 768, 820, 1023) check the field spacing in the header, the popup's right edge at 640, and — on a real iPad or a `visualViewport` override — the "See all results" row above the keyboard.
