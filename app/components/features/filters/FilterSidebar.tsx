@@ -2,7 +2,7 @@
 
 import React from 'react';
 import type { IconType } from 'react-icons';
-import { FaTag, FaHeadphones, FaWaveSquare, FaLayerGroup, FaBluetooth, FaMicrochip } from 'react-icons/fa6';
+import { FaTag, FaHeadphones, FaWaveSquare, FaLayerGroup, FaBluetooth, FaMicrochip, FaPlug, FaBolt } from 'react-icons/fa6';
 import { getFacetModule, resolveGroupIcon, type Category, type AnyFacetDef, type FacetOptionCount } from './facetRegistry';
 import type { RangeBounds } from '@/sanity-cms/lib/products/getFilterFacets';
 import { CheckboxGroup, BooleanToggle, RangeControl, PriceControl } from './FilterControls';
@@ -37,18 +37,28 @@ export {
  *
  * Category-aware since sang-logium-3rv.6: `category` picks which of the three
  * per-category facet modules (facetRegistry.ts) drives groups/facets/URL
- * params. Bespoke rail icons only exist for headphones today -- the other two
- * categories get a neutral fallback icon per group (resolveGroupIcon), a
- * content decision tracked separately, not a wiring gap.
+ * params. Rail icons come from GROUP_ICONS per category (resolveGroupIcon);
+ * groups without a bespoke icon get a neutral fallback. Groups with nothing
+ * selectable are hidden from both the rail and the panel (visibleGroups).
  */
 
-const HEADPHONES_GROUP_ICONS: Record<string, IconType> = {
-  commercial: FaTag,
-  type: FaHeadphones,
-  sound: FaWaveSquare,
-  material: FaLayerGroup,
-  wireless: FaBluetooth,
-  technical: FaMicrochip,
+const GROUP_ICONS: Record<Category, Record<string, IconType>> = {
+  headphones: {
+    commercial: FaTag,
+    type: FaHeadphones,
+    sound: FaWaveSquare,
+    material: FaLayerGroup,
+    wireless: FaBluetooth,
+    technical: FaMicrochip,
+  },
+  'audio-electronics': {
+    commercial: FaTag,
+    type: FaLayerGroup,
+    connections: FaPlug,
+    amplification: FaBolt,
+    digital: FaWaveSquare,
+  },
+  accessories: {},
 };
 const FALLBACK_GROUP_ICON: IconType = FaLayerGroup;
 
@@ -107,6 +117,27 @@ export function FilterPanelBody({
   const clearAll = useClearAllFilters();
   const handleRailSelect = (groupId: string) => scrollToGroup(groupId, panelScrollId, groupIdPrefix);
 
+  // A group with nothing selectable (no nonzero option counts and, for
+  // range-only groups, no computed bounds) is hidden from the rail AND the
+  // panel so the two maps can't drift apart. 'commercial' is always shown:
+  // it hosts the price control even when all its facet counts are zero.
+  const hasContent = (groupId: string) => {
+    if (groupId === 'commercial') return true;
+    const facets = facetsForGroup(groupId);
+    const selectable = facets.filter((f) => f.control !== 'range');
+    if (selectable.length === 0) {
+      return facets.some((f) => rangeBounds[f.id]?.min != null);
+    }
+    return facets.some((f) =>
+      f.control === 'checkbox'
+        ? (checkboxCounts[f.id] ?? []).some((c) => c.count > 0)
+        : f.control === 'boolean'
+          ? (booleanCounts[f.id] ?? 0) > 0
+          : false,
+    );
+  };
+  const visibleGroups = groups.filter((group) => hasContent(group.id));
+
   return (
     <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-md border border-border-secondary bg-surface-elevated">
       <div className="flex shrink-0 items-center justify-between gap-2 p-6 pb-4">
@@ -121,17 +152,17 @@ export function FilterPanelBody({
       </div>
 
       <div className="flex min-h-0 flex-1">
-        {groups.length > 1 && (
+        {visibleGroups.length > 1 && (
           <nav
             aria-label="Jump to a filter section"
             className="flex w-14 shrink-0 flex-col gap-0.5 overflow-y-auto overscroll-y-contain border-r border-border-secondary p-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
           >
-            {groups.map((group) => (
+            {visibleGroups.map((group) => (
               <RailTile
                 key={group.id}
                 id={group.id}
                 label={group.label}
-                icon={resolveGroupIcon(category, group.id, HEADPHONES_GROUP_ICONS, FALLBACK_GROUP_ICON)}
+                icon={resolveGroupIcon(category, group.id, GROUP_ICONS, FALLBACK_GROUP_ICON)}
                 onSelect={handleRailSelect}
               />
             ))}
@@ -142,7 +173,7 @@ export function FilterPanelBody({
           id={panelScrollId}
           className="flex-1 overflow-y-auto overscroll-y-contain [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden pb-12"
         >
-          {groups.map((group) => (
+          {visibleGroups.map((group) => (
             <PanelSection key={group.id} id={group.id} idPrefix={groupIdPrefix} label={group.label} note={group.note}>
               {group.id === 'commercial' && <PriceControl category={category} min={priceBounds.min} max={priceBounds.max} />}
               {facetsForGroup(group.id).map((facet) => renderFacet(facet, category, checkboxCounts, booleanCounts, brandLabels, rangeBounds, isDefaultState))}
