@@ -38,6 +38,18 @@ export function addRecentSearch(term: string): void {
   }
 }
 
+export function removeRecentSearch(term: string): void {
+  if (typeof window === 'undefined') return;
+  const trimmed = term.trim();
+  if (!trimmed) return;
+  const next = read().filter((t) => t.toLowerCase() !== trimmed.toLowerCase());
+  try {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+  } catch {
+    /* storage unavailable — non-fatal */
+  }
+}
+
 export function clearRecentSearches(): void {
   if (typeof window === 'undefined') return;
   try {

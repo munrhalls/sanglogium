@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { MagnifyingGlass, Clock, X } from '@phosphor-icons/react';
 import { cn } from '@/lib/utils/tailwind';
-import { getRecentSearches, clearRecentSearches } from './recentSearches';
+import { getRecentSearches, clearRecentSearches, removeRecentSearch } from './recentSearches';
 
 /**
  * Zero-query state for the mobile search overlay (sang-logium-85y).
@@ -44,6 +44,11 @@ export function SearchZeroQueryPanel({ onSelect }: SearchZeroQueryPanelProps) {
     setRecent([]);
   };
 
+  const handleRemove = (term: string) => {
+    removeRecentSearch(term);
+    setRecent(getRecentSearches());
+  };
+
   return (
     <div
       className={cn(
@@ -68,10 +73,18 @@ export function SearchZeroQueryPanel({ onSelect }: SearchZeroQueryPanelProps) {
           </div>
           <ul>
             {recent.map((term) => (
-              <li key={term}>
-                <button type="button" className={rowClass} onClick={() => onSelect(term)}>
+              <li key={term} className="flex items-center">
+                <button type="button" className={cn(rowClass, 'flex-1 min-w-0')} onClick={() => onSelect(term)}>
                   <Clock size={16} className="shrink-0 text-secondary-600" />
                   <span className="truncate">{term}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleRemove(term)}
+                  className="flex items-center justify-center w-11 h-11 shrink-0 text-secondary-500 hover:text-primary transition-colors"
+                  aria-label={`Remove ${term}`}
+                >
+                  <X size={14} />
                 </button>
               </li>
             ))}
