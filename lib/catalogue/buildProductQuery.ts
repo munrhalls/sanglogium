@@ -19,7 +19,7 @@ import {
   FILTER_SORT_KEYS,
   type SortValue,
 } from './filterSortParams';
-import { FILTER_FACETS, type FilterFacet, isPlaceholderVocab } from './facetMap';
+import { FILTER_FACETS, type FilterFacet } from './facetMap';
 
 // Shape matches the server-side loader so RSC and client always agree.
 // The loader returns sort/price/inStock plus one key per facet urlParam.
@@ -95,13 +95,22 @@ function addMultiOrEnumPredicate(parts: string[], params: Record<string, unknown
   // Sanity product data is canonical mixed case (e.g. 'SBC', 'aptX HD',
   // 'V-Shaped', 'IPX4'). Compare with lower() on the product side so the
   // two vocabularies can diverge in case without silently zeroing matches.
-  if (facet.type === 'multi' || isPlaceholderVocab(facet.valueVocab)) {
-    // Multi-select / array field: any overlap with the selected values.
-    parts.push(`count(coalesce(${field}, [])[lower(@) in $${paramName}]) > 0`);
-  } else {
-    // Enum / string field: each product holds one value, so OR is `in`.
-    parts.push(`coalesce(lower(${field}), '') in $${paramName}`);
-  }
+  //
+  // sang-logium-269 -- a field's real per-document storage shape does not
+  // always match its schema-declared type: a 'multi' (array) field is
+  // sometimes stored as a bare scalar on an individual product, and an
+  // 'enum' (scalar) field is sometimes stored as a one-element array
+  // (confirmed live on accessories: compatibleProductType, conductorMaterial,
+  // material, balancedUnbalanced, brand all had real products silently
+  // excluded by a type-driven predicate). GROQ degrades both shape
+  // mismatches to null rather than erroring -- lower() on an array, and
+  // indexing [...] on a scalar/null, both return null -- so checking BOTH
+  // shapes with OR is exactly as correct as the old single-shape predicate
+  // for genuinely single-shape data (the other branch is just always false)
+  // and additionally correct for the mixed-shape data observed live.
+  parts.push(
+    `(coalesce(lower(${field}), '') in $${paramName} || count(coalesce(${field}, [])[lower(@) in $${paramName}]) > 0)`,
+  );
   params[paramName] = values;
 }
 
