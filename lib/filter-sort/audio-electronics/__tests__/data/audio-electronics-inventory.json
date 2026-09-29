@@ -16,23 +16,30 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "bluetooth",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX Adaptive",
+      "aptX HD",
+      "aptX",
+      "LDAC"
+    ],
     "inputs": [
       "usb",
       "bluetooth",
       "xlr-balanced",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "roon-ready"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 59900,
     "inStockResolved": true
   },
@@ -53,21 +60,29 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX",
+      "aptX HD",
+      "aptX Adaptive",
+      "aptX Lossless",
+      "LDAC"
+    ],
     "inputs": [
       "bluetooth",
       "usb"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 21999,
     "inStockResolved": true
   },
@@ -89,17 +104,21 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": null,
+    "inputs": null,
+    "balancedOutput": true,
     "amplification": null,
     "dacIncluded": true,
-    "balancedOutput": true,
-    "inputs": null,
-    "outputs": [
-      "pre-out"
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": "r2r-ladder",
+    "streamingPlatformSupport": [
+      "airplay2",
+      "roon-ready",
+      "spotify-connect",
+      "dlna"
     ],
-    "awards": null,
     "condition": "open-box",
-    "dealsDiscount": "sale",
-    "newArrival": null,
     "priceCentsResolved": 60099,
     "inStockResolved": false
   },
@@ -121,9 +140,8 @@
     ],
     "deviceType": "network-streamer",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical",
@@ -133,11 +151,21 @@
       "rca",
       "phono-mm-mc"
     ],
-    "outputs": null,
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "akm"
+    ],
+    "streamingPlatformSupport": [
+      "airplay2",
+      "tidal-connect",
+      "spotify-connect",
+      "roon-ready",
+      "dlna"
+    ],
+    "condition": "new",
     "priceCentsResolved": 999900,
     "inStockResolved": true
   },
@@ -159,24 +187,23 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical",
       "coaxial",
       "rca"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "pre-out-rca"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "akm"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 21999,
     "inStockResolved": true
   },
@@ -198,17 +225,28 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "sbc",
+      "aac",
+      "aptx",
+      "aptx-hd",
+      "aptx-ll",
+      "ldac"
+    ],
+    "inputs": null,
+    "balancedOutput": true,
     "amplification": null,
     "dacIncluded": true,
-    "balancedOutput": true,
-    "inputs": null,
-    "outputs": [
-      "pre-out"
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": "r2r-ladder",
+    "streamingPlatformSupport": [
+      "airplay2",
+      "roon-ready",
+      "spotify-connect",
+      "dlna"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 164999,
     "inStockResolved": true
   },
@@ -230,9 +268,14 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX",
+      "aptX HD",
+      "LDAC"
+    ],
     "inputs": [
       "usb",
       "optical",
@@ -241,11 +284,13 @@
       "i2s-iis",
       "aes-ebu"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [],
+    "condition": "new",
     "priceCentsResolved": 116000,
     "inStockResolved": true
   },
@@ -267,21 +312,20 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": null,
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical",
       "coaxial"
     ],
-    "outputs": [
-      "4.4mm"
-    ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 349999,
     "inStockResolved": true
   },
@@ -303,23 +347,22 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical",
       "coaxial"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "pre-out-rca"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "r2r-ladder"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 17599,
     "inStockResolved": true
   },
@@ -341,25 +384,27 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "LDAC"
+    ],
     "inputs": [
       "usb",
       "optical",
       "coaxial",
       "bluetooth"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "pre-out-rca",
-      "pre-out-xlr"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "r2r-ladder"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 31999,
     "inStockResolved": true
   },
@@ -381,9 +426,16 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX",
+      "aptX HD",
+      "aptX Adaptive",
+      "aptX LL",
+      "LDAC"
+    ],
     "inputs": [
       "usb",
       "optical",
@@ -393,16 +445,19 @@
       "bluetooth",
       "ethernet-lan"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "pre-out-rca",
-      "pre-out-xlr"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "akm"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "streamingPlatformSupport": [
+      "airplay2",
+      "roon-ready",
+      "dlna"
+    ],
+    "condition": "new",
     "priceCentsResolved": 98999,
     "inStockResolved": true
   },
@@ -424,9 +479,14 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "sbc",
+      "aac",
+      "aptx",
+      "aptx-hd",
+      "ldac"
+    ],
     "inputs": [
       "usb",
       "coaxial",
@@ -434,11 +494,15 @@
       "xlr-balanced",
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": [],
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": null,
+    "dacChipsetFamily": [
+      "r2r-ladder"
+    ],
+    "streamingPlatformSupport": [],
     "condition": "new",
-    "dealsDiscount": "sale",
-    "newArrival": null,
     "priceCentsResolved": 64900,
     "inStockResolved": true
   },
@@ -460,18 +524,29 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX",
+      "aptX HD",
+      "aptX Adaptive",
+      "LDAC",
+      "LC3"
+    ],
     "inputs": [
       "usb",
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "cirrus-logic"
+    ],
+    "streamingPlatformSupport": [],
+    "condition": "new",
     "priceCentsResolved": 27900,
     "inStockResolved": true
   },
@@ -493,22 +568,19 @@
     ],
     "deviceType": "preamplifier",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": false,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "xlr-balanced",
       "rca"
     ],
-    "outputs": [
-      "headphone-jack",
-      "pre-out-rca",
-      "pre-out-xlr"
-    ],
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 116000,
     "inStockResolved": true
   },
@@ -530,20 +602,24 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "aptx",
+      "ldac"
+    ],
     "inputs": [
       "usb",
       "coaxial",
       "optical",
       "rca"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": "ess-sabre",
+    "streamingPlatformSupport": [],
+    "condition": "new",
     "priceCentsResolved": 52000,
     "inStockResolved": true
   },
@@ -562,17 +638,18 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
+    "inputs": null,
+    "balancedOutput": true,
     "amplification": null,
     "dacIncluded": false,
-    "balancedOutput": true,
-    "inputs": null,
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 49900,
     "inStockResolved": true
   },
@@ -591,17 +668,18 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
+    "inputs": null,
+    "balancedOutput": false,
     "amplification": null,
     "dacIncluded": false,
-    "balancedOutput": false,
-    "inputs": null,
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 16900,
     "inStockResolved": true
   },
@@ -620,17 +698,18 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
+    "inputs": null,
+    "balancedOutput": true,
     "amplification": null,
     "dacIncluded": false,
-    "balancedOutput": true,
-    "inputs": null,
-    "outputs": null,
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 49900,
     "inStockResolved": true
   },
@@ -649,17 +728,18 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
+    "inputs": null,
+    "balancedOutput": true,
     "amplification": null,
     "dacIncluded": false,
-    "balancedOutput": true,
-    "inputs": null,
-    "outputs": null,
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 16900,
     "inStockResolved": true
   },
@@ -678,17 +758,18 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
+    "inputs": null,
+    "balancedOutput": true,
     "amplification": "solid-state",
     "dacIncluded": false,
-    "balancedOutput": true,
-    "inputs": null,
-    "outputs": null,
-    "awards": null,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 149900,
     "inStockResolved": true
   },
@@ -708,17 +789,18 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "digital-audio-player",
     "formFactor": "portable",
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
+    "inputs": null,
+    "balancedOutput": true,
     "amplification": null,
     "dacIncluded": true,
-    "balancedOutput": true,
-    "inputs": null,
-    "outputs": null,
-    "awards": null,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": null,
     "priceCentsResolved": 52900,
     "inStockResolved": true
   },
@@ -740,23 +822,25 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "bluetooth",
       "xlr-balanced",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": null,
+    "dacChipsetFamily": [
+      "cirrus-logic"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "streamingPlatformSupport": [
+      "roon-ready"
+    ],
+    "condition": "new",
     "priceCentsResolved": 44900,
     "inStockResolved": true
   },
@@ -778,9 +862,15 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX",
+      "aptX HD",
+      "aptX LL",
+      "LDAC"
+    ],
     "inputs": [
       "rca",
       "usb",
@@ -788,11 +878,15 @@
       "coaxial",
       "aes-ebu"
     ],
-    "outputs": null,
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": [],
+    "condition": "new",
     "priceCentsResolved": 42900,
     "inStockResolved": true
   },
@@ -813,20 +907,30 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "LDAC",
+      "aptX HD",
+      "aptX LL",
+      "aptX",
+      "SBC",
+      "AAC"
+    ],
     "inputs": [
       "usb",
       "optical",
       "coaxial",
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 19900,
     "inStockResolved": true
   },
@@ -848,9 +952,8 @@
     ],
     "deviceType": "network-streamer",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical",
@@ -863,16 +966,19 @@
       "ethernet-lan",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "pre-out-rca",
-      "speaker-terminals"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "airplay2",
+      "spotify-connect",
+      "tidal-connect",
+      "roon-ready",
+      "dlna"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 129900,
     "inStockResolved": true
   },
@@ -894,20 +1000,24 @@
     ],
     "deviceType": "network-streamer",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": [],
     "inputs": [
       "ethernet-lan",
       "optical",
       "usb",
       "coaxial"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": "akm",
+    "streamingPlatformSupport": [
+      "airplay2",
+      "dlna"
+    ],
+    "condition": "new",
     "priceCentsResolved": 129900,
     "inStockResolved": true
   },
@@ -929,20 +1039,23 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "coaxial",
       "optical",
       "i2s-iis",
       "usb"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "r2r-ladder"
+    ],
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 82900,
     "inStockResolved": true
   },
@@ -964,9 +1077,15 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX",
+      "aptX HD",
+      "aptX LL",
+      "LDAC"
+    ],
     "inputs": [
       "usb",
       "optical",
@@ -974,11 +1093,15 @@
       "aes-ebu",
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": [],
+    "condition": "new",
     "priceCentsResolved": 79900,
     "inStockResolved": true
   },
@@ -1000,20 +1123,23 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "optical",
       "coaxial",
       "rca",
       "usb"
     ],
-    "outputs": null,
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "akm"
+    ],
+    "streamingPlatformSupport": [],
+    "condition": "new",
     "priceCentsResolved": 31900,
     "inStockResolved": true
   },
@@ -1035,21 +1161,19 @@
     ],
     "deviceType": "preamplifier",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": false,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "xlr-balanced",
       "rca"
     ],
-    "outputs": [
-      "pre-out-xlr",
-      "pre-out-rca"
-    ],
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 154500,
     "inStockResolved": true
   },
@@ -1071,20 +1195,21 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "coaxial",
       "optical",
       "aes-ebu"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": "ess-sabre",
+    "streamingPlatformSupport": [],
+    "condition": "new",
     "priceCentsResolved": 23200,
     "inStockResolved": true
   },
@@ -1106,19 +1231,20 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical",
       "coaxial"
     ],
-    "outputs": null,
-    "awards": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 5999,
     "inStockResolved": true
   },
@@ -1140,19 +1266,20 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical",
       "coaxial"
     ],
-    "outputs": null,
-    "awards": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 7999,
     "inStockResolved": true
   },
@@ -1174,21 +1301,23 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical"
     ],
-    "outputs": [
-      "headphone-jack",
-      "pre-out-rca"
+    "balancedOutput": false,
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
     ],
-    "awards": null,
+    "streamingPlatformSupport": [
+      "roon-ready"
+    ],
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 59900,
     "inStockResolved": true
   },
@@ -1207,17 +1336,18 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
+    "inputs": null,
+    "balancedOutput": false,
     "amplification": null,
     "dacIncluded": false,
-    "balancedOutput": false,
-    "inputs": null,
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 59900,
     "inStockResolved": true
   },
@@ -1238,9 +1368,15 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX",
+      "aptX HD",
+      "aptX LL",
+      "LDAC"
+    ],
     "inputs": [
       "usb",
       "coaxial",
@@ -1248,11 +1384,15 @@
       "bluetooth",
       "rca"
     ],
-    "outputs": null,
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": [],
+    "condition": "new",
     "priceCentsResolved": 48900,
     "inStockResolved": true
   },
@@ -1271,17 +1411,18 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
+    "inputs": null,
+    "balancedOutput": false,
     "amplification": null,
     "dacIncluded": false,
-    "balancedOutput": false,
-    "inputs": null,
-    "outputs": null,
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 24900,
     "inStockResolved": true
   },
@@ -1302,9 +1443,15 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX",
+      "aptX HD",
+      "aptX LL",
+      "LDAC"
+    ],
     "inputs": [
       "usb",
       "coaxial",
@@ -1314,11 +1461,13 @@
       "rca",
       "xlr-balanced"
     ],
-    "outputs": null,
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [],
+    "condition": "new",
     "priceCentsResolved": 99900,
     "inStockResolved": true
   },
@@ -1339,22 +1488,19 @@
     ],
     "deviceType": "preamplifier",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": false,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "rca",
       "xlr-balanced"
     ],
-    "outputs": [
-      "headphone-jack",
-      "pre-out-rca",
-      "pre-out-xlr"
-    ],
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": true,
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 62900,
     "inStockResolved": true
   },
@@ -1375,22 +1521,19 @@
     ],
     "deviceType": "preamplifier",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": false,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "rca",
       "xlr-balanced"
     ],
-    "outputs": [
-      "pre-out-rca",
-      "pre-out-xlr",
-      "headphone-jack"
-    ],
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 109900,
     "inStockResolved": true
   },
@@ -1411,9 +1554,8 @@
     ],
     "deviceType": "network-streamer",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": false,
-    "balancedOutput": false,
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical",
@@ -1421,11 +1563,21 @@
       "hdmi-earc",
       "rca"
     ],
-    "outputs": null,
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": false,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "akm"
+    ],
+    "streamingPlatformSupport": [
+      "airplay2",
+      "tidal-connect",
+      "spotify-connect",
+      "roon-ready",
+      "dlna"
+    ],
+    "condition": "new",
     "priceCentsResolved": 249900,
     "inStockResolved": true
   },
@@ -1445,20 +1597,34 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "digital-audio-player",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX",
+      "aptX HD",
+      "aptX Adaptive",
+      "LDAC"
+    ],
     "inputs": [
       "usb",
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "cirrus-logic"
+    ],
+    "streamingPlatformSupport": [
+      "airplay2",
+      "roon-ready",
+      "dlna"
+    ],
+    "condition": "new",
     "priceCentsResolved": 39999,
     "inStockResolved": true
   },
@@ -1480,19 +1646,25 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "ldac",
+      "aptx-hd"
+    ],
     "inputs": [
       "usb",
       "bluetooth",
       "coaxial"
     ],
-    "outputs": null,
-    "awards": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": null,
+    "dacChipsetFamily": [
+      "akm"
+    ],
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": null,
     "priceCentsResolved": 49900,
     "inStockResolved": true
   },
@@ -1514,17 +1686,20 @@
     ],
     "deviceType": "dac",
     "formFactor": "dongle",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb"
     ],
-    "outputs": null,
-    "awards": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": null,
     "priceCentsResolved": 9900,
     "inStockResolved": true
   },
@@ -1544,21 +1719,36 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "digital-audio-player",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX",
+      "aptX HD",
+      "aptX Adaptive",
+      "aptX LL",
+      "LDAC"
+    ],
     "inputs": [
       "usb",
       "coaxial",
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": [
+      "airplay2",
+      "roon-ready",
+      "dlna"
+    ],
+    "condition": "new",
     "priceCentsResolved": 99999,
     "inStockResolved": true
   },
@@ -1579,19 +1769,22 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "bluetooth",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "LDAC"
+    ],
     "inputs": [
       "bluetooth"
     ],
-    "outputs": [
-      "headphone-jack"
-    ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 1999,
     "inStockResolved": true
   },
@@ -1612,22 +1805,23 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "aptX"
+    ],
     "inputs": [
       "usb",
       "optical",
       "coaxial",
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": [
-      "What Hi-Fi? Best DAC"
-    ],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [],
+    "condition": "new",
     "priceCentsResolved": 259500,
     "inStockResolved": true
   },
@@ -1648,17 +1842,20 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": [],
+    "condition": "new",
     "priceCentsResolved": 24900,
     "inStockResolved": true
   },
@@ -1679,24 +1876,24 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "bluetooth",
       "xlr-balanced",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "speaker-terminals"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "tidal-connect",
+      "roon-ready"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 19900,
     "inStockResolved": true
   },
@@ -1718,18 +1915,22 @@
     ],
     "deviceType": "network-streamer",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": false,
-    "balancedOutput": false,
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": null,
     "inputs": [
       "ethernet-lan",
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": false,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [],
+    "streamingPlatformSupport": [
+      "dlna",
+      "roon-ready"
+    ],
+    "condition": "new",
     "priceCentsResolved": 150000,
     "inStockResolved": true
   },
@@ -1751,9 +1952,14 @@
     ],
     "deviceType": "network-streamer",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": [
+      "sbc",
+      "aac",
+      "aptx",
+      "aptx-hd",
+      "ldac"
+    ],
     "inputs": [
       "usb",
       "optical",
@@ -1764,11 +1970,20 @@
       "bluetooth",
       "ethernet-lan"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "akm"
+    ],
+    "streamingPlatformSupport": [
+      "roon-ready",
+      "airplay2",
+      "dlna",
+      "tidal-connect"
+    ],
+    "condition": "new",
     "priceCentsResolved": 198000,
     "inStockResolved": true
   },
@@ -1790,9 +2005,11 @@
     ],
     "deviceType": "network-streamer",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": [
+      "sbc",
+      "aac"
+    ],
     "inputs": [
       "usb",
       "optical",
@@ -1801,11 +2018,19 @@
       "bluetooth",
       "ethernet-lan"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": [
+      "roon-ready",
+      "dlna",
+      "tidal-connect"
+    ],
+    "condition": "new",
     "priceCentsResolved": 129900,
     "inStockResolved": true
   },
@@ -1827,9 +2052,8 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical",
@@ -1840,16 +2064,19 @@
       "ethernet-lan",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "pre-out-rca",
-      "speaker-terminals"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "airplay2",
+      "spotify-connect",
+      "tidal-connect",
+      "roon-ready",
+      "dlna"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 324900,
     "inStockResolved": true
   },
@@ -1871,19 +2098,22 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical",
       "coaxial"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 22800,
     "inStockResolved": true
   },
@@ -1905,20 +2135,30 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "LDAC",
+      "aptX HD",
+      "aptX Adaptive",
+      "aptX",
+      "AAC",
+      "SBC"
+    ],
     "inputs": [
       "usb",
       "optical",
       "coaxial",
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 22900,
     "inStockResolved": true
   },
@@ -1940,9 +2180,15 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "LDAC",
+      "aptX HD",
+      "aptX Adaptive",
+      "aptX",
+      "AAC",
+      "SBC"
+    ],
     "inputs": [
       "usb",
       "optical",
@@ -1951,11 +2197,13 @@
       "aes-ebu",
       "i2s-iis"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 129900,
     "inStockResolved": true
   },
@@ -1974,19 +2222,18 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
+    "inputs": null,
+    "balancedOutput": false,
     "amplification": null,
     "dacIncluded": false,
-    "balancedOutput": false,
-    "inputs": null,
-    "outputs": null,
-    "awards": [
-      "Reviewer's Choice"
-    ],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 1099900,
     "inStockResolved": true
   },
@@ -2007,19 +2254,22 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical",
       "coaxial"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 39900,
     "inStockResolved": true
   },
@@ -2038,17 +2288,18 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "portable",
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
+    "inputs": null,
+    "balancedOutput": true,
     "amplification": null,
     "dacIncluded": false,
-    "balancedOutput": true,
-    "inputs": null,
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 49900,
     "inStockResolved": true
   },
@@ -2069,17 +2320,20 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "cirrus-logic"
+    ],
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 3999,
     "inStockResolved": true
   },
@@ -2101,9 +2355,10 @@
     ],
     "deviceType": "integrated-amplifier",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": [
+      "aptX HD"
+    ],
     "inputs": [
       "hdmi-earc",
       "optical",
@@ -2112,14 +2367,18 @@
       "bluetooth",
       "ethernet-lan"
     ],
-    "outputs": [
-      "speaker-terminals",
-      "subwoofer-out"
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "airplay2",
+      "spotify-connect",
+      "tidal-connect",
+      "roon-ready"
     ],
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 54900,
     "inStockResolved": true
   },
@@ -2139,17 +2398,21 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "integrated-amplifier",
     "formFactor": "desktop",
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": [
+      "sbc",
+      "aac"
+    ],
+    "inputs": null,
+    "balancedOutput": false,
     "amplification": null,
     "dacIncluded": false,
-    "balancedOutput": false,
-    "inputs": null,
-    "outputs": null,
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 379900,
     "inStockResolved": true
   },
@@ -2169,17 +2432,25 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "digital-audio-player",
     "formFactor": "portable",
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX HD",
+      "LDAC"
+    ],
+    "inputs": null,
+    "balancedOutput": true,
     "amplification": null,
     "dacIncluded": true,
-    "balancedOutput": true,
-    "inputs": null,
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 177300,
     "inStockResolved": true
   },
@@ -2199,17 +2470,25 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "digital-audio-player",
     "formFactor": "portable",
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX HD",
+      "LDAC"
+    ],
+    "inputs": null,
+    "balancedOutput": true,
     "amplification": null,
     "dacIncluded": true,
-    "balancedOutput": true,
-    "inputs": null,
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "akm"
+    ],
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 348200,
     "inStockResolved": true
   },
@@ -2228,22 +2507,21 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "portable",
-    "amplification": "hybrid",
-    "dacIncluded": false,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "rca",
       "xlr-balanced"
     ],
-    "outputs": [
-      "headphone-jack"
-    ],
-    "awards": null,
+    "balancedOutput": true,
+    "amplification": "hybrid",
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 79900,
     "inStockResolved": true
   },
@@ -2264,17 +2542,20 @@
     ],
     "deviceType": "dac",
     "formFactor": "dongle",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb"
     ],
-    "outputs": null,
-    "awards": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "cirrus-logic"
+    ],
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 16900,
     "inStockResolved": true
   },
@@ -2296,9 +2577,10 @@
     ],
     "deviceType": "network-streamer",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": [
+      "sbc"
+    ],
     "inputs": [
       "usb",
       "optical",
@@ -2306,11 +2588,20 @@
       "hdmi-earc",
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": [],
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": [
+      "airplay2",
+      "spotify-connect",
+      "tidal-connect",
+      "roon-ready"
+    ],
     "condition": "open-box",
-    "dealsDiscount": null,
-    "newArrival": false,
     "priceCentsResolved": 99900,
     "inStockResolved": true
   },
@@ -2332,22 +2623,26 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "sbc",
+      "aptx"
+    ],
     "inputs": [
       "usb",
       "optical",
       "coaxial",
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": [
-      "What Hi-Fi? Awards 2021 winner"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
     ],
+    "streamingPlatformSupport": [],
     "condition": "open-box",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 44900,
     "inStockResolved": true
   },
@@ -2369,19 +2664,25 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "coaxial",
       "ethernet-lan"
     ],
-    "outputs": null,
-    "awards": [],
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd64",
+    "dacChipsetFamily": [
+      "r2r-ladder"
+    ],
+    "streamingPlatformSupport": [
+      "tidal-connect",
+      "dlna"
+    ],
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": null,
     "priceCentsResolved": 29900,
     "inStockResolved": true
   },
@@ -2403,9 +2704,14 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "sbc",
+      "aac",
+      "aptx",
+      "aptx-hd",
+      "ldac"
+    ],
     "inputs": [
       "usb",
       "coaxial",
@@ -2413,11 +2719,15 @@
       "xlr-balanced",
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": [],
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": null,
+    "dacChipsetFamily": [
+      "r2r-ladder"
+    ],
+    "streamingPlatformSupport": [],
     "condition": "new",
-    "dealsDiscount": "sale",
-    "newArrival": null,
     "priceCentsResolved": 64900,
     "inStockResolved": true
   },
@@ -2436,11 +2746,10 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": false,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "rca",
@@ -2448,15 +2757,15 @@
       "xlr-balanced",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "pre-out-rca"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "roon-ready"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 374900,
     "inStockResolved": true
   },
@@ -2477,20 +2786,21 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "rca"
     ],
-    "outputs": null,
-    "awards": [
-      "Headfonics Best Desktop Headphone Amplifier 2019"
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd128",
+    "dacChipsetFamily": [
+      "ess-sabre"
     ],
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 169900,
     "inStockResolved": false
   },
@@ -2509,24 +2819,21 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": false,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "rca",
       "xlr-balanced"
     ],
-    "outputs": [
-      "headphone-jack",
-      "pre-out-rca",
-      "pre-out-xlr"
-    ],
-    "awards": null,
+    "balancedOutput": true,
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 39900,
     "inStockResolved": true
   },
@@ -2545,20 +2852,18 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
+    "inputs": null,
+    "balancedOutput": true,
     "amplification": null,
     "dacIncluded": false,
-    "balancedOutput": true,
-    "inputs": null,
-    "outputs": null,
-    "awards": [
-      "eisa-best-headphone-amplifier-2022-2023",
-      "headfonia-best-amplifier-2024-readers-choice"
-    ],
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 227500,
     "inStockResolved": true
   },
@@ -2579,20 +2884,21 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": "tube",
-    "dacIncluded": false,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "rca"
     ],
-    "outputs": [
-      "headphone-jack"
+    "balancedOutput": false,
+    "amplification": "tube",
+    "dacIncluded": false,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 139900,
     "inStockResolved": true
   },
@@ -2611,21 +2917,20 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
-    "amplification": "tube",
-    "dacIncluded": false,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "rca"
     ],
-    "outputs": [
-      "headphone-jack"
-    ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": "tube",
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 89900,
     "inStockResolved": true
   },
@@ -2646,18 +2951,27 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX",
+      "aptX HD",
+      "LDAC"
+    ],
     "inputs": [
       "usb",
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 22900,
     "inStockResolved": true
   },
@@ -2678,17 +2992,20 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "akm"
+    ],
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 44000,
     "inStockResolved": true
   },
@@ -2709,24 +3026,32 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX Adaptive",
+      "aptX HD",
+      "aptX LL",
+      "aptX",
+      "LDAC"
+    ],
     "inputs": [
       "usb",
       "bluetooth",
       "xlr-balanced",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "speaker-terminals"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "airplay2",
+      "roon-ready"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 19900,
     "inStockResolved": true
   },
@@ -2748,9 +3073,15 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "LDAC",
+      "aptX HD",
+      "aptX Adaptive",
+      "aptX",
+      "AAC",
+      "SBC"
+    ],
     "inputs": [
       "usb",
       "optical",
@@ -2758,11 +3089,15 @@
       "bluetooth",
       "aes-ebu"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 61500,
     "inStockResolved": true
   },
@@ -2784,20 +3119,30 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "LDAC",
+      "aptX HD",
+      "aptX LL",
+      "aptX",
+      "SBC",
+      "AAC"
+    ],
     "inputs": [
       "usb",
       "optical",
       "coaxial",
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 19900,
     "inStockResolved": true
   },
@@ -2818,18 +3163,21 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical"
     ],
-    "outputs": null,
-    "awards": null,
+    "balancedOutput": false,
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 54400,
     "inStockResolved": true
   },
@@ -2850,19 +3198,20 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": "hybrid",
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb"
     ],
-    "outputs": [
-      "headphone-jack"
+    "balancedOutput": false,
+    "amplification": "hybrid",
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 44900,
     "inStockResolved": true
   },
@@ -2884,9 +3233,8 @@
     ],
     "deviceType": "integrated-amplifier",
     "formFactor": "desktop",
-    "amplification": "class-d",
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": null,
     "inputs": [
       "optical",
       "coaxial",
@@ -2894,16 +3242,17 @@
       "usb",
       "hdmi-earc"
     ],
-    "outputs": [
-      "pre-out-rca",
-      "speaker-terminals"
+    "balancedOutput": false,
+    "amplification": "class-d",
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": "ess-sabre",
+    "streamingPlatformSupport": [
+      "dlna",
+      "roon-ready",
+      "spotify-connect"
     ],
-    "awards": [
-      "The Absolute Sound Buyer's Guide Pick 2024"
-    ],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 369500,
     "inStockResolved": true
   },
@@ -2925,9 +3274,14 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX",
+      "aptX HD",
+      "LDAC"
+    ],
     "inputs": [
       "usb",
       "optical",
@@ -2935,17 +3289,19 @@
       "bluetooth",
       "ethernet-lan"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "headphone-jack",
-      "pre-out-rca",
-      "pre-out-xlr"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "streamingPlatformSupport": [
+      "airplay2",
+      "roon-ready",
+      "dlna"
+    ],
+    "condition": "new",
     "priceCentsResolved": 54999,
     "inStockResolved": true
   },
@@ -2965,17 +3321,23 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "digital-audio-player",
     "formFactor": "portable",
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "aptX HD",
+      "LDAC"
+    ],
+    "inputs": null,
+    "balancedOutput": true,
     "amplification": null,
     "dacIncluded": true,
-    "balancedOutput": true,
-    "inputs": null,
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "akm"
+    ],
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 227000,
     "inStockResolved": true
   },
@@ -2995,17 +3357,25 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "digital-audio-player",
     "formFactor": "portable",
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "aptX HD",
+      "LDAC"
+    ],
+    "inputs": null,
+    "balancedOutput": true,
     "amplification": null,
     "dacIncluded": true,
-    "balancedOutput": true,
-    "inputs": null,
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "cirrus-logic"
+    ],
+    "streamingPlatformSupport": [
+      "roon-ready"
+    ],
+    "condition": "new",
     "priceCentsResolved": 65900,
     "inStockResolved": true
   },
@@ -3025,17 +3395,25 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "digital-audio-player",
     "formFactor": "desktop",
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "aptX HD",
+      "LDAC"
+    ],
+    "inputs": null,
+    "balancedOutput": true,
     "amplification": null,
     "dacIncluded": true,
-    "balancedOutput": true,
-    "inputs": null,
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": [
+      "roon-ready"
+    ],
+    "condition": "new",
     "priceCentsResolved": 129900,
     "inStockResolved": true
   },
@@ -3057,18 +3435,23 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": true,
-    "balancedOutput": null,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": [
+      "aptx-hd"
+    ],
     "inputs": [
       "usb",
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": null,
+    "balancedOutput": null,
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": null,
     "condition": "open-box",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 89900,
     "inStockResolved": true
   },
@@ -3090,9 +3473,14 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX Adaptive",
+      "aptX",
+      "LDAC"
+    ],
     "inputs": [
       "usb",
       "optical",
@@ -3102,16 +3490,15 @@
       "xlr-balanced",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "pre-out-rca",
-      "speaker-terminals"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "roon-ready"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 64900,
     "inStockResolved": true
   },
@@ -3133,9 +3520,14 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "sbc",
+      "aac",
+      "aptx",
+      "aptx-hd",
+      "ldac"
+    ],
     "inputs": [
       "usb",
       "optical",
@@ -3143,11 +3535,15 @@
       "bluetooth",
       "rca"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": [],
+    "condition": "new",
     "priceCentsResolved": 299900,
     "inStockResolved": true
   },
@@ -3169,20 +3565,23 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical",
       "coaxial",
       "aes-ebu"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "akm"
+    ],
+    "streamingPlatformSupport": [],
+    "condition": "new",
     "priceCentsResolved": 109500,
     "inStockResolved": true
   },
@@ -3203,20 +3602,18 @@
     ],
     "deviceType": "integrated-amplifier",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": false,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "rca"
     ],
-    "outputs": [
-      "headphone-jack",
-      "speaker-terminals"
-    ],
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 197500,
     "inStockResolved": true
   },
@@ -3237,21 +3634,19 @@
     ],
     "deviceType": "integrated-amplifier",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": false,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "rca",
       "xlr-balanced"
     ],
-    "outputs": [
-      "headphone-jack",
-      "speaker-terminals"
-    ],
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 432000,
     "inStockResolved": true
   },
@@ -3270,11 +3665,10 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": false,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "rca",
@@ -3282,15 +3676,15 @@
       "xlr-balanced",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "pre-out-rca"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "roon-ready"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "open-box",
     "priceCentsResolved": 289900,
     "inStockResolved": true
   },
@@ -3311,23 +3705,18 @@
     ],
     "deviceType": "integrated-amplifier",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": false,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "rca"
     ],
-    "outputs": [
-      "speaker-terminals",
-      "headphone-jack"
-    ],
-    "awards": [
-      "Red Dot Award: Product Design 2021",
-      "iF Design Gold Award 2022"
-    ],
+    "balancedOutput": false,
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 625000,
     "inStockResolved": false
   },
@@ -3346,24 +3735,21 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": false,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "rca",
       "xlr-balanced"
     ],
-    "outputs": [
-      "headphone-jack",
-      "pre-out-rca",
-      "pre-out-xlr"
-    ],
-    "awards": null,
+    "balancedOutput": true,
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 239900,
     "inStockResolved": true
   },
@@ -3382,24 +3768,21 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": false,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "rca",
       "xlr-balanced"
     ],
-    "outputs": [
-      "headphone-jack",
-      "pre-out-rca",
-      "pre-out-xlr"
-    ],
-    "awards": null,
+    "balancedOutput": true,
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 79900,
     "inStockResolved": true
   },
@@ -3418,17 +3801,18 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
+    "inputs": null,
+    "balancedOutput": true,
     "amplification": null,
     "dacIncluded": false,
-    "balancedOutput": true,
-    "inputs": null,
-    "outputs": null,
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 1399500,
     "inStockResolved": true
   },
@@ -3449,21 +3833,19 @@
     ],
     "deviceType": "preamplifier",
     "formFactor": "desktop",
-    "amplification": "tube",
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "xlr-balanced",
       "rca"
     ],
-    "outputs": [
-      "pre-out-xlr",
-      "headphone-jack"
-    ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": "tube",
+    "dacIncluded": true,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 899900,
     "inStockResolved": true
   },
@@ -3484,17 +3866,20 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 24900,
     "inStockResolved": true
   },
@@ -3515,17 +3900,20 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "akm"
+    ],
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 23900,
     "inStockResolved": true
   },
@@ -3545,21 +3933,36 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "digital-audio-player",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX",
+      "aptX HD",
+      "aptX Adaptive",
+      "aptX LL",
+      "LDAC"
+    ],
     "inputs": [
       "usb",
       "coaxial",
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": [
+      "airplay2",
+      "roon-ready",
+      "dlna"
+    ],
+    "condition": "new",
     "priceCentsResolved": 179999,
     "inStockResolved": true
   },
@@ -3580,21 +3983,29 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX",
+      "aptX HD",
+      "aptX Adaptive",
+      "aptX Lossless",
+      "LDAC"
+    ],
     "inputs": [
       "bluetooth",
       "usb"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 19999,
     "inStockResolved": true
   },
@@ -3615,21 +4026,29 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX",
+      "aptX HD",
+      "aptX Adaptive",
+      "aptX LL",
+      "LDAC"
+    ],
     "inputs": [
       "bluetooth",
       "usb"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 15999,
     "inStockResolved": true
   },
@@ -3650,22 +4069,20 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical",
       "coaxial"
     ],
-    "outputs": null,
-    "awards": [
-      "What Hi-Fi? Best DAC",
-      "What Hi-Fi? Product of the Year"
-    ],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [],
+    "condition": "new",
     "priceCentsResolved": 65000,
     "inStockResolved": true
   },
@@ -3686,17 +4103,20 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": [],
+    "condition": "new",
     "priceCentsResolved": 14900,
     "inStockResolved": true
   },
@@ -3717,23 +4137,25 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "bluetooth",
       "xlr-balanced",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": null,
+    "dacChipsetFamily": [
+      "cirrus-logic"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "streamingPlatformSupport": [
+      "roon-ready"
+    ],
+    "condition": "new",
     "priceCentsResolved": 27900,
     "inStockResolved": true
   },
@@ -3755,9 +4177,11 @@
     ],
     "deviceType": "network-streamer",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": [
+      "sbc",
+      "aac"
+    ],
     "inputs": [
       "usb",
       "optical",
@@ -3766,11 +4190,19 @@
       "bluetooth",
       "ethernet-lan"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": [
+      "roon-ready",
+      "dlna",
+      "tidal-connect"
+    ],
+    "condition": "new",
     "priceCentsResolved": 85900,
     "inStockResolved": true
   },
@@ -3792,9 +4224,8 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical",
@@ -3804,15 +4235,15 @@
       "i2s-iis",
       "rca"
     ],
-    "outputs": null,
-    "awards": [
-      "hificlube-dac-of-the-year-2023",
-      "headphone-show-dac-of-the-year-2023",
-      "eisa-award"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
     ],
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 319500,
     "inStockResolved": true
   },
@@ -3834,22 +4265,22 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical",
       "coaxial"
     ],
-    "outputs": null,
-    "awards": [
-      "Reviewers' Choice - SoundStage! Hi-Fi",
-      "Recommended Reference Component - SoundStage! Hi-Fi"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
     ],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 129900,
     "inStockResolved": true
   },
@@ -3870,17 +4301,20 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": null,
+    "dacChipsetFamily": [
+      "cirrus-logic"
+    ],
+    "streamingPlatformSupport": [],
+    "condition": "new",
     "priceCentsResolved": 8999,
     "inStockResolved": true
   },
@@ -3902,9 +4336,8 @@
     ],
     "deviceType": "network-streamer",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": null,
     "inputs": [
       "optical",
       "coaxial",
@@ -3913,20 +4346,16 @@
       "hdmi-earc",
       "usb"
     ],
-    "outputs": [
-      "pre-out-rca",
-      "pre-out-xlr"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": "ess-sabre",
+    "streamingPlatformSupport": [
+      "dlna",
+      "roon-ready"
     ],
-    "awards": [
-      "Editor's Choice Award 2022",
-      "Editor's Choice Award 2024",
-      "EISA Award — High-End Music Player 2021–2022",
-      "Highly Commended",
-      "Five Stars — Recommended"
-    ],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 499500,
     "inStockResolved": true
   },
@@ -3945,22 +4374,20 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
-    "amplification": "tube",
-    "dacIncluded": false,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "rca"
     ],
-    "outputs": [
-      "headphone-jack",
-      "pre-out"
-    ],
-    "awards": null,
+    "balancedOutput": false,
+    "amplification": "tube",
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "on-sale",
-    "newArrival": false,
     "priceCentsResolved": 94900,
     "inStockResolved": false
   },
@@ -3979,23 +4406,21 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
-    "amplification": "tube",
-    "dacIncluded": false,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "rca",
-      "xlr"
+      "xlr-balanced"
     ],
-    "outputs": [
-      "headphone-jack",
-      "pre-out"
-    ],
-    "awards": null,
+    "balancedOutput": true,
+    "amplification": "tube",
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 889900,
     "inStockResolved": false
   },
@@ -4015,17 +4440,25 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "digital-audio-player",
     "formFactor": "portable",
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX HD",
+      "LDAC"
+    ],
+    "inputs": null,
+    "balancedOutput": true,
     "amplification": null,
     "dacIncluded": true,
-    "balancedOutput": true,
-    "inputs": null,
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "akm"
+    ],
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 362000,
     "inStockResolved": true
   },
@@ -4045,17 +4478,25 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "digital-audio-player",
     "formFactor": "portable",
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX HD",
+      "LDAC"
+    ],
+    "inputs": null,
+    "balancedOutput": true,
     "amplification": null,
     "dacIncluded": true,
-    "balancedOutput": true,
-    "inputs": null,
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "akm"
+    ],
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 241000,
     "inStockResolved": true
   },
@@ -4075,17 +4516,23 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "digital-audio-player",
     "formFactor": "portable",
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "aptX HD",
+      "LDAC"
+    ],
+    "inputs": null,
+    "balancedOutput": true,
     "amplification": null,
     "dacIncluded": true,
-    "balancedOutput": true,
-    "inputs": null,
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "akm"
+    ],
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 329900,
     "inStockResolved": true
   },
@@ -4107,9 +4554,10 @@
     ],
     "deviceType": "network-streamer",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": [
+      "sbc"
+    ],
     "inputs": [
       "usb",
       "optical",
@@ -4117,11 +4565,20 @@
       "hdmi-earc",
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": [],
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": [
+      "airplay2",
+      "spotify-connect",
+      "tidal-connect",
+      "roon-ready"
+    ],
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 179900,
     "inStockResolved": true
   },
@@ -4143,22 +4600,26 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "sbc",
+      "aptx"
+    ],
     "inputs": [
       "usb",
       "optical",
       "coaxial",
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": [
-      "What Hi-Fi? Awards 2021 winner"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
     ],
+    "streamingPlatformSupport": [],
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 39900,
     "inStockResolved": true
   },
@@ -4180,19 +4641,20 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical",
       "coaxial"
     ],
-    "outputs": null,
-    "awards": [],
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "none",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [],
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 14900,
     "inStockResolved": true
   },
@@ -4214,18 +4676,24 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": [
+      "aptx-hd",
+      "ldac"
+    ],
     "inputs": [
       "usb",
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": null,
+    "balancedOutput": false,
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 299900,
     "inStockResolved": true
   },
@@ -4247,18 +4715,23 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": [
+      "aptx-hd"
+    ],
     "inputs": [
       "usb",
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": null,
+    "balancedOutput": false,
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": null,
     "condition": "open-box",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 89900,
     "inStockResolved": true
   },
@@ -4280,23 +4753,25 @@
     ],
     "deviceType": "integrated-amplifier",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": [
+      "aptx-hd"
+    ],
     "inputs": [
       "usb",
       "optical",
       "rca",
       "bluetooth"
     ],
-    "outputs": [
-      "pre-out-rca",
-      "headphone-jack"
+    "balancedOutput": false,
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
     ],
-    "awards": null,
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 195200,
     "inStockResolved": true
   },
@@ -4318,24 +4793,24 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": [
+      "aptx-hd",
+      "ldac"
+    ],
     "inputs": [
       "usb",
       "optical",
       "rca",
       "bluetooth"
     ],
-    "outputs": [
-      "pre-out-rca",
-      "subwoofer-out",
-      "headphone-jack"
-    ],
-    "awards": null,
+    "balancedOutput": true,
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 179900,
     "inStockResolved": true
   },
@@ -4357,19 +4832,20 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical",
       "coaxial"
     ],
-    "outputs": null,
-    "awards": [],
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [],
     "condition": "open-box",
-    "dealsDiscount": null,
-    "newArrival": null,
     "priceCentsResolved": 399900,
     "inStockResolved": true
   },
@@ -4391,20 +4867,29 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "sbc",
+      "aac",
+      "aptx",
+      "aptx-hd",
+      "ldac"
+    ],
     "inputs": [
       "bluetooth",
       "usb",
       "optical",
       "coaxial"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 74900,
     "inStockResolved": true
   },
@@ -4426,9 +4911,8 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical",
@@ -4438,11 +4922,15 @@
       "i2s-iis",
       "rca"
     ],
-    "outputs": null,
-    "awards": [],
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 369500,
     "inStockResolved": true
   },
@@ -4464,19 +4952,22 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "rca",
       "xlr-balanced"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd128",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 19900,
     "inStockResolved": true
   },
@@ -4497,21 +4988,19 @@
     ],
     "deviceType": "preamplifier",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": false,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "rca",
       "xlr-balanced"
     ],
-    "outputs": [
-      "headphone-jack",
-      "pre-out-rca"
-    ],
-    "awards": [],
+    "balancedOutput": true,
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "open-box",
-    "dealsDiscount": null,
-    "newArrival": null,
     "priceCentsResolved": 49900,
     "inStockResolved": true
   },
@@ -4530,17 +5019,18 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
+    "inputs": null,
+    "balancedOutput": true,
     "amplification": null,
     "dacIncluded": false,
-    "balancedOutput": true,
-    "inputs": null,
-    "outputs": null,
-    "awards": [],
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "sale",
-    "newArrival": null,
     "priceCentsResolved": 219900,
     "inStockResolved": true
   },
@@ -4559,24 +5049,20 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "portable",
-    "amplification": "solid-state",
-    "dacIncluded": false,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "rca"
     ],
-    "outputs": [
-      "headphone-jack"
-    ],
-    "awards": [
-      "Red Dot Design Award 2022",
-      "iF Design Award 2023"
-    ],
+    "balancedOutput": false,
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": null,
-    "newArrival": false,
     "priceCentsResolved": 299900,
     "inStockResolved": false
   },
@@ -4595,24 +5081,20 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "portable",
-    "amplification": "solid-state",
-    "dacIncluded": false,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "rca"
     ],
-    "outputs": [
-      "headphone-jack"
-    ],
-    "awards": [
-      "Red Dot Design Award 2022",
-      "iF Design Award 2023"
-    ],
+    "balancedOutput": false,
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 350000,
     "inStockResolved": false
   },
@@ -4632,9 +5114,14 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX Adaptive",
+      "aptX",
+      "LDAC"
+    ],
     "inputs": [
       "usb",
       "optical",
@@ -4644,15 +5131,15 @@
       "xlr-balanced",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "pre-out-rca"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "roon-ready"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 169900,
     "inStockResolved": false
   },
@@ -4670,11 +5157,10 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": false,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "rca",
@@ -4682,16 +5168,15 @@
       "xlr-balanced",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "pre-out-rca",
-      "speaker-terminals"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "roon-ready"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 22900,
     "inStockResolved": true
   },
@@ -4711,24 +5196,24 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "bluetooth",
       "xlr-balanced",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "speaker-terminals"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "tidal-connect",
+      "roon-ready"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 19900,
     "inStockResolved": true
   },
@@ -4748,9 +5233,8 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "rca",
@@ -4758,16 +5242,15 @@
       "xlr-balanced",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "pre-out-rca",
-      "speaker-terminals"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "roon-ready"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 22900,
     "inStockResolved": true
   },
@@ -4787,24 +5270,24 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "bluetooth",
       "xlr-balanced",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "speaker-terminals"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "tidal-connect",
+      "roon-ready"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 21800,
     "inStockResolved": false
   },
@@ -4822,11 +5305,10 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": false,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "rca",
@@ -4834,15 +5316,15 @@
       "xlr-balanced",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "pre-out-rca"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "roon-ready"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 374900,
     "inStockResolved": false
   },
@@ -4862,15 +5344,16 @@
     ],
     "deviceType": "cd-player-transport",
     "formFactor": "desktop",
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
+    "inputs": [],
+    "balancedOutput": false,
     "amplification": null,
     "dacIncluded": true,
-    "balancedOutput": false,
-    "inputs": [],
-    "outputs": null,
-    "awards": [],
+    "dsdSupport": "dsd128",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [],
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 149900,
     "inStockResolved": true
   },
@@ -4890,17 +5373,20 @@
     ],
     "deviceType": "cd-player-transport",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd128",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": [],
+    "condition": "new",
     "priceCentsResolved": 99900,
     "inStockResolved": true
   },
@@ -4920,21 +5406,20 @@
     ],
     "deviceType": "cd-player-transport",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical",
       "coaxial"
     ],
-    "outputs": null,
-    "awards": [
-      "iF Design Award"
-    ],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [],
+    "condition": "new",
     "priceCentsResolved": 1200000,
     "inStockResolved": true
   },
@@ -4954,9 +5439,14 @@
     ],
     "deviceType": "network-streamer",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": [
+      "sbc",
+      "aac",
+      "aptx",
+      "aptx-hd",
+      "ldac"
+    ],
     "inputs": [
       "usb",
       "optical",
@@ -4967,11 +5457,20 @@
       "bluetooth",
       "ethernet-lan"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "akm"
+    ],
+    "streamingPlatformSupport": [
+      "roon-ready",
+      "airplay2",
+      "dlna",
+      "tidal-connect"
+    ],
+    "condition": "new",
     "priceCentsResolved": 198000,
     "inStockResolved": true
   },
@@ -4991,9 +5490,8 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical",
@@ -5001,14 +5499,13 @@
       "i2s-iis",
       "aes-ebu"
     ],
-    "outputs": [
-      "pre-out-rca",
-      "pre-out-xlr"
-    ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": "akm",
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 529500,
     "inStockResolved": false
   },
@@ -5028,23 +5525,25 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "bluetooth",
       "xlr-balanced",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": null,
+    "dacChipsetFamily": [
+      "cirrus-logic"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "streamingPlatformSupport": [
+      "roon-ready"
+    ],
+    "condition": "new",
     "priceCentsResolved": 44900,
     "inStockResolved": true
   },
@@ -5064,9 +5563,13 @@
     ],
     "deviceType": "network-streamer",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "AAC",
+      "aptX",
+      "aptX HD",
+      "aptX LL"
+    ],
     "inputs": [
       "coaxial",
       "optical",
@@ -5075,13 +5578,19 @@
       "hdmi-earc",
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": [
-      "Hi-Fi+ Highly Commended Award"
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "airplay2",
+      "chromecast",
+      "spotify-connect",
+      "tidal-connect",
+      "roon-ready"
     ],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 700000,
     "inStockResolved": false
   },
@@ -5101,24 +5610,32 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX Adaptive",
+      "aptX HD",
+      "aptX LL",
+      "aptX",
+      "LDAC"
+    ],
     "inputs": [
       "usb",
       "bluetooth",
       "xlr-balanced",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "speaker-terminals"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "airplay2",
+      "roon-ready"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 19900,
     "inStockResolved": true
   },
@@ -5138,24 +5655,25 @@
     ],
     "deviceType": "dac",
     "formFactor": "dongle",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "bluetooth",
       "xlr-balanced",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "speaker-terminals"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "streamingPlatformSupport": [
+      "roon-ready"
+    ],
+    "condition": "new",
     "priceCentsResolved": 7900,
     "inStockResolved": false
   },
@@ -5175,24 +5693,24 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "bluetooth",
       "xlr-balanced",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "speaker-terminals"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "tidal-connect",
+      "roon-ready"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 18900,
     "inStockResolved": false
   },
@@ -5212,9 +5730,14 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX Adaptive",
+      "aptX",
+      "LDAC"
+    ],
     "inputs": [
       "usb",
       "optical",
@@ -5224,16 +5747,15 @@
       "xlr-balanced",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "pre-out-rca",
-      "speaker-terminals"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "roon-ready"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 79900,
     "inStockResolved": true
   },
@@ -5253,25 +5775,19 @@
     ],
     "deviceType": "power-amplifier",
     "formFactor": "desktop",
-    "amplification": "tube",
-    "dacIncluded": false,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "rca",
       "xlr-balanced"
     ],
-    "outputs": [
-      "headphone-jack"
-    ],
-    "awards": [
-      "AVForums Best Hi-Fi Product Award",
-      "What Hi-Fi 5 star logo",
-      "HiFi+ Award Winner 2021",
-      "Audiograde Recommended Badge"
-    ],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": "tube",
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 250000,
     "inStockResolved": true
   },
@@ -5289,11 +5805,10 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": false,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "rca",
@@ -5301,16 +5816,15 @@
       "xlr-balanced",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "pre-out-rca",
-      "speaker-terminals"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "roon-ready"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 9900,
     "inStockResolved": true
   },
@@ -5330,9 +5844,14 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX Adaptive",
+      "aptX",
+      "LDAC"
+    ],
     "inputs": [
       "usb",
       "optical",
@@ -5341,15 +5860,15 @@
       "xlr-balanced",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "speaker-terminals"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "roon-ready"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 74900,
     "inStockResolved": true
   },
@@ -5370,9 +5889,16 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX Adaptive",
+      "aptX HD",
+      "aptX LL",
+      "aptX",
+      "LDAC"
+    ],
     "inputs": [
       "usb",
       "optical",
@@ -5381,15 +5907,15 @@
       "xlr-balanced",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "speaker-terminals"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "roon-ready"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 59900,
     "inStockResolved": true
   },
@@ -5407,22 +5933,20 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
-    "amplification": "tube",
-    "dacIncluded": false,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "rca"
     ],
-    "outputs": [
-      "headphone-jack",
-      "pre-out"
-    ],
-    "awards": null,
+    "balancedOutput": false,
+    "amplification": "tube",
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "on-sale",
-    "newArrival": false,
     "priceCentsResolved": 99500,
     "inStockResolved": true
   },
@@ -5442,9 +5966,8 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "rca",
       "xlr-balanced",
@@ -5453,11 +5976,15 @@
       "coaxial",
       "aes-ebu"
     ],
-    "outputs": null,
-    "awards": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 369500,
     "inStockResolved": false
   },
@@ -5477,22 +6004,19 @@
     ],
     "deviceType": "preamplifier",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": false,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "rca",
       "xlr-balanced"
     ],
-    "outputs": [
-      "headphone-jack",
-      "pre-out-rca",
-      "pre-out-xlr"
-    ],
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 59900,
     "inStockResolved": false
   },
@@ -5512,17 +6036,20 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd128",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 19900,
     "inStockResolved": true
   },
@@ -5543,19 +6070,20 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": "tube",
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb"
     ],
-    "outputs": [
-      "headphone-jack"
+    "balancedOutput": false,
+    "amplification": "tube",
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 189900,
     "inStockResolved": true
   },
@@ -5575,20 +6103,27 @@
     ],
     "deviceType": "network-streamer",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical",
       "coaxial",
       "i2s-iis"
     ],
-    "outputs": null,
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": [
+      "airplay2",
+      "roon-ready",
+      "dlna"
+    ],
+    "condition": "new",
     "priceCentsResolved": 79900,
     "inStockResolved": true
   },
@@ -5608,22 +6143,18 @@
     ],
     "deviceType": "integrated-amplifier",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": false,
-    "balancedOutput": null,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "rca"
     ],
-    "outputs": [
-      "speaker-terminals",
-      "headphone-jack"
-    ],
-    "awards": [
-      "Product of the Year - Headfonia"
-    ],
+    "balancedOutput": null,
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "open-box",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 46900,
     "inStockResolved": true
   },
@@ -5641,17 +6172,18 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
+    "inputs": null,
+    "balancedOutput": false,
     "amplification": null,
     "dacIncluded": false,
-    "balancedOutput": false,
-    "inputs": null,
-    "outputs": null,
-    "awards": [],
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 54995,
     "inStockResolved": true
   },
@@ -5671,15 +6203,16 @@
     ],
     "deviceType": null,
     "formFactor": null,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
+    "inputs": null,
+    "balancedOutput": null,
     "amplification": null,
     "dacIncluded": false,
-    "balancedOutput": null,
-    "inputs": null,
-    "outputs": null,
-    "awards": null,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 6995,
     "inStockResolved": true
   },
@@ -5699,21 +6232,20 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical",
       "coaxial"
     ],
-    "outputs": null,
-    "awards": [
-      "What Hi-Fi? Best DAC"
-    ],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [],
+    "condition": "new",
     "priceCentsResolved": 159500,
     "inStockResolved": true
   },
@@ -5733,22 +6265,19 @@
     ],
     "deviceType": "preamplifier",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": false,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "rca",
       "xlr-balanced"
     ],
-    "outputs": [
-      "pre-out-rca",
-      "pre-out-xlr",
-      "headphone-jack"
-    ],
-    "awards": null,
+    "balancedOutput": true,
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": null,
-    "newArrival": null,
     "priceCentsResolved": 599900,
     "inStockResolved": true
   },
@@ -5766,25 +6295,21 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": false,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "rca",
       "xlr-balanced"
     ],
-    "outputs": [
-      "pre-out-xlr",
-      "pre-out-rca",
-      "subwoofer-out",
-      "headphone-jack"
-    ],
-    "awards": null,
+    "balancedOutput": true,
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 199900,
     "inStockResolved": true
   },
@@ -5804,18 +6329,23 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": true,
-    "balancedOutput": null,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": [
+      "aptx-hd"
+    ],
     "inputs": [
       "usb",
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": null,
+    "balancedOutput": null,
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 91500,
     "inStockResolved": true
   },
@@ -5835,23 +6365,18 @@
     ],
     "deviceType": "integrated-amplifier",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": false,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "rca"
     ],
-    "outputs": [
-      "speaker-terminals",
-      "headphone-jack"
-    ],
-    "awards": [
-      "Red Dot Award: Product Design 2021",
-      "iF Design Gold Award 2022"
-    ],
+    "balancedOutput": false,
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "open-box",
-    "dealsDiscount": "sale",
-    "newArrival": false,
     "priceCentsResolved": 505000,
     "inStockResolved": false
   },
@@ -5869,17 +6394,18 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
+    "inputs": null,
+    "balancedOutput": true,
     "amplification": "solid-state",
     "dacIncluded": false,
-    "balancedOutput": true,
-    "inputs": null,
-    "outputs": null,
-    "awards": null,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 114400,
     "inStockResolved": true
   },
@@ -5899,19 +6425,29 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "LDAC",
+      "aptX HD",
+      "aptX Adaptive",
+      "aptX",
+      "AAC",
+      "SBC"
+    ],
     "inputs": [
       "usb",
       "bluetooth",
       "rca"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 29900,
     "inStockResolved": true
   },
@@ -5931,17 +6467,20 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": [],
+    "condition": "new",
     "priceCentsResolved": 14900,
     "inStockResolved": true
   },
@@ -5959,11 +6498,10 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "xlr-balanced",
       "rca",
@@ -5972,13 +6510,15 @@
       "coaxial",
       "aes-ebu"
     ],
-    "outputs": [
-      "headphone-jack"
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "akm"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 204900,
     "inStockResolved": true
   },
@@ -5998,9 +6538,15 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": false,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "LDAC",
+      "aptX HD",
+      "aptX Adaptive",
+      "aptX",
+      "AAC",
+      "SBC"
+    ],
     "inputs": [
       "usb",
       "optical",
@@ -6009,11 +6555,13 @@
       "aes-ebu",
       "i2s-iis"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": false,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 129900,
     "inStockResolved": true
   },
@@ -6033,9 +6581,8 @@
     ],
     "deviceType": "network-streamer",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": false,
-    "balancedOutput": false,
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "coaxial",
@@ -6044,15 +6591,19 @@
       "ethernet-lan",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "speaker-terminals"
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": false,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "airplay2",
+      "spotify-connect",
+      "tidal-connect",
+      "roon-ready",
+      "dlna"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 39900,
     "inStockResolved": true
   },
@@ -6072,9 +6623,8 @@
     ],
     "deviceType": "network-streamer",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": false,
-    "balancedOutput": false,
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "coaxial",
@@ -6083,15 +6633,19 @@
       "ethernet-lan",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "speaker-terminals"
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": false,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "airplay2",
+      "spotify-connect",
+      "tidal-connect",
+      "roon-ready",
+      "dlna"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "open-box",
     "priceCentsResolved": 29900,
     "inStockResolved": true
   },
@@ -6111,23 +6665,25 @@
     ],
     "deviceType": "network-streamer",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": null,
     "inputs": [
       "rca",
       "optical",
       "coaxial",
       "usb"
     ],
-    "outputs": [
-      "pre-out-rca",
-      "headphone-jack"
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": "ess-sabre",
+    "streamingPlatformSupport": [
+      "dlna",
+      "roon-ready",
+      "spotify-connect"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 269500,
     "inStockResolved": true
   },
@@ -6147,19 +6703,20 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb"
     ],
-    "outputs": null,
-    "awards": [
-      "2022 VGP Gold Technology Award (Japan)"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": null,
+    "dacChipsetFamily": [
+      "r2r-ladder"
     ],
+    "streamingPlatformSupport": [],
     "condition": "new",
-    "dealsDiscount": "sale",
-    "newArrival": null,
     "priceCentsResolved": 39900,
     "inStockResolved": true
   },
@@ -6179,18 +6736,23 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": [
+      "aptx-hd"
+    ],
     "inputs": [
       "usb",
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": null,
+    "balancedOutput": false,
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 139500,
     "inStockResolved": true
   },
@@ -6210,9 +6772,8 @@
     ],
     "deviceType": "preamplifier",
     "formFactor": "desktop",
-    "amplification": "hybrid",
-    "dacIncluded": false,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "rca",
@@ -6220,16 +6781,15 @@
       "xlr-balanced",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "pre-out-rca",
-      "speaker-terminals"
+    "balancedOutput": true,
+    "amplification": "hybrid",
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "roon-ready"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 224900,
     "inStockResolved": true
   },
@@ -6249,20 +6809,30 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "AAC",
+      "SBC",
+      "aptX",
+      "aptX HD",
+      "aptX LL",
+      "LDAC"
+    ],
     "inputs": [
       "usb",
       "optical",
       "coaxial",
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 39900,
     "inStockResolved": true
   },
@@ -6280,20 +6850,18 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
+    "inputs": null,
+    "balancedOutput": null,
     "amplification": "tube",
     "dacIncluded": false,
-    "balancedOutput": null,
-    "inputs": null,
-    "outputs": [
-      "headphone-jack",
-      "speaker-terminals"
-    ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": "sale",
-    "newArrival": null,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 159900,
     "inStockResolved": false
   },
@@ -6313,22 +6881,22 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "coaxial",
       "optical",
       "usb"
     ],
-    "outputs": null,
-    "awards": [
-      "Stereophile Class A+ Recommended Component",
-      "Stereophile Digital Product of the Year Runner Up 2025"
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd128",
+    "dacChipsetFamily": [
+      "ess-sabre"
     ],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 349500,
     "inStockResolved": true
   },
@@ -6348,17 +6916,20 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb"
     ],
-    "outputs": null,
-    "awards": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "cirrus-logic"
+    ],
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 24900,
     "inStockResolved": true
   },
@@ -6378,19 +6949,18 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": null,
+    "bluetoothCodecs": null,
     "inputs": [
       "usb"
     ],
-    "outputs": [
-      "4.4mm"
-    ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 16999,
     "inStockResolved": true
   },
@@ -6408,17 +6978,18 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
+    "inputs": null,
+    "balancedOutput": false,
     "amplification": null,
     "dacIncluded": false,
-    "balancedOutput": false,
-    "inputs": null,
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "open-box",
     "priceCentsResolved": 19900,
     "inStockResolved": true
   },
@@ -6438,18 +7009,24 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": [
+      "aptx-hd",
+      "ldac"
+    ],
     "inputs": [
       "usb",
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": null,
+    "balancedOutput": false,
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 299900,
     "inStockResolved": true
   },
@@ -6467,25 +7044,24 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "xlr-balanced",
       "rca",
       "usb"
     ],
-    "outputs": [
-      "headphone-jack"
+    "balancedOutput": false,
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "akm"
     ],
-    "awards": [
-      "EC PAM 2021"
-    ],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 79900,
     "inStockResolved": true
   },
@@ -6503,23 +7079,21 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
-    "amplification": "tube",
-    "dacIncluded": false,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "rca",
-      "xlr"
+      "xlr-balanced"
     ],
-    "outputs": [
-      "headphone-jack",
-      "pre-out"
-    ],
-    "awards": null,
+    "balancedOutput": true,
+    "amplification": "tube",
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "open-box",
-    "dealsDiscount": "on-sale",
-    "newArrival": false,
     "priceCentsResolved": 689500,
     "inStockResolved": false
   },
@@ -6537,22 +7111,21 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "xlr-balanced",
       "rca"
     ],
-    "outputs": [
-      "headphone-jack"
-    ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 49900,
     "inStockResolved": true
   },
@@ -6572,19 +7145,20 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical",
       "coaxial"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [],
+    "condition": "new",
     "priceCentsResolved": 529500,
     "inStockResolved": true
   },
@@ -6604,17 +7178,20 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": null,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb"
     ],
-    "outputs": null,
-    "awards": null,
+    "balancedOutput": null,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": null,
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 19995,
     "inStockResolved": true
   },
@@ -6634,20 +7211,30 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "LDAC",
+      "aptX HD",
+      "aptX LL",
+      "aptX",
+      "SBC",
+      "AAC"
+    ],
     "inputs": [
       "usb",
       "optical",
       "coaxial",
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 19900,
     "inStockResolved": true
   },
@@ -6667,19 +7254,21 @@
     ],
     "deviceType": "network-streamer",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": false,
-    "balancedOutput": false,
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": null,
     "inputs": [
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": [
-      "Gramophone Product of the Month"
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": false,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [],
+    "streamingPlatformSupport": [
+      "dlna",
+      "roon-ready"
     ],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 65000,
     "inStockResolved": true
   },
@@ -6699,19 +7288,18 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": null,
+    "bluetoothCodecs": null,
     "inputs": [
       "usb"
     ],
-    "outputs": [
-      "4.4mm"
-    ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 99900,
     "inStockResolved": true
   },
@@ -6731,15 +7319,16 @@
     ],
     "deviceType": null,
     "formFactor": "desktop",
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
+    "inputs": null,
+    "balancedOutput": false,
     "amplification": null,
     "dacIncluded": true,
-    "balancedOutput": false,
-    "inputs": null,
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 13100,
     "inStockResolved": true
   },
@@ -6759,9 +7348,12 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "sbc",
+      "aac",
+      "ldac"
+    ],
     "inputs": [
       "usb",
       "optical",
@@ -6769,11 +7361,15 @@
       "bluetooth",
       "rca"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": [],
+    "condition": "new",
     "priceCentsResolved": 199500,
     "inStockResolved": true
   },
@@ -6793,20 +7389,29 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical",
       "coaxial",
       "i2s-iis"
     ],
-    "outputs": null,
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": [
+      "airplay2",
+      "tidal-connect",
+      "spotify-connect",
+      "roon-ready",
+      "dlna"
+    ],
+    "condition": "new",
     "priceCentsResolved": 299900,
     "inStockResolved": true
   },
@@ -6824,11 +7429,10 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical",
@@ -6836,14 +7440,15 @@
       "rca",
       "xlr-balanced"
     ],
-    "outputs": [
-      "pre-out-xlr",
-      "headphone-jack"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 249500,
     "inStockResolved": true
   },
@@ -6863,9 +7468,8 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "rca",
@@ -6873,16 +7477,18 @@
       "xlr-balanced",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "pre-out-rca",
-      "speaker-terminals"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": null,
+    "dacChipsetFamily": [
+      "ess-sabre"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "streamingPlatformSupport": [
+      "tidal-connect",
+      "roon-ready"
+    ],
+    "condition": "new",
     "priceCentsResolved": 7900,
     "inStockResolved": true
   },
@@ -6900,34 +7506,21 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": false,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "xlr-balanced",
       "rca"
     ],
-    "outputs": [
-      "pre-out-xlr",
-      "pre-out-rca",
-      "headphone-jack"
-    ],
-    "awards": [
-      "Best Headphone Amplifier - AP Mastering",
-      "Best Preamplifier - Secrets of Home Theater",
-      "Stereophile Recommended Components 2025",
-      "Home Theater and High Fidelity - Best High-End Stereo Preamplifier 2021",
-      "The Absolute Sound - Product of the Year Award",
-      "hi-fi+ 20th Anniversary Top 100",
-      "AV Tech Media Awards - Best Headphone Amplifier",
-      "Everything Audio Network 2018 Product of the Year",
-      "Hi-Fi News - Outstanding Product Award"
-    ],
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 349900,
     "inStockResolved": true
   },
@@ -6947,22 +7540,23 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "aptX"
+    ],
     "inputs": [
       "usb",
       "optical",
       "coaxial",
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": [
-      "What Hi-Fi? Best DAC"
-    ],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [],
+    "condition": "new",
     "priceCentsResolved": 250000,
     "inStockResolved": true
   },
@@ -6980,17 +7574,18 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
+    "inputs": null,
+    "balancedOutput": false,
     "amplification": null,
     "dacIncluded": false,
-    "balancedOutput": false,
-    "inputs": null,
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 19900,
     "inStockResolved": true
   },
@@ -7008,28 +7603,21 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": false,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "rca",
       "xlr-balanced"
     ],
-    "outputs": [
-      "pre-out-xlr",
-      "pre-out-rca",
-      "subwoofer-out",
-      "headphone-jack"
-    ],
-    "awards": [
-      "The Ear Editor's Choice Award",
-      "Soundnews Gold Award"
-    ],
+    "balancedOutput": true,
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 349900,
     "inStockResolved": true
   },
@@ -7049,21 +7637,20 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical",
       "coaxial"
     ],
-    "outputs": null,
-    "awards": [
-      "What Hi-Fi? Product of the Year"
-    ],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [],
+    "condition": "new",
     "priceCentsResolved": 65000,
     "inStockResolved": true
   },
@@ -7081,17 +7668,18 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
+    "inputs": null,
+    "balancedOutput": false,
     "amplification": null,
     "dacIncluded": false,
-    "balancedOutput": false,
-    "inputs": null,
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 43900,
     "inStockResolved": true
   },
@@ -7111,9 +7699,8 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical",
@@ -7123,11 +7710,15 @@
       "i2s-iis",
       "rca"
     ],
-    "outputs": null,
-    "awards": [],
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 329500,
     "inStockResolved": true
   },
@@ -7145,11 +7736,10 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "xlr-balanced",
       "rca",
@@ -7157,15 +7747,15 @@
       "optical",
       "coaxial"
     ],
-    "outputs": [
-      "pre-out-xlr",
-      "pre-out-rca",
-      "headphone-jack"
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "akm"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 224900,
     "inStockResolved": true
   },
@@ -7186,9 +7776,14 @@
     ],
     "deviceType": "network-streamer",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": [
+      "sbc",
+      "aac",
+      "aptx",
+      "aptx-hd",
+      "ldac"
+    ],
     "inputs": [
       "usb",
       "optical",
@@ -7199,11 +7794,20 @@
       "bluetooth",
       "ethernet-lan"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "akm"
+    ],
+    "streamingPlatformSupport": [
+      "roon-ready",
+      "airplay2",
+      "dlna",
+      "tidal-connect"
+    ],
+    "condition": "new",
     "priceCentsResolved": 198000,
     "inStockResolved": true
   },
@@ -7223,9 +7827,14 @@
     ],
     "deviceType": "network-streamer",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": [
+      "sbc",
+      "aac",
+      "aptx",
+      "aptx-hd",
+      "ldac"
+    ],
     "inputs": [
       "usb",
       "optical",
@@ -7233,11 +7842,19 @@
       "bluetooth",
       "ethernet-lan"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": [
+      "roon-ready",
+      "dlna",
+      "tidal-connect"
+    ],
+    "condition": "new",
     "priceCentsResolved": 76900,
     "inStockResolved": true
   },
@@ -7257,20 +7874,27 @@
     ],
     "deviceType": "network-streamer",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical",
       "coaxial",
       "i2s-iis"
     ],
-    "outputs": null,
-    "awards": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": [
+      "airplay2",
+      "roon-ready",
+      "dlna"
+    ],
     "condition": "open-box",
-    "dealsDiscount": null,
-    "newArrival": null,
     "priceCentsResolved": 219900,
     "inStockResolved": false
   },
@@ -7290,9 +7914,10 @@
     ],
     "deviceType": "network-streamer",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": [
+      "aptX Adaptive"
+    ],
     "inputs": [
       "hdmi-earc",
       "optical",
@@ -7301,11 +7926,20 @@
       "bluetooth",
       "ethernet-lan"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": [
+      "airplay2",
+      "spotify-connect",
+      "tidal-connect",
+      "roon-ready"
+    ],
+    "condition": "new",
     "priceCentsResolved": 34900,
     "inStockResolved": true
   },
@@ -7326,9 +7960,14 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "bluetooth",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX Adaptive",
+      "aptX",
+      "LDAC"
+    ],
     "inputs": [
       "usb",
       "optical",
@@ -7338,16 +7977,15 @@
       "xlr-balanced",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "pre-out-rca",
-      "speaker-terminals"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "none",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "roon-ready"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 29900,
     "inStockResolved": true
   },
@@ -7368,23 +8006,30 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "bluetooth",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX Adaptive",
+      "aptX HD",
+      "aptX",
+      "LDAC"
+    ],
     "inputs": [
       "usb",
       "bluetooth",
       "xlr-balanced",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "roon-ready"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 12900,
     "inStockResolved": true
   },
@@ -7406,17 +8051,21 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": null,
+    "inputs": null,
+    "balancedOutput": true,
     "amplification": null,
     "dacIncluded": true,
-    "balancedOutput": true,
-    "inputs": null,
-    "outputs": [
-      "pre-out"
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": "r2r-ladder",
+    "streamingPlatformSupport": [
+      "airplay2",
+      "roon-ready",
+      "spotify-connect",
+      "dlna"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 359999,
     "inStockResolved": true
   },
@@ -7438,17 +8087,21 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": null,
+    "inputs": null,
+    "balancedOutput": true,
     "amplification": null,
     "dacIncluded": true,
-    "balancedOutput": true,
-    "inputs": null,
-    "outputs": [
-      "pre-out"
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": "ess-sabre",
+    "streamingPlatformSupport": [
+      "airplay2",
+      "roon-ready",
+      "spotify-connect",
+      "dlna"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 299999,
     "inStockResolved": true
   },
@@ -7470,9 +8123,8 @@
     ],
     "deviceType": "network-streamer",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": [],
     "inputs": [
       "ethernet-lan",
       "usb",
@@ -7480,11 +8132,16 @@
       "coaxial",
       "optical"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": "ess-sabre",
+    "streamingPlatformSupport": [
+      "airplay2",
+      "dlna"
+    ],
+    "condition": "new",
     "priceCentsResolved": 93900,
     "inStockResolved": true
   },
@@ -7506,15 +8163,22 @@
     ],
     "deviceType": "network-streamer",
     "formFactor": "desktop",
+    "deviceConnectivity": "wifi-networked",
+    "bluetoothCodecs": null,
+    "inputs": null,
+    "balancedOutput": false,
     "amplification": null,
     "dacIncluded": true,
-    "balancedOutput": false,
-    "inputs": null,
-    "outputs": null,
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "airplay2",
+      "tidal-connect",
+      "spotify-connect",
+      "roon-ready",
+      "dlna"
+    ],
+    "condition": "new",
     "priceCentsResolved": 399900,
     "inStockResolved": true
   },
@@ -7536,19 +8200,22 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "optical",
       "coaxial"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 10900,
     "inStockResolved": true
   },
@@ -7570,20 +8237,30 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "LDAC",
+      "aptX HD",
+      "aptX Adaptive",
+      "aptX",
+      "AAC",
+      "SBC"
+    ],
     "inputs": [
       "usb",
       "optical",
       "coaxial",
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "akm"
+    ],
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 34900,
     "inStockResolved": true
   },
@@ -7605,17 +8282,21 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": null,
+    "inputs": null,
+    "balancedOutput": true,
     "amplification": null,
     "dacIncluded": true,
-    "balancedOutput": true,
-    "inputs": null,
-    "outputs": [
-      "pre-out"
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": "ess-sabre",
+    "streamingPlatformSupport": [
+      "airplay2",
+      "roon-ready",
+      "spotify-connect",
+      "dlna"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 159999,
     "inStockResolved": true
   },
@@ -7637,17 +8318,28 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "sbc",
+      "aac",
+      "aptx",
+      "aptx-hd",
+      "aptx-ll",
+      "ldac"
+    ],
+    "inputs": null,
+    "balancedOutput": true,
     "amplification": null,
     "dacIncluded": true,
-    "balancedOutput": true,
-    "inputs": null,
-    "outputs": [
-      "pre-out"
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": "r2r-ladder",
+    "streamingPlatformSupport": [
+      "airplay2",
+      "roon-ready",
+      "spotify-connect",
+      "dlna"
     ],
-    "awards": null,
     "condition": "open-box",
-    "dealsDiscount": "sale",
-    "newArrival": null,
     "priceCentsResolved": 129999,
     "inStockResolved": false
   },
@@ -7669,9 +8361,8 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "coaxial",
       "optical",
@@ -7679,11 +8370,15 @@
       "i2s-iis",
       "aes-ebu"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "r2r-ladder"
+    ],
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 139900,
     "inStockResolved": true
   },
@@ -7705,25 +8400,27 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "LDAC"
+    ],
     "inputs": [
       "usb",
       "optical",
       "coaxial",
       "bluetooth"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "pre-out-rca",
-      "pre-out-xlr"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "r2r-ladder"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 23900,
     "inStockResolved": true
   },
@@ -7745,20 +8442,30 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX",
+      "aptX HD",
+      "aptX LL",
+      "LDAC"
+    ],
     "inputs": [
       "usb",
       "optical",
       "coaxial",
       "bluetooth"
     ],
-    "outputs": null,
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "akm"
+    ],
+    "streamingPlatformSupport": [],
+    "condition": "new",
     "priceCentsResolved": 47900,
     "inStockResolved": true
   },
@@ -7780,20 +8487,21 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "coaxial",
       "optical",
       "aes-ebu"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": "ess-sabre",
+    "streamingPlatformSupport": [],
+    "condition": "new",
     "priceCentsResolved": 64000,
     "inStockResolved": true
   },
@@ -7814,9 +8522,15 @@
     ],
     "deviceType": "dac",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired-wireless",
+    "bluetoothCodecs": [
+      "SBC",
+      "AAC",
+      "aptX",
+      "aptX HD",
+      "aptX LL",
+      "LDAC"
+    ],
     "inputs": [
       "usb",
       "coaxial",
@@ -7824,11 +8538,15 @@
       "bluetooth",
       "rca"
     ],
-    "outputs": null,
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "ess-sabre"
+    ],
+    "streamingPlatformSupport": [],
+    "condition": "new",
     "priceCentsResolved": 70900,
     "inStockResolved": true
   },
@@ -7849,9 +8567,8 @@
     ],
     "deviceType": null,
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": false,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "rca",
@@ -7859,16 +8576,15 @@
       "xlr-balanced",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "pre-out-rca",
-      "speaker-terminals"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "roon-ready"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 22900,
     "inStockResolved": true
   },
@@ -7889,22 +8605,19 @@
     ],
     "deviceType": "preamplifier",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": false,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "rca",
       "xlr-balanced"
     ],
-    "outputs": [
-      "headphone-jack",
-      "pre-out-rca",
-      "pre-out-xlr"
-    ],
-    "awards": [],
+    "balancedOutput": true,
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "open-box",
-    "dealsDiscount": null,
-    "newArrival": null,
     "priceCentsResolved": 12600,
     "inStockResolved": true
   },
@@ -7923,28 +8636,21 @@
     "category": [
       "audio-electronics"
     ],
-    "deviceType": null,
+    "deviceType": "headphone-amplifier",
     "formFactor": "desktop",
-    "amplification": "solid-state",
-    "dacIncluded": false,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "rca",
       "xlr-balanced"
     ],
-    "outputs": [
-      "pre-out-xlr",
-      "pre-out-rca",
-      "subwoofer-out",
-      "headphone-jack"
-    ],
-    "awards": [
-      "The Ear Editor's Choice Award",
-      "Soundnews Gold Award"
-    ],
+    "balancedOutput": true,
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 349900,
     "inStockResolved": true
   },
@@ -7965,20 +8671,18 @@
     ],
     "deviceType": "power-amplifier",
     "formFactor": "desktop",
-    "amplification": null,
-    "dacIncluded": false,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "xlr-balanced"
     ],
-    "outputs": [
-      "headphone-jack",
-      "speaker-terminals"
-    ],
-    "awards": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": false,
+    "dsdSupport": null,
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": false,
     "priceCentsResolved": 199995,
     "inStockResolved": true
   },
@@ -8000,19 +8704,20 @@
     ],
     "deviceType": "dac",
     "formFactor": "dongle",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb"
     ],
-    "outputs": [
-      "headphone-jack"
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "cirrus-logic"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 3299,
     "inStockResolved": true
   },
@@ -8034,17 +8739,20 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": false,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb"
     ],
-    "outputs": null,
-    "awards": [],
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "balancedOutput": false,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "cirrus-logic"
+    ],
+    "streamingPlatformSupport": null,
+    "condition": "new",
     "priceCentsResolved": 5999,
     "inStockResolved": true
   },
@@ -8066,24 +8774,24 @@
     ],
     "deviceType": "dac",
     "formFactor": "portable",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb",
       "bluetooth",
       "xlr-balanced",
       "phono-mm-mc"
     ],
-    "outputs": [
-      "headphone-jack",
-      "headphone-jack",
-      "speaker-terminals"
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": null,
+    "streamingPlatformSupport": [
+      "tidal-connect",
+      "roon-ready"
     ],
-    "awards": null,
-    "condition": null,
-    "dealsDiscount": null,
-    "newArrival": null,
+    "condition": "new",
     "priceCentsResolved": 19900,
     "inStockResolved": true
   },
@@ -8105,17 +8813,20 @@
     ],
     "deviceType": "dac",
     "formFactor": "dongle",
-    "amplification": null,
-    "dacIncluded": true,
-    "balancedOutput": true,
+    "deviceConnectivity": "wired",
+    "bluetoothCodecs": null,
     "inputs": [
       "usb"
     ],
-    "outputs": null,
-    "awards": null,
+    "balancedOutput": true,
+    "amplification": null,
+    "dacIncluded": true,
+    "dsdSupport": "dsd256-plus",
+    "dacChipsetFamily": [
+      "r2r-ladder"
+    ],
+    "streamingPlatformSupport": null,
     "condition": "new",
-    "dealsDiscount": "none",
-    "newArrival": null,
     "priceCentsResolved": 28900,
     "inStockResolved": true
   }

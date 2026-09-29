@@ -172,6 +172,7 @@ export function SearchSheet({ search, onClose }: SearchSheetProps) {
             variant="sheet"
             query={search.query}
             results={search.results}
+            entries={search.entries}
             isFetching={search.isFetching}
             hasError={search.hasError}
             activeIndex={search.activeIndex}
@@ -179,6 +180,7 @@ export function SearchSheet({ search, onClose }: SearchSheetProps) {
             optionId={search.optionId}
             onActiveChange={search.setActiveIndex}
             onProductClick={search.openProduct}
+            onEntryClick={search.openEntry}
             onViewAll={() => search.submit()}
             onNavigate={search.go}
           />

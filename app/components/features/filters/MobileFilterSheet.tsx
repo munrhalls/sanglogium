@@ -32,6 +32,8 @@ export interface MobileFilterSheetProps {
   rangeBounds?: Record<string, RangeBounds>;
   category?: Category;
   isDefaultState?: boolean;
+  /** Optional: render only these facet group ids (see FilterSidebar). */
+  groupIds?: string[];
   /** Shown on the trigger button and the sheet's "show results" footer. */
   totalCount: number;
 }

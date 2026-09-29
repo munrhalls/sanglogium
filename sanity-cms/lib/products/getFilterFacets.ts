@@ -244,6 +244,14 @@ const getFilterFacetsFn = async ({
     return { groups: {}, booleans: {}, brandLabels: {}, ranges: {} };
   }
 
+  return computeCatalogueFacets(products, state);
+};
+
+/** Pure facet counts over an already-fetched product set (catalogue routes and /search share it). */
+export function computeCatalogueFacets(
+  products: RawProduct[],
+  state: ProductQueryState,
+): CatalogueFacets {
   const groups: FacetGroups = {};
   const booleans: BooleanFacetCounts = {};
   const brandLabels = brandLabelMap(products);
@@ -338,7 +346,7 @@ const getFilterFacetsFn = async ({
   }
 
   return { groups, booleans, brandLabels, ranges, isDefaultState: isDefaultFilterState(state) };
-};
+}
 
 export const getFilterFacets = withCache(getFilterFacetsFn) as (
   options: GetFilterFacetsOptions,

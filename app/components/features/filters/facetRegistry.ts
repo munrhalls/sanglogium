@@ -98,13 +98,9 @@ export function getFacetModule(category: Category): FacetModule {
   return MODULES[category];
 }
 
-/** Bespoke per-group rail icons for audio-electronics' and accessories' own
- *  taxonomies are a content/design decision (which icon best fits "Turntables
- *  & Vinyl"?), not a wiring fix -- out of scope here, tracked as a follow-up
- *  (sang-logium-3rv.6). Both categories get one neutral fallback per group
- *  until that follow-up lands; headphones keeps its existing bespoke set,
- *  passed in by the caller. */
-export function resolveGroupIcon<T>(category: Category, groupId: string, headphoneIcons: Record<string, T>, fallback: T): T {
-  if (category === 'headphones') return headphoneIcons[groupId] ?? fallback;
-  return fallback;
+/** Per-category rail icons: each category passes its own group-id -> icon map
+ *  (a slice may omit a group or the whole map); any group without an entry
+ *  gets the caller's neutral fallback. */
+export function resolveGroupIcon<T>(category: Category, groupId: string, iconsByCategory: Partial<Record<Category, Record<string, T>>>, fallback: T): T {
+  return iconsByCategory[category]?.[groupId] ?? fallback;
 }
