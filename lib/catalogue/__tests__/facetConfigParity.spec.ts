@@ -4,11 +4,13 @@
 // facetConfig.ts module (UI vocabulary shown to shoppers) are independently
 // hand-typed and linked only by matching urlParam/id strings, by convention,
 // with nothing enforcing their value sets agree. sang-logium-3rv.10 covers
-// schema <-> facetMap.ts; this file covers facetMap.ts <-> facetConfig.ts.
+// schema <-> facetMap.ts; this file covers facetMap.ts <-> facetConfig.ts
+// for the headphones and audio-electronics slices.
 
 import { describe, it, expect } from "vitest";
 import { FILTER_FACETS, isPlaceholderVocab, type FilterFacet } from "@/lib/catalogue/facetMap";
 import { FACETS as headphonesFacets } from "@/lib/filter-sort/headphones/facetConfig";
+import { FACETS as audioElectronicsFacets } from "@/lib/filter-sort/audio-electronics/facetConfig";
 
 // Loose, duck-typed shape — deliberately not importing each POC module's own
 // FacetDef type, since the three modules declare structurally-identical but
@@ -21,6 +23,7 @@ type PocFacet = {
 
 const CATEGORY_FACETS: Record<string, PocFacet[]> = {
   headphones: headphonesFacets as unknown as PocFacet[],
+  'audio-electronics': audioElectronicsFacets as unknown as PocFacet[],
 };
 
 function facetMapEntryFor(category: string, urlParam: string): FilterFacet | undefined {
