@@ -2,7 +2,7 @@
 
 import React from 'react';
 import type { IconType } from 'react-icons';
-import { FaTag, FaHeadphones, FaWaveSquare, FaLayerGroup, FaBluetooth, FaMicrochip, FaPlug, FaBolt } from 'react-icons/fa6';
+import { FaTag, FaHeadphones, FaWaveSquare, FaLayerGroup, FaBluetooth, FaMicrochip, FaPlug, FaBolt, FaScrewdriverWrench } from 'react-icons/fa6';
 import { getFacetModule, resolveGroupIcon, type Category, type AnyFacetDef, type FacetOptionCount } from './facetRegistry';
 import type { RangeBounds } from '@/sanity-cms/lib/products/getFilterFacets';
 import { CheckboxGroup, BooleanToggle, RangeControl, PriceControl } from './FilterControls';
@@ -58,7 +58,12 @@ const GROUP_ICONS: Record<Category, Record<string, IconType>> = {
     amplification: FaBolt,
     digital: FaWaveSquare,
   },
-  accessories: {},
+  accessories: {
+    commercial: FaTag,
+    type: FaLayerGroup,
+    cables: FaPlug,
+    replacementParts: FaScrewdriverWrench,
+  },
 };
 const FALLBACK_GROUP_ICON: IconType = FaLayerGroup;
 

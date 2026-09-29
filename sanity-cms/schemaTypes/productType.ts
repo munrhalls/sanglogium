@@ -817,7 +817,7 @@ export const productType = defineType({
           title: "Condition / stock type",
           type: "string",
           options: { list: ["new", "open-box", "refurbished"] },
-          categories: ["accessories", "audio-electronics"],
+          categories: ["audio-electronics"],
         },
         {
           name: "dealsDiscount",
@@ -841,18 +841,15 @@ export const productType = defineType({
           options: {
             list: [
               "cables-interconnects",
-              "stands-isolation",
-              "racks-furniture",
-              "power",
-              "cases-storage-transport",
-              "cleaning-maintenance",
               "replacement-parts",
+              "cases-storage-transport",
               "adapters-converters",
-              "room-acoustic-treatment",
+              "cleaning-maintenance",
+              "stands-isolation",
             ],
           },
           description:
-            "Renamed vocabulary 2026-09-13 from the old cable/adapter/interconnect/eartip/earpad/stand/case/care enum; see docs/filters-sort/accessories-filterattributes-migration.md. Gates every domain-specific field below via each field's `domain`.",
+            "Gates every domain-specific field below via each field's `domain`.",
           categories: ["accessories"],
         },
         {
@@ -863,7 +860,7 @@ export const productType = defineType({
             {
               type: "string",
               options: {
-                list: ["headphone", "speaker", "turntable", "amplifier-source", "universal-any"],
+                list: ["headphone", "speaker", "amplifier-source", "universal-any"],
               },
             },
           ],
@@ -878,11 +875,9 @@ export const productType = defineType({
               type: "string",
               options: {
                 list: [
+                  "headphone-cable",
                   "interconnect-rca-xlr",
-                  "speaker-cable",
                   "digital-usb-coaxial-optical-aes-ebu-ethernet",
-                  "power-mains",
-                  "phono",
                 ],
               },
             },
@@ -901,18 +896,17 @@ export const productType = defineType({
                 list: [
                   "rca",
                   "xlr",
-                  "banana-plug",
-                  "spade",
-                  "bnc",
                   "3.5mm",
                   "2.5mm",
                   "4.4mm",
+                  "6.35mm",
+                  "4-pin-mini-xlr",
                   "mini-to-rca",
                 ],
               },
             },
           ],
-          description: "Critical filter. Enum updated 2026-09-13 to match should-be-accessories.md item 12; see docs/filters-sort/accessories-filterattributes-migration.md.",
+          description: "Critical filter.",
           categories: ["accessories"],
           domain: ["cables-interconnects"],
         },
@@ -990,39 +984,6 @@ export const productType = defineType({
           domain: ["stands-isolation", "racks-furniture"],
         },
         {
-          name: "powerProductType",
-          title: "Power product type",
-          type: "string",
-          options: {
-            list: [
-              "conditioner",
-              "surge-protector",
-              "power-distributor",
-              "battery-ups-backup",
-              "power-cable",
-            ],
-          },
-          categories: ["accessories"],
-          domain: ["power"],
-        },
-        {
-          name: "outletCount",
-          title: "Outlet count",
-          type: "number",
-          categories: ["accessories"],
-          domain: ["power"],
-        },
-        {
-          name: "powerConnectorType",
-          title: "Power connector / plug type",
-          type: "array",
-          of: [
-            { type: "string", options: { list: ["nema-5-15", "iec-c13-c15", "20-amp"] } },
-          ],
-          categories: ["accessories"],
-          domain: ["power"],
-        },
-        {
           name: "cleaningProductType",
           title: "Cleaning product type",
           type: "string",
@@ -1055,16 +1016,7 @@ export const productType = defineType({
           title: "Part type",
           type: "string",
           options: {
-            list: [
-              "ear-pads-cushions",
-              "ear-tips",
-              "phono-cartridge-stylus",
-              "drive-belt",
-              "remote-control",
-              "dust-cover",
-              "fuses",
-              "vacuum-tubes-valves",
-            ],
+            list: ["ear-pads-cushions", "ear-tips"],
           },
           categories: ["accessories"],
           domain: ["replacement-parts"],
@@ -1099,24 +1051,7 @@ export const productType = defineType({
           categories: ["accessories"],
           domain: ["adapters-converters"],
         },
-        {
-          name: "treatmentType",
-          title: "Treatment type",
-          type: "array",
-          of: [
-            { type: "string", options: { list: ["acoustic-panel", "bass-trap", "diffuser", "isolation-pad"] } },
-          ],
-          categories: ["accessories"],
-          domain: ["room-acoustic-treatment"],
-        },
-        {
-          name: "mounting",
-          title: "Mounting",
-          type: "array",
-          of: [{ type: "string", options: { list: ["wall", "ceiling", "freestanding"] } }],
-          categories: ["accessories"],
-          domain: ["room-acoustic-treatment"],
-        },
+
       ] as any[]).map(({ categories, domain, domainField, ...field }) =>
         defineField({
           ...field,
