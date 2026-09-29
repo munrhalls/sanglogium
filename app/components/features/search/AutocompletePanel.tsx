@@ -145,6 +145,8 @@ export function AutocompletePanel({
                   <ProductImage
                     image={product.image}
                     alt=""
+                    reveal={false}
+                    sizes="48px"
                     className="h-full w-full object-contain mix-blend-multiply"
                   />
                 )}
