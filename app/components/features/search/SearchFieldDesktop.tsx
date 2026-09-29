@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils/tailwind";
 import { AutocompletePanel } from "./AutocompletePanel";
 import { SearchInput } from "./SearchInput";
 import { SearchZeroQueryPanel } from "./SearchZeroQueryPanel";
+import { useVisualViewportBox } from "./useVisualViewportBox";
 import { MIN_QUERY_LENGTH } from "./useSearchController";
 import type { SearchController } from "./useSearchController";
 
@@ -29,7 +30,12 @@ function isEditable(target: EventTarget | null): boolean {
  */
 export function SearchFieldDesktop({ search, sheetOpen }: SearchFieldDesktopProps) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const viewportBox = useVisualViewportBox();
+  // Popup max height in px while the on-screen keyboard is open, else null
+  // (the CSS max-h class governs).
+  const [popupMaxHeight, setPopupMaxHeight] = useState<number | null>(null);
 
   const showPopup = isOpen && !sheetOpen;
   const showSuggestions = showPopup && search.showSuggestions;
@@ -40,6 +46,24 @@ export function SearchFieldDesktop({ search, sheetOpen }: SearchFieldDesktopProp
     search.setActiveIndex(-1);
     search.setEditing(false);
   };
+
+  // While the on-screen keyboard is open the layout viewport keeps its full
+  // height, so cap the popup to the visible (visual) viewport: the 8px mt-2
+  // gap plus 8px breathing room below the wrapper.
+  useEffect(() => {
+    if (!showPopup || !viewportBox || !viewportBox.keyboardOpen) {
+      setPopupMaxHeight(null);
+      return;
+    }
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
+    setPopupMaxHeight(
+      Math.max(
+        160,
+        viewportBox.top + viewportBox.height - wrapper.getBoundingClientRect().bottom - 16
+      )
+    );
+  }, [showPopup, viewportBox]);
 
   // `/` focuses the field from anywhere on the page (unless already typing).
   useEffect(() => {
@@ -91,6 +115,7 @@ export function SearchFieldDesktop({ search, sheetOpen }: SearchFieldDesktopProp
 
   return (
     <div
+      ref={wrapperRef}
       onBlur={handleBlur}
       className="relative hidden min-w-0 flex-1 sm:mx-auto sm:block sm:max-w-md md:max-w-lg lg:max-w-xl"
     >
@@ -174,9 +199,13 @@ export function SearchFieldDesktop({ search, sheetOpen }: SearchFieldDesktopProp
           // Keep focus in the input when the popup is pressed (prevents the
           // blur-before-click race that would unmount a suggestion mid-tap).
           onMouseDown={(e) => e.preventDefault()}
+          style={
+            popupMaxHeight !== null
+              ? { maxHeight: `min(36rem, ${popupMaxHeight}px)` }
+              : undefined
+          }
           className={cn(
             "absolute left-0 top-full z-50 mt-2 w-full",
-            "min-w-[min(30rem,calc(100vw_-_2rem))]",
             "max-h-[min(36rem,calc(100dvh_-_6rem))] overflow-y-auto overscroll-contain",
             "rounded-lg border border-border-secondary bg-surface-elevated shadow-cardDark"
           )}
