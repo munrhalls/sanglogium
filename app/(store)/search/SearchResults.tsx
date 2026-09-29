@@ -20,8 +20,10 @@ export async function SearchResults({ resultsPromise, query }: SearchResultsProp
 
   return (
     <>
-      <div className="border-b border-border-secondary pb-4 mb-6">
-        <span className="type-metadata text-secondary">{totalCount} products</span>
+      <div className="flex items-center justify-between border-b border-border-secondary pb-4 mb-6">
+        <span className="type-metadata text-secondary">
+          {totalCount} {totalCount === 1 ? 'product' : 'products'}
+        </span>
       </div>
       {/* No sidebar to eat width here, so cap the grid itself at max-w-content
           (1280px) — without it, auto-fill would run to 6-7 columns on wide

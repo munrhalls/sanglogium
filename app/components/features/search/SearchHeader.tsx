@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { SearchQueryBar } from './SearchQueryBar';
 
 interface SearchHeaderProps {
   query: string;
@@ -7,8 +8,9 @@ interface SearchHeaderProps {
 
 export function SearchHeader({ query }: SearchHeaderProps) {
   return (
-    <div className="mb-6">
-      <nav aria-label="Breadcrumb" className="flex items-center gap-2 mb-6">
+    <div className="mb-4 sm:mb-6">
+      {query && <SearchQueryBar query={query} />}
+      <nav aria-label="Breadcrumb" className="hidden sm:flex items-center gap-2 mb-6">
         <ol className="flex items-center gap-2">
           <li>
             <Link
@@ -29,7 +31,7 @@ export function SearchHeader({ query }: SearchHeaderProps) {
       <div className="section-header-anchor">
         <p className="type-overline text-accent-500">Search Results</p>
       </div>
-      <h1 className="type-section-hed uppercase mt-2">
+      <h1 className="type-section-hed uppercase mt-2 break-words line-clamp-2 text-spotlight sm:text-h1">
         {query ? `\u201C${query.toUpperCase()}\u201D` : 'Search'}
       </h1>
     </div>
