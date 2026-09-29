@@ -52,10 +52,12 @@ function ActionButtons({ isAuthenticated }: ActionButtonsProps) {
       <button
         id="mobile-search-trigger"
         onClick={() => (isSearchOpen ? closeSearch() : openSearch())}
-        className="flex sm:hidden cursor-pointer touch-manipulation flex-col items-center"
+        className="flex sm:hidden cursor-pointer touch-manipulation flex-col items-center justify-center min-w-[44px] min-h-[44px] rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
         type="button"
         style={{ isolation: "isolate" }}
-        aria-label={isSearchOpen ? "Close search" : "Open search"}
+        aria-label="Search"
+        aria-haspopup="dialog"
+        aria-expanded={isSearchOpen}
       >
         {isSearchOpen ? (
           <XIcon className="h-6 w-6" />
