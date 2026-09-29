@@ -13,7 +13,7 @@ interface SearchPaginationProps {
 /**
  * Real `<Link href>` pagination for search results (G8): crawlable, preserves
  * every query param (q, sort), supports middle-click/open-in-new-tab, and keeps
- * the previous scroll:false behavior via the Link `scroll` option.
+ * the default Link scroll behavior, so a page change returns to the top.
  */
 export function SearchPagination({ totalCount, perPage = 24 }: SearchPaginationProps) {
   const pathname = usePathname();
@@ -70,7 +70,6 @@ export function SearchPagination({ totalCount, perPage = 24 }: SearchPaginationP
           <Link
             href={hrefFor(currentPage - 1)}
             rel="prev"
-            scroll={false}
             aria-label="Previous page"
             className={activeItem}
           >
@@ -100,7 +99,7 @@ export function SearchPagination({ totalCount, perPage = 24 }: SearchPaginationP
                 {page}
               </span>
             ) : (
-              <Link key={page} href={hrefFor(page)} scroll={false} aria-label={`Go to page ${page}`} className={numberInactive}>
+              <Link key={page} href={hrefFor(page)} aria-label={`Go to page ${page}`} className={numberInactive}>
                 {page}
               </Link>
             )
@@ -111,7 +110,6 @@ export function SearchPagination({ totalCount, perPage = 24 }: SearchPaginationP
           <Link
             href={hrefFor(currentPage + 1)}
             rel="next"
-            scroll={false}
             aria-label="Next page"
             className={activeItem}
           >

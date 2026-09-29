@@ -24,7 +24,10 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   const pageValue = Array.isArray(query.page) ? query.page[0] : query.page;
   const page = typeof pageValue === 'string' ? Number(pageValue) : 1;
 
-  const resultsPromise = searchProductsFull(q, undefined, page);
+  const sortValue = Array.isArray(query.sort) ? query.sort[0] : query.sort;
+  const sort = typeof sortValue === 'string' ? sortValue : undefined;
+
+  const resultsPromise = searchProductsFull(q, sort, page);
 
   return (
     // w-full: <main> is a flex column, so a bare mx-auto child shrinks to its

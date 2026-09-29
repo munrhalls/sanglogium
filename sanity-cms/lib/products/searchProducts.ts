@@ -282,12 +282,26 @@ export async function searchProductsFull(
       params: { query: searchTerm, spacedQuery: spacedTerm },
     });
 
-    const products = (matchedProducts ?? []).slice().sort((a, b) => {
+    const byRelevance = (a: SearchProduct, b: SearchProduct) => {
       const scoreA = scoreProduct(a, rawQuery);
       const scoreB = scoreProduct(b, rawQuery);
       if (scoreB !== scoreA) return scoreB - scoreA;
       return a.name.localeCompare(b.name);
-    });
+    };
+
+    const comparator =
+      sort === 'price-asc'
+        ? (a: SearchProduct, b: SearchProduct) =>
+            a.price_data.unit_amount - b.price_data.unit_amount || byRelevance(a, b)
+        : sort === 'price-desc'
+          ? (a: SearchProduct, b: SearchProduct) =>
+              b.price_data.unit_amount - a.price_data.unit_amount || byRelevance(a, b)
+          : sort === 'name-asc'
+            ? (a: SearchProduct, b: SearchProduct) =>
+                a.name.localeCompare(b.name) || byRelevance(a, b)
+            : byRelevance;
+
+    const products = (matchedProducts ?? []).slice().sort(comparator);
 
     const totalPages = Math.max(1, Math.ceil(totalCount / effectivePerPage));
     const effectivePage = Math.min(safePage, totalPages);
