@@ -1,0 +1,8122 @@
+[
+  {
+    "_id": "DZc43yHr6ydfgE7zB3znRV",
+    "name": "iFi Audio Go Pod Max Portable IEM Bluetooth DAC/AMP (Unit Only)",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "2Q3Hkst6W23iaT5J8DYRdm"
+    ],
+    "price": 59900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "bluetooth",
+      "xlr-balanced",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 59900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "DZc43yHr6ydfgE7zB3zokw",
+    "name": "FiiO BTR17 Bluetooth USB DAC/Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "2Q3Hkst6W23iaT5J8DYRdm"
+    ],
+    "price": 21999,
+    "brand": [
+      "fiio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "bluetooth",
+      "usb"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 21999,
+    "inStockResolved": true
+  },
+  {
+    "_id": "DZc43yHr6ydfgE7zB40gAe",
+    "name": "GUSTARD R30 Fully-Discrete R2R Network Streaming DAC (Apos Certified)",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "npwbgqg3v4t5qe95rg35wte0"
+    ],
+    "price": 60099,
+    "brand": [
+      "gustard"
+    ],
+    "inStock": false,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": null,
+    "outputs": [
+      "pre-out"
+    ],
+    "awards": null,
+    "condition": "open-box",
+    "dealsDiscount": "sale",
+    "newArrival": null,
+    "priceCentsResolved": 60099,
+    "inStockResolved": false
+  },
+  {
+    "_id": "DZc43yHr6ydfgE7zB40rkU",
+    "name": "Matrix Audio MS-1 Flagship Music Streamer",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "npwbgqg3v4t5qe95rg35wte0"
+    ],
+    "price": 999900,
+    "brand": [
+      "matrix-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "i2s-iis",
+      "xlr-balanced",
+      "rca",
+      "phono-mm-mc"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 999900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "DZc43yHr6ydfgE7zB40v3a",
+    "name": "FiiO K7 Balanced Headphone DAC/Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 21999,
+    "brand": [
+      "fiio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "rca"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "pre-out-rca"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 21999,
+    "inStockResolved": true
+  },
+  {
+    "_id": "DZc43yHr6ydfgE7zB4112Z",
+    "name": "GUSTARD DAC-R26II Network Streaming R2R DAC",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 164999,
+    "brand": [
+      "gustard"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": null,
+    "outputs": [
+      "pre-out"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 164999,
+    "inStockResolved": true
+  },
+  {
+    "_id": "DZc43yHr6ydfgE7zB41H2s",
+    "name": "VMV D2R MKII Desktop DAC (Digital-to-Analog Converter)",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 116000,
+    "brand": [
+      "vmv"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "bluetooth",
+      "i2s-iis",
+      "aes-ebu"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 116000,
+    "inStockResolved": true
+  },
+  {
+    "_id": "DZc43yHr6ydfgE7zB41Jlm",
+    "name": "SMSL VMV D3 Advanced R-2R DAC (Digital-to-Analog Converter)",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 349999,
+    "brand": [
+      "smsl"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 349999,
+    "inStockResolved": true
+  },
+  {
+    "_id": "DZc43yHr6ydfgE7zB41PVg",
+    "name": "FiiO K11 R2R Balanced Desktop DAC/Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 17599,
+    "brand": [
+      "fiio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "pre-out-rca"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 17599,
+    "inStockResolved": true
+  },
+  {
+    "_id": "DZc43yHr6ydfgE7zB41Wo6",
+    "name": "FiiO K13 R2R Desktop DAC/Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 31999,
+    "brand": [
+      "fiio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "bluetooth"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "pre-out-rca",
+      "pre-out-xlr"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 31999,
+    "inStockResolved": true
+  },
+  {
+    "_id": "DZc43yHr6ydfgE7zB41fx8",
+    "name": "FiiO K17 Desktop DAC/Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 98999,
+    "brand": [
+      "fiio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "rca",
+      "xlr-balanced",
+      "bluetooth",
+      "ethernet-lan"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "pre-out-rca",
+      "pre-out-xlr"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 98999,
+    "inStockResolved": true
+  },
+  {
+    "_id": "DZc43yHr6ydfgE7zB41lXz",
+    "name": "HIFIMAN EF600 Desktop R2R DAC/Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 64900,
+    "brand": [
+      "hifiman"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "coaxial",
+      "rca",
+      "xlr-balanced",
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": "new",
+    "dealsDiscount": "sale",
+    "newArrival": null,
+    "priceCentsResolved": 64900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "DZc43yHr6ydfgE7zB41oi2",
+    "name": "xDuoo DM-01 Desktop DAC/Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 27900,
+    "brand": [
+      "xduoo"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 27900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "DZc43yHr6ydfgE7zB41seL",
+    "name": "VMV P2 MKII Desktop Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 116000,
+    "brand": [
+      "vmv"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "preamplifier",
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": [
+      "xlr-balanced",
+      "rca"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "pre-out-rca",
+      "pre-out-xlr"
+    ],
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 116000,
+    "inStockResolved": true
+  },
+  {
+    "_id": "DZc43yHr6ydfgE7zB42MQD",
+    "name": "YULONG DAART Aurora Desktop DAC/Pre-amp/ Headphone Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 52000,
+    "brand": [
+      "yulong"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "coaxial",
+      "optical",
+      "rca"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 52000,
+    "inStockResolved": true
+  },
+  {
+    "_id": "DZc43yHr6ydfgE7zB42mdu",
+    "name": "TOPPING A70 Pro Fully Balanced Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 49900,
+    "brand": [
+      "topping"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": null,
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 49900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "DZc43yHr6ydfgE7zB42o6O",
+    "name": "TOPPING L50 Headphone Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 16900,
+    "brand": [
+      "topping"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": null,
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 16900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "DZc43yHr6ydfgE7zB42uia",
+    "name": "xDuoo TA-20 Plus Balanced Tube Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 49900,
+    "brand": [
+      "xduoo"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": null,
+    "outputs": null,
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 49900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "DZc43yHr6ydfgE7zB42wTA",
+    "name": "xDuoo MT-604 Balanced Tube Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 16900,
+    "brand": [
+      "xduoo"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": null,
+    "outputs": null,
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 16900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "DZc43yHr6ydfgE7zB43FOR",
+    "name": "Burson SOLOIST STELLAR 8W XLR Class-A Headphone / Pre Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 149900,
+    "brand": [
+      "burson-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": null,
+    "outputs": null,
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 149900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "DZc43yHr6ydfgE7zB45LQY",
+    "name": "Cayin N3Ultra Triple Timbre Digital Audio Player",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o9igtdq1g5oqaahpa0zvq238"
+    ],
+    "price": 52900,
+    "brand": [
+      "cayin"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": null,
+    "outputs": null,
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": null,
+    "priceCentsResolved": 52900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "DZc43yHr6ydfgE7zB46CG4",
+    "name": "iFi GO bar Kensei",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "dW7bkxuW7lwltD3OAxQBo5"
+    ],
+    "price": 44900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "bluetooth",
+      "xlr-balanced",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 44900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "DZc43yHr6ydfgE7zB46Kfr",
+    "name": "xDuoo XD-05 BAL Balanced DAC/Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "dW7bkxuW7lwltD3OAxQBo5"
+    ],
+    "price": 42900,
+    "brand": [
+      "xduoo"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "rca",
+      "usb",
+      "optical",
+      "coaxial",
+      "aes-ebu"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 42900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "GPjMdcfFWZVrKyR2PB4QYo",
+    "name": "TOPPING DX3 Pro+ Bluetooth DAC/Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "2Q3Hkst6W23iaT5J8DYRdm"
+    ],
+    "price": 19900,
+    "brand": [
+      "topping"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 19900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "GPjMdcfFWZVrKyR2PB5NeM",
+    "name": "iFi NEO Stream",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "npwbgqg3v4t5qe95rg35wte0"
+    ],
+    "price": 129900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "rca",
+      "bluetooth",
+      "xlr-balanced",
+      "aes-ebu",
+      "i2s-iis",
+      "ethernet-lan",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "pre-out-rca",
+      "speaker-terminals"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 129900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "GPjMdcfFWZVrKyR2PB5Tcg",
+    "name": "YULONG DAART Asura Music Streamer & Desktop DAC & Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "npwbgqg3v4t5qe95rg35wte0"
+    ],
+    "price": 129900,
+    "brand": [
+      "yulong"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "ethernet-lan",
+      "optical",
+      "usb",
+      "coaxial"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 129900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "GPjMdcfFWZVrKyR2PB5pis",
+    "name": "LADDER Czerny R2R Desktop DAC",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 82900,
+    "brand": [
+      "ladder"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "coaxial",
+      "optical",
+      "i2s-iis",
+      "usb"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 82900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "GPjMdcfFWZVrKyR2PB6DOw",
+    "name": "xDuoo XD05 Pro (XD05Pro) Hard Nucleus Modular DAC/Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 79900,
+    "brand": [
+      "xduoo"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "aes-ebu",
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 79900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "GPjMdcfFWZVrKyR2PB6EDC",
+    "name": "xDuoo TA-10R Tube DAC/Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 31900,
+    "brand": [
+      "xduoo"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "optical",
+      "coaxial",
+      "rca",
+      "usb"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 31900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "GPjMdcfFWZVrKyR2PB6IuA",
+    "name": "LADDER Chopin Desktop R2R Pre-amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 154500,
+    "brand": [
+      "ladder"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "preamplifier",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": [
+      "xlr-balanced",
+      "rca"
+    ],
+    "outputs": [
+      "pre-out-xlr",
+      "pre-out-rca"
+    ],
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 154500,
+    "inStockResolved": true
+  },
+  {
+    "_id": "GPjMdcfFWZVrKyR2PB6how",
+    "name": "Yulong Canary II DAC/Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 23200,
+    "brand": [
+      "yulong"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "coaxial",
+      "optical",
+      "aes-ebu"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 23200,
+    "inStockResolved": true
+  },
+  {
+    "_id": "GPjMdcfFWZVrKyR2PB6tb0",
+    "name": "Fosi Audio Q4 Mini Stereo Gaming DAC & Headphone Amplifier Audio",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 5999,
+    "brand": [
+      "fosi-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 5999,
+    "inStockResolved": true
+  },
+  {
+    "_id": "GPjMdcfFWZVrKyR2PB6xuA",
+    "name": "Fosi Audio K5 Pro Gaming DAC/ Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 7999,
+    "brand": [
+      "fosi-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 7999,
+    "inStockResolved": true
+  },
+  {
+    "_id": "GPjMdcfFWZVrKyR2PB6zec",
+    "name": "Burson Playmate 3 Class-A Headphone Amp/ Pre-Amp/ DAC",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 59900,
+    "brand": [
+      "burson-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "pre-out-rca"
+    ],
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 59900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "GPjMdcfFWZVrKyR2PB71sA",
+    "name": "TOPPING A90 Discrete Headphone Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 59900,
+    "brand": [
+      "topping"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": null,
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 59900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "GPjMdcfFWZVrKyR2PB76mM",
+    "name": "xDuoo TA-22 DAC/Tube Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 48900,
+    "brand": [
+      "xduoo"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "coaxial",
+      "optical",
+      "bluetooth",
+      "rca"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 48900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "GPjMdcfFWZVrKyR2PB7D0Y",
+    "name": "xDuoo TA-66 OTL Tube Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 24900,
+    "brand": [
+      "xduoo"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": null,
+    "outputs": null,
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 24900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "GPjMdcfFWZVrKyR2PB7GdO",
+    "name": "xDuoo TA-32 High-performance DAC &amp; Balanced Tube Class-A Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 99900,
+    "brand": [
+      "xduoo"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "coaxial",
+      "optical",
+      "aes-ebu",
+      "bluetooth",
+      "rca",
+      "xlr-balanced"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 99900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "GPjMdcfFWZVrKyR2PB7LN0",
+    "name": "Singxer SA-2 Fully-balanced Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 62900,
+    "brand": [
+      "singxer"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "preamplifier",
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": [
+      "rca",
+      "xlr-balanced"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "pre-out-rca",
+      "pre-out-xlr"
+    ],
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 62900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "GPjMdcfFWZVrKyR2PB7cLm",
+    "name": "YULONG DAART A39 Desktop R2R Pre-Amp & Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 109900,
+    "brand": [
+      "yulong"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "preamplifier",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": [
+      "rca",
+      "xlr-balanced"
+    ],
+    "outputs": [
+      "pre-out-rca",
+      "pre-out-xlr",
+      "headphone-jack"
+    ],
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 109900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "GPjMdcfFWZVrKyR2PB7h5O",
+    "name": "Matrix TS-1 All-in-One Streamer/ Pre-Amplifier/ Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 249900,
+    "brand": [
+      "matrix-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "hdmi-earc",
+      "rca"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 249900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "GPjMdcfFWZVrKyR2PB9DqI",
+    "name": "FiiO M21 Portable High-Res Lossless Music Player",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o9igtdq1g5oqaahpa0zvq238"
+    ],
+    "price": 39999,
+    "brand": [
+      "fiio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 39999,
+    "inStockResolved": true
+  },
+  {
+    "_id": "GPjMdcfFWZVrKyR2PBA7rO",
+    "name": "Cayin RU9 Vacuum Tube Portable DAC/Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "dW7bkxuW7lwltD3OAxQBo5"
+    ],
+    "price": 49900,
+    "brand": [
+      "cayin"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "bluetooth",
+      "coaxial"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": null,
+    "priceCentsResolved": 49900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "GPjMdcfFWZVrKyR2PBA93S",
+    "name": "Cayin RU3 Portable USB DAC/Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "dW7bkxuW7lwltD3OAxQBo5"
+    ],
+    "price": 9900,
+    "brand": [
+      "cayin"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "dongle",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": null,
+    "priceCentsResolved": 9900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnKwOVD",
+    "name": "FiiO M15S Portable Music Player",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o9igtdq1g5oqaahpa0zvq238"
+    ],
+    "price": 99999,
+    "brand": [
+      "fiio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "coaxial",
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 99999,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnN3Yzy",
+    "name": "FiiO BTR11 Portable DAC and Headphone Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "2Q3Hkst6W23iaT5J8DYRdm"
+    ],
+    "price": 1999,
+    "brand": [
+      "fiio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "bluetooth"
+    ],
+    "outputs": [
+      "headphone-jack"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 1999,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnN74UJ",
+    "name": "Chord Electronics Hugo 2 Portable DAC & Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "ipz8oe0elii0vm2voxsbgsw6"
+    ],
+    "price": 259500,
+    "brand": [
+      "chord-electronics"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": [
+      "What Hi-Fi? Best DAC"
+    ],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 259500,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnN7D4q",
+    "name": "Questyle M15i USB Portable DAC & Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "ipz8oe0elii0vm2voxsbgsw6"
+    ],
+    "price": 24900,
+    "brand": [
+      "questyle"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 24900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnN7WCP",
+    "name": "iFi Audio Hip DAC 3 Portable DAC/Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "ipz8oe0elii0vm2voxsbgsw6"
+    ],
+    "price": 19900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "bluetooth",
+      "xlr-balanced",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "speaker-terminals"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 19900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnN7qVp",
+    "name": "Chord Electronics 2go",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "npwbgqg3v4t5qe95rg35wte0"
+    ],
+    "price": 150000,
+    "brand": [
+      "chord-electronics"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "network-streamer",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": [
+      "ethernet-lan",
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 150000,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnN82fv",
+    "name": "Eversolo DMP-A8 All-In-One Streamer, DAC, Preamp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "npwbgqg3v4t5qe95rg35wte0"
+    ],
+    "price": 198000,
+    "brand": [
+      "eversolo"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "hdmi-earc",
+      "xlr-balanced",
+      "rca",
+      "bluetooth",
+      "ethernet-lan"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 198000,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnN8E5N",
+    "name": "Eversolo DMP-A6 Master Edition Streamer and DAC",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "npwbgqg3v4t5qe95rg35wte0"
+    ],
+    "price": 129900,
+    "brand": [
+      "eversolo"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "hdmi-earc",
+      "bluetooth",
+      "ethernet-lan"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 129900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnN8QYu",
+    "name": "iFi Audio Pro iDSD Signature DAC/Amp & Streamer",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "npwbgqg3v4t5qe95rg35wte0"
+    ],
+    "price": 324900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "rca",
+      "bluetooth",
+      "xlr-balanced",
+      "ethernet-lan",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "pre-out-rca",
+      "speaker-terminals"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 324900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnN8f2p",
+    "name": "Topping E50 Desktop Digital to Analog Convertor (DAC)",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 22800,
+    "brand": [
+      "topping"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 22800,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnN8n4N",
+    "name": "Topping D50 III DAC",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 22900,
+    "brand": [
+      "topping"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 22900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnN9RG0",
+    "name": "Topping DX9 DAC, Headphone Amplifier and Pre-Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 129900,
+    "brand": [
+      "topping"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "bluetooth",
+      "aes-ebu",
+      "i2s-iis"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 129900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnNA955",
+    "name": "Zähl HM1 Reference Desktop Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 1099900,
+    "brand": [
+      "zahl"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": null,
+    "outputs": null,
+    "awards": [
+      "Reviewer's Choice"
+    ],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 1099900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnNFt41",
+    "name": "EarMen Angel Portable DAC and Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "ipz8oe0elii0vm2voxsbgsw6"
+    ],
+    "price": 39900,
+    "brand": [
+      "earmen"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 39900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnNGIa4",
+    "name": "Astell&Kern PA10 Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "ipz8oe0elii0vm2voxsbgsw6"
+    ],
+    "price": 49900,
+    "brand": [
+      "astell-and-kern"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": null,
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 49900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnNGOLg",
+    "name": "Moondrop Dawn Pro Portable DAC and Headphone Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "ipz8oe0elii0vm2voxsbgsw6"
+    ],
+    "price": 3999,
+    "brand": [
+      "moondrop"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 3999,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnNHjjW",
+    "name": "Bluesound Powernode Edge Streamer and Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "npwbgqg3v4t5qe95rg35wte0"
+    ],
+    "price": 54900,
+    "brand": [
+      "bluesound"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "integrated-amplifier",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "hdmi-earc",
+      "optical",
+      "rca",
+      "usb",
+      "bluetooth",
+      "ethernet-lan"
+    ],
+    "outputs": [
+      "speaker-terminals",
+      "subwoofer-out"
+    ],
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 54900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnNIk7B",
+    "name": "Naim Uniti Atom Amplifier Headphone Edition",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 379900,
+    "brand": [
+      "naim"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": null,
+    "outputs": null,
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 379900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnNK74C",
+    "name": "Astell&Kern PD20 | Digital Audio Player",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o9igtdq1g5oqaahpa0zvq238"
+    ],
+    "price": 177300,
+    "brand": [
+      "astell-and-kern"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": null,
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 177300,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnNKGX9",
+    "name": "Astell&Kern A&Ultima SP4000 | Digital Audio Player",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o9igtdq1g5oqaahpa0zvq238"
+    ],
+    "price": 348200,
+    "brand": [
+      "astell-and-kern"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": null,
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 348200,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnRGpuU",
+    "name": "Aune Audio BX2 Magnum Portable Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "ipz8oe0elii0vm2voxsbgsw6"
+    ],
+    "price": 79900,
+    "brand": [
+      "aune-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "portable",
+    "amplification": "hybrid",
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": [
+      "rca",
+      "xlr-balanced"
+    ],
+    "outputs": [
+      "headphone-jack"
+    ],
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 79900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnRGtU3",
+    "name": "Aune Audio YUKI Portable DAC and Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "ipz8oe0elii0vm2voxsbgsw6"
+    ],
+    "price": 16900,
+    "brand": [
+      "aune-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "dongle",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 16900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnRH2Ru",
+    "name": "Denon DNP-2000NE Streaming Music Player and Preamplifier - Open Box",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "npwbgqg3v4t5qe95rg35wte0"
+    ],
+    "price": 99900,
+    "brand": [
+      "denon"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "hdmi-earc",
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": "open-box",
+    "dealsDiscount": null,
+    "newArrival": false,
+    "priceCentsResolved": 99900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnRHed9",
+    "name": "Cambridge Audio DacMagic 200M - Open Box",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 44900,
+    "brand": [
+      "cambridge-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": [
+      "What Hi-Fi? Awards 2021 winner"
+    ],
+    "condition": "open-box",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 44900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnRIFQs",
+    "name": "Hifiman EF499 Desktop DAC and Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 29900,
+    "brand": [
+      "hifiman"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "coaxial",
+      "ethernet-lan"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": null,
+    "priceCentsResolved": 29900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnRIIom",
+    "name": "Hifiman EF600 Headphone Amplifier and DAC",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 64900,
+    "brand": [
+      "hifiman"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "coaxial",
+      "rca",
+      "xlr-balanced",
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": "new",
+    "dealsDiscount": "sale",
+    "newArrival": null,
+    "priceCentsResolved": 64900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnRJcsz",
+    "name": "iFi Audio iCAN Phantom Headphone Amplifier and Energizer",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 374900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "rca",
+      "bluetooth",
+      "xlr-balanced",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "pre-out-rca"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 374900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnRJqYN",
+    "name": "Auris Audio Euterpe",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 169900,
+    "brand": [
+      "auris-audio"
+    ],
+    "inStock": false,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "rca"
+    ],
+    "outputs": null,
+    "awards": [
+      "Headfonics Best Desktop Headphone Amplifier 2019"
+    ],
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 169900,
+    "inStockResolved": false
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnRKRM6",
+    "name": "Aune Audio N7 Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 39900,
+    "brand": [
+      "aune-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": [
+      "rca",
+      "xlr-balanced"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "pre-out-rca",
+      "pre-out-xlr"
+    ],
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 39900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnRKsJY",
+    "name": "Ferrum Oor Desktop Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 227500,
+    "brand": [
+      "ferrum-audio"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": null,
+    "outputs": null,
+    "awards": [
+      "eisa-best-headphone-amplifier-2022-2023",
+      "headfonia-best-amplifier-2024-readers-choice"
+    ],
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 227500,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnRL7UE",
+    "name": "Woo Audio WA7 Fireflies 3rd Gen Headphone Tube Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 139900,
+    "brand": [
+      "woo-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": "tube",
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "rca"
+    ],
+    "outputs": [
+      "headphone-jack"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 139900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnRLHGc",
+    "name": "Woo Audio WA6 Desktop Tube Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 89900,
+    "brand": [
+      "woo-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": "tube",
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": [
+      "rca"
+    ],
+    "outputs": [
+      "headphone-jack"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 89900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnTCCwU",
+    "name": "Astell&Kern AK HB1 | Portable Wired/Wireless Bluetooth DAC/Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "2Q3Hkst6W23iaT5J8DYRdm"
+    ],
+    "price": 22900,
+    "brand": [
+      "astell-and-kern"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 22900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "MrEMtYwMtrFDGWmRnTE4cB",
+    "name": "Astell&Kern HC5 | Portable DAC and Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "ipz8oe0elii0vm2voxsbgsw6"
+    ],
+    "price": 44000,
+    "brand": [
+      "astell-and-kern"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 44000,
+    "inStockResolved": true
+  },
+  {
+    "_id": "PHPYj28HJdPDHAaIBACuKc",
+    "name": "iFi Audio GO Blu Portable Bluetooth DAC/Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "2Q3Hkst6W23iaT5J8DYRdm"
+    ],
+    "price": 19900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "bluetooth",
+      "xlr-balanced",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "speaker-terminals"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 19900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "PHPYj28HJdPDHAaIBAGWYs",
+    "name": "Topping D70 Pro DAC",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 61500,
+    "brand": [
+      "topping"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "bluetooth",
+      "aes-ebu"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 61500,
+    "inStockResolved": true
+  },
+  {
+    "_id": "PHPYj28HJdPDHAaIBAGqx8",
+    "name": "Topping DX3 Pro+ Desktop DAC & Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 19900,
+    "brand": [
+      "topping"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 19900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "PHPYj28HJdPDHAaIBAHGKa",
+    "name": "Burson Audio Playmate 2",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 54400,
+    "brand": [
+      "burson-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 54400,
+    "inStockResolved": true
+  },
+  {
+    "_id": "PHPYj28HJdPDHAaIBAKFRO",
+    "name": "Woo Audio Tube Mini Portable DAC and Tube Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "ipz8oe0elii0vm2voxsbgsw6"
+    ],
+    "price": 44900,
+    "brand": [
+      "woo-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": "hybrid",
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "headphone-jack"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 44900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "PHPYj28HJdPDHAaIBAL1Lw",
+    "name": "HiFi Rose RS520 Network Streamer & Integrated Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "npwbgqg3v4t5qe95rg35wte0"
+    ],
+    "price": 369500,
+    "brand": [
+      "hifi-rose"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "integrated-amplifier",
+    "formFactor": "desktop",
+    "amplification": "class-d",
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "optical",
+      "coaxial",
+      "rca",
+      "usb",
+      "hdmi-earc"
+    ],
+    "outputs": [
+      "pre-out-rca",
+      "speaker-terminals"
+    ],
+    "awards": [
+      "The Absolute Sound Buyer's Guide Pick 2024"
+    ],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 369500,
+    "inStockResolved": true
+  },
+  {
+    "_id": "PHPYj28HJdPDHAaIBAMKFk",
+    "name": "FiiO R7 DAC and Headphone Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 54999,
+    "brand": [
+      "fiio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "bluetooth",
+      "ethernet-lan"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "headphone-jack",
+      "pre-out-rca",
+      "pre-out-xlr"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 54999,
+    "inStockResolved": true
+  },
+  {
+    "_id": "PHPYj28HJdPDHAaIBANGzM",
+    "name": "Astell&Kern A&ultima SP3000M | Digital Audio Player",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o9igtdq1g5oqaahpa0zvq238"
+    ],
+    "price": 227000,
+    "brand": [
+      "astell-and-kern"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": null,
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 227000,
+    "inStockResolved": true
+  },
+  {
+    "_id": "PHPYj28HJdPDHAaIBANTBA",
+    "name": "Astell&Kern A&norma SR35 | Digital Audio Player",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o9igtdq1g5oqaahpa0zvq238"
+    ],
+    "price": 65900,
+    "brand": [
+      "astell-and-kern"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": null,
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 65900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "PHPYj28HJdPDHAaIBANaSM",
+    "name": "Astell&Kern Acro CA1000T | Transportable Digital Audio Player",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o9igtdq1g5oqaahpa0zvq238"
+    ],
+    "price": 129900,
+    "brand": [
+      "astell-and-kern"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": null,
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 129900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "PHPYj28HJdPDHAaIBCfbSC",
+    "name": "Burson Audio Composer 3X Performance DAC - Open Box",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 89900,
+    "brand": [
+      "burson-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "balancedOutput": null,
+    "inputs": [
+      "usb",
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": "open-box",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 89900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "PHPYj28HJdPDHAaIBCgFZU",
+    "name": "iFi Audio iDSD NEO",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 64900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "rca",
+      "bluetooth",
+      "xlr-balanced",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "pre-out-rca",
+      "speaker-terminals"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 64900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "PHPYj28HJdPDHAaIBCgRj0",
+    "name": "Questyle CMA 18 Master DAC and Headphone Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 299900,
+    "brand": [
+      "questyle"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "bluetooth",
+      "rca"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 299900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "PHPYj28HJdPDHAaIBCgUJK",
+    "name": "Questyle CMA Twelve Desktop DAC & Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 109500,
+    "brand": [
+      "questyle"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "aes-ebu"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 109500,
+    "inStockResolved": true
+  },
+  {
+    "_id": "PHPYj28HJdPDHAaIBCgaYO",
+    "name": "Chord Electronics Anni",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 197500,
+    "brand": [
+      "chord-electronics"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "integrated-amplifier",
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": [
+      "rca"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "speaker-terminals"
+    ],
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 197500,
+    "inStockResolved": true
+  },
+  {
+    "_id": "PHPYj28HJdPDHAaIBCghLo",
+    "name": "Chord Electronics Alto Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 432000,
+    "brand": [
+      "chord-electronics"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "integrated-amplifier",
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": [
+      "rca",
+      "xlr-balanced"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "speaker-terminals"
+    ],
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 432000,
+    "inStockResolved": true
+  },
+  {
+    "_id": "PHPYj28HJdPDHAaIBCgrcW",
+    "name": "iFi Audio iCAN Phantom Headphone Amplifier and Energizer - Open Box",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 289900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "rca",
+      "bluetooth",
+      "xlr-balanced",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "pre-out-rca"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 289900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "PHPYj28HJdPDHAaIBChGhe",
+    "name": "Enleum Amp-23r Desktop Headphone & Speaker Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 625000,
+    "brand": [
+      "enleum"
+    ],
+    "inStock": false,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "integrated-amplifier",
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": [
+      "rca"
+    ],
+    "outputs": [
+      "speaker-terminals",
+      "headphone-jack"
+    ],
+    "awards": [
+      "Red Dot Award: Product Design 2021",
+      "iF Design Gold Award 2022"
+    ],
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 625000,
+    "inStockResolved": false
+  },
+  {
+    "_id": "PHPYj28HJdPDHAaIBChQCG",
+    "name": "Aune Audio A17 Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 239900,
+    "brand": [
+      "aune-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": [
+      "rca",
+      "xlr-balanced"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "pre-out-rca",
+      "pre-out-xlr"
+    ],
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 239900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "PHPYj28HJdPDHAaIBChWTc",
+    "name": "Aune Audio S17 Pro EVO Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 79900,
+    "brand": [
+      "aune-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": [
+      "rca",
+      "xlr-balanced"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "pre-out-rca",
+      "pre-out-xlr"
+    ],
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 79900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "PHPYj28HJdPDHAaIBChaz2",
+    "name": "Luxman P-100 Centennial Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 1399500,
+    "brand": [
+      "luxman"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": null,
+    "outputs": null,
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 1399500,
+    "inStockResolved": true
+  },
+  {
+    "_id": "PHPYj28HJdPDHAaIBChpSq",
+    "name": "Woo Audio WA23 LUNA",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 899900,
+    "brand": [
+      "woo-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "preamplifier",
+    "formFactor": "desktop",
+    "amplification": "tube",
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "xlr-balanced",
+      "rca"
+    ],
+    "outputs": [
+      "pre-out-xlr",
+      "headphone-jack"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 899900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "PHPYj28HJdPDHAaIBDs64e",
+    "name": "Astell&Kern HC3 | Portable DAC and Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "ipz8oe0elii0vm2voxsbgsw6"
+    ],
+    "price": 24900,
+    "brand": [
+      "astell-and-kern"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 24900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "PHPYj28HJdPDHAaIBDs9x8",
+    "name": "Astell&Kern AK HC4 | Portable DAC and Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "ipz8oe0elii0vm2voxsbgsw6"
+    ],
+    "price": 23900,
+    "brand": [
+      "astell-and-kern"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 23900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjexfWP",
+    "name": "FiiO M17 Portable Music Player",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o9igtdq1g5oqaahpa0zvq238"
+    ],
+    "price": 179999,
+    "brand": [
+      "fiio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "coaxial",
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 179999,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjgp8X6",
+    "name": "FiiO BTR17 Bluetooth DAC And Headphone Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "2Q3Hkst6W23iaT5J8DYRdm"
+    ],
+    "price": 19999,
+    "brand": [
+      "fiio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "bluetooth",
+      "usb"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 19999,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjgpOZX",
+    "name": "FiiO BTR7 Portable DAC and Headphone Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "2Q3Hkst6W23iaT5J8DYRdm"
+    ],
+    "price": 15999,
+    "brand": [
+      "fiio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "bluetooth",
+      "usb"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 15999,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjgsEF8",
+    "name": "Chord Electronics Mojo 2 Portable DAC and Headphone Amplifier (4.4mm)",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "ipz8oe0elii0vm2voxsbgsw6"
+    ],
+    "price": 65000,
+    "brand": [
+      "chord-electronics"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial"
+    ],
+    "outputs": null,
+    "awards": [
+      "What Hi-Fi? Best DAC",
+      "What Hi-Fi? Product of the Year"
+    ],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 65000,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjgsda0",
+    "name": "Questyle M12i Portable USB DAC & Headphone Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "ipz8oe0elii0vm2voxsbgsw6"
+    ],
+    "price": 14900,
+    "brand": [
+      "questyle"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 14900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjgsvqe",
+    "name": "iFi Audio GO Bar Portable USB DAC & Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "ipz8oe0elii0vm2voxsbgsw6"
+    ],
+    "price": 27900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "bluetooth",
+      "xlr-balanced",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 27900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjgtLZ7",
+    "name": "Eversolo DMP-A6 Streamer and DAC Gen 2",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "npwbgqg3v4t5qe95rg35wte0"
+    ],
+    "price": 85900,
+    "brand": [
+      "eversolo"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "hdmi-earc",
+      "bluetooth",
+      "ethernet-lan"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 85900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjguCqf",
+    "name": "Ferrum WANDLA 2.0 DAC",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 319500,
+    "brand": [
+      "ferrum-audio"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "aes-ebu",
+      "hdmi-earc",
+      "i2s-iis",
+      "rca"
+    ],
+    "outputs": null,
+    "awards": [
+      "hificlube-dac-of-the-year-2023",
+      "headphone-show-dac-of-the-year-2023",
+      "eisa-award"
+    ],
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 319500,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjguegb",
+    "name": "RME ADI-2 DAC FS Desktop DAC & Headphone Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 129900,
+    "brand": [
+      "rme"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial"
+    ],
+    "outputs": null,
+    "awards": [
+      "Reviewers' Choice - SoundStage! Hi-Fi",
+      "Recommended Reference Component - SoundStage! Hi-Fi"
+    ],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 129900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjh0awA",
+    "name": "CrinEar Protocol Max",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "ipz8oe0elii0vm2voxsbgsw6"
+    ],
+    "price": 8999,
+    "brand": [
+      "crinear"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 8999,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjh1b8Y",
+    "name": "HiFi Rose RS150B Reference HiFi Network Streamer",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "npwbgqg3v4t5qe95rg35wte0"
+    ],
+    "price": 499500,
+    "brand": [
+      "hifi-rose"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "optical",
+      "coaxial",
+      "rca",
+      "aes-ebu",
+      "hdmi-earc",
+      "usb"
+    ],
+    "outputs": [
+      "pre-out-rca",
+      "pre-out-xlr"
+    ],
+    "awards": [
+      "Editor's Choice Award 2022",
+      "Editor's Choice Award 2024",
+      "EISA Award — High-End Music Player 2021–2022",
+      "Highly Commended",
+      "Five Stars — Recommended"
+    ],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 499500,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjh34kd",
+    "name": "Feliks Audio Echo Classic",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 94900,
+    "brand": [
+      "feliks-audio"
+    ],
+    "inStock": false,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": "tube",
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": [
+      "rca"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "pre-out"
+    ],
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "on-sale",
+    "newArrival": false,
+    "priceCentsResolved": 94900,
+    "inStockResolved": false
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjh3AqB",
+    "name": "Feliks Audio Envy Flagship Desktop Headphone Tube Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 889900,
+    "brand": [
+      "feliks-audio"
+    ],
+    "inStock": false,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": "tube",
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": [
+      "rca",
+      "xlr"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "pre-out"
+    ],
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 889900,
+    "inStockResolved": false
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjh3y6H",
+    "name": "Astell&Kern A&ultima SP4000T | Vacuum Tube Digital Audio Player",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o9igtdq1g5oqaahpa0zvq238"
+    ],
+    "price": 362000,
+    "brand": [
+      "astell-and-kern"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": null,
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 362000,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjh4ExH",
+    "name": "Astell&Kern PD10 | Digital Audio Player",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o9igtdq1g5oqaahpa0zvq238"
+    ],
+    "price": 241000,
+    "brand": [
+      "astell-and-kern"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": null,
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 241000,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjh4PL8",
+    "name": "Astell&Kern A&ultima SP3000T | Vacuum Tube Digital Audio Player",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o9igtdq1g5oqaahpa0zvq238"
+    ],
+    "price": 329900,
+    "brand": [
+      "astell-and-kern"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": null,
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 329900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjkSVqY",
+    "name": "Denon DNP-2000NE Streaming Music Player and Preamplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "npwbgqg3v4t5qe95rg35wte0"
+    ],
+    "price": 179900,
+    "brand": [
+      "denon"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "hdmi-earc",
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 179900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjkStf2",
+    "name": "Cambridge Audio DacMagic 200M",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 39900,
+    "brand": [
+      "cambridge-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": [
+      "What Hi-Fi? Awards 2021 winner"
+    ],
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 39900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjkSwUK",
+    "name": "Cambridge Audio DacMagic 100",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 14900,
+    "brand": [
+      "cambridge-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 14900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjkT8mA",
+    "name": "Burson Audio Conductor 3x Grand Tourer Desktop DAC & Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 299900,
+    "brand": [
+      "burson-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 299900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjkTAjW",
+    "name": "Burson Audio Conductor 3x Performance - Open Box",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 89900,
+    "brand": [
+      "burson-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": "open-box",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 89900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjkTEhb",
+    "name": "Burson Audio Timekeeper 3i Reference Integrated Amp & DAC",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 195200,
+    "brand": [
+      "burson-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "integrated-amplifier",
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "rca",
+      "bluetooth"
+    ],
+    "outputs": [
+      "pre-out-rca",
+      "headphone-jack"
+    ],
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 195200,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjkTGp4",
+    "name": "Burson Audio Conductor 3 GT",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 179900,
+    "brand": [
+      "burson-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "rca",
+      "bluetooth"
+    ],
+    "outputs": [
+      "pre-out-rca",
+      "subwoofer-out",
+      "headphone-jack"
+    ],
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 179900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjkTTlM",
+    "name": "Chord Electronics Hugo TT2 - Open Box",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 399900,
+    "brand": [
+      "chord-electronics"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": "open-box",
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 399900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjkThBz",
+    "name": "Eversolo DAC-Z8 Desktop DAC and Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 74900,
+    "brand": [
+      "eversolo"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "bluetooth",
+      "usb",
+      "optical",
+      "coaxial"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 74900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjkTlXf",
+    "name": "Ferrum WANDLA HP DAC and Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 369500,
+    "brand": [
+      "ferrum-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "aes-ebu",
+      "hdmi-earc",
+      "i2s-iis",
+      "rca"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 369500,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjkU57D",
+    "name": "EarMen ST-Amp Fully Balanced DAC and Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 19900,
+    "brand": [
+      "earmen"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "rca",
+      "xlr-balanced"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 19900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjkUefp",
+    "name": "EarMen Ch-Amp Headphone Amplifier - Open Box",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 49900,
+    "brand": [
+      "earmen"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "preamplifier",
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": [
+      "rca",
+      "xlr-balanced"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "pre-out-rca"
+    ],
+    "awards": [],
+    "condition": "open-box",
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 49900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjkV2A5",
+    "name": "Hifiman Prelude Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 219900,
+    "brand": [
+      "hifiman"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": null,
+    "outputs": null,
+    "awards": [],
+    "condition": "new",
+    "dealsDiscount": "sale",
+    "newArrival": null,
+    "priceCentsResolved": 219900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjkVKDF",
+    "name": "Enleum HPA-23rm Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 299900,
+    "brand": [
+      "enleum"
+    ],
+    "inStock": false,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "portable",
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": [
+      "rca"
+    ],
+    "outputs": [
+      "headphone-jack"
+    ],
+    "awards": [
+      "Red Dot Design Award 2022",
+      "iF Design Award 2023"
+    ],
+    "condition": "new",
+    "dealsDiscount": null,
+    "newArrival": false,
+    "priceCentsResolved": 299900,
+    "inStockResolved": false
+  },
+  {
+    "_id": "Pn6oyV4Ks5AcNbecjkVOLR",
+    "name": "Enleum Amp 23-RMH Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 350000,
+    "brand": [
+      "enleum"
+    ],
+    "inStock": false,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "portable",
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": [
+      "rca"
+    ],
+    "outputs": [
+      "headphone-jack"
+    ],
+    "awards": [
+      "Red Dot Design Award 2022",
+      "iF Design Award 2023"
+    ],
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 350000,
+    "inStockResolved": false
+  },
+  {
+    "_id": "Y7l1IhzX2fnyiano4ipzcN",
+    "name": "iFi Audio iDSD Valkyrie Portable Amp & DAC",
+    "catalogueLocationKeys": [
+      "ipz8oe0elii0vm2voxsbgsw6"
+    ],
+    "price": 169900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": false,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "rca",
+      "bluetooth",
+      "xlr-balanced",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "pre-out-rca"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 169900,
+    "inStockResolved": false
+  },
+  {
+    "_id": "Y7l1IhzX2fnyiano4iq6jp",
+    "name": "iFi Audio Zen Can 3 Analog Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 22900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "rca",
+      "bluetooth",
+      "xlr-balanced",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "pre-out-rca",
+      "speaker-terminals"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 22900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Y7l1IhzX2fnyiano4jO6bg",
+    "name": "iFi Audio hip-dac 3 Portable USB DAC & Amplifier",
+    "catalogueLocationKeys": [
+      "dW7bkxuW7lwltD3OAxQBo5"
+    ],
+    "price": 19900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "bluetooth",
+      "xlr-balanced",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "speaker-terminals"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 19900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "Y7l1IhzX2fnyiano4jOIfY",
+    "name": "iFi Audio Zen DAC 3 Balanced Headphone Amp & DAC",
+    "catalogueLocationKeys": [
+      "dW7bkxuW7lwltD3OAxQBo5"
+    ],
+    "price": 22900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "rca",
+      "bluetooth",
+      "xlr-balanced",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "pre-out-rca",
+      "speaker-terminals"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 22900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "ZuUKzmkqDyQwdcwhxl77C3",
+    "name": "iFi Audio Hip-dac2 Portable USB DAC and Headphone Amp with Soft Protective Case",
+    "catalogueLocationKeys": [
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 21800,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": false,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "bluetooth",
+      "xlr-balanced",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "speaker-terminals"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 21800,
+    "inStockResolved": false
+  },
+  {
+    "_id": "ZuUKzmkqDyQwdcwhxl7Puy",
+    "name": "iFi Audio iCan Phantom Analog Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 374900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": false,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "rca",
+      "bluetooth",
+      "xlr-balanced",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "pre-out-rca"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 374900,
+    "inStockResolved": false
+  },
+  {
+    "_id": "ZuUKzmkqDyQwdcwhxlIcNL",
+    "name": "Denon DCD-1700NE CD/SACD Player with Advanced AL32 Processing Plus (Black)",
+    "catalogueLocationKeys": [
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 149900,
+    "brand": [
+      "denon"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "cd-player-transport",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [],
+    "outputs": null,
+    "awards": [],
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 149900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "ZuUKzmkqDyQwdcwhxlIfVH",
+    "name": "Marantz CD 60 CD Player (Silver Gold)",
+    "catalogueLocationKeys": [
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 99900,
+    "brand": [
+      "marantz"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "cd-player-transport",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 99900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "ZuUKzmkqDyQwdcwhxlIflR",
+    "name": "Marantz SACD10 CD Player (Black)",
+    "catalogueLocationKeys": [
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 1200000,
+    "brand": [
+      "marantz"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "cd-player-transport",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial"
+    ],
+    "outputs": null,
+    "awards": [
+      "iF Design Award"
+    ],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 1200000,
+    "inStockResolved": true
+  },
+  {
+    "_id": "ZuUKzmkqDyQwdcwhxlJjyP",
+    "name": "Eversolo DMP-A8 Network Streamer with Built-In DAC",
+    "catalogueLocationKeys": [
+      "npwbgqg3v4t5qe95rg35wte0"
+    ],
+    "price": 198000,
+    "brand": [
+      "eversolo"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "hdmi-earc",
+      "xlr-balanced",
+      "rca",
+      "bluetooth",
+      "ethernet-lan"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 198000,
+    "inStockResolved": true
+  },
+  {
+    "_id": "ZuUKzmkqDyQwdcwhxlJkHG",
+    "name": "HiFi Rose RD160 DAC (Silver)",
+    "catalogueLocationKeys": [
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 529500,
+    "brand": [
+      "hifi-rose"
+    ],
+    "inStock": false,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "i2s-iis",
+      "aes-ebu"
+    ],
+    "outputs": [
+      "pre-out-rca",
+      "pre-out-xlr"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 529500,
+    "inStockResolved": false
+  },
+  {
+    "_id": "ZuUKzmkqDyQwdcwhxlJlJu",
+    "name": "iFi Audio GO bar Kensei Portable Hi-Res USB DAC and Preamp",
+    "catalogueLocationKeys": [
+      "dW7bkxuW7lwltD3OAxQBo5"
+    ],
+    "price": 44900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "bluetooth",
+      "xlr-balanced",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 44900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "ZuUKzmkqDyQwdcwhxlJpXB",
+    "name": "McIntosh DS200 Streaming DAC",
+    "catalogueLocationKeys": [
+      "npwbgqg3v4t5qe95rg35wte0"
+    ],
+    "price": 700000,
+    "brand": [
+      "mcintosh"
+    ],
+    "inStock": false,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "coaxial",
+      "optical",
+      "usb",
+      "aes-ebu",
+      "hdmi-earc",
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": [
+      "Hi-Fi+ Highly Commended Award"
+    ],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 700000,
+    "inStockResolved": false
+  },
+  {
+    "_id": "dLGDVDmEEI2lV8CArAcaQ0",
+    "name": "iFi Audio Go blu Portable Bluetooth DAC/Headphone Amp",
+    "catalogueLocationKeys": [
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 19900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "bluetooth",
+      "xlr-balanced",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "speaker-terminals"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 19900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "dLGDVDmEEI2lV8CArAcay4",
+    "name": "iFi Audio GO Link Max Portable Amp & DAC",
+    "catalogueLocationKeys": [
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 7900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": false,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "dongle",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "bluetooth",
+      "xlr-balanced",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "speaker-terminals"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 7900,
+    "inStockResolved": false
+  },
+  {
+    "_id": "dLGDVDmEEI2lV8CArAcd7E",
+    "name": "iFi Audio Hip-dac2 Portable USB DAC and Headphone Amp",
+    "catalogueLocationKeys": [
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 18900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": false,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "bluetooth",
+      "xlr-balanced",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "speaker-terminals"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 18900,
+    "inStockResolved": false
+  },
+  {
+    "_id": "dLGDVDmEEI2lV8CArAcfBk",
+    "name": "iFi Audio NEO iDSD Desktop USB DAC/Headphone Amp with Bluetooth",
+    "catalogueLocationKeys": [
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 79900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "rca",
+      "bluetooth",
+      "xlr-balanced",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "pre-out-rca",
+      "speaker-terminals"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 79900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "dLGDVDmEEI2lV8CArAcgSi",
+    "name": "McIntosh MHA200 2-Channel Vacuum Tube Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 250000,
+    "brand": [
+      "mcintosh"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "power-amplifier",
+    "formFactor": "desktop",
+    "amplification": "tube",
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": [
+      "rca",
+      "xlr-balanced"
+    ],
+    "outputs": [
+      "headphone-jack"
+    ],
+    "awards": [
+      "AVForums Best Hi-Fi Product Award",
+      "What Hi-Fi 5 star logo",
+      "HiFi+ Award Winner 2021",
+      "Audiograde Recommended Badge"
+    ],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 250000,
+    "inStockResolved": true
+  },
+  {
+    "_id": "dLGDVDmEEI2lV8CArAcpNU",
+    "name": "iFi Audio ZEN Air CAN High-Power Analogue Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 9900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "rca",
+      "bluetooth",
+      "xlr-balanced",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "pre-out-rca",
+      "speaker-terminals"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 9900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "k27n1AQuIbSr5iozG1vD4O",
+    "name": "iFi Audio Diablo-X DAC and Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 74900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "bluetooth",
+      "xlr-balanced",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "speaker-terminals"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 74900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "k27n1AQuIbSr5iozG1vDSz",
+    "name": "iFi Audio xDSD Gryphon Portable Bluetooth DAC & Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "2Q3Hkst6W23iaT5J8DYRdm",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 59900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "bluetooth",
+      "xlr-balanced",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "speaker-terminals"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 59900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "k27n1AQuIbSr5iozG1vExT",
+    "name": "Feliks Audio Echo MK II",
+    "catalogueLocationKeys": [
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 99500,
+    "brand": [
+      "feliks-audio"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": "tube",
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": [
+      "rca"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "pre-out"
+    ],
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "on-sale",
+    "newArrival": false,
+    "priceCentsResolved": 99500,
+    "inStockResolved": true
+  },
+  {
+    "_id": "k27n1AQuIbSr5iozG1vF9H",
+    "name": "Violectric V590 Desktop Headphone DAC/Amp",
+    "catalogueLocationKeys": [
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 369500,
+    "brand": [
+      "violectric"
+    ],
+    "inStock": false,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "rca",
+      "xlr-balanced",
+      "usb",
+      "optical",
+      "coaxial",
+      "aes-ebu"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 369500,
+    "inStockResolved": false
+  },
+  {
+    "_id": "k27n1AQuIbSr5iozG1vG7I",
+    "name": "Singxer SA1 V2 Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 59900,
+    "brand": [
+      "singxer"
+    ],
+    "inStock": false,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "preamplifier",
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": [
+      "rca",
+      "xlr-balanced"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "pre-out-rca",
+      "pre-out-xlr"
+    ],
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 59900,
+    "inStockResolved": false
+  },
+  {
+    "_id": "k27n1AQuIbSr5iozG1vI8F",
+    "name": "EarMen Colibri Portable DAC and Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 19900,
+    "brand": [
+      "earmen"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 19900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "k27n1AQuIbSr5iozG1vIfh",
+    "name": "Woo Audio WA8 Eclipse Portable Vacuum Tube Headphone Amp & DAC",
+    "catalogueLocationKeys": [
+      "ipz8oe0elii0vm2voxsbgsw6",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 189900,
+    "brand": [
+      "woo-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": "tube",
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "headphone-jack"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 189900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "k27n1AQuIbSr5iozG1vJ1L",
+    "name": "Matrix Audio Element i Network Streamer, DAC/Amp",
+    "catalogueLocationKeys": [
+      "npwbgqg3v4t5qe95rg35wte0"
+    ],
+    "price": 79900,
+    "brand": [
+      "matrix-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "i2s-iis"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 79900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "k27n1AQuIbSr5iozG1vJMz",
+    "name": "Burson Audio Funk Amplifier - Open Box",
+    "catalogueLocationKeys": [
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 46900,
+    "brand": [
+      "burson-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "integrated-amplifier",
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "balancedOutput": null,
+    "inputs": [
+      "rca"
+    ],
+    "outputs": [
+      "speaker-terminals",
+      "headphone-jack"
+    ],
+    "awards": [
+      "Product of the Year - Headfonia"
+    ],
+    "condition": "open-box",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 46900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "k27n1AQuIbSr5iozG1vKTr",
+    "name": "Lake People G111 Desktop Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 54995,
+    "brand": [
+      "lake-people"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": null,
+    "outputs": null,
+    "awards": [],
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 54995,
+    "inStockResolved": true
+  },
+  {
+    "_id": "k27n1AQuIbSr5iozG1vKge",
+    "name": "AudioQuest Jitterbug FMJ",
+    "catalogueLocationKeys": [
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 6995,
+    "brand": [
+      "audioquest"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": null,
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": null,
+    "inputs": null,
+    "outputs": null,
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 6995,
+    "inStockResolved": true
+  },
+  {
+    "_id": "k27n1AQuIbSr5iozG1vMai",
+    "name": "Chord Electronics Qutest",
+    "catalogueLocationKeys": [
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 159500,
+    "brand": [
+      "chord-electronics"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial"
+    ],
+    "outputs": null,
+    "awards": [
+      "What Hi-Fi? Best DAC"
+    ],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 159500,
+    "inStockResolved": true
+  },
+  {
+    "_id": "k27n1AQuIbSr5iozG1vNxK",
+    "name": "Niimbus US 5 Desktop Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 599900,
+    "brand": [
+      "nimbus"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "preamplifier",
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": [
+      "rca",
+      "xlr-balanced"
+    ],
+    "outputs": [
+      "pre-out-rca",
+      "pre-out-xlr",
+      "headphone-jack"
+    ],
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 599900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "k27n1AQuIbSr5iozG1vOH0",
+    "name": "Burson Audio Soloist 3x Grand Tourer",
+    "catalogueLocationKeys": [
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 199900,
+    "brand": [
+      "burson-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": [
+      "rca",
+      "xlr-balanced"
+    ],
+    "outputs": [
+      "pre-out-xlr",
+      "pre-out-rca",
+      "subwoofer-out",
+      "headphone-jack"
+    ],
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 199900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "k27n1AQuIbSr5iozG1vPcd",
+    "name": "Burson Audio Composer 3X Performance DAC",
+    "catalogueLocationKeys": [
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 91500,
+    "brand": [
+      "burson-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "balancedOutput": null,
+    "inputs": [
+      "usb",
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 91500,
+    "inStockResolved": true
+  },
+  {
+    "_id": "k27n1AQuIbSr5iozG1vPuL",
+    "name": "Enleum Amp-23r Desktop Headphone & Speaker Amplifier - Open Box",
+    "catalogueLocationKeys": [
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 505000,
+    "brand": [
+      "enleum"
+    ],
+    "inStock": false,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "integrated-amplifier",
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": [
+      "rca"
+    ],
+    "outputs": [
+      "speaker-terminals",
+      "headphone-jack"
+    ],
+    "awards": [
+      "Red Dot Award: Product Design 2021",
+      "iF Design Gold Award 2022"
+    ],
+    "condition": "open-box",
+    "dealsDiscount": "sale",
+    "newArrival": false,
+    "priceCentsResolved": 505000,
+    "inStockResolved": false
+  },
+  {
+    "_id": "k27n1AQuIbSr5iozG1vSJt",
+    "name": "Burson Soloist 3X Performance",
+    "catalogueLocationKeys": [
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 114400,
+    "brand": [
+      "burson-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": null,
+    "outputs": null,
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 114400,
+    "inStockResolved": true
+  },
+  {
+    "_id": "k27n1AQuIbSr5iozG1vTDy",
+    "name": "Topping G5",
+    "catalogueLocationKeys": [
+      "2Q3Hkst6W23iaT5J8DYRdm"
+    ],
+    "price": 29900,
+    "brand": [
+      "topping"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "bluetooth",
+      "rca"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 29900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "k27n1AQuIbSr5iozG1vTNo",
+    "name": "Questyle M12i Portable USB DAC & Headphone Amp",
+    "catalogueLocationKeys": [
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 14900,
+    "brand": [
+      "questyle"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 14900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "k27n1AQuIbSr5iozG1vTYd",
+    "name": "SPL Phonitor XE Desktop Headphone Amplifier with Optional DAC",
+    "catalogueLocationKeys": [
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 204900,
+    "brand": [
+      "spl"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "xlr-balanced",
+      "rca",
+      "usb",
+      "optical",
+      "coaxial",
+      "aes-ebu"
+    ],
+    "outputs": [
+      "headphone-jack"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 204900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "k27n1AQuIbSr5iozG1vToN",
+    "name": "Topping DX9 DAC, Headphone Amplifier and Pre-Amp",
+    "catalogueLocationKeys": [
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 129900,
+    "brand": [
+      "topping"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "bluetooth",
+      "aes-ebu",
+      "i2s-iis"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 129900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "k27n1AQuIbSr5iozG2ixn6",
+    "name": "iFi Audio Zen Stream",
+    "catalogueLocationKeys": [
+      "npwbgqg3v4t5qe95rg35wte0"
+    ],
+    "price": 39900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "coaxial",
+      "bluetooth",
+      "xlr-balanced",
+      "ethernet-lan",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "speaker-terminals"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 39900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "k27n1AQuIbSr5iozG2iztx",
+    "name": "iFi Audio Zen Stream - Open Box",
+    "catalogueLocationKeys": [
+      "npwbgqg3v4t5qe95rg35wte0"
+    ],
+    "price": 29900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "coaxial",
+      "bluetooth",
+      "xlr-balanced",
+      "ethernet-lan",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "speaker-terminals"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 29900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "k27n1AQuIbSr5iozG2j6zk",
+    "name": "HiFi Rose RS250A Network Streamer",
+    "catalogueLocationKeys": [
+      "npwbgqg3v4t5qe95rg35wte0"
+    ],
+    "price": 269500,
+    "brand": [
+      "hifi-rose"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "rca",
+      "optical",
+      "coaxial",
+      "usb"
+    ],
+    "outputs": [
+      "pre-out-rca",
+      "headphone-jack"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 269500,
+    "inStockResolved": true
+  },
+  {
+    "_id": "moXlkADK7m1DHgGwWwESUS",
+    "name": "Hifiman EF400 Headphone Amplifier and DAC",
+    "catalogueLocationKeys": [
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 39900,
+    "brand": [
+      "hifiman"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": null,
+    "awards": [
+      "2022 VGP Gold Technology Award (Japan)"
+    ],
+    "condition": "new",
+    "dealsDiscount": "sale",
+    "newArrival": null,
+    "priceCentsResolved": 39900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "moXlkADK7m1DHgGwWwESiF",
+    "name": "Burson Conductor 3 Reference",
+    "catalogueLocationKeys": [
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 139500,
+    "brand": [
+      "burson-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 139500,
+    "inStockResolved": true
+  },
+  {
+    "_id": "moXlkADK7m1DHgGwWwET3O",
+    "name": "iFi Audio Pro iCAN Signature Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 224900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "preamplifier",
+    "formFactor": "desktop",
+    "amplification": "hybrid",
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "rca",
+      "bluetooth",
+      "xlr-balanced",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "pre-out-rca",
+      "speaker-terminals"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 224900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "moXlkADK7m1DHgGwWwETNc",
+    "name": "EarMen Tradutto Desktop DAC",
+    "catalogueLocationKeys": [
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 39900,
+    "brand": [
+      "earmen"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 39900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "moXlkADK7m1DHgGwWwETaU",
+    "name": "LeeLoo Desktop Tube Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 159900,
+    "brand": [
+      "headphones-com"
+    ],
+    "inStock": false,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": "tube",
+    "dacIncluded": false,
+    "balancedOutput": null,
+    "inputs": null,
+    "outputs": [
+      "headphone-jack",
+      "speaker-terminals"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": "sale",
+    "newArrival": null,
+    "priceCentsResolved": 159900,
+    "inStockResolved": false
+  },
+  {
+    "_id": "moXlkADK7m1DHgGwWwEUpi",
+    "name": "DAC204 Desktop DAC",
+    "catalogueLocationKeys": [
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 349500,
+    "brand": [
+      "weiss"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "coaxial",
+      "optical",
+      "usb"
+    ],
+    "outputs": null,
+    "awards": [
+      "Stereophile Class A+ Recommended Component",
+      "Stereophile Digital Product of the Year Runner Up 2025"
+    ],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 349500,
+    "inStockResolved": true
+  },
+  {
+    "_id": "moXlkADK7m1DHgGwWwEZTT",
+    "name": "Violectric Chronos Portable USB DAC/Amp",
+    "catalogueLocationKeys": [
+      "dW7bkxuW7lwltD3OAxQBo5"
+    ],
+    "price": 24900,
+    "brand": [
+      "violectric"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 24900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "moXlkADK7m1DHgGwWwEaXf",
+    "name": "SMSL SU-6 Desktop DAC",
+    "catalogueLocationKeys": [
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 16999,
+    "brand": [
+      "smsl"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 16999,
+    "inStockResolved": true
+  },
+  {
+    "_id": "moXlkADK7m1DHgGwWwEdEz",
+    "name": "Topping L50 Desktop Headphone Amplifier - Open Box",
+    "catalogueLocationKeys": [
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 19900,
+    "brand": [
+      "topping"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": null,
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 19900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "moXlkADK7m1DHgGwWwEdNG",
+    "name": "Burson Audio Conductor 3x Grand Tourer Desktop DAC & Amp",
+    "catalogueLocationKeys": [
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 299900,
+    "brand": [
+      "burson-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 299900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "moXlkADK7m1DHgGwWwEdoq",
+    "name": "SPL Phonitor One D",
+    "catalogueLocationKeys": [
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 79900,
+    "brand": [
+      "spl"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "xlr-balanced",
+      "rca",
+      "usb"
+    ],
+    "outputs": [
+      "headphone-jack"
+    ],
+    "awards": [
+      "EC PAM 2021"
+    ],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 79900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "moXlkADK7m1DHgGwWwEeK6",
+    "name": "Feliks Audio Envy Flagship Desktop Headphone Tube Amplifier - Open Box",
+    "catalogueLocationKeys": [
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 689500,
+    "brand": [
+      "feliks-audio"
+    ],
+    "inStock": false,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": "tube",
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": [
+      "rca",
+      "xlr"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "pre-out"
+    ],
+    "awards": null,
+    "condition": "open-box",
+    "dealsDiscount": "on-sale",
+    "newArrival": false,
+    "priceCentsResolved": 689500,
+    "inStockResolved": false
+  },
+  {
+    "_id": "moXlkADK7m1DHgGwWwEenW",
+    "name": "SPL Phonitor One",
+    "catalogueLocationKeys": [
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 49900,
+    "brand": [
+      "spl"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "xlr-balanced",
+      "rca"
+    ],
+    "outputs": [
+      "headphone-jack"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 49900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "moXlkADK7m1DHgGwWwEfPD",
+    "name": "Chord Electronics Hugo TT2",
+    "catalogueLocationKeys": [
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 529500,
+    "brand": [
+      "chord-electronics"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 529500,
+    "inStockResolved": true
+  },
+  {
+    "_id": "moXlkADK7m1DHgGwWwEgQe",
+    "name": "AudioQuest Dragonfly Cobalt USB DAC/Amp",
+    "catalogueLocationKeys": [
+      "ipz8oe0elii0vm2voxsbgsw6"
+    ],
+    "price": 19995,
+    "brand": [
+      "audioquest"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": null,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 19995,
+    "inStockResolved": true
+  },
+  {
+    "_id": "moXlkADK7m1DHgGwWwEgal",
+    "name": "Topping DX3 Pro+ Desktop DAC & Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 19900,
+    "brand": [
+      "topping"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 19900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "moXlkADK7m1DHgGwWwzejm",
+    "name": "Chord Electronics Poly V3",
+    "catalogueLocationKeys": [
+      "npwbgqg3v4t5qe95rg35wte0"
+    ],
+    "price": 65000,
+    "brand": [
+      "chord-electronics"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "network-streamer",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": [
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": [
+      "Gramophone Product of the Month"
+    ],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 65000,
+    "inStockResolved": true
+  },
+  {
+    "_id": "n10eAegrGspodtsQvy3cvI",
+    "name": "SMSL SU-X Desktop DAC",
+    "catalogueLocationKeys": [
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 99900,
+    "brand": [
+      "smsl"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "4.4mm"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 99900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "n10eAegrGspodtsQvy3fgK",
+    "name": "Topping L30 II",
+    "catalogueLocationKeys": [
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 13100,
+    "brand": [
+      "topping"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": null,
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 13100,
+    "inStockResolved": true
+  },
+  {
+    "_id": "n10eAegrGspodtsQvy3jJm",
+    "name": "Questyle CMA Fifteen Desktop DAC and Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 199500,
+    "brand": [
+      "questyle"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "bluetooth",
+      "rca"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 199500,
+    "inStockResolved": true
+  },
+  {
+    "_id": "n10eAegrGspodtsQvy3lt9",
+    "name": "Matrix Audio X-Sabre 3 Desktop DAC",
+    "catalogueLocationKeys": [
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 299900,
+    "brand": [
+      "matrix-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "i2s-iis"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 299900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "n10eAegrGspodtsQvy3xAp",
+    "name": "Sennheiser HDV 820 Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 249500,
+    "brand": [
+      "sennheiser"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "rca",
+      "xlr-balanced"
+    ],
+    "outputs": [
+      "pre-out-xlr",
+      "headphone-jack"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 249500,
+    "inStockResolved": true
+  },
+  {
+    "_id": "n10eAegrGspodtsQvy4D2G",
+    "name": "iFi Audio Uno",
+    "catalogueLocationKeys": [
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 7900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "rca",
+      "bluetooth",
+      "xlr-balanced",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "pre-out-rca",
+      "speaker-terminals"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 7900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "n10eAegrGspodtsQvy4Df8",
+    "name": "Benchmark HPA4 Desktop Headphone Amplifier (SILVER)",
+    "catalogueLocationKeys": [
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 349900,
+    "brand": [
+      "benchmark-media-systems"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": [
+      "xlr-balanced",
+      "rca"
+    ],
+    "outputs": [
+      "pre-out-xlr",
+      "pre-out-rca",
+      "headphone-jack"
+    ],
+    "awards": [
+      "Best Headphone Amplifier - AP Mastering",
+      "Best Preamplifier - Secrets of Home Theater",
+      "Stereophile Recommended Components 2025",
+      "Home Theater and High Fidelity - Best High-End Stereo Preamplifier 2021",
+      "The Absolute Sound - Product of the Year Award",
+      "hi-fi+ 20th Anniversary Top 100",
+      "AV Tech Media Awards - Best Headphone Amplifier",
+      "Everything Audio Network 2018 Product of the Year",
+      "Hi-Fi News - Outstanding Product Award"
+    ],
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 349900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "n10eAegrGspodtsQvy4Nwc",
+    "name": "Chord Electronics Hugo 2 Portable DAC & Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 250000,
+    "brand": [
+      "chord-electronics"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": [
+      "What Hi-Fi? Best DAC"
+    ],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 250000,
+    "inStockResolved": true
+  },
+  {
+    "_id": "n10eAegrGspodtsQvy4P4a",
+    "name": "Topping A50 III Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 19900,
+    "brand": [
+      "topping"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": null,
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 19900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "n10eAegrGspodtsQvy4Rpc",
+    "name": "Burson Audio Soloist Voyager",
+    "catalogueLocationKeys": [
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 349900,
+    "brand": [
+      "burson-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": [
+      "rca",
+      "xlr-balanced"
+    ],
+    "outputs": [
+      "pre-out-xlr",
+      "pre-out-rca",
+      "subwoofer-out",
+      "headphone-jack"
+    ],
+    "awards": [
+      "The Ear Editor's Choice Award",
+      "Soundnews Gold Award"
+    ],
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 349900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "n10eAegrGspodtsQvy4UmJ",
+    "name": "Chord Electronics Mojo 2 Portable DAC and Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 65000,
+    "brand": [
+      "chord-electronics"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial"
+    ],
+    "outputs": null,
+    "awards": [
+      "What Hi-Fi? Product of the Year"
+    ],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 65000,
+    "inStockResolved": true
+  },
+  {
+    "_id": "n10eAegrGspodtsQvy4Z6W",
+    "name": "Topping A70 Pro Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 43900,
+    "brand": [
+      "topping"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": false,
+    "inputs": null,
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 43900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "n10eAegrGspodtsQvy4b6u",
+    "name": "Ferrum WANDLA DAC - GoldenSound Edition",
+    "catalogueLocationKeys": [
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 329500,
+    "brand": [
+      "ferrum-audio"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "aes-ebu",
+      "hdmi-earc",
+      "i2s-iis",
+      "rca"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 329500,
+    "inStockResolved": true
+  },
+  {
+    "_id": "n10eAegrGspodtsQvy4cvd",
+    "name": "SPL Phonitor X Desktop Headphone Amplifier with Optional DAC",
+    "catalogueLocationKeys": [
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 224900,
+    "brand": [
+      "spl"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "xlr-balanced",
+      "rca",
+      "usb",
+      "optical",
+      "coaxial"
+    ],
+    "outputs": [
+      "pre-out-xlr",
+      "pre-out-rca",
+      "headphone-jack"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 224900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "n10eAegrGspodtsQw12tbj",
+    "name": "Eversolo DMP-A8 All-In-One Streamer, DAC Amp, Preamp",
+    "catalogueLocationKeys": [
+      "o37u0yjphzt3qu91ewnww2yj",
+      "npwbgqg3v4t5qe95rg35wte0"
+    ],
+    "price": 198000,
+    "brand": [
+      "eversolo"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "hdmi-earc",
+      "xlr-balanced",
+      "rca",
+      "bluetooth",
+      "ethernet-lan"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 198000,
+    "inStockResolved": true
+  },
+  {
+    "_id": "n10eAegrGspodtsQw134Ce",
+    "name": "Eversolo DMP-A6 Streamer and DAC",
+    "catalogueLocationKeys": [
+      "npwbgqg3v4t5qe95rg35wte0"
+    ],
+    "price": 76900,
+    "brand": [
+      "eversolo"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "bluetooth",
+      "ethernet-lan"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 76900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "n10eAegrGspodtsQw13Qpt",
+    "name": "Matrix Audio Element X - Open Box",
+    "catalogueLocationKeys": [
+      "npwbgqg3v4t5qe95rg35wte0"
+    ],
+    "price": 219900,
+    "brand": [
+      "matrix-audio"
+    ],
+    "inStock": false,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "i2s-iis"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": "open-box",
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 219900,
+    "inStockResolved": false
+  },
+  {
+    "_id": "n10eAegrGspodtsQw13RKz",
+    "name": "Bluesound Node Wireless Music Streamer",
+    "catalogueLocationKeys": [
+      "npwbgqg3v4t5qe95rg35wte0"
+    ],
+    "price": 34900,
+    "brand": [
+      "bluesound"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "hdmi-earc",
+      "optical",
+      "rca",
+      "usb",
+      "bluetooth",
+      "ethernet-lan"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 34900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "xMEqvkRBbdrlJXyFG8eD0B",
+    "name": "iFi ZEN Blue 3 Bluetooth Desktop DAC",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "2Q3Hkst6W23iaT5J8DYRdm"
+    ],
+    "price": 29900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "rca",
+      "bluetooth",
+      "xlr-balanced",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "pre-out-rca",
+      "speaker-terminals"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 29900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "xMEqvkRBbdrlJXyFG8eFfR",
+    "name": "iFi GO blu Air Portable Hi-Res Bluetooth DAC & Headphone Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "2Q3Hkst6W23iaT5J8DYRdm"
+    ],
+    "price": 12900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "bluetooth",
+      "xlr-balanced",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 12900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "xMEqvkRBbdrlJXyFG8fHrh",
+    "name": "GUSTARD R30 Fully-Discrete R2R Network Streaming DAC",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "npwbgqg3v4t5qe95rg35wte0"
+    ],
+    "price": 359999,
+    "brand": [
+      "gustard"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": null,
+    "outputs": [
+      "pre-out"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 359999,
+    "inStockResolved": true
+  },
+  {
+    "_id": "xMEqvkRBbdrlJXyFG8fIQr",
+    "name": "GUSTARD X30 4xES9039SPRO Streamer Digital to Analog Convertor (DAC)",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "npwbgqg3v4t5qe95rg35wte0"
+    ],
+    "price": 299999,
+    "brand": [
+      "gustard"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": null,
+    "outputs": [
+      "pre-out"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 299999,
+    "inStockResolved": true
+  },
+  {
+    "_id": "xMEqvkRBbdrlJXyFG8fV4x",
+    "name": "YULONG DAART D39 ESS9039PRO Music Streamer & Desktop DAC",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "npwbgqg3v4t5qe95rg35wte0"
+    ],
+    "price": 93900,
+    "brand": [
+      "yulong"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "ethernet-lan",
+      "usb",
+      "aes-ebu",
+      "coaxial",
+      "optical"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 93900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "xMEqvkRBbdrlJXyFG8fa0r",
+    "name": "Matrix NT-1 Network Transport",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "npwbgqg3v4t5qe95rg35wte0"
+    ],
+    "price": 399900,
+    "brand": [
+      "matrix-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "network-streamer",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": null,
+    "outputs": null,
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 399900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "xMEqvkRBbdrlJXyFG8fdhP",
+    "name": "TOPPING D10s DAC (Digital-to-Analog Converter)",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 10900,
+    "brand": [
+      "topping"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 10900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "xMEqvkRBbdrlJXyFG8ffSP",
+    "name": "TOPPING E70 VELVET AK4499EX Desktop DAC (Digital-to-Analog-Convertor)",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 34900,
+    "brand": [
+      "topping"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 34900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "xMEqvkRBbdrlJXyFG8fkYr",
+    "name": "GUSTARD X26 III Dual ES9039SPRO Digital to Analog Convertor (DAC)",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 159999,
+    "brand": [
+      "gustard"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": null,
+    "outputs": [
+      "pre-out"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 159999,
+    "inStockResolved": true
+  },
+  {
+    "_id": "xMEqvkRBbdrlJXyFG8fsmh",
+    "name": "GUSTARD DAC-R26II Network Streaming R2R DAC (Apos Certified)",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 129999,
+    "brand": [
+      "gustard"
+    ],
+    "inStock": false,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": null,
+    "outputs": [
+      "pre-out"
+    ],
+    "awards": null,
+    "condition": "open-box",
+    "dealsDiscount": "sale",
+    "newArrival": null,
+    "priceCentsResolved": 129999,
+    "inStockResolved": false
+  },
+  {
+    "_id": "xMEqvkRBbdrlJXyFG8fuQf",
+    "name": "LADDER Schumann Desktop DAC",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "mpni93r13d9yo2vn5moexlkp"
+    ],
+    "price": 139900,
+    "brand": [
+      "ladder"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "coaxial",
+      "optical",
+      "usb",
+      "i2s-iis",
+      "aes-ebu"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 139900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "xMEqvkRBbdrlJXyFG8gRUZ",
+    "name": "FiiO K13 R2R Desktop DAC/Amp (Apos Certified)",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 23900,
+    "brand": [
+      "fiio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "bluetooth"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "pre-out-rca",
+      "pre-out-xlr"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 23900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "xMEqvkRBbdrlJXyFG8gbWv",
+    "name": "xDuoo XA-10 DAC/Headphone Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 47900,
+    "brand": [
+      "xduoo"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "optical",
+      "coaxial",
+      "bluetooth"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 47900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "xMEqvkRBbdrlJXyFG8gx1X",
+    "name": "Yulong Aquila II DAC/Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "o37u0yjphzt3qu91ewnww2yj"
+    ],
+    "price": 64000,
+    "brand": [
+      "yulong"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "coaxial",
+      "optical",
+      "aes-ebu"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 64000,
+    "inStockResolved": true
+  },
+  {
+    "_id": "xMEqvkRBbdrlJXyFG8hoYl",
+    "name": "xDuoo TA-30 Tube Headphone Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 70900,
+    "brand": [
+      "xduoo"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb",
+      "coaxial",
+      "optical",
+      "bluetooth",
+      "rca"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 70900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "xMEqvkRBbdrlJXyFG8huOv",
+    "name": "iFi Zen CAN 3",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 22900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "rca",
+      "bluetooth",
+      "xlr-balanced",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "pre-out-rca",
+      "speaker-terminals"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 22900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "xMEqvkRBbdrlJXyFG8hyzj",
+    "name": "Singxer SA-2 Fully-balanced Headphone Amplifier (Apos Certified)",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 12600,
+    "brand": [
+      "singxer"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "preamplifier",
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": [
+      "rca",
+      "xlr-balanced"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "pre-out-rca",
+      "pre-out-xlr"
+    ],
+    "awards": [],
+    "condition": "open-box",
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 12600,
+    "inStockResolved": true
+  },
+  {
+    "_id": "xMEqvkRBbdrlJXyFG8i3hZ",
+    "name": "Burson Soloist Voyager Flagship Class-A Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 349900,
+    "brand": [
+      "burson-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": null,
+    "formFactor": "desktop",
+    "amplification": "solid-state",
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": [
+      "rca",
+      "xlr-balanced"
+    ],
+    "outputs": [
+      "pre-out-xlr",
+      "pre-out-rca",
+      "subwoofer-out",
+      "headphone-jack"
+    ],
+    "awards": [
+      "The Ear Editor's Choice Award",
+      "Soundnews Gold Award"
+    ],
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 349900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "xMEqvkRBbdrlJXyFG8i9Jf",
+    "name": "Orchard Audio Valencia Balanced Headphone Power Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "o6mz3kbs5xla8ixastppktsd"
+    ],
+    "price": 199995,
+    "brand": [
+      "orchard-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "power-amplifier",
+    "formFactor": "desktop",
+    "amplification": null,
+    "dacIncluded": false,
+    "balancedOutput": true,
+    "inputs": [
+      "xlr-balanced"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "speaker-terminals"
+    ],
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": false,
+    "priceCentsResolved": 199995,
+    "inStockResolved": true
+  },
+  {
+    "_id": "xMEqvkRBbdrlJXyFG8l4SB",
+    "name": "FiiO KA11 Dongle DAC/Headphone Amplifier",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "dW7bkxuW7lwltD3OAxQBo5"
+    ],
+    "price": 3299,
+    "brand": [
+      "fiio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "dongle",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": [
+      "headphone-jack"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 3299,
+    "inStockResolved": true
+  },
+  {
+    "_id": "xMEqvkRBbdrlJXyFG8l6fJ",
+    "name": "Moondrop Dawn Pro 2 Dual Portable DAC/Amp",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "dW7bkxuW7lwltD3OAxQBo5"
+    ],
+    "price": 5999,
+    "brand": [
+      "moondrop"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": false,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": null,
+    "awards": [],
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 5999,
+    "inStockResolved": true
+  },
+  {
+    "_id": "xMEqvkRBbdrlJXyFG8lEY3",
+    "name": "iFi Hip-DAC 3",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "dW7bkxuW7lwltD3OAxQBo5"
+    ],
+    "price": 19900,
+    "brand": [
+      "ifi-audio"
+    ],
+    "inStock": true,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "portable",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb",
+      "bluetooth",
+      "xlr-balanced",
+      "phono-mm-mc"
+    ],
+    "outputs": [
+      "headphone-jack",
+      "headphone-jack",
+      "speaker-terminals"
+    ],
+    "awards": null,
+    "condition": null,
+    "dealsDiscount": null,
+    "newArrival": null,
+    "priceCentsResolved": 19900,
+    "inStockResolved": true
+  },
+  {
+    "_id": "xMEqvkRBbdrlJXyFG8lIgj",
+    "name": "Cayin RU7 1-Bit Resistor Network Portable DAC",
+    "catalogueLocationKeys": [
+      "ti2wufd15h51jxtq855ogbfa",
+      "lkuqr2n1gpeivrvxisnfs3ot",
+      "dW7bkxuW7lwltD3OAxQBo5"
+    ],
+    "price": 28900,
+    "brand": [
+      "cayin"
+    ],
+    "inStock": null,
+    "category": [
+      "audio-electronics"
+    ],
+    "deviceType": "dac",
+    "formFactor": "dongle",
+    "amplification": null,
+    "dacIncluded": true,
+    "balancedOutput": true,
+    "inputs": [
+      "usb"
+    ],
+    "outputs": null,
+    "awards": null,
+    "condition": "new",
+    "dealsDiscount": "none",
+    "newArrival": null,
+    "priceCentsResolved": 28900,
+    "inStockResolved": true
+  }
+]
