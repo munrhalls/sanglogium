@@ -91,10 +91,14 @@ export function SearchSheet({ search, onClose }: SearchSheetProps) {
       aria-modal="true"
       aria-label="Search products"
       onKeyDown={handleDialogKeyDown}
-      className="fixed inset-x-0 top-0 z-[60] flex h-dvh flex-col bg-surface-elevated sm:hidden"
+      className="fixed inset-x-0 top-0 z-[60] flex h-dvh flex-col bg-surface-elevated motion-safe:animate-search-sheet-in sm:hidden"
       style={box ? { top: box.top, height: box.height } : undefined}
     >
-      <div className="flex h-14 shrink-0 items-center gap-1 border-b border-border-secondary pl-1 pr-3">
+      <div
+        className="shrink-0 border-b border-border-secondary pb-2 pl-1 pr-3"
+        style={{ paddingTop: "max(0.5rem, env(safe-area-inset-top))" }}
+      >
+        <div className="flex h-11 items-center gap-1">
         <button
           type="button"
           onClick={close}
@@ -142,6 +146,7 @@ export function SearchSheet({ search, onClose }: SearchSheetProps) {
             )}
           </div>
         </form>
+        </div>
       </div>
 
       <p role="status" className="sr-only">
