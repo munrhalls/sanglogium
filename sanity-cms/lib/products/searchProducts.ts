@@ -2,25 +2,15 @@
 
 import { sanityFetch } from '@/sanity-cms/lib/client';
 import groq from 'groq';
-import catalogueData from '@/data/catalogue-index.json';
-
-const slotMetadataMap: Record<string, { children?: string[] }> =
-  (catalogueData as any).slotMetadataMap || {};
-
-const parentByChild = new Map<string, string>();
-for (const [parentId, meta] of Object.entries(slotMetadataMap)) {
-  for (const childId of meta.children || []) {
-    parentByChild.set(childId, parentId);
-  }
-}
-
-const slugToIdMap: Record<string, string> = (catalogueData as any).slugToIdMap || {};
-const ROOT_HEADPHONES = slugToIdMap.headphones;
-const ROOT_AUDIO_ELECTRONICS = slugToIdMap['audio-electronics'];
-const ROOT_ACCESSORIES = slugToIdMap.accessories;
+import { ROOT_CATEGORIES, deriveSpacedQuery, normalizeText, rootCategoriesOf, scoreProduct } from '@/sanity-cms/lib/products/searchScoring';
+import type { RootCategory } from '@/sanity-cms/lib/products/searchScoring';
+import { computeCatalogueFacets, productMatchesState } from '@/sanity-cms/lib/products/getFilterFacets';
+import type { CatalogueFacets, RawProduct } from '@/sanity-cms/lib/products/getFilterFacets';
+import { sanitizeFilterState } from '@/lib/catalogue/sanitizeFilterState';
+import type { ProductQueryState } from '@/lib/catalogue/buildProductQuery';
+import type { PriceRangeData } from '@/lib/catalogue/priceBounds';
 
 const MAX_AUTOCOMPLETE = 6;
-const MAX_AUTOCOMPLETE_CANDIDATES = MAX_AUTOCOMPLETE * 8;
 const MIN_QUERY_LENGTH = 2;
 const DEFAULT_PER_PAGE = 24;
 
@@ -33,6 +23,7 @@ export interface AutocompleteProduct {
   slug: { current: string };
   image: any;
   catalogueLocationKeys?: string[];
+  availableStock?: number;
 }
 
 export interface SearchProduct {
@@ -47,139 +38,43 @@ export interface SearchProduct {
   slug: { current: string };
   image: any;
   catalogueLocationKeys: string[];
+  filterAttributes?: Record<string, unknown>;
+  brandRef?: { name: string; slug: string } | null;
+  price?: number;
 }
 
 export interface SearchResult {
   products: SearchProduct[];
   totalCount: number;
+  /** Products matching the words alone, before any filter is applied. */
+  unfilteredCount: number;
+  facets?: CatalogueFacets;
+  priceRange?: PriceRangeData;
+  /** The filter state actually applied (junk brand values dropped). */
+  state?: ProductQueryState;
+  /** Root category the results are narrowed to, when a valid one was requested. */
+  category?: RootCategory;
+  /** Per-category counts under the active filters (ignoring the category itself). */
+  categoryCounts?: { id: RootCategory; label: string; count: number }[];
+  /** Products matching the active filters across all categories. */
+  allCategoriesCount?: number;
 }
 
 const MAX_SORT_WINDOW = 2000;
 
-function normalizeText(value: string): string {
-  return value.toLowerCase().replace(/[^a-z0-9]/g, '');
-}
-
-function deriveSpacedQuery(value: string): string {
-  // Produce a spacing-normalised variant of the raw query so GROQ match
-  // can hit both concatenated models ("hd800s") and dashed variants
-  // ("HD-800-S"). "SennheiserHD800S" becomes "Sennheiser HD 800S".
-  return value
-    .replace(/[^a-zA-Z0-9]+/g, ' ')
-    .replace(/([a-z])([A-Z])/g, '$1 $2')
-    .replace(/([a-zA-Z]+)(\d+)/g, '$1 $2')
-    .replace(/(\d+)\s+([a-zA-Z]+)/g, '$1$2')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
-function getRootCategory(key: string): 'headphones' | 'audio-electronics' | 'accessories' | null {
-  let current = key;
-  const seen = new Set<string>();
-  while (current && !seen.has(current)) {
-    seen.add(current);
-    if (current === ROOT_HEADPHONES) return 'headphones';
-    if (current === ROOT_AUDIO_ELECTRONICS) return 'audio-electronics';
-    if (current === ROOT_ACCESSORIES) return 'accessories';
-    current = parentByChild.get(current) || '';
-  }
-  return null;
-}
-
-function categoryScore(keys?: string[]): number {
-  if (!keys || keys.length === 0) return 0;
-  const roots = new Set<'headphones' | 'audio-electronics' | 'accessories' | null>();
-  for (const key of keys) {
-    roots.add(getRootCategory(key));
-  }
-  if (roots.has('headphones') || roots.has('audio-electronics')) return 50;
-  if (roots.has('accessories')) return -50;
-  return 0;
-}
-
-function buildFullName(name: string, brandName: string): string {
-  const nameNorm = normalizeText(name);
-  const brandNorm = normalizeText(brandName);
-  if (!brandNorm || nameNorm.startsWith(brandNorm)) {
-    return name;
-  }
-  return `${brandName} ${name}`.trim();
-}
-
-function positionBonus(index: number): number {
-  return Math.max(0, 1000 - Math.min(index, 1000));
-}
-
-function scoreProduct(
-  product: {
-    name: string;
-    brand?: { name?: string } | null;
-    sku?: string;
-    catalogueLocationKeys?: string[];
-  },
-  rawQuery: string
-): number {
-  const queryNorm = normalizeText(rawQuery);
-  if (!queryNorm) return 0;
-
-  const name = product.name || '';
-  const brandName = product.brand?.name || '';
-  const sku = product.sku || '';
-
-  const nameNorm = normalizeText(name);
-  const fullName = buildFullName(name, brandName);
-  const fullNameNorm = normalizeText(fullName);
-  const skuNorm = normalizeText(sku);
-
-  const cat = categoryScore(product.catalogueLocationKeys);
-
-  if (fullNameNorm === queryNorm) {
-    return 1000 * 1000 + positionBonus(0) + cat;
-  }
-  if (fullNameNorm.startsWith(queryNorm)) {
-    return 900 * 1000 + positionBonus(0) + cat;
-  }
-  if (nameNorm === queryNorm) {
-    return 850 * 1000 + positionBonus(0) + cat;
-  }
-  if (skuNorm === queryNorm) {
-    return 820 * 1000 + positionBonus(0) + cat;
-  }
-  if (nameNorm.startsWith(queryNorm)) {
-    return 800 * 1000 + positionBonus(0) + cat;
-  }
-  if (skuNorm.startsWith(queryNorm)) {
-    return 700 * 1000 + positionBonus(0) + cat;
-  }
-
-  const nameIdx = nameNorm.indexOf(queryNorm);
-  if (nameIdx !== -1) {
-    return 600 * 1000 + positionBonus(nameIdx) + cat;
-  }
-
-  const fullNameIdx = fullNameNorm.indexOf(queryNorm);
-  if (fullNameIdx !== -1) {
-    return 500 * 1000 + positionBonus(fullNameIdx) + cat;
-  }
-
-  const skuIdx = skuNorm.indexOf(queryNorm);
-  if (skuIdx !== -1) {
-    return 400 * 1000 + positionBonus(skuIdx) + cat;
-  }
-
-  // Loose brand-name token match for partial brand queries.
-  if (brandName) {
-    const brandNorm = normalizeText(brandName);
-    const queryTokens = rawQuery.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
-    for (const token of queryTokens) {
-      if (token.length >= 2 && brandNorm.includes(token)) {
-        return 100 * 1000 + cat;
-      }
-    }
-  }
-
-  return cat;
-}
+// One GROQ predicate for suggestions and results, so both see the same matched
+// set. The suggestions score ALL of it (not just the first N by _id), which is
+// what keeps the popup's top rows equal to the results page's top rows.
+const SEARCH_MATCH = groq`_type == "product" && defined(catalogueLocationKeys) && count(catalogueLocationKeys) > 0 && (
+        name match $query ||
+        name match $spacedQuery ||
+        sku match $query ||
+        brand._ref in *[_type == "brand" && (name match $query || name match $spacedQuery)]._id ||
+        specifications[].value match $query ||
+        specifications[].value match $spacedQuery ||
+        overviewFields[].value match $query ||
+        overviewFields[].value match $spacedQuery
+      )`;
 
 export async function searchProductsAutocomplete(query: string): Promise<AutocompleteProduct[]> {
   if (!query || query.trim().length < MIN_QUERY_LENGTH || normalizeText(query).length < MIN_QUERY_LENGTH) {
@@ -192,16 +87,7 @@ export async function searchProductsAutocomplete(query: string): Promise<Autocom
 
   try {
     const candidates = await sanityFetch<AutocompleteProduct[]>({
-      query: groq`*[_type == "product" && defined(catalogueLocationKeys) && count(catalogueLocationKeys) > 0 && (
-        name match $query ||
-        name match $spacedQuery ||
-        sku match $query ||
-        brand._ref in *[_type == "brand" && (name match $query || name match $spacedQuery)]._id ||
-        specifications[].value match $query ||
-        specifications[].value match $spacedQuery ||
-        overviewFields[].value match $query ||
-        overviewFields[].value match $spacedQuery
-      )] {
+      query: groq`*[${SEARCH_MATCH}] {
         _id,
         name,
         sku,
@@ -209,8 +95,9 @@ export async function searchProductsAutocomplete(query: string): Promise<Autocom
         price_data,
         "brand": brand->{ _id, name, slug },
         slug,
-        image
-      } | order(_id asc) [0...${MAX_AUTOCOMPLETE_CANDIDATES}]`,
+        image,
+        "availableStock": stock - reservedStock
+      } | order(_id asc) [0...${MAX_SORT_WINDOW}]`,
       params: { query: searchTerm, spacedQuery: spacedTerm },
     });
 
@@ -229,10 +116,12 @@ export async function searchProductsFull(
   query: string,
   sort?: string,
   page: number = 1,
-  perPage: number = DEFAULT_PER_PAGE
+  perPage: number = DEFAULT_PER_PAGE,
+  state?: ProductQueryState,
+  category?: string
 ): Promise<SearchResult> {
   if (!query || query.trim().length < MIN_QUERY_LENGTH || normalizeText(query).length < MIN_QUERY_LENGTH) {
-    return { products: [], totalCount: 0 };
+    return { products: [], totalCount: 0, unfilteredCount: 0 };
   }
 
   const rawQuery = query.trim();
@@ -242,16 +131,7 @@ export async function searchProductsFull(
   const safePage = Math.max(1, Math.floor(page) || 1);
   const effectivePerPage = Math.max(1, Math.floor(perPage) || DEFAULT_PER_PAGE);
 
-  const filterClause = groq`_type == "product" && defined(catalogueLocationKeys) && count(catalogueLocationKeys) > 0 && (
-    name match $query ||
-    name match $spacedQuery ||
-    sku match $query ||
-    brand._ref in *[_type == "brand" && (name match $query || name match $spacedQuery)]._id ||
-    specifications[].value match $query ||
-    specifications[].value match $spacedQuery ||
-    overviewFields[].value match $query ||
-    overviewFields[].value match $spacedQuery
-  )`;
+  const filterClause = SEARCH_MATCH;
 
   try {
     const countResult = await sanityFetch<number>({
@@ -259,12 +139,12 @@ export async function searchProductsFull(
       params: { query: searchTerm, spacedQuery: spacedTerm },
     });
 
-    const totalCount = countResult ?? 0;
-    if (totalCount === 0) {
-      return { products: [], totalCount: 0 };
+    const unfilteredCount = countResult ?? 0;
+    if (unfilteredCount === 0) {
+      return { products: [], totalCount: 0, unfilteredCount: 0 };
     }
 
-    const sortWindow = Math.min(totalCount, MAX_SORT_WINDOW);
+    const sortWindow = Math.min(unfilteredCount, MAX_SORT_WINDOW);
     const matchedProducts = await sanityFetch<SearchProduct[]>({
       query: groq`*[${filterClause}] {
         _id,
@@ -277,10 +157,55 @@ export async function searchProductsFull(
         "brand": brand->{ _id, name, slug },
         slug,
         image,
-        catalogueLocationKeys
+        catalogueLocationKeys,
+        filterAttributes,
+        "brandRef": brand->{ name, "slug": slug.current },
+        "price": price_data.unit_amount
       } | order(_id asc) [0...${sortWindow}]`,
       params: { query: searchTerm, spacedQuery: spacedTerm },
     });
+
+    const matched = matchedProducts ?? [];
+
+    // Filters: counts, price range and the filtered list all come from this one
+    // matched set, so the sidebar's counts can never disagree with the results.
+    let facets: CatalogueFacets | undefined;
+    let priceRange: PriceRangeData | undefined;
+    let appliedState: ProductQueryState | undefined;
+    let filtered = matched;
+    let categoryCounts: SearchResult['categoryCounts'];
+    let allCategoriesCount: number | undefined;
+    const activeCategory = ROOT_CATEGORIES.find((c) => c.id === category)?.id;
+    // Category narrowing scopes the counts, price range and list; the category
+    // chips themselves are counted below over the un-narrowed set.
+    const scoped = activeCategory
+      ? matched.filter((p) => rootCategoriesOf(p.catalogueLocationKeys).includes(activeCategory))
+      : matched;
+    if (state) {
+      facets = computeCatalogueFacets(scoped as unknown as RawProduct[], state);
+      appliedState = sanitizeFilterState(state, { brand: Object.keys(facets.brandLabels) });
+      const activeState = appliedState;
+      filtered = scoped.filter((p) => productMatchesState(p as unknown as RawProduct, activeState));
+      const acrossCategories = matched.filter((p) =>
+        productMatchesState(p as unknown as RawProduct, activeState)
+      );
+      allCategoriesCount = acrossCategories.length;
+      categoryCounts = ROOT_CATEGORIES.map((c) => ({
+        id: c.id,
+        label: c.label,
+        count: acrossCategories.filter((p) => rootCategoriesOf(p.catalogueLocationKeys).includes(c.id))
+          .length,
+      }));
+      const prices = scoped
+        .map((p) => p.price_data?.unit_amount)
+        .filter((n): n is number => Number.isFinite(n));
+      priceRange = {
+        minPrice: prices.length ? Math.min(...prices) : null,
+        maxPrice: prices.length ? Math.max(...prices) : null,
+        prices,
+      };
+    }
+    const resultCount = state ? filtered.length : unfilteredCount;
 
     const byRelevance = (a: SearchProduct, b: SearchProduct) => {
       const scoreA = scoreProduct(a, rawQuery);
@@ -296,23 +221,35 @@ export async function searchProductsFull(
         : sort === 'price-desc'
           ? (a: SearchProduct, b: SearchProduct) =>
               b.price_data.unit_amount - a.price_data.unit_amount || byRelevance(a, b)
-          : sort === 'name-asc'
+          : sort === 'alpha-asc' || sort === 'name-asc'
             ? (a: SearchProduct, b: SearchProduct) =>
                 a.name.localeCompare(b.name) || byRelevance(a, b)
             : byRelevance;
 
-    const products = (matchedProducts ?? []).slice().sort(comparator);
+    const products = filtered.slice().sort(comparator);
 
-    const totalPages = Math.max(1, Math.ceil(totalCount / effectivePerPage));
+    const totalPages = Math.max(1, Math.ceil(resultCount / effectivePerPage));
     const effectivePage = Math.min(safePage, totalPages);
     const offset = (effectivePage - 1) * effectivePerPage;
 
+    // Strip the filter-only fields so they never reach the client grid.
+    const pageProducts = products
+      .slice(offset, offset + effectivePerPage)
+      .map(({ filterAttributes, brandRef, price, ...product }) => product);
+
     return {
-      products: products.slice(offset, offset + effectivePerPage),
-      totalCount,
+      products: pageProducts,
+      totalCount: resultCount,
+      unfilteredCount,
+      facets,
+      priceRange,
+      state: appliedState,
+      category: activeCategory,
+      categoryCounts,
+      allCategoriesCount,
     };
   } catch (error) {
     console.error(`[searchProductsFull] Failed for query "${query}", sort "${sort}", page ${page}:`, error);
-    return { products: [], totalCount: 0 };
+    return { products: [], totalCount: 0, unfilteredCount: 0 };
   }
 }

@@ -31,7 +31,10 @@ One controller, three surfaces:
 - From 2 characters: live product suggestions (150ms debounce, small in-memory cache, previous results stay visible while loading) with the matched text highlighted, and a trailing "See all results" option.
 - Desktop shortcuts: `/` focuses the field, arrows move, Enter opens the highlighted option (or submits), Esc closes the popup, a second Esc clears the text.
 - `/search`: compact heading on phones, 44px pagination buttons, and a no-query / no-results page that offers category and popular-search links instead of a dead end.
+- `/search` filters and sort: filters use the same URL contract as the catalogue (`loadFilterSort`), limited to the category-agnostic `commercial` group (Price, Brand, In stock) because results span categories; the sidebar shows from `lg`, a Filters sheet below it. Facet counts, the price range and the result list are computed from the same in-memory matched set inside `searchProductsFull`, so counts always equal results. `sort` is NOT parsed by `loadFilterSort`: valid values are `relevance` (default, absent from the URL), `price-asc`, `price-desc`, `alpha-asc` (legacy `name-asc` accepted), validated in `searchProductsFull`.
 
 ## Checking it
 
 Dev-server checks that matter after a change: open the sheet at 390px and 320px wide with the keyboard up, press the browser Back button from the sheet, and Tab through the popup on desktop. The visual-viewport behaviour can be simulated by overriding `window.visualViewport` in an init script; real-device confirmation on iOS Safari and Android Chrome is still worth a minute. On tablet widths (640, 744, 768, 820, 1023) check the field spacing in the header, the popup's right edge at 640, and — on a real iPad or a `visualViewport` override — the "See all results" row above the keyboard.
+
+On `/search?q=hd` tick a brand and confirm the toolbar count equals the brand's sidebar count, `q` survives, Back undoes one step, and Clear all keeps `q`; check the Filters sheet at 390 and 744 and the sidebar at 1024, 1280 and 1920.

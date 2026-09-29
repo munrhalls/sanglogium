@@ -3,19 +3,22 @@
 import React, { useEffect } from "react";
 import type { MouseEvent } from "react";
 import Link from "next/link";
-import { ArrowRight, MagnifyingGlass } from "@phosphor-icons/react";
+import { ArrowRight, MagnifyingGlass, SquaresFour, Tag } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils/tailwind";
 import { ProductImage } from "@/app/components/features/products/ProductImage";
 import { formatPrice } from "@/lib/utils/price";
 import type { AutocompleteProduct } from "@/sanity-cms/lib/products/searchProducts";
 import { HighlightedText } from "./HighlightedText";
 import { CATEGORY_SUGGESTIONS, isPlainLeftClick, productHref, searchHref } from "./searchLinks";
+import type { SuggestionEntry } from "./suggestionEntries";
 
 interface AutocompletePanelProps {
   /** popup = desktop dropdown, sheet = full-bleed list inside the mobile sheet. */
   variant: "popup" | "sheet";
   query: string;
   results: AutocompleteProduct[];
+  /** Category / brand entries shown above the products. */
+  entries: SuggestionEntry[];
   isFetching: boolean;
   hasError: boolean;
   activeIndex: number;
@@ -23,6 +26,7 @@ interface AutocompletePanelProps {
   optionId: (index: number) => string;
   onActiveChange: (index: number) => void;
   onProductClick: (product: AutocompleteProduct) => void;
+  onEntryClick: (entry: SuggestionEntry) => void;
   onViewAll: () => void;
   onNavigate: (href: string) => void;
 }
@@ -50,6 +54,7 @@ export function AutocompletePanel({
   variant,
   query,
   results,
+  entries,
   isFetching,
   hasError,
   activeIndex,
@@ -57,14 +62,19 @@ export function AutocompletePanel({
   optionId,
   onActiveChange,
   onProductClick,
+  onEntryClick,
   onViewAll,
   onNavigate,
 }: AutocompletePanelProps) {
   const trimmed = query.trim();
   const isSheet = variant === "sheet";
-  const viewAllIndex = results.length;
+  // Option order: entries, products, then "see all results".
+  const productOffset = entries.length;
+  const viewAllIndex = entries.length + results.length;
   const showSkeleton = isFetching && results.length === 0;
-  const showEmpty = !isFetching && !hasError && results.length === 0;
+  const showEmpty = !isFetching && !hasError && results.length === 0 && entries.length === 0;
+  const categoryEntries = entries.filter((e) => e.kind === "category");
+  const brandEntries = entries.filter((e) => e.kind === "brand");
 
   // Keep the keyboard-highlighted option inside the scroll area.
   useEffect(() => {
@@ -84,12 +94,38 @@ export function AutocompletePanel({
     "focus-visible:outline-none"
   );
 
+  const renderEntry = (entry: SuggestionEntry, index: number) => {
+    const isActive = index === activeIndex;
+    const Icon = entry.kind === "category" ? SquaresFour : Tag;
+    return (
+      <a
+        key={`${entry.kind}-${entry.href}`}
+        id={optionId(index)}
+        role="option"
+        aria-selected={isActive}
+        href={entry.href}
+        tabIndex={-1}
+        onMouseMove={() => {
+          if (!isActive) onActiveChange(index);
+        }}
+        onClick={handleClick(() => onEntryClick(entry))}
+        className={cn(
+          optionBase,
+          "min-h-12 py-2",
+          isActive ? "border-brand-400 bg-surface-card" : "border-transparent hover:bg-surface-card"
+        )}
+      >
+        <Icon size={18} className="shrink-0 text-secondary-500" aria-hidden="true" />
+        <span className="type-body min-w-0 flex-1 truncate text-secondary-300">
+          <HighlightedText text={entry.label} query={trimmed} />
+        </span>
+        <ArrowRight size={16} className="shrink-0 text-secondary-500" aria-hidden="true" />
+      </a>
+    );
+  };
+
   return (
     <div className="flex flex-col">
-      {results.length > 0 && (
-        <p className="type-overline px-3 pb-1 pt-3 text-accent-500">Products</p>
-      )}
-
       {showSkeleton && (
         <div className="py-1">
           <SuggestionSkeleton />
@@ -119,7 +155,25 @@ export function AutocompletePanel({
         aria-busy={isFetching}
         className={cn(results.length > 0 && isFetching && "opacity-60 transition-opacity")}
       >
-        {results.map((product, index) => {
+        {categoryEntries.length > 0 && (
+          <div role="group" aria-label="Categories">
+            <p className="type-overline px-3 pb-1 pt-3 text-accent-500">Categories</p>
+            {categoryEntries.map((entry) => renderEntry(entry, entries.indexOf(entry)))}
+          </div>
+        )}
+        {brandEntries.length > 0 && (
+          <div role="group" aria-label="Brands">
+            <p className="type-overline px-3 pb-1 pt-3 text-accent-500">Brands</p>
+            {brandEntries.map((entry) => renderEntry(entry, entries.indexOf(entry)))}
+          </div>
+        )}
+        {results.length > 0 && (
+          <p className="type-overline px-3 pb-1 pt-3 text-accent-500" role="presentation">
+            Products
+          </p>
+        )}
+        {results.map((product, resultIndex) => {
+          const index = productOffset + resultIndex;
           const isActive = index === activeIndex;
           const brandName = product.brand?.name;
           return (

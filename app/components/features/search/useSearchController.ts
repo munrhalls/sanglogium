@@ -1,12 +1,14 @@
 "use client";
 
-import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { searchProductsAutocomplete } from "@/sanity-cms/lib/products/searchProducts";
 import type { AutocompleteProduct } from "@/sanity-cms/lib/products/searchProducts";
 import { addRecentSearch } from "./recentSearches";
 import { productHref, searchHref } from "./searchLinks";
+import { buildSuggestionEntries } from "./suggestionEntries";
+import type { SuggestionEntry } from "./suggestionEntries";
 
 export const MIN_QUERY_LENGTH = 2;
 const DEBOUNCE_MS = 150;
@@ -49,8 +51,13 @@ export function useSearchController({ isSheetOpen }: { isSheetOpen: boolean }) {
 
   const trimmed = query.trim();
   const showSuggestions = isEditing && trimmed.length >= MIN_QUERY_LENGTH;
-  // Every product, plus the trailing "see all results" option.
-  const optionCount = showSuggestions ? results.length + 1 : 0;
+  // Category / brand entries (derived from the products), then every product,
+  // then the trailing "see all results" option, in that order.
+  const entries = useMemo(
+    () => (showSuggestions ? buildSuggestionEntries(trimmed, results) : []),
+    [showSuggestions, trimmed, results]
+  );
+  const optionCount = showSuggestions ? entries.length + results.length + 1 : 0;
 
   // Keep the text in sync with the URL when it changes externally.
   useEffect(() => {
@@ -156,6 +163,14 @@ export function useSearchController({ isSheetOpen }: { isSheetOpen: boolean }) {
     [go]
   );
 
+  const openEntry = useCallback(
+    (entry: SuggestionEntry) => {
+      setIsEditing(false);
+      go(entry.href);
+    },
+    [go]
+  );
+
   const optionId = useCallback((index: number) => `${idBase}-option-${index}`, [idBase]);
 
   const handleKeyDown = useCallback(
@@ -183,7 +198,9 @@ export function useSearchController({ isSheetOpen }: { isSheetOpen: boolean }) {
         case "Enter": {
           if (!options.isOpen || !showSuggestions || activeIndex < 0) return;
           e.preventDefault();
-          if (activeIndex < results.length) openProduct(results[activeIndex]);
+          const productIndex = activeIndex - entries.length;
+          if (activeIndex < entries.length) openEntry(entries[activeIndex]);
+          else if (productIndex < results.length) openProduct(results[productIndex]);
           else submit();
           options.onActivate?.();
           return;
@@ -194,7 +211,7 @@ export function useSearchController({ isSheetOpen }: { isSheetOpen: boolean }) {
         }
       }
     },
-    [trimmed, optionCount, showSuggestions, activeIndex, results, openProduct, submit]
+    [trimmed, optionCount, showSuggestions, activeIndex, entries, results, openEntry, openProduct, submit]
   );
 
   let statusMessage = "";
@@ -216,6 +233,8 @@ export function useSearchController({ isSheetOpen }: { isSheetOpen: boolean }) {
     clear,
     reset,
     results,
+    entries,
+    openEntry,
     isFetching,
     hasError,
     showSuggestions,

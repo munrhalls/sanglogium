@@ -69,6 +69,9 @@ interface FilterSidebarProps {
   /** True when no catalogue filters are active (sort is ignored). Hides
    *  zero-match checkbox/boolean options on first load. */
   isDefaultState?: boolean;
+  /** Optional: render only these FACET_GROUPS ids (e.g. ['commercial'] for
+   *  cross-category /search results). Omitted = every group, as before. */
+  groupIds?: string[];
 }
 
 interface FilterPanelBodyProps extends FilterSidebarProps {
@@ -95,10 +98,12 @@ export function FilterPanelBody({
   rangeBounds = {},
   category = 'headphones',
   isDefaultState = false,
+  groupIds,
   panelScrollId,
   groupIdPrefix,
 }: FilterPanelBodyProps) {
   const { FACET_GROUPS, facetsForGroup, useClearAllFilters } = getFacetModule(category);
+  const groups = groupIds ? FACET_GROUPS.filter((g) => groupIds.includes(g.id)) : FACET_GROUPS;
   const clearAll = useClearAllFilters();
   const handleRailSelect = (groupId: string) => scrollToGroup(groupId, panelScrollId, groupIdPrefix);
 
@@ -116,26 +121,28 @@ export function FilterPanelBody({
       </div>
 
       <div className="flex min-h-0 flex-1">
-        <nav
-          aria-label="Jump to a filter section"
-          className="flex w-14 shrink-0 flex-col gap-0.5 overflow-y-auto overscroll-y-contain border-r border-border-secondary p-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
-        >
-          {FACET_GROUPS.map((group) => (
-            <RailTile
-              key={group.id}
-              id={group.id}
-              label={group.label}
-              icon={resolveGroupIcon(category, group.id, HEADPHONES_GROUP_ICONS, FALLBACK_GROUP_ICON)}
-              onSelect={handleRailSelect}
-            />
-          ))}
-        </nav>
+        {groups.length > 1 && (
+          <nav
+            aria-label="Jump to a filter section"
+            className="flex w-14 shrink-0 flex-col gap-0.5 overflow-y-auto overscroll-y-contain border-r border-border-secondary p-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {groups.map((group) => (
+              <RailTile
+                key={group.id}
+                id={group.id}
+                label={group.label}
+                icon={resolveGroupIcon(category, group.id, HEADPHONES_GROUP_ICONS, FALLBACK_GROUP_ICON)}
+                onSelect={handleRailSelect}
+              />
+            ))}
+          </nav>
+        )}
 
         <div
           id={panelScrollId}
           className="flex-1 overflow-y-auto overscroll-y-contain [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden pb-12"
         >
-          {FACET_GROUPS.map((group) => (
+          {groups.map((group) => (
             <PanelSection key={group.id} id={group.id} idPrefix={groupIdPrefix} label={group.label} note={group.note}>
               {group.id === 'commercial' && <PriceControl category={category} min={priceBounds.min} max={priceBounds.max} />}
               {facetsForGroup(group.id).map((facet) => renderFacet(facet, category, checkboxCounts, booleanCounts, brandLabels, rangeBounds, isDefaultState))}

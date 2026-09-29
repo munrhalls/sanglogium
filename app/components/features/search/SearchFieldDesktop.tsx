@@ -215,6 +215,7 @@ export function SearchFieldDesktop({ search, sheetOpen }: SearchFieldDesktopProp
               variant="popup"
               query={search.query}
               results={search.results}
+              entries={search.entries}
               isFetching={search.isFetching}
               hasError={search.hasError}
               activeIndex={search.activeIndex}
@@ -223,6 +224,10 @@ export function SearchFieldDesktop({ search, sheetOpen }: SearchFieldDesktopProp
               onActiveChange={search.setActiveIndex}
               onProductClick={(product) => {
                 search.openProduct(product);
+                finish();
+              }}
+              onEntryClick={(entry) => {
+                search.openEntry(entry);
                 finish();
               }}
               onViewAll={() => {
