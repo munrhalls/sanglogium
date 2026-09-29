@@ -1,12 +1,11 @@
 'use client';
 
 import React from 'react';
-import { usePathname } from 'next/navigation';
 import type { IconType } from 'react-icons';
 import { FaTag, FaHeadphones, FaWaveSquare, FaLayerGroup, FaBluetooth, FaMicrochip } from 'react-icons/fa6';
 import { getFacetModule, resolveGroupIcon, type Category, type AnyFacetDef, type FacetOptionCount } from './facetRegistry';
 import type { RangeBounds } from '@/sanity-cms/lib/products/getFilterFacets';
-import { CheckboxGroup, BooleanToggle, RangeControl, PriceControl, RatingControl } from './FilterControls';
+import { CheckboxGroup, BooleanToggle, RangeControl, PriceControl } from './FilterControls';
 
 // Re-export the shared header/style constants so sibling filter modules can
 // import them from a stable barrel instead of the component they decorate.
@@ -101,8 +100,6 @@ export function FilterPanelBody({
 }: FilterPanelBodyProps) {
   const { FACET_GROUPS, facetsForGroup, useClearAllFilters } = getFacetModule(category);
   const clearAll = useClearAllFilters();
-  const pathname = usePathname();
-  const hideCustomerRating = pathname === '/products/headphones';
   const handleRailSelect = (groupId: string) => scrollToGroup(groupId, panelScrollId, groupIdPrefix);
 
   return (
@@ -141,7 +138,6 @@ export function FilterPanelBody({
           {FACET_GROUPS.map((group) => (
             <PanelSection key={group.id} id={group.id} idPrefix={groupIdPrefix} label={group.label} note={group.note}>
               {group.id === 'commercial' && <PriceControl category={category} min={priceBounds.min} max={priceBounds.max} />}
-              {group.id === 'commercial' && !hideCustomerRating && <RatingControl category={category} />}
               {facetsForGroup(group.id).map((facet) => renderFacet(facet, category, checkboxCounts, booleanCounts, brandLabels, rangeBounds, isDefaultState))}
             </PanelSection>
           ))}
