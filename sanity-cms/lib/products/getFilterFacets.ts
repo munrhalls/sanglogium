@@ -241,7 +241,7 @@ const getFilterFacetsFn = async ({
     products = (await sanityFetch<RawProduct[]>({ query, params: { keys } })) ?? [];
   } catch (error) {
     console.error(`[getFilterFacets] Failed for ${keys.length} keys:`, error);
-    return { groups: {}, booleans: {}, brandLabels: {}, ranges: {} };
+    return { groups: {}, booleans: {}, brandLabels: {}, ranges: {}, isDefaultState: isDefaultFilterState(state) };
   }
 
   return computeCatalogueFacets(products, state);

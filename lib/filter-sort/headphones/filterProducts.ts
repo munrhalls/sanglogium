@@ -97,26 +97,10 @@ export function filterProducts(products: HeadphoneProduct[], state: FilterSortSt
 const byString = (a: string, b: string) => a.localeCompare(b);
 const byNumber = (a: number, b: number) => a - b;
 
-/** Bayesian-weighted rating: pulls low-review-count items toward the dataset
- *  mean so a single 5★ review can't outrank hundreds of 4.7★ ones —
- *  should-be.md's explicit "weight by count, not average alone" caution. */
-function weightedRating(p: HeadphoneProduct, meanRating: number, minVotes = 15): number {
-  const v = p.ratingCount;
-  return (v / (v + minVotes)) * p.rating + (minVotes / (v + minVotes)) * meanRating;
-}
-
 export function sortProducts(products: HeadphoneProduct[], sort: SortValue): HeadphoneProduct[] {
-  const meanRating = products.length ? products.reduce((sum, p) => sum + p.rating, 0) / products.length : 0;
   const sorted = [...products];
 
   switch (sort) {
-    case 'most-relevant':
-      // No search query exists on a pure category browse, so there is nothing
-      // to rank textual relevance against — falls back to Featured rather
-      // than faking a relevance score (AI_LESSONS L11).
-      return sorted.sort((a, b) => b.featuredPriority - a.featuredPriority || b.popularity - a.popularity);
-    case 'best-selling':
-      return sorted.sort((a, b) => b.popularity - a.popularity);
     case 'alpha-asc':
       return sorted.sort((a, b) => byString(a.name, b.name));
     case 'alpha-desc':
@@ -127,13 +111,8 @@ export function sortProducts(products: HeadphoneProduct[], sort: SortValue): Hea
       return sorted.sort((a, b) => byNumber(b.price_data.unit_amount, a.price_data.unit_amount));
     case 'date-old':
       return sorted.sort((a, b) => byString(a._createdAt, b._createdAt));
-    case 'date-new':
+    case 'newest':
       return sorted.sort((a, b) => byString(b._createdAt, a._createdAt));
-    case 'rating-desc':
-      return sorted.sort((a, b) => weightedRating(b, meanRating) - weightedRating(a, meanRating));
-    case 'discount-desc':
-      return sorted.sort((a, b) => (b.discountPercent ?? 0) - (a.discountPercent ?? 0));
-    case 'featured':
     default:
       return sorted.sort((a, b) => b.featuredPriority - a.featuredPriority || b.popularity - a.popularity);
   }
