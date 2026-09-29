@@ -27,7 +27,6 @@
       "Bash(git log:*)",
       "Bash(git show:*)",
       "Bash(git branch:*)",
-      "Bash(bd:*)",
       "Bash(ls:*)",
       "Bash(cat:*)",
       "Bash(mkdir:*)",
@@ -36,9 +35,7 @@
       "mcp__claude-in-chrome__read_network_requests"
     ],
     "deny": [
-      "Bash(rm -rf *)",
-      "Bash(git push:*)",
-      "Bash(git commit:*)"
+      "Bash(rm -rf *)"
     ]
   }
 }
