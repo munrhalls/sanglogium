@@ -3,10 +3,10 @@
 **Invoke with:** "run the risk protocol on `<issue>`", "risk-assess `<issue>`", or just
 "risk protocol". Any of these means exactly this document.
 
-**What it produces:** a two-part risk assessment **appended to the beads issue's NOTES**
-(`bd update <id> --append-notes`) — never touching the description.
+**What it produces:** a two-part risk assessment **appended to the milestone's section in `_project/<feature>/plan.md`**
+— never touching the milestone goal or task list.
 
-**When:** before any agent (this chat, CLI, cloud, or Devin) starts implementing a beads
+**When:** before any agent (this chat, CLI, cloud, or Devin) starts implementing a milestone
 issue. It is the pre-flight, not the build. The build method is
 `_project/00-MOST-IMPORTANT-lean-tracer-bullet-methodology.md` (Part 1: campaign structure,
 Part 2: milestone execution); its "no build/lint/test/tsc as self-verification" rule
@@ -89,7 +89,7 @@ plain-text line. Do not work around it, and do not open a blocking question widg
 
 ## Output shape
 
-Appended to the issue (`bd update <id> --append-notes`), never the description:
+Appended to the milestone section in plan.md, never the goal or task list:
 
 ```
 RISK ASSESSMENT (added <date>)

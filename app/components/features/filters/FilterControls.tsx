@@ -6,7 +6,6 @@ import { ProgressiveFilterOptionList } from '@/app/components/features/filters/P
 import {
   FilterSliderSection,
   DualRangeSlider,
-  ResetButton,
   filterSectionHeaderRow,
   filterSectionHeaderLabel,
   filterSectionHeaderAction,
@@ -263,8 +262,6 @@ export function RangeControl({
   );
 }
 
-const RATING_TIERS = [4, 3] as const;
-
 export function PriceControl({ category, min, max }: { category: Category; min: number; max: number }) {
   const { useFilterParam } = getFacetModule(category);
   const [minParam, setMinParam] = useFilterParam('minPrice', { history: 'replace' }) as [
@@ -328,34 +325,5 @@ export function PriceControl({ category, min, max }: { category: Category; min: 
         }}
       />
     </FilterSliderSection>
-  );
-}
-
-export function RatingControl({ category }: { category: Category }) {
-  const { useFilterParam } = getFacetModule(category);
-  const [minRating, setMinRating] = useFilterParam('minRating') as [number | null, (v: number | null) => void];
-
-  return (
-    <div className="flex flex-col gap-3">
-      <div className={filterSectionHeaderRow}>
-        <span className={filterSectionHeaderLabel}>Customer Rating</span>
-        <ResetButton active={minRating != null} label="Reset rating filter" onClick={() => setMinRating(null)} />
-      </div>
-      <div className="flex flex-col gap-2">
-        {RATING_TIERS.map((tier) => {
-          const checked = minRating === tier;
-          return (
-            <Checkbox
-              key={tier}
-              name="minRating"
-              value={String(tier)}
-              label={`${tier}★ & up`}
-              checked={checked}
-              onChange={() => setMinRating(checked ? null : tier)}
-            />
-          );
-        })}
-      </div>
-    </div>
   );
 }

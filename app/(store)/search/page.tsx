@@ -2,10 +2,11 @@ import React, { Suspense } from 'react';
 import { redirect } from 'next/navigation';
 import { SearchHeader } from '@/app/components/features/search/SearchHeader';
 import { searchProductsFull } from '@/sanity-cms/lib/products/searchProducts';
-import { ProductGridSkeleton } from '@/app/components/skeletons/ProductGridSkeleton';
 import { isFacetedQuery } from '@/lib/catalogue/seo';
 import { detectSearchRedirect } from '@/lib/catalogue/detectSearchRedirect';
-import { SearchResults } from './SearchResults';
+import { loadFilterSort } from '@/lib/catalogue/filterSortParams';
+import type { ProductQueryState } from '@/lib/catalogue/buildProductQuery';
+import { SearchResults, SearchResultsSkeleton } from './SearchResults';
 
 interface SearchPageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -24,12 +25,24 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   const pageValue = Array.isArray(query.page) ? query.page[0] : query.page;
   const page = typeof pageValue === 'string' ? Number(pageValue) : 1;
 
-  const resultsPromise = searchProductsFull(q, undefined, page);
+  const sortValue = Array.isArray(query.sort) ? query.sort[0] : query.sort;
+  const sort = typeof sortValue === 'string' ? sortValue : undefined;
+
+  // Same URL contract as the catalogue. `sort` is NOT taken from here: its
+  // vocabulary has no `relevance`, so searchProductsFull validates the raw value.
+  const filterState = loadFilterSort(query) as ProductQueryState;
+
+  const catValue = Array.isArray(query.cat) ? query.cat[0] : query.cat;
+  const category = typeof catValue === 'string' ? catValue : undefined;
+
+  const resultsPromise = searchProductsFull(q, sort, page, undefined, filterState, category);
 
   return (
-    <div className="mx-auto max-w-catalogue px-4 md:px-8 pt-6 pb-12">
+    // w-full: <main> is a flex column, so a bare mx-auto child shrinks to its
+    // content's max-content width (the auto-fill grid then overflows past sm).
+    <div className="mx-auto w-full max-w-catalogue px-4 md:px-8 pt-4 sm:pt-6 pb-12">
       <SearchHeader query={q} />
-      <Suspense fallback={<ProductGridSkeleton />}>
+      <Suspense fallback={<SearchResultsSkeleton />}>
         <SearchResults resultsPromise={resultsPromise} query={q} />
       </Suspense>
     </div>

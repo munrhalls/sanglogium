@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en" data-theme="luxury">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dev server wedge: prevent and recover</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@5.5.19/daisyui.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@5.5.19/themes.css">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.2.4/dist/index.global.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  :where(.grid, .flex) > * { min-width: 0; }
+  :where(p, h1, h2, h3, li, td, th, .badge) { overflow-wrap: anywhere; }
+  pre.cmd { white-space: pre-wrap; word-break: break-word; font-size: .82rem; line-height: 1.5; }
+</style>
+</head>
+<body class="bg-base-100 text-base-content">
+<main class="max-w-5xl mx-auto px-4 py-8 space-y-10">
+
+<header class="space-y-2">
+  <h1 class="text-3xl font-bold">Dev server wedge: prevent first, recover fast</h1>
+  <p class="opacity-80">Evidence read from this machine while your dev server was running, then the prevention table, then the recovery path. I did not run the dev server or the new script.</p>
+</header>
+
+<section class="rounded-box border border-warning/40 bg-warning/10 p-4 space-y-2">
+  <h2 class="text-xl font-semibold">What I measured (10 minutes after a fresh start)</h2>
+  <ul class="list-disc pl-5 space-y-1 text-sm">
+    <li><b>Swap 1.7 GB of 2 GB used</b>, only 329 MB free. RAM: 15.6 GB total, 8.9 GB used. Once swap fills, a Node process stops responding while it thrashes. This matches "unresponsive, not crashed".</li>
+    <li><b><code>next-server</code> RSS 2.78 GB</b> at 10 minutes uptime, on webpack with Sentry wrapped in.</li>
+    <li><b>File watchers:</b> <code>max_user_watches=135755</code>. Not a problem unless you see a watcher error (row 4).</li>
+    <li><b>One <code>next dev</code>, no overlap</b> right now. <code>.next</code> is 478 MB.</li>
+  </ul>
+  <p class="text-sm opacity-80">So memory pressure is the prime suspect. Corrupted <code>.next</code> is more likely a <i>consequence</i> (killed mid-cache-write) than the cause.</p>
+</section>
+
+<section class="space-y-3">
+  <h2 class="text-2xl font-semibold">1. Prevention (highest payoff first)</h2>
+  <div class="overflow-x-auto">
+  <table class="table table-sm bg-base-200 rounded-box">
+    <thead><tr><th>#</th><th>Cause</th><th>Detect early</th><th>Prevent</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td><b>Memory / swap exhaustion</b></td>
+        <td><code>devctl.sh watch</code> warns at server &gt; 4 GB or swap &gt; 90%.</td>
+        <td>
+          <b>Done in the repo:</b> <code>dev</code> now runs <code>next dev --turbopack</code>; Sentry's wrapper is skipped in dev. Both cut dev memory (my expectation, not measured).<br>
+          <b>You run (needs sudo), grow swap 2 to 8 GB:</b>
+          <pre class="cmd bg-base-300 rounded p-2 mt-1">sudo swapoff /swapfile &amp;&amp; sudo fallocate -l 8G /swapfile &amp;&amp; sudo mkswap /swapfile &amp;&amp; sudo swapon /swapfile</pre>
+          <b>Optional, kill a runaway instead of freezing the desktop:</b> <code>sudo apt install earlyoom</code>
+        </td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><b>Corrupt / stale <code>.next</code></b> after a hard kill, dependency change, config edit, or big branch switch</td>
+        <td>Terminal errors: <code>Cannot find module</code>, <code>ENOENT … .next/server</code>, manifest errors, <code>Caching failed</code>.</td>
+        <td>Stop with Ctrl-C, never <code>kill -9</code> first (TERM lets the cache flush; <code>devctl.sh restart</code> uses TERM, then -9 only after 3 s). Restart the server after <code>npm install</code>, editing <code>next.config.ts</code>/<code>.env*</code>, or a <code>git switch</code> that changes <code>package-lock.json</code>.</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td><b>Overlapping dev processes</b> on the same checkout</td>
+        <td><code>pgrep -af "next dev"</code> shows more than one; port 3000 "already in use".</td>
+        <td>One server per checkout. The repo ban already stops agents starting one. <code>devctl.sh restart</code> kills by port and by this repo's path first, so a stray process can't survive a recovery.</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td><b>File-watcher overflow</b></td>
+        <td>Terminal shows <code>ENOSPC: System limit for number of file watchers reached</code> or <code>EMFILE</code>.</td>
+        <td>Only if it appears:
+          <pre class="cmd bg-base-300 rounded p-2 mt-1">echo fs.inotify.max_user_watches=524288 | sudo tee /etc/sysctl.d/40-inotify.conf &amp;&amp; sudo sysctl --system</pre>
+        </td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td><b>Heavy one-off routes</b> (<code>/studio</code>, Sanity packages)</td>
+        <td>Memory jumps right after visiting <code>/studio</code>.</td>
+        <td>Don't open <code>/studio</code> in the UI-checking session. Restart after using it.</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section class="space-y-3">
+  <h2 class="text-2xl font-semibold">2. Fast-path recovery</h2>
+  <p class="text-sm">New file: <code>scripts/devctl.sh</code> (syntax-checked with <code>bash -n</code> only, never run). One-time alias for your shell:</p>
+  <pre class="cmd bg-base-300 rounded-box p-3">alias dr='~/work/sanglogium/scripts/devctl.sh restart'
+alias drc='~/work/sanglogium/scripts/devctl.sh restart --clean'
+alias drw='~/work/sanglogium/scripts/devctl.sh watch'</pre>
+  <div class="overflow-x-auto">
+  <table class="table table-sm bg-base-200 rounded-box">
+    <thead><tr><th>Step</th><th>Command</th><th>Use when</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><code>dr</code></td><td><b>Default.</b> Kill and start, keep <code>.next</code>. Most wedges are a memory-thrashed process, and this fixes them.</td></tr>
+      <tr><td>2</td><td><code>drc</code></td><td>Same error after step 1 (module/manifest/ENOENT). Removes build output but <b>keeps <code>.next/cache</code></b>, so the restart stays fast.</td></tr>
+      <tr><td>3</td><td><code>devctl.sh restart --nuke</code></td><td>Last resort: <code>rm -rf .next</code>. Slowest, and rarely needed.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="text-sm"><b>Is <code>rm -rf .next</code> necessary?</b> Usually not. It is what makes your recovery take minutes, because it also throws away the compile cache. Escalate only when a plain restart repeats the same error.</p>
+
+  <div class="rounded-box border border-base-content/20 bg-base-200 p-4 space-y-2">
+    <h3 class="font-semibold">Detecting "wedged" without clicking around</h3>
+    <p class="text-sm">Run <code>drw</code> in a second terminal tab. Every 10 s it fetches <code>/robots.txt</code> (tiny route) with an 8 s timeout. Two failures in a row, or server &gt; 4 GB, or swap &gt; 90%, prints a line and raises a desktop notification (<code>notify-send</code>). It only warns; it never restarts on its own.</p>
+    <p class="text-xs opacity-70">Your own <code>curl</code>: the repo's curl ban is for agents. Note the first probe after a cold start includes compile time, so one early failure is normal.</p>
+  </div>
+</section>
+
+<section class="rounded-box border border-base-content/20 bg-base-200 p-4 space-y-2">
+  <h2 class="text-xl font-semibold">Also changed, per your feedback on the last page</h2>
+  <ul class="list-disc pl-5 space-y-1 text-sm">
+    <li><code>CLAUDE.md</code> and <code>AGENTS.md</code>: verification now means <b>your PR review on GitHub + your live check on the dev server</b>. Diff reading and rebasing don't count. Agents never load, attach a browser to, or poll the dev server unless you ask in the live conversation.</li>
+    <li>Both chat prompts saved to <code>~/work/global/workflow/</code> (the <code>global</code> folder I found under <code>~/work</code>): <code>architect-chat.md</code>, <code>executor-chat.md</code>, with the new verification rule inside.</li>
+    <li><b>Correction to my earlier item 4:</b> switching the warm server to another branch is a wedge trigger when the branch changes dependencies or config. Restart with <code>dr</code> after such a switch.</li>
+    <li><b>Not done, on purpose:</b> warm-route script (extra machinery), agent browser access (you said no), running anything.</li>
+    <li><b>Revert path:</b> if <code>--turbopack</code> fails on first start, run <code>npm run dev-no-turbo</code>; that script already exists.</li>
+  </ul>
+</section>
+
+</main>
+</body>
+</html>

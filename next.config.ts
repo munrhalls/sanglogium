@@ -114,4 +114,7 @@ const bundleAnalyzer = withBundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
 });
 
-export default withSentryConfig(bundleAnalyzer(nextConfig));
+const config = bundleAnalyzer(nextConfig);
+
+// Sentry's build-time wrapper adds compile work that dev doesn't need.
+export default process.env.NODE_ENV === "development" ? config : withSentryConfig(config);

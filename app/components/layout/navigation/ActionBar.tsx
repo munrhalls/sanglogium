@@ -22,105 +22,89 @@ function ActionButtons({ isAuthenticated }: ActionButtonsProps) {
 
   const displayCount = hasHydrated ? basketCount : 0;
 
+  // Every control shares one full-height, equal-width hit area (the bar is 44px
+  // tall, the minimum touch target) and carries an accessible name: the labels
+  // beneath the icons are hidden visually, so aria-label is the only name.
+  const item =
+    "flex h-full min-w-11 flex-1 cursor-pointer touch-manipulation items-center justify-center";
+  const iso = { isolation: "isolate" } as const;
+
   return (
-    <div className="flex h-full items-center justify-around px-4">
-
-
+    <div className="flex h-full items-stretch justify-around px-2">
       <button
         onClick={() => (isOpen ? closeDrawer() : openDrawer("catalogue"))}
-        className="flex cursor-pointer touch-manipulation flex-col items-center"
+        className={item}
         type="button"
-        style={{ isolation: "isolate" }}
+        style={iso}
+        aria-label={isOpen ? "Close menu" : "Open menu"}
+        aria-expanded={isOpen}
       >
-        {/* TODO: use phosphor icons - when the menu is open, the button should turn to close X icon */}
         {isOpen ? (
           <div className="relative flex h-10 w-10 items-center justify-center">
             {/* The Circle Highlight */}
             <div className="absolute h-6 w-6 rounded-full bg-white/5 ring-1 ring-white/10" />
 
             {/* The Icon */}
-            <XIcon className="relative h-5 w-5 text-brand-200" weight="bold" />
+            <XIcon className="relative h-5 w-5 text-brand-200" weight="bold" aria-hidden="true" />
           </div>
         ) : (
-          <ListIcon className="h-5 w-5" weight="bold" />
+          <ListIcon className="h-5 w-5" weight="bold" aria-hidden="true" />
         )}
-        <span className="sr-only mt-1 hidden text-xs text-cap sm:inline-block">
-          Menu
-        </span>
       </button>
 
       <button
         id="mobile-search-trigger"
         onClick={() => (isSearchOpen ? closeSearch() : openSearch())}
-        className="flex sm:hidden cursor-pointer touch-manipulation flex-col items-center"
+        className={cn(item, "sm:hidden")}
         type="button"
-        style={{ isolation: "isolate" }}
+        style={iso}
         aria-label={isSearchOpen ? "Close search" : "Open search"}
+        aria-expanded={isSearchOpen}
       >
         {isSearchOpen ? (
-          <XIcon className="h-6 w-6" />
+          <XIcon className="h-6 w-6" aria-hidden="true" />
         ) : (
-          <Search className="h-6 w-6" />
+          <Search className="h-6 w-6" aria-hidden="true" />
         )}
-        <span className="sr-only mt-1 hidden text-xs text-cap sm:inline-block">
-          Search
-        </span>
       </button>
 
       {isAuthenticated ? (
-        <Link
-          href="/account"
-          className="flex cursor-pointer touch-manipulation flex-col items-center"
-          type="button"
-          style={{ isolation: "isolate" }}
-        >
-          <UserIcon className="h-5 w-5" />
-          <span className="sr-only mt-1 hidden text-xs text-cap sm:inline-block">
-            Account
-          </span>
+        <Link href="/account" className={item} style={iso} aria-label="Account">
+          <UserIcon className="h-5 w-5" aria-hidden="true" />
         </Link>
       ) : (
         <>
-          <Link
-            href="/sign-in"
-            className="flex cursor-pointer touch-manipulation flex-col items-center"
-            type="button"
-            style={{ isolation: "isolate" }}
-          >
-            <SignInIcon className="h-5 w-5" />
-            <span className="sr-only mt-1 hidden text-xs text-cap sm:inline-block">
-              Sign In
-            </span>
+          <Link href="/sign-in" className={item} style={iso} aria-label="Sign in">
+            <SignInIcon className="h-5 w-5" aria-hidden="true" />
           </Link>
-          <Link
-            href="/sign-up"
-            className="flex cursor-pointer touch-manipulation flex-col items-center"
-            type="button"
-            style={{ isolation: "isolate" }}
-          >
-            <UserPlus className="h-5 w-5" />
-            <span className="sr-only mt-1 hidden text-xs text-cap sm:inline-block">
-              Sign Up
-            </span>
+          <Link href="/sign-up" className={item} style={iso} aria-label="Sign up">
+            <UserPlus className="h-5 w-5" aria-hidden="true" />
           </Link>
         </>
       )}
 
       <Link
         href="/basket"
-        className="flex cursor-pointer touch-manipulation flex-col items-center relative"
-        type="button"
-        style={{ isolation: "isolate" }}
+        className={item}
+        style={iso}
         data-testid="basket-button"
+        aria-label={
+          displayCount > 0
+            ? `Basket, ${displayCount} ${displayCount === 1 ? "item" : "items"}`
+            : "Basket"
+        }
       >
-        <ShoppingBag className="h-5 w-5" />
-        {hasHydrated && basketCount > 0 && (
-          <span data-testid="basket-badge" className="absolute -top-1 -right-2 h-4 w-4 rounded-full bg-brand-400 text-brand-900 text-xs flex items-center justify-center font-bold rounded-[2px]">
-            {basketCount > 99 ? '99+' : basketCount}
-          </span>
-        )}
-        <span className="sr-only mt-1 hidden text-xs text-cap sm:inline-block">
-          Basket
+        <span className="relative flex">
+          <ShoppingBag className="h-5 w-5" aria-hidden="true" />
+          {hasHydrated && basketCount > 0 && (
+            <span
+              data-testid="basket-badge"
+              aria-hidden="true"
+              className="absolute -top-1 -right-2 flex h-4 w-4 items-center justify-center rounded-[2px] bg-brand-400 text-xs font-bold text-brand-900"
+            >
+              {basketCount > 99 ? "99+" : basketCount}
+            </span>
+          )}
         </span>
       </Link>
     </div>

@@ -7,6 +7,8 @@ interface ProductImageProps {
   alt: string;
   className?: string;
   priority?: boolean;
+  reveal?: boolean;
+  sizes?: string;
 }
 
 export function ProductImage({
@@ -14,6 +16,8 @@ export function ProductImage({
   alt,
   className,
   priority = false,
+  reveal = true,
+  sizes = "(max-width: 768px) 50vw, 25vw",
 }: ProductImageProps) {
   // Get the asset reference - Sanity can use either _ref or _id
   const assetRef = image?.asset?._ref || image?.asset?._id;
@@ -22,7 +26,7 @@ export function ProductImage({
   // Blur-up placeholder only for opaque photos — a transparent PNG would let
   // the blurred LQIP bleed through its transparent regions, so those fall back
   // to the flat surface colour (streaming-poc parity).
-  const showLqip = lqip !== null && isOpaque !== false;
+  const showLqip = reveal && lqip !== null && isOpaque !== false;
 
   if (!assetRef) {
     return (
@@ -51,10 +55,10 @@ export function ProductImage({
         src={assetRef}
         alt={alt}
         fill
-        sizes="(max-width: 768px) 50vw, 25vw"
-        className={`object-contain mix-blend-multiply ${styles.reveal}`}
+        sizes={sizes}
+        className={`object-contain mix-blend-multiply ${reveal ? styles.reveal : ""}`}
         priority={priority}
-        data-reveal=""
+        data-reveal={reveal ? "" : undefined}
         suppressHydrationWarning
       />
     </div>

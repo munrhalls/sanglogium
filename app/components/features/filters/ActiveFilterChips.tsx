@@ -40,7 +40,6 @@ export function ActiveFilterChips({ brandLabels = {}, category = 'headphones' }:
   const [sort, setSort] = useFilterParam('sort') as [string, (v: string) => void];
   const [minPrice, setMinPrice] = useFilterParam('minPrice') as [number | null, (v: number | null) => void];
   const [maxPrice, setMaxPrice] = useFilterParam('maxPrice') as [number | null, (v: number | null) => void];
-  const [minRating, setMinRating] = useFilterParam('minRating') as [number | null, (v: number | null) => void];
   const clearAll = useClearAllFilters();
 
   // Stable hook-order access to every generic facet param (and, for range
@@ -83,10 +82,6 @@ export function ActiveFilterChips({ brandLabels = {}, category = 'headphones' }:
         setMaxPrice(null);
       },
     });
-  }
-
-  if (minRating != null) {
-    chips.push({ key: 'minRating', label: `${minRating}★ & up`, onRemove: () => setMinRating(null) });
   }
 
   if (sort !== SORT_DEFAULT) {

@@ -12,7 +12,9 @@ export default function Header() {
     <header
       className={cn(
         "sticky left-0 right-0 top-0 z-50",
-        "flex h-[var(--mobile-header-h)] shrink-0 items-center justify-around gap-4 lg:h-[var(--desktop-header-h)]",
+        // Phones: logo + a flexible search bar edge to edge. sm and up: logo,
+        // search field centred in the remaining space, actions on the right.
+        "flex h-[var(--mobile-header-h)] shrink-0 items-center gap-3 px-3 sm:gap-6 sm:px-6 lg:h-[var(--desktop-header-h)]",
         "bg-brand-900 text-cap"
       )}
     >

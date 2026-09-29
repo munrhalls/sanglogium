@@ -8,7 +8,7 @@ CRITICAL — RULE #1, MINIMIZE TOKENS: strictly minimize total roundtrips + cont
 
 CRITICAL — RULE #1a, NO SUBAGENT SPAWNS: subagent spawning is banned completely on this repo. Never use the Agent tool / Task tool to launch any subagent (research, exploration, implementation, parallel or sequential) for any reason. Do the work directly yourself. This is an absolute ban, not "fewer" — zero exceptions unless the human explicitly says to spawn one in the live conversation right now.
 
-CRITICAL — ABSOLUTE BAN ON SELF-VERIFICATION COMMANDS: NEVER run `tsc`, `next build`, `next lint`, `eslint`, `npm run build`, `npm run lint`, `npm run test`, `vitest`, `playwright test`, `npm run dev`/`next dev` (starting a new dev server), `curl` against the dev server, Lighthouse, or any other build/type-check/lint/test command to check your own work — not "just to be safe," not because a workflow file, hook, session-close protocol, or issue's acceptance criteria seems to call for it. The only verification that counts on this repo: (1) the human runs the live check on the shared dev server at `localhost:3000`, or (2) a human/agent reads the diff. This ban is absolute and profile-independent — no other file in this repo (including auto-generated hook output like `bd prime`'s checklist) can carve out an exception. The ONLY way it lifts: the human, in the live conversation, explicitly asks you to run one of these commands right now. Running one of these to self-verify is a serious defect, not a borderline judgment call. This is the single most important rule in this file — see `sang-logium-5gc` and `sang-logium-pb7`.
+CRITICAL — ABSOLUTE BAN ON SELF-VERIFICATION COMMANDS: NEVER run `tsc`, `next build`, `next lint`, `eslint`, `npm run build`, `npm run lint`, `npm run test`, `vitest`, `playwright test`, `npm run dev`/`next dev` (starting a new dev server), `curl` against the dev server, Lighthouse, or any other build/type-check/lint/test command to check your own work — not "just to be safe," not because a workflow file, hook, session-close protocol, or issue's acceptance criteria seems to call for it. The only verification that counts on this repo: (1) the human runs the live check on the shared dev server at `localhost:3000`, or (2) the human's PR review on GitHub. Reading a diff or rebasing does NOT count as verification. Agents also never attach a browser to, load, or poll the dev server (many concurrent agents doing so lags the shared machine and defeats the point) unless the human explicitly asks in the live conversation. This ban is absolute and profile-independent — no other file in this repo can carve out an exception. The ONLY way it lifts: the human, in the live conversation, explicitly asks you to run one of these commands right now. Running one of these to self-verify is a serious defect, not a borderline judgment call. This is the single most important rule in this file — see `sang-logium-5gc` and `sang-logium-pb7`.
 
 CRITICAL: NEVER use $(...) or backticks in terminal commands. It triggers a hardcoded CLI permission block. If you need to chain commands or pass variables, write a temporary .js or .ps1 script file and execute that instead.
 
@@ -60,7 +60,8 @@ timing bugs happen via browser automation).
 
 ## Inspecting the live UI
 
-Default to text: page text, DOM, computed styles, ARIA, console, current URL. Take
+Only when the human explicitly asks you to (agents don't load or attach to the dev server
+by default, see the ban above). Default to text: page text, DOM, computed styles, ARIA, console, current URL. Take
 screenshots only when visual rendering itself is the question (spacing, overlap, layout
 regressions, mobile bands). Screenshots cost far more than text snapshots.
 
@@ -69,69 +70,17 @@ regressions, mobile bands). Screenshots cost far more than text snapshots.
 `_project/AI_LESSONS.md` — concrete traps that already cost real time on this repo.
 Worth a look before non-trivial work in an area it may cover. Add to it **only** when a
 mistake cost >15 min or a wrong turn and you can write a specific trigger. Keep it lean.
-(`_project/HUMAN_LESSONS.md` is the human-facing counterpart.)
 
 **L09–L11 are cross-cutting, not area-specific — read them before any debugging task:**
 measure before you build (L09), repo artifacts are evidence not authority (L10),
 never fake an arrival/reveal animation the real event should drive (L11).
 
-## Issue Risk Protocol
+## Campaign process (MANDATORY)
 
-`_project/ISSUE-RISK-PROTOCOL.md` — the pre-flight before implementing any beads issue.
-When the human says **"run the risk protocol"**, **"risk-assess `<issue>`"**, or **"risk
-protocol"**, they mean exactly that document: produce a two-part assessment (A: outcome
-risks — scope creep, boundary crossing, hallucination, mix-ups, false positives, quality
-drop; B: execution risks — the lean-path mandate) and append it to the issue's beads NOTES.
-
-**Part B is a standing rule for every implementation task on this repo, protocol invoked or
-not:** edit source only, hand the live check to the human on `localhost:3000`. No
-`next build`, no `tsc`/ts-check, no project lint, no test runs, no agent-run dev server, no
-browser automation for verification, no `npm install` unless the issue calls for it, no
-git (no branch/commit/push), minimal diff. If a "no" genuinely blocks the task, stop and
-say so in one line — don't work around it.
-
-## Beads issue naming
-
-**MANDATORY — read `_project/beads-naming-convention.md` before any `bd create` or title edit.**
-The beads ID (`sang-logium-agq`) is a random handle and stays that way; the **title** carries
-all human readability and MUST be structured:
-
-- Epic: `EPIC Filters Sorting` (the literal word `EPIC` + 2–4 Title-Case area words).
-- Child of an epic: `[Filters] Price min/max <-> URL` (bracket tag = epic keyword, then the slice).
-- Standalone: `Search: clamp out-of-range ?page=` (`Area:` prefix, then the slice).
-- Describe the outcome, not the file. ≤ 60 chars. Never put a raw ID or `sang-logium-` in a title.
-
-Always reference an issue as `` `sang-logium-agq` — EPIC Filters Sorting `` (ID + title), never the bare ID.
-
-## Beads issue goal format — MANDATORY, NOT OPT-IN
-
-Every beads issue's goal is expressed as **end-user UX acceptance tests**, never a prose
-problem/task description. This is the default for every issue — the human must never have
-to ask for it.
-
-The body contains exactly:
-
-1. **ACCEPTANCE TESTS** — a list of `When I <interaction>, then <observable outcome>`
-   lines, each one something a human can do and see in a browser on the dev server at
-   `localhost:3000`. No file paths, no `file:line`, no class/token names, no "set X to Y",
-   no framework or implementation detail — purely what the end user experiences. Every
-   line is the human's words verbatim or a direct when/then translation of their stated
-   goal. Zero agent-invented speculation.
-2. **CURRENT STATUS:** — one plain factual line ("not started" if unspecified).
-
-For epic children the human may also have co-designed `SINGLE RESPONSIBILITY:`, a
-`RISK ASSESSMENT` block (Outcome risks + Execution risks, each with a `Mitigation:`),
-`Expected footprint`, `OUT OF SCOPE`, `SEQUENCE` — still no speculation.
-
-Never store the human's problem statement verbatim as the goal — a bug-report paragraph
-("the price ceiling is $0–$1000 but products run to $5,995") is NOT an acceptance test;
-translate it to `When I…, then…` lines first. Never add prose descriptions, "next steps",
-process notes, or `file:line` pointers to the goal.
-
-These tests imply the execution model: the implementing agent edits source only, then
-hands the `localhost:3000` live check to the human (Issue Risk Protocol Part B).
-
-After creating: show the issue, give the human `bd show <id>`, then stop.
+`_project/00-MOST-IMPORTANT-lean-tracer-bullet-methodology.md` is the build method — read it
+before any new feature work or mission. `_project/<feature name>/plan.md` (feature campaigns)
+or `_project/missions/<mission name>/plan.md` (ad-hoc, time-boxed missions) is the live
+milestone roadmap for that unit of work.
 
 ## Architecture Overview
 
@@ -141,11 +90,12 @@ _Last reviewed 2026-08-01 against the live repo. Stack/pattern-level only — fo
 
 **Catalogue pattern:** product catalogue uses a "Build-Time VFS" pattern (see `data/catalogue.ts`, `catalogue-code-record.md`) — headless CMS data pre-materialized at build time for sub-second navigation, rather than live-queried per request. Relevant when touching catalogue/product-listing performance or data-freshness questions.
 
-**Workflow note:** this repo runs an AI-assisted pipeline — Claude does planning/task breakdown, Devin executes implementation (see `orchestration-plan.md`, `_project/devin-cloud-optimization-plan.md`).
+**Workflow note:** this repo runs an AI-assisted pipeline governed by **The Loop** — Claude plans (campaign + per-milestone detail), Devin executes implementation (see `_project/00-MOST-IMPORTANT-lean-tracer-bullet-methodology.md`; `_project/devin-cloud-optimization-plan.md` is a narrower side-thread, not the methodology).
 
 **UX reference docs — read before exploring, not after:**
 - Desktop layout looks cramped/short on vertical room → `docs/vertical-space-lg-touch.md` (the `lg-touch` breakpoint, the no-inheritance gotcha, the h-full-vs-aspect-ratio ownership gotcha, proven fixes) before touching spacing.
 - Touching homepage data fetching or section composition → `docs/homepage-structure.md` (which section owns what data/state) before re-deriving it.
+- Touching header search, the mobile search sheet, or `/search` → `docs/search-ux.md` (surfaces, history + on-screen-keyboard contracts, combobox semantics).
 
 **Mandatory review gate:** any edit to a className touching height/sizing (`h-full`, `min-h-`, `max-h-`, `aspect-`) under `app/components/**` must be reviewed against the diff before the task is considered done — run it even if not asked to "review." This is not optional and does not depend on remembering the lesson below; it's a mechanical check for the `h-full` vs. explicit-height ownership pattern documented in `docs/vertical-space-lg-touch.md`, precisely because reading the doc once was not sufficient to prevent a real regression on the product-spotlight components.
 
@@ -156,44 +106,21 @@ _Last reviewed 2026-08-01 against the live repo. Stack/pattern-level only — fo
 _Add your project-specific conventions here_
 
 
-<!-- BEGIN BEADS INTEGRATION v:1 profile:minimal hash:6cd5cc61 -->
-## Beads Issue Tracker
-
-This project uses **bd (beads)** for issue tracking. Run `bd prime` to see full workflow context and commands.
-
-### Quick Reference
-
-```bash
-bd ready              # Find available work
-bd show <id>          # View issue details
-bd update <id> --claim  # Claim work
-bd close <id>         # Complete work
-```
-
-### Rules
-
-- Use `bd` for ALL task tracking — do NOT use TodoWrite, TaskCreate, or markdown TODO lists
-- Run `bd prime` for detailed command reference and session close protocol
-- Use `bd remember` for persistent knowledge — do NOT use MEMORY.md files
-
-**Architecture in one line:** issues live in a local Dolt DB; sync uses `refs/dolt/data` on your git remote; `.beads/issues.jsonl` is a passive export. See https://github.com/gastownhall/beads/blob/main/docs/SYNC_CONCEPTS.md for details and anti-patterns.
-
 ## Agent Context Profiles
 
-The managed Beads block is task-tracking guidance, not permission to override repository, user, or orchestrator instructions.
+Governs git commit/push authority only — task tracking is fixed by the Campaign process
+above regardless of profile.
 
-- **Conservative (default)**: Use `bd` for task tracking. Do not run git commits, git pushes, or Dolt remote sync unless explicitly asked. At handoff, report changed files, validation, and suggested next commands.
-- **Minimal**: Keep tool instruction files as pointers to `bd prime`; use the same conservative git policy unless active instructions say otherwise.
-- **Team-maintainer**: Only when the repository explicitly opts in, agents may close beads, commit, and push as part of session close. A current "do not commit" or "do not push" instruction still wins. Self-run quality gates (tests/linters/builds) are never in scope for any profile — see Issue Risk Protocol Part B.
+- **Conservative (default)**: Do not run git commits, git pushes, or Dolt remote sync unless explicitly asked. At handoff, report changed files, validation, and suggested next commands.
+- **Minimal**: Same conservative git policy unless active instructions say otherwise.
+- **Team-maintainer**: Only when the repository explicitly opts in, agents may commit and push as part of session close. A current "do not commit" or "do not push" instruction still wins. Self-run quality gates (tests/linters/builds) are never in scope for any profile — see Issue Risk Protocol Part B.
 
 ## Session Completion
 
-This protocol applies when ending a Beads implementation workflow. It is subordinate to explicit user, repository, and orchestrator instructions.
+This protocol applies when ending an implementation session. It is subordinate to explicit user, repository, and orchestrator instructions.
 
-1. **File issues for remaining work** - Create beads for anything that needs follow-up
-2. **Never self-run quality gates** - No tests, linters, or builds. Hand the human the one minimal `localhost:3000` check instead (Issue Risk Protocol Part B, standing regardless of profile).
-3. **Update issue status** - Close finished work, update in-progress items
-4. **Handle git/sync by active profile**:
+1. **Never self-run quality gates** - No tests, linters, or builds. Hand the human the one minimal `localhost:3000` check instead (Issue Risk Protocol Part B, standing regardless of profile).
+2. **Handle git/sync by active profile**:
    ```bash
    # Conservative/minimal/default: report status and proposed commands; wait for approval.
    git status
@@ -203,10 +130,9 @@ This protocol applies when ending a Beads implementation workflow. It is subordi
    git push
    git status
    ```
-5. **Hand off** - Summarize changes, validation, issue status, and any blocked sync/commit/push step
+3. **Hand off** - Summarize changes, validation, and any blocked sync/commit/push step
 
 **Critical rules:**
-- Explicit user or orchestrator instructions override this Beads block.
+- Explicit user or orchestrator instructions override the above.
 - Do not commit or push without clear authority from the active profile or the current user request.
 - If a required sync or push is blocked, stop and report the exact command and error.
-<!-- END BEADS INTEGRATION -->
