@@ -2,12 +2,13 @@ import { backendClient } from '@/sanity-cms/lib/backendClient'
 import { logCheckoutEvent } from '@/lib/dev/event-logger'
 import { sendOrderConfirmationEmail } from '@/lib/email'
 import Stripe from 'stripe'
-import { randomUUID } from 'node:crypto'
 import { z } from 'zod'
 
 interface ProductDoc {
   _id: string
+  _rev: string
   name: string
+  stock: number
   price_data: { unit_amount: number } | null
 }
 
@@ -134,6 +135,11 @@ function resolveOrderData(
   }
 }
 
+/**
+ * Creates the order for a succeeded PaymentIntent and decrements stock — atomically.
+ * Safe to call any number of times, concurrently, from the webhook and the return
+ * handler: a payment ends with exactly one order and its stock decremented exactly once.
+ */
 export async function createOrderFromPaymentIntent(
   pi: Stripe.PaymentIntent,
   sessionData?: OrderSessionData
@@ -155,7 +161,8 @@ export async function createOrderFromPaymentIntent(
 
   await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_create_start', data: { paymentIntentId, source: sessionData ? 'session' : 'metadata' }, outcome: 'success' });
 
-  // Step 1: Idempotency — skip if order already exists for this PI
+  // Step 1: Fast-path idempotency — skip if order already exists for this PI.
+  // Also covers orders created before deterministic IDs. The atomic guard is Step 11.
   const existing = await backendClient.fetch<{ _id: string } | null>(
     `*[_type == "order" && paymentIntentId == $paymentIntentId][0]{ _id }`,
     { paymentIntentId }
@@ -177,10 +184,10 @@ export async function createOrderFromPaymentIntent(
     await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_invalid_email', data: { paymentIntentId, email: rawCustomerEmail }, outcome: 'error' })
   }
 
-  // Step 3: Fetch product names and prices from Sanity
+  // Step 3: Fetch product names, prices and stock (with revision, for Step 11) from Sanity
   const productIds = basket.map((item) => item.productId)
   const products = await backendClient.fetch<ProductDoc[]>(
-    `*[_type == "product" && _id in $ids]{ _id, name, price_data { unit_amount } }`,
+    `*[_type == "product" && _id in $ids]{ _id, _rev, name, stock, price_data { unit_amount } }`,
     { ids: productIds }
   )
   const productMap = new Map(products.map((p) => [p._id, p]))
@@ -242,15 +249,17 @@ export async function createOrderFromPaymentIntent(
   const paymentMethodType = charge?.payment_method_details?.type ?? 'unknown'
   const cardDetails = charge?.payment_method_details?.card
 
-  // Step 9: Generate unique order identifiers
+  // Step 9: Generate order identifiers
   const year = new Date().getFullYear()
   // Use PI ID suffix to guarantee uniqueness without non-atomic counter (M-01)
   const orderNumber = `ORD-${year}-${paymentIntentId.slice(-6).toUpperCase()}`
-  const orderId = `order_${randomUUID()}`
+  // Deterministic: one PaymentIntent can only ever map to one order document (Step 11)
+  const orderId = `order_${paymentIntentId}`
   const now = new Date().toISOString()
 
-  // Step 10: Create order document
+  // Step 10: Build order document
   const orderDoc = {
+    _id: orderId,
     _type: 'order' as const,
     orderNumber,
     orderId,
@@ -274,9 +283,54 @@ export async function createOrderFromPaymentIntent(
     ...(shippingMethod ? { shippingMethod } : {}),
   }
 
-  await backendClient.create(orderDoc as Parameters<typeof backendClient.create>[0])
+  // Step 11: Commit the order and every stock decrement as ONE Sanity transaction
+  // (ADR-002, Pattern 1). All-or-nothing: an order never exists without its stock
+  // movement, or the reverse.
+  // - `create` on the deterministic _id fails if the order exists, so a concurrent or
+  //   retried run can neither create a second order nor decrement stock twice.
+  // - `ifRevisionID` makes each decrement conditional on the stock we read: if another
+  //   order touched the product meanwhile, the whole transaction is rejected and nothing
+  //   is written. The webhook then returns 500 and Stripe retries against fresh stock.
+  const quantityByProduct = new Map<string, number>()
+  for (const { productId, quantity } of basket) {
+    quantityByProduct.set(productId, (quantityByProduct.get(productId) ?? 0) + quantity)
+  }
+
+  const transaction = backendClient.transaction().create(orderDoc as Parameters<typeof backendClient.create>[0])
+  const shortfalls: Array<{ productId: string; currentStock: number; requested: number }> = []
+  for (const [productId, requested] of quantityByProduct) {
+    const product = productMap.get(productId)
+    const currentStock = product?.stock ?? 0
+    // A paid order must always be recorded, so a line that cannot be decremented
+    // (unknown product, malformed quantity, not enough stock) is skipped and reported
+    // rather than allowed to reject the whole transaction.
+    if (!product || !Number.isInteger(requested) || requested < 1 || currentStock < requested) {
+      shortfalls.push({ productId, currentStock, requested })
+      continue
+    }
+    transaction.patch(productId, { ifRevisionID: product._rev, dec: { stock: requested } })
+  }
+
+  try {
+    await transaction.commit()
+  } catch (err) {
+    // A failed commit writes nothing. If the order exists, another run got there first
+    // (or this commit landed and only the response was lost): nothing left to do.
+    if (await backendClient.getDocument(orderId)) {
+      await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_already_exists', data: { paymentIntentId }, outcome: 'success' })
+      return
+    }
+    throw err
+  }
 
   await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_created', data: { orderNumber, orderId, paymentIntentId, itemCount: items.length }, outcome: 'success' })
+
+  for (const shortfall of shortfalls) {
+    // Payment already succeeded, so the order stands; the shortfall is left for manual review
+    await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_stock_insufficient', data: shortfall, outcome: 'error' })
+  }
+
+  await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_stock_decremented', data: { itemCount: quantityByProduct.size - shortfalls.length }, outcome: 'success' })
 
   try {
     await sendOrderConfirmationEmail({
@@ -291,53 +345,6 @@ export async function createOrderFromPaymentIntent(
   }
 
   if (process.env.NODE_ENV !== 'production') {
-    console.log(`[ORDER CREATE] Order ${orderNumber} created for PI ${paymentIntentId}`)
-  }
-
-  // Step 11: Decrement stock with concurrency guard (C-03)
-  // Pre-check: verify sufficient stock before decrementing
-  const stockDocs = await backendClient.fetch<Array<{ _id: string; stock: number }>>(
-    `*[_type == "product" && _id in $ids]{ _id, stock }`,
-    { ids: basket.map((i) => i.productId) }
-  )
-  const stockMap = new Map(stockDocs.map((d) => [d._id, d.stock]))
-
-  for (const item of basket) {
-    const currentStock = stockMap.get(item.productId) ?? 0
-    if (currentStock < item.quantity) {
-      await logCheckoutEvent({
-        correlationId: traceId,
-        slice: 'order-create',
-        event: 'order_stock_insufficient',
-        data: { productId: item.productId, currentStock, requested: item.quantity },
-        outcome: 'error',
-      })
-      // Continue without decrement — order flagged for manual review
-      continue
-    }
-    await backendClient.patch(item.productId).dec({ stock: item.quantity }).commit()
-  }
-
-  // Post-check: verify no negative stock after decrement
-  const postStockDocs = await backendClient.fetch<Array<{ _id: string; stock: number }>>(
-    `*[_type == "product" && _id in $ids]{ _id, stock }`,
-    { ids: basket.map((i) => i.productId) }
-  )
-  for (const doc of postStockDocs) {
-    if (doc.stock < 0) {
-      await logCheckoutEvent({
-        correlationId: traceId,
-        slice: 'order-create',
-        event: 'order_stock_negative',
-        data: { productId: doc._id, stock: doc.stock },
-        outcome: 'error',
-      })
-    }
-  }
-
-  await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_stock_decremented', data: { itemCount: basket.length }, outcome: 'success' })
-
-  if (process.env.NODE_ENV !== 'production') {
-    console.log(`[ORDER CREATE] Stock decremented for ${basket.length} items`)
+    console.log(`[ORDER CREATE] Order ${orderNumber} created for PI ${paymentIntentId}, stock decremented for ${quantityByProduct.size - shortfalls.length} products`)
   }
 }
