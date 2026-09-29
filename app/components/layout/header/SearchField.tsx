@@ -309,20 +309,21 @@ export default function SearchField() {
                   </button>
                 )}
               </div>
-              {showOverlay && (
-                <AutocompleteOverlay
-                  results={autocompleteResults}
-                  query={query}
-                  activeIndex={activeIndex}
-                  isLoading={isLoading}
-                  showThumbnails={true}
-                  onItemClick={handleOverlayItemClick}
-                  error={autocompleteError}
-                  listboxId="autocomplete-listbox-mobile"
-                />
-              )}
             </form>
           </div>
+          {showOverlay && (
+            <AutocompleteOverlay
+              results={autocompleteResults}
+              query={query}
+              activeIndex={activeIndex}
+              isLoading={isLoading}
+              showThumbnails={true}
+              onItemClick={handleOverlayItemClick}
+              error={autocompleteError}
+              listboxId="autocomplete-listbox-mobile"
+              mobile
+            />
+          )}
           {(query.trim().length < MIN_QUERY_LENGTH || !isUserTyping) && (
             // Full-bleed, full-height on mobile: this wrapper owns the surface and
             // runs edge-to-edge down to the bottom of the overlay. The zero-query

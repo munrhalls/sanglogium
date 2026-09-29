@@ -12,22 +12,33 @@ interface AutocompleteItemProps {
   showThumbnail?: boolean;
   onClick?: () => void;
   listboxId?: string;
+  query?: string;
 }
 
-export function AutocompleteItem({ product, isActive, index, showThumbnail = true, onClick, listboxId = 'autocomplete-listbox' }: AutocompleteItemProps) {
+export function AutocompleteItem({ product, isActive, index, showThumbnail = true, onClick, listboxId = 'autocomplete-listbox', query = '' }: AutocompleteItemProps) {
+  const name = product.name;
+  const matchIndex = query ? name.toLowerCase().indexOf(query.toLowerCase()) : -1;
+  const nameNode = matchIndex >= 0 ? (
+    <>
+      {name.slice(0, matchIndex)}
+      <strong className="font-semibold">{name.slice(matchIndex, matchIndex + query.length)}</strong>
+      {name.slice(matchIndex + query.length)}
+    </>
+  ) : name;
+
   return (
     <li
       id={`${listboxId}-item-${index}`}
       role="option"
       aria-selected={isActive}
       className={cn(
-        "p-3 flex items-center gap-3 rounded-md transition-colors duration-150 cursor-pointer",
+        "rounded-md transition-colors duration-150 cursor-pointer",
         isActive ? "bg-surface-card border-l-2 border-brand-400" : "hover:bg-surface-card"
       )}
     >
       <Link
         href={`/product/${product.slug.current}`}
-        className="flex items-center gap-3 w-full"
+        className="flex items-center gap-3 w-full p-3 min-h-[56px]"
         tabIndex={-1}
         onClick={onClick}
       >
@@ -41,7 +52,7 @@ export function AutocompleteItem({ product, isActive, index, showThumbnail = tru
           </div>
         )}
         <div className="flex flex-col min-w-0">
-          <span className="type-body text-primary truncate">{product.name}</span>
+          <span className="type-body text-primary truncate">{nameNode}</span>
           <span className="type-caption text-secondary">
             {product.brand?.name && `${product.brand.name} · `}{formatPrice(product.price_data.unit_amount)}
           </span>
