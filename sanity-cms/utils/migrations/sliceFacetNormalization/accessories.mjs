@@ -3,7 +3,7 @@
 //        node accessories.mjs --write  -> backup, then apply in one transaction
 // Idempotent: after a successful --write, a dry run reports 0 docs to patch.
 
-import { readClient as client, writeClient } from "../headphonesFilterAttributes/getClient.mjs";
+import { readClient as client, writeClient } from "./getClient.mjs";
 import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
