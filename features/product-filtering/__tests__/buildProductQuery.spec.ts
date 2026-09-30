@@ -1,7 +1,7 @@
 // sang-logium-3rv.12 follow-up — direct correctness tests for
 // buildProductQuery.ts, the single GROQ predicate builder shared by every
 // /products/* route. Previously zero test coverage. Companion to
-// sanity-cms/lib/products/__tests__/getFilterFacets.spec.ts, which covers the
+// features/product-filtering/__tests__/facetCounts.spec.ts, which covers the
 // separate in-memory matching engine — see that file's header for why the two
 // are not tested for behavioural equivalence against each other (different
 // execution targets: a GROQ string vs a JS interpreter).

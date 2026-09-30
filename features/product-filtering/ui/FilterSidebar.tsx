@@ -5,7 +5,7 @@ import type { IconType } from 'react-icons';
 import { FaTag, FaHeadphones, FaWaveSquare, FaLayerGroup, FaBluetooth, FaMicrochip, FaPlug, FaBolt, FaScrewdriverWrench } from 'react-icons/fa6';
 import { getFacetModule, resolveGroupIcon, type Category, type AnyFacetDef, type FacetOptionCount } from '../config/facetRegistry';
 import { useClearAllFilters } from './useFilterParam';
-import type { RangeBounds } from '@/sanity-cms/lib/products/getFilterFacets';
+import type { RangeBounds } from '../domain/facetCounts';
 import { CheckboxGroup, BooleanToggle, RangeControl, PriceControl } from './FilterControls';
 
 // Re-export the shared header/style constants so sibling filter modules can

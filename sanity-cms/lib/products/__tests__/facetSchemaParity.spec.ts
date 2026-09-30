@@ -1,5 +1,5 @@
 // sang-logium-3rv.10 — closes the "no automated check" gap: nothing previously
-// verified that ../config/facetMap.ts's closed-vocab valueVocab arrays
+// verified that the product-filtering feature's config/facetMap.ts closed-vocab valueVocab arrays
 // still match the Sanity schema's options.list for the same field. This is
 // exactly the bug class that made "Harman-target-like" (soundSignature)
 // silently unfilterable before sang-logium-3rv.9.
@@ -11,7 +11,7 @@
 
 import { describe, it, expect } from "vitest";
 import { productType } from "@/sanity-cms/schemaTypes/productType";
-import { FILTER_FACETS, isPlaceholderVocab } from "../config/facetMap";
+import { FILTER_FACETS, isPlaceholderVocab } from "@/features/product-filtering";
 
 type SchemaField = {
   name: string;

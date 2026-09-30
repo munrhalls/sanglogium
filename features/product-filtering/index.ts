@@ -12,6 +12,10 @@ export { isFiltersActive } from './domain/buildProductQuery';
 export type { ProductQueryState } from './domain/buildProductQuery';
 export { resolvePriceBounds } from './domain/priceBounds';
 export type { PriceRangeData } from './domain/priceBounds';
+export type {
+  CatalogueFacets,
+  RawProduct,
+} from './domain/facetCounts';
 export { FilterSidebar } from './ui/FilterSidebar';
 export { SortBar } from './ui/SortBar';
 export { ActiveFilterChips } from './ui/ActiveFilterChips';

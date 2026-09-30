@@ -10,7 +10,6 @@ import { Pagination } from '@/app/components/features/products/Pagination';
 import { ChunkedProductGrid, CHUNK_SIZE } from '@/app/components/features/products/ChunkedProductGrid';
 import { isFacetedQuery } from '@/lib/catalogue/seo';
 import { ActiveFilterChips, FilterSidebar, SortBar, isFiltersActive, loadFilterSort, resolvePriceBounds, sanitizeFilterState, type ProductQueryState } from '@/features/product-filtering';
-import { buildProductQuery } from '@/features/product-filtering/server';
 
 export const dynamic = 'force-dynamic';
 
@@ -45,10 +44,9 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
   const brandLabels = allFacets.brandLabels;
 
   const state = sanitizeFilterState(preState, { brand: Object.keys(brandLabels) });
-  const { orderClause, whereClause, params } = buildProductQuery(state);
   const filtersActive = isFiltersActive(state);
 
-  const totalCount = await getProductsCount({ keys: allKeys, whereClause, params });
+  const totalCount = await getProductsCount({ keys: allKeys, state });
   const priceBounds = resolvePriceBounds(priceRange);
 
   const totalPages = Math.ceil(totalCount / PER_PAGE);
@@ -57,7 +55,7 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
 
   const chunkPromises = Array.from(
     { length: Math.ceil(PER_PAGE / CHUNK_SIZE) },
-    (_, i) => getProductsChunk({ keys: allKeys, offset: pageStart + i * CHUNK_SIZE, limit: CHUNK_SIZE, orderClause, whereClause, params }),
+    (_, i) => getProductsChunk({ keys: allKeys, offset: pageStart + i * CHUNK_SIZE, limit: CHUNK_SIZE, state }),
   );
 
   return (
