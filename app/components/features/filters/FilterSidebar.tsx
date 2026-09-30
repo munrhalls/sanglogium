@@ -189,7 +189,7 @@ export function FilterPanelBody({
   );
 }
 
-const PANEL_SCROLL_ID = 'poc-filter-panel-scroll';
+const PANEL_SCROLL_ID = 'filter-panel-scroll';
 
 // Deliberately not `element.scrollIntoView()`: the target sits inside two
 // nested scrollable ancestors (this panel, and the page-level `<main>`),
@@ -230,7 +230,7 @@ function RailTile({
       onClick={() => onSelect(id)}
       aria-label={`Jump to ${title} filters`}
       title={`Jump to ${title} filters`}
-      data-testid={`poc-rail-tile-${id}`}
+      data-testid={`filter-rail-tile-${id}`}
       className="flex items-center justify-center rounded-md py-3.5 transition-colors hover:bg-accent-500/10 focus-visible:outline focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-accent-500"
     >
       <Icon className="h-[1.125rem] w-[1.125rem] shrink-0 text-text-caption" aria-hidden="true" />
@@ -254,7 +254,7 @@ function PanelSection({
   return (
     <div
       id={`${idPrefix}${id}`}
-      data-testid={`poc-panel-${id}`}
+      data-testid={`filter-panel-${id}`}
       className="flex flex-col gap-6 border-b border-border-secondary p-6 last:border-b-0"
     >
       {(label || note) && (
@@ -309,11 +309,11 @@ function renderFacet(
 export function FilterSidebar(props: FilterSidebarProps) {
   return (
     <aside
-      data-testid="poc-filter-sidebar"
+      data-testid="filter-sidebar"
       aria-label="Filters"
       className="hidden w-96 shrink-0 self-start sticky top-0 pt-6 pb-6 h-[calc(100dvh-var(--desktop-header-h)-var(--desktop-catalogue-nav-h))] lg-touch:flex lg-desktop:flex flex-col"
     >
-      <FilterPanelBody {...props} panelScrollId={PANEL_SCROLL_ID} groupIdPrefix="poc-group-" />
+      <FilterPanelBody {...props} panelScrollId={PANEL_SCROLL_ID} groupIdPrefix="filter-group-" />
     </aside>
   );
 }

@@ -126,7 +126,7 @@ export function ActiveFilterChips({ brandLabels = {}, category = 'headphones' }:
   if (chips.length === 0) return null;
 
   return (
-    <div data-testid="poc-active-filter-chips" className="mb-6 flex flex-wrap items-center gap-2">
+    <div data-testid="active-filter-chips" className="mb-6 flex flex-wrap items-center gap-2">
       {chips.map((chip) => (
         <span
           key={chip.key}
