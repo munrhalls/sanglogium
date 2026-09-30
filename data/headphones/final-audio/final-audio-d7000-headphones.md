@@ -41,8 +41,6 @@ source_urls:
 - https://final-inc.com/en/blogs/value-ws-1/equipped-with-newly-developed-pina-align-diffuser-br-the-birth-of-the-new-flagship-headphone-d7000-of-the-final-d-series
 - https://cdn.shopify.com/s/files/1/0516/3106/3190/files/260414_D7000_manual_forweb_EN-FR-DE-JP-CH.pdf?v=1776149407
 - https://audio46.com/products/final-audio-d7000-semi-open-planar-magnetic-headphones
-- https://docs/filters-sort/sourcing-protocol-headphones.md
-- https://docs/filters-sort/schema-headphones.md
 verified_at: '2026-09-14'
 data_status: COMPLETE
 ---

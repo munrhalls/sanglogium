@@ -80,7 +80,7 @@ data_status: COMPLETE
 
 ## Conflict / Caution Notes
 - The current `filterAttributes.deviceType` closed vocabulary may not fully capture combo devices (DAC + headphone amp + preamp). The value below is the closest available match.
-- The `price` and `inStock` values are derived from the live Sanity product export (`_project/filters/products-export.json`); the audited retailer/manufacturer pages supply the technical specification citations.
+- The `price` and `inStock` values are derived from the live Sanity product export; the audited retailer/manufacturer pages supply the technical specification citations.
 - Burson product pages for current models were served with Polish-zloty localised pricing; USD prices are taken from the live CMS export.
 - Where a source page lists inputs/outputs only as marketing prose or images without explicit connector lines, those fields are recorded as `null` and not inferred.
 - This is an open-box catalogue record; condition is "open-box" and the cited technical data comes from the new-equipment source unless the open-box listing explicitly states otherwise.

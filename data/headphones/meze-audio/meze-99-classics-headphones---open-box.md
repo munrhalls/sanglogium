@@ -40,7 +40,7 @@ data_status: COMPLETE
 ## Verification Notes
 - **driverType** (hard-spec): Driver Type | Dynamic — https://mezeaudio.com/products/99-classics-v2-gold
 - **acousticDesign** (marketing-fact): 99 Classics Walnut Gold Closed Back Dynamic Headphones 2015 Available — https://en.wikipedia.org/wiki/Meze_Audio
-- **impedanceOhms** (hard-spec): Legacy 1st-generation Meze 99 Classics manufacturer-published spec: 32 Ω (recorded per the manufacturer-source note in docs/filters-sort/meze-audio-sourced.md; the live page's 16 Ω is the 2nd Gen, a different SKU) — https://en.wikipedia.org/wiki/Meze_Audio
+- **impedanceOhms** (hard-spec): Legacy 1st-generation Meze 99 Classics manufacturer-published spec: 32 Ω (the live page's 16 Ω is the 2nd Gen, a different SKU) — https://en.wikipedia.org/wiki/Meze_Audio
 - **sensitivityDbMw** (hard-spec): Legacy 1st-generation Meze 99 Classics manufacturer-published spec: 103 dB SPL/mW at 1 kHz — https://en.wikipedia.org/wiki/Meze_Audio
 - **freqResponseHz** (hard-spec): Frequency Response | 15 Hz - 25 kHz — https://mezeaudio.com/products/99-classics-v2-gold
 - **soundSignature** (editorial): Meze 99 Classics 310 Bassy Just excessive bass that unfortunately screws with the tonality of the mids. C- B- Dynamic Closed Circumaural — https://crinacle.com/rankings/headphones/

@@ -71,6 +71,6 @@ data_status: COMPLETE
 
 ## Conflict / Caution Notes
 - The current `filterAttributes.deviceType` closed vocabulary does not include a dedicated headphone-amplifier or preamplifier value. This product is recorded as `deviceType: null` rather than force-fit into an inapplicable category.
-- The `price` and `inStock` values are derived from the live Sanity product export (`_project/filters/products-export.json`); the audited retailer/manufacturer pages supply the technical specification citations.
+- The `price` and `inStock` values are derived from the live Sanity product export; the audited retailer/manufacturer pages supply the technical specification citations.
 - Burson product pages for current models were served with Polish-zloty localised pricing; USD prices are taken from the live CMS export.
 - Where a source page lists inputs/outputs only as marketing prose or images without explicit connector lines, those fields are recorded as `null` and not inferred.
