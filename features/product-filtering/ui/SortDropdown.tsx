@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { getFacetModule, type Category } from '@/features/product-filtering';
-import { useFilterParam } from '@/app/hooks/nuqs/useFilterSort';
+import { getFacetModule, type Category } from '../config/facetRegistry';
+import { useFilterParam } from './useFilterParam';
 
 /**
  * URL <-> its own display only — never touches the product grid, data, counts

@@ -4,9 +4,8 @@ import { sanityFetch } from '@/sanity-cms/lib/client';
 import groq from 'groq';
 import { ROOT_CATEGORIES, deriveSpacedQuery, normalizeText, rootCategoriesOf, scoreProduct } from '@/sanity-cms/lib/products/searchScoring';
 import type { RootCategory } from '@/sanity-cms/lib/products/searchScoring';
-import { computeCatalogueFacets, productMatchesState } from '@/sanity-cms/lib/products/getFilterFacets';
-import type { CatalogueFacets, RawProduct } from '@/sanity-cms/lib/products/getFilterFacets';
-import { sanitizeFilterState, type ProductQueryState, type PriceRangeData } from '@/features/product-filtering';
+import { computeCatalogueFacets, productMatchesState } from '@/features/product-filtering/server';
+import { sanitizeFilterState, type CatalogueFacets, type ProductQueryState, type PriceRangeData, type RawProduct } from '@/features/product-filtering';
 
 const MAX_AUTOCOMPLETE = 6;
 const MIN_QUERY_LENGTH = 2;

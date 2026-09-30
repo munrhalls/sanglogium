@@ -2,6 +2,8 @@ import { sanityFetch } from '@/sanity-cms/lib/client';
 import { groq } from 'next-sanity';
 import { cache } from 'react';
 import type { Product as SanityProduct } from '@/sanity.types';
+import type { ProductQueryState } from '@/features/product-filtering';
+import { buildProductQuery } from '@/features/product-filtering/server';
 
 const DEFAULT_PER_PAGE = 24;
 
@@ -58,15 +60,16 @@ const PRODUCT_PROJECTION = groq`{
 
 export interface GetProductsCountOptions {
   keys: string[];
-  // S1 (buildProductQuery): extra `&&`-prefixed predicate + its named params.
-  // Empty by default so unfiltered callers are unaffected.
-  whereClause?: string;
-  params?: Record<string, unknown>;
+  // S1 (buildProductQuery): the active filter/sort state; clauses are built
+  // here from it. Omitted = unfiltered count, exactly as before.
+  state?: ProductQueryState;
 }
 
 // Count-only fetch, used to size pagination without fetching any product rows.
-const getProductsCountFn = async ({ keys, whereClause = '', params = {} }: GetProductsCountOptions): Promise<number> => {
+const getProductsCountFn = async ({ keys, state }: GetProductsCountOptions): Promise<number> => {
   if (!keys.length) return 0;
+
+  const { whereClause, params } = state ? buildProductQuery(state) : { whereClause: '', params: {} };
 
   const countQuery = groq`count(*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0${whereClause}])`;
 
@@ -86,18 +89,17 @@ export interface GetProductsChunkOptions {
   keys: string[];
   offset: number;
   limit: number;
-  // S1 (buildProductQuery): `| order(...)` (pipe included), an extra
-  // `&&`-prefixed predicate, and the named params both reference. All empty by
-  // default — the raw slice order is Sanity's default when no orderClause is
-  // given, matching prior behaviour.
-  orderClause?: string;
-  whereClause?: string;
-  params?: Record<string, unknown>;
+  // S1 (buildProductQuery): the active filter/sort state; order/where clauses
+  // and their named params are built here from it. Omitted = no clauses — the
+  // raw slice order is Sanity's default, matching prior behaviour.
+  state?: ProductQueryState;
 }
 
 // Fetches one arbitrary offset/limit slice of products, for parallel per-chunk streaming.
-const getProductsChunkFn = async ({ keys, offset, limit, orderClause = '', whereClause = '', params = {} }: GetProductsChunkOptions): Promise<Product[]> => {
+const getProductsChunkFn = async ({ keys, offset, limit, state }: GetProductsChunkOptions): Promise<Product[]> => {
   if (!keys.length || limit <= 0) return [];
+
+  const { orderClause, whereClause, params } = state ? buildProductQuery(state) : { orderClause: '', whereClause: '', params: {} };
 
   const end = offset + limit;
   const order = orderClause ? ` ${orderClause}` : '';

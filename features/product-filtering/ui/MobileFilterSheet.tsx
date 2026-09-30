@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import { Drawer } from 'vaul';
 import { FunnelSimple as FunnelIcon, X as XIcon } from '@phosphor-icons/react';
 import { FilterPanelBody } from './FilterSidebar';
-import type { Category, FacetOptionCount } from '@/features/product-filtering';
-import type { RangeBounds } from '@/sanity-cms/lib/products/getFilterFacets';
+import type { Category, FacetOptionCount } from '../config/facetRegistry';
+import type { RangeBounds } from '../domain/facetCounts';
 import { cn } from '@/lib/utils/tailwind';
 
 /**

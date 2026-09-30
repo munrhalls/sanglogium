@@ -85,6 +85,37 @@ export default [
       ],
     },
   },
+  {
+    files: ["features/product-filtering/**/*.{ts,tsx}"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          paths: [
+            {
+              name: "jest",
+              message: "Use Vitest instead. See tests/AGENTS.md Testing Rules.",
+            },
+            {
+              name: "@testing-library/jest-dom",
+              message: "Use Vitest matchers instead. See tests/AGENTS.md Testing Rules.",
+            },
+            {
+              name: "@testing-library/jest-dom/extend-expect",
+              message: "Use Vitest matchers instead. See tests/AGENTS.md Testing Rules.",
+            },
+          ],
+          patterns: [
+            {
+              regex: "(^|/)sanity-cms/",
+              message:
+                "The product-filtering feature must not import sanity-cms. Data access stays in sanity-cms/lib/products and calls into the feature through @/features/product-filtering/server.",
+            },
+          ],
+        },
+      ],
+    },
+  },
   eslintConfigPrettier,
   {
     ignores: [

@@ -11,7 +11,7 @@
 // in JS, so there is no shared runtime to assert equivalence against without
 // either a GROQ interpreter or a live Sanity call. Instead, each engine gets
 // its own direct correctness coverage — this file for the in-memory one,
-// lib/catalogue/__tests__/buildProductQuery.spec.ts for the GROQ one.
+// features/product-filtering/__tests__/buildProductQuery.spec.ts for the GROQ one.
 
 import { describe, it, expect } from "vitest";
 import {
@@ -21,9 +21,9 @@ import {
   valuesForFacet,
   numericValueForRangeFacet,
   type RawProduct,
-} from "@/sanity-cms/lib/products/getFilterFacets";
-import { FILTER_FACETS } from "@/features/product-filtering";
-import type { ProductQueryState } from "@/features/product-filtering";
+} from "../domain/facetCounts";
+import { FILTER_FACETS } from "../config/facetMap";
+import type { ProductQueryState } from "../domain/buildProductQuery";
 
 const wearingStyleFacet = FILTER_FACETS.find((f) => f.urlParam === "wearingStyle")!;
 const connectivityFacet = FILTER_FACETS.find((f) => f.urlParam === "connectivity")!;

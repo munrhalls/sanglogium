@@ -3,9 +3,9 @@
 import React from 'react';
 import type { IconType } from 'react-icons';
 import { FaTag, FaHeadphones, FaWaveSquare, FaLayerGroup, FaBluetooth, FaMicrochip, FaPlug, FaBolt, FaScrewdriverWrench } from 'react-icons/fa6';
-import { getFacetModule, resolveGroupIcon, type Category, type AnyFacetDef, type FacetOptionCount } from '@/features/product-filtering';
-import { useClearAllFilters } from '@/app/hooks/nuqs/useFilterSort';
-import type { RangeBounds } from '@/sanity-cms/lib/products/getFilterFacets';
+import { getFacetModule, resolveGroupIcon, type Category, type AnyFacetDef, type FacetOptionCount } from '../config/facetRegistry';
+import { useClearAllFilters } from './useFilterParam';
+import type { RangeBounds } from '../domain/facetCounts';
 import { CheckboxGroup, BooleanToggle, RangeControl, PriceControl } from './FilterControls';
 
 // Re-export the shared header/style constants so sibling filter modules can

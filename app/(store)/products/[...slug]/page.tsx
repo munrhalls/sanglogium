@@ -10,11 +10,7 @@ import { ShopHeader } from '@/app/components/features/products/ShopHeader';
 import { EmptyResults } from '@/app/components/features/products/EmptyResults';
 import { Pagination } from '@/app/components/features/products/Pagination';
 import { ChunkedProductGrid, CHUNK_SIZE } from '@/app/components/features/products/ChunkedProductGrid';
-import { FilterSidebar } from '@/app/components/features/filters/FilterSidebar';
-import { SortBar } from '@/app/components/features/filters/SortBar';
-import { ActiveFilterChips } from '@/app/components/features/filters/ActiveFilterChips';
-import { isCategory, isFiltersActive, loadFilterSort, resolvePriceBounds, sanitizeFilterState, type Category, type ProductQueryState } from '@/features/product-filtering';
-import { buildProductQuery } from '@/features/product-filtering/server';
+import { ActiveFilterChips, FilterSidebar, SortBar, isCategory, isFiltersActive, loadFilterSort, resolvePriceBounds, sanitizeFilterState, type Category, type ProductQueryState } from '@/features/product-filtering';
 import Breadcrumbs from '@/app/components/ui/breadcrumbs/CategoryBreadcrumbs';
 import { isFacetedQuery, canonicalCategoryPath } from '@/lib/catalogue/seo';
 
@@ -71,11 +67,10 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   const state = sanitizeFilterState(preState, {
     brand: Object.keys(facets.brandLabels),
   });
-  const { orderClause, whereClause, params: queryParams } = buildProductQuery(state);
 
   const filtersActive = isFiltersActive(state);
 
-  const totalCount = await getProductsCount({ keys: descendantKeys, whereClause, params: queryParams });
+  const totalCount = await getProductsCount({ keys: descendantKeys, state });
   const priceBounds = resolvePriceBounds(priceRange);
 
   if (!metadata) {
@@ -95,7 +90,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   // own Suspense boundaries.
   const chunkPromises = Array.from(
     { length: Math.ceil(PER_PAGE / CHUNK_SIZE) },
-    (_, i) => getProductsChunk({ keys: descendantKeys, offset: pageStart + i * CHUNK_SIZE, limit: CHUNK_SIZE, orderClause, whereClause, params: queryParams }),
+    (_, i) => getProductsChunk({ keys: descendantKeys, offset: pageStart + i * CHUNK_SIZE, limit: CHUNK_SIZE, state }),
   );
 
   return (

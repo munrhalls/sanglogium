@@ -3,13 +3,10 @@ import { SearchEmpty } from '@/app/components/features/search/SearchEmpty';
 import { SearchPagination } from '@/app/components/features/search/SearchPagination';
 import { SearchSort } from '@/app/components/features/search/SearchSort';
 import { SearchCategoryChips } from '@/app/components/features/search/SearchCategoryChips';
-import { FilterSidebar } from '@/app/components/features/filters/FilterSidebar';
-import { MobileFilterSheet } from '@/app/components/features/filters/MobileFilterSheet';
-import { ActiveFilterChips } from '@/app/components/features/filters/ActiveFilterChips';
 import { EmptyResults } from '@/app/components/features/products/EmptyResults';
 import { ProductGrid } from '@/app/components/features/products/ProductGrid';
 import { ProductGridSkeleton } from '@/app/components/skeletons/ProductGridSkeleton';
-import { isFiltersActive, resolvePriceBounds, SORT_DEFAULT } from '@/features/product-filtering';
+import { ActiveFilterChips, FilterSidebar, MobileFilterSheet, isFiltersActive, resolvePriceBounds, SORT_DEFAULT } from '@/features/product-filtering';
 import { getWishlistProductIds } from '@/lib/wishlist';
 import type { SearchResult } from '@/sanity-cms/lib/products/searchProducts';
 
