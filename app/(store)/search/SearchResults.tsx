@@ -1,8 +1,5 @@
 import React from 'react';
-import { SearchEmpty } from '@/app/components/features/search/SearchEmpty';
-import { SearchPagination } from '@/app/components/features/search/SearchPagination';
-import { SearchSort } from '@/app/components/features/search/SearchSort';
-import { SearchCategoryChips } from '@/app/components/features/search/SearchCategoryChips';
+import { SearchEmpty, SearchPagination, SearchSort, SearchCategoryChips } from '@/features/product-search';
 import { EmptyResults } from '@/app/components/features/products/EmptyResults';
 import { ProductGrid } from '@/app/components/features/products/ProductGrid';
 import { ProductGridSkeleton } from '@/app/components/skeletons/ProductGridSkeleton';

@@ -9,8 +9,8 @@ import { ProductImage } from "@/app/components/features/products/ProductImage";
 import { formatPrice } from "@/lib/utils/price";
 import type { AutocompleteProduct } from "@/sanity-cms/lib/products/searchProducts";
 import { HighlightedText } from "./HighlightedText";
-import { CATEGORY_SUGGESTIONS } from "@/features/product-search";
-import type { SuggestionEntry } from "@/features/product-search";
+import { CATEGORY_SUGGESTIONS } from "../config/searchSuggestions";
+import type { SuggestionEntry } from "../domain/suggestionEntries";
 import { isPlainLeftClick, productHref, searchHref } from "./searchLinks";
 
 interface AutocompletePanelProps {

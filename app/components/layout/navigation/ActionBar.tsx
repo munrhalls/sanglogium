@@ -4,7 +4,7 @@ import React from "react";
 import { ListIcon, XIcon, List as Menu, MagnifyingGlass as Search, ShoppingBag, User as UserIcon, SignIn as SignInIcon, UserPlus } from "@phosphor-icons/react";
 import Link from "next/link";
 import { useDrawer } from "@/app/hooks/nuqs/useDrawer";
-import { useSearchOverlay } from "@/app/hooks/nuqs/useSearchOverlay";
+import { useSearchOverlay } from "@/features/product-search";
 import { cn } from "@/lib/utils/tailwind";
 import useBasketStore, { selectTotalItemsCount, selectHasHydrated } from "@/store/basketStore";
 

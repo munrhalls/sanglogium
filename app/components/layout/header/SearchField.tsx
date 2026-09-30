@@ -1,11 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import { useSearchOverlay } from "@/app/hooks/nuqs/useSearchOverlay";
-import { SearchBarTrigger } from "@/app/components/features/search/SearchBarTrigger";
-import { SearchFieldDesktop } from "@/app/components/features/search/SearchFieldDesktop";
-import { SearchSheet } from "@/app/components/features/search/SearchSheet";
-import { useSearchController } from "@/app/components/features/search/useSearchController";
+import { SearchBarTrigger, SearchFieldDesktop, SearchSheet, useSearchController, useSearchOverlay } from "@/features/product-search";
 
 /**
  * Header search, composed from three surfaces that share one controller:
