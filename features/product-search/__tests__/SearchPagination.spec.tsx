@@ -7,7 +7,7 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
 import { render, screen, cleanup } from '@testing-library/react'
 import '@testing-library/jest-dom/vitest'
-import { SearchPagination } from '@/app/components/features/search/SearchPagination'
+import { SearchPagination } from '../ui/SearchPagination'
 
 // Mock next/navigation
 const mockSearchParams = new URLSearchParams()

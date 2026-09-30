@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { SearchError } from '@/app/components/features/search/SearchError';
+import { SearchError } from '@/features/product-search';
 
 export default function SearchErrorBoundary({
   error,

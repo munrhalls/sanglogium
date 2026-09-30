@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Clock, MagnifyingGlass, X } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils/tailwind";
 import { clearRecentSearches, getRecentSearches, removeRecentSearch } from "./recentSearches";
-import { CATEGORY_SUGGESTIONS, POPULAR_SEARCHES } from "@/features/product-search";
+import { CATEGORY_SUGGESTIONS, POPULAR_SEARCHES } from "../config/searchSuggestions";
 import { isPlainLeftClick } from "./searchLinks";
 
 /**
