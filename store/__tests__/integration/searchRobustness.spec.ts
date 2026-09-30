@@ -39,7 +39,7 @@ describe('search: critical-journey robustness (real catalogue, no mocks)', () =>
   it('too-short query returns empty instantly and never hits the network', async () => {
     const fetchSpy = vi.spyOn(client, 'fetch')
     const result = await searchProductsFull('a')
-    expect(result).toEqual({ products: [], totalCount: 0 })
+    expect(result).toEqual({ products: [], totalCount: 0, unfilteredCount: 0 })
     expect(fetchSpy).not.toHaveBeenCalled()
     fetchSpy.mockRestore()
   })
@@ -74,7 +74,7 @@ describe('search: critical-journey robustness (real catalogue, no mocks)', () =>
 
   it('a query guaranteed to match nothing returns a defined empty result, not an error', async () => {
     const result = await searchProductsFull('zzznonexistentproductqueryxyz999')
-    expect(result).toEqual({ products: [], totalCount: 0 })
+    expect(result).toEqual({ products: [], totalCount: 0, unfilteredCount: 0 })
   }, TIMEOUT)
 
   it('an out-of-range page clamps to the last valid page instead of erroring or emptying out', async () => {
