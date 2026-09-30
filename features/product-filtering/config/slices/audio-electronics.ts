@@ -1,6 +1,6 @@
 // Filter/sort module for the audio-electronics slice. Option lists mirror
-// lib/catalogue/facetMap.ts valueVocab exactly (verified by
-// lib/catalogue/__tests__/facetConfigParity.spec.ts); facet ids equal the
+// ../facetMap.ts valueVocab exactly (verified by
+// ../../__tests__/facetConfigParity.spec.ts); facet ids equal the
 // facetMap urlParam of the same facet.
 
 export type Option = { value: string; label: string };

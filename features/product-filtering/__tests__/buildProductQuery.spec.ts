@@ -12,7 +12,7 @@
 // range-facet or vocab change accidentally touches the price-specific branch.
 
 import { describe, it, expect } from "vitest";
-import { buildProductQuery, isFiltersActive, type ProductQueryState } from "@/lib/catalogue/buildProductQuery";
+import { buildProductQuery, isFiltersActive, type ProductQueryState } from "../domain/buildProductQuery";
 
 function baseState(overrides: Record<string, unknown> = {}): ProductQueryState {
   return {

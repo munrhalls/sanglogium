@@ -1,7 +1,7 @@
 "use client";
 
 // F1 client helpers layered on the headless contract in
-// lib/catalogue/filterSortParams.ts. Headless still applies: no visible control,
+// the product-filtering feature's config/filterSortParams.ts. Headless still applies: no visible control,
 // no data access, no import of the grid / product data / counts / streaming.
 //
 // What this adds on top of the raw parsers:
@@ -22,7 +22,7 @@ import {
   PAGE_PARAM_KEY,
   type SortValue,
   filterSortParsers,
-} from "@/lib/catalogue/filterSortParams";
+} from "@/features/product-filtering";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Param read/write

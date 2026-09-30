@@ -5,7 +5,6 @@ import { getCategoryMetadata } from '@/sanity-cms/lib/products/getCategoryMetada
 import { getProductsCount, getProductsChunk } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
 import { getFilterFacets } from '@/sanity-cms/lib/products/getFilterFacets';
 import { getCategoryPriceRange } from '@/sanity-cms/lib/products/getCategoryPriceRange';
-import { resolvePriceBounds } from '@/lib/catalogue/priceBounds';
 import { getWishlistProductIds } from '@/lib/wishlist';
 import { ShopHeader } from '@/app/components/features/products/ShopHeader';
 import { EmptyResults } from '@/app/components/features/products/EmptyResults';
@@ -14,13 +13,10 @@ import { ChunkedProductGrid, CHUNK_SIZE } from '@/app/components/features/produc
 import { FilterSidebar } from '@/app/components/features/filters/FilterSidebar';
 import { SortBar } from '@/app/components/features/filters/SortBar';
 import { ActiveFilterChips } from '@/app/components/features/filters/ActiveFilterChips';
-import { isCategory, type Category } from '@/app/components/features/filters/category';
+import { isCategory, isFiltersActive, loadFilterSort, resolvePriceBounds, sanitizeFilterState, type Category, type ProductQueryState } from '@/features/product-filtering';
+import { buildProductQuery } from '@/features/product-filtering/server';
 import Breadcrumbs from '@/app/components/ui/breadcrumbs/CategoryBreadcrumbs';
 import { isFacetedQuery, canonicalCategoryPath } from '@/lib/catalogue/seo';
-import { loadFilterSort } from '@/lib/catalogue/filterSortParams';
-import { buildProductQuery, isFiltersActive } from '@/lib/catalogue/buildProductQuery';
-import type { ProductQueryState } from '@/lib/catalogue/buildProductQuery';
-import { sanitizeFilterState } from '@/lib/catalogue/sanitizeFilterState';
 
 export const dynamic = 'force-dynamic';
 

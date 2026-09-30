@@ -9,9 +9,7 @@ import { ActiveFilterChips } from '@/app/components/features/filters/ActiveFilte
 import { EmptyResults } from '@/app/components/features/products/EmptyResults';
 import { ProductGrid } from '@/app/components/features/products/ProductGrid';
 import { ProductGridSkeleton } from '@/app/components/skeletons/ProductGridSkeleton';
-import { resolvePriceBounds } from '@/lib/catalogue/priceBounds';
-import { isFiltersActive } from '@/lib/catalogue/buildProductQuery';
-import { SORT_DEFAULT } from '@/lib/catalogue/filterSortParams';
+import { isFiltersActive, resolvePriceBounds, SORT_DEFAULT } from '@/features/product-filtering';
 import { getWishlistProductIds } from '@/lib/wishlist';
 import type { SearchResult } from '@/sanity-cms/lib/products/searchProducts';
 

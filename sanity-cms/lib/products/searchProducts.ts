@@ -6,9 +6,7 @@ import { ROOT_CATEGORIES, deriveSpacedQuery, normalizeText, rootCategoriesOf, sc
 import type { RootCategory } from '@/sanity-cms/lib/products/searchScoring';
 import { computeCatalogueFacets, productMatchesState } from '@/sanity-cms/lib/products/getFilterFacets';
 import type { CatalogueFacets, RawProduct } from '@/sanity-cms/lib/products/getFilterFacets';
-import { sanitizeFilterState } from '@/lib/catalogue/sanitizeFilterState';
-import type { ProductQueryState } from '@/lib/catalogue/buildProductQuery';
-import type { PriceRangeData } from '@/lib/catalogue/priceBounds';
+import { sanitizeFilterState, type ProductQueryState, type PriceRangeData } from '@/features/product-filtering';
 
 const MAX_AUTOCOMPLETE = 6;
 const MIN_QUERY_LENGTH = 2;

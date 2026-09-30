@@ -42,7 +42,7 @@
 // layer leaves alone except via the page-reset helper below).
 //
 // Price unit: the URL carries whole DOLLARS. Product `price_data.unit_amount` is
-// cents and the slider UI works in dollars (lib/catalogue/priceBounds.ts,
+// cents and the slider UI works in dollars (features/product-filtering/domain/priceBounds.ts,
 // lib/utils/price.ts). F3 converts at the edges; the URL never carries cents.
 //
 // History mode: discrete controls (sort, inStock, brand) use

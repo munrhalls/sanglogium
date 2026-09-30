@@ -20,7 +20,7 @@
 // the shopper could legitimately re-add is never removed, and the clean-URL /
 // clearOnDefault semantics are untouched — this never writes the URL.
 
-import { FILTER_FACETS, isPlaceholderVocab } from './facetMap';
+import { FILTER_FACETS, isPlaceholderVocab } from '../config/facetMap';
 import type { ProductQueryState } from './buildProductQuery';
 
 export function sanitizeFilterState(

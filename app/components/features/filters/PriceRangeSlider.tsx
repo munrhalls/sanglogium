@@ -6,7 +6,7 @@ import {
   DEFAULT_PRICE_CEILING,
   PREMIUM_TIERS,
   PREMIUM_TIER_MIN,
-} from "@/lib/catalogue/priceBounds";
+} from "@/features/product-filtering";
 import { formatPriceMajor } from "@/lib/utils/price";
 
 /**

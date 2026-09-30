@@ -3,7 +3,8 @@
 import React from 'react';
 import type { IconType } from 'react-icons';
 import { FaTag, FaHeadphones, FaWaveSquare, FaLayerGroup, FaBluetooth, FaMicrochip, FaPlug, FaBolt, FaScrewdriverWrench } from 'react-icons/fa6';
-import { getFacetModule, resolveGroupIcon, type Category, type AnyFacetDef, type FacetOptionCount } from './facetRegistry';
+import { getFacetModule, resolveGroupIcon, type Category, type AnyFacetDef, type FacetOptionCount } from '@/features/product-filtering';
+import { useClearAllFilters } from '@/app/hooks/nuqs/useFilterSort';
 import type { RangeBounds } from '@/sanity-cms/lib/products/getFilterFacets';
 import { CheckboxGroup, BooleanToggle, RangeControl, PriceControl } from './FilterControls';
 
@@ -36,8 +37,9 @@ export {
  * useFilterParam; nothing here is optimistic about a fetch in flight.
  *
  * Category-aware since sang-logium-3rv.6: `category` picks which of the three
- * per-category facet modules (facetRegistry.ts) drives groups/facets/URL
- * params. Rail icons come from GROUP_ICONS per category (resolveGroupIcon);
+ * per-category facet modules (facetRegistry.ts) drives groups/facets; URL
+ * params go through the shared useFilterParam/useClearAllFilters hooks.
+ * Rail icons come from GROUP_ICONS per category (resolveGroupIcon);
  * groups without a bespoke icon get a neutral fallback. Groups with nothing
  * selectable are hidden from both the rail and the panel (visibleGroups).
  */
@@ -116,7 +118,7 @@ export function FilterPanelBody({
   panelScrollId,
   groupIdPrefix,
 }: FilterPanelBodyProps) {
-  const { FACET_GROUPS, facetsForGroup, useClearAllFilters } = getFacetModule(category);
+  const { FACET_GROUPS, facetsForGroup } = getFacetModule(category);
   const groups = groupIds ? FACET_GROUPS.filter((g) => groupIds.includes(g.id)) : FACET_GROUPS;
   const clearAll = useClearAllFilters();
   const handleRailSelect = (groupId: string) => scrollToGroup(groupId, panelScrollId, groupIdPrefix);

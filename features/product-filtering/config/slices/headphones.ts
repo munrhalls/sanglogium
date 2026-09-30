@@ -1,6 +1,6 @@
 // Headless facet definitions for the headphones slice: facet ids equal the
-// lib/catalogue/facetMap.ts urlParam of the same facet; option lists mirror
-// facetMap valueVocab (checked by lib/catalogue/__tests__/facetConfigParity.spec.ts).
+// ../facetMap.ts urlParam of the same facet; option lists mirror
+// facetMap valueVocab (checked by ../../__tests__/facetConfigParity.spec.ts).
 
 export type FacetGroupId = 'commercial' | 'type' | 'sound' | 'material' | 'wireless' | 'technical';
 
@@ -96,7 +96,7 @@ export const FACETS: FacetDef[] = [
   // ── Sound Properties ────────────────────────────────────────────────────
   // Values are the exact strings from sanity-cms/schemaTypes/productType.ts's
   // soundSignature options.list (sang-logium-3rv.5) -- they must match
-  // lib/catalogue/facetMap.ts's valueVocab exactly (case included).
+  // ../facetMap.ts's valueVocab exactly (case included).
   // sang-logium-3rv.9 -- schema options.list (productType.ts) has 8 values;
   // 'Harman-target-like' was missing here, so a product carrying it could
   // never be selected or counted. Added to match the schema exactly.
@@ -151,10 +151,10 @@ export const facetsForGroup = (group: FacetGroupId): FacetDef[] => FACETS.filter
 // most-relevant, best-selling, rating-desc, discount-desc) are kept out of
 // this route's dropdown until their backing fields are populated. The
 // comparator for each value lives server-side in
-// lib/catalogue/buildProductQuery.ts.
+// ../../domain/buildProductQuery.ts.
 //
 // Static value/label pairs only, same shape as production's SORT_OPTIONS in
-// lib/catalogue/facetMap.ts — this is what the URL parser's allowlist and the
+// ../facetMap.ts — this is what the URL parser's allowlist and the
 // (headless, product-data-blind) SortDropdown both consume. Keeping the two
 // separate is what lets SortDropdown stay a pure URL <-> display control with
 // zero product-data dependency, matching F2.

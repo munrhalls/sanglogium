@@ -215,7 +215,7 @@ export const productType = defineType({
       title: "Filter Attributes",
       type: "object",
       description:
-        "Closed, machine-readable attributes used by the catalogue filter controls and GROQ predicates. One field per facet in lib/catalogue/facetMap.ts.",
+        "Closed, machine-readable attributes used by the catalogue filter controls and GROQ predicates. One field per facet in the product-filtering feature's config/facetMap.ts.",
       fields: ([
         {
           name: "price",
