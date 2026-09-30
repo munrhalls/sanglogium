@@ -66,3 +66,41 @@ Notes for the human:
 - The UNSURE-HUMAN bucket is dominated by `normalizeAccessoryImages/candidates/` (~156 MB tracked renders). If the accessories image migration is confirmed applied, that dir alone is most of the reclaimable space.
 - `dev.ps1`/`devctl.sh`/`cline-agent-helpers.ps1` have zero repo refs but are dev-environment tooling (desktop shortcut, shell aliases) — your call.
 - All eight homepage-copy/product-delete scripts write to production Sanity; repo evidence cannot prove the writes landed.
+
+---
+
+## Applied (2026-09-30, branch `prune`)
+
+Deletions staged via `git rm`; re-grep before each confirmed no new live inbound refs.
+
+| Path | Files | Freed (working tree) |
+|---|---|---|
+| `scripts/fetch-hifi-rose-product-map.mjs` | 1 | 4K |
+| `scripts/photography-fill-ratio-audit.mjs` | 1 | 16K |
+| `scripts/spotlight-ux-audit.cjs` | 1 | 8K |
+| `scripts/spotlight-verify.cjs` | 1 | 4K |
+| `scripts/mobile-ux-measure.cjs` | 1 | 8K |
+| `scripts/fullpage.js` (empty) | 1 | 0K |
+| `sanity-cms/utils/migrations/productCategoriesToCatalogueLocationKeys/` | 12 | 64K |
+| `sanity-cms/update/` | 5 | 236K |
+| `sanity-cms/upload/` | 3 | 332K |
+| `public/normalization-main-images/` | 32 | 14.1 MB |
+| `public/ui-test-helpers.js`, `test-mock.js`, `scenario-happyPath.js` | 3 | 12K |
+| **Total** | **61** | **~14.8 MB** |
+
+Dangling-ref check after deletion: `git grep` for every deleted name across `package.json`, `AGENTS.md`, `CLAUDE.md`, `tests/`, `app/`, `lib/`, `store/`, `next.config.ts`, `sanity.config.ts` → **0 matches**. Nothing restored.
+
+Known soft note: the kept `normalizeIemImages` migration scripts still contain `OUTPUT_DIR = .../public/normalization-main-images` constants — dead output paths in UNSURE-HUMAN code, not live references; they recreate the dir if ever re-run.
+
+## Skipped / UNSURE-HUMAN — one question each
+
+1. `scripts/delete-two-products.mjs` + `verify-deleted-two-products.mjs` — were the two products actually deleted in prod, so both scripts can go?
+2. `scripts/update-hero-copy.mjs` — did the hero copy update land in prod?
+3. `scripts/update-homepage-accessories.mjs` + `.ts` twin — did the homepage accessories update land?
+4. `scripts/update-newest-release-copy.mjs`, `-subtitle.mjs`, `verify-and-fix-newest-release-copy.mjs` — is the newest-release copy final in prod?
+5. `scripts/cline-agent-helpers.ps1` — do you still source this in any Cline/agent setup?
+6. `scripts/dev.ps1` — is the "Sang-logium Dev.lnk" Windows shortcut still in use (repo is on Linux now)?
+7. `scripts/devctl.sh` — do you use the `dr`/`drc`/`drw` aliases from `.lavish/dev-server-wedge.html`?
+8. `sanity-cms/utils/migrations/normalizeAccessoryImages/` (~156 MB incl. 287 `candidates/` renders) — did `PRODUCTION_patchPhased.mjs` finish applying to prod?
+9. `sanity-cms/utils/migrations/normalizeIemImages/` (~6.8 MB) — did the IEM patch + `fixPi7S2Only` finish applying to prod?
+10. `sanity-cms/utils/migrations/sliceFacetNormalization/` — committed today; is the accessories slice `--write` still pending?
