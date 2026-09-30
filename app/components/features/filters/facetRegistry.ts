@@ -1,13 +1,9 @@
 'use client';
 
-// Category-aware selector over the per-category facet modules: headphones
-// has its own module under lib/filter-sort/headphones/, while
-// audio-electronics and accessories have minimal modules under
-// lib/filter-sort/<slice>/ and use the production URL hook. Before
-// sang-logium-3rv.6, FilterSidebar/FilterControls/ActiveFilterChips imported
-// headphones' module unconditionally, so /products/audio-electronics and
-// /products/accessories silently rendered headphones' groups and facets --
-// this file is the single place that picks the right one per route.
+// Category-aware selector over the per-category facet modules under
+// lib/filter-sort/<slice>/ (headphones, audio-electronics, accessories);
+// all three use the production URL hook app/hooks/nuqs/useFilterSort.tsx.
+// This file is the single place that picks the right module per route.
 //
 // The three modules are structurally identical (same FacetDef/FacetGroup
 // shape, same useFilterParam/useClearAllFilters contract) but each has its
@@ -18,7 +14,6 @@
 import * as headphones from '@/lib/filter-sort/headphones/facetConfig';
 import * as audioElectronics from '@/lib/filter-sort/audio-electronics/facetConfig';
 import * as accessories from '@/lib/filter-sort/accessories/facetConfig';
-import { useFilterParam as useHeadphonesFilterParam, useClearAllFilters as useHeadphonesClearAll } from '@/lib/filter-sort/headphones/useFilterParam';
 import { useFilterParam as useCatalogueFilterParam, useClearAllFilters as useCatalogueClearAll } from '@/app/hooks/nuqs/useFilterSort';
 // Re-exported below for existing client-side importers -- the canonical
 // definitions live in ./category.ts (a non-'use client' module) so Server
@@ -31,9 +26,9 @@ export type Option = { value: string; label: string };
 export type FacetOptionCount = { value: string; count: number };
 
 /** Structural shape actually read by FilterSidebar/FilterControls/
- *  ActiveFilterChips -- id/label/control/options/unit/min/max. `field` (a
- *  keyof-per-category-product-type) and `group`/`itemNo`/`status` deliberately
- *  excluded: never read by these render-only components (sang-logium-3rv.5). */
+ *  ActiveFilterChips -- id/label/control/options/unit/min/max. `group`
+ *  deliberately excluded: never read by these render-only components
+ *  (sang-logium-3rv.5). */
 export interface AnyFacetDef {
   id: string;
   label: string;
@@ -71,8 +66,8 @@ const MODULES: Record<Category, FacetModule> = {
     facetsForGroup: headphones.facetsForGroup as FacetModule['facetsForGroup'],
     SORT_OPTIONS: headphones.SORT_OPTIONS,
     SORT_DEFAULT: headphones.SORT_DEFAULT,
-    useFilterParam: useHeadphonesFilterParam,
-    useClearAllFilters: useHeadphonesClearAll,
+    useFilterParam: useCatalogueFilterParam,
+    useClearAllFilters: useCatalogueClearAll,
   },
   'audio-electronics': {
     FACETS: audioElectronics.FACETS,

@@ -6,9 +6,9 @@
 // vocabulary can never drift between producers and consumers.
 //
 // HEADLESS: no JSX, no data access. It does not know about the product grid,
-// product data, result counts, or streaming. The Product Grid observes URL
-// changes independently via lib/catalogue/urlChangeEvents.ts (`locationchange`);
-// the controls never call the grid.
+// product data, result counts, or streaming. The controls never call the
+// grid: a filter/sort write updates the URL with shallow:false and the
+// catalogue RSC re-renders the grid (see FILTER_SORT_URL_OPTIONS below).
 //
 // This is a deliberate fresh design for the client-only display-sync needs of the
 // F-layer. The deleted lib/catalogue/{filterParams,sortParams,searchParams}.ts
