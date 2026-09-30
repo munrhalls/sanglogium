@@ -115,3 +115,17 @@ git_stats.txt
 # Photography audit output
 scripts/output/
 
+
+# generated / scratch artifacts
+backups/
+sanity/backups/
+sanity-cms/backups/
+_project/agent-logs/
+_project/_scratch/
+_project/scratch/
+_project/*.log
+*.stdout.log
+*.tsbuildinfo
+*.bak
+*.orig
+.DS_Store
