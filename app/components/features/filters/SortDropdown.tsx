@@ -16,12 +16,12 @@ export function SortDropdown({ category = 'headphones' }: { category?: Category 
 
   return (
     <div className="flex items-center gap-2">
-      <label htmlFor="poc-sort" className="type-caption text-text-caption whitespace-nowrap">
+      <label htmlFor="sort-select" className="type-caption text-text-caption whitespace-nowrap">
         Sort by
       </label>
       <div className="relative">
         <select
-          id="poc-sort"
+          id="sort-select"
           name="sort"
           value={sort}
           onChange={(event) => setSort(event.target.value)}

@@ -34,9 +34,9 @@ You are a capture-scroll agent. Your job is to take viewport-sized screenshots t
    - Full page:
      `node .devin/skills/capture-scroll/capture-scroll.mjs http://localhost:3000/products/headphones /tmp/page-scroll --hint=body --prefix=page`
    - Specific element:
-     `node .devin/skills/capture-scroll/capture-scroll.mjs http://localhost:3000/products/headphones /tmp/sidebar --selector='#poc-filter-panel-scroll' --prefix=filter`
+     `node .devin/skills/capture-scroll/capture-scroll.mjs http://localhost:3000/products/headphones /tmp/sidebar --selector='#filter-panel-scroll' --prefix=filter`
    - Opened `<select>` dropdown (sets `size = options.length`):
-     `node .devin/skills/capture-scroll/capture-scroll.mjs http://localhost:3000/products/headphones /tmp/sort --selector='#poc-sort' --open-select --prefix=sort-dropdown`
+     `node .devin/skills/capture-scroll/capture-scroll.mjs http://localhost:3000/products/headphones /tmp/sort --selector='#sort-select' --open-select --prefix=sort-dropdown`
 3. Return the listed `file://` links in order.
 
 ## Options

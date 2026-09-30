@@ -38,8 +38,8 @@ export interface MobileFilterSheetProps {
   totalCount: number;
 }
 
-const PANEL_SCROLL_ID = 'poc-filter-panel-scroll-mobile';
-const GROUP_ID_PREFIX = 'poc-group-mobile-';
+const PANEL_SCROLL_ID = 'filter-panel-scroll-mobile';
+const GROUP_ID_PREFIX = 'filter-group-mobile-';
 
 export function MobileFilterSheet(props: MobileFilterSheetProps) {
   const { totalCount, ...panelProps } = props;
