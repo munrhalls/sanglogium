@@ -109,3 +109,50 @@ Legend: "inbound refs" = quoting specifiers/files found referencing the target (
 
 - Unused exports inside live files were out of scope per the task; observed while auditing: `de-rates`/`gb-rates` import live `packlink-rates` symbols (dropping those files shrinks its export surface), `getSpotlight2/3Data` shims re-export `Spotlight1Data` aliases, `CheckoutPanel` exports a props interface nothing consumes. Whole-file verdicts already cover these.
 - `sanity.types.ts` is generated — regenerating rather than editing is the right maintenance path; left alone.
+
+---
+
+# Phase 2 — Applied deletions
+
+## 5. Applied (39 files deleted via `git rm`)
+
+Every DELETE row was re-verified with `git grep` (basename + import path, code files only) immediately before removal; all still had zero live references. No row was downgraded.
+
+- Components (24): `suppressImageWarnings`, `ErrorMessage` (common), `BackdropClose`, `ExitButton`, `BasketUIMock`, `CheckoutPanel`, `featured/card/Card.tsx`, `CarouselMediaBox`, `GridMediaBox`, `Spotlight`, `SpotlightMediaBox`, `skeletons/ShopHeaderSkeleton`, `CTA`, `DrawerToggleButton`, `CategoryTitleIcon`, `infoTooltip`, `PromotionImage`, `SanityImage`, `SegmentTitle`, `SmartLink`
+- Homepage fetcher shims (4): `getAccessoryProducts`, `getNewestRelease`, `getSpotlight2Data`, `getSpotlight3Data`
+- Lib/app modules (4): `app/hooks/useOrderTotals.ts`, `app/lib/data/dataLoader.ts`, `lib/catalogue/semanticMatching.ts`, `lib/utils/`— none; plus `lib/shipping/{carrier-rates,de-rates,gb-rates}.ts` (3)
+- Test infra (1): `tests/setup/time-mock.ts`
+- Routes (5 files / 2 route dirs): `app/(test)/streaming-poc/{page.tsx,reveal.module.css,types.ts}`, `app/sandbox/{page.tsx,layout.tsx}` — whole folders removed; every file inside belonged to the deleted route.
+
+Resulting empty dirs (`app/components/layout/{grid,spotlight}`, `app/components/ui/{icons,info-tool-tip,promotion-image,sanity-image,segment-title,smart-link}`, `app/components/features/homepage/featured/card`, `app/lib/data`, `tests/setup`, `app/sandbox`, `app/(test)/streaming-poc`) are gone; git does not track empty dirs.
+
+## 6. Cascade deletions (orphaned only by the removals above)
+
+| path | evidence |
+|---|---|
+| `app/components/features/homepage/featured/card/CardDetails.tsx` | imported solely by deleted `Card.tsx`; graph re-run + `git grep CardDetails` in code: 0 refs |
+| `app/components/features/homepage/featured/card/CardMedia.tsx` | same — only importer was `Card.tsx` |
+| `lib/catalogue/semanticConfig.ts` | imported solely by deleted `semanticMatching.ts` (`getSemanticRule`, `SEMANTIC_CATEGORIES`); `git grep semanticConfig` in code: 0 refs |
+
+Re-run after cascade: **0 unresolved imports** across the remaining codebase; zero-inbound list is stable (no new orphans on second pass). Cascading stopped.
+
+## 7. Skipped / UNSURE-HUMAN (not deleted — one question each)
+
+- `lib/address/nominatim-validator.ts` — is the parked Nominatim skeleton still wanted for a future validator rollout?
+- `lib/utils/cookies.ts` — is the `CHECKOUT_JWT_SECRET` jose helper still planned for a cookie-gated checkout flow?
+- `lib/dev/integrity-monitor.ts` — is this dev-only monitor still run ad-hoc by hand?
+- `lib/dev/logger.ts` — should the "unified frontend logger" be adopted or removed, given nothing imports it?
+- `tests/fixtures/catalogue-fixtures.ts` — is the filters-sorting campaign that staged these fixtures still active?
+- `store/__tests__/e2e/non-local-basket.spec.ts` — should this Playwright spec be moved under a playwright `testDir` and/or excluded from vitest's `**/*.spec.ts` include?
+- `app/api/address/autocomplete/route.ts` — is this Photon endpoint called by anything outside the repo (scripts, mobile), or safe to remove?
+- `app/api/shipping/route.ts` and `app/api/shipping/rates/route.ts` — are these hit externally, or superseded by `/api/basket/shipping-rates`?
+- `app/design-system-test/**` and `app/dev/design-system/` — are agents still directed to these pages via `docs/design-system.md`?
+- `app/(admin)/packer/` — is the packer route still used operationally?
+- `app/actions/address/google-address-validator.frozen.ts` — kept (KEEP verdict): confirmed frozen-by-design, no action.
+
+## 8. Needs package.json / config follow-up (re-stated; package.json untouched)
+
+- `vitest.integration.config.ts` includes `tests/basket/integration/**` and `tests/checkout/guest-checkout-inventory-reservation/**` — **neither directory exists**. Stale include globs.
+- `playwright-ct.config.ts` `testDir: './tests/component'` — **directory does not exist**; no `package.json` script invokes this config.
+- No `package.json` script invokes `vitest.integration.config.ts`; no script points at any path deleted in this phase — nothing to remove from `package.json` itself.
+- `store/__tests__/e2e/non-local-basket.spec.ts` is a Playwright spec swallowed by vitest's `**/*.spec.ts` include (see UNSURE-HUMAN).
