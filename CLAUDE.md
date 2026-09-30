@@ -107,6 +107,8 @@ _Last reviewed 2026-08-01 against the live repo. Stack/pattern-level only — fo
 
 - When outputting a file or directory path, always print it as a `file://` URI (e.g. `file:///home/jan/file.json`) for one-click terminal opening.
 
+- **Where product feature code goes:** a new or refactored product feature lives in `features/<name>/` with `ui/`, `config/`, `domain/` and `__tests__/`, plus `index.ts` (client-safe entry) and `server.ts` (server-only entry, imports 'server-only'); the two examples are `features/product-filtering/` and `features/product-search/`. `app/` stays route-only and thin. Outside code imports a feature only through its entries, and a feature imports another feature only through that feature's entries. `app/components/features/` is LEGACY: migrate a feature out of it only when a task already touches that feature, never for its own sake. Shared, feature-agnostic UI stays in `app/components/{ui,layout,common,skeletons,analytics}`. Sanity access stays in `sanity-cms/`.
+
 _Add your project-specific conventions here_
 
 
