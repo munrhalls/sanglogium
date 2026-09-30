@@ -1,7 +1,7 @@
 # ADR-002: Tiered Inventory Concurrency Strategy
 
 ## Status
-Accepted
+Superseded — the Redis FIFO queue removal happened (no queue code exists today), but Pattern 2 ("Soft Reservation via Redis TTL") was never implemented: there is no Redis client, no `soft-reserve` code, and no reservation creation in the codebase. `reservedStock` is a read-only display field (`stock - reservedStock`). Treat this ADR as history, not as a description of current or planned infra.
 
 ## Date
 2026-05-21

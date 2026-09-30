@@ -12,10 +12,8 @@
 
 **✅ Compatible:**
 - Next.js 15 - Native Vercel support, auto-detects build settings
-- Upstash Redis (minimal usage in dev tools only) - Fully compatible
 - Sanity CMS - No changes needed
 - Stripe - No changes needed
-- Clerk - No changes needed
 
 **⚠️ Migration Required:**
 - **Custom headers:** `netlify.toml` headers → move to `next.config.ts` or `vercel.json`
@@ -88,13 +86,9 @@ vercel login
    - `NEXT_PUBLIC_SANITY_PROJECT_ID`
    - `SANITY_API_TOKEN`
    - `SANITY_STUDIO_READ_WRITE`
-   - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
-   - `CLERK_SECRET_KEY`
    - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
    - `STRIPE_SECRET_KEY`
    - `STRIPE_WEBHOOK_SECRET`
-   - `UPSTASH_REDIS_REST_URL`
-   - `UPSTASH_REDIS_REST_TOKEN`
    - Any other variables present in Netlify
 
 **After filling all fields:**

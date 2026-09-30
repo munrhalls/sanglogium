@@ -14,7 +14,7 @@
 | 4 | Mobile | Summary card and payment form stacked: back nav sits *between* them — breaks visual flow and is easy to miss | Medium |
 | 5 | Both | "Deliver to" address block has no visual anchor (no pin icon, no section label styling) — reads as plain body text | Medium |
 | 6 | Both | Loading state for PaymentForm is bare `type-caption` text "Loading payment form…" — no skeleton, feels broken | Medium |
-| 7 | Both | Error state in `PaymentPageClient.tsx` uses raw off-brand Tailwind utilities (`bg-red-50`, `text-red-800`, `bg-blue-600`) | High |
+| 7 | Both | Error state in `PaymentPageClient.tsx` uses raw off-brand Tailwind utilities (`bg-red-50`, `text-red-800`, `bg-blue-600`) — NOTE: `PaymentPageClient.tsx` no longer exists in the codebase | High |
 | 8 | Both | `CheckoutSummary` h2 "Order Summary" uses `type-section-hed` — correct weight but no overline / section-anchor contrast above it | Low |
 | 9 | Desktop | Left column (summary + nav) and right column (payment form) are not top-aligned — `space-y-4` adds offset | Low |
 | 10 | Both | VAT row always shows `0,00 zł` — visually adds noise; label "VAT (included)" is correct but value needs de-emphasis | Low |
@@ -252,7 +252,9 @@ All rows: `border-t border-border-secondary pt-2`
 
 ## 8. Error State (PaymentPageClient / system-level)
 
-**Current problem:** Uses off-brand `bg-red-50 text-red-800 bg-blue-600` — completely breaks design system.
+> **Stale:** `PaymentPageClient.tsx` has been deleted; this section describes a component that no longer exists. Retained only for the design intent if an equivalent error surface is rebuilt.
+
+**Current problem (historical):** Uses off-brand `bg-red-50 text-red-800 bg-blue-600` — completely breaks design system.
 
 ### Spec
 - **Container:** `.card-base` (matches rest of page)

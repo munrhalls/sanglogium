@@ -1,7 +1,6 @@
 # Orchestration Diagrams
 
-> Visual reference for the parallel-track execution plan.  
-> Read alongside `_project/orchestration-plan.md`.
+> Visual reference for the parallel-track execution plan.
 
 ---
 
