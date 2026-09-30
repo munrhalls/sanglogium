@@ -3,10 +3,10 @@ import { createClient } from "@sanity/client";
 import path from "path";
 import { fileURLToPath } from "url";
 
-// Same token split as normalizeIemImages/getClient.mjs and
-// headphonesFilterAttributes/getClient.mjs: read via SANITY_API_READ_TOKEN,
-// write via SANITY_STUDIO_READ_WRITE (the project does not set
-// SANITY_STUDIO_READ_WRITE_CREATE).
+// Mirrors sanity-cms/utils/migrations/normalizeIemImages/getClient.mjs's
+// proven token split — the top-level sanity-cms/utils/getClient.mjs expects
+// SANITY_STUDIO_READ_WRITE_CREATE, which isn't set in this project's
+// .env.local; SANITY_API_READ_TOKEN / SANITY_STUDIO_READ_WRITE are.
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, "../../../../.env.local") });
@@ -23,6 +23,8 @@ export const readClient = createClient({
   token: process.env.SANITY_API_READ_TOKEN,
 });
 
+// Writes go to the production dataset. Used only when a migration script is
+// invoked with --write.
 export const writeClient = createClient({
   ...sharedConfig,
   token: process.env.SANITY_STUDIO_READ_WRITE,

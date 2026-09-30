@@ -13,7 +13,7 @@
 import { writeFileSync, mkdirSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { readClient, writeClient } from '../headphonesFilterAttributes/getClient.mjs';
+import { readClient, writeClient } from './getClient.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const WRITE = process.argv.includes('--write');
