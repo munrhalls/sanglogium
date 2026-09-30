@@ -1,5 +1,7 @@
 # Logging Patterns Research 2026
 
+> **STALE PREMISE (2026-09-30):** This document assumes "existing Redis infrastructure." Redis/Upstash has been fully removed — there is no Redis client, no `UPSTASH_*` env consumer, and neither recommended file (`lib/frontend-logger.ts`, `app/api/logs/[traceId]/route.ts`) was ever built. What exists today: `lib/dev/event-logger.ts` (live), `lib/dev/logger.ts`, `app/api/trace/route.ts`. Read as research history only.
+
 > **Retrieval Date:** 2026-05-27
 > **Researcher:** AI/Human collaboration
 > **Decay Risk:** Medium — Next.js logging config evolves; Stripe/Redis APIs are stable

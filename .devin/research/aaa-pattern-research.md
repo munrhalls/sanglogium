@@ -42,8 +42,7 @@ Tests become unreadable when they mix setup, execution, and verification in uncl
 **Claim:** Tests should be structured as Arrange (setup), Act (execute), Assert (verify)
 
 **Verification:**
-- [x] Located in our codebase: tests/checkout-queue/integration/happy-path/sequential-fifo.test.ts
-- [x] Test created: N/A (existing code)
+- [ ] Located in our codebase: referenced `tests/checkout-queue/` test file has since been deleted
 - [x] Source inspected: Our codebase
 
 **Actual Behavior:**

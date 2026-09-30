@@ -2,6 +2,30 @@
 
 Date: 2026-09-30. Branch: stale-docs-audit. Read-only sweep; no code changes in Phase 1.
 
+## Needs human decision (code/config — agents never delete these)
+
+Remaining `git grep -i upstash|bullmq` hits and other dead infra residue that require a human (package.json edits, code deletions, test/config changes):
+
+| File | Line | Why it remains |
+|---|---|---|
+| `package.json` | `"@upstash/redis": "^1.37.0"` dep; `test:checkout*` scripts → nonexistent `tests/checkout/guest-checkout-inventory-reservation/` + `tests/checkout/quick-test.test.ts` | Dead dep + dead scripts — human to uninstall/retarget |
+| `package.json` | `pino`, `pino-pretty` deps | Declared, zero imports — unused deps, human to uninstall (or wire Pino if it was intended) |
+| `lib/dev/redis-test.ts` | whole file | Dead code (no importers); last `@upstash/redis` consumer — human to delete |
+| `lib/dev/integrity-monitor.ts` | whole file | Dead code (no importers); self-aware Redis stubs — human to delete |
+| `lib/dev/logger.ts` | whole file | Dead code (no importers); app uses `event-logger.ts` — human to delete |
+| `playwright.checkout.config.ts` | :11 comment "(shared Redis/Sanity)" | Comment only — human to fix comment / decide if config still needed |
+| `vitest.integration.config.ts` | `RESERVATION_TTL_SEC`, glob of missing dir | Dead config — human to fix |
+| `tests/config.ts` | `RESERVATION_EXPIRY_MS` | No consumer — human to remove |
+| `tests/checkout/e2e/shipping-visual-tracer.test.ts` | creates `basketReservation` docs | Dead-path test — human to delete/retarget |
+| `app/api/shipping/rates/route.ts` | reads `basketReservation` docs | Orphaned route (UI uses `/api/basket/shipping-rates`) — human to delete |
+| `sanity-cms/lib/client.ts`, `backendClient.ts` | "Used for: basket reservations" comments | Stale comments on live files — human to fix |
+| `docs/auth/data-functionality-should-be-intelligence-update{,-2}.md` | Upstash-as-rate-limiter-storage suggestions | KEEP verdicts (proposal, not false claim) — human may optionally annotate |
+| `research/LOGGING_PATTERNS_2026.md` | body still describes Redis-based design | Banner added marking premise stale; body left for human to delete or rewrite |
+| `docs/devin-carousel-arrow-visual-refinement-tasks.md`, `docs/devin-carousel-controls-ux-tasks.md`, `docs/devin-iem-ux-tasks.md` | — | Finished one-off task briefs — DELETE-doc candidates, left for human call |
+| `flash-window-problem.md` | — | Resolved Windows diagnostic, one-off — DELETE-doc candidate, human call |
+
+
+
 ## (a) Ground-truth stack
 
 Source: `package.json`, `instrumentation.ts`, `instrumentation-client.ts`, `sentry.server.config.ts`, `sentry.edge.config.ts`, `vercel.json`, `git grep process.env` over `app lib actions sanity-cms`.
@@ -173,4 +197,27 @@ Not flagged (verified clean of removed-infra references): `docs/performance/*`, 
 - **P0 (agent-visible, fix first):** `README.md` ✅ done · `AGENTS.md`/`CLAUDE.md` (verified clean) · `package.json` dead deps+scripts · `lib/dev/redis-test.ts`, `lib/dev/integrity-monitor.ts`, `lib/dev/logger.ts`, `app/api/shipping/rates/route.ts`, `vitest.integration.config.ts`, `tests/checkout/e2e/shipping-visual-tracer.test.ts`, `tests/config.ts`, `playwright.checkout.config.ts` comment, `sanity-cms/lib/*` comments — all FLAG FOR HUMAN (code).
 - **P1 (docs describing removed features):** all of `docs/checkout-queue/**` (5 files) · `app/checkout/Checkout plan.md` · `docs/checkout/ADR-002` (annotate/decide) · `docs/hosting/Q & A.md` · `tests/checkout/test-data/integration-test-spec.md` · `docs/checkout/payment/ux-visual-should-be-intelligence.md` · `docs/kanban-cline-cli-guide.md` · `orchestration-diagrams/diagrams.md` (dead link) · `flash-window-problem.md` · `docs/devin-*-tasks.md` (3 finished briefs).
 - **P2 (historical/research, low risk):** `research/LOGGING_PATTERNS_2026.md` (false Redis premise) · `research/_ARCHIVED_*` (keep, archived) · `.devin/research/aaa-pattern-research.md` (one stale line) · `_project/devin-cloud-optimization-plan.md`, `_project/reports/*` (historical).
+
+## Result (Phase 4)
+
+**Deleted (`git rm`):**
+- `docs/checkout-queue/README.md`, `MAJOR ADR.md`, `PRODUCTION.md`, `TECHNICAL DIAGRAM.md`, `reservation-ttl/README.md` — entire folder documented removed queue/Redis infra
+- `app/checkout/Checkout plan.md` — described a reservation-document flow that was never the current implementation
+- `tests/checkout/test-data/integration-test-spec.md` — spec for files that don't exist
+- `docs/kanban-cline-cli-guide.md` — guide for `.beads`/`bd` tooling absent from the repo
+
+**Corrected (docs only):**
+- `README.md:33` — removed "Upstash Redis (inventory reservation)" and "BullMQ (background jobs)" (no such code); also removed "Pino (structured logging)" (dep declared, zero imports — real logger is `lib/dev/event-logger.ts`)
+- `docs/hosting/Q & A.md` — removed Upstash-compat line and `UPSTASH_REDIS_REST_*` env entries; also removed `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`/`CLERK_SECRET_KEY` and the "Clerk - No changes needed" line (Clerk not in code — found during the same correction)
+- `docs/checkout/ADR-002-checkout-inventory-concurrency.md` — Status changed to Superseded with a note that the Redis soft-reservation half was never implemented
+- `docs/checkout/payment/ux-visual-should-be-intelligence.md` — two `PaymentPageClient.tsx` references annotated as deleted component
+- `orchestration-diagrams/diagrams.md` — removed dead link to nonexistent `_project/orchestration-plan.md`
+- `.devin/research/aaa-pattern-research.md` — stale `tests/checkout-queue/...` path replaced with a note that it was deleted
+- `research/LOGGING_PATTERNS_2026.md` — stale-premise banner added at top
+
+**Flagged (not touched — code/config/human call):** see "Needs human decision" table above.
+
+**Dead-link check:** after deletions, `git grep` for `checkout-queue`, `Checkout plan`, `integration-test-spec`, `kanban-cline-cli` across the repo returns only `.devin/research/aaa-pattern-research.md` (now corrected) and this report — no inbound dead links introduced.
+
+**Remaining `upstash|bullmq` hits** (all expected, all in "Needs human decision"): `lib/dev/redis-test.ts`, `package.json` (dep), `docs/auth/data-functionality-should-be-intelligence-update{,-2}.md` (KEEP proposals), `research/LOGGING_PATTERNS_2026.md` (bannered historical).
 
