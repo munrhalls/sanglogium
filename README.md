@@ -28,7 +28,7 @@ solo over 18+ months.
 
 **Shipping:** AlleKurier & Packlink (aggregated rate quoting)
 
-**State & Forms:** Zustand · React Hook Form · Zod
+**State & Forms:** Zustand · Zod
 
 **Infrastructure:** Sentry (error monitoring & tracing) · Vercel Speed Insights (RUM)
 
