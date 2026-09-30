@@ -4,7 +4,7 @@ import React from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
 // `sort` on /search is validated by searchProductsFull, not by the catalogue
-// parser (whose vocabulary has no `relevance`). `name-asc` is the legacy value.
+// parser (whose vocabulary has no `relevance`).
 const SORT_OPTIONS = [
   { value: 'relevance', label: 'Relevance' },
   { value: 'price-asc', label: 'Price: Low to High' },
@@ -18,8 +18,7 @@ export function SearchSort() {
   const searchParams = useSearchParams();
 
   const raw = searchParams.get('sort') ?? 'relevance';
-  const normalized = raw === 'name-asc' ? 'alpha-asc' : raw;
-  const current = SORT_OPTIONS.some((o) => o.value === normalized) ? normalized : 'relevance';
+  const current = SORT_OPTIONS.some((o) => o.value === raw) ? raw : 'relevance';
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const params = new URLSearchParams(searchParams.toString());

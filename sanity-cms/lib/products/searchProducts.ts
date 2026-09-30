@@ -221,7 +221,7 @@ export async function searchProductsFull(
         : sort === 'price-desc'
           ? (a: SearchProduct, b: SearchProduct) =>
               b.price_data.unit_amount - a.price_data.unit_amount || byRelevance(a, b)
-          : sort === 'alpha-asc' || sort === 'name-asc'
+          : sort === 'alpha-asc'
             ? (a: SearchProduct, b: SearchProduct) =>
                 a.name.localeCompare(b.name) || byRelevance(a, b)
             : byRelevance;
