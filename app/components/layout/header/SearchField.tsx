@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 import { SearchBarTrigger, SearchFieldDesktop, SearchSheet, useSearchController, useSearchOverlay } from "@/features/product-search";
+import { searchProductsAutocomplete } from "@/sanity-cms/lib/products/searchProducts";
 
 /**
  * Header search, composed from three surfaces that share one controller:
@@ -12,7 +13,7 @@ import { SearchBarTrigger, SearchFieldDesktop, SearchSheet, useSearchController,
  */
 export default function SearchField() {
   const { isSearchOpen, openSearch, closeSearch } = useSearchOverlay();
-  const search = useSearchController({ isSheetOpen: isSearchOpen });
+  const search = useSearchController({ isSheetOpen: isSearchOpen, fetchSuggestions: searchProductsAutocomplete });
   const { reset } = search;
 
   // Whatever closes the sheet (back arrow, Escape, bottom-bar X, system Back,

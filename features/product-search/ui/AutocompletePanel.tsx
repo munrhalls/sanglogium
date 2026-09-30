@@ -7,7 +7,7 @@ import { ArrowRight, MagnifyingGlass, SquaresFour, Tag } from "@phosphor-icons/r
 import { cn } from "@/lib/utils/tailwind";
 import { ProductImage } from "@/app/components/features/products/ProductImage";
 import { formatPrice } from "@/lib/utils/price";
-import type { AutocompleteProduct } from "@/sanity-cms/lib/products/searchProducts";
+import type { AutocompleteProduct } from "../domain/searchTypes";
 import { HighlightedText } from "./HighlightedText";
 import { CATEGORY_SUGGESTIONS } from "../config/searchSuggestions";
 import type { SuggestionEntry } from "../domain/suggestionEntries";

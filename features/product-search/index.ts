@@ -2,6 +2,7 @@
 // Never re-export server-only or Sanity code here.
 // Explicit named re-exports only; never bare export *.
 export { detectSearchRedirect } from './domain/detectSearchRedirect';
+export type { AutocompleteProduct, SearchProduct, SearchResult } from './domain/searchTypes';
 export { SearchHeader } from './ui/SearchHeader';
 export { SearchError } from './ui/SearchError';
 export { SearchEmpty } from './ui/SearchEmpty';
