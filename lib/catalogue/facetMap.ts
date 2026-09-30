@@ -541,13 +541,5 @@ export const facetsForCategory = (category: string): FilterFacet[] =>
     (f) => f.categories.includes('*') || f.categories.includes(category),
   );
 
-export const FILTER_FACET_BY_PARAM = new Map(FILTER_FACETS.map((f) => [f.urlParam, f]));
-
-export const FILTER_FACET_BY_FIELD = new Map(
-  FILTER_FACETS.map((f) => [f.field.replace('filterAttributes.', ''), f])
-);
-
-export const SORT_OPTION_BY_VALUE = new Map(SORT_OPTIONS.map((s) => [s.urlValue, s]));
-
 export const isPlaceholderVocab = (vocab: string[]) =>
   vocab.some((v) => v.startsWith('<') && v.endsWith('>'));
