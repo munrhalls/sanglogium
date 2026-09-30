@@ -7,8 +7,8 @@ import { searchProductsAutocomplete } from "@/sanity-cms/lib/products/searchProd
 import type { AutocompleteProduct } from "@/sanity-cms/lib/products/searchProducts";
 import { addRecentSearch } from "./recentSearches";
 import { productHref, searchHref } from "./searchLinks";
-import { buildSuggestionEntries } from "./suggestionEntries";
-import type { SuggestionEntry } from "./suggestionEntries";
+import { buildSuggestionEntries } from "@/features/product-search";
+import type { SuggestionEntry } from "@/features/product-search";
 
 export const MIN_QUERY_LENGTH = 2;
 const DEBOUNCE_MS = 150;

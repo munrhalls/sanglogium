@@ -9,8 +9,9 @@ import { ProductImage } from "@/app/components/features/products/ProductImage";
 import { formatPrice } from "@/lib/utils/price";
 import type { AutocompleteProduct } from "@/sanity-cms/lib/products/searchProducts";
 import { HighlightedText } from "./HighlightedText";
-import { CATEGORY_SUGGESTIONS, isPlainLeftClick, productHref, searchHref } from "./searchLinks";
-import type { SuggestionEntry } from "./suggestionEntries";
+import { CATEGORY_SUGGESTIONS } from "@/features/product-search";
+import type { SuggestionEntry } from "@/features/product-search";
+import { isPlainLeftClick, productHref, searchHref } from "./searchLinks";
 
 interface AutocompletePanelProps {
   /** popup = desktop dropdown, sheet = full-bleed list inside the mobile sheet. */
