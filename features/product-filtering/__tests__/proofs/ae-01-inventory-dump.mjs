@@ -5,17 +5,13 @@
 // not the full audio-electronics schema, most of which is
 // per-deviceType display-only detail, never surfaced as a filter.
 //
-// Lives under lib/filter-sort/audio-electronics/__tests__/ (not the
-// sibling headphones __tests__/ folder) because a just-discovered local
-// .git/info/exclude rule targets lib/filter-sort/__tests__/ for cleanup by
-// some concurrent process -- new untracked files written there vanish
-// within seconds. sanityRaw.mjs itself is a tracked file in that folder and
-// unaffected, so it's still imported from there rather than duplicated.
+// Lives under features/product-filtering/__tests__/proofs/ alongside the
+// other proof scripts; imports sanityRaw.mjs from the same folder.
 //
-// Run: node --env-file=.env.local lib/filter-sort/audio-electronics/__tests__/ae-01-inventory-dump.mjs
+// Run: node --env-file=.env.local features/product-filtering/__tests__/proofs/ae-01-inventory-dump.mjs
 
 import { writeFileSync } from 'node:fs';
-import { sanityQuery } from '../../__tests__/sanityRaw.mjs';
+import { sanityQuery } from './sanityRaw.mjs';
 
 // Every field below is a live facetMap.ts entry tagged categories:
 // ["audio-electronics"] (device-specific) or shared with other slices
@@ -66,11 +62,11 @@ async function main() {
   });
 
   writeFileSync(
-    new URL('./data/audio-electronics-inventory.json', import.meta.url),
+    new URL('../data/audio-electronics-inventory.json', import.meta.url),
     JSON.stringify(inventory, null, 2),
   );
 
-  console.log(`\nWrote ${inventory.length} products to lib/filter-sort/audio-electronics/__tests__/data/audio-electronics-inventory.json`);
+  console.log(`\nWrote ${inventory.length} products to features/product-filtering/__tests__/data/audio-electronics-inventory.json`);
 }
 
 main().catch((err) => {

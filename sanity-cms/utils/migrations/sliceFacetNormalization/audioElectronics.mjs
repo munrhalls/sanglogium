@@ -70,7 +70,7 @@ async function main() {
   );
   if (docs.length < 200) {
     // Fallback: same fetch-all + client-side category test as
-    // lib/filter-sort/audio-electronics/__tests__/ae-01-inventory-dump.mjs
+    // features/product-filtering/__tests__/proofs/ae-01-inventory-dump.mjs
     const all = await readClient.fetch(`*[_type=="product"]{_id, name, filterAttributes}`);
     docs = all.filter((p) => (p.filterAttributes?.category || []).includes('audio-electronics'));
   }

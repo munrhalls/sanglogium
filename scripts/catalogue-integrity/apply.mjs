@@ -5,7 +5,7 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { loadCatalogue, ROOTS, unroll } from './lib.mjs';
-import { sanityQuery } from '../../lib/filter-sort/__tests__/sanityRaw.mjs';
+import { sanityQuery } from '../../features/product-filtering/__tests__/proofs/sanityRaw.mjs';
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const args = Object.fromEntries(
