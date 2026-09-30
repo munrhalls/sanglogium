@@ -6,8 +6,6 @@ import type { Category } from './facetRegistry';
 import { MobileFilterSheet, type MobileFilterSheetProps } from './MobileFilterSheet';
 
 /**
- * POC-local mirror of app/components/features/filters/SortBar.tsx.
- *
  * `mobileFilterProps` is optional so existing non-catalogue callers of
  * SortBar (if any) keep compiling unchanged; the two products pages that
  * render a FilterSidebar always pass it, which is what puts the mobile

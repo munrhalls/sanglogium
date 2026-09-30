@@ -1,15 +1,14 @@
-// Source-of-truth copies of _project/filters/facet-map.json and
-// _project/filters/sort-map.json for the app layer.
-//
-// They are hard-coded here (not imported from _project) because _project is
-// research/tooling and is excluded from the TypeScript include list. The
-// _project/filters/check-wiring.cjs script verifies these arrays stay in sync
-// with the canonical JSON files.
+// Facet and sort definitions: the single source of truth for URL params,
+// Sanity field paths, closed vocabularies and per-category scope. Kept in
+// sync with sanity-cms/schemaTypes/productType.ts by
+// lib/catalogue/__tests__/facetSchemaParity.spec.ts and with the per-category
+// UI modules (lib/filter-sort/<slice>/facetConfig.ts) by
+// lib/catalogue/__tests__/facetConfigParity.spec.ts.
 
 export type FilterFacetType = 'range' | 'enum' | 'boolean' | 'multi';
 
 export interface FilterFacet {
-  /** Human-facing facet name (matches facet-map.json). */
+  /** Human-facing facet name. */
   facet: string;
   /** Sanity filterAttributes path, e.g. "filterAttributes.wearingStyle". */
   field: string;
@@ -229,7 +228,7 @@ export const FILTER_FACETS: FilterFacet[] = [
     categories: ['headphones'],
     urlParam: 'driverConfig',
   },
-  // sang-logium-3rv.5 -- these 5 were declared in the POC's facetConfig.ts
+  // sang-logium-3rv.5 -- these 5 were declared in the headphones facetConfig.ts
   // (RangeFacet) but never added here, so RangeControl rendered a slider with
   // zero data or query dependency: hardcoded min/max, no filtering effect at
   // all. urlParam matches the `id` keys in facetConfig.ts, same convention as
@@ -256,8 +255,7 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Frequency response -- bass extension',
     // freqResponseHz is a {min,max} object (sanity-cms/schemaTypes/
     // productType.ts:337); there is no stored bassExtensionHz field --
-    // docs/filters-sort/schema-headphones.md:51 documents bass extension as
-    // "MAY be derived from freqResponseHz.min at render time". Lower min =
+    // bass extension is derived from freqResponseHz.min. Lower min =
     // deeper bass extension, so this filters on the low end of the pair.
     field: 'filterAttributes.freqResponseHz.min',
     type: 'range',
@@ -276,7 +274,7 @@ export const FILTER_FACETS: FilterFacet[] = [
   {
     facet: 'Battery life',
     // batteryLifeHours is {ancOff, ancOn}, both nullable (productType.ts:434).
-    // should-be.md wants both shown separately where available; for the single
+    // Both figures exist; for the single
     // range-filter value this facet backs, ancOff (the headline, ANC-off
     // figure manufacturers usually quote) is the simplification -- same
     // one-field-of-a-pair treatment as bass extension above. A product with

@@ -25,11 +25,7 @@ export { filterSectionHeaderRow, filterSectionHeaderLabel, filterSectionHeaderAc
 type SetArray = (next: string[] | ((prev: string[]) => string[])) => void;
 
 // Every control below takes `category` and resolves its own useFilterParam
-// through facetRegistry.ts's per-category module (sang-logium-3rv.6) --
-// before that, every one of these imported headphones' useFilterParam
-// directly, so /products/audio-electronics and /products/accessories wrote
-// their filter state through headphones' URL-param contract instead of
-// their own.
+// through facetRegistry.ts's per-category module.
 
 export function CheckboxGroup({
   category,
@@ -49,7 +45,7 @@ export function CheckboxGroup({
   const [selected, setSelected] = useFilterParam(facet.id) as [string[], SetArray];
   const selectedArray = selected ?? [];
 
-  // facet.options (this POC's hand-typed slugs) and counts[].value
+  // facet.options (the facet module's hand-typed slugs) and counts[].value
   // (facetMap.ts's independently hand-typed valueVocab) are two separately
   // authored vocabularies for the same concept and routinely differ only in
   // case/format (e.g. 'sbc' vs 'SBC', 'ipx4' vs 'IPX4') — compare

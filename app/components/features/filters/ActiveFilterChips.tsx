@@ -6,7 +6,6 @@ import { humanizeFacetValue } from '@/lib/catalogue/humanizeFacetValue';
 import { formatPriceMajor } from '@/lib/utils/price';
 
 /**
- * POC-local mirror of app/components/features/filters/ActiveFilterChips.tsx.
  * SINGLE RESPONSIBILITY: URL <-> its own display. Renders one chip per active
  * value and, on interaction, writes the corrected value back through the
  * shared hook. Never imports or reacts to the product grid, product data,
@@ -20,8 +19,7 @@ import { formatPriceMajor } from '@/lib/utils/price';
 interface ActiveFilterChipsProps {
   brandLabels?: Record<string, string>;
   /** Optional: app/(store)/products/page.tsx (all-products) omits this and
-   *  gets headphones' contract, unchanged from pre-sang-logium-3rv.6
-   *  behavior there (same default FilterSidebar uses). */
+   *  defaults to headphones (same default FilterSidebar uses). */
   category?: Category;
 }
 

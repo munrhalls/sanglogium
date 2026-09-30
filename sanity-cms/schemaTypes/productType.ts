@@ -215,7 +215,7 @@ export const productType = defineType({
       title: "Filter Attributes",
       type: "object",
       description:
-        "Closed, machine-readable attributes used by the catalogue filter controls and GROQ predicates. One field per facet from _project/filters/facet-map.json.",
+        "Closed, machine-readable attributes used by the catalogue filter controls and GROQ predicates. One field per facet in lib/catalogue/facetMap.ts.",
       fields: ([
         {
           name: "price",
@@ -278,7 +278,7 @@ export const productType = defineType({
           title: "Acoustic design",
           type: "array",
           of: [{ type: "string", options: { list: ["open-back", "closed-back", "semi-open"] } }],
-          description: "Renamed from backDesign 2026-09-13; see docs/filters-sort/headphones-filterattributes-migration.md.",
+          description: "Renamed from backDesign 2026-09-13.",
           categories: ["headphones"],
         },
         {
@@ -378,7 +378,7 @@ export const productType = defineType({
               },
             },
           ],
-          description: "Renamed from connector 2026-09-13; only 2.5mm is renamed to 2.5mm-balanced, every other value carried over 1:1 (see docs/filters-sort/headphones-filterattributes-migration.md).",
+          description: "Renamed from connector 2026-09-13; only 2.5mm is renamed to 2.5mm-balanced, every other value carried over 1:1.",
           categories: ["headphones"],
         },
         {
@@ -427,7 +427,7 @@ export const productType = defineType({
           title: "Active noise cancelling (ANC)",
           type: "string",
           options: { list: ["anc", "passive", "none"] },
-          description: "Replaces the old boolean noiseCancelling 2026-09-13; see docs/filters-sort/headphones-filterattributes-migration.md.",
+          description: "Replaces the old boolean noiseCancelling 2026-09-13.",
           categories: ["headphones"],
         },
         {
@@ -540,7 +540,7 @@ export const productType = defineType({
           title: "Form factor",
           type: "string",
           options: { list: ["desktop", "portable", "dongle"] },
-          description: "Legacy field, no should-be-audio-electronics.md equivalent — kept as-is, not migrated.",
+          description: "Legacy field, kept as-is, not migrated.",
           categories: ["audio-electronics"],
         },
         {
@@ -561,14 +561,14 @@ export const productType = defineType({
           name: "dacIncluded",
           title: "DAC included",
           type: "boolean",
-          description: "Legacy field, no should-be-audio-electronics.md equivalent — kept as-is, not migrated.",
+          description: "Legacy field, kept as-is, not migrated.",
           categories: ["audio-electronics"],
         },
         {
           name: "balancedOutput",
           title: "Balanced output",
           type: "boolean",
-          description: "Legacy field, no should-be-audio-electronics.md equivalent — kept as-is, not migrated.",
+          description: "Legacy field, kept as-is, not migrated.",
           categories: ["audio-electronics"],
         },
         {
@@ -660,7 +660,7 @@ export const productType = defineType({
             },
           ],
           description:
-            "Merged should-be-audio-electronics.md items 15 (Input Types) and 26 (Digital Inputs) into one field, domain-gated across both the Amplification and Digital Source device types — they shared the same gate field (deviceType) and largely overlapping values, so two fields would have meant the same fact recorded twice.",
+            "Merges the former Input Types and Digital Inputs fields into one field, domain-gated across both the Amplification and Digital Source device types — they shared the same gate field (deviceType) and largely overlapping values, so two fields would have meant the same fact recorded twice.",
           categories: ["audio-electronics"],
           domain: [
             "integrated-amplifier",
@@ -687,7 +687,7 @@ export const productType = defineType({
             },
           ],
           description:
-            "Redesigned 2026-09-13 from a headphone-output-jack-shaped vocab (6.35mm/4.4mm/4-pin-xlr/rca-line-out) to should-be-audio-electronics.md item 16's coarser taxonomy; see docs/filters-sort/audio-electronics-filterattributes-migration.md.",
+            "Redesigned 2026-09-13 from a headphone-output-jack-shaped vocab (6.35mm/4.4mm/4-pin-xlr/rca-line-out) to a coarser taxonomy.",
           categories: ["audio-electronics"],
           domain: [
             "integrated-amplifier",

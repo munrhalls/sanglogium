@@ -79,8 +79,7 @@ import {
   parseAsStringLiteral,
 } from "nuqs/server";
 
-// Canonical facet/sort definitions from _project/filters/facet-map.json and
-// sort-map.json, mirrored here so the app and the URL contract share one shape.
+// Facet and sort definitions come from ./facetMap so the app and the URL contract share one shape.
 import {
   FILTER_FACETS,
   SORT_OPTIONS as SORT_MAP,

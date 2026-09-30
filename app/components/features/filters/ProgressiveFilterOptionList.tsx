@@ -9,8 +9,7 @@ import {
 
 /**
  * Progressive-disclosure option list for a high-count checkbox facet (Brand and
- * similar). Implements the decisions in
- * `_project/filters/brand-facet-pattern.md`:
+ * similar). Implements these decisions:
  *
  *  1. Show the first {@link INITIAL_VISIBLE} count-ranked options, then a
  *     "Show more (N)" control that reveals the rest inline; "Show less" snaps
