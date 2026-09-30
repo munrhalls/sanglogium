@@ -1,8 +1,9 @@
 'use client';
 
 import React from 'react';
-import { getFacetModule, humanizeFacetValue, type Category } from '@/features/product-filtering';
-import { useFilterParam, useClearAllFilters } from '@/app/hooks/nuqs/useFilterSort';
+import { getFacetModule, type Category } from '../config/facetRegistry';
+import { humanizeFacetValue } from '../domain/humanizeFacetValue';
+import { useFilterParam, useClearAllFilters } from './useFilterParam';
 import { formatPriceMajor } from '@/lib/utils/price';
 
 /**

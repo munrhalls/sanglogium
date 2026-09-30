@@ -8,11 +8,8 @@ import { ShopHeader } from '@/app/components/features/products/ShopHeader';
 import { EmptyResults } from '@/app/components/features/products/EmptyResults';
 import { Pagination } from '@/app/components/features/products/Pagination';
 import { ChunkedProductGrid, CHUNK_SIZE } from '@/app/components/features/products/ChunkedProductGrid';
-import { FilterSidebar } from '@/app/components/features/filters/FilterSidebar';
-import { SortBar } from '@/app/components/features/filters/SortBar';
-import { ActiveFilterChips } from '@/app/components/features/filters/ActiveFilterChips';
 import { isFacetedQuery } from '@/lib/catalogue/seo';
-import { isFiltersActive, loadFilterSort, resolvePriceBounds, sanitizeFilterState, type ProductQueryState } from '@/features/product-filtering';
+import { ActiveFilterChips, FilterSidebar, SortBar, isFiltersActive, loadFilterSort, resolvePriceBounds, sanitizeFilterState, type ProductQueryState } from '@/features/product-filtering';
 import { buildProductQuery } from '@/features/product-filtering/server';
 
 export const dynamic = 'force-dynamic';

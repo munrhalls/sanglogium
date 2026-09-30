@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { useClearAllFilters } from '@/app/hooks/nuqs/useFilterSort';
+import { useClearAllFilters } from '@/features/product-filtering';
 
 interface EmptyResultsProps {
   /**

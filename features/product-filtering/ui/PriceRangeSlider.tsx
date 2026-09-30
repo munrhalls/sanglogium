@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useFilterParam } from "@/app/hooks/nuqs/useFilterSort";
+import { useFilterParam } from "./useFilterParam";
 import {
   DEFAULT_PRICE_CEILING,
   PREMIUM_TIERS,
   PREMIUM_TIER_MIN,
-} from "@/features/product-filtering";
+} from "../domain/priceBounds";
 import { formatPriceMajor } from "@/lib/utils/price";
 
 /**

@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Checkbox } from '@/app/components/ui/Checkbox';
-import { ProgressiveFilterOptionList } from '@/app/components/features/filters/ProgressiveFilterOptionList';
+import { ProgressiveFilterOptionList } from './ProgressiveFilterOptionList';
 import {
   FilterSliderSection,
   DualRangeSlider,
@@ -11,10 +11,11 @@ import {
   filterSectionHeaderAction,
   filterStateActive,
   filterStateInactive,
-} from '@/app/components/features/filters/PriceRangeSlider';
+} from './PriceRangeSlider';
 import { formatPriceMajor } from '@/lib/utils/price';
-import { getFacetModule, humanizeFacetValue, type Category, type AnyFacetDef, type FacetOptionCount } from '@/features/product-filtering';
-import { useFilterParam } from '@/app/hooks/nuqs/useFilterSort';
+import { getFacetModule, type Category, type AnyFacetDef, type FacetOptionCount } from '../config/facetRegistry';
+import { humanizeFacetValue } from '../domain/humanizeFacetValue';
+import { useFilterParam } from './useFilterParam';
 
 /**
  * Re-export the shared filter-section header primitives defined in

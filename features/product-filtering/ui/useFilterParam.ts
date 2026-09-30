@@ -22,7 +22,7 @@ import {
   PAGE_PARAM_KEY,
   type SortValue,
   filterSortParsers,
-} from "@/features/product-filtering";
+} from "../config/filterSortParams";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Param read/write

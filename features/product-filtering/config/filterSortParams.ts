@@ -67,7 +67,7 @@
 // by both the catalogue RSC pages (via `loadFilterSort`) and the client controls
 // (via `filterSortParsers`). `nuqs/server` re-exports every parser and carries no
 // "use client" boundary, so the shared parser map is safe on both sides. The
-// client hooks (`useQueryState` etc.) still come from `nuqs` in useFilterSort.tsx.
+// client hooks (`useQueryState` etc.) still come from `nuqs` in ui/useFilterParam.ts.
 import {
   createLoader,
   createSerializer,
@@ -159,7 +159,7 @@ export const FILTER_SORT_KEYS = Object.keys(filterSortParsers) as Array<
  *
  * `shallow: false` (S1 — sang-logium-ytc): a filter/sort write notifies the
  * server so the catalogue RSC re-renders the grid with the new order/predicate.
- * The write stays wrapped in a React transition (see useFilterSort.tsx),
+ * The write stays wrapped in a React transition (see ui/useFilterParam.ts),
  * so this is a transition-driven navigation: `loading.tsx` does NOT fire, the
  * sidebar stays mounted, the grid refetches quietly in the background.
  */
