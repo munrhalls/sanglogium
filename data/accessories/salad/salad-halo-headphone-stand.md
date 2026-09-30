@@ -52,7 +52,7 @@ data_status: "COMPLETE"
 
 ## Sourcing context
 
-Sourced against `docs/filters-sort/should-be-accessories.md` and the shared `docs/filters-sort/sourcing-protocol.md`. No category-specific `sourcing-protocol-accessories.md` or `schema-accessories.md` existed at source time; the field vocabulary below follows the conventions in `app/(test)/poc/filter-sort/accessories/lib/types.ts` and the should-be list items. A later schema reconciliation pass is required before any CMS write.
+Sourced against the accessories field vocabulary as it stood at source time (the reference documents have since been removed). A later schema reconciliation pass is required before any CMS write.
 
 ## Field audit
 

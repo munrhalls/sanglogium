@@ -40,8 +40,6 @@ spec_fields:
 source_urls:
 - https://audio46.com/products/final-audio-ze8000-true-wireless-earphones
 - https://final-inc.com/products/ze8000-jp
-- https://docs/filters-sort/sourcing-protocol-headphones.md
-- https://docs/filters-sort/schema-headphones.md
 verified_at: '2026-09-13'
 data_status: COMPLETE
 ---
@@ -62,10 +60,10 @@ data_status: COMPLETE
 - **impedanceOhms** (hard-spec): (entire manufacturer Specs block read in full — only 5 lines: Bluetooth 5.2 / codecs / playtime / charge time / IPX4. No impedance line; confirmed absent from the owner's manual too — exhausted NULL) — https://final-inc.com/products/ze8000-jp
 - **sensitivityDbMw** (hard-spec): (entire manufacturer Specs block read in full — no sensitivity line; confirmed absent from the owner's manual too — exhausted NULL) — https://final-inc.com/products/ze8000-jp
 - **freqResponseHz** (hard-spec): (entire manufacturer Specs block read in full — no frequency-response line; confirmed absent from the owner's manual too — exhausted NULL) — https://final-inc.com/products/ze8000-jp
-- **soundSignature** (editorial): (exhausted Tier 3: no Crinacle rankings/graph/individual review post, no ASR measurement, no Rtings review for ZE8000 — all three audited via sitemap + on-site search on 2026-09-13; the protocol defines no Tier-3 fallback, so NULL rather than inferred from marketing copy) — https://docs/filters-sort/sourcing-protocol-headphones.md
-- **acousticDesign** (marketing-fact): (field vocab is over-ear-oriented (open-back/closed-back/semi-open); not applicable to a true-wireless in-ear — left null rather than guessed) — https://docs/filters-sort/schema-headphones.md
+- **soundSignature** (editorial): (exhausted Tier 3: no Crinacle rankings/graph/individual review post, no ASR measurement, no Rtings review for ZE8000 — all three audited via sitemap + on-site search on 2026-09-13; the protocol defines no Tier-3 fallback, so NULL rather than inferred from marketing copy)
+- **acousticDesign** (marketing-fact): (field vocab is over-ear-oriented (open-back/closed-back/semi-open); not applicable to a true-wireless in-ear — left null rather than guessed)
 - **cableTermination** (marketing-fact): (true-wireless only — no cable supplied and none accepted; field not applicable) — https://final-inc.com/products/ze8000-jp
 - **detachableCable** (marketing-fact): (true-wireless only — no cable supplied; field not applicable) — https://final-inc.com/products/ze8000-jp
-- **cableLengthM** (hard-spec): (true-wireless — schema marks cableLengthM null when not applicable, e.g. true-wireless) — https://docs/filters-sort/schema-headphones.md
+- **cableLengthM** (hard-spec): (true-wireless — schema marks cableLengthM null when not applicable, e.g. true-wireless)
 - **foldable** (marketing-fact): (no folding/collapsing mechanism — not applicable to an earbud; boolean feature-absence rule) — https://final-inc.com/products/ze8000-jp
 - **awards** (marketing-fact): (no award or recognition citation found for this SKU — exhausted NULL) — https://final-inc.com/products/ze8000-jp

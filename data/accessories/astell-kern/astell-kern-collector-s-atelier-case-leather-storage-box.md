@@ -35,8 +35,6 @@ spec_fields:
   mounting: null
 source_urls:
   - "https://astellnkern.co.uk/products/collectors-atelier"
-  - "https://docs/filters-sort/should-be-accessories.md"
-  - "https://docs/filters-sort/accessories-filterattributes-migration.md"
 verified_at: "2026-09-14"
 data_status: "COMPLETE"
 ---

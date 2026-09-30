@@ -36,9 +36,6 @@ spec_fields:
   mounting: null
 source_urls:
   - "https://www.audioquest.com/products/chicago-rca-interconnect-cable"
-  - "https://docs/filters-sort/sourcing-protocol.md"
-  - "https://docs/filters-sort/should-be-accessories.md"
-  - "https://docs/filters-sort/accessories-filterattributes-migration.md"
 verified_at: "2026-09-14"
 data_status: "COMPLETE"
 ---
