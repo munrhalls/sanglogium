@@ -19,7 +19,7 @@ export {
 
 /**
  * Desktop filter sidebar shell — the two-region layout the acceptance tests
- * ask for: a compact rail of tiles (one per should-be.md group) on the left,
+ * ask for: a compact rail of tiles (one per facet group) on the left,
  * the actual controls on the right. The rail is intentionally NOT height-
  * matched to the panel: it's a short, fixed-width table of contents that
  * always fits the sidebar's own visible height, while the panel underneath it
@@ -74,12 +74,11 @@ interface FilterSidebarProps {
   priceBounds: { min: number; max: number };
   /** Optional: app/(store)/products/page.tsx (all-products) does not compute
    *  per-category range bounds and omits this prop entirely -- RangeControl
-   *  falls back to facetConfig.ts's hardcoded min/max in that case, same as
-   *  before sang-logium-3rv.5. */
+   *  falls back to facetConfig.ts's hardcoded min/max in that case. */
   rangeBounds?: Record<string, RangeBounds>;
   /** Optional: app/(store)/products/page.tsx (all-products) spans every
    *  category and has no single facet module to pick -- defaults to
-   *  headphones', unchanged from pre-sang-logium-3rv.6 behavior there. */
+   *  headphones. */
   category?: Category;
   /** True when no catalogue filters are active (sort is ignored). Hides
    *  zero-match checkbox/boolean options on first load. */
@@ -193,8 +192,8 @@ export function FilterPanelBody({
 const PANEL_SCROLL_ID = 'poc-filter-panel-scroll';
 
 // Deliberately not `element.scrollIntoView()`: the target sits inside two
-// nested scrollable ancestors (this panel, and the page-level `<main>` from
-// headphones/layout.tsx), and `scrollIntoView` walks up EVERY scrollable
+// nested scrollable ancestors (this panel, and the page-level `<main>`),
+// and `scrollIntoView` walks up EVERY scrollable
 // ancestor to satisfy visibility — which nudges the product grid's scroll
 // position too. Scrolling the panel container directly, by exact pixel
 // offset, touches only this one element and nothing above it.

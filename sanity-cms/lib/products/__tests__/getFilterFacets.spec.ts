@@ -3,8 +3,7 @@
 // computes every facet count and option on /products/headphones (and the
 // other two catalogue categories). Previously zero test coverage, despite
 // this being the function that decides, for every shopper-visible count,
-// whether a product counts as a match. See docs/filters-sort/
-// audit-headphones-professional-readiness.md, Gap 4.
+// whether a product counts as a match.
 //
 // This file does not attempt to prove productMatchesState and
 // buildProductQuery.ts (the GROQ predicate builder) always agree — one emits

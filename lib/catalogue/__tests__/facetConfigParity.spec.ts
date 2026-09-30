@@ -1,5 +1,4 @@
-// sang-logium-3rv.11 — closes the other half of the "no automated check" gap
-// (docs/filters-sort/audit-headphones-professional-readiness.md, Gap 2/5):
+// sang-logium-3rv.11 — closes the other half of the "no automated check" gap:
 // lib/catalogue/facetMap.ts (query/count vocabulary) and the per-category
 // facetConfig.ts modules (UI vocabulary shown to shoppers) are independently
 // hand-typed and linked only by matching urlParam/id strings, by convention,
@@ -13,19 +12,19 @@ import { FACETS as headphonesFacets } from "@/lib/filter-sort/headphones/facetCo
 import { FACETS as accessoriesFacets } from "@/lib/filter-sort/accessories/facetConfig";
 import { FACETS as audioElectronicsFacets } from "@/lib/filter-sort/audio-electronics/facetConfig";
 
-// Loose, duck-typed shape — deliberately not importing each POC module's own
+// Loose, duck-typed shape — deliberately not importing each module's own
 // FacetDef type, since the three modules declare structurally-identical but
 // separately-defined types (see facetRegistry.ts's own AnyFacetDef comment).
-type PocFacet = {
+type ModuleFacet = {
   id: string;
   control: string;
   options?: Array<{ value: string }> | "derived";
 };
 
-const CATEGORY_FACETS: Record<string, PocFacet[]> = {
-  headphones: headphonesFacets as unknown as PocFacet[],
-  accessories: accessoriesFacets as unknown as PocFacet[],
-  'audio-electronics': audioElectronicsFacets as unknown as PocFacet[],
+const CATEGORY_FACETS: Record<string, ModuleFacet[]> = {
+  headphones: headphonesFacets as unknown as ModuleFacet[],
+  accessories: accessoriesFacets as unknown as ModuleFacet[],
+  'audio-electronics': audioElectronicsFacets as unknown as ModuleFacet[],
 };
 
 function facetMapEntryFor(category: string, urlParam: string): FilterFacet | undefined {
@@ -34,7 +33,7 @@ function facetMapEntryFor(category: string, urlParam: string): FilterFacet | und
   );
 }
 
-describe("POC facetConfig.ts checkbox options match lib/catalogue/facetMap.ts, per category", () => {
+describe("facetConfig.ts checkbox options match lib/catalogue/facetMap.ts, per category", () => {
   for (const [category, facets] of Object.entries(CATEGORY_FACETS)) {
     it(`${category}: every checkbox facet with a closed option list matches facetMap.ts exactly`, () => {
       const mismatches: string[] = [];

@@ -4,14 +4,11 @@ import React from 'react';
 import { getFacetModule, type Category } from './facetRegistry';
 
 /**
- * POC-local mirror of app/components/features/filters/SortDropdown.tsx.
  * URL <-> its own display only — never touches the product grid, data, counts
  * or streaming.
  *
- * Category-aware since sang-logium-3rv.6 (SORT_OPTIONS/parser shape happen to
- * be identical across all three categories today, so this was never a
- * functional bug -- but the hardcoded headphones import was inconsistent
- * with every other control now going through facetRegistry.ts).
+ * Category-aware: SORT_OPTIONS and the URL hook come from the per-category
+ * module (facetRegistry.ts).
  */
 export function SortDropdown({ category = 'headphones' }: { category?: Category }) {
   const { SORT_OPTIONS, useFilterParam } = getFacetModule(category);

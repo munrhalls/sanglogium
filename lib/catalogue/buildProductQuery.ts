@@ -9,8 +9,7 @@
 // query translation in the app (risk A2).
 //
 // SCOPE: all sort options and all filterAttributes facets defined in
-// lib/catalogue/facetMap.ts (sourced from _project/filters/facet-map.json and
-// sort-map.json). Price, brand, in-stock and all category-specific facets now
+// lib/catalogue/facetMap.ts. Price, brand, in-stock and all category-specific facets now
 // read from the dedicated filterAttributes object, never from free-text fields.
 
 import {

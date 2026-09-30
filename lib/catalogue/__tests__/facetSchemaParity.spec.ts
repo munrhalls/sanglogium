@@ -1,6 +1,4 @@
-// sang-logium-3rv.10 — closes the "no automated check" gap found in the
-// headphones professional-readiness audit (docs/filters-sort/
-// audit-headphones-professional-readiness.md, Gap 2/5): nothing previously
+// sang-logium-3rv.10 — closes the "no automated check" gap: nothing previously
 // verified that lib/catalogue/facetMap.ts's closed-vocab valueVocab arrays
 // still match the Sanity schema's options.list for the same field. This is
 // exactly the bug class that made "Harman-target-like" (soundSignature)

@@ -11,7 +11,7 @@ Trigger: objective QA of the live-check screenshots scored the search UX **6.3/1
 | `/search` has none of it: only a count and `SearchSort` (own select, own vocab: relevance/price-asc/price-desc/name-asc) | `app/(store)/search/SearchResults.tsx`, `SearchSort.tsx` |
 | Search fetches ALL matches (window 2000; catalogue is ~707) then scores + sorts + slices in memory | `sanity-cms/lib/products/searchProducts.ts` `searchProductsFull` |
 | `searchProducts.ts` is a `'use server'` file: it may only export async functions, so its scorer cannot be imported elsewhere until extracted | same file |
-| The sidebar `commercial` group = Price (+ rating control), Brand, In-stock: category-agnostic. Other groups (sound, material, wireless, technical) are headphone-specific | `lib/filter-sort/headphones/facetConfig.ts` |
+| The sidebar `commercial` group = Price, Brand, In-stock: category-agnostic (the customer-rating control was removed). Other groups come from the per-category modules | `lib/filter-sort/<slice>/facetConfig.ts` |
 | `loadFilterSort` parses `sort` against the catalogue vocabulary only; `relevance` is not in it | `filterSortParams.ts` |
 | Autocomplete takes `order(_id asc)[0...48]` BEFORE scoring, so for broad queries the best matches can miss the candidate window | `searchProductsAutocomplete` |
 | Scoring builds `fullName = brand+name` with spaces stripped, so substrings can match across the brand/name seam (`mcintosh|ds200` contains "hd") | `scoreProduct`, `buildFullName` |
