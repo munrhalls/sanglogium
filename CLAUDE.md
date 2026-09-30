@@ -92,6 +92,8 @@ _Last reviewed 2026-08-01 against the live repo. Stack/pattern-level only — fo
 
 **Filters & sorting:** live in `features/product-filtering/` (`ui/`, `config/`, `domain/`, `__tests__/`). Outside code imports only `@/features/product-filtering` (client-safe) or `@/features/product-filtering/server` (server-only); Sanity fetchers stay in `sanity-cms/lib/products/` and take the filter state.
 
+**Search:** lives in `features/product-search/` (`ui/`, `config/`, `domain/`, `__tests__/`). Outside code imports only `@/features/product-search` (client-safe) or `@/features/product-search/server` (server-only); the Sanity fetcher stays in `sanity-cms/lib/products/searchProducts.ts` and the header `SearchField.tsx` passes its suggestion action into `useSearchController`. Search consumes filters only through `@/features/product-filtering`.
+
 **Workflow note:** this repo runs an AI-assisted pipeline governed by **The Loop** — Claude plans (campaign + per-milestone detail), Devin executes implementation (see `_project/00-MOST-IMPORTANT-lean-tracer-bullet-methodology.md`; `_project/devin-cloud-optimization-plan.md` is a narrower side-thread, not the methodology).
 
 **UX reference docs — read before exploring, not after:**
