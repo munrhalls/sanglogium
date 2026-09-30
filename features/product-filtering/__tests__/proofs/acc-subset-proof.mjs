@@ -12,8 +12,8 @@
 //
 // Run (from the repo root, against the real Sanity dataset — no dev server
 // needed; this proof exercises the production GROQ predicate directly):
-//   node --experimental-strip-types --loader ./lib/filter-sort/__tests__/tsExtLoader.mjs \
-//     --env-file=.env.local lib/filter-sort/__tests__/acc-subset-proof.mjs
+//   node --experimental-strip-types --loader ./features/product-filtering/__tests__/proofs/tsExtLoader.mjs \
+//     --env-file=.env.local features/product-filtering/__tests__/proofs/acc-subset-proof.mjs
 //
 // Two independent halves, diffed for exact ID-set equality on every case:
 //
@@ -54,7 +54,7 @@
 
 import { readFileSync, writeFileSync } from 'node:fs';
 import { sanityQuery } from './sanityRaw.mjs';
-import { buildProductQuery } from '../../../features/product-filtering/domain/buildProductQuery.ts';
+import { buildProductQuery } from '../../domain/buildProductQuery.ts';
 
 const CATEGORY = 'accessories';
 // Handled specially (coalesce semantics + boundary cases), not by the
@@ -63,8 +63,8 @@ const CATEGORY = 'accessories';
 const EXCLUDED_URL_PARAMS = new Set(['price', 'inStock']);
 const SAME_FACET_MAX_CARDINALITY = 10;
 const HTTP_CONCURRENCY = 6; // Sanity HTTP roundtrips only; results print in case order
-const INVENTORY_FILE = new URL('./data/acc-inventory.json', import.meta.url);
-const REPORT_FILE = new URL('./data/acc-subset-proof-report.json', import.meta.url);
+const INVENTORY_FILE = new URL('../data/acc-inventory.json', import.meta.url);
+const REPORT_FILE = new URL('../data/acc-subset-proof-report.json', import.meta.url);
 
 // ---------------------------------------------------------------------------
 // Data loading: pull FILTER_FACETS out of the TS source and load the
@@ -72,7 +72,7 @@ const REPORT_FILE = new URL('./data/acc-subset-proof-report.json', import.meta.u
 // ---------------------------------------------------------------------------
 
 function loadFilterFacets() {
-  const source = readFileSync(new URL('../../../features/product-filtering/config/facetMap.ts', import.meta.url), 'utf8');
+  const source = readFileSync(new URL('../../config/facetMap.ts', import.meta.url), 'utf8');
   const match = source.match(/export const FILTER_FACETS: FilterFacet\[\] = (\[[\s\S]*?\n\]);/);
   if (!match) throw new Error('Could not locate FILTER_FACETS in facetMap.ts');
   return new Function(`return ${match[1]}`)();
@@ -80,7 +80,7 @@ function loadFilterFacets() {
 
 function loadCatalogueIndex() {
   return JSON.parse(
-    readFileSync(new URL('../../../data/catalogue-index.json', import.meta.url), 'utf8'),
+    readFileSync(new URL('../../../../data/catalogue-index.json', import.meta.url), 'utf8'),
   );
 }
 
@@ -391,7 +391,7 @@ async function main() {
   console.log(`Fetching every product TAGGED "${CATEGORY}" from Sanity (dataset=${process.env.NEXT_PUBLIC_SANITY_DATASET})...`);
   const inventory = await fetchInventory(allFacets);
   writeFileSync(INVENTORY_FILE, JSON.stringify(inventory, null, 2));
-  console.log(`${inventory.length} products tagged ${CATEGORY} (oracle universe; dump written to data/acc-inventory.json).`);
+  console.log(`${inventory.length} products tagged ${CATEGORY} (oracle universe; dump written to features/product-filtering/__tests__/data/acc-inventory.json).`);
   console.log(`VFS scope: ${vfsKeys.length} catalogue keys under node ${categoryNodeId} (what /products/${CATEGORY} actually serves).`);
   console.log(`Facets under test: ${facets.length} non-range (+ inStock, price) + ${rangeFacets.length} range.\n`);
 
@@ -462,8 +462,8 @@ async function main() {
   const seconds = ((Date.now() - t0) / 1000).toFixed(1);
   console.log(`\n${results.length} cases: ${pass} PASS, ${fail} FAIL (${seconds}s).`);
   console.log(fail === 0
-    ? `ZERO FAILS — every case: exact subset, no non-belonging product, no missing product. Report: data/acc-subset-proof-report.json`
-    : `${fail} FAIL(S) — see the per-case missing/extra/non-belonging lists above and data/acc-subset-proof-report.json.`);
+    ? `ZERO FAILS — every case: exact subset, no non-belonging product, no missing product. Report: features/product-filtering/__tests__/data/acc-subset-proof-report.json`
+    : `${fail} FAIL(S) — see the per-case missing/extra/non-belonging lists above and features/product-filtering/__tests__/data/acc-subset-proof-report.json.`);
   process.exit(fail === 0 ? 0 : 1);
 }
 

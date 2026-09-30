@@ -1,5 +1,5 @@
 // Category-aware selector over the per-category facet configs under
-// lib/filter-sort/<slice>/ (headphones, audio-electronics, accessories).
+// features/product-filtering/config/slices/ (headphones, audio-electronics, accessories).
 // This file is the single place that picks the right module per route --
 // it only selects the slice's facet config (FACETS, groups, sort options);
 // it does not select a URL hook. Consumers import the shared URL-param

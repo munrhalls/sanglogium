@@ -5,8 +5,8 @@
 //
 // Run against the shared dev server (must already be running on :3000 — do
 // not start one; see AGENTS.md rule 1):
-//   node --experimental-strip-types --loader ./lib/catalogue/__tests__/tsExtLoader.mjs \
-//     --env-file=.env.local lib/catalogue/__tests__/headphones-subset-proof.mjs
+//   node --experimental-strip-types --loader ./features/product-filtering/__tests__/proofs/tsExtLoader.mjs \
+//     --env-file=.env.local features/product-filtering/__tests__/proofs/headphones-subset-proof.mjs
 //
 // Two independent halves, diffed for exact set equality on every case:
 //
@@ -43,7 +43,7 @@
 //      fallback set.
 
 import { readFileSync } from 'node:fs';
-import { FILTER_FACETS, isPlaceholderVocab } from '../../../features/product-filtering/config/facetMap.ts';
+import { FILTER_FACETS, isPlaceholderVocab } from '../../config/facetMap.ts';
 
 const BASE_URL = process.argv[2] || 'http://localhost:3000';
 const PER_PAGE = 24;
@@ -67,7 +67,7 @@ async function sanityQuery(query, params = {}) {
 }
 
 // ── category scope: the same VFS mechanism production uses ─────────────────
-const index = JSON.parse(readFileSync(new URL('../../../data/catalogue-index.json', import.meta.url), 'utf8'));
+const index = JSON.parse(readFileSync(new URL('../../../../data/catalogue-index.json', import.meta.url), 'utf8'));
 const headphonesNodeId = index.slugToIdMap['headphones'];
 if (!headphonesNodeId) throw new Error('Could not resolve "headphones" in data/catalogue-index.json');
 

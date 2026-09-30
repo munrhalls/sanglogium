@@ -10,7 +10,7 @@
 // wrote; no network call, no repo imports (vocab lists copied by hand from
 // facetMap.ts so this oracle stays independent of the code under test).
 //
-// Run: node lib/filter-sort/audio-electronics/__tests__/ae-02-verify-facet-coverage-and-vocab.mjs
+// Run: node features/product-filtering/__tests__/proofs/ae-02-verify-facet-coverage-and-vocab.mjs
 
 import { readFileSync } from 'node:fs';
 
@@ -43,7 +43,7 @@ const VOCAB = {
 };
 
 const inventory = JSON.parse(
-  readFileSync(new URL('./data/audio-electronics-inventory.json', import.meta.url), 'utf8'),
+  readFileSync(new URL('../data/audio-electronics-inventory.json', import.meta.url), 'utf8'),
 );
 
 let missingKeys = 0;

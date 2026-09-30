@@ -90,6 +90,8 @@ _Last reviewed 2026-08-01 against the live repo. Stack/pattern-level only — fo
 
 **Catalogue pattern:** product catalogue uses a "Build-Time VFS" pattern (see `data/catalogue.ts`, `catalogue-code-record.md`) — headless CMS data pre-materialized at build time for sub-second navigation, rather than live-queried per request. Relevant when touching catalogue/product-listing performance or data-freshness questions.
 
+**Filters & sorting:** live in `features/product-filtering/` (`ui/`, `config/`, `domain/`, `__tests__/`). Outside code imports only `@/features/product-filtering` (client-safe) or `@/features/product-filtering/server` (server-only); Sanity fetchers stay in `sanity-cms/lib/products/` and take the filter state.
+
 **Workflow note:** this repo runs an AI-assisted pipeline governed by **The Loop** — Claude plans (campaign + per-milestone detail), Devin executes implementation (see `_project/00-MOST-IMPORTANT-lean-tracer-bullet-methodology.md`; `_project/devin-cloud-optimization-plan.md` is a narrower side-thread, not the methodology).
 
 **UX reference docs — read before exploring, not after:**
@@ -97,7 +99,7 @@ _Last reviewed 2026-08-01 against the live repo. Stack/pattern-level only — fo
 - Touching homepage data fetching or section composition → `docs/homepage-structure.md` (which section owns what data/state) before re-deriving it.
 - Touching header search, the mobile search sheet, or `/search` → `docs/search-ux.md` (surfaces, history + on-screen-keyboard contracts, combobox semantics).
 
-**Mandatory review gate:** any edit to a className touching height/sizing (`h-full`, `min-h-`, `max-h-`, `aspect-`) under `app/components/**` must be reviewed against the diff before the task is considered done — run it even if not asked to "review." This is not optional and does not depend on remembering the lesson below; it's a mechanical check for the `h-full` vs. explicit-height ownership pattern documented in `docs/vertical-space-lg-touch.md`, precisely because reading the doc once was not sufficient to prevent a real regression on the product-spotlight components.
+**Mandatory review gate:** any edit to a className touching height/sizing (`h-full`, `min-h-`, `max-h-`, `aspect-`) under `app/components/**` or `features/**/ui/**` must be reviewed against the diff before the task is considered done — run it even if not asked to "review." This is not optional and does not depend on remembering the lesson below; it's a mechanical check for the `h-full` vs. explicit-height ownership pattern documented in `docs/vertical-space-lg-touch.md`, precisely because reading the doc once was not sufficient to prevent a real regression on the product-spotlight components.
 
 ## Conventions & Patterns
 

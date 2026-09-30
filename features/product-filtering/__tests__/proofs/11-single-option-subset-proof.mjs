@@ -3,8 +3,7 @@ import { sanityQuery } from './sanityRaw.mjs';
 
 const CATEGORY = process.argv[2] || 'headphones';
 const EXCLUDED_URL_PARAMS = new Set(['price', 'inStock']);
-const SAME_FACET_MAX_CARDINALITY = 10;
-const OUTPUT_FILE = new URL(`./data/12-two-option-combination-matrix-proof.${CATEGORY}.json`, import.meta.url);
+const OUTPUT_FILE = new URL(`../data/11-single-option-subset-proof.${CATEGORY}.json`, import.meta.url);
 
 // ---------------------------------------------------------------------------
 // Data loading: pull FILTER_FACETS out of the TS source and load the
@@ -12,7 +11,7 @@ const OUTPUT_FILE = new URL(`./data/12-two-option-combination-matrix-proof.${CAT
 // ---------------------------------------------------------------------------
 
 function loadFilterFacets() {
-  const source = readFileSync(new URL('../../../features/product-filtering/config/facetMap.ts', import.meta.url), 'utf8');
+  const source = readFileSync(new URL('../../config/facetMap.ts', import.meta.url), 'utf8');
   const match = source.match(/export const FILTER_FACETS: FilterFacet\[\] = (\[[\s\S]*?\n\]);/);
   if (!match) throw new Error('Could not locate FILTER_FACETS in facetMap.ts');
   return new Function(`return ${match[1]}`)();
@@ -20,7 +19,7 @@ function loadFilterFacets() {
 
 function loadCatalogueIndex() {
   return JSON.parse(
-    readFileSync(new URL('../../../data/catalogue-index.json', import.meta.url), 'utf8'),
+    readFileSync(new URL('../../../../data/catalogue-index.json', import.meta.url), 'utf8'),
   );
 }
 
@@ -88,7 +87,7 @@ function facetsUnderTest() {
 }
 
 // ---------------------------------------------------------------------------
-// GROQ query builders — turn a facet + candidate value(s) into the same
+// GROQ query builder — turns a facet + candidate value into the same
 // where-clause the real filter-sort pipeline would produce.
 // ---------------------------------------------------------------------------
 
@@ -105,26 +104,14 @@ function addMultiOrEnumPredicate(parts, params, facet, values) {
   params[paramName] = values;
 }
 
-function addFacetPredicate(parts, params, facet, value) {
+function realWhereClauseFor(facet, rawValue) {
+  const parts = [];
+  const params = {};
   if (facet.type === 'boolean') {
     parts.push(`${facet.field} == true`);
   } else {
-    addMultiOrEnumPredicate(parts, params, facet, [value.trim().toLowerCase()]);
+    addMultiOrEnumPredicate(parts, params, facet, [rawValue.trim().toLowerCase()]);
   }
-}
-
-function realWhereClauseForSameFacet(facet, values) {
-  const parts = [];
-  const params = {};
-  addMultiOrEnumPredicate(parts, params, facet, values.map((v) => v.trim().toLowerCase()));
-  return { whereClause: parts.length ? ` && ${parts.join(' && ')}` : '', params };
-}
-
-function realWhereClauseForCrossFacet(facetA, valueA, facetB, valueB) {
-  const parts = [];
-  const params = {};
-  addFacetPredicate(parts, params, facetA, valueA);
-  addFacetPredicate(parts, params, facetB, valueB);
   return { whereClause: parts.length ? ` && ${parts.join(' && ')}` : '', params };
 }
 
@@ -158,46 +145,6 @@ function candidateValues(facet, products) {
     for (const v of fieldValues(p.filterAttributes[fieldKey(facet)])) seen.add(v);
   }
   return Array.from(seen);
-}
-
-function expectedIdsFor(products, facet, value) {
-  return new Set(products.filter((p) => matchesOption(p, facet, value)).map((p) => p._id));
-}
-
-function symmetricDifferenceCount(expected, actual) {
-  let count = 0;
-  for (const id of expected) if (!actual.has(id)) count++;
-  for (const id of actual) if (!expected.has(id)) count++;
-  return count;
-}
-
-// ---------------------------------------------------------------------------
-// Per-facet candidate value bookkeeping: which values to pair up within a
-// facet, and which single "best" (highest-coverage) value to use when
-// pairing this facet against another one.
-// ---------------------------------------------------------------------------
-
-function buildFacetValueMaps(facets, products) {
-  const perFacetValues = new Map();
-  const perFacetBestValue = new Map();
-
-  for (const facet of facets) {
-    const values = candidateValues(facet, products);
-    perFacetValues.set(facet.urlParam, values);
-
-    let best = null;
-    let bestSize = -1;
-    for (const value of values) {
-      const size = expectedIdsFor(products, facet, value).size;
-      if (size > bestSize) {
-        best = value;
-        bestSize = size;
-      }
-    }
-    perFacetBestValue.set(facet.urlParam, best);
-  }
-
-  return { perFacetValues, perFacetBestValue };
 }
 
 // ---------------------------------------------------------------------------
@@ -261,147 +208,51 @@ function checkCategoryMembership(vfsProducts, categoryTaggedIds) {
   };
 }
 
-// THE CORE CHECK THIS FUNCTION PROVES, for two values of the SAME facet
-// (e.g. brand=Sony OR brand=Bose — a product matching either one should
-// show up, since picking two checkboxes under one filter is a union):
+// THE CORE CHECK THIS FILE PROVES, for one facet=value option (e.g. brand=Sony):
 //
-//   expectedProductIds — ground truth. Scan every in-memory product by hand
-//                        and keep it if matchesOption() is true for EITHER
-//                        value. No Sanity query is involved in computing this.
+//   expectedProductIds  — ground truth. Scan every in-memory product by hand
+//                         with matchesOption() and see which ones qualify.
+//                         No Sanity query is involved in computing this.
 //
-//   actualProductIds   — reality. Run the REAL GROQ where-clause the app
-//                        would send for "this facet is valueA OR valueB",
-//                        and see which products it returns.
+//   actualProductIds    — reality. Run the REAL GROQ where-clause the app's
+//                         filter would send to Sanity for this option, and
+//                         see which products it returns.
 //
-// If the two sets differ, the real multi-select query is wrong.
-async function testSameFacetPair(facet, valueA, valueB, products, categoryIds) {
+// If expectedProductIds and actualProductIds aren't the same set, the real
+// query is wrong for this option — that's the bug this test would catch.
+async function testSingleOption(facet, value, products, categoryIds) {
   const expectedProductIds = new Set(
-    products
-      .filter((p) => matchesOption(p, facet, valueA) || matchesOption(p, facet, valueB))
-      .map((p) => p._id),
+    products.filter((p) => matchesOption(p, facet, value)).map((p) => p._id),
   );
 
-  const { whereClause, params } = realWhereClauseForSameFacet(facet, [valueA, valueB]);
+  const { whereClause, params } = realWhereClauseFor(facet, value);
   const actualProducts = await sanityQuery(
     `*[_type == "product" && count(catalogueLocationKeys[@ in $categoryIds]) > 0${whereClause}]{ _id }`,
     { categoryIds, ...params },
   );
   const actualProductIds = new Set(actualProducts.map((p) => p._id));
-  const mismatches = symmetricDifferenceCount(expectedProductIds, actualProductIds);
+
+  const missingFromActual = [...expectedProductIds].filter((id) => !actualProductIds.has(id));
+  const unexpectedInActual = [...actualProductIds].filter((id) => !expectedProductIds.has(id));
+  const mismatches = missingFromActual.length + unexpectedInActual.length;
 
   const result = {
-    kind: 'same-facet-union',
-    facetA: facet.urlParam,
-    valueA,
-    facetB: facet.urlParam,
-    valueB,
-    expectedCount: expectedProductIds.size,
-    actualCount: actualProductIds.size,
+    facet: facet.urlParam,
+    field: facet.field,
+    type: facet.type,
+    value,
     expectedIds: [...expectedProductIds],
     actualIds: [...actualProductIds],
+    missingFromActual,
+    unexpectedInActual,
     pass: mismatches === 0,
   };
 
   console.log(
-    `${facet.urlParam}=[${valueA}, ${valueB}]  expected=${expectedProductIds.size} actual=${actualProductIds.size} mismatches=${mismatches} ${mismatches === 0 ? 'PASS' : 'FAIL'}`,
+    `${facet.urlParam}=${value}  expected=${expectedProductIds.size} actual=${actualProductIds.size} mismatches=${mismatches} ${mismatches === 0 ? 'PASS' : 'FAIL'}`,
   );
 
   return { result, mismatches };
-}
-
-// THE CORE CHECK THIS FUNCTION PROVES, for two values on DIFFERENT facets
-// (e.g. brand=Sony AND wireless=true — picking one checkbox under two
-// different filters is an intersection, not a union):
-//
-//   expectedProductIds — ground truth. Scan every in-memory product by hand
-//                        and keep it only if matchesOption() is true for
-//                        BOTH facets. No Sanity query is involved here.
-//
-//   actualProductIds   — reality. Run the REAL GROQ where-clause the app
-//                        would send for "facetA is valueA AND facetB is
-//                        valueB", and see which products it returns.
-//
-// If the two sets differ, the real cross-facet filter combination is wrong.
-async function testCrossFacetPair(facetA, valueA, facetB, valueB, products, categoryIds) {
-  const expectedProductIds = new Set(
-    products
-      .filter((p) => matchesOption(p, facetA, valueA) && matchesOption(p, facetB, valueB))
-      .map((p) => p._id),
-  );
-
-  const { whereClause, params } = realWhereClauseForCrossFacet(facetA, valueA, facetB, valueB);
-  const actualProducts = await sanityQuery(
-    `*[_type == "product" && count(catalogueLocationKeys[@ in $categoryIds]) > 0${whereClause}]{ _id }`,
-    { categoryIds, ...params },
-  );
-  const actualProductIds = new Set(actualProducts.map((p) => p._id));
-  const mismatches = symmetricDifferenceCount(expectedProductIds, actualProductIds);
-
-  const result = {
-    kind: 'cross-facet-intersection',
-    facetA: facetA.urlParam,
-    valueA,
-    facetB: facetB.urlParam,
-    valueB,
-    expectedCount: expectedProductIds.size,
-    actualCount: actualProductIds.size,
-    expectedIds: [...expectedProductIds],
-    actualIds: [...actualProductIds],
-    pass: mismatches === 0,
-  };
-
-  console.log(
-    `${facetA.urlParam}=${valueA} AND ${facetB.urlParam}=${valueB}  expected=${expectedProductIds.size} actual=${actualProductIds.size} mismatches=${mismatches} ${mismatches === 0 ? 'PASS' : 'FAIL'}`,
-  );
-
-  return { result, mismatches };
-}
-
-async function runSameFacetTests(facets, perFacetValues, products, categoryIds) {
-  const results = [];
-  let mismatchTotal = 0;
-
-  console.log('');
-  console.log('SAME-FACET (union) pairs');
-
-  for (const facet of facets) {
-    if (facet.type === 'boolean') continue;
-    const values = perFacetValues.get(facet.urlParam);
-    if (values.length < 2 || values.length > SAME_FACET_MAX_CARDINALITY) continue;
-
-    for (let i = 0; i < values.length; i++) {
-      for (let j = i + 1; j < values.length; j++) {
-        const { result, mismatches } = await testSameFacetPair(facet, values[i], values[j], products, categoryIds);
-        results.push(result);
-        mismatchTotal += mismatches;
-      }
-    }
-  }
-
-  return { results, mismatchTotal };
-}
-
-async function runCrossFacetTests(facets, perFacetBestValue, products, categoryIds) {
-  const results = [];
-  let mismatchTotal = 0;
-
-  console.log('');
-  console.log('CROSS-FACET (intersection) pairs');
-
-  for (let i = 0; i < facets.length; i++) {
-    for (let j = i + 1; j < facets.length; j++) {
-      const facetA = facets[i];
-      const facetB = facets[j];
-      const valueA = perFacetBestValue.get(facetA.urlParam);
-      const valueB = perFacetBestValue.get(facetB.urlParam);
-
-      const { result, mismatches } = await testCrossFacetPair(facetA, valueA, facetB, valueB, products, categoryIds);
-      results.push(result);
-      mismatchTotal += mismatches;
-    }
-  }
-
-  return { results, mismatchTotal };
 }
 
 // ---------------------------------------------------------------------------
@@ -416,22 +267,28 @@ async function main() {
 
   console.log(`${CATEGORY} VFS product count: ${products.length}`);
   console.log(`facets under test: ${facets.length}`);
+  console.log('');
+
+  const results = [];
+  let mismatchTotal = 0;
 
   const categoryTaggedIds = await loadCategoryTaggedIds(CATEGORY);
   const membership = checkCategoryMembership(products, categoryTaggedIds);
+  results.push(membership.result);
+  mismatchTotal += membership.mismatches;
 
-  const { perFacetValues, perFacetBestValue } = buildFacetValueMaps(facets, products);
-
-  const sameFacet = await runSameFacetTests(facets, perFacetValues, products, categoryIds);
-  const crossFacet = await runCrossFacetTests(facets, perFacetBestValue, products, categoryIds);
-
-  const results = [membership.result, ...sameFacet.results, ...crossFacet.results];
-  const mismatchTotal = membership.mismatches + sameFacet.mismatchTotal + crossFacet.mismatchTotal;
+  for (const facet of facets) {
+    for (const value of candidateValues(facet, products)) {
+      const { result, mismatches } = await testSingleOption(facet, value, products, categoryIds);
+      results.push(result);
+      mismatchTotal += mismatches;
+    }
+  }
 
   writeFileSync(OUTPUT_FILE, JSON.stringify(results, null, 2));
 
   console.log('');
-  console.log(`combinations tested: ${results.length}`);
+  console.log(`options tested: ${results.length}`);
   console.log(`total mismatches: ${mismatchTotal}`);
   console.log(`ANY MISMATCH FOUND: ${mismatchTotal === 0 ? 'NO' : 'YES'}`);
 

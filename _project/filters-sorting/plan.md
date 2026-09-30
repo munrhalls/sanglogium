@@ -16,7 +16,9 @@ Refactor `11-single-option-subset-proof.mjs` and
 `12-two-option-combination-matrix-proof.mjs` so the Arrange step (expected
 result per option, per pair) is dead-simple to read. Decide and establish
 the filters-and-sorting feature's root folder, and move these into its
-`__tests__/`.
+`__tests__/`. Decided: root = `features/product-filtering/`; proofs in
+`features/product-filtering/__tests__/proofs/`; frozen inventories in
+`features/product-filtering/__tests__/data/`.
 
 ## Milestone 2 — Real CMS data integrity
 
