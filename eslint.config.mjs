@@ -55,7 +55,6 @@ export default [
   },
   {
     files: ["**/*.{ts,tsx}"],
-    ignores: ["features/product-filtering/**"],
     rules: {
       "no-restricted-imports": [
         "error",
@@ -76,9 +75,9 @@ export default [
           ],
           patterns: [
             {
-              regex: "(^|/)features/product-filtering/(?!server$).+",
+              regex: "(^|/)features/(product-filtering|product-search)/(?!server$).+",
               message:
-                "Import from @/features/product-filtering (client-safe) or @/features/product-filtering/server (server only). Deep imports are not allowed.",
+                "Import from @/features/<feature> (client-safe) or @/features/<feature>/server (server only). Deep imports are not allowed.",
             },
           ],
         },
@@ -86,7 +85,10 @@ export default [
     },
   },
   {
-    files: ["features/product-filtering/**/*.{ts,tsx}"],
+    files: [
+      "features/product-filtering/**/*.{ts,tsx}",
+      "features/product-search/**/*.{ts,tsx}",
+    ],
     rules: {
       "no-restricted-imports": [
         "error",
@@ -107,9 +109,14 @@ export default [
           ],
           patterns: [
             {
+              regex: "(^|/)features/(product-filtering|product-search)/(?!server$).+",
+              message:
+                "Import from @/features/<feature> (client-safe) or @/features/<feature>/server (server only). Deep imports are not allowed.",
+            },
+            {
               regex: "(^|/)sanity-cms/",
               message:
-                "The product-filtering feature must not import sanity-cms. Data access stays in sanity-cms/lib/products and calls into the feature through @/features/product-filtering/server.",
+                "Product features must not import sanity-cms. Data access stays in sanity-cms/lib/products and calls into the feature through @/features/<feature>/server.",
             },
           ],
         },

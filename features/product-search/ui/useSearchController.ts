@@ -3,8 +3,7 @@
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { searchProductsAutocomplete } from "@/sanity-cms/lib/products/searchProducts";
-import type { AutocompleteProduct } from "@/sanity-cms/lib/products/searchProducts";
+import type { AutocompleteProduct } from "../domain/searchTypes";
 import { addRecentSearch } from "./recentSearches";
 import { productHref, searchHref } from "./searchLinks";
 import { buildSuggestionEntries } from "../domain/suggestionEntries";
@@ -32,8 +31,15 @@ interface KeyDownOptions {
  * (products, then the trailing "see all results" option) and navigation.
  *
  * It owns no DOM and no refs. Surfaces own focus, blur and visibility.
+ * The suggestion fetcher is injected so the feature never imports sanity-cms.
  */
-export function useSearchController({ isSheetOpen }: { isSheetOpen: boolean }) {
+export function useSearchController({
+  isSheetOpen,
+  fetchSuggestions,
+}: {
+  isSheetOpen: boolean;
+  fetchSuggestions: (query: string) => Promise<AutocompleteProduct[]>;
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const urlQuery = searchParams.get("q") || "";
@@ -91,7 +97,7 @@ export function useSearchController({ isSheetOpen }: { isSheetOpen: boolean }) {
 
     const timer = setTimeout(async () => {
       try {
-        const next = await searchProductsAutocomplete(trimmed);
+        const next = await fetchSuggestions(trimmed);
         if (cancelled) return;
         const cache = cacheRef.current;
         cache.set(key, next);
@@ -114,7 +120,7 @@ export function useSearchController({ isSheetOpen }: { isSheetOpen: boolean }) {
       cancelled = true;
       clearTimeout(timer);
     };
-  }, [trimmed, isEditing]);
+  }, [trimmed, isEditing, fetchSuggestions]);
 
   const setQuery = useCallback((value: string) => {
     setQueryState(value);

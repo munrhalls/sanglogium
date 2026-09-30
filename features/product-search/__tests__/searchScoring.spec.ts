@@ -2,7 +2,7 @@
 // synchronous: no Sanity, no mocks. Each case encodes a defect seen in QA.
 
 import { describe, it, expect } from "vitest";
-import { scoreProduct, type ScorableProduct } from "@/sanity-cms/lib/products/searchScoring";
+import { scoreProduct, type ScorableProduct } from "../domain/searchScoring";
 
 const p = (name: string, brand: string, extra: Partial<ScorableProduct> = {}): ScorableProduct => ({
   name,

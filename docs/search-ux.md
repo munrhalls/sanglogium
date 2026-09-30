@@ -1,6 +1,6 @@
 # Search UX
 
-How header search works and why. Read before changing anything under `app/components/features/search/` or `app/components/layout/header/SearchField.tsx`.
+How header search works and why. Read before changing anything under `features/product-search/` or `app/components/layout/header/SearchField.tsx`.
 
 ## Surfaces
 
@@ -12,7 +12,7 @@ One controller, three surfaces:
 | `sm` and up (tablet, desktop) | wide field in the header with a suggestion popup | `SearchFieldDesktop` |
 | both | shared state, debounce, cache, keyboard handling | `useSearchController` |
 
-`SearchField.tsx` only composes them. The bottom action bar's search button (`#mobile-search-trigger`) opens the same sheet through the `search` URL param (`useSearchOverlay`).
+`SearchField.tsx` only composes them. SearchField.tsx and the bottom ActionBar stay in layout and import from `@/features/product-search`; SearchField also passes the suggestion server action (`searchProductsAutocomplete`) into `useSearchController`, so the feature never imports sanity-cms. The bottom action bar's search button (`#mobile-search-trigger`) opens the same sheet through the `search` URL param (`useSearchOverlay`).
 
 ## Contracts worth not breaking
 
@@ -31,7 +31,16 @@ One controller, three surfaces:
 - From 2 characters: live product suggestions (150ms debounce, small in-memory cache, previous results stay visible while loading) with the matched text highlighted, and a trailing "See all results" option.
 - Desktop shortcuts: `/` focuses the field, arrows move, Enter opens the highlighted option (or submits), Esc closes the popup, a second Esc clears the text.
 - `/search`: compact heading on phones, 44px pagination buttons, and a no-query / no-results page that offers category and popular-search links instead of a dead end.
-- `/search` filters and sort: filters use the same URL contract as the catalogue (`loadFilterSort`), limited to the category-agnostic `commercial` group (Price, Brand, In stock) because results span categories; the sidebar shows from `lg`, a Filters sheet below it. Facet counts, the price range and the result list are computed from the same in-memory matched set inside `searchProductsFull`, so counts always equal results. `sort` is NOT parsed by `loadFilterSort`: valid values are `relevance` (default, absent from the URL), `price-asc`, `price-desc`, `alpha-asc` (legacy `name-asc` accepted), validated in `searchProductsFull`.
+- `/search` filters and sort: filters use the same URL contract as the catalogue (`loadFilterSort` from `@/features/product-filtering`), limited to the category-agnostic `commercial` group (Price, Brand, In stock) because results span categories; the sidebar shows from `lg`, a Filters sheet below it. Facet counts, the price range and the result list are computed from the same in-memory matched set by `buildSearchResult` (features/product-search/domain/searchResults.ts), called from `searchProductsFull`, so counts always equal results. `sort` is NOT parsed by `loadFilterSort`: valid values are `relevance` (default, absent from the URL), `price-asc`, `price-desc`, `alpha-asc` (legacy `name-asc` accepted), validated in `searchProductsFull`'s result pipeline (`buildSearchResult`).
+
+## Where things live
+
+- `ui/`: components, `useSearchController`, `useSearchOverlay`, `recentSearches`, `searchLinks`
+- `domain/`: pure logic — `highlight`, `suggestionEntries`, `detectSearchRedirect`, `searchScoring`, `searchResults`, `searchTypes`
+- `config/`: `searchSuggestions` (category shortcuts, popular searches)
+- `server.ts`: server-only scoring/result building for the fetcher — never import it from client code
+- `index.ts`: client-safe public entry
+- `__tests__/`: scoring spec, pagination spec; the live-Sanity spec stays in `store/__tests__/integration/searchRobustness.spec.ts`
 
 ## Checking it
 
