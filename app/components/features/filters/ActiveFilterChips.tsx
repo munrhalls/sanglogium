@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { getFacetModule, type Category } from './facetRegistry';
-import { humanizeFacetValue } from '@/lib/catalogue/humanizeFacetValue';
+import { getFacetModule, humanizeFacetValue, type Category } from '@/features/product-filtering';
+import { useFilterParam, useClearAllFilters } from '@/app/hooks/nuqs/useFilterSort';
 import { formatPriceMajor } from '@/lib/utils/price';
 
 /**
@@ -12,7 +12,8 @@ import { formatPriceMajor } from '@/lib/utils/price';
  * result counts or streaming.
  *
  * Category-aware since sang-logium-3rv.6: `category` picks which per-category
- * facet module (facetRegistry.ts) supplies FACETS and useFilterParam, so a
+ * facet module (facetRegistry.ts) supplies FACETS, while useFilterParam and
+ * useClearAllFilters are the shared hooks imported above, so a
  * chip's URL param always matches the sidebar control that set it.
  */
 
@@ -32,7 +33,7 @@ interface Chip {
 const formatRangeChipValue = (value: number, unit: string) => (unit === 'm' ? `${value.toFixed(1)}m` : `${Math.round(value)} ${unit}`);
 
 export function ActiveFilterChips({ brandLabels = {}, category = 'headphones' }: ActiveFilterChipsProps) {
-  const { FACETS, SORT_DEFAULT, SORT_OPTIONS, useFilterParam, useClearAllFilters } = getFacetModule(category);
+  const { FACETS, SORT_DEFAULT, SORT_OPTIONS } = getFacetModule(category);
   const sortLabel = (value: string) => SORT_OPTIONS.find((o) => o.value === value)?.label ?? value;
 
   const [sort, setSort] = useFilterParam('sort') as [string, (v: string) => void];

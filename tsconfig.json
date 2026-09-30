@@ -35,6 +35,8 @@
     "components/**/*.ts",
     "components/**/*.tsx",
     "eslint.config.mjs",
+    "features/**/*.ts",
+    "features/**/*.tsx",
     "lib/**/*.ts",
     "lib/**/*.tsx",
     "middleware.ts",

@@ -5,9 +5,9 @@ import {
   FILTER_FACETS,
   type FilterFacet,
   isPlaceholderVocab,
-} from '@/lib/catalogue/facetMap';
-import { humanizeFacetValue } from '@/lib/catalogue/humanizeFacetValue';
-import type { ProductQueryState } from '@/lib/catalogue/buildProductQuery';
+  humanizeFacetValue,
+  type ProductQueryState,
+} from '@/features/product-filtering';
 
 const withCache = <T extends (...args: any[]) => any>(fn: T): T => {
   try {

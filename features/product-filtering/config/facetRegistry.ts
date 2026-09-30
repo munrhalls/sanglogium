@@ -1,22 +1,22 @@
-'use client';
-
-// Category-aware selector over the per-category facet modules under
-// lib/filter-sort/<slice>/ (headphones, audio-electronics, accessories);
-// all three use the production URL hook app/hooks/nuqs/useFilterSort.tsx.
-// This file is the single place that picks the right module per route.
+// Category-aware selector over the per-category facet configs under
+// lib/filter-sort/<slice>/ (headphones, audio-electronics, accessories).
+// This file is the single place that picks the right module per route --
+// it only selects the slice's facet config (FACETS, groups, sort options);
+// it does not select a URL hook. Consumers import the shared URL-param
+// and clear-all hooks directly from the catalogue's nuqs hook module
+// (all categories share that one hook).
 //
 // The three modules are structurally identical (same FacetDef/FacetGroup
-// shape, same useFilterParam/useClearAllFilters contract) but each has its
-// own FacetGroupId union and product type, so cross-category typing here is
-// intentionally loose (AnyFacetDef / any) rather than importing one
-// category's concrete types as if they applied to all three.
+// shape) but each has its own FacetGroupId union and product type, so
+// cross-category typing here is intentionally loose (AnyFacetDef / any)
+// rather than importing one category's concrete types as if they applied
+// to all three.
 
-import * as headphones from '@/lib/filter-sort/headphones/facetConfig';
-import * as audioElectronics from '@/lib/filter-sort/audio-electronics/facetConfig';
-import * as accessories from '@/lib/filter-sort/accessories/facetConfig';
-import { useFilterParam as useCatalogueFilterParam, useClearAllFilters as useCatalogueClearAll } from '@/app/hooks/nuqs/useFilterSort';
+import * as headphones from './slices/headphones';
+import * as audioElectronics from './slices/audio-electronics';
+import * as accessories from './slices/accessories';
 // Re-exported below for existing client-side importers -- the canonical
-// definitions live in ./category.ts (a non-'use client' module) so Server
+// definitions live in ./category.ts (a module with no client directive) so Server
 // Components can use them without crossing the client boundary.
 import { CATEGORIES, isCategory, type Category } from './category';
 
@@ -55,8 +55,6 @@ export interface FacetModule {
   facetsForGroup: (groupId: string) => AnyFacetDef[];
   SORT_OPTIONS: Option[];
   SORT_DEFAULT: string;
-  useFilterParam: (key: string, optionOverrides?: { history?: 'push' | 'replace' }) => [any, any];
-  useClearAllFilters: () => () => void;
 }
 
 const MODULES: Record<Category, FacetModule> = {
@@ -66,8 +64,6 @@ const MODULES: Record<Category, FacetModule> = {
     facetsForGroup: headphones.facetsForGroup as FacetModule['facetsForGroup'],
     SORT_OPTIONS: headphones.SORT_OPTIONS,
     SORT_DEFAULT: headphones.SORT_DEFAULT,
-    useFilterParam: useCatalogueFilterParam,
-    useClearAllFilters: useCatalogueClearAll,
   },
   'audio-electronics': {
     FACETS: audioElectronics.FACETS,
@@ -75,8 +71,6 @@ const MODULES: Record<Category, FacetModule> = {
     facetsForGroup: audioElectronics.facetsForGroup as FacetModule['facetsForGroup'],
     SORT_OPTIONS: audioElectronics.SORT_OPTIONS,
     SORT_DEFAULT: audioElectronics.SORT_DEFAULT,
-    useFilterParam: useCatalogueFilterParam,
-    useClearAllFilters: useCatalogueClearAll,
   },
   accessories: {
     FACETS: accessories.FACETS,
@@ -84,8 +78,6 @@ const MODULES: Record<Category, FacetModule> = {
     facetsForGroup: accessories.facetsForGroup as FacetModule['facetsForGroup'],
     SORT_OPTIONS: accessories.SORT_OPTIONS,
     SORT_DEFAULT: accessories.SORT_DEFAULT,
-    useFilterParam: useCatalogueFilterParam,
-    useClearAllFilters: useCatalogueClearAll,
   },
 };
 

@@ -1,7 +1,7 @@
 import { sanityFetch } from '@/sanity-cms/lib/client';
 import { groq } from 'next-sanity';
 import { cache } from 'react';
-import type { PriceRangeData } from '@/lib/catalogue/priceBounds';
+import type { PriceRangeData } from '@/features/product-filtering';
 
 // React cache is only available in React Server Components; skip it in tests.
 const withCache = <T extends (...args: any[]) => any>(fn: T): T => {

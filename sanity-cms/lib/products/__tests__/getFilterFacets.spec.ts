@@ -22,8 +22,8 @@ import {
   numericValueForRangeFacet,
   type RawProduct,
 } from "@/sanity-cms/lib/products/getFilterFacets";
-import { FILTER_FACETS } from "@/lib/catalogue/facetMap";
-import type { ProductQueryState } from "@/lib/catalogue/buildProductQuery";
+import { FILTER_FACETS } from "@/features/product-filtering";
+import type { ProductQueryState } from "@/features/product-filtering";
 
 const wearingStyleFacet = FILTER_FACETS.find((f) => f.urlParam === "wearingStyle")!;
 const connectivityFacet = FILTER_FACETS.find((f) => f.urlParam === "connectivity")!;

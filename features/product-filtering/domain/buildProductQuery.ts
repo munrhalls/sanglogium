@@ -9,7 +9,7 @@
 // query translation in the app (risk A2).
 //
 // SCOPE: all sort options and all filterAttributes facets defined in
-// lib/catalogue/facetMap.ts. Price, brand, in-stock and all category-specific facets now
+// ../config/facetMap.ts. Price, brand, in-stock and all category-specific facets now
 // read from the dedicated filterAttributes object, never from free-text fields.
 
 import {
@@ -17,8 +17,8 @@ import {
   SORT_OPTIONS,
   FILTER_SORT_KEYS,
   type SortValue,
-} from './filterSortParams';
-import { FILTER_FACETS, type FilterFacet } from './facetMap';
+} from '../config/filterSortParams';
+import { FILTER_FACETS, type FilterFacet } from '../config/facetMap';
 
 // Shape matches the server-side loader so RSC and client always agree.
 // The loader returns sort/price/inStock plus one key per facet urlParam.

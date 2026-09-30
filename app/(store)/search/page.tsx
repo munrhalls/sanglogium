@@ -4,8 +4,7 @@ import { SearchHeader } from '@/app/components/features/search/SearchHeader';
 import { searchProductsFull } from '@/sanity-cms/lib/products/searchProducts';
 import { isFacetedQuery } from '@/lib/catalogue/seo';
 import { detectSearchRedirect } from '@/lib/catalogue/detectSearchRedirect';
-import { loadFilterSort } from '@/lib/catalogue/filterSortParams';
-import type { ProductQueryState } from '@/lib/catalogue/buildProductQuery';
+import { loadFilterSort, type ProductQueryState } from '@/features/product-filtering';
 import { SearchResults, SearchResultsSkeleton } from './SearchResults';
 
 interface SearchPageProps {

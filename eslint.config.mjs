@@ -53,6 +53,38 @@ export default [
       "react-hooks/set-state-in-effect": "off", // Plugin not configured, pre-existing issues
     },
   },
+  {
+    files: ["**/*.{ts,tsx}"],
+    ignores: ["features/product-filtering/**"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          paths: [
+            {
+              name: "jest",
+              message: "Use Vitest instead. See tests/AGENTS.md Testing Rules.",
+            },
+            {
+              name: "@testing-library/jest-dom",
+              message: "Use Vitest matchers instead. See tests/AGENTS.md Testing Rules.",
+            },
+            {
+              name: "@testing-library/jest-dom/extend-expect",
+              message: "Use Vitest matchers instead. See tests/AGENTS.md Testing Rules.",
+            },
+          ],
+          patterns: [
+            {
+              regex: "(^|/)features/product-filtering/(?!server$).+",
+              message:
+                "Import from @/features/product-filtering (client-safe) or @/features/product-filtering/server (server only). Deep imports are not allowed.",
+            },
+          ],
+        },
+      ],
+    },
+  },
   eslintConfigPrettier,
   {
     ignores: [

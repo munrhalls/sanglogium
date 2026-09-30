@@ -3,7 +3,7 @@ import {
   resolvePriceBounds,
   DEFAULT_PRICE_CEILING,
   NORMAL_PRICE_CEILING,
-} from "@/lib/catalogue/priceBounds";
+} from "../domain/priceBounds";
 
 describe("resolvePriceBounds (B6 / T5.3)", () => {
   it("derives max from real category data", () => {
