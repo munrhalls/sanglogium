@@ -4,7 +4,7 @@
 // helper that produces the visible page numbers with ellipsis truncation.
 
 import { describe, it, expect } from "vitest";
-import { getPageList, totalPagesFor } from "@/lib/catalogue/pagination";
+import { getPageList, totalPagesFor } from "../domain/pagination";
 
 describe("totalPagesFor", () => {
   it("returns 0 when there are no items", () => {

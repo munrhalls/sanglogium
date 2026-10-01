@@ -1,6 +1,6 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
-import { resolveSlugToId, unrollDescendantKeys } from '@/data/catalogue';
+import { resolveSlugToId, unrollDescendantKeys } from '@/features/catalogue/server';
 import { getCategoryMetadata } from '@/sanity-cms/lib/products/getCategoryMetadata';
 import { getProductsCount, getProductsChunk } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
 import { getFilterFacets } from '@/sanity-cms/lib/products/getFilterFacets';
@@ -12,7 +12,7 @@ import { Pagination } from '@/app/components/features/products/Pagination';
 import { ChunkedProductGrid, CHUNK_SIZE } from '@/app/components/features/products/ChunkedProductGrid';
 import { ActiveFilterChips, FilterSidebar, SortBar, isCategory, isFiltersActive, loadFilterSort, resolvePriceBounds, sanitizeFilterState, type Category, type ProductQueryState } from '@/features/product-filtering';
 import Breadcrumbs from '@/app/components/ui/breadcrumbs/CategoryBreadcrumbs';
-import { isFacetedQuery, canonicalCategoryPath } from '@/lib/catalogue/seo';
+import { isFacetedQuery, canonicalCategoryPath } from '@/features/catalogue';
 
 export const dynamic = 'force-dynamic';
 

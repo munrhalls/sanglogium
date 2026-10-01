@@ -1,7 +1,7 @@
 // Filter/sort module for the accessories slice. Facet ids equal the
 // facetMap.ts urlParam for the accessories category; closed-vocab option
 // values are locked to facetMap.ts valueVocab (checked by
-// lib/catalogue/__tests__/facetConfigParity.spec.ts).
+// facetConfigParity.spec.ts (deleted)).
 
 export type Option = { value: string; label: string };
 export type FacetGroupId = 'commercial' | 'type' | 'cables' | 'replacementParts';

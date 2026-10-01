@@ -1,6 +1,6 @@
 import { sanityFetch } from "@/sanity-cms/lib/client";
 import { defineQuery } from "next-sanity";
-import { resolveSlugToId } from "@/data/catalogue";
+import { resolveSlugToId } from "@/features/catalogue/server";
 
 // ============================================================================
 // Type Definitions - Exact matches to existing interfaces for zero-breaking

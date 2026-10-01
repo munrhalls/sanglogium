@@ -1,4 +1,4 @@
-import catalogueIndex from "./catalogue-index.json";
+import catalogueIndex from "@/data/catalogue-index.json";
 
 export interface CatalogueTreeNode {
   _key: string;
