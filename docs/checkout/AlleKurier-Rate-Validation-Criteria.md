@@ -10,7 +10,7 @@ This document defines validation criteria and test scenarios to verify that ship
 
 ### Implementation Status
 
-**File: `lib/shipping/allekurier.ts`**
+**File: `features/checkout/adapters/allekurierRates.ts`**
 - Uses hardcoded sender data (lines 89-93): "Test Sender", "Warsaw"
 - Does NOT read from .env sender address variables
 - API endpoint: `https://allekurier.pl/api_v1/order_create`
@@ -187,7 +187,7 @@ SENDER_ADDRESS_PL_EMAIL=pl@sanglogium.com
 ### Critical Gap 2: AlleKurier Implementation Uses Hardcoded Sender Data
 
 **Current State:**
-- `lib/shipping/allekurier.ts` lines 89-93 use hardcoded values
+- `features/checkout/adapters/allekurierRates.ts` lines 89-93 use hardcoded values
 - Does NOT read from .env sender address variables
 
 **Impact:**
@@ -196,7 +196,7 @@ SENDER_ADDRESS_PL_EMAIL=pl@sanglogium.com
 - Hard to maintain if sender address changes
 
 **Recommendation:**
-Update `lib/shipping/allekurier.ts` to read sender address from .env:
+Update `features/checkout/adapters/allekurierRates.ts` to read sender address from .env:
 ```typescript
 // Read from .env or use defaults
 const senderName = process.env.SENDER_ADDRESS_PL_NAME || 'Sang Logium PL';
@@ -232,7 +232,7 @@ Create comprehensive test script that executes all test scenarios:
 
 ### Phase 1: Configuration Fixes (Pre-requisite)
 1. ✓ Add SENDER_ADDRESS_PL_* variables to .env (COMPLETED)
-2. Update `lib/shipping/allekurier.ts` to read from .env
+2. Update `features/checkout/adapters/allekurierRates.ts` to read from .env
 3. Verify test account status with AlleKurier support
 
 ### Phase 2: Baseline Testing

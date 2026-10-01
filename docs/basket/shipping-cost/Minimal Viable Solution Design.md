@@ -11,7 +11,7 @@ The shipping cost display is implemented across three layers:
 
 ### Frontend: BasketManager
 
-**Location:** `app/components/features/basket/BasketManager.tsx`
+**Location:** `features/basket/ui/BasketManager.tsx`
 
 **Responsibilities:**
 - Calculate parcel data from basket items
@@ -89,7 +89,7 @@ const alleKurierServices = await fetchAlleKurierRates({
 
 ### Utility: CountryDetector
 
-**Location:** `lib/shipping/countryDetector.ts`
+**Location:** `features/checkout/domain/countryDetector.ts`
 
 **Responsibilities:**
 - Detect user country via IP geolocation
@@ -144,7 +144,7 @@ localStorage.setItem(CACHE_KEY, JSON.stringify({
 
 ### Frontend: BasketSummary
 
-**Location:** `app/components/features/basket/BasketSummary.tsx`
+**Location:** `features/basket/ui/BasketSummary.tsx`
 
 **Responsibilities:**
 - Display shipping cost
@@ -214,7 +214,7 @@ interface ShippingOption {
 ## Testing
 
 ### Integration Tests
-**Location:** `app/components/features/basket/__tests__/shipping-cost/shipping-rates.integration.test.ts`
+**Location:** `tests/live/basket/shippingRates.spec.ts`
 
 **Test Cases:**
 1. Empty basket - returns null

@@ -21,7 +21,7 @@ const JEST_PATHS = [
   },
 ];
 
-// Anchored so it matches "@/features/x/y" and "../features/x/y" but never the legacy "@/app/components/features/x/y".
+// Anchored so it matches "@/features/x/y" and "../features/x/y".
 const ENTRY_ONLY = {
   regex: "^(@/|(\\.\\.?/)+)features/[^/]+/(?!(server|actions)$).+",
   message:
@@ -35,7 +35,7 @@ const NO_SANITY = {
 };
 
 const NO_APP = {
-  regex: "(^|/)app/(?!components/(ui|features)/)",
+  regex: "(^|/)app/(?!components/ui/)",
   message:
     "Features never import routes, server actions, hooks or the shell (app/components/layout). Shared UI lives in app/components/ui.",
 };
@@ -114,7 +114,32 @@ export default [
     },
   },
   {
-    files: ["features/**/*.{ts,tsx}"],
+    // The data layer never imports Server Actions (Server Actions import the
+    // data layer). ENTRY_ONLY is repeated because a later flat-config block
+    // replaces the rule for matching files.
+    files: ["sanity-cms/lib/**/*.{ts,tsx}"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          paths: JEST_PATHS,
+          patterns: [
+            ENTRY_ONLY,
+            {
+              regex: "^@/features/[^/]+/actions$",
+              message:
+                "The data layer never imports Server Actions (Server Actions import the data layer).",
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    files: [
+      "features/**/*.{ts,tsx}",
+      "app/components/layout/**/*.{ts,tsx}",
+    ],
     rules: {
       "import/no-cycle": ["warn", { maxDepth: 6 }],
     },

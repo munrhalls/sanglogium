@@ -21,7 +21,7 @@
 5. The `checkoutSessionId` / idempotency key must be generated server-side as a high-entropy value (e.g., UUID v4) and must not be predictable, client-supplied, or reused across changed basket/total parameters.  
    *(cites `security-audit.md` §1 Basket new finding 2 and §4 Payment new finding 2; `security-intelligence.md` §6 Stripe idempotency and §2 OWASP Session Management)*
 6. The basket step must not emit unguarded `console.log` / `error` / `warn` messages containing basket contents, product IDs, or quantities in production.  
-   *(cites `sang-logium-v9d`; `security-audit.md` §1 Basket / `app/actions/checkout/index.ts`)*
+   *(cites `sang-logium-v9d`; `security-audit.md` §1 Basket / `features/checkout/actions.ts`)*
 
 ### Rudimentary functional baseline
 
