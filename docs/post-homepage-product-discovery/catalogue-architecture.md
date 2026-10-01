@@ -47,7 +47,7 @@ Render ProductGrid with products
 |------|---------|
 | `sanity/lib/products/getProductsByVfsKeys.ts` | Fetch products by slot IDs (TO IMPLEMENT) |
 | `app/(store)/shop/[...slug]/page.tsx` | Category listing page (TO IMPLEMENT) |
-| `app/components/features/products/ProductGrid.tsx` | Product grid presentation (TO IMPLEMENT) |
+| `features/products/ui/ProductGrid.tsx` | Product grid presentation (TO IMPLEMENT) |
 
 ### Navigation Layer
 | File | Purpose |
@@ -148,7 +148,7 @@ Create `app/(store)/shop/[...slug]/page.tsx`:
 ```typescript
 import { resolveSlugToId, unrollDescendantKeys } from "@/data/catalogue";
 import { getProductsByVfsKeys } from "@/sanity/lib/products/getProductsByVfsKeys";
-import { ProductGrid } from "@/app/components/features/products/ProductGrid";
+import { ProductGrid } from "@/features/products";
 
 export default async function CategoryPage({ 
   params: { slug }
