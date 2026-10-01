@@ -1,5 +1,5 @@
 import { backendClient } from "@/sanity-cms/lib/backendClient";
-import type { Product } from "@/sanity-cms/lib/products/getProductsByVfsKeys";
+import type { Product } from "@/features/products";
 
 export async function getWishlistProducts(authId: string): Promise<Product[]> {
   const result = await backendClient.fetch<{ products: Product[] | null } | null>(

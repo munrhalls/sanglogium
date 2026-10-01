@@ -1,5 +1,4 @@
-import { Product } from '@/sanity-cms/lib/products/getProductBySlug';
-import { RelatedProduct } from '@/sanity-cms/lib/products/getRelatedProducts';
+import type { ProductDetailData as Product, RelatedProduct } from "@/features/products";
 import { ImageGallery } from './ImageGallery';
 import { ProductInfo } from './ProductInfo';
 import { RelatedProducts } from './RelatedProducts';

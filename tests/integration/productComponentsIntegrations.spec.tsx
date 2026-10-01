@@ -16,7 +16,7 @@ vi.mock('next-sanity/image', () => ({
 }))
 
 // Mock urlFor to handle simple URL strings
-vi.mock('@/sanity-cms/lib/image', () => ({
+vi.mock('@/lib/utils/sanityImageUrl', () => ({
   urlFor: (source: any) => ({
     width: () => ({
       height: () => ({

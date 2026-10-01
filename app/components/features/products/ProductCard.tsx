@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { ProductImage } from "./ProductImage";
-import type { Product } from "@/sanity-cms/lib/products/getProductsByVfsKeys";
+import type { Product } from "@/features/products";
 import { Price } from "@/app/components/ui/Price";
 import { BasketControls } from "@/features/basket";
 import { WishlistButton } from "@/app/components/features/wishlist/WishlistButton";

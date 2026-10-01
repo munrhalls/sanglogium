@@ -1,6 +1,6 @@
 import React from "react";
 import { ProductCard } from "./ProductCard";
-import type { Product } from "@/sanity-cms/lib/products/getProductsByVfsKeys";
+import type { Product } from "@/features/products";
 
 interface ProductChunkProps {
   promise: Promise<Product[]>;

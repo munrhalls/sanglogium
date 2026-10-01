@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils/tailwind";
 import { ProductCard } from "./ProductCard";
 import { productGridClass } from "./gridLayout";
 import { ImageRevealScript } from "./ImageRevealScript";
-import type { Product } from "@/sanity-cms/lib/products/getProductsByVfsKeys";
+import type { Product } from "@/features/products";
 
 interface ProductGridProps {
   products: Product[];

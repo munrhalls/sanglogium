@@ -5,7 +5,7 @@ import { ProductChunkSkeleton } from "@/app/components/skeletons/ProductChunkSke
 import { productGridClass } from "./gridLayout";
 import { ImageRevealScript } from "./ImageRevealScript";
 import { ImageRevealClient } from "./ImageRevealClient";
-import type { Product } from "@/sanity-cms/lib/products/getProductsByVfsKeys";
+import type { Product } from "@/features/products";
 
 export const CHUNK_SIZE = 6;
 

@@ -1,6 +1,6 @@
 import { sanityFetch } from '@/sanity-cms/lib/client';
 import groq from 'groq';
-import { Product } from './getProductBySlug';
+import type { ProductDetailData as Product } from '@/features/products';
 
 export async function getProductsByIds(ids: string[]): Promise<Product[]> {
   if (!ids || ids.length === 0) {

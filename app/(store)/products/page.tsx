@@ -3,7 +3,7 @@ import { getAllLeafKeys } from '@/features/catalogue/server';
 import { getProductsCount, getProductsChunk } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
 import { getFilterFacets } from '@/sanity-cms/lib/products/getFilterFacets';
 import { getCategoryPriceRange } from '@/sanity-cms/lib/products/getCategoryPriceRange';
-import { getWishlistProductIds } from '@/lib/wishlist';
+import { getWishlistProductIds } from "@/sanity-cms/lib/account/getWishlistProductIds";
 import { ShopHeader } from '@/app/components/features/products/ShopHeader';
 import { EmptyResults } from '@/app/components/features/products/EmptyResults';
 import { Pagination } from '@/app/components/features/products/Pagination';

@@ -4,7 +4,7 @@ import { EmptyResults } from '@/app/components/features/products/EmptyResults';
 import { ProductGrid } from '@/app/components/features/products/ProductGrid';
 import { ProductGridSkeleton } from '@/app/components/skeletons/ProductGridSkeleton';
 import { ActiveFilterChips, FilterSidebar, MobileFilterSheet, isFiltersActive, resolvePriceBounds, SORT_DEFAULT } from '@/features/product-filtering';
-import { getWishlistProductIds } from '@/lib/wishlist';
+import { getWishlistProductIds } from "@/sanity-cms/lib/account/getWishlistProductIds";
 
 interface SearchResultsProps {
   resultsPromise: Promise<SearchResult>;
