@@ -9,7 +9,7 @@ import {
 import { cn } from "@/lib/utils/tailwind";
 import { NavActionItem } from "@/app/components/ui/NavActionItem";
 import { BasketButton } from "@/app/components/features/basket/BasketButton";
-import { signOut } from "@/app/hooks/useSignOut";
+import { signOut } from "@/features/auth";
 
 interface NavbarActionsProps {
   isAuthenticated: boolean;

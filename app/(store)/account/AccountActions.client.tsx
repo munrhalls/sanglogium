@@ -2,9 +2,8 @@
 
 import { useActionState, useEffect, useState } from "react";
 import { authClient } from "@/lib/auth-client";
-import { TwoFactorSection } from "@/features/auth";
+import { TwoFactorSection, signOut, signOutAllDevices } from "@/features/auth";
 import { updateName, updatePreferences } from "./actions";
-import { signOut, signOutAllDevices } from "@/app/hooks/useSignOut";
 
 async function requireFreshSession(): Promise<boolean> {
   const session = await authClient.getSession();
