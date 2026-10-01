@@ -4,7 +4,7 @@ import Image from "next/image";
 
 import Link from "next/link";
 
-import type { SpotlightData as Spotlight1Data } from "@/features/homepage";
+import type { SpotlightData as Spotlight1Data } from "../../domain/homepageTypes";
 
 import { Carousel } from "@/app/components/ui/carousel/CarouselRoot";
 

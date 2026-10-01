@@ -9,7 +9,7 @@ import {
   CarouselDots,
 } from "@/app/components/ui/carousel/CarouselControls";
 import FeaturedHeader from "./FeaturedHeader";
-import type { FeaturedProduct } from "@/features/homepage";
+import type { FeaturedProduct } from "../../domain/homepageTypes";
 import { BasketControls } from "@/features/basket";
 import { formatPrice } from "@/lib/utils/price";
 
