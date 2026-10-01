@@ -5,10 +5,10 @@ import { defineConfig, devices } from "@playwright/test";
  * Use this for rapid iteration during development
  */
 export default defineConfig({
-  testDir: "./tests/checkout",
+  testDir: "./tests/e2e/checkout",
   testMatch: "**/*.test.ts",
 
-  // CRITICAL: Single worker for checkout tests (shared Redis/Sanity)
+  // CRITICAL: Single worker for checkout tests (shared Sanity dataset)
   workers: 1,
   fullyParallel: false,
 

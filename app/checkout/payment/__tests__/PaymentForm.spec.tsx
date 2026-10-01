@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 // eslint-disable-next-line no-restricted-imports -- Types needed for TypeScript
 import '@testing-library/jest-dom';
-import PaymentForm from '@/app/checkout/payment/PaymentForm.client';
+import PaymentForm from '../PaymentForm.client';
 
 const mockFetch = vi.fn();
 (globalThis as unknown as Record<string, unknown>).fetch = mockFetch as unknown as typeof fetch;

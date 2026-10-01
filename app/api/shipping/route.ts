@@ -1,4 +1,4 @@
-import { submitShippingAction } from "@/app/actions/address/address";
+import { submitShippingAction } from "@/features/checkout/actions";
 
 export const runtime = 'nodejs';
 

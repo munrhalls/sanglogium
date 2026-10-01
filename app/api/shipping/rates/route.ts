@@ -1,7 +1,7 @@
 import { getBackendClient } from '@/sanity-cms/lib/backendClient';
 import { fetchPacklinkRates } from '@/lib/shipping/packlink-rates';
-import { fetchAlleKurierRates, transformAlleKurierToShippingOption } from '@/lib/shipping/allekurier-rates';
-import { calculatePackagesFromReservation } from '@/lib/shipping/parcel-calculator';
+import { fetchAlleKurierRates, transformAlleKurierToShippingOption } from '@/features/checkout/server';
+import { calculatePackagesFromReservation } from "@/features/checkout";
 
 export const runtime = 'nodejs';
 

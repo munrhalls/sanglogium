@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { saveShippingAction } from "@/app/actions/checkout";
+import { saveShippingAction } from "../actions";
 import { formatDeliveryEstimate } from "@/lib/utils/formatting";
 import { formatPriceMajor } from "@/lib/utils/price";
 import { cn } from "@/lib/utils/tailwind";
-import CheckoutStepper from "../_components/CheckoutStepper";
+import CheckoutStepper from "./CheckoutStepper";
 
 interface ShippingOption {
   provider: string;

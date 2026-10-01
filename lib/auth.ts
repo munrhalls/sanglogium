@@ -10,7 +10,7 @@ import {
   sendDeleteAccountVerification,
 } from "./email";
 import { backendClient } from "@/sanity-cms/lib/backendClient";
-import { mergeGuestOrdersByEmail } from "./checkout/mergeGuestOrders";
+import { mergeGuestOrdersByEmail } from "@/sanity-cms/lib/orders/mergeGuestOrders";
 
 function validateDatabaseConfig() {
   const databaseUrl = process.env.DATABASE_URL || "";

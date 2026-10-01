@@ -10,7 +10,7 @@ const mocks = vi.hoisted(() => ({ getIronSession: vi.fn() }));
 vi.mock("iron-session", () => ({ getIronSession: mocks.getIronSession }));
 vi.mock("next/headers", () => ({ cookies: vi.fn().mockResolvedValue({}) }));
 
-import { getCheckoutSession } from "@/lib/session";
+import { getCheckoutSession } from "../adapters/session";
 
 describe("Checkout Session", () => {
   beforeEach(() => {

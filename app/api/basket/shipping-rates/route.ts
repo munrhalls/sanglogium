@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { fetchAlleKurierRates, transformAlleKurierToShippingOption } from '@/lib/shipping/allekurier-rates';
+import { fetchAlleKurierRates, transformAlleKurierToShippingOption } from '@/features/checkout/server';
 
 export const runtime = 'nodejs';
 

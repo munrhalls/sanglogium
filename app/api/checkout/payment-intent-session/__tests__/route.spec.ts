@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
 // Must mock before importing the route
-vi.mock('@/lib/session', () => ({
+vi.mock('@/features/checkout/server', () => ({
   getCheckoutSession: vi.fn(),
 }))
 
@@ -31,8 +31,8 @@ vi.mock('groq', () => ({
   default: vi.fn(() => 'mocked-query'),
 }))
 
-import { POST } from '@/app/api/checkout/payment-intent-session/route'
-import { getCheckoutSession } from '@/lib/session'
+import { POST } from '../route'
+import { getCheckoutSession } from '@/features/checkout/server'
 import { stripe } from '@/lib/stripe'
 import { getBackendClient } from '@/sanity-cms/lib/backendClient'
 

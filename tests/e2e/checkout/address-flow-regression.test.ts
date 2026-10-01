@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { testAddresses } from '../test-data/test-addresses'
+import { testAddresses } from './test-data/test-addresses'
 
 const seedSecret = process.env.CHECKOUT_SEED_SECRET || 'dev-secret'
 

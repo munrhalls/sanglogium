@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { addAddress, removeAddress, updateAddress } from "./actions";
-import type { Address } from "@/app/checkout/checkout.types";
+import type { Address } from "@/features/checkout";
 
 const REGIONS = [
   { code: "PL", label: "Poland" },

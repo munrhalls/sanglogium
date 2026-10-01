@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCheckoutSession } from "@/lib/session";
-import { Address } from "@/app/checkout/checkout.types";
+import { getCheckoutSession } from "@/features/checkout/server";
+import type { Address } from "@/features/checkout";
 
 const REAL_PRODUCT_ID = "3O1ZNp54LWQGln4uEAU7Vs";
 

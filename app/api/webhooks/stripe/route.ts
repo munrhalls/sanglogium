@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { stripe } from '@/lib/stripe'
-import { createOrderFromPaymentIntent } from '@/lib/checkout/createOrderFromPaymentIntent'
+import { createOrderFromPaymentIntent } from '@/sanity-cms/lib/orders/createOrderFromPaymentIntent'
 import { logCheckoutEvent } from '@/lib/dev/event-logger'
 
 // Stripe requires the raw request body for signature verification —

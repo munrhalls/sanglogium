@@ -16,7 +16,7 @@
 // Zero mocks: real browser, real Google API.
 
 import { test, expect } from '@playwright/test'
-import { testAddresses } from '../test-data/test-addresses'
+import { testAddresses } from './test-data/test-addresses'
 
 test.describe('Checkout address flow (E2E)', () => {
   test('submits a valid address and redirects to shipping', async ({ page }) => {

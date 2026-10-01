@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getCheckoutSession } from '@/lib/session'
+import { getCheckoutSession } from '@/features/checkout/server'
 import { stripe } from '@/lib/stripe'
 import { logCheckoutEvent } from '@/lib/dev/event-logger'
 import { getBackendClient } from '@/sanity-cms/lib/backendClient'

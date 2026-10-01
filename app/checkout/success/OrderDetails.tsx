@@ -1,7 +1,7 @@
 import { fetchOrderByPaymentIntentId } from '@/sanity-cms/lib/orders/getOrderByPaymentIntentId'
 import Link from 'next/link'
 import { Hourglass } from '@phosphor-icons/react/dist/ssr'
-import { RefreshButton } from './RefreshButton'
+import { RefreshButton } from '@/features/checkout'
 import { formatPrice } from '@/lib/utils/price'
 
 interface Props {

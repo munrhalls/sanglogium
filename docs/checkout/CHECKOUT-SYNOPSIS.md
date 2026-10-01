@@ -31,7 +31,7 @@
 | `lastPaymentIntentId` | string | Return handler (any path) | — |
 | `checkoutSessionId` | string | `initCheckoutSession` | — |
 
-**Cookie name:** `checkout_session` · **Max size:** 4KB · **Source:** `lib/session.ts`
+**Cookie name:** `checkout_session` · **Max size:** 4KB · **Source:** `features/checkout/adapters/session.ts`
 
 ### Session Guards (funnel jump prevention)
 
@@ -98,7 +98,7 @@ flowchart LR
 - `app/(store)/basket/page.tsx` — Server Component shell
 - `app/components/features/basket/BasketManager.tsx` — Client Component (main logic)
 - `app/components/features/basket/BasketSummary.tsx` — Client Component
-- `app/components/features/checkout/reservation/CheckoutButton.tsx` — Client Component
+- `features/checkout/ui/CheckoutButton.tsx` — Client Component
 
 ```mermaid
 flowchart TD
@@ -129,9 +129,9 @@ flowchart TD
 **Route:** `/checkout/address`
 **Files:**
 - `app/checkout/address/page.tsx` — Server Component
-- `app/checkout/address/AddressForm.tsx` — Client Component
-- `app/actions/checkout/index.ts` → `saveAddress`
-- `app/actions/address/address.ts` → `submitShippingAction`
+- `features/checkout/ui/AddressForm.tsx` — Client Component
+- `features/checkout/actions.ts` → `saveAddress`
+- `features/checkout/actions.ts` → `submitShippingAction`
 
 ```mermaid
 flowchart TD
@@ -165,10 +165,10 @@ flowchart TD
 **Route:** `/checkout/shipping`
 **Files:**
 - `app/checkout/shipping/page.tsx` — Server Component
-- `app/checkout/shipping/ShippingPageClient.tsx` — Client Component
-- `app/actions/checkout/index.ts` → `saveShippingAction`
-- `lib/shipping/allekurier-rates.ts`
-- `lib/shipping/parcel-calculator.ts`
+- `features/checkout/ui/ShippingPageClient.tsx` — Client Component
+- `features/checkout/actions.ts` → `saveShippingAction`
+- `features/checkout/adapters/allekurierRates.ts`
+- `features/checkout/domain/parcelCalculator.ts`
 - `sanity-cms/lib/products/getProductsByIds`
 
 ```mermaid
@@ -210,7 +210,7 @@ flowchart TD
 **Files:**
 - `app/checkout/payment/page.tsx` — Server Component
 - `app/checkout/payment/PaymentForm.client.tsx` — Client Component
-- `app/checkout/payment/_components/CheckoutSummary.tsx` — Server Component
+- `features/checkout/ui/CheckoutSummary.tsx` — Server Component
 - `app/api/checkout/payment-intent-session/route.ts` — Route Handler (POST)
 
 ```mermaid
@@ -287,7 +287,7 @@ flowchart TD
 
 ### 3.6 Order Creation (`createOrderFromPaymentIntent`)
 
-**File:** `lib/checkout/createOrderFromPaymentIntent.ts`
+**File:** `sanity-cms/lib/orders/createOrderFromPaymentIntent.ts`
 
 **Two data sources (fallback chain):**
 1. `sessionData` (return handler path — passed directly, most reliable)
@@ -315,8 +315,8 @@ flowchart TD
 **Files:**
 - `app/checkout/success/page.tsx` — Server Component
 - `app/checkout/success/OrderDetails.tsx` — Server Component (Suspense child)
-- `app/checkout/success/RefreshButton.tsx` — Client Component
-- `app/checkout/success/SuccessAnalytics.client.tsx` — Client Component
+- `features/checkout/ui/RefreshButton.tsx` — Client Component
+- `features/checkout/ui/SuccessAnalytics.client.tsx` — Client Component
 
 ```mermaid
 flowchart TD
@@ -348,7 +348,7 @@ flowchart TD
 
 ## 4. Shared Infrastructure
 
-### 4.1 Session (`lib/session.ts`)
+### 4.1 Session (`features/checkout/adapters/session.ts`)
 
 ```typescript
 // Cookie: checkout_session | httpOnly | secure (prod) | sameSite: lax | maxAge: 3600s
@@ -365,7 +365,7 @@ interface CheckoutSession {
 }
 ```
 
-### 4.2 Checkout Stepper (`app/checkout/_components/CheckoutStepper.tsx`)
+### 4.2 Checkout Stepper (`features/checkout/ui/CheckoutStepper.tsx`)
 
 Client component. Steps: Basket (0) → Address (1) → Shipping (2) → Payment (3).
 Active step highlighted with `brand-400`. Passed steps: `brand-600`. Pending: `secondary-600`.
@@ -392,8 +392,8 @@ Exports `stripe` (server-side Stripe SDK) and `retrievePaymentIntent`. Used in p
 
 | Service | Used by | Auth | Purpose |
 |---|---|---|---|
-| Google Address Validation API | `app/actions/address/address.ts` | `GOOGLE_MAPS_API_KEY` | Validate + normalize address |
-| AlleKurier API | `lib/shipping/allekurier-rates.ts` | `ALLEKURIER_EMAIL` + `ALLEKURIER_PASSWORD` | Fetch real shipping rates |
+| Google Address Validation API | `features/checkout/actions.ts` | `GOOGLE_MAPS_API_KEY` | Validate + normalize address |
+| AlleKurier API | `features/checkout/adapters/allekurierRates.ts` | `ALLEKURIER_EMAIL` + `ALLEKURIER_PASSWORD` | Fetch real shipping rates |
 | Stripe | Payment page + return handler + success page | `STRIPE_SECRET_KEY` / `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | PaymentIntent, Elements, retrieval |
 | Sanity CMS | Basket, shipping, payment, order creation | `SANITY_STUDIO_READ_WRITE` | Product prices, stock, parcel data, orders |
 
