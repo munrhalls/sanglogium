@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Spotlight1Data } from "../product-spotlight-1/getSpotlight1Data";
+import type { SpotlightData as Spotlight1Data } from "@/features/homepage";
 import { Carousel } from "@/app/components/ui/carousel/CarouselRoot";
 import { CarouselTrack } from "@/app/components/ui/carousel/CarouselTrack";
 import { CarouselSlide } from "@/app/components/ui/carousel/CarouselSlide";

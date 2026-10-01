@@ -3,10 +3,8 @@ import TrustBar from "@/app/components/features/homepage/trust-bar/TrustBar";
 import ProductSpotlight2 from "@/app/components/features/homepage/product-spotlight-2/ProductSpotlight2";
 import ProductSpotlight3 from "@/app/components/features/homepage/product-spotlight-3/ProductSpotlight3";
 import IemsGallery from "@/app/components/features/homepage/iems-gallery/IemsGallery";
-import {
-  getIemProductsBySlugs,
-  HOME_12,
-} from "@/app/components/features/homepage/iems-gallery/getIemProducts";
+import { getIemProductsBySlugs } from "@/sanity-cms/lib/homepage/getIemProductsBySlugs";
+import { HOME_12 } from "@/features/homepage";
 import NewestRelease from "@/app/components/features/homepage/newest-release/NewestRelease";
 import Dacs from "@/app/components/features/homepage/dacs/Dacs";
 import Accessories from "@/app/components/features/homepage/accessories/Accessories";

@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { NewestReleaseData } from "@/sanity-cms/lib/homepage/getHomepageData";
+import type { NewestReleaseData } from "@/features/homepage";
 import { formatPrice } from "@/lib/utils/price";
 import { Carousel } from "@/app/components/ui/carousel/CarouselRoot";
 import { CarouselTrack } from "@/app/components/ui/carousel/CarouselTrack";

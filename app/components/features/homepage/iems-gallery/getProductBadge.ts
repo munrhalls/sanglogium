@@ -1,4 +1,4 @@
-import { IemProduct } from "./getIemProducts";
+import type { IemProduct } from "@/features/homepage";
 
 export function getProductBadge(product: IemProduct, index: number): string | undefined {
   const name = product.name.toLowerCase();

@@ -1,8 +1,6 @@
 import { sanityFetch } from "@/sanity-cms/lib/client";
 import { defineQuery } from "next-sanity";
-import type { IemProduct } from "@/sanity-cms/lib/homepage/getHomepageData";
-
-export type { IemProduct };
+import type { IemProduct } from "@/features/homepage";
 
 const IEMS_BY_SLUGS_QUERY = defineQuery(`*[_type == "product" && slug.current in $slugs] {
   _id,
@@ -20,21 +18,6 @@ const IEMS_BY_SLUGS_QUERY = defineQuery(`*[_type == "product" && slug.current in
     alt
   }
 }`);
-
-export const HOME_12 = [
-  "64-audio-u12t-in-ear-headphones",
-  "64-audio-u4s-in-ear-headphones",
-  "crinear-reference-in-ear-headphones",
-  "moondrop-blessing-3-in-ear-monitor-iem-hybrid-earphones",
-  "moondrop-dark-saber-in-ear-headphones",
-  "moondrop-rays-gaming-iems",
-  "moondrop-variations-tribrid-iem",
-  "sennheiser-ie-900-in-ear-headphones",
-  "softears-volume-s-in-ear-headphones",
-  "thieaudio-hype-4-in-ear-headphones",
-  "thieaudio-monarch-mkiii-in-ear-headphones",
-  "truthear-nova-in-ear-headphones",
-];
 
 export async function getIemProductsBySlugs(slugs: string[]) {
   if (!slugs.length) return [];
