@@ -6,13 +6,13 @@ import Link from "next/link";
 
 import { Spotlight1Data } from "../product-spotlight-1/getSpotlight1Data";
 
-import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
+import { Carousel } from "@/app/components/ui/carousel/CarouselRoot";
 
-import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";
+import { CarouselTrack } from "@/app/components/ui/carousel/CarouselTrack";
 
-import { CarouselSlide } from "@/app/components/layout/carousel/CarouselSlide";
+import { CarouselSlide } from "@/app/components/ui/carousel/CarouselSlide";
 
-import { CarouselPrevious, CarouselNext, CarouselDots } from "@/app/components/layout/carousel/CarouselControls";
+import { CarouselPrevious, CarouselNext, CarouselDots } from "@/app/components/ui/carousel/CarouselControls";
 
 const FRACTAL_RING_MASK = {
   maskImage: "url('/backgrounds/fractal_ring.webp')",

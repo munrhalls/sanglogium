@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, createContext, useEffect } from "react";
-import { NavbarManagerProps } from "@/app/components/layout/carousel/types";
+import { NavbarManagerProps } from "@/app/components/layout/catalogue/catalogue-nav.types";
 import { cn } from "@/lib/utils/tailwind";
 import {
   CaretDownIcon,

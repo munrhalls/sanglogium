@@ -33,7 +33,3 @@ export interface CarouselProviderProps {
   breakpointMap?: CarouselBreakpoints;
 }
 
-export interface NavbarManagerProps {
-  navLinks: { id: string; label: string }[];
-  children: React.ReactNode[];
-}

@@ -4,7 +4,7 @@ import {
   CarouselPrevious,
   CarouselNext,
   CarouselDots,
-} from "@/app/components/layout/carousel/CarouselControls";
+} from "@/app/components/ui/carousel/CarouselControls";
 import HeroImage from "./HeroImage";
 import SliceTitle from "./SliceTitle";
 

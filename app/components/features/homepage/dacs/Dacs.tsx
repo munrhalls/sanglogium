@@ -1,10 +1,10 @@
 import React from "react";
 import Link from "next/link";
 import { sanityFetch } from "@/sanity-cms/lib/client";
-import { Carousel } from '@/app/components/layout/carousel/CarouselRoot';
-import { CarouselTrack } from '@/app/components/layout/carousel/CarouselTrack';
-import { CarouselSlide } from '@/app/components/layout/carousel/CarouselSlide';
-import { CarouselNext, CarouselPrevious, CarouselDots } from '@/app/components/layout/carousel/CarouselControls';
+import { Carousel } from '@/app/components/ui/carousel/CarouselRoot';
+import { CarouselTrack } from '@/app/components/ui/carousel/CarouselTrack';
+import { CarouselSlide } from '@/app/components/ui/carousel/CarouselSlide';
+import { CarouselNext, CarouselPrevious, CarouselDots } from '@/app/components/ui/carousel/CarouselControls';
 import DacsHeader from "./DacsHeader";
 import DacCard from "./DacCard";
 import { DacProduct } from "./getDacProducts";
