@@ -21,7 +21,7 @@ export const client = createClient({
 
 // WRITE client for backend atomic operations
 // Uses SANITY_STUDIO_READ_WRITE_CREATE (preferred) or SANITY_API_TOKEN (fallback)
-// Used for: basket reservations, stock updates, profile operations
+// Used for: stock updates, profile operations
 const writeToken = process.env.SANITY_STUDIO_READ_WRITE_CREATE || process.env.SANITY_API_TOKEN;
 
 export const writeClient = createClient({
