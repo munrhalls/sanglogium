@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { getBasketProducts } from '../../../../../../sanity-cms/lib/products/getBasketProducts'
+import { getBasketProducts } from '@/sanity-cms/lib/products/getBasketProducts'
 
 const TEST_PRODUCT_ID = process.env.TEST_PRODUCT_ID || 'k27n1AQuIbSr5iozFz7EE4'
 

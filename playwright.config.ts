@@ -1,7 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
-  testDir: './app/components/features/basket/__tests__/e2e',
+  testDir: './tests/e2e/basket',
   /* Maximum time one test can run for. */
   timeout: 30 * 1000,
   expect: {

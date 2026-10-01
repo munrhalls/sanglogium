@@ -27,8 +27,6 @@ export default defineConfig(({ mode }) => {
       fileParallelism: false, // Run test files sequentially for isolation
       maxWorkers: 1, // Single worker to prevent race conditions
       include: [
-        'app/components/features/basket/__tests__/integration/**/*.test.ts',
-        'tests/checkout/integration/**/*.test.ts',
         'tests/live/**/*.spec.ts',
         'tests/live/**/*.spec.tsx',
       ],

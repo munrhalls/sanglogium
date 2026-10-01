@@ -27,8 +27,8 @@ test:
     during normal work (see AGENTS.md / CLAUDE.md) - the no-mistakes evidence
     step is the one sanctioned place tests actually run.
 
-    For a PR that only touches test files under store/__tests__/**, sanity-cms/lib/**
-    tests, or features/catalogue/__tests__/** tests (no files under app/(store), app/(admin),
+    For a PR that only touches test files under features/*/__tests__/**, tests/**,
+    app/**/__tests__/** or sanity-cms/lib/** tests (no files under app/(store), app/(admin),
     app/(studio), app/api, or app/actions): run `npm test` for real and confirm
     it passes. No live browser click-through is required - no UI or API surface
     changed.

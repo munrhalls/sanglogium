@@ -44,8 +44,6 @@
     "sanity.cli.ts",
     "sanity.config.ts",
     "sanity-cms/**/*.ts",
-    "store/**/*.ts",
-    "store/**/*.tsx",
     "tailwind.config.ts",
     ".next/types/**/*.ts"
   ],
