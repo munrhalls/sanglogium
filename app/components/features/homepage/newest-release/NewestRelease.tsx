@@ -3,14 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { NewestReleaseData } from "@/sanity-cms/lib/homepage/getHomepageData";
 import { formatPrice } from "@/lib/utils/price";
-import { Carousel } from "@/app/components/layout/carousel/CarouselRoot";
-import { CarouselTrack } from "@/app/components/layout/carousel/CarouselTrack";
-import { CarouselSlide } from "@/app/components/layout/carousel/CarouselSlide";
+import { Carousel } from "@/app/components/ui/carousel/CarouselRoot";
+import { CarouselTrack } from "@/app/components/ui/carousel/CarouselTrack";
+import { CarouselSlide } from "@/app/components/ui/carousel/CarouselSlide";
 import {
   CarouselPrevious,
   CarouselNext,
   CarouselDots,
-} from "@/app/components/layout/carousel/CarouselControls";
+} from "@/app/components/ui/carousel/CarouselControls";
 
 interface NewestReleaseProps {
   newestReleaseData: NewestReleaseData | null;
