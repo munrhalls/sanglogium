@@ -40,7 +40,7 @@ One controller, three surfaces:
 - `config/`: `searchSuggestions` (category shortcuts, popular searches)
 - `server.ts`: server-only scoring/result building for the fetcher — never import it from client code
 - `index.ts`: client-safe public entry
-- `__tests__/`: scoring spec, pagination spec; the live-Sanity spec stays in `store/__tests__/integration/searchRobustness.spec.ts`
+- `__tests__/`: scoring spec, pagination spec; the live-Sanity spec stays in `tests/live/product-search/searchRobustness.spec.ts`
 
 ## Checking it
 
