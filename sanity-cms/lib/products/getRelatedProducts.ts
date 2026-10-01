@@ -1,14 +1,6 @@
 import { sanityFetch } from '@/sanity-cms/lib/client';
 import groq from 'groq';
-
-export interface RelatedProduct {
-  _id: string;
-  name: string;
-  brand: { _id: string; name: string } | null;
-  price_data: { currency: string; unit_amount: number };
-  image: any;
-  slug: { current: string };
-}
+import type { RelatedProduct } from '@/features/products';
 
 export async function getRelatedProducts(
   currentId: string,

@@ -1,9 +1,9 @@
 import React from "react";
 import { cn } from "@/lib/utils/tailwind";
 import { ProductCard } from "./ProductCard";
-import { productGridClass } from "./gridLayout";
+import { productGridClass } from "../config/gridLayout";
 import { ImageRevealScript } from "./ImageRevealScript";
-import type { Product } from "@/sanity-cms/lib/products/getProductsByVfsKeys";
+import type { Product } from "../domain/productTypes";
 
 interface ProductGridProps {
   products: Product[];

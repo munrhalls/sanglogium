@@ -1,9 +1,8 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getProductBySlug, getRelatedProducts } from '@/sanity-cms/lib/products';
-import { ProductDetail } from '@/app/components/features/products';
-import { getWishlistProductIds } from '@/lib/wishlist';
-import { generateOptimizedTitle, generateSEOTitle, generateMetaDescription } from '@/lib/utils/title-optimization';
+import { getWishlistProductIds } from "@/sanity-cms/lib/account/getWishlistProductIds";
+import { ProductDetail, generateOptimizedTitle, generateSEOTitle, generateMetaDescription } from "@/features/products";
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>;

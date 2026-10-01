@@ -4,6 +4,7 @@ import { cache } from 'react';
 import type { Product as SanityProduct } from '@/sanity.types';
 import type { ProductQueryState } from '@/features/product-filtering';
 import { buildProductQuery } from '@/features/product-filtering/server';
+import type { Product } from '@/features/products';
 
 const DEFAULT_PER_PAGE = 24;
 
@@ -18,20 +19,6 @@ const withCache = <T extends (...args: any[]) => any>(fn: T): T => {
   } catch {
     return fn;
   }
-};
-
-// Product type matching actual GROQ query result (brand is dereferenced with ->)
-export type Product = {
-  _id: string;
-  name: string;
-  brand: { _id: string; name: string; slug?: { current: string } } | null;
-  price_data: { currency: string; unit_amount: number };
-  image: any;
-  catalogueLocationKeys: string[];
-  slug: { current: string };
-  stock: number;
-  reservedStock: number;
-  availableStock: number;
 };
 
 const PRODUCT_PROJECTION = groq`{

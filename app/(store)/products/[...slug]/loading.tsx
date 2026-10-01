@@ -1,5 +1,4 @@
-import { ShopHeaderSkeleton } from '@/app/components/features/products/ShopHeaderSkeleton';
-import { ProductGridSkeleton } from '@/app/components/skeletons/ProductGridSkeleton';
+import { ShopHeaderSkeleton, ProductGridSkeleton } from "@/features/products";
 
 export default function CategoryLoading() {
   return (

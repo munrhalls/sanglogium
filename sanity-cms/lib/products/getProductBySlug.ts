@@ -1,29 +1,7 @@
 import { cache } from 'react';
 import { sanityFetch } from '@/sanity-cms/lib/client';
 import groq from 'groq';
-
-export interface Product {
-  _id: string;
-  name: string;
-  brand: { _id: string; name: string; slug: string } | null;
-  price_data: { currency: string; unit_amount: number };
-  stock: number;
-  reservedStock: number;
-  sku: string;
-  image: any;
-  gallery?: any[];
-  slug: { current: string };
-  description?: any;
-  overviewFields?: { _key?: string; title: string; value: string; information?: string }[];
-  specifications?: { title: string; value: string; information?: string }[];
-  catalogueLocationKeys: string[];
-  parcel?: {
-    length: number;
-    width: number;
-    height: number;
-    weight: number;
-  };
-}
+import type { ProductDetailData as Product } from '@/features/products';
 
 export const getProductBySlug = cache(async (slug: string): Promise<Product | null> => {
   const products = await sanityFetch<Product[]>({

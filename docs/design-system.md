@@ -193,12 +193,12 @@ instead of the intended muted/emphasized tone:
 | File | Lines | Notes |
 |---|---|---|
 | `app/(store)/product/[slug]/page.tsx` | 36, 42, 47 (breadcrumb) | lines 36 & 42 each carry two bare tokens: base `text-secondary` **and** `hover:text-primary` |
-| `app/components/features/products/ProductDetail.tsx` | 39, 40, 42, 49, 50, 52 (spec table) | |
-| `app/components/features/products/ProductInfo.tsx` | 34, 37, 82, 101, 108, 118, 121, 140 | |
-| `app/components/features/products/ProductCard.tsx` | 62 | |
-| `app/components/features/products/ImageGallery.tsx` | 127 | base `text-body` **and** `hover:text-primary` on the same line |
-| `app/components/features/products/EmptyResults.tsx` | 10 | |
-| `app/components/features/products/ProductGrid.tsx` | 16 | |
+| `features/products/ui/ProductDetail.tsx` | 39, 40, 42, 49, 50, 52 (spec table) | |
+| `features/products/ui/ProductInfo.tsx` | 34, 37, 82, 101, 108, 118, 121, 140 | |
+| `features/products/ui/ProductCard.tsx` | 62 | |
+| `features/products/ui/ImageGallery.tsx` | 127 | base `text-body` **and** `hover:text-primary` on the same line |
+| `features/products/ui/EmptyResults.tsx` | 10 | |
+| `features/products/ui/ProductGrid.tsx` | 16 | |
 
 Effect on the flagged PDP specifically: spec-table labels/values and price/quantity text all
 render in the same color instead of the intended label-vs-value contrast — flattening exactly the

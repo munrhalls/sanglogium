@@ -7,7 +7,7 @@
 
 // NOTE: tests/ is excluded from tsconfig, so the "@/" alias is not resolved by
 // the editor here. Use a relative type-only import (matches tests/helpers).
-import type { Product } from "../../sanity-cms/lib/products/getProductsByVfsKeys";
+import type { Product } from "@/features/products";
 
 /** Catalogue location key shared by every fixture product. */
 export const FIXTURE_CATALOGUE_KEY = "cat-test";

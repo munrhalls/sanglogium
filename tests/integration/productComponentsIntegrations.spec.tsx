@@ -1,8 +1,7 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
 import { render, screen, act, cleanup } from '@testing-library/react'
 import '@testing-library/jest-dom/vitest'
-import { ProductCard } from '@/app/components/features/products/ProductCard'
-import { ProductInfo } from '@/app/components/features/products/ProductInfo'
+import { ProductCard, ProductInfo } from '@/features/products'
 import { useBasketStore } from '@/features/basket'
 
 // Mock next/link to avoid complex router setup
@@ -16,7 +15,7 @@ vi.mock('next-sanity/image', () => ({
 }))
 
 // Mock urlFor to handle simple URL strings
-vi.mock('@/sanity-cms/lib/image', () => ({
+vi.mock('@/lib/utils/sanityImageUrl', () => ({
   urlFor: (source: any) => ({
     width: () => ({
       height: () => ({

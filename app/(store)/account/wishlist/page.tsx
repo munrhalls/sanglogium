@@ -1,7 +1,7 @@
 import { verifySession } from "@/lib/auth/dal";
 import { getWishlistProducts } from "@/sanity-cms/lib/account/getWishlistProducts";
 import Link from "next/link";
-import { ProductGrid } from "@/app/components/features/products/ProductGrid";
+import { ProductGrid } from "@/features/products";
 
 export default async function WishlistPage() {
   const session = await verifySession();
