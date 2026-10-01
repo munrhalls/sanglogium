@@ -32,8 +32,6 @@
   "include": [
     "app/**/*.ts",
     "app/**/*.tsx",
-    "components/**/*.ts",
-    "components/**/*.tsx",
     "eslint.config.mjs",
     "features/**/*.ts",
     "features/**/*.tsx",
