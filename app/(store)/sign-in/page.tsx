@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import SignInForm from "./SignInForm";
+import { SignInForm } from "@/features/auth";
 import { isGoogleAuthEnabled } from "@/lib/auth/providers";
 
 export default function SignInPage() {
