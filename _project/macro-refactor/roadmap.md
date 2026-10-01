@@ -419,3 +419,67 @@ const NO_APP = {
 //  3. files features/*/actions.ts        : patterns [ENTRY_ONLY, NO_APP]        (override)
 //  4. files features/**                  : 'import/no-cycle': ['warn', { maxDepth: 6 }]    (A11 adds app/components/layout/** and flips to error once the owner confirms a clean baseline)
 ```
+
+## 10. Closing facts (measured, 2026-10-01)
+
+### Feature folders (tracked file counts and entry files present)
+
+| Feature | Tracked files | index.ts | server.ts | actions.ts |
+|---|---|---|---|---|
+| product-filtering | 39 | yes | yes | no |
+| product-search | 29 | yes | yes | no |
+| catalogue | 21 | yes | yes | no |
+| checkout | 21 | yes | yes | yes |
+| auth | 8 | yes | no | no |
+| basket | 15 | yes | no | no |
+| products | 26 | yes | no | yes |
+| homepage | 27 | yes | no | no |
+| account | 4 | yes | no | yes |
+
+### Legacy locations (gone or present, `git ls-files` count)
+
+| Location | Status |
+|---|---|
+| `app/components/features` | gone (0) |
+| `app/components/common` | gone (0) |
+| `app/components/skeletons` | gone (0) |
+| `app/actions` | gone (0) |
+| `app/hooks` | gone (0) |
+| `store` | gone (0) |
+| `lib/checkout` | gone (0) |
+| `lib/address` | gone (0) |
+| `lib/catalogue` | gone (0) |
+| `lib/session.ts` | gone (0) |
+| `lib/wishlist.ts` | gone (0) |
+| `data/catalogue.ts` | gone (0) |
+| `tests/checkout` | gone (0) |
+
+### Top level of `lib/` and `sanity-cms/lib` (measured on this branch; infra-closeout deletions not yet merged)
+
+`lib/` files: `auth-client.ts`, `auth.ts`, `email.ts`, `qrcode.d.ts`, `stripe.ts`. `lib/` dirs: `auth/`, `dev/`, `sanity/`, `shipping/`, `utils/`.
+
+`sanity-cms/lib/` files: `backendClient.ts`, `checkoutClient.ts`, `client.ts`, `deleteUtils.ts`. `sanity-cms/lib/` dirs: `account/`, `api/`, `homepage/`, `orders/`, `products/`.
+
+### Counts
+
+`sanity-cms` mentions under `features/` (file: count): `features/account/actions.ts`:6, `features/account/index.ts`:1, `features/auth/index.ts`:1, `features/basket/index.ts`:1, `features/catalogue/index.ts`:1, `features/checkout/index.ts`:1, `features/homepage/index.ts`:1, `features/product-filtering/__tests__/proofs/sanityRaw.mjs`:1, `features/product-filtering/config/facetMap.ts`:4, `features/product-filtering/config/slices/headphones.ts`:1, `features/product-filtering/domain/facetCounts.ts`:2, `features/product-filtering/index.ts`:1, `features/product-search/index.ts`:1, `features/product-search/ui/useSearchController.ts`:1, `features/products/actions.ts`:3, `features/products/index.ts`:1.
+
+`export *` under `features/`: 0.
+
+Files named `actions.ts`: `features/account/actions.ts`, `features/checkout/actions.ts`, `features/products/actions.ts`.
+
+### Dated docs still referencing retired paths (left untouched by the Turn 2 sweep)
+
+| File | Hits |
+|---|---|
+| `docs/auth/2026-07-11-account-auth-verification-and-gap-analysis.md` | 1 |
+| `docs/auth/devin-tasks/04-address-book.md` | 2 |
+| `docs/checkout/payment/implementation-intelligence.md` | 2 |
+| `docs/checkout/security-audit.md` | 26 |
+| `docs/checkout/security-intelligence.md` | 1 |
+| `docs/devin-carousel-arrow-visual-refinement-tasks.md` | 3 |
+| `docs/devin-carousel-controls-ux-tasks.md` | 12 |
+| `docs/devin-iem-ux-tasks.md` | 9 |
+| `docs/examples/gold-standard.tsx` | 1 (no clear new path: basket has no actions.ts) |
+| `docs/homepage-ux-audit-2026-08-05.md` | 1 |
+| `docs/performance/INVESTIGATION_REPORT.md` | 1 |
