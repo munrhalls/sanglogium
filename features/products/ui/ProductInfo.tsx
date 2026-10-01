@@ -8,7 +8,7 @@ import { ShoppingCartIcon, CheckIcon } from '@phosphor-icons/react/dist/ssr';
 import { QuantitySelector } from "./QuantitySelector";
 import { centsToDisplay } from '@/lib/utils/price';
 import { BasketControls } from "@/features/basket";
-import { WishlistButton } from "@/app/components/features/wishlist/WishlistButton";
+import { WishlistButton } from "./WishlistButton";
 
 // Fields at or above this word count are treated as narrative content (paragraphs,
 // e.g. Description/Sustainability/Battery Life copy) and demoted into the collapsed

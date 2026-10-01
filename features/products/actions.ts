@@ -1,7 +1,8 @@
 "use server";
 
 import { requireSession } from "@/lib/auth/dal";
-import { backendClient } from "@/sanity-cms/lib/backendClient";
+import { addWishlistItem } from "@/sanity-cms/lib/account/addWishlistItem";
+import { removeWishlistItem } from "@/sanity-cms/lib/account/removeWishlistItem";
 import { getProfileIdByAuthId } from "@/sanity-cms/lib/account/getProfileIdByAuthId";
 
 // Sanity document IDs are alphanumeric plus `_.-` (see Sanity's own ID rules).
@@ -22,12 +23,7 @@ export async function addToWishlist(productId: string) {
     return { error: "Profile not found." };
   }
 
-  await backendClient
-    .patch(profile._id)
-    .setIfMissing({ wishlist: [] })
-    .unset([`wishlist[_ref == "${productId}"]`])
-    .append("wishlist", [{ _type: "reference", _ref: productId }])
-    .commit();
+  await addWishlistItem(profile._id, productId);
 
   return { success: true };
 }
@@ -41,10 +37,7 @@ export async function removeFromWishlist(productId: string) {
     return { error: "Profile not found." };
   }
 
-  await backendClient
-    .patch(profile._id)
-    .unset([`wishlist[_ref == "${productId}"]`])
-    .commit();
+  await removeWishlistItem(profile._id, productId);
 
   return { success: true };
 }
