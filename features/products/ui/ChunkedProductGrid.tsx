@@ -1,11 +1,11 @@
 import React, { Suspense } from "react";
 import { cn } from "@/lib/utils/tailwind";
 import { ProductChunk } from "./ProductChunk";
-import { ProductChunkSkeleton } from "@/app/components/skeletons/ProductChunkSkeleton";
-import { productGridClass } from "./gridLayout";
+import { ProductChunkSkeleton } from "./ProductChunkSkeleton";
+import { productGridClass } from "../config/gridLayout";
 import { ImageRevealScript } from "./ImageRevealScript";
 import { ImageRevealClient } from "./ImageRevealClient";
-import type { Product } from "@/features/products";
+import type { Product } from "../domain/productTypes";
 
 export const CHUNK_SIZE = 6;
 

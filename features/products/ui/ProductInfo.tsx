@@ -1,11 +1,11 @@
 "use client";
 
-import type { ProductDetailData as Product } from "@/features/products";
+import type { ProductDetailData as Product } from "../domain/productTypes";
 import { urlFor } from '@/lib/utils/sanityImageUrl';
 import { useState } from 'react';
 import { Price } from '@/app/components/ui/Price';
 import { ShoppingCartIcon, CheckIcon } from '@phosphor-icons/react/dist/ssr';
-import { QuantitySelector } from '@/app/components/ui/QuantitySelector';
+import { QuantitySelector } from "./QuantitySelector";
 import { centsToDisplay } from '@/lib/utils/price';
 import { BasketControls } from "@/features/basket";
 import { WishlistButton } from "@/app/components/features/wishlist/WishlistButton";

@@ -5,7 +5,7 @@ import type { MouseEvent } from "react";
 import Link from "next/link";
 import { ArrowRight, MagnifyingGlass, SquaresFour, Tag } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils/tailwind";
-import { ProductImage } from "@/app/components/features/products/ProductImage";
+import { ProductImage } from "@/features/products";
 import { formatPrice } from "@/lib/utils/price";
 import type { AutocompleteProduct } from "../domain/searchTypes";
 import { HighlightedText } from "./HighlightedText";
