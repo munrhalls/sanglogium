@@ -1,4 +1,4 @@
-import type { NavigationItem } from "@/features/catalogue";
+import type { NavigationItem } from "../domain/catalogue";
 
 export type CatalogueNavItem = NavigationItem;
 

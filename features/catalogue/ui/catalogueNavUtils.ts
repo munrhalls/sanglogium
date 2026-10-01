@@ -1,4 +1,4 @@
-import type { CatalogueNavItem } from "./catalogue-nav.types";
+import type { CatalogueNavItem } from "./catalogueNavTypes";
 
 export function transformCatalogueJson(rawData: { catalogue: CatalogueNavItem[] }): CatalogueNavItem[] {
   // The data is already in the correct format from getCatalogueForNavigation()

@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils/tailwind";
-import type { CatalogueNavItem } from "../catalogue-nav.types";
+import type { CatalogueNavItem } from "../catalogueNavTypes";
 import DetailWatermark from "./DetailWatermark";
 import DetailSection from "./DetailSection";
 

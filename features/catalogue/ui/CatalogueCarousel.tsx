@@ -4,9 +4,9 @@ import { Carousel } from "@/app/components/ui/carousel/CarouselRoot";
 import { CarouselTrack } from "@/app/components/ui/carousel/CarouselTrack";
 import { CarouselSlide } from "@/app/components/ui/carousel/CarouselSlide";
 
-import { CatalogueView } from "@/app/components/layout/catalogue/CatalogueView";
-import { transformCatalogueJson } from "@/app/components/layout/catalogue/catalogue-nav.utils";
-import type { CatalogueNavItem } from "@/app/components/layout/catalogue/catalogue-nav.types";
+import { CatalogueView } from "./CatalogueView";
+import { transformCatalogueJson } from "./catalogueNavUtils";
+import type { CatalogueNavItem } from "./catalogueNavTypes";
 
 import { cn } from "@/lib/utils/tailwind";
 

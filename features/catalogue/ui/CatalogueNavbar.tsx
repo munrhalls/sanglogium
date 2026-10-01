@@ -1,8 +1,8 @@
 import React from "react";
 import { CatalogueView } from "./CatalogueView";
 import NavbarManager from "./NavbarManager";
-import { transformCatalogueJson } from "./catalogue-nav.utils";
-import type { CatalogueNavItem } from "./catalogue-nav.types";
+import { transformCatalogueJson } from "./catalogueNavUtils";
+import type { CatalogueNavItem } from "./catalogueNavTypes";
 import { cn } from "@/lib/utils/tailwind";
 
 interface CatalogueNavbarProps {
