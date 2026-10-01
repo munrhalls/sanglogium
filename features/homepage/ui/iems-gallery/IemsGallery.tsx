@@ -1,7 +1,7 @@
 import Link from "next/link";
 import IemsGalleryHeader from "./IemsGalleryHeader";
-import type { IemProduct } from "@/features/homepage";
-import { getProductBadge } from "./getProductBadge";
+import type { IemProduct } from "../../domain/homepageTypes";
+import { getProductBadge } from "../../domain/getProductBadge";
 import IemCard from "./IemCard";
 
 interface IemsGalleryProps {

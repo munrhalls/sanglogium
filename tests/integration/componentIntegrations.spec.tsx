@@ -2,10 +2,7 @@ import { describe, it, expect, vi, afterEach } from 'vitest'
 import { render, screen, act, cleanup } from '@testing-library/react'
 import '@testing-library/jest-dom/vitest'
 import { BasketControls } from '@/features/basket'
-import { FeaturedCard } from '@/features/homepage'
-import IemCard from '@/app/components/features/homepage/iems-gallery/IemCard'
-import DacCard from '@/app/components/features/homepage/dacs/DacCard'
-import AccessoryCard from '@/app/components/features/homepage/accessories/AccessoryCard'
+import { FeaturedCard, IemCard, DacCard, AccessoryCard } from '@/features/homepage'
 import { useBasketStore } from '@/features/basket'
 
 // Mock next/link to avoid complex router setup

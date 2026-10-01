@@ -1,4 +1,4 @@
-import Accessories from "@/app/components/features/homepage/accessories/Accessories";
+import { Accessories } from "@/features/homepage";
 import Shelf from "@/app/components/layout/general/Shelf";
 import { fetchHomepageData } from "../lib/fetchHomepageData";
 import fs from "fs/promises";

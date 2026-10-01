@@ -6,7 +6,7 @@ import { CarouselSlide } from '@/app/components/ui/carousel/CarouselSlide';
 import { CarouselNext, CarouselPrevious, CarouselDots } from '@/app/components/ui/carousel/CarouselControls';
 import DacsHeader from "./DacsHeader";
 import DacCard from "./DacCard";
-import type { DacProduct } from "@/features/homepage";
+import type { DacProduct } from "../../domain/homepageTypes";
 
 interface DacsProps {
   dacsData: DacProduct[];

@@ -1,9 +1,5 @@
-import IemsGallery from "@/app/components/features/homepage/iems-gallery/IemsGallery";
 import { getIemProductsBySlugs } from "@/sanity-cms/lib/homepage/getIemProductsBySlugs";
-import { Hero, TrustBar, Featured, ProductSpotlight1, ProductSpotlight2, ProductSpotlight3, HOME_12 } from "@/features/homepage";
-import NewestRelease from "@/app/components/features/homepage/newest-release/NewestRelease";
-import Dacs from "@/app/components/features/homepage/dacs/Dacs";
-import Accessories from "@/app/components/features/homepage/accessories/Accessories";
+import { Hero, TrustBar, Featured, ProductSpotlight1, ProductSpotlight2, ProductSpotlight3, IemsGallery, NewestRelease, Dacs, Accessories, HOME_12 } from "@/features/homepage";
 import Shelf from "@/app/components/layout/general/Shelf";
 import { fetchHomepageData } from "./lib/fetchHomepageData";
 
