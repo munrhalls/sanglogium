@@ -1,7 +1,7 @@
 import { verifySession } from "@/lib/auth/dal";
 import { getUserAddresses } from "@/sanity-cms/lib/account/getUserAddresses";
 import Link from "next/link";
-import AddressesClient from "./AddressesClient";
+import { AddressesClient } from "@/features/account";
 
 export default async function AddressesPage() {
   const session = await verifySession();

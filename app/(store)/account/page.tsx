@@ -2,7 +2,7 @@ import { verifySession } from "@/lib/auth/dal";
 import { getAccountSummary } from "@/sanity-cms/lib/account/getAccountSummary";
 import { countMergedGuestOrders } from "@/sanity-cms/lib/account/countMergedGuestOrders";
 import Link from "next/link";
-import AccountActionsClient from "./AccountActions.client";
+import { AccountActionsClient } from "@/features/account";
 
 interface AccountPageProps {
   searchParams?: Promise<{ merge?: string; emailChanged?: string }>;

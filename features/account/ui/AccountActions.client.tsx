@@ -3,7 +3,7 @@
 import { useActionState, useEffect, useState } from "react";
 import { authClient } from "@/lib/auth-client";
 import { TwoFactorSection, signOut, signOutAllDevices } from "@/features/auth";
-import { updateName, updatePreferences } from "@/features/account/actions";
+import { updateName, updatePreferences } from "../actions";
 
 async function requireFreshSession(): Promise<boolean> {
   const session = await authClient.getSession();
