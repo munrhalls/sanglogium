@@ -1,6 +1,6 @@
 import { getCheckoutSession } from "@/features/checkout/server";
 import { redirect } from "next/navigation";
-import AddressForm from "./AddressForm";
+import { AddressForm } from "@/features/checkout";
 import type { Address } from "@/features/checkout";
 
 export default async function Page() {

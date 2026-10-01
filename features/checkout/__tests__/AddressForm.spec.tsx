@@ -3,8 +3,8 @@ import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 import userEvent from '@testing-library/user-event';
 import { Component, createRef, type ReactNode } from 'react';
-import AddressForm from './AddressForm';
-import { saveAddress } from '@/features/checkout/actions';
+import AddressForm from '../ui/AddressForm';
+import { saveAddress } from '../actions';
 
 class TestErrorBoundary extends Component<
   { children: ReactNode },
@@ -24,11 +24,11 @@ class TestErrorBoundary extends Component<
   }
 }
 
-vi.mock('@/features/checkout/actions', () => ({
+vi.mock('../actions', () => ({
   saveAddress: vi.fn(),
 }));
 
-vi.mock('../_components/CheckoutStepper', () => ({
+vi.mock('../ui/CheckoutStepper', () => ({
   default: ({ currentStep }: { currentStep: number }) => (
     <nav data-testid="stepper">Step {currentStep}</nav>
   ),

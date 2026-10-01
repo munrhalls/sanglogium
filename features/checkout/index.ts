@@ -1,6 +1,13 @@
 // Client-safe public entry. Routes, sanity-cms, layout and other features import ONLY from here, from ./server or from ./actions.
 // Never re-export server-only or Sanity code here.
 // Explicit named re-exports only; never bare export *.
-export type { Address, Status, ServerResponse, ServerProduct, BasketCheckoutItem } from './domain/checkoutTypes';
+export type { Address } from './domain/checkoutTypes';
 export { calculatePackages, calculatePackagesFromReservation, DEFAULT_PARCEL } from './domain/parcelCalculator';
 export { detectCountry } from './domain/countryDetector';
+export { default as CheckoutStepper } from './ui/CheckoutStepper';
+export { default as CheckoutSummary } from './ui/CheckoutSummary';
+export { default as AddressForm } from './ui/AddressForm';
+export { default as ShippingPageClient } from './ui/ShippingPageClient';
+export { RefreshButton } from './ui/RefreshButton';
+export { SuccessAnalytics } from './ui/SuccessAnalytics.client';
+export { CheckoutButton } from './ui/CheckoutButton';

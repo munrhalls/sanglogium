@@ -7,8 +7,7 @@ import { retrievePaymentIntent } from '@/lib/stripe'
 import { logCheckoutEvent } from '@/lib/dev/event-logger'
 import { fetchOrderByPaymentIntentId } from '@/sanity-cms/lib/orders/getOrderByPaymentIntentId'
 import OrderDetails from './OrderDetails'
-import { RefreshButton } from './RefreshButton'
-import { SuccessAnalytics } from './SuccessAnalytics.client'
+import { RefreshButton, SuccessAnalytics } from '@/features/checkout'
 import { formatPrice } from '@/lib/utils/price'
 
 interface SuccessPageSearchParams {

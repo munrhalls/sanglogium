@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import type { ReactNode } from 'react';
-import CheckoutSummary from '@/app/checkout/payment/_components/CheckoutSummary';
+import { CheckoutSummary } from '@/features/checkout';
 import { BasketItemDisplay } from './_showcase/BasketItemDisplay';
 import { PaymentMethodSelector } from './_showcase/PaymentMethodSelector';
 

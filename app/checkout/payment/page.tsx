@@ -4,9 +4,8 @@ import Link from "next/link";
 import { client } from "@/sanity-cms/lib/client";
 import groq from "groq";
 import PaymentForm from "./PaymentForm.client";
-import CheckoutSummary from "./_components/CheckoutSummary";
+import { CheckoutSummary, CheckoutStepper } from "@/features/checkout";
 import { logCheckoutEvent } from "@/lib/dev/event-logger";
-import CheckoutStepper from "../_components/CheckoutStepper";
 
 interface PaymentProduct {
   _id: string;
