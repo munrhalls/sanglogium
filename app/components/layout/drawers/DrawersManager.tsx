@@ -1,7 +1,7 @@
 "use client";
 
 import { Drawer } from "vaul";
-import { useDrawer } from "@/app/hooks/nuqs/useDrawer";
+import { useDrawer } from "./useDrawer";
 import CarouselCatalogue from "@/app/components/layout/catalogue/CatalogueCarousel";
 import { cn } from "@/lib/utils/tailwind";
 
