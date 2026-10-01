@@ -25,7 +25,7 @@ sequenceDiagram
 
 ## Key Components
 
-- **basketStore.ts** (`store/basketStore.ts`) - Zustand store with persist middleware
+- **basketStore.ts** (`features/basket/ui/basketStore.ts`) - Zustand store with persist middleware
 - **Zod Schema** - Input validation for basket items (productId, quantity)
 - **Fallback Storage** - localStorage → sessionStorage graceful degradation
 - **Selectors** - Computed values (totalItems, hasItem, itemQuantity)

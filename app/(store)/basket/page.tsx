@@ -1,6 +1,5 @@
-import BasketManager from "@/app/components/features/basket/BasketManager";
+import { BasketManager, Loader } from "@/features/basket";
 import { Suspense } from "react";
-import Loader from "@/app/components/common/Loader";
 import Shelf from "@/app/components/layout/general/Shelf";
 
 export default function BasketPage() {

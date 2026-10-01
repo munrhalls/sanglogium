@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Trash } from "@phosphor-icons/react";
 import { useShallow } from "zustand/shallow";
 import { BasketControls } from "./BasketControls";
-import useBasketStore from "@/store/basketStore";
+import useBasketStore from "./basketStore";
 import { sanityImageLoader } from "@/lib/utils/sanityImageLoader";
 import { formatPriceMajor } from "@/lib/utils/price";
 

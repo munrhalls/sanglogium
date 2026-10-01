@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useDrawer } from "@/app/components/layout/drawers/useDrawer";
 import { useSearchOverlay } from "@/features/product-search";
 import { cn } from "@/lib/utils/tailwind";
-import useBasketStore, { selectTotalItemsCount, selectHasHydrated } from "@/store/basketStore";
+import { useBasketStore, selectTotalItemsCount, selectHasHydrated } from "@/features/basket";
 
 
 

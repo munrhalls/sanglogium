@@ -7,7 +7,7 @@ import { Price } from '@/app/components/ui/Price';
 import { ShoppingCartIcon, CheckIcon } from '@phosphor-icons/react/dist/ssr';
 import { QuantitySelector } from '@/app/components/ui/QuantitySelector';
 import { centsToDisplay } from '@/lib/utils/price';
-import { BasketControls } from "@/app/components/features/basket/BasketControls";
+import { BasketControls } from "@/features/basket";
 import { WishlistButton } from "@/app/components/features/wishlist/WishlistButton";
 
 // Fields at or above this word count are treated as narrative content (paragraphs,

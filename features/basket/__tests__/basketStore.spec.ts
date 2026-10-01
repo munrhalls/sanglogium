@@ -5,7 +5,7 @@
 // - Reason: Foundation for basket state management
 
 import { describe, it, expect, beforeEach } from 'vitest'
-import useBasketStore, { selectTotalItemsCount, selectHasItem, selectItemQuantity } from './../../basketStore'
+import useBasketStore, { selectTotalItemsCount, selectHasItem, selectItemQuantity } from '../ui/basketStore'
 
 describe('BasketStore Actions', () => {
   beforeEach(() => {

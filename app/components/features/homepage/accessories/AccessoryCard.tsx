@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { AccessoryItem } from "./types";
-import { BasketControls } from "@/app/components/features/basket/BasketControls";
+import { BasketControls } from "@/features/basket";
 import { Price } from "@/app/components/ui/Price";
 import { ProductBadge } from "@/app/components/ui/ProductBadge";
 import { centsToDisplay } from "@/lib/utils/price";
