@@ -35,6 +35,8 @@ export default defineConfig(({ mode }) => {
         '**/node_modules/**',
         '**/dist/**',
         '**/.next/**',
+        '**/e2e/**',
+        '**/live/**',
       ],
     },
   };

@@ -20,7 +20,6 @@ export default defineConfig(({ mode }) => {
       env: {
         ...env,
         NODE_ENV: "test",
-        RESERVATION_TTL_SEC: "5",
       },
       setupFiles: ['./vitest.integration.setup.ts'],
       hookTimeout: 60000, // 60s for server start/stop
@@ -28,15 +27,15 @@ export default defineConfig(({ mode }) => {
       fileParallelism: false, // Run test files sequentially for isolation
       maxWorkers: 1, // Single worker to prevent race conditions
       include: [
-        'tests/basket/integration/**/*.test.ts',
         'app/components/features/basket/__tests__/integration/**/*.test.ts',
-        'tests/checkout/guest-checkout-inventory-reservation/integration/**/*.test.tsx',
-        'tests/checkout/guest-checkout-inventory-reservation/integration/**/*.test.ts',
         'tests/checkout/integration/**/*.test.ts',
+        'tests/live/**/*.spec.ts',
+        'tests/live/**/*.spec.tsx',
       ],
       exclude: [
-        'tests/checkout/guest-checkout-inventory-reservation/integration/**/node_modules/**',
-        'tests/checkout/guest-checkout-inventory-reservation/integration/**/dist/**',
+        '**/node_modules/**',
+        '**/dist/**',
+        '**/.next/**',
       ],
     },
   };

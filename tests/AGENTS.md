@@ -2,11 +2,14 @@
 
 When working with test files in this directory:
 
-## Naming
-- Unit tests: `[subject].test.ts` or `[subject].test.tsx`
-- Integration tests: `[subject].test.ts`
-- E2E tests: `[feature].spec.ts`
-- Component tests: `[subject].spec.tsx`
+## Naming and lanes
+- Unit and component specs (jsdom, no network): `[subject].spec.ts` or `[subject].spec.tsx`, colocated and flat in the owner's `__tests__/` (for features: `features/<name>/__tests__/`). Default lane: `npm test`.
+- Live-service specs (real Sanity, dev server on :3000, real Stripe): `[subject].spec.ts(x)` in `tests/live/<owner>/` (these specs import sanity-cms or need real services, which `features/**` may not do). Run with `npm run test:live` only (vitest.integration.config.ts); the default lane excludes `**/live/**`.
+- Specs for an `app/api` route: `[route].spec.ts` in that route's `__tests__/` (routes are not features).
+- Browser e2e (Playwright): `[flow].spec.ts` in `tests/e2e/<journey>/` (performance specs: `tests/e2e/performance/`). A journey spec drives the whole app, so no single feature owns it. The default lane excludes `**/e2e/**`.
+- A spec that imports two or more sibling features: `tests/integration/[topic].spec.tsx`.
+- Live-CMS proof scripts (Node .mjs, run by a human): `features/<name>/__tests__/{proofs,data}/`.
+- Older files still named `.test.ts`, or kept in `unit/` and `integration/` subfolders, are renamed or flattened by the axis that moves their owner; do not rename them elsewhere.
 
 ## Structure (Contract-Based)
 - Top-level `describe`: Contract or system name (e.g., "Basket Store", "Basket Page Contracts")
