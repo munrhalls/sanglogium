@@ -6,6 +6,40 @@ import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const sangLogiumPlugin = require("./eslint-plugin-sang-logium.cjs");
 
+const JEST_PATHS = [
+  {
+    name: "jest",
+    message: "Use Vitest instead. See tests/AGENTS.md Testing Rules.",
+  },
+  {
+    name: "@testing-library/jest-dom",
+    message: "Use Vitest matchers instead. See tests/AGENTS.md Testing Rules.",
+  },
+  {
+    name: "@testing-library/jest-dom/extend-expect",
+    message: "Use Vitest matchers instead. See tests/AGENTS.md Testing Rules.",
+  },
+];
+
+// Anchored so it matches "@/features/x/y" and "../features/x/y" but never the legacy "@/app/components/features/x/y".
+const ENTRY_ONLY = {
+  regex: "^(@/|(\\.\\.?/)+)features/[^/]+/(?!(server|actions)$).+",
+  message:
+    "Import from @/features/<feature> (client-safe), @/features/<feature>/server (server only) or @/features/<feature>/actions (Server Actions). Deep imports are not allowed.",
+};
+
+const NO_SANITY = {
+  regex: "(^|/)sanity-cms/",
+  message:
+    "Features must not import sanity-cms. Data access stays in sanity-cms/lib and calls into the feature through @/features/<feature>/server. Only features/<feature>/actions.ts may import sanity-cms.",
+};
+
+const NO_APP = {
+  regex: "(^|/)app/(?!components/(ui|features)/)",
+  message:
+    "Features never import routes, server actions, hooks or the shell (app/components/layout). Shared UI lives in app/components/ui.",
+};
+
 export default [
   ...nextVitals,
   ...nextTypeScript,
@@ -18,20 +52,7 @@ export default [
       "no-restricted-imports": [
         "error",
         {
-          paths: [
-            {
-              name: "jest",
-              message: "Use Vitest instead. See tests/AGENTS.md Testing Rules.",
-            },
-            {
-              name: "@testing-library/jest-dom",
-              message: "Use Vitest matchers instead. See tests/AGENTS.md Testing Rules.",
-            },
-            {
-              name: "@testing-library/jest-dom/extend-expect",
-              message: "Use Vitest matchers instead. See tests/AGENTS.md Testing Rules.",
-            },
-          ],
+          paths: JEST_PATHS,
         },
       ],
 
@@ -59,68 +80,43 @@ export default [
       "no-restricted-imports": [
         "error",
         {
-          paths: [
-            {
-              name: "jest",
-              message: "Use Vitest instead. See tests/AGENTS.md Testing Rules.",
-            },
-            {
-              name: "@testing-library/jest-dom",
-              message: "Use Vitest matchers instead. See tests/AGENTS.md Testing Rules.",
-            },
-            {
-              name: "@testing-library/jest-dom/extend-expect",
-              message: "Use Vitest matchers instead. See tests/AGENTS.md Testing Rules.",
-            },
-          ],
-          patterns: [
-            {
-              regex: "(^|/)features/(product-filtering|product-search)/(?!server$).+",
-              message:
-                "Import from @/features/<feature> (client-safe) or @/features/<feature>/server (server only). Deep imports are not allowed.",
-            },
-          ],
+          paths: JEST_PATHS,
+          patterns: [ENTRY_ONLY],
         },
       ],
     },
   },
   {
-    files: [
-      "features/product-filtering/**/*.{ts,tsx}",
-      "features/product-search/**/*.{ts,tsx}",
-    ],
+    files: ["features/**/*.{ts,tsx}"],
     rules: {
       "no-restricted-imports": [
         "error",
         {
-          paths: [
-            {
-              name: "jest",
-              message: "Use Vitest instead. See tests/AGENTS.md Testing Rules.",
-            },
-            {
-              name: "@testing-library/jest-dom",
-              message: "Use Vitest matchers instead. See tests/AGENTS.md Testing Rules.",
-            },
-            {
-              name: "@testing-library/jest-dom/extend-expect",
-              message: "Use Vitest matchers instead. See tests/AGENTS.md Testing Rules.",
-            },
-          ],
-          patterns: [
-            {
-              regex: "(^|/)features/(product-filtering|product-search)/(?!server$).+",
-              message:
-                "Import from @/features/<feature> (client-safe) or @/features/<feature>/server (server only). Deep imports are not allowed.",
-            },
-            {
-              regex: "(^|/)sanity-cms/",
-              message:
-                "Product features must not import sanity-cms. Data access stays in sanity-cms/lib/products and calls into the feature through @/features/<feature>/server.",
-            },
-          ],
+          paths: JEST_PATHS,
+          patterns: [ENTRY_ONLY, NO_SANITY, NO_APP],
         },
       ],
+    },
+  },
+  {
+    // The only feature files allowed to import sanity-cms; a later flat-config
+    // block replaces the rule for matching files, so the jest paths and the
+    // entry/app rules are repeated here.
+    files: ["features/*/actions.ts"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          paths: JEST_PATHS,
+          patterns: [ENTRY_ONLY, NO_APP],
+        },
+      ],
+    },
+  },
+  {
+    files: ["features/**/*.{ts,tsx}"],
+    rules: {
+      "import/no-cycle": ["warn", { maxDepth: 6 }],
     },
   },
   eslintConfigPrettier,

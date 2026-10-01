@@ -11,9 +11,15 @@ product_surface:
   - path: app/api
     kind: api
     drives: Route handlers consumed by the storefront and webhooks (Stripe, etc.).
-  - path: app/actions
+  - path: features/checkout/actions.ts
     kind: api
-    drives: Server actions - basket, checkout, wishlist mutations invoked from the storefront UI.
+    drives: Checkout Server Actions - session init, address validation and shipping saves invoked from the storefront UI.
+  - path: features/products/actions.ts
+    kind: api
+    drives: Wishlist Server Actions - add or remove a product from the signed-in user's wishlist from the heart button.
+  - path: features/account/actions.ts
+    kind: api
+    drives: Account Server Actions - profile name, marketing preferences and address book changes invoked from the signed-in account pages.
 
 test:
   instructions: |
@@ -33,6 +39,10 @@ test:
     open a product). For app/(admin) or app/(studio): same, against that
     surface's own pages. For app/api or app/actions: exercise the changed
     route/action for real (a real request/invocation), not a source-code read.
+
+    For a PR that moves or edits code under features/<name>/ui or app/components/ (an organization-only refactor): no behaviour change is expected. Open the storefront pages that render the moved components (for example the home page for homepage sections, /products and a product page for product components, /basket for basket components) and confirm they look and behave as before.
+
+    For a PR that touches features/<name>/actions.ts: invoke the action for real from the UI that uses it (a real form submit or click), not a source-code read, and confirm the data change.
 
 commands:
   test: npm test
