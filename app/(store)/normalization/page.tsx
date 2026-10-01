@@ -1,6 +1,6 @@
 import Shelf from "@/app/components/layout/general/Shelf";
-import { getIemProductsBySlugs, HOME_12 } from "@/app/components/features/homepage/iems-gallery/getIemProducts";
-import IemsGallery from "@/app/components/features/homepage/iems-gallery/IemsGallery";
+import { getIemProductsBySlugs } from "@/sanity-cms/lib/homepage/getIemProductsBySlugs";
+import { IemsGallery, HOME_12 } from "@/features/homepage";
 
 export const revalidate = 3600;
 

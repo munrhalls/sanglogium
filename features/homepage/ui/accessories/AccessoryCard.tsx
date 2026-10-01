@@ -3,7 +3,7 @@ import Link from "next/link";
 import type { AccessoryItem } from "./types";
 import { BasketControls } from "@/features/basket";
 import { Price } from "@/app/components/ui/Price";
-import { ProductBadge } from "@/app/components/ui/ProductBadge";
+import { ProductBadge } from "../shared/ProductBadge";
 import { centsToDisplay } from "@/lib/utils/price";
 
 interface AccessoryCardProps {

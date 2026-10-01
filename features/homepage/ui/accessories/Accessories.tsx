@@ -1,6 +1,6 @@
 import AccessoriesHeader from "./AccessoriesHeader";
 import CategorySection from "./CategorySection";
-import type { AccessoryData } from "@/sanity-cms/lib/homepage/getHomepageData";
+import type { AccessoryData } from "../../domain/homepageTypes";
 
 interface AccessoriesProps {
   accessoriesData: AccessoryData;

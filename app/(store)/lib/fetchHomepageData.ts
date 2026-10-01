@@ -1,7 +1,8 @@
-import { fetchHomepageDataBatched, HomepageData } from "@/sanity-cms/lib/homepage/getHomepageData";
+import { fetchHomepageDataBatched } from "@/sanity-cms/lib/homepage/getHomepageData";
+import type { HomepageData } from "@/features/homepage";
 
 // Re-export the interface for backward compatibility
-export type { HomepageData } from "@/sanity-cms/lib/homepage/getHomepageData";
+export type { HomepageData } from "@/features/homepage";
 
 /**
  * Fetches all homepage data using batched queries.
