@@ -32,7 +32,7 @@ vi.mock("@/lib/email", () => ({ sendOrderConfirmationEmail: vi.fn() }));
 import {
   createOrderFromPaymentIntent,
   type OrderSessionData,
-} from "@/lib/checkout/createOrderFromPaymentIntent";
+} from "../createOrderFromPaymentIntent";
 import { logCheckoutEvent } from "@/lib/dev/event-logger";
 import { sendOrderConfirmationEmail } from "@/lib/email";
 
