@@ -40,7 +40,7 @@ Render ProductGrid with products
 | File | Purpose |
 |------|---------|
 | `data/catalogue-index.json` | Pre-built index with all slot IDs and tree structure |
-| `data/catalogue.ts` | VFS functions: `resolveSlugToId`, `unrollDescendantKeys` |
+| `features/catalogue/domain/catalogue.ts` | VFS functions: `resolveSlugToId`, `unrollDescendantKeys` |
 
 ### Product Resolution Layer
 | File | Purpose |
@@ -52,8 +52,8 @@ Render ProductGrid with products
 ### Navigation Layer
 | File | Purpose |
 |------|---------|
-| `app/components/layout/catalogue/CatalogueNavbar.tsx` | Renders navigation from VFS |
-| `app/components/layout/catalogue/details/DetailSection.tsx` | Renders category links |
+| `features/catalogue/ui/CatalogueNavbar.tsx` | Renders navigation from VFS |
+| `features/catalogue/ui/details/DetailSection.tsx` | Renders category links |
 
 ## VFS Functions Reference
 
@@ -172,7 +172,7 @@ export default async function CategoryPage({
 
 ### Step 3: Update Navigation URLs
 
-In `data/catalogue.ts`, change URL generation:
+In `features/catalogue/domain/catalogue.ts`, change URL generation:
 
 ```typescript
 // From:
