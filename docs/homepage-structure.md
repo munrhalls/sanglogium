@@ -10,8 +10,8 @@ If a fact here contradicts the code, the code wins — re-verify after any large
 
 ## Data fetching — two calls in `page.tsx`
 
-1. `fetchHomepageData()` → `fetchHomepageDataBatched()` (`sanity-cms/lib/homepage/getHomepageData.ts`) — **2 Sanity queries**: one for `hero`, one batched GROQ query for every other section (featured, 3 spotlights, newestRelease, dacs, all 7 accessory categories). Replaced ~10 separate fetches; TTFB ~10.9s → <600ms.
-2. `getIemProductsBySlugs(HOME_12)` (`app/components/features/homepage/iems-gallery/getIemProducts.ts`) — separate query, IEM products by a hardcoded slug list, passed to `IemsGallery` as `iemsData`. The `iemsGallery` field on `fetchHomepageData`'s return is unused dead weight.
+1. `fetchHomepageData()` → `fetchHomepageDataBatched()` (`sanity-cms/lib/homepage/getHomepageData.ts`; the section data types live in `features/homepage/domain/homepageTypes.ts` and the fetcher imports them from `@/features/homepage`) — **2 Sanity queries**: one for `hero`, one batched GROQ query for every other section (featured, 3 spotlights, newestRelease, dacs, all 7 accessory categories). Replaced ~10 separate fetches; TTFB ~10.9s → <600ms.
+2. `getIemProductsBySlugs(HOME_12)` (`sanity-cms/lib/homepage/getIemProductsBySlugs.ts`; `HOME_12` lives in `features/homepage/config/homeIems.ts`) — separate query, IEM products by a hardcoded slug list, passed to `IemsGallery` as `iemsData`. The `iemsGallery` field on `fetchHomepageData`'s return is unused dead weight.
 
 **New homepage data → add a field to the batched query. Do not add a third separate fetch.**
 
@@ -19,14 +19,14 @@ If a fact here contradicts the code, the code wins — re-verify after any large
 
 | Section | File | Data prop |
 |---|---|---|
-| Hero | `homepage/hero/Hero.tsx` | `data.hero` |
-| TrustBar | `homepage/trust-bar/TrustBar.tsx` | none (static) |
-| Featured | `homepage/featured/` | `data.featured` |
-| ProductSpotlight1/2/3 | `homepage/product-spotlight-{1,2,3}/` | `data.spotlight{1,2,3}` |
-| IemsGallery | `homepage/iems-gallery/IemsGallery.tsx` | `iemsData` (call #2) |
-| NewestRelease | `homepage/newest-release/NewestRelease.tsx` | `data.newestRelease` |
-| Dacs | `homepage/dacs/Dacs.tsx` | `data.dacs` |
-| Accessories | `homepage/accessories/Accessories.tsx` (+ `CategorySection.tsx`) | `data.accessories.{cables,interconnects,adapters,earpads,eartips,careCleaning,storage}` |
+| Hero | `features/homepage/ui/hero/Hero.tsx` | `data.hero` |
+| TrustBar | `features/homepage/ui/trust-bar/TrustBar.tsx` | none (static) |
+| Featured | `features/homepage/ui/featured/` | `data.featured` |
+| ProductSpotlight1/2/3 | `features/homepage/ui/product-spotlight-{1,2,3}/` | `data.spotlight{1,2,3}` |
+| IemsGallery | `features/homepage/ui/iems-gallery/IemsGallery.tsx` | `iemsData` (call #2) |
+| NewestRelease | `features/homepage/ui/newest-release/NewestRelease.tsx` | `data.newestRelease` |
+| Dacs | `features/homepage/ui/dacs/Dacs.tsx` | `data.dacs` |
+| Accessories | `features/homepage/ui/accessories/Accessories.tsx` (+ `CategorySection.tsx`) | `data.accessories.{cables,interconnects,adapters,earpads,eartips,careCleaning,storage}` |
 
 Every section except Hero and TrustBar is wrapped in `Shelf` (`app/components/layout/general/Shelf.tsx`) in `page.tsx`, with a `spacing` prop and optional `fullBleed`.
 
@@ -34,10 +34,10 @@ Every section except Hero and TrustBar is wrapped in `Shelf` (`app/components/la
 
 There is no shared homepage product card. Each section has its own:
 
-- Featured → `homepage/featured/card/Card.tsx`
-- IemsGallery → `homepage/iems-gallery/IemCard.tsx`
-- Dacs → `homepage/dacs/DacCard.tsx`
-- Accessories → `homepage/accessories/AccessoryCard.tsx`
+- Featured → `FeaturedCard` in `features/homepage/ui/featured/Featured.tsx`
+- IemsGallery → `features/homepage/ui/iems-gallery/IemCard.tsx`
+- Dacs → `features/homepage/ui/dacs/DacCard.tsx`
+- Accessories → `features/homepage/ui/accessories/AccessoryCard.tsx`
 - Spotlights, NewestRelease → no card component; bespoke single-product layouts.
 
 `IemCard.tsx` and `AccessoryCard.tsx` are structurally identical and must be kept in sync by hand.
@@ -48,7 +48,7 @@ There is no shared homepage product card. Each section has its own:
 Page tree is Server Components by default. Client islands:
 
 - `HeroQualityBar.tsx` (child of Hero)
-- The carousel primitives (`app/components/layout/carousel/Carousel*.tsx`)
+- The carousel primitives (`app/components/ui/carousel/Carousel*.tsx`)
 - Leaf controls inside cards: `BasketControls.tsx`, `WishlistButton.tsx`
 
 The card components themselves (`Card`, `IemCard`, `DacCard`, `AccessoryCard`) are Server Components that render those client leaves.
@@ -57,7 +57,7 @@ The card components themselves (`Card`, `IemCard`, `DacCard`, `AccessoryCard`) a
 
 No section component or card owns Zustand / `nuqs` state. Cards delegate:
 
-- basket add/remove → `BasketControls` (`app/components/features/basket/BasketControls.tsx`)
+- basket add/remove → `BasketControls` (`features/basket/ui/BasketControls.tsx`)
 - wishlist toggle → `WishlistButton` (`app/components/features/wishlist/WishlistButton.tsx`)
 
 A "add to basket from the homepage" bug is in `BasketControls`, not the section or card.
@@ -65,8 +65,8 @@ A "add to basket from the homepage" bug is in `BasketControls`, not the section 
 ## Shared primitives
 
 - `Shelf` — section layout wrapper.
-- `SectionHeader` (`homepage/shared/SectionHeader.tsx`) — reused header block (e.g. via `IemsGalleryHeader`).
-- Carousel (`app/components/layout/carousel/`) — imported by 7 sections (Featured, Accessories/CategorySection, Dacs, NewestRelease, all 3 spotlights). One implementation — a carousel bug in one place is present everywhere.
+- `SectionHeader` (`features/homepage/ui/shared/SectionHeader.tsx`) — reused header block (e.g. via `IemsGalleryHeader`).
+- Carousel (`app/components/ui/carousel/`) — imported by 7 sections (Featured, Accessories/CategorySection, Dacs, NewestRelease, all 3 spotlights). One implementation — a carousel bug in one place is present everywhere.
 
 ---
 
