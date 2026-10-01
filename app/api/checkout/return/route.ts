@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { getCheckoutSession } from "@/lib/session";
+import { getCheckoutSession } from "@/features/checkout/server";
 import { retrievePaymentIntent } from "@/lib/stripe";
 import { logCheckoutEvent } from "@/lib/dev/event-logger";
 import { createOrderFromPaymentIntent, type OrderSessionData } from "@/lib/checkout/createOrderFromPaymentIntent";

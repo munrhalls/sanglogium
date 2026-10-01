@@ -1,6 +1,6 @@
 ﻿import { describe, it, expect, vi, beforeEach } from "vitest";
-import { submitShippingAction } from "./address";
-import type { Address } from "@/app/checkout/checkout.types";
+import { submitShippingAction } from "../actions";
+import type { Address } from "../domain/checkoutTypes";
 
 const mockFetch = vi.fn();
 vi.stubGlobal("fetch", mockFetch);

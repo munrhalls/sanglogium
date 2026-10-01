@@ -1,7 +1,7 @@
-import { getCheckoutSession } from "@/lib/session";
+import { getCheckoutSession } from "@/features/checkout/server";
 import { redirect } from "next/navigation";
-import { fetchAlleKurierRates, transformAlleKurierToShippingOption } from "@/lib/shipping/allekurier-rates";
-import { calculatePackages } from "@/lib/shipping/parcel-calculator";
+import { fetchAlleKurierRates, transformAlleKurierToShippingOption } from "@/features/checkout/server";
+import { calculatePackages } from "@/features/checkout";
 import { getProductsByIds } from "@/sanity-cms/lib/products/getProductsByIds";
 import ShippingPageClient from "./ShippingPageClient";
 import { logCheckoutEvent } from "@/lib/dev/event-logger";

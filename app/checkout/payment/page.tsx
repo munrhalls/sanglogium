@@ -1,4 +1,4 @@
-import { getCheckoutSession } from "@/lib/session";
+import { getCheckoutSession } from "@/features/checkout/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { client } from "@/sanity-cms/lib/client";

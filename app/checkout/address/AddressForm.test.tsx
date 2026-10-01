@@ -4,7 +4,7 @@ import '@testing-library/jest-dom/vitest';
 import userEvent from '@testing-library/user-event';
 import { Component, createRef, type ReactNode } from 'react';
 import AddressForm from './AddressForm';
-import { saveAddress } from '@/app/actions/checkout';
+import { saveAddress } from '@/features/checkout/actions';
 
 class TestErrorBoundary extends Component<
   { children: ReactNode },
@@ -24,7 +24,7 @@ class TestErrorBoundary extends Component<
   }
 }
 
-vi.mock('@/app/actions/checkout', () => ({
+vi.mock('@/features/checkout/actions', () => ({
   saveAddress: vi.fn(),
 }));
 

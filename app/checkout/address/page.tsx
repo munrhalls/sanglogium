@@ -1,7 +1,7 @@
-import { getCheckoutSession } from "@/lib/session";
+import { getCheckoutSession } from "@/features/checkout/server";
 import { redirect } from "next/navigation";
 import AddressForm from "./AddressForm";
-import type { Address } from "../checkout.types";
+import type { Address } from "@/features/checkout";
 
 export default async function Page() {
   const session = await getCheckoutSession();

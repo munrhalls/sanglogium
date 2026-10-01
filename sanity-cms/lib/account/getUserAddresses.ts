@@ -1,5 +1,5 @@
 import { backendClient } from "@/sanity-cms/lib/backendClient";
-import type { Address } from "@/app/checkout/checkout.types";
+import type { Address } from "@/features/checkout";
 
 export type SavedAddress = Address & { _key: string };
 

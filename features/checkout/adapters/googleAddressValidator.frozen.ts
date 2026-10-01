@@ -12,7 +12,7 @@
 // only ever called from address.ts, never invoked directly as a Server
 // Action, so it may accept a function argument (acceptAsEntered).
 // ==========================================================================
-import { Address, ServerResponse } from "@/app/checkout/checkout.types";
+import type { Address, ServerResponse } from "../domain/checkoutTypes";
 
 interface RequestBody {
   address: {
