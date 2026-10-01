@@ -2,7 +2,7 @@
 
 import { useShallow } from 'zustand/shallow';
 import { ShoppingCart } from "@phosphor-icons/react";
-import useBasketStore from "@/store/basketStore";
+import { useBasketStore } from "@/features/basket";
 
 interface BasketControlsProps {
   productId: string;

@@ -8,7 +8,7 @@ import DacCard from '../../../app/components/features/homepage/dacs/DacCard'
 import AccessoryCard from '../../../app/components/features/homepage/accessories/AccessoryCard'
 import { ProductCard } from '../../../app/components/features/products/ProductCard'
 import { ProductInfo } from '../../../app/components/features/products/ProductInfo'
-import useBasketStore from '../../../store/basketStore'
+import { useBasketStore } from '@/features/basket'
 
 // Mock next/link to avoid complex router setup
 vi.mock('next/link', () => ({

@@ -3,7 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom/vitest'
 import { mutate } from 'swr'
 import BasketManager from '../../BasketManager'
-import useBasketStore from './../../../../../../store/basketStore'
+import { useBasketStore } from '@/features/basket'
 
 vi.mock('../../BasketSummary', () => ({
   default: ({ itemCount, subtotal }: { itemCount: number; subtotal: number }) => (
