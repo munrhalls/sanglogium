@@ -2,7 +2,7 @@
 
 import { useActionState, useEffect, useState } from "react";
 import { authClient } from "@/lib/auth-client";
-import { TwoFactorSection } from "@/app/components/features/auth/TwoFactorSection";
+import { TwoFactorSection } from "@/features/auth";
 import { updateName, updatePreferences } from "./actions";
 import { signOut, signOutAllDevices } from "@/app/hooks/useSignOut";
 
