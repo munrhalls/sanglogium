@@ -7,8 +7,8 @@
 import { describe, it, expect, afterEach } from 'vitest'
 import { render, screen, act, cleanup, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom/vitest'
-import { BasketControls } from '../../../app/components/features/basket/BasketControls'
-import { useBasketStore } from '@/features/basket'
+import { BasketControls } from '../ui/BasketControls'
+import useBasketStore from '../ui/basketStore'
 
 describe('basketControls', () => {
 

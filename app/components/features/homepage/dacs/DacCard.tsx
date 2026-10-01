@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { BasketControls } from "@/app/components/features/basket/BasketControls";
+import { BasketControls } from "@/features/basket";
 import { formatPrice } from "@/lib/utils/price";
 
 export default function DacCard({ item, idx }: { item: any; idx: number }) {

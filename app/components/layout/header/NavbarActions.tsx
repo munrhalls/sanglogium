@@ -8,7 +8,7 @@ import {
 } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils/tailwind";
 import { NavActionItem } from "@/app/components/ui/NavActionItem";
-import { BasketButton } from "@/app/components/features/basket/BasketButton";
+import { BasketButton } from "@/features/basket";
 import { signOut } from "@/features/auth";
 
 interface NavbarActionsProps {

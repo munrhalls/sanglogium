@@ -3,7 +3,7 @@
 import { ShoppingCartIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 import { NavActionItem } from "@/app/components/ui/NavActionItem";
-import { useBasketStore, selectTotalItemsCount, selectHasHydrated } from "@/features/basket";
+import useBasketStore, { selectTotalItemsCount, selectHasHydrated } from "./basketStore";
 
 export function BasketButton() {
   const itemCount = useBasketStore(selectTotalItemsCount);
