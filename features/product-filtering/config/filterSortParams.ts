@@ -11,7 +11,7 @@
 // catalogue RSC re-renders the grid (see FILTER_SORT_URL_OPTIONS below).
 //
 // This is a deliberate fresh design for the client-only display-sync needs of the
-// F-layer. The deleted lib/catalogue/{filterParams,sortParams,searchParams}.ts
+// F-layer. The deleted {filterParams,sortParams,searchParams}.ts
 // encoded the OLD removed server-driven system (compound `?f=brand:x` syntax, a
 // server-side sort allowlist, `shallow:false` + `router.replace` to force an RSC
 // refetch) — do NOT revive their schema or routing model.
@@ -38,7 +38,7 @@
 // serialize to the key being absent. `minPrice` /
 // `maxPrice` have no "default value": absent simply means unbounded, so a null
 // write removes them. This keeps faceted URLs clean and keeps
-// lib/catalogue/seo.ts `isFacetedQuery` honest (it keys off `page`, which this
+// features/catalogue/domain/seo.ts `isFacetedQuery` honest (it keys off `page`, which this
 // layer leaves alone except via the page-reset helper below).
 //
 // Price unit: the URL carries whole DOLLARS. Product `price_data.unit_amount` is

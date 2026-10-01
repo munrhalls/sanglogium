@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import { redirect } from 'next/navigation';
 import { searchProductsFull } from '@/sanity-cms/lib/products/searchProducts';
-import { isFacetedQuery } from '@/lib/catalogue/seo';
+import { isFacetedQuery } from '@/features/catalogue';
 import { detectSearchRedirect, SearchHeader } from '@/features/product-search';
 import { loadFilterSort, type ProductQueryState } from '@/features/product-filtering';
 import { SearchResults, SearchResultsSkeleton } from './SearchResults';

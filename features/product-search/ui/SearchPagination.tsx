@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { getPageList } from '@/lib/catalogue/pagination';
+import { getPageList } from '@/features/catalogue';
 
 interface SearchPaginationProps {
   totalCount: number;

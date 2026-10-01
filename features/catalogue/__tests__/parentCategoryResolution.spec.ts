@@ -5,7 +5,7 @@
 // correctly expands a root node into all descendant leaf IDs.
 
 import { describe, it, expect } from "vitest";
-import { resolveSlugToId, unrollDescendantKeys } from "@/data/catalogue";
+import { resolveSlugToId, unrollDescendantKeys } from "../domain/catalogue";
 
 const HEADPHONES_ID = "ugyeto8653n495dpf89nzoar";
 const OPEN_BACK_ID = "o7c6baiuobsr7ni2y2vf22sh";

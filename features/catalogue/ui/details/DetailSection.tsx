@@ -1,7 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils/tailwind";
 import Link from "next/link";
-import type { CatalogueNavItem } from "../catalogue-nav.types";
+import type { CatalogueNavItem } from "../catalogueNavTypes";
 import { useNavContext } from "../NavbarManager";
 
 type CatalogueSection = CatalogueNavItem["sections"][number];

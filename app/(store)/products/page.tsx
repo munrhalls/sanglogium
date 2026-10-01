@@ -1,5 +1,5 @@
 import React from 'react';
-import { getAllLeafKeys } from '@/data/catalogue';
+import { getAllLeafKeys } from '@/features/catalogue/server';
 import { getProductsCount, getProductsChunk } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
 import { getFilterFacets } from '@/sanity-cms/lib/products/getFilterFacets';
 import { getCategoryPriceRange } from '@/sanity-cms/lib/products/getCategoryPriceRange';
@@ -8,7 +8,7 @@ import { ShopHeader } from '@/app/components/features/products/ShopHeader';
 import { EmptyResults } from '@/app/components/features/products/EmptyResults';
 import { Pagination } from '@/app/components/features/products/Pagination';
 import { ChunkedProductGrid, CHUNK_SIZE } from '@/app/components/features/products/ChunkedProductGrid';
-import { isFacetedQuery } from '@/lib/catalogue/seo';
+import { isFacetedQuery } from '@/features/catalogue';
 import { ActiveFilterChips, FilterSidebar, SortBar, isFiltersActive, loadFilterSort, resolvePriceBounds, sanitizeFilterState, type ProductQueryState } from '@/features/product-filtering';
 
 export const dynamic = 'force-dynamic';

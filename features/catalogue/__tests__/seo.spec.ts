@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { isFacetedQuery, canonicalCategoryPath } from "@/lib/catalogue/seo";
+import { isFacetedQuery, canonicalCategoryPath } from "../domain/seo";
 
 describe("catalogue SEO helpers (A9 / T8.1)", () => {
   it("treats f / sort / page>1 as faceted (non-indexable)", () => {
