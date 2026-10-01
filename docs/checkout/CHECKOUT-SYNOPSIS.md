@@ -96,8 +96,8 @@ flowchart LR
 **Route:** `/basket`
 **Files:**
 - `app/(store)/basket/page.tsx` — Server Component shell
-- `app/components/features/basket/BasketManager.tsx` — Client Component (main logic)
-- `app/components/features/basket/BasketSummary.tsx` — Client Component
+- `features/basket/ui/BasketManager.tsx` — Client Component (main logic)
+- `features/basket/ui/BasketSummary.tsx` — Client Component
 - `features/checkout/ui/CheckoutButton.tsx` — Client Component
 
 ```mermaid

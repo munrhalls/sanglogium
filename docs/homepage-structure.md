@@ -41,7 +41,7 @@ There is no shared homepage product card. Each section has its own:
 - Spotlights, NewestRelease → no card component; bespoke single-product layouts.
 
 `IemCard.tsx` and `AccessoryCard.tsx` are structurally identical and must be kept in sync by hand.
-`app/components/features/products/ProductCard.tsx` is the **product-listing** grid card — not used anywhere on the homepage.
+`features/products/ui/ProductCard.tsx` is the **product-listing** grid card — not used anywhere on the homepage.
 
 ## Server/client boundary
 
@@ -58,7 +58,7 @@ The card components themselves (`Card`, `IemCard`, `DacCard`, `AccessoryCard`) a
 No section component or card owns Zustand / `nuqs` state. Cards delegate:
 
 - basket add/remove → `BasketControls` (`features/basket/ui/BasketControls.tsx`)
-- wishlist toggle → `WishlistButton` (`app/components/features/wishlist/WishlistButton.tsx`)
+- wishlist toggle → `WishlistButton` (`features/products/ui/WishlistButton.tsx`)
 
 A "add to basket from the homepage" bug is in `BasketControls`, not the section or card.
 
