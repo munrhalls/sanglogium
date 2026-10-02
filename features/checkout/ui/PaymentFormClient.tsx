@@ -13,7 +13,13 @@ import {
 
 import { formatPrice } from "@/lib/utils/price";
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+let stripePromise: ReturnType<typeof loadStripe> | null = null;
+function getStripePromise() {
+  if (!stripePromise) {
+    stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+  }
+  return stripePromise;
+}
 
 // Brand-aligned Stripe appearance — matches the dark design system
 // Tokens sourced from tailwind.config.ts
@@ -350,7 +356,7 @@ export default function PaymentForm({ grandTotal, metadata, address, traceId }: 
 
   return (
     <div className="space-y-6">
-      <Elements stripe={stripePromise} options={{ clientSecret, appearance: stripeAppearance, defaultValues: { billingDetails: { email: metadata.email } } } as any}>
+      <Elements stripe={getStripePromise()} options={{ clientSecret, appearance: stripeAppearance, defaultValues: { billingDetails: { email: metadata.email } } } as any}>
         {grandTotal >= 5000 && (
           <div className="mb-4">
             <PaymentMethodMessagingElement

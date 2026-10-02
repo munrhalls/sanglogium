@@ -1,7 +1,7 @@
-import { fetchOrderByPaymentIntentId } from '@/sanity-cms/lib/orders/getOrderByPaymentIntentId'
+import { getOrderByPaymentIntentId } from '../adapters/orders'
 import Link from 'next/link'
 import { Hourglass } from '@phosphor-icons/react/dist/ssr'
-import { RefreshButton } from '@/features/checkout'
+import { RefreshButton } from './RefreshButton'
 import { formatPrice } from '@/lib/utils/price'
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default async function OrderDetails({ paymentIntentId, fallbackTotal }: Props) {
-  const order = await fetchOrderByPaymentIntentId(paymentIntentId)
+  const order = await getOrderByPaymentIntentId(paymentIntentId)
 
   if (!order) {
     const fallbackFormatted = formatPrice(fallbackTotal)

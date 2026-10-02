@@ -114,6 +114,19 @@ export default [
     },
   },
   {
+    // Server-only boundary files of a feature (actions.ts, adapters/) are the only feature files allowed to import sanity-cms.
+    files: ["features/*/adapters/**/*.{ts,tsx}"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          paths: JEST_PATHS,
+          patterns: [ENTRY_ONLY, NO_APP],
+        },
+      ],
+    },
+  },
+  {
     // The data layer never imports Server Actions (Server Actions import the
     // data layer). ENTRY_ONLY is repeated because a later flat-config block
     // replaces the rule for matching files.

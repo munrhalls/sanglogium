@@ -196,7 +196,7 @@ export async function fetchAlleKurierRates(
 
 /**
  * Transform AlleKurier service to ShippingOption interface
- * Mapping per docs/checkout/shipping/Q & A.md:
+ * Mapping:
  * - provider ← Carrier.name
  * - servicelevel.name ← Service.name
  * - rateId ← Carrier.code + Service.code
