@@ -1,3 +1,8 @@
+# Performance test template (reference)
+
+Documentation sample only — not compiled. Original content preserved verbatim.
+
+```ts
 /**
  * Performance Test Template
  * 
@@ -84,3 +89,5 @@ test('homepage Core Web Vitals', async ({ page }) => {
     expect(metrics['layout-shift']).toBeLessThan(THRESHOLDS.CLS);
   }
 });
+
+```

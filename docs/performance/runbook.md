@@ -1,5 +1,7 @@
 # Performance Regression Runbook
 
+> **Point-in-time document.** File paths below were accurate when this was written and may predate the 2026-10 repository reorganization. Check git history before relying on them.
+
 This runbook covers how to respond when Lighthouse CI, Vercel Speed Insights, or Sentry reports a performance regression. It only references tooling that is part of the project after Phases 1–5.
 
 ## Lighthouse CI assertion fails on a PR

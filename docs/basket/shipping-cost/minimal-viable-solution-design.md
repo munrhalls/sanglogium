@@ -1,5 +1,7 @@
 # Shipping Cost Display - Technical Design
 
+> **Point-in-time document.** File paths below were accurate when this was written and may predate the 2026-10 repository reorganization. Check git history before relying on them.
+
 ## Implementation Overview
 
 The shipping cost display is implemented across three layers:

@@ -1,141 +1,262 @@
-# Auth — Data & Functional Intelligence
-
-## Library Decision
-
-**Chosen:** Better Auth
-
-**Why:** Auth.js v5 was taken over by the Better Auth team in September 2025 and is now in security-patch mode only. Better Auth is the actively developed, framework-native alternative, recommended by Auth.js maintainers and listed as a recommended library by Next.js itself.
-
-**Sources:**
-- https://github.com/nextauthjs/next-auth/discussions/13252
-
-## Architecture
-
-**Dual database architecture:**
-- **Better Auth** owns identity (users, sessions, credentials)
-- **Sanity** owns user profiles (name, email, addresses, order history)
-- Link via `authId` field on `userProfile` document
-
-**Guest checkout remains untouched.** No auth required to browse or purchase.
-
-## Database Strategy
-
-| Environment | Database | Adapter |
-|-------------|----------|---------|
-| All (dev, test, production) | Turso (libSQL) | `kysely-libsql` |
-
-SQLite file (`better-auth.db`) is no longer supported. All environments must use Turso to ensure consistency and avoid ephemeral filesystem issues. `lib/auth.ts` validates `DATABASE_URL` and `TURSO_AUTH_TOKEN` at startup in all environments.
-
-## Key Files
-
-| File | Purpose |
-|------|---------|
-| `lib/auth.ts` | Better Auth configuration, DB adapter setup |
-| `lib/auth-client.ts` | Frontend auth client |
-| `lib/auth/dal.ts` | Server-side `verifySession()` |
-| `app/api/auth/[...all]/route.ts` | Better Auth API handler |
-| `app/(store)/sign-in/` | Sign-in page + form |
-| `app/(store)/sign-up/` | Sign-up page + form + server action |
-| `app/(store)/account/` | Protected account page |
-| `middleware.ts` | Route protection for `/account/*` |
-| `sanity-cms/schemaTypes/userType.ts` | `userProfile` schema |
-
-## Auth Features Configured
-
-- Email + password registration/sign-in
-- Google OAuth (conditional on env vars)
-- Rate limiting: 10 requests per 60s window
-- Auto-sign-in after registration
-- No email verification required
-
-## Gap-Close Audit — May 31, 2026
-
-**CLOSED:**
-1. middleware.ts + NavbarActionsServer.tsx hardcoded cookie name → fixed with `getSessionCookie()` from `better-auth/cookies`
-2. SignInForm had no redirect after login → added `router.push("/account")`
-3. SignUpPage missing Suspense for `useSearchParams` → added
-4. `@better-auth/kysely-adapter` missing from package.json → added v1.6.11
-5. Dead `AuthMenu.tsx` with `alert()` stubs → deleted
+# Auth — Should-Be Data & Functionality Intelligence
+## Sang Logium · Next.js 15 / React 19 / Better Auth / Turso · June 2026
 
 ---
 
-## Production Checklist — 2026-06-04
+## 1. Identity Data Model
 
-**Status:** Code is production-ready. Infrastructure setup is pending.
+### 1.1 User record (Better Auth `user` table)
 
-### Code Verification (COMPLETE — no changes needed)
+| Field | Type | Constraint | Rationale |
+|---|---|---|---|
+| `id` | string (UUID) | PK | Better Auth default |
+| `email` | string | unique, NOT NULL | primary identity key |
+| `emailVerified` | boolean | NOT NULL, default false | required for email integrity (order receipts, resets) |
+| `name` | string | nullable | display only |
+| `image` | string | nullable | OAuth avatar URL |
+| `createdAt` | datetime | NOT NULL | audit |
+| `updatedAt` | datetime | NOT NULL | audit |
 
-| Check | Result | Evidence |
-|-------|--------|----------|
-| `lib/auth.ts` auto-detects `libsql://` → `LibsqlDialect` | PASS | Line 11: `databaseUrl.startsWith("libsql://")` |
-| `kysely-libsql@0.7.1` exports `LibsqlDialect` with `{ url, authToken }` | PASS | `node_modules/kysely-libsql/dist/index.d.ts` line 9 |
-| `@libsql/client@0.17.3` installed | PASS | `package.json` line 60 |
-| `TURSO_AUTH_TOKEN` consumed by adapter | PASS | `lib/auth.ts` line 15 |
-| `.env.example` documents Turso setup steps | PASS | `.env.example` lines 47–72 |
+**No additional fields should live on this table.** All ecommerce profile data (addresses, order history) belongs to the Sanity `userProfile` document, linked via `authId`.
 
-### External Setup Steps (MANUAL — user must execute)
+### 1.2 Session record (Better Auth `session` table)
 
-**Step 1 — Install Turso CLI**
-```bash
-npm install -g @tursoproject/cli
-```
+| Field | Type | Constraint | Rationale |
+|---|---|---|---|
+| `id` | string | PK | Better Auth default |
+| `token` | string | unique, NOT NULL | the cookie value |
+| `userId` | string | FK → user.id, NOT NULL | |
+| `expiresAt` | datetime | NOT NULL | checked on every request |
+| `ipAddress` | string | nullable | security audit trail |
+| `userAgent` | string | nullable | security audit trail |
+| `createdAt` | datetime | NOT NULL | freshness calculation base |
+| `updatedAt` | datetime | NOT NULL | |
 
-**Step 2 — Authenticate with Turso**
-```bash
-turso auth login
-```
-Opens browser for GitHub authentication.
+### 1.3 Sanity `userProfile` document
 
-**Step 3 — Create database**
-```bash
-turso db create sang-logium-auth
-```
+| Field | Type | Constraint | Rationale |
+|---|---|---|---|
+| `authId` | string | required, unique | foreign key to `user.id` |
+| `email` | string | required | denormalised; kept in sync on sign-up |
+| `name` | string | optional | |
+| `addresses` | array | optional | shipping addresses |
+| `stripeCustomerId` | string | optional | set on first payment |
+| `createdAt` | datetime | set on creation | |
 
-**Step 4 — Get database URL**
-```bash
-turso db show sang-logium-auth --url
-# → libsql://sang-logium-auth-<your-org>.<region>.turso.io
-```
+**Write rule:** `userProfile` document must be created atomically in the same request as Better Auth user creation (server action or API route). If the Sanity write fails, the Better Auth user must not be persisted (or must be rolled back / flagged for cleanup). A user record with no linked `userProfile` is a data integrity gap.
 
-**Step 5 — Create auth token**
-```bash
-turso db tokens create sang-logium-auth
-# → long secret token (copy it, never commit it)
-```
+---
 
-**Step 6 — Set Vercel environment variables**
-Go to **Vercel Dashboard → Project Settings → Environment Variables** and add:
+## 2. Session Semantics
 
-| Variable | Value | Source |
-|----------|-------|--------|
-| `DATABASE_URL` | `libsql://sang-logium-auth-<org>.<region>.turso.io` | Step 4 |
-| `TURSO_AUTH_TOKEN` | `<paste-token-from-step-5>` | Step 5 |
-| `BETTER_AUTH_URL` | `https://sanglogium.com` | Already set in `.env` |
+### 2.1 Expiry configuration
 
-**Step 7 — Verify Google OAuth callback**
-In **Google Cloud Console → APIs & Services → Credentials → OAuth 2.0 Client IDs**:
-- Authorized redirect URIs must include: `https://sanglogium.com/api/auth/callback/google`
-- If missing, add it before deploying.
+| Parameter | Should-Be Value | Rationale |
+|---|---|---|
+| `expiresIn` | 7 days (604800 s) | Standard ecommerce; balances UX vs security |
+| `updateAge` | 1 day (86400 s) | Sliding window: active users stay logged in |
+| `freshAge` | 5 minutes (300 s) | Sensitive actions (password change, address update) require a fresh session |
+| `disableSessionRefresh` | false (default) | Must not be disabled |
 
-**Step 8 — Deploy**
-Push to production branch. Better Auth tables auto-create on first API request — no manual migration needed.
+### 2.2 Session revocation
 
-### Post-Deployment Verification
+Must be implemented for:
+- **Sign-out:** revoke current session only (`authClient.signOut()`)
+- **Password reset (forgot password flow):** set `emailAndPassword.revokeSessionsOnPasswordReset: true` in `lib/auth.ts` — Better Auth supports this as a config flag; all sessions are revoked automatically when a reset token is consumed
+- **Password change (account page):** no automatic config flag exists for this case in Better Auth; must call `authClient.revokeOtherSessions()` explicitly in the change-password server action after a successful credential update
+- **Account page "sign out all devices":** expose `authClient.revokeSessions()` — required for ecommerce where a user may share a device
 
-Run these checks on the production URL after deploy:
+### 2.3 Session freshness guard
 
-- [ ] `/sign-up` → register with email/password → redirects to `/account`
-- [ ] `/account` → shows user name/email; unauthenticated user redirected to `/sign-in`
-- [ ] `/account/orders` → accessible when signed in; redirects when not
-- [ ] Navbar → shows "Account" dropdown with "Sign Out" when authenticated
-- [ ] Sign Out → clears session; navbar reverts to "Sign In"
-- [ ] `/sign-in` → sign in with existing credentials → redirects to `/account`
-- [ ] Google OAuth button → completes flow → redirects to `/account`
+Actions that mutate sensitive identity or payment data (change password, change email, add/remove address, access order history with PII) must verify session freshness via `freshAge` before proceeding. A stale session must redirect to re-authentication, not simply reject silently.
 
-### Internal Safeguards Added
+---
 
-`lib/auth.ts` validates database configuration at startup in **all environments**:
-- If `DATABASE_URL` does not start with `libsql://` or `http` → **throws with clear error message**
-- If `TURSO_AUTH_TOKEN` is missing → **throws with clear error message**
-- Prevents silent fallback or misconfiguration in any environment.
+## 3. Password Security
 
+### 3.1 Hashing
+
+Better Auth uses `scrypt` by default. This is correct and must not be overridden with a weaker algorithm. No action required.
+
+### 3.2 Password policy (enforced server-side)
+
+| Rule | Should-Be |
+|---|---|
+| Minimum length | 8 characters |
+| Maximum length | 128 characters (prevent bcrypt/scrypt DoS) |
+| Complexity | Not required (length > complexity per NIST SP 800-63B) |
+
+Better Auth's `emailAndPassword.minPasswordLength` and `maxPasswordLength` must be set explicitly. Do not rely on client-side validation alone.
+
+### 3.3 Forgot password flow
+
+This flow is **required** and is currently absent from the spec. It is a hard ecommerce requirement — users who cannot recover their account abandon the store.
+
+**Required data contract:**
+
+1. User submits email → server calls `authClient.forgetPassword({ email, redirectTo })` (Better Auth built-in)
+2. Better Auth generates a time-limited reset token (default: 1 hour / 3600 s — must be configured explicitly as `expiresIn` on `emailAndPassword`)
+3. Server sends reset email via a transactional email provider (Resend is the standard choice for Next.js stacks in 2026) with a link containing the token
+4. User clicks link → server validates token → user submits new password → Better Auth calls `resetPassword`
+5. On success: all other sessions revoked (required — existing sessions must be invalidated after a credential change)
+6. On failure (invalid/expired token): clear error, no user enumeration (always return 200 from the "send reset email" endpoint regardless of whether the email exists)
+
+**Required configuration additions to `lib/auth.ts`:**
+- `emailAndPassword.sendResetPassword` function must be implemented
+- An email provider (Resend or equivalent) must be wired in
+- `emailAndPassword.resetPasswordTokenExpiresIn: 3600` (1 hour) must be set explicitly
+
+### 3.4 Email enumeration protection
+
+`emailAndPassword.userNotFoundOnSignIn` must not leak whether an email is registered. Better Auth's default sign-in returns a generic error — do not override this to be more specific.
+
+For the reset password endpoint: Better Auth returns 200 regardless of whether the email exists, preventing enumeration. This default must not be changed.
+
+---
+
+## 4. Email Verification
+
+### 4.1 Current state
+
+`requireEmailVerification` is not set (defaults to false). This is a **data integrity risk** for ecommerce: unverified emails mean:
+- Order confirmation emails bounce silently
+- Password reset emails are undeliverable
+- A malicious user can register with someone else's email and begin placing orders
+
+### 4.2 Should-be decision
+
+**Require email verification before first sign-in.** Set `emailAndPassword.requireEmailVerification: true`.
+
+This requires:
+- `sendVerificationEmail` function implemented in `lib/auth.ts`
+- Transactional email provider (same as used for password reset — Resend)
+- A `/verify-email` route that handles the callback token
+
+**Grace period rule:** on registration, auto-sign-in is acceptable for browsing (current config has `autoSignIn: true`). However, checkout must require a verified email before an order is confirmed. This is a data layer gate, not a UX gate.
+
+---
+
+## 5. OAuth (Google) Flow
+
+### 5.1 Data requirements
+
+When a user signs in via Google OAuth:
+- Better Auth creates a `user` record with `emailVerified: true` (Google guarantees email ownership)
+- A `userProfile` document must be created in Sanity if one does not already exist for `authId`
+- The Google `account` record is stored in Better Auth's `account` table (standard)
+
+### 5.2 PKCE and state
+
+Better Auth stores OAuth `state` and PKCE `code_verifier` in the database and removes them after the callback completes. This is correct and must not be disabled.
+
+### 5.3 Callback URL integrity
+
+`trustedOrigins` in `lib/auth.ts` must include only `https://sanglogium.com` in production. No wildcards. No `disableOriginCheck: true`.
+
+---
+
+## 6. CSRF Protection
+
+Better Auth provides layered CSRF protection by default. The following must not be disabled or degraded:
+
+| Protection layer | Must-be state |
+|---|---|
+| `Content-Type: application/json` enforcement | Active (default) — never use form submissions to auth endpoints |
+| `Origin` header validation against `baseURL` | Active (default) |
+| `SameSite=Lax` on session cookies | Active (default) — do not override to `None` |
+| `disableCSRFCheck` | Must remain `false` (default) |
+| `disableOriginCheck` | Must remain `false` (default) |
+
+---
+
+## 7. Cookie Requirements
+
+| Attribute | Should-Be Value | Notes |
+|---|---|---|
+| `HttpOnly` | true | Better Auth default on production |
+| `Secure` | true | Better Auth sets this when `baseURL` is `https://` |
+| `SameSite` | `Lax` | Better Auth default; do not override to `None` |
+| Cookie name | via `getSessionCookie()` from `better-auth/cookies` | Already fixed per gap-close audit; do not hardcode |
+
+Cookie caching (`cookieCache`) is optional but recommended for performance on Vercel serverless (reduces DB reads per request). If enabled, `maxAge` should be 5 minutes with `strategy: "compact"`. The cached cookie must never contain sensitive user data.
+
+---
+
+## 8. Rate Limiting
+
+Better Auth includes built-in rate limiting. The current config sets 10 requests per 60-second window globally.
+
+| Endpoint type | Should-Be limit |
+|---|---|
+| Sign-in | 5 attempts per 15 minutes per IP |
+| Sign-up | 3 per hour per IP |
+| Password reset request | 3 per hour per email |
+| General auth routes | 10 per 60 s (current) |
+
+**Note:** Better Auth's built-in rate limiter uses an in-memory store by default, which does not persist across Vercel serverless function instances. For production, configure a secondary storage (Redis / Upstash) for the rate limiter, or accept the weaker per-instance guarantee as a known trade-off.
+
+---
+
+## 9. Middleware / DAL Auth Guard Architecture
+
+### 9.1 CVE-2025-29927 — middleware bypass
+
+Next.js versions prior to 15.2.3 had a CVSS 9.1 middleware bypass via `x-middleware-subrequest` header. All protected-route checks in middleware were skippable. The fix: **middleware must only handle redirects (UX), not be the sole authorization gate.**
+
+**Should-be rule:** Route protection must be enforced at two layers:
+1. **Middleware** (`middleware.ts`) — UX redirect only; never trusted as a security boundary
+2. **DAL** (`lib/auth/dal.ts` → `verifySession()`) — called inside every Server Component and Route Handler that accesses protected data; this is the security boundary
+
+### 9.2 `verifySession()` behaviour contract
+
+| Call context | Should-Be behaviour |
+|---|---|
+| Server Component (page) | Redirect to `/sign-in` if no valid session |
+| Route Handler / API route | Return `null` (never redirect); caller must return 401 |
+| Server Action | Throw / return error if no valid session; never silently proceed |
+
+The current DAL file is listed but its behaviour is not fully specced. This contract must be implemented.
+
+### 9.3 Layout auth check anti-pattern
+
+Auth checks must not live in `layout.tsx`. Due to Next.js partial rendering, layouts do not re-run on client-side navigation within their subtree. `verifySession()` must be called in the page component or in the data-fetching function it calls.
+
+---
+
+## 10. Secret Management
+
+| Secret | Should-Be |
+|---|---|
+| `BETTER_AUTH_SECRET` | 32+ character random string; stored in Vercel env; never committed |
+| Secret rotation | Use `secrets: [{ version: N, value: ... }]` array in `lib/auth.ts` for non-destructive rotation (no mass logout) |
+| `TURSO_AUTH_TOKEN` | Stored only in Vercel env; never in code or `.env` committed to repo |
+
+The startup validation already in `lib/auth.ts` (throws if `DATABASE_URL` is wrong or `TURSO_AUTH_TOKEN` missing in production) is correct and must be kept.
+
+---
+
+## 11. Guest Checkout Integrity
+
+Guest checkout remains untouched per architecture decision. The following data boundaries must be maintained:
+
+- No auth state is assumed or required at any point in the browse / cart / checkout flow for guests
+- A guest completing a purchase must **not** be auto-enrolled as a registered user
+- If a guest provides an email that matches an existing account, the order is attached to that email but no session is created
+- Stripe customer ID created for a guest is stored on the order document only, not on any `userProfile`
+
+---
+
+## 12. Gap Summary (vs. Current Spec)
+
+| Gap | Severity | Resolution |
+|---|---|---|
+| No `sendResetPassword` / forgot password flow | **Critical** | Implement via Better Auth `emailAndPassword.sendResetPassword` + Resend |
+| No email provider wired in | **Critical** | Required for password reset and email verification |
+| `requireEmailVerification: false` (default) | **High** | Set to `true`; implement `sendVerificationEmail` |
+| `expiresIn`, `updateAge`, `freshAge` not explicitly set | **Medium** | Declare explicit values in `lib/auth.ts` (not rely on defaults) |
+| `minPasswordLength`, `maxPasswordLength` not configured | **Medium** | Set to 8 and 128 respectively |
+| `userProfile` creation atomicity with user creation not specced | **Medium** | Define and enforce the write contract |
+| `verifySession()` DAL behaviour contract not specced | **Medium** | Define redirect-vs-null-return per call context |
+| Rate limiter storage not specced for Vercel serverless | **Low** | Decide: accept per-instance limits or add Upstash |
+| `cookieCache` not configured | **Low** | Optional; add for serverless performance |
+| Session revocation on password reset not explicitly configured | **Medium** | Set `emailAndPassword.revokeSessionsOnPasswordReset: true`; manually call `revokeOtherSessions()` on password change |

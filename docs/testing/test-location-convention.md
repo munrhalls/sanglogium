@@ -1,5 +1,8 @@
 # Test File Location Convention
 
+> **Point-in-time document.** File paths below were accurate when this was written and may predate the 2026-10 repository reorganization. Check git history before relying on them.
+> The unit/integration/e2e suites were retired on 2026-10-02; only the live-CMS proof scripts in scripts/filters-proofs remain (see CLAUDE.md, Tests).
+
 Tests are co-located with the main implementation actor, not in `/docs` folder.
 
 ## Convention

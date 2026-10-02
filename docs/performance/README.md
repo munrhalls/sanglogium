@@ -1,5 +1,7 @@
 # Performance Strategy — Sang Logium
 
+> **Point-in-time document.** File paths below were accurate when this was written and may predate the 2026-10 repository reorganization. Check git history before relying on them.
+
 ## Target
 
 All pages pass Core Web Vitals at the 90th percentile (LCP under 2.5s, INP under 200ms, CLS under 0.1, TTFB under 800ms). Lighthouse Performance score at least 90.
