@@ -1,5 +1,7 @@
 # Performance Monitoring Investigation Report
 
+> **Point-in-time document.** File paths below were accurate when this was written and may predate the 2026-10 repository reorganization. Check git history before relying on them.
+
 ## Executive Summary
 
 **Finding:** The performance monitoring implementation has **basic setup issues** that prevent 2 of 3 pillars from working. The documentation incorrectly marks broken components as "✅ Active/Implemented".

@@ -1,5 +1,7 @@
 # Checkout System — Source Code Synopsis
 
+> **Point-in-time document.** File paths below were accurate when this was written and may predate the 2026-10 repository reorganization. Check git history before relying on them.
+
 > **Scope:** Complete tracing of the checkout funnel from basket to order confirmation.
 > **Accuracy:** 100% source-derived. No assumptions.
 > **Last traced:** Jun 2026

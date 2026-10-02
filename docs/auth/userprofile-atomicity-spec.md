@@ -1,296 +1,269 @@
 # userProfile Creation Atomicity — Should-Be Spec
-> **Point-in-time document.** File paths below were accurate when this was written and may predate the 2026-10 repository reorganization. Check git history before relying on them.
 
+## Sang Logium · Sign-Up / Sign-In Data Layer · June 2026
 
-## Sang Logium · Sign-Up Data Layer · June 2026
+> **Scope:** Data layer and functionality layer only. Zero UX / zero implementation.
 
 ---
 
-## 1. Current State (Verified)
+## 1. Verified Current State
 
-### 1.1 Sign-up flow
+### 1.1 Actual sign-up flow (source-verified)
 
 ```
 SignUpForm.tsx (Client Component)
-  ├── authClient.signUp.email({ email, password, name })
-  │     └── POST /api/auth/sign-up/email
-  │           └── Better Auth creates user in auth DB
-  │           └── Returns { user, token } to client
-  ├── createUserProfile({ authId, email, name })  [Server Action]
-  │     └── Sanity backendClient.create({ _type: "userProfile", ... })
-  │     └── Returns { success, docId } or { success: false, error }
+  └── authClient.signUp.email({ email, password, name })
+        └── POST /api/auth/sign-up/email
+              └── Better Auth inserts user row in auth DB
+              └── requireEmailVerification: true  → sends verification email
+              └── autoSignIn: true                → session cookie set immediately
+              └── Returns { user: { id, email, name, ... } } to client
+  └── createUserProfile({ authId: user.id, email, name })  [Server Action]
+        └── backendClient.fetch(GROQ for existing profile)
+        └── backendClient.create({ _type: "userProfile", authId, email, name })
+        └── Returns { success, docId } or { success: false, error }
   └── router.push("/account")
 ```
 
-**Files:**
-- `app/(store)/sign-up/SignUpForm.tsx` — client form
-- `app/(store)/sign-up/actions.ts` — server action for Sanity profile
-- `app/api/auth/[...all]/route.ts` — Better Auth API handler
-- `lib/auth.ts` — Better Auth configuration
+**Key verified facts from source code:**
 
-### 1.2 Failure modes (verified)
+| Fact | Source | Value |
+|------|--------|-------|
+| `requireEmailVerification` | `lib/auth.ts:88` | `true` |
+| `autoSignIn` | `lib/auth.ts:91` | `true` |
+| Profile creation timing | `SignUpForm.tsx:35` | Immediately after sign-up response, before email verification |
+| Profile idempotency guard | `actions.ts:22-29` | Existing profile by `authId` → returns early |
+| Error logging | `actions.ts:40-44` | `[AUTH] CRITICAL` prefix with `authId` + `email` |
+| DAL functions | `lib/auth/dal.ts` | `verifySession()` (redirects), `getSession()` (returns null), `requireSession()` (throws) |
+| `userProfile` schema fields | `userType.ts` | `authId`, `email`, `name`, `addresses` — no custom `createdAt` |
+| Sanity auto-timestamp | Sanity platform | `_createdAt` set automatically on every document |
 
-| Step | What happens | Result |
-|------|--------------|--------|
-| `authClient.signUp.email` fails | Error returned to client | No auth user, no profile. Clean failure. |
-| `signUp.email` succeeds, `createUserProfile` fails | Auth user exists in DB, no Sanity profile | **ORPHANED USER** — user can sign in but has no profile data (addresses, orders). |
-| `signUp.email` succeeds, `createUserProfile` succeeds | Auth user + Sanity profile exist | Correct state. |
-| `createUserProfile` succeeds but user refreshes before redirect | Profile exists, user may not realize sign-up succeeded | UX gap, not data gap. |
+### 1.2 The email verification interaction (critical context)
 
-### 1.3 Root cause
+Better Auth with `requireEmailVerification: true` AND `autoSignIn: true` behaves as follows:
 
-Better Auth and Sanity are **two separate data stores** with **no distributed transaction** between them. Better Auth uses SQLite (local) or Turso (production); Sanity is a separate cloud CMS. There is no two-phase commit, no saga, no outbox pattern. The current client-side orchestration (sign-up → then profile creation) is inherently non-atomic.
+- Sign-up creates the auth user row and a session immediately (`autoSignIn`)
+- The user is signed in and can navigate to `/account`
+- However, `emailVerified` on the user record is `false`
+- Email verification happens asynchronously — user clicks link in email
+- Until verified: the user exists, has a session, can sign in again, but `emailVerified: false`
 
-### 1.4 Better Auth transaction behavior (verified)
+This means `createUserProfile()` runs **while `emailVerified: false`**. This is intentional and correct for this architecture — profile creation does not depend on email verification status.
 
-Better Auth **does not use database transactions** for the sign-up endpoint. Confirmed by GitHub issue #4193: if account or session creation fails after the user row is inserted, the user row is **not rolled back**. This applies equally to our custom `databaseHooks.user.create.after` hook — if the hook throws, the user row persists.
+### 1.3 Failure modes (verified)
+
+| Step | Outcome | Category |
+|------|---------|----------|
+| `authClient.signUp.email` fails | No auth user, no profile | Clean failure |
+| `signUp.email` succeeds, `createUserProfile` fails | Auth user + session exist, no profile | **Orphaned user** |
+| `signUp.email` succeeds, `createUserProfile` succeeds | Auth user + profile exist | Correct state |
+| `signUp.email` succeeds, user never verifies email | Auth user + profile exist, `emailVerified: false` | Unverified user (separate concern) |
+| `databaseHooks` fires and Sanity succeeds | Profile created before `createUserProfile` runs | Duplicate prevented by idempotency guard in action |
+
+### 1.4 Root cause of the atomicity gap
+
+Better Auth (SQLite/Turso) and Sanity are two independent data stores. There is no distributed transaction, no outbox, no saga. Better Auth does not roll back the user row if a post-creation hook throws. The client-side orchestration in `SignUpForm.tsx` (sign-up → then profile creation) is inherently non-atomic. This is a known constraint of the dual-database architecture — the correct engineering response is defensive healing, not complex rollback.
 
 ---
 
-## 2. Atomicity Options Evaluated
+## 2. Should-Be Architecture Decision
 
-### 2.1 Option A: `databaseHooks.user.create.after`
+### 2.1 Accepted constraint
 
-**Approach:** Register a `databaseHooks.user.create.after` hook in `lib/auth.ts`. When Better Auth inserts the user row, the hook fires and creates the Sanity userProfile synchronously.
+**True atomicity across two independent data stores is impossible without an outbox pattern or saga, both of which are overengineered for this scale.** The correct approach is:
 
-```ts
-// lib/auth.ts — inside betterAuth({...})
-databaseHooks: {
-  user: {
-    create: {
-      after: async (user) => {
-        await backendClient.create({
-          _type: "userProfile",
-          authId: user.id,
-          email: user.email,
-          name: user.name || "",
-        });
-      },
-    },
-  },
-}
+1. **Best-effort creation at sign-up** — attempt profile creation immediately after auth user creation
+2. **Defensive healing at session use** — if profile is missing when the user authenticates, create it on-demand
+3. **Idempotency** — all creation paths are safe to run multiple times
+
+### 2.2 Rejected approaches
+
+| Option | Why rejected |
+|--------|-------------|
+| Rollback auth user on Sanity failure | Better Auth exposes `auth.api.deleteUser` but it is not transactional. The window between user row insert and rollback can still leave orphans. Adds complexity for marginal gain. |
+| Server action calling `auth.api.signUpEmail` | Session cookie headers from `returnHeaders` cannot be forwarded to the browser automatically from Next.js server actions. This is a framework constraint, not a Better Auth limitation. Breaks the sign-in flow. |
+| Outbox pattern / saga | Correct distributed systems pattern but severely over-engineered for an ecommerce store at this scale. Introduces Redis/queue dependency. |
+| Store profile in Better Auth `user` table via `additionalFields` | Violates the dual-database architecture. Addresses and order history belong in Sanity. |
+
+---
+
+## 3. Should-Be: Layers and Invariants
+
+### 3.1 Layer 1 — Sign-up action (best-effort, current)
+
+**What it must do:**
+- Attempt to create `userProfile` immediately after `authClient.signUp.email()` returns
+- Check for existing profile by `authId` before creating (idempotency guard — already implemented)
+- On Sanity failure: log structured error with `authId` + `email`, return `{ success: false }` to client
+- **Must not attempt rollback of the auth user** — unreliable and not safe
+
+**What it must NOT do:**
+- Block the sign-up success state on profile creation failure (the user is registered; Sanity failure is recoverable)
+- Expose the Sanity error message to the end user
+
+**Log contract on failure:**
+```
+[AUTH] CRITICAL: userProfile creation failed after sign-up.
+  authId: <id>
+  email: <email>
+  error: <message>
 ```
 
-**Pros:**
-- Runs server-side inside the auth handler
-- No client-side orchestration needed
-- Profile is created immediately after user creation
+### 3.2 Layer 2 — DAL healing (defensive, on authenticated request)
 
-**Cons:**
-- Hook is **fire-and-forget** (returns `Promise<void>`). If Sanity fails, the auth user is already persisted.
-- No rollback mechanism. Same orphan problem as current flow.
-- Hook runs for ALL user creation paths (including OAuth), which may not be desired if OAuth users need different profile handling.
-- Adds a cross-system network call inside the auth request, increasing latency.
+**When to run:** Inside `verifySession()` only (not `getSession()` or `requireSession()`).
 
-**Verdict:** Moves the problem but does not solve it. **Not recommended as primary fix.**
+**Rationale:** `verifySession()` is the guard used in protected page Server Components (e.g., `/account`). It is called on every protected page load. `getSession()` is used in Route Handlers and may be called from non-page contexts (e.g., API routes) where triggering a Sanity write on every call would be inappropriate. `requireSession()` is used in server actions where the same concern applies.
 
-### 2.2 Option B: Server Action with `auth.api.signUpEmail`
+**Performance constraint:** `verifySession()` is wrapped in React `cache()` — it runs at most once per request tree. The additional Sanity read inside it runs at most once per page load. This is acceptable.
 
-**Approach:** Convert sign-up to a server action. The client form POSTs to a server action. The server action calls `auth.api.signUpEmail({ body, returnHeaders: true })`, then creates the Sanity profile. If Sanity fails, the server action can attempt to clean up the auth user.
+**Optimization (should-be):** The healing check should be skipped when the session is confirmed healthy. The correct approach is a **session-level flag** — store a `profileCreated: true` boolean in the Better Auth session's custom data, or use a lightweight in-memory cache keyed by `userId` with a short TTL (e.g., 5 minutes). On cache hit, skip the Sanity read entirely.
 
-```ts
-// app/(store)/sign-up/actions.ts
-"use server";
-import { auth } from "@/lib/auth";
-import { backendClient } from "@/sanity-cms/lib/backendClient";
+**Should-be healing logic (data contract):**
 
-export async function signUpAndCreateProfile(input: {
-  email: string;
-  password: string;
-  name: string;
-}) {
-  const { headers, response } = await auth.api.signUpEmail({
-    returnHeaders: true,
-    body: input,
-  });
-
-  const user = response?.user;
-  if (!user?.id) {
-    throw new Error("Sign-up failed: no user returned");
-  }
-
-  try {
-    await backendClient.create({
-      _type: "userProfile",
-      authId: user.id,
-      email: input.email,
-      name: input.name || "",
-    });
-  } catch (sanityError) {
-    // Attempt rollback: delete the auth user
-    // NOTE: Better Auth does not expose a simple server-side deleteUser
-    // This requires calling the internal adapter or API
-    throw new Error("Profile creation failed; sign-up rolled back");
-  }
-
-  return { headers }; // Client sets cookies from headers
-}
+```
+verifySession() is called
+  → auth.api.getSession() returns valid session
+  → check session cache: is userId known-good?
+      YES → skip Sanity check, return session
+      NO  → query Sanity: does userProfile with authId == session.user.id exist?
+              YES → mark userId as known-good in cache, return session
+              NO  → create userProfile with { authId, email, name } from session.user
+                    → mark userId as known-good in cache
+                    → return session
 ```
 
-**Pros:**
-- Server-side orchestration is cleaner than client-side
-- Both operations happen in one server request
-- Can attempt rollback on failure
+**What `ensureUserProfile()` must NOT do:**
+- Throw or redirect if Sanity is unavailable — log the error and continue (auth success must not be blocked by Sanity availability)
+- Write to Sanity on every call without caching — O(n) Sanity writes for n page loads is a correctness bug, not just a performance issue
 
-**Cons:**
-- Better Auth does not expose a clean `auth.api.deleteUser()` endpoint for rollback
-- Rollback would require direct DB adapter access (`auth.$context.db` or raw SQL), which is brittle
-- Session cookie headers from `returnHeaders` must be forwarded to the client — Next.js server actions do not propagate response headers to the browser automatically
-- Complexity increases significantly
+### 3.3 Layer 3 — OAuth path
 
-**Verdict:** Better than Option A, but rollback is unreliable. **Medium complexity, medium benefit.**
+When a user signs in via Google OAuth, Better Auth creates the auth user with `emailVerified: true` (Google guarantees email ownership). The `userProfile` creation path is identical to the email path: Layer 2 (DAL healing in `verifySession()`) will create the profile on the first authenticated page load if it does not exist.
 
-### 2.3 Option C: Defensive checks + cleanup job (RECOMMENDED)
+**No separate OAuth profile creation code is needed.** The healing layer handles all auth providers uniformly.
 
-**Approach:** Accept that true atomicity is impossible across two independent data stores. Instead:
+---
 
-1. **Auto-create missing profiles on demand:** When `verifySession()` or any auth-dependent page loads, check if a `userProfile` exists for the authenticated user. If not, create it on the fly.
+## 4. Data Invariants
 
-2. **Cleanup job:** A periodic job scans Better Auth users and deletes any that have no `userProfile` after a grace period (e.g., 24 hours).
+| Invariant | Enforcement point | Enforcement mechanism |
+|-----------|-------------------|----------------------|
+| Every active authenticated user has a `userProfile` | `verifySession()` | Healing check on first load |
+| `userProfile.authId` is unique per Sanity document | Sign-up action + DAL | Idempotency guard (fetch before create) |
+| `userProfile.email` matches the auth user's email at creation time | Sign-up action | Set from `user.email` returned by Better Auth |
+| `userProfile` creation is idempotent | Both layers | Fetch-before-create guard |
+| Sanity unavailability does not block authenticated access | DAL healing layer | try/catch, log, continue |
+| Profile creation in DAL does not block page render | DAL healing layer | Must complete before returning session (not fire-and-forget) — the user arriving at `/account` must have a profile |
 
-3. **Monitoring:** Log all `createUserProfile` failures with user ID for manual review.
+### 4.1 On the `_createdAt` field
 
-```ts
-// lib/auth/dal.ts — inside verifySession / getSession
-export const verifySession = cache(async () => {
-  const session = await auth.api.getSession({ headers: await headers() });
-  if (!session) redirect("/sign-in");
+Sanity automatically sets `_createdAt` on all documents at creation time. A custom `createdAt` field in the schema is **not required** and should not be added. Any cleanup logic must use `_createdAt`.
 
-  // Defensive: ensure userProfile exists
-  await ensureUserProfile(session.user);
+---
 
-  return { isAuth: true, userId: session.user.id, user: session.user };
-});
+## 5. Failure Recovery Matrix
 
-async function ensureUserProfile(user: { id: string; email: string; name?: string | null }) {
-  const existing = await backendClient.fetch(
-    `*[_type == "userProfile" && authId == $authId][0]`,
-    { authId: user.id }
-  );
-  if (!existing) {
-    await backendClient.create({
-      _type: "userProfile",
-      authId: user.id,
-      email: user.email,
-      name: user.name || "",
-    });
-  }
-}
+| Scenario | Recovery path | Data state after recovery |
+|----------|--------------|--------------------------|
+| `createUserProfile` fails during sign-up (Layer 1) | Layer 2 creates profile on first `/account` load | Profile exists, user is operational |
+| Sanity is down during sign-up | Layer 1 fails silently, Layer 2 retries on next load when Sanity recovers | Profile exists once Sanity is available |
+| Sanity is down during `verifySession()` healing | Log error, allow session to proceed without healing | Auth works; profile missing until next load succeeds |
+| OAuth sign-in, no profile exists | Layer 2 creates profile on first `/account` load | Profile exists |
+| `createUserProfile` called twice for same `authId` | Idempotency guard returns existing doc ID | Single profile, no duplicate |
+| User unverified, profile exists | Normal — unverified user can still have a profile; checkout enforces email verification separately | Profile exists, checkout blocked until verified |
+
+---
+
+## 6. Cleanup — Should-Be Policy
+
+### 6.1 What "orphaned user" means (precise definition)
+
+An **auth orphan** is: an auth user whose `userProfile` document does not exist AND whose `createdAt` in the Better Auth DB is more than 24 hours old (i.e., Layer 2 healing has had time to run but hasn't). The age check uses the auth user record's `createdAt` — there is no Sanity document to check `_createdAt` on for a true orphan.
+
+An **unverified user** is NOT an orphan. An unverified user with a profile is a normal state.
+
+### 6.2 Correct cleanup action
+
+The cleanup job must **create the missing profile**, not delete the auth user.
+
+Rationale: deleting the auth user is destructive and irreversible. The user may have verified their email but Sanity may have been unavailable at that moment. Creating the missing profile is safe, idempotent, and recoverable.
+
+**Exception — hard delete candidates:** An auth user with no profile AND `emailVerified: false` AND `createdAt > 7 days ago` (from the Better Auth DB) AND no orders linked to their email in Sanity can be considered abandoned. Hard deletion is acceptable in this narrow case only. Before deleting, verify no Sanity order document has `userId` matching this auth ID or `customerEmail` matching this email.
+
+### 6.3 Cleanup query logic (data contract)
+
+```
+1. Fetch all auth users from Better Auth DB (SQLite/Turso)
+2. For each user:
+   a. Query Sanity: *[_type == "userProfile" && authId == $authId][0]
+   b. Query Sanity: *[_type == "order" && (userId == $authId || customerEmail == $email)][0]
+   c. If profile exists → skip (healthy state)
+   d. If profile missing AND order exists → create missing profile (user has purchase history)
+   e. If profile missing AND no order AND emailVerified == true → create profile (verified user, Layer 2 failed)
+   f. If profile missing AND no order AND emailVerified == false AND age > 7 days → candidate for deletion (log, do not auto-delete without human confirmation in first run)
+3. Log summary: N healed, N candidates for deletion, N healthy
 ```
 
-**Pros:**
-- No complex orchestration
-- Orphaned users self-heal on first page load
-- Cleanup job removes any that slip through
-- Works with all auth paths (email, OAuth, future providers)
-- Simple and robust
-
-**Cons:**
-- Brief window where orphaned user exists (between sign-up and first page load)
-- Cleanup job needed as safety net
-- Slightly more DB load on every `verifySession()` call
-
-**Verdict:** Best practical approach for a dual-database architecture. **Recommended.**
-
-### 2.4 Option D: Single database (rejected)
-
-**Approach:** Store user profile data in Better Auth's `user` table via `additionalFields`.
-
-**Why rejected:**
-- The spec explicitly requires a dual-database strategy (Better Auth for identity, Sanity for ecommerce profiles)
-- Addresses and order history belong in Sanity for CMS-managed content
-- Better Auth is not a general-purpose database
+**First run policy:** Log deletion candidates; do not auto-delete. After reviewing the log output once manually, auto-delete can be enabled.
 
 ---
 
-## 3. Should-Be Decision
+## 7. `userProfile` Schema — Should-Be (Data Layer Only)
 
-**Primary approach: Option C (Defensive checks + cleanup)**  
-**Secondary: Option A (databaseHooks) as additional safety net**
+The current schema is sufficient for the atomicity concern. No new fields are required.
 
-### 3.1 Immediate changes (data layer)
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `authId` | string | required | FK to Better Auth `user.id`; must be unique |
+| `email` | string | required | Copied from auth user at creation; source of truth for display only |
+| `name` | string | optional | Copied from auth user at creation |
+| `addresses` | array | optional | Shipping addresses — ecommerce profile data |
+| `_createdAt` | datetime | auto | Set by Sanity; use for cleanup age checks |
 
-1. **`lib/auth/dal.ts`** — Add `ensureUserProfile()` call inside `verifySession()`, `getSession()`, and `requireSession()`. This auto-creates a missing profile on any authenticated request.
+**What must not be added:** A custom `createdAt` field duplicating `_createdAt`. Redundant and creates sync risk.
 
-2. **`app/(store)/sign-up/actions.ts`** — Keep current `createUserProfile()` but improve it:
-   - Return the created doc ID on success
-   - Log structured error with `[AUTH] ORPHAN` prefix on failure
-   - Do NOT attempt rollback (unreliable)
-
-3. **`lib/auth.ts`** — Add `databaseHooks.user.create.after` as a secondary safety net. If Sanity succeeds here, `ensureUserProfile()` in DAL is a no-op. If Sanity fails here, DAL will heal it later.
-
-4. **Cleanup script** — Create `scripts/cleanup-orphaned-auth-users.mjs` that:
-   - Queries Better Auth DB for all users
-   - Queries Sanity for matching `userProfile` documents
-   - Deletes auth users with no profile created > 24 hours ago
-   - Run via cron or Vercel cron job
-
-### 3.2 Data invariants
-
-| Invariant | Enforcement |
-|-----------|-------------|
-| Every authenticated request must have a `userProfile` | `ensureUserProfile()` in DAL |
-| `userProfile.authId` is unique | Sanity schema `authId` field + query check |
-| `userProfile.email` matches auth user email | Set at creation time; not continuously synced |
-| Orphaned users older than 24h are deleted | Cleanup script |
-
-### 3.3 Failure recovery
-
-| Scenario | Recovery |
-|----------|----------|
-| `createUserProfile` fails during sign-up | `ensureUserProfile()` creates it on next page load |
-| Sanity is temporarily down during sign-up | User can still sign in; profile auto-created when Sanity recovers |
-| OAuth user has no profile | `ensureUserProfile()` creates it on first `/account` visit |
-| Cleanup job deletes a legitimate user's auth record | Must never happen — cleanup only deletes users with no profile AND no orders |
+**What is explicitly out of scope here:** `stripeCustomerId` — this belongs to the checkout flow, not the auth/profile creation flow.
 
 ---
 
-## 4. Implementation Tasks
+## 8. Deferred Concerns (Out of Scope for This Spec)
 
-### Task 1 — DAL defensive profile creation
-**File:** `lib/auth/dal.ts`  
-**Change:** Add `ensureUserProfile()` helper; call it in `verifySession()`, `getSession()`, and `requireSession()`.
+These are real concerns but belong to separate specs:
 
-### Task 2 — Sign-up action logging
-**File:** `app/(store)/sign-up/actions.ts`  
-**Change:** Add structured orphan logging with user ID + email on `createUserProfile` failure.
-
-### Task 3 — Auth hook safety net
-**File:** `lib/auth.ts`  
-**Change:** Add `databaseHooks.user.create.after` to create Sanity profile. Wrap in try/catch so hook failure does not crash auth.
-
-### Task 4 — Cleanup script
-**File:** `scripts/cleanup-orphaned-auth-users.mjs` (new)  
-**Change:** Query auth DB + Sanity; delete orphaned users > 24h old.
-
-### Task 5 — Vercel cron job
-**File:** `vercel.json`  
-**Change:** Add cron schedule for cleanup script (e.g., daily at 3 AM).
+| Concern | Where it belongs |
+|---------|-----------------|
+| Email verification flow (verified → unverified state gate) | `email-verification-spec.md` |
+| Forgot password / password reset | `password-reset-spec.md` |
+| `stripeCustomerId` on `userProfile` | Checkout / payment spec |
+| Session freshness guard for sensitive mutations | Session management spec |
+| Rate limiter storage for Vercel serverless | Infrastructure / security spec |
+| Google OAuth `userProfile` upsert on email collision | OAuth spec |
 
 ---
 
-## 5. Verification Checks
+## 9. Verification Checks (Data Layer)
 
-- [ ] Sign up with email → `/account` loads → Sanity `userProfile` document exists with correct `authId`
-- [ ] Simulate Sanity failure during sign-up → sign-up succeeds → `/account` still loads → `userProfile` auto-created by DAL
-- [ ] Sign in with OAuth → `/account` loads → `userProfile` auto-created if missing
-- [ ] Run cleanup script manually → no false positives (no legitimate users deleted)
-- [ ] Cleanup script identifies orphaned user → deletes auth user after 24h grace period
+These are binary pass/fail checks for confirming correct behaviour — not implementation tasks.
+
+- [ ] Sign up with email → Sanity `userProfile` document exists with matching `authId` and correct `email`/`name`
+- [ ] Sign up with email → `userProfile` idempotency: calling `createUserProfile` again with the same `authId` returns `{ alreadyExists: true }`, no duplicate document in Sanity
+- [ ] Simulate Layer 1 failure (mock Sanity error during sign-up) → user can still navigate to `/account` → `userProfile` auto-created by Layer 2 on page load
+- [ ] Simulate user with no profile navigating to `/account` (manually delete profile in Sanity Studio) → profile auto-created on next page load, no error shown to user
+- [ ] OAuth sign-in (Google) → no profile exists → `/account` loads → profile auto-created by Layer 2
+- [ ] Sanity down during `verifySession()` healing → page still loads (auth is not blocked) → error logged → profile created on next successful load
+- [ ] Cleanup script dry run (first run) → no profiles deleted → deletion candidates logged for review → N healthy users confirmed
+- [ ] Cleanup script healing run → orphaned users with verified email and no orders → profile created → not deleted
 
 ---
 
-## 6. Scope Boundary
+## 10. Corrections to Previous Spec Version
 
-**In scope:**
-- userProfile creation atomicity
-- DAL defensive checks
-- Auth database hooks
-- Cleanup script
-- Sign-up action error handling
-
-**Out of scope:**
-- Any UI/UX changes to sign-up form
-- Email verification flow (handled separately)
-- Password reset flow (handled separately)
-- OAuth UI changes
-- Any non-auth features
+| Previous spec claim | Correction |
+|--------------------|------------|
+| "authClient.signUp.email() → Returns { user, token } to client → router.push('/account')" | `autoSignIn: true` means a session is set immediately, but `requireEmailVerification: true` means the user is unverified. Profile creation runs before verification. This is correct and intentional. |
+| "Cleanup job deletes auth users with no profile > 24h" | **Wrong.** Cleanup should create the missing profile, not delete the auth user. Hard delete is only valid for: no profile + no orders + unverified + > 7 days old. |
+| "Add `ensureUserProfile()` to `verifySession()`, `getSession()`, AND `requireSession()`" | Only `verifySession()` is the correct placement. `getSession()` and `requireSession()` are used in API/action contexts where unconditional Sanity writes are inappropriate. |
+| "Better Auth does not expose a clean `auth.api.deleteUser()` endpoint" | Better Auth v1.6+ does expose `auth.api.deleteUser` for admin use. The reason rollback is rejected is the atomicity window, not missing API. |
+| Spec referenced `createdAt` as a custom `userProfile` field for cleanup age checks | The correct field is Sanity's auto-generated `_createdAt`. No custom field needed. |
+| "Cleanup job needed as safety net" (implied fire-and-forget heal) | The cleanup job's primary action is **healing** (create missing profiles), not deletion. Deletion is a narrow exception with strict preconditions. |

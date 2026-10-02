@@ -15,18 +15,16 @@ Other loose docs: [replicable-step-recipe.md](./replicable-step-recipe.md) — s
 ## By folder
 
 - [audits/](./audits/) — dated UX audits (homepage, PDP, 2026-08-05)
-- [auth/](./auth/) — auth/account gap analyses, intelligence notes, devin task briefs
+- [auth/](./auth/) — auth/account gap analyses and intelligence notes
 - [basket/](./basket/) — basket PRDs, solution designs, ADRs (page, non-local, shipping cost)
 - [checkout/](./checkout/) — checkout synopsis, ADRs, security audit, per-area intelligence
-- [diagrams/](./diagrams/) — standalone technical diagrams (data flow, bounded contexts, patterns)
-- [examples/](./examples/) — reference code examples (gold-standard component)
-- [footer/](./footer/) — footer design screenshots (desktop, mobile)
+- [diagrams/](./diagrams/) — standalone technical diagrams (data flow, payment page, return handler)
+- [examples/](./examples/) — documentation samples (Markdown)
 - [hosting/](./hosting/) — hosting framed objective and Q&A
 - [logging/](./logging/) — logging framed objective, acceptance tests, task decomposition
 - [performance/](./performance/) — performance budgets, audit checklists, monitoring, runbook
-- [post-homepage-product-discovery/](./post-homepage-product-discovery/) — catalogue architecture plus design mockups
+- [post-homepage-product-discovery/](./post-homepage-product-discovery/) — catalogue architecture
 - [research/](./research/) — live research notes; [research/archive/](./research/archive/) holds closed research
-- [testing/](./testing/) — test principles and guides; canonical conventions: tests/TestsNamingConvention.md, tests/TestsContractConvention.md
-- [user-account/](./user-account/) — user-account system and data-functionality intelligence
+- [testing/](./testing/) — test-file location convention for the surviving live-CMS proof scripts
 
 Process docs and closed campaign records live in _project/, not here.

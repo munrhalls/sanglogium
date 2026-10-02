@@ -1,5 +1,7 @@
 # Sang Logium — Product Detail Page UX Audit
 
+> **Point-in-time document.** File paths below were accurate when this was written and may predate the 2026-10 repository reorganization. Check git history before relying on them.
+
 *2026-08-05. Subject: `/product/sony-ult-wear-...` (Sony ULT WEAR Wireless Noise Canceling Headphones, $148). Methodology: full-page screenshot analyzed section by section, cross-referenced against `tailwind.config.ts` and the live source — `app/(store)/product/[slug]/page.tsx`, `ProductDetail.tsx`, `ProductInfo.tsx`, `ImageGallery.tsx`. Companion to `docs/homepage-ux-audit-2026-08-05.md`.*
 
 *Note: the recurring red "1 issue" pills visible throughout the screenshot are a third-party QA/annotation overlay (browser extension or review tool), not part of the live page. They're ignored below as page content, but their sheer density is itself a signal worth asking about separately.*

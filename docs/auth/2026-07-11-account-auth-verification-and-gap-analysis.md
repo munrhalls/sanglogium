@@ -52,7 +52,7 @@ Sources: [OWASP Authentication Cheat Sheet](https://cheatsheetseries.owasp.org/c
 
 ### C.1 — False positives found and corrected
 
-Two internal docs in this repo (`docs/user-account/user-account-system-intelligence.md`, dated 2026-06-10) describe blockers that **no longer exist**. Both were checked against current source and are stale — the fixing commit landed the same day the doc was written:
+Two internal docs in this repo (`docs/auth/user-account-system-intelligence.md`, dated 2026-06-10) describe blockers that **no longer exist**. Both were checked against current source and are stale — the fixing commit landed the same day the doc was written:
 
 | Old claim | Current source reality | Verdict |
 |---|---|---|
@@ -93,20 +93,6 @@ These are not re-listed as gaps below.
 
 ---
 
-## Part D — Where the closure plans live
+## Part D — Where the closure plans lived
 
-Each gap above has a standalone, dependency-ordered implementation spec under `docs/auth/devin-tasks/`, sized so a single task can be handed to an agent without it needing the rest of the codebase in context. Start at `docs/auth/devin-tasks/00-README.md`.
-
-| Phase file | Closes |
-|---|---|
-| `01-quick-fixes.md` | G12, G13, G14 |
-| `02-profile-name-edit.md` | G1 |
-| `03-profile-email-change.md` | G3 |
-| `04-address-book.md` | G2 |
-| `05-order-detail-page.md` | G4 |
-| `06-account-deletion-gdpr-export.md` | G5 |
-| `07-guest-to-account-order-merge.md` | G11 |
-| `08-notification-preferences.md` | G7 |
-| `09-wishlist-favorites.md` | G6 |
-| `10-two-factor-auth.md` | G9, G10 |
-| `11-additional-social-providers.md` | G8 |
+Each gap above had a standalone, dependency-ordered implementation spec under `docs/auth/devin-tasks/` (01–11, closed G1–G14). All briefs were executed and the folder has since been removed; git history retains them.

@@ -1,3 +1,8 @@
+# Gold-standard component (reference)
+
+Documentation sample only — not compiled. Original content preserved verbatim.
+
+```tsx
 /**
  * Gold Standard Examples - Sang-Logium
  *
@@ -355,3 +360,5 @@ function ProductDetail({ product, relatedProducts }: ProductDetailProps) {
 function FilterChip({ value }: { value: string }) {
   return null // Placeholder
 }
+
+```

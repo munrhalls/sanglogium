@@ -1,5 +1,7 @@
 # Sanglogium: System Design (North Star)
 
+> **Point-in-time document.** File paths below were accurate when this was written and may predate the 2026-10 repository reorganization. Check git history before relying on them.
+
 The authoritative target for the system's design. All implementation work is measured against it.
 Grounded against the code and live data on 2026-10-02.
 
@@ -91,7 +93,7 @@ nears the plan's document cap. If any of those happens, move orders **and** stoc
 
 **Decision: account data moves to Turso.** The user entity is split across two stores with no shared transaction.
 That split is the single root cause of the sync hooks, the on-read profile healing and the best-effort profile
-deletion (`docs/auth/userprofile-atomicity-spec-updated.md`). In one SQL database, profile creation becomes part of
+deletion (`docs/auth/userprofile-atomicity-spec.md`). In one SQL database, profile creation becomes part of
 sign-up and erasure becomes one cascading delete.
 
 ## 4. Storage & consistency
