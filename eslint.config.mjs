@@ -4,7 +4,7 @@ import nextTypeScript from "eslint-config-next/typescript";
 import { createRequire } from "module";
 
 const require = createRequire(import.meta.url);
-const sangLogiumPlugin = require("./eslint-plugin-sang-logium.cjs");
+const sangLogiumPlugin = require("./tools/eslint-plugin-sang-logium.cjs");
 
 const JEST_PATHS = [
   {
