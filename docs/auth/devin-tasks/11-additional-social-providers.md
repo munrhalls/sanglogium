@@ -1,4 +1,6 @@
 # Phase 11 — Additional social providers (Apple, GitHub, etc.)
+> **Point-in-time document.** File paths below were accurate when this was written and may predate the 2026-10 repository reorganization. Check git history before relying on them.
+
 
 **Priority: lowest — optional.** Only do this if explicitly requested; the original audit lists it as a gap but does not mark it urgent, and it has no functional/security implications the way phases 1–7 do.
 **Depends on:** nothing technically. Reuses the exact pattern from phase 1's Google gating fix — do phase 1 first.

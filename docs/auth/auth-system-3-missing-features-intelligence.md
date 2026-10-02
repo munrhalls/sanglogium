@@ -1,4 +1,6 @@
 # Auth System — 3 Missing Features Intelligence
+> **Point-in-time document.** File paths below were accurate when this was written and may predate the 2026-10 repository reorganization. Check git history before relying on them.
+
 
 **Date:** June 2026  
 **Stack:** Next.js 15 / React 19 / Better Auth v1.6.11 / Turso (SQLite) / Resend  

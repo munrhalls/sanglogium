@@ -1,4 +1,6 @@
 # Checkout Security & Baseline Effectiveness Audit
+> **Point-in-time document.** File paths below were accurate when this was written and may predate the 2026-10 repository reorganization. Check git history before relying on them.
+
 
 > **Scope:** Audit-only, read-and-report. No source code under `app/`, `lib/`, `sanity-cms/`, `components/`, `middleware.ts`, `next.config.*`, or `package.json` was modified.  
 > **Evidence rules applied:**

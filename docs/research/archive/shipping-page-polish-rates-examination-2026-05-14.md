@@ -1,4 +1,6 @@
 # Shipping Page Polish Shipping Rates - Complete Technical Context Examination
+> **Point-in-time document.** File paths below were accurate when this was written and may predate the 2026-10 repository reorganization. Check git history before relying on them.
+
 
 **Date:** 2026-05-14
 **Purpose:** Comprehensive examination of all work completed on shipping page Polish shipping rate integration, Furgonetka API implementation challenges, and Polish shipping data/API access issues

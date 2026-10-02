@@ -1,4 +1,6 @@
 # Checkout Security & Baseline UX Intelligence
+> **Point-in-time document.** File paths below were accurate when this was written and may predate the 2026-10 repository reorganization. Check git history before relying on them.
+
 
 > **Purpose:** External standards and baseline UX expectations against which the current checkout architecture (documented in [`checkout-synopsis.md`](./checkout-synopsis.md)) can be audited.  
 > **Scope:** Research and synthesis only. No source-code changes.  

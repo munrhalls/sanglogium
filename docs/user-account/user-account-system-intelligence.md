@@ -1,4 +1,6 @@
 # User Account System — Complete Intelligence
+> **Point-in-time document.** File paths below were accurate when this was written and may predate the 2026-10 repository reorganization. Check git history before relying on them.
+
 ## Sang Logium · Next.js 15 / React 19 / Better Auth v1.6.11 / Turso / Sanity CMS v3
 **Date:** June 2026  
 **Method:** Full source trace, file-by-file, call-site verified  
