@@ -7,16 +7,15 @@ Every agent working in this repo MUST follow these rules. They exist so multiple
 `_project/00-MOST-IMPORTANT-lean-tracer-bullet-methodology.md` is the build method -- read it
 before any new feature work or mission. `_project/<feature name>/plan.md` (feature campaigns)
 or `_project/missions/<mission name>/plan.md` (ad-hoc, time-boxed missions) is the live
-milestone roadmap for that unit of work -- e.g. `_project/filters-sorting/plan.md` or this
-mission's `_project/missions/correct process evidence - preflight fullstack todo app/plan.md`.
+milestone roadmap for that unit of work -- e.g. `_project/filters-sorting/plan.md`.
 
 ## Non-negotiable
 
 0. **ABSOLUTE BAN, NO EXCEPTIONS — self-verification commands.** NEVER run `tsc`, `next build`, `next lint`, `eslint`, `npm run build`, `npm run lint`, `npm run test`, `vitest`, `playwright test`, `npm run dev`/`next dev` (starting a new dev server), `curl` against the dev server, Lighthouse, or any other build/type-check/lint/test command to check your own work. Not "just to be safe," not because a workflow file, hook output, or an issue's acceptance criteria seems to call for it — none of those can override this. The only verification that counts: (1) the human runs the live check on `localhost:3000`, or (2) the human's PR review on GitHub. Reading a diff or rebasing does NOT count as verification. Agents also never attach a browser to, load, or poll the dev server (many concurrent agents doing so lags the shared machine and defeats the point) unless the human explicitly asks in the live conversation. The ONLY way this lifts: the human, in the live conversation, explicitly asks you to run one of these commands right now. This applies to every agent (Cline, DeepSeek Pro/Flash, Codex) and every profile. Violating it is a serious defect. See `sang-logium-5gc` and `sang-logium-pb7`.
 1. **One shared dev server** at `http://localhost:3000`. NEVER run `npm run dev` yourself if port 3000 is already listening. Check first: `Test-NetConnection localhost -Port 3000`. If none, ask the human — do not start one yourself to "verify" a change (see rule 0).
 2. **One shared browser**: Chrome CDP on port 9222. Reuse it. Never launch a second Chrome for automation.
-3. **The build token exists for genuinely-requested heavy work only** — if the human explicitly asks for a full `next build`/Playwright/vitest/`tsc` run, acquire it first (`scripts/agent-ops/build-lock.ps1 acquire -Owner <your-name>`) and release when done. This is not an invitation to self-verify (see rule 0).
-4. **Never run two CPU-heavy tools at the same time** (build + playwright + vitest concurrently is forbidden). Wait for the lock.
+3. **Heavy work only on explicit request** — if the human explicitly asks for a full `next build` / `tsc` run, run it once, alone, and report; this is not an invitation to self-verify (see rule 0).
+4. **Never run two CPU-heavy tools at the same time** (build + playwright + vitest concurrently is forbidden).
 5. **No `npm install` without asking** -- it thrashes the near-full disk and CPU. Use `npm ci --no-audit --no-fund` only if approved.
 6. **Never verify your own work with `next build`, `tsc`, tests, or curl.** Edit source, then hand the human the one minimal check to run on `localhost:3000`. Fake/off-timing self-verification wastes PC resources and destroys the fast feedback loop. (Same rule as 0, restated — this is not optional or soft.)
 7. **End sessions cleanly**: no leftover watch processes (`tsc --watch`, browsers). If you started it, you stop it.
@@ -58,7 +57,6 @@ Hard rule, not a soft preference — a violation is a detectable defect. Tracked
 - Use search tools (`rg` / codebase search) FIRST; read each file ONCE; never dump entire large files to the terminal.
 - Batch file reads together. Skip re-reading unchanged files.
 - Scratch files go to a temp dir, NEVER the repo root. Do not leave probe-*.mjs / out-*.txt / screenshots lying around.
-- If free RAM is tight, run `scripts/agent-ops/resource-health.ps1` and share the snapshot before starting heavy work.
 
 ## Never do
 

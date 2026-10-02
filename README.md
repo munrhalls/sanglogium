@@ -36,8 +36,6 @@ solo over 18+ months.
 
 **Styling:** Tailwind CSS
 
-**Testing:** Playwright (E2E & component) · Vitest (unit & integration)
-
 ## Screenshots
 
 _(placeholder — see Phase 4)_
