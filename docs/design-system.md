@@ -2,7 +2,7 @@
 
 Scope: visual/layout design only — colors, type, spacing, radii, shadows, breakpoints, component
 classes, layout patterns. Explicitly excludes conversion-UX recommendations (reviews, trust copy,
-cross-sell) — those live in `docs/pdp-ux-audit-2026-08-05.md` and `docs/homepage-ux-audit-2026-08-05.md`,
+cross-sell) — those live in `docs/audits/pdp-ux-audit-2026-08-05.md` and `docs/audits/homepage-ux-audit-2026-08-05.md`,
 a separate workstream, out of scope here.
 
 Methodology: every token below is read directly from `tailwind.config.ts` / `app/globals.css`,
@@ -162,7 +162,7 @@ zero new colors, sizes, or components.
 `ProductDetail.tsx:19` splits `grid-cols-1 lg:grid-cols-2`: image column (`ImageGallery`) vs. info
 column (`ProductInfo`). The image column's height is fixed by the product photo + thumbnail strip
 (≈600px+ at desktop). The info column's height is entirely a function of `product.overviewFields`
-content, which `docs/pdp-ux-audit-2026-08-05.md` already found data-quality-inconsistent. When a
+content, which `docs/audits/pdp-ux-audit-2026-08-05.md` already found data-quality-inconsistent. When a
 product has no short/quick-scan overview fields — confirmed live at
 `/product/xduoo-xd-05-bal-balanced-dac-amp`, screenshotted at 1440×800 and 1440×960 — the info
 column renders brand/title/price/stock/buy-box/shipping-line and stops, leaving ~300–350px of
@@ -209,7 +209,7 @@ hierarchy `.type-caption`/`.type-body` were meant to create. Mechanical fix: pre
 
 `NewestRelease.tsx:106` hand-rolls `border-accent-600 bg-accent-600 text-secondary-900 …
 hover:bg-transparent hover:text-secondary-900` instead of `.btn-primary`/`.btn-secondary`/
-`.btn-ghost`. Flagged in `docs/homepage-ux-audit-2026-08-05.md`; still present, unfixed as of this
+`.btn-ghost`. Flagged in `docs/audits/homepage-ux-audit-2026-08-05.md`; still present, unfixed as of this
 writing. Two problems in one: it's a fourth, undocumented button style on the page's single
 highest-value CTA, and the hover state sets background transparent while keeping dark text — text
 goes near-invisible against the dark page on hover. Fix direction (execution plan, Task 2): reuse
@@ -248,7 +248,7 @@ the only sources of truth.
 
 *Built 2026-08-06 from `tailwind.config.ts`, `app/globals.css`, live-site screenshots
 (sanglogium.com, desktop 1440×800/1440×960, `/product/xduoo-xd-05-bal-balanced-dac-amp`), and the
-component source cited inline. Cross-referenced against `docs/pdp-ux-audit-2026-08-05.md` and
-`docs/homepage-ux-audit-2026-08-05.md` (conversion-UX findings, separate workstream). Verify line
+component source cited inline. Cross-referenced against `docs/audits/pdp-ux-audit-2026-08-05.md` and
+`docs/audits/homepage-ux-audit-2026-08-05.md` (conversion-UX findings, separate workstream). Verify line
 numbers against actual files before relying on them after further edits — this codebase iterates
 fast; two of the PDP audit's own findings were already fixed by the time this document was written.*

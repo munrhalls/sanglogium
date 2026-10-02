@@ -55,6 +55,6 @@ sequenceDiagram
 
 ## Related Documentation
 
-- [PRD](./1. PRD.md) - Product requirements and definition of done
-- [Technical Solution](./2. Minimal Viable Solution Design.md) - Detailed technical design
-- [UI Plan](./3. UI Plan.md) - HTML structure for basket controls
+- [PRD](./1-prd.md) - Product requirements and definition of done
+- [Technical Solution](./2-minimal-viable-solution-design.md) - Detailed technical design
+- [UI Plan](./3-ui-plan.md) - HTML structure for basket controls

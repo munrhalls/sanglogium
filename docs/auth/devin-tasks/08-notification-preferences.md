@@ -1,4 +1,6 @@
 # Phase 8 — Notification preferences
+> **Point-in-time document.** File paths below were accurate when this was written and may predate the 2026-10 repository reorganization. Check git history before relying on them.
+
 
 **Priority: low.** Do not start until phases 1–7 are shipped and verified.
 **Depends on:** nothing technically.

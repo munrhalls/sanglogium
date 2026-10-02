@@ -1,4 +1,6 @@
 # Poland Shipping API Zero-Cost Validation - FINAL RESULT
+> **Point-in-time document.** File paths below were accurate when this was written and may predate the 2026-10 repository reorganization. Check git history before relying on them.
+
 
 **Date:** 2026-05-14
 **Status:** ❌ CONTRACT CANNOT BE FULFILLED

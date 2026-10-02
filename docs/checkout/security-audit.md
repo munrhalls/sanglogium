@@ -1,10 +1,12 @@
 # Checkout Security & Baseline Effectiveness Audit
+> **Point-in-time document.** File paths below were accurate when this was written and may predate the 2026-10 repository reorganization. Check git history before relying on them.
+
 
 > **Scope:** Audit-only, read-and-report. No source code under `app/`, `lib/`, `sanity-cms/`, `components/`, `middleware.ts`, `next.config.*`, or `package.json` was modified.  
 > **Evidence rules applied:**
 > - Non-browser security properties are evidenced with a concrete `file:line` citation plus reasoning.
 > - User-observable behaviours are **not** guessed at from the code; items that need the dev server are collected in the dedicated "DEFERRED — needs live dev server" section at the end.
-> **Standards used:** `docs/checkout/security-intelligence.md` and `docs/checkout/CHECKOUT-SYNOPSIS.md`.  
+> **Standards used:** `docs/checkout/security-intelligence.md` and `docs/checkout/checkout-synopsis.md`.  
 > **Date:** 2026-09-14.
 
 ---

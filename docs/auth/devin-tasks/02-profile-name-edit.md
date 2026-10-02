@@ -1,4 +1,6 @@
 # Phase 2 — Profile editing: display name
+> **Point-in-time document.** File paths below were accurate when this was written and may predate the 2026-10 repository reorganization. Check git history before relying on them.
+
 
 **Depends on:** Phase 1 (clean baseline; not a hard technical dependency, just do it in order).
 **Closes:** G1 (partial — name only; email is Phase 3).

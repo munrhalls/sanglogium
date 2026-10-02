@@ -1,4 +1,6 @@
 # Phase 1 — Quick fixes (no new features)
+> **Point-in-time document.** File paths below were accurate when this was written and may predate the 2026-10 repository reorganization. Check git history before relying on them.
+
 
 **Depends on:** nothing. Do this first.
 **Closes:** G12 (no returnTo redirect), G13 (Google button shown when unconfigured), G14 (dead code).

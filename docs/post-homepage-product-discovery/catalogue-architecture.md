@@ -45,7 +45,7 @@ Render ProductGrid with products
 ### Product Resolution Layer
 | File | Purpose |
 |------|---------|
-| `sanity/lib/products/getProductsByVfsKeys.ts` | Fetch products by slot IDs (TO IMPLEMENT) |
+| `sanity-cms/lib/products/getProductsByVfsKeys.ts` | Fetch products by slot IDs (TO IMPLEMENT) |
 | `app/(store)/shop/[...slug]/page.tsx` | Category listing page (TO IMPLEMENT) |
 | `features/products/ui/ProductGrid.tsx` | Product grid presentation (TO IMPLEMENT) |
 
@@ -121,10 +121,10 @@ This query uses array intersection — returns products where at least one `cata
 
 ### Step 1: Create Product Resolution Function
 
-Create `sanity/lib/products/getProductsByVfsKeys.ts`:
+Create `sanity-cms/lib/products/getProductsByVfsKeys.ts`:
 
 ```typescript
-import { sanityFetch } from "@/sanity/lib/client";
+import { sanityFetch } from "@/sanity-cms/lib/client";
 import { cache } from "react";
 import groq from "groq";
 
@@ -146,8 +146,8 @@ export const getProductsByVfsKeys = cache(async (keys: string[]) => {
 Create `app/(store)/shop/[...slug]/page.tsx`:
 
 ```typescript
-import { resolveSlugToId, unrollDescendantKeys } from "@/data/catalogue";
-import { getProductsByVfsKeys } from "@/sanity/lib/products/getProductsByVfsKeys";
+import { resolveSlugToId, unrollDescendantKeys } from "@/features/catalogue/server";
+import { getProductsByVfsKeys } from "@/sanity-cms/lib/products/getProductsByVfsKeys";
 import { ProductGrid } from "@/features/products";
 
 export default async function CategoryPage({ 
@@ -215,9 +215,7 @@ Data fetching happens server-side for:
 
 ## Related Documentation
 
-- [VFS Test Plan](../tests/catalogue/VFS_TEST_PLAN.md)
-- [Frontend VFS Audit](../audit-reports/FRONTEND_VFS_CONSUMPTION_AUDIT.md)
-- [Sanity Schema](../sanity/schemaTypes/productType.ts)
+- [Sanity Schema](../../sanity-cms/schemaTypes/productType.ts)
 
 ---
 

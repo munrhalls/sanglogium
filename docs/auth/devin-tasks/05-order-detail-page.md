@@ -1,4 +1,6 @@
 # Phase 5 — Order detail / invoice / tracking page
+> **Point-in-time document.** File paths below were accurate when this was written and may predate the 2026-10 repository reorganization. Check git history before relying on them.
+
 
 **Depends on:** nothing (independent of phases 2–4).
 **Closes:** G4.

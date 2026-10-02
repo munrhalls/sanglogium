@@ -1,4 +1,6 @@
 # Account & Authentication — Audit Verification + Gap Analysis
+> **Point-in-time document.** File paths below were accurate when this was written and may predate the 2026-10 repository reorganization. Check git history before relying on them.
+
 
 **Date:** 2026-07-11
 **Method:** Every claim below was checked directly against source in this repo (not against other docs, not against memory of prior sessions). Where an older internal doc disagreed with current source, current source wins and the doc is flagged stale.

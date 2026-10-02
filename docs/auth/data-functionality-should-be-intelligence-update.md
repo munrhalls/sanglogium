@@ -1,3 +1,5 @@
+> **Point-in-time document.** File paths below were accurate when this was written and may predate the 2026-10 repository reorganization. Check git history before relying on them.
+
 Good. Scope confirmed: auth system only — sign in / sign up, the Better Auth integration as documented in the uploaded file.
 Now proceeding through the workflow.Searched the webSearched the webGood. I now have enough intelligence to proceed. Let me compile, plan, scan for gaps/red flags, then write the spec.
 Step 4-5 — Plan + gap/red flag scan (internal)

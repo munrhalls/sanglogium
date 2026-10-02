@@ -112,7 +112,7 @@ Acceptance: exactly those two assertion levels changed, in both config files.
 ### Phase 6 — Documentation (do last, references the finished state of Phases 1–5)
 
 **Task 6.1 — Performance budget doc**
-Create `docs/performance/PERFORMANCE_BUDGET.md` listing every threshold currently enforced in `lighthouserc.cjs`/`lighthouserc.mobile.cjs` as a table (metric, budget, level, rationale), plus one paragraph stating these are the project's performance SLA.
+Create `docs/performance/performance-budget.md` listing every threshold currently enforced in `lighthouserc.cjs`/`lighthouserc.mobile.cjs` as a table (metric, budget, level, rationale), plus one paragraph stating these are the project's performance SLA.
 Acceptance: new doc file, values match the actual config files exactly (no invented numbers).
 
 **Task 6.2 — Regression runbook**

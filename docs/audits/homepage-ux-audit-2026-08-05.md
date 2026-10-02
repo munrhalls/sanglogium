@@ -1,4 +1,6 @@
 # Sang Logium — Homepage UX Audit
+> **Point-in-time document.** File paths below were accurate when this was written and may predate the 2026-10 repository reorganization. Check git history before relying on them.
+
 
 *2026-08-05. Methodology: full-page screenshot of the live homepage (13,405px scroll depth) analyzed section by section, cross-referenced against `tailwind.config.ts` (design tokens) and homepage source in `app/components/features/homepage/**`. Structural facts confirmed against `docs/homepage-structure.md`.*
 

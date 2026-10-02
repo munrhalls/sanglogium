@@ -107,6 +107,6 @@ Fallback to `SENDER_ADDRESS_DEFAULT_*` if country-specific not configured.
 
 ## Related Documentation
 
-- [PRD](./PRD.md) - Product requirements and definition of done
-- [Technical Solution](./Minimal Viable Solution Design.md) - Detailed technical design
-- [Technical Diagrams](./TECHNICAL DIAGRAM.md) - Sequence diagrams
+- [PRD](./prd.md) - Product requirements and definition of done
+- [Technical Solution](./minimal-viable-solution-design.md) - Detailed technical design
+- [Technical Diagrams](./technical-diagram.md) - Sequence diagrams

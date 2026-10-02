@@ -1,4 +1,6 @@
 # AlleKurier Rate Validation Criteria and Test Scenarios
+> **Point-in-time document.** File paths below were accurate when this was written and may predate the 2026-10 repository reorganization. Check git history before relying on them.
+
 
 ## Executive Summary
 
@@ -328,4 +330,4 @@ for (const scenario of testScenarios) {
 - AlleKurier API Documentation: https://github.com/AlleKurier/api_v1
 - AlleKurier Setup: `docs/checkout/address slice/ALLEKURIER_SETUP.md`
 - Q&A on Poland Shipping: `docs/checkout/address slice/1. Q & A.md`
-- Poland Shipping Research: `research/Poland-Shipping-API-Research.md`
+- Poland Shipping Research: `docs/research/archive/poland-shipping-api-research-1.md`
