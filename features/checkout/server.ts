@@ -6,3 +6,4 @@ export { fetchAlleKurierRates, transformAlleKurierToShippingOption } from './ada
 export { default as OrderDetails } from './ui/OrderDetails';
 export { getOrderByPaymentIntentId } from './adapters/orders';
 export type { OrderForSuccessPage } from './adapters/orders';
+export { default as PaymentConfirmed } from './ui/PaymentConfirmed';

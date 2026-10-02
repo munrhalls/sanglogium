@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import type { Address, ServerResponse } from "./domain/checkoutTypes";
 import { logCheckoutEvent, generateCheckoutSessionId } from "@/lib/dev/event-logger";
 import { verifyPolishAddress } from "./adapters/terytValidator";
-import { validateWithGoogle } from "./adapters/googleAddressValidator.frozen";
+import { validateWithGoogle } from "./adapters/googleAddressValidator";
 
 export async function initCheckoutSession(items: Array<{ productId: string; quantity: number }>, checkoutSessionId?: string) {
   const session = await getCheckoutSession();
@@ -206,7 +206,7 @@ const normalizeRegionCode = (code?: string | null): string | undefined => {
 
 // ACTIVE verifier — GUS TERYT (official registry, free, no key). The Google
 // path is FROZEN and only reachable via ADDRESS_VERIFY_MODE=google (see
-// google-address-validator.frozen.ts).
+// googleAddressValidator.ts).
 async function validateWithTeryt(
   input: Address,
   normalizedRegion: string,
@@ -274,6 +274,6 @@ export async function submitShippingAction(
     return acceptAsEntered();
   }
 
-  // FROZEN path — see google-address-validator.frozen.ts.
+  // FROZEN path — see googleAddressValidator.ts.
   return validateWithGoogle(input, normalizedInput, acceptAsEntered);
 }
