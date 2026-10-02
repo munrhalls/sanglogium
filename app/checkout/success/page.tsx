@@ -2,11 +2,9 @@ import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
 import Link from 'next/link'
 import { CheckCircle, Lock, WarningCircle, XCircle, Clock } from '@phosphor-icons/react/dist/ssr'
-import { getCheckoutSession } from '@/features/checkout/server'
+import { getCheckoutSession, OrderDetails, getOrderByPaymentIntentId } from '@/features/checkout/server'
 import { retrievePaymentIntent } from '@/lib/stripe'
 import { logCheckoutEvent } from '@/lib/dev/event-logger'
-import { fetchOrderByPaymentIntentId } from '@/sanity-cms/lib/orders/getOrderByPaymentIntentId'
-import OrderDetails from './OrderDetails'
 import { RefreshButton, SuccessAnalytics } from '@/features/checkout'
 import { formatPrice } from '@/lib/utils/price'
 
@@ -59,7 +57,7 @@ export default async function SuccessPage({
   // H-04: if session gate fails, check if a completed order exists in Sanity
   let sanityOrderFallback = false
   if (!hasSessionClaim) {
-    const order = await fetchOrderByPaymentIntentId(payment_intent)
+    const order = await getOrderByPaymentIntentId(payment_intent)
     if (!order) {
       await logCheckoutEvent({ correlationId: traceId, slice: 'success-page', event: 'success_page_gate_denied', data: { paymentIntentId: payment_intent }, outcome: 'error' });
       redirect('/basket')

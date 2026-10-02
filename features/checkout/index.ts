@@ -11,3 +11,4 @@ export { default as ShippingPageClient } from './ui/ShippingPageClient';
 export { RefreshButton } from './ui/RefreshButton';
 export { SuccessAnalytics } from './ui/SuccessAnalyticsClient';
 export { CheckoutButton } from './ui/CheckoutButton';
+export { default as PaymentForm } from './ui/PaymentFormClient';
