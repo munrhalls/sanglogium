@@ -32,15 +32,7 @@ yarn-error.log*
 
 # env files (added redundancy to be sure)
 .env*
-.env.Local
-.env.local
-.env.local.*
-.env.development.Local
-.env.test.Local
-.env.production.Local
-.env.production.Local
-.env.example
-.env.template
+!.env.example
 
 # vercel
 .vercel
@@ -51,7 +43,6 @@ next-env.d.ts
 
 # Local Netlify folder
 .netlify
-# Deployment backups\nbackups/
 
 
 # ngrok configuration
@@ -71,7 +62,6 @@ scripts/image-pipeline/.env
 # Test artifacts and generated data
 test-results/
 playwright-report/
-data/catalogue-index.json
 
 # Runtime logs
 logs/
@@ -82,9 +72,6 @@ logs/
 
 # Repomix output
 repomix-output.xml
-
-.vercel
-.env*
 
 # Temporary test files
 cookies.txt
@@ -101,7 +88,6 @@ scripts/temp-*.mjs
 .windsurf/
 _temp_*.json
 _temp_*.txt
-cookies.txt
 temp_notes.txt
 *.db-wal
 
