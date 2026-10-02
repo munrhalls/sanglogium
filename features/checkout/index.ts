@@ -9,5 +9,5 @@ export { default as CheckoutSummary } from './ui/CheckoutSummary';
 export { default as AddressForm } from './ui/AddressForm';
 export { default as ShippingPageClient } from './ui/ShippingPageClient';
 export { RefreshButton } from './ui/RefreshButton';
-export { SuccessAnalytics } from './ui/SuccessAnalytics.client';
+export { SuccessAnalytics } from './ui/SuccessAnalyticsClient';
 export { CheckoutButton } from './ui/CheckoutButton';
