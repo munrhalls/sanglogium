@@ -3,7 +3,7 @@
 import type { ProductDetailData as Product } from "../domain/productTypes";
 import { urlFor } from '@/lib/utils/sanityImageUrl';
 import { useState } from 'react';
-import { Price } from '@/app/components/ui/Price';
+import { Price } from '@/shared/ui/Price';
 import { ShoppingCartIcon, CheckIcon } from '@phosphor-icons/react/dist/ssr';
 import { QuantitySelector } from "./QuantitySelector";
 import { centsToDisplay } from '@/lib/utils/price';

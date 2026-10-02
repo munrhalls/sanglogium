@@ -7,7 +7,7 @@ import {
   UserPlus,
 } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils/tailwind";
-import { NavActionItem } from "@/app/components/ui/NavActionItem";
+import { NavActionItem } from "@/shared/ui/NavActionItem";
 import { BasketButton } from "@/features/basket";
 import { signOut } from "@/features/auth";
 

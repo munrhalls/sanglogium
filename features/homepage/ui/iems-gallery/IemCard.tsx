@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { IemProduct } from "../../domain/homepageTypes";
 import { BasketControls } from "@/features/basket";
-import { Price } from "@/app/components/ui/Price";
+import { Price } from "@/shared/ui/Price";
 import { ProductBadge } from "../shared/ProductBadge";
 import { centsToDisplay } from "@/lib/utils/price";
 
