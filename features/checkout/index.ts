@@ -12,3 +12,6 @@ export { RefreshButton } from './ui/RefreshButton';
 export { SuccessAnalytics } from './ui/SuccessAnalyticsClient';
 export { CheckoutButton } from './ui/CheckoutButton';
 export { default as PaymentForm } from './ui/PaymentFormClient';
+export { dedupeShippingLabel } from './domain/shippingLabel';
+export { buildPaymentLineItems, calculateGrandTotal, computePaymentTotals } from './domain/paymentSummary';
+export type { PaymentLineItem, PaymentProductInput } from './domain/paymentSummary';

@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getCheckoutSession } from '@/features/checkout/server'
 import { stripe } from '@/lib/stripe'
 import { logCheckoutEvent } from '@/lib/dev/event-logger'
-import { getBackendClient } from '@/sanity-cms/lib/backendClient'
+import { getProductUnitAmountsByIds } from '@/sanity-cms/lib/products/getProductUnitAmountsByIds'
 import { getSession } from '@/lib/auth/dal'
-import groq from 'groq'
+import { calculateGrandTotal } from '@/features/checkout'
 
 export async function POST(request: NextRequest) {
   try {
@@ -45,10 +45,7 @@ export async function POST(request: NextRequest) {
     }
 
     const ids = session.basket.map(i => i.productId)
-    const products = await getBackendClient().fetch<{ _id: string; price_data: { unit_amount: number } | null }[]>(
-      groq`*[_type == "product" && _id in $ids]{ _id, price_data { unit_amount } }`,
-      { ids }
-    )
+    const products = await getProductUnitAmountsByIds(ids)
 
     if (products.length !== session.basket.length) {
       await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_product_mismatch', data: { expected: session.basket.length, received: products.length }, outcome: 'error' })
@@ -66,7 +63,7 @@ export async function POST(request: NextRequest) {
       subtotal += unitPrice * item.quantity
     }
 
-    const computedGrandTotal = Math.round(subtotal + session.shippingCost)
+    const computedGrandTotal = calculateGrandTotal(subtotal, session.shippingCost)
 
     if (!Number.isInteger(computedGrandTotal) || computedGrandTotal < 1) {
       await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_invalid_total', data: { subtotal, shippingCost: session.shippingCost, computedGrandTotal }, outcome: 'error' })
