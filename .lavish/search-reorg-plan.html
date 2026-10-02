@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Search reorg plan</title>
+<style>
+  :root { --bg:#fff; --fg:#1c1c1e; --mut:#6b6b70; --line:#e3e3e6; --acc:#0b6bcb; --warn:#b45309; --soft:#f6f6f8; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#141416; --fg:#ececef; --mut:#9a9aa2; --line:#2c2c31; --acc:#6cb2ff; --warn:#f0b35a; --soft:#1c1c20; } }
+  body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.55 system-ui,sans-serif; }
+  main { max-width:980px; margin:0 auto; padding:24px 16px 64px; }
+  h1 { font-size:24px; margin:0 0 4px; } h2 { font-size:18px; margin:36px 0 10px; border-bottom:1px solid var(--line); padding-bottom:6px; }
+  p.lead { color:var(--mut); margin:0 0 8px; }
+  table { border-collapse:collapse; width:100%; font-size:13.5px; display:block; overflow-x:auto; }
+  th,td { border:1px solid var(--line); padding:6px 9px; text-align:left; vertical-align:top; }
+  th { background:var(--soft); }
+  code { font:12.5px ui-monospace,monospace; background:var(--soft); padding:1px 4px; border-radius:4px; }
+  .g { border:1px solid var(--line); border-radius:8px; padding:10px 12px; margin:8px 0; }
+  .g b { color:var(--warn); }
+  .turn { border-left:3px solid var(--acc); padding:2px 0 2px 12px; margin:14px 0; }
+  ul { margin:4px 0 4px 18px; padding:0; }
+</style>
+</head>
+<body>
+<main>
+<h1>Search reorganization: features/product-search</h1>
+<p class="lead">Axis slug <code>search-reorg</code>. Baseline main @ 758ec1f5. Organization only. Turn 1 phase files are written at <code>_project/working-memory/search-reorg/turn-1/</code>.</p>
+
+<h2>1. Gap scan (verified by reading the code)</h2>
+
+<div class="g"><b>G1 Nothing to build on yet.</b> <code>features/</code>, the tsconfig include and the Tailwind glob do not exist on main; filters Turn 1 creates them. Search Turn 1 is hard-gated on that PR being merged (file-existence checks in phase 1.1).</div>
+
+<div class="g"><b>G2 Lint objects clobber each other.</b> A later flat-config object replaces earlier options for the same rule on overlapping files. A second, independent "outsiders may not deep-import" object for search would silently drop the filters regex for every outsider (and the filters rule-2 object would lose the jest paths etc.). Search cannot copy the filters pattern as a second object. Plan: in Turn 3 restructure to ONE shared rule-1 object listing both feature regexes and ONE rule-2 object covering both feature folders, each repeating the three jest paths. It is a single edit of <code>eslint.config.mjs</code> after filters Turn 3 (the other editor of that file) is merged.</div>
+
+<div class="g"><b>G3 searchProducts.ts is mixed and is a <code>'use server'</code> module.</b> It holds the GROQ + fetch (stays in <code>sanity-cms/lib/products/</code>), the types AutocompleteProduct / SearchProduct / SearchResult, and a large pure pipeline (facets, category counts, price range, comparators, paging) plus the autocomplete rank/slice. Pure parts move to <code>domain/</code>; the types move with them; the file may afterwards export only async functions (a <code>'use server'</code> rule). Its imports of filters symbols were re-pointed by filters Turns 1 and 3, so it is edited only in search Turn 3.</div>
+
+<div class="g"><b>G4 One client to server-action boundary breaks rule 2.</b> <code>useSearchController</code> (client, in the UI) imports <code>searchProductsAutocomplete</code> from sanity-cms. The feature may not import sanity-cms, and there is no "fetcher takes state" trick for a hook. Recommendation: the hook takes a <code>fetchSuggestions</code> argument; <code>SearchField.tsx</code> (stays in layout, is the composition root) passes the server action. This is the only signature change of the axis; no behaviour change.</div>
+
+<div class="g"><b>G5 searchScoring.ts has module-level side effects.</b> It builds lookup maps from <code>data/catalogue-index.json</code> at import time. It goes into <code>domain/</code> but is exported ONLY through <code>server.ts</code>, never <code>index.ts</code>, so the catalogue JSON cannot leak into a client bundle through the barrel. Types (RootCategory) may go through <code>index.ts</code>.</div>
+
+<div class="g"><b>G6 Dormant code.</b> <code>lib/catalogue/semanticConfig.ts</code> and <code>semanticMatching.ts</code> have zero importers anywhere (code, scripts, docs). Turn 1 moves them verbatim (config/, domain/) and exports nothing. Whether to delete them is your call, not this axis.</div>
+
+<div class="g"><b>G7 searchLinks.ts mixes static data and helpers.</b> The two constants (CATEGORY_SUGGESTIONS, POPULAR_SEARCHES) are needed by the pure <code>suggestionEntries.ts</code>, so they become <code>config/searchSuggestions.ts</code>; the href/click helpers (React type import) stay UI-side. This avoids a domain to ui dependency. <code>recentSearches.ts</code> (localStorage) also goes to <code>ui/</code>, not domain, because it is browser-only.</div>
+
+<div class="g"><b>G8 Stays out (verified).</b> <code>lib/catalogue/pagination.ts</code> (also used by products Pagination.tsx) and <code>seo.ts</code> (also used by both products pages). <code>searchRobustness.spec.ts</code> stays in <code>store/__tests__/integration</code>: it calls the live Sanity fetcher, and a spec inside the feature would violate rule 2.</div>
+
+<div class="g"><b>G9 Hidden importers.</b> No <code>.mjs</code>/<code>.cjs</code>, script, CI or config file references any search module (grep over the whole tracked tree). Only docs: <code>docs/search-ux.md</code> and live plans get updated in Turn 4; historical <code>_project</code> files are left alone. CLAUDE.md points at <code>docs/search-ux.md</code> (path unchanged), so it needs no edit.</div>
+
+<div class="g"><b>G10 Skeleton is conditional.</b> Search has no proofs or fixtures (no <code>.mjs</code>, no data files), so <code>__tests__/proofs</code> and <code>data</code> are not created (Rule 1c). Skeleton and name <code>product-search</code> hold; no evidence demands a change.</div>
+
+<div class="g"><b>G11 Log file collision.</b> If search PRs append to <code>_project/filters-sorting/logs/agent-steps.log</code> while a filters PR is open, both append to the same tail and conflict. Search uses <code>_project/search/logs/agent-steps.log</code> instead. Revert this in the phase files if you want a single log.</div>
+
+<div class="g"><b>G12 Small notes.</b> <code>MIN_QUERY_LENGTH = 2</code> is duplicated (controller and fetcher); left alone, not organization. Filters phase checks assert <code>app/hooks/nuqs/</code> holds useDrawer + useSearchOverlay; search Turn 2 moves useSearchOverlay, so it is gated on filters Turn 2 being merged. Filters Turn 4 is not written yet, so search Turn 4 will be written after it exists.</div>
+
+<h2>2. Turn map</h2>
+<p class="lead">Rule: search Turn N starts only after filters Turn N is merged. No search turn edits a file that a later, possibly still-open filters turn edits.</p>
+
+<div class="turn"><b>Turn 1: foundation + headless core (4 phases, written)</b><br>
+Gate: filters T1 merged (<code>features/product-filtering/{index,server}.ts</code>, <code>config/facetRegistry.ts</code>, <code>domain/buildProductQuery.ts</code> exist; <code>lib/catalogue/facetMap.ts</code> gone; tsconfig + Tailwind mention <code>features/</code>).
+<ul>
+<li>1.1 sync, gate, scaffold <code>index.ts</code> and <code>server.ts</code></li>
+<li>1.2 config/: <code>semanticConfig</code>, <code>searchSuggestions</code> (split from searchLinks)</li>
+<li>1.3 domain/: <code>highlight</code>, <code>suggestionEntries</code>, <code>detectSearchRedirect</code>, <code>semanticMatching</code>; re-point importers</li>
+<li>1.4 sweep, cleanup, log, commit, push, PR</li>
+</ul>
+Shared files touched: <code>app/(store)/search/page.tsx</code> (one import line; filters T1 already merged, filters T2/T3 do not touch it). Untouched on purpose: <code>searchProducts.ts</code>, <code>SearchResults.tsx</code>, <code>eslint.config.mjs</code>.</div>
+
+<div class="turn"><b>Turn 2: UI shell move (4 phases)</b><br>
+Gate: filters T2 merged (<code>features/product-filtering/ui/FilterSidebar.tsx</code> exists; <code>app/components/features/filters/</code> and <code>app/hooks/nuqs/useFilterSort.tsx</code> gone).
+<ul>
+<li>2.1 sync, gate, git mv the 13 components + <code>useSearchController</code>, <code>useVisualViewportBox</code>, <code>recentSearches</code>, <code>searchLinks</code>, <code>useSearchOverlay</code> into <code>ui/</code></li>
+<li>2.2 ui/ imports config/domain/siblings relatively (never through its own entry); type-only sanity imports stay (Turn 3 fixes them)</li>
+<li>2.3 re-point outside importers to the entry (<code>page.tsx</code>, <code>error.tsx</code>, <code>SearchResults.tsx</code>, <code>SearchField.tsx</code>, <code>ActionBar.tsx</code>); move <code>SearchPagination.spec.tsx</code> into <code>__tests__/</code>; prune index.ts to real outsider use</li>
+<li>2.4 sweep, cleanup, log, PR</li>
+</ul>
+Shared files: <code>SearchResults.tsx</code> (search-component import lines only; filters T2 already merged, filters T3 does not touch it).</div>
+
+<div class="turn"><b>Turn 3: server seam + lint boundary (5 phases)</b><br>
+Gate: filters T3 merged (<code>domain/facetCounts.ts</code> exists; <code>sanity-cms/lib/products/__tests__/getFilterFacets.spec.ts</code> gone; eslint config contains the sanity-cms regex).
+<ul>
+<li>3.1 move <code>searchScoring</code> to <code>domain/</code>; extract the pure result pipeline and autocomplete ranking plus the three types from <code>searchProducts.ts</code>; server.ts / index.ts exports</li>
+<li>3.2 move <code>searchScoring.spec</code> to <code>__tests__/</code>; fetcher and all type importers re-pointed; prune exports</li>
+<li>3.3 <code>useSearchController</code> takes <code>fetchSuggestions</code>; <code>SearchField</code> passes the server action</li>
+<li>3.4 ESLint: shared rule-1 object for both features + rule-2 object for both feature folders</li>
+<li>3.5 sweep, cleanup, log, PR</li>
+</ul>
+Shared files: <code>searchProducts.ts</code>, <code>SearchResults.tsx</code> (type import), <code>eslint.config.mjs</code>.</div>
+
+<div class="turn"><b>Turn 4: docs pointers + leftovers (about 3 phases, written after filters T4 exists)</b><br>
+Gate: filters T4 merged (its marker files to be fixed when I read its phase files).
+<ul>
+<li>path updates in <code>docs/search-ux.md</code> and live plans (<code>_project/search/plan.md</code>, <code>_project/search-capability/plan.md</code>); historical records untouched</li>
+<li>leftover audit (empty dirs, <code>lib/catalogue</code> holds only pagination + seo), final grep sweep, PR</li>
+</ul></div>
+
+<h2>3. Symmetry: filters vs search</h2>
+<table>
+<tr><th>Aspect</th><th>features/product-filtering</th><th>features/product-search</th></tr>
+<tr><td>Entries</td><td><code>index.ts</code> client-safe, <code>server.ts</code> (<code>import 'server-only'</code>)</td><td>identical</td></tr>
+<tr><td>Folders</td><td><code>ui/ config/ domain/ __tests__/{proofs,data}</code></td><td>same; <code>proofs/</code> and <code>data/</code> only when content exists (none today)</td></tr>
+<tr><td>config/</td><td>facetMap, filterSortParams, category, facetRegistry, slices/*</td><td>searchSuggestions, semanticConfig</td></tr>
+<tr><td>domain/</td><td>buildProductQuery, sanitizeFilterState, priceBounds, humanizeFacetValue, facetCounts</td><td>highlight, suggestionEntries, detectSearchRedirect, semanticMatching, searchScoring, search result pipeline + types</td></tr>
+<tr><td>ui/</td><td>8 components + <code>useFilterParam</code></td><td>13 components + controller, viewport hook, recentSearches, searchLinks, <code>useSearchOverlay</code></td></tr>
+<tr><td>Pure half of mixed data file</td><td><code>getFilterFacets.ts</code> to <code>domain/facetCounts.ts</code></td><td><code>searchProducts.ts</code> to <code>domain/</code> (pipeline + types)</td></tr>
+<tr><td>Fetcher stays in</td><td><code>sanity-cms/lib/products/</code>, takes filter state</td><td><code>sanity-cms/lib/products/searchProducts.ts</code> (fetch + guards only)</td></tr>
+<tr><td>Import rules</td><td>outsiders only <code>@/features/product-filtering[/server]</code>; explicit named re-exports; types via index, server runtime via server.ts; pruned</td><td>identical</td></tr>
+<tr><td>Lint rule 1 / rule 2</td><td>deep-import ban / no sanity-cms in the feature</td><td>same two rules, merged into shared objects (G2)</td></tr>
+<tr><td>Cross-feature</td><td>none</td><td>search imports filters only via its two entries; filters never imports search</td></tr>
+<tr><td>Turn rhythm</td><td>T1 core, T2 UI, T3 server seam, T4 proofs/docs</td><td>T1 core, T2 UI, T3 server seam + lint, T4 docs (Lint moves to T3 only because of G2 and the shared config file.)</td></tr>
+<tr><td>Working memory</td><td>same folder convention, first phase syncs + gates, last phase deletes its folder, commits, PR</td><td>identical; log file differs (G11)</td></tr>
+</table>
+
+<h2>4. Human check per PR</h2>
+<ul>
+<li>Golden queries in <code>_project/search-capability/golden-queries.md</code>: same results and order.</li>
+<li><code>/search</code> with a filter, a sort and pagination; category chips; Clear all keeps <code>q</code>.</li>
+<li>Header autocomplete on desktop; mobile search sheet (open, type, Back closes it); bottom-bar trigger.</li>
+<li>Turn 2 adds styling checks (files now live under <code>features/</code>, scanned by the Tailwind glob). Turn 3 adds the lint boundary and unchanged counts.</li>
+</ul>
+</main>
+</body>
+</html>

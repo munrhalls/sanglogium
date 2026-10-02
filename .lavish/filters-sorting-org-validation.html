@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en" data-theme="luxury">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Filters &amp; sorting: folder verdict</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@5.5.19/daisyui.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@5.5.19/themes.css">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.2.4/dist/index.global.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  :where(.grid, .flex) > * { min-width: 0; }
+  :where(p, h1, h2, h3, li, dd, td, th, .badge) { overflow-wrap: anywhere; }
+  body { background: var(--color-base-100); color: var(--color-base-content); }
+  code { font-size: .85em; padding: .08rem .35rem; border-radius: .3rem; background: var(--color-base-300); }
+  pre { font-size: .78rem; line-height: 1.5; white-space: pre; overflow-x: auto; }
+  pre code { background: transparent; padding: 0; font-size: inherit; }
+  td, th { vertical-align: top; }
+</style>
+</head>
+<body>
+<main class="max-w-5xl mx-auto px-4 py-8 space-y-12">
+
+<header class="space-y-3">
+  <p class="text-xs uppercase tracking-widest opacity-60">Architecture review &middot; sanglogium &middot; filters &amp; sorting &middot; 2026-09-30</p>
+  <h1 class="text-3xl md:text-4xl font-bold leading-tight">Proposed folder organization: verified against the repo</h1>
+  <p class="opacity-80">Read-only. I read the live code, configs and data inventories; I changed nothing and ran no build, lint or test command.</p>
+</header>
+
+<!-- VERDICT -->
+<section class="space-y-4">
+  <div class="border-2 border-warning/60 bg-warning/10 rounded-box p-5 space-y-3">
+    <p class="text-xs uppercase tracking-widest text-warning">Verdict</p>
+    <p class="text-xl md:text-2xl font-semibold leading-snug">The principles pass. The concrete tree does not: adopted as written, it would not work in this repo and would create a second source of truth.</p>
+    <p class="opacity-90">My judgment: as written &asymp; 5/10 here (principles ~8, tree ~4). The validated tree in section 4 &asymp; 8.5/10. It needs no tsconfig, Tailwind, Vitest or Next config edits.</p>
+  </div>
+  <div class="grid md:grid-cols-4 gap-3 text-sm">
+    <div class="rounded-box border border-base-content/20 p-3"><p class="text-2xl font-bold">708</p><p class="opacity-70">products: 186 headphones, 234 audio-electronics, 288 accessories</p></div>
+    <div class="rounded-box border border-base-content/20 p-3"><p class="text-2xl font-bold">46</p><p class="opacity-70">facet definitions (3 universal, 1 all-products, 23 / 11 / 8 per slice), 4 storage types</p></div>
+    <div class="rounded-box border border-base-content/20 p-3"><p class="text-2xl font-bold">8</p><p class="opacity-70">sort options, each with a tie-break</p></div>
+    <div class="rounded-box border border-base-content/20 p-3"><p class="text-2xl font-bold">3</p><p class="opacity-70">routes reading the same filter state: <code>/products</code>, <code>/products/[...slug]</code>, <code>/search</code></p></div>
+  </div>
+</section>
+
+<!-- LINE BY LINE -->
+<section class="space-y-4">
+  <h2 class="text-2xl font-bold">2. The proposal, line by line</h2>
+  <div class="overflow-x-auto">
+  <table class="table table-sm">
+    <thead><tr><th>Proposed</th><th>Call</th><th>What the repo actually shows</th></tr></thead>
+    <tbody>
+      <tr><td><code>src/</code> root</td><td><span class="badge badge-error">DROP</span></td>
+        <td>No <code>src/</code> exists; alias is <code>@/*</code> &rarr; <code>./*</code> and routes live in root <code>app/</code>. Next.js ignores <code>src/app</code> when a root <code>app/</code> exists, so the proposed <code>page.tsx</code> would never be routed.</td></tr>
+      <tr><td><code>app/(catalogue)/[slice]/page.tsx</code></td><td><span class="badge badge-error">DROP</span></td>
+        <td>Real routes are <code>app/(store)/products/page.tsx</code> and <code>products/[...slug]/page.tsx</code> (<code>slug[0]</code> = slice; nested categories resolve via <code>resolveSlugToId</code> + <code>unrollDescendantKeys</code>), plus <code>/search</code>. A single <code>[slice]</code> segment cannot express nested categories. Both pages are already thin composition.</td></tr>
+      <tr><td>&ldquo;parse via nuqs cache&rdquo;</td><td><span class="badge badge-warning">CHANGE</span></td>
+        <td>Repo uses <code>createLoader</code> (<code>loadFilterSort</code>) then <code>sanitizeFilterState</code> in two passes: brand is vetted only after facets load, because brand vocabulary is CMS data. State is passed as props, so <code>createSearchParamsCache</code> buys nothing.</td></tr>
+      <tr><td><code>api/build-groq.ts</code></td><td><span class="badge badge-warning">CHANGE</span></td>
+        <td>Name collides with <code>app/api/</code> and <code>sanity-cms/lib/api/</code>. And one predicate has <b>two evaluators</b>: GROQ in <code>buildProductQuery.ts</code> (the grid) and in-memory JS <code>productMatchesState</code> inside <code>sanity-cms/lib/products/getFilterFacets.ts</code> (disjunctive counts). A lone <code>build-groq</code> hides that drift risk.</td></tr>
+      <tr><td><code>lib/sanity/client.ts</code></td><td><span class="badge badge-error">DROP</span></td>
+        <td>The client is <code>sanity-cms/lib/client.ts</code>. Repo CLAUDE.md: Sanity queries live in <code>sanity-cms/</code>, never in <code>app/</code>; lint rule <code>sang-logium/no-direct-sanity-in-client</code> enforces the client boundary. Fetchers already sit in <code>sanity-cms/lib/products/</code>.</td></tr>
+      <tr><td><code>models/parsers.ts</code> + Zod</td><td><span class="badge badge-error">DROP Zod</span></td>
+        <td>nuqs parsers already validate and default (<code>parseAsStringLiteral(SORT_VALUES).withDefault</code>); <code>sanitizeFilterState</code> vets vocabulary. Brand vocabulary is runtime CMS data, so it cannot be a static Zod enum. Hand-written Zod would be a 4th copy of the facet vocabulary (JSON &rarr; <code>facetMap.ts</code> &rarr; per-slice config &rarr; Zod). &ldquo;models&rdquo; is not repo vocabulary.</td></tr>
+      <tr><td><code>types.ts</code> &ldquo;strict interfaces&rdquo;</td><td><span class="badge badge-warning">CHANGE</span></td>
+        <td>Right instinct, real weakness: <code>facetParsers: Record&lt;string, any&gt;</code>, <code>ProductQueryState</code> has <code>[key: string]: unknown</code>, pages cast <code>loadFilterSort(query) as ProductQueryState</code>. Strictness must be <em>derived</em> from <code>FILTER_FACETS</code> (<code>as const</code>), not a parallel hand-written interface. No new file.</td></tr>
+      <tr><td><code>FilterSidebar</code> owns <code>useQueryStates</code></td><td><span class="badge badge-warning">CHANGE</span></td>
+        <td>Repo has one hook, <code>useFilterParam</code>, that owns history mode, <code>shallow:false</code>, <code>startTransition</code> and page reset. Components owning nuqs would let those rules drift per control. <code>useQueryStates</code> is used only for clear-all.</td></tr>
+      <tr><td><code>__tests__/</code> = unit + component</td><td><span class="badge badge-warning">CHANGE</span></td>
+        <td>Misses the real Milestone 1/2 assets: numbered <code>.mjs</code> oracle proofs run by a human against live CMS (Vitest only includes <code>*.spec|test.ts(x)</code>, so they never run in CI), a 3.8&nbsp;MB frozen-inventory <code>data/</code>, 3 <code>scratch-investigate*.mjs</code>, 6 tracked <code>.log</code> outputs, and a duplicated <code>tsExtLoader.mjs</code>.</td></tr>
+      <tr><td>root <code>e2e/</code></td><td><span class="badge badge-warning">CHANGE</span></td>
+        <td>Would be a third e2e location. <code>tests/e2e/</code> exists, and each suite has its own <code>playwright.*.config.ts</code> (default config's <code>testDir</code> points at basket). Not needed until an e2e is written.</td></tr>
+      <tr><td>thin routes &middot; pure query builder &middot; shared isomorphic parsers &middot; colocated tests</td><td><span class="badge badge-success">KEEP</span></td>
+        <td>Already the repo's intent: <code>buildProductQuery.ts</code> is headers-first &ldquo;PURE, one translation&rdquo;; <code>filterSortParams.ts</code> imports <code>nuqs/server</code> so server and client share one parser map; <code>__tests__/</code> colocation is used in <code>lib/catalogue</code> and <code>sanity-cms/lib/products</code>.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- GAPS -->
+<section class="space-y-4">
+  <h2 class="text-2xl font-bold">3. What the proposal cannot see (gap scan of the real content)</h2>
+  <div class="space-y-3">
+    <div class="border border-error/40 bg-error/10 rounded-box p-4 space-y-1">
+      <p class="font-semibold">Red flag in the repo itself: two URL contracts in production</p>
+      <p class="text-sm opacity-90">Headphones is wired through a &ldquo;POC-local mirror&rdquo;: <code>lib/filter-sort/headphones/useFilterParam.ts</code> + <code>headphones/filterSortParams.ts</code> (parsers keyed by facet <code>id</code>), selected in <code>facetRegistry.ts</code>. Audio-electronics and accessories use the production hook <code>app/hooks/nuqs/useFilterSort.tsx</code>. So headphones URLs are written by different parsers than the ones the server's <code>loadFilterSort</code> reads. The proposal's &ldquo;one <code>parsers.ts</code>&rdquo; principle is exactly right, and the repo violates it. Close: point headphones at the one hook, then delete the mirror.</p>
+    </div>
+    <ul class="space-y-2 text-sm list-disc pl-5">
+      <li><b>Slice axis missing.</b> Three slices have different facet sets, so a registry is needed. It exists in two layers: <code>facetMap.ts</code> (data contract: field, type, urlParam, categories) and <code>lib/filter-sort/&lt;slice&gt;/facetConfig.ts</code> (presentation: groups, labels, controls). Keep both; keep their parity specs beside them.</li>
+      <li><b>Sort is absent.</b> Eight sorts live in <code>facetMap.ts</code> (<code>SORT_OPTIONS</code>) and the order clauses in <code>buildProductQuery.ts</code>. No separate folder needed.</li>
+      <li><b>Facet counts are absent.</b> Disjunctive counts, range bounds, <code>brandLabels</code>, <code>isDefaultState</code> come from <code>getFilterFacets</code>, computed in memory over up to 1000 docs per route (catalogue is 708). Its pure half belongs with the filter core; only the fetch + cache stays in <code>sanity-cms/</code>.</li>
+      <li><b>Junk deep links</b> (<code>?brand=x</code>, <code>?driverType=banana</code>) are handled by <code>sanitizeFilterState</code>: needs a home in the core. Price bounds (<code>priceBounds.ts</code>) and <code>humanizeFacetValue.ts</code> likewise.</li>
+      <li><b>Config traps for any new root.</b> Tailwind <code>content</code> scans <code>pages, components, app, src, sanity</code> only, so UI under <code>lib/</code> or a new <code>features/</code> would silently lose its classes. <code>tsconfig.include</code> lists <code>app, lib, sanity-cms, store</code> but no <code>features</code>. The validated tree avoids both.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- TREE -->
+<section class="space-y-4">
+  <h2 class="text-2xl font-bold">4. Validated organization</h2>
+  <p class="opacity-80">One feature, two runtime seams, plus the repo-mandated data layer. Headless core in <code>lib/filter-sort/</code> (already exists, already holds the proofs, already in <code>tsconfig.include</code>). UI shell stays in <code>app/components/features/filters/</code> (Tailwind-scanned, same convention as the 10 other features). Flat files, no invented sub-folders.</p>
+  <div class="border border-base-content/20 rounded-box p-4 bg-base-200">
+<pre><code>app/
+├─ (store)/
+│  ├─ products/page.tsx                  KEEP     all-products route, composition only
+│  ├─ products/[...slug]/page.tsx        KEEP     slug[0] = slice; nested categories via VFS
+│  └─ search/page.tsx                    KEEP     third consumer of the same filter state
+└─ components/features/filters/          KEEP     UI shell ('use client')
+   ├─ FilterSidebar · FilterControls · SortBar · SortDropdown · MobileFilterSheet
+   │  ActiveFilterChips · PriceRangeSlider · ProgressiveFilterOptionList     KEEP
+   ├─ facetRegistry.ts                   SHRINK   only picks the slice's facet config; no second hook
+   ├─ useFilterParam.ts                  MOVE  &lt;- app/hooks/nuqs/useFilterSort.tsx   (the ONE hook)
+   └─ __tests__/*.spec.tsx               ADD only when a component test is written
+
+lib/filter-sort/                         HEADLESS CORE: no JSX, no data access, isomorphic
+├─ facetMap.ts                           MOVE  &lt;- lib/catalogue/   46 facets + 8 sorts (mirror of _project/filters/*.json)
+├─ filterSortParams.ts                   MOVE  &lt;- lib/catalogue/   THE URL contract (imports nuqs/server)
+├─ sanitizeFilterState.ts                MOVE  &lt;- lib/catalogue/
+├─ buildProductQuery.ts                  MOVE  &lt;- lib/catalogue/   state -&gt; GROQ (the grid)
+├─ facetCounts.ts                        EXTRACT &lt;- sanity-cms/lib/products/getFilterFacets.ts
+│                                                 pure JS twin: productMatchesState, computeCatalogueFacets + helpers
+├─ priceBounds.ts · humanizeFacetValue.ts  MOVE &lt;- lib/catalogue/
+├─ headphones/facetConfig.ts (+ types.ts)  KEEP   slice presentation config
+├─ audio-electronics/facetConfig.ts      KEEP
+├─ accessories/facetConfig.ts            KEEP
+└─ __tests__/
+   ├─ *.spec.ts                          Vitest: offline, deterministic
+   │                                     &lt;- lib/catalogue/__tests__ {buildProductQuery, facetConfigParity, facetSchemaParity, priceBounds}
+   ├─ proofs/                            human-run .mjs vs live CMS: 11-single-option, 12-two-option + what they import
+   └─ data/                              frozen inventories + expected-*.json (the Arrange fixtures)
+
+sanity-cms/lib/products/                 STAYS    data access (repo rule). getFilterFacets.ts = fetch + cache only
+tests/e2e/filters-sorting.spec.ts        WHEN WRITTEN, not now; own playwright.*.config.ts like checkout/performance
+
+DELETE, only after headphones is re-pointed to the one hook:
+  lib/filter-sort/headphones/{filterProducts,filterSortParams,useFilterParam}.ts
+  app/(test)/poc/filter-sort/headphones/**                       (POC; confirm it is no longer needed)
+  __tests__/scratch-investigate{,2,3}.mjs · 6 tracked *.log · duplicate tsExtLoader.mjs
+TRIAGE in Milestone 1: 01-10, acc-*, ae-* scripts. Keep only what 11 and 12 import.</code></pre>
+  </div>
+</section>
+
+<!-- BLAST RADIUS -->
+<section class="space-y-4">
+  <h2 class="text-2xl font-bold">5. Move ledger and blast radius</h2>
+  <p class="text-sm opacity-80">Grep for the moved paths finds ~45 referencing files. Because everything imports through <code>@/</code>, the app-side change is mechanical.</p>
+  <ul class="space-y-2 text-sm list-disc pl-5">
+    <li><b>App TS/TSX (14):</b> filters components, <code>EmptyResults</code>, the three route pages, <code>SearchResults</code>, plus the POC pages (deleted anyway).</li>
+    <li><b>sanity-cms (4):</b> <code>getCategoryPriceRange</code>, <code>getFilterFacets</code>, <code>searchProducts</code>, <code>getFilterFacets.spec</code>.</li>
+    <li><b>Easy to miss, they break silently outside the type-checker:</b> ~10 <code>.mjs</code> proofs and both <code>tsExtLoader.mjs</code> copies, and <code>_project/filters/check-wiring.cjs</code> + <code>verify-all.cjs</code>. <code>check-wiring</code> is the guard that <code>facetMap.ts</code> still matches <code>facet-map.json</code>; it must be re-pointed or the guard is dead.</li>
+    <li><b>Do it as one path-only move commit</b>, separate from the headphones re-point and the deletions, so a regression is attributable. Then the human runs the live <code>localhost:3000</code> check (repo rule: agents don't).</li>
+  </ul>
+</section>
+
+<!-- CHECKS -->
+<section class="space-y-4">
+  <h2 class="text-2xl font-bold">6. /checks on the validated tree</h2>
+  <div class="overflow-x-auto">
+  <table class="table table-sm">
+    <thead><tr><th>Check</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>Simplest possible</td><td>Flat files, no new sub-folders, no Zod, no new config, no <code>src/</code>, no <code>features/</code> root, e2e deferred.</td></tr>
+      <tr><td>Gaps / omissions</td><td>Slices, sorts, counts, sanitize, price bounds, three routes, proofs/fixtures, config globs all placed.</td></tr>
+      <tr><td>Red flags</td><td>One found (two URL contracts) and closed by the re-point.</td></tr>
+      <tr><td>False positives</td><td><code>src/</code> and <code>[slice]</code> claims verified against tsconfig, tailwind, routes, Next behavior; the <code>lib/catalogue</code> files that are search/SEO (<code>pagination</code>, <code>seo</code>, <code>semantic*</code>, <code>detectSearchRedirect</code>) deliberately stay put.</td></tr>
+      <tr><td>Over-complication</td><td><code>facetCounts.ts</code> is the only new file, justified by the two-evaluator drift. Optional and deferrable if you want the leanest move first.</td></tr>
+      <tr><td>System-fit</td><td>Respects: <code>@/</code> alias, Sanity-in-<code>sanity-cms/</code> rule, <code>tests/AGENTS.md</code> naming, Tailwind <code>content</code>, Vitest globs, agents never run e2e.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- OPEN -->
+<section class="space-y-4">
+  <h2 class="text-2xl font-bold">7. Not verified, and decisions for you</h2>
+  <ul class="space-y-2 text-sm list-disc pl-5">
+    <li><b>Root seam (my recommendation is the two-seam layout above).</b> The alternative, one <code>features/filters-sorting/</code> root, costs two config edits (<code>tsconfig.include</code>, Tailwind <code>content</code>) and forks the 10-feature convention. Reversible either way.</li>
+    <li><b>Which evaluator Milestone 1's proof binds to.</b> I did not read what <code>03/11/12</code> execute. &ldquo;Zero wrongly-included items&rdquo; is only true for the grid if the proof exercises the GROQ predicate. <code>groq-js</code> is in <code>node_modules</code> but only transitively (via <code>sanity</code>, not in <code>package.json</code>); declare it if you want an offline GROQ-vs-JS parity spec.</li>
+    <li><b>What <code>facetConfigParity.spec.ts</code> asserts.</b> I found it, I did not read it. It is what currently holds the headphones mirror to the server's URL params.</li>
+    <li><b>POC route deletion.</b> <code>app/(test)/poc/filter-sort/headphones</code> may still serve as the Milestone 1 (c) reference; your call.</li>
+  </ul>
+</section>
+
+</main>
+</body>
+</html>

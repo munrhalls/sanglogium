@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en" data-theme="luxury">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Housekeeping Campaign Plan</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@5.5.19/daisyui.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@5.5.19/themes.css">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.2.4/dist/index.global.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  :where(.grid, .flex) > * { min-width: 0; }
+  :where(p, h1, h2, h3, li, td, th, .badge) { overflow-wrap: anywhere; }
+  :where(img, svg) { max-width: 100%; height: auto; }
+  body { background: var(--color-base-100); color: var(--color-base-content); }
+  code { font-size: .85em; padding: .05rem .35rem; border-radius: .3rem; background: color-mix(in oklab, var(--color-base-content) 12%, transparent); }
+  .lane-a { fill: var(--color-primary); } .lane-b { fill: var(--color-secondary); } .lane-c { fill: var(--color-accent); } .lane-g { fill: var(--color-warning); }
+  .lbl { fill: var(--color-base-100); font: 600 12px ui-sans-serif, system-ui, sans-serif; }
+  .lbl-out { fill: var(--color-base-content); font: 12px ui-sans-serif, system-ui, sans-serif; }
+  .axis-line { stroke: var(--color-base-content); stroke-opacity: .35; }
+</style>
+</head>
+<body class="min-h-screen">
+<main class="mx-auto max-w-5xl px-4 py-8 space-y-12">
+
+<!-- UPDATE 2026-10-02: owner decisions applied -->
+<section class="rounded-box border border-primary/60 bg-primary/10 p-5 space-y-3">
+  <h2 class="text-2xl font-semibold">Update: your G1–G10 answers are applied (this block supersedes the counts below)</h2>
+  <p>The plan is now <strong>11 axes and 31 phase files</strong>. Nine axes run in parallel (27 phases), then <code>hk-closeout</code> (2), then <code>hk-history-purge</code> (1 agent phase plus an owner-only runbook). Longest chain: <code>hk-docs</code> 7 + closeout 2 + purge 2 = 11 phases; 4 terminals is the useful maximum.</p>
+  <ul class="list-disc pl-5 space-y-1 text-sm">
+    <li><strong>New axes from your answers:</strong> <code>hk-retire-scripts</code> (G1+G2: 8 one-off scripts + 7 tooling files), <code>hk-retire-migrations</code> (G3: ~312 migration files, 200 public images, 2 pages), <code>hk-retire-dead-app</code> (G4+G5+G6: orphan shipping routes, dev trees, 9 icons; LOGO.svg and logo-orbit.svg kept), <code>hk-retire-tests</code> (G10: all tests deleted except the 6 filters proofs, their helpers and data; plus vitest/playwright configs, <code>app/(test)</code>, 12 package.json scripts), <code>hk-history-purge</code> (G9: backup + owner-run runbook).</li>
+    <li><strong>Changed axes:</strong> <code>hk-repo-contract</code> now drops the <code>data/catalogue-index.json</code> ignore line (G7a: file stays tracked, so <code>git ls-files -ci</code> ends empty). <code>hk-docs</code> also deletes the 3 <code>devin-*-tasks.md</code> and the stale logging note (G8) and resolves the differing test-doc pair to the newer copy. <code>hk-root-tidy</code> shrinks to the ESLint plugin only and <code>hk-naming</code> to the 4 <code>.client.tsx</code> renames, because the vitest files and tests they would have touched are deleted by <code>hk-retire-tests</code>. <code>hk-closeout</code> now also edits AGENTS.md (build-lock rule, resource-health bullet) and rewrites the CLAUDE.md test statements.</li>
+    <li><strong>Two corrections from the quick checks you asked for:</strong> (1) <code>app/(store)/lib/fetchHomepageData.ts</code> is used by the live home page, so it is <em>kept</em>; my "only the normalize page uses it" was wrong. (2) The live shipping flow calls only <code>/api/basket/shipping-rates</code>; <code>app/api/shipping/route.ts</code>, <code>app/api/shipping/rates/route.ts</code> and <code>lib/shipping/packlink-rates.ts</code> have no caller, so they are deleted. The scripts count is 8, not 9.</li>
+    <li><strong>Interpretation to confirm:</strong> I read "any tests, except latest few proof scripts (filters)" as: delete every unit, integration, live and e2e test and the machinery that only runs them. The 6 proof scripts were all last committed 2026-09-30, so there is no older subset to cut and all are kept. Package removal stays an owner step (<code>npm uninstall</code> command is prepared in the PR).</li>
+    <li><strong>History purge is destructive.</strong> It rewrites every commit hash; open PRs, 12 treehouse worktrees and every clone must be recreated. <code>git-filter-repo</code> is not installed, and the repo has a second remote (<code>no-mistakes</code>) that also holds the old history. Phase 1.2 is an owner-only runbook; phase 1.1 only measures and makes a mirror backup.</li>
+  </ul>
+</section>
+
+<!-- ANSWER -->
+<header class="space-y-4">
+  <p class="text-sm opacity-70">Stage 1 + Stage 2 · read-only · repo <code>file:///home/jan/work/sanglogium</code> · 2026-10-02</p>
+  <h1 class="text-3xl sm:text-4xl font-bold">Six axes, 20 executor phases written, five axes run in parallel. The biggest wins are ten owner decisions only you can make.</h1>
+  <p class="text-lg opacity-90">All phase files are in <code>_project/working-memory/hk-*/</code> and are pure organization: moves, renames, deletions of proven-dead files, and documentation. Critical path is 9 phases. The 10 owner-gated items (more than 160 MB of tracked migration material, one-off production scripts, orphan routes) are not planned yet because each needs a fact only you have.</p>
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+    <div class="rounded-box border border-base-content/20 p-4"><div class="text-3xl font-bold">6</div><div class="text-sm opacity-80">axes: 5 parallel + 1 serial closeout</div></div>
+    <div class="rounded-box border border-base-content/20 p-4"><div class="text-3xl font-bold">20</div><div class="text-sm opacity-80">phase files, each standalone for one Devin paste</div></div>
+    <div class="rounded-box border border-base-content/20 p-4"><div class="text-3xl font-bold">0</div><div class="text-sm opacity-80">files written by two axes (checked in the ownership table)</div></div>
+    <div class="rounded-box border border-base-content/20 p-4"><div class="text-3xl font-bold">10</div><div class="text-sm opacity-80">owner-gated items, section 6</div></div>
+  </div>
+</header>
+
+<!-- CORRECTIONS -->
+<section class="space-y-3">
+  <h2 class="text-2xl font-semibold">First, six corrections to my earlier audit</h2>
+  <p class="opacity-80">The deeper scan contradicted parts of what I told you two days ago. These are the fixes, so you do not plan around wrong claims.</p>
+  <ul class="space-y-2">
+    <li class="rounded-box border border-warning/40 bg-warning/10 p-3"><strong>F4 mechanism was wrong.</strong> <code>.gitignore</code> already ignores <code>backups/</code>, <code>sanity/backups/</code> and <code>_project/agent-logs/</code> lower down. Those files are tracked because they were committed before the rules existed. The fix is <code>git rm --cached</code>, not new rules. The broken <code>\n</code> line is real but harmless, and my "<code>logs/</code> doesn't match" claim was wrong.</li>
+    <li class="rounded-box border border-warning/40 bg-warning/10 p-3"><strong>F8 withdrawn.</strong> The 76 vendored files under <code>.claude/skills/</code> are the skills CLI's normal output paired with <code>skills-lock.json</code>. That is not a defect.</li>
+    <li class="rounded-box border border-warning/40 bg-warning/10 p-3"><strong>F1 is a known, owner-deferred item, not a discovery.</strong> The macro-refactor roadmap (G9) says the dev and normalization pages are "deferred completely by the owner", and the prune audit rated <code>public/normalize-accessories-images/</code> KEEP. It moves to the gated register.</li>
+    <li class="rounded-box border border-warning/40 bg-warning/10 p-3"><strong>F9 shipping routes are already identified.</strong> <code>stale-docs-audit.md</code> (2026-09-30) names <code>app/api/shipping/rates</code> an orphaned route. It is gated, not new.</li>
+    <li class="rounded-box border border-warning/40 bg-warning/10 p-3"><strong>The 703 product <code>.md</code> files are deliberate.</strong> They are the sourcing records read by <code>scripts/catalogue-integrity/rubric.mjs</code>. They are not misplaced and not in the plan.</li>
+    <li class="rounded-box border border-warning/40 bg-warning/10 p-3"><strong>My 2.8 / 5 was too harsh.</strong> Thirteen earlier axes (PRs #38–#53) plus the prune and junk audits already fixed code-level organization. What remains is housekeeping debt plus unanswered owner questions.</li>
+  </ul>
+</section>
+
+<!-- STAGE 1: FINDINGS -->
+<section class="space-y-4">
+  <h2 class="text-2xl font-semibold">Stage 1 · Gap-scan findings by theme</h2>
+  <p class="opacity-80">Method: <code>git ls-files</code> inventory, an import-stem orphan scan, a naming scan, and a dead-path scan over every doc and config. Counts below are measured, not estimated. The rightmost column says which axis fixes it.</p>
+  <div class="overflow-x-auto rounded-box border border-base-content/20">
+    <table class="table table-sm sm:table-md">
+      <thead><tr><th>Theme</th><th>What is wrong (measured)</th><th>Fixed by</th></tr></thead>
+      <tbody>
+        <tr><td class="font-medium">T1 Repo contract</td><td>111 tracked files match <code>.gitignore</code> (109 agent logs, <code>sanity/backups</code> JSON 6 MB, <code>data/catalogue-index.json</code>). Stray <code>helloworld.txt</code> and a <code>.md.save</code>. <code>.gitignore</code> has a broken line, 3 duplicated entries and an 8-line env block that is just <code>.env*</code>. <code>.env.example</code> is explicitly ignored, so there is no tracked env contract (42 variables are read).</td><td><code>hk-repo-contract</code></td></tr>
+        <tr><td class="font-medium">T2 Root clutter</td><td>63 root entries. Four are movable: 3 vitest setup files and the local ESLint plugin. The rest are tool-mandated or tool-default (<code>schema.json</code>, <code>sanity.types.ts</code>, <code>skills-lock.json</code>) and stay by design.</td><td><code>hk-root-tidy</code></td></tr>
+        <tr><td class="font-medium">T3 Docs structure</td><td>Two doc roots (<code>research/</code> outside <code>docs/</code>). 21 paths with spaces or <code>&amp;</code>. 17 upper-case or Capitalized doc names (plus 3 exempt by convention). 5 <code>_ARCHIVED_</code> prefixes, including a pair that would collide (128 vs 214 lines, different content). 5 duplicated documents (1 identical pair in <code>tests/</code> vs <code>docs/testing/</code>, 4 identical in <code>.devin/research/</code>) plus 1 differing pair. 2 dated audits loose at the docs root. No index.</td><td><code>hk-docs</code> T1–T2</td></tr>
+        <tr><td class="font-medium">T4 Docs path truth</td><td>147 dead path references in 32 files under <code>docs/</code> and <code>research/</code> (about 125 more elsewhere, mostly inside <code>_project/</code> records). 3 living docs carry 6 of them. 25 point-in-time docs describe pre-reorganization paths with no label.</td><td><code>hk-docs</code> T3</td></tr>
+        <tr><td class="font-medium">T5 Planning records</td><td><code>_project/</code> mixes living process docs with 7 closed campaign folders (51 files). Two shell scripts sit in a docs folder. Five pipeline JSON reports sit in the <code>data/</code> content root (0 code references).</td><td><code>hk-records</code></td></tr>
+        <tr><td class="font-medium">T6 Naming drift</td><td>4 client components end in <code>.client.tsx</code> while 3 end in <code>XClient.tsx</code> (and 2 server twins are <code>XServer.tsx</code>). 2 unit tests are <code>.test.ts</code> against 39 <code>.spec</code>. The Playwright <code>.test.ts</code> exception is undocumented.</td><td><code>hk-naming</code></td></tr>
+        <tr><td class="font-medium">T7 Entry-doc drift</td><td>After the axes above, <code>CLAUDE.md</code> still names <code>PaymentForm.client.tsx</code> and similar. <code>AGENTS.md</code> cites a mission folder that does not exist. No written layout standard exists.</td><td><code>hk-closeout</code></td></tr>
+        <tr><td class="font-medium">T8 Owner-gated debris</td><td>9 one-off production-write scripts, Windows-era tooling, more than 160 MB of migration candidates, orphan routes and test, unreferenced <code>public/</code> assets, unguarded dev pages. All need a fact only you have.</td><td>section 6, not planned yet</td></tr>
+        <tr><td class="font-medium">T9 History &amp; config</td><td><code>.git</code> is 771 MB (committed <code>.venv</code>, conversation caches, <code>bin/protoc.exe</code>). Config drift items that are not organization (webhook script path, Node 20 vs 22, tests excluded from tsconfig).</td><td>section 6, report only</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="text-sm opacity-80"><strong>Orphan-scan false positives I removed:</strong> <code>public/images/*-skeletal.png</code> look unreferenced but are used by a template string in <code>features/catalogue/domain/catalogue.ts</code>; <code>features/product-filtering/__tests__/proofs/*.mjs</code> and the <code>.log</code> beside them are proof evidence kept by repo convention; <code>scripts/catalogue-integrity/*.mjs</code> are manual-run tools.</p>
+</section>
+
+<!-- TARGET STATE -->
+<section class="space-y-4">
+  <h2 class="text-2xl font-semibold">Target-state spec: the "Repository Layout Standard"</h2>
+  <p class="opacity-80">This is the end state. The closeout axis writes it verbatim into <code>CLAUDE.md</code>, so it becomes the rule every agent reads. Elite here means enforceable by a grep, not by taste.</p>
+  <div class="grid gap-3 sm:grid-cols-2">
+    <div class="rounded-box border border-base-content/20 p-4"><h3 class="font-semibold">1 · Root allowlist</h3><p class="text-sm opacity-90">Only tool-mandated config, tool-generated files at their default path, the three entry docs, a tracked <code>.env.example</code>, and a fixed folder list (<code>app features lib sanity-cms tests scripts tools docs data public _project .github .claude .codex .devin .lavish</code>). Anything new needs owner approval.</p></div>
+    <div class="rounded-box border border-base-content/20 p-4"><h3 class="font-semibold">2 · Where things go</h3><p class="text-sm opacity-90">Local tooling in <code>tools/</code>; test config in <code>tests/setup/</code>; scripts in <code>scripts/</code> (executed one-offs are deleted); docs in <code>docs/</code> with an index; closed campaigns in <code>_project/archive/</code>.</p></div>
+    <div class="rounded-box border border-base-content/20 p-4"><h3 class="font-semibold">3 · Never committed</h3><p class="text-sm opacity-90">Secrets, logs, backups, caches, virtualenvs, conversation caches, anything <code>.gitignore</code> matches. Check: <code>git ls-files -ci --exclude-standard</code> is empty (one pending exception).</p></div>
+    <div class="rounded-box border border-base-content/20 p-4"><h3 class="font-semibold">4 · Naming</h3><p class="text-sm opacity-90">Docs and scripts kebab-case; no spaces or non-ASCII in tracked paths; <code>XClient.tsx</code> / <code>XServer.tsx</code> pairs; <code>*.spec.ts(x)</code> unit specs with one documented Playwright exception.</p></div>
+    <div class="rounded-box border border-base-content/20 p-4 sm:col-span-2"><h3 class="font-semibold">5 · Docs honesty</h3><p class="text-sm opacity-90">Living docs contain no dead path. A document that may name outdated paths carries a "Point-in-time document" banner. No document exists twice.</p></div>
+  </div>
+  <p class="text-sm opacity-80"><strong>Tooling this standard needs:</strong> none to adopt. Enforcement is the PR review plus the verification greps in the closeout phase, because the repo bans agent-run lint/build/test. Optional hardening, each needing your go-ahead because it runs tools: a root-allowlist CI check, <code>knip</code> for dead files and exports, a <code>git filter-repo</code> history purge (G9). Not planned.</p>
+</section>
+
+<!-- STAGE 2: AXES + PARALLELISM -->
+<section class="space-y-4">
+  <h2 class="text-2xl font-semibold">Stage 2 · Axes, turns and parallel dispatch</h2>
+  <p class="opacity-80">Following the repo's own precedent (<code>_project/macro-refactor/parallel-plan.md</code> and the "PR per axis" rule): one axis is one branch, one terminal and one PR. Phases inside an axis run serially. Axes run in parallel only when they write disjoint files. Ordering: cheap mechanical moves first, cross-cutting path rewiring last.</p>
+
+  <figure class="rounded-box border border-base-content/20 p-4">
+    <svg viewBox="0 0 760 250" role="img" aria-label="Three terminals running the five parallel axes, then the closeout axis" width="100%">
+      <title>Execution lanes: unit is one phase</title>
+      <line class="axis-line" x1="70" y1="215" x2="740" y2="215"/>
+      <g class="lbl-out"><text x="70" y="235">0</text><text x="130" y="235">1</text><text x="190" y="235">2</text><text x="250" y="235">3</text><text x="310" y="235">4</text><text x="370" y="235">5</text><text x="430" y="235">6</text><text x="490" y="235">7</text><text x="550" y="235">8</text><text x="610" y="235">9 (phases)</text></g>
+      <g class="lbl-out"><text x="4" y="46">Terminal 1</text><text x="4" y="106">Terminal 2</text><text x="4" y="166">Terminal 3</text></g>
+      <g id="lane-t1"><title>hk-docs: 7 phases, then hk-closeout: 2 phases</title><rect class="lane-a" x="70" y="26" width="420" height="30" rx="4"/><text class="lbl" x="80" y="46">hk-docs · 3 turns · 7 phases</text><rect class="lane-g" x="490" y="26" width="120" height="30" rx="4"/><text class="lbl" x="500" y="46">hk-closeout · 2</text></g>
+      <g id="lane-t2"><title>hk-records: 3 phases, then hk-repo-contract: 3 phases, then waits</title><rect class="lane-b" x="70" y="86" width="180" height="30" rx="4"/><text class="lbl" x="80" y="106">hk-records · 3</text><rect class="lane-b" x="250" y="86" width="180" height="30" rx="4" style="opacity:.75"/><text class="lbl" x="260" y="106">hk-repo-contract · 3</text></g>
+      <g id="lane-t3"><title>hk-naming: 3 phases, then hk-root-tidy: 2 phases, then waits</title><rect class="lane-c" x="70" y="146" width="180" height="30" rx="4"/><text class="lbl" x="80" y="166">hk-naming · 3</text><rect class="lane-c" x="250" y="146" width="120" height="30" rx="4" style="opacity:.75"/><text class="lbl" x="260" y="166">hk-root-tidy · 2</text></g>
+      <g id="wait"><title>Merge wait: closeout starts after all five PRs are merged</title><rect x="430" y="86" width="60" height="30" rx="4" fill="none" stroke="currentColor" stroke-dasharray="4 3" opacity=".45"/><text class="lbl-out" x="436" y="106">idle</text><rect x="370" y="146" width="120" height="30" rx="4" fill="none" stroke="currentColor" stroke-dasharray="4 3" opacity=".45"/><text class="lbl-out" x="394" y="166">idle</text></g>
+    </svg>
+    <figcaption class="text-sm opacity-80 mt-2">One unit is one phase (one Devin paste). With 3 terminals the critical path is 9 phases. With 5 terminals it is also 9, because <code>hk-docs</code> (7) is the long pole, so more than 3 terminals only helps if you want fewer queued phases per terminal.</figcaption>
+  </figure>
+
+  <div class="grid gap-3 md:grid-cols-2">
+    <article class="rounded-box border border-base-content/30 p-4 space-y-1"><h3 class="font-semibold"><span class="badge badge-primary mr-2">wave 0</span>hk-repo-contract <span class="opacity-70 text-sm">· 1 turn · 3 phases</span></h3><p class="text-sm">Untrack 111 ignored-but-tracked files (local copies stay), delete 2 strays, fix <code>.gitignore</code>, add <code>.env.example</code> (names only). <code>data/catalogue-index.json</code> is excluded on purpose (G7).</p><p class="text-xs opacity-70">Owns: <code>.gitignore</code>, <code>.env.example</code>, <code>_project/agent-logs/**</code>, <code>sanity/backups/**</code>, <code>helloworld.txt</code>, one <code>.md.save</code>.</p></article>
+    <article class="rounded-box border border-base-content/30 p-4 space-y-1"><h3 class="font-semibold"><span class="badge badge-primary mr-2">wave 0</span>hk-root-tidy <span class="opacity-70 text-sm">· 1 turn · 2 phases</span></h3><p class="text-sm">Move 3 vitest setup files to <code>tests/setup/</code> and the ESLint plugin to <code>tools/</code>; repoint 4 lines. Playwright and vitest configs stay at the root by design.</p><p class="text-xs opacity-70">Owns: <code>vitest.config.mts</code>, <code>vitest.integration.config.ts</code>, <code>eslint.config.mjs</code>, the 4 moved files.</p></article>
+    <article class="rounded-box border border-base-content/30 p-4 space-y-1"><h3 class="font-semibold"><span class="badge badge-primary mr-2">wave 0</span>hk-docs <span class="opacity-70 text-sm">· 3 turns · 7 phases</span></h3><p class="text-sm">T1 move <code>research/</code> under <code>docs/</code> and rename to kebab-case (spaces, upper-case, <code>_ARCHIVED_</code>). T2 delete identical duplicates, group audits, add <code>docs/README.md</code>. T3 fix 3 living docs, add 25 point-in-time banners.</p><p class="text-xs opacity-70">Owns: <code>docs/**</code>, <code>research/**</code>, 4 duplicate files in <code>.devin/research/</code>.</p></article>
+    <article class="rounded-box border border-base-content/30 p-4 space-y-1"><h3 class="font-semibold"><span class="badge badge-primary mr-2">wave 0</span>hk-records <span class="opacity-70 text-sm">· 1 turn · 3 phases</span></h3><p class="text-sm">Move 7 closed campaign folders to <code>_project/archive/</code>; move 2 shell scripts to <code>scripts/</code> and 5 JSON reports out of <code>data/</code>; add two index READMEs. Nothing inside the archive is edited.</p><p class="text-xs opacity-70">Owns: <code>_project/**</code> (not <code>agent-logs</code>), 2 new files in <code>scripts/</code>, 5 files in <code>data/</code>.</p></article>
+    <article class="rounded-box border border-base-content/30 p-4 space-y-1"><h3 class="font-semibold"><span class="badge badge-primary mr-2">wave 0</span>hk-naming <span class="opacity-70 text-sm">· 1 turn · 3 phases</span></h3><p class="text-sm">Rename 2 unit tests to <code>.spec.ts</code> and 4 <code>.client.tsx</code> components to <code>XClient.tsx</code> (specifier edits only); document the Playwright <code>.test.ts</code> exception. Last of the import-rewiring work, kept to 4 files.</p><p class="text-xs opacity-70">Owns: the 6 renamed files, their import lines, <code>tests/TestsNamingConvention.md</code>.</p></article>
+    <article class="rounded-box border border-warning/50 bg-warning/10 p-4 space-y-1"><h3 class="font-semibold"><span class="badge badge-warning mr-2">wave 1</span>hk-closeout <span class="opacity-70 text-sm">· 1 turn · 2 phases</span></h3><p class="text-sm">Gate on all five merges, fix every leftover reference they reported, write the Repository Layout Standard into <code>CLAUDE.md</code>, verify the standard with greps, open the PR.</p><p class="text-xs opacity-70">Owns: <code>CLAUDE.md</code>, <code>AGENTS.md</code> (the only axis allowed to edit them) and the final cross-reference fixes.</p></article>
+  </div>
+
+  <h3 class="text-xl font-semibold pt-2">File-ownership matrix: why the five axes can run together</h3>
+  <div class="overflow-x-auto rounded-box border border-base-content/20">
+    <table class="table table-xs sm:table-sm">
+      <thead><tr><th>Shared or sensitive file</th><th>Single writer</th><th>Others</th></tr></thead>
+      <tbody>
+        <tr><td><code>.gitignore</code>, <code>.env.example</code></td><td>hk-repo-contract</td><td>none</td></tr>
+        <tr><td><code>CLAUDE.md</code>, <code>AGENTS.md</code></td><td>hk-closeout</td><td>every other axis only reports references to them</td></tr>
+        <tr><td><code>docs/**</code></td><td>hk-docs</td><td>hk-records and hk-naming only report; hk-closeout edits last</td></tr>
+        <tr><td><code>_project/**</code></td><td>hk-records</td><td><code>agent-logs</code> is hk-repo-contract's; <code>_scratch</code> and <code>working-memory</code> are never committed</td></tr>
+        <tr><td><code>tests/TestsNamingConvention.md</code></td><td>hk-naming</td><td>hk-docs deletes only the identical copy under <code>docs/testing/</code></td></tr>
+        <tr><td>vitest, eslint config</td><td>hk-root-tidy</td><td>hk-naming reads the vitest glob, edits nothing</td></tr>
+        <tr><td><code>data/</code></td><td>hk-repo-contract (one <code>.md.save</code>), hk-records (5 JSON files)</td><td>disjoint paths</td></tr>
+        <tr><td><code>package.json</code>, <code>.no-mistakes.yaml</code></td><td>nobody</td><td>untouched by design</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="text-sm"><strong>Declared dependencies:</strong> hk-closeout after all five. Inside <code>hk-docs</code>, T1 → T2 → T3 (T2 compares files renamed in T1; T3 banners paths created in T1–T2). No other axis has a prerequisite. <strong>Ordering conflicts that cannot overlap:</strong> none beyond these; the reference-fix work that would have collided across axes was deliberately pushed into hk-closeout.</p>
+</section>
+
+<!-- PHASE FILES -->
+<section class="space-y-4">
+  <h2 class="text-2xl font-semibold">Dispatch list (paste one phase at a time, in order)</h2>
+  <p class="opacity-80">Every file stands alone: goal, owned paths, ordered tasks, reference checks, a <code>- [ ]</code> checklist, and the standing rules (no tsc / lint / build / test, no <code>$()</code>). The first phase of each axis syncs to <code>main</code>. Intermediate turns commit and push; only the last phase of the last turn opens the PR (your "PR per axis" rule).</p>
+  <div class="overflow-x-auto rounded-box border border-base-content/20">
+    <table class="table table-xs sm:table-sm">
+      <thead><tr><th>Axis folder (all under <code>_project/working-memory/</code>)</th><th>Phase files</th></tr></thead>
+      <tbody>
+        <tr><td><code>file:///home/jan/work/sanglogium/_project/working-memory/hk-repo-contract/</code></td><td><code>turn-1/phase-1.1</code> strays and untracking · <code>1.2</code> .gitignore + .env.example · <code>1.3</code> commit + PR</td></tr>
+        <tr><td><code>file:///home/jan/work/sanglogium/_project/working-memory/hk-root-tidy/</code></td><td><code>turn-1/phase-1.1</code> move + repoint · <code>1.2</code> commit + PR</td></tr>
+        <tr><td><code>file:///home/jan/work/sanglogium/_project/working-memory/hk-docs/</code></td><td><code>turn-1/phase-1.1</code> move research · <code>1.2</code> remove spaces · <code>1.3</code> kebab-case, commit (no PR) · <code>turn-2/phase-2.1</code> dedupe + audits · <code>2.2</code> docs index, commit · <code>turn-3/phase-3.1</code> living fixes + banners · <code>3.2</code> greps + PR</td></tr>
+        <tr><td><code>file:///home/jan/work/sanglogium/_project/working-memory/hk-records/</code></td><td><code>turn-1/phase-1.1</code> archive folders · <code>1.2</code> scripts + reports · <code>1.3</code> indexes + PR</td></tr>
+        <tr><td><code>file:///home/jan/work/sanglogium/_project/working-memory/hk-naming/</code></td><td><code>turn-1/phase-1.1</code> .spec rename + note · <code>1.2</code> XClient rename · <code>1.3</code> commit + PR</td></tr>
+        <tr><td><code>file:///home/jan/work/sanglogium/_project/working-memory/hk-closeout/</code></td><td><code>turn-1/phase-1.1</code> gate, fixes, standard · <code>1.2</code> verification + PR (starts only after the five PRs merge)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="text-sm opacity-80"><strong>Suggested 3-terminal queues:</strong> T1 <code>hk-docs</code> → <code>hk-closeout</code>; T2 <code>hk-records</code> → <code>hk-repo-contract</code>; T3 <code>hk-naming</code> → <code>hk-root-tidy</code>. Human live checks are in each axis's last phase (<code>hk-root-tidy</code> and <code>hk-naming</code> need you to run <code>npm run test</code> once; the others are PR-diff reviews).</p>
+</section>
+
+<!-- GATED REGISTER -->
+<section class="space-y-4">
+  <h2 class="text-2xl font-semibold">6 · Owner-gated register: where the big wins are</h2>
+  <p class="opacity-80">I did not write phase files for these, because each needs a fact only you hold and a "no" would waste the work. Several are the old prune-audit questions still open since 2026-09-30. Answer in one reply ("G1 yes, G3 no…") and I will write the phases (one axis each, all independent of each other and of the six above).</p>
+  <div class="overflow-x-auto rounded-box border border-base-content/20">
+    <table class="table table-xs sm:table-sm">
+      <thead><tr><th>ID</th><th>Item (measured)</th><th>Your question</th><th>If yes</th></tr></thead>
+      <tbody>
+        <tr><td>G1</td><td>9 one-off production-write scripts in <code>scripts/</code>: <code>delete-two-products</code>, <code>verify-deleted-two-products</code>, <code>update-hero-copy</code>, <code>update-homepage-accessories</code> (<code>.mjs</code> + <code>.ts</code> twin), <code>update-newest-release-copy</code>, <code>-subtitle</code>, <code>verify-and-fix-newest-release-copy</code></td><td>Did those edits land in production, so the scripts are spent?</td><td>delete (git history keeps them)</td></tr>
+        <tr><td>G2</td><td><code>scripts/cline-agent-helpers.ps1</code>, <code>dev.ps1</code>, <code>devctl.sh</code>, <code>scripts/agent-ops/*.ps1</code> (4). <code>AGENTS.md</code> rule 3 still references <code>build-lock.ps1</code>.</td><td>Still used? The machine is Linux now.</td><td>delete, and <code>AGENTS.md</code> gets edited in the same axis</td></tr>
+        <tr><td>G3</td><td>Migrations and candidates: <code>sanity-cms/utils/migrations/</code> (312 files, ~163 MB), <code>public/normalize-accessories-images/</code> (200 PNGs, shipped to production), the two <code>(store)/normalization*</code> pages, <code>app/(store)/lib/fetchHomepageData.ts</code> (only the normalize page uses it), zero-reference <code>sanity-cms/utils/categories/*.json</code> + <code>brands.txt</code></td><td>Did the accessories and IEM patches finish in production? Is <code>sliceFacetNormalization --write</code> still pending? (Prune questions 8–10, plus your earlier "defer the pages".)</td><td>delete, which removes well over 160 MB from the tree (migrations alone are ~163 MB per the prune audit) and 2 public routes</td></tr>
+        <tr><td>G4</td><td>Orphan code: <code>app/api/shipping/route.ts</code>, <code>app/api/shipping/rates/route.ts</code> (269 lines), <code>lib/shipping/packlink-rates.ts</code>, <code>tests/e2e/checkout/shipping-visual-tracer.test.ts</code> (dead-path test), unregistered <code>sanity-cms/schemaTypes/spotlightType.ts</code>, <code>tests/fixtures/catalogue-fixtures.ts</code> (no importer)</td><td>Delete the cluster? It changes routes, so it is not pure organization.</td><td>delete</td></tr>
+        <tr><td>G5</td><td>Dev trees <code>app/design-system-test/**</code> (6 files, 730-line page) and <code>app/dev/design-system/**</code> (4): public, no guard found by grep, sitemap exposure unchecked</td><td>Merge into one guarded <code>app/dev/</code>, or delete?</td><td>behaviour change, so your call</td></tr>
+        <tr><td>G6</td><td>Zero-reference <code>public/</code> files: <code>icons/*.svg</code> (9), <code>LOGO.svg</code>, <code>logo-orbit.svg</code></td><td>Any external URL use (emails, social cards)?</td><td>delete</td></tr>
+        <tr><td>G7</td><td><code>data/catalogue-index.json</code>: tracked, <em>and</em> in <code>.gitignore</code>, referenced 25 times; <code>CLAUDE.md</code> says it "stays in <code>data/</code> as the generated artifact"</td><td>(a) keep tracked and delete the ignore line, or (b) untrack and rely on <code>prebuild</code>? (b) means a fresh clone's dev server lacks it until a build.</td><td>my default: (a), zero risk</td></tr>
+        <tr><td>G8</td><td>3 finished task briefs <code>docs/devin-*-tasks.md</code>; <code>docs/research/logging-patterns-2026.md</code> (Redis premise stale); the differing <code>TEST_INTEGRATION_CONTEXT_AWARENESS</code> pair</td><td>Delete the briefs and the stale note? Which test-doc version wins?</td><td>delete / pick</td></tr>
+        <tr><td>G9</td><td><code>.git</code> = 771 MB: committed <code>.venv/</code> (opencv, numpy, scipy, onnxruntime), <code>.conversation-cache/</code>, <code>.ai-conversation-cache/</code>, <code>bin/protoc.exe</code></td><td>Purge history? Needs <code>git filter-repo</code> and a force-push of every branch. Destructive and coordinated.</td><td>a separate operation, not in this plan</td></tr>
+        <tr><td>G10</td><td>Report-only findings: <code>npm run webhook</code> forwards to <code>/api/webhook</code> but the route is <code>/api/webhooks/stripe</code>; <code>tsconfig</code> excludes <code>tests/</code> so test code is never type-checked; CI pins Node 20 while <code>.node-version</code> is 22; <code>AGENTS.md</code> is Windows-era and duplicates <code>CLAUDE.md</code> hard limits; <code>.no-mistakes.yaml</code> still names <code>app/actions</code>; <code>tests/e2e/checkout/address-flow.spec.ts</code> matches no Playwright config; unused deps (<code>pino</code>, <code>@upstash/redis</code>) per the 2026-09-30 audit, not re-verified</td><td>Not organization; each changes behaviour or config.</td><td>tell me which to open as issues</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- RISKS -->
+<section class="space-y-3 pb-8">
+  <h2 class="text-2xl font-semibold">Risks and what I did not verify</h2>
+  <ul class="list-disc pl-5 space-y-1 opacity-90">
+    <li><strong>Nothing was executed.</strong> No lint, build, test or dev server, per repo rules. The only mechanisms that can fail are a wrong path in a config (<code>hk-root-tidy</code>) or a wrong import specifier (<code>hk-naming</code>); both fail at startup, and each PR carries the exact human check.</li>
+    <li><strong>Untracking is reversible.</strong> <code>hk-repo-contract</code> uses <code>git rm --cached</code>, so your local logs and backup stay on disk.</li>
+    <li><strong>Judgment calls baked in:</strong> archive rather than delete closed records (non-destructive); keep Playwright and vitest configs at the root (tool convention); banner point-in-time docs instead of rewriting them.</li>
+    <li><strong>Not verified:</strong> whether <code>_project/archive</code> contents are linked from anywhere I did not grep (Notion, bookmarks); the contents of the 3 <code>docs/devin-*-tasks.md</code> beyond the earlier audit's verdict; whether any email template hardcodes a <code>public/</code> URL (G6).</li>
+    <li><strong>Local-only tidy for you:</strong> 17 stale untracked folders under <code>_project/working-memory/</code> left by the finished macro-refactor can be deleted by hand; agents never touch them.</li>
+  </ul>
+</section>
+
+</main>
+</body>
+</html>

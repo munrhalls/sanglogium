@@ -1,0 +1,39 @@
+Progress report — 2026-09-30
+============================
+
+Scope: all branches, commits since 00:00 today.
+46 commits, 19 PRs merged (#22–#40). Author: Munrhalls (plus one stray commit by Claude).
+Net diff on main: 1,564 files changed, +1,789 / −1,175,600 lines — almost entirely deletions.
+
+Two workstreams:
+
+1) Repo prune/audit campaign (morning, ~08:00–11:10)
+   - Audits first, then deletions — every removal was evidence-backed:
+     * stale-docs audit: removed dead Upstash/BullMQ/Redis references and dead docs
+     * dep audit: pruned unused dependencies and stale package.json scripts
+     * prune T2/T3: deleted 61 + 39 verified-dead files (~15 MB), incl. 2 dead route dirs
+     * junk audit: pruned tracked logs, backups, generated artifacts
+   - Big specific deletions:
+     * sanity-cms/backups snapshot dir — 974 tracked files
+     * headphones oracle proof pipeline + applied migrations + CMS patch supervisor
+     * headphones POC route, POC mirror hook/params, dead catalogue exports
+     * legacy _project/filters toolchain and filter-sort proof leftovers
+   - Cleanup fixes: stale filter/sort comments + schema descriptions, dropped legacy
+     name-asc sort alias, renamed poc- prefixed ids/testids in shared filter components
+
+2) Feature-directory reorganization (midday, ~11:10–12:15)
+   - Moved catalogue code into features/<name>/ structure:
+     * features/product-filtering — headless core (config, domain, specs), UI + URL hook,
+       facet-count extraction, proofs and fixtures consolidated under the feature
+     * features/product-search — headless core, UI + hooks, scoring + result building
+     * lint boundary added enforcing feature boundaries for both
+   - Docs pointers updated; PR #40 documents the convention
+     (features/<name>/ is canonical, app/components/features is legacy)
+
+Loose ends / notes
+   - helloworld.txt (1 line, authored "Claude") rode into main via PR #40 — likely stray.
+   - Local main is 10 commits behind origin/main.
+   - Working tree: 3 deleted _project files (devin-cloud-optimization-plan.md,
+     feed-next.sh, sourcing-pipeline-monitor.sh); untracked .lavish/*.html and
+     _project/working-memory/.
+   - Treehouse branches exist for beads-removal, junk-audit, dep-audit, accessories.

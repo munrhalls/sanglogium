@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en" data-theme="luxury">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The one lever: green before main</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@5.5.19/daisyui.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@5.5.19/themes.css">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.2.4/dist/index.global.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  :where(.grid, .flex, .layout-grid, .layout-flex) > * { min-width: 0; }
+  :where(p, h1, h2, h3, h4, li, dd, td, th, .badge, .label) { overflow-wrap: anywhere; }
+  :where(img, svg, video, canvas, iframe) { max-width: 100%; height: auto; }
+  body { background: var(--color-base-100); color: var(--color-base-content); }
+  code { font-size: .85em; padding: .08rem .35rem; border-radius: .3rem; background: var(--color-base-300); }
+  .figure text { font-size: 12px; fill: currentColor; }
+  .figure .t { font-weight: 700; font-size: 13px; }
+  .figure .s { font-size: 11px; opacity: .75; }
+  .figure .lane { font-size: 11px; letter-spacing: .08em; opacity: .7; }
+  .figure .n { fill: var(--color-base-200); stroke: currentColor; stroke-opacity: .35; stroke-width: 1.5; }
+  .figure .n-human { stroke: var(--color-warning); stroke-opacity: 1; }
+  .figure .n-machine { stroke: var(--color-success); stroke-opacity: 1; stroke-width: 2.5; }
+  .figure .n-bad { stroke: var(--color-error); stroke-opacity: 1; stroke-dasharray: 5 3; }
+  .figure .band { fill: var(--color-error); fill-opacity: .22; stroke: var(--color-error); stroke-opacity: .6; }
+  .figure .dot-ok { fill: var(--color-success); }
+  .figure .dot-bad { fill: var(--color-error); }
+  .figure .edge { stroke: currentColor; stroke-opacity: .55; fill: none; stroke-width: 1.5; }
+  .figure .edge-fix { stroke: var(--color-success); fill: none; stroke-width: 2; }
+</style>
+</head>
+<body>
+<main class="max-w-5xl mx-auto px-4 py-8 space-y-12">
+
+<header class="space-y-3">
+  <p class="text-xs uppercase tracking-widest opacity-60">Workflow review &middot; sanglogium &middot; 2026-09-29</p>
+  <h1 class="text-3xl md:text-4xl font-bold leading-tight">The one lever: let a machine say &ldquo;green&rdquo; before anything reaches <code>main</code></h1>
+  <p class="opacity-80">Your question: what is the one easy thing that makes the rest of shipping at 8+/10 easier or irrelevant? Answer first, then the evidence from today&rsquo;s history, the first-principles argument, eight alternatives, and what I could not verify. Read-only analysis: nothing in the repo was changed.</p>
+</header>
+
+<!-- 1. ANSWER -->
+<section id="answer" class="space-y-4">
+  <div class="border-2 border-success/60 bg-success/10 rounded-box p-5 space-y-3">
+    <p class="text-xs uppercase tracking-widest text-success">The answer</p>
+    <p class="text-xl md:text-2xl font-semibold leading-snug">Make GitHub &mdash; not you, not your laptop &mdash; decide whether a change may enter <code>main</code>.</p>
+    <p>Concretely: <strong>one required check named <code>verify</code> (<code>tsc --noEmit</code>) on every PR and every push to <code>main</code>.</strong> About 15 lines of YAML and one repository setting. The repo is public, so runners and branch protection are free.</p>
+  </div>
+  <div class="grid gap-3 md:grid-cols-3">
+    <div class="rounded-box border border-base-300 bg-base-200 p-4"><p class="font-semibold">Takes work off the bottleneck</p><p class="text-sm opacity-80 mt-1">Your attention is the only scarce resource in the loop. Type and build errors are compiler work, not review work.</p></div>
+    <div class="rounded-box border border-base-300 bg-base-200 p-4"><p class="font-semibold">Gives Devin an oracle</p><p class="text-sm opacity-80 mt-1">A remote check costs your laptop nothing, so &ldquo;agents never run checks locally&rdquo; stops costing quality.</p></div>
+    <div class="rounded-box border border-base-300 bg-base-200 p-4"><p class="font-semibold">Makes every later gain one line</p><p class="text-sm opacity-80 mt-1">Lint, unit tests, a width check, a preview URL: each becomes one added line that runs forever, not one more box you re-tick by hand.</p></div>
+  </div>
+</section>
+
+<!-- 2. EVIDENCE -->
+<section id="evidence" class="space-y-4">
+  <h2 class="text-2xl font-bold">What today&rsquo;s history says about the current setup</h2>
+  <div class="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="rounded-box border border-error/40 bg-base-200 p-4"><p class="text-3xl font-bold text-error">11 days</p><p class="text-sm mt-1"><code>main</code> could not build, and nobody knew. Type errors landed 09-17 (<code>28e61315</code>) and 09-18 (<code>0579ed01</code>), a third on 09-28 (<code>bc2b2df5</code>). Last good deploy: 09-16.</p></div>
+    <div class="rounded-box border border-error/40 bg-base-200 p-4"><p class="text-3xl font-bold text-error">20 of 20</p><p class="text-sm mt-1">deploy-on-push runs since 09-28 failed. Latest log: <code>VERCEL_TOKEN</code>, <code>VERCEL_ORG_ID</code>, <code>VERCEL_PROJECT_ID</code> are empty, so it has never been able to deploy. Every <code>main</code> commit shows a red &#10007;, so red now means nothing.</p></div>
+    <div class="rounded-box border border-error/40 bg-base-200 p-4"><p class="text-3xl font-bold text-error">0</p><p class="text-sm mt-1">automated checks on any PR. The only ones are GitBook docs sync; #12, #17 and #20 show none at all.</p></div>
+    <div class="rounded-box border border-warning/50 bg-base-200 p-4"><p class="text-3xl font-bold text-warning">10 of 18</p><p class="text-sm mt-1">PRs merged within 5 min of opening (#19: +44,534/&minus;2,773 lines, 35 files, merged in 1 min). Four others (#12, #15, #17, #18) waited 46&ndash;181 min, then merged within a minute of each other after one shared 41-box live check on a scratch branch.</p></div>
+    <div class="rounded-box border border-warning/50 bg-base-200 p-4"><p class="text-3xl font-bold text-warning">3 builds</p><p class="text-sm mt-1">and ~35 min to ship today. Each failed production build showed one type error after ~5 min; one <code>tsc --noEmit</code> listed all 7 at once. Vercel&rsquo;s own type-check step takes ~20 s.</p></div>
+    <div class="rounded-box border border-warning/50 bg-base-200 p-4"><p class="text-3xl font-bold text-warning">Unknown</p><p class="text-sm mt-1">whether <code>main</code> (<code>0ce1a187</code>) builds right now. Two merges (17:20 checkout hardening, 17:29 PR #21) landed after the last deployable commit, and production is ~11 h old. I did not run <code>tsc</code> (your ban).</p></div>
+  </div>
+
+  <figure class="rounded-box border border-base-300 bg-base-200 p-3">
+    <svg id="fig-timeline" class="figure w-full h-auto text-base-content" viewBox="0 0 900 220" role="img" aria-labelledby="fig-timeline-t">
+      <title id="fig-timeline-t">Timeline 09-16 to 09-29: main was undeployable for 11 days without anyone knowing</title>
+      <rect id="band-red" class="band" x="103" y="98" width="757" height="24" rx="4"><title>Main cannot build, unnoticed</title></rect>
+      <line id="axis" class="edge" x1="40" y1="110" x2="860" y2="110"/>
+      <text x="481" y="115" text-anchor="middle" class="s">main cannot build &#8212; nobody knows</text>
+      <circle id="ev-good" class="dot-ok" cx="40" cy="110" r="6"><title>09-16 last good production deploy</title></circle>
+      <circle id="ev-err1" class="dot-bad" cx="103" cy="110" r="6"><title>09-17 type error 1</title></circle>
+      <circle id="ev-err2" class="dot-bad" cx="166" cy="110" r="6"><title>09-18 type error 2</title></circle>
+      <circle id="ev-err3" class="dot-bad" cx="797" cy="110" r="6"><title>09-28 type error 3</title></circle>
+      <circle id="ev-fix" class="dot-ok" cx="860" cy="110" r="6"><title>09-29 fixed and live</title></circle>
+      <text x="40" y="150" class="t">09-16</text><text x="40" y="166" class="s">last good deploy</text>
+      <text x="103" y="84" class="s">09-17 &#183; type error #1</text>
+      <text x="166" y="150" class="s">09-18 &#183; type error #2</text>
+      <text x="797" y="84" text-anchor="end" class="s">09-28 &#183; error #3 + deploy job added</text>
+      <text x="860" y="150" text-anchor="end" class="s">09-29 &#183; 3 failed builds, fix, live</text>
+      <text x="481" y="204" text-anchor="middle" class="s">83 commits &#183; 19 merges landed on top of it</text>
+    </svg>
+    <figcaption class="text-sm opacity-80 mt-2 px-1">Two of the three errors are &ldquo;one site missed&rdquo; slips. <code>28e61315</code> added a required field and updated 2 of 3 return sites; <code>0579ed01</code> removed six sort values and left their <code>case</code> branches. A compiler flags that in seconds; a diff reader rarely does.</figcaption>
+  </figure>
+</section>
+
+<!-- 3. FIRST PRINCIPLES -->
+<section id="principles" class="space-y-4">
+  <h2 class="text-2xl font-bold">First principles</h2>
+  <ol class="space-y-3">
+    <li class="rounded-box border border-base-300 bg-base-200 p-4"><p class="font-semibold">1. Throughput is set by the slowest stage.</p><p class="text-sm opacity-85 mt-1">Architect and Devin are cheap and parallel (three worktrees ran at once). The one serial stage is your attention plus one shared dev server. More executors only add unmerged inventory: 19 local branches, a <code>live-check</code> scratch branch, PRs waiting up to 3 h. So there are three ways to ship faster: take work off you, stop rework re-entering, shorten feedback. Nothing else moves the ceiling.</p></li>
+    <li class="rounded-box border border-base-300 bg-base-200 p-4"><p class="font-semibold">2. A person should verify only what a machine cannot.</p><p class="text-sm opacity-85 mt-1">Types, imports and builds are machine work; many size, overflow and ARIA assertions are too. Taste, hierarchy and &ldquo;does this solve the product problem&rdquo; are yours. Today&rsquo;s failed deploys: 4 of 4 were type errors, the class you are worst placed to catch by eye.</p></li>
+    <li class="rounded-box border border-base-300 bg-base-200 p-4"><p class="font-semibold">3. An agent with no oracle cannot converge, so a person becomes its oracle.</p><p class="text-sm opacity-85 mt-1">Your ban on local checks removes Devin&rsquo;s only oracle to protect a laptop that already wedges (swap 1.7/2 GB and a 2.8 GB <code>next-server</code>, per <code>.lavish/dev-server-wedge.html</code>). A remote check costs the laptop nothing, so the ban&rsquo;s reason does not apply to it.</p></li>
+    <li class="rounded-box border border-base-300 bg-base-200 p-4"><p class="font-semibold">4. A defect&rsquo;s cost grows with the delay before it is found.</p><p class="text-sm opacity-85 mt-1">At PR time: minutes, author&rsquo;s context still loaded, a ~20 s check. At deploy time: 11 days later, 83 commits on top, and three 5-minute builds to see three errors one at a time.</p></li>
+    <li class="rounded-box border border-base-300 bg-base-200 p-4"><p class="font-semibold">5. Verification must scale with production.</p><p class="text-sm opacity-85 mt-1">N executors make N PRs. Your review time does not scale with N; a GitHub runner does, in parallel, for free on a public repo.</p></li>
+  </ol>
+</section>
+
+<!-- 4. PICTURE -->
+<section id="picture" class="space-y-4">
+  <h2 class="text-2xl font-bold">The lever as a picture</h2>
+  <figure class="rounded-box border border-base-300 bg-base-200 p-3">
+    <svg id="fig-pipeline" class="figure w-full h-auto text-base-content" viewBox="0 0 900 275" role="img" aria-labelledby="fig-pipeline-t">
+      <title id="fig-pipeline-t">Delivery loop today versus with a required verify check</title>
+      <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs>
+
+      <text x="20" y="24" class="lane">TODAY &#8212; YOU ARE THE ONLY VERIFIER</text>
+      <g id="lane-today">
+        <rect id="t-arch" class="n" x="20" y="36" width="104" height="50" rx="8"/><text x="72" y="58" text-anchor="middle" class="t">Architect</text><text x="72" y="74" text-anchor="middle" class="s">phases</text>
+        <rect id="t-devin" class="n" x="145" y="36" width="104" height="50" rx="8"/><text x="197" y="58" text-anchor="middle" class="t">Devin</text><text x="197" y="74" text-anchor="middle" class="s">codes the PR</text>
+        <rect id="t-pr" class="n n-bad" x="270" y="36" width="104" height="50" rx="8"/><text x="322" y="58" text-anchor="middle" class="t">PR</text><text x="322" y="74" text-anchor="middle" class="s">no checks</text>
+        <rect id="t-you" class="n n-human" x="395" y="36" width="104" height="50" rx="8"/><text x="447" y="58" text-anchor="middle" class="t">You: eyes</text><text x="447" y="74" text-anchor="middle" class="s">+ live check</text>
+        <rect id="t-main" class="n" x="520" y="36" width="104" height="50" rx="8"/><text x="572" y="58" text-anchor="middle" class="t">main</text><text x="572" y="74" text-anchor="middle" class="s">merge</text>
+        <rect id="t-deploy" class="n" x="645" y="36" width="104" height="50" rx="8"/><text x="697" y="58" text-anchor="middle" class="t">Deploy</text><text x="697" y="74" text-anchor="middle" class="s">by hand</text>
+        <rect id="t-surprise" class="n n-bad" x="770" y="36" width="104" height="50" rx="8"/><text x="822" y="58" text-anchor="middle" class="t">Surprise</text><text x="822" y="74" text-anchor="middle" class="s">days later</text>
+        <line class="edge" x1="124" y1="61" x2="143" y2="61" marker-end="url(#arr)"/><line class="edge" x1="249" y1="61" x2="268" y2="61" marker-end="url(#arr)"/><line class="edge" x1="374" y1="61" x2="393" y2="61" marker-end="url(#arr)"/><line class="edge" x1="499" y1="61" x2="518" y2="61" marker-end="url(#arr)"/><line class="edge" x1="624" y1="61" x2="643" y2="61" marker-end="url(#arr)"/><line class="edge" x1="749" y1="61" x2="768" y2="61" marker-end="url(#arr)"/>
+      </g>
+
+      <text x="20" y="184" class="lane">WITH THE GATE &#8212; GITHUB VERIFIES, YOU JUDGE</text>
+      <g id="lane-gate">
+        <rect id="g-arch" class="n" x="20" y="196" width="104" height="50" rx="8"/><text x="72" y="218" text-anchor="middle" class="t">Architect</text><text x="72" y="234" text-anchor="middle" class="s">phases</text>
+        <rect id="g-devin" class="n" x="145" y="196" width="104" height="50" rx="8"/><text x="197" y="218" text-anchor="middle" class="t">Devin</text><text x="197" y="234" text-anchor="middle" class="s">codes the PR</text>
+        <rect id="g-pr" class="n" x="270" y="196" width="104" height="50" rx="8"/><text x="322" y="218" text-anchor="middle" class="t">PR</text><text x="322" y="234" text-anchor="middle" class="s">opened</text>
+        <rect id="g-verify" class="n n-machine" x="395" y="196" width="104" height="50" rx="8"/><text x="447" y="218" text-anchor="middle" class="t">GitHub verify</text><text x="447" y="234" text-anchor="middle" class="s">&#10003; or &#10007;</text>
+        <rect id="g-you" class="n n-human" x="520" y="196" width="104" height="50" rx="8"/><text x="572" y="218" text-anchor="middle" class="t">You</text><text x="572" y="234" text-anchor="middle" class="s">green PRs only</text>
+        <rect id="g-main" class="n" x="645" y="196" width="104" height="50" rx="8"/><text x="697" y="218" text-anchor="middle" class="t">main</text><text x="697" y="234" text-anchor="middle" class="s">always green</text>
+        <rect id="g-deploy" class="n n-machine" x="770" y="196" width="104" height="50" rx="8"/><text x="822" y="218" text-anchor="middle" class="t">Deploy</text><text x="822" y="234" text-anchor="middle" class="s">on merge</text>
+        <line class="edge" x1="124" y1="221" x2="143" y2="221" marker-end="url(#arr)"/><line class="edge" x1="249" y1="221" x2="268" y2="221" marker-end="url(#arr)"/><line class="edge" x1="374" y1="221" x2="393" y2="221" marker-end="url(#arr)"/><line class="edge" x1="499" y1="221" x2="518" y2="221" marker-end="url(#arr)"/><line class="edge" x1="624" y1="221" x2="643" y2="221" marker-end="url(#arr)"/><line class="edge" x1="749" y1="221" x2="768" y2="221" marker-end="url(#arr)"/>
+        <path id="g-fixloop" class="edge-fix" d="M447 196 C447 146 197 146 197 196" marker-end="url(#arr)"><title>Red check goes back to Devin</title></path>
+        <text x="322" y="140" text-anchor="middle" class="s">red &#8594; Devin fixes on its own branch</text>
+        <text x="447" y="264" text-anchor="middle" class="s">~1&#8211;3 min &#183; free runner &#183; no local CPU</text>
+      </g>
+    </svg>
+  </figure>
+
+  <div class="overflow-x-auto rounded-box border border-base-300">
+    <table class="table table-sm">
+      <thead><tr><th>Who</th><th>What changes</th></tr></thead>
+      <tbody class="text-sm">
+        <tr><td class="font-semibold align-top">You</td><td>Review only green PRs. Spend attention on product and UX. The live check shrinks each time a box becomes a script.</td></tr>
+        <tr><td class="font-semibold align-top">Devin</td><td>Gets a verdict it can read (<code>gh-axi pr checks</code>) and fix against, with zero local compute. Your call whether it does.</td></tr>
+        <tr><td class="font-semibold align-top">Architect</td><td>Done-criteria can name the check. No verification prose in phases.</td></tr>
+        <tr><td class="font-semibold align-top">Deploy</td><td>Stops being an event. Merge is deploy, once the deploy job depends on <code>verify</code>. No more &ldquo;deploy very soon&rdquo; scramble.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 5. ALTERNATIVES -->
+<section id="alternatives" class="space-y-4">
+  <h2 class="text-2xl font-bold">Alternatives, compared</h2>
+  <div class="overflow-x-auto rounded-box border border-base-300">
+    <table class="table table-sm">
+      <thead><tr><th>Model</th><th>What it fixes (evidence)</th><th>Cost</th><th>Verdict</th></tr></thead>
+      <tbody class="text-sm align-top">
+        <tr class="bg-success/10">
+          <td class="font-semibold align-top min-w-40">Remote gate: required <code>verify</code> on every PR and on <code>main</code></td>
+          <td class="align-top min-w-56">11-day red <code>main</code>; you doing compiler work; Devin without an oracle; deploy surprises.</td>
+          <td class="align-top min-w-56">~15 lines YAML, 1 setting, ~1&ndash;3 min of free runner per PR.</td>
+          <td class="align-top"><span class="badge badge-success">Do now</span></td>
+        </tr>
+        <tr>
+          <td class="font-semibold align-top">Short-lived branches: axis is a label, new branch per turn from fresh <code>origin/main</code></td>
+          <td class="align-top">Diverged branches (today&rsquo;s failed <code>git pull</code> on <code>live-check</code>, 19 merged local branches).</td>
+          <td class="align-top">Changes the one-branch-per-axis rule you just confirmed. Without the gate it only reaches red faster.</td>
+          <td class="align-top"><span class="badge badge-info">Next, your call</span></td>
+        </tr>
+        <tr>
+          <td class="font-semibold align-top">Preview URL per PR instead of <code>localhost:3000</code></td>
+          <td class="align-top">One shared dev server, the integration-branch hack, no real-device checks.</td>
+          <td class="align-top">Vercel Git deploys are off in <code>vercel.json</code>; preview env and Sanity CORS to sort out.</td>
+          <td class="align-top"><span class="badge badge-info">After the gate</span></td>
+        </tr>
+        <tr>
+          <td class="font-semibold align-top">Executable checks: Architect ships Playwright/Vitest checks, Devin makes them pass</td>
+          <td class="align-top">The 41-box manual live check; ambiguity in prose criteria.</td>
+          <td class="align-top">High: needs a remote runner and data; a medium model can game its own tests. <code>package.json</code> points at RWD/a11y specs that are not in the tree.</td>
+          <td class="align-top"><span class="badge badge-info">After the gate, one box at a time</span></td>
+        </tr>
+        <tr>
+          <td class="font-semibold align-top">WIP limit: at most 2 open PRs</td>
+          <td class="align-top">PRs waiting 46&ndash;181 min for one shared live check.</td>
+          <td class="align-top">Discipline only; decays without a mechanism. Idle Devin time is free.</td>
+          <td class="align-top"><span class="badge badge-warning">Habit</span></td>
+        </tr>
+        <tr class="opacity-80">
+          <td class="font-semibold align-top">One PR per axis, at the end</td>
+          <td class="align-top">Nothing observed.</td>
+          <td class="align-top">Bigger batch. #19 was 44k lines merged in 1 min: unreviewable.</td>
+          <td class="align-top"><span class="badge badge-error badge-outline">Reject</span></td>
+        </tr>
+        <tr class="opacity-80">
+          <td class="font-semibold align-top">Automate the paste (orchestrator)</td>
+          <td class="align-top">A non-bottleneck; manual paste is zero friction for you.</td>
+          <td class="align-top">A control plane to build and maintain.</td>
+          <td class="align-top"><span class="badge badge-error badge-outline">Reject</span></td>
+        </tr>
+        <tr class="opacity-80">
+          <td class="font-semibold align-top">Lift the local-run ban so Devin self-verifies</td>
+          <td class="align-top">The oracle problem.</td>
+          <td class="align-top">Laptop already wedges; N agents multiply it. The gate gives the same oracle remotely.</td>
+          <td class="align-top"><span class="badge badge-error badge-outline">Reject</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="text-sm opacity-85"><strong>Why the gate ranks first:</strong> every other row either needs a verdict to be safe (branches, previews, executable checks just deliver unverified code faster), decays without a mechanism (WIP limit), or enlarges the batch. It is the only row that removes work from you instead of reorganizing it.</p>
+
+  <div class="rounded-box border border-info/40 bg-base-200 p-4 space-y-2">
+    <p class="font-semibold">Your open question: PR per turn, or one at the end?</p>
+    <p class="text-sm"><strong>Per turn.</strong> Defect cost grows with batch size times detection delay, so smaller batches fail cheaper and sooner, and every merged PR is a checkpoint you can revert to. The wrinkle is not the cadence but the branch lifetime: a branch reused after its PR merged is diverged from <code>main</code> (same mechanism as today&rsquo;s failed pull on <code>live-check</code>). Reset the axis branch to <code>origin/main</code> at each turn start, or use a fresh branch per turn. Your rule, your call.</p>
+  </div>
+</section>
+
+<!-- 6. GAP SCAN -->
+<section id="gaps" class="space-y-4">
+  <h2 class="text-2xl font-bold">Gap scan</h2>
+  <div class="grid gap-4 md:grid-cols-2">
+    <div class="rounded-box border border-success/40 bg-base-200 p-4 space-y-2">
+      <p class="font-semibold text-success">Closed (verified)</p>
+      <ul class="text-sm space-y-2 list-disc pl-5">
+        <li>The repo is public, <code>main</code> is unprotected and there are no rulesets, so required checks are free to add.</li>
+        <li>No PR-time CI exists. The only workflow is <code>.github/workflows/vercel-deploy.yml</code>, and it fails at its first step.</li>
+        <li><code>tsc</code> alone would have caught every failed deploy: 4 of 4 causes were type errors.</li>
+        <li>Clean-clone viability: <code>package-lock.json</code>, <code>data/catalogue-index.json</code> and <code>sanity.types.ts</code> are tracked. <code>next-env.d.ts</code> is gitignored, so the workflow writes its two lines first. <code>npm ci</code> needs <code>--legacy-peer-deps</code> (as in <code>vercel.json</code>). No <code>engines</code> pin, so Node 22.</li>
+      </ul>
+    </div>
+    <div class="rounded-box border border-warning/50 bg-base-200 p-4 space-y-2">
+      <p class="font-semibold text-warning">Open (not closable from here)</p>
+      <ul class="text-sm space-y-2 list-disc pl-5">
+        <li>Is <code>main</code> green right now? Unknown. Requiring a check on a red <code>main</code> blocks everything, so run it once first, fix red, then require it.</li>
+        <li>Green is not good. <code>tsc</code> cannot see behaviour, UX or Sanity data. Commit <code>71468aee</code> changed production data with no gate at all.</li>
+        <li>Your repo rule says the only verification that counts is you plus the live check. It needs one amendment: a green remote check counts; agents may read it, never run it locally. I will not change your rules unasked.</li>
+        <li>Should Devin wait on the check and fix red? It costs session time, not laptop. Needs your explicit mandate.</li>
+        <li>The red <code>deploy</code> workflow would sit as a red &#10007; beside a green <code>verify</code>, so fix or delete it in the same change.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 7. WHAT TO DO -->
+<section id="steps" class="space-y-4">
+  <h2 class="text-2xl font-bold">What to do</h2>
+  <ol class="space-y-3">
+    <li class="flex gap-3 rounded-box border border-base-300 bg-base-200 p-4"><span class="badge badge-neutral shrink-0">me &middot; 5 min</span><p class="text-sm">Add <code>.github/workflows/verify.yml</code>: checkout, Node 22 with npm cache, <code>npm ci --legacy-peer-deps</code>, write <code>next-env.d.ts</code>, <code>npx tsc --noEmit</code>. Triggers: <code>pull_request</code> and <code>push: main</code>.</p></li>
+    <li class="flex gap-3 rounded-box border border-base-300 bg-base-200 p-4"><span class="badge badge-neutral shrink-0">me &middot; one run</span><p class="text-sm">Run it once on <code>main</code>. If red, fix on a short branch (same pattern as PR #20) before anything is required.</p></li>
+    <li class="flex gap-3 rounded-box border border-base-300 bg-base-200 p-4"><span class="badge badge-warning shrink-0">you &middot; 1 min</span><p class="text-sm">GitHub: Settings, Rules, require the <code>verify</code> check on <code>main</code>.</p></li>
+    <li class="flex gap-3 rounded-box border border-base-300 bg-base-200 p-4"><span class="badge badge-warning shrink-0">you &middot; 3 min</span><p class="text-sm">Create a <code>VERCEL_TOKEN</code> in the Vercel dashboard. I set the three secrets (org and project ids are already in <code>.vercel/repo.json</code>) and add <code>needs: verify</code> so merge is deploy. Until then, delete the always-red workflow.</p></li>
+    <li class="flex gap-3 rounded-box border border-base-300 bg-base-200 p-4"><span class="badge badge-ghost shrink-0">your call</span><p class="text-sm">One line in <code>executor-chat.md</code>: &ldquo;After opening the PR, read <code>gh-axi pr checks</code>; if <code>verify</code> is red, fix on the same branch (max 2 tries), then report.&rdquo;</p></li>
+  </ol>
+  <p class="text-sm opacity-80">After that, one line at a time: <code>eslint</code>, <code>vitest run</code>, a Playwright width/overflow check that replaces live-check boxes, a preview URL per PR. Nothing beyond the first step is needed now.</p>
+</section>
+
+<details class="rounded-box border border-base-300 bg-base-200 p-4">
+  <summary class="cursor-pointer font-semibold">Where each claim comes from</summary>
+  <ul class="text-sm space-y-1 mt-3 list-disc pl-5 opacity-85">
+    <li><code>gh run list</code> and <code>gh run view --log-failed</code>: 20 failed deploy runs, empty secrets.</li>
+    <li><code>gh pr list --state merged</code> and <code>gh pr view N --json statusCheckRollup</code>: PR sizes, open-to-merge times, checks.</li>
+    <li><code>git log -S</code> on <code>getFilterFacets.ts</code> and headphones <code>facetConfig.ts</code>: error provenance (<code>28e61315</code>, <code>0579ed01</code>); <code>git log</code> on <code>bc2b2df5</code>.</li>
+    <li><code>vercel ls</code> and <code>vercel inspect --logs</code>: last good deploy, three failed builds, ~20 s type-check step.</li>
+    <li><code>git show 54ae551f:_project/search-ux/07-live-check.md</code>: the 41-box live check. <code>.lavish/dev-server-wedge.html</code>: laptop memory numbers.</li>
+    <li><code>gh api repos/munrhalls/sanglogium</code>, <code>.../branches/main/protection</code>, <code>.../rulesets</code>: public, unprotected, no rulesets.</li>
+    <li>Inference, not measured: that <code>verify</code> would take ~1&ndash;3 min on a runner (Vercel&rsquo;s type step alone was ~20 s; install time is my estimate).</li>
+  </ul>
+</details>
+
+</main>
+</body>
+</html>
