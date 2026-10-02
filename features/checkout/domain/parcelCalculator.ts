@@ -142,7 +142,6 @@ export function calculatePackages(
 
 /**
  * Overload for basketReservation structure (parcel data embedded)
- * Used by app/api/shipping/rates/route.ts
  */
 export function calculatePackagesFromReservation(
   basketReservation: BasketReservationItem[]
