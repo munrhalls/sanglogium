@@ -328,4 +328,4 @@ for (const scenario of testScenarios) {
 - AlleKurier API Documentation: https://github.com/AlleKurier/api_v1
 - AlleKurier Setup: `docs/checkout/address slice/ALLEKURIER_SETUP.md`
 - Q&A on Poland Shipping: `docs/checkout/address slice/1. Q & A.md`
-- Poland Shipping Research: `research/Poland-Shipping-API-Research.md`
+- Poland Shipping Research: `docs/research/archive/poland-shipping-api-research-1.md`

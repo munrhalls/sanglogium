@@ -24,7 +24,7 @@ NEVER mix up writing tests, with implementing ANYTHING - a test is a test. NEVER
 
 
 ## Critical Principle - 3
-Description and it block must follow test naming convention [@/TestsNamingConvention.md] - AND be accurate and one to one specific with what the test does.
+Description and it block must follow test naming convention [@/docs/testing/tests-naming-convention.md] - AND be accurate and one to one specific with what the test does.
 
 ## Critical Principle - 4
 Tests specify behavior, never implement inside tests. No implementation inside tests - tests verify behavioral contract based on their layer (data layer = data contract, view layer = ui contract), components implement. 

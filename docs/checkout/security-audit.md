@@ -4,7 +4,7 @@
 > **Evidence rules applied:**
 > - Non-browser security properties are evidenced with a concrete `file:line` citation plus reasoning.
 > - User-observable behaviours are **not** guessed at from the code; items that need the dev server are collected in the dedicated "DEFERRED — needs live dev server" section at the end.
-> **Standards used:** `docs/checkout/security-intelligence.md` and `docs/checkout/CHECKOUT-SYNOPSIS.md`.  
+> **Standards used:** `docs/checkout/security-intelligence.md` and `docs/checkout/checkout-synopsis.md`.  
 > **Date:** 2026-09-14.
 
 ---

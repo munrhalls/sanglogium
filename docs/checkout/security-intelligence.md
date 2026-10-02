@@ -1,8 +1,8 @@
 # Checkout Security & Baseline UX Intelligence
 
-> **Purpose:** External standards and baseline UX expectations against which the current checkout architecture (documented in [`CHECKOUT-SYNOPSIS.md`](./CHECKOUT-SYNOPSIS.md)) can be audited.  
+> **Purpose:** External standards and baseline UX expectations against which the current checkout architecture (documented in [`checkout-synopsis.md`](./checkout-synopsis.md)) can be audited.  
 > **Scope:** Research and synthesis only. No source-code changes.  
-> **Calibration rule:** Every security finding below has been checked against `CHECKOUT-SYNOPSIS.md` sections 3.4 (Payment), 3.5 (Return Handler), 3.6 (Order Creation), and the shared session/cookie specification in 4.1 before inclusion.
+> **Calibration rule:** Every security finding below has been checked against `checkout-synopsis.md` sections 3.4 (Payment), 3.5 (Return Handler), 3.6 (Order Creation), and the shared session/cookie specification in 4.1 before inclusion.
 
 ---
 
@@ -37,7 +37,7 @@ For an embedded payment form (iframe / Stripe Elements), the merchant can confir
 - Implementing controls such as those in PCI-DSS Requirements 6.4.3 and 11.6.1 (e.g., CSP, SRI, script-integrity monitoring, subresource integrity) to protect the payment page from scripts targeting account data; or
 - Obtaining confirmation from the PCI-DSS-compliant TPSP (Stripe) that, when implemented per their instructions, the solution includes techniques that protect the merchant payment page from script attacks.
 
-**Calibration against this repo:** `CHECKOUT-SYNOPSIS.md` §3.4 confirms Stripe Elements / PaymentIntents are used, but it does **not** state how the merchant page protects against malicious scripts injected into the merchant origin (CSP, SRI, script-integrity monitoring, etc.). This is a gap to record for the audit stage: the page should either document a Stripe-provided assurance or a merchant-side control that satisfies the v4.0.1 script-attack criterion.
+**Calibration against this repo:** `checkout-synopsis.md` §3.4 confirms Stripe Elements / PaymentIntents are used, but it does **not** state how the merchant page protects against malicious scripts injected into the merchant origin (CSP, SRI, script-integrity monitoring, etc.). This is a gap to record for the audit stage: the page should either document a Stripe-provided assurance or a merchant-side control that satisfies the v4.0.1 script-attack criterion.
 
 ### SAQ conclusion
 If the integration remains “card data never touches our server,” continues to use Stripe Elements/PaymentIntents exactly as documented, and does not begin writing custom code that handles raw card information, the appropriate PCI validation route for a Level 2–4 merchant is most likely **SAQ A**. Any deviation (custom card input, server-side card handling, etc.) would move the merchant out of SAQ A and into SAQ A-EP or SAQ D territory.
@@ -49,7 +49,7 @@ If the integration remains “card data never touches our server,” continues t
 ### Source
 - OWASP Cheat Sheet Series, *Session Management Cheat Sheet* (https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
 
-### Findings calibrated to the checkout session (`lib/session.ts` as described in `CHECKOUT-SYNOPSIS.md` §4.1)
+### Findings calibrated to the checkout session (`lib/session.ts` as described in `checkout-synopsis.md` §4.1)
 
 | OWASP guidance | Current implementation (per synopsis) | Gap / note |
 |---|---|---|
@@ -81,7 +81,7 @@ OWASP lists the primary CSRF defenses in order of preference:
 4. **Defense in depth:** `SameSite` cookie attribute and origin-header checks.
 
 ### Calibration to this repo
-The checkout funnel uses Next.js Server Actions (`saveAddress`, `saveShippingAction`, `initCheckoutSession`) and API routes (`/api/checkout/payment-intent-session`, `/api/checkout/return`). `CHECKOUT-SYNOPSIS.md` notes the checkout cookie is `SameSite: lax` and `HttpOnly`.
+The checkout funnel uses Next.js Server Actions (`saveAddress`, `saveShippingAction`, `initCheckoutSession`) and API routes (`/api/checkout/payment-intent-session`, `/api/checkout/return`). `checkout-synopsis.md` notes the checkout cookie is `SameSite: lax` and `HttpOnly`.
 
 | Defense | Current state (per synopsis) | Comment |
 |---|---|---|
@@ -109,7 +109,7 @@ OWASP recommends:
 - Apply min/max ranges, allowed-value sets, strict regex anchored to the full string (`^...$`), and type conversion with strict exception handling.
 
 ### Calibration to this repo
-`CHECKOUT-SYNOPSIS.md` shows validation at multiple points:
+`checkout-synopsis.md` shows validation at multiple points:
 
 | Input | Validation described |
 |---|---|
@@ -145,7 +145,7 @@ Stripe strongly recommends that every webhook endpoint **verify the `Stripe-Sign
 4. If verification succeeds, return `2xx` **before** running long-lived logic; long work should be done asynchronously.
 
 ### Calibration to this repo
-`CHECKOUT-SYNOPSIS.md` §3.6 mentions the webhook path as an **“async safety net”** that also calls `createOrderFromPaymentIntent`. It does **not** describe signature verification in the synopsis.
+`checkout-synopsis.md` §3.6 mentions the webhook path as an **“async safety net”** that also calls `createOrderFromPaymentIntent`. It does **not** describe signature verification in the synopsis.
 
 **Gap to audit:** Stage 2 must confirm that the production webhook handler:
 - Uses the raw body (not `req.json()` or a transformed body) for `constructEvent`.
@@ -170,7 +170,7 @@ If the webhook handler is not yet verifying signatures, that is a security gap t
 - `GET` and `DELETE` are idempotent by definition and do not need a key.
 
 ### Calibration to this repo
-`CHECKOUT-SYNOPSIS.md` describes two idempotency mechanisms:
+`checkout-synopsis.md` describes two idempotency mechanisms:
 
 1. **PaymentIntent create/update key:** The payment-intent route uses `checkoutSessionId` as the Stripe idempotency key. This is **not a UUID** (it contains a timestamp + random component). If the timestamp is stable within a session and the random component is high entropy, collision risk is low, but it is not the form Stripe recommends. It also carries a timestamp, which is not sensitive but is structured.
 2. **Order creation guard:** `createOrderFromPaymentIntent` checks whether an `order` document with the given `paymentIntentId` already exists and skips creation if so. This is an application-level idempotency guard.
@@ -202,7 +202,7 @@ The epic only needs **baseline, “does the funnel complete without failing the 
 - Allow quantity changes and easy removal without forcing “Update” buttons or setting quantity to zero.
 - Persist the basket across the transition from `/basket` into `/checkout/address`.
 
-**Calibration:** `CHECKOUT-SYNOPSIS.md` §3.1 describes the basket is hydrated from `localStorage` via Zustand, enriched via SWR, capped to `stock - reservedStock`, and saved into the encrypted `iron-session` by `initCheckoutSession`. This matches the baseline. Audit should confirm that if `initCheckoutSession` fails or the cookie is full, the user is not silently dropped.
+**Calibration:** `checkout-synopsis.md` §3.1 describes the basket is hydrated from `localStorage` via Zustand, enriched via SWR, capped to `stock - reservedStock`, and saved into the encrypted `iron-session` by `initCheckoutSession`. This matches the baseline. Audit should confirm that if `initCheckoutSession` fails or the cookie is full, the user is not silently dropped.
 
 ### 7.2 Address
 **Baseline expectation:** The customer can enter and validate a shipping address without re-typing, and invalid addresses are blocked before proceeding.
@@ -211,7 +211,7 @@ The epic only needs **baseline, “does the funnel complete without failing the 
 - Preserve already-entered data on validation failure.
 - Use a single, clear set of fields and defaults where possible.
 
-**Calibration:** `CHECKOUT-SYNOPSIS.md` §3.2 uses Google Address Validation with strict acceptance rules (`PREMISE`/`SUB_PREMISE`, `addressComplete=true`, no inferred components) and normalizes to a fixed schema. The form hydrates from `initialAddress` and on `FIX` returns to the client. This is a strong baseline. Audit should confirm that Google API errors or unavailability do not leave the user stuck or permit unvalidated addresses.
+**Calibration:** `checkout-synopsis.md` §3.2 uses Google Address Validation with strict acceptance rules (`PREMISE`/`SUB_PREMISE`, `addressComplete=true`, no inferred components) and normalizes to a fixed schema. The form hydrates from `initialAddress` and on `FIX` returns to the client. This is a strong baseline. Audit should confirm that Google API errors or unavailability do not leave the user stuck or permit unvalidated addresses.
 
 ### 7.3 Shipping
 **Baseline expectation:** The customer sees accurate, available shipping options derived from the address and basket, and the selected option is preserved.
@@ -220,7 +220,7 @@ The epic only needs **baseline, “does the funnel complete without failing the 
 - Selection should be clear and single-choice.
 - Changing the address should invalidate stale shipping choices (to avoid wrong rates).
 
-**Calibration:** `CHECKOUT-SYNOPSIS.md` §3.3 fetches live AlleKurier rates based on package aggregation from Sanity parcel data, and `saveAddress` cascades to clear shipping fields. This matches. Audit should confirm the radio selection is accessible and the selected option is correctly saved.
+**Calibration:** `checkout-synopsis.md` §3.3 fetches live AlleKurier rates based on package aggregation from Sanity parcel data, and `saveAddress` cascades to clear shipping fields. This matches. Audit should confirm the radio selection is accessible and the selected option is correctly saved.
 
 ### 7.4 Payment
 **Baseline expectation:** The customer sees an accurate total, can pay with a supported method, and payment failures are recoverable without restarting the funnel.
@@ -230,7 +230,7 @@ The epic only needs **baseline, “does the funnel complete without failing the 
 - Payment errors should be specific and preserve non-sensitive context.
 - The flow should support the redirect/return pattern where applicable (BLIK, P24, wallets).
 
-**Calibration:** `CHECKOUT-SYNOPSIS.md` §3.4 re-derives `grandTotal` from live Sanity on the server, creates/updates a PaymentIntent, and uses Stripe Elements for BLIK/P24/Card/Apple Pay/Google Pay. Return handler distinguishes `succeeded`, `requires_payment_method`, `canceled`, and `processing`. This is a solid baseline. Audit should confirm the retry/backoff on `payment-intent-session` does not create duplicate PaymentIntents and that the return URL cannot be replayed with an unrelated PI.
+**Calibration:** `checkout-synopsis.md` §3.4 re-derives `grandTotal` from live Sanity on the server, creates/updates a PaymentIntent, and uses Stripe Elements for BLIK/P24/Card/Apple Pay/Google Pay. Return handler distinguishes `succeeded`, `requires_payment_method`, `canceled`, and `processing`. This is a solid baseline. Audit should confirm the retry/backoff on `payment-intent-session` does not create duplicate PaymentIntents and that the return URL cannot be replayed with an unrelated PI.
 
 ### 7.5 Order confirmation
 **Baseline expectation:** After a successful payment, the customer sees a clear confirmation with order reference, amount, items, and next steps; refresh/reload does not break the page.
@@ -239,7 +239,7 @@ The epic only needs **baseline, “does the funnel complete without failing the 
 - Support direct page refresh (e.g., via a `payment_intent` query parameter and fallback order lookup).
 - For processing states, offer a non-blocking refresh/polling mechanism.
 
-**Calibration:** `CHECKOUT-SYNOPSIS.md` §3.7 describes a success page that retrieves the PaymentIntent, falls back to `fetchOrderByPaymentIntentId` in Sanity if the session is gone, and shows `OrderDetails` plus a `RefreshButton` for `processing`. This matches the baseline. Audit should confirm the fallback path does not leak another user’s order and that the `completedPaymentIntentId`/`lastPaymentIntentId` check is robust.
+**Calibration:** `checkout-synopsis.md` §3.7 describes a success page that retrieves the PaymentIntent, falls back to `fetchOrderByPaymentIntentId` in Sanity if the session is gone, and shows `OrderDetails` plus a `RefreshButton` for `processing`. This matches the baseline. Audit should confirm the fallback path does not leak another user’s order and that the `completedPaymentIntentId`/`lastPaymentIntentId` check is robust.
 
 ---
 
@@ -256,7 +256,7 @@ The following are **deliberately excluded** from this intelligence deliverable b
 
 ## 9. Synthesis / open questions for the audit stage (`sang-logium-4ff.2`)
 
-The following items are flagged for `sang-logium-4ff.2` because they emerged from calibrating external standards against `CHECKOUT-SYNOPSIS.md`:
+The following items are flagged for `sang-logium-4ff.2` because they emerged from calibrating external standards against `checkout-synopsis.md`:
 
 1. **PCI DSS v4.0.1 script-attack criterion:** Does the merchant page have CSP / script-integrity controls or a documented Stripe-provided assurance for SAQ A eligibility?
 2. **Session timeout semantics:** Is the 1-hour `iron-session` TTL absolute or idle? Is the cookie invalidated after checkout completion?
