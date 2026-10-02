@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { client } from "@/sanity-cms/lib/client";
 import groq from "groq";
-import PaymentForm from "./PaymentForm.client";
+import PaymentForm from "./PaymentFormClient";
 import { CheckoutSummary, CheckoutStepper } from "@/features/checkout";
 import { logCheckoutEvent } from "@/lib/dev/event-logger";
 
