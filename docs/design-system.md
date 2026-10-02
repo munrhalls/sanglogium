@@ -7,13 +7,12 @@ a separate workstream, out of scope here.
 
 Methodology: every token below is read directly from `tailwind.config.ts` / `app/globals.css`,
 cross-referenced against the live production site (sanglogium.com, desktop screenshots at
-1440×800 and 1440×960) and real component source — not `/design-system-test` or `/dev/design-system`
-(neither is the source of truth — see note at the end). If a value here contradicts the code, the
+1440×800 and 1440×960) and real component source. If a value here contradicts the code, the
 code wins — re-verify before trusting this after a config change.
 
 This document exists because a real, professional design already exists in this codebase — it
 just was never written down in one place. Read this before proposing any visual change to the
-app. Companion execution spec: `_project/reports/design-system-completion-DEVIN-PLAN.md`.
+app. Companion execution spec: `_project/archive/reports/design-system-completion-DEVIN-PLAN.md`.
 
 ## Visual language (the intent behind the tokens)
 
@@ -237,11 +236,7 @@ Apply before changing any className, anywhere, during a professionalization pass
 
 ## Not the source of truth
 
-`app/design-system-test/**` is a standalone portfolio/showcase page (see
-`design-system-page-execution.md`) built to demonstrate design-system work to a hiring reviewer —
-not wired into the app; never copy its content into real pages. `app/dev/design-system/page.tsx`
-is closer to reality (renders real components: `BasketItemDisplay`, `PaymentMethodSelector`,
-`CheckoutSummary`) but is still a dev-only showcase. `tailwind.config.ts` plus the live site are
+`tailwind.config.ts` plus the live site are
 the only sources of truth.
 
 ---
