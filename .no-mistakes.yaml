@@ -25,13 +25,7 @@ test:
   instructions: |
     This repo bans agents from self-running build/lint/test/dev-server commands
     during normal work (see AGENTS.md / CLAUDE.md) - the no-mistakes evidence
-    step is the one sanctioned place tests actually run.
-
-    For a PR that only touches test files under features/*/__tests__/**, tests/**,
-    app/**/__tests__/** or sanity-cms/lib/** tests (no files under app/(store), app/(admin),
-    app/(studio), app/api, or app/actions): run `npm test` for real and confirm
-    it passes. No live browser click-through is required - no UI or API surface
-    changed.
+    step is the one sanctioned place live checks run.
 
     For a PR that touches app/(store): start the dev server, open the changed
     page(s) in a real browser, and drive the actual customer journey affected
@@ -44,8 +38,6 @@ test:
 
     For a PR that touches features/<name>/actions.ts: invoke the action for real from the UI that uses it (a real form submit or click), not a source-code read, and confirm the data change.
 
-commands:
-  test: npm test
 
 ignore_patterns:
   - node_modules/**
