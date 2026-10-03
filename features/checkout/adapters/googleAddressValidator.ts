@@ -12,7 +12,7 @@
 // only ever called from features/checkout/actions.ts, never invoked directly as a Server
 // Action, so it may accept a function argument (acceptAsEntered).
 // ==========================================================================
-import type { Address, ServerResponse } from "../domain/checkoutTypes";
+import type { Address, ServerResponse } from "@/features/checkout/domain/checkoutTypes";
 
 interface RequestBody {
   address: {

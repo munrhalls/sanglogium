@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import { updatePreferences } from "../actions";
+import { updatePreferences } from "@/features/account/actions";
 
 export default function NotificationsSection({
   marketingEmailsOptIn = false,

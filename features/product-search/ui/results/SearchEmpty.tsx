@@ -1,8 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { MagnifyingGlass } from '@phosphor-icons/react/dist/ssr';
-import { CATEGORY_SUGGESTIONS, POPULAR_SEARCHES } from '../../config/searchSuggestions';
-import { searchHref } from '../../domain/searchLinks';
+import { CATEGORY_SUGGESTIONS, POPULAR_SEARCHES } from '@/features/product-search/config/searchSuggestions';
+import { searchHref } from '@/features/product-search/domain/searchLinks';
 
 interface SearchEmptyProps {
   query: string;

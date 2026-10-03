@@ -1,4 +1,4 @@
-import { getOrderByPaymentIntentId } from '../adapters/orders'
+import { getOrderByPaymentIntentId } from '@/features/checkout/adapters/orders'
 import Link from 'next/link'
 import { Hourglass } from '@phosphor-icons/react/dist/ssr'
 import { RefreshButton } from './RefreshButton'

@@ -2,9 +2,9 @@
 
 import { useState, useEffect, useRef } from "react";
 import { unstable_rethrow } from "next/navigation";
-import { saveAddress } from "../actions";
+import { saveAddress } from "@/features/checkout/actions";
 import CheckoutStepper from "./CheckoutStepper";
-import type { Address } from "../domain/checkoutTypes";
+import type { Address } from "@/features/checkout/domain/checkoutTypes";
 
 const REGIONS = [{ code: "PL", label: "Poland" }] as const;
 

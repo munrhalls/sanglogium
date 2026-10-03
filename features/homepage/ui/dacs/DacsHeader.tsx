@@ -1,4 +1,4 @@
-import SectionHeader from "../shared/SectionHeader";
+import SectionHeader from "@/features/homepage/ui/shared/SectionHeader";
 
 export default function DacsHeader() {
   return (

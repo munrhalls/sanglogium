@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { AccessoryItem } from "../../domain/accessoryTypes";
+import type { AccessoryItem } from "@/features/homepage/domain/accessoryTypes";
 import { BasketControls } from "@/features/basket";
 import { Price } from "@/shared/ui/Price";
-import { ProductBadge } from "../shared/ProductBadge";
+import { ProductBadge } from "@/features/homepage/ui/shared/ProductBadge";
 import { centsToDisplay } from "@/lib/utils/price";
 
 interface AccessoryCardProps {

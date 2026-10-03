@@ -1,7 +1,7 @@
 import { getImageProps } from 'next/image';
 import Link from "next/link";
 import { cn } from "@/lib/utils/tailwind";
-import { HeroData, SanityImage } from "../../domain/heroTypes";
+import { HeroData, SanityImage } from "@/features/homepage/domain/heroTypes";
 import { HeroQualityBar } from "./HeroQualityBar";
 
 interface HeroProps {

@@ -17,8 +17,8 @@ import {
   SORT_OPTIONS,
   FILTER_SORT_KEYS,
   type SortValue,
-} from '../config/filterSortParams';
-import { FILTER_FACETS, type FilterFacet } from '../config/facetMap';
+} from '@/features/product-filtering/config/filterSortParams';
+import { FILTER_FACETS, type FilterFacet } from '@/features/product-filtering/config/facetMap';
 
 // Shape matches the server-side loader so RSC and client always agree.
 // The loader returns sort/price/inStock plus one key per facet urlParam.

@@ -6,7 +6,7 @@ import {
   FILTER_FACETS,
   isPlaceholderVocab,
   type FilterFacet,
-} from '../config/facetMap';
+} from '@/features/product-filtering/config/facetMap';
 import { humanizeFacetValue } from './humanizeFacetValue';
 import type { ProductQueryState } from './buildProductQuery';
 

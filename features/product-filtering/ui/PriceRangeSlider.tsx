@@ -1,12 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useFilterParam } from "../model/useFilterParam";
+import { useFilterParam } from "@/features/product-filtering/model/useFilterParam";
 import {
   DEFAULT_PRICE_CEILING,
   PREMIUM_TIERS,
   PREMIUM_TIER_MIN,
-} from "../domain/priceBounds";
+} from "@/features/product-filtering/domain/priceBounds";
 import { formatPriceMajor } from "@/lib/utils/price";
 import { FilterSliderSection, ResetButton } from "./FilterSection";
 import { DualRangeSlider } from "./DualRangeSlider";
