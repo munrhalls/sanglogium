@@ -4,7 +4,7 @@ import Image from "next/image";
 
 import Link from "next/link";
 
-import type { SpotlightData as Spotlight1Data } from "../../domain/homepageTypes";
+import type { SpotlightData } from "../../domain/homepageTypes";
 
 import { Carousel } from "@/shared/ui/carousel/CarouselRoot";
 
@@ -23,15 +23,15 @@ const FRACTAL_RING_MASK = {
   WebkitMaskRepeat: "no-repeat",
 };
 
-interface ProductSpotlight3Props {
+interface ProductSpotlightFractalProps {
 
-  spotlightData: Spotlight1Data | null;
+  spotlightData: SpotlightData | null;
 
 }
 
 
 
-export default function ProductSpotlight3({ spotlightData }: ProductSpotlight3Props) {
+export default function ProductSpotlightFractal({ spotlightData }: ProductSpotlightFractalProps) {
 
   if (!spotlightData || !spotlightData.productRef) return null;
 

@@ -1,6 +1,6 @@
 import { getIemProductsBySlugs } from "@/sanity-cms/lib/homepage/getIemProductsBySlugs";
-import { Hero, TrustBar, Featured, ProductSpotlight1, ProductSpotlight2, ProductSpotlight3, IemsGallery, NewestRelease, Dacs, Accessories, HOME_12 } from "@/features/homepage";
-import Shelf from "@/app/components/layout/general/Shelf";
+import { Hero, TrustBar, Featured, ProductSpotlightMediaLeft, ProductSpotlightMediaRight, ProductSpotlightFractal, IemsGallery, NewestRelease, Dacs, Accessories, HOME_12 } from "@/features/homepage";
+import Shelf from "@/app/components/layout/shelf/Shelf";
 import { fetchHomepageData } from "@/sanity-cms/lib/homepage/getHomepageData";
 
 export const revalidate = 3600;
@@ -19,15 +19,15 @@ export default async function HomePage() {
       </Shelf>
 
       <Shelf spacing="loose">
-        <ProductSpotlight1 spotlightData={data.spotlight1} />
+        <ProductSpotlightMediaLeft spotlightData={data.spotlight1} />
       </Shelf>
 
       <Shelf spacing="loose">
-        <ProductSpotlight2 spotlightData={data.spotlight2} />
+        <ProductSpotlightMediaRight spotlightData={data.spotlight2} />
       </Shelf>
 
       <Shelf spacing="loose">
-        <ProductSpotlight3 spotlightData={data.spotlight3} />
+        <ProductSpotlightFractal spotlightData={data.spotlight3} />
       </Shelf>
 
       <Shelf fullBleed spacing="loose">

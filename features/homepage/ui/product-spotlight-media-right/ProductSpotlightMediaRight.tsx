@@ -1,17 +1,17 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import type { SpotlightData as Spotlight1Data } from "../../domain/homepageTypes";
+import type { SpotlightData } from "../../domain/homepageTypes";
 import { Carousel } from "@/shared/ui/carousel/CarouselRoot";
 import { CarouselTrack } from "@/shared/ui/carousel/CarouselTrack";
 import { CarouselSlide } from "@/shared/ui/carousel/CarouselSlide";
 import { CarouselPrevious, CarouselNext, CarouselDots } from "@/shared/ui/carousel/CarouselControls";
 
-interface ProductSpotlight2Props {
-  spotlightData: Spotlight1Data | null;
+interface ProductSpotlightMediaRightProps {
+  spotlightData: SpotlightData | null;
 }
 
-export default async function ProductSpotlight2({ spotlightData }: ProductSpotlight2Props) {
+export default async function ProductSpotlightMediaRight({ spotlightData }: ProductSpotlightMediaRightProps) {
     if (!spotlightData || !spotlightData.productRef) return null;
     const { productRef: product, promoTitle, promoSubtitle, promoText } = spotlightData;
 
