@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { getCheckoutSession } from "@/features/checkout/server";
 import { retrievePaymentIntent } from "@/lib/stripe";
-import { logCheckoutEvent } from "@/lib/dev/event-logger";
+import { logCheckoutEvent } from "@/lib/dev/eventLogger";
 import { createOrderFromPaymentIntent, type OrderSessionData } from "@/sanity-cms/lib/orders/createOrderFromPaymentIntent";
 import { getSession } from "@/lib/auth/dal";
 

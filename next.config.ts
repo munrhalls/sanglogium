@@ -50,7 +50,7 @@ const nextConfig: NextConfig = {
   },
   images: {
     loader: "custom",
-    loaderFile: "./lib/utils/sanityImageLoader.ts",
+    loaderFile: "./lib/sanity/imageLoader.ts",
     formats: ["image/avif", "image/webp"],
     remotePatterns: [{ protocol: "https", hostname: "cdn.sanity.io" }, { protocol: "https", hostname: "images.unsplash.com" }],
     qualities: [75, 90],

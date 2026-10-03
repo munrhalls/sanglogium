@@ -1,6 +1,6 @@
 import "server-only";
 import { cache } from "react";
-import { auth } from "@/lib/auth";
+import { auth } from "@/lib/auth/server";
 import { backendClient } from "@/sanity-cms/lib/backendClient";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -71,7 +71,7 @@ async function ensureUserProfile(user: { id: string; email: string; name?: strin
  * Use in page.tsx files.
  *
  * Layer 2 healing: auto-creates missing userProfile on first protected
- * page load. See docs/auth/userprofile-atomicity-spec-updated.md
+ * page load.
  */
 export const verifySession = cache(async () => {
   const session = await auth.api.getSession({

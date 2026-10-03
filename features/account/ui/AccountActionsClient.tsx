@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useEffect, useState } from "react";
-import { authClient } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth/client";
 import { TwoFactorSection, signOut, signOutAllDevices } from "@/features/auth";
 import { updateName, updatePreferences } from "../actions";
 

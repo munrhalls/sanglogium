@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { fetchAlleKurierRates, transformAlleKurierToShippingOption } from "@/features/checkout/server";
 import { calculatePackages, ShippingPageClient } from "@/features/checkout";
 import { getProductsByIds } from "@/sanity-cms/lib/products/getProductsByIds";
-import { logCheckoutEvent } from "@/lib/dev/event-logger";
+import { logCheckoutEvent } from "@/lib/dev/eventLogger";
 
 export default async function Page() {
   const session = await getCheckoutSession();

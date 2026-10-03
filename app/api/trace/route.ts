@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { logCheckoutEvent } from '@/lib/dev/event-logger';
+import { logCheckoutEvent } from '@/lib/dev/eventLogger';
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Unconditional console log — guaranteed visibility in the server terminal
-    // regardless of LOG_LEVEL (event-logger is gated and swallows 'log' by default).
+    // regardless of LOG_LEVEL (eventLogger is gated and swallows 'log' by default).
     console.log(`[TRACE] ${step} (${traceId})`, JSON.stringify(data || {}));
 
     await logCheckoutEvent({
