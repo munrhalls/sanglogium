@@ -119,3 +119,4 @@ _project/*.log
 # Vendored agent skills (pinned in skills-lock.json) and generated Lavish review artifacts
 .claude/skills/
 .lavish/
+.devin/config.local.json
