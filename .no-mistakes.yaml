@@ -34,7 +34,7 @@ test:
     surface's own pages. For app/api or app/actions: exercise the changed
     route/action for real (a real request/invocation), not a source-code read.
 
-    For a PR that moves or edits code under features/<name>/ui or app/components/ (an organization-only refactor): no behaviour change is expected. Open the storefront pages that render the moved components (for example the home page for homepage sections, /products and a product page for product components, /basket for basket components) and confirm they look and behave as before.
+    For a PR that moves or edits code under features/<name>/ui, app/components/ or shared/ (an organization-only refactor): no behaviour change is expected. Open the storefront pages that render the moved components (for example the home page for homepage sections, /products and a product page for product components, /basket for basket components) and confirm they look and behave as before.
 
     For a PR that touches features/<name>/actions.ts: invoke the action for real from the UI that uses it (a real form submit or click), not a source-code read, and confirm the data change.
 
