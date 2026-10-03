@@ -88,6 +88,5 @@ Implement a three-pattern tiered approach based on item characteristics:
 
 ## References
 
-- Research document: `_project/research/critical/Checkout-system-fifo-queue-flawed-idea.md`
 - Related beads issue: sang-logium-g14
 - Related beads issue: sang-logium-01t (Redis spin loop anti-pattern research)

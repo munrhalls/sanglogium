@@ -19,7 +19,7 @@ This is the codebase's actual name for "not enough vertical room on desktop." If
 
 Every sized element picks one height model: it **owns** its height (`aspect-*`, or a literal `h-[Npx]`) or it **inherits** height from a parent (`h-full`, `min-h-*`, `max-h-*`). The two models aren't interchangeable mid-refactor — switching an element from `aspect-*` to `h-full` only works if every ancestor up to the nearest self-owned/explicit-height box also carries a matching height utility. Drop one link and the element collapses or overflows silently, often only at one breakpoint.
 
-Real instance: `ProductSpotlight1/2/3` carousel slides moved from `aspect-[4/3]` to `h-full` in the same diff that dropped the parent grid's own `max-h-[350px]` mobile constraint (`d8bb31ac`) — the slide had nothing left to inherit from on mobile. Fixed by keeping the constraint on the sized ancestor and letting `h-full` chain down to it cleanly.
+Real instance: `ProductSpotlightMediaLeft/MediaRight/Fractal` carousel slides moved from `aspect-[4/3]` to `h-full` in the same diff that dropped the parent grid's own `max-h-[350px]` mobile constraint (`d8bb31ac`) — the slide had nothing left to inherit from on mobile. Fixed by keeping the constraint on the sized ancestor and letting `h-full` chain down to it cleanly.
 
 This is why any `app/components/**` diff touching these utilities must be reviewed as a mechanical check (Check C) — reading this once was not enough to prevent the regression above.
 

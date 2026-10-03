@@ -35,12 +35,12 @@ One controller, three surfaces:
 
 ## Where things live
 
-- `ui/`: components, `useSearchController`, `useSearchOverlay`, `recentSearches`, `searchLinks`
-- `domain/`: pure logic — `highlight`, `suggestionEntries`, `detectSearchRedirect`, `searchScoring`, `searchResults`, `searchTypes`
+- `ui/`: components
+- `model/`: `useSearchController`, `useSearchOverlay`, `useVisualViewportBox`, `recentSearches`
+- `domain/`: pure logic — `highlight`, `suggestionEntries`, `detectSearchRedirect`, `searchScoring`, `searchResults`, `searchTypes`, `searchLinks`
 - `config/`: `searchSuggestions` (category shortcuts, popular searches)
 - `server.ts`: server-only scoring/result building for the fetcher — never import it from client code
 - `index.ts`: client-safe public entry
-- `__tests__/`: scoring spec, pagination spec; the live-Sanity spec stays in `tests/live/product-search/searchRobustness.spec.ts`
 
 ## Checking it
 

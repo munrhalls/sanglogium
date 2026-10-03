@@ -19,7 +19,7 @@ This document describes how the catalogue system connects to product discovery, 
 ```
 User clicks "Open-Back" in navigation
          ↓
-Navigate to /shop/headphones/open-back
+Navigate to /products/headphones/open-back
          ↓
 Server Component parses URL → extracts slug "open-back"
          ↓
@@ -45,9 +45,9 @@ Render ProductGrid with products
 ### Product Resolution Layer
 | File | Purpose |
 |------|---------|
-| `sanity-cms/lib/products/getProductsByVfsKeys.ts` | Fetch products by slot IDs (TO IMPLEMENT) |
-| `app/(store)/shop/[...slug]/page.tsx` | Category listing page (TO IMPLEMENT) |
-| `features/products/ui/ProductGrid.tsx` | Product grid presentation (TO IMPLEMENT) |
+| `sanity-cms/lib/products/getProductsByVfsKeys.ts` | Fetch products by slot IDs |
+| `app/(store)/products/[...slug]/page.tsx` | Category listing page |
+| `features/products/ui/listing/ProductGrid.tsx` | Product grid presentation |
 
 ### Navigation Layer
 | File | Purpose |
@@ -96,11 +96,9 @@ This query uses array intersection — returns products where at least one `cata
 
 | URL Pattern | Example | Resolves To |
 |-------------|---------|-------------|
-| `/shop/[category]/[leaf]` | `/shop/headphones/open-back` | Leaf node products |
-| `/shop/[category]` | `/shop/headphones` | All products in category (all leaves) |
+| `/products/[category]/[leaf]` | `/products/headphones/open-back` | Leaf node products |
+| `/products/[category]` | `/products/headphones` | All products in category (all leaves) |
 | `/brand/[slug]` | `/brand/sennheiser` | Brand page (separate system) |
-
-**Note:** Navigation currently generates `/products/*` — should be updated to `/shop/*` for consistency.
 
 ## Current Status
 
@@ -108,13 +106,12 @@ This query uses array intersection — returns products where at least one `cata
 - [x] VFS pre-built index (`catalogue-index.json`)
 - [x] VFS lookup functions (`resolveSlugToId`, `unrollDescendantKeys`)
 - [x] Navigation rendering from VFS
-- [x] Test suite (63 tests passing)
+- [x] `getProductsByVfsKeys()` function
+- [x] `/products/[...slug]/page.tsx` category pages
+- [x] `ProductGrid` component
 - [x] Product schema with `catalogueLocationKeys`
 
 ### Not Implemented ❌
-- [ ] `getProductsByVfsKeys()` function
-- [ ] `/shop/[...slug]/page.tsx` category pages
-- [ ] `ProductGrid` component
 - [ ] Homepage VFS integration (currently hardcoded)
 
 ## Implementation Guide
@@ -143,7 +140,7 @@ export const getProductsByVfsKeys = cache(async (keys: string[]) => {
 
 ### Step 2: Create Category Page
 
-Create `app/(store)/shop/[...slug]/page.tsx`:
+Create `app/(store)/products/[...slug]/page.tsx`:
 
 ```typescript
 import { resolveSlugToId, unrollDescendantKeys } from "@/features/catalogue/server";
@@ -169,32 +166,6 @@ export default async function CategoryPage({
   return <ProductGrid products={products} />;
 }
 ```
-
-### Step 3: Update Navigation URLs
-
-In `features/catalogue/domain/catalogue.ts`, change URL generation:
-
-```typescript
-// From:
-url: `/products/${rootItem.slug?.current}/${link.slug?.current}`
-
-// To:
-url: `/shop/${rootItem.slug?.current}/${link.slug?.current}`
-```
-
-## Testing
-
-Run VFS test suite:
-
-```bash
-npx vitest run tests/catalogue/vfs.test.ts
-```
-
-Tests verify:
-- Node ID → leaf node resolution
-- Leaf node → product ID resolution via GROQ
-- Parent node → aggregated products
-- Pre-computed index consistency
 
 ## Architecture Decisions
 
