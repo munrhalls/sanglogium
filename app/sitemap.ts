@@ -1,12 +1,7 @@
 import { MetadataRoute } from "next";
-import { client } from "@/sanity-cms/lib/client";
+import { getSitemapSlugs } from "@/sanity-cms/lib/products/getSitemapSlugs";
 
 const SITE_URL = "https://sanglogium.com";
-
-interface SanityDocument {
-  slug: string;
-  _updatedAt?: string;
-}
 
 type ChangeFreq =
   | "always"
@@ -24,16 +19,7 @@ type SitemapEntry = MetadataRoute.Sitemap[number] & {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
-    const [products, categories] = await Promise.all<
-      [SanityDocument[], SanityDocument[]]
-    >([
-      client.fetch(
-        `*[_type == "product" && defined(slug.current)]{ "slug": slug.current, _updatedAt }`
-      ),
-      client.fetch(
-        `*[_type == "category" && defined(slug.current)]{ "slug": slug.current, _updatedAt }`
-      ),
-    ]);
+    const { products, categories } = await getSitemapSlugs();
 
     const productUrls = (products || []).map((p: any) => {
       const safeSlug = encodeURIComponent(p.slug);
