@@ -7,8 +7,8 @@ import { cn } from "@/lib/utils/tailwind";
 import { AutocompletePanel } from "./AutocompletePanel";
 import { SearchInput } from "./SearchInput";
 import { SearchZeroQueryPanel } from "./SearchZeroQueryPanel";
-import { useVisualViewportBox } from "./useVisualViewportBox";
-import type { SearchController } from "./useSearchController";
+import { useVisualViewportBox } from "../useVisualViewportBox";
+import type { SearchController } from "../useSearchController";
 
 interface SearchSheetProps {
   search: SearchController;

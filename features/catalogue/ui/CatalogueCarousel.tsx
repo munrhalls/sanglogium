@@ -5,17 +5,16 @@ import { CarouselTrack } from "@/shared/ui/carousel/CarouselTrack";
 import { CarouselSlide } from "@/shared/ui/carousel/CarouselSlide";
 
 import { CatalogueView } from "./CatalogueView";
-import { transformCatalogueJson } from "./catalogueNavUtils";
-import type { CatalogueNavItem } from "./catalogueNavTypes";
+import type { NavigationItem } from "../domain/catalogue";
 
 import { cn } from "@/lib/utils/tailwind";
 
 interface CatalogueCarouselProps {
-  catalogueDataRaw: { catalogue: CatalogueNavItem[] };
+  catalogueDataRaw: { catalogue: NavigationItem[] };
 }
 
 export default function CatalogueCarousel({ catalogueDataRaw }: CatalogueCarouselProps) {
-  const catalogueData: CatalogueNavItem[] = transformCatalogueJson(catalogueDataRaw);
+  const catalogueData: NavigationItem[] = catalogueDataRaw.catalogue;
 
   return (
     <nav

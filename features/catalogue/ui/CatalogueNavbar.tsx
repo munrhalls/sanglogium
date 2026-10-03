@@ -1,16 +1,15 @@
 import React from "react";
 import { CatalogueView } from "./CatalogueView";
 import NavbarManager from "./NavbarManager";
-import { transformCatalogueJson } from "./catalogueNavUtils";
-import type { CatalogueNavItem } from "./catalogueNavTypes";
+import type { NavigationItem } from "../domain/catalogue";
 import { cn } from "@/lib/utils/tailwind";
 
 interface CatalogueNavbarProps {
-  catalogueDataRaw: { catalogue: CatalogueNavItem[] };
+  catalogueDataRaw: { catalogue: NavigationItem[] };
 }
 
 const CatalogueNavbar = async ({ catalogueDataRaw }: CatalogueNavbarProps) => {
-  const catalogueData: CatalogueNavItem[] = transformCatalogueJson(catalogueDataRaw);
+  const catalogueData: NavigationItem[] = catalogueDataRaw.catalogue;
 
   const navLinks = catalogueData.map((item) => ({
     id: item.id,

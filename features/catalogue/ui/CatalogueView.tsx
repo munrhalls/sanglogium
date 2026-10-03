@@ -1,11 +1,11 @@
 import { cn } from "@/lib/utils/tailwind";
 import React from "react";
-import type { CatalogueNavItem } from "./catalogueNavTypes";
+import type { NavigationItem } from "../domain/catalogue";
 import SliceHero from "./hero/SliceHero";
 import SliceDetails from "./details/SliceDetails";
 
 interface CatalogueViewProps {
-  data: CatalogueNavItem;
+  data: NavigationItem;
 }
 
 export function CatalogueView({ data }: CatalogueViewProps) {

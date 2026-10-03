@@ -2,7 +2,7 @@
 import { useShallow } from "zustand/shallow";
 import { useMemo, useState, useEffect } from "react";
 import useSWR from "swr";
-import useBasketStore from "./basketStore";
+import useBasketStore from "../domain/basketStore";
 import { detectCountry, DEFAULT_PARCEL } from "@/features/checkout";
 import BasketSkeleton from "./BasketSkeleton";
 import EmptyBasket from "./EmptyBasket";

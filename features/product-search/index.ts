@@ -3,14 +3,14 @@
 // Explicit named re-exports only; never bare export *.
 export { detectSearchRedirect } from './domain/detectSearchRedirect';
 export type { AutocompleteProduct, SearchProduct, SearchResult } from './domain/searchTypes';
-export { SearchHeader } from './ui/SearchHeader';
-export { SearchError } from './ui/SearchError';
-export { SearchEmpty } from './ui/SearchEmpty';
-export { SearchPagination } from './ui/SearchPagination';
-export { SearchSort } from './ui/SearchSort';
-export { SearchCategoryChips } from './ui/SearchCategoryChips';
-export { SearchBarTrigger } from './ui/SearchBarTrigger';
-export { SearchFieldDesktop } from './ui/SearchFieldDesktop';
-export { SearchSheet } from './ui/SearchSheet';
+export { SearchHeader } from './ui/results/SearchHeader';
+export { SearchError } from './ui/results/SearchError';
+export { SearchEmpty } from './ui/results/SearchEmpty';
+export { SearchPagination } from './ui/results/SearchPagination';
+export { SearchSort } from './ui/results/SearchSort';
+export { SearchCategoryChips } from './ui/results/SearchCategoryChips';
+export { SearchBarTrigger } from './ui/field/SearchBarTrigger';
+export { SearchFieldDesktop } from './ui/field/SearchFieldDesktop';
+export { SearchSheet } from './ui/field/SearchSheet';
 export { useSearchController } from './ui/useSearchController';
 export { useSearchOverlay } from './ui/useSearchOverlay';

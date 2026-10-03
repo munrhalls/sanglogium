@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { ProductImage } from "./ProductImage";
-import type { Product } from "../domain/productTypes";
+import type { Product } from "../../domain/productTypes";
 import { Price } from "@/shared/ui/Price";
 import { BasketControls } from "@/features/basket";
 import { WishlistButton } from "./WishlistButton";

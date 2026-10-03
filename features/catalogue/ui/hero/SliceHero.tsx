@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils/tailwind";
-import type { CatalogueNavItem } from "../catalogueNavTypes";
+import type { NavigationItem } from "../../domain/catalogue";
 import {
   CarouselPrevious,
   CarouselNext,
@@ -12,7 +12,7 @@ import SliceTitle from "./SliceTitle";
 // BACKLOG TODO - make sure arrows are smaller on very tiny phones viewport
 // BACKLOGO TODO - ^ same for landscape on tiny phones viewport or narrow height viewport
 
-export default function SliceHero({ data }: { data: CatalogueNavItem }) {
+export default function SliceHero({ data }: { data: NavigationItem }) {
   return (
     <div
       className={cn(
