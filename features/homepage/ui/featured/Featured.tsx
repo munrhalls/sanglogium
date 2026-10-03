@@ -1,13 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Carousel } from "@/app/components/ui/carousel/CarouselRoot";
-import { CarouselTrack } from "@/app/components/ui/carousel/CarouselTrack";
-import { CarouselSlide } from "@/app/components/ui/carousel/CarouselSlide";
+import { Carousel } from "@/shared/ui/carousel/CarouselRoot";
+import { CarouselTrack } from "@/shared/ui/carousel/CarouselTrack";
+import { CarouselSlide } from "@/shared/ui/carousel/CarouselSlide";
 import {
   CarouselPrevious,
   CarouselNext,
   CarouselDots,
-} from "@/app/components/ui/carousel/CarouselControls";
+} from "@/shared/ui/carousel/CarouselControls";
 import FeaturedHeader from "./FeaturedHeader";
 import type { FeaturedProduct } from "../../domain/homepageTypes";
 import { BasketControls } from "@/features/basket";

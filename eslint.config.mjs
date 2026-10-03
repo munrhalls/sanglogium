@@ -35,9 +35,15 @@ const NO_SANITY = {
 };
 
 const NO_APP = {
-  regex: "(^|/)app/(?!components/ui/)",
+  regex: "(^|/)app/",
   message:
-    "Features never import routes, server actions, hooks or the shell (app/components/layout). Shared UI lives in app/components/ui.",
+    "Features and shared/ never import from app/ (routes, server actions, shell). Shared UI lives in shared/ui.",
+};
+
+const NO_FEATURES = {
+  regex: "(^|/)features/",
+  message:
+    "shared/ must not import features/. Dependencies run app -> features -> shared.",
 };
 
 export default [
@@ -95,6 +101,17 @@ export default [
           paths: JEST_PATHS,
           patterns: [ENTRY_ONLY, NO_SANITY, NO_APP],
         },
+      ],
+    },
+  },
+  {
+    // JEST_PATHS and ENTRY_ONLY are repeated because a later flat-config block
+    // replaces the rule for matching files.
+    files: ["shared/**/*.{ts,tsx}"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        { paths: JEST_PATHS, patterns: [ENTRY_ONLY, NO_APP, NO_FEATURES] },
       ],
     },
   },

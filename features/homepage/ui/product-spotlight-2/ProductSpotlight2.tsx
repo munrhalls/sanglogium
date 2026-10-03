@@ -2,10 +2,10 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { SpotlightData as Spotlight1Data } from "../../domain/homepageTypes";
-import { Carousel } from "@/app/components/ui/carousel/CarouselRoot";
-import { CarouselTrack } from "@/app/components/ui/carousel/CarouselTrack";
-import { CarouselSlide } from "@/app/components/ui/carousel/CarouselSlide";
-import { CarouselPrevious, CarouselNext, CarouselDots } from "@/app/components/ui/carousel/CarouselControls";
+import { Carousel } from "@/shared/ui/carousel/CarouselRoot";
+import { CarouselTrack } from "@/shared/ui/carousel/CarouselTrack";
+import { CarouselSlide } from "@/shared/ui/carousel/CarouselSlide";
+import { CarouselPrevious, CarouselNext, CarouselDots } from "@/shared/ui/carousel/CarouselControls";
 
 interface ProductSpotlight2Props {
   spotlightData: Spotlight1Data | null;

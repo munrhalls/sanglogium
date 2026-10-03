@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Checkbox } from '@/app/components/ui/Checkbox';
+import { Checkbox } from '@/shared/ui/Checkbox';
 import { ProgressiveFilterOptionList } from './ProgressiveFilterOptionList';
 import {
   FilterSliderSection,

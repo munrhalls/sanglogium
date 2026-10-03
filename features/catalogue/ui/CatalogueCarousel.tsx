@@ -1,8 +1,8 @@
 "use client";
 
-import { Carousel } from "@/app/components/ui/carousel/CarouselRoot";
-import { CarouselTrack } from "@/app/components/ui/carousel/CarouselTrack";
-import { CarouselSlide } from "@/app/components/ui/carousel/CarouselSlide";
+import { Carousel } from "@/shared/ui/carousel/CarouselRoot";
+import { CarouselTrack } from "@/shared/ui/carousel/CarouselTrack";
+import { CarouselSlide } from "@/shared/ui/carousel/CarouselSlide";
 
 import { CatalogueView } from "./CatalogueView";
 import { transformCatalogueJson } from "./catalogueNavUtils";
