@@ -4,7 +4,7 @@ import React from 'react';
 import type { IconType } from 'react-icons';
 import { FaTag, FaHeadphones, FaWaveSquare, FaLayerGroup, FaBluetooth, FaMicrochip, FaPlug, FaBolt, FaScrewdriverWrench } from 'react-icons/fa6';
 import { getFacetModule, resolveGroupIcon, type Category, type AnyFacetDef, type FacetOptionCount } from '../config/facetRegistry';
-import { useClearAllFilters } from './useFilterParam';
+import { useClearAllFilters } from '../model/useFilterParam';
 import type { RangeBounds } from '../domain/facetCounts';
 import { CheckboxGroup, BooleanToggle, RangeControl, PriceControl } from './FilterControls';
 

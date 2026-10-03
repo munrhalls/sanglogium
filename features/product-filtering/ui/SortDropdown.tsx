@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { getFacetModule, type Category } from '../config/facetRegistry';
-import { useFilterParam } from './useFilterParam';
+import { useFilterParam } from '../model/useFilterParam';
 
 /**
  * URL <-> its own display only — never touches the product grid, data, counts

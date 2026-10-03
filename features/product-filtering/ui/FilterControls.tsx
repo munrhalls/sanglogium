@@ -5,17 +5,17 @@ import { Checkbox } from '@/shared/ui/Checkbox';
 import { ProgressiveFilterOptionList } from './ProgressiveFilterOptionList';
 import {
   FilterSliderSection,
-  DualRangeSlider,
   filterSectionHeaderRow,
   filterSectionHeaderLabel,
   filterSectionHeaderAction,
   filterStateActive,
   filterStateInactive,
-} from './PriceRangeSlider';
+} from './FilterSection';
+import { DualRangeSlider } from './DualRangeSlider';
 import { formatPriceMajor } from '@/lib/utils/price';
 import { getFacetModule, type Category, type AnyFacetDef, type FacetOptionCount } from '../config/facetRegistry';
 import { humanizeFacetValue } from '../domain/humanizeFacetValue';
-import { useFilterParam } from './useFilterParam';
+import { useFilterParam } from '../model/useFilterParam';
 
 /**
  * Re-export the shared filter-section header primitives defined in

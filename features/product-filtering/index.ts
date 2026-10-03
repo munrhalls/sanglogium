@@ -20,4 +20,4 @@ export { FilterSidebar } from './ui/FilterSidebar';
 export { SortBar } from './ui/SortBar';
 export { ActiveFilterChips } from './ui/ActiveFilterChips';
 export { MobileFilterSheet } from './ui/MobileFilterSheet';
-export { useClearAllFilters } from './ui/useFilterParam';
+export { useClearAllFilters } from './model/useFilterParam';

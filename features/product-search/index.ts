@@ -12,5 +12,5 @@ export { SearchCategoryChips } from './ui/results/SearchCategoryChips';
 export { SearchBarTrigger } from './ui/field/SearchBarTrigger';
 export { SearchFieldDesktop } from './ui/field/SearchFieldDesktop';
 export { SearchSheet } from './ui/field/SearchSheet';
-export { useSearchController } from './ui/useSearchController';
-export { useSearchOverlay } from './ui/useSearchOverlay';
+export { useSearchController } from './model/useSearchController';
+export { useSearchOverlay } from './model/useSearchOverlay';
