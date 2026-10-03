@@ -1,7 +1,7 @@
 import { getIemProductsBySlugs } from "@/sanity-cms/lib/homepage/getIemProductsBySlugs";
 import { Hero, TrustBar, Featured, ProductSpotlight1, ProductSpotlight2, ProductSpotlight3, IemsGallery, NewestRelease, Dacs, Accessories, HOME_12 } from "@/features/homepage";
 import Shelf from "@/app/components/layout/general/Shelf";
-import { fetchHomepageData } from "./lib/fetchHomepageData";
+import { fetchHomepageData } from "@/sanity-cms/lib/homepage/getHomepageData";
 
 export const revalidate = 3600;
 

@@ -2,10 +2,8 @@ import "./../globals.css";
 import "../suppress-warnings";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { cn } from "@/lib/utils/tailwind";
-
-// Fonts & Config
-import { metadata } from "./configuration";
-import { montserrat } from "./configuration";
+import type { Metadata } from "next";
+import { Montserrat } from "next/font/google";
 
 // Global Components
 import Header from "@/app/components/layout/header/Header";
@@ -19,7 +17,31 @@ import GoogleAnalytics from "@/app/components/analytics/GoogleAnalytics";
 import { getCatalogueForNavigation } from "@/features/catalogue/server";
 import { Suspense } from "react";
 
-export { metadata };
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-montserrat",
+});
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "https://sanglogium.com",
+  },
+  title: "Sang Logium Audio Shop",
+
+  description: "E-commerce store",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+};
 
 export default async function RootLayout({
   children,

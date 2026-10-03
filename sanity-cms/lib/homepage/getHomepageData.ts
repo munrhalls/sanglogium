@@ -480,3 +480,33 @@ export async function fetchHomepageDataBatched(): Promise<HomepageData> {
     };
   }
 }
+
+export async function fetchHomepageData(): Promise<HomepageData> {
+  try {
+    const data = await fetchHomepageDataBatched();
+
+    return data;
+  } catch (error) {
+    console.error('Error fetching homepage data:', error);
+
+    return {
+      hero: null,
+      featured: [],
+      spotlight1: null,
+      spotlight2: null,
+      spotlight3: null,
+      iemsGallery: [],
+      newestRelease: null,
+      dacs: [],
+      accessories: {
+        cables: [],
+        interconnects: [],
+        adapters: [],
+        earpads: [],
+        eartips: [],
+        careCleaning: [],
+        storage: []
+      }
+    };
+  }
+}
