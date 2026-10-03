@@ -1,63 +1,10 @@
+import type { HeroData } from "./heroTypes";
+
+export type { HeroData } from "./heroTypes";
+
 // ============================================================================
 // Type Definitions - Exact matches to existing interfaces for zero-breaking
 // ============================================================================
-
-export interface HeroData {
-  headline: string;
-  subheadline: string;
-  ctaText: string;
-  ctaLink?: string;
-  backgroundImage: {
-    asset: {
-      _id: string;
-      url: string;
-      metadata: {
-        dimensions: {
-          width: number;
-          height: number;
-          aspectRatio: number;
-        };
-        lqip: string;
-      };
-    };
-    hotspot?: {
-      x: number;
-      y: number;
-    };
-    crop?: {
-      top: number;
-      bottom: number;
-      left: number;
-      right: number;
-    };
-    alt?: string;
-  };
-  mobileBackgroundImage: {
-    asset: {
-      _id: string;
-      url: string;
-      metadata: {
-        dimensions: {
-          width: number;
-          height: number;
-          aspectRatio: number;
-        };
-        lqip: string;
-      };
-    };
-    hotspot?: {
-      x: number;
-      y: number;
-    };
-    crop?: {
-      top: number;
-      bottom: number;
-      left: number;
-      right: number;
-    };
-    alt?: string;
-  };
-}
 
 export interface FeaturedProduct {
   _id: string;
