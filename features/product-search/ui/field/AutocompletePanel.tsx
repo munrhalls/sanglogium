@@ -7,11 +7,12 @@ import { ArrowRight, MagnifyingGlass, SquaresFour, Tag } from "@phosphor-icons/r
 import { cn } from "@/lib/utils/tailwind";
 import { ProductImage } from "@/features/products";
 import { formatPrice } from "@/lib/utils/price";
-import type { AutocompleteProduct } from "../domain/searchTypes";
+import type { AutocompleteProduct } from "../../domain/searchTypes";
 import { HighlightedText } from "./HighlightedText";
-import { CATEGORY_SUGGESTIONS } from "../config/searchSuggestions";
-import type { SuggestionEntry } from "../domain/suggestionEntries";
-import { isPlainLeftClick, productHref, searchHref } from "./searchLinks";
+import { CATEGORY_SUGGESTIONS } from "../../config/searchSuggestions";
+import type { SuggestionEntry } from "../../domain/suggestionEntries";
+import { isPlainLeftClick } from "../isPlainLeftClick";
+import { productHref, searchHref } from "../../domain/searchLinks";
 
 interface AutocompletePanelProps {
   /** popup = desktop dropdown, sheet = full-bleed list inside the mobile sheet. */

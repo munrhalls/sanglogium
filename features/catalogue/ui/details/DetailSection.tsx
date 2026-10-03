@@ -1,10 +1,10 @@
 "use client";
 import { cn } from "@/lib/utils/tailwind";
 import Link from "next/link";
-import type { CatalogueNavItem } from "../catalogueNavTypes";
+import type { NavigationItem } from "../../domain/catalogue";
 import { useNavContext } from "../NavbarManager";
 
-type CatalogueSection = CatalogueNavItem["sections"][number];
+type CatalogueSection = NavigationItem["sections"][number];
 
 interface DetailSectionProps {
   section: CatalogueSection;

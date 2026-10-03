@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, createContext, useEffect } from "react";
-import { NavbarManagerProps } from "./catalogueNavTypes";
 import { cn } from "@/lib/utils/tailwind";
 import {
   CaretDownIcon,
@@ -25,6 +24,11 @@ export const useNavContext = () => React.useContext(NavContext);
 
 // BACKLOG TODO - make sure navbar manager is hidden on anything less than lg-desktop (including lg-touch)
 // BACKLOG TODO - make sure catalogue carousel drawer is not accessible on lg-desktop -> should result in normal homepage with navbar on lg-desktop
+
+export interface NavbarManagerProps {
+  navLinks: { id: string; label: string }[];
+  children: React.ReactNode[];
+}
 
 export default function NavbarManager({
   navLinks,

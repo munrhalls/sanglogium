@@ -1,10 +1,10 @@
 import { cn } from "@/lib/utils/tailwind";
-import type { CatalogueNavItem } from "../catalogueNavTypes";
+import type { NavigationItem } from "../../domain/catalogue";
 import DetailWatermark from "./DetailWatermark";
 import DetailSection from "./DetailSection";
 
 interface SliceDetailsProps {
-  data: CatalogueNavItem;
+  data: NavigationItem;
 }
 
 export default function SliceDetails({ data }: SliceDetailsProps) {

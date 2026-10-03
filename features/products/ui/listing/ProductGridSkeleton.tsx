@@ -1,5 +1,5 @@
 import React from 'react';
-import { productGridClass } from "../config/gridLayout";
+import { productGridClass } from "../../config/gridLayout";
 
 // Sized and laid out to match the loaded ProductGrid exactly (same shared grid
 // class, same aspect-[4/3] image box + text block as ProductCard) so the

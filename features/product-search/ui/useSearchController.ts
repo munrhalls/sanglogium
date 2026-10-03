@@ -5,7 +5,7 @@ import type { KeyboardEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { AutocompleteProduct } from "../domain/searchTypes";
 import { addRecentSearch } from "./recentSearches";
-import { productHref, searchHref } from "./searchLinks";
+import { productHref, searchHref } from "../domain/searchLinks";
 import { buildSuggestionEntries } from "../domain/suggestionEntries";
 import type { SuggestionEntry } from "../domain/suggestionEntries";
 
