@@ -115,3 +115,7 @@ _project/*.log
 *.bak
 *.orig
 .DS_Store
+
+# Vendored agent skills (pinned in skills-lock.json) and generated Lavish review artifacts
+.claude/skills/
+.lavish/
