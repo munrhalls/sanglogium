@@ -3,7 +3,7 @@
 import { useActionState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { authClient } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth/client";
 
 export default function ResetPasswordForm() {
   const searchParams = useSearchParams();

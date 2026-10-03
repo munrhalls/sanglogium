@@ -3,7 +3,7 @@
 import { getCheckoutSession } from "./adapters/session";
 import { redirect } from "next/navigation";
 import type { Address, ServerResponse } from "./domain/checkoutTypes";
-import { logCheckoutEvent, generateCheckoutSessionId } from "@/lib/dev/event-logger";
+import { logCheckoutEvent, generateCheckoutSessionId } from "@/lib/dev/eventLogger";
 import { verifyPolishAddress } from "./adapters/terytValidator";
 import { validateWithGoogle } from "./adapters/googleAddressValidator";
 

@@ -8,7 +8,7 @@ import {
   sendVerificationEmail,
   sendResetPasswordEmail,
   sendDeleteAccountVerification,
-} from "./email";
+} from "../email";
 import { backendClient } from "@/sanity-cms/lib/backendClient";
 import { mergeGuestOrdersByEmail } from "@/sanity-cms/lib/orders/mergeGuestOrders";
 
@@ -264,7 +264,6 @@ export const auth = betterAuth({
             // For full atomicity, a custom server action wrapping BOTH user creation
             // AND profile creation in a transaction would be required — but that
             // would bypass Better Auth's built-in endpoints and is out of scope.
-            // See docs/auth/userprofile-atomicity-spec-updated.md
           }
         },
       },

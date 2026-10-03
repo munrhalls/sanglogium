@@ -1,5 +1,5 @@
 import { backendClient } from '@/sanity-cms/lib/backendClient'
-import { logCheckoutEvent } from '@/lib/dev/event-logger'
+import { logCheckoutEvent } from '@/lib/dev/eventLogger'
 import { sendOrderConfirmationEmail } from '@/lib/email'
 import Stripe from 'stripe'
 import { z } from 'zod'

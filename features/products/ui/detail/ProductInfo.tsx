@@ -1,7 +1,7 @@
 "use client";
 
 import type { ProductDetailData as Product } from "../../domain/productTypes";
-import { urlFor } from '@/lib/utils/sanityImageUrl';
+import { urlFor } from '@/lib/sanity/imageUrl';
 import { useState } from 'react';
 import { Price } from '@/shared/ui/Price';
 import { ShoppingCartIcon, CheckIcon } from '@phosphor-icons/react/dist/ssr';
