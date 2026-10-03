@@ -17,7 +17,7 @@ deletes them, never committed); one PR per thematic axis.
 3. **Heavy work only on explicit request** — if the human explicitly asks for a full `next build` / `tsc` run, run it once, alone, and report; this is not an invitation to self-verify (see rule 0).
 4. **Never run two CPU-heavy tools at the same time** (build + playwright + vitest concurrently is forbidden).
 5. **No `npm install` without asking** -- it thrashes the near-full disk and CPU. Use `npm ci --no-audit --no-fund` only if approved.
-6. **Never verify your own work with `next build`, `tsc`, tests, or curl.** Edit source, then hand the human the one minimal check to run on `localhost:3000`. Fake/off-timing self-verification wastes PC resources and destroys the fast feedback loop. (Same rule as 0, restated — this is not optional or soft.)
+6. **Never verify your own work with `next build`, `tsc`, tests, or curl.** Edit source, then hand the human the one minimal check to run on `localhost:3000`. Fake/off-timing self-verification wastes PC resources and destroys the fast feedback loop. (Same rule as 0, restated — this is not optional or soft.) ONE PERMITTED COMMAND: `node tools/check-imports.mjs` on the axis's changed files may run once at phase end — it is a name-resolution check, not a typecheck/build.
 7. **End sessions cleanly**: no leftover watch processes (`tsc --watch`, browsers). If you started it, you stop it.
 
 ## FEEDBACK LOOP — HARD GATES (never break; breaking = defect)
