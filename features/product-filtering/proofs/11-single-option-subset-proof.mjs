@@ -4,6 +4,8 @@ import { sanityQuery } from './sanityRaw.mjs';
 const CATEGORY = process.argv[2] || 'headphones';
 const EXCLUDED_URL_PARAMS = new Set(['price', 'inStock']);
 const OUTPUT_FILE = new URL(`./out/11-single-option-subset-proof.${CATEGORY}.json`, import.meta.url);
+const FEATURE_DIR = new URL('..', import.meta.url);
+const REPO_ROOT = new URL('..', new URL('..', FEATURE_DIR));
 
 // ---------------------------------------------------------------------------
 // Data loading: pull FILTER_FACETS out of the TS source and load the
@@ -11,7 +13,7 @@ const OUTPUT_FILE = new URL(`./out/11-single-option-subset-proof.${CATEGORY}.jso
 // ---------------------------------------------------------------------------
 
 function loadFilterFacets() {
-  const source = readFileSync(new URL('../config/facetMap.ts', import.meta.url), 'utf8');
+  const source = readFileSync(new URL('config/facetMap.ts', FEATURE_DIR), 'utf8');
   const match = source.match(/export const FILTER_FACETS: FilterFacet\[\] = (\[[\s\S]*?\n\]);/);
   if (!match) throw new Error('Could not locate FILTER_FACETS in facetMap.ts');
   return new Function(`return ${match[1]}`)();
@@ -19,7 +21,7 @@ function loadFilterFacets() {
 
 function loadCatalogueIndex() {
   return JSON.parse(
-    readFileSync(new URL('../../../data/catalogue-index.json', import.meta.url), 'utf8'),
+    readFileSync(new URL('data/catalogue-index.json', REPO_ROOT), 'utf8'),
   );
 }
 

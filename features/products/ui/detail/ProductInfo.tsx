@@ -1,6 +1,6 @@
 "use client";
 
-import type { ProductDetailData as Product } from "../../domain/productTypes";
+import type { ProductDetailData as Product } from "@/features/products/domain/productTypes";
 import { urlFor } from '@/lib/sanity/imageUrl';
 import { useState } from 'react';
 import { Price } from '@/shared/ui/Price';
@@ -8,7 +8,7 @@ import { ShoppingCartIcon, CheckIcon } from '@phosphor-icons/react/dist/ssr';
 import { QuantitySelector } from "./QuantitySelector";
 import { centsToDisplay } from '@/lib/utils/price';
 import { BasketControls } from "@/features/basket";
-import { WishlistButton } from "../card/WishlistButton";
+import { WishlistButton } from "@/features/products/ui/card/WishlistButton";
 
 // Fields at or above this word count are treated as narrative content (paragraphs,
 // e.g. Description/Sustainability/Battery Life copy) and demoted into the collapsed

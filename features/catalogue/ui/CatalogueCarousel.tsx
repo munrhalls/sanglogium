@@ -5,7 +5,7 @@ import { CarouselTrack } from "@/shared/ui/carousel/CarouselTrack";
 import { CarouselSlide } from "@/shared/ui/carousel/CarouselSlide";
 
 import { CatalogueView } from "./CatalogueView";
-import type { NavigationItem } from "../domain/catalogue";
+import type { NavigationItem } from "@/features/catalogue/domain/catalogue";
 
 import { cn } from "@/lib/utils/tailwind";
 

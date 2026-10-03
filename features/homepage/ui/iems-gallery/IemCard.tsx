@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { IemProduct } from "../../domain/homepageTypes";
+import type { IemProduct } from "@/features/homepage/domain/homepageTypes";
 import { BasketControls } from "@/features/basket";
 import { Price } from "@/shared/ui/Price";
-import { ProductBadge } from "../shared/ProductBadge";
+import { ProductBadge } from "@/features/homepage/ui/shared/ProductBadge";
 import { centsToDisplay } from "@/lib/utils/price";
 
 interface IemCardProps {

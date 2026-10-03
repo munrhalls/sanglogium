@@ -1,7 +1,7 @@
 import React from "react";
 import { CatalogueView } from "./CatalogueView";
 import NavbarManager from "./NavbarManager";
-import type { NavigationItem } from "../domain/catalogue";
+import type { NavigationItem } from "@/features/catalogue/domain/catalogue";
 import { cn } from "@/lib/utils/tailwind";
 
 interface CatalogueNavbarProps {

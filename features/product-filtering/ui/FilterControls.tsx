@@ -13,9 +13,9 @@ import {
 } from './FilterSection';
 import { DualRangeSlider } from './DualRangeSlider';
 import { formatPriceMajor } from '@/lib/utils/price';
-import { getFacetModule, type Category, type AnyFacetDef, type FacetOptionCount } from '../config/facetRegistry';
-import { humanizeFacetValue } from '../domain/humanizeFacetValue';
-import { useFilterParam } from '../model/useFilterParam';
+import { getFacetModule, type Category, type AnyFacetDef, type FacetOptionCount } from '@/features/product-filtering/config/facetRegistry';
+import { humanizeFacetValue } from '@/features/product-filtering/domain/humanizeFacetValue';
+import { useFilterParam } from '@/features/product-filtering/model/useFilterParam';
 
 /**
  * Re-export the shared filter-section header primitives defined in

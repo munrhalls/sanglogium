@@ -5,7 +5,7 @@ import OrderDetails from './OrderDetails'
 import OrderDetailsSkeleton from './OrderDetailsSkeleton'
 import OrderNextSteps from './OrderNextSteps'
 import { SuccessAnalytics } from './SuccessAnalyticsClient'
-import { getPaymentMethodHint } from '../domain/paymentMethodHint'
+import { getPaymentMethodHint } from '@/features/checkout/domain/paymentMethodHint'
 import { formatPrice } from '@/lib/utils/price'
 
 interface Props {

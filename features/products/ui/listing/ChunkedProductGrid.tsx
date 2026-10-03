@@ -2,10 +2,10 @@ import React, { Suspense } from "react";
 import { cn } from "@/lib/utils/tailwind";
 import { ProductChunk } from "./ProductChunk";
 import { ProductChunkSkeleton } from "./ProductChunkSkeleton";
-import { productGridClass } from "../../config/gridLayout";
-import { ImageRevealScript } from "../card/ImageRevealScript";
-import { ImageRevealClient } from "../card/ImageRevealClient";
-import type { Product } from "../../domain/productTypes";
+import { productGridClass } from "@/features/products/config/gridLayout";
+import { ImageRevealScript } from "@/features/products/ui/card/ImageRevealScript";
+import { ImageRevealClient } from "@/features/products/ui/card/ImageRevealClient";
+import type { Product } from "@/features/products/domain/productTypes";
 
 export const CHUNK_SIZE = 6;
 
