@@ -28,6 +28,15 @@ const ENTRY_ONLY = {
     "Import from @/features/<feature> (client-safe), @/features/<feature>/server (server only) or @/features/<feature>/actions (Server Actions). Deep imports are not allowed.",
 };
 
+// Inside features/, only './' same-directory relative imports are allowed;
+// anything reaching outside the file's directory must use the absolute alias
+// (@/features/<name>/…, @/lib/…, @/sanity-cms/…). Specifiers with '..' are banned.
+const NO_PARENT_RELATIVE = {
+  group: ["../*", ".."],
+  message:
+    "Parent-relative imports are not allowed inside features/. Use the absolute alias (@/features/<name>/…, @/lib/…, @/sanity-cms/…).",
+};
+
 const NO_SANITY = {
   regex: "(^|/)sanity-cms/",
   message:
@@ -93,13 +102,13 @@ export default [
     },
   },
   {
-    files: ["features/**/*.{ts,tsx}"],
+    files: ["features/**/*.{ts,tsx,mts,mjs}"],
     rules: {
       "no-restricted-imports": [
         "error",
         {
           paths: JEST_PATHS,
-          patterns: [ENTRY_ONLY, NO_SANITY, NO_APP],
+          patterns: [ENTRY_ONLY, NO_SANITY, NO_APP, NO_PARENT_RELATIVE],
         },
       ],
     },
@@ -125,7 +134,7 @@ export default [
         "error",
         {
           paths: JEST_PATHS,
-          patterns: [ENTRY_ONLY, NO_APP],
+          patterns: [ENTRY_ONLY, NO_APP, NO_PARENT_RELATIVE],
         },
       ],
     },
@@ -138,7 +147,7 @@ export default [
         "error",
         {
           paths: JEST_PATHS,
-          patterns: [ENTRY_ONLY, NO_APP],
+          patterns: [ENTRY_ONLY, NO_APP, NO_PARENT_RELATIVE],
         },
       ],
     },
