@@ -5,9 +5,9 @@ Every agent working in this repo MUST follow these rules. They exist so multiple
 ## Campaign process (MANDATORY)
 
 `_project/00-MOST-IMPORTANT-lean-tracer-bullet-methodology.md` is the build method -- read it
-before any new feature work or mission. `_project/<feature name>/plan.md` (feature campaigns)
-or `_project/missions/<mission name>/plan.md` (ad-hoc, time-boxed missions) is the live
-milestone roadmap for that unit of work -- e.g. `_project/filters-sorting/plan.md`.
+before any new feature work or mission. Live plans are the architect's phase files under
+`_project/working-memory/<axis>/turn-<n>/phase-<n.m>.md` (transient: each turn's last phase
+deletes them, never committed); one PR per thematic axis.
 
 ## Non-negotiable
 

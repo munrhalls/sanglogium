@@ -22,13 +22,13 @@ If a fact here contradicts the code, the code wins — re-verify after any large
 | Hero | `features/homepage/ui/hero/Hero.tsx` | `data.hero` |
 | TrustBar | `features/homepage/ui/trust-bar/TrustBar.tsx` | none (static) |
 | Featured | `features/homepage/ui/featured/` | `data.featured` |
-| ProductSpotlight1/2/3 | `features/homepage/ui/product-spotlight-{1,2,3}/` | `data.spotlight{1,2,3}` |
+| ProductSpotlightMediaLeft / MediaRight / Fractal | `features/homepage/ui/product-spotlight-{media-left,media-right,fractal}/` | `data.spotlight{1,2,3}` |
 | IemsGallery | `features/homepage/ui/iems-gallery/IemsGallery.tsx` | `iemsData` (call #2) |
 | NewestRelease | `features/homepage/ui/newest-release/NewestRelease.tsx` | `data.newestRelease` |
 | Dacs | `features/homepage/ui/dacs/Dacs.tsx` | `data.dacs` |
 | Accessories | `features/homepage/ui/accessories/Accessories.tsx` (+ `CategorySection.tsx`) | `data.accessories.{cables,interconnects,adapters,earpads,eartips,careCleaning,storage}` |
 
-Every section except Hero and TrustBar is wrapped in `Shelf` (`app/components/layout/general/Shelf.tsx`) in `page.tsx`, with a `spacing` prop and optional `fullBleed`.
+Every section except Hero and TrustBar is wrapped in `Shelf` (`app/components/layout/shelf/Shelf.tsx`) in `page.tsx`, with a `spacing` prop and optional `fullBleed`.
 
 ## Cards — bespoke per section, NOT shared
 
@@ -41,14 +41,14 @@ There is no shared homepage product card. Each section has its own:
 - Spotlights, NewestRelease → no card component; bespoke single-product layouts.
 
 `IemCard.tsx` and `AccessoryCard.tsx` are structurally identical and must be kept in sync by hand.
-`features/products/ui/ProductCard.tsx` is the **product-listing** grid card — not used anywhere on the homepage.
+`features/products/ui/card/ProductCard.tsx` is the **product-listing** grid card — not used anywhere on the homepage.
 
 ## Server/client boundary
 
 Page tree is Server Components by default. Client islands:
 
 - `HeroQualityBar.tsx` (child of Hero)
-- The carousel primitives (`app/components/ui/carousel/Carousel*.tsx`)
+- The carousel primitives (`shared/ui/carousel/Carousel*.tsx`)
 - Leaf controls inside cards: `BasketControls.tsx`, `WishlistButton.tsx`
 
 The card components themselves (`Card`, `IemCard`, `DacCard`, `AccessoryCard`) are Server Components that render those client leaves.
@@ -66,7 +66,7 @@ A "add to basket from the homepage" bug is in `BasketControls`, not the section 
 
 - `Shelf` — section layout wrapper.
 - `SectionHeader` (`features/homepage/ui/shared/SectionHeader.tsx`) — reused header block (e.g. via `IemsGalleryHeader`).
-- Carousel (`app/components/ui/carousel/`) — imported by 7 sections (Featured, Accessories/CategorySection, Dacs, NewestRelease, all 3 spotlights). One implementation — a carousel bug in one place is present everywhere.
+- Carousel (`shared/ui/carousel/`) — imported by 7 sections (Featured, Accessories/CategorySection, Dacs, NewestRelease, all 3 spotlights). One implementation — a carousel bug in one place is present everywhere.
 
 ---
 
