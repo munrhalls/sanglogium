@@ -5,7 +5,7 @@ import type { MouseEvent } from "react";
 import Link from "next/link";
 import { Clock, MagnifyingGlass, X } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils/tailwind";
-import { clearRecentSearches, getRecentSearches, removeRecentSearch } from "../recentSearches";
+import { clearRecentSearches, getRecentSearches, removeRecentSearch } from "../model/recentSearches";
 import { CATEGORY_SUGGESTIONS, POPULAR_SEARCHES } from "../../config/searchSuggestions";
 import { isPlainLeftClick } from "../isPlainLeftClick";
 

@@ -7,9 +7,9 @@ import { cn } from "@/lib/utils/tailwind";
 import { AutocompletePanel } from "./AutocompletePanel";
 import { SearchInput } from "./SearchInput";
 import { SearchZeroQueryPanel } from "./SearchZeroQueryPanel";
-import { useVisualViewportBox } from "../useVisualViewportBox";
-import { MIN_QUERY_LENGTH } from "../useSearchController";
-import type { SearchController } from "../useSearchController";
+import { useVisualViewportBox } from "../model/useVisualViewportBox";
+import { MIN_QUERY_LENGTH } from "../model/useSearchController";
+import type { SearchController } from "../model/useSearchController";
 
 interface SearchFieldDesktopProps {
   search: SearchController;
