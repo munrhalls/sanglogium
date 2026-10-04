@@ -1,7 +1,7 @@
 import { sanityFetch } from '@/sanity-cms/lib/client';
 import { groq } from 'next-sanity';
 import { cache } from 'react';
-import { computeCatalogueFacets, isDefaultFilterState } from '@/features/product-filtering/server';
+import { computeCatalogueFacets, isDefaultFilterState } from '@/features/product-filtering/domain';
 import type { CatalogueFacets, RawProduct, ProductQueryState } from '@/features/product-filtering';
 
 const withCache = <T extends (...args: any[]) => any>(fn: T): T => {

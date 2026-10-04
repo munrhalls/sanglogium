@@ -1,6 +1,5 @@
 import { scoreProduct, ROOT_CATEGORIES, rootCategoriesOf } from './searchScoring';
-import { computeCatalogueFacets, productMatchesState } from '@/features/product-filtering/server';
-import { sanitizeFilterState } from '@/features/product-filtering';
+import { computeCatalogueFacets, productMatchesState, sanitizeFilterState } from '@/features/product-filtering/domain';
 import type { AutocompleteProduct, SearchProduct, SearchResult } from './searchTypes';
 import type {
   CatalogueFacets,

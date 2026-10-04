@@ -3,7 +3,7 @@ import { groq } from 'next-sanity';
 import { cache } from 'react';
 import type { Product as SanityProduct } from '@/sanity.types';
 import type { ProductQueryState } from '@/features/product-filtering';
-import { buildProductQuery } from '@/features/product-filtering/server';
+import { buildProductQuery } from '@/features/product-filtering/domain';
 import type { Product } from '@/features/products';
 
 const DEFAULT_PER_PAGE = 24;
