@@ -1,7 +1,7 @@
 import "server-only";
 import { cache } from "react";
 import { auth } from "./betterAuth";
-import { backendClient } from "@/sanity-cms/lib/backendClient";
+import { createUserProfileIfMissing } from "@/sanity-cms/lib/account/createUserProfileIfMissing";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -34,28 +34,15 @@ async function ensureUserProfile(user: { id: string; email: string; name?: strin
   if (isCached(user.id)) return;
 
   try {
-    const existing = await backendClient.fetch(
-      `*[_type == "userProfile" && authId == $authId][0]`,
-      { authId: user.id }
-    );
-
-    if (existing) {
-      markCached(user.id);
-      return;
-    }
-
-    await backendClient.create({
-      _type: "userProfile",
-      authId: user.id,
-      email: user.email,
-      name: user.name || "",
-    });
-
+    const result = await createUserProfileIfMissing(user);
     markCached(user.id);
-    console.log("[AUTH] HEAL: userProfile created on demand.", {
-      authId: user.id,
-      email: user.email,
-    });
+
+    if (result === "created") {
+      console.log("[AUTH] HEAL: userProfile created on demand.", {
+        authId: user.id,
+        email: user.email,
+      });
+    }
   } catch (error) {
     console.error("[AUTH] HEAL FAILED: could not create userProfile on demand.", {
       authId: user.id,
