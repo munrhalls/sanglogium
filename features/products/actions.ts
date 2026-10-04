@@ -1,6 +1,6 @@
 "use server";
 
-import { requireSession } from "@/lib/auth/dal";
+import { requireSession } from "@/features/auth/server";
 import { addWishlistItem } from "@/sanity-cms/lib/account/addWishlistItem";
 import { removeWishlistItem } from "@/sanity-cms/lib/account/removeWishlistItem";
 import { getProfileIdByAuthId } from "@/sanity-cms/lib/account/getProfileIdByAuthId";

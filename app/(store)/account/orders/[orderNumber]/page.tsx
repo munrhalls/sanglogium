@@ -1,4 +1,4 @@
-import { verifySession } from "@/lib/auth/dal";
+import { verifySession } from "@/features/auth/server";
 import { getUserOrderByNumber } from "@/sanity-cms/lib/orders/getUserOrderByNumber";
 import { notFound } from "next/navigation";
 import Link from "next/link";

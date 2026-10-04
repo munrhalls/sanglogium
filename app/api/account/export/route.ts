@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getSession } from "@/lib/auth/dal";
+import { getSession } from "@/features/auth/server";
 import { getFullUserProfile } from "@/sanity-cms/lib/account/getFullUserProfile";
 import { getAllUserOrdersFull } from "@/sanity-cms/lib/orders/getAllUserOrdersFull";
 

@@ -1,4 +1,4 @@
-import { verifySession } from "@/lib/auth/dal";
+import { verifySession } from "@/features/auth/server";
 import { getWishlistProducts } from "@/sanity-cms/lib/account/getWishlistProducts";
 import Link from "next/link";
 import { ProductGrid } from "@/features/products";

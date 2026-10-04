@@ -3,7 +3,7 @@ import { getCheckoutSession } from "@/features/checkout/server";
 import { retrievePaymentIntent } from "@/lib/stripe";
 import { logCheckoutEvent } from "@/lib/dev/eventLogger";
 import { createOrderFromPaymentIntent, type OrderSessionData } from "@/sanity-cms/lib/orders/createOrderFromPaymentIntent";
-import { getSession } from "@/lib/auth/dal";
+import { getSession } from "@/features/auth/server";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);

@@ -1,6 +1,6 @@
 import "server-only";
 import { cache } from "react";
-import { auth } from "@/lib/auth/server";
+import { auth } from "./betterAuth";
 import { backendClient } from "@/sanity-cms/lib/backendClient";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";

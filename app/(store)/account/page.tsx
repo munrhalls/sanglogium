@@ -1,4 +1,4 @@
-import { verifySession } from "@/lib/auth/dal";
+import { verifySession } from "@/features/auth/server";
 import { getAccountSummary } from "@/sanity-cms/lib/account/getAccountSummary";
 import { countMergedGuestOrders } from "@/sanity-cms/lib/account/countMergedGuestOrders";
 import Link from "next/link";

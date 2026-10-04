@@ -1,4 +1,4 @@
-import { verifySession } from "@/lib/auth/dal";
+import { verifySession } from "@/features/auth/server";
 import { getUserAddresses } from "@/sanity-cms/lib/account/getUserAddresses";
 import Link from "next/link";
 import { AddressesClient } from "@/features/account";

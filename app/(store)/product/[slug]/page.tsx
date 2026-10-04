@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getProductBySlug, getRelatedProducts } from '@/sanity-cms/lib/products';
-import { getWishlistProductIds } from "@/sanity-cms/lib/account/getWishlistProductIds";
+import { getWishlistProductIds } from "@/features/products/server";
 import { ProductDetail, generateOptimizedTitle, generateSEOTitle, generateMetaDescription } from "@/features/products";
 
 interface ProductPageProps {
