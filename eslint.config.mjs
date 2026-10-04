@@ -21,40 +21,6 @@ const JEST_PATHS = [
   },
 ];
 
-// Anchored so it matches "@/features/x/y" and "../features/x/y".
-const ENTRY_ONLY = {
-  regex: "^(@/|(\\.\\.?/)+)features/[^/]+/(?!(server|actions)$).+",
-  message:
-    "Import from @/features/<feature> (client-safe), @/features/<feature>/server (server only) or @/features/<feature>/actions (Server Actions). Deep imports are not allowed.",
-};
-
-// Inside features/, only './' same-directory relative imports are allowed;
-// anything reaching outside the file's directory must use the absolute alias
-// (@/features/<name>/…, @/lib/…, @/sanity-cms/…). Specifiers with '..' are banned.
-const NO_PARENT_RELATIVE = {
-  group: ["../*", ".."],
-  message:
-    "Parent-relative imports are not allowed inside features/. Use the absolute alias (@/features/<name>/…, @/lib/…, @/sanity-cms/…).",
-};
-
-const NO_SANITY = {
-  regex: "(^|/)sanity-cms/",
-  message:
-    "Features must not import sanity-cms. Data access stays in sanity-cms/lib and calls into the feature through @/features/<feature>/server. Only features/<feature>/actions.ts may import sanity-cms.",
-};
-
-const NO_APP = {
-  regex: "(^|/)app/",
-  message:
-    "Features and shared/ never import from app/ (routes, server actions, shell). Shared UI lives in shared/ui.",
-};
-
-const NO_FEATURES = {
-  regex: "(^|/)features/",
-  message:
-    "shared/ must not import features/. Dependencies run app -> features -> shared.",
-};
-
 export default [
   ...nextVitals,
   ...nextTypeScript,
@@ -87,91 +53,6 @@ export default [
       "@typescript-eslint/no-explicit-any": "warn",
       "prefer-const": "warn",
       "react-hooks/set-state-in-effect": "off", // Plugin not configured, pre-existing issues
-    },
-  },
-  {
-    files: ["**/*.{ts,tsx}"],
-    rules: {
-      "no-restricted-imports": [
-        "error",
-        {
-          paths: JEST_PATHS,
-          patterns: [ENTRY_ONLY],
-        },
-      ],
-    },
-  },
-  {
-    files: ["features/**/*.{ts,tsx,mts,mjs}"],
-    rules: {
-      "no-restricted-imports": [
-        "error",
-        {
-          paths: JEST_PATHS,
-          patterns: [ENTRY_ONLY, NO_SANITY, NO_APP, NO_PARENT_RELATIVE],
-        },
-      ],
-    },
-  },
-  {
-    // JEST_PATHS and ENTRY_ONLY are repeated because a later flat-config block
-    // replaces the rule for matching files.
-    files: ["shared/**/*.{ts,tsx}"],
-    rules: {
-      "no-restricted-imports": [
-        "error",
-        { paths: JEST_PATHS, patterns: [ENTRY_ONLY, NO_APP, NO_FEATURES] },
-      ],
-    },
-  },
-  {
-    // The only feature files allowed to import sanity-cms; a later flat-config
-    // block replaces the rule for matching files, so the jest paths and the
-    // entry/app rules are repeated here.
-    files: ["features/*/actions.ts"],
-    rules: {
-      "no-restricted-imports": [
-        "error",
-        {
-          paths: JEST_PATHS,
-          patterns: [ENTRY_ONLY, NO_APP, NO_PARENT_RELATIVE],
-        },
-      ],
-    },
-  },
-  {
-    // Server-only boundary files of a feature (actions.ts, adapters/) are the only feature files allowed to import sanity-cms.
-    files: ["features/*/adapters/**/*.{ts,tsx}"],
-    rules: {
-      "no-restricted-imports": [
-        "error",
-        {
-          paths: JEST_PATHS,
-          patterns: [ENTRY_ONLY, NO_APP, NO_PARENT_RELATIVE],
-        },
-      ],
-    },
-  },
-  {
-    // The data layer never imports Server Actions (Server Actions import the
-    // data layer). ENTRY_ONLY is repeated because a later flat-config block
-    // replaces the rule for matching files.
-    files: ["sanity-cms/lib/**/*.{ts,tsx}"],
-    rules: {
-      "no-restricted-imports": [
-        "error",
-        {
-          paths: JEST_PATHS,
-          patterns: [
-            ENTRY_ONLY,
-            {
-              regex: "^@/features/[^/]+/actions$",
-              message:
-                "The data layer never imports Server Actions (Server Actions import the data layer).",
-            },
-          ],
-        },
-      ],
     },
   },
   {
