@@ -1,6 +1,6 @@
 # Organizational pattern: single source of truth
 
-Normative model of how this repository is organized. It says what the repo **should be**. It is a separate concern from what the repo currently is; the only place the two meet is the dated snapshot in section 7. Where the code disagrees with this document, the code is defective. A rule changes only by editing this file.
+Normative model of how this repository is organized. It says what the repo **should be**. It is a separate concern from what the repo currently is. Where the code disagrees with this document, the code is defective. A rule changes only by editing this file.
 
 Derived and checked 2026-10-03 against `origin/main` at `ef60f05c`.
 
@@ -122,48 +122,15 @@ These do not follow from the axioms and are enforced by review.
 
 The model is proven by five short arguments, each checkable by a few lines of script.
 
-| Claim | Argument | Check result at the snapshot |
-|-------|----------|------------------------------|
-| P1 Placement is total and unique | zones are disjoint path prefixes; features and `shared/` split on the second path segment | 410 of 410 tracked paths placed, 0 unplaced |
-| P2 No cycle between layers | along any inter-layer import rank strictly decreases; a cycle would need `r > r` | see conformance below |
-| P3 No cycle between features | along any cross-slice import level strictly decreases | 0 violations; 0 cross-slice deep imports |
-| P4 Planes are isolated | the plane table has "imports nothing" or a short allowed list for each plane | runtime to tooling 0, tooling to runtime 0, studio to runtime 0; the only runtime to studio edge is the `app/(studio)` page |
-| P5 Nothing is left over | the kinds table covers every path | every one of the 705 import specifiers resolves; no unplaced kind |
+| Claim | Argument | Enforced by |
+|-------|----------|-------------|
+| P1 Placement is total and unique | zones are disjoint path prefixes; features and `shared/` split on the second path segment | `tools/check-org-pattern.mjs`, rule PLACE |
+| P2 No cycle between layers | along any inter-layer import rank strictly decreases; a cycle would need `r > r` | `tools/check-org-pattern.mjs`, rules RANK and ENV |
+| P3 No cycle between features | along any cross-slice import level strictly decreases | `tools/check-org-pattern.mjs`, rules SURFACE and LEVEL |
+| P4 Planes are isolated | the plane table has "imports nothing" or a short allowed list for each plane | `tools/check-org-pattern.mjs`, rule PLANE |
+| P5 Nothing is left over | the kinds table covers every path | `tools/check-imports.mjs`, rules SPEC and DELETED |
 
 Re-check procedure (any script): (1) map each tracked path to a zone by prefix; (2) extract import specifiers; (3) resolve `@/` and relative ones; (4) for each runtime edge test `rank(src) > rank(dst)` or same layer and slice; (5) for each cross-slice edge test the level inequality and that the target is a surface.
-
-### Snapshot: fit against the repository (dated, not normative)
-
-Delete this subsection when conformance reaches 100%.
-
-- 705 import edges: 623 value, 82 type-only. 609 of 623 value edges conform (97.8%).
-- All 92 same-feature deep imports (57 files) conform; the rank order inside features is ui over model over domain over config with no upward edge.
-- All cross-slice edges satisfy the level inequality; the edge set equals the previously documented table.
-
-The 14 non-conforming value edges fall in exactly three families:
-
-| Family | Edges | What it is |
-|--------|-------|------------|
-| F-A1 pure helpers reached through the wrong surface | 6 | the data layer (4) and `features/product-search/domain/` (2) import pure builders from the `server.ts` or `index.ts` of `product-filtering`, `catalogue`, `product-search`; they belong behind `domain` |
-| F-A2 UI published through the server face | 4 | `features/catalogue/server.ts` and `features/checkout/server.ts` re-export 3 `ui/` components; one of them (`OrderDetails`) is async and imports an adapter from `ui/` |
-| F-B auth service held in `lib/` | 4 | `lib/auth/dal.ts` and `lib/auth/server.ts` import the data layer (3); `sanity-cms/lib/account/getWishlistProductIds.ts` imports `lib/auth/dal` (1, which becomes upward once the service is placed at rank 3) |
-
-What the check forced into the model (red flags that became categories, not exceptions):
-
-1. Probe scripts and the catalogue build script hold GROQ outside the data layer, so Tooling is a plane with its own queries.
-2. `shared/styles` is loaded by Tailwind config, not by the app, so `shared/` splits by consumer.
-3. `sanity.config.ts` is imported by the `/studio` route, so Studio is a plane with one permitted runtime importer.
-4. `data/catalogue-index.json` is written by a script and read by runtime, so files are the only channel between planes.
-5. `server.ts` mixed pure builders, UI and adapter reads, so surfaces are ordered by rank.
-6. 92 same-feature deep imports, so the entry rule is scoped to cross-slice.
-
-Alternatives measured and rejected:
-
-| Alternative | Cost on the same data |
-|-------------|-----------------------|
-| Documented pattern read literally (entry rule everywhere) | 92 extra non-conforming import lines |
-| `lib/` ranked above the data layer | 10 upward edges (core 1, shared 6, data 3) against the 4 of F-B |
-| Keep `server.ts` pure and add a fifth surface for adapter reads | adds a surface and moves every app import of `server.ts` that reads an adapter (up to 11 of them) |
 
 ## Appendix A: the model on one screen
 
