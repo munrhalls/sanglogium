@@ -9,7 +9,11 @@ import {
   sendResetPasswordEmail,
   sendDeleteAccountVerification,
 } from "@/lib/email";
-import { backendClient } from "@/sanity-cms/lib/backendClient";
+import { hasOpenOrders } from "@/sanity-cms/lib/orders/hasOpenOrders";
+import { anonymizeUserOrders } from "@/sanity-cms/lib/orders/anonymizeUserOrders";
+import { deleteUserProfile } from "@/sanity-cms/lib/account/deleteUserProfile";
+import { syncUserProfile } from "@/sanity-cms/lib/account/syncUserProfile";
+import { createUserProfileIfMissing } from "@/sanity-cms/lib/account/createUserProfileIfMissing";
 import { mergeGuestOrdersByEmail } from "@/sanity-cms/lib/orders/mergeGuestOrders";
 
 function validateDatabaseConfig() {
@@ -125,20 +129,7 @@ export const auth = betterAuth({
         await sendDeleteAccountVerification({ user, url, token });
       },
       beforeDelete: async (user) => {
-        const openStatuses = [
-          "pending_payment",
-          "processing",
-          "packed",
-          "shipped",
-          "out_for_delivery",
-        ];
-
-        const openOrders = await backendClient.fetch<{ _id: string }[]>(
-          `*[_type == "order" && userId == $userId && status in $openStatuses]{_id}`,
-          { userId: user.id, openStatuses }
-        );
-
-        if (openOrders && openOrders.length > 0) {
+        if (await hasOpenOrders(user.id)) {
           throw new Error(
             "Cannot delete account with open orders. Please wait for all orders to be delivered or cancelled."
           );
@@ -147,14 +138,7 @@ export const auth = betterAuth({
       afterDelete: async (user) => {
         // Hard-delete the user profile (no legally required retention).
         try {
-          const profile = await backendClient.fetch<{ _id: string }>(
-            `*[_type == "userProfile" && authId == $authId][0]{_id}`,
-            { authId: user.id }
-          );
-
-          if (profile?._id) {
-            await backendClient.delete(profile._id);
-          }
+          await deleteUserProfile(user.id);
         } catch (error) {
           console.error("[AUTH] afterDelete: failed to delete userProfile.", {
             authId: user.id,
@@ -164,14 +148,7 @@ export const auth = betterAuth({
 
         // Anonymize order history: remove userId but keep orders for accounting/tax.
         try {
-          await backendClient
-            .patch({
-              query: `*[_type == "order" && userId == $userId]`,
-              params: { userId: user.id },
-            })
-            .unset(["userId"])
-            .set({ isGuest: true })
-            .commit();
+          await anonymizeUserOrders(user.id);
         } catch (error) {
           console.error("[AUTH] afterDelete: failed to anonymize orders.", {
             authId: user.id,
@@ -186,16 +163,7 @@ export const auth = betterAuth({
       update: {
         after: async (user) => {
           try {
-            const profile = await backendClient.fetch<{ _id: string }>(
-              `*[_type == "userProfile" && authId == $authId][0]{_id}`,
-              { authId: user.id }
-            );
-            if (profile?._id) {
-              await backendClient
-                .patch(profile._id)
-                .set({ email: user.email, name: user.name || "" })
-                .commit();
-            }
+            await syncUserProfile(user);
           } catch (error) {
             console.error("[AUTH] HOOK FAILED: userProfile sync on update.", {
               authId: user.id,
@@ -230,18 +198,8 @@ export const auth = betterAuth({
       create: {
         after: async (user) => {
           try {
-            const existing = await backendClient.fetch(
-              `*[_type == "userProfile" && authId == $authId][0]`,
-              { authId: user.id }
-            );
-            if (existing) return;
-
-            await backendClient.create({
-              _type: "userProfile",
-              authId: user.id,
-              email: user.email,
-              name: user.name || "",
-            });
+            const result = await createUserProfileIfMissing(user);
+            if (result === "existing") return;
 
             console.log("[AUTH] HOOK: userProfile created via databaseHooks.", {
               authId: user.id,
