@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { SignUpForm } from "@/features/auth";
-import { isGoogleAuthEnabled } from "@/lib/auth/providers";
+import { isGoogleAuthEnabled } from "@/features/auth/server";
 
 export default function SignUpPage() {
   return (

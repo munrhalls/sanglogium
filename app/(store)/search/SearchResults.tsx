@@ -2,7 +2,7 @@ import React from 'react';
 import { SearchEmpty, SearchPagination, SearchSort, SearchCategoryChips, type SearchResult } from '@/features/product-search';
 import { EmptyResults, ProductGrid, ProductGridSkeleton } from "@/features/products";
 import { ActiveFilterChips, FilterSidebar, MobileFilterSheet, isFiltersActive, resolvePriceBounds, SORT_DEFAULT } from '@/features/product-filtering';
-import { getWishlistProductIds } from "@/sanity-cms/lib/account/getWishlistProductIds";
+import { getWishlistProductIds } from "@/features/products/server";
 
 interface SearchResultsProps {
   resultsPromise: Promise<SearchResult>;

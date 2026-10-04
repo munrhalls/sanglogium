@@ -3,7 +3,7 @@ import { getCheckoutSession } from '@/features/checkout/server'
 import { stripe } from '@/lib/stripe'
 import { logCheckoutEvent } from '@/lib/dev/eventLogger'
 import { getProductUnitAmountsByIds } from '@/sanity-cms/lib/products/getProductUnitAmountsByIds'
-import { getSession } from '@/lib/auth/dal'
+import { getSession } from '@/features/auth/server'
 import { calculateGrandTotal } from '@/features/checkout'
 
 export async function POST(request: NextRequest) {

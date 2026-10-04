@@ -8,7 +8,7 @@ import {
   sendVerificationEmail,
   sendResetPasswordEmail,
   sendDeleteAccountVerification,
-} from "../email";
+} from "@/lib/email";
 import { backendClient } from "@/sanity-cms/lib/backendClient";
 import { mergeGuestOrdersByEmail } from "@/sanity-cms/lib/orders/mergeGuestOrders";
 
@@ -257,7 +257,7 @@ export const auth = betterAuth({
             // the user is already persisted. True atomic rollback is impossible here.
             // The user now exists in Better Auth without a linked userProfile.
             //
-            // Mitigation (healing): `lib/auth/dal.ts` `ensureUserProfile()` auto-creates
+            // Mitigation (healing): `features/auth/adapters/session.ts` `ensureUserProfile()` auto-creates
             // the missing profile on the first authenticated page load (Server Components
             // via `verifySession()`). This acts as a deferred cleanup/flagging strategy.
             //

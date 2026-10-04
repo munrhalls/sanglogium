@@ -1,13 +1,11 @@
-import { getSession } from "@/lib/auth/dal";
 import { backendClient } from "@/sanity-cms/lib/backendClient";
 
-export async function getWishlistProductIds(): Promise<string[]> {
-  const session = await getSession();
-  if (!session) return [];
-
+export async function getWishlistProductIdsByAuthId(
+  authId: string
+): Promise<string[]> {
   const profile = await backendClient.fetch<{ ids?: string[] | null }>(
     `*[_type == "userProfile" && authId == $authId][0]{ "ids": wishlist[]._ref }`,
-    { authId: session.userId }
+    { authId }
   );
 
   return profile?.ids ?? [];

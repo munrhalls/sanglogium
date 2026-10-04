@@ -5,7 +5,7 @@ import { getCategoryMetadata } from '@/sanity-cms/lib/products/getCategoryMetada
 import { getProductsCount, getProductsChunk } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
 import { getFilterFacets } from '@/sanity-cms/lib/products/getFilterFacets';
 import { getCategoryPriceRange } from '@/sanity-cms/lib/products/getCategoryPriceRange';
-import { getWishlistProductIds } from "@/sanity-cms/lib/account/getWishlistProductIds";
+import { getWishlistProductIds } from "@/features/products/server";
 import { ShopHeader, EmptyResults, Pagination, ChunkedProductGrid, CHUNK_SIZE } from "@/features/products";
 import { ActiveFilterChips, FilterSidebar, SortBar, isCategory, isFiltersActive, loadFilterSort, resolvePriceBounds, sanitizeFilterState, type Category, type ProductQueryState } from '@/features/product-filtering';
 import { isFacetedQuery, canonicalCategoryPath } from '@/features/catalogue';
