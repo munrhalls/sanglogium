@@ -1,4 +1,4 @@
-// Client-safe public entry. Routes, sanity-cms, layout and other features import ONLY from here or from ./server.
+// Client-safe public entry. Routes, sanity-cms, layout and other features import ONLY from here or from ./domain.
 // Never re-export server-only or Sanity code here.
 // Explicit named re-exports only; never bare export *.
 export { detectSearchRedirect } from './domain/detectSearchRedirect';

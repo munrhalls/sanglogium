@@ -1,6 +1,6 @@
 import { sanityFetch } from "@/sanity-cms/lib/client";
 import { defineQuery } from "next-sanity";
-import { resolveSlugToId } from "@/features/catalogue/server";
+import { resolveSlugToId } from "@/features/catalogue/domain";
 import type { HeroData, FeaturedProduct, SpotlightProduct, SpotlightData, IemProduct, NewestReleaseData, DacProduct, AccessoryProduct, AccessoryData, HomepageData } from "@/features/homepage";
 
 // ============================================================================

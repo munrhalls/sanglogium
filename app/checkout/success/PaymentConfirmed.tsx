@@ -2,10 +2,7 @@ import { Suspense } from 'react'
 import type Stripe from 'stripe'
 import { CheckCircle, Lock } from '@phosphor-icons/react/dist/ssr'
 import OrderDetails from './OrderDetails'
-import OrderDetailsSkeleton from './OrderDetailsSkeleton'
-import OrderNextSteps from './OrderNextSteps'
-import { SuccessAnalytics } from './SuccessAnalyticsClient'
-import { getPaymentMethodHint } from '@/features/checkout/domain/paymentMethodHint'
+import { OrderDetailsSkeleton, OrderNextSteps, SuccessAnalytics, getPaymentMethodHint } from '@/features/checkout'
 import { formatPrice } from '@/lib/utils/price'
 
 interface Props {

@@ -7,7 +7,7 @@ import {
   deriveSpacedQuery,
   rankAutocomplete,
   buildSearchResult,
-} from '@/features/product-search/server';
+} from '@/features/product-search/domain';
 import type {
   AutocompleteProduct,
   SearchProduct,

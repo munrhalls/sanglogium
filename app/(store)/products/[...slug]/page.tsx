@@ -1,6 +1,7 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
-import { resolveSlugToId, unrollDescendantKeys, Breadcrumbs } from '@/features/catalogue/server';
+import { resolveSlugToId, unrollDescendantKeys } from '@/features/catalogue/server';
+import Breadcrumbs from './CategoryBreadcrumbs';
 import { getCategoryMetadata } from '@/sanity-cms/lib/products/getCategoryMetadata';
 import { getProductsCount, getProductsChunk } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
 import { getFilterFacets } from '@/sanity-cms/lib/products/getFilterFacets';
