@@ -1,3 +1,4 @@
+import "server-only";
 import { backendClient } from "@/platform/db/backendClient";
 import type { Order } from "@/sanity.types";
 

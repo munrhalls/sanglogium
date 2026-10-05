@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import { authClient } from "@/features/auth";
-import { requireFreshSession } from "./requireFreshSession";
+import { requireFreshSession } from "@/features/account/state/requireFreshSession";
 
 export default function EmailSection({
   email,

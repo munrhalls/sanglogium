@@ -1,9 +1,6 @@
+import "server-only";
 import { backendClient } from "@/platform/db/backendClient";
-
-export interface AccountSummary {
-  _id?: string;
-  marketingEmailsOptIn?: boolean;
-}
+import type { AccountSummary } from "@/features/account/core/rules/accountTypes";
 
 export async function getAccountSummary(authId: string): Promise<AccountSummary | null> {
   return backendClient.fetch<AccountSummary | null>(

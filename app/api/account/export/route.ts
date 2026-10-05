@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { getSession } from "@/features/auth/server";
-import { getFullUserProfile } from "@/sanity-cms/lib/account/getFullUserProfile";
-import { getAllUserOrdersFull } from "@/sanity-cms/lib/orders/getAllUserOrdersFull";
+import { getAccountExport } from "@/features/account/server";
 
 export async function GET() {
   const session = await getSession();
@@ -9,23 +8,11 @@ export async function GET() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const userId = session.userId;
-
-  const [profile, orders] = await Promise.all([
-    getFullUserProfile(userId),
-    getAllUserOrdersFull(userId),
-  ]);
-
-  const exportData = {
-    userId,
-    profile,
-    orders: orders || [],
-    exportedAt: new Date().toISOString(),
-  };
+  const exportData = await getAccountExport(session.userId);
 
   const json = JSON.stringify(exportData, null, 2);
-  const date = new Date().toISOString().split("T")[0];
-  const filename = `sang-logium-data-export-${userId}-${date}.json`;
+  const date = exportData.exportedAt.split("T")[0];
+  const filename = `sang-logium-data-export-${session.userId}-${date}.json`;
 
   return new NextResponse(json, {
     status: 200,

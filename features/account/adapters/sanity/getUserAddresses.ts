@@ -1,12 +1,6 @@
+import "server-only";
 import { backendClient } from "@/platform/db/backendClient";
-import type { Address } from "@/features/checkout";
-
-export type SavedAddress = Address & { _key: string };
-
-export interface UserAddressesProfile {
-  _id: string;
-  addresses?: SavedAddress[];
-}
+import type { UserAddressesProfile } from "@/features/account/core/rules/accountTypes";
 
 export async function getUserAddresses(authId: string): Promise<UserAddressesProfile | null> {
   return backendClient.fetch<UserAddressesProfile | null>(

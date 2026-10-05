@@ -1,16 +1,6 @@
+import "server-only";
 import { backendClient } from "@/platform/db/backendClient";
-
-export interface UserOrderSummary {
-  orderNumber: string;
-  status: string;
-  pricing: {
-    total: number;
-    currency: string;
-  };
-  dates: {
-    orderedAt: string;
-  };
-}
+import type { UserOrderSummary } from "@/features/account/core/rules/accountTypes";
 
 export async function getUserOrders(userId: string): Promise<UserOrderSummary[]> {
   return backendClient.fetch<UserOrderSummary[]>(

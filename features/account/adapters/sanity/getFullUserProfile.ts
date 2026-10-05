@@ -1,3 +1,4 @@
+import "server-only";
 import { backendClient } from "@/platform/db/backendClient";
 
 export async function getFullUserProfile(authId: string): Promise<Record<string, unknown> | null> {
