@@ -1,10 +1,10 @@
 // purely homepage implementation - functionality awaiting for post-homepage products discovery ui development
 
 import { cn } from "@/platform/utils/tailwind";
-import BrandLogo from "./BrandLogo";
-import SearchField from "./SearchField";
+import BrandLogo from "@/features/shell/ui/header/BrandLogo";
+import SearchField from "@/features/shell/ui/header/SearchField";
 import NavbarActionsServer from "./NavbarActionsServer";
-import NavbarActionsSkeleton from "./NavbarActionsSkeleton";
+import NavbarActionsSkeleton from "@/features/shell/ui/header/NavbarActionsSkeleton";
 import { Suspense } from "react";
 
 export default function Header() {

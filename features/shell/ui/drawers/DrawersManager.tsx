@@ -1,7 +1,7 @@
 "use client";
 
 import { Drawer } from "vaul";
-import { useDrawer } from "./useDrawer";
+import { useDrawer } from "@/features/shell/state/useDrawer";
 import { CatalogueCarousel as CarouselCatalogue } from "@/features/catalogue";
 import { cn } from "@/platform/utils/tailwind";
 

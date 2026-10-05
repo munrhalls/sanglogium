@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import ContentLayout, {
-  ContentSection,
-} from "@/app/components/layout/content/ContentLayout";
+import { ContentLayout, ContentSection } from "@/features/shell/server";
 
 const title = "Returns Policy — Sang Logium";
 const description =
