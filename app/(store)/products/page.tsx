@@ -1,8 +1,7 @@
 import React from 'react';
 import { getAllLeafKeys } from '@/features/catalogue/server';
 import { getProductsCount, getProductsChunk } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
-import { getFilterFacets } from '@/sanity-cms/lib/products/getFilterFacets';
-import { getCategoryPriceRange } from '@/sanity-cms/lib/products/getCategoryPriceRange';
+import { getFilterFacets, getCategoryPriceRange } from '@/features/product-filtering/server';
 import { getWishlistProductIds } from "@/features/products/server";
 import { ShopHeader, EmptyResults, Pagination, ChunkedProductGrid, CHUNK_SIZE } from "@/features/products";
 import { isFacetedQuery } from '@/features/catalogue';

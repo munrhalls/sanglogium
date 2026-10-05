@@ -120,3 +120,6 @@ _project/*.log
 .claude/skills/
 .lavish/
 .devin/config.local.json
+
+# Live proof output (moved from features/product-filtering/proofs/out)
+tools/proofs/product-filtering/out/

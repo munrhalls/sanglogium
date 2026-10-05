@@ -1,3 +1,5 @@
+import "server-only";
+
 // S1 — the one pure translation from catalogue filter/sort STATE to the GROQ
 // fragments the Sanity catalogue fetches need. The catalogue Server Components
 // (/products and /products/[...slug]) read the state from `searchParams` via
@@ -9,28 +11,18 @@
 // query translation in the app (risk A2).
 //
 // SCOPE: all sort options and all filterAttributes facets defined in
-// ../config/facetMap.ts. Price, brand, in-stock and all category-specific facets now
+// ../../core/definitions/facetMap.ts. Price, brand, in-stock and all category-specific facets now
 // read from the dedicated filterAttributes object, never from free-text fields.
 
 import {
+  FILTER_FACETS,
   SORT_DEFAULT,
   SORT_OPTIONS,
-  FILTER_SORT_KEYS,
+  type FilterFacet,
   type SortValue,
-} from '@/features/product-filtering/config/filterSortParams';
-import { FILTER_FACETS, type FilterFacet } from '@/features/product-filtering/config/facetMap';
-
-// Shape matches the server-side loader so RSC and client always agree.
-// The loader returns sort/price/inStock plus one key per facet urlParam.
-// We expose the fixed fields with their parser types and keep an index for
-// the dynamic facet keys so the contract stays type-safe and extensible.
-export interface ProductQueryState {
-  sort: SortValue;
-  minPrice: number | null;
-  maxPrice: number | null;
-  inStock: boolean;
-  [key: string]: unknown;
-}
+} from '@/features/product-filtering/core/definitions/facetMap';
+import { FACET_FIELD_MAP } from './fieldMap';
+import type { ProductQueryState } from '@/features/product-filtering/core/rules/filterTypes';
 
 export interface ProductQuery {
   /** GROQ ordering, pipe included: `| order(...)`. Applied before the slice. */
@@ -43,37 +35,41 @@ export interface ProductQuery {
 
 const ORDER_BY_SORT: Record<SortValue, string> = Object.fromEntries(
   SORT_OPTIONS.map((o) => {
-    switch (o.value) {
+    switch (o.urlValue) {
       case 'featured':
         return [
-          o.value,
+          o.urlValue,
           '| order(coalesce(sortAttributes.featuredPriority, displayPriority, 0) desc, coalesce(sortAttributes.popularity, 0) desc, _createdAt desc)',
         ];
       case 'best-selling':
         return [
-          o.value,
+          o.urlValue,
           '| order(coalesce(sortAttributes.popularity, 0) desc, _createdAt desc)',
         ];
       case 'price-asc':
-        return [o.value, '| order(price_data.unit_amount asc, _createdAt desc)'];
+        return [o.urlValue, '| order(price_data.unit_amount asc, _createdAt desc)'];
       case 'price-desc':
-        return [o.value, '| order(price_data.unit_amount desc, _createdAt desc)'];
+        return [o.urlValue, '| order(price_data.unit_amount desc, _createdAt desc)'];
       case 'newest':
-        return [o.value, '| order(_createdAt desc, _id desc)'];
+        return [o.urlValue, '| order(_createdAt desc, _id desc)'];
       case 'alpha-asc':
-        return [o.value, '| order(lower(name) asc, _id asc)'];
+        return [o.urlValue, '| order(lower(name) asc, _id asc)'];
       case 'alpha-desc':
-        return [o.value, '| order(lower(name) desc, _id desc)'];
+        return [o.urlValue, '| order(lower(name) desc, _id desc)'];
       case 'date-old':
-        return [o.value, '| order(_createdAt asc, _id asc)'];
+        return [o.urlValue, '| order(_createdAt asc, _id asc)'];
       default:
-        return [o.value, '| order(_createdAt desc, _id desc)'];
+        return [o.urlValue, '| order(_createdAt desc, _id desc)'];
     }
   })
 ) as Record<SortValue, string>;
 
 function fieldName(facet: FilterFacet) {
-  return facet.field.replace('filterAttributes.', '');
+  return facet.attribute;
+}
+
+function fieldPath(facet: FilterFacet) {
+  return FACET_FIELD_MAP[facet.urlParam];
 }
 
 function selectedValues(state: ProductQueryState, facet: FilterFacet): string[] {
@@ -87,7 +83,7 @@ function selectedValues(state: ProductQueryState, facet: FilterFacet): string[] 
 
 function addMultiOrEnumPredicate(parts: string[], params: Record<string, unknown>, facet: FilterFacet, values: string[]) {
   if (values.length === 0) return;
-  const field = facet.field;
+  const field = fieldPath(facet);
   const paramName = `${fieldName(facet)}Param`;
 
   // sang-logium-3rv.5 -- URL values are lower-cased by selectedValues() and
@@ -147,7 +143,7 @@ export function buildProductQuery(state: ProductQueryState): ProductQuery {
     if (facet.type === 'boolean') {
       const active = state[facet.urlParam as keyof ProductQueryState];
       if (active === true) {
-        parts.push(`${facet.field} == true`);
+        parts.push(`${fieldPath(facet)} == true`);
       }
       continue;
     }
@@ -160,12 +156,12 @@ export function buildProductQuery(state: ProductQueryState): ProductQuery {
       const maxVal = state[`${facet.urlParam}Max` as keyof ProductQueryState];
       if (typeof minVal === 'number') {
         const paramName = `${facet.urlParam}MinParam`;
-        parts.push(`${facet.field} >= $${paramName}`);
+        parts.push(`${fieldPath(facet)} >= $${paramName}`);
         params[paramName] = minVal;
       }
       if (typeof maxVal === 'number') {
         const paramName = `${facet.urlParam}MaxParam`;
-        parts.push(`${facet.field} <= $${paramName}`);
+        parts.push(`${fieldPath(facet)} <= $${paramName}`);
         params[paramName] = maxVal;
       }
       continue;
@@ -178,25 +174,4 @@ export function buildProductQuery(state: ProductQueryState): ProductQuery {
   const whereClause = parts.length ? ` && ${parts.join(' && ')}` : '';
 
   return { orderClause, whereClause, params };
-}
-
-/**
- * Whether any filter or non-default sort is currently active — drives the
- * EmptyResults "no results because of your filters" vs. "no products in this
- * category at all" messaging. Single source of truth (sang-logium-3rv.12
- * follow-up): app/(store)/products/page.tsx and app/(store)/products/
- * [...slug]/page.tsx each independently hand-wrote an equivalent check
- * before, and sang-logium-3rv.5 already had to fix the same bug in both
- * copies separately once — the same drift risk this file's header comment
- * already calls out (S1, risk A2) for the query itself.
- */
-export function isFiltersActive(state: ProductQueryState): boolean {
-  return FILTER_SORT_KEYS.some((key) => {
-    if (key === 'sort') return state.sort !== SORT_DEFAULT;
-    if (key === 'minPrice' || key === 'maxPrice') return state[key] != null;
-    const value = state[key];
-    if (typeof value === 'number') return true;
-    if (Array.isArray(value)) return value.length > 0;
-    return value === true;
-  });
 }

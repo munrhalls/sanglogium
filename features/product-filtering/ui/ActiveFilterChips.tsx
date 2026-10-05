@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
-import { getFacetModule, type Category } from '@/features/product-filtering/config/facetRegistry';
-import { humanizeFacetValue } from '@/features/product-filtering/domain/humanizeFacetValue';
-import { useFilterParam, useClearAllFilters } from '@/features/product-filtering/model/useFilterParam';
+import { getFacetModule, type Category } from '@/features/product-filtering/core/definitions/facetRegistry';
+import { humanizeFacetValue } from '@/features/product-filtering/core/rules/humanizeFacetValue';
+import { useFilterParam, useClearAllFilters } from '@/features/product-filtering/state/useFilterParam';
 import { formatPriceMajor } from '@/platform/utils/price';
 
 /**

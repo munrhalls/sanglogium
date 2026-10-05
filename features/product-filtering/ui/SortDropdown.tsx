@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { getFacetModule, type Category } from '@/features/product-filtering/config/facetRegistry';
-import { useFilterParam } from '@/features/product-filtering/model/useFilterParam';
+import { getFacetModule, type Category } from '@/features/product-filtering/core/definitions/facetRegistry';
+import { useFilterParam } from '@/features/product-filtering/state/useFilterParam';
 
 /**
  * URL <-> its own display only — never touches the product grid, data, counts

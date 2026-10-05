@@ -42,7 +42,7 @@
 // layer leaves alone except via the page-reset helper below).
 //
 // Price unit: the URL carries whole DOLLARS. Product `price_data.unit_amount` is
-// cents and the slider UI works in dollars (features/product-filtering/domain/priceBounds.ts,
+// cents and the slider UI works in dollars (features/product-filtering/core/rules/priceBounds.ts,
 // lib/utils/price.ts). F3 converts at the edges; the URL never carries cents.
 //
 // History mode: discrete controls (sort, inStock, brand) use
@@ -67,7 +67,7 @@
 // by both the catalogue RSC pages (via `loadFilterSort`) and the client controls
 // (via `filterSortParsers`). `nuqs/server` re-exports every parser and carries no
 // "use client" boundary, so the shared parser map is safe on both sides. The
-// client hooks (`useQueryState` etc.) still come from `nuqs` in ui/useFilterParam.ts.
+// client hooks (`useQueryState` etc.) still come from `nuqs` in state/useFilterParam.ts.
 import {
   createLoader,
   createSerializer,
@@ -79,20 +79,23 @@ import {
   parseAsStringLiteral,
 } from "nuqs/server";
 
-// Facet and sort definitions come from ./facetMap so the app and the URL contract share one shape.
+// Facet and sort definitions come from core/definitions/facetMap so the app
+// and the URL contract share one shape.
 import {
   FILTER_FACETS,
+  SORT_DEFAULT,
   SORT_OPTIONS as SORT_MAP,
   type FilterFacet,
+  type SortValue,
   isPlaceholderVocab,
-} from "./facetMap";
+} from "@/features/product-filtering/core/definitions/facetMap";
+import type { ProductQueryState } from "@/features/product-filtering/core/rules/filterTypes";
+export type { SortValue } from "@/features/product-filtering/core/definitions/facetMap";
 
 // Fixed sort allowlist. `value` goes in the URL; `label` is for the controls.
 // SortValue is derived directly from the canonical sort-map tuple so only the
 // URL values declared in facetMap.ts are valid.
-export type SortValue = (typeof SORT_MAP)[number]["urlValue"];
-
-export const SORT_DEFAULT: SortValue = "newest";
+export { SORT_DEFAULT };
 
 const SORT_VALUES = SORT_MAP.map((o) => o.urlValue) as SortValue[];
 
@@ -184,3 +187,24 @@ export const loadFilterSort = createLoader(filterSortParsers);
  * clean-URL rule. Pass a base URL/searchParams to merge into an existing query.
  */
 export const serializeFilterSort = createSerializer(filterSortParsers);
+
+/**
+ * Whether any filter or non-default sort is currently active — drives the
+ * EmptyResults "no results because of your filters" vs. "no products in this
+ * category at all" messaging. Single source of truth (sang-logium-3rv.12
+ * follow-up): app/(store)/products/page.tsx and app/(store)/products/
+ * [...slug]/page.tsx each independently hand-wrote an equivalent check
+ * before, and sang-logium-3rv.5 already had to fix the same bug in both
+ * copies separately once — the same drift risk this file's header comment
+ * already calls out (S1, risk A2) for the query itself.
+ */
+export function isFiltersActive(state: ProductQueryState): boolean {
+  return FILTER_SORT_KEYS.some((key) => {
+    if (key === 'sort') return state.sort !== SORT_DEFAULT;
+    if (key === 'minPrice' || key === 'maxPrice') return state[key] != null;
+    const value = state[key];
+    if (typeof value === 'number') return true;
+    if (Array.isArray(value)) return value.length > 0;
+    return value === true;
+  });
+}

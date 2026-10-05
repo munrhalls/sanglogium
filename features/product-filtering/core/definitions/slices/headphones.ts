@@ -151,7 +151,7 @@ export const facetsForGroup = (group: FacetGroupId): FacetDef[] => FACETS.filter
 // most-relevant, best-selling, rating-desc, discount-desc) are kept out of
 // this route's dropdown until their backing fields are populated. The
 // comparator for each value lives server-side in
-// ../../domain/buildProductQuery.ts.
+// @/features/product-filtering/adapters/sanity/buildProductQuery.ts.
 //
 // Static value/label pairs only, same shape as production's SORT_OPTIONS in
 // ../facetMap.ts — this is what the URL parser's allowlist and the
