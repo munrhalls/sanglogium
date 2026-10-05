@@ -1,16 +1,16 @@
-import { getOrderByPaymentIntentId } from '@/features/checkout/server'
+import type { OrderForSuccessPage } from '@/features/checkout/core/rules/checkoutTypes'
 import Link from 'next/link'
 import { Hourglass } from '@phosphor-icons/react/dist/ssr'
 import { RefreshButton } from '@/features/checkout'
 import { formatPrice } from '@/platform/utils/price'
 
 interface Props {
-  paymentIntentId: string
+  orderPromise: Promise<OrderForSuccessPage | null>
   fallbackTotal: number
 }
 
-export default async function OrderDetails({ paymentIntentId, fallbackTotal }: Props) {
-  const order = await getOrderByPaymentIntentId(paymentIntentId)
+export default async function OrderDetails({ orderPromise, fallbackTotal }: Props) {
+  const order = await orderPromise
 
   if (!order) {
     const fallbackFormatted = formatPrice(fallbackTotal)

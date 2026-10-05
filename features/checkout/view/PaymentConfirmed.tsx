@@ -1,6 +1,7 @@
 import { Suspense } from 'react'
 import type Stripe from 'stripe'
 import { CheckCircle, Lock } from '@phosphor-icons/react/dist/ssr'
+import type { OrderForSuccessPage } from '@/features/checkout/core/rules/checkoutTypes'
 import OrderDetails from './OrderDetails'
 import { OrderDetailsSkeleton, OrderNextSteps, SuccessAnalytics, getPaymentMethodHint } from '@/features/checkout'
 import { formatPrice } from '@/platform/utils/price'
@@ -9,9 +10,10 @@ interface Props {
   paymentIntentId: string
   amount: number
   latestCharge: Stripe.PaymentIntent['latest_charge']
+  orderPromise: Promise<OrderForSuccessPage | null>
 }
 
-export default function PaymentConfirmed({ paymentIntentId, amount, latestCharge }: Props) {
+export default function PaymentConfirmed({ paymentIntentId, amount, latestCharge, orderPromise }: Props) {
   const amountFormatted = formatPrice(amount)
   const paymentMethodHint = getPaymentMethodHint(latestCharge)
 
@@ -38,7 +40,7 @@ export default function PaymentConfirmed({ paymentIntentId, amount, latestCharge
       <div className="grid grid-cols-1 gap-6 lg-touch:grid-cols-[3fr_2fr] lg-desktop:grid-cols-[3fr_2fr]">
         <div>
           <Suspense fallback={<OrderDetailsSkeleton />}>
-            <OrderDetails paymentIntentId={paymentIntentId} fallbackTotal={amount} />
+            <OrderDetails orderPromise={orderPromise} fallbackTotal={amount} />
           </Suspense>
         </div>
         <OrderNextSteps />

@@ -55,13 +55,34 @@ export type AddressValidation = {
   placesAutocomplete: (q: string) => Promise<AutocompleteResult[]>;
 };
 
+export type CheckoutSessionHandle = CheckoutSession & {
+  save: () => Promise<void>;
+  destroy: () => void;
+};
+
 export type CheckoutSessions = {
-  getCheckoutSession: () => Promise<CheckoutSession>;
+  getCheckoutSession: () => Promise<CheckoutSessionHandle>;
 };
 
 export type Payments = {
   stripe: Stripe;
   retrievePaymentIntent: (paymentIntentId: string) => Promise<Stripe.PaymentIntent>;
+  constructWebhookEvent: (
+    rawBody: string,
+    signature: string,
+    secret: string
+  ) => Stripe.Event;
+  updatePaymentIntentAmount: (
+    paymentIntentId: string,
+    amount: number,
+    metadata: Record<string, string>,
+    idempotencyKey: string
+  ) => Promise<Stripe.PaymentIntent>;
+  createPaymentIntentForAmount: (
+    amount: number,
+    metadata: Record<string, string>,
+    idempotencyKey: string
+  ) => Promise<Stripe.PaymentIntent>;
 };
 
 export type OrderEmails = {
