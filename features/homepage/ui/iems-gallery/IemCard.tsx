@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { IemProduct } from "@/features/homepage/domain/homepageTypes";
+import type { IemProduct } from "@/features/homepage/core/rules/homepageTypes";
 import { BasketControls } from "@/features/basket";
 import { Price } from "@/platform/design/ui/Price";
 import { ProductBadge } from "@/features/homepage/ui/shared/ProductBadge";

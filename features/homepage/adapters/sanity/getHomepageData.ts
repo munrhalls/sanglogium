@@ -1,7 +1,10 @@
+import "server-only";
+
 import { sanityFetch } from "@/platform/db/client";
 import { defineQuery } from "next-sanity";
 import { resolveSlugToId } from "@/features/catalogue/server";
-import type { HeroData, FeaturedProduct, SpotlightProduct, SpotlightData, IemProduct, NewestReleaseData, DacProduct, AccessoryProduct, AccessoryData, HomepageData } from "@/features/homepage";
+import type { HeroData, FeaturedProduct, SpotlightProduct, SpotlightData, IemProduct, NewestReleaseData, DacProduct, AccessoryProduct, AccessoryData } from "@/features/homepage/core/rules/homepageTypes";
+import type { HomepageSections } from "@/features/homepage/core/ports";
 
 // ============================================================================
 // Unified GROQ Queries - Single batched request for all homepage data
@@ -303,210 +306,77 @@ function processNewestReleaseData(data: NewestReleaseData | null): NewestRelease
  * Fetch hero data from hero document.
  * Separate query because hero is a different document type.
  */
-async function fetchHeroData(): Promise<HeroData | null> {
-  try {
-    const heroData = await sanityFetch<HeroData>({ query: HERO_QUERY });
-    return heroData || null;
-  } catch (error) {
-    console.error("[homepageBatch] Error fetching hero data:", error);
-    return null;
-  }
+export async function fetchHeroData(): Promise<HeroData | null> {
+  const heroData = await sanityFetch<HeroData>({ query: HERO_QUERY });
+  return heroData || null;
 }
 
 /**
  * Fetch all homepage data sections in a single batched query.
  * Replaces 8 separate API calls with 1 request.
  */
-async function fetchHomepageSections(): Promise<{
-  featured: FeaturedProduct[];
-  spotlight1: SpotlightData | null;
-  spotlight2: SpotlightData | null;
-  spotlight3: SpotlightData | null;
-  iemsGallery: IemProduct[];
-  newestRelease: NewestReleaseData | null;
-  dacs: DacProduct[];
-  accessories: AccessoryData;
-}> {
-  try {
-    const slotIds = {
-      cablesId: resolveSlugToId("headphone-cables"),
-      interconnectsId: resolveSlugToId("interconnects"),
-      adaptersId: resolveSlugToId("adapters"),
-      earpadsId: resolveSlugToId("earpads"),
-      eartipsId: resolveSlugToId("eartips"),
-      careCleaningId: resolveSlugToId("care-cleaning"),
-      storageStandsId: resolveSlugToId("headphone-stands"),
-      carryingCasesId: resolveSlugToId("carrying-cases"),
-    };
+export async function fetchHomepageSections(): Promise<HomepageSections | null> {
+  const slotIds = {
+    cablesId: resolveSlugToId("headphone-cables"),
+    interconnectsId: resolveSlugToId("interconnects"),
+    adaptersId: resolveSlugToId("adapters"),
+    earpadsId: resolveSlugToId("earpads"),
+    eartipsId: resolveSlugToId("eartips"),
+    careCleaningId: resolveSlugToId("care-cleaning"),
+    storageStandsId: resolveSlugToId("headphone-stands"),
+    carryingCasesId: resolveSlugToId("carrying-cases"),
+  };
 
-    const missingSlot = Object.entries(slotIds).find(([, id]) => id === undefined);
-    if (missingSlot) {
-      throw new Error(`resolveSlugToId returned undefined for accessory slot param "${missingSlot[0]}" — check data/catalogue-index.json`);
-    }
-
-    const rawData = await sanityFetch<{
-      featured?: FeaturedProduct[];
-      spotlight1?: SpotlightData;
-      spotlight2?: SpotlightData;
-      spotlight3?: SpotlightData;
-      iemsGallery?: IemProduct[];
-      newestRelease?: NewestReleaseData;
-      dacs?: DacProduct[];
-      accessoriesCables?: AccessoryProduct[];
-      accessoriesInterconnects?: AccessoryProduct[];
-      accessoriesAdapters?: AccessoryProduct[];
-      accessoriesEarpads?: AccessoryProduct[];
-      accessoriesEartips?: AccessoryProduct[];
-      accessoriesCareCleaning?: AccessoryProduct[];
-      accessoriesStorage?: AccessoryProduct[];
-    }>({ query: HOMEPAGE_DATA_QUERY, params: slotIds });
-
-    if (!rawData) {
-      console.warn("[homepageBatch] No homepageData document found");
-      return {
-        featured: [],
-        spotlight1: null,
-        spotlight2: null,
-        spotlight3: null,
-        iemsGallery: [],
-        newestRelease: null,
-        dacs: [],
-        accessories: {
-          cables: [],
-          interconnects: [],
-          adapters: [],
-          earpads: [],
-          eartips: [],
-          careCleaning: [],
-          storage: []
-        }
-      };
-    }
-
-    // Process spotlights to merge gallery into images
-    const spotlight1 = processSpotlightData(rawData.spotlight1 ?? null);
-    const spotlight2 = processSpotlightData(rawData.spotlight2 ?? null);
-    const spotlight3 = processSpotlightData(rawData.spotlight3 ?? null);
-    const newestRelease = processNewestReleaseData(rawData.newestRelease ?? null);
-    const accessories: AccessoryData = {
-      cables: rawData.accessoriesCables ?? [],
-      interconnects: rawData.accessoriesInterconnects ?? [],
-      adapters: rawData.accessoriesAdapters ?? [],
-      earpads: rawData.accessoriesEarpads ?? [],
-      eartips: rawData.accessoriesEartips ?? [],
-      careCleaning: rawData.accessoriesCareCleaning ?? [],
-      storage: rawData.accessoriesStorage ?? []
-    };
-
-    return {
-      featured: rawData.featured ?? [],
-      spotlight1,
-      spotlight2,
-      spotlight3,
-      iemsGallery: rawData.iemsGallery ?? [],
-      newestRelease,
-      dacs: rawData.dacs ?? [],
-      accessories
-    };
-  } catch (error) {
-    console.error("[homepageBatch] Error fetching homepage sections:", error);
-    // Return empty structure to prevent page crashes
-    return {
-      featured: [],
-      spotlight1: null,
-      spotlight2: null,
-      spotlight3: null,
-      iemsGallery: [],
-      newestRelease: null,
-      dacs: [],
-      accessories: {
-        cables: [],
-        interconnects: [],
-        adapters: [],
-        earpads: [],
-        eartips: [],
-        careCleaning: [],
-        storage: []
-      }
-    };
+  const missingSlot = Object.entries(slotIds).find(([, id]) => id === undefined);
+  if (missingSlot) {
+    throw new Error(`resolveSlugToId returned undefined for accessory slot param "${missingSlot[0]}" — check data/catalogue-index.json`);
   }
-}
 
-/**
- * Fetch all homepage data in 2 batched requests (down from 10).
- * Returns data in exact shape expected by HomepageData interface.
- */
-export async function fetchHomepageDataBatched(): Promise<HomepageData> {
-  const startTime = performance.now();
+  const rawData = await sanityFetch<{
+    featured?: FeaturedProduct[];
+    spotlight1?: SpotlightData;
+    spotlight2?: SpotlightData;
+    spotlight3?: SpotlightData;
+    iemsGallery?: IemProduct[];
+    newestRelease?: NewestReleaseData;
+    dacs?: DacProduct[];
+    accessoriesCables?: AccessoryProduct[];
+    accessoriesInterconnects?: AccessoryProduct[];
+    accessoriesAdapters?: AccessoryProduct[];
+    accessoriesEarpads?: AccessoryProduct[];
+    accessoriesEartips?: AccessoryProduct[];
+    accessoriesCareCleaning?: AccessoryProduct[];
+    accessoriesStorage?: AccessoryProduct[];
+  }>({ query: HOMEPAGE_DATA_QUERY, params: slotIds });
 
-  try {
-    // Parallel fetch of hero (separate doc type) and homepage sections (single batched query)
-    const [hero, sections] = await Promise.all([
-      fetchHeroData(),
-      fetchHomepageSections()
-    ]);
-
-    const duration = performance.now() - startTime;
-    console.log(`[Homepage Data Fetch (Batched)] Completed in ${duration.toFixed(2)}ms`);
-
-    return {
-      hero,
-      ...sections
-    };
-  } catch (error) {
-    console.error("[homepageBatch] Error in batched fetch:", error);
-    const duration = performance.now() - startTime;
-    console.log(`[Homepage Data Fetch (Batched)] Failed after ${duration.toFixed(2)}ms`);
-
-    // Return empty data structure to prevent page crashes
-    return {
-      hero: null,
-      featured: [],
-      spotlight1: null,
-      spotlight2: null,
-      spotlight3: null,
-      iemsGallery: [],
-      newestRelease: null,
-      dacs: [],
-      accessories: {
-        cables: [],
-        interconnects: [],
-        adapters: [],
-        earpads: [],
-        eartips: [],
-        careCleaning: [],
-        storage: []
-      }
-    };
+  if (!rawData) {
+    console.warn("[homepageBatch] No homepageData document found");
+    return null;
   }
-}
 
-export async function fetchHomepageData(): Promise<HomepageData> {
-  try {
-    const data = await fetchHomepageDataBatched();
+  // Process spotlights to merge gallery into images
+  const spotlight1 = processSpotlightData(rawData.spotlight1 ?? null);
+  const spotlight2 = processSpotlightData(rawData.spotlight2 ?? null);
+  const spotlight3 = processSpotlightData(rawData.spotlight3 ?? null);
+  const newestRelease = processNewestReleaseData(rawData.newestRelease ?? null);
+  const accessories: AccessoryData = {
+    cables: rawData.accessoriesCables ?? [],
+    interconnects: rawData.accessoriesInterconnects ?? [],
+    adapters: rawData.accessoriesAdapters ?? [],
+    earpads: rawData.accessoriesEarpads ?? [],
+    eartips: rawData.accessoriesEartips ?? [],
+    careCleaning: rawData.accessoriesCareCleaning ?? [],
+    storage: rawData.accessoriesStorage ?? []
+  };
 
-    return data;
-  } catch (error) {
-    console.error('Error fetching homepage data:', error);
-
-    return {
-      hero: null,
-      featured: [],
-      spotlight1: null,
-      spotlight2: null,
-      spotlight3: null,
-      iemsGallery: [],
-      newestRelease: null,
-      dacs: [],
-      accessories: {
-        cables: [],
-        interconnects: [],
-        adapters: [],
-        earpads: [],
-        eartips: [],
-        careCleaning: [],
-        storage: []
-      }
-    };
-  }
+  return {
+    featured: rawData.featured ?? [],
+    spotlight1,
+    spotlight2,
+    spotlight3,
+    iemsGallery: rawData.iemsGallery ?? [],
+    newestRelease,
+    dacs: rawData.dacs ?? [],
+    accessories
+  };
 }
