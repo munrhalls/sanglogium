@@ -1,21 +1,11 @@
+import "server-only";
+import type { AuthDeps } from "@/features/auth/core/ports";
 import { betterAuth } from "better-auth";
 import { kyselyAdapter } from "@better-auth/kysely-adapter";
 import { Kysely } from "kysely";
 import { LibsqlDialect } from "kysely-libsql";
 import { nextCookies } from "better-auth/next-js";
 import { twoFactor } from "better-auth/plugins";
-import {
-  sendVerificationEmail,
-  sendResetPasswordEmail,
-  sendDeleteAccountVerification,
-} from "@/features/auth/adapters/resend/authEmails";
-import { hasOpenOrders } from "@/sanity-cms/lib/orders/hasOpenOrders";
-import { anonymizeUserOrders } from "@/sanity-cms/lib/orders/anonymizeUserOrders";
-import { deleteUserProfile } from "@/sanity-cms/lib/account/deleteUserProfile";
-import { syncUserProfile } from "@/sanity-cms/lib/account/syncUserProfile";
-import { createUserProfileIfMissing } from "@/sanity-cms/lib/account/createUserProfileIfMissing";
-import { mergeGuestOrdersByEmail } from "@/sanity-cms/lib/orders/mergeGuestOrders";
-
 function validateDatabaseConfig() {
   const databaseUrl = process.env.DATABASE_URL || "";
 
@@ -64,7 +54,8 @@ if (!process.env.BETTER_AUTH_SECRET) {
   );
 }
 
-export const auth = betterAuth({
+export function createAuth(deps: AuthDeps) {
+  return betterAuth({
   database: kyselyAdapter(db, { type: "sqlite" }),
   secret: process.env.BETTER_AUTH_SECRET,
   secrets: process.env.BETTER_AUTH_SECRETS
@@ -95,7 +86,7 @@ export const auth = betterAuth({
     },
   },
   emailVerification: {
-    sendVerificationEmail,
+    sendVerificationEmail: deps.emails.sendVerificationEmail,
     sendOnSignUp: true,
     expiresIn: 60 * 60,
   },
@@ -105,7 +96,7 @@ export const auth = betterAuth({
     minPasswordLength: 8,
     maxPasswordLength: 128,
     autoSignIn: false,
-    sendResetPassword: sendResetPasswordEmail,
+    sendResetPassword: deps.emails.sendResetPasswordEmail,
     resetPasswordTokenExpiresIn: 60 * 60,
     revokeSessionsOnPasswordReset: true,
   },
@@ -126,10 +117,10 @@ export const auth = betterAuth({
     deleteUser: {
       enabled: true,
       sendDeleteAccountVerification: async ({ user, url, token }) => {
-        await sendDeleteAccountVerification({ user, url, token });
+        await deps.emails.sendDeleteAccountVerification({ user, url, token });
       },
       beforeDelete: async (user) => {
-        if (await hasOpenOrders(user.id)) {
+        if (await deps.orders.hasOpenOrders(user.id)) {
           throw new Error(
             "Cannot delete account with open orders. Please wait for all orders to be delivered or cancelled."
           );
@@ -138,7 +129,7 @@ export const auth = betterAuth({
       afterDelete: async (user) => {
         // Hard-delete the user profile (no legally required retention).
         try {
-          await deleteUserProfile(user.id);
+          await deps.profiles.deleteUserProfile(user.id);
         } catch (error) {
           console.error("[AUTH] afterDelete: failed to delete userProfile.", {
             authId: user.id,
@@ -148,7 +139,7 @@ export const auth = betterAuth({
 
         // Anonymize order history: remove userId but keep orders for accounting/tax.
         try {
-          await anonymizeUserOrders(user.id);
+          await deps.orders.anonymizeUserOrders(user.id);
         } catch (error) {
           console.error("[AUTH] afterDelete: failed to anonymize orders.", {
             authId: user.id,
@@ -163,7 +154,7 @@ export const auth = betterAuth({
       update: {
         after: async (user) => {
           try {
-            await syncUserProfile(user);
+            await deps.profiles.syncUserProfile(user);
           } catch (error) {
             console.error("[AUTH] HOOK FAILED: userProfile sync on update.", {
               authId: user.id,
@@ -174,7 +165,7 @@ export const auth = betterAuth({
           if (!user.emailVerified || !user.email) return;
 
           try {
-            const { linked } = await mergeGuestOrdersByEmail(
+            const { linked } = await deps.orders.mergeGuestOrders(
               user.id,
               user.email
             );
@@ -198,7 +189,7 @@ export const auth = betterAuth({
       create: {
         after: async (user) => {
           try {
-            const result = await createUserProfileIfMissing(user);
+            const result = await deps.profiles.createUserProfileIfMissing(user);
             if (result === "existing") return;
 
             console.log("[AUTH] HOOK: userProfile created via databaseHooks.", {
@@ -215,7 +206,7 @@ export const auth = betterAuth({
             // the user is already persisted. True atomic rollback is impossible here.
             // The user now exists in Better Auth without a linked userProfile.
             //
-            // Mitigation (healing): `features/auth/adapters/session.ts` `ensureUserProfile()` auto-creates
+            // Mitigation (healing): `features/auth/adapters/better-auth/session.ts` `ensureUserProfile()` auto-creates
             // the missing profile on the first authenticated page load (Server Components
             // via `verifySession()`). This acts as a deferred cleanup/flagging strategy.
             //
@@ -237,3 +228,4 @@ export const auth = betterAuth({
     }),
   ],
 });
+}

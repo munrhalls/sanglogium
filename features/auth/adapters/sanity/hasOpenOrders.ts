@@ -1,3 +1,4 @@
+import "server-only";
 import { backendClient } from "@/platform/db/backendClient";
 
 const OPEN_STATUSES = [
