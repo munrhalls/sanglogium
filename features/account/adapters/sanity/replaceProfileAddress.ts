@@ -1,7 +1,8 @@
+import "server-only";
 import { backendClient } from "@/platform/db/backendClient";
 import type { Address } from "@/features/checkout";
 
-// addressKey must already be validated by the caller (isValidAddressKey in features/account/actions.ts).
+// addressKey must already be validated by the caller (isValidAddressKey in features/account/core/rules/addressInput.ts).
 export async function replaceProfileAddress(
   profileId: string,
   addressKey: string,

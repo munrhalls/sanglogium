@@ -1,3 +1,4 @@
+import "server-only";
 import { backendClient } from "@/platform/db/backendClient";
 
 export async function setMarketingOptIn(
