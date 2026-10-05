@@ -1,5 +1,5 @@
 import { cn } from "@/platform/utils/tailwind";
-import type { NavigationItem } from "@/features/catalogue/domain/catalogue";
+import type { NavigationItem } from "@/features/catalogue/core/rules/catalogue";
 import {
   CarouselPrevious,
   CarouselNext,

@@ -10,7 +10,7 @@ import Header from "@/app/components/layout/header/Header";
 import Footer from "@/app/components/layout/footer/Footer";
 import DrawersManager from "@/app/components/layout/drawers/DrawersManager";
 import ActionBarServer from "@/app/components/layout/navigation/ActionBarServer";
-import { CatalogueNavbar } from "@/features/catalogue";
+import { CatalogueNavbar } from "@/features/catalogue/server";
 import { WebVitals } from "@/platform/analytics/WebVitals";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import GoogleAnalytics from "@/platform/analytics/GoogleAnalytics";

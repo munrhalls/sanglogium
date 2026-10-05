@@ -1,5 +1,3 @@
-import catalogueIndex from "@/data/catalogue-index.json";
-
 export interface CatalogueTreeNode {
   _key: string;
   _type: "catalogueItem";
@@ -12,59 +10,12 @@ export interface CatalogueTreeNode {
 
 export type CatalogueTree = CatalogueTreeNode[];
 
-interface CatalogueIndexData {
+export interface CatalogueIndexData {
   generatedAt: string;
   slugToIdMap: Record<string, string>;
   slotMetadataMap: Record<string, { children: string[] }>;
   tree: CatalogueTree;
 }
-
-export const getCatalogue = (): CatalogueTree => {
-  const data = catalogueIndex as unknown;
-
-  try {
-    validateCatalogueIndex(data);
-    return (data as CatalogueIndexData).tree || [];
-  } catch (error) {
-    console.error('❌ Catalogue validation failed:', error);
-    // Return empty tree as graceful fallback
-    return [];
-  }
-};
-
-export const resolveSlugToId = (slug: string) => {
-  const data = catalogueIndex as unknown as CatalogueIndexData;
-  return data.slugToIdMap[slug];
-};
-
-export const unrollDescendantKeys = (nodeId: string): string[] => {
-  const data = catalogueIndex as unknown as CatalogueIndexData;
-  const slotMetadataMap = data.slotMetadataMap;
-
-  // If ID not in slotMetadataMap, treat as leaf node and return itself
-  if (!slotMetadataMap[nodeId]) {
-    if (process.env.NODE_ENV === "development") {
-      console.warn(`[VFS] ID ${nodeId} not in slotMetadataMap, treating as leaf`);
-    }
-    return [nodeId];
-  }
-
-  const result = new Set<string>();
-  const stack = [nodeId];
-
-  while (stack.length > 0) {
-    const currentId = stack.pop()!;
-    if (result.has(currentId)) {
-      continue;
-    }
-
-    result.add(currentId);
-    const children = slotMetadataMap[currentId]?.children || [];
-    stack.push(...children);
-  }
-
-  return Array.from(result);
-};
 
 // Runtime validation for VFS data integrity
 export function validateCatalogueIndex(data: unknown): asserts data is CatalogueIndexData {
@@ -131,9 +82,7 @@ export interface NavigationItem {
 }
 
 // Transform VFS tree to navigation format
-export const getCatalogueForNavigation = (): NavigationItem[] => {
-  const tree = getCatalogue();
-
+export const catalogueToNavigation = (tree: CatalogueTree): NavigationItem[] => {
   return tree.map(rootItem => {
     const navigationItem: NavigationItem = {
       id: rootItem.slug?.current || rootItem.title.toLowerCase().replace(/\s+/g, '-'),
@@ -182,12 +131,4 @@ export const getCatalogueForNavigation = (): NavigationItem[] => {
 
     return navigationItem;
   });
-};
-
-
-export const getAllLeafKeys = (): string[] => {
-  const data = catalogueIndex as unknown as CatalogueIndexData;
-  return Object.entries(data.slotMetadataMap)
-    .filter(([_, v]) => v.children.length === 0)
-    .map(([id]) => id);
 };
