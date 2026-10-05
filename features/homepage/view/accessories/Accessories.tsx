@@ -1,6 +1,6 @@
-import AccessoriesHeader from "./AccessoriesHeader";
-import CategorySection from "./CategorySection";
-import type { AccessoryData } from "@/features/homepage/domain/homepageTypes";
+import AccessoriesHeader from "@/features/homepage/ui/accessories/AccessoriesHeader";
+import CategorySection from "@/features/homepage/ui/accessories/CategorySection";
+import type { AccessoryData } from "@/features/homepage/core/rules/homepageTypes";
 
 interface AccessoriesProps {
   accessoriesData: AccessoryData;

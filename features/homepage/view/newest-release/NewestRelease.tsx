@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import type { NewestReleaseData } from "@/features/homepage/domain/homepageTypes";
+import type { NewestReleaseData } from "@/features/homepage/core/rules/homepageTypes";
 import { formatPrice } from "@/platform/utils/price";
 import { Carousel } from "@/platform/design/ui/carousel/CarouselRoot";
 import { CarouselTrack } from "@/platform/design/ui/carousel/CarouselTrack";

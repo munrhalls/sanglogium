@@ -4,9 +4,9 @@ import { Carousel } from '@/platform/design/ui/carousel/CarouselRoot';
 import { CarouselTrack } from '@/platform/design/ui/carousel/CarouselTrack';
 import { CarouselSlide } from '@/platform/design/ui/carousel/CarouselSlide';
 import { CarouselNext, CarouselPrevious, CarouselDots } from '@/platform/design/ui/carousel/CarouselControls';
-import DacsHeader from "./DacsHeader";
-import DacCard from "./DacCard";
-import type { DacProduct } from "@/features/homepage/domain/homepageTypes";
+import DacsHeader from "@/features/homepage/ui/dacs/DacsHeader";
+import DacCard from "@/features/homepage/ui/dacs/DacCard";
+import type { DacProduct } from "@/features/homepage/core/rules/homepageTypes";
 
 interface DacsProps {
   dacsData: DacProduct[];
