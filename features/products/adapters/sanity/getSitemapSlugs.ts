@@ -1,9 +1,6 @@
+import "server-only";
+import type { SitemapSlug } from '@/features/products/core/rules/productDataTypes';
 import { client } from '@/platform/db/client';
-
-export interface SitemapSlug {
-  slug: string;
-  _updatedAt?: string;
-}
 
 export async function getSitemapSlugs(): Promise<{
   products: SitemapSlug[];

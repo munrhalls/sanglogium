@@ -1,3 +1,5 @@
+import "server-only";
+import type { CategoryMetadata } from '@/features/products/core/rules/productDataTypes';
 import catalogueIndex from '@/data/catalogue-index.json';
 
 // React cache is only available in React Server Components
@@ -11,15 +13,6 @@ const withCache = <T extends (...args: any[]) => any>(fn: T): T => {
     return fn;
   }
 };
-
-export interface CategoryMetadata {
-  id: string;
-  name: string;
-  slug: string | null;
-  type: 'header' | 'link';
-  parentId: string | null;
-  breadcrumb: Array<{ label: string; href: string }>;
-}
 
 const getCategoryMetadataFn = async (key: string): Promise<CategoryMetadata | null> => {
   const metadata = catalogueIndex.slotMetadataMap[key as keyof typeof catalogueIndex.slotMetadataMap];

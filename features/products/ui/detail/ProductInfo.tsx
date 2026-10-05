@@ -1,6 +1,6 @@
 "use client";
 
-import type { ProductDetailData as Product } from "@/features/products/domain/productTypes";
+import type { ProductDetailData as Product } from "@/features/products/core/rules/productTypes";
 import { urlFor } from '@/platform/db/imageUrl';
 import { useState } from 'react';
 import { Price } from '@/platform/design/ui/Price';

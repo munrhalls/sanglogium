@@ -1,6 +1,7 @@
+import "server-only";
 import { sanityFetch } from '@/platform/db/client';
 import groq from 'groq';
-import type { RelatedProduct } from '@/features/products';
+import type { RelatedProduct } from '@/features/products/core/rules/productTypes';
 
 export async function getRelatedProducts(
   currentId: string,
