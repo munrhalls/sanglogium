@@ -7,5 +7,5 @@ export { default as VerifyEmailForm } from './ui/VerifyEmailForm';
 export { default as ForgotPasswordForm } from './ui/ForgotPasswordForm';
 export { default as ResetPasswordForm } from './ui/ResetPasswordForm';
 export { TwoFactorSection } from './ui/TwoFactorSection';
-export { signOut, signOutAllDevices } from './model/useSignOut';
+export { signOut, signOutAllDevices } from './state/useSignOut';
 export { authClient } from './state/authClient';
