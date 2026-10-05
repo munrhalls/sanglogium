@@ -1,18 +1,8 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
-import { resolveSlugToId, unrollDescendantKeys } from '@/features/catalogue/server';
-import Breadcrumbs from './CategoryBreadcrumbs';
-import { getCategoryMetadata } from '@/sanity-cms/lib/products/getCategoryMetadata';
-import { getProductsCount, getProductsChunk } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
-import { getFilterFacets, getCategoryPriceRange } from '@/features/product-filtering/server';
-import { getWishlistProductIds } from "@/features/products/server";
-import { ShopHeader, EmptyResults, Pagination, ChunkedProductGrid, CHUNK_SIZE } from "@/features/products";
-import { ActiveFilterChips, FilterSidebar, SortBar, isCategory, isFiltersActive, loadFilterSort, resolvePriceBounds, sanitizeFilterState, type Category, type ProductQueryState } from '@/features/product-filtering';
-import { isFacetedQuery, canonicalCategoryPath } from '@/features/catalogue';
+import { getListingPage, getListingMetadata, ListingPage } from '@/features/products/server';
 
 export const dynamic = 'force-dynamic';
-
-const PER_PAGE = 24;
 
 interface CategoryPageProps {
   params: Promise<{ slug: string[] }>;
@@ -22,144 +12,15 @@ interface CategoryPageProps {
 export default async function CategoryPage({ params, searchParams }: CategoryPageProps) {
   const { slug } = await params;
   const query = await searchParams;
-  const leafSlug = slug[slug.length - 1];
-  const nodeId = resolveSlugToId(leafSlug);
+  const result = await getListingPage({ slug, query });
+  if (result.notFound) notFound();
 
-  if (!nodeId) {
-    notFound();
-  }
-
-  // slug[0] is always the top-level category (headphones/audio-electronics/
-  // accessories), including for nested category pages -- picks which of the
-  // three per-category facet modules drives the sidebar (sang-logium-3rv.6).
-  // isCategory's type guard only narrows a plain variable, not an indexed
-  // expression like slug[0] directly -- bind it first or the ternary widens
-  // back to `string` and fails FilterSidebarProps.category's `Category` type.
-  const rawCategory = slug[0];
-  const category: Category = isCategory(rawCategory) ? rawCategory : 'headphones';
-
-  const pageValue = Array.isArray(query.page) ? query.page[0] : query.page;
-  const page = typeof pageValue === 'string' ? Number(pageValue) : 1;
-  const descendantKeys = unrollDescendantKeys(nodeId);
-
-  // Drop URL filter values that match nothing valid for this route (e.g.
-  // ?brand=notabrand, ?driverType=banana) so a junk deep link is inert instead
-  // of a dead-end empty page. Closed-vocab facets are vetted purely up front;
-  // brand is data-derived, so it is vetted below against the brand slugs the
-  // facet computation finds on this route. (jw8.3)
-  const preState = sanitizeFilterState(
-    loadFilterSort(query) as ProductQueryState,
-  );
-
-  const [metadata, facets, priceRange, wishlistProductIds] = await Promise.all([
-    getCategoryMetadata(nodeId),
-    getFilterFacets({ keys: descendantKeys, state: preState }),
-    // FULL category price span — not narrowed by active filters, so the max
-    // handle can always be dragged back up past the current selection.
-    getCategoryPriceRange({ keys: descendantKeys }),
-    getWishlistProductIds(),
-  ]);
-
-  const state = sanitizeFilterState(preState, {
-    brand: Object.keys(facets.brandLabels),
-  });
-
-  const filtersActive = isFiltersActive(state);
-
-  const totalCount = await getProductsCount({ keys: descendantKeys, state });
-  const priceBounds = resolvePriceBounds(priceRange);
-
-  if (!metadata) {
-    notFound();
-  }
-
-  const categoryPath = slug.length > 1
-    ? slug[0].split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
-    : undefined;
-
-  const totalPages = Math.ceil(totalCount / PER_PAGE);
-  const effectivePage = totalPages > 0 ? Math.min(Math.max(1, page || 1), totalPages) : Math.max(1, page || 1);
-  const pageStart = (effectivePage - 1) * PER_PAGE;
-
-  // Fire one chunk fetch per CHUNK_SIZE slice of the page, in parallel and
-  // unawaited — each is streamed in independently via ChunkedProductGrid's
-  // own Suspense boundaries.
-  const chunkPromises = Array.from(
-    { length: Math.ceil(PER_PAGE / CHUNK_SIZE) },
-    (_, i) => getProductsChunk({ keys: descendantKeys, offset: pageStart + i * CHUNK_SIZE, limit: CHUNK_SIZE, state }),
-  );
-
-  return (
-    <div className="mx-auto w-full max-w-catalogue px-4 md:px-8 pb-12">
-      <Breadcrumbs categoryParts={slug} />
-      <ShopHeader title={metadata.name} overline={categoryPath} />
-
-      <div className="flex flex-col lg-touch:flex-row lg-desktop:flex-row gap-8">
-        <FilterSidebar
-          key={category}
-          category={category}
-          checkboxCounts={facets.groups}
-          booleanCounts={facets.booleans}
-          brandLabels={facets.brandLabels}
-          priceBounds={{ min: priceBounds.min, max: priceBounds.max }}
-          rangeBounds={facets.ranges}
-          isDefaultState={facets.isDefaultState}
-        />
-        <div className="min-w-0 flex-1">
-          <ActiveFilterChips key={category} category={category} brandLabels={facets.brandLabels} />
-          <SortBar
-            key={category}
-            totalCount={totalCount}
-            category={category}
-            mobileFilterProps={{
-              checkboxCounts: facets.groups,
-              booleanCounts: facets.booleans,
-              brandLabels: facets.brandLabels,
-              priceBounds: { min: priceBounds.min, max: priceBounds.max },
-              rangeBounds: facets.ranges,
-              isDefaultState: facets.isDefaultState,
-            }}
-          />
-          {totalCount === 0 ? (
-            <EmptyResults filtersActive={filtersActive} />
-          ) : (
-            <>
-              <ChunkedProductGrid chunkPromises={chunkPromises} wishlistProductIds={wishlistProductIds} />
-              <Pagination
-                currentPage={effectivePage}
-                totalPages={totalPages}
-                totalCount={totalCount}
-                perPage={PER_PAGE}
-              />
-            </>
-          )}
-        </div>
-      </div>
-    </div>
-  );
+  return <ListingPage {...result} />;
 }
 
 // Generate metadata for SEO
 export async function generateMetadata({ params, searchParams }: CategoryPageProps) {
   const { slug } = await params;
   const query = await searchParams;
-  const leafSlug = slug[slug.length - 1];
-  const nodeId = resolveSlugToId(leafSlug);
-
-  if (!nodeId) {
-    return { title: 'Category Not Found' };
-  }
-
-  const metadata = await getCategoryMetadata(nodeId);
-
-  if (!metadata) {
-    return { title: 'Category Not Found' };
-  }
-
-  return {
-    title: `${metadata.name} — Sang Logium`,
-    description: `Browse ${metadata.name} headphones and audio equipment`,
-    alternates: { canonical: canonicalCategoryPath(slug) },
-    robots: isFacetedQuery(query) ? { index: false, follow: true } : undefined,
-  };
+  return getListingMetadata({ slug, query });
 }

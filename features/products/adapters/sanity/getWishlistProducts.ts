@@ -1,5 +1,6 @@
+import "server-only";
 import { backendClient } from "@/platform/db/backendClient";
-import type { Product } from "@/features/products";
+import type { Product } from "@/features/products/core/rules/productTypes";
 
 export async function getWishlistProducts(authId: string): Promise<Product[]> {
   const result = await backendClient.fetch<{ products: Product[] | null } | null>(

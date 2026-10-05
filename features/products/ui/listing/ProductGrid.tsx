@@ -1,9 +1,9 @@
 import React from "react";
 import { cn } from "@/platform/utils/tailwind";
 import { ProductCard } from "@/features/products/ui/card/ProductCard";
-import { productGridClass } from "@/features/products/config/gridLayout";
+import { productGridClass } from "@/features/products/core/definitions/gridLayout";
 import { ImageRevealScript } from "@/features/products/ui/card/ImageRevealScript";
-import type { Product } from "@/features/products/domain/productTypes";
+import type { Product } from "@/features/products/core/rules/productTypes";
 
 interface ProductGridProps {
   products: Product[];

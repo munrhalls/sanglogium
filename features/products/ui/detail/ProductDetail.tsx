@@ -1,4 +1,4 @@
-import type { ProductDetailData as Product, RelatedProduct } from "@/features/products/domain/productTypes";
+import type { ProductDetailData as Product, RelatedProduct } from "@/features/products/core/rules/productTypes";
 import { ImageGallery } from './ImageGallery';
 import { ProductInfo } from './ProductInfo';
 import { RelatedProducts } from './RelatedProducts';

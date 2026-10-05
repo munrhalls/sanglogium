@@ -27,3 +27,7 @@
 // same cascade reason the columns are (nothing later matches `sm:`).
 export const productGridClass =
   "grid gap-3 sm:gap-6 grid-cols-2 sm:grid-cols-products";
+
+// Products per streamed chunk on the listing routes — each chunk is fetched and
+// Suspense-streamed independently by ChunkedProductGrid.
+export const CHUNK_SIZE = 6;

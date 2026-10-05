@@ -1,10 +1,11 @@
+import "server-only";
 import { sanityFetch } from '@/platform/db/client';
 import { groq } from 'next-sanity';
 import { cache } from 'react';
 import type { Product as SanityProduct } from '@/sanity.types';
-import type { ProductQueryState } from '@/features/product-filtering';
 import { buildProductQuery } from '@/features/product-filtering/server';
-import type { Product } from '@/features/products';
+import type { Product } from '@/features/products/core/rules/productTypes';
+import type { GetProductsCountOptions, GetProductsChunkOptions, GetProductsOptions, PaginatedProducts } from '@/features/products/core/rules/productDataTypes';
 
 const DEFAULT_PER_PAGE = 24;
 
@@ -45,13 +46,6 @@ const PRODUCT_PROJECTION = groq`{
   catalogueLocationKeys
 }`;
 
-export interface GetProductsCountOptions {
-  keys: string[];
-  // S1 (buildProductQuery): the active filter/sort state; clauses are built
-  // here from it. Omitted = unfiltered count, exactly as before.
-  state?: ProductQueryState;
-}
-
 // Count-only fetch, used to size pagination without fetching any product rows.
 const getProductsCountFn = async ({ keys, state }: GetProductsCountOptions): Promise<number> => {
   if (!keys.length) return 0;
@@ -71,16 +65,6 @@ const getProductsCountFn = async ({ keys, state }: GetProductsCountOptions): Pro
 export const getProductsCount = withCache(getProductsCountFn) as (
   options: GetProductsCountOptions
 ) => Promise<number>;
-
-export interface GetProductsChunkOptions {
-  keys: string[];
-  offset: number;
-  limit: number;
-  // S1 (buildProductQuery): the active filter/sort state; order/where clauses
-  // and their named params are built here from it. Omitted = no clauses — the
-  // raw slice order is Sanity's default, matching prior behaviour.
-  state?: ProductQueryState;
-}
 
 // Fetches one arbitrary offset/limit slice of products, for parallel per-chunk streaming.
 const getProductsChunkFn = async ({ keys, offset, limit, state }: GetProductsChunkOptions): Promise<Product[]> => {
@@ -104,19 +88,6 @@ const getProductsChunkFn = async ({ keys, offset, limit, state }: GetProductsChu
 export const getProductsChunk = withCache(getProductsChunkFn) as (
   options: GetProductsChunkOptions
 ) => Promise<Product[]>;
-
-export interface GetProductsOptions {
-  keys: string[];
-  sort?: string;
-  filters?: string[];
-  page?: number;    // 1-based page number
-  perPage?: number; // Page size (capped at MAX_PRODUCTS_LIMIT)
-}
-
-export interface PaginatedProducts {
-  products: Product[];
-  totalCount: number; // Total across the whole filtered set, not the page window
-}
 
 const getProductsByVfsKeysFn = async ({
   keys,

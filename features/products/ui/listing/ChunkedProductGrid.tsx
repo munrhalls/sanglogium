@@ -1,28 +1,27 @@
 import React, { Suspense } from "react";
 import { cn } from "@/platform/utils/tailwind";
-import { ProductChunk } from "./ProductChunk";
 import { ProductChunkSkeleton } from "./ProductChunkSkeleton";
-import { productGridClass } from "@/features/products/config/gridLayout";
+import { productGridClass, CHUNK_SIZE } from "@/features/products/core/definitions/gridLayout";
 import { ImageRevealScript } from "@/features/products/ui/card/ImageRevealScript";
 import { ImageRevealClient } from "@/features/products/ui/card/ImageRevealClient";
-import type { Product } from "@/features/products/domain/productTypes";
 
-export const CHUNK_SIZE = 6;
+export { CHUNK_SIZE };
 
 interface ChunkedProductGridProps {
-  chunkPromises: Promise<Product[]>[];
+  // One rendered <ProductChunk /> element per chunk promise — the caller
+  // (a view) maps promises to elements so this stays a presentational
+  // wrapper and ui/ never imports view/.
+  chunks: React.ReactNode[];
   className?: string;
-  wishlistProductIds?: string[];
 }
 
 // Renders one continuous responsive grid where each chunk streams in
 // independently via its own Suspense boundary, per the confirmed
-// streaming-poc mechanism: promises are created (unawaited) by the caller
-// and handed down as props, never fetched inside this component.
+// streaming-poc mechanism: chunk elements are created (unawaited) by the
+// caller and handed down as props, never fetched inside this component.
 export function ChunkedProductGrid({
-  chunkPromises,
+  chunks,
   className,
-  wishlistProductIds,
 }: ChunkedProductGridProps) {
   return (
     <>
@@ -32,16 +31,12 @@ export function ChunkedProductGrid({
         data-testid="product-grid"
         className={cn(productGridClass, className)}
       >
-        {chunkPromises.map((promise, i) => (
+        {chunks.map((chunk, i) => (
           <Suspense
             key={i}
             fallback={<ProductChunkSkeleton count={CHUNK_SIZE} />}
           >
-            <ProductChunk
-              promise={promise}
-              wishlistProductIds={wishlistProductIds}
-              priority={i === 0}
-            />
+            {chunk}
           </Suspense>
         ))}
       </div>
