@@ -3,7 +3,10 @@ import type Stripe from 'stripe'
 import { CheckCircle, Lock } from '@phosphor-icons/react/dist/ssr'
 import type { OrderForSuccessPage } from '@/features/checkout/core/rules/checkoutTypes'
 import OrderDetails from './OrderDetails'
-import { OrderDetailsSkeleton, OrderNextSteps, SuccessAnalytics, getPaymentMethodHint } from '@/features/checkout'
+import OrderDetailsSkeleton from '@/features/checkout/ui/OrderDetailsSkeleton'
+import OrderNextSteps from '@/features/checkout/ui/OrderNextSteps'
+import { SuccessAnalytics } from '@/features/checkout/ui/SuccessAnalyticsClient'
+import { getPaymentMethodHint } from '@/features/checkout/core/rules/paymentMethodHint'
 import { formatPrice } from '@/platform/utils/price'
 
 interface Props {
