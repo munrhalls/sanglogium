@@ -3,7 +3,7 @@
 import React from "react";
 import { ListIcon, XIcon, List as Menu, MagnifyingGlass as Search, ShoppingBag, User as UserIcon, SignIn as SignInIcon, UserPlus } from "@phosphor-icons/react";
 import Link from "next/link";
-import { useDrawer } from "@/app/components/layout/drawers/useDrawer";
+import { useDrawer } from "@/features/shell/state/useDrawer";
 import { useSearchOverlay } from "@/features/product-search";
 import { cn } from "@/platform/utils/tailwind";
 import { useBasketStore, selectTotalItemsCount, selectHasHydrated } from "@/features/basket";

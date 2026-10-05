@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import ContentLayout from "@/app/components/layout/content/ContentLayout";
+import { ContentLayout } from "@/features/shell/server";
 
 const title = "FAQ — Sang Logium";
 const description =

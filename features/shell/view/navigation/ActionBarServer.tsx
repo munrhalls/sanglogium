@@ -1,6 +1,6 @@
 import { headers } from "next/headers";
 import { getSessionCookie } from "better-auth/cookies";
-import ActionBar from "./ActionBar";
+import ActionBar from "@/features/shell/ui/navigation/ActionBar";
 
 export default async function ActionBarServer() {
   const headersList = await headers();

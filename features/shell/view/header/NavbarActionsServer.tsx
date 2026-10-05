@@ -1,6 +1,6 @@
 import { headers } from "next/headers";
 import { getSessionCookie } from "better-auth/cookies";
-import NavbarActions from "./NavbarActions";
+import NavbarActions from "@/features/shell/ui/header/NavbarActions";
 
 export default async function NavbarActionsServer() {
   const headersList = await headers();
