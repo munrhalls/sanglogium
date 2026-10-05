@@ -1,7 +1,7 @@
 import "./../globals.css";
-import "../suppress-warnings";
+import "@/platform/utils/suppressWarnings";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
-import { cn } from "@/lib/utils/tailwind";
+import { cn } from "@/platform/utils/tailwind";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 
@@ -11,9 +11,9 @@ import Footer from "@/app/components/layout/footer/Footer";
 import DrawersManager from "@/app/components/layout/drawers/DrawersManager";
 import ActionBarServer from "@/app/components/layout/navigation/ActionBarServer";
 import { CatalogueNavbar } from "@/features/catalogue";
-import { WebVitals } from "@/app/components/analytics/WebVitals";
+import { WebVitals } from "@/platform/analytics/WebVitals";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import GoogleAnalytics from "@/app/components/analytics/GoogleAnalytics";
+import GoogleAnalytics from "@/platform/analytics/GoogleAnalytics";
 import { getCatalogueForNavigation } from "@/features/catalogue/server";
 import { Suspense } from "react";
 

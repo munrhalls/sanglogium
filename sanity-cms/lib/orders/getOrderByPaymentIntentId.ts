@@ -1,4 +1,4 @@
-import { backendClient } from "../backendClient";
+import { backendClient } from "@/platform/db/backendClient";
 
 export interface OrderForSuccessPage {
   _id: string;

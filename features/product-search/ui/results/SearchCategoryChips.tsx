@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { cn } from '@/lib/utils/tailwind';
+import { cn } from '@/platform/utils/tailwind';
 
 interface SearchCategoryChipsProps {
   counts: { id: string; label: string; count: number }[];

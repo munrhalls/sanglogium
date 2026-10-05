@@ -1,4 +1,4 @@
-import { sanityFetch } from '@/sanity-cms/lib/client';
+import { sanityFetch } from '@/platform/db/client';
 import { groq } from 'next-sanity';
 import { cache } from 'react';
 import type { PriceRangeData } from '@/features/product-filtering';

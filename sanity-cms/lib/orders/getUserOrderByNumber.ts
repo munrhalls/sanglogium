@@ -1,4 +1,4 @@
-import { backendClient } from "../backendClient";
+import { backendClient } from "@/platform/db/backendClient";
 import type { Order } from "@/sanity.types";
 
 export async function getUserOrderByNumber(

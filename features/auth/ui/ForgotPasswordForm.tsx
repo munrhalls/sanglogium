@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import Link from "next/link";
-import { authClient } from "@/lib/auth/client";
+import { authClient } from "@/features/auth/state/authClient";
 
 export default function ForgotPasswordForm() {
   const [state, formAction, isPending] = useActionState(

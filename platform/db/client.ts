@@ -2,7 +2,7 @@
 // No token required - uses CDN for performance
 // Used for: product catalog, homepage components, public queries
 import { createClient } from "next-sanity";
-import { apiVersion, dataset, projectId } from "../env";
+import { apiVersion, dataset, projectId } from "./env";
 import imageUrlBuilder from "@sanity/image-url";
 
 export const client = createClient({
@@ -18,20 +18,6 @@ export const client = createClient({
   },
   perspective: "published",
 });
-
-// WRITE client for backend atomic operations
-// Uses SANITY_STUDIO_READ_WRITE_CREATE (preferred) or SANITY_API_TOKEN (fallback)
-// Used for: stock updates, profile operations
-const writeToken = process.env.SANITY_STUDIO_READ_WRITE_CREATE || process.env.SANITY_API_TOKEN;
-
-export const writeClient = createClient({
-  projectId,
-  dataset,
-  apiVersion,
-  useCdn: false, // Must be false for writes
-  token: writeToken,
-});
-
 
 const builder = imageUrlBuilder(client);
 

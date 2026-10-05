@@ -1,4 +1,4 @@
-import { backendClient } from "@/sanity-cms/lib/backendClient";
+import { backendClient } from "@/platform/db/backendClient";
 import type { Address } from "@/features/checkout";
 
 // addressKey must already be validated by the caller (isValidAddressKey in features/account/actions.ts).

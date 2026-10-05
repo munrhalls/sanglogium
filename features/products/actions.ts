@@ -3,7 +3,7 @@
 import { requireSession } from "@/features/auth/server";
 import { addWishlistItem } from "@/sanity-cms/lib/account/addWishlistItem";
 import { removeWishlistItem } from "@/sanity-cms/lib/account/removeWishlistItem";
-import { getProfileIdByAuthId } from "@/sanity-cms/lib/account/getProfileIdByAuthId";
+import { getProfileIdByAuthId } from "@/features/auth/server";
 
 // Sanity document IDs are alphanumeric plus `_.-` (see Sanity's own ID rules).
 // Rejecting anything else before it reaches a Sanity patch path expression

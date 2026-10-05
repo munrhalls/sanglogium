@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils/tailwind";
+import { cn } from "@/platform/utils/tailwind";
 import React from "react";
 import type { NavigationItem } from "@/features/catalogue/domain/catalogue";
 import SliceHero from "./hero/SliceHero";

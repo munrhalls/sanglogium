@@ -1,4 +1,4 @@
-import { backendClient } from "@/sanity-cms/lib/backendClient";
+import { backendClient } from "@/platform/db/backendClient";
 
 export async function anonymizeUserOrders(userId: string): Promise<void> {
   await backendClient

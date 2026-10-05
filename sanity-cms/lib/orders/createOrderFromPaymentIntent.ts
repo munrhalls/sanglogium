@@ -1,6 +1,6 @@
-import { backendClient } from '@/sanity-cms/lib/backendClient'
-import { logCheckoutEvent } from '@/lib/dev/eventLogger'
-import { sendOrderConfirmationEmail } from '@/lib/email'
+import { backendClient } from '@/platform/db/backendClient'
+import { logCheckoutEvent } from '@/platform/utils/eventLogger'
+import { sendOrderConfirmationEmail } from '@/features/checkout/adapters/resend/orderConfirmationEmail'
 import Stripe from 'stripe'
 import { z } from 'zod'
 

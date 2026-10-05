@@ -1,4 +1,4 @@
-import { backendClient } from "@/sanity-cms/lib/backendClient";
+import { backendClient } from "@/platform/db/backendClient";
 
 // productId must already be validated by the caller (isValidProductId in features/products/actions.ts).
 export async function removeWishlistItem(profileId: string, productId: string): Promise<void> {

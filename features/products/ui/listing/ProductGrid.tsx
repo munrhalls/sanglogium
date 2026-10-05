@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "@/lib/utils/tailwind";
+import { cn } from "@/platform/utils/tailwind";
 import { ProductCard } from "@/features/products/ui/card/ProductCard";
 import { productGridClass } from "@/features/products/config/gridLayout";
 import { ImageRevealScript } from "@/features/products/ui/card/ImageRevealScript";

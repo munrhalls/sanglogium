@@ -3,7 +3,7 @@
 import { Drawer } from "vaul";
 import { useDrawer } from "./useDrawer";
 import { CatalogueCarousel as CarouselCatalogue } from "@/features/catalogue";
-import { cn } from "@/lib/utils/tailwind";
+import { cn } from "@/platform/utils/tailwind";
 
 // BACKLOG TODO - ensure the mobile catalogue / menu is not accessible when catalogue navbar is accessible (lg-touch/desktop related)
 interface DrawerManagerProps {

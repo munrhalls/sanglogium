@@ -10,7 +10,7 @@
  * Reference: https://github.com/AlleKurier/api_v1
  */
 
-import { logCheckoutEvent } from '@/lib/dev/eventLogger';
+import { logCheckoutEvent } from '@/platform/utils/eventLogger';
 
 export interface AlleKurierService {
   Carrier: {

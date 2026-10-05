@@ -1,4 +1,4 @@
-import { client } from "@/sanity-cms/lib/client";
+import { client } from "@/platform/db/client";
 import groq from "groq";
 
 export interface PaymentProduct {

@@ -2,7 +2,7 @@
 
 import React from "react";
 import { MagnifyingGlass } from "@phosphor-icons/react";
-import { cn } from "@/lib/utils/tailwind";
+import { cn } from "@/platform/utils/tailwind";
 
 interface SearchBarTriggerProps {
   /** The query currently shown on the results page, if any. */

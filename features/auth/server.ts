@@ -3,3 +3,4 @@ import 'server-only';
 export { auth } from './adapters/betterAuth';
 export { verifySession, getSession, requireSession } from './adapters/session';
 export { isGoogleAuthEnabled } from './adapters/providers';
+export { getProfileIdByAuthId } from './adapters/sanity/getProfileIdByAuthId';

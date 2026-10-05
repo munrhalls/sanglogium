@@ -2,9 +2,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import { saveShippingAction } from "@/features/checkout/actions";
-import { formatDeliveryEstimate } from "@/lib/utils/formatting";
-import { formatPriceMajor } from "@/lib/utils/price";
-import { cn } from "@/lib/utils/tailwind";
+import { formatDeliveryEstimate } from "@/platform/utils/formatting";
+import { formatPriceMajor } from "@/platform/utils/price";
+import { cn } from "@/platform/utils/tailwind";
 import CheckoutStepper from "./CheckoutStepper";
 
 interface ShippingOption {

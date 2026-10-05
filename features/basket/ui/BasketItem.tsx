@@ -5,8 +5,8 @@ import { Trash } from "@phosphor-icons/react";
 import { useShallow } from "zustand/shallow";
 import { BasketControls } from "./BasketControls";
 import useBasketStore from "@/features/basket/model/basketStore";
-import { sanityImageLoader } from "@/lib/sanity/imageLoader";
-import { formatPriceMajor } from "@/lib/utils/price";
+import { sanityImageLoader } from "@/platform/db/imageLoader";
+import { formatPriceMajor } from "@/platform/utils/price";
 
 interface BasketItemProps {
   productId: string

@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils/tailwind";
+import { cn } from "@/platform/utils/tailwind";
 import { ReactNode } from "react";
 
 interface ShelfProps {

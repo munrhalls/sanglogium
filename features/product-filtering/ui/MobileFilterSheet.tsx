@@ -6,7 +6,7 @@ import { FunnelSimple as FunnelIcon, X as XIcon } from '@phosphor-icons/react';
 import { FilterPanelBody } from './FilterSidebar';
 import type { Category, FacetOptionCount } from '@/features/product-filtering/config/facetRegistry';
 import type { RangeBounds } from '@/features/product-filtering/domain/facetCounts';
-import { cn } from '@/lib/utils/tailwind';
+import { cn } from '@/platform/utils/tailwind';
 
 /**
  * Mobile/tablet (<1024px, i.e. below the `lg-touch`/`lg-desktop` pair)

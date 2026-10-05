@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { cn } from "@/lib/utils/tailwind";
+import { cn } from "@/platform/utils/tailwind";
 
 const ITEMS = ["Handcrafted", "Precision Engineered", "Absolute Purity"] as const;
 const CYCLE_MS = 3000;

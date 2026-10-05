@@ -46,10 +46,31 @@ const files = changed.filter(exists);
 
 const specCache = new Map();
 const resolveCache = new Map();
+const flagCache = new Map();
+// Per-file flags computed once: a server-only marker anywhere, and the first-statement directive
+// after comments and blank lines. Non-code and missing files get all-false.
+function flags(file) {
+  if (!flagCache.has(file)) {
+    let serverOnly = false;
+    let first = null;
+    if (CODE.test(file) && exists(file)) {
+      const src = read(file);
+      serverOnly = /^import\s+["']server-only["']/m.test(src);
+      first = /^(?:\s|\/\/[^\n]*\n|\/\*[\s\S]*?\*\/)*["']use (client|server)["']/.exec(src)?.[1] ?? null;
+    }
+    flagCache.set(file, { serverOnly, first });
+  }
+  return flagCache.get(file);
+}
 const ctx = {
   changed: files,
   deleted,
   tracked: () => git(["ls-files"]).filter((f) => CODE.test(f) && exists(f)),
+  // True when the file has a line starting with import "server-only" (either quote style).
+  serverOnly: (file) => flags(file).serverOnly,
+  // True when the first statement is the "use client" / "use server" directive.
+  useClient: (file) => flags(file).first === "client",
+  useServer: (file) => flags(file).first === "server",
   // Parsed relative and @/ imports of a file: [{ spec, line, typeOnly }], parsed once per file.
   specs(file) {
     if (!specCache.has(file)) {

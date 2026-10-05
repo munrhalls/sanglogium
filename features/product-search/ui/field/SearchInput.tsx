@@ -2,7 +2,7 @@
 
 import { forwardRef } from "react";
 import type { InputHTMLAttributes } from "react";
-import { cn } from "@/lib/utils/tailwind";
+import { cn } from "@/platform/utils/tailwind";
 
 interface SearchInputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, "type" | "role"> {

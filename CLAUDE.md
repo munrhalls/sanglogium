@@ -89,15 +89,18 @@ deletes them, never committed); one PR per thematic axis.
 Copy the block below verbatim at the top of every phase that creates, moves or edits code. It is a digest of `docs/organizational-pattern.md` (the single source of truth); `node tools/check-turn.mjs` enforces it.
 
 ```text
-ORGANIZATIONAL PATTERN (binding). Source of truth: docs/organizational-pattern.md. Read its sections 2 and 4 before placing or importing anything.
-1. Placement: every file goes in the home its kind has in section 4. If no home fits, STOP and say so in your report. Never invent a folder, root file or feature subfolder.
-2. Imports go DOWN the ladder only: 6 app > 5 ui (features ui/, index.ts) > 4 logic (actions.ts, model/) > 3 server (adapters/, server.ts) > 2 data (sanity-cms/lib) > 1 core (domain/, config/, shared/ui) > 0 leaf (lib/, sanity-cms/env.ts, data/). Inside one feature and one layer, imports are free.
-3. Across features: import only a LOWER level (L3 product-search > L2 products, homepage > L1 basket, account > L0 catalogue, product-filtering, checkout, auth) and only through its surface: @/features/<f>, @/features/<f>/server, @/features/<f>/actions or @/features/<f>/domain.
-4. ui/, model/, domain/, config/ and shared/ui are client-safe: they never import sanity-cms/lib, adapters/ or server.ts. Server-rendered components live in app/ beside their route.
-5. No '..' under features/: use './x' for the same directory and '@/...' for everything else.
-6. GROQ and Sanity patches exist only in sanity-cms/lib.
-7. If the task seems to require breaking a rule, do not work around it: stop and report it.
-8. Never edit tools/check-turn.mjs, tools/check-imports.mjs, tools/check-org-pattern.mjs, tools/git-hooks/, docs/organizational-pattern.md or this block to make a change pass.
+ORGANIZATIONAL PATTERN (binding). Source of truth: docs/organizational-pattern.md. Read its sections 2 and 3 before placing or importing anything.
+1. Every file has exactly one home (section 3). If no home fits, STOP and say so in your report. Never invent a folder, root file or slice part.
+2. A slice is features/<slice>/ built only from: index.ts (client door), server.ts (server door), ui/, state/, url/, view/, queries/, commands/, core/definitions/, core/rules/, core/ports.ts, adapters/<system>/, schema/. Omit the parts a slice does not need.
+3. Inside a slice, imports follow the archetype table in section 2. core/ imports only core/.
+4. Code outside a slice reaches it only through its index.ts or server.ts. Slice-to-slice imports never form a cycle.
+5. Only adapters/<system>/ talk to an outside system (Sanity, Stripe, better-auth, Resend, Google...). GROQ and Sanity patches exist only in adapters/sanity/. server.ts wires adapters into ports and never imports a 'use server' file.
+6. app/ holds Next route files only. A route imports slice doors and platform/ and only composes them.
+7. platform/ (design, db, email, analytics, utils) imports only platform/. Client-safe code (ui/, state/, url/, core/, index.ts, platform/design/ui/, any 'use client' file) never imports a file containing import "server-only"; every server.ts contains it.
+8. No '..' under features/: use './x' for the same directory and '@/...' for everything else.
+9. Legacy homes (section 6) are only emptied, never added to.
+10. If the task seems to require breaking a rule, do not work around it: stop and report it.
+11. Never edit tools/check-turn.mjs, tools/check-imports.mjs, tools/check-org-pattern.mjs, tools/git-hooks/, docs/organizational-pattern.md or this block to make a change pass.
 ```
 
 ## Architecture Overview

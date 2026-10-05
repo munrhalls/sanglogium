@@ -5,7 +5,7 @@ import { ListIcon, XIcon, List as Menu, MagnifyingGlass as Search, ShoppingBag, 
 import Link from "next/link";
 import { useDrawer } from "@/app/components/layout/drawers/useDrawer";
 import { useSearchOverlay } from "@/features/product-search";
-import { cn } from "@/lib/utils/tailwind";
+import { cn } from "@/platform/utils/tailwind";
 import { useBasketStore, selectTotalItemsCount, selectHasHydrated } from "@/features/basket";
 
 

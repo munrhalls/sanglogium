@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import { authClient } from "@/lib/auth/client";
+import { authClient } from "@/features/auth";
 import { requireFreshSession } from "./requireFreshSession";
 
 export default function ChangePasswordSection() {

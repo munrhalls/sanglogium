@@ -1,6 +1,6 @@
 "use client";
 
-import { authClient } from "@/lib/auth/client";
+import { authClient } from "@/features/auth";
 
 export async function requireFreshSession(): Promise<boolean> {
   const session = await authClient.getSession();

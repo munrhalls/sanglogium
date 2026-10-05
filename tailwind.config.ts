@@ -1,15 +1,15 @@
 import type { Config } from "tailwindcss";
 import animatePlugin from "tailwindcss-animate";
 import typographyPlugin from "@tailwindcss/typography";
-import { brand, secondary, accent, success, error, warning, surface, textTokens, border } from "./shared/styles/tokens";
-import { typographyDefaultsPlugin, uiComponentsPlugin } from "./shared/styles/componentsPlugin";
+import { brand, secondary, accent, success, error, warning, surface, textTokens, border } from "./platform/design/styles/tokens";
+import { typographyDefaultsPlugin, uiComponentsPlugin } from "./platform/design/styles/componentsPlugin";
 
 export default {
   darkMode: ["class"],
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./features/**/*.{js,ts,jsx,tsx,mdx}",
-    "./shared/**/*.{js,ts,jsx,tsx,mdx}",
+    "./platform/**/*.{js,ts,jsx,tsx,mdx}",
     "./sanity/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {

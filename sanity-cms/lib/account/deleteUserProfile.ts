@@ -1,5 +1,5 @@
-import { backendClient } from "@/sanity-cms/lib/backendClient";
-import { getProfileIdByAuthId } from "@/sanity-cms/lib/account/getProfileIdByAuthId";
+import { backendClient } from "@/platform/db/backendClient";
+import { getProfileIdByAuthId } from "@/features/auth/adapters/sanity/getProfileIdByAuthId";
 
 export async function deleteUserProfile(authId: string): Promise<void> {
   const profile = await getProfileIdByAuthId(authId);

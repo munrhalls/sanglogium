@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import type { FocusEvent, FormEvent, KeyboardEvent } from "react";
 import { MagnifyingGlass, X } from "@phosphor-icons/react";
-import { cn } from "@/lib/utils/tailwind";
+import { cn } from "@/platform/utils/tailwind";
 import { AutocompletePanel } from "./AutocompletePanel";
 import { SearchInput } from "./SearchInput";
 import { SearchZeroQueryPanel } from "./SearchZeroQueryPanel";

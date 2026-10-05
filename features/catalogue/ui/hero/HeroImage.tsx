@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils/tailwind";
+import { cn } from "@/platform/utils/tailwind";
 import type { NavigationItem } from "@/features/catalogue/domain/catalogue";
 
 export default function HeroImage({ data }: { data: NavigationItem }) {

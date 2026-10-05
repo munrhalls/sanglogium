@@ -3,7 +3,7 @@ import type Stripe from 'stripe'
 import { CheckCircle, Lock } from '@phosphor-icons/react/dist/ssr'
 import OrderDetails from './OrderDetails'
 import { OrderDetailsSkeleton, OrderNextSteps, SuccessAnalytics, getPaymentMethodHint } from '@/features/checkout'
-import { formatPrice } from '@/lib/utils/price'
+import { formatPrice } from '@/platform/utils/price'
 
 interface Props {
   paymentIntentId: string

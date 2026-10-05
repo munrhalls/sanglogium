@@ -2,8 +2,8 @@ import { redirect } from 'next/navigation'
 import { getCheckoutSession, getOrderByPaymentIntentId } from '@/features/checkout/server'
 import PaymentConfirmed from './PaymentConfirmed'
 import { PaymentVerificationFailed, PaymentDeclined, PaymentCanceled, PaymentProcessing, PaymentUnexpectedStatus } from '@/features/checkout'
-import { retrievePaymentIntent } from '@/lib/stripe'
-import { logCheckoutEvent } from '@/lib/dev/eventLogger'
+import { retrievePaymentIntent } from '@/features/checkout/server'
+import { logCheckoutEvent } from '@/platform/utils/eventLogger'
 
 interface SuccessPageSearchParams {
   payment_intent?: string

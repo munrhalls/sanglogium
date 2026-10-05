@@ -1,10 +1,10 @@
-import { cn } from "@/lib/utils/tailwind";
+import { cn } from "@/platform/utils/tailwind";
 import type { NavigationItem } from "@/features/catalogue/domain/catalogue";
 import {
   CarouselPrevious,
   CarouselNext,
   CarouselDots,
-} from "@/shared/ui/carousel/CarouselControls";
+} from "@/platform/design/ui/carousel/CarouselControls";
 import HeroImage from "./HeroImage";
 import SliceTitle from "./SliceTitle";
 

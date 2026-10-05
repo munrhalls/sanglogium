@@ -1,4 +1,4 @@
-import { sanityFetch } from "@/sanity-cms/lib/client";
+import { sanityFetch } from "@/platform/db/client";
 import { defineQuery } from "next-sanity";
 import type { IemProduct } from "@/features/homepage";
 

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Checkbox } from '@/shared/ui/Checkbox';
+import { Checkbox } from './Checkbox';
 import {
   filterSectionHeaderAction,
   filterStateActive,

@@ -2,10 +2,10 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { SpotlightData } from "@/features/homepage/domain/homepageTypes";
-import { Carousel } from "@/shared/ui/carousel/CarouselRoot";
-import { CarouselTrack } from "@/shared/ui/carousel/CarouselTrack";
-import { CarouselSlide } from "@/shared/ui/carousel/CarouselSlide";
-import { CarouselPrevious, CarouselNext, CarouselDots } from "@/shared/ui/carousel/CarouselControls";
+import { Carousel } from "@/platform/design/ui/carousel/CarouselRoot";
+import { CarouselTrack } from "@/platform/design/ui/carousel/CarouselTrack";
+import { CarouselSlide } from "@/platform/design/ui/carousel/CarouselSlide";
+import { CarouselPrevious, CarouselNext, CarouselDots } from "@/platform/design/ui/carousel/CarouselControls";
 
 interface ProductSpotlightMediaRightProps {
   spotlightData: SpotlightData | null;

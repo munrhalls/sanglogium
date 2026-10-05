@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Checkbox } from '@/shared/ui/Checkbox';
+import { Checkbox } from './Checkbox';
 import { ProgressiveFilterOptionList } from './ProgressiveFilterOptionList';
 import {
   FilterSliderSection,
@@ -12,7 +12,7 @@ import {
   filterStateInactive,
 } from './FilterSection';
 import { DualRangeSlider } from './DualRangeSlider';
-import { formatPriceMajor } from '@/lib/utils/price';
+import { formatPriceMajor } from '@/platform/utils/price';
 import { getFacetModule, type Category, type AnyFacetDef, type FacetOptionCount } from '@/features/product-filtering/config/facetRegistry';
 import { humanizeFacetValue } from '@/features/product-filtering/domain/humanizeFacetValue';
 import { useFilterParam } from '@/features/product-filtering/model/useFilterParam';

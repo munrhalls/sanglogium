@@ -2,10 +2,10 @@ import React from "react";
 import Link from "next/link";
 import { ProductImage } from "./ProductImage";
 import type { Product } from "@/features/products/domain/productTypes";
-import { Price } from "@/shared/ui/Price";
+import { Price } from "@/platform/design/ui/Price";
 import { BasketControls } from "@/features/basket";
 import { WishlistButton } from "./WishlistButton";
-import { centsToDisplay } from "@/lib/utils/price";
+import { centsToDisplay } from "@/platform/utils/price";
 
 interface ProductCardProps {
   product: Product;

@@ -4,7 +4,7 @@ import React from 'react';
 import { getFacetModule, type Category } from '@/features/product-filtering/config/facetRegistry';
 import { humanizeFacetValue } from '@/features/product-filtering/domain/humanizeFacetValue';
 import { useFilterParam, useClearAllFilters } from '@/features/product-filtering/model/useFilterParam';
-import { formatPriceMajor } from '@/lib/utils/price';
+import { formatPriceMajor } from '@/platform/utils/price';
 
 /**
  * SINGLE RESPONSIBILITY: URL <-> its own display. Renders one chip per active

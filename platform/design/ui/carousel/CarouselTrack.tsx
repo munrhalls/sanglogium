@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
-import { cn } from "@/lib/utils/tailwind";
+import { cn } from "@/platform/utils/tailwind";
 import { useCarousel } from "./CarouselContext";
 
 interface CarouselTrackProps {
