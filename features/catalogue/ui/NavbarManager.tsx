@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, createContext, useEffect } from "react";
-import { cn } from "@/lib/utils/tailwind";
+import { cn } from "@/platform/utils/tailwind";
 import {
   CaretDownIcon,
   HeadphonesIcon,

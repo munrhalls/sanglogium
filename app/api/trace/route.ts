@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { logCheckoutEvent } from '@/lib/dev/eventLogger';
+import { logCheckoutEvent } from '@/platform/utils/eventLogger';
 
 export async function POST(request: NextRequest) {
   try {

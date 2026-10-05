@@ -8,7 +8,7 @@ import {
   sendVerificationEmail,
   sendResetPasswordEmail,
   sendDeleteAccountVerification,
-} from "@/lib/email";
+} from "@/features/auth/adapters/resend/authEmails";
 import { hasOpenOrders } from "@/sanity-cms/lib/orders/hasOpenOrders";
 import { anonymizeUserOrders } from "@/sanity-cms/lib/orders/anonymizeUserOrders";
 import { deleteUserProfile } from "@/sanity-cms/lib/account/deleteUserProfile";

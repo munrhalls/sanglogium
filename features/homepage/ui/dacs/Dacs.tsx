@@ -1,9 +1,9 @@
 import React from "react";
 import Link from "next/link";
-import { Carousel } from '@/shared/ui/carousel/CarouselRoot';
-import { CarouselTrack } from '@/shared/ui/carousel/CarouselTrack';
-import { CarouselSlide } from '@/shared/ui/carousel/CarouselSlide';
-import { CarouselNext, CarouselPrevious, CarouselDots } from '@/shared/ui/carousel/CarouselControls';
+import { Carousel } from '@/platform/design/ui/carousel/CarouselRoot';
+import { CarouselTrack } from '@/platform/design/ui/carousel/CarouselTrack';
+import { CarouselSlide } from '@/platform/design/ui/carousel/CarouselSlide';
+import { CarouselNext, CarouselPrevious, CarouselDots } from '@/platform/design/ui/carousel/CarouselControls';
 import DacsHeader from "./DacsHeader";
 import DacCard from "./DacCard";
 import type { DacProduct } from "@/features/homepage/domain/homepageTypes";

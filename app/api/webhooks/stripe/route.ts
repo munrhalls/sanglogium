@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
-import { stripe } from '@/lib/stripe'
+import { stripe } from '@/features/checkout/server'
 import { createOrderFromPaymentIntent } from '@/sanity-cms/lib/orders/createOrderFromPaymentIntent'
-import { logCheckoutEvent } from '@/lib/dev/eventLogger'
+import { logCheckoutEvent } from '@/platform/utils/eventLogger'
 
 // Stripe requires the raw request body for signature verification —
 // Next.js App Router does NOT automatically parse it, so we read it as text.

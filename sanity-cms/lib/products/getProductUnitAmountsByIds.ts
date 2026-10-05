@@ -1,4 +1,4 @@
-import { getBackendClient } from '@/sanity-cms/lib/backendClient';
+import { getBackendClient } from '@/platform/db/backendClient';
 import groq from 'groq';
 
 export async function getProductUnitAmountsByIds(

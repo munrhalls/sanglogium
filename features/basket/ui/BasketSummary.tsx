@@ -2,7 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowLeftIcon } from "@phosphor-icons/react";
-import { Price } from "@/shared/ui/Price";
+import { Price } from "@/platform/design/ui/Price";
 import { CheckoutButton } from "@/features/checkout";
 
 interface BasketSummaryProps {

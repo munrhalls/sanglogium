@@ -7,7 +7,7 @@ import {
   PREMIUM_TIERS,
   PREMIUM_TIER_MIN,
 } from "@/features/product-filtering/domain/priceBounds";
-import { formatPriceMajor } from "@/lib/utils/price";
+import { formatPriceMajor } from "@/platform/utils/price";
 import { FilterSliderSection, ResetButton } from "./FilterSection";
 import { DualRangeSlider } from "./DualRangeSlider";
 

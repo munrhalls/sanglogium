@@ -1,5 +1,5 @@
 import urlBuilder from "@sanity/image-url";
-import { dataset, projectId } from "@/sanity-cms/env";
+import { dataset, projectId } from "./env";
 
 const builder = urlBuilder({ projectId, dataset });
 

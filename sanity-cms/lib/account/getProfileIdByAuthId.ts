@@ -1,4 +1,4 @@
-import { backendClient } from "@/sanity-cms/lib/backendClient";
+import { backendClient } from "@/platform/db/backendClient";
 
 export async function getProfileIdByAuthId(authId: string): Promise<{ _id: string } | null> {
   return backendClient.fetch<{ _id: string } | null>(

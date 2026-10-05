@@ -11,7 +11,7 @@ import {
   PaymentMethodMessagingElement,
 } from "@stripe/react-stripe-js";
 
-import { formatPrice } from "@/lib/utils/price";
+import { formatPrice } from "@/platform/utils/price";
 
 let stripePromise: ReturnType<typeof loadStripe> | null = null;
 function getStripePromise() {

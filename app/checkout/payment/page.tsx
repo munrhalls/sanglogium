@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { getPaymentProducts } from "@/sanity-cms/lib/products/getPaymentProducts";
 import { CheckoutSummary, CheckoutStepper, PaymentForm, dedupeShippingLabel, buildPaymentLineItems, computePaymentTotals } from "@/features/checkout";
-import { logCheckoutEvent } from "@/lib/dev/eventLogger";
+import { logCheckoutEvent } from "@/platform/utils/eventLogger";
 
 export default async function Page() {
   const session = await getCheckoutSession();

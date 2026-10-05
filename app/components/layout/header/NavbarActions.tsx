@@ -6,8 +6,8 @@ import {
   SignInIcon,
   UserPlus,
 } from "@phosphor-icons/react";
-import { cn } from "@/lib/utils/tailwind";
-import { NavActionItem } from "@/shared/ui/NavActionItem";
+import { cn } from "@/platform/utils/tailwind";
+import { NavActionItem } from "@/platform/design/ui/NavActionItem";
 import { BasketButton } from "@/features/basket";
 import { signOut } from "@/features/auth";
 

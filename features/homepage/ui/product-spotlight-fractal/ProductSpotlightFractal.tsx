@@ -6,13 +6,13 @@ import Link from "next/link";
 
 import type { SpotlightData } from "@/features/homepage/domain/homepageTypes";
 
-import { Carousel } from "@/shared/ui/carousel/CarouselRoot";
+import { Carousel } from "@/platform/design/ui/carousel/CarouselRoot";
 
-import { CarouselTrack } from "@/shared/ui/carousel/CarouselTrack";
+import { CarouselTrack } from "@/platform/design/ui/carousel/CarouselTrack";
 
-import { CarouselSlide } from "@/shared/ui/carousel/CarouselSlide";
+import { CarouselSlide } from "@/platform/design/ui/carousel/CarouselSlide";
 
-import { CarouselPrevious, CarouselNext, CarouselDots } from "@/shared/ui/carousel/CarouselControls";
+import { CarouselPrevious, CarouselNext, CarouselDots } from "@/platform/design/ui/carousel/CarouselControls";
 
 const FRACTAL_RING_MASK = {
   maskImage: "url('/backgrounds/fractal_ring.webp')",

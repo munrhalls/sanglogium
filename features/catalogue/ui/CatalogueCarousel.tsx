@@ -1,13 +1,13 @@
 "use client";
 
-import { Carousel } from "@/shared/ui/carousel/CarouselRoot";
-import { CarouselTrack } from "@/shared/ui/carousel/CarouselTrack";
-import { CarouselSlide } from "@/shared/ui/carousel/CarouselSlide";
+import { Carousel } from "@/platform/design/ui/carousel/CarouselRoot";
+import { CarouselTrack } from "@/platform/design/ui/carousel/CarouselTrack";
+import { CarouselSlide } from "@/platform/design/ui/carousel/CarouselSlide";
 
 import { CatalogueView } from "./CatalogueView";
 import type { NavigationItem } from "@/features/catalogue/domain/catalogue";
 
-import { cn } from "@/lib/utils/tailwind";
+import { cn } from "@/platform/utils/tailwind";
 
 interface CatalogueCarouselProps {
   catalogueDataRaw: { catalogue: NavigationItem[] };

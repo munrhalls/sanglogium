@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { cn } from "@/lib/utils/tailwind";
+import { cn } from "@/platform/utils/tailwind";
 import { ProductChunk } from "./ProductChunk";
 import { ProductChunkSkeleton } from "./ProductChunkSkeleton";
 import { productGridClass } from "@/features/products/config/gridLayout";

@@ -2,8 +2,8 @@ import { verifySession } from "@/features/auth/server";
 import { getUserOrderByNumber } from "@/sanity-cms/lib/orders/getUserOrderByNumber";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Order } from "@/sanity.types";
-import { formatPrice } from "@/lib/utils/price";
+import type { Order } from "@/sanity.types";
+import { formatPrice } from "@/platform/utils/price";
 
 interface OrderDetailPageProps {
   params: Promise<{ orderNumber: string }>;

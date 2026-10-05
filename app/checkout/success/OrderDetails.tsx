@@ -2,7 +2,7 @@ import { getOrderByPaymentIntentId } from '@/features/checkout/server'
 import Link from 'next/link'
 import { Hourglass } from '@phosphor-icons/react/dist/ssr'
 import { RefreshButton } from '@/features/checkout'
-import { formatPrice } from '@/lib/utils/price'
+import { formatPrice } from '@/platform/utils/price'
 
 interface Props {
   paymentIntentId: string

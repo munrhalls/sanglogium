@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils/tailwind";
+import { cn } from "@/platform/utils/tailwind";
 import type { NavigationItem } from "@/features/catalogue/domain/catalogue";
 import DetailWatermark from "./DetailWatermark";
 import DetailSection from "./DetailSection";

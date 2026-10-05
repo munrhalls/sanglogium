@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { formatPrice } from "@/lib/utils/price";
+import { formatPrice } from "@/platform/utils/price";
 
 interface CheckoutItem {
   productId: string;

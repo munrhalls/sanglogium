@@ -2,7 +2,7 @@
 
 import { ShoppingCart, MapPin, Truck, CreditCard } from "@phosphor-icons/react";
 import type { Icon } from "@phosphor-icons/react";
-import { cn } from "@/lib/utils/tailwind";
+import { cn } from "@/platform/utils/tailwind";
 
 interface StepDef {
   label: string;

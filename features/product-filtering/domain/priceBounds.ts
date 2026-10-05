@@ -1,4 +1,4 @@
-import { centsToDisplay } from "@/lib/utils/price";
+import { centsToDisplay } from "@/platform/utils/price";
 
 /** Fallback display ceiling (dollars) when a category has no derivable max price. */
 export const DEFAULT_PRICE_CEILING = 1000;

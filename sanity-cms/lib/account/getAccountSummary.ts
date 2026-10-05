@@ -1,4 +1,4 @@
-import { backendClient } from "@/sanity-cms/lib/backendClient";
+import { backendClient } from "@/platform/db/backendClient";
 
 export interface AccountSummary {
   _id?: string;

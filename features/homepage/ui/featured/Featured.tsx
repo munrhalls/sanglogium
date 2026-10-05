@@ -1,17 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Carousel } from "@/shared/ui/carousel/CarouselRoot";
-import { CarouselTrack } from "@/shared/ui/carousel/CarouselTrack";
-import { CarouselSlide } from "@/shared/ui/carousel/CarouselSlide";
+import { Carousel } from "@/platform/design/ui/carousel/CarouselRoot";
+import { CarouselTrack } from "@/platform/design/ui/carousel/CarouselTrack";
+import { CarouselSlide } from "@/platform/design/ui/carousel/CarouselSlide";
 import {
   CarouselPrevious,
   CarouselNext,
   CarouselDots,
-} from "@/shared/ui/carousel/CarouselControls";
+} from "@/platform/design/ui/carousel/CarouselControls";
 import FeaturedHeader from "./FeaturedHeader";
 import type { FeaturedProduct } from "@/features/homepage/domain/homepageTypes";
 import { BasketControls } from "@/features/basket";
-import { formatPrice } from "@/lib/utils/price";
+import { formatPrice } from "@/platform/utils/price";
 
 interface FeaturedProps {
   featuredData: FeaturedProduct[];

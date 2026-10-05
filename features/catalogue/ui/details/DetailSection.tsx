@@ -1,5 +1,5 @@
 "use client";
-import { cn } from "@/lib/utils/tailwind";
+import { cn } from "@/platform/utils/tailwind";
 import Link from "next/link";
 import type { NavigationItem } from "@/features/catalogue/domain/catalogue";
 import { useNavContext } from "@/features/catalogue/ui/NavbarManager";

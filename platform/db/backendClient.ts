@@ -3,7 +3,7 @@
 // Used for: stock updates, profile operations, orders
 import { createClient } from "next-sanity";
 
-import { apiVersion, projectId, dataset } from "../env";
+import { apiVersion, projectId, dataset } from "./env";
 
 export function getBackendClient() {
   const writeToken = process.env.SANITY_STUDIO_READ_WRITE

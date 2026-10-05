@@ -1,7 +1,7 @@
 ﻿import "../globals.css";
 import { Montserrat } from "next/font/google";
 import BrandLogo from "@/app/components/layout/header/BrandLogo";
-import GoogleAnalytics from "@/app/components/analytics/GoogleAnalytics";
+import GoogleAnalytics from "@/platform/analytics/GoogleAnalytics";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const montserrat = Montserrat({

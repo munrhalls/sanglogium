@@ -1,5 +1,5 @@
 import { cache } from 'react';
-import { sanityFetch } from '@/sanity-cms/lib/client';
+import { sanityFetch } from '@/platform/db/client';
 import groq from 'groq';
 import type { ProductDetailData as Product } from '@/features/products';
 

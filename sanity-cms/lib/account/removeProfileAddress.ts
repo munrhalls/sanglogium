@@ -1,4 +1,4 @@
-import { backendClient } from "@/sanity-cms/lib/backendClient";
+import { backendClient } from "@/platform/db/backendClient";
 
 // addressKey must already be validated by the caller (isValidAddressKey in features/account/actions.ts).
 export async function removeProfileAddress(

@@ -1,6 +1,6 @@
 // purely homepage implementation - functionality awaiting for post-homepage products discovery ui development
 
-import { cn } from "@/lib/utils/tailwind";
+import { cn } from "@/platform/utils/tailwind";
 import BrandLogo from "./BrandLogo";
 import SearchField from "./SearchField";
 import NavbarActionsServer from "./NavbarActionsServer";

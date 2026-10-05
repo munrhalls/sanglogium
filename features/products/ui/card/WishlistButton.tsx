@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { usePathname } from "next/navigation";
 import { Heart } from "@phosphor-icons/react/dist/ssr";
-import { authClient } from "@/lib/auth/client";
+import { authClient } from "@/features/auth";
 import { addToWishlist, removeFromWishlist } from "@/features/products/actions";
 
 interface WishlistButtonProps {

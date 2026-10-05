@@ -1,11 +1,11 @@
-import { Carousel } from '@/shared/ui/carousel/CarouselRoot';
-import { CarouselTrack } from '@/shared/ui/carousel/CarouselTrack';
-import { CarouselSlide } from '@/shared/ui/carousel/CarouselSlide';
+import { Carousel } from '@/platform/design/ui/carousel/CarouselRoot';
+import { CarouselTrack } from '@/platform/design/ui/carousel/CarouselTrack';
+import { CarouselSlide } from '@/platform/design/ui/carousel/CarouselSlide';
 import {
   CarouselPrevious,
   CarouselNext,
   CarouselDots,
-} from '@/shared/ui/carousel/CarouselControls';
+} from '@/platform/design/ui/carousel/CarouselControls';
 import AccessoryCard from "./AccessoryCard";
 import { AccessoryCategory, AccessoryItem } from "@/features/homepage/domain/accessoryTypes";
 

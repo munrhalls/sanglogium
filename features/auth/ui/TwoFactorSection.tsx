@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useTransition } from "react";
 import * as QRCode from "qrcode";
-import { authClient } from "@/lib/auth/client";
+import { authClient } from "@/features/auth/state/authClient";
 
 interface TwoFactorSectionProps {
   twoFactorEnabled: boolean;

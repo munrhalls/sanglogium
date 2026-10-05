@@ -1,4 +1,4 @@
-import { dataset, projectId } from "./sanity-cms/env";
+import { dataset, projectId } from "./platform/db/env";
 import { schema } from "./sanity-cms/schemaTypes";
 import { structure } from "./sanity-cms/structure";
 // import { colorInput } from "@sanity/color-input";

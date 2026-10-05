@@ -2,15 +2,15 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { NewestReleaseData } from "@/features/homepage/domain/homepageTypes";
-import { formatPrice } from "@/lib/utils/price";
-import { Carousel } from "@/shared/ui/carousel/CarouselRoot";
-import { CarouselTrack } from "@/shared/ui/carousel/CarouselTrack";
-import { CarouselSlide } from "@/shared/ui/carousel/CarouselSlide";
+import { formatPrice } from "@/platform/utils/price";
+import { Carousel } from "@/platform/design/ui/carousel/CarouselRoot";
+import { CarouselTrack } from "@/platform/design/ui/carousel/CarouselTrack";
+import { CarouselSlide } from "@/platform/design/ui/carousel/CarouselSlide";
 import {
   CarouselPrevious,
   CarouselNext,
   CarouselDots,
-} from "@/shared/ui/carousel/CarouselControls";
+} from "@/platform/design/ui/carousel/CarouselControls";
 
 interface NewestReleaseProps {
   newestReleaseData: NewestReleaseData | null;

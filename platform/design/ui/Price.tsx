@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { formatPriceMajor } from '@/lib/utils/price';
+import { formatPriceMajor } from '@/platform/utils/price';
 
 interface PriceProps {
   /** Price in major units (dollars) — e.g. the output of `centsToDisplay`. */

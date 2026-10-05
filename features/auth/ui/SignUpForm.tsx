@@ -3,7 +3,7 @@
 import { useActionState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { authClient } from "@/lib/auth/client";
+import { authClient } from "@/features/auth/state/authClient";
 
 interface SignUpFormProps {
   googleEnabled?: boolean;

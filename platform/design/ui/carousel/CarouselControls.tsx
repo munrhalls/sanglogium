@@ -2,7 +2,7 @@
 
 import React from "react";
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
-import { cn } from "@/lib/utils/tailwind";
+import { cn } from "@/platform/utils/tailwind";
 import { useCarousel } from "./CarouselContext";
 import { CarouselIcon } from "./DotIcon";
 

@@ -1,4 +1,4 @@
-import { backendClient } from "@/sanity-cms/lib/backendClient";
+import { backendClient } from "@/platform/db/backendClient";
 import type { Product } from "@/features/products";
 
 export async function getWishlistProducts(authId: string): Promise<Product[]> {

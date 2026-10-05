@@ -1,7 +1,7 @@
 import { verifySession } from "@/features/auth/server";
 import { getUserOrders } from "@/sanity-cms/lib/orders/getUserOrders";
 import Link from "next/link";
-import { formatPrice } from "@/lib/utils/price";
+import { formatPrice } from "@/platform/utils/price";
 
 export default async function OrdersPage() {
   const session = await verifySession();
