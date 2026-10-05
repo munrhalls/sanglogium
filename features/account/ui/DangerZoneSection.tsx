@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { authClient } from "@/features/auth";
 import { signOut } from "@/features/auth";
-import { requireFreshSession } from "./requireFreshSession";
+import { requireFreshSession } from "@/features/account/state/requireFreshSession";
 
 export default function DangerZoneSection() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);

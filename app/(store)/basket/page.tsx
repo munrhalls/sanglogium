@@ -1,6 +1,6 @@
 import { BasketManager, Loader } from "@/features/basket";
 import { Suspense } from "react";
-import Shelf from "@/app/components/layout/shelf/Shelf";
+import { Shelf } from "@/features/shell/server";
 
 export default function BasketPage() {
   return (

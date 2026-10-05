@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { SortDropdown } from './SortDropdown';
-import type { Category } from '@/features/product-filtering/config/facetRegistry';
+import type { Category } from '@/features/product-filtering/core/definitions/facetRegistry';
 import { MobileFilterSheet, type MobileFilterSheetProps } from './MobileFilterSheet';
 
 /**
