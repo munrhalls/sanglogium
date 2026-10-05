@@ -81,8 +81,12 @@ never fake an arrival/reveal animation the real event should drive (L11).
 
 `_project/00-MOST-IMPORTANT-lean-tracer-bullet-methodology.md` is the build method — read it
 before any new feature work or mission. Live plans are the architect's phase files under
-`_project/working-memory/<axis>/turn-<n>/phase-<n.m>.md` (transient: each turn's last phase
-deletes them, never committed); one PR per thematic axis.
+`_project/working-memory/<axis>/turn-<n>/phase-<n.m>.md` plus `_project/working-memory/run-order.json`
+(which axis waits for which); transient, never committed. The owner starts the campaign runner from the
+main checkout: `node ~/work/global/workflow/run-campaign.mjs <campaign> _project/working-memory/run-order.json --check "node tools/check-turn.mjs --all"`.
+It runs each phase as a fresh executor process in a runner-made worktree (executors never sync, switch
+branches, push or open PRs), merges each finished axis into `<campaign>/integration`, and opens one PR
+per campaign.
 
 ## PATTERN BLOCK
 
