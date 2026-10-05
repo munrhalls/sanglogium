@@ -1,0 +1,38 @@
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  max-width: 28rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+#add {
+  display: flex;
+  gap: 0.5rem;
+}
+
+#add input {
+  flex-grow: 1;
+}
+
+#list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.25rem 0;
+}
+
+li.done span {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+li button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
