@@ -1,6 +1,6 @@
 import { cn } from "@/platform/utils/tailwind";
 import React from "react";
-import type { NavigationItem } from "@/features/catalogue/domain/catalogue";
+import type { NavigationItem } from "@/features/catalogue/core/rules/catalogue";
 import SliceHero from "./hero/SliceHero";
 import SliceDetails from "./details/SliceDetails";
 
