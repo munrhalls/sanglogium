@@ -10,8 +10,8 @@ If a fact here contradicts the code, the code wins — re-verify after any large
 
 ## Data fetching — two calls in `page.tsx`
 
-1. `fetchHomepageData()` → `fetchHomepageDataBatched()` (`sanity-cms/lib/homepage/getHomepageData.ts`; the section data types live in `features/homepage/domain/homepageTypes.ts` and the fetcher imports them from `@/features/homepage`) — **2 Sanity queries**: one for `hero`, one batched GROQ query for every other section (featured, 3 spotlights, newestRelease, dacs, all 7 accessory categories). Replaced ~10 separate fetches; TTFB ~10.9s → <600ms.
-2. `getIemProductsBySlugs(HOME_12)` (`sanity-cms/lib/homepage/getIemProductsBySlugs.ts`; `HOME_12` lives in `features/homepage/config/homeIems.ts`) — separate query, IEM products by a hardcoded slug list, passed to `IemsGallery` as `iemsData`. The `iemsGallery` field on `fetchHomepageData`'s return is unused dead weight.
+1. `fetchHomepageData()` → `fetchHomepageDataBatched()` (`features/homepage/adapters/sanity/getHomepageData.ts`; the section data types live in `features/homepage/core/rules/homepageTypes.ts` and the fetcher imports them from `@/features/homepage`) — **2 Sanity queries**: one for `hero`, one batched GROQ query for every other section (featured, 3 spotlights, newestRelease, dacs, all 7 accessory categories). Replaced ~10 separate fetches; TTFB ~10.9s → <600ms.
+2. `getIemProductsBySlugs(HOME_12)` (`features/homepage/adapters/sanity/getIemProductsBySlugs.ts`; `HOME_12` lives in `features/homepage/core/definitions/homeIems.ts`) — separate query, IEM products by a hardcoded slug list, passed to `IemsGallery` as `iemsData`. The `iemsGallery` field on `fetchHomepageData`'s return is unused dead weight.
 
 **New homepage data → add a field to the batched query. Do not add a third separate fetch.**
 
@@ -28,7 +28,7 @@ If a fact here contradicts the code, the code wins — re-verify after any large
 | Dacs | `features/homepage/ui/dacs/Dacs.tsx` | `data.dacs` |
 | Accessories | `features/homepage/ui/accessories/Accessories.tsx` (+ `CategorySection.tsx`) | `data.accessories.{cables,interconnects,adapters,earpads,eartips,careCleaning,storage}` |
 
-Every section except Hero and TrustBar is wrapped in `Shelf` (`app/components/layout/shelf/Shelf.tsx`) in `page.tsx`, with a `spacing` prop and optional `fullBleed`.
+Every section except Hero and TrustBar is wrapped in `Shelf` (`features/shell/ui/shelf/Shelf.tsx`) in `page.tsx`, with a `spacing` prop and optional `fullBleed`.
 
 ## Cards — bespoke per section, NOT shared
 
@@ -48,7 +48,7 @@ There is no shared homepage product card. Each section has its own:
 Page tree is Server Components by default. Client islands:
 
 - `HeroQualityBar.tsx` (child of Hero)
-- The carousel primitives (`shared/ui/carousel/Carousel*.tsx`)
+- The carousel primitives (`platform/design/ui/carousel/Carousel*.tsx`)
 - Leaf controls inside cards: `BasketControls.tsx`, `WishlistButton.tsx`
 
 The card components themselves (`Card`, `IemCard`, `DacCard`, `AccessoryCard`) are Server Components that render those client leaves.
@@ -66,7 +66,7 @@ A "add to basket from the homepage" bug is in `BasketControls`, not the section 
 
 - `Shelf` — section layout wrapper.
 - `SectionHeader` (`features/homepage/ui/shared/SectionHeader.tsx`) — reused header block (e.g. via `IemsGalleryHeader`).
-- Carousel (`shared/ui/carousel/`) — imported by 7 sections (Featured, Accessories/CategorySection, Dacs, NewestRelease, all 3 spotlights). One implementation — a carousel bug in one place is present everywhere.
+- Carousel (`platform/design/ui/carousel/`) — imported by 7 sections (Featured, Accessories/CategorySection, Dacs, NewestRelease, all 3 spotlights). One implementation — a carousel bug in one place is present everywhere.
 
 ---
 

@@ -1,6 +1,6 @@
 # Search UX
 
-How header search works and why. Read before changing anything under `features/product-search/` or `app/components/layout/header/SearchField.tsx`.
+How header search works and why. Read before changing anything under `features/product-search/` or `features/shell/ui/header/SearchField.tsx`.
 
 ## Surfaces
 
@@ -31,7 +31,7 @@ One controller, three surfaces:
 - From 2 characters: live product suggestions (150ms debounce, small in-memory cache, previous results stay visible while loading) with the matched text highlighted, and a trailing "See all results" option.
 - Desktop shortcuts: `/` focuses the field, arrows move, Enter opens the highlighted option (or submits), Esc closes the popup, a second Esc clears the text.
 - `/search`: compact heading on phones, 44px pagination buttons, and a no-query / no-results page that offers category and popular-search links instead of a dead end.
-- `/search` filters and sort: filters use the same URL contract as the catalogue (`loadFilterSort` from `@/features/product-filtering`), limited to the category-agnostic `commercial` group (Price, Brand, In stock) because results span categories; the sidebar shows from `lg`, a Filters sheet below it. Facet counts, the price range and the result list are computed from the same in-memory matched set by `buildSearchResult` (features/product-search/domain/searchResults.ts), called from `searchProductsFull`, so counts always equal results. `sort` is NOT parsed by `loadFilterSort`: valid values are `relevance` (default, absent from the URL), `price-asc`, `price-desc`, `alpha-asc` (legacy `name-asc` accepted), validated in `searchProductsFull`'s result pipeline (`buildSearchResult`).
+- `/search` filters and sort: filters use the same URL contract as the catalogue (`loadFilterSort` from `@/features/product-filtering`), limited to the category-agnostic `commercial` group (Price, Brand, In stock) because results span categories; the sidebar shows from `lg`, a Filters sheet below it. Facet counts, the price range and the result list are computed from the same in-memory matched set by `buildSearchResult` (features/product-search/core/rules/searchResults.ts), called from `searchProductsFull`, so counts always equal results. `sort` is NOT parsed by `loadFilterSort`: valid values are `relevance` (default, absent from the URL), `price-asc`, `price-desc`, `alpha-asc` (legacy `name-asc` accepted), validated in `searchProductsFull`'s result pipeline (`buildSearchResult`).
 
 ## Where things live
 

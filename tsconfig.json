@@ -41,7 +41,6 @@
     "postcss.config.mjs",
     "sanity.cli.ts",
     "sanity.config.ts",
-    "sanity-cms/**/*.ts",
     "platform/**/*.ts",
     "platform/**/*.tsx",
     "studio/**/*.ts",
