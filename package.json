@@ -10,6 +10,7 @@
     "build": "npm run prebuild && next build",
     "start": "next start",
     "prod": "npm run build && npm run start",
+    "laws": "node --experimental-strip-types --import ./tools/laws-loader.mjs --test \"features/**/*.laws.ts\"",
     "lint": "eslint .",
     "lint-strict": "eslint . --max-warnings 0",
     "typegen": "sanity schema extract && sanity typegen generate",

@@ -107,6 +107,8 @@ While slices migrate, these legacy homes are accepted and not checked: `sanity-c
 | A9 | ROUTE (imports only; "no logic" is review-enforced) |
 | all | `tools/check-imports.mjs`: SPEC (every import resolves), DELETED (no importer of a removed file) |
 
+Behaviour (L): `npm run laws` runs every `*.laws.ts` file; the human runs it, agents never do.
+
 `import type` is erased at build time, so it is exempt from ENV only.
 
 ## Appendix: the whole repository
