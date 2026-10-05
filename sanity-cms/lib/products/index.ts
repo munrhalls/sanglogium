@@ -4,6 +4,4 @@ export { getProductBySlug } from './getProductBySlug';
 export { getRelatedProducts } from './getRelatedProducts';
 export { getSitemapSlugs } from './getSitemapSlugs';
 export type { SitemapSlug } from './getSitemapSlugs';
-export { getBasketProducts } from './getBasketProducts';
 export type { CategoryMetadata } from './getCategoryMetadata';
-export type { BasketProduct } from './getBasketProducts';
