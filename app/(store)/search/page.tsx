@@ -1,10 +1,9 @@
 import React, { Suspense } from 'react';
 import { redirect } from 'next/navigation';
-import { searchProductsFull } from '@/sanity-cms/lib/products/searchProducts';
+import { searchProductsFull, SearchResults, SearchResultsSkeleton } from '@/features/product-search/server';
 import { isFacetedQuery } from '@/features/catalogue';
 import { detectSearchRedirect, SearchHeader } from '@/features/product-search';
 import { loadFilterSort, type ProductQueryState } from '@/features/product-filtering';
-import { SearchResults, SearchResultsSkeleton } from './SearchResults';
 
 interface SearchPageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;

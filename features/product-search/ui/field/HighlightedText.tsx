@@ -1,6 +1,6 @@
 import React from 'react';
 import { cn } from '@/platform/utils/tailwind';
-import { splitHighlight } from '@/features/product-search/domain/highlight';
+import { splitHighlight } from '@/features/product-search/core/rules/highlight';
 
 interface HighlightedTextProps {
   text: string;

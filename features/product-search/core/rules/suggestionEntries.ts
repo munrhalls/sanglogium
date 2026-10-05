@@ -1,4 +1,4 @@
-import { CATEGORY_SUGGESTIONS } from '@/features/product-search/config/searchSuggestions';
+import { CATEGORY_SUGGESTIONS } from '@/features/product-search/core/definitions/searchSuggestions';
 
 /**
  * Non-product suggestions shown above the product rows: a category the shopper

@@ -1,5 +1,9 @@
 import React from 'react';
-import { SearchEmpty, SearchPagination, SearchSort, SearchCategoryChips, type SearchResult } from '@/features/product-search';
+import { SearchEmpty } from '@/features/product-search/ui/results/SearchEmpty';
+import { SearchPagination } from '@/features/product-search/ui/results/SearchPagination';
+import { SearchSort } from '@/features/product-search/ui/results/SearchSort';
+import { SearchCategoryChips } from '@/features/product-search/ui/results/SearchCategoryChips';
+import type { SearchResult } from '@/features/product-search/core/rules/searchTypes';
 import { EmptyResults, ProductGrid, ProductGridSkeleton } from "@/features/products";
 import { ActiveFilterChips, FilterSidebar, MobileFilterSheet, isFiltersActive, resolvePriceBounds, SORT_DEFAULT } from '@/features/product-filtering';
 import { getWishlistProductIds } from "@/features/products/server";

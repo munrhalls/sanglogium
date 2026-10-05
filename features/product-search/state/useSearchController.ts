@@ -3,11 +3,11 @@
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import type { AutocompleteProduct } from "@/features/product-search/domain/searchTypes";
+import type { AutocompleteProduct } from "@/features/product-search/core/rules/searchTypes";
 import { addRecentSearch } from "./recentSearches";
-import { productHref, searchHref } from "@/features/product-search/domain/searchLinks";
-import { buildSuggestionEntries } from "@/features/product-search/domain/suggestionEntries";
-import type { SuggestionEntry } from "@/features/product-search/domain/suggestionEntries";
+import { productHref, searchHref } from "@/features/product-search/url/searchLinks";
+import { buildSuggestionEntries } from "@/features/product-search/core/rules/suggestionEntries";
+import type { SuggestionEntry } from "@/features/product-search/core/rules/suggestionEntries";
 
 export const MIN_QUERY_LENGTH = 2;
 const DEBOUNCE_MS = 150;
