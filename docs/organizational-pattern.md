@@ -89,11 +89,7 @@ Across slices: any runtime file may import another slice's `index.ts`; only serv
 - Behaviour laws: a port gets laws when it gets a second adapter or when its behaviour is not obvious; URL translators get round-trip laws. Laws use `node:test` and need no dependency. Agents never run them; the human does.
 - Hygiene: secrets, env files, logs, caches and working notes are never committed.
 
-## 6. Transition (temporary, removed by the close-out axis)
-
-While slices migrate, these legacy homes are accepted and not checked: `sanity-cms/lib/`, `sanity-cms/env.ts`, `sanity-cms/schemaTypes/`, `sanity-cms/structure.ts`, `lib/`, `shared/`, `features/<slice>/model/`, `domain/`, `config/` and `proofs/`, `features/<slice>/actions.ts`, files placed directly in `features/<slice>/adapters/`, and files in `app/` that are not Next special files. Imports into legacy files are not checked either. Legacy homes are only emptied, never added to.
-
-## 7. Enforcement
+## 6. Enforcement
 
 | Axiom | Rule in `tools/check-org-pattern.mjs` |
 |-------|----------------------------------------|

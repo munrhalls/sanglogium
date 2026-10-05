@@ -1,5 +1,5 @@
 // Check "org-pattern": where every file lives and how slices may import each other, as defined in
-// docs/organizational-pattern.md (the tables below mirror its sections 2, 3 and 6; edit both together).
+// docs/organizational-pattern.md (the tables below mirror its sections 2 and 3; edit both together).
 //   PLACE      every changed path has a home (section 3)
 //   DOTDOT     no '..' specifier under features/
 //   PLANE      runtime never imports a non-runtime plane; studio/tooling never import runtime; nothing imports laws
@@ -17,9 +17,9 @@ const ROOT_ENTRY = /^(middleware\.ts|instrumentation\.ts|instrumentation-client\
 const ROOT_OTHER = /^(package(-lock)?\.json|tsconfig\.json|next\.config\.ts|postcss\.config\.mjs|tailwind\.config\.ts|eslint\.config\.mjs|\.prettierrc|\.prettierignore|\.node-version|\.gitignore|\.codeiumignore|\.env\.example|sanity\.cli\.ts|schema\.json|skills-lock\.json|vercel\.json|\.no-mistakes\.yaml|README\.md|CLAUDE\.md|AGENTS\.md)$/;
 const APP_ROUTE = /^(page|layout|loading|error|global-error|not-found|template|default|route|sitemap|robots|manifest|icon|apple-icon|opengraph-image|twitter-image)\.(ts|tsx|js|jsx)$/;
 const PARTS = ["ui", "state", "url", "view", "queries", "commands"];
-const Z = (plane, extra) => ({ plane, home: null, slice: null, part: null, system: null, legacy: false, clientSafe: false, ...extra });
+const Z = (plane, extra) => ({ plane, home: null, slice: null, part: null, system: null, clientSafe: false, ...extra });
 
-// path -> zone (null = no home). First match wins; legacy homes are section 6 transition homes.
+// path -> zone (null = no home). First match wins.
 function zone(p) {
   if (p.endsWith(".laws.ts")) return Z("laws");
   const seg = p.split("/");
@@ -35,13 +35,12 @@ function zone(p) {
     case "app":
       return p === "app/globals.css" || APP_ROUTE.test(seg[n - 1])
         ? Z("runtime", { home: "app", part: "route" })
-        : Z("runtime", { legacy: true });
+        : null;
     case "features": {
       const slice = { slice: a };
       if (n === 3) {
         if (b === "index.ts") return Z("runtime", { ...slice, home: "slice", part: "index" });
         if (b === "server.ts") return Z("runtime", { ...slice, home: "slice", part: "server" });
-        if (b === "actions.ts") return Z("runtime", { ...slice, legacy: true });
         return null;
       }
       if (PARTS.includes(b)) return Z("runtime", { ...slice, home: "slice", part: b });
@@ -53,11 +52,9 @@ function zone(p) {
       if (b === "adapters") {
         return n >= 5
           ? Z("runtime", { ...slice, home: "slice", part: "adapters", system: seg[3] })
-          : Z("runtime", { ...slice, legacy: true });
+          : null;
       }
       if (b === "schema") return Z("studio", slice);
-      if (b === "model" || b === "domain" || b === "config") return Z("runtime", { ...slice, legacy: true });
-      if (b === "proofs") return Z("tooling", { ...slice, legacy: true });
       return null;
     }
     case "platform":
@@ -65,15 +62,6 @@ function zone(p) {
       if (a === "design" && b === "styles") return Z("config");
       return ["db", "email", "analytics", "utils"].includes(a) ? Z("runtime", { home: "platform" }) : null;
     case "studio": return Z("studio");
-    case "sanity-cms":
-      if (a === "lib" || p === "sanity-cms/env.ts") return Z("runtime", { legacy: true });
-      if (a === "schemaTypes" || p === "sanity-cms/structure.ts") return Z("studio", { legacy: true });
-      return null;
-    case "lib": return Z("runtime", { legacy: true });
-    case "shared":
-      if (a === "ui") return Z("runtime", { legacy: true });
-      if (a === "styles") return Z("config", { legacy: true });
-      return null;
     case "data": return Z("runtime", { home: "leaf" });
     case "scripts": case "tools": return Z("tooling");
     case "docs": case "_project": case ".github": case ".claude": case ".codex": case ".devin": case "public": return Z("other");
@@ -108,11 +96,11 @@ function edge(ctx, file, rel, { spec, typeOnly, line }) {
   else if (A.plane === "runtime") {
     if (B.plane === "studio") { if (!file.startsWith("app/(studio)/")) out.push(`${at} PLANE runtime imports studio`); }
     else if (B.plane !== "runtime") out.push(`${at} PLANE runtime imports ${B.plane}`);
-  } else if ((A.plane === "studio" || A.plane === "tooling") && B.plane === "runtime" && rel !== "platform/db/env.ts" && rel !== "sanity-cms/env.ts") {
+  } else if ((A.plane === "studio" || A.plane === "tooling") && B.plane === "runtime" && rel !== "platform/db/env.ts") {
     out.push(`${at} PLANE ${A.plane} imports runtime`);
   }
-  // Legacy zones and non-runtime planes stop here.
-  if (A.legacy || B.legacy || A.plane !== "runtime" || B.plane !== "runtime") return out;
+  // Non-runtime planes stop here.
+  if (A.plane !== "runtime" || B.plane !== "runtime") return out;
   if (B.slice && A.slice !== B.slice && B.part !== "index" && B.part !== "server")
     out.push(`${at} DOOR import ${B.slice} only through index.ts or server.ts`);
   if (A.slice && A.slice === B.slice) {
