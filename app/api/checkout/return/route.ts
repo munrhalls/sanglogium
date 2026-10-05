@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { getCheckoutSession } from "@/features/checkout/server";
 import { retrievePaymentIntent } from "@/features/checkout/server";
 import { logCheckoutEvent } from "@/platform/utils/eventLogger";
-import { createOrderFromPaymentIntent, type OrderSessionData } from "@/features/checkout/server";
+import { placeOrderFromPaymentIntent, type OrderSessionData } from "@/features/checkout/server";
 import { getSession } from "@/features/auth/server";
 
 export async function GET(request: Request) {
@@ -125,7 +125,7 @@ export async function GET(request: Request) {
   // Non-fatal: wrapped in try/catch so a Sanity error never blocks the user redirect.
   if (pi.status === 'succeeded' && capturedSessionData) {
     try {
-      await createOrderFromPaymentIntent(pi, capturedSessionData);
+      await placeOrderFromPaymentIntent(pi, capturedSessionData);
       await logCheckoutEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_order_created', data: { paymentIntentId: pi.id }, outcome: 'success' });
     } catch (err) {
       await logCheckoutEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_order_create_failed', data: { paymentIntentId: pi.id, error: err instanceof Error ? err.message : String(err) }, outcome: 'error' });

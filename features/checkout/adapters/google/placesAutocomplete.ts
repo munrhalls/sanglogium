@@ -1,12 +1,8 @@
 import "server-only";
 
-export interface AutocompleteResult {
-  street: string;
-  streetNumber: string;
-  city: string;
-  postalCode: string;
-  regionCode: string;
-}
+import type { AutocompleteResult } from "@/features/checkout/core/rules/checkoutTypes";
+
+export type { AutocompleteResult };
 
 interface PhotonProperties {
   name?: string;

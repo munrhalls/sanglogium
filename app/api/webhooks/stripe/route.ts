@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { stripe } from '@/features/checkout/server'
-import { createOrderFromPaymentIntent } from '@/features/checkout/server'
+import { placeOrderFromPaymentIntent } from '@/features/checkout/server'
 import { logCheckoutEvent } from '@/platform/utils/eventLogger'
 
 // Stripe requires the raw request body for signature verification —
@@ -15,7 +15,7 @@ async function handlePaymentIntentSucceeded(pi: Stripe.PaymentIntent): Promise<v
   await logCheckoutEvent({ correlationId: traceId, slice: 'webhook', event: 'webhook_payment_succeeded_start', data: { paymentIntentId }, outcome: 'success' });
 
   try {
-    await createOrderFromPaymentIntent(pi)
+    await placeOrderFromPaymentIntent(pi)
     await logCheckoutEvent({ correlationId: traceId, slice: 'webhook', event: 'webhook_payment_succeeded_complete', data: { paymentIntentId }, outcome: 'success' });
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err)
