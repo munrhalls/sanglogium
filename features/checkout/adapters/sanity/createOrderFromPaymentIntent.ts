@@ -1,6 +1,7 @@
+import "server-only";
 import { backendClient } from '@/platform/db/backendClient'
 import { logCheckoutEvent } from '@/platform/utils/eventLogger'
-import { sendOrderConfirmationEmail } from '@/features/checkout/adapters/resend/orderConfirmationEmail'
+import type { OrderBasketItem as BasketItem, OrderAddress, OrderSessionData, CreateOrderResult } from '@/features/checkout/core/rules/checkoutTypes'
 import Stripe from 'stripe'
 import { z } from 'zod'
 
@@ -12,33 +13,7 @@ interface ProductDoc {
   price_data: { unit_amount: number } | null
 }
 
-interface BasketItem {
-  productId: string
-  quantity: number
-}
-
-interface OrderAddress {
-  firstName?: string
-  lastName?: string
-  regionCode: string
-  postalCode: string
-  street: string
-  streetNumber: string
-  city: string
-}
-
-export interface OrderSessionData {
-  basket: BasketItem[]
-  address?: OrderAddress
-  shippingCode?: string
-  shippingCost?: number
-  shippingMethodName?: string
-  shippingCarrier?: string
-  shippingEstimatedDays?: number
-  email?: string
-  checkoutSessionId?: string
-  userId?: string
-}
+export type { OrderSessionData };
 
 const STRIPE_METADATA_MAX_SAFE = 450
 
@@ -143,7 +118,7 @@ function resolveOrderData(
 export async function createOrderFromPaymentIntent(
   pi: Stripe.PaymentIntent,
   sessionData?: OrderSessionData
-): Promise<void> {
+): Promise<CreateOrderResult> {
   const paymentIntentId = pi.id
 
   const {
@@ -172,7 +147,7 @@ export async function createOrderFromPaymentIntent(
     if (process.env.NODE_ENV !== 'production') {
       console.log(`[ORDER CREATE] Order already exists for PI ${paymentIntentId} — skipping`)
     }
-    return
+    return { created: false }
   }
 
   await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_data_resolved', data: { paymentIntentId, itemCount: basket.length }, outcome: 'success' })
@@ -318,7 +293,7 @@ export async function createOrderFromPaymentIntent(
     // (or this commit landed and only the response was lost): nothing left to do.
     if (await backendClient.getDocument(orderId)) {
       await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_already_exists', data: { paymentIntentId }, outcome: 'success' })
-      return
+      return { created: false }
     }
     throw err
   }
@@ -332,19 +307,8 @@ export async function createOrderFromPaymentIntent(
 
   await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_stock_decremented', data: { itemCount: quantityByProduct.size - shortfalls.length }, outcome: 'success' })
 
-  try {
-    await sendOrderConfirmationEmail({
-      to: customerEmail,
-      orderNumber,
-      items,
-      total,
-      shippingAddress,
-    })
-  } catch {
-    // email failure is non-fatal — order already created
-  }
-
   if (process.env.NODE_ENV !== 'production') {
     console.log(`[ORDER CREATE] Order ${orderNumber} created for PI ${paymentIntentId}, stock decremented for ${quantityByProduct.size - shortfalls.length} products`)
   }
+  return { created: true, email: { to: customerEmail, orderNumber, items, total, shippingAddress } }
 }

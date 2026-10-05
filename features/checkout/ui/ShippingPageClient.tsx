@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { saveShippingAction } from "@/features/checkout/actions";
+import { saveShippingAction } from "@/features/checkout/commands/saveShippingAction";
 import { formatDeliveryEstimate } from "@/platform/utils/formatting";
 import { formatPriceMajor } from "@/platform/utils/price";
 import { cn } from "@/platform/utils/tailwind";

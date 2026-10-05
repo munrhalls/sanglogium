@@ -1,97 +1,20 @@
-import { getCheckoutSession } from "@/features/checkout/server";
-import { redirect } from "next/navigation";
 import Link from "next/link";
-import { getPaymentProducts } from "@/sanity-cms/lib/products/getPaymentProducts";
-import { CheckoutSummary, CheckoutStepper, PaymentForm, dedupeShippingLabel, buildPaymentLineItems, computePaymentTotals } from "@/features/checkout";
-import { logCheckoutEvent } from "@/platform/utils/eventLogger";
+import { getPaymentPageData } from "@/features/checkout/server";
+import { CheckoutSummary, CheckoutStepper, PaymentForm } from "@/features/checkout";
 
 export default async function Page() {
-  const session = await getCheckoutSession();
-  const checkoutSessionId = session.checkoutSessionId;
-  const traceId = checkoutSessionId || 'unknown';
-
-  // Log payment page load
-  await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_page_load', data: { hasBasket: !!session.basket?.length, hasAddress: !!session.address, hasShippingCost: session.shippingCost !== undefined && session.shippingCost !== null }, outcome: 'success' });
-
-  if (!session.basket?.length) {
-    await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_guard_basket_empty', data: {}, outcome: 'error' });
-    redirect("/basket");
-  }
-
-  if (session.basket.some((i) => !Number.isInteger(i.quantity) || i.quantity < 1)) {
-    await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_guard_invalid_quantity', data: { basket: session.basket }, outcome: 'error' });
-    redirect("/basket?error=invalid_basket");
-  }
-
-  if (!session.address) {
-    await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_guard_no_address', data: {}, outcome: 'error' });
-    redirect("/checkout/address");
-  }
-
-  if (session.shippingCost === undefined || session.shippingCost === null) {
-    await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_guard_no_shipping_cost', data: {}, outcome: 'error' });
-    redirect("/checkout/shipping");
-  }
-
-  // Quantity sanity check — prevent unreasonably high orders
-  const MAX_QUANTITY_PER_ITEM = 10;
-  for (const item of session.basket) {
-    if (item.quantity > MAX_QUANTITY_PER_ITEM) {
-      await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_guard_excessive_quantity', data: { productId: item.productId, quantity: item.quantity, max: MAX_QUANTITY_PER_ITEM }, outcome: 'error' });
-      redirect(`/basket?error=excessive_quantity&id=${item.productId}`);
-    }
-  }
-
-  const ids = session.basket.map((i) => i.productId);
-
-  await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_sanity_query_start', data: { productIds: ids, quantities: session.basket.map(i => ({ productId: i.productId, quantity: i.quantity })) }, outcome: 'success' });
-
-  const sanityProducts = await getPaymentProducts(ids);
-
-  await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_sanity_query_complete', data: { productCount: sanityProducts.length, expectedCount: session.basket.length }, outcome: 'success' });
-
-  if (sanityProducts.length !== session.basket.length) {
-    await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_product_mismatch', data: { expected: session.basket.length, received: sanityProducts.length }, outcome: 'error' });
-    throw new Error("Product mismatch — basket contains unknown product IDs");
-  }
-
-  for (const product of sanityProducts) {
-    if (!Number.isFinite(product.price_data?.unit_amount)) {
-      await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_invalid_price', data: { productId: product._id }, outcome: 'error' });
-      throw new Error(`Product ${product._id} has invalid price`);
-    }
-    if (product.stock === 0) {
-      await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_out_of_stock', data: { productId: product._id }, outcome: 'error' });
-      redirect(`/basket?error=out_of_stock&id=${product._id}`);
-    }
-  }
-
-  const items = buildPaymentLineItems(session.basket, sanityProducts);
-  const { subtotal, grandTotal, vatAmount } = computePaymentTotals(items, session.shippingCost);
-
-  await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_calculation', data: { subtotal, shippingCost: session.shippingCost, grandTotal, vatAmount }, outcome: 'success' });
-
-  if (grandTotal < 1) {
-    await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_invalid_total', data: { subtotal, shippingCost: session.shippingCost, grandTotal }, outcome: 'error' });
-    redirect("/basket?error=invalid_total");
-  }
-
-  if (process.env.NODE_ENV !== "production") {
-    console.log("[PAYMENT PAGE] subtotal:", subtotal, "grandTotal:", grandTotal);
-  }
-
-  const address = session.address!;
-  const shippingLabel = dedupeShippingLabel(session.shippingCarrier, session.shippingMethodName);
-
-  const metadata: Record<string, string> = {
-    regionCode: address.regionCode,
-    postalCode: address.postalCode,
-    street: address.street,
-    streetNumber: address.streetNumber,
-    city: address.city,
-    email: session.email ?? "",
-    ...(checkoutSessionId && { checkoutSessionId }),
-  };
+  const {
+    items,
+    subtotal,
+    grandTotal,
+    vatAmount,
+    shippingCost,
+    shippingEstimatedDays,
+    shippingLabel,
+    address,
+    metadata,
+    traceId,
+  } = await getPaymentPageData();
 
   return (
     <div className="space-y-6">
@@ -101,10 +24,10 @@ export default async function Page() {
         <div className="min-w-0 space-y-4">
           <CheckoutSummary
             items={items}
-            shippingCost={session.shippingCost as number}
+            shippingCost={shippingCost}
             shippingLabel={shippingLabel}
-            shippingEstimatedDays={session.shippingEstimatedDays}
-            address={session.address}
+            shippingEstimatedDays={shippingEstimatedDays}
+            address={address}
             subtotal={subtotal}
             grandTotal={grandTotal}
             vatAmount={vatAmount}

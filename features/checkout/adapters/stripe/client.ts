@@ -17,3 +17,27 @@ export async function retrievePaymentIntent(paymentIntentId: string): Promise<St
     expand: ['latest_charge'],
   })
 }
+
+export async function updatePaymentIntentAmount(
+  paymentIntentId: string,
+  amount: number,
+  metadata: Record<string, string>,
+  idempotencyKey: string
+): Promise<Stripe.PaymentIntent> {
+  return stripe.paymentIntents.update(
+    paymentIntentId,
+    { amount, metadata },
+    { idempotencyKey }
+  )
+}
+
+export async function createPaymentIntentForAmount(
+  amount: number,
+  metadata: Record<string, string>,
+  idempotencyKey: string
+): Promise<Stripe.PaymentIntent> {
+  return stripe.paymentIntents.create(
+    { amount, currency: 'pln', automatic_payment_methods: { enabled: true }, metadata },
+    { idempotencyKey }
+  )
+}

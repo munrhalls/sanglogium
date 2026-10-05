@@ -1,36 +1,10 @@
+import "server-only";
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 
-export interface CheckoutSession {
-  basket: Array<{ productId: string; quantity: number }>;
-  address?: {
-    firstName: string;
-    lastName: string;
-    phone: string;
-    regionCode: string;
-    postalCode: string;
-    street: string;
-    streetNumber: string;
-    city: string;
-    geocode?: {
-      location: {
-        latitude: number;
-        longitude: number;
-      };
-    };
-    placeId?: string;
-  };
-  email?: string;
-  shippingCode?: string;
-  shippingCost?: number;
-  shippingMethodName?: string;
-  shippingCarrier?: string;
-  shippingEstimatedDays?: number;
-  paymentIntentId?: string;
-  completedPaymentIntentId?: string;
-  lastPaymentIntentId?: string; // Set for any PI processed by return handler (not just succeeded)
-  checkoutSessionId?: string; // Unified Trace ID for checkout flow logging
-}
+import type { CheckoutSession } from "@/features/checkout/core/rules/checkoutTypes";
+
+export type { CheckoutSession };
 
 // Fail closed: the cookie carries trusted checkout values (e.g. shippingCost), so a
 // missing secret must stop checkout rather than fall back to a guessable password.

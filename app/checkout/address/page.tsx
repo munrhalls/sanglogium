@@ -1,22 +1,8 @@
-import { getCheckoutSession } from "@/features/checkout/server";
-import { redirect } from "next/navigation";
+import { getAddressPageData } from "@/features/checkout/server";
 import { AddressForm } from "@/features/checkout";
-import type { Address } from "@/features/checkout";
 
 export default async function Page() {
-  const session = await getCheckoutSession();
+  const { traceId, initialAddress } = await getAddressPageData();
 
-  // Guard: Redirect to basket if session.basket is missing
-  if (!session.basket || session.basket.length === 0) {
-    console.log("[ADDRESS PAGE] No basket in session, redirecting to basket");
-    redirect("/basket");
-  }
-
-  const traceId = session.checkoutSessionId || 'unknown';
-
-  // TRACER: Log session state to server console for verification
-  console.log("[ADDRESS PAGE] session.basket:", session.basket);
-  console.log("[ADDRESS PAGE] session.address:", session.address);
-
-  return <AddressForm traceId={traceId} initialAddress={session.address} />;
+  return <AddressForm traceId={traceId} initialAddress={initialAddress} />;
 }

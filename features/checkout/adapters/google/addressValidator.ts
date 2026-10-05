@@ -1,3 +1,4 @@
+import "server-only";
 // ==========================================================================
 // FROZEN — Google Address Validation API (legacy path).
 //
@@ -5,14 +6,14 @@
 // multi-country launch by setting ADDRESS_VERIFY_MODE=google. Do not treat
 // this code as live; it is dead unless that env flag is set. It costs money
 // per call and was replaced by the free TERYT verifier (see
-// features/checkout/adapters/terytValidator.ts). A missing API key degrades to
+// features/checkout/adapters/teryt/validator.ts). A missing API key degrades to
 // accept-as-entered (region-gated) rather than blocking checkout.
 //
 // This file is a plain server-side helper module (NOT "use server") — it is
-// only ever called from features/checkout/actions.ts, never invoked directly as a Server
+// only ever called from features/checkout/commands/submitShippingAction.ts, never invoked directly as a Server
 // Action, so it may accept a function argument (acceptAsEntered).
 // ==========================================================================
-import type { Address, ServerResponse } from "@/features/checkout/domain/checkoutTypes";
+import type { Address, ServerResponse } from "@/features/checkout/core/rules/checkoutTypes";
 
 interface RequestBody {
   address: {

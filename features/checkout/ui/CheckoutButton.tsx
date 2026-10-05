@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { initCheckoutSession } from '@/features/checkout/actions'
+import { initCheckoutSession } from '@/features/checkout/commands/initCheckoutSession'
 
 export interface CheckoutButtonProps {
   basketData?: Array<{

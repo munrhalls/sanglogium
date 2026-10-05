@@ -1,3 +1,4 @@
+import "server-only";
 /**
  * AlleKurier Shipping Rates Fetcher
  *
@@ -12,37 +13,9 @@
 
 import { logCheckoutEvent } from '@/platform/utils/eventLogger';
 
-export interface AlleKurierService {
-  Carrier: {
-    code: string;
-    name: string;
-  };
-  Service: {
-    code: string;
-    name: string;
-  };
-  Order: {
-    net: number;
-    gross: number;
-  };
-  Time: {
-    days: string;
-    description: string;
-  };
-}
+import type { AlleKurierService, AlleKurierRatesInput, AlleKurierShippingOption } from "@/features/checkout/core/rules/checkoutTypes";
 
-export interface AlleKurierRatesInput {
-  fromCountry: string;
-  fromZip: string;
-  toCountry: string;
-  toZip: string;
-  packages: Array<{
-    width: number;
-    height: number;
-    length: number;
-    weight: number;
-  }>;
-}
+export type { AlleKurierService, AlleKurierRatesInput };
 
 /**
  * Get AlleKurier credentials from environment variables
@@ -206,14 +179,7 @@ export async function fetchAlleKurierRates(
  */
 export function transformAlleKurierToShippingOption(
   service: AlleKurierService
-): {
-  provider: string;
-  servicelevel: { name: string };
-  rateId: string;
-  amount: number;
-  currency: string;
-  estimatedDays: number;
-} {
+): AlleKurierShippingOption {
   const carrier = service.Carrier || {};
   const svc = service.Service || {};
   const order = service.Order || {};

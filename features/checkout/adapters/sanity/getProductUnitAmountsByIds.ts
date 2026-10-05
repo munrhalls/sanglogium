@@ -1,3 +1,4 @@
+import "server-only";
 import { getBackendClient } from '@/platform/db/backendClient';
 import groq from 'groq';
 

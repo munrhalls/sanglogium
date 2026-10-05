@@ -1,3 +1,4 @@
+import "server-only";
 // GUS TERYT ws1 client — free, authoritative Polish address verification.
 //
 // SOAP 1.1 + WS-Security UsernameToken via fetch (no SDK, no key, 0 cost).
@@ -16,19 +17,9 @@
 // returns an arbitrary street for the locality (false positive). Guarded below.
 // Always fails soft (`degraded: true`) so checkout never dead-ends on GUS.
 
-export interface TerytVerifyInput {
-  street: string;
-  streetNumber: string;
-  postalCode: string;
-  city: string;
-}
+import type { TerytVerifyInput, TerytVerifyResult } from "@/features/checkout/core/rules/checkoutTypes";
 
-export interface TerytVerifyResult {
-  valid: boolean;
-  degraded: boolean;
-  reason?: string;
-  streetName?: string;
-}
+export type { TerytVerifyInput, TerytVerifyResult };
 
 const DEFAULT_ENDPOINT = "https://uslugaterytws1test.stat.gov.pl/Terytws1.svc";
 const DEFAULT_USER = "TestPubliczny";

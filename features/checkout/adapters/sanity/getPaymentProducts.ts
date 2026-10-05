@@ -1,13 +1,10 @@
+import "server-only";
 import { client } from "@/platform/db/client";
 import groq from "groq";
 
-export interface PaymentProduct {
-  _id: string;
-  name: string | null;
-  price_data: { unit_amount: number } | null;
-  stock: number | null;
-  imageUrl: string | null;
-}
+import type { PaymentProduct } from "@/features/checkout/core/rules/checkoutTypes";
+
+export type { PaymentProduct };
 
 export async function getPaymentProducts(ids: string[]): Promise<PaymentProduct[]> {
   return client.fetch<PaymentProduct[]>(

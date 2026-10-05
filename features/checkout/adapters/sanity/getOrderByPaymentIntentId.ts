@@ -1,44 +1,9 @@
+import "server-only";
 import { backendClient } from "@/platform/db/backendClient";
 
-export interface OrderForSuccessPage {
-  _id: string;
-  orderNumber: string;
-  customerEmail: string;
-  isGuest: boolean;
-  items: Array<{
-    productId: string;
-    name: string;
-    quantity: number;
-    price: number;
-    subtotal: number;
-  }>;
-  pricing: {
-    subtotal: number;
-    shipping: number;
-    tax: number;
-    discount: number;
-    total: number;
-    currency: string;
-  };
-  shippingAddress: {
-    name: string;
-    line1: string;
-    city: string;
-    state: string;
-    postalCode: string;
-    country: string;
-  };
-  shippingMethod?: {
-    name: string;
-    carrier: string;
-    price: number;
-    estimatedDays?: number;
-  };
-  status: string;
-  dates: {
-    orderedAt: string;
-  };
-}
+import type { OrderForSuccessPage } from "@/features/checkout/core/rules/checkoutTypes";
+
+export type { OrderForSuccessPage };
 
 export async function fetchOrderByPaymentIntentId(
   paymentIntentId: string
