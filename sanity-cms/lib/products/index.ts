@@ -5,7 +5,5 @@ export { getRelatedProducts } from './getRelatedProducts';
 export { getSitemapSlugs } from './getSitemapSlugs';
 export type { SitemapSlug } from './getSitemapSlugs';
 export { getBasketProducts } from './getBasketProducts';
-export { getBrandFacets, brandLabelMap } from './getBrandFacets';
-export type { BrandFacet } from './getBrandFacets';
 export type { CategoryMetadata } from './getCategoryMetadata';
 export type { BasketProduct } from './getBasketProducts';

@@ -1,7 +1,7 @@
 "use server";
 
 import { requireSession, auth } from "@/features/auth/server";
-import { getProfileIdByAuthId } from "@/sanity-cms/lib/account/getProfileIdByAuthId";
+import { getProfileIdByAuthId } from "@/features/auth/server";
 import { headers } from "next/headers";
 import { randomUUID } from "node:crypto";
 import type { Address } from "@/features/checkout";

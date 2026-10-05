@@ -1,5 +1,5 @@
 import { backendClient } from "@/platform/db/backendClient";
-import { getProfileIdByAuthId } from "@/sanity-cms/lib/account/getProfileIdByAuthId";
+import { getProfileIdByAuthId } from "@/features/auth/adapters/sanity/getProfileIdByAuthId";
 
 export async function syncUserProfile(user: {
   id: string;

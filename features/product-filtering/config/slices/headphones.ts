@@ -94,7 +94,7 @@ export const FACETS: FacetDef[] = [
   { id: 'connectivity', group: 'type', label: 'Connectivity', control: 'checkbox', options: opts([['wired', 'Wired'], ['wireless', 'Wireless (Bluetooth)'], ['true-wireless', 'True Wireless'], ['hybrid', 'Wired + Wireless Hybrid']]) },
 
   // ── Sound Properties ────────────────────────────────────────────────────
-  // Values are the exact strings from sanity-cms/schemaTypes/productType.ts's
+  // Values are the exact strings from features/products/schema/productType.ts's
   // soundSignature options.list (sang-logium-3rv.5) -- they must match
   // ../facetMap.ts's valueVocab exactly (case included).
   // sang-logium-3rv.9 -- schema options.list (productType.ts) has 8 values;

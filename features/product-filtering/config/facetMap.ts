@@ -91,7 +91,7 @@ export const FILTER_FACETS: FilterFacet[] = [
     field: 'filterAttributes.driverType',
     // Array field in schema, same enum/array mismatch as wearingStyle above.
     type: 'multi',
-    // Was missing 3 of the schema's 8 real options (sanity-cms/schemaTypes/
+    // Was missing 3 of the schema's 8 real options (features/products/schema/
     // productType.ts:452) -- amt/bone-conduction/electret silently never got
     // counted, regardless of real product data.
     valueVocab: ['dynamic', 'planar-magnetic', 'electrostatic', 'balanced-armature', 'hybrid', 'amt', 'bone-conduction', 'electret'],
@@ -102,7 +102,7 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Connectivity',
     field: 'filterAttributes.connectivity',
     type: 'enum',
-    // Was missing 2 of the schema's 4 real options (sanity-cms/schemaTypes/
+    // Was missing 2 of the schema's 4 real options (features/products/schema/
     // productType.ts:296) -- true-wireless/hybrid silently never got counted.
     valueVocab: ['wired', 'wireless', 'true-wireless', 'hybrid'],
     categories: ['headphones'],
@@ -249,7 +249,7 @@ export const FILTER_FACETS: FilterFacet[] = [
   },
   {
     facet: 'Frequency response -- bass extension',
-    // freqResponseHz is a {min,max} object (sanity-cms/schemaTypes/
+    // freqResponseHz is a {min,max} object (features/products/schema/
     // productType.ts:337); there is no stored bassExtensionHz field --
     // bass extension is derived from freqResponseHz.min. Lower min =
     // deeper bass extension, so this filters on the low end of the pair.
@@ -391,7 +391,7 @@ export const FILTER_FACETS: FilterFacet[] = [
     urlParam: 'connectorTermination',
   },
   // sang-logium-3rv.7 — accessories commercial + domain facets vocabulary/parity cleanup.
-  // Closed vocabularies below match sanity-cms/schemaTypes/productType.ts
+  // Closed vocabularies below match features/products/schema/productType.ts
   // options.list values for each field.
   {
     facet: 'Awards / recognition',
