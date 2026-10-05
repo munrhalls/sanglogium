@@ -1,3 +1,4 @@
+import "server-only";
 // GUS TERYT ws1 client — free, authoritative Polish address verification.
 //
 // SOAP 1.1 + WS-Security UsernameToken via fetch (no SDK, no key, 0 cost).

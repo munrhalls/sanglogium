@@ -1,7 +1,7 @@
 import { getCheckoutSession } from "@/features/checkout/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { getPaymentProducts } from "@/sanity-cms/lib/products/getPaymentProducts";
+import { getPaymentProducts } from "@/features/checkout/server";
 import { CheckoutSummary, CheckoutStepper, PaymentForm, dedupeShippingLabel, buildPaymentLineItems, computePaymentTotals } from "@/features/checkout";
 import { logCheckoutEvent } from "@/platform/utils/eventLogger";
 

@@ -1,3 +1,4 @@
+import "server-only";
 /**
  * AlleKurier Shipping Rates Fetcher
  *

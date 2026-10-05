@@ -36,3 +36,15 @@ export type BasketCheckoutItem = {
   _id: string;
   quantity: number;
 };
+
+// Checkout-owned product shape (cycle guard): only the fields checkout reads.
+export type CheckoutProduct = {
+  _id: string;
+  name?: string | null;
+  parcel?: {
+    length: number;
+    width: number;
+    height: number;
+    weight: number;
+  };
+};

@@ -1,3 +1,4 @@
+import "server-only";
 import { backendClient } from '@/platform/db/backendClient'
 import { logCheckoutEvent } from '@/platform/utils/eventLogger'
 import { sendOrderConfirmationEmail } from '@/features/checkout/adapters/resend/orderConfirmationEmail'

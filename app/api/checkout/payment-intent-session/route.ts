@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getCheckoutSession } from '@/features/checkout/server'
 import { stripe } from '@/features/checkout/server'
 import { logCheckoutEvent } from '@/platform/utils/eventLogger'
-import { getProductUnitAmountsByIds } from '@/sanity-cms/lib/products/getProductUnitAmountsByIds'
+import { getProductUnitAmountsByIds } from '@/features/checkout/server'
 import { getSession } from '@/features/auth/server'
 import { calculateGrandTotal } from '@/features/checkout'
 

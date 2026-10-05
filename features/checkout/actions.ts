@@ -1,11 +1,11 @@
 "use server";
 
-import { getCheckoutSession } from "./adapters/session";
+import { getCheckoutSession } from "./adapters/iron-session/checkoutSession";
 import { redirect } from "next/navigation";
-import type { Address, ServerResponse } from "./domain/checkoutTypes";
+import type { Address, ServerResponse } from "./core/rules/checkoutTypes";
 import { logCheckoutEvent, generateCheckoutSessionId } from "@/platform/utils/eventLogger";
-import { verifyPolishAddress } from "./adapters/terytValidator";
-import { validateWithGoogle } from "./adapters/googleAddressValidator";
+import { verifyPolishAddress } from "./adapters/teryt/validator";
+import { validateWithGoogle } from "./adapters/google/addressValidator";
 
 export async function initCheckoutSession(items: Array<{ productId: string; quantity: number }>, checkoutSessionId?: string) {
   const session = await getCheckoutSession();

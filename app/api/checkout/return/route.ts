@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { getCheckoutSession } from "@/features/checkout/server";
 import { retrievePaymentIntent } from "@/features/checkout/server";
 import { logCheckoutEvent } from "@/platform/utils/eventLogger";
-import { createOrderFromPaymentIntent, type OrderSessionData } from "@/sanity-cms/lib/orders/createOrderFromPaymentIntent";
+import { createOrderFromPaymentIntent, type OrderSessionData } from "@/features/checkout/server";
 import { getSession } from "@/features/auth/server";
 
 export async function GET(request: Request) {

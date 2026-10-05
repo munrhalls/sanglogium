@@ -1,3 +1,4 @@
+import "server-only";
 import { client } from "@/platform/db/client";
 import groq from "groq";
 
