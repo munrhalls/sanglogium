@@ -1,14 +1,14 @@
 // Pure facet-count logic: in-memory matching engine and aggregation over an
 // already-fetched product set. No Sanity, no fetch, no cache — those live in
-// sanity-cms/lib/products/getFilterFacets.ts, which calls this module.
+// queries/getFilterFacets.ts, which calls this module.
 
 import {
   FILTER_FACETS,
   isPlaceholderVocab,
   type FilterFacet,
-} from '@/features/product-filtering/config/facetMap';
+} from '@/features/product-filtering/core/definitions/facetMap';
 import { humanizeFacetValue } from './humanizeFacetValue';
-import type { ProductQueryState } from './buildProductQuery';
+import type { ProductQueryState, RawProduct } from './filterTypes';
 
 export interface FacetOption {
   value: string;
@@ -39,19 +39,6 @@ export interface CatalogueFacets {
   isDefaultState: boolean;
 }
 
-// Exported (sang-logium-3rv.12): previously module-private. Made directly
-// testable so the in-memory matching engine has its own correctness coverage
-// -- see sanity-cms/lib/products/__tests__/getFilterFacets.spec.ts. Purely
-// additive visibility change, no behaviour change.
-export interface RawProduct {
-  _id: string;
-  filterAttributes?: Record<string, unknown>;
-  brandRef?: { name: string; slug: string } | null;
-  price?: number;
-  stock?: number;
-  reservedStock?: number;
-}
-
 export function getPriceCents(p: RawProduct): number | null {
   if (p.filterAttributes?.price != null) {
     return Number(p.filterAttributes.price);
@@ -70,7 +57,7 @@ export function isInStock(p: RawProduct): boolean {
 }
 
 export function valuesForFacet(p: RawProduct, facet: FilterFacet): string[] {
-  const field = facet.field.replace('filterAttributes.', '');
+  const field = facet.attribute;
   const raw = p.filterAttributes?.[field];
   if (raw === undefined || raw === null) return [];
   if (Array.isArray(raw)) return raw.map((v) => String(v).toLowerCase());
@@ -78,12 +65,13 @@ export function valuesForFacet(p: RawProduct, facet: FilterFacet): string[] {
 }
 
 /**
- * Numeric value for a range facet, following its (possibly nested) `field`
- * path -- e.g. 'freqResponseHz.min' or 'batteryLifeHours.ancOff' -- unlike
- * `valuesForFacet` above, which only reads a top-level filterAttributes key.
+ * Numeric value for a range facet, following its (possibly nested)
+ * `attribute` path -- e.g. 'freqResponseHz.min' or 'batteryLifeHours.ancOff'
+ * -- unlike `valuesForFacet` above, which only reads a top-level
+ * filterAttributes key.
  */
 export function numericValueForRangeFacet(p: RawProduct, facet: FilterFacet): number | null {
-  const path = facet.field.replace('filterAttributes.', '').split('.');
+  const path = facet.attribute.split('.');
   let cur: unknown = p.filterAttributes;
   for (const key of path) {
     if (cur == null || typeof cur !== 'object') return null;

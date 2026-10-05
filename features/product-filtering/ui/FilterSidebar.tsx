@@ -3,9 +3,9 @@
 import React from 'react';
 import type { IconType } from 'react-icons';
 import { FaTag, FaHeadphones, FaWaveSquare, FaLayerGroup, FaBluetooth, FaMicrochip, FaPlug, FaBolt, FaScrewdriverWrench } from 'react-icons/fa6';
-import { getFacetModule, resolveGroupIcon, type Category, type AnyFacetDef, type FacetOptionCount } from '@/features/product-filtering/config/facetRegistry';
-import { useClearAllFilters } from '@/features/product-filtering/model/useFilterParam';
-import type { RangeBounds } from '@/features/product-filtering/domain/facetCounts';
+import { getFacetModule, resolveGroupIcon, type Category, type AnyFacetDef, type FacetOptionCount } from '@/features/product-filtering/core/definitions/facetRegistry';
+import { useClearAllFilters } from '@/features/product-filtering/state/useFilterParam';
+import type { RangeBounds } from '@/features/product-filtering/core/rules/facetCounts';
 import { CheckboxGroup, BooleanToggle, RangeControl, PriceControl } from './FilterControls';
 
 // Re-export the shared header/style constants so sibling filter modules can

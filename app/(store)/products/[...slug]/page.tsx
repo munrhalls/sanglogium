@@ -4,8 +4,7 @@ import { resolveSlugToId, unrollDescendantKeys } from '@/features/catalogue/serv
 import Breadcrumbs from './CategoryBreadcrumbs';
 import { getCategoryMetadata } from '@/sanity-cms/lib/products/getCategoryMetadata';
 import { getProductsCount, getProductsChunk } from '@/sanity-cms/lib/products/getProductsByVfsKeys';
-import { getFilterFacets } from '@/sanity-cms/lib/products/getFilterFacets';
-import { getCategoryPriceRange } from '@/sanity-cms/lib/products/getCategoryPriceRange';
+import { getFilterFacets, getCategoryPriceRange } from '@/features/product-filtering/server';
 import { getWishlistProductIds } from "@/features/products/server";
 import { ShopHeader, EmptyResults, Pagination, ChunkedProductGrid, CHUNK_SIZE } from "@/features/products";
 import { ActiveFilterChips, FilterSidebar, SortBar, isCategory, isFiltersActive, loadFilterSort, resolvePriceBounds, sanitizeFilterState, type Category, type ProductQueryState } from '@/features/product-filtering';

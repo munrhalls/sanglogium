@@ -2,7 +2,7 @@
 // in this folder ONLY. Deliberately does not import sanity-cms/lib/client.ts
 // or any other repo transport helper -- written from scratch this session so
 // nothing in this proof chain depends on repo code outside what's under test
-// (features/product-filtering/domain/buildProductQuery.ts, called directly by 07-diff-against-production.mjs).
+// (features/product-filtering/adapters/sanity/buildProductQuery.ts, called directly by 07-diff-against-production.mjs).
 //
 // Reads connection info from env (populate via `node --env-file=.env.local`).
 
