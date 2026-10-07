@@ -14,6 +14,5 @@ export { SearchFieldDesktop } from './ui/field/SearchFieldDesktop';
 export { SearchSheet } from './ui/field/SearchSheet';
 export { useSearchController } from './state/useSearchController';
 export { useSearchOverlay } from './state/useSearchOverlay';
-export { normalizeText, deriveSpacedQuery } from './core/rules/searchScoring';
-export { rankAutocomplete, buildSearchResult } from './core/rules/searchResults';
+export { normalizeText, deriveSpacedQuery } from './core/rules/searchText';
 export { fetchSearchSuggestions } from './commands/fetchSearchSuggestions';

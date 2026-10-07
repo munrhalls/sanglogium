@@ -3,6 +3,7 @@
 // Explicit named re-exports only; never bare export *.
 export { isCategory } from './core/definitions/facetRegistry';
 export type { Category } from './core/definitions/facetRegistry';
+export { CATEGORIES, CATEGORY_LABELS } from './core/definitions/category';
 export { loadFilterSort, SORT_DEFAULT, isFiltersActive } from './url/filterSortParams';
 export { FILTER_FACETS, isPlaceholderVocab } from './core/definitions/facetMap';
 export type { FilterFacet } from './core/definitions/facetMap';
