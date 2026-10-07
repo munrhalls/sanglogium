@@ -3,11 +3,10 @@
 import { cn } from "@/platform/utils/tailwind";
 import BrandLogo from "@/features/shell/ui/header/BrandLogo";
 import SearchField from "@/features/shell/ui/header/SearchField";
-import NavbarActionsServer from "./NavbarActionsServer";
-import NavbarActionsSkeleton from "@/features/shell/ui/header/NavbarActionsSkeleton";
+import NavbarActions from "@/features/shell/ui/header/NavbarActions";
 import { Suspense } from "react";
 
-export default function Header() {
+export default function Header({ isAuthenticated }: { isAuthenticated: boolean }) {
   return (
     <header
       className={cn(
@@ -22,9 +21,8 @@ export default function Header() {
       <Suspense>
         <SearchField />
       </Suspense>
-      <Suspense fallback={<NavbarActionsSkeleton />}>
-        <NavbarActionsServer />
-      </Suspense>
+      {/* Cart count: hardcode 0 for now — cart state is managed client-side via Zustand */}
+      <NavbarActions isAuthenticated={isAuthenticated} cartCount={0} />
     </header>
   );
 }
