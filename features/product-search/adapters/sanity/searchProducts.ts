@@ -1,6 +1,6 @@
 import "server-only";
 
-import { sanityFetch } from '@/platform/db/client';
+import { sanityFetch } from '@/platform/sanity/client';
 import groq from 'groq';
 import type { AutocompleteProduct, SearchProduct } from '@/features/product-search/core/rules/searchTypes';
 

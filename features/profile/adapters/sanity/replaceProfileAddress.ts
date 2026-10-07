@@ -1,5 +1,5 @@
 import "server-only";
-import { backendClient } from "@/platform/db/backendClient";
+import { backendClient } from "@/platform/sanity/backendClient";
 import type { Address } from "@/features/address";
 
 // addressKey must already be validated by the caller (isValidAddressKey in the account slice addressInput rules).

@@ -1,5 +1,5 @@
 import "server-only";
-import { backendClient } from "@/platform/db/backendClient";
+import { backendClient } from "@/platform/sanity/backendClient";
 import type { UserAddressesProfile } from "@/features/account/core/rules/accountTypes";
 
 export async function getUserAddresses(authId: string): Promise<UserAddressesProfile | null> {

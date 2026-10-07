@@ -1,5 +1,5 @@
 import "server-only";
-import { backendClient } from "@/platform/db/backendClient";
+import { backendClient } from "@/platform/sanity/backendClient";
 
 const OPEN_STATUSES = [
   "pending_payment",

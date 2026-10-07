@@ -1,5 +1,5 @@
 import "server-only";
-import { getBackendClient } from '@/platform/db/backendClient';
+import { getBackendClient } from '@/platform/sanity/backendClient';
 import groq from 'groq';
 
 export async function getProductUnitAmountsByIds(

@@ -1,5 +1,5 @@
 import "server-only";
-import { sanityFetch } from '@/platform/db/client';
+import { sanityFetch } from '@/platform/sanity/client';
 import { groq } from 'next-sanity';
 import type { PriceRangeData } from '@/features/product-filtering/core/rules/priceBounds';
 import type { PriceRangeSource } from '@/features/product-filtering/core/ports';

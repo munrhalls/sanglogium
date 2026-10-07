@@ -60,7 +60,7 @@ function zone(p) {
     case "platform":
       if (a === "design" && b === "ui") return Z("runtime", { home: "platform", clientSafe: true });
       if (a === "design" && b === "styles") return Z("config");
-      return ["db", "email", "analytics", "utils"].includes(a) ? Z("runtime", { home: "platform" }) : null;
+      return ["sanity", "email", "analytics", "utils"].includes(a) ? Z("runtime", { home: "platform" }) : null;
     case "studio": return Z("studio");
     case "data": return Z("runtime", { home: "leaf" });
     case "scripts": case "tools": return Z("tooling");
@@ -96,7 +96,7 @@ function edge(ctx, file, rel, { spec, typeOnly, line }) {
   else if (A.plane === "runtime") {
     if (B.plane === "studio") { if (!file.startsWith("app/(studio)/")) out.push(`${at} PLANE runtime imports studio`); }
     else if (B.plane !== "runtime") out.push(`${at} PLANE runtime imports ${B.plane}`);
-  } else if ((A.plane === "studio" || A.plane === "tooling") && B.plane === "runtime" && rel !== "platform/db/env.ts") {
+  } else if ((A.plane === "studio" || A.plane === "tooling") && B.plane === "runtime" && rel !== "platform/sanity/env.ts") {
     out.push(`${at} PLANE ${A.plane} imports runtime`);
   }
   // Non-runtime planes stop here.

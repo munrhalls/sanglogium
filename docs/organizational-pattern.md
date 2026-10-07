@@ -7,7 +7,7 @@ Normative model of how this repository is organized: vertical slices. It says wh
 | # | Axiom |
 |---|-------|
 | A1 | **One home.** Every tracked path has exactly one home, decided by its path (section 3). |
-| A2 | **Two worlds.** The runtime is the code Next bundles. Everything else is a plane: studio, tooling, laws, config, docs, automation, static. Runtime never imports a plane. Studio and tooling import from the runtime only `platform/db/env.ts`. |
+| A2 | **Two worlds.** The runtime is the code Next bundles. Everything else is a plane: studio, tooling, laws, config, docs, automation, static. Runtime never imports a plane. Studio and tooling import from the runtime only `platform/sanity/env.ts`. |
 | A3 | **Slices.** Each capability lives in one slice, `features/<slice>/`, built only from the parts in section 2. |
 | A4 | **Doors.** Code outside a slice imports it only through `index.ts` (client door) or `server.ts` (server door). |
 | A5 | **No cycles.** The slice-to-slice import graph, type imports included, has no cycle. A slice's level is 1 + the highest level it imports; levels are derived, never stored. |
@@ -58,7 +58,7 @@ Across slices: any runtime file may import another slice's `index.ts`; only serv
 | Slice part | `features/<slice>/...` (section 2) |
 | Design primitive | `platform/design/ui/` |
 | Design tokens and Tailwind plugin (config plane) | `platform/design/styles/` |
-| Store clients (`client` for public CDN reads, `backendClient` for token reads and writes), Sanity env, image URL helpers | `platform/db/` |
+| Store clients (`client` for public CDN reads, `backendClient` for token reads and writes), Sanity env, image URL helpers | `platform/sanity/ |
 | Email sending primitive | `platform/email/` |
 | Analytics components and helpers | `platform/analytics/` |
 | Utility with no product knowledge | `platform/utils/` |
@@ -78,7 +78,7 @@ Across slices: any runtime file may import another slice's `index.ts`; only serv
 ## 4. Data rule
 
 - A slice reads and writes the documents it needs through its own `adapters/sanity/`, typed by `sanity.types.ts`. Each write path lives in exactly one slice.
-- A write that must touch several documents atomically stays in one adapter of the slice that owns the operation (order placement in checkout, see `docs/checkout/ADR-002-checkout-inventory-concurrency.md`).
+- A write that must touch several documents atomically stays in one adapter of the slice that owns the operation (order placement in checkout, see `docs/ADR-002-checkout-inventory-concurrency.md`).
 
 ## 5. Conventions (review-enforced)
 
@@ -113,7 +113,7 @@ Behaviour (L): `npm run laws` runs every `*.laws.ts` file; the human runs it, ag
 app/                      routes only: read params, call slice doors, compose
 features/<slice>/         index.ts  server.ts  ui/  state/  url/  view/  queries/  commands/
                           core/{definitions,rules,ports.ts}  adapters/<system>/  schema/
-platform/                 design/{ui,styles}  db/  email/  analytics/  utils/   (knows no slice)
+platform/                 design/{ui,styles}  sanity/  email/  analytics/  utils/   (knows no slice)
 studio/                   schema collector and desk structure (sanity.config.ts at root)
 data/                     generated data read by the runtime
 scripts/  tools/          build scripts; local checks, live proofs

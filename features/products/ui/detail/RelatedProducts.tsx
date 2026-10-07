@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { sanityImageLoader } from '@/platform/db/imageLoader';
+import { sanityImageLoader } from '@/platform/sanity/imageLoader';
 import { formatPrice } from '@/platform/utils/price';
 
 interface RelatedProduct {

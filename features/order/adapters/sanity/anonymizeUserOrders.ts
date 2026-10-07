@@ -1,5 +1,5 @@
 import "server-only";
-import { backendClient } from "@/platform/db/backendClient";
+import { backendClient } from "@/platform/sanity/backendClient";
 
 export async function anonymizeUserOrders(userId: string): Promise<void> {
   await backendClient
