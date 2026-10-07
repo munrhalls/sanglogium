@@ -1,7 +1,7 @@
-import type { Order } from "@/sanity.types";
 import type {
   AccountSummary,
   MergedGuestOrderCountParams,
+  OrderDetail,
   UserAddressesProfile,
   UserOrderSummary,
 } from "./rules/accountTypes";
@@ -20,7 +20,7 @@ export type OrderHistoryPorts = {
   getUserOrderByNumber: (
     orderNumber: string,
     userId: string,
-  ) => Promise<Order | null>;
+  ) => Promise<OrderDetail | null>;
   getAllUserOrdersFull: (userId: string) => Promise<Record<string, unknown>[]>;
   countMergedGuestOrders: (
     params: MergedGuestOrderCountParams,

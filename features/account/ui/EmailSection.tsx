@@ -1,8 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import { authClient } from "@/features/auth";
-import { requireFreshSession } from "@/features/account/state/requireFreshSession";
+import { changeEmail, requireFreshSession } from "@/features/auth";
 
 export default function EmailSection({
   email,
@@ -19,7 +18,7 @@ export default function EmailSection({
       const newEmail = (formData.get("newEmail") as string)?.trim();
       if (!newEmail) return { error: "Email cannot be empty." };
 
-      const result = await authClient.changeEmail({
+      const result = await changeEmail({
         newEmail,
         callbackURL: "/account?emailChanged=true",
       });
