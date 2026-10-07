@@ -1,5 +1,5 @@
-import { subscribeSchema } from "@/features/shell/core/rules/newsletter";
-import type { NewsletterSubscriptions } from "@/features/shell/core/ports";
+import { subscribeSchema } from "@/features/newsletter/core/rules/newsletter";
+import type { NewsletterSubscriptions } from "@/features/newsletter/core/ports";
 
 type SubscribeNewsletterResult = {
   status: number;

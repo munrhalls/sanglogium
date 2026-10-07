@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { subscribeNewsletter } from "@/features/shell/server";
+import { subscribeNewsletter } from "@/features/newsletter/server";
 
 export async function POST(request: NextRequest) {
   let body: unknown;

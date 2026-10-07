@@ -12,7 +12,7 @@ import {
   FaCcApplePay,
 } from "react-icons/fa6";
 import Link from "next/link";
-import NewsletterSignup from "./NewsletterSignupClient";
+import { NewsletterSignup } from "@/features/newsletter";
 
 const SectionTitle = ({ title }: { title: string }) => (
   <div className={cn("type-overline", "text-brand-400")}>{title}</div>
