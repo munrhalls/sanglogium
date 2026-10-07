@@ -6,7 +6,8 @@ import type {
   Payments,
   OrderEmails,
 } from "@/features/checkout/core/ports";
-import type { OrderSessionData, PaymentSnapshot } from "@/features/checkout/core/rules/checkoutTypes";
+import type { OrderSessionData } from "@/features/order";
+import type { PaymentSnapshot } from "@/features/checkout/core/rules/checkoutTypes";
 import { logCheckoutEvent } from "@/platform/utils/eventLogger";
 import { getSession } from "@/features/auth/server";
 import { placeOrderFromPayment } from "./placeOrderFromPayment";
@@ -129,7 +130,7 @@ export async function handlePaymentReturn(
   await logCheckoutEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_session_saved', data: { status: payment.status }, outcome: 'success' });
 
   // Step 3b: on succeeded path, create order synchronously before redirect
-  // Idempotent — createOrderFromPaymentIntent skips if order already exists (webhook may also fire).
+  // Idempotent — createOrderFromPayment skips if order already exists (webhook may also fire).
   // Non-fatal: wrapped in try/catch so a Sanity error never blocks the user redirect.
   if (payment.status === 'succeeded' && capturedSessionData) {
     try {

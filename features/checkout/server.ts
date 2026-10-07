@@ -3,7 +3,7 @@ import 'server-only';
 import { getCheckoutSession } from './adapters/iron-session/checkoutSession';
 import { fetchShippingOptions } from '@/features/shipping/server';
 import { fetchOrderByPaymentIntentId } from './adapters/sanity/getOrderByPaymentIntentId';
-import { createOrderFromPaymentIntent } from './adapters/sanity/createOrderFromPaymentIntent';
+import { createOrderFromPayment } from '@/features/order/server';
 import { getPaymentProducts } from './adapters/sanity/getPaymentProducts';
 import { getProductsByIds } from './adapters/sanity/getProductsByIds';
 import { getProductUnitAmountsByIds } from './adapters/sanity/getProductUnitAmountsByIds';
@@ -27,7 +27,7 @@ import type {
 } from './core/ports';
 
 const orders: Orders = {
-  createOrderFromPaymentIntent,
+  createOrderFromPayment,
   getOrderByPaymentIntentId: fetchOrderByPaymentIntentId,
 };
 
@@ -65,7 +65,5 @@ export const handlePaymentWebhook = (
 
 export { getCheckoutSession };
 export { fetchOrderByPaymentIntentId as getOrderByPaymentIntentId };
-export { createOrderFromPaymentIntent };
-export type { OrderSessionData } from './core/rules/checkoutTypes';
 export { default as OrderDetails } from './view/OrderDetails';
 export { default as PaymentConfirmed } from './view/PaymentConfirmed';

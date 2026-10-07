@@ -5,10 +5,8 @@ import type {
   Orders,
   Payments,
 } from "@/features/checkout/core/ports";
-import type {
-  PaymentMethodDetails,
-  PaymentSnapshot,
-} from "@/features/checkout/core/rules/checkoutTypes";
+import type { PaymentMethodDetails } from "@/features/order";
+import type { PaymentSnapshot } from "@/features/checkout/core/rules/checkoutTypes";
 import { logCheckoutEvent } from "@/platform/utils/eventLogger";
 
 export type SuccessPageResult =

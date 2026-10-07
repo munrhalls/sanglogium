@@ -3,7 +3,7 @@ import { catalogueItemType } from "../features/catalogue/schema/catalogueItemTyp
 import { heroType } from "../features/homepage/schema/heroType";
 import { homepageDataType } from "../features/homepage/schema/homepageDataType";
 import { brandType } from "../features/products/schema/brandType";
-import { orderType } from "../features/checkout/schema/orderType";
+import { orderType } from "../features/order/schema/orderType";
 import { userType } from "../features/auth/schema/userType";
 
 export const schema = {

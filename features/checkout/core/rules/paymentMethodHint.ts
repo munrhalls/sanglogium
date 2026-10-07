@@ -1,4 +1,4 @@
-import type { PaymentMethodDetails } from './checkoutTypes'
+import type { PaymentMethodDetails } from '@/features/order'
 
 export function getPaymentMethodHint(method: PaymentMethodDetails | null): string | null {
   const type = method?.type ?? 'unknown'

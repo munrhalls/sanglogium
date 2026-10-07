@@ -1,5 +1,6 @@
 import type { Orders, OrderEmails } from "@/features/checkout/core/ports";
-import type { OrderSessionData, PaymentSnapshot } from "@/features/checkout/core/rules/checkoutTypes";
+import type { OrderSessionData } from "@/features/order";
+import type { PaymentSnapshot } from "@/features/checkout/core/rules/checkoutTypes";
 
 /**
  * Creates the order for a succeeded payment and sends the confirmation
@@ -9,7 +10,7 @@ export async function placeOrderFromPayment(
   ports: { orders: Orders; emails: OrderEmails },
   input: { payment: PaymentSnapshot; sessionData?: OrderSessionData }
 ): Promise<void> {
-  const result = await ports.orders.createOrderFromPaymentIntent(
+  const result = await ports.orders.createOrderFromPayment(
     input.payment,
     input.sessionData
   );

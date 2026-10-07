@@ -1,6 +1,7 @@
 import { Suspense } from 'react'
 import { CheckCircle, Lock } from '@phosphor-icons/react/dist/ssr'
-import type { OrderForSuccessPage, PaymentMethodDetails } from '@/features/checkout/core/rules/checkoutTypes'
+import type { PaymentMethodDetails } from '@/features/order'
+import type { OrderForSuccessPage } from '@/features/checkout/core/rules/checkoutTypes'
 import OrderDetails from './OrderDetails'
 import OrderDetailsSkeleton from '@/features/checkout/ui/OrderDetailsSkeleton'
 import OrderNextSteps from '@/features/checkout/ui/OrderNextSteps'
