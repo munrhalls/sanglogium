@@ -9,6 +9,7 @@ export { SearchEmpty } from './ui/results/SearchEmpty';
 export { SearchPagination } from './ui/results/SearchPagination';
 export { SearchSort } from './ui/results/SearchSort';
 export { SearchCategoryChips } from './ui/results/SearchCategoryChips';
+export { SearchResultsSkeleton } from './ui/results/SearchResultsSkeleton';
 export { SearchBarTrigger } from './ui/field/SearchBarTrigger';
 export { SearchFieldDesktop } from './ui/field/SearchFieldDesktop';
 export { SearchSheet } from './ui/field/SearchSheet';

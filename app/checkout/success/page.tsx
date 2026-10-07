@@ -1,5 +1,5 @@
 import { getSuccessPageResult, getOrderByPaymentIntentId } from '@/features/checkout/server'
-import { PaymentConfirmed } from '@/features/checkout/server'
+import { PaymentConfirmedView } from '@/features/checkout/server'
 import { PaymentVerificationFailed, PaymentDeclined, PaymentCanceled, PaymentProcessing, PaymentUnexpectedStatus } from '@/features/checkout'
 
 interface SuccessPageSearchParams {
@@ -25,7 +25,7 @@ export default async function SuccessPage({
       return <PaymentVerificationFailed paymentIntentId={result.paymentIntentId} />
     case 'succeeded':
       return (
-        <PaymentConfirmed
+        <PaymentConfirmedView
           paymentIntentId={result.paymentIntentId}
           amount={result.amount}
           paymentMethod={result.paymentMethod}

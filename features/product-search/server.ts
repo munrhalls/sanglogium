@@ -31,4 +31,4 @@ export function searchProductsFull(
   return searchProductsFullQuery(searchSource, query, sort, page, perPage, state, category);
 }
 
-export { SearchResults, SearchResultsSkeleton } from './view/SearchResults';
+export { SearchResultsView } from './view/SearchResultsView';

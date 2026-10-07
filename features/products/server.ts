@@ -47,8 +47,8 @@ export const getProductPage = createGetProductPage({ catalog, getWishlistProduct
 export const getProductMetadata = createGetProductMetadata({ catalog });
 export const getSitemapEntries = createGetSitemapEntries({ catalog });
 
-export { default as ListingPage } from './view/ListingPage';
-export { default as ProductPageView } from './view/ProductPage';
-export { default as WishlistPageView } from './view/WishlistPage';
+export { default as ListingView } from './view/ListingView';
+export { default as ProductView } from './view/ProductView';
+export { default as WishlistView } from './view/WishlistView';
 
 export { getWishlistProducts };

@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getProductPage, getProductMetadata, ProductPageView } from '@/features/products/server';
+import { getProductPage, getProductMetadata, ProductView } from '@/features/products/server';
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>;
@@ -14,7 +14,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   }
 
   return (
-    <ProductPageView
+    <ProductView
       product={result.product}
       relatedProducts={result.relatedProducts}
       isInWishlist={result.isInWishlist}

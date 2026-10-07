@@ -1,5 +1,5 @@
 // Category-aware selector over the per-category facet configs under
-// features/product-filtering/core/definitions/slices/ (headphones, audio-electronics, accessories).
+// features/product-filtering/core/definitions/categories/ (headphones, audioElectronics, accessories).
 // This file is the single place that picks the right module per route --
 // it only selects the slice's facet config (FACETS, groups, sort options);
 // it does not select a URL hook. Consumers import the shared URL-param
@@ -12,9 +12,9 @@
 // rather than importing one category's concrete types as if they applied
 // to all three.
 
-import * as headphones from './slices/headphones';
-import * as audioElectronics from './slices/audio-electronics';
-import * as accessories from './slices/accessories';
+import * as headphones from './categories/headphones';
+import * as audioElectronics from './categories/audioElectronics';
+import * as accessories from './categories/accessories';
 // Re-exported below for existing client-side importers -- the canonical
 // definitions live in ./category.ts (a module with no client directive) so Server
 // Components can use them without crossing the client boundary.

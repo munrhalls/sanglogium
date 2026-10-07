@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 
 // Global Components
-import { StoreShell } from "@/features/shell/server";
+import { StoreShellView } from "@/features/shell/server";
 import GoogleAnalytics from "@/platform/analytics/GoogleAnalytics";
 import { getCatalogueForNavigation } from "@/features/catalogue/server";
 import { hasSessionCookie } from "@/features/auth/server";
@@ -60,7 +60,7 @@ export default async function RootLayout({
           "selection:bg-brand-accent-600 selection:text-brand-800"
         )}
       >
-        <StoreShell catalogueDataRaw={catalogueDataRaw} isAuthenticated={isAuthenticated}>{children}</StoreShell>
+        <StoreShellView catalogueDataRaw={catalogueDataRaw} isAuthenticated={isAuthenticated}>{children}</StoreShellView>
         <GoogleAnalytics />
       </body>
     </html>

@@ -65,6 +65,5 @@ export const handlePaymentWebhook = (
 
 export { getCheckoutSession };
 export { fetchOrderByPaymentIntentId as getOrderByPaymentIntentId };
-export { default as OrderDetails } from './view/OrderDetails';
-export { default as PaymentConfirmed } from './view/PaymentConfirmed';
+export { default as PaymentConfirmedView } from './view/PaymentConfirmedView';
 export { recordCheckoutTrace } from './commands/recordCheckoutTrace';

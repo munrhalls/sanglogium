@@ -1,0 +1,37 @@
+import React from "react";
+import { CategoryPanel } from "@/features/catalogue/ui/CategoryPanel";
+import NavbarManager from "@/features/catalogue/ui/NavbarManager";
+import type { NavigationItem } from "@/features/catalogue/core/rules/catalogue";
+import { cn } from "@/platform/utils/tailwind";
+
+interface CatalogueNavbarProps {
+  catalogueDataRaw: { catalogue: NavigationItem[] };
+}
+
+const CatalogueNavbarView = async ({ catalogueDataRaw }: CatalogueNavbarProps) => {
+  const catalogueData: NavigationItem[] = catalogueDataRaw.catalogue;
+
+  const navLinks = catalogueData.map((item) => ({
+    id: item.id,
+    label: item.label,
+  }));
+
+  return (
+    <nav
+      className={cn(
+        "hidden w-full shrink-0 items-center bg-brand-900 lg:flex lg:h-[var(--desktop-catalogue-nav-h)] border-b border-brand-700"
+      )}
+      aria-label="Catalogue Navigation"
+    >
+      <div className="container mx-auto flex h-full items-center justify-center">
+        <NavbarManager navLinks={navLinks}>
+          {catalogueData.map((item) => (
+            <CategoryPanel key={item.id} data={item} />
+          ))}
+        </NavbarManager>
+      </div>
+    </nav>
+  );
+};
+
+export default CatalogueNavbarView;

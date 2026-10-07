@@ -3,7 +3,7 @@ import { cn } from "@/platform/utils/tailwind";
 import { ProductChunkSkeleton } from "./ProductChunkSkeleton";
 import { productGridClass, CHUNK_SIZE } from "@/features/products/core/definitions/gridLayout";
 import { ImageRevealScript } from "@/features/products/ui/card/ImageRevealScript";
-import { ImageRevealClient } from "@/features/products/ui/card/ImageRevealClient";
+import { ImageReveal } from "@/features/products/ui/card/ImageReveal";
 
 export { CHUNK_SIZE };
 
@@ -26,7 +26,7 @@ export function ChunkedProductGrid({
   return (
     <>
       <ImageRevealScript />
-      <ImageRevealClient />
+      <ImageReveal />
       <div
         data-testid="product-grid"
         className={cn(productGridClass, className)}
