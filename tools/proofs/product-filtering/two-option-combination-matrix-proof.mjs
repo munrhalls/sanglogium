@@ -4,7 +4,7 @@ import { sanityQuery } from './sanityRaw.mjs';
 const CATEGORY = process.argv[2] || 'headphones';
 const EXCLUDED_URL_PARAMS = new Set(['price', 'inStock']);
 const SAME_FACET_MAX_CARDINALITY = 10;
-const OUTPUT_FILE = new URL(`./out/12-two-option-combination-matrix-proof.${CATEGORY}.json`, import.meta.url);
+const OUTPUT_FILE = new URL(`./out/two-option-combination-matrix-proof.${CATEGORY}.json`, import.meta.url);
 const FEATURE_DIR = new URL('../../../features/product-filtering', import.meta.url);
 const REPO_ROOT = new URL('..', new URL('..', FEATURE_DIR));
 

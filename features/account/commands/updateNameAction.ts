@@ -3,7 +3,7 @@
 import { requireSession, updateUserName } from "@/features/auth/server";
 import { getProfileIdByAuthId, setProfileName } from "@/features/profile/server";
 
-export async function updateName(formData: FormData) {
+export async function updateNameAction(formData: FormData) {
   const session = await requireSession();
   const name = (formData.get("name") as string)?.trim();
   if (!name) return { error: "Name cannot be empty." };

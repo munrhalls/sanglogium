@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { addAddress } from "@/features/account/commands/addAddress";
-import { updateAddress } from "@/features/account/commands/updateAddress";
-import { removeAddress } from "@/features/account/commands/removeAddress";
+import { addAddressAction } from "@/features/account/commands/addAddressAction";
+import { updateAddressAction } from "@/features/account/commands/updateAddressAction";
+import { removeAddressAction } from "@/features/account/commands/removeAddressAction";
 import type { Address } from "@/features/address";
 
 const REGIONS = [
@@ -33,8 +33,8 @@ export default function Addresses({ addresses }: AddressesClientProps) {
 
     const addressKey = (formData.get("addressKey") as string) || "";
     const result = addressKey
-      ? await updateAddress(addressKey, formData)
-      : await addAddress(formData);
+      ? await updateAddressAction(addressKey, formData)
+      : await addAddressAction(formData);
 
     if ("error" in result && result.error) {
       setSaveError(result.error);
@@ -57,7 +57,7 @@ export default function Addresses({ addresses }: AddressesClientProps) {
     setRemoveError(null);
     setRemovingKey(addressKey);
 
-    const result = await removeAddress(addressKey);
+    const result = await removeAddressAction(addressKey);
     if (result.error) {
       setRemoveError(result.error);
     }

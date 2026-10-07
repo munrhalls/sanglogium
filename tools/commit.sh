@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# scripts/commit.sh - Git commit protocol CLI for sang-logium (Linux).
+# tools/commit.sh - Git commit protocol CLI for sang-logium (Linux).
 #
 # Usage:
 #   npm run commit
-#   bash scripts/commit.sh [-n|--no-push]
+#   bash tools/commit.sh [-n|--no-push]
 #
 # Implements the commit protocol: orient, classify (A-E), stage precisely,
 # commit with taxonomy tag, and push to origin main automatically.
@@ -15,7 +15,7 @@ case "${1:-}" in
   -n|--no-push) NoPush=1 ;;
   -h|--help)
     echo "Usage: npm run commit"
-    echo "       bash scripts/commit.sh [-n|--no-push]"
+    echo "       bash tools/commit.sh [-n|--no-push]"
     echo ""
     echo "Implements the commit protocol: orient, classify (A-E), stage precisely,"
     echo "commit with taxonomy tag, push to origin main automatically. -n skips the push."
@@ -186,7 +186,7 @@ while [ ${#remaining[@]} -gt 0 ]; do
     echo -e "${R}Invalid difficulty. Enter 1-13.${N}"
   done
 
-  read -r -p "Scope/filenames (e.g. 'scripts/commit.sh'): " scope
+  read -r -p "Scope/filenames (e.g. 'tools/commit.sh'): " scope
   [ -z "$scope" ] && scope="${unit_files[0]}"
 
   action=""

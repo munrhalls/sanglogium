@@ -14,7 +14,7 @@ export default {
   ],
   theme: {
     backgroundImage: {
-      'fractal-ring': "url('/backgrounds/fractal_ring.webp')",
+      'fractal-ring': "url('/backgrounds/fractal-ring.webp')",
     },
     borderRadius: {
       lg: "4px",

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 import { SearchBarTrigger, SearchFieldDesktop, SearchSheet, useSearchController, useSearchOverlay } from "@/features/product-search";
-import { fetchSearchSuggestions as searchProductsAutocomplete } from "@/features/product-search";
+import { fetchSearchSuggestionsAction as searchProductsAutocomplete } from "@/features/product-search";
 
 /**
  * Header search, composed from three surfaces that share one controller:

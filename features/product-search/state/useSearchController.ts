@@ -31,7 +31,7 @@ interface KeyDownOptions {
  * (products, then the trailing "see all results" option) and navigation.
  *
  * It owns no DOM and no refs. Surfaces own focus, blur and visibility.
- * The suggestion fetcher is injected so the feature never imports sanity-cms.
+ * The suggestion fetcher is injected by the caller; the shell's SearchField passes fetchSearchSuggestionsAction.
  */
 export function useSearchController({
   isSheetOpen,

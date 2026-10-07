@@ -1,10 +1,10 @@
 'use server';
 
 import { requireSession } from "@/features/auth/server";
-import { getProfileIdByAuthId, addWishlistItem } from "@/features/profile/server";
+import { getProfileIdByAuthId, removeWishlistItem } from "@/features/profile/server";
 import { isValidProductId } from "@/features/products/core/rules/productId";
 
-export async function addToWishlist(productId: string) {
+export async function removeFromWishlistAction(productId: string) {
   const session = await requireSession();
   if (!isValidProductId(productId)) return { error: "Invalid product." };
 
@@ -13,7 +13,7 @@ export async function addToWishlist(productId: string) {
     return { error: "Profile not found." };
   }
 
-  await addWishlistItem(profile._id, productId);
+  await removeWishlistItem(profile._id, productId);
 
   return { success: true };
 }

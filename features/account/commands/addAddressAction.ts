@@ -5,7 +5,7 @@ import { getProfileIdByAuthId, addProfileAddress } from "@/features/profile/serv
 import { randomUUID } from "node:crypto";
 import { parseAddress } from "@/features/account/core/rules/addressInput";
 
-export async function addAddress(formData: FormData) {
+export async function addAddressAction(formData: FormData) {
   const session = await requireSession();
   const parsed = parseAddress(formData);
   if ("error" in parsed) return parsed;

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { initCheckoutSession } from '@/features/checkout/commands/initCheckoutSession'
+import { initCheckoutSessionAction } from '@/features/checkout/commands/initCheckoutSessionAction'
 
 export interface CheckoutButtonProps {
   basketData?: Array<{
@@ -56,7 +56,7 @@ export function CheckoutButton({
       }))
 
       // Call Server Action with checkoutSessionId
-      await initCheckoutSession(items, checkoutSessionId)
+      await initCheckoutSessionAction(items, checkoutSessionId)
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Checkout failed'
       setError(message)

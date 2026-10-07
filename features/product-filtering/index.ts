@@ -1,6 +1,4 @@
-// Client-safe public entry. Routes, sanity-cms and other features import ONLY from here (client) or ./server (server).
-// Never re-export server-only or Sanity code here.
-// Explicit named re-exports only; never bare export *.
+// Client door: the only entry other slices and routes use for this slice's client-safe code. Explicit named re-exports only.
 export { isCategory } from './core/definitions/facetRegistry';
 export type { Category } from './core/definitions/facetRegistry';
 export { CATEGORIES, CATEGORY_LABELS } from './core/definitions/category';

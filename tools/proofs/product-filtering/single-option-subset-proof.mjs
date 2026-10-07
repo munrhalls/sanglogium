@@ -3,7 +3,7 @@ import { sanityQuery } from './sanityRaw.mjs';
 
 const CATEGORY = process.argv[2] || 'headphones';
 const EXCLUDED_URL_PARAMS = new Set(['price', 'inStock']);
-const OUTPUT_FILE = new URL(`./out/11-single-option-subset-proof.${CATEGORY}.json`, import.meta.url);
+const OUTPUT_FILE = new URL(`./out/single-option-subset-proof.${CATEGORY}.json`, import.meta.url);
 const FEATURE_DIR = new URL('../../../features/product-filtering', import.meta.url);
 const REPO_ROOT = new URL('..', new URL('..', FEATURE_DIR));
 

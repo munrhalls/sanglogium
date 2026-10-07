@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { unstable_rethrow } from "next/navigation";
-import { saveAddress } from "@/features/checkout/commands/saveAddress";
+import { saveAddressAction } from "@/features/checkout/commands/saveAddressAction";
 import CheckoutStepper from "./CheckoutStepper";
 import type { Address } from "@/features/address";
 
@@ -93,7 +93,7 @@ export default function AddressForm({
     });
 
     try {
-      const result = await saveAddress(addressData, { skipValidation });
+      const result = await saveAddressAction(addressData, { skipValidation });
       console.log("[ADDRESS FORM] saveAddress resolved", result);
       if (result && result.status === "FIX") {
         console.log(

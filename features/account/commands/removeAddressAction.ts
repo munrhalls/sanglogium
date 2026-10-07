@@ -4,7 +4,7 @@ import { requireSession } from "@/features/auth/server";
 import { getProfileIdByAuthId, removeProfileAddress } from "@/features/profile/server";
 import { isValidAddressKey } from "@/features/account/core/rules/addressInput";
 
-export async function removeAddress(addressKey: string) {
+export async function removeAddressAction(addressKey: string) {
   const session = await requireSession();
   if (!isValidAddressKey(addressKey)) return { error: "Invalid address." };
 

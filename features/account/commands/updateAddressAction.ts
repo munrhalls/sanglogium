@@ -4,7 +4,7 @@ import { requireSession } from "@/features/auth/server";
 import { getProfileIdByAuthId, replaceProfileAddress } from "@/features/profile/server";
 import { isValidAddressKey, parseAddress } from "@/features/account/core/rules/addressInput";
 
-export async function updateAddress(addressKey: string, formData: FormData) {
+export async function updateAddressAction(addressKey: string, formData: FormData) {
   const session = await requireSession();
   if (!isValidAddressKey(addressKey)) return { error: "Invalid address." };
 

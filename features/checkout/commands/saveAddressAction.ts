@@ -6,7 +6,7 @@ import type { Address } from "@/features/address";
 import { logCheckoutEvent, generateCheckoutSessionId } from "@/features/checkout/core/rules/checkoutEvents";
 import { checkAddress } from "@/features/address/server";
 
-export async function saveAddress(
+export async function saveAddressAction(
   address: Address,
   opts?: { skipValidation?: boolean }
 ) {
