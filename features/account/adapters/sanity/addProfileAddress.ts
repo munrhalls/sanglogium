@@ -1,6 +1,6 @@
 import "server-only";
 import { backendClient } from "@/platform/db/backendClient";
-import type { Address } from "@/features/checkout";
+import type { Address } from "@/features/address";
 
 export async function addProfileAddress(
   profileId: string,

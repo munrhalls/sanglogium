@@ -1,7 +1,5 @@
-"use server";
-
-import type { Address, ServerResponse } from "@/features/checkout/core/rules/checkoutTypes";
-import { verifyPolishAddress, validateWithGoogle } from "@/features/checkout/server";
+import type { Address, AddressCheckResult } from "@/features/address/core/rules/addressTypes";
+import type { AddressRegistry, AddressValidator } from "@/features/address/core/ports";
 
 // Normalize region-code aliases on both sides of the validation round-trip.
 // The customer-facing code may be "UK" but the frozen Google path's ISO
@@ -14,12 +12,13 @@ const normalizeRegionCode = (code?: string | null): string | undefined => {
 
 // ACTIVE verifier — GUS TERYT (official registry, free, no key). The Google
 // path is FROZEN and only reachable via ADDRESS_VERIFY_MODE=google (see
-// googleAddressValidator.ts).
+// adapters/google/addressValidator.ts).
 async function validateWithTeryt(
+  registry: AddressRegistry,
   input: Address,
   normalizedRegion: string,
-): Promise<ServerResponse> {
-  const t = await verifyPolishAddress({
+): Promise<AddressCheckResult> {
+  const t = await registry.verifyAddress({
     street: input.street,
     streetNumber: input.streetNumber,
     postalCode: input.postalCode,
@@ -47,17 +46,18 @@ async function validateWithTeryt(
   return { status: "ACCEPT", address: { ...input, regionCode: normalizedRegion } };
 }
 
-export async function submitShippingAction(
+export async function checkAddress(
+  ports: { registry: AddressRegistry; validator: AddressValidator },
   input: Address,
   opts?: { skipValidation?: boolean },
-): Promise<ServerResponse> {
+): Promise<AddressCheckResult> {
   const normalizedInput =
     normalizeRegionCode(input.regionCode) ?? input.regionCode;
 
   // Accept the address exactly as entered (region normalized). Used by the
   // human escape hatch and by graceful degradation when Google is unavailable
   // (e.g. closed billing account) so checkout can never dead-end on Google.
-  const acceptAsEntered = (): ServerResponse => {
+  const acceptAsEntered = (): AddressCheckResult => {
     return {
       status: "ACCEPT",
       address: { ...input, regionCode: normalizedInput },
@@ -77,11 +77,11 @@ export async function submitShippingAction(
   const verifyMode = process.env.ADDRESS_VERIFY_MODE ?? "teryt";
   if (verifyMode !== "google") {
     if (normalizedInput === "PL") {
-      return validateWithTeryt(input, normalizedInput);
+      return validateWithTeryt(ports.registry, input, normalizedInput);
     }
     return acceptAsEntered();
   }
 
-  // FROZEN path — see googleAddressValidator.ts.
-  return validateWithGoogle(input, normalizedInput, acceptAsEntered);
+  // FROZEN path — see adapters/google/addressValidator.ts.
+  return ports.validator.validateAddress(input, normalizedInput, acceptAsEntered);
 }

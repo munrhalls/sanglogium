@@ -1,12 +1,7 @@
 import type Stripe from "stripe";
 import type { ShippingOption, ShippingRatesInput } from "@/features/shipping";
 import type {
-  Address,
-  ServerResponse,
   CheckoutSession,
-  TerytVerifyInput,
-  TerytVerifyResult,
-  AutocompleteResult,
   OrderForSuccessPage,
   OrderSessionData,
   PaymentProduct,
@@ -35,15 +30,6 @@ export type CheckoutCatalog = {
 
 export type ShippingRates = { fetchShippingOptions: (input: ShippingRatesInput, traceId?: string) => Promise<ShippingOption[]> };
 
-export type AddressValidation = {
-  verifyPolishAddress: (input: TerytVerifyInput) => Promise<TerytVerifyResult>;
-  validateWithGoogle: (
-    input: Address,
-    normalizedInput: string,
-    acceptAsEntered: () => ServerResponse
-  ) => Promise<ServerResponse>;
-  placesAutocomplete: (q: string) => Promise<AutocompleteResult[]>;
-};
 
 export type CheckoutSessionHandle = CheckoutSession & {
   save: () => Promise<void>;

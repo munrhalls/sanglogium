@@ -2,9 +2,9 @@
 
 import { getCheckoutSession } from "@/features/checkout/server";
 import { redirect } from "next/navigation";
-import type { Address } from "@/features/checkout/core/rules/checkoutTypes";
+import type { Address } from "@/features/address";
 import { logCheckoutEvent, generateCheckoutSessionId } from "@/platform/utils/eventLogger";
-import { submitShippingAction } from "./submitShippingAction";
+import { checkAddress } from "@/features/address/server";
 
 export async function saveAddress(
   address: Address,
@@ -30,8 +30,8 @@ export async function saveAddress(
     outcome: 'success',
   });
 
-  // Call Google Address Validation
-  const validationResult = await submitShippingAction(address, opts);
+  // Check the address (TERYT registry; Google only when ADDRESS_VERIFY_MODE=google)
+  const validationResult = await checkAddress(address, opts);
   console.log("[SAVE ADDRESS] validationResult.status:", validationResult.status);
   console.log("[SAVE ADDRESS] validationResult.address:", validationResult.address);
 

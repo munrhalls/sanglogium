@@ -3,9 +3,6 @@ import 'server-only';
 import type Stripe from 'stripe';
 import { getCheckoutSession } from './adapters/iron-session/checkoutSession';
 import { fetchShippingOptions } from '@/features/shipping/server';
-import { verifyPolishAddress } from './adapters/teryt/validator';
-import { validateWithGoogle } from './adapters/google/addressValidator';
-import { placesAutocomplete } from './adapters/google/placesAutocomplete';
 import { fetchOrderByPaymentIntentId } from './adapters/sanity/getOrderByPaymentIntentId';
 import { createOrderFromPaymentIntent } from './adapters/sanity/createOrderFromPaymentIntent';
 import { getPaymentProducts } from './adapters/sanity/getPaymentProducts';
@@ -26,7 +23,6 @@ import type {
   Orders,
   CheckoutCatalog,
   ShippingRates,
-  AddressValidation,
   CheckoutSessions,
   Payments,
   OrderEmails,
@@ -46,11 +42,6 @@ const catalogue: CheckoutCatalog = {
 
 const shipping: ShippingRates = { fetchShippingOptions };
 
-const addressValidation: AddressValidation = {
-  verifyPolishAddress,
-  validateWithGoogle,
-  placesAutocomplete,
-};
 
 const sessions: CheckoutSessions = { getCheckoutSession };
 
@@ -80,12 +71,11 @@ export const handleStripeWebhook = (
 ) => handleStripeWebhookCmd({ orders, payments, emails }, input);
 
 export { getCheckoutSession };
-export { verifyPolishAddress, validateWithGoogle, placesAutocomplete };
 export { fetchOrderByPaymentIntentId as getOrderByPaymentIntentId };
 export { createOrderFromPaymentIntent };
 export { getPaymentProducts, getProductsByIds, getProductUnitAmountsByIds };
 export { stripe, retrievePaymentIntent };
-export type { CheckoutSession, OrderSessionData, OrderForSuccessPage, AutocompleteResult } from './core/rules/checkoutTypes';
+export type { CheckoutSession, OrderSessionData, OrderForSuccessPage } from './core/rules/checkoutTypes';
 export type { PaymentProduct } from './core/rules/checkoutTypes';
 export { default as OrderDetails } from './view/OrderDetails';
 export { default as PaymentConfirmed } from './view/PaymentConfirmed';

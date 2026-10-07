@@ -1,7 +1,6 @@
 // Client-safe public entry. Routes, sanity-cms, layout and other features import ONLY from here, from ./server or from ./actions.
 // Never re-export server-only or Sanity code here.
 // Explicit named re-exports only; never bare export *.
-export type { Address } from './core/rules/checkoutTypes';
 export { default as CheckoutStepper } from './ui/CheckoutStepper';
 export { default as CheckoutSummary } from './ui/CheckoutSummary';
 export { default as AddressForm } from './ui/AddressForm';
