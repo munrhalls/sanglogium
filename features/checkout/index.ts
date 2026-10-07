@@ -2,8 +2,6 @@
 // Never re-export server-only or Sanity code here.
 // Explicit named re-exports only; never bare export *.
 export type { Address } from './core/rules/checkoutTypes';
-export { calculatePackages, calculatePackagesFromReservation, DEFAULT_PARCEL } from './core/rules/parcelCalculator';
-export { detectCountry } from './core/rules/countryDetector';
 export { default as CheckoutStepper } from './ui/CheckoutStepper';
 export { default as CheckoutSummary } from './ui/CheckoutSummary';
 export { default as AddressForm } from './ui/AddressForm';
@@ -12,7 +10,6 @@ export { RefreshButton } from './ui/RefreshButton';
 export { SuccessAnalytics } from './ui/SuccessAnalyticsClient';
 export { CheckoutButton } from './ui/CheckoutButton';
 export { default as PaymentForm } from './ui/PaymentFormClient';
-export { dedupeShippingLabel } from './core/rules/shippingLabel';
 export { buildPaymentLineItems, calculateGrandTotal, computePaymentTotals } from './core/rules/paymentSummary';
 export type { PaymentLineItem, PaymentProductInput } from './core/rules/paymentSummary';
 export { getPaymentMethodHint } from './core/rules/paymentMethodHint';

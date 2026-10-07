@@ -49,47 +49,6 @@ export type CheckoutProduct = {
   };
 };
 
-export interface AlleKurierService {
-  Carrier: {
-    code: string;
-    name: string;
-  };
-  Service: {
-    code: string;
-    name: string;
-  };
-  Order: {
-    net: number;
-    gross: number;
-  };
-  Time: {
-    days: string;
-    description: string;
-  };
-}
-
-export interface AlleKurierRatesInput {
-  fromCountry: string;
-  fromZip: string;
-  toCountry: string;
-  toZip: string;
-  packages: Array<{
-    width: number;
-    height: number;
-    length: number;
-    weight: number;
-  }>;
-}
-
-export type AlleKurierShippingOption = {
-  provider: string;
-  servicelevel: { name: string };
-  rateId: string;
-  amount: number;
-  currency: string;
-  estimatedDays: number;
-};
-
 export interface TerytVerifyInput {
   street: string;
   streetNumber: string;

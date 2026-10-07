@@ -49,4 +49,39 @@ async function validateWithTeryt(
 
 export async function submitShippingAction(
   input: Address,
-  opts?: { skipValidation?: boolean }
+  opts?: { skipValidation?: boolean },
+): Promise<ServerResponse> {
+  const normalizedInput =
+    normalizeRegionCode(input.regionCode) ?? input.regionCode;
+
+  // Accept the address exactly as entered (region normalized). Used by the
+  // human escape hatch and by graceful degradation when Google is unavailable
+  // (e.g. closed billing account) so checkout can never dead-end on Google.
+  const acceptAsEntered = (): ServerResponse => {
+    return {
+      status: "ACCEPT",
+      address: { ...input, regionCode: normalizedInput },
+    };
+  };
+
+  // Human escape hatch: accept the address exactly as the customer entered it,
+  // bypassing Google validation. Prevents a valid submission from dead-ending
+  // on a strict Google verdict.
+  if (opts?.skipValidation) {
+    return acceptAsEntered();
+  }
+
+  // ACTIVE verifier: TERYT (official GUS registry, free). Runs for all PL
+  // submissions; the store ships within Poland only, so other regions are
+  // simply accepted as entered (region-gated).
+  const verifyMode = process.env.ADDRESS_VERIFY_MODE ?? "teryt";
+  if (verifyMode !== "google") {
+    if (normalizedInput === "PL") {
+      return validateWithTeryt(input, normalizedInput);
+    }
+    return acceptAsEntered();
+  }
+
+  // FROZEN path — see googleAddressValidator.ts.
+  return validateWithGoogle(input, normalizedInput, acceptAsEntered);
+}

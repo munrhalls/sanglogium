@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getCheapestShippingRate } from '@/features/checkout/server';
+import { getCheapestShippingRate } from '@/features/shipping/server';
 
 export const runtime = 'nodejs';
 
