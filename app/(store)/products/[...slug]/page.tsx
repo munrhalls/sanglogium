@@ -1,6 +1,6 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
-import { getListingView, getListingMetadata, ListingView } from '@/features/products/server';
+import { getListingPage, getListingMetadata, ListingView } from '@/features/products/server';
 
 export const dynamic = 'force-dynamic';
 
@@ -12,7 +12,7 @@ interface CategoryPageProps {
 export default async function CategoryPage({ params, searchParams }: CategoryPageProps) {
   const { slug } = await params;
   const query = await searchParams;
-  const result = await getListingView({ slug, query });
+  const result = await getListingPage({ slug, query });
   if (result.notFound) notFound();
 
   return <ListingView {...result} />;
