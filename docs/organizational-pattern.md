@@ -121,7 +121,7 @@ A part may group its files in one level of sub-folders named after a screen regi
 | A11 | VIEWDATA |
 | A12, section 4 | GENERATED (`sanity.types.ts` imports); the single write owner is review-enforced |
 | Section 5 naming | ACTION, NAMES |
-| all | `tools/check-imports.mjs`: SPEC (every import resolves), DELETED (no importer of a removed file) |
+| all | `tools/check-imports.mjs`: SPEC (every import resolves), DELETED (no importer of a removed file), EXPORT (every imported name is exported by its target) |
 
 Behaviour (L): `npm run laws` runs every `*.laws.ts` file; the human runs it, agents never do.
 
