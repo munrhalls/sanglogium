@@ -2,7 +2,7 @@
 
 import { getCheckoutSession } from "@/features/checkout/server";
 import { redirect } from "next/navigation";
-import { logCheckoutEvent } from "@/platform/utils/eventLogger";
+import { logCheckoutEvent } from "@/features/checkout/core/rules/checkoutEvents";
 
 export async function saveShippingAction(
   shippingCode: string,

@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
-import type Stripe from 'stripe'
 import { CheckCircle, Lock } from '@phosphor-icons/react/dist/ssr'
+import type { PaymentMethodDetails } from '@/features/order'
 import type { OrderForSuccessPage } from '@/features/checkout/core/rules/checkoutTypes'
 import OrderDetails from './OrderDetails'
 import OrderDetailsSkeleton from '@/features/checkout/ui/OrderDetailsSkeleton'
@@ -12,13 +12,13 @@ import { formatPrice } from '@/platform/utils/price'
 interface Props {
   paymentIntentId: string
   amount: number
-  latestCharge: Stripe.PaymentIntent['latest_charge']
+  paymentMethod: PaymentMethodDetails | null
   orderPromise: Promise<OrderForSuccessPage | null>
 }
 
-export default function PaymentConfirmed({ paymentIntentId, amount, latestCharge, orderPromise }: Props) {
+export default function PaymentConfirmed({ paymentIntentId, amount, paymentMethod, orderPromise }: Props) {
   const amountFormatted = formatPrice(amount)
-  const paymentMethodHint = getPaymentMethodHint(latestCharge)
+  const paymentMethodHint = getPaymentMethodHint(paymentMethod)
 
   return (
     <section aria-label="Order confirmation" className="flex flex-col gap-6">

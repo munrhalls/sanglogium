@@ -7,7 +7,7 @@ import type {
 } from "@/features/checkout/core/ports";
 import type { ShippingOption } from "@/features/shipping";
 import { calculatePackages } from "@/features/shipping";
-import { logCheckoutEvent } from "@/platform/utils/eventLogger";
+import { logCheckoutEvent } from "@/features/checkout/core/rules/checkoutEvents";
 
 export type ShippingPageData =
   | { kind: "ok"; shippingOptions: ShippingOption[]; traceId: string }

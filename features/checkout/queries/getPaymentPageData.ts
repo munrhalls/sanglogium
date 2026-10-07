@@ -8,7 +8,7 @@ import type { CheckoutSession } from "@/features/checkout/core/rules/checkoutTyp
 import { buildPaymentLineItems, computePaymentTotals } from "@/features/checkout/core/rules/paymentSummary";
 import type { PaymentLineItem } from "@/features/checkout/core/rules/paymentSummary";
 import { dedupeShippingLabel } from "@/features/shipping";
-import { logCheckoutEvent } from "@/platform/utils/eventLogger";
+import { logCheckoutEvent } from "@/features/checkout/core/rules/checkoutEvents";
 
 export type PaymentPageData = {
   items: PaymentLineItem[];

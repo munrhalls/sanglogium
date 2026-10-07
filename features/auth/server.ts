@@ -7,9 +7,8 @@ import { createUserProfileIfMissing } from './adapters/sanity/createUserProfileI
 import { syncUserProfile } from './adapters/sanity/syncUserProfile';
 import { deleteUserProfile } from './adapters/sanity/deleteUserProfile';
 import { getProfileIdByAuthId } from './adapters/sanity/getProfileIdByAuthId';
-import { anonymizeUserOrders } from './adapters/sanity/anonymizeUserOrders';
 import { hasOpenOrders } from './adapters/sanity/hasOpenOrders';
-import { mergeGuestOrdersByEmail } from './adapters/sanity/mergeGuestOrders';
+import { anonymizeUserOrders, mergeGuestOrders } from '@/features/order/server';
 import {
   sendVerificationEmail,
   sendResetPasswordEmail,
@@ -26,7 +25,7 @@ const profiles: UserProfiles = {
 const orders: OrderLifecycle = {
   anonymizeUserOrders,
   hasOpenOrders,
-  mergeGuestOrders: mergeGuestOrdersByEmail,
+  mergeGuestOrders,
 };
 
 const emails: AuthEmails = {

@@ -1,8 +1,7 @@
 import "server-only";
 import { backendClient } from '@/platform/db/backendClient'
-import { logCheckoutEvent } from '@/platform/utils/eventLogger'
-import type { OrderBasketItem as BasketItem, OrderAddress, OrderSessionData, CreateOrderResult } from '@/features/checkout/core/rules/checkoutTypes'
-import Stripe from 'stripe'
+import { logEvent } from '@/platform/utils/eventLogger'
+import type { OrderBasketItem as BasketItem, OrderAddress, OrderSessionData, CreateOrderResult, PaidPayment } from '@/features/order/core/rules/orderTypes'
 import { z } from 'zod'
 
 interface ProductDoc {
@@ -13,12 +12,11 @@ interface ProductDoc {
   price_data: { unit_amount: number } | null
 }
 
-export type { OrderSessionData };
 
 const STRIPE_METADATA_MAX_SAFE = 450
 
 function resolveOrderData(
-  pi: Stripe.PaymentIntent,
+  pi: PaidPayment,
   sessionData?: OrderSessionData
 ): {
   basket: BasketItem[]
@@ -49,7 +47,7 @@ function resolveOrderData(
       shippingMethodName: sessionData.shippingMethodName ?? '',
       shippingCarrier: sessionData.shippingCarrier ?? '',
       shippingEstimatedDays: sessionData.shippingEstimatedDays,
-      customerEmail: sessionData.email ?? pi.receipt_email ?? '',
+      customerEmail: sessionData.email ?? pi.receiptEmail ?? '',
       traceId,
       userId: sessionData.userId,
     }
@@ -63,7 +61,7 @@ function resolveOrderData(
   const shippingMethodName = pi.metadata?.shippingMethodName ?? ''
   const shippingCarrier = pi.metadata?.shippingCarrier ?? ''
   const shippingEstimatedDaysStr = pi.metadata?.shippingEstimatedDays ?? ''
-  const customerEmail = pi.metadata?.email || pi.receipt_email || ''
+  const customerEmail = pi.metadata?.email || pi.receiptEmail || ''
 
   if (!rawBasket || !rawAddress) {
     throw new Error(`Missing basket/address metadata for PI ${pi.id}`)
@@ -115,8 +113,8 @@ function resolveOrderData(
  * Safe to call any number of times, concurrently, from the webhook and the return
  * handler: a payment ends with exactly one order and its stock decremented exactly once.
  */
-export async function createOrderFromPaymentIntent(
-  pi: Stripe.PaymentIntent,
+export async function createOrderFromPayment(
+  pi: PaidPayment,
   sessionData?: OrderSessionData
 ): Promise<CreateOrderResult> {
   const paymentIntentId = pi.id
@@ -134,7 +132,7 @@ export async function createOrderFromPaymentIntent(
     userId,
   } = resolveOrderData(pi, sessionData)
 
-  await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_create_start', data: { paymentIntentId, source: sessionData ? 'session' : 'metadata' }, outcome: 'success' });
+  await logEvent({ correlationId: traceId, slice: 'order-create', event: 'order_create_start', data: { paymentIntentId, source: sessionData ? 'session' : 'metadata' }, outcome: 'success' });
 
   // Step 1: Fast-path idempotency — skip if order already exists for this PI.
   // Also covers orders created before deterministic IDs. The atomic guard is Step 11.
@@ -143,20 +141,20 @@ export async function createOrderFromPaymentIntent(
     { paymentIntentId }
   )
   if (existing) {
-    await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_already_exists', data: { paymentIntentId }, outcome: 'success' })
+    await logEvent({ correlationId: traceId, slice: 'order-create', event: 'order_already_exists', data: { paymentIntentId }, outcome: 'success' })
     if (process.env.NODE_ENV !== 'production') {
       console.log(`[ORDER CREATE] Order already exists for PI ${paymentIntentId} — skipping`)
     }
     return { created: false }
   }
 
-  await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_data_resolved', data: { paymentIntentId, itemCount: basket.length }, outcome: 'success' })
+  await logEvent({ correlationId: traceId, slice: 'order-create', event: 'order_data_resolved', data: { paymentIntentId, itemCount: basket.length }, outcome: 'success' })
 
   // Step 2: Validate email
   const emailValidation = z.string().email().safeParse(rawCustomerEmail)
   const customerEmail = emailValidation.success ? rawCustomerEmail : ''
   if (rawCustomerEmail && !emailValidation.success) {
-    await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_invalid_email', data: { paymentIntentId, email: rawCustomerEmail }, outcome: 'error' })
+    await logEvent({ correlationId: traceId, slice: 'order-create', event: 'order_invalid_email', data: { paymentIntentId, email: rawCustomerEmail }, outcome: 'error' })
   }
 
   // Step 3: Fetch product names, prices and stock (with revision, for Step 11) from Sanity
@@ -217,12 +215,8 @@ export async function createOrderFromPaymentIntent(
   }
 
   // Step 8: Extract payment method details from charge (reliable) instead of payment_method_types[0]
-  const charge =
-    typeof pi.latest_charge === 'object' && pi.latest_charge !== null
-      ? pi.latest_charge
-      : null
-  const paymentMethodType = charge?.payment_method_details?.type ?? 'unknown'
-  const cardDetails = charge?.payment_method_details?.card
+  const paymentMethodType = pi.paymentMethod?.type ?? 'unknown'
+  const cardDetails = pi.paymentMethod?.card
 
   // Step 9: Generate order identifiers
   const year = new Date().getFullYear()
@@ -292,20 +286,20 @@ export async function createOrderFromPaymentIntent(
     // A failed commit writes nothing. If the order exists, another run got there first
     // (or this commit landed and only the response was lost): nothing left to do.
     if (await backendClient.getDocument(orderId)) {
-      await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_already_exists', data: { paymentIntentId }, outcome: 'success' })
+      await logEvent({ correlationId: traceId, slice: 'order-create', event: 'order_already_exists', data: { paymentIntentId }, outcome: 'success' })
       return { created: false }
     }
     throw err
   }
 
-  await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_created', data: { orderNumber, orderId, paymentIntentId, itemCount: items.length }, outcome: 'success' })
+  await logEvent({ correlationId: traceId, slice: 'order-create', event: 'order_created', data: { orderNumber, orderId, paymentIntentId, itemCount: items.length }, outcome: 'success' })
 
   for (const shortfall of shortfalls) {
     // Payment already succeeded, so the order stands; the shortfall is left for manual review
-    await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_stock_insufficient', data: shortfall, outcome: 'error' })
+    await logEvent({ correlationId: traceId, slice: 'order-create', event: 'order_stock_insufficient', data: shortfall, outcome: 'error' })
   }
 
-  await logCheckoutEvent({ correlationId: traceId, slice: 'order-create', event: 'order_stock_decremented', data: { itemCount: quantityByProduct.size - shortfalls.length }, outcome: 'success' })
+  await logEvent({ correlationId: traceId, slice: 'order-create', event: 'order_stock_decremented', data: { itemCount: quantityByProduct.size - shortfalls.length }, outcome: 'success' })
 
   if (process.env.NODE_ENV !== 'production') {
     console.log(`[ORDER CREATE] Order ${orderNumber} created for PI ${paymentIntentId}, stock decremented for ${quantityByProduct.size - shortfalls.length} products`)

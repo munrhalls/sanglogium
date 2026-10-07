@@ -1,14 +1,9 @@
 import "server-only";
 import { sendEmail } from "@/platform/email/send";
 import { formatPrice } from "@/platform/utils/price";
+import type { OrderConfirmationEmailData } from "@/features/order";
 
-export async function sendOrderConfirmationEmail(data: {
-  to: string
-  orderNumber: string
-  items: Array<{ name: string; quantity: number; subtotal: number }>
-  total: number
-  shippingAddress: { name: string; line1: string; city: string; postalCode: string }
-}): Promise<void> {
+export async function sendOrderConfirmationEmail(data: OrderConfirmationEmailData): Promise<void> {
   const { to, orderNumber, items, total, shippingAddress } = data
 
   const itemsHtml = items

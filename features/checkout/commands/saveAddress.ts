@@ -3,7 +3,7 @@
 import { getCheckoutSession } from "@/features/checkout/server";
 import { redirect } from "next/navigation";
 import type { Address } from "@/features/address";
-import { logCheckoutEvent, generateCheckoutSessionId } from "@/platform/utils/eventLogger";
+import { logCheckoutEvent, generateCheckoutSessionId } from "@/features/checkout/core/rules/checkoutEvents";
 import { checkAddress } from "@/features/address/server";
 
 export async function saveAddress(
