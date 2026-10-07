@@ -6,20 +6,19 @@ import { SearchCategoryChips } from '@/features/product-search/ui/results/Search
 import type { SearchResult } from '@/features/product-search/core/rules/searchTypes';
 import { EmptyResults, ProductGrid, ProductGridSkeleton } from "@/features/products";
 import { ActiveFilterChips, FilterSidebar, MobileFilterSheet, isFiltersActive, resolvePriceBounds, SORT_DEFAULT } from '@/features/product-filtering';
-import { getWishlistProductIds } from "@/features/products/server";
-
 interface SearchResultsProps {
   resultsPromise: Promise<SearchResult>;
+  wishlistPromise: Promise<string[]>;
   query: string;
 }
 
 // Results span every category, so only the category-agnostic group applies.
 const SEARCH_FILTER_GROUPS = ['commercial'];
 
-export async function SearchResults({ resultsPromise, query }: SearchResultsProps) {
+export async function SearchResults({ resultsPromise, wishlistPromise, query }: SearchResultsProps) {
   const { products, totalCount, unfilteredCount, facets, priceRange, state, category, categoryCounts, allCategoriesCount } =
     await resultsPromise;
-  const wishlistProductIds = await getWishlistProductIds();
+  const wishlistProductIds = await wishlistPromise;
 
   // Nothing matches the words at all (filters can't be the cause).
   if (unfilteredCount === 0) {

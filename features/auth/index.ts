@@ -8,4 +8,5 @@ export { default as ForgotPasswordForm } from './ui/ForgotPasswordForm';
 export { default as ResetPasswordForm } from './ui/ResetPasswordForm';
 export { TwoFactorSection } from './ui/TwoFactorSection';
 export { signOut, signOutAllDevices } from './state/useSignOut';
-export { authClient } from './state/authClient';
+export { changePassword, changeEmail, deleteAccount, useIsSignedIn } from './state/accountSecurity';
+export { requireFreshSession } from './state/requireFreshSession';

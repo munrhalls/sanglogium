@@ -3,12 +3,7 @@ import "server-only";
 import type { AddressBookPorts, OrderHistoryPorts, ProfilePorts } from "./core/ports";
 import { getAccountSummary } from "./adapters/sanity/getAccountSummary";
 import { getFullUserProfile } from "./adapters/sanity/getFullUserProfile";
-import { setProfileName } from "./adapters/sanity/setProfileName";
-import { setMarketingOptIn } from "./adapters/sanity/setMarketingOptIn";
 import { getUserAddresses } from "./adapters/sanity/getUserAddresses";
-import { addProfileAddress } from "./adapters/sanity/addProfileAddress";
-import { replaceProfileAddress } from "./adapters/sanity/replaceProfileAddress";
-import { removeProfileAddress } from "./adapters/sanity/removeProfileAddress";
 import { getUserOrders } from "./adapters/sanity/getUserOrders";
 import { getUserOrderByNumber } from "./adapters/sanity/getUserOrderByNumber";
 import { getAllUserOrdersFull } from "./adapters/sanity/getAllUserOrdersFull";
@@ -21,15 +16,10 @@ import type { AccountOverviewParams } from "./queries/getAccountOverview";
 export const profile: ProfilePorts = {
   getAccountSummary,
   getFullUserProfile,
-  setProfileName,
-  setMarketingOptIn,
 };
 
 export const addressBook: AddressBookPorts = {
   getUserAddresses,
-  addProfileAddress,
-  replaceProfileAddress,
-  removeProfileAddress,
 };
 
 export const orderHistory: OrderHistoryPorts = {
@@ -54,16 +44,6 @@ export { default as OrdersView } from "./view/OrdersView";
 export { default as OrderDetailView } from "./view/OrderDetailView";
 
 export {
-  getAccountSummary,
-  getFullUserProfile,
-  setProfileName,
-  setMarketingOptIn,
   getUserAddresses,
-  addProfileAddress,
-  replaceProfileAddress,
-  removeProfileAddress,
   getUserOrders,
-  getUserOrderByNumber,
-  getAllUserOrdersFull,
-  countMergedGuestOrders,
 };

@@ -1,9 +1,9 @@
 "use server";
 
-import { requireSession, getProfileIdByAuthId } from "@/features/auth/server";
+import { requireSession } from "@/features/auth/server";
+import { getProfileIdByAuthId, addProfileAddress } from "@/features/profile/server";
 import { randomUUID } from "node:crypto";
 import { parseAddress } from "@/features/account/core/rules/addressInput";
-import { addProfileAddress } from "@/features/account/server";
 
 export async function addAddress(formData: FormData) {
   const session = await requireSession();

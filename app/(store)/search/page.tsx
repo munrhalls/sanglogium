@@ -4,6 +4,7 @@ import { searchProductsFull, SearchResults, SearchResultsSkeleton } from '@/feat
 import { isFacetedQuery } from '@/features/catalogue';
 import { detectSearchRedirect, SearchHeader } from '@/features/product-search';
 import { loadFilterSort, type ProductQueryState } from '@/features/product-filtering';
+import { getWishlistProductIds } from '@/features/products/server';
 
 interface SearchPageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -40,7 +41,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
     <div className="mx-auto w-full max-w-catalogue px-4 md:px-8 pt-4 sm:pt-6 pb-12">
       <SearchHeader query={q} />
       <Suspense fallback={<SearchResultsSkeleton />}>
-        <SearchResults resultsPromise={resultsPromise} query={q} />
+        <SearchResults resultsPromise={resultsPromise} wishlistPromise={getWishlistProductIds()} query={q} />
       </Suspense>
     </div>
   );

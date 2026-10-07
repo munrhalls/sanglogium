@@ -1,8 +1,8 @@
 "use server";
 
-import { requireSession, getProfileIdByAuthId } from "@/features/auth/server";
+import { requireSession } from "@/features/auth/server";
+import { getProfileIdByAuthId, removeProfileAddress } from "@/features/profile/server";
 import { isValidAddressKey } from "@/features/account/core/rules/addressInput";
-import { removeProfileAddress } from "@/features/account/server";
 
 export async function removeAddress(addressKey: string) {
   const session = await requireSession();

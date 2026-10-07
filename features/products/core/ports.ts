@@ -19,8 +19,6 @@ export type CatalogPorts = {
 };
 
 export type WishlistPorts = {
-  addWishlistItem: (profileId: string, productId: string) => Promise<void>;
-  removeWishlistItem: (profileId: string, productId: string) => Promise<void>;
   getWishlistProductIdsByAuthId: (authId: string) => Promise<string[]>;
   getWishlistProducts: (authId: string) => Promise<Product[]>;
 };

@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { usePathname } from "next/navigation";
 import { Heart } from "@phosphor-icons/react/dist/ssr";
-import { authClient } from "@/features/auth";
+import { useIsSignedIn } from "@/features/auth";
 import { addToWishlist } from "@/features/products/commands/addToWishlist";
 import { removeFromWishlist } from "@/features/products/commands/removeFromWishlist";
 
@@ -39,12 +39,10 @@ export function WishlistButton({
   className = "",
   variant = "default",
 }: WishlistButtonProps) {
-  const { data: sessionData } = authClient.useSession();
+  const isSignedIn = useIsSignedIn();
   const [inWishlist, setInWishlist] = useState(initiallyInWishlist);
   const [isPending, startTransition] = useTransition();
   const pathname = usePathname();
-
-  const isSignedIn = !!sessionData?.session;
 
   async function handleClick(e: React.MouseEvent) {
     e.preventDefault();

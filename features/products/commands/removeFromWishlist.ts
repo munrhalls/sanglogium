@@ -1,7 +1,7 @@
 'use server';
 
-import { requireSession, getProfileIdByAuthId } from "@/features/auth/server";
-import { wishlist } from "@/features/products/server";
+import { requireSession } from "@/features/auth/server";
+import { getProfileIdByAuthId, removeWishlistItem } from "@/features/profile/server";
 import { isValidProductId } from "@/features/products/core/rules/productId";
 
 export async function removeFromWishlist(productId: string) {
@@ -13,7 +13,7 @@ export async function removeFromWishlist(productId: string) {
     return { error: "Profile not found." };
   }
 
-  await wishlist.removeWishlistItem(profile._id, productId);
+  await removeWishlistItem(profile._id, productId);
 
   return { success: true };
 }
