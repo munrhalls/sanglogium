@@ -13,80 +13,48 @@
 //  - Word-prefix matches beat mid-word substrings ("amp" → "Headphone Amp",
 //    not "Campfire").
 //  - Products that matched only through specs/overview text sort last.
-import catalogueData from '@/data/catalogue-index.json';
-
-const slotMetadataMap: Record<string, { children?: string[] }> =
-  (catalogueData as any).slotMetadataMap || {};
-
-const parentByChild = new Map<string, string>();
-for (const [parentId, meta] of Object.entries(slotMetadataMap)) {
-  for (const childId of meta.children || []) {
-    parentByChild.set(childId, parentId);
-  }
-}
-
-const slugToIdMap: Record<string, string> = (catalogueData as any).slugToIdMap || {};
-const ROOT_HEADPHONES = slugToIdMap.headphones;
-const ROOT_AUDIO_ELECTRONICS = slugToIdMap['audio-electronics'];
-const ROOT_ACCESSORIES = slugToIdMap.accessories;
-
-export function normalizeText(value: string): string {
-  return value.toLowerCase().replace(/[^a-z0-9]/g, '');
-}
+import type { CategoryLookup } from '@/features/catalogue';
+import { CATEGORIES, CATEGORY_LABELS, type Category } from '@/features/product-filtering';
+import { normalizeText } from './searchText';
 
 function tokenize(value: string): string[] {
   return value.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
 }
 
-export function deriveSpacedQuery(value: string): string {
-  // Produce a spacing-normalised variant of the raw query so GROQ match
-  // can hit both concatenated models ("hd800s") and dashed variants
-  // ("HD-800-S"). "SennheiserHD800S" becomes "Sennheiser HD 800S".
-  return value
-    .replace(/[^a-zA-Z0-9]+/g, ' ')
-    .replace(/([a-z])([A-Z])/g, '$1 $2')
-    .replace(/([a-zA-Z]+)(\d+)/g, '$1 $2')
-    .replace(/(\d+)\s+([a-zA-Z]+)/g, '$1$2')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
-function getRootCategory(key: string): 'headphones' | 'audio-electronics' | 'accessories' | null {
+function getRootCategory(key: string, lookup: CategoryLookup): Category | null {
   let current = key;
   const seen = new Set<string>();
   while (current && !seen.has(current)) {
     seen.add(current);
-    if (current === ROOT_HEADPHONES) return 'headphones';
-    if (current === ROOT_AUDIO_ELECTRONICS) return 'audio-electronics';
-    if (current === ROOT_ACCESSORIES) return 'accessories';
-    current = parentByChild.get(current) || '';
+    const root = CATEGORIES.find((c) => current === lookup.idBySlug[c]);
+    if (root) return root;
+    current = lookup.parentById[current] || '';
   }
   return null;
 }
 
-export type RootCategory = 'headphones' | 'audio-electronics' | 'accessories';
+export type RootCategory = Category;
 
-export const ROOT_CATEGORIES: { id: RootCategory; label: string }[] = [
-  { id: 'headphones', label: 'Headphones' },
-  { id: 'audio-electronics', label: 'Audio Electronics' },
-  { id: 'accessories', label: 'Accessories' },
-];
+export const ROOT_CATEGORIES: { id: RootCategory; label: string }[] = CATEGORIES.map((id) => ({
+  id,
+  label: CATEGORY_LABELS[id],
+}));
 
 /** Every root category a product sits under (a product can sit under several). */
-export function rootCategoriesOf(keys?: string[]): RootCategory[] {
+export function rootCategoriesOf(keys: string[] | undefined, lookup: CategoryLookup): RootCategory[] {
   const roots = new Set<RootCategory>();
   for (const key of keys ?? []) {
-    const root = getRootCategory(key);
+    const root = getRootCategory(key, lookup);
     if (root) roots.add(root);
   }
   return [...roots];
 }
 
-function categoryScore(keys?: string[]): number {
+function categoryScore(keys: string[] | undefined, lookup: CategoryLookup): number {
   if (!keys || keys.length === 0) return 0;
-  const roots = new Set<'headphones' | 'audio-electronics' | 'accessories' | null>();
+  const roots = new Set<Category | null>();
   for (const key of keys) {
-    roots.add(getRootCategory(key));
+    roots.add(getRootCategory(key, lookup));
   }
   if (roots.has('headphones') || roots.has('audio-electronics')) return 50;
   if (roots.has('accessories')) return -50;
@@ -105,7 +73,7 @@ export interface ScorableProduct {
   availableStock?: number;
 }
 
-export function scoreProduct(product: ScorableProduct, rawQuery: string): number {
+export function scoreProduct(product: ScorableProduct, rawQuery: string, lookup: CategoryLookup): number {
   const queryNorm = normalizeText(rawQuery);
   if (!queryNorm) return 0;
 
@@ -123,7 +91,7 @@ export function scoreProduct(product: ScorableProduct, rawQuery: string): number
   // Small, additive tie-breakers that never outrank a better match tier:
   // headphones/electronics over accessories, in stock, shorter (closer) names.
   const tiebreak =
-    categoryScore(product.catalogueLocationKeys) +
+    categoryScore(product.catalogueLocationKeys, lookup) +
     (product.availableStock != null && product.availableStock > 0 ? 20 : 0) -
     Math.min(nameNorm.length, 500) / 100;
 

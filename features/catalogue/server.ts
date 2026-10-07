@@ -10,5 +10,6 @@ export const resolveSlugToId = catalogueIndex.resolveSlugToId;
 export const unrollDescendantKeys = catalogueIndex.unrollDescendantKeys;
 export const getAllLeafKeys = catalogueIndex.getAllLeafKeys;
 export const getCatalogueForNavigation = catalogueIndex.getCatalogueForNavigation;
+export const getCategoryLookup = catalogueIndex.getCategoryLookup;
 
 export { default as CatalogueNavbar } from './view/CatalogueNavbar';

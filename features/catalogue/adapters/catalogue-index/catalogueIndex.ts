@@ -6,6 +6,7 @@ import {
   validateCatalogueIndex,
   type CatalogueIndexData,
   type CatalogueTree,
+  type CategoryLookup,
 } from "@/features/catalogue/core/rules/catalogue";
 
 export const getCatalogue = (): CatalogueTree => {
@@ -62,4 +63,15 @@ export const getAllLeafKeys = (): string[] => {
   return Object.entries(data.slotMetadataMap)
     .filter(([_, v]) => v.children.length === 0)
     .map(([id]) => id);
+};
+
+export const getCategoryLookup = (): CategoryLookup => {
+  const data = catalogueIndex as unknown as CatalogueIndexData;
+  const parentById: Record<string, string> = {};
+  for (const [parentId, meta] of Object.entries(data.slotMetadataMap)) {
+    for (const childId of meta.children) {
+      parentById[childId] = parentId;
+    }
+  }
+  return { parentById, idBySlug: data.slugToIdMap };
 };
