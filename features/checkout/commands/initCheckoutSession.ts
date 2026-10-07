@@ -2,7 +2,7 @@
 
 import { getCheckoutSession } from "@/features/checkout/server";
 import { redirect } from "next/navigation";
-import { logCheckoutEvent, generateCheckoutSessionId } from "@/platform/utils/eventLogger";
+import { logCheckoutEvent, generateCheckoutSessionId } from "@/features/checkout/core/rules/checkoutEvents";
 
 export async function initCheckoutSession(items: Array<{ productId: string; quantity: number }>, checkoutSessionId?: string) {
   const session = await getCheckoutSession();

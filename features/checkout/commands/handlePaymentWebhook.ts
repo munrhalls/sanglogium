@@ -1,7 +1,7 @@
 import "server-only";
 import type { Orders, Payments, OrderEmails } from "@/features/checkout/core/ports";
 import type { PaymentEvent, PaymentSnapshot } from "@/features/checkout/core/rules/checkoutTypes";
-import { logCheckoutEvent } from "@/platform/utils/eventLogger";
+import { logCheckoutEvent } from "@/features/checkout/core/rules/checkoutEvents";
 import { placeOrderFromPayment } from "./placeOrderFromPayment";
 
 export type WebhookResult = { status: number; body: { error?: string; received?: boolean } };

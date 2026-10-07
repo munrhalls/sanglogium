@@ -7,7 +7,7 @@ import type {
 } from "@/features/checkout/core/ports";
 import type { PaymentMethodDetails } from "@/features/order";
 import type { PaymentSnapshot } from "@/features/checkout/core/rules/checkoutTypes";
-import { logCheckoutEvent } from "@/platform/utils/eventLogger";
+import { logCheckoutEvent } from "@/features/checkout/core/rules/checkoutEvents";
 
 export type SuccessPageResult =
   | { kind: "verificationFailed"; paymentIntentId: string }

@@ -67,3 +67,4 @@ export { getCheckoutSession };
 export { fetchOrderByPaymentIntentId as getOrderByPaymentIntentId };
 export { default as OrderDetails } from './view/OrderDetails';
 export { default as PaymentConfirmed } from './view/PaymentConfirmed';
+export { recordCheckoutTrace } from './commands/recordCheckoutTrace';
