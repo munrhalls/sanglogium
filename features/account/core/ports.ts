@@ -1,4 +1,4 @@
-import type { Address } from "@/features/checkout";
+import type { Address } from "@/features/address";
 import type { Order } from "@/sanity.types";
 import type {
   AccountSummary,

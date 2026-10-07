@@ -17,9 +17,9 @@ import "server-only";
 // returns an arbitrary street for the locality (false positive). Guarded below.
 // Always fails soft (`degraded: true`) so checkout never dead-ends on GUS.
 
-import type { TerytVerifyInput, TerytVerifyResult } from "@/features/checkout/core/rules/checkoutTypes";
+import type { RegistryCheckInput, RegistryCheckResult } from "@/features/address/core/rules/addressTypes";
 
-export type { TerytVerifyInput, TerytVerifyResult };
+export type { RegistryCheckInput, RegistryCheckResult };
 
 const DEFAULT_ENDPOINT = "https://uslugaterytws1test.stat.gov.pl/Terytws1.svc";
 const DEFAULT_USER = "TestPubliczny";
@@ -112,8 +112,8 @@ const stripStreetPrefix = (s: string): string => {
 };
 
 export async function verifyPolishAddress(
-  input: TerytVerifyInput,
-): Promise<TerytVerifyResult> {
+  input: RegistryCheckInput,
+): Promise<RegistryCheckResult> {
   const city = input.city.trim();
   const street = input.street.trim();
   const postal = input.postalCode.trim();

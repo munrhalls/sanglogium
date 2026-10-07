@@ -1,4 +1,4 @@
-import type { Address } from "@/features/checkout";
+import type { Address } from "@/features/address";
 
 export interface AccountSummary {
   _id?: string;

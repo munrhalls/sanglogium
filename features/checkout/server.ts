@@ -1,11 +1,8 @@
 import 'server-only';
-// Server-only entry: checkout session and courier rates. Never import from client components or Node .mjs scripts.
+// Server-only entry: checkout session, payments, order placement and the step pages' data. Never import from client components or Node .mjs scripts.
 import type Stripe from 'stripe';
 import { getCheckoutSession } from './adapters/iron-session/checkoutSession';
-import { fetchAlleKurierRates, transformAlleKurierToShippingOption } from './adapters/allekurier/rates';
-import { verifyPolishAddress } from './adapters/teryt/validator';
-import { validateWithGoogle } from './adapters/google/addressValidator';
-import { placesAutocomplete } from './adapters/google/placesAutocomplete';
+import { fetchShippingOptions } from '@/features/shipping/server';
 import { fetchOrderByPaymentIntentId } from './adapters/sanity/getOrderByPaymentIntentId';
 import { createOrderFromPaymentIntent } from './adapters/sanity/createOrderFromPaymentIntent';
 import { getPaymentProducts } from './adapters/sanity/getPaymentProducts';
@@ -18,7 +15,6 @@ import { getAddressPageData as getAddressPageDataQuery } from './queries/getAddr
 import { getShippingPageData as getShippingPageDataQuery } from './queries/getShippingPageData';
 import { getPaymentPageData as getPaymentPageDataQuery } from './queries/getPaymentPageData';
 import { getSuccessPageResult as getSuccessPageResultQuery } from './queries/getSuccessPageResult';
-import { getCheapestShippingRate as getCheapestShippingRateQuery } from './queries/getCheapestShippingRate';
 import { createPaymentIntent as createPaymentIntentCmd } from './commands/createPaymentIntent';
 import { handlePaymentReturn as handlePaymentReturnCmd } from './commands/handlePaymentReturn';
 import { handleStripeWebhook as handleStripeWebhookCmd } from './commands/handleStripeWebhook';
@@ -27,7 +23,6 @@ import type {
   Orders,
   CheckoutCatalog,
   ShippingRates,
-  AddressValidation,
   CheckoutSessions,
   Payments,
   OrderEmails,
@@ -45,16 +40,8 @@ const catalogue: CheckoutCatalog = {
   getProductUnitAmountsByIds,
 };
 
-const shipping: ShippingRates = {
-  fetchAlleKurierRates,
-  transformAlleKurierToShippingOption,
-};
+const shipping: ShippingRates = { fetchShippingOptions };
 
-const addressValidation: AddressValidation = {
-  verifyPolishAddress,
-  validateWithGoogle,
-  placesAutocomplete,
-};
 
 const sessions: CheckoutSessions = { getCheckoutSession };
 
@@ -73,9 +60,6 @@ export const getPaymentPageData = () => getPaymentPageDataQuery({ sessions, cata
 export const getSuccessPageResult = (
   input: Parameters<typeof getSuccessPageResultQuery>[1]
 ) => getSuccessPageResultQuery({ sessions, orders, payments }, input);
-export const getCheapestShippingRate = (
-  input: Parameters<typeof getCheapestShippingRateQuery>[1]
-) => getCheapestShippingRateQuery({ shipping }, input);
 export const createPaymentIntent = (
   input: Parameters<typeof createPaymentIntentCmd>[1]
 ) => createPaymentIntentCmd({ sessions, catalogue, payments }, input);
@@ -87,13 +71,11 @@ export const handleStripeWebhook = (
 ) => handleStripeWebhookCmd({ orders, payments, emails }, input);
 
 export { getCheckoutSession };
-export { fetchAlleKurierRates, transformAlleKurierToShippingOption };
-export { verifyPolishAddress, validateWithGoogle, placesAutocomplete };
 export { fetchOrderByPaymentIntentId as getOrderByPaymentIntentId };
 export { createOrderFromPaymentIntent };
 export { getPaymentProducts, getProductsByIds, getProductUnitAmountsByIds };
 export { stripe, retrievePaymentIntent };
-export type { CheckoutSession, OrderSessionData, OrderForSuccessPage, AutocompleteResult } from './core/rules/checkoutTypes';
+export type { CheckoutSession, OrderSessionData, OrderForSuccessPage } from './core/rules/checkoutTypes';
 export type { PaymentProduct } from './core/rules/checkoutTypes';
 export { default as OrderDetails } from './view/OrderDetails';
 export { default as PaymentConfirmed } from './view/PaymentConfirmed';

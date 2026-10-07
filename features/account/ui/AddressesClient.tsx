@@ -4,7 +4,7 @@ import { useState } from "react";
 import { addAddress } from "@/features/account/commands/addAddress";
 import { updateAddress } from "@/features/account/commands/updateAddress";
 import { removeAddress } from "@/features/account/commands/removeAddress";
-import type { Address } from "@/features/checkout";
+import type { Address } from "@/features/address";
 
 const REGIONS = [
   { code: "PL", label: "Poland" },

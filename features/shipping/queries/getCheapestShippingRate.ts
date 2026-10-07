@@ -1,6 +1,6 @@
 import "server-only";
-import type { ShippingRates } from "@/features/checkout/core/ports";
-import type { AlleKurierShippingOption } from "@/features/checkout/core/rules/checkoutTypes";
+import type { ShippingRates } from "@/features/shipping/core/ports";
+import type { ShippingOption } from "@/features/shipping/core/rules/shippingTypes";
 
 interface ParcelData {
   length: number;
@@ -12,7 +12,7 @@ interface ParcelData {
 export async function getCheapestShippingRate(
   ports: { shipping: ShippingRates },
   input: { parcelData: ParcelData[]; countryCode: string }
-): Promise<AlleKurierShippingOption | null> {
+): Promise<ShippingOption | null> {
   const { parcelData, countryCode } = input;
 
   // Courier limits
@@ -123,22 +123,20 @@ export async function getCheapestShippingRate(
 
   const senderAddress = getSenderAddress(countryCode);
 
-  let shippingOptions: AlleKurierShippingOption[] = [];
+  let shippingOptions: ShippingOption[] = [];
 
   // Call country-specific shipping API
   if (countryCode === 'PL') {
-    const alleKurierServices = await ports.shipping.fetchAlleKurierRates({
+    shippingOptions = await ports.shipping.fetchShippingOptions({
       fromCountry: senderAddress?.country || 'PL',
       fromZip: senderAddress?.zip || '',
       toCountry: countryCode,
       toZip: '02-001', // Warsaw - Polish domestic shipping uses flat rates
       packages: packages,
     });
-
-    shippingOptions = alleKurierServices.map(ports.shipping.transformAlleKurierToShippingOption);
   } else if (countryCode === 'GB') {
     // TODO: GB API integration (Task 6)
-    const mockShippingOptions: AlleKurierShippingOption[] = [
+    const mockShippingOptions: ShippingOption[] = [
       {
         provider: 'Mock GB Carrier',
         servicelevel: { name: 'Standard' },
@@ -151,7 +149,7 @@ export async function getCheapestShippingRate(
     shippingOptions = mockShippingOptions;
   } else if (countryCode === 'DE') {
     // TODO: DE API integration (Task 8)
-    const mockShippingOptions: AlleKurierShippingOption[] = [
+    const mockShippingOptions: ShippingOption[] = [
       {
         provider: 'Mock DE Carrier',
         servicelevel: { name: 'Standard' },

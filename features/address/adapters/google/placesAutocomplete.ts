@@ -1,8 +1,8 @@
 import "server-only";
 
-import type { AutocompleteResult } from "@/features/checkout/core/rules/checkoutTypes";
+import type { AddressSuggestion } from "@/features/address/core/rules/addressTypes";
 
-export type { AutocompleteResult };
+export type { AddressSuggestion };
 
 interface PhotonProperties {
   name?: string;
@@ -15,7 +15,7 @@ interface PhotonProperties {
 
 // Free, keyless street autocomplete over OpenStreetMap (komoot/Photon).
 // Always fails to an empty result list.
-export async function placesAutocomplete(q: string): Promise<AutocompleteResult[]> {
+export async function placesAutocomplete(q: string): Promise<AddressSuggestion[]> {
   const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&lang=default&limit=6`;
   try {
     const res = await fetch(url, {

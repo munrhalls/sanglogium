@@ -1,28 +1,5 @@
-export type Address = {
-  firstName: string;
-  lastName: string;
-  phone: string;
-  regionCode: string;
-  postalCode: string;
-  street: string;
-  streetNumber: string;
-  city: string;
-};
 
-export type Status = "LOADING" | "FIX" | "CONFIRM" | "ACCEPT";
 
-export type ServerResponse = {
-  status: Status;
-  address?: Address;
-  geocode?: {
-    location: {
-      latitude: number;
-      longitude: number;
-    };
-  };
-  placeId?: string;
-  errors?: Record<string, string>;
-};
 
 export type ServerProduct = {
   _id: string;
@@ -49,60 +26,7 @@ export type CheckoutProduct = {
   };
 };
 
-export interface AlleKurierService {
-  Carrier: {
-    code: string;
-    name: string;
-  };
-  Service: {
-    code: string;
-    name: string;
-  };
-  Order: {
-    net: number;
-    gross: number;
-  };
-  Time: {
-    days: string;
-    description: string;
-  };
-}
 
-export interface AlleKurierRatesInput {
-  fromCountry: string;
-  fromZip: string;
-  toCountry: string;
-  toZip: string;
-  packages: Array<{
-    width: number;
-    height: number;
-    length: number;
-    weight: number;
-  }>;
-}
-
-export type AlleKurierShippingOption = {
-  provider: string;
-  servicelevel: { name: string };
-  rateId: string;
-  amount: number;
-  currency: string;
-  estimatedDays: number;
-};
-
-export interface TerytVerifyInput {
-  street: string;
-  streetNumber: string;
-  postalCode: string;
-  city: string;
-}
-
-export interface TerytVerifyResult {
-  valid: boolean;
-  degraded: boolean;
-  reason?: string;
-  streetName?: string;
-}
 
 export interface CheckoutSession {
   basket: Array<{ productId: string; quantity: number }>;
@@ -211,13 +135,6 @@ export interface PaymentProduct {
   imageUrl: string | null;
 }
 
-export interface AutocompleteResult {
-  street: string;
-  streetNumber: string;
-  city: string;
-  postalCode: string;
-  regionCode: string;
-}
 
 export type OrderConfirmationEmailData = {
   to: string;
