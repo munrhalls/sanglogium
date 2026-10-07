@@ -52,7 +52,7 @@ Render ProductGrid with products
 ### Navigation Layer
 | File | Purpose |
 |------|---------|
-| `features/catalogue/ui/CatalogueNavbar.tsx` | Renders navigation from VFS |
+| `features/catalogue/view/CatalogueNavbarView.tsx` | Renders navigation from VFS |
 | `features/catalogue/ui/details/DetailSection.tsx` | Renders category links |
 
 ## VFS Functions Reference
@@ -121,7 +121,7 @@ This query uses array intersection — returns products where at least one `cata
 Create `features/products/adapters/sanity/getProductsByVfsKeys.ts`:
 
 ```typescript
-import { sanityFetch } from "@/platform/db/client";
+import { sanityFetch } from "@/platform/sanity/client";
 import { cache } from "react";
 import groq from "groq";
 
@@ -186,7 +186,7 @@ Data fetching happens server-side for:
 
 ## Related Documentation
 
-- [Sanity Schema](../../features/products/schema/productType.ts)
+- [Sanity Schema](../features/products/schema/productType.ts)
 
 ---
 

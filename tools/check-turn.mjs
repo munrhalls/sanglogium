@@ -71,7 +71,10 @@ const ctx = {
   // True when the first statement is the "use client" / "use server" directive.
   useClient: (file) => flags(file).first === "client",
   useServer: (file) => flags(file).first === "server",
-  // Parsed relative and @/ imports of a file: [{ spec, line, typeOnly }], parsed once per file.
+  // Parsed imports of a file: [{ spec, line, typeOnly, external, imported }], parsed once per file.
+  // external is true for vendor package specifiers (neither "./" nor "@/"). imported is the list of
+  // names brought in: each named binding ("type"/"as alias" stripped), "default" for a default
+  // binding and "*" for a namespace binding; empty for dynamic import() and require().
   specs(file) {
     if (!specCache.has(file)) {
       const out = [];
@@ -79,12 +82,16 @@ const ctx = {
         const src = read(file);
         for (const m of src.matchAll(STMT)) {
           const spec = m[3] ?? m[4] ?? m[5];
-          if (!spec.startsWith(".") && !spec.startsWith("@/")) continue;
+          const external = !spec.startsWith(".") && !spec.startsWith("@/");
           const clause = (m[2] || "").replace(/\s+from\s+$/, "");
           const names = (/\{([^}]*)\}/.exec(clause)?.[1] ?? "").split(",").map((s) => s.trim()).filter(Boolean);
           const lone = clause.replace(/\{[^}]*\}/, "").replace(/[,\s]/g, "");
           const typeOnly = !!m[1] || (names.length > 0 && !lone && names.every((s) => s.startsWith("type ")));
-          out.push({ spec, typeOnly, line: src.slice(0, m.index + m[0].search(/[^\s;]/)).split("\n").length });
+          const imported = names.map((s) => s.replace(/^type\s+/, "").replace(/\s+as\s+\w+$/, ""));
+          const bare = clause.replace(/\{[^}]*\}/, "").replace(/,/g, " ").trim();
+          if (/\*\s*as\s+/.test(bare)) imported.push("*");
+          else if (/^(?:type\s+)?\w+$/.test(bare)) imported.push("default");
+          out.push({ spec, typeOnly, line: src.slice(0, m.index + m[0].search(/[^\s;]/)).split("\n").length, external, imported });
         }
       }
       specCache.set(file, out);

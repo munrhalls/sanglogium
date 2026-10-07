@@ -1,5 +1,5 @@
 import "server-only";
-import { backendClient } from "@/platform/db/backendClient";
+import { backendClient } from "@/platform/sanity/backendClient";
 
 export async function getAllUserOrdersFull(userId: string): Promise<Record<string, unknown>[]> {
   return backendClient.fetch<Record<string, unknown>[]>(

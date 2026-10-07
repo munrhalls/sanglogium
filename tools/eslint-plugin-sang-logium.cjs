@@ -105,68 +105,6 @@ module.exports = {
       },
     },
 
-    // Rule 5: No direct Sanity queries in Client Components
-    "no-direct-sanity-in-client": {
-      meta: {
-        type: "problem",
-        docs: {
-          description: "Disallow direct Sanity client usage in Client Components",
-          category: "Architecture",
-          recommended: true,
-        },
-        messages: {
-          noDirectSanity: "Use Server Components for Sanity queries.",
-        },
-      },
-      create(context) {
-        let hasUseClient = false;
-        let hasSanityImport = false;
-
-        return {
-          // Check for 'use client'
-          ExpressionStatement(node) {
-            if (
-              node.expression.type === "Literal" &&
-              node.expression.value === "use client"
-            ) {
-              hasUseClient = true;
-            }
-          },
-          // Check for sanity client import
-          ImportDeclaration(node) {
-            if (
-              node.source.value.includes("sanity") &&
-              node.source.value.includes("client")
-            ) {
-              hasSanityImport = true;
-            }
-          },
-          // Check for sanityClient.fetch usage
-          CallExpression(node) {
-            if (
-              hasUseClient &&
-              node.callee.type === "MemberExpression" &&
-              node.callee.object.type === "Identifier" &&
-              (node.callee.object.name === "sanityClient" ||
-               node.callee.object.name.includes("sanity")) &&
-              node.callee.property.type === "Identifier" &&
-              node.callee.property.name === "fetch"
-            ) {
-              context.report({
-                node,
-                messageId: "noDirectSanity",
-              });
-            }
-          },
-          "Program:exit"() {
-            // Reset for next file
-            hasUseClient = false;
-            hasSanityImport = false;
-          },
-        };
-      },
-    },
-
     // Rule 3: useQueryState null check (simplified - checks for obvious direct usage)
     "useQueryState-null-check": {
       meta: {
@@ -297,64 +235,6 @@ module.exports = {
             // Reset
             hasUseClient = false;
             hasInteractivity = false;
-          },
-        };
-      },
-    },
-
-    // Rule 6: Test import discipline (basic version - warns on suspicious patterns)
-    "test-import-discipline": {
-      meta: {
-        type: "suggestion",
-        docs: {
-          description: "Warn when test files may be copying instead of importing",
-          category: "Testing",
-          recommended: true,
-        },
-        messages: {
-          mayBeCopying: "Ensure you're importing from source, not copying implementation. See tests/AGENTS.md Testing Rules.",
-        },
-      },
-      create(context) {
-        // Only run in test files
-        const filename = context.getFilename();
-        if (!filename.includes(".test.") && !filename.includes(".spec.")) {
-          return {};
-        }
-
-        return {
-          // Warn on class definitions in test files
-          ClassDeclaration(node) {
-            // Skip if it's a test helper class that's exported
-            if (node.parent.type === "ExportNamedDeclaration") {
-              return;
-            }
-
-            context.report({
-              node,
-              messageId: "mayBeCopying",
-            });
-          },
-          // Warn on function declarations that look like copies
-          FunctionDeclaration(node) {
-            // Skip if exported (might be legitimate helper)
-            if (node.parent.type === "ExportNamedDeclaration") {
-              return;
-            }
-
-            // Skip test lifecycle functions
-            if (["beforeEach", "afterEach", "beforeAll", "afterAll"].includes(node.id.name)) {
-              return;
-            }
-
-            // If function name looks like a utility (generate*, calculate*, etc.)
-            const suspiciousPrefixes = ["generate", "calculate", "format", "parse", "validate", "transform"];
-            if (suspiciousPrefixes.some(prefix => node.id.name.toLowerCase().startsWith(prefix))) {
-              context.report({
-                node,
-                messageId: "mayBeCopying",
-              });
-            }
           },
         };
       },

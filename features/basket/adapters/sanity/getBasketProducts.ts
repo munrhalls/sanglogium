@@ -1,6 +1,6 @@
 import "server-only";
 
-import { sanityFetch } from '@/platform/db/client';
+import { sanityFetch } from '@/platform/sanity/client';
 import type { BasketProduct } from '@/features/basket/core/rules/basketTypes';
 import groq from 'groq';
 

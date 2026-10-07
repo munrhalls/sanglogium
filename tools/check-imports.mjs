@@ -9,14 +9,16 @@ const id = (rel) => rel.replace(/\.(d\.ts|ts|tsx|mts|mjs|js|jsx|json|css)$/, "")
 export function run(ctx) {
   const out = [];
   for (const file of ctx.changed) {
-    for (const { spec, line } of ctx.specs(file)) {
+    for (const { spec, line, external } of ctx.specs(file)) {
+      if (external) continue;
       if (!ctx.resolve(file, spec)) out.push(`${file}:${line} "${spec}" SPEC unresolved`);
     }
   }
   if (ctx.deleted.length) {
     const dead = new Map(ctx.deleted.map((d) => [id(d), d]));
     for (const file of ctx.tracked()) {
-      for (const { spec, line } of ctx.specs(file)) {
+      for (const { spec, line, external } of ctx.specs(file)) {
+        if (external) continue;
         const gone = dead.get(id(ctx.rel(file, spec)));
         if (gone) out.push(`${file}:${line} "${spec}" DELETED importer of removed ${gone}`);
       }

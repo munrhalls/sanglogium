@@ -1,4 +1,4 @@
-import { dataset, projectId } from "./platform/db/env";
+import { dataset, projectId } from "./platform/sanity/env";
 import { schema } from "./studio/schema";
 import { structure } from "./studio/structure";
 // import { colorInput } from "@sanity/color-input";

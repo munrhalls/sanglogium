@@ -1,7 +1,7 @@
 "use client";
 
 import type { ProductDetailData as Product } from "@/features/products/core/rules/productTypes";
-import { urlFor } from '@/platform/db/imageUrl';
+import { urlFor } from '@/platform/sanity/imageUrl';
 import { useState } from 'react';
 import { Price } from '@/platform/design/ui/Price';
 import { ShoppingCartIcon, CheckIcon } from '@phosphor-icons/react/dist/ssr';
