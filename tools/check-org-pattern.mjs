@@ -6,10 +6,16 @@
 //   DOOR       a slice is imported only through index.ts or server.ts
 //   INWARD     inside a slice, imports follow the archetype table (section 2)
 //   PLATFORM   platform/ imports only platform/
-//   ROUTE      routes reach data through a slice, never directly
+//   ROUTE      routes reach data through a slice and import only next, react, slice doors and platform/
 //   ENV        client-safe code never imports server-only code
 //   SERVERDOOR every server.ts contains import "server-only"
 //   CYCLE      the slice-to-slice import graph has no cycle
+//   CORE       core/ imports only its own core/, another slice's index.ts and platform/utils/
+//   VENDOR     vendor packages only in adapters/, platform/, framework entries or the studio plane
+//   VIEWDATA   a view imports only *View components from another slice's server.ts
+//   GENERATED  sanity.types.ts only in adapters/sanity/ and platform/
+//   ACTION     'use server' files are features/<slice>/commands/<name>Action.ts and vice versa
+//   NAMES      view/ components end in View; ui/ names never end in View, Client, Server or Page
 
 export const name = "org-pattern";
 
@@ -83,8 +89,20 @@ const ALLOW = {
   adapters: ["adapters", "core"],
 };
 const CLIENT_SAFE_PARTS = ["ui", "state", "url", "core", "index"];
+const VENDORS = ["stripe", "@stripe/", "better-auth", "@better-auth/", "kysely", "kysely-libsql", "next-sanity", "@sanity/", "sanity", "groq", "resend", "iron-session", "@vercel/", "@sentry/", "web-vitals"];
+const BROWSER_KITS = ["@stripe/stripe-js", "@stripe/react-stripe-js"];
+const ACTION_PATH = /^features\/[^/]+\/commands\/([A-Za-z0-9_-]+)Action\.ts$/;
+// spec is a vendor package when some entry matches: entries ending in "/" match by prefix,
+// any other entry matches when spec equals it or starts with it + "/".
+function isVendor(spec) {
+  return VENDORS.some((v) => (v.endsWith("/") ? spec.startsWith(v) : spec === v || spec.startsWith(v + "/")));
+}
+// The model's A9 list of packages a route may import.
+function routePackage(spec) {
+  return spec === "next" || spec.startsWith("next/") || spec === "react";
+}
 
-function edge(ctx, file, rel, { spec, typeOnly, line }) {
+function edge(ctx, file, rel, { spec, typeOnly, line, imported }) {
   const at = `${file}:${line} "${spec}"`;
   const out = [];
   if (file.startsWith("features/") && spec.startsWith("..")) out.push(`${at} DOTDOT use ./x or the @/ alias`);
@@ -116,6 +134,12 @@ function edge(ctx, file, rel, { spec, typeOnly, line }) {
     out.push(`${at} ROUTE routes reach data through a slice`);
   if (!typeOnly && (CLIENT_SAFE_PARTS.includes(A.part) || A.clientSafe || ctx.useClient(file)) && ctx.serverOnly(rel))
     out.push(`${at} ENV client-safe code imports server-only code`);
+  if (A.part === "core" && B.slice !== A.slice && B.part !== "index" && !rel.startsWith("platform/utils/"))
+    out.push(`${at} CORE core/ imports only its own core/, another slice's index.ts and platform/utils/`);
+  if (rel === "sanity.types.ts" && !(A.part === "adapters" && A.system === "sanity") && A.home !== "platform")
+    out.push(`${at} GENERATED sanity.types.ts only in adapters/sanity/ and platform/`);
+  if (A.part === "view" && B.part === "server" && B.slice !== A.slice && imported.some((n) => !n.endsWith("View")))
+    out.push(`${at} VIEWDATA a view imports only *View components from another slice's server.ts`);
   return out;
 }
 
@@ -126,6 +150,7 @@ function findCycle(ctx) {
     const seg = f.split("/");
     if (seg[0] !== "features" || seg.length < 3) continue;
     for (const s of ctx.specs(f)) {
+      if (s.external) continue;
       const rel = ctx.resolve(f, s.spec);
       const t = rel?.split("/");
       if (!t || t[0] !== "features" || t.length < 3 || t[1] === seg[1]) continue;
@@ -159,7 +184,30 @@ export function run(ctx) {
     if (!A) out.push(`${file} PLACE no home (docs/organizational-pattern.md section 3)`);
     if (A?.part === "server" && !ctx.serverOnly(file))
       out.push(`${file} SERVERDOOR server.ts must contain import "server-only"`);
+    if (A && A.plane === "runtime") {
+      const action = ACTION_PATH.test(file);
+      if (ctx.useServer(file) && !action)
+        out.push(`${file} ACTION a 'use server' file must be features/<slice>/commands/<name>Action.ts`);
+      if (action && !ctx.useServer(file))
+        out.push(`${file} ACTION ${file.match(ACTION_PATH)[1]}Action.ts must start with 'use server'`);
+      const parts = file.split("/");
+      if (parts[0] === "features" && file.endsWith(".tsx")) {
+        if (parts[2] === "view" && !file.endsWith("View.tsx"))
+          out.push(`${file} NAMES view/ components end in View`);
+        if (parts[2] === "ui" && /(View|Client|Server|Page)\.tsx$/.test(file))
+          out.push(`${file} NAMES ui/ names never end in View, Client, Server or Page`);
+      }
+      for (const s of ctx.specs(file)) {
+        if (!s.external) continue;
+        const at = `${file}:${s.line} "${s.spec}"`;
+        if (isVendor(s.spec) && !(A.part === "adapters" || A.home === "platform" || A.part === "entry" || file.startsWith("app/(studio)/") || ((A.part === "ui" || A.part === "state") && BROWSER_KITS.includes(s.spec))))
+          out.push(`${at} VENDOR vendor packages only in adapters/, platform/, framework entries or the studio plane`);
+        if (A.part === "route" && !routePackage(s.spec) && !file.startsWith("app/(studio)/"))
+          out.push(`${at} ROUTE routes import only next, react, slice doors and platform/`);
+      }
+    }
     for (const s of ctx.specs(file)) {
+      if (s.external) continue;
       const rel = ctx.resolve(file, s.spec);
       if (rel) out.push(...edge(ctx, file, rel, s));
     }
