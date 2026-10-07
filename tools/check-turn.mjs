@@ -62,6 +62,200 @@ function flags(file) {
   }
   return flagCache.get(file);
 }
+
+const exportCache = new Map();
+const exportOpen = new Set(); // files whose export set is being computed (export * cycle guard)
+const NO_EXPORTS = new Set();
+const stripComments = (s) => s.replace(/\/\*[\s\S]*?\*\/|\/\/[^\n]*/g, " ");
+// Index of the first `ch` at bracket depth 0 (quotes skipped), or -1.
+function topChar(s, ch) {
+  let depth = 0, q = null;
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i];
+    if (q) { if (c === "\\") i++; else if (c === q) q = null; continue; }
+    if (c === '"' || c === "'" || c === "`") q = c;
+    else if ("([{".includes(c)) depth++;
+    else if (")]}".includes(c)) depth--;
+    else if (c === ch && depth === 0) return i;
+  }
+  return -1;
+}
+// Split on commas at bracket depth 0 (quotes skipped).
+function splitTop(s) {
+  const parts = [];
+  let depth = 0, q = null, start = 0;
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i];
+    if (q) { if (c === "\\") i++; else if (c === q) q = null; continue; }
+    if (c === '"' || c === "'" || c === "`") q = c;
+    else if ("([{".includes(c)) depth++;
+    else if (")]}".includes(c)) depth--;
+    else if (c === "," && depth === 0) { parts.push(s.slice(start, i)); start = i + 1; }
+  }
+  parts.push(s.slice(start));
+  return parts;
+}
+// Bound names of a destructuring pattern body: `key: alias` -> alias, `...rest` -> rest, defaults
+// dropped; nested { } / [ ] patterns recurse.
+function patternNames(body, out) {
+  for (const raw of splitTop(stripComments(body))) {
+    let part = raw.trim();
+    if (!part) continue;
+    if (part.startsWith("...")) part = part.slice(3).trim();
+    const eq = topChar(part, "=");
+    if (eq !== -1) part = part.slice(0, eq).trim();
+    const colon = topChar(part, ":");
+    if (colon !== -1) part = part.slice(colon + 1).trim();
+    if (/^[A-Za-z_$][\w$]*$/.test(part)) out.add(part);
+    else if (part.startsWith("{") || part.startsWith("[")) {
+      const end = part.lastIndexOf(part[0] === "{" ? "}" : "]");
+      if (end > 0) patternNames(part.slice(1, end), out);
+    }
+  }
+}
+// Names a module exports ("default" for a default export, alias side for `as`), or null when they
+// cannot be known: non-code/missing file, `export =`, or an `export *` whose specifier is external,
+// unresolvable or a target whose own exports are null.
+function moduleExports(file) {
+  if (!CODE.test(file) || !exists(file)) return null;
+  const src = read(file);
+  const names = new Set();
+  // Advance past whitespace and comments.
+  const skip = (i) => {
+    for (;;) {
+      const t = /^(?:\s+|\/\*[\s\S]*?\*\/|\/\/[^\n]*)+/.exec(src.slice(i));
+      if (!t) return i;
+      i += t[0].length;
+    }
+  };
+  // [identifier, position past it and trailing ws/comments] or [null, skipped position].
+  const ident = (i) => {
+    const p = skip(i);
+    const w = /^[A-Za-z_$][\w$]*/.exec(src.slice(p));
+    return w ? [w[0], skip(p + w[0].length)] : [null, p];
+  };
+  // [string literal contents, position past it] or [null, skipped position].
+  const strLit = (i) => {
+    const p = skip(i);
+    const s = /^["']([^"']+)["']/.exec(src.slice(p));
+    return s ? [s[1], p + s[0].length] : [null, p];
+  };
+  // End index of the bracket group starting at i (comments/strings skipped), or -1.
+  const closeIdx = (i) => {
+    let depth = 0, q = null;
+    for (let j = i; j < src.length; j++) {
+      const c = src[j];
+      if (q) { if (c === "\\") j++; else if (c === q) q = null; continue; }
+      if (c === '"' || c === "'" || c === "`") q = c;
+      else if (c === "/" && src[j + 1] === "/") { const e = src.indexOf("\n", j); if (e === -1) return -1; j = e; }
+      else if (c === "/" && src[j + 1] === "*") { const e = src.indexOf("*/", j + 2); if (e === -1) return -1; j = e + 1; }
+      else if ("([{".includes(c)) depth++;
+      else if (")]}".includes(c) && --depth === 0) return j;
+    }
+    return -1;
+  };
+  // Index of the next top-level ',' starting a new declarator, or -1 at ';', newline or EOF.
+  const nextDecl = (i) => {
+    let depth = 0, q = null;
+    for (let j = i; j < src.length; j++) {
+      const c = src[j];
+      if (q) { if (c === "\\") j++; else if (c === q) q = null; continue; }
+      if (c === '"' || c === "'" || c === "`") q = c;
+      else if (c === "/" && src[j + 1] === "/") return -1;
+      else if (c === "/" && src[j + 1] === "*") { const e = src.indexOf("*/", j + 2); if (e === -1) return -1; j = e + 1; }
+      else if ("([{".includes(c)) depth++;
+      else if (")]}".includes(c)) depth--;
+      else if (depth === 0 && c === ",") return j;
+      else if (depth === 0 && (c === ";" || c === "\n")) return -1;
+    }
+    return -1;
+  };
+  for (const m of src.matchAll(/^[ \t]*export\b/gm)) {
+    let i = skip(m.index + m[0].length);
+    if (src[i] === "=") return null; // export =
+    // Peel modifiers: declare / abstract / async.
+    let w, p;
+    for (;;) {
+      [w, p] = ident(i);
+      if (w === "declare" || w === "abstract" || w === "async") i = p;
+      else break;
+    }
+    i = p;
+    if (w === "default") { names.add("default"); continue; }
+    if (w === null || w === "type") {
+      if (src[i] === "{") {
+        // export { ... } / export type { ... }, with or without `from "spec"`.
+        const end = closeIdx(i);
+        if (end === -1) continue;
+        for (const raw of splitTop(stripComments(src.slice(i + 1, end)))) {
+          const s = raw.trim().replace(/^type\s+/, "");
+          const as = /^[A-Za-z_$][\w$]*\s+as\s+([A-Za-z_$][\w$]*)$/.exec(s);
+          if (as) names.add(as[1]);
+          else if (/^[A-Za-z_$][\w$]*$/.test(s)) names.add(s);
+        }
+        continue;
+      }
+      if (src[i] === "*") {
+        // export * as NS from "spec" / export [type] * from "spec".
+        const [w2, j2] = ident(i + 1);
+        if (w2 === "as") {
+          const [ns] = ident(j2);
+          if (ns) names.add(ns);
+          continue;
+        }
+        if (w2 === "from") {
+          const [spec] = strLit(j2);
+          if (spec == null) continue;
+          if (!spec.startsWith(".") && !spec.startsWith("@/")) return null;
+          const target = ctx.resolve(file, spec);
+          if (!target) return null;
+          const sub = ctx.exports(target);
+          if (sub === null) return null;
+          for (const n of sub) if (n !== "default") names.add(n);
+        }
+        continue;
+      }
+      if (w === "type") {
+        // export type NAME = ... / NAME<...> = ...
+        const [nm, jn] = ident(i);
+        if (nm && (src[jn] === "=" || src[jn] === "<")) names.add(nm);
+      }
+      continue;
+    }
+    if (w === "const" || w === "let" || w === "var") {
+      let q = i;
+      for (let decl = 0;; decl++) {
+        const pk = skip(q);
+        if (src[pk] === "{" || src[pk] === "[") {
+          const end = closeIdx(pk);
+          if (end === -1) break;
+          patternNames(src.slice(pk + 1, end), names);
+          q = end + 1;
+        } else {
+          const [nm, jn] = ident(pk);
+          if (!nm) break;
+          if (decl === 0 && nm === "enum") { // export const enum X
+            const [nm2] = ident(jn);
+            if (nm2) names.add(nm2);
+            break;
+          }
+          names.add(nm);
+          q = jn;
+        }
+        const nx = nextDecl(q);
+        if (nx === -1) break;
+        q = nx + 1;
+      }
+      continue;
+    }
+    if (w === "function" || w === "class" || w === "interface" || w === "enum" ||
+        w === "namespace" || w === "module") {
+      const [nm] = ident(w === "function" && src[i] === "*" ? i + 1 : i);
+      if (nm) names.add(nm);
+    }
+  }
+  return names;
+}
 const ctx = {
   changed: files,
   deleted,
@@ -97,6 +291,19 @@ const ctx = {
       specCache.set(file, out);
     }
     return specCache.get(file);
+  },
+  // Exported names of a module ("default" for a default export, alias side for `as`), or null when
+  // they cannot be known: non-code/missing file, `export =`, or an `export *` whose specifier is
+  // external, unresolvable or a target whose own exports are null. Computed once per file; while a
+  // file's set is being computed a re-entrant `export *` call for it contributes no names.
+  exports(file) {
+    if (exportOpen.has(file)) return NO_EXPORTS;
+    if (!exportCache.has(file)) {
+      exportOpen.add(file);
+      exportCache.set(file, moduleExports(file));
+      exportOpen.delete(file);
+    }
+    return exportCache.get(file);
   },
   // '@/' -> repo root; '.'/'..' -> importer's directory. Repo-relative path, whether or not it exists.
   rel(importer, spec) {

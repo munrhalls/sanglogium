@@ -39,7 +39,7 @@ export default async function HeroView({ heroData }: HeroProps) {
   } = getImageProps({
     ...commonImageProps,
     src: heroData.backgroundImage.asset?._id ?? "",
-    alt: heroData.backgroundImage.alt || "HeroView Image",
+    alt: heroData.backgroundImage.alt || "Hero Image",
   });
 
   const {
@@ -47,7 +47,7 @@ export default async function HeroView({ heroData }: HeroProps) {
   } = getImageProps({
     ...commonImageProps,
     src: mobileBackgroundImage.asset?._id ?? "",
-    alt: mobileBackgroundImage.alt || heroData.backgroundImage.alt || "HeroView Image",
+    alt: mobileBackgroundImage.alt || heroData.backgroundImage.alt || "Hero Image",
   });
 
   const desktopPosition = getPosition(heroData.backgroundImage);
