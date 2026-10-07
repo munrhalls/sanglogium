@@ -1,4 +1,5 @@
 import { scoreProduct, ROOT_CATEGORIES, rootCategoriesOf } from './searchScoring';
+import type { CategoryLookup } from '@/features/catalogue';
 import { computeCatalogueFacets, productMatchesState, sanitizeFilterState } from '@/features/product-filtering';
 import type { AutocompleteProduct, SearchProduct, SearchResult } from './searchTypes';
 import type {
@@ -12,10 +13,11 @@ const MAX_AUTOCOMPLETE = 6;
 
 export function rankAutocomplete(
   candidates: AutocompleteProduct[],
-  rawQuery: string
+  rawQuery: string,
+  lookup: CategoryLookup
 ): AutocompleteProduct[] {
   return (candidates ?? [])
-    .map((product) => ({ product, score: scoreProduct(product, rawQuery) }))
+    .map((product) => ({ product, score: scoreProduct(product, rawQuery, lookup) }))
     .sort((a, b) => b.score - a.score || a.product.name.localeCompare(b.product.name))
     .slice(0, MAX_AUTOCOMPLETE)
     .map(({ product }) => product);
@@ -30,6 +32,7 @@ export function buildSearchResult(input: {
   perPage: number;
   state?: ProductQueryState;
   category?: string;
+  lookup: CategoryLookup;
 }): SearchResult {
   const {
     matched,
@@ -40,6 +43,7 @@ export function buildSearchResult(input: {
     perPage: effectivePerPage,
     state,
     category,
+    lookup,
   } = input;
 
   // Filters: counts, price range and the filtered list all come from this one
@@ -54,7 +58,7 @@ export function buildSearchResult(input: {
   // Category narrowing scopes the counts, price range and list; the category
   // chips themselves are counted below over the un-narrowed set.
   const scoped = activeCategory
-    ? matched.filter((p) => rootCategoriesOf(p.catalogueLocationKeys).includes(activeCategory))
+    ? matched.filter((p) => rootCategoriesOf(p.catalogueLocationKeys, lookup).includes(activeCategory))
     : matched;
   if (state) {
     facets = computeCatalogueFacets(scoped as unknown as RawProduct[], state);
@@ -68,8 +72,9 @@ export function buildSearchResult(input: {
     categoryCounts = ROOT_CATEGORIES.map((c) => ({
       id: c.id,
       label: c.label,
-      count: acrossCategories.filter((p) => rootCategoriesOf(p.catalogueLocationKeys).includes(c.id))
-        .length,
+      count: acrossCategories.filter((p) =>
+        rootCategoriesOf(p.catalogueLocationKeys, lookup).includes(c.id)
+      ).length,
     }));
     const prices = scoped
       .map((p) => p.price_data?.unit_amount)
@@ -83,8 +88,8 @@ export function buildSearchResult(input: {
   const resultCount = state ? filtered.length : unfilteredCount;
 
   const byRelevance = (a: SearchProduct, b: SearchProduct) => {
-    const scoreA = scoreProduct(a, rawQuery);
-    const scoreB = scoreProduct(b, rawQuery);
+    const scoreA = scoreProduct(a, rawQuery, lookup);
+    const scoreB = scoreProduct(b, rawQuery, lookup);
     if (scoreB !== scoreA) return scoreB - scoreA;
     return a.name.localeCompare(b.name);
   };

@@ -6,8 +6,6 @@ import { getCategoryMetadata } from './adapters/sanity/getCategoryMetadata';
 import { getProductBySlug } from './adapters/sanity/getProductBySlug';
 import { getRelatedProducts } from './adapters/sanity/getRelatedProducts';
 import { getSitemapSlugs } from './adapters/sanity/getSitemapSlugs';
-import { addWishlistItem } from './adapters/sanity/addWishlistItem';
-import { removeWishlistItem } from './adapters/sanity/removeWishlistItem';
 import { getWishlistProductIdsByAuthId } from './adapters/sanity/getWishlistProductIdsByAuthId';
 import { getWishlistProducts } from './adapters/sanity/getWishlistProducts';
 import { createGetWishlistProductIds } from './queries/getWishlistProductIds';
@@ -19,7 +17,7 @@ import { getFilterFacets, getCategoryPriceRange } from '@/features/product-filte
 import type { CatalogPorts, WishlistPorts } from './core/ports';
 import type { ListingPorts } from './queries/getListingPage';
 
-export const catalog: CatalogPorts = {
+const catalog: CatalogPorts = {
   getProductsByVfsKeys,
   getProductsCount,
   getProductsChunk,
@@ -29,9 +27,7 @@ export const catalog: CatalogPorts = {
   getSitemapSlugs,
 };
 
-export const wishlist: WishlistPorts = {
-  addWishlistItem,
-  removeWishlistItem,
+const wishlist: WishlistPorts = {
   getWishlistProductIdsByAuthId,
   getWishlistProducts,
 };
@@ -51,18 +47,8 @@ export const getProductPage = createGetProductPage({ catalog, getWishlistProduct
 export const getProductMetadata = createGetProductMetadata({ catalog });
 export const getSitemapEntries = createGetSitemapEntries({ catalog });
 
-export { default as ListingPage } from './view/ListingPage';
-export { default as ProductPageView } from './view/ProductPage';
-export { default as WishlistPageView } from './view/WishlistPage';
+export { default as ListingView } from './view/ListingView';
+export { default as ProductView } from './view/ProductView';
+export { default as WishlistView } from './view/WishlistView';
 
-export {
-  getProductsByVfsKeys,
-  getProductsCount,
-  getProductsChunk,
-  getCategoryMetadata,
-  getProductBySlug,
-  getRelatedProducts,
-  getSitemapSlugs,
-  getWishlistProducts,
-};
-export type { CategoryMetadata, SitemapSlug, GetProductsOptions, PaginatedProducts } from './core/rules/productDataTypes';
+export { getWishlistProducts };

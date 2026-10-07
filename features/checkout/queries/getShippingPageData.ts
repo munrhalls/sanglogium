@@ -5,12 +5,12 @@ import type {
   CheckoutCatalog,
   ShippingRates,
 } from "@/features/checkout/core/ports";
-import type { AlleKurierShippingOption } from "@/features/checkout/core/rules/checkoutTypes";
-import { calculatePackages } from "@/features/checkout/core/rules/parcelCalculator";
-import { logCheckoutEvent } from "@/platform/utils/eventLogger";
+import type { ShippingOption } from "@/features/shipping";
+import { calculatePackages } from "@/features/shipping";
+import { logCheckoutEvent } from "@/features/checkout/core/rules/checkoutEvents";
 
 export type ShippingPageData =
-  | { kind: "ok"; shippingOptions: AlleKurierShippingOption[]; traceId: string }
+  | { kind: "ok"; shippingOptions: ShippingOption[]; traceId: string }
   | { kind: "error"; error: string; traceId: string };
 
 export async function getShippingPageData(ports: {
@@ -74,7 +74,7 @@ export async function getShippingPageData(ports: {
 
   // Call AlleKurier API
   const senderZip = process.env.SENDER_ADDRESS_DEFAULT_ZIP || "00-001";
-  const allekurierPayload = {
+  const ratesInput = {
     fromCountry: "PL",
     fromZip: senderZip,
     toCountry: session.address.regionCode,
@@ -82,16 +82,13 @@ export async function getShippingPageData(ports: {
     packages,
   };
 
-  await logCheckoutEvent({ correlationId: traceId, slice: 'address-submit', event: 'shipping_allekurier_request', data: { payload: allekurierPayload, packageCount: packages.length, totalWeight: packages.reduce((sum, p) => sum + p.weight, 0) }, outcome: 'success' });
+  await logCheckoutEvent({ correlationId: traceId, slice: 'address-submit', event: 'shipping_allekurier_request', data: { payload: ratesInput, packageCount: packages.length, totalWeight: packages.reduce((sum, p) => sum + p.weight, 0) }, outcome: 'success' });
 
-  const rates = await ports.shipping.fetchAlleKurierRates(allekurierPayload, traceId);
+  const shippingOptions = await ports.shipping.fetchShippingOptions(ratesInput, traceId);
 
-  console.log("[SHIPPING PAGE] AlleKurier rates:", rates.length);
+  console.log("[SHIPPING PAGE] AlleKurier rates:", shippingOptions.length);
 
-  await logCheckoutEvent({ correlationId: traceId, slice: 'address-submit', event: 'shipping_allekurier_response', data: { rateCount: rates.length, rates: rates.map(r => ({ carrier: r.Carrier.name, service: r.Service.name, price: r.Order.gross })) }, outcome: 'success' });
-
-  // Transform to shipping options
-  const shippingOptions = rates.map(ports.shipping.transformAlleKurierToShippingOption);
+  await logCheckoutEvent({ correlationId: traceId, slice: 'address-submit', event: 'shipping_allekurier_response', data: { rateCount: shippingOptions.length, rates: shippingOptions.map((o) => ({ carrier: o.provider, service: o.servicelevel.name, price: o.amount })) }, outcome: 'success' });
 
   return { kind: "ok", shippingOptions, traceId };
 }

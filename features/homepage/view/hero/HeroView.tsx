@@ -1,0 +1,122 @@
+import { getImageProps } from 'next/image';
+import Link from "next/link";
+import { cn } from "@/platform/utils/tailwind";
+import { HeroData, SanityImage } from "@/features/homepage/core/rules/heroTypes";
+import { HeroQualityBar } from "@/features/homepage/ui/hero/HeroQualityBar";
+
+interface HeroProps {
+  heroData: HeroData | null;
+}
+
+export default async function HeroView({ heroData }: HeroProps) {
+  if (!heroData?.backgroundImage || !heroData?.headline) {
+    return null;
+  }
+
+  const mobileBackgroundImage = heroData.mobileBackgroundImage || heroData.backgroundImage;
+
+  const getPosition = (image: SanityImage) => {
+    const x = image.hotspot?.x ? image.hotspot.x * 100 : 50;
+    const y = image.hotspot?.y ? image.hotspot.y * 100 : 50;
+    return `${x}% ${y}%`;
+  };
+
+  // Generate blur placeholder from Sanity LQIP
+  const blurDataURL = mobileBackgroundImage.asset?.metadata?.lqip || undefined;
+
+  const commonImageProps = {
+    fill: true,
+    priority: true,
+    fetchPriority: 'high' as const,
+    quality: 75,
+    sizes: '100vw',
+    placeholder: blurDataURL ? ("blur" as const) : ("empty" as const),
+    blurDataURL,
+  };
+
+  const {
+    props: { srcSet: desktopSrcSet },
+  } = getImageProps({
+    ...commonImageProps,
+    src: heroData.backgroundImage.asset?._id ?? "",
+    alt: heroData.backgroundImage.alt || "HeroView Image",
+  });
+
+  const {
+    props: { srcSet: mobileSrcSet, ...rest },
+  } = getImageProps({
+    ...commonImageProps,
+    src: mobileBackgroundImage.asset?._id ?? "",
+    alt: mobileBackgroundImage.alt || heroData.backgroundImage.alt || "HeroView Image",
+  });
+
+  const desktopPosition = getPosition(heroData.backgroundImage);
+  const mobilePosition = getPosition(mobileBackgroundImage);
+  const ctaLink = heroData.ctaLink || "/products";
+
+  return (
+    <section
+      className={cn("relative w-full overflow-hidden", "bg-black text-white",
+        "h-[calc(100dvh-var(--mobile-header-h)-var(--mobile-menu-h))]",
+        "lg:h-[calc(100dvh-var(--desktop-header-h)-var(--desktop-catalogue-nav-h))]",
+        "min-h-[80vh]"
+      )}
+    >
+        <div className="absolute inset-0 z-0">
+          <picture>
+            <source media="(min-width: 768px)" srcSet={desktopSrcSet} />
+            <img
+              {...rest}
+              srcSet={mobileSrcSet}
+              className="object-cover rounded-none max-md:[object-position:var(--mobile-pos)] md:[object-position:var(--desktop-pos)]"
+              style={{ ...rest.style, '--desktop-pos': desktopPosition, '--mobile-pos': mobilePosition } as React.CSSProperties}
+            />
+          </picture>
+
+          <div
+            className={cn(
+              "absolute inset-0",
+              "bg-gradient-to-r from-black/60 via-black/20 to-transparent"
+            )}
+          />
+        </div>
+
+        <div
+          className={cn(
+            "relative z-10 h-full w-full",
+            "px-[clamp(1.5rem,5vw,8rem)] max-lg:landscape:px-6",
+            "flex flex-col justify-center lg:justify-start lg-touch:items-start lg-desktop:items-start",
+            "gap-6 lg:pt-[22vh]"
+          )}
+        >
+          <div
+            className={cn(
+              "flex max-w-xl flex-col items-start gap-3 md:gap-5",
+              "max-w-xl w-full",
+              "landscape:max-w-full lg-touch:landscape:max-w-4xl lg-desktop:landscape:max-w-4xl",
+            )}
+          >
+            <div className="flex flex-col gap-2">
+              <h1 className="type-hero-headline uppercase text-[clamp(2rem,4vw_+_1.25rem,2.875rem)] lg:text-[clamp(2.75rem,1.5vw_+_2rem,4.5rem)]">
+                {heroData.headline}
+              </h1>
+              <p className="type-hero-sub m-0 p-0 font-light lg:text-[clamp(1.125rem,0.4vw_+_1rem,1.5rem)]">
+                {heroData.subheadline || "Curated by audio engineers"}
+              </p>
+            </div>
+
+            <Link
+              href={ctaLink}
+              className={cn(
+                "btn-primary px-6 lg:px-10 py-4 lg:py-5",
+                "text-[0.9375rem] lg:text-cta-hero font-bold uppercase"
+              )}
+            >
+              {heroData.ctaText || "Shop the Collection"}
+            </Link>
+          </div>
+        </div>
+      <HeroQualityBar />
+    </section>
+  );
+}

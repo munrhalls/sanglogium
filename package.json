@@ -17,7 +17,7 @@
     "ts-check": "tsc --noEmit --pretty",
     "ts-check:watch": "tsc --noEmit --watch",
     "analyze": "ANALYZE=true npm run build",
-    "commit": "bash scripts/commit.sh"
+    "commit": "bash tools/commit.sh"
   },
   "dependencies": {
     "@better-auth/kysely-adapter": "1.6.11",

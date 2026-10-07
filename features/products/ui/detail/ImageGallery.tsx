@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
-import { sanityImageLoader } from '@/platform/db/imageLoader';
+import { sanityImageLoader } from '@/platform/sanity/imageLoader';
 
 interface ImageGalleryProps {
   images: any[];

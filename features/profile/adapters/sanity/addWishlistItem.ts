@@ -1,0 +1,12 @@
+import "server-only";
+import { backendClient } from "@/platform/sanity/backendClient";
+
+// productId must already be validated by the caller (isValidProductId in the products slice productId rules).
+export async function addWishlistItem(profileId: string, productId: string): Promise<void> {
+  await backendClient
+    .patch(profileId)
+    .setIfMissing({ wishlist: [] })
+    .unset([`wishlist[_ref == "${productId}"]`])
+    .append("wishlist", [{ _type: "reference", _ref: productId }])
+    .commit();
+}

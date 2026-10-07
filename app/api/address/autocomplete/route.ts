@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { placesAutocomplete } from "@/features/checkout/server";
+import { suggestAddresses } from "@/features/address/server";
 
 export const runtime = "nodejs";
 
@@ -14,6 +14,6 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ results: [] });
   }
 
-  const results = await placesAutocomplete(q);
+  const results = await suggestAddresses(q);
   return NextResponse.json({ results });
 }

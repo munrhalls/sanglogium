@@ -1,5 +1,5 @@
 import Link from "next/link";
-import AddressesClient from "@/features/account/ui/AddressesClient";
+import Addresses from "@/features/account/ui/Addresses";
 import type { SavedAddress } from "@/features/account/core/rules/accountTypes";
 
 export default function AddressesView({
@@ -11,7 +11,7 @@ export default function AddressesView({
     <div className="p-6">
       <h1 className="mb-4 text-2xl font-bold">My Addresses</h1>
       <p className="mb-4">Manage your saved addresses for faster checkout.</p>
-      <AddressesClient addresses={addresses} />
+      <Addresses addresses={addresses} />
       <Link href="/account" className="mt-4 inline-block text-blue-600 underline">
         Back to Account
       </Link>

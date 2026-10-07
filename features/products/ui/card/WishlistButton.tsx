@@ -3,9 +3,9 @@
 import { useState, useTransition } from "react";
 import { usePathname } from "next/navigation";
 import { Heart } from "@phosphor-icons/react/dist/ssr";
-import { authClient } from "@/features/auth";
-import { addToWishlist } from "@/features/products/commands/addToWishlist";
-import { removeFromWishlist } from "@/features/products/commands/removeFromWishlist";
+import { useIsSignedIn } from "@/features/auth";
+import { addToWishlistAction } from "@/features/products/commands/addToWishlistAction";
+import { removeFromWishlistAction } from "@/features/products/commands/removeFromWishlistAction";
 
 interface WishlistButtonProps {
   productId: string;
@@ -39,12 +39,10 @@ export function WishlistButton({
   className = "",
   variant = "default",
 }: WishlistButtonProps) {
-  const { data: sessionData } = authClient.useSession();
+  const isSignedIn = useIsSignedIn();
   const [inWishlist, setInWishlist] = useState(initiallyInWishlist);
   const [isPending, startTransition] = useTransition();
   const pathname = usePathname();
-
-  const isSignedIn = !!sessionData?.session;
 
   async function handleClick(e: React.MouseEvent) {
     e.preventDefault();
@@ -58,7 +56,7 @@ export function WishlistButton({
     const next = !inWishlist;
 
     startTransition(async () => {
-      const result = next ? await addToWishlist(productId) : await removeFromWishlist(productId);
+      const result = next ? await addToWishlistAction(productId) : await removeFromWishlistAction(productId);
       if (result && "success" in result && result.success) {
         setInWishlist(next);
       }

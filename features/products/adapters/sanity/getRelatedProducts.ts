@@ -1,5 +1,5 @@
 import "server-only";
-import { sanityFetch } from '@/platform/db/client';
+import { sanityFetch } from '@/platform/sanity/client';
 import groq from 'groq';
 import type { RelatedProduct } from '@/features/products/core/rules/productTypes';
 

@@ -1,5 +1,5 @@
 import "server-only";
-import { backendClient } from "@/platform/db/backendClient";
+import { backendClient } from "@/platform/sanity/backendClient";
 import type { Product } from "@/features/products/core/rules/productTypes";
 
 export async function getWishlistProducts(authId: string): Promise<Product[]> {

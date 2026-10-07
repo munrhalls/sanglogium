@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { Order } from "@/sanity.types";
+import type { OrderDetail } from "@/features/account/core/rules/accountTypes";
 import { formatPrice } from "@/platform/utils/price";
 
 function formatCurrency(amount: number | undefined, _currency?: string | undefined) {
@@ -16,8 +16,8 @@ function displayStatus(status: string | undefined) {
 }
 
 function formatAddress(
-  address: Order["shippingAddress"],
-  fallback?: Order["shippingAddress"]
+  address: OrderDetail["shippingAddress"],
+  fallback?: OrderDetail["shippingAddress"]
 ) {
   if (!address) {
     return fallback ? "Same as shipping" : "Not recorded";
@@ -35,7 +35,7 @@ function formatAddress(
   return parts.join("\n");
 }
 
-export default function OrderDetailView({ order }: { order: Order }) {
+export default function OrderDetailView({ order }: { order: OrderDetail }) {
   const pricing = order.pricing;
   const currency = pricing?.currency;
   const items = order.items || [];

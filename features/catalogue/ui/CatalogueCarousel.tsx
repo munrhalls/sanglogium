@@ -4,7 +4,7 @@ import { Carousel } from "@/platform/design/ui/carousel/CarouselRoot";
 import { CarouselTrack } from "@/platform/design/ui/carousel/CarouselTrack";
 import { CarouselSlide } from "@/platform/design/ui/carousel/CarouselSlide";
 
-import { CatalogueView } from "./CatalogueView";
+import { CategoryPanel } from "./CategoryPanel";
 import type { NavigationItem } from "@/features/catalogue/core/rules/catalogue";
 
 import { cn } from "@/platform/utils/tailwind";
@@ -34,7 +34,7 @@ export default function CatalogueCarousel({ catalogueDataRaw }: CatalogueCarouse
                   "flex flex-col group-data-[active=true]/animation-settle:opacity-100"
                 )}
               >
-                <CatalogueView data={item} />
+                <CategoryPanel data={item} />
               </div>
             </CarouselSlide>
           ))}

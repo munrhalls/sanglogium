@@ -1,12 +1,13 @@
 import "server-only";
 import { redirect } from "next/navigation";
-import type Stripe from "stripe";
 import type {
   CheckoutSessions,
   Orders,
   Payments,
 } from "@/features/checkout/core/ports";
-import { logCheckoutEvent } from "@/platform/utils/eventLogger";
+import type { PaymentMethodDetails } from "@/features/order";
+import type { PaymentSnapshot } from "@/features/checkout/core/rules/checkoutTypes";
+import { logCheckoutEvent } from "@/features/checkout/core/rules/checkoutEvents";
 
 export type SuccessPageResult =
   | { kind: "verificationFailed"; paymentIntentId: string }
@@ -14,7 +15,7 @@ export type SuccessPageResult =
       kind: "succeeded";
       paymentIntentId: string;
       amount: number;
-      latestCharge: Stripe.PaymentIntent["latest_charge"];
+      paymentMethod: PaymentMethodDetails | null;
     }
   | { kind: "declined"; message: string }
   | { kind: "canceled" }
@@ -60,37 +61,34 @@ export async function getSuccessPageResult(
   }
 
   // Verify PI status server-side (try/catch — never throw on catch, user already paid)
-  let pi: Stripe.PaymentIntent | null = null
+  let payment: PaymentSnapshot | null = null
   try {
-    pi = await ports.payments.retrievePaymentIntent(payment_intent)
+    payment = await ports.payments.retrievePayment(payment_intent)
   } catch {
     // Stripe API down — render recoverable error, same as verification_failed branch
     return { kind: 'verificationFailed', paymentIntentId: payment_intent }
   }
 
   // Succeeded branch
-  if (pi.status === 'succeeded') {
-    await logCheckoutEvent({ correlationId: traceId, slice: 'success-page', event: 'success_page_succeeded', data: { paymentIntentId: payment_intent, amount: pi.amount, sanityFallback: sanityOrderFallback }, outcome: 'success' });
-    return { kind: 'succeeded', paymentIntentId: pi.id, amount: pi.amount, latestCharge: pi.latest_charge }
+  if (payment.status === 'succeeded') {
+    await logCheckoutEvent({ correlationId: traceId, slice: 'success-page', event: 'success_page_succeeded', data: { paymentIntentId: payment_intent, amount: payment.amount, sanityFallback: sanityOrderFallback }, outcome: 'success' });
+    return { kind: 'succeeded', paymentIntentId: payment.id, amount: payment.amount, paymentMethod: payment.paymentMethod }
   }
 
-  await logCheckoutEvent({ correlationId: traceId, slice: 'success-page', event: 'success_page_status', data: { paymentIntentId: payment_intent, status: pi.status }, outcome: 'error' });
+  await logCheckoutEvent({ correlationId: traceId, slice: 'success-page', event: 'success_page_status', data: { paymentIntentId: payment_intent, status: payment.status }, outcome: 'error' });
 
   // Failed branch
-  if (pi.status === 'requires_payment_method') {
-    const declineMessage =
-      (pi as { last_payment_error?: { message?: string } }).last_payment_error?.message ??
-      'Payment was declined.'
-    return { kind: 'declined', message: declineMessage }
+  if (payment.status === 'requires_payment_method') {
+    return { kind: 'declined', message: payment.failureMessage ?? 'Payment was declined.' }
   }
 
   // Canceled branch
-  if (pi.status === 'canceled') {
+  if (payment.status === 'canceled') {
     return { kind: 'canceled' }
   }
 
   // Processing branch
-  if (pi.status === 'processing') {
+  if (payment.status === 'processing') {
     return { kind: 'processing', paymentIntentId: payment_intent }
   }
 

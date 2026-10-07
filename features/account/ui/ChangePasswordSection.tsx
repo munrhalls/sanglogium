@@ -1,8 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import { authClient } from "@/features/auth";
-import { requireFreshSession } from "@/features/account/state/requireFreshSession";
+import { changePassword, requireFreshSession } from "@/features/auth";
 
 export default function ChangePasswordSection() {
   const [changeState, changeAction, changePending] = useActionState(
@@ -18,7 +17,7 @@ export default function ChangePasswordSection() {
         return { error: "New passwords do not match." };
       }
 
-      const result = await authClient.changePassword({
+      const result = await changePassword({
         currentPassword,
         newPassword,
         revokeOtherSessions: true,

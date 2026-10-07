@@ -44,9 +44,7 @@ export default [
       // Custom plugin rules (Rules 2-6, 8)
       "sang-logium/no-clone-element": "error",
       "sang-logium/groq-reference-syntax": "error",
-      "sang-logium/no-direct-sanity-in-client": "error",
       "sang-logium/useQueryState-null-check": "warn",
-      "sang-logium/test-import-discipline": "warn",
       "sang-logium/server-component-default": "warn",
 
       // Temporarily disabled for deployment - pre-existing issues

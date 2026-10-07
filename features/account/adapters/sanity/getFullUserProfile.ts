@@ -1,5 +1,5 @@
 import "server-only";
-import { backendClient } from "@/platform/db/backendClient";
+import { backendClient } from "@/platform/sanity/backendClient";
 
 export async function getFullUserProfile(authId: string): Promise<Record<string, unknown> | null> {
   return backendClient.fetch<Record<string, unknown> | null>(

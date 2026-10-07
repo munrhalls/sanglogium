@@ -20,11 +20,11 @@ export function getIemProductsBySlugs(slugs: string[]): Promise<IemProduct[]> {
   return getHomepageIems(homepageSource, slugs);
 }
 
-export { default as HomePage } from './view/HomePage';
-export { default as Hero } from './view/hero/Hero';
-export { default as Featured, FeaturedCard } from './view/featured/Featured';
-export { default as ProductSpotlightMediaLeft } from './view/product-spotlight-media-left/ProductSpotlightMediaLeft';
-export { default as ProductSpotlightMediaRight } from './view/product-spotlight-media-right/ProductSpotlightMediaRight';
-export { default as NewestRelease } from './view/newest-release/NewestRelease';
-export { default as Dacs } from './view/dacs/Dacs';
-export { default as Accessories } from './view/accessories/Accessories';
+export { default as HomepageView } from './view/HomepageView';
+export { default as HeroView } from './view/hero/HeroView';
+export { default as FeaturedView, FeaturedCard } from './view/featured/FeaturedView';
+export { default as ProductSpotlightMediaLeftView } from './view/product-spotlight-media-left/ProductSpotlightMediaLeftView';
+export { default as ProductSpotlightMediaRightView } from './view/product-spotlight-media-right/ProductSpotlightMediaRightView';
+export { default as NewestReleaseView } from './view/newest-release/NewestReleaseView';
+export { default as DacsView } from './view/dacs/DacsView';
+export { default as AccessoriesView } from './view/accessories/AccessoriesView';

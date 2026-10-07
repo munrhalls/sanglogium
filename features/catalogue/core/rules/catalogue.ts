@@ -81,6 +81,11 @@ export interface NavigationItem {
   feature: { caption: string };
 }
 
+export interface CategoryLookup {
+  parentById: Record<string, string>;
+  idBySlug: Record<string, string>;
+}
+
 // Transform VFS tree to navigation format
 export const catalogueToNavigation = (tree: CatalogueTree): NavigationItem[] => {
   return tree.map(rootItem => {

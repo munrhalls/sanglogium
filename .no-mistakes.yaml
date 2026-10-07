@@ -11,15 +11,18 @@ product_surface:
   - path: app/api
     kind: api
     drives: Route handlers consumed by the storefront and webhooks (Stripe, etc.).
-  - path: features/checkout/actions.ts
+  - path: features/account/commands
     kind: api
-    drives: Checkout Server Actions - session init, address validation and shipping saves invoked from the storefront UI.
-  - path: features/products/actions.ts
+    drives: Account Server Actions (commands/*Action.ts) - profile name, marketing preferences and address book changes from the signed-in account pages.
+  - path: features/checkout/commands
     kind: api
-    drives: Wishlist Server Actions - add or remove a product from the signed-in user's wishlist from the heart button.
-  - path: features/account/actions.ts
+    drives: Checkout Server Actions (commands/*Action.ts) - session init, address check and shipping saves from the storefront.
+  - path: features/products/commands
     kind: api
-    drives: Account Server Actions - profile name, marketing preferences and address book changes invoked from the signed-in account pages.
+    drives: Wishlist Server Actions (commands/*Action.ts) - add or remove a product from the signed-in user's wishlist.
+  - path: features/product-search/commands
+    kind: api
+    drives: Search suggestions Server Action (commands/fetchSearchSuggestionsAction.ts) - header autocomplete.
 
 test:
   instructions: |
@@ -31,15 +34,15 @@ test:
     page(s) in a real browser, and drive the actual customer journey affected
     (e.g. type a query into search, follow it to /search, page through results,
     open a product). For app/(admin) or app/(studio): same, against that
-    surface's own pages. For app/api or app/actions: exercise the changed
+    surface's own pages. For app/api or a Server Action (features/<slice>/commands/<name>Action.ts): exercise the changed
     route/action for real (a real request/invocation), not a source-code read.
 
-    For a PR that moves or edits code under features/<name>/ui, app/components/ or shared/ (an organization-only refactor): no behaviour change is expected. Open the storefront pages that render the moved components (for example the home page for homepage sections, /products and a product page for product components, /basket for basket components) and confirm they look and behave as before.
+    For a PR that moves or edits code under features/<slice>/ui, features/<slice>/view or platform/design/ui (an organization-only refactor): no behaviour change is expected. Open the storefront pages that render the moved components (for example the home page for homepage sections, /products and a product page for product components, /basket for basket components) and confirm they look and behave as before.
 
-    For a PR that touches features/<name>/actions.ts: invoke the action for real from the UI that uses it (a real form submit or click), not a source-code read, and confirm the data change.
+    For a PR that touches features/<slice>/commands/<name>Action.ts: invoke the action for real from the UI that uses it (a real form submit or click), not a source-code read, and confirm the data change.
 
 
 ignore_patterns:
   - node_modules/**
   - .next/**
-  - sanity-cms/**/*.types.ts
+  - sanity.types.ts

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { logCheckoutEvent } from '@/platform/utils/eventLogger';
+import { recordCheckoutTrace } from '@/features/checkout/server';
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,17 +14,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'step is required' }, { status: 400 });
     }
 
-    // Unconditional console log — guaranteed visibility in the server terminal
-    // regardless of LOG_LEVEL (eventLogger is gated and swallows 'log' by default).
-    console.log(`[TRACE] ${step} (${traceId})`, JSON.stringify(data || {}));
-
-    await logCheckoutEvent({
-      correlationId: traceId,
-      slice: 'payment-submit',
-      event: step,
-      data: data || {},
-      outcome: 'success',
-    });
+    await recordCheckoutTrace({ traceId, step, data });
 
     return NextResponse.json({ success: true });
   } catch (error) {

@@ -1,6 +1,6 @@
 import "server-only";
 import { cache } from 'react';
-import { sanityFetch } from '@/platform/db/client';
+import { sanityFetch } from '@/platform/sanity/client';
 import groq from 'groq';
 import type { ProductDetailData as Product } from '@/features/products/core/rules/productTypes';
 

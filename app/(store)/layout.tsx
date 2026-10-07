@@ -5,9 +5,10 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 
 // Global Components
-import { StoreShell } from "@/features/shell/server";
+import { StoreShellView } from "@/features/shell/server";
 import GoogleAnalytics from "@/platform/analytics/GoogleAnalytics";
 import { getCatalogueForNavigation } from "@/features/catalogue/server";
+import { hasSessionCookie } from "@/features/auth/server";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -42,6 +43,7 @@ export default async function RootLayout({
 }>) {
   // Get catalogue data from pre-built VFS
   const catalogueDataRaw = { catalogue: getCatalogueForNavigation() };
+  const isAuthenticated = await hasSessionCookie();
 
   return (
     <html lang="en" className={cn(montserrat.variable, "antialiased")}>
@@ -58,7 +60,7 @@ export default async function RootLayout({
           "selection:bg-brand-accent-600 selection:text-brand-800"
         )}
       >
-        <StoreShell catalogueDataRaw={catalogueDataRaw}>{children}</StoreShell>
+        <StoreShellView catalogueDataRaw={catalogueDataRaw} isAuthenticated={isAuthenticated}>{children}</StoreShellView>
         <GoogleAnalytics />
       </body>
     </html>

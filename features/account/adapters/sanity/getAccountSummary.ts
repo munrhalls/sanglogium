@@ -1,5 +1,5 @@
 import "server-only";
-import { backendClient } from "@/platform/db/backendClient";
+import { backendClient } from "@/platform/sanity/backendClient";
 import type { AccountSummary } from "@/features/account/core/rules/accountTypes";
 
 export async function getAccountSummary(authId: string): Promise<AccountSummary | null> {

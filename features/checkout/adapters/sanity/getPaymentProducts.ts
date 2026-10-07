@@ -1,5 +1,5 @@
 import "server-only";
-import { client } from "@/platform/db/client";
+import { client } from "@/platform/sanity/client";
 import groq from "groq";
 
 import type { PaymentProduct } from "@/features/checkout/core/rules/checkoutTypes";

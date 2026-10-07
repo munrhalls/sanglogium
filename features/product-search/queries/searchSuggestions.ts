@@ -1,4 +1,4 @@
-import { normalizeText, deriveSpacedQuery } from '@/features/product-search/core/rules/searchScoring';
+import { normalizeText, deriveSpacedQuery } from '@/features/product-search/core/rules/searchText';
 import { rankAutocomplete } from '@/features/product-search/core/rules/searchResults';
 import type { AutocompleteProduct } from '@/features/product-search/core/rules/searchTypes';
 import type { SearchSource } from '@/features/product-search/core/ports';
@@ -19,7 +19,7 @@ export async function getSearchSuggestions(
 
   try {
     const candidates = await source.fetchAutocompleteCandidates(searchTerm, spacedTerm);
-    return rankAutocomplete(candidates ?? [], rawQuery);
+    return rankAutocomplete(candidates ?? [], rawQuery, source.getCategoryLookup());
   } catch (error) {
     console.error(`[searchProductsAutocomplete] Failed for query "${query}":`, error);
     return [];

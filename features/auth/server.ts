@@ -1,15 +1,12 @@
 import 'server-only';
-// Server-only entry: the auth instance, the session guards and the provider flag. Never import from client components or Node .mjs scripts.
+// Server-only entry: session guards, the auth route handlers, account name updates and the provider flag. Never import from client components or Node .mjs scripts.
 import { createAuth } from './adapters/better-auth/auth';
 import { createSessionReaders } from './adapters/better-auth/session';
+import { createRouteHandlers, createUserNameUpdater } from './adapters/better-auth/serverApi';
 import type { UserProfiles, OrderLifecycle, AuthEmails } from './core/ports';
-import { createUserProfileIfMissing } from './adapters/sanity/createUserProfileIfMissing';
-import { syncUserProfile } from './adapters/sanity/syncUserProfile';
-import { deleteUserProfile } from './adapters/sanity/deleteUserProfile';
-import { getProfileIdByAuthId } from './adapters/sanity/getProfileIdByAuthId';
-import { anonymizeUserOrders } from './adapters/sanity/anonymizeUserOrders';
+import { createUserProfileIfMissing, syncUserProfile, deleteUserProfile, getProfileIdByAuthId } from '@/features/profile/server';
 import { hasOpenOrders } from './adapters/sanity/hasOpenOrders';
-import { mergeGuestOrdersByEmail } from './adapters/sanity/mergeGuestOrders';
+import { anonymizeUserOrders, mergeGuestOrders } from '@/features/order/server';
 import {
   sendVerificationEmail,
   sendResetPasswordEmail,
@@ -26,7 +23,7 @@ const profiles: UserProfiles = {
 const orders: OrderLifecycle = {
   anonymizeUserOrders,
   hasOpenOrders,
-  mergeGuestOrders: mergeGuestOrdersByEmail,
+  mergeGuestOrders,
 };
 
 const emails: AuthEmails = {
@@ -35,9 +32,12 @@ const emails: AuthEmails = {
   sendDeleteAccountVerification,
 };
 
-export const auth = createAuth({ profiles, orders, emails });
+const auth = createAuth({ profiles, orders, emails });
+
+export const authRouteHandlers = createRouteHandlers(auth);
+export const updateUserName = createUserNameUpdater(auth);
 
 const { getSession, requireSession, verifySession } = createSessionReaders(auth, profiles);
 export { getSession, requireSession, verifySession };
+export { hasSessionCookie } from './adapters/better-auth/serverApi';
 export { isGoogleAuthEnabled } from './adapters/better-auth/providers';
-export { getProfileIdByAuthId } from './adapters/sanity/getProfileIdByAuthId';

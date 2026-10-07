@@ -1,25 +1,23 @@
-import type Stripe from "stripe";
+import type { ShippingOption, ShippingRatesInput } from "@/features/shipping";
 import type {
-  Address,
-  ServerResponse,
-  CheckoutSession,
-  AlleKurierService,
-  AlleKurierRatesInput,
-  AlleKurierShippingOption,
-  TerytVerifyInput,
-  TerytVerifyResult,
-  AutocompleteResult,
-  OrderForSuccessPage,
+  CreateOrderResult,
+  OrderConfirmationEmailData,
   OrderSessionData,
+  PaidPayment,
+} from "@/features/order";
+import type {
+  CheckoutSession,
+  OrderForSuccessPage,
   PaymentProduct,
   CheckoutProduct,
-  OrderConfirmationEmailData,
-  CreateOrderResult,
+  PaymentSnapshot,
+  PaymentHandle,
+  PaymentEvent,
 } from "./rules/checkoutTypes";
 
 export type Orders = {
-  createOrderFromPaymentIntent: (
-    pi: Stripe.PaymentIntent,
+  createOrderFromPayment: (
+    payment: PaidPayment,
     sessionData?: OrderSessionData
   ) => Promise<CreateOrderResult>;
   getOrderByPaymentIntentId: (
@@ -35,25 +33,8 @@ export type CheckoutCatalog = {
   ) => Promise<{ _id: string; price_data: { unit_amount: number } | null }[]>;
 };
 
-export type ShippingRates = {
-  fetchAlleKurierRates: (
-    input: AlleKurierRatesInput,
-    traceId?: string
-  ) => Promise<AlleKurierService[]>;
-  transformAlleKurierToShippingOption: (
-    service: AlleKurierService
-  ) => AlleKurierShippingOption;
-};
+export type ShippingRates = { fetchShippingOptions: (input: ShippingRatesInput, traceId?: string) => Promise<ShippingOption[]> };
 
-export type AddressValidation = {
-  verifyPolishAddress: (input: TerytVerifyInput) => Promise<TerytVerifyResult>;
-  validateWithGoogle: (
-    input: Address,
-    normalizedInput: string,
-    acceptAsEntered: () => ServerResponse
-  ) => Promise<ServerResponse>;
-  placesAutocomplete: (q: string) => Promise<AutocompleteResult[]>;
-};
 
 export type CheckoutSessionHandle = CheckoutSession & {
   save: () => Promise<void>;
@@ -65,24 +46,23 @@ export type CheckoutSessions = {
 };
 
 export type Payments = {
-  stripe: Stripe;
-  retrievePaymentIntent: (paymentIntentId: string) => Promise<Stripe.PaymentIntent>;
-  constructWebhookEvent: (
+  retrievePayment: (paymentId: string) => Promise<PaymentSnapshot>;
+  parseWebhookEvent: (
     rawBody: string,
     signature: string,
     secret: string
-  ) => Stripe.Event;
-  updatePaymentIntentAmount: (
-    paymentIntentId: string,
+  ) => PaymentEvent;
+  updatePaymentAmount: (
+    paymentId: string,
     amount: number,
     metadata: Record<string, string>,
     idempotencyKey: string
-  ) => Promise<Stripe.PaymentIntent>;
-  createPaymentIntentForAmount: (
+  ) => Promise<PaymentHandle>;
+  createPayment: (
     amount: number,
     metadata: Record<string, string>,
     idempotencyKey: string
-  ) => Promise<Stripe.PaymentIntent>;
+  ) => Promise<PaymentHandle>;
 };
 
 export type OrderEmails = {

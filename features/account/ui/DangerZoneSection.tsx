@@ -1,9 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { authClient } from "@/features/auth";
-import { signOut } from "@/features/auth";
-import { requireFreshSession } from "@/features/account/state/requireFreshSession";
+import { deleteAccount, requireFreshSession, signOut } from "@/features/auth";
 
 export default function DangerZoneSection() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
@@ -29,7 +27,7 @@ export default function DangerZoneSection() {
 
     const password = formData.get("password") as string;
 
-    const result = await authClient.deleteUser({ password });
+    const result = await deleteAccount({ password });
 
     if (result.error) {
       setDeleteError(result.error.message ?? null);

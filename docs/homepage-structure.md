@@ -19,22 +19,22 @@ If a fact here contradicts the code, the code wins — re-verify after any large
 
 | Section | File | Data prop |
 |---|---|---|
-| Hero | `features/homepage/ui/hero/Hero.tsx` | `data.hero` |
+| Hero | `features/homepage/view/hero/HeroView.tsx` | `data.hero` |
 | TrustBar | `features/homepage/ui/trust-bar/TrustBar.tsx` | none (static) |
-| Featured | `features/homepage/ui/featured/` | `data.featured` |
-| ProductSpotlightMediaLeft / MediaRight / Fractal | `features/homepage/ui/product-spotlight-{media-left,media-right,fractal}/` | `data.spotlight{1,2,3}` |
+| Featured | `features/homepage/view/featured/FeaturedView.tsx` | `data.featured` |
+| ProductSpotlightMediaLeft / MediaRight / Fractal | `features/homepage/view/product-spotlight-{media-left,media-right}/ and features/homepage/ui/product-spotlight-fractal/` | `data.spotlight{1,2,3}` |
 | IemsGallery | `features/homepage/ui/iems-gallery/IemsGallery.tsx` | `iemsData` (call #2) |
-| NewestRelease | `features/homepage/ui/newest-release/NewestRelease.tsx` | `data.newestRelease` |
-| Dacs | `features/homepage/ui/dacs/Dacs.tsx` | `data.dacs` |
-| Accessories | `features/homepage/ui/accessories/Accessories.tsx` (+ `CategorySection.tsx`) | `data.accessories.{cables,interconnects,adapters,earpads,eartips,careCleaning,storage}` |
+| NewestRelease | `features/homepage/view/newest-release/NewestReleaseView.tsx` | `data.newestRelease` |
+| Dacs | `features/homepage/view/dacs/DacsView.tsx` | `data.dacs` |
+| Accessories | `features/homepage/view/accessories/AccessoriesView.tsx` (+ `CategorySection.tsx`) | `data.accessories.{cables,interconnects,adapters,earpads,eartips,careCleaning,storage}` |
 
-Every section except Hero and TrustBar is wrapped in `Shelf` (`features/shell/ui/shelf/Shelf.tsx`) in `page.tsx`, with a `spacing` prop and optional `fullBleed`.
+Every section except Hero and TrustBar is wrapped in `Shelf` (`platform/design/ui/Shelf.tsx`) in `features/homepage/view/HomepageView.tsx`, with a `spacing` prop and optional `fullBleed`.
 
 ## Cards — bespoke per section, NOT shared
 
 There is no shared homepage product card. Each section has its own:
 
-- Featured → `FeaturedCard` in `features/homepage/ui/featured/Featured.tsx`
+- Featured → `FeaturedCard` in `features/homepage/view/featured/FeaturedView.tsx`
 - IemsGallery → `features/homepage/ui/iems-gallery/IemCard.tsx`
 - Dacs → `features/homepage/ui/dacs/DacCard.tsx`
 - Accessories → `features/homepage/ui/accessories/AccessoryCard.tsx`
@@ -58,7 +58,7 @@ The card components themselves (`Card`, `IemCard`, `DacCard`, `AccessoryCard`) a
 No section component or card owns Zustand / `nuqs` state. Cards delegate:
 
 - basket add/remove → `BasketControls` (`features/basket/ui/BasketControls.tsx`)
-- wishlist toggle → `WishlistButton` (`features/products/ui/WishlistButton.tsx`)
+- wishlist toggle → `WishlistButton` (`features/products/ui/card/WishlistButton.tsx`)
 
 A "add to basket from the homepage" bug is in `BasketControls`, not the section or card.
 

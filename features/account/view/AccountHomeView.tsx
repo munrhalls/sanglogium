@@ -1,5 +1,5 @@
 import Link from "next/link";
-import AccountActionsClient from "@/features/account/ui/AccountActionsClient";
+import AccountActions from "@/features/account/ui/AccountActions";
 
 interface AccountHomeViewProps {
   name: string;
@@ -42,7 +42,7 @@ export default function AccountHomeView({
           My Wishlist
         </Link>
       </nav>
-      <AccountActionsClient
+      <AccountActions
         name={name}
         email={email}
         shouldClearMergeFlag={showMergeBanner}

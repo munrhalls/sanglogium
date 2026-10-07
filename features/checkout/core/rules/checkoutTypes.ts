@@ -1,28 +1,5 @@
-export type Address = {
-  firstName: string;
-  lastName: string;
-  phone: string;
-  regionCode: string;
-  postalCode: string;
-  street: string;
-  streetNumber: string;
-  city: string;
-};
 
-export type Status = "LOADING" | "FIX" | "CONFIRM" | "ACCEPT";
-
-export type ServerResponse = {
-  status: Status;
-  address?: Address;
-  geocode?: {
-    location: {
-      latitude: number;
-      longitude: number;
-    };
-  };
-  placeId?: string;
-  errors?: Record<string, string>;
-};
+import type { PaymentMethodDetails } from '@/features/order';
 
 export type ServerProduct = {
   _id: string;
@@ -49,60 +26,7 @@ export type CheckoutProduct = {
   };
 };
 
-export interface AlleKurierService {
-  Carrier: {
-    code: string;
-    name: string;
-  };
-  Service: {
-    code: string;
-    name: string;
-  };
-  Order: {
-    net: number;
-    gross: number;
-  };
-  Time: {
-    days: string;
-    description: string;
-  };
-}
 
-export interface AlleKurierRatesInput {
-  fromCountry: string;
-  fromZip: string;
-  toCountry: string;
-  toZip: string;
-  packages: Array<{
-    width: number;
-    height: number;
-    length: number;
-    weight: number;
-  }>;
-}
-
-export type AlleKurierShippingOption = {
-  provider: string;
-  servicelevel: { name: string };
-  rateId: string;
-  amount: number;
-  currency: string;
-  estimatedDays: number;
-};
-
-export interface TerytVerifyInput {
-  street: string;
-  streetNumber: string;
-  postalCode: string;
-  city: string;
-}
-
-export interface TerytVerifyResult {
-  valid: boolean;
-  degraded: boolean;
-  reason?: string;
-  streetName?: string;
-}
 
 export interface CheckoutSession {
   basket: Array<{ productId: string; quantity: number }>;
@@ -175,34 +99,6 @@ export interface OrderForSuccessPage {
   };
 }
 
-export type OrderBasketItem = {
-  productId: string;
-  quantity: number;
-};
-
-export type OrderAddress = {
-  firstName?: string;
-  lastName?: string;
-  regionCode: string;
-  postalCode: string;
-  street: string;
-  streetNumber: string;
-  city: string;
-};
-
-export interface OrderSessionData {
-  basket: OrderBasketItem[];
-  address?: OrderAddress;
-  shippingCode?: string;
-  shippingCost?: number;
-  shippingMethodName?: string;
-  shippingCarrier?: string;
-  shippingEstimatedDays?: number;
-  email?: string;
-  checkoutSessionId?: string;
-  userId?: string;
-}
-
 export interface PaymentProduct {
   _id: string;
   name: string | null;
@@ -211,23 +107,26 @@ export interface PaymentProduct {
   imageUrl: string | null;
 }
 
-export interface AutocompleteResult {
-  street: string;
-  streetNumber: string;
-  city: string;
-  postalCode: string;
-  regionCode: string;
-}
 
-export type OrderConfirmationEmailData = {
-  to: string;
-  orderNumber: string;
-  items: Array<{ name: string; quantity: number; subtotal: number }>;
-  total: number;
-  shippingAddress: { name: string; line1: string; city: string; postalCode: string };
+export type PaymentSnapshot = {
+  id: string;
+  status: string;
+  amount: number;
+  currency: string;
+  receiptEmail: string | null;
+  metadata: Record<string, string>;
+  paymentMethod: PaymentMethodDetails | null;
+  failureMessage: string | null;
 };
 
-export type CreateOrderResult = {
-  created: boolean;
-  email?: OrderConfirmationEmailData;
+export type PaymentHandle = {
+  id: string;
+  clientSecret: string | null;
+};
+
+export type PaymentEvent = {
+  id: string;
+  rawType: string;
+  kind: "succeeded" | "failed" | "canceled" | "other";
+  payment: PaymentSnapshot | null;
 };

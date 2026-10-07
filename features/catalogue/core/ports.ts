@@ -1,4 +1,4 @@
-import type { CatalogueTree, NavigationItem } from './rules/catalogue';
+import type { CatalogueTree, NavigationItem, CategoryLookup } from './rules/catalogue';
 
 export interface CatalogueIndex {
   getCatalogue(): CatalogueTree;
@@ -6,4 +6,5 @@ export interface CatalogueIndex {
   unrollDescendantKeys(nodeId: string): string[];
   getAllLeafKeys(): string[];
   getCatalogueForNavigation(): NavigationItem[];
+  getCategoryLookup(): CategoryLookup;
 }

@@ -1,4 +1,4 @@
-import { normalizeText, deriveSpacedQuery } from '@/features/product-search/core/rules/searchScoring';
+import { normalizeText, deriveSpacedQuery } from '@/features/product-search/core/rules/searchText';
 import { buildSearchResult } from '@/features/product-search/core/rules/searchResults';
 import type { SearchResult } from '@/features/product-search/core/rules/searchTypes';
 import type { SearchSource } from '@/features/product-search/core/ports';
@@ -50,6 +50,7 @@ export async function searchProductsFullQuery(
       perPage: effectivePerPage,
       state,
       category,
+      lookup: source.getCategoryLookup(),
     });
   } catch (error) {
     console.error(`[searchProductsFull] Failed for query "${query}", sort "${sort}", page ${page}:`, error);

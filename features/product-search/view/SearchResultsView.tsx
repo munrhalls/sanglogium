@@ -1,0 +1,69 @@
+import React from 'react';
+import { SearchEmpty } from '@/features/product-search/ui/results/SearchEmpty';
+import { SearchPagination } from '@/features/product-search/ui/results/SearchPagination';
+import { SearchSort } from '@/features/product-search/ui/results/SearchSort';
+import { SearchCategoryChips } from '@/features/product-search/ui/results/SearchCategoryChips';
+import type { SearchResult } from '@/features/product-search/core/rules/searchTypes';
+import { EmptyResults, ProductGrid } from "@/features/products";
+import { ActiveFilterChips, FilterSidebar, MobileFilterSheet, isFiltersActive, resolvePriceBounds, SORT_DEFAULT } from '@/features/product-filtering';
+interface SearchResultsProps {
+  resultsPromise: Promise<SearchResult>;
+  wishlistPromise: Promise<string[]>;
+  query: string;
+}
+
+// Results span every category, so only the category-agnostic group applies.
+const SEARCH_FILTER_GROUPS = ['commercial'];
+
+export async function SearchResultsView({ resultsPromise, wishlistPromise, query }: SearchResultsProps) {
+  const { products, totalCount, unfilteredCount, facets, priceRange, state, category, categoryCounts, allCategoriesCount } =
+    await resultsPromise;
+  const wishlistProductIds = await wishlistPromise;
+
+  // Nothing matches the words at all (filters can't be the cause).
+  if (unfilteredCount === 0) {
+    return <SearchEmpty query={query} />;
+  }
+
+  const priceBounds = resolvePriceBounds(priceRange);
+  const filtersActive = state ? isFiltersActive({ ...state, sort: SORT_DEFAULT }) : false;
+  const panelProps = facets
+    ? {
+        checkboxCounts: facets.groups,
+        booleanCounts: facets.booleans,
+        brandLabels: facets.brandLabels,
+        priceBounds: { min: priceBounds.min, max: priceBounds.max },
+        isDefaultState: facets.isDefaultState,
+        groupIds: SEARCH_FILTER_GROUPS,
+      }
+    : null;
+
+  return (
+    <div className="flex flex-col gap-8 lg-touch:flex-row lg-desktop:flex-row">
+      {panelProps && <FilterSidebar {...panelProps} />}
+      <div className="min-w-0 flex-1">
+        {categoryCounts && (
+          <SearchCategoryChips counts={categoryCounts} active={category} allCount={allCategoriesCount ?? 0} />
+        )}
+        {facets && <ActiveFilterChips brandLabels={facets.brandLabels} />}
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-4 border-b border-border-secondary pb-4">
+          <div className="flex items-center gap-3">
+            {panelProps && <MobileFilterSheet {...panelProps} totalCount={totalCount} />}
+            <span className="type-metadata text-secondary" aria-live="polite">
+              {totalCount} {totalCount === 1 ? 'product' : 'products'}
+            </span>
+          </div>
+          <SearchSort />
+        </div>
+        {totalCount === 0 ? (
+          <EmptyResults filtersActive={filtersActive} />
+        ) : (
+          <>
+            <ProductGrid products={products} wishlistProductIds={wishlistProductIds} />
+            <SearchPagination totalCount={totalCount} />
+          </>
+        )}
+      </div>
+    </div>
+  );
+}

@@ -1,6 +1,6 @@
 import "server-only";
 
-import { sanityFetch } from "@/platform/db/client";
+import { sanityFetch } from "@/platform/sanity/client";
 import { defineQuery } from "next-sanity";
 import { resolveSlugToId } from "@/features/catalogue/server";
 import type { HeroData, FeaturedProduct, SpotlightProduct, SpotlightData, IemProduct, NewestReleaseData, DacProduct, AccessoryProduct, AccessoryData } from "@/features/homepage/core/rules/homepageTypes";
