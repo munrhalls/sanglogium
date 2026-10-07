@@ -1,6 +1,6 @@
 import "server-only";
 import { Resend } from "resend";
-import type { NewsletterSubscriptions } from "@/features/shell/core/ports";
+import type { NewsletterSubscriptions } from "@/features/newsletter/core/ports";
 
 const resendApiKey = process.env.RESEND_API_KEY;
 const audienceId = process.env.RESEND_AUDIENCE_ID;

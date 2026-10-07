@@ -28,7 +28,7 @@ If a fact here contradicts the code, the code wins — re-verify after any large
 | Dacs | `features/homepage/ui/dacs/Dacs.tsx` | `data.dacs` |
 | Accessories | `features/homepage/ui/accessories/Accessories.tsx` (+ `CategorySection.tsx`) | `data.accessories.{cables,interconnects,adapters,earpads,eartips,careCleaning,storage}` |
 
-Every section except Hero and TrustBar is wrapped in `Shelf` (`features/shell/ui/shelf/Shelf.tsx`) in `page.tsx`, with a `spacing` prop and optional `fullBleed`.
+Every section except Hero and TrustBar is wrapped in `Shelf` (`platform/design/ui/Shelf.tsx`) in `page.tsx`, with a `spacing` prop and optional `fullBleed`.
 
 ## Cards — bespoke per section, NOT shared
 

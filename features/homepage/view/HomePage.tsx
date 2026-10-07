@@ -1,4 +1,4 @@
-import { Shelf } from "@/features/shell/server";
+import Shelf from "@/platform/design/ui/Shelf";
 import Hero from "./hero/Hero";
 import TrustBar from "@/features/homepage/ui/trust-bar/TrustBar";
 import Featured from "./featured/Featured";

@@ -1,12 +1,12 @@
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { cn } from "@/platform/utils/tailwind";
 import Header from "@/features/shell/view/header/Header";
-import { CatalogueNavbar } from "@/features/catalogue";
+import { CatalogueNavbar } from "@/features/catalogue/server";
 import DrawersManager from "@/features/shell/ui/drawers/DrawersManager";
 import ActionBarServer from "@/features/shell/view/navigation/ActionBarServer";
 import Footer from "@/features/shell/ui/footer/Footer";
 import { WebVitals } from "@/platform/analytics/WebVitals";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import { SpeedInsights } from "@/platform/analytics/SpeedInsights";
 import { Suspense } from "react";
 import type { ComponentProps, ReactNode } from "react";
 
