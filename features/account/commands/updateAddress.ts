@@ -1,8 +1,8 @@
 "use server";
 
-import { requireSession, getProfileIdByAuthId } from "@/features/auth/server";
+import { requireSession } from "@/features/auth/server";
+import { getProfileIdByAuthId, replaceProfileAddress } from "@/features/profile/server";
 import { isValidAddressKey, parseAddress } from "@/features/account/core/rules/addressInput";
-import { replaceProfileAddress } from "@/features/account/server";
 
 export async function updateAddress(addressKey: string, formData: FormData) {
   const session = await requireSession();

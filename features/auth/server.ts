@@ -3,10 +3,7 @@ import 'server-only';
 import { createAuth } from './adapters/better-auth/auth';
 import { createSessionReaders } from './adapters/better-auth/session';
 import type { UserProfiles, OrderLifecycle, AuthEmails } from './core/ports';
-import { createUserProfileIfMissing } from './adapters/sanity/createUserProfileIfMissing';
-import { syncUserProfile } from './adapters/sanity/syncUserProfile';
-import { deleteUserProfile } from './adapters/sanity/deleteUserProfile';
-import { getProfileIdByAuthId } from './adapters/sanity/getProfileIdByAuthId';
+import { createUserProfileIfMissing, syncUserProfile, deleteUserProfile, getProfileIdByAuthId } from '@/features/profile/server';
 import { hasOpenOrders } from './adapters/sanity/hasOpenOrders';
 import { anonymizeUserOrders, mergeGuestOrders } from '@/features/order/server';
 import {
@@ -39,4 +36,3 @@ export const auth = createAuth({ profiles, orders, emails });
 const { getSession, requireSession, verifySession } = createSessionReaders(auth, profiles);
 export { getSession, requireSession, verifySession };
 export { isGoogleAuthEnabled } from './adapters/better-auth/providers';
-export { getProfileIdByAuthId } from './adapters/sanity/getProfileIdByAuthId';

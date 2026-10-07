@@ -1,8 +1,8 @@
 "use server";
 
-import { requireSession, auth, getProfileIdByAuthId } from "@/features/auth/server";
+import { requireSession, auth } from "@/features/auth/server";
+import { getProfileIdByAuthId, setProfileName } from "@/features/profile/server";
 import { headers } from "next/headers";
-import { setProfileName } from "@/features/account/server";
 
 export async function updateName(formData: FormData) {
   const session = await requireSession();

@@ -1,7 +1,7 @@
 "use server";
 
-import { requireSession, getProfileIdByAuthId } from "@/features/auth/server";
-import { setMarketingOptIn } from "@/features/account/server";
+import { requireSession } from "@/features/auth/server";
+import { getProfileIdByAuthId, setMarketingOptIn } from "@/features/profile/server";
 
 export async function updatePreferences(formData: FormData) {
   const session = await requireSession();
