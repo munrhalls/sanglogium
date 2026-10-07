@@ -148,3 +148,35 @@ export type CreateOrderResult = {
   created: boolean;
   email?: OrderConfirmationEmailData;
 };
+
+export type PaymentMethodDetails = {
+  type: string;
+  card: {
+    brand: string | null;
+    last4: string | null;
+    walletType: string | null;
+  } | null;
+};
+
+export type PaymentSnapshot = {
+  id: string;
+  status: string;
+  amount: number;
+  currency: string;
+  receiptEmail: string | null;
+  metadata: Record<string, string>;
+  paymentMethod: PaymentMethodDetails | null;
+  failureMessage: string | null;
+};
+
+export type PaymentHandle = {
+  id: string;
+  clientSecret: string | null;
+};
+
+export type PaymentEvent = {
+  id: string;
+  rawType: string;
+  kind: "succeeded" | "failed" | "canceled" | "other";
+  payment: PaymentSnapshot | null;
+};

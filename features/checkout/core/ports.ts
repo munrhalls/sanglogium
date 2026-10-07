@@ -1,4 +1,3 @@
-import type Stripe from "stripe";
 import type { ShippingOption, ShippingRatesInput } from "@/features/shipping";
 import type {
   CheckoutSession,
@@ -8,11 +7,14 @@ import type {
   CheckoutProduct,
   OrderConfirmationEmailData,
   CreateOrderResult,
+  PaymentSnapshot,
+  PaymentHandle,
+  PaymentEvent,
 } from "./rules/checkoutTypes";
 
 export type Orders = {
   createOrderFromPaymentIntent: (
-    pi: Stripe.PaymentIntent,
+    payment: PaymentSnapshot,
     sessionData?: OrderSessionData
   ) => Promise<CreateOrderResult>;
   getOrderByPaymentIntentId: (
@@ -41,24 +43,23 @@ export type CheckoutSessions = {
 };
 
 export type Payments = {
-  stripe: Stripe;
-  retrievePaymentIntent: (paymentIntentId: string) => Promise<Stripe.PaymentIntent>;
-  constructWebhookEvent: (
+  retrievePayment: (paymentId: string) => Promise<PaymentSnapshot>;
+  parseWebhookEvent: (
     rawBody: string,
     signature: string,
     secret: string
-  ) => Stripe.Event;
-  updatePaymentIntentAmount: (
-    paymentIntentId: string,
+  ) => PaymentEvent;
+  updatePaymentAmount: (
+    paymentId: string,
     amount: number,
     metadata: Record<string, string>,
     idempotencyKey: string
-  ) => Promise<Stripe.PaymentIntent>;
-  createPaymentIntentForAmount: (
+  ) => Promise<PaymentHandle>;
+  createPayment: (
     amount: number,
     metadata: Record<string, string>,
     idempotencyKey: string
-  ) => Promise<Stripe.PaymentIntent>;
+  ) => Promise<PaymentHandle>;
 };
 
 export type OrderEmails = {

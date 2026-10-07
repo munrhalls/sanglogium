@@ -1,13 +1,8 @@
-import type Stripe from 'stripe'
+import type { PaymentMethodDetails } from './checkoutTypes'
 
-export function getPaymentMethodHint(latestCharge: Stripe.PaymentIntent['latest_charge']): string | null {
-  const charge =
-    typeof latestCharge === 'object' && latestCharge !== null
-      ? latestCharge
-      : null
-  // M-02: use charge.payment_method_details.type instead of payment_method_types[0]
-  const type = charge?.payment_method_details?.type ?? 'unknown'
-  const card = charge?.payment_method_details?.card
+export function getPaymentMethodHint(method: PaymentMethodDetails | null): string | null {
+  const type = method?.type ?? 'unknown'
+  const card = method?.card
 
   switch (type) {
     case 'blik':
@@ -21,7 +16,7 @@ export function getPaymentMethodHint(latestCharge: Stripe.PaymentIntent['latest_
     case 'link':
       return 'Link'
     case 'card': {
-      const wallet = card?.wallet?.type
+      const wallet = card?.walletType
       if (wallet === 'apple_pay') return 'Apple Pay'
       if (wallet === 'google_pay') return 'Google Pay'
       if (card?.brand && card?.last4) {

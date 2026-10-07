@@ -1,8 +1,7 @@
 import "server-only";
 import { backendClient } from '@/platform/db/backendClient'
 import { logCheckoutEvent } from '@/platform/utils/eventLogger'
-import type { OrderBasketItem as BasketItem, OrderAddress, OrderSessionData, CreateOrderResult } from '@/features/checkout/core/rules/checkoutTypes'
-import Stripe from 'stripe'
+import type { OrderBasketItem as BasketItem, OrderAddress, OrderSessionData, CreateOrderResult, PaymentSnapshot } from '@/features/checkout/core/rules/checkoutTypes'
 import { z } from 'zod'
 
 interface ProductDoc {
@@ -18,7 +17,7 @@ export type { OrderSessionData };
 const STRIPE_METADATA_MAX_SAFE = 450
 
 function resolveOrderData(
-  pi: Stripe.PaymentIntent,
+  pi: PaymentSnapshot,
   sessionData?: OrderSessionData
 ): {
   basket: BasketItem[]
@@ -49,7 +48,7 @@ function resolveOrderData(
       shippingMethodName: sessionData.shippingMethodName ?? '',
       shippingCarrier: sessionData.shippingCarrier ?? '',
       shippingEstimatedDays: sessionData.shippingEstimatedDays,
-      customerEmail: sessionData.email ?? pi.receipt_email ?? '',
+      customerEmail: sessionData.email ?? pi.receiptEmail ?? '',
       traceId,
       userId: sessionData.userId,
     }
@@ -63,7 +62,7 @@ function resolveOrderData(
   const shippingMethodName = pi.metadata?.shippingMethodName ?? ''
   const shippingCarrier = pi.metadata?.shippingCarrier ?? ''
   const shippingEstimatedDaysStr = pi.metadata?.shippingEstimatedDays ?? ''
-  const customerEmail = pi.metadata?.email || pi.receipt_email || ''
+  const customerEmail = pi.metadata?.email || pi.receiptEmail || ''
 
   if (!rawBasket || !rawAddress) {
     throw new Error(`Missing basket/address metadata for PI ${pi.id}`)
@@ -116,7 +115,7 @@ function resolveOrderData(
  * handler: a payment ends with exactly one order and its stock decremented exactly once.
  */
 export async function createOrderFromPaymentIntent(
-  pi: Stripe.PaymentIntent,
+  pi: PaymentSnapshot,
   sessionData?: OrderSessionData
 ): Promise<CreateOrderResult> {
   const paymentIntentId = pi.id
@@ -217,12 +216,8 @@ export async function createOrderFromPaymentIntent(
   }
 
   // Step 8: Extract payment method details from charge (reliable) instead of payment_method_types[0]
-  const charge =
-    typeof pi.latest_charge === 'object' && pi.latest_charge !== null
-      ? pi.latest_charge
-      : null
-  const paymentMethodType = charge?.payment_method_details?.type ?? 'unknown'
-  const cardDetails = charge?.payment_method_details?.card
+  const paymentMethodType = pi.paymentMethod?.type ?? 'unknown'
+  const cardDetails = pi.paymentMethod?.card
 
   // Step 9: Generate order identifiers
   const year = new Date().getFullYear()

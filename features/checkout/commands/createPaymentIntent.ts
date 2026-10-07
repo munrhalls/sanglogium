@@ -5,6 +5,7 @@ import type {
   Payments,
 } from "@/features/checkout/core/ports";
 import { calculateGrandTotal } from "@/features/checkout/core/rules/paymentSummary";
+import type { PaymentHandle } from "@/features/checkout/core/rules/checkoutTypes";
 import { logCheckoutEvent } from "@/platform/utils/eventLogger";
 import { getSession } from "@/features/auth/server";
 
@@ -125,7 +126,7 @@ export async function createPaymentIntent(
       }
     }
 
-    let result: { id: string; client_secret: string | null }
+    let result: PaymentHandle
 
     // M-03: Reject non-idempotent fallback; idempotency key must be stable
     if (!session.checkoutSessionId) {
@@ -136,22 +137,22 @@ export async function createPaymentIntent(
 
     if (session.paymentIntentId) {
       try {
-        result = await ports.payments.updatePaymentIntentAmount(session.paymentIntentId, computedGrandTotal, enrichedMetadata, idempotencyKey)
+        result = await ports.payments.updatePaymentAmount(session.paymentIntentId, computedGrandTotal, enrichedMetadata, idempotencyKey)
         await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_update', data: { paymentIntentId: session.paymentIntentId, amount: computedGrandTotal }, outcome: 'success' })
       } catch (err) {
         await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_update_failed', data: { error: err instanceof Error ? err.message : String(err) }, outcome: 'error' })
         session.paymentIntentId = undefined
-        result = await ports.payments.createPaymentIntentForAmount(computedGrandTotal, enrichedMetadata, idempotencyKey)
+        result = await ports.payments.createPayment(computedGrandTotal, enrichedMetadata, idempotencyKey)
         session.paymentIntentId = result.id
         await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_create', data: { paymentIntentId: result.id, amount: computedGrandTotal, currency: 'pln' }, outcome: 'success' })
       }
     } else {
-      result = await ports.payments.createPaymentIntentForAmount(computedGrandTotal, enrichedMetadata, idempotencyKey)
+      result = await ports.payments.createPayment(computedGrandTotal, enrichedMetadata, idempotencyKey)
       session.paymentIntentId = result.id
       await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_create', data: { paymentIntentId: result.id, amount: computedGrandTotal, currency: 'pln' }, outcome: 'success' })
     }
 
-    if (!result.client_secret) {
+    if (!result.clientSecret) {
       await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_no_client_secret', data: { paymentIntentId: result.id }, outcome: 'error' })
       return { ok: false, error: 'Stripe did not return client_secret', status: 500 }
     }
@@ -164,7 +165,7 @@ export async function createPaymentIntent(
 
     await session.save()
 
-    return { ok: true, clientSecret: result.client_secret }
+    return { ok: true, clientSecret: result.clientSecret }
   } catch (error) {
     console.error('Error creating payment intent:', error)
     return { ok: false, error: 'Failed to create payment intent', status: 500 }

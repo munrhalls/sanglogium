@@ -28,7 +28,7 @@ export default async function SuccessPage({
         <PaymentConfirmed
           paymentIntentId={result.paymentIntentId}
           amount={result.amount}
-          latestCharge={result.latestCharge}
+          paymentMethod={result.paymentMethod}
           orderPromise={getOrderByPaymentIntentId(result.paymentIntentId)}
         />
       )
