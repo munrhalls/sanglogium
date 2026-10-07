@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import { updatePreferences } from "@/features/account/commands/updatePreferences";
+import { updatePreferencesAction } from "@/features/account/commands/updatePreferencesAction";
 
 export default function NotificationsSection({
   marketingEmailsOptIn = false,
@@ -9,7 +9,7 @@ export default function NotificationsSection({
   marketingEmailsOptIn?: boolean;
 }) {
   const [preferenceState, preferenceAction, preferencePending] = useActionState(
-    async (_prevState: unknown, formData: FormData) => updatePreferences(formData),
+    async (_prevState: unknown, formData: FormData) => updatePreferencesAction(formData),
     null
   );
 

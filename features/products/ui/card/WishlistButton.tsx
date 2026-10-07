@@ -4,8 +4,8 @@ import { useState, useTransition } from "react";
 import { usePathname } from "next/navigation";
 import { Heart } from "@phosphor-icons/react/dist/ssr";
 import { useIsSignedIn } from "@/features/auth";
-import { addToWishlist } from "@/features/products/commands/addToWishlist";
-import { removeFromWishlist } from "@/features/products/commands/removeFromWishlist";
+import { addToWishlistAction } from "@/features/products/commands/addToWishlistAction";
+import { removeFromWishlistAction } from "@/features/products/commands/removeFromWishlistAction";
 
 interface WishlistButtonProps {
   productId: string;
@@ -56,7 +56,7 @@ export function WishlistButton({
     const next = !inWishlist;
 
     startTransition(async () => {
-      const result = next ? await addToWishlist(productId) : await removeFromWishlist(productId);
+      const result = next ? await addToWishlistAction(productId) : await removeFromWishlistAction(productId);
       if (result && "success" in result && result.success) {
         setInWishlist(next);
       }

@@ -9,7 +9,7 @@ export const filterAttributesField = defineField({
       title: "Filter Attributes",
       type: "object",
       description:
-        "Closed, machine-readable attributes used by the catalogue filter controls and GROQ predicates. One field per facet in the product-filtering feature's config/facetMap.ts.",
+        "Closed, machine-readable attributes used by the catalogue filter controls and GROQ predicates. One field per facet in the product-filtering feature's core/definitions/facetMap.ts.",
       fields: ([...sharedFields, ...headphonesFields, ...audioElectronicsFields, ...accessoriesFields] as any[]).map(({ categories, domain, domainField, ...field }) =>
         defineField({
           ...field,

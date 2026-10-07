@@ -15,8 +15,8 @@ import { CarouselSlide } from "@/platform/design/ui/carousel/CarouselSlide";
 import { CarouselPrevious, CarouselNext, CarouselDots } from "@/platform/design/ui/carousel/CarouselControls";
 
 const FRACTAL_RING_MASK = {
-  maskImage: "url('/backgrounds/fractal_ring.webp')",
-  WebkitMaskImage: "url('/backgrounds/fractal_ring.webp')",
+  maskImage: "url('/backgrounds/fractal-ring.webp')",
+  WebkitMaskImage: "url('/backgrounds/fractal-ring.webp')",
   maskSize: "100%",
   WebkitMaskSize: "100%",
   maskRepeat: "no-repeat",

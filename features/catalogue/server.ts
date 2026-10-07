@@ -12,4 +12,4 @@ export const getAllLeafKeys = catalogueIndex.getAllLeafKeys;
 export const getCatalogueForNavigation = catalogueIndex.getCatalogueForNavigation;
 export const getCategoryLookup = catalogueIndex.getCategoryLookup;
 
-export { default as CatalogueNavbar } from './view/CatalogueNavbar';
+export { default as CatalogueNavbarView } from './view/CatalogueNavbarView';
