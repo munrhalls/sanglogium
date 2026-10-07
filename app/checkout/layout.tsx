@@ -2,7 +2,7 @@
 import { Montserrat } from "next/font/google";
 import { BrandLogo } from "@/features/shell/server";
 import GoogleAnalytics from "@/platform/analytics/GoogleAnalytics";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import { SpeedInsights } from "@/platform/analytics/SpeedInsights";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
