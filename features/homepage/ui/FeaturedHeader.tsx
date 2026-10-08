@@ -1,4 +1,4 @@
-import SectionHeader from "@/features/homepage/ui/shared/SectionHeader";
+import SectionHeader from "./SectionHeader";
 
 export default function FeaturedHeader() {
   return (

@@ -21,10 +21,10 @@ export function getIemProductsBySlugs(slugs: string[]): Promise<IemProduct[]> {
 }
 
 export { default as HomepageView } from './view/HomepageView';
-export { default as HeroView } from './view/hero/HeroView';
-export { default as FeaturedView, FeaturedCard } from './view/featured/FeaturedView';
-export { default as ProductSpotlightMediaLeftView } from './view/product-spotlight-media-left/ProductSpotlightMediaLeftView';
-export { default as ProductSpotlightMediaRightView } from './view/product-spotlight-media-right/ProductSpotlightMediaRightView';
-export { default as NewestReleaseView } from './view/newest-release/NewestReleaseView';
-export { default as DacsView } from './view/dacs/DacsView';
-export { default as AccessoriesView } from './view/accessories/AccessoriesView';
+export { default as HeroView } from './view/HeroView';
+export { default as FeaturedView, FeaturedCard } from './view/FeaturedView';
+export { default as ProductSpotlightMediaLeftView } from './view/ProductSpotlightMediaLeftView';
+export { default as ProductSpotlightMediaRightView } from './view/ProductSpotlightMediaRightView';
+export { default as NewestReleaseView } from './view/NewestReleaseView';
+export { default as DacsView } from './view/DacsView';
+export { default as AccessoriesView } from './view/AccessoriesView';

@@ -1,5 +1,5 @@
 import { Clock } from '@phosphor-icons/react/dist/ssr'
-import { RefreshButton } from './RefreshButton'
+import { RefreshButton } from '@/features/checkout/ui/RefreshButton'
 
 export default function PaymentProcessing({ paymentIntentId }: { paymentIntentId: string }) {
   return (

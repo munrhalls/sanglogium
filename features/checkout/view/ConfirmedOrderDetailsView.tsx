@@ -9,7 +9,7 @@ interface Props {
   fallbackTotal: number
 }
 
-export default async function OrderDetailsView({ orderPromise, fallbackTotal }: Props) {
+export default async function ConfirmedOrderDetailsView({ orderPromise, fallbackTotal }: Props) {
   const order = await orderPromise
 
   if (!order) {

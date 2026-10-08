@@ -3,7 +3,7 @@ import 'server-only';
 
 import { verifyPolishAddress } from './adapters/teryt/validator';
 import { validateWithGoogle } from './adapters/google/addressValidator';
-import { placesAutocomplete } from './adapters/google/placesAutocomplete';
+import { placesAutocomplete } from './adapters/photon/placesAutocomplete';
 import { checkAddress as checkAddressQuery } from './queries/checkAddress';
 import type { Address, AddressCheckResult } from './core/rules/addressTypes';
 import type { AddressRegistry, AddressValidator } from './core/ports';

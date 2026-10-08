@@ -2,7 +2,7 @@ import { cn } from "@/platform/utils/tailwind";
 import React from "react";
 import type { NavigationItem } from "@/features/catalogue/core/rules/catalogue";
 import CategoryHero from "./hero/CategoryHero";
-import CategoryDetails from "./details/CategoryDetails";
+import CategoryDetails from "./detail/CategoryDetails";
 
 interface CategoryPanelProps {
   data: NavigationItem;
