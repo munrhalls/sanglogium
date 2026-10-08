@@ -3,7 +3,6 @@ export { default as CheckoutStepper } from './ui/CheckoutStepper';
 export { default as CheckoutSummary } from './ui/CheckoutSummary';
 export { default as AddressForm } from './ui/AddressForm';
 export { default as ShippingStep } from './ui/ShippingStep';
-export { CheckoutButton } from './ui/CheckoutButton';
 export { BasketCheckout } from './ui/BasketCheckout';
 export { default as PaymentForm } from './ui/PaymentForm';
 export { default as PaymentVerificationFailed } from './ui/payment-status/PaymentVerificationFailed';

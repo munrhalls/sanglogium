@@ -2,7 +2,8 @@
 
 import { getCheckoutSession } from "@/features/checkout/server";
 import { redirect } from "next/navigation";
-import { logCheckoutEvent, generateCheckoutSessionId } from "@/features/checkout/core/rules/checkoutEvents";
+import { logEvent } from "@/platform/utils/eventLogger";
+import { generateCheckoutSessionId } from "@/features/checkout/core/rules/checkoutSessionId";
 
 export async function initCheckoutSessionAction(items: Array<{ productId: string; quantity: number }>, checkoutSessionId?: string) {
   const session = await getCheckoutSession();
@@ -16,7 +17,7 @@ export async function initCheckoutSessionAction(items: Array<{ productId: string
   session.basket = items;
   await session.save();
 
-  await logCheckoutEvent({
+  await logEvent({
     correlationId: finalCheckoutSessionId,
     slice: 'basket-address',
     event: 'checkout_init',

@@ -1,3 +1,4 @@
+import "server-only";
 import type { Address, AddressCheckResult } from "@/features/address/core/types/addressTypes";
 import type { AddressRegistry, AddressValidator } from "@/features/address/core/ports";
 

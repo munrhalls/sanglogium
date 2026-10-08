@@ -36,7 +36,7 @@ export type CheckoutCatalog = {
 export type ShippingRates = { fetchShippingOptions: (input: ShippingRatesInput, traceId?: string) => Promise<ShippingOption[]> };
 
 
-export type CheckoutSessionHandle = CheckoutSession & {
+type CheckoutSessionHandle = CheckoutSession & {
   save: () => Promise<void>;
   destroy: () => void;
 };

@@ -2,7 +2,7 @@
 
 import { getCheckoutSession } from "@/features/checkout/server";
 import { redirect } from "next/navigation";
-import { logCheckoutEvent } from "@/features/checkout/core/rules/checkoutEvents";
+import { logEvent } from "@/platform/utils/eventLogger";
 
 export async function saveShippingAction(
   shippingCode: string,
@@ -31,7 +31,7 @@ export async function saveShippingAction(
     redirect("/basket");
   }
 
-  await logCheckoutEvent({
+  await logEvent({
     correlationId: checkoutSessionId,
     slice: 'address-submit',
     event: 'shipping_selection_start',
@@ -41,7 +41,7 @@ export async function saveShippingAction(
 
   // Validate priceInCents is a positive integer
   if (!Number.isInteger(priceInCents) || priceInCents < 1) {
-    await logCheckoutEvent({
+    await logEvent({
       correlationId: checkoutSessionId,
       slice: 'address-submit',
       event: 'shipping_invalid_price',
@@ -51,7 +51,7 @@ export async function saveShippingAction(
     throw new Error("Invalid shipping price");
   }
 
-  await logCheckoutEvent({
+  await logEvent({
     correlationId: checkoutSessionId,
     slice: 'address-submit',
     event: 'shipping_option_selected',
@@ -68,7 +68,7 @@ export async function saveShippingAction(
 
   await session.save();
 
-  await logCheckoutEvent({
+  await logEvent({
     correlationId: checkoutSessionId,
     slice: 'address-submit',
     event: 'shipping_saved',

@@ -4,7 +4,6 @@ import groq from "groq";
 
 import type { PaymentProduct } from "@/features/checkout/core/types/checkoutTypes";
 
-export type { PaymentProduct };
 
 export async function getPaymentProducts(ids: string[]): Promise<PaymentProduct[]> {
   return client.fetch<PaymentProduct[]>(
