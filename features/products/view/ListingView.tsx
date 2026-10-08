@@ -14,6 +14,7 @@ interface ListingPageProps {
   title: string;
   overline?: string;
   breadcrumbs?: string[];
+  breadcrumbLabels?: string[];
   category?: Category;
   facets: CatalogueFacets;
   priceBounds: { min: number; max: number };
@@ -30,6 +31,7 @@ export default function ListingView({
   title,
   overline,
   breadcrumbs,
+  breadcrumbLabels,
   category,
   facets,
   priceBounds,
@@ -43,7 +45,7 @@ export default function ListingView({
 }: ListingPageProps) {
   return (
     <div className="mx-auto w-full max-w-catalogue px-4 md:px-8 pb-12">
-      {breadcrumbs && <CategoryBreadcrumbsView categoryParts={breadcrumbs} />}
+      {breadcrumbs && <CategoryBreadcrumbsView categoryParts={breadcrumbs} labels={breadcrumbLabels ?? breadcrumbs} />}
       <ShopHeader title={title} overline={overline} />
 
       <div className="flex flex-col lg-touch:flex-row lg-desktop:flex-row gap-8">

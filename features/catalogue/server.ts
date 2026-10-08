@@ -11,5 +11,7 @@ export const unrollDescendantKeys = catalogueIndex.unrollDescendantKeys;
 export const getAllLeafKeys = catalogueIndex.getAllLeafKeys;
 export const getCatalogueForNavigation = catalogueIndex.getCatalogueForNavigation;
 export const getCategoryLookup = catalogueIndex.getCategoryLookup;
+export const getCategoryMetadata = catalogueIndex.getCategoryMetadata;
+export const getBreadcrumbLabels = catalogueIndex.getBreadcrumbLabels;
 
 export { default as CatalogueNavbarView } from './view/CatalogueNavbarView';

@@ -24,6 +24,7 @@ export interface ListingPorts {
     resolveSlugToId: (slug: string) => string | undefined;
     unrollDescendantKeys: (nodeId: string) => string[];
     getAllLeafKeys: () => string[];
+    getBreadcrumbLabels: (parts: string[]) => string[];
   };
   filtering: {
     getFilterFacets: (options: { keys: string[]; state: ProductQueryState }) => Promise<CatalogueFacets>;
@@ -39,6 +40,7 @@ export type ListingPageResult =
       title: string;
       overline?: string;
       breadcrumbs?: string[];
+      breadcrumbLabels?: string[];
       category?: Category;
       facets: CatalogueFacets;
       priceBounds: { min: number; max: number };
@@ -125,6 +127,7 @@ export function createGetListingPage(ports: ListingPorts) {
       title: slug ? (metadata as CategoryMetadata).name : 'All Products',
       overline,
       breadcrumbs: slug ?? undefined,
+      breadcrumbLabels: slug ? ports.catalogue.getBreadcrumbLabels(slug) : undefined,
       category,
       facets,
       priceBounds: { min: priceBounds.min, max: priceBounds.max },
