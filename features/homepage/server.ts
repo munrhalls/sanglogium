@@ -1,7 +1,9 @@
 import "server-only";
 
-import { fetchHeroData, fetchHomepageSections } from './adapters/sanity/getHomepageData';
-import { fetchIemProductsBySlugs } from './adapters/sanity/getIemProductsBySlugs';
+import { fetchHeroData } from './adapters/sanity/fetchHeroData';
+import { fetchHomepageSections } from './adapters/sanity/fetchHomepageSections';
+import { fetchIemProductsBySlugs } from './adapters/sanity/fetchIemProductsBySlugs';
+import { resolveSlugToId } from '@/features/catalogue/server';
 import { getHomepage as getHomepageQuery, getHomepageIems } from './queries/getHomepage';
 import type { HomepageSource } from './core/ports';
 import type { HomepageData, IemProduct } from './core/types/homepageTypes';
@@ -10,6 +12,7 @@ const homepageSource: HomepageSource = {
   fetchHeroData,
   fetchHomepageSections,
   fetchIemProductsBySlugs,
+  resolveSlugToId,
 };
 
 export function getHomepage(): Promise<HomepageData> {
@@ -21,10 +24,3 @@ export function getIemProductsBySlugs(slugs: string[]): Promise<IemProduct[]> {
 }
 
 export { default as HomepageView } from './view/HomepageView';
-export { default as HeroView } from './view/HeroView';
-export { default as FeaturedView, FeaturedCard } from './view/FeaturedView';
-export { default as ProductSpotlightMediaLeftView } from './view/ProductSpotlightMediaLeftView';
-export { default as ProductSpotlightMediaRightView } from './view/ProductSpotlightMediaRightView';
-export { default as NewestReleaseView } from './view/NewestReleaseView';
-export { default as DacsView } from './view/DacsView';
-export { default as AccessoriesView } from './view/AccessoriesView';

@@ -2,9 +2,8 @@ import "server-only";
 
 import { sanityFetch } from "@/platform/sanity/client";
 import { defineQuery } from "next-sanity";
-import { resolveSlugToId } from "@/features/catalogue/server";
-import type { HeroData, FeaturedProduct, SpotlightProduct, SpotlightData, IemProduct, NewestReleaseData, DacProduct, AccessoryProduct, AccessoryData } from "@/features/homepage/core/types/homepageTypes";
-import type { HomepageSections } from "@/features/homepage/core/ports";
+import type { FeaturedProduct, SpotlightProduct, SpotlightData, IemProduct, NewestReleaseData, DacProduct, AccessoryProduct, AccessoryData } from "@/features/homepage/core/types/homepageTypes";
+import type { AccessorySlotIds, HomepageSections } from "@/features/homepage/core/ports";
 
 // ============================================================================
 // Unified GROQ Queries - Single batched request for all homepage data
@@ -208,44 +207,6 @@ const HOMEPAGE_DATA_QUERY = defineQuery(`
   }
 `);
 
-/**
- * Separate query for hero document (different document type)
- */
-const HERO_QUERY = defineQuery(`
-  *[_type == "hero"] | order(_updatedAt desc)[0] {
-    headline,
-    subheadline,
-    ctaText,
-    ctaLink,
-    backgroundImage {
-      asset->{
-        _id,
-        url,
-        metadata {
-          dimensions,
-          lqip
-        }
-      },
-      hotspot,
-      crop,
-      alt
-    },
-    mobileBackgroundImage {
-      asset->{
-        _id,
-        url,
-        metadata {
-          dimensions,
-          lqip
-        }
-      },
-      hotspot,
-      crop,
-      alt
-    }
-  }
-`);
-
 // ============================================================================
 // Data Processing Functions - Transform raw GROQ output to expected shapes
 // ============================================================================
@@ -303,35 +264,10 @@ function processNewestReleaseData(data: NewestReleaseData | null): NewestRelease
 // ============================================================================
 
 /**
- * Fetch hero data from hero document.
- * Separate query because hero is a different document type.
- */
-export async function fetchHeroData(): Promise<HeroData | null> {
-  const heroData = await sanityFetch<HeroData>({ query: HERO_QUERY });
-  return heroData || null;
-}
-
-/**
  * Fetch all homepage data sections in a single batched query.
  * Replaces 8 separate API calls with 1 request.
  */
-export async function fetchHomepageSections(): Promise<HomepageSections | null> {
-  const slotIds = {
-    cablesId: resolveSlugToId("headphone-cables"),
-    interconnectsId: resolveSlugToId("interconnects"),
-    adaptersId: resolveSlugToId("adapters"),
-    earpadsId: resolveSlugToId("earpads"),
-    eartipsId: resolveSlugToId("eartips"),
-    careCleaningId: resolveSlugToId("care-cleaning"),
-    storageStandsId: resolveSlugToId("headphone-stands"),
-    carryingCasesId: resolveSlugToId("carrying-cases"),
-  };
-
-  const missingSlot = Object.entries(slotIds).find(([, id]) => id === undefined);
-  if (missingSlot) {
-    throw new Error(`resolveSlugToId returned undefined for accessory slot param "${missingSlot[0]}" — check data/catalogue-index.json`);
-  }
-
+export async function fetchHomepageSections(slotIds: AccessorySlotIds): Promise<HomepageSections | null> {
   const rawData = await sanityFetch<{
     featured?: FeaturedProduct[];
     spotlight1?: SpotlightData;

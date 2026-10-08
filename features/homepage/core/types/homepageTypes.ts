@@ -65,7 +65,7 @@ export interface IemProduct {
   image: { asset: { _id: string; url: string }; alt?: string };
 }
 
-export interface NewestReleaseProduct {
+interface NewestReleaseProduct {
   _id: string;
   name: string;
   brand: {
