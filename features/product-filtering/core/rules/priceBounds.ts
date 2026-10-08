@@ -9,7 +9,7 @@ export const DEFAULT_PRICE_CEILING = 1000;
  * sub-$10k range where products actually cluster; the luxury tail above is
  * reached through the fixed premium tier checkboxes instead.
  */
-export const NORMAL_PRICE_CEILING = 10_000;
+const NORMAL_PRICE_CEILING = 10_000;
 
 /**
  * Fixed premium tier ceilings (dollars), in $10k increments. Rendered as a
@@ -36,7 +36,7 @@ export interface PriceRangeData {
 }
 
 /** Slider display bounds in whole-ish dollars, as consumed by PriceRangeSlider. */
-export interface PriceBounds {
+interface PriceBounds {
   min: number;
   max: number;
   /** True when the category has products priced above `NORMAL_PRICE_CEILING`:

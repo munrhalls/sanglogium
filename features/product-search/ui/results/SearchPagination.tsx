@@ -47,7 +47,7 @@ export function SearchPagination({ totalCount, perPage = 24 }: SearchPaginationP
     'inline-flex min-h-11 flex-1 items-center justify-center rounded-md border border-border-secondary px-4 type-body sm:flex-none';
   const activeItem = `${item} text-primary transition-colors hover:bg-surface-elevated active:bg-surface-elevated`;
   const disabledItem = `${item} text-secondary-400 cursor-not-allowed`;
-  // Numbered pills (matches features/products/ui/Pagination.tsx)
+  // Numbered pills (matches features/products/ui/listing/Pagination.tsx)
   // only from sm up, where there's room for them next to Prev/Next. A phone-
   // width strip of number pills is a worse tap target than the existing wide
   // Prev/Next pair, so phones keep the plain "Page X of Y" caption instead.

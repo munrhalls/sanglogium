@@ -2,6 +2,8 @@
 // ../facetMap.ts urlParam of the same facet; option lists mirror
 // facetMap valueVocab.
 
+import type { Option } from '@/features/product-filtering/core/definitions/option';
+
 export type FacetGroupId = 'commercial' | 'type' | 'sound' | 'material' | 'wireless' | 'technical';
 
 export interface FacetGroup {
@@ -36,8 +38,6 @@ export const FACET_GROUPS: FacetGroup[] = [
     label: 'Technical Specs',
   },
 ];
-
-export type Option = { value: string; label: string };
 
 interface FacetBase {
   /** URL query-param key. */
@@ -145,40 +145,3 @@ export const FACETS: FacetDef[] = [
 
 export const facetsForGroup = (group: FacetGroupId): FacetDef[] => FACETS.filter((f) => f.group === group);
 
-// ─────────────────────────────────────────────────────────────────────────
-// Sort — only options that can be made meaningful from the current headphones
-// product data. Options not data-supported for this category (featured,
-// most-relevant, best-selling, rating-desc, discount-desc) are kept out of
-// this route's dropdown until their backing fields are populated. The
-// comparator for each value lives server-side in
-// @/features/product-filtering/adapters/sanity/buildProductQuery.ts.
-//
-// Static value/label pairs only, same shape as production's SORT_OPTIONS in
-// ../facetMap.ts — this is what the URL parser's allowlist and the
-// (headless, product-data-blind) SortDropdown both consume. Keeping the two
-// separate is what lets SortDropdown stay a pure URL <-> display control with
-// zero product-data dependency, matching F2.
-// ─────────────────────────────────────────────────────────────────────────
-
-export const SORT_VALUES = [
-  'newest',
-  'price-asc',
-  'price-desc',
-  'alpha-asc',
-  'alpha-desc',
-  'date-old',
-] as const;
-
-export type SortValue = (typeof SORT_VALUES)[number];
-export const SORT_DEFAULT: SortValue = 'newest';
-
-const SORT_LABELS: Record<SortValue, string> = {
-  newest: 'Newest',
-  'price-asc': 'Price, Low to High',
-  'price-desc': 'Price, High to Low',
-  'alpha-asc': 'Alphabetically, A-Z',
-  'alpha-desc': 'Alphabetically, Z-A',
-  'date-old': 'Date, Old to New',
-};
-
-export const SORT_OPTIONS: Option[] = SORT_VALUES.map((value) => ({ value, label: SORT_LABELS[value] }));

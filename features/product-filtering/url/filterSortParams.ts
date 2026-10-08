@@ -38,12 +38,12 @@
 // serialize to the key being absent. `minPrice` /
 // `maxPrice` have no "default value": absent simply means unbounded, so a null
 // write removes them. This keeps faceted URLs clean and keeps
-// features/catalogue/domain/seo.ts `isFacetedQuery` honest (it keys off `page`, which this
+// features/catalogue/core/rules/seo.ts `isFacetedQuery` honest (it keys off `page`, which this
 // layer leaves alone except via the page-reset helper below).
 //
 // Price unit: the URL carries whole DOLLARS. Product `price_data.unit_amount` is
 // cents and the slider UI works in dollars (features/product-filtering/core/rules/priceBounds.ts,
-// lib/utils/price.ts). F3 converts at the edges; the URL never carries cents.
+// platform/utils/price.ts). F3 converts at the edges; the URL never carries cents.
 //
 // History mode: discrete controls (sort, inStock, brand) use
 // `history: "push"` so a single change is individually reversible with the
@@ -99,12 +99,6 @@ export { SORT_DEFAULT };
 
 const SORT_VALUES = SORT_MAP.map((o) => o.urlValue) as SortValue[];
 
-export const SORT_OPTIONS: { value: SortValue; label: string }[] = SORT_MAP.map(
-  (o) => ({
-    value: o.urlValue,
-    label: o.sort,
-  })
-);
 
 function parserForFacet(facet: FilterFacet) {
   if (facet.type === "boolean") {
@@ -152,7 +146,7 @@ export const filterSortParsers = {
 };
 
 /** Every key this contract owns — useful for "clear all" and chip enumeration. */
-export const FILTER_SORT_KEYS = Object.keys(filterSortParsers) as Array<
+const FILTER_SORT_KEYS = Object.keys(filterSortParsers) as Array<
   keyof typeof filterSortParsers
 >;
 

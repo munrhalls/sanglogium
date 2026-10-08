@@ -10,14 +10,14 @@ import {
 import { humanizeFacetValue } from './humanizeFacetValue';
 import type { ProductQueryState, RawProduct } from '@/features/product-filtering/core/types/filterTypes';
 
-export interface FacetOption {
+interface FacetOption {
   value: string;
   label: string;
   count: number;
 }
 
-export type FacetGroups = Record<string, FacetOption[]>;
-export type BooleanFacetCounts = Record<string, number>;
+type FacetGroups = Record<string, FacetOption[]>;
+type BooleanFacetCounts = Record<string, number>;
 
 /** Full category span (unnarrowed by active filters) for a range facet, in
  *  its raw field unit -- mirrors getCategoryPriceRange's price treatment. */
@@ -39,7 +39,7 @@ export interface CatalogueFacets {
   isDefaultState: boolean;
 }
 
-export function getPriceCents(p: RawProduct): number | null {
+function getPriceCents(p: RawProduct): number | null {
   if (p.filterAttributes?.price != null) {
     return Number(p.filterAttributes.price);
   }
@@ -47,7 +47,7 @@ export function getPriceCents(p: RawProduct): number | null {
   return null;
 }
 
-export function isInStock(p: RawProduct): boolean {
+function isInStock(p: RawProduct): boolean {
   if (p.filterAttributes?.inStock != null) {
     return Boolean(p.filterAttributes.inStock);
   }
@@ -56,7 +56,7 @@ export function isInStock(p: RawProduct): boolean {
   return stock - reserved > 0;
 }
 
-export function valuesForFacet(p: RawProduct, facet: FilterFacet): string[] {
+function valuesForFacet(p: RawProduct, facet: FilterFacet): string[] {
   const field = facet.attribute;
   const raw = p.filterAttributes?.[field];
   if (raw === undefined || raw === null) return [];
@@ -70,7 +70,7 @@ export function valuesForFacet(p: RawProduct, facet: FilterFacet): string[] {
  * -- unlike `valuesForFacet` above, which only reads a top-level
  * filterAttributes key.
  */
-export function numericValueForRangeFacet(p: RawProduct, facet: FilterFacet): number | null {
+function numericValueForRangeFacet(p: RawProduct, facet: FilterFacet): number | null {
   const path = facet.attribute.split('.');
   let cur: unknown = p.filterAttributes;
   for (const key of path) {

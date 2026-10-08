@@ -11,7 +11,7 @@ import type { AutocompleteProduct } from "@/features/product-search/core/types/s
 import { HighlightedText } from "./HighlightedText";
 import { CATEGORY_SUGGESTIONS } from "@/features/product-search/core/definitions/searchSuggestions";
 import type { SuggestionEntry } from "@/features/product-search/core/rules/suggestionEntries";
-import { isPlainLeftClick } from "@/features/product-search/ui/isPlainLeftClick";
+import { isPlainLeftClick } from "@/features/product-search/core/rules/isPlainLeftClick";
 import { productHref, searchHref } from "@/features/product-search/url/searchLinks";
 
 interface AutocompletePanelProps {

@@ -24,7 +24,7 @@ import {
 import { FACET_FIELD_MAP } from './fieldMap';
 import type { ProductQueryState } from '@/features/product-filtering/core/types/filterTypes';
 
-export interface ProductQuery {
+interface ProductQuery {
   /** GROQ ordering, pipe included: `| order(...)`. Applied before the slice. */
   orderClause: string;
   /** Extra predicate for the `*[...]` filter, `&&`-prefixed. Empty in S1. */

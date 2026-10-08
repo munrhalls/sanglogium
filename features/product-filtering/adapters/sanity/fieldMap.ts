@@ -55,18 +55,3 @@ export const FACET_FIELD_MAP: Record<string, string> = {
   balanced: 'filterAttributes.balancedUnbalanced',
   partType: 'filterAttributes.partType',
 };
-
-/** sort urlValue -> its GROQ backing field and tie-break fragment. */
-export const SORT_FIELD_MAP: Record<
-  string,
-  { backingField: string; tieBreak: string }
-> = {
-  'featured': { backingField: 'sortAttributes.featuredPriority', tieBreak: 'sortAttributes.popularity desc, _createdAt desc' },
-  'best-selling': { backingField: 'sortAttributes.popularity', tieBreak: '_createdAt desc' },
-  'price-asc': { backingField: 'price_data.unit_amount', tieBreak: '_createdAt desc' },
-  'price-desc': { backingField: 'price_data.unit_amount', tieBreak: '_createdAt desc' },
-  'newest': { backingField: '_createdAt', tieBreak: '_id desc' },
-  'alpha-asc': { backingField: 'name', tieBreak: '_id asc' },
-  'alpha-desc': { backingField: 'name', tieBreak: '_id desc' },
-  'date-old': { backingField: '_createdAt', tieBreak: '_id asc' },
-};
