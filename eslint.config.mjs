@@ -6,21 +6,6 @@ import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const sangLogiumPlugin = require("./tools/eslint-plugin-sang-logium.cjs");
 
-const JEST_PATHS = [
-  {
-    name: "jest",
-    message: "Use Vitest instead. See tests/AGENTS.md Testing Rules.",
-  },
-  {
-    name: "@testing-library/jest-dom",
-    message: "Use Vitest matchers instead. See tests/AGENTS.md Testing Rules.",
-  },
-  {
-    name: "@testing-library/jest-dom/extend-expect",
-    message: "Use Vitest matchers instead. See tests/AGENTS.md Testing Rules.",
-  },
-];
-
 export default [
   ...nextVitals,
   ...nextTypeScript,
@@ -29,16 +14,7 @@ export default [
       "sang-logium": sangLogiumPlugin,
     },
     rules: {
-      // Rule 1: No Jest imports (using built-in no-restricted-imports)
-      "no-restricted-imports": [
-        "error",
-        {
-          paths: JEST_PATHS,
-        },
-      ],
-
-      // Rule 7: No Jest globals (describe, it, expect without import)
-      // Disabled for TypeScript - TypeScript handles undefined variable detection
+      // TypeScript handles undefined variable detection
       "no-undef": "off",
 
       // Custom plugin rules (Rules 2-6, 8)
@@ -56,7 +32,6 @@ export default [
   {
     files: [
       "features/**/*.{ts,tsx}",
-      "app/components/layout/**/*.{ts,tsx}",
     ],
     rules: {
       "import/no-cycle": ["warn", { maxDepth: 6 }],
@@ -68,8 +43,6 @@ export default [
       ".next/**",
       "dist/**",
       "node_modules/**",
-      "_archive/**",
-      "docs/examples/**", // Documentation files with example syntax
     ],
   },
   {

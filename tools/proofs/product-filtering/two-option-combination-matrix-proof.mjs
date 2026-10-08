@@ -1,5 +1,5 @@
 import { writeFileSync, readFileSync } from 'node:fs';
-import { sanityQuery } from './sanityRaw.mjs';
+import { sanityQuery } from './sanity-raw.mjs';
 
 const CATEGORY = process.argv[2] || 'headphones';
 const EXCLUDED_URL_PARAMS = new Set(['price', 'inStock']);
