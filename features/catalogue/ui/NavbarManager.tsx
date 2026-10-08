@@ -1,6 +1,7 @@
 "use client";
-import React, { useState, createContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { cn } from "@/platform/utils/tailwind";
+import { NavContext } from "@/features/catalogue/state/useNavContext";
 import {
   CaretDownIcon,
   HeadphonesIcon,
@@ -17,15 +18,10 @@ function getCategoryIcon(label: string) {
   return SquaresFourIcon;
 }
 
-// Context for providing closeMenu to nested components
-const NavContext = createContext<{ closeMenu: () => void }>({ closeMenu: () => {} });
-
-export const useNavContext = () => React.useContext(NavContext);
-
 // BACKLOG TODO - make sure navbar manager is hidden on anything less than lg-desktop (including lg-touch)
 // BACKLOG TODO - make sure catalogue carousel drawer is not accessible on lg-desktop -> should result in normal homepage with navbar on lg-desktop
 
-export interface NavbarManagerProps {
+interface NavbarManagerProps {
   navLinks: { id: string; label: string }[];
   children: React.ReactNode[];
 }

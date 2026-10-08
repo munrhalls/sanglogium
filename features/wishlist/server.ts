@@ -2,7 +2,7 @@ import 'server-only';
 import { getSession } from '@/features/auth/server';
 import { getWishlistProductIdsByAuthId } from './adapters/sanity/getWishlistProductIdsByAuthId';
 import { getWishlistProducts } from './adapters/sanity/getWishlistProducts';
-import { createGetWishlistProductIds } from './queries/getWishlistProductIds';
+import { getWishlistProductIds as getWishlistProductIdsQuery } from './queries/getWishlistProductIds';
 import type { WishlistPorts } from './core/ports';
 
 const wishlist: WishlistPorts = {
@@ -10,7 +10,7 @@ const wishlist: WishlistPorts = {
   getWishlistProducts,
 };
 
-export const getWishlistProductIds = createGetWishlistProductIds({ getSession, wishlist });
+export const getWishlistProductIds = () => getWishlistProductIdsQuery({ getSession, wishlist });
 
 export { getWishlistProducts };
 

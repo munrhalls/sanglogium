@@ -1,10 +1,8 @@
 import type { WishlistQueryPorts } from '@/features/wishlist/core/ports';
 
-export function createGetWishlistProductIds({ getSession, wishlist }: WishlistQueryPorts) {
-  return async function getWishlistProductIds(): Promise<string[]> {
+export async function getWishlistProductIds({ getSession, wishlist }: WishlistQueryPorts): Promise<string[]> {
     const session = await getSession();
     if (!session) return [];
 
     return wishlist.getWishlistProductIdsByAuthId(session.userId);
-  };
 }

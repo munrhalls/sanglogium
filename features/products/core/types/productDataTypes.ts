@@ -31,14 +31,7 @@ export interface PaginatedProducts {
   totalCount: number; // Total across the whole filtered set, not the page window
 }
 
-export interface CategoryMetadata {
-  id: string;
-  name: string;
-  slug: string | null;
-  type: 'header' | 'link';
-  parentId: string | null;
-  breadcrumb: Array<{ label: string; href: string }>;
-}
+export type { CategoryMetadata } from '@/features/catalogue';
 
 export interface SitemapSlug {
   slug: string;

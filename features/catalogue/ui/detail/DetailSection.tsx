@@ -2,7 +2,7 @@
 import { cn } from "@/platform/utils/tailwind";
 import Link from "next/link";
 import type { NavigationItem } from "@/features/catalogue/core/rules/catalogue";
-import { useNavContext } from "@/features/catalogue/ui/NavbarManager";
+import { useNavContext } from "@/features/catalogue/state/useNavContext";
 
 type CatalogueSection = NavigationItem["sections"][number];
 

@@ -17,8 +17,7 @@ type SitemapEntry = MetadataRoute.Sitemap[number] & {
   priority?: number;
 };
 
-export function createGetSitemapEntries(ports: { catalog: Pick<CatalogPorts, 'getSitemapSlugs'> }) {
-  return async function getSitemapEntries(): Promise<MetadataRoute.Sitemap> {
+export async function getSitemapEntries(ports: { catalog: Pick<CatalogPorts, 'getSitemapSlugs'> }): Promise<MetadataRoute.Sitemap> {
     try {
       const { products, categories } = await ports.catalog.getSitemapSlugs();
 
@@ -81,5 +80,4 @@ export function createGetSitemapEntries(ports: { catalog: Pick<CatalogPorts, 'ge
       console.error('Sitemap generation failed:', err);
       return [{ url: SITE_URL, lastModified: new Date() }];
     }
-  };
 }

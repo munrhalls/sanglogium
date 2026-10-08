@@ -19,25 +19,9 @@ interface PaginationProps {
  * product window updates without client state. Also shows a positional
  * 'Showing X–Y of Z' line matching the search surface (G7).
  */
-export const PAGINATION_WRAPPER_CLASSES = 'mt-8 flex flex-col items-center gap-3';
-export const PAGINATION_CAPTION_CLASSES = 'type-caption text-secondary-500';
-export const PAGINATION_BUTTON_ROW_CLASSES = 'h-10';
-
-export function PaginationSkeleton() {
-  return (
-    <nav
-      aria-label="Pagination"
-      aria-hidden="true"
-      data-testid="pagination-skeleton"
-      className={PAGINATION_WRAPPER_CLASSES}
-    >
-      <span className={`${PAGINATION_CAPTION_CLASSES} bg-secondary-800 rounded w-40 animate-pulse inline-block`}>
-        &nbsp;
-      </span>
-      <div className={`${PAGINATION_BUTTON_ROW_CLASSES} animate-pulse`} />
-    </nav>
-  );
-}
+const PAGINATION_WRAPPER_CLASSES = 'mt-8 flex flex-col items-center gap-3';
+const PAGINATION_CAPTION_CLASSES = 'type-caption text-secondary-500';
+const PAGINATION_BUTTON_ROW_CLASSES = 'h-10';
 
 export function Pagination({ currentPage, totalPages, totalCount, perPage = 24 }: PaginationProps) {
   const pathname = usePathname();

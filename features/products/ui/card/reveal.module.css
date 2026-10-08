@@ -1,5 +1,5 @@
-/* Product-grid image reveal — ported from app/(test)/streaming-poc
-   (issue sang-logium-7j8). The <img> ships blurred in the static SSR HTML and
+/* Product-grid image reveal — ported from a streamed product-grid
+   proof of concept (issue sang-logium-7j8). The <img> ships blurred in the static SSR HTML and
    un-blurs on its own byte arrival; the trigger is an inline capture-phase
    `load` listener (ImageRevealScript), never React — so it fires per image,
    before hydration, and cannot batch into one wall (AI_LESSONS L07). No

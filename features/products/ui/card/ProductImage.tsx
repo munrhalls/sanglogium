@@ -25,7 +25,7 @@ export function ProductImage({
   const isOpaque: boolean | null = image?.asset?.metadata?.isOpaque ?? null;
   // Blur-up placeholder only for opaque photos — a transparent PNG would let
   // the blurred LQIP bleed through its transparent regions, so those fall back
-  // to the flat surface colour (streaming-poc parity).
+  // to the flat surface colour (proof-of-concept parity).
   const showLqip = reveal && lqip !== null && isOpaque !== false;
 
   if (!assetRef) {

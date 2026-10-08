@@ -1,4 +1,4 @@
-export interface CatalogueTreeNode {
+interface CatalogueTreeNode {
   _key: string;
   _type: "catalogueItem";
   title: string;
@@ -61,14 +61,14 @@ export function validateCatalogueIndex(data: unknown): asserts data is Catalogue
 }
 
 // Navigation-specific interfaces
-export interface NavigationLink {
+interface NavigationLink {
   label: string;
   url: string;
   slug?: string;
 }
 
 
-export interface NavigationSection {
+interface NavigationSection {
   title: string;
   links: NavigationLink[];
 }
@@ -79,6 +79,15 @@ export interface NavigationItem {
   imageUrl: string;
   sections: NavigationSection[];
   feature: { caption: string };
+}
+
+export interface CategoryMetadata {
+  id: string;
+  name: string;
+  slug: string | null;
+  type: 'header' | 'link';
+  parentId: string | null;
+  breadcrumb: Array<{ label: string; href: string }>;
 }
 
 export interface CategoryLookup {
