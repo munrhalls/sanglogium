@@ -2,10 +2,16 @@
 import { useState } from "react";
 import Link from "next/link";
 import { saveShippingAction } from "@/features/checkout/actions/saveShippingAction";
-import { formatDeliveryEstimate } from "@/platform/utils/formatting";
 import { formatPriceMajor } from "@/platform/utils/price";
 import { cn } from "@/platform/utils/tailwind";
 import CheckoutStepper from "./CheckoutStepper";
+
+function formatDeliveryEstimate(days: number): string {
+  if (days === 1) {
+    return '1 dzień roboczy';
+  }
+  return `${days} dni robocze`;
+}
 
 interface ShippingOption {
   provider: string;

@@ -1,11 +1,8 @@
 import "server-only";
-import { Resend } from "resend";
 import type { NewsletterSubscriptions } from "@/features/newsletter/core/ports";
+import { resend } from "@/platform/email/client";
 
-const resendApiKey = process.env.RESEND_API_KEY;
 const audienceId = process.env.RESEND_AUDIENCE_ID;
-
-const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
 export const subscribeToNewsletter: NewsletterSubscriptions["subscribe"] = async (
   email
