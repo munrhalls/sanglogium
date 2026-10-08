@@ -1,18 +1,6 @@
 
 import type { PaymentMethodDetails } from '@/features/order';
 
-export type ServerProduct = {
-  _id: string;
-  name: string;
-  price: number;
-  stock: number;
-  _rev: string;
-};
-
-export type BasketCheckoutItem = {
-  _id: string;
-  quantity: number;
-};
 
 // Checkout-owned product shape (cycle guard): only the fields checkout reads.
 export type CheckoutProduct = {

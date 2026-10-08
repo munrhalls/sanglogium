@@ -3,7 +3,6 @@ import { backendClient } from "@/platform/sanity/backendClient";
 
 import type { OrderForSuccessPage } from "@/features/checkout/core/types/checkoutTypes";
 
-export type { OrderForSuccessPage };
 
 export async function fetchOrderByPaymentIntentId(
   paymentIntentId: string

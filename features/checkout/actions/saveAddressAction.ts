@@ -3,7 +3,8 @@
 import { getCheckoutSession } from "@/features/checkout/server";
 import { redirect } from "next/navigation";
 import type { Address } from "@/features/address";
-import { logCheckoutEvent, generateCheckoutSessionId } from "@/features/checkout/core/rules/checkoutEvents";
+import { logEvent } from "@/platform/utils/eventLogger";
+import { generateCheckoutSessionId } from "@/features/checkout/core/rules/checkoutSessionId";
 import { checkAddress } from "@/features/address/server";
 
 export async function saveAddressAction(
@@ -22,7 +23,7 @@ export async function saveAddressAction(
   const checkoutSessionId = session.checkoutSessionId || generateCheckoutSessionId();
   session.checkoutSessionId = checkoutSessionId;
 
-  await logCheckoutEvent({
+  await logEvent({
     correlationId: checkoutSessionId,
     slice: 'address-submit',
     event: 'address_submit_start',
@@ -35,7 +36,7 @@ export async function saveAddressAction(
   console.log("[SAVE ADDRESS] validationResult.status:", validationResult.status);
   console.log("[SAVE ADDRESS] validationResult.address:", validationResult.address);
 
-  await logCheckoutEvent({
+  await logEvent({
     correlationId: checkoutSessionId,
     slice: 'address-submit',
     event: 'address_validation_result',
@@ -45,7 +46,7 @@ export async function saveAddressAction(
 
   // Only proceed if validation succeeds
   if (validationResult.status !== "ACCEPT") {
-    await logCheckoutEvent({
+    await logEvent({
       correlationId: checkoutSessionId,
       slice: 'address-submit',
       event: 'address_validation_failed',
@@ -74,7 +75,7 @@ export async function saveAddressAction(
   await session.save();
   console.log("[SAVE ADDRESS] Session saved. session.address after save:", session.address);
 
-  await logCheckoutEvent({
+  await logEvent({
     correlationId: checkoutSessionId,
     slice: 'address-submit',
     event: 'address_saved',

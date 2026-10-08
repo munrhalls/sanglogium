@@ -1,4 +1,4 @@
-export interface PaymentProductInput {
+interface PaymentProductInput {
   _id: string;
   name: string | null;
   price_data: { unit_amount: number } | null;

@@ -8,7 +8,7 @@ import type {
 } from "@/features/checkout/core/ports";
 import type { OrderSessionData } from "@/features/order";
 import type { PaymentSnapshot } from "@/features/checkout/core/types/checkoutTypes";
-import { logCheckoutEvent } from "@/features/checkout/core/rules/checkoutEvents";
+import { logEvent } from "@/platform/utils/eventLogger";
 import { getSession } from "@/features/auth/server";
 import { placeOrderFromPayment } from "./placeOrderFromPayment";
 
@@ -23,21 +23,21 @@ export async function handlePaymentReturn(
 
   const authSession = await getSession();
 
-  await logCheckoutEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_start', data: { hasPaymentIntent: !!payment_intent }, outcome: 'success' });
+  await logEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_start', data: { hasPaymentIntent: !!payment_intent }, outcome: 'success' });
 
   if (!payment_intent) {
-    await logCheckoutEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_missing_intent', data: {}, outcome: 'error' });
+    await logEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_missing_intent', data: {}, outcome: 'error' });
     redirect("/basket?error=missing_intent");
   }
 
   // M-1: Guard against arbitrary PI retrieval — session must know this intent
   if (!session.paymentIntentId && !session.completedPaymentIntentId) {
-    await logCheckoutEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_no_active_intent', data: { urlPaymentIntent: payment_intent }, outcome: 'error' });
+    await logEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_no_active_intent', data: { urlPaymentIntent: payment_intent }, outcome: 'error' });
     redirect("/basket?error=no_active_intent");
   }
 
   if (session.paymentIntentId && session.paymentIntentId !== payment_intent) {
-    await logCheckoutEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_intent_mismatch', data: { sessionPaymentIntentId: session.paymentIntentId, urlPaymentIntent: payment_intent }, outcome: 'error' });
+    await logEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_intent_mismatch', data: { sessionPaymentIntentId: session.paymentIntentId, urlPaymentIntent: payment_intent }, outcome: 'error' });
     redirect("/basket?error=intent_mismatch");
   }
 
@@ -51,12 +51,12 @@ export async function handlePaymentReturn(
   let payment: PaymentSnapshot;
   try {
     payment = await ports.payments.retrievePayment(payment_intent);
-    await logCheckoutEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_pi_retrieved', data: { paymentIntentId: payment_intent, status: payment.status, amount: payment.amount }, outcome: 'success' });
+    await logEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_pi_retrieved', data: { paymentIntentId: payment_intent, status: payment.status, amount: payment.amount }, outcome: 'success' });
     if (process.env.NODE_ENV !== "production") {
       console.log("[RETURN HANDLER] PI retrieved — status:", payment.status, "amount:", payment.amount);
     }
   } catch (err) {
-    await logCheckoutEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_pi_retrieve_failed', data: { paymentIntentId: payment_intent, error: err instanceof Error ? err.message : String(err) }, outcome: 'error' });
+    await logEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_pi_retrieve_failed', data: { paymentIntentId: payment_intent, error: err instanceof Error ? err.message : String(err) }, outcome: 'error' });
     // H-01: never set completedPaymentIntentId on failure paths
     session.lastPaymentIntentId = payment_intent;
     await session.save();
@@ -69,7 +69,7 @@ export async function handlePaymentReturn(
   // but completedPaymentIntentId is ONLY set on succeeded
   session.lastPaymentIntentId = payment.id;
 
-  await logCheckoutEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_session_lifecycle_start', data: { paymentIntentId: payment.id, status: payment.status }, outcome: 'success' });
+  await logEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_session_lifecycle_start', data: { paymentIntentId: payment.id, status: payment.status }, outcome: 'success' });
 
   // Capture session data before clearing — needed for concurrent order creation on succeeded path
   const capturedSessionData: OrderSessionData | null = payment.status === 'succeeded' ? {
@@ -96,30 +96,30 @@ export async function handlePaymentReturn(
       session.shippingCode = undefined;
       session.shippingCost = undefined;
 
-      await logCheckoutEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_session_cleared_succeeded', data: {}, outcome: 'success' });
+      await logEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_session_cleared_succeeded', data: {}, outcome: 'success' });
       break;
 
     case "requires_payment_method":
       session.paymentIntentId = undefined;
       // KEEP basket, address, shippingCode, shippingCost
-      await logCheckoutEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_session_partial_cleared_failed', data: {}, outcome: 'error' });
+      await logEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_session_partial_cleared_failed', data: {}, outcome: 'error' });
       break;
 
     case "canceled":
       session.paymentIntentId = undefined;
       // KEEP basket, address, shippingCode, shippingCost
-      await logCheckoutEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_session_partial_cleared_canceled', data: {}, outcome: 'error' });
+      await logEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_session_partial_cleared_canceled', data: {}, outcome: 'error' });
       break;
 
     case "processing":
       // KEEP everything — async confirmation may still resolve
-      await logCheckoutEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_session_kept_processing', data: {}, outcome: 'success' });
+      await logEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_session_kept_processing', data: {}, outcome: 'success' });
       break;
 
     default:
       session.paymentIntentId = undefined;
       // KEEP basket, address, shippingCode, shippingCost
-      await logCheckoutEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_session_partial_cleared_unknown', data: { status: payment.status }, outcome: 'error' });
+      await logEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_session_partial_cleared_unknown', data: { status: payment.status }, outcome: 'error' });
       await session.save();
       redirect(`/basket?error=unexpected_status`);
   }
@@ -127,7 +127,7 @@ export async function handlePaymentReturn(
   // Step 3: persist session
   await session.save();
 
-  await logCheckoutEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_session_saved', data: { status: payment.status }, outcome: 'success' });
+  await logEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_session_saved', data: { status: payment.status }, outcome: 'success' });
 
   // Step 3b: on succeeded path, create order synchronously before redirect
   // Idempotent — createOrderFromPayment skips if order already exists (webhook may also fire).
@@ -135,9 +135,9 @@ export async function handlePaymentReturn(
   if (payment.status === 'succeeded' && capturedSessionData) {
     try {
       await placeOrderFromPayment({ orders: ports.orders, emails: ports.emails }, { payment, sessionData: capturedSessionData });
-      await logCheckoutEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_order_created', data: { paymentIntentId: payment.id }, outcome: 'success' });
+      await logEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_order_created', data: { paymentIntentId: payment.id }, outcome: 'success' });
     } catch (err) {
-      await logCheckoutEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_order_create_failed', data: { paymentIntentId: payment.id, error: err instanceof Error ? err.message : String(err) }, outcome: 'error' });
+      await logEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_order_create_failed', data: { paymentIntentId: payment.id, error: err instanceof Error ? err.message : String(err) }, outcome: 'error' });
     }
   }
 
@@ -157,7 +157,7 @@ export async function handlePaymentReturn(
     }
   })();
 
-  await logCheckoutEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_redirect', data: { status: payment.status, redirectTarget }, outcome: 'success' });
+  await logEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_redirect', data: { status: payment.status, redirectTarget }, outcome: 'success' });
 
   redirect(redirectTarget);
 }

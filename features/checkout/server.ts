@@ -2,7 +2,7 @@ import 'server-only';
 // Server-only entry: checkout session, payments, order placement and the step pages' data. Never import from client components or Node .mjs scripts.
 import { getCheckoutSession } from './adapters/iron-session/checkoutSession';
 import { fetchShippingOptions } from '@/features/shipping/server';
-import { fetchOrderByPaymentIntentId } from './adapters/sanity/getOrderByPaymentIntentId';
+import { fetchOrderByPaymentIntentId } from './adapters/sanity/fetchOrderByPaymentIntentId';
 import { createOrderFromPayment } from '@/features/order/server';
 import { getPaymentProducts } from './adapters/sanity/getPaymentProducts';
 import { getProductsByIds } from './adapters/sanity/getProductsByIds';
