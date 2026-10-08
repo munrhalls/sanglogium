@@ -1,4 +1,4 @@
-export type CountryCode = 'PL' | 'GB' | 'DE';
+type CountryCode = 'PL' | 'GB' | 'DE';
 
 const CACHE_KEY = 'detected_country';
 const CACHE_EXPIRY_MS = 60 * 60 * 1000; // 1 hour

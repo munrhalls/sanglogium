@@ -19,8 +19,6 @@ import "server-only";
 
 import type { RegistryCheckInput, RegistryCheckResult } from "@/features/address/core/types/addressTypes";
 
-export type { RegistryCheckInput, RegistryCheckResult };
-
 const DEFAULT_ENDPOINT = "https://uslugaterytws1test.stat.gov.pl/Terytws1.svc";
 const DEFAULT_USER = "TestPubliczny";
 const DEFAULT_PASS = "1234abcd";

@@ -1,4 +1,4 @@
-export type MetricKind = "score" | "ms" | "cls" | "bytes";
+type MetricKind = "score" | "ms" | "cls" | "bytes";
 
 export type Assertion = {
   name: "minScore" | "maxNumericValue";
@@ -57,7 +57,7 @@ export function formatExpected(value: number, kind: MetricKind): string {
   return String(value);
 }
 
-export function formatBytes(bytes: number): string {
+function formatBytes(bytes: number): string {
   if (bytes === 0) return "0 B";
   const k = 1024;
   const sizes = ["B", "KB", "MB"];

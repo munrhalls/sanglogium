@@ -49,7 +49,7 @@ interface GoogleValidationVerdict {
   hasInferredComponents: boolean;
 }
 
-export interface GoogleValidationResponse {
+interface GoogleValidationResponse {
   result?: {
     verdict?: GoogleValidationVerdict;
     address?: GoogleAddress;
@@ -66,7 +66,7 @@ export interface GoogleValidationResponse {
 const ALLOWED_GRANULARITY = new Set(["PREMISE", "SUB_PREMISE"]);
 
 // Countries the checkout address form actually offers (see REGIONS in
-// app/checkout/address/AddressForm.tsx) plus the GB code the region gate
+// features/checkout/ui/AddressForm.tsx) plus the GB code the region gate
 // accepts when it matches the normalized input (UK alias -> GB). A
 // Google-normalized regionCode outside this set must never be persisted.
 const SUPPORTED_REGION_CODES = new Set(["PL", "GB"]);

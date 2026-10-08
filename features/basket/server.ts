@@ -12,4 +12,3 @@ const basketProducts: BasketProductsPort = {
 export function getBasketProducts(ids: string[]): Promise<BasketProduct[]> {
   return getBasketProductsQuery(basketProducts, ids);
 }
-export type { BasketProduct };

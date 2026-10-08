@@ -9,12 +9,12 @@
  * @returns Array of packages for shipping API (weight in kg, dimensions in cm)
  */
 
-export interface BasketItem {
+interface BasketItem {
   productId: string;
   quantity: number;
 }
 
-export interface ProductWithParcel {
+interface ProductWithParcel {
   _id: string;
   parcel?: {
     length: number;
@@ -24,18 +24,7 @@ export interface ProductWithParcel {
   };
 }
 
-export interface BasketReservationItem {
-  _id: string;
-  quantity: number;
-  parcel?: {
-    length: number;
-    width: number;
-    height: number;
-    weight: number;
-  };
-}
-
-export interface Package {
+interface Package {
   weight: number; // kg
   width: number; // cm
   height: number; // cm
@@ -140,85 +129,3 @@ export function calculatePackages(
   return packages.filter(pkg => pkg.weight > 0);
 }
 
-/**
- * Overload for basketReservation structure (parcel data embedded)
- */
-export function calculatePackagesFromReservation(
-  basketReservation: BasketReservationItem[]
-): Package[] {
-  // Aggregate total weight and volume
-  let totalWeight = 0; // grams
-  let totalVolume = 0; // cm³
-  let maxLength = 0;
-  let maxWidth = 0;
-  let maxHeight = 0;
-
-  for (const item of basketReservation) {
-    const parcel = item.parcel ?? DEFAULT_PARCEL;
-
-    if (!item.parcel) {
-      console.warn(`[PARCEL CALC] Product ${item._id} missing parcel data, using DEFAULT_PARCEL`);
-    }
-
-    totalWeight += parcel.weight * item.quantity;
-    totalVolume += parcel.length * parcel.width * parcel.height * item.quantity;
-    maxLength = Math.max(maxLength, parcel.length);
-    maxWidth = Math.max(maxWidth, parcel.width);
-    maxHeight = Math.max(maxHeight, parcel.height);
-  }
-
-  // Guard: no valid parcel data found
-  if (totalWeight === 0 && totalVolume === 0) {
-    console.warn('[PARCEL CALC] No valid parcel data for any basket reservation item');
-    return [];
-  }
-
-  // Calculate number of parcels needed
-  const parcelsByWeight = Math.ceil(totalWeight / MAX_WEIGHT_G);
-  const parcelsByVolume = Math.ceil(totalVolume / MAX_VOLUME_CM3);
-  const numParcels = Math.max(parcelsByWeight, parcelsByVolume, 1);
-
-  // If only one parcel, return aggregated dimensions
-  if (numParcels === 1) {
-    return [{
-      weight: totalWeight / 1000, // convert grams to kg
-      width: maxWidth,
-      height: maxHeight,
-      length: maxLength,
-    }];
-  }
-
-  // Split into multiple parcels
-  const parcelsPerSplit = Math.ceil(basketReservation.length / numParcels);
-  const packages: Package[] = [];
-
-  for (let i = 0; i < numParcels; i++) {
-    const startIdx = i * parcelsPerSplit;
-    const endIdx = Math.min(startIdx + parcelsPerSplit, basketReservation.length);
-    const subset = basketReservation.slice(startIdx, endIdx);
-
-    let splitWeight = 0;
-    let splitMaxLength = 0;
-    let splitMaxWidth = 0;
-    let splitMaxHeight = 0;
-
-    for (const item of subset) {
-      if (item.parcel) {
-        splitWeight += item.parcel.weight * item.quantity;
-        splitMaxLength = Math.max(splitMaxLength, item.parcel.length);
-        splitMaxWidth = Math.max(splitMaxWidth, item.parcel.width);
-        splitMaxHeight = Math.max(splitMaxHeight, item.parcel.height);
-      }
-    }
-
-    packages.push({
-      weight: splitWeight / 1000, // convert grams to kg
-      width: splitMaxWidth,
-      height: splitMaxHeight,
-      length: splitMaxLength,
-    });
-  }
-
-  // Filter out empty packages (can happen when splitting single-item baskets)
-  return packages.filter(pkg => pkg.weight > 0);
-}
