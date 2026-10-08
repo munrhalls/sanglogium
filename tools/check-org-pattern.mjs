@@ -1,7 +1,7 @@
 // Check "org-pattern": where every file lives and how slices may import each other, as defined in
 // docs/organizational-pattern.md (the tables below mirror its sections 2 and 3; edit both together).
 //   PLACE      every changed path has a home (section 3)
-//   DOTDOT     no '..' specifier under features/ (studio-plane files excepted)
+//   DOTDOT     no '..' specifier in a runtime or laws file (studio-plane files excepted)
 //   PLANE      runtime never imports a non-runtime plane; studio/tooling never import runtime except platform/sanity/env.ts and the facet vocabulary; nothing imports laws
 //   DOOR       a slice is imported only through index.ts or server.ts
 //   INWARD     inside a slice, imports follow the archetype table (section 2)
@@ -107,7 +107,7 @@ function edge(ctx, file, rel, { spec, typeOnly, line, imported }) {
   const at = `${file}:${line} "${spec}"`;
   const out = [];
   const A = zone(file);
-  if (file.startsWith("features/") && A?.plane !== "studio" && spec.startsWith("..")) out.push(`${at} DOTDOT use ./x or the @/ alias`);
+  if ((A?.plane === "runtime" || A?.plane === "laws") && spec.startsWith("..")) out.push(`${at} DOTDOT use ./x or the @/ alias`);
   const B = zone(rel);
   if (!A || !B) return out; // unplaced paths are reported by PLACE
   // Plane rules (A laws: no plane rule).
