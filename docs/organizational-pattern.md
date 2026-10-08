@@ -25,15 +25,15 @@ Normative model of how this repository is organized: vertical slices. It says wh
 |------|-------|-----------------------------|
 | `index.ts` | client door: components, hooks, URL translators, client-safe types and values (other slices' `core/` may import these), Server Actions | ui, state, url, core, actions |
 | `server.ts` | server door: wires adapters into ports and use cases, re-exports views and wired functions; contains `import "server-only"` | every part except schema; never a `'use server'` file |
-| `ui/` | client and presentational components; names never end in `View`, `Client`, `Server` or `Page` | ui, state, url, core, actions |
-| `state/` | client stores, hooks, and the browser's calls to outside systems | state, url, core, actions, adapters |
+| `ui/` | client and presentational components (server-safe ones included) and their `*.module.css` files; names never end in `View`, `Client`, `Server` or `Page` | ui, state, url, core, actions |
+| `state/` | client stores, hooks, and the browser's calls to outside systems (the app's own `/api/` routes are not one: a `ui/` component may call them) | state, url, core, actions, adapters |
 | `url/` | URL to typed state translators, both directions | url, core |
 | `view/` | server-rendered components named `*View`; data arrives as props | view, ui, url, core |
 | `queries/` | read use cases with logic; take their ports as the first parameter | queries, core |
 | `commands/` | write use cases; they take their ports as the first parameter | commands, url, core |
 | `actions/` | every Server Action: `'use server'`, one per file, named `<name>Action.ts` (an action is an RPC entry point, reads included) | url, core, server.ts |
-| `core/definitions/` | data: registries, constants, labels | core |
-| `core/rules/` | pure logic | core |
+| `core/definitions/` | data: registries, constants, labels, and the pure lookups and guards that read only that data | core |
+| `core/rules/` | logic with no I/O (reading the clock or a random value is allowed) | core |
 | `core/types/` | type-only modules: the slice's data shapes, no runtime values | core |
 | `core/ports.ts` | the function types queries, commands and server.ts need from adapters, in the slice's own types | core |
 | `adapters/<system>/` | the only code that talks to an outside system (`sanity`, `stripe`, `better-auth`, `resend`, `google`, ...); implements ports and maps vendor shapes into the slice's types | the same system, core |
@@ -49,12 +49,12 @@ A part may group its files in one level of sub-folders named after a screen regi
 2. URL parsers and serializers go to `url/`; client stores and hooks to `state/`.
 3. Server components go to `view/` (named `*View`); client and presentational components to `ui/`.
 4. Every call to an outside system goes to `adapters/<system>/`, usually one function per file, and returns the slice's own types. A file that uses a secret or a server-only API contains `import "server-only"`. GROQ and Sanity patches exist only in `adapters/sanity/`.
-5. `core/ports.ts` declares a function type for each adapter function the slice uses, grouped into named port objects.
+5. `core/ports.ts` declares a function type for each adapter function the slice uses, grouped into named port objects. A slice with no query or command that takes ports has no `core/ports.ts`; its `server.ts` re-exports the adapter functions it needs.
 6. A use case with logic goes to `queries/<name>.ts` or `commands/<name>.ts` and takes its ports as the first parameter. Without logic, `server.ts` exports the wired adapter function directly.
 7. A Server Action is `actions/<name>Action.ts` starting with `'use server'`: auth guard (through the auth slice's server door), input validation, one call to a wired function from a server door, revalidation.
 8. `server.ts` contains `import "server-only"`, builds the port objects from adapters, binds use cases, and re-exports views and wired functions under stable names.
 9. `index.ts` re-exports what other slices' and routes' client code may use.
-10. A route reads its params, calls server-door functions and renders a server-door view. No GROQ, no adapter, no logic.
+10. A route reads its params, calls server-door functions and renders a server-door view. No GROQ, no adapter, no logic. A route handler (`route.ts`) maps the request to one server-door call and the result to a response with its status code, and holds no business rule.
 
 ## 3. Homes
 
@@ -98,10 +98,10 @@ A part may group its files in one level of sub-folders named after a screen regi
 
 ## 5. Conventions (review-enforced unless section 6 names a rule)
 
-- Specifiers: `./x` for the same directory and `@/...` otherwise; no `..` under `features/`, except in studio-plane files, which use relative paths only because the Sanity CLI does not resolve `@/`.
+- Specifiers: `./x` for the same directory and `@/...` otherwise; no `..` in a runtime file (`app/`, `features/`, `platform/`, root entry files), except in studio-plane files, which use relative paths only because the Sanity CLI does not resolve `@/`.
 - Naming: components PascalCase; module files camelCase; docs, scripts and static assets kebab-case (exempt: `README.md`, `CLAUDE.md`, `AGENTS.md`, `ADR-NNN-*.md` and the three `_project/` process documents); `view/` components end in `View`; `ui/` component names never end in `View`, `Client`, `Server` or `Page`; Server Actions are `actions/<name>Action.ts`; slice names are domain nouns.
 - One Server Action per file.
-- Promotion: a component moves to `platform/design/ui/` when a second slice needs it.
+- Promotion: a component moves to `platform/design/ui/` when a second slice needs it. Only a component with no domain knowledge is promoted; a domain component that other slices need is exported through its slice's `index.ts`.
 - Composition roots: a route, a slice's `server.ts`, a page-level view and a batched query are the designated places that change when a part is added; every other change is an addition.
 - Client doors: `index.ts` may carry the pure values and types other slices' `core/` needs (a shared kernel). A separate pure door is added only when laws must import such a module.
 - Behaviour laws: a port gets laws when it gets a second adapter or when its behaviour is not obvious; URL translators get round-trip laws. Laws use `node:test` and need no dependency. Agents never run them; the human does.
@@ -122,7 +122,7 @@ A part may group its files in one level of sub-folders named after a screen regi
 | A10 | VENDOR |
 | A11 | VIEWDATA |
 | A12, section 4 | GENERATED (`sanity.types.ts` imports); the single write owner is review-enforced |
-| Section 5 naming | ACTION, NAMES |
+| Section 5 specifiers and naming | DOTDOT, ACTION, NAMES |
 | all | `tools/check-imports.mjs`: SPEC (every import resolves), DELETED (no importer of a removed file), EXPORT (every imported name is exported by its target) |
 
 Behaviour (L): `npm run laws` runs every `*.laws.ts` file; the human runs it, agents never do.

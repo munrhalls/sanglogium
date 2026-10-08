@@ -99,9 +99,9 @@ ORGANIZATIONAL PATTERN (binding). Source of truth: docs/organizational-pattern.m
 3. Inside a slice, imports follow the archetype table in section 2. core/ imports only its own core/, another slice's index.ts and platform/utils/; never a vendor package, sanity.types.ts or data/.
 4. Code outside a slice reaches it only through its index.ts or server.ts. Slice-to-slice imports never form a cycle.
 5. Only adapters/<system>/ talk to an outside system (Sanity, Stripe, better-auth, Resend, Google...); vendor packages (section 3) are imported only there, in platform/, in framework entry files and in the studio plane. GROQ and Sanity patches exist only in adapters/sanity/. server.ts wires adapters into ports and never imports a 'use server' file.
-6. app/ holds Next route files only. A route imports slice doors, platform/, next and react, and only composes them.
+6. app/ holds Next route files only. A route imports slice doors, platform/, next, next/* and react, and only composes them.
 7. platform/ (design, sanity, email, analytics, utils) imports only platform/. Client-safe code (ui/, state/, url/, core/, index.ts, platform/design/ui/, any 'use client' file) never imports a file containing import "server-only"; every server.ts contains it.
-8. No '..' under features/: use './x' for the same directory and '@/...' for everything else.
+8. No '..' in runtime files (app/, features/, platform/), except studio-plane files: use './x' for the same directory and '@/...' for everything else.
 9. view/ components end in View and get data as props; ui/ names never end in View, Client, Server or Page; every Server Action is actions/<name>Action.ts; every CMS document type has one owning slice that holds its schema and every write (section 4).
 10. If the task seems to require breaking a rule, do not work around it: stop and report it.
 11. Never edit tools/check-turn.mjs, tools/check-imports.mjs, tools/check-org-pattern.mjs, tools/git-hooks/, docs/organizational-pattern.md or this block to make a change pass.

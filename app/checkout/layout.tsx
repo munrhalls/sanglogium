@@ -1,4 +1,4 @@
-﻿import "../globals.css";
+﻿import "@/app/globals.css";
 import { Montserrat } from "next/font/google";
 import { BrandLogo } from "@/features/shell";
 import GoogleAnalytics from "@/platform/analytics/GoogleAnalytics";
