@@ -3,16 +3,18 @@ import React from "react";
 import Link from "next/link";
 import { ArrowLeftIcon } from "@phosphor-icons/react";
 import { Price } from "@/platform/design/ui/Price";
-import { CheckoutButton } from "@/features/checkout";
 
 interface BasketSummaryProps {
   itemCount: number;
   subtotal: number;
   basketData?: Array<{ productId: string; quantity: number; price_data: { currency: string; unit_amount: number }; availableStock?: number }>;
   shippingCost: number | null;
+  renderCheckout: RenderCheckout;
 }
 
-export default function BasketSummary({ itemCount, subtotal, basketData, shippingCost }: BasketSummaryProps) {
+export type RenderCheckout = (basketData: BasketSummaryProps["basketData"], disabled: boolean) => React.ReactNode;
+
+export default function BasketSummary({ itemCount, subtotal, basketData, shippingCost, renderCheckout }: BasketSummaryProps) {
   const total = shippingCost !== null ? subtotal + shippingCost : subtotal;
 
   return (
@@ -55,7 +57,7 @@ export default function BasketSummary({ itemCount, subtotal, basketData, shippin
       </div>
 
       <div>
-        <CheckoutButton basketData={basketData} disabled={itemCount === 0} />
+        {renderCheckout(basketData, itemCount === 0)}
 
         <Link
           href="/"

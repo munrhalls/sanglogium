@@ -110,6 +110,7 @@ _project/agent-logs/
 _project/_scratch/
 _project/scratch/
 _project/*.log
+_project/working-memory/
 *.stdout.log
 *.tsbuildinfo
 *.bak
