@@ -5,8 +5,6 @@ import { productGridClass, CHUNK_SIZE } from "@/features/products/core/definitio
 import { ImageRevealScript } from "@/features/products/ui/card/ImageRevealScript";
 import { ImageReveal } from "@/features/products/ui/card/ImageReveal";
 
-export { CHUNK_SIZE };
-
 interface ChunkedProductGridProps {
   // One rendered <ProductChunk /> element per chunk promise — the caller
   // (a view) maps promises to elements so this stays a presentational
@@ -17,7 +15,7 @@ interface ChunkedProductGridProps {
 
 // Renders one continuous responsive grid where each chunk streams in
 // independently via its own Suspense boundary, per the confirmed
-// streaming-poc mechanism: chunk elements are created (unawaited) by the
+// proof-of-concept mechanism: chunk elements are created (unawaited) by the
 // caller and handed down as props, never fetched inside this component.
 export function ChunkedProductGrid({
   chunks,

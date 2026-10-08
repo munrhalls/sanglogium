@@ -6,19 +6,18 @@ import {
   generateMetaDescription,
 } from '@/features/products/core/rules/titleOptimization';
 
-export interface ProductPagePorts {
+interface ProductPagePorts {
   catalog: Pick<CatalogPorts, 'getProductBySlug' | 'getRelatedProducts'>;
 }
 
-export type ProductPageResult =
+type ProductPageResult =
   | { product: null }
   | {
       product: ProductDetailData;
       relatedProducts: RelatedProduct[];
     };
 
-export function createGetProductPage(ports: ProductPagePorts) {
-  return async function getProductPage(slug: string): Promise<ProductPageResult> {
+export async function getProductPage(ports: ProductPagePorts, slug: string): Promise<ProductPageResult> {
     const product = await ports.catalog.getProductBySlug(slug);
 
     if (!product) {
@@ -36,11 +35,9 @@ export function createGetProductPage(ports: ProductPagePorts) {
       product,
       relatedProducts,
     };
-  };
 }
 
-export function createGetProductMetadata(ports: Pick<ProductPagePorts, 'catalog'>) {
-  return async function getProductMetadata(slug: string) {
+export async function getProductMetadata(ports: Pick<ProductPagePorts, 'catalog'>, slug: string) {
     const product = await ports.catalog.getProductBySlug(slug);
 
     if (!product) {
@@ -86,5 +83,4 @@ export function createGetProductMetadata(ports: Pick<ProductPagePorts, 'catalog'
         'seo-title': seoTitle, // Custom meta for SEO tracking
       }
     };
-  };
 }

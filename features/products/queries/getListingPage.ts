@@ -33,7 +33,7 @@ export interface ListingPorts {
   catalog: CatalogPorts;
 }
 
-export type ListingPageResult =
+type ListingPageResult =
   | { notFound: true }
   | {
       notFound?: false;
@@ -52,11 +52,10 @@ export type ListingPageResult =
       chunkPromises: Promise<Product[]>[];
     };
 
-export function createGetListingPage(ports: ListingPorts) {
-  return async function getListingPage(input: {
-    slug: string[] | null;
-    query: SearchParams;
-  }): Promise<ListingPageResult> {
+export async function getListingPage(ports: ListingPorts, input: {
+  slug: string[] | null;
+  query: SearchParams;
+}): Promise<ListingPageResult> {
     const { slug, query } = input;
     const nodeId = slug ? ports.catalogue.resolveSlugToId(slug[slug.length - 1]) : undefined;
 
@@ -138,11 +137,9 @@ export function createGetListingPage(ports: ListingPorts) {
       perPage: PER_PAGE,
       chunkPromises,
     };
-  };
 }
 
-export function createGetListingMetadata(ports: Pick<ListingPorts, 'catalogue' | 'catalog'>) {
-  return async function getListingMetadata(input: { slug: string[] | null; query: SearchParams }) {
+export async function getListingMetadata(ports: Pick<ListingPorts, 'catalogue' | 'catalog'>, input: { slug: string[] | null; query: SearchParams }) {
     const { slug, query } = input;
 
     if (!slug) {
@@ -173,5 +170,4 @@ export function createGetListingMetadata(ports: Pick<ListingPorts, 'catalogue' |
       alternates: { canonical: canonicalCategoryPath(slug) },
       robots: isFacetedQuery(query) ? { index: false, follow: true } : undefined,
     };
-  };
 }
