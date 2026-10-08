@@ -12,7 +12,7 @@ export {
   productMatchesState,
 } from './core/rules/facetCounts';
 export { humanizeFacetValue } from './core/rules/humanizeFacetValue';
-export type { ProductQueryState, RawProduct } from './core/rules/filterTypes';
+export type { ProductQueryState, RawProduct } from './core/types/filterTypes';
 export { resolvePriceBounds } from './core/rules/priceBounds';
 export type { PriceRangeData } from './core/rules/priceBounds';
 export type { CatalogueFacets } from './core/rules/facetCounts';

@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { ProductImage } from "./ProductImage";
-import type { Product } from "@/features/products/core/rules/productTypes";
+import type { Product } from "@/features/products/core/types/productTypes";
 import { Price } from "@/platform/design/ui/Price";
 import { BasketControls } from "@/features/basket";
 import { centsToDisplay } from "@/platform/utils/price";

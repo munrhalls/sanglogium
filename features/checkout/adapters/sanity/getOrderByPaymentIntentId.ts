@@ -1,7 +1,7 @@
 import "server-only";
 import { backendClient } from "@/platform/sanity/backendClient";
 
-import type { OrderForSuccessPage } from "@/features/checkout/core/rules/checkoutTypes";
+import type { OrderForSuccessPage } from "@/features/checkout/core/types/checkoutTypes";
 
 export type { OrderForSuccessPage };
 

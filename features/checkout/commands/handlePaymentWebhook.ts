@@ -1,6 +1,6 @@
 import "server-only";
 import type { Orders, Payments, OrderEmails } from "@/features/checkout/core/ports";
-import type { PaymentEvent, PaymentSnapshot } from "@/features/checkout/core/rules/checkoutTypes";
+import type { PaymentEvent, PaymentSnapshot } from "@/features/checkout/core/types/checkoutTypes";
 import { logCheckoutEvent } from "@/features/checkout/core/rules/checkoutEvents";
 import { placeOrderFromPayment } from "./placeOrderFromPayment";
 

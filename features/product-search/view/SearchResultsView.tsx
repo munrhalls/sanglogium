@@ -3,7 +3,7 @@ import { SearchEmpty } from '@/features/product-search/ui/results/SearchEmpty';
 import { SearchPagination } from '@/features/product-search/ui/results/SearchPagination';
 import { SearchSort } from '@/features/product-search/ui/results/SearchSort';
 import { SearchCategoryChips } from '@/features/product-search/ui/results/SearchCategoryChips';
-import type { SearchResult } from '@/features/product-search/core/rules/searchTypes';
+import type { SearchResult } from '@/features/product-search/core/types/searchTypes';
 import { EmptyResults, ProductGrid } from "@/features/products";
 import type { CardAction } from "@/features/products";
 import { ActiveFilterChips, FilterSidebar, MobileFilterSheet, isFiltersActive, resolvePriceBounds, SORT_DEFAULT } from '@/features/product-filtering';

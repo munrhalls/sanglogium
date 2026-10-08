@@ -4,4 +4,4 @@ export type {
   AddressCheckResult,
   AddressCheckStatus,
   AddressSuggestion,
-} from './core/rules/addressTypes';
+} from './core/types/addressTypes';

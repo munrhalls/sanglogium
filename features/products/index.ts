@@ -1,5 +1,5 @@
 // Client door: the only entry other slices and routes use for this slice's client-safe code. Explicit named re-exports only.
-export type { Product, ProductDetailData, RelatedProduct } from './core/rules/productTypes';
+export type { Product, ProductDetailData, RelatedProduct } from './core/types/productTypes';
 export { generateOptimizedTitle, generateSEOTitle, generateMetaDescription } from './core/rules/titleOptimization';
 export { ChunkedProductGrid, CHUNK_SIZE } from './ui/listing/ChunkedProductGrid';
 export { EmptyResults } from './ui/listing/EmptyResults';

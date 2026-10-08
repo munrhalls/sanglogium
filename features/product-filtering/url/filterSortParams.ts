@@ -89,7 +89,7 @@ import {
   type SortValue,
   isPlaceholderVocab,
 } from "@/features/product-filtering/core/definitions/facetMap";
-import type { ProductQueryState } from "@/features/product-filtering/core/rules/filterTypes";
+import type { ProductQueryState } from "@/features/product-filtering/core/types/filterTypes";
 export type { SortValue } from "@/features/product-filtering/core/definitions/facetMap";
 
 // Fixed sort allowlist. `value` goes in the URL; `label` is for the controls.

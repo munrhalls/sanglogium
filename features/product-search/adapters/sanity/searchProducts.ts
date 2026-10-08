@@ -2,7 +2,7 @@ import "server-only";
 
 import { sanityFetch } from '@/platform/sanity/client';
 import groq from 'groq';
-import type { AutocompleteProduct, SearchProduct } from '@/features/product-search/core/rules/searchTypes';
+import type { AutocompleteProduct, SearchProduct } from '@/features/product-search/core/types/searchTypes';
 
 const MAX_SORT_WINDOW = 2000;
 

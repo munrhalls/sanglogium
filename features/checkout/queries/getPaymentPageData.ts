@@ -4,7 +4,7 @@ import type {
   CheckoutSessions,
   CheckoutCatalog,
 } from "@/features/checkout/core/ports";
-import type { CheckoutSession } from "@/features/checkout/core/rules/checkoutTypes";
+import type { CheckoutSession } from "@/features/checkout/core/types/checkoutTypes";
 import { buildPaymentLineItems, computePaymentTotals } from "@/features/checkout/core/rules/paymentSummary";
 import type { PaymentLineItem } from "@/features/checkout/core/rules/paymentSummary";
 import { dedupeShippingLabel } from "@/features/shipping";

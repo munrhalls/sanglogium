@@ -1,4 +1,4 @@
-import type { BasketProduct } from './rules/basketTypes';
+import type { BasketProduct } from './types/basketTypes';
 
 export type GetBasketProducts = (ids: string[]) => Promise<BasketProduct[]>;
 

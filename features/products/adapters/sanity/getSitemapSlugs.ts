@@ -1,5 +1,5 @@
 import "server-only";
-import type { SitemapSlug } from '@/features/products/core/rules/productDataTypes';
+import type { SitemapSlug } from '@/features/products/core/types/productDataTypes';
 import { client } from '@/platform/sanity/client';
 
 export async function getSitemapSlugs(): Promise<{

@@ -6,7 +6,7 @@ import type {
   Payments,
 } from "@/features/checkout/core/ports";
 import type { PaymentMethodDetails } from "@/features/order";
-import type { PaymentSnapshot } from "@/features/checkout/core/rules/checkoutTypes";
+import type { PaymentSnapshot } from "@/features/checkout/core/types/checkoutTypes";
 import { logCheckoutEvent } from "@/features/checkout/core/rules/checkoutEvents";
 
 export type SuccessPageResult =

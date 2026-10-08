@@ -7,7 +7,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { computeCatalogueFacets } from './facetCounts';
-import type { ProductQueryState, RawProduct } from './filterTypes';
+import type { ProductQueryState, RawProduct } from '@/features/product-filtering/core/types/filterTypes';
 
 // Six products over two facet groups (wearingStyle: multi, connectivity:
 // enum) so each group's count can be checked against a narrowing selection

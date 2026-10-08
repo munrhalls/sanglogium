@@ -1,4 +1,4 @@
-import type { AutocompleteProduct, SearchProduct } from './rules/searchTypes';
+import type { AutocompleteProduct, SearchProduct } from './types/searchTypes';
 import type { CategoryLookup } from '@/features/catalogue';
 
 export type SearchSource = {

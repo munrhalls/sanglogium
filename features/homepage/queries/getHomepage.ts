@@ -1,4 +1,4 @@
-import type { AccessoryData, HomepageData, IemProduct } from "@/features/homepage/core/rules/homepageTypes";
+import type { AccessoryData, HomepageData, IemProduct } from "@/features/homepage/core/types/homepageTypes";
 import type { HomepageSections, HomepageSource } from "@/features/homepage/core/ports";
 
 function emptyAccessories(): AccessoryData {

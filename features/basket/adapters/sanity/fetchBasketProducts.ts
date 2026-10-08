@@ -1,7 +1,7 @@
 import "server-only";
 
 import { sanityFetch } from '@/platform/sanity/client';
-import type { BasketProduct } from '@/features/basket/core/rules/basketTypes';
+import type { BasketProduct } from '@/features/basket/core/types/basketTypes';
 import groq from 'groq';
 
 export async function fetchBasketProducts(ids: string[]): Promise<BasketProduct[]> {

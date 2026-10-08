@@ -1,5 +1,5 @@
 import type { CatalogPorts } from '@/features/products/core/ports';
-import type { ProductDetailData, RelatedProduct } from '@/features/products/core/rules/productTypes';
+import type { ProductDetailData, RelatedProduct } from '@/features/products/core/types/productTypes';
 import {
   generateOptimizedTitle,
   generateSEOTitle,

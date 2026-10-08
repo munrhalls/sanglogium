@@ -1,7 +1,7 @@
 import "server-only";
 import { sanityFetch } from '@/platform/sanity/client';
 import { groq } from 'next-sanity';
-import type { RawProduct } from '@/features/product-filtering/core/rules/filterTypes';
+import type { RawProduct } from '@/features/product-filtering/core/types/filterTypes';
 import type { FacetSource } from '@/features/product-filtering/core/ports';
 
 /**

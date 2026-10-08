@@ -1,5 +1,5 @@
 import "server-only";
-import type { CategoryMetadata } from '@/features/products/core/rules/productDataTypes';
+import type { CategoryMetadata } from '@/features/products/core/types/productDataTypes';
 import catalogueIndex from '@/data/catalogue-index.json';
 
 // React cache is only available in React Server Components

@@ -13,7 +13,7 @@ import "server-only";
 // only ever called from features/address/queries/checkAddress.ts, never invoked directly as a Server
 // Action, so it may accept a function argument (acceptAsEntered).
 // ==========================================================================
-import type { Address, AddressCheckResult } from "@/features/address/core/rules/addressTypes";
+import type { Address, AddressCheckResult } from "@/features/address/core/types/addressTypes";
 
 interface RequestBody {
   address: {

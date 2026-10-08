@@ -1,7 +1,7 @@
 import { scoreProduct, ROOT_CATEGORIES, rootCategoriesOf } from './searchScoring';
 import type { CategoryLookup } from '@/features/catalogue';
 import { computeCatalogueFacets, productMatchesState, sanitizeFilterState } from '@/features/product-filtering';
-import type { AutocompleteProduct, SearchProduct, SearchResult } from './searchTypes';
+import type { AutocompleteProduct, SearchProduct, SearchResult } from '@/features/product-search/core/types/searchTypes';
 import type {
   CatalogueFacets,
   ProductQueryState,

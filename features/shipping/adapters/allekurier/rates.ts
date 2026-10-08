@@ -13,7 +13,7 @@ import "server-only";
 
 import { logEvent } from '@/platform/utils/eventLogger';
 
-import type { ShippingOption, ShippingRatesInput } from "@/features/shipping/core/rules/shippingTypes";
+import type { ShippingOption, ShippingRatesInput } from "@/features/shipping/core/types/shippingTypes";
 
 interface AlleKurierService {
   Carrier: {

@@ -2,7 +2,7 @@ import React from 'react';
 import type { ReactNode } from 'react';
 import Link from 'next/link';
 import { ProductDetail } from '@/features/products/ui/detail/ProductDetail';
-import type { ProductDetailData, RelatedProduct } from '@/features/products/core/rules/productTypes';
+import type { ProductDetailData, RelatedProduct } from '@/features/products/core/types/productTypes';
 
 interface ProductPageViewProps {
   product: ProductDetailData;

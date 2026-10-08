@@ -21,7 +21,7 @@
 // clearOnDefault semantics are untouched — this never writes the URL.
 
 import { FILTER_FACETS, isPlaceholderVocab } from '@/features/product-filtering/core/definitions/facetMap';
-import type { ProductQueryState } from './filterTypes';
+import type { ProductQueryState } from '@/features/product-filtering/core/types/filterTypes';
 
 export function sanitizeFilterState(
   state: ProductQueryState,

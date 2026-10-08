@@ -4,8 +4,8 @@ import { useState, useTransition } from "react";
 import { usePathname } from "next/navigation";
 import { Heart } from "@phosphor-icons/react/dist/ssr";
 import { useIsSignedIn } from "@/features/auth";
-import { addToWishlistAction } from "@/features/wishlist/commands/addToWishlistAction";
-import { removeFromWishlistAction } from "@/features/wishlist/commands/removeFromWishlistAction";
+import { addToWishlistAction } from "@/features/wishlist/actions/addToWishlistAction";
+import { removeFromWishlistAction } from "@/features/wishlist/actions/removeFromWishlistAction";
 
 interface WishlistButtonProps {
   productId: string;

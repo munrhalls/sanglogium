@@ -1,4 +1,4 @@
-import type { AccessoryData, DacProduct, FeaturedProduct, HeroData, IemProduct, NewestReleaseData, SpotlightData } from './rules/homepageTypes';
+import type { AccessoryData, DacProduct, FeaturedProduct, HeroData, IemProduct, NewestReleaseData, SpotlightData } from './types/homepageTypes';
 
 export interface HomepageSections {
   featured: FeaturedProduct[];

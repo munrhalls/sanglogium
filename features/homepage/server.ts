@@ -4,7 +4,7 @@ import { fetchHeroData, fetchHomepageSections } from './adapters/sanity/getHomep
 import { fetchIemProductsBySlugs } from './adapters/sanity/getIemProductsBySlugs';
 import { getHomepage as getHomepageQuery, getHomepageIems } from './queries/getHomepage';
 import type { HomepageSource } from './core/ports';
-import type { HomepageData, IemProduct } from './core/rules/homepageTypes';
+import type { HomepageData, IemProduct } from './core/types/homepageTypes';
 
 const homepageSource: HomepageSource = {
   fetchHeroData,
