@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ContentLayout, ContentSection } from "@/features/shell/server";
+import { ContentLayout, ContentSection } from "@/features/shell";
 
 const title = "Privacy Policy — Sang Logium";
 const description =

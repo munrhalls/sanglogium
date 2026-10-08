@@ -1,6 +1,6 @@
 ﻿import "../globals.css";
 import { Montserrat } from "next/font/google";
-import { BrandLogo } from "@/features/shell/server";
+import { BrandLogo } from "@/features/shell";
 import GoogleAnalytics from "@/platform/analytics/GoogleAnalytics";
 import { SpeedInsights } from "@/platform/analytics/SpeedInsights";
 

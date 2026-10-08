@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ContentLayout, ContentSection } from "@/features/shell/server";
+import { ContentLayout, ContentSection } from "@/features/shell";
 
 const title = "Returns Policy — Sang Logium";
 const description =

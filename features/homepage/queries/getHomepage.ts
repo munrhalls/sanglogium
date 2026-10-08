@@ -1,5 +1,6 @@
+import { ACCESSORY_SLOT_SLUGS } from "@/features/homepage/core/definitions/accessorySlots";
 import type { AccessoryData, HomepageData, IemProduct } from "@/features/homepage/core/types/homepageTypes";
-import type { HomepageSections, HomepageSource } from "@/features/homepage/core/ports";
+import type { AccessorySlotIds, HomepageSections, HomepageSource } from "@/features/homepage/core/ports";
 
 function emptyAccessories(): AccessoryData {
   return {
@@ -26,6 +27,17 @@ function emptySections(): HomepageSections {
   };
 }
 
+function resolveAccessorySlotIds(source: HomepageSource): AccessorySlotIds {
+  const entries = Object.entries(ACCESSORY_SLOT_SLUGS).map(
+    ([param, slug]) => [param, source.resolveSlugToId(slug)] as const
+  );
+  const missing = entries.find(([, id]) => id === undefined);
+  if (missing) {
+    throw new Error(`resolveSlugToId returned undefined for accessory slot param "${missing[0]}" — check data/catalogue-index.json`);
+  }
+  return Object.fromEntries(entries) as AccessorySlotIds;
+}
+
 /**
  * Fetch all homepage data in 2 batched requests (down from 10).
  * Returns data in exact shape expected by HomepageData interface.
@@ -40,7 +52,7 @@ export async function getHomepage(source: HomepageSource): Promise<HomepageData>
         console.error("[homepageBatch] Error fetching hero data:", error);
         return null;
       }),
-      source.fetchHomepageSections()
+      Promise.resolve().then(() => source.fetchHomepageSections(resolveAccessorySlotIds(source)))
         .then((s) => s ?? emptySections())
         .catch((error) => {
           console.error("[homepageBatch] Error fetching homepage sections:", error);
