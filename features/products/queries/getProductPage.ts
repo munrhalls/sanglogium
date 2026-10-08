@@ -8,7 +8,6 @@ import {
 
 export interface ProductPagePorts {
   catalog: Pick<CatalogPorts, 'getProductBySlug' | 'getRelatedProducts'>;
-  getWishlistProductIds: () => Promise<string[]>;
 }
 
 export type ProductPageResult =
@@ -16,7 +15,6 @@ export type ProductPageResult =
   | {
       product: ProductDetailData;
       relatedProducts: RelatedProduct[];
-      isInWishlist: boolean;
     };
 
 export function createGetProductPage(ports: ProductPagePorts) {
@@ -34,12 +32,9 @@ export function createGetProductPage(ports: ProductPagePorts) {
       6
     );
 
-    const wishlistProductIds = await ports.getWishlistProductIds();
-
     return {
       product,
       relatedProducts,
-      isInWishlist: wishlistProductIds.includes(product._id),
     };
   };
 }

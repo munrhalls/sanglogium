@@ -5,7 +5,7 @@ import { SearchResultsSkeleton } from '@/features/product-search';
 import { isFacetedQuery } from '@/features/catalogue';
 import { detectSearchRedirect, SearchHeader } from '@/features/product-search';
 import { loadFilterSort, type ProductQueryState } from '@/features/product-filtering';
-import { getWishlistProductIds } from '@/features/products/server';
+import { getWishlistProductIds, WishlistToggleView } from '@/features/wishlist/server';
 
 interface SearchPageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -35,6 +35,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   const category = typeof catValue === 'string' ? catValue : undefined;
 
   const resultsPromise = searchProductsFull(q, sort, page, undefined, filterState, category);
+  const wishlist = getWishlistProductIds();
 
   return (
     // w-full: <main> is a flex column, so a bare mx-auto child shrinks to its
@@ -42,7 +43,13 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
     <div className="mx-auto w-full max-w-catalogue px-4 md:px-8 pt-4 sm:pt-6 pb-12">
       <SearchHeader query={q} />
       <Suspense fallback={<SearchResultsSkeleton />}>
-        <SearchResultsView resultsPromise={resultsPromise} wishlistPromise={getWishlistProductIds()} query={q} />
+        <SearchResultsView
+          resultsPromise={resultsPromise}
+          cardAction={(productId, className) => (
+            <WishlistToggleView productId={productId} wishlistPromise={wishlist} variant="quiet" className={className} />
+          )}
+          query={q}
+        />
       </Suspense>
     </div>
   );

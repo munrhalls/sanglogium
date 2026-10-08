@@ -30,7 +30,6 @@ export interface ListingPorts {
     getCategoryPriceRange: (options: { keys: string[] }) => Promise<PriceRangeData>;
   };
   catalog: CatalogPorts;
-  getWishlistProductIds: () => Promise<string[]>;
 }
 
 export type ListingPageResult =
@@ -49,7 +48,6 @@ export type ListingPageResult =
       effectivePage: number;
       perPage: number;
       chunkPromises: Promise<Product[]>[];
-      wishlistProductIds: string[];
     };
 
 export function createGetListingPage(ports: ListingPorts) {
@@ -85,13 +83,12 @@ export function createGetListingPage(ports: ListingPorts) {
       loadFilterSort(query) as ProductQueryState,
     );
 
-    const [metadata, facets, priceRange, wishlistProductIds] = await Promise.all([
+    const [metadata, facets, priceRange] = await Promise.all([
       slug ? ports.catalog.getCategoryMetadata(nodeId!) : Promise.resolve(null),
       ports.filtering.getFilterFacets({ keys, state: preState }),
       // FULL category price span — not narrowed by active filters, so the max
       // handle can always be dragged back up past the current selection.
       ports.filtering.getCategoryPriceRange({ keys }),
-      ports.getWishlistProductIds(),
     ]);
 
     if (slug && !metadata) {
@@ -137,7 +134,6 @@ export function createGetListingPage(ports: ListingPorts) {
       effectivePage,
       perPage: PER_PAGE,
       chunkPromises,
-      wishlistProductIds,
     };
   };
 }

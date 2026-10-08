@@ -58,7 +58,7 @@ The card components themselves (`Card`, `IemCard`, `DacCard`, `AccessoryCard`) a
 No section component or card owns Zustand / `nuqs` state. Cards delegate:
 
 - basket add/remove → `BasketControls` (`features/basket/ui/BasketControls.tsx`)
-- wishlist toggle → `WishlistButton` (`features/products/ui/card/WishlistButton.tsx`)
+- wishlist toggle → `WishlistButton` (`features/wishlist/ui/WishlistButton.tsx`)
 
 A "add to basket from the homepage" bug is in `BasketControls`, not the section or card.
 

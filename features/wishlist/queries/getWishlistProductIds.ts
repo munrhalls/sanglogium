@@ -1,4 +1,4 @@
-import type { WishlistQueryPorts } from '@/features/products/core/ports';
+import type { WishlistQueryPorts } from '@/features/wishlist/core/ports';
 
 export function createGetWishlistProductIds({ getSession, wishlist }: WishlistQueryPorts) {
   return async function getWishlistProductIds(): Promise<string[]> {
