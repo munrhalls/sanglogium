@@ -10,7 +10,7 @@ If a fact here contradicts the code, the code wins — re-verify after any large
 
 ## Data fetching — two calls in `page.tsx`
 
-1. `fetchHomepageData()` → `fetchHomepageDataBatched()` (`features/homepage/adapters/sanity/getHomepageData.ts`; the section data types live in `features/homepage/core/rules/homepageTypes.ts` and the fetcher imports them from `@/features/homepage`) — **2 Sanity queries**: one for `hero`, one batched GROQ query for every other section (featured, 3 spotlights, newestRelease, dacs, all 7 accessory categories). Replaced ~10 separate fetches; TTFB ~10.9s → <600ms.
+1. `fetchHomepageData()` → `fetchHomepageDataBatched()` (`features/homepage/adapters/sanity/getHomepageData.ts`; the section data types live in `features/homepage/core/types/homepageTypes.ts` and the fetcher imports them from `@/features/homepage`) — **2 Sanity queries**: one for `hero`, one batched GROQ query for every other section (featured, 3 spotlights, newestRelease, dacs, all 7 accessory categories). Replaced ~10 separate fetches; TTFB ~10.9s → <600ms.
 2. `getIemProductsBySlugs(HOME_12)` (`features/homepage/adapters/sanity/getIemProductsBySlugs.ts`; `HOME_12` lives in `features/homepage/core/definitions/homeIems.ts`) — separate query, IEM products by a hardcoded slug list, passed to `IemsGallery` as `iemsData`. The `iemsGallery` field on `fetchHomepageData`'s return is unused dead weight.
 
 **New homepage data → add a field to the batched query. Do not add a third separate fetch.**

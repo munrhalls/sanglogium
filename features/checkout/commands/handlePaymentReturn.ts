@@ -7,7 +7,7 @@ import type {
   OrderEmails,
 } from "@/features/checkout/core/ports";
 import type { OrderSessionData } from "@/features/order";
-import type { PaymentSnapshot } from "@/features/checkout/core/rules/checkoutTypes";
+import type { PaymentSnapshot } from "@/features/checkout/core/types/checkoutTypes";
 import { logCheckoutEvent } from "@/features/checkout/core/rules/checkoutEvents";
 import { getSession } from "@/features/auth/server";
 import { placeOrderFromPayment } from "./placeOrderFromPayment";

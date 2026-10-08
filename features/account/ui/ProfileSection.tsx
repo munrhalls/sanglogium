@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import { updateNameAction } from "@/features/account/commands/updateNameAction";
+import { updateNameAction } from "@/features/account/actions/updateNameAction";
 
 export default function ProfileSection({ name }: { name: string }) {
   const [nameState, nameAction, namePending] = useActionState(

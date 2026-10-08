@@ -6,8 +6,8 @@ import { getSearchSuggestions } from './queries/searchSuggestions';
 import { searchProductsFullQuery } from './queries/searchProductsFull';
 import type { SearchSource } from './core/ports';
 import type { ProductQueryState } from '@/features/product-filtering';
-import type { SearchResult } from './core/rules/searchTypes';
-import type { AutocompleteProduct } from './core/rules/searchTypes';
+import type { SearchResult } from './core/types/searchTypes';
+import type { AutocompleteProduct } from './core/types/searchTypes';
 
 const searchSource: SearchSource = {
   getCategoryLookup,

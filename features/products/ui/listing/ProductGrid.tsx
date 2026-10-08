@@ -4,7 +4,7 @@ import { ProductCard } from "@/features/products/ui/card/ProductCard";
 import type { CardAction } from "@/features/products/ui/card/ProductCard";
 import { productGridClass } from "@/features/products/core/definitions/gridLayout";
 import { ImageRevealScript } from "@/features/products/ui/card/ImageRevealScript";
-import type { Product } from "@/features/products/core/rules/productTypes";
+import type { Product } from "@/features/products/core/types/productTypes";
 
 interface ProductGridProps {
   products: Product[];

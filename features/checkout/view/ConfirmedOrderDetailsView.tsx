@@ -1,4 +1,4 @@
-import type { OrderForSuccessPage } from '@/features/checkout/core/rules/checkoutTypes'
+import type { OrderForSuccessPage } from '@/features/checkout/core/types/checkoutTypes'
 import Link from 'next/link'
 import { Hourglass } from '@phosphor-icons/react/dist/ssr'
 import { RefreshButton } from '@/features/checkout/ui/RefreshButton'

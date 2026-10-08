@@ -13,7 +13,7 @@ import type {
   PaymentSnapshot,
   PaymentHandle,
   PaymentEvent,
-} from "./rules/checkoutTypes";
+} from "./types/checkoutTypes";
 
 export type Orders = {
   createOrderFromPayment: (

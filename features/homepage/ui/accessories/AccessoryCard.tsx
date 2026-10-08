@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { AccessoryItem } from "@/features/homepage/core/rules/accessoryTypes";
+import type { AccessoryItem } from "@/features/homepage/core/types/accessoryTypes";
 import { BasketControls } from "@/features/basket";
 import { Price } from "@/platform/design/ui/Price";
 import { ProductBadge } from "@/features/homepage/ui/ProductBadge";

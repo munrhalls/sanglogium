@@ -7,7 +7,7 @@ import { ChunkedProductGrid } from '@/features/products/ui/listing/ChunkedProduc
 import { ProductChunkView } from './ProductChunkView';
 import { FilterSidebar, SortBar, ActiveFilterChips } from '@/features/product-filtering';
 import type { Category, CatalogueFacets } from '@/features/product-filtering';
-import type { Product } from '@/features/products/core/rules/productTypes';
+import type { Product } from '@/features/products/core/types/productTypes';
 import type { CardAction } from '@/features/products/ui/card/ProductCard';
 
 interface ListingPageProps {

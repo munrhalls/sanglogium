@@ -1,6 +1,6 @@
 import { normalizeText, deriveSpacedQuery } from '@/features/product-search/core/rules/searchText';
 import { buildSearchResult } from '@/features/product-search/core/rules/searchResults';
-import type { SearchResult } from '@/features/product-search/core/rules/searchTypes';
+import type { SearchResult } from '@/features/product-search/core/types/searchTypes';
 import type { SearchSource } from '@/features/product-search/core/ports';
 import type { ProductQueryState } from '@/features/product-filtering';
 

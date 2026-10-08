@@ -4,8 +4,8 @@ import { groq } from 'next-sanity';
 import { cache } from 'react';
 import type { Product as SanityProduct } from '@/sanity.types';
 import { buildProductQuery } from '@/features/product-filtering/server';
-import type { Product } from '@/features/products/core/rules/productTypes';
-import type { GetProductsCountOptions, GetProductsChunkOptions, GetProductsOptions, PaginatedProducts } from '@/features/products/core/rules/productDataTypes';
+import type { Product } from '@/features/products/core/types/productTypes';
+import type { GetProductsCountOptions, GetProductsChunkOptions, GetProductsOptions, PaginatedProducts } from '@/features/products/core/types/productDataTypes';
 
 const DEFAULT_PER_PAGE = 24;
 

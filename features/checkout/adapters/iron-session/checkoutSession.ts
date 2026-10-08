@@ -2,7 +2,7 @@ import "server-only";
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 
-import type { CheckoutSession } from "@/features/checkout/core/rules/checkoutTypes";
+import type { CheckoutSession } from "@/features/checkout/core/types/checkoutTypes";
 
 export type { CheckoutSession };
 

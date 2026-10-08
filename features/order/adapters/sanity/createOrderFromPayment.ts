@@ -1,7 +1,7 @@
 import "server-only";
 import { backendClient } from '@/platform/sanity/backendClient'
 import { logEvent } from '@/platform/utils/eventLogger'
-import type { OrderBasketItem as BasketItem, OrderAddress, OrderSessionData, CreateOrderResult, PaidPayment } from '@/features/order/core/rules/orderTypes'
+import type { OrderBasketItem as BasketItem, OrderAddress, OrderSessionData, CreateOrderResult, PaidPayment } from '@/features/order/core/types/orderTypes'
 import { z } from 'zod'
 
 interface ProductDoc {

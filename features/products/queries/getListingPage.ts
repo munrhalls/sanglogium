@@ -11,8 +11,8 @@ import {
 } from '@/features/product-filtering';
 import { isFacetedQuery, canonicalCategoryPath } from '@/features/catalogue';
 import type { CatalogPorts } from '@/features/products/core/ports';
-import type { CategoryMetadata } from '@/features/products/core/rules/productDataTypes';
-import type { Product } from '@/features/products/core/rules/productTypes';
+import type { CategoryMetadata } from '@/features/products/core/types/productDataTypes';
+import type { Product } from '@/features/products/core/types/productTypes';
 import { CHUNK_SIZE } from '@/features/products/core/definitions/gridLayout';
 
 const PER_PAGE = 24;

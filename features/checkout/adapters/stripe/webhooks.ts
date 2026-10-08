@@ -1,7 +1,7 @@
 import "server-only";
 import Stripe from 'stripe'
 import { stripe, toPaymentSnapshot } from './client'
-import type { PaymentEvent } from '@/features/checkout/core/rules/checkoutTypes'
+import type { PaymentEvent } from '@/features/checkout/core/types/checkoutTypes'
 
 export function parseWebhookEvent(
   rawBody: string,

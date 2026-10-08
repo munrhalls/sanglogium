@@ -9,7 +9,7 @@ import IemsGallery from "@/features/homepage/ui/iems-gallery/IemsGallery";
 import NewestReleaseView from "./NewestReleaseView";
 import DacsView from "./DacsView";
 import AccessoriesView from "./AccessoriesView";
-import type { HomepageData, IemProduct } from "@/features/homepage/core/rules/homepageTypes";
+import type { HomepageData, IemProduct } from "@/features/homepage/core/types/homepageTypes";
 
 interface HomePageProps {
   data: HomepageData;

@@ -3,7 +3,7 @@ import 'server-only';
 import { fetchBasketProducts } from './adapters/sanity/fetchBasketProducts';
 import { getBasketProducts as getBasketProductsQuery } from './queries/getBasketProducts';
 import type { BasketProductsPort } from './core/ports';
-import type { BasketProduct } from './core/rules/basketTypes';
+import type { BasketProduct } from './core/types/basketTypes';
 
 const basketProducts: BasketProductsPort = {
   getBasketProducts: fetchBasketProducts,

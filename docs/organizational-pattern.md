@@ -23,33 +23,35 @@ Normative model of how this repository is organized: vertical slices. It says wh
 
 | Part | Holds | May import inside its slice |
 |------|-------|-----------------------------|
-| `index.ts` | client door: components, hooks, URL translators, client-safe types and values (other slices' `core/` may import these), Server Actions | ui, state, url, core, commands |
+| `index.ts` | client door: components, hooks, URL translators, client-safe types and values (other slices' `core/` may import these), Server Actions | ui, state, url, core, actions |
 | `server.ts` | server door: wires adapters into ports and use cases, re-exports views and wired functions; contains `import "server-only"` | every part except schema; never a `'use server'` file |
-| `ui/` | client and presentational components; names never end in `View`, `Client`, `Server` or `Page` | ui, state, url, core, commands |
-| `state/` | client stores, hooks, and the browser's calls to outside systems | state, url, core, commands, adapters |
+| `ui/` | client and presentational components; names never end in `View`, `Client`, `Server` or `Page` | ui, state, url, core, actions |
+| `state/` | client stores, hooks, and the browser's calls to outside systems | state, url, core, actions, adapters |
 | `url/` | URL to typed state translators, both directions | url, core |
 | `view/` | server-rendered components named `*View`; data arrives as props | view, ui, url, core |
 | `queries/` | read use cases with logic; take their ports as the first parameter | queries, core |
-| `commands/` | write use cases (take their ports) and every Server Action: `'use server'`, one per file, named `<name>Action.ts` (an action is an RPC entry point, reads included) | commands, url, core, server.ts |
+| `commands/` | write use cases; they take their ports as the first parameter | commands, url, core |
+| `actions/` | every Server Action: `'use server'`, one per file, named `<name>Action.ts` (an action is an RPC entry point, reads included) | url, core, server.ts |
 | `core/definitions/` | data: registries, constants, labels | core |
-| `core/rules/` | pure logic and types | core |
+| `core/rules/` | pure logic | core |
+| `core/types/` | type-only modules: the slice's data shapes, no runtime values | core |
 | `core/ports.ts` | the function types queries, commands and server.ts need from adapters, in the slice's own types | core |
 | `adapters/<system>/` | the only code that talks to an outside system (`sanity`, `stripe`, `better-auth`, `resend`, `google`, ...); implements ports and maps vendor shapes into the slice's types | the same system, core |
 | `schema/` | CMS document types (studio plane) | schema |
 
-Across slices: any runtime file may import another slice's `index.ts`; only server-side files (`server.ts`, `queries/`, `commands/`, `adapters/`, routes) may import another slice's `server.ts`, and `view/` may import from it only `*View` components. Any runtime file may import `platform/`, within the limits of A6 and A10.
+Across slices: any runtime file may import another slice's `index.ts`; only server-side files (`server.ts`, `queries/`, `commands/`, `actions/`, `adapters/`, routes) may import another slice's `server.ts`, and `view/` may import from it only `*View` components. Any runtime file may import `platform/`, within the limits of A6 and A10.
 
 A part may group its files in one level of sub-folders named after a screen region or a flow (`ui/card/`, `view/listing/`).
 
 ### Slice recipe (building or converting a slice)
 
-1. Pure types and logic go to `core/rules/`; constants and registries to `core/definitions/`.
+1. Type-only modules go to `core/types/`, pure logic to `core/rules/`, constants and registries to `core/definitions/`.
 2. URL parsers and serializers go to `url/`; client stores and hooks to `state/`.
 3. Server components go to `view/` (named `*View`); client and presentational components to `ui/`.
 4. Every call to an outside system goes to `adapters/<system>/`, usually one function per file, and returns the slice's own types. A file that uses a secret or a server-only API contains `import "server-only"`. GROQ and Sanity patches exist only in `adapters/sanity/`.
 5. `core/ports.ts` declares a function type for each adapter function the slice uses, grouped into named port objects.
 6. A use case with logic goes to `queries/<name>.ts` or `commands/<name>.ts` and takes its ports as the first parameter. Without logic, `server.ts` exports the wired adapter function directly.
-7. A Server Action is `commands/<name>Action.ts` starting with `'use server'`: auth guard (through the auth slice's server door), input validation, one call to a wired function from a server door, revalidation.
+7. A Server Action is `actions/<name>Action.ts` starting with `'use server'`: auth guard (through the auth slice's server door), input validation, one call to a wired function from a server door, revalidation.
 8. `server.ts` contains `import "server-only"`, builds the port objects from adapters, binds use cases, and re-exports views and wired functions under stable names.
 9. `index.ts` re-exports what other slices' and routes' client code may use.
 10. A route reads its params, calls server-door functions and renders a server-door view. No GROQ, no adapter, no logic.
@@ -97,7 +99,7 @@ A part may group its files in one level of sub-folders named after a screen regi
 ## 5. Conventions (review-enforced unless section 6 names a rule)
 
 - Specifiers: `./x` for the same directory and `@/...` otherwise; no `..` under `features/`, except in studio-plane files, which use relative paths only because the Sanity CLI does not resolve `@/`.
-- Naming: components PascalCase; module files camelCase; docs, scripts and static assets kebab-case (exempt: `README.md`, `CLAUDE.md`, `AGENTS.md`, `ADR-NNN-*.md` and the three `_project/` process documents); `view/` components end in `View`; `ui/` component names never end in `View`, `Client`, `Server` or `Page`; Server Actions are `commands/<name>Action.ts`; slice names are domain nouns.
+- Naming: components PascalCase; module files camelCase; docs, scripts and static assets kebab-case (exempt: `README.md`, `CLAUDE.md`, `AGENTS.md`, `ADR-NNN-*.md` and the three `_project/` process documents); `view/` components end in `View`; `ui/` component names never end in `View`, `Client`, `Server` or `Page`; Server Actions are `actions/<name>Action.ts`; slice names are domain nouns.
 - One Server Action per file.
 - Promotion: a component moves to `platform/design/ui/` when a second slice needs it.
 - Composition roots: a route, a slice's `server.ts`, a page-level view and a batched query are the designated places that change when a part is added; every other change is an addition.
@@ -131,8 +133,8 @@ Behaviour (L): `npm run laws` runs every `*.laws.ts` file; the human runs it, ag
 
 ```
 app/                      routes only: read params, call slice doors, compose
-features/<slice>/         index.ts  server.ts  ui/  state/  url/  view/  queries/  commands/
-                          core/{definitions,rules,ports.ts}  adapters/<system>/  schema/
+features/<slice>/         index.ts  server.ts  ui/  state/  url/  view/  queries/  commands/  actions/
+                          core/{definitions,rules,types,ports.ts}  adapters/<system>/  schema/
 platform/                 design/{ui,styles}  sanity/  email/  analytics/  utils/   (knows no slice)
 studio/                   schema collector and desk structure (sanity.config.ts at root)
 data/                     generated data read by the runtime

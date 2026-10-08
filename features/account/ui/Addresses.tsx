@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { addAddressAction } from "@/features/account/commands/addAddressAction";
-import { updateAddressAction } from "@/features/account/commands/updateAddressAction";
-import { removeAddressAction } from "@/features/account/commands/removeAddressAction";
+import { addAddressAction } from "@/features/account/actions/addAddressAction";
+import { updateAddressAction } from "@/features/account/actions/updateAddressAction";
+import { removeAddressAction } from "@/features/account/actions/removeAddressAction";
 import type { Address } from "@/features/address";
 
 const REGIONS = [

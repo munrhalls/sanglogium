@@ -3,7 +3,7 @@ import Stripe from 'stripe'
 import type {
   PaymentSnapshot,
   PaymentHandle,
-} from '@/features/checkout/core/rules/checkoutTypes'
+} from '@/features/checkout/core/types/checkoutTypes'
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY
 if (!stripeSecretKey) {

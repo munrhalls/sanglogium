@@ -1,6 +1,6 @@
 import { normalizeText, deriveSpacedQuery } from '@/features/product-search/core/rules/searchText';
 import { rankAutocomplete } from '@/features/product-search/core/rules/searchResults';
-import type { AutocompleteProduct } from '@/features/product-search/core/rules/searchTypes';
+import type { AutocompleteProduct } from '@/features/product-search/core/types/searchTypes';
 import type { SearchSource } from '@/features/product-search/core/ports';
 
 const MIN_QUERY_LENGTH = 2;

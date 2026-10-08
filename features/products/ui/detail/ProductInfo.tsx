@@ -1,6 +1,6 @@
 "use client";
 
-import type { ProductDetailData as Product } from "@/features/products/core/rules/productTypes";
+import type { ProductDetailData as Product } from "@/features/products/core/types/productTypes";
 import { urlFor } from '@/platform/sanity/imageUrl';
 import { useState } from 'react';
 import type { ReactNode } from 'react';

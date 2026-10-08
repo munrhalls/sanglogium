@@ -1,6 +1,6 @@
 import "server-only";
 
-import type { AddressSuggestion } from "@/features/address/core/rules/addressTypes";
+import type { AddressSuggestion } from "@/features/address/core/types/addressTypes";
 
 export type { AddressSuggestion };
 

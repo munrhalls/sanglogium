@@ -1,4 +1,4 @@
-import type { AuthUser } from "./rules/authTypes";
+import type { AuthUser } from "./types/authTypes";
 
 export type UserProfiles = {
   createUserProfileIfMissing: (user: AuthUser) => Promise<"existing" | "created">;

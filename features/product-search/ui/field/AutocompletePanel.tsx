@@ -7,7 +7,7 @@ import { ArrowRight, MagnifyingGlass, SquaresFour, Tag } from "@phosphor-icons/r
 import { cn } from "@/platform/utils/tailwind";
 import { ProductImage } from "@/features/products";
 import { formatPrice } from "@/platform/utils/price";
-import type { AutocompleteProduct } from "@/features/product-search/core/rules/searchTypes";
+import type { AutocompleteProduct } from "@/features/product-search/core/types/searchTypes";
 import { HighlightedText } from "./HighlightedText";
 import { CATEGORY_SUGGESTIONS } from "@/features/product-search/core/definitions/searchSuggestions";
 import type { SuggestionEntry } from "@/features/product-search/core/rules/suggestionEntries";

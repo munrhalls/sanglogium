@@ -8,7 +8,7 @@ import {
   type FilterFacet,
 } from '@/features/product-filtering/core/definitions/facetMap';
 import { humanizeFacetValue } from './humanizeFacetValue';
-import type { ProductQueryState, RawProduct } from './filterTypes';
+import type { ProductQueryState, RawProduct } from '@/features/product-filtering/core/types/filterTypes';
 
 export interface FacetOption {
   value: string;

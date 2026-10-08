@@ -5,7 +5,7 @@ import type {
   Payments,
 } from "@/features/checkout/core/ports";
 import { calculateGrandTotal } from "@/features/checkout/core/rules/paymentSummary";
-import type { PaymentHandle } from "@/features/checkout/core/rules/checkoutTypes";
+import type { PaymentHandle } from "@/features/checkout/core/types/checkoutTypes";
 import { logCheckoutEvent } from "@/features/checkout/core/rules/checkoutEvents";
 import { getSession } from "@/features/auth/server";
 

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { OrderDetail } from "@/features/account/core/rules/accountTypes";
+import type { OrderDetail } from "@/features/account/core/types/accountTypes";
 import { formatPrice } from "@/platform/utils/price";
 
 function formatCurrency(amount: number | undefined, _currency?: string | undefined) {

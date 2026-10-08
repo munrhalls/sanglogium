@@ -1,7 +1,7 @@
 import React from "react";
 import { ProductCard } from "@/features/products/ui/card/ProductCard";
 import type { CardAction } from "@/features/products/ui/card/ProductCard";
-import type { Product } from "@/features/products/core/rules/productTypes";
+import type { Product } from "@/features/products/core/types/productTypes";
 
 interface ProductChunkProps {
   promise: Promise<Product[]>;

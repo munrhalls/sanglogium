@@ -1,4 +1,4 @@
-import type { RootCategory } from './searchScoring';
+import type { RootCategory } from '@/features/product-search/core/rules/searchScoring';
 import type {
   CatalogueFacets,
   ProductQueryState,

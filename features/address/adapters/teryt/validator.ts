@@ -17,7 +17,7 @@ import "server-only";
 // returns an arbitrary street for the locality (false positive). Guarded below.
 // Always fails soft (`degraded: true`) so checkout never dead-ends on GUS.
 
-import type { RegistryCheckInput, RegistryCheckResult } from "@/features/address/core/rules/addressTypes";
+import type { RegistryCheckInput, RegistryCheckResult } from "@/features/address/core/types/addressTypes";
 
 export type { RegistryCheckInput, RegistryCheckResult };
 

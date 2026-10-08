@@ -3,7 +3,7 @@ import type {
   AddressCheckResult,
   RegistryCheckInput,
   RegistryCheckResult,
-} from "./rules/addressTypes";
+} from "./types/addressTypes";
 
 export type AddressRegistry = {
   verifyAddress: (input: RegistryCheckInput) => Promise<RegistryCheckResult>;

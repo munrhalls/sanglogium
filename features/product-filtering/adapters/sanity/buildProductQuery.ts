@@ -22,7 +22,7 @@ import {
   type SortValue,
 } from '@/features/product-filtering/core/definitions/facetMap';
 import { FACET_FIELD_MAP } from './fieldMap';
-import type { ProductQueryState } from '@/features/product-filtering/core/rules/filterTypes';
+import type { ProductQueryState } from '@/features/product-filtering/core/types/filterTypes';
 
 export interface ProductQuery {
   /** GROQ ordering, pipe included: `| order(...)`. Applied before the slice. */

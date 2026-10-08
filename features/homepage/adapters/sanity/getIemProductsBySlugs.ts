@@ -2,7 +2,7 @@ import "server-only";
 
 import { sanityFetch } from "@/platform/sanity/client";
 import { defineQuery } from "next-sanity";
-import type { IemProduct } from "@/features/homepage/core/rules/homepageTypes";
+import type { IemProduct } from "@/features/homepage/core/types/homepageTypes";
 
 const IEMS_BY_SLUGS_QUERY = defineQuery(`*[_type == "product" && slug.current in $slugs] {
   _id,
