@@ -1,9 +1,10 @@
-import { useQueryState, parseAsString } from "nuqs";
+import { useQueryState } from "nuqs";
+import { drawerParam } from "@/features/shell/url/drawerParam";
 
 export function useDrawer() {
   const [drawer, setDrawer] = useQueryState(
     "drawer",
-    parseAsString.withOptions({ history: "push" })
+    drawerParam
   );
 
   return {
