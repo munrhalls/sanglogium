@@ -1,4 +1,5 @@
-import type { Address, AddressCheckResult } from "@/features/address/core/rules/addressTypes";
+import "server-only";
+import type { Address, AddressCheckResult } from "@/features/address/core/types/addressTypes";
 import type { AddressRegistry, AddressValidator } from "@/features/address/core/ports";
 
 // Normalize region-code aliases on both sides of the validation round-trip.

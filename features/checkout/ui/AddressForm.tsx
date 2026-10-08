@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { unstable_rethrow } from "next/navigation";
-import { saveAddressAction } from "@/features/checkout/commands/saveAddressAction";
+import { saveAddressAction } from "@/features/checkout/actions/saveAddressAction";
 import CheckoutStepper from "./CheckoutStepper";
 import type { Address } from "@/features/address";
 

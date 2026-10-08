@@ -6,7 +6,7 @@ import {
   isDefaultFilterState,
   type CatalogueFacets,
 } from '@/features/product-filtering/core/rules/facetCounts';
-import type { ProductQueryState } from '@/features/product-filtering/core/rules/filterTypes';
+import type { ProductQueryState } from '@/features/product-filtering/core/types/filterTypes';
 import type { FacetSource } from '@/features/product-filtering/core/ports';
 
 export interface GetFilterFacetsOptions {

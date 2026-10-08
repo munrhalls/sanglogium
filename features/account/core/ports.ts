@@ -4,7 +4,7 @@ import type {
   OrderDetail,
   UserAddressesProfile,
   UserOrderSummary,
-} from "./rules/accountTypes";
+} from "./types/accountTypes";
 
 export type ProfilePorts = {
   getAccountSummary: (authId: string) => Promise<AccountSummary | null>;

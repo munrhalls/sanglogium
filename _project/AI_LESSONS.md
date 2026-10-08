@@ -5,8 +5,6 @@ when a mistake cost >15 min or a wrong turn **and** you can write a specific tri
 Check this before non-trivial work in an area it might cover. Keep it lean — if scrolling
 this feels long, prune it.
 
-_Human-facing takeaways live in `_project/HUMAN_LESSONS.md`._
-
 ## Index
 
 - L01 — judging a change in the in-app preview pane → slow/partial render is not "broken"
@@ -32,20 +30,20 @@ longer, re-check, and confirm motion/perf in a real browser before concluding an
 Never declare the dev server or streaming "broken" from what this pane shows.
 
 ### L02 · Streaming POC — the real constraint is "no SSR throw/suspend", not "no client component"
-**When:** touching `app/(test)/streaming-poc/` and adding load/onLoad state.
+**When:** touching the product-card image reveal (`features/products/ui/card/`) or the chunked listing grid and adding load/onLoad state.
 **Lesson:** a `"use client"` component inside the per-row `<Suspense>` tree that *throws
 or suspends during SSR* (bad import, sync data read) makes every row error-boundary out
 at once — the page renders as one wall instead of streaming row by row. A small client
 leaf that renders synchronously (`useState`, `onLoad`, no throw path) does **not**
-collapse streaming and is the shipped pattern (`RevealImage.tsx`). Keep `ProductRow` /
-`page.tsx` themselves server components; the client wrapper is a leaf only. See also L06.
+collapse streaming and is the shipped pattern (`ImageReveal.tsx`). Keep the chunk and
+page components server components; the client wrapper is a leaf only. See also L06.
 
 ### L03 · next/image has no native blur→sharp animation
 **When:** asked to make images "ease in" / "resolve gently" from their LQIP.
 **Lesson:** `placeholder="blur"` is an instant swap, not a transition (Next 15), and the
 real bitmap paints **natively on `load`, before any JS** — verified in
 `next/dist/shared/lib/get-img-props.js` (no opacity/filter on the img, blur is just a
-background-image). Shipped approach (`RevealImage.tsx`, "Attempt G"): a tiny `"use
+background-image). Shipped approach (`ImageReveal.tsx`, "Attempt G"): a tiny `"use
 client"` wrapper around `<Image>` with **no `placeholder="blur"`** (its load-time
 re-render reconciles any external `-done` back off the className — that fought every
 script-based attempt). The `<img>` ships blurred from the first SSR frame via
@@ -59,7 +57,7 @@ cached-vs-fresh fork. **Do NOT gate it behind
 so every attempt that set `animation/transition/filter: none` under it was invisible on
 the one machine being tested (root cause of ~a week stuck). A blur/opacity dissolve on
 image load is a crossfade, not vestibular motion — keep it (shorten to ~200ms under
-reduce-motion at most). Full writeup: `_project/audits/streaming-poc/`.
+reduce-motion at most).
 
 ### L06 · Image-reveal on a streaming grid: animate blur, never opacity
 **When:** building an on-load image reveal (client wrapper, `onLoad` → state → class)
@@ -70,8 +68,7 @@ pass, so all rows appear together — "one big wall, later" — a regression aga
 streaming UX even though per-row `<Suspense>` still works. Fix: the reveal animates
 `filter: blur()` only, `opacity` stays `1`. The `<img>` then paints the frame its bytes
 arrive, hydration-independent, so products still stream in as fast small chunks;
-hydration only decides when the blur eases off. Cost real time as attempt "F.1" in
-`_project/audits/streaming-poc/failed-attempts.md`.
+hydration only decides when the blur eases off.
 
 ### L04 · Don't burn time on live browser automation for timing bugs
 **When:** tempted to spin up browser automation / a dev-server session to *watch* a
@@ -95,7 +92,7 @@ that reproduces *only* the mechanism under test, add a `performance.now()` event
 open it in the real browser, read the result. Minutes to build, clean yes/no, zero
 framework confounds, and it runs on the actual test machine (reduced-motion and all).
 This is the constructive half of L04. Real payoff:
-`_project/audits/streaming-poc/reveal-diagnostic.html` settled the ~week-old "does the
+a throwaway reveal-diagnostic page settled the ~week-old "does the
 blur→sharp class flip even work here" question in one run — it transitioned, it did not
 pop, the reduce-motion guard did not kill it — proving the CSS mechanism is sound and
 the `sang-logium-7j8` bug lives in the `next/image` + RSC *integration* (trigger timing
@@ -116,7 +113,7 @@ trigger off React — an inline `<script>` in the streamed shell adds a capture-
 `load` listener on `document` (fires per image, before hydration), double-rAF for a
 painted blurred frame, then set a `data-*` attribute (not a class → no reconcile, no
 hydration warning). Needs `next/image` with **no** `placeholder="blur"` or its load
-re-render clobbers the attribute. Full writeup: `_project/audits/streaming-poc/`.
+re-render clobbers the attribute.
 
 ### L08 · Per-image load timing → Resource Timing API, not the Network panel
 **When:** you need to know when each image's fetch started / finished, or whether load

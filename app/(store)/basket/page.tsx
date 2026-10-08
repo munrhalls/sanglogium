@@ -1,4 +1,5 @@
-import { BasketManager, Loader } from "@/features/basket";
+import { Loader } from "@/features/basket";
+import { BasketCheckout } from "@/features/checkout";
 import { Suspense } from "react";
 import Shelf from "@/platform/design/ui/Shelf";
 
@@ -11,7 +12,7 @@ export default function BasketPage() {
         </h1>
       </div>
       <Suspense fallback={<Loader />}>
-        <BasketManager />
+        <BasketCheckout />
       </Suspense>
     </Shelf>
   );

@@ -1,15 +1,15 @@
 import Shelf from "@/platform/design/ui/Shelf";
-import HeroView from "./hero/HeroView";
-import TrustBar from "@/features/homepage/ui/trust-bar/TrustBar";
-import FeaturedView from "./featured/FeaturedView";
-import ProductSpotlightMediaLeftView from "./product-spotlight-media-left/ProductSpotlightMediaLeftView";
-import ProductSpotlightMediaRightView from "./product-spotlight-media-right/ProductSpotlightMediaRightView";
-import ProductSpotlightFractal from "@/features/homepage/ui/product-spotlight-fractal/ProductSpotlightFractal";
+import HeroView from "./HeroView";
+import TrustBar from "@/features/homepage/ui/TrustBar";
+import FeaturedView from "./FeaturedView";
+import ProductSpotlightMediaLeftView from "./ProductSpotlightMediaLeftView";
+import ProductSpotlightMediaRightView from "./ProductSpotlightMediaRightView";
+import ProductSpotlightFractal from "@/features/homepage/ui/ProductSpotlightFractal";
 import IemsGallery from "@/features/homepage/ui/iems-gallery/IemsGallery";
-import NewestReleaseView from "./newest-release/NewestReleaseView";
-import DacsView from "./dacs/DacsView";
-import AccessoriesView from "./accessories/AccessoriesView";
-import type { HomepageData, IemProduct } from "@/features/homepage/core/rules/homepageTypes";
+import NewestReleaseView from "./NewestReleaseView";
+import DacsView from "./DacsView";
+import AccessoriesView from "./AccessoriesView";
+import type { HomepageData, IemProduct } from "@/features/homepage/core/types/homepageTypes";
 
 interface HomePageProps {
   data: HomepageData;

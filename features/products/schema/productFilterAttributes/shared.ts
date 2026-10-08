@@ -1,3 +1,5 @@
+import { vocabFor } from "../../../product-filtering/core/definitions/facetMap";
+
 export const sharedFields: any[] = [
         {
           name: "price",
@@ -11,7 +13,7 @@ export const sharedFields: any[] = [
           name: "brand",
           title: "Brand",
           type: "array",
-          of: [{ type: "string", options: { list: ["<brand-slug>"] } }],
+          of: [{ type: "string", options: { list: vocabFor("brand") } }],
           categories: ["*"],
         },
         {
@@ -27,7 +29,7 @@ export const sharedFields: any[] = [
           of: [
             {
               type: "string",
-              options: { list: ["headphones", "audio-electronics", "accessories"] },
+              options: { list: vocabFor("category") },
             },
           ],
           categories: ["all-products"],

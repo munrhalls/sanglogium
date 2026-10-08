@@ -1,9 +1,11 @@
+import { vocabFor } from "../../../product-filtering/core/definitions/facetMap";
+
 export const audioElectronicsFields: any[] = [
         {
           name: "deviceConnectivity",
           title: "Connectivity",
           type: "string",
-          options: { list: ["wired", "bluetooth", "wifi-networked", "wired-wireless"] },
+          options: { list: vocabFor("deviceConnectivity") },
           description:
             "Gates the Connectivity & Wireless field group. Distinct from headphones' own `connectivity` field (different vocab, different slice).",
           categories: ["audio-electronics"],
@@ -12,7 +14,7 @@ export const audioElectronicsFields: any[] = [
           name: "formFactor",
           title: "Form factor",
           type: "string",
-          options: { list: ["desktop", "portable", "dongle"] },
+          options: { list: vocabFor("formFactor") },
           description: "Legacy field, kept as-is, not migrated.",
           categories: ["audio-electronics"],
         },
@@ -20,7 +22,7 @@ export const audioElectronicsFields: any[] = [
           name: "amplification",
           title: "Amplifier topology",
           type: "string",
-          options: { list: ["solid-state", "tube", "hybrid", "class-d"] },
+          options: { list: vocabFor("amplification") },
           categories: ["audio-electronics"],
           domain: [
             "integrated-amplifier",
@@ -115,21 +117,7 @@ export const audioElectronicsFields: any[] = [
           of: [
             {
               type: "string",
-              options: {
-                list: [
-                  "usb",
-                  "optical",
-                  "coaxial",
-                  "rca",
-                  "bluetooth",
-                  "xlr-balanced",
-                  "phono-mm-mc",
-                  "hdmi-earc",
-                  "ethernet-lan",
-                  "i2s-iis",
-                  "aes-ebu",
-                ],
-              },
+              options: { list: vocabFor("inputs") },
             },
           ],
           description:
@@ -183,7 +171,7 @@ export const audioElectronicsFields: any[] = [
           name: "dsdSupport",
           title: "DSD support",
           type: "string",
-          options: { list: ["none", "dsd64", "dsd128", "dsd256-plus"] },
+          options: { list: vocabFor("dsdSupport") },
           categories: ["audio-electronics"],
           domain: ["dac", "network-streamer", "cd-player-transport", "digital-audio-player"],
           domainField: "deviceType",
@@ -202,7 +190,7 @@ export const audioElectronicsFields: any[] = [
           title: "DAC chipset family",
           type: "array",
           of: [
-            { type: "string", options: { list: ["ess-sabre", "akm", "cirrus-logic", "r2r-ladder"] } },
+            { type: "string", options: { list: vocabFor("dacChipsetFamily") } },
           ],
           categories: ["audio-electronics"],
           domain: ["dac", "network-streamer", "cd-player-transport", "digital-audio-player"],
@@ -215,9 +203,7 @@ export const audioElectronicsFields: any[] = [
           of: [
             {
               type: "string",
-              options: {
-                list: ["airplay2", "chromecast", "spotify-connect", "tidal-connect", "roon-ready", "dlna"],
-              },
+              options: { list: vocabFor("streamingPlatformSupport") },
             },
           ],
           categories: ["audio-electronics"],
@@ -289,7 +275,7 @@ export const audioElectronicsFields: any[] = [
           name: "condition",
           title: "Condition / stock type",
           type: "string",
-          options: { list: ["new", "open-box", "refurbished"] },
+          options: { list: vocabFor("condition") },
           categories: ["audio-electronics"],
         },
         {
@@ -311,16 +297,7 @@ export const audioElectronicsFields: any[] = [
           name: "accessoryType",
           title: "Accessory category",
           type: "string",
-          options: {
-            list: [
-              "cables-interconnects",
-              "replacement-parts",
-              "cases-storage-transport",
-              "adapters-converters",
-              "cleaning-maintenance",
-              "stands-isolation",
-            ],
-          },
+          options: { list: vocabFor("accessoryType") },
           description:
             "Gates every domain-specific field below via each field's `domain`.",
           categories: ["accessories"],

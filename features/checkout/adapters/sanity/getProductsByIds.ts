@@ -1,7 +1,7 @@
 import "server-only";
 import { sanityFetch } from '@/platform/sanity/client';
 import groq from 'groq';
-import type { CheckoutProduct as Product } from "@/features/checkout/core/rules/checkoutTypes";
+import type { CheckoutProduct as Product } from "@/features/checkout/core/types/checkoutTypes";
 
 export async function getProductsByIds(ids: string[]): Promise<Product[]> {
   if (!ids || ids.length === 0) {

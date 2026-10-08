@@ -1,20 +1,15 @@
 import 'server-only';
-// Server-only entry: wired catalog + wishlist ports and the session-aware wishlist read. Never import from client components or Node .mjs scripts.
-import { getSession } from '@/features/auth/server';
+// Server-only entry: wired catalog ports. Never import from client components or Node .mjs scripts.
 import { getProductsByVfsKeys, getProductsCount, getProductsChunk } from './adapters/sanity/getProductsByVfsKeys';
-import { getCategoryMetadata } from './adapters/sanity/getCategoryMetadata';
 import { getProductBySlug } from './adapters/sanity/getProductBySlug';
 import { getRelatedProducts } from './adapters/sanity/getRelatedProducts';
 import { getSitemapSlugs } from './adapters/sanity/getSitemapSlugs';
-import { getWishlistProductIdsByAuthId } from './adapters/sanity/getWishlistProductIdsByAuthId';
-import { getWishlistProducts } from './adapters/sanity/getWishlistProducts';
-import { createGetWishlistProductIds } from './queries/getWishlistProductIds';
-import { createGetListingPage, createGetListingMetadata } from './queries/getListingPage';
-import { createGetProductPage, createGetProductMetadata } from './queries/getProductPage';
-import { createGetSitemapEntries } from './queries/getSitemapEntries';
-import { resolveSlugToId, unrollDescendantKeys, getAllLeafKeys } from '@/features/catalogue/server';
+import { getListingPage as getListingPageQuery, getListingMetadata as getListingMetadataQuery } from './queries/getListingPage';
+import { getProductPage as getProductPageQuery, getProductMetadata as getProductMetadataQuery } from './queries/getProductPage';
+import { getSitemapEntries as getSitemapEntriesQuery } from './queries/getSitemapEntries';
+import { resolveSlugToId, unrollDescendantKeys, getAllLeafKeys, getCategoryMetadata, getBreadcrumbLabels } from '@/features/catalogue/server';
 import { getFilterFacets, getCategoryPriceRange } from '@/features/product-filtering/server';
-import type { CatalogPorts, WishlistPorts } from './core/ports';
+import type { CatalogPorts } from './core/ports';
 import type { ListingPorts } from './queries/getListingPage';
 
 const catalog: CatalogPorts = {
@@ -27,28 +22,17 @@ const catalog: CatalogPorts = {
   getSitemapSlugs,
 };
 
-const wishlist: WishlistPorts = {
-  getWishlistProductIdsByAuthId,
-  getWishlistProducts,
-};
-
-export const getWishlistProductIds = createGetWishlistProductIds({ getSession, wishlist });
-
 const listingPorts: ListingPorts = {
-  catalogue: { resolveSlugToId, unrollDescendantKeys, getAllLeafKeys },
+  catalogue: { resolveSlugToId, unrollDescendantKeys, getAllLeafKeys, getBreadcrumbLabels },
   filtering: { getFilterFacets, getCategoryPriceRange },
   catalog,
-  getWishlistProductIds,
 };
 
-export const getListingPage = createGetListingPage(listingPorts);
-export const getListingMetadata = createGetListingMetadata(listingPorts);
-export const getProductPage = createGetProductPage({ catalog, getWishlistProductIds });
-export const getProductMetadata = createGetProductMetadata({ catalog });
-export const getSitemapEntries = createGetSitemapEntries({ catalog });
+export const getListingPage = (input: Parameters<typeof getListingPageQuery>[1]) => getListingPageQuery(listingPorts, input);
+export const getListingMetadata = (input: Parameters<typeof getListingMetadataQuery>[1]) => getListingMetadataQuery(listingPorts, input);
+export const getProductPage = (slug: string) => getProductPageQuery({ catalog }, slug);
+export const getProductMetadata = (slug: string) => getProductMetadataQuery({ catalog }, slug);
+export const getSitemapEntries = () => getSitemapEntriesQuery({ catalog });
 
 export { default as ListingView } from './view/ListingView';
 export { default as ProductView } from './view/ProductView';
-export { default as WishlistView } from './view/WishlistView';
-
-export { getWishlistProducts };

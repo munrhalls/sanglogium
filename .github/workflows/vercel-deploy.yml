@@ -3,10 +3,9 @@ name: Deploy to Vercel (Production)
 # Runs on GitHub's own runners, not in any sandboxed dev session -- this
 # exists specifically because Vercel's own Git auto-deploy is not enabled
 # on this repo, and Claude's cloud dev sessions have no network path to
-# api.vercel.com (org egress policy). Pushing to main is what triggers a
-# real production deploy. Deploys are MANUAL ONLY: run this workflow via
-# "Run workflow" in the Actions tab or `gh workflow run vercel-deploy.yml`.
-# Pushing to main does NOT deploy.
+# api.vercel.com (org egress policy). Deploys are MANUAL ONLY: run this
+# workflow via "Run workflow" in the Actions tab or
+# `gh workflow run vercel-deploy.yml`. Pushing to main does NOT deploy.
 #
 # Required repo secrets (Settings -> Secrets and variables -> Actions):
 #   VERCEL_TOKEN      - vercel.com/account/tokens

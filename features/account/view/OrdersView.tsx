@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { formatPrice } from "@/platform/utils/price";
-import type { UserOrderSummary } from "@/features/account/core/rules/accountTypes";
+import type { UserOrderSummary } from "@/features/account/core/types/accountTypes";
 
 export default function OrdersView({
   orders,

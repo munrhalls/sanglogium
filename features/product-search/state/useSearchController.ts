@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import type { AutocompleteProduct } from "@/features/product-search/core/rules/searchTypes";
+import type { AutocompleteProduct } from "@/features/product-search/core/types/searchTypes";
 import { addRecentSearch } from "./recentSearches";
 import { productHref, searchHref } from "@/features/product-search/url/searchLinks";
 import { buildSuggestionEntries } from "@/features/product-search/core/rules/suggestionEntries";

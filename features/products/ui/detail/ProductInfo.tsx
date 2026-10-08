@@ -1,14 +1,14 @@
 "use client";
 
-import type { ProductDetailData as Product } from "@/features/products/core/rules/productTypes";
+import type { ProductDetailData as Product } from "@/features/products/core/types/productTypes";
 import { urlFor } from '@/platform/sanity/imageUrl';
 import { useState } from 'react';
+import type { ReactNode } from 'react';
 import { Price } from '@/platform/design/ui/Price';
 import { ShoppingCartIcon, CheckIcon } from '@phosphor-icons/react/dist/ssr';
 import { QuantitySelector } from "./QuantitySelector";
 import { centsToDisplay } from '@/platform/utils/price';
 import { BasketControls } from "@/features/basket";
-import { WishlistButton } from "@/features/products/ui/card/WishlistButton";
 
 // Fields at or above this word count are treated as narrative content (paragraphs,
 // e.g. Description/Sustainability/Battery Life copy) and demoted into the collapsed
@@ -59,7 +59,7 @@ function groupFieldsByTitle(fields: OverviewFieldData[]): { title: string; field
   return order.map((title) => ({ title, fields: groups.get(title)! }));
 }
 
-export function ProductInfo({ product, isInWishlist = false }: { product: Product; isInWishlist?: boolean }) {
+export function ProductInfo({ product, wishlistSlot }: { product: Product; wishlistSlot?: ReactNode }) {
   const [preAddQty, setPreAddQty] = useState(1);
   const displayPrice = centsToDisplay(product.price_data.unit_amount);
 
@@ -96,10 +96,7 @@ export function ProductInfo({ product, isInWishlist = false }: { product: Produc
             isBasketPage={false}
             wrapperClassName="flex items-center gap-4"
           />
-          <WishlistButton
-            productId={product._id}
-            initiallyInWishlist={isInWishlist}
-          />
+          {wishlistSlot}
         </div>
         <p className="type-caption text-secondary">
           Domestic Multi-Carrier Shipping · 2-Year Warranty · Expert Support

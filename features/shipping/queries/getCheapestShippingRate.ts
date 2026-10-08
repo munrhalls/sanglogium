@@ -1,6 +1,6 @@
 import "server-only";
 import type { ShippingRates } from "@/features/shipping/core/ports";
-import type { ShippingOption } from "@/features/shipping/core/rules/shippingTypes";
+import type { ShippingOption } from "@/features/shipping/core/types/shippingTypes";
 
 interface ParcelData {
   length: number;

@@ -7,7 +7,7 @@ import {
   CarouselDots,
 } from '@/platform/design/ui/carousel/CarouselControls';
 import AccessoryCard from "./AccessoryCard";
-import { AccessoryCategory, AccessoryItem } from "@/features/homepage/core/rules/accessoryTypes";
+import { AccessoryCategory, AccessoryItem } from "@/features/homepage/core/types/accessoryTypes";
 
 interface CategorySectionProps {
   category: AccessoryCategory;

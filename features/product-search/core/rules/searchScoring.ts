@@ -65,7 +65,7 @@ function positionBonus(index: number): number {
   return Math.max(0, 1000 - Math.min(index, 1000));
 }
 
-export interface ScorableProduct {
+interface ScorableProduct {
   name: string;
   brand?: { name?: string } | null;
   sku?: string;

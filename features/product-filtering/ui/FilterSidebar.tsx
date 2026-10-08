@@ -8,16 +8,6 @@ import { useClearAllFilters } from '@/features/product-filtering/state/useFilter
 import type { RangeBounds } from '@/features/product-filtering/core/rules/facetCounts';
 import { CheckboxGroup, BooleanToggle, RangeControl, PriceControl } from './FilterControls';
 
-// Re-export the shared header/style constants so sibling filter modules can
-// import them from a stable barrel instead of the component they decorate.
-export {
-  filterSectionHeaderRow,
-  filterSectionHeaderLabel,
-  filterSectionHeaderAction,
-  filterStateActive,
-  filterStateInactive,
-} from './FilterControls';
-
 /**
  * Desktop filter sidebar shell — the two-region layout the acceptance tests
  * ask for: a compact rail of tiles (one per facet group) on the left,

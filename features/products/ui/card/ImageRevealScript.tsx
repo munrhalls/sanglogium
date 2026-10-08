@@ -1,7 +1,7 @@
 import React from "react";
 
-/* Non-hydrating inline reveal trigger — ported verbatim from
- * app/(test)/streaming-poc (issue sang-logium-7j8, Attempt I).
+/* Non-hydrating inline reveal trigger — ported verbatim from a
+ * streamed product-grid proof of concept (issue sang-logium-7j8, Attempt I).
  *
  * Runs in the streamed shell, BEFORE any grid <img> is parsed and with zero
  * dependency on React hydration. It attaches a capture-phase `load` listener

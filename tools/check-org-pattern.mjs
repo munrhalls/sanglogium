@@ -1,8 +1,8 @@
 // Check "org-pattern": where every file lives and how slices may import each other, as defined in
 // docs/organizational-pattern.md (the tables below mirror its sections 2 and 3; edit both together).
 //   PLACE      every changed path has a home (section 3)
-//   DOTDOT     no '..' specifier under features/
-//   PLANE      runtime never imports a non-runtime plane; studio/tooling never import runtime; nothing imports laws
+//   DOTDOT     no '..' specifier in a runtime or laws file (studio-plane files excepted)
+//   PLANE      runtime never imports a non-runtime plane; studio/tooling never import runtime except platform/sanity/env.ts and the facet vocabulary; nothing imports laws
 //   DOOR       a slice is imported only through index.ts or server.ts
 //   INWARD     inside a slice, imports follow the archetype table (section 2)
 //   PLATFORM   platform/ imports only platform/
@@ -14,7 +14,7 @@
 //   VENDOR     vendor packages only in adapters/, platform/, framework entries or the studio plane
 //   VIEWDATA   a view imports only *View components from another slice's server.ts
 //   GENERATED  sanity.types.ts only in adapters/sanity/ and platform/
-//   ACTION     'use server' files are features/<slice>/commands/<name>Action.ts and vice versa
+//   ACTION     'use server' files are features/<slice>/actions/<name>Action.ts and vice versa
 //   NAMES      view/ components end in View; ui/ names never end in View, Client, Server or Page
 
 export const name = "org-pattern";
@@ -22,7 +22,7 @@ export const name = "org-pattern";
 const ROOT_ENTRY = /^(middleware\.ts|instrumentation\.ts|instrumentation-client\.ts|sentry\.[a-z]+\.config\.ts)$/;
 const ROOT_OTHER = /^(package(-lock)?\.json|tsconfig\.json|next\.config\.ts|postcss\.config\.mjs|tailwind\.config\.ts|eslint\.config\.mjs|\.prettierrc|\.prettierignore|\.node-version|\.gitignore|\.codeiumignore|\.env\.example|sanity\.cli\.ts|schema\.json|skills-lock\.json|vercel\.json|\.no-mistakes\.yaml|README\.md|CLAUDE\.md|AGENTS\.md)$/;
 const APP_ROUTE = /^(page|layout|loading|error|global-error|not-found|template|default|route|sitemap|robots|manifest|icon|apple-icon|opengraph-image|twitter-image)\.(ts|tsx|js|jsx)$/;
-const PARTS = ["ui", "state", "url", "view", "queries", "commands"];
+const PARTS = ["ui", "state", "url", "view", "queries", "commands", "actions"];
 const Z = (plane, extra) => ({ plane, home: null, slice: null, part: null, system: null, clientSafe: false, ...extra });
 
 // path -> zone (null = no home). First match wins.
@@ -51,7 +51,7 @@ function zone(p) {
       }
       if (PARTS.includes(b)) return Z("runtime", { ...slice, home: "slice", part: b });
       if (b === "core") {
-        return seg[3] === "definitions" || seg[3] === "rules" || p === `features/${a}/core/ports.ts`
+        return seg[3] === "definitions" || seg[3] === "rules" || seg[3] === "types" || p === `features/${a}/core/ports.ts`
           ? Z("runtime", { ...slice, home: "slice", part: "core" })
           : null;
       }
@@ -77,21 +77,22 @@ function zone(p) {
 
 // Section 2 archetype table: importer part -> parts it may import inside the same slice.
 const ALLOW = {
-  index: ["ui", "state", "url", "core", "commands"],
+  index: ["ui", "state", "url", "core", "actions"],
   server: ["index", "server", "ui", "state", "url", "view", "queries", "commands", "core", "adapters"],
-  ui: ["ui", "state", "url", "core", "commands"],
-  state: ["state", "url", "core", "commands", "adapters"],
+  ui: ["ui", "state", "url", "core", "actions"],
+  state: ["state", "url", "core", "actions", "adapters"],
   url: ["url", "core"],
   view: ["view", "ui", "url", "core"],
   queries: ["queries", "core"],
-  commands: ["commands", "url", "core", "server"],
+  commands: ["commands", "url", "core"],
+  actions: ["url", "core", "server"],
   core: ["core"],
   adapters: ["adapters", "core"],
 };
 const CLIENT_SAFE_PARTS = ["ui", "state", "url", "core", "index"];
 const VENDORS = ["stripe", "@stripe/", "better-auth", "@better-auth/", "kysely", "kysely-libsql", "next-sanity", "@sanity/", "sanity", "groq", "resend", "iron-session", "@vercel/", "@sentry/", "web-vitals"];
 const BROWSER_KITS = ["@stripe/stripe-js", "@stripe/react-stripe-js"];
-const ACTION_PATH = /^features\/[^/]+\/commands\/([A-Za-z0-9_-]+)Action\.ts$/;
+const ACTION_PATH = /^features\/[^/]+\/actions\/([A-Za-z0-9_-]+)Action\.ts$/;
 // spec is a vendor package when some entry matches: entries ending in "/" match by prefix,
 // any other entry matches when spec equals it or starts with it + "/".
 function isVendor(spec) {
@@ -105,8 +106,8 @@ function routePackage(spec) {
 function edge(ctx, file, rel, { spec, typeOnly, line, imported }) {
   const at = `${file}:${line} "${spec}"`;
   const out = [];
-  if (file.startsWith("features/") && spec.startsWith("..")) out.push(`${at} DOTDOT use ./x or the @/ alias`);
   const A = zone(file);
+  if ((A?.plane === "runtime" || A?.plane === "laws") && spec.startsWith("..")) out.push(`${at} DOTDOT use ./x or the @/ alias`);
   const B = zone(rel);
   if (!A || !B) return out; // unplaced paths are reported by PLACE
   // Plane rules (A laws: no plane rule).
@@ -114,7 +115,7 @@ function edge(ctx, file, rel, { spec, typeOnly, line, imported }) {
   else if (A.plane === "runtime") {
     if (B.plane === "studio") { if (!file.startsWith("app/(studio)/")) out.push(`${at} PLANE runtime imports studio`); }
     else if (B.plane !== "runtime") out.push(`${at} PLANE runtime imports ${B.plane}`);
-  } else if ((A.plane === "studio" || A.plane === "tooling") && B.plane === "runtime" && rel !== "platform/sanity/env.ts") {
+  } else if ((A.plane === "studio" || A.plane === "tooling") && B.plane === "runtime" && rel !== "platform/sanity/env.ts" && rel !== "features/product-filtering/core/definitions/facetMap.ts") {
     out.push(`${at} PLANE ${A.plane} imports runtime`);
   }
   // Non-runtime planes stop here.
@@ -187,7 +188,7 @@ export function run(ctx) {
     if (A && A.plane === "runtime") {
       const action = ACTION_PATH.test(file);
       if (ctx.useServer(file) && !action)
-        out.push(`${file} ACTION a 'use server' file must be features/<slice>/commands/<name>Action.ts`);
+        out.push(`${file} ACTION a 'use server' file must be features/<slice>/actions/<name>Action.ts`);
       if (action && !ctx.useServer(file))
         out.push(`${file} ACTION ${file.match(ACTION_PATH)[1]}Action.ts must start with 'use server'`);
       const parts = file.split("/");

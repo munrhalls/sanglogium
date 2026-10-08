@@ -84,25 +84,6 @@ export function CarouselNext({ className, iconStyle = "caret", variant = "defaul
   );
 }
 
-export function CarouselIndicator({ className }: { className?: string }) {
-  const context = useCarousel();
-  if (!context) return null;
-
-  const { activeIndex, dotsCount } = context;
-  const current = Math.round(Number(activeIndex)) + 1;
-
-  return (
-    <span
-      role="status"
-      aria-live="polite"
-      aria-atomic="true"
-      className={cn("type-metadata tabular-nums select-none", className)}
-    >
-      {current} / {dotsCount}
-    </span>
-  );
-}
-
 interface CarouselDotsProps {
   className?: string;
   variant?: "default" | "dark";

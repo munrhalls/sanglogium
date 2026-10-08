@@ -280,7 +280,7 @@ async function buildCatalogueIndex() {
     console.log(
       `✅ Index Built! Mapped ${Object.keys(slotMetadataMap).length} categories.`
     );
-    console.log(`📂 Saved to: src/data/catalogue-index.json`);
+    console.log(`📂 Saved to: data/catalogue-index.json`);
   } catch (error) {
     console.error("❌ Build Failed:", error);
     process.exit(1);

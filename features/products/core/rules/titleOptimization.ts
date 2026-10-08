@@ -5,7 +5,7 @@
  * and brand recognition across all product pages systematically.
  */
 
-export interface TitleOptions {
+interface TitleOptions {
   productName: string;
   brand?: { _id: string; name: string; slug: string } | null;
   siteName?: string;
@@ -145,30 +145,4 @@ export function generateMetaDescription(
     : fallback.substring(0, maxLength - 3) + "...";
 }
 
-/**
- * Utility for testing title lengths across different contexts
- */
-export function analyzeTitleLength(title: string): {
-  length: number;
-  browserTabDisplay: string;
-  serpDisplay: string;
-  recommendations: string[];
-} {
-  const browserTabLimit = 60;
-  const serpLimit = 70; // Google typically shows ~70 chars
 
-  return {
-    length: title.length,
-    browserTabDisplay: title.length <= browserTabLimit
-      ? title
-      : title.substring(0, browserTabLimit - 3) + "...",
-    serpDisplay: title.length <= serpLimit
-      ? title
-      : title.substring(0, serpLimit - 3) + "...",
-    recommendations: [
-      ...(title.length > browserTabLimit ? [`Browser tab: Consider shorter title (${browserTabLimit} chars)`] : []),
-      ...(title.length > serpLimit ? [`SERP: Consider shorter title (${serpLimit} chars)`] : []),
-      ...(title.length < 30 ? ["Consider adding more detail for better SEO"] : []),
-    ]
-  };
-}

@@ -1,15 +1,16 @@
 import React from 'react';
+import type { ReactNode } from 'react';
 import Link from 'next/link';
 import { ProductDetail } from '@/features/products/ui/detail/ProductDetail';
-import type { ProductDetailData, RelatedProduct } from '@/features/products/core/rules/productTypes';
+import type { ProductDetailData, RelatedProduct } from '@/features/products/core/types/productTypes';
 
 interface ProductPageViewProps {
   product: ProductDetailData;
   relatedProducts: RelatedProduct[];
-  isInWishlist: boolean;
+  wishlistSlot?: ReactNode;
 }
 
-export default function ProductView({ product, relatedProducts, isInWishlist }: ProductPageViewProps) {
+export default function ProductView({ product, relatedProducts, wishlistSlot }: ProductPageViewProps) {
   return (
     <div className="mx-auto w-full max-w-content px-4 md:px-8 py-6">
       {/* Breadcrumbs */}
@@ -33,7 +34,7 @@ export default function ProductView({ product, relatedProducts, isInWishlist }: 
         </ol>
       </nav>
 
-      <ProductDetail product={product} relatedProducts={relatedProducts} isInWishlist={isInWishlist} />
+      <ProductDetail product={product} relatedProducts={relatedProducts} wishlistSlot={wishlistSlot} />
     </div>
   );
 }

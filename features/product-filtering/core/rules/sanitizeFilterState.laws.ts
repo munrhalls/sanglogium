@@ -8,7 +8,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { sanitizeFilterState } from './sanitizeFilterState';
-import type { ProductQueryState } from './filterTypes';
+import type { ProductQueryState } from '@/features/product-filtering/core/types/filterTypes';
 
 const BASE: ProductQueryState = {
   sort: 'newest',

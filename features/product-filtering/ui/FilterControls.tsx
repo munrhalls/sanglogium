@@ -9,19 +9,12 @@ import {
   filterSectionHeaderLabel,
   filterSectionHeaderAction,
   filterStateActive,
-  filterStateInactive,
 } from './FilterSection';
 import { DualRangeSlider } from './DualRangeSlider';
 import { formatPriceMajor } from '@/platform/utils/price';
 import { getFacetModule, type Category, type AnyFacetDef, type FacetOptionCount } from '@/features/product-filtering/core/definitions/facetRegistry';
 import { humanizeFacetValue } from '@/features/product-filtering/core/rules/humanizeFacetValue';
 import { useFilterParam } from '@/features/product-filtering/state/useFilterParam';
-
-/**
- * Re-export the shared filter-section header primitives defined in
- * PriceRangeSlider.tsx so FilterSidebar.tsx can expose them in one place.
- */
-export { filterSectionHeaderRow, filterSectionHeaderLabel, filterSectionHeaderAction, filterStateActive, filterStateInactive };
 
 type SetArray = (next: string[] | ((prev: string[]) => string[])) => void;
 

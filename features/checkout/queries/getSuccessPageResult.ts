@@ -1,4 +1,3 @@
-import "server-only";
 import { redirect } from "next/navigation";
 import type {
   CheckoutSessions,
@@ -6,10 +5,10 @@ import type {
   Payments,
 } from "@/features/checkout/core/ports";
 import type { PaymentMethodDetails } from "@/features/order";
-import type { PaymentSnapshot } from "@/features/checkout/core/rules/checkoutTypes";
-import { logCheckoutEvent } from "@/features/checkout/core/rules/checkoutEvents";
+import type { PaymentSnapshot } from "@/features/checkout/core/types/checkoutTypes";
+import { logEvent } from "@/platform/utils/eventLogger";
 
-export type SuccessPageResult =
+type SuccessPageResult =
   | { kind: "verificationFailed"; paymentIntentId: string }
   | {
       kind: "succeeded";
@@ -36,7 +35,7 @@ export async function getSuccessPageResult(
   const session = await ports.sessions.getCheckoutSession()
   const traceId = session.checkoutSessionId || 'unknown'
 
-  await logCheckoutEvent({ correlationId: traceId, slice: 'success-page', event: 'success_page_enter', data: { paymentIntentId: payment_intent, hasCompletedClaim: session.completedPaymentIntentId === payment_intent, hasLastClaim: session.lastPaymentIntentId === payment_intent }, outcome: 'success' });
+  await logEvent({ correlationId: traceId, slice: 'success-page', event: 'success_page_enter', data: { paymentIntentId: payment_intent, hasCompletedClaim: session.completedPaymentIntentId === payment_intent, hasLastClaim: session.lastPaymentIntentId === payment_intent }, outcome: 'success' });
 
   const hasSessionClaim =
     session.completedPaymentIntentId === payment_intent ||
@@ -47,16 +46,16 @@ export async function getSuccessPageResult(
   if (!hasSessionClaim) {
     const order = await ports.orders.getOrderByPaymentIntentId(payment_intent)
     if (!order) {
-      await logCheckoutEvent({ correlationId: traceId, slice: 'success-page', event: 'success_page_gate_denied', data: { paymentIntentId: payment_intent }, outcome: 'error' });
+      await logEvent({ correlationId: traceId, slice: 'success-page', event: 'success_page_gate_denied', data: { paymentIntentId: payment_intent }, outcome: 'error' });
       redirect('/basket')
     }
     sanityOrderFallback = true
-    await logCheckoutEvent({ correlationId: traceId, slice: 'success-page', event: 'success_page_gate_sanity_fallback', data: { paymentIntentId: payment_intent, orderNumber: order.orderNumber }, outcome: 'success' });
+    await logEvent({ correlationId: traceId, slice: 'success-page', event: 'success_page_gate_sanity_fallback', data: { paymentIntentId: payment_intent, orderNumber: order.orderNumber }, outcome: 'success' });
   }
 
   // Verification-failed path set by Route Handler catch
   if (error === 'verification_failed') {
-    await logCheckoutEvent({ correlationId: traceId, slice: 'success-page', event: 'success_page_verification_failed', data: { paymentIntentId: payment_intent }, outcome: 'error' });
+    await logEvent({ correlationId: traceId, slice: 'success-page', event: 'success_page_verification_failed', data: { paymentIntentId: payment_intent }, outcome: 'error' });
     return { kind: 'verificationFailed', paymentIntentId: payment_intent }
   }
 
@@ -71,11 +70,11 @@ export async function getSuccessPageResult(
 
   // Succeeded branch
   if (payment.status === 'succeeded') {
-    await logCheckoutEvent({ correlationId: traceId, slice: 'success-page', event: 'success_page_succeeded', data: { paymentIntentId: payment_intent, amount: payment.amount, sanityFallback: sanityOrderFallback }, outcome: 'success' });
+    await logEvent({ correlationId: traceId, slice: 'success-page', event: 'success_page_succeeded', data: { paymentIntentId: payment_intent, amount: payment.amount, sanityFallback: sanityOrderFallback }, outcome: 'success' });
     return { kind: 'succeeded', paymentIntentId: payment.id, amount: payment.amount, paymentMethod: payment.paymentMethod }
   }
 
-  await logCheckoutEvent({ correlationId: traceId, slice: 'success-page', event: 'success_page_status', data: { paymentIntentId: payment_intent, status: payment.status }, outcome: 'error' });
+  await logEvent({ correlationId: traceId, slice: 'success-page', event: 'success_page_status', data: { paymentIntentId: payment_intent, status: payment.status }, outcome: 'error' });
 
   // Failed branch
   if (payment.status === 'requires_payment_method') {

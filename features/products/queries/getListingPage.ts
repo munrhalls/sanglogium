@@ -11,8 +11,8 @@ import {
 } from '@/features/product-filtering';
 import { isFacetedQuery, canonicalCategoryPath } from '@/features/catalogue';
 import type { CatalogPorts } from '@/features/products/core/ports';
-import type { CategoryMetadata } from '@/features/products/core/rules/productDataTypes';
-import type { Product } from '@/features/products/core/rules/productTypes';
+import type { CategoryMetadata } from '@/features/products/core/types/productDataTypes';
+import type { Product } from '@/features/products/core/types/productTypes';
 import { CHUNK_SIZE } from '@/features/products/core/definitions/gridLayout';
 
 const PER_PAGE = 24;
@@ -24,22 +24,23 @@ export interface ListingPorts {
     resolveSlugToId: (slug: string) => string | undefined;
     unrollDescendantKeys: (nodeId: string) => string[];
     getAllLeafKeys: () => string[];
+    getBreadcrumbLabels: (parts: string[]) => string[];
   };
   filtering: {
     getFilterFacets: (options: { keys: string[]; state: ProductQueryState }) => Promise<CatalogueFacets>;
     getCategoryPriceRange: (options: { keys: string[] }) => Promise<PriceRangeData>;
   };
   catalog: CatalogPorts;
-  getWishlistProductIds: () => Promise<string[]>;
 }
 
-export type ListingPageResult =
+type ListingPageResult =
   | { notFound: true }
   | {
       notFound?: false;
       title: string;
       overline?: string;
       breadcrumbs?: string[];
+      breadcrumbLabels?: string[];
       category?: Category;
       facets: CatalogueFacets;
       priceBounds: { min: number; max: number };
@@ -49,14 +50,12 @@ export type ListingPageResult =
       effectivePage: number;
       perPage: number;
       chunkPromises: Promise<Product[]>[];
-      wishlistProductIds: string[];
     };
 
-export function createGetListingPage(ports: ListingPorts) {
-  return async function getListingPage(input: {
-    slug: string[] | null;
-    query: SearchParams;
-  }): Promise<ListingPageResult> {
+export async function getListingPage(ports: ListingPorts, input: {
+  slug: string[] | null;
+  query: SearchParams;
+}): Promise<ListingPageResult> {
     const { slug, query } = input;
     const nodeId = slug ? ports.catalogue.resolveSlugToId(slug[slug.length - 1]) : undefined;
 
@@ -85,13 +84,12 @@ export function createGetListingPage(ports: ListingPorts) {
       loadFilterSort(query) as ProductQueryState,
     );
 
-    const [metadata, facets, priceRange, wishlistProductIds] = await Promise.all([
+    const [metadata, facets, priceRange] = await Promise.all([
       slug ? ports.catalog.getCategoryMetadata(nodeId!) : Promise.resolve(null),
       ports.filtering.getFilterFacets({ keys, state: preState }),
       // FULL category price span — not narrowed by active filters, so the max
       // handle can always be dragged back up past the current selection.
       ports.filtering.getCategoryPriceRange({ keys }),
-      ports.getWishlistProductIds(),
     ]);
 
     if (slug && !metadata) {
@@ -128,6 +126,7 @@ export function createGetListingPage(ports: ListingPorts) {
       title: slug ? (metadata as CategoryMetadata).name : 'All Products',
       overline,
       breadcrumbs: slug ?? undefined,
+      breadcrumbLabels: slug ? ports.catalogue.getBreadcrumbLabels(slug) : undefined,
       category,
       facets,
       priceBounds: { min: priceBounds.min, max: priceBounds.max },
@@ -137,13 +136,10 @@ export function createGetListingPage(ports: ListingPorts) {
       effectivePage,
       perPage: PER_PAGE,
       chunkPromises,
-      wishlistProductIds,
     };
-  };
 }
 
-export function createGetListingMetadata(ports: Pick<ListingPorts, 'catalogue' | 'catalog'>) {
-  return async function getListingMetadata(input: { slug: string[] | null; query: SearchParams }) {
+export async function getListingMetadata(ports: Pick<ListingPorts, 'catalogue' | 'catalog'>, input: { slug: string[] | null; query: SearchParams }) {
     const { slug, query } = input;
 
     if (!slug) {
@@ -174,5 +170,4 @@ export function createGetListingMetadata(ports: Pick<ListingPorts, 'catalogue' |
       alternates: { canonical: canonicalCategoryPath(slug) },
       robots: isFacetedQuery(query) ? { index: false, follow: true } : undefined,
     };
-  };
 }

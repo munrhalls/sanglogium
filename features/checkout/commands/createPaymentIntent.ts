@@ -1,15 +1,14 @@
-import "server-only";
 import type {
   CheckoutSessions,
   CheckoutCatalog,
   Payments,
 } from "@/features/checkout/core/ports";
 import { calculateGrandTotal } from "@/features/checkout/core/rules/paymentSummary";
-import type { PaymentHandle } from "@/features/checkout/core/rules/checkoutTypes";
-import { logCheckoutEvent } from "@/features/checkout/core/rules/checkoutEvents";
+import type { PaymentHandle } from "@/features/checkout/core/types/checkoutTypes";
+import { logEvent } from "@/platform/utils/eventLogger";
 import { getSession } from "@/features/auth/server";
 
-export type CreatePaymentIntentResult =
+type CreatePaymentIntentResult =
   | { ok: true; clientSecret: string | null }
   | { ok: false; error: string; status: number };
 
@@ -35,12 +34,12 @@ export async function createPaymentIntent(
 
     // ── Re-derive grandTotal from live Sanity data (authoritative) ──
     if (!session.basket?.length) {
-      await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_empty_basket', data: {}, outcome: 'error' })
+      await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_empty_basket', data: {}, outcome: 'error' })
       return { ok: false, error: 'Basket is empty', status: 400 }
     }
 
     if (session.shippingCost === undefined || session.shippingCost === null) {
-      await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_missing_shipping', data: {}, outcome: 'error' })
+      await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_missing_shipping', data: {}, outcome: 'error' })
       return { ok: false, error: 'Shipping cost is missing', status: 400 }
     }
 
@@ -48,7 +47,7 @@ export async function createPaymentIntent(
     const products = await ports.catalogue.getProductUnitAmountsByIds(ids)
 
     if (products.length !== session.basket.length) {
-      await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_product_mismatch', data: { expected: session.basket.length, received: products.length }, outcome: 'error' })
+      await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_product_mismatch', data: { expected: session.basket.length, received: products.length }, outcome: 'error' })
       return { ok: false, error: 'Product mismatch — one or more basket items not found', status: 400 }
     }
 
@@ -57,7 +56,7 @@ export async function createPaymentIntent(
       const product = products.find(p => p._id === item.productId)
       const unitPrice = product?.price_data?.unit_amount
       if (!unitPrice || !Number.isFinite(unitPrice)) {
-        await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_invalid_price', data: { productId: item.productId }, outcome: 'error' })
+        await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_invalid_price', data: { productId: item.productId }, outcome: 'error' })
         return { ok: false, error: `Invalid price for product ${item.productId}`, status: 400 }
       }
       subtotal += unitPrice * item.quantity
@@ -66,7 +65,7 @@ export async function createPaymentIntent(
     const computedGrandTotal = calculateGrandTotal(subtotal, session.shippingCost)
 
     if (!Number.isInteger(computedGrandTotal) || computedGrandTotal < 1) {
-      await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_invalid_total', data: { subtotal, shippingCost: session.shippingCost, computedGrandTotal }, outcome: 'error' })
+      await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_invalid_total', data: { subtotal, shippingCost: session.shippingCost, computedGrandTotal }, outcome: 'error' })
       return { ok: false, error: 'Invalid total amount', status: 400 }
     }
 
@@ -118,7 +117,7 @@ export async function createPaymentIntent(
       .filter(([, v]) => v.length > 500)
       .map(([k]) => k)
     if (oversizeKeys.length > 0) {
-      await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_metadata_oversize', data: { keys: oversizeKeys }, outcome: 'error' })
+      await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_metadata_oversize', data: { keys: oversizeKeys }, outcome: 'error' })
       return {
         ok: false,
         error: `Metadata values exceed Stripe 500-char limit for keys: ${oversizeKeys.join(', ')}`,
@@ -130,7 +129,7 @@ export async function createPaymentIntent(
 
     // M-03: Reject non-idempotent fallback; idempotency key must be stable
     if (!session.checkoutSessionId) {
-      await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_missing_session_id', data: {}, outcome: 'error' })
+      await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_missing_session_id', data: {}, outcome: 'error' })
       return { ok: false, error: 'Checkout session ID is missing', status: 400 }
     }
     const idempotencyKey = session.checkoutSessionId
@@ -138,29 +137,29 @@ export async function createPaymentIntent(
     if (session.paymentIntentId) {
       try {
         result = await ports.payments.updatePaymentAmount(session.paymentIntentId, computedGrandTotal, enrichedMetadata, idempotencyKey)
-        await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_update', data: { paymentIntentId: session.paymentIntentId, amount: computedGrandTotal }, outcome: 'success' })
+        await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_update', data: { paymentIntentId: session.paymentIntentId, amount: computedGrandTotal }, outcome: 'success' })
       } catch (err) {
-        await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_update_failed', data: { error: err instanceof Error ? err.message : String(err) }, outcome: 'error' })
+        await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_update_failed', data: { error: err instanceof Error ? err.message : String(err) }, outcome: 'error' })
         session.paymentIntentId = undefined
         result = await ports.payments.createPayment(computedGrandTotal, enrichedMetadata, idempotencyKey)
         session.paymentIntentId = result.id
-        await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_create', data: { paymentIntentId: result.id, amount: computedGrandTotal, currency: 'pln' }, outcome: 'success' })
+        await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_create', data: { paymentIntentId: result.id, amount: computedGrandTotal, currency: 'pln' }, outcome: 'success' })
       }
     } else {
       result = await ports.payments.createPayment(computedGrandTotal, enrichedMetadata, idempotencyKey)
       session.paymentIntentId = result.id
-      await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_create', data: { paymentIntentId: result.id, amount: computedGrandTotal, currency: 'pln' }, outcome: 'success' })
+      await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_create', data: { paymentIntentId: result.id, amount: computedGrandTotal, currency: 'pln' }, outcome: 'success' })
     }
 
     if (!result.clientSecret) {
-      await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_no_client_secret', data: { paymentIntentId: result.id }, outcome: 'error' })
+      await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_no_client_secret', data: { paymentIntentId: result.id }, outcome: 'error' })
       return { ok: false, error: 'Stripe did not return client_secret', status: 500 }
     }
 
     // C-02: Cookie size pre-check before save (warn threshold ~3KB before 4KB hard limit)
     const sessionJsonSize = Buffer.byteLength(JSON.stringify(session), 'utf8')
     if (sessionJsonSize > 3000) {
-      await logCheckoutEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_session_cookie_warn', data: { size: sessionJsonSize }, outcome: 'error' })
+      await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_session_cookie_warn', data: { size: sessionJsonSize }, outcome: 'error' })
     }
 
     await session.save()

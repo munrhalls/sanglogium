@@ -13,16 +13,16 @@ import { getOrderDetail as getOrderDetailQ } from "./queries/getOrderDetail";
 import { getAccountExport as getAccountExportQ } from "./queries/getAccountExport";
 import type { AccountOverviewParams } from "./queries/getAccountOverview";
 
-export const profile: ProfilePorts = {
+const profile: ProfilePorts = {
   getAccountSummary,
   getFullUserProfile,
 };
 
-export const addressBook: AddressBookPorts = {
+const addressBook: AddressBookPorts = {
   getUserAddresses,
 };
 
-export const orderHistory: OrderHistoryPorts = {
+const orderHistory: OrderHistoryPorts = {
   getUserOrders,
   getUserOrderByNumber,
   getAllUserOrdersFull,

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Addresses from "@/features/account/ui/Addresses";
-import type { SavedAddress } from "@/features/account/core/rules/accountTypes";
+import type { SavedAddress } from "@/features/account/core/types/accountTypes";
 
 export default function AddressesView({
   addresses,

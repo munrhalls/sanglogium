@@ -1,6 +1,6 @@
 import type { Orders, OrderEmails } from "@/features/checkout/core/ports";
 import type { OrderSessionData } from "@/features/order";
-import type { PaymentSnapshot } from "@/features/checkout/core/rules/checkoutTypes";
+import type { PaymentSnapshot } from "@/features/checkout/core/types/checkoutTypes";
 
 /**
  * Creates the order for a succeeded payment and sends the confirmation

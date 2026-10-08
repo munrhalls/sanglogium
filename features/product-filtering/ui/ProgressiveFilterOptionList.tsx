@@ -5,7 +5,7 @@ import { Checkbox } from './Checkbox';
 import {
   filterSectionHeaderAction,
   filterStateActive,
-} from './FilterSidebar';
+} from './FilterSection';
 
 /**
  * Progressive-disclosure option list for a high-count checkbox facet (Brand and

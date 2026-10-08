@@ -34,7 +34,7 @@ import {
  * Uses `history: "replace"` so it doesn't add its own Back-stack entry — it
  * rides along with the control's push.
  */
-export function usePageReset() {
+function usePageReset() {
   const [, setPage] = useQueryState(
     PAGE_PARAM_KEY,
     parseAsInteger.withOptions({ history: "replace", shallow: true, scroll: false }),

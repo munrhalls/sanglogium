@@ -10,8 +10,7 @@ build/
 .git/
 .windsurf_bak/
 .netlify/
-.clerk/
-# Python virtualenvs (scripts/image-pipeline/venv is 604 MB of DLLs/PYDs)
+# Python virtualenvs
 **/venv/
 **/.venv/
 **/env/
@@ -19,14 +18,6 @@ build/
 *.pyc
 *.pyd
 *.dll
-# Heavy Sanity backups (multi-MB JSON blobs)
-# sanity/backups/ (lifted for u8w.2 matrix work)
-# Image pipeline artifacts
-scripts/image-pipeline/venv/
-scripts/image-pipeline/models/
-scripts/image-pipeline/*.txt
-# Large JSON data dumps
-sanity/update/*.json
 # .todo files trigger pathological re-indexing in language server on edit
 # (confirmed Apr 26 — 1 KB file edits grew RAM from 1.1 GB to 8.7 GB)
 *.todo

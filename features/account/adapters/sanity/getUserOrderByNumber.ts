@@ -1,6 +1,6 @@
 import "server-only";
 import { backendClient } from "@/platform/sanity/backendClient";
-import type { OrderDetail } from "@/features/account/core/rules/accountTypes";
+import type { OrderDetail } from "@/features/account/core/types/accountTypes";
 
 export async function getUserOrderByNumber(
   orderNumber: string,

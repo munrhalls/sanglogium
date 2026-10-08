@@ -17,9 +17,7 @@ import "server-only";
 // returns an arbitrary street for the locality (false positive). Guarded below.
 // Always fails soft (`degraded: true`) so checkout never dead-ends on GUS.
 
-import type { RegistryCheckInput, RegistryCheckResult } from "@/features/address/core/rules/addressTypes";
-
-export type { RegistryCheckInput, RegistryCheckResult };
+import type { RegistryCheckInput, RegistryCheckResult } from "@/features/address/core/types/addressTypes";
 
 const DEFAULT_ENDPOINT = "https://uslugaterytws1test.stat.gov.pl/Terytws1.svc";
 const DEFAULT_USER = "TestPubliczny";

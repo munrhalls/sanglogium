@@ -1,6 +1,6 @@
 import "server-only";
 import { backendClient } from "@/platform/sanity/backendClient";
-import type { UserOrderSummary } from "@/features/account/core/rules/accountTypes";
+import type { UserOrderSummary } from "@/features/account/core/types/accountTypes";
 
 export async function getUserOrders(userId: string): Promise<UserOrderSummary[]> {
   return backendClient.fetch<UserOrderSummary[]>(

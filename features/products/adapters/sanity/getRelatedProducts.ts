@@ -1,7 +1,7 @@
 import "server-only";
 import { sanityFetch } from '@/platform/sanity/client';
 import groq from 'groq';
-import type { RelatedProduct } from '@/features/products/core/rules/productTypes';
+import type { RelatedProduct } from '@/features/products/core/types/productTypes';
 
 export async function getRelatedProducts(
   currentId: string,

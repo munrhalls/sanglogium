@@ -1,6 +1,6 @@
 import Link from "next/link";
 import IemsGalleryHeader from "./IemsGalleryHeader";
-import type { IemProduct } from "@/features/homepage/core/rules/homepageTypes";
+import type { IemProduct } from "@/features/homepage/core/types/homepageTypes";
 import { getProductBadge } from "@/features/homepage/core/rules/getProductBadge";
 import IemCard from "./IemCard";
 

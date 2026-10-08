@@ -7,11 +7,11 @@ import { ArrowRight, MagnifyingGlass, SquaresFour, Tag } from "@phosphor-icons/r
 import { cn } from "@/platform/utils/tailwind";
 import { ProductImage } from "@/features/products";
 import { formatPrice } from "@/platform/utils/price";
-import type { AutocompleteProduct } from "@/features/product-search/core/rules/searchTypes";
+import type { AutocompleteProduct } from "@/features/product-search/core/types/searchTypes";
 import { HighlightedText } from "./HighlightedText";
 import { CATEGORY_SUGGESTIONS } from "@/features/product-search/core/definitions/searchSuggestions";
 import type { SuggestionEntry } from "@/features/product-search/core/rules/suggestionEntries";
-import { isPlainLeftClick } from "@/features/product-search/ui/isPlainLeftClick";
+import { isPlainLeftClick } from "@/features/product-search/core/rules/isPlainLeftClick";
 import { productHref, searchHref } from "@/features/product-search/url/searchLinks";
 
 interface AutocompletePanelProps {

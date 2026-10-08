@@ -2,7 +2,7 @@ import "server-only";
 import { cache } from 'react';
 import { sanityFetch } from '@/platform/sanity/client';
 import groq from 'groq';
-import type { ProductDetailData as Product } from '@/features/products/core/rules/productTypes';
+import type { ProductDetailData as Product } from '@/features/products/core/types/productTypes';
 
 export const getProductBySlug = cache(async (slug: string): Promise<Product | null> => {
   const products = await sanityFetch<Product[]>({

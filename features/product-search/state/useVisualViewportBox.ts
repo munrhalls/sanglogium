@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export interface ViewportBox {
+interface ViewportBox {
   top: number;
   height: number;
   keyboardOpen: boolean;

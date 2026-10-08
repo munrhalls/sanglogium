@@ -1,26 +1,23 @@
 import type { CatalogPorts } from '@/features/products/core/ports';
-import type { ProductDetailData, RelatedProduct } from '@/features/products/core/rules/productTypes';
+import type { ProductDetailData, RelatedProduct } from '@/features/products/core/types/productTypes';
 import {
   generateOptimizedTitle,
   generateSEOTitle,
   generateMetaDescription,
 } from '@/features/products/core/rules/titleOptimization';
 
-export interface ProductPagePorts {
+interface ProductPagePorts {
   catalog: Pick<CatalogPorts, 'getProductBySlug' | 'getRelatedProducts'>;
-  getWishlistProductIds: () => Promise<string[]>;
 }
 
-export type ProductPageResult =
+type ProductPageResult =
   | { product: null }
   | {
       product: ProductDetailData;
       relatedProducts: RelatedProduct[];
-      isInWishlist: boolean;
     };
 
-export function createGetProductPage(ports: ProductPagePorts) {
-  return async function getProductPage(slug: string): Promise<ProductPageResult> {
+export async function getProductPage(ports: ProductPagePorts, slug: string): Promise<ProductPageResult> {
     const product = await ports.catalog.getProductBySlug(slug);
 
     if (!product) {
@@ -34,18 +31,13 @@ export function createGetProductPage(ports: ProductPagePorts) {
       6
     );
 
-    const wishlistProductIds = await ports.getWishlistProductIds();
-
     return {
       product,
       relatedProducts,
-      isInWishlist: wishlistProductIds.includes(product._id),
     };
-  };
 }
 
-export function createGetProductMetadata(ports: Pick<ProductPagePorts, 'catalog'>) {
-  return async function getProductMetadata(slug: string) {
+export async function getProductMetadata(ports: Pick<ProductPagePorts, 'catalog'>, slug: string) {
     const product = await ports.catalog.getProductBySlug(slug);
 
     if (!product) {
@@ -91,5 +83,4 @@ export function createGetProductMetadata(ports: Pick<ProductPagePorts, 'catalog'
         'seo-title': seoTitle, // Custom meta for SEO tracking
       }
     };
-  };
 }

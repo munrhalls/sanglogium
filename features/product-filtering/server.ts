@@ -5,8 +5,8 @@ import "server-only";
 // '@/features/product-filtering/server' — never from adapters/ directly.
 
 import { cache } from 'react';
-import { fetchFacetProducts } from './adapters/sanity/getFilterFacets';
-import { fetchCategoryPriceRange } from './adapters/sanity/getCategoryPriceRange';
+import { fetchFacetProducts } from './adapters/sanity/fetchFacetProducts';
+import { fetchCategoryPriceRange } from './adapters/sanity/fetchCategoryPriceRange';
 import {
   getFilterFacets as getFilterFacetsQuery,
   type GetFilterFacetsOptions,
@@ -37,5 +37,4 @@ export const getCategoryPriceRange = withCache(
     getCategoryPriceRangeQuery(fetchCategoryPriceRange, options),
 );
 
-export type { GetFilterFacetsOptions, GetCategoryPriceRangeOptions };
 export { buildProductQuery } from './adapters/sanity/buildProductQuery';

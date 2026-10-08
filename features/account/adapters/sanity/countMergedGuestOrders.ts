@@ -1,6 +1,6 @@
 import "server-only";
 import { backendClient } from "@/platform/sanity/backendClient";
-import type { MergedGuestOrderCountParams } from "@/features/account/core/rules/accountTypes";
+import type { MergedGuestOrderCountParams } from "@/features/account/core/types/accountTypes";
 
 export async function countMergedGuestOrders(params: MergedGuestOrderCountParams): Promise<number> {
   const orders = await backendClient.fetch<Array<{ _id: string }>>(

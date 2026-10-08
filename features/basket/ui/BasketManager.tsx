@@ -7,7 +7,7 @@ import { detectCountry, DEFAULT_PARCEL } from "@/features/shipping";
 import BasketSkeleton from "./BasketSkeleton";
 import EmptyBasket from "./EmptyBasket";
 import BasketItem from "./BasketItem";
-import BasketSummary from "./BasketSummary";
+import BasketSummary, { type RenderCheckout } from "./BasketSummary";
 
 interface CmsProduct {
   _id: string;
@@ -46,7 +46,7 @@ async function fetchBasketProducts(productIds: string[]) {
   return result.data || [];
 }
 
-export default function BasketManager() {
+export default function BasketManager({ renderCheckout }: { renderCheckout: RenderCheckout }) {
   const { items: basket, _hasHydrated } = useBasketStore(
     useShallow((state) => ({
       items: state.items,
@@ -229,6 +229,7 @@ export default function BasketManager() {
             subtotal={subtotal}
             basketData={checkoutData}
             shippingCost={shippingCost}
+            renderCheckout={renderCheckout}
           />
         </div>
       </div>
@@ -240,6 +241,7 @@ export default function BasketManager() {
           subtotal={subtotal}
           basketData={checkoutData}
           shippingCost={shippingCost}
+          renderCheckout={renderCheckout}
         />
       </div>
     </div>

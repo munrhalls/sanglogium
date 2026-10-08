@@ -10,4 +10,3 @@ const shipping: ShippingRates = { fetchShippingOptions };
 export const getCheapestShippingRate = (input: Parameters<typeof getCheapestShippingRateQuery>[1]) => getCheapestShippingRateQuery({ shipping }, input);
 
 export { fetchShippingOptions };
-export type { ShippingOption, ShippingRatesInput } from './core/rules/shippingTypes';

@@ -4,15 +4,17 @@ import { ShopHeader } from '@/features/products/ui/listing/ShopHeader';
 import { EmptyResults } from '@/features/products/ui/listing/EmptyResults';
 import { Pagination } from '@/features/products/ui/listing/Pagination';
 import { ChunkedProductGrid } from '@/features/products/ui/listing/ChunkedProductGrid';
-import { ProductChunkView } from '@/features/products/view/listing/ProductChunkView';
+import { ProductChunkView } from './ProductChunkView';
 import { FilterSidebar, SortBar, ActiveFilterChips } from '@/features/product-filtering';
 import type { Category, CatalogueFacets } from '@/features/product-filtering';
-import type { Product } from '@/features/products/core/rules/productTypes';
+import type { Product } from '@/features/products/core/types/productTypes';
+import type { CardAction } from '@/features/products/ui/card/ProductCard';
 
 interface ListingPageProps {
   title: string;
   overline?: string;
   breadcrumbs?: string[];
+  breadcrumbLabels?: string[];
   category?: Category;
   facets: CatalogueFacets;
   priceBounds: { min: number; max: number };
@@ -22,13 +24,14 @@ interface ListingPageProps {
   effectivePage: number;
   perPage: number;
   chunkPromises: Promise<Product[]>[];
-  wishlistProductIds: string[];
+  cardAction?: CardAction;
 }
 
 export default function ListingView({
   title,
   overline,
   breadcrumbs,
+  breadcrumbLabels,
   category,
   facets,
   priceBounds,
@@ -38,11 +41,11 @@ export default function ListingView({
   effectivePage,
   perPage,
   chunkPromises,
-  wishlistProductIds,
+  cardAction,
 }: ListingPageProps) {
   return (
     <div className="mx-auto w-full max-w-catalogue px-4 md:px-8 pb-12">
-      {breadcrumbs && <CategoryBreadcrumbsView categoryParts={breadcrumbs} />}
+      {breadcrumbs && <CategoryBreadcrumbsView categoryParts={breadcrumbs} labels={breadcrumbLabels ?? breadcrumbs} />}
       <ShopHeader title={title} overline={overline} />
 
       <div className="flex flex-col lg-touch:flex-row lg-desktop:flex-row gap-8">
@@ -80,7 +83,7 @@ export default function ListingView({
                   <ProductChunkView
                     key={i}
                     promise={promise}
-                    wishlistProductIds={wishlistProductIds}
+                    cardAction={cardAction}
                     priority={i === 0}
                   />
                 ))}

@@ -18,11 +18,12 @@ import * as accessories from './categories/accessories';
 // Re-exported below for existing client-side importers -- the canonical
 // definitions live in ./category.ts (a module with no client directive) so Server
 // Components can use them without crossing the client boundary.
-import { CATEGORIES, isCategory, type Category } from './category';
+import { isCategory, type Category } from './category';
+import type { Option } from './option';
+import { SORT_OPTIONS, SORT_DEFAULT } from './sortOptions';
 
-export { CATEGORIES, isCategory, type Category };
+export { isCategory, type Category };
 
-export type Option = { value: string; label: string };
 export type FacetOptionCount = { value: string; count: number };
 
 /** Structural shape actually read by FilterSidebar/FilterControls/
@@ -43,7 +44,7 @@ export interface AnyFacetDef {
   subheading?: string;
 }
 
-export interface FacetGroupDef {
+interface FacetGroupDef {
   id: string;
   label: string;
   note?: string;
@@ -62,22 +63,22 @@ const MODULES: Record<Category, FacetModule> = {
     FACETS: headphones.FACETS,
     FACET_GROUPS: headphones.FACET_GROUPS,
     facetsForGroup: headphones.facetsForGroup as FacetModule['facetsForGroup'],
-    SORT_OPTIONS: headphones.SORT_OPTIONS,
-    SORT_DEFAULT: headphones.SORT_DEFAULT,
+    SORT_OPTIONS,
+    SORT_DEFAULT,
   },
   'audio-electronics': {
     FACETS: audioElectronics.FACETS,
     FACET_GROUPS: audioElectronics.FACET_GROUPS,
     facetsForGroup: audioElectronics.facetsForGroup as FacetModule['facetsForGroup'],
-    SORT_OPTIONS: audioElectronics.SORT_OPTIONS,
-    SORT_DEFAULT: audioElectronics.SORT_DEFAULT,
+    SORT_OPTIONS,
+    SORT_DEFAULT,
   },
   accessories: {
     FACETS: accessories.FACETS,
     FACET_GROUPS: accessories.FACET_GROUPS,
     facetsForGroup: accessories.facetsForGroup as FacetModule['facetsForGroup'],
-    SORT_OPTIONS: accessories.SORT_OPTIONS,
-    SORT_DEFAULT: accessories.SORT_DEFAULT,
+    SORT_OPTIONS,
+    SORT_DEFAULT,
   },
 };
 

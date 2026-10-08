@@ -1,9 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { initCheckoutSessionAction } from '@/features/checkout/commands/initCheckoutSessionAction'
+import { initCheckoutSessionAction } from '@/features/checkout/actions/initCheckoutSessionAction'
+import { generateCheckoutSessionId } from '@/features/checkout/core/rules/checkoutSessionId'
 
-export interface CheckoutButtonProps {
+interface CheckoutButtonProps {
   basketData?: Array<{
     productId: string;
     quantity: number;
@@ -19,11 +20,6 @@ export interface CheckoutButtonProps {
     };
   }>;
   disabled?: boolean;
-}
-
-// Generate checkoutSessionId on client side
-function generateCheckoutSessionId(): string {
-  return `chk_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
 }
 
 export function CheckoutButton({

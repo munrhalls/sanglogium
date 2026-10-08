@@ -1,7 +1,6 @@
-import "server-only";
 import { redirect } from "next/navigation";
 import type { CheckoutSessions } from "@/features/checkout/core/ports";
-import type { CheckoutSession } from "@/features/checkout/core/rules/checkoutTypes";
+import type { CheckoutSession } from "@/features/checkout/core/types/checkoutTypes";
 
 export async function getAddressPageData(ports: {
   sessions: CheckoutSessions;

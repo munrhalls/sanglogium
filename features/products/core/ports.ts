@@ -1,4 +1,4 @@
-import type { Product, ProductDetailData, RelatedProduct } from './rules/productTypes';
+import type { Product, ProductDetailData, RelatedProduct } from './types/productTypes';
 import type {
   CategoryMetadata,
   GetProductsChunkOptions,
@@ -6,7 +6,7 @@ import type {
   GetProductsOptions,
   PaginatedProducts,
   SitemapSlug,
-} from './rules/productDataTypes';
+} from './types/productDataTypes';
 
 export type CatalogPorts = {
   getProductsByVfsKeys: (options: GetProductsOptions) => Promise<PaginatedProducts>;
@@ -18,12 +18,3 @@ export type CatalogPorts = {
   getSitemapSlugs: () => Promise<{ products: SitemapSlug[]; categories: SitemapSlug[] }>;
 };
 
-export type WishlistPorts = {
-  getWishlistProductIdsByAuthId: (authId: string) => Promise<string[]>;
-  getWishlistProducts: (authId: string) => Promise<Product[]>;
-};
-
-export type WishlistQueryPorts = {
-  getSession: () => Promise<{ userId: string } | null>;
-  wishlist: WishlistPorts;
-};

@@ -1,4 +1,4 @@
-import type { BasketProduct } from '@/features/basket/core/rules/basketTypes';
+import type { BasketProduct } from '@/features/basket/core/types/basketTypes';
 import type { BasketProductsPort } from '@/features/basket/core/ports';
 
 function sanitizeFiniteNonNegative(value: unknown): number {
