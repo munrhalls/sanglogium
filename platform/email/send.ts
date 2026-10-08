@@ -1,10 +1,7 @@
 import "server-only";
-import { Resend } from "resend";
+import { resend } from "./client";
 
-const resendApiKey = process.env.RESEND_API_KEY;
 const resendFromEmail = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
-
-const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
 function logDevEmail(type: string, to: string, url: string) {
   console.log(`\n[DEV EMAIL] ${type}`);

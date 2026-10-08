@@ -4,12 +4,6 @@
 
 export type PageItem = number | "ellipsis";
 
-/** Total number of pages for a filtered set of `totalCount` items. */
-export function totalPagesFor(totalCount: number, perPage: number): number {
-  if (totalCount <= 0 || perPage <= 0) return 0;
-  return Math.ceil(totalCount / perPage);
-}
-
 const range = (start: number, end: number): number[] =>
   Array.from({ length: Math.max(0, end - start + 1) }, (_, i) => start + i);
 

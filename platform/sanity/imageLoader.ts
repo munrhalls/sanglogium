@@ -1,7 +1,4 @@
-import urlBuilder from "@sanity/image-url";
-import { dataset, projectId } from "./env";
-
-const builder = urlBuilder({ projectId, dataset });
+import { urlFor } from "./imageUrl";
 
 function sanityImageLoader({
   src,
@@ -17,8 +14,7 @@ function sanityImageLoader({
     return src;
   }
   // Sanity asset ref: generate optimized CDN URL
-  return builder
-    .image(src)
+  return urlFor(src)
     .width(width)
     .quality(quality || 75)
     .auto("format")
