@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import type { ProductDetailData as Product, RelatedProduct } from "@/features/products/core/rules/productTypes";
 import { ImageGallery } from './ImageGallery';
 import { ProductInfo } from './ProductInfo';
@@ -6,10 +7,10 @@ import { RelatedProducts } from './RelatedProducts';
 interface ProductDetailProps {
   product: Product;
   relatedProducts?: RelatedProduct[];
-  isInWishlist?: boolean;
+  wishlistSlot?: ReactNode;
 }
 
-export function ProductDetail({ product, relatedProducts = [], isInWishlist = false }: ProductDetailProps) {
+export function ProductDetail({ product, relatedProducts = [], wishlistSlot }: ProductDetailProps) {
   // Combine main image with gallery for the image gallery
   const allImages = product.image ? [product.image, ...(product.gallery || [])] : (product.gallery || []);
 
@@ -23,7 +24,7 @@ export function ProductDetail({ product, relatedProducts = [], isInWishlist = fa
 
         {/* Product Info */}
         <div>
-          <ProductInfo product={product} isInWishlist={isInWishlist} />
+          <ProductInfo product={product} wishlistSlot={wishlistSlot} />
         </div>
       </div>
 

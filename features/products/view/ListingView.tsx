@@ -8,6 +8,7 @@ import { ProductChunkView } from '@/features/products/view/listing/ProductChunkV
 import { FilterSidebar, SortBar, ActiveFilterChips } from '@/features/product-filtering';
 import type { Category, CatalogueFacets } from '@/features/product-filtering';
 import type { Product } from '@/features/products/core/rules/productTypes';
+import type { CardAction } from '@/features/products/ui/card/ProductCard';
 
 interface ListingPageProps {
   title: string;
@@ -22,7 +23,7 @@ interface ListingPageProps {
   effectivePage: number;
   perPage: number;
   chunkPromises: Promise<Product[]>[];
-  wishlistProductIds: string[];
+  cardAction?: CardAction;
 }
 
 export default function ListingView({
@@ -38,7 +39,7 @@ export default function ListingView({
   effectivePage,
   perPage,
   chunkPromises,
-  wishlistProductIds,
+  cardAction,
 }: ListingPageProps) {
   return (
     <div className="mx-auto w-full max-w-catalogue px-4 md:px-8 pb-12">
@@ -80,7 +81,7 @@ export default function ListingView({
                   <ProductChunkView
                     key={i}
                     promise={promise}
-                    wishlistProductIds={wishlistProductIds}
+                    cardAction={cardAction}
                     priority={i === 0}
                   />
                 ))}

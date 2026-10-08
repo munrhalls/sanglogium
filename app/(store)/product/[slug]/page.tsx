@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { getProductPage, getProductMetadata, ProductView } from '@/features/products/server';
+import { getWishlistProductIds, WishlistToggleView } from '@/features/wishlist/server';
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>;
@@ -7,6 +8,7 @@ interface ProductPageProps {
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = await params;
+  const wishlist = getWishlistProductIds();
   const result = await getProductPage(slug);
 
   if (!result.product) {
@@ -17,7 +19,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     <ProductView
       product={result.product}
       relatedProducts={result.relatedProducts}
-      isInWishlist={result.isInWishlist}
+      wishlistSlot={<WishlistToggleView productId={result.product._id} wishlistPromise={wishlist} />}
     />
   );
 }

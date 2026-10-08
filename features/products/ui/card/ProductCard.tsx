@@ -4,18 +4,19 @@ import { ProductImage } from "./ProductImage";
 import type { Product } from "@/features/products/core/rules/productTypes";
 import { Price } from "@/platform/design/ui/Price";
 import { BasketControls } from "@/features/basket";
-import { WishlistButton } from "./WishlistButton";
 import { centsToDisplay } from "@/platform/utils/price";
+
+export type CardAction = (productId: string, className: string) => React.ReactNode;
 
 interface ProductCardProps {
   product: Product;
-  isWishlisted?: boolean;
+  cardAction?: CardAction;
   priority?: boolean;
 }
 
 export function ProductCard({
   product,
-  isWishlisted = false,
+  cardAction,
   priority = false,
 }: ProductCardProps) {
   const displayPrice = centsToDisplay(product.price_data.unit_amount);
@@ -36,12 +37,7 @@ export function ProductCard({
         className="group card-product-dark relative col-span-1 flex h-full min-w-0 flex-col overflow-hidden !p-0 duration-300"
         data-testid="product-card"
       >
-        <WishlistButton
-          productId={product._id}
-          initiallyInWishlist={isWishlisted}
-          variant="quiet"
-          className="absolute right-1 top-1 z-20"
-        />
+        {cardAction?.(product._id, "absolute right-1 top-1 z-20")}
 
         <Link
           href={`/product/${product.slug.current}`}

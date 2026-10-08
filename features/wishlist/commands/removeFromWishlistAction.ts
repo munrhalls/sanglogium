@@ -2,7 +2,7 @@
 
 import { requireSession } from "@/features/auth/server";
 import { getProfileIdByAuthId, removeWishlistItem } from "@/features/profile/server";
-import { isValidProductId } from "@/features/products/core/rules/productId";
+import { isValidProductId } from "@/features/products";
 
 export async function removeFromWishlistAction(productId: string) {
   const session = await requireSession();

@@ -5,9 +5,11 @@ export { ChunkedProductGrid, CHUNK_SIZE } from './ui/listing/ChunkedProductGrid'
 export { EmptyResults } from './ui/listing/EmptyResults';
 export { Pagination } from './ui/listing/Pagination';
 export { ProductCard } from './ui/card/ProductCard';
+export type { CardAction } from './ui/card/ProductCard';
 export { ProductDetail } from './ui/detail/ProductDetail';
 export { ProductGrid } from './ui/listing/ProductGrid';
 export { ProductGridSkeleton } from './ui/listing/ProductGridSkeleton';
+export { isValidProductId } from './core/rules/productId';
 export { ProductImage } from './ui/card/ProductImage';
 export { ProductInfo } from './ui/detail/ProductInfo';
 export { ShopHeader } from './ui/listing/ShopHeader';

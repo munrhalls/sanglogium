@@ -1,20 +1,20 @@
 import React from "react";
 import { ProductCard } from "@/features/products/ui/card/ProductCard";
+import type { CardAction } from "@/features/products/ui/card/ProductCard";
 import type { Product } from "@/features/products/core/rules/productTypes";
 
 interface ProductChunkProps {
   promise: Promise<Product[]>;
-  wishlistProductIds?: string[];
+  cardAction?: CardAction;
   priority?: boolean;
 }
 
 export async function ProductChunkView({
   promise,
-  wishlistProductIds,
+  cardAction,
   priority = false,
 }: ProductChunkProps) {
   const products = await promise;
-  const wishlistSet = wishlistProductIds ? new Set(wishlistProductIds) : null;
 
   return (
     <>
@@ -22,7 +22,7 @@ export async function ProductChunkView({
         <ProductCard
           key={product._id}
           product={product}
-          isWishlisted={wishlistSet?.has(product._id) ?? false}
+          cardAction={cardAction}
           priority={priority}
         />
       ))}

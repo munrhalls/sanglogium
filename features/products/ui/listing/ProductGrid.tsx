@@ -1,6 +1,7 @@
 import React from "react";
 import { cn } from "@/platform/utils/tailwind";
 import { ProductCard } from "@/features/products/ui/card/ProductCard";
+import type { CardAction } from "@/features/products/ui/card/ProductCard";
 import { productGridClass } from "@/features/products/core/definitions/gridLayout";
 import { ImageRevealScript } from "@/features/products/ui/card/ImageRevealScript";
 import type { Product } from "@/features/products/core/rules/productTypes";
@@ -8,13 +9,13 @@ import type { Product } from "@/features/products/core/rules/productTypes";
 interface ProductGridProps {
   products: Product[];
   className?: string;
-  wishlistProductIds?: string[];
+  cardAction?: CardAction;
 }
 
 export function ProductGrid({
   products,
   className,
-  wishlistProductIds,
+  cardAction,
 }: ProductGridProps) {
   if (products.length === 0) {
     return (
@@ -30,8 +31,6 @@ export function ProductGrid({
     );
   }
 
-  const wishlistSet = wishlistProductIds ? new Set(wishlistProductIds) : null;
-
   return (
     <>
       <ImageRevealScript />
@@ -43,7 +42,7 @@ export function ProductGrid({
           <ProductCard
             key={product._id}
             product={product}
-            isWishlisted={wishlistSet?.has(product._id) ?? false}
+            cardAction={cardAction}
           />
         ))}
       </div>
