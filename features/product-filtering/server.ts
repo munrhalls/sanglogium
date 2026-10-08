@@ -5,8 +5,8 @@ import "server-only";
 // '@/features/product-filtering/server' — never from adapters/ directly.
 
 import { cache } from 'react';
-import { fetchFacetProducts } from './adapters/sanity/getFilterFacets';
-import { fetchCategoryPriceRange } from './adapters/sanity/getCategoryPriceRange';
+import { fetchFacetProducts } from './adapters/sanity/fetchFacetProducts';
+import { fetchCategoryPriceRange } from './adapters/sanity/fetchCategoryPriceRange';
 import {
   getFilterFacets as getFilterFacetsQuery,
   type GetFilterFacetsOptions,

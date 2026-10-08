@@ -4,7 +4,7 @@ import { sanityFetch } from '@/platform/sanity/client';
 import type { BasketProduct } from '@/features/basket/core/rules/basketTypes';
 import groq from 'groq';
 
-export async function getBasketProducts(ids: string[]): Promise<BasketProduct[]> {
+export async function fetchBasketProducts(ids: string[]): Promise<BasketProduct[]> {
   if (!ids || ids.length === 0) {
     return [];
   }

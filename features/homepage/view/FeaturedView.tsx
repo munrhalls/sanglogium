@@ -8,7 +8,7 @@ import {
   CarouselNext,
   CarouselDots,
 } from "@/platform/design/ui/carousel/CarouselControls";
-import FeaturedHeader from "@/features/homepage/ui/featured/FeaturedHeader";
+import FeaturedHeader from "@/features/homepage/ui/FeaturedHeader";
 import type { FeaturedProduct } from "@/features/homepage/core/rules/homepageTypes";
 import { BasketControls } from "@/features/basket";
 import { formatPrice } from "@/platform/utils/price";

@@ -2,7 +2,7 @@ import { Suspense } from 'react'
 import { CheckCircle, Lock } from '@phosphor-icons/react/dist/ssr'
 import type { PaymentMethodDetails } from '@/features/order'
 import type { OrderForSuccessPage } from '@/features/checkout/core/rules/checkoutTypes'
-import OrderDetailsView from './OrderDetailsView'
+import ConfirmedOrderDetailsView from './ConfirmedOrderDetailsView'
 import OrderDetailsSkeleton from '@/features/checkout/ui/OrderDetailsSkeleton'
 import OrderNextSteps from '@/features/checkout/ui/OrderNextSteps'
 import { SuccessAnalytics } from '@/features/checkout/ui/SuccessAnalytics'
@@ -43,7 +43,7 @@ export default function PaymentConfirmedView({ paymentIntentId, amount, paymentM
       <div className="grid grid-cols-1 gap-6 lg-touch:grid-cols-[3fr_2fr] lg-desktop:grid-cols-[3fr_2fr]">
         <div>
           <Suspense fallback={<OrderDetailsSkeleton />}>
-            <OrderDetailsView orderPromise={orderPromise} fallbackTotal={amount} />
+            <ConfirmedOrderDetailsView orderPromise={orderPromise} fallbackTotal={amount} />
           </Suspense>
         </div>
         <OrderNextSteps />

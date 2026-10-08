@@ -1,4 +1,4 @@
-import SectionHeader from "@/features/homepage/ui/shared/SectionHeader";
+import SectionHeader from "@/features/homepage/ui/SectionHeader";
 
 export default function IemsGalleryHeader({ href }: { href?: string }) {
   return (

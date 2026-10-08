@@ -53,7 +53,7 @@ Render ProductGrid with products
 | File | Purpose |
 |------|---------|
 | `features/catalogue/view/CatalogueNavbarView.tsx` | Renders navigation from VFS |
-| `features/catalogue/ui/details/DetailSection.tsx` | Renders category links |
+| `features/catalogue/ui/detail/DetailSection.tsx` | Renders category links |
 
 ## VFS Functions Reference
 

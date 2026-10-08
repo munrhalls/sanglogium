@@ -4,7 +4,7 @@ import { ShopHeader } from '@/features/products/ui/listing/ShopHeader';
 import { EmptyResults } from '@/features/products/ui/listing/EmptyResults';
 import { Pagination } from '@/features/products/ui/listing/Pagination';
 import { ChunkedProductGrid } from '@/features/products/ui/listing/ChunkedProductGrid';
-import { ProductChunkView } from '@/features/products/view/listing/ProductChunkView';
+import { ProductChunkView } from './ProductChunkView';
 import { FilterSidebar, SortBar, ActiveFilterChips } from '@/features/product-filtering';
 import type { Category, CatalogueFacets } from '@/features/product-filtering';
 import type { Product } from '@/features/products/core/rules/productTypes';

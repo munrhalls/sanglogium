@@ -1,6 +1,6 @@
 import 'server-only';
 // Server door: newsletter subscription.
-import { subscribeToNewsletter } from './adapters/resend/subscribeNewsletter';
+import { subscribeToNewsletter } from './adapters/resend/subscribeToNewsletter';
 import { subscribeNewsletter as subscribeNewsletterUseCase } from './commands/subscribeNewsletter';
 import type { NewsletterSubscriptions } from './core/ports';
 
