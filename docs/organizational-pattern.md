@@ -7,7 +7,7 @@ Normative model of how this repository is organized: vertical slices. It says wh
 | # | Axiom |
 |---|-------|
 | A1 | **One home.** Every tracked path has exactly one home, decided by its path (section 3). |
-| A2 | **Two worlds.** The runtime is the code Next bundles. Everything else is a plane: studio, tooling, laws, config, docs, automation, static. Runtime never imports a plane; the one exception is `app/(studio)/`, which mounts the studio plane. Studio and tooling import from the runtime only `platform/sanity/env.ts`. |
+| A2 | **Two worlds.** The runtime is the code Next bundles. Everything else is a plane: studio, tooling, laws, config, docs, automation, static. Runtime never imports a plane; the one exception is `app/(studio)/`, which mounts the studio plane. Studio and tooling import from the runtime only `platform/sanity/env.ts` and the import-free facet vocabulary `features/product-filtering/core/definitions/facetMap.ts`. |
 | A3 | **Slices.** Each capability lives in one slice, `features/<slice>/`, built only from the parts in section 2. |
 | A4 | **Doors.** Code outside a slice imports it only through `index.ts` (client door) or `server.ts` (server door). |
 | A5 | **No cycles.** The slice-to-slice import graph, type imports included, has no cycle. A slice's level is 1 + the highest level it imports; levels are derived, never stored. |
@@ -96,7 +96,7 @@ A part may group its files in one level of sub-folders named after a screen regi
 
 ## 5. Conventions (review-enforced unless section 6 names a rule)
 
-- Specifiers: `./x` for the same directory and `@/...` otherwise; no `..` under `features/`. Studio-plane files use relative paths only, because the Sanity CLI does not resolve `@/`.
+- Specifiers: `./x` for the same directory and `@/...` otherwise; no `..` under `features/`, except in studio-plane files, which use relative paths only because the Sanity CLI does not resolve `@/`.
 - Naming: components PascalCase; module files camelCase; docs, scripts and static assets kebab-case (exempt: `README.md`, `CLAUDE.md`, `AGENTS.md`, `ADR-NNN-*.md` and the three `_project/` process documents); `view/` components end in `View`; `ui/` component names never end in `View`, `Client`, `Server` or `Page`; Server Actions are `commands/<name>Action.ts`; slice names are domain nouns.
 - One Server Action per file.
 - Promotion: a component moves to `platform/design/ui/` when a second slice needs it.

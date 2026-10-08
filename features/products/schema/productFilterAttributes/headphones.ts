@@ -1,4 +1,5 @@
 import { defineArrayMember } from "sanity";
+import { vocabFor } from "../../../product-filtering/core/definitions/facetMap";
 
 export const headphonesFields: any[] = [
         {
@@ -14,14 +15,14 @@ export const headphonesFields: any[] = [
           name: "wearingStyle",
           title: "Wearing style",
           type: "array",
-          of: [{ type: "string", options: { list: ["over-ear", "on-ear", "in-ear"] } }],
+          of: [{ type: "string", options: { list: vocabFor("wearingStyle") } }],
           categories: ["headphones"],
         },
         {
           name: "acousticDesign",
           title: "Acoustic design",
           type: "array",
-          of: [{ type: "string", options: { list: ["open-back", "closed-back", "semi-open"] } }],
+          of: [{ type: "string", options: { list: vocabFor("acousticDesign") } }],
           description: "Renamed from backDesign 2026-09-13.",
           categories: ["headphones"],
         },
@@ -29,7 +30,7 @@ export const headphonesFields: any[] = [
           name: "fitType",
           title: "Fit type (IEM)",
           type: "string",
-          options: { list: ["universal", "custom"] },
+          options: { list: vocabFor("fitType") },
           description: "Null/unset when the product is not an IEM.",
           categories: ["headphones"],
         },
@@ -37,7 +38,7 @@ export const headphonesFields: any[] = [
           name: "connectivity",
           title: "Connectivity",
           type: "string",
-          options: { list: ["wired", "wireless", "true-wireless", "hybrid"] },
+          options: { list: vocabFor("connectivity") },
           categories: ["headphones"],
         },
         {
@@ -50,18 +51,7 @@ export const headphonesFields: any[] = [
           name: "soundSignature",
           title: "Sound signature / tonal preference",
           type: "string",
-          options: {
-            list: [
-              "Neutral",
-              "Warm",
-              "Bright/Analytical",
-              "Dark",
-              "V-Shaped",
-              "Basshead",
-              "Mid-Forward",
-              "Harman-target-like",
-            ],
-          },
+          options: { list: vocabFor("soundSignature") },
           categories: ["headphones"],
         },
         {
@@ -170,7 +160,7 @@ export const headphonesFields: any[] = [
           name: "anc",
           title: "Active noise cancelling (ANC)",
           type: "string",
-          options: { list: ["anc", "passive", "none"] },
+          options: { list: vocabFor("anc") },
           description: "Replaces the old boolean noiseCancelling 2026-09-13.",
           categories: ["headphones"],
         },
@@ -192,18 +182,7 @@ export const headphonesFields: any[] = [
           of: [
             {
               type: "string",
-              options: {
-                list: [
-                  "dynamic",
-                  "planar-magnetic",
-                  "electrostatic",
-                  "balanced-armature",
-                  "hybrid",
-                  "amt",
-                  "bone-conduction",
-                  "electret",
-                ],
-              },
+              options: { list: vocabFor("driverType") },
             },
           ],
           categories: ["headphones"],
@@ -254,18 +233,7 @@ export const headphonesFields: any[] = [
           name: "deviceType",
           title: "Product category",
           type: "string",
-          options: {
-            list: [
-              "headphone-amplifier",
-              "digital-audio-player",
-              "dac",
-              "network-streamer",
-              "preamplifier",
-              "integrated-amplifier",
-              "power-amplifier",
-              "cd-player-transport",
-            ],
-          },
+          options: { list: vocabFor("deviceType") },
           description:
             "Headphone amplifiers and digital audio players are in scope for this slice (restored 2026-09-29 alongside the data backfill). Gates every domain-specific field below via each field's `domain`.",
           categories: ["audio-electronics"],

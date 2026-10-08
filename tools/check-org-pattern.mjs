@@ -1,8 +1,8 @@
 // Check "org-pattern": where every file lives and how slices may import each other, as defined in
 // docs/organizational-pattern.md (the tables below mirror its sections 2 and 3; edit both together).
 //   PLACE      every changed path has a home (section 3)
-//   DOTDOT     no '..' specifier under features/
-//   PLANE      runtime never imports a non-runtime plane; studio/tooling never import runtime; nothing imports laws
+//   DOTDOT     no '..' specifier under features/ (studio-plane files excepted)
+//   PLANE      runtime never imports a non-runtime plane; studio/tooling never import runtime except platform/sanity/env.ts and the facet vocabulary; nothing imports laws
 //   DOOR       a slice is imported only through index.ts or server.ts
 //   INWARD     inside a slice, imports follow the archetype table (section 2)
 //   PLATFORM   platform/ imports only platform/
@@ -105,8 +105,8 @@ function routePackage(spec) {
 function edge(ctx, file, rel, { spec, typeOnly, line, imported }) {
   const at = `${file}:${line} "${spec}"`;
   const out = [];
-  if (file.startsWith("features/") && spec.startsWith("..")) out.push(`${at} DOTDOT use ./x or the @/ alias`);
   const A = zone(file);
+  if (file.startsWith("features/") && A?.plane !== "studio" && spec.startsWith("..")) out.push(`${at} DOTDOT use ./x or the @/ alias`);
   const B = zone(rel);
   if (!A || !B) return out; // unplaced paths are reported by PLACE
   // Plane rules (A laws: no plane rule).
@@ -114,7 +114,7 @@ function edge(ctx, file, rel, { spec, typeOnly, line, imported }) {
   else if (A.plane === "runtime") {
     if (B.plane === "studio") { if (!file.startsWith("app/(studio)/")) out.push(`${at} PLANE runtime imports studio`); }
     else if (B.plane !== "runtime") out.push(`${at} PLANE runtime imports ${B.plane}`);
-  } else if ((A.plane === "studio" || A.plane === "tooling") && B.plane === "runtime" && rel !== "platform/sanity/env.ts") {
+  } else if ((A.plane === "studio" || A.plane === "tooling") && B.plane === "runtime" && rel !== "platform/sanity/env.ts" && rel !== "features/product-filtering/core/definitions/facetMap.ts") {
     out.push(`${at} PLANE ${A.plane} imports runtime`);
   }
   // Non-runtime planes stop here.

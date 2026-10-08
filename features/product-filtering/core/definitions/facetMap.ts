@@ -525,3 +525,11 @@ export const facetsForCategory = (category: string): FilterFacet[] =>
 
 export const isPlaceholderVocab = (vocab: string[]) =>
   vocab.some((v) => v.startsWith('<') && v.endsWith('>'));
+
+/** The closed vocabulary of the facet whose URL query-param key is `urlParam`.
+ *  Throws when no facet uses that key. */
+export function vocabFor(urlParam: string): string[] {
+  const facet = FILTER_FACETS.find((f) => f.urlParam === urlParam);
+  if (!facet) throw new Error(`No facet vocabulary for urlParam "${urlParam}"`);
+  return facet.valueVocab;
+}

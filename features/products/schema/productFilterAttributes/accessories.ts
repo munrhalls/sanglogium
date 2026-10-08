@@ -1,3 +1,5 @@
+import { vocabFor } from "../../../product-filtering/core/definitions/facetMap";
+
 export const accessoriesFields: any[] = [
         {
           name: "compatibleProductType",
@@ -7,7 +9,7 @@ export const accessoriesFields: any[] = [
             {
               type: "string",
               options: {
-                list: ["headphone", "speaker", "amplifier-source", "universal-any"],
+                list: vocabFor("compatibleProductType"),
               },
             },
           ],
@@ -21,11 +23,7 @@ export const accessoriesFields: any[] = [
             {
               type: "string",
               options: {
-                list: [
-                  "headphone-cable",
-                  "interconnect-rca-xlr",
-                  "digital-usb-coaxial-optical-aes-ebu-ethernet",
-                ],
+                list: vocabFor("cableFunction"),
               },
             },
           ],
@@ -40,16 +38,7 @@ export const accessoriesFields: any[] = [
             {
               type: "string",
               options: {
-                list: [
-                  "rca",
-                  "xlr",
-                  "3.5mm",
-                  "2.5mm",
-                  "4.4mm",
-                  "6.35mm",
-                  "4-pin-mini-xlr",
-                  "mini-to-rca",
-                ],
+                list: vocabFor("connectorTermination"),
               },
             },
           ],
@@ -71,7 +60,7 @@ export const accessoriesFields: any[] = [
           of: [
             {
               type: "string",
-              options: { list: ["copper-ofc", "silver", "silver-plated-copper"] },
+              options: { list: vocabFor("conductorMaterial") },
             },
           ],
           categories: ["accessories"],
@@ -163,7 +152,7 @@ export const accessoriesFields: any[] = [
           title: "Part type",
           type: "string",
           options: {
-            list: ["ear-pads-cushions", "ear-tips"],
+            list: vocabFor("partType"),
           },
           categories: ["accessories"],
           domain: ["replacement-parts"],
