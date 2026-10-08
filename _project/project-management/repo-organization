@@ -1,0 +1,14 @@
+## Repo organization
+
+objective: organizational pattern of the repository is solid, simple, zero inconsistencies, needs zero exceptions to handle every repository need, and carries zero unnecessary administrative overhead
+scope: organizational pattern of the repository, end to end; anything that is not organizational structure is out
+
+DoD:
+theme One pattern
+- [ ] zero inconsistencies across the repository: each feature is a vertical slice and follows the same pattern
+- [ ] within a slice, each part follows the same pattern from start to end
+- [ ] the platform pattern each feature draws from has zero inconsistencies
+
+theme Import integrity
+- [ ] all imports use the `@` alias, zero `/../..` instances
+sequence: first; superseded by the Repo organization section of `root-sanglogium.md`

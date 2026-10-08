@@ -1,0 +1,44 @@
+# Handoff — project manager, 2026-10-08
+
+objective: turn "finish Sanglogium to a solid flagship level, as if a real store for a real client" into fixed, ordered, binary DoD items per feature and theme; the owner estimates time, the PM never does
+scope: `root-sanglogium.md` (draft v0.6, nine features in derived order, items for all, verifiers only on Repo organization and Data protection); `repo-organization` is its older source
+
+DoD:
+theme Next step
+- [ ] owner confirms or amends the checklists and sequence in `root-sanglogium.md`
+- [ ] verifiers added to the items of Catalogue data through Live deployment, in sequence order
+
+theme Blocked inputs
+- [ ] Checkout: destination countries sold to
+- [ ] Checkout: how the money path is verified (owner-run Stripe test-mode on `localhost:3000`, or an approved proof script)
+- [ ] Live deployment: numeric mobile, accessibility and performance thresholds
+sequence: Repo organization, Data protection, Catalogue data, Discovery surfaces, Basket, Checkout, Accounts, Admin panel, Live deployment
+
+decisions (owner, 2026-10-08):
+- dependency order; Sanity CMS is the system of record; `ADR/` at the repo root
+- only the latest repo counts; old SDD findings F-01..F-18 are out
+- admin and packer placeholders deleted, replaced by the new Admin panel
+- performance report: owner-only page behind the admin role, outside admin navigation
+- Admin panel: four screens, first-party shopper-event table in Turso, synthetic demo sales history
+
+facts (code, 2026-10-08):
+- Sanity client has no token and `useCdn: true` (public dataset); orders and profiles share it with products
+- shipping cost is client-chosen (`saveShippingAction`) and charged as is
+- paid orders with missing stock are only logged: no refund, no notice
+- `/api/revalidate` revalidates a tag nothing reads, and has no secret
+- `prebuild` has no Sanity token: a private dataset breaks builds
+- `catalogue-index.json` is the category tree only; products are live CDN queries
+- ADR-002 soft reservations never built; no admin role in auth
+- working tree dirty: basket/checkout edits, deleted `docs/ADR-00x`, untracked `ADR/`
+
+rules:
+- no subagents; no tsc, build, lint, test or dev-server commands
+- verifiers: the owner (PR review, live check on `localhost:3000`) or `node tools/check-turn.mjs`
+- paths as `file://` URIs; no `$(...)` or backticks in shell commands
+- PM outputs only scope, DoD, sequence and risks
+- files in this folder use the root file's format: objective, scope, DoD, themes separated by a blank line, sequence
+
+start prompt:
+```
+/project-manager Continue Sanglogium. Read `_project/project-management/handoff-pm-session` and `root-sanglogium.md`. Next step: apply the owner's answers to the blocked inputs, then add verifiers to the next feature in sequence order.
+```
