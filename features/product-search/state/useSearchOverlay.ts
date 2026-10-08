@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useEffect } from "react";
-import { useQueryState, parseAsBoolean } from "nuqs";
+import { useQueryState } from "nuqs";
+import { searchOverlayParam } from "@/features/product-search/url/searchOverlayParam";
 
 // True only while the overlay is open AND was opened by an in-app push, i.e. the
 // previous history entry is the page the shopper came from.
@@ -17,7 +18,7 @@ let openedByPush = false;
 export function useSearchOverlay() {
   const [search, setSearch] = useQueryState(
     "search",
-    parseAsBoolean.withOptions({ history: "push" })
+    searchOverlayParam
   );
   const isSearchOpen = !!search;
 

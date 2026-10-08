@@ -7,7 +7,7 @@ import { Clock, MagnifyingGlass, X } from "@phosphor-icons/react";
 import { cn } from "@/platform/utils/tailwind";
 import { clearRecentSearches, getRecentSearches, removeRecentSearch } from "@/features/product-search/state/recentSearches";
 import { CATEGORY_SUGGESTIONS, POPULAR_SEARCHES } from "@/features/product-search/core/definitions/searchSuggestions";
-import { isPlainLeftClick } from "@/features/product-search/ui/isPlainLeftClick";
+import { isPlainLeftClick } from "@/features/product-search/core/rules/isPlainLeftClick";
 
 /**
  * Zero-query state, shown by both search surfaces before the shopper has typed

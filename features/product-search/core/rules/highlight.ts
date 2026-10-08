@@ -1,4 +1,4 @@
-export interface TextPart {
+interface TextPart {
   text: string;
   match: boolean;
 }
