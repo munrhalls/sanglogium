@@ -48,16 +48,12 @@ next-env.d.ts
 # ngrok configuration
 ngrok.yml
 
-# clerk configuration
-/.clerk/
-
 # Python Virtual Environment & Scripts
 .venv/
 venv/
 env/
 __pycache__/
 *.pyc
-scripts/image-pipeline/.env
 
 # Test artifacts and generated data
 test-results/
@@ -104,8 +100,6 @@ scripts/output/
 
 # generated / scratch artifacts
 backups/
-sanity/backups/
-sanity-cms/backups/
 _project/agent-logs/
 _project/_scratch/
 _project/scratch/

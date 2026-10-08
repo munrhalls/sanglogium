@@ -10,7 +10,6 @@ export default {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./features/**/*.{js,ts,jsx,tsx,mdx}",
     "./platform/**/*.{js,ts,jsx,tsx,mdx}",
-    "./sanity/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     backgroundImage: {
