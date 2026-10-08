@@ -2,8 +2,6 @@ import "server-only";
 
 import type { AddressSuggestion } from "@/features/address/core/types/addressTypes";
 
-export type { AddressSuggestion };
-
 interface PhotonProperties {
   name?: string;
   street?: string;

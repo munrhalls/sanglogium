@@ -63,7 +63,7 @@ function parseDaysString(daysStr: string): number {
  * Fetch real shipping rates from AlleKurier API
  * Returns empty array if no credentials configured or API error
  */
-export async function fetchAlleKurierRates(
+async function fetchAlleKurierRates(
   input: ShippingRatesInput,
   traceId?: string
 ): Promise<AlleKurierService[]> {
@@ -194,7 +194,7 @@ export async function fetchAlleKurierRates(
  * - currency ← "PLN"
  * - estimatedDays ← parse Time.days
  */
-export function transformAlleKurierToShippingOption(
+function transformAlleKurierToShippingOption(
   service: AlleKurierService
 ): ShippingOption {
   const carrier = service.Carrier || {};

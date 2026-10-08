@@ -200,17 +200,6 @@ const useBasketStore = create<BasketStore>()(
 export const selectTotalItemsCount = (state: BasketState) =>
   state.items.reduce((sum, item) => sum + item.quantity, 0);
 
-export const selectItems = (state: BasketState) => state.items;
-
-export const selectItem = (state: BasketState, productId: string) =>
-  state.items.find((item) => item.productId === productId);
-
-export const selectItemQuantity = (state: BasketState, productId: string) =>
-  selectItem(state, productId)?.quantity ?? 0;
-
-export const selectHasItem = (state: BasketState, productId: string) =>
-  state.items.some((item) => item.productId === productId);
-
 export const selectHasHydrated = (state: BasketState) => state._hasHydrated;
 
 export default useBasketStore;
