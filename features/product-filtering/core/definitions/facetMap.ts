@@ -20,14 +20,6 @@ export interface FilterFacet {
   urlParam: string;
 }
 
-export interface SortOption {
-  /** Human-facing sort label. */
-  sort: string;
-  /** URL query-param value. */
-  urlValue: string;
-  /** Sort direction. */
-  direction: 'asc' | 'desc';
-}
 
 export const FILTER_FACETS: FilterFacet[] = [
   {
@@ -505,23 +497,6 @@ export type SortValue = (typeof SORT_OPTIONS)[number]['urlValue'];
 
 /** The sort applied when the URL carries none. */
 export const SORT_DEFAULT: SortValue = 'newest';
-
-/** Canonical category keys used by `FilterFacet.categories` (besides `"*"`). */
-export type FacetCategory =
-  | 'headphones'
-  | 'audio-electronics'
-  | 'accessories'
-  | 'all-products';
-
-/**
- * The facets that apply to a given catalogue category: the universal ones
- * (`categories: ["*"]`) plus any whose `categories` list names this category.
- * An unrecognised category still gets the universal facets.
- */
-export const facetsForCategory = (category: string): FilterFacet[] =>
-  FILTER_FACETS.filter(
-    (f) => f.categories.includes('*') || f.categories.includes(category),
-  );
 
 export const isPlaceholderVocab = (vocab: string[]) =>
   vocab.some((v) => v.startsWith('<') && v.endsWith('>'));

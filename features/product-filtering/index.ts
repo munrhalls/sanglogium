@@ -3,15 +3,11 @@ export { isCategory } from './core/definitions/facetRegistry';
 export type { Category } from './core/definitions/facetRegistry';
 export { CATEGORIES, CATEGORY_LABELS } from './core/definitions/category';
 export { loadFilterSort, SORT_DEFAULT, isFiltersActive } from './url/filterSortParams';
-export { FILTER_FACETS, isPlaceholderVocab } from './core/definitions/facetMap';
-export type { FilterFacet } from './core/definitions/facetMap';
 export { sanitizeFilterState } from './core/rules/sanitizeFilterState';
 export {
   computeCatalogueFacets,
-  isDefaultFilterState,
   productMatchesState,
 } from './core/rules/facetCounts';
-export { humanizeFacetValue } from './core/rules/humanizeFacetValue';
 export type { ProductQueryState, RawProduct } from './core/types/filterTypes';
 export { resolvePriceBounds } from './core/rules/priceBounds';
 export type { PriceRangeData } from './core/rules/priceBounds';

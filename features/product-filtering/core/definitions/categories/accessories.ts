@@ -2,7 +2,8 @@
 // facetMap.ts urlParam for the accessories category; closed-vocab option
 // values are locked to facetMap.ts valueVocab.
 
-export type Option = { value: string; label: string };
+import type { Option } from '@/features/product-filtering/core/definitions/option';
+
 export type FacetGroupId = 'commercial' | 'type' | 'cables' | 'replacementParts';
 
 export interface FacetGroup {
@@ -134,13 +135,3 @@ export const FACETS: FacetDef[] = [
 
 export const facetsForGroup = (group: FacetGroupId): FacetDef[] => FACETS.filter((f) => f.group === group);
 
-export const SORT_OPTIONS: Option[] = [
-  { value: 'newest', label: 'Newest' },
-  { value: 'price-asc', label: 'Price, Low to High' },
-  { value: 'price-desc', label: 'Price, High to Low' },
-  { value: 'alpha-asc', label: 'Alphabetically, A-Z' },
-  { value: 'alpha-desc', label: 'Alphabetically, Z-A' },
-  { value: 'date-old', label: 'Date, Old to New' },
-];
-
-export const SORT_DEFAULT: string = 'newest';

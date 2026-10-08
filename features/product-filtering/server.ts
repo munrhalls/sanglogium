@@ -37,5 +37,4 @@ export const getCategoryPriceRange = withCache(
     getCategoryPriceRangeQuery(fetchCategoryPriceRange, options),
 );
 
-export type { GetFilterFacetsOptions, GetCategoryPriceRangeOptions };
 export { buildProductQuery } from './adapters/sanity/buildProductQuery';
