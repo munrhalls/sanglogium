@@ -25,7 +25,7 @@ This is why any `features/shell/**` diff touching these utilities must be review
 
 ## Proven techniques already in this codebase (in order of how often they're used)
 
-1. **Shrink spacing one step at `lg-touch:`** — padding/gap/margin one Tailwind step tighter than at `lg-desktop:`. Most common fix. Example: `Featured.tsx`, `Dacs.tsx`, `Accessories.tsx`.
+1. **Shrink spacing one step at `lg-touch:`** — padding/gap/margin one Tailwind step tighter than at `lg-desktop:`. Most common fix. Example: `FeaturedView.tsx`, `DacsView.tsx`, `AccessoriesView.tsx` in `features/homepage/view/`.
 2. **Cap a region's own height and let it scroll, instead of shrinking everything** — `sticky ... h-[calc(100vh-var(--desktop-header-h))] overflow-y-auto`. Used for the filters sidebar on `/products`. Use this when content is inherently long (lists, filters) rather than trying to compress it.
 3. **Flatten image aspect ratio** — wider/shorter ratio at `lg-touch:` than at `lg:`/`lg-desktop:`. Example: `DacCard.tsx` (`aspect-[3/2]` → `lg-touch:aspect-[16/9]`).
 4. **Drop large reserved bottom padding once desktop layout applies** — mobile layouts often reserve space for a sticky bottom CTA (`pb-48`); that space is dead weight at `lg+` and gets zeroed (`lg-touch:pb-0 lg-desktop:pb-0`). Example: `BasketManager.tsx`, `BasketSkeleton.tsx`.
