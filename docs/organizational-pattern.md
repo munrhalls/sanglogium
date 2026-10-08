@@ -78,7 +78,7 @@ A part may group its files in one level of sub-folders named after a screen regi
 | Behaviour laws (laws plane: may import the runtime, nothing imports them) | `<module>.laws.ts` next to the module they check |
 | Static asset | `public/` |
 | Living reference doc | `docs/<topic>.md` |
-| Architecture decision record | `docs/ADR-NNN-<topic>.md` |
+| Architecture decision record | `docs/adr/ADR-NNN-<topic>.md` (append-only: a decision is superseded by a new ADR, never deleted) |
 | Process and entry docs | `_project/`, root `README.md`, `CLAUDE.md`, `AGENTS.md` |
 | Agent and automation configuration | `.github/`, `.claude/`, `.codex/`, `.devin/`, `vercel.json`, `.no-mistakes.yaml`, `skills-lock.json` (one folder per agent tool; each tool reads its own, so overlap between them is intended) |
 | Ephemeral: logs, caches, env files, phase files | nowhere in git |
@@ -91,7 +91,7 @@ A part may group its files in one level of sub-folders named after a screen regi
 
 - Every CMS document type has one owning slice: its `schema/` and every write path live there. Another slice writes through the owner's `server.ts`. Owners: `userProfile` is owned by profile; `order` by order; `product` and `brand` by products; `catalogueItem` by catalogue; `hero` and `homepageData` by homepage.
 - Reads are free: a slice reads the documents it needs through its own `adapters/sanity/`.
-- A write that must touch several documents atomically stays in one adapter of the slice that owns the operation (order placement in order, see `docs/ADR-002-checkout-inventory-concurrency.md`).
+- A write that must touch several documents atomically stays in one adapter of the slice that owns the operation (order placement in order, see `docs/adr/ADR-002-checkout-inventory-concurrency.md`).
 - `sanity.types.ts` is imported only by `adapters/sanity/` and `platform/`; contracts in `core/` and `view/` use the slice's own types.
 
 ## 5. Conventions (review-enforced unless section 6 names a rule)
