@@ -69,7 +69,7 @@ function zone(p) {
       return ["sanity", "email", "analytics", "utils"].includes(a) ? Z("runtime", { home: "platform" }) : null;
     case "studio": return Z("studio");
     case "data": return Z("runtime", { home: "leaf" });
-    case "scripts": case "tools": return Z("tooling");
+    case "scripts": case "tools": case "tests": return Z("tooling");
     case "docs": case "_project": case ".github": case ".claude": case ".codex": case ".devin": case "public": return Z("other");
     default: return null;
   }
