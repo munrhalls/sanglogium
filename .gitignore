@@ -117,4 +117,4 @@ _project/working-memory/
 .devin/config.local.json
 
 # Live proof output (moved from features/product-filtering/proofs/out)
-tools/proofs/product-filtering/out/
+tests/product-filtering/out/

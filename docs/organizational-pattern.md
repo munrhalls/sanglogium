@@ -76,7 +76,8 @@ A part may group its files in one level of sub-folders named after a screen regi
 | Generated data read by the runtime | `data/`, read only by the owning slice's adapter |
 | Generated types and schema | repo root (`sanity.types.ts`, `schema.json`) |
 | Build or one-off script | `scripts/` |
-| Local tooling, checks, live proofs, operator scripts | `tools/` |
+| Local tooling, checks, operator scripts | `tools/` |
+| Live proofs, test scripts | `tests/<feature>/`, shadowing `features/` (a slice gets a shadow folder only when it has real tests) |
 | Behaviour laws (laws plane: may import the runtime, nothing imports them) | `<module>.laws.ts` next to the module they check |
 | Static asset | `public/` |
 | Living reference doc | `docs/<topic>.md` |
@@ -85,7 +86,7 @@ A part may group its files in one level of sub-folders named after a screen regi
 | Agent and automation configuration | `.github/`, `.claude/`, `.codex/`, `.devin/`, `vercel.json`, `.no-mistakes.yaml`, `skills-lock.json` (one folder per agent tool; each tool reads its own, so overlap between them is intended) |
 | Ephemeral: logs, caches, env files, phase files | nowhere in git |
 
-**Root allowlist.** Files: `package.json`, `package-lock.json`, `tsconfig.json`, `next.config.ts`, `postcss.config.mjs`, `tailwind.config.ts`, `eslint.config.mjs`, `.prettierrc`, `.prettierignore`, `sanity.config.ts`, `sanity.cli.ts`, `sentry.*.config.ts`, `instrumentation*.ts`, `middleware.ts`, `vercel.json`, `.node-version`, `.gitignore`, `.codeiumignore`, `.no-mistakes.yaml`, `.env.example`; tool-generated `schema.json`, `sanity.types.ts`, `skills-lock.json`; entry docs `README.md`, `CLAUDE.md`, `AGENTS.md`. Folders: `app/ features/ platform/ studio/ scripts/ tools/ docs/ data/ public/ _project/ .github/ .claude/ .codex/ .devin/`. Nothing else at the root.
+**Root allowlist.** Files: `package.json`, `package-lock.json`, `tsconfig.json`, `next.config.ts`, `postcss.config.mjs`, `tailwind.config.ts`, `eslint.config.mjs`, `.prettierrc`, `.prettierignore`, `sanity.config.ts`, `sanity.cli.ts`, `sentry.*.config.ts`, `instrumentation*.ts`, `middleware.ts`, `vercel.json`, `.node-version`, `.gitignore`, `.codeiumignore`, `.no-mistakes.yaml`, `.env.example`; tool-generated `schema.json`, `sanity.types.ts`, `skills-lock.json`; entry docs `README.md`, `CLAUDE.md`, `AGENTS.md`. Folders: `app/ features/ platform/ studio/ scripts/ tools/ tests/ docs/ data/ public/ _project/ .github/ .claude/ .codex/ .devin/`. Nothing else at the root.
 
 **Vendor packages** (A10): `stripe`, `@stripe/*`, `better-auth` and its subpaths, `@better-auth/*`, `kysely`, `kysely-libsql`, `next-sanity` and its subpaths, `@sanity/*`, `sanity`, `groq`, `resend`, `iron-session`, `@vercel/*`, `@sentry/*`, `web-vitals`. **Browser kits**, allowed in `ui/` and `state/`: `@stripe/stripe-js`, `@stripe/react-stripe-js`. A new vendor is added here and in the gate in the same change.
 
