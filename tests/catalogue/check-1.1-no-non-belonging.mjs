@@ -28,6 +28,10 @@ const IN = `*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0
 for (const slice of SLICES) {
   const inside = await client.fetch(IN, { keys: keysFor(slice) });
   console.log(`\n=== [1.1] ${slice} — ${inside.length} products in slice ===`);
-  for (const p of inside) console.log(`${p.name} — ${p.brand ?? '(no brand)'}`);
+  inside.sort((a, b) => (a.brand ?? '').localeCompare(b.brand ?? '') || a.name.localeCompare(b.name));
+  inside.forEach((p, i) => {
+    if (i % 5 === 0) console.log(`\n── items ${i + 1}–${Math.min(i + 5, inside.length)} ──`);
+    console.log(`${String(i + 1).padStart(3)}. ${p.brand ?? '(no brand)'} — ${p.name}`);
+  });
   if (inside.length >= 1000) console.log(`!! slice hit the 1000 cap — list may be truncated`);
 }

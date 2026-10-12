@@ -28,6 +28,10 @@ const OUT = `*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) ==
 for (const slice of SLICES) {
   const outside = await client.fetch(OUT, { keys: keysFor(slice) });
   console.log(`\n=== [1.2] ${slice} — ${outside.length} products NOT in slice ===`);
-  for (const p of outside) console.log(`${p.name} — ${p.brand ?? '(no brand)'}`);
+  outside.sort((a, b) => (a.brand ?? '').localeCompare(b.brand ?? '') || a.name.localeCompare(b.name));
+  outside.forEach((p, i) => {
+    if (i % 5 === 0) console.log(`\n── items ${i + 1}–${Math.min(i + 5, outside.length)} ──`);
+    console.log(`${String(i + 1).padStart(3)}. ${p.brand ?? '(no brand)'} — ${p.name}`);
+  });
   if (outside.length >= 1000) console.log(`!! outside list hit the 1000 cap — may be truncated`);
 }
