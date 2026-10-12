@@ -1,17 +1,7 @@
 // Check 1.1 — zero non-belonging products in each slice.
 // Prints the full in-slice list for human verdict. Run: node tests/catalogue/check-1.1-no-non-belonging.mjs
 import { readFileSync } from 'node:fs';
-import { createClient } from '@sanity/client';
-
-process.loadEnvFile(new URL('../../.env.local', import.meta.url));
-
-const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
-  apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-11-14',
-  useCdn: false,
-  perspective: 'published',
-});
+import { client } from './sanity-client.mjs';
 
 // Mirrors resolveSlugToId + unrollDescendantKeys in
 // features/catalogue/adapters/catalogue-index/catalogueIndex.ts

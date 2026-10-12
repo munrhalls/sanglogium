@@ -1,17 +1,7 @@
 // Check 1.2 — zero missing products: nothing outside the slice should belong in it.
 // Prints the full out-of-slice list for human verdict. Run: node tests/catalogue/check-1.2-no-missing.mjs
 import { readFileSync } from 'node:fs';
-import { createClient } from '@sanity/client';
-
-process.loadEnvFile(new URL('../../.env.local', import.meta.url));
-
-const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
-  apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-11-14',
-  useCdn: false,
-  perspective: 'published',
-});
+import { client } from './sanity-client.mjs';
 
 // Mirrors resolveSlugToId + unrollDescendantKeys in
 // features/catalogue/adapters/catalogue-index/catalogueIndex.ts

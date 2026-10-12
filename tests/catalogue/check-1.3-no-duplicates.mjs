@@ -1,17 +1,7 @@
 // Check 1.3 — zero duplicates: returned count equals distinct product IDs.
 // Run: node tests/catalogue/check-1.3-no-duplicates.mjs
 import { readFileSync } from 'node:fs';
-import { createClient } from '@sanity/client';
-
-process.loadEnvFile(new URL('../../.env.local', import.meta.url));
-
-const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
-  apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-11-14',
-  useCdn: false,
-  perspective: 'published',
-});
+import { client } from './sanity-client.mjs';
 
 // Mirrors resolveSlugToId + unrollDescendantKeys in
 // features/catalogue/adapters/catalogue-index/catalogueIndex.ts
