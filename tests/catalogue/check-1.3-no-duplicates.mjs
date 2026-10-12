@@ -19,7 +19,10 @@ const keysFor = (slug) => {
   return [...out];
 };
 
-const SLICES = ['headphones', 'audio-electronics', 'accessories'];
+const ALL = ['headphones', 'audio-electronics', 'accessories'];
+const SLICES = process.argv[2] ? [process.argv[2]] : ALL;
+if (!process.argv[2]) console.log('No slice arg — running all three. Pass one of: ' + ALL.join(', '));
+
 const IN = `*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0] | order(_id asc) [0...1000] { _id, name, "brand": brand->name }`;
 
 for (const slice of SLICES) {
