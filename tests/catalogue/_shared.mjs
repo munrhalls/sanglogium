@@ -2,7 +2,7 @@
 import { readFileSync } from 'node:fs';
 import { createClient } from '@sanity/client';
 
-process.loadEnvFile(new URL('../../../../../.env.local', import.meta.url));
+process.loadEnvFile(new URL('../../.env.local', import.meta.url));
 
 export const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
@@ -14,7 +14,7 @@ export const client = createClient({
 
 // Mirrors resolveSlugToId + unrollDescendantKeys in
 // features/catalogue/adapters/catalogue-index/catalogueIndex.ts
-const index = JSON.parse(readFileSync(new URL('../../../../../data/catalogue-index.json', import.meta.url)));
+const index = JSON.parse(readFileSync(new URL('../../data/catalogue-index.json', import.meta.url)));
 export const keysFor = (slug) => {
   const root = index.slugToIdMap[slug];
   const out = new Set();
