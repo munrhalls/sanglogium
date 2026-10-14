@@ -1,5 +1,7 @@
 // Check 1.2 — zero missing products: nothing outside the slice should belong in it.
-// Prints the full out-of-slice list for human verdict. Run: node tests/catalogue/check-1.2-no-missing.mjs
+// Prints the out-of-slice list and the no-keys list for human verdict, then reconciles
+// in-slice + outside + no-keys against the total product count.
+// Run: node tests/catalogue/check-1.2-no-missing.mjs
 import { readFileSync } from 'node:fs';
 import { client } from './sanity-client.mjs';
 
@@ -23,15 +25,32 @@ const ALL = ['headphones', 'audio-electronics', 'accessories'];
 const SLICES = process.argv[2] ? [process.argv[2]] : ALL;
 if (!process.argv[2]) console.log('No slice arg — running all three. Pass one of: ' + ALL.join(', '));
 
-const OUT = `*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) == 0] | order(_id asc) [0...1000] { _id, name, "brand": brand->name }`;
+// Three disjoint sets: no keys (null or empty), keys that miss the slice, keys that hit it.
+const NO_KEYS = `count(coalesce(catalogueLocationKeys, [])) == 0`;
+const OUT = `*[_type == "product" && !(${NO_KEYS}) && count(catalogueLocationKeys[@ in $keys]) == 0] | order(_id asc) [0...1000] { _id, name, "brand": brand->name }`;
+const UNKEYED = `*[_type == "product" && ${NO_KEYS}] | order(_id asc) [0...1000] { _id, name, "brand": brand->name }`;
+const COUNTS = `{ "total": count(*[_type == "product"]), "inside": count(*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0]) }`;
 
-for (const slice of SLICES) {
-  const outside = await client.fetch(OUT, { keys: keysFor(slice) });
-  console.log(`\n=== [1.2] ${slice} — ${outside.length} products NOT in slice ===`);
-  outside.sort((a, b) => (a.brand ?? '').localeCompare(b.brand ?? '') || a.name.localeCompare(b.name));
-  outside.forEach((p, i) => {
-    if (i % 5 === 0) console.log(`\n── items ${i + 1}–${Math.min(i + 5, outside.length)} ──`);
+const print = (label, list) => {
+  list.sort((a, b) => (a.brand ?? '').localeCompare(b.brand ?? '') || a.name.localeCompare(b.name));
+  list.forEach((p, i) => {
+    if (i % 5 === 0) console.log(`\n── items ${i + 1}–${Math.min(i + 5, list.length)} ──`);
     console.log(`${String(i + 1).padStart(3)}. ${p.brand ?? '(no brand)'} — ${p.name}`);
   });
-  if (outside.length >= 1000) console.log(`!! outside list hit the 1000 cap — may be truncated`);
+  if (list.length >= 1000) console.log(`!! ${label} list hit the 1000 cap — may be truncated`);
+};
+
+for (const slice of SLICES) {
+  const keys = keysFor(slice);
+  const outside = await client.fetch(OUT, { keys });
+  const unkeyed = await client.fetch(UNKEYED);
+  const { total, inside } = await client.fetch(COUNTS, { keys });
+
+  console.log(`\n=== [1.2] ${slice} — ${outside.length} products NOT in slice ===`);
+  print('outside', outside);
+  console.log(`\n=== [1.2] ${slice} — ${unkeyed.length} products with NO catalogueLocationKeys ===`);
+  print('no-keys', unkeyed);
+
+  const sum = inside + outside.length + unkeyed.length;
+  console.log(`\n=== [1.2] ${slice} — reconcile: in slice ${inside} + outside ${outside.length} + no keys ${unkeyed.length} = ${sum}; total products ${total}; reconciles: ${sum === total} ===`);
 }
