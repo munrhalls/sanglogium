@@ -1,13 +1,20 @@
-// Check 1.3 — zero duplicates: no two product documents are the same product.
-// "Same product" = same brand + same normalised name (lower-case, &amp; decoded, punctuation
-// and spacing ignored). Looks at ALL products, reports groups with at least one member in the slice,
-// so a twin sitting outside the slice is still caught.
-// Run: node tests/catalogue/check-1.3-no-duplicates.mjs
+// ══════════════════════════════════════════════════════════════════
+// CHECK 1.3 — zero duplicates: no two documents are the same product.
+// Pass = duplicate groups: 0 on every slice, no cap warnings.
+// Run: node tests/catalogue/check-1.3-no-duplicates.mjs <slice>
+//
+// Read this top to bottom. Each STEP is a black box: the header says
+// what goes in, what comes out, and why the output is trustworthy by
+// logic alone. You verify the wiring between steps — not the mechanics.
+// ══════════════════════════════════════════════════════════════════
 import { readFileSync } from 'node:fs';
 import { client } from './sanity-client.mjs';
 
-// Mirrors resolveSlugToId + unrollDescendantKeys in
-// features/catalogue/adapters/catalogue-index/catalogueIndex.ts
+// ── STEP 1: Resolve a slice slug to its full set of location keys ──
+// IN:  data/catalogue-index.json + one slice slug.
+// OUT: every location id inside that slice (all descendants).
+// TRUST: same recursive unroll the app uses — "in slice" matches what
+//      the storefront means.
 const index = JSON.parse(readFileSync(new URL('../../data/catalogue-index.json', import.meta.url)));
 const keysFor = (slug) => {
   const root = index.slugToIdMap[slug];
@@ -26,17 +33,39 @@ const ALL = ['headphones', 'audio-electronics', 'accessories'];
 const SLICES = process.argv[2] ? [process.argv[2]] : ALL;
 if (!process.argv[2]) console.log('No slice arg — running all three. Pass one of: ' + ALL.join(', '));
 
+// ── STEP 2: Fetch ALL products with a normalised identity ──────────
+// IN:  one slice's `keys` (only used to tag each doc in/out of slice).
+// OUT: `products` — every product with `_id`, name, brand, inSlice flag.
+// TRUST: grouping happens across the WHOLE catalogue, not just the
+//      slice — so a duplicate whose twin sits outside the slice is
+//      still caught and printed tagged "outside".
 const norm = (s) => (s ?? '').toLowerCase().replace(/&amp;/g, '&').replace(/[^a-z0-9]+/g, ' ').trim();
 const PRODUCTS = `*[_type == "product"] | order(_id asc) [0...1000] { _id, name, "brand": brand->name, "inSlice": count(catalogueLocationKeys[@ in $keys]) > 0 }`;
 
 for (const slice of SLICES) {
   const products = await client.fetch(PRODUCTS, { keys: keysFor(slice) });
+
+// ── STEP 3: Group by "same product" and keep the collisions ────────
+// IN:  `products` from step 2.
+// OUT: `dupes` — groups of 2+ docs sharing normalised brand + name
+//      (lower-case, &amp; decoded, punctuation/spacing ignored), where
+//      at least one member sits in the slice.
+// TRUST: normalisation is pure string reduction, applied identically
+//      to every doc — two docs land together only when brand and name
+//      reduce to the same string, i.e. a human would call them the
+//      same product.
   const groups = new Map();
   for (const p of products) {
     const key = `${norm(p.brand)}|${norm(p.name)}`;
     groups.set(key, [...(groups.get(key) ?? []), p]);
   }
   const dupes = [...groups.values()].filter((g) => g.length > 1 && g.some((p) => p.inSlice));
+
+// ── STEP 4: Print the verdict ──────────────────────────────────────
+// IN:  `dupes` from step 3.
+// OUT: count + each group with members tagged in slice / outside.
+// TRUST: zero groups printed means zero collisions under the rule —
+//      PASS is `duplicate groups: 0`.
   console.log(`\n=== [1.3] ${slice} — ${products.length} products checked, duplicate groups: ${dupes.length} ===`);
   dupes.forEach((g, i) => {
     console.log(`\n── group ${i + 1} ──`);
