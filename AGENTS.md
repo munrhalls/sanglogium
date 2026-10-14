@@ -5,7 +5,9 @@ Every agent working in this repo MUST follow these rules. They exist so multiple
 ## Campaign process (MANDATORY)
 
 `_project/00-MOST-IMPORTANT-lean-tracer-bullet-methodology.md` is the build method -- read it
-before any new feature work or mission. Live plans are the architect's phase files under
+before any new feature work or mission. For intent, Definition of Done, proof means and
+verification, `_project/project-management/blueprint-for-wholeness-of-proof-instructions.md`
+is authoritative and takes precedence wherever the two disagree. Live plans are the architect's phase files under
 `_project/working-memory/<axis>/turn-<n>/phase-<n.m>.md` plus `_project/working-memory/run-order.json`
 (which axis waits for which); transient, never committed. The owner starts the campaign runner from the
 main checkout: `node ~/work/global/workflow/run-campaign.mjs <campaign> _project/working-memory/run-order.json --check "node tools/check-turn.mjs --all"`.
@@ -75,9 +77,9 @@ Hard rule, not a soft preference — a violation is a detectable defect. Tracked
 Governs git commit/push authority only — task tracking is fixed by the Campaign process
 above regardless of profile.
 
-- **Conservative (default)**: Do not run git commits, git pushes unless explicitly asked. At handoff, report changed files, validation, and suggested next commands.
-- **Minimal**: Same conservative git policy unless active instructions say otherwise.
-- **Team-maintainer**: Only when the repository explicitly opts in, agents may commit and push as part of session close. A current "do not commit" or "do not push" instruction still wins. Self-run quality gates (tests/linters/builds) are never in scope for any profile — see item 6 above and Issue Risk Protocol Part B.
+- **Conservative (default)**: Agents may commit, push feature branches, and open PRs as part of the work — including mission PRs under `_project/project-management/` — without asking each time. Never merge; the human validates and merges. Force-push, history rewrites, and commits directly to `main` still require explicit approval.
+- **Minimal**: Same as conservative.
+- **Team-maintainer**: Same git authority as conservative. Self-run quality gates (tests/linters/builds) are never in scope for any profile — see item 6 above and Issue Risk Protocol Part B.
 
 ## Session Completion
 
@@ -86,12 +88,7 @@ This protocol applies when ending an implementation session. It is subordinate t
 1. **Never self-run quality gates** - No tests, linters, or builds. Hand the human the one minimal `localhost:3000` check instead (see item 6 above — standing, regardless of profile).
 2. **Handle git/sync by active profile**:
    ```bash
-   # Conservative/minimal/default: report status and proposed commands; wait for approval.
-   git status
-
-   # Team-maintainer opt-in only, unless current instructions forbid it:
-   git pull --rebase
-   git push
+   # All profiles: report status; commit/push/PR per the profiles above.
    git status
    ```
 3. **Hand off** - Summarize changes, validation, and any blocked sync/commit/push step

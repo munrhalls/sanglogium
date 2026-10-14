@@ -80,7 +80,9 @@ never fake an arrival/reveal animation the real event should drive (L11).
 ## Campaign process (MANDATORY)
 
 `_project/00-MOST-IMPORTANT-lean-tracer-bullet-methodology.md` is the build method — read it
-before any new feature work or mission. Live plans are the architect's phase files under
+before any new feature work or mission. For intent, Definition of Done, proof means and
+verification, `_project/project-management/blueprint-for-wholeness-of-proof-instructions.md`
+is authoritative and takes precedence wherever the two disagree. Live plans are the architect's phase files under
 `_project/working-memory/<axis>/turn-<n>/phase-<n.m>.md` plus `_project/working-memory/run-order.json`
 (which axis waits for which); transient, never committed. The owner starts the campaign runner from the
 main checkout: `node ~/work/global/workflow/run-campaign.mjs <campaign> _project/working-memory/run-order.json --check "node tools/check-turn.mjs --all"`.
@@ -133,7 +135,7 @@ _Last reviewed 2026-10-01 against the live repo. Stack/pattern-level only — fo
 - When outputting a file or directory path, always print it as a `file://` URI (e.g. `file:///home/jan/file.json`) for one-click terminal opening.
 
 - **Organizational pattern:** where every kind of file lives and what may import what is defined only in `docs/organizational-pattern.md` and enforced by `node tools/check-turn.mjs`. The non-structural conventions (specifier form, naming, thin Server Actions, promotion to `platform/design/ui`, hygiene) are in its section 5.
-- **Tests:** the unit, integration and e2e suites were retired on 2026-10-02 (owner decision: untrustworthy). Only two filters live-CMS proof scripts remain, in `tests/product-filtering/` (their output goes to the git-ignored `tests/product-filtering/out/`). Do not add test files, test configs or test dependencies without the owner's approval. Exception: behaviour laws (`*.laws.ts`, `node:test`, no dependency), which the human runs with `npm run laws`.
+- **Tests:** the unit, integration and e2e suites were retired on 2026-10-02 (owner decision: untrustworthy). Only two filters live-CMS proof scripts remain, in `tests/product-filtering/` (their output goes to the git-ignored `tests/product-filtering/out/`). Do not add test files, test configs or test dependencies without the owner's approval. Exceptions: behaviour laws (`*.laws.ts`, `node:test`, no dependency), which the human runs with `npm run laws`; and prepared checks under the proof pipeline (`_project/project-management/blueprint-for-wholeness-of-proof-instructions.md`) — a check may take test form freely, no approval needed.
 - **Feature map:** `catalogue`: build-time VFS catalogue (`data/catalogue-index.json`, read only by `adapters/catalogue-index/`); `product-filtering`: URL-driven filter/sort state, the category vocabulary and the Sanity GROQ query builder; `product-search`: header field, results view and `actions/fetchSearchSuggestionsAction.ts`; `products`: PDP, listing grids and the `productType`/`brandType` schemas; `wishlist`: the wishlist heart, its two Server Actions, the wishlist page view and the ids read; `basket`: client store `state/basketStore.ts`, product hydration via `adapters/sanity/`; `shipping`: courier rates, parcel rules and browser country detection; `address`: the address type, TERYT/Google checks and suggestions; `checkout`: the checkout steps, session and vendor-neutral payments (`adapters/stripe/` maps Stripe); `order`: the order document (schema, the ADR-002 placement transaction, guest-order merge, anonymisation); `profile`: the user profile document (schema and every write); `auth`: sign-in/up UI and flows, session guards and purpose-named account-security functions; `account`: account pages and their actions; `homepage`: storefront sections, data via `adapters/sanity/`; `shell`: store chrome (header, footer, navigation, drawers, content layout); `newsletter`: signup form and Resend subscription; `performance`: the admin Lighthouse baseline report.
 
 _Add your project-specific conventions here_
@@ -144,7 +146,7 @@ _Add your project-specific conventions here_
 _Set 2026-10-02 by the housekeeping campaign (axes hk-*). Any new top-level file or folder needs the owner's approval._
 
 - **Root allowlist:** defined once, in `docs/organizational-pattern.md` section 3; the gate mirrors it. Any new top-level file or folder needs the owner's approval. `node tools/check-turn.mjs` rejects any changed path that belongs to no zone of the model.
-- **Where things go:** local tooling in `tools/` (the end-of-turn checks `check-turn.mjs`, `check-imports.mjs` and `check-org-pattern.mjs`, the git hook in `tools/git-hooks/`, the ESLint plugin, the laws loader `tools/laws-loader.mjs` and the operator scripts `commit.sh`, `feed-next.sh` and `sourcing-pipeline-monitor.sh`); build scripts in `scripts/` (an executed one-off script is deleted, git history is the archive); tests shadow `features/` in `tests/` (only features with real tests get a shadow folder); documentation in `docs/` (only living reference documents and ADRs; working notes and generated analyses are deleted, never stored); `_project/` holds the three living process documents and the transient `working-memory/` hand-off folder; closed campaign records are deleted, not archived.
+- **Where things go:** local tooling in `tools/` (the end-of-turn checks `check-turn.mjs`, `check-imports.mjs` and `check-org-pattern.mjs`, the git hook in `tools/git-hooks/`, the ESLint plugin, the laws loader `tools/laws-loader.mjs` and the operator scripts `commit.sh`, `feed-next.sh` and `sourcing-pipeline-monitor.sh`); build scripts in `scripts/` (an executed one-off script is deleted, git history is the archive); tests shadow `features/` in `tests/` (only features with real tests get a shadow folder); documentation in `docs/` (only living reference documents and ADRs; working notes and generated analyses are deleted, never stored); `_project/` holds the living process documents, the proof pipeline (`project-management/` — blueprint instructions, `missions/<feature>/<mission>/{dod,blueprint}.md`, `work-record/`) and the transient `working-memory/` hand-off folder; closed campaign records are deleted, not archived.
 - **Never committed:** secrets, any `.env*` except `.env.example` (names only), logs, backups, caches, virtualenvs, conversation caches, phase files under `_project/working-memory/`, anything matched by `.gitignore`. `git ls-files -ci --exclude-standard` must list nothing.
 - **Naming:** defined once, in `docs/organizational-pattern.md` section 5; the gate's ACTION and NAMES rules check the mechanical parts. No spaces or non-ASCII characters in tracked paths.
 - **Docs honesty:** the living docs (`docs/vertical-space-lg-touch.md`, `docs/homepage-structure.md`, `docs/search-ux.md`, `docs/catalogue-architecture.md`, `docs/organizational-pattern.md`, `docs/adr/ADR-002-checkout-inventory-concurrency.md` and `docs/adr/ADR-003-campaign-runner.md`) must contain no dead path. Never keep an identical copy of a document in two places.
@@ -154,9 +156,9 @@ _Set 2026-10-02 by the housekeeping campaign (axes hk-*). Any new top-level file
 Governs git commit/push authority only — task tracking is fixed by the Campaign process
 above regardless of profile.
 
-- **Conservative (default)**: Do not run git commits, git pushes, or Dolt remote sync unless explicitly asked. At handoff, report changed files, validation, and suggested next commands.
-- **Minimal**: Same conservative git policy unless active instructions say otherwise.
-- **Team-maintainer**: Only when the repository explicitly opts in, agents may commit and push as part of session close. A current "do not commit" or "do not push" instruction still wins. Self-run quality gates (tests/linters/builds) are never in scope for any profile — see Issue Risk Protocol Part B.
+- **Conservative (default)**: Agents may commit, push feature branches, and open PRs as part of the work — including mission PRs under `_project/project-management/` — without asking each time. Never merge; the human validates and merges. Force-push, history rewrites, and commits directly to `main` still require explicit approval.
+- **Minimal**: Same as conservative.
+- **Team-maintainer**: Same git authority as conservative. Self-run quality gates (tests/linters/builds) are never in scope for any profile — see Issue Risk Protocol Part B.
 
 ## Session Completion
 
@@ -165,12 +167,7 @@ This protocol applies when ending an implementation session. It is subordinate t
 1. **Never self-run quality gates** - No tests, linters, or builds. Hand the human the one minimal `localhost:3000` check instead (Issue Risk Protocol Part B, standing regardless of profile).
 2. **Handle git/sync by active profile**:
    ```bash
-   # Conservative/minimal/default: report status and proposed commands; wait for approval.
-   git status
-
-   # Team-maintainer opt-in only, unless current instructions forbid it:
-   git pull --rebase
-   git push
+   # All profiles: report status; commit/push/PR per the profiles above.
    git status
    ```
 3. **Hand off** - Summarize changes, validation, and any blocked sync/commit/push step
