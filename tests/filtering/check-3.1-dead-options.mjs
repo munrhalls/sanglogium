@@ -1,5 +1,8 @@
 // ══════════════════════════════════════════════════════════════════
 // CHECK 3.1 — every offered filter value matches ≥1 product in the slice.
+// Offered = what the slice's sidebar lists: each checkbox facet's options,
+// and the "on" state of each boolean toggle. A derived facet (brand) lists
+// live values, so it cannot be dead; a range has no clickable values.
 // Pass = "DEAD OPTIONS: 0".
 // Run: node tests/filtering/check-3.1-dead-options.mjs <slice>
 //
@@ -18,50 +21,51 @@ if (!root) { console.log('Usage: node tests/filtering/check-3.1-dead-options.mjs
 const keys = new Set();
 { const s = [root]; while (s.length) { const id = s.pop(); if (keys.has(id)) continue; keys.add(id); s.push(...(index.slotMetadataMap[id]?.children ?? [])); } }
 
-// ── STEP 2: The closed vocabularies applicable to this slice ────────
-// IN:  FILTER_FACETS. OUT: every facet whose categories include this
-//      slice or '*', with a concrete closed valueVocab (placeholders
-//      like '<brand-slug>' skipped — a placeholder vocab is derived
-//      from live data, so dead-by-construction options can't exist).
-// TRUST: same applicability rule the app uses (categories field).
-const APPLICABLE = FILTER_FACETS.filter((f) =>
-  (f.categories.includes('*') || f.categories.includes(process.argv[2])) &&
-  f.type !== 'range' && // range vocab 'min'/'max' are bound markers, not clickable values
-  !f.valueVocab.some((v) => v.startsWith('<'))
-);
+// ── STEP 2: The options the slice's sidebar offers ──────────────────
+// IN:  the slice's own FACETS (what print-2.1 shows) + FILTER_FACETS for
+//      each facet's filterAttributes key.
+// OUT: OFFERED — one entry per clickable value: a checkbox option's
+//      value, or "on" for a boolean toggle.
+// TRUST: built from the offered facets themselves, so nothing the sidebar
+//      does not list is counted (an unlisted vocab value cannot be "dead").
+const MOD = {
+  'headphones': 'categories/headphones.ts',
+  'audio-electronics': 'categories/audioElectronics.ts',
+  'accessories': 'categories/accessories.ts',
+}[process.argv[2]];
+const { FACETS } = await import(`../../features/product-filtering/core/definitions/${MOD}`);
+const OFFERED = [];
+for (const f of FACETS) {
+  const attribute = FILTER_FACETS.find((x) => x.urlParam === f.id).attribute;
+  if (f.control === 'boolean') OFFERED.push({ id: f.id, attribute, boolean: true, value: 'on' });
+  else if (f.control === 'checkbox' && f.options !== 'derived')
+    for (const o of f.options) OFFERED.push({ id: f.id, attribute, boolean: false, value: o.value });
+}
 
-// ── STEP 3: Per offered value, count matching products ──────────────
-// IN:  keys + one facet's attribute path under filterAttributes.
-// OUT: dead list — offered values with 0 matching products.
-// TRUST: the count uses array-contains semantics on the same
-//      filterAttributes path buildProductQuery filters on — a value
-//      counted 0 here can never be returned by a shopper's click.
+// ── STEP 3: Per offered value, count the products a click returns ───
+// IN:  keys + OFFERED.
+// OUT: dead list — offered values whose click returns 0 products.
+// TRUST: the predicate is the app's own (buildProductQuery.ts): checkbox
+//      values lower-cased on both sides and matched against a scalar OR an
+//      array field; a toggle is `== true`; inStock falls back to
+//      stock - reservedStock exactly as the app does.
 const dead = [];
-let checked = 0;
-for (const f of APPLICABLE) {
-  for (const raw of f.valueVocab) {
-    // Boolean vocab is 'true'/'false' strings; the data holds real
-    // booleans — cast before matching. Enum/multi stay string and match
-    // scalar fields (==) and array fields (in) alike.
-    const value = f.type === 'boolean' ? raw === 'true' : raw;
-    // inStock mirrors buildProductQuery's own coalesce fallback — absent
-    // filterAttributes.inStock still matches via stock - reservedStock.
-    const clause = f.urlParam === 'inStock'
-      ? `coalesce(filterAttributes.inStock, stock - reservedStock > 0) == $value`
-      : f.type === 'boolean'
-        ? `filterAttributes.${f.attribute} == $value`
-        : `(filterAttributes.${f.attribute} == $value || $value in filterAttributes.${f.attribute})`;
-    const n = await client.fetch(
-      `count(*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0 && ${clause}])`,
-      { keys: [...keys], value }
-    );
-    checked++;
-    if (n === 0) dead.push(`${f.urlParam}: '${raw}' — 0 products`);
-  }
+for (const o of OFFERED) {
+  const field = `filterAttributes.${o.attribute}`;
+  const clause = o.id === 'inStock'
+    ? 'coalesce(filterAttributes.inStock, stock - reservedStock > 0) == true'
+    : o.boolean
+      ? `${field} == true`
+      : `(coalesce(lower(${field}), '') in $values || count(coalesce(${field}, [])[lower(@) in $values]) > 0)`;
+  const n = await client.fetch(
+    `count(*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0 && ${clause}])`,
+    { keys: [...keys], values: [o.value.toLowerCase()] }
+  );
+  if (n === 0) dead.push(`${o.id}: '${o.value}' — 0 products`);
 }
 
 // ── STEP 4: Report ──────────────────────────────────────────────────
 // TRUST: "checked" is printed, so a pass cannot be an empty scan.
-console.log(`checked: ${checked} offered values across ${APPLICABLE.length} facets in ${process.argv[2]}`);
+console.log(`checked: ${OFFERED.length} offered values across ${new Set(OFFERED.map((o) => o.id)).size} facets in ${process.argv[2]}`);
 console.log(dead.length ? dead.join('\n') : 'clean');
 console.log(`\nDEAD OPTIONS: ${dead.length}`);
