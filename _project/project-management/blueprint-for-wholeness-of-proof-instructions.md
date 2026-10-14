@@ -103,6 +103,17 @@ never preparation. The PR is the single workspace: the next unticked bullet
 is always the next thing to do, and the checklist's state at any moment is
 exactly how much of the mission is proven.
 
+**Make verification one click.** Every bullet carries a direct GitHub link to
+whatever the human must read (the script on the PR branch, and the commit that
+changed it) and the exact command to run. The linked code is pushed before the
+PR body points at it — a link to unpushed code shows the old version.
+
+**Prerequisites found mid-verification go into the PR.** When a bullet turns out
+to presume something unproven (a check that cannot fail, data that must be
+cleaned first), add numbered prerequisite bullets (`0.1`, `0.2`, …) ahead of the
+bullets they unblock, in dependency order, in the same loaded format, and update
+the PR body. Keep them lean; do not renumber the DoD's own items.
+
 Firing one bullet, in dependency order, is two human acts:
 
 1. **Aim check** — the human reads the prepared check whole before it runs;
