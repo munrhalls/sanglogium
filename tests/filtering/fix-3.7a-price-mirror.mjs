@@ -15,7 +15,7 @@ import { client } from '../catalogue/sanity-client.mjs';
 // ── STEP 1: The products of every slice, with both prices ───────────
 // IN:  data/catalogue-index.json + the three slice slugs.
 // OUT: `products` — _id, _rev, name, price_data.unit_amount, current mirror.
-// TRUST: same slice unroll as check 3.0.1, so "drifting" here is exactly
+// TRUST: same slice unroll as check 3.7a, so "drifting" here is exactly
 //      what that check lists.
 const index = JSON.parse(readFileSync(new URL('../../data/catalogue-index.json', import.meta.url)));
 const keysFor = (slug) => {
