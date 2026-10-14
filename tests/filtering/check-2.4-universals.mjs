@@ -1,6 +1,7 @@
 // ══════════════════════════════════════════════════════════════════
-// CHECK 2.4 — universal options mean/name/behave identically in every
-// slice; no slice-specific option duplicates or clashes with a universal.
+// CHECK 2.4 — universals are single-source and no slice-specific option
+// duplicates or clashes with one. (That every slice presents them
+// identically is check 0.2.)
 // Pass = "CLASHES: 0".
 // Run: node tests/filtering/check-2.4-universals.mjs
 //
@@ -44,9 +45,11 @@ const MODS = {
   'audio-electronics': 'categories/audioElectronics.ts',
   'accessories': 'categories/accessories.ts',
 };
+let scanned = 0;
 for (const [slice, mod] of Object.entries(MODS)) {
   const { FACETS } = await import(`../../features/product-filtering/core/definitions/${mod}`);
   for (const f of FACETS) {
+    scanned++;
     // A 'derived' category facet on a universal urlParam presents the
     // universal — not a shadow. A closed list would redefine its vocab.
     if (universalParams.has(f.id) && f.control === 'checkbox' && f.options !== 'derived')
@@ -55,5 +58,7 @@ for (const [slice, mod] of Object.entries(MODS)) {
 }
 
 // ── STEP 3: Report ──────────────────────────────────────────────────
+// TRUST: "scanned" is printed, so a pass cannot be an empty scan.
+console.log(`scanned: ${scanned} facets in ${Object.keys(MODS).length} slices; ${byParam.size} urlParams in FILTER_FACETS`);
 console.log(clashes.length ? '\n' + clashes.join('\n') : '\nclean');
 console.log(`CLASHES: ${clashes.length}`);

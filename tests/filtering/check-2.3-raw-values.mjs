@@ -1,9 +1,12 @@
 // ══════════════════════════════════════════════════════════════════
 // CHECK 2.3 — one real-world value = one option: no spelling variants,
 // one casing style, one unit expression, accurate labels.
-// This script makes NO hygiene judgment — it prints every distinct raw
-// value the slice's products actually carry per filterable attribute,
-// so a human reads the vocabulary the options must match.
+// For every checkbox facet the slice OFFERS, it prints each distinct raw
+// value the slice's products carry (verbatim, with counts). A row marked
+// ✗ is a value the facet does not offer — a variant a shopper's click
+// would never match. Unmarked rows are for a human to read (labels and
+// units are read from print-2.1's output).
+// Pass = "✗ ROWS: 0" and every printed list clean under human read.
 // Run: node tests/filtering/check-2.3-raw-values.mjs <slice>
 //
 // Read this top to bottom. Each STEP is a black box: the header says
@@ -25,33 +28,47 @@ if (!root) { console.log('Usage: node tests/filtering/check-2.3-raw-values.mjs <
 const keys = new Set();
 { const s = [root]; while (s.length) { const id = s.pop(); if (keys.has(id)) continue; keys.add(id); s.push(...(index.slotMetadataMap[id]?.children ?? [])); } }
 
-// ── STEP 2: Pick the attributes to inspect ──────────────────────────
-// IN:  FILTER_FACETS entries applicable to this slice (categories
-//      contains the slice slug, or '*' universal).
-// OUT: attributes — the filterAttributes key paths the UI can filter on.
-// TRUST: same applicability rule the app uses; range/boolean facets are
-//      single-valued by type, so only enum/multi vocab is listed below.
-const ATTRS = FILTER_FACETS.filter((f) =>
-  (f.categories.includes('*') || f.categories.includes(process.argv[2])) &&
-  f.type !== 'range' && f.type !== 'boolean'
-).map((f) => ({ urlParam: f.urlParam, attribute: f.attribute }));
+// ── STEP 2: The attributes the slice's sidebar offers ───────────────
+// IN:  the slice's own FACETS (what print-2.1 shows) + FILTER_FACETS.
+// OUT: ATTRS — one entry per offered checkbox facet: the
+//      filterAttributes key behind it, and its offered option values
+//      (null for a derived facet such as brand).
+// TRUST: built from the offered facets themselves, so every offered
+//      option set is scanned and nothing the sidebar doesn't offer is.
+const MOD = {
+  'headphones': 'categories/headphones.ts',
+  'audio-electronics': 'categories/audioElectronics.ts',
+  'accessories': 'categories/accessories.ts',
+}[process.argv[2]];
+const { FACETS } = await import(`../../features/product-filtering/core/definitions/${MOD}`);
+const ATTRS = FACETS.filter((f) => f.control === 'checkbox').map((f) => {
+  const canon = FILTER_FACETS.find((x) => x.urlParam === f.id);
+  if (!canon) throw new Error(`facet '${f.id}' has no FILTER_FACETS entry (check 2.2 reports it)`);
+  return { id: f.id, attribute: canon.attribute, offered: f.options === 'derived' ? null : new Set(f.options.map((o) => o.value)) };
+});
 
 // ── STEP 3: Fetch raw filterAttributes for every product in slice ───
-// IN:  keys. OUT: products' filterAttributes objects only.
+// IN:  keys. OUT: each product's name, its brand reference's slug, and
+//      its filterAttributes bag.
 // TRUST: fetch is keyed by the same catalogueLocationKeys membership as
-//      mission-01; no projection beyond the attribute bag.
+//      mission-01; the brand slug comes from the product's own brand
+//      reference — a source independent of the attribute bag.
 const products = await client.fetch(
-  `*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0][0...1000]{ filterAttributes }`,
+  `*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0][0...1000]{ name, "brandSlug": brand->slug.current, filterAttributes }`,
   { keys: [...keys] }
 );
 
 // ── STEP 4: Distinct raw values per attribute, printed for reading ──
 // IN:  filterAttributes bags + ATTRS.
-// OUT: per attribute, the sorted distinct values with product counts.
+// OUT: per attribute, the distinct values with product counts, sorted
+//      by count. A row is ✗ when its facet is closed and the value is
+//      not an offered option.
 // TRUST: pure tally — values are printed verbatim (case, spelling kept)
-//      so variants like "Open-Back" vs "open-back" are visible.
+//      so variants like "Open-Back" vs "open-back" are visible; the
+//      only judgement is set membership in the facet's own offered list.
 const get = (obj, path) => path.split('.').reduce((o, k) => o?.[k], obj);
-for (const { urlParam, attribute } of ATTRS) {
+let flagged = 0;
+for (const { id, attribute, offered } of ATTRS) {
   const tally = new Map();
   for (const p of products) {
     const v = get(p.filterAttributes, attribute);
@@ -61,8 +78,32 @@ for (const { urlParam, attribute } of ATTRS) {
     }
   }
   const rows = [...tally.entries()].sort((a, b) => b[1] - a[1]);
-  console.log(`\n── ${urlParam}  (${attribute}) — ${rows.length} distinct ──`);
-  for (const [v, n] of rows) console.log(`  ${String(n).padStart(4)}  ${v}`);
+  console.log(`\n── ${id}  (${attribute}) — ${rows.length} distinct ──`);
+  for (const [v, n] of rows) {
+    const bad = offered ? !offered.has(v) : false;
+    if (bad) flagged++;
+    console.log(`  ${bad ? '✗' : ' '} ${String(n).padStart(4)}  ${v}`);
+  }
   if (!rows.length) console.log('  (no product carries this attribute)');
+
+  // ── STEP 5: Derived facet (brand) — each product's value is its own brand ──
+  // IN:  `products` (value + brand reference slug). OUT: ✗ line per product whose
+  //      attribute is not exactly [its brand reference's slug].
+  // TRUST: a derived facet's options ARE the raw values, so a product whose value
+  //      differs from its own brand reference (case, shape, other slug) splits one
+  //      brand into two options. The reference is the independent source.
+  //      (A product with no value at all is mission 03's "missing", not a variant.)
+  if (offered === null) {
+    for (const p of products) {
+      const v = get(p.filterAttributes, attribute);
+      if (v == null) continue;
+      const arr = Array.isArray(v) ? v : [v];
+      if (arr.length !== 1 || arr[0] !== p.brandSlug) {
+        flagged++;
+        console.log(`  ✗ ${p.name}: ${JSON.stringify(v ?? null)} ≠ ["${p.brandSlug}"]`);
+      }
+    }
+  }
 }
-console.log(`\n${products.length} products scanned in ${process.argv[2]}. Read each list: variants, casing, units, jargon.`);
+console.log(`\n${products.length} products scanned in ${process.argv[2]}. ✗ ROWS: ${flagged}`);
+console.log('Read each list: variants, casing, units, jargon.');

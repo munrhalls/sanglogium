@@ -1,8 +1,9 @@
 // ══════════════════════════════════════════════════════════════════
 // CHECK 2.1 — zero nonsensical or misplaced options in a slice.
-// This script makes NO decision — it prints the complete offered option
-// set for one slice so a human can read it and judge: does every facet
-// and every option make sense for this slice's products?
+// This script makes NO decision — it prints every option the slice's
+// definitions offer so a human can read it and judge: does every facet
+// and every option make sense for this slice's products? (A derived brand
+// list and the price slider's ends come from live data — mission 03.)
 // Run: node tests/filtering/print-2.1-facets.mjs <slice>
 //      (headphones | audio-electronics | accessories)
 //
