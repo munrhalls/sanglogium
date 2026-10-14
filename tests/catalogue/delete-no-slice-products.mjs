@@ -56,7 +56,10 @@ const candidates = [
 // IN:  one candidate `_id`.
 // OUT: every document that pointed at it no longer does.
 // TRUST: `references($id)` finds ALL referrers regardless of type or
-//      field (homepage rows, "On Sale", anything). The walker collects
+//      field (homepage rows, "On Sale", anything). It runs with the
+//      `previewDrafts` perspective so draft documents (e.g.
+//      drafts.homepageData) are found and unreferenced too — a draft
+//      ref blocks deletion exactly like a published one. The walker collects
 //      every path whose value is `{_ref: <id>}` — object or array item —
 //      and unsets exactly those paths, so nothing else in the referrer
 //      is touched. Sanity refuses to delete a referenced doc, so any
@@ -87,10 +90,11 @@ const refPaths = (node, targetId, base = '') => {
 // TRUST: deletion is attempted only after its own unreference pass; a
 //      failure prints FAILED with the error, so the count at the end
 //      is the real result, not an assumption.
+const draftAware = client.withConfig({ perspective: 'previewDrafts' });
 let deleted = 0;
 for (const p of candidates) {
   try {
-    const referrers = await client.fetch(`*[references($id)]`, { id: p._id });
+    const referrers = await draftAware.fetch(`*[references($id)]`, { id: p._id });
     for (const ref of referrers) {
       const paths = refPaths(ref, p._id).filter((path) => path !== '_id' && !path.startsWith('_id.'));
       if (paths.length) await client.patch(ref._id).unset(paths).commit();
