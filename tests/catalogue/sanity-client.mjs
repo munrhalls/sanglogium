@@ -11,4 +11,5 @@ export const client = createClient({
   apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-11-14',
   useCdn: false,
   perspective: 'published',
+  token: process.env.SANITY_STUDIO_READ_WRITE,
 });
