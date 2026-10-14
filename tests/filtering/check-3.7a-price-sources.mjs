@@ -1,13 +1,12 @@
 // ══════════════════════════════════════════════════════════════════
-// CHECK 3.0.1 — the price the filters read equals the price the slider
-// is built from.
-// Prerequisite of 1.4: the slider ends come from price_data.unit_amount
-// (fetchCategoryPriceRange), but the price filter and the facet counts
-// read filterAttributes.price FIRST (buildProductQuery.ts S2,
-// facetCounts.ts getPriceCents). Where the two differ, "the range ends"
-// and "what the range returns" are different prices.
+// CHECK 3.7a — price is a facet; every product must carry a REAL value
+// for it (sub-check of 2.2, which only tests presence).
+// The price filter and the facet counts read filterAttributes.price FIRST
+// (buildProductQuery.ts S2, facetCounts.ts getPriceCents), while the card
+// and the slider ends use price_data.unit_amount. A mirror that is not the
+// same cents is not a real value: that product is filtered at the wrong price.
 // Pass = "MIRROR DRIFT: 0".
-// Run: node tests/filtering/check-3.0.1-price-sources.mjs
+// Run: node tests/filtering/check-3.7a-price-sources.mjs
 //
 // Read this top to bottom. Each STEP is a black box: the header says
 // what goes in, what comes out, and why the output is trustworthy by

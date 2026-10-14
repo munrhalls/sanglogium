@@ -1,9 +1,9 @@
 // ══════════════════════════════════════════════════════════════════
-// FIX 3.0.1 — set filterAttributes.price to price_data.unit_amount for the
-// products check 3.0.1 marks ✗ (the schema's contract: "Product price in
+// FIX 2.2.a — set filterAttributes.price to price_data.unit_amount for the
+// products check 3.7a marks ✗ (the schema's contract: "Product price in
 // cents; mirrors price_data.unit_amount for filter predicates").
-// Run: node tests/filtering/fix-3.0.1-price-mirror.mjs           (dry run: prints every change, writes nothing)
-//      node tests/filtering/fix-3.0.1-price-mirror.mjs --apply   (one atomic Sanity transaction)
+// Run: node tests/filtering/fix-3.7a-price-mirror.mjs           (dry run: prints every change, writes nothing)
+//      node tests/filtering/fix-3.7a-price-mirror.mjs --apply   (one atomic Sanity transaction)
 //
 // Read this top to bottom. Each STEP is a black box: the header says
 // what goes in, what comes out, and why the output is trustworthy by
