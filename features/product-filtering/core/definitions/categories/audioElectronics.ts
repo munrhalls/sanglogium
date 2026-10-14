@@ -38,7 +38,6 @@ export const FACETS: FacetDef[] = [
     options: [
       { value: 'new', label: 'New' },
       { value: 'open-box', label: 'Open Box' },
-      { value: 'refurbished', label: 'Refurbished' },
     ],
   },
   { id: 'inStock', group: 'commercial', label: 'In Stock Only', control: 'boolean' },

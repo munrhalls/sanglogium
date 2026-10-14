@@ -81,10 +81,9 @@ export const FILTER_FACETS: FilterFacet[] = [
     attribute: 'driverType',
     // Array field in schema, same enum/array mismatch as wearingStyle above.
     type: 'multi',
-    // Was missing 3 of the schema's 8 real options (features/products/schema/
-    // productType.ts:452) -- amt/bone-conduction/electret silently never got
-    // counted, regardless of real product data.
-    valueVocab: ['dynamic', 'planar-magnetic', 'electrostatic', 'balanced-armature', 'hybrid', 'amt', 'bone-conduction', 'electret'],
+    // Only values some headphones product carries (mission 03 1.1 removed
+    // hybrid/bone-conduction/electret: zero products).
+    valueVocab: ['dynamic', 'planar-magnetic', 'electrostatic', 'balanced-armature', 'amt'],
     categories: ['headphones'],
     urlParam: 'driverType',
   },
@@ -102,7 +101,7 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Connector / plug',
     attribute: 'cableTermination',
     type: 'multi',
-    valueVocab: ['3.5mm', '6.35mm', '4.4mm-balanced', '4-pin-xlr', '2.5mm-balanced', 'usb-c', 'mmcx', '2-pin', 'fixed-cable'],
+    valueVocab: ['3.5mm', '6.35mm', '4.4mm-balanced', '4-pin-xlr', '2.5mm-balanced', 'usb-c', 'mmcx'],
     categories: ['headphones'],
     urlParam: 'cableTermination',
   },
@@ -167,10 +166,9 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Sound signature',
     attribute: 'soundSignature',
     type: 'enum',
-    // sang-logium-3rv.9 -- schema options.list (productType.ts) has 8 values;
-    // 'Harman-target-like' was missing here, so a product carrying it could
-    // never be counted or filtered to. Added to match the schema exactly.
-    valueVocab: ['Neutral', 'Warm', 'Bright/Analytical', 'Dark', 'V-Shaped', 'Basshead', 'Mid-Forward', 'Harman-target-like'],
+    // Only values some headphones product carries (mission 03 1.1 removed
+    // Dark and Harman-target-like: zero products).
+    valueVocab: ['Neutral', 'Warm', 'Bright/Analytical', 'V-Shaped', 'Basshead', 'Mid-Forward'],
     categories: ['headphones'],
     urlParam: 'soundSignature',
   },
@@ -194,7 +192,7 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Water / sweat resistance',
     attribute: 'ipxRating',
     type: 'enum',
-    valueVocab: ['none', 'IPX2', 'IPX4', 'IPX5', 'IPX7', 'IPX8'],
+    valueVocab: ['none', 'IPX4', 'IPX5'],
     categories: ['headphones'],
     urlParam: 'ipx',
   },
@@ -210,7 +208,7 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Driver configuration',
     attribute: 'driverConfigBucket',
     type: 'enum',
-    valueVocab: ['single-dynamic', 'single-ba', 'multi-ba', 'hybrid-config', 'planar', 'other'],
+    valueVocab: ['single-dynamic', 'multi-ba', 'hybrid-config', 'other'],
     categories: ['headphones'],
     urlParam: 'driverConfig',
   },
@@ -395,7 +393,7 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Condition',
     attribute: 'condition',
     type: 'enum',
-    valueVocab: ['new', 'open-box', 'refurbished'],
+    valueVocab: ['new', 'open-box'],
     categories: ['audio-electronics'],
     urlParam: 'condition',
   },

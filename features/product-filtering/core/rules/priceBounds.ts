@@ -4,12 +4,13 @@ import { centsToDisplay } from "@/platform/utils/price";
 export const DEFAULT_PRICE_CEILING = 1000;
 
 /**
- * Ceiling (dollars) of the normal draggable price slider. When a category has
- * products priced above this, the slider scale is spent entirely on the
- * sub-$10k range where products actually cluster; the luxury tail above is
- * reached through the fixed premium tier checkboxes instead.
+ * Ceiling (dollars) of the normal draggable price slider. Up to this the
+ * slider ends are the category's real lowest/highest prices (mission 03 1.4);
+ * when a category has products priced above it, the slider scale is spent
+ * entirely on the sub-$20k range where products actually cluster; the luxury
+ * tail above is reached through the fixed premium tier checkboxes instead.
  */
-const NORMAL_PRICE_CEILING = 10_000;
+const NORMAL_PRICE_CEILING = 20_000;
 
 /**
  * Fixed premium tier ceilings (dollars), in $10k increments. Rendered as a
@@ -18,11 +19,11 @@ const NORMAL_PRICE_CEILING = 10_000;
  * `NORMAL_PRICE_CEILING`. Ticking one writes that exact value to the shared
  * `maxPrice` URL param — inclusive ("up to $40,000"), never "and up".
  */
-export const PREMIUM_TIERS = [20_000, 30_000, 40_000] as const;
+export const PREMIUM_TIERS = [30_000, 40_000] as const;
 
 /**
  * When a premium tier is selected, the price minimum snaps up to this floor
- * (dollars) — a shopper reaching for $20k+ gear is not also looking at $50
+ * (dollars) — a shopper reaching for $30k+ gear is not also looking at $50
  * cables. Clearing the tier restores whatever minimum was in force before.
  */
 export const PREMIUM_TIER_MIN = 4_000;

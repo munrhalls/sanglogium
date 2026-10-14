@@ -106,8 +106,6 @@ export const headphonesFields: any[] = [
                   "6.35mm",
                   "usb-c",
                   "mmcx",
-                  "2-pin",
-                  "fixed-cable",
                 ],
               },
             },
@@ -138,7 +136,7 @@ export const headphonesFields: any[] = [
           name: "ipxRating",
           title: "Water / sweat resistance (IPX)",
           type: "string",
-          options: { list: ["none", "IPX2", "IPX4", "IPX5", "IPX7", "IPX8"] },
+          options: { list: ["none", "IPX4", "IPX5"] },
           categories: ["headphones"],
         },
         {
@@ -192,7 +190,7 @@ export const headphonesFields: any[] = [
           title: "Driver configuration (bucket)",
           type: "string",
           options: {
-            list: ["single-dynamic", "single-ba", "multi-ba", "hybrid-config", "planar", "other"],
+            list: ["single-dynamic", "multi-ba", "hybrid-config", "other"],
           },
           categories: ["headphones"],
         },
