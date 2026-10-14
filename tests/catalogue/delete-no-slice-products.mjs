@@ -59,7 +59,11 @@ const candidates = [
 //      field (homepage rows, "On Sale", anything). It runs with the
 //      `previewDrafts` perspective so draft documents (e.g.
 //      drafts.homepageData) are found and unreferenced too — a draft
-//      ref blocks deletion exactly like a published one. The walker collects
+//      ref blocks deletion exactly like a published one. Every referrer
+//      is cleaned under BOTH ids — `x` and `drafts.x` — because a draft
+//      twin can hold the ref while the overlay reports the base _id, so
+//      patching the base alone leaves the draft blocking the delete.
+//      The walker collects
 //      every path whose value is `{_ref: <id>}` — object or array item —
 //      and unsets exactly those paths, so nothing else in the referrer
 //      is touched. Sanity refuses to delete a referenced doc, so any
@@ -94,10 +98,23 @@ const draftAware = client.withConfig({ perspective: 'previewDrafts' });
 let deleted = 0;
 for (const p of candidates) {
   try {
-    const referrers = await draftAware.fetch(`*[references($id)]`, { id: p._id });
-    for (const ref of referrers) {
-      const paths = refPaths(ref, p._id).filter((path) => path !== '_id' && !path.startsWith('_id.'));
-      if (paths.length) await client.patch(ref._id).unset(paths).commit();
+    const referrers = await draftAware.fetch(`*[references($id)]{_id}`, { id: p._id });
+    const docIds = [...new Set(referrers.flatMap((r) => {
+      const base = r._id.replace(/^drafts\./, '');
+      return [base, `drafts.${base}`];
+    }))];
+    // Ref paths are collected from every fetchable variant, then unset on
+    // BOTH ids — a draft twin may not be fetchable yet still block deletion.
+    const paths = new Set();
+    for (const docId of docIds) {
+      const doc = await draftAware.fetch(`*[_id == $docId][0]`, { docId });
+      if (!doc) continue;
+      refPaths(doc, p._id)
+        .filter((path) => path !== '_id' && !path.startsWith('_id.'))
+        .forEach((path) => paths.add(path));
+    }
+    for (const docId of docIds) {
+      if (paths.size) await client.patch(docId).unset([...paths]).commit().catch(() => {});
     }
     await client.delete(p._id);
     deleted++;
