@@ -143,3 +143,17 @@ prepared means + pass condition — fired by the human in the mission PR.
 
 Opening a mission PR is part of this pipeline and is pre-authorized — it
 needs no separate go-ahead. Merging is always the human's.
+
+## CHECK SCRIPTS READ AS BLACK-BOX CHAINS
+
+A check script must be verifiable by pure logic on first read — the human
+verifies the wiring between steps, not the mechanics inside them.
+
+- The script is a sequence of labeled segments (`// ── STEP N: <name> ──`),
+  each treated as a black box.
+- Each segment's header states: what goes in, what comes out, and why the
+  output can be trusted by logic alone (e.g. "walks all descendants, so no
+  product placed under a leaf is missed").
+- Output of step N feeds step N+1 visibly — no hidden coupling.
+- Printed output labels match what the steps claim to produce.
+- Mechanics inside a box get commented only where the stated contract needs it.
