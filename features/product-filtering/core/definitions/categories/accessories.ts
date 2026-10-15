@@ -93,7 +93,7 @@ export const FACETS: FacetDef[] = [
   {
     id: 'length',
     group: 'cables',
-    label: 'Length',
+    label: 'Cable Length',
     control: 'range',
     unit: 'm',
     min: 0,

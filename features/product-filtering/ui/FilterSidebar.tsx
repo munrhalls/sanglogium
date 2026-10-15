@@ -78,6 +78,8 @@ interface FilterSidebarProps {
   /** Optional: render only these FACET_GROUPS ids (e.g. ['commercial'] for
    *  cross-category /search results). Omitted = every group, as before. */
   groupIds?: string[];
+  /** Facet ids this slice hides because the slice already fixes their value. */
+  hiddenFacetIds?: string[];
 }
 
 interface FilterPanelBodyProps extends FilterSidebarProps {
@@ -105,10 +107,12 @@ export function FilterPanelBody({
   category = 'headphones',
   isDefaultState = false,
   groupIds,
+  hiddenFacetIds = [],
   panelScrollId,
   groupIdPrefix,
 }: FilterPanelBodyProps) {
-  const { FACET_GROUPS, facetsForGroup } = getFacetModule(category);
+  const { FACET_GROUPS, facetsForGroup: allFacetsForGroup } = getFacetModule(category);
+  const facetsForGroup = (groupId: string) => allFacetsForGroup(groupId).filter((f) => !hiddenFacetIds.includes(f.id));
   const groups = groupIds ? FACET_GROUPS.filter((g) => groupIds.includes(g.id)) : FACET_GROUPS;
   const clearAll = useClearAllFilters();
   const handleRailSelect = (groupId: string) => scrollToGroup(groupId, panelScrollId, groupIdPrefix);

@@ -22,9 +22,12 @@ const index = JSON.parse(read('data/catalogue-index.json'));
 // ════════════════════════════════════════════════════════════
 // ■ STEP 1 — EACH CATEGORY'S SIDEBAR DEFINITION
 // ════════════════════════════════════════════════════════════
-//   IN   :  the three category files under core/definitions/categories/
+//   IN   :  the three category files under core/definitions/categories/,
+//           sliceHiddenFacets.ts, sortOptions.ts
 //   OUT  :  CATEGORIES['headphones'] = { groups: [commercial, type, sound, …],
 //                                        facets: [brand, productCategory, …] }
+//           HIDDEN['headphones/open-back'] = ['acousticDesign']
+//           SORT_OPTIONS = [{ value: 'newest', label: 'Date Added, New to Old' }, …]
 //   WHY  :  the arrays are cut out of the file text, so nothing is added or dropped
 // ════════════════════════════════════════════════════════════
 const opts = (pairs) => pairs.map(([value, label]) => ({ value, label }));
@@ -38,6 +41,14 @@ const CATEGORIES = {
   'audio-electronics': loadCategory('audioElectronics'),
   accessories: loadCategory('accessories'),
 };
+// Controls a slice hides (slice path -> facet ids), cut out of the file text the same way.
+const HIDDEN = new Function(
+  `return ${read('features/product-filtering/core/definitions/sliceHiddenFacets.ts').match(/export const HIDDEN_FACETS_BY_SLICE: [^=]+= (\{[\s\S]*?\n\});/)[1]}`,
+)();
+// The sort choices, same way.
+const SORT_OPTIONS = new Function(
+  `return ${read('features/product-filtering/core/definitions/sortOptions.ts').match(/export const SORT_OPTIONS: \w+\[\] = (\[[\s\S]*?\n\]);/)[1]}`,
+)();
 
 // ════════════════════════════════════════════════════════════
 // ■ STEP 2 — SLICES AND THEIR KEY SETS
@@ -92,8 +103,10 @@ const has = (products, facetId, value) => products.some((p) => valuesOf(p, facet
 // ════════════════════════════════════════════════════════════
 // ■ STEP 5 — THE SIDEBAR, AS THE SHOPPER SEES IT
 // ════════════════════════════════════════════════════════════
-//   IN   :  a category definition (STEP 1) + the slice's products (STEP 3)
-//   OUT  :  text. One chunk per group, in sidebar order; inside it one chunk per control:
+//   IN   :  a category definition (STEP 1), the slice's hidden controls (STEP 1)
+//           and the slice's products (STEP 3)
+//   OUT  :  text. One chunk per group, in sidebar order; inside it one chunk per control
+//           (a control the slice hides is not printed):
 //               SOUND PROPERTIES
 //
 //               Signature
@@ -102,7 +115,8 @@ const has = (products, facetId, value) => products.some((p) => valuesOf(p, facet
 //   WHY  :  an option shows only if a product carries it; a group shows only if
 //           something in it is selectable (the price group always) — the sidebar's own rules
 // ════════════════════════════════════════════════════════════
-function sidebarText({ groups, facets }, products) {
+function sidebarText({ groups, facets: allFacets }, products, hiddenIds) {
+  const facets = allFacets.filter((f) => !hiddenIds.includes(f.id));
   const brandSlugs = [...new Set(products.flatMap((p) => valuesOf(p, 'brand')))].sort();
   const brandLabel = (slug) => products.find((p) => p.brandRef?.slug?.toLowerCase() === slug)?.brandRef.name ?? slug;
 
@@ -142,8 +156,10 @@ function sidebarText({ groups, facets }, products) {
 // ════════════════════════════════════════════════════════════
 // ■ STEP 6 — PRINT
 // ════════════════════════════════════════════════════════════
-//   IN   :  every slice (STEP 2), its products (STEP 3), its sidebar text (STEP 5)
-//   OUT  :  the slice name, then its groups. The gap size says what belongs together:
+//   IN   :  every slice (STEP 2), its products (STEP 3), its sidebar text (STEP 5),
+//           the sort choices (STEP 1)
+//   OUT  :  the slice name, then its groups; last, the sort choices (same on every slice).
+//           The gap size says what belongs together:
 //               8 blank lines  between slices
 //               3 blank lines  between groups
 //               1 blank line   between controls
@@ -153,5 +169,7 @@ function sidebarText({ groups, facets }, products) {
 for (const slice of slices) {
   const products = (await sanityQuery(PRODUCTS_QUERY, { keys: keysFor(index.slugToIdMap[slice]) })) ?? [];
   console.log('\n'.repeat(8) + slice.toUpperCase().replace('/', ' / ') + '\n\n');
-  console.log(sidebarText(CATEGORIES[slice.split('/')[0]], products));
+  console.log(sidebarText(CATEGORIES[slice.split('/')[0]], products, HIDDEN[slice] ?? []));
 }
+console.log('\n'.repeat(8) + 'SORT (SAME ON EVERY SLICE)\n\n');
+console.log(SORT_OPTIONS.map((o) => o.label).join('\n'));

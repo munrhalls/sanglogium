@@ -34,6 +34,8 @@ export interface MobileFilterSheetProps {
   isDefaultState?: boolean;
   /** Optional: render only these facet group ids (see FilterSidebar). */
   groupIds?: string[];
+  /** Facet ids this slice hides (see FilterSidebar). */
+  hiddenFacetIds?: string[];
   /** Shown on the trigger button and the sheet's "show results" footer. */
   totalCount: number;
 }

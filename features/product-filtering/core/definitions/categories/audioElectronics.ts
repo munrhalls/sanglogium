@@ -93,7 +93,7 @@ export const FACETS: FacetDef[] = [
       { value: 'optical', label: 'Optical' },
       { value: 'coaxial', label: 'Coaxial' },
       { value: 'rca', label: 'RCA' },
-      { value: 'bluetooth', label: 'Bluetooth' },
+      { value: 'bluetooth', label: 'Bluetooth Input' },
       { value: 'xlr-balanced', label: 'XLR / Balanced' },
       { value: 'phono-mm-mc', label: 'Phono (MM/MC)' },
       { value: 'hdmi-earc', label: 'HDMI / eARC' },
@@ -102,7 +102,7 @@ export const FACETS: FacetDef[] = [
       { value: 'aes-ebu', label: 'AES/EBU' },
     ],
   },
-  { id: 'balancedOutput', group: 'connections', label: 'Balanced Output', control: 'boolean' },
+  { id: 'balancedOutput', group: 'connections', label: 'Has Balanced Output', control: 'boolean' },
 
   {
     id: 'amplification',
@@ -112,12 +112,12 @@ export const FACETS: FacetDef[] = [
     options: [
       { value: 'solid-state', label: 'Solid-State' },
       { value: 'tube', label: 'Tube / Valve' },
-      { value: 'hybrid', label: 'Hybrid' },
+      { value: 'hybrid', label: 'Hybrid (Tube + Solid-State)' },
       { value: 'class-d', label: 'Class D' },
     ],
   },
 
-  { id: 'dacIncluded', group: 'digital', label: 'Built-in DAC', control: 'boolean' },
+  { id: 'dacIncluded', group: 'digital', label: 'Has Built-in DAC', control: 'boolean' },
   {
     id: 'dsdSupport',
     group: 'digital',

@@ -2,6 +2,7 @@
 export { isCategory } from './core/definitions/facetRegistry';
 export type { Category } from './core/definitions/facetRegistry';
 export { CATEGORIES, CATEGORY_LABELS } from './core/definitions/category';
+export { hiddenFacetIds } from './core/definitions/sliceHiddenFacets';
 export { loadFilterSort, SORT_DEFAULT, isFiltersActive } from './url/filterSortParams';
 export { sanitizeFilterState } from './core/rules/sanitizeFilterState';
 export {

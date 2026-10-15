@@ -5,7 +5,7 @@ import { EmptyResults } from '@/features/products/ui/listing/EmptyResults';
 import { Pagination } from '@/features/products/ui/listing/Pagination';
 import { ChunkedProductGrid } from '@/features/products/ui/listing/ChunkedProductGrid';
 import { ProductChunkView } from './ProductChunkView';
-import { FilterSidebar, SortBar, ActiveFilterChips } from '@/features/product-filtering';
+import { FilterSidebar, SortBar, ActiveFilterChips, hiddenFacetIds } from '@/features/product-filtering';
 import type { Category, CatalogueFacets } from '@/features/product-filtering';
 import type { Product } from '@/features/products/core/types/productTypes';
 import type { CardAction } from '@/features/products/ui/card/ProductCard';
@@ -43,6 +43,7 @@ export default function ListingView({
   chunkPromises,
   cardAction,
 }: ListingPageProps) {
+  const hiddenIds = hiddenFacetIds(breadcrumbs?.join('/'));
   return (
     <div className="mx-auto w-full max-w-catalogue px-4 md:px-8 pb-12">
       {breadcrumbs && <CategoryBreadcrumbsView categoryParts={breadcrumbs} labels={breadcrumbLabels ?? breadcrumbs} />}
@@ -58,6 +59,7 @@ export default function ListingView({
           priceBounds={{ min: priceBounds.min, max: priceBounds.max }}
           rangeBounds={category !== undefined ? facets.ranges : undefined}
           isDefaultState={facets.isDefaultState}
+          hiddenFacetIds={hiddenIds}
         />
         <div className="min-w-0 flex-1">
           <ActiveFilterChips key={category} category={category} brandLabels={facets.brandLabels} />
@@ -72,6 +74,7 @@ export default function ListingView({
               priceBounds: { min: priceBounds.min, max: priceBounds.max },
               rangeBounds: category !== undefined ? facets.ranges : undefined,
               isDefaultState: facets.isDefaultState,
+              hiddenFacetIds: hiddenIds,
             }}
           />
           {totalCount === 0 ? (
