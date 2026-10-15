@@ -32,7 +32,9 @@ blueprint already proves.
 ## WORK 1 — WHOLENESS (exhaustive, silent)
 
 Before writing anything, understand completely. This work is mandatory and
-produces no document.
+persists as `wholeness.md` in the feature folder — a flat bullet list of
+facts only, each pass a minimal update with zero waste characters to the
+truest current state of understanding and done status.
 
 - Read the real surface — the actual files, queries, data, definitions.
   Never from memory, never assumed.
@@ -66,14 +68,19 @@ yet — return to Work 1.
 
 ## RULES
 
-- Zero misses: every DoD item has a means. An item with no stateable means is
-  a gap — flag it, never pad it.
+- Zero misses: every DoD item has a means. An item with no stateable means:
+  write it as one plain short line in the file and tell the human — never
+  pad it.
 - Zero extras: no matrices, no taxonomies, no machinery, no narration.
-  The document contains items and means. Nothing else.
+  The document is a two-line intro, then the items, each with one read line
+  and one pass line. A real gap is one plain short line. No dismissals,
+  limitations or justification — a human-review proof needs no defence.
+  Nothing else.
 - Independence: the expected answer comes from a source other than the thing
   being checked (e.g. the product's own declared field vs the query that
   fetched it). A means that consults only the system under test can only
-  self-agree — that is no proof.
+  self-agree — that is no proof. Satisfy this in your reasoning; never write
+  about it in the artifact.
 - Honest gate: each means either fails because the behavior is not built yet,
   or passes with a stated reason it already holds. A means that can only
   pass is no check; a means that fails on its own machinery is rewritten.
@@ -86,7 +93,8 @@ yet — return to Work 1.
 
 If you cannot state a means without a judgment call — an expected result you
 cannot pin, a boundary you cannot delineate — stop and name the exact gap.
-A gap in the blueprint is a defect; never fill it by guessing.
+A gap in the blueprint is a defect; never fill it by guessing. Write it as
+one plain short line in the file and say it in chat.
 
 ## THE PIPELINE — FROM INTENT TO MERGE
 
@@ -149,11 +157,32 @@ needs no separate go-ahead. Merging is always the human's.
 A check script must be verifiable by pure logic on first read — the human
 verifies the wiring between steps, not the mechanics inside them.
 
-- The script is a sequence of labeled segments (`// ── STEP N: <name> ──`),
-  each treated as a black box.
-- Each segment's header states: what goes in, what comes out, and why the
-  output can be trusted by logic alone (e.g. "walks all descendants, so no
-  product placed under a leaf is missed").
+- The script is a sequence of segments, each a black box. Every segment
+  header is the same block, in this exact shape:
+  ```
+  // ════════════════════════════════════════════════════════════
+  // ■ STEP N — <NAME IN CAPS>
+  // ════════════════════════════════════════════════════════════
+  //   IN   :  <what goes in>
+  //   OUT  :  <what comes out>
+  //   WHY  :  <why the output can be trusted by logic alone>
+  // ════════════════════════════════════════════════════════════
+  ```
 - Output of step N feeds step N+1 visibly — no hidden coupling.
 - Printed output labels match what the steps claim to produce.
 - Mechanics inside a box get commented only where the stated contract needs it.
+
+## PRINTED OUTPUT IS BUILT FOR THE EYE
+
+Whatever a human reads — printouts, check output, read checks — is made to
+be taken in at a glance, without reading:
+
+- One distinct marker per level, so the eye tells the levels apart before
+  reading: slice = full-width `█` banner; group = `┏━┓` box; control =
+  a type symbol (`▣` options list, `◐` yes/no, `↔` range); option = `○`.
+- Names of slices, groups and controls in CAPS.
+- Options one per line, in a short column — never one long `|` line.
+- No line past about 80 characters.
+- Gaps carry the structure: 8 blank lines between slices, 1 between groups.
+- Applies to every agent composing a read check for a human, Claude and
+  Devin alike.
