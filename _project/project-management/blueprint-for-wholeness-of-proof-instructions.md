@@ -164,25 +164,26 @@ verifies the wiring between steps, not the mechanics inside them.
   // ■ STEP N — <NAME IN CAPS>
   // ════════════════════════════════════════════════════════════
   //   IN   :  <what goes in>
-  //   OUT  :  <what comes out>
+  //   OUT  :  <what comes out, with a small example of its shape>
   //   WHY  :  <why the output can be trusted by logic alone>
   // ════════════════════════════════════════════════════════════
   ```
+- The top of the script has a one-line FLOW showing which step feeds which.
 - Output of step N feeds step N+1 visibly — no hidden coupling.
 - Printed output labels match what the steps claim to produce.
 - Mechanics inside a box get commented only where the stated contract needs it.
 
-## PRINTED OUTPUT IS BUILT FOR THE EYE
+This is the **read check**: the human reads the script and judges whether
+what it does makes sense. The script is laid out for exactly that.
 
-Whatever a human reads — printouts, check output, read checks — is made to
-be taken in at a glance, without reading:
+## THE PRINTOUT IS CHUNKED FOR THE EYE
 
-- One distinct marker per level, so the eye tells the levels apart before
-  reading: slice = full-width `█` banner; group = `┏━┓` box; control =
-  a type symbol (`▣` options list, `◐` yes/no, `↔` range); option = `○`.
-- Names of slices, groups and controls in CAPS.
-- Options one per line, in a short column — never one long `|` line.
-- No line past about 80 characters.
-- Gaps carry the structure: 8 blank lines between slices, 1 between groups.
-- Applies to every agent composing a read check for a human, Claude and
-  Devin alike.
+The printout is a separate thing from the script. It is read straight in the
+PR, so it is plain text grouped by whitespace — no banners, boxes or symbols:
+
+- Chunk, then sub-chunk, at every level (slice → group → control → options).
+- Vertical distance says what belongs together: biggest gap between the
+  biggest chunks, smaller gaps inward, none between a control and its options.
+- Options one per line under their control.
+- Applies to every agent composing a printout for a human, Claude and Devin
+  alike.

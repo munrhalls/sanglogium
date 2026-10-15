@@ -1,9 +1,16 @@
-// Mission 02 printout: per slice, per sidebar group, the controls and option
-// labels as the shopper sees them (options with 0 products in the slice are
-// left out, as the sidebar does). Labels only, no counts.
+// MISSION 02 — CONTROL PRINTOUT
 //
-// Run from repo root:
-//   node --env-file=.env.local --experimental-strip-types tests/product-filtering/control-printout.mjs | less -S
+// WHAT IT DOES:  prints, per slice and per sidebar group, the controls and option labels
+//                the shopper sees. Options no product in the slice carries are left out
+//                (as the sidebar does). Labels only, no counts.
+//
+// FLOW:          STEP 1 categories ─┐
+//                STEP 2 slices ─────┼─► STEP 5 sidebar text ─► STEP 6 print
+//                STEP 3 products ───┤
+//                STEP 4 product values ┘
+//
+// RUN (repo root):
+//   node --env-file=.env.local --experimental-strip-types tests/product-filtering/control-printout.mjs
 
 import { readFileSync } from 'node:fs';
 import { sanityQuery } from './sanity-raw.mjs';
@@ -16,7 +23,8 @@ const index = JSON.parse(read('data/catalogue-index.json'));
 // ■ STEP 1 — EACH CATEGORY'S SIDEBAR DEFINITION
 // ════════════════════════════════════════════════════════════
 //   IN   :  the three category files under core/definitions/categories/
-//   OUT  :  { groups, facets } per category, exactly as written in the files
+//   OUT  :  CATEGORIES['headphones'] = { groups: [commercial, type, sound, …],
+//                                        facets: [brand, productCategory, …] }
 //   WHY  :  the arrays are cut out of the file text, so nothing is added or dropped
 // ════════════════════════════════════════════════════════════
 const opts = (pairs) => pairs.map(([value, label]) => ({ value, label }));
@@ -35,7 +43,8 @@ const CATEGORIES = {
 // ■ STEP 2 — SLICES AND THEIR KEY SETS
 // ════════════════════════════════════════════════════════════
 //   IN   :  slugToIdMap and slotMetadataMap from data/catalogue-index.json
-//   OUT  :  the 3 roots + every "category/sub-slice" path; keysFor(node id) = node + all descendants
+//   OUT  :  slices = ['headphones', 'audio-electronics', 'accessories', 'headphones/open-back', …]
+//           keysFor(node id) = ['o7c6…', …]  (the node + all its descendants)
 //   WHY  :  the walk visits every descendant, so no product placed below a node is missed
 // ════════════════════════════════════════════════════════════
 const slices = ['headphones', 'audio-electronics', 'accessories', ...Object.keys(index.slugToIdMap).filter((s) => s.includes('/'))];
@@ -55,8 +64,8 @@ function keysFor(nodeId) {
 // ■ STEP 3 — A SLICE'S PRODUCTS
 // ════════════════════════════════════════════════════════════
 //   IN   :  a slice's key set (STEP 2)
-//   OUT  :  every product placed in the slice, with the fields the sidebar counts from
-//   WHY  :  same selector and projection the sidebar's own fetch uses
+//   OUT  :  [{ _id, filterAttributes, brandRef, stock, reservedStock }, …]  one per product in the slice
+//   WHY  :  same selector and fields the sidebar's own fetch uses
 // ════════════════════════════════════════════════════════════
 const PRODUCTS_QUERY = `*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0] | order(_id asc) [0...1000] {
   _id, filterAttributes, "brandRef": brand->{ name, "slug": slug.current }, stock, reservedStock
@@ -66,7 +75,9 @@ const PRODUCTS_QUERY = `*[_type == "product" && count(catalogueLocationKeys[@ in
 // ■ STEP 4 — WHAT THE PRODUCTS CARRY
 // ════════════════════════════════════════════════════════════
 //   IN   :  products (STEP 3) and a facet id
-//   OUT  :  the lower-cased values the products hold for that facet; in-stock test
+//   OUT  :  valuesOf(product, 'acousticDesign') = ['open-back']
+//           has(products, 'acousticDesign', 'open-back') = true / false
+//           inStock(product) = true / false
 //   WHY  :  reads the product's own field named in facetMap.ts, nothing else
 // ════════════════════════════════════════════════════════════
 function valuesOf(p, facetId) {
@@ -82,13 +93,15 @@ const has = (products, facetId, value) => products.some((p) => valuesOf(p, facet
 // ■ STEP 5 — THE SIDEBAR, AS THE SHOPPER SEES IT
 // ════════════════════════════════════════════════════════════
 //   IN   :  a category definition (STEP 1) + the slice's products (STEP 3)
-//   OUT  :  text: groups in sidebar order, each with its controls and option labels
+//   OUT  :  text. One chunk per group, in sidebar order; inside it one chunk per control:
+//               SOUND PROPERTIES
+//
+//               Signature
+//                 Neutral / Reference
+//                 Warm
 //   WHY  :  an option shows only if a product carries it; a group shows only if
-//           something in it is selectable (price group always) — the sidebar's own rules
+//           something in it is selectable (the price group always) — the sidebar's own rules
 // ════════════════════════════════════════════════════════════
-const WIDTH = 66;
-const box = (title) => `┏${'━'.repeat(WIDTH)}┓\n┃  GROUP:  ${title.padEnd(WIDTH - 11)}┃\n┗${'━'.repeat(WIDTH)}┛`;
-
 function sidebarText({ groups, facets }, products) {
   const brandSlugs = [...new Set(products.flatMap((p) => valuesOf(p, 'brand')))].sort();
   const brandLabel = (slug) => products.find((p) => p.brandRef?.slug?.toLowerCase() === slug)?.brandRef.name ?? slug;
@@ -107,34 +120,38 @@ function sidebarText({ groups, facets }, products) {
     return fs.some((f) => (f.control === 'checkbox' ? shownOptions(f).length > 0 : f.control === 'boolean' ? boolShown(f) : false));
   };
 
+  // One control = its name, then its options right under it.
+  const controlChunk = (f) => {
+    const sub = f.subheading ? `${f.subheading.toUpperCase()}\n` : '';
+    if (f.control === 'range') return `${sub}${f.label} (${f.unit})`;
+    if (f.control === 'boolean') return boolShown(f) ? `${sub}${f.label}` : null;
+    return `${sub}${f.label}\n${shownOptions(f).map((o) => `  ${o}`).join('\n')}`;
+  };
+
   return groups
     .filter(hasContent)
     .map((g) => {
-      const title = g.label ? g.label.toUpperCase() : `(NO TITLE)  ·  ${g.id.toUpperCase()}`;
-      const lines = [box(title), ''];
-      if (g.id === 'commercial') lines.push('  ↔  PRICE', '');
-      for (const f of facets.filter((x) => x.group === g.id)) {
-        const name = f.label.toUpperCase();
-        if (f.subheading) lines.push(`  ──  ${f.subheading.toUpperCase()}  ──`, '');
-        if (f.control === 'range') lines.push(`  ↔  ${name}  (${f.unit})`, '');
-        else if (f.control === 'boolean') boolShown(f) && lines.push(`  ◐  ${name}`, '');
-        else lines.push(`  ▣  ${name}`, ...shownOptions(f).map((o) => `       ○  ${o}`), '');
-      }
-      return lines.join('\n');
+      const title = g.label ? g.label.toUpperCase() : `(NO TITLE: ${g.id})`;
+      const controls = facets.filter((x) => x.group === g.id).map(controlChunk).filter(Boolean);
+      if (g.id === 'commercial') controls.unshift('Price');
+      return `${title}\n\n${controls.join('\n\n')}`;
     })
-    .join('\n');
+    .join('\n\n\n\n');
 }
 
 // ════════════════════════════════════════════════════════════
 // ■ STEP 6 — PRINT
 // ════════════════════════════════════════════════════════════
 //   IN   :  every slice (STEP 2), its products (STEP 3), its sidebar text (STEP 5)
-//   OUT  :  one banner per slice, 8 blank lines before it; one blank line between groups
+//   OUT  :  the slice name, then its groups. The gap size says what belongs together:
+//               8 blank lines  between slices
+//               3 blank lines  between groups
+//               1 blank line   between controls
+//               0 blank lines  between a control and its options
 //   WHY  :  one loop over all slices, nothing skipped, nothing reordered
 // ════════════════════════════════════════════════════════════
 for (const slice of slices) {
   const products = (await sanityQuery(PRODUCTS_QUERY, { keys: keysFor(index.slugToIdMap[slice]) })) ?? [];
-  const bar = '█'.repeat(WIDTH + 2);
-  console.log('\n'.repeat(8) + `${bar}\n██  SLICE:  ${slice.toUpperCase().replace('/', ' / ')}\n${bar}\n`);
+  console.log('\n'.repeat(8) + slice.toUpperCase().replace('/', ' / ') + '\n\n');
   console.log(sidebarText(CATEGORIES[slice.split('/')[0]], products));
 }
