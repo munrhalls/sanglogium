@@ -1,5 +1,7 @@
 # DoD — Filters & Sorting — semantic controls
 
+Scope: data layer only — the filter and sort definitions (controls, option labels, sort labels). Judged: whether they make sense and cannot confuse an end user, per slice. Out: queries, product data, membership, how the sidebar draws or behaves.
+
 Presumes `01-membership` holds. Each group presumes every group above it already holds.
 
 ## 1. Filter/sorting controls — semantically accurate

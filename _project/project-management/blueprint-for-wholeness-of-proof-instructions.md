@@ -71,9 +71,13 @@ yet — return to Work 1.
 - Zero misses: every DoD item has a means. An item with no stateable means:
   write it as one plain short line in the file and tell the human — never
   pad it.
+- Scope line: every `dod.md` opens with one `Scope:` line — the layer, what
+  is judged, and what is out. The blueprint and the PR body repeat it
+  verbatim as their first line. Whoever works the mission reads it first and
+  stays inside it; work outside it is a defect — stop and report.
 - Zero extras: no matrices, no taxonomies, no machinery, no narration.
-  The document is a two-line intro, then the items, each with one read line
-  and one pass line. A real gap is one plain short line. No dismissals,
+  The document is the Scope line, a two-line intro, then the items, each with
+  one read line and one pass line. A real gap is one plain short line. No dismissals,
   limitations or justification — a human-review proof needs no defence.
   Nothing else.
 - Independence: the expected answer comes from a source other than the thing

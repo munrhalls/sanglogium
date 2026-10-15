@@ -1,5 +1,7 @@
 # Blueprint — filters & sorting — control semantics
 
+Scope: data layer only — the filter and sort definitions (controls, option labels, sort labels). Judged: whether they make sense and cannot confuse an end user, per slice. Out: queries, product data, membership, how the sidebar draws or behaves.
+
 One printout, read by a human. Per slice, per sidebar group, the controls with
 their option labels, as the shopper sees them. Wide gap between slices, narrow
 gap between groups.

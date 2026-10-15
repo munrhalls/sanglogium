@@ -20,8 +20,9 @@ TRUST: a fixed bar stops "done" from drifting while you build.
 ## 2. DoD CHUNK
 IN:  the bar, built only from the wholeness (step 0) — never from assumption,
      memory, or what sounds plausible.
-OUT: 3–5 binary claims in a `dod.md` — each true/false, checkable by a human
-     who does not trust the author.
+OUT: a `dod.md` opening with one `Scope:` line (the layer, what is judged,
+     what is out), then 3–5 binary claims — each true/false, checkable by a
+     human who does not trust the author.
 TRUST: small enough to hold in your head; each item names one verifiable fact.
      One chunk = one kind of verification act. If items need different acts
      (eyeball judgement vs. cross-slice diff vs. data query), they are
@@ -29,14 +30,14 @@ TRUST: small enough to hold in your head; each item names one verifiable fact.
 
 ## 3. BLUEPRINT
 IN:  one dod.md, plus the same wholeness.
-OUT: each DoD item paired with ONE proof means — the simplest concrete check
-     that demonstrates it. Terseness is earned by the wholeness work, not performed.
+OUT: the Scope line copied on top, then each DoD item paired with ONE proof
+     means — the simplest concrete check that demonstrates it. Terseness is earned by the wholeness work, not performed.
 TRUST: every assumption a check stands on traces to an earlier proven item or is
      itself a check. Packed assumptions are the failure mode.
 
 ## 4. PR AS WORKSPACE
 IN:  the blueprint, implemented checks (scripts in tests/).
-OUT: PR body = the DoD list as checkbox tracer bullets. Each bullet is a PAIR:
+OUT: PR body = the Scope line first, then the DoD list as checkbox tracer bullets. Each bullet is a PAIR:
      READ the check (linked, black-box IN/OUT/WHY step headers, output built for the eye) +
      RUN the check (exact command, per slice) + PASS criterion.
 TRUST: the human ticks each box with their own eyes, in order.
