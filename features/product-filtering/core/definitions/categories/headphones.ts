@@ -89,7 +89,7 @@ export const FACETS: FacetDef[] = [
   // ── Type ─────────────────────────────────────────────────────────────────
   // No closed options.list in the schema either -- derive from real data,
   // same treatment as brand and awards (sang-logium-3rv.5).
-  { id: 'productCategory', group: 'type', label: 'Type', control: 'checkbox', options: opts([['over-ear', 'Over Ear'], ['iem', 'In-Ear'], ['true-wireless', 'True Wireless'], ['on-ear', 'On Ear']]) },
+  { id: 'productCategory', group: 'type', label: 'Type', control: 'checkbox', options: opts([['over-ear', 'Over Ear'], ['iem', 'In-Ear'], ['true-wireless', 'Wireless'], ['on-ear', 'On Ear']]) },
   { id: 'acousticDesign', group: 'type', label: 'Acoustic Design', control: 'checkbox', options: opts([['open-back', 'Open-Back'], ['closed-back', 'Closed-Back'], ['semi-open', 'Semi-Open / Hybrid']]) },
   { id: 'connectivity', group: 'type', label: 'Connectivity', control: 'checkbox', options: opts([['wired', 'Wired'], ['wireless', 'Wireless (Bluetooth)'], ['true-wireless', 'True Wireless'], ['hybrid', 'Wired + Wireless Hybrid']]) },
 
@@ -106,7 +106,7 @@ export const FACETS: FacetDef[] = [
   // Simplification of "frequency response range" (a per-product min–max pair) to
   // its single most-compared dimension, bass extension — see the enrichment
   // script for the full rationale.
-  { id: 'bassExtension', group: 'sound', label: 'Bass Extension', control: 'range', min: 2, max: 25, unit: 'Hz' },
+  { id: 'bassExtension', group: 'sound', label: 'Frequency Response', control: 'range', min: 2, max: 25, unit: 'Hz' },
 
   // ── Material Factors ────────────────────────────────────────────────────
   { id: 'microphone', group: 'material', label: 'Microphone', control: 'boolean' },
