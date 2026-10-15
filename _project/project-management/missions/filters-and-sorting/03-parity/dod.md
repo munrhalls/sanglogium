@@ -1,6 +1,6 @@
 # DoD — Filters & Sorting — parity
 
-Presumes `01-membership` and `02-controls` hold. Each group presumes every group above it already holds.
+Presumes `01-membership` and `02-control-semantics` hold. Each group presumes every group above it already holds.
 
 ## 1. Options ↔ inventory
 - [ ] 1.1 Every offered filter value matches ≥1 product in that slice.
