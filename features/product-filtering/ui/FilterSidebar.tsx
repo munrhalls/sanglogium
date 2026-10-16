@@ -4,7 +4,7 @@ import React from 'react';
 import type { IconType } from 'react-icons';
 import { FaTag, FaHeadphones, FaWaveSquare, FaLayerGroup, FaBluetooth, FaMicrochip, FaPlug, FaBolt, FaScrewdriverWrench } from 'react-icons/fa6';
 import { getFacetModule, resolveGroupIcon, type Category, type AnyFacetDef, type FacetOptionCount } from '@/features/product-filtering/core/definitions/facetRegistry';
-import { useClearAllFilters } from '@/features/product-filtering/state/useFilterParam';
+import { useClearAllFilters, useFilterParam } from '@/features/product-filtering/state/useFilterParam';
 import type { RangeBounds } from '@/features/product-filtering/core/rules/facetCounts';
 import { CheckboxGroup, BooleanToggle, RangeControl, PriceControl } from './FilterControls';
 
@@ -113,13 +113,22 @@ export function FilterPanelBody({
   const clearAll = useClearAllFilters();
   const handleRailSelect = (groupId: string) => scrollToGroup(groupId, panelScrollId, groupIdPrefix);
 
+  // Facets may declare showWhen{facet,values}: hidden unless that facet's
+  // current selection intersects values (accessories cables/parts gating).
+  const [gateSelection] = useFilterParam('accessoryType');
+  const gatedValues: string[] = Array.isArray(gateSelection) ? gateSelection : gateSelection ? [gateSelection] : [];
+  const visibleFacets = (groupId: string) =>
+    facetsForGroup(groupId).filter(
+      (f) => !f.showWhen || gatedValues.length === 0 || f.showWhen.values.some((v) => gatedValues.includes(v)),
+    );
+
   // A group with nothing selectable (no nonzero option counts and, for
   // range-only groups, no computed bounds) is hidden from the rail AND the
   // panel so the two maps can't drift apart. 'commercial' is always shown:
   // it hosts the price control even when all its facet counts are zero.
   const hasContent = (groupId: string) => {
     if (groupId === 'commercial') return true;
-    const facets = facetsForGroup(groupId);
+    const facets = visibleFacets(groupId);
     const selectable = facets.filter((f) => f.control !== 'range');
     if (selectable.length === 0) {
       return facets.some((f) => rangeBounds[f.id]?.min != null);
@@ -172,7 +181,7 @@ export function FilterPanelBody({
           {visibleGroups.map((group) => (
             <PanelSection key={group.id} id={group.id} idPrefix={groupIdPrefix} label={group.label} note={group.note}>
               {group.id === 'commercial' && <PriceControl category={category} min={priceBounds.min} max={priceBounds.max} />}
-              {facetsForGroup(group.id).map((facet) => renderFacet(facet, category, checkboxCounts, booleanCounts, brandLabels, rangeBounds, isDefaultState))}
+              {visibleFacets(group.id).map((facet) => renderFacet(facet, category, checkboxCounts, booleanCounts, brandLabels, rangeBounds, isDefaultState))}
             </PanelSection>
           ))}
         </div>

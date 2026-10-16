@@ -42,6 +42,9 @@ export interface AnyFacetDef {
    *  control, for grouping a few facets under one label inside a shared
    *  FACET_GROUP (e.g. "Cable Properties" above Detachable Cable + Foldable). */
   subheading?: string;
+  /** Show this facet only when another facet's selection includes one of
+   *  `values` — empty/absent selection shows everything (accessories). */
+  showWhen?: { facet: string; values: string[] };
 }
 
 interface FacetGroupDef {

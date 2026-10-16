@@ -93,7 +93,6 @@ export const FACETS: FacetDef[] = [
       { value: 'optical', label: 'Optical' },
       { value: 'coaxial', label: 'Coaxial' },
       { value: 'rca', label: 'RCA' },
-      { value: 'bluetooth', label: 'Bluetooth' },
       { value: 'xlr-balanced', label: 'XLR / Balanced' },
       { value: 'phono-mm-mc', label: 'Phono (MM/MC)' },
       { value: 'hdmi-earc', label: 'HDMI / eARC' },

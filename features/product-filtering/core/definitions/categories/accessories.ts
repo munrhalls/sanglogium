@@ -22,6 +22,9 @@ export interface FacetDef {
   min?: number;
   max?: number;
   step?: number;
+  /** Show this facet only when another facet's selection includes one of
+   *  `values` — empty/absent selection shows everything. */
+  showWhen?: { facet: string; values: string[] };
 }
 
 export const FACET_GROUPS: FacetGroup[] = [
@@ -73,6 +76,7 @@ export const FACETS: FacetDef[] = [
         label: 'Digital (USB / Coaxial / Optical / AES / Ethernet)',
       },
     ],
+    showWhen: { facet: 'accessoryType', values: ['cables-interconnects'] },
   },
   {
     id: 'connectorTermination',
@@ -99,6 +103,7 @@ export const FACETS: FacetDef[] = [
     min: 0,
     max: 15,
     step: 0.1,
+    showWhen: { facet: 'accessoryType', values: ['cables-interconnects'] },
   },
   {
     id: 'conductorMaterial',
@@ -130,6 +135,7 @@ export const FACETS: FacetDef[] = [
       { value: 'ear-pads-cushions', label: 'Ear Pads / Cushions' },
       { value: 'ear-tips', label: 'Ear Tips' },
     ],
+    showWhen: { facet: 'accessoryType', values: ['replacement-parts'] },
   },
 ];
 
