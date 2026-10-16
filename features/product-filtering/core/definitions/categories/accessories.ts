@@ -73,7 +73,7 @@ export const FACETS: FacetDef[] = [
       { value: 'interconnect-rca-xlr', label: 'Interconnect (RCA/XLR)' },
       {
         value: 'digital-usb-coaxial-optical-aes-ebu-ethernet',
-        label: 'Digital (USB / Coaxial / Optical / AES / Ethernet)',
+        label: 'Digital Cable',
       },
     ],
     showWhen: { facet: 'accessoryType', values: ['cables-interconnects'] },
@@ -91,7 +91,7 @@ export const FACETS: FacetDef[] = [
       { value: '4.4mm', label: '4.4mm' },
       { value: '6.35mm', label: '6.35mm' },
       { value: '4-pin-mini-xlr', label: '4-Pin Mini XLR' },
-      { value: 'mini-to-rca', label: 'Mini-to-RCA' },
+      { value: 'mini-to-rca', label: '3.5mm Mini-Jack to RCA' },
     ],
   },
   {
@@ -111,7 +111,7 @@ export const FACETS: FacetDef[] = [
     label: 'Conductor Material',
     control: 'checkbox',
     options: [
-      { value: 'copper-ofc', label: 'Copper / OFC' },
+      { value: 'copper-ofc', label: 'Copper / Oxygen-Free (OFC)' },
       { value: 'silver', label: 'Silver' },
       { value: 'silver-plated-copper', label: 'Silver-Plated Copper' },
     ],
@@ -119,11 +119,11 @@ export const FACETS: FacetDef[] = [
   {
     id: 'balanced',
     group: 'cables',
-    label: 'Balanced / Unbalanced',
+    label: 'Signal Type',
     control: 'checkbox',
     options: [
-      { value: 'balanced', label: 'Balanced' },
-      { value: 'unbalanced', label: 'Unbalanced' },
+      { value: 'balanced', label: 'Balanced (Noise-Rejecting)' },
+      { value: 'unbalanced', label: 'Unbalanced (Standard)' },
     ],
   },
   {
