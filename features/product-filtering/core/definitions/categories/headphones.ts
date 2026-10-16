@@ -89,7 +89,6 @@ export const FACETS: FacetDef[] = [
   // ── Type ─────────────────────────────────────────────────────────────────
   // No closed options.list in the schema either -- derive from real data,
   // same treatment as brand and awards (sang-logium-3rv.5).
-  { id: 'productCategory', group: 'type', label: 'Type', control: 'checkbox', options: opts([['over-ear', 'Over Ear'], ['iem', 'In-Ear'], ['true-wireless', 'True Wireless'], ['on-ear', 'On Ear']]) },
   { id: 'acousticDesign', group: 'type', label: 'Acoustic Design', control: 'checkbox', options: opts([['open-back', 'Open-Back'], ['closed-back', 'Closed-Back'], ['semi-open', 'Semi-Open / Hybrid']]) },
   { id: 'connectivity', group: 'type', label: 'Connectivity', control: 'checkbox', options: opts([['wired', 'Wired'], ['wireless', 'Wireless (Bluetooth)'], ['hybrid', 'Wired + Wireless Hybrid']]) },
 

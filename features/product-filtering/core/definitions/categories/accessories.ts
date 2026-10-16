@@ -40,7 +40,7 @@ export const FACETS: FacetDef[] = [
   {
     id: 'accessoryType',
     group: 'type',
-    label: 'Accessory Category',
+    label: 'Accessory Type',
     control: 'checkbox',
     options: [
       { value: 'cables-interconnects', label: 'Cables & Interconnects' },
