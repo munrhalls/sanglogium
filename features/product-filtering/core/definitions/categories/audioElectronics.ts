@@ -140,7 +140,7 @@ export const FACETS: FacetDef[] = [
       { value: 'chromecast', label: 'Chromecast built-in' },
       { value: 'spotify-connect', label: 'Spotify Connect' },
       { value: 'tidal-connect', label: 'TIDAL Connect' },
-      { value: 'roon-ready', label: 'Roon Ready' },
+      { value: 'roon-ready', label: 'Roon Ready (Roon Music Server)' },
       { value: 'dlna', label: 'DLNA (Legacy Network Share)' },
     ],
   },
