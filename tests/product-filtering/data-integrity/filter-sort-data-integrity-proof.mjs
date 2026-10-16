@@ -1,17 +1,18 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// FLOW: read the declared controls/options/sorts from the definition files →
-// fetch every product's stored filter values from Sanity → diff the two sides
-// in both directions → print each broken link, exit 1 if any exist.
+// WHAT THIS IS, IN ONE BREATH:
 //
-// This proof CHANGES NOTHING. It reads code files and Sanity data and prints
-// what it finds. It proves WHAT IS.
+//   The code says "products can be filtered by these options".
+//   Sanity stores the actual values on each product.
+//   This script checks the two sides match — in both directions —
+//   and prints every place they don't. It changes nothing.
 //
-// Determinism: output is a pure function of (definition files at this commit)
-// + (Sanity dataset at run time). Same code + same data → same output, always.
-// It is not a fixed historical snapshot; if product data changes, the checked
-// relationship is re-evaluated fresh — that is the point of an integrity check.
+//   Think of it like checking a guest list at the door:
+//   everyone on the list should be inside, everyone inside should be on
+//   the list. Any mismatch is printed by name.
 //
-// Run: node --env-file=.env.local tests/product-filtering/data-integrity/filter-sort-data-integrity-proof.mjs
+//   Same code + same Sanity data = same output. Every run. No randomness.
+//
+// RUN: node --env-file=.env.local tests/product-filtering/data-integrity/filter-sort-data-integrity-proof.mjs
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { readFileSync } from 'node:fs';
@@ -31,13 +32,12 @@ const CATEGORY_SLUG = {
 };
 
 // ═══════════════════════════════════════════════════════════════════════════
-// STEP 1 · CONTROLS
-// IN:  the three category definition files — the rendered control list.
-// OUT: per slice, every facet { id, control, options } where options is a
-//      static value list, 'derived' (runtime-collected, e.g. brand — cannot
-//      corrupt by definition), or null (boolean/range — no vocabulary).
-// WHY: these files are what the sidebar actually renders. Any value check
-//      must start from this list, not from registries that may be stale.
+// STEP 1 · READ THE MENU
+// IN:  the three files that define what filter controls the shop shows.
+// OUT: for each slice: its controls, and for each control its allowed values.
+// WHY: this is the "guest list" — the values a product is ALLOWED to have.
+//      Some controls say 'derived' (their list is built from the data itself,
+//      like Brand) or are sliders/toggles — those have no fixed list to check.
 // ═══════════════════════════════════════════════════════════════════════════
 function parseFacets(source) {
   const facetsBlock = source.slice(source.indexOf('FACETS'));
@@ -70,11 +70,10 @@ for (const cat of CATEGORIES) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// STEP 2 · FIELD MAP
-// IN:  adapters/sanity/fieldMap.ts — facet id → Sanity document field path.
-// OUT: FACET_FIELD_MAP { facetId: 'filterAttributes.x' }.
-// WHY: the map is the declared bridge between a control and product data.
-//      A control with no entry here has no declared field — broken by itself.
+// STEP 2 · READ THE WIRING DIAGRAM
+// IN:  fieldMap.ts — says which product field each control reads.
+// OUT: { controlId: 'filterAttributes.someField' }
+// WHY: a control with no wire to a field can't filter anything at all.
 // ═══════════════════════════════════════════════════════════════════════════
 const FACET_FIELD_MAP = Object.fromEntries(
   [...read('features/product-filtering/adapters/sanity/fieldMap.ts').matchAll(/^\s*(\w+): '([^']+)'/gm)]
@@ -82,15 +81,14 @@ const FACET_FIELD_MAP = Object.fromEntries(
 );
 
 // ═══════════════════════════════════════════════════════════════════════════
-// STEP 3 · SORTS
-// IN:  definitions/sortOptions.ts (rendered sort list) +
-//      adapters/sanity/buildProductQuery.ts (ORDER_BY_SORT case clauses) +
-//      SORT_FIELD below (each rendered sort → the document field it orders by).
-// OUT: sorts both ways: rendered option missing a clause = dead option;
-//      clause existing for a non-rendered value = unreachable registry entry.
-//      Field presence is checked in STEP 6.
-// WHY: sorting has no "option values on products" — its integrity link is
-//      option → order clause → field that actually holds data.
+// STEP 3 · READ THE SORT SETUP
+// IN:  sortOptions.ts (the dropdown the user sees) + buildProductQuery.ts
+//      (the actual sort instructions behind each choice) + SORT_FIELD below
+//      (which product field each sort looks at).
+// OUT: two lists to compare — visible sort choices vs. existing instructions.
+// WHY: sorting has no "allowed values" like filters do. A sort is broken if
+//      the dropdown offers a choice with no instruction behind it, or if an
+//      instruction exists for a choice the dropdown doesn't offer.
 // ═══════════════════════════════════════════════════════════════════════════
 const SORT_OPTIONS = [...read(`${DEF}/sortOptions.ts`).matchAll(/value: '([\w-]+)'/g)]
   .map((m) => m[1]);
@@ -107,12 +105,13 @@ const SORT_FIELD = {
 };
 
 // ═══════════════════════════════════════════════════════════════════════════
-// STEP 4 · PRODUCTS
-// IN:  live Sanity — every product's id, name, location keys, filter values.
-// OUT: per slice, the products that belong to it: a product is in slice X
-//      when a catalogueLocationKey equals X or starts with 'X/'.
-// WHY: the slice boundary is exactly how the catalogue decides which
-//      products a category page shows — the proof uses the same rule.
+// STEP 4 · FETCH THE PRODUCTS
+// IN:  Sanity — every product's name, which shelf it sits on, and all its
+//      stored filter values.
+// OUT: for each slice, the products on its shelf. "Shelf" = the same rule
+//      the shop uses: a product belongs to 'headphones' when one of its
+//      location keys is 'headphones' or starts with 'headphones/'.
+// WHY: this is "who is actually in the room" — the real data being checked.
 // ═══════════════════════════════════════════════════════════════════════════
 const products = await sanityQuery(
   `*[_type == "product"]{ _id, name, _createdAt, catalogueLocationKeys, filterAttributes, price_data }`,
@@ -125,9 +124,8 @@ const inSlice = (p, cat) =>
 const getField = (p, path) =>
   path.split('.').reduce((o, k) => (o == null ? undefined : o[k]), p);
 
-// A field may be stored as a scalar OR an array on different products
-// (confirmed live — see buildProductQuery.ts's mixed-shape note). Collect
-// values from both shapes so neither is silently missed.
+// A product may store one value ('wired') or a list (['SBC','AAC']) in a
+// field — both shapes exist in the live data. Read both, miss nothing.
 const storedValues = (p, path) => {
   const v = getField(p, path);
   if (v == null) return [];
@@ -135,15 +133,18 @@ const storedValues = (p, path) => {
 };
 
 // ═══════════════════════════════════════════════════════════════════════════
-// STEP 5 · FILTER LINKS — three separate checks, each reported alone.
-// CHECK A · control → field:  every control has a FACET_FIELD_MAP entry.
-// CHECK B · option → product: every static option value appears on ≥1
-//           product in its slice (else it is a dead option).
-// CHECK C · product → option: every stored value on slice products resolves
-//           to a declared option (else the product is unfilterable by it).
-// 'derived' and boolean/range facets run CHECK A only — they have no static
-// vocabulary to diff (derived collects from data at runtime, so B and C are
-// vacuous for it).
+// STEP 5 · CHECK EVERY FILTER, BOTH DIRECTIONS
+// For each control in each slice, three questions:
+//
+//   A · does the control have a wire to a product field?
+//       (no wire = it filters nothing)
+//   B · is every allowed value actually used by some product?
+//       (unused value = a checkbox that always shows zero results)
+//   C · does every stored product value appear on the allowed list?
+//       (unlisted value = a product no checkbox can ever find)
+//
+// 'derived' and toggle/slider controls only get question A — they have no
+// fixed list, so B and C can't apply.
 // ═══════════════════════════════════════════════════════════════════════════
 const problems = [];
 const lines = [];
@@ -185,10 +186,13 @@ for (const cat of CATEGORIES) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// STEP 6 · SORT LINKS
-// CHECK D · rendered option ↔ order clause (both directions).
-// CHECK E · the field each sort orders by is defined on ≥1 product per slice
-//           (a sort on an all-empty field silently does nothing).
+// STEP 6 · CHECK THE SORTS AND THE WIRING LEFTOVERS
+//   D · every dropdown sort choice has a sort instruction, and every
+//       instruction has a dropdown choice (both directions).
+//   E · the field each sort looks at isn't empty on every product in a
+//       slice — sorting by a field nobody has does nothing.
+//   F · every wire in the field map is used by some control — a wire to a
+//       control that no longer exists is a leftover from deleted filters.
 // ═══════════════════════════════════════════════════════════════════════════
 lines.push(`\nsort`);
 for (const v of SORT_OPTIONS) {
@@ -209,13 +213,9 @@ for (const v of ORDER_CLAUSES) {
   }
 }
 
-// CHECK F · field map → control: every FACET_FIELD_MAP entry is read by at
-// least one slice's control. An entry no control uses is a stale wire — the
-// registry still claims a field nothing reads.
 lines.push(`\nfield map`);
 const usedIds = new Set(Object.values(slices).flat().map((f) => f.id));
-// 'price' is exempt: the sidebar renders a bespoke PriceSection that is not a
-// FACETS entry — its field mapping is used even though no facet declares it.
+// 'price' is exempt: its slider is built specially, not from the facet list.
 for (const id of Object.keys(FACET_FIELD_MAP)) {
   if (id === 'price') continue;
   if (!usedIds.has(id)) {
@@ -226,8 +226,8 @@ for (const id of Object.keys(FACET_FIELD_MAP)) {
 
 // ═══════════════════════════════════════════════════════════════════════════
 // STEP 7 · VERDICT
-// Exit 0 = every checked link holds. Exit 1 = the printed problems are the
-// exact broken links, each naming slice · control · direction · value.
+// Prints everything found, then one summary line.
+// Exit 0 = clean. Exit 1 = the printed lines name every broken link.
 // ═══════════════════════════════════════════════════════════════════════════
 console.log(lines.join('\n'));
 console.log(`\n${problems.length === 0 ? 'INTEGRITY OK — all links hold' : `${problems.length} broken link(s)`}`);
