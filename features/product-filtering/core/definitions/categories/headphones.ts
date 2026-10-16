@@ -119,7 +119,7 @@ export const FACETS: FacetDef[] = [
   // -- was missing IPX2, lowercased IPX4/5/7, and had a phantom 'ip67' that
   // does not exist in the schema at all (sang-logium-3rv.5).
   { id: 'ipx', group: 'material', label: 'Water Resistance (IPX)', control: 'checkbox', options: opts([['none', 'None'], ['IPX2', 'IPX2 (Light Drips)'], ['IPX4', 'IPX4 (Splash-Proof)'], ['IPX5', 'IPX5 (Jets / Heavy Rain)'], ['IPX7', 'IPX7 (30-Min Submersion)'], ['IPX8', 'IPX8 (Swimmable)']]) },
-  { id: 'requiresAmplifier', group: 'material', label: 'Needs Amp to Shine', control: 'boolean' },
+  { id: 'requiresAmplifier', group: 'material', label: 'Requires Amplifier', control: 'boolean' },
   { id: 'portable', group: 'material', label: 'Portable', control: 'boolean' },
 
   // ── Wireless (domain-gated on connectivity !== 'wired') ────────────────
