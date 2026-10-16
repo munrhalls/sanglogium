@@ -124,10 +124,10 @@ export const FACETS: FacetDef[] = [
     label: 'DAC Chipset',
     control: 'checkbox',
     options: [
-      { value: 'ess-sabre', label: 'ESS Sabre' },
-      { value: 'akm', label: 'AKM (Velvet Sound)' },
-      { value: 'cirrus-logic', label: 'Cirrus Logic' },
-      { value: 'r2r-ladder', label: 'R-2R Ladder' },
+      { value: 'ess-sabre', label: 'ESS Sabre (Crisp, Detailed)' },
+      { value: 'akm', label: 'AKM (Warm, Smooth)' },
+      { value: 'cirrus-logic', label: 'Cirrus Logic (Balanced)' },
+      { value: 'r2r-ladder', label: 'R-2R Ladder (Analog-Style)' },
     ],
   },
   {
