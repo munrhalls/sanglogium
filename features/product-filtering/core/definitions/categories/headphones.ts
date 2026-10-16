@@ -127,7 +127,7 @@ export const FACETS: FacetDef[] = [
   // used space-separated 'aptX HD'/'aptX Adaptive', not hyphenated -- both
   // silently zeroed those two out even after the countFor case-fix
   // (sang-logium-3rv.5).
-  { id: 'codec', group: 'wireless', label: 'Bluetooth Codec', control: 'checkbox', options: opts([['SBC', 'SBC (Basic)'], ['AAC', 'AAC (Apple-Optimized)'], ['aptX', 'aptX'], ['aptX HD', 'aptX HD (Hi-Res)'], ['aptX Adaptive', 'aptX Adaptive (Auto-Adjusting)'], ['aptX LL', 'aptX LL (Low-Latency)'], ['LDAC', 'LDAC (Sony Hi-Res)'], ['LC3', 'LC3 (LE Audio)']]) },
+  { id: 'codec', group: 'wireless', label: 'Bluetooth Codec', control: 'checkbox', options: opts([['SBC', 'SBC (Basic)'], ['AAC', 'AAC (Apple-Optimized)'], ['aptX', 'aptX'], ['aptX HD', 'aptX HD (Hi-Res)'], ['aptX Adaptive', 'aptX Adaptive (Auto-Adjusting)'], ['aptX LL', 'aptX LL (Low-Latency)'], ['LDAC', 'LDAC (Hi-Res)'], ['LC3', 'LC3 (LE Audio)']]) },
   { id: 'anc', group: 'wireless', label: 'Noise Cancelling', control: 'checkbox', options: opts([['anc', 'Active Noise Cancelling'], ['passive', 'Passive Isolation Only'], ['none', 'No Noise Cancelling']]) },
   { id: 'batteryLife', group: 'wireless', label: 'Battery Life', control: 'range', min: 0, max: 70, unit: 'hrs' },
 
