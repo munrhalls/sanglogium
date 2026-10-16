@@ -73,7 +73,7 @@ export const FACETS: FacetDef[] = [
       { value: 'interconnect-rca-xlr', label: 'Interconnect (RCA/XLR)' },
       {
         value: 'digital-usb-coaxial-optical-aes-ebu-ethernet',
-        label: 'Digital Cable (USB, Optical, Coax…)',
+        label: 'Digital Cable',
       },
     ],
     showWhen: { facet: 'accessoryType', values: ['cables-interconnects'] },
