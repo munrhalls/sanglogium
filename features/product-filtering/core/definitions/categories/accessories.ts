@@ -119,11 +119,11 @@ export const FACETS: FacetDef[] = [
   {
     id: 'balanced',
     group: 'cables',
-    label: 'Balanced / Unbalanced',
+    label: 'Signal Type',
     control: 'checkbox',
     options: [
-      { value: 'balanced', label: 'Balanced' },
-      { value: 'unbalanced', label: 'Unbalanced' },
+      { value: 'balanced', label: 'Balanced (Noise-Rejecting)' },
+      { value: 'unbalanced', label: 'Unbalanced (Standard)' },
     ],
   },
   {
