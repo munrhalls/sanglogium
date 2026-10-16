@@ -31,6 +31,29 @@ const CATEGORY_SLUG = {
   accessories: 'accessories',
 };
 
+// The catalogue's own shelf map: which location keys hang under each
+// category. Committed file — same one the shop itself uses at build time.
+const CATALOGUE_INDEX = JSON.parse(read('data/catalogue-index.json'));
+const descendantKeys = (rootId) => {
+  const keys = new Set();
+  const stack = [rootId];
+  while (stack.length) {
+    const id = stack.pop();
+    if (keys.has(id)) continue;
+    keys.add(id);
+    for (const child of CATALOGUE_INDEX.slotMetadataMap[id]?.children ?? []) {
+      stack.push(child);
+    }
+  }
+  return keys;
+};
+const SLICE_KEYS = Object.fromEntries(
+  Object.values(CATEGORY_SLUG).map((slug) => [
+    slug,
+    descendantKeys(CATALOGUE_INDEX.slugToIdMap[slug]),
+  ]),
+);
+
 // ═══════════════════════════════════════════════════════════════════════════
 // STEP 1 · READ THE MENU
 // IN:  the three files that define what filter controls the shop shows.
@@ -107,19 +130,17 @@ const SORT_FIELD = {
 // ═══════════════════════════════════════════════════════════════════════════
 // STEP 4 · FETCH THE PRODUCTS
 // IN:  Sanity — every product's name, which shelf it sits on, and all its
-//      stored filter values.
+//      stored filter values. Plus data/catalogue-index.json (loaded above).
 // OUT: for each slice, the products on its shelf. "Shelf" = the same rule
-//      the shop uses: a product belongs to 'headphones' when one of its
-//      location keys is 'headphones' or starts with 'headphones/'.
+//      the shop uses: the product carries a location key that lives under
+//      the slice's category node in the catalogue index.
 // WHY: this is "who is actually in the room" — the real data being checked.
 // ═══════════════════════════════════════════════════════════════════════════
 const products = await sanityQuery(
   `*[_type == "product"]{ _id, name, _createdAt, catalogueLocationKeys, filterAttributes, price_data }`,
 );
 const inSlice = (p, cat) =>
-  (p.catalogueLocationKeys ?? []).some(
-    (k) => k === CATEGORY_SLUG[cat] || k.startsWith(CATEGORY_SLUG[cat] + '/'),
-  );
+  (p.catalogueLocationKeys ?? []).some((k) => SLICE_KEYS[CATEGORY_SLUG[cat]].has(k));
 
 const getField = (p, path) =>
   path.split('.').reduce((o, k) => (o == null ? undefined : o[k]), p);
