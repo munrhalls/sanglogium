@@ -42,7 +42,7 @@ export const FACETS: FacetDef[] = [
       { value: 'digital-audio-player', label: 'Digital Audio Player' },
       { value: 'dac', label: 'DAC (Converter)' },
       { value: 'network-streamer', label: 'Network Streamer' },
-      { value: 'preamplifier', label: 'Preamplifier' },
+      { value: 'preamplifier', label: 'Preamplifier (Needs Power Amp)' },
       { value: 'integrated-amplifier', label: 'Integrated Amp (All-in-One)' },
       { value: 'power-amplifier', label: 'Power Amp (Needs Preamp)' },
       { value: 'cd-player-transport', label: 'CD Player / Transport' },
