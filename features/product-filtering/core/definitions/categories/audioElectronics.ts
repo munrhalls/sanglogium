@@ -30,17 +30,6 @@ export const FACET_GROUPS: FacetGroup[] = [
 
 export const FACETS: FacetDef[] = [
   { id: 'brand', group: 'commercial', label: 'Brand', control: 'checkbox', options: 'derived' },
-  {
-    id: 'condition',
-    group: 'commercial',
-    label: 'Condition',
-    control: 'checkbox',
-    options: [
-      { value: 'new', label: 'New' },
-      { value: 'open-box', label: 'Open Box' },
-      { value: 'refurbished', label: 'Refurbished' },
-    ],
-  },
   { id: 'inStock', group: 'commercial', label: 'In Stock Only', control: 'boolean' },
 
   {
@@ -93,7 +82,6 @@ export const FACETS: FacetDef[] = [
       { value: 'optical', label: 'Optical' },
       { value: 'coaxial', label: 'Coaxial' },
       { value: 'rca', label: 'RCA' },
-      { value: 'bluetooth', label: 'Bluetooth' },
       { value: 'xlr-balanced', label: 'XLR / Balanced' },
       { value: 'phono-mm-mc', label: 'Phono (MM/MC)' },
       { value: 'hdmi-earc', label: 'HDMI / eARC' },

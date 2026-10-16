@@ -471,7 +471,7 @@ export const SORT_OPTIONS = [
     direction: 'desc',
   },
   {
-    sort: 'Newest',
+    sort: 'Recently Added',
     urlValue: 'newest',
     direction: 'desc',
   },
@@ -484,11 +484,6 @@ export const SORT_OPTIONS = [
     sort: 'Alphabetically, Z-A',
     urlValue: 'alpha-desc',
     direction: 'desc',
-  },
-  {
-    sort: 'Date, Old to New',
-    urlValue: 'date-old',
-    direction: 'asc',
   },
 ] as const;
 
