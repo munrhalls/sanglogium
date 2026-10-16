@@ -99,7 +99,7 @@ export const FACETS: FacetDef[] = [
   // sang-logium-3rv.9 -- schema options.list (productType.ts) has 8 values;
   // 'Harman-target-like' was missing here, so a product carrying it could
   // never be selected or counted. Added to match the schema exactly.
-  { id: 'soundSignature', group: 'sound', label: 'Signature', control: 'checkbox', options: opts([['Neutral', 'Neutral / Reference'], ['Warm', 'Warm'], ['Bright/Analytical', 'Bright / Analytical'], ['Dark', 'Dark (Smooth, Laid-Back)'], ['V-Shaped', 'V-Shaped (Bass + Treble Boost)'], ['Basshead', 'Basshead (Heavy Bass)'], ['Mid-Forward', 'Mid-Forward'], ['Harman-target-like', 'Harman Tuning (Studio Reference)']]) },
+  { id: 'soundSignature', group: 'sound', label: 'Signature', control: 'checkbox', options: opts([['Neutral', 'Neutral'], ['Warm', 'Warm'], ['Bright/Analytical', 'Bright / Analytical'], ['Dark', 'Dark (Smooth, Laid-Back)'], ['V-Shaped', 'V-Shaped (Bass + Treble Boost)'], ['Basshead', 'Basshead (Heavy Bass)'], ['Mid-Forward', 'Mid-Forward (Prominent Vocals)'], ['Harman-target-like', 'Harman Tuning (Balanced Sound)']]) },
   { id: 'impedance', group: 'sound', label: 'Impedance', control: 'range', min: 3, max: 520, unit: 'Ω' },
   { id: 'sensitivity', group: 'sound', label: 'Sensitivity', control: 'range', min: 89, max: 128, unit: 'dB/mW' },
   // Simplification of "frequency response range" (a per-product min–max pair) to
