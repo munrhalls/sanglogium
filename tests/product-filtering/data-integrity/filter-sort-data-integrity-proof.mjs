@@ -20,7 +20,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { sanityQuery } from '../sanity-raw.mjs';
 
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), '../..');
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), '../../..');
 const read = (rel) => readFileSync(join(ROOT, rel), 'utf8');
 
 const DEF = 'features/product-filtering/core/definitions';
