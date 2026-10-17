@@ -2,6 +2,8 @@
 
 One line per entry. Plain language.
 
+- 2026-10-12: Try the shortest/easiest options first before verification hoops. (LinkedIn PC block: persona ID upload + 5-day wait was unnecessary — phone-number login + push approval worked in one minute.)
+
 ## Human skill progress observed
 
 - 2026-10-16: Deleted the DoD paperwork step instead of grinding through it — worked directly in the PR. This is the root skill: when a process produces no verifiable output, cut it, don't fix it. Everything else depends on this.
