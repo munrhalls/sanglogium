@@ -10,7 +10,7 @@ solo over 18+ months.
 - Custom checkout flow with Stripe Payment Intents
 - Custom authentication system (Better Auth)
 - Catalogue of 500+ products with admin and marketing management panels
-- AI-assisted development workflow: PR checkboxes → architect → campaign runner → parallel
+- AI-assisted development workflow: PR checkboxes → architect → runner → parallel
   Devin executors, each ending in a human-verify checkbox on the PR
 
 ## Tech Stack

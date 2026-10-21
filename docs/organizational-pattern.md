@@ -84,7 +84,7 @@ A part may group its files in one level of sub-folders named after a screen regi
 | Architecture decision record | `docs/adr/ADR-NNN-<topic>.md` (append-only: a decision is superseded by a new ADR, never deleted) |
 | Process and entry docs | `_project/`, root `README.md`, `CLAUDE.md`, `AGENTS.md` |
 | Agent and automation configuration | `.github/`, `.claude/`, `.codex/`, `.devin/`, `vercel.json`, `.no-mistakes.yaml`, `skills-lock.json` (one folder per agent tool; each tool reads its own, so overlap between them is intended) |
-| Ephemeral: logs, caches, env files, phase files | nowhere in git |
+| Ephemeral: logs, caches, env files, task files | nowhere in git |
 
 **Root allowlist.** Files: `package.json`, `package-lock.json`, `tsconfig.json`, `next.config.ts`, `postcss.config.mjs`, `tailwind.config.ts`, `eslint.config.mjs`, `.prettierrc`, `.prettierignore`, `sanity.config.ts`, `sanity.cli.ts`, `sentry.*.config.ts`, `instrumentation*.ts`, `middleware.ts`, `vercel.json`, `.node-version`, `.gitignore`, `.codeiumignore`, `.no-mistakes.yaml`, `.env.example`; tool-generated `schema.json`, `sanity.types.ts`, `skills-lock.json`; entry docs `README.md`, `CLAUDE.md`, `AGENTS.md`. Folders: `app/ features/ platform/ studio/ scripts/ tools/ tests/ docs/ data/ public/ _project/ .github/ .claude/ .codex/ .devin/`. Nothing else at the root.
 

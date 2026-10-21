@@ -2,17 +2,16 @@
 
 Every agent working in this repo MUST follow these rules. They exist so multiple agents can work on one 16 GB laptop without it lagging. **Wispr Flow (voice input) is mandatory -- never kill or disable it.**
 
-## Campaign process (MANDATORY)
+## Process (MANDATORY)
 
-The process is fixed: PR checkboxes -> `/architect` -> campaign runner. The owner copies a PR's checkboxes to the
-architect, which writes phase files under `_project/working-memory/<axis>/turn-<n>/phase-<n.m>.md` plus
-`_project/working-memory/run-order.json` (which axis waits for which); transient, never committed. The owner starts
-the runner from the main checkout:
-`node ~/work/global/workflow/run-campaign.mjs <campaign> _project/working-memory/run-order.json --pr <pr> --check "node tools/check-turn.mjs --all"`.
-It runs each phase as a fresh executor process in a runner-made worktree cut from the PR's branch (executors never sync,
-switch branches, commit, push or open PRs), commits and pushes after every phase, adds a `human verify` sub-checkbox with
-file links under the matching checkbox in the PR body, merges each finished axis into `<campaign>/integration`, and pushes
-the result to the PR's branch.
+PR checkboxes -> `/architect` -> runner -> human verify, all on the PR's own branch. The owner pastes a PR's unchecked
+boxes to the architect, which writes one task file per executor into `_project/working-memory/` (gitignored, never
+committed), named `<wave><letter>-<name>.md`: tasks of the same wave run in parallel, waves run in order. From a checkout
+of the PR's branch the owner runs `node ~/work/global/workflow/run.mjs <PR> --check "node tools/check-turn.mjs --all"`
+(add `--dry` first to check the plan). For each task the runner cuts a branch from the PR branch, runs a fresh executor on
+it (executors never commit, push or branch), merges it back into the PR branch when there is no conflict and the check
+passes, pushes, and adds a `human verify` checkbox under the matching box in the PR body. The owner verifies, then merges
+the PR into `main`.
 
 ## Non-negotiable
 
@@ -22,7 +21,7 @@ the result to the PR's branch.
 3. **Heavy work only on explicit request** — if the human explicitly asks for a full `next build` / `tsc` run, run it once, alone, and report; this is not an invitation to self-verify (see rule 0).
 4. **Never run two CPU-heavy tools at the same time** (build + playwright + vitest concurrently is forbidden).
 5. **No `npm install` without asking** -- it thrashes the near-full disk and CPU. Use `npm ci --no-audit --no-fund` only if approved.
-6. **Never verify your own work with `next build`, `tsc`, tests, or curl.** Edit source, then hand the human the one minimal check to run on `localhost:3000`. Fake/off-timing self-verification wastes PC resources and destroys the fast feedback loop. (Same rule as 0, restated — this is not optional or soft.) ONE PERMITTED COMMAND: `node tools/check-turn.mjs`, once per turn before handoff (in a campaign run the runner runs it when it merges an axis, so an executor does not). It runs the end-of-turn checks: import integrity (`tools/check-imports.mjs`) and the organizational pattern (`tools/check-org-pattern.mjs`, defined in `docs/organizational-pattern.md`). On a violation, fix it by moving or re-pointing code, then re-run once. Never edit a check, the git hook, the model document or the PATTERN BLOCK in CLAUDE.md to make it pass, and never push with `--no-verify`. A push is rejected by the `tools/git-hooks/pre-push` hook while violations remain. If a violation cannot be removed without breaking the phase's goal, stop and report it instead of pushing. It is a dependency-free file check: no typecheck, build, lint or test.
+6. **Never verify your own work with `next build`, `tsc`, tests, or curl.** Edit source, then hand the human the one minimal check to run on `localhost:3000`. Fake/off-timing self-verification wastes PC resources and destroys the fast feedback loop. (Same rule as 0, restated — this is not optional or soft.) ONE PERMITTED COMMAND: `node tools/check-turn.mjs`, once per turn before handoff (in a runner task the runner runs it when it merges the task, so an executor does not). It runs the end-of-turn checks: import integrity (`tools/check-imports.mjs`) and the organizational pattern (`tools/check-org-pattern.mjs`, defined in `docs/organizational-pattern.md`). On a violation, fix it by moving or re-pointing code, then re-run once. Never edit a check, the git hook, the model document or the PATTERN BLOCK in CLAUDE.md to make it pass, and never push with `--no-verify`. A push is rejected by the `tools/git-hooks/pre-push` hook while violations remain. If a violation cannot be removed without breaking the task's goal, stop and report it instead of pushing. It is a dependency-free file check: no typecheck, build, lint or test.
 7. **End sessions cleanly**: no leftover watch processes (`tsc --watch`, browsers). If you started it, you stop it.
 
 ## FEEDBACK LOOP — HARD GATES (never break; breaking = defect)
@@ -73,7 +72,7 @@ Hard rule, not a soft preference — a violation is a detectable defect.
 
 ## Git and handoff
 
-Outside a campaign run, agents may commit, push feature branches and open PRs as part of the work without asking each time. In a campaign run the executor never commits, pushes or opens PRs: the runner does. Never merge; the human validates and merges. Force-push, history rewrites and commits directly to `main` need explicit approval. If a required sync or push is blocked, stop and report the exact command and error.
+Outside a runner task, agents may commit, push feature branches and open PRs as part of the work without asking each time. In a runner task the executor never commits, pushes or opens PRs: the runner does. Never merge; the human validates and merges. Force-push, history rewrites and commits directly to `main` need explicit approval. If a required sync or push is blocked, stop and report the exact command and error.
 
 At handoff, summarize the changes and give the human the one minimal `localhost:3000` check.
 

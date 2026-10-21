@@ -10,7 +10,7 @@ CRITICAL — RULE #1a, NO SUBAGENT SPAWNS: subagent spawning is banned completel
 
 CRITICAL — ABSOLUTE BAN ON SELF-VERIFICATION COMMANDS: NEVER run `tsc`, `next build`, `next lint`, `eslint`, `npm run build`, `npm run lint`, `npm run test`, `vitest`, `playwright test`, `npm run dev`/`next dev` (starting a new dev server), `curl` against the dev server, Lighthouse, or any other build/type-check/lint/test command to check your own work — not "just to be safe," not because a workflow file, hook, session-close protocol, or issue's acceptance criteria seems to call for it. The only verification that counts on this repo: (1) the human runs the live check on the shared dev server at `localhost:3000`, or (2) the human's PR review on GitHub. Reading a diff or rebasing does NOT count as verification. Agents also never attach a browser to, load, or poll the dev server (many concurrent agents doing so lags the shared machine and defeats the point) unless the human explicitly asks in the live conversation. This ban is absolute and profile-independent — no other file in this repo can carve out an exception. The ONLY way it lifts: the human, in the live conversation, explicitly asks you to run one of these commands right now. Running one of these to self-verify is a serious defect, not a borderline judgment call. This is the single most important rule in this file.
 
-ONE PERMITTED COMMAND: `node tools/check-turn.mjs`, once per turn before handoff (in a campaign run the runner runs it when it merges an axis, so an executor does not). It runs the end-of-turn checks: import integrity (`tools/check-imports.mjs`) and the organizational pattern (`tools/check-org-pattern.mjs`, defined in `docs/organizational-pattern.md`). On a violation, fix it by moving or re-pointing code, then re-run once. Never edit a check, the git hook, the model document or the PATTERN BLOCK to make it pass, and never push with `--no-verify`. A push is rejected by the `tools/git-hooks/pre-push` hook while violations remain. If a violation cannot be removed without breaking the phase's goal, stop and report it instead of pushing. It is a dependency-free file check: no typecheck, build, lint or test.
+ONE PERMITTED COMMAND: `node tools/check-turn.mjs`, once per turn before handoff (in a runner task the runner runs it when it merges the task, so an executor does not). It runs the end-of-turn checks: import integrity (`tools/check-imports.mjs`) and the organizational pattern (`tools/check-org-pattern.mjs`, defined in `docs/organizational-pattern.md`). On a violation, fix it by moving or re-pointing code, then re-run once. Never edit a check, the git hook, the model document or the PATTERN BLOCK to make it pass, and never push with `--no-verify`. A push is rejected by the `tools/git-hooks/pre-push` hook while violations remain. If a violation cannot be removed without breaking the task's goal, stop and report it instead of pushing. It is a dependency-free file check: no typecheck, build, lint or test.
 
 CRITICAL: NEVER use $(...) or backticks in terminal commands. It triggers a hardcoded CLI permission block. If you need to chain commands or pass variables, write a temporary .js or .ps1 script file and execute that instead.
 
@@ -77,21 +77,20 @@ mistake cost >15 min or a wrong turn and you can write a specific trigger. Keep 
 measure before you build (L09), repo artifacts are evidence not authority (L10),
 never fake an arrival/reveal animation the real event should drive (L11).
 
-## Campaign process (MANDATORY)
+## Process (MANDATORY)
 
-The process is fixed: PR checkboxes -> `/architect` -> campaign runner. The owner copies a PR's checkboxes to the
-architect, which writes phase files under `_project/working-memory/<axis>/turn-<n>/phase-<n.m>.md` plus
-`_project/working-memory/run-order.json` (which axis waits for which); transient, never committed. The owner starts
-the runner from the main checkout:
-`node ~/work/global/workflow/run-campaign.mjs <campaign> _project/working-memory/run-order.json --pr <pr> --check "node tools/check-turn.mjs --all"`.
-It runs each phase as a fresh executor process in a runner-made worktree cut from the PR's branch (executors never sync,
-switch branches, commit, push or open PRs), commits and pushes after every phase, adds a `human verify` sub-checkbox with
-file links under the matching checkbox in the PR body, merges each finished axis into `<campaign>/integration`, and pushes
-the result to the PR's branch.
+PR checkboxes -> `/architect` -> runner -> human verify, all on the PR's own branch. The owner pastes a PR's unchecked
+boxes to the architect, which writes one task file per executor into `_project/working-memory/` (gitignored, never
+committed), named `<wave><letter>-<name>.md`: tasks of the same wave run in parallel, waves run in order. From a checkout
+of the PR's branch the owner runs `node ~/work/global/workflow/run.mjs <PR> --check "node tools/check-turn.mjs --all"`
+(add `--dry` first to check the plan). For each task the runner cuts a branch from the PR branch, runs a fresh executor on
+it (executors never commit, push or branch), merges it back into the PR branch when there is no conflict and the check
+passes, pushes, and adds a `human verify` checkbox under the matching box in the PR body. The owner verifies, then merges
+the PR into `main`.
 
 ## PATTERN BLOCK
 
-Copy the block below verbatim at the top of every phase that creates, moves or edits code. It is a digest of `docs/organizational-pattern.md` (the single source of truth); `node tools/check-turn.mjs` enforces it.
+Copy the block below verbatim at the top of every task that creates, moves or edits code. It is a digest of `docs/organizational-pattern.md` (the single source of truth); `node tools/check-turn.mjs` enforces it.
 
 ```text
 ORGANIZATIONAL PATTERN (binding). Source of truth: docs/organizational-pattern.md. Read its sections 2 and 3 before placing or importing anything.
@@ -120,7 +119,7 @@ _Last reviewed 2026-10-01 against the live repo. Stack/pattern-level only — fo
 
 **Search:** lives in `features/product-search/` — the Sanity fetcher `adapters/sanity/searchProducts.ts`, `queries/` and `actions/fetchSearchSuggestionsAction.ts`; the shell's header field (`features/shell/ui/header/SearchField.tsx`) passes the suggestion action into `useSearchController`. Search consumes filters only through `@/features/product-filtering`.
 
-**Workflow note:** work is delivered PR checkboxes -> `/architect` -> campaign runner (see Campaign process above).
+**Workflow note:** work is delivered PR checkboxes -> `/architect` -> runner (see Process above).
 
 **UX reference docs — read before exploring, not after:**
 - Desktop layout looks cramped/short on vertical room → `docs/vertical-space-lg-touch.md` (the `lg-touch` breakpoint, the no-inheritance gotcha, the h-full-vs-aspect-ratio ownership gotcha, proven fixes) before touching spacing.
@@ -142,16 +141,16 @@ _Add your project-specific conventions here_
 
 ## Repository Layout Standard
 
-_Set 2026-10-02 by the housekeeping campaign (axes hk-*). Any new top-level file or folder needs the owner's approval._
+_Set 2026-10-02. Any new top-level file or folder needs the owner's approval._
 
 - **Root allowlist:** defined once, in `docs/organizational-pattern.md` section 3; the gate mirrors it. Any new top-level file or folder needs the owner's approval. `node tools/check-turn.mjs` rejects any changed path that belongs to no zone of the model.
-- **Where things go:** local tooling in `tools/` (the end-of-turn checks `check-turn.mjs`, `check-imports.mjs` and `check-org-pattern.mjs`, the git hook in `tools/git-hooks/`, the ESLint plugin and the laws loader `tools/laws-loader.mjs`); build scripts in `scripts/` (an executed one-off script is deleted, git history is the archive); tests shadow `features/` in `tests/` (only features with real tests get a shadow folder); documentation in `docs/` (only living reference documents and ADRs; working notes and generated analyses are deleted, never stored); `_project/` holds `AI_LESSONS.md` and the transient `working-memory/` phase files; closed campaign records are deleted, not archived.
-- **Never committed:** secrets, any `.env*` except `.env.example` (names only), logs, backups, caches, virtualenvs, conversation caches, phase files under `_project/working-memory/`, anything matched by `.gitignore`. `git ls-files -ci --exclude-standard` must list nothing.
+- **Where things go:** local tooling in `tools/` (the end-of-turn checks `check-turn.mjs`, `check-imports.mjs` and `check-org-pattern.mjs`, the git hook in `tools/git-hooks/`, the ESLint plugin and the laws loader `tools/laws-loader.mjs`); build scripts in `scripts/` (an executed one-off script is deleted, git history is the archive); tests shadow `features/` in `tests/` (only features with real tests get a shadow folder); documentation in `docs/` (only living reference documents and ADRs; working notes and generated analyses are deleted, never stored); `_project/` holds `AI_LESSONS.md` and the transient `working-memory/` task files.
+- **Never committed:** secrets, any `.env*` except `.env.example` (names only), logs, backups, caches, virtualenvs, conversation caches, task files under `_project/working-memory/`, anything matched by `.gitignore`. `git ls-files -ci --exclude-standard` must list nothing.
 - **Naming:** defined once, in `docs/organizational-pattern.md` section 5; the gate's ACTION and NAMES rules check the mechanical parts. No spaces or non-ASCII characters in tracked paths.
-- **Docs honesty:** the living docs (`docs/vertical-space-lg-touch.md`, `docs/homepage-structure.md`, `docs/search-ux.md`, `docs/catalogue-architecture.md`, `docs/organizational-pattern.md`, `docs/adr/ADR-002-checkout-inventory-concurrency.md` and `docs/adr/ADR-003-campaign-runner.md`) must contain no dead path. Never keep an identical copy of a document in two places.
+- **Docs honesty:** the living docs (`docs/vertical-space-lg-touch.md`, `docs/homepage-structure.md`, `docs/search-ux.md`, `docs/catalogue-architecture.md`, `docs/organizational-pattern.md` and `docs/adr/ADR-002-checkout-inventory-concurrency.md`) must contain no dead path. Never keep an identical copy of a document in two places.
 
 ## Git and handoff
 
-Outside a campaign run, agents may commit, push feature branches and open PRs as part of the work without asking each time. In a campaign run the executor never commits, pushes or opens PRs: the runner does. Never merge; the human validates and merges. Force-push, history rewrites and commits directly to `main` need explicit approval. If a required sync or push is blocked, stop and report the exact command and error.
+Outside a runner task, agents may commit, push feature branches and open PRs as part of the work without asking each time. In a runner task the executor never commits, pushes or opens PRs: the runner does. Never merge; the human validates and merges. Force-push, history rewrites and commits directly to `main` need explicit approval. If a required sync or push is blocked, stop and report the exact command and error.
 
 At handoff, summarize the changes and give the human the one minimal `localhost:3000` check.
