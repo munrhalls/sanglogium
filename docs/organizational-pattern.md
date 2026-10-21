@@ -100,7 +100,7 @@ A part may group its files in one level of sub-folders named after a screen regi
 ## 5. Conventions (review-enforced unless section 6 names a rule)
 
 - Specifiers: `./x` for the same directory and `@/...` otherwise; no `..` in a runtime file (`app/`, `features/`, `platform/`, root entry files), except in studio-plane files, which use relative paths only because the Sanity CLI does not resolve `@/`.
-- Naming: components PascalCase; module files camelCase; docs, scripts and static assets kebab-case (exempt: `README.md`, `CLAUDE.md`, `AGENTS.md`, `ADR-NNN-*.md` and the three `_project/` process documents); `view/` components end in `View`; `ui/` component names never end in `View`, `Client`, `Server` or `Page`; Server Actions are `actions/<name>Action.ts`; slice names are domain nouns.
+- Naming: components PascalCase; module files camelCase; docs, scripts and static assets kebab-case (exempt: `README.md`, `CLAUDE.md`, `AGENTS.md`, `ADR-NNN-*.md` and `_project/AI_LESSONS.md`); `view/` components end in `View`; `ui/` component names never end in `View`, `Client`, `Server` or `Page`; Server Actions are `actions/<name>Action.ts`; slice names are domain nouns.
 - One Server Action per file.
 - Promotion: a component moves to `platform/design/ui/` when a second slice needs it. Only a component with no domain knowledge is promoted; a domain component that other slices need is exported through its slice's `index.ts`.
 - Composition roots: a route, a slice's `server.ts`, a page-level view and a batched query are the designated places that change when a part is added; every other change is an addition.

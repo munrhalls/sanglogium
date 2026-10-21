@@ -27,16 +27,13 @@
       "Bash(git log:*)",
       "Bash(git show:*)",
       "Bash(git branch:*)",
+      "Bash(gh pr view:*)",
       "Bash(ls:*)",
       "Bash(cat:*)",
       "Bash(mkdir:*)",
       "mcp__claude-in-chrome__navigate",
       "mcp__claude-in-chrome__tabs_context_mcp",
-      "mcp__claude-in-chrome__read_network_requests",
-      "Bash(rm -rf /home/jan/work/sanglogium/_project/working-memory)",
-      "Bash(rm -rf /home/jan/work/sanglogium/_project/working-memory/:*)",
-      "Bash(rm -r /home/jan/work/sanglogium/_project/working-memory/:*)",
-      "Bash(rm /home/jan/work/sanglogium/_project/working-memory/:*)"
+      "mcp__claude-in-chrome__read_network_requests"
     ],
     "deny": []
   }

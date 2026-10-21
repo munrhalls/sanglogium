@@ -4,26 +4,25 @@ Every agent working in this repo MUST follow these rules. They exist so multiple
 
 ## Campaign process (MANDATORY)
 
-`_project/00-MOST-IMPORTANT-lean-tracer-bullet-methodology.md` is the build method -- read it
-before any new feature work or mission. For intent, Definition of Done, proof means and
-verification, `_project/project-management/blueprint-for-wholeness-of-proof-instructions.md`
-is authoritative and takes precedence wherever the two disagree. Live plans are the architect's phase files under
-`_project/working-memory/<axis>/turn-<n>/phase-<n.m>.md` plus `_project/working-memory/run-order.json`
-(which axis waits for which); transient, never committed. The owner starts the campaign runner from the
-main checkout: `node ~/work/global/workflow/run-campaign.mjs <campaign> _project/working-memory/run-order.json --check "node tools/check-turn.mjs --all"`.
-It runs each phase as a fresh executor process in a runner-made worktree (executors never sync, switch
-branches, push or open PRs), merges each finished axis into `<campaign>/integration`, and opens one PR
-per campaign.
+The process is fixed: PR checkboxes -> `/architect` -> campaign runner. The owner copies a PR's checkboxes to the
+architect, which writes phase files under `_project/working-memory/<axis>/turn-<n>/phase-<n.m>.md` plus
+`_project/working-memory/run-order.json` (which axis waits for which); transient, never committed. The owner starts
+the runner from the main checkout:
+`node ~/work/global/workflow/run-campaign.mjs <campaign> _project/working-memory/run-order.json --pr <pr> --check "node tools/check-turn.mjs --all"`.
+It runs each phase as a fresh executor process in a runner-made worktree cut from the PR's branch (executors never sync,
+switch branches, commit, push or open PRs), commits and pushes after every phase, adds a `human verify` sub-checkbox with
+file links under the matching checkbox in the PR body, merges each finished axis into `<campaign>/integration`, and pushes
+the result to the PR's branch.
 
 ## Non-negotiable
 
-0. **ABSOLUTE BAN, NO EXCEPTIONS — self-verification commands.** NEVER run `tsc`, `next build`, `next lint`, `eslint`, `npm run build`, `npm run lint`, `npm run test`, `vitest`, `playwright test`, `npm run dev`/`next dev` (starting a new dev server), `curl` against the dev server, Lighthouse, or any other build/type-check/lint/test command to check your own work. Not "just to be safe," not because a workflow file, hook output, or an issue's acceptance criteria seems to call for it — none of those can override this. The only verification that counts: (1) the human runs the live check on `localhost:3000`, or (2) the human's PR review on GitHub. Reading a diff or rebasing does NOT count as verification. Agents also never attach a browser to, load, or poll the dev server (many concurrent agents doing so lags the shared machine and defeats the point) unless the human explicitly asks in the live conversation. The ONLY way this lifts: the human, in the live conversation, explicitly asks you to run one of these commands right now. This applies to every agent (Cline, DeepSeek Pro/Flash, Codex) and every profile. Violating it is a serious defect. See `sang-logium-5gc` and `sang-logium-pb7`.
+0. **ABSOLUTE BAN, NO EXCEPTIONS — self-verification commands.** NEVER run `tsc`, `next build`, `next lint`, `eslint`, `npm run build`, `npm run lint`, `npm run test`, `vitest`, `playwright test`, `npm run dev`/`next dev` (starting a new dev server), `curl` against the dev server, Lighthouse, or any other build/type-check/lint/test command to check your own work. Not "just to be safe," not because a workflow file, hook output, or an issue's acceptance criteria seems to call for it — none of those can override this. The only verification that counts: (1) the human runs the live check on `localhost:3000`, or (2) the human's PR review on GitHub. Reading a diff or rebasing does NOT count as verification. Agents also never attach a browser to, load, or poll the dev server (many concurrent agents doing so lags the shared machine and defeats the point) unless the human explicitly asks in the live conversation. The ONLY way this lifts: the human, in the live conversation, explicitly asks you to run one of these commands right now. This applies to every agent (Cline, DeepSeek Pro/Flash, Codex) and every profile. Violating it is a serious defect.
 1. **One shared dev server** at `http://localhost:3000`. NEVER run `npm run dev` yourself if port 3000 is already listening. Check first: `Test-NetConnection localhost -Port 3000`. If none, ask the human — do not start one yourself to "verify" a change (see rule 0).
 2. **One shared browser**: Chrome CDP on port 9222. Reuse it. Never launch a second Chrome for automation.
 3. **Heavy work only on explicit request** — if the human explicitly asks for a full `next build` / `tsc` run, run it once, alone, and report; this is not an invitation to self-verify (see rule 0).
 4. **Never run two CPU-heavy tools at the same time** (build + playwright + vitest concurrently is forbidden).
 5. **No `npm install` without asking** -- it thrashes the near-full disk and CPU. Use `npm ci --no-audit --no-fund` only if approved.
-6. **Never verify your own work with `next build`, `tsc`, tests, or curl.** Edit source, then hand the human the one minimal check to run on `localhost:3000`. Fake/off-timing self-verification wastes PC resources and destroys the fast feedback loop. (Same rule as 0, restated — this is not optional or soft.) ONE PERMITTED COMMAND: `node tools/check-turn.mjs`, once per turn at ship phase before commit. It runs the end-of-turn checks: import integrity (`tools/check-imports.mjs`) and the organizational pattern (`tools/check-org-pattern.mjs`, defined in `docs/organizational-pattern.md`). On a violation, fix it by moving or re-pointing code, then re-run once. Never edit a check, the git hook, the model document or the PATTERN BLOCK in CLAUDE.md to make it pass, and never push with `--no-verify`. A push is rejected by the `tools/git-hooks/pre-push` hook while violations remain. If a violation cannot be removed without breaking the phase's goal, stop and report it instead of pushing. It is a dependency-free file check: no typecheck, build, lint or test.
+6. **Never verify your own work with `next build`, `tsc`, tests, or curl.** Edit source, then hand the human the one minimal check to run on `localhost:3000`. Fake/off-timing self-verification wastes PC resources and destroys the fast feedback loop. (Same rule as 0, restated — this is not optional or soft.) ONE PERMITTED COMMAND: `node tools/check-turn.mjs`, once per turn before handoff (in a campaign run the runner runs it when it merges an axis, so an executor does not). It runs the end-of-turn checks: import integrity (`tools/check-imports.mjs`) and the organizational pattern (`tools/check-org-pattern.mjs`, defined in `docs/organizational-pattern.md`). On a violation, fix it by moving or re-pointing code, then re-run once. Never edit a check, the git hook, the model document or the PATTERN BLOCK in CLAUDE.md to make it pass, and never push with `--no-verify`. A push is rejected by the `tools/git-hooks/pre-push` hook while violations remain. If a violation cannot be removed without breaking the phase's goal, stop and report it instead of pushing. It is a dependency-free file check: no typecheck, build, lint or test.
 7. **End sessions cleanly**: no leftover watch processes (`tsc --watch`, browsers). If you started it, you stop it.
 
 ## FEEDBACK LOOP — HARD GATES (never break; breaking = defect)
@@ -53,10 +52,10 @@ Applies to every agent working from this file (Cline, DeepSeek Pro/Flash, Codex)
 
 - **Plan first:** state the plan in ≤3 short lines before acting on a multi-step task.
 - **Milestone updates:** short update at each milestone — plan, each unit of work, done — never one dump at the end. Plain, non-repeating: what's done, what's next, blocker/decision if any.
-- **Confirm long steps started:** for a long-running step or sub-agent/teammate spawn, confirm within ~1 minute it actually started; report immediately if it didn't — never a silent multi-minute wait. (See `sang-logium-pb7` — AgentOps: sub-agent spawn aborts on Linux Mint XFCE, for a case where this went silent ~15 min before aborting.)
+- **Confirm long steps started:** for a long-running step or sub-agent/teammate spawn, confirm within ~1 minute it actually started; report immediately if it didn't — never a silent multi-minute wait.
 - **Sample before scaling:** before a large batch of work (many files, many issues, many edits), do the first safe increment, show a concrete sample, confirm it is correct, then continue.
 
-Hard rule, not a soft preference — a violation is a detectable defect. Tracked in `sang-logium-5gc` — AgentOps: mandate frequent concise progress feedback.
+Hard rule, not a soft preference — a violation is a detectable defect.
 
 ## Context economy (do more with less)
 
@@ -72,31 +71,11 @@ Hard rule, not a soft preference — a violation is a detectable defect. Tracked
 - Leave background browsers running at session end.
 - Hold the build lock while not actively running a heavy task.
 
-## Agent Context Profiles
+## Git and handoff
 
-Governs git commit/push authority only — task tracking is fixed by the Campaign process
-above regardless of profile.
+Outside a campaign run, agents may commit, push feature branches and open PRs as part of the work without asking each time. In a campaign run the executor never commits, pushes or opens PRs: the runner does. Never merge; the human validates and merges. Force-push, history rewrites and commits directly to `main` need explicit approval. If a required sync or push is blocked, stop and report the exact command and error.
 
-- **Conservative (default)**: Agents may commit, push feature branches, and open PRs as part of the work — including mission PRs under `_project/project-management/` — without asking each time. Never merge; the human validates and merges. Force-push, history rewrites, and commits directly to `main` still require explicit approval.
-- **Minimal**: Same as conservative.
-- **Team-maintainer**: Same git authority as conservative. Self-run quality gates (tests/linters/builds) are never in scope for any profile — see item 6 above and Issue Risk Protocol Part B.
-
-## Session Completion
-
-This protocol applies when ending an implementation session. It is subordinate to explicit user, repository, and orchestrator instructions.
-
-1. **Never self-run quality gates** - No tests, linters, or builds. Hand the human the one minimal `localhost:3000` check instead (see item 6 above — standing, regardless of profile).
-2. **Handle git/sync by active profile**:
-   ```bash
-   # All profiles: report status; commit/push/PR per the profiles above.
-   git status
-   ```
-3. **Hand off** - Summarize changes, validation, and any blocked sync/commit/push step
-
-**Critical rules:**
-- Explicit user or orchestrator instructions override the above.
-- Do not commit or push without clear authority from the active profile or the current user request.
-- If a required sync or push is blocked, stop and report the exact command and error.
+At handoff, summarize the changes and give the human the one minimal `localhost:3000` check.
 
 ## Clickable file links
 
