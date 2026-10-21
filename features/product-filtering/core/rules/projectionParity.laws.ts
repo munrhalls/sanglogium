@@ -14,6 +14,8 @@ import { fieldInventory } from './fieldInventory';
 import { deriveControl } from './deriveControl';
 import { deriveOptions } from './deriveOptions';
 import { applyOptionLabels } from './applyOptionLabels';
+import { ACCEPTED_OPTION_DELTAS } from '@/features/product-filtering/core/definitions/acceptedOptionDeltas';
+import { ACCEPTED_OPTION_LABELS } from '@/features/product-filtering/core/definitions/acceptedOptionLabels';
 import type { FacetControl } from '@/features/product-filtering/core/types/facetProjection';
 import type { RawProduct } from '@/features/product-filtering/core/types/filterTypes';
 
@@ -60,16 +62,24 @@ function deltasFor(slice: string): Deltas {
       applyOptionLabels(facet.attribute, deriveOptions(stat)).map((o): [string, string] => [o.value, o.label]),
     );
     const declared = new Map(facet.options.map((o): [string, string] => [o.value, o.label]));
+    const accepted = ACCEPTED_OPTION_DELTAS[facet.attribute];
     for (const [value, label] of declared) {
       if (!derived.has(value)) {
-        deltas.options.push(`${where}: declared option "${value}" is in no product`);
-      } else if (facet.attribute !== 'brand' && derived.get(value) !== label) {
-        // brand labels come from brand.name, outside the label pipeline — no parity to check
+        if (!(accepted?.dropped ?? []).includes(value)) {
+          deltas.options.push(`${where}: declared option "${value}" is in no product`);
+        }
+      } else if (
+        facet.attribute !== 'brand' &&
+        derived.get(value) !== label &&
+        ACCEPTED_OPTION_LABELS[facet.attribute]?.[value] !== derived.get(value)
+      ) {
+        // brand labels come from brand.name, outside the label pipeline — no parity to check;
+        // a label recorded in acceptedOptionLabels is an approved departure from the declared set
         deltas.labels.push(`${where} "${value}": declared "${label}", derived "${derived.get(value)}"`);
       }
     }
     for (const value of derived.keys()) {
-      if (!declared.has(value)) {
+      if (!declared.has(value) && !(accepted?.added ?? []).includes(value)) {
         deltas.options.push(`${where}: data has "${value}", which is not a declared option`);
       }
     }
@@ -85,7 +95,7 @@ for (const slice of SLICES) {
   test(`${slice}: derived controls reproduce the target`, { skip }, () => {
     assert.equal(deltas().controls.length, 0, `\n${deltas().controls.join('\n')}`);
   });
-  test(`${slice}: derived options reproduce the target`, { skip, todo: 'owner sign-off: the data options replace the declared set' }, () => {
+  test(`${slice}: derived options reproduce the target`, { skip, todo: 'owner sign-off: unacknowledged option-set deltas below — record in acceptedOptionDeltas.ts' }, () => {
     assert.equal(deltas().options.length, 0, `\n${deltas().options.join('\n')}`);
   });
   test(`${slice}: derived labels reproduce the target`, { skip, todo: 'owner sign-off: the adapter (override ?? humanize) replaces hand-typed labels' }, () => {

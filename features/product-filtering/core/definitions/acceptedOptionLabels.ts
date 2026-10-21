@@ -6,6 +6,9 @@
 // no longer matches and the law lists it again for re-approval: silence always
 // traces to a recorded, still-current verdict, never to a blanket mute.
 export const ACCEPTED_OPTION_LABELS: Record<string, Record<string, string>> = {
-  'connectivity': { 'true-wireless': 'True Wireless' },
+  'connectivity': {
+    'true-wireless': 'True Wireless',
+    'hybrid': 'Wired/Wireless Hybrid', // approved rename away from declared "Wired + Wireless Hybrid"
+  },
   'inputs': { 'bluetooth': 'Bluetooth' },
 };

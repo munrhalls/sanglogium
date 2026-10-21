@@ -84,7 +84,7 @@ export const OPTION_LABEL_OVERRIDES: Record<string, Record<string, string>> = {
   'connectivity': {
     'wired': 'Wired',
     'wireless': 'Wireless (Bluetooth)',
-    'hybrid': 'Wired + Wireless Hybrid',
+    'hybrid': 'Wired/Wireless Hybrid',
   },
 
   'connectorTermination': {
