@@ -18,7 +18,9 @@ A deterministic script with no AI, `~/work/global/workflow/run-campaign.mjs`, ru
 - An axis starts once every axis it needs is merged into `<campaign>/integration`, and it branches from that branch's tip.
 - A finished axis merges only when there is no conflict and `node tools/check-turn.mjs --all` passes.
 - A STOP, a conflict or a failed check stops that axis and every axis that needs it. Rerunning the command resumes.
-- When every axis is merged, the runner opens one PR per campaign. Executors never sync, push or open PRs.
+- The runner is given the PR whose checkboxes are being implemented (`--pr`); `<campaign>/integration` starts from that PR's branch.
+- After each finished phase the runner commits and pushes the axis branch and adds a `human verify` sub-checkbox, with links to the files to check, under the matching checkbox in the PR body.
+- When every axis is merged, the runner pushes the result to the PR's branch. Executors never sync, commit, push or open PRs.
 - `main` requires a PR, and the rule applies to admins too.
 
 ## Consequences

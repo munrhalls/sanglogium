@@ -18,6 +18,7 @@ this feels long, prune it.
 - L09 — a "why does X happen" question is open → no fix code, no option list, until the decisive measurement is run; every causal claim is a hypothesis with a cheap test, done turn 1
 - L10 — repo artifacts (audits, plans, older lessons) are evidence, not authority → check what question the doc actually answered before letting it rule an approach in/out
 - L11 — representational honesty: an arrival/reveal animation must be driven by the real event it depicts, never a timer/queue/`transition-delay` that fakes the look
+- L14 — building or debugging a user-visible flow → trace it end to end, expected result at every hand-off, fix only the broken stop
 
 ## Lessons
 
@@ -152,3 +153,7 @@ to make it look right.
 signal path (attach the listener earlier, off the hydration-gated trigger — L07), never
 simulate it. A choreographed cascade over items that all arrived together is a lie the
 user can feel.
+
+### L14 · Trace the whole flow, fix only the broken stop
+**When:** building or debugging anything the user sees end to end (a checkout step, filter → URL → grid, search suggestions).
+**Lesson:** map the flow from the user's action to the final result, write the expected value at every hand-off ("bus stop"), check each against the real thing, and fix only the stop that is wrong — never touch working code. A check counts only if a human can confirm the same end result by eye; tests of internal state, and framework-debugging detours (browser automation without explicit targets), are time lost. Start any test setup with the simplest pre-flight check; if that fails, fix the setup or drop it.
