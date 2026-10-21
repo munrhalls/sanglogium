@@ -58,7 +58,6 @@ export const FACETS: FacetDef[] = [
     control: 'checkbox',
     options: [
       { value: 'headphone', label: 'Headphones' },
-      { value: 'speaker', label: 'Speakers' },
       { value: 'amplifier-source', label: 'Amplifiers & Sources' },
       { value: 'universal-any', label: 'Universal' },
     ],

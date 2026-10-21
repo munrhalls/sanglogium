@@ -10,9 +10,4 @@
 export const ACCEPTED_OPTION_DELTAS: Record<string, { added?: string[]; dropped?: string[] }> = {
   'connectivity': { added: ['true-wireless'] },
   'inputs': { added: ['bluetooth'] },
-  'soundSignature': { dropped: ['Dark', 'Harman-target-like'] },
-  'cableTermination': { dropped: ['2-pin'] },
-  'ipxRating': { dropped: ['IPX2', 'IPX7', 'IPX8'] },
-  'driverType': { dropped: ['bone-conduction', 'electret', 'hybrid'] },
-  'driverConfigBucket': { dropped: ['single-ba', 'planar'] },
 };

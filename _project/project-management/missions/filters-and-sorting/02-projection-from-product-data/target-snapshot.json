@@ -50,11 +50,9 @@
             { "value": "Neutral", "label": "Neutral" },
             { "value": "Warm", "label": "Warm" },
             { "value": "Bright/Analytical", "label": "Bright / Analytical" },
-            { "value": "Dark", "label": "Dark (Smooth, Laid-Back)" },
             { "value": "V-Shaped", "label": "V-Shaped (Bass + Treble Boost)" },
             { "value": "Basshead", "label": "Basshead (Heavy Bass)" },
-            { "value": "Mid-Forward", "label": "Mid-Forward (Prominent Vocals)" },
-            { "value": "Harman-target-like", "label": "Harman Tuning (Balanced Sound)" }
+            { "value": "Mid-Forward", "label": "Mid-Forward (Prominent Vocals)" }
           ],
           "attribute": "soundSignature", "storage": "enum", "vocab": ["Neutral", "Warm", "Bright/Analytical", "Dark", "V-Shaped", "Basshead", "Mid-Forward", "Harman-target-like"]
         },
@@ -86,8 +84,7 @@
             { "value": "4-pin-xlr", "label": "4-Pin XLR" },
             { "value": "6.35mm", "label": "6.35mm (1/4 inch)" },
             { "value": "usb-c", "label": "USB-C" },
-            { "value": "mmcx", "label": "MMCX (Snap-In)" },
-            { "value": "2-pin", "label": "2-Pin" }
+            { "value": "mmcx", "label": "MMCX (Snap-In)" }
           ],
           "attribute": "cableTermination", "storage": "multi", "vocab": ["3.5mm", "6.35mm", "4.4mm-balanced", "4-pin-xlr", "2.5mm-balanced", "usb-c", "mmcx", "2-pin", "fixed-cable"]
         },
@@ -104,11 +101,8 @@
           "id": "ipx", "group": "material", "label": "Water Resistance (IPX)", "control": "checkbox",
           "options": [
             { "value": "none", "label": "None" },
-            { "value": "IPX2", "label": "IPX2 (Light Drips)" },
             { "value": "IPX4", "label": "IPX4 (Splash-Proof)" },
-            { "value": "IPX5", "label": "IPX5 (Jets / Heavy Rain)" },
-            { "value": "IPX7", "label": "IPX7 (30-Min Submersion)" },
-            { "value": "IPX8", "label": "IPX8 (Swimmable)" }
+            { "value": "IPX5", "label": "IPX5 (Jets / Heavy Rain)" }
           ],
           "attribute": "ipxRating", "storage": "enum", "vocab": ["none", "IPX2", "IPX4", "IPX5", "IPX7", "IPX8"]
         },
@@ -155,10 +149,7 @@
             { "value": "planar-magnetic", "label": "Planar Magnetic" },
             { "value": "electrostatic", "label": "Electrostatic" },
             { "value": "balanced-armature", "label": "Balanced Armature" },
-            { "value": "amt", "label": "AMT / Ribbon (Air-Motion)" },
-            { "value": "bone-conduction", "label": "Bone Conduction" },
-            { "value": "electret", "label": "Electret (Electrostatic-Type)" },
-            { "value": "hybrid", "label": "Hybrid (Mixed Driver Types)" }
+            { "value": "amt", "label": "AMT / Ribbon (Air-Motion)" }
           ],
           "attribute": "driverType", "storage": "multi", "vocab": ["dynamic", "planar-magnetic", "electrostatic", "balanced-armature", "hybrid", "amt", "bone-conduction", "electret"]
         },
@@ -166,10 +157,8 @@
           "id": "driverConfig", "group": "technical", "label": "Driver Configuration", "control": "checkbox",
           "options": [
             { "value": "single-dynamic", "label": "Single Dynamic" },
-            { "value": "single-ba", "label": "Single Balanced Armature" },
             { "value": "multi-ba", "label": "Multi Balanced Armature" },
             { "value": "hybrid-config", "label": "Hybrid (Multi-Driver Combo)" },
-            { "value": "planar", "label": "Planar" },
             { "value": "other", "label": "Other / Unusual Design" }
           ],
           "attribute": "driverConfigBucket", "storage": "enum", "vocab": ["single-dynamic", "single-ba", "multi-ba", "hybrid-config", "planar", "other"]
@@ -328,7 +317,6 @@
           "id": "compatibleProductType", "group": "type", "label": "Compatible With", "control": "checkbox",
           "options": [
             { "value": "headphone", "label": "Headphones" },
-            { "value": "speaker", "label": "Speakers" },
             { "value": "amplifier-source", "label": "Amplifiers & Sources" },
             { "value": "universal-any", "label": "Universal" }
           ],

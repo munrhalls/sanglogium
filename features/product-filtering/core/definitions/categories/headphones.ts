@@ -99,7 +99,7 @@ export const FACETS: FacetDef[] = [
   // sang-logium-3rv.9 -- schema options.list (productType.ts) has 8 values;
   // 'Harman-target-like' was missing here, so a product carrying it could
   // never be selected or counted. Added to match the schema exactly.
-  { id: 'soundSignature', group: 'sound', label: 'Signature', control: 'checkbox', options: opts([['Neutral', 'Neutral'], ['Warm', 'Warm'], ['Bright/Analytical', 'Bright / Analytical'], ['Dark', 'Dark (Smooth, Laid-Back)'], ['V-Shaped', 'V-Shaped (Bass + Treble Boost)'], ['Basshead', 'Basshead (Heavy Bass)'], ['Mid-Forward', 'Mid-Forward (Prominent Vocals)'], ['Harman-target-like', 'Harman Tuning (Balanced Sound)']]) },
+  { id: 'soundSignature', group: 'sound', label: 'Signature', control: 'checkbox', options: opts([['Neutral', 'Neutral'], ['Warm', 'Warm'], ['Bright/Analytical', 'Bright / Analytical'], ['V-Shaped', 'V-Shaped (Bass + Treble Boost)'], ['Basshead', 'Basshead (Heavy Bass)'], ['Mid-Forward', 'Mid-Forward (Prominent Vocals)']]) },
   { id: 'impedance', group: 'sound', label: 'Impedance', control: 'range', min: 3, max: 520, unit: 'Ω' },
   { id: 'sensitivity', group: 'sound', label: 'Sensitivity', control: 'range', min: 89, max: 128, unit: 'dB/mW' },
   // Simplification of "frequency response range" (a per-product min–max pair) to
@@ -112,13 +112,13 @@ export const FACETS: FacetDef[] = [
   // Real schema options.list (productType.ts:385) has 9 entries; 4 were
   // missing, so real products with those terminations had no selectable
   // checkbox (sang-logium-3rv.5).
-  { id: 'cableTermination', group: 'material', label: 'Cable Type', control: 'checkbox', options: opts([['3.5mm', '3.5mm SE'], ['2.5mm-balanced', '2.5mm Balanced'], ['4.4mm-balanced', '4.4mm Balanced'], ['4-pin-xlr', '4-Pin XLR'], ['6.35mm', '6.35mm (1/4 inch)'], ['usb-c', 'USB-C'], ['mmcx', 'MMCX (Snap-In)'], ['2-pin', '2-Pin']]) },
+  { id: 'cableTermination', group: 'material', label: 'Cable Type', control: 'checkbox', options: opts([['3.5mm', '3.5mm SE'], ['2.5mm-balanced', '2.5mm Balanced'], ['4.4mm-balanced', '4.4mm Balanced'], ['4-pin-xlr', '4-Pin XLR'], ['6.35mm', '6.35mm (1/4 inch)'], ['usb-c', 'USB-C'], ['mmcx', 'MMCX (Snap-In)']]) },
   { id: 'foldable', group: 'material', label: 'Foldable', control: 'boolean' },
   { id: 'cableLength', group: 'material', label: 'Cable Length', control: 'range', min: 0.2, max: 4.0, unit: 'm' },
   // Real schema options.list is none/IPX2/IPX4/IPX5/IPX7/IPX8 (productType.ts:407)
   // -- was missing IPX2, lowercased IPX4/5/7, and had a phantom 'ip67' that
   // does not exist in the schema at all (sang-logium-3rv.5).
-  { id: 'ipx', group: 'material', label: 'Water Resistance (IPX)', control: 'checkbox', options: opts([['none', 'None'], ['IPX2', 'IPX2 (Light Drips)'], ['IPX4', 'IPX4 (Splash-Proof)'], ['IPX5', 'IPX5 (Jets / Heavy Rain)'], ['IPX7', 'IPX7 (30-Min Submersion)'], ['IPX8', 'IPX8 (Swimmable)']]) },
+  { id: 'ipx', group: 'material', label: 'Water Resistance (IPX)', control: 'checkbox', options: opts([['none', 'None'], ['IPX4', 'IPX4 (Splash-Proof)'], ['IPX5', 'IPX5 (Jets / Heavy Rain)']]) },
   { id: 'requiresAmplifier', group: 'material', label: 'Requires Amplifier', control: 'boolean' },
   { id: 'portable', group: 'material', label: 'Portable', control: 'boolean' },
 
@@ -132,13 +132,13 @@ export const FACETS: FacetDef[] = [
   { id: 'batteryLife', group: 'wireless', label: 'Battery Life', control: 'range', min: 0, max: 70, unit: 'hrs' },
 
   // ── Technical Specs ─────────────────────────────────────────────────────
-  { id: 'driverType', group: 'technical', label: 'Driver Type', control: 'checkbox', options: opts([['dynamic', 'Dynamic'], ['planar-magnetic', 'Planar Magnetic'], ['electrostatic', 'Electrostatic'], ['balanced-armature', 'Balanced Armature'], ['amt', 'AMT / Ribbon (Air-Motion)'], ['bone-conduction', 'Bone Conduction'], ['electret', 'Electret (Electrostatic-Type)'], ['hybrid', 'Hybrid (Mixed Driver Types)']]) },
+  { id: 'driverType', group: 'technical', label: 'Driver Type', control: 'checkbox', options: opts([['dynamic', 'Dynamic'], ['planar-magnetic', 'Planar Magnetic'], ['electrostatic', 'Electrostatic'], ['balanced-armature', 'Balanced Armature'], ['amt', 'AMT / Ribbon (Air-Motion)']]) },
   // Real schema options.list is single-dynamic/single-ba/multi-ba/
   // hybrid-config/planar/other (productType.ts:472) -- 'tribrid' does not
   // exist in the schema at all and could never match; 'planar'/'other' were
   // missing entirely, so those products had no checkbox to select at all
   // (sang-logium-3rv.5).
-  { id: 'driverConfig', group: 'technical', label: 'Driver Configuration', control: 'checkbox', options: opts([['single-dynamic', 'Single Dynamic'], ['single-ba', 'Single Balanced Armature'], ['multi-ba', 'Multi Balanced Armature'], ['hybrid-config', 'Hybrid (Multi-Driver Combo)'], ['planar', 'Planar'], ['other', 'Other / Unusual Design']]) },
+  { id: 'driverConfig', group: 'technical', label: 'Driver Configuration', control: 'checkbox', options: opts([['single-dynamic', 'Single Dynamic'], ['multi-ba', 'Multi Balanced Armature'], ['hybrid-config', 'Hybrid (Multi-Driver Combo)'], ['other', 'Other / Unusual Design']]) },
 ];
 
 export const facetsForGroup = (group: FacetGroupId): FacetDef[] => FACETS.filter((f) => f.group === group);

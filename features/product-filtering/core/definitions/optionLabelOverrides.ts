@@ -65,12 +65,10 @@ export const OPTION_LABEL_OVERRIDES: Record<string, Record<string, string>> = {
     '6.35mm': '6.35mm (1/4 inch)',
     'usb-c': 'USB-C',
     'mmcx': 'MMCX (Snap-In)',
-    '2-pin': '2-Pin',
   },
 
   'compatibleProductType': {
     'headphone': 'Headphones',
-    'speaker': 'Speakers',
     'amplifier-source': 'Amplifiers & Sources',
     'universal-any': 'Universal',
   },
@@ -125,10 +123,8 @@ export const OPTION_LABEL_OVERRIDES: Record<string, Record<string, string>> = {
 
   'driverConfigBucket': {
     'single-dynamic': 'Single Dynamic',
-    'single-ba': 'Single Balanced Armature',
     'multi-ba': 'Multi Balanced Armature',
     'hybrid-config': 'Hybrid (Multi-Driver Combo)',
-    'planar': 'Planar',
     'other': 'Other / Unusual Design',
   },
 
@@ -138,9 +134,6 @@ export const OPTION_LABEL_OVERRIDES: Record<string, Record<string, string>> = {
     'electrostatic': 'Electrostatic',
     'balanced-armature': 'Balanced Armature',
     'amt': 'AMT / Ribbon (Air-Motion)',
-    'bone-conduction': 'Bone Conduction',
-    'electret': 'Electret (Electrostatic-Type)',
-    'hybrid': 'Hybrid (Mixed Driver Types)',
   },
 
   'dsdSupport': {
@@ -171,11 +164,8 @@ export const OPTION_LABEL_OVERRIDES: Record<string, Record<string, string>> = {
 
   'ipxRating': {
     'none': 'None',
-    'IPX2': 'IPX2 (Light Drips)',
     'IPX4': 'IPX4 (Splash-Proof)',
     'IPX5': 'IPX5 (Jets / Heavy Rain)',
-    'IPX7': 'IPX7 (30-Min Submersion)',
-    'IPX8': 'IPX8 (Swimmable)',
   },
 
   'partType': {
@@ -187,11 +177,9 @@ export const OPTION_LABEL_OVERRIDES: Record<string, Record<string, string>> = {
     'Neutral': 'Neutral',
     'Warm': 'Warm',
     'Bright/Analytical': 'Bright / Analytical',
-    'Dark': 'Dark (Smooth, Laid-Back)',
     'V-Shaped': 'V-Shaped (Bass + Treble Boost)',
     'Basshead': 'Basshead (Heavy Bass)',
     'Mid-Forward': 'Mid-Forward (Prominent Vocals)',
-    'Harman-target-like': 'Harman Tuning (Balanced Sound)',
   },
 
   'streamingPlatformSupport': {
