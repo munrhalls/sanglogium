@@ -73,8 +73,8 @@ import {
   createSerializer,
   parseAsArrayOf,
   parseAsBoolean,
+  createParser,
   parseAsFloat,
-  parseAsInteger,
   parseAsString,
   parseAsStringLiteral,
 } from "nuqs/server";
@@ -132,6 +132,12 @@ for (const facet of FILTER_FACETS) {
  * `loadFilterSort` loader and every client control, so a deep link and the
  * control that reads it can never disagree.
  */
+// parseAsInteger is parseInt: it reads "1.2.3" as 1. Prices accept whole numbers only.
+const parseAsWholeNumber = createParser({
+  parse: (value) => (/^-?\d+$/.test(value) ? Number(value) : null),
+  serialize: (value) => String(Math.round(value)),
+});
+
 export const filterSortParsers = {
   // Junk / unknown values fall through to the default (parseAsStringLiteral
   // returns null for anything off the list; `.withDefault` then supplies
@@ -139,8 +145,8 @@ export const filterSortParsers = {
   sort: parseAsStringLiteral(SORT_VALUES).withDefault(SORT_DEFAULT),
 
   // Dollars, integer. No default: absent = unbounded. Non-numeric → null.
-  minPrice: parseAsInteger,
-  maxPrice: parseAsInteger,
+  minPrice: parseAsWholeNumber,
+  maxPrice: parseAsWholeNumber,
 
   ...facetParsers,
 };
