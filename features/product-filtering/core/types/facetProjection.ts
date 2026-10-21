@@ -1,6 +1,8 @@
 // Shapes of the data-derived facet projection: what the product data of one slice says
 // about each filterAttributes field. Type-only module.
 
+import type { SelectedFacet } from '@/features/product-filtering/core/definitions/facetSelector';
+
 /** JS kind of a stored value. An array of anything is 'array'. */
 export type ObservedKind = 'boolean' | 'number' | 'string' | 'array' | 'object';
 
@@ -29,4 +31,16 @@ export type FieldInventory = Record<string, FieldStat>;
 export interface DerivedOption {
   value: string;
   label: string;
+}
+
+/** One selected facet after projection: the human pick (id/attribute/label/group/unit)
+ *  joined with everything the data derived for that attribute. */
+export interface ProjectedFacet extends SelectedFacet {
+  /** Widget inferred from the field's kinds; null when the data cannot render this facet. */
+  control: FacetControl | null;
+  /** Labelled options — present only when control === 'checkbox'. */
+  options?: DerivedOption[];
+  /** Numeric bounds — present only when control === 'range'. */
+  min?: number;
+  max?: number;
 }
