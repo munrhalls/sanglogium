@@ -13,6 +13,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { fieldInventory } from './fieldInventory';
 import { deriveControl } from './deriveControl';
 import { deriveOptions } from './deriveOptions';
+import { applyOptionLabels } from './applyOptionLabels';
 import type { FacetControl } from '@/features/product-filtering/core/types/facetProjection';
 import type { RawProduct } from '@/features/product-filtering/core/types/filterTypes';
 
@@ -55,12 +56,15 @@ function deltasFor(slice: string): Deltas {
     }
     if (facet.control !== 'checkbox' || !Array.isArray(facet.options)) continue;
 
-    const derived = new Map(deriveOptions(stat).map((o): [string, string] => [o.value, o.label]));
+    const derived = new Map(
+      applyOptionLabels(facet.attribute, deriveOptions(stat)).map((o): [string, string] => [o.value, o.label]),
+    );
     const declared = new Map(facet.options.map((o): [string, string] => [o.value, o.label]));
     for (const [value, label] of declared) {
       if (!derived.has(value)) {
         deltas.options.push(`${where}: declared option "${value}" is in no product`);
-      } else if (derived.get(value) !== label) {
+      } else if (facet.attribute !== 'brand' && derived.get(value) !== label) {
+        // brand labels come from brand.name, outside the label pipeline — no parity to check
         deltas.labels.push(`${where} "${value}": declared "${label}", derived "${derived.get(value)}"`);
       }
     }
@@ -73,7 +77,7 @@ function deltasFor(slice: string): Deltas {
   return deltas;
 }
 
-// Options and labels are todo: they differ by owner decision (the data replaces the declared set, humanize replaces hand-typed labels), so every run prints them without failing. Controls must match.
+// Options and labels are todo: they differ by owner decision (the data replaces the declared set, the adapter's override ?? humanize replaces hand-typed labels), so every run prints them without failing. Controls must match.
 for (const slice of SLICES) {
   const skip = existsSync(dataPath(slice)) ? false : SCAN_HINT;
   let cached: Deltas | undefined;
@@ -84,7 +88,7 @@ for (const slice of SLICES) {
   test(`${slice}: derived options reproduce the target`, { skip, todo: 'owner sign-off: the data options replace the declared set' }, () => {
     assert.equal(deltas().options.length, 0, `\n${deltas().options.join('\n')}`);
   });
-  test(`${slice}: derived labels reproduce the target`, { skip, todo: 'owner sign-off: the humanize rule replaces hand-typed labels' }, () => {
+  test(`${slice}: derived labels reproduce the target`, { skip, todo: 'owner sign-off: the adapter (override ?? humanize) replaces hand-typed labels' }, () => {
     assert.equal(deltas().labels.length, 0, `\n${deltas().labels.join('\n')}`);
   });
 }

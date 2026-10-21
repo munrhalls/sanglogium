@@ -1,9 +1,11 @@
 // Behaviour law: every projected option label is either curated (an entry in
-// optionLabelOverrides) or a draft (the humanize fallback). Drafts are legal —
-// they are what lets the option set stay exactly the data's — but each one is
-// a label no human has reviewed. These todo tests print the draft list per
-// slice on every `npm run laws`: promote the bad ones into
-// optionLabelOverrides.ts, accept the rest.
+// optionLabelOverrides), accepted (a recorded verdict in acceptedOptionLabels),
+// or an unreviewed draft (the humanize fallback). Drafts are legal — they are
+// what lets the option set stay exactly the data's — but each unreviewed one
+// is a label no human has signed off. These todo tests print the unreviewed
+// list per slice on every `npm run laws`: promote the bad ones into
+// optionLabelOverrides.ts, record the good ones in acceptedOptionLabels.ts.
+// Acceptance records the label itself, so a changed humanization re-lists it.
 //
 // The `brand` attribute is excluded: its labels come from brand.name data,
 // not the label pipeline.
@@ -21,6 +23,7 @@ import { fieldInventory } from './fieldInventory';
 import { projectFacets } from './projectFacets';
 import { FACET_SELECTOR } from '@/features/product-filtering/core/definitions/facetSelector';
 import { OPTION_LABEL_OVERRIDES } from '@/features/product-filtering/core/definitions/optionLabelOverrides';
+import { ACCEPTED_OPTION_LABELS } from '@/features/product-filtering/core/definitions/acceptedOptionLabels';
 import type { RawProduct } from '@/features/product-filtering/core/types/filterTypes';
 
 const SLICES = ['headphones', 'audio-electronics', 'accessories'] as const;
@@ -37,9 +40,11 @@ function draftsFor(slice: (typeof SLICES)[number]): string[] {
     if (facet.control !== 'checkbox' || !facet.options || EXCLUDED_ATTRIBUTES.has(facet.attribute)) continue;
     const overrides = OPTION_LABEL_OVERRIDES[facet.attribute] ?? {};
     for (const option of facet.options) {
-      if (overrides[option.value] === undefined) {
-        drafts.push(`${facet.id} (${facet.attribute}): "${option.value}" -> "${option.label}"`);
-      }
+      if (overrides[option.value] !== undefined) continue;
+      const accepted = ACCEPTED_OPTION_LABELS[facet.attribute]?.[option.value];
+      if (accepted === option.label) continue;
+      const drift = accepted === undefined ? '' : ` (was accepted as "${accepted}")`;
+      drafts.push(`${facet.id} (${facet.attribute}): "${option.value}" -> "${option.label}"${drift}`);
     }
   }
   return drafts;
@@ -50,8 +55,8 @@ for (const slice of SLICES) {
   let cached: string[] | undefined;
   const drafts = () => (cached ??= draftsFor(slice));
   test(
-    `${slice}: every option label is curated`,
-    { skip, todo: 'owner sign-off: drafts listed below — promote into optionLabelOverrides.ts or accept' },
+    `${slice}: every option label is curated or accepted`,
+    { skip, todo: 'owner sign-off: unreviewed drafts below — promote into optionLabelOverrides.ts or record in acceptedOptionLabels.ts' },
     () => {
       assert.equal(drafts().length, 0, `\n${drafts().join('\n')}`);
     },
