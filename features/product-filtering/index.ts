@@ -8,6 +8,7 @@ export {
   computeCatalogueFacets,
   productMatchesState,
 } from './core/rules/facetCounts';
+export { buildFacetSet } from './core/rules/buildFacetSet';
 export type { ProductQueryState, RawProduct } from './core/types/filterTypes';
 export { resolvePriceBounds } from './core/rules/priceBounds';
 export type { PriceRangeData } from './core/rules/priceBounds';
