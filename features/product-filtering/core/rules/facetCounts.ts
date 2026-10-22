@@ -1,13 +1,11 @@
 // Pure facet-count logic: in-memory matching engine and aggregation over an
 // already-fetched product set. No Sanity, no fetch, no cache — those live in
-// queries/getFilterFacets.ts, which calls this module.
+// queries/getFilterFacets.ts, which calls this module. Which facets exist and
+// how each one behaves (checkbox, boolean, range) comes from the FacetSet the
+// caller passes in (core/rules/buildFacetSet.ts), not from a declared list.
 
-import {
-  FILTER_FACETS,
-  isPlaceholderVocab,
-  type FilterFacet,
-} from '@/features/product-filtering/core/definitions/facetMap';
 import { humanizeFacetValue } from './humanizeFacetValue';
+import type { FacetSet, NarrowingFacet } from '@/features/product-filtering/core/types/facetProjection';
 import type { ProductQueryState, RawProduct } from '@/features/product-filtering/core/types/filterTypes';
 
 interface FacetOption {
@@ -27,16 +25,18 @@ export interface RangeBounds {
 }
 
 export interface CatalogueFacets {
-  /** Map of urlParam -> checkbox options (multi / enum / brand). */
+  /** Map of facet id -> checkbox options (multi / enum / brand). */
   groups: FacetGroups;
-  /** Map of urlParam -> count for boolean facets. */
+  /** Map of facet id -> count for boolean facets. */
   booleans: BooleanFacetCounts;
   /** Map of brand slug -> label for the brand facet. */
   brandLabels: Record<string, string>;
-  /** Map of urlParam -> real min/max for range facets (sang-logium-3rv.5). */
+  /** Map of facet id -> real min/max for range facets (sang-logium-3rv.5). */
   ranges: Record<string, RangeBounds>;
   /** Whether no catalogue filters are currently active (sort is ignored). */
   isDefaultState: boolean;
+  /** The facets to draw: the set these counts were computed for. */
+  facetSet: FacetSet;
 }
 
 function getPriceCents(p: RawProduct): number | null {
@@ -56,9 +56,8 @@ function isInStock(p: RawProduct): boolean {
   return stock - reserved > 0;
 }
 
-function valuesForFacet(p: RawProduct, facet: FilterFacet): string[] {
-  const field = facet.attribute;
-  const raw = p.filterAttributes?.[field];
+function valuesForFacet(p: RawProduct, facet: { attribute: string }): string[] {
+  const raw = p.filterAttributes?.[facet.attribute];
   if (raw === undefined || raw === null) return [];
   if (Array.isArray(raw)) return raw.map((v) => String(v).toLowerCase());
   return [String(raw).toLowerCase()];
@@ -70,7 +69,7 @@ function valuesForFacet(p: RawProduct, facet: FilterFacet): string[] {
  * -- unlike `valuesForFacet` above, which only reads a top-level
  * filterAttributes key.
  */
-function numericValueForRangeFacet(p: RawProduct, facet: FilterFacet): number | null {
+function numericValueForRangeFacet(p: RawProduct, facet: { attribute: string }): number | null {
   const path = facet.attribute.split('.');
   let cur: unknown = p.filterAttributes;
   for (const key of path) {
@@ -82,9 +81,15 @@ function numericValueForRangeFacet(p: RawProduct, facet: FilterFacet): number | 
   return Number.isFinite(num) ? num : null;
 }
 
+/** Every facet that narrows a count: the ones drawn plus the query-only ones. */
+function narrowingFacets(facetSet: FacetSet): NarrowingFacet[] {
+  return [...facetSet.facets, ...facetSet.queryOnly];
+}
+
 export function productMatchesState(
   p: RawProduct,
   state: ProductQueryState,
+  facetSet: FacetSet,
   excludeParam?: string,
 ): boolean {
   // Price range
@@ -99,14 +104,13 @@ export function productMatchesState(
   // In stock
   if (excludeParam !== 'inStock' && state.inStock && !isInStock(p)) return false;
 
-  for (const facet of FILTER_FACETS) {
-    if (facet.urlParam === 'price') continue;
-    if (facet.urlParam === 'inStock') continue;
-    if (facet.urlParam === excludeParam) continue;
+  for (const facet of narrowingFacets(facetSet)) {
+    if (facet.id === 'inStock') continue;
+    if (facet.id === excludeParam) continue;
 
-    const paramValue = state[facet.urlParam as keyof ProductQueryState];
+    const paramValue = state[facet.id as keyof ProductQueryState];
 
-    if (facet.type === 'boolean') {
+    if (facet.control === 'boolean') {
       if (paramValue === true) {
         const ok = valuesForFacet(p, facet).some((v) => v === 'true');
         if (!ok) return false;
@@ -118,9 +122,9 @@ export function productMatchesState(
     // narrow every OTHER facet's disjunctive count too, same as price/inStock
     // already do above. Mirrors buildProductQuery.ts's GROQ range predicate,
     // in-memory.
-    if (facet.type === 'range') {
-      const minVal = state[`${facet.urlParam}Min` as keyof ProductQueryState];
-      const maxVal = state[`${facet.urlParam}Max` as keyof ProductQueryState];
+    if (facet.control === 'range') {
+      const minVal = state[`${facet.id}Min` as keyof ProductQueryState];
+      const maxVal = state[`${facet.id}Max` as keyof ProductQueryState];
       if (typeof minVal !== 'number' && typeof maxVal !== 'number') continue;
       const num = numericValueForRangeFacet(p, facet);
       if (typeof minVal === 'number' && (num == null || num < minVal)) return false;
@@ -144,24 +148,15 @@ export function productMatchesState(
   return true;
 }
 
-function labelForValue(facet: FilterFacet, value: string): string {
-  if (facet.urlParam === 'brand' && !value) return 'Unknown';
+function labelForValue(facetId: string, value: string): string {
+  if (facetId === 'brand' && !value) return 'Unknown';
   return humanizeFacetValue(value);
-}
-
-function distinctBrandSlugs(products: RawProduct[]): string[] {
-  const set = new Set<string>();
-  for (const p of products) {
-    const slugs = valuesForFacet(p, FILTER_FACETS.find((f) => f.urlParam === 'brand')!);
-    for (const s of slugs) if (s) set.add(s);
-  }
-  return Array.from(set);
 }
 
 function brandLabelMap(products: RawProduct[]): Record<string, string> {
   const map: Record<string, string> = {};
   for (const p of products) {
-    for (const slug of valuesForFacet(p, FILTER_FACETS.find((f) => f.urlParam === 'brand')!)) {
+    for (const slug of valuesForFacet(p, { attribute: 'brand' })) {
       if (!map[slug]) {
         map[slug] = p.brandRef?.slug?.toLowerCase() === slug ? p.brandRef.name : slug;
       }
@@ -170,24 +165,22 @@ function brandLabelMap(products: RawProduct[]): Record<string, string> {
   return map;
 }
 
-export function isDefaultFilterState(state: ProductQueryState): boolean {
+export function isDefaultFilterState(state: ProductQueryState, facetSet: FacetSet): boolean {
   if (state.minPrice != null || state.maxPrice != null) return false;
 
-  for (const facet of FILTER_FACETS) {
-    if (facet.urlParam === 'price') continue;
-
-    if (facet.type === 'range') {
-      if (state[`${facet.urlParam}Min` as keyof ProductQueryState] != null) return false;
-      if (state[`${facet.urlParam}Max` as keyof ProductQueryState] != null) return false;
+  for (const facet of narrowingFacets(facetSet)) {
+    if (facet.control === 'range') {
+      if (state[`${facet.id}Min` as keyof ProductQueryState] != null) return false;
+      if (state[`${facet.id}Max` as keyof ProductQueryState] != null) return false;
       continue;
     }
 
-    if (facet.type === 'boolean') {
-      if (state[facet.urlParam as keyof ProductQueryState] === true) return false;
+    if (facet.control === 'boolean') {
+      if (state[facet.id as keyof ProductQueryState] === true) return false;
       continue;
     }
 
-    const value = state[facet.urlParam as keyof ProductQueryState];
+    const value = state[facet.id as keyof ProductQueryState];
     if (Array.isArray(value) && value.length > 0) return false;
     if (typeof value === 'string' && value) return false;
   }
@@ -199,70 +192,72 @@ export function isDefaultFilterState(state: ProductQueryState): boolean {
 export function computeCatalogueFacets(
   products: RawProduct[],
   state: ProductQueryState,
+  facetSet: FacetSet,
 ): CatalogueFacets {
   const groups: FacetGroups = {};
   const booleans: BooleanFacetCounts = {};
   const brandLabels = brandLabelMap(products);
 
-  for (const facet of FILTER_FACETS) {
-    if (facet.urlParam === 'price') continue;
-    // Range facets get their own bounds computation below, not checkbox
-    // options built from their ['min','max'] valueVocab placeholder.
-    if (facet.type === 'range') continue;
+  for (const facet of facetSet.facets) {
+    // Range facets get their own bounds computation below, not checkbox options.
+    if (facet.control === 'range') continue;
 
-    const baseProducts = products.filter((p) => productMatchesState(p, state, facet.urlParam));
+    const baseProducts = products.filter((p) => productMatchesState(p, state, facetSet, facet.id));
 
-    if (facet.type === 'boolean') {
+    if (facet.control === 'boolean') {
       // In-stock is special: it must mirror buildProductQuery's coalesce of
       // filterAttributes.inStock and the legacy stock arithmetic. Counting only
       // products with an explicit `filterAttributes.inStock == true` would show
       // zero until every product is migrated (sang-logium-3rv.7).
-      booleans[facet.urlParam] = baseProducts.filter(
-        facet.urlParam === 'inStock' ? isInStock : (p) =>
+      booleans[facet.id] = baseProducts.filter(
+        facet.id === 'inStock' ? isInStock : (p) =>
           valuesForFacet(p, facet).some((v) => v === 'true'),
       ).length;
       continue;
     }
 
+    // The option values are the data's distinct values, carried by the facet. A facet
+    // without them (brand) takes the values present among the products the other
+    // selections leave.
+    const listed = new Map<string, string>((facet.options ?? []).map((o): [string, string] => [o.value.toLowerCase(), o.label]));
     let optionValues: string[];
-    if (isPlaceholderVocab(facet.valueVocab)) {
-      // For placeholder-backed fields (brand / compatibility) collect the actual
-      // distinct values present in the data.
+    if (facet.options) {
+      optionValues = facet.options.map((o) => o.value);
+    } else {
       const set = new Set<string>();
       for (const p of baseProducts) {
         for (const v of valuesForFacet(p, facet)) if (v) set.add(v);
       }
       optionValues = Array.from(set).sort();
-    } else {
-      optionValues = facet.valueVocab;
     }
+
+    const labelOf = (value: string): string => {
+      const lower = value.toLowerCase();
+      if (facet.id === 'brand' && brandLabels[lower]) return brandLabels[lower];
+      return listed.get(lower) ?? labelForValue(facet.id, value);
+    };
 
     // Keep currently selected values visible even if their count is zero, so the
     // shopper can untick them and see the label.
-    const selected = Array.isArray(state[facet.urlParam as keyof ProductQueryState])
-      ? (state[facet.urlParam as keyof ProductQueryState] as string[])
+    const selected = Array.isArray(state[facet.id as keyof ProductQueryState])
+      ? (state[facet.id as keyof ProductQueryState] as string[])
       : [];
-    const selectedSet = new Set(selected.map((s) => s.toLowerCase()));
 
     const options: FacetOption[] = optionValues.map((value) => {
       const valueLower = value.toLowerCase();
       const count = baseProducts.filter((p) =>
         valuesForFacet(p, facet).some((v) => v === valueLower),
       ).length;
-      return {
-        value,
-        label: brandLabels[valueLower] ?? labelForValue(facet, value),
-        count,
-      };
+      return { value, label: labelOf(value), count };
     });
 
-    // Append any selected slugs that are not in the closed vocab/placeholder set.
+    // Append any selected value that is not in the option set.
     for (const s of selected) {
       const lower = s.toLowerCase();
       if (!optionValues.some((v) => v.toLowerCase() === lower)) {
         options.push({
           value: s,
-          label: brandLabels[lower] ?? humanizeFacetValue(s),
+          label: labelOf(s),
           count: baseProducts.filter((p) =>
             valuesForFacet(p, facet).some((v) => v === lower),
           ).length,
@@ -274,7 +269,7 @@ export function computeCatalogueFacets(
       b.count - a.count || a.label.localeCompare(b.label)
     );
 
-    groups[facet.urlParam] = options;
+    groups[facet.id] = options;
   }
 
   // Range facet bounds: FULL category span, unnarrowed by active filters --
@@ -282,16 +277,23 @@ export function computeCatalogueFacets(
   // getCategoryPriceRange, reusing the one product fetch already above
   // instead of a second query. sang-logium-3rv.5.
   const ranges: Record<string, RangeBounds> = {};
-  for (const facet of FILTER_FACETS) {
-    if (facet.type !== 'range' || facet.urlParam === 'price') continue;
+  for (const facet of facetSet.facets) {
+    if (facet.control !== 'range') continue;
     const values = products
       .map((p) => numericValueForRangeFacet(p, facet))
       .filter((v): v is number => v != null);
-    ranges[facet.urlParam] = {
+    ranges[facet.id] = {
       min: values.length ? Math.min(...values) : null,
       max: values.length ? Math.max(...values) : null,
     };
   }
 
-  return { groups, booleans, brandLabels, ranges, isDefaultState: isDefaultFilterState(state) };
+  return {
+    groups,
+    booleans,
+    brandLabels,
+    ranges,
+    isDefaultState: isDefaultFilterState(state, facetSet),
+    facetSet,
+  };
 }
