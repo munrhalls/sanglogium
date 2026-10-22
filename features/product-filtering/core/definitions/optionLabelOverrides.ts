@@ -1,6 +1,5 @@
 // Curated option-label overrides, keyed by attribute path then raw data
-// value. Seeded from target-snapshot.json's declared option labels — the only
-// hand-kept labels left. The adapter applies `override ?? humanize` per
+// value — the only hand-kept labels left. The adapter applies `override ?? humanize` per
 // option: a label here wins, anything else is humanized. This map can rename a
 // label but can never add, remove or reorder an option — the option set is
 // always exactly the field's distinct data values. Entries whose value no
