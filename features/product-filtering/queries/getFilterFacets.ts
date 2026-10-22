@@ -8,6 +8,7 @@ import {
   type CatalogueFacets,
 } from '@/features/product-filtering/core/rules/facetCounts';
 import { buildFacetSet } from '@/features/product-filtering/core/rules/buildFacetSet';
+import { dropUnselectableOptions } from '@/features/product-filtering/core/rules/dropUnselectableOptions';
 import type { Category } from '@/features/product-filtering/core/definitions/category';
 import type { FacetSet } from '@/features/product-filtering/core/types/facetProjection';
 import type { ProductQueryState } from '@/features/product-filtering/core/types/filterTypes';
@@ -47,6 +48,9 @@ export async function getFilterFacets(
     return emptyFacets(state);
   }
 
-  const facetSet = buildFacetSet(products, category ?? 'headphones');
+  const { facetSet, dropped } = dropUnselectableOptions(buildFacetSet(products, category ?? 'headphones'));
+  if (dropped.length) {
+    console.warn('[getFilterFacets] Hidden: the data holds values the URL cannot select. Add them to facetMap.ts valueVocab:', dropped);
+  }
   return computeCatalogueFacets(products, state, facetSet);
 }
