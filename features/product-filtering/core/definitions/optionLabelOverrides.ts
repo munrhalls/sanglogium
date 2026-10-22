@@ -3,12 +3,11 @@
 // option: a label here wins, anything else is humanized. This map can rename a
 // label but can never add, remove or reorder an option — the option set is
 // always exactly the field's distinct data values. Entries whose value no
-// product carries are dormant.
+// product carries are dormant. A row exists only where its label differs from humanize.
 
 export const OPTION_LABEL_OVERRIDES: Record<string, Record<string, string>> = {
   'accessoryType': {
     'cables-interconnects': 'Cables & Interconnects',
-    'replacement-parts': 'Replacement Parts',
     'cases-storage-transport': 'Cases & Storage',
     'adapters-converters': 'Adapters & Converters',
     'cleaning-maintenance': 'Cleaning & Maintenance',
@@ -51,15 +50,12 @@ export const OPTION_LABEL_OVERRIDES: Record<string, Record<string, string>> = {
   },
 
   'cableFunction': {
-    'headphone-cable': 'Headphone Cable',
     'interconnect-rca-xlr': 'Interconnect (RCA/XLR)',
     'digital-usb-coaxial-optical-aes-ebu-ethernet': 'Digital Cable',
   },
 
   'cableTermination': {
     '3.5mm': '3.5mm SE',
-    '2.5mm-balanced': '2.5mm Balanced',
-    '4.4mm-balanced': '4.4mm Balanced',
     '4-pin-xlr': '4-Pin XLR',
     '6.35mm': '6.35mm (1/4 inch)',
     'usb-c': 'USB-C',
@@ -74,23 +70,15 @@ export const OPTION_LABEL_OVERRIDES: Record<string, Record<string, string>> = {
 
   'conductorMaterial': {
     'copper-ofc': 'Copper / Oxygen-Free (OFC)',
-    'silver': 'Silver',
     'silver-plated-copper': 'Silver-Plated Copper',
   },
 
   'connectivity': {
-    'wired': 'Wired',
     'wireless': 'Wireless (Bluetooth)',
     'hybrid': 'Wired/Wireless Hybrid',
   },
 
   'connectorTermination': {
-    'rca': 'RCA',
-    'xlr': 'XLR',
-    '3.5mm': '3.5mm',
-    '2.5mm': '2.5mm',
-    '4.4mm': '4.4mm',
-    '6.35mm': '6.35mm',
     '4-pin-mini-xlr': '4-Pin Mini XLR',
     'mini-to-rca': '3.5mm Mini-Jack to RCA',
   },
@@ -103,17 +91,12 @@ export const OPTION_LABEL_OVERRIDES: Record<string, Record<string, string>> = {
   },
 
   'deviceConnectivity': {
-    'wired': 'Wired',
-    'bluetooth': 'Bluetooth',
     'wifi-networked': 'Wi-Fi / Networked',
     'wired-wireless': 'Wired + Wireless (BT/Wi-Fi)',
   },
 
   'deviceType': {
-    'headphone-amplifier': 'Headphone Amplifier',
-    'digital-audio-player': 'Digital Audio Player',
     'dac': 'DAC (Converter)',
-    'network-streamer': 'Network Streamer',
     'preamplifier': 'Preamplifier (Needs Power Amp)',
     'integrated-amplifier': 'Integrated Amp (All-in-One)',
     'power-amplifier': 'Power Amp (Needs Preamp)',
@@ -121,38 +104,22 @@ export const OPTION_LABEL_OVERRIDES: Record<string, Record<string, string>> = {
   },
 
   'driverConfigBucket': {
-    'single-dynamic': 'Single Dynamic',
     'multi-ba': 'Multi Balanced Armature',
     'hybrid-config': 'Hybrid (Multi-Driver Combo)',
     'other': 'Other / Unusual Design',
   },
 
   'driverType': {
-    'dynamic': 'Dynamic',
-    'planar-magnetic': 'Planar Magnetic',
-    'electrostatic': 'Electrostatic',
-    'balanced-armature': 'Balanced Armature',
     'amt': 'AMT / Ribbon (Air-Motion)',
   },
 
   'dsdSupport': {
-    'none': 'None',
     'dsd64': 'DSD64 (Hi-Res Audio)',
     'dsd128': 'DSD128 (Hi-Res Audio)',
     'dsd256-plus': 'DSD256+ (Hi-Res Audio)',
   },
 
-  'formFactor': {
-    'desktop': 'Desktop',
-    'portable': 'Portable',
-    'dongle': 'Dongle',
-  },
-
   'inputs': {
-    'usb': 'USB',
-    'optical': 'Optical',
-    'coaxial': 'Coaxial',
-    'rca': 'RCA',
     'xlr-balanced': 'XLR / Balanced',
     'phono-mm-mc': 'Phono / Turntable (MM/MC)',
     'hdmi-earc': 'HDMI (ARC / eARC)',
@@ -162,19 +129,15 @@ export const OPTION_LABEL_OVERRIDES: Record<string, Record<string, string>> = {
   },
 
   'ipxRating': {
-    'none': 'None',
     'IPX4': 'IPX4 (Splash-Proof)',
     'IPX5': 'IPX5 (Jets / Heavy Rain)',
   },
 
   'partType': {
     'ear-pads-cushions': 'Ear Pads / Cushions',
-    'ear-tips': 'Ear Tips',
   },
 
   'soundSignature': {
-    'Neutral': 'Neutral',
-    'Warm': 'Warm',
     'Bright/Analytical': 'Bright / Analytical',
     'V-Shaped': 'V-Shaped (Bass + Treble Boost)',
     'Basshead': 'Basshead (Heavy Bass)',
@@ -184,7 +147,6 @@ export const OPTION_LABEL_OVERRIDES: Record<string, Record<string, string>> = {
   'streamingPlatformSupport': {
     'airplay2': 'AirPlay 2',
     'chromecast': 'Chromecast built-in',
-    'spotify-connect': 'Spotify Connect',
     'tidal-connect': 'TIDAL Connect',
     'roon-ready': 'Roon Ready (Roon Music Server)',
     'dlna': 'DLNA (Legacy Network Share)',

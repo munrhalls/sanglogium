@@ -8,7 +8,7 @@ import { getListingPage as getListingPageQuery, getListingMetadata as getListing
 import { getProductPage as getProductPageQuery, getProductMetadata as getProductMetadataQuery } from './queries/getProductPage';
 import { getSitemapEntries as getSitemapEntriesQuery } from './queries/getSitemapEntries';
 import { resolveSlugToId, unrollDescendantKeys, getAllLeafKeys, getCategoryMetadata, getBreadcrumbLabels } from '@/features/catalogue/server';
-import { getFilterFacets, getCategoryPriceRange } from '@/features/product-filtering/server';
+import { getFilterFacets } from '@/features/product-filtering/server';
 import type { CatalogPorts } from './core/ports';
 import type { ListingPorts } from './queries/getListingPage';
 
@@ -24,7 +24,7 @@ const catalog: CatalogPorts = {
 
 const listingPorts: ListingPorts = {
   catalogue: { resolveSlugToId, unrollDescendantKeys, getAllLeafKeys, getBreadcrumbLabels },
-  filtering: { getFilterFacets, getCategoryPriceRange },
+  filtering: { getFilterFacets },
   catalog,
 };
 

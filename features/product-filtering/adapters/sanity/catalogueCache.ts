@@ -1,4 +1,4 @@
-// How the facet and price-range reads use Next's Data Cache: served for FACET_REVALIDATE_SECONDS before
+// How the facet read uses Next's Data Cache: served for FACET_REVALIDATE_SECONDS before
 // Sanity is asked again, and cleared at once by the tag that app/api/revalidate/route.ts revalidates on
 // every publish. 300 s matches the s-maxage in next.config.ts. It is also how stale the "In stock (N)"
 // count may get when stock changes without a publish (checkout is unaffected: stock is checked
