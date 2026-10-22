@@ -1,18 +1,17 @@
 'use client';
 
 import React from 'react';
-import { getFacetModule, type Category } from '@/features/product-filtering/core/definitions/facetRegistry';
+import { SORT_OPTIONS } from '@/features/product-filtering/core/definitions/sortOptions';
 import { useFilterParam } from '@/features/product-filtering/state/useFilterParam';
 
 /**
  * URL <-> its own display only — never touches the product grid, data, counts
  * or streaming.
  *
- * Category-aware: SORT_OPTIONS comes from the per-category module
- * (facetRegistry.ts); the URL hook is the shared useFilterParam.
+ * The sort choices are the same on every category (sortOptions.ts); the URL
+ * hook is the shared useFilterParam.
  */
-export function SortDropdown({ category = 'headphones' }: { category?: Category }) {
-  const { SORT_OPTIONS } = getFacetModule(category);
+export function SortDropdown() {
   const [sort, setSort] = useFilterParam('sort');
 
   return (

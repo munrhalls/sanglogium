@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { SortDropdown } from './SortDropdown';
-import type { Category } from '@/features/product-filtering/core/definitions/facetRegistry';
+import type { Category } from '@/features/product-filtering/core/definitions/category';
 import { MobileFilterSheet, type MobileFilterSheetProps } from './MobileFilterSheet';
 
 /**
@@ -32,7 +32,7 @@ export function SortBar({
           {totalCount} {totalCount === 1 ? 'product' : 'products'}
         </span>
       </div>
-      <SortDropdown category={category} />
+      <SortDropdown />
     </div>
   );
 }

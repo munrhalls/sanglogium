@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { getFacetModule, type Category } from '@/features/product-filtering/core/definitions/facetRegistry';
+import { SORT_OPTIONS, SORT_DEFAULT } from '@/features/product-filtering/core/definitions/sortOptions';
+import type { RenderedFacet } from '@/features/product-filtering/core/types/facetProjection';
 import { humanizeFacetValue } from '@/features/product-filtering/core/rules/humanizeFacetValue';
 import { useFilterParam, useClearAllFilters } from '@/features/product-filtering/state/useFilterParam';
 import { formatPriceMajor } from '@/platform/utils/price';
@@ -12,17 +13,13 @@ import { formatPriceMajor } from '@/platform/utils/price';
  * shared hook. Never imports or reacts to the product grid, product data,
  * result counts or streaming.
  *
- * Category-aware since sang-logium-3rv.6: `category` picks which per-category
- * facet module (facetRegistry.ts) supplies FACETS, while useFilterParam and
- * useClearAllFilters are the shared hooks imported above, so a
- * chip's URL param always matches the sidebar control that set it.
+ * The facets to make chips for arrive as the `facets` prop (derived from product data by getFilterFacets); useFilterParam and useClearAllFilters are the shared hooks imported above, so a chip's URL param always matches the sidebar control that set it.
  */
 
 interface ActiveFilterChipsProps {
+  /** The facets the sidebar draws (CatalogueFacets.facetSet.facets). */
+  facets: RenderedFacet[];
   brandLabels?: Record<string, string>;
-  /** Optional: app/(store)/products/page.tsx (all-products) omits this and
-   *  defaults to headphones (same default FilterSidebar uses). */
-  category?: Category;
 }
 
 interface Chip {
@@ -33,8 +30,13 @@ interface Chip {
 
 const formatRangeChipValue = (value: number, unit: string) => (unit === 'm' ? `${value.toFixed(1)}m` : `${Math.round(value)} ${unit}`);
 
-export function ActiveFilterChips({ brandLabels = {}, category = 'headphones' }: ActiveFilterChipsProps) {
-  const { FACETS, SORT_DEFAULT, SORT_OPTIONS } = getFacetModule(category);
+// The body calls one hook per facet, so it is remounted whenever the facet list changes.
+export function ActiveFilterChips(props: ActiveFilterChipsProps) {
+  const listKey = props.facets.map((facet) => `${facet.id}:${facet.control}`).join('|');
+  return <ActiveFilterChipsBody key={listKey} {...props} />;
+}
+
+function ActiveFilterChipsBody({ facets, brandLabels = {} }: ActiveFilterChipsProps) {
   const sortLabel = (value: string) => SORT_OPTIONS.find((o) => o.value === value)?.label ?? value;
 
   const [sort, setSort] = useFilterParam('sort') as [string, (v: string) => void];
@@ -42,11 +44,7 @@ export function ActiveFilterChips({ brandLabels = {}, category = 'headphones' }:
   const [maxPrice, setMaxPrice] = useFilterParam('maxPrice') as [number | null, (v: number | null) => void];
   const clearAll = useClearAllFilters();
 
-  // Stable hook-order access to every generic facet param (and, for range
-  // facets, their Min/Max pair) — FACETS is a static, compile-time-constant
-  // array for a given category, so this loop calling a fixed sequence of
-  // hooks is safe every render (same pattern production's own
-  // ActiveFilterChips.tsx uses over FILTER_FACETS).
+  // Hook-order access to every generic facet param (and, for range facets, their Min/Max pair): `facets` is fixed for the life of a mounted body, because ActiveFilterChips remounts the body when the list changes.
   type ArraySetter = [string[], (next: string[] | ((prev: string[]) => string[])) => void];
   type BoolSetter = [boolean, (next: boolean) => void];
   type NumSetter = [number | null, (next: number | null) => void];
@@ -55,7 +53,7 @@ export function ActiveFilterChips({ brandLabels = {}, category = 'headphones' }:
   const booleanSetters = new Map<string, BoolSetter>();
   const rangeSetters = new Map<string, [NumSetter, NumSetter]>();
 
-  for (const facet of FACETS) {
+  for (const facet of facets) {
     if (facet.control === 'boolean') {
       booleanSetters.set(facet.id, useFilterParam(facet.id) as unknown as BoolSetter);
     } else if (facet.control === 'range') {
@@ -88,7 +86,7 @@ export function ActiveFilterChips({ brandLabels = {}, category = 'headphones' }:
     chips.push({ key: 'sort', label: `Sort: ${sortLabel(sort)}`, onRemove: () => setSort(SORT_DEFAULT) });
   }
 
-  for (const facet of FACETS) {
+  for (const facet of facets) {
     if (facet.control === 'boolean') {
       const [active, setActive] = booleanSetters.get(facet.id)!;
       if (active) chips.push({ key: facet.id, label: facet.label, onRemove: () => setActive(false) });
