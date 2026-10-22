@@ -7,7 +7,7 @@ Normative model of how this repository is organized: vertical slices. It says wh
 | # | Axiom |
 |---|-------|
 | A1 | **One home.** Every tracked path has exactly one home, decided by its path (section 3). |
-| A2 | **Two worlds.** The runtime is the code Next bundles. Everything else is a plane: studio, tooling, laws, config, docs, automation, static. Runtime never imports a plane; the one exception is `app/(studio)/`, which mounts the studio plane. Studio and tooling import from the runtime only `platform/sanity/env.ts` and the import-free facet vocabulary `features/product-filtering/core/definitions/facetMap.ts`. |
+| A2 | **Two worlds.** The runtime is the code Next bundles. Everything else is a plane: studio, tooling, laws, config, docs, automation, static. Runtime never imports a plane; the one exception is `app/(studio)/`, which mounts the studio plane. Studio and tooling import from the runtime only `platform/sanity/env.ts`. |
 | A3 | **Slices.** Each capability lives in one slice, `features/<slice>/`, built only from the parts in section 2. |
 | A4 | **Doors.** Code outside a slice imports it only through `index.ts` (client door) or `server.ts` (server door). |
 | A5 | **No cycles.** The slice-to-slice import graph, type imports included, has no cycle. A slice's level is 1 + the highest level it imports; levels are derived, never stored. |
