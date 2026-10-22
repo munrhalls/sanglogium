@@ -1,7 +1,7 @@
 // Types shared by the slice's pure rules: the filter/sort state shape every
 // rule consumes and the product shape the in-memory matching engine reads.
 
-import type { SortValue } from '@/features/product-filtering/core/definitions/facetMap';
+import type { SortValue } from '@/features/product-filtering/core/definitions/sortOptions';
 
 // Shape matches the server-side loader (url/filterSortParsers) so RSC and
 // client always agree: sort/price/inStock plus one key per facet urlParam.

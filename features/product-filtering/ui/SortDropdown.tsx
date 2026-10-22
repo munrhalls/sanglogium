@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { SORT_OPTIONS } from '@/features/product-filtering/core/definitions/sortOptions';
+import { SORT_DROPDOWN_OPTIONS } from '@/features/product-filtering/core/definitions/sortOptions';
 import { useFilterParam } from '@/features/product-filtering/state/useFilterParam';
 
 /**
@@ -27,7 +27,7 @@ export function SortDropdown() {
           onChange={(event) => setSort(event.target.value)}
           className="type-body rounded-sm appearance-none border border-border-secondary bg-surface-elevated py-2 pl-3 pr-9 text-text-body transition-colors hover:border-accent-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500"
         >
-          {SORT_OPTIONS.map((option) => (
+          {SORT_DROPDOWN_OPTIONS.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
             </option>

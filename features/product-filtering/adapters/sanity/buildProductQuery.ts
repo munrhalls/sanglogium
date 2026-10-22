@@ -21,7 +21,7 @@ import {
   SORT_DEFAULT,
   SORT_OPTIONS,
   type SortValue,
-} from '@/features/product-filtering/core/definitions/facetMap';
+} from '@/features/product-filtering/core/definitions/sortOptions';
 import type { FacetSet, NarrowingFacet, RenderedFacet } from '@/features/product-filtering/core/types/facetProjection';
 import type { ProductQueryState } from '@/features/product-filtering/core/types/filterTypes';
 

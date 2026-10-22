@@ -1,12 +1,9 @@
 // Facet selector: the human picklist of which product-data attributes are
-// projected as filter controls, per slice. Seeded from target-snapshot.json —
-// it carries only what data cannot provide (id, attribute path, display label,
-// group, range unit, and the display metadata showWhen, subheading and group
-// note), plus the query-only facets. No control, options, bounds or vocab:
-// those are derived from product data. selectorSeeding.laws.ts proves the
-// rendered facet set and the query-only list equal the snapshot (display
-// metadata is set aside there, the snapshot does not record it); edited by
-// hand from here on.
+// projected as filter controls, per slice. It carries only what data cannot
+// provide (id, attribute path, display label, group, range unit, and the
+// display metadata showWhen, subheading and group note), plus the query-only
+// facets. No control, options, bounds or vocab: those are derived from
+// product data. Edited by hand.
 
 export interface SelectorGroup {
   id: string;

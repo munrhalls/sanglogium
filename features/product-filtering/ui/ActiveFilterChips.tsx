@@ -37,7 +37,7 @@ export function ActiveFilterChips(props: ActiveFilterChipsProps) {
 }
 
 function ActiveFilterChipsBody({ facets, brandLabels = {} }: ActiveFilterChipsProps) {
-  const sortLabel = (value: string) => SORT_OPTIONS.find((o) => o.value === value)?.label ?? value;
+  const sortLabel = (value: string) => SORT_OPTIONS.find((o) => o.urlValue === value)?.label ?? value;
 
   const [sort, setSort] = useFilterParam('sort') as [string, (v: string) => void];
   const [minPrice, setMinPrice] = useFilterParam('minPrice') as [number | null, (v: number | null) => void];
