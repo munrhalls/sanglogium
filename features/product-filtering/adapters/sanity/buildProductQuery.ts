@@ -58,7 +58,7 @@ const ORDER_BY_SORT: Record<SortValue, string> = Object.fromEntries(
       case 'alpha-desc':
         return [o.urlValue, '| order(lower(name) desc, _id asc)'];
       default:
-        return [o.urlValue, '| order(_createdAt desc, _id desc)'];
+        return [SORT_DEFAULT, '| order(_createdAt desc, _id desc)'];
     }
   })
 ) as Record<SortValue, string>;
