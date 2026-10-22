@@ -62,15 +62,11 @@ function collectCategoryIdWithDescendants(categoryNodeId) {
 // Facet helpers
 // ---------------------------------------------------------------------------
 
-// Most facets list their real allowed values in facetMap.ts (e.g. brand's
-// vocab is ["Sony", "Bose", ...]). Some instead hold a placeholder like
-// ["<dynamic>"] because the values are too numerous/volatile to hardcode.
-// This detects that placeholder case so candidateValues() knows to derive
-// the real values from the product data instead.
-function isPlaceholderVocab(vocab) {
-  return vocab.some((v) => v.startsWith('<') && v.endsWith('>'));
-}
-
+// The candidate values for a facet are the distinct values actually seen on
+// this category's products — the same derivation the app uses at runtime.
+// (The Studio authoring lists now live in
+// features/products/schema/productFilterAttributes/vocab.ts; the proof reads
+// live data, not a list.)
 function facetsForCategory(category) {
   return FILTER_FACETS.filter(
     (f) => f.categories.includes('*') || f.categories.includes(category),
@@ -155,11 +151,9 @@ function matchesOption(product, facet, value) {
 }
 
 // Which values do we test for this facet? Boolean facets: just "true".
-// Facets with a real vocab list: every value in that list. Facets with a
-// placeholder vocab: every value actually seen on these in-memory products.
+// Every other facet: every value actually seen on these in-memory products.
 function candidateValues(facet, products) {
   if (facet.type === 'boolean') return ['true'];
-  if (!isPlaceholderVocab(facet.valueVocab)) return facet.valueVocab;
   const seen = new Set();
   for (const p of products) {
     for (const v of fieldValues(p.filterAttributes[fieldKey(facet)])) seen.add(v);

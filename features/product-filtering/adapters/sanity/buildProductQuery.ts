@@ -7,27 +7,28 @@ import "server-only";
 // `getProductsCount` / `getProductsChunk`.
 //
 // PURE: no JSX, no data access, no `searchParams` parsing. Its only importer is
-// the Server Component — no client module imports it, so there is exactly one
-// query translation in the app (risk A2).
+// the products slice's Sanity adapter — no client module imports it, so there
+// is exactly one query translation in the app (risk A2).
 //
-// SCOPE: all sort options and all filterAttributes facets defined in
-// ../../core/definitions/facetMap.ts. Price, brand, in-stock and all category-specific facets now
-// read from the dedicated filterAttributes object, never from free-text fields.
+// SCOPE: which facets can narrow the query comes from the caller's FacetSet —
+// the same derivation that feeds the sidebar and the counts. A URL param that
+// is not a facet of this route's set produces no predicate here (inert, not a
+// dead end), and a value it cannot select never reaches this function
+// (sanitizeFilterState drops it upstream). Each facet's document field is
+// `filterAttributes.<attribute>` — the path the selector already carries.
 
 import {
-  FILTER_FACETS,
   SORT_DEFAULT,
   SORT_OPTIONS,
-  type FilterFacet,
   type SortValue,
 } from '@/features/product-filtering/core/definitions/facetMap';
-import { FACET_FIELD_MAP } from './fieldMap';
+import type { FacetSet, NarrowingFacet, RenderedFacet } from '@/features/product-filtering/core/types/facetProjection';
 import type { ProductQueryState } from '@/features/product-filtering/core/types/filterTypes';
 
 interface ProductQuery {
   /** GROQ ordering, pipe included: `| order(...)`. Applied before the slice. */
   orderClause: string;
-  /** Extra predicate for the `*[...]` filter, `&&`-prefixed. Empty in S1. */
+  /** Extra predicate for the `*[...]` filter, `&&`-prefixed. */
   whereClause: string;
   /** Named params the clauses reference. Merged alongside `keys` by the fetch. */
   params: Record<string, unknown>;
@@ -55,23 +56,19 @@ const ORDER_BY_SORT: Record<SortValue, string> = Object.fromEntries(
       case 'alpha-asc':
         return [o.urlValue, '| order(lower(name) asc, _id asc)'];
       case 'alpha-desc':
-        return [o.urlValue, '| order(lower(name) desc, _id desc)'];
+        return [o.urlValue, '| order(lower(name) desc, _id asc)'];
       default:
         return [o.urlValue, '| order(_createdAt desc, _id desc)'];
     }
   })
 ) as Record<SortValue, string>;
 
-function fieldName(facet: FilterFacet) {
-  return facet.attribute;
+function fieldPath(facet: NarrowingFacet | RenderedFacet) {
+  return `filterAttributes.${facet.attribute}`;
 }
 
-function fieldPath(facet: FilterFacet) {
-  return FACET_FIELD_MAP[facet.urlParam];
-}
-
-function selectedValues(state: ProductQueryState, facet: FilterFacet): string[] {
-  const raw = state[facet.urlParam as keyof ProductQueryState];
+function selectedValues(state: ProductQueryState, facetId: string): string[] {
+  const raw = state[facetId as keyof ProductQueryState];
   if (Array.isArray(raw)) {
     return raw.map((s) => String(s).trim().toLowerCase()).filter(Boolean);
   }
@@ -79,10 +76,10 @@ function selectedValues(state: ProductQueryState, facet: FilterFacet): string[] 
   return [];
 }
 
-function addMultiOrEnumPredicate(parts: string[], params: Record<string, unknown>, facet: FilterFacet, values: string[]) {
+function addCheckboxPredicate(parts: string[], params: Record<string, unknown>, facet: NarrowingFacet | RenderedFacet, values: string[]) {
   if (values.length === 0) return;
   const field = fieldPath(facet);
-  const paramName = `${fieldName(facet)}Param`;
+  const paramName = `${facet.id}Param`;
 
   // sang-logium-3rv.5 -- URL values are lower-cased by selectedValues() and
   // Sanity product data is canonical mixed case (e.g. 'SBC', 'aptX HD',
@@ -107,7 +104,9 @@ function addMultiOrEnumPredicate(parts: string[], params: Record<string, unknown
   params[paramName] = values;
 }
 
-export function buildProductQuery(state: ProductQueryState): ProductQuery {
+const EMPTY_FACET_SET: FacetSet = { groups: [], facets: [], queryOnly: [] };
+
+export function buildProductQuery(state: ProductQueryState, facetSet: FacetSet = EMPTY_FACET_SET): ProductQuery {
   const sort: SortValue =
     (state.sort as SortValue) ?? SORT_DEFAULT;
   const orderClause = ORDER_BY_SORT[sort] ?? ORDER_BY_SORT[SORT_DEFAULT];
@@ -133,40 +132,36 @@ export function buildProductQuery(state: ProductQueryState): ProductQuery {
     parts.push('coalesce(filterAttributes.inStock, stock - reservedStock > 0) == true');
   }
 
-  // Add a predicate for every non-price, non-inStock filter facet.
-  for (const facet of FILTER_FACETS) {
-    if (facet.urlParam === 'price') continue;
-    if (facet.urlParam === 'inStock') continue;
+  // A predicate for every selected narrowing facet of this route's set.
+  for (const facet of [...facetSet.facets, ...facetSet.queryOnly]) {
+    if (facet.id === 'inStock') continue; // handled above — it keeps its stock-arithmetic fallback.
 
-    if (facet.type === 'boolean') {
-      const active = state[facet.urlParam as keyof ProductQueryState];
-      if (active === true) {
+    if (facet.control === 'boolean') {
+      if (state[facet.id as keyof ProductQueryState] === true) {
         parts.push(`${fieldPath(facet)} == true`);
       }
       continue;
     }
 
-    // sang-logium-3rv.5 -- additive: mirrors the minPrice/maxPrice predicates
-    // above (S2), generalized to any range-type facet instead of only price.
-    // Does not touch the price branch above it.
-    if (facet.type === 'range') {
-      const minVal = state[`${facet.urlParam}Min` as keyof ProductQueryState];
-      const maxVal = state[`${facet.urlParam}Max` as keyof ProductQueryState];
+    // Mirrors productMatchesState's in-memory range check (sang-logium-3rv.5):
+    // `${facet.id}Min`/`${facet.id}Max`, same shape as minPrice/maxPrice.
+    if (facet.control === 'range') {
+      const minVal = state[`${facet.id}Min` as keyof ProductQueryState];
+      const maxVal = state[`${facet.id}Max` as keyof ProductQueryState];
       if (typeof minVal === 'number') {
-        const paramName = `${facet.urlParam}MinParam`;
+        const paramName = `${facet.id}MinParam`;
         parts.push(`${fieldPath(facet)} >= $${paramName}`);
         params[paramName] = minVal;
       }
       if (typeof maxVal === 'number') {
-        const paramName = `${facet.urlParam}MaxParam`;
+        const paramName = `${facet.id}MaxParam`;
         parts.push(`${fieldPath(facet)} <= $${paramName}`);
         params[paramName] = maxVal;
       }
       continue;
     }
 
-    const values = selectedValues(state, facet);
-    addMultiOrEnumPredicate(parts, params, facet, values);
+    addCheckboxPredicate(parts, params, facet, selectedValues(state, facet.id));
   }
 
   const whereClause = parts.length ? ` && ${parts.join(' && ')}` : '';

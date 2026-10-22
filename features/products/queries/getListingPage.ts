@@ -75,18 +75,15 @@ export async function getListingPage(ports: ListingPorts, input: {
     const pageValue = Array.isArray(query.page) ? query.page[0] : query.page;
     const page = typeof pageValue === 'string' ? Number(pageValue) : 1;
 
-    // Drop URL filter values that match nothing valid for this route (e.g.
-    // ?brand=notabrand, ?driverType=banana) so a junk deep link is inert instead
-    // of a dead-end empty page. Closed-vocab facets are vetted purely up front;
-    // brand is data-derived, so it is vetted below against the brand slugs the
-    // facet computation finds on this route. (jw8.3)
-    const preState = sanitizeFilterState(
-      loadFilterSort(query) as ProductQueryState,
-    );
+    // URL filter values are vetted against this route's own facet set inside
+    // getFilterFacets — a bogus deep link (?driverType=banana) is inert there,
+    // before it can touch counts or the product query (jw8.3). Brand is vetted
+    // below: its values live on brandRef, so its vocab is the counted brand set.
+    const rawState = loadFilterSort(query) as ProductQueryState;
 
     const [metadata, facets, priceRange] = await Promise.all([
       slug ? ports.catalog.getCategoryMetadata(nodeId!) : Promise.resolve(null),
-      ports.filtering.getFilterFacets({ keys, state: preState, category }),
+      ports.filtering.getFilterFacets({ keys, state: rawState, category }),
       // FULL category price span — not narrowed by active filters, so the max
       // handle can always be dragged back up past the current selection.
       ports.filtering.getCategoryPriceRange({ keys }),
@@ -96,13 +93,13 @@ export async function getListingPage(ports: ListingPorts, input: {
       return { notFound: true };
     }
 
-    const state = sanitizeFilterState(preState, {
+    const state = sanitizeFilterState(facets.state, facets.facetSet, {
       brand: Object.keys(facets.brandLabels),
     });
 
     const filtersActive = isFiltersActive(state);
 
-    const totalCount = await ports.catalog.getProductsCount({ keys, state });
+    const totalCount = await ports.catalog.getProductsCount({ keys, state, facetSet: facets.facetSet });
     const priceBounds = resolvePriceBounds(priceRange);
 
     const overline =
@@ -119,7 +116,7 @@ export async function getListingPage(ports: ListingPorts, input: {
     // own Suspense boundaries.
     const chunkPromises = Array.from(
       { length: Math.ceil(PER_PAGE / CHUNK_SIZE) },
-      (_, i) => ports.catalog.getProductsChunk({ keys, offset: pageStart + i * CHUNK_SIZE, limit: CHUNK_SIZE, state }),
+      (_, i) => ports.catalog.getProductsChunk({ keys, offset: pageStart + i * CHUNK_SIZE, limit: CHUNK_SIZE, state, facetSet: facets.facetSet }),
     );
 
     return {

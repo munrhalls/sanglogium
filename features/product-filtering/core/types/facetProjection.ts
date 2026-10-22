@@ -50,8 +50,17 @@ export interface RenderedFacet extends Omit<ProjectedFacet, 'control'> {
   control: FacetControl;
 }
 
-/** What the counts engine needs of a facet to narrow by it. */
-export type NarrowingFacet = Pick<RenderedFacet, 'id' | 'attribute' | 'control'>;
+/** What the counts engine needs of a facet to narrow by it, and what the URL
+ *  side needs to vet a selection: id, document attribute, control — and for a
+ *  checkbox facet the legal values themselves, derived from the data. */
+export interface NarrowingFacet {
+  id: string;
+  attribute: string;
+  control: FacetControl;
+  /** The selectable values, derived from product data. Set only on queryOnly
+   *  checkbox facets — rendered facets carry theirs as `options`. */
+  values?: string[];
+}
 
 /** Everything the sidebar draws and the counts narrow by, derived from one product set (core/rules/buildFacetSet.ts). */
 export interface FacetSet {

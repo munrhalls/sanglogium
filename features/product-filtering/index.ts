@@ -10,6 +10,7 @@ export {
 } from './core/rules/facetCounts';
 export { buildFacetSet } from './core/rules/buildFacetSet';
 export type { ProductQueryState, RawProduct } from './core/types/filterTypes';
+export type { FacetSet } from './core/types/facetProjection';
 export { resolvePriceBounds } from './core/rules/priceBounds';
 export type { PriceRangeData } from './core/rules/priceBounds';
 export type { CatalogueFacets } from './core/rules/facetCounts';

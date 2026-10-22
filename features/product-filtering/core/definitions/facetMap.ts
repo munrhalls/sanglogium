@@ -1,5 +1,8 @@
 // Canonical facet and sort definitions for the product-filtering feature.
-// Single source of truth.
+// Single source of truth for the URL param contract and the sort allowlist.
+// There is no value vocabulary here: selectable values are derived from
+// product data at request time. The Studio option lists editors pick from
+// live in features/products/schema/productFilterAttributes/vocab.ts.
 
 export type FilterFacetType = 'range' | 'enum' | 'boolean' | 'multi';
 
@@ -8,12 +11,10 @@ export interface FilterFacet {
   facet: string;
   /** Key path inside the product's filterAttributes object (RawProduct
    *  shape, e.g. "wearingStyle", "freqResponseHz.min"). The document-level
-   *  'filterAttributes.' prefix lives in adapters/sanity/fieldMap.ts. */
+   *  'filterAttributes.' prefix is added at query-build time. */
   attribute: string;
   /** Storage type. */
   type: FilterFacetType;
-  /** Closed vocabulary or placeholder marker. */
-  valueVocab: string[];
   /** Applicable category slugs; ["*"] means universal. */
   categories: string[];
   /** URL query-param key. */
@@ -26,7 +27,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Price',
     attribute: 'price',
     type: 'range',
-    valueVocab: ['min', 'max'],
     categories: ['*'],
     urlParam: 'price',
   },
@@ -34,7 +34,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Brand',
     attribute: 'brand',
     type: 'multi',
-    valueVocab: ['<brand-slug>'],
     categories: ['*'],
     urlParam: 'brand',
   },
@@ -42,7 +41,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'In stock only',
     attribute: 'inStock',
     type: 'boolean',
-    valueVocab: ['true', 'false'],
     categories: ['*'],
     urlParam: 'inStock',
   },
@@ -50,7 +48,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Category',
     attribute: 'category',
     type: 'multi',
-    valueVocab: ['headphones', 'audio-electronics', 'accessories'],
     categories: ['all-products'],
     urlParam: 'category',
   },
@@ -63,7 +60,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     // failed to match any correctly-typed product and only matched legacy
     // un-migrated docs storing a raw string (sang-logium bug hunt 2026-09-15).
     type: 'multi',
-    valueVocab: ['over-ear', 'on-ear', 'in-ear'],
     categories: ['headphones'],
     urlParam: 'wearingStyle',
   },
@@ -72,7 +68,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     attribute: 'acousticDesign',
     // Array field in schema, same enum/array mismatch as wearingStyle above.
     type: 'multi',
-    valueVocab: ['open-back', 'closed-back', 'semi-open'],
     categories: ['headphones'],
     urlParam: 'acousticDesign',
   },
@@ -84,7 +79,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     // Was missing 3 of the schema's 8 real options (features/products/schema/
     // productType.ts:452) -- amt/bone-conduction/electret silently never got
     // counted, regardless of real product data.
-    valueVocab: ['dynamic', 'planar-magnetic', 'electrostatic', 'balanced-armature', 'hybrid', 'amt', 'bone-conduction', 'electret'],
     categories: ['headphones'],
     urlParam: 'driverType',
   },
@@ -94,7 +88,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     type: 'enum',
     // Was missing 2 of the schema's 4 real options (features/products/schema/
     // productType.ts:296) -- true-wireless/hybrid silently never got counted.
-    valueVocab: ['wired', 'wireless', 'true-wireless', 'hybrid'],
     categories: ['headphones'],
     urlParam: 'connectivity',
   },
@@ -102,7 +95,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Connector / plug',
     attribute: 'cableTermination',
     type: 'multi',
-    valueVocab: ['3.5mm', '6.35mm', '4.4mm-balanced', '4-pin-xlr', '2.5mm-balanced', 'usb-c', 'mmcx', '2-pin', 'fixed-cable'],
     categories: ['headphones'],
     urlParam: 'cableTermination',
   },
@@ -110,7 +102,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Microphone',
     attribute: 'microphone',
     type: 'boolean',
-    valueVocab: ['true', 'false'],
     categories: ['headphones'],
     urlParam: 'microphone',
   },
@@ -118,7 +109,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Noise cancelling',
     attribute: 'anc',
     type: 'enum',
-    valueVocab: ['anc', 'passive', 'none'],
     categories: ['headphones'],
     urlParam: 'anc',
   },
@@ -126,7 +116,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Requires amplifier',
     attribute: 'requiresAmplifier',
     type: 'boolean',
-    valueVocab: ['true', 'false'],
     categories: ['headphones'],
     urlParam: 'requiresAmplifier',
   },
@@ -143,7 +132,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     attribute: 'productCategory',
     type: 'multi',
     // No closed options.list in the schema either — derive from data.
-    valueVocab: ['<product-category>'],
     categories: ['headphones'],
     urlParam: 'productCategory',
   },
@@ -151,7 +139,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Fit type',
     attribute: 'fitType',
     type: 'enum',
-    valueVocab: ['universal', 'custom'],
     categories: ['headphones'],
     urlParam: 'fitType',
   },
@@ -159,7 +146,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Portable',
     attribute: 'portable',
     type: 'boolean',
-    valueVocab: ['true', 'false'],
     categories: ['headphones'],
     urlParam: 'portable',
   },
@@ -170,7 +156,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     // sang-logium-3rv.9 -- schema options.list (productType.ts) has 8 values;
     // 'Harman-target-like' was missing here, so a product carrying it could
     // never be counted or filtered to. Added to match the schema exactly.
-    valueVocab: ['Neutral', 'Warm', 'Bright/Analytical', 'Dark', 'V-Shaped', 'Basshead', 'Mid-Forward', 'Harman-target-like'],
     categories: ['headphones'],
     urlParam: 'soundSignature',
   },
@@ -178,7 +163,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Detachable cable',
     attribute: 'detachableCable',
     type: 'boolean',
-    valueVocab: ['true', 'false'],
     categories: ['headphones'],
     urlParam: 'detachableCable',
   },
@@ -186,7 +170,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Foldable',
     attribute: 'foldable',
     type: 'boolean',
-    valueVocab: ['true', 'false'],
     categories: ['headphones'],
     urlParam: 'foldable',
   },
@@ -194,7 +177,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Water / sweat resistance',
     attribute: 'ipxRating',
     type: 'enum',
-    valueVocab: ['none', 'IPX2', 'IPX4', 'IPX5', 'IPX7', 'IPX8'],
     categories: ['headphones'],
     urlParam: 'ipx',
   },
@@ -202,7 +184,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Bluetooth codec',
     attribute: 'bluetoothCodecs',
     type: 'multi',
-    valueVocab: ['SBC', 'AAC', 'aptX', 'aptX HD', 'aptX Adaptive', 'aptX LL', 'LDAC', 'LC3'],
     categories: ['headphones'],
     urlParam: 'codec',
   },
@@ -210,7 +191,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Driver configuration',
     attribute: 'driverConfigBucket',
     type: 'enum',
-    valueVocab: ['single-dynamic', 'single-ba', 'multi-ba', 'hybrid-config', 'planar', 'other'],
     categories: ['headphones'],
     urlParam: 'driverConfig',
   },
@@ -225,7 +205,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Impedance',
     attribute: 'impedanceOhms',
     type: 'range',
-    valueVocab: ['min', 'max'],
     categories: ['headphones'],
     urlParam: 'impedance',
   },
@@ -233,7 +212,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Sensitivity',
     attribute: 'sensitivityDbMw',
     type: 'range',
-    valueVocab: ['min', 'max'],
     categories: ['headphones'],
     urlParam: 'sensitivity',
   },
@@ -245,7 +223,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     // deeper bass extension, so this filters on the low end of the pair.
     attribute: 'freqResponseHz.min',
     type: 'range',
-    valueVocab: ['min', 'max'],
     categories: ['headphones'],
     urlParam: 'bassExtension',
   },
@@ -253,7 +230,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Cable length',
     attribute: 'cableLengthM',
     type: 'range',
-    valueVocab: ['min', 'max'],
     categories: ['headphones'],
     urlParam: 'cableLength',
   },
@@ -269,7 +245,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     // practice.
     attribute: 'batteryLifeHours.ancOff',
     type: 'range',
-    valueVocab: ['min', 'max'],
     categories: ['headphones'],
     urlParam: 'batteryLife',
   },
@@ -277,7 +252,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Device type',
     attribute: 'deviceType',
     type: 'enum',
-    valueVocab: ['headphone-amplifier', 'digital-audio-player', 'dac', 'network-streamer', 'preamplifier', 'integrated-amplifier', 'power-amplifier', 'cd-player-transport'],
     categories: ['audio-electronics'],
     urlParam: 'deviceType',
   },
@@ -285,7 +259,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Connectivity',
     attribute: 'deviceConnectivity',
     type: 'enum',
-    valueVocab: ['wired', 'bluetooth', 'wifi-networked', 'wired-wireless'],
     categories: ['audio-electronics'],
     urlParam: 'deviceConnectivity',
   },
@@ -293,7 +266,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'DSD support',
     attribute: 'dsdSupport',
     type: 'enum',
-    valueVocab: ['none', 'dsd64', 'dsd128', 'dsd256-plus'],
     categories: ['audio-electronics'],
     urlParam: 'dsdSupport',
   },
@@ -301,7 +273,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'DAC chipset family',
     attribute: 'dacChipsetFamily',
     type: 'multi',
-    valueVocab: ['ess-sabre', 'akm', 'cirrus-logic', 'r2r-ladder'],
     categories: ['audio-electronics'],
     urlParam: 'dacChipsetFamily',
   },
@@ -309,7 +280,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Streaming platform support',
     attribute: 'streamingPlatformSupport',
     type: 'multi',
-    valueVocab: ['airplay2', 'chromecast', 'spotify-connect', 'tidal-connect', 'roon-ready', 'dlna'],
     categories: ['audio-electronics'],
     urlParam: 'streamingPlatformSupport',
   },
@@ -317,7 +287,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Form factor',
     attribute: 'formFactor',
     type: 'enum',
-    valueVocab: ['desktop', 'portable', 'dongle'],
     categories: ['audio-electronics'],
     urlParam: 'formFactor',
   },
@@ -328,7 +297,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     // sang-logium-ttn: was missing 'class-d', which productType.ts's own
     // options.list declares -- no live product could ever be filtered to
     // by that value.
-    valueVocab: ['solid-state', 'tube', 'hybrid', 'class-d'],
     categories: ['audio-electronics'],
     urlParam: 'amplification',
   },
@@ -336,7 +304,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'DAC included',
     attribute: 'dacIncluded',
     type: 'boolean',
-    valueVocab: ['true', 'false'],
     categories: ['audio-electronics'],
     urlParam: 'dacIncluded',
   },
@@ -344,7 +311,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Balanced output',
     attribute: 'balancedOutput',
     type: 'boolean',
-    valueVocab: ['true', 'false'],
     categories: ['audio-electronics'],
     urlParam: 'balancedOutput',
   },
@@ -356,7 +322,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     // options.list declares (xlr-balanced, phono-mm-mc, hdmi-earc,
     // ethernet-lan, i2s-iis, aes-ebu) -- real products carry these but no
     // checkbox ever existed to filter by them.
-    valueVocab: ['usb', 'optical', 'coaxial', 'rca', 'bluetooth', 'xlr-balanced', 'phono-mm-mc', 'hdmi-earc', 'ethernet-lan', 'i2s-iis', 'aes-ebu'],
     categories: ['audio-electronics'],
     urlParam: 'inputs',
   },
@@ -368,7 +333,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Accessory type',
     attribute: 'accessoryType',
     type: 'enum',
-    valueVocab: ['cables-interconnects', 'replacement-parts', 'cases-storage-transport', 'adapters-converters', 'cleaning-maintenance', 'stands-isolation'],
     categories: ['accessories'],
     urlParam: 'accessoryType',
   },
@@ -376,7 +340,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Connector / termination',
     attribute: 'connectorTermination',
     type: 'multi',
-    valueVocab: ['rca', 'xlr', '3.5mm', '2.5mm', '4.4mm', '6.35mm', '4-pin-mini-xlr', 'mini-to-rca'],
     categories: ['accessories'],
     urlParam: 'connectorTermination',
   },
@@ -387,7 +350,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Awards / recognition',
     attribute: 'awards',
     type: 'multi',
-    valueVocab: ['<award-slug>'],
     categories: ['headphones'],
     urlParam: 'awards',
   },
@@ -395,7 +357,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Condition',
     attribute: 'condition',
     type: 'enum',
-    valueVocab: ['new', 'open-box', 'refurbished'],
     categories: ['audio-electronics'],
     urlParam: 'condition',
   },
@@ -403,7 +364,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Compatible product type',
     attribute: 'compatibleProductType',
     type: 'multi',
-    valueVocab: ['headphone', 'speaker', 'amplifier-source', 'universal-any'],
     categories: ['accessories'],
     urlParam: 'compatibleProductType',
   },
@@ -411,7 +371,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Cable function',
     attribute: 'cableFunction',
     type: 'multi',
-    valueVocab: ['headphone-cable', 'interconnect-rca-xlr', 'digital-usb-coaxial-optical-aes-ebu-ethernet'],
     categories: ['accessories'],
     urlParam: 'cableFunction',
   },
@@ -419,7 +378,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Length',
     attribute: 'lengthM',
     type: 'range',
-    valueVocab: ['min', 'max'],
     categories: ['accessories'],
     urlParam: 'length',
   },
@@ -427,7 +385,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Conductor material',
     attribute: 'conductorMaterial',
     type: 'multi',
-    valueVocab: ['copper-ofc', 'silver', 'silver-plated-copper'],
     categories: ['accessories'],
     urlParam: 'conductorMaterial',
   },
@@ -435,7 +392,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Balanced / unbalanced',
     attribute: 'balancedUnbalanced',
     type: 'enum',
-    valueVocab: ['balanced', 'unbalanced'],
     categories: ['accessories'],
     urlParam: 'balanced',
   },
@@ -443,7 +399,6 @@ export const FILTER_FACETS: FilterFacet[] = [
     facet: 'Part type',
     attribute: 'partType',
     type: 'enum',
-    valueVocab: ['ear-pads-cushions', 'ear-tips'],
     categories: ['accessories'],
     urlParam: 'partType',
   },
@@ -492,14 +447,3 @@ export type SortValue = (typeof SORT_OPTIONS)[number]['urlValue'];
 
 /** The sort applied when the URL carries none. */
 export const SORT_DEFAULT: SortValue = 'newest';
-
-export const isPlaceholderVocab = (vocab: string[]) =>
-  vocab.some((v) => v.startsWith('<') && v.endsWith('>'));
-
-/** The closed vocabulary of the facet whose URL query-param key is `urlParam`.
- *  Throws when no facet uses that key. */
-export function vocabFor(urlParam: string): string[] {
-  const facet = FILTER_FACETS.find((f) => f.urlParam === urlParam);
-  if (!facet) throw new Error(`No facet vocabulary for urlParam "${urlParam}"`);
-  return facet.valueVocab;
-}

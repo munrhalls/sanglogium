@@ -12,13 +12,12 @@ import {
 } from './filterSortParams';
 import {
   FILTER_FACETS,
-  isPlaceholderVocab,
 } from '@/features/product-filtering/core/definitions/facetMap';
 
-// One representative valid value per parser key, derived from the canonical
-// facet map so every facet kind (boolean, enum, multi, range) and the sort
-// are covered — including a real value for placeholder-vocab facets like
-// `brand`, whose vocabulary is data-derived.
+// One representative value per parser key, covering every facet kind
+// (boolean, enum, multi, range) and the sort. Any string exercises an array
+// parser — whether a value is selectable is product data's job, not the URL
+// contract's.
 function representativeValue(key: string): unknown {
   if (key === 'sort') return 'price-asc';
   if (key === 'minPrice') return 25;
@@ -32,7 +31,7 @@ function representativeValue(key: string): unknown {
   assert.ok(facet, `no facet found for parser key "${key}"`);
   if (facet.type === 'boolean') return true;
   if (facet.type === 'range') return key.endsWith('Min') ? 10 : 90;
-  return [isPlaceholderVocab(facet.valueVocab) ? 'acme' : facet.valueVocab[0]];
+  return ['acme'];
 }
 
 test('every parser round-trips a valid value through serialize -> parse', (t) => {

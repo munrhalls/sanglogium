@@ -37,17 +37,19 @@ test('the snapshot carries the facetMap side of every facet', () => {
     assert.ok(entry, `${facet.id}: no FILTER_FACETS entry`);
     assert.equal(facet.attribute, entry.attribute, `${facet.id}: attribute`);
     assert.equal(facet.storage, entry.type, `${facet.id}: storage`);
-    assert.deepEqual(facet.vocab, entry.valueVocab, `${facet.id}: vocab`);
   }
   const queryOnly = FILTER_FACETS.filter((f) => !ids.has(f.urlParam)).map((f) => ({
     id: f.urlParam,
     label: f.facet,
     attribute: f.attribute,
     storage: f.type,
-    vocab: f.valueVocab,
     categories: f.categories,
   }));
-  assert.deepEqual(snapshot.queryOnlyFacets, queryOnly, 'queryOnlyFacets');
+  assert.deepEqual(
+    snapshot.queryOnlyFacets.map(({ vocab, ...rest }: any) => rest),
+    queryOnly,
+    'queryOnlyFacets',
+  );
 });
 
 test('the snapshot freezes the sort options', () => {

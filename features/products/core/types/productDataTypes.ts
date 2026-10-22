@@ -1,4 +1,4 @@
-import type { ProductQueryState } from '@/features/product-filtering';
+import type { FacetSet, ProductQueryState } from '@/features/product-filtering';
 import type { Product } from './productTypes';
 
 export interface GetProductsCountOptions {
@@ -6,6 +6,9 @@ export interface GetProductsCountOptions {
   // S1 (buildProductQuery): the active filter/sort state; clauses are built
   // here from it. Omitted = unfiltered count, exactly as before.
   state?: ProductQueryState;
+  // The facets of this route the state may narrow by — required when `state`
+  // carries facet selections, else no facet predicates are emitted.
+  facetSet?: FacetSet;
 }
 
 export interface GetProductsChunkOptions {
@@ -16,6 +19,9 @@ export interface GetProductsChunkOptions {
   // and their named params are built here from it. Omitted = no clauses — the
   // raw slice order is Sanity's default, matching prior behaviour.
   state?: ProductQueryState;
+  // The facets of this route the state may narrow by — required when `state`
+  // carries facet selections.
+  facetSet?: FacetSet;
 }
 
 export interface GetProductsOptions {

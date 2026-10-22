@@ -37,6 +37,8 @@ export interface CatalogueFacets {
   isDefaultState: boolean;
   /** The facets to draw: the set these counts were computed for. */
   facetSet: FacetSet;
+  /** The state these counts were computed over, after vetting against the facet set. */
+  state: ProductQueryState;
 }
 
 function getPriceCents(p: RawProduct): number | null {
@@ -295,5 +297,6 @@ export function computeCatalogueFacets(
     ranges,
     isDefaultState: isDefaultFilterState(state, facetSet),
     facetSet,
+    state,
   };
 }

@@ -87,7 +87,6 @@ import {
   SORT_OPTIONS as SORT_MAP,
   type FilterFacet,
   type SortValue,
-  isPlaceholderVocab,
 } from "@/features/product-filtering/core/definitions/facetMap";
 import type { ProductQueryState } from "@/features/product-filtering/core/types/filterTypes";
 export type { SortValue } from "@/features/product-filtering/core/definitions/facetMap";

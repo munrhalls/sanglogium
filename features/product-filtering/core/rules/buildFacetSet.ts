@@ -50,7 +50,10 @@ export function buildFacetSet(products: RawProduct[], scope: FacetScope): FacetS
   const queryOnly = QUERY_ONLY_FACETS.flatMap(({ id, attribute }): NarrowingFacet[] => {
     const stat = inventory[attribute];
     const control = stat ? deriveControl(stat) : null;
-    return control === null ? [] : [{ id, attribute, control }];
+    if (control === null) return [];
+    // The URL vets selections against the same derivation: a checkbox facet's
+    // legal values are the distinct values the data actually holds.
+    return [control === 'checkbox' ? { id, attribute, control, values: stat.values } : { id, attribute, control }];
   });
 
   return { groups: selector.groups, facets, queryOnly };
