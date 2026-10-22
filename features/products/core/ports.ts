@@ -3,13 +3,10 @@ import type {
   CategoryMetadata,
   GetProductsChunkOptions,
   GetProductsCountOptions,
-  GetProductsOptions,
-  PaginatedProducts,
   SitemapSlug,
 } from './types/productDataTypes';
 
 export type CatalogPorts = {
-  getProductsByVfsKeys: (options: GetProductsOptions) => Promise<PaginatedProducts>;
   getProductsCount: (options: GetProductsCountOptions) => Promise<number>;
   getProductsChunk: (options: GetProductsChunkOptions) => Promise<Product[]>;
   getCategoryMetadata: (key: string) => Promise<CategoryMetadata | null>;

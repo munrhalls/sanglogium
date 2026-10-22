@@ -1,5 +1,4 @@
 import type { FacetSet, ProductQueryState } from '@/features/product-filtering';
-import type { Product } from './productTypes';
 
 export interface GetProductsCountOptions {
   keys: string[];
@@ -22,19 +21,6 @@ export interface GetProductsChunkOptions {
   // The facets of this route the state may narrow by — required when `state`
   // carries facet selections.
   facetSet?: FacetSet;
-}
-
-export interface GetProductsOptions {
-  keys: string[];
-  sort?: string;
-  filters?: string[];
-  page?: number;    // 1-based page number
-  perPage?: number; // Page size (capped at MAX_PRODUCTS_LIMIT)
-}
-
-export interface PaginatedProducts {
-  products: Product[];
-  totalCount: number; // Total across the whole filtered set, not the page window
 }
 
 export type { CategoryMetadata } from '@/features/catalogue';
