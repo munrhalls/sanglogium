@@ -31,10 +31,11 @@ test('every parser round-trips a valid value through serialize -> parse', (t) =>
     const value = representativeValue(key);
     const query = serializeFilterSort({ [key]: value });
     const parsed = loadFilterSort(query);
+    const actual = parsed[key as keyof typeof parsed];
     t.assert.deepEqual(
-      parsed[key],
+      actual,
       value,
-      `parser "${key}" round-trip: ${query} parsed back to ${JSON.stringify(parsed[key])}`,
+      `parser "${key}" round-trip: ${query} parsed back to ${JSON.stringify(actual)}`,
     );
   }
 });
