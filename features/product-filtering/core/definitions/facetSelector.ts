@@ -1,13 +1,18 @@
 // Facet selector: the human picklist of which product-data attributes are
 // projected as filter controls, per slice. Seeded from target-snapshot.json —
 // it carries only what data cannot provide (id, attribute path, display label,
-// group, range unit). No control, options, bounds or vocab: those are derived
-// from product data. selectorSeeding.laws.ts proves this file equals the
-// snapshot's rendered facet set; edited by hand from here on.
+// group, range unit, and the display metadata showWhen, subheading and group
+// note), plus the query-only facets. No control, options, bounds or vocab:
+// those are derived from product data. selectorSeeding.laws.ts proves the
+// rendered facet set and the query-only list equal the snapshot (display
+// metadata is set aside there, the snapshot does not record it); edited by
+// hand from here on.
 
 export interface SelectorGroup {
   id: string;
   label: string;
+  /** Short note under the group heading; absent when the group has none. */
+  note?: string;
 }
 
 export interface SelectedFacet {
@@ -21,6 +26,10 @@ export interface SelectedFacet {
   group: string;
   /** Display unit for range controls (e.g. 'Ω'); absent otherwise. */
   unit?: string;
+  /** Sub-heading drawn above this facet inside its group; absent when it has none. */
+  subheading?: string;
+  /** Draw this facet only while the selection of the facet named here includes one of `values`; an empty selection draws everything. */
+  showWhen?: { facet: string; values: string[] };
 }
 
 export interface SliceSelector {
@@ -102,12 +111,29 @@ export const FACET_SELECTOR: {
       { id: 'inStock', attribute: 'inStock', label: 'In Stock Only', group: 'commercial' },
       { id: 'accessoryType', attribute: 'accessoryType', label: 'Accessory Type', group: 'type' },
       { id: 'compatibleProductType', attribute: 'compatibleProductType', label: 'Compatible With', group: 'type' },
-      { id: 'cableFunction', attribute: 'cableFunction', label: 'Cable Type', group: 'cables' },
+      { id: 'cableFunction', attribute: 'cableFunction', label: 'Cable Type', group: 'cables', showWhen: { facet: 'accessoryType', values: ['cables-interconnects'] } },
       { id: 'connectorTermination', attribute: 'connectorTermination', label: 'Connectors', group: 'cables' },
-      { id: 'length', attribute: 'lengthM', label: 'Length', group: 'cables', unit: 'm' },
+      { id: 'length', attribute: 'lengthM', label: 'Length', group: 'cables', unit: 'm', showWhen: { facet: 'accessoryType', values: ['cables-interconnects'] } },
       { id: 'conductorMaterial', attribute: 'conductorMaterial', label: 'Conductor Material', group: 'cables' },
       { id: 'balanced', attribute: 'balancedUnbalanced', label: 'Signal Type', group: 'cables' },
-      { id: 'partType', attribute: 'partType', label: 'Part Type', group: 'replacementParts' },
+      { id: 'partType', attribute: 'partType', label: 'Part Type', group: 'replacementParts', showWhen: { facet: 'accessoryType', values: ['replacement-parts'] } },
     ],
   },
 };
+
+/** A facet only the URL knows: no control draws it, but it still narrows the counts like any other
+ *  (search redirects link to wearingStyle=in-ear). Its control comes from the data. */
+export interface QueryOnlyFacet {
+  id: string;
+  attribute: string;
+}
+
+export const QUERY_ONLY_FACETS: QueryOnlyFacet[] = [
+  { id: 'category', attribute: 'category' },
+  { id: 'wearingStyle', attribute: 'wearingStyle' },
+  { id: 'productCategory', attribute: 'productCategory' },
+  { id: 'fitType', attribute: 'fitType' },
+  { id: 'detachableCable', attribute: 'detachableCable' },
+  { id: 'awards', attribute: 'awards' },
+  { id: 'condition', attribute: 'condition' },
+];

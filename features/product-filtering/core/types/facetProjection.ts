@@ -1,7 +1,7 @@
 // Shapes of the data-derived facet projection: what the product data of one slice says
 // about each filterAttributes field. Type-only module.
 
-import type { SelectedFacet } from '@/features/product-filtering/core/definitions/facetSelector';
+import type { SelectedFacet, SelectorGroup } from '@/features/product-filtering/core/definitions/facetSelector';
 
 /** JS kind of a stored value. An array of anything is 'array'. */
 export type ObservedKind = 'boolean' | 'number' | 'string' | 'array' | 'object';
@@ -44,3 +44,24 @@ export interface ProjectedFacet extends SelectedFacet {
   min?: number;
   max?: number;
 }
+
+/** A projected facet the sidebar can draw: the data gave it a control. */
+export interface RenderedFacet extends Omit<ProjectedFacet, 'control'> {
+  control: FacetControl;
+}
+
+/** What the counts engine needs of a facet to narrow by it. */
+export type NarrowingFacet = Pick<RenderedFacet, 'id' | 'attribute' | 'control'>;
+
+/** Everything the sidebar draws and the counts narrow by, derived from one product set (core/rules/buildFacetSet.ts). */
+export interface FacetSet {
+  /** Groups to draw, in order. */
+  groups: SelectorGroup[];
+  /** Facets to draw, in order. */
+  facets: RenderedFacet[];
+  /** Facets only the URL knows (QUERY_ONLY_FACETS): nothing draws them, but they still narrow the counts. */
+  queryOnly: NarrowingFacet[];
+}
+
+/** One checkbox option's live count, as the sidebar reads it. */
+export type FacetOptionCount = { value: string; count: number };
