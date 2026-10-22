@@ -32,6 +32,7 @@ const emptyFacets = (state: ProductQueryState): CatalogueFacets => ({
   booleans: {},
   brandLabels: {},
   ranges: {},
+  priceRange: { minPrice: null, maxPrice: null, prices: [] },
   isDefaultState: isDefaultFilterState(state, EMPTY_FACET_SET),
   facetSet: EMPTY_FACET_SET,
   state,

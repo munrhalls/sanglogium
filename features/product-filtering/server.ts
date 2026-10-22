@@ -6,17 +6,11 @@ import "server-only";
 
 import { cache } from 'react';
 import { fetchFacetProducts } from './adapters/sanity/fetchFacetProducts';
-import { fetchCategoryPriceRange } from './adapters/sanity/fetchCategoryPriceRange';
 import {
   getFilterFacets as getFilterFacetsQuery,
   type GetFilterFacetsOptions,
 } from './queries/getFilterFacets';
-import {
-  getCategoryPriceRange as getCategoryPriceRangeQuery,
-  type GetCategoryPriceRangeOptions,
-} from './queries/getCategoryPriceRange';
 import type { CatalogueFacets } from './core/rules/facetCounts';
-import type { PriceRangeData } from './core/rules/priceBounds';
 
 // React cache is only available in React Server Components; skip it elsewhere.
 const withCache = <T extends (...args: any[]) => any>(fn: T): T => {
@@ -30,11 +24,6 @@ const withCache = <T extends (...args: any[]) => any>(fn: T): T => {
 export const getFilterFacets = withCache(
   (options: GetFilterFacetsOptions): Promise<CatalogueFacets> =>
     getFilterFacetsQuery(fetchFacetProducts, options),
-);
-
-export const getCategoryPriceRange = withCache(
-  (options: GetCategoryPriceRangeOptions): Promise<PriceRangeData> =>
-    getCategoryPriceRangeQuery(fetchCategoryPriceRange, options),
 );
 
 export { buildProductQuery } from './adapters/sanity/buildProductQuery';

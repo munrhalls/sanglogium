@@ -7,7 +7,6 @@ import {
   type ProductQueryState,
   type Category,
   type CatalogueFacets,
-  type PriceRangeData,
 } from '@/features/product-filtering';
 import { isFacetedQuery, canonicalCategoryPath } from '@/features/catalogue';
 import type { CatalogPorts } from '@/features/products/core/ports';
@@ -28,7 +27,6 @@ export interface ListingPorts {
   };
   filtering: {
     getFilterFacets: (options: { keys: string[]; state: ProductQueryState; category?: Category }) => Promise<CatalogueFacets>;
-    getCategoryPriceRange: (options: { keys: string[] }) => Promise<PriceRangeData>;
   };
   catalog: CatalogPorts;
 }
@@ -81,12 +79,9 @@ export async function getListingPage(ports: ListingPorts, input: {
     // below: its values live on brandRef, so its vocab is the counted brand set.
     const rawState = loadFilterSort(query) as ProductQueryState;
 
-    const [metadata, facets, priceRange] = await Promise.all([
+    const [metadata, facets] = await Promise.all([
       slug ? ports.catalog.getCategoryMetadata(nodeId!) : Promise.resolve(null),
       ports.filtering.getFilterFacets({ keys, state: rawState, category }),
-      // FULL category price span — not narrowed by active filters, so the max
-      // handle can always be dragged back up past the current selection.
-      ports.filtering.getCategoryPriceRange({ keys }),
     ]);
 
     if (slug && !metadata) {
@@ -100,7 +95,7 @@ export async function getListingPage(ports: ListingPorts, input: {
     const filtersActive = isFiltersActive(state);
 
     const totalCount = await ports.catalog.getProductsCount({ keys, state, facetSet: facets.facetSet });
-    const priceBounds = resolvePriceBounds(priceRange);
+    const priceBounds = resolvePriceBounds(facets.priceRange); // full category span, not narrowed by filters: the max handle can always be dragged back up
 
     const overline =
       slug && slug.length > 1

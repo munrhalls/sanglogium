@@ -115,7 +115,7 @@ _Last reviewed 2026-10-01 against the live repo. Stack/pattern-level only — fo
 
 **Catalogue pattern:** product catalogue uses a "Build-Time VFS" pattern (see `features/catalogue/` — its `data/catalogue-index.json` is read only by `adapters/catalogue-index/` — and `docs/catalogue-architecture.md`) — headless CMS data pre-materialized at build time for sub-second navigation, rather than live-queried per request. Relevant when touching catalogue/product-listing performance or data-freshness questions.
 
-**Filters & sorting:** live in `features/product-filtering/` (`url/`, `state/`, `ui/`, `core/`, `adapters/sanity/` for the GROQ and field map, `queries/`). Outside code uses `@/features/product-filtering` (client) or `@/features/product-filtering/server` (`getFilterFacets`, `getCategoryPriceRange`, `buildProductQuery`).
+**Filters & sorting:** live in `features/product-filtering/` (`url/`, `state/`, `ui/`, `core/`, `adapters/sanity/` for the GROQ and field map, `queries/`). Outside code uses `@/features/product-filtering` (client) or `@/features/product-filtering/server` (`getFilterFacets`, `buildProductQuery`).
 
 **Search:** lives in `features/product-search/` — the Sanity fetcher `adapters/sanity/searchProducts.ts`, `queries/` and `actions/fetchSearchSuggestionsAction.ts`; the shell's header field (`features/shell/ui/header/SearchField.tsx`) passes the suggestion action into `useSearchController`. Search consumes filters only through `@/features/product-filtering`.
 
