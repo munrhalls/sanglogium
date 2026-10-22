@@ -1,9 +1,13 @@
 // Resolver hooks for `npm run laws`: lets the laws plane load plain TypeScript
 // under `node --experimental-strip-types` by supporting the repo's `@/` alias
 // (resolved from the repo root) and extensionless specifiers (`./x` -> `./x.ts`,
-// `./x.tsx` or `./x/index.ts`, first existing file wins). Everything else —
-// bare imports like `nuqs/server` or `node:test`, and specifiers that already
-// carry an extension — falls through to the default resolver.
+// `./x.tsx` or `./x/index.ts`, first existing file wins). Also resolves the bare
+// `server-only` specifier to an empty module — that package only throws when it
+// detects a non-server bundler; here there is no bundler, so importing the
+// modules that carry it (e.g. buildProductQuery.ts) needs nothing from it.
+// Everything else — bare imports like `nuqs/server` or `node:test`, and
+// specifiers that already carry an extension — falls through to the default
+// resolver.
 // Dependency-free: Node builtins only.
 
 import { existsSync } from 'node:fs';
@@ -24,6 +28,9 @@ function fileForExtensionless(absPath) {
 
 registerHooks({
   resolve(specifier, context, nextResolve) {
+    if (specifier === 'server-only') {
+      return { url: 'data:text/javascript,export {}', shortCircuit: true };
+    }
     if (specifier.startsWith('@/')) {
       const abs = path.join(repoRoot, specifier.slice(2));
       const target = path.extname(abs) ? abs : fileForExtensionless(abs);
