@@ -4,7 +4,8 @@ import React, { useState } from 'react';
 import { Drawer } from 'vaul';
 import { FunnelSimple as FunnelIcon, X as XIcon } from '@phosphor-icons/react';
 import { FilterPanelBody } from './FilterSidebar';
-import type { Category, FacetOptionCount } from '@/features/product-filtering/core/definitions/facetRegistry';
+import type { Category } from '@/features/product-filtering/core/definitions/category';
+import type { FacetOptionCount, FacetSet } from '@/features/product-filtering/core/types/facetProjection';
 import type { RangeBounds } from '@/features/product-filtering/core/rules/facetCounts';
 import { cn } from '@/platform/utils/tailwind';
 
@@ -25,6 +26,7 @@ import { cn } from '@/platform/utils/tailwind';
  * drawer.
  */
 export interface MobileFilterSheetProps {
+  facetSet: FacetSet;
   checkboxCounts: Record<string, FacetOptionCount[]>;
   booleanCounts: Record<string, number>;
   brandLabels: Record<string, string>;
