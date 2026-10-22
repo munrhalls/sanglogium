@@ -73,58 +73,73 @@ import {
   createSerializer,
   parseAsArrayOf,
   parseAsBoolean,
+  createParser,
   parseAsFloat,
-  parseAsInteger,
   parseAsString,
   parseAsStringLiteral,
 } from "nuqs/server";
 
-// Facet and sort definitions come from core/definitions/facetMap so the app
-// and the URL contract share one shape.
+// Facet param keys come from the same selector the facets themselves do, so a
+// facet can never exist without its URL grammar. The parser *shape* is static:
+// parsers are built on the client before any product data exists. Which values
+// are legal is decided per request by sanitizeFilterState, not here.
 import {
-  FILTER_FACETS,
   SORT_DEFAULT,
   SORT_OPTIONS as SORT_MAP,
-  type FilterFacet,
   type SortValue,
-  isPlaceholderVocab,
-} from "@/features/product-filtering/core/definitions/facetMap";
+} from "@/features/product-filtering/core/definitions/sortOptions";
+import {
+  FACET_SELECTOR,
+  QUERY_ONLY_FACETS,
+} from "@/features/product-filtering/core/definitions/facetSelector";
 import type { ProductQueryState } from "@/features/product-filtering/core/types/filterTypes";
-export type { SortValue } from "@/features/product-filtering/core/definitions/facetMap";
+export type { SortValue } from "@/features/product-filtering/core/definitions/sortOptions";
 
 // Fixed sort allowlist. `value` goes in the URL; `label` is for the controls.
 // SortValue is derived directly from the canonical sort-map tuple so only the
-// URL values declared in facetMap.ts are valid.
+// URL values declared in sortOptions.ts are valid.
 export { SORT_DEFAULT };
 
 const SORT_VALUES = SORT_MAP.map((o) => o.urlValue) as SortValue[];
 
 
-function parserForFacet(facet: FilterFacet) {
-  if (facet.type === "boolean") {
-    return parseAsBoolean.withDefault(false);
+// Params whose value is a single boolean rather than a list — the one shape
+// the selector cannot express, since control kinds are data-derived at request
+// time while this parser map is static.
+export const FILTER_BOOLEAN_PARAMS = new Set([
+  "inStock",
+  "microphone",
+  "requiresAmplifier",
+  "portable",
+  "foldable",
+  "dacIncluded",
+  "balancedOutput",
+  "detachableCable",
+]);
+
+// Build parsers for every selected and query-only facet, keyed by facet id.
+// Range facets (selector entries carrying a `unit`) get two float parsers each
+// -- `${id}Min`/`${id}Max` -- mirroring the minPrice/maxPrice shape: no
+// default, absent means unbounded.
+function parserForParam(id: string, unit?: string) {
+  if (unit) {
+    return { [`${id}Min`]: parseAsFloat, [`${id}Max`]: parseAsFloat };
   }
-  // Enum and multi-select facets are both stored as arrays of strings in the
-  // URL. The GROQ layer (buildProductQuery) treats enum as an OR-over-values
-  // predicate and multi as an overlap/count predicate.
-  return parseAsArrayOf(parseAsString).withDefault([]);
+  if (FILTER_BOOLEAN_PARAMS.has(id)) {
+    return { [id]: parseAsBoolean.withDefault(false) };
+  }
+  // Checkbox facets are stored as arrays of strings in the URL.
+  return { [id]: parseAsArrayOf(parseAsString).withDefault([]) };
 }
 
-// Build parsers for every non-price filter facet, keyed by its urlParam.
-// Range facets (excluding price, handled as the bespoke minPrice/maxPrice
-// pair above) get two float parsers each -- `${urlParam}Min`/`${urlParam}Max`
-// -- mirroring the minPrice/maxPrice shape: no default, absent means
-// unbounded. sang-logium-3rv.5 (additive: the boolean/enum/multi branch below
-// is unchanged from before this facet type existed).
 const facetParsers: Record<string, any> = {};
-for (const facet of FILTER_FACETS) {
-  if (facet.urlParam === "price") continue; // price is minPrice / maxPrice
-  if (facet.type === "range") {
-    facetParsers[`${facet.urlParam}Min`] = parseAsFloat;
-    facetParsers[`${facet.urlParam}Max`] = parseAsFloat;
-    continue;
+for (const selector of Object.values(FACET_SELECTOR)) {
+  for (const facet of selector.facets) {
+    Object.assign(facetParsers, parserForParam(facet.id, facet.unit));
   }
-  facetParsers[facet.urlParam] = parserForFacet(facet);
+}
+for (const facet of QUERY_ONLY_FACETS) {
+  Object.assign(facetParsers, parserForParam(facet.id));
 }
 
 /**
@@ -132,6 +147,12 @@ for (const facet of FILTER_FACETS) {
  * `loadFilterSort` loader and every client control, so a deep link and the
  * control that reads it can never disagree.
  */
+// parseAsInteger is parseInt: it reads "1.2.3" as 1. Prices accept whole numbers only.
+const parseAsWholeNumber = createParser({
+  parse: (value) => (/^-?\d+$/.test(value) ? Number(value) : null),
+  serialize: (value) => String(Math.round(value)),
+});
+
 export const filterSortParsers = {
   // Junk / unknown values fall through to the default (parseAsStringLiteral
   // returns null for anything off the list; `.withDefault` then supplies
@@ -139,8 +160,8 @@ export const filterSortParsers = {
   sort: parseAsStringLiteral(SORT_VALUES).withDefault(SORT_DEFAULT),
 
   // Dollars, integer. No default: absent = unbounded. Non-numeric → null.
-  minPrice: parseAsInteger,
-  maxPrice: parseAsInteger,
+  minPrice: parseAsWholeNumber,
+  maxPrice: parseAsWholeNumber,
 
   ...facetParsers,
 };

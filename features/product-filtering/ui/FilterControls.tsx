@@ -12,14 +12,15 @@ import {
 } from './FilterSection';
 import { DualRangeSlider } from './DualRangeSlider';
 import { formatPriceMajor } from '@/platform/utils/price';
-import { getFacetModule, type Category, type AnyFacetDef, type FacetOptionCount } from '@/features/product-filtering/core/definitions/facetRegistry';
+import type { Category } from '@/features/product-filtering/core/definitions/category';
+import type { FacetOptionCount, RenderedFacet } from '@/features/product-filtering/core/types/facetProjection';
 import { humanizeFacetValue } from '@/features/product-filtering/core/rules/humanizeFacetValue';
 import { useFilterParam } from '@/features/product-filtering/state/useFilterParam';
 
 type SetArray = (next: string[] | ((prev: string[]) => string[])) => void;
 
-// Every control below takes `category` (kept on the props for facet-module
-// context) and uses the shared useFilterParam hook imported above.
+// Every control below takes `category` and uses the shared useFilterParam
+// hook imported above.
 
 export function CheckboxGroup({
   category,
@@ -29,7 +30,7 @@ export function CheckboxGroup({
   isDefaultState = false,
 }: {
   category: Category;
-  facet: AnyFacetDef;
+  facet: RenderedFacet;
   counts: FacetOptionCount[];
   brandLabels?: Record<string, string>;
   isDefaultState?: boolean;
@@ -38,17 +39,16 @@ export function CheckboxGroup({
   const [selected, setSelected] = useFilterParam(facet.id) as [string[], SetArray];
   const selectedArray = selected ?? [];
 
-  // facet.options (the facet module's hand-typed slugs) and counts[].value
-  // (facetMap.ts's independently hand-typed valueVocab) are two separately
-  // authored vocabularies for the same concept and routinely differ only in
-  // case/format (e.g. 'sbc' vs 'SBC', 'ipx4' vs 'IPX4') — compare
-  // case-insensitively so that drift doesn't silently zero out a real count.
+  // facet.options are the data's distinct values (buildFacetSet) and
+  // counts[].value are counted over the same products, so they agree; the
+  // comparison stays case-insensitive so a casing difference can never
+  // zero out a real count.
   const countFor = (value: string) =>
     counts.find((c) => c.value.toLowerCase() === value.toLowerCase())?.count ?? 0;
   const labelFor = (value: string) => brandLabels?.[value] ?? humanizeFacetValue(value);
 
-  const staticOptions = facet.options === 'derived' ? null : facet.options;
-  const options = (staticOptions ?? counts.map((c) => ({ value: c.value, label: labelFor(c.value) }))).map((o) => ({
+  const listedOptions = facet.options ?? null;
+  const options = (listedOptions ?? counts.map((c) => ({ value: c.value, label: labelFor(c.value) }))).map((o) => ({
     value: o.value,
     label: o.label,
     count: countFor(o.value),
@@ -121,7 +121,7 @@ export function BooleanToggle({
   isDefaultState = false,
 }: {
   category: Category;
-  facet: AnyFacetDef;
+  facet: RenderedFacet;
   count?: number;
   isDefaultState?: boolean;
 }) {
@@ -157,9 +157,9 @@ export function RangeControl({
   bounds,
 }: {
   category: Category;
-  facet: AnyFacetDef;
-  /** Real category span from getFilterFacets; falls back to facet's
-   *  hardcoded min/max (sang-logium-3rv.5) when a bound is missing --
+  facet: RenderedFacet;
+  /** Real category span from getFilterFacets; falls back to the facet's
+   *  own min/max from the product data when a bound is missing --
    *  e.g. zero matching products, or a route this prop was not threaded to
    *  yet -- same "always have a usable slider" fallback PriceControl gets
    *  from resolvePriceBounds' DEFAULT_PRICE_CEILING. */

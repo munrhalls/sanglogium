@@ -29,6 +29,7 @@ export async function SearchResultsView({ resultsPromise, cardAction, query }: S
   const filtersActive = state ? isFiltersActive({ ...state, sort: SORT_DEFAULT }) : false;
   const panelProps = facets
     ? {
+        facetSet: facets.facetSet,
         checkboxCounts: facets.groups,
         booleanCounts: facets.booleans,
         brandLabels: facets.brandLabels,
@@ -45,7 +46,7 @@ export async function SearchResultsView({ resultsPromise, cardAction, query }: S
         {categoryCounts && (
           <SearchCategoryChips counts={categoryCounts} active={category} allCount={allCategoriesCount ?? 0} />
         )}
-        {facets && <ActiveFilterChips brandLabels={facets.brandLabels} />}
+        {facets && <ActiveFilterChips facets={facets.facetSet.facets} brandLabels={facets.brandLabels} />}
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4 border-b border-border-secondary pb-4">
           <div className="flex items-center gap-3">
             {panelProps && <MobileFilterSheet {...panelProps} totalCount={totalCount} />}

@@ -1,6 +1,6 @@
 import { scoreProduct, ROOT_CATEGORIES, rootCategoriesOf } from './searchScoring';
 import type { CategoryLookup } from '@/features/catalogue';
-import { computeCatalogueFacets, productMatchesState, sanitizeFilterState } from '@/features/product-filtering';
+import { buildFacetSet, computeCatalogueFacets, productMatchesState, sanitizeFilterState } from '@/features/product-filtering';
 import type { AutocompleteProduct, SearchProduct, SearchResult } from '@/features/product-search/core/types/searchTypes';
 import type {
   CatalogueFacets,
@@ -61,12 +61,16 @@ export function buildSearchResult(input: {
     ? matched.filter((p) => rootCategoriesOf(p.catalogueLocationKeys, lookup).includes(activeCategory))
     : matched;
   if (state) {
-    facets = computeCatalogueFacets(scoped as unknown as RawProduct[], state);
-    appliedState = sanitizeFilterState(state, { brand: Object.keys(facets.brandLabels) });
+    // Results span every category, so the facet set is the category-agnostic one (brand, in stock),
+    // built from every matched product so it does not change with the category chip.
+    const facetSet = buildFacetSet(matched as unknown as RawProduct[], 'commercial');
+    const vetted = sanitizeFilterState(state, facetSet);
+    facets = computeCatalogueFacets(scoped as unknown as RawProduct[], vetted, facetSet);
+    appliedState = sanitizeFilterState(vetted, facetSet, { brand: Object.keys(facets.brandLabels) });
     const activeState = appliedState;
-    filtered = scoped.filter((p) => productMatchesState(p as unknown as RawProduct, activeState));
+    filtered = scoped.filter((p) => productMatchesState(p as unknown as RawProduct, activeState, facetSet));
     const acrossCategories = matched.filter((p) =>
-      productMatchesState(p as unknown as RawProduct, activeState)
+      productMatchesState(p as unknown as RawProduct, activeState, facetSet)
     );
     allCategoriesCount = acrossCategories.length;
     categoryCounts = ROOT_CATEGORIES.map((c) => ({

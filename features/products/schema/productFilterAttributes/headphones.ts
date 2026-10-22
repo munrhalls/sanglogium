@@ -1,5 +1,5 @@
 import { defineArrayMember } from "sanity";
-import { vocabFor } from "../../../product-filtering/core/definitions/facetMap";
+import { vocabFor } from "./vocab";
 
 export const headphonesFields: any[] = [
         {
