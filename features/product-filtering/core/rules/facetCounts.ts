@@ -5,6 +5,7 @@
 // caller passes in (core/rules/buildFacetSet.ts), not from a declared list.
 
 import { humanizeFacetValue } from './humanizeFacetValue';
+import type { PriceRangeData } from './priceBounds';
 import type { FacetSet, NarrowingFacet } from '@/features/product-filtering/core/types/facetProjection';
 import type { ProductQueryState, RawProduct } from '@/features/product-filtering/core/types/filterTypes';
 
@@ -18,7 +19,7 @@ type FacetGroups = Record<string, FacetOption[]>;
 type BooleanFacetCounts = Record<string, number>;
 
 /** Full category span (unnarrowed by active filters) for a range facet, in
- *  its raw field unit -- mirrors getCategoryPriceRange's price treatment. */
+ *  its raw field unit -- mirrors the price treatment in priceBounds.ts. */
 export interface RangeBounds {
   min: number | null;
   max: number | null;
@@ -33,6 +34,8 @@ export interface CatalogueFacets {
   brandLabels: Record<string, string>;
   /** Map of facet id -> real min/max for range facets (sang-logium-3rv.5). */
   ranges: Record<string, RangeBounds>;
+  /** Full price span (cents) of the fetched products, unnarrowed by active filters; feeds resolvePriceBounds. */
+  priceRange: PriceRangeData;
   /** Whether no catalogue filters are currently active (sort is ignored). */
   isDefaultState: boolean;
   /** The facets to draw: the set these counts were computed for. */
@@ -276,8 +279,8 @@ export function computeCatalogueFacets(
 
   // Range facet bounds: FULL category span, unnarrowed by active filters --
   // same "max handle can always drag back up" reasoning as
-  // getCategoryPriceRange, reusing the one product fetch already above
-  // instead of a second query. sang-logium-3rv.5.
+  // the price slider, from the one product fetch already above.
+  // sang-logium-3rv.5.
   const ranges: Record<string, RangeBounds> = {};
   for (const facet of facetSet.facets) {
     if (facet.control !== 'range') continue;
@@ -290,11 +293,19 @@ export function computeCatalogueFacets(
     };
   }
 
+  const prices = products.map((p) => p.price).filter((n): n is number => typeof n === 'number');
+  const priceRange: PriceRangeData = {
+    minPrice: prices.length ? Math.min(...prices) : null,
+    maxPrice: prices.length ? Math.max(...prices) : null,
+    prices,
+  };
+
   return {
     groups,
     booleans,
     brandLabels,
     ranges,
+    priceRange,
     isDefaultState: isDefaultFilterState(state, facetSet),
     facetSet,
     state,
