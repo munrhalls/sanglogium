@@ -52,6 +52,7 @@ export default function ListingView({
         <FilterSidebar
           key={category}
           category={category}
+          facetSet={facets.facetSet}
           checkboxCounts={facets.groups}
           booleanCounts={facets.booleans}
           brandLabels={facets.brandLabels}
@@ -60,12 +61,13 @@ export default function ListingView({
           isDefaultState={facets.isDefaultState}
         />
         <div className="min-w-0 flex-1">
-          <ActiveFilterChips key={category} category={category} brandLabels={facets.brandLabels} />
+          <ActiveFilterChips facets={facets.facetSet.facets} brandLabels={facets.brandLabels} />
           <SortBar
             key={category}
             totalCount={totalCount}
             category={category}
             mobileFilterProps={{
+              facetSet: facets.facetSet,
               checkboxCounts: facets.groups,
               booleanCounts: facets.booleans,
               brandLabels: facets.brandLabels,

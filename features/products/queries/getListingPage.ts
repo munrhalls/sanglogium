@@ -27,7 +27,7 @@ export interface ListingPorts {
     getBreadcrumbLabels: (parts: string[]) => string[];
   };
   filtering: {
-    getFilterFacets: (options: { keys: string[]; state: ProductQueryState }) => Promise<CatalogueFacets>;
+    getFilterFacets: (options: { keys: string[]; state: ProductQueryState; category?: Category }) => Promise<CatalogueFacets>;
     getCategoryPriceRange: (options: { keys: string[] }) => Promise<PriceRangeData>;
   };
   catalog: CatalogPorts;
@@ -64,8 +64,8 @@ export async function getListingPage(ports: ListingPorts, input: {
     }
 
     // slug[0] is always the top-level category (headphones/audio-electronics/
-    // accessories), including for nested category pages -- picks which of the
-    // three per-category facet modules drives the sidebar (sang-logium-3rv.6).
+    // accessories), including for nested category pages -- picks which slice's
+    // facets getFilterFacets derives for the sidebar (sang-logium-3rv.6).
     const rawCategory = slug ? slug[0] : undefined;
     const category: Category | undefined =
       rawCategory !== undefined ? (isCategory(rawCategory) ? rawCategory : 'headphones') : undefined;
@@ -86,7 +86,7 @@ export async function getListingPage(ports: ListingPorts, input: {
 
     const [metadata, facets, priceRange] = await Promise.all([
       slug ? ports.catalog.getCategoryMetadata(nodeId!) : Promise.resolve(null),
-      ports.filtering.getFilterFacets({ keys, state: preState }),
+      ports.filtering.getFilterFacets({ keys, state: preState, category }),
       // FULL category price span — not narrowed by active filters, so the max
       // handle can always be dragged back up past the current selection.
       ports.filtering.getCategoryPriceRange({ keys }),
