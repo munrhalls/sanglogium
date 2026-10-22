@@ -21,9 +21,14 @@ export const client = createClient({
 export async function sanityFetch<QueryResponse>({
   query,
   params = {},
+  next,
 }: {
   query: string;
   params?: any;
+  /** Next.js Data Cache options. Omitted = the fetch is not cached. */
+  next?: { revalidate?: number | false; tags?: string[] };
 }): Promise<QueryResponse> {
-  return client.fetch<QueryResponse>(query, params);
+  return next
+    ? client.fetch<QueryResponse>(query, params, { next })
+    : client.fetch<QueryResponse>(query, params);
 }

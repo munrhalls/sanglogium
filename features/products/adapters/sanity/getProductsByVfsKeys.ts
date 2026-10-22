@@ -47,10 +47,10 @@ const PRODUCT_PROJECTION = groq`{
 }`;
 
 // Count-only fetch, used to size pagination without fetching any product rows.
-const getProductsCountFn = async ({ keys, state }: GetProductsCountOptions): Promise<number> => {
+const getProductsCountFn = async ({ keys, state, facetSet }: GetProductsCountOptions): Promise<number> => {
   if (!keys.length) return 0;
 
-  const { whereClause, params } = state ? buildProductQuery(state) : { whereClause: '', params: {} };
+  const { whereClause, params } = state ? buildProductQuery(state, facetSet) : { whereClause: '', params: {} };
 
   const countQuery = groq`count(*[_type == "product" && count(catalogueLocationKeys[@ in $keys]) > 0${whereClause}])`;
 
@@ -67,10 +67,10 @@ export const getProductsCount = withCache(getProductsCountFn) as (
 ) => Promise<number>;
 
 // Fetches one arbitrary offset/limit slice of products, for parallel per-chunk streaming.
-const getProductsChunkFn = async ({ keys, offset, limit, state }: GetProductsChunkOptions): Promise<Product[]> => {
+const getProductsChunkFn = async ({ keys, offset, limit, state, facetSet }: GetProductsChunkOptions): Promise<Product[]> => {
   if (!keys.length || limit <= 0) return [];
 
-  const { orderClause, whereClause, params } = state ? buildProductQuery(state) : { orderClause: '', whereClause: '', params: {} };
+  const { orderClause, whereClause, params } = state ? buildProductQuery(state, facetSet) : { orderClause: '', whereClause: '', params: {} };
 
   const end = offset + limit;
   const order = orderClause ? ` ${orderClause}` : '';

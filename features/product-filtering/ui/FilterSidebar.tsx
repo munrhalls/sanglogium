@@ -3,7 +3,8 @@
 import React from 'react';
 import type { IconType } from 'react-icons';
 import { FaTag, FaHeadphones, FaWaveSquare, FaLayerGroup, FaBluetooth, FaMicrochip, FaPlug, FaBolt, FaScrewdriverWrench } from 'react-icons/fa6';
-import { getFacetModule, resolveGroupIcon, type Category, type AnyFacetDef, type FacetOptionCount } from '@/features/product-filtering/core/definitions/facetRegistry';
+import type { Category } from '@/features/product-filtering/core/definitions/category';
+import type { FacetOptionCount, FacetSet, RenderedFacet } from '@/features/product-filtering/core/types/facetProjection';
 import { useClearAllFilters, useFilterParam } from '@/features/product-filtering/state/useFilterParam';
 import type { RangeBounds } from '@/features/product-filtering/core/rules/facetCounts';
 import { CheckboxGroup, BooleanToggle, RangeControl, PriceControl } from './FilterControls';
@@ -26,11 +27,11 @@ import { CheckboxGroup, BooleanToggle, RangeControl, PriceControl } from './Filt
  * product grid. Every control reads/writes its own URL param via
  * useFilterParam; nothing here is optimistic about a fetch in flight.
  *
- * Category-aware since sang-logium-3rv.6: `category` picks which of the three
- * per-category facet modules (facetRegistry.ts) drives groups/facets; URL
- * params go through the shared useFilterParam/useClearAllFilters hooks.
- * Rail icons come from GROUP_ICONS per category (resolveGroupIcon);
- * groups without a bespoke icon get a neutral fallback. Groups with nothing
+ * The groups and facets to draw arrive as the `facetSet` prop (derived
+ * from product data by getFilterFacets); URL params go through the shared
+ * useFilterParam/useClearAllFilters hooks. `category` only picks the rail
+ * icons from GROUP_ICONS; groups without a bespoke icon get a neutral
+ * fallback. Groups with nothing
  * selectable are hidden from both the rail and the panel (visibleGroups).
  */
 
@@ -60,17 +61,18 @@ const GROUP_ICONS: Record<Category, Record<string, IconType>> = {
 const FALLBACK_GROUP_ICON: IconType = FaLayerGroup;
 
 interface FilterSidebarProps {
+  /** The groups and facets to draw, derived from product data (CatalogueFacets.facetSet). */
+  facetSet: FacetSet;
   checkboxCounts: Record<string, FacetOptionCount[]>;
   booleanCounts: Record<string, number>;
   brandLabels: Record<string, string>;
   priceBounds: { min: number; max: number };
-  /** Optional: app/(store)/products/page.tsx (all-products) does not compute
-   *  per-category range bounds and omits this prop entirely -- RangeControl
-   *  falls back to facetConfig.ts's hardcoded min/max in that case. */
+  /** Optional: app/(store)/products/page.tsx (all-products) omits this
+   *  prop -- RangeControl then falls back to the facet's own min/max from
+   *  the product data. */
   rangeBounds?: Record<string, RangeBounds>;
-  /** Optional: app/(store)/products/page.tsx (all-products) spans every
-   *  category and has no single facet module to pick -- defaults to
-   *  headphones. */
+  /** Picks the rail icons. Optional: All Products spans every category and
+   *  defaults to headphones. */
   category?: Category;
   /** True when no catalogue filters are active (sort is ignored). Hides
    *  zero-match checkbox/boolean options on first load. */
@@ -97,6 +99,7 @@ interface FilterPanelBodyProps extends FilterSidebarProps {
  * pass unique panelScrollId/groupIdPrefix values.
  */
 export function FilterPanelBody({
+  facetSet,
   checkboxCounts,
   booleanCounts,
   brandLabels,
@@ -108,7 +111,8 @@ export function FilterPanelBody({
   panelScrollId,
   groupIdPrefix,
 }: FilterPanelBodyProps) {
-  const { FACET_GROUPS, facetsForGroup } = getFacetModule(category);
+  const FACET_GROUPS = facetSet.groups;
+  const facetsForGroup = (groupId: string) => facetSet.facets.filter((f) => f.group === groupId);
   const groups = groupIds ? FACET_GROUPS.filter((g) => groupIds.includes(g.id)) : FACET_GROUPS;
   const clearAll = useClearAllFilters();
   const handleRailSelect = (groupId: string) => scrollToGroup(groupId, panelScrollId, groupIdPrefix);
@@ -167,7 +171,7 @@ export function FilterPanelBody({
                 key={group.id}
                 id={group.id}
                 label={group.label}
-                icon={resolveGroupIcon(category, group.id, GROUP_ICONS, FALLBACK_GROUP_ICON)}
+                icon={GROUP_ICONS[category]?.[group.id] ?? FALLBACK_GROUP_ICON}
                 onSelect={handleRailSelect}
               />
             ))}
@@ -270,7 +274,7 @@ function PanelSection({
 }
 
 function renderFacet(
-  facet: AnyFacetDef,
+  facet: RenderedFacet,
   category: Category,
   checkboxCounts: Record<string, FacetOptionCount[]>,
   booleanCounts: Record<string, number>,

@@ -114,3 +114,6 @@ _project/working-memory/
 
 # Live proof output (moved from features/product-filtering/proofs/out)
 tests/product-filtering/out/
+
+# personal work journal
+_project/project-management/work-record/

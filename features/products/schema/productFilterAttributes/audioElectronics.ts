@@ -1,4 +1,4 @@
-import { vocabFor } from "../../../product-filtering/core/definitions/facetMap";
+import { vocabFor } from "./vocab";
 
 export const audioElectronicsFields: any[] = [
         {

@@ -8,10 +8,11 @@ import assert from 'node:assert/strict';
 
 import { computeCatalogueFacets } from './facetCounts';
 import type { ProductQueryState, RawProduct } from '@/features/product-filtering/core/types/filterTypes';
+import type { FacetSet } from '@/features/product-filtering/core/types/facetProjection';
 
-// Six products over two facet groups (wearingStyle: multi, connectivity:
-// enum) so each group's count can be checked against a narrowing selection
-// in the other.
+// Six products over two facet groups (wearingStyle, connectivity: both
+// checkbox facets) so each group's count can be checked against a narrowing
+// selection in the other.
 const PRODUCTS: RawProduct[] = [
   { _id: 'p1', filterAttributes: { wearingStyle: 'over-ear', connectivity: 'wired' } },
   { _id: 'p2', filterAttributes: { wearingStyle: 'over-ear', connectivity: 'wireless' } },
@@ -30,6 +31,26 @@ const STATE: ProductQueryState = {
   connectivity: ['wired'],
 };
 
+const checkbox = (id: string, values: string[]) => ({
+  id,
+  attribute: id,
+  label: id,
+  group: 'g',
+  control: 'checkbox' as const,
+  options: values.map((value) => ({ value, label: value })),
+});
+
+// Two checkbox facets whose option lists name a value no fixture product carries
+// (connectivity "hybrid"), so a zero count can be checked.
+const FACETS: FacetSet = {
+  groups: [{ id: 'g', label: '' }],
+  facets: [
+    checkbox('wearingStyle', ['over-ear', 'on-ear', 'in-ear']),
+    checkbox('connectivity', ['wired', 'wireless', 'true-wireless', 'hybrid']),
+  ],
+  queryOnly: [],
+};
+
 function option(groups: ReturnType<typeof computeCatalogueFacets>['groups'], param: string, value: string) {
   const opt = groups[param]?.find((o) => o.value === value);
   assert.ok(opt, `expected ${param} option "${value}" to exist`);
@@ -37,7 +58,7 @@ function option(groups: ReturnType<typeof computeCatalogueFacets>['groups'], par
 }
 
 test('an option ignores its own group selection and respects other groups', () => {
-  const { groups } = computeCatalogueFacets(PRODUCTS, STATE);
+  const { groups } = computeCatalogueFacets(PRODUCTS, STATE, FACETS);
   // Over-ear is not selected; if own-group selections leaked in it would be 0.
   // Respecting only connectivity=wired: wired products are p1, p3, p6 and the
   // single over-ear among them is p1.
@@ -48,14 +69,14 @@ test('an option ignores its own group selection and respects other groups', () =
 });
 
 test('an option with no matches is present with count zero (not omitted)', () => {
-  const { groups } = computeCatalogueFacets(PRODUCTS, STATE);
-  // Closed-vocab value in-ear, no wired product has it.
+  const { groups } = computeCatalogueFacets(PRODUCTS, STATE, FACETS);
+  // Listed value in-ear, no wired product has it.
   assert.equal(option(groups, 'wearingStyle', 'in-ear').count, 0);
   assert.equal(option(groups, 'connectivity', 'hybrid').count, 0);
 });
 
 test('no option or boolean count is negative', () => {
-  const { groups, booleans } = computeCatalogueFacets(PRODUCTS, STATE);
+  const { groups, booleans } = computeCatalogueFacets(PRODUCTS, STATE, FACETS);
   for (const options of Object.values(groups)) {
     for (const o of options) assert.ok(o.count >= 0, `${o.value} counted ${o.count}`);
   }
