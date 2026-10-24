@@ -102,8 +102,8 @@ END OF DERIVE CONTROLS AND OPTIONS -> LABELS
 | step | file |
 |---|---|
 | 1. a developer lists the option text that humanizing can't produce, because the value alone can't spell it out | `features/product-filtering/core/definitions/optionLabelOverrides.ts` |
-| 2. each control gets a name, its field name humanized, because a field name is not for reading (wearingStyle -> Wearing Style) | `features/product-filtering/core/rules/deriveLabels.ts`, using `features/product-filtering/core/rules/humanizeFacetValue.ts` |
-| 3. each checkbox option gets its text: the override for its field and value, else its value written as text and humanized, so true / false work too | same file |
+| 2. each control gets a name, its field name humanized, because a field name is not for reading (wearingStyle -> Wearing Style) | `features/product-filtering/core/rules/humanizeFieldName.ts`, called by `features/product-filtering/core/rules/deriveLabels.ts` |
+| 3. each checkbox option gets its text: the override for its field and value, else its value written as text and humanized, so true / false work too | `features/product-filtering/core/rules/deriveLabels.ts`, using `features/product-filtering/core/rules/humanizeFacetValue.ts` |
 | 4. return each category's controls with their names and option text | same file |
 
 ## Proof - Derive labels
@@ -151,21 +151,80 @@ end of proof
 
 The proof covers flow steps 2-4. Flow step 1 (a developer editing the real table, and the real table being the default) is not proved: the fake table stands in.
 
-## Derive 3 - sort
+## Derive controls and options -> sort
 
 ```
-start of derive 3
+START OF DERIVE CONTROLS AND OPTIONS -> SORT
 
-products data -> available fields -> sort picklist
-sort picklist -> value type per field, asc/desc -> one control + options
-options -> auto-label (A→Z, Low→High, Old→New) -> optional override -> labels map
-sort config includes a default (used when the URL has no sort)
--> per category: sort control + options + labels + default
+controls per category, made from the sort fields (the exit of the chunk "products data -> controls and options", run with the sort fields as its picklist)
++ sort fields (the fields a developer chose for sorting, kept in code)
+-> per category, per sort field, in sort field order, its control:
 
-end of derive 3
+  no control (no product has a value)  ->  no sort options
+  range                                ->  Low to High, High to Low
+  checkbox                             ->  A to Z, Z to A
+
+-> per sort option: its URL value (field-asc, field-desc), its field, its direction, its text (the field name humanized, then the direction)
+-> per category: its sort options, and its default, the first option
+   a category with no sort options  ->  no sort
+
+END OF DERIVE CONTROLS AND OPTIONS -> SORT
 ```
 
-Proof: not written yet.
+**MAP** — execution flow step - file
+
+| step | file |
+|---|---|
+| 1. a developer lists the fields a shopper can sort by, in the order the sort control offers them, because product data can't say which fields are worth sorting | `features/product-filtering/core/definitions/sortFields.ts` |
+| 2. read the product documents from the CMS | `features/product-filtering/adapters/sanity/readProductsAndPicklist.ts` |
+| 3. shape them for derive | `features/product-filtering/core/rules/shapeProductsForDerive.ts` |
+| 4. for each sort field, pick a control per category from its values (every value a number -> range, otherwise -> checkbox, no values -> no control), because that tells numbers from text | `features/product-filtering/core/rules/deriveControlsAndOptions.ts`, run with the sort fields as its picklist |
+| 5. each sort field that has a control gets two options, ascending and descending, with the direction words for its control, and each option gets its URL value, field, direction and text | `features/product-filtering/core/rules/deriveSort.ts`, using `features/product-filtering/core/rules/humanizeFieldName.ts` |
+| 6. a category's first option is its default, because a URL with no sort needs one; a category with no options gets no sort | same file as step 5 |
+| 7. return each category's sort | same file as step 5 |
+
+## Proof - Derive sort
+
+```
+start of proof: derive controls and options -> sort
+
+fake controls (one file, in the exit shape of the controls chunk):
+  fruit: price range 3 to 5, size [small, large]
+  veg:   price range 9 to 9
+  herb:  no controls
+fake sort fields (in the test): size, price
+
+expected (written by hand):
+  fruit:
+    options: size-asc "Size: A to Z", size-desc "Size: Z to A", price-asc "Price: Low to High", price-desc "Price: High to Low"
+    default: size-asc
+  veg:
+    options: price-asc "Price: Low to High", price-desc "Price: High to Low"
+    default: price-asc
+    (no size options: veg has no size control)
+  (no herb sort: herb has no options)
+
+run:
+  fake controls + fake sort fields -> sort
+
+check:
+  output === expected (options in sort field order, each with its value, field, direction and text)
+
+end of proof
+```
+
+**MAP** — proof step - file
+
+| step | file |
+|---|---|
+| 1. the fake controls | `tests/product-filtering/backend/fakeSortControls.json` |
+| 2. the fake sort fields, standing in for the real list | `tests/product-filtering/backend/controlsAndOptionsToSort.test.ts` |
+| 3. load the fake controls | same file |
+| 4. run sort on the fake controls and the fake sort fields | `features/product-filtering/core/rules/deriveSort.ts` |
+| 5. print the output | `tests/product-filtering/backend/controlsAndOptionsToSort.test.ts` |
+| 6. compare the output to the expected, written by hand in the test, options in sort field order | same file |
+
+The proof covers flow steps 5-7. Flow steps 1-4 are not proved here: steps 3-4 are proved by the controls chunk's proof and the fake controls stand in for what they return, and the fake sort fields stand in for the real list (and for the real list being the default).
 
 ## Derive 4 - flat index
 
@@ -184,7 +243,7 @@ Proof: not written yet.
 ## Derive output
 
 ```
-config = controls with their names + options with their text, scoped per category (controls and options, labels, derive 3)
+config = controls with their names + options with their text + sort options with their default, scoped per category (controls and options, labels, sort)
 config + flat index (derive 4) -> output
 ```
 

@@ -1,0 +1,10 @@
+{
+  "fruit": {
+    "price": { "control": "range", "min": 3, "max": 5 },
+    "size": { "control": "checkbox", "options": ["small", "large"] }
+  },
+  "veg": {
+    "price": { "control": "range", "min": 9, "max": 9 }
+  },
+  "herb": {}
+}

@@ -2,6 +2,7 @@ import { OPTION_LABEL_OVERRIDES } from '@/features/product-filtering/core/defini
 import type { ControlsByCategory } from '@/features/product-filtering/core/types/controlsAndOptions';
 import type { LabelledControlsByCategory } from '@/features/product-filtering/core/types/labelledControls';
 import { humanizeFacetValue } from './humanizeFacetValue';
+import { humanizeFieldName } from './humanizeFieldName';
 
 /** Gives every control a name and every checkbox option its text: the override for that field and value, else humanized. */
 export function deriveLabels(
@@ -12,7 +13,7 @@ export function deriveLabels(
   for (const [category, fields] of Object.entries(controls)) {
     const labelled: LabelledControlsByCategory[string] = {};
     for (const [field, control] of Object.entries(fields)) {
-      const name = humanizeFacetValue(field.replace(/([a-z\d])([A-Z])/g, '$1 $2'));
+      const name = humanizeFieldName(field);
       labelled[field] =
         control.control === 'range'
           ? { ...control, name }
