@@ -70,7 +70,9 @@ function zone(p) {
     case "studio": return Z("studio");
     case "data": return Z("runtime", { home: "leaf" });
     case "scripts": case "tools": case "tests": return Z("tooling");
-    case "docs": case "_project": case ".github": case ".claude": case ".codex": case ".devin": case "public": return Z("other");
+    case "docs":
+      return p === "docs/organizational-pattern.md" || a === "features" || a === "adr" ? Z("other") : null;
+    case "_project": case ".github": case ".claude": case ".codex": case ".devin": case "public": return Z("other");
     default: return null;
   }
 }
