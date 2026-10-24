@@ -1,0 +1,8 @@
+{
+  "category": "veg",
+  "fields": {
+    "farm": { "id": "hill", "name": "Hill Farm" },
+    "grown": ["organic"],
+    "price": 9
+  }
+}

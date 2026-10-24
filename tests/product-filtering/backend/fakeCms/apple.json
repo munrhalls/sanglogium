@@ -1,0 +1,9 @@
+{
+  "category": "fruit",
+  "fields": {
+    "farm": { "id": "sunny", "name": "Sunny Farm" },
+    "grown": ["organic"],
+    "price": 3,
+    "size": "small"
+  }
+}

@@ -2,6 +2,7 @@
 // function's output and a hand-written expected, including option order.
 // Human-run only, one file at a time: node --experimental-strip-types --import ./tools/alias-loader.mjs --test <this file>
 
+import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
@@ -12,45 +13,12 @@ import type {
 } from '@/features/product-filtering/core/types/controlsAndOptions';
 
 test('derive products data -> controls and options', () => {
-  const picklist = ['farm', 'grown', 'price', 'size'];
+  const fakeCms = (name: string) =>
+    JSON.parse(readFileSync(new URL(`./fakeCms/${name}.json`, import.meta.url), 'utf8'));
 
-  const products: DerivableProduct[] = [
-    {
-      category: 'fruit',
-      fields: {
-        farm: { id: 'sunny', name: 'Sunny Farm' },
-        grown: ['organic'],
-        price: 3,
-        size: 'small',
-      },
-    },
-    {
-      category: 'fruit',
-      fields: {
-        farm: { id: 'hill', name: 'Hill Farm' },
-        grown: ['organic', 'local'],
-        price: 5,
-        size: 'large',
-      },
-    },
-    {
-      category: 'fruit',
-      fields: {
-        farm: { id: 'sunny', name: 'Sunny Farm' },
-        grown: ['imported'],
-        price: 4,
-        size: 'small',
-      },
-    },
-    {
-      category: 'veg',
-      fields: {
-        farm: { id: 'hill', name: 'Hill Farm' },
-        grown: ['organic'],
-        price: 9,
-      },
-    },
-  ];
+  const picklist: string[] = fakeCms('picklist').fields;
+
+  const products: DerivableProduct[] = ['apple', 'pear', 'mango', 'spinach'].map(fakeCms);
 
   const expected: ControlsByCategory = {
     fruit: {

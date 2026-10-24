@@ -1,0 +1,9 @@
+{
+  "category": "fruit",
+  "fields": {
+    "farm": { "id": "hill", "name": "Hill Farm" },
+    "grown": ["organic", "local"],
+    "price": 5,
+    "size": "large"
+  }
+}

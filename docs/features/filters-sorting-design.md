@@ -37,12 +37,12 @@ END OF DERIVE PRODUCTS DATA -> CONTROLS AND OPTIONS
 ```
 start of proof: derive products data -> controls and options
 
-fake input:
-  picklist: farm, grown, price, size
-  apple:   category fruit, farm ref(sunny, "Sunny Farm"), grown [organic], price 3, size small
-  pear:    category fruit, farm ref(hill, "Hill Farm"), grown [organic, local], price 5, size large
-  mango:   category fruit, farm ref(sunny, "Sunny Farm"), grown [imported], price 4, size small
-  spinach: category veg, farm ref(hill, "Hill Farm"), grown [organic], price 9
+fake CMS documents (one file each, as the read step returns them):
+  picklist.json: farm, grown, price, size
+  apple.json:    category fruit, farm ref(sunny, "Sunny Farm"), grown [organic], price 3, size small
+  pear.json:     category fruit, farm ref(hill, "Hill Farm"), grown [organic, local], price 5, size large
+  mango.json:    category fruit, farm ref(sunny, "Sunny Farm"), grown [imported], price 4, size small
+  spinach.json:  category veg, farm ref(hill, "Hill Farm"), grown [organic], price 9
 
 expected (written by hand):
   fruit:
@@ -57,7 +57,7 @@ expected (written by hand):
     (no size control: no veg product has a size)
 
 run:
-  fake input -> derive -> controls + options
+  fake CMS documents -> derive -> controls + options
 
 check:
   output === expected (options in first-seen order)
@@ -69,12 +69,12 @@ end of proof
 
 | step | file |
 |---|---|
-| 1. write the fake input: the picklist and four products | `tests/product-filtering/backend/productsDataToDerivedControlsAndOptions.test.ts` |
-| 2. write the expected output by hand | same file |
-| 3. run the fake input through derive | `features/product-filtering/core/rules/deriveControlsAndOptions.ts` |
-| 4. compare the output to the expected, options in first-seen order | `tests/product-filtering/backend/productsDataToDerivedControlsAndOptions.test.ts` |
+| 1. the fake CMS documents: the picklist and four products | `tests/product-filtering/backend/fakeCms/*.json` |
+| 2. load the documents, the way the read step would return them | `tests/product-filtering/backend/productsDataToDerivedControlsAndOptions.test.ts` |
+| 3. run them through derive | `features/product-filtering/core/rules/deriveControlsAndOptions.ts` |
+| 4. compare the output to the expected, written by hand in the test, options in first-seen order | `tests/product-filtering/backend/productsDataToDerivedControlsAndOptions.test.ts` |
 
-The proof covers flow steps 3-6. Flow steps 1-2 (create and read the picklist) are not proved: the fake input stands in for the read.
+The proof covers flow steps 3-6. Flow steps 1-2 (create and read the picklist) are not proved: the fake files stand in for the read.
 
 ## Derive 2 - labels
 
