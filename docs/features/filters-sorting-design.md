@@ -9,11 +9,14 @@ Derive is four chunks, each with its own entry, exit and proof. A chunk's exit s
 ```
 start of derive products data -> controls and options
 
-products data, picklist (the fields chosen as filters) -> controls per category
-picklist field -> control type (every value a number -> range, otherwise -> checkbox)
-checkbox -> options = distinct values across the category's products, first seen order (a reference's value is its id)
-range -> min / max over the category's products (no per-value counts)
-field with no values in the category -> no control
+products data + picklist (the fields chosen as filters)
+-> per category, per picklist field, the field's values:
+
+  no values             ->  no control
+  every value a number  ->  range     min / max
+  otherwise             ->  checkbox  options = distinct values, first seen order
+
+  (a reference's value is its id)
 -> per category: controls + options
 
 end of derive products data -> controls and options
