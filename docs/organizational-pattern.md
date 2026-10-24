@@ -7,7 +7,7 @@ Normative model of how this repository is organized: vertical slices. It says wh
 | # | Axiom |
 |---|-------|
 | A1 | **One home.** Every tracked path has exactly one home, decided by its path (section 3). |
-| A2 | **Two worlds.** The runtime is the code Next bundles. Everything else is a plane: studio, tooling, laws, config, docs, automation, static. Runtime never imports a plane; the one exception is `app/(studio)/`, which mounts the studio plane. Studio and tooling import from the runtime only `platform/sanity/env.ts`. |
+| A2 | **Two worlds.** The runtime is the code Next bundles. Everything else is a plane: studio, tooling, test, config, docs, automation, static. Runtime never imports a plane; the one exception is `app/(studio)/`, which mounts the studio plane. Studio and tooling import from the runtime only `platform/sanity/env.ts`. The test plane may import the runtime; nothing imports it. |
 | A3 | **Slices.** Each capability lives in one slice, `features/<slice>/`, built only from the parts in section 2. |
 | A4 | **Doors.** Code outside a slice imports it only through `index.ts` (client door) or `server.ts` (server door). |
 | A5 | **No cycles.** The slice-to-slice import graph, type imports included, has no cycle. A slice's level is 1 + the highest level it imports; levels are derived, never stored. |
@@ -78,7 +78,7 @@ A part may group its files in one level of sub-folders named after a screen regi
 | Build or one-off script | `scripts/` |
 | Local tooling, checks, operator scripts | `tools/` |
 | Live proofs, test scripts | `tests/<feature>/`, shadowing `features/` (a slice gets a shadow folder only when it has real tests) |
-| Behaviour laws (laws plane: may import the runtime, nothing imports them) | `tests/<feature>/<module>.laws.ts` |
+| Behaviour laws and tests (test plane: may import the runtime, nothing imports them) | `tests/<feature>/<module>.laws.ts`, `tests/<feature>/<module>.test.ts` |
 | Static asset | `public/` |
 | Living reference doc | `docs/features/<topic>.md` |
 | Architecture decision record | `docs/adr/ADR-NNN-<topic>.md` (append-only: a decision is superseded by a new ADR, never deleted) |
@@ -126,7 +126,7 @@ A part may group its files in one level of sub-folders named after a screen regi
 | Section 5 specifiers and naming | DOTDOT, ACTION, NAMES |
 | all | `tools/check-imports.mjs`: SPEC (every import resolves), DELETED (no importer of a removed file), EXPORT (every imported name is exported by its target) |
 
-Behaviour (L): `npm run laws` runs every `*.laws.ts` file; the human runs it, agents never do.
+Behaviour (L): `npm run laws` runs every `*.laws.ts` and `*.test.ts` file; the human runs it, agents never do.
 
 `import type` is erased at build time, so it is exempt from ENV only.
 
