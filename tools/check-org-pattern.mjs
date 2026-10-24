@@ -1,8 +1,8 @@
 // Check "org-pattern": where every file lives and how slices may import each other, as defined in
 // docs/organizational-pattern.md (the tables below mirror its sections 2 and 3; edit both together).
 //   PLACE      every changed path has a home (section 3)
-//   DOTDOT     no '..' specifier in a runtime or laws file (studio-plane files excepted)
-//   PLANE      runtime never imports a non-runtime plane; studio/tooling never import runtime except platform/sanity/env.ts; nothing imports laws
+//   DOTDOT     no '..' specifier in a runtime or test file (studio-plane files excepted)
+//   PLANE      runtime never imports a non-runtime plane; studio/tooling never import runtime except platform/sanity/env.ts; nothing imports the test plane
 //   DOOR       a slice is imported only through index.ts or server.ts
 //   INWARD     inside a slice, imports follow the archetype table (section 2)
 //   PLATFORM   platform/ imports only platform/
@@ -27,7 +27,7 @@ const Z = (plane, extra) => ({ plane, home: null, slice: null, part: null, syste
 
 // path -> zone (null = no home). First match wins.
 function zone(p) {
-  if (p.endsWith(".laws.ts")) return Z("laws");
+  if (p.endsWith(".laws.ts") || p.endsWith(".test.ts")) return Z("test");
   const seg = p.split("/");
   const [top, a, b] = seg;
   const n = seg.length;
@@ -109,11 +109,11 @@ function edge(ctx, file, rel, { spec, typeOnly, line, imported }) {
   const at = `${file}:${line} "${spec}"`;
   const out = [];
   const A = zone(file);
-  if ((A?.plane === "runtime" || A?.plane === "laws") && spec.startsWith("..")) out.push(`${at} DOTDOT use ./x or the @/ alias`);
+  if ((A?.plane === "runtime" || A?.plane === "test") && spec.startsWith("..")) out.push(`${at} DOTDOT use ./x or the @/ alias`);
   const B = zone(rel);
   if (!A || !B) return out; // unplaced paths are reported by PLACE
-  // Plane rules (A laws: no plane rule).
-  if (B.plane === "laws" && A.plane !== "laws") out.push(`${at} PLANE ${A.plane} imports laws`);
+  // Plane rules (A test: no plane rule).
+  if (B.plane === "test" && A.plane !== "test") out.push(`${at} PLANE ${A.plane} imports test`);
   else if (A.plane === "runtime") {
     if (B.plane === "studio") { if (!file.startsWith("app/(studio)/")) out.push(`${at} PLANE runtime imports studio`); }
     else if (B.plane !== "runtime") out.push(`${at} PLANE runtime imports ${B.plane}`);
