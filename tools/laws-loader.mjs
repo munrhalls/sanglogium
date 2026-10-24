@@ -1,4 +1,4 @@
-// Resolver hooks for `npm run laws`: lets the laws plane load plain TypeScript
+// Resolver hooks for `npm run laws`: lets the test plane load plain TypeScript
 // under `node --experimental-strip-types` by supporting the repo's `@/` alias
 // (resolved from the repo root) and extensionless specifiers (`./x` -> `./x.ts`,
 // `./x.tsx` or `./x/index.ts`, first existing file wins). Everything else —
