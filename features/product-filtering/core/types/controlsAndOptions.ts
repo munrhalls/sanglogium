@@ -7,6 +7,15 @@ export interface DerivableProduct {
   /** field name -> one value or a list of values (single-valued = list of one). */
   fields: Record<string, FieldValue | FieldValue[]>;
 }
+/** A product document as the CMS read returns it: its catalogue keys and its filterAttributes. */
+export interface RawProductDoc {
+  catalogueLocationKeys?: string[];
+  filterAttributes?: Record<string, FieldValue | FieldValue[] | null> | null;
+}
+/** The picklist document as the CMS read returns it. */
+export interface RawPicklistDoc {
+  fields?: string[] | null;
+}
 export type DerivedControl =
   | { control: 'checkbox'; options: Scalar[] }
   | { control: 'range'; min: number; max: number };

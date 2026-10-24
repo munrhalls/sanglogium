@@ -1,6 +1,8 @@
 {
-  "category": "fruit",
-  "fields": {
+  "_id": "apple",
+  "_type": "product",
+  "catalogueLocationKeys": ["fruit"],
+  "filterAttributes": {
     "farm": { "id": "sunny", "name": "Sunny Farm" },
     "grown": ["organic"],
     "price": 3,

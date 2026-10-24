@@ -1,6 +1,8 @@
 {
-  "category": "fruit",
-  "fields": {
+  "_id": "mango",
+  "_type": "product",
+  "catalogueLocationKeys": ["fruit"],
+  "filterAttributes": {
     "farm": { "id": "sunny", "name": "Sunny Farm" },
     "grown": ["imported"],
     "price": 4,

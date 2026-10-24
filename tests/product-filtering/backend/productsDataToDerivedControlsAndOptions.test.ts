@@ -1,5 +1,5 @@
-// Behaviour laws for deriveControlsAndOptions: strict equality between the
-// function's output and a hand-written expected, including option order.
+// Behaviour laws for the derive chunk: fake CMS documents (./fakeCms) -> shape -> derive,
+// strict equality between the output and a hand-written expected, including option order.
 // Human-run only, one file at a time: node --experimental-strip-types --import ./tools/alias-loader.mjs --test <this file>
 
 import { readFileSync } from 'node:fs';
@@ -7,18 +7,17 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { deriveControlsAndOptions } from '@/features/product-filtering/core/rules/deriveControlsAndOptions';
-import type {
-  ControlsByCategory,
-  DerivableProduct,
-} from '@/features/product-filtering/core/types/controlsAndOptions';
+import { shapeProductsForDerive } from '@/features/product-filtering/core/rules/shapeProductsForDerive';
+import type { ControlsByCategory } from '@/features/product-filtering/core/types/controlsAndOptions';
 
 test('derive products data -> controls and options', () => {
   const fakeCms = (name: string) =>
     JSON.parse(readFileSync(new URL(`./fakeCms/${name}.json`, import.meta.url), 'utf8'));
 
-  const picklist: string[] = fakeCms('picklist').fields;
-
-  const products: DerivableProduct[] = ['apple', 'pear', 'mango', 'spinach'].map(fakeCms);
+  const { products, picklist } = shapeProductsForDerive(
+    ['apple', 'pear', 'mango', 'spinach'].map(fakeCms),
+    fakeCms('picklist'),
+  );
 
   const expected: ControlsByCategory = {
     fruit: {

@@ -5,7 +5,8 @@ import { homepageDataType } from "../features/homepage/schema/homepageDataType";
 import { brandType } from "../features/products/schema/brandType";
 import { orderType } from "../features/order/schema/orderType";
 import { userType } from "../features/profile/schema/userType";
+import { filterPicklistType } from "../features/product-filtering/schema/filterPicklistType";
 
 export const schema = {
-  types: [heroType, catalogueItemType, productType, homepageDataType, brandType, orderType, userType],
+  types: [heroType, catalogueItemType, productType, homepageDataType, brandType, orderType, userType, filterPicklistType],
 };

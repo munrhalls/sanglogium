@@ -1,3 +1,5 @@
 {
+  "_id": "filterPicklist",
+  "_type": "filterPicklist",
   "fields": ["farm", "grown", "price", "size"]
 }

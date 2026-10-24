@@ -1,6 +1,8 @@
 {
-  "category": "fruit",
-  "fields": {
+  "_id": "pear",
+  "_type": "product",
+  "catalogueLocationKeys": ["fruit"],
+  "filterAttributes": {
     "farm": { "id": "hill", "name": "Hill Farm" },
     "grown": ["organic", "local"],
     "price": 5,

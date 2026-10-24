@@ -25,24 +25,25 @@ END OF DERIVE PRODUCTS DATA -> CONTROLS AND OPTIONS
 
 | step | file |
 |---|---|
-| 1. an editor picks the filter fields in the CMS, which creates the picklist | `features/product-filtering/schema/filterPicklist.ts` |
-| 2. read the products and the picklist from the CMS | `features/product-filtering/adapters/sanity/readProductsAndPicklist.ts` |
-| 3. for each picklist field, gather its values per category | `features/product-filtering/core/rules/deriveControlsAndOptions.ts` |
-| 4. a value that points to another document is cut down to that document's id, so every product pointing at the same document gives the same value (one option) | same file |
-| 5. for each picklist field, pick a control from its values:<br>no values -> no control<br>every value a number -> range<br>otherwise -> checkbox | same file |
-| 6. return each category's controls and options | same file |
+| 1. an editor picks the filter fields in the CMS, which creates the picklist | `features/product-filtering/schema/filterPicklistType.ts` (listed in `studio/schema.ts`, opened from `studio/structure.ts`) |
+| 2. read the product documents and the picklist document from the CMS | `features/product-filtering/adapters/sanity/readProductsAndPicklist.ts` |
+| 3. shape them for derive: one entry per product per catalogue key it sits under, holding its filter attributes (unset ones dropped); the picklist is its list of field names | `features/product-filtering/core/rules/shapeProductsForDerive.ts` |
+| 4. for each picklist field, gather its values per category | `features/product-filtering/core/rules/deriveControlsAndOptions.ts` |
+| 5. a value that points to another document is cut down to that document's id, so every product pointing at the same document gives the same value (one option) | same file |
+| 6. for each picklist field, pick a control from its values:<br>no values -> no control<br>every value a number -> range<br>otherwise -> checkbox | same file |
+| 7. return each category's controls and options | same file |
 
 ## Proof - Derive controls and options
 
 ```
 start of proof: derive products data -> controls and options
 
-fake CMS documents (one file each, as the read step returns them):
-  picklist.json: farm, grown, price, size
-  apple.json:    category fruit, farm ref(sunny, "Sunny Farm"), grown [organic], price 3, size small
-  pear.json:     category fruit, farm ref(hill, "Hill Farm"), grown [organic, local], price 5, size large
-  mango.json:    category fruit, farm ref(sunny, "Sunny Farm"), grown [imported], price 4, size small
-  spinach.json:  category veg, farm ref(hill, "Hill Farm"), grown [organic], price 9
+fake CMS documents (one file each, as the CMS read returns them):
+  picklist.json: fields farm, grown, price, size
+  apple.json:    catalogue key fruit, filter attributes: farm ref(sunny, "Sunny Farm"), grown [organic], price 3, size small
+  pear.json:     catalogue key fruit, filter attributes: farm ref(hill, "Hill Farm"), grown [organic, local], price 5, size large
+  mango.json:    catalogue key fruit, filter attributes: farm ref(sunny, "Sunny Farm"), grown [imported], price 4, size small
+  spinach.json:  catalogue key veg, filter attributes: farm ref(hill, "Hill Farm"), grown [organic], price 9
 
 expected (written by hand):
   fruit:
@@ -57,7 +58,7 @@ expected (written by hand):
     (no size control: no veg product has a size)
 
 run:
-  fake CMS documents -> derive -> controls + options
+  fake CMS documents -> shape -> derive -> controls + options
 
 check:
   output === expected (options in first-seen order)
@@ -70,11 +71,13 @@ end of proof
 | step | file |
 |---|---|
 | 1. the fake CMS documents: the picklist and four products | `tests/product-filtering/backend/fakeCms/*.json` |
-| 2. load the documents, the way the read step would return them | `tests/product-filtering/backend/productsDataToDerivedControlsAndOptions.test.ts` |
-| 3. run them through derive | `features/product-filtering/core/rules/deriveControlsAndOptions.ts` |
-| 4. compare the output to the expected, written by hand in the test, options in first-seen order | `tests/product-filtering/backend/productsDataToDerivedControlsAndOptions.test.ts` |
+| 2. load the documents, the way the CMS read returns them | `tests/product-filtering/backend/productsDataToDerivedControlsAndOptions.test.ts` |
+| 3. shape them for derive | `features/product-filtering/core/rules/shapeProductsForDerive.ts` |
+| 4. run derive on the shaped products and picklist | `features/product-filtering/core/rules/deriveControlsAndOptions.ts` |
+| 5. print the output | `tests/product-filtering/backend/productsDataToDerivedControlsAndOptions.test.ts` |
+| 6. compare the output to the expected, written by hand in the test, options in first-seen order | same file |
 
-The proof covers flow steps 3-6. Flow steps 1-2 (create and read the picklist) are not proved: the fake files stand in for the read.
+The proof covers flow steps 3-7. Flow steps 1-2 (the editor creating the picklist, the fetch from the CMS) are not proved: the fake files stand in for what the fetch returns.
 
 ## Derive 2 - labels
 
