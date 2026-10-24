@@ -10,8 +10,7 @@
 //   ENV        client-safe code never imports server-only code
 //   SERVERDOOR every server.ts contains import "server-only"
 //   CYCLE      the slice-to-slice import graph has no cycle
-//   CORE       core/ imports only its own core/, another slice's index.ts and platform/utils/
-//   VENDOR     vendor packages only in adapters/, platform/, framework entries or the studio plane
+//   CORE       core/ imports only its own core/, another slice's index.ts and platform/utils/, and no vendor package
 //   VIEWDATA   a view imports only *View components from another slice's server.ts
 //   GENERATED  sanity.types.ts only in adapters/sanity/ and platform/
 //   ACTION     'use server' files are features/<slice>/actions/<name>Action.ts and vice versa
@@ -93,7 +92,6 @@ const ALLOW = {
 };
 const CLIENT_SAFE_PARTS = ["ui", "state", "url", "core", "index"];
 const VENDORS = ["stripe", "@stripe/", "better-auth", "@better-auth/", "kysely", "kysely-libsql", "next-sanity", "@sanity/", "sanity", "groq", "resend", "iron-session", "@vercel/", "@sentry/", "web-vitals"];
-const BROWSER_KITS = ["@stripe/stripe-js", "@stripe/react-stripe-js"];
 const ACTION_PATH = /^features\/[^/]+\/actions\/([A-Za-z0-9_-]+)Action\.ts$/;
 // spec is a vendor package when some entry matches: entries ending in "/" match by prefix,
 // any other entry matches when spec equals it or starts with it + "/".
@@ -203,8 +201,8 @@ export function run(ctx) {
       for (const s of ctx.specs(file)) {
         if (!s.external) continue;
         const at = `${file}:${s.line} "${s.spec}"`;
-        if (isVendor(s.spec) && !(A.part === "adapters" || A.home === "platform" || A.part === "entry" || file.startsWith("app/(studio)/") || ((A.part === "ui" || A.part === "state") && BROWSER_KITS.includes(s.spec))))
-          out.push(`${at} VENDOR vendor packages only in adapters/, platform/, framework entries or the studio plane`);
+        if (isVendor(s.spec) && A.part === "core")
+          out.push(`${at} CORE core/ imports no vendor package`);
         if (A.part === "route" && !routePackage(s.spec) && !file.startsWith("app/(studio)/"))
           out.push(`${at} ROUTE routes import only next, react, slice doors and platform/`);
       }

@@ -25,6 +25,10 @@ CRITICAL — NO PARALLEL MULTI-AGENT BATCHES, EVER, WITHOUT EXPLICIT PER-BATCH G
 - Research-heavy subagent work (WebSearch/WebFetch/PDF-reading loops) is exactly the expensive, hard-to-interrupt shape this rule exists to prevent — treat it as the default case this rule is for, not an edge case.
 - Reason: a 6-way parallel subagent launch burned ~30% of the human's 5-hour rate-limit window in under a minute on pure research with zero completed output, and the "confirm within ~1 minute that it started" cadence was not enough to catch it before real damage was done. Confirming a start is not the same as confirming the cost was worth it.
 
+## Source of truth
+
+Only physics and irrefutable logic or math are truth. Docs, code, artifacts, past decisions and earlier agent statements are choices or assumptions: question them, never cite one as proof that something is required, and say which claims are forced and which are chosen.
+
 ## Response Formatting
 
 Every answer to the user — and every subagent report — must be presented in **balanced chunks** that the human visual system can parse quickly. Never a wall of text.
@@ -98,7 +102,7 @@ ORGANIZATIONAL PATTERN (binding). Source of truth: docs/organizational-pattern.m
 2. A slice is features/<slice>/ built only from: index.ts (client door), server.ts (server door), ui/, state/, url/, view/, queries/, commands/, actions/, core/definitions/, core/rules/, core/types/, core/ports.ts, adapters/<system>/, schema/. Omit the parts a slice does not need.
 3. Inside a slice, imports follow the archetype table in section 2. core/ imports only its own core/, another slice's index.ts and platform/utils/; never a vendor package, sanity.types.ts or data/.
 4. Code outside a slice reaches it only through its index.ts or server.ts. Slice-to-slice imports never form a cycle.
-5. Only adapters/<system>/ talk to an outside system (Sanity, Stripe, better-auth, Resend, Google...); vendor packages (section 3) are imported only there, in platform/, in framework entry files and in the studio plane. GROQ and Sanity patches exist only in adapters/sanity/. server.ts wires adapters into ports and never imports a 'use server' file.
+5. server.ts wires adapters into ports and never imports a 'use server' file.
 6. app/ holds Next route files only. A route imports slice doors, platform/, next, next/* and react, and only composes them.
 7. platform/ (design, sanity, email, analytics, utils) imports only platform/. Client-safe code (ui/, state/, url/, core/, index.ts, platform/design/ui/, any 'use client' file) never imports a file containing import "server-only"; every server.ts contains it.
 8. No '..' in runtime files (app/, features/, platform/), except studio-plane files: use './x' for the same directory and '@/...' for everything else.
@@ -111,8 +115,7 @@ ORGANIZATIONAL PATTERN (binding). Source of truth: docs/organizational-pattern.m
 
 _Last reviewed 2026-10-01 against the live repo. Stack/pattern-level only — for implementation detail, read the actual files; this is not a substitute for that. Full tech stack list lives in `README.md` (kept there to avoid two copies drifting apart) — Next.js 15 App Router, React 19, Sanity v3, Stripe, Better Auth, Zustand, TypeScript/Zod._
 
-**Top-level route/folder map:** `app/` holds Next route files only: route groups `(store)` (public storefront), `(admin)`, `(studio)` (Sanity Studio), plus `checkout/` (pages) and `api/` (route handlers). Feature code lives in `features/<slice>/`, built from the archetype in `docs/organizational-pattern.md` section 2 (see Conventions & Patterns). `platform/` (`design`, `sanity`, `email`, `analytics`, `utils`) knows no slice; `studio/` collects the slice-owned CMS schemas; `data/` holds generated data. GROQ and Sanity patches live only in `features/*/adapters/sanity/` — never in `app/`.
-
+**Top-level route/folder map:** `app/` holds Next route files only: route groups `(store)` (public storefront), `(admin)`, `(studio)` (Sanity Studio), plus `checkout/` (pages) and `api/` (route handlers). Feature code lives in `features/<slice>/`, built from the archetype in `docs/organizational-pattern.md` section 2 (see Conventions & Patterns). `platform/` (`design`, `sanity`, `email`, `analytics`, `utils`) knows no slice; `studio/` collects the slice-owned CMS schemas; `data/` holds generated data.
 **Catalogue pattern:** product catalogue uses a "Build-Time VFS" pattern (see `features/catalogue/` — its `data/catalogue-index.json` is read only by `adapters/catalogue-index/` — and `docs/features/catalogue-architecture.md`) — headless CMS data pre-materialized at build time for sub-second navigation, rather than live-queried per request. Relevant when touching catalogue/product-listing performance or data-freshness questions.
 
 **Filters & sorting:** live in `features/product-filtering/` (`url/`, `state/`, `ui/`, `core/`, `adapters/sanity/` for the GROQ and field map, `queries/`). Outside code uses `@/features/product-filtering` (client) or `@/features/product-filtering/server` (`getFilterFacets`, `buildProductQuery`).

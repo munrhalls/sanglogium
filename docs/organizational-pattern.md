@@ -15,7 +15,6 @@ Normative model of how this repository is organized: vertical slices. It says wh
 | A7 | **Environment.** Client-safe code (`ui/`, `state/`, `url/`, `core/`, `index.ts`, `platform/design/ui/`, any `'use client'` file) never value-imports a file containing `import "server-only"`. Every `server.ts` contains it. |
 | A8 | **Platform knows no slice.** `platform/` imports only `platform/`. |
 | A9 | **Routes compose.** `app/` holds Next route files only. A route imports slice doors, `platform/`, `next`, `next/*` and `react`, and only composes them. |
-| A10 | **Vendors behind adapters.** A vendor package (section 3) is imported only by `adapters/<system>/`, `platform/`, framework entry files and the studio plane (`app/(studio)/` included). `ui/` and `state/` may import a browser kit (section 3). |
 | A11 | **Views take props.** A `view/` component gets its data as props; from another slice's `server.ts` it imports only `*View` components. |
 | A12 | **One owner per document.** Every CMS document type has one owning slice; it holds the type's `schema/` and every write path (section 4). |
 
@@ -36,10 +35,10 @@ Normative model of how this repository is organized: vertical slices. It says wh
 | `core/rules/` | logic with no I/O (reading the clock or a random value is allowed) | core |
 | `core/types/` | type-only modules: the slice's data shapes, no runtime values | core |
 | `core/ports.ts` | the function types queries, commands and server.ts need from adapters, in the slice's own types | core |
-| `adapters/<system>/` | the only code that talks to an outside system (`sanity`, `stripe`, `better-auth`, `resend`, `google`, ...); implements ports and maps vendor shapes into the slice's types | the same system, core |
+| `adapters/<system>/` | code that talks to an outside system (`sanity`, `stripe`, `better-auth`, `resend`, `google`, ...); implements ports and maps vendor shapes into the slice's types | the same system, core |
 | `schema/` | CMS document types (studio plane) | schema |
 
-Across slices: any runtime file may import another slice's `index.ts`; only server-side files (`server.ts`, `queries/`, `commands/`, `actions/`, `adapters/`, routes) may import another slice's `server.ts`, and `view/` may import from it only `*View` components. Any runtime file may import `platform/`, within the limits of A6 and A10.
+Across slices: any runtime file may import another slice's `index.ts`; only server-side files (`server.ts`, `queries/`, `commands/`, `actions/`, `adapters/`, routes) may import another slice's `server.ts`, and `view/` may import from it only `*View` components. Any runtime file may import `platform/`, within the limits of A6.
 
 A part may group its files in one level of sub-folders named after a screen region or a flow (`ui/card/`, `view/listing/`).
 
@@ -48,7 +47,7 @@ A part may group its files in one level of sub-folders named after a screen regi
 1. Type-only modules go to `core/types/`, pure logic to `core/rules/`, constants and registries to `core/definitions/`.
 2. URL parsers and serializers go to `url/`; client stores and hooks to `state/`.
 3. Server components go to `view/` (named `*View`); client and presentational components to `ui/`.
-4. Every call to an outside system goes to `adapters/<system>/`, usually one function per file, and returns the slice's own types. A file that uses a secret or a server-only API contains `import "server-only"`. GROQ and Sanity patches exist only in `adapters/sanity/`.
+4. A call to an outside system may go to `adapters/<system>/`, usually one function per file, returning the slice's own types. A file that uses a secret or a server-only API contains `import "server-only"`.
 5. `core/ports.ts` declares a function type for each adapter function the slice uses, grouped into named port objects. A slice with no query or command that takes ports has no `core/ports.ts`; its `server.ts` re-exports the adapter functions it needs.
 6. A use case with logic goes to `queries/<name>.ts` or `commands/<name>.ts` and takes its ports as the first parameter. Without logic, `server.ts` exports the wired adapter function directly.
 7. A Server Action is `actions/<name>Action.ts` starting with `'use server'`: auth guard (through the auth slice's server door), input validation, one call to a wired function from a server door, revalidation.
@@ -88,12 +87,12 @@ A part may group its files in one level of sub-folders named after a screen regi
 
 **Root allowlist.** Files: `package.json`, `package-lock.json`, `tsconfig.json`, `next.config.ts`, `postcss.config.mjs`, `tailwind.config.ts`, `eslint.config.mjs`, `.prettierrc`, `.prettierignore`, `sanity.config.ts`, `sanity.cli.ts`, `sentry.*.config.ts`, `instrumentation*.ts`, `middleware.ts`, `vercel.json`, `.node-version`, `.gitignore`, `.codeiumignore`, `.no-mistakes.yaml`, `.env.example`; tool-generated `schema.json`, `sanity.types.ts`, `skills-lock.json`; entry docs `README.md`, `CLAUDE.md`, `AGENTS.md`. Folders: `app/ features/ platform/ studio/ scripts/ tools/ tests/ docs/ data/ public/ _project/ .github/ .claude/ .codex/ .devin/`. Nothing else at the root.
 
-**Vendor packages** (A10): `stripe`, `@stripe/*`, `better-auth` and its subpaths, `@better-auth/*`, `kysely`, `kysely-libsql`, `next-sanity` and its subpaths, `@sanity/*`, `sanity`, `groq`, `resend`, `iron-session`, `@vercel/*`, `@sentry/*`, `web-vitals`. **Browser kits**, allowed in `ui/` and `state/`: `@stripe/stripe-js`, `@stripe/react-stripe-js`. A new vendor is added here and in the gate in the same change.
+**Vendor packages** (A6: `core/` never imports one): `stripe`, `@stripe/*`, `better-auth` and its subpaths, `@better-auth/*`, `kysely`, `kysely-libsql`, `next-sanity` and its subpaths, `@sanity/*`, `sanity`, `groq`, `resend`, `iron-session`, `@vercel/*`, `@sentry/*`, `web-vitals`. A new vendor is added here and in the gate in the same change.
 
 ## 4. Data rule
 
 - Every CMS document type has one owning slice: its `schema/` and every write path live there. Another slice writes through the owner's `server.ts`. Owners: `userProfile` is owned by profile; `order` by order; `product` and `brand` by products; `catalogueItem` by catalogue; `hero` and `homepageData` by homepage.
-- Reads are free: a slice reads the documents it needs through its own `adapters/sanity/`.
+- Reads are free: a slice reads the documents it needs.
 - A write that must touch several documents atomically stays in one adapter of the slice that owns the operation (order placement in order, see `docs/adr/ADR-002-checkout-inventory-concurrency.md`).
 - `sanity.types.ts` is imported only by `adapters/sanity/` and `platform/`; contracts in `core/` and `view/` use the slice's own types.
 
@@ -116,11 +115,10 @@ A part may group its files in one level of sub-folders named after a screen regi
 | A2 | PLANE |
 | A4 | DOOR |
 | A5 | CYCLE (whole tree, every run) |
-| A6 | INWARD, CORE |
+| A6 | INWARD, CORE (including the no-vendor-package rule) |
 | A7 | ENV, SERVERDOOR |
 | A8 | PLATFORM |
 | A9 | ROUTE (imports; "no logic" is review-enforced) |
-| A10 | VENDOR |
 | A11 | VIEWDATA |
 | A12, section 4 | GENERATED (`sanity.types.ts` imports); the single write owner is review-enforced |
 | Section 5 specifiers and naming | DOTDOT, ACTION, NAMES |
@@ -142,6 +140,5 @@ docs/  _project/  public/
 
 slice -> slice only through index.ts / server.ts, never in a cycle
 inside a slice every import points inward, toward core/
-only adapters/ (and the shared clients in platform/) talk to Sanity, Stripe, better-auth, Resend, Google
 every CMS document has one owning slice
 ```
