@@ -57,13 +57,24 @@ expected (written by hand):
     (no size control: no veg product has a size)
 
 run:
-  fake input -> derive, verbatim -> controls + options
+  fake input -> derive -> controls + options
 
 check:
   output === expected (options in first-seen order)
 
 end of proof
 ```
+
+**MAP** — proof step - file
+
+| step | file |
+|---|---|
+| 1. write the fake input: the picklist and four products | `tests/product-filtering/backend/productsDataToDerivedControlsAndOptions.test.ts` |
+| 2. write the expected output by hand | same file |
+| 3. run the fake input through derive | `features/product-filtering/core/rules/deriveControlsAndOptions.ts` |
+| 4. compare the output to the expected, options in first-seen order | `tests/product-filtering/backend/productsDataToDerivedControlsAndOptions.test.ts` |
+
+The proof covers flow steps 3-6. Flow steps 1-2 (create and read the picklist) are not proved: the fake input stands in for the read.
 
 ## Derive 2 - labels
 
