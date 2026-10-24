@@ -113,7 +113,7 @@ _Last reviewed 2026-10-01 against the live repo. Stack/pattern-level only — fo
 
 **Top-level route/folder map:** `app/` holds Next route files only: route groups `(store)` (public storefront), `(admin)`, `(studio)` (Sanity Studio), plus `checkout/` (pages) and `api/` (route handlers). Feature code lives in `features/<slice>/`, built from the archetype in `docs/organizational-pattern.md` section 2 (see Conventions & Patterns). `platform/` (`design`, `sanity`, `email`, `analytics`, `utils`) knows no slice; `studio/` collects the slice-owned CMS schemas; `data/` holds generated data. GROQ and Sanity patches live only in `features/*/adapters/sanity/` — never in `app/`.
 
-**Catalogue pattern:** product catalogue uses a "Build-Time VFS" pattern (see `features/catalogue/` — its `data/catalogue-index.json` is read only by `adapters/catalogue-index/` — and `docs/catalogue-architecture.md`) — headless CMS data pre-materialized at build time for sub-second navigation, rather than live-queried per request. Relevant when touching catalogue/product-listing performance or data-freshness questions.
+**Catalogue pattern:** product catalogue uses a "Build-Time VFS" pattern (see `features/catalogue/` — its `data/catalogue-index.json` is read only by `adapters/catalogue-index/` — and `docs/features/catalogue-architecture.md`) — headless CMS data pre-materialized at build time for sub-second navigation, rather than live-queried per request. Relevant when touching catalogue/product-listing performance or data-freshness questions.
 
 **Filters & sorting:** live in `features/product-filtering/` (`url/`, `state/`, `ui/`, `core/`, `adapters/sanity/` for the GROQ and field map, `queries/`). Outside code uses `@/features/product-filtering` (client) or `@/features/product-filtering/server` (`getFilterFacets`, `buildProductQuery`).
 
@@ -122,11 +122,11 @@ _Last reviewed 2026-10-01 against the live repo. Stack/pattern-level only — fo
 **Workflow note:** work is delivered PR checkboxes -> `/architect` -> runner (see Process above).
 
 **UX reference docs — read before exploring, not after:**
-- Desktop layout looks cramped/short on vertical room → `docs/vertical-space-lg-touch.md` (the `lg-touch` breakpoint, the no-inheritance gotcha, the h-full-vs-aspect-ratio ownership gotcha, proven fixes) before touching spacing.
-- Touching homepage data fetching or section composition → `docs/homepage-structure.md` (which section owns what data/state) before re-deriving it.
-- Touching header search, the mobile search sheet, or `/search` → `docs/search-ux.md` (surfaces, history + on-screen-keyboard contracts, combobox semantics).
+- Desktop layout looks cramped/short on vertical room → `docs/features/vertical-space-lg-touch.md` (the `lg-touch` breakpoint, the no-inheritance gotcha, the h-full-vs-aspect-ratio ownership gotcha, proven fixes) before touching spacing.
+- Touching homepage data fetching or section composition → `docs/features/homepage-structure.md` (which section owns what data/state) before re-deriving it.
+- Touching header search, the mobile search sheet, or `/search` → `docs/features/search-ux.md` (surfaces, history + on-screen-keyboard contracts, combobox semantics).
 
-**Mandatory review gate:** any edit to a className touching height/sizing (`h-full`, `min-h-`, `max-h-`, `aspect-`) under `features/shell/**`, `platform/design/**` or `features/**/ui/**` must be reviewed against the diff before the task is considered done — run it even if not asked to "review." This is not optional and does not depend on remembering the lesson below; it's a mechanical check for the `h-full` vs. explicit-height ownership pattern documented in `docs/vertical-space-lg-touch.md`, precisely because reading the doc once was not sufficient to prevent a real regression on the product-spotlight components.
+**Mandatory review gate:** any edit to a className touching height/sizing (`h-full`, `min-h-`, `max-h-`, `aspect-`) under `features/shell/**`, `platform/design/**` or `features/**/ui/**` must be reviewed against the diff before the task is considered done — run it even if not asked to "review." This is not optional and does not depend on remembering the lesson below; it's a mechanical check for the `h-full` vs. explicit-height ownership pattern documented in `docs/features/vertical-space-lg-touch.md`, precisely because reading the doc once was not sufficient to prevent a real regression on the product-spotlight components.
 
 ## Conventions & Patterns
 
@@ -144,10 +144,10 @@ _Add your project-specific conventions here_
 _Set 2026-10-02. Any new top-level file or folder needs the owner's approval._
 
 - **Root allowlist:** defined once, in `docs/organizational-pattern.md` section 3; the gate mirrors it. Any new top-level file or folder needs the owner's approval. `node tools/check-turn.mjs` rejects any changed path that belongs to no zone of the model.
-- **Where things go:** local tooling in `tools/` (the end-of-turn checks `check-turn.mjs`, `check-imports.mjs` and `check-org-pattern.mjs`, the git hook in `tools/git-hooks/`, the ESLint plugin and the laws loader `tools/laws-loader.mjs`); build scripts in `scripts/` (an executed one-off script is deleted, git history is the archive); tests shadow `features/` in `tests/` (only features with real tests get a shadow folder); documentation in `docs/` (only living reference documents and ADRs; working notes and generated analyses are deleted, never stored); `_project/` holds `AI_LESSONS.md` and the transient `working-memory/` task files.
+- **Where things go:** local tooling in `tools/` (the end-of-turn checks `check-turn.mjs`, `check-imports.mjs` and `check-org-pattern.mjs`, the git hook in `tools/git-hooks/`, the ESLint plugin and the laws loader `tools/laws-loader.mjs`); build scripts in `scripts/` (an executed one-off script is deleted, git history is the archive); tests shadow `features/` in `tests/` (only features with real tests get a shadow folder); documentation in `docs/` (living reference documents in `docs/features/`, ADRs in `docs/adr/`, the model document `docs/organizational-pattern.md`; working notes and generated analyses are deleted, never stored); `_project/` holds `AI_LESSONS.md` and the transient `working-memory/` task files.
 - **Never committed:** secrets, any `.env*` except `.env.example` (names only), logs, backups, caches, virtualenvs, conversation caches, task files under `_project/working-memory/`, anything matched by `.gitignore`. `git ls-files -ci --exclude-standard` must list nothing.
 - **Naming:** defined once, in `docs/organizational-pattern.md` section 5; the gate's ACTION and NAMES rules check the mechanical parts. No spaces or non-ASCII characters in tracked paths.
-- **Docs honesty:** the living docs (`docs/vertical-space-lg-touch.md`, `docs/homepage-structure.md`, `docs/search-ux.md`, `docs/catalogue-architecture.md`, `docs/organizational-pattern.md` and `docs/adr/ADR-002-checkout-inventory-concurrency.md`) must contain no dead path. Never keep an identical copy of a document in two places.
+- **Docs honesty:** the living docs (`docs/features/vertical-space-lg-touch.md`, `docs/features/homepage-structure.md`, `docs/features/search-ux.md`, `docs/features/catalogue-architecture.md`, `docs/features/filters-sorting-design.md`, `docs/organizational-pattern.md` and `docs/adr/ADR-002-checkout-inventory-concurrency.md`) must contain no dead path. Never keep an identical copy of a document in two places.
 
 ## Git and handoff
 
