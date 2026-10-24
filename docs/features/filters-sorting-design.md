@@ -20,6 +20,16 @@ products data + picklist (the fields chosen as filters)
 -> per category: controls + options
 
 END OF DERIVE PRODUCTS DATA -> CONTROLS AND OPTIONS
+
+MAP (execution order, stop - file)
+
+  1.   collect values per category, per field   - features/product-filtering/core/rules/deriveControlsAndOptions.ts
+       (a reference's value becomes its id)
+  2-4. one of three, per field:                  - same file
+       no values -> no control
+       every value a number -> range
+       otherwise -> checkbox
+  5.   return per category: controls + options - same file
 ```
 
 ## Proof - Derive controls and options
