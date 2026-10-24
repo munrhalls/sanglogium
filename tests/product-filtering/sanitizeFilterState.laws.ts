@@ -1,4 +1,4 @@
-// Behaviour laws for ./sanitizeFilterState: sanitizing must be idempotent —
+// Behaviour laws for sanitizeFilterState: sanitizing must be idempotent —
 // sanitize(sanitize(s)) always equals sanitize(s) — over representative
 // states including unknown facet values, out-of-range prices and empty
 // selections. The vocabulary comes from the facet set, so the fixture carries
@@ -9,7 +9,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { sanitizeFilterState } from './sanitizeFilterState';
+import { sanitizeFilterState } from '@/features/product-filtering/core/rules/sanitizeFilterState';
 import type { FacetSet } from '@/features/product-filtering/core/types/facetProjection';
 import type { ProductQueryState } from '@/features/product-filtering/core/types/filterTypes';
 

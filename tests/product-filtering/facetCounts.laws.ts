@@ -1,4 +1,4 @@
-// Behaviour laws for ./facetCounts: the disjunctive counting contract — an
+// Behaviour laws for facetCounts: the disjunctive counting contract — an
 // option's count ignores selections in its own facet group and respects the
 // selections in every other group — and no count is ever negative.
 // Human-run only, via `npm run laws` (node:test, no dependency, no app boot).
@@ -6,7 +6,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { computeCatalogueFacets } from './facetCounts';
+import { computeCatalogueFacets } from '@/features/product-filtering/core/rules/facetCounts';
 import type { ProductQueryState, RawProduct } from '@/features/product-filtering/core/types/filterTypes';
 import type { FacetSet } from '@/features/product-filtering/core/types/facetProjection';
 

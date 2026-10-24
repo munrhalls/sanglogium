@@ -1,4 +1,4 @@
-// Behaviour laws for the filter/sort URL-param contract in ./filterSortParams.
+// Behaviour laws for the filter/sort URL-param contract in filterSortParams.
 // Human-run only, via `npm run laws` (node:test, no dependency, no app boot).
 
 import test from 'node:test';
@@ -10,7 +10,7 @@ import {
   filterSortParsers,
   loadFilterSort,
   serializeFilterSort,
-} from './filterSortParams';
+} from '@/features/product-filtering/url/filterSortParams';
 
 // One representative value per parser key, covering every facet kind
 // (boolean, checkbox, range) and the sort. Any string exercises an array

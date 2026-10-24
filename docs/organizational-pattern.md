@@ -78,7 +78,7 @@ A part may group its files in one level of sub-folders named after a screen regi
 | Build or one-off script | `scripts/` |
 | Local tooling, checks, operator scripts | `tools/` |
 | Live proofs, test scripts | `tests/<feature>/`, shadowing `features/` (a slice gets a shadow folder only when it has real tests) |
-| Behaviour laws (laws plane: may import the runtime, nothing imports them) | `<module>.laws.ts` next to the module they check |
+| Behaviour laws (laws plane: may import the runtime, nothing imports them) | `tests/<feature>/<module>.laws.ts` |
 | Static asset | `public/` |
 | Living reference doc | `docs/features/<topic>.md` |
 | Architecture decision record | `docs/adr/ADR-NNN-<topic>.md` (append-only: a decision is superseded by a new ADR, never deleted) |
