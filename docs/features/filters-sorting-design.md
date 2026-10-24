@@ -28,7 +28,7 @@ END OF DERIVE PRODUCTS DATA -> CONTROLS AND OPTIONS
 | 1. an editor picks the filter fields in the CMS, which creates the picklist | `features/product-filtering/schema/filterPicklist.ts` |
 | 2. read the products and the picklist from the CMS | `features/product-filtering/adapters/sanity/readProductsAndPicklist.ts` |
 | 3. for each picklist field, gather its values per category | `features/product-filtering/core/rules/deriveControlsAndOptions.ts` |
-| 4. turn each reference value into its id, so two products pointing at the same document give one option, not two | same file |
+| 4. a value that points to another document is cut down to that document's id, so every product pointing at the same document gives the same value (one option) | same file |
 | 5. for each picklist field, pick a control from its values:<br>no values -> no control<br>every value a number -> range<br>otherwise -> checkbox | same file |
 | 6. return each category's controls and options | same file |
 
