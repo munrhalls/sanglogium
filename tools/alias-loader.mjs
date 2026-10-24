@@ -1,7 +1,10 @@
-// Resolver hooks for `npm run laws`: lets the test plane load plain TypeScript
-// under `node --experimental-strip-types` by supporting the repo's `@/` alias
-// (resolved from the repo root) and extensionless specifiers (`./x` -> `./x.ts`,
-// `./x.tsx` or `./x/index.ts`, first existing file wins). Everything else —
+// Node alias loader. Its only purpose: plain `node` cannot resolve the repo's
+// `@/` alias or extensionless imports, so tests that import app code need this.
+// Use: `node --experimental-strip-types --import ./tools/alias-loader.mjs --test <file>`.
+//
+// It adds `@/` (resolved from the repo root) and extensionless specifiers
+// (`./x` -> `./x.ts`, `./x.tsx` or `./x/index.ts`, first existing file wins).
+// Everything else —
 // bare imports like `nuqs/server` or `node:test`, and specifiers that already
 // carry an extension — falls through to the default resolver.
 // Dependency-free: Node builtins only.

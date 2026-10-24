@@ -126,8 +126,6 @@ A part may group its files in one level of sub-folders named after a screen regi
 | Section 5 specifiers and naming | DOTDOT, ACTION, NAMES |
 | all | `tools/check-imports.mjs`: SPEC (every import resolves), DELETED (no importer of a removed file), EXPORT (every imported name is exported by its target) |
 
-Behaviour (L): `npm run laws` runs every `*.laws.ts` and `*.test.ts` file; the human runs it, agents never do.
-
 `import type` is erased at build time, so it is exempt from ENV only.
 
 ## Appendix: the whole repository

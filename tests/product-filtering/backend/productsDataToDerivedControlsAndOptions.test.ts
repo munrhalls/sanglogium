@@ -1,6 +1,6 @@
 // Behaviour laws for deriveControlsAndOptions: strict equality between the
 // function's output and a hand-written expected, including option order.
-// Human-run only, via `npm run laws` (node:test, no dependency, no app boot).
+// Human-run only, one file at a time: node --experimental-strip-types --import ./tools/alias-loader.mjs --test <this file>
 
 import test from 'node:test';
 import assert from 'node:assert/strict';
