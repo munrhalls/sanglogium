@@ -79,18 +79,77 @@ end of proof
 
 The proof covers flow steps 3-7. Flow steps 1-2 (the editor creating the picklist, the fetch from the CMS) are not proved: the fake files stand in for what the fetch returns.
 
-## Derive 2 - labels
+## Derive controls and options -> labels
 
 ```
-start of derive 2
+START OF DERIVE CONTROLS AND OPTIONS -> LABELS
 
-options -> auto-label (humanized, or referenced doc title) -> optional override -> labels map
--> per category: labels map
+controls + options per category (the exit of the chunk above)
++ option text overrides (a table kept in code)
+-> per control, its name: the field name, humanized
+-> per checkbox option, its text:
 
-end of derive 2
+  an override exists for that field and value  ->  the override
+  otherwise                                     ->  the value as text, humanized
+
+-> per category: controls, each with a name, each checkbox option with its text
+
+END OF DERIVE CONTROLS AND OPTIONS -> LABELS
 ```
 
-Proof: not written yet.
+**MAP** — execution flow step - file
+
+| step | file |
+|---|---|
+| 1. a developer lists the option text that humanizing can't produce, because the value alone can't spell it out | `features/product-filtering/core/definitions/optionLabelOverrides.ts` |
+| 2. each control gets a name, its field name humanized, because a field name is not for reading (wearingStyle -> Wearing Style) | `features/product-filtering/core/rules/deriveLabels.ts`, using `features/product-filtering/core/rules/humanizeFacetValue.ts` |
+| 3. each checkbox option gets its text: the override for its field and value, else its value written as text and humanized, so true / false work too | same file |
+| 4. return each category's controls with their names and option text | same file |
+
+## Proof - Derive labels
+
+```
+start of proof: derive controls and options -> labels
+
+fake derived controls (one file, in the exit shape of the chunk above):
+  fruit: farm [sunny, hill], fresh [true, false], grown [organic, local, imported], grownIn [open-field, glasshouse], price range 3 to 5, size [small, large]
+  veg:   farm [hill], grown [organic], price range 9 to 9
+fake override table (in the test): grown / imported -> "Imported from abroad"
+
+expected (written by hand):
+  fruit:
+    farm: name Farm; Sunny, Hill
+    fresh: name Fresh; True, False
+    grown: name Grown; Organic, Local, Imported from abroad
+    grownIn: name Grown In; Open Field, Glasshouse
+    price: name Price, range 3 to 5
+    size: name Size; Small, Large
+  veg:
+    farm: name Farm; Hill
+    grown: name Grown; Organic
+    price: name Price, range 9 to 9
+
+run:
+  fake derived controls + fake override table -> labels
+
+check:
+  output === expected (options in input order, each with its value and its text)
+
+end of proof
+```
+
+**MAP** — proof step - file
+
+| step | file |
+|---|---|
+| 1. the fake derived controls | `tests/product-filtering/backend/fakeDerivedControls.json` |
+| 2. the fake override table, standing in for the real one | `tests/product-filtering/backend/controlsAndOptionsToLabels.test.ts` |
+| 3. load the fake derived controls | same file |
+| 4. run labels on the fake controls and the fake override table | `features/product-filtering/core/rules/deriveLabels.ts` |
+| 5. print the output | `tests/product-filtering/backend/controlsAndOptionsToLabels.test.ts` |
+| 6. compare the output to the expected, written by hand in the test, options in input order | same file |
+
+The proof covers flow steps 2-4. Flow step 1 (a developer editing the real table, and the real table being the default) is not proved: the fake table stands in.
 
 ## Derive 3 - sort
 
@@ -125,7 +184,7 @@ Proof: not written yet.
 ## Derive output
 
 ```
-config = controls + options + labels, scoped per category (controls and options, derive 2, derive 3)
+config = controls with their names + options with their text, scoped per category (controls and options, labels, derive 3)
 config + flat index (derive 4) -> output
 ```
 
@@ -207,7 +266,7 @@ counts = request-time overlay on the static config
 ```
 start of client component
 
-labels map -> null override renders auto-label, non-null renders override
+control names + option text -> printed as given
 controls + options + counts -> interactive elements (checkbox, slider, toggle, sort, size, page)
 user interaction -> URL only (nuqs, shallow: false, startTransition)
 filter / sort / size change -> the same URL write sets page = 1
