@@ -22,8 +22,7 @@ export function deriveControlsAndOptions(
       const raw = product.fields[name];
       if (raw === undefined) continue;
       const items = Array.isArray(raw) ? raw : [raw];
-      const list = category.get(name);
-      if (!list) continue;
+      const list = category.get(name) as Scalar[];
       for (const item of items) {
         list.push(typeof item === 'object' ? item.id : item);
       }

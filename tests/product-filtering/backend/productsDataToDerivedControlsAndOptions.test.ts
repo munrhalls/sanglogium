@@ -11,8 +11,8 @@ import type {
   DerivableProduct,
 } from '@/features/product-filtering/core/types/controlsAndOptions';
 
-test('derive 1: products data -> controls + options', () => {
-  const picklist = ['farm', 'grown', 'price'];
+test('derive products data -> controls and options', () => {
+  const picklist = ['farm', 'grown', 'price', 'size'];
 
   const products: DerivableProduct[] = [
     {
@@ -21,6 +21,7 @@ test('derive 1: products data -> controls + options', () => {
         farm: { id: 'sunny', name: 'Sunny Farm' },
         grown: ['organic'],
         price: 3,
+        size: 'small',
       },
     },
     {
@@ -29,6 +30,7 @@ test('derive 1: products data -> controls + options', () => {
         farm: { id: 'hill', name: 'Hill Farm' },
         grown: ['organic', 'local'],
         price: 5,
+        size: 'large',
       },
     },
     {
@@ -37,6 +39,7 @@ test('derive 1: products data -> controls + options', () => {
         farm: { id: 'sunny', name: 'Sunny Farm' },
         grown: ['imported'],
         price: 4,
+        size: 'small',
       },
     },
     {
@@ -54,6 +57,7 @@ test('derive 1: products data -> controls + options', () => {
       farm: { control: 'checkbox', options: ['sunny', 'hill'] },
       grown: { control: 'checkbox', options: ['organic', 'local', 'imported'] },
       price: { control: 'range', min: 3, max: 5 },
+      size: { control: 'checkbox', options: ['small', 'large'] },
     },
     veg: {
       farm: { control: 'checkbox', options: ['hill'] },
@@ -62,5 +66,9 @@ test('derive 1: products data -> controls + options', () => {
     },
   };
 
-  assert.deepStrictEqual(deriveControlsAndOptions(products, picklist), expected);
+  const result = deriveControlsAndOptions(products, picklist);
+  console.log('deriveControlsAndOptions(products, picklist) =>');
+  console.log(JSON.stringify(result, null, 2));
+
+  assert.deepStrictEqual(result, expected);
 });

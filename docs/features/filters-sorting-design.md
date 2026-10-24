@@ -4,32 +4,31 @@
 
 Derive is four chunks, each with its own entry, exit and proof. A chunk's exit shape is the next chunk's entry shape, defined once.
 
-## Derive 1 - controls and options
+## Derive products data -> controls and options
 
 ```
-start of derive 1
+start of derive products data -> controls and options
 
-products data -> available fields -> picklist (chosen from the fields)
-picklist field -> value type -> control type (number -> range, otherwise -> checkbox)
-every field is a list of values (single-valued = list of one)
-reference field -> value = referenced id
-checkbox -> options = distinct values across the category's products, first seen order
+products data, picklist (the fields chosen as filters) -> controls per category
+picklist field -> control type (every value a number -> range, otherwise -> checkbox)
+checkbox -> options = distinct values across the category's products, first seen order (a reference's value is its id)
 range -> min / max over the category's products (no per-value counts)
+field with no values in the category -> no control
 -> per category: controls + options
 
-end of derive 1
+end of derive products data -> controls and options
 ```
 
 ## Proof - Derive controls and options
 
 ```
-start of proof: derive 1 -> products data -> controls + options
+start of proof: derive products data -> controls and options
 
 fake input:
-  picklist: farm, grown, price
-  apple:   category fruit, farm ref(sunny, "Sunny Farm"), grown [organic], price 3
-  pear:    category fruit, farm ref(hill, "Hill Farm"), grown [organic, local], price 5
-  mango:   category fruit, farm ref(sunny, "Sunny Farm"), grown [imported], price 4
+  picklist: farm, grown, price, size
+  apple:   category fruit, farm ref(sunny, "Sunny Farm"), grown [organic], price 3, size small
+  pear:    category fruit, farm ref(hill, "Hill Farm"), grown [organic, local], price 5, size large
+  mango:   category fruit, farm ref(sunny, "Sunny Farm"), grown [imported], price 4, size small
   spinach: category veg, farm ref(hill, "Hill Farm"), grown [organic], price 9
 
 expected (written by hand):
@@ -37,13 +36,15 @@ expected (written by hand):
     farm: checkbox -> sunny, hill
     grown: checkbox -> organic, local, imported
     price: range -> min 3, max 5
+    size: checkbox -> small, large
   veg:
     farm: checkbox -> hill
     grown: checkbox -> organic
     price: range -> min 9, max 9
+    (no size control: no veg product has a size)
 
 run:
-  fake input -> derive 1, verbatim -> controls + options
+  fake input -> derive, verbatim -> controls + options
 
 check:
   output === expected (options in first-seen order)
@@ -97,7 +98,7 @@ Proof: not written yet.
 ## Derive output
 
 ```
-config = controls + options + labels, scoped per category (derive 1 + 2 + 3)
+config = controls + options + labels, scoped per category (controls and options, derive 2, derive 3)
 config + flat index (derive 4) -> output
 ```
 
