@@ -7,7 +7,7 @@ Derive is four chunks, each with its own entry, exit and proof. A chunk's exit s
 ## Derive products data -> controls and options
 
 ```
-start of derive products data -> controls and options
+START OF DERIVE PRODUCTS DATA -> CONTROLS AND OPTIONS
 
 products data + picklist (the fields chosen as filters)
 -> per category, per picklist field, the field's values:
@@ -19,7 +19,7 @@ products data + picklist (the fields chosen as filters)
   (a reference's value is its id)
 -> per category: controls + options
 
-end of derive products data -> controls and options
+END OF DERIVE PRODUCTS DATA -> CONTROLS AND OPTIONS
 ```
 
 ## Proof - Derive controls and options
