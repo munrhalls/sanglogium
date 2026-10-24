@@ -20,7 +20,7 @@ range -> min / max over the category's products (no per-value counts)
 end of derive 1
 ```
 
-## Proof - Derive 1
+## Proof - Derive controls and options
 
 ```
 start of proof: derive 1 -> products data -> controls + options
