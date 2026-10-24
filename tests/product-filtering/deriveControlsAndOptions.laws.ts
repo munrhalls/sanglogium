@@ -1,11 +1,11 @@
-// Behaviour laws for ./deriveControlsAndOptions: strict equality between the
+// Behaviour laws for deriveControlsAndOptions: strict equality between the
 // function's output and a hand-written expected, including option order.
 // Human-run only, via `npm run laws` (node:test, no dependency, no app boot).
 
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { deriveControlsAndOptions } from './deriveControlsAndOptions';
+import { deriveControlsAndOptions } from '@/features/product-filtering/core/rules/deriveControlsAndOptions';
 import type {
   ControlsByCategory,
   DerivableProduct,
