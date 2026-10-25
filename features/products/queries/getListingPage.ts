@@ -1,10 +1,9 @@
 import {
   sanitizeFilterState,
-  loadFilterSort,
   isFiltersActive,
   resolvePriceBounds,
   isCategory,
-  type ProductQueryState,
+  type FilterQuery,
   type Category,
   type CatalogueFacets,
 } from '@/features/product-filtering';
@@ -26,7 +25,7 @@ export interface ListingPorts {
     getBreadcrumbLabels: (parts: string[]) => string[];
   };
   filtering: {
-    getFilterFacets: (options: { keys: string[]; state: ProductQueryState; category?: Category }) => Promise<CatalogueFacets>;
+    getFilterFacets: (options: { keys: string[]; query: FilterQuery; category?: Category }) => Promise<CatalogueFacets>;
   };
   catalog: CatalogPorts;
 }
@@ -73,15 +72,14 @@ export async function getListingPage(ports: ListingPorts, input: {
     const pageValue = Array.isArray(query.page) ? query.page[0] : query.page;
     const page = typeof pageValue === 'string' ? Number(pageValue) : 1;
 
-    // URL filter values are vetted against this route's own facet set inside
-    // getFilterFacets — a bogus deep link (?driverType=banana) is inert there,
-    // before it can touch counts or the product query (jw8.3). Brand is vetted
-    // below: its values live on brandRef, so its vocab is the counted brand set.
-    const rawState = loadFilterSort(query) as ProductQueryState;
-
+    // The raw query goes to getFilterFacets, which decodes it and vets the URL
+    // filter values against this route's own facet set — a bogus deep link
+    // (?driverType=banana) is inert there, before it can touch counts or the
+    // product query (jw8.3). Brand is vetted below: its values live on
+    // brandRef, so its vocab is the counted brand set.
     const [metadata, facets] = await Promise.all([
       slug ? ports.catalog.getCategoryMetadata(nodeId!) : Promise.resolve(null),
-      ports.filtering.getFilterFacets({ keys, state: rawState, category }),
+      ports.filtering.getFilterFacets({ keys, query, category }),
     ]);
 
     if (slug && !metadata) {
