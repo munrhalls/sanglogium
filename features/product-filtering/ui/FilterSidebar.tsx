@@ -114,12 +114,12 @@ export function FilterPanelBody({
   const FACET_GROUPS = facetSet.groups;
   const facetsForGroup = (groupId: string) => facetSet.facets.filter((f) => f.group === groupId);
   const groups = groupIds ? FACET_GROUPS.filter((g) => groupIds.includes(g.id)) : FACET_GROUPS;
-  const clearAll = useClearAllFilters();
+  const clearAll = useClearAllFilters(facetSet);
   const handleRailSelect = (groupId: string) => scrollToGroup(groupId, panelScrollId, groupIdPrefix);
 
   // Facets may declare showWhen{facet,values}: hidden unless that facet's
   // current selection intersects values (accessories cables/parts gating).
-  const [gateSelection] = useFilterParam('accessoryType');
+  const [gateSelection] = useFilterParam('accessoryType', { control: 'checkbox' });
   const gatedValues: string[] = Array.isArray(gateSelection) ? gateSelection : gateSelection ? [gateSelection] : [];
   const visibleFacets = (groupId: string) =>
     facetsForGroup(groupId).filter(
