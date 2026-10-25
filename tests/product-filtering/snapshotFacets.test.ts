@@ -2,8 +2,8 @@
 // Run it before and after the filter-picklist change, then diff the two files in tests/product-filtering/out/.
 // node --conditions=react-server --env-file=/home/jan/work/sanglogium/.env.local --experimental-strip-types --import ./tools/alias-loader.mjs tests/product-filtering/snapshotFacets.test.ts <label>
 //
-// Plain node cannot load `next-sanity` (it imports next/dynamic), so the two imports that need it are swapped
-// for the same GROQ string and a plain @sanity/client fetch. Every query, and all the code that shapes the
+// Plain node cannot load `next-sanity` (it imports next/dynamic) and has no `server-only` package (Next aliases it),
+// so those imports are swapped: `server-only` for nothing, the other two for the same GROQ string and a plain @sanity/client fetch. Every query, and all the code that shapes the
 // result, is the real one; only the transport differs. useCdn is off so a just-written picklist is read at once.
 import { createClient } from '@sanity/client';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -21,6 +21,7 @@ const client = createClient({
 const stub = (source: string) => ({ url: `data:text/javascript,${encodeURIComponent(source)}`, shortCircuit: true });
 registerHooks({
   resolve(specifier, context, nextResolve) {
+    if (specifier === 'server-only') return stub('');
     if (specifier === 'next-sanity') {
       return stub('export const groq = (s, ...v) => s.reduce((a, c, i) => a + c + (v[i] ?? ""), "");');
     }
