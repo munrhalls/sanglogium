@@ -2,7 +2,7 @@ import { normalizeText, deriveSpacedQuery } from '@/features/product-search/core
 import { buildSearchResult } from '@/features/product-search/core/rules/searchResults';
 import type { SearchResult } from '@/features/product-search/core/types/searchTypes';
 import type { SearchSource } from '@/features/product-search/core/ports';
-import type { ProductQueryState } from '@/features/product-filtering';
+import type { FilterQuery } from '@/features/product-filtering';
 
 const MIN_QUERY_LENGTH = 2;
 const DEFAULT_PER_PAGE = 24;
@@ -14,7 +14,7 @@ export async function searchProductsFullQuery(
   sort?: string,
   page: number = 1,
   perPage: number = DEFAULT_PER_PAGE,
-  state?: ProductQueryState,
+  filterQuery?: FilterQuery,
   category?: string
 ): Promise<SearchResult> {
   if (!query || query.trim().length < MIN_QUERY_LENGTH || normalizeText(query).length < MIN_QUERY_LENGTH) {
@@ -48,7 +48,7 @@ export async function searchProductsFullQuery(
       sort,
       page: safePage,
       perPage: effectivePerPage,
-      state,
+      filterQuery,
       category,
       lookup: source.getCategoryLookup(),
     });
