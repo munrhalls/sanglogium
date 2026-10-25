@@ -14,6 +14,9 @@ export interface ProductQueryState {
   [key: string]: unknown;
 }
 
+/** A raw URL query as Next hands it to a page: key to one value or a list. */
+export type FilterQuery = Record<string, string | string[] | undefined>;
+
 export interface RawProduct {
   _id: string;
   filterAttributes?: Record<string, unknown>;
