@@ -33,7 +33,7 @@ END OF DERIVE PRODUCTS DATA -> CONTROLS AND OPTIONS
 | 6. for each picklist field, pick a control from its values:<br>no values -> no control<br>every value a number -> range<br>otherwise -> checkbox | same file |
 | 7. return each category's controls and options | same file |
 
-## Proof - Derive controls and options
+## Proof - products data -> controls and options
 
 ```
 start of proof: derive products data -> controls and options
