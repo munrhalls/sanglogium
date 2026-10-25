@@ -1,5 +1,25 @@
 # Filters, sorting, pagination — design
 
+## Live (request time)
+
+The flow the shopper's page runs now. The owner picks the filter fields in the CMS; the page reads the picklist together with the products, builds the facet set, decodes the URL against it and draws the sidebar.
+
+**MAP** — execution flow step - file
+
+| step | file |
+|---|---|
+| 1. the owner picks, in Studio, per slice (headphones, audio-electronics, accessories), the product fields that become filter controls; the offered fields are every `filterAttributes` field name of the product schema (nested ones as leaf paths) except brand, in stock and price, which stay fixed in code | `features/product-filtering/schema/filterPicklistType.ts` (listed in `studio/schema.ts`, opened from `studio/structure.ts`) |
+| 2. read the picklist document and the slice's products together, both cached for 300 s, so a pick reaches the page within 5 minutes without a deploy; a missing document or a failed picklist read means no picked controls | `features/product-filtering/adapters/sanity/fetchPicklist.ts` and `features/product-filtering/adapters/sanity/fetchFacetProducts.ts` (cache in `features/product-filtering/adapters/sanity/catalogueCache.ts`), called from `features/product-filtering/queries/getFilterFacets.ts` |
+| 3. the facet set is the fixed brand and in stock plus the picked fields; each facet's id, which is also its URL key, is a fixed function of the field name | `features/product-filtering/core/rules/buildFacetSet.ts`, `features/product-filtering/core/rules/facetKey.ts` |
+| 4. label, group, unit and `showWhen` come from the code table when it has an entry, otherwise a humanized label in the group "More filters" | `features/product-filtering/core/definitions/facetSelector.ts` |
+| 5. a field draws a control only if its products have values; kind, options and bounds come from product data only | `features/product-filtering/core/rules/fieldInventory.ts`, `features/product-filtering/core/rules/deriveControl.ts`, `features/product-filtering/core/rules/projectFacets.ts` |
+| 6. decode the URL from the raw query once the facet set is known: a checkbox control is a list, a boolean a flag, a range `<key>Min` / `<key>Max`; a key that is not a control of this facet set is ignored and shows the full list | `loadFacetFilterState` in `features/product-filtering/url/filterSortParams.ts` |
+| 7. the sidebar draws the groups of the facet set, including "More filters" | `features/product-filtering/ui/FilterSidebar.tsx` |
+
+## Later — derive, store, request pipeline
+
+Everything below is a later step that no page calls yet: the build-time derive chunks, the artifact store and the request-time evaluator over the flat index stay here as the design, wired in when a page calls them. Where derive needs the picklist it reads the same document `features/product-filtering/adapters/sanity/fetchPicklist.ts` reads.
+
 ## Derive (build time)
 
 Derive is four chunks, each with its own entry, exit and proof. A chunk's exit shape is the next chunk's entry shape, defined once.
@@ -26,7 +46,7 @@ END OF DERIVE PRODUCTS DATA -> CONTROLS AND OPTIONS
 | step | file |
 |---|---|
 | 1. an editor picks the filter fields in the CMS, which creates the picklist | `features/product-filtering/schema/filterPicklistType.ts` (listed in `studio/schema.ts`, opened from `studio/structure.ts`) |
-| 2. read the product documents and the picklist document from the CMS | `features/product-filtering/adapters/sanity/readProductsAndPicklist.ts` |
+| 2. read the product documents and the picklist document from the CMS — derive's CMS reader is built when derive is wired in; the picklist is the same document `features/product-filtering/adapters/sanity/fetchPicklist.ts` reads | built with the wiring |
 | 3. shape them for derive: one entry per product per catalogue key it sits under, holding its filter attributes (unset ones dropped); the picklist is its list of field names | `features/product-filtering/core/rules/shapeProductsForDerive.ts` |
 | 4. for each picklist field, gather its values per category | `features/product-filtering/core/rules/deriveControlsAndOptions.ts` |
 | 5. a value that points to another document is cut down to that document's id, so every product pointing at the same document gives the same value (one option) | same file |
