@@ -61,7 +61,7 @@ export default function ListingView({
           isDefaultState={facets.isDefaultState}
         />
         <div className="min-w-0 flex-1">
-          <ActiveFilterChips facets={facets.facetSet.facets} brandLabels={facets.brandLabels} />
+          <ActiveFilterChips facetSet={facets.facetSet} brandLabels={facets.brandLabels} />
           <SortBar
             key={category}
             totalCount={totalCount}
@@ -77,7 +77,7 @@ export default function ListingView({
             }}
           />
           {totalCount === 0 ? (
-            <EmptyResults filtersActive={filtersActive} />
+            <EmptyResults filtersActive={filtersActive} facetSet={facets.facetSet} />
           ) : (
             <>
               <ChunkedProductGrid

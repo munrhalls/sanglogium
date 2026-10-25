@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useClearAllFilters } from '@/features/product-filtering';
+import type { FacetSet } from '@/features/product-filtering';
 
 interface EmptyResultsProps {
   /**
@@ -11,10 +12,12 @@ interface EmptyResultsProps {
    * returns the visitor to the full grid.
    */
   filtersActive?: boolean;
+  /** The facet set "Clear all" clears; optional so the empty state still renders where no facet set was derived. */
+  facetSet?: FacetSet;
 }
 
-export function EmptyResults({ filtersActive = false }: EmptyResultsProps) {
-  const clearAll = useClearAllFilters();
+export function EmptyResults({ filtersActive = false, facetSet }: EmptyResultsProps) {
+  const clearAll = useClearAllFilters(facetSet);
 
   return (
     <div data-testid="empty-results" className="py-16 text-center space-y-4">
