@@ -1,9 +1,8 @@
-// Facet selector: the human picklist of which product-data attributes are
-// projected as filter controls, per slice. It carries only what data cannot
-// provide (id, attribute path, display label, group, range unit, and the
-// display metadata showWhen, subheading and group note), plus the query-only
-// facets. No control, options, bounds or vocab: those are derived from
-// product data. Edited by hand.
+// Facet selector: per slice, only the presentation product data cannot
+// provide — a display label, group, range unit, subheading and showWhen per
+// field, plus the group list. Which of these fields become controls is picked
+// in the CMS; control kind, options and bounds all come from product data.
+// Edited by hand.
 
 export interface SelectorGroup {
   id: string;
@@ -29,9 +28,30 @@ export interface SelectedFacet {
   showWhen?: { facet: string; values: string[] };
 }
 
+/** Presentation metadata for one field a slice's owner may pick. */
+export interface FieldMeta {
+  label: string;
+  group: string;
+  unit?: string;
+  subheading?: string;
+  /** `facet` is a facet id (URL key), not an attribute path. */
+  showWhen?: { facet: string; values: string[] };
+}
+
+export const COMMERCIAL_GROUP: SelectorGroup = { id: 'commercial', label: '' };
+
+export const MORE_GROUP: SelectorGroup = { id: 'more', label: 'More filters' };
+
+/** Brand and in stock are the same in every slice. */
+export const COMMERCIAL_FACETS: SelectedFacet[] = [
+  { id: 'brand', attribute: 'brand', label: 'Brand', group: 'commercial' },
+  { id: 'inStock', attribute: 'inStock', label: 'In Stock Only', group: 'commercial' },
+];
+
 export interface SliceSelector {
   groups: SelectorGroup[];
-  facets: SelectedFacet[];
+  /** Presentation per attribute path, for the fields the owner may pick. */
+  fields: Record<string, FieldMeta>;
 }
 
 export const FACET_SELECTOR: {
@@ -41,80 +61,74 @@ export const FACET_SELECTOR: {
 } = {
   'headphones': {
     groups: [
-      { id: 'commercial', label: '' },
+      COMMERCIAL_GROUP,
       { id: 'type', label: '' },
       { id: 'sound', label: 'Sound Properties' },
       { id: 'material', label: 'Material Factors' },
       { id: 'wireless', label: 'Wireless' },
       { id: 'technical', label: 'Technical Specs' },
     ],
-    facets: [
-      { id: 'brand', attribute: 'brand', label: 'Brand', group: 'commercial' },
-      { id: 'inStock', attribute: 'inStock', label: 'In Stock Only', group: 'commercial' },
-      { id: 'acousticDesign', attribute: 'acousticDesign', label: 'Acoustic Design', group: 'type' },
-      { id: 'connectivity', attribute: 'connectivity', label: 'Connectivity', group: 'type' },
-      { id: 'soundSignature', attribute: 'soundSignature', label: 'Signature', group: 'sound' },
-      { id: 'impedance', attribute: 'impedanceOhms', label: 'Impedance', group: 'sound', unit: 'Ω' },
-      { id: 'sensitivity', attribute: 'sensitivityDbMw', label: 'Sensitivity', group: 'sound', unit: 'dB/mW' },
-      { id: 'bassExtension', attribute: 'freqResponseHz.min', label: 'Bass Extension', group: 'sound', unit: 'Hz' },
-      { id: 'microphone', attribute: 'microphone', label: 'Microphone', group: 'material' },
-      { id: 'cableTermination', attribute: 'cableTermination', label: 'Cable Type', group: 'material' },
-      { id: 'foldable', attribute: 'foldable', label: 'Foldable', group: 'material' },
-      { id: 'cableLength', attribute: 'cableLengthM', label: 'Cable Length', group: 'material', unit: 'm' },
-      { id: 'ipx', attribute: 'ipxRating', label: 'Water Resistance (IPX)', group: 'material' },
-      { id: 'requiresAmplifier', attribute: 'requiresAmplifier', label: 'Requires Amplifier', group: 'material' },
-      { id: 'portable', attribute: 'portable', label: 'Portable', group: 'material' },
-      { id: 'codec', attribute: 'bluetoothCodecs', label: 'Bluetooth Codec', group: 'wireless' },
-      { id: 'anc', attribute: 'anc', label: 'Noise Cancelling', group: 'wireless' },
-      { id: 'batteryLife', attribute: 'batteryLifeHours.ancOff', label: 'Battery Life', group: 'wireless', unit: 'hrs' },
-      { id: 'driverType', attribute: 'driverType', label: 'Driver Type', group: 'technical' },
-      { id: 'driverConfig', attribute: 'driverConfigBucket', label: 'Driver Configuration', group: 'technical' },
-    ],
+    fields: {
+      acousticDesign: { label: 'Acoustic Design', group: 'type' },
+      connectivity: { label: 'Connectivity', group: 'type' },
+      soundSignature: { label: 'Signature', group: 'sound' },
+      impedanceOhms: { label: 'Impedance', group: 'sound', unit: 'Ω' },
+      sensitivityDbMw: { label: 'Sensitivity', group: 'sound', unit: 'dB/mW' },
+      'freqResponseHz.min': { label: 'Bass Extension', group: 'sound', unit: 'Hz' },
+      microphone: { label: 'Microphone', group: 'material' },
+      cableTermination: { label: 'Cable Type', group: 'material' },
+      foldable: { label: 'Foldable', group: 'material' },
+      cableLengthM: { label: 'Cable Length', group: 'material', unit: 'm' },
+      ipxRating: { label: 'Water Resistance (IPX)', group: 'material' },
+      requiresAmplifier: { label: 'Requires Amplifier', group: 'material' },
+      portable: { label: 'Portable', group: 'material' },
+      bluetoothCodecs: { label: 'Bluetooth Codec', group: 'wireless' },
+      anc: { label: 'Noise Cancelling', group: 'wireless' },
+      'batteryLifeHours.ancOff': { label: 'Battery Life', group: 'wireless', unit: 'hrs' },
+      driverType: { label: 'Driver Type', group: 'technical' },
+      driverConfigBucket: { label: 'Driver Configuration', group: 'technical' },
+    },
   },
 
   'audio-electronics': {
     groups: [
-      { id: 'commercial', label: '' },
+      COMMERCIAL_GROUP,
       { id: 'type', label: 'Type' },
       { id: 'connections', label: 'Connections' },
       { id: 'amplification', label: 'Amplification' },
       { id: 'digital', label: 'Digital & Streaming' },
     ],
-    facets: [
-      { id: 'brand', attribute: 'brand', label: 'Brand', group: 'commercial' },
-      { id: 'inStock', attribute: 'inStock', label: 'In Stock Only', group: 'commercial' },
-      { id: 'deviceType', attribute: 'deviceType', label: 'Device Type', group: 'type' },
-      { id: 'formFactor', attribute: 'formFactor', label: 'Form Factor', group: 'type' },
-      { id: 'deviceConnectivity', attribute: 'deviceConnectivity', label: 'Connectivity', group: 'connections' },
-      { id: 'inputs', attribute: 'inputs', label: 'Inputs', group: 'connections' },
-      { id: 'balancedOutput', attribute: 'balancedOutput', label: 'Balanced Output', group: 'connections' },
-      { id: 'amplification', attribute: 'amplification', label: 'Amplifier Topology', group: 'amplification' },
-      { id: 'dacIncluded', attribute: 'dacIncluded', label: 'Built-in DAC', group: 'digital' },
-      { id: 'dsdSupport', attribute: 'dsdSupport', label: 'DSD Support', group: 'digital' },
-      { id: 'dacChipsetFamily', attribute: 'dacChipsetFamily', label: 'DAC Chipset', group: 'digital' },
-      { id: 'streamingPlatformSupport', attribute: 'streamingPlatformSupport', label: 'Streaming Platforms', group: 'digital' },
-    ],
+    fields: {
+      deviceType: { label: 'Device Type', group: 'type' },
+      formFactor: { label: 'Form Factor', group: 'type' },
+      deviceConnectivity: { label: 'Connectivity', group: 'connections' },
+      inputs: { label: 'Inputs', group: 'connections' },
+      balancedOutput: { label: 'Balanced Output', group: 'connections' },
+      amplification: { label: 'Amplifier Topology', group: 'amplification' },
+      dacIncluded: { label: 'Built-in DAC', group: 'digital' },
+      dsdSupport: { label: 'DSD Support', group: 'digital' },
+      dacChipsetFamily: { label: 'DAC Chipset', group: 'digital' },
+      streamingPlatformSupport: { label: 'Streaming Platforms', group: 'digital' },
+    },
   },
 
   'accessories': {
     groups: [
-      { id: 'commercial', label: '' },
+      COMMERCIAL_GROUP,
       { id: 'type', label: 'Type' },
       { id: 'cables', label: 'Cables' },
       { id: 'replacementParts', label: 'Replacement Parts' },
     ],
-    facets: [
-      { id: 'brand', attribute: 'brand', label: 'Brand', group: 'commercial' },
-      { id: 'inStock', attribute: 'inStock', label: 'In Stock Only', group: 'commercial' },
-      { id: 'accessoryType', attribute: 'accessoryType', label: 'Accessory Type', group: 'type' },
-      { id: 'compatibleProductType', attribute: 'compatibleProductType', label: 'Compatible With', group: 'type' },
-      { id: 'cableFunction', attribute: 'cableFunction', label: 'Cable Type', group: 'cables', showWhen: { facet: 'accessoryType', values: ['cables-interconnects'] } },
-      { id: 'connectorTermination', attribute: 'connectorTermination', label: 'Connectors', group: 'cables' },
-      { id: 'length', attribute: 'lengthM', label: 'Length', group: 'cables', unit: 'm', showWhen: { facet: 'accessoryType', values: ['cables-interconnects'] } },
-      { id: 'conductorMaterial', attribute: 'conductorMaterial', label: 'Conductor Material', group: 'cables' },
-      { id: 'balanced', attribute: 'balancedUnbalanced', label: 'Signal Type', group: 'cables' },
-      { id: 'partType', attribute: 'partType', label: 'Part Type', group: 'replacementParts', showWhen: { facet: 'accessoryType', values: ['replacement-parts'] } },
-    ],
+    fields: {
+      accessoryType: { label: 'Accessory Type', group: 'type' },
+      compatibleProductType: { label: 'Compatible With', group: 'type' },
+      cableFunction: { label: 'Cable Type', group: 'cables', showWhen: { facet: 'accessoryType', values: ['cables-interconnects'] } },
+      connectorTermination: { label: 'Connectors', group: 'cables' },
+      lengthM: { label: 'Length', group: 'cables', unit: 'm', showWhen: { facet: 'accessoryType', values: ['cables-interconnects'] } },
+      conductorMaterial: { label: 'Conductor Material', group: 'cables' },
+      balancedUnbalanced: { label: 'Signal Type', group: 'cables' },
+      partType: { label: 'Part Type', group: 'replacementParts', showWhen: { facet: 'accessoryType', values: ['replacement-parts'] } },
+    },
   },
 };
 
