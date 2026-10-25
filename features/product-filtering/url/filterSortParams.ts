@@ -79,20 +79,23 @@ import {
   parseAsStringLiteral,
 } from "nuqs/server";
 
-// Facet param keys come from the same selector the facets themselves do, so a
-// facet can never exist without its URL grammar. The parser *shape* is static:
-// parsers are built on the client before any product data exists. Which values
-// are legal is decided per request by sanitizeFilterState, not here.
+// Facet param keys and their kinds come from the facet set, which comes from
+// product data: the control the data gave a facet decides its parser
+// (`checkbox` = list, `boolean` = flag, `range` = `<id>Min`/`<id>Max` floats).
+// Which values are legal is decided per request by sanitizeFilterState, not here.
 import {
   SORT_DEFAULT,
   SORT_OPTIONS as SORT_MAP,
   type SortValue,
 } from "@/features/product-filtering/core/definitions/sortOptions";
-import {
-  FACET_SELECTOR,
-  QUERY_ONLY_FACETS,
-} from "@/features/product-filtering/core/definitions/facetSelector";
-import type { ProductQueryState } from "@/features/product-filtering/core/types/filterTypes";
+import type {
+  FacetControl,
+  FacetSet,
+} from "@/features/product-filtering/core/types/facetProjection";
+import type {
+  FilterQuery,
+  ProductQueryState,
+} from "@/features/product-filtering/core/types/filterTypes";
 export type { SortValue } from "@/features/product-filtering/core/definitions/sortOptions";
 
 // Fixed sort allowlist. `value` goes in the URL; `label` is for the controls.
@@ -101,46 +104,6 @@ export type { SortValue } from "@/features/product-filtering/core/definitions/so
 export { SORT_DEFAULT };
 
 const SORT_VALUES = SORT_MAP.map((o) => o.urlValue) as SortValue[];
-
-
-// Params whose value is a single boolean rather than a list — the one shape
-// the selector cannot express, since control kinds are data-derived at request
-// time while this parser map is static.
-export const FILTER_BOOLEAN_PARAMS = new Set([
-  "inStock",
-  "microphone",
-  "requiresAmplifier",
-  "portable",
-  "foldable",
-  "dacIncluded",
-  "balancedOutput",
-  "detachableCable",
-]);
-
-// Build parsers for every selected and query-only facet, keyed by facet id.
-// Range facets (selector entries carrying a `unit`) get two float parsers each
-// -- `${id}Min`/`${id}Max` -- mirroring the minPrice/maxPrice shape: no
-// default, absent means unbounded.
-function parserForParam(id: string, unit?: string) {
-  if (unit) {
-    return { [`${id}Min`]: parseAsFloat, [`${id}Max`]: parseAsFloat };
-  }
-  if (FILTER_BOOLEAN_PARAMS.has(id)) {
-    return { [id]: parseAsBoolean.withDefault(false) };
-  }
-  // Checkbox facets are stored as arrays of strings in the URL.
-  return { [id]: parseAsArrayOf(parseAsString).withDefault([]) };
-}
-
-const facetParsers: Record<string, any> = {};
-for (const selector of Object.values(FACET_SELECTOR)) {
-  for (const facet of selector.facets) {
-    Object.assign(facetParsers, parserForParam(facet.id, facet.unit));
-  }
-}
-for (const facet of QUERY_ONLY_FACETS) {
-  Object.assign(facetParsers, parserForParam(facet.id));
-}
 
 /**
  * The parser map — the single source of truth. Imported by both the server
@@ -163,13 +126,41 @@ export const filterSortParsers = {
   minPrice: parseAsWholeNumber,
   maxPrice: parseAsWholeNumber,
 
-  ...facetParsers,
+  // Fixed in code: in stock is a flag, brand is a checkbox list of slugs.
+  inStock: parseAsBoolean.withDefault(false),
+  brand: parseAsArrayOf(parseAsString).withDefault([]),
 };
 
-/** Every key this contract owns — useful for "clear all" and chip enumeration. */
-const FILTER_SORT_KEYS = Object.keys(filterSortParsers) as Array<
-  keyof typeof filterSortParsers
->;
+/** The parser for one URL param of a facet, chosen by the control the product data gave it. */
+export function parserForControl(control: FacetControl) {
+  if (control === 'range') return parseAsFloat;
+  if (control === 'boolean') return parseAsBoolean.withDefault(false);
+  return parseAsArrayOf(parseAsString).withDefault([]);
+}
+
+/** Every parser for one facet set: the static ones plus one per facet, `<id>Min` / `<id>Max` for a range. */
+export function filterParsersFor(facetSet: FacetSet) {
+  const parsers: Record<string, any> = { ...filterSortParsers };
+  for (const facet of [...facetSet.facets, ...facetSet.queryOnly]) {
+    if (facet.control === 'range') {
+      parsers[`${facet.id}Min`] = parseAsFloat;
+      parsers[`${facet.id}Max`] = parseAsFloat;
+    } else {
+      parsers[facet.id] = parserForControl(facet.control);
+    }
+  }
+  return parsers;
+}
+
+/** Changes whenever the set of keys or their kinds changes. */
+export function facetSignature(facetSet: FacetSet): string {
+  return [...facetSet.facets, ...facetSet.queryOnly].map((facet) => `${facet.id}:${facet.control}`).join('|');
+}
+
+/** The URL state: the static params, and with a facet set also that set's own keys. */
+export function loadFacetFilterState(query: FilterQuery, facetSet?: FacetSet): ProductQueryState {
+  return createLoader(facetSet ? filterParsersFor(facetSet) : filterSortParsers)(query) as ProductQueryState;
+}
 
 /**
  * Shared nuqs options for the discrete controls (sort, inStock, brand).
@@ -214,10 +205,9 @@ export const serializeFilterSort = createSerializer(filterSortParsers);
  * already calls out (S1, risk A2) for the query itself.
  */
 export function isFiltersActive(state: ProductQueryState): boolean {
-  return FILTER_SORT_KEYS.some((key) => {
-    if (key === 'sort') return state.sort !== SORT_DEFAULT;
-    if (key === 'minPrice' || key === 'maxPrice') return state[key] != null;
-    const value = state[key];
+  return Object.entries(state).some(([key, value]) => {
+    if (key === 'sort') return value !== SORT_DEFAULT;
+    if (key === 'minPrice' || key === 'maxPrice') return value != null;
     if (typeof value === 'number') return true;
     if (Array.isArray(value)) return value.length > 0;
     return value === true;
