@@ -15,14 +15,21 @@
 // re-renders. The control surface never reads a pending / in-flight signal
 // (sang-logium-aks): controls write the URL and reflect the URL, nothing more.
 
-import { startTransition, useCallback } from "react";
+import { startTransition, useCallback, useMemo } from "react";
 import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
 import {
   FILTER_SORT_URL_OPTIONS,
   PAGE_PARAM_KEY,
   type SortValue,
+  facetSignature,
+  filterParsersFor,
   filterSortParsers,
+  parserForControl,
 } from "@/features/product-filtering/url/filterSortParams";
+import type {
+  FacetControl,
+  FacetSet,
+} from "@/features/product-filtering/core/types/facetProjection";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Param read/write
@@ -48,24 +55,27 @@ function usePageReset() {
  * history mode, shallow flag and page-reset behaviour can never drift between
  * controls.
  *
- * `optionOverrides` lets F3's price control switch to `history: "replace"` for
- * its debounced drag writes.
+ * `options.history` lets F3's price control switch to `history: "replace"` for
+ * its debounced drag writes. `options.control` picks the parser for a facet
+ * param — the control the product data gave the facet decides its URL kind.
  *
  * Returns `any` because the set of filter facets is driven by the dynamic
- * facet-map; consumers (F2–F6) cast to their concrete parser types.
+ * facet set; consumers (F2–F6) cast to their concrete parser types.
  */
 export function useFilterParam(
   key: string,
-  optionOverrides?: { history?: "push" | "replace" },
+  options?: { history?: "push" | "replace"; control?: FacetControl },
 ): [any, any] {
   const resetPage = usePageReset();
 
-  const parser = (filterSortParsers as Record<string, any>)[key];
+  const parser = options?.control
+    ? parserForControl(options.control)
+    : (filterSortParsers as Record<string, any>)[key];
   const [value, setValueRaw] = useQueryState(
     key,
     parser.withOptions({
       ...FILTER_SORT_URL_OPTIONS,
-      ...optionOverrides,
+      history: options?.history ?? FILTER_SORT_URL_OPTIONS.history,
       startTransition,
     }),
   ) as unknown as [any, any];
@@ -91,11 +101,15 @@ export function useFilterParam(
 
 /**
  * F6's "Clear all": remove every filter/sort param this contract owns in one URL
- * write, then reset the page. Unrelated params (`?q=` from search) survive
- * because nuqs merges rather than replaces the query.
+ * write, then reset the page. With a facet set, that set's own keys are cleared
+ * too. Unrelated params (`?q=` from search) survive because nuqs merges rather
+ * than replaces the query.
  */
-export function useClearAllFilters() {
-  const [, setAll] = useQueryStates(filterSortParsers, FILTER_SORT_URL_OPTIONS);
+export function useClearAllFilters(facetSet?: FacetSet) {
+  const signature = facetSet ? facetSignature(facetSet) : '';
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const parsers = useMemo(() => (facetSet ? filterParsersFor(facetSet) : filterSortParsers), [signature]);
+  const [, setAll] = useQueryStates(parsers, FILTER_SORT_URL_OPTIONS);
   const resetPage = usePageReset();
 
   return useCallback(() => {
