@@ -1,9 +1,10 @@
 import { scoreProduct, ROOT_CATEGORIES, rootCategoriesOf } from './searchScoring';
 import type { CategoryLookup } from '@/features/catalogue';
-import { buildFacetSet, computeCatalogueFacets, productMatchesState, sanitizeFilterState } from '@/features/product-filtering';
+import { buildFacetSet, computeCatalogueFacets, loadFacetFilterState, productMatchesState, sanitizeFilterState } from '@/features/product-filtering';
 import type { AutocompleteProduct, SearchProduct, SearchResult } from '@/features/product-search/core/types/searchTypes';
 import type {
   CatalogueFacets,
+  FilterQuery,
   ProductQueryState,
   PriceRangeData,
   RawProduct,
@@ -30,7 +31,7 @@ export function buildSearchResult(input: {
   sort?: string;
   page: number;
   perPage: number;
-  state?: ProductQueryState;
+  filterQuery?: FilterQuery;
   category?: string;
   lookup: CategoryLookup;
 }): SearchResult {
@@ -41,7 +42,7 @@ export function buildSearchResult(input: {
     sort,
     page: safePage,
     perPage: effectivePerPage,
-    state,
+    filterQuery,
     category,
     lookup,
   } = input;
@@ -60,10 +61,11 @@ export function buildSearchResult(input: {
   const scoped = activeCategory
     ? matched.filter((p) => rootCategoriesOf(p.catalogueLocationKeys, lookup).includes(activeCategory))
     : matched;
-  if (state) {
+  if (filterQuery) {
     // Results span every category, so the facet set is the category-agnostic one (brand, in stock),
     // built from every matched product so it does not change with the category chip.
     const facetSet = buildFacetSet(matched as unknown as RawProduct[], 'commercial');
+    const state = loadFacetFilterState(filterQuery, facetSet);
     const vetted = sanitizeFilterState(state, facetSet);
     facets = computeCatalogueFacets(scoped as unknown as RawProduct[], vetted, facetSet);
     appliedState = sanitizeFilterState(vetted, facetSet, { brand: Object.keys(facets.brandLabels) });
@@ -89,7 +91,7 @@ export function buildSearchResult(input: {
       prices,
     };
   }
-  const resultCount = state ? filtered.length : unfilteredCount;
+  const resultCount = filterQuery ? filtered.length : unfilteredCount;
 
   const byRelevance = (a: SearchProduct, b: SearchProduct) => {
     const scoreA = scoreProduct(a, rawQuery, lookup);
