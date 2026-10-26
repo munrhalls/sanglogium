@@ -13,7 +13,6 @@ export const accessoriesFields: any[] = [
               },
             },
           ],
-          categories: ["accessories"],
         },
         {
           name: "cableFunction",
@@ -27,7 +26,6 @@ export const accessoriesFields: any[] = [
               },
             },
           ],
-          categories: ["accessories"],
           domain: ["cables-interconnects"],
         },
         {
@@ -43,14 +41,12 @@ export const accessoriesFields: any[] = [
             },
           ],
           description: "Critical filter.",
-          categories: ["accessories"],
           domain: ["cables-interconnects"],
         },
         {
           name: "lengthM",
           title: "Length (m)",
           type: "number",
-          categories: ["accessories"],
           domain: ["cables-interconnects"],
         },
         {
@@ -63,7 +59,6 @@ export const accessoriesFields: any[] = [
               options: { list: vocabFor("conductorMaterial") },
             },
           ],
-          categories: ["accessories"],
           domain: ["cables-interconnects"],
         },
         {
@@ -71,7 +66,6 @@ export const accessoriesFields: any[] = [
           title: "Balanced / unbalanced",
           type: "string",
           options: { list: ["balanced", "unbalanced"] },
-          categories: ["accessories"],
           domain: ["cables-interconnects"],
         },
         {
@@ -92,7 +86,6 @@ export const accessoriesFields: any[] = [
               },
             },
           ],
-          categories: ["accessories"],
           domain: ["stands-isolation", "racks-furniture"],
         },
         {
@@ -102,21 +95,18 @@ export const accessoriesFields: any[] = [
           of: [
             { type: "string", options: { list: ["wood", "metal", "acrylic", "composite-mdf"] } },
           ],
-          categories: ["accessories"],
           domain: ["stands-isolation", "racks-furniture"],
         },
         {
           name: "adjustableHeight",
           title: "Adjustable height",
           type: "boolean",
-          categories: ["accessories"],
           domain: ["stands-isolation", "racks-furniture"],
         },
         {
           name: "weightCapacityKg",
           title: "Weight / load capacity (kg)",
           type: "number",
-          categories: ["accessories"],
           domain: ["stands-isolation", "racks-furniture"],
         },
         {
@@ -134,7 +124,6 @@ export const accessoriesFields: any[] = [
               "screen-lens-cloth",
             ],
           },
-          categories: ["accessories"],
           domain: ["cleaning-maintenance"],
         },
         {
@@ -144,7 +133,6 @@ export const accessoriesFields: any[] = [
           of: [
             { type: "string", options: { list: ["vinyl", "cd", "stylus-cartridge", "optical-lens"] } },
           ],
-          categories: ["accessories"],
           domain: ["cleaning-maintenance"],
         },
         {
@@ -154,7 +142,6 @@ export const accessoriesFields: any[] = [
           options: {
             list: vocabFor("partType"),
           },
-          categories: ["accessories"],
           domain: ["replacement-parts"],
         },
         {
@@ -163,7 +150,6 @@ export const accessoriesFields: any[] = [
           type: "array",
           of: [{ type: "string", options: { list: ["<compatible-model>"] } }],
           description: "Critical filter.",
-          categories: ["accessories"],
           domain: ["replacement-parts"],
         },
         {
@@ -184,7 +170,6 @@ export const accessoriesFields: any[] = [
               },
             },
           ],
-          categories: ["accessories"],
           domain: ["adapters-converters"],
         },
 

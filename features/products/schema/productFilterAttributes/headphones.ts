@@ -9,14 +9,12 @@ export const headphonesFields: any[] = [
           of: [{ type: "string" }],
           description:
             "Shopper-facing sub-type within the headphones slice. Distinct from the catalogue-routing filterAttributes.category.",
-          categories: ["headphones"],
         },
         {
           name: "wearingStyle",
           title: "Wearing style",
           type: "array",
           of: [{ type: "string", options: { list: vocabFor("wearingStyle") } }],
-          categories: ["headphones"],
         },
         {
           name: "acousticDesign",
@@ -24,7 +22,6 @@ export const headphonesFields: any[] = [
           type: "array",
           of: [{ type: "string", options: { list: vocabFor("acousticDesign") } }],
           description: "Renamed from backDesign 2026-09-13.",
-          categories: ["headphones"],
         },
         {
           name: "fitType",
@@ -32,40 +29,34 @@ export const headphonesFields: any[] = [
           type: "string",
           options: { list: vocabFor("fitType") },
           description: "Null/unset when the product is not an IEM.",
-          categories: ["headphones"],
         },
         {
           name: "connectivity",
           title: "Connectivity",
           type: "string",
           options: { list: vocabFor("connectivity") },
-          categories: ["headphones"],
         },
         {
           name: "portable",
           title: "Portable / desktop",
           type: "boolean",
-          categories: ["headphones"],
         },
         {
           name: "soundSignature",
           title: "Sound signature / tonal preference",
           type: "string",
           options: { list: vocabFor("soundSignature") },
-          categories: ["headphones"],
         },
         {
           name: "impedanceOhms",
           title: "Impedance (Ω)",
           type: "number",
-          categories: ["headphones"],
         },
         {
           name: "sensitivityDbMw",
           title: "Sensitivity (dB)",
           type: "number",
           description: "Recorded on whatever reference basis the manufacturer publishes (dB/mW or dB/1Vrms) — basis is captured in the paired sourcing quote, not a separate field.",
-          categories: ["headphones"],
         },
         {
           name: "freqResponseHz",
@@ -75,20 +66,17 @@ export const headphonesFields: any[] = [
             { name: "min", title: "Min Hz", type: "number" },
             { name: "max", title: "Max Hz", type: "number" },
           ],
-          categories: ["headphones"],
         },
         {
           name: "requiresAmplifier",
           title: "Requires amplifier",
           type: "boolean",
           description: "Derived from impedanceOhms + sensitivityDbMw at data-write time.",
-          categories: ["headphones"],
         },
         {
           name: "microphone",
           title: "Microphone",
           type: "boolean",
-          categories: ["headphones"],
         },
         {
           name: "cableTermination",
@@ -113,33 +101,28 @@ export const headphonesFields: any[] = [
             },
           ],
           description: "Renamed from connector 2026-09-13; only 2.5mm is renamed to 2.5mm-balanced, every other value carried over 1:1.",
-          categories: ["headphones"],
         },
         {
           name: "detachableCable",
           title: "Detachable / upgradeable cable",
           type: "boolean",
-          categories: ["headphones"],
         },
         {
           name: "cableLengthM",
           title: "Cable length (m)",
           type: "number",
           description: "Null when not applicable (e.g. true-wireless).",
-          categories: ["headphones"],
         },
         {
           name: "foldable",
           title: "Foldable",
           type: "boolean",
-          categories: ["headphones"],
         },
         {
           name: "ipxRating",
           title: "Water / sweat resistance (IPX)",
           type: "string",
           options: { list: ["none", "IPX2", "IPX4", "IPX5", "IPX7", "IPX8"] },
-          categories: ["headphones"],
         },
         {
           name: "bluetoothCodecs",
@@ -154,7 +137,6 @@ export const headphonesFields: any[] = [
             },
           ],
           description: "Meaningful only when connectivity !== 'wired'.",
-          categories: ["headphones", "audio-electronics"],
         },
         {
           name: "anc",
@@ -162,7 +144,6 @@ export const headphonesFields: any[] = [
           type: "string",
           options: { list: vocabFor("anc") },
           description: "Replaces the old boolean noiseCancelling 2026-09-13.",
-          categories: ["headphones"],
         },
         {
           name: "batteryLifeHours",
@@ -173,7 +154,6 @@ export const headphonesFields: any[] = [
             { name: "ancOn", title: "ANC on", type: "number" },
           ],
           description: "Both null for a wired-only product.",
-          categories: ["headphones"],
         },
         {
           name: "driverType",
@@ -185,7 +165,6 @@ export const headphonesFields: any[] = [
               options: { list: vocabFor("driverType") },
             },
           ],
-          categories: ["headphones"],
         },
         {
           name: "driverConfigBucket",
@@ -194,14 +173,12 @@ export const headphonesFields: any[] = [
           options: {
             list: ["single-dynamic", "single-ba", "multi-ba", "hybrid-config", "planar", "other"],
           },
-          categories: ["headphones"],
         },
         {
           name: "driverConfigDetail",
           title: "Driver configuration (detail)",
           type: "string",
           description: "Display-only, e.g. \"1DD+4BA\". Derived from the same source as driverConfigBucket — no separate citation.",
-          categories: ["headphones"],
         },
         {
           name: "sourcing",
@@ -227,7 +204,6 @@ export const headphonesFields: any[] = [
               ],
             }),
           ],
-          categories: ["headphones", "accessories", "audio-electronics"],
         },
         {
           name: "deviceType",
@@ -236,6 +212,5 @@ export const headphonesFields: any[] = [
           options: { list: vocabFor("deviceType") },
           description:
             "Headphone amplifiers and digital audio players are in scope for this slice (restored 2026-09-29 alongside the data backfill). Gates every domain-specific field below via each field's `domain`.",
-          categories: ["audio-electronics"],
         },
 ];
