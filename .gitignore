@@ -118,8 +118,3 @@ tests/product-filtering/out/
 # personal work journal
 _project/project-management/work-record/
 
-# Beads / Dolt files (added by bd init)
-.dolt/
-*.db
-.beads-credential-key
-.beads/proxieddb/
