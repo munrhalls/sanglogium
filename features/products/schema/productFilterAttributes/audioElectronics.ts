@@ -8,7 +8,6 @@ export const audioElectronicsFields: any[] = [
           options: { list: vocabFor("deviceConnectivity") },
           description:
             "Gates the Connectivity & Wireless field group. Distinct from headphones' own `connectivity` field (different vocab, different slice).",
-          categories: ["audio-electronics"],
         },
         {
           name: "formFactor",
@@ -16,14 +15,12 @@ export const audioElectronicsFields: any[] = [
           type: "string",
           options: { list: vocabFor("formFactor") },
           description: "Legacy field, kept as-is, not migrated.",
-          categories: ["audio-electronics"],
         },
         {
           name: "amplification",
           title: "Amplifier topology",
           type: "string",
           options: { list: vocabFor("amplification") },
-          categories: ["audio-electronics"],
           domain: [
             "integrated-amplifier",
             "power-amplifier",
@@ -37,21 +34,18 @@ export const audioElectronicsFields: any[] = [
           title: "DAC included",
           type: "boolean",
           description: "Legacy field, kept as-is, not migrated.",
-          categories: ["audio-electronics"],
         },
         {
           name: "balancedOutput",
           title: "Balanced output",
           type: "boolean",
           description: "Legacy field, kept as-is, not migrated.",
-          categories: ["audio-electronics"],
         },
         {
           name: "powerOutputPerChannelW",
           title: "Power output per channel (W RMS)",
           type: "number",
           description: "Critical filter.",
-          categories: ["audio-electronics"],
           domain: [
             "integrated-amplifier",
             "power-amplifier",
@@ -64,7 +58,6 @@ export const audioElectronicsFields: any[] = [
           title: "Channel count",
           type: "array",
           of: [{ type: "string", options: { list: ["2.0", "2.1", "5.1", "7.1", "7.1.4"] } }],
-          categories: ["audio-electronics"],
           domain: [
             "integrated-amplifier",
             "power-amplifier",
@@ -78,7 +71,6 @@ export const audioElectronicsFields: any[] = [
           type: "string",
           options: { list: ["none", "mm", "mc"] },
           description: "Critical filter. Yes/No + MM/MC collapsed into one field, not two.",
-          categories: ["audio-electronics"],
           domain: [
             "integrated-amplifier",
             "power-amplifier",
@@ -90,7 +82,6 @@ export const audioElectronicsFields: any[] = [
           name: "trigger12v",
           title: "12V trigger / custom-install ready",
           type: "boolean",
-          categories: ["audio-electronics"],
           domain: [
             "integrated-amplifier",
             "power-amplifier",
@@ -102,7 +93,6 @@ export const audioElectronicsFields: any[] = [
           name: "remoteControlIncluded",
           title: "Remote control included",
           type: "boolean",
-          categories: ["audio-electronics"],
           domain: [
             "integrated-amplifier",
             "power-amplifier",
@@ -122,7 +112,6 @@ export const audioElectronicsFields: any[] = [
           ],
           description:
             "Merges the former Input Types and Digital Inputs fields into one field, domain-gated across both the Amplification and Digital Source device types — they shared the same gate field (deviceType) and largely overlapping values, so two fields would have meant the same fact recorded twice.",
-          categories: ["audio-electronics"],
           domain: [
             "integrated-amplifier",
             "power-amplifier",
@@ -149,7 +138,6 @@ export const audioElectronicsFields: any[] = [
           ],
           description:
             "Redesigned 2026-09-13 from a headphone-output-jack-shaped vocab (6.35mm/4.4mm/4-pin-xlr/rca-line-out) to a coarser taxonomy.",
-          categories: ["audio-electronics"],
           domain: [
             "integrated-amplifier",
             "power-amplifier",
@@ -163,7 +151,6 @@ export const audioElectronicsFields: any[] = [
           title: "Max sample rate / bit depth (PCM)",
           type: "string",
           description: "Free text, e.g. \"32-bit/768kHz\" — no fixed enum, values vary too much by spec sheet.",
-          categories: ["audio-electronics"],
           domain: ["dac", "network-streamer", "cd-player-transport", "digital-audio-player"],
           domainField: "deviceType",
         },
@@ -172,7 +159,6 @@ export const audioElectronicsFields: any[] = [
           title: "DSD support",
           type: "string",
           options: { list: vocabFor("dsdSupport") },
-          categories: ["audio-electronics"],
           domain: ["dac", "network-streamer", "cd-player-transport", "digital-audio-player"],
           domainField: "deviceType",
         },
@@ -181,7 +167,6 @@ export const audioElectronicsFields: any[] = [
           title: "MQA / Hi-Res Audio certification",
           type: "array",
           of: [{ type: "string", options: { list: ["mqa", "hi-res-audio"] } }],
-          categories: ["audio-electronics"],
           domain: ["dac", "network-streamer", "cd-player-transport", "digital-audio-player"],
           domainField: "deviceType",
         },
@@ -192,7 +177,6 @@ export const audioElectronicsFields: any[] = [
           of: [
             { type: "string", options: { list: vocabFor("dacChipsetFamily") } },
           ],
-          categories: ["audio-electronics"],
           domain: ["dac", "network-streamer", "cd-player-transport", "digital-audio-player"],
           domainField: "deviceType",
         },
@@ -206,7 +190,6 @@ export const audioElectronicsFields: any[] = [
               options: { list: vocabFor("streamingPlatformSupport") },
             },
           ],
-          categories: ["audio-electronics"],
           domain: ["dac", "network-streamer", "cd-player-transport", "digital-audio-player"],
           domainField: "deviceType",
         },
@@ -215,7 +198,6 @@ export const audioElectronicsFields: any[] = [
           title: "Network connection",
           type: "array",
           of: [{ type: "string", options: { list: ["wifi", "ethernet"] } }],
-          categories: ["audio-electronics"],
           domain: ["dac", "network-streamer", "cd-player-transport", "digital-audio-player"],
           domainField: "deviceType",
         },
@@ -224,7 +206,6 @@ export const audioElectronicsFields: any[] = [
           title: "Speeds supported",
           type: "array",
           of: [{ type: "string", options: { list: ["33-1-3", "45", "78"] } }],
-          categories: ["audio-electronics"],
           domain: [],
           domainField: "deviceType",
         },
@@ -233,7 +214,6 @@ export const audioElectronicsFields: any[] = [
           title: "Voice assistant built-in",
           type: "array",
           of: [{ type: "string", options: { list: ["alexa", "google-assistant"] } }],
-          categories: ["audio-electronics"],
           domain: ["bluetooth", "wifi-networked", "wired-wireless"],
           domainField: "deviceConnectivity",
         },
@@ -241,7 +221,6 @@ export const audioElectronicsFields: any[] = [
           name: "multiroomSupport",
           title: "Multiroom support",
           type: "boolean",
-          categories: ["audio-electronics"],
           domain: ["bluetooth", "wifi-networked", "wired-wireless"],
           domainField: "deviceConnectivity",
         },
@@ -250,33 +229,28 @@ export const audioElectronicsFields: any[] = [
           title: "Finish / color",
           type: "array",
           of: [{ type: "string" }],
-          categories: ["audio-electronics"],
         },
         {
           name: "rackMountable19",
           title: "Rack-mountable (19\")",
           type: "boolean",
-          categories: ["audio-electronics"],
         },
         {
           name: "countryOfManufacture",
           title: "Country of manufacture",
           type: "string",
-          categories: ["audio-electronics"],
         },
         {
           name: "customerRating",
           title: "Customer rating (min stars)",
           type: "number",
           description: "Store-computed from review aggregate; not individually sourced.",
-          categories: ["accessories", "audio-electronics"],
         },
         {
           name: "condition",
           title: "Condition / stock type",
           type: "string",
           options: { list: vocabFor("condition") },
-          categories: ["audio-electronics"],
         },
         {
           name: "dealsDiscount",
@@ -284,14 +258,12 @@ export const audioElectronicsFields: any[] = [
           type: "string",
           options: { list: ["none", "sale", "clearance"] },
           description: "Store-operational; not individually sourced.",
-          categories: ["accessories", "audio-electronics"],
         },
         {
           name: "newArrival",
           title: "New arrival",
           type: "boolean",
           description: "Store-operational; not individually sourced.",
-          categories: ["accessories", "audio-electronics"],
         },
         {
           name: "accessoryType",
@@ -300,6 +272,5 @@ export const audioElectronicsFields: any[] = [
           options: { list: vocabFor("accessoryType") },
           description:
             "Gates every domain-specific field below via each field's `domain`.",
-          categories: ["accessories"],
         },
 ];
