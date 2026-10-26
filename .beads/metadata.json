@@ -1,0 +1,7 @@
+{
+  "database": "dolt",
+  "backend": "dolt",
+  "dolt_mode": "embedded",
+  "dolt_database": "sanglogium",
+  "project_id": "3748cf13-c7f8-4499-9deb-41773e1be495"
+}
