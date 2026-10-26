@@ -10,17 +10,6 @@
         ],
         "matcher": ""
       }
-    ],
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "command": "bd prime --hook-json",
-            "type": "command"
-          }
-        ],
-        "matcher": ""
-      }
     ]
   },
   "permissions": {
