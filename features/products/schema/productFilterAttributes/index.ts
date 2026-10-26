@@ -10,18 +10,10 @@ export const filterAttributesField = defineField({
       type: "object",
       description:
         "Closed, machine-readable attributes used by the catalogue filter controls and GROQ predicates. Option lists editors pick from live in ./vocab.ts.",
-      fields: ([...sharedFields, ...headphonesFields, ...audioElectronicsFields, ...accessoriesFields] as any[]).map(({ categories, domain, domainField, ...field }) =>
+      fields: ([...sharedFields, ...headphonesFields, ...audioElectronicsFields, ...accessoriesFields] as any[]).map(({ domain, domainField, ...field }) =>
         defineField({
           ...field,
           hidden: ({ document }) => {
-            if (categories.includes("*") || categories.includes("all-products")) {
-              return false;
-            }
-            const keys = (document as any)?.catalogueLocationKeys ?? [];
-            const inCategory = keys.some((k: string) =>
-              categories.some((c: string) => k === c || k.startsWith(c + "/"))
-            );
-            if (!inCategory) return true;
             if (domain) {
               // domainField names which filterAttributes field this field is
               // gated by (defaults to accessoryType for backward compat —
