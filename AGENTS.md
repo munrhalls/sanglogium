@@ -12,6 +12,7 @@ of the PR's branch the owner runs `node ~/work/global/workflow/run.mjs <PR> --ch
 it (executors never commit, push or branch), merges it back into the PR branch when there is no conflict and the check
 passes, pushes, and adds a `human verify` checkbox under the matching box in the PR body. The owner verifies, then merges
 the PR into `main`.
+A PR that waits for the runner is opened as a draft; the owner marks it ready after the runner's last task lands, so GitHub refuses an early merge.
 
 ## Non-negotiable
 
