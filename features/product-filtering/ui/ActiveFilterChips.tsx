@@ -28,7 +28,7 @@ interface Chip {
   onRemove: () => void;
 }
 
-const formatRangeChipValue = (value: number, unit: string) => (unit === 'm' ? `${value.toFixed(1)}m` : `${Math.round(value)} ${unit}`);
+const formatRangeChipValue = (value: number) => (Number.isInteger(value) ? String(value) : value.toFixed(1));
 
 // The body calls one hook per facet, so it is remounted whenever the facet list changes.
 export function ActiveFilterChips(props: ActiveFilterChipsProps) {
@@ -97,11 +97,10 @@ function ActiveFilterChipsBody({ facetSet, brandLabels = {} }: ActiveFilterChips
     if (facet.control === 'range') {
       const [[minVal, setMinVal], [maxVal, setMaxVal]] = rangeSetters.get(facet.id)!;
       if (minVal == null && maxVal == null) continue;
-      const unit = facet.unit ?? '';
       let label: string;
-      if (minVal != null && maxVal != null) label = `${facet.label}: ${formatRangeChipValue(minVal, unit)} – ${formatRangeChipValue(maxVal, unit)}`;
-      else if (minVal != null) label = `${facet.label}: ${formatRangeChipValue(minVal, unit)}+`;
-      else label = `${facet.label}: up to ${formatRangeChipValue(maxVal as number, unit)}`;
+      if (minVal != null && maxVal != null) label = `${facet.label}: ${formatRangeChipValue(minVal)} – ${formatRangeChipValue(maxVal)}`;
+      else if (minVal != null) label = `${facet.label}: ${formatRangeChipValue(minVal)}+`;
+      else label = `${facet.label}: up to ${formatRangeChipValue(maxVal as number)}`;
       chips.push({
         key: facet.id,
         label,

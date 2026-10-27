@@ -2,10 +2,10 @@
 
 import React from 'react';
 import type { IconType } from 'react-icons';
-import { FaTag, FaHeadphones, FaWaveSquare, FaLayerGroup, FaBluetooth, FaMicrochip, FaPlug, FaBolt, FaScrewdriverWrench } from 'react-icons/fa6';
+import { FaTag, FaLayerGroup } from 'react-icons/fa6';
 import type { Category } from '@/features/product-filtering/core/definitions/category';
 import type { FacetOptionCount, FacetSet, RenderedFacet } from '@/features/product-filtering/core/types/facetProjection';
-import { useClearAllFilters, useFilterParam } from '@/features/product-filtering/state/useFilterParam';
+import { useClearAllFilters } from '@/features/product-filtering/state/useFilterParam';
 import type { RangeBounds } from '@/features/product-filtering/core/rules/facetCounts';
 import { CheckboxGroup, BooleanToggle, RangeControl, PriceControl } from './FilterControls';
 
@@ -29,35 +29,13 @@ import { CheckboxGroup, BooleanToggle, RangeControl, PriceControl } from './Filt
  *
  * The groups and facets to draw arrive as the `facetSet` prop (derived
  * from product data by getFilterFacets); URL params go through the shared
- * useFilterParam/useClearAllFilters hooks. `category` only picks the rail
- * icons from GROUP_ICONS; groups without a bespoke icon get a neutral
- * fallback. Groups with nothing
+ * useFilterParam/useClearAllFilters hooks. The rail icon for a group is
+ * GROUP_ICONS[group.id], or the neutral fallback for groups without a
+ * bespoke icon. Groups with nothing
  * selectable are hidden from both the rail and the panel (visibleGroups).
  */
 
-const GROUP_ICONS: Record<Category, Record<string, IconType>> = {
-  headphones: {
-    commercial: FaTag,
-    type: FaHeadphones,
-    sound: FaWaveSquare,
-    material: FaLayerGroup,
-    wireless: FaBluetooth,
-    technical: FaMicrochip,
-  },
-  'audio-electronics': {
-    commercial: FaTag,
-    type: FaLayerGroup,
-    connections: FaPlug,
-    amplification: FaBolt,
-    digital: FaWaveSquare,
-  },
-  accessories: {
-    commercial: FaTag,
-    type: FaLayerGroup,
-    cables: FaPlug,
-    replacementParts: FaScrewdriverWrench,
-  },
-};
+const GROUP_ICONS: Record<string, IconType> = { commercial: FaTag };
 const FALLBACK_GROUP_ICON: IconType = FaLayerGroup;
 
 interface FilterSidebarProps {
@@ -117,22 +95,13 @@ export function FilterPanelBody({
   const clearAll = useClearAllFilters(facetSet);
   const handleRailSelect = (groupId: string) => scrollToGroup(groupId, panelScrollId, groupIdPrefix);
 
-  // Facets may declare showWhen{facet,values}: hidden unless that facet's
-  // current selection intersects values (accessories cables/parts gating).
-  const [gateSelection] = useFilterParam('accessoryType', { control: 'checkbox' });
-  const gatedValues: string[] = Array.isArray(gateSelection) ? gateSelection : gateSelection ? [gateSelection] : [];
-  const visibleFacets = (groupId: string) =>
-    facetsForGroup(groupId).filter(
-      (f) => !f.showWhen || gatedValues.length === 0 || f.showWhen.values.some((v) => gatedValues.includes(v)),
-    );
-
   // A group with nothing selectable (no nonzero option counts and, for
   // range-only groups, no computed bounds) is hidden from the rail AND the
   // panel so the two maps can't drift apart. 'commercial' is always shown:
   // it hosts the price control even when all its facet counts are zero.
   const hasContent = (groupId: string) => {
     if (groupId === 'commercial') return true;
-    const facets = visibleFacets(groupId);
+    const facets = facetsForGroup(groupId);
     const selectable = facets.filter((f) => f.control !== 'range');
     if (selectable.length === 0) {
       return facets.some((f) => rangeBounds[f.id]?.min != null);
@@ -171,7 +140,7 @@ export function FilterPanelBody({
                 key={group.id}
                 id={group.id}
                 label={group.label}
-                icon={GROUP_ICONS[category]?.[group.id] ?? FALLBACK_GROUP_ICON}
+                icon={GROUP_ICONS[group.id] ?? FALLBACK_GROUP_ICON}
                 onSelect={handleRailSelect}
               />
             ))}
@@ -183,9 +152,9 @@ export function FilterPanelBody({
           className="flex-1 overflow-y-auto overscroll-y-contain [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden pb-12"
         >
           {visibleGroups.map((group) => (
-            <PanelSection key={group.id} id={group.id} idPrefix={groupIdPrefix} label={group.label} note={group.note}>
+            <PanelSection key={group.id} id={group.id} idPrefix={groupIdPrefix} label={group.label}>
               {group.id === 'commercial' && <PriceControl category={category} min={priceBounds.min} max={priceBounds.max} />}
-              {visibleFacets(group.id).map((facet) => renderFacet(facet, category, checkboxCounts, booleanCounts, brandLabels, rangeBounds, isDefaultState))}
+              {facetsForGroup(group.id).map((facet) => renderFacet(facet, category, checkboxCounts, booleanCounts, brandLabels, rangeBounds, isDefaultState))}
             </PanelSection>
           ))}
         </div>
@@ -247,13 +216,11 @@ function PanelSection({
   id,
   idPrefix,
   label,
-  note,
   children,
 }: {
   id: string;
   idPrefix: string;
   label: string;
-  note?: string;
   children: React.ReactNode;
 }) {
   return (
@@ -262,10 +229,9 @@ function PanelSection({
       data-testid={`filter-panel-${id}`}
       className="flex flex-col gap-6 border-b border-border-secondary p-6 last:border-b-0"
     >
-      {(label || note) && (
+      {label && (
         <div className="flex flex-col gap-1">
-          {label && <span className="type-overline">{label}</span>}
-          {note && <p className="type-caption text-text-caption">{note}</p>}
+          <span className="type-overline">{label}</span>
         </div>
       )}
       {children}
@@ -299,16 +265,7 @@ function renderFacet(
     control = <RangeControl category={category} facet={facet} bounds={rangeBounds[facet.id]} />;
   }
 
-  if (!facet.subheading) {
-    return <React.Fragment key={facet.id}>{control}</React.Fragment>;
-  }
-
-  return (
-    <div key={facet.id} className="flex flex-col gap-3">
-      <span className="type-overline">{facet.subheading}</span>
-      {control}
-    </div>
-  );
+  return <React.Fragment key={facet.id}>{control}</React.Fragment>;
 }
 
 export function FilterSidebar(props: FilterSidebarProps) {
