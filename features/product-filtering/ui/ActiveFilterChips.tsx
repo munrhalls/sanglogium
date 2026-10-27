@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { SORT_OPTIONS, SORT_DEFAULT } from '@/features/product-filtering/core/definitions/sortOptions';
-import type { RenderedFacet } from '@/features/product-filtering/core/types/facetProjection';
+import type { FacetSet } from '@/features/product-filtering/core/types/facetProjection';
 import { humanizeFacetValue } from '@/features/product-filtering/core/rules/humanizeFacetValue';
 import { useFilterParam, useClearAllFilters } from '@/features/product-filtering/state/useFilterParam';
 import { formatPriceMajor } from '@/platform/utils/price';
@@ -13,12 +13,12 @@ import { formatPriceMajor } from '@/platform/utils/price';
  * shared hook. Never imports or reacts to the product grid, product data,
  * result counts or streaming.
  *
- * The facets to make chips for arrive as the `facets` prop (derived from product data by getFilterFacets); useFilterParam and useClearAllFilters are the shared hooks imported above, so a chip's URL param always matches the sidebar control that set it.
+ * The facet set to make chips for arrives as the `facetSet` prop (derived from product data by getFilterFacets); useFilterParam and useClearAllFilters are the shared hooks imported above, so a chip's URL param always matches the sidebar control that set it.
  */
 
 interface ActiveFilterChipsProps {
-  /** The facets the sidebar draws (CatalogueFacets.facetSet.facets). */
-  facets: RenderedFacet[];
+  /** The facet set the sidebar draws (CatalogueFacets.facetSet). */
+  facetSet: FacetSet;
   brandLabels?: Record<string, string>;
 }
 
@@ -28,21 +28,22 @@ interface Chip {
   onRemove: () => void;
 }
 
-const formatRangeChipValue = (value: number, unit: string) => (unit === 'm' ? `${value.toFixed(1)}m` : `${Math.round(value)} ${unit}`);
+const formatRangeChipValue = (value: number) => (Number.isInteger(value) ? String(value) : value.toFixed(1));
 
 // The body calls one hook per facet, so it is remounted whenever the facet list changes.
 export function ActiveFilterChips(props: ActiveFilterChipsProps) {
-  const listKey = props.facets.map((facet) => `${facet.id}:${facet.control}`).join('|');
+  const listKey = props.facetSet.facets.map((facet) => `${facet.id}:${facet.control}`).join('|');
   return <ActiveFilterChipsBody key={listKey} {...props} />;
 }
 
-function ActiveFilterChipsBody({ facets, brandLabels = {} }: ActiveFilterChipsProps) {
+function ActiveFilterChipsBody({ facetSet, brandLabels = {} }: ActiveFilterChipsProps) {
+  const { facets } = facetSet;
   const sortLabel = (value: string) => SORT_OPTIONS.find((o) => o.urlValue === value)?.label ?? value;
 
   const [sort, setSort] = useFilterParam('sort') as [string, (v: string) => void];
   const [minPrice, setMinPrice] = useFilterParam('minPrice') as [number | null, (v: number | null) => void];
   const [maxPrice, setMaxPrice] = useFilterParam('maxPrice') as [number | null, (v: number | null) => void];
-  const clearAll = useClearAllFilters();
+  const clearAll = useClearAllFilters(facetSet);
 
   // Hook-order access to every generic facet param (and, for range facets, their Min/Max pair): `facets` is fixed for the life of a mounted body, because ActiveFilterChips remounts the body when the list changes.
   type ArraySetter = [string[], (next: string[] | ((prev: string[]) => string[])) => void];
@@ -55,13 +56,13 @@ function ActiveFilterChipsBody({ facets, brandLabels = {} }: ActiveFilterChipsPr
 
   for (const facet of facets) {
     if (facet.control === 'boolean') {
-      booleanSetters.set(facet.id, useFilterParam(facet.id) as unknown as BoolSetter);
+      booleanSetters.set(facet.id, useFilterParam(facet.id, { control: 'boolean' }) as unknown as BoolSetter);
     } else if (facet.control === 'range') {
-      const minTuple = useFilterParam(`${facet.id}Min`) as unknown as NumSetter;
-      const maxTuple = useFilterParam(`${facet.id}Max`) as unknown as NumSetter;
+      const minTuple = useFilterParam(`${facet.id}Min`, { control: 'range' }) as unknown as NumSetter;
+      const maxTuple = useFilterParam(`${facet.id}Max`, { control: 'range' }) as unknown as NumSetter;
       rangeSetters.set(facet.id, [minTuple, maxTuple]);
     } else {
-      checkboxSetters.set(facet.id, useFilterParam(facet.id) as unknown as ArraySetter);
+      checkboxSetters.set(facet.id, useFilterParam(facet.id, { control: 'checkbox' }) as unknown as ArraySetter);
     }
   }
 
@@ -96,11 +97,10 @@ function ActiveFilterChipsBody({ facets, brandLabels = {} }: ActiveFilterChipsPr
     if (facet.control === 'range') {
       const [[minVal, setMinVal], [maxVal, setMaxVal]] = rangeSetters.get(facet.id)!;
       if (minVal == null && maxVal == null) continue;
-      const unit = facet.unit ?? '';
       let label: string;
-      if (minVal != null && maxVal != null) label = `${facet.label}: ${formatRangeChipValue(minVal, unit)} – ${formatRangeChipValue(maxVal, unit)}`;
-      else if (minVal != null) label = `${facet.label}: ${formatRangeChipValue(minVal, unit)}+`;
-      else label = `${facet.label}: up to ${formatRangeChipValue(maxVal as number, unit)}`;
+      if (minVal != null && maxVal != null) label = `${facet.label}: ${formatRangeChipValue(minVal)} – ${formatRangeChipValue(maxVal)}`;
+      else if (minVal != null) label = `${facet.label}: ${formatRangeChipValue(minVal)}+`;
+      else label = `${facet.label}: up to ${formatRangeChipValue(maxVal as number)}`;
       chips.push({
         key: facet.id,
         label,

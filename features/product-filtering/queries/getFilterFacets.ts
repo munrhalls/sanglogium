@@ -1,8 +1,8 @@
 // Read use case: facet counts for a route's VFS key set, and the facets the sidebar draws. Takes
-// its port as the first parameter; the Sanity fetch lives in adapters/sanity/. One product fetch
+// its ports as the first parameter; the Sanity fetches live in adapters/sanity/. One product fetch
 // feeds both: the facet list is derived from the same products the counts are computed over — and
-// the URL state is vetted against that same derivation before any counting happens, so a value the
-// data cannot select stays inert everywhere downstream.
+// the raw URL query is decoded against that same facet set before any counting happens, so a value
+// the data cannot select stays inert everywhere downstream.
 
 import {
   computeCatalogueFacets,
@@ -11,16 +11,17 @@ import {
 } from '@/features/product-filtering/core/rules/facetCounts';
 import { buildFacetSet } from '@/features/product-filtering/core/rules/buildFacetSet';
 import { sanitizeFilterState } from '@/features/product-filtering/core/rules/sanitizeFilterState';
+import { EMPTY_PICKLIST } from '@/features/product-filtering/core/definitions/picklist';
 import type { Category } from '@/features/product-filtering/core/definitions/category';
 import type { FacetSet } from '@/features/product-filtering/core/types/facetProjection';
-import type { ProductQueryState } from '@/features/product-filtering/core/types/filterTypes';
-import type { FacetSource } from '@/features/product-filtering/core/ports';
+import type { FilterQuery, ProductQueryState } from '@/features/product-filtering/core/types/filterTypes';
+import type { FacetPorts } from '@/features/product-filtering/core/ports';
 
 export interface GetFilterFacetsOptions {
   /** The route's VFS key set. */
   keys: string[];
-  /** The filter/sort state as parsed from the URL — vetted here against the facet set before use. */
-  state: ProductQueryState;
+  /** The raw URL query — decoded here once the facet set it is vetted against is known. */
+  query: FilterQuery;
   /** The route's top-level category. All Products has none and draws the headphones facets, as it always has. */
   category?: Category;
 }
@@ -39,20 +40,28 @@ const emptyFacets = (state: ProductQueryState): CatalogueFacets => ({
 });
 
 export async function getFilterFacets(
-  fetchProducts: FacetSource,
-  { keys, state, category }: GetFilterFacetsOptions,
+  ports: FacetPorts,
+  { keys, query, category }: GetFilterFacetsOptions,
 ): Promise<CatalogueFacets> {
-  if (!keys.length) return emptyFacets(state);
+  if (!keys.length) return emptyFacets(ports.loadState(query));
 
   let products;
+  let picklist;
   try {
-    products = await fetchProducts({ keys });
+    [products, picklist] = await Promise.all([
+      ports.fetchProducts({ keys }),
+      ports.fetchPicklist().catch((error) => {
+        console.error('[getFilterFacets] Picklist read failed, no picked controls:', error);
+        return EMPTY_PICKLIST;
+      }),
+    ]);
   } catch (error) {
     console.error(`[getFilterFacets] Failed for ${keys.length} keys:`, error);
-    return emptyFacets(state);
+    return emptyFacets(ports.loadState(query));
   }
 
-  const facetSet = buildFacetSet(products, category ?? 'headphones');
-  const cleanState = sanitizeFilterState(state, facetSet);
+  const scope = category ?? 'headphones';
+  const facetSet = buildFacetSet(products, picklist[scope]);
+  const cleanState = sanitizeFilterState(ports.loadState(query, facetSet), facetSet);
   return computeCatalogueFacets(products, cleanState, facetSet);
 }

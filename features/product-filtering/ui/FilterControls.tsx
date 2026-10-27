@@ -36,7 +36,7 @@ export function CheckboxGroup({
   isDefaultState?: boolean;
 }) {
   const [expanded, setExpanded] = useState(true);
-  const [selected, setSelected] = useFilterParam(facet.id) as [string[], SetArray];
+  const [selected, setSelected] = useFilterParam(facet.id, { control: 'checkbox' }) as [string[], SetArray];
   const selectedArray = selected ?? [];
 
   // facet.options are the data's distinct values (buildFacetSet) and
@@ -125,7 +125,10 @@ export function BooleanToggle({
   count?: number;
   isDefaultState?: boolean;
 }) {
-  const [active, setActive] = useFilterParam(facet.id) as [boolean, (v: boolean | ((prev: boolean) => boolean)) => void];
+  const [active, setActive] = useFilterParam(facet.id, { control: 'boolean' }) as [
+    boolean,
+    (v: boolean | ((prev: boolean) => boolean)) => void,
+  ];
 
   if (isDefaultState && count === 0 && !active) {
     return null;
@@ -144,9 +147,8 @@ export function BooleanToggle({
   );
 }
 
-function formatRangeValue(value: number, unit: string): string {
-  if (unit === 'm') return `${value.toFixed(1)}m`;
-  return `${Math.round(value)} ${unit}`;
+function formatRangeValue(value: number): string {
+  return Number.isInteger(value) ? String(value) : value.toFixed(1);
 }
 
 const RANGE_WRITE_DEBOUNCE_MS = 300;
@@ -168,11 +170,11 @@ export function RangeControl({
   const boundsMin = bounds?.min ?? facet.min ?? 0;
   const boundsMax = bounds?.max ?? facet.max ?? 0;
 
-  const [minParam, setMinParam] = useFilterParam(`${facet.id}Min`, { history: 'replace' }) as [
+  const [minParam, setMinParam] = useFilterParam(`${facet.id}Min`, { history: 'replace', control: 'range' }) as [
     number | null,
     (v: number | null) => void,
   ];
-  const [maxParam, setMaxParam] = useFilterParam(`${facet.id}Max`, { history: 'replace' }) as [
+  const [maxParam, setMaxParam] = useFilterParam(`${facet.id}Max`, { history: 'replace', control: 'range' }) as [
     number | null,
     (v: number | null) => void,
   ];
@@ -232,8 +234,8 @@ export function RangeControl({
         max={boundsMax}
         minValue={localMin}
         maxValue={localMax}
-        minLabel={formatRangeValue(localMin, facet.unit ?? '')}
-        maxLabel={formatRangeValue(localMax, facet.unit ?? '')}
+        minLabel={formatRangeValue(localMin)}
+        maxLabel={formatRangeValue(localMax)}
         onChangeMin={(value) => {
           const next = Math.min(value, localMax);
           setLocalMin(next);

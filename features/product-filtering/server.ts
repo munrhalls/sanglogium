@@ -6,11 +6,14 @@ import "server-only";
 
 import { cache } from 'react';
 import { fetchFacetProducts } from './adapters/sanity/fetchFacetProducts';
+import { fetchPicklist } from './adapters/sanity/fetchPicklist';
+import { loadFacetFilterState } from './url/filterSortParams';
 import {
   getFilterFacets as getFilterFacetsQuery,
   type GetFilterFacetsOptions,
 } from './queries/getFilterFacets';
 import type { CatalogueFacets } from './core/rules/facetCounts';
+import type { FacetPorts } from './core/ports';
 
 // React cache is only available in React Server Components; skip it elsewhere.
 const withCache = <T extends (...args: any[]) => any>(fn: T): T => {
@@ -21,9 +24,15 @@ const withCache = <T extends (...args: any[]) => any>(fn: T): T => {
   }
 };
 
+const facetPorts: FacetPorts = {
+  fetchProducts: fetchFacetProducts,
+  fetchPicklist,
+  loadState: loadFacetFilterState,
+};
+
 export const getFilterFacets = withCache(
   (options: GetFilterFacetsOptions): Promise<CatalogueFacets> =>
-    getFilterFacetsQuery(fetchFacetProducts, options),
+    getFilterFacetsQuery(facetPorts, options),
 );
 
 export { buildProductQuery } from './adapters/sanity/buildProductQuery';

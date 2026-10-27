@@ -1,7 +1,29 @@
 // Shapes of the data-derived facet projection: what the product data of one slice says
 // about each filterAttributes field. Type-only module.
 
-import type { SelectedFacet, SelectorGroup } from '@/features/product-filtering/core/definitions/facetSelector';
+/** A group of facets the sidebar draws under one heading. */
+export interface FacetGroup {
+  id: string;
+  label: string;
+}
+
+export interface SelectedFacet {
+  /** Facet id. */
+  id: string;
+  /** Path inside filterAttributes this facet projects (e.g. 'impedanceOhms', 'freqResponseHz.min'). */
+  attribute: string;
+  /** Human-facing control name. */
+  label: string;
+  /** Group id from this slice's groups list. */
+  group: string;
+}
+
+/** A facet only the URL knows: no control draws it, but it still narrows the counts like any other
+ *  (search redirects link to wearingStyle=in-ear). Its control comes from the data. */
+export interface QueryOnlyFacet {
+  id: string;
+  attribute: string;
+}
 
 /** JS kind of a stored value. An array of anything is 'array'. */
 export type ObservedKind = 'boolean' | 'number' | 'string' | 'array' | 'object';
@@ -65,7 +87,7 @@ export interface NarrowingFacet {
 /** Everything the sidebar draws and the counts narrow by, derived from one product set (core/rules/buildFacetSet.ts). */
 export interface FacetSet {
   /** Groups to draw, in order. */
-  groups: SelectorGroup[];
+  groups: FacetGroup[];
   /** Facets to draw, in order. */
   facets: RenderedFacet[];
   /** Facets only the URL knows (QUERY_ONLY_FACETS): nothing draws them, but they still narrow the counts. */

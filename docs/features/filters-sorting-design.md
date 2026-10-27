@@ -1,5 +1,26 @@
 # Filters, sorting, pagination — design
 
+## Live (request time)
+
+The flow the shopper's page runs now. The owner picks the filter fields in the CMS; the page reads the picklist together with the products, builds the facet set, decodes the URL against it and draws the sidebar.
+
+Paths are relative to `features/product-filtering/`.
+
+| step | file |
+|---|---|
+| 1. The owner picks the fields per slice in Studio | `schema/filterPicklistType.ts` |
+| 2. The page reads the picklist with the products (cached 300 s); a failed read means no picks | `adapters/sanity/fetchPicklist.ts`, `queries/getFilterFacets.ts` |
+| 3. Facet set = brand, in stock, plus the picks; id and URL key come from the field name | `core/rules/buildFacetSet.ts`, `core/rules/facetKey.ts` |
+| 4. A picked field's label comes from its name; its group is "More filters" | `core/rules/buildFacetSet.ts` |
+| 5. Control, options and bounds come from product data; no values, no control | `core/rules/fieldInventory.ts`, `core/rules/deriveControl.ts`, `core/rules/projectFacets.ts` |
+| 6. The URL is decoded against the facet set; an unknown key is ignored | `url/filterSortParams.ts` |
+| 7. The sidebar draws the groups | `ui/FilterSidebar.tsx` |
+| Temporary | `core/definitions/awaitingLaterChunks.ts` holds brand and in stock, the two groups and `wearingStyle` until later chunks own them |
+
+## Later — derive, store, request pipeline
+
+Everything below is a later step that no page calls yet: the build-time derive chunks, the artifact store and the request-time evaluator over the flat index stay here as the design, wired in when a page calls them. Where derive needs the picklist it reads the same document `features/product-filtering/adapters/sanity/fetchPicklist.ts` reads.
+
 ## Derive (build time)
 
 Derive is four chunks, each with its own entry, exit and proof. A chunk's exit shape is the next chunk's entry shape, defined once.
@@ -26,7 +47,7 @@ END OF DERIVE PRODUCTS DATA -> CONTROLS AND OPTIONS
 | step | file |
 |---|---|
 | 1. an editor picks the filter fields in the CMS, which creates the picklist | `features/product-filtering/schema/filterPicklistType.ts` (listed in `studio/schema.ts`, opened from `studio/structure.ts`) |
-| 2. read the product documents and the picklist document from the CMS | `features/product-filtering/adapters/sanity/readProductsAndPicklist.ts` |
+| 2. read the product documents and the picklist document from the CMS — derive's CMS reader is built when derive is wired in; the picklist is the same document `features/product-filtering/adapters/sanity/fetchPicklist.ts` reads | built with the wiring |
 | 3. shape them for derive: one entry per product per catalogue key it sits under, holding its filter attributes (unset ones dropped); the picklist is its list of field names | `features/product-filtering/core/rules/shapeProductsForDerive.ts` |
 | 4. for each picklist field, gather its values per category | `features/product-filtering/core/rules/deriveControlsAndOptions.ts` |
 | 5. a value that points to another document is cut down to that document's id, so every product pointing at the same document gives the same value (one option) | same file |

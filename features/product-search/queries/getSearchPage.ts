@@ -1,4 +1,3 @@
-import { loadFilterSort, type ProductQueryState } from '@/features/product-filtering';
 import { detectSearchRedirect } from '@/features/product-search/core/rules/detectSearchRedirect';
 import type { SearchSource } from '@/features/product-search/core/ports';
 import type { SearchResult } from '@/features/product-search/core/types/searchTypes';
@@ -27,16 +26,14 @@ export function getSearchPage(source: SearchSource, params: SearchParams): Searc
   const sortValue = first(params.sort);
   const sort = typeof sortValue === 'string' ? sortValue : undefined;
 
-  // Same URL contract as the catalogue. `sort` is NOT taken from here: its
-  // vocabulary has no `relevance`, so searchProductsFullQuery validates the raw value.
-  const filterState = loadFilterSort(params) as ProductQueryState;
-
+  // `sort` is NOT taken from the catalogue's sort vocabulary: it has no
+  // `relevance`, so searchProductsFullQuery validates the raw value.
   const catValue = first(params.cat);
   const category = typeof catValue === 'string' ? catValue : undefined;
 
   return {
     kind: 'results',
     query: q,
-    resultsPromise: searchProductsFullQuery(source, q, sort, page, undefined, filterState, category),
+    resultsPromise: searchProductsFullQuery(source, q, sort, page, undefined, params, category),
   };
 }

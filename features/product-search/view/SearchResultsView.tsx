@@ -46,7 +46,7 @@ export async function SearchResultsView({ resultsPromise, cardAction, query }: S
         {categoryCounts && (
           <SearchCategoryChips counts={categoryCounts} active={category} allCount={allCategoriesCount ?? 0} />
         )}
-        {facets && <ActiveFilterChips facets={facets.facetSet.facets} brandLabels={facets.brandLabels} />}
+        {facets && <ActiveFilterChips facetSet={facets.facetSet} brandLabels={facets.brandLabels} />}
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4 border-b border-border-secondary pb-4">
           <div className="flex items-center gap-3">
             {panelProps && <MobileFilterSheet {...panelProps} totalCount={totalCount} />}
@@ -57,7 +57,7 @@ export async function SearchResultsView({ resultsPromise, cardAction, query }: S
           <SearchSort />
         </div>
         {totalCount === 0 ? (
-          <EmptyResults filtersActive={filtersActive} />
+          <EmptyResults filtersActive={filtersActive} facetSet={facets?.facetSet} />
         ) : (
           <>
             <ProductGrid products={products} cardAction={cardAction} />
