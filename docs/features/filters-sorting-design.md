@@ -4,17 +4,18 @@
 
 The flow the shopper's page runs now. The owner picks the filter fields in the CMS; the page reads the picklist together with the products, builds the facet set, decodes the URL against it and draws the sidebar.
 
-**MAP** — execution flow step - file
+Paths are relative to `features/product-filtering/`.
 
 | step | file |
 |---|---|
-| 1. the owner picks, in Studio, per slice (headphones, audio-electronics, accessories), the product fields that become filter controls; the offered fields are every `filterAttributes` field name of the product schema (nested ones as leaf paths) except brand, in stock and price, which stay fixed in code | `features/product-filtering/schema/filterPicklistType.ts` (listed in `studio/schema.ts`, opened from `studio/structure.ts`) |
-| 2. read the picklist document and the slice's products together, both cached for 300 s, so a pick reaches the page within 5 minutes without a deploy; a missing document or a failed picklist read means no picked controls | `features/product-filtering/adapters/sanity/fetchPicklist.ts` and `features/product-filtering/adapters/sanity/fetchFacetProducts.ts` (cache in `features/product-filtering/adapters/sanity/catalogueCache.ts`), called from `features/product-filtering/queries/getFilterFacets.ts` |
-| 3. the facet set is the fixed brand and in stock plus the picked fields; each facet's id, which is also its URL key, is a fixed function of the field name | `features/product-filtering/core/rules/buildFacetSet.ts`, `features/product-filtering/core/rules/facetKey.ts` |
-| 4. a picked field gets a label made from its field name and the group "More filters"; what later chunks still need (brand and in stock, the two groups, the wearingStyle query-only entry) waits in a temporary file | `features/product-filtering/core/rules/buildFacetSet.ts`, `features/product-filtering/core/definitions/awaitingLaterChunks.ts` |
-| 5. a field draws a control only if its products have values; kind, options and bounds come from product data only | `features/product-filtering/core/rules/fieldInventory.ts`, `features/product-filtering/core/rules/deriveControl.ts`, `features/product-filtering/core/rules/projectFacets.ts` |
-| 6. decode the URL from the raw query once the facet set is known: a checkbox control is a list, a boolean a flag, a range `<key>Min` / `<key>Max`; a key that is not a control of this facet set is ignored and shows the full list | `loadFacetFilterState` in `features/product-filtering/url/filterSortParams.ts` |
-| 7. the sidebar draws the groups of the facet set, including "More filters" | `features/product-filtering/ui/FilterSidebar.tsx` |
+| 1. The owner picks the fields per slice in Studio | `schema/filterPicklistType.ts` |
+| 2. The page reads the picklist with the products (cached 300 s); a failed read means no picks | `adapters/sanity/fetchPicklist.ts`, `queries/getFilterFacets.ts` |
+| 3. Facet set = brand, in stock, plus the picks; id and URL key come from the field name | `core/rules/buildFacetSet.ts`, `core/rules/facetKey.ts` |
+| 4. A picked field's label comes from its name; its group is "More filters" | `core/rules/buildFacetSet.ts` |
+| 5. Control, options and bounds come from product data; no values, no control | `core/rules/fieldInventory.ts`, `core/rules/deriveControl.ts`, `core/rules/projectFacets.ts` |
+| 6. The URL is decoded against the facet set; an unknown key is ignored | `url/filterSortParams.ts` |
+| 7. The sidebar draws the groups | `ui/FilterSidebar.tsx` |
+| Temporary | `core/definitions/awaitingLaterChunks.ts` holds brand and in stock, the two groups and `wearingStyle` until later chunks own them |
 
 ## Later — derive, store, request pipeline
 
