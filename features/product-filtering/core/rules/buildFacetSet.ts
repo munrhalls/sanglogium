@@ -6,23 +6,22 @@
 import {
   COMMERCIAL_FACETS,
   COMMERCIAL_GROUP,
-  FACET_SELECTOR,
   MORE_GROUP,
   QUERY_ONLY_FACETS,
-  type FieldMeta,
-  type SelectedFacet,
-  type SelectorGroup,
-} from '@/features/product-filtering/core/definitions/facetSelector';
-import type { Category } from '@/features/product-filtering/core/definitions/category';
-import type { FacetSet, NarrowingFacet, ProjectedFacet, RenderedFacet } from '@/features/product-filtering/core/types/facetProjection';
+} from '@/features/product-filtering/core/definitions/awaitingLaterChunks';
+import type {
+  FacetGroup,
+  FacetSet,
+  NarrowingFacet,
+  ProjectedFacet,
+  RenderedFacet,
+  SelectedFacet,
+} from '@/features/product-filtering/core/types/facetProjection';
 import type { RawProduct } from '@/features/product-filtering/core/types/filterTypes';
 import { deriveControl } from './deriveControl';
 import { facetKey } from './facetKey';
 import { fieldInventory } from './fieldInventory';
 import { projectFacets } from './projectFacets';
-
-/** A slice's facets, or 'commercial': only the group every slice shares (brand, in stock), for /search results that span slices. */
-export type FacetScope = Category | 'commercial';
 
 /** 'wearingStyle' -> 'Wearing Style': dots become word breaks, camelCase
  *  humps become word breaks, every word is capitalised. */
@@ -36,29 +35,20 @@ function humanizeAttribute(attribute: string): string {
     .join(' ');
 }
 
-/** A picked field with no selector entry still draws: humanized label, "More filters" group, no unit. */
-function fallbackMeta(attribute: string): FieldMeta {
-  return { label: humanizeAttribute(attribute), group: MORE_GROUP.id };
-}
-
-/** The fixed commercial facets plus the picked fields, each with its selector
- *  presentation or the code fallback. 'commercial' scope ignores the picks. */
-function selectionFor(scope: FacetScope, picks: string[]): { groups: SelectorGroup[]; facets: SelectedFacet[] } {
-  if (scope === 'commercial') {
-    return { groups: [COMMERCIAL_GROUP], facets: COMMERCIAL_FACETS };
-  }
-  const { groups, fields } = FACET_SELECTOR[scope];
+/** The fixed commercial facets plus the picked fields: a picked field becomes
+ *  a facet from its name alone — id from facetKey, label humanized, "More filters" group. */
+function selectionFor(picks: string[]): { groups: FacetGroup[]; facets: SelectedFacet[] } {
   const attributes = [...new Set(picks)].filter(
     (attribute) => attribute !== 'brand' && attribute !== 'inStock' && attribute !== 'price',
   );
-  let needsMoreGroup = false;
-  const picked = attributes.map((attribute): SelectedFacet => {
-    const meta = fields[attribute];
-    if (!meta) needsMoreGroup = true;
-    return { id: facetKey(attribute), attribute, ...(meta ?? fallbackMeta(attribute)) };
-  });
+  const picked = attributes.map((attribute): SelectedFacet => ({
+    id: facetKey(attribute),
+    attribute,
+    label: humanizeAttribute(attribute),
+    group: MORE_GROUP.id,
+  }));
   return {
-    groups: needsMoreGroup ? [...groups, MORE_GROUP] : groups,
+    groups: picked.length ? [COMMERCIAL_GROUP, MORE_GROUP] : [COMMERCIAL_GROUP],
     facets: [...COMMERCIAL_FACETS, ...picked],
   };
 }
@@ -78,9 +68,9 @@ function withoutBrandOptions(facet: RenderedFacet): RenderedFacet {
   return rest;
 }
 
-export function buildFacetSet(products: RawProduct[], scope: FacetScope, picks: string[] = []): FacetSet {
+export function buildFacetSet(products: RawProduct[], picks: string[] = []): FacetSet {
   const inventory = fieldInventory(products);
-  const selection = selectionFor(scope, picks);
+  const selection = selectionFor(picks);
 
   const facets = projectFacets(selection.facets, inventory)
     .map(withKnownControl)

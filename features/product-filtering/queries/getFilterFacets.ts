@@ -61,7 +61,7 @@ export async function getFilterFacets(
   }
 
   const scope = category ?? 'headphones';
-  const facetSet = buildFacetSet(products, scope, picklist[scope]);
+  const facetSet = buildFacetSet(products, picklist[scope]);
   const cleanState = sanitizeFilterState(ports.loadState(query, facetSet), facetSet);
   return computeCatalogueFacets(products, cleanState, facetSet);
 }

@@ -64,7 +64,7 @@ export function buildSearchResult(input: {
   if (filterQuery) {
     // Results span every category, so the facet set is the category-agnostic one (brand, in stock),
     // built from every matched product so it does not change with the category chip.
-    const facetSet = buildFacetSet(matched as unknown as RawProduct[], 'commercial');
+    const facetSet = buildFacetSet(matched as unknown as RawProduct[]);
     const state = loadFacetFilterState(filterQuery, facetSet);
     const vetted = sanitizeFilterState(state, facetSet);
     facets = computeCatalogueFacets(scoped as unknown as RawProduct[], vetted, facetSet);
