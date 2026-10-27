@@ -1,12 +1,15 @@
 import { deriveControl } from './deriveControl';
 import { deriveOptions } from './deriveOptions';
 import { applyOptionLabels } from './applyOptionLabels';
-import type { SelectedFacet } from '@/features/product-filtering/core/definitions/facetSelector';
-import type { FieldInventory, ProjectedFacet } from '@/features/product-filtering/core/types/facetProjection';
+import type {
+  FieldInventory,
+  ProjectedFacet,
+  SelectedFacet,
+} from '@/features/product-filtering/core/types/facetProjection';
 
 /** Project the drawn facets — the fixed commercial ones plus the owner's
  *  picks — through the product-data inventory: each facet's presentation
- *  (id/attribute/label/group/unit) joined with what the data derives for its
+ *  (id/attribute/label/group) joined with what the data derives for its
  *  attribute — control, numeric bounds, and for checkboxes the labelled
  *  options. Facet order is preserved. */
 export function projectFacets(facets: SelectedFacet[], inventory: FieldInventory): ProjectedFacet[] {
