@@ -4,7 +4,7 @@
 // Run: node --env-file=/home/jan/work/sanglogium/.env.local scripts/remove-stray-filter-keys.mjs
 // Apply: node --env-file=/home/jan/work/sanglogium/.env.local scripts/remove-stray-filter-keys.mjs --apply
 
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, unlinkSync, writeFileSync } from 'node:fs';
 import { createClient } from '@sanity/client';
 
 const APPLY = process.argv.includes('--apply');
@@ -16,7 +16,7 @@ const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
   apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-11-14',
-  token: process.env.SANITY_API_TOKEN,
+  token: process.env.SANITY_STUDIO_READ_WRITE,
   useCdn: false,
   perspective: 'raw',
 });
@@ -63,6 +63,11 @@ if (!APPLY) {
   for (const item of strays) {
     tx.patch(item.id, { unset: item.keys.map(({ key }) => 'filterAttributes.' + key) });
   }
-  await tx.commit();
+  try {
+    await tx.commit();
+  } catch (error) {
+    unlinkSync(BACKUP);
+    throw error;
+  }
   console.log(`removed ${count} keys from ${strays.length} products`);
 }
