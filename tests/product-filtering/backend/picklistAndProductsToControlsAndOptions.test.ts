@@ -78,6 +78,7 @@ test('picklist + products data -> controls and options', () => {
       { id: 'more', label: 'More filters' },
     ],
     facets: [
+      { id: 'brand', attribute: 'brand', label: 'Brand', group: 'commercial', control: 'checkbox' },
       { id: 'inStock', attribute: 'inStock', label: 'In Stock Only', group: 'commercial', control: 'boolean' },
       {
         id: 'shell',
