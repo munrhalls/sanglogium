@@ -36,7 +36,7 @@ Not placed yet: sort, pagination, search, the product grid. Each is checked agai
 
 - A proof runs one chunk alone on a small fake input in the real format with alien content.
 - The expected output is written by hand, not by the code.
-- The input's real format is checked once against the real CMS.
+- A proof's input classes come from the schema's type table and the live data, not from guessing. The proof names them.
 - A chunk's proof input is the previous chunk's expected output, written once.
 - Pixels are judged by an eye once.
 - Nothing else counts as proof: no click-through, no mocks, no unit test per function, no whole-page snapshots.
@@ -60,4 +60,4 @@ In steps:
 | 3. The picklist is read with the products (cached 300 s; a failed read means no picks). Facet set = brand, in stock, plus the picks. A picked field's id and URL key come from its name; its group is "More filters". A control's name comes from its field name | `adapters/sanity/fetchPicklist.ts`, `queries/getFilterFacets.ts`, `core/rules/buildFacetSet.ts`, `core/rules/facetKey.ts` |
 | 4. Kind, options and bounds come from the data: no value, no control; only true/false, an on/off control; only numbers, a range from the smallest to the largest; only text (alone or in a list), a checkbox with one option per distinct value, sorted; a list of objects holds no value, so no control. An option's text is its value split at hyphens and spaces into words, each capitalised (known acronyms upper-cased, a word with a digit kept as it is) | `core/rules/fieldInventory.ts`, `core/rules/deriveControl.ts`, `core/rules/deriveOptions.ts`, `core/rules/humanizeFacetValue.ts`, `core/rules/projectFacets.ts` |
 | Temporary: brand, in stock, the two groups and `wearingStyle` stay until later chunks own them | `core/definitions/awaitingLaterChunks.ts` |
-| Proof, passed 2026-10-28: four fake products in real format with alien content; the expected facet set written by hand; the slice's own picks used and a failed picklist read giving no picks. Not proven here: the brand facet and `wearingStyle`, which are temporary | `tests/product-filtering/backend/picklistAndProductsToControlsAndOptions.test.ts`, `tests/product-filtering/backend/picklistPerSlice.test.ts` |
+| Proof, passed 2026-10-28: four fake products in real format with alien content; the expected facet set written by hand; the slice's own picks used and a failed picklist read giving no picks. The classes in the live data are listed by the real-data check. Not proven here: the brand facet and `wearingStyle`, which are temporary | `tests/product-filtering/backend/picklistAndProductsToControlsAndOptions.test.ts`, `tests/product-filtering/backend/picklistPerSlice.test.ts`, `tests/product-filtering/pickablePathsRealData.test.ts` |
