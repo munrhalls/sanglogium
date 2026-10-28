@@ -8,7 +8,7 @@ Paths are relative to `features/product-filtering/`.
 
 | step | file |
 |---|---|
-| 1. The owner picks the fields per slice in Studio | `schema/filterPicklistType.ts` |
+| 1. The owner fills in the `filterPicklist` document in Studio: the fields per slice | `schema/filterPicklistType.ts` (its shape); the document itself is data in the dataset, no file |
 | 2. The page reads the picklist with the products (cached 300 s); a failed read means no picks | `adapters/sanity/fetchPicklist.ts`, `queries/getFilterFacets.ts` |
 | 3. Facet set = brand, in stock, plus the picks; id and URL key come from the field name | `core/rules/buildFacetSet.ts`, `core/rules/facetKey.ts` |
 | 4. A picked field's label comes from its name; its group is "More filters" | `core/rules/buildFacetSet.ts` |
@@ -46,7 +46,7 @@ END OF DERIVE PRODUCTS DATA -> CONTROLS AND OPTIONS
 
 | step | file |
 |---|---|
-| 1. an editor picks the filter fields in the CMS, which creates the picklist | `features/product-filtering/schema/filterPicklistType.ts` (listed in `studio/schema.ts`, opened from `studio/structure.ts`) |
+| 1. an editor fills in the `filterPicklist` document in the CMS: the fields chosen as filters | `features/product-filtering/schema/filterPicklistType.ts` (its shape; listed in `studio/schema.ts`, opened from `studio/structure.ts`) |
 | 2. read the product documents and the picklist document from the CMS — derive's CMS reader is built when derive is wired in; the picklist is the same document `features/product-filtering/adapters/sanity/fetchPicklist.ts` reads | built with the wiring |
 | 3. shape them for derive: one entry per product per catalogue key it sits under, holding its filter attributes (unset ones dropped); the picklist is its list of field names | `features/product-filtering/core/rules/shapeProductsForDerive.ts` |
 | 4. for each picklist field, gather its values per category | `features/product-filtering/core/rules/deriveControlsAndOptions.ts` |
