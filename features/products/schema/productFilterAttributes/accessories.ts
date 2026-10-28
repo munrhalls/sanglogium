@@ -172,5 +172,12 @@ export const accessoriesFields: any[] = [
           ],
           domain: ["adapters-converters"],
         },
-
+        {
+          name: "accessoryType",
+          title: "Accessory category",
+          type: "string",
+          options: { list: vocabFor("accessoryType") },
+          description:
+            "Gates every domain-specific field via each field's `domain`.",
+        },
 ];

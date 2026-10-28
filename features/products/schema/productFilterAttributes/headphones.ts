@@ -205,12 +205,4 @@ export const headphonesFields: any[] = [
             }),
           ],
         },
-        {
-          name: "deviceType",
-          title: "Product category",
-          type: "string",
-          options: { list: vocabFor("deviceType") },
-          description:
-            "Headphone amplifiers and digital audio players are in scope for this slice (restored 2026-09-29 alongside the data backfill). Gates every domain-specific field below via each field's `domain`.",
-        },
 ];

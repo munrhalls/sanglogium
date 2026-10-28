@@ -266,11 +266,11 @@ export const audioElectronicsFields: any[] = [
           description: "Store-operational; not individually sourced.",
         },
         {
-          name: "accessoryType",
-          title: "Accessory category",
+          name: "deviceType",
+          title: "Product category",
           type: "string",
-          options: { list: vocabFor("accessoryType") },
+          options: { list: vocabFor("deviceType") },
           description:
-            "Gates every domain-specific field below via each field's `domain`.",
+            "Headphone amplifiers and digital audio players are in scope for this slice (restored 2026-09-29 alongside the data backfill). Gates every domain-specific field via each field's `domain`.",
         },
 ];
