@@ -17,7 +17,7 @@ In steps:
 
 | step | file |
 |---|---|
-| 1. The choices are the leaf paths of `filterAttributes` (nested fields as `a.b`), minus brand, in stock, price | `schema/filterPicklistType.ts`, `studio/schema.ts`, `studio/structure.ts`, `features/products/schema/productFilterAttributes.ts` |
+| 1. The choices are the leaf paths of `filterAttributes` (nested fields as `a.b`), minus brand, in stock, price | `schema/filterPicklistType.ts`, `studio/schema.ts`, `studio/structure.ts`, `features/products/schema/productFilterAttributes/index.ts` |
 | 2. The owner fills three lists, one per slice | the document is data in the dataset, no file |
 | 3. The picklist is read with the products (cached 300 s; a failed read means no picks). Facet set = brand, in stock, plus the picks. A picked field's id, URL key and label come from its name; its group is "More filters". Control, options and bounds come from the data; no values, no control | `adapters/sanity/fetchPicklist.ts`, `queries/getFilterFacets.ts`, `core/rules/buildFacetSet.ts`, `core/rules/facetKey.ts`, `core/rules/fieldInventory.ts`, `core/rules/deriveControl.ts`, `core/rules/projectFacets.ts` |
 | 4. The URL is decoded against the facet set; an unknown key is ignored | `url/filterSortParams.ts` |
