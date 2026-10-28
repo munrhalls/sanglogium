@@ -1,8 +1,14 @@
-// One-off script: lists product documents holding keys the Studio schema does not know. Writes nothing.
+// One-off script: lists product documents holding keys the Studio schema does not know.
+// With --apply: saves the stray values to a backup file, then removes the keys.
 // One-off — the owner runs it manually.
 // Run: node --env-file=/home/jan/work/sanglogium/.env.local scripts/remove-stray-filter-keys.mjs
+// Apply: node --env-file=/home/jan/work/sanglogium/.env.local scripts/remove-stray-filter-keys.mjs --apply
 
+import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { createClient } from '@sanity/client';
+
+const APPLY = process.argv.includes('--apply');
+const BACKUP = 'scripts/output/stray-filter-keys-backup.json';
 
 const STRAY_KEYS = ['accessoryCategory', 'compatibleModelOrBrand', 'availability', 'inStockOnly'];
 
@@ -43,4 +49,20 @@ for (const { id, keys } of strays) {
   }
 }
 console.log(`${strays.length} products, ${count} keys`);
-console.log('dry run: nothing written.');
+if (!APPLY) {
+  console.log('dry run: nothing written. Add --apply to remove them.');
+} else if (strays.length === 0) {
+  console.log('nothing to remove.');
+} else if (existsSync(BACKUP)) {
+  console.log(`backup file exists, move it away first: ${BACKUP}`);
+  process.exit(1);
+} else {
+  mkdirSync('scripts/output', { recursive: true });
+  writeFileSync(BACKUP, JSON.stringify(strays, null, 2));
+  const tx = client.transaction();
+  for (const item of strays) {
+    tx.patch(item.id, { unset: item.keys.map(({ key }) => 'filterAttributes.' + key) });
+  }
+  await tx.commit();
+  console.log(`removed ${count} keys from ${strays.length} products`);
+}
