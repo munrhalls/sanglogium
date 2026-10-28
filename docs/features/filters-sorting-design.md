@@ -10,7 +10,7 @@ Next: prove 2.
 |---|---|---|---|
 | 1 | picklist (CMS) + products data -> controls and options | backend | passed 2026-10-28 |
 | 2 | controls and options + curated texts (CMS) -> labelled controls and options | backend | none |
-| 3 | URL + labelled controls -> filter state | backend | none |
+| 3 | URL + labelled controls -> filter state | backend | passed 2026-10-28 (brand names are checked in chunk 4) |
 | 4 | labelled controls + filter state -> counts and bounds | backend | none |
 | 5 | filter state + labelled controls -> the page's products and their total | backend | none |
 | 6 | counts and bounds -> sidebar and chips on screen | frontend | none |
@@ -95,7 +95,7 @@ In steps:
 | 2. An unknown key is ignored, a bad sort falls back to the default, a price that is not a whole number is none | `url/filterSortParams.ts` |
 | 3. A checkbox value that matches no option is dropped | `core/rules/sanitizeFilterState.ts`, `queries/getFilterFacets.ts` |
 | Temporary: brand values are checked later, against the counted brands, so this chunk is finished after chunk 4 | `features/products/queries/getListingPage.ts` |
-| Proof: not written. Classes: each control kind × (key absent, valid, junk), a bad sort, a bad price. Source: the parsers | not written |
+| Proof, passed 2026-10-28: a facet set in chunk 1's output format with one control of each kind (a checkbox with options, a checkbox without, a true/false control, a range, a checkbox whose kept option has capitals, a query-only one); three URLs: empty, valid, junk (bad sort, price that is not a whole number, a value that matches no option, an unknown key); the expected state written by hand | `tests/product-filtering/backend/urlToFilterState.test.ts` |
 
 ## 4. labelled controls + filter state -> counts and bounds
 
