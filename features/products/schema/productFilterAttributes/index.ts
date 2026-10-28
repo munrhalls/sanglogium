@@ -29,3 +29,9 @@ export const filterAttributesField = defineField({
         })
       ),
     });
+
+export const filterAttributeGroups = {
+  headphones: [...sharedFields, ...headphonesFields],
+  audioElectronics: [...sharedFields, ...audioElectronicsFields],
+  accessories: [...sharedFields, ...accessoriesFields],
+};
