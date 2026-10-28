@@ -5,7 +5,8 @@ import { homepageDataType } from "../features/homepage/schema/homepageDataType";
 import { brandType } from "../features/products/schema/brandType";
 import { orderType } from "../features/order/schema/orderType";
 import { userType } from "../features/profile/schema/userType";
-import { makeFilterPicklistType, filterFieldPaths } from "../features/product-filtering/schema/filterPicklistType";
+import { makeFilterPicklistType } from "../features/product-filtering/schema/filterPicklistType";
+import { filterFieldPaths } from "../features/product-filtering/schema/filterFieldPaths";
 import { filterAttributesField } from "../features/products/schema/productFilterAttributes";
 
 export const schema = {
