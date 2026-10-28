@@ -47,7 +47,7 @@ Not placed yet: sort, pagination, search, the product grid. Each is checked agai
 picklist (CMS) + products data -> controls and options
 
 In steps:
-1. product filterAttributes fields, minus brand, in stock, price -> the picklist's choices in Studio
+1. product filterAttributes fields (shared plus the slice's own), minus brand, in stock, price and lists of objects -> the picklist's choices in Studio
 2. owner's picks -> filterPicklist document
 3. filterPicklist + products data -> facet set: which controls exist
 4. facet set + products data -> kind, options, bounds per control
@@ -55,7 +55,7 @@ In steps:
 
 | step | file |
 |---|---|
-| 1. The choices are the leaf paths of `filterAttributes` (nested fields as `a.b`), minus brand, in stock, price | `schema/filterPicklistType.ts`, `studio/schema.ts`, `studio/structure.ts`, `features/products/schema/productFilterAttributes/index.ts` |
+| 1. Each slice's list offers the leaf paths of the shared fields and of that slice's own fields (nested fields as `a.b`), minus brand, in stock, price and lists of objects | `schema/filterPicklistType.ts`, `studio/schema.ts`, `studio/structure.ts`, `schema/filterFieldPaths.ts`, `features/products/schema/productFilterAttributes/index.ts` |
 | 2. The owner fills three lists, one per slice | the document is data in the dataset, no file |
 | 3. The picklist is read with the products (cached 300 s; a failed read means no picks). Facet set = brand, in stock, plus the picks. A picked field's id and URL key come from its name; its group is "More filters". A control's name comes from its field name | `adapters/sanity/fetchPicklist.ts`, `queries/getFilterFacets.ts`, `core/rules/buildFacetSet.ts`, `core/rules/facetKey.ts` |
 | 4. Kind, options and bounds come from the data: no value, no control; only true/false, an on/off control; only numbers, a range from the smallest to the largest; only text (alone or in a list), a checkbox with one option per distinct value, sorted; a list of objects holds no value, so no control. An option's text is its value split at hyphens and spaces into words, each capitalised (known acronyms upper-cased, a word with a digit kept as it is) | `core/rules/fieldInventory.ts`, `core/rules/deriveControl.ts`, `core/rules/deriveOptions.ts`, `core/rules/humanizeFacetValue.ts`, `core/rules/projectFacets.ts` |
