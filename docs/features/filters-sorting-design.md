@@ -19,11 +19,11 @@ Backend: V0 to V4. It ends in two plain values, `CatalogueFacets` and the produc
 
 ## Progress
 
-Order is forced: each chunk's entry is the previous chunk's exit. A chunk is done when its proof passes. Next: prove 1.
+Order is forced: each chunk's entry is the previous chunk's exit. A chunk is done when its proof passes. Next: prove 2.
 
 | # | chunk | files | code | proof |
 |---|---|---|---|---|
-| 1 | picklist (CMS) + products data -> controls and options | below | live | none |
+| 1 | picklist (CMS) + products data -> controls and options | below | live | passed 2026-10-28 |
 | 2 | controls and options + curated texts (CMS) -> labelled controls and options | `core/rules/applyOptionLabels.ts`, `core/definitions/optionLabelOverrides.ts` | live with a code table; the move to the CMS is decided, not built | none |
 | 3 | labelled controls + URL -> filter state | `url/filterSortParams.ts`, `core/rules/sanitizeFilterState.ts` | exists, not read | none |
 | 4 | labelled controls + filter state -> counts and product list | `core/rules/facetCounts.ts`, `adapters/sanity/buildProductQuery.ts`, `features/products/adapters/sanity/getProductsByVfsKeys.ts` | exists, not read | none |
@@ -58,6 +58,6 @@ In steps:
 | 1. The choices are the leaf paths of `filterAttributes` (nested fields as `a.b`), minus brand, in stock, price | `schema/filterPicklistType.ts`, `studio/schema.ts`, `studio/structure.ts`, `features/products/schema/productFilterAttributes/index.ts` |
 | 2. The owner fills three lists, one per slice | the document is data in the dataset, no file |
 | 3. The picklist is read with the products (cached 300 s; a failed read means no picks). Facet set = brand, in stock, plus the picks. A picked field's id and URL key come from its name; its group is "More filters". A control's name comes from its field name | `adapters/sanity/fetchPicklist.ts`, `queries/getFilterFacets.ts`, `core/rules/buildFacetSet.ts`, `core/rules/facetKey.ts` |
-| 4. Kind, options and bounds come from the data; no values, no control. An option's text comes from its value (words split, acronyms upper-cased) | `core/rules/fieldInventory.ts`, `core/rules/deriveControl.ts`, `core/rules/deriveOptions.ts`, `core/rules/humanizeFacetValue.ts`, `core/rules/projectFacets.ts` |
+| 4. Kind, options and bounds come from the data: no value, no control; only true/false, an on/off control; only numbers (alone or in a list), a range from the smallest to the largest; only text (alone or in a list), a checkbox with one option per distinct value, sorted. An option's text is its value split at hyphens and spaces into words, each capitalised (known acronyms upper-cased, a word with a digit kept as it is) | `core/rules/fieldInventory.ts`, `core/rules/deriveControl.ts`, `core/rules/deriveOptions.ts`, `core/rules/humanizeFacetValue.ts`, `core/rules/projectFacets.ts` |
 | Temporary: brand, in stock, the two groups and `wearingStyle` stay until later chunks own them | `core/definitions/awaitingLaterChunks.ts` |
-| Proof (not written): a fake picklist and four fake products in real format, alien content; the expected controls and options written by hand | not written |
+| Proof, passed 2026-10-28: three fake products in real format with alien content; the expected facet set written by hand; the slice's own picks used and a failed picklist read giving no picks. Not proven here: the brand facet and `wearingStyle`, which are temporary | `tests/product-filtering/backend/picklistAndProductsToControlsAndOptions.test.ts`, `tests/product-filtering/backend/picklistPerSlice.test.ts` |
