@@ -1,7 +1,8 @@
-// The FacetSet one product set supports: the fixed commercial facets plus the
-// owner's picks (which come from the CMS picklist), each joined with what the
-// products' own data says about it (fieldInventory -> projectFacets), plus the
-// query-only facets. Pure: the caller passes the products.
+// The FacetSet one product set supports: the fixed commercial facets (they carry
+// their own control) plus the owner's picks (which come from the CMS picklist),
+// each pick joined with what the products' own data says about it
+// (fieldInventory -> projectFacets), plus the query-only facets. Pure: the
+// caller passes the products.
 
 import {
   COMMERCIAL_FACETS,
@@ -35,9 +36,9 @@ function humanizeAttribute(attribute: string): string {
     .join(' ');
 }
 
-/** The fixed commercial facets plus the picked fields: a picked field becomes
- *  a facet from its name alone — id from facetKey, label humanized, "More filters" group. */
-function selectionFor(picks: string[]): { groups: FacetGroup[]; facets: SelectedFacet[] } {
+/** The picked fields: a picked field becomes a facet from its name alone — id from facetKey,
+ *  label humanized, "More filters" group. The groups to draw follow from whether any pick is left. */
+function selectionFor(picks: string[]): { groups: FacetGroup[]; picked: SelectedFacet[] } {
   const attributes = [...new Set(picks)].filter(
     (attribute) => attribute !== 'brand' && attribute !== 'inStock' && attribute !== 'price',
   );
@@ -49,33 +50,20 @@ function selectionFor(picks: string[]): { groups: FacetGroup[]; facets: Selected
   }));
   return {
     groups: picked.length ? [COMMERCIAL_GROUP, MORE_GROUP] : [COMMERCIAL_GROUP],
-    facets: [...COMMERCIAL_FACETS, ...picked],
+    picked,
   };
 }
 
-/** The sidebar draws a facet only when the data gave it a control. In stock is the exception: availability is
- *  computed from the stock fields of every product, so its toggle needs no stored field. */
-function withKnownControl(facet: ProjectedFacet): RenderedFacet | null {
-  const control = facet.control ?? (facet.id === 'inStock' ? 'boolean' : null);
-  return control === null ? null : { ...facet, control };
-}
-
-/** Brand keeps no option list: its options and their names are counted from the products (brandRef.name),
- *  not derived from slugs. */
-function withoutBrandOptions(facet: RenderedFacet): RenderedFacet {
-  if (facet.id !== 'brand') return facet;
-  const { options, ...rest } = facet;
-  return rest;
+/** The sidebar draws a pick only when the data gave it a control. */
+function hasControl(facet: ProjectedFacet): facet is RenderedFacet {
+  return facet.control !== null;
 }
 
 export function buildFacetSet(products: RawProduct[], picks: string[] = []): FacetSet {
   const inventory = fieldInventory(products);
   const selection = selectionFor(picks);
 
-  const facets = projectFacets(selection.facets, inventory)
-    .map(withKnownControl)
-    .filter((facet): facet is RenderedFacet => facet !== null)
-    .map(withoutBrandOptions);
+  const facets = [...COMMERCIAL_FACETS, ...projectFacets(selection.picked, inventory).filter(hasControl)];
 
   const renderedAttributes = new Set(facets.map((facet) => facet.attribute));
   const queryOnly = QUERY_ONLY_FACETS.flatMap(({ id, attribute }): NarrowingFacet[] => {

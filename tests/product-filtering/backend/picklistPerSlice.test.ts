@@ -45,20 +45,20 @@ const facetIds = async (category?: 'headphones' | 'audio-electronics' | 'accesso
 };
 
 test("the slice's own picks are used", async () => {
-  assert.deepStrictEqual(await facetIds('audio-electronics'), ['inStock', 'legs']);
+  assert.deepStrictEqual(await facetIds('audio-electronics'), ['brand', 'inStock', 'legs']);
 });
 
 test('no category reads the headphones list', async () => {
-  assert.deepStrictEqual(await facetIds(), ['inStock', 'shell']);
+  assert.deepStrictEqual(await facetIds(), ['brand', 'inStock', 'shell']);
 });
 
 test('an empty list gives no picked controls', async () => {
-  assert.deepStrictEqual(await facetIds('accessories'), ['inStock']);
+  assert.deepStrictEqual(await facetIds('accessories'), ['brand', 'inStock']);
 });
 
 test('a failed picklist read gives no picks', async () => {
   assert.deepStrictEqual(
     await facetIds('audio-electronics', Promise.reject(new Error('picklist read failed'))),
-    ['inStock'],
+    ['brand', 'inStock'],
   );
 });

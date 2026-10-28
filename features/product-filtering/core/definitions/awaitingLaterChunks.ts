@@ -7,17 +7,18 @@
 import type {
   FacetGroup,
   QueryOnlyFacet,
-  SelectedFacet,
+  RenderedFacet,
 } from '@/features/product-filtering/core/types/facetProjection';
 
 export const COMMERCIAL_GROUP: FacetGroup = { id: 'commercial', label: '' };
 
 export const MORE_GROUP: FacetGroup = { id: 'more', label: 'More filters' };
 
-/** Brand and in stock are the same in every slice. */
-export const COMMERCIAL_FACETS: SelectedFacet[] = [
-  { id: 'brand', attribute: 'brand', label: 'Brand', group: 'commercial' },
-  { id: 'inStock', attribute: 'inStock', label: 'In Stock Only', group: 'commercial' },
+/** Brand and in stock are the same in every slice and carry their control here: no stored field decides them.
+ *  Brand has no option list, its names are counted from the products (brandRef.name). In stock is computed from the stock fields. */
+export const COMMERCIAL_FACETS: RenderedFacet[] = [
+  { id: 'brand', attribute: 'brand', label: 'Brand', group: 'commercial', control: 'checkbox' },
+  { id: 'inStock', attribute: 'inStock', label: 'In Stock Only', group: 'commercial', control: 'boolean' },
 ];
 
 export const QUERY_ONLY_FACETS: QueryOnlyFacet[] = [
