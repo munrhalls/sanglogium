@@ -38,16 +38,22 @@ picklist (CMS) + products data -> controls and options
 In steps:
 1. product filterAttributes fields (shared plus the slice's own), minus brand, in stock, price and lists of objects -> the picklist's choices in Studio
 2. owner's picks -> filterPicklist document
-3. filterPicklist + products data -> facet set: which controls exist
-4. facet set + products data -> kind, options, bounds per control
+3. filterPicklist + products data -> the picks and the products, read together
+4. picks -> selected facets: brand, in stock and one per pick, each with an id, a name and a group
+5. products data -> inventory: per field, its kinds, distinct values and number span
+6. selected facets + inventory -> a kind, options and bounds per facet
+7. facets with no kind are dropped -> the facet set, what the sidebar can draw
 ```
 
 | step | file |
 |---|---|
 | 1. Each slice's list offers the leaf paths of the shared fields and of that slice's own fields (nested fields as `a.b`), minus brand, in stock, price and lists of objects | `schema/filterPicklistType.ts`, `studio/schema.ts`, `studio/structure.ts`, `schema/filterFieldPaths.ts`, `features/products/schema/productFilterAttributes/index.ts` |
 | 2. The owner fills three lists, one per slice | the document is data in the dataset, no file |
-| 3. The picklist is read with the products (cached 300 s; a failed read means no picks). Facet set = brand, in stock, plus the picks. A picked field's id and URL key come from its name; its group is "More filters". A control's name comes from its field name | `adapters/sanity/fetchPicklist.ts`, `queries/getFilterFacets.ts`, `core/rules/buildFacetSet.ts`, `core/rules/facetKey.ts` |
-| 4. Kind, options and bounds come from the data: no value, no control; only true/false, an on/off control; only numbers (alone or in a list), a range from the smallest to the largest; only text (alone or in a list), a checkbox with one option per distinct value, sorted; a list of objects holds no value, so no control. An option's text is its value split at hyphens and spaces into words, each capitalised (known acronyms upper-cased, a word with a digit kept as it is) | `core/rules/fieldInventory.ts`, `core/rules/deriveControl.ts`, `core/rules/deriveOptions.ts`, `core/rules/humanizeFacetValue.ts`, `core/rules/projectFacets.ts` |
+| 3. The picklist is read with the products (cached 300 s; a failed read means no picks) | `adapters/sanity/fetchPicklist.ts`, `queries/getFilterFacets.ts` |
+| 4. Selected facets are brand and in stock, then one per distinct pick (brand, in stock and price picks are dropped). A pick's id and URL key come from its name, its name is the field name split into capitalised words, its group is "More filters" | `core/rules/buildFacetSet.ts` (`selectionFor`, `humanizeAttribute`), `core/rules/facetKey.ts` |
+| 5. For each field path the inventory holds the kinds stored (text, number, true/false, list, object), the distinct text and true/false values, and the smallest and largest number | `core/rules/fieldInventory.ts` |
+| 6. Kind, options and bounds come from the data: no value, no control; only true/false, an on/off control; only numbers (alone or in a list), a range from the smallest to the largest; only text (alone or in a list), a checkbox with one option per distinct value, sorted; a list of objects holds no value, so no control. An option's text is its value split at hyphens and spaces into words, each capitalised (known acronyms upper-cased, a word with a digit kept as it is) | `core/rules/projectFacets.ts`, `core/rules/deriveControl.ts`, `core/rules/deriveOptions.ts`, `core/rules/humanizeFacetValue.ts` |
+| 7. A facet with no kind is not drawn. In stock is always an on/off control, because availability is computed from the stock fields; brand keeps no option list, its names are counted from the products | `core/rules/buildFacetSet.ts` (`withKnownControl`, `withoutBrandOptions`) |
 | Temporary: brand, in stock, the two groups and `wearingStyle` stay until later chunks own them | `core/definitions/awaitingLaterChunks.ts` |
 | Proof, passed 2026-10-28: four fake products in real format with alien content, and the expected facet set written by hand; the slice's own picks used and a failed picklist read giving no picks; the field list of step 1 on a fake schema. The classes in the live data are listed by the real-data check. Not proven here: the brand facet and `wearingStyle`, which are temporary | `tests/product-filtering/backend/picklistAndProductsToControlsAndOptions.test.ts`, `tests/product-filtering/backend/picklistPerSlice.test.ts`, `tests/product-filtering/backend/filterFieldPaths.test.ts`, `tests/product-filtering/pickablePathsRealData.test.ts` |
 
@@ -64,7 +70,7 @@ In steps:
 | step | file |
 |---|---|
 | 1. The owner enters a text for a control name or an option. It lives in the CMS, so no deploy is needed | not built |
-| 2. A curated text wins; without one, a control's name comes from its field name and an option's text from its value | `core/rules/applyOptionLabels.ts`, `core/definitions/optionLabelOverrides.ts` (this table in code goes when step 1 is built) |
+| 2. A curated text wins; without one, a control's name comes from its field name and an option's text from its value. It attaches inside chunk 1's code: option texts in `projectFacets.ts` (chunk 1 step 6) via `applyOptionLabels`, the control's name in `buildFacetSet.ts` (chunk 1 step 4). With no curated text both change nothing, so chunk 1's expected output stays true | `core/rules/applyOptionLabels.ts`, `core/definitions/optionLabelOverrides.ts` (this table in code goes when step 1 is built) |
 | Proof: not written. Classes: text curated or not, for a control name and for an option. Source: the curated list | not written |
 
 ## 3. URL + labelled controls -> filter state
