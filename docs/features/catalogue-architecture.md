@@ -27,7 +27,7 @@ resolveSlugToId("open-back") → "o7c6baiuobsr7ni2y2vf22sh"
          ↓
 unrollDescendantKeys(nodeId) → ["o7c6baiuobsr7ni2y2vf22sh"]
          ↓
-getProductsByVfsKeys(["o7c6..."]) → GROQ query
+getProductsChunk({ keys: ["o7c6..."], ... }) → GROQ query
          ↓
 Sanity returns products with matching catalogueLocationKeys
          ↓
@@ -106,7 +106,7 @@ This query uses array intersection — returns products where at least one `cata
 - [x] VFS pre-built index (`catalogue-index.json`)
 - [x] VFS lookup functions (`resolveSlugToId`, `unrollDescendantKeys`)
 - [x] Navigation rendering from VFS
-- [x] `getProductsByVfsKeys()` function
+- [x] `getProductsCount()` and `getProductsChunk()` functions
 - [x] `/products/[...slug]/page.tsx` category pages
 - [x] `ProductGrid` component
 - [x] Product schema with `catalogueLocationKeys`
