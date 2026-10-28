@@ -2,7 +2,8 @@
 //   - filterAttributes.price is removed everywhere: the only price is price_data.unit_amount.
 //   - channelCount stored as a number becomes the one-item list the schema declares (2 -> ["2.0"]).
 //   - phonoStageBuiltIn stored as false becomes "none"; hiResCertification stored as false is removed (no certification).
-//   A value it cannot map (a true, a number outside the schema's list) is printed as NOT FIXED and left alone.
+//   - hiResCertification true on the two GUSTARD DACs (X30, X26 III) becomes ["mqa"]: their spec sheets list MQA and no Hi-Res Audio logo.
+//   A value it cannot map (any other true, a number outside the schema's list) is printed as NOT FIXED and left alone.
 // Dry run by default. With --apply: saves the old values to a backup file, then writes. The owner runs it manually.
 // Run: node --env-file=/home/jan/work/sanglogium/.env.local scripts/fix-cms-contract-data.mjs
 // Apply: node --env-file=/home/jan/work/sanglogium/.env.local scripts/fix-cms-contract-data.mjs --apply
@@ -13,6 +14,7 @@ import { createClient } from '@sanity/client';
 const APPLY = process.argv.includes('--apply');
 const BACKUP = 'scripts/output/cms-contract-data-backup.json';
 const CHANNEL_COUNTS = ['2.0', '2.1', '5.1', '7.1', '7.1.4'];
+const MQA_DACS = ['xMEqvkRBbdrlJXyFG8fIQr', 'xMEqvkRBbdrlJXyFG8fkYr'];
 
 const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
@@ -62,6 +64,10 @@ for (const doc of docs) {
       before.hiResCertification = false;
       unset.push('filterAttributes.hiResCertification');
       note('hiResCertification', false, 'removed');
+    } else if (MQA_DACS.includes(_id)) {
+      before.hiResCertification = true;
+      set['filterAttributes.hiResCertification'] = ['mqa'];
+      note('hiResCertification', true, '["mqa"]');
     } else notFixed.push(`${_id} | hiResCertification | true`);
   }
   if (unset.length || Object.keys(set).length) changes.push({ id: _id, set, unset, before });
