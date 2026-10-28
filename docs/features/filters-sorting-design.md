@@ -4,7 +4,7 @@ Scope: the filter, sort and pagination flow, from the CMS to the shopper's scree
 
 ## Progress
 
-Next: prove 2.
+Next: apply the data migration (see 0). Chunk 2 waits for the owner to rule how the curated texts are stored. Chunks 6 to 8 need a way to render components in a test; none is merged.
 
 | # | chunk | side | proof |
 |---|---|---|---|
