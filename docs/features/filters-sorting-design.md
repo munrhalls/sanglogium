@@ -70,7 +70,7 @@ In steps:
 | step | file |
 |---|---|
 | 1. The owner enters a text for a control name or an option. It lives in the CMS, so no deploy is needed | not built |
-| 2. A curated text wins; without one, a control's name comes from its field name and an option's text from its value | `core/rules/applyOptionLabels.ts`, `core/definitions/optionLabelOverrides.ts` (this table in code goes when step 1 is built) |
+| 2. A curated text wins; without one, a control's name comes from its field name and an option's text from its value. It attaches inside chunk 1's code: option texts in `projectFacets.ts` (chunk 1 step 6) via `applyOptionLabels`, the control's name in `buildFacetSet.ts` (chunk 1 step 4). With no curated text both change nothing, so chunk 1's expected output stays true | `core/rules/applyOptionLabels.ts`, `core/definitions/optionLabelOverrides.ts` (this table in code goes when step 1 is built) |
 | Proof: not written. Classes: text curated or not, for a control name and for an option. Source: the curated list | not written |
 
 ## 3. URL + labelled controls -> filter state
