@@ -24,6 +24,8 @@ test('picklist + products data -> controls and options', () => {
         tilt: { min: 1, max: 5 },
         empty: '',
         lone: 'q',
+        span: [10, 30],
+        ways: 'a-b',
       },
     },
     {
@@ -36,6 +38,8 @@ test('picklist + products data -> controls and options', () => {
         sourcing: [{ _key: 'k2', field: 'legs', quote: 'r' }],
         tilt: { min: 2, max: 9 },
         empty: [],
+        span: [20],
+        ways: ['c-d', 'a-b'],
       },
     },
     {
@@ -60,6 +64,8 @@ test('picklist + products data -> controls and options', () => {
     'ghost',
     'sourcing',
     'gone',
+    'span',
+    'ways',
     'shell',
     'price',
     'brand',
@@ -100,6 +106,18 @@ test('picklist + products data -> controls and options', () => {
       { id: 'legs', attribute: 'legs', label: 'Legs', group: 'more', control: 'range', min: 4, max: 8 },
       { id: 'tiltMin', attribute: 'tilt.min', label: 'Tilt Min', group: 'more', control: 'range', min: 1, max: 2 },
       { id: 'tiltMax', attribute: 'tilt.max', label: 'Tilt Max', group: 'more', control: 'range', min: 5, max: 9 },
+      { id: 'span', attribute: 'span', label: 'Span', group: 'more', control: 'range', min: 10, max: 30 },
+      {
+        id: 'ways',
+        attribute: 'ways',
+        label: 'Ways',
+        group: 'more',
+        control: 'checkbox',
+        options: [
+          { value: 'a-b', label: 'A B' },
+          { value: 'c-d', label: 'C D' },
+        ],
+      },
     ],
     queryOnly: [],
   };
