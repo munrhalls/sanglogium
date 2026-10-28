@@ -1,20 +1,5 @@
 import { defineType, defineField } from "sanity";
 
-export const FIXED_IN_CODE = ["brand", "inStock", "price"];
-
-export function filterFieldPaths(fields: any[], prefix = ""): string[] {
-  const paths: string[] = [];
-  for (const field of fields) {
-    const path = prefix ? prefix + "." + field.name : field.name;
-    if (field.type === "object" && Array.isArray(field.fields)) {
-      paths.push(...filterFieldPaths(field.fields, path));
-    } else {
-      paths.push(path);
-    }
-  }
-  return [...new Set(paths)].filter((path) => !FIXED_IN_CODE.includes(path));
-}
-
 const listField = (name: string, title: string, paths: string[]) =>
   defineField({
     name,
