@@ -12,7 +12,7 @@ Next: prove 2.
 | 2 | controls and options + curated texts (CMS) -> labelled controls and options | backend | none |
 | 3 | URL + labelled controls -> filter state | backend | passed 2026-10-28 (brand names are checked in chunk 4) |
 | 4 | labelled controls + filter state -> counts and bounds | backend | passed 2026-10-28 |
-| 5 | filter state + labelled controls -> the page's products and their total | backend | none |
+| 5 | filter state + labelled controls -> the page's products and their total | backend | passed 2026-10-28 |
 | 6 | counts and bounds -> sidebar and chips on screen | frontend | none |
 | 7 | sort and page state -> sort bar and page links on screen | frontend | none |
 | 8 | user input -> URL | frontend | none |
@@ -131,8 +131,8 @@ In steps:
 |---|---|
 | 1. Price, in stock and one test per selected control narrow the products; the sort picks the order | `adapters/sanity/buildProductQuery.ts` |
 | 2. The total counts the products that pass | `features/products/adapters/sanity/getProductsByVfsKeys.ts` |
-| 3. A page past the end becomes the last page; the window is cut into chunks | `features/products/queries/getListingPage.ts`, `features/products/adapters/sanity/getProductsByVfsKeys.ts` |
-| Proof: not written. Classes: each control kind selected or not, each sort value, a page before, inside and past the end. Source: the state and the sort list | not written |
+| 3. A page that is not a whole number from 1 up is page 1; a page past the end becomes the last page; the window is cut into chunks | `features/products/core/rules/pageWindow.ts`, `features/products/queries/getListingPage.ts`, `features/products/adapters/sanity/getProductsByVfsKeys.ts` |
+| Proof, passed 2026-10-28: five fake products in the real format (a text stored as a list in one product, a stock flag against the stock fields, a list with a capital) and a sixth outside the route; the real count and chunk functions run with the fetch swapped for the in-memory GROQ engine `groq-js` (installed with `sanity`); chunk 3's facet set and states; every sort value, every control kind alone, several choices and an unknown key, each with its expected ids and total written by hand; a window of the ordered products; the page rule on a page before, inside, past the end and not a whole number | `tests/product-filtering/backend/stateToProducts.test.ts` |
 
 ## 6. counts and bounds -> sidebar and chips on screen
 
