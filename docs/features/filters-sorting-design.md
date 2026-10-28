@@ -11,7 +11,7 @@ Next: prove 2.
 | 1 | picklist (CMS) + products data -> controls and options | backend | passed 2026-10-28 |
 | 2 | controls and options + curated texts (CMS) -> labelled controls and options | backend | none |
 | 3 | URL + labelled controls -> filter state | backend | passed 2026-10-28 (brand names are checked in chunk 4) |
-| 4 | labelled controls + filter state -> counts and bounds | backend | none |
+| 4 | labelled controls + filter state -> counts and bounds | backend | passed 2026-10-28 |
 | 5 | filter state + labelled controls -> the page's products and their total | backend | none |
 | 6 | counts and bounds -> sidebar and chips on screen | frontend | none |
 | 7 | sort and page state -> sort bar and page links on screen | frontend | none |
@@ -112,9 +112,9 @@ In steps:
 |---|---|
 | 1. A product counts for an option when it matches every other choice, so the shopper sees what the option would give | `core/rules/facetCounts.ts` |
 | 2. A range's bounds are never narrowed by the current choices, so its handle can always move back | `core/rules/facetCounts.ts` |
-| 3. The price span, and brand names from the products' brands | `core/rules/priceBounds.ts`, `core/rules/facetCounts.ts` |
+| 3. The price span, and brand names from the products' brands | `core/rules/facetCounts.ts` |
 | The result is `CatalogueFacets`, returned by | `queries/getFilterFacets.ts` |
-| Proof: not written. Classes: each control kind × (no choice, one choice, two choices). Source: the control kinds and the state | not written |
+| Proof, passed 2026-10-28: chunk 3's facet set and four fake products (stock by its fields, by a stored flag, a brand with no brand document, a range, a checkbox with capitals); three states in chunk 3's output format: no choice, one choice, several choices across a checkbox list, a true/false control, a range and the price; the expected counts, bounds and brand names written by hand | `tests/product-filtering/backend/countsAndBounds.test.ts` |
 
 ## 5. filter state + labelled controls -> the page's products and their total
 
@@ -148,7 +148,7 @@ In steps:
 | step | file |
 |---|---|
 | 1. Each group is drawn under its heading | `ui/FilterSidebar.tsx`, `ui/MobileFilterSheet.tsx` |
-| 2. Checkbox list with counts (a zero count is greyed), on/off toggle, range slider over the full span | `ui/FilterControls.tsx`, `ui/FilterSection.tsx`, `ui/Checkbox.tsx`, `ui/DualRangeSlider.tsx`, `ui/ProgressiveFilterOptionList.tsx` |
+| 2. Checkbox list with counts (a zero count is greyed), on/off toggle, range slider over the full span | `ui/FilterControls.tsx`, `ui/FilterSection.tsx`, `ui/Checkbox.tsx`, `ui/DualRangeSlider.tsx`, `ui/ProgressiveFilterOptionList.tsx`, `core/rules/priceBounds.ts` (the span as slider bounds) |
 | 3. Each active choice also shows as a chip | `ui/ActiveFilterChips.tsx` |
 | Proof: not written. Render from a fixture `CatalogueFacets`, compare the text, look once. Classes: each control kind | not written |
 
