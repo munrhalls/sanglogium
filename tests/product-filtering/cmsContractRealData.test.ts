@@ -144,6 +144,10 @@ const mixedKinds = rule(
   'one kind per field',
   'a pickable field holding text in some products and numbers or true/false in others gets no control; a list counts as its items',
 );
+const unheld = rule(
+  'every offered field is held by a product',
+  'a field the schema offers but no product of the slice holds can never draw a control',
+);
 const deadPick = rule('every pick draws a control', 'a pick in the picklist that no product backs, or that mixes kinds, draws nothing');
 const staleSpec = rule('every pick is offered by the schema', 'the picklist offers only the fields of its slice; a pick outside them was offered once and the schema moved on');
 const pickLines: string[] = [];
@@ -194,6 +198,9 @@ for (const slice of SLICES) {
     if (product.filterAttributes && typeof product.filterAttributes === 'object') walk(product.filterAttributes, '');
   }
 
+  for (const path of [...PICKABLE[slice]].sort()) {
+    if (!OWN_RULES.has(path) && !kinds.has(path)) unheld(`${slice} ${path}`);
+  }
   for (const [path, counts] of [...kinds].sort(([a], [b]) => a.localeCompare(b))) {
     if (OWN_RULES.has(path) || !PICKABLE[slice].has(path) || counts.size < 2) continue;
     mixedKinds(`${slice} ${path}: ${[...counts].map(([kind, { n, ex }]) => `${kind} in ${n} (e.g. ${ex.join(' ')})`).join('; ')}`);
