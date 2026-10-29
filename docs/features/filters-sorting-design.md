@@ -4,11 +4,11 @@ Scope: the filter, sort and pagination flow, from the CMS to the shopper's scree
 
 ## Progress
 
-Next: apply the data migration (see 0). Chunk 2 waits for the owner to rule how the curated texts are stored. Chunks 6 to 8 need a way to render components in a test; none is merged.
+Next: chunk 2 waits for the owner to rule how the curated texts are stored. Chunks 6 to 8 need a way to render components in a test; none is merged.
 
 | # | chunk | side | proof |
 |---|---|---|---|
-| 0 | CMS data -> what filtering and sorting read | upstream | built 2026-10-29; 1 data rule open (see 0) |
+| 0 | CMS data -> what filtering and sorting read | upstream | passed 2026-10-29 |
 | 1 | picklist (CMS) + products data -> controls and options | backend | passed 2026-10-28 |
 | 2 | controls and options + curated texts (CMS) -> labelled controls and options | backend | none |
 | 3 | URL + labelled controls -> filter state | backend | passed 2026-10-28 (brand names are checked in chunk 4) |
@@ -44,12 +44,10 @@ Four questions were put to the live data, in this order. One script answers all 
 
 | # | question (the owner's words, 2026-10-29) | answer and what proves it |
 |---|---|---|
-| a | "is the CMS data fully consistent relative to filtering/sorting needs? yes/no. If no or yes is unproven/brittle - solve that first. Regardless of answer - achieve simplest/minimalest (physics thinking) proof of CMS consistency vs filter/sort needs first." | No. The script has 13 rules, each one a thing the filter or sort code reads: name, price, in stock, brand, sort numbers, the product's slice, the 1000-product fetch cap, one kind per field. First run broke three: stored filter price in dollars on 24 products, three audio fields mixing kinds (11 products), 12 groups of values differing only by case. Fixed in code: one price source (`price_data.unit_amount`), one option per lower-cased value (`core/rules/fieldInventory.ts`). Still broken: one kind per field, fixed by `scripts/fix-cms-contract-data.mjs` (the owner applies) and two products the owner decides |
+| a | "is the CMS data fully consistent relative to filtering/sorting needs? yes/no. If no or yes is unproven/brittle - solve that first. Regardless of answer - achieve simplest/minimalest (physics thinking) proof of CMS consistency vs filter/sort needs first." | No. The script has 13 rules, each one a thing the filter or sort code reads: name, price, in stock, brand, sort numbers, the product's slice, the 1000-product fetch cap, one kind per field. First run broke three: stored filter price in dollars on 24 products, three audio fields mixing kinds (11 products), 12 groups of values differing only by case. Fixed in code: one price source (`price_data.unit_amount`), one option per lower-cased value (`core/rules/fieldInventory.ts`). Fixed in the data on 2026-10-29 (655 products, applied by the owner): the stored filter price removed, the three audio fields set to one kind, the two GUSTARD DACs set to `["mqa"]` (their spec sheets list MQA and no Hi-Res Audio logo). The proof now prints 0 broken, the same on two runs |
 | b | "is picklist, every field of it, proven and grounded in cms data? yes/no" | No at first: `deviceType` and `accessoryType` sat in the wrong slice's schema file, so the picklist could not offer two of its own 36 picks. Moved to their own slices (the data decides: 216 of 221 audio-electronics products hold the first, 258 of 259 accessories the second). Now yes: every pick is offered by the schema, held by products, and draws a control |
 | c | "Is the step from picklist to derived controls and options proven and grounded in CMS data - every field of it? Purely the derive step: stored values -> control kind, options, bounds." | Yes. For each of the 72 pickable fields, the expected control, options and bounds are read straight from the raw products and compared with what chunk 1 derives (every class is hit: checkbox from text and from lists, on/off, range from numbers and from lists, none because empty, none because mixed). Checked that it can fail: lowering a range's upper bound by one made 11 fields fail |
 | d | "Is every field Studio offers actually able to produce a control on real data?" | No at first: 4 offered fields (`speedsSupported`, `furnitureType`, `cleaningProductType`, `formatCompatibility`) were held by no product, so they could never draw a control. Removed from the schema; nothing stored is lost, since no product held them. Now yes: the rule "every offered field is held by a product" prints broken in: 0 (it printed 4 before). |
-
-Open: the owner runs `scripts/fix-cms-contract-data.mjs --apply`. It also turns the two GUSTARD DACs' `hiResCertification: true` into `["mqa"]` (their spec sheets list MQA and no Hi-Res Audio logo). The proof is satisfied when the script prints "the data holds every rule". The migration script is deleted after it ran.
 
 ## 1. picklist (CMS) + products data -> controls and options
 
