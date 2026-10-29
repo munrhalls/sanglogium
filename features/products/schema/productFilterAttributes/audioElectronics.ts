@@ -202,14 +202,6 @@ export const audioElectronicsFields: any[] = [
           domainField: "deviceType",
         },
         {
-          name: "speedsSupported",
-          title: "Speeds supported",
-          type: "array",
-          of: [{ type: "string", options: { list: ["33-1-3", "45", "78"] } }],
-          domain: [],
-          domainField: "deviceType",
-        },
-        {
           name: "voiceAssistant",
           title: "Voice assistant built-in",
           type: "array",

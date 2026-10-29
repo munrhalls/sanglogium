@@ -69,26 +69,6 @@ export const accessoriesFields: any[] = [
           domain: ["cables-interconnects"],
         },
         {
-          name: "furnitureType",
-          title: "Furniture type",
-          type: "array",
-          of: [
-            {
-              type: "string",
-              options: {
-                list: [
-                  "speaker-stand",
-                  "equipment-rack-shelf",
-                  "isolation-platform-feet-pucks",
-                  "turntable-wall-shelf",
-                  "wall-mount",
-                ],
-              },
-            },
-          ],
-          domain: ["stands-isolation", "racks-furniture"],
-        },
-        {
           name: "material",
           title: "Material",
           type: "array",
@@ -108,32 +88,6 @@ export const accessoriesFields: any[] = [
           title: "Weight / load capacity (kg)",
           type: "number",
           domain: ["stands-isolation", "racks-furniture"],
-        },
-        {
-          name: "cleaningProductType",
-          title: "Cleaning product type",
-          type: "string",
-          options: {
-            list: [
-              "record-cleaning-fluid",
-              "record-cleaning-machine",
-              "stylus-brush-cleaner",
-              "carbon-fiber-brush",
-              "anti-static-gun",
-              "demagnetizer",
-              "screen-lens-cloth",
-            ],
-          },
-          domain: ["cleaning-maintenance"],
-        },
-        {
-          name: "formatCompatibility",
-          title: "Format compatibility",
-          type: "array",
-          of: [
-            { type: "string", options: { list: ["vinyl", "cd", "stylus-cartridge", "optical-lens"] } },
-          ],
-          domain: ["cleaning-maintenance"],
         },
         {
           name: "partType",
