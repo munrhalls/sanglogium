@@ -1,7 +1,8 @@
-// Field consistency: do all products that hold a field hold it in the same form?
+// Field value form consistency: do all products that hold a top-level field hold its value in the same form?
+// Top-level fields only. Fields inside objects or lists, and what is inside a list or an object, are the next PR.
 // Human-run. Reads only. Phase 1 proves the scan on fake products; phase 2 runs it on the live data for one field.
 // Only the latest run is kept: tests/products/out/ is emptied before each live run.
-// node --env-file=/home/jan/work/sanglogium/.env.local --experimental-strip-types --import ./tools/alias-loader.mjs tests/products/fieldValueFormConsistency.test.ts <field path>
+// node --env-file=/home/jan/work/sanglogium/.env.local --experimental-strip-types --import ./tools/alias-loader.mjs tests/products/fieldValueFormConsistency.test.ts <field>
 //
 // `sanity` is swapped for a stub: productType.ts imports defineType and defineField from it, and the field lists are plain objects.
 import { createClient } from '@sanity/client';
@@ -25,90 +26,81 @@ type Product = Record<string, unknown> & { _id: string };
 // The form of one value: its JSON kind. What is inside a list or an object is not looked at here.
 const formOf = (value: unknown): string => (value === null ? 'null' : Array.isArray(value) ? 'array' : typeof value);
 
-// The value at a dotted path. Not held when a step is absent or the step before it is not an object.
-const valueAt = (product: Product, path: string): { held: boolean; value?: unknown } => {
-  let current: unknown = product;
-  for (const key of path.split('.')) {
-    if (current === null || typeof current !== 'object' || Array.isArray(current) || !(key in current)) return { held: false };
-    current = (current as Record<string, unknown>)[key];
-  }
-  return { held: true, value: current };
-};
-
 // Products in `_id` order. The first holder of the field sets the reference form; each later holder is compared to it.
 // A field the schema does not define gets no missing list.
-function scan(products: Product[], path: string, definedBySchema: boolean) {
+function scan(products: Product[], field: string, definedBySchema: boolean) {
   const ordered = [...products].sort((a, b) => (a._id < b._id ? -1 : a._id > b._id ? 1 : 0));
   let reference: string | null = null;
   let holders = 0;
   const inconsistencies: { id: string; form: string }[] = [];
   const missing: string[] = [];
   for (const product of ordered) {
-    const found = valueAt(product, path);
-    if (!found.held) {
+    if (!Object.hasOwn(product, field)) {
       missing.push(product._id);
       continue;
     }
     holders += 1;
-    const form = formOf(found.value);
+    const form = formOf(product[field]);
     if (reference === null) reference = form;
     else if (form !== reference) inconsistencies.push({ id: product._id, form });
   }
-  return { path, reference, holders, inconsistencies, missing: definedBySchema ? missing : null };
+  return { field, reference, holders, inconsistencies, missing: definedBySchema ? missing : null };
 }
 
-// Every field path the product schema defines outside filterAttributes, nested object fields included.
-const schemaPaths = (fields: any[], prefix = ''): string[] =>
-  fields.flatMap((field) => {
-    const path = prefix ? `${prefix}.${field.name}` : field.name;
-    return field.type === 'object' && Array.isArray(field.fields) ? [path, ...schemaPaths(field.fields, path)] : [path];
-  });
-const SCHEMA_PATHS = new Set(schemaPaths((productType as any).fields.filter((field: any) => field.name !== 'filterAttributes')));
+// Every top-level field the product schema defines outside filterAttributes.
+const SCHEMA_FIELDS = new Set(
+  (productType as any).fields.map((field: any) => field.name).filter((name: string) => name !== 'filterAttributes'),
+);
 
 // ---- phase 1: proof on fake products, expected output written by hand ----
-// f0 lacks the field (so the reference comes from the first holder, f1); f2 repeats the reference form;
-// f3 string, f4 list of numbers, f5 null, f9 empty list differ; f6 empty parent, f7 no parent, f8 parent not an object lack it.
+// f0, f7, f8 lack the field (so the reference comes from the first holder, f1); f2 repeats the reference form;
+// f3 string, f4 list, f5 null, f6 object, f9 empty list differ.
 const fake: Product[] = [
-  { _id: 'f9', price_data: { unit_amount: [] } },
-  { _id: 'f4', price_data: { unit_amount: [1, 2] } },
+  { _id: 'f9', stock: [] },
+  { _id: 'f4', stock: [1, 2] },
   { _id: 'f0' },
-  { _id: 'f1', price_data: { currency: 'zzz', unit_amount: 7 } },
-  { _id: 'f8', price_data: 'x' },
-  { _id: 'f2', price_data: { unit_amount: 9 } },
-  { _id: 'f3', price_data: { unit_amount: '9' } },
-  { _id: 'f7', note: 'no parent' },
-  { _id: 'f5', price_data: { unit_amount: null } },
-  { _id: 'f6', price_data: {} },
+  { _id: 'f1', stock: 7, name: 'zzz' },
+  { _id: 'f8', name: 'qqq' },
+  { _id: 'f2', stock: 9 },
+  { _id: 'f6', stock: { a: 1 } },
+  { _id: 'f3', stock: '9' },
+  { _id: 'f7', note: 'no field' },
+  { _id: 'f5', stock: null },
 ];
-deepStrictEqual(scan(fake, 'price_data.unit_amount', true), {
-  path: 'price_data.unit_amount',
+deepStrictEqual(scan(fake, 'stock', true), {
+  field: 'stock',
   reference: 'number',
-  holders: 6,
+  holders: 7,
   inconsistencies: [
     { id: 'f3', form: 'string' },
     { id: 'f4', form: 'array' },
     { id: 'f5', form: 'null' },
+    { id: 'f6', form: 'object' },
     { id: 'f9', form: 'array' },
   ],
-  missing: ['f0', 'f6', 'f7', 'f8'],
+  missing: ['f0', 'f7', 'f8'],
 });
 // A field the schema does not define: holders and inconsistencies only, no missing list.
-const alien: Product[] = [{ _id: 'g3', box: { dial: 'x' } }, { _id: 'g1', box: { dial: 1 } }, { _id: 'g2' }];
-deepStrictEqual(scan(alien, 'box.dial', false), {
-  path: 'box.dial',
+const alien: Product[] = [
+  { _id: 'g3', dial: 'x' },
+  { _id: 'g1', dial: 1 },
+  { _id: 'g2' },
+];
+deepStrictEqual(scan(alien, 'dial', false), {
+  field: 'dial',
   reference: 'number',
   holders: 2,
   inconsistencies: [{ id: 'g3', form: 'string' }],
   missing: null,
 });
-// The schema paths come from the real productType, and filterAttributes is left out.
-deepStrictEqual(SCHEMA_PATHS.has('price_data.unit_amount'), true);
-deepStrictEqual(SCHEMA_PATHS.has('filterAttributes'), false);
+// The schema fields come from the real productType, and filterAttributes is left out.
+deepStrictEqual(SCHEMA_FIELDS.has('stock'), true);
+deepStrictEqual(SCHEMA_FIELDS.has('filterAttributes'), false);
 console.log('proof on fake products: passed');
 
 // ---- phase 2: the live data, one field ----
 const field = process.argv[2];
-if (!field) throw new Error('Pass the field path, for example price_data.unit_amount');
+if (!field) throw new Error('Pass the top-level field name, for example stock');
 
 const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
@@ -123,7 +115,7 @@ const docs: Product[] = await client.fetch('*[_type == "product"]');
 const fetchSeconds = (Date.now() - started) / 1000;
 const published = docs.filter((doc) => !doc._id.startsWith('drafts.') && !doc._id.startsWith('versions.'));
 
-const result = scan(published, field, SCHEMA_PATHS.has(field));
+const result = scan(published, field, SCHEMA_FIELDS.has(field));
 const lines = [
   `field: ${field}`,
   `defined by schema: ${result.missing === null ? 'no' : 'yes'}`,
