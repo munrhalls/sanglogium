@@ -30,7 +30,9 @@ Not in this document yet: search results (they reuse chunks 1–4 through the fi
 
 - A proof runs one chunk alone on a small fake input in the real format, with alien content.
 - Its input classes come from the schema's type table and the live data, not from guessing. The proof names them.
+- It calls the code the page runs, never a copy.
 - The expected output is written by hand, not by the code.
+- A proof must be able to fail: break the code on purpose, the proof must fail, then restore it.
 - A chunk's proof input is the previous chunk's expected output.
 - Pixels are judged by an eye once.
 - Nothing else counts: no click-through, no mocks, no test per function.
