@@ -26,6 +26,8 @@ test('picklist + products data -> controls and options', () => {
         lone: 'q',
         span: [10, 30],
         ways: 'a-b',
+        finish: 'Matte-Gold',
+        mix: 'x',
       },
     },
     {
@@ -40,6 +42,8 @@ test('picklist + products data -> controls and options', () => {
         empty: [],
         span: [20],
         ways: ['c-d', 'a-b'],
+        finish: 'matte-gold',
+        mix: 3,
       },
     },
     {
@@ -47,6 +51,7 @@ test('picklist + products data -> controls and options', () => {
       filterAttributes: {
         shell: 'hard-blue',
         legs: 6,
+        finish: 'satin-ash',
         gone: null,
       },
     },
@@ -66,6 +71,8 @@ test('picklist + products data -> controls and options', () => {
     'gone',
     'span',
     'ways',
+    'finish',
+    'mix',
     'shell',
     'price',
     'brand',
@@ -117,6 +124,17 @@ test('picklist + products data -> controls and options', () => {
         options: [
           { value: 'a-b', label: 'A B' },
           { value: 'c-d', label: 'C D' },
+        ],
+      },
+      {
+        id: 'finish',
+        attribute: 'finish',
+        label: 'Finish',
+        group: 'more',
+        control: 'checkbox',
+        options: [
+          { value: 'Matte-Gold', label: 'Matte Gold' },
+          { value: 'satin-ash', label: 'Satin Ash' },
         ],
       },
     ],
