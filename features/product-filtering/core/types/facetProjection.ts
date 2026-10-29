@@ -39,7 +39,7 @@ export interface FieldStat {
   kinds: ObservedKind[];
   /** Number of products carrying a value. */
   count: number;
-  /** Distinct string and boolean values (booleans as 'true' / 'false'; array elements flattened), data casing kept, sorted. */
+  /** Distinct string and boolean values (booleans as 'true' / 'false'; array elements flattened), one per lower-cased value (the first in sort order), sorted. */
   values: string[];
   /** Smallest and largest finite number seen (scalar or array element); null when none. */
   min: number | null;

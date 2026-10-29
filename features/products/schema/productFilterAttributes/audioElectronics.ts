@@ -202,14 +202,6 @@ export const audioElectronicsFields: any[] = [
           domainField: "deviceType",
         },
         {
-          name: "speedsSupported",
-          title: "Speeds supported",
-          type: "array",
-          of: [{ type: "string", options: { list: ["33-1-3", "45", "78"] } }],
-          domain: [],
-          domainField: "deviceType",
-        },
-        {
           name: "voiceAssistant",
           title: "Voice assistant built-in",
           type: "array",
@@ -266,11 +258,11 @@ export const audioElectronicsFields: any[] = [
           description: "Store-operational; not individually sourced.",
         },
         {
-          name: "accessoryType",
-          title: "Accessory category",
+          name: "deviceType",
+          title: "Product category",
           type: "string",
-          options: { list: vocabFor("accessoryType") },
+          options: { list: vocabFor("deviceType") },
           description:
-            "Gates every domain-specific field below via each field's `domain`.",
+            "Headphone amplifiers and digital audio players are in scope for this slice (restored 2026-09-29 alongside the data backfill). Gates every domain-specific field via each field's `domain`.",
         },
 ];

@@ -1,5 +1,5 @@
 // Pure scan of a slice's products: per filterAttributes path, the kinds of value
-// stored, how many products carry it, its distinct values and its numeric span.
+// stored, how many products carry it, its distinct values (one per lower-cased value) and its numeric span.
 
 import type { RawProduct } from '@/features/product-filtering/core/types/filterTypes';
 import type { FieldInventory, ObservedKind } from '@/features/product-filtering/core/types/facetProjection';
@@ -7,7 +7,7 @@ import type { FieldInventory, ObservedKind } from '@/features/product-filtering/
 interface Acc {
   kinds: Set<ObservedKind>;
   count: number;
-  values: Set<string>;
+  values: Map<string, string>; // lower-cased value -> the spelling kept
   min: number | null;
   max: number | null;
 }
@@ -20,7 +20,10 @@ export function fieldInventory(products: RawProduct[]): FieldInventory {
       acc.min = acc.min === null || v < acc.min ? v : acc.min;
       acc.max = acc.max === null || v > acc.max ? v : acc.max;
     } else if (typeof v === 'string' || typeof v === 'boolean') {
-      acc.values.add(String(v));
+      const text = String(v);
+      const lower = text.toLowerCase();
+      const kept = acc.values.get(lower);
+      if (kept === undefined || text < kept) acc.values.set(lower, text);
     }
   };
 
@@ -38,7 +41,7 @@ export function fieldInventory(products: RawProduct[]): FieldInventory {
 
       let acc = map.get(attribute);
       if (!acc) {
-        acc = { kinds: new Set(), count: 0, values: new Set(), min: null, max: null };
+        acc = { kinds: new Set(), count: 0, values: new Map(), min: null, max: null };
         map.set(attribute, acc);
       }
       acc.count += 1;
@@ -69,7 +72,7 @@ export function fieldInventory(products: RawProduct[]): FieldInventory {
       attribute,
       kinds: [...acc.kinds].sort(),
       count: acc.count,
-      values: [...acc.values].sort(),
+      values: [...acc.values.values()].sort(),
       min: acc.min,
       max: acc.max,
     };

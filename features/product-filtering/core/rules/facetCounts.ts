@@ -45,11 +45,7 @@ export interface CatalogueFacets {
 }
 
 function getPriceCents(p: RawProduct): number | null {
-  if (p.filterAttributes?.price != null) {
-    return Number(p.filterAttributes.price);
-  }
-  if (p.price != null) return Number(p.price);
-  return null;
+  return p.price != null ? Number(p.price) : null;
 }
 
 function isInStock(p: RawProduct): boolean {

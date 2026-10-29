@@ -4,10 +4,11 @@ Scope: the filter, sort and pagination flow, from the CMS to the shopper's scree
 
 ## Progress
 
-Next: apply the data migration (see 0). Chunk 2 waits for the owner to rule how the curated texts are stored. Chunks 6 to 8 need a way to render components in a test; none is merged.
+Next: chunk 2 waits for the owner to rule how the curated texts are stored. Chunks 6 to 8 need a way to render components in a test; none is merged.
 
 | # | chunk | side | proof |
 |---|---|---|---|
+| 0 | CMS data -> what filtering and sorting read | upstream | passed 2026-10-29 |
 | 1 | picklist (CMS) + products data -> controls and options | backend | passed 2026-10-28 |
 | 2 | controls and options + curated texts (CMS) -> labelled controls and options | backend | none |
 | 3 | URL + labelled controls -> filter state | backend | passed 2026-10-28 (brand names are checked in chunk 4) |
@@ -37,6 +38,17 @@ Not in this document yet: search results (they reuse chunks 1–4 through the fi
 - Pixels are judged by an eye once.
 - Nothing else counts: no click-through, no mocks, no test per function.
 
+## 0. CMS data -> what filtering and sorting read
+
+Four questions were put to the live data, in this order. One script answers all four: `tests/product-filtering/cmsContractRealData.test.ts` (human-run, reads only, prints each rule with why the code needs it and how many products break it; exit code 1 when any rule is broken). Two runs on unchanged data print the same text.
+
+| # | question (the owner's words, 2026-10-29) | answer and what proves it |
+|---|---|---|
+| a | "is the CMS data fully consistent relative to filtering/sorting needs? yes/no. If no or yes is unproven/brittle - solve that first. Regardless of answer - achieve simplest/minimalest (physics thinking) proof of CMS consistency vs filter/sort needs first." | No. The script has 13 rules, each one a thing the filter or sort code reads: name, price, in stock, brand, sort numbers, the product's slice, the 1000-product fetch cap, one kind per field. First run broke three: stored filter price in dollars on 24 products, three audio fields mixing kinds (11 products), 12 groups of values differing only by case. Fixed in code: one price source (`price_data.unit_amount`), one option per lower-cased value (`core/rules/fieldInventory.ts`). Fixed in the data on 2026-10-29 (655 products, applied by the owner): the stored filter price removed, the three audio fields set to one kind, the two GUSTARD DACs set to `["mqa"]` (their spec sheets list MQA and no Hi-Res Audio logo). The proof now prints 0 broken, the same on two runs |
+| b | "is picklist, every field of it, proven and grounded in cms data? yes/no" | No at first: `deviceType` and `accessoryType` sat in the wrong slice's schema file, so the picklist could not offer two of its own 36 picks. Moved to their own slices (the data decides: 216 of 221 audio-electronics products hold the first, 258 of 259 accessories the second). Now yes: every pick is offered by the schema, held by products, and draws a control |
+| c | "Is the step from picklist to derived controls and options proven and grounded in CMS data - every field of it? Purely the derive step: stored values -> control kind, options, bounds." | Yes. For each of the 72 pickable fields, the expected control, options and bounds are read straight from the raw products and compared with what chunk 1 derives (every class is hit: checkbox from text and from lists, on/off, range from numbers and from lists, none because empty, none because mixed). Checked that it can fail: lowering a range's upper bound by one made 11 fields fail |
+| d | "Is every field Studio offers actually able to produce a control on real data?" | No at first: 4 offered fields (`speedsSupported`, `furnitureType`, `cleaningProductType`, `formatCompatibility`) were held by no product, so they could never draw a control. Removed from the schema; nothing stored is lost, since no product held them. Now yes: the rule "every offered field is held by a product" prints broken in: 0 (it printed 4 before). |
+
 ## 1. picklist (CMS) + products data -> controls and options
 
 ```
@@ -58,11 +70,11 @@ In steps:
 | 2. The owner fills three lists, one per slice | the document is data in the dataset, no file |
 | 3. The picklist is read with the products (cached 300 s; a failed read means no picks) | `adapters/sanity/fetchPicklist.ts`, `queries/getFilterFacets.ts` |
 | 4. Selected facets are one per distinct pick (brand, in stock and price picks are dropped). A pick's id and URL key come from its name, its name is the field name split into capitalised words, its group is "More filters" | `core/rules/buildFacetSet.ts` (`selectionFor`, `humanizeAttribute`), `core/rules/facetKey.ts` |
-| 5. For each field path the inventory holds the kinds stored (text, number, true/false, list, object), the distinct text and true/false values (sorted), and the smallest and largest number. A list counts as its items | `core/rules/fieldInventory.ts` |
+| 5. For each field path the inventory holds the kinds stored (text, number, true/false, list, object), the distinct text and true/false values (sorted; spellings that differ only by case count as one), and the smallest and largest number. A list counts as its items | `core/rules/fieldInventory.ts` |
 | 6. The values decide the control: only true/false, an on/off control; only numbers, a range; only text, a checkbox with one option per value; anything else, none. An option's text is its value as readable words (the rule is in the header of `humanizeFacetValue.ts`) | `core/rules/projectFacets.ts`, `core/rules/deriveControl.ts`, `core/rules/deriveOptions.ts`, `core/rules/humanizeFacetValue.ts` |
 | 7. A pick with no kind is not drawn. Brand and in stock are fixed in code with their control, because no stored field decides them: in stock is computed from the stock fields; brand has no option list, its names are counted from the products | `core/rules/buildFacetSet.ts`, `core/definitions/awaitingLaterChunks.ts` |
 | Temporary: brand, in stock, the two groups and `wearingStyle` stay until later chunks own them | `core/definitions/awaitingLaterChunks.ts` |
-| Proof, passed 2026-10-28: four fake products in real format with alien content, and the expected facet set written by hand; the slice's own picks used and a failed picklist read giving no picks; the field list of step 1 on a fake schema. The classes in the live data are listed by the real-data check. Not proven here: the brand names and `wearingStyle`, which are temporary | `tests/product-filtering/backend/picklistAndProductsToControlsAndOptions.test.ts`, `tests/product-filtering/backend/picklistPerSlice.test.ts`, `tests/product-filtering/backend/filterFieldPaths.test.ts`, `tests/product-filtering/pickablePathsRealData.test.ts` |
+| Proof, passed 2026-10-28: four fake products in real format with alien content, and the expected facet set written by hand (it includes two spellings that differ only by case, and a field mixing text and a number); the slice's own picks used and a failed picklist read giving no picks; the field list of step 1 on a fake schema. The classes in the live data are listed by the real-data check. Not proven here: the brand names and `wearingStyle`, which are temporary | `tests/product-filtering/backend/picklistAndProductsToControlsAndOptions.test.ts`, `tests/product-filtering/backend/picklistPerSlice.test.ts`, `tests/product-filtering/backend/filterFieldPaths.test.ts`, `tests/product-filtering/pickablePathsRealData.test.ts` |
 
 ## 2. controls and options + curated texts (CMS) -> labelled controls and options
 

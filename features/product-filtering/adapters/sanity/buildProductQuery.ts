@@ -114,15 +114,13 @@ export function buildProductQuery(state: ProductQueryState, facetSet: FacetSet =
   const parts: string[] = [];
   const params: Record<string, unknown> = {};
 
-  // S2 — price range. The source of truth for price is filterAttributes.price,
-  // but the slider and the existing price_data.unit_amount are kept in sync, so
-  // we coalesce for a safe fallback until the data migration is complete.
+  // S2 — price range. price_data.unit_amount (cents) is the only price; the price sorts read the same field.
   if (state.minPrice != null) {
-    parts.push('coalesce(filterAttributes.price, price_data.unit_amount) >= $minCents');
+    parts.push('price_data.unit_amount >= $minCents');
     params.minCents = state.minPrice * 100;
   }
   if (state.maxPrice != null) {
-    parts.push('coalesce(filterAttributes.price, price_data.unit_amount) <= $maxCents');
+    parts.push('price_data.unit_amount <= $maxCents');
     params.maxCents = state.maxPrice * 100;
   }
 

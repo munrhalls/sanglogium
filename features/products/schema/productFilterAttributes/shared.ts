@@ -2,13 +2,6 @@ import { vocabFor } from "./vocab";
 
 export const sharedFields: any[] = [
         {
-          name: "price",
-          title: "Price",
-          type: "number",
-          description:
-            "Product price in cents; mirrors price_data.unit_amount for filter predicates.",
-        },
-        {
           name: "brand",
           title: "Brand",
           type: "array",
