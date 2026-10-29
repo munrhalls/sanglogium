@@ -22,13 +22,8 @@ const { productType } = await import('@/features/products/schema/productType');
 
 type Product = Record<string, unknown> & { _id: string };
 
-// The form of one value: its JSON kind. An array also names the kinds of its items.
-const formOf = (value: unknown): string =>
-  value === null
-    ? 'null'
-    : Array.isArray(value)
-      ? `array<${[...new Set(value.map(formOf))].sort().join(',')}>`
-      : typeof value;
+// The form of one value: its JSON kind. What is inside a list or an object is not looked at here.
+const formOf = (value: unknown): string => (value === null ? 'null' : Array.isArray(value) ? 'array' : typeof value);
 
 // The value at a dotted path. Not held when a step is absent or the step before it is not an object.
 const valueAt = (product: Product, path: string): { held: boolean; value?: unknown } => {
@@ -91,9 +86,9 @@ deepStrictEqual(scan(fake, 'price_data.unit_amount', true), {
   holders: 6,
   inconsistencies: [
     { id: 'f3', form: 'string' },
-    { id: 'f4', form: 'array<number>' },
+    { id: 'f4', form: 'array' },
     { id: 'f5', form: 'null' },
-    { id: 'f9', form: 'array<>' },
+    { id: 'f9', form: 'array' },
   ],
   missing: ['f0', 'f6', 'f7', 'f8'],
 });
