@@ -117,4 +117,5 @@ tests/product-filtering/out/
 
 # personal work journal
 _project/project-management/work-record/
+tests/products/nonPrimitiveOut/
 

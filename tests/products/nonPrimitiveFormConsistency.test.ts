@@ -1,9 +1,15 @@
 // Checks that every product holds the value at each path of a non-primitive
 // field in the same form. Human-run, reads only.
-// Phase 1: node --experimental-strip-types --import ./tools/alias-loader.mjs tests/products/nonPrimitiveFormConsistency.test.ts
+// Two phases: a proof on fake products, then a live run on all published products.
+// Run: node --env-file=/home/jan/work/sanglogium/.env.local --experimental-strip-types --import ./tools/alias-loader.mjs tests/products/nonPrimitiveFormConsistency.test.ts
+// The latest run replaces tests/products/nonPrimitiveOut/nonPrimitiveFormConsistency.txt.
 
 import { deepStrictEqual } from 'node:assert';
+import { mkdirSync, writeFileSync } from 'node:fs';
 import { registerHooks } from 'node:module';
+import { resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
+import { createClient } from '@sanity/client';
 
 registerHooks({
   resolve(specifier, context, nextResolve) {
@@ -159,3 +165,52 @@ const expected: Result[] = [
 
 deepStrictEqual(scan(fake), expected);
 console.log('proof on fake products: passed');
+
+// Phase 2: live run over every published product in the CMS. Reads only.
+const client = createClient({
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
+  apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-11-14',
+  useCdn: false,
+  perspective: 'raw',
+  token: process.env.SANITY_API_READ_TOKEN,
+});
+
+const docs: Product[] = await client.fetch('*[_type == "product"]');
+const published = docs.filter((d) => !d._id.startsWith('drafts.') && !d._id.startsWith('versions.'));
+const results = scan(published);
+
+const lines: string[] = [`products read: ${published.length} published (not published: ${docs.length - published.length})`];
+for (const r of results) {
+  lines.push('');
+  lines.push(`path: ${r.path}`);
+  lines.push(r.reference === null ? 'reference form: none, no product holds it' : `reference form: ${r.reference}`);
+  lines.push(`holders: ${r.holders}`);
+  lines.push(`inconsistencies: ${r.inconsistencies.length}`);
+  for (const e of r.inconsistencies) lines.push(`  ${e.id}  ${e.at}  ${e.form}`);
+  if (r.missing === null) {
+    lines.push('missing: not listed, the schema does not define this path');
+  } else {
+    lines.push(`missing: ${r.missing.length}`);
+    for (const e of r.missing) lines.push(`  ${e.id}  ${e.at}`);
+  }
+  if (r.empty.length > 0) {
+    lines.push(`empty lists: ${r.empty.length}`);
+    for (const e of r.empty) lines.push(`  ${e.id}  ${e.at}`);
+  }
+}
+const text = lines.join('\n') + '\n';
+mkdirSync('tests/products/nonPrimitiveOut', { recursive: true });
+writeFileSync('tests/products/nonPrimitiveOut/nonPrimitiveFormConsistency.txt', text);
+
+const withInconsistencies = results.filter((r) => r.inconsistencies.length > 0);
+const withMissing = results.filter((r) => r.missing !== null && r.missing.length > 0);
+const emptyTotal = results.reduce((n, r) => n + r.empty.length, 0);
+console.log(`products read: ${published.length} published (not published: ${docs.length - published.length})`);
+console.log(`paths scanned: ${results.length}`);
+console.log(`paths with inconsistencies: ${withInconsistencies.length}`);
+console.log(`paths with missing entries: ${withMissing.length}`);
+console.log(`empty lists: ${emptyTotal}`);
+for (const r of withInconsistencies.slice(0, 40)) console.log(`  ${r.path}  ${r.inconsistencies.length}`);
+if (withInconsistencies.length > 40) console.log(`... ${withInconsistencies.length - 40} more in the file`);
+console.log(`output: ${pathToFileURL(resolve('tests/products/nonPrimitiveOut/nonPrimitiveFormConsistency.txt')).href}`);
