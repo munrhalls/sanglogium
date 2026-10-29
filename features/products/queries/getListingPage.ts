@@ -12,6 +12,7 @@ import type { CatalogPorts } from '@/features/products/core/ports';
 import type { CategoryMetadata } from '@/features/products/core/types/productDataTypes';
 import type { Product } from '@/features/products/core/types/productTypes';
 import { CHUNK_SIZE } from '@/features/products/core/definitions/gridLayout';
+import { pageWindow } from '@/features/products/core/rules/pageWindow';
 
 const PER_PAGE = 24;
 
@@ -100,16 +101,13 @@ export async function getListingPage(ports: ListingPorts, input: {
         ? slug[0].split('-').map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
         : undefined;
 
-    const totalPages = Math.ceil(totalCount / PER_PAGE);
-    const effectivePage = totalPages > 0 ? Math.min(Math.max(1, page || 1), totalPages) : Math.max(1, page || 1);
-    const pageStart = (effectivePage - 1) * PER_PAGE;
+    const { totalPages, effectivePage, chunkOffsets } = pageWindow(totalCount, page, PER_PAGE);
 
     // Fire one chunk fetch per CHUNK_SIZE slice of the page, in parallel and
     // unawaited — each is streamed in independently via ChunkedProductGrid's
     // own Suspense boundaries.
-    const chunkPromises = Array.from(
-      { length: Math.ceil(PER_PAGE / CHUNK_SIZE) },
-      (_, i) => ports.catalog.getProductsChunk({ keys, offset: pageStart + i * CHUNK_SIZE, limit: CHUNK_SIZE, state, facetSet: facets.facetSet }),
+    const chunkPromises = chunkOffsets.map((offset) =>
+      ports.catalog.getProductsChunk({ keys, offset, limit: CHUNK_SIZE, state, facetSet: facets.facetSet }),
     );
 
     return {

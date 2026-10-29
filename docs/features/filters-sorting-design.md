@@ -4,16 +4,16 @@ Scope: the filter, sort and pagination flow, from the CMS to the shopper's scree
 
 ## Progress
 
-Next: prove 2.
+Next: apply the data migration (see 0). Chunk 2 waits for the owner to rule how the curated texts are stored. Chunks 6 to 8 need a way to render components in a test; none is merged.
 
 | # | chunk | side | proof |
 |---|---|---|---|
 | 0 | CMS data -> what filtering and sorting read | upstream | built 2026-10-29; 1 data rule open (see 0) |
 | 1 | picklist (CMS) + products data -> controls and options | backend | passed 2026-10-28 |
 | 2 | controls and options + curated texts (CMS) -> labelled controls and options | backend | none |
-| 3 | URL + labelled controls -> filter state | backend | none |
-| 4 | labelled controls + filter state -> counts and bounds | backend | none |
-| 5 | filter state + labelled controls -> the page's products and their total | backend | none |
+| 3 | URL + labelled controls -> filter state | backend | passed 2026-10-28 (brand names are checked in chunk 4) |
+| 4 | labelled controls + filter state -> counts and bounds | backend | passed 2026-10-28 |
+| 5 | filter state + labelled controls -> the page's products and their total | backend | passed 2026-10-28 |
 | 6 | counts and bounds -> sidebar and chips on screen | frontend | none |
 | 7 | sort and page state -> sort bar and page links on screen | frontend | none |
 | 8 | user input -> URL | frontend | none |
@@ -31,7 +31,9 @@ Not in this document yet: search results (they reuse chunks 1–4 through the fi
 
 - A proof runs one chunk alone on a small fake input in the real format, with alien content.
 - Its input classes come from the schema's type table and the live data, not from guessing. The proof names them.
+- It calls the code the page runs, never a copy.
 - The expected output is written by hand, not by the code.
+- A proof must be able to fail: break the code on purpose, the proof must fail, then restore it.
 - A chunk's proof input is the previous chunk's expected output.
 - Pixels are judged by an eye once.
 - Nothing else counts: no click-through, no mocks, no test per function.
@@ -108,7 +110,7 @@ In steps:
 | 2. An unknown key is ignored, a bad sort falls back to the default, a price that is not a whole number is none | `url/filterSortParams.ts` |
 | 3. A checkbox value that matches no option is dropped | `core/rules/sanitizeFilterState.ts`, `queries/getFilterFacets.ts` |
 | Temporary: brand values are checked later, against the counted brands, so this chunk is finished after chunk 4 | `features/products/queries/getListingPage.ts` |
-| Proof: not written. Classes: each control kind × (key absent, valid, junk), a bad sort, a bad price. Source: the parsers | not written |
+| Proof, passed 2026-10-28: a facet set in chunk 1's output format with one control of each kind (a checkbox with options, a checkbox without, a true/false control, a range, a checkbox whose kept option has capitals, a query-only one); three URLs: empty, valid, junk (bad sort, price that is not a whole number, a value that matches no option, an unknown key); the expected state written by hand | `tests/product-filtering/backend/urlToFilterState.test.ts` |
 
 ## 4. labelled controls + filter state -> counts and bounds
 
@@ -125,9 +127,9 @@ In steps:
 |---|---|
 | 1. A product counts for an option when it matches every other choice, so the shopper sees what the option would give | `core/rules/facetCounts.ts` |
 | 2. A range's bounds are never narrowed by the current choices, so its handle can always move back | `core/rules/facetCounts.ts` |
-| 3. The price span, and brand names from the products' brands | `core/rules/priceBounds.ts`, `core/rules/facetCounts.ts` |
+| 3. The price span, and brand names from the products' brands | `core/rules/facetCounts.ts` |
 | The result is `CatalogueFacets`, returned by | `queries/getFilterFacets.ts` |
-| Proof: not written. Classes: each control kind × (no choice, one choice, two choices). Source: the control kinds and the state | not written |
+| Proof, passed 2026-10-28: chunk 3's facet set and four fake products (stock by its fields, by a stored flag, a brand with no brand document, a range, a checkbox with capitals); three states in chunk 3's output format: no choice, one choice, several choices across a checkbox list, a true/false control, a range and the price; the expected counts, bounds and brand names written by hand | `tests/product-filtering/backend/countsAndBounds.test.ts` |
 
 ## 5. filter state + labelled controls -> the page's products and their total
 
@@ -144,8 +146,8 @@ In steps:
 |---|---|
 | 1. Price, in stock and one test per selected control narrow the products; the sort picks the order | `adapters/sanity/buildProductQuery.ts` |
 | 2. The total counts the products that pass | `features/products/adapters/sanity/getProductsByVfsKeys.ts` |
-| 3. A page past the end becomes the last page; the window is cut into chunks | `features/products/queries/getListingPage.ts`, `features/products/adapters/sanity/getProductsByVfsKeys.ts` |
-| Proof: not written. Classes: each control kind selected or not, each sort value, a page before, inside and past the end. Source: the state and the sort list | not written |
+| 3. A page that is not a whole number from 1 up is page 1; a page past the end becomes the last page; the window is cut into chunks | `features/products/core/rules/pageWindow.ts`, `features/products/queries/getListingPage.ts`, `features/products/adapters/sanity/getProductsByVfsKeys.ts` |
+| Proof, passed 2026-10-28: five fake products in the real format (a text stored as a list in one product, a stock flag against the stock fields, a list with a capital) and a sixth outside the route; the real count and chunk functions run with the fetch swapped for the in-memory GROQ engine `groq-js` (installed with `sanity`); chunk 3's facet set and states; every sort value, every control kind alone, several choices and an unknown key, each with its expected ids and total written by hand; a window of the ordered products; the page rule on a page before, inside, past the end and not a whole number | `tests/product-filtering/backend/stateToProducts.test.ts` |
 
 ## 6. counts and bounds -> sidebar and chips on screen
 
@@ -161,7 +163,7 @@ In steps:
 | step | file |
 |---|---|
 | 1. Each group is drawn under its heading | `ui/FilterSidebar.tsx`, `ui/MobileFilterSheet.tsx` |
-| 2. Checkbox list with counts (a zero count is greyed), on/off toggle, range slider over the full span | `ui/FilterControls.tsx`, `ui/FilterSection.tsx`, `ui/Checkbox.tsx`, `ui/DualRangeSlider.tsx`, `ui/ProgressiveFilterOptionList.tsx` |
+| 2. Checkbox list with counts (a zero count is greyed), on/off toggle, range slider over the full span | `ui/FilterControls.tsx`, `ui/FilterSection.tsx`, `ui/Checkbox.tsx`, `ui/DualRangeSlider.tsx`, `ui/ProgressiveFilterOptionList.tsx`, `core/rules/priceBounds.ts` (the span as slider bounds) |
 | 3. Each active choice also shows as a chip | `ui/ActiveFilterChips.tsx` |
 | Proof: not written. Render from a fixture `CatalogueFacets`, compare the text, look once. Classes: each control kind | not written |
 
