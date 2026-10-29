@@ -1,8 +1,8 @@
-// Field value form consistency: do all products that hold a top-level field hold its value in the same form?
+// Primitive form consistency: do all products that hold a top-level field hold its value in the same form?
 // Top-level fields only. Fields inside objects or lists, and what is inside a list or an object, are the next PR.
 // Human-run. Reads only. Phase 1 proves the scan on fake products; phase 2 runs it on the live data for one field.
 // Only the latest run is kept: tests/products/out/ is emptied before each live run.
-// node --env-file=/home/jan/work/sanglogium/.env.local --experimental-strip-types --import ./tools/alias-loader.mjs tests/products/fieldValueFormConsistency.test.ts <field>
+// node --env-file=/home/jan/work/sanglogium/.env.local --experimental-strip-types --import ./tools/alias-loader.mjs tests/products/primitiveFormConsistency.test.ts <field>
 //
 // `sanity` is swapped for a stub: productType.ts imports defineType and defineField from it, and the field lists are plain objects.
 import { createClient } from '@sanity/client';
@@ -130,8 +130,8 @@ const text = `${lines.join('\n')}\n`;
 
 rmSync('tests/products/out', { recursive: true, force: true });
 mkdirSync('tests/products/out', { recursive: true });
-writeFileSync('tests/products/out/fieldValueFormConsistency.txt', text);
+writeFileSync('tests/products/out/primitiveFormConsistency.txt', text);
 
 const shown = lines.slice(0, 40);
-console.log(shown.join('\n') + (lines.length > shown.length ? `\n... ${lines.length - shown.length} more lines in tests/products/out/fieldValueFormConsistency.txt` : ''));
+console.log(shown.join('\n') + (lines.length > shown.length ? `\n... ${lines.length - shown.length} more lines in tests/products/out/primitiveFormConsistency.txt` : ''));
 console.log(`fetched ${docs.length} documents, ${(JSON.stringify(docs).length / 1e6).toFixed(1)} MB, in ${fetchSeconds.toFixed(1)} s`);
