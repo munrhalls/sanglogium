@@ -82,12 +82,14 @@ const errors = []
 const seen = new Set()
 const after = new Map(hp.map((p) => [p._id, structuredClone(p.fa ?? {})]))
 const plan = []
+const unresolved = []
 for (const fill of fills) {
   const tag = `${fill.file} ${fill.name ?? fill.id}`
   const p = byId.get(fill.id)
   if (!p) { errors.push(`${tag}: not a headphones product id`); continue }
   if (seen.has(fill.id)) errors.push(`${tag}: appears in two fills`)
   seen.add(fill.id)
+  if (fill.unresolved) { unresolved.push(`${tag}: ${fill.unresolved}`); continue }
   const cells = Object.keys(fill.set ?? {})
   if (!cells.length) errors.push(`${tag}: empty set`)
   const fa = after.get(fill.id)
@@ -114,6 +116,7 @@ for (const { p, changes } of plan) {
   console.log(`\n${p.name}`)
   for (const c of changes) console.log(`  ${c.cell}: ${c.old === undefined ? '(missing)' : JSON.stringify(c.old)} -> ${JSON.stringify(c.v)}   ${c.url}`)
 }
+console.log(`\nunresolved by the executors: ${unresolved.length}${unresolved.map((e) => `\n  ${e}`).join('')}`)
 console.log(`\nfill errors: ${errors.length}${errors.map((e) => `\n  ${e}`).join('')}`)
 console.log(`headphones still unusable or contradicting after these fills: ${remaining.length}${remaining.map((e) => `\n  ${e}`).join('')}`)
 if (errors.length) { console.log('\nRefused: fix the fills first.'); process.exit(1) }
