@@ -1,0 +1,107 @@
+{
+  "task": "1a",
+  "fills": [
+    {
+      "id": "MrEMtYwMtrFDGWmRnQW6KX",
+      "name": "64 Audio U12t In-Ear Headphones",
+      "set": { "cableLengthM": 1.22 },
+      "sources": [{ "cell": "cableLengthM", "url": "https://headphones.com/blogs/reviews/64-audio-u12t-universal-iem-review", "quote": "48\" Detachable Premium Cable" }]
+    },
+    {
+      "id": "Agdc7UdudmikAzJtKWUVPW",
+      "name": "64 Audio U4s In-Ear Headphones",
+      "set": { "cableLengthM": 1.22 },
+      "sources": [{ "cell": "cableLengthM", "url": "https://baybloorradio.com/64audio-u4s/", "quote": "48\" Black Premium Cable" }]
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIBCE9om",
+      "name": "CrinEar Daybreak In-Ear Headphones",
+      "set": {},
+      "unresolvedCells": { "cableLengthM": "Maker page and retailers list cable material only; no length stated" }
+    },
+    {
+      "id": "Agdc7UdudmikAzJtKWUOut",
+      "name": "CrinEar Reference In-Ear Headphones",
+      "set": {},
+      "unresolvedCells": { "cableLengthM": "Maker page and retailers list cable material only; no length stated" }
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8jtEr",
+      "name": "Kinera Freya In-Ear Monitor (IEM) Earphone",
+      "set": { "cableLengthM": 1.2 },
+      "sources": [{ "cell": "cableLengthM", "url": "https://m.aoshida-audio.com/products/kinera-freya", "quote": "Cable length: 1.2m" }]
+    },
+    {
+      "id": "GPjMdcfFWZVrKyR2PB8uW2",
+      "name": "Moondrop Aria 2 IEMs",
+      "set": { "cableLengthM": 1.2 },
+      "sources": [{ "cell": "cableLengthM", "url": "https://ae-pic-a1.aliexpress-media.com/kf/Sbc866c94a5484d42a0c4734838ba592a1.pdf", "quote": "Cable Length: 1.2m (detachable, replaceable)" }]
+    },
+    {
+      "id": "DZc43yHr6ydfgE7zB44sHt",
+      "name": "Moondrop Blessing 3 In-Ear Monitor (IEM) Hybrid Earphones",
+      "set": { "cableLengthM": 1.2 },
+      "sources": [{ "cell": "cableLengthM", "url": "https://e-catalog.com/MOONDROP-BLESSING-3.htm", "quote": "Cable length 1.2 m" }]
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnTEgIK",
+      "name": "Moondrop Dark Saber In-Ear Headphones",
+      "set": {},
+      "unresolvedCells": { "cableLengthM": "Maker spec page lists no cable length; no major-retailer spec found" }
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8jrTr",
+      "name": "Moondrop Kadenz Flagship 10mm IEMs",
+      "set": { "cableLengthM": 1.2 },
+      "sources": [{ "cell": "cableLengthM", "url": "https://drhead.ae/product/moondrop_kadenz_grey/", "quote": "Cable length, m 1.2" }]
+    },
+    {
+      "id": "GPjMdcfFWZVrKyR2PB90Ze",
+      "name": "Moondrop May Dynamic Driver + Planar Magnetic Driver IEM (In-Ear Monitor)",
+      "set": { "cableLengthM": 1.2 },
+      "sources": [{ "cell": "cableLengthM", "url": "https://drhead.ae/product/moondrop_may_dsp_silver/", "quote": "Cable length, m 1.2" }]
+    },
+    {
+      "id": "GPjMdcfFWZVrKyR2PB8yx8",
+      "name": "Moondrop Rays Gaming IEMs",
+      "set": { "cableLengthM": 1.2 },
+      "sources": [{ "cell": "cableLengthM", "url": "https://drhead.ae/product/moondrop_rays/", "quote": "Cable length, m 1.2" }]
+    },
+    {
+      "id": "GPjMdcfFWZVrKyR2PB8xPu",
+      "name": "Moondrop Starfield II In-Ear Monitor (IEM)",
+      "set": { "cableLengthM": 1.2 },
+      "sources": [{ "cell": "cableLengthM", "url": "https://drhead.ae/product/moondrop_starfield_2/", "quote": "Cable length, m 1.2" }]
+    },
+    {
+      "id": "DZc43yHr6ydfgE7zB44oFY",
+      "name": "Moondrop Variations Tribrid IEM",
+      "set": { "cableLengthM": 1.2 },
+      "sources": [{ "cell": "cableLengthM", "url": "https://fiximaudio.com/products/moondrop-variations-in-ear-monitor", "quote": "Cable Length 120cm" }]
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjjqHIM",
+      "name": "Symphonium Audio Crimson In-Ear Headphones",
+      "set": { "cableLengthM": 1.2 },
+      "sources": [{ "cell": "cableLengthM", "url": "https://www.symphoniumaudio.com/products/novaron", "quote": "Length 1.2m" }]
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIBCF9jM",
+      "name": "Symphonium Audio Titan In-Ear Headphones",
+      "set": {},
+      "unresolvedCells": { "cableLengthM": "Maker and bundled Neptune cable pages give no cable length" }
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIBCEZtk",
+      "name": "Thieaudio Hype 4 In-Ear Headphones",
+      "set": { "cableLengthM": 1.2 },
+      "sources": [{ "cell": "cableLengthM", "url": "https://www.headphonesty.com/2024/03/thieaudio-hype-4-review/", "quote": "1.2m cable" }]
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnQWhwn",
+      "name": "Sennheiser IE 600 In-Ear Headphones",
+      "set": { "cableLengthM": 1.25 },
+      "sources": [{ "cell": "cableLengthM", "url": "https://global.sennheiser-hearing.com/products/ie-600", "quote": "Cable length 125 cm" }]
+    }
+  ]
+}
