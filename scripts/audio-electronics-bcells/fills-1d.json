@@ -1,0 +1,196 @@
+{
+  "task": "1d",
+  "fills": [
+    {
+      "id": "MrEMtYwMtrFDGWmRnN3Yzy",
+      "name": "FiiO BTR11 Portable DAC and Headphone Amp",
+      "set": {
+        "dsdSupport": "none",
+        "hiResCertification": [],
+        "dacChipsetFamily": [],
+        "streamingPlatformSupport": [],
+        "networkConnection": [],
+        "voiceAssistant": [],
+        "multiroomSupport": false
+      },
+      "sources": [
+        { "cell": "dsdSupport", "url": "https://www.fiio.com/btr11_parameters" },
+        { "cell": "hiResCertification", "url": "https://www.fiio.com/btr11_parameters" },
+        { "cell": "dacChipsetFamily", "url": "https://www.fiio.com/btr11_parameters" },
+        { "cell": "streamingPlatformSupport", "url": "https://www.fiio.com/btr11_parameters" },
+        { "cell": "networkConnection", "url": "https://www.fiio.com/btr11_parameters" },
+        { "cell": "voiceAssistant", "url": "https://www.fiio.com/btr11_parameters" },
+        { "cell": "multiroomSupport", "url": "https://www.fiio.com/btr11_parameters" }
+      ],
+      "unresolvedCells": {
+        "maxSampleRateBitDepth": "FiiO spec page lists only Bluetooth codecs SBC/AAC/LDAC ('LDAC up to 96k'); no PCM bit depth stated, USB is charge-only."
+      }
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjgp8X6",
+      "name": "FiiO BTR17 Bluetooth DAC And Headphone Amp",
+      "set": {
+        "streamingPlatformSupport": [],
+        "networkConnection": [],
+        "voiceAssistant": [],
+        "multiroomSupport": false
+      },
+      "sources": [
+        { "cell": "streamingPlatformSupport", "url": "https://www.fiio.com/btr17_parameters" },
+        { "cell": "networkConnection", "url": "https://www.fiio.com/btr17_parameters" },
+        { "cell": "voiceAssistant", "url": "https://www.fiio.com/btr17_parameters" },
+        { "cell": "multiroomSupport", "url": "https://www.fiio.com/btr17_parameters" }
+      ]
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjgpOZX",
+      "name": "FiiO BTR7 Portable DAC and Headphone Amp",
+      "set": {
+        "streamingPlatformSupport": [],
+        "networkConnection": [],
+        "voiceAssistant": [],
+        "multiroomSupport": false
+      },
+      "sources": [
+        { "cell": "streamingPlatformSupport", "url": "https://www.fiio.com/btr7_parameters" },
+        { "cell": "networkConnection", "url": "https://www.fiio.com/btr7_parameters" },
+        { "cell": "voiceAssistant", "url": "https://www.fiio.com/btr7_parameters" },
+        { "cell": "multiroomSupport", "url": "https://www.fiio.com/btr7_parameters" }
+      ]
+    },
+    {
+      "id": "DZc43yHr6ydfgE7zB41PVg",
+      "name": "FiiO K11 R2R Balanced Desktop DAC/Amp",
+      "set": {
+        "hiResCertification": [],
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "hiResCertification", "url": "https://fiio.com/k11r2r_parameters" },
+        { "cell": "streamingPlatformSupport", "url": "https://fiio.com/k11r2r_parameters" },
+        { "cell": "networkConnection", "url": "https://fiio.com/k11r2r_parameters" }
+      ]
+    },
+    {
+      "id": "DZc43yHr6ydfgE7zB41Wo6",
+      "name": "FiiO K13 R2R Desktop DAC/Amp",
+      "set": {
+        "hiResCertification": ["mqa"],
+        "streamingPlatformSupport": [],
+        "networkConnection": [],
+        "voiceAssistant": [],
+        "multiroomSupport": false
+      },
+      "sources": [
+        { "cell": "hiResCertification", "url": "https://www.fiio.com/k13r2r_parameters" },
+        { "cell": "streamingPlatformSupport", "url": "https://www.fiio.com/k13r2r_parameters" },
+        { "cell": "networkConnection", "url": "https://www.fiio.com/k13r2r_parameters" },
+        { "cell": "voiceAssistant", "url": "https://www.fiio.com/k13r2r_parameters" },
+        { "cell": "multiroomSupport", "url": "https://www.fiio.com/k13r2r_parameters" }
+      ]
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8gRUZ",
+      "name": "FiiO K13 R2R Desktop DAC/Amp (Apos Certified)",
+      "set": {
+        "hiResCertification": ["mqa"],
+        "streamingPlatformSupport": [],
+        "networkConnection": [],
+        "voiceAssistant": [],
+        "multiroomSupport": false
+      },
+      "sources": [
+        { "cell": "hiResCertification", "url": "https://www.fiio.com/k13r2r_parameters" },
+        { "cell": "streamingPlatformSupport", "url": "https://www.fiio.com/k13r2r_parameters" },
+        { "cell": "networkConnection", "url": "https://www.fiio.com/k13r2r_parameters" },
+        { "cell": "voiceAssistant", "url": "https://www.fiio.com/k13r2r_parameters" },
+        { "cell": "multiroomSupport", "url": "https://www.fiio.com/k13r2r_parameters" }
+      ]
+    },
+    {
+      "id": "DZc43yHr6ydfgE7zB41fx8",
+      "name": "FiiO K17 Desktop DAC/Amp",
+      "set": {
+        "voiceAssistant": [],
+        "multiroomSupport": true
+      },
+      "sources": [
+        { "cell": "voiceAssistant", "url": "https://www.fiio.com/k17_parameters" },
+        { "cell": "multiroomSupport", "url": "https://www.fiio.com/k17_parameters" }
+      ]
+    },
+    {
+      "id": "DZc43yHr6ydfgE7zB40v3a",
+      "name": "FiiO K7 Balanced Headphone DAC/Amp",
+      "set": {
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "streamingPlatformSupport", "url": "https://www.fiio.com/k7_parameters" },
+        { "cell": "networkConnection", "url": "https://www.fiio.com/k7_parameters" }
+      ]
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8l4SB",
+      "name": "FiiO KA11 Dongle DAC/Headphone Amplifier",
+      "set": {
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "streamingPlatformSupport", "url": "https://www.fiio.com/ka11_parameters" },
+        { "cell": "networkConnection", "url": "https://www.fiio.com/ka11_parameters" }
+      ]
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnKwOVD",
+      "name": "FiiO M15S Portable Music Player",
+      "set": {
+        "voiceAssistant": [],
+        "multiroomSupport": true
+      },
+      "sources": [
+        { "cell": "voiceAssistant", "url": "https://www.fiio.com/M15s_parameters" },
+        { "cell": "multiroomSupport", "url": "https://www.fiio.com/M15s_parameters" }
+      ]
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjexfWP",
+      "name": "FiiO M17 Portable Music Player",
+      "set": {
+        "voiceAssistant": [],
+        "multiroomSupport": true
+      },
+      "sources": [
+        { "cell": "voiceAssistant", "url": "https://fiio.com/m17_parameters" },
+        { "cell": "multiroomSupport", "url": "https://fiio.com/m17_parameters" }
+      ]
+    },
+    {
+      "id": "GPjMdcfFWZVrKyR2PB9DqI",
+      "name": "FiiO M21 Portable High-Res Lossless Music Player",
+      "set": {
+        "voiceAssistant": [],
+        "multiroomSupport": true
+      },
+      "sources": [
+        { "cell": "voiceAssistant", "url": "https://fiio.com/m21_parameters" },
+        { "cell": "multiroomSupport", "url": "https://fiio.com/m21_parameters" }
+      ]
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIBAMKFk",
+      "name": "FiiO R7 DAC and Headphone Amp",
+      "set": {
+        "voiceAssistant": [],
+        "multiroomSupport": true
+      },
+      "sources": [
+        { "cell": "voiceAssistant", "url": "https://www.fiio.com/r7_parameters" },
+        { "cell": "multiroomSupport", "url": "https://www.fiio.com/r7_parameters" }
+      ]
+    }
+  ]
+}
