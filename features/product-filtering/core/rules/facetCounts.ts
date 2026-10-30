@@ -49,9 +49,6 @@ function getPriceCents(p: RawProduct): number | null {
 }
 
 function isInStock(p: RawProduct): boolean {
-  if (p.filterAttributes?.inStock != null) {
-    return Boolean(p.filterAttributes.inStock);
-  }
   const stock = p.stock ?? 0;
   const reserved = p.reservedStock ?? 0;
   return stock - reserved > 0;
@@ -206,10 +203,7 @@ export function computeCatalogueFacets(
     const baseProducts = products.filter((p) => productMatchesState(p, state, facetSet, facet.id));
 
     if (facet.control === 'boolean') {
-      // In-stock is special: it must mirror buildProductQuery's coalesce of
-      // filterAttributes.inStock and the legacy stock arithmetic. Counting only
-      // products with an explicit `filterAttributes.inStock == true` would show
-      // zero until every product is migrated (sang-logium-3rv.7).
+      // In stock is special: it counts by the stock fields, the same as buildProductQuery.
       booleans[facet.id] = baseProducts.filter(
         facet.id === 'inStock' ? isInStock : (p) =>
           valuesForFacet(p, facet).some((v) => v === 'true'),
