@@ -128,7 +128,7 @@ In steps:
 | 2. A range's bounds are never narrowed by the current choices, so its handle can always move back | `core/rules/facetCounts.ts` |
 | 3. The price span, and brand names from the products' brands | `core/rules/facetCounts.ts` |
 | The result is `CatalogueFacets`, returned by | `queries/getFilterFacets.ts` |
-| Proof, passed 2026-10-28: chunk 3's facet set and four fake products (stock by its fields, by a stored flag, a brand with no brand document, a range, a checkbox with capitals); three states in chunk 3's output format: no choice, one choice, several choices across a checkbox list, a true/false control, a range and the price; the expected counts, bounds and brand names written by hand | `tests/product-filtering/backend/countsAndBounds.test.ts` |
+| Proof, passed 2026-10-28: chunk 3's facet set and four fake products (stock by its fields, a product with no brand document, a range, a checkbox with capitals); three states in chunk 3's output format: no choice, one choice, several choices across a checkbox list, a true/false control, a range and the price; the expected counts, bounds and brand names written by hand | `tests/product-filtering/backend/countsAndBounds.test.ts` |
 
 ## 5. filter state + labelled controls -> the page's products and their total
 
@@ -146,7 +146,7 @@ In steps:
 | 1. Price, in stock and one test per selected control narrow the products; the sort picks the order | `adapters/sanity/buildProductQuery.ts` |
 | 2. The total counts the products that pass | `features/products/adapters/sanity/getProductsByVfsKeys.ts` |
 | 3. A page that is not a whole number from 1 up is page 1; a page past the end becomes the last page; the window is cut into chunks | `features/products/core/rules/pageWindow.ts`, `features/products/queries/getListingPage.ts`, `features/products/adapters/sanity/getProductsByVfsKeys.ts` |
-| Proof, passed 2026-10-28: five fake products in the real format (a text stored as a list in one product, a stock flag against the stock fields, a list with a capital) and a sixth outside the route; the real count and chunk functions run with the fetch swapped for the in-memory GROQ engine `groq-js` (installed with `sanity`); chunk 3's facet set and states; every sort value, every control kind alone, several choices and an unknown key, each with its expected ids and total written by hand; a window of the ordered products; the page rule on a page before, inside, past the end and not a whole number | `tests/product-filtering/backend/stateToProducts.test.ts` |
+| Proof, passed 2026-10-28: five fake products in the real format (a text stored as a list in one product, a product with no brand document, a list with a capital) and a sixth outside the route; the real count and chunk functions run with the fetch swapped for the in-memory GROQ engine `groq-js` (installed with `sanity`); chunk 3's facet set and states; every sort value, every control kind alone, several choices and an unknown key, each with its expected ids and total written by hand; a window of the ordered products; the page rule on a page before, inside, past the end and not a whole number | `tests/product-filtering/backend/stateToProducts.test.ts` |
 
 ## 6. counts and bounds -> sidebar and chips on screen
 
