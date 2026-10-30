@@ -1,0 +1,28 @@
+{
+  "fills": [
+    {
+      "id": "n10eAegrGspodtsQvy3fgK",
+      "name": "Topping L30 II",
+      "set": { "deviceType": "headphone-amplifier" },
+      "sources": [
+        {
+          "cell": "deviceType",
+          "url": "https://dl.topping.audio/usermanual/l30ii.pdf",
+          "quote": "Thank you for purchasing linear headphone amplifier L30 II"
+        }
+      ]
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8huOv",
+      "name": "iFi Zen CAN 3",
+      "set": { "deviceType": "headphone-amplifier" },
+      "sources": [
+        {
+          "cell": "deviceType",
+          "url": "https://ifi-audio.com/products/zen-can-3/",
+          "quote": "Our new headphone amplifier, with its sleek design and unparalleled performance"
+        }
+      ]
+    }
+  ]
+}
