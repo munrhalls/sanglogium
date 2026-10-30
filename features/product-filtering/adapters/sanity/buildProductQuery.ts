@@ -91,7 +91,7 @@ function addCheckboxPredicate(parts: string[], params: Record<string, unknown>, 
   // sometimes stored as a bare scalar on an individual product, and an
   // 'enum' (scalar) field is sometimes stored as a one-element array
   // (confirmed live on accessories: compatibleProductType, conductorMaterial,
-  // material, balancedUnbalanced, brand all had real products silently
+  // material, balancedUnbalanced all had real products silently
   // excluded by a type-driven predicate). GROQ degrades both shape
   // mismatches to null rather than erroring -- lower() on an array, and
   // indexing [...] on a scalar/null, both return null -- so checking BOTH
@@ -154,6 +154,16 @@ export function buildProductQuery(state: ProductQueryState, facetSet: FacetSet =
         const paramName = `${facet.id}MaxParam`;
         parts.push(`${fieldPath(facet)} <= $${paramName}`);
         params[paramName] = maxVal;
+      }
+      continue;
+    }
+
+    // Brand is read from the product's brand document, not from a stored copy.
+    if (facet.id === 'brand') {
+      const brands = selectedValues(state, 'brand');
+      if (brands.length > 0) {
+        parts.push('lower(brand->slug.current) in $brandParam');
+        params.brandParam = brands;
       }
       continue;
     }
