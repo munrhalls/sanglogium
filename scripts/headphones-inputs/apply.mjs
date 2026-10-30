@@ -2,6 +2,7 @@
 // Delete this folder once it has run (git history is the archive).
 // Default is a DRY RUN (reads only). --apply writes: backup first, ONE transaction, each patch guarded by the document's revision, then a re-read that checks the result.
 // --apply is refused while any headphones product still has an unusable rule input or a cell that holds a value where the rule says "doesn't apply" (the step 4 done condition).
+// A product the executors marked "unresolved" is reported and does not block: it needs a decision that is not a fill.
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -107,8 +108,9 @@ for (const fill of fills) {
   }
   plan.push({ p, fill, changes })
 }
-const remaining = []
-for (const p of hp) for (const m of problemsOf(after.get(p._id))) remaining.push(`${p.name}: ${m}`)
+const unresolvedIds = new Set(fills.filter((x) => x.unresolved).map((x) => x.id))
+const remaining = [], remainingAccepted = []
+for (const p of hp) for (const m of problemsOf(after.get(p._id))) (unresolvedIds.has(p._id) ? remainingAccepted : remaining).push(`${p.name}: ${m}`)
 
 // 4. report
 console.log(`${apply ? 'APPLY' : 'DRY RUN'}: ${files.length} fills file(s), ${fills.length} products, ${plan.reduce((n, x) => n + x.changes.length, 0)} cells`)
@@ -118,6 +120,7 @@ for (const { p, changes } of plan) {
 }
 console.log(`\nunresolved by the executors: ${unresolved.length}${unresolved.map((e) => `\n  ${e}`).join('')}`)
 console.log(`\nfill errors: ${errors.length}${errors.map((e) => `\n  ${e}`).join('')}`)
+console.log(`left on purpose (marked unresolved by the executors, reported above): ${remainingAccepted.length}${remainingAccepted.map((e) => `\n  ${e}`).join('')}`)
 console.log(`headphones still unusable or contradicting after these fills: ${remaining.length}${remaining.map((e) => `\n  ${e}`).join('')}`)
 if (errors.length) { console.log('\nRefused: fix the fills first.'); process.exit(1) }
 if (!apply) { console.log(`\nNothing was written. To apply, run the same command with --apply (backup goes to ${BACKUP}).`); process.exit(0) }
@@ -152,6 +155,6 @@ for (const { p, changes } of plan) {
 }
 for (const p of before.products) if (!seen.has(p._id) && JSON.stringify(p.fa) !== JSON.stringify(reById.get(p._id)?.fa)) bad.push(`${p._id}: untouched product changed`)
 if (re.products.length !== before.products.length) bad.push('product count changed')
-const left = re.products.filter((p) => byId.has(p._id)).flatMap((p) => problemsOf(p.fa ?? {}))
+const left = re.products.filter((p) => byId.has(p._id) && !unresolvedIds.has(p._id)).flatMap((p) => problemsOf(p.fa ?? {}))
 if (left.length) bad.push(`${left.length} unusable inputs or contradictions remain`)
 console.log(bad.length ? `VERIFY FAILED:\n  ${bad.join('\n  ')}` : `verified: ${plan.length} products filled; every other filterAttributes value identical; 0 unusable inputs, 0 contradictions; ${re.products.length} products.`)
