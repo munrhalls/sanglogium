@@ -1,0 +1,284 @@
+{
+  "task": "1d",
+  "fills": [
+    {
+      "id": "MrEMtYwMtrFDGWmRnGS7NA",
+      "name": "Campfire Audio Flight | Curated Eartip Pack",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "compatibility": "Maker page (campfireaudio.com/products/flight) and retailers say it fits universal-fit earphones; no specific models named."
+      }
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnGSBlG",
+      "name": "Campfire Audio Marshmallows Isolating Foam Eartips | Replacement Eartips",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "compatibility": "Maker/retailer pages (bloomaudio.com, listenup.com) say for Campfire earphones and most standard nozzles; no specific models named."
+      }
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIB6Fxyi",
+      "name": "Campfire Audio Silicone Eartips | Replacement Eartips",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "compatibility": "Maker/retailer pages (bloomaudio.com, baybloorradio.com) describe a generic replacement tip with ~5mm bore; no specific models named."
+      }
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIB8e38u",
+      "name": "Comply T100 Foam Ear Tips",
+      "set": {
+        "compatibility": [
+          "Altec Lansing inMotion 616",
+          "Altec Lansing inMotion 716",
+          "Creative Aurvana 2",
+          "Etymotic Research Ety-8 Bluetooth Earphones",
+          "Etymotic Research ER-4 microPro 4B",
+          "Etymotic Research ER-4 microPro 4S",
+          "Etymotic Research ER-4 microPro 4P",
+          "Etymotic Research HF-2",
+          "Etymotic Research HF-3",
+          "Etymotic Research HF-5",
+          "Etymotic Research MC-3",
+          "Etymotic Research MC-5",
+          "FutureSonics Atrio M3",
+          "FutureSonics Atrio M5",
+          "FutureSonics Atrio M8",
+          "FutureSonics Atrio M9",
+          "Grado iGi",
+          "Harman Kardon EP-710",
+          "Harman Kardon EP-730",
+          "Jays D-Jays",
+          "Jays Q-Jays",
+          "Jays S-Jays",
+          "Klipsch Custom 1",
+          "Klipsch Custom 2",
+          "Klipsch Custom 3",
+          "Klipsch Image S4/S4i",
+          "Klipsch Image X5",
+          "Klipsch Image X10/X10i",
+          "Microsonic Epic JC",
+          "Microsonic Epic X",
+          "Phiaton PS-200",
+          "Philips SHE-9850",
+          "Shure SE315",
+          "Shure SE425",
+          "Shure SE535",
+          "Shure SE110",
+          "Shure SE115",
+          "Shure SE210",
+          "Shure SE310",
+          "Shure SE420",
+          "Shure SE530",
+          "Shure E500",
+          "Shure E3c",
+          "Shure E4c",
+          "Shure E5c",
+          "Shure E3g",
+          "Shure E4g",
+          "Shure i3c",
+          "Shure i4c",
+          "Shure SCL3",
+          "Shure SCL4",
+          "Shure SCL5",
+          "Sleek Audio SA-6",
+          "Westone UM-1",
+          "Westone UM-2",
+          "Westone UM-3X",
+          "Westone 1",
+          "Westone 2",
+          "Westone 3",
+          "Westone 4"
+        ]
+      },
+      "sources": [
+        { "cell": "compatibility", "url": "https://www.audiomagic.eu/en/headphones/in-ear-headphones/accessories/comply-t100-2" }
+      ]
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIBCC8aa",
+      "name": "Dekoni Audio Elite Sheepskin Ear Pads for Focal",
+      "set": {
+        "compatibility": [
+          "Focal Utopia",
+          "Focal Stellia",
+          "Focal Clear",
+          "Focal Clear MG",
+          "Focal Celestee",
+          "Focal Radiance",
+          "Focal Elear",
+          "Focal Elegia",
+          "Focal Elex"
+        ]
+      },
+      "sources": [
+        { "cell": "compatibility", "url": "https://dekoniaudio.com/products/ear-pads-for-focal-headphones-stellia-radiante-utopia-clear-clearmg-celestee" }
+      ]
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnQSjcO",
+      "name": "Dekoni Audio The Mercury Premium Memory Foam Isolation Earphone Tips, Black, 4.9mm, 3-Pack",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "compatibility": "Dekoni product page lists it as universal fit for IEMs/earphones with a 4.9mm nozzle; no specific models named."
+      }
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjbDXfF",
+      "name": "Earpiece Cleaning Tool",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "partType": "A wire-loop/brush cleaning tool (sensaphonics.com); not ear-tips or ear-pads-cushions.",
+        "compatibility": "Sensaphonics page names no compatible models; it is a generic cleaning tool."
+      }
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnGT3k3",
+      "name": "Eletech Baroque | Luxury HiFi Eartips for IEMs",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "compatibility": "Maker page (elementechnology.com/products/baroque) gives sizes only; universal IEM tip, no specific models named."
+      }
+    },
+    {
+      "id": "hrPfqTtkIIoluttvs2PJ0R",
+      "name": "Eletech Baroque Stage | Luxury HiFi Eartips for IEMs",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "compatibility": "Maker page (elementechnology.com/products/baroque-stage-audiophile-hi-fi-eartips) gives sizes only; no specific models named."
+      }
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnGSzbV",
+      "name": "Eletech Baroque TWS | Luxury HiFi Eartips for TWS",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "compatibility": "Maker page (elementechnology.com/products/baroque-tws) and Bloom Audio say compatible with the majority of TWS earbuds; no specific models named."
+      }
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnGT5JE",
+      "name": "Final Audio FUSION-G | Triple Hybrid Structure Ear Tips",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "compatibility": "Maker page (final-inc.com/en/products/fusion-g-jp) says compatible with wired and wireless earphones of each company; no specific models named."
+      }
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjb0hIg",
+      "name": "Final Audio Type E | Silicone Ear Tips",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "compatibility": "Fits earphones with 4.5-5.5mm nozzles plus adapter for thinner nozzles; maker/retailers name brands broadly, no specific model list."
+      }
+    },
+    {
+      "id": "fisKNZUL2oYuqkoQMV1Bkp",
+      "name": "Memory Foam IEM Tips Black - Samsung Galaxy Buds Pro",
+      "set": {
+        "partType": "ear-tips",
+        "compatibility": ["Samsung Galaxy Buds Pro (1st Gen)"]
+      },
+      "sources": [
+        { "cell": "partType", "url": "https://dekoniaudio.com/products/dekoni-bulletz-memory-foam-iem-tips-black-samsung-galaxy-buds" },
+        { "cell": "compatibility", "url": "https://dekoniaudio.com/products/dekoni-bulletz-memory-foam-iem-tips-black-samsung-galaxy-buds" }
+      ]
+    },
+    {
+      "id": "FfAIr0MG25AzkX2gQHNAYN",
+      "name": "Memory Foam Isolation Earphone Tips Black - Gemini 3mm",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "compatibility": "Dekoni product page lists it as universal fit for IEMs/earphones with a 3mm nozzle; no specific models named."
+      }
+    },
+    {
+      "id": "0IQ2UjkdXJma4iOcjodDq5",
+      "name": "Memory Foam Isolation Earphone Tips Black 4.9mm Mercury",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "compatibility": "Dekoni product page lists it as universal fit for IEMs/earphones with a 4.9mm nozzle; no specific models named."
+      }
+    },
+    {
+      "id": "GjMaRFaHMVTsBoyxtAc5GA",
+      "name": "Premium Memory Foam Isolation Earphone Tips Black - True Wireless",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "compatibility": "Dekoni product page says universal fit for many popular true wireless earbuds (Sennheiser Momentum, Fostex TM2 given only as examples); no definitive model list."
+      }
+    },
+    {
+      "id": "h2HZXAdWspjApNB9KwbQYY",
+      "name": "Standard Size Oval Replacement Earpads for Studio Monitor Headphones and Communication Headsets - Audio Technica, Sony, and More",
+      "set": {
+        "compatibility": [
+          "Audio Technica ATHM50X",
+          "Audio Technica ATHM40X",
+          "Audio Technica ATHM30X",
+          "Audio Technica ATHM20X",
+          "Audio Technica ATH-MSR7",
+          "Sony MDR-7506",
+          "Sony MDR-V6",
+          "Sony MDR-M1",
+          "Sony CDR900ST",
+          "Clear-Com CC-400",
+          "Clear-Com CC-300"
+        ]
+      },
+      "sources": [
+        { "cell": "compatibility", "url": "https://dekoniaudio.com/products/standard-size-oval-ear-pads-for-studio-monitor-headphones-and-communication-headsets-audio-technica-sony-and-more" }
+      ]
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnGr7Rk",
+      "name": "Steel Needle",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "partType": "A steel cleaning/replacement needle for the IEM VAC; not ear-tips or ear-pads-cushions."
+      }
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjb1MSV",
+      "name": "Symbio W Eartips | Hybrid Silcone/Foam Eartips",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "compatibility": "Maker page (symbiow.com) says fits most IEM nozzles on the market (4.5-6mm stem); no specific models named."
+      }
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnGrApe",
+      "name": "VAC Pro Filter and O-Ring Kit",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "partType": "A filter and O-ring replacement kit for the VAC Pro vacuum; not ear-tips or ear-pads-cushions."
+      }
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnGr9GT",
+      "name": "VAC Pro Needle Kit",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "partType": "A needle kit for the VAC Pro vacuum; not ear-tips or ear-pads-cushions."
+      }
+    }
+  ]
+}
