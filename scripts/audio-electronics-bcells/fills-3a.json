@@ -1,0 +1,219 @@
+{
+  "task": "3a",
+  "fills": [
+    {
+      "id": "DZc43yHr6ydfgE7zB45LQY",
+      "name": "Cayin N3Ultra Triple Timbre Digital Audio Player",
+      "set": {
+        "maxSampleRateBitDepth": "32-bit/768kHz",
+        "dsdSupport": "dsd256-plus",
+        "hiResCertification": ["mqa"],
+        "dacChipsetFamily": ["akm"],
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "maxSampleRateBitDepth", "url": "https://headfonics.com/cayin-n3ultra-review/4/" },
+        { "cell": "dsdSupport", "url": "https://headfonics.com/cayin-n3ultra-review/4/" },
+        { "cell": "hiResCertification", "url": "https://en.manual.ly/cayin/cayin-n3ultra/manual" },
+        { "cell": "dacChipsetFamily", "url": "https://addictedtoaudio.com.au/collections/daps-digital-audio-players/products/cayin-n3ultra-vacuum-tube-digital-audio-player" },
+        { "cell": "streamingPlatformSupport", "url": "https://staging.minidisc.com.au/cayin-n3ultra-vaccum-tube-digital-audio-player" },
+        { "cell": "networkConnection", "url": "https://staging.minidisc.com.au/cayin-n3ultra-vaccum-tube-digital-audio-player" }
+      ]
+    },
+    {
+      "id": "GPjMdcfFWZVrKyR2PBA93S",
+      "name": "Cayin RU3 Portable USB DAC/Amp",
+      "set": {
+        "hiResCertification": [],
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "hiResCertification", "url": "https://bloomaudio.com/products/cayin-ru3" },
+        { "cell": "streamingPlatformSupport", "url": "https://bloomaudio.com/products/cayin-ru3" },
+        { "cell": "networkConnection", "url": "https://bloomaudio.com/products/cayin-ru3" }
+      ]
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8lIgj",
+      "name": "Cayin RU7 1-Bit Resistor Network Portable DAC",
+      "set": {
+        "maxSampleRateBitDepth": "32-bit/384kHz",
+        "hiResCertification": [],
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "maxSampleRateBitDepth", "url": "https://headfonics.com/cayin-ru7-review/" },
+        { "cell": "hiResCertification", "url": "https://www.headfonia.com/cayin-ru7-review/" },
+        { "cell": "streamingPlatformSupport", "url": "https://www.headfonia.com/cayin-ru7-review/" },
+        { "cell": "networkConnection", "url": "https://www.headfonia.com/cayin-ru7-review/" }
+      ]
+    },
+    {
+      "id": "GPjMdcfFWZVrKyR2PBA7rO",
+      "name": "Cayin RU9 Vacuum Tube Portable DAC/Amp",
+      "set": {
+        "maxSampleRateBitDepth": "32-bit/768kHz",
+        "dsdSupport": "dsd256-plus",
+        "hiResCertification": [],
+        "streamingPlatformSupport": [],
+        "networkConnection": [],
+        "voiceAssistant": [],
+        "multiroomSupport": false
+      },
+      "sources": [
+        { "cell": "maxSampleRateBitDepth", "url": "https://www.laytonaudio.ca/en/product/portable-audio/5503-ru9-portable-vacuum-tube-dac-headphone-amp.html" },
+        { "cell": "dsdSupport", "url": "https://www.laytonaudio.ca/en/product/portable-audio/5503-ru9-portable-vacuum-tube-dac-headphone-amp.html" },
+        { "cell": "hiResCertification", "url": "https://www.laytonaudio.ca/en/product/portable-audio/5503-ru9-portable-vacuum-tube-dac-headphone-amp.html" },
+        { "cell": "streamingPlatformSupport", "url": "https://www.laytonaudio.ca/en/product/portable-audio/5503-ru9-portable-vacuum-tube-dac-headphone-amp.html" },
+        { "cell": "networkConnection", "url": "https://www.laytonaudio.ca/en/product/portable-audio/5503-ru9-portable-vacuum-tube-dac-headphone-amp.html" },
+        { "cell": "voiceAssistant", "url": "https://www.laytonaudio.ca/en/product/portable-audio/5503-ru9-portable-vacuum-tube-dac-headphone-amp.html" },
+        { "cell": "multiroomSupport", "url": "https://www.laytonaudio.ca/en/product/portable-audio/5503-ru9-portable-vacuum-tube-dac-headphone-amp.html" }
+      ]
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjkThBz",
+      "name": "Eversolo DAC-Z8 Desktop DAC and Amp",
+      "set": {
+        "streamingPlatformSupport": [],
+        "networkConnection": [],
+        "voiceAssistant": [],
+        "multiroomSupport": false
+      },
+      "sources": [
+        { "cell": "streamingPlatformSupport", "url": "https://eversolo.eu/dac-z8/" },
+        { "cell": "networkConnection", "url": "https://eversolo.eu/dac-z8/" },
+        { "cell": "voiceAssistant", "url": "https://eversolo.eu/dac-z8/" },
+        { "cell": "multiroomSupport", "url": "https://eversolo.eu/dac-z8/" }
+      ]
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnN8E5N",
+      "name": "Eversolo DMP-A6 Master Edition Streamer and DAC",
+      "set": {
+        "voiceAssistant": [],
+        "multiroomSupport": true
+      },
+      "sources": [
+        { "cell": "voiceAssistant", "url": "https://www.eversolo.co.uk/product-range/p/eversolo-dmp-a6" },
+        { "cell": "multiroomSupport", "url": "https://www.eversolo.co.uk/product-range/p/eversolo-dmp-a6" }
+      ]
+    },
+    {
+      "id": "n10eAegrGspodtsQw134Ce",
+      "name": "Eversolo DMP-A6 Streamer and DAC",
+      "set": {
+        "voiceAssistant": [],
+        "multiroomSupport": true
+      },
+      "sources": [
+        { "cell": "voiceAssistant", "url": "https://futureaudiophile.com/eversolo-dmp-a6-streaming-dac-and-music-server-reviewed/" },
+        { "cell": "multiroomSupport", "url": "https://futureaudiophile.com/eversolo-dmp-a6-streaming-dac-and-music-server-reviewed/" }
+      ]
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjgtLZ7",
+      "name": "Eversolo DMP-A6 Streamer and DAC Gen 2",
+      "set": {
+        "voiceAssistant": [],
+        "multiroomSupport": true
+      },
+      "sources": [
+        { "cell": "voiceAssistant", "url": "https://www.eversolo.co.uk/product-range/p/eversolo-dmp-a6" },
+        { "cell": "multiroomSupport", "url": "https://www.eversolo.co.uk/product-range/p/eversolo-dmp-a6" }
+      ]
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnN82fv",
+      "name": "Eversolo DMP-A8 All-In-One Streamer, DAC, Preamp",
+      "set": {
+        "voiceAssistant": [],
+        "multiroomSupport": true
+      },
+      "sources": [
+        { "cell": "voiceAssistant", "url": "https://www.eversolo.com/Product/spec/model/DMP-A8/target/uXoirEESmeVKKmVViAFMcQ==.html" },
+        { "cell": "multiroomSupport", "url": "https://www.eversolo.com/Product/spec/model/DMP-A8/target/uXoirEESmeVKKmVViAFMcQ==.html" }
+      ]
+    },
+    {
+      "id": "k27n1AQuIbSr5iozG1vJ1L",
+      "name": "Matrix Audio Element i Network Streamer, DAC/Amp",
+      "set": {
+        "voiceAssistant": [],
+        "multiroomSupport": true
+      },
+      "sources": [
+        { "cell": "voiceAssistant", "url": "https://www.matrix-digi.com/pdf/element_i_Manual_EN.pdf" },
+        { "cell": "multiroomSupport", "url": "https://www.matrix-digi.com/news/81" }
+      ]
+    },
+    {
+      "id": "n10eAegrGspodtsQw13Qpt",
+      "name": "Matrix Audio Element X - Open Box",
+      "set": {
+        "voiceAssistant": [],
+        "multiroomSupport": true
+      },
+      "sources": [
+        { "cell": "voiceAssistant", "url": "https://www.matrix-digi.com/pdf/element_X_Manual_EN.pdf" },
+        { "cell": "multiroomSupport", "url": "https://www.matrix-digi.com/news/81" }
+      ]
+    },
+    {
+      "id": "DZc43yHr6ydfgE7zB40rkU",
+      "name": "Matrix Audio MS-1 Flagship Music Streamer",
+      "set": {
+        "voiceAssistant": [],
+        "multiroomSupport": true
+      },
+      "sources": [
+        { "cell": "voiceAssistant", "url": "https://www.matrix-digi.com/pdf/MS-1_User_Manual_EN.pdf" },
+        { "cell": "multiroomSupport", "url": "https://absouluteav.com/products/matrix-audio-ms-1-music-streamer" }
+      ]
+    },
+    {
+      "id": "n10eAegrGspodtsQvy3lt9",
+      "name": "Matrix Audio X-Sabre 3 Desktop DAC",
+      "set": {
+        "voiceAssistant": [],
+        "multiroomSupport": true
+      },
+      "sources": [
+        { "cell": "voiceAssistant", "url": "https://www.matrix-digi.com/product/14/X-SABRE_3" },
+        { "cell": "multiroomSupport", "url": "https://www.cma.audio/en/detail/index/sArticle/2639" }
+      ]
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8fa0r",
+      "name": "Matrix NT-1 Network Transport",
+      "set": {
+        "hiResCertification": ["mqa"],
+        "dacChipsetFamily": [],
+        "voiceAssistant": [],
+        "multiroomSupport": true
+      },
+      "sources": [
+        { "cell": "hiResCertification", "url": "https://alleliteaudio.com/products/matrix-audio-nt-1" },
+        { "cell": "dacChipsetFamily", "url": "https://alleliteaudio.com/products/matrix-audio-nt-1" },
+        { "cell": "voiceAssistant", "url": "https://www.matrix-digi.com/product/116/NT-1" },
+        { "cell": "multiroomSupport", "url": "https://callensaudiolabs.ch/en/products/matrix-nt-1" }
+      ]
+    },
+    {
+      "id": "GPjMdcfFWZVrKyR2PB7h5O",
+      "name": "Matrix TS-1 All-in-One Streamer/ Pre-Amplifier/ Headphone Amplifier",
+      "set": {
+        "hiResCertification": ["mqa"],
+        "voiceAssistant": [],
+        "multiroomSupport": true
+      },
+      "sources": [
+        { "cell": "hiResCertification", "url": "https://alleliteaudio.com/products/matrix-audio-ts-1" },
+        { "cell": "voiceAssistant", "url": "https://www.matrix-digi.com/product/121/TS-1" },
+        { "cell": "multiroomSupport", "url": "https://www.matrix-digi.com/news/814" }
+      ]
+    }
+  ]
+}
