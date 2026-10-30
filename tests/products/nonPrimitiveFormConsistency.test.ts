@@ -45,7 +45,6 @@ registerHooks({
   },
 });
 const { productType } = await import('@/features/products/schema/productType');
-const { sharedFields } = await import('@/features/products/schema/productFilterAttributes/shared');
 const { headphonesFields } = await import('@/features/products/schema/productFilterAttributes/headphones');
 const { audioElectronicsFields } = await import('@/features/products/schema/productFilterAttributes/audioElectronics');
 const { accessoriesFields } = await import('@/features/products/schema/productFilterAttributes/accessories');
@@ -688,9 +687,9 @@ const OUT = 'tests/products/nonPrimitiveOut/nonPrimitiveFormConsistency.txt';
 const liveSchema: SchemaInput = {
   productFields: (productType as any).fields,
   filterGroups: {
-    headphones: [...sharedFields, ...headphonesFields],
-    'audio-electronics': [...sharedFields, ...audioElectronicsFields],
-    accessories: [...sharedFields, ...accessoriesFields],
+    headphones: [...headphonesFields],
+    'audio-electronics': [...audioElectronicsFields],
+    accessories: [...accessoriesFields],
   },
 };
 

@@ -6,10 +6,8 @@
 // Keyed by the filter param/facet id each schema field serves.
 
 export const FILTER_VOCAB: Record<string, string[]> = {
-  brand: ['<brand-slug>'],
   wearingStyle: ['over-ear', 'on-ear', 'in-ear'],
   acousticDesign: ['open-back', 'closed-back', 'semi-open'],
-  fitType: ['universal', 'custom'],
   connectivity: ['wired', 'wireless', 'true-wireless', 'hybrid'],
   soundSignature: ['Neutral', 'Warm', 'Bright/Analytical', 'Dark', 'V-Shaped', 'Basshead', 'Mid-Forward', 'Harman-target-like'],
   anc: ['anc', 'passive', 'none'],

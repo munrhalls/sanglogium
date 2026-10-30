@@ -3,14 +3,6 @@ import { vocabFor } from "./vocab";
 
 export const headphonesFields: any[] = [
         {
-          name: "productCategory",
-          title: "Product category / type",
-          type: "array",
-          of: [{ type: "string" }],
-          description:
-            "Shopper-facing sub-type within the headphones slice. Distinct from the catalogue-routing filterAttributes.category.",
-        },
-        {
           name: "wearingStyle",
           title: "Wearing style",
           type: "array",
@@ -22,13 +14,6 @@ export const headphonesFields: any[] = [
           type: "array",
           of: [{ type: "string", options: { list: vocabFor("acousticDesign") } }],
           description: "Renamed from backDesign 2026-09-13.",
-        },
-        {
-          name: "fitType",
-          title: "Fit type (IEM)",
-          type: "string",
-          options: { list: vocabFor("fitType") },
-          description: "Null/unset when the product is not an IEM.",
         },
         {
           name: "connectivity",
