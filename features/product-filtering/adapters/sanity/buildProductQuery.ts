@@ -124,15 +124,14 @@ export function buildProductQuery(state: ProductQueryState, facetSet: FacetSet =
     params.maxCents = state.maxPrice * 100;
   }
 
-  // In-stock and other boolean facets read from filterAttributes. Availability
-  // falls back to the legacy stock arithmetic for products not yet migrated.
+  // In stock is computed from the stock fields; no stored flag decides it.
   if (state.inStock) {
-    parts.push('coalesce(filterAttributes.inStock, stock - reservedStock > 0) == true');
+    parts.push('stock - reservedStock > 0');
   }
 
   // A predicate for every selected narrowing facet of this route's set.
   for (const facet of [...facetSet.facets, ...facetSet.queryOnly]) {
-    if (facet.id === 'inStock') continue; // handled above — it keeps its stock-arithmetic fallback.
+    if (facet.id === 'inStock') continue; // handled above
 
     if (facet.control === 'boolean') {
       if (state[facet.id as keyof ProductQueryState] === true) {
