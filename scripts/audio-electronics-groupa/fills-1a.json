@@ -1,0 +1,125 @@
+{
+  "task": "1a",
+  "fills": [
+    {
+      "id": "k27n1AQuIbSr5iozG1vD4O",
+      "name": "iFi Audio Diablo-X DAC and Headphone Amplifier",
+      "set": { "rackMountable19": false },
+      "sources": [
+        { "cell": "rackMountable19", "url": "https://ifi-audio.com/products/idsd-diablo-x" }
+      ]
+    },
+    {
+      "id": "ZuUKzmkqDyQwdcwhxlJlJu",
+      "name": "iFi Audio GO bar Kensei Portable Hi-Res USB DAC and Preamp",
+      "set": { "rackMountable19": false },
+      "sources": [
+        { "cell": "rackMountable19", "url": "https://ifi-audio.com/products/go-bar-kensei" }
+      ]
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjgsvqe",
+      "name": "iFi Audio GO Bar Portable USB DAC & Headphone Amplifier",
+      "set": { "rackMountable19": false },
+      "sources": [
+        { "cell": "rackMountable19", "url": "https://ifi-audio.com/products/go-bar" }
+      ]
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIBACuKc",
+      "name": "iFi Audio GO Blu Portable Bluetooth DAC/Amp",
+      "set": { "rackMountable19": false },
+      "sources": [
+        { "cell": "rackMountable19", "url": "https://ifi-audio.com/products/go-blu" }
+      ]
+    },
+    {
+      "id": "dLGDVDmEEI2lV8CArAcay4",
+      "name": "iFi Audio GO Link Max Portable Amp & DAC",
+      "set": { "rackMountable19": false },
+      "sources": [
+        { "cell": "rackMountable19", "url": "https://ifi-audio.com/products/go-link-max" }
+      ]
+    },
+    {
+      "id": "DZc43yHr6ydfgE7zB3znRV",
+      "name": "iFi Audio Go Pod Max Portable IEM Bluetooth DAC/AMP (Unit Only)",
+      "set": { "rackMountable19": false },
+      "sources": [
+        { "cell": "rackMountable19", "url": "https://ifi-audio.com/products/go-pod-max" }
+      ]
+    },
+    {
+      "id": "dLGDVDmEEI2lV8CArAcd7E",
+      "name": "iFi Audio Hip-dac2 Portable USB DAC and Headphone Amp",
+      "set": { "rackMountable19": false },
+      "sources": [
+        { "cell": "rackMountable19", "url": "https://ifi-audio.com/products/hip-dac2" }
+      ]
+    },
+    {
+      "id": "ZuUKzmkqDyQwdcwhxl77C3",
+      "name": "iFi Audio Hip-dac2 Portable USB DAC and Headphone Amp with Soft Protective Case",
+      "set": { "rackMountable19": false },
+      "sources": [
+        { "cell": "rackMountable19", "url": "https://ifi-audio.com/products/hip-dac2" }
+      ]
+    },
+    {
+      "id": "ZuUKzmkqDyQwdcwhxl7Puy",
+      "name": "iFi Audio iCan Phantom Analog Headphone Amplifier",
+      "set": { "rackMountable19": false },
+      "sources": [
+        { "cell": "rackMountable19", "url": "https://ifi-audio.com/products/ican-phantom" }
+      ]
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnRJcsz",
+      "name": "iFi Audio iCAN Phantom Headphone Amplifier and Energizer",
+      "set": { "rackMountable19": false },
+      "sources": [
+        { "cell": "rackMountable19", "url": "https://ifi-audio.com/products/ican-phantom" }
+      ]
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIBCgrcW",
+      "name": "iFi Audio iCAN Phantom Headphone Amplifier and Energizer - Open Box",
+      "set": { "rackMountable19": false },
+      "sources": [
+        { "cell": "rackMountable19", "url": "https://ifi-audio.com/products/ican-phantom" }
+      ]
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIBCgFZU",
+      "name": "iFi Audio iDSD NEO",
+      "set": { "rackMountable19": false },
+      "sources": [
+        { "cell": "rackMountable19", "url": "https://downloads.ifi-audio.com/wp-content/uploads/2020/11/Neo-iDSD-manual-Ver1.1.pdf" }
+      ]
+    },
+    {
+      "id": "Y7l1IhzX2fnyiano4ipzcN",
+      "name": "iFi Audio iDSD Valkyrie Portable Amp & DAC",
+      "set": { "rackMountable19": false },
+      "sources": [
+        { "cell": "rackMountable19", "url": "https://ifi-audio.com/products/idsd-valkyrie" }
+      ]
+    },
+    {
+      "id": "dLGDVDmEEI2lV8CArAcfBk",
+      "name": "iFi Audio NEO iDSD Desktop USB DAC/Headphone Amp with Bluetooth",
+      "set": { "rackMountable19": false },
+      "sources": [
+        { "cell": "rackMountable19", "url": "https://downloads.ifi-audio.com/wp-content/uploads/2020/11/Neo-iDSD-manual-Ver1.1.pdf" }
+      ]
+    },
+    {
+      "id": "moXlkADK7m1DHgGwWwET3O",
+      "name": "iFi Audio Pro iCAN Signature Headphone Amplifier",
+      "set": { "rackMountable19": false },
+      "sources": [
+        { "cell": "rackMountable19", "url": "https://ifi-audio.com/products/pro-ican-signature" }
+      ]
+    }
+  ]
+}
