@@ -7,7 +7,6 @@
 
 export const FILTER_VOCAB: Record<string, string[]> = {
   brand: ['<brand-slug>'],
-  category: ['headphones', 'audio-electronics', 'accessories'],
   wearingStyle: ['over-ear', 'on-ear', 'in-ear'],
   acousticDesign: ['open-back', 'closed-back', 'semi-open'],
   fitType: ['universal', 'custom'],
