@@ -1,0 +1,199 @@
+{
+  "task": "1c",
+  "fills": [
+    {
+      "id": "n10eAegrGspodtsQvy4P4a",
+      "name": "Topping A50 III Headphone Amplifier",
+      "set": {
+        "amplification": "solid-state",
+        "outputs": ["headphone-jack"]
+      },
+      "sources": [
+        { "cell": "amplification", "url": "https://apos.audio/products/topping-a50-iii-desktop-headphone-amp" },
+        { "cell": "outputs", "url": "https://apos.audio/products/topping-a50-iii-desktop-headphone-amp" }
+      ]
+    },
+    {
+      "id": "DZc43yHr6ydfgE7zB42mdu",
+      "name": "TOPPING A70 Pro Fully Balanced Headphone Amplifier",
+      "set": {
+        "amplification": "solid-state",
+        "outputs": ["headphone-jack", "pre-out-rca", "pre-out-xlr"]
+      },
+      "sources": [
+        { "cell": "amplification", "url": "https://www.topping.store/products/topping-a70-pro-headphone-amp-preamp" },
+        { "cell": "outputs", "url": "https://dl.topping.audio/usermanual/a70p_en.pdf" }
+      ]
+    },
+    {
+      "id": "GPjMdcfFWZVrKyR2PB71sA",
+      "name": "TOPPING A90 Discrete Headphone Amp",
+      "set": {
+        "amplification": "solid-state",
+        "outputs": ["headphone-jack", "pre-out-rca", "pre-out-xlr"]
+      },
+      "sources": [
+        { "cell": "amplification", "url": "https://apos.audio/products/topping-a90-headphone-amp" },
+        { "cell": "outputs", "url": "https://apos.audio/products/topping-a90-headphone-amp" }
+      ]
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8fdhP",
+      "name": "TOPPING D10s DAC (Digital-to-Analog Converter)",
+      "set": {
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "streamingPlatformSupport", "url": "https://apos.audio/products/topping-d10s-dac" },
+        { "cell": "networkConnection", "url": "https://apos.audio/products/topping-d10s-dac" }
+      ]
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnN8n4N",
+      "name": "Topping D50 III DAC",
+      "set": {
+        "streamingPlatformSupport": [],
+        "networkConnection": [],
+        "voiceAssistant": [],
+        "multiroomSupport": false
+      },
+      "sources": [
+        { "cell": "streamingPlatformSupport", "url": "https://apos.audio/products/topping-d50-iii-desktop-dac" },
+        { "cell": "networkConnection", "url": "https://apos.audio/products/topping-d50-iii-desktop-dac" },
+        { "cell": "voiceAssistant", "url": "https://apos.audio/products/topping-d50-iii-desktop-dac" },
+        { "cell": "multiroomSupport", "url": "https://apos.audio/products/topping-d50-iii-desktop-dac" }
+      ]
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIBAGWYs",
+      "name": "Topping D70 Pro DAC",
+      "set": {
+        "streamingPlatformSupport": [],
+        "networkConnection": [],
+        "voiceAssistant": [],
+        "multiroomSupport": false
+      },
+      "sources": [
+        { "cell": "streamingPlatformSupport", "url": "https://dl.topping.audio/usermanual/d70p_s_en.pdf" },
+        { "cell": "networkConnection", "url": "https://dl.topping.audio/usermanual/d70p_s_en.pdf" },
+        { "cell": "voiceAssistant", "url": "https://dl.topping.audio/usermanual/d70p_s_en.pdf" },
+        { "cell": "multiroomSupport", "url": "https://dl.topping.audio/usermanual/d70p_s_en.pdf" }
+      ]
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIBAGqx8",
+      "name": "Topping DX3 Pro+ Desktop DAC & Headphone Amplifier",
+      "set": {
+        "streamingPlatformSupport": [],
+        "networkConnection": [],
+        "voiceAssistant": [],
+        "multiroomSupport": false
+      },
+      "sources": [
+        { "cell": "streamingPlatformSupport", "url": "https://apos.audio/products/topping-dx3-pro-plus-bluetooth-dac-amp" },
+        { "cell": "networkConnection", "url": "https://apos.audio/products/topping-dx3-pro-plus-bluetooth-dac-amp" },
+        { "cell": "voiceAssistant", "url": "https://apos.audio/products/topping-dx3-pro-plus-bluetooth-dac-amp" },
+        { "cell": "multiroomSupport", "url": "https://apos.audio/products/topping-dx3-pro-plus-bluetooth-dac-amp" }
+      ]
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnN9RG0",
+      "name": "Topping DX9 DAC, Headphone Amplifier and Pre-Amp",
+      "set": {
+        "dacChipsetFamily": ["akm"],
+        "streamingPlatformSupport": [],
+        "networkConnection": [],
+        "voiceAssistant": [],
+        "multiroomSupport": false
+      },
+      "sources": [
+        { "cell": "dacChipsetFamily", "url": "https://bloomaudio.com/products/topping-dx9" },
+        { "cell": "streamingPlatformSupport", "url": "https://bloomaudio.com/products/topping-dx9" },
+        { "cell": "networkConnection", "url": "https://bloomaudio.com/products/topping-dx9" },
+        { "cell": "voiceAssistant", "url": "https://bloomaudio.com/products/topping-dx9" },
+        { "cell": "multiroomSupport", "url": "https://bloomaudio.com/products/topping-dx9" }
+      ]
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnN8f2p",
+      "name": "Topping E50 Desktop Digital to Analog Convertor (DAC)",
+      "set": {
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "streamingPlatformSupport", "url": "https://apos.audio/products/topping-e50-dac-digital-to-analog-convertor" },
+        { "cell": "networkConnection", "url": "https://apos.audio/products/topping-e50-dac-digital-to-analog-convertor" }
+      ]
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8ffSP",
+      "name": "TOPPING E70 VELVET AK4499EX Desktop DAC (Digital-to-Analog-Convertor)",
+      "set": {
+        "streamingPlatformSupport": [],
+        "networkConnection": [],
+        "voiceAssistant": [],
+        "multiroomSupport": false
+      },
+      "sources": [
+        { "cell": "streamingPlatformSupport", "url": "https://apos.audio/products/topping-e70-velvet-desktop-dac-digital-to-analog-convertor" },
+        { "cell": "networkConnection", "url": "https://apos.audio/products/topping-e70-velvet-desktop-dac-digital-to-analog-convertor" },
+        { "cell": "voiceAssistant", "url": "https://apos.audio/products/topping-e70-velvet-desktop-dac-digital-to-analog-convertor" },
+        { "cell": "multiroomSupport", "url": "https://apos.audio/products/topping-e70-velvet-desktop-dac-digital-to-analog-convertor" }
+      ]
+    },
+    {
+      "id": "k27n1AQuIbSr5iozG1vTDy",
+      "name": "Topping G5",
+      "set": {
+        "streamingPlatformSupport": [],
+        "networkConnection": [],
+        "voiceAssistant": [],
+        "multiroomSupport": false
+      },
+      "sources": [
+        { "cell": "streamingPlatformSupport", "url": "https://www.topping.store/products/topping-g5-portable-nfca-headphone-amplifier-dac" },
+        { "cell": "networkConnection", "url": "https://www.topping.store/products/topping-g5-portable-nfca-headphone-amplifier-dac" },
+        { "cell": "voiceAssistant", "url": "https://www.topping.store/products/topping-g5-portable-nfca-headphone-amplifier-dac" },
+        { "cell": "multiroomSupport", "url": "https://www.topping.store/products/topping-g5-portable-nfca-headphone-amplifier-dac" }
+      ]
+    },
+    {
+      "id": "n10eAegrGspodtsQvy3fgK",
+      "name": "Topping L30 II",
+      "set": {
+        "amplification": "solid-state",
+        "outputs": ["headphone-jack", "pre-out-rca"]
+      },
+      "sources": [
+        { "cell": "amplification", "url": "https://apos.audio/products/topping-l30-ii-headphone-amp" },
+        { "cell": "outputs", "url": "https://apos.audio/products/topping-l30-ii-headphone-amp" }
+      ]
+    },
+    {
+      "id": "moXlkADK7m1DHgGwWwEdEz",
+      "name": "Topping L50 Desktop Headphone Amplifier - Open Box",
+      "set": {
+        "amplification": "solid-state",
+        "outputs": ["headphone-jack", "pre-out-rca"]
+      },
+      "sources": [
+        { "cell": "amplification", "url": "https://apos.audio/products/topping-l50-headphone-amp" },
+        { "cell": "outputs", "url": "https://manuals.plus/topping/l50-linear-headphone-amplifier-manual" }
+      ]
+    },
+    {
+      "id": "DZc43yHr6ydfgE7zB42o6O",
+      "name": "TOPPING L50 Headphone Amp",
+      "set": {
+        "amplification": "solid-state",
+        "outputs": ["headphone-jack", "pre-out-rca"]
+      },
+      "sources": [
+        { "cell": "amplification", "url": "https://apos.audio/products/topping-l50-headphone-amp" },
+        { "cell": "outputs", "url": "https://manuals.plus/topping/l50-linear-headphone-amplifier-manual" }
+      ]
+    }
+  ]
+}
