@@ -67,6 +67,7 @@ export const accessoriesFields: any[] = [
           title: "Balanced / unbalanced",
           type: "array",
           of: [{ type: "string", options: { list: ["balanced", "unbalanced"] } }],
+          description: "Meaningful only for analog cables (cableFunction headphone-cable or interconnect-rca-xlr). Empty for a digital-only cable.",
           domain: ["cables-interconnects"],
         },
         {
@@ -121,6 +122,7 @@ export const accessoriesFields: any[] = [
                   "connector-adapter",
                   "standalone-phono-preamp",
                   "usb-dac-dongle",
+                  "usb-noise-filter",
                 ],
               },
             },
