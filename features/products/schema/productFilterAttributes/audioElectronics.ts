@@ -217,45 +217,15 @@ export const audioElectronicsFields: any[] = [
           domainField: "deviceConnectivity",
         },
         {
-          name: "finishColor",
-          title: "Finish / color",
-          type: "array",
-          of: [{ type: "string" }],
-        },
-        {
           name: "rackMountable19",
           title: "Rack-mountable (19\")",
           type: "boolean",
-        },
-        {
-          name: "countryOfManufacture",
-          title: "Country of manufacture",
-          type: "string",
-        },
-        {
-          name: "customerRating",
-          title: "Customer rating (min stars)",
-          type: "number",
-          description: "Store-computed from review aggregate; not individually sourced.",
         },
         {
           name: "condition",
           title: "Condition / stock type",
           type: "string",
           options: { list: vocabFor("condition") },
-        },
-        {
-          name: "dealsDiscount",
-          title: "Deals / discount",
-          type: "string",
-          options: { list: ["none", "sale", "clearance"] },
-          description: "Store-operational; not individually sourced.",
-        },
-        {
-          name: "newArrival",
-          title: "New arrival",
-          type: "boolean",
-          description: "Store-operational; not individually sourced.",
         },
         {
           name: "deviceType",
