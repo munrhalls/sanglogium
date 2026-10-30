@@ -16,7 +16,8 @@
 //                                        (text, number, true/false, list, object)
 //   form differs from the schema         a stored form other than the one the schema declares
 //   path the schema does not declare     a value on a path the schema does not declare for this scope
-//   value outside the option list        text not in the schema's option list, or the same word with other capitals
+//   value outside the option list        text not in the schema's option list; in filterAttributes only, also the same word with other capitals
+//                                        (a facet groups by exact text; the non-filter fields are display text, so capitals are not checked there)
 //   required field absent                non-filter fields only: the schema requires the field and the product has no key
 // A missing key is clean (except a required field). This checks form, not truth: a wrong but well-formed value passes.
 
@@ -340,7 +341,8 @@ function classify(
     if (vocab) {
       const off = strings.filter((s) => !vocab.includes(s.value as string));
       if (off.length) put(f.offList, path, 'outside the option list', off.map((s) => entry(s, ` value=${s.value}`)));
-    } else {
+    } else if (mode === 'filter') {
+      // a facet groups by exact text, so two spellings of one word are two options; the non-filter fields are display text
       const spellings = new Map<string, Set<string>>();
       for (const s of strings) {
         const lower = (s.value as string).toLowerCase();
@@ -442,6 +444,7 @@ function renderScope(title: string, f: Findings, limit: number): string[] {
 // Fake fields and products in the real format with alien content. The expected values are written by hand.
 // Slices: headphones p01 p02 p03 p09, audio-electronics p04 p05 p09, accessories p06 p07 p10; p08 is in none, p09 in two.
 // Each kind of inconsistency appears at least once; the draft must be ignored; the products are not in id order.
+// Capitals: mat (p06 Brass, p10 brass) is flagged in filterAttributes; the labels a (p01) and A (p10) are one word with other capitals on a non-filter field and must not be flagged.
 const img = (ref: string) => ({ _type: 'image', asset: { _type: 'reference', _ref: ref } });
 const fakeSchema: SchemaInput = {
   productFields: [
@@ -511,7 +514,7 @@ const fakeSnapshot: Snapshot = {
       catalogueLocationKeys: ['c-hp-1'],
       filterAttributes: { tags: [], cups: ['closed', 'Closed'], ohms: 32, bat: { on: 6 }, fx: 1 },
     },
-    { _id: 'p10', label: 'j', cost: { amount: 90, unit: 'zz' }, cover: img('i9'), catalogueLocationKeys: ['c-ac-1'], filterAttributes: { tags: ['r'], len: 2, mat: 'brass' } },
+    { _id: 'p10', label: 'A', cost: { amount: 90, unit: 'zz' }, cover: img('i9'), catalogueLocationKeys: ['c-ac-1'], filterAttributes: { tags: ['r'], len: 2, mat: 'brass' } },
     {
       _id: 'p01',
       label: 'a',
