@@ -1,0 +1,177 @@
+{
+  "task": "2b",
+  "fills": [
+    {
+      "id": "k27n1AQuIbSr5iozG1vPcd",
+      "name": "Burson Audio Composer 3X Performance DAC",
+      "set": {
+        "maxSampleRateBitDepth": "32-bit/768kHz",
+        "hiResCertification": [],
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "maxSampleRateBitDepth", "url": "https://addictedtoaudio.co.nz/products/burson-audio-composer-3x-performance-dac" },
+        { "cell": "hiResCertification", "url": "https://addictedtoaudio.co.nz/products/burson-audio-composer-3x-performance-dac" },
+        { "cell": "streamingPlatformSupport", "url": "https://addictedtoaudio.co.nz/products/burson-audio-composer-3x-performance-dac" },
+        { "cell": "networkConnection", "url": "https://addictedtoaudio.co.nz/products/burson-audio-composer-3x-performance-dac" }
+      ]
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIBCfbSC",
+      "name": "Burson Audio Composer 3X Performance DAC - Open Box",
+      "set": {
+        "maxSampleRateBitDepth": "32-bit/768kHz",
+        "hiResCertification": [],
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "maxSampleRateBitDepth", "url": "https://addictedtoaudio.co.nz/products/burson-audio-composer-3x-performance-dac" },
+        { "cell": "hiResCertification", "url": "https://addictedtoaudio.co.nz/products/burson-audio-composer-3x-performance-dac" },
+        { "cell": "streamingPlatformSupport", "url": "https://addictedtoaudio.co.nz/products/burson-audio-composer-3x-performance-dac" },
+        { "cell": "networkConnection", "url": "https://addictedtoaudio.co.nz/products/burson-audio-composer-3x-performance-dac" }
+      ]
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjkTGp4",
+      "name": "Burson Audio Conductor 3 GT",
+      "set": {
+        "hiResCertification": [],
+        "dacChipsetFamily": ["ess-sabre"],
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "hiResCertification", "url": "https://hifiheaven.net/product/burson-audio-conductor-3-gt-grand-tourer-single-ended-usb-dac-headphone-amp-preamp/" },
+        { "cell": "dacChipsetFamily", "url": "https://hifiheaven.net/product/burson-audio-conductor-3-gt-grand-tourer-single-ended-usb-dac-headphone-amp-preamp/" },
+        { "cell": "streamingPlatformSupport", "url": "https://hifiheaven.net/product/burson-audio-conductor-3-gt-grand-tourer-single-ended-usb-dac-headphone-amp-preamp/" },
+        { "cell": "networkConnection", "url": "https://hifiheaven.net/product/burson-audio-conductor-3-gt-grand-tourer-single-ended-usb-dac-headphone-amp-preamp/" }
+      ]
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjkT8mA",
+      "name": "Burson Audio Conductor 3x Grand Tourer Desktop DAC & Amp",
+      "set": {
+        "hiResCertification": [],
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "hiResCertification", "url": "https://www.audiophonics.fr/en/dac-with-volume/burson-audio-conductor-3x-gt-dac-2x-es9038-class-a-headphone-amplifier-10w-bluetooth-50-32bit-768khz-dsd512-p-16446.html" },
+        { "cell": "streamingPlatformSupport", "url": "https://www.audiophonics.fr/en/dac-with-volume/burson-audio-conductor-3x-gt-dac-2x-es9038-class-a-headphone-amplifier-10w-bluetooth-50-32bit-768khz-dsd512-p-16446.html" },
+        { "cell": "networkConnection", "url": "https://www.audiophonics.fr/en/dac-with-volume/burson-audio-conductor-3x-gt-dac-2x-es9038-class-a-headphone-amplifier-10w-bluetooth-50-32bit-768khz-dsd512-p-16446.html" }
+      ]
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjkTAjW",
+      "name": "Burson Audio Conductor 3x Performance - Open Box",
+      "set": {
+        "maxSampleRateBitDepth": "32-bit/768kHz",
+        "hiResCertification": [],
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "maxSampleRateBitDepth", "url": "https://addictedtoaudio.com.au/products/burson-audio-conductor-3x-performance-dac-headphone-amplifier" },
+        { "cell": "hiResCertification", "url": "https://addictedtoaudio.com.au/products/burson-audio-conductor-3x-performance-dac-headphone-amplifier" },
+        { "cell": "streamingPlatformSupport", "url": "https://addictedtoaudio.com.au/products/burson-audio-conductor-3x-performance-dac-headphone-amplifier" },
+        { "cell": "networkConnection", "url": "https://addictedtoaudio.com.au/products/burson-audio-conductor-3x-performance-dac-headphone-amplifier" }
+      ]
+    },
+    {
+      "id": "k27n1AQuIbSr5iozG1vJMz",
+      "name": "Burson Audio Funk Amplifier - Open Box",
+      "set": {
+        "channelCount": ["2.0"],
+        "phonoStageBuiltIn": "none",
+        "trigger12v": false
+      },
+      "sources": [
+        { "cell": "channelCount", "url": "https://bursonaudio.com/products/funk/" },
+        { "cell": "phonoStageBuiltIn", "url": "https://bursonaudio.com/products/funk/" },
+        { "cell": "trigger12v", "url": "https://bursonaudio.com/products/funk/" }
+      ]
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIBAHGKa",
+      "name": "Burson Audio Playmate 2",
+      "set": {
+        "maxSampleRateBitDepth": "32-bit/768kHz",
+        "hiResCertification": [],
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "maxSampleRateBitDepth", "url": "https://bloomaudio.com/products/burson-playmate-2" },
+        { "cell": "hiResCertification", "url": "https://bloomaudio.com/products/burson-playmate-2" },
+        { "cell": "streamingPlatformSupport", "url": "https://bloomaudio.com/products/burson-playmate-2" },
+        { "cell": "networkConnection", "url": "https://bloomaudio.com/products/burson-playmate-2" }
+      ]
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjkTEhb",
+      "name": "Burson Audio Timekeeper 3i Reference Integrated Amp & DAC",
+      "set": {
+        "channelCount": ["2.0"],
+        "phonoStageBuiltIn": "none",
+        "trigger12v": false
+      },
+      "sources": [
+        { "cell": "channelCount", "url": "https://soundnews.net/amplifiers/power-amps/burson-timekeeper-3i-review-one-for-all-and-all-for-one" },
+        { "cell": "phonoStageBuiltIn", "url": "https://soundnews.net/amplifiers/power-amps/burson-timekeeper-3i-review-one-for-all-and-all-for-one" },
+        { "cell": "trigger12v", "url": "https://soundnews.net/amplifiers/power-amps/burson-timekeeper-3i-review-one-for-all-and-all-for-one" }
+      ]
+    },
+    {
+      "id": "moXlkADK7m1DHgGwWwESiF",
+      "name": "Burson Conductor 3 Reference",
+      "set": {
+        "maxSampleRateBitDepth": "32-bit/768kHz",
+        "hiResCertification": [],
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "maxSampleRateBitDepth", "url": "https://www.headphoneer.com/burson-conductor-3-reference-review/" },
+        { "cell": "hiResCertification", "url": "https://www.headphoneer.com/burson-conductor-3-reference-review/" },
+        { "cell": "streamingPlatformSupport", "url": "https://www.headphoneer.com/burson-conductor-3-reference-review/" },
+        { "cell": "networkConnection", "url": "https://www.headphoneer.com/burson-conductor-3-reference-review/" }
+      ]
+    },
+    {
+      "id": "GPjMdcfFWZVrKyR2PB6zec",
+      "name": "Burson Playmate 3 Class-A Headphone Amp/ Pre-Amp/ DAC",
+      "set": {
+        "maxSampleRateBitDepth": "32-bit/768kHz",
+        "hiResCertification": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "maxSampleRateBitDepth", "url": "https://bursonaudio.com/products/playmate-3/" },
+        { "cell": "hiResCertification", "url": "https://bursonaudio.com/products/playmate-3/" },
+        { "cell": "networkConnection", "url": "https://bursonaudio.com/products/playmate-3/" }
+      ]
+    },
+    {
+      "id": "k27n1AQuIbSr5iozG1vSJt",
+      "name": "Burson Soloist 3X Performance",
+      "set": {
+        "outputs": ["pre-out-xlr", "headphone-jack"]
+      },
+      "sources": [
+        { "cell": "outputs", "url": "https://bursonaudio.com/our-blog/hifiman-arya-and-sennheiser-6xx-with-burson-soloist-3xp-and-super-charger-3a/" }
+      ]
+    },
+    {
+      "id": "DZc43yHr6ydfgE7zB43FOR",
+      "name": "Burson SOLOIST STELLAR 8W XLR Class-A Headphone / Pre Amp",
+      "set": {
+        "outputs": ["headphone-jack", "pre-out-xlr", "pre-out-rca", "subwoofer-out"]
+      },
+      "sources": [
+        { "cell": "outputs", "url": "https://bursonaudio.com/products/soloist-stellar/" }
+      ]
+    }
+  ]
+}
