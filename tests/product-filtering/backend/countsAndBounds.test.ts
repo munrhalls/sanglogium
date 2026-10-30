@@ -48,12 +48,12 @@ const facetSet: FacetSet = {
   queryOnly: [{ id: 'wearingStyle', attribute: 'wearingStyle', control: 'checkbox', values: ['in-ear', 'over-ear'] }],
 };
 
-// Price is in cents. p1 is in stock by its stock fields (5 - 1), p2 is not (1 - 1), p3 is by its stored flag
-// (its stock fields say no), p4 is by its stock fields. p4's brand has no brand document.
+// Price is in cents. p1 is in stock by its stock fields (5 - 1), p2 is not (1 - 1), p3 is (1 - 0), p4 is (2 - 0).
+// p4 has no brand document, so it has no brand.
 const products: RawProduct[] = [
   {
     _id: 'p1',
-    filterAttributes: { brand: ['acme'], shell: 'hard-blue', glow: true, legs: 4, finish: 'Matte-Gold', wearingStyle: 'in-ear' },
+    filterAttributes: { shell: 'hard-blue', glow: true, legs: 4, finish: 'Matte-Gold', wearingStyle: 'in-ear' },
     brandRef: { name: 'Acme Audio', slug: 'acme' },
     price: 10000,
     stock: 5,
@@ -61,7 +61,7 @@ const products: RawProduct[] = [
   },
   {
     _id: 'p2',
-    filterAttributes: { brand: ['acme'], shell: 'soft-red', glow: false, legs: 6, finish: 'matte-gold', wearingStyle: 'over-ear' },
+    filterAttributes: { shell: 'soft-red', glow: false, legs: 6, finish: 'matte-gold', wearingStyle: 'over-ear' },
     brandRef: { name: 'Acme Audio', slug: 'acme' },
     price: 20000,
     stock: 1,
@@ -69,15 +69,15 @@ const products: RawProduct[] = [
   },
   {
     _id: 'p3',
-    filterAttributes: { brand: ['zed'], shell: 'hard-blue', glow: true, legs: 8, finish: 'satin-ash', inStock: true },
+    filterAttributes: { shell: 'hard-blue', glow: true, legs: 8, finish: 'satin-ash' },
     brandRef: { name: 'Zed Works', slug: 'zed' },
     price: 30000,
-    stock: 0,
+    stock: 1,
     reservedStock: 0,
   },
   {
     _id: 'p4',
-    filterAttributes: { brand: ['orphan'], finish: 'satin-ash' },
+    filterAttributes: { finish: 'satin-ash' },
     brandRef: null,
     price: 40000,
     stock: 2,
@@ -101,7 +101,7 @@ const none: ProductQueryState = {
 
 // What no choice cannot change: the bounds and the brand names, from all four products.
 const bounds = {
-  brandLabels: { acme: 'Acme Audio', zed: 'Zed Works', orphan: 'orphan' },
+  brandLabels: { acme: 'Acme Audio', zed: 'Zed Works' },
   ranges: { legs: { min: 4, max: 8 } },
   priceRange: { minPrice: 10000, maxPrice: 40000, prices: [10000, 20000, 30000, 40000] },
 };
@@ -112,7 +112,6 @@ test('labelled controls + filter state -> counts and bounds', () => {
     groups: {
       brand: [
         { value: 'acme', label: 'Acme Audio', count: 2 },
-        { value: 'orphan', label: 'orphan', count: 1 },
         { value: 'zed', label: 'Zed Works', count: 1 },
       ],
       shell: [

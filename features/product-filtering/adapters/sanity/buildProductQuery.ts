@@ -91,7 +91,7 @@ function addCheckboxPredicate(parts: string[], params: Record<string, unknown>, 
   // sometimes stored as a bare scalar on an individual product, and an
   // 'enum' (scalar) field is sometimes stored as a one-element array
   // (confirmed live on accessories: compatibleProductType, conductorMaterial,
-  // material, balancedUnbalanced, brand all had real products silently
+  // material, balancedUnbalanced all had real products silently
   // excluded by a type-driven predicate). GROQ degrades both shape
   // mismatches to null rather than erroring -- lower() on an array, and
   // indexing [...] on a scalar/null, both return null -- so checking BOTH
@@ -124,15 +124,14 @@ export function buildProductQuery(state: ProductQueryState, facetSet: FacetSet =
     params.maxCents = state.maxPrice * 100;
   }
 
-  // In-stock and other boolean facets read from filterAttributes. Availability
-  // falls back to the legacy stock arithmetic for products not yet migrated.
+  // In stock is computed from the stock fields; no stored flag decides it.
   if (state.inStock) {
-    parts.push('coalesce(filterAttributes.inStock, stock - reservedStock > 0) == true');
+    parts.push('stock - reservedStock > 0');
   }
 
   // A predicate for every selected narrowing facet of this route's set.
   for (const facet of [...facetSet.facets, ...facetSet.queryOnly]) {
-    if (facet.id === 'inStock') continue; // handled above — it keeps its stock-arithmetic fallback.
+    if (facet.id === 'inStock') continue; // handled above
 
     if (facet.control === 'boolean') {
       if (state[facet.id as keyof ProductQueryState] === true) {
@@ -155,6 +154,16 @@ export function buildProductQuery(state: ProductQueryState, facetSet: FacetSet =
         const paramName = `${facet.id}MaxParam`;
         parts.push(`${fieldPath(facet)} <= $${paramName}`);
         params[paramName] = maxVal;
+      }
+      continue;
+    }
+
+    // Brand is read from the product's brand document, not from a stored copy.
+    if (facet.id === 'brand') {
+      const brands = selectedValues(state, 'brand');
+      if (brands.length > 0) {
+        parts.push('lower(brand->slug.current) in $brandParam');
+        params.brandParam = brands;
       }
       continue;
     }
