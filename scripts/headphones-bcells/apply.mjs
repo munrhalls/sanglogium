@@ -38,8 +38,21 @@ const without = (fa, cells) => { const c = structuredClone(fa ?? {}); for (const
 // 1. the fills
 const files = fs.readdirSync(here).filter((f) => /^fills-.+\.json$/.test(f)).sort()
 if (!files.length) throw new Error('no fills-*.json next to this script')
-const fills = []
-for (const f of files) for (const x of JSON.parse(fs.readFileSync(path.join(here, f), 'utf8')).fills) fills.push({ ...x, file: f })
+const rawFills = []
+for (const f of files) for (const x of JSON.parse(fs.readFileSync(path.join(here, f), 'utf8')).fills) rawFills.push({ ...x, file: f })
+// one product can appear in several files (a second pass): merge them; a cell set later is no longer unresolved
+const mergedById = new Map()
+for (const f of rawFills) {
+  const m = mergedById.get(f.id) ?? { id: f.id, name: f.name, files: [], set: {}, sources: [], unresolvedCells: {} }
+  m.files.push(f.file)
+  if (f.unresolved) m.unresolved = f.unresolved
+  Object.assign(m.set, f.set ?? {})
+  m.sources.push(...(f.sources ?? []))
+  Object.assign(m.unresolvedCells, f.unresolvedCells ?? {})
+  mergedById.set(f.id, m)
+}
+for (const m of mergedById.values()) for (const c of Object.keys(m.set)) delete m.unresolvedCells[c]
+const fills = [...mergedById.values()].map((m) => ({ ...m, file: m.files.join('+') }))
 
 // 2. the live data
 const query = `{
@@ -73,7 +86,6 @@ for (const fill of fills) {
   const tag = `${fill.file} ${fill.name ?? fill.id}`
   const p = byId.get(fill.id)
   if (!p) { errors.push(`${tag}: not a headphones product id`); continue }
-  if (seen.has(fill.id)) errors.push(`${tag}: appears in two fills`)
   seen.add(fill.id)
   const fa = after.get(fill.id)
   if (fill.unresolved) { unresolved.push(`${tag}: ${fill.unresolved}`); for (const c of Object.keys(CELLS)) covered.add(`${fill.id}|${c}`); continue }
