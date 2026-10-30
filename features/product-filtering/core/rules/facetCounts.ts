@@ -55,6 +55,11 @@ function isInStock(p: RawProduct): boolean {
 }
 
 function valuesForFacet(p: RawProduct, facet: { attribute: string }): string[] {
+  // Brand comes from the product's brand document (brandRef), not from filterAttributes.
+  if (facet.attribute === 'brand') {
+    const slug = p.brandRef?.slug;
+    return slug ? [slug.toLowerCase()] : [];
+  }
   const raw = p.filterAttributes?.[facet.attribute];
   if (raw === undefined || raw === null) return [];
   if (Array.isArray(raw)) return raw.map((v) => String(v).toLowerCase());
