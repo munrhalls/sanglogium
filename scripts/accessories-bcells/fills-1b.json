@@ -1,0 +1,168 @@
+{
+  "task": "1b",
+  "fills": [
+    {
+      "id": "PHPYj28HJdPDHAaIBCiXro",
+      "name": "Dekoni Audio Ensemble 1/8\" 64\" Nylon Jacket Cable with HD600 Headphone Connectors",
+      "set": {
+        "connectorTermination": ["3.5mm"],
+        "conductorMaterial": ["silver"],
+        "balancedUnbalanced": ["unbalanced"]
+      },
+      "sources": [
+        { "cell": "connectorTermination", "url": "https://dekoniaudio.com/products/dekoni-audio-ensemble-presplit-nylon-wrapped-cable-with-unbalanced-35mm-plug-64" },
+        { "cell": "conductorMaterial", "url": "https://dekoniaudio.com/products/dekoni-audio-ensemble-presplit-nylon-wrapped-cable-with-unbalanced-35mm-plug-64" },
+        { "cell": "balancedUnbalanced", "url": "https://dekoniaudio.com/products/dekoni-audio-ensemble-presplit-nylon-wrapped-cable-with-unbalanced-35mm-plug-64" }
+      ]
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnRNW0l",
+      "name": "Dekoni Audio Ensemble 4-Pin XLR 64\" Braided Cable Cable with 3.5mm Headphone Connectors",
+      "set": {
+        "conductorMaterial": ["silver-plated-copper"]
+      },
+      "sources": [
+        { "cell": "conductorMaterial", "url": "https://dekoniaudio.prowly.com/345185-dekoni-audio-expands-its-product-line-with-revolutionary-ensemble-modular-headphone-cables-for-audiophiles-pros-and-enthusiasts" }
+      ]
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnRPAdw",
+      "name": "Dekoni Audio Ensemble 4-Pin XLR 64\" Braided Cable Cable with HD600 Headphone Connectors",
+      "set": {
+        "conductorMaterial": ["silver-plated-copper"]
+      },
+      "sources": [
+        { "cell": "conductorMaterial", "url": "https://dekoniaudio.prowly.com/345185-dekoni-audio-expands-its-product-line-with-revolutionary-ensemble-modular-headphone-cables-for-audiophiles-pros-and-enthusiasts" }
+      ]
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIBCiFsQ",
+      "name": "Dekoni Audio Ensemble 4.4mm 52\" Braided Cable with 3.5mm Headphone Connectors",
+      "set": {
+        "conductorMaterial": ["silver-plated-copper"]
+      },
+      "sources": [
+        { "cell": "conductorMaterial", "url": "https://dekoniaudio.com/pages/silver-plated-copper-bundle-products" }
+      ]
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjkXxA2",
+      "name": "Dekoni Audio Ensemble 4.4mm 52\" Braided Cable with 4-pin Mini XLR Headphone Connectors",
+      "set": {
+        "conductorMaterial": ["silver-plated-copper"]
+      },
+      "sources": [
+        { "cell": "conductorMaterial", "url": "https://dekoniaudio.com/pages/silver-plated-copper-bundle-products" }
+      ]
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnRMEGN",
+      "name": "Dekoni Audio Ensemble 4.4mm 52\" Braided Cable with HD600 Headphone Connectors",
+      "set": {
+        "conductorMaterial": ["silver-plated-copper"]
+      },
+      "sources": [
+        { "cell": "conductorMaterial", "url": "https://dekoniaudio.com/pages/silver-plated-copper-bundle-products" }
+      ]
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIBCk0IW",
+      "name": "Dekoni Audio Ensemble 4.4mm 52\" Nylon Wrapped Cable with 4-pin Mini XLR Headphone Connectors",
+      "set": {
+        "conductorMaterial": ["silver"]
+      },
+      "sources": [
+        { "cell": "conductorMaterial", "url": "https://dekoniaudio.com/pages/cable-ensemble" }
+      ]
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIBCiKGy",
+      "name": "Dekoni Audio Ensemble 4.4mm 52\" Nylon Wrapped Cable with HD600 Headphone Connectors",
+      "set": {
+        "conductorMaterial": ["silver"]
+      },
+      "sources": [
+        { "cell": "conductorMaterial", "url": "https://dekoniaudio.com/pages/cable-ensemble" }
+      ]
+    },
+    {
+      "id": "DraufLIOgnzQlqrObMwKGy",
+      "name": "Dekoni Audio Ensemble 4.4mm 64\" Braided Cable with 3.5mm Headphone Connectors",
+      "set": {
+        "conductorMaterial": ["silver-plated-copper"]
+      },
+      "sources": [
+        { "cell": "conductorMaterial", "url": "https://digitaldjgear.com/products/dekoni-audio-ensemble-4-4mm-silver-plated-copper-braided-cable-with-mmcx-iem-connectors-52" }
+      ]
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjkWvRG",
+      "name": "Dekoni Audio Ensemble 4.4mm 64\" Braided Cable with 4-pin Mini XLR Headphone Connectors",
+      "set": {
+        "conductorMaterial": ["silver-plated-copper"]
+      },
+      "sources": [
+        { "cell": "conductorMaterial", "url": "https://dekoniaudio.com/pages/silver-plated-copper-bundle-products" }
+      ]
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnROEm9",
+      "name": "Dekoni Audio Ensemble 4.4mm 64\" Braided Cable with HD600 Headphone Connectors",
+      "set": {
+        "conductorMaterial": ["silver-plated-copper"]
+      },
+      "sources": [
+        { "cell": "conductorMaterial", "url": "https://dekoniaudio.com/pages/silver-plated-copper-bundle-products" }
+      ]
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjkYRpG",
+      "name": "Dekoni Audio Ensemble 4.4mm 64\" Nylon Wrapped Cable with 3.5mm Headphone Connectors",
+      "set": {
+        "conductorMaterial": ["silver"]
+      },
+      "sources": [
+        { "cell": "conductorMaterial", "url": "https://dekoniaudio.com/pages/cable-ensemble" }
+      ]
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnRPD5X",
+      "name": "Dekoni Audio Ensemble 4.4mm 64\" Nylon Wrapped Cable with HD600 Headphone Connectors",
+      "set": {
+        "conductorMaterial": ["silver"]
+      },
+      "sources": [
+        { "cell": "conductorMaterial", "url": "https://dekoniaudio.com/pages/cable-ensemble" }
+      ]
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIBCk6T0",
+      "name": "Dekoni Audio Ensemble 64\" 4.4 + Mini XLR Blue Nylon Woven Jacket",
+      "set": {
+        "connectorTermination": ["4.4mm", "4-pin-mini-xlr"],
+        "conductorMaterial": ["silver"]
+      },
+      "sources": [
+        { "cell": "connectorTermination", "url": "https://dekoniaudio.com/products/dekoni-audio-ensemble-64-44-mini-xlr-blue-nylon-woven-jacket" },
+        { "cell": "conductorMaterial", "url": "https://dekoniaudio.com/products/dekoni-audio-ensemble-64-44-mini-xlr-blue-nylon-woven-jacket" }
+      ]
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjkXHP8",
+      "name": "Dekoni Audio Ensemble Post-Split Nylon Wrapped Cable with Single 3-pin Mini XLR",
+      "set": {
+        "connectorTermination": ["2.5mm"],
+        "conductorMaterial": ["silver"],
+        "balancedUnbalanced": ["balanced"]
+      },
+      "sources": [
+        { "cell": "connectorTermination", "url": "https://www.soundphilereview.com/reviews/dekoni-ensemble-cables-review-52537/" },
+        { "cell": "conductorMaterial", "url": "https://dekoniaudio.com/products/dekoni-audio-ensemble-post-split-nylon-wrapped-cable-for-ath-m-series" },
+        { "cell": "balancedUnbalanced", "url": "https://www.fujiya-avic.co.jp/shop/g/g200000070624/" }
+      ],
+      "unresolvedCells": {
+        "lengthM": "Maker product page lists no length; no retailer spec found (only a review estimate of ~30 cm, not a maker or retailer statement)."
+      }
+    }
+  ]
+}
