@@ -1,0 +1,40 @@
+{
+  "fills": [
+    {
+      "id": "DZc43yHr6ydfgE7zB41Jlm",
+      "name": "SMSL VMV D3 Advanced R-2R DAC (Digital-to-Analog Converter)",
+      "set": { "deviceConnectivity": "wired" },
+      "sources": [
+        {
+          "cell": "deviceConnectivity",
+          "url": "https://smsl-audio.com/upload/portal/download/VMVD3Manual.pdf",
+          "quote": "输入方式 ... USB /光纤/同轴/I2S/ AES(EBU)"
+        }
+      ]
+    },
+    {
+      "id": "moXlkADK7m1DHgGwWwEaXf",
+      "name": "SMSL SU-6 Desktop DAC",
+      "set": { "deviceConnectivity": "wired-wireless" },
+      "sources": [
+        {
+          "cell": "deviceConnectivity",
+          "url": "https://www.smsl-audio.com/portal/product/detail/id/773.html",
+          "quote": "Qualcomm latest Bluetooth chip supports LDAC 24bit/96kHz, APTX/HD, SBC, AAC"
+        }
+      ]
+    },
+    {
+      "id": "n10eAegrGspodtsQvy3cvI",
+      "name": "SMSL SU-X Desktop DAC",
+      "set": { "deviceConnectivity": "wired-wireless" },
+      "sources": [
+        {
+          "cell": "deviceConnectivity",
+          "url": "https://www.smsl-audio.com/portal/product/detail/id/859.html",
+          "quote": "Qualcomm's high-end Bluetooth chip, supports LDAC(24bit/96kHz),APTX/HD, SBC, AAC"
+        }
+      ]
+    }
+  ]
+}
