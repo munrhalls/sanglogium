@@ -150,7 +150,7 @@ export const audioElectronicsFields: any[] = [
           name: "maxSampleRateBitDepth",
           title: "Max sample rate / bit depth (PCM)",
           type: "string",
-          description: "Free text, e.g. \"32-bit/768kHz\" — no fixed enum, values vary too much by spec sheet.",
+          description: "One form, `<bits>-bit/<kHz>kHz`, e.g. \"32-bit/768kHz\": the highest PCM bit depth and rate the device accepts. DSD is in its own field.",
           domain: ["dac", "network-streamer", "cd-player-transport", "digital-audio-player"],
           domainField: "deviceType",
         },
