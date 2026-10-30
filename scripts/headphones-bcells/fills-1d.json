@@ -1,0 +1,133 @@
+{
+  "task": "1d",
+  "fills": [
+    {
+      "id": "k27n1AQuIbSr5iozG2jAqp",
+      "name": "Bowers & Wilkins PI5 True Wireless Earbuds",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "batteryLifeHours.ancOff": "Maker's spec (owner's manual) gives only one figure 'Up to 4 hours Bluetooth' with no ANC on/off statement",
+        "batteryLifeHours.ancOn": "Maker's spec gives only one figure 'Up to 4 hours Bluetooth' with no ANC on/off statement"
+      }
+    },
+    {
+      "id": "k27n1AQuIbSr5iozG2j7uo",
+      "name": "Bowers & Wilkins PI7 True Wireless Noise Cancelling In-Ear Headphones",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "batteryLifeHours.ancOff": "Maker's spec (owner's manual) gives only one figure 'Up to 4 hours Bluetooth' with no ANC on/off statement",
+        "batteryLifeHours.ancOn": "Maker's spec gives only one figure 'Up to 4 hours Bluetooth' with no ANC on/off statement"
+      }
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnQV78j",
+      "name": "Bowers & Wilkins PX8 Wireless ANC Headphones",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "batteryLifeHours.ancOff": "Maker's page gives only '30 hours playback' without stating whether ANC is on or off"
+      }
+    },
+    {
+      "id": "dLGDVDmEEI2lV8CArIgBZs",
+      "name": "Bowers & Wilkins Pi6 In-Ear Bluetooth Wireless Earbuds (Forest Green)",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "batteryLifeHours.ancOff": "Maker's manual gives only 'Up to 8 hours for earbuds (with ANC on)'; no ANC-off figure"
+      }
+    },
+    {
+      "id": "dLGDVDmEEI2lV8CArIgBmG",
+      "name": "Bowers & Wilkins Pi6 In-Ear Bluetooth Wireless Earbuds (Glacier Blue)",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "batteryLifeHours.ancOff": "Maker's manual gives only 'Up to 8 hours for earbuds (with ANC on)'; no ANC-off figure"
+      }
+    },
+    {
+      "id": "dLGDVDmEEI2lV8CArIgC3I",
+      "name": "Bowers & Wilkins Pi6 In-Ear Bluetooth Wireless Earbuds (Storm Grey)",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "batteryLifeHours.ancOff": "Maker's manual gives only 'Up to 8 hours for earbuds (with ANC on)'; no ANC-off figure"
+      }
+    },
+    {
+      "id": "dLGDVDmEEI2lV8CArIgKzc",
+      "name": "Bowers & Wilkins Pi8 In-Ear Bluetooth True Wireless Earbuds (Midnight Blue)",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "batteryLifeHours.ancOff": "Maker's page gives only 'Up to 6.5 hours for earbuds (with ANC on)'; no ANC-off figure"
+      }
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIBDsKN0",
+      "name": "Denon PerL True Wireless In-Ear Headphones",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "batteryLifeHours.ancOn": "Maker's '6 hrs' earbud figure and its test footnote do not state whether noise cancellation was on or off"
+      }
+    },
+    {
+      "id": "GPjMdcfFWZVrKyR2PB7yn8",
+      "name": "Sennheiser HDB 630 Bluetooth ANC Headphones",
+      "set": { "batteryLifeHours.ancOn": 60 },
+      "sources": [
+        { "cell": "batteryLifeHours.ancOn", "url": "https://www.sennheiser-hearing.com/en-US/p/hdb-630/", "quote": "Up to 60 hours (with ANC on)" }
+      ]
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjjpYAS",
+      "name": "Sennheiser MOMENTUM True Wireless 4",
+      "set": {
+        "batteryLifeHours.ancOn": 7,
+        "bluetoothCodecs": ["SBC", "AAC", "aptX", "aptX Adaptive", "LC3"]
+      },
+      "sources": [
+        { "cell": "batteryLifeHours.ancOn", "url": "https://eu.sennheiser-hearing.com/products/momentum-true-wireless-4", "quote": "Up to 7.5 hrs music playtime with earbuds (ANC off); Up to 7.0 hrs music playtime with earbuds (ANC on)" },
+        { "cell": "bluetoothCodecs", "url": "https://eu.sennheiser-hearing.com/products/momentum-true-wireless-4", "quote": "Supported codecs SBC, AAC, aptX™, aptX™ Adaptive/Lossless, LC3" }
+      ]
+    },
+    {
+      "id": "ZuUKzmkqDyQwdcwhxwQHiY",
+      "name": "Sennheiser Momentum Sport True Wireless Earbuds with Adaptive Noise Cancellation (Black)",
+      "set": {
+        "bluetoothCodecs": ["SBC", "AAC", "aptX", "aptX Adaptive"]
+      },
+      "sources": [
+        { "cell": "bluetoothCodecs", "url": "https://global.sennheiser-hearing.com/products/momentum-sport", "quote": "Supported codecs SBC, AAC, aptX™, aptX adaptive™" }
+      ],
+      "unresolvedCells": {
+        "batteryLifeHours.ancOff": "Maker's spec gives only 'Up to 6 hrs music playtime with earbuds' with no ANC on/off statement",
+        "batteryLifeHours.ancOn": "Maker's spec gives only 'Up to 6 hrs music playtime with earbuds' with no ANC on/off statement"
+      }
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnQTeER",
+      "name": "Sennheiser RS 175 Headphones",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "bluetoothCodecs": "Not a Bluetooth headphone: maker lists only digital RF wireless via transmitter base (carrier frequency 2.4–2.48 GHz), no Bluetooth codecs",
+        "batteryLifeHours.ancOff": "No ANC exists on this RF TV headphone; maker lists 'Operating time 18 hrs' but there is no ANC-off ANC-headphone figure"
+      }
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnQUmde",
+      "name": "T+A Solitaire T",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "batteryLifeHours.ancOff": "Maker's spec gives 'Battery Lifetime 70 h, 35 in HQ mode' without stating whether ANC is on or off",
+        "batteryLifeHours.ancOn": "Maker's spec gives 'Battery Lifetime 70 h, 35 in HQ mode' without stating whether ANC is on or off"
+      }
+    }
+  ]
+}
