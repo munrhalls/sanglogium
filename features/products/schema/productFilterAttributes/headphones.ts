@@ -53,12 +53,6 @@ export const headphonesFields: any[] = [
           ],
         },
         {
-          name: "requiresAmplifier",
-          title: "Requires amplifier",
-          type: "boolean",
-          description: "Derived from impedanceOhms + sensitivityDbMw at data-write time.",
-        },
-        {
           name: "microphone",
           title: "Microphone",
           type: "boolean",
@@ -160,12 +154,6 @@ export const headphonesFields: any[] = [
           options: {
             list: ["single-dynamic", "single-ba", "multi-ba", "hybrid-config", "planar", "other"],
           },
-        },
-        {
-          name: "driverConfigDetail",
-          title: "Driver configuration (detail)",
-          type: "string",
-          description: "Display-only, e.g. \"1DD+4BA\". Derived from the same source as driverConfigBucket — no separate citation.",
         },
         {
           name: "sourcing",
