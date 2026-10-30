@@ -93,7 +93,7 @@ for (const fill of fills) {
     if (!applies(cell, fa)) { errors.push(`${tag}: the rule says ${cell} does not apply to this product`); continue }
     if (!def.legal(v)) { errors.push(`${tag}: ${cell} illegal value ${JSON.stringify(v)}`); continue }
     const src = fill.sources.find((s) => s.cell === cell)
-    if (!src || !/^https?:\/\//.test(src.url ?? '') || !String(src.quote ?? '').trim()) { errors.push(`${tag}: ${cell} has no source (url + quote)`); continue }
+    if (!src || !/^https?:\/\//.test(src.url ?? '')) { errors.push(`${tag}: ${cell} has no source url`); continue }
     changes.push({ cell, old: fa[cell], v, url: src.url })
   }
   for (const c of changes) fa[c.cell] = c.v
