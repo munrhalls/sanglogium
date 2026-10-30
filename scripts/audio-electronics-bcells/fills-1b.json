@@ -1,0 +1,223 @@
+{
+  "task": "1b",
+  "fills": [
+    {
+      "id": "MrEMtYwMtrFDGWmRnN8QYu",
+      "name": "iFi Audio Pro iDSD Signature DAC/Amp & Streamer",
+      "set": {
+        "maxSampleRateBitDepth": "32-bit/768kHz",
+        "dacChipsetFamily": [],
+        "voiceAssistant": [],
+        "multiroomSupport": true
+      },
+      "sources": [
+        { "cell": "maxSampleRateBitDepth", "url": "https://ifi-audio.com/products/pro-idsd-signature" },
+        { "cell": "dacChipsetFamily", "url": "https://ifi-audio.com/products/pro-idsd-signature" },
+        { "cell": "voiceAssistant", "url": "https://ifi-audio.com/products/pro-idsd-signature" },
+        { "cell": "multiroomSupport", "url": "https://ifiaudio.jp/products/pro-idsd-signature/" }
+      ],
+      "unresolvedCells": {}
+    },
+    {
+      "id": "n10eAegrGspodtsQvy4D2G",
+      "name": "iFi Audio Uno",
+      "set": {
+        "maxSampleRateBitDepth": "32-bit/384kHz",
+        "dsdSupport": "dsd256-plus",
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "maxSampleRateBitDepth", "url": "https://ifi-audio.com/products/uno" },
+        { "cell": "dsdSupport", "url": "https://ifi-audio.com/products/uno" },
+        { "cell": "networkConnection", "url": "https://ifi-audio.com/products/uno" }
+      ],
+      "unresolvedCells": {}
+    },
+    {
+      "id": "k27n1AQuIbSr5iozG1vDSz",
+      "name": "iFi Audio xDSD Gryphon Portable Bluetooth DAC & Headphone Amplifier",
+      "set": {
+        "maxSampleRateBitDepth": "32-bit/768kHz",
+        "dacChipsetFamily": [],
+        "networkConnection": [],
+        "multiroomSupport": false
+      },
+      "sources": [
+        { "cell": "maxSampleRateBitDepth", "url": "https://ifi-audio.com/products/xdsd-gryphon" },
+        { "cell": "dacChipsetFamily", "url": "https://ifi-audio.com/products/xdsd-gryphon" },
+        { "cell": "networkConnection", "url": "https://ifi-audio.com/products/xdsd-gryphon" },
+        { "cell": "multiroomSupport", "url": "https://ifi-audio.com/products/xdsd-gryphon" }
+      ],
+      "unresolvedCells": {}
+    },
+    {
+      "id": "dLGDVDmEEI2lV8CArAcpNU",
+      "name": "iFi Audio ZEN Air CAN High-Power Analogue Headphone Amplifier",
+      "set": {
+        "amplification": "solid-state"
+      },
+      "sources": [
+        { "cell": "amplification", "url": "https://ifi-audio.jp/zen/zen_air_can.html" }
+      ],
+      "unresolvedCells": {}
+    },
+    {
+      "id": "Y7l1IhzX2fnyiano4iq6jp",
+      "name": "iFi Audio Zen Can 3 Analog Headphone Amplifier",
+      "set": {
+        "amplification": "solid-state"
+      },
+      "sources": [
+        { "cell": "amplification", "url": "https://ifi-audio.com/products/zen-can-3" }
+      ],
+      "unresolvedCells": {}
+    },
+    {
+      "id": "Y7l1IhzX2fnyiano4jOIfY",
+      "name": "iFi Audio Zen DAC 3 Balanced Headphone Amp & DAC",
+      "set": {
+        "maxSampleRateBitDepth": "32-bit/768kHz",
+        "dsdSupport": "dsd256-plus",
+        "dacChipsetFamily": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "maxSampleRateBitDepth", "url": "https://ifi-audio.com/products/zen-dac-3" },
+        { "cell": "dsdSupport", "url": "https://ifi-audio.com/products/zen-dac-3" },
+        { "cell": "dacChipsetFamily", "url": "https://ifi-audio.com/products/zen-dac-3" },
+        { "cell": "networkConnection", "url": "https://ifi-audio.com/products/zen-dac-3" }
+      ],
+      "unresolvedCells": {}
+    },
+    {
+      "id": "k27n1AQuIbSr5iozG2ixn6",
+      "name": "iFi Audio Zen Stream",
+      "set": {
+        "maxSampleRateBitDepth": "32-bit/384kHz",
+        "voiceAssistant": [],
+        "multiroomSupport": true
+      },
+      "sources": [
+        { "cell": "maxSampleRateBitDepth", "url": "https://downloads.ifi-audio.com/wp-content/uploads/2023/02/ZEN-Stream-User-Manual-Ver1.45_ok.pdf" },
+        { "cell": "voiceAssistant", "url": "https://downloads.ifi-audio.com/wp-content/uploads/2023/02/ZEN-Stream-User-Manual-Ver1.45_ok.pdf" },
+        { "cell": "multiroomSupport", "url": "https://www.hifioasis.com/reviews/ifi-zen-stream-review/" }
+      ],
+      "unresolvedCells": {
+        "dacChipsetFamily": "ZEN Stream is a streaming transport with no DAC chip; spec/manual lists formats but no DAC chip."
+      }
+    },
+    {
+      "id": "k27n1AQuIbSr5iozG2iztx",
+      "name": "iFi Audio Zen Stream - Open Box",
+      "set": {
+        "maxSampleRateBitDepth": "32-bit/384kHz",
+        "voiceAssistant": [],
+        "multiroomSupport": true
+      },
+      "sources": [
+        { "cell": "maxSampleRateBitDepth", "url": "https://downloads.ifi-audio.com/wp-content/uploads/2023/02/ZEN-Stream-User-Manual-Ver1.45_ok.pdf" },
+        { "cell": "voiceAssistant", "url": "https://downloads.ifi-audio.com/wp-content/uploads/2023/02/ZEN-Stream-User-Manual-Ver1.45_ok.pdf" },
+        { "cell": "multiroomSupport", "url": "https://www.hifioasis.com/reviews/ifi-zen-stream-review/" }
+      ],
+      "unresolvedCells": {
+        "dacChipsetFamily": "ZEN Stream is a streaming transport with no DAC chip; spec/manual lists formats but no DAC chip."
+      }
+    },
+    {
+      "id": "DZc43yHr6ydfgE7zB46CG4",
+      "name": "iFi GO bar Kensei",
+      "set": {
+        "maxSampleRateBitDepth": "32-bit/384kHz",
+        "dsdSupport": "dsd256-plus",
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "maxSampleRateBitDepth", "url": "https://ifi-audio.com/products/go-bar-kensei" },
+        { "cell": "dsdSupport", "url": "https://ifi-audio.com/products/go-bar-kensei" },
+        { "cell": "networkConnection", "url": "https://ifi-audio.com/products/go-bar-kensei" }
+      ],
+      "unresolvedCells": {}
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8eFfR",
+      "name": "iFi GO blu Air Portable Hi-Res Bluetooth DAC & Headphone Amp",
+      "set": {
+        "maxSampleRateBitDepth": "24-bit/96kHz",
+        "dsdSupport": "none",
+        "dacChipsetFamily": ["cirrus-logic"],
+        "networkConnection": [],
+        "voiceAssistant": [],
+        "multiroomSupport": false
+      },
+      "sources": [
+        { "cell": "maxSampleRateBitDepth", "url": "https://cobra.fr/cdn/shop/files/NOTICE_IFI_AUDIO_GO_BLU_AIR.pdf?v=4817949158336179908" },
+        { "cell": "dsdSupport", "url": "https://cobra.fr/cdn/shop/files/NOTICE_IFI_AUDIO_GO_BLU_AIR.pdf?v=4817949158336179908" },
+        { "cell": "dacChipsetFamily", "url": "https://ifi-audio.com/products/go-blu-air" },
+        { "cell": "networkConnection", "url": "https://ifi-audio.com/products/go-blu-air" },
+        { "cell": "voiceAssistant", "url": "https://ifi-audio.com/products/go-blu-air" },
+        { "cell": "multiroomSupport", "url": "https://ifi-audio.com/products/go-blu-air" }
+      ],
+      "unresolvedCells": {}
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8lEY3",
+      "name": "iFi Hip-DAC 3",
+      "set": {
+        "maxSampleRateBitDepth": "32-bit/384kHz",
+        "dacChipsetFamily": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "maxSampleRateBitDepth", "url": "https://ifi-audio.com/products/hip-dac-3" },
+        { "cell": "dacChipsetFamily", "url": "https://ifi-audio.com/products/hip-dac-3" },
+        { "cell": "networkConnection", "url": "https://ifi-audio.com/products/hip-dac-3" }
+      ],
+      "unresolvedCells": {}
+    },
+    {
+      "id": "GPjMdcfFWZVrKyR2PB5NeM",
+      "name": "iFi NEO Stream",
+      "set": {
+        "maxSampleRateBitDepth": "32-bit/768kHz",
+        "dacChipsetFamily": [],
+        "voiceAssistant": [],
+        "multiroomSupport": true
+      },
+      "sources": [
+        { "cell": "maxSampleRateBitDepth", "url": "https://downloads.ifi-audio.com/wp-content/uploads/2022/09/Neo-Stream-User-Manual_Ver0.21.pdf" },
+        { "cell": "dacChipsetFamily", "url": "https://ifiaudio.jp/products/neo-stream/" },
+        { "cell": "voiceAssistant", "url": "https://downloads.ifi-audio.com/wp-content/uploads/2022/09/Neo-Stream-User-Manual_Ver0.21.pdf" },
+        { "cell": "multiroomSupport", "url": "https://ifiaudio.jp/products/neo-stream/" }
+      ],
+      "unresolvedCells": {}
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8eD0B",
+      "name": "iFi ZEN Blue 3 Bluetooth Desktop DAC",
+      "set": {
+        "dacChipsetFamily": ["ess-sabre"],
+        "networkConnection": [],
+        "voiceAssistant": [],
+        "multiroomSupport": false
+      },
+      "sources": [
+        { "cell": "dacChipsetFamily", "url": "https://ifi-audio.com/products/zen-blue-3" },
+        { "cell": "networkConnection", "url": "https://ifi-audio.com/products/zen-blue-3" },
+        { "cell": "voiceAssistant", "url": "https://ifi-audio.com/products/zen-blue-3" },
+        { "cell": "multiroomSupport", "url": "https://ifi-audio.com/products/zen-blue-3" }
+      ],
+      "unresolvedCells": {}
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8huOv",
+      "name": "iFi Zen CAN 3",
+      "set": {
+        "amplification": "solid-state"
+      },
+      "sources": [
+        { "cell": "amplification", "url": "https://ifi-audio.com/products/zen-can-3" }
+      ],
+      "unresolvedCells": {}
+    }
+  ]
+}
