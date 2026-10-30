@@ -1,0 +1,242 @@
+{
+  "task": "3d",
+  "fills": [
+    {
+      "id": "GPjMdcfFWZVrKyR2PB2gcY",
+      "name": "Apos x Community Druid R2R DAC",
+      "set": {
+        "maxSampleRateBitDepth": "32-bit/768kHz",
+        "dsdSupport": "dsd256-plus",
+        "hiResCertification": [],
+        "dacChipsetFamily": ["r2r-ladder"],
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "maxSampleRateBitDepth", "url": "https://apos.audio/products/apos-x-community-druid-r2r-dac" },
+        { "cell": "dsdSupport", "url": "https://apos.audio/products/apos-x-community-druid-r2r-dac" },
+        { "cell": "hiResCertification", "url": "https://apos.audio/products/apos-x-community-druid-r2r-dac" },
+        { "cell": "dacChipsetFamily", "url": "https://apos.audio/products/apos-x-community-druid-r2r-dac" },
+        { "cell": "streamingPlatformSupport", "url": "https://apos.audio/products/apos-x-community-druid-r2r-dac" },
+        { "cell": "networkConnection", "url": "https://apos.audio/products/apos-x-community-druid-r2r-dac" }
+      ]
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8bEZj",
+      "name": "Apos x Community Gremlin Tube Amp",
+      "set": {
+        "amplification": "hybrid",
+        "outputs": ["headphone-jack"]
+      },
+      "sources": [
+        { "cell": "amplification", "url": "https://apos.audio/products/apos-x-community-gremlin-diy-tube-amp" },
+        { "cell": "outputs", "url": "https://apos.audio/products/apos-x-community-gremlin-diy-tube-amp" }
+      ]
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8bJ71",
+      "name": "Apos x Geshelli Merlin AKM Desktop DAC",
+      "set": {
+        "maxSampleRateBitDepth": "32-bit/768kHz",
+        "dsdSupport": "dsd256-plus",
+        "hiResCertification": [],
+        "dacChipsetFamily": ["akm"],
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "maxSampleRateBitDepth", "url": "https://apos.audio/products/apos-x-geshelli-merlin-akm-desktop-dac" },
+        { "cell": "dsdSupport", "url": "https://apos.audio/products/apos-x-geshelli-merlin-akm-desktop-dac" },
+        { "cell": "hiResCertification", "url": "https://apos.audio/products/apos-x-geshelli-merlin-akm-desktop-dac" },
+        { "cell": "dacChipsetFamily", "url": "https://apos.audio/products/apos-x-geshelli-merlin-akm-desktop-dac" },
+        { "cell": "streamingPlatformSupport", "url": "https://apos.audio/products/apos-x-geshelli-merlin-akm-desktop-dac" },
+        { "cell": "networkConnection", "url": "https://apos.audio/products/apos-x-geshelli-merlin-akm-desktop-dac" }
+      ]
+    },
+    {
+      "id": "ZuUKzmkqDyQwdcwhxlIcNL",
+      "name": "Denon DCD-1700NE CD/SACD Player with Advanced AL32 Processing Plus (Black)",
+      "set": {
+        "hiResCertification": [],
+        "dacChipsetFamily": []
+      },
+      "sources": [
+        { "cell": "hiResCertification", "url": "https://www.denon.com/en/product/cd-players/dcd-1700ne/DCD1700NE.html" },
+        { "cell": "dacChipsetFamily", "url": "https://www.denon.com/en-gb/product/cd-players/dcd-1700ne/DCD1700NEGB.html" }
+      ]
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjkSVqY",
+      "name": "Denon DNP-2000NE Streaming Music Player and Preamplifier",
+      "set": {
+        "hiResCertification": []
+      },
+      "sources": [
+        { "cell": "hiResCertification", "url": "https://www.denon.com/en/product/network-audio-players/dnp-2000ne/DNP2000NE.html" }
+      ]
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnRH2Ru",
+      "name": "Denon DNP-2000NE Streaming Music Player and Preamplifier - Open Box",
+      "set": {
+        "hiResCertification": []
+      },
+      "sources": [
+        { "cell": "hiResCertification", "url": "https://www.denon.com/en/product/network-audio-players/dnp-2000ne/DNP2000NE.html" }
+      ]
+    },
+    {
+      "id": "GPjMdcfFWZVrKyR2PB6xuA",
+      "name": "Fosi Audio K5 Pro Gaming DAC/ Headphone Amplifier",
+      "set": {
+        "dsdSupport": "none",
+        "hiResCertification": [],
+        "dacChipsetFamily": [],
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "dsdSupport", "url": "https://fosiaudio.com/pages/dac-k5-pro" },
+        { "cell": "hiResCertification", "url": "https://fosiaudio.com/pages/dac-k5-pro" },
+        { "cell": "dacChipsetFamily", "url": "https://www.audiophile-heaven.com/2023/01/fosi-audio-k5-pro-dac-amp-eq-more-versatile-than-a-multicooker.html" },
+        { "cell": "streamingPlatformSupport", "url": "https://fosiaudio.com/pages/dac-k5-pro" },
+        { "cell": "networkConnection", "url": "https://fosiaudio.com/pages/dac-k5-pro" }
+      ]
+    },
+    {
+      "id": "GPjMdcfFWZVrKyR2PB6tb0",
+      "name": "Fosi Audio Q4 Mini Stereo Gaming DAC & Headphone Amplifier Audio",
+      "set": {
+        "dsdSupport": "none",
+        "hiResCertification": [],
+        "dacChipsetFamily": [],
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "dsdSupport", "url": "https://fosiaudio.com/products/fosi-audio-q4-mini-stereo-gaming-dac-headphone-amplifier" },
+        { "cell": "hiResCertification", "url": "https://fosiaudio.com/products/fosi-audio-q4-mini-stereo-gaming-dac-headphone-amplifier" },
+        { "cell": "dacChipsetFamily", "url": "https://fosiaudio.com/pages/user-instruction-q4" },
+        { "cell": "streamingPlatformSupport", "url": "https://fosiaudio.com/products/fosi-audio-q4-mini-stereo-gaming-dac-headphone-amplifier" },
+        { "cell": "networkConnection", "url": "https://fosiaudio.com/products/fosi-audio-q4-mini-stereo-gaming-dac-headphone-amplifier" }
+      ]
+    },
+    {
+      "id": "GPjMdcfFWZVrKyR2PB6IuA",
+      "name": "LADDER Chopin Desktop R2R Pre-amplifier",
+      "set": {
+        "amplification": "solid-state"
+      },
+      "sources": [
+        { "cell": "amplification", "url": "https://apos.audio/products/ladder-chopin-ii-desktop-dac-amp" }
+      ],
+      "unresolvedCells": {
+        "powerOutputPerChannelW": "Line-stage preamp: specs give output level in Vrms (2.0 RCA / 4.0 XLR), no watts-per-channel figure published"
+      }
+    },
+    {
+      "id": "GPjMdcfFWZVrKyR2PB5pis",
+      "name": "LADDER Czerny R2R Desktop DAC",
+      "set": {
+        "hiResCertification": [],
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "hiResCertification", "url": "https://apos.audio/products/ladder-czerny-r2r-desktop-dac" },
+        { "cell": "streamingPlatformSupport", "url": "https://apos.audio/products/ladder-czerny-r2r-desktop-dac" },
+        { "cell": "networkConnection", "url": "https://apos.audio/products/ladder-czerny-r2r-desktop-dac" }
+      ]
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8fuQf",
+      "name": "LADDER Schumann Desktop DAC",
+      "set": {
+        "hiResCertification": [],
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "hiResCertification", "url": "https://apos.audio/products/ladder-schumann-desktop-dac" },
+        { "cell": "streamingPlatformSupport", "url": "https://apos.audio/products/ladder-schumann-desktop-dac" },
+        { "cell": "networkConnection", "url": "https://apos.audio/products/ladder-schumann-desktop-dac" }
+      ]
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8l6fJ",
+      "name": "Moondrop Dawn Pro 2 Dual Portable DAC/Amp",
+      "set": {
+        "hiResCertification": [],
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "hiResCertification", "url": "https://moondroplab.com/en/products/dawn-pro-2" },
+        { "cell": "streamingPlatformSupport", "url": "https://moondroplab.com/en/products/dawn-pro-2" },
+        { "cell": "networkConnection", "url": "https://moondroplab.com/en/products/dawn-pro-2" }
+      ]
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnNGOLg",
+      "name": "Moondrop Dawn Pro Portable DAC and Headphone Amp",
+      "set": {
+        "hiResCertification": [],
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "hiResCertification", "url": "https://moondroplab.com/en/products/dawn-pro" },
+        { "cell": "streamingPlatformSupport", "url": "https://moondroplab.com/en/products/dawn-pro" },
+        { "cell": "networkConnection", "url": "https://moondroplab.com/en/products/dawn-pro" }
+      ]
+    },
+    {
+      "id": "n10eAegrGspodtsQvy4cvd",
+      "name": "SPL Phonitor X Desktop Headphone Amplifier with Optional DAC",
+      "set": {
+        "amplification": "solid-state"
+      },
+      "sources": [
+        { "cell": "amplification", "url": "https://spl.audio/en/spl-produkt/phonitor-x/" }
+      ]
+    },
+    {
+      "id": "k27n1AQuIbSr5iozG1vTYd",
+      "name": "SPL Phonitor XE Desktop Headphone Amplifier with Optional DAC",
+      "set": {
+        "amplification": "solid-state"
+      },
+      "sources": [
+        { "cell": "amplification", "url": "https://spl.audio/en/spl-produkt/phonitor-xe/" }
+      ]
+    },
+    {
+      "id": "moXlkADK7m1DHgGwWwEZTT",
+      "name": "Violectric Chronos Portable USB DAC/Amp",
+      "set": {
+        "hiResCertification": [],
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "hiResCertification", "url": "https://www.electromod.co.uk/violectric-chronos" },
+        { "cell": "streamingPlatformSupport", "url": "https://www.electromod.co.uk/violectric-chronos" },
+        { "cell": "networkConnection", "url": "https://www.electromod.co.uk/violectric-chronos" }
+      ]
+    },
+    {
+      "id": "k27n1AQuIbSr5iozG1vF9H",
+      "name": "Violectric V590 Desktop Headphone DAC/Amp",
+      "set": {
+        "hiResCertification": [],
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "hiResCertification", "url": "https://www.violectric.de/en/products/headphone-preamps/violectric-dha-v5902" },
+        { "cell": "streamingPlatformSupport", "url": "https://www.violectric.de/en/products/headphone-preamps/violectric-dha-v5902" },
+        { "cell": "networkConnection", "url": "https://www.violectric.de/en/products/headphone-preamps/violectric-dha-v5902" }
+      ]
+    }
+  ]
+}
