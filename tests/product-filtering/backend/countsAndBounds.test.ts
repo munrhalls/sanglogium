@@ -48,8 +48,8 @@ const facetSet: FacetSet = {
   queryOnly: [{ id: 'wearingStyle', attribute: 'wearingStyle', control: 'checkbox', values: ['in-ear', 'over-ear'] }],
 };
 
-// Price is in cents. p1 is in stock by its stock fields (5 - 1), p2 is not (1 - 1), p3 is by its stored flag
-// (its stock fields say no), p4 is by its stock fields. p4's brand has no brand document.
+// Price is in cents. p1 is in stock by its stock fields (5 - 1), p2 is not (1 - 1), p3 is (1 - 0), p4 is (2 - 0).
+// p4's brand has no brand document.
 const products: RawProduct[] = [
   {
     _id: 'p1',
@@ -69,10 +69,10 @@ const products: RawProduct[] = [
   },
   {
     _id: 'p3',
-    filterAttributes: { brand: ['zed'], shell: 'hard-blue', glow: true, legs: 8, finish: 'satin-ash', inStock: true },
+    filterAttributes: { brand: ['zed'], shell: 'hard-blue', glow: true, legs: 8, finish: 'satin-ash' },
     brandRef: { name: 'Zed Works', slug: 'zed' },
     price: 30000,
-    stock: 0,
+    stock: 1,
     reservedStock: 0,
   },
   {
