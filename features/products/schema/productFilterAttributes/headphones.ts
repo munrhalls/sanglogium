@@ -81,6 +81,8 @@ export const headphonesFields: any[] = [
                   "mmcx",
                   "2-pin",
                   "fixed-cable",
+                  "pro-bias",
+                  "lemo",
                 ],
               },
             },
@@ -121,7 +123,7 @@ export const headphonesFields: any[] = [
               },
             },
           ],
-          description: "Meaningful only when connectivity !== 'wired'.",
+          description: "Meaningful only when connectivity is wireless, true-wireless or hybrid (a Bluetooth link). Empty for wired and rf-wireless.",
         },
         {
           name: "anc",
