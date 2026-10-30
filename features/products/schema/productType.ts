@@ -167,6 +167,13 @@ export const productType = defineType({
     }),
 
     defineField({
+      name: "description",
+      title: "Description",
+      type: "array",
+      of: [defineArrayMember({ type: "block" })],
+    }),
+
+    defineField({
       name: "overviewFields",
       title: "Overview Fields",
       type: "array",
