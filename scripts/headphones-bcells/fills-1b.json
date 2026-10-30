@@ -1,0 +1,187 @@
+{
+  "task": "1b",
+  "fills": [
+    {
+      "id": "DZc43yHr6ydfgE7zB40XMj",
+      "name": "Apos x Audio-Technica ATH-R70x Refine Headphone",
+      "set": { "cableTermination": ["3.5mm"] },
+      "sources": [
+        {
+          "cell": "cableTermination",
+          "url": "https://apos.audio/products/apos-x-audio-technica-ath-r70x-refine-headphone",
+          "quote": "Stock cable with 3.5mm termination"
+        }
+      ]
+    },
+    {
+      "id": "DZc43yHr6ydfgE7zB3xQZo",
+      "name": "Apos x Community Rock Lobster IEMs",
+      "set": { "cableTermination": ["3.5mm", "4.4mm-balanced"], "detachableCable": true },
+      "sources": [
+        {
+          "cell": "cableTermination",
+          "url": "https://apos.audio/products/apos-x-community-rock-lobster-iems",
+          "quote": "Connector: 3.5mm wired, 4.4mm wired"
+        },
+        {
+          "cell": "detachableCable",
+          "url": "https://apos.audio/products/apos-x-community-rock-lobster-iems",
+          "quote": "Detachable 3.5mm or 4.4mm cable"
+        }
+      ],
+      "unresolvedCells": {
+        "cableLengthM": "Maker's page lists the cable and its connectors but gives no cable length."
+      }
+    },
+    {
+      "id": "DZc43yHr6ydfgE7zB460aC",
+      "name": "Audeze CRBN2 Electrostatic Headphones (Case Included)",
+      "set": {},
+      "unresolvedCells": {
+        "cableTermination": "Maker lists '2.5m OCC monocrystal copper, 5-pin Pro Bias' attached cable; the 5-pin Pro Bias electrostatic connector is not among the allowed values."
+      }
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8enyh",
+      "name": "Audeze LCD-2 Classic (Apos Certified)",
+      "set": { "cableLengthM": 1.9 },
+      "sources": [
+        {
+          "cell": "cableLengthM",
+          "url": "https://www.treoo.com/product/audeze-lcd2-classic-planar-magnetic-over-the-ear-headphone",
+          "quote": "1.9m 4-pin XLR Cable"
+        }
+      ]
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIBAJiLG",
+      "name": "Audeze LCD-2 Classic Headphones",
+      "set": { "cableLengthM": 1.9 },
+      "sources": [
+        {
+          "cell": "cableLengthM",
+          "url": "https://www.treoo.com/product/audeze-lcd2-classic-planar-magnetic-over-the-ear-headphone",
+          "quote": "1.9m 4-pin XLR Cable"
+        }
+      ]
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8elsb",
+      "name": "Audeze LCD-2 Open Back Headphone",
+      "set": { "cableLengthM": 1.9 },
+      "sources": [
+        {
+          "cell": "cableLengthM",
+          "url": "https://soundium.com/products/audeze-lcd-2-leather-free",
+          "quote": "1 x 1.9m 1/4\" TRS to dual 4-pin mini-XLR cable"
+        }
+      ]
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8kl09",
+      "name": "Audeze LCD-5s Planar Magnetic Headphone",
+      "set": { "cableLengthM": 2.5 },
+      "sources": [
+        {
+          "cell": "cableLengthM",
+          "url": "https://www.thomannmusic.com/audeze_lcd_5s.htm",
+          "quote": "Includes 2.5 m 4-pin XLR connection cable"
+        }
+      ]
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8kmvh",
+      "name": "ES Lab ES-2a 90mm Electrostatic Headphones",
+      "set": {},
+      "unresolvedCells": {
+        "cableTermination": "Maker lists 'Termination: 5-Pin Stax Type Pro Bias'; the electrostatic Pro Bias connector is not among the allowed values."
+      }
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8ko41",
+      "name": "ES Lab EX-1a Electrostatic Headphones",
+      "set": {},
+      "unresolvedCells": {
+        "cableTermination": "Maker lists a '6-core PC-Triple-C copper Pro Bias cable'; the Pro Bias electrostatic connector is not among the allowed values."
+      }
+    },
+    {
+      "id": "GPjMdcfFWZVrKyR2PB9jN4",
+      "name": "ES Lab EX-1a Electrostatic Headphones (Apos Certified)",
+      "set": {},
+      "unresolvedCells": {
+        "cableTermination": "Maker lists a '6-core PC-Triple-C copper Pro Bias cable'; the Pro Bias electrostatic connector is not among the allowed values."
+      }
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnN51PA",
+      "name": "Hifiman HE1000 Stealth Headphones - Stealth Magnet Edition",
+      "set": { "cableLengthM": 3 },
+      "sources": [
+        {
+          "cell": "cableLengthM",
+          "url": "https://www.advancedmp3players.co.uk/hifiman-he-1000-v2-stealth-edition-planar-headphones",
+          "quote": "3.0 m headphone cable (6.35mm plug)"
+        }
+      ]
+    },
+    {
+      "id": "GPjMdcfFWZVrKyR2PB2jje",
+      "name": "SJY Horizon Closed Carbon Planar Magnetic Headphones",
+      "set": { "cableTermination": ["4.4mm-balanced"], "cableLengthM": 1.5 },
+      "sources": [
+        {
+          "cell": "cableTermination",
+          "url": "https://sjyaudio.com/products/horizon-closed-carbon-1",
+          "quote": "Balanced 4.4mm 1.5M cable"
+        },
+        {
+          "cell": "cableLengthM",
+          "url": "https://sjyaudio.com/products/horizon-closed-carbon-1",
+          "quote": "Balanced 4.4mm 1.5M cable"
+        }
+      ],
+      "unresolvedCells": {
+        "detachableCable": "Maker's page lists the supplied cable but does not state whether it detaches from the ear cups."
+      }
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8eR7h",
+      "name": "SJY Zeph Open-Back Planar Magnetic Headphones",
+      "set": {},
+      "unresolvedCells": {
+        "cableLengthM": "Maker's page lists a 'Detachable Dual 3.5mm to 4.4mm balanced headphone cable' but gives no cable length."
+      }
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnTDDVo",
+      "name": "Warwick Acoustics Bravura Headphones",
+      "set": { "cableLengthM": 2.01 },
+      "sources": [
+        {
+          "cell": "cableLengthM",
+          "url": "https://www.moon-audio.com/products/bravura-electrostatic-headphones-amplifier-system",
+          "quote": "79\" Audio cable (two 4-pin LEMO connectors on the headphone end and an 8-pin connector on the amplifier end)"
+        }
+      ],
+      "unresolvedCells": {
+        "cableTermination": "Maker lists proprietary 'Polarized, 4-pin, self-latching Lemo connectors' (headphone end) and an 8-pin connector (amplifier end); neither is among the allowed values."
+      }
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIBDrPvO",
+      "name": "Warwick Acoustics Bravura Headphones - Open Box",
+      "set": { "cableLengthM": 2.01 },
+      "sources": [
+        {
+          "cell": "cableLengthM",
+          "url": "https://www.moon-audio.com/products/bravura-electrostatic-headphones-amplifier-system",
+          "quote": "79\" Audio cable (two 4-pin LEMO connectors on the headphone end and an 8-pin connector on the amplifier end)"
+        }
+      ],
+      "unresolvedCells": {
+        "cableTermination": "Maker lists proprietary 'Polarized, 4-pin, self-latching Lemo connectors' (headphone end) and an 8-pin connector (amplifier end); neither is among the allowed values."
+      }
+    }
+  ]
+}
