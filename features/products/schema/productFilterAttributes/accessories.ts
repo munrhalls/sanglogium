@@ -46,7 +46,8 @@ export const accessoriesFields: any[] = [
         {
           name: "lengthM",
           title: "Length (m)",
-          type: "number",
+          type: "array",
+          of: [{ type: "number" }],
           domain: ["cables-interconnects"],
         },
         {
@@ -64,8 +65,8 @@ export const accessoriesFields: any[] = [
         {
           name: "balancedUnbalanced",
           title: "Balanced / unbalanced",
-          type: "string",
-          options: { list: ["balanced", "unbalanced"] },
+          type: "array",
+          of: [{ type: "string", options: { list: ["balanced", "unbalanced"] } }],
           domain: ["cables-interconnects"],
         },
         {
