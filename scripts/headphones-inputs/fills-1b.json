@@ -1,0 +1,28 @@
+{
+  "task": "1b",
+  "fills": [
+    {
+      "id": "DZc43yHr6ydfgE7zB3xQZo",
+      "name": "Apos x Community Rock Lobster IEMs",
+      "set": { "connectivity": "wired", "anc": "passive" },
+      "sources": [
+        { "cell": "connectivity", "url": "https://apos.audio/products/apos-x-community-rock-lobster-iems", "quote": "Connector: 3.5mm wired, 4.4mm wired" },
+        { "cell": "anc", "url": "https://apos.audio/products/apos-x-community-rock-lobster-iems", "quote": "We set out to create an IEM you could take anywhere, plug into virtually anything" }
+      ]
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjh0awA",
+      "name": "CrinEar Protocol Max",
+      "unresolved": "maker's page shows the Protocol Max is a USB-C portable DAC-amplifier dongle, not a headphone; it has no earpiece, so anc (sealed vs open design) cannot be decided"
+    },
+    {
+      "id": "GPjMdcfFWZVrKyR2PB2jje",
+      "name": "SJY Horizon Closed Carbon Planar Magnetic Headphones",
+      "set": { "connectivity": "wired", "anc": "passive" },
+      "sources": [
+        { "cell": "connectivity", "url": "https://sjyaudio.com/products/horizon-closed-carbon-1", "quote": "Balanced 4.4mm 1.5M cable" },
+        { "cell": "anc", "url": "https://sjyaudio.com/products/horizon-closed-carbon-1", "quote": "Closed-back planar magnetic headphone" }
+      ]
+    }
+  ]
+}
