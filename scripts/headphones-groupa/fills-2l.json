@@ -1,0 +1,207 @@
+{
+  "task": "2l",
+  "fills": [
+    {
+      "id": "ZuUKzmkqDyQwdcwhxwQHiY",
+      "name": "Sennheiser Momentum Sport True Wireless Earbuds with Adaptive Noise Cancellation (Black)",
+      "set": {
+        "soundSignature": "Basshead",
+        "ipxRating": "IPX5",
+        "driverConfigBucket": "single-dynamic",
+        "impedanceOhms": 150,
+        "sensitivityDbMw": 110,
+        "freqResponseHz.min": 15,
+        "freqResponseHz.max": 18000
+      },
+      "sources": [
+        { "cell": "soundSignature", "url": "https://www.soundguys.com/sennheiser-momentum-sport-review-113978/" },
+        { "cell": "ipxRating", "url": "https://global.sennheiser-hearing.com/products/momentum-sport" },
+        { "cell": "driverConfigBucket", "url": "https://global.sennheiser-hearing.com/products/momentum-sport" },
+        { "cell": "impedanceOhms", "url": "https://fullspecs.net/wireless-headphone/sennheiser/momentum-sport-specifications/" },
+        { "cell": "sensitivityDbMw", "url": "https://global.sennheiser-hearing.com/products/momentum-sport" },
+        { "cell": "freqResponseHz.min", "url": "https://global.sennheiser-hearing.com/products/momentum-sport" },
+        { "cell": "freqResponseHz.max", "url": "https://global.sennheiser-hearing.com/products/momentum-sport" }
+      ],
+      "unresolvedCells": {}
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnQTeER",
+      "name": "Sennheiser RS 175 Headphones",
+      "set": {
+        "soundSignature": "Bright/Analytical",
+        "ipxRating": "none",
+        "driverConfigBucket": "single-dynamic",
+        "impedanceOhms": 32
+      },
+      "sources": [
+        { "cell": "soundSignature", "url": "https://zitseng.com/archives/8831" },
+        { "cell": "ipxRating", "url": "https://support.sennheiser-hearing.com/hc/en-us/articles/37868115267869-RS-175-195-Specifications" },
+        { "cell": "driverConfigBucket", "url": "https://support.sennheiser-hearing.com/hc/en-us/articles/37868115267869-RS-175-195-Specifications" },
+        { "cell": "impedanceOhms", "url": "https://www.richersounds.com/sennheiser-rs-175-black/" }
+      ],
+      "unresolvedCells": {}
+    },
+    {
+      "id": "GPjMdcfFWZVrKyR2PB2jje",
+      "name": "SJY Horizon Closed Carbon Planar Magnetic Headphones",
+      "set": {
+        "wearingStyle": "over-ear",
+        "acousticDesign": "closed-back",
+        "soundSignature": "Neutral",
+        "ipxRating": "none",
+        "driverConfigBucket": "planar",
+        "driverType": ["planar-magnetic"],
+        "portable": false,
+        "microphone": false,
+        "foldable": false,
+        "impedanceOhms": 11,
+        "sensitivityDbMw": 90
+      },
+      "sources": [
+        { "cell": "wearingStyle", "url": "https://sjyaudio.com/products/horizon-closed-carbon-1" },
+        { "cell": "acousticDesign", "url": "https://sjyaudio.com/products/horizon-closed-carbon-1" },
+        { "cell": "soundSignature", "url": "https://sjyaudio.com/products/horizon-closed-carbon-1" },
+        { "cell": "ipxRating", "url": "https://sjyaudio.com/products/horizon-closed-carbon-1" },
+        { "cell": "driverConfigBucket", "url": "https://sjyaudio.com/products/horizon-closed-carbon-1" },
+        { "cell": "driverType", "url": "https://sjyaudio.com/products/horizon-closed-carbon-1" },
+        { "cell": "portable", "url": "https://sjyaudio.com/products/horizon-closed-carbon-1" },
+        { "cell": "microphone", "url": "https://sjyaudio.com/products/horizon-closed-carbon-1" },
+        { "cell": "foldable", "url": "https://sjyaudio.com/products/horizon-closed-carbon-1" },
+        { "cell": "impedanceOhms", "url": "https://sjyaudio.com/products/horizon-closed-carbon-1" },
+        { "cell": "sensitivityDbMw", "url": "https://sjyaudio.com/products/horizon-closed-carbon-1" }
+      ],
+      "unresolvedCells": {
+        "freqResponseHz.min": "SJY's product page spec block lists only cable, weight, sensitivity and impedance; no frequency response range is published anywhere.",
+        "freqResponseHz.max": "SJY's product page spec block lists only cable, weight, sensitivity and impedance; no frequency response range is published anywhere."
+      }
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8eR7h",
+      "name": "SJY Zeph Open-Back Planar Magnetic Headphones",
+      "set": {
+        "soundSignature": "Bright/Analytical",
+        "ipxRating": "none"
+      },
+      "sources": [
+        { "cell": "soundSignature", "url": "https://sjyaudio.com/products/zeph-store-copy" },
+        { "cell": "ipxRating", "url": "https://sjyaudio.com/products/zeph-store-copy" }
+      ],
+      "unresolvedCells": {
+        "freqResponseHz.min": "SJY's spec block (driver size, impedance, sensitivity, thicknesses, connector, weight) publishes no frequency response range.",
+        "freqResponseHz.max": "SJY's spec block (driver size, impedance, sensitivity, thicknesses, connector, weight) publishes no frequency response range."
+      }
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjmDlGL",
+      "name": "Softears Volume S In-Ear Headphones",
+      "set": {
+        "acousticDesign": "closed-back",
+        "soundSignature": "Neutral",
+        "ipxRating": "none",
+        "sensitivityDbMw": 114
+      },
+      "sources": [
+        { "cell": "acousticDesign", "url": "https://eliseaudio.com/en-us/products/softears-volume-s" },
+        { "cell": "soundSignature", "url": "https://twister6.com/2025/04/28/softears-volume-s/" },
+        { "cell": "ipxRating", "url": "https://eliseaudio.com/en-us/products/softears-volume-s" },
+        { "cell": "sensitivityDbMw", "url": "https://eliseaudio.com/en-us/products/softears-volume-s" }
+      ],
+      "unresolvedCells": {}
+    },
+    {
+      "id": "ZuUKzmkqDyQwdcwhxwQLK7",
+      "name": "Sony Linkbuds Fit Truly Wireless Noise Cancelling Earbuds (White)",
+      "set": {
+        "soundSignature": "Warm",
+        "driverConfigBucket": "single-dynamic"
+      },
+      "sources": [
+        { "cell": "soundSignature", "url": "https://www.consumerreports.org/electronics-computers/headphones/sony-linkbuds-fit/m415796/" },
+        { "cell": "driverConfigBucket", "url": "https://www.sony.com/electronics/support/wireless-headphones-bluetooth-headphones/wf-ls910n/specifications" }
+      ],
+      "unresolvedCells": {
+        "impedanceOhms": "Sony's WF-LS910N specification page lists no impedance; retailer spec pages (fullspecs.net) mark it N/A.",
+        "sensitivityDbMw": "Sony publishes no sensitivity figure for the WF-LS910N and no retailer/review spec page lists one."
+      }
+    },
+    {
+      "id": "k27n1AQuIbSr5iozG2itJe",
+      "name": "Sony LinkBuds Truly Wireless Earbuds",
+      "set": {
+        "soundSignature": "Mid-Forward",
+        "driverConfigBucket": "single-dynamic",
+        "impedanceOhms": 16
+      },
+      "sources": [
+        { "cell": "soundSignature", "url": "https://im.com.au/av/sony-linkbuds-wf-l900-open-ring-hear-through-bt-earphones-review/" },
+        { "cell": "driverConfigBucket", "url": "https://www.sony.com/electronics/support/wireless-headphones-bluetooth-headphones/wf-l900" },
+        { "cell": "impedanceOhms", "url": "https://www.amazon.ca/dp/B09QNLR4GD" }
+      ],
+      "unresolvedCells": {
+        "sensitivityDbMw": "Sony publishes no sensitivity figure for the WF-L900 and no retailer/review spec page lists one."
+      }
+    },
+    {
+      "id": "n10eAegrGspodtsQw12meG",
+      "name": "Sony WF-1000XM5 Wireless In-Ear Headphones",
+      "set": {
+        "driverConfigBucket": "single-dynamic",
+        "impedanceOhms": 32
+      },
+      "sources": [
+        { "cell": "driverConfigBucket", "url": "https://www.sony.com/electronics/support/wireless-headphones-bluetooth-headphones/wf-1000xm5/specifications" },
+        { "cell": "impedanceOhms", "url": "https://www.soundguys.com/product/sony-wf-1000xm5/" }
+      ],
+      "unresolvedCells": {
+        "sensitivityDbMw": "Sony publishes no sensitivity figure for the WF-1000XM5 and no retailer/review spec page lists one."
+      }
+    },
+    {
+      "id": "ZuUKzmkqDyQwdcwhxwQPfT",
+      "name": "Sony WF-1000XM5 Wireless Noise Cancelling In-Ear Headphone Bundle with gSport Hardshell Case (Silver)",
+      "set": {
+        "driverConfigBucket": "single-dynamic",
+        "impedanceOhms": 32
+      },
+      "sources": [
+        { "cell": "driverConfigBucket", "url": "https://www.sony.com/electronics/support/wireless-headphones-bluetooth-headphones/wf-1000xm5/specifications" },
+        { "cell": "impedanceOhms", "url": "https://www.soundguys.com/product/sony-wf-1000xm5/" }
+      ],
+      "unresolvedCells": {
+        "sensitivityDbMw": "Sony publishes no sensitivity figure for the WF-1000XM5 and no retailer/review spec page lists one."
+      }
+    },
+    {
+      "id": "dLGDVDmEEI2lV8CArIgSA0",
+      "name": "Sony WF-G700N INZONE Buds Truly Wireless Noise Cancelling Earbud Bundle with gSport Case (Black)",
+      "set": {
+        "driverConfigBucket": "single-dynamic",
+        "impedanceOhms": 48,
+        "sensitivityDbMw": 92
+      },
+      "sources": [
+        { "cell": "driverConfigBucket", "url": "https://www.sony.com/electronics/support/headphones-gaming-headphones/wf-g700n/specifications" },
+        { "cell": "impedanceOhms", "url": "https://fullspecs.net/wireless-headphone/sony/wf-g700n-specifications/" },
+        { "cell": "sensitivityDbMw", "url": "https://fullspecs.net/wireless-headphone/sony/wf-g700n-specifications/" }
+      ],
+      "unresolvedCells": {}
+    },
+    {
+      "id": "dLGDVDmEEI2lV8CArIgVky",
+      "name": "Sony WFL910 Linkbuds Truly Wireless Earbuds (Black)",
+      "set": {
+        "soundSignature": "Mid-Forward",
+        "driverConfigBucket": "single-dynamic",
+        "impedanceOhms": 16
+      },
+      "sources": [
+        { "cell": "soundSignature", "url": "https://im.com.au/av/sony-linkbuds-wf-l900-open-ring-hear-through-bt-earphones-review/" },
+        { "cell": "driverConfigBucket", "url": "https://www.sony.com/electronics/support/wireless-headphones-bluetooth-headphones/wf-l900" },
+        { "cell": "impedanceOhms", "url": "https://www.amazon.ca/dp/B09QNLR4GD" }
+      ],
+      "unresolvedCells": {
+        "sensitivityDbMw": "Sony publishes no sensitivity figure for the WF-L900 (retailer SKU WFL910) and no retailer/review spec page lists one."
+      }
+    }
+  ]
+}
