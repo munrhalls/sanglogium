@@ -5,14 +5,14 @@ export const headphonesFields: any[] = [
         {
           name: "wearingStyle",
           title: "Wearing style",
-          type: "array",
-          of: [{ type: "string", options: { list: vocabFor("wearingStyle") } }],
+          type: "string",
+          options: { list: vocabFor("wearingStyle") },
         },
         {
           name: "acousticDesign",
           title: "Acoustic design",
-          type: "array",
-          of: [{ type: "string", options: { list: vocabFor("acousticDesign") } }],
+          type: "string",
+          options: { list: vocabFor("acousticDesign") },
           description: "Renamed from backDesign 2026-09-13.",
         },
         {
