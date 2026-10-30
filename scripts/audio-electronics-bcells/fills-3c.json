@@ -1,0 +1,220 @@
+{
+  "task": "3c",
+  "fills": [
+    {
+      "id": "Pn6oyV4Ks5AcNbecjh34kd",
+      "name": "Feliks Audio Echo Classic",
+      "set": {
+        "outputs": ["headphone-jack", "pre-out-rca"]
+      },
+      "sources": [
+        { "cell": "outputs", "url": "https://www.richersounds.com/feliks-audio-echo-classic/" }
+      ]
+    },
+    {
+      "id": "k27n1AQuIbSr5iozG1vExT",
+      "name": "Feliks Audio Echo MK II",
+      "set": {
+        "outputs": ["headphone-jack", "pre-out-rca"]
+      },
+      "sources": [
+        { "cell": "outputs", "url": "https://bloomaudio.com/products/feliks-audio-echo-mk-2" }
+      ]
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjh3AqB",
+      "name": "Feliks Audio Envy Flagship Desktop Headphone Tube Amplifier",
+      "set": {
+        "outputs": ["headphone-jack", "pre-out-rca", "pre-out-xlr"]
+      },
+      "sources": [
+        { "cell": "outputs", "url": "https://feliksaudio.pl/product/envy/" }
+      ]
+    },
+    {
+      "id": "moXlkADK7m1DHgGwWwEeK6",
+      "name": "Feliks Audio Envy Flagship Desktop Headphone Tube Amplifier - Open Box",
+      "set": {
+        "outputs": ["headphone-jack", "pre-out-rca", "pre-out-xlr"]
+      },
+      "sources": [
+        { "cell": "outputs", "url": "https://feliksaudio.pl/product/envy/" }
+      ]
+    },
+    {
+      "id": "ZuUKzmkqDyQwdcwhxlJkHG",
+      "name": "HiFi Rose RD160 DAC (Silver)",
+      "set": {
+        "hiResCertification": ["mqa"],
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "hiResCertification", "url": "https://www.henleyaudio.co.uk/wwwroot/Media/downloads/products/HROSRD160/HROSRD160_Product%20Manual.pdf" },
+        { "cell": "streamingPlatformSupport", "url": "https://www.stereonet.com/news/hifi-rose-rd160-dac-preamplifier-has-future-fi-looks" },
+        { "cell": "networkConnection", "url": "https://www.stereonet.com/news/hifi-rose-rd160-dac-preamplifier-has-future-fi-looks" }
+      ]
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjh1b8Y",
+      "name": "HiFi Rose RS150B Reference HiFi Network Streamer",
+      "set": {
+        "voiceAssistant": [],
+        "multiroomSupport": true
+      },
+      "sources": [
+        { "cell": "voiceAssistant", "url": "https://www.hifiroseusa.com/products/hifi-rose-rs150b-high-performance-network-streamer" },
+        { "cell": "multiroomSupport", "url": "https://www.hifiroseusa.com/products/hifi-rose-rs150b-high-performance-network-streamer" }
+      ]
+    },
+    {
+      "id": "k27n1AQuIbSr5iozG2j6zk",
+      "name": "HiFi Rose RS250A Network Streamer",
+      "set": {
+        "voiceAssistant": [],
+        "multiroomSupport": true
+      },
+      "sources": [
+        { "cell": "voiceAssistant", "url": "https://www.crutchfield.com/S-BMd5OiVhOwv/p_358RS250AB/HiFi-Rose-RS250A-Black.html" },
+        { "cell": "multiroomSupport", "url": "https://www.henleyaudio.co.uk/media/frqjngub/product-announcement-hi-fi-rose-rs250a-december-2022.pdf" }
+      ]
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIBAL1Lw",
+      "name": "HiFi Rose RS520 Network Streamer & Integrated Amplifier",
+      "set": {
+        "phonoStageBuiltIn": "none",
+        "voiceAssistant": [],
+        "multiroomSupport": true
+      },
+      "sources": [
+        { "cell": "phonoStageBuiltIn", "url": "http://stereophile.com/content/hifi-rose-rs520-streaming-integrated-amplifier" },
+        { "cell": "voiceAssistant", "url": "https://www.hifiroseusa.com/products/rs520-wireless-network-streamer-integrated-amplifier" },
+        { "cell": "multiroomSupport", "url": "https://www.hifiroseusa.com/products/rs520-wireless-network-streamer-integrated-amplifier" }
+      ]
+    },
+    {
+      "id": "moXlkADK7m1DHgGwWwEaXf",
+      "name": "SMSL SU-6 Desktop DAC",
+      "set": {
+        "maxSampleRateBitDepth": "32-bit/768kHz",
+        "dsdSupport": "dsd256-plus",
+        "hiResCertification": ["hi-res-audio"],
+        "dacChipsetFamily": ["ess-sabre"],
+        "streamingPlatformSupport": [],
+        "networkConnection": [],
+        "voiceAssistant": [],
+        "multiroomSupport": false
+      },
+      "sources": [
+        { "cell": "maxSampleRateBitDepth", "url": "https://www.smsl-audio.com/portal/product/detail/id/773.html" },
+        { "cell": "dsdSupport", "url": "https://www.smsl-audio.com/portal/product/detail/id/773.html" },
+        { "cell": "hiResCertification", "url": "https://www.smsl-audio.com/portal/product/detail/id/773.html" },
+        { "cell": "dacChipsetFamily", "url": "https://www.smsl-audio.com/portal/product/detail/id/773.html" },
+        { "cell": "streamingPlatformSupport", "url": "https://www.smsl-audio.com/portal/product/detail/id/773.html" },
+        { "cell": "networkConnection", "url": "https://www.smsl-audio.com/portal/product/detail/id/773.html" },
+        { "cell": "voiceAssistant", "url": "https://www.smsl-audio.com/portal/product/detail/id/773.html" },
+        { "cell": "multiroomSupport", "url": "https://www.smsl-audio.com/portal/product/detail/id/773.html" }
+      ]
+    },
+    {
+      "id": "n10eAegrGspodtsQvy3cvI",
+      "name": "SMSL SU-X Desktop DAC",
+      "set": {
+        "maxSampleRateBitDepth": "32-bit/768kHz",
+        "dsdSupport": "dsd256-plus",
+        "hiResCertification": ["mqa", "hi-res-audio"],
+        "dacChipsetFamily": ["ess-sabre"],
+        "streamingPlatformSupport": [],
+        "networkConnection": [],
+        "voiceAssistant": [],
+        "multiroomSupport": false
+      },
+      "sources": [
+        { "cell": "maxSampleRateBitDepth", "url": "https://www.smsl-audio.com/portal/product/detail/id/859.html" },
+        { "cell": "dsdSupport", "url": "https://www.smsl-audio.com/portal/product/detail/id/859.html" },
+        { "cell": "hiResCertification", "url": "https://www.smsl-audio.com/portal/product/detail/id/859.html" },
+        { "cell": "dacChipsetFamily", "url": "https://www.smsl-audio.com/portal/product/detail/id/859.html" },
+        { "cell": "streamingPlatformSupport", "url": "https://www.smsl-audio.com/portal/product/detail/id/859.html" },
+        { "cell": "networkConnection", "url": "https://www.smsl-audio.com/portal/product/detail/id/859.html" },
+        { "cell": "voiceAssistant", "url": "https://www.smsl-audio.com/portal/product/detail/id/859.html" },
+        { "cell": "multiroomSupport", "url": "https://www.smsl-audio.com/portal/product/detail/id/859.html" }
+      ]
+    },
+    {
+      "id": "DZc43yHr6ydfgE7zB41Jlm",
+      "name": "SMSL VMV D3 Advanced R-2R DAC (Digital-to-Analog Converter)",
+      "set": {
+        "maxSampleRateBitDepth": "32-bit/768kHz",
+        "dsdSupport": "dsd256-plus",
+        "hiResCertification": ["mqa"],
+        "dacChipsetFamily": ["r2r-ladder"],
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "maxSampleRateBitDepth", "url": "https://www.audiophonics.fr/en/dac-with-volume/smsl-vmv-d3-balanced-dac-r2r-4x-pcm1704-32bit-768khz-dsd512-mqa-p-15775.html" },
+        { "cell": "dsdSupport", "url": "https://www.audiophonics.fr/en/dac-with-volume/smsl-vmv-d3-balanced-dac-r2r-4x-pcm1704-32bit-768khz-dsd512-mqa-p-15775.html" },
+        { "cell": "hiResCertification", "url": "https://www.audiophonics.fr/en/dac-with-volume/smsl-vmv-d3-balanced-dac-r2r-4x-pcm1704-32bit-768khz-dsd512-mqa-p-15775.html" },
+        { "cell": "dacChipsetFamily", "url": "https://apos.audio/products/smsl-vmv-d3-advanced-r-2r-dac-digital-to-analog-converter" },
+        { "cell": "streamingPlatformSupport", "url": "https://www.audiophonics.fr/en/dac-with-volume/smsl-vmv-d3-balanced-dac-r2r-4x-pcm1704-32bit-768khz-dsd512-mqa-p-15775.html" },
+        { "cell": "networkConnection", "url": "https://www.audiophonics.fr/en/dac-with-volume/smsl-vmv-d3-balanced-dac-r2r-4x-pcm1704-32bit-768khz-dsd512-mqa-p-15775.html" }
+      ]
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIBAKFRO",
+      "name": "Woo Audio Tube Mini Portable DAC and Tube Amp",
+      "set": {
+        "hiResCertification": ["mqa"],
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "hiResCertification", "url": "https://majorhifi.com/woo-audio-tube-mini/" },
+        { "cell": "streamingPlatformSupport", "url": "https://wooaudio.com/amplifiers/tube-mini" },
+        { "cell": "networkConnection", "url": "https://wooaudio.com/amplifiers/tube-mini" }
+      ]
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIBChpSq",
+      "name": "Woo Audio WA23 LUNA",
+      "set": {
+        "channelCount": ["2.0"]
+      },
+      "sources": [
+        { "cell": "channelCount", "url": "https://wooaudio.com/amplifiers/wa23-luna" }
+      ],
+      "unresolvedCells": {
+        "powerOutputPerChannelW": "Woo Audio publishes no wattage for the WA23 LUNA (spec field left blank on wooaudio.com; Stereophile notes power ratings are not disclosed)"
+      }
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnRL7UE",
+      "name": "Woo Audio WA7 Fireflies 3rd Gen Headphone Tube Amplifier",
+      "set": {
+        "hiResCertification": [],
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "hiResCertification", "url": "https://wooaudio.com/amplifiers/wa7-3rd-generation" },
+        { "cell": "streamingPlatformSupport", "url": "https://wooaudio.com/amplifiers/wa7-3rd-generation" },
+        { "cell": "networkConnection", "url": "https://wooaudio.com/amplifiers/wa7-3rd-generation" }
+      ]
+    },
+    {
+      "id": "k27n1AQuIbSr5iozG1vIfh",
+      "name": "Woo Audio WA8 Eclipse Portable Vacuum Tube Headphone Amp & DAC",
+      "set": {
+        "hiResCertification": [],
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "hiResCertification", "url": "https://wooaudio.com/amplifiers/wa8" },
+        { "cell": "streamingPlatformSupport", "url": "https://wooaudio.com/amplifiers/wa8" },
+        { "cell": "networkConnection", "url": "https://wooaudio.com/amplifiers/wa8" }
+      ]
+    }
+  ]
+}
