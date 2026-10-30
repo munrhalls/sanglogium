@@ -8,7 +8,7 @@
 export const FILTER_VOCAB: Record<string, string[]> = {
   wearingStyle: ['over-ear', 'on-ear', 'in-ear'],
   acousticDesign: ['open-back', 'closed-back', 'semi-open'],
-  connectivity: ['wired', 'wireless', 'true-wireless', 'hybrid'],
+  connectivity: ['wired', 'wireless', 'true-wireless', 'hybrid', 'rf-wireless'],
   soundSignature: ['Neutral', 'Warm', 'Bright/Analytical', 'Dark', 'V-Shaped', 'Basshead', 'Mid-Forward', 'Harman-target-like'],
   anc: ['anc', 'passive', 'none'],
   driverType: ['dynamic', 'planar-magnetic', 'electrostatic', 'balanced-armature', 'hybrid', 'amt', 'bone-conduction', 'electret'],
