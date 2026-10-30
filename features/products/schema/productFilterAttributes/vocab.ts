@@ -24,7 +24,7 @@ export const FILTER_VOCAB: Record<string, string[]> = {
   accessoryType: ['cables-interconnects', 'replacement-parts', 'cases-storage-transport', 'adapters-converters', 'cleaning-maintenance', 'stands-isolation'],
   compatibleProductType: ['headphone', 'speaker', 'amplifier-source', 'universal-any'],
   cableFunction: ['headphone-cable', 'interconnect-rca-xlr', 'digital-usb-coaxial-optical-aes-ebu-ethernet'],
-  connectorTermination: ['rca', 'xlr', '3.5mm', '2.5mm', '4.4mm', '6.35mm', '4-pin-mini-xlr', 'mini-to-rca'],
+  connectorTermination: ['rca', 'xlr', '3.5mm', '2.5mm', '4.4mm', '6.35mm', '4-pin-mini-xlr', 'mini-to-rca', 'usb-a', 'usb-b', 'usb-micro', 'usb-c'],
   conductorMaterial: ['copper-ofc', 'silver', 'silver-plated-copper'],
   partType: ['ear-pads-cushions', 'ear-tips'],
 };
