@@ -1,0 +1,117 @@
+{
+  "task": "1b",
+  "fills": [
+    {
+      "id": "MrEMtYwMtrFDGWmRnN8QYu",
+      "name": "iFi Audio Pro iDSD Signature DAC/Amp & Streamer",
+      "set": { "rackMountable19": false },
+      "sources": [
+        { "cell": "rackMountable19", "url": "https://ifi-audio.com/products/pro-idsd-signature" }
+      ]
+    },
+    {
+      "id": "n10eAegrGspodtsQvy4D2G",
+      "name": "iFi Audio Uno",
+      "set": { "rackMountable19": false },
+      "sources": [
+        { "cell": "rackMountable19", "url": "https://ifi-audio.com/products/uno" }
+      ]
+    },
+    {
+      "id": "k27n1AQuIbSr5iozG1vDSz",
+      "name": "iFi Audio xDSD Gryphon Portable Bluetooth DAC & Headphone Amplifier",
+      "set": { "rackMountable19": false },
+      "sources": [
+        { "cell": "rackMountable19", "url": "https://ifi-audio.com/products/xdsd-gryphon" }
+      ]
+    },
+    {
+      "id": "dLGDVDmEEI2lV8CArAcpNU",
+      "name": "iFi Audio ZEN Air CAN High-Power Analogue Headphone Amplifier",
+      "set": { "rackMountable19": false },
+      "sources": [
+        { "cell": "rackMountable19", "url": "https://downloads.ifi-audio.com/wp-content/uploads/2022/05/ZEN-Air-CAN-User-Manual-Ver1.02_ok.pdf" }
+      ]
+    },
+    {
+      "id": "Y7l1IhzX2fnyiano4iq6jp",
+      "name": "iFi Audio Zen Can 3 Analog Headphone Amplifier",
+      "set": { "rackMountable19": false },
+      "sources": [
+        { "cell": "rackMountable19", "url": "https://ifi-audio.com/products/zen-can-3" }
+      ]
+    },
+    {
+      "id": "Y7l1IhzX2fnyiano4jOIfY",
+      "name": "iFi Audio Zen DAC 3 Balanced Headphone Amp & DAC",
+      "set": { "rackMountable19": false },
+      "sources": [
+        { "cell": "rackMountable19", "url": "https://downloads.ifi-audio.com/wp-content/uploads/2024/04/ZEN_DAC_3_Tech_Lowdown_1.1.pdf" }
+      ]
+    },
+    {
+      "id": "k27n1AQuIbSr5iozG2ixn6",
+      "name": "iFi Audio Zen Stream",
+      "set": { "rackMountable19": false },
+      "sources": [
+        { "cell": "rackMountable19", "url": "https://downloads.ifi-audio.com/wp-content/uploads/2023/02/ZEN-Stream-User-Manual-Ver1.45_ok.pdf" }
+      ]
+    },
+    {
+      "id": "k27n1AQuIbSr5iozG2iztx",
+      "name": "iFi Audio Zen Stream - Open Box",
+      "set": { "rackMountable19": false },
+      "sources": [
+        { "cell": "rackMountable19", "url": "https://downloads.ifi-audio.com/wp-content/uploads/2023/02/ZEN-Stream-User-Manual-Ver1.45_ok.pdf" }
+      ]
+    },
+    {
+      "id": "DZc43yHr6ydfgE7zB46CG4",
+      "name": "iFi GO bar Kensei",
+      "set": { "rackMountable19": false },
+      "sources": [
+        { "cell": "rackMountable19", "url": "https://ifi-audio.com/products/go-bar-kensei" }
+      ]
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8eFfR",
+      "name": "iFi GO blu Air Portable Hi-Res Bluetooth DAC & Headphone Amp",
+      "set": { "rackMountable19": false },
+      "sources": [
+        { "cell": "rackMountable19", "url": "https://ifi-audio.com/products/go-blu-air" }
+      ]
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8lEY3",
+      "name": "iFi Hip-DAC 3",
+      "set": { "rackMountable19": false },
+      "sources": [
+        { "cell": "rackMountable19", "url": "https://ifi-audio.com/products/hip-dac-3" }
+      ]
+    },
+    {
+      "id": "GPjMdcfFWZVrKyR2PB5NeM",
+      "name": "iFi NEO Stream",
+      "set": { "rackMountable19": false },
+      "sources": [
+        { "cell": "rackMountable19", "url": "https://ifi-audio.com/products/neo-stream" }
+      ]
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8eD0B",
+      "name": "iFi ZEN Blue 3 Bluetooth Desktop DAC",
+      "set": { "rackMountable19": false },
+      "sources": [
+        { "cell": "rackMountable19", "url": "https://ifi-audio.com/products/zen-blue-3" }
+      ]
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8huOv",
+      "name": "iFi Zen CAN 3",
+      "set": { "rackMountable19": false },
+      "sources": [
+        { "cell": "rackMountable19", "url": "https://ifi-audio.com/products/zen-can-3" }
+      ]
+    }
+  ]
+}
