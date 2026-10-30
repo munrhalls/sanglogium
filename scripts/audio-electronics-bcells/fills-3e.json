@@ -1,0 +1,227 @@
+{
+  "task": "3e",
+  "fills": [
+    {
+      "id": "moXlkADK7m1DHgGwWwEgQe",
+      "name": "AudioQuest Dragonfly Cobalt USB DAC/Amp",
+      "set": {
+        "dsdSupport": "none",
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "dsdSupport", "url": "https://www.bhphotovideo.com/c/product/1494827-REG/audioquest_dragonflycob_dragonfly_cobalt_usb.html" },
+        { "cell": "streamingPlatformSupport", "url": "https://www.audioquest.com/products/dragonfly-cobalt" },
+        { "cell": "networkConnection", "url": "https://www.audioquest.com/products/dragonfly-cobalt" }
+      ]
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnRGtU3",
+      "name": "Aune Audio YUKI Portable DAC and Headphone Amplifier",
+      "set": {
+        "hiResCertification": [],
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "hiResCertification", "url": "https://www.aune-store.com/en/aune-yuki-dongle-dac_110207_1236/" },
+        { "cell": "streamingPlatformSupport", "url": "https://www.aune-store.com/en/aune-yuki-dongle-dac_110207_1236/" },
+        { "cell": "networkConnection", "url": "https://www.aune-store.com/en/aune-yuki-dongle-dac_110207_1236/" }
+      ]
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnRJqYN",
+      "name": "Auris Audio Euterpe",
+      "set": {
+        "hiResCertification": [],
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "hiResCertification", "url": "https://www.stereonet.com/news/auris-audio-euterpe-a-delightful-valve-headphone-amplifier" },
+        { "cell": "streamingPlatformSupport", "url": "https://www.stereonet.com/news/auris-audio-euterpe-a-delightful-valve-headphone-amplifier" },
+        { "cell": "networkConnection", "url": "https://www.stereonet.com/news/auris-audio-euterpe-a-delightful-valve-headphone-amplifier" }
+      ]
+    },
+    {
+      "id": "n10eAegrGspodtsQvy4Df8",
+      "name": "Benchmark HPA4 Desktop Headphone Amplifier (SILVER)",
+      "set": {
+        "amplification": "solid-state"
+      },
+      "sources": [
+        { "cell": "amplification", "url": "https://benchmarkmedia.com/products/hpa4" }
+      ]
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnNHjjW",
+      "name": "Bluesound Powernode Edge Streamer and Amplifier",
+      "set": {
+        "amplification": "class-d"
+      },
+      "sources": [
+        { "cell": "amplification", "url": "https://www.bluesound.com/products/powernode-edge/" }
+      ]
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjkSwUK",
+      "name": "Cambridge Audio DacMagic 100",
+      "set": {
+        "dacChipsetFamily": []
+      },
+      "sources": [
+        { "cell": "dacChipsetFamily", "url": "https://manuals.cambridgeaudio.com/en/dacmagic-100/technical-specifications" }
+      ]
+    },
+    {
+      "id": "moXlkADK7m1DHgGwWwEUpi",
+      "name": "DAC204 Desktop DAC",
+      "set": {
+        "hiResCertification": [],
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "hiResCertification", "url": "https://www.stereophile.com/content/weiss-dac204-da-processor-specifications" },
+        { "cell": "streamingPlatformSupport", "url": "https://www.stereophile.com/content/weiss-dac204-da-processor-specifications" },
+        { "cell": "networkConnection", "url": "https://www.stereophile.com/content/weiss-dac204-da-processor-specifications" }
+      ]
+    },
+    {
+      "id": "k27n1AQuIbSr5iozG1vKTr",
+      "name": "Lake People G111 Desktop Headphone Amplifier",
+      "set": {
+        "amplification": "solid-state",
+        "outputs": ["headphone-jack"]
+      },
+      "sources": [
+        { "cell": "amplification", "url": "https://www.lake-people.de/en/categories/headphone-preamps/lake-people-phone-amp-g111-mkii" },
+        { "cell": "outputs", "url": "https://www.lake-people.de/en/categories/headphone-preamps/lake-people-phone-amp-g111-mkii" }
+      ]
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIBChaz2",
+      "name": "Luxman P-100 Centennial Headphone Amplifier",
+      "set": {
+        "amplification": "solid-state",
+        "outputs": ["headphone-jack", "pre-out-rca"]
+      },
+      "sources": [
+        { "cell": "amplification", "url": "https://www.luxman.com/product/detail.php?id=52" },
+        { "cell": "outputs", "url": "https://www.luxman.cz/data/novinky/p100c_release.pdf" }
+      ]
+    },
+    {
+      "id": "ZuUKzmkqDyQwdcwhxlIflR",
+      "name": "Marantz SACD10 CD Player (Black)",
+      "set": {
+        "dacChipsetFamily": []
+      },
+      "sources": [
+        { "cell": "dacChipsetFamily", "url": "https://www.marantz.com/on/demandware.static/-/Library-Sites-marantz_northamerica_shared/default/dw46185f70/archive-downloads/Marantz-SACD-10-Info-Sheet.pdf" }
+      ]
+    },
+    {
+      "id": "ZuUKzmkqDyQwdcwhxlJpXB",
+      "name": "McIntosh DS200 Streaming DAC",
+      "set": {
+        "dacChipsetFamily": ["ess-sabre"],
+        "multiroomSupport": true
+      },
+      "sources": [
+        { "cell": "dacChipsetFamily", "url": "https://www.stereophile.com/content/mcintosh-ds200-streaming-da-processor-specifications" },
+        { "cell": "multiroomSupport", "url": "https://www.stereophile.com/content/mcintosh-ds200-streaming-da-processor-specifications" }
+      ]
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnNIk7B",
+      "name": "Naim Uniti Atom Amplifier Headphone Edition",
+      "set": {
+        "amplification": "solid-state",
+        "outputs": ["headphone-jack", "pre-out-xlr", "pre-out-rca", "subwoofer-out"],
+        "powerOutputPerChannelW": 1.5,
+        "channelCount": ["2.0"],
+        "phonoStageBuiltIn": "none",
+        "trigger12v": false,
+        "remoteControlIncluded": true,
+        "voiceAssistant": []
+      },
+      "sources": [
+        { "cell": "amplification", "url": "https://www.naimaudio.com/products/uniti-atom-headphone-edition" },
+        { "cell": "outputs", "url": "https://www.naimaudio.com/products/uniti-atom-headphone-edition" },
+        { "cell": "powerOutputPerChannelW", "url": "https://www.naimaudio.com/products/uniti-atom-headphone-edition" },
+        { "cell": "channelCount", "url": "https://www.naimaudio.com/products/uniti-atom-headphone-edition" },
+        { "cell": "phonoStageBuiltIn", "url": "https://www.naimaudio.com/products/uniti-atom-headphone-edition" },
+        { "cell": "trigger12v", "url": "https://www.naimaudio.com/products/uniti-atom-headphone-edition" },
+        { "cell": "remoteControlIncluded", "url": "https://dam.focal-naim.com/m/2a7af84ce1455b62/original/FP_Uniti-Atom-Headphone-Edition-_-EN-pdf.pdf" },
+        { "cell": "voiceAssistant", "url": "https://www.naimaudio.com/products/uniti-atom-headphone-edition" }
+      ]
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8i9Jf",
+      "name": "Orchard Audio Valencia Balanced Headphone Power Amp",
+      "set": {
+        "amplification": "solid-state"
+      },
+      "sources": [
+        { "cell": "amplification", "url": "https://orchardaudio.com/shop/valencia-headphone-amplifer/" }
+      ]
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjguegb",
+      "name": "RME ADI-2 DAC FS Desktop DAC & Headphone Amp",
+      "set": {
+        "streamingPlatformSupport": [],
+        "networkConnection": []
+      },
+      "sources": [
+        { "cell": "streamingPlatformSupport", "url": "https://rme-audio.de/adi-2-dac.html" },
+        { "cell": "networkConnection", "url": "https://rme-audio.de/adi-2-dac.html" }
+      ]
+    },
+    {
+      "id": "n10eAegrGspodtsQvy3xAp",
+      "name": "Sennheiser HDV 820 Headphone Amplifier",
+      "set": {
+        "amplification": "solid-state"
+      },
+      "sources": [
+        { "cell": "amplification", "url": "https://global.sennheiser-hearing.com/products/hdv-820" }
+      ]
+    },
+    {
+      "id": "DZc43yHr6ydfgE7zB41H2s",
+      "name": "VMV D2R MKII Desktop DAC (Digital-to-Analog Converter)",
+      "set": {
+        "dacChipsetFamily": []
+      },
+      "sources": [
+        { "cell": "dacChipsetFamily", "url": "https://www.smsl-audio.com/portal/product/detail/id/745.html" }
+      ]
+    },
+    {
+      "id": "GPjMdcfFWZVrKyR2PB7cLm",
+      "name": "YULONG DAART A39 Desktop R2R Pre-Amp & Headphone Amplifier",
+      "set": {
+        "amplification": "solid-state",
+        "powerOutputPerChannelW": 6
+      },
+      "sources": [
+        { "cell": "amplification", "url": "https://apos.audio/products/yulong-a39-desktop-headphone-amplifier" },
+        { "cell": "powerOutputPerChannelW", "url": "https://dgtcentral.com/yulong-daart-a39-r2r-desktop-headphone-amp-preamp/" }
+      ]
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnNA955",
+      "name": "Zähl HM1 Reference Desktop Headphone Amplifier",
+      "set": {
+        "amplification": "solid-state",
+        "outputs": ["headphone-jack", "pre-out-xlr", "pre-out-rca"]
+      },
+      "sources": [
+        { "cell": "amplification", "url": "https://hm1.zaehl.com/en/" },
+        { "cell": "outputs", "url": "https://zaehl.com/products/hm1-headphones-mixing-amplifier" }
+      ]
+    }
+  ]
+}
