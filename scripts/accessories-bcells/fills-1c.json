@@ -1,0 +1,274 @@
+{
+  "task": "1c",
+  "fills": [
+    {
+      "id": "3O1ZNp54LWQGln4uEAUGAa",
+      "name": "64 Audio Premium Pearl Cable (3.5mm)",
+      "set": { "lengthM": [1.22] },
+      "sources": [
+        { "cell": "lengthM", "url": "https://www.e-earphone.jp/products/568764" }
+      ]
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIB6cQtu",
+      "name": "ALO audio Reference 8 | Mini to Mini Cable",
+      "set": { "balancedUnbalanced": ["unbalanced"] },
+      "sources": [
+        { "cell": "balancedUnbalanced", "url": "https://www.mixwave.co.jp/c_audio/item/alo-audio/reference-8-mini-to-mini-cable.html" }
+      ],
+      "unresolvedCells": { "lengthM": "Checked ALO/mixwave product spec pages and retailers (e-earphone, gdshop, audio46); no page states a cable length for the Reference 8 Mini to Mini." }
+    },
+    {
+      "id": "GPjMdcfFWZVrKyR2PB2mFi",
+      "name": "Apos x Z Reviews Magia Cable",
+      "set": {
+        "connectorTermination": ["3.5mm", "2.5mm", "4.4mm", "6.35mm", "xlr", "4-pin-mini-xlr"],
+        "lengthM": [1.5, 3],
+        "conductorMaterial": ["copper-ofc"],
+        "balancedUnbalanced": ["balanced", "unbalanced"]
+      },
+      "sources": [
+        { "cell": "connectorTermination", "url": "https://apos.audio/products/apos-z-reviews-magia-cable" },
+        { "cell": "lengthM", "url": "https://apos.audio/products/apos-z-reviews-magia-cable" },
+        { "cell": "conductorMaterial", "url": "https://apos.audio/products/apos-z-reviews-magia-cable" },
+        { "cell": "balancedUnbalanced", "url": "https://apos.audio/products/apos-z-reviews-magia-cable" }
+      ]
+    },
+    {
+      "id": "Y7l1IhzX2fnyiano58Gmxj",
+      "name": "AudioQuest Cinnamon USB to Micro Audio Cable - 2.46 ft. (.75m)",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "connectorTermination": "Digital USB-A to Micro-USB cable (AudioQuest spec); neither connector has a value in the allowed list.",
+        "balancedUnbalanced": "Digital USB cable; no balanced/unbalanced signal path applies and the maker states none."
+      }
+    },
+    {
+      "id": "Y7l1IhzX2fnyiano58GsCK",
+      "name": "AudioQuest Forest USB to Micro High Definition Digital Audio Cable - 1.5M",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "connectorTermination": "Digital USB-A to Micro-USB cable (AudioQuest spec); neither connector has a value in the allowed list.",
+        "balancedUnbalanced": "Digital USB cable; no balanced/unbalanced signal path applies and the maker states none."
+      }
+    },
+    {
+      "id": "mhejwYdgiH5W70wqaK7ngk",
+      "name": "AudioQuest Pearl USB-A to USB-B Cable - 4.92ft. (1.5m)",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": {
+        "connectorTermination": "Digital USB-A to USB-B cable (AudioQuest spec); neither connector has a value in the allowed list.",
+        "balancedUnbalanced": "Digital USB cable; no balanced/unbalanced signal path applies and the maker states none."
+      }
+    },
+    {
+      "id": "GPjMdcfFWZVrKyR2PB7nEI",
+      "name": "Cables for Rock Lobster IEM",
+      "set": { "balancedUnbalanced": ["balanced", "unbalanced"] },
+      "sources": [
+        { "cell": "balancedUnbalanced", "url": "https://apos.audio/products/cables-for-rock-lobster-iem" }
+      ]
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjh3ghZ",
+      "name": "Crystal Cable DUET for Focal Utopia",
+      "set": {
+        "connectorTermination": ["2.5mm", "3.5mm", "4.4mm", "6.35mm", "xlr"],
+        "conductorMaterial": ["silver"],
+        "balancedUnbalanced": ["balanced", "unbalanced"]
+      },
+      "sources": [
+        { "cell": "connectorTermination", "url": "https://crystalcable.com/duet-series/" },
+        { "cell": "conductorMaterial", "url": "https://crystalcable.com/duet-series/" },
+        { "cell": "balancedUnbalanced", "url": "https://crystalcable.com/duet-series/" }
+      ]
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIB6cRSG",
+      "name": "Dan Clark Audio DUMMER Cable | Headphone Cable for AEON and ETHER",
+      "set": { "conductorMaterial": ["copper-ofc"] },
+      "sources": [
+        { "cell": "conductorMaterial", "url": "https://headfonics.com/dan-clark-audio-aeon-2-first-contact/" }
+      ]
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIB6cVoW",
+      "name": "Dekoni Audio Balanced 4.4mm Cable for Sennheiser HD600 | Replacement Headphone Cable",
+      "set": {
+        "lengthM": [1.2],
+        "conductorMaterial": ["silver-plated-copper"]
+      },
+      "sources": [
+        { "cell": "lengthM", "url": "https://bloomaudio.com/products/dekoni-audio-balanced-4-4mm-cable-for-sennheiser-hd600" },
+        { "cell": "conductorMaterial", "url": "https://bloomaudio.com/products/dekoni-audio-balanced-4-4mm-cable-for-sennheiser-hd600" }
+      ]
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjbXY7s",
+      "name": "Dekoni Audio Balanced XLR Cable for Sennheiser HD800 | Replacement Headphone Cable",
+      "set": {
+        "connectorTermination": ["xlr"],
+        "lengthM": [1.2]
+      },
+      "sources": [
+        { "cell": "connectorTermination", "url": "https://dekoniaudio.com/products/dekoni-audio-balanced-4-pin-xlr-cable-for-sennheiser-hd800-hd800s-hd820-headphones-12m-length" },
+        { "cell": "lengthM", "url": "https://dekoniaudio.com/products/dekoni-audio-balanced-4-pin-xlr-cable-for-sennheiser-hd800-hd800s-hd820-headphones-12m-length" }
+      ]
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnH5lm0",
+      "name": "Eletech Aristotle | Copper IEM Upgrade Cable",
+      "set": {
+        "lengthM": [1.2],
+        "balancedUnbalanced": ["balanced", "unbalanced"]
+      },
+      "sources": [
+        { "cell": "lengthM", "url": "https://www.e-earphone.jp/products/495707" },
+        { "cell": "balancedUnbalanced", "url": "https://hifonix.co.uk/detail/eletech-aristotle/" }
+      ]
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIB6cZHo",
+      "name": "Eletech Azrael | Copper Upgrade Cable for IEMs",
+      "set": {
+        "lengthM": [1.25],
+        "balancedUnbalanced": ["balanced", "unbalanced"]
+      },
+      "sources": [
+        { "cell": "lengthM", "url": "https://bloomaudio.com/products/eletech-azrael-copper-upgrade-cable" },
+        { "cell": "balancedUnbalanced", "url": "https://bloomaudio.com/products/eletech-azrael-copper-upgrade-cable" }
+      ]
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjbXdBN",
+      "name": "Eletech Cassiel | Silver-Plated Copper Upgrade Cable for IEMs",
+      "set": {
+        "lengthM": [1.25],
+        "balancedUnbalanced": ["balanced", "unbalanced"]
+      },
+      "sources": [
+        { "cell": "lengthM", "url": "https://bloomaudio.com/products/eletech-cassiel-silver-upgrade-cable" },
+        { "cell": "balancedUnbalanced", "url": "https://hifonix.co.uk/detail/elementechnology-cassiel-occ-silver-plated-copper-cables/" }
+      ]
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjbXdtC",
+      "name": "Eletech Elegy to Lucia | Limited Flagship IEM Cable",
+      "set": {
+        "lengthM": [1.2],
+        "conductorMaterial": ["copper-ofc", "silver-plated-copper"],
+        "balancedUnbalanced": ["balanced"]
+      },
+      "sources": [
+        { "cell": "lengthM", "url": "https://www.e-earphone.jp/products/675048" },
+        { "cell": "conductorMaterial", "url": "https://elementechnology.com/products/elegy-to-lucia" },
+        { "cell": "balancedUnbalanced", "url": "https://www.e-earphone.jp/products/675048" }
+      ]
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjbXftv",
+      "name": "Eletech Euclid | Silver IEM Upgrade Cable",
+      "set": {
+        "lengthM": [1.2],
+        "balancedUnbalanced": ["balanced", "unbalanced"]
+      },
+      "sources": [
+        { "cell": "lengthM", "url": "https://www.e-earphone.jp/products/496451" },
+        { "cell": "balancedUnbalanced", "url": "https://elementechnology.com/products/euclid" }
+      ]
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIBAHVcm",
+      "name": "Etched Headphone Cable",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": { "conductorMaterial": "Listenmore/headphones.com and retailer pages describe jacket, connectors and lengths only; no page names the conductor material." }
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIBAHZj0",
+      "name": "Etched Headphone Cable for Sennheiser HD 600 Series",
+      "set": {},
+      "sources": [],
+      "unresolvedCells": { "conductorMaterial": "Listenmore/headphones.com and retailer pages describe jacket, connectors and lengths only; no page names the conductor material." }
+    },
+    {
+      "id": "E5AJbuTajbv7O6i4rY3WSR",
+      "name": "HEDDphone Balanced 4-Pin XLR Cable",
+      "set": { "conductorMaterial": ["copper-ofc"] },
+      "sources": [
+        { "cell": "conductorMaterial", "url": "https://www.altomusic.com/products/heddphone-balanced-xlr-cable-hpc2-hpc2" }
+      ]
+    },
+    {
+      "id": "Y7l1IhzX2fnyiano58Giz2",
+      "name": "JL Audio 2-Channel Core RCA Male to RCA Male Cables - 6 ft. (1.82m) - 2-Pack",
+      "set": { "balancedUnbalanced": ["unbalanced"] },
+      "sources": [
+        { "cell": "balancedUnbalanced", "url": "https://www.jlaudio.com/collections/car-audio-rca-cables" }
+      ]
+    },
+    {
+      "id": "GPjMdcfFWZVrKyR2PB7o7q",
+      "name": "Magia Modular Cable Kit",
+      "set": { "balancedUnbalanced": ["balanced", "unbalanced"] },
+      "sources": [
+        { "cell": "balancedUnbalanced", "url": "https://apos.audio/products/apos-x-z-reviews-magia-modular-cable-kit" }
+      ]
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIBAHiIM",
+      "name": "Meze Audio 99 Series Silver Replacement cable (2.5mm, 3.5mm or 4.4mm)",
+      "set": { "balancedUnbalanced": ["balanced", "unbalanced"] },
+      "sources": [
+        { "cell": "balancedUnbalanced", "url": "https://mezeaudio.com/products/99-series-silver-plated-upgrade-cables" }
+      ]
+    },
+    {
+      "id": "moXlkADK7m1DHgGwWxMmzS",
+      "name": "Meze Audio Copper PCUHD 4-Pin Mini-XLR Replacement Cable",
+      "set": {
+        "connectorTermination": ["4-pin-mini-xlr", "2.5mm", "3.5mm", "4.4mm", "6.35mm", "xlr"],
+        "lengthM": [1.3, 2.5],
+        "conductorMaterial": ["copper-ofc"],
+        "balancedUnbalanced": ["balanced", "unbalanced"]
+      },
+      "sources": [
+        { "cell": "connectorTermination", "url": "https://mezeaudio.eu/products/minixlr-pcuhd-copper-premium-cable" },
+        { "cell": "lengthM", "url": "https://mezeaudio.eu/products/minixlr-pcuhd-copper-premium-cable" },
+        { "cell": "conductorMaterial", "url": "https://mezeaudio.com/products/minixlr-pcuhd-copper-premium-cable" },
+        { "cell": "balancedUnbalanced", "url": "https://mezeaudio.eu/products/minixlr-pcuhd-copper-premium-cable" }
+      ]
+    },
+    {
+      "id": "FVx8zpBk46ZESxpKNI3WOv",
+      "name": "Meze Audio MMCX to 3.5mm Silver-Plated Headphone Cable - 3.9 ft.",
+      "set": {
+        "connectorTermination": ["3.5mm"],
+        "lengthM": [1.2],
+        "conductorMaterial": ["silver-plated-copper"],
+        "balancedUnbalanced": ["unbalanced"]
+      },
+      "sources": [
+        { "cell": "connectorTermination", "url": "https://mezeaudio.com/products/rai-penta-balanced-silver-plated-upgrade-cables" },
+        { "cell": "lengthM", "url": "https://mezeaudio.com/products/rai-penta-balanced-silver-plated-upgrade-cables" },
+        { "cell": "conductorMaterial", "url": "https://mezeaudio.com/products/rai-penta-balanced-silver-plated-upgrade-cables" },
+        { "cell": "balancedUnbalanced", "url": "https://mezeaudio.com/products/rai-penta-balanced-silver-plated-upgrade-cables" }
+      ]
+    },
+    {
+      "id": "moXlkADK7m1DHgGwWxMkkd",
+      "name": "Moondrop Free DSP USB-C IEM Cable",
+      "set": { "lengthM": [1.2] },
+      "sources": [
+        { "cell": "lengthM", "url": "https://www.linsoul.com/products/moondrop-free-dsp-usb-c-earphone-cable" }
+      ],
+      "unresolvedCells": {
+        "connectorTermination": "Cable is USB-C plug to 0.78mm 2-pin (Moondrop spec); neither connector has a value in the allowed list.",
+        "balancedUnbalanced": "Digital USB-C cable with built-in DAC; the maker states no balanced/unbalanced analog signal path."
+      }
+    }
+  ]
+}
