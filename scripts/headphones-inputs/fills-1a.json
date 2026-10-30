@@ -1,0 +1,77 @@
+{
+  "task": "1a",
+  "fills": [
+    {
+      "id": "n10eAegrGspodtsQvneRgi",
+      "name": "Meze 99 Classics Headphones - Open Box",
+      "set": { "anc": "passive" },
+      "sources": [{ "cell": "anc", "url": "https://mezeaudio.com/products/99-classics-v2-gold", "quote": "Closed-back" }]
+    },
+    {
+      "id": "PHPYj28HJdPDHAaIBAJqcI",
+      "name": "Meze Audio 109 PRO Headphones",
+      "set": { "anc": "none" },
+      "sources": [{ "cell": "anc", "url": "https://mezeaudio.com/products/109-pro", "quote": "open-back headphones" }]
+    },
+    {
+      "id": "moXlkADK7m1DHgGwWtblBG",
+      "name": "Meze Audio LIRIC II Headphones",
+      "set": { "anc": "passive" },
+      "sources": [{ "cell": "anc", "url": "https://mezeaudio.com/products/liric", "quote": "Best Closed-Back Headphones for Premium Sound Quality" }]
+    },
+    {
+      "id": "k27n1AQuIbSr5iozFz7KdY",
+      "name": "Meze Audio LIRIC II Headphones - Open Box",
+      "set": { "anc": "passive" },
+      "sources": [{ "cell": "anc", "url": "https://mezeaudio.com/products/liric", "quote": "Best Closed-Back Headphones for Premium Sound Quality" }]
+    },
+    {
+      "id": "k27n1AQuIbSr5iozFz7EE4",
+      "name": "Sennheiser HD 560S",
+      "set": { "anc": "none" },
+      "sources": [{ "cell": "anc", "url": "https://us.sennheiser-hearing.com/products/hd-560s", "quote": "The HD 560S features an open-back design" }]
+    },
+    {
+      "id": "n10eAegrGspodtsQvneN6x",
+      "name": "Sennheiser HD 569 Headphones",
+      "set": { "anc": "passive" },
+      "sources": [{ "cell": "anc", "url": "https://sennheiser-hearing.com/p/hd-569/", "quote": "Closed-back earcups" }]
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjgrju8",
+      "name": "Sennheiser HD 600 Headphones",
+      "set": { "anc": "none" },
+      "sources": [{ "cell": "anc", "url": "https://us.sennheiser-hearing.com/products/hd-600", "quote": "an acoustically transparent open-back earcup" }]
+    },
+    {
+      "id": "k27n1AQuIbSr5iozFz7GSn",
+      "name": "Sennheiser HD 620S Headphones",
+      "set": { "anc": "passive" },
+      "sources": [{ "cell": "anc", "url": "https://sennheiser-hearing.com/p/hd-620s/", "quote": "Closed-back headphones with steel-reinforced ear cup covers" }]
+    },
+    {
+      "id": "Pn6oyV4Ks5AcNbecjgrpEU",
+      "name": "Sennheiser HD 650 Headphones",
+      "set": { "anc": "none" },
+      "sources": [{ "cell": "anc", "url": "https://us.sennheiser-hearing.com/products/hd-650", "quote": "Open-back design" }]
+    },
+    {
+      "id": "IVp0Ya0qCxU3IKB1jVguzD",
+      "name": "Sennheiser HD 660S2 Headphones",
+      "set": { "anc": "none" },
+      "sources": [{ "cell": "anc", "url": "https://us.sennheiser-hearing.com/products/hd-660s2", "quote": "Comfortable open-back design" }]
+    },
+    {
+      "id": "n10eAegrGspodtsQvneQzx",
+      "name": "Sennheiser HD 820 - Open Box",
+      "set": { "anc": "passive" },
+      "sources": [{ "cell": "anc", "url": "https://us.sennheiser-hearing.com/products/hd-820", "quote": "Closed-back earcups" }]
+    },
+    {
+      "id": "moXlkADK7m1DHgGwWtbklW",
+      "name": "Sennheiser HD 820 Headphones",
+      "set": { "anc": "passive" },
+      "sources": [{ "cell": "anc", "url": "https://us.sennheiser-hearing.com/products/hd-820", "quote": "Closed-back earcups" }]
+    }
+  ]
+}
