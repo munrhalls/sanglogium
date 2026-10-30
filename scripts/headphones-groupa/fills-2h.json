@@ -1,0 +1,154 @@
+{
+  "task": "2h",
+  "fills": [
+    {
+      "id": "PHPYj28HJdPDHAaIBADCQs",
+      "name": "Hifiman Sundara Headphones | 2020 Edition",
+      "set": {
+        "ipxRating": "none"
+      },
+      "sources": [
+        { "cell": "ipxRating", "url": "https://hifiman.com/products/detail/286" }
+      ],
+      "unresolvedCells": {}
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8kExX",
+      "name": "HIFIMAN Sundara Planar Magnetic Headphones",
+      "set": {
+        "ipxRating": "none"
+      },
+      "sources": [
+        { "cell": "ipxRating", "url": "https://hifiman.com/products/detail/286" }
+      ],
+      "unresolvedCells": {}
+    },
+    {
+      "id": "MrEMtYwMtrFDGWmRnQVOZL",
+      "name": "Hisenior Audio Mega5-EST In-Ear Headphones",
+      "set": {
+        "acousticDesign": "closed-back",
+        "soundSignature": "Warm"
+      },
+      "sources": [
+        { "cell": "acousticDesign", "url": "https://www.headfonia.com/hisenior-mega5est-review/" },
+        { "cell": "soundSignature", "url": "https://www.headfonia.com/hisenior-mega5est-review/" }
+      ],
+      "unresolvedCells": {}
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8jtEr",
+      "name": "Kinera Freya In-Ear Monitor (IEM) Earphone",
+      "set": {
+        "acousticDesign": "closed-back",
+        "soundSignature": "Mid-Forward",
+        "ipxRating": "none"
+      },
+      "sources": [
+        { "cell": "acousticDesign", "url": "https://theheadphonelist.com/kinera-freya-review-metamorphosis/" },
+        { "cell": "soundSignature", "url": "https://www.headphonesty.com/2020/08/review-kinera-freya/" },
+        { "cell": "ipxRating", "url": "https://theheadphonelist.com/kinera-freya-review-metamorphosis/" }
+      ],
+      "unresolvedCells": {}
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8jv3N",
+      "name": "Kinera NANNA In-Ear Monitor (IEM) Earphone",
+      "set": {
+        "acousticDesign": "closed-back",
+        "ipxRating": "none"
+      },
+      "sources": [
+        { "cell": "acousticDesign", "url": "https://www.treoo.com/product/kinera-nanna-4-driver-hybrid-electrostatic-in-ear-earphone" },
+        { "cell": "ipxRating", "url": "https://www.treoo.com/product/kinera-nanna-4-driver-hybrid-electrostatic-in-ear-earphone" }
+      ],
+      "unresolvedCells": {}
+    },
+    {
+      "id": "k27n1AQuIbSr5iozG2iyZJ",
+      "name": "Mark Levinson № 5909 Active Noise Cancellation Headphones",
+      "set": {
+        "soundSignature": "Harman-target-like",
+        "driverConfigBucket": "single-dynamic"
+      },
+      "sources": [
+        { "cell": "soundSignature", "url": "https://www.ecoustics.com/reviews/mark-levinson-no-5909/" },
+        { "cell": "driverConfigBucket", "url": "https://www.ecoustics.com/reviews/mark-levinson-no-5909/" }
+      ],
+      "unresolvedCells": {}
+    },
+    {
+      "id": "GPjMdcfFWZVrKyR2PB4zFK",
+      "name": "Meze 105 AER Open-Back Headphones",
+      "set": {
+        "soundSignature": "Warm",
+        "ipxRating": "none",
+        "driverConfigBucket": "single-dynamic"
+      },
+      "sources": [
+        { "cell": "soundSignature", "url": "https://bloomaudio.com/blogs/articles/a-smooth-landing-meze-105-aer-review" },
+        { "cell": "ipxRating", "url": "https://mezeaudio.com/products/105-aer" },
+        { "cell": "driverConfigBucket", "url": "https://mezeaudio.com/products/105-aer" }
+      ],
+      "unresolvedCells": {}
+    },
+    {
+      "id": "xMEqvkRBbdrlJXyFG8ekB7",
+      "name": "Meze 105 Silva Open-Back Headphones",
+      "set": {
+        "soundSignature": "Warm",
+        "ipxRating": "none",
+        "driverConfigBucket": "single-dynamic"
+      },
+      "sources": [
+        { "cell": "soundSignature", "url": "https://www.audioreviews.org/meze-105-silva-review/" },
+        { "cell": "ipxRating", "url": "https://mezeaudio.com/products/105-silva" },
+        { "cell": "driverConfigBucket", "url": "https://mezeaudio.com/products/105-silva" }
+      ],
+      "unresolvedCells": {}
+    },
+    {
+      "id": "n10eAegrGspodtsQvneRgi",
+      "name": "Meze 99 Classics Headphones - Open Box",
+      "set": {
+        "ipxRating": "none",
+        "driverConfigBucket": "single-dynamic"
+      },
+      "sources": [
+        { "cell": "ipxRating", "url": "https://mezeaudio.com/products/99-classics" },
+        { "cell": "driverConfigBucket", "url": "https://mezeaudio.com/products/99-classics" }
+      ],
+      "unresolvedCells": {}
+    },
+    {
+      "id": "GPjMdcfFWZVrKyR2PB4pYs",
+      "name": "Meze Audio 109 PRO Dynamic Open-Back Headphone (Apos Certified)",
+      "set": {
+        "soundSignature": "Warm",
+        "ipxRating": "none",
+        "driverConfigBucket": "single-dynamic"
+      },
+      "sources": [
+        { "cell": "soundSignature", "url": "https://www.headphonecheck.com/test/meze-audio-109-pro/" },
+        { "cell": "ipxRating", "url": "https://mezeaudio.com/products/109-pro" },
+        { "cell": "driverConfigBucket", "url": "https://mezeaudio.com/products/109-pro" }
+      ],
+      "unresolvedCells": {}
+    },
+    {
+      "id": "GPjMdcfFWZVrKyR2PB7tsw",
+      "name": "Meze Audio 99 Classics Closed Back Headphones 2nd Gen",
+      "set": {
+        "soundSignature": "Warm",
+        "ipxRating": "none",
+        "driverConfigBucket": "single-dynamic"
+      },
+      "sources": [
+        { "cell": "soundSignature", "url": "https://www.headphonecheck.com/test/meze-audio-99-classics/" },
+        { "cell": "ipxRating", "url": "https://mezeaudio.com/products/99-classics" },
+        { "cell": "driverConfigBucket", "url": "https://mezeaudio.com/products/99-classics" }
+      ],
+      "unresolvedCells": {}
+    }
+  ]
+}
