@@ -98,11 +98,7 @@ const stockUndecidable = rule(
   'in stock can be decided',
   'the in-stock filter reads stock minus reservedStock; a missing number counts as out of stock in the query and as zero in the counts',
 );
-const brandMissing = rule('brand is stored', 'the brand filter and its list read filterAttributes.brand only');
-const brandDiffers = rule(
-  'stored brand matches the brand document',
-  'a brand name shows only when the stored brand equals the brand document slug; else the slug shows',
-);
+const brandMissing = rule('brand has a document', 'the brand filter and its list read the brand document slug (brand->slug.current); a product without one has no brand');
 const sortNumbers = rule(
   'sort numbers are numbers',
   'featured and best-selling read sortAttributes.featuredPriority, displayPriority and popularity',
@@ -113,18 +109,12 @@ const unreachable = rule(
 );
 
 for (const p of all) {
-  const fa = (p.filterAttributes ?? {}) as Record<string, unknown>;
   if (typeof p.name !== 'string' || !p.name.trim()) badName(p._id);
   if (!isNumber(p.unitAmount) || p.unitAmount < 0) badPrice(`${p._id}: ${JSON.stringify(p.unitAmount)}`);
   if (!(isNumber(p.stock) && isNumber(p.reservedStock))) {
     stockUndecidable(`${p._id}: stock ${JSON.stringify(p.stock)}, reserved ${JSON.stringify(p.reservedStock)}`);
   }
-  const brand = fa.brand;
-  const brandText = typeof brand === 'string' ? brand : Array.isArray(brand) && brand.length === 1 ? brand[0] : null;
-  if (typeof brandText !== 'string' || !brandText) brandMissing(`${p._id}: ${JSON.stringify(brand)}`);
-  else if (brandText.toLowerCase() !== String(p.brandSlug ?? '').toLowerCase()) {
-    brandDiffers(`${p._id}: stored ${JSON.stringify(brandText)}, document ${JSON.stringify(p.brandSlug)}`);
-  }
+  if (typeof p.brandSlug !== 'string' || !p.brandSlug) brandMissing(`${p._id}: ${JSON.stringify(p.brandSlug)}`);
   for (const [key, value] of [
     ['sortAttributes.featuredPriority', p.sortAttributes?.featuredPriority],
     ['sortAttributes.popularity', p.sortAttributes?.popularity],

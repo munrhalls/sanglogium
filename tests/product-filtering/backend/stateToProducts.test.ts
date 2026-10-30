@@ -51,15 +51,24 @@ const product = (
   catalogueLocationKeys: ['k1'],
 });
 
+const brand = (id: string) => ({ _type: 'reference', _ref: id });
+
+const brands = [
+  { _type: 'brand', _id: 'b-acme', name: 'Acme Audio', slug: { current: 'acme' } },
+  { _type: 'brand', _id: 'b-zed', name: 'Zed Works', slug: { current: 'zed' } },
+];
+
 const dataset = [
-  product('p1', '2026-01-01', 'Beta Cup', 10000, 5, 1, { brand: ['acme'], shell: 'hard-blue', glow: true, legs: 4, finish: 'Matte-Gold', wearingStyle: 'in-ear' }, { featuredPriority: 2, popularity: 5 }),
+  ...brands,
+  { ...product('p1', '2026-01-01', 'Beta Cup', 10000, 5, 1, { shell: 'hard-blue', glow: true, legs: 4, finish: 'Matte-Gold', wearingStyle: 'in-ear' }, { featuredPriority: 2, popularity: 5 }), brand: brand('b-acme') },
   // shell stored as a one-item list, the other products store a bare text
-  product('p2', '2026-02-01', 'alpha Dish', 20000, 1, 1, { brand: ['acme'], shell: ['soft-red'], glow: false, legs: 6, finish: 'matte-gold', wearingStyle: 'over-ear' }, { popularity: 9 }, 7),
-  product('p3', '2026-03-01', 'Gamma Bowl', 30000, 1, 0, { brand: ['zed'], shell: 'hard-blue', glow: true, legs: 8, finish: 'satin-ash' }, { featuredPriority: 2, popularity: 1 }),
+  { ...product('p2', '2026-02-01', 'alpha Dish', 20000, 1, 1, { shell: ['soft-red'], glow: false, legs: 6, finish: 'matte-gold', wearingStyle: 'over-ear' }, { popularity: 9 }, 7), brand: brand('b-acme') },
+  { ...product('p3', '2026-03-01', 'Gamma Bowl', 30000, 1, 0, { shell: 'hard-blue', glow: true, legs: 8, finish: 'satin-ash' }, { featuredPriority: 2, popularity: 1 }), brand: brand('b-zed') },
   // finish stored as a list with a capital
-  product('p4', '2026-04-01', 'delta Jar', 40000, 2, 0, { brand: ['orphan'], finish: ['Satin-Ash'] }),
-  product('p5', '2026-05-01', 'Epsilon Pan', 25000, 3, 0, { brand: ['zed'], shell: 'soft-red', legs: 5 }, { popularity: 9 }),
-  { ...product('p6', '2026-06-01', 'Zeta Lid', 5000, 9, 0, { brand: ['acme'], shell: 'hard-blue' }), catalogueLocationKeys: ['k2'] },
+  // no brand document, so no brand
+  product('p4', '2026-04-01', 'delta Jar', 40000, 2, 0, { finish: ['Satin-Ash'] }),
+  { ...product('p5', '2026-05-01', 'Epsilon Pan', 25000, 3, 0, { shell: 'soft-red', legs: 5 }, { popularity: 9 }), brand: brand('b-zed') },
+  { ...product('p6', '2026-06-01', 'Zeta Lid', 5000, 9, 0, { shell: 'hard-blue' }), catalogueLocationKeys: ['k2'], brand: brand('b-acme') },
 ];
 
 (globalThis as any).__fetch = async (query: string, params: Record<string, unknown>) => {
